@@ -47,7 +47,7 @@
     "karma-ng-html2js-preprocessor": "~0.1.2",
     "karma-sourcemap-loader": "~0.3.6",
     "wiredep": "~2.2.2",
-    "wrench": "~1.5.8",
+    "wrench": "~1.5.8"
   },
   "engines": {
     "node": ">=0.10.0"
