@@ -1,0 +1,19 @@
+{
+  // This file contains root configuration for ESLint. Its rules may be overriden in a specific
+  // folder (e.g., tests) by placing .eslintrc in it. 
+  // All lint rules should be placed here unless they do not apply to entire JavaScript codebase.
+  // For example, indentation rules should be here (applies to all JS files), but Protractor
+  // should not (applies only to integration tests files).
+
+  // Base rules on recommended ESLint settings.
+  // TODO(bryk): Determine whether there is a better base config.
+  "extends": "eslint:recommended",
+  "env": {
+    // Enables all ES6 features except modules.
+    "es6": true
+  },
+  "ecmaFeatures": {
+    // Enable ES6 modules to have all language features covered.
+    "modules": true
+  }
+}
