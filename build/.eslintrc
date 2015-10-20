@@ -1,0 +1,6 @@
+{
+  "env": {
+    // Build files are written in node.
+    "node": true
+  }
+}

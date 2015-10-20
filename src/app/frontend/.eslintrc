@@ -1,0 +1,8 @@
+{
+  // Load eslint-plugin-angular to have angular specific checks.
+  "plugins": ["angular"],
+  "rules": {
+    // Disable undefined variable checking. This is done by the compiler. 
+    "no-undef": 0
+  }
+}
