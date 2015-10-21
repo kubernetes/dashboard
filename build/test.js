@@ -26,7 +26,7 @@ import conf from './conf';
 
 /**
  * @param {boolean} singleRun
- * @param {function()} doneFn
+ * @param {function(?Error=)} doneFn
  */
 function runUnitTests(singleRun, doneFn) {
   let localConfig = {
@@ -36,14 +36,14 @@ function runUnitTests(singleRun, doneFn) {
   };
 
   let server = new karma.Server(localConfig, function(failCount) {
-    doneFn(failCount ? new Error("Failed " + failCount + " tests.") : null);
+    doneFn(failCount ? new Error("Failed " + failCount + " tests.") : undefined);
   })
   server.start();
 }
 
 
 /**
- * @param {function()} doneFn
+ * @param {function(?Error=)} doneFn
  */
 function runProtractorTests(doneFn) {
   gulp.src(path.join(conf.paths.integrationTest, '**/*.js'))
@@ -51,8 +51,7 @@ function runProtractorTests(doneFn) {
       configFile: conf.paths.protractorConf
     }))
     .on('error', function (err) {
-      // Make sure failed tests cause gulp to exit non-zero.
-      throw err;
+      doneFn(err);
     })
     .on('end', function () {
       // Close browser sync server.
