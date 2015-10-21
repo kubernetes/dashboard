@@ -12,11 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/**
+ * @fileoverview Externs for Angular router: https://github.com/angular/router
+ *
+ * TODO(bryk): Move the externs out of this project.
+ */
+
+
+/** @const */
+var ngNewRouter = {};
+
 
 /**
- * @param {!angular.$log} $log
- * @ngInject
+ * @typedef {{
+ *   setTemplateMapping: function(function(string):string)
+ * }}
  */
-export function runBlock ($log) {
-  $log.debug('runBlock end');
-}
+ngNewRouter.$componentLoaderProvider = {};
+
+
+/**
+ * @typedef {{
+ *   config: function(!Array<{path: string, component: string}>)
+ * }}
+ */
+ngNewRouter.$router = {};
