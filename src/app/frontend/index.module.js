@@ -14,10 +14,10 @@
 
 /**
  * @fileoverview Entry point module to the application. Loads and configures other modules needed
- * to bootstrap the application
+ * to bootstrap the application.
  */
 import { config } from './index.config';
-import { routerConfig, RouterController } from './index.route';
+import { RouterController, routerConfig } from './index.route';
 import { runBlock } from './index.run';
 import { MainController } from './main/main.controller';
 
@@ -29,4 +29,3 @@ export default angular.module(
     .run(runBlock)
     .controller('RouterController', RouterController)
     .controller('MainController', MainController);
-

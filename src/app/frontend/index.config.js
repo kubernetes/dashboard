@@ -13,8 +13,8 @@
 // limitations under the License.
 
 
-/** @ngInject */
-export function config($logProvider) {
-  $logProvider.debugEnabled(true);
+/**
+ * @ngInject
+ */
+export function config() {
 }
-

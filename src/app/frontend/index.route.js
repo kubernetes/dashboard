@@ -13,20 +13,25 @@
 // limitations under the License.
 
 
-/** @ngInject */
+/**
+ * @param {!ngNewRouter.$componentLoaderProvider} $componentLoaderProvider
+ * @ngInject
+ */
 export function routerConfig($componentLoaderProvider) {
   $componentLoaderProvider.setTemplateMapping(function(name) {
-    return `${ name }/${ name }.html`;
+    return `${name}/${name}.html`;
   });
 }
 
+
 export class RouterController {
-  /** @ngInject */
+  /**
+   * @param {!ngNewRouter.$router} $router
+   * @ngInject
+   */
   constructor($router) {
-    var router = $router;
-    router['config']([
+    $router.config([
       { path: '/', component: 'main' }
     ]);
   }
 }
-

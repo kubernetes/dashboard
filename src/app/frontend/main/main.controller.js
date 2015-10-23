@@ -14,16 +14,19 @@
 
 
 export class MainController {
-  /** @ngInject */
   constructor() {
+    /** @export */
     this.testValue = 7;
   }
 
-  /** @ngInject */
+  /**
+   * @param {!angular.$timeout} $timeout
+   * @ngInject
+   * @export
+   */
   activate($timeout) {
     $timeout(() => {
-      this.foo = 'bar';
+      this.testValue = 8;
     }, 4000);
   }
 }
-
