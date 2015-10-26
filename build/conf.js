@@ -35,17 +35,32 @@ export default {
     app: path.join(basePath, 'src/app'),
     assets: path.join(basePath, 'src/app/assets'),
     base: basePath,
+    backendSrc: path.join(basePath, 'src/app/backend'),
+    backendTmp: path.join(basePath, '.tmp/backend'),
     bowerComponents: path.join(basePath, 'bower_components'),
     build: path.join(basePath, 'build'),
     dist: path.join(basePath, 'dist'),
+    externs: path.join(basePath, 'src/app/externs'),
     frontendSrc: path.join(basePath, 'src/app/frontend'),
     frontendTest: path.join(basePath, 'src/test/frontend'),
     integrationTest: path.join(basePath, 'src/test/integration'),
     karmaConf: path.join(basePath, 'build/karma.conf.js'),
+    nodeModules: path.join(basePath, 'node_modules'),
     partials: path.join(basePath, '.tmp/partials'),
+    prodTmp: path.join(basePath, '.tmp/prod'),
     protractorConf: path.join(basePath, 'build/protractor.conf.js'),
     serve: path.join(basePath, '.tmp/serve'),
     src: path.join(basePath, 'src'),
     tmp: path.join(basePath, '.tmp')
+  },
+
+  /**
+   * Frontend application constants.
+   */
+  frontend: {
+    /**
+     * The name of the root Angular module, i.e., the module that bootstraps the application.
+     */
+    rootModuleName: 'kubernetesConsole'
   }
 };
