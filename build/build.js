@@ -44,9 +44,9 @@ import conf from './conf';
  *  4. Everything is saved in the dist directory.
  */
 gulp.task('build', ['index:prod', 'assets'], function () {
-  let htmlFilter = gulpFilter('*.html', { restore: true });
-  let vendorCssFilter = gulpFilter('**/vendor.css', { restore: true });
-  let vendorJsFilter = gulpFilter('**/vendor.js', { restore: true });
+  let htmlFilter = gulpFilter('*.html', {restore: true});
+  let vendorCssFilter = gulpFilter('**/vendor.css', {restore: true});
+  let vendorJsFilter = gulpFilter('**/vendor.js', {restore: true});
   let assets;
 
   return gulp.src(path.join(conf.paths.prodTmp, '*.html'))
@@ -76,7 +76,7 @@ gulp.task('build', ['index:prod', 'assets'], function () {
     }))
     .pipe(htmlFilter.restore)
     .pipe(gulp.dest(conf.paths.dist))
-    .pipe(gulpSize({ showFiles: true }));
+    .pipe(gulpSize({showFiles: true}));
 });
 
 
