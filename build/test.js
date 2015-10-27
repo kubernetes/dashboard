@@ -32,7 +32,7 @@ function runUnitTests(singleRun, doneFn) {
   let localConfig = {
     configFile: conf.paths.karmaConf,
     singleRun: singleRun,
-    autoWatch: !singleRun
+    autoWatch: !singleRun,
   };
 
   let server = new karma.Server(localConfig, function(failCount) {
@@ -48,7 +48,7 @@ function runUnitTests(singleRun, doneFn) {
 function runProtractorTests(doneFn) {
   gulp.src(path.join(conf.paths.integrationTest, '**/*.js'))
     .pipe(gulpProtractor.protractor({
-      configFile: conf.paths.protractorConf
+      configFile: conf.paths.protractorConf,
     }))
     .on('error', function (err) {
       doneFn(err);

@@ -30,20 +30,20 @@ import conf from './conf';
  * @param {string} indexPath
  */
 function createIndexFile(indexPath) {
-  let injectStyles = gulp.src(path.join(indexPath, '**/*.css'), { read: false });
+  let injectStyles = gulp.src(path.join(indexPath, '**/*.css'), {read: false});
 
-  let injectScripts = gulp.src(path.join(indexPath, '**/*.js'), { read: false });
+  let injectScripts = gulp.src(path.join(indexPath, '**/*.js'), {read: false});
 
   let injectOptions = {
     // Make the dependencies relative to the deps directory.
     ignorePath: [path.relative(conf.paths.base, indexPath)],
     addRootSlash: false,
-    quiet: true
+    quiet: true,
   };
 
   let wiredepOptions = {
     // Make wiredep dependencies begin with "bower_components/" not "../../...".
-    ignorePath: path.relative(conf.paths.frontendSrc, indexPath) + '/'
+    ignorePath: path.relative(conf.paths.frontendSrc, indexPath) + '/',
   };
 
   return gulp.src(path.join(conf.paths.frontendSrc, 'index.html'))

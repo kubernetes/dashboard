@@ -10,10 +10,17 @@
   "extends": "eslint:recommended",
   "env": {
     // Enables all ES6 features except modules.
-    "es6": true
+    "es6": true,
   },
   "ecmaFeatures": {
     // Enable ES6 modules to have all language features covered.
-    "modules": true
-  }
+    "modules": true,
+  },
+  "rules": {
+    // Require dangling comma at the end of any  multiline list/object. This is to be consistent
+    // with backend code.
+    "comma-dangle": [2, "always-multiline"],
+    // No spacing in object literals nor in imports/exports.
+    "object-curly-spacing": [2, "never"],
+  },
 }

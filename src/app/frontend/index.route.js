@@ -31,7 +31,7 @@ export class RouterController {
    */
   constructor($router) {
     $router.config([
-      { path: '/', component: 'main' }
+      {path: '/', component: 'main'},
     ]);
   }
 }
