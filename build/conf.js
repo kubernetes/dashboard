@@ -29,6 +29,16 @@ const basePath = path.join(__dirname, '../');
  */ 
 export default {
   /**
+   * Deployment constants configuration.
+   */
+  deploy: {
+    /**
+     * The name of the Docker image with the application.
+     */ 
+    imageName: 'kubernetes/console',
+  },
+
+  /**
    * Frontend application constants.
    */
   frontend: {

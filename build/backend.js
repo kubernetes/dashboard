@@ -44,7 +44,7 @@ const goBackendDependencies = [
  *     default ones.
  */
 function spawnGoProcess(args, doneFn, opt_env) {
-  var goTask = child.spawn('go', args, {
+  let goTask = child.spawn('go', args, {
     env: lodash.merge(process.env, {GOPATH: conf.paths.backendTmp}, opt_env || {}),
   });
 
