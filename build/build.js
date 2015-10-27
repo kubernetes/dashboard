@@ -24,7 +24,6 @@ import gulpUglify from 'gulp-uglify';
 import gulpUseref from 'gulp-useref';
 import gulpRev from 'gulp-rev';
 import gulpRevReplace from 'gulp-rev-replace';
-import gulpSize from 'gulp-size';
 import uglifySaveLicense from 'uglify-save-license';
 import path from 'path';
 
@@ -40,7 +39,7 @@ import conf from './conf';
  *  3. CSS and JS assets are suffixed with version hash.
  *  4. Everything is saved in the dist directory.
  */
-gulp.task('build', ['index:prod', 'assets'], function () {
+gulp.task('build', ['assets', 'backend:prod', 'index:prod'], function () {
   let htmlFilter = gulpFilter('*.html', {restore: true});
   let vendorCssFilter = gulpFilter('**/vendor.css', {restore: true});
   let vendorJsFilter = gulpFilter('**/vendor.js', {restore: true});
@@ -72,8 +71,7 @@ gulp.task('build', ['index:prod', 'assets'], function () {
       quotes: true,
     }))
     .pipe(htmlFilter.restore)
-    .pipe(gulp.dest(conf.paths.dist))
-    .pipe(gulpSize({showFiles: true}));
+    .pipe(gulp.dest(conf.paths.dist));
 });
 
 
