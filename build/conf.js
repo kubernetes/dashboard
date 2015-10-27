@@ -29,6 +29,16 @@ const basePath = path.join(__dirname, '../');
  */ 
 export default {
   /**
+   * Deployment constants configuration.
+   */
+  deploy: {
+    /**
+     * The name of the Docker image with the application.
+     */ 
+    imageName: 'kubernetes/console',
+  },
+
+  /**
    * Absolute paths to known directories, e.g., to source directory.
    */
   paths: {
@@ -39,6 +49,7 @@ export default {
     backendTmp: path.join(basePath, '.tmp/backend'),
     bowerComponents: path.join(basePath, 'bower_components'),
     build: path.join(basePath, 'build'),
+    deploySrc: path.join(basePath, 'src/app/deploy'),
     dist: path.join(basePath, 'dist'),
     externs: path.join(basePath, 'src/app/externs'),
     frontendSrc: path.join(basePath, 'src/app/frontend'),
