@@ -29,10 +29,10 @@ var path = require('path');
  */
 exports.config = {
   capabilities: {
-    'browserName': 'chrome'
+    'browserName': 'chrome',
   },
   
   baseUrl: 'http://localhost:3000',
 
-  specs: [path.join(conf.paths.integrationTest, '**/*.js')]
+  specs: [path.join(conf.paths.integrationTest, '**/*.js')],
 };

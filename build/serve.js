@@ -31,15 +31,15 @@ import conf from './conf';
 function browserSyncInit(baseDir) {
   // Enable custom support for Angular apps, e.g., history management.
   browserSync.use(browserSyncSpa({
-    selector: '[ng-app]'
+    selector: '[ng-app]',
   }));
 
   browserSync.instance = browserSync.init({
     startPath: '/',
     server: {
-      baseDir: baseDir
+      baseDir: baseDir,
     },
-    browser: [] // Needed so that the browser does not auto-launch.
+    browser: [], // Needed so that the browser does not auto-launch.
   });
 }
 
@@ -52,7 +52,7 @@ gulp.task('serve', ['watch'], function () {
     conf.paths.serve,
     conf.paths.frontendSrc, // For angular templates to work.
     conf.paths.app, // For assets to work.
-    conf.paths.base // For bower dependencies to work.
+    conf.paths.base, // For bower dependencies to work.
   ]);
 });
 
@@ -72,7 +72,7 @@ gulp.task('watch', ['index'], function () {
   gulp.watch([path.join(conf.paths.frontendSrc, 'index.html'), 'bower.json'], ['index']);
 
   gulp.watch([
-    path.join(conf.paths.frontendSrc, '**/*.scss')
+    path.join(conf.paths.frontendSrc, '**/*.scss'),
   ], function(event) {
     if(event.type === 'changed') {
       // If this is a file change, rebuild only styles - nothing more is needed.

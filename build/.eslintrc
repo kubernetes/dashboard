@@ -2,5 +2,9 @@
   "env": {
     // Build files are written in node.
     "node": true
+  },
+  "rules": {
+    // This folder contains Node code, so using console is fine.
+    "no-console": 0
   }
 }
