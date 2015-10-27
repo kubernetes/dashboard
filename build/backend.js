@@ -31,7 +31,7 @@ import conf from './conf';
  */
 const goBackendDependencies = [
   'github.com/golang/glog',
-  'github.com/spf13/pflag'
+  'github.com/spf13/pflag',
 ];
 
 
@@ -45,7 +45,7 @@ const goBackendDependencies = [
  */
 function spawnGoProcess(args, doneFn, opt_env) {
   let goTask = child.spawn('go', args, {
-    env: lodash.merge(process.env, {GOPATH: conf.paths.backendTmp}, opt_env || {})
+    env: lodash.merge(process.env, {GOPATH: conf.paths.backendTmp}, opt_env || {}),
   });
 
   // Call Gulp callback on task exit. This has to be done to make Gulp dependency management
@@ -76,7 +76,7 @@ gulp.task('backend', ['backend-dependencies'], function(doneFn) {
   spawnGoProcess([
     'build',
     '-o', path.join(conf.paths.serve, 'console'),
-    path.join(conf.paths.backendSrc, 'console.go')
+    path.join(conf.paths.backendSrc, 'console.go'),
   ], doneFn);
 });
 
@@ -98,12 +98,12 @@ gulp.task('backend:prod', ['backend-dependencies'], function(doneFn) {
           '-a',
           '-installsuffix', 'cgo',
           '-o', outputBinaryPath,
-          path.join(conf.paths.backendSrc, 'console.go')
+          path.join(conf.paths.backendSrc, 'console.go'),
         ], doneFn, {
           // Disable cgo package. Required to run on scratch docker image.
           CGO_ENABLED: '0',
           // Scratch docker image is linux.
-          GOOS: 'linux'
+          GOOS: 'linux',
         });
       }, function(error) {
         doneFn(error);

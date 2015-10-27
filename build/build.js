@@ -17,9 +17,7 @@
  */
 import del from 'del';
 import gulp from 'gulp';
-import gulpEslint from 'gulp-eslint';
 import gulpFilter from 'gulp-filter';
-import gulpInject from 'gulp-inject';
 import gulpMinifyCss from 'gulp-minify-css';
 import gulpMinifyHtml from 'gulp-minify-html';
 import gulpUglify from 'gulp-uglify';
@@ -27,7 +25,6 @@ import gulpUseref from 'gulp-useref';
 import gulpRev from 'gulp-rev';
 import gulpRevReplace from 'gulp-rev-replace';
 import gulpSize from 'gulp-size';
-import gulpSourcemaps from 'gulp-sourcemaps';
 import uglifySaveLicense from 'uglify-save-license';
 import path from 'path';
 
@@ -55,8 +52,8 @@ gulp.task('build', ['index:prod', 'assets'], function () {
         // To resolve local paths.
         conf.paths.prodTmp,
         // To resolve bower_components/... paths.
-        conf.paths.base
-      ]
+        conf.paths.base,
+      ],
     }))
     .pipe(vendorCssFilter)
     .pipe(gulpMinifyCss())
@@ -72,7 +69,7 @@ gulp.task('build', ['index:prod', 'assets'], function () {
     .pipe(gulpMinifyHtml({
       empty: true,
       spare: true,
-      quotes: true
+      quotes: true,
     }))
     .pipe(htmlFilter.restore)
     .pipe(gulp.dest(conf.paths.dist))

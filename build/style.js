@@ -34,15 +34,15 @@ import conf from './conf';
  */
 gulp.task('styles', function () {
   let sassOptions = {
-    style: 'expanded'
+    style: 'expanded',
   };
 
-  let cssFilter = gulpFilter('**/*.css', { restore: true });
+  let cssFilter = gulpFilter('**/*.css', {restore: true});
 
   return gulp.src(path.join(conf.paths.frontendSrc, '**/*.scss'))
     .pipe(gulpSass(sassOptions))
     .pipe(cssFilter)
-    .pipe(gulpSourcemaps.init({ loadMaps: true }))
+    .pipe(gulpSourcemaps.init({loadMaps: true}))
     .pipe(gulpAutoprefixer())
     .pipe(gulpSourcemaps.write())
     .pipe(cssFilter.restore)
@@ -58,7 +58,7 @@ gulp.task('styles', function () {
  */
 gulp.task('styles:prod', function () {
   let sassOptions = {
-    style: 'compressed'
+    style: 'compressed',
   };
 
   return gulp.src(path.join(conf.paths.frontendSrc, '**/*.scss'))

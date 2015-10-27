@@ -39,6 +39,16 @@ export default {
   },
 
   /**
+   * Frontend application constants.
+   */
+  frontend: {
+    /**
+     * The name of the root Angular module, i.e., the module that bootstraps the application.
+     */
+    rootModuleName: 'kubernetesConsole',
+  },
+
+  /**
    * Absolute paths to known directories, e.g., to source directory.
    */
   paths: {
@@ -62,16 +72,6 @@ export default {
     protractorConf: path.join(basePath, 'build/protractor.conf.js'),
     serve: path.join(basePath, '.tmp/serve'),
     src: path.join(basePath, 'src'),
-    tmp: path.join(basePath, '.tmp')
+    tmp: path.join(basePath, '.tmp'),
   },
-
-  /**
-   * Frontend application constants.
-   */
-  frontend: {
-    /**
-     * The name of the root Angular module, i.e., the module that bootstraps the application.
-     */
-    rootModuleName: 'kubernetesConsole'
-  }
 };

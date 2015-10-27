@@ -18,6 +18,7 @@
 import gulp from 'gulp';
 import gulpAngularTemplatecache from 'gulp-angular-templatecache';
 import gulpClosureCompiler from 'gulp-closure-compiler';
+import gulpEslint from 'gulp-eslint';
 import gulpMinifyHtml from 'gulp-minify-html';
 import lodash from 'lodash';
 import path from 'path';
@@ -38,11 +39,11 @@ const closureCompilerBaseConfig = {
     js_module_root: conf.paths.frontendSrc,
     language_in: 'ECMASCRIPT6_STRICT',
     language_out: 'ECMASCRIPT3',
-    manage_closure_dependencies: true
+    manage_closure_dependencies: true,
   },
   compilerPath: path.join(conf.paths.nodeModules, 'google-closure-compiler/compiler.jar'),
   // This makes the compiler faster. Requires Java 7+.
-  tieredCompilation: true
+  tieredCompilation: true,
 };
 
 
@@ -66,8 +67,8 @@ gulp.task('scripts', ['create-serve-folders'], function() {
         // Make source map URLs relative to frontend source directory.
         source_map_location_mapping: path.relative(conf.paths.base, conf.paths.frontendSrc) + '|',
         // Include source map in the output bundle.
-        output_wrapper: '%output%\n//# sourceMappingURL=' + `${bundleBaseName}.js.map`
-      }
+        output_wrapper: '%output%\n//# sourceMappingURL=' + `${bundleBaseName}.js.map`,
+      },
     }, closureCompilerBaseConfig);
 
   return gulp.src(path.join(conf.paths.frontendSrc, '**/*.js'))
@@ -81,8 +82,6 @@ gulp.task('scripts', ['create-serve-folders'], function() {
  * directory.
  */
  gulp.task('scripts:prod', ['angular-templates'], function() {
-  let bundleBaseName = 'app';
-
   let closureCompilerConfig = lodash.merge({
       fileName: 'app.js',
       compilerFlags: {
@@ -103,10 +102,10 @@ gulp.task('scripts', ['create-serve-folders'], function() {
           // This check does not work correctly with ES6.
           'inferredConstCheck',
           // Let ESLint handle all lint checks.
-          'lintChecks'
+          'lintChecks',
         ],
-        use_types_for_optimization: null
-      }
+        use_types_for_optimization: null,
+      },
     }, closureCompilerBaseConfig);
 
   return gulp.src([
@@ -116,7 +115,7 @@ gulp.task('scripts', ['create-serve-folders'], function() {
       path.join(conf.paths.partials, '**/*.js'),
       // Include base.js to enable some compiler functions, e.g., @export annotation handling.
       path.join(conf.paths.bowerComponents,
-          'google-closure-library/closure/goog/base.js')
+          'google-closure-library/closure/goog/base.js'),
     ])
     .pipe(gulpClosureCompiler(closureCompilerConfig))
     .pipe(gulp.dest(conf.paths.prodTmp));
@@ -131,10 +130,10 @@ gulp.task('angular-templates', function () {
     .pipe(gulpMinifyHtml({
       empty: true,
       spare: true,
-      quotes: true
+      quotes: true,
     }))
     .pipe(gulpAngularTemplatecache('angular-templates.js', {
-      module: conf.frontend.rootModuleName
+      module: conf.frontend.rootModuleName,
     }))
     .pipe(gulp.dest(conf.paths.partials));
 });
