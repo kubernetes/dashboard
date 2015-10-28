@@ -14,24 +14,9 @@
 
 
 /**
- * @param {!ngNewRouter.$componentLoaderProvider} $componentLoaderProvider
+ * @param {!angular.$routeProvider} $routeProvider
  * @ngInject
  */
-export function routerConfig($componentLoaderProvider) {
-  $componentLoaderProvider.setTemplateMapping(function(name) {
-    return `${name}/${name}.html`;
-  });
-}
-
-
-export class RouterController {
-  /**
-   * @param {!ngNewRouter.$router} $router
-   * @ngInject
-   */
-  constructor($router) {
-    $router.config([
-      {path: '/', component: 'main'},
-    ]);
-  }
+export default function routeConfig($routeProvider) {
+  // TODO(bryk): Configure 'otherwise' route here.
 }

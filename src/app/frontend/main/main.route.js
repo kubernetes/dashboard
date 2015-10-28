@@ -1,4 +1,4 @@
-// Copyright 2015 Google Inc.
+// Copyright 2015 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,28 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * @fileoverview Externs for Angular router: https://github.com/angular/router
- *
- * TODO(bryk): Move the externs out of this project.
- */
-
-
-/** @const */
-var ngNewRouter = {};
+import MainController from './main.controller';
 
 
 /**
- * @typedef {{
- *   setTemplateMapping: function(function(string):string)
- * }}
+ * @param {!angular.$routeProvider} $routeProvider
+ * @ngInject
  */
-ngNewRouter.$componentLoaderProvider = {};
-
-
-/**
- * @typedef {{
- *   config: function(!Array<{path: string, component: string}>)
- * }}
- */
-ngNewRouter.$router = {};
+export default function routeConfig($routeProvider) {
+  $routeProvider.when('/', {
+    templateUrl: 'main/main.html',
+    controller: MainController,
+    controllerAs: 'ctrl',
+  });
+}
