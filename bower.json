@@ -10,21 +10,12 @@
     "angular-aria": "~1.4.2",
     "angular-material": "~0.10.1",
     "angular-messages": "~1.4.2",
-    "angular-new-router": "~0.5.3",
     "angular-resource": "~1.4.2",
+    "angular-route": "~1.4.2",
     "angular-sanitize": "~1.4.2"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.2",
     "google-closure-library": "*"
-  },
-  "//": "Some dependencies do not have main files defined. Override this here so that",
-  "//": "build tools know what files to serve.",
-  "overrides": {
-    "angular-new-router": {
-      "main": [
-        "dist/router.es5.js"
-      ]
-    }
   }
 }
