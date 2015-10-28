@@ -15,7 +15,6 @@
 /**
  * @fileoverview Gulp tasks for processing stylesheets.
  */
-import browserSync from 'browser-sync';
 import gulp from 'gulp';
 import gulpAutoprefixer from 'gulp-autoprefixer';
 import gulpMinifyCss from 'gulp-minify-css';
@@ -24,6 +23,7 @@ import gulpSass from 'gulp-sass';
 import path from 'path';
 import gulpConcat from 'gulp-concat';
 
+import {browserSyncInstance} from './serve';
 import conf from './conf';
 
 
@@ -42,7 +42,7 @@ gulp.task('styles', function () {
     .pipe(gulpSourcemaps.write("."))
     .pipe(gulp.dest(conf.paths.serve))
     // If BrowserSync is running, inform it that styles have changed.
-    .pipe(browserSync.stream());
+    .pipe(browserSyncInstance.stream());
 });
 
 
