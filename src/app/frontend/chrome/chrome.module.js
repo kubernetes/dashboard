@@ -12,17 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import MainController from './main.controller';
+import chromeDirective from './chrome.directive';
 
 
 /**
- * @param {!angular.$routeProvider} $routeProvider
- * @ngInject
+ * Angular module containing navigation chrome for the application.
  */
-export default function routeConfig($routeProvider) {
-  $routeProvider.when('/', {
-    templateUrl: 'main/main.html',
-    controller: MainController,
-    controllerAs: 'ctrl',
-  });
-}
+export default angular.module(
+    'kubernetesConsole.chrome',
+    [
+      'ngMaterial',
+    ])
+    .directive('chrome', chromeDirective);
