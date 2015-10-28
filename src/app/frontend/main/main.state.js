@@ -1,4 +1,4 @@
-// Copyright 2015 Google Inc.
+// Copyright 2015 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,8 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import MainController from './main.controller';
 
-body {
-  background-color: gray;
+
+/**
+ * @param {!ui.router.$stateProvider} $stateProvider
+ * @ngInject
+ */
+export default function stateConfig($stateProvider) {
+  $stateProvider.state('main', {
+    url: '',
+    templateUrl: 'main/main.html',
+    controller: MainController,
+    controllerAs: 'ctrl',
+  });
 }
-

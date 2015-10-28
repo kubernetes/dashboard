@@ -16,8 +16,9 @@
  * @fileoverview Entry point module to the application. Loads and configures other modules needed
  * to bootstrap the application.
  */
-import routeConfig from './index.route';
+import chromeModule from './chrome/chrome.module';
 import mainModule from './main/main.module';
+import routeConfig from './index.route';
 
 export default angular.module(
     'kubernetesConsole',
@@ -27,8 +28,9 @@ export default angular.module(
       'ngMaterial',
       'ngMessages',
       'ngResource',
-      'ngRoute',
       'ngSanitize',
+      'ui.router',
+      chromeModule.name,
       mainModule.name,
     ])
     .config(routeConfig);

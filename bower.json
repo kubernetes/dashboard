@@ -10,8 +10,8 @@
     "angular-aria": "~1.4.2",
     "angular-material": "~0.10.1",
     "angular-messages": "~1.4.2",
+    "angular-ui-router": "~0.2.15",
     "angular-resource": "~1.4.2",
-    "angular-route": "~1.4.2",
     "angular-sanitize": "~1.4.2"
   },
   "devDependencies": {

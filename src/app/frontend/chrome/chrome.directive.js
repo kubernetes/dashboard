@@ -1,4 +1,4 @@
-// Copyright 2015 Google Inc.
+// Copyright 2015 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,12 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Robo Slab font.
-@import url(//fonts.googleapis.com/css?family=Roboto+Slab:400,700|Roboto:400,700,700italic,400italic);
+import ChromeController from './chrome.controller';
 
-// Angular Material icon font. It allows to use the icons as fonts.
-@import url(//fonts.googleapis.com/icon?family=Material+Icons);
 
-html {
-  font-family: 'Roboto Slab', serif;
+/**
+ * Returns directive definition object for the chrome directive.
+ *
+ * @return {!angular.Directive}
+ */
+export default function chromeDirective() {
+  return {
+    bindToController: true,
+    controller: ChromeController,
+    controllerAs: 'ctrl',
+    templateUrl: 'chrome/chrome.html',
+    transclude: true,
+  };
 }
