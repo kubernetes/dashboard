@@ -13,18 +13,15 @@
 // limitations under the License.
 
 
-export class MainController {
-  constructor() {
-    /** @export */
-    this.testValue = 7;
-  }
-
+export default class MainController {
   /**
    * @param {!angular.$timeout} $timeout
    * @ngInject
-   * @export
    */
-  activate($timeout) {
+  constructor($timeout) {
+    /** @export */
+    this.testValue = 7;
+
     $timeout(() => {
       this.testValue = 8;
     }, 4000);

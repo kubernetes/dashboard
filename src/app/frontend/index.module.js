@@ -16,16 +16,19 @@
  * @fileoverview Entry point module to the application. Loads and configures other modules needed
  * to bootstrap the application.
  */
-import {config} from './index.config';
-import {RouterController, routerConfig} from './index.route';
-import {runBlock} from './index.run';
-import {MainController} from './main/main.controller';
+import routeConfig from './index.route';
+import mainModule from './main/main.module';
 
 export default angular.module(
     'kubernetesConsole',
-    ['ngAnimate', 'ngSanitize', 'ngMessages', 'ngAria', 'ngResource', 'ngNewRouter', 'ngMaterial'])
-    .config(config)
-    .config(routerConfig)
-    .run(runBlock)
-    .controller('RouterController', RouterController)
-    .controller('MainController', MainController);
+    [
+      'ngAnimate',
+      'ngAria',
+      'ngMaterial',
+      'ngMessages',
+      'ngResource',
+      'ngRoute',
+      'ngSanitize',
+      mainModule.name,
+    ])
+    .config(routeConfig);
