@@ -88,7 +88,7 @@ export default function(config) {
 
     // karma-ng-html2js-preprocessor plugin config.
     ngHtml2JsPreprocessor: {
-      stripPrefix: conf.paths.frontendSrc + '/', 
+      stripPrefix: conf.paths.frontendSrc + '/',
       moduleName: conf.frontend.moduleName,
     },
   };

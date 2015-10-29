@@ -26,7 +26,7 @@ const basePath = path.join(__dirname, '../');
 
 /**
  * Exported configuration object with common constants used in build pipeline.
- */ 
+ */
 export default {
   /**
    * Deployment constants configuration.
@@ -34,7 +34,7 @@ export default {
   deploy: {
     /**
      * The name of the Docker image with the application.
-     */ 
+     */
     imageName: 'kubernetes/console',
   },
 

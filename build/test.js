@@ -37,7 +37,7 @@ function runUnitTests(singleRun, doneFn) {
 
   let server = new karma.Server(localConfig, function(failCount) {
     doneFn(failCount ? new Error("Failed " + failCount + " tests.") : undefined);
-  })
+  });
   server.start();
 }
 

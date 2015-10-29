@@ -17,6 +17,7 @@
  *
  * TODO(bryk): Start using ES6 in this file when supported.
  */
+/* eslint no-var: 0 */ // no-var check disabled because this file is not written in ES6.
 require('babel-core/register');
 var conf = require('./conf');
 var path = require('path');
@@ -31,7 +32,7 @@ exports.config = {
   capabilities: {
     'browserName': 'chrome',
   },
-  
+
   baseUrl: 'http://localhost:3000',
 
   specs: [path.join(conf.paths.integrationTest, '**/*.js')],

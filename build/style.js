@@ -66,5 +66,5 @@ gulp.task('styles:prod', function () {
     .pipe(gulpAutoprefixer())
     .pipe(gulpConcat('app.css'))
     .pipe(gulpMinifyCss())
-    .pipe(gulp.dest(conf.paths.prodTmp))
+    .pipe(gulp.dest(conf.paths.prodTmp));
 });
