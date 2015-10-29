@@ -19,7 +19,7 @@ import chromeDirective from './chrome.directive';
  * Angular module containing navigation chrome for the application.
  */
 export default angular.module(
-    'kubernetesConsole.chrome',
+    'kubernetesDashboard.chrome',
     [
       'ngMaterial',
     ])

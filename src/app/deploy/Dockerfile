@@ -27,4 +27,4 @@ ADD . /
 # The port that the application listens on.
 # TODO(bryk): Parametrize this argument so that other build tools are aware of the exposed port.
 EXPOSE 8080
-ENTRYPOINT ["/console"]
+ENTRYPOINT ["/dashboard"]
