@@ -2,7 +2,7 @@
   "//": "Specification of this file can be found at:",
   "//": "https://github.com/bower/spec/blob/master/json.md",
 
-  "name": "kubernetes-console",
+  "name": "kubernetes-dashboard",
   "version": "0.0.1",
   "dependencies": {
     "angular": "~1.4.2",

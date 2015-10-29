@@ -2,7 +2,7 @@
   "//": "Specification of this file can be found at: https://docs.npmjs.com/files/package.json",
   "//": "When a dependency is not needed it should be removed from the list.",
 
-  "name": "kubernetes-console",
+  "name": "kubernetes-dashboard",
   "version": "0.0.1",
   "devDependencies": {
     "babel": "~5.8.23",
