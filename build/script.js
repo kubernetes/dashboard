@@ -94,6 +94,8 @@ gulp.task('scripts', ['create-serve-folders'], function() {
           path.join(conf.paths.nodeModules,
               'google-closure-compiler/contrib/externs/angular-1.4-q_templated.js'),
           path.join(conf.paths.nodeModules,
+              'google-closure-compiler/contrib/externs/angular-material.js'),
+          path.join(conf.paths.nodeModules,
               'google-closure-compiler/contrib/externs/angular_ui_router.js'),
           path.join(conf.paths.externs, '**/*.js'),
         ],

@@ -18,9 +18,8 @@
  */
 
 
-export class MainPage {
+export default class MainPage {
   constructor() {
-    this.jumbEl = element(by.css('.jumbotron'));
-    this.h1El = this.jumbEl.element(by.css('h1'));
+    this.header = element(by.css('header'));
   }
 }
