@@ -35,7 +35,7 @@ export default {
     /**
      * The name of the Docker image with the application.
      */
-    imageName: 'kubernetes/console',
+    imageName: 'kubernetes/dashboard',
   },
 
   /**
@@ -45,7 +45,7 @@ export default {
     /**
      * The name of the root Angular module, i.e., the module that bootstraps the application.
      */
-    rootModuleName: 'kubernetesConsole',
+    rootModuleName: 'kubernetesDashboard',
   },
 
   /**

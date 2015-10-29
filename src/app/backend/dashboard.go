@@ -15,26 +15,26 @@
 package main
 
 import (
-  "flag"
-  "fmt"
-  "net/http"
+	"flag"
+	"fmt"
+	"net/http"
 
-  "github.com/golang/glog"
-  "github.com/spf13/pflag"
+	"github.com/golang/glog"
+	"github.com/spf13/pflag"
 )
 
 var (
-  argPort = pflag.Int("port", 8080, "The port to listen to for incomming HTTP requests")
+	argPort = pflag.Int("port", 8080, "The port to listen to for incomming HTTP requests")
 )
 
 func main() {
-  pflag.CommandLine.AddGoFlagSet(flag.CommandLine)
-  pflag.Parse()
-  glog.Info("Starting HTTP server on port ", *argPort)
-  defer glog.Flush();
+	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)
+	pflag.Parse()
+	glog.Info("Starting HTTP server on port ", *argPort)
+	defer glog.Flush()
 
-  // Run a HTTP server that serves static files from current directory.
-  // TODO(bryk): Disable directory listing.
-  http.Handle("/", http.FileServer(http.Dir("./")))
-  glog.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", *argPort), nil))
+	// Run a HTTP server that serves static files from current directory.
+	// TODO(bryk): Disable directory listing.
+	http.Handle("/", http.FileServer(http.Dir("./")))
+	glog.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", *argPort), nil))
 }

@@ -21,7 +21,7 @@ import mainModule from './main/main.module';
 import routeConfig from './index.route';
 
 export default angular.module(
-    'kubernetesConsole',
+    'kubernetesDashboard',
     [
       'ngAnimate',
       'ngAria',
