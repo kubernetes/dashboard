@@ -24,6 +24,6 @@ This is because every action goes through well defined API.
 * Transactional actions are easier to implement on the backend than on the frontend. Examples of
 such actions: "create a replication controller and a service for it" or "do a rolling update".
 * Possible code reuse from existing tools (e.g., kubectl) and upstream contributions to the tools.
-* Speed: getting composite data from beckends is faster on the backend (if it runs close to the
+* Speed: getting composite data from backends is faster on the backend (if it runs close to the
 data sources). For example, getting a list of pods with their CPU utilization timeline
 requires at least two requests. Doing them on the backend shortens RTT.
