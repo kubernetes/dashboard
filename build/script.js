@@ -20,31 +20,10 @@ import gulpAngularTemplatecache from 'gulp-angular-templatecache';
 import gulpClosureCompiler from 'gulp-closure-compiler';
 import gulpEslint from 'gulp-eslint';
 import gulpMinifyHtml from 'gulp-minify-html';
-import lodash from 'lodash';
 import path from 'path';
+import webpackStream from 'webpack-stream';
 
 import conf from './conf';
-
-
-/**
- * Base Closure Compiler config to be extended in, e.g., prod or dev config.
- */
-const closureCompilerBaseConfig = {
-  // "foo_flag: null" means that a flag is enabled.
-  compilerFlags: {
-    angular_pass: null,
-    closure_entry_point: 'module$src$app$frontend$index_module',
-    export_local_property_definitions: null,
-    generate_exports: null,
-    js_module_root: conf.paths.frontendSrc,
-    language_in: 'ECMASCRIPT6_STRICT',
-    language_out: 'ECMASCRIPT3',
-    manage_closure_dependencies: true,
-  },
-  compilerPath: path.join(conf.paths.nodeModules, 'google-closure-compiler/compiler.jar'),
-  // This makes the compiler faster. Requires Java 7+.
-  tieredCompilation: true,
-};
 
 
 /**
@@ -52,27 +31,21 @@ const closureCompilerBaseConfig = {
  * directory. This has to be done because currently browsers do not handle ES6 syntax and
  * modules correctly.
  *
- * Note that 'create-serve-folders' task is required because closure compiler source maps function
- * requires the folders to exist upfront.
+ * Only dependencies of root application module are included in the bundle.
  */
 gulp.task('scripts', ['create-serve-folders'], function() {
-  let bundleBaseName = 'app-dev';
-  let closureCompilerConfig = lodash.merge({
-      fileName: `${bundleBaseName}.js`,
-      compilerFlags: {
-        // WHITESPACE_ONLY is not an option because it leaves ES6 modules unmodified. ES6 modules
-        // arent handled by browsers correctly (yet).
-        compilation_level: 'SIMPLE_OPTIMIZATIONS',
-        create_source_map: path.join(conf.paths.serve, `${bundleBaseName}.js.map`),
-        // Make source map URLs relative to frontend source directory.
-        source_map_location_mapping: path.relative(conf.paths.base, conf.paths.frontendSrc) + '|',
-        // Include source map in the output bundle.
-        output_wrapper: '%output%\n//# sourceMappingURL=' + `${bundleBaseName}.js.map`,
-      },
-    }, closureCompilerBaseConfig);
+  let webpackOptions = {
+    devtool: 'inline-source-map',
+    module: {
+      // ES6 modules have to be preprocessed with Babel loader to work in browsers.
+      loaders: [{test: /\.js$/, exclude: /node_modules/, loaders: ['babel-loader']}],
+    },
+    output: {filename: 'app-dev.js'},
+    quiet: true,
+  };
 
-  return gulp.src(path.join(conf.paths.frontendSrc, '**/*.js'))
-    .pipe(gulpClosureCompiler(closureCompilerConfig))
+  return gulp.src(path.join(conf.paths.frontendSrc, 'index.module.js'))
+    .pipe(webpackStream(webpackOptions))
     .pipe(gulp.dest(conf.paths.serve));
 });
 
@@ -82,33 +55,47 @@ gulp.task('scripts', ['create-serve-folders'], function() {
  * directory.
  */
  gulp.task('scripts:prod', ['angular-templates'], function() {
-  let closureCompilerConfig = lodash.merge({
-      fileName: 'app.js',
-      compilerFlags: {
-        compilation_level: 'ADVANCED_OPTIMIZATIONS',
-        externs: [
-          path.join(conf.paths.nodeModules,
-              'google-closure-compiler/contrib/externs/angular-1.4.js'),
-          path.join(conf.paths.nodeModules,
-              'google-closure-compiler/contrib/externs/angular-1.4-http-promise_templated.js'),
-          path.join(conf.paths.nodeModules,
-              'google-closure-compiler/contrib/externs/angular-1.4-q_templated.js'),
-          path.join(conf.paths.nodeModules,
-              'google-closure-compiler/contrib/externs/angular_ui_router.js'),
-          path.join(conf.paths.externs, '**/*.js'),
-        ],
-        // Enable all compiler checks by default and make them errors.
-        jscomp_error: '*',
-        // Disable checks that are not applicable to the project.
-        jscomp_off: [
-          // This check does not work correctly with ES6.
-          'inferredConstCheck',
-          // Let ESLint handle all lint checks.
-          'lintChecks',
-        ],
-        use_types_for_optimization: null,
-      },
-    }, closureCompilerBaseConfig);
+  let closureCompilerConfig = {
+    fileName: 'app.js',
+    // "foo_flag: null" means that a flag is enabled.
+    compilerFlags: {
+      angular_pass: null,
+      closure_entry_point: 'module$src$app$frontend$index_module',
+      compilation_level: 'ADVANCED_OPTIMIZATIONS',
+      export_local_property_definitions: null,
+      externs: [
+        path.join(conf.paths.nodeModules,
+            'google-closure-compiler/contrib/externs/angular-1.4.js'),
+        path.join(conf.paths.nodeModules,
+            'google-closure-compiler/contrib/externs/angular-1.4-http-promise_templated.js'),
+        path.join(conf.paths.nodeModules,
+            'google-closure-compiler/contrib/externs/angular-1.4-q_templated.js'),
+        path.join(conf.paths.nodeModules,
+            'google-closure-compiler/contrib/externs/angular-material.js'),
+        path.join(conf.paths.nodeModules,
+            'google-closure-compiler/contrib/externs/angular_ui_router.js'),
+        path.join(conf.paths.externs, '**/*.js'),
+      ],
+      generate_exports: null,
+      js_module_root: conf.paths.frontendSrc,
+      // Enable all compiler checks by default and make them errors.
+      jscomp_error: '*',
+      // Disable checks that are not applicable to the project.
+      jscomp_off: [
+        // This check does not work correctly with ES6.
+        'inferredConstCheck',
+        // Let ESLint handle all lint checks.
+        'lintChecks',
+      ],
+      language_in: 'ECMASCRIPT6_STRICT',
+      language_out: 'ECMASCRIPT3',
+      manage_closure_dependencies: true,
+      use_types_for_optimization: null,
+    },
+    compilerPath: path.join(conf.paths.nodeModules, 'google-closure-compiler/compiler.jar'),
+    // This makes the compiler faster. Requires Java 7+.
+    tieredCompilation: true,
+  };
 
   return gulp.src([
       // Application source files.

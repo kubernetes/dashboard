@@ -18,7 +18,9 @@
  */
 import chromeModule from './chrome/chrome.module';
 import mainModule from './main/main.module';
+import indexConfig from './index.config';
 import routeConfig from './index.route';
+
 
 export default angular.module(
     'kubernetesDashboard',
@@ -33,4 +35,5 @@ export default angular.module(
       chromeModule.name,
       mainModule.name,
     ])
+    .config(indexConfig)
     .config(routeConfig);

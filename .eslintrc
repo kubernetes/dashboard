@@ -20,6 +20,9 @@
     // Require dangling comma at the end of any  multiline list/object. This is to be consistent
     // with backend code.
     "comma-dangle": [2, "always-multiline"],
+    // Force using === and !=== except when comparing to null. This is to prevent from bugs that
+    // come from automatic type conversion in == operator and to be consistent across the codebase.
+    "eqeqeq": [2, "allow-null"],
     // Disallow trailing spaces. This is to unify code because editors may have different
     // settings.
     no-trailing-spaces: 2,
