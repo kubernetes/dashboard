@@ -29,6 +29,16 @@ const basePath = path.join(__dirname, '../');
  */
 export default {
   /**
+   * Backend application constants.
+   */
+  backend: {
+    /**
+     * The name of the backend binary.
+     */
+    binaryName: 'dashboard',
+  },
+
+  /**
    * Deployment constants configuration.
    */
   deploy: {
@@ -64,6 +74,7 @@ export default {
     externs: path.join(basePath, 'src/app/externs'),
     frontendSrc: path.join(basePath, 'src/app/frontend'),
     frontendTest: path.join(basePath, 'src/test/frontend'),
+    goWorkspace: path.join(basePath, '.go_workspace'),
     integrationTest: path.join(basePath, 'src/test/integration'),
     karmaConf: path.join(basePath, 'build/karma.conf.js'),
     nodeModules: path.join(basePath, 'node_modules'),

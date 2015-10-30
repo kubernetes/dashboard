@@ -32,14 +32,8 @@ import conf from './conf';
 
 /**
  * Builds production package and places it in the dist directory.
- *
- * Following steps are done here:
- *  1. Vendor CSS and JS files are concatenated and minified.
- *  2. index.html is minified.
- *  3. CSS and JS assets are suffixed with version hash.
- *  4. Everything is saved in the dist directory.
  */
-gulp.task('build', ['assets', 'backend:prod', 'index:prod'], function () {
+gulp.task('build', ['backend:prod', 'build-frontend'], function () {
   let htmlFilter = gulpFilter('*.html', {restore: true});
   let vendorCssFilter = gulpFilter('**/vendor.css', {restore: true});
   let vendorJsFilter = gulpFilter('**/vendor.js', {restore: true});
@@ -76,6 +70,18 @@ gulp.task('build', ['assets', 'backend:prod', 'index:prod'], function () {
 
 
 /**
+ * Builds production version of the frontend application.
+ *
+ * Following steps are done here:
+ *  1. Vendor CSS and JS files are concatenated and minified.
+ *  2. index.html is minified.
+ *  3. CSS and JS assets are suffixed with version hash.
+ *  4. Everything is saved in the dist directory.
+ */
+gulp.task('build-frontend', ['assets', 'index:prod']);
+
+
+/**
  * Copies assets to the dist directory.
  */
 gulp.task('assets', function () {
@@ -88,5 +94,5 @@ gulp.task('assets', function () {
  * Cleans all build artifacts.
  */
 gulp.task('clean', function () {
-  return del([path.join(conf.paths.dist, '/'), path.join(conf.paths.tmp, '/')]);
+  return del([conf.paths.dist, conf.paths.goWorkspace, conf.paths.tmp]);
 });

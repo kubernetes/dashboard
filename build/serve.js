@@ -17,10 +17,19 @@
  */
 import browserSync from 'browser-sync';
 import browserSyncSpa from 'browser-sync-spa';
+import child from 'child_process';
 import gulp from 'gulp';
 import path from 'path';
 
 import conf from './conf';
+
+
+/**
+ * Currently running backend process object. Null if the backend is not running.
+ *
+ * @type {?child.ChildProcess}
+ */
+let runningBackendProcess = null;
 
 
 /**
@@ -35,6 +44,7 @@ function browserSyncInit(baseDir) {
   }));
 
   browserSync.instance = browserSync.init({
+    // TODO(bryk): Add proxy to the backend here.
     startPath: '/',
     server: {
       baseDir: baseDir,
@@ -47,7 +57,7 @@ function browserSyncInit(baseDir) {
 /**
  * Serves the application in development mode.
  */
-gulp.task('serve', ['watch'], function () {
+gulp.task('serve', ['spawn-backend', 'watch'], function () {
   browserSyncInit([
     conf.paths.serve,
     conf.paths.frontendSrc, // For angular templates to work.
@@ -60,8 +70,48 @@ gulp.task('serve', ['watch'], function () {
 /**
  * Serves the application in production mode.
  */
-gulp.task('serve:prod', ['build'], function () {
+gulp.task('serve:prod', ['build-frontend', 'spawn-backend'], function () {
   browserSyncInit(conf.paths.dist);
+});
+
+
+/**
+ * Spawns new backend application process and finishes the task immediately. Previously spawned
+ * backend process is killed beforehand, if any.
+ */
+gulp.task('spawn-backend', ['backend', 'kill-backend'], function () {
+  runningBackendProcess = child.spawn(path.join(conf.paths.serve, conf.backend.binaryName));
+
+  runningBackendProcess.on('exit', function() {
+    // Mark that there is no backend process running anymore.
+    runningBackendProcess = null;
+  });
+
+  runningBackendProcess.stdout.on('data', function (data) {
+    console.log('' + data);
+  });
+
+  runningBackendProcess.stderr.on('data', function (data) {
+    console.error('' + data);
+  });
+});
+
+
+/**
+ * Kills running backend process (if any).
+ */
+gulp.task('kill-backend', function (doneFn) {
+  if (runningBackendProcess) {
+    runningBackendProcess.on('exit', function() {
+      // Mark that there is no backend process running anymore.
+      runningBackendProcess = null;
+      // Finish the task only when the backend is actually killed.
+      doneFn();
+    });
+    runningBackendProcess.kill();
+  } else {
+    doneFn();
+  }
 });
 
 
@@ -84,4 +134,5 @@ gulp.task('watch', ['index'], function () {
   });
 
   gulp.watch(path.join(conf.paths.frontendSrc, '**/*.js'), ['scripts']);
+  gulp.watch(path.join(conf.paths.backendSrc, '**/*.go'), ['spawn-backend']);
 });
