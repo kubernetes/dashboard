@@ -1,4 +1,6 @@
 # Kubernetes Dashboard
+[![Build Status](https://travis-ci.org/kubernetes/dashboard.svg?branch=master)](https://travis-ci.org/kubernetes/dashboard)
+
 Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters. It allows to
 manage applications running in the cluster, troubleshoot them, as well as, manage the cluster
 itself.
