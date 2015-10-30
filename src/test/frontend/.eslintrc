@@ -1,5 +1,10 @@
 {
   "env": {
     "jasmine": true,
-  }
+  },
+  "globals": {
+    // Define missing global Angular variables.
+    "inject": true,
+    "module": true,
+  },
 }
