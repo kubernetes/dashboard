@@ -19,6 +19,10 @@
 
 # Explicitly set the environment to be container-based. This makes the builds faster.
 sudo: false
+# Cache downloaded Node.JS modules in the node_modules directory for faster builds.
+cache:
+  directories:
+    - node_modules
 # Use Node.js as primary language because Gulp is the build system used in the project.
 language: node_js
 before_script:

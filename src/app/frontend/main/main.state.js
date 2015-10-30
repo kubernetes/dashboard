@@ -16,11 +16,12 @@ import MainController from './main.controller';
 
 
 /**
- * @param {!angular.$routeProvider} $routeProvider
+ * @param {!ui.router.$stateProvider} $stateProvider
  * @ngInject
  */
-export default function routeConfig($routeProvider) {
-  $routeProvider.when('/', {
+export default function stateConfig($stateProvider) {
+  $stateProvider.state('main', {
+    url: '/',
     templateUrl: 'main/main.html',
     controller: MainController,
     controllerAs: 'ctrl',

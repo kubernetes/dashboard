@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import routeConfig from './main.route';
+import stateConfig from './main.state';
 
 
-export default angular.module('kubernetesConsole.main', [])
-    .config(routeConfig);
+export default angular.module('kubernetesDashboard.main', [])
+    .config(stateConfig);

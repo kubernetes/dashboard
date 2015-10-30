@@ -12,8 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// Robo Slab font.
+@import url(//fonts.googleapis.com/css?family=Roboto+Slab:400,700|Roboto:400,700,700italic,400italic);
 
-body {
- border: 1px solid red;
+// Angular Material icon font. It allows to use the icons as fonts.
+@import url(//fonts.googleapis.com/icon?family=Material+Icons);
+
+html {
+  font-family: 'Roboto Slab', serif;
 }
-

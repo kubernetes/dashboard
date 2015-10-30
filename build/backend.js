@@ -69,27 +69,27 @@ function spawnGoProcess(args, doneFn, opt_env) {
 
 
 /**
- * Compiles backend application in development mode and places 'console' binary in the serve
+ * Compiles backend application in development mode and places the binary in the serve
  * directory.
  */
 gulp.task('backend', ['backend-dependencies'], function(doneFn) {
   spawnGoProcess([
     'build',
-    '-o', path.join(conf.paths.serve, 'console'),
-    path.join(conf.paths.backendSrc, 'console.go'),
+    '-o', path.join(conf.paths.serve, 'dashboard'),
+    path.join(conf.paths.backendSrc, 'dashboard.go'),
   ], doneFn);
 });
 
 
 /**
- * Compiles backend application in production mode and places 'console' binary in the dist
+ * Compiles backend application in production mode and places the binary in the dist
  * directory.
  *
  * The production binary difference from development binary is only that it contains all
  * dependencies inside it and is targeted for Linux.
  */
 gulp.task('backend:prod', ['backend-dependencies'], function(doneFn) {
-  let outputBinaryPath = path.join(conf.paths.dist, 'console');
+  let outputBinaryPath = path.join(conf.paths.dist, 'dashboard');
   // Delete output binary first. This is required because prod build does not override it.
   del(outputBinaryPath)
       .then(function() {
@@ -98,7 +98,7 @@ gulp.task('backend:prod', ['backend-dependencies'], function(doneFn) {
           '-a',
           '-installsuffix', 'cgo',
           '-o', outputBinaryPath,
-          path.join(conf.paths.backendSrc, 'console.go'),
+          path.join(conf.paths.backendSrc, 'dashboard.go'),
         ], doneFn, {
           // Disable cgo package. Required to run on scratch docker image.
           CGO_ENABLED: '0',
