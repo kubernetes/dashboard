@@ -54,7 +54,7 @@ gulp.task('scripts', ['create-serve-folders'], function() {
  * Compiles frontend JavaScript files into production bundle located in {conf.paths.prodTmp}
  * directory.
  */
- gulp.task('scripts:prod', ['angular-templates'], function() {
+gulp.task('scripts:prod', ['angular-templates'], function() {
   let closureCompilerConfig = {
     fileName: 'app.js',
     // "foo_flag: null" means that a flag is enabled.

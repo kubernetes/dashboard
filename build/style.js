@@ -18,7 +18,6 @@
 import browserSync from 'browser-sync';
 import gulp from 'gulp';
 import gulpAutoprefixer from 'gulp-autoprefixer';
-import gulpFilter from 'gulp-filter';
 import gulpMinifyCss from 'gulp-minify-css';
 import gulpSourcemaps from 'gulp-sourcemaps';
 import gulpSass from 'gulp-sass';
@@ -37,15 +36,10 @@ gulp.task('styles', function () {
     style: 'expanded',
   };
 
-  let cssFilter = gulpFilter('**/*.css', {restore: true});
-
   return gulp.src(path.join(conf.paths.frontendSrc, '**/*.scss'))
+    .pipe(gulpSourcemaps.init())
     .pipe(gulpSass(sassOptions))
-    .pipe(cssFilter)
-    .pipe(gulpSourcemaps.init({loadMaps: true}))
-    .pipe(gulpAutoprefixer())
-    .pipe(gulpSourcemaps.write())
-    .pipe(cssFilter.restore)
+    .pipe(gulpSourcemaps.write("."))
     .pipe(gulp.dest(conf.paths.serve))
     // If BrowserSync is running, inform it that styles have changed.
     .pipe(browserSync.stream());
