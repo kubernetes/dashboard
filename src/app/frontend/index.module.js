@@ -18,10 +18,12 @@
  */
 import chromeModule from './chrome/chrome.module';
 import mainModule from './main/main.module';
+import indexConfig from './index.config';
 import routeConfig from './index.route';
 
+
 export default angular.module(
-    'kubernetesConsole',
+    'kubernetesDashboard',
     [
       'ngAnimate',
       'ngAria',
@@ -33,4 +35,5 @@ export default angular.module(
       chromeModule.name,
       mainModule.name,
     ])
+    .config(indexConfig)
     .config(routeConfig);

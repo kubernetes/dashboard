@@ -15,5 +15,5 @@
 import stateConfig from './main.state';
 
 
-export default angular.module('kubernetesConsole.main', [])
+export default angular.module('kubernetesDashboard.main', [])
     .config(stateConfig);

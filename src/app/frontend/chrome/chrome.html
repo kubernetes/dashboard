@@ -1,20 +1,17 @@
-<div>
-  <md-content>
-    <md-toolbar>
-      <div class="md-toolbar-tools">
-        <md-button class="md-icon-button" aria-label="Settings">
-          <md-icon md-font-library="material-icons">menu</md-icon>
-        </md-button>
-        <h2>
-          <span>Kubernetes cluster: {{ctrl.clusterName}}</span>
-        </h2>
-        <span flex></span>
-        <md-button class="md-icon-button" aria-label="Favorite">
-          <md-icon md-font-library="material-icons">more_vert</md-icon>
-        </md-button>
-      </div>
-    </md-toolbar>
-
-    <div ng-transclude></div>
-  </md-content>
-</div>
+<md-content>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <md-button ui-sref="main" aria-label="Kubernetes Dashboard homepage" class="md-icon-button">
+        <md-icon md-svg-icon="assets/images/kubernetes-logo.svg" class="kd-toolbar-logo"></md-icon>
+      </md-button>
+      <h2>
+        <span>kubernetes</span>
+      </h2>
+      <span flex></span>
+      <md-button class="md-icon-button">
+        <md-icon md-font-library="material-icons">more_vert</md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <div ng-transclude></div>
+</md-content>
