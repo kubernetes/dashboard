@@ -25,17 +25,17 @@
     "eqeqeq": [2, "allow-null"],
     // Disallow trailing spaces. This is to unify code because editors may have different
     // settings.
-    no-trailing-spaces: 2,
+    "no-trailing-spaces": 2,
     // Disallow modifying constant variables.
-    no-const-assign: 2,
+    "no-const-assign": 2,
     // Force using 'let' or 'const' instead of 'var'. This is to prevent from var hoisting bugs.
-    no-var: 2,
+    "no-var": 2,
     // Require semicolons in every place they are valid. This is to prevent from automatic
     // semicolon insertion bugs.
-    semi: [2, "always"],
+    "semi": [2, "always"],
     // Disallow setting strict mode in files. All JS code in the project uses ES6 modules so is
     // implicitly strict.
-    strict: [2, "never"],
+    "strict": [2, "never"],
     // No spacing in object literals nor in imports/exports.
     "object-curly-spacing": [2, "never"],
   },
