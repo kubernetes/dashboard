@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import MainPage from './main.po'; 
+import MainPage from './main.po';
 
 
 describe('The main view', function () {
-  var page;
+  let page;
 
   beforeEach(function () {
     browser.get('/index.html');
@@ -27,4 +27,3 @@ describe('The main view', function () {
     expect(page.header.getText()).toBe('Page content goes here.');
   });
 });
-

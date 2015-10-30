@@ -1,14 +1,14 @@
 {
-  // Load eslint-plugin-angular to have angular specific checks.
+  // Load eslint-plugin-angular to have Angular specific checks.
   "plugins": ["angular"],
   "rules": {
-    // Disable undefined variable checking. This is done by the compiler. 
-    "no-undef": 0,
-    // Disable module getter rule. It gives no benefits in this codebase. Every file is
-    // in its own module, so there is no variable leaking.
-    "angular/module-getter": 0,
     // Disable dependency injection linting because the linter does not understand
     // @ngInject JsDoc annotation.
     "angular/di": 0,
+    // Disable module getter rule. It gives no benefits in this codebase. Every file is
+    // in its own module, so there is no variable leaking.
+    "angular/module-getter": 0,
+    // Disable undefined variable checking. This is done by the compiler. 
+    "no-undef": 0,
   }
 }

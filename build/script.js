@@ -46,7 +46,7 @@ gulp.task('scripts', ['create-serve-folders'], function() {
 
   return gulp.src(path.join(conf.paths.frontendSrc, 'index.module.js'))
     .pipe(webpackStream(webpackOptions))
-    .pipe(gulp.dest(conf.paths.serve))
+    .pipe(gulp.dest(conf.paths.serve));
 });
 
 
@@ -141,10 +141,10 @@ gulp.task('create-serve-folders', function () {
  */
 gulp.task('lint', function () {
   return gulp.src([path.join(conf.paths.src, '**/*.js'), path.join(conf.paths.build, '**/*.js')])
-    // Attach lint output to the eslint property of the file. 
+    // Attach lint output to the eslint property of the file.
     .pipe(gulpEslint())
     // Output the lint results to the console.
     .pipe(gulpEslint.format())
-    // Exit with an error code (1) on a lint error. 
+    // Exit with an error code (1) on a lint error.
     .pipe(gulpEslint.failOnError());
 });

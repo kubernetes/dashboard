@@ -37,7 +37,7 @@ const goBackendDependencies = [
 
 /**
  * Spawns Go process with GOPATH placed in the backend tmp folder.
- * 
+ *
  * @param {!Array<string>} args
  * @param {function(?Error=)} doneFn
  * @param {!Object<string, string>=} opt_env Optional environment variables to be concatenated with
