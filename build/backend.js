@@ -45,7 +45,7 @@ const goBackendDependencies = [
  */
 function spawnGoProcess(args, doneFn, opt_env) {
   let goTask = child.spawn('go', args, {
-    env: lodash.merge(process.env, {GOPATH: conf.paths.backendTmp}, opt_env || {}),
+    env: lodash.merge(process.env, {GOPATH: conf.paths.goWorkspace}, opt_env || {}),
   });
 
   // Call Gulp callback on task exit. This has to be done to make Gulp dependency management
@@ -75,7 +75,7 @@ function spawnGoProcess(args, doneFn, opt_env) {
 gulp.task('backend', ['backend-dependencies'], function(doneFn) {
   spawnGoProcess([
     'build',
-    '-o', path.join(conf.paths.serve, 'dashboard'),
+    '-o', path.join(conf.paths.serve, conf.backend.binaryName),
     path.join(conf.paths.backendSrc, 'dashboard.go'),
   ], doneFn);
 });
@@ -89,7 +89,8 @@ gulp.task('backend', ['backend-dependencies'], function(doneFn) {
  * dependencies inside it and is targeted for Linux.
  */
 gulp.task('backend:prod', ['backend-dependencies'], function(doneFn) {
-  let outputBinaryPath = path.join(conf.paths.dist, 'dashboard');
+  let outputBinaryPath = path.join(conf.paths.dist, conf.backend.binaryName);
+
   // Delete output binary first. This is required because prod build does not override it.
   del(outputBinaryPath)
       .then(function() {

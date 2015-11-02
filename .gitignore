@@ -3,9 +3,10 @@ node_modules/
 bower_components/
 
 ## Build and test artifacts
-coverage/
+.go_workspace/
 .sass-cache/
 .tmp/
+coverage/
 dist/
 
 ## IDE specific files
