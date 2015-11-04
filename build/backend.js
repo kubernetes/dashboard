@@ -25,18 +25,7 @@ import conf from './conf';
 
 
 /**
- * External dependencies of the Go backend application.
- *
- * @type {!Array<string>}
- */
-const goBackendDependencies = [
-  'github.com/golang/glog',
-  'github.com/spf13/pflag',
-];
-
-
-/**
- * Spawns Go process with GOPATH placed in the backend tmp folder.
+ * Spawns Go process wrapped with Godep command.
  *
  * @param {!Array<string>} args
  * @param {function(?Error=)} doneFn
@@ -44,8 +33,8 @@ const goBackendDependencies = [
  *     default ones.
  */
 function spawnGoProcess(args, doneFn, opt_env) {
-  let goTask = child.spawn('go', args, {
-    env: lodash.merge(process.env, {GOPATH: conf.paths.goWorkspace}, opt_env || {}),
+  let goTask = child.spawn('godep', ['go'].concat(args), {
+    env: lodash.merge(process.env, opt_env || {}),
   });
 
   // Call Gulp callback on task exit. This has to be done to make Gulp dependency management
@@ -72,7 +61,7 @@ function spawnGoProcess(args, doneFn, opt_env) {
  * Compiles backend application in development mode and places the binary in the serve
  * directory.
  */
-gulp.task('backend', ['backend-dependencies'], function(doneFn) {
+gulp.task('backend', function(doneFn) {
   spawnGoProcess([
     'build',
     '-o', path.join(conf.paths.serve, conf.backend.binaryName),
@@ -88,7 +77,7 @@ gulp.task('backend', ['backend-dependencies'], function(doneFn) {
  * The production binary difference from development binary is only that it contains all
  * dependencies inside it and is targeted for Linux.
  */
-gulp.task('backend:prod', ['backend-dependencies'], function(doneFn) {
+gulp.task('backend:prod', function(doneFn) {
   let outputBinaryPath = path.join(conf.paths.dist, conf.backend.binaryName);
 
   // Delete output binary first. This is required because prod build does not override it.
@@ -109,15 +98,4 @@ gulp.task('backend:prod', ['backend-dependencies'], function(doneFn) {
       }, function(error) {
         doneFn(error);
       });
-});
-
-
-/**
- * Gets backend dependencies and places them in the backend tmp directory.
- *
- * TODO(bryk): Investigate switching to Godep: https://github.com/tools/godep
- */
-gulp.task('backend-dependencies', [], function(doneFn) {
-  let args = ['get'].concat(goBackendDependencies);
-  spawnGoProcess(args, doneFn);
 });

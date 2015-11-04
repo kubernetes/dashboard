@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Travis continous inegration system configuration file. 
+# Travis continuous integration system configuration file. 
 #
 # Overview on how to customize the configuration is located at:
 # http://docs.travis-ci.com/user/customizing-the-build/
@@ -29,4 +29,10 @@ language: node_js
 before_script:
   # Install frontend dependencies to be able to build the project.
   - ./node_modules/.bin/bower install
+
+  # Set up Go environment for build.
+  - export GOPATH=$HOME/.gopath
+  # Download godep tool and make add it to PATH environment variable.
+  - go get github.com/tools/godep
+  - export PATH=$PATH:$GOPATH/bin
 script: ./node_modules/.bin/gulp build
