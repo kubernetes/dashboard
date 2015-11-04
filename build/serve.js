@@ -89,7 +89,7 @@ gulp.task('serve', ['index'], serveDevelopmentMode);
 /**
  * Serves the application in production mode.
  */
-gulp.task('serve:prod', ['build-frontend', 'spawn-backend'], function () {
+gulp.task('serve:prod', ['build-frontend'], function () {
   browserSyncInit(conf.paths.dist);
 });
 
