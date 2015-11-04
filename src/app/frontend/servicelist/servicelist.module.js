@@ -12,20 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ChromeController from './chrome.controller';
+import stateConfig from './servicelist.state';
 
 
 /**
- * Returns directive definition object for the chrome directive.
+ * Angular module for the service list view.
  *
- * @return {!angular.Directive}
+ * The view shows services running in the cluster and allows to manage them.
  */
-export default function chromeDirective() {
-  return {
-    bindToController: true,
-    controller: ChromeController,
-    controllerAs: 'ctrl',
-    templateUrl: 'chrome/chrome.html',
-    transclude: true,
-  };
-}
+export default angular.module(
+    'kubernetesDashboard.serviceList',
+    [
+      'ui.router',
+    ])
+    .config(stateConfig);

@@ -4,7 +4,7 @@
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//      http://www.apache.org/licenses/LICENSE-2.0
+//     http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -12,18 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import MainController from './main.controller';
+import ServiceListController from './servicelist.controller';
 
 
 /**
+ * Configures states for the service view.
+ *
  * @param {!ui.router.$stateProvider} $stateProvider
  * @ngInject
  */
 export default function stateConfig($stateProvider) {
-  $stateProvider.state('main', {
-    url: '/',
-    templateUrl: 'main/main.html',
-    controller: MainController,
+  $stateProvider.state('servicelist', {
+    url: '/servicelist',
+    templateUrl: 'servicelist/servicelist.html',
+    controller: ServiceListController,
     controllerAs: 'ctrl',
   });
 }

@@ -12,20 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ChromeController from './chrome.controller';
+import PageObject from './zerostate.po';
 
 
-/**
- * Returns directive definition object for the chrome directive.
- *
- * @return {!angular.Directive}
- */
-export default function chromeDirective() {
-  return {
-    bindToController: true,
-    controller: ChromeController,
-    controllerAs: 'ctrl',
-    templateUrl: 'chrome/chrome.html',
-    transclude: true,
-  };
-}
+describe('Zero state view', function () {
+  let page;
+
+  beforeEach(function () {
+    browser.get('/index.html');
+    page = new PageObject();
+  });
+
+  it('should do something', function() {
+    expect(page.header.getText()).toContain('page');
+  });
+});
