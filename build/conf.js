@@ -1,10 +1,10 @@
-// Copyright 2015 Google Inc.
+// Copyright 2015 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//      http://www.apache.org/licenses/LICENSE-2.0
+//     http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -36,6 +36,14 @@ export default {
      * The name of the backend binary.
      */
     binaryName: 'dashboard',
+    /**
+     * Name of the main backend package that is used in go build command.
+     */
+    packageName: './src/app/backend',
+    /**
+     * Name of the test backend package that is used in go test command.
+     */
+    testPackageName: './src/test/backend',
   },
 
   /**
@@ -66,6 +74,7 @@ export default {
     assets: path.join(basePath, 'src/app/assets'),
     base: basePath,
     backendSrc: path.join(basePath, 'src/app/backend'),
+    backendTest: path.join(basePath, 'src/test/backend'),
     backendTmp: path.join(basePath, '.tmp/backend'),
     bowerComponents: path.join(basePath, 'bower_components'),
     build: path.join(basePath, 'build'),
