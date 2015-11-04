@@ -21,13 +21,13 @@
 import './build/check';
 import './build/backend';
 import './build/build';
+import './build/cluster';
 import './build/deploy';
 import './build/index';
 import './build/script';
 import './build/serve';
 import './build/style';
 import './build/test';
-import './build/cluster';
 
 
 // No business logic in this file.

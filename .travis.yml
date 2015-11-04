@@ -18,7 +18,7 @@
 # http://docs.travis-ci.com/user/customizing-the-build/
 
 # Explicitly set the environment to be container-based. This makes the builds faster.
-sudo: false
+sudo: true
 # Cache downloaded Node.JS modules & Bower frontend dependencies for faster builds.
 cache:
   directories:
@@ -26,6 +26,10 @@ cache:
     - bower_components
 # Use Node.js as primary language because Gulp is the build system used in the project.
 language: node_js
+
+services:
+  - docker
+
 before_script:
   # Prepare environment for the Chrome browser.
   - export CHROME_BIN=chromium-browser
@@ -40,4 +44,12 @@ before_script:
   # Download godep tool and make add it to PATH environment variable.
   - go get github.com/tools/godep
   - export PATH=$PATH:$GOPATH/bin
-script: ./node_modules/.bin/gulp check
+  - curl -fsSL https://github.com/coreos/etcd/releases/download/v2.2.1/etcd-v2.2.1-linux-amd64.tar.gz | tar xzf -
+  - ln -fns etcd-v2.2.1-linux-amd64 etcd
+  - export PATH=./etcd:$PATH
+  - etcd --version
+  - go version
+#script: ./node_modules/.bin/gulp check
+script: ./node_modules/.bin/gulp create-cluster
+after_script:
+  - cd ./.tmp/kubernetes/; make quick-release
