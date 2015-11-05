@@ -15,12 +15,12 @@
 /**
  * @fileoverview Gulp tasks for unit and integration tests.
  */
-import browserSync from 'browser-sync';
 import gulp from 'gulp';
 import gulpProtractor from 'gulp-protractor';
 import karma from 'karma';
 import path from 'path';
 
+import {browserSyncInstance} from './serve';
 import conf from './conf';
 import goCommand from './gocommand';
 
@@ -63,11 +63,17 @@ function runProtractorTests(doneFn) {
       configFile: conf.paths.protractorConf,
     }))
     .on('error', function (err) {
+      // Close browser sync server to prevent the process from hanging.
+      browserSyncInstance.exit();
+      // Kill backend server, if running.
+      gulp.start('kill-backend');
       doneFn(err);
     })
     .on('end', function () {
-      // Close browser sync server.
-      browserSync.exit();
+      // Close browser sync server to prevent the process from hanging.
+      browserSyncInstance.exit();
+      // Kill backend server, if running.
+      gulp.start('kill-backend');
       doneFn();
     });
 }
