@@ -39,11 +39,11 @@ export default {
     /**
      * Name of the main backend package that is used in go build command.
      */
-    packageName: './src/app/backend',
+    packageName: 'app/backend',
     /**
      * Name of the test backend package that is used in go test command.
      */
-    testPackageName: './src/test/backend',
+    testPackageName: 'test/backend',
   },
 
   /**

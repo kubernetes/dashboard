@@ -18,7 +18,6 @@
 import gulp from 'gulp';
 import gulpAngularTemplatecache from 'gulp-angular-templatecache';
 import gulpClosureCompiler from 'gulp-closure-compiler';
-import gulpEslint from 'gulp-eslint';
 import gulpMinifyHtml from 'gulp-minify-html';
 import path from 'path';
 import webpackStream from 'webpack-stream';
@@ -133,18 +132,4 @@ gulp.task('angular-templates', function () {
  */
 gulp.task('create-serve-folders', function () {
   return gulp.src('').pipe(gulp.dest(conf.paths.serve));
-});
-
-
-/**
- * Lints all projects code files. This includes frontend source code, as well as, build scripts.
- */
-gulp.task('lint', function () {
-  return gulp.src([path.join(conf.paths.src, '**/*.js'), path.join(conf.paths.build, '**/*.js')])
-    // Attach lint output to the eslint property of the file.
-    .pipe(gulpEslint())
-    // Output the lint results to the console.
-    .pipe(gulpEslint.format())
-    // Exit with an error code (1) on a lint error.
-    .pipe(gulpEslint.failOnError());
 });

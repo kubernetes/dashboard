@@ -62,6 +62,15 @@ export default function(config) {
 
     browsers: ['Chrome'],
 
+    customLaunchers: {
+      // Custom launcher for Travis CI. It is required because Travis environment cannot use
+      // sandbox.
+      chromeTravis: {
+        base: 'Chrome',
+        flags: ['--no-sandbox'],
+      },
+    },
+
     reporters: ['progress'],
 
     preprocessors: {}, // This field is filled with values later.
@@ -92,6 +101,11 @@ export default function(config) {
       moduleName: conf.frontend.moduleName,
     },
   };
+
+  // Use custom browser configuration when running on Travis CI.
+  if (process.env.TRAVIS) {
+    configuration.browsers = ['chromeTravis'];
+  }
 
   // Convert all JS code written ES6 with modules to ES5 bundles that browsers can digest.
   configuration.preprocessors[path.join(conf.paths.frontendTest, '**/*.js')] = ['browserify'];
