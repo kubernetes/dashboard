@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package backend
 
 import (
 	"flag"
@@ -24,14 +24,32 @@ import (
 )
 
 var (
-	argPort = pflag.Int("port", 8080, "The port to listen to for incomming HTTP requests")
+	argPort          = pflag.Int("port", 8080, "The port to listen to for incoming HTTP requests")
+	argApiserverHost = pflag.String("apiserver-host", "", "The address of the Kubernetes Apiserver "+
+		"to connect to in the format of protocol://address:port, e.g., "+
+		"http://localhost:8001. If not specified, the assumption is that the binary runs in a"+
+		"Kubernetes cluster and local discovery is attempted.")
 )
 
 func main() {
 	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)
+
 	pflag.Parse()
 	glog.Info("Starting HTTP server on port ", *argPort)
 	defer glog.Flush()
+
+	apiserverClient, err := CreateApiserverClient(*argApiserverHost, new(ClientFactoryImpl))
+	if err != nil {
+		glog.Fatal(err)
+	}
+
+	serverAPIVersion, err := apiserverClient.ServerAPIVersions()
+	if err != nil {
+		glog.Fatal(err)
+	}
+
+	// Display Apiserver version. This is just for tests.
+	println("Server API version: " + serverAPIVersion.GoString())
 
 	// Run a HTTP server that serves static files from current directory.
 	// TODO(bryk): Disable directory listing.
