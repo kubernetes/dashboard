@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package backend
+package main
 
 import (
-	"github.com/dashboard/src/app/backend"
+	backend "github.com/dashboard/src/app/backend"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"testing"
 )
