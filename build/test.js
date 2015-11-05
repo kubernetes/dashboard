@@ -1,10 +1,10 @@
-// Copyright 2015 Google Inc.
+// Copyright 2015 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//      http://www.apache.org/licenses/LICENSE-2.0
+//     http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,6 +22,7 @@ import path from 'path';
 
 import {browserSyncInstance} from './serve';
 import conf from './conf';
+import goCommand from './gocommand';
 
 
 /**
@@ -39,6 +40,17 @@ function runUnitTests(singleRun, doneFn) {
     doneFn(failCount ? new Error("Failed " + failCount + " tests.") : undefined);
   });
   server.start();
+}
+
+
+/**
+ * @param {function(?Error=)} doneFn
+ */
+function runBackendTests(doneFn) {
+  goCommand([
+    'test',
+    conf.backend.testPackageName,
+  ], doneFn);
 }
 
 
@@ -70,17 +82,48 @@ function runProtractorTests(doneFn) {
 /**
  * Runs once all unit tests of the application.
  */
-gulp.task('test', function(doneFn) {
+gulp.task('test', ['frontend-test', 'backend-test']);
+
+
+/**
+ * Runs once all unit tests of the frontend application.
+ */
+gulp.task('frontend-test', function(doneFn) {
   runUnitTests(true, doneFn);
 });
+
+
+/**
+ * Runs once all unit tests of the backend application.
+ */
+gulp.task('backend-test', runBackendTests);
 
 
 /**
  * Runs all unit tests of the application. Watches for changes in the source files to rerun
  * the tests.
  */
-gulp.task('test:watch', function(doneFn) {
+gulp.task('test:watch', ['frontend-test:watch', 'backend-test:watch']);
+
+
+/**
+ * Runs frontend backend application tests. Watches for changes in the source files to rerun
+ * the tests.
+ */
+gulp.task('frontend-test:watch', function(doneFn) {
   runUnitTests(false, doneFn);
+});
+
+
+/**
+ * Runs backend application tests. Watches for changes in the source files to rerun
+ * the tests.
+ */
+gulp.task('backend-test:watch', ['backend-test'], function() {
+  gulp.watch([
+    path.join(conf.paths.backendSrc, '**/*.go'),
+    path.join(conf.paths.backendTest, '**/*.go'),
+  ], ['backend-test']);
 });
 
 

@@ -1,10 +1,10 @@
-// Copyright 2015 Google Inc.
+// Copyright 2015 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//      http://www.apache.org/licenses/LICENSE-2.0
+//     http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,48 +13,14 @@
 // limitations under the License.
 
 /**
- * Gulp tasks for compiling backend application.
+ * @fileoverview Gulp tasks for compiling backend application.
  */
-import child from 'child_process';
 import del from 'del';
 import gulp from 'gulp';
-import lodash from 'lodash';
 import path from 'path';
 
 import conf from './conf';
-
-
-/**
- * Spawns Go process wrapped with Godep command.
- *
- * @param {!Array<string>} args
- * @param {function(?Error=)} doneFn
- * @param {!Object<string, string>=} opt_env Optional environment variables to be concatenated with
- *     default ones.
- */
-function spawnGoProcess(args, doneFn, opt_env) {
-  let goTask = child.spawn('godep', ['go'].concat(args), {
-    env: lodash.merge(process.env, opt_env || {}),
-  });
-
-  // Call Gulp callback on task exit. This has to be done to make Gulp dependency management
-  // work.
-  goTask.on('exit', function(code) {
-    if (code === 0) {
-      doneFn();
-    } else {
-      doneFn(new Error('Go command error, code:' + code));
-    }
-  });
-
-  goTask.stdout.on('data', function (data) {
-    console.log('' + data);
-  });
-
-  goTask.stderr.on('data', function (data) {
-    console.error('' + data);
-  });
-}
+import goCommand from './gocommand';
 
 
 /**
@@ -62,10 +28,12 @@ function spawnGoProcess(args, doneFn, opt_env) {
  * directory.
  */
 gulp.task('backend', function(doneFn) {
-  spawnGoProcess([
+  goCommand([
     'build',
+    // Install dependencies to speed up subsequent compilations.
+    '-i',
     '-o', path.join(conf.paths.serve, conf.backend.binaryName),
-    path.join(conf.paths.backendSrc, 'dashboard.go'),
+    conf.backend.packageName,
   ], doneFn);
 });
 
@@ -83,12 +51,12 @@ gulp.task('backend:prod', function(doneFn) {
   // Delete output binary first. This is required because prod build does not override it.
   del(outputBinaryPath)
       .then(function() {
-        spawnGoProcess([
+        goCommand([
           'build',
           '-a',
           '-installsuffix', 'cgo',
           '-o', outputBinaryPath,
-          path.join(conf.paths.backendSrc, 'dashboard.go'),
+          conf.backend.packageName,
         ], doneFn, {
           // Disable cgo package. Required to run on scratch docker image.
           CGO_ENABLED: '0',
