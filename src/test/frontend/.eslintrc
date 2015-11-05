@@ -2,8 +2,8 @@
   "env": {
     "jasmine": true,
   },
+  // Define missing global Angular testing environment variables.
   "globals": {
-    // Define missing global Angular variables.
     "inject": true,
     "module": true,
   },
