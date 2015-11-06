@@ -18,18 +18,22 @@
 import child from 'child_process';
 import lodash from 'lodash';
 
+import conf from './conf';
+
 
 /**
  * Spawns Go process wrapped with the Godep command.
  *
  * @param {!Array<string>} args
  * @param {function(?Error=)} doneFn
- * @param {!Object<string, string>=} opt_env Optional environment variables to be concatenated with
- *     default ones.
  */
-export default function spawnGoProcess(args, doneFn, opt_env) {
+export default function spawnGoProcess(args, doneFn) {
+  // Add base directory to the gopath so that local imports work.
+  let sourceGopath = `${process.env.GOPATH}:${conf.paths.base}`;
+  let env = lodash.merge(process.env, {GOPATH: sourceGopath});
+
   let goTask = child.spawn('godep', ['go'].concat(args), {
-    env: lodash.merge(process.env, opt_env || {}),
+    env: env,
   });
 
   // Call Gulp callback on task exit. This has to be done to make Gulp dependency management

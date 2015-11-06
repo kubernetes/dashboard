@@ -33,7 +33,19 @@ import conf from './conf';
 /**
  * Builds production package and places it in the dist directory.
  */
-gulp.task('build', ['backend:prod', 'build-frontend'], function () {
+gulp.task('build', ['backend:prod', 'build-frontend']);
+
+
+/**
+ * Builds production version of the frontend application.
+ *
+ * Following steps are done here:
+ *  1. Vendor CSS and JS files are concatenated and minified.
+ *  2. index.html is minified.
+ *  3. CSS and JS assets are suffixed with version hash.
+ *  4. Everything is saved in the dist directory.
+ */
+gulp.task('build-frontend', ['assets', 'index:prod'], function () {
   let htmlFilter = gulpFilter('*.html', {restore: true});
   let vendorCssFilter = gulpFilter('**/vendor.css', {restore: true});
   let vendorJsFilter = gulpFilter('**/vendor.js', {restore: true});
@@ -67,18 +79,6 @@ gulp.task('build', ['backend:prod', 'build-frontend'], function () {
     .pipe(htmlFilter.restore)
     .pipe(gulp.dest(conf.paths.dist));
 });
-
-
-/**
- * Builds production version of the frontend application.
- *
- * Following steps are done here:
- *  1. Vendor CSS and JS files are concatenated and minified.
- *  2. index.html is minified.
- *  3. CSS and JS assets are suffixed with version hash.
- *  4. Everything is saved in the dist directory.
- */
-gulp.task('build-frontend', ['assets', 'index:prod']);
 
 
 /**

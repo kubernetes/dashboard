@@ -18,6 +18,7 @@
  *
  * Learn more at: http://gulpjs.com
  */
+import './build/check';
 import './build/backend';
 import './build/build';
 import './build/deploy';

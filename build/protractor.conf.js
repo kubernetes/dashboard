@@ -29,11 +29,15 @@ var path = require('path');
  * Schema can be found here: https://github.com/angular/protractor/blob/master/docs/referenceConf.js
  */
 exports.config = {
+  baseUrl: 'http://localhost:3000',
+
   capabilities: {
-    'browserName': 'chrome',
+    // Firefox is used instead of Chrome, because that's what Travis supports best.
+    // The browser that is used in the integration tests should not affect the results, anyway.
+    'browserName': 'firefox',
   },
 
-  baseUrl: 'http://localhost:3000',
+  framework: 'jasmine',
 
   specs: [path.join(conf.paths.integrationTest, '**/*.js')],
 };

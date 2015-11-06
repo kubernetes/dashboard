@@ -15,7 +15,7 @@
 package main
 
 import (
-	backend "github.com/dashboard/src/app/backend"
+	backend "app/backend"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"testing"
 )
