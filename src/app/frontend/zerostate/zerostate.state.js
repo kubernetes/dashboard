@@ -23,9 +23,9 @@ import ZeroStateController from './zerostate.controller';
  */
 export default function stateConfig($stateProvider) {
   $stateProvider.state('zero', {
-    url: '/',
-    templateUrl: 'zerostate/zerostate.html',
     controller: ZeroStateController,
     controllerAs: 'ctrl',
+    url: '/',
+    templateUrl: 'zerostate/zerostate.html',
   });
 }

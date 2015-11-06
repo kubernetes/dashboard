@@ -12,20 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ServiceListController from './servicelist.controller';
+import stateConfig from './deploy.state';
 
 
 /**
- * Configures states for the service view.
+ * Angular module for the deploy view.
  *
- * @param {!ui.router.$stateProvider} $stateProvider
- * @ngInject
+ * The view allows for deploying applications to Kubernetes clusters.
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state('servicelist', {
-    controller: ServiceListController,
-    controllerAs: 'ctrl',
-    url: '/servicelist',
-    templateUrl: 'servicelist/servicelist.html',
-  });
-}
+export default angular.module(
+    'kubernetesDashboard.deploy',
+    [
+      'ngMaterial',
+      'ui.router',
+    ])
+    .config(stateConfig);
