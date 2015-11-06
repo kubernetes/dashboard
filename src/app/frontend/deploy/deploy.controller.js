@@ -12,20 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ServiceListController from './servicelist.controller';
-
 
 /**
- * Configures states for the service view.
+ * Controller for the deploy view.
  *
- * @param {!ui.router.$stateProvider} $stateProvider
- * @ngInject
+ * @final
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state('servicelist', {
-    controller: ServiceListController,
-    controllerAs: 'ctrl',
-    url: '/servicelist',
-    templateUrl: 'servicelist/servicelist.html',
-  });
+export default class DeployController {
+  /**
+   * @param {!angular.$timeout} $timeout
+   * @ngInject
+   */
+  constructor($timeout) {
+    /** @export {number} */
+    this.testValue = 7;
+
+    $timeout(() => {
+      this.testValue = 8;
+    }, 4000);
+  }
 }

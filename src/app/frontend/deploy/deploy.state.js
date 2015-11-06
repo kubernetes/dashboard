@@ -12,20 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ServiceListController from './servicelist.controller';
+import DeployController from './deploy.controller';
 
 
 /**
- * Configures states for the service view.
+ * Configures states for the deploy view.
  *
  * @param {!ui.router.$stateProvider} $stateProvider
  * @ngInject
  */
 export default function stateConfig($stateProvider) {
-  $stateProvider.state('servicelist', {
-    controller: ServiceListController,
+  $stateProvider.state('deploy', {
+    controller: DeployController,
     controllerAs: 'ctrl',
-    url: '/servicelist',
-    templateUrl: 'servicelist/servicelist.html',
+    url: '/deploy',
+    templateUrl: 'deploy/deploy.html',
   });
 }

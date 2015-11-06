@@ -17,6 +17,7 @@
  * to bootstrap the application.
  */
 import chromeModule from './chrome/chrome.module';
+import deployModule from './deploy/deploy.module';
 import indexConfig from './index.config';
 import routeConfig from './index.route';
 import serviceListModule from './servicelist/servicelist.module';
@@ -34,6 +35,7 @@ export default angular.module(
       'ngSanitize',
       'ui.router',
       chromeModule.name,
+      deployModule.name,
       serviceListModule.name,
       zerostateModule.name,
     ])
