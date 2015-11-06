@@ -2,7 +2,7 @@
 	"ImportPath": "github.com/dashboard",
 	"GoVersion": "go1.5.1",
 	"Packages": [
-		"./..."
+		"./src/app/backend/"
 	],
 	"Deps": [
 		{
