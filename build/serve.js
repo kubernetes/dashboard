@@ -39,24 +39,36 @@ let runningBackendProcess = null;
 
 
 /**
- * Initializes BrowserSync tool. Files are server from baseDir directory list.
+ * Initializes BrowserSync tool. Files are server from baseDir directory list. When
+ * includeBowerComponents is true, requests for paths starting with '/bower_components' are
+ * routed to bower components directory.
  *
  * @param {!Array<string>|string} baseDir
+ * @param {boolean} includeBowerComponents
  */
-function browserSyncInit(baseDir) {
+function browserSyncInit(baseDir, includeBowerComponents) {
   // Enable custom support for Angular apps, e.g., history management.
   browserSyncInstance.use(browserSyncSpa({
     selector: '[ng-app]',
   }));
 
-  browserSyncInstance.init({
+  let config = {
+    browser: [], // Needed so that the browser does not auto-launch.
+    directory: false, // Disable directory listings.
     // TODO(bryk): Add proxy to the backend here.
     startPath: '/',
     server: {
       baseDir: baseDir,
     },
-    browser: [], // Needed so that the browser does not auto-launch.
-  });
+  };
+
+  if (includeBowerComponents) {
+    config.server.routes = {
+      '/bower_components': conf.paths.bowerComponents,
+    };
+  }
+
+  browserSyncInstance.init(config);
 }
 
 
@@ -68,8 +80,7 @@ function serveDevelopmentMode() {
     conf.paths.serve,
     conf.paths.frontendSrc, // For angular templates to work.
     conf.paths.app, // For assets to work.
-    conf.paths.base, // For bower dependencies to work.
-  ]);
+  ], true);
 }
 
 
@@ -90,7 +101,7 @@ gulp.task('serve', ['index'], serveDevelopmentMode);
  * Serves the application in production mode.
  */
 gulp.task('serve:prod', ['build-frontend'], function () {
-  browserSyncInit(conf.paths.dist);
+  browserSyncInit(conf.paths.distPublic, false);
 });
 
 
@@ -155,4 +166,3 @@ gulp.task('watch', ['index'], function () {
   gulp.watch(path.join(conf.paths.frontendSrc, '**/*.js'), ['scripts']);
   gulp.watch(path.join(conf.paths.backendSrc, '**/*.go'), ['spawn-backend']);
 });
-

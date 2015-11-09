@@ -77,7 +77,7 @@ gulp.task('build-frontend', ['assets', 'index:prod'], function () {
       quotes: true,
     }))
     .pipe(htmlFilter.restore)
-    .pipe(gulp.dest(conf.paths.dist));
+    .pipe(gulp.dest(conf.paths.distPublic));
 });
 
 
@@ -86,7 +86,7 @@ gulp.task('build-frontend', ['assets', 'index:prod'], function () {
  */
 gulp.task('assets', function () {
   return gulp.src(path.join(conf.paths.assets, '/**/*'), {base: conf.paths.app})
-    .pipe(gulp.dest(conf.paths.dist));
+    .pipe(gulp.dest(conf.paths.distPublic));
 });
 
 
