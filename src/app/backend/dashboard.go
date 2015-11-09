@@ -51,9 +51,9 @@ func main() {
 	// Display Apiserver version. This is just for tests.
 	println("Server API version: " + serverAPIVersion.GoString())
 
-	// Run a HTTP server that serves static files from current directory and handles API calls.
+	// Run a HTTP server that serves static public files from './public' and handles API calls.
 	// TODO(bryk): Disable directory listing.
-	http.Handle("/", http.FileServer(http.Dir("./")))
+	http.Handle("/", http.FileServer(http.Dir("./public")))
 	http.Handle("/api/", createApiHandler())
 	glog.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", *argPort), nil))
 }
