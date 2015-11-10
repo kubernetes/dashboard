@@ -20,15 +20,43 @@
  */
 export default class DeployController {
   /**
-   * @param {!angular.$timeout} $timeout
+   * @param {!angular.$resource} $resource
+   * @param {!angular.$log} $log
    * @ngInject
    */
-  constructor($timeout) {
-    /** @export {number} */
-    this.testValue = 7;
+  constructor($resource, $log) {
+    /** @export {string} */
+    this.appName = '';
 
-    $timeout(() => {
-      this.testValue = 8;
-    }, 4000);
+    /** @export {string} */
+    this.containerImage = '';
+
+    /** @private {!angular.Resource<!backendApi.DeployAppConfig>} */
+    this.resource_ = $resource('/api/deploy');
+
+    /** @private {!angular.$log} */
+    this.log_ = $log;
+  }
+
+  /**
+   * Deploys the application based on the sate of the controller.
+   *
+   * @export
+   */
+  deploy() {
+    /** @type {!backendApi.DeployAppConfig} */
+    let deployAppConfig = {
+      appName: this.appName,
+      containerImage: this.containerImage,
+    };
+
+    this.resource_.save(
+        deployAppConfig,
+        (savedConfig) => {
+          this.log_.info('Succesfully deployed application: ', savedConfig);
+        },
+        (err) => {
+          this.log_.error('Error deployng application:', err);
+        });
   }
 }
