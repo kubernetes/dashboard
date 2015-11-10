@@ -15,26 +15,42 @@
 package main
 
 import (
-	"io"
 	"net/http"
 
 	restful "github.com/emicklei/go-restful"
+	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
 // Creates a new HTTP handler that handles all requests to the API of the backend.
-func createApiHandler() http.Handler {
+func CreateApiHandler(client *client.Client) http.Handler {
 	wsContainer := restful.NewContainer()
 
 	// TODO(bryk): This is for tests only. Replace with real implementation once ready.
 	ws := new(restful.WebService)
-	ws.Path("/api/test").
+	ws.Path("/api/deploy").
 		Consumes(restful.MIME_JSON).
 		Produces(restful.MIME_JSON)
-	ws.Route(ws.GET("").To(func(req *restful.Request, resp *restful.Response) {
-		io.WriteString(resp, "Hello world")
-	}))
+	ws.Route(ws.POST("").To(func(request *restful.Request, response *restful.Response) {
+		cfg := new(DeployAppConfig)
+		if err := request.ReadEntity(cfg); err != nil {
+			HandleInternalError(response, err)
+			return
+		}
+		if err := DeployApp(cfg, client); err != nil {
+			HandleInternalError(response, err)
+			return
+		}
+
+		response.WriteHeaderAndEntity(http.StatusCreated, cfg)
+	}).Reads(DeployAppConfig{}).Writes(DeployAppConfig{}))
 
 	wsContainer.Add(ws)
 
 	return wsContainer
+}
+
+// Handler that writes the given error to the response and sets appropriate HTTP status headers.
+func HandleInternalError(response *restful.Response, err error) {
+	response.AddHeader("Content-Type", "text/plain")
+	response.WriteErrorString(http.StatusInternalServerError, err.Error()+"\n")
 }
