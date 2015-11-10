@@ -80,6 +80,7 @@ export default {
     build: path.join(basePath, 'build'),
     deploySrc: path.join(basePath, 'src/app/deploy'),
     dist: path.join(basePath, 'dist'),
+    distPublic: path.join(basePath, 'dist/public'),
     externs: path.join(basePath, 'src/app/externs'),
     frontendSrc: path.join(basePath, 'src/app/frontend'),
     frontendTest: path.join(basePath, 'src/test/frontend'),

@@ -43,7 +43,7 @@ function createIndexFile(indexPath) {
 
   let wiredepOptions = {
     // Make wiredep dependencies begin with "bower_components/" not "../../...".
-    ignorePath: path.relative(conf.paths.frontendSrc, conf.paths.base) + '/',
+    ignorePath: path.relative(conf.paths.frontendSrc, conf.paths.base),
   };
 
   return gulp.src(path.join(conf.paths.frontendSrc, 'index.html'))
