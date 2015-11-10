@@ -32,7 +32,7 @@ import conf from './conf';
  *
  * Only dependencies of root application module are included in the bundle.
  */
-gulp.task('scripts', ['create-serve-folders'], function() {
+gulp.task('scripts', function() {
   let webpackOptions = {
     devtool: 'inline-source-map',
     module: {
@@ -124,12 +124,4 @@ gulp.task('angular-templates', function () {
       module: conf.frontend.rootModuleName,
     }))
     .pipe(gulp.dest(conf.paths.partials));
-});
-
-
-/**
- * Creates {conf.paths.serve} folder.
- */
-gulp.task('create-serve-folders', function () {
-  return gulp.src('').pipe(gulp.dest(conf.paths.serve));
 });

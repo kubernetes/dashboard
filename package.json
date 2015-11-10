@@ -50,6 +50,7 @@
     "karma-sourcemap-loader": "~0.3.6",
     "lodash": "~3.10.1",
     "uglify-save-license": "~0.4.1",
+    "proxy-middleware": "~0.15.0",
     "webpack-stream": "~2.1.1",
     "wiredep": "~2.2.2",
     "wrench": "~1.5.8"

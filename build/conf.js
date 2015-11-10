@@ -44,6 +44,10 @@ export default {
      * Name of the test backend package that is used in go test command.
      */
     testPackageName: 'test/backend',
+    /**
+     * Port number of the development server started by Gulp.
+     */
+    devServerPort: 8080,
   },
 
   /**

@@ -19,7 +19,9 @@ import browserSync from 'browser-sync';
 import browserSyncSpa from 'browser-sync-spa';
 import child from 'child_process';
 import gulp from 'gulp';
+import url from 'url';
 import path from 'path';
+import proxyMiddleware from 'proxy-middleware';
 
 import conf from './conf';
 
@@ -39,9 +41,9 @@ let runningBackendProcess = null;
 
 
 /**
- * Initializes BrowserSync tool. Files are server from baseDir directory list. When
- * includeBowerComponents is true, requests for paths starting with '/bower_components' are
- * routed to bower components directory.
+ * Initializes BrowserSync tool. Files are served from baseDir directory list and all API calls
+ * are proxied to a running backend instance. When includeBowerComponents is true, requests for
+ * paths starting with '/bower_components' are routed to bower components directory.
  *
  * @param {!Array<string>|string} baseDir
  * @param {boolean} includeBowerComponents
@@ -52,14 +54,20 @@ function browserSyncInit(baseDir, includeBowerComponents) {
     selector: '[ng-app]',
   }));
 
+  let apiRoute = '/api';
+  let proxyMiddlewareOptions =
+      url.parse(`http://localhost:${conf.backend.devServerPort}${apiRoute}`);
+  proxyMiddlewareOptions.route = apiRoute;
+
   let config = {
     browser: [], // Needed so that the browser does not auto-launch.
     directory: false, // Disable directory listings.
     // TODO(bryk): Add proxy to the backend here.
-    startPath: '/',
     server: {
       baseDir: baseDir,
+      middleware: proxyMiddleware(proxyMiddlewareOptions),
     },
+    startPath: '/',
   };
 
   if (includeBowerComponents) {
@@ -110,7 +118,9 @@ gulp.task('serve:prod', ['build-frontend'], function () {
  * backend process is killed beforehand, if any.
  */
 gulp.task('spawn-backend', ['backend', 'kill-backend'], function () {
-  runningBackendProcess = child.spawn(path.join(conf.paths.serve, conf.backend.binaryName));
+  runningBackendProcess = child.spawn(
+      path.join(conf.paths.serve, conf.backend.binaryName),
+      [`--port=${conf.backend.devServerPort}`]);
 
   runningBackendProcess.on('exit', function() {
     // Mark that there is no backend process running anymore.
