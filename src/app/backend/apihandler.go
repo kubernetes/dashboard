@@ -33,8 +33,8 @@ func CreateHttpApiHandler(client *client.Client) http.Handler {
 	deployWs.Route(
 		deployWs.POST("").
 			To(apiHandler.handleDeploy).
-			Reads(DeployAppConfig{}).
-			Writes(DeployAppConfig{}))
+			Reads(AppDeployment{}).
+			Writes(AppDeployment{}))
 	wsContainer.Add(deployWs)
 
 	microserviceListWs := new(restful.WebService)
@@ -55,7 +55,7 @@ type ApiHandler struct {
 
 // Handles deploy API call.
 func (apiHandler *ApiHandler) handleDeploy(request *restful.Request, response *restful.Response) {
-	cfg := new(DeployAppConfig)
+	cfg := new(AppDeployment)
 	if err := request.ReadEntity(cfg); err != nil {
 		handleInternalError(response, err)
 		return
