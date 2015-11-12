@@ -34,7 +34,7 @@ export default function spawnGoProcess(args, doneFn) {
 
   let goTask = child.spawn('godep', ['go'].concat(args), {
     env: env,
-  });
+  }, {stdio: 'inherit'});
 
   // Call Gulp callback on task exit. This has to be done to make Gulp dependency management
   // work.
@@ -44,13 +44,5 @@ export default function spawnGoProcess(args, doneFn) {
     } else {
       doneFn(new Error('Go command error, code:' + code));
     }
-  });
-
-  goTask.stdout.on('data', function (data) {
-    console.log('' + data);
-  });
-
-  goTask.stderr.on('data', function (data) {
-    console.error('' + data);
   });
 }

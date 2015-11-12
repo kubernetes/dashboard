@@ -27,7 +27,7 @@ import conf from './conf';
  * @param {function(?Error=)} doneFn
  */
 function spawnDockerProcess(args, doneFn) {
-  let dockerTask = child.spawn('docker', args);
+  let dockerTask = child.spawn('docker', args, {stdio: 'inherit'});
 
   // Call Gulp callback on task exit. This has to be done to make Gulp dependency management
   // work.
@@ -37,14 +37,6 @@ function spawnDockerProcess(args, doneFn) {
     } else {
       doneFn(new Error('Docker command error, code:' + code));
     }
-  });
-
-  dockerTask.stdout.on('data', function (data) {
-    console.log('' + data);
-  });
-
-  dockerTask.stderr.on('data', function (data) {
-    console.error('' + data);
   });
 }
 
