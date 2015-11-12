@@ -1,0 +1,8 @@
+{
+  "rules": {
+    // Disable undefined variable checking. Extern files often use global variables.
+    "no-undef": 0,
+    // Disable unused variable checking. Extern functions always have unused variables.
+    "no-unused-vars": 0,
+  }
+}

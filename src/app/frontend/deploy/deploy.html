@@ -17,6 +17,17 @@ limitations under the License.
 <div layout="column" layout-padding layout-align="center center">
   <md-whiteframe class="kd-deploy-whiteframe md-whiteframe-5dp" flex flex-gt-md>
     <h3 class="md-headline">Deploy a Containerized App</h3>
-    <span>Lorem ipsum...</span>
+    <form name="userForm">
+      <md-input-container class="md-block">
+        <label>App name</label>
+        <input ng-model="ctrl.appName">
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label>Container Image</label>
+        <input ng-model="ctrl.containerImage">
+      </md-input-container>
+      <md-button href class="md-raised md-primary" ng-click="ctrl.deploy()">Submit</md-button>
+      <md-button class="md-raised" ui-sref="zero">Cancel</md-button>
+    </form>
   </md-whiteframe>
 </div>
