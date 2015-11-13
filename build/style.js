@@ -59,6 +59,9 @@ gulp.task('styles:prod', function () {
     .pipe(gulpSass(sassOptions))
     .pipe(gulpAutoprefixer())
     .pipe(gulpConcat('app.css'))
-    .pipe(gulpMinifyCss())
+    .pipe(gulpMinifyCss({
+      // Do not process @import statements. This breaks Angular Material font icons.
+      processImport: false,
+    }))
     .pipe(gulp.dest(conf.paths.prodTmp));
 });

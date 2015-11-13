@@ -46,3 +46,24 @@ backendApi.PortMapping;
  * }}
  */
 backendApi.AppDeployment;
+
+
+/**
+ * @typedef {{
+ *   microservices: !Array<!backendApi.Microservice>
+ * }}
+ */
+backendApi.MicroserviceList;
+
+
+/**
+ * @typedef {{
+ *   name: string,
+ *   replicaSet: {
+ *     podsRunning: number,
+ *     podsDesired: number,
+ *     containerImages: !Array<string>
+ *   }
+ * }}
+ */
+backendApi.Microservice;

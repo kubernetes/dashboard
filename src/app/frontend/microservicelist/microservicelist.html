@@ -14,8 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div layout="vertical" layout-fill>
-  <header>
-    Service page. {{ctrl.test}}
-  </header>
+<div layout="row" layout-wrap layout-margin layout-align="center center">
+  <md-card ng-repeat="microservice in ctrl.microservices">
+    <md-card-content class="kd-microservice-card">
+      <div layout="row" layout-align="space-between center">
+        <span flex>{{microservice.name}}</span>
+        <md-button flex class="md-icon-button kd-microservice-card-menu">
+          <md-icon md-font-library="material-icons">more_vert</md-icon>
+        </md-button>
+      </div>
+      <div class="md-caption">
+        <span>{{microservice.replicaSet.podsRunning}} pods running</span>
+      </div>
+    </md-card-content>
+  </md-card >
 </div>
