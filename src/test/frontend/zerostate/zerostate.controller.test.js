@@ -23,6 +23,11 @@ describe('Main controller', () => {
   }));
 
   it('should do something', () => {
-    expect(vm.testValue).toEqual(7);
+    expect(vm.learnMoreLinks).toEqual([
+      {title: 'Dashboard Tour', link: "#"},
+      {title: 'Deploying your App', link: "#"},
+      {title: 'Monitoring your App', link: "#"},
+      {title: 'Troubleshooting', link: "#"},
+    ]);
   });
 });

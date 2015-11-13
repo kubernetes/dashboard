@@ -20,15 +20,15 @@
  */
 export default class ZeroStateController {
   /**
-   * @param {!angular.$timeout} $timeout
    * @ngInject
    */
-  constructor($timeout) {
-    /** @export {number} */
-    this.testValue = 7;
-
-    $timeout(() => {
-      this.testValue = 8;
-    }, 4000);
+  constructor() {
+    /** @export {!Array<{title:string, link:string}>} */
+    this.learnMoreLinks = [
+      {title: 'Dashboard Tour', link: "#"},
+      {title: 'Deploying your App', link: "#"},
+      {title: 'Monitoring your App', link: "#"},
+      {title: 'Troubleshooting', link: "#"},
+    ];
   }
 }
