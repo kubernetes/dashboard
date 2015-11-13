@@ -120,7 +120,8 @@ gulp.task('serve:prod', ['build-frontend'], function () {
 gulp.task('spawn-backend', ['backend', 'kill-backend'], function () {
   runningBackendProcess = child.spawn(
       path.join(conf.paths.serve, conf.backend.binaryName),
-      [`--port=${conf.backend.devServerPort}`], {stdio: 'inherit'});
+      [`--port=${conf.backend.devServerPort}`],
+      {stdio: 'inherit'});
 
   runningBackendProcess.on('exit', function() {
     // Mark that there is no backend process running anymore.
