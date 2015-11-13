@@ -12,15 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import stateConfig from './microservicelist.state';
+
 
 /**
- * Controller for the service list view.
+ * Angular module for the microservice list view.
  *
- * @final
+ * The view shows microservices running in the cluster and allows to manage them.
  */
-export default class ServiceListController {
-  constructor() {
-    /** @export {!Array<string>} */
-    this.testServices = ['srvc1', 'srvc2'];
-  }
-}
+export default angular.module(
+    'kubernetesDashboard.microserviceList',
+    [
+      'ngMaterial',
+      'ui.router',
+    ])
+    .config(stateConfig);

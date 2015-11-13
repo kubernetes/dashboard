@@ -20,7 +20,7 @@ import chromeModule from './chrome/chrome.module';
 import deployModule from './deploy/deploy.module';
 import indexConfig from './index.config';
 import routeConfig from './index.route';
-import serviceListModule from './servicelist/servicelist.module';
+import microserviceListModule from './microservicelist/microservicelist.module';
 import zerostateModule from './zerostate/zerostate.module';
 
 
@@ -36,7 +36,7 @@ export default angular.module(
       'ui.router',
       chromeModule.name,
       deployModule.name,
-      serviceListModule.name,
+      microserviceListModule.name,
       zerostateModule.name,
     ])
     .config(indexConfig)

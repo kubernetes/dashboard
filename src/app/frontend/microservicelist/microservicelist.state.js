@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ServiceListController from './servicelist.controller';
+import MicroserviceListController from './microservicelist.controller';
 
 
 /**
@@ -22,10 +22,10 @@ import ServiceListController from './servicelist.controller';
  * @ngInject
  */
 export default function stateConfig($stateProvider) {
-  $stateProvider.state('servicelist', {
-    controller: ServiceListController,
+  $stateProvider.state('microservicelist', {
+    controller: MicroserviceListController,
     controllerAs: 'ctrl',
-    url: '/servicelist',
-    templateUrl: 'servicelist/servicelist.html',
+    url: '/microservicelist',
+    templateUrl: 'microservicelist/microservicelist.html',
   });
 }
