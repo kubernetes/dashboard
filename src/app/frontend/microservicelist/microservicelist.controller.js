@@ -19,8 +19,32 @@
  * @final
  */
 export default class MicroserviceListController {
-  constructor() {
-    /** @export {!Array<string>} */
-    this.test = ['srvc1', 'srvc2'];
+  /**
+   * @param {!angular.$log} $log
+   * @param {!angular.$resource} $resource
+   * @ngInject
+   */
+  constructor($log, $resource) {
+    /** @export {!Array<backendApi.Microservice>} */
+    this.microservices = [];
+
+    this.initialize_($log, $resource);
+  }
+
+  /**
+   * @param {!angular.$log} $log
+   * @param {!angular.$resource} $resource
+   * @private
+   */
+  initialize_($log, $resource) {
+    /** @type {!angular.Resource<!backendApi.MicroserviceList>} */
+    let resource = $resource('/api/microservice');
+
+    resource.get((microserviceList) => {
+      $log.info('Successfully fetched microservice list: ', microserviceList);
+      this.microservices = microserviceList.microservices;
+    }, (err) => {
+      $log.error('Error fetching microservice list: ', err);
+    });
   }
 }
