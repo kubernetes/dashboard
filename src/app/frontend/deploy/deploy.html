@@ -17,17 +17,52 @@ limitations under the License.
 <div layout="column" layout-padding layout-align="center center">
   <md-whiteframe class="kd-deploy-whiteframe md-whiteframe-5dp" flex flex-gt-md>
     <h3 class="md-headline">Deploy a Containerized App</h3>
-    <form name="userForm">
+    <form ng-submit="ctrl.deploy()">
       <md-input-container class="md-block">
         <label>App name</label>
-        <input ng-model="ctrl.appName">
+        <input ng-model="ctrl.name" required>
+      </md-input-container>
+      <md-radio-group ng-model="data.group1">
+        <md-radio-button class="md-primary">
+          Specify app details below
+        </md-radio-button>
+        <md-radio-button value="bar" class="md-primary">
+          Upload a YAML or JSON file
+        </md-radio-button>
+      </md-radio-group>
+      <md-input-container class="md-block">
+        <label>Container image</label>
+        <input ng-model="ctrl.containerImage" required>
       </md-input-container>
       <md-input-container class="md-block">
-        <label>Container Image</label>
-        <input ng-model="ctrl.containerImage">
+        <label>Number of pods</label>
+        <input ng-model="ctrl.replicas" type="number" required min="1">
       </md-input-container>
-      <md-button href class="md-raised md-primary" ng-click="ctrl.deploy()">Submit</md-button>
-      <md-button class="md-raised" ui-sref="zero">Cancel</md-button>
+      <div layout="row" ng-repeat="portMapping in ctrl.portMappings">
+        <md-input-container class="md-block">
+          <label>Port</label>
+          <input ng-model="portMapping.port" type="number" min="0">
+        </md-input-container>
+        <md-input-container class="md-block">
+          <label>Target port</label>
+          <input ng-model="portMapping.targetPort" type="number" min="0">
+        </md-input-container>
+        <md-input-container class="md-block">
+          <label>Protocol</label>
+          <md-select ng-model="portMapping.protocol" required>
+            <md-option ng-repeat="protocol in ctrl.protocols" ng-value="protocol">
+              {{protocol}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+      </div>
+      <md-switch ng-model="ctrl.isExternal" class="md-primary">
+        Expose service externally
+      </md-switch>
+      <md-button class="md-raised md-primary" type="submit" ng-disabled="ctrl.isDeployDisabled()">
+        Deploy
+      </md-button>
+      <md-button class="md-raised" ng-click="ctrl.cancel()">Cancel</md-button>
     </form>
   </md-whiteframe>
 </div>

@@ -22,12 +22,27 @@
  * @externs
  */
 
+
 const backendApi = {};
+
 
 /**
  * @typedef {{
- *   appName: string,
- *   containerImage: string
+ *   port: (number|null),
+ *   protocol: string,
+ *   targetPort: (number|null)
  * }}
  */
-backendApi.DeployAppConfig;
+backendApi.PortMapping;
+
+
+/**
+ * @typedef {{
+ *   containerImage: string,
+ *   isExternal: boolean,
+ *   name: string,
+ *   portMappings: !Array<!backendApi.PortMapping>,
+ *   replicas: number
+ * }}
+ */
+backendApi.AppDeployment;
