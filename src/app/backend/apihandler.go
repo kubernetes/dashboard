@@ -46,6 +46,15 @@ func CreateHttpApiHandler(client *client.Client) http.Handler {
 			Writes(ReplicaSetList{}))
 	wsContainer.Add(replicaSetListWs)
 
+	namespaceListWs := new(restful.WebService)
+	namespaceListWs.Path("/api/namespace").
+		Produces(restful.MIME_JSON)
+	namespaceListWs.Route(
+		namespaceListWs.GET("").
+			To(apiHandler.handleGetNamespaceList).
+			Writes(NamespacesList{}))
+	wsContainer.Add(namespaceListWs)
+
 	return wsContainer
 }
 
@@ -73,6 +82,19 @@ func (apiHandler *ApiHandler) handleGetReplicaSetList(
 	request *restful.Request, response *restful.Response) {
 
 	result, err := GetReplicaSetList(apiHandler.client)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get namespace list API call.
+func (apiHandler *ApiHandler) handleGetNamespaceList(
+	request *restful.Request, response *restful.Response) {
+
+	result, err := GetNamespaceList(apiHandler.client)
 	if err != nil {
 		handleInternalError(response, err)
 		return

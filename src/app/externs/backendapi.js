@@ -42,7 +42,8 @@ backendApi.PortMapping;
  *   isExternal: boolean,
  *   name: string,
  *   portMappings: !Array<!backendApi.PortMapping>,
- *   replicas: number
+ *   replicas: number,
+ *   namespace: string
  * }}
  */
 backendApi.AppDeployment;
@@ -70,3 +71,10 @@ backendApi.ReplicaSetList;
  * }}
  */
 backendApi.ReplicaSet;
+
+/**
+ * @typedef {{
+ *   namespaces: !Array<string>
+ * }}
+ */
+backendApi.NamespaceList;

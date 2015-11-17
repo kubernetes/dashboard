@@ -23,9 +23,10 @@ export default class DeployController {
    * @param {!angular.$resource} $resource
    * @param {!angular.$log} $log
    * @param {!ui.router.$state} $state
+   * @param {!backendApi.NamespaceList} namespaces
    * @ngInject
    */
-  constructor($resource, $log, $state) {
+  constructor($resource, $log, $state, namespaces) {
     /** @export {string} */
     this.name = '';
 
@@ -45,11 +46,23 @@ export default class DeployController {
     /** @export {!Array<!backendApi.PortMapping>} */
     this.portMappings = [this.newEmptyPortMapping_(this.protocols[0])];
 
+    /**
+     * List of available namespaces.
+     * @export {!Array<string>}
+     */
+    this.namespaces = namespaces.namespaces;
+
+    /**
+     * Currently chosen namespace.
+     * @export {(string|undefined)}
+     */
+    this.namespace = this.namespaces.length > 0 ? this.namespaces[0] : undefined;
+
     /** @export {boolean} */
     this.isExternal = false;
 
-    /** @private {!angular.Resource<!backendApi.AppDeployment>} */
-    this.resource_ = $resource('/api/deploy');
+    /** @private {!angular.$resource} */
+    this.resource_ = $resource;
 
     /** @private {!angular.$log} */
     this.log_ = $log;
@@ -76,10 +89,14 @@ export default class DeployController {
       name: this.name,
       portMappings: this.portMappings.filter(this.isPortMappingEmpty_),
       replicas: this.replicas,
+      namespace: this.namespace,
     };
 
+    /** @type {!angular.Resource<!backendApi.AppDeployment>} */
+    let resource = this.resource_('/api/deploy');
+
     this.isDeployInProgress_ = true;
-    this.resource_.save(
+    resource.save(
         deployAppConfig,
         (savedConfig) => {
           this.isDeployInProgress_ = false;

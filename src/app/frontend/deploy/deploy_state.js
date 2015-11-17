@@ -26,6 +26,22 @@ export default function stateConfig($stateProvider) {
     controller: DeployController,
     controllerAs: 'ctrl',
     url: '/deploy',
+    resolve: {
+      namespaces: resolveNamespaces,
+    },
     templateUrl: 'deploy/deploy.html',
   });
+
+  /**
+   * Resolves namespaces for the deploy view.
+   *
+   * @param {!angular.$resource} $resource
+   * @ngInject
+   */
+  function resolveNamespaces($resource) {
+    /** @type {!angular.Resource<!backendApi.NamespaceList>} */
+    let resource = $resource('/api/namespace');
+
+    return resource.get().$promise;
+  }
 }

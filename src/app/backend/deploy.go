@@ -37,6 +37,9 @@ type AppDeployment struct {
 
 	// Whether the created service is external.
 	IsExternal bool `json:"isExternal"`
+
+	// Target namespace of the application.
+	Namespace string `json:"namespace"`
 }
 
 // Port mapping for an application deployment.
@@ -79,7 +82,7 @@ func DeployApp(deployment *AppDeployment, client *client.Client) error {
 		},
 	}
 
-	_, err := client.ReplicationControllers(api.NamespaceDefault).Create(replicaSet)
+	_, err := client.ReplicationControllers(deployment.Namespace).Create(replicaSet)
 
 	if err != nil {
 		// TODO(bryk): Roll back created resources in case of error.
@@ -116,7 +119,7 @@ func DeployApp(deployment *AppDeployment, client *client.Client) error {
 			service.Spec.Ports = append(service.Spec.Ports, servicePort)
 		}
 
-		_, err = client.Services(api.NamespaceDefault).Create(service)
+		_, err = client.Services(deployment.Namespace).Create(service)
 
 		// TODO(bryk): Roll back created resources in case of error.
 

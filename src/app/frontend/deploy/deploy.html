@@ -56,6 +56,14 @@ limitations under the License.
           </md-select>
         </md-input-container>
       </div>
+      <md-input-container class="md-block">
+        <label>Namespace</label>
+        <md-select ng-model="ctrl.namespace" required>
+          <md-option ng-repeat="namespace in ctrl.namespaces" ng-value="namespace">
+            {{namespace}}
+          </md-option>
+        </md-select>
+      </md-input-container>
       <md-switch ng-model="ctrl.isExternal" class="md-primary">
         Expose service externally
       </md-switch>
