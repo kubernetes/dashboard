@@ -24,6 +24,6 @@ describe('Zero state view', function () {
   });
 
   it('should do something', function() {
-    expect(page.header.getText()).toContain('page');
+    expect(page.deployButton.getText()).toContain('DEPLOY');
   });
 });

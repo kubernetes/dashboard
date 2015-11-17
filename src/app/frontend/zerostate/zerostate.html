@@ -14,9 +14,34 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div layout="vertical" layout-fill>
-  <header>
-    Zero state page. <a ui-sref="microservicelist">Go to microservices page</a> or
-    <a ui-sref="deploy">deploy an app</a>.
-  </header>
+<div layout="row" layout-align="center center" layout-padding class="kd-zerostate-content">
+  <md-content layout layout-align="center" class="kd-content">
+    <md-card flex="50" class="kd-zerostate-deploy-card">
+      <md-toolbar layout="row" class="md-primary kd-zerostate-card-header"
+                  layout-align="center center" flex>
+        <md-icon md-svg-icon="assets/images/kubernetes-logo.svg"
+                 class="kd-zerostate-card-logo"></md-icon>
+        <span class="md-padding" flex>The <b>Kubernetes Dashboard</b> lets you deploy, monitor
+          and troubleshoot containerized apps and services</span>
+      </md-toolbar>
+      <md-card-content layout-align="center center">
+        <md-button ui-sref="deploy" class="md-raised md-primary kd-zerostate-deploy-bt">Deploy an
+          app
+        </md-button>
+      </md-card-content>
+    </md-card>
+    <md-card flex="15" class="kd-zerostate-lm-card">
+      <md-card-content>
+        <md-text-float class="kd-zerostate-lm-text"><b>Learn more</b></md-text-float>
+        <md-list class="kd-zerostate-lm-list">
+          <md-list-item class="kd-zerostate-lm-list-item"
+                        ng-repeat="option in ctrl.learnMoreLinks">
+            <a ui-sref="{{option.link}}">
+              {{option.title}} <i class="material-icons kd-zerostate-ext-link-icon">open_in_new</i>
+            </a>
+          </md-list-item>
+        </md-list>
+      </md-card-content>
+    </md-card>
+  </md-content>
 </div>
