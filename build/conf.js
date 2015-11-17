@@ -45,9 +45,13 @@ export default {
      */
     testPackageName: 'test/backend',
     /**
-     * Port number of the development server started by Gulp.
+     * Port number of the backend server. Only used during development.
      */
-    devServerPort: 8080,
+    devServerPort: 9091,
+    /**
+    * Address for the Kubernetes API server.
+    */
+    apiServerHost: 'http://localhost:8080',
   },
 
   /**
@@ -64,6 +68,10 @@ export default {
    * Frontend application constants.
    */
   frontend: {
+    /**
+    * Port number to access the dashboard UI
+    */
+    serverPort: 9090,
     /**
      * The name of the root Angular module, i.e., the module that bootstraps the application.
      */

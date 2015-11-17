@@ -67,6 +67,7 @@ function browserSyncInit(baseDir, includeBowerComponents) {
       baseDir: baseDir,
       middleware: proxyMiddleware(proxyMiddlewareOptions),
     },
+    port: conf.frontend.serverPort,
     startPath: '/',
   };
 
@@ -96,32 +97,48 @@ function serveDevelopmentMode() {
  * Serves the application in development mode. Watches for changes in the source files to rebuild
  * development artifacts.
  */
-gulp.task('serve:watch', ['watch'], serveDevelopmentMode);
+gulp.task('serve:watch', ['spawn-backend', 'watch'], serveDevelopmentMode);
 
 
 /**
  * Serves the application in development mode.
  */
-gulp.task('serve', ['index'], serveDevelopmentMode);
+gulp.task('serve', ['spawn-backend', 'index'], serveDevelopmentMode);
 
 
 /**
  * Serves the application in production mode.
  */
-gulp.task('serve:prod', ['build-frontend'], function () {
-  browserSyncInit(conf.paths.distPublic, false);
+gulp.task('serve:prod', ['spawn-backend:prod']);
+
+
+/**
+ * Spawns new backend application process and finishes the task immediately. Previously spawned
+ * backend process is killed beforehand, if any. The frontend pages are served by BrowserSync.
+ */
+gulp.task('spawn-backend', ['backend', 'kill-backend'], function () {
+  runningBackendProcess = child.spawn(
+      path.join(conf.paths.serve, conf.backend.binaryName),
+      [`--apiserver-host=${conf.backend.apiServerHost}`, `--port=${conf.backend.devServerPort}`],
+      {stdio: 'inherit'});
+
+  runningBackendProcess.on('exit', function() {
+    // Mark that there is no backend process running anymore.
+    runningBackendProcess = null;
+  });
 });
 
 
 /**
  * Spawns new backend application process and finishes the task immediately. Previously spawned
- * backend process is killed beforehand, if any.
+ * backend process is killed beforehand, if any. In production the backend does serve the frontend
+ * pages as well.
  */
-gulp.task('spawn-backend', ['backend', 'kill-backend'], function () {
+gulp.task('spawn-backend:prod', ['build-frontend', 'backend:prod', 'kill-backend'], function () {
   runningBackendProcess = child.spawn(
-      path.join(conf.paths.serve, conf.backend.binaryName),
-      [`--port=${conf.backend.devServerPort}`],
-      {stdio: 'inherit'});
+      path.join(conf.paths.dist, conf.backend.binaryName),
+      [`--apiserver-host=${conf.backend.apiServerHost}`, `--port=${conf.frontend.serverPort}`],
+      {stdio: 'inherit', cwd: conf.paths.dist});
 
   runningBackendProcess.on('exit', function() {
     // Mark that there is no backend process running anymore.
