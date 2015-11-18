@@ -21,25 +21,18 @@ import (
 	"k8s.io/kubernetes/pkg/labels"
 )
 
-// List of microservices in the cluster.
-type MicroserviceList struct {
-	// Unordered list of microservices.
-	Microservices []Microservice `json:"microservices"`
+// List of Replica Sets in the cluster.
+type ReplicaSetList struct {
+	// Unordered list of Replica Sets.
+	ReplicaSets []ReplicaSet `json:"replicaSets"`
 }
 
-// Microservice is a Kubernetes replica set plus zero or more Kubernetes services.
-type Microservice struct {
-	// Name of the microservice, derived from the replica set.
+// Kubernetes Replica Set (aka. Replication Controller) plus zero or more Kubernetes services that
+// target the Replica Set.
+type ReplicaSet struct {
+	// Name of the Replica Set.
 	Name string `json:"name"`
 
-	// Replica set that represents the microservice.
-	ReplicaSet ReplicaSet `json:"replicaSet"`
-
-	// TODO(bryk): Add service field here.
-}
-
-// Replica set model to represent in the user interface.
-type ReplicaSet struct {
 	// Number of pods that are currently running.
 	PodsRunning int `json:"podsRunning"`
 
@@ -48,10 +41,12 @@ type ReplicaSet struct {
 
 	// Container images of the replica set.
 	ContainerImages []string `json:"containerImages"`
+
+	// TODO(bryk): Add service information here.
 }
 
-// Returns a list of all microservices in the cluster.
-func GetMicroserviceList(client *client.Client) (*MicroserviceList, error) {
+// Returns a list of all Replica Sets in the cluster.
+func GetReplicaSetList(client *client.Client) (*ReplicaSetList, error) {
 	list, err := client.ReplicationControllers(api.NamespaceAll).
 		List(labels.Everything(), fields.Everything())
 
@@ -59,24 +54,22 @@ func GetMicroserviceList(client *client.Client) (*MicroserviceList, error) {
 		return nil, err
 	}
 
-	microserviceList := &MicroserviceList{}
+	replicaSetList := &ReplicaSetList{}
 
-	for _, element := range list.Items {
+	for _, replicaSet := range list.Items {
 		var containerImages []string
 
-		for _, container := range element.Spec.Template.Spec.Containers {
+		for _, container := range replicaSet.Spec.Template.Spec.Containers {
 			containerImages = append(containerImages, container.Image)
 		}
 
-		microserviceList.Microservices = append(microserviceList.Microservices, Microservice{
-			Name: element.ObjectMeta.Name,
-			ReplicaSet: ReplicaSet{
-				ContainerImages: containerImages,
-				PodsRunning:     element.Status.Replicas,
-				PodsDesired:     element.Spec.Replicas,
-			},
+		replicaSetList.ReplicaSets = append(replicaSetList.ReplicaSets, ReplicaSet{
+			Name:            replicaSet.ObjectMeta.Name,
+			ContainerImages: containerImages,
+			PodsRunning:     replicaSet.Status.Replicas,
+			PodsDesired:     replicaSet.Spec.Replicas,
 		})
 	}
 
-	return microserviceList, nil
+	return replicaSetList, nil
 }

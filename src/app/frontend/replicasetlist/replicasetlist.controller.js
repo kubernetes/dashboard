@@ -14,19 +14,19 @@
 
 
 /**
- * Controller for the service list view.
+ * Controller for the replica set list view.
  *
  * @final
  */
-export default class MicroserviceListController {
+export default class ReplicaSetListController {
   /**
    * @param {!angular.$log} $log
    * @param {!angular.$resource} $resource
    * @ngInject
    */
   constructor($log, $resource) {
-    /** @export {!Array<backendApi.Microservice>} */
-    this.microservices = [];
+    /** @export {!Array<backendApi.ReplicaSet>} */
+    this.replicaSets = [];
 
     this.initialize_($log, $resource);
   }
@@ -37,14 +37,14 @@ export default class MicroserviceListController {
    * @private
    */
   initialize_($log, $resource) {
-    /** @type {!angular.Resource<!backendApi.MicroserviceList>} */
-    let resource = $resource('/api/microservice');
+    /** @type {!angular.Resource<!backendApi.ReplicaSetList>} */
+    let resource = $resource('/api/replicaset');
 
-    resource.get((microserviceList) => {
-      $log.info('Successfully fetched microservice list: ', microserviceList);
-      this.microservices = microserviceList.microservices;
+    resource.get((replicaSetList) => {
+      $log.info('Successfully fetched Replica Set list: ', replicaSetList);
+      this.replicaSets = replicaSetList.replicaSets;
     }, (err) => {
-      $log.error('Error fetching microservice list: ', err);
+      $log.error('Error fetching Replica Set list: ', err);
     });
   }
 }

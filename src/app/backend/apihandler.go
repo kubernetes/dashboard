@@ -37,14 +37,14 @@ func CreateHttpApiHandler(client *client.Client) http.Handler {
 			Writes(AppDeployment{}))
 	wsContainer.Add(deployWs)
 
-	microserviceListWs := new(restful.WebService)
-	microserviceListWs.Path("/api/microservice").
+	replicaSetListWs := new(restful.WebService)
+	replicaSetListWs.Path("/api/replicaset").
 		Produces(restful.MIME_JSON)
-	microserviceListWs.Route(
-		microserviceListWs.GET("").
-			To(apiHandler.handleGetMicroserviceList).
-			Writes(MicroserviceList{}))
-	wsContainer.Add(microserviceListWs)
+	replicaSetListWs.Route(
+		replicaSetListWs.GET("").
+			To(apiHandler.handleGetReplicaSetList).
+			Writes(ReplicaSetList{}))
+	wsContainer.Add(replicaSetListWs)
 
 	return wsContainer
 }
@@ -68,11 +68,11 @@ func (apiHandler *ApiHandler) handleDeploy(request *restful.Request, response *r
 	response.WriteHeaderAndEntity(http.StatusCreated, cfg)
 }
 
-// Handles get microservice list API call.
-func (apiHandler *ApiHandler) handleGetMicroserviceList(
+// Handles get Replica Set list API call.
+func (apiHandler *ApiHandler) handleGetReplicaSetList(
 	request *restful.Request, response *restful.Response) {
 
-	result, err := GetMicroserviceList(apiHandler.client)
+	result, err := GetReplicaSetList(apiHandler.client)
 	if err != nil {
 		handleInternalError(response, err)
 		return

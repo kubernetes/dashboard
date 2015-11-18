@@ -50,20 +50,18 @@ backendApi.AppDeployment;
 
 /**
  * @typedef {{
- *   microservices: !Array<!backendApi.Microservice>
+ *   replicaSets: !Array<!backendApi.ReplicaSet>
  * }}
  */
-backendApi.MicroserviceList;
+backendApi.ReplicaSetList;
 
 
 /**
  * @typedef {{
  *   name: string,
- *   replicaSet: {
- *     podsRunning: number,
- *     podsDesired: number,
- *     containerImages: !Array<string>
- *   }
+ *   podsRunning: number,
+ *   podsDesired: number,
+ *   containerImages: !Array<string>
  * }}
  */
-backendApi.Microservice;
+backendApi.ReplicaSet;
