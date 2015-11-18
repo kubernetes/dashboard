@@ -12,18 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './microservicelist.state';
+import ReplicaSetListController from './replicasetlist.controller';
 
 
 /**
- * Angular module for the microservice list view.
+ * Configures states for the service view.
  *
- * The view shows microservices running in the cluster and allows to manage them.
+ * @param {!ui.router.$stateProvider} $stateProvider
+ * @ngInject
  */
-export default angular.module(
-    'kubernetesDashboard.microserviceList',
-    [
-      'ngMaterial',
-      'ui.router',
-    ])
-    .config(stateConfig);
+export default function stateConfig($stateProvider) {
+  $stateProvider.state('replicasetlist', {
+    controller: ReplicaSetListController,
+    controllerAs: 'ctrl',
+    url: '/replicasetlist',
+    templateUrl: 'replicasetlist/replicasetlist.html',
+  });
+}
