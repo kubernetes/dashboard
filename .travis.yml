@@ -12,13 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Travis continuous integration system configuration file. 
+# Travis continuous integration system configuration file.
 #
 # Overview on how to customize the configuration is located at:
 # http://docs.travis-ci.com/user/customizing-the-build/
 
-# Explicitly set the environment to be container-based. This makes the builds faster.
-sudo: false
+# According to the documentation: http://docs.travis-ci.com/user/docker/
+# sudo is required to enable docker in Travis CI.
+sudo: true
 # Cache downloaded Node.JS modules & Bower frontend dependencies for faster builds.
 cache:
   directories:
@@ -26,6 +27,12 @@ cache:
     - bower_components
 # Use Node.js as primary language because Gulp is the build system used in the project.
 language: node_js
+
+# Docker is required to set up a simple, single node Kubernetes cluster.
+# Local Docker-based cluster is the simplest way to create kubernetes on the host machine.
+services:
+  - docker
+
 before_script:
   # Prepare environment for the Chrome browser.
   - export CHROME_BIN=chromium-browser
@@ -37,7 +44,19 @@ before_script:
 
   # Set up Go environment for build.
   - export GOPATH=$HOME/.gopath
+
   # Download godep tool and make add it to PATH environment variable.
   - go get github.com/tools/godep
   - export PATH=$PATH:$GOPATH/bin
+
+  # Download etcd and make add it to PATH environment variable.
+  # Etcd is used to manage kubernetes cluster coordination and for state management.
+  - curl -fsSL https://github.com/coreos/etcd/releases/download/v2.2.1/etcd-v2.2.1-linux-amd64.tar.gz | tar xzf -
+  - ln -fns etcd-v2.2.1-linux-amd64 etcd
+  - export PATH=$PWD/etcd:$PATH
+
+  # Pull golang image to build local kubernetes cluster.
+  # Local cluster has build process that runs in a Docker container.
+  # This simplifies initial set up and provides for a very consistent build and test environment.
+  - docker pull golang:1.4
 script: ./node_modules/.bin/gulp check

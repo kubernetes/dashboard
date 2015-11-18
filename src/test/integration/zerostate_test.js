@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import PageObject from './zerostate.po';
+import PageObject from './zerostate_po';
 
 
 describe('Zero state view', function () {

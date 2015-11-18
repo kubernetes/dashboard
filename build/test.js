@@ -65,15 +65,15 @@ function runProtractorTests(doneFn) {
     .on('error', function (err) {
       // Close browser sync server to prevent the process from hanging.
       browserSyncInstance.exit();
-      // Kill backend server, if running.
-      gulp.start('kill-backend');
+      // Kill backend server and cluster, if running.
+      gulp.start('kill-all');
       doneFn(err);
     })
     .on('end', function () {
       // Close browser sync server to prevent the process from hanging.
       browserSyncInstance.exit();
-      // Kill backend server, if running.
-      gulp.start('kill-backend');
+      // Kill backend server and cluster, if running.
+      gulp.start('kill-all');
       doneFn();
     });
 }
@@ -136,10 +136,17 @@ gulp.task('integration-test', ['serve:nowatch', 'webdriver-update'], runProtract
 /**
  * Runs application integration tests. Uses production version of the application.
  */
-gulp.task('integration-test:prod', ['serve:prod', 'webdriver-update'], runProtractorTests);
+gulp.task('integration-test:prod', ['local-up-cluster', 'serve:prod', 'webdriver-update'],
+    runProtractorTests);
 
 
 /**
  * Downloads and updates webdriver. Required to keep it up to date.
  */
 gulp.task('webdriver-update', gulpProtractor.webdriver_update);
+
+
+/**
+ * Kills backend server and cluster, if running.
+ */
+gulp.task('kill-all', ['kill-backend', 'kill-cluster']);
