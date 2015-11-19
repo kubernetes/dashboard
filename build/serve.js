@@ -97,13 +97,13 @@ function serveDevelopmentMode() {
  * Serves the application in development mode. Watches for changes in the source files to rebuild
  * development artifacts.
  */
-gulp.task('serve:watch', ['spawn-backend', 'watch'], serveDevelopmentMode);
+gulp.task('serve', ['spawn-backend', 'watch'], serveDevelopmentMode);
 
 
 /**
  * Serves the application in development mode.
  */
-gulp.task('serve', ['spawn-backend', 'index'], serveDevelopmentMode);
+gulp.task('serve:nowatch', ['spawn-backend', 'index'], serveDevelopmentMode);
 
 
 /**
