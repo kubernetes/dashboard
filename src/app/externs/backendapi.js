@@ -59,9 +59,14 @@ backendApi.ReplicaSetList;
 /**
  * @typedef {{
  *   name: string,
+ *   description: string,
+ *   labels: !Object<string, string>,
  *   podsRunning: number,
- *   podsDesired: number,
- *   containerImages: !Array<string>
+ *   podsPending: number,
+ *   containerImages: !Array<string>,
+ *   age: number,
+ *   internalEndpoints: !Array<string>,
+ *   externalEndpoints: !Array<string>
  * }}
  */
 backendApi.ReplicaSet;

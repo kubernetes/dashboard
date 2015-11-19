@@ -84,7 +84,7 @@ export default class DeployController {
         (savedConfig) => {
           this.isDeployInProgress_ = false;
           this.log_.info('Successfully deployed application: ', savedConfig);
-          this.state_.go('servicelist');
+          this.state_.go('replicasetlist');
         },
         (err) => {
           this.isDeployInProgress_ = false;
