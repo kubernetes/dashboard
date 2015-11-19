@@ -12,19 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ZerostateController from 'zerostate/zerostate_controller';
+describe('Deploy view', function() {
+  beforeEach(function() { browser.get('#/deploy'); });
 
-describe('Main controller', () => {
-  let ctrl;
+  it('should not contain errors in console', function() {
+    browser.manage().logs().get('browser').then(function(browserLog) {
+      // Filter and search for errors logs
+      let filteredLogs = browserLog.filter((log) => { return log.level.value > 900; });
 
-  beforeEach(angular.mock.inject(() => { ctrl = new ZerostateController(); }));
-
-  it('should do something', () => {
-    expect(ctrl.learnMoreLinks).toEqual([
-      {title: 'Dashboard Tour', link: "#"},
-      {title: 'Deploying your App', link: "#"},
-      {title: 'Monitoring your App', link: "#"},
-      {title: 'Troubleshooting', link: "#"},
-    ]);
+      // Expect no error logs
+      expect(filteredLogs.length).toBe(0);
+    });
   });
 });

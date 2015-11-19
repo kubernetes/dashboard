@@ -30,6 +30,9 @@ export default class DeployController {
    * @ngInject
    */
   constructor($resource, $log, $state, $mdDialog, namespaces) {
+    /** @export {!angular.FormController} Initialized from the template */
+    this.deployForm;
+
     /** @export {string} */
     this.name = '';
 
@@ -108,7 +111,7 @@ export default class DeployController {
    * @return {boolean}
    * @export
    */
-  isDeployDisabled() { return this.isDeployInProgress_; }
+  isDeployDisabled() { return this.isDeployInProgress_ || this.deployForm.$invalid; }
 
   /**
    * Cancels the deployment form.

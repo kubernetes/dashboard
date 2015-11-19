@@ -10,5 +10,8 @@
     "angular/module-getter": 0,
     // Disable undefined variable checking. This is done by the compiler. 
     "no-undef": 0,
+    // To allow comparison to undefined variable, because Google Closure Compiler does not
+    // understand angular.isDefined correctly.
+    "angular/definedundefined": 0,
   }
 }

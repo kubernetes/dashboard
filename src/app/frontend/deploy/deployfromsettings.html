@@ -47,3 +47,15 @@ limitations under the License.
     <label>Description (optional)</label>
     <textarea ng-model="ctrl.description"></textarea>
 </md-input-container>
+<div>
+    <div>Labels (optional)</div>
+    <div layout="column">
+        <div layout="row">
+            <p flex>Key</p>
+            <p flex>Value</p>
+        </div>
+        <div ng-repeat="label in ctrl.labels">
+            <kd-label layout="row" flex label="label" labels="ctrl.labels"></kd-label>
+        </div>
+    </div>
+</div>
