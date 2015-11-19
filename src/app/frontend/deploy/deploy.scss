@@ -18,3 +18,24 @@
   // TODO(bryk): Find a better, application wide constant for the min width.
   min-width: 600px;
 }
+
+.kd-deploy-label-list {
+  > md-list-item {
+    min-height: 10px;
+    > md-input-container {
+      padding-bottom: 0;
+    }
+  }
+}
+
+.kd-deploy-labels-header {
+  font-size: 0.85em;
+  padding: 0 5px !important;
+}
+
+.kd-deploy-labels-button {
+  min-width: 10px;
+  margin: 0;
+  padding: 0;
+  min-height: 10px;
+}

@@ -16,6 +16,9 @@ import {stateName as zerostate} from 'zerostate/zerostate_state';
 import {stateName as replicasetliststate} from 'replicasetlist/replicasetlist_state';
 
 
+import DeployFormLabel, {APP_LABEL_KEY, VERSION_LABEL_KEY} from './deploy_form_label';
+import DeployLabelService from './deploy_label_service';
+
 /**
  * Controller for the deploy view.
  *
@@ -75,10 +78,20 @@ export default class DeployController {
 
     /** @private {boolean} */
     this.isDeployInProgress_ = false;
+
+    /** @private {!DeployLabelService} */
+    this.deployLabelService_ = new DeployLabelService();
+
+    /** @export {!Array<!DeployFormLabel>} */
+    this.labels = [
+      new DeployFormLabel(APP_LABEL_KEY, '', false),
+      new DeployFormLabel(VERSION_LABEL_KEY, '', false),
+      new DeployFormLabel(),
+    ];
   }
 
   /**
-   * Deploys the application based on the sate of the controller.
+   * Deploys the application based on the state of the controller.
    *
    * @export
    */
@@ -118,7 +131,7 @@ export default class DeployController {
    * @export
    */
   isDeployDisabled() {
-    return this.isDeployInProgress_;
+    return this.isDeployInProgress_ || this.deployLabelService_.hasDuplicationError(this.labels);
   }
 
   /**
@@ -150,5 +163,81 @@ export default class DeployController {
    */
   isPortMappingEmpty_(portMapping) {
     return !!portMapping.port && !!portMapping.targetPort;
+  }
+
+  /**
+   * Deletes row from labels list.
+   * @param {!DeployFormLabel} label
+   * @export
+   */
+  deleteLabel(label) {
+    this.deployLabelService_.deleteLabel(this.labels, label);
+  }
+
+  /**
+   * Binds name param to non-editable app label in order to
+   * autocomplete 'app' value label when name value is filled.
+   * @export
+   */
+  bindNameLabel() {
+    this.deployLabelService_.bindNameLabel(this.labels, this.name);
+  }
+
+  /**
+   * Binds containerImage param to non-editable version label in order to
+   * autocomplete 'version' label value when container image value is filled.
+   * @export
+   */
+  bindVersionLabel() {
+    this.deployLabelService_.bindVersionLabel(this.labels, this.containerImage);
+  }
+
+  /**
+   * Returns true when label is editable and is not last on the list.
+   * Used to indicate whether delete icon should be shown near label.
+   * @param {!DeployFormLabel} label
+   * @returns {boolean}
+   * @export
+   */
+  isRemovable(label) {
+    return this.deployLabelService_.isRemovable(this.labels, label);
+  }
+
+  /**
+   * Shows delete icon after label definition when mouse enters the list item.
+   * @param {!DeployFormLabel} label
+   * @export
+   */
+  onEnter(label) {
+    return this.deployLabelService_.onEnter(label);
+  }
+
+  /**
+   * Hides delete icon after label definition when mouse leaves the list item.
+   * @param {!DeployFormLabel} label
+   * @export
+   */
+  onLeave(label) {
+    return this.deployLabelService_.onLeave(label);
+  }
+
+  /**
+   * Returns true if there are 2 or more labels with the same key on the labelList,
+   * false otherwise.
+   * @param {!DeployFormLabel} label
+   * @returns {boolean}
+   * @export
+   */
+  isDuplicated(label) {
+    return (label.hasError = this.deployLabelService_.isDuplicated(this.labels, label));
+  }
+
+  /**
+   * Checks label for errors and adds/removes label to/from list if no error is found.
+   * @param {!DeployFormLabel} label
+   * @export
+   */
+  checkLabel(label) {
+    this.deployLabelService_.checkLabel(this.labels, label);
   }
 }

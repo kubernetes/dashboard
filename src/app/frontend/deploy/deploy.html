@@ -20,7 +20,9 @@ limitations under the License.
     <form ng-submit="ctrl.deploy()">
       <md-input-container class="md-block">
         <label>App name</label>
-        <input ng-model="ctrl.name" required>
+        <input ng-model="ctrl.name"
+               ng-change="ctrl.bindNameLabel()"
+               required>
       </md-input-container>
       <md-radio-group ng-model="data.group1">
         <md-radio-button class="md-primary">
@@ -32,7 +34,9 @@ limitations under the License.
       </md-radio-group>
       <md-input-container class="md-block">
         <label>Container image</label>
-        <input ng-model="ctrl.containerImage" required>
+        <input ng-model="ctrl.containerImage"
+               ng-change="ctrl.bindVersionLabel()"
+               required>
       </md-input-container>
       <md-input-container class="md-block">
         <label>Number of pods</label>
@@ -56,6 +60,37 @@ limitations under the License.
           </md-select>
         </md-input-container>
       </div>
+      <md-switch ng-model="ctrl.isExternal" class="md-primary">
+        Expose service externally
+      </md-switch>
+      <md-content>
+        <label>Labels (optional)</label>
+        <md-list class="kd-deploy-label-list">
+          <md-list-item class="kd-deploy-labels-header">
+            <p flex>Key</p>
+            <p flex>Value</p>
+          </md-list-item>
+          <md-list-item ng-repeat="label in ctrl.labels"
+                        ng-mouseenter="ctrl.onEnter(label)" ng-mouseleave="ctrl.onLeave(label)">
+            <md-input-container md-no-float class="md-block" flex="45">
+              <input ng-model="label.key" ng-change="ctrl.checkLabel(label)"
+                     placeholder="{{label.key}}" ng-disabled="!label.editable">
+              <ng-messages for="label" ng-if="ctrl.isDuplicated(label)">
+                <ng-message when="hasError">Duplicated label key error.</ng-message>
+              </ng-messages>
+            </md-input-container>
+            <p flex="5"></p>
+            <md-input-container md-no-float class="md-block" flex="40">
+              <input ng-model="label.value" ng-change="ctrl.checkLabel(label)"
+                     placeholder="{{label.value}}" ng-disabled="!label.editable">
+              <ng-messages ng-if="label.hasError"></ng-messages>
+            </md-input-container>
+            <md-button ng-show="ctrl.isRemovable(label)" ng-click="ctrl.deleteLabel(label)"
+                       class="material-icons kd-deploy-labels-button">delete
+            </md-button>
+          </md-list-item>
+        </md-list>
+      </md-content>
       <md-input-container class="md-block">
         <label>Namespace</label>
         <md-select ng-model="ctrl.namespace" required>
@@ -64,10 +99,8 @@ limitations under the License.
           </md-option>
         </md-select>
       </md-input-container>
-      <md-switch ng-model="ctrl.isExternal" class="md-primary">
-        Expose service externally
-      </md-switch>
-      <md-button class="md-raised md-primary" type="submit" ng-disabled="ctrl.isDeployDisabled()">
+      <md-button class="md-raised md-primary" type="submit"
+                 ng-disabled="ctrl.isDeployDisabled()">
         Deploy
       </md-button>
       <md-button class="md-raised" ng-click="ctrl.cancel()">Cancel</md-button>
