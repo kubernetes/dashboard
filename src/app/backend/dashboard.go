@@ -24,10 +24,10 @@ import (
 )
 
 var (
-	argPort          = pflag.Int("port", 8080, "The port to listen to for incoming HTTP requests")
+	argPort          = pflag.Int("port", 9090, "The port to listen to for incoming HTTP requests")
 	argApiserverHost = pflag.String("apiserver-host", "", "The address of the Kubernetes Apiserver "+
 		"to connect to in the format of protocol://address:port, e.g., "+
-		"http://localhost:8001. If not specified, the assumption is that the binary runs in a"+
+		"http://localhost:8080. If not specified, the assumption is that the binary runs inside a"+
 		"Kubernetes cluster and local discovery is attempted.")
 )
 

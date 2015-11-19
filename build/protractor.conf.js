@@ -29,7 +29,7 @@ var path = require('path');
  * Schema can be found here: https://github.com/angular/protractor/blob/master/docs/referenceConf.js
  */
 exports.config = {
-  baseUrl: 'http://localhost:3000',
+  baseUrl: 'http://localhost:' + conf.frontend.serverPort,
 
   capabilities: {
     // Firefox is used instead of Chrome, because that's what Travis supports best.

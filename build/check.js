@@ -27,9 +27,11 @@ import conf from './conf';
  * follows the style guide, it is buildable and all tests pass.
  *
  * This task should be used prior to publishing a change.
- */
-gulp.task('check', ['lint', 'build', 'test', 'integration-test:prod']);
-
+ *
+ * TODO(cheld) enable integration tests once kuberentes cluster can be launched in travis
+ * gulp.task('check', ['lint', 'build', 'test', 'integration-test:prod']);
+ **/
+gulp.task('check', ['lint', 'build', 'test']);
 
 /**
  * Lints all projects code files. This includes frontend source code, as well as, build scripts.
