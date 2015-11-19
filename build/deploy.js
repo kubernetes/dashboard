@@ -47,7 +47,7 @@ function spawnDockerProcess(args, doneFn) {
  *
  * In order to run the image on a Kubernates cluster, it has to be deployed to a registry.
  */
-gulp.task('docker-image', ['docker-file'], function(doneFn) {
+gulp.task('docker-image', ['build', 'docker-file'], function(doneFn) {
   spawnDockerProcess([
     'build',
     // Remove intermediate containers after a successful build.

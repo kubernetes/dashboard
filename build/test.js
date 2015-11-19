@@ -130,7 +130,7 @@ gulp.task('backend-test:watch', ['backend-test'], function() {
 /**
  * Runs application integration tests. Uses development version of the application.
  */
-gulp.task('integration-test', ['serve', 'webdriver-update'], runProtractorTests);
+gulp.task('integration-test', ['serve:nowatch', 'webdriver-update'], runProtractorTests);
 
 
 /**
