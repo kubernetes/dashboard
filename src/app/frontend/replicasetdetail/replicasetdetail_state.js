@@ -15,6 +15,31 @@
 import ReplicaSetDetailController from './replicasetdetail_controller';
 
 
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'replicasetdetail';
+
+
+/**
+ * Parameters for this state.
+ *
+ * All properties are @exported and in sync with URL param names.
+ * @final
+ */
+export class StateParams {
+  /**
+   * @param {string} namespace
+   * @param {string} replicaSet
+   */
+  constructor(namespace, replicaSet) {
+    /** @export {string} Namespace of this Replica Set. */
+    this.namespace = namespace;
+
+    /** @export {string} Name of this Replica Set. */
+    this.replicaSet = replicaSet;
+  }
+}
+
+
 /**
  * Configures states for the service view.
  *
@@ -22,10 +47,10 @@ import ReplicaSetDetailController from './replicasetdetail_controller';
  * @ngInject
  */
 export default function stateConfig($stateProvider) {
-  $stateProvider.state('replicasetdetail', {
+  $stateProvider.state(stateName, {
     controller: ReplicaSetDetailController,
     controllerAs: 'ctrl',
-    url: '/replicasetdetail',
+    url: '/replicasets/:namespace/:replicaSet',
     templateUrl: 'replicasetdetail/replicasetdetail.html',
   });
 }

@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {StateParams} from 'replicasetdetail/replicasetdetail_state';
+import {stateName} from 'replicasetdetail/replicasetdetail_state';
+
 
 /**
  * Controller for the replica set list view.
@@ -22,11 +25,15 @@ export default class ReplicaSetListController {
   /**
    * @param {!angular.$log} $log
    * @param {!angular.$resource} $resource
+   * @param {!ui.router.$state} $state
    * @ngInject
    */
-  constructor($log, $resource) {
+  constructor($log, $resource, $state) {
     /** @export {!Array<backendApi.ReplicaSet>} */
     this.replicaSets = [];
+
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
 
     this.initialize_($log, $resource);
   }
@@ -38,7 +45,7 @@ export default class ReplicaSetListController {
    */
   initialize_($log, $resource) {
     /** @type {!angular.Resource<!backendApi.ReplicaSetList>} */
-    let resource = $resource('/api/replicaset');
+    let resource = $resource('/api/replicasets');
 
     resource.get((replicaSetList) => {
       $log.info('Successfully fetched Replica Set list: ', replicaSetList);
@@ -46,5 +53,15 @@ export default class ReplicaSetListController {
     }, (err) => {
       $log.error('Error fetching Replica Set list: ', err);
     });
+  }
+
+  /**
+   * @param {!backendApi.ReplicaSet} replicaSet
+   * @return {string}
+   * @export
+   */
+  getReplicaSetDetailHref(replicaSet) {
+    // TODO(bryk): Set proper namespace here.
+    return this.state_.href(stateName, new StateParams('default', replicaSet.name));
   }
 }

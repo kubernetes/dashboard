@@ -27,7 +27,7 @@ func CreateHttpApiHandler(client *client.Client) http.Handler {
 	wsContainer := restful.NewContainer()
 
 	deployWs := new(restful.WebService)
-	deployWs.Path("/api/deploy").
+	deployWs.Path("/api/appdeployments").
 		Consumes(restful.MIME_JSON).
 		Produces(restful.MIME_JSON)
 	deployWs.Route(
@@ -38,7 +38,7 @@ func CreateHttpApiHandler(client *client.Client) http.Handler {
 	wsContainer.Add(deployWs)
 
 	replicaSetListWs := new(restful.WebService)
-	replicaSetListWs.Path("/api/replicaset").
+	replicaSetListWs.Path("/api/replicasets").
 		Produces(restful.MIME_JSON)
 	replicaSetListWs.Route(
 		replicaSetListWs.GET("").
@@ -47,7 +47,7 @@ func CreateHttpApiHandler(client *client.Client) http.Handler {
 	wsContainer.Add(replicaSetListWs)
 
 	namespaceListWs := new(restful.WebService)
-	namespaceListWs.Path("/api/namespace").
+	namespaceListWs.Path("/api/namespaces").
 		Produces(restful.MIME_JSON)
 	namespaceListWs.Route(
 		namespaceListWs.GET("").

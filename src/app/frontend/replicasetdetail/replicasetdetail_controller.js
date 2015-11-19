@@ -20,10 +20,13 @@
  */
 export default class ReplicaSetDetailController {
   /**
-   * @param {!angular.$log} $log
+   * @param {!./replicasetdetail_state.StateParams} $stateParams
    * @ngInject
    */
-  constructor($log) {
-    $log.info('TODO(bryk): this controller should do something');
+  constructor($stateParams) {
+    /**
+     * @export {!./replicasetdetail_state.StateParams}
+     */
+    this.stateParams = $stateParams;
   }
 }

@@ -17,9 +17,11 @@ limitations under the License.
 <div layout="row" layout-wrap layout-margin layout-align="center center">
   <md-card ng-repeat="replicaSet in ctrl.replicaSets">
     <md-card-content class="kd-replicaset-card">
-      <div layout="row" layout-align="space-between start">
+      <div layout="row" layout-align="space-between center">
         <div flex layout="column">
-          <div flex>{{replicaSet.name}}</div>
+          <a ng-href="{{ctrl.getReplicaSetDetailHref(replicaSet)}}" flex>
+            {{replicaSet.name}}
+          </a>
           <div flex class="md-caption">
             <span ng-repeat="(label, value) in replicaSet.labels"
                 class="kd-replicaset-card-label">
@@ -27,7 +29,7 @@ limitations under the License.
             </span>
           </div>
         </div>
-        <md-button flex="initial" class="md-icon-button kd-replicaset-card-menu">
+        <md-button flex="none" class="md-icon-button">
           <md-icon md-font-library="material-icons">more_vert</md-icon>
         </md-button>
       </div>

@@ -15,6 +15,10 @@
 import ZeroStateController from './zerostate_controller';
 
 
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'zero';
+
+
 /**
  * Configures states for the zero state view.
  *
@@ -22,7 +26,7 @@ import ZeroStateController from './zerostate_controller';
  * @ngInject
  */
 export default function stateConfig($stateProvider) {
-  $stateProvider.state('zero', {
+  $stateProvider.state(stateName, {
     controller: ZeroStateController,
     controllerAs: 'ctrl',
     url: '/',

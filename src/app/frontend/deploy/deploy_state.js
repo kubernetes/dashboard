@@ -15,6 +15,10 @@
 import DeployController from './deploy_controller';
 
 
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'deploy';
+
+
 /**
  * Configures states for the deploy view.
  *
@@ -22,7 +26,7 @@ import DeployController from './deploy_controller';
  * @ngInject
  */
 export default function stateConfig($stateProvider) {
-  $stateProvider.state('deploy', {
+  $stateProvider.state(stateName, {
     controller: DeployController,
     controllerAs: 'ctrl',
     url: '/deploy',
@@ -40,7 +44,7 @@ export default function stateConfig($stateProvider) {
    */
   function resolveNamespaces($resource) {
     /** @type {!angular.Resource<!backendApi.NamespaceList>} */
-    let resource = $resource('/api/namespace');
+    let resource = $resource('/api/namespaces');
 
     return resource.get().$promise;
   }
