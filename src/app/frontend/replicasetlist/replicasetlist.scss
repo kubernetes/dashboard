@@ -12,12 +12,43 @@
 // See the License for the specific language governing permissions and   
 // limitations under the License.    
    
-.kd-replicaset-card {    
-  padding-top: 0;    
+.kd-replicaset-card {        
   width: 400px;    
-}    
-   
-.kd-replicaset-card-menu {   
-  max-width: 48px;   
 }
 
+.kd-replicaset-card-logs {
+  color: inherit;
+  text-decoration: none;
+}
+
+.kd-replicaset-card-logs {
+  color: inherit;
+  text-decoration: none;
+}
+
+.kd-replicaset-card-logs:after {
+  content: '\25BC';
+}
+
+.kd-replicaset-card-logs:hover {
+  text-decoration: underline;
+}
+
+.kd-replicaset-card-divider {
+  border: 0;
+  border-top: 1px solid;
+}
+
+.kd-replicaset-card-section {
+  margin-top: 1em;
+}
+
+.kd-replicaset-card-section-image {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.kd-replicaset-card-label {
+  margin-right: 1em;
+}

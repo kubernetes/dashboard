@@ -33,16 +33,29 @@ type ReplicaSet struct {
 	// Name of the Replica Set.
 	Name string `json:"name"`
 
+	// Human readable description of this Replica Set.
+	Description string `json:"description"`
+
+	// Label of this Replica Set.
+	Labels map[string]string `json:"labels"`
+
 	// Number of pods that are currently running.
 	PodsRunning int `json:"podsRunning"`
 
-	// Number of pods that are desired to run in this replica set.
-	PodsDesired int `json:"podsDesired"`
+	// Number of pods that are pending in this Replica Set.
+	PodsPending int `json:"podsPending"`
 
-	// Container images of the replica set.
+	// Container images of the Replica Set.
 	ContainerImages []string `json:"containerImages"`
 
-	// TODO(bryk): Add service information here.
+	// Age in milliseconds of the oldest replica in the Set.
+	Age uint64 `json:"age"`
+
+	// Internal endpoints of all Kubernetes services have the same label selector as this Replica Set.
+	InternalEndpoints []string `json:"internalEndpoints"`
+
+	// External endpoints of all Kubernetes services have the same label selector as this Replica Set.
+	ExternalEndpoints []string `json:"externalEndpoints"`
 }
 
 // Returns a list of all Replica Sets in the cluster.
@@ -64,10 +77,20 @@ func GetReplicaSetList(client *client.Client) (*ReplicaSetList, error) {
 		}
 
 		replicaSetList.ReplicaSets = append(replicaSetList.ReplicaSets, ReplicaSet{
-			Name:            replicaSet.ObjectMeta.Name,
-			ContainerImages: containerImages,
+			Name: replicaSet.ObjectMeta.Name,
+			// TODO(bryk): This field contains test value. Implement it.
+			Description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
+				"Nulla metus nibh, iaculis a consectetur vitae, imperdiet pellentesque turpis.",
+			Labels:          replicaSet.ObjectMeta.Labels,
 			PodsRunning:     replicaSet.Status.Replicas,
-			PodsDesired:     replicaSet.Spec.Replicas,
+			PodsPending:     replicaSet.Spec.Replicas - replicaSet.Status.Replicas,
+			ContainerImages: containerImages,
+			// TODO(bryk): This field contains test value. Implement it.
+			Age: 18,
+			// TODO(bryk): This field contains test value. Implement it.
+			InternalEndpoints: []string{"webapp"},
+			// TODO(bryk): This field contains test value. Implement it.
+			ExternalEndpoints: []string{"81.76.02.198:80"},
 		})
 	}
 
