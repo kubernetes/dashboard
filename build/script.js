@@ -43,7 +43,7 @@ gulp.task('scripts', function() {
     quiet: true,
   };
 
-  return gulp.src(path.join(conf.paths.frontendSrc, 'index.module.js'))
+  return gulp.src(path.join(conf.paths.frontendSrc, 'index_module.js'))
     .pipe(webpackStream(webpackOptions))
     .pipe(gulp.dest(conf.paths.serve));
 });
