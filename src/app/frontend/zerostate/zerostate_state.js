@@ -12,20 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ChromeController from './chrome.controller';
+import ZeroStateController from './zerostate_controller';
 
 
 /**
- * Returns directive definition object for the chrome directive.
+ * Configures states for the zero state view.
  *
- * @return {!angular.Directive}
+ * @param {!ui.router.$stateProvider} $stateProvider
+ * @ngInject
  */
-export default function chromeDirective() {
-  return {
-    bindToController: true,
-    controller: ChromeController,
+export default function stateConfig($stateProvider) {
+  $stateProvider.state('zero', {
+    controller: ZeroStateController,
     controllerAs: 'ctrl',
-    templateUrl: 'chrome/chrome.html',
-    transclude: true,
-  };
+    url: '/',
+    templateUrl: 'zerostate/zerostate.html',
+  });
 }

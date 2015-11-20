@@ -12,17 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './zerostate.state';
+import ZerostateController from 'zerostate/zerostate_controller';
 
 
-/**
- * Angular module for the zero state view.
- *
- * The view is active on the first launch of the application and is used for onboarding new users.
- */
-export default angular.module(
-    'kubernetesDashboard.zerostate',
-    [
-      'ui.router',
-    ])
-    .config(stateConfig);
+describe('Main controller', () => {
+  let vm;
+
+  beforeEach(inject(($timeout) => {
+    vm = new ZerostateController($timeout);
+  }));
+
+  it('should do something', () => {
+    expect(vm.learnMoreLinks).toEqual([
+      {title: 'Dashboard Tour', link: "#"},
+      {title: 'Deploying your App', link: "#"},
+      {title: 'Monitoring your App', link: "#"},
+      {title: 'Troubleshooting', link: "#"},
+    ]);
+  });
+});

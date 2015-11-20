@@ -12,20 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ZeroStateController from './zerostate.controller';
+import chromeDirective from './chrome_directive';
 
 
 /**
- * Configures states for the zero state view.
- *
- * @param {!ui.router.$stateProvider} $stateProvider
- * @ngInject
+ * Angular module containing navigation chrome for the application.
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state('zero', {
-    controller: ZeroStateController,
-    controllerAs: 'ctrl',
-    url: '/',
-    templateUrl: 'zerostate/zerostate.html',
-  });
-}
+export default angular.module(
+    'kubernetesDashboard.chrome',
+    [
+      'ngMaterial',
+      'ui.router',
+    ])
+    .directive('chrome', chromeDirective);

@@ -12,18 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './replicasetdetail.state';
+import ReplicaSetDetailController from './replicasetdetail_controller';
 
 
 /**
- * Angular module for the Replica Set details view.
+ * Configures states for the service view.
  *
- * The view shows detailed view of a Replica Sets.
+ * @param {!ui.router.$stateProvider} $stateProvider
+ * @ngInject
  */
-export default angular.module(
-    'kubernetesDashboard.replicaSetDetails',
-    [
-      'ngMaterial',
-      'ui.router',
-    ])
-    .config(stateConfig);
+export default function stateConfig($stateProvider) {
+  $stateProvider.state('replicasetdetail', {
+    controller: ReplicaSetDetailController,
+    controllerAs: 'ctrl',
+    url: '/replicasetdetail',
+    templateUrl: 'replicasetdetail/replicasetdetail.html',
+  });
+}

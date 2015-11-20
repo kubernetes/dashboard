@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './deploy.state';
-
 
 /**
- * Angular module for the deploy view.
+ * Controller for the replica set details view.
  *
- * The view allows for deploying applications to Kubernetes clusters.
+ * @final
  */
-export default angular.module(
-    'kubernetesDashboard.deploy',
-    [
-      'ngMaterial',
-      'ui.router',
-    ])
-    .config(stateConfig);
+export default class ReplicaSetDetailController {
+  /**
+   * @param {!angular.$log} $log
+   * @ngInject
+   */
+  constructor($log) {
+    $log.info('TODO(bryk): this controller should do something');
+  }
+}

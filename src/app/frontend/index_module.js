@@ -16,13 +16,13 @@
  * @fileoverview Entry point module to the application. Loads and configures other modules needed
  * to bootstrap the application.
  */
-import chromeModule from './chrome/chrome.module';
-import deployModule from './deploy/deploy.module';
-import indexConfig from './index.config';
-import routeConfig from './index.route';
-import replicaSetDetailModule from './replicasetdetail/replicasetdetail.module';
-import replicaSetListModule from './replicasetlist/replicasetlist.module';
-import zerostateModule from './zerostate/zerostate.module';
+import chromeModule from './chrome/chrome_module';
+import deployModule from './deploy/deploy_module';
+import indexConfig from './index_config';
+import routeConfig from './index_route';
+import replicaSetDetailModule from './replicasetdetail/replicasetdetail_module';
+import replicaSetListModule from './replicasetlist/replicasetlist_module';
+import zerostateModule from './zerostate/zerostate_module';
 
 
 export default angular.module(

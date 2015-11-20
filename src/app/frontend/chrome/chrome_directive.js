@@ -12,18 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './replicasetlist.state';
+import ChromeController from './chrome_controller';
 
 
 /**
- * Angular module for the Replica Set list view.
+ * Returns directive definition object for the chrome directive.
  *
- * The view shows Replica Sets running in the cluster and allows to manage them.
+ * @return {!angular.Directive}
  */
-export default angular.module(
-    'kubernetesDashboard.replicaSetList',
-    [
-      'ngMaterial',
-      'ui.router',
-    ])
-    .config(stateConfig);
+export default function chromeDirective() {
+  return {
+    bindToController: true,
+    controller: ChromeController,
+    controllerAs: 'ctrl',
+    templateUrl: 'chrome/chrome.html',
+    transclude: true,
+  };
+}

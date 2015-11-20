@@ -12,20 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import DeployController from './deploy.controller';
+import stateConfig from './zerostate_state';
 
 
 /**
- * Configures states for the deploy view.
+ * Angular module for the zero state view.
  *
- * @param {!ui.router.$stateProvider} $stateProvider
- * @ngInject
+ * The view is active on the first launch of the application and is used for onboarding new users.
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state('deploy', {
-    controller: DeployController,
-    controllerAs: 'ctrl',
-    url: '/deploy',
-    templateUrl: 'deploy/deploy.html',
-  });
-}
+export default angular.module(
+    'kubernetesDashboard.zerostate',
+    [
+      'ui.router',
+    ])
+    .config(stateConfig);

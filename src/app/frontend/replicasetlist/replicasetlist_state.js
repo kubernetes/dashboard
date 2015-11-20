@@ -12,18 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import ReplicaSetListController from './replicasetlist_controller';
+
 
 /**
- * Controller for the replica set details view.
+ * Configures states for the service view.
  *
- * @final
+ * @param {!ui.router.$stateProvider} $stateProvider
+ * @ngInject
  */
-export default class ReplicaSetDetailsController {
-  /**
-   * @param {!angular.$log} $log
-   * @ngInject
-   */
-  constructor($log) {
-    $log.info('TODO(bryk): this controller should do something');
-  }
+export default function stateConfig($stateProvider) {
+  $stateProvider.state('replicasetlist', {
+    controller: ReplicaSetListController,
+    controllerAs: 'ctrl',
+    url: '/replicasetlist',
+    templateUrl: 'replicasetlist/replicasetlist.html',
+  });
 }
