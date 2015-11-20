@@ -12,16 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import chromeDirective from './chrome.directive';
+import stateConfig from './deploy_state';
 
 
 /**
- * Angular module containing navigation chrome for the application.
+ * Angular module for the deploy view.
+ *
+ * The view allows for deploying applications to Kubernetes clusters.
  */
 export default angular.module(
-    'kubernetesDashboard.chrome',
+    'kubernetesDashboard.deploy',
     [
       'ngMaterial',
       'ui.router',
     ])
-    .directive('chrome', chromeDirective);
+    .config(stateConfig);

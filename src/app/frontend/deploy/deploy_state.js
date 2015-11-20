@@ -12,20 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ReplicaSetDetailController from './replicasetdetail.controller';
+import DeployController from './deploy_controller';
 
 
 /**
- * Configures states for the service view.
+ * Configures states for the deploy view.
  *
  * @param {!ui.router.$stateProvider} $stateProvider
  * @ngInject
  */
 export default function stateConfig($stateProvider) {
-  $stateProvider.state('replicasetdetail', {
-    controller: ReplicaSetDetailController,
+  $stateProvider.state('deploy', {
+    controller: DeployController,
     controllerAs: 'ctrl',
-    url: '/replicasetdetail',
-    templateUrl: 'replicasetdetail/replicasetdetail.html',
+    url: '/deploy',
+    templateUrl: 'deploy/deploy.html',
   });
 }

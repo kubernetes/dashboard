@@ -12,22 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ZerostateController from 'zerostate/zerostate.controller';
+import stateConfig from './replicasetdetail_state';
 
 
-describe('Main controller', () => {
-  let vm;
-
-  beforeEach(inject(($timeout) => {
-    vm = new ZerostateController($timeout);
-  }));
-
-  it('should do something', () => {
-    expect(vm.learnMoreLinks).toEqual([
-      {title: 'Dashboard Tour', link: "#"},
-      {title: 'Deploying your App', link: "#"},
-      {title: 'Monitoring your App', link: "#"},
-      {title: 'Troubleshooting', link: "#"},
-    ]);
-  });
-});
+/**
+ * Angular module for the Replica Set details view.
+ *
+ * The view shows detailed view of a Replica Sets.
+ */
+export default angular.module(
+    'kubernetesDashboard.replicaSetDetail',
+    [
+      'ngMaterial',
+      'ui.router',
+    ])
+    .config(stateConfig);
