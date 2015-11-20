@@ -59,7 +59,7 @@ gulp.task('scripts:prod', ['angular-templates'], function() {
     // "foo_flag: null" means that a flag is enabled.
     compilerFlags: {
       angular_pass: null,
-      closure_entry_point: 'module$src$app$frontend$index_module',
+      closure_entry_point: 'module$index_module',
       compilation_level: 'ADVANCED_OPTIMIZATIONS',
       export_local_property_definitions: null,
       externs: [
@@ -76,7 +76,7 @@ gulp.task('scripts:prod', ['angular-templates'], function() {
         path.join(conf.paths.externs, '**/*.js'),
       ],
       generate_exports: null,
-      js_module_root: conf.paths.frontendSrc,
+      js_module_root: path.relative(conf.paths.base, conf.paths.frontendSrc),
       // Enable all compiler checks by default and make them errors.
       jscomp_error: '*',
       // Disable checks that are not applicable to the project.
