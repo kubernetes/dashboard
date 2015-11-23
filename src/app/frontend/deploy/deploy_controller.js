@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {stateName as zerostate} from 'zerostate/zerostate_state';
+import {stateName as replicasetliststate} from 'replicasetlist/replicasetlist_state';
+
 
 /**
  * Controller for the deploy view.
@@ -93,7 +96,7 @@ export default class DeployController {
     };
 
     /** @type {!angular.Resource<!backendApi.AppDeployment>} */
-    let resource = this.resource_('/api/deploy');
+    let resource = this.resource_('/api/appdeployments');
 
     this.isDeployInProgress_ = true;
     resource.save(
@@ -101,7 +104,7 @@ export default class DeployController {
         (savedConfig) => {
           this.isDeployInProgress_ = false;
           this.log_.info('Successfully deployed application: ', savedConfig);
-          this.state_.go('replicasetlist');
+          this.state_.go(replicasetliststate);
         },
         (err) => {
           this.isDeployInProgress_ = false;
@@ -123,7 +126,7 @@ export default class DeployController {
    * @export
    */
   cancel() {
-    this.state_.go('zero');
+    this.state_.go(zerostate);
   }
 
   /**
