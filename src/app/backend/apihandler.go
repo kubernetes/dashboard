@@ -37,14 +37,18 @@ func CreateHttpApiHandler(client *client.Client) http.Handler {
 			Writes(AppDeployment{}))
 	wsContainer.Add(deployWs)
 
-	replicaSetListWs := new(restful.WebService)
-	replicaSetListWs.Path("/api/replicasets").
+	replicaSetWs := new(restful.WebService)
+	replicaSetWs.Path("/api/replicasets").
 		Produces(restful.MIME_JSON)
-	replicaSetListWs.Route(
-		replicaSetListWs.GET("").
+	replicaSetWs.Route(
+		replicaSetWs.GET("").
 			To(apiHandler.handleGetReplicaSetList).
 			Writes(ReplicaSetList{}))
-	wsContainer.Add(replicaSetListWs)
+	replicaSetWs.Route(
+		replicaSetWs.GET("/{namespace}/{replicaSet}").
+			To(apiHandler.handleGetReplicaSetDetail).
+			Writes(ReplicaSetDetail{}))
+	wsContainer.Add(replicaSetWs)
 
 	namespaceListWs := new(restful.WebService)
 	namespaceListWs.Path("/api/namespaces").
@@ -82,6 +86,21 @@ func (apiHandler *ApiHandler) handleGetReplicaSetList(
 	request *restful.Request, response *restful.Response) {
 
 	result, err := GetReplicaSetList(apiHandler.client)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get Replica Set detail API call.
+func (apiHandler *ApiHandler) handleGetReplicaSetDetail(
+	request *restful.Request, response *restful.Response) {
+
+	namespace := request.PathParameter("namespace")
+	replicaSet := request.PathParameter("replicaSet")
+	result, err := GetReplicaSetDetail(apiHandler.client, namespace, replicaSet)
 	if err != nil {
 		handleInternalError(response, err)
 		return

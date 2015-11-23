@@ -60,17 +60,45 @@ backendApi.ReplicaSetList;
 /**
  * @typedef {{
  *   name: string,
+ *   namespace: string,
  *   description: string,
  *   labels: !Object<string, string>,
  *   podsRunning: number,
  *   podsPending: number,
  *   containerImages: !Array<string>,
- *   age: number,
+ *   creationTime: string,
  *   internalEndpoints: !Array<string>,
  *   externalEndpoints: !Array<string>
  * }}
  */
 backendApi.ReplicaSet;
+
+
+/**
+ * @typedef {{
+ *   name: string,
+ *   namespace: string,
+ *   labels: !Object<string, string>,
+ *   labelSelector: !Object<string, string>,
+ *   containerImages: !Array<string>,
+ *   podsDesired: number,
+ *   podsRunning: number,
+ *   pods: !Array<!backendApi.ReplicaSetPod>
+ * }}
+ */
+backendApi.ReplicaSetDetail;
+
+
+/**
+ * @typedef {{
+ *   name: string,
+ *   startTime: ?string,
+ *   podIP: string,
+ *   nodeName: string
+ * }}
+ */
+backendApi.ReplicaSetPod;
+
 
 /**
  * @typedef {{

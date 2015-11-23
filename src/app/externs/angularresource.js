@@ -29,7 +29,7 @@ angular.ResourceClass;
 
 
 /**
- * @typedef {function(string):!angular.Resource}
+ * @typedef {function(string, !Object=):!angular.Resource}
  */
 angular.$resource;
 

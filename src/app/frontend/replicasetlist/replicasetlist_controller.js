@@ -61,7 +61,6 @@ export default class ReplicaSetListController {
    * @export
    */
   getReplicaSetDetailHref(replicaSet) {
-    // TODO(bryk): Set proper namespace here.
-    return this.state_.href(stateName, new StateParams('default', replicaSet.name));
+    return this.state_.href(stateName, new StateParams(replicaSet.namespace, replicaSet.name));
   }
 }
