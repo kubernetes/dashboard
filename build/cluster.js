@@ -48,6 +48,15 @@ let exec = childProcess.exec;
 
 
 /**
+ * A Number, representing the ID value of the timer that is set for function which periodically
+ * checks if cluster is running. The null means that no timer is running.
+ *
+ * @type {?number}
+ */
+let isRunningSetIntervalHandler = null;
+
+
+/**
  * Checks if cluster health check return correct status.
  * When custer is up and running then return 'ok'.
  * @param {function(?Error=)} doneFn
@@ -188,14 +197,17 @@ gulp.task('spawn-cluster', ['checkout-kubernetes-version', 'kubeconfig-set-clust
  * Checks periodically if cluster is up and running.
  */
 gulp.task('wait-for-cluster', function (doneFn) {
-  let isRunningHandler = setInterval(isRunning, 1000);
+  if(!isRunningSetIntervalHandler) {
+    isRunningSetIntervalHandler = setInterval(isRunning, 1000);
+  }
 
   function isRunning() {
     clusterHealthCheck(function (result) {
       if (result === 'ok') {
         gulpUtil.log(
           gulpUtil.colors.magenta("Kubernetes cluster is up and running."));
-        clearTimeout(isRunningHandler);
+        clearTimeout(isRunningSetIntervalHandler);
+        isRunningSetIntervalHandler = null;
         doneFn();
       }
     });
