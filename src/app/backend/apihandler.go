@@ -33,8 +33,8 @@ func CreateHttpApiHandler(client *client.Client) http.Handler {
 	deployWs.Route(
 		deployWs.POST("").
 			To(apiHandler.handleDeploy).
-			Reads(AppDeployment{}).
-			Writes(AppDeployment{}))
+			Reads(AppDeploymentSpec{}).
+			Writes(AppDeploymentSpec{}))
 	wsContainer.Add(deployWs)
 
 	replicaSetWs := new(restful.WebService)
@@ -50,14 +50,20 @@ func CreateHttpApiHandler(client *client.Client) http.Handler {
 			Writes(ReplicaSetDetail{}))
 	wsContainer.Add(replicaSetWs)
 
-	namespaceListWs := new(restful.WebService)
-	namespaceListWs.Path("/api/namespaces").
+	namespacesWs := new(restful.WebService)
+	namespacesWs.Path("/api/namespaces").
+		Consumes(restful.MIME_JSON).
 		Produces(restful.MIME_JSON)
-	namespaceListWs.Route(
-		namespaceListWs.GET("").
-			To(apiHandler.handleGetNamespaceList).
+	namespacesWs.Route(
+		namespacesWs.POST("").
+			To(apiHandler.handleCreateNamespace).
+			Reads(NamespaceSpec{}).
+			Writes(NamespaceSpec{}))
+	namespacesWs.Route(
+		namespacesWs.GET("").
+			To(apiHandler.handleGetNamespaces).
 			Writes(NamespacesList{}))
-	wsContainer.Add(namespaceListWs)
+	wsContainer.Add(namespacesWs)
 
 	logsWs := new(restful.WebService)
 	logsWs.Path("/api/logs").
@@ -77,17 +83,17 @@ type ApiHandler struct {
 
 // Handles deploy API call.
 func (apiHandler *ApiHandler) handleDeploy(request *restful.Request, response *restful.Response) {
-	cfg := new(AppDeployment)
-	if err := request.ReadEntity(cfg); err != nil {
+	appDeploymentSpec := new(AppDeploymentSpec)
+	if err := request.ReadEntity(appDeploymentSpec); err != nil {
 		handleInternalError(response, err)
 		return
 	}
-	if err := DeployApp(cfg, apiHandler.client); err != nil {
+	if err := DeployApp(appDeploymentSpec, apiHandler.client); err != nil {
 		handleInternalError(response, err)
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, cfg)
+	response.WriteHeaderAndEntity(http.StatusCreated, appDeploymentSpec)
 }
 
 // Handles get Replica Set list API call.
@@ -118,8 +124,24 @@ func (apiHandler *ApiHandler) handleGetReplicaSetDetail(
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
+// Handles namespace creation API call.
+func (apiHandler *ApiHandler) handleCreateNamespace(request *restful.Request,
+	response *restful.Response) {
+	namespaceSpec := new(NamespaceSpec)
+	if err := request.ReadEntity(namespaceSpec); err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	if err := CreateNamespace(namespaceSpec, apiHandler.client); err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, namespaceSpec)
+}
+
 // Handles get namespace list API call.
-func (apiHandler *ApiHandler) handleGetNamespaceList(
+func (apiHandler *ApiHandler) handleGetNamespaces(
 	request *restful.Request, response *restful.Response) {
 
 	result, err := GetNamespaceList(apiHandler.client)
