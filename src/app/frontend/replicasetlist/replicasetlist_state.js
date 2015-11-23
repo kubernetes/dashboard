@@ -28,6 +28,21 @@ export default function stateConfig($stateProvider) {
     controller: ReplicaSetListController,
     controllerAs: 'ctrl',
     url: '/replicasets',
+    resolve: {
+      replicaSets: resolveReplicaSets,
+    },
     templateUrl: 'replicasetlist/replicasetlist.html',
   });
+}
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.$q.Promise}
+ * @ngInject
+ */
+export function resolveReplicaSets($resource) {
+  /** @type {!angular.Resource<!backendApi.ReplicaSetList>} */
+  let resource = $resource('/api/replicasets');
+
+  return resource.get().$promise;
 }

@@ -25,11 +25,12 @@ export default class ReplicaSetListController {
    * @param {!angular.$log} $log
    * @param {!angular.$resource} $resource
    * @param {!ui.router.$state} $state
+   * @param {!backendApi.ReplicaSetList} replicaSets
    * @ngInject
    */
-  constructor($log, $resource, $state) {
+  constructor($log, $resource, $state, replicaSets) {
     /** @export {!Array<backendApi.ReplicaSet>} */
-    this.replicaSets = [];
+    this.replicaSets = replicaSets.replicaSets;
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
