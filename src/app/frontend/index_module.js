@@ -26,20 +26,20 @@ import zerostateModule from './zerostate/zerostate_module';
 
 
 export default angular.module(
-    'kubernetesDashboard',
-    [
-      'ngAnimate',
-      'ngAria',
-      'ngMaterial',
-      'ngMessages',
-      'ngResource',
-      'ngSanitize',
-      'ui.router',
-      chromeModule.name,
-      deployModule.name,
-      replicaSetDetailModule.name,
-      replicaSetListModule.name,
-      zerostateModule.name,
-    ])
+                          'kubernetesDashboard',
+                          [
+                            'ngAnimate',
+                            'ngAria',
+                            'ngMaterial',
+                            'ngMessages',
+                            'ngResource',
+                            'ngSanitize',
+                            'ui.router',
+                            chromeModule.name,
+                            deployModule.name,
+                            replicaSetDetailModule.name,
+                            replicaSetListModule.name,
+                            zerostateModule.name,
+                          ])
     .config(indexConfig)
     .config(routeConfig);

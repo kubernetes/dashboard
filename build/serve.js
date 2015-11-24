@@ -60,8 +60,8 @@ function browserSyncInit(baseDir, includeBowerComponents) {
   proxyMiddlewareOptions.route = apiRoute;
 
   let config = {
-    browser: [], // Needed so that the browser does not auto-launch.
-    directory: false, // Disable directory listings.
+    browser: [],       // Needed so that the browser does not auto-launch.
+    directory: false,  // Disable directory listings.
     // TODO(bryk): Add proxy to the backend here.
     server: {
       baseDir: baseDir,
@@ -85,11 +85,13 @@ function browserSyncInit(baseDir, includeBowerComponents) {
  * Serves the application in development mode.
  */
 function serveDevelopmentMode() {
-  browserSyncInit([
-    conf.paths.serve,
-    conf.paths.frontendSrc, // For angular templates to work.
-    conf.paths.app, // For assets to work.
-  ], true);
+  browserSyncInit(
+      [
+        conf.paths.serve,
+        conf.paths.frontendSrc,  // For angular templates to work.
+        conf.paths.app,          // For assets to work.
+      ],
+      true);
 }
 
 
@@ -116,7 +118,7 @@ gulp.task('serve:prod', ['spawn-backend:prod']);
  * Spawns new backend application process and finishes the task immediately. Previously spawned
  * backend process is killed beforehand, if any. The frontend pages are served by BrowserSync.
  */
-gulp.task('spawn-backend', ['backend', 'kill-backend'], function () {
+gulp.task('spawn-backend', ['backend', 'kill-backend'], function() {
   runningBackendProcess = child.spawn(
       path.join(conf.paths.serve, conf.backend.binaryName),
       [`--apiserver-host=${conf.backend.apiServerHost}`, `--port=${conf.backend.devServerPort}`],
@@ -134,24 +136,25 @@ gulp.task('spawn-backend', ['backend', 'kill-backend'], function () {
  * backend process is killed beforehand, if any. In production the backend does serve the frontend
  * pages as well.
  */
-gulp.task('spawn-backend:prod', ['build-frontend', 'backend:prod', 'kill-backend',
-    'wait-for-cluster'], function () {
-  runningBackendProcess = child.spawn(
-      path.join(conf.paths.dist, conf.backend.binaryName),
-      [`--apiserver-host=${conf.backend.apiServerHost}`, `--port=${conf.frontend.serverPort}`],
-      {stdio: 'inherit', cwd: conf.paths.dist});
+gulp.task(
+    'spawn-backend:prod', ['build-frontend', 'backend:prod', 'kill-backend', 'wait-for-cluster'],
+    function() {
+      runningBackendProcess = child.spawn(
+          path.join(conf.paths.dist, conf.backend.binaryName),
+          [`--apiserver-host=${conf.backend.apiServerHost}`, `--port=${conf.frontend.serverPort}`],
+          {stdio: 'inherit', cwd: conf.paths.dist});
 
-  runningBackendProcess.on('exit', function () {
-    // Mark that there is no backend process running anymore.
-    runningBackendProcess = null;
-  });
-});
+      runningBackendProcess.on('exit', function() {
+        // Mark that there is no backend process running anymore.
+        runningBackendProcess = null;
+      });
+    });
 
 
 /**
  * Kills running backend process (if any).
  */
-gulp.task('kill-backend', function (doneFn) {
+gulp.task('kill-backend', function(doneFn) {
   if (runningBackendProcess) {
     runningBackendProcess.on('exit', function() {
       // Mark that there is no backend process running anymore.
@@ -169,20 +172,22 @@ gulp.task('kill-backend', function (doneFn) {
 /**
  * Watches for changes in source files and runs Gulp tasks to rebuild them.
  */
-gulp.task('watch', ['index'], function () {
+gulp.task('watch', ['index'], function() {
   gulp.watch([path.join(conf.paths.frontendSrc, 'index.html'), 'bower.json'], ['index']);
 
-  gulp.watch([
-    path.join(conf.paths.frontendSrc, '**/*.scss'),
-  ], function(event) {
-    if(event.type === 'changed') {
-      // If this is a file change, rebuild only styles - nothing more is needed.
-      gulp.start('styles');
-    } else {
-      // If this is new/deleted file, everything has to be rebuilt.
-      gulp.start('index');
-    }
-  });
+  gulp.watch(
+      [
+        path.join(conf.paths.frontendSrc, '**/*.scss'),
+      ],
+      function(event) {
+        if (event.type === 'changed') {
+          // If this is a file change, rebuild only styles - nothing more is needed.
+          gulp.start('styles');
+        } else {
+          // If this is new/deleted file, everything has to be rebuilt.
+          gulp.start('index');
+        }
+      });
 
   gulp.watch(path.join(conf.paths.frontendSrc, '**/*.js'), ['scripts']);
   gulp.watch(path.join(conf.paths.backendSrc, '**/*.go'), ['spawn-backend']);

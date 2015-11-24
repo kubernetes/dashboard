@@ -1,0 +1,5 @@
+# Project configuration for the clang-format tool.
+# Learn more at: http://clang.llvm.org/docs/ClangFormat.html
+Language:        JavaScript
+BasedOnStyle:    Google
+ColumnLimit:     100

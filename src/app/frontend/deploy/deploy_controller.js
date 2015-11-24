@@ -117,17 +117,13 @@ export default class DeployController {
    * @return {boolean}
    * @export
    */
-  isDeployDisabled() {
-    return this.isDeployInProgress_;
-  }
+  isDeployDisabled() { return this.isDeployInProgress_; }
 
   /**
    * Cancels the deployment form.
    * @export
    */
-  cancel() {
-    this.state_.go(zerostate);
-  }
+  cancel() { this.state_.go(zerostate); }
 
   /**
    * @param {string} defaultProtocol
@@ -148,7 +144,5 @@ export default class DeployController {
    * @return {boolean}
    * @private
    */
-  isPortMappingEmpty_(portMapping) {
-    return !!portMapping.port && !!portMapping.targetPort;
-  }
+  isPortMappingEmpty_(portMapping) { return !!portMapping.port && !!portMapping.targetPort; }
 }

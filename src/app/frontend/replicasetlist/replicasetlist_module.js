@@ -21,9 +21,9 @@ import stateConfig from './replicasetlist_state';
  * The view shows Replica Sets running in the cluster and allows to manage them.
  */
 export default angular.module(
-    'kubernetesDashboard.replicaSetList',
-    [
-      'ngMaterial',
-      'ui.router',
-    ])
+                          'kubernetesDashboard.replicaSetList',
+                          [
+                            'ngMaterial',
+                            'ui.router',
+                          ])
     .config(stateConfig);

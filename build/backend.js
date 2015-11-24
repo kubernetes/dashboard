@@ -28,13 +28,16 @@ import goCommand from './gocommand';
  * directory.
  */
 gulp.task('backend', function(doneFn) {
-  goCommand([
-    'build',
-    // Install dependencies to speed up subsequent compilations.
-    '-i',
-    '-o', path.join(conf.paths.serve, conf.backend.binaryName),
-    conf.backend.packageName,
-  ], doneFn);
+  goCommand(
+      [
+        'build',
+        // Install dependencies to speed up subsequent compilations.
+        '-i',
+        '-o',
+        path.join(conf.paths.serve, conf.backend.binaryName),
+        conf.backend.packageName,
+      ],
+      doneFn);
 });
 
 
@@ -50,20 +53,24 @@ gulp.task('backend:prod', function(doneFn) {
 
   // Delete output binary first. This is required because prod build does not override it.
   del(outputBinaryPath)
-      .then(function() {
-        goCommand([
-          'build',
-          '-a',
-          '-installsuffix', 'cgo',
-          '-o', outputBinaryPath,
-          conf.backend.packageName,
-        ], doneFn, {
-          // Disable cgo package. Required to run on scratch docker image.
-          CGO_ENABLED: '0',
-          // Scratch docker image is linux.
-          GOOS: 'linux',
-        });
-      }, function(error) {
-        doneFn(error);
-      });
+      .then(
+          function() {
+            goCommand(
+                [
+                  'build',
+                  '-a',
+                  '-installsuffix',
+                  'cgo',
+                  '-o',
+                  outputBinaryPath,
+                  conf.backend.packageName,
+                ],
+                doneFn, {
+                  // Disable cgo package. Required to run on scratch docker image.
+                  CGO_ENABLED: '0',
+                  // Scratch docker image is linux.
+                  GOOS: 'linux',
+                });
+          },
+          function(error) { doneFn(error); });
 });

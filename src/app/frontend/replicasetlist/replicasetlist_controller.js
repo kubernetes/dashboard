@@ -47,12 +47,12 @@ export default class ReplicaSetListController {
     /** @type {!angular.Resource<!backendApi.ReplicaSetList>} */
     let resource = $resource('/api/replicasets');
 
-    resource.get((replicaSetList) => {
-      $log.info('Successfully fetched Replica Set list: ', replicaSetList);
-      this.replicaSets = replicaSetList.replicaSets;
-    }, (err) => {
-      $log.error('Error fetching Replica Set list: ', err);
-    });
+    resource.get(
+        (replicaSetList) => {
+          $log.info('Successfully fetched Replica Set list: ', replicaSetList);
+          this.replicaSets = replicaSetList.replicaSets;
+        },
+        (err) => { $log.error('Error fetching Replica Set list: ', err); });
   }
 
   /**

@@ -36,12 +36,11 @@ function getFileList() {
     devDependencies: true,
   };
 
-  return wiredep(wiredepOptions).js
-    .concat([
-      path.join(conf.paths.frontendTest, '**/*.js'),
-      path.join(conf.paths.frontendSrc, '**/*.js'),
-      path.join(conf.paths.frontendSrc, '**/*.html'),
-    ]);
+  return wiredep(wiredepOptions).js.concat([
+    path.join(conf.paths.frontendTest, '**/*.js'),
+    path.join(conf.paths.frontendSrc, '**/*.js'),
+    path.join(conf.paths.frontendSrc, '**/*.html'),
+  ]);
 }
 
 
@@ -73,7 +72,7 @@ export default function(config) {
 
     reporters: ['progress'],
 
-    preprocessors: {}, // This field is filled with values later.
+    preprocessors: {},  // This field is filled with values later.
 
     plugins: [
       'karma-chrome-launcher',

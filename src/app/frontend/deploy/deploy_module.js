@@ -21,9 +21,9 @@ import stateConfig from './deploy_state';
  * The view allows for deploying applications to Kubernetes clusters.
  */
 export default angular.module(
-    'kubernetesDashboard.deploy',
-    [
-      'ngMaterial',
-      'ui.router',
-    ])
+                          'kubernetesDashboard.deploy',
+                          [
+                            'ngMaterial',
+                            'ui.router',
+                          ])
     .config(stateConfig);

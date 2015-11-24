@@ -47,10 +47,12 @@ function runUnitTests(singleRun, doneFn) {
  * @param {function(?Error=)} doneFn
  */
 function runBackendTests(doneFn) {
-  goCommand([
-    'test',
-    conf.backend.testPackageName,
-  ], doneFn);
+  goCommand(
+      [
+        'test',
+        conf.backend.testPackageName,
+      ],
+      doneFn);
 }
 
 
@@ -59,23 +61,24 @@ function runBackendTests(doneFn) {
  */
 function runProtractorTests(doneFn) {
   gulp.src(path.join(conf.paths.integrationTest, '**/*.js'))
-    .pipe(gulpProtractor.protractor({
-      configFile: conf.paths.protractorConf,
-    }))
-    .on('error', function (err) {
-      // Close browser sync server to prevent the process from hanging.
-      browserSyncInstance.exit();
-      // Kill backend server and cluster, if running.
-      gulp.start('kill-all');
-      doneFn(err);
-    })
-    .on('end', function () {
-      // Close browser sync server to prevent the process from hanging.
-      browserSyncInstance.exit();
-      // Kill backend server and cluster, if running.
-      gulp.start('kill-all');
-      doneFn();
-    });
+      .pipe(gulpProtractor.protractor({
+        configFile: conf.paths.protractorConf,
+      }))
+      .on('error',
+          function(err) {
+            // Close browser sync server to prevent the process from hanging.
+            browserSyncInstance.exit();
+            // Kill backend server and cluster, if running.
+            gulp.start('kill-all');
+            doneFn(err);
+          })
+      .on('end', function() {
+        // Close browser sync server to prevent the process from hanging.
+        browserSyncInstance.exit();
+        // Kill backend server and cluster, if running.
+        gulp.start('kill-all');
+        doneFn();
+      });
 }
 
 
@@ -88,9 +91,7 @@ gulp.task('test', ['frontend-test', 'backend-test']);
 /**
  * Runs once all unit tests of the frontend application.
  */
-gulp.task('frontend-test', function(doneFn) {
-  runUnitTests(true, doneFn);
-});
+gulp.task('frontend-test', function(doneFn) { runUnitTests(true, doneFn); });
 
 
 /**
@@ -110,9 +111,7 @@ gulp.task('test:watch', ['frontend-test:watch', 'backend-test:watch']);
  * Runs frontend backend application tests. Watches for changes in the source files to rerun
  * the tests.
  */
-gulp.task('frontend-test:watch', function(doneFn) {
-  runUnitTests(false, doneFn);
-});
+gulp.task('frontend-test:watch', function(doneFn) { runUnitTests(false, doneFn); });
 
 
 /**
@@ -120,10 +119,12 @@ gulp.task('frontend-test:watch', function(doneFn) {
  * the tests.
  */
 gulp.task('backend-test:watch', ['backend-test'], function() {
-  gulp.watch([
-    path.join(conf.paths.backendSrc, '**/*.go'),
-    path.join(conf.paths.backendTest, '**/*.go'),
-  ], ['backend-test']);
+  gulp.watch(
+      [
+        path.join(conf.paths.backendSrc, '**/*.go'),
+        path.join(conf.paths.backendTest, '**/*.go'),
+      ],
+      ['backend-test']);
 });
 
 
@@ -136,7 +137,8 @@ gulp.task('integration-test', ['serve:nowatch', 'webdriver-update'], runProtract
 /**
  * Runs application integration tests. Uses production version of the application.
  */
-gulp.task('integration-test:prod', ['local-up-cluster', 'serve:prod', 'webdriver-update'],
+gulp.task(
+    'integration-test:prod', ['local-up-cluster', 'serve:prod', 'webdriver-update'],
     runProtractorTests);
 
 

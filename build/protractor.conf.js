@@ -17,7 +17,7 @@
  *
  * TODO(bryk): Start using ES6 in this file when supported.
  */
-/* eslint no-var: 0 */ // no-var check disabled because this file is not written in ES6.
+/* eslint no-var: 0 */  // no-var check disabled because this file is not written in ES6.
 require('babel-core/register');
 var conf = require('./conf');
 var path = require('path');
