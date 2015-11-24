@@ -31,18 +31,18 @@ import conf from './conf';
  * Compiles stylesheets and places them into the serve folder. Each stylesheet file is compiled
  * separately.
  */
-gulp.task('styles', function () {
+gulp.task('styles', function() {
   let sassOptions = {
     style: 'expanded',
   };
 
   return gulp.src(path.join(conf.paths.frontendSrc, '**/*.scss'))
-    .pipe(gulpSourcemaps.init())
-    .pipe(gulpSass(sassOptions))
-    .pipe(gulpSourcemaps.write("."))
-    .pipe(gulp.dest(conf.paths.serve))
-    // If BrowserSync is running, inform it that styles have changed.
-    .pipe(browserSyncInstance.stream());
+      .pipe(gulpSourcemaps.init())
+      .pipe(gulpSass(sassOptions))
+      .pipe(gulpSourcemaps.write("."))
+      .pipe(gulp.dest(conf.paths.serve))
+      // If BrowserSync is running, inform it that styles have changed.
+      .pipe(browserSyncInstance.stream());
 });
 
 
@@ -50,18 +50,18 @@ gulp.task('styles', function () {
  * Compiles stylesheets and places them into the prod tmp folder. Styles are compiled and minified
  * into a single file.
  */
-gulp.task('styles:prod', function () {
+gulp.task('styles:prod', function() {
   let sassOptions = {
     style: 'compressed',
   };
 
   return gulp.src(path.join(conf.paths.frontendSrc, '**/*.scss'))
-    .pipe(gulpSass(sassOptions))
-    .pipe(gulpAutoprefixer())
-    .pipe(gulpConcat('app.css'))
-    .pipe(gulpMinifyCss({
-      // Do not process @import statements. This breaks Angular Material font icons.
-      processImport: false,
-    }))
-    .pipe(gulp.dest(conf.paths.prodTmp));
+      .pipe(gulpSass(sassOptions))
+      .pipe(gulpAutoprefixer())
+      .pipe(gulpConcat('app.css'))
+      .pipe(gulpMinifyCss({
+        // Do not process @import statements. This breaks Angular Material font icons.
+        processImport: false,
+      }))
+      .pipe(gulp.dest(conf.paths.prodTmp));
 });

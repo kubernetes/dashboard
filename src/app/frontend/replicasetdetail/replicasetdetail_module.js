@@ -21,9 +21,9 @@ import stateConfig from './replicasetdetail_state';
  * The view shows detailed view of a Replica Sets.
  */
 export default angular.module(
-    'kubernetesDashboard.replicaSetDetail',
-    [
-      'ngMaterial',
-      'ui.router',
-    ])
+                          'kubernetesDashboard.replicaSetDetail',
+                          [
+                            'ngMaterial',
+                            'ui.router',
+                          ])
     .config(stateConfig);

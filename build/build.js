@@ -45,54 +45,53 @@ gulp.task('build', ['backend:prod', 'build-frontend']);
  *  3. CSS and JS assets are suffixed with version hash.
  *  4. Everything is saved in the dist directory.
  */
-gulp.task('build-frontend', ['assets', 'index:prod'], function () {
+gulp.task('build-frontend', ['assets', 'index:prod'], function() {
   let htmlFilter = gulpFilter('*.html', {restore: true});
   let vendorCssFilter = gulpFilter('**/vendor.css', {restore: true});
   let vendorJsFilter = gulpFilter('**/vendor.js', {restore: true});
   let assets;
 
   return gulp.src(path.join(conf.paths.prodTmp, '*.html'))
-    .pipe(assets = gulpUseref.assets({
-      searchPath: [
-        // To resolve local paths.
-        conf.paths.prodTmp,
-        // To resolve bower_components/... paths.
-        conf.paths.base,
-      ],
-    }))
-    .pipe(vendorCssFilter)
-    .pipe(gulpMinifyCss())
-    .pipe(vendorCssFilter.restore)
-    .pipe(vendorJsFilter)
-    .pipe(gulpUglify({preserveComments: uglifySaveLicense}))
-    .pipe(vendorJsFilter.restore)
-    .pipe(gulpRev())
-    .pipe(assets.restore())
-    .pipe(gulpUseref({searchPath: [conf.paths.prodTmp]}))
-    .pipe(gulpRevReplace())
-    .pipe(htmlFilter)
-    .pipe(gulpMinifyHtml({
-      empty: true,
-      spare: true,
-      quotes: true,
-    }))
-    .pipe(htmlFilter.restore)
-    .pipe(gulp.dest(conf.paths.distPublic));
+      .pipe(assets = gulpUseref.assets({
+        searchPath: [
+          // To resolve local paths.
+          conf.paths.prodTmp,
+          // To resolve bower_components/... paths.
+          conf.paths.base,
+        ],
+      }))
+      .pipe(vendorCssFilter)
+      .pipe(gulpMinifyCss())
+      .pipe(vendorCssFilter.restore)
+      .pipe(vendorJsFilter)
+      .pipe(gulpUglify({preserveComments: uglifySaveLicense}))
+      .pipe(vendorJsFilter.restore)
+      .pipe(gulpRev())
+      .pipe(assets.restore())
+      .pipe(gulpUseref({searchPath: [conf.paths.prodTmp]}))
+      .pipe(gulpRevReplace())
+      .pipe(htmlFilter)
+      .pipe(gulpMinifyHtml({
+        empty: true,
+        spare: true,
+        quotes: true,
+      }))
+      .pipe(htmlFilter.restore)
+      .pipe(gulp.dest(conf.paths.distPublic));
 });
 
 
 /**
  * Copies assets to the dist directory.
  */
-gulp.task('assets', function () {
+gulp.task('assets', function() {
   return gulp.src(path.join(conf.paths.assets, '/**/*'), {base: conf.paths.app})
-    .pipe(gulp.dest(conf.paths.distPublic));
+      .pipe(gulp.dest(conf.paths.distPublic));
 });
 
 
 /**
  * Cleans all build artifacts.
  */
-gulp.task('clean', function () {
-  return del([conf.paths.dist, conf.paths.goWorkspace, conf.paths.tmp]);
-});
+gulp.task(
+    'clean', function() { return del([conf.paths.dist, conf.paths.goWorkspace, conf.paths.tmp]); });

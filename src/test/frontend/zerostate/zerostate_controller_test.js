@@ -18,9 +18,7 @@ import ZerostateController from 'zerostate/zerostate_controller';
 describe('Main controller', () => {
   let vm;
 
-  beforeEach(inject(($timeout) => {
-    vm = new ZerostateController($timeout);
-  }));
+  beforeEach(inject(($timeout) => { vm = new ZerostateController($timeout); }));
 
   it('should do something', () => {
     expect(vm.learnMoreLinks).toEqual([

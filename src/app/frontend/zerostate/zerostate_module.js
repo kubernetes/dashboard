@@ -21,8 +21,8 @@ import stateConfig from './zerostate_state';
  * The view is active on the first launch of the application and is used for onboarding new users.
  */
 export default angular.module(
-    'kubernetesDashboard.zerostate',
-    [
-      'ui.router',
-    ])
+                          'kubernetesDashboard.zerostate',
+                          [
+                            'ui.router',
+                          ])
     .config(stateConfig);

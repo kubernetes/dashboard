@@ -14,7 +14,5 @@
 
 
 export default class ZeroStatePageObject {
-  constructor() {
-    this.deployButton = element(by.css('.kd-zerostate-deploy-bt'));
-  }
+  constructor() { this.deployButton = element(by.css('.kd-zerostate-deploy-bt')); }
 }

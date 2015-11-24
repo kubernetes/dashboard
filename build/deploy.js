@@ -48,13 +48,16 @@ function spawnDockerProcess(args, doneFn) {
  * In order to run the image on a Kubernates cluster, it has to be deployed to a registry.
  */
 gulp.task('docker-image', ['build', 'docker-file'], function(doneFn) {
-  spawnDockerProcess([
-    'build',
-    // Remove intermediate containers after a successful build.
-    '--rm=true',
-    '--tag', conf.deploy.imageName,
-    conf.paths.dist,
-  ], doneFn);
+  spawnDockerProcess(
+      [
+        'build',
+        // Remove intermediate containers after a successful build.
+        '--rm=true',
+        '--tag',
+        conf.deploy.imageName,
+        conf.paths.dist,
+      ],
+      doneFn);
 });
 
 
@@ -62,6 +65,5 @@ gulp.task('docker-image', ['build', 'docker-file'], function(doneFn) {
  * Processes the Docker file and places it in the dist folder for building.
  */
 gulp.task('docker-file', function() {
-  return gulp.src(path.join(conf.paths.deploySrc, 'Dockerfile'))
-      .pipe(gulp.dest(conf.paths.dist));
+  return gulp.src(path.join(conf.paths.deploySrc, 'Dockerfile')).pipe(gulp.dest(conf.paths.dist));
 });

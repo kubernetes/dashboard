@@ -15,15 +15,14 @@
 import PageObject from './zerostate_po';
 
 
-describe('Zero state view', function () {
+describe('Zero state view', function() {
   let page;
 
-  beforeEach(function () {
+  beforeEach(function() {
     browser.get('/index.html');
     page = new PageObject();
   });
 
-  it('should do something', function() {
-    expect(page.deployButton.getText()).toContain('DEPLOY');
-  });
+  it('should do something',
+     function() { expect(page.deployButton.getText()).toContain('DEPLOY'); });
 });

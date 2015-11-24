@@ -65,4 +65,3 @@ angular.Resource.prototype.get = function(opt_callback, opt_errback) {};
  * @returns {!angular.ResourceClass}
  */
 angular.Resource.prototype.query = function(opt_callback, opt_errback) {};
-
