@@ -19,7 +19,6 @@
  * @externs
  */
 
-
 /**
  * @typedef {{
  *   $promise: !angular.$q.Promise
@@ -27,13 +26,10 @@
  */
 angular.ResourceClass;
 
-
 /**
  * @typedef {function(string, !Object=):!angular.Resource}
  */
 angular.$resource;
-
-
 
 /**
  * @constructor
@@ -41,27 +37,24 @@ angular.$resource;
  */
 angular.Resource = function() {};
 
-
 /**
  * @param {!T} data
  * @param {function(!T)=} opt_callback
  * @param {function(!angular.$http.Response)=} opt_errback
- * @returns {!angular.ResourceClass}
+ * @return {!angular.ResourceClass}
  */
 angular.Resource.prototype.save = function(data, opt_callback, opt_errback) {};
 
-
 /**
  * @param {function(!T)=} opt_callback
  * @param {function(!angular.$http.Response)=} opt_errback
- * @returns {!angular.ResourceClass}
+ * @return {!angular.ResourceClass}
  */
 angular.Resource.prototype.get = function(opt_callback, opt_errback) {};
 
-
 /**
  * @param {function(!T)=} opt_callback
  * @param {function(!angular.$http.Response)=} opt_errback
- * @returns {!angular.ResourceClass}
+ * @return {!angular.ResourceClass}
  */
 angular.Resource.prototype.query = function(opt_callback, opt_errback) {};

@@ -20,7 +20,6 @@ import lodash from 'lodash';
 
 import conf from './conf';
 
-
 /**
  * Spawns Go process wrapped with the Godep command.
  *
@@ -43,7 +42,7 @@ export default function spawnGoProcess(args, doneFn) {
     if (code === 0) {
       doneFn();
     } else {
-      doneFn(new Error('Go command error, code:' + code));
+      doneFn(new Error(`Go command error, code: ${code}`));
     }
   });
 }

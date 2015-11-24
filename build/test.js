@@ -24,7 +24,6 @@ import {browserSyncInstance} from './serve';
 import conf from './conf';
 import goCommand from './gocommand';
 
-
 /**
  * @param {boolean} singleRun
  * @param {function(?Error=)} doneFn
@@ -37,11 +36,10 @@ function runUnitTests(singleRun, doneFn) {
   };
 
   let server = new karma.Server(localConfig, function(failCount) {
-    doneFn(failCount ? new Error("Failed " + failCount + " tests.") : undefined);
+    doneFn(failCount ? new Error(`Failed ${failCount} tests.`) : undefined);
   });
   server.start();
 }
-
 
 /**
  * @param {function(?Error=)} doneFn
@@ -54,7 +52,6 @@ function runBackendTests(doneFn) {
       ],
       doneFn);
 }
-
 
 /**
  * @param {function(?Error=)} doneFn
@@ -81,24 +78,20 @@ function runProtractorTests(doneFn) {
       });
 }
 
-
 /**
  * Runs once all unit tests of the application.
  */
 gulp.task('test', ['frontend-test', 'backend-test']);
-
 
 /**
  * Runs once all unit tests of the frontend application.
  */
 gulp.task('frontend-test', function(doneFn) { runUnitTests(true, doneFn); });
 
-
 /**
  * Runs once all unit tests of the backend application.
  */
 gulp.task('backend-test', runBackendTests);
-
 
 /**
  * Runs all unit tests of the application. Watches for changes in the source files to rerun
@@ -106,13 +99,11 @@ gulp.task('backend-test', runBackendTests);
  */
 gulp.task('test:watch', ['frontend-test:watch', 'backend-test:watch']);
 
-
 /**
  * Runs frontend backend application tests. Watches for changes in the source files to rerun
  * the tests.
  */
 gulp.task('frontend-test:watch', function(doneFn) { runUnitTests(false, doneFn); });
-
 
 /**
  * Runs backend application tests. Watches for changes in the source files to rerun
@@ -127,12 +118,10 @@ gulp.task('backend-test:watch', ['backend-test'], function() {
       ['backend-test']);
 });
 
-
 /**
  * Runs application integration tests. Uses development version of the application.
  */
 gulp.task('integration-test', ['serve:nowatch', 'webdriver-update'], runProtractorTests);
-
 
 /**
  * Runs application integration tests. Uses production version of the application.
@@ -141,12 +130,10 @@ gulp.task(
     'integration-test:prod', ['local-up-cluster', 'serve:prod', 'webdriver-update'],
     runProtractorTests);
 
-
 /**
  * Downloads and updates webdriver. Required to keep it up to date.
  */
 gulp.task('webdriver-update', gulpProtractor.webdriver_update);
-
 
 /**
  * Kills backend server and cluster, if running.

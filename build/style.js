@@ -26,7 +26,6 @@ import gulpConcat from 'gulp-concat';
 import {browserSyncInstance} from './serve';
 import conf from './conf';
 
-
 /**
  * Compiles stylesheets and places them into the serve folder. Each stylesheet file is compiled
  * separately.
@@ -44,7 +43,6 @@ gulp.task('styles', function() {
       // If BrowserSync is running, inform it that styles have changed.
       .pipe(browserSyncInstance.stream());
 });
-
 
 /**
  * Compiles stylesheets and places them into the prod tmp folder. Styles are compiled and minified

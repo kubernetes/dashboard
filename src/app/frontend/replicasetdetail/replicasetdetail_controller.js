@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 /**
  * Controller for the replica set details view.
  *
@@ -20,11 +19,12 @@
  */
 export default class ReplicaSetDetailController {
   /**
+   * @param {!backendApi.ReplicaSetDetail} replicaSetDetail
    * @ngInject
    */
   constructor(replicaSetDetail) {
     /**
-     * @export {backendApi.ReplicaSetDetail}
+     * @export {!backendApi.ReplicaSetDetail}
      */
     this.replicaSetDetail = replicaSetDetail;
   }

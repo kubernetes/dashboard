@@ -14,10 +14,8 @@
 
 import DeployController from './deploy_controller';
 
-
 /** Name of the state. Can be used in, e.g., $state.go method. */
 export const stateName = 'deploy';
-
 
 /**
  * Configures states for the deploy view.
@@ -40,6 +38,7 @@ export default function stateConfig($stateProvider) {
    * Resolves namespaces for the deploy view.
    *
    * @param {!angular.$resource} $resource
+   * @return {!angular.$q.Promise}
    * @ngInject
    */
   function resolveNamespaces($resource) {

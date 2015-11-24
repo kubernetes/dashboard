@@ -14,10 +14,8 @@
 
 import ZeroStateController from './zerostate_controller';
 
-
 /** Name of the state. Can be used in, e.g., $state.go method. */
 export const stateName = 'zero';
-
 
 /**
  * Configures states for the zero state view.

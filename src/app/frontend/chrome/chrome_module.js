@@ -14,7 +14,6 @@
 
 import chromeDirective from './chrome_directive';
 
-
 /**
  * Angular module containing navigation chrome for the application.
  */

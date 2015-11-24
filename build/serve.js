@@ -25,12 +25,10 @@ import proxyMiddleware from 'proxy-middleware';
 
 import conf from './conf';
 
-
 /**
  * Browser sync instance that serves the application.
  */
 export const browserSyncInstance = browserSync.create();
-
 
 /**
  * Currently running backend process object. Null if the backend is not running.
@@ -38,7 +36,6 @@ export const browserSyncInstance = browserSync.create();
  * @type {?child.ChildProcess}
  */
 let runningBackendProcess = null;
-
 
 /**
  * Initializes BrowserSync tool. Files are served from baseDir directory list and all API calls
@@ -80,7 +77,6 @@ function browserSyncInit(baseDir, includeBowerComponents) {
   browserSyncInstance.init(config);
 }
 
-
 /**
  * Serves the application in development mode.
  */
@@ -94,25 +90,21 @@ function serveDevelopmentMode() {
       true);
 }
 
-
 /**
  * Serves the application in development mode. Watches for changes in the source files to rebuild
  * development artifacts.
  */
 gulp.task('serve', ['spawn-backend', 'watch'], serveDevelopmentMode);
 
-
 /**
  * Serves the application in development mode.
  */
 gulp.task('serve:nowatch', ['spawn-backend', 'index'], serveDevelopmentMode);
 
-
 /**
  * Serves the application in production mode.
  */
 gulp.task('serve:prod', ['spawn-backend:prod']);
-
 
 /**
  * Spawns new backend application process and finishes the task immediately. Previously spawned
@@ -129,7 +121,6 @@ gulp.task('spawn-backend', ['backend', 'kill-backend'], function() {
     runningBackendProcess = null;
   });
 });
-
 
 /**
  * Spawns new backend application process and finishes the task immediately. Previously spawned
@@ -150,7 +141,6 @@ gulp.task(
       });
     });
 
-
 /**
  * Kills running backend process (if any).
  */
@@ -167,7 +157,6 @@ gulp.task('kill-backend', function(doneFn) {
     doneFn();
   }
 });
-
 
 /**
  * Watches for changes in source files and runs Gulp tasks to rebuild them.

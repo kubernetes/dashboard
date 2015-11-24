@@ -24,7 +24,6 @@ import webpackStream from 'webpack-stream';
 
 import conf from './conf';
 
-
 /**
  * Compiles frontend JavaScript files into development bundle located in {conf.paths.serve}
  * directory. This has to be done because currently browsers do not handle ES6 syntax and
@@ -52,7 +51,6 @@ gulp.task('scripts', function() {
       .pipe(webpackStream(webpackOptions))
       .pipe(gulp.dest(conf.paths.serve));
 });
-
 
 /**
  * Compiles frontend JavaScript files into production bundle located in {conf.paths.prodTmp}
@@ -114,7 +112,6 @@ gulp.task('scripts:prod', ['angular-templates'], function() {
       .pipe(gulpClosureCompiler(closureCompilerConfig))
       .pipe(gulp.dest(conf.paths.prodTmp));
 });
-
 
 /**
  * Compiles Angular HTML template files into one JS file that serves them through $templateCache.

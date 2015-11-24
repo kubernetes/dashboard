@@ -14,7 +14,6 @@
 
 import stateConfig from './zerostate_state';
 
-
 /**
  * Angular module for the zero state view.
  *

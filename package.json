@@ -24,7 +24,7 @@
     "gulp-clang-format": "~1.0.23",
     "gulp-closure-compiler": "~0.3.1",
     "gulp-concat": "~2.6.0",
-    "gulp-eslint": "~1.0.0",
+    "gulp-eslint": "~1.1.0",
     "gulp-filter": "~3.0.1",
     "gulp-flatten": "~0.2.0",
     "gulp-git": "~1.6.0",

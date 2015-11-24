@@ -14,7 +14,6 @@
 
 import ZerostateController from 'zerostate/zerostate_controller';
 
-
 describe('Main controller', () => {
   let vm;
 

@@ -29,12 +29,10 @@ import path from 'path';
 
 import conf from './conf';
 
-
 /**
  * Builds production package and places it in the dist directory.
  */
 gulp.task('build', ['backend:prod', 'build-frontend']);
-
 
 /**
  * Builds production version of the frontend application.
@@ -80,7 +78,6 @@ gulp.task('build-frontend', ['assets', 'index:prod'], function() {
       .pipe(gulp.dest(conf.paths.distPublic));
 });
 
-
 /**
  * Copies assets to the dist directory.
  */
@@ -88,7 +85,6 @@ gulp.task('assets', function() {
   return gulp.src(path.join(conf.paths.assets, '/**/*'), {base: conf.paths.app})
       .pipe(gulp.dest(conf.paths.distPublic));
 });
-
 
 /**
  * Cleans all build artifacts.

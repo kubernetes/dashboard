@@ -15,7 +15,6 @@
 import {StateParams} from 'replicasetdetail/replicasetdetail_state';
 import {stateName} from 'replicasetdetail/replicasetdetail_state';
 
-
 /**
  * Controller for the replica set list view.
  *

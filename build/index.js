@@ -23,11 +23,11 @@ import wiredep from 'wiredep';
 
 import conf from './conf';
 
-
 /**
  * Creates index file in the given directory with dependencies injected from that directory.
  *
  * @param {string} indexPath
+ * @return {!stream.Stream}
  */
 function createIndexFile(indexPath) {
   let injectStyles = gulp.src(path.join(indexPath, '**/*.css'), {read: false});
@@ -54,12 +54,10 @@ function createIndexFile(indexPath) {
       .pipe(browserSync.stream());
 }
 
-
 /**
  * Creates frontend application index file with development dependencies injected.
  */
 gulp.task('index', ['scripts', 'styles'], function() { return createIndexFile(conf.paths.serve); });
-
 
 /**
  * Creates frontend application index file with production dependencies injected.
