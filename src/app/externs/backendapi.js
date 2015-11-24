@@ -106,3 +106,11 @@ backendApi.ReplicaSetPod;
  * }}
  */
 backendApi.NamespaceList;
+
+/**
+ * @typedef {{
+ *  key: string,
+ *  value: string
+ * }}
+ */
+backendApi.Label;
