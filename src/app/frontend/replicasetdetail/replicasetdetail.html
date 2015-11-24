@@ -14,7 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div layout="row" layout-margin layout-align="center center">
-  Displaying details for replica set {{ctrl.stateParams.replicaSet}} in namespace
-  {{ctrl.stateParams.namespace}}.
+<div layout="column" layout-margin layout-align="center center">
+  Displaying details for replica set {{ctrl.replicaSetDetail.name}} in namespace
+  {{ctrl.replicaSetDetail.namespace}}.
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th>Pod</th>
+          <th>Start time</th>
+          <th>IP</th>
+          <th>Node</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="pod in ctrl.replicaSetDetail.pods">
+          <td>{{pod.name}}</td>
+          <td>{{pod.startTime}}</td>
+          <td>{{pod.podIP}}</td>
+          <td>{{pod.nodeName}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

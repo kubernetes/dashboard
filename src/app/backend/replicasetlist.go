@@ -16,6 +16,7 @@ package main
 
 import (
 	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
@@ -33,6 +34,9 @@ type ReplicaSet struct {
 	// Name of the Replica Set.
 	Name string `json:"name"`
 
+	// Namespace this Replica Set is in.
+	Namespace string `json:"namespace"`
+
 	// Human readable description of this Replica Set.
 	Description string `json:"description"`
 
@@ -48,8 +52,8 @@ type ReplicaSet struct {
 	// Container images of the Replica Set.
 	ContainerImages []string `json:"containerImages"`
 
-	// Age in milliseconds of the oldest replica in the Set.
-	Age uint64 `json:"age"`
+	// Time the replica set was created.
+	CreationTime unversioned.Time `json:"creationTime"`
 
 	// Internal endpoints of all Kubernetes services have the same label selector as this Replica Set.
 	InternalEndpoints []string `json:"internalEndpoints"`
@@ -77,7 +81,8 @@ func GetReplicaSetList(client *client.Client) (*ReplicaSetList, error) {
 		}
 
 		replicaSetList.ReplicaSets = append(replicaSetList.ReplicaSets, ReplicaSet{
-			Name: replicaSet.ObjectMeta.Name,
+			Name:      replicaSet.ObjectMeta.Name,
+			Namespace: replicaSet.ObjectMeta.Namespace,
 			// TODO(bryk): This field contains test value. Implement it.
 			Description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
 				"Nulla metus nibh, iaculis a consectetur vitae, imperdiet pellentesque turpis.",
@@ -85,8 +90,7 @@ func GetReplicaSetList(client *client.Client) (*ReplicaSetList, error) {
 			PodsRunning:     replicaSet.Status.Replicas,
 			PodsPending:     replicaSet.Spec.Replicas - replicaSet.Status.Replicas,
 			ContainerImages: containerImages,
-			// TODO(bryk): This field contains test value. Implement it.
-			Age: 18,
+			CreationTime:    replicaSet.ObjectMeta.CreationTimestamp,
 			// TODO(bryk): This field contains test value. Implement it.
 			InternalEndpoints: []string{"webapp"},
 			// TODO(bryk): This field contains test value. Implement it.

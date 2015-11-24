@@ -20,13 +20,12 @@
  */
 export default class ReplicaSetDetailController {
   /**
-   * @param {!./replicasetdetail_state.StateParams} $stateParams
    * @ngInject
    */
-  constructor($stateParams) {
+  constructor(replicaSetDetail) {
     /**
-     * @export {!./replicasetdetail_state.StateParams}
+     * @export {backendApi.ReplicaSetDetail}
      */
-    this.stateParams = $stateParams;
+    this.replicaSetDetail = replicaSetDetail;
   }
 }

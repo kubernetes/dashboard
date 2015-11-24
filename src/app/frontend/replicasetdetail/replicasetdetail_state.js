@@ -52,5 +52,21 @@ export default function stateConfig($stateProvider) {
     controllerAs: 'ctrl',
     url: '/replicasets/:namespace/:replicaSet',
     templateUrl: 'replicasetdetail/replicasetdetail.html',
+    resolve: {
+      replicaSetDetail: resolveDetails,
+    },
   });
+}
+
+
+/**
+ * @param {!StateParams} $stateParams
+ * @param {!angular.$resource} $resource
+ * @ngInject
+ */
+function resolveDetails($stateParams, $resource) {
+  /** @type {!angular.Resource<!backendApi.ReplicaSetDetail>} */
+  let resource = $resource('/api/replicasets/:namespace/:replicaSet', $stateParams);
+
+  return resource.get().$promise;
 }
