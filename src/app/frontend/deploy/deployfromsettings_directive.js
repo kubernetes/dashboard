@@ -12,19 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './deploy_state';
-import deployFromSettingsDirective from './deployfromsettings_directive';
+import DeployFromSettingsController from './deployfromsettings_controller';
 
 /**
- * Angular module for the deploy view.
- *
- * The view allows for deploying applications to Kubernetes clusters.
+ * Returns directive definition object for the deploy from settings directive.
+ * @return {!angular.Directive}
  */
-export default angular.module(
-                          'kubernetesDashboard.deploy',
-                          [
-                            'ngMaterial',
-                            'ui.router',
-                          ])
-    .config(stateConfig)
-    .directive('deployFromSettings', deployFromSettingsDirective);
+export default function deployFromSettingsDirective() {
+  return {
+    scope: {},
+    bindToController: {
+      name: '=',
+      namespace: '=',
+      detail: '=',
+    },
+    controller: DeployFromSettingsController,
+    controllerAs: 'ctrl',
+    templateUrl: 'deploy/deployfromsettings.html',
+  };
+}
