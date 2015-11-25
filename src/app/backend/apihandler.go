@@ -59,6 +59,15 @@ func CreateHttpApiHandler(client *client.Client) http.Handler {
 			Writes(NamespacesList{}))
 	wsContainer.Add(namespaceListWs)
 
+	logsWs := new(restful.WebService)
+	logsWs.Path("/api/logs").
+		Produces(restful.MIME_JSON)
+	logsWs.Route(
+		logsWs.GET("/{namespace}/{podId}").
+			To(apiHandler.handleLogs).
+			Writes(Logs{}))
+	wsContainer.Add(logsWs)
+
 	return wsContainer
 }
 
@@ -119,6 +128,19 @@ func (apiHandler *ApiHandler) handleGetNamespaceList(
 		return
 	}
 
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles log API call.
+func (apiHandler *ApiHandler) handleLogs(request *restful.Request, response *restful.Response) {
+
+	namespace := request.PathParameter("namespace")
+	podId := request.PathParameter("podId")
+	result, err := GetPodLogs(apiHandler.client, namespace, podId)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
