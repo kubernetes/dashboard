@@ -24,7 +24,6 @@ import replicaSetDetailModule from './replicasetdetail/replicasetdetail_module';
 import replicaSetListModule from './replicasetlist/replicasetlist_module';
 import zerostateModule from './zerostate/zerostate_module';
 
-
 export default angular.module(
                           'kubernetesDashboard',
                           [

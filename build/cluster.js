@@ -30,12 +30,11 @@ import source from 'vinyl-source-stream';
 
 import conf from './conf';
 
-
-const kubernetesArchive = 'kubernetes.tar.gz',
-      kubernetesUrl = 'https://github.com/kubernetes/kubernetes.git', stableVersion = 'v1.1.1',
-      tarballUrl = 'https://storage.googleapis.com/kubernetes-release/release',
-      upScript = `${conf.paths.kubernetes}/hack/local-up-cluster.sh`;
-
+const kubernetesArchive = 'kubernetes.tar.gz';
+const kubernetesUrl = 'https://github.com/kubernetes/kubernetes.git';
+const stableVersion = 'v1.1.1';
+const tarballUrl = 'https://storage.googleapis.com/kubernetes-release/release';
+const upScript = `${conf.paths.kubernetes}/hack/local-up-cluster.sh`;
 
 /**
  * Currently running cluster process object. Null if the cluster is not running.
@@ -43,8 +42,6 @@ const kubernetesArchive = 'kubernetes.tar.gz',
  * @type {?child.ChildProcess}
  */
 let clusterProcess = null;
-let exec = childProcess.exec;
-
 
 /**
  * A Number, representing the ID value of the timer that is set for function which periodically
@@ -54,14 +51,13 @@ let exec = childProcess.exec;
  */
 let isRunningSetIntervalHandler = null;
 
-
 /**
  * Checks if cluster health check return correct status.
  * When custer is up and running then return 'ok'.
  * @param {function(?Error=)} doneFn
  */
 function clusterHealthCheck(doneFn) {
-  exec(`curl http://127.0.0.1:8080/healthz/ping`, function(err, stdout) {
+  childProcess.exec(`curl http://127.0.0.1:8080/healthz/ping`, function(err, stdout) {
     if (err) {
       return doneFn(new Error(err));
     }
@@ -69,19 +65,17 @@ function clusterHealthCheck(doneFn) {
   });
 }
 
-
 /**
  * Executes controls command using kubectl.
  * @param {string} command
  * @param {function(?Error=)} doneFn
  */
 function executeKubectlCommand(command, doneFn) {
-  exec(`${conf.paths.kubernetes}/cluster/kubectl.sh ${command}`, function(err) {
+  childProcess.exec(`${conf.paths.kubernetes}/cluster/kubectl.sh ${command}`, function(err) {
     if (err) return doneFn(new Error(err));
     doneFn();
   });
 }
-
 
 /**
  * Creates cluster from scratch.
@@ -95,7 +89,6 @@ function executeKubectlCommand(command, doneFn) {
  *  * Install etcd
  */
 gulp.task('local-up-cluster', ['spawn-cluster']);
-
 
 /**
  * Tears down a Kubernetes cluster.
@@ -111,7 +104,6 @@ gulp.task('kill-cluster', function(doneFn) {
     doneFn();
   }
 });
-
 
 /**
  * Clones kubernetes from git repository. Task skip if kubernetes directory exist.
@@ -129,7 +121,6 @@ gulp.task('clone-kubernetes', function(doneFn) {
   });
 });
 
-
 /**
  * Checkouts kubernetes to latest stable version.
  */
@@ -139,7 +130,6 @@ gulp.task('checkout-kubernetes-version', ['clone-kubernetes'], function(doneFn) 
     doneFn();
   });
 });
-
 
 /**
  * Checks if kubectl is already downloaded.
@@ -163,12 +153,10 @@ gulp.task('download-kubectl', function(doneFn) {
   });
 });
 
-
 /**
  * Removes kubernetes before git clone command.
  */
 gulp.task('clear-kubernetes', function() { return del(conf.paths.kubernetes); });
-
 
 /**
  * Spawns local-up-cluster.sh script.
@@ -187,7 +175,6 @@ gulp.task(
 
       clusterProcess.on('exit', function() { clusterProcess = null; });
     });
-
 
 /**
  * Checks periodically if cluster is up and running.
@@ -209,7 +196,6 @@ gulp.task('wait-for-cluster', function(doneFn) {
   }
 });
 
-
 /**
  * Sets a cluster entry in kubeconfig.
  * Configures kubernetes server for localhost.
@@ -223,7 +209,6 @@ gulp.task(
           doneFn);
     });
 
-
 /**
  * Sets a context entry in kubeconfig as local.
  */
@@ -232,7 +217,6 @@ gulp.task(
     function(doneFn) {
       executeKubectlCommand('config set-context local --cluster=local', doneFn);
     });
-
 
 /**
  * Sets the current-context in a kubeconfig file

@@ -14,7 +14,6 @@
 
 import PageObject from './zerostate_po';
 
-
 describe('Zero state view', function() {
   let page;
 

@@ -14,7 +14,6 @@
 
 import stateConfig from './deploy_state';
 
-
 /**
  * Angular module for the deploy view.
  *

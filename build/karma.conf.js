@@ -23,7 +23,6 @@ import wiredep from 'wiredep';
 
 import conf from './conf';
 
-
 /**
  * Returns an array of files required by Karma to run the tests.
  *
@@ -42,7 +41,6 @@ function getFileList() {
     path.join(conf.paths.frontendSrc, '**/*.html'),
   ]);
 }
-
 
 /**
  * Exported default function which sets Karma configuration. Required by the framework.
@@ -96,7 +94,7 @@ export default function(config) {
 
     // karma-ng-html2js-preprocessor plugin config.
     ngHtml2JsPreprocessor: {
-      stripPrefix: conf.paths.frontendSrc + '/',
+      stripPrefix: `${conf.paths.frontendSrc}/`,
       moduleName: conf.frontend.moduleName,
     },
   };

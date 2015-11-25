@@ -17,25 +17,59 @@
     "modules": true,
   },
   "rules": {
+    // Require parens in arrow function arguments.
+    "arrow-parens": [2, "always"],
     // Require dangling comma at the end of any  multiline list/object. This is to be consistent
     // with backend code.
     "comma-dangle": [2, "always-multiline"],
+    // Enforce newline consistency in member expressions. Dots are places on the same line as
+    // the property.
+    "dot-location": [2, "property"],
+    // Enforce newline at the end of file, with no multiple empty lines.
+    "eol-last": 2,
     // Force using === and !=== except when comparing to null. This is to prevent from bugs that
     // come from automatic type conversion in == operator and to be consistent across the codebase.
     "eqeqeq": [2, "allow-null"],
+    // Require a capital letter for constructors.
+    "new-cap": 2,
+    // Disallow the omission of parentheses when invoking a constructor with no arguments.
+    "new-parens": 2,
+    // Disallow modifying constant variables.
+    "no-const-assign": 2,
+    // Disallow this keywords outside of classes or class-like objects.
+    "no-invalid-this": 2,
+    // Allow at most one newline between code blocks.
+    "no-multiple-empty-lines": [2, {"max": 1}],
+    // Disallow the use of ternary operators when a simpler alternative exists.
+    "no-unneeded-ternary": 2,
+    // Avoid code that looks like two expressions but is actually one.
+    "no-unexpected-multiline": 2,
     // Disallow trailing spaces. This is to unify code because editors may have different
     // settings.
     "no-trailing-spaces": 2,
-    // Disallow modifying constant variables.
-    "no-const-assign": 2,
     // Force using 'let' or 'const' instead of 'var'. This is to prevent from var hoisting bugs.
     "no-var": 2,
+    // Require one variable declaration statement.
+    "one-var": [2, "never"],
+    // Prefer using template literals instead of strings concatenation.
+    "prefer-template": 2,
+    // Require use of the second argument for parseInt().
+    "radix": 2,
     // Require semicolons in every place they are valid. This is to prevent from automatic
     // semicolon insertion bugs.
     "semi": [2, "always"],
     // Disallow setting strict mode in files. All JS code in the project uses ES6 modules so is
     // implicitly strict.
     "strict": [2, "never"],
+    // Require valid JSDoc.
+    "valid-jsdoc": [2, {
+      "prefer": {
+        "returns": "return"
+      },
+      "requireReturnDescription": false,
+      "requireReturn": false,
+      "requireParamDescription": false
+    }],
     // No spacing in object literals nor in imports/exports.
     "object-curly-spacing": [2, "never"],
   },

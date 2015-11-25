@@ -15,7 +15,6 @@
 import {stateName as zerostate} from 'zerostate/zerostate_state';
 import {stateName as replicasetliststate} from 'replicasetlist/replicasetlist_state';
 
-
 /**
  * Controller for the deploy view.
  *

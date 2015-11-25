@@ -22,7 +22,6 @@ import path from 'path';
 import conf from './conf';
 import goCommand from './gocommand';
 
-
 /**
  * Compiles backend application in development mode and places the binary in the serve
  * directory.
@@ -39,7 +38,6 @@ gulp.task('backend', function(doneFn) {
       ],
       doneFn);
 });
-
 
 /**
  * Compiles backend application in production mode and places the binary in the dist

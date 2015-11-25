@@ -14,7 +14,6 @@
 
 import ChromeController from './chrome_controller';
 
-
 /**
  * Returns directive definition object for the chrome directive.
  *

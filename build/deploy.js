@@ -21,7 +21,6 @@ import path from 'path';
 
 import conf from './conf';
 
-
 /**
  * @param {!Array<string>} args
  * @param {function(?Error=)} doneFn
@@ -35,11 +34,10 @@ function spawnDockerProcess(args, doneFn) {
     if (code === 0) {
       doneFn();
     } else {
-      doneFn(new Error('Docker command error, code:' + code));
+      doneFn(new Error(`Docker command error, code: ${code}`));
     }
   });
 }
-
 
 /**
  * Creates Docker image for the application. The image is tagged with the image name configuration
@@ -59,7 +57,6 @@ gulp.task('docker-image', ['build', 'docker-file'], function(doneFn) {
       ],
       doneFn);
 });
-
 
 /**
  * Processes the Docker file and places it in the dist folder for building.

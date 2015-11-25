@@ -17,12 +17,10 @@
  */
 import path from 'path';
 
-
 /**
  * Base path for all other paths.
  */
 const basePath = path.join(__dirname, '../');
-
 
 /**
  * Exported configuration object with common constants used in build pipeline.

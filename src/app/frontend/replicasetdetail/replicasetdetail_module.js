@@ -14,7 +14,6 @@
 
 import stateConfig from './replicasetdetail_state';
 
-
 /**
  * Angular module for the Replica Set details view.
  *

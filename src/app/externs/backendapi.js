@@ -22,9 +22,7 @@
  * @externs
  */
 
-
 const backendApi = {};
-
 
 /**
  * @typedef {{
@@ -34,7 +32,6 @@ const backendApi = {};
  * }}
  */
 backendApi.PortMapping;
-
 
 /**
  * @typedef {{
@@ -48,14 +45,12 @@ backendApi.PortMapping;
  */
 backendApi.AppDeployment;
 
-
 /**
  * @typedef {{
  *   replicaSets: !Array<!backendApi.ReplicaSet>
  * }}
  */
 backendApi.ReplicaSetList;
-
 
 /**
  * @typedef {{
@@ -73,7 +68,6 @@ backendApi.ReplicaSetList;
  */
 backendApi.ReplicaSet;
 
-
 /**
  * @typedef {{
  *   name: string,
@@ -88,7 +82,6 @@ backendApi.ReplicaSet;
  */
 backendApi.ReplicaSetDetail;
 
-
 /**
  * @typedef {{
  *   name: string,
@@ -98,7 +91,6 @@ backendApi.ReplicaSetDetail;
  * }}
  */
 backendApi.ReplicaSetPod;
-
 
 /**
  * @typedef {{

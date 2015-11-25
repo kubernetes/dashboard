@@ -14,10 +14,8 @@
 
 import ReplicaSetDetailController from './replicasetdetail_controller';
 
-
 /** Name of the state. Can be used in, e.g., $state.go method. */
 export const stateName = 'replicasetdetail';
-
 
 /**
  * Parameters for this state.
@@ -39,7 +37,6 @@ export class StateParams {
   }
 }
 
-
 /**
  * Configures states for the service view.
  *
@@ -58,10 +55,10 @@ export default function stateConfig($stateProvider) {
   });
 }
 
-
 /**
  * @param {!StateParams} $stateParams
  * @param {!angular.$resource} $resource
+ * @return {!angular.$q.Promise}
  * @ngInject
  */
 function resolveDetails($stateParams, $resource) {

@@ -22,7 +22,6 @@ import path from 'path';
 
 import conf from './conf';
 
-
 /**
  * Checks whether codebase is in a state that is ready for submission. This means that code
  * follows the style guide, it is buildable and all tests pass.
@@ -31,13 +30,11 @@ import conf from './conf';
  **/
 gulp.task('check', ['lint', 'build', 'test', 'integration-test:prod']);
 
-
 /**
  * Lints all projects code files.
  * // TODO(bryk): Also lint Go files here.
  */
 gulp.task('lint', ['lint-javascript', 'check-javascript-format']);
-
 
 /**
  * Lints all projects JavaScript files using ESLint. This includes frontend source code, as well as,
@@ -53,7 +50,6 @@ gulp.task('lint-javascript', function() {
       .pipe(gulpEslint.failOnError());
 });
 
-
 /**
  * Checks whether project's JavaScript files are formatted according to clang-format style.
  */
@@ -61,7 +57,6 @@ gulp.task('check-javascript-format', function() {
   return gulp.src([path.join(conf.paths.src, '**/*.js'), path.join(conf.paths.build, '**/*.js')])
       .pipe(gulpClangFormat.checkFormat('file', undefined, {verbose: true, fail: true}));
 });
-
 
 /**
  * Formats all project's JavaScript files using clang-format.

@@ -14,10 +14,8 @@
 
 import ReplicaSetListController from './replicasetlist_controller';
 
-
 /** Name of the state. Can be used in, e.g., $state.go method. */
 export const stateName = 'replicasets';
-
 
 /**
  * Configures states for the service view.
