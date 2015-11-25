@@ -33,18 +33,16 @@ export default function stateConfig($stateProvider) {
     },
     templateUrl: 'deploy/deploy.html',
   });
+}
 
-  /**
-   * Resolves namespaces for the deploy view.
-   *
-   * @param {!angular.$resource} $resource
-   * @return {!angular.$q.Promise}
-   * @ngInject
-   */
-  function resolveNamespaces($resource) {
-    /** @type {!angular.Resource<!backendApi.NamespaceList>} */
-    let resource = $resource('/api/namespaces');
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.$q.Promise}
+ * @ngInject
+ */
+export function resolveNamespaces($resource) {
+  /** @type {!angular.Resource<!backendApi.NamespaceList>} */
+  let resource = $resource('/api/namespaces');
 
-    return resource.get().$promise;
-  }
+  return resource.get().$promise;
 }
