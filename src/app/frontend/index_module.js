@@ -19,6 +19,7 @@
 import chromeModule from './chrome/chrome_module';
 import deployModule from './deploy/deploy_module';
 import indexConfig from './index_config';
+import logsModule from './logs/logs_module';
 import routeConfig from './index_route';
 import replicaSetDetailModule from './replicasetdetail/replicasetdetail_module';
 import replicaSetListModule from './replicasetlist/replicasetlist_module';
@@ -36,6 +37,7 @@ export default angular.module(
                             'ui.router',
                             chromeModule.name,
                             deployModule.name,
+                            logsModule.name,
                             replicaSetDetailModule.name,
                             replicaSetListModule.name,
                             zerostateModule.name,

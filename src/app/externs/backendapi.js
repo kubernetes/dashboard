@@ -106,3 +106,12 @@ backendApi.NamespaceSpec;
  * }}
  */
 backendApi.NamespaceList;
+
+/**
+ * @typedef {{
+ *   podId: string,
+ *   sinceTime: ?string,
+ *   logs: !Array<string>
+ * }}
+ */
+backendApi.Logs;

@@ -14,17 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-content class="kd-content">
-  <md-toolbar class="kd-toolbar">
-    <div class="md-toolbar-tools">
-      <md-button ui-sref="zero" aria-label="Kubernetes Dashboard homepage" class="md-icon-button">
-        <md-icon md-svg-icon="assets/images/kubernetes-logo.svg" class="kd-toolbar-logo"></md-icon>
-      </md-button>
-      <h2>
-        <span>kubernetes</span>
-      </h2>
-      <div flex ui-view="toolbar"></div>
-    </div>
-  </md-toolbar>
-  <div ng-transclude></div>
-</md-content>
+<div layout="row" flex layout-fill>
+    <md-content layout-padding flex layout-fill
+                ng-class="{'md-logs-text-color-invert': ctrl.isTextColorInverted,
+                 'md-logs-text-color': !ctrl.isTextColorInverted}">
+        <div ng-repeat="n in ctrl.logsSet">
+            <pre>{{n}}</pre>
+        </div>
+    </md-content>
+</div>

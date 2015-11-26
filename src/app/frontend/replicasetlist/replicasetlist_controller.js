@@ -14,6 +14,7 @@
 
 import {StateParams} from 'replicasetdetail/replicasetdetail_state';
 import {stateName} from 'replicasetdetail/replicasetdetail_state';
+import {stateName as logsState} from 'logs/logs_state';
 
 /**
  * Controller for the replica set list view.
@@ -62,5 +63,14 @@ export default class ReplicaSetListController {
    */
   getReplicaSetDetailHref(replicaSet) {
     return this.state_.href(stateName, new StateParams(replicaSet.namespace, replicaSet.name));
+  }
+
+  /**
+   * @param {!backendApi.ReplicaSet} replicaSet
+   * @return {string}
+   * @export
+   */
+  getReplicaSetLogsHref(replicaSet) {
+    return this.state_.href(logsState, new StateParams(replicaSet.namespace, replicaSet.name));
   }
 }
