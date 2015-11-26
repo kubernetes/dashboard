@@ -40,6 +40,9 @@ export default class DeployController {
     /** @export {number} */
     this.replicas = 1;
 
+    /** @export {string} */
+    this.description = '';
+
     /**
      * List of supported protocols.
      * TODO(bryk): Do not hardcode the here, move to backend.
@@ -94,6 +97,7 @@ export default class DeployController {
       containerImage: this.containerImage,
       isExternal: this.isExternal,
       name: this.name,
+      description: this.description,
       portMappings: this.portMappings.filter(this.isPortMappingEmpty_),
       replicas: this.replicas,
       namespace: this.namespace,

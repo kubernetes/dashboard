@@ -20,6 +20,11 @@ import (
 	"k8s.io/kubernetes/pkg/util"
 )
 
+const (
+	DescriptionAnnotationKey = "description"
+	NameLabelKey             = "name"
+)
+
 // Specification for an app deployment.
 type AppDeploymentSpec struct {
 	// Name of the application.
@@ -37,6 +42,9 @@ type AppDeploymentSpec struct {
 
 	// Whether the created service is external.
 	IsExternal bool `json:"isExternal"`
+
+	// Description of the deployment.
+	Description string `json:"description"`
 
 	// Target namespace of the application.
 	Namespace string `json:"namespace"`
@@ -59,10 +67,16 @@ type PortMapping struct {
 // common labels.
 // TODO(bryk): Write tests for this function.
 func DeployApp(spec *AppDeploymentSpec, client *client.Client) error {
+	annotations := map[string]string{DescriptionAnnotationKey: spec.Description}
+	labels := map[string]string{NameLabelKey: spec.Name}
+	objectMeta := api.ObjectMeta{
+		Annotations: annotations,
+		Name:        spec.Name,
+		Labels:      labels,
+	}
+
 	podTemplate := &api.PodTemplateSpec{
-		ObjectMeta: api.ObjectMeta{
-			Labels: map[string]string{"name": spec.Name},
-		},
+		ObjectMeta: objectMeta,
 		Spec: api.PodSpec{
 			Containers: []api.Container{{
 				Name:  spec.Name,
@@ -72,12 +86,10 @@ func DeployApp(spec *AppDeploymentSpec, client *client.Client) error {
 	}
 
 	replicaSet := &api.ReplicationController{
-		ObjectMeta: api.ObjectMeta{
-			Name: spec.Name,
-		},
+		ObjectMeta: objectMeta,
 		Spec: api.ReplicationControllerSpec{
 			Replicas: spec.Replicas,
-			Selector: map[string]string{"name": spec.Name},
+			Selector: labels,
 			Template: podTemplate,
 		},
 	}
@@ -91,12 +103,9 @@ func DeployApp(spec *AppDeploymentSpec, client *client.Client) error {
 
 	if len(spec.PortMappings) > 0 {
 		service := &api.Service{
-			ObjectMeta: api.ObjectMeta{
-				Name:   spec.Name,
-				Labels: map[string]string{"name": spec.Name},
-			},
+			ObjectMeta: objectMeta,
 			Spec: api.ServiceSpec{
-				Selector: map[string]string{"name": spec.Name},
+				Selector: labels,
 			},
 		}
 

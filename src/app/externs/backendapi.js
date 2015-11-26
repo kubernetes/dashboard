@@ -38,6 +38,7 @@ backendApi.PortMapping;
  *   containerImage: string,
  *   isExternal: boolean,
  *   name: string,
+ *   description: string,
  *   portMappings: !Array<!backendApi.PortMapping>,
  *   replicas: number,
  *   namespace: string

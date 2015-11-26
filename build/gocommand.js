@@ -21,7 +21,8 @@ import lodash from 'lodash';
 import conf from './conf';
 
 /**
- * Spawns Go process wrapped with the Godep command.
+ * Spawns Go process wrapped with the Godep command. Backend source files must me packaged with
+ * 'package-backend-source' task before running this command.
  *
  * @param {!Array<string>} args
  * @param {function(?Error=)} doneFn
@@ -33,7 +34,7 @@ export default function spawnGoProcess(args, doneFn) {
     return;
   }
 
-  let sourceGopath = `${process.env.GOPATH}:${conf.paths.base}`;
+  let sourceGopath = `${process.env.GOPATH}:${conf.paths.backendTmp}`;
   let env = lodash.merge(process.env, {GOPATH: sourceGopath});
 
   let goTask = child.spawn('godep', ['go'].concat(args), {

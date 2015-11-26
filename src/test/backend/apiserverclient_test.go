@@ -15,7 +15,6 @@
 package main
 
 import (
-	backend "app/backend"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"testing"
 )
@@ -34,14 +33,14 @@ func (FakeClientFactory) NewInCluster() (*client.Client, error) {
 }
 
 func TestCreateApiserverClient_inCluster(t *testing.T) {
-	client, _ := backend.CreateApiserverClient("", new(FakeClientFactory))
+	client, _ := CreateApiserverClient("", new(FakeClientFactory))
 	if client != fakeInClusterClient {
 		t.Fatal("Expected in cluster client to be created")
 	}
 }
 
 func TestCreateApiserverClient_remote(t *testing.T) {
-	client, _ := backend.CreateApiserverClient("http://foo:bar", new(FakeClientFactory))
+	client, _ := CreateApiserverClient("http://foo:bar", new(FakeClientFactory))
 	if client != fakeRemoteClient {
 		t.Fatal("Expected remote client to be created")
 	}

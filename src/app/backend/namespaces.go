@@ -28,7 +28,7 @@ type NamespaceSpec struct {
 }
 
 // List of Namespaces in the cluster.
-type NamespacesList struct {
+type NamespaceList struct {
 	// Unordered list of Namespaces.
 	Namespaces []string `json:"namespaces"`
 }
@@ -47,14 +47,14 @@ func CreateNamespace(spec *NamespaceSpec, client *client.Client) error {
 }
 
 // Returns a list of all namespaces in the cluster.
-func GetNamespaceList(client *client.Client) (*NamespacesList, error) {
+func GetNamespaceList(client *client.Client) (*NamespaceList, error) {
 	list, err := client.Namespaces().List(labels.Everything(), fields.Everything())
 
 	if err != nil {
 		return nil, err
 	}
 
-	namespaceList := &NamespacesList{}
+	namespaceList := &NamespaceList{}
 
 	for _, element := range list.Items {
 		namespaceList.Namespaces = append(namespaceList.Namespaces, element.ObjectMeta.Name)

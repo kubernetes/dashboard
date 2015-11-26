@@ -26,7 +26,7 @@ import goCommand from './gocommand';
  * Compiles backend application in development mode and places the binary in the serve
  * directory.
  */
-gulp.task('backend', function(doneFn) {
+gulp.task('backend', ['package-backend-source'], function(doneFn) {
   goCommand(
       [
         'build',
@@ -46,7 +46,7 @@ gulp.task('backend', function(doneFn) {
  * The production binary difference from development binary is only that it contains all
  * dependencies inside it and is targeted for Linux.
  */
-gulp.task('backend:prod', function(doneFn) {
+gulp.task('backend:prod', ['package-backend-source'], function(doneFn) {
   let outputBinaryPath = path.join(conf.paths.dist, conf.backend.binaryName);
 
   // Delete output binary first. This is required because prod build does not override it.
@@ -71,4 +71,17 @@ gulp.task('backend:prod', function(doneFn) {
                 });
           },
           function(error) { doneFn(error); });
+});
+
+/**
+ * Moves all backend source files (app and tests) to a temporary package directory where it can be
+ * applied go commands.
+ *
+ * This is required to consolidate test and app files into single directories and to make packaging
+ * work.
+ */
+gulp.task('package-backend-source', function() {
+  return gulp
+      .src([path.join(conf.paths.backendSrc, '**/*'), path.join(conf.paths.backendTest, '**/*')])
+      .pipe(gulp.dest(conf.paths.backendTmpSrc));
 });
