@@ -14,17 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-content class="kd-content">
-  <md-toolbar class="kd-toolbar">
-    <div class="md-toolbar-tools">
-      <a ui-sref="replicasets">
-        <md-icon md-svg-icon="assets/images/kubernetes-logo.svg" class="kd-toolbar-logo"></md-icon>
-      </a>
-      <h2>
-        <span>kubernetes</span>
-      </h2>
-      <div flex ui-view="toolbar"></div>
+<div layout="row" flex layout-fill>
+  <md-content layout-padding flex layout-fill
+              ng-class=ctrl.getStyleClass()>
+    <div ng-repeat="n in ctrl.logsSet" class="kd-logs-element">
+      <pre>{{n}}</pre>
     </div>
-  </md-toolbar>
-  <div ng-transclude></div>
-</md-content>
+  </md-content>
+</div>

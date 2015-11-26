@@ -1,0 +1,48 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<div layout="row" layout-wrap layout-margin layout-align="center center">
+  <span flex="10"></span>
+
+  <div layout="row" layout-wrap layout-margin layout-align="center center">
+    <span>Logs from pod</span>
+    <span flex></span>
+    <md-select aria-label="Logs from pod" ng-model="ctrl.pod"
+               md-on-close="ctrl.onPodChange(ctrl.pod.name)"
+               required>
+      <md-option ng-repeat="item in ctrl.pods" ng-value="item">
+        {{item.name}}
+      </md-option>
+    </md-select>
+    <span>container</span>
+    <md-select aria-label="Containers" ng-model="ctrl.container"
+               md-on-close="ctrl.onContainerChange(ctrl.container.name)"
+               required>
+      <md-option ng-repeat="item in ctrl.containers" ng-value="item">
+        {{item.name}}
+      </md-option>
+    </md-select>
+  </div>
+  <span flex>Running since {{ctrl.podCreationTime}}</span>
+  <span flex></span>
+  <md-button class="kd-icon-button" id="colorText"
+             ng-click="ctrl.onTextColorChange()">
+    <md-icon md-font-library="material-icons"
+             ng-class=ctrl.getStyleClass()>
+      format_color_text
+    </md-icon>
+  </md-button>
+</div>

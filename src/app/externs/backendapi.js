@@ -184,3 +184,12 @@ backendApi.ReplicaSetPodWithContainers;
  * }}
  */
 backendApi.ReplicaSetPods;
+
+/**
+ * @typedef {{
+ *   podId: string,
+ *   sinceTime: string,
+ *   logs: !Array<string>
+ * }}
+ */
+backendApi.Logs;

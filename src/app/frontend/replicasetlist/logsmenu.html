@@ -27,18 +27,21 @@ limitations under the License.
     </md-menu-item>
     <md-menu-item ng-repeat="pod in ctrl.replicaSetPodsList" class="kd-menu-logs-md-menu-item">
       <div flex class="kd-menu-logs-item">{{pod.name | middleEllipsis:10}}</div>
-      <div flex="50" class="kd-menu-logs-item">
-        <a>
+      <div flex="50" class="kd-menu-logs-item" ng-if="ctrl.podContainerExists(pod)">
+        <a ng-href="{{::ctrl.getLogsHref(pod.name, pod.podContainers[0].name)}}">
           {{pod.startTime}}<i
           class="material-icons kd-menu-logs-link-icon">open_in_new</i>
         </a>
       </div>
-      <div flex class="kd-menu-logs-item" ng-if="pod.totalRestartCount != 0">
+      <div flex="50" class="kd-menu-logs-item" ng-if="!ctrl.podContainerExists(pod)">
+        -
+      </div>
+      <div flex class="kd-menu-logs-item" ng-if="ctrl.podContainersRestarted(pod)">
         <a>
           Logs<i class="material-icons kd-menu-logs-link-icon">open_in_new</i>
         </a>
       </div>
-      <div flex class="kd-menu-logs-item" ng-if="pod.totalRestartCount == 0">
+      <div flex class="kd-menu-logs-item" ng-if="!ctrl.podContainersRestarted(pod)">
         -
       </div>
     </md-menu-item>

@@ -12,23 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../assets/styles/color_variables';
+$logs-toolbar-color-black: #000;
+$logs-toolbar-color-white: #fff;
 
-.kd-toolbar-logo {
-  height: 42px;
-  margin-right: 1em;
-  width: 42px;
+.kd-logs-color-icon {
+  background-color: $logs-toolbar-color-black;
+  color: $logs-toolbar-color-white;
 }
 
-.kd-toolbar {
-  box-shadow: $whiteframe-shadow-z1;
+.kd-logs-color-icon-invert {
+  background-color: $logs-toolbar-color-white;
+  color: $logs-toolbar-color-black;
 }
 
-body {
-  background-color: $body;
-  height: 100%;
-}
-
-a {
-  text-decoration: inherit;
+// This override styles to get white-black icon on toolbar
+md-toolbar {
+  md-icon {
+    &.kd-logs-color-icon-invert {
+      color: $logs-toolbar-color-black;
+    }
+  }
 }

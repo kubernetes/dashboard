@@ -22,6 +22,9 @@ describe('Logs menu controller', () => {
    */
   let ctrl;
 
+  /** @type {!ui.router.$state} */
+  let state;
+
   /**
    * @type {!function()} mdOpenMenu
    */
@@ -30,7 +33,10 @@ describe('Logs menu controller', () => {
   beforeEach(() => {
     angular.mock.module(replicaSetListModule.name);
 
-    angular.mock.inject(($controller) => { ctrl = $controller(LogsMenuController); });
+    angular.mock.inject(($controller, $state) => {
+      state = $state;
+      ctrl = $controller(LogsMenuController, $state);
+    });
   });
 
   it('should instantiate the controller properly', () => { expect(ctrl).not.toBeUndefined(); });
@@ -55,5 +61,56 @@ describe('Logs menu controller', () => {
 
     // then
     expect(ctrl.replicaSetPodsList).toEqual([]);
+  });
+
+  it('should call href on log click', () => {
+    // given
+    spyOn(state, 'href');
+
+    // when
+    ctrl.getLogsHref("podName", "containerName");
+
+    // then
+    expect(state.href).toHaveBeenCalled();
+  });
+
+  it('should return false when pod does not have any container', () => {
+    // when
+    let pod = {
+      "podContainers": [{}],
+    };
+    // then
+    expect(ctrl.podContainerExists(pod)).toBeFalsy();
+  });
+
+  it('should return true when pod has one container', () => {
+    // when
+    let pod = {
+      "podContainers": [
+        {
+          "name": "php-redis",
+        },
+      ],
+    };
+    // then
+    expect(ctrl.podContainerExists(pod)).toBeTruthy();
+  });
+
+  it('should return false when pod containers were not restarted', () => {
+    // when
+    let pod = {
+      "totalRestartCount": 0,
+    };
+    // then
+    expect(ctrl.podContainersRestarted(pod)).toBeFalsy();
+  });
+
+  it('should return true when pod containers were restarted', () => {
+    // when
+    let pod = {
+      "totalRestartCount": 1,
+    };
+    // then
+    expect(ctrl.podContainersRestarted(pod)).toBeTruthy();
   });
 });

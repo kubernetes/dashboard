@@ -12,23 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../assets/styles/color_variables';
-
-.kd-toolbar-logo {
-  height: 42px;
-  margin-right: 1em;
-  width: 42px;
-}
-
-.kd-toolbar {
-  box-shadow: $whiteframe-shadow-z1;
-}
-
-body {
-  background-color: $body;
-  height: 100%;
-}
-
-a {
-  text-decoration: inherit;
-}
+/** Name of the view. Can be used in state config to define toolbar view */
+export const toolbarViewName = 'toolbar';
