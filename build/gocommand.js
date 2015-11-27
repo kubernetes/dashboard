@@ -28,6 +28,11 @@ import conf from './conf';
  */
 export default function spawnGoProcess(args, doneFn) {
   // Add base directory to the gopath so that local imports work.
+  if (!process.env.GOPATH) {
+    doneFn(new Error('GOPATH is not set. Go process will not be spawned.'));
+    return;
+  }
+
   let sourceGopath = `${process.env.GOPATH}:${conf.paths.base}`;
   let env = lodash.merge(process.env, {GOPATH: sourceGopath});
 

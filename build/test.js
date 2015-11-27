@@ -121,13 +121,15 @@ gulp.task('backend-test:watch', ['backend-test'], function() {
 /**
  * Runs application integration tests. Uses development version of the application.
  */
-gulp.task('integration-test', ['serve:nowatch', 'webdriver-update'], runProtractorTests);
+gulp.task(
+    'integration-test', ['serve:nowatch', 'webdriver-update', 'wait-for-cluster'],
+    runProtractorTests);
 
 /**
  * Runs application integration tests. Uses production version of the application.
  */
 gulp.task(
-    'integration-test:prod', ['local-up-cluster', 'serve:prod', 'webdriver-update'],
+    'integration-test:prod', ['serve:prod', 'webdriver-update', 'wait-for-cluster'],
     runProtractorTests);
 
 /**

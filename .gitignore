@@ -8,10 +8,10 @@ bower_components/
 .tmp/
 coverage/
 dist/
+kubernetes/
 
 ## IDE specific files
 # IntelliJ
 .idea/
 # Vi temporary files
 *.swp
-
