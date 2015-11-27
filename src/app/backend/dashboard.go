@@ -43,14 +43,6 @@ func main() {
 		glog.Fatal(err)
 	}
 
-	serverAPIVersion, err := apiserverClient.ServerAPIVersions()
-	if err != nil {
-		glog.Fatal(err)
-	}
-
-	// Display Apiserver version. This is just for tests.
-	println("Server API version: " + serverAPIVersion.GoString())
-
 	// Run a HTTP server that serves static public files from './public' and handles API calls.
 	// TODO(bryk): Disable directory listing.
 	http.Handle("/", http.FileServer(http.Dir("./public")))
