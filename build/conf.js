@@ -97,7 +97,7 @@ export default {
     goWorkspace: path.join(basePath, '.go_workspace'),
     integrationTest: path.join(basePath, 'src/test/integration'),
     karmaConf: path.join(basePath, 'build/karma.conf.js'),
-    kubernetes: path.join(basePath, '.tmp/kubernetes'),
+    kubernetes: path.join(basePath, 'kubernetes'),
     nodeModules: path.join(basePath, 'node_modules'),
     partials: path.join(basePath, '.tmp/partials'),
     prodTmp: path.join(basePath, '.tmp/prod'),

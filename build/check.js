@@ -23,12 +23,21 @@ import path from 'path';
 import conf from './conf';
 
 /**
- * Checks whether codebase is in a state that is ready for submission. This means that code
- * follows the style guide, it is buildable and all tests pass.
+ * Builds Dashboard and ensures that the following requirements are met:
+ *   * The code follows the style guidelines.
+ *   * Unit tests in frontend & backend are successful.
+ *   * Integration tests against Kubernetes are successful. The cluster is
+ *     expected to be up and running as a prerequisite.
  *
  * This task should be used prior to publishing a change.
  **/
 gulp.task('check', ['lint', 'build', 'test', 'integration-test:prod']);
+
+/**
+ * Checks the code quality of Dashboard. In addition a local kubernetes cluster is spawned.
+ * NOTE: This is meant as an entry point for CI jobs.
+ */
+gulp.task('check:create-cluster', ['local-up-cluster', 'check']);
 
 /**
  * Lints all projects code files.

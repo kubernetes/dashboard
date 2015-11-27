@@ -59,4 +59,4 @@ before_script:
   # Local cluster has build process that runs in a Docker container.
   # This simplifies initial set up and provides for a very consistent build and test environment.
   - docker pull golang:1.4
-script: ./node_modules/.bin/gulp check
+script: ./node_modules/.bin/gulp check:create-cluster

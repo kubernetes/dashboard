@@ -44,12 +44,30 @@ const upScript = `${conf.paths.kubernetes}/hack/local-up-cluster.sh`;
 let clusterProcess = null;
 
 /**
+ * @type {boolean} The variable is set when there is an error during cluster creation.
+ */
+let clusterSpawnFailure = null;
+
+/**
  * A Number, representing the ID value of the timer that is set for function which periodically
  * checks if cluster is running. The null means that no timer is running.
  *
  * @type {?number}
  */
 let isRunningSetIntervalHandler = null;
+
+/**
+ * Checks if there was a failure during cluster creation.
+ * Produces an error in case there was one.
+ * @param {function(?Error=)} doneFn - callback for the error
+ */
+function checkForClusterFailure(doneFn) {
+  if (clusterSpawnFailure) {
+    clearTimeout(isRunningSetIntervalHandler);
+    isRunningSetIntervalHandler = null;
+    doneFn(new Error('There was an error during cluster creation. Aborting.'));
+  }
+}
 
 /**
  * Checks if cluster health check return correct status.
@@ -88,7 +106,7 @@ function executeKubectlCommand(command, doneFn) {
  *  * Install golang
  *  * Install etcd
  */
-gulp.task('local-up-cluster', ['spawn-cluster', 'wait-for-cluster']);
+gulp.task('local-up-cluster', ['spawn-cluster']);
 
 /**
  * Tears down a Kubernetes cluster.
@@ -145,7 +163,7 @@ gulp.task('download-kubectl', function(doneFn) {
           .pipe(untar())
           .pipe(filter)
           .pipe(chmod(755))
-          .pipe(gulp.dest(conf.paths.tmp))
+          .pipe(gulp.dest(conf.paths.base))
           .on('end', function() { doneFn(); });
     } else {
       doneFn();
@@ -173,18 +191,32 @@ gulp.task(
     function() {
       clusterProcess = childProcess.spawn(upScript, {stdio: 'inherit'});
 
-      clusterProcess.on('exit', function() { clusterProcess = null; });
+      clusterProcess.on('exit', function(code) {
+        if (code !== 0) {
+          clusterSpawnFailure = code;
+        }
+        clusterProcess = null;
+      });
     });
 
 /**
  * Checks periodically if cluster is up and running.
  */
 gulp.task('wait-for-cluster', function(doneFn) {
+  let counter = 0;
   if (!isRunningSetIntervalHandler) {
     isRunningSetIntervalHandler = setInterval(isRunning, 1000);
   }
 
   function isRunning() {
+    if (counter % 10 === 0) {
+      gulpUtil.log(gulpUtil.colors.magenta(`Waiting for a kubernetes cluster on port 8080...`));
+    }
+    counter += 1;
+
+    checkForClusterFailure(doneFn);
+
+    // constantly query the cluster until it is properly running
     clusterHealthCheck(function(result) {
       if (result === 'ok') {
         gulpUtil.log(gulpUtil.colors.magenta("Kubernetes cluster is up and running."));
