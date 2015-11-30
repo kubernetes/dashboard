@@ -49,7 +49,7 @@ export default {
     /**
     * Address for the Kubernetes API server.
     */
-    apiServerHost: 'http://localhost:8080',
+    apiServerHost: 'localhost:8080',
   },
 
   /**

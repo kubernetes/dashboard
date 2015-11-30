@@ -113,7 +113,10 @@ gulp.task('serve:prod', ['spawn-backend:prod']);
 gulp.task('spawn-backend', ['backend', 'kill-backend'], function() {
   runningBackendProcess = child.spawn(
       path.join(conf.paths.serve, conf.backend.binaryName),
-      [`--apiserver-host=${conf.backend.apiServerHost}`, `--port=${conf.backend.devServerPort}`],
+      [
+        `--apiserver-host=http://${conf.backend.apiServerHost}`,
+        `--port=${conf.backend.devServerPort}`,
+      ],
       {stdio: 'inherit'});
 
   runningBackendProcess.on('exit', function() {
@@ -130,7 +133,10 @@ gulp.task('spawn-backend', ['backend', 'kill-backend'], function() {
 gulp.task('spawn-backend:prod', ['build-frontend', 'backend:prod', 'kill-backend'], function() {
   runningBackendProcess = child.spawn(
       path.join(conf.paths.dist, conf.backend.binaryName),
-      [`--apiserver-host=${conf.backend.apiServerHost}`, `--port=${conf.frontend.serverPort}`],
+      [
+        `--apiserver-host=http://${conf.backend.apiServerHost}`,
+        `--port=${conf.frontend.serverPort}`,
+      ],
       {stdio: 'inherit', cwd: conf.paths.dist});
 
   runningBackendProcess.on('exit', function() {
