@@ -62,6 +62,9 @@ limitations under the License.
           <md-option ng-repeat="namespace in ctrl.namespaces" ng-value="namespace">
             {{namespace}}
           </md-option>
+          <md-option ng-click="ctrl.handleNamespaceDialog($event)">
+            Create a new namespace...
+          </md-option>
         </md-select>
       </md-input-container>
       <md-switch ng-model="ctrl.isExternal" class="md-primary">

@@ -43,7 +43,7 @@ backendApi.PortMapping;
  *   namespace: string
  * }}
  */
-backendApi.AppDeployment;
+backendApi.AppDeploymentSpec;
 
 /**
  * @typedef {{
@@ -91,6 +91,13 @@ backendApi.ReplicaSetDetail;
  * }}
  */
 backendApi.ReplicaSetPod;
+
+/**
+ * @typedef {{
+ *   name: string
+ * }}
+ */
+backendApi.NamespaceSpec;
 
 /**
  * @typedef {{

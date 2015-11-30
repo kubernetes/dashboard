@@ -1,0 +1,33 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<md-dialog aria-label="Create a new namespace" layout="column" layout-padding>
+  <md-content layout-padding>
+    <h4 class="md-title" >Create a new namespace</h4>
+    <p>The new namespace will be added to the cluster.</p>
+    <!-- TODO(maciaszczykm): Missing detailed cluster info and learn more link. -->
+    <form id="namespaceForm" ng-submit="ctrl.createNamespace()">
+      <md-input-container class="md-block">
+        <label>Namespace name</label>
+        <input ng-model="ctrl.namespace" required>
+      </md-input-container>
+      <div class="md-actions" layout="row">
+        <md-button ng-disabled="ctrl.isDisabled()" class="md-primary" type="submit">OK</md-button>
+        <md-button ng-click="ctrl.cancel()">Cancel</md-button>
+      </div>
+    </form>
+  </md-content>
+</md-dialog>

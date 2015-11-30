@@ -15,15 +15,35 @@
 package main
 
 import (
+	api "k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
 )
 
+// Specification of namespace to be created.
+type NamespaceSpec struct {
+	// Name of the namespace.
+	Name string `json:"name"`
+}
+
 // List of Namespaces in the cluster.
 type NamespacesList struct {
 	// Unordered list of Namespaces.
 	Namespaces []string `json:"namespaces"`
+}
+
+// Creates namespace based on given specification.
+func CreateNamespace(spec *NamespaceSpec, client *client.Client) error {
+	namespace := &api.Namespace{
+		ObjectMeta: api.ObjectMeta{
+			Name: spec.Name,
+		},
+	}
+
+	_, err := client.Namespaces().Create(namespace)
+
+	return err
 }
 
 // Returns a list of all namespaces in the cluster.

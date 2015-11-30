@@ -14,6 +14,7 @@
 
 import {stateName as zerostate} from 'zerostate/zerostate_state';
 import {stateName as replicasetliststate} from 'replicasetlist/replicasetlist_state';
+import showNamespaceDialog from 'deploy/createnamespace_dialog';
 
 /**
  * Controller for the deploy view.
@@ -25,10 +26,11 @@ export default class DeployController {
    * @param {!angular.$resource} $resource
    * @param {!angular.$log} $log
    * @param {!ui.router.$state} $state
+   * @param {!md.$dialog} $mdDialog
    * @param {!backendApi.NamespaceList} namespaces
    * @ngInject
    */
-  constructor($resource, $log, $state, namespaces) {
+  constructor($resource, $log, $state, $mdDialog, namespaces) {
     /** @export {string} */
     this.name = '';
 
@@ -72,6 +74,9 @@ export default class DeployController {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
+    /** @private {!md.$dialog} */
+    this.mdDialog_ = $mdDialog;
+
     /** @private {boolean} */
     this.isDeployInProgress_ = false;
   }
@@ -84,8 +89,8 @@ export default class DeployController {
   deploy() {
     // TODO(bryk): Validate input data before sending to the server.
 
-    /** @type {!backendApi.AppDeployment} */
-    let deployAppConfig = {
+    /** @type {!backendApi.AppDeploymentSpec} */
+    let appDeploymentSpec = {
       containerImage: this.containerImage,
       isExternal: this.isExternal,
       name: this.name,
@@ -94,12 +99,12 @@ export default class DeployController {
       namespace: this.namespace,
     };
 
-    /** @type {!angular.Resource<!backendApi.AppDeployment>} */
+    /** @type {!angular.Resource<!backendApi.AppDeploymentSpec>} */
     let resource = this.resource_('/api/appdeployments');
 
     this.isDeployInProgress_ = true;
     resource.save(
-        deployAppConfig,
+        appDeploymentSpec,
         (savedConfig) => {
           this.isDeployInProgress_ = false;
           this.log_.info('Successfully deployed application: ', savedConfig);
@@ -109,6 +114,31 @@ export default class DeployController {
           this.isDeployInProgress_ = false;
           this.log_.error('Error deploying application:', err);
         });
+  }
+
+  /**
+   * Displays new namespace creation dialog.
+   *
+   * @param {!angular.Scope.Event} event
+   */
+  handleNamespaceDialog(event) {
+    showNamespaceDialog(this.mdDialog_, event, this.namespaces)
+        .then(
+            /**
+             * Handles namespace dialog result. If namespace was created successfully then it
+             * will be selected, otherwise first namespace will be selected.
+             *
+             * @param {string|undefined} answer
+             */
+            (answer) => {
+              if (answer) {
+                this.namespace = answer;
+                this.namespaces = this.namespaces.concat(answer);
+              } else {
+                this.namespace = this.namespaces[0];
+              }
+            },
+            () => { this.namespace = this.namespaces[0]; });
   }
 
   /**
