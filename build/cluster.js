@@ -37,6 +37,11 @@ const tarballUrl = 'https://storage.googleapis.com/kubernetes-release/release';
 const upScript = `${conf.paths.kubernetes}/hack/local-up-cluster.sh`;
 
 /**
+ * The healthz URL of the cluster to check that it is running.
+ */
+const clusterHealthzUrl = `http://${conf.backend.apiServerHost}/healthz`;
+
+/**
  * Currently running cluster process object. Null if the cluster is not running.
  *
  * @type {?child.ChildProcess}
@@ -75,7 +80,7 @@ function checkForClusterFailure(doneFn) {
  * @param {function(?Error=)} doneFn
  */
 function clusterHealthCheck(doneFn) {
-  childProcess.exec(`curl http://127.0.0.1:8080/healthz/ping`, function(err, stdout) {
+  childProcess.exec(`curl ${clusterHealthzUrl}`, function(err, stdout) {
     if (err) {
       return doneFn(new Error(err));
     }
@@ -210,7 +215,9 @@ gulp.task('wait-for-cluster', function(doneFn) {
 
   function isRunning() {
     if (counter % 10 === 0) {
-      gulpUtil.log(gulpUtil.colors.magenta(`Waiting for a kubernetes cluster on port 8080...`));
+      gulpUtil.log(
+          gulpUtil.colors.magenta(
+              `Waiting for a Kubernetes cluster on ${conf.backend.apiServerHost}...`));
     }
     counter += 1;
 
@@ -219,7 +226,7 @@ gulp.task('wait-for-cluster', function(doneFn) {
     // constantly query the cluster until it is properly running
     clusterHealthCheck(function(result) {
       if (result === 'ok') {
-        gulpUtil.log(gulpUtil.colors.magenta("Kubernetes cluster is up and running."));
+        gulpUtil.log(gulpUtil.colors.magenta('Kubernetes cluster is up and running.'));
         clearTimeout(isRunningSetIntervalHandler);
         isRunningSetIntervalHandler = null;
         doneFn();
@@ -236,8 +243,8 @@ gulp.task(
     'kubeconfig-set-cluster-local', ['download-kubectl', 'checkout-kubernetes-version'],
     function(doneFn) {
       executeKubectlCommand(
-          'config set-cluster local --server=http://127.0.0.1:8080 ' +
-              '--insecure-skip-tls-verify=true',
+          `config set-cluster local --server=http://${conf.backend.apiServerHost}` +
+              `--insecure-skip-tls-verify=true`,
           doneFn);
     });
 
