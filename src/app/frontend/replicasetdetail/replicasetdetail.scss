@@ -1,0 +1,119 @@
+// Copyright 2015 Google Inc. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+@import "../../assets/styles/color_variables";
+
+$replicasetdetails-sidebar-bg: #FAFAFA;
+$replicasetdetails-border: #DDDDDD;
+$replicasetdetails-table-message: black;
+$replicasetdetails-table-cell: #777777;
+
+.kd-replicasetdetail-sidebar {
+  background-color: $replicasetdetails-sidebar-bg;
+  min-width: 315px;
+}
+
+.kd-replicasetdetail-table {
+  width: 100%;
+}
+
+.kd-replicasetdetail-sidebar-header {
+  color: dimgray;
+  border-bottom: 1px solid $replicasetdetails-border;
+  min-height: 49px;
+  max-height: 49px;
+}
+
+.kd-replicasetdetail-sidebar-hedaer-icon {
+  font-size: 1.7em;
+  vertical-align: middle;
+}
+
+.kd-replicasetdetail-table-message {
+  color: #000000;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.kd-replicasetdetail-sidebar-title {
+  padding-bottom: 10px;
+  padding-top: 10px;
+  font-size: 15px;
+}
+
+.kd-replicasetdetail-sidebar-line {
+  padding-bottom: 6px;
+  font-size: 11px;
+  color: $line
+}
+
+.kd-replicasetdetail-sidebar-subline {
+  padding-bottom: 8px;
+  font-size: 13px;
+  color: $subline
+}
+
+.kd-replicasetdetail-sidebar-icon {
+  color: $primary;
+  padding: 0 3px 0 3px;
+  vertical-align: top;
+  font-size: 20px;
+}
+
+.kd-replicasetdetail-sidebar-service-icon {
+  color: $subline;
+  padding: 0 3px 0 3px;
+  vertical-align: top;
+  font-size: 14px;
+}
+
+.kd-replicasetdetail-sidebar-buttons {
+  color: $primary;
+  font-size: 0.85em;
+}
+
+.kd-replicasetdetail-options {
+  margin: 15px;
+}
+
+.kd-replicasetdetail-sidebar-info {
+  padding-left: 5px;
+}
+
+.kd-replicasetdetail-option-picker {
+  min-width: 150px;
+  padding-right: 25px;
+}
+
+
+.kd-replicasetdetail-table-cell {
+  text-align: left;
+  color: $replicasetdetails-table-cell;
+  font-size: 13px;
+  border-bottom: 1px solid $replicasetdetails-border;
+}
+
+.kd-replicasetdetail-table-message {
+  color: $replicasetdetails-table-message;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.kd-replicasetdetail-table-icon {
+  font-size: 14px;
+  padding: 0 3px 0 3px;
+  vertical-align: top;
+}

@@ -15,8 +15,11 @@
 package main
 
 import (
+	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	"k8s.io/kubernetes/pkg/fields"
+	"k8s.io/kubernetes/pkg/labels"
 )
 
 // Detailed information about a Replica Set.
@@ -44,6 +47,9 @@ type ReplicaSetDetail struct {
 
 	// Detailed information about Pods belonging to this Replica Set.
 	Pods []ReplicaSetPod `json:"pods"`
+
+	// Detailed information about service related to Replica Set.
+	Services []ServiceDetail `json:"services"`
 }
 
 // Detailed information about a Pod that belongs to a Replica Set.
@@ -61,6 +67,22 @@ type ReplicaSetPod struct {
 	NodeName string `json:"nodeName"`
 }
 
+// Detailed information about a Service connected to Replica Set.
+type ServiceDetail struct {
+	// Internal endpoints of all Kubernetes services that have the same label selector as connected
+	// Replica Set.
+	// Endpoint is DNS name merged with ports.
+	InternalEndpoint string `json:"internalEndpoint"`
+
+	// External endpoints of all Kubernetes services that have the same label selector as connected
+	// Replica Set.
+	// Endpoint is external IP address name merged with ports.
+	ExternalEndpoints []string `json:"externalEndpoints"`
+
+	// Label selector of the service.
+	Selector map[string]string `json:"selector"`
+}
+
 // Returns detailed information about the given replica set in the given namespace.
 func GetReplicaSetDetail(client *client.Client, namespace string, name string) (
 	*ReplicaSetDetail, error) {
@@ -72,6 +94,15 @@ func GetReplicaSetDetail(client *client.Client, namespace string, name string) (
 	replicaSet := replicaSetWithPods.ReplicaSet
 	pods := replicaSetWithPods.Pods
 
+	services, err := client.Services(namespace).List(unversioned.ListOptions{
+		LabelSelector: unversioned.LabelSelector{labels.Everything()},
+		FieldSelector: unversioned.FieldSelector{fields.Everything()},
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
 	replicaSetDetail := &ReplicaSetDetail{
 		Name:          replicaSet.Name,
 		Namespace:     replicaSet.Namespace,
@@ -79,6 +110,12 @@ func GetReplicaSetDetail(client *client.Client, namespace string, name string) (
 		LabelSelector: replicaSet.Spec.Selector,
 		PodsRunning:   replicaSet.Status.Replicas,
 		PodsDesired:   replicaSet.Spec.Replicas,
+	}
+
+	matchingServices := getMatchingServices(services.Items, replicaSet)
+
+	for _, service := range matchingServices {
+		replicaSetDetail.Services = append(replicaSetDetail.Services, getServiceDetail(service))
 	}
 
 	for _, container := range replicaSet.Spec.Template.Spec.Containers {
@@ -96,4 +133,21 @@ func GetReplicaSetDetail(client *client.Client, namespace string, name string) (
 	}
 
 	return replicaSetDetail, nil
+}
+
+func getServiceDetail(service api.Service) ServiceDetail {
+	var externalEndpoints []string
+	for _, externalIp := range service.Status.LoadBalancer.Ingress {
+		externalEndpoints = append(externalEndpoints,
+			getExternalEndpoint(externalIp.Hostname, service.Spec.Ports))
+	}
+
+	serviceDetail := ServiceDetail{
+		InternalEndpoint: getInternalEndpoint(service.Name, service.Namespace,
+			service.Spec.Ports),
+		ExternalEndpoints: externalEndpoints,
+		Selector:          service.Spec.Selector,
+	}
+
+	return serviceDetail
 }

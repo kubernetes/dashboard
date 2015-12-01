@@ -14,27 +14,177 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div layout="column" layout-margin layout-align="center center">
-  Displaying details for replica set {{ctrl.replicaSetDetail.name}} in namespace
-  {{ctrl.replicaSetDetail.namespace}}.
-  <div>
-    <table>
-      <thead>
-        <tr>
-          <th>Pod</th>
-          <th>Start time</th>
-          <th>IP</th>
-          <th>Node</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="pod in ctrl.replicaSetDetail.pods">
-          <td>{{pod.name}}</td>
-          <td>{{pod.startTime}}</td>
-          <td>{{pod.podIP}}</td>
-          <td>{{pod.nodeName}}</td>
-        </tr>
-      </tbody>
-    </table>
+<md-content layout="row" layout-fill flex>
+  <div class="kd-replicasetdetail-sidebar" layout="column">
+    <div class="kd-replicasetdetail-sidebar-header" flex layout-align="start center" layout="row">
+      <a flex-offset="10" ui-sref="replicasets">
+        <i class="material-icons kd-replicasetdetail-sidebar-hedaer-icon">keyboard_backspace</i>
+      </a>
+      <span flex-offset="5" flex class="md-title">
+        {{ctrl.replicaSetDetail.name}}
+      </span>
+    </div>
+    <div flex-offset="5" flex layout-align="start start" layout-padding layout="row">
+      <div flex layout="column">
+        <div layout="row" class="kd-replicasetdetail-sidebar-buttons">
+          <span flex="55">
+            <i class="material-icons kd-replicasetdetail-sidebar-icon">refresh</i>
+            ROLLING UPDATE
+          </span>
+          <span flex-offset="5" flex>
+            <i class="material-icons kd-replicasetdetail-sidebar-icon">delete</i>
+            DELETE
+          </span>
+        </div>
+        <div flex layout="column" class="kd-replicasetdetail-sidebar-info">
+          <span class="kd-replicasetdetail-sidebar-title">
+            {{ctrl.replicaSetDetail.pods.length}} pods
+            <i class="material-icons kd-replicasetdetail-sidebar-icon">
+              mode_edit
+            </i>
+          </span>
+          <span class="kd-replicasetdetail-sidebar-line">Label selector</span>
+          <span class="kd-replicasetdetail-sidebar-subline">
+            {{ctrl.formatLabelString(ctrl.replicaSetDetail.labelSelector)}}
+          </span>
+          <span class="kd-replicasetdetail-sidebar-title">Replica Sets</span>
+          <span class="kd-replicasetdetail-sidebar-line">Labels</span>
+          <span class="kd-replicasetdetail-sidebar-subline">
+            {{ctrl.formatLabelString(ctrl.replicaSetDetail.labels)}}
+          </span>
+          <span class="kd-replicasetdetail-sidebar-line">Images</span>
+          <span class="kd-replicasetdetail-sidebar-subline"
+                ng-repeat="image in ctrl.replicaSetDetail.containerImages">
+            {{image}}
+          </span>
+          <span class="kd-replicasetdetail-sidebar-title">Service</span>
+          <span class="kd-replicasetdetail-sidebar-line">Label selector</span>
+          <span class="kd-replicasetdetail-sidebar-subline"
+                ng-repeat="service in ctrl.replicaSetDetail.services">
+            {{ctrl.formatLabelString(service.selector)}}
+          </span>
+          <span class="kd-replicasetdetail-sidebar-line">Internal endpoint</span>
+          <div class="kd-replicasetdetail-sidebar-subline"
+               ng-repeat="service in ctrl.replicaSetDetail.services">
+            <span ng-show="service.internalEndpoint">
+              {{service.internalEndpoint}}
+            </span>
+            <i ng-show="service.internalEndpoint"
+               class="material-icons kd-replicasetdetail-sidebar-service-icon">
+              help
+            </i>
+            <span ng-hide="service.internalEndpoint">none</span>
+          </div>
+          <span class="kd-replicasetdetail-sidebar-line">External endpoint</span>
+          <div class="kd-replicasetdetail-sidebar-subline"
+               ng-repeat="service in ctrl.replicaSetDetail.services">
+            <span ng-show="service.externalEndpoints">
+              {{service.externalEndpoints}}
+            </span>
+            <i ng-show="service.externalEndpoints"
+               class="material-icons kd-replicasetdetail-sidebar-service-icon">open_in_new</i>
+            <span class="kd-replicasetdetail-sidebar-subline" ng-hide="service.externalEndpoints">
+              none
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+  <md-tabs flex md-border-bottom md-dynamic-height>
+    <md-tab label="Pods">
+      <md-content>
+        <table class="kd-replicasetdetail-table" cellspacing="0" cellpadding="15">
+          <thead>
+          <tr>
+            <th class="kd-replicasetdetail-table-cell">
+              Pod<i class="material-icons kd-replicasetdetail-table-icon">help</i>
+            </th>
+            <th class="kd-replicasetdetail-table-cell">
+              Start time<i class="material-icons kd-replicasetdetail-table-icon">help</i>
+            </th>
+            <th class="kd-replicasetdetail-table-cell">
+              <i class="material-icons kd-replicasetdetail-table-icon">arrow_downward</i>
+              IP
+              <i class="material-icons kd-replicasetdetail-table-icon">help</i>
+            </th>
+            <th class="kd-replicasetdetail-table-cell">
+              Node<i class="material-icons kd-replicasetdetail-table-icon">help</i>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="pod in ctrl.replicaSetDetail.pods">
+            <td class="kd-replicasetdetail-table-cell">{{pod.name}}</td>
+            <td class="kd-replicasetdetail-table-cell">{{pod.startTime | date:'short'}}</td>
+            <td class="kd-replicasetdetail-table-cell">{{pod.podIP}}</td>
+            <td class="kd-replicasetdetail-table-cell">{{pod.nodeName}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </md-content>
+    </md-tab>
+    <md-tab label="Events">
+      <md-content flex>
+        <div class="kd-replicasetdetail-options" layout="row">
+          <md-input-container class="kd-replicasetdetail-option-picker">
+            <label>Type</label>
+            <!-- TODO(maciaszczykm): Handle value change. -->
+            <md-select ng-model="ctrl.eventType" required>
+              <md-option ng-repeat="type in ctrl.eventTypeFilter" ng-value="type">
+                {{type}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+          <md-input-container class="kd-replicasetdetail-option-picker">
+            <label>Source</label>
+            <!-- TODO(maciaszczykm): Handle value change. -->
+            <md-select ng-model="ctrl.eventSource" required>
+              <md-option ng-repeat="source in ctrl.eventSourceFilter" ng-value="source">
+                {{source}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+        </div>
+        <table class="kd-replicasetdetail-table" cellspacing="0" cellpadding="15">
+          <thead>
+          <tr>
+            <th class="kd-replicasetdetail-table-cell">
+              Message<i class="material-icons kd-replicasetdetail-table-icon">help</i>
+            </th>
+            <th class="kd-replicasetdetail-table-cell">
+              Source<i class="material-icons kd-replicasetdetail-table-icon">help</i>
+            </th>
+            <th class="kd-replicasetdetail-table-cell">
+              Sub-object<i class="material-icons kd-replicasetdetail-table-icon">help</i>
+            </th>
+            <th class="kd-replicasetdetail-table-cell">
+              Count<i class="material-icons kd-replicasetdetail-table-icon">help</i></th>
+            <th class="kd-replicasetdetail-table-cell">
+              First seen<i class="material-icons kd-replicasetdetail-table-icon">help</i>
+            </th>
+            <th class="kd-replicasetdetail-table-cell">
+              <i class="material-icons kd-replicasetdetail-table-icon">arrow_downward</i>
+              Last seen
+              <i class="material-icons kd-replicasetdetail-table-icon">help</i>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="event in ctrl.replicaSetEvents.events">
+            <td class="kd-replicasetdetail-table-cell kd-replicasetdetail-table-message">
+              {{event.message}}
+            </td>
+            <td class="kd-replicasetdetail-table-cell">
+              {<!>{{event.sourceComponent}} {{event.sourceHost}}<!>}
+            </td>
+            <td class="kd-replicasetdetail-table-cell">{{event.object}}</td>
+            <td class="kd-replicasetdetail-table-cell">{{event.count}}</td>
+            <td class="kd-replicasetdetail-table-cell">{{event.firstSeen | date:'short'}}</td>
+            <td class="kd-replicasetdetail-table-cell">{{event.lastSeen | date:'short'}}</td>
+          </tr>
+          </tbody>
+        </table>
+    </md-tab>
+  </md-tabs>
+</md-content>

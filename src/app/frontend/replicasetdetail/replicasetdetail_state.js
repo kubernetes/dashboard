@@ -51,6 +51,7 @@ export default function stateConfig($stateProvider) {
     templateUrl: 'replicasetdetail/replicasetdetail.html',
     resolve: {
       replicaSetDetail: resolveReplicaSetDetails,
+      replicaSetEvents: resolveReplicaSetEvents,
     },
   });
 }
@@ -64,6 +65,19 @@ export default function stateConfig($stateProvider) {
 export function resolveReplicaSetDetails($stateParams, $resource) {
   /** @type {!angular.Resource<!backendApi.ReplicaSetDetail>} */
   let resource = $resource('/api/replicasets/:namespace/:replicaSet', $stateParams);
+
+  return resource.get().$promise;
+}
+
+/**
+ * @param {!StateParams} $stateParams
+ * @param {!angular.$resource} $resource
+ * @return {!angular.$q.Promise}
+ * @ngInject
+ */
+export function resolveReplicaSetEvents($stateParams, $resource) {
+  /** @type {!angular.Resource<!backendApi.Events>} */
+  let resource = $resource('/api/events/:namespace/:replicaSet', $stateParams);
 
   return resource.get().$promise;
 }

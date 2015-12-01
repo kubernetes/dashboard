@@ -49,6 +49,28 @@ backendApi.AppDeploymentSpec;
 
 /**
  * @typedef {{
+ *   namespace: string,
+ *   events: !Array<!backendApi.Event>
+ * }}
+ */
+backendApi.Events;
+
+/**
+ * @typedef {{
+ *   message: string,
+ *   sourceComponent: string,
+ *   sourceHost: string,
+ *   object: string,
+ *   count: number,
+ *   firstSeen: string,
+ *   lastSeen: string,
+ *   reason: string
+ * }}
+ */
+backendApi.Event;
+
+/**
+ * @typedef {{
  *   replicaSets: !Array<!backendApi.ReplicaSet>
  * }}
  */
@@ -79,7 +101,8 @@ backendApi.ReplicaSet;
  *   containerImages: !Array<string>,
  *   podsDesired: number,
  *   podsRunning: number,
- *   pods: !Array<!backendApi.ReplicaSetPod>
+ *   pods: !Array<!backendApi.ReplicaSetPod>,
+ *   services: !Array<!backendApi.ServiceDetail>
  * }}
  */
 backendApi.ReplicaSetDetail;
@@ -93,6 +116,15 @@ backendApi.ReplicaSetDetail;
  * }}
  */
 backendApi.ReplicaSetPod;
+
+/**
+ * @typedef {{
+ *  internalEndpoint: string,
+ *  externalEndpoints: !Array<string>,
+ *  selector: !Object<string, string>
+ * }}
+ */
+backendApi.ServiceDetail;
 
 /**
  * @typedef {{

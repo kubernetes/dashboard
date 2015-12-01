@@ -82,7 +82,7 @@ func CreateHttpApiHandler(client *client.Client) http.Handler {
 	eventsWs.Path("/api/events").
 		Produces(restful.MIME_JSON)
 	eventsWs.Route(
-		eventsWs.GET("/{namespace}").
+		eventsWs.GET("/{namespace}/{replicaSet}").
 			To(apiHandler.handleEvents).
 			Writes(Events{}))
 	wsContainer.Add(eventsWs)
@@ -197,7 +197,8 @@ func (apiHandler *ApiHandler) handleLogs(request *restful.Request, response *res
 // Handles event API call.
 func (apiHandler *ApiHandler) handleEvents(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
-	result, err := GetEvents(apiHandler.client, namespace)
+	replicaSet := request.PathParameter("replicaSet")
+	result, err := GetEvents(apiHandler.client, namespace, replicaSet)
 	if err != nil {
 		handleInternalError(response, err)
 		return
