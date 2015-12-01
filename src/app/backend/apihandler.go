@@ -62,7 +62,7 @@ func CreateHttpApiHandler(client *client.Client) http.Handler {
 	namespacesWs.Route(
 		namespacesWs.GET("").
 			To(apiHandler.handleGetNamespaces).
-			Writes(NamespacesList{}))
+			Writes(NamespaceList{}))
 	wsContainer.Add(namespacesWs)
 
 	logsWs := new(restful.WebService)

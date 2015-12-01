@@ -15,17 +15,17 @@ limitations under the License.
 -->
 
 <div layout="row" layout-wrap layout-margin layout-align="center center">
-  <md-card ng-repeat="replicaSet in ctrl.replicaSets">
+  <md-card ng-repeat="replicaSet in ::ctrl.replicaSets">
     <md-card-content class="kd-replicaset-card">
       <div layout="row" layout-align="space-between center">
         <div flex layout="column">
-          <a ng-href="{{ctrl.getReplicaSetDetailHref(replicaSet)}}" flex>
-            {{replicaSet.name}}
+          <a ng-href="{{::ctrl.getReplicaSetDetailHref(replicaSet)}}" flex>
+            {{::replicaSet.name}}
           </a>
           <div flex class="md-caption">
-            <span ng-repeat="(label, value) in replicaSet.labels"
+            <span ng-repeat="(label, value) in ::replicaSet.labels"
                 class="kd-replicaset-card-label">
-              {{label}}:{{value}}
+              {{::label}}:{{::value}}
             </span>
           </div>
         </div>
@@ -36,50 +36,56 @@ limitations under the License.
       <div class="md-caption">
         <div layout="row">
           <span flex="60">
-            {{replicaSet.podsRunning}} pods running, {{replicaSet.podsPending}} pending
+            {{::replicaSet.podsRunning}} pods running, {{::replicaSet.podsPending}} pending
           </span>
           <a flex="40" href="#" class="kd-replicaset-card-logs">Logs</a>
         </div>
         <hr class="kd-replicaset-card-divider"></hr>
         <div layout="row" layout-wrap>
-          <div ng-if="replicaSet.description" flex="100" layout="column"
+          <div ng-if="::replicaSet.description" flex="100" layout="column"
               class="kd-replicaset-card-section">
             <span flex>Description</span>
             <div flex>
-              {{replicaSet.description}}
+              {{::replicaSet.description}}
             </div>
           </div>
 
           <div flex="60" layout="column" class="kd-replicaset-card-section">
             <span flex>Image</span>
             <div flex>
-              <div ng-repeat="image in replicaSet.containerImages"
+              <div ng-repeat="image in ::replicaSet.containerImages track by $index"
                   class="kd-replicaset-card-section-image">
-                {{image}}
+                {{::image}}
               </div>
             </div>
           </div>
 
           <div flex="40" layout="column" class="kd-replicaset-card-section">
             <span flex="initial">Creation time</span>
-            <span flex>{{replicaSet.creationTime}}</span>
+            <span flex>{{::replicaSet.creationTime}}</span>
           </div>
 
           <div flex="60" layout="column" class="kd-replicaset-card-section">
             <span flex="initial">Internal Endpoint</span>
             <div flex>
-              <span ng-repeat="endpoint in replicaSet.internalEndpoints">
-                {{endpoint}}
-              </span>
+              <div ng-repeat="endpoint in ::replicaSet.internalEndpoints track by $index">
+                {{::endpoint}}
+              </div>
+              <div ng-if="::!replicaSet.internalEndpoints.length">
+                none
+              </div>
             </div>
           </div>
 
           <div flex="40" layout="column" class="kd-replicaset-card-section">
             <span flex="initial">External Endpoint</span>
             <div flex>
-              <span ng-repeat="endpoint in replicaSet.externalEndpoints">
-                {{endpoint}}
-              </span>
+              <div ng-repeat="endpoint in ::replicaSet.externalEndpoints track by $index">
+                <a ng-href="http://{{::endpoint}}" target="_blank">{{::endpoint}}</a>
+              </div>
+              <div ng-if="::!replicaSet.externalEndpoints.length">
+                none
+              </div>
             </div>
           </div>
         </div>

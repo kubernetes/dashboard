@@ -20,6 +20,8 @@ import (
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
+	"strconv"
+	"strings"
 )
 
 // List of Replica Sets in the cluster.
@@ -56,47 +58,131 @@ type ReplicaSet struct {
 	CreationTime unversioned.Time `json:"creationTime"`
 
 	// Internal endpoints of all Kubernetes services have the same label selector as this Replica Set.
+	// Endpoint is DNS name merged with ports.
 	InternalEndpoints []string `json:"internalEndpoints"`
 
 	// External endpoints of all Kubernetes services have the same label selector as this Replica Set.
+	// Endpoint is external IP address name merged with ports.
 	ExternalEndpoints []string `json:"externalEndpoints"`
 }
 
 // Returns a list of all Replica Sets in the cluster.
 func GetReplicaSetList(client *client.Client) (*ReplicaSetList, error) {
-	list, err := client.ReplicationControllers(api.NamespaceAll).
+	replicaSets, err := client.ReplicationControllers(api.NamespaceAll).
 		List(labels.Everything(), fields.Everything())
 
 	if err != nil {
 		return nil, err
 	}
 
+	services, err := client.Services(api.NamespaceAll).
+		List(labels.Everything(), fields.Everything())
+
+	if err != nil {
+		return nil, err
+	}
+
+	return getReplicaSetList(replicaSets.Items, services.Items), nil
+}
+
+// Returns a list of all Replica Set model objects in the cluster, based on all Kubernetes
+// Replica Set and Service API objects.
+// The function processes all Replica Sets API objects and finds matching Services for them.
+func getReplicaSetList(
+	replicaSets []api.ReplicationController, services []api.Service) *ReplicaSetList {
+
 	replicaSetList := &ReplicaSetList{}
 
-	for _, replicaSet := range list.Items {
+	for _, replicaSet := range replicaSets {
 		var containerImages []string
-
 		for _, container := range replicaSet.Spec.Template.Spec.Containers {
 			containerImages = append(containerImages, container.Image)
 		}
 
+		matchingServices := getMatchingServices(services, &replicaSet)
+		var internalEndpoints []string
+		var externalEndpoints []string
+		for _, service := range matchingServices {
+			internalEndpoints = append(internalEndpoints,
+				getInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports))
+			for _, externalIp := range service.Status.LoadBalancer.Ingress {
+				externalEndpoints = append(externalEndpoints,
+					getExternalEndpoint(externalIp.Hostname, service.Spec.Ports))
+			}
+		}
+
 		replicaSetList.ReplicaSets = append(replicaSetList.ReplicaSets, ReplicaSet{
-			Name:      replicaSet.ObjectMeta.Name,
-			Namespace: replicaSet.ObjectMeta.Namespace,
-			// TODO(bryk): This field contains test value. Implement it.
-			Description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
-				"Nulla metus nibh, iaculis a consectetur vitae, imperdiet pellentesque turpis.",
-			Labels:          replicaSet.ObjectMeta.Labels,
-			PodsRunning:     replicaSet.Status.Replicas,
-			PodsPending:     replicaSet.Spec.Replicas - replicaSet.Status.Replicas,
-			ContainerImages: containerImages,
-			CreationTime:    replicaSet.ObjectMeta.CreationTimestamp,
-			// TODO(bryk): This field contains test value. Implement it.
-			InternalEndpoints: []string{"webapp"},
-			// TODO(bryk): This field contains test value. Implement it.
-			ExternalEndpoints: []string{"81.76.02.198:80"},
+			Name:              replicaSet.ObjectMeta.Name,
+			Namespace:         replicaSet.ObjectMeta.Namespace,
+			Description:       replicaSet.Annotations[DescriptionAnnotationKey],
+			Labels:            replicaSet.ObjectMeta.Labels,
+			PodsRunning:       replicaSet.Status.Replicas,
+			PodsPending:       replicaSet.Spec.Replicas - replicaSet.Status.Replicas,
+			ContainerImages:   containerImages,
+			CreationTime:      replicaSet.ObjectMeta.CreationTimestamp,
+			InternalEndpoints: internalEndpoints,
+			ExternalEndpoints: externalEndpoints,
 		})
 	}
 
-	return replicaSetList, nil
+	return replicaSetList
+}
+
+// Returns internal endpoint name for the given service properties, e.g.,
+// "my-service.namespace 80/TCP" or "my-service 53/TCP,53/UDP".
+func getInternalEndpoint(serviceName string, namespace string, ports []api.ServicePort) string {
+	name := serviceName
+	if namespace != api.NamespaceDefault {
+		name = name + "." + namespace
+	}
+
+	return name + getServicePortsName(ports)
+}
+
+// Returns external endpoint name for the given service properties.
+func getExternalEndpoint(serviceIp string, ports []api.ServicePort) string {
+	return serviceIp + getServicePortsName(ports)
+}
+
+// Gets human readable name for the given service ports list.
+func getServicePortsName(ports []api.ServicePort) string {
+	var portsString []string
+	for _, port := range ports {
+		portsString = append(portsString, strconv.Itoa(port.Port)+"/"+string(port.Protocol))
+	}
+	if len(portsString) > 0 {
+		return " " + strings.Join(portsString, ",")
+	} else {
+		return ""
+	}
+}
+
+// Returns all services that target the same Pods (or subset) as the given Replica Set.
+func getMatchingServices(services []api.Service,
+	replicaSet *api.ReplicationController) []api.Service {
+
+	var matchingServices []api.Service
+	for _, service := range services {
+		if isServiceMatchingReplicaSet(service.Spec.Selector, replicaSet.Spec.Selector) {
+			matchingServices = append(matchingServices, service)
+		}
+	}
+	return matchingServices
+}
+
+// Returns true when a Service with the given selector targets the same Pods (or subset) that
+// a Replica Set with the given selector.
+func isServiceMatchingReplicaSet(serviceSelector map[string]string,
+	replicaSetSpecSelector map[string]string) bool {
+
+	// If service has no selectors, then assume it targets different Pods.
+	if len(serviceSelector) == 0 {
+		return false
+	}
+	for label, value := range serviceSelector {
+		if rsValue, ok := replicaSetSpecSelector[label]; !ok || rsValue != value {
+			return false
+		}
+	}
+	return true
 }
