@@ -74,6 +74,15 @@ func CreateHttpApiHandler(client *client.Client) http.Handler {
 			Writes(Logs{}))
 	wsContainer.Add(logsWs)
 
+	eventsWs := new(restful.WebService)
+	eventsWs.Path("/api/events").
+		Produces(restful.MIME_JSON)
+	eventsWs.Route(
+		eventsWs.GET("/{namespace}").
+			To(apiHandler.handleEvents).
+			Writes(Events{}))
+	wsContainer.Add(eventsWs)
+
 	return wsContainer
 }
 
@@ -155,10 +164,20 @@ func (apiHandler *ApiHandler) handleGetNamespaces(
 
 // Handles log API call.
 func (apiHandler *ApiHandler) handleLogs(request *restful.Request, response *restful.Response) {
-
 	namespace := request.PathParameter("namespace")
 	podId := request.PathParameter("podId")
 	result, err := GetPodLogs(apiHandler.client, namespace, podId)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles event API call.
+func (apiHandler *ApiHandler) handleEvents(request *restful.Request, response *restful.Response) {
+	namespace := request.PathParameter("namespace")
+	result, err := GetEvents(apiHandler.client, namespace)
 	if err != nil {
 		handleInternalError(response, err)
 		return
