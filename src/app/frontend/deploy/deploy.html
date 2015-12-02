@@ -17,8 +17,8 @@ limitations under the License.
 <div layout="column" layout-padding layout-align="center center">
   <md-whiteframe class="kd-deploy-whiteframe md-whiteframe-5dp" flex flex-gt-md>
     <h3 class="md-headline">Deploy a Containerized App</h3>
-    <form ng-submit="ctrl.deploy()">
-      <md-input-container>
+    <form ng-submit="ctrl.deployBySelection()">
+      <md-input-container class="md-block">
         <label>App name</label>
         <input ng-model="ctrl.name" required>
       </md-input-container>
@@ -30,50 +30,21 @@ limitations under the License.
           Upload a YAML or JSON file
         </md-radio-button>
       </md-radio-group>
-      <md-input-container>
-        <label>Container image</label>
-        <input ng-model="ctrl.containerImage" required>
-      </md-input-container>
-      <md-input-container>
-        <label>Number of pods</label>
-        <input ng-model="ctrl.replicas" type="number" required min="1">
-      </md-input-container>
-      <div layout="row" ng-repeat="portMapping in ctrl.portMappings">
-        <md-input-container flex>
-          <label>Port</label>
-          <input ng-model="portMapping.port" type="number" min="0">
-        </md-input-container>
-        <md-input-container flex>
-          <label>Target port</label>
-          <input ng-model="portMapping.targetPort" type="number" min="0">
-        </md-input-container>
-        <md-input-container flex="none">
-          <label>Protocol</label>
-          <md-select ng-model="portMapping.protocol" required>
-            <md-option ng-repeat="protocol in ctrl.protocols" ng-value="protocol">
-              {{protocol}}
-            </md-option>
-          </md-select>
-        </md-input-container>
-      </div>
-      <md-input-container>
-        <label>Namespace</label>
-        <md-select ng-model="ctrl.namespace" required>
-          <md-option ng-repeat="namespace in ctrl.namespaces" ng-value="namespace">
-            {{namespace}}
-          </md-option>
-          <md-option ng-click="ctrl.handleNamespaceDialog($event)">
-            Create a new namespace...
-          </md-option>
-        </md-select>
-      </md-input-container>
-      <md-switch ng-model="ctrl.isExternal" class="md-primary">
-        Expose service externally
-      </md-switch>
-      <md-input-container>
-        <label>Description (optional)</label>
-        <textarea ng-model="ctrl.description"></textarea>
-      </md-input-container>
+      <deploy-from-settings name="ctrl.name"
+                            namespace="ctrl.namespace"
+                            detail="ctrl.detail">
+      </deploy-from-settings>
+      <md-input-container class="md-block">
+      <label>Namespace</label>
+      <md-select ng-model="ctrl.namespace" required>
+        <md-option ng-repeat="namespace in ctrl.namespaces" ng-value="namespace">
+          {{namespace}}
+        </md-option>
+        <md-option ng-click="ctrl.handleNamespaceDialog($event)">
+          Create a new namespace...
+        </md-option>
+      </md-select>
+    </md-input-container>
       <md-button class="md-raised md-primary" type="submit" ng-disabled="ctrl.isDeployDisabled()">
         Deploy
       </md-button>

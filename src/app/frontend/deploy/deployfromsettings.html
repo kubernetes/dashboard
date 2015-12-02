@@ -1,0 +1,49 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<md-input-container class="md-block">
+    <label>Container image</label>
+    <input ng-model="ctrl.containerImage" required>
+</md-input-container>
+<md-input-container class="md-block">
+    <label>Number of pods</label>
+    <input ng-model="ctrl.replicas" type="number" required min="1">
+</md-input-container>
+<div layout="row" ng-repeat="portMapping in ctrl.portMappings">
+    <md-input-container flex>
+        <label>Port</label>
+        <input ng-model="portMapping.port" type="number" min="0">
+    </md-input-container>
+    <md-input-container flex>
+        <label>Target port</label>
+        <input ng-model="portMapping.targetPort" type="number" min="0">
+    </md-input-container>
+    <md-input-container flex="none">
+        <label>Protocol</label>
+        <md-select ng-model="portMapping.protocol" required>
+            <md-option ng-repeat="protocol in ctrl.protocols" ng-value="protocol">
+                {{protocol}}
+            </md-option>
+        </md-select>
+    </md-input-container>
+</div>
+<md-switch ng-model="ctrl.isExternal" class="md-primary">
+    Expose service externally
+</md-switch>
+<md-input-container>
+    <label>Description (optional)</label>
+    <textarea ng-model="ctrl.description"></textarea>
+</md-input-container>
