@@ -38,7 +38,7 @@ limitations under the License.
           <span flex="60">
             {{::replicaSet.podsRunning}} pods running, {{::replicaSet.podsPending}} pending
           </span>
-          <a flex="40" href="#" class="kd-replicaset-card-logs">Logs</a>
+          <a flex="40" ng-href="{{ctrl.getReplicaSetLogsHref(replicaSet)}}" class="kd-replicaset-card-logs">Logs</a>
         </div>
         <hr class="kd-replicaset-card-divider"></hr>
         <div layout="row" layout-wrap>
