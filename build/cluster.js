@@ -111,7 +111,7 @@ function executeKubectlCommand(command, doneFn) {
  *  * Install golang
  *  * Install etcd
  */
-gulp.task('local-up-cluster', ['spawn-cluster']);
+gulp.task('local-up-cluster', ['spawn-cluster', 'wait-for-cluster']);
 
 /**
  * Tears down a Kubernetes cluster.
