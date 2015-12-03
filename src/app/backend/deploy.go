@@ -22,7 +22,6 @@ import (
 
 const (
 	DescriptionAnnotationKey = "description"
-	NameLabelKey             = "name"
 )
 
 // Specification for an app deployment.
@@ -48,6 +47,9 @@ type AppDeploymentSpec struct {
 
 	// Target namespace of the application.
 	Namespace string `json:"namespace"`
+
+	// Labels that will be defined on Pods/RCs/Services
+	Labels []Label `json:"labels"`
 }
 
 // Port mapping for an application deployment.
@@ -62,13 +64,22 @@ type PortMapping struct {
 	Protocol api.Protocol `json:"protocol"`
 }
 
+// Structure representing label assignable to Pod/RC/Service
+type Label struct {
+	// Label key
+	Key string `json:"key"`
+
+	// Label value
+	Value string `json:"value"`
+}
+
 // Deploys an app based on the given configuration. The app is deployed using the given client.
 // App deployment consists of a replication controller and an optional service. Both of them share
 // common labels.
 // TODO(bryk): Write tests for this function.
 func DeployApp(spec *AppDeploymentSpec, client *client.Client) error {
 	annotations := map[string]string{DescriptionAnnotationKey: spec.Description}
-	labels := map[string]string{NameLabelKey: spec.Name}
+	labels := getLabelsMap(spec.Labels)
 	objectMeta := api.ObjectMeta{
 		Annotations: annotations,
 		Name:        spec.Name,
@@ -136,4 +147,15 @@ func DeployApp(spec *AppDeploymentSpec, client *client.Client) error {
 	} else {
 		return nil
 	}
+}
+
+// Converts array of labels to map[string]string
+func getLabelsMap(labels []Label) map[string]string {
+	result := make(map[string]string)
+
+	for _, label := range labels {
+		result[label.Key] = label.Value
+	}
+
+	return result
 }

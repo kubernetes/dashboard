@@ -4,7 +4,6 @@
   },
   // Define missing global Angular testing environment variables.
   "globals": {
-    "inject": true,
-    "module": true,
+    "angular": true,
   },
 }

@@ -41,7 +41,8 @@ backendApi.PortMapping;
  *   description: string,
  *   portMappings: !Array<!backendApi.PortMapping>,
  *   replicas: number,
- *   namespace: string
+ *   namespace: string,
+ *   labels: !Array<!backendApi.Label>
  * }}
  */
 backendApi.AppDeploymentSpec;
@@ -106,3 +107,11 @@ backendApi.NamespaceSpec;
  * }}
  */
 backendApi.NamespaceList;
+
+/**
+ * @typedef {{
+ *  key: string,
+ *  value: string
+ * }}
+ */
+backendApi.Label;

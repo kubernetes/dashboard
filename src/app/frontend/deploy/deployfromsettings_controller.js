@@ -12,7 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import DeployLabel from './deploylabel';
 import {stateName as replicasetliststate} from 'replicasetlist/replicasetlist_state';
+
+// Label keys for predefined labels
+export const APP_LABEL_KEY = 'app';
+export const VERSION_LABEL_KEY = 'version';
 
 /**
  * Controller for the deploy from settings directive.
@@ -68,6 +73,13 @@ export default class DeployFromSettingsController {
 
     /** @export {boolean} */
     this.isExternal = false;
+
+    /** @export {!Array<!DeployLabel>} */
+    this.labels = [
+      new DeployLabel(APP_LABEL_KEY, '', false, this.getName_.bind(this)),
+      new DeployLabel(VERSION_LABEL_KEY, '', false, this.getContainerImageVersion_.bind(this)),
+      new DeployLabel(),
+    ];
   }
 
   /**
@@ -87,6 +99,7 @@ export default class DeployFromSettingsController {
       portMappings: this.portMappings.filter(this.isPortMappingEmpty_),
       replicas: this.replicas,
       namespace: this.namespace,
+      labels: this.toBackendApiLabels_(this.labels),
     };
 
     let defer = this.q_.defer();
@@ -108,6 +121,22 @@ export default class DeployFromSettingsController {
   }
 
   /**
+   * Converts array of DeployLabel to array of backend api label
+   * @param {!Array<!DeployLabel>} labels
+   * @return {!Array<!backendApi.Label>}
+   * @private
+   */
+  toBackendApiLabels_(labels) {
+    // Omit labels with empty key/value
+    /** @type {!Array<!DeployLabel>} */
+    let apiLabels =
+        labels.filter((label) => { return label.key.length !== 0 && label.value().length !== 0; });
+
+    // Transform to array of backend api labels
+    return apiLabels.map((label) => { return label.toBackendApi(); });
+  }
+
+  /**
    * @param {string} defaultProtocol
    * @return {!backendApi.PortMapping}
    * @private
@@ -123,4 +152,31 @@ export default class DeployFromSettingsController {
    * @private
    */
   isPortMappingEmpty_(portMapping) { return !!portMapping.port && !!portMapping.targetPort; }
+
+  /**
+   * Callbacks used in DeployLabel model to make it aware of controller state changes.
+   */
+
+  /**
+   * Returns extracted from link container image version.
+   * @return {string}
+   * @private
+   */
+  getContainerImageVersion_() {
+    /** @type {number} */
+    let index = (this.containerImage || '').lastIndexOf(':');
+
+    if (index > -1) {
+      return this.containerImage.substring(index + 1);
+    }
+
+    return '';
+  }
+
+  /**
+   * Returns application name.
+   * @return {string}
+   * @private
+   */
+  getName_() { return this.name; }
 }

@@ -1,0 +1,36 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<ng-form layout="row" flex name="labelForm">
+  <md-input-container md-no-float class="md-block" flex="45">
+    <input name="key" ng-model="labelCtrl.label.key" ng-change="labelCtrl.check(labelForm)"
+           placeholder="{{labelCtrl.label.key}}" ng-disabled="!labelCtrl.label.editable">
+    <ng-messages for="labelForm.key.$error" ng-if="labelForm.key.$invalid">
+      <ng-message when="unique">{{labelCtrl.label.key}} is not unique.</ng-message>
+    </ng-messages>
+  </md-input-container>
+  <p flex="5"></p>
+  <md-input-container md-no-float class="md-block" flex="40">
+    <input ng-model="labelCtrl.label.value" ng-change="labelCtrl.check()"
+           placeholder="{{labelCtrl.label.value}}" ng-disabled="!labelCtrl.label.editable"
+           ng-model-options="{ getterSetter: true }">
+    <ng-messages ng-if="labelForm.key.$error.unique"></ng-messages>
+  </md-input-container>
+  <md-button type="button" ng-show="labelCtrl.isRemovable()"
+             ng-click="labelCtrl.deleteLabel()"
+             class="material-icons kd-deploy-labels-button">delete
+  </md-button>
+</ng-form>

@@ -14,6 +14,7 @@
 
 import stateConfig from './deploy_state';
 import deployFromSettingsDirective from './deployfromsettings_directive';
+import deployLabelDirective from './deploylabel_directive';
 
 /**
  * Angular module for the deploy view.
@@ -24,7 +25,9 @@ export default angular.module(
                           'kubernetesDashboard.deploy',
                           [
                             'ngMaterial',
+                            'ngResource',
                             'ui.router',
                           ])
     .config(stateConfig)
-    .directive('deployFromSettings', deployFromSettingsDirective);
+    .directive('deployFromSettings', deployFromSettingsDirective)
+    .directive('kdLabel', deployLabelDirective);

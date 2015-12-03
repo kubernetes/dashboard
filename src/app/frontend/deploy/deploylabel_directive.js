@@ -12,19 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ZerostateController from 'zerostate/zerostate_controller';
+import DeployLabelController from './deploylabel_controller';
 
-describe('Main controller', () => {
-  let ctrl;
-
-  beforeEach(angular.mock.inject(() => { ctrl = new ZerostateController(); }));
-
-  it('should do something', () => {
-    expect(ctrl.learnMoreLinks).toEqual([
-      {title: 'Dashboard Tour', link: "#"},
-      {title: 'Deploying your App', link: "#"},
-      {title: 'Monitoring your App', link: "#"},
-      {title: 'Troubleshooting', link: "#"},
-    ]);
-  });
-});
+/**
+ * Returns directive definition for deploy form label.
+ *
+ * @return {!angular.Directive}
+ */
+export default function labelDirective() {
+  return {
+    controller: DeployLabelController,
+    controllerAs: 'labelCtrl',
+    templateUrl: 'deploy/deploylabel.html',
+    scope: {},
+    bindToController: {
+      label: '=',
+      labels: '=',
+    },
+  };
+}
