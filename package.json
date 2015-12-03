@@ -1,5 +1,4 @@
 {
-  "//": "Specification of this file can be found at: https://docs.npmjs.com/files/package.json",
   "//": "When a dependency is not needed it should be removed from the list.",
   "name": "kubernetes-dashboard",
   "version": "0.0.1",
@@ -15,7 +14,7 @@
     "del": "~2.0.1",
     "eslint-loader": "~1.0.0",
     "eslint-plugin-angular": "~0.11.0",
-    "google-closure-compiler": "~20150920.0.0",
+    "google-closure-compiler": "~20151015.0.0",
     "gulp": "~3.9.0",
     "gulp-angular-templatecache": "~1.7.0",
     "gulp-autoprefixer": "~3.0.1",
