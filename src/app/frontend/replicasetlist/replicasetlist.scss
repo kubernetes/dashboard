@@ -19,14 +19,20 @@
 .kd-replicaset-card-logs {
   color: inherit;
   text-decoration: none;
+  /* This override button style to make it look like a link */
+  padding: inherit;
+  margin: inherit;
+  min-width: inherit;
+  min-height: inherit;
+  line-height: 0px;
+  border-radius: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  text-transform: inherit;
 }
 
 .kd-replicaset-card-logs:after {
   content: '\25BC';
-}
-
-.kd-replicaset-card-logs:hover {
-  text-decoration: underline;
 }
 
 .kd-replicaset-card-divider {
@@ -46,4 +52,26 @@
 
 .kd-replicaset-card-label {
   margin-right: 1em;
+}
+
+.kd-menu-logs-md-menu-item {
+  min-height: 30px;
+  height: 30px;
+}
+
+.kd-menu-logs-item-header {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+
+.kd-menu-logs-item {
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 0.8em;
+}
+
+.kd-menu-logs-link-icon {
+  font-size: 1em;
+  margin-left: 5px;
 }

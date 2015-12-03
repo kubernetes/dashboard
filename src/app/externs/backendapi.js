@@ -148,3 +148,28 @@ backendApi.NamespaceList;
  * }}
  */
 backendApi.Label;
+
+/**
+ * @typedef {{
+ *   name: string,
+ *   restartCount: number
+ * }}
+ */
+backendApi.PodContainer;
+
+/**
+ * @typedef {{
+ *   name: string,
+ *   startTime: string,
+ *   totalRestartCount: number,
+ *   podContainers: !Array<!backendApi.PodContainer>
+ * }}
+ */
+backendApi.ReplicaSetPodWithContainers;
+
+/**
+ * @typedef {{
+ *   pods: !Array<!backendApi.ReplicaSetPodWithContainers>
+ * }}
+ */
+backendApi.ReplicaSetPods;

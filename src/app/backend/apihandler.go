@@ -19,6 +19,7 @@ import (
 
 	restful "github.com/emicklei/go-restful"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	"strconv"
 )
 
 // Creates a new HTTP handler that handles all requests to the API of the backend.
@@ -161,7 +162,11 @@ func (apiHandler *ApiHandler) handleGetReplicaSetPods(
 
 	namespace := request.PathParameter("namespace")
 	replicaSet := request.PathParameter("replicaSet")
-	result, err := GetReplicaSetPods(apiHandler.client, namespace, replicaSet)
+	limit, err := strconv.Atoi(request.QueryParameter("limit"))
+	if err != nil {
+		limit = 0
+	}
+	result, err := GetReplicaSetPods(apiHandler.client, namespace, replicaSet, limit)
 	if err != nil {
 		handleInternalError(response, err)
 		return

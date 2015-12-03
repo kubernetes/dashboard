@@ -16,18 +16,24 @@ package main
 
 import (
 	api "k8s.io/kubernetes/pkg/api"
-	types "k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	"sort"
 )
+
+// TotalRestartCountSorter sorts ReplicaSetPodWithContainers by restarts number.
+type TotalRestartCountSorter []ReplicaSetPodWithContainers
+
+func (a TotalRestartCountSorter) Len() int      { return len(a) }
+func (a TotalRestartCountSorter) Swap(i, j int) { a[i], a[j] = a[j], a[i] }
+func (a TotalRestartCountSorter) Less(i, j int) bool {
+	return a[i].TotalRestartCount > a[j].TotalRestartCount
+}
 
 // Information about a Container that belongs to a Pod.
 type PodContainer struct {
 	// Name of a Container.
 	Name string `json:"name"`
-
-	// Container state.
-	State types.ContainerState `json:"state,omitempty"`
 
 	// Number of restarts.
 	RestartCount int `json:"restartCount"`
@@ -47,26 +53,32 @@ type ReplicaSetPodWithContainers struct {
 	// Time the Pod has started. Empty if not started.
 	StartTime *unversioned.Time `json:"startTime"`
 
+	// Total number of restarts.
+	TotalRestartCount int `json:"totalRestartCount"`
+
 	// List of Containers that belongs to particular Pod.
 	PodContainers []PodContainer `json:"podContainers"`
 }
 
 // Returns list of pods with containers for the given replica set in the given namespace.
-func GetReplicaSetPods(client *client.Client, namespace string, name string) (
+// Limit specify the number of records to return. There is no limit when given value is zero.
+func GetReplicaSetPods(client *client.Client, namespace string, name string, limit int) (
 	*ReplicaSetPods, error) {
 	pods, err := getRawReplicaSetPods(client, namespace, name)
 	if err != nil {
 		return nil, err
 	}
 
-	return getReplicaSetPods(pods.Items), nil
+	return getReplicaSetPods(pods.Items, limit), nil
 }
 
 // Creates and return structure containing pods with containers for given replica set.
-func getReplicaSetPods(pods []api.Pod) *ReplicaSetPods {
+// Data is sorted by total number of restarts for replica set pod.
+// Result set can be limited
+func getReplicaSetPods(pods []api.Pod, limit int) *ReplicaSetPods {
 	replicaSetPods := &ReplicaSetPods{}
-
 	for _, pod := range pods {
+		totalRestartCount := 0
 		replicaSetPodWithContainers := ReplicaSetPodWithContainers{
 			Name:      pod.Name,
 			StartTime: pod.Status.StartTime,
@@ -75,13 +87,21 @@ func getReplicaSetPods(pods []api.Pod) *ReplicaSetPods {
 			podContainer := PodContainer{
 				Name:         containerStatus.Name,
 				RestartCount: containerStatus.RestartCount,
-				State:        containerStatus.State,
 			}
 			replicaSetPodWithContainers.PodContainers =
 				append(replicaSetPodWithContainers.PodContainers, podContainer)
+			totalRestartCount += containerStatus.RestartCount
 		}
+		replicaSetPodWithContainers.TotalRestartCount = totalRestartCount
 		replicaSetPods.Pods = append(replicaSetPods.Pods, replicaSetPodWithContainers)
 	}
+	sort.Sort(TotalRestartCountSorter(replicaSetPods.Pods))
 
+	if limit > 0 {
+		if limit > len(replicaSetPods.Pods) {
+			limit = len(replicaSetPods.Pods)
+		}
+		replicaSetPods.Pods = replicaSetPods.Pods[0:limit]
+	}
 	return replicaSetPods
 }
