@@ -9,6 +9,7 @@ bower_components/
 coverage/
 dist/
 kubernetes/
+.tools/
 
 ## IDE specific files
 # IntelliJ

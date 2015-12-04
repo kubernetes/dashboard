@@ -91,6 +91,7 @@ export default {
     externs: path.join(basePath, 'src/app/externs'),
     frontendSrc: path.join(basePath, 'src/app/frontend'),
     frontendTest: path.join(basePath, 'src/test/frontend'),
+    goTools: path.join(basePath, '.tools/go'),
     goWorkspace: path.join(basePath, '.go_workspace'),
     integrationTest: path.join(basePath, 'src/test/integration'),
     karmaConf: path.join(basePath, 'build/karma.conf.js'),
