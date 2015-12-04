@@ -24,10 +24,10 @@ limitations under the License.
         <label>Namespace name</label>
         <input ng-model="ctrl.namespace" required>
       </md-input-container>
-      <div class="md-actions" layout="row">
+      <md-dialog-actions layout="row">
         <md-button ng-disabled="ctrl.isDisabled()" class="md-primary" type="submit">OK</md-button>
         <md-button ng-click="ctrl.cancel()">Cancel</md-button>
-      </div>
+      </md-dialog-actions>
     </form>
   </md-content>
 </md-dialog>
