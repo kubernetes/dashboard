@@ -43,9 +43,16 @@ export default class NamespaceDialogController {
 
     /** @export {string} */
     this.namespace = '';
+
+    //TODO(cheld) move to some central place or html?
+    this.namespaceMaxLength = 63;
+
+    this.namespacePattern = "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$";
+
   }
 
   /**
+   * TODO(cheld) clean up
    * Returns true if new namespace name hasn't been filled by the user, i.e, is empty.
    * @return {boolean}
    */
