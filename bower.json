@@ -8,7 +8,7 @@
     "angular": "~1.4.2",
     "angular-animate": "~1.4.2",
     "angular-aria": "~1.4.2",
-    "angular-material": "~0.11.4",
+    "angular-material": "~1.0.0-rc6",
     "angular-messages": "~1.4.2",
     "angular-ui-router": "~0.2.15",
     "angular-resource": "~1.4.2",
