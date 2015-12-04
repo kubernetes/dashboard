@@ -8,7 +8,7 @@
   },
   "license": "Apache-2.0",
   "devDependencies": {
-    "babel": "~6.1.18",
+    "babel": "~6.3.13",
     "babel-core": "~6.3.13",
     "babel-loader": "~6.2.0",
     "babel-preset-es2015": "~6.3.13",
