@@ -47,7 +47,7 @@ function getFileList() {
  *
  * @param {!Object} config
  */
-export default function(config) {
+module.exports = function(config) {
   let configuration = {
     basePath: conf.paths.base,
 
@@ -88,7 +88,7 @@ export default function(config) {
       paths: [conf.paths.frontendSrc, conf.paths.frontendTest],
       transform: [
         // Transform ES6 code into ES5 so that browsers can digest it.
-        'babelify',
+        ['babelify', {'presets': ['es2015']}],
       ],
     },
 
@@ -112,4 +112,4 @@ export default function(config) {
   configuration.preprocessors[path.join(conf.paths.frontendSrc, '**/*.html')] = ['ng-html2js'];
 
   config.set(configuration);
-}
+};

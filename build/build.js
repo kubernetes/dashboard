@@ -47,15 +47,15 @@ gulp.task('build-frontend', ['assets', 'index:prod'], function() {
   let htmlFilter = gulpFilter('*.html', {restore: true});
   let vendorCssFilter = gulpFilter('**/vendor.css', {restore: true});
   let vendorJsFilter = gulpFilter('**/vendor.js', {restore: true});
-  let assets;
+  let assetsFilter = gulpFilter(['**/*.js', '**/*.css'], {restore: true});
 
   return gulp.src(path.join(conf.paths.prodTmp, '*.html'))
-      .pipe(assets = gulpUseref.assets({
+      .pipe(gulpUseref({
         searchPath: [
           // To resolve local paths.
-          conf.paths.prodTmp,
+          path.relative(conf.paths.base, conf.paths.prodTmp),
           // To resolve bower_components/... paths.
-          conf.paths.base,
+          path.relative(conf.paths.base, conf.paths.base),
         ],
       }))
       .pipe(vendorCssFilter)
@@ -64,8 +64,9 @@ gulp.task('build-frontend', ['assets', 'index:prod'], function() {
       .pipe(vendorJsFilter)
       .pipe(gulpUglify({preserveComments: uglifySaveLicense}))
       .pipe(vendorJsFilter.restore)
+      .pipe(assetsFilter)
       .pipe(gulpRev())
-      .pipe(assets.restore())
+      .pipe(assetsFilter.restore)
       .pipe(gulpUseref({searchPath: [conf.paths.prodTmp]}))
       .pipe(gulpRevReplace())
       .pipe(htmlFilter)

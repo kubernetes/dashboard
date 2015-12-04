@@ -15,13 +15,11 @@
 /**
  * @fileoverview Configuration file for Protractor test runner.
  *
- * TODO(bryk): Start using ES6 in this file when supported.
+ * TODO(bryk): Start using ES6 modules in this file when supported.
  */
-/* eslint no-var: 0 */           // disabled because this file is not written in ES6.
-/* eslint prefer-template: 0 */  // disabled because this file is not written in ES6.
 require('babel-core/register');
-var conf = require('./conf');
-var path = require('path');
+const conf = require('./conf').default;
+const path = require('path');
 
 /**
  * Exported protractor config required by the framework.
@@ -29,7 +27,7 @@ var path = require('path');
  * Schema can be found here: https://github.com/angular/protractor/blob/master/docs/referenceConf.js
  */
 exports.config = {
-  baseUrl: 'http://localhost:' + conf.frontend.serverPort,
+  baseUrl: `http://localhost:${conf.frontend.serverPort}`,
 
   capabilities: {
     // Firefox is used instead of Chrome, because that's what Travis supports best.
