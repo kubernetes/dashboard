@@ -160,6 +160,7 @@ func getServicePortsName(ports []api.ServicePort) string {
 // Returns all services that target the same Pods (or subset) as the given Replica Set.
 func getMatchingServices(services []api.Service,
 	replicaSet *api.ReplicationController) []api.Service {
+	// TODO(bryk): Match namespace too.
 
 	var matchingServices []api.Service
 	for _, service := range services {
