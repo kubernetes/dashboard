@@ -68,6 +68,6 @@
     "node": ">=4.2.2"
   },
   "scripts": {
-    "postinstall": "export GOPATH=`pwd`/.tools/go && go get github.com/tools/godep"
+    "postinstall": "./build/postinstall.sh"
   }
 }
