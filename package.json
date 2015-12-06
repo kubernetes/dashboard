@@ -17,7 +17,7 @@
     "browser-sync": "~2.10.0",
     "browser-sync-spa": "~1.0.2",
     "browserify": "~12.0.1",
-    "del": "~2.1.0",
+    "del": "~2.2.0",
     "eslint-plugin-angular": "~0.14.0",
     "google-closure-compiler": "~20151015.0.0",
     "gulp": "~3.9.0",
