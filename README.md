@@ -18,7 +18,6 @@ Kubernetes Dashboard project consists of two main components. They are called he
 Make sure the following software is installed and added to the `$PATH` variable:
 * Docker (1.3+)
 * go (1.5+)
-* godep (18+)
 * nodejs (4.2.2+)
 * npm (1.3+)
 * etcd (2.2+)
