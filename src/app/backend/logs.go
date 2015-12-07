@@ -17,23 +17,24 @@ package main
 import (
 	"io/ioutil"
 	api "k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"strings"
-	"time"
 )
 
 // Log response structure
 type Logs struct {
 	// Pod id
 	PodId string `json:"podId"`
-	// Specific date (RFC3339) when logs started
-	SinceTime string `json:"sinceTime"`
+	// Specific time when logs started
+	SinceTime unversioned.Time `json:"sinceTime"`
 	// Logs string
 	Logs []string `json:"logs"`
 }
 
-// Return logs for particular pod or error when occurred.
-func GetPodLogs(client *client.Client, namespace string, podId string) (*Logs, error) {
+// Return logs for particular pod and container or error when occurred.
+func GetPodLogs(client *client.Client, namespace string, podId string, container string) (*Logs,
+	error) {
 
 	pod, err := client.Pods(namespace).Get(podId)
 	if err != nil {
@@ -41,21 +42,17 @@ func GetPodLogs(client *client.Client, namespace string, podId string) (*Logs, e
 	}
 
 	logOptions := &api.PodLogOptions{
+		Container:  container,
 		Follow:     false,
 		Previous:   false,
 		Timestamps: true,
 	}
 
-	logString, err := getRawPodLogs(client, namespace, podId, logOptions)
+	rawLogs, err := getRawPodLogs(client, namespace, podId, logOptions)
 	if err != nil {
 		return nil, err
 	}
-	logs := &Logs{
-		PodId:     podId,
-		SinceTime: pod.CreationTimestamp.Format(time.RFC3339),
-		Logs:      strings.Split(logString, "\n"),
-	}
-	return logs, nil
+	return constructLogs(podId, pod.CreationTimestamp, rawLogs), nil
 }
 
 // Construct a request for getting the logs for a pod and retrieves the logs.
@@ -80,4 +77,14 @@ func getRawPodLogs(client *client.Client, namespace string, podID string,
 		return "", err
 	}
 	return string(result), nil
+}
+
+// Return Logs structure for given parameters.
+func constructLogs(podId string, sinceTime unversioned.Time, rawLogs string) *Logs {
+	logs := &Logs{
+		PodId:     podId,
+		SinceTime: sinceTime,
+		Logs:      strings.Split(rawLogs, "\n"),
+	}
+	return logs
 }
