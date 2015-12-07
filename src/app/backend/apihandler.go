@@ -48,6 +48,10 @@ func CreateHttpApiHandler(client *client.Client) http.Handler {
 		replicaSetWs.GET("/{namespace}/{replicaSet}").
 			To(apiHandler.handleGetReplicaSetDetail).
 			Writes(ReplicaSetDetail{}))
+	replicaSetWs.Route(
+		replicaSetWs.GET("/pods/{namespace}/{replicaSet}").
+			To(apiHandler.handleGetReplicaSetPods).
+			Writes(ReplicaSetPods{}))
 	wsContainer.Add(replicaSetWs)
 
 	namespacesWs := new(restful.WebService)
@@ -125,6 +129,21 @@ func (apiHandler *ApiHandler) handleGetReplicaSetDetail(
 	namespace := request.PathParameter("namespace")
 	replicaSet := request.PathParameter("replicaSet")
 	result, err := GetReplicaSetDetail(apiHandler.client, namespace, replicaSet)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get Replica Set Pods API call.
+func (apiHandler *ApiHandler) handleGetReplicaSetPods(
+	request *restful.Request, response *restful.Response) {
+
+	namespace := request.PathParameter("namespace")
+	replicaSet := request.PathParameter("replicaSet")
+	result, err := GetReplicaSetPods(apiHandler.client, namespace, replicaSet)
 	if err != nil {
 		handleInternalError(response, err)
 		return

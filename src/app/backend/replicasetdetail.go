@@ -17,8 +17,6 @@ package main
 import (
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
-	"k8s.io/kubernetes/pkg/fields"
-	"k8s.io/kubernetes/pkg/labels"
 )
 
 // Detailed information about a Replica Set.
@@ -67,11 +65,12 @@ type ReplicaSetPod struct {
 func GetReplicaSetDetail(client *client.Client, namespace string, name string) (
 	*ReplicaSetDetail, error) {
 
-	replicaSet, err := client.ReplicationControllers(namespace).Get(name)
-
+	replicaSetWithPods, err := getRawReplicaSetWithPods(client, namespace, name)
 	if err != nil {
 		return nil, err
 	}
+	replicaSet := replicaSetWithPods.ReplicaSet
+	pods := replicaSetWithPods.Pods
 
 	replicaSetDetail := &ReplicaSetDetail{
 		Name:          replicaSet.Name,
@@ -85,9 +84,6 @@ func GetReplicaSetDetail(client *client.Client, namespace string, name string) (
 	for _, container := range replicaSet.Spec.Template.Spec.Containers {
 		replicaSetDetail.ContainerImages = append(replicaSetDetail.ContainerImages, container.Image)
 	}
-
-	labelSelector := labels.SelectorFromSet(replicaSet.Spec.Selector)
-	pods, err := client.Pods(namespace).List(labelSelector, fields.Everything())
 
 	for _, pod := range pods.Items {
 		podDetail := ReplicaSetPod{
