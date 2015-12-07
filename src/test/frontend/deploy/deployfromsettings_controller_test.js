@@ -14,6 +14,7 @@
 
 import DeployFromSettingController from 'deploy/deployfromsettings_controller';
 import deployModule from 'deploy/deploy_module';
+import DeployLabel from 'deploy/deploylabel';
 
 describe('DeployFromSettings controller', () => {
   let ctrl;
@@ -27,25 +28,80 @@ describe('DeployFromSettings controller', () => {
   });
 
   it('should return empty string when containerImage is undefined', () => {
+    // given
     ctrl.containerImage = undefined;
-    expect(ctrl.getContainerImageVersion_()).toEqual('');
+
+    // when
+    let result = ctrl.getContainerImageVersion_();
+
+    // then
+    expect(result).toEqual('');
   });
 
   it('should return empty string when containerImage is empty', () => {
+    // given
     ctrl.containerImage = '';
-    expect(ctrl.getContainerImageVersion_()).toEqual('');
+
+    // when
+    let result = ctrl.getContainerImageVersion_();
+
+    // then
+    expect(result).toEqual('');
   });
 
   it('should return empty string when containerImage is not empty and does not contain `:`' +
          ' delimiter',
      () => {
+       // given
        ctrl.containerImage = 'test';
-       expect(ctrl.getContainerImageVersion_()).toEqual('');
+
+       // when
+       let result = ctrl.getContainerImageVersion_();
+
+       // then
+       expect(result).toEqual('');
      });
 
   it('should return part of the string after `:` delimiter', () => {
+    // given
     ctrl.containerImage = 'test:1';
-    expect(ctrl.getContainerImageVersion_()).toEqual('1');
+
+    // when
+    let result = ctrl.getContainerImageVersion_();
+
+    // then
+    expect(result).toEqual('1');
   });
 
+  it('should return empty array when labels array is empty', () => {
+    // given
+    let labels = [];
+
+    // when
+    let result = ctrl.toBackendApiLabels_(labels);
+
+    // then
+    expect(result).toEqual([]);
+  });
+
+  it('should return filtered backend api labels array without empty key/values', () => {
+    // given
+    let labels = [
+      new DeployLabel('', 'val'),
+      new DeployLabel('key1', 'val1'),
+    ];
+
+    // when
+    let result = ctrl.toBackendApiLabels_(labels);
+
+    // then
+    let expected = [
+      {
+        key: 'key1',
+        value: 'val1',
+      },
+    ];
+
+    expect(result).toEqual(expected);
+  });
 });
