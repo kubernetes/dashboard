@@ -20,12 +20,39 @@
 export default class ReplicaSetDetailController {
   /**
    * @param {!backendApi.ReplicaSetDetail} replicaSetDetail
+   * @param {!backendApi.Events} replicaSetEvents
    * @ngInject
    */
-  constructor(replicaSetDetail) {
-    /**
-     * @export {!backendApi.ReplicaSetDetail}
-     */
+  constructor(replicaSetDetail, replicaSetEvents) {
+    /** @export {!backendApi.ReplicaSetDetail} */
     this.replicaSetDetail = replicaSetDetail;
+
+    /** @export {!backendApi.Events} */
+    this.replicaSetEvents = replicaSetEvents;
+
+    /** @const @export {!Array<string>} */
+    this.eventTypeFilter = ['All', 'Warning'];
+
+    /** @export {string} */
+    this.eventType = this.eventTypeFilter[0];
+
+    /** @const @export {!Array<string>} */
+    this.eventSourceFilter = ['All', 'User', 'System'];
+
+    /** @export {string} */
+    this.eventSource = this.eventSourceFilter[0];
+  }
+
+  /**
+   * TODO(floreks): Reuse this in replicasetlist controller.
+   * Formats labels object to readable string.
+   * @param {!Object} object
+   * @return {string}
+   * @export
+   */
+  formatLabelString(object) {
+    let result = '';
+    angular.forEach(object, function(value, key) { result += `,${key}=${value}`; });
+    return result.substring(1);
   }
 }
