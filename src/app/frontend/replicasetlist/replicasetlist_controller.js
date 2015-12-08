@@ -22,37 +22,16 @@ import {stateName} from 'replicasetdetail/replicasetdetail_state';
  */
 export default class ReplicaSetListController {
   /**
-   * @param {!angular.$log} $log
-   * @param {!angular.$resource} $resource
    * @param {!ui.router.$state} $state
    * @param {!backendApi.ReplicaSetList} replicaSets
    * @ngInject
    */
-  constructor($log, $resource, $state, replicaSets) {
+  constructor($state, replicaSets) {
     /** @export {!Array<backendApi.ReplicaSet>} */
     this.replicaSets = replicaSets.replicaSets;
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
-
-    this.initialize_($log, $resource);
-  }
-
-  /**
-   * @param {!angular.$log} $log
-   * @param {!angular.$resource} $resource
-   * @private
-   */
-  initialize_($log, $resource) {
-    /** @type {!angular.Resource<!backendApi.ReplicaSetList>} */
-    let resource = $resource('/api/replicasets');
-
-    resource.get(
-        (replicaSetList) => {
-          $log.info('Successfully fetched Replica Set list: ', replicaSetList);
-          this.replicaSets = replicaSetList.replicaSets;
-        },
-        (err) => { $log.error('Error fetching Replica Set list: ', err); });
   }
 
   /**
