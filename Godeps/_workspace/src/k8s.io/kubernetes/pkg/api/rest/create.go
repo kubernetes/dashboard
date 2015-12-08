@@ -21,7 +21,7 @@ import (
 	"k8s.io/kubernetes/pkg/api/errors"
 	"k8s.io/kubernetes/pkg/api/validation"
 	"k8s.io/kubernetes/pkg/runtime"
-	"k8s.io/kubernetes/pkg/util/fielderrors"
+	utilvalidation "k8s.io/kubernetes/pkg/util/validation"
 )
 
 // RESTCreateStrategy defines the minimum validation, accepted input, and
@@ -37,11 +37,15 @@ type RESTCreateStrategy interface {
 	NamespaceScoped() bool
 	// PrepareForCreate is invoked on create before validation to normalize
 	// the object.  For example: remove fields that are not to be persisted,
-	// sort order-insensitive list fields, etc.
+	// sort order-insensitive list fields, etc.  This should not remove fields
+	// whose presence would be considered a validation error.
 	PrepareForCreate(obj runtime.Object)
 	// Validate is invoked after default fields in the object have been filled in before
-	// the object is persisted.
-	Validate(ctx api.Context, obj runtime.Object) fielderrors.ValidationErrorList
+	// the object is persisted.  This method should not mutate the object.
+	Validate(ctx api.Context, obj runtime.Object) utilvalidation.ErrorList
+	// Canonicalize is invoked after validation has succeeded but before the
+	// object has been persisted.  This method may mutate the object.
+	Canonicalize(obj runtime.Object)
 }
 
 // BeforeCreate ensures that common operations for all resources are performed on creation. It only returns
@@ -73,9 +77,11 @@ func BeforeCreate(strategy RESTCreateStrategy, ctx api.Context, obj runtime.Obje
 	// Custom validation (including name validation) passed
 	// Now run common validation on object meta
 	// Do this *after* custom validation so that specific error messages are shown whenever possible
-	if errs := validation.ValidateObjectMeta(objectMeta, strategy.NamespaceScoped(), validation.ValidatePathSegmentName); len(errs) > 0 {
+	if errs := validation.ValidateObjectMeta(objectMeta, strategy.NamespaceScoped(), validation.ValidatePathSegmentName, utilvalidation.NewFieldPath("metadata")); len(errs) > 0 {
 		return errors.NewInvalid(kind, objectMeta.Name, errs)
 	}
+
+	strategy.Canonicalize(obj)
 
 	return nil
 }

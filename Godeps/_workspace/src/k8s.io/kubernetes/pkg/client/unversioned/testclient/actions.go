@@ -19,7 +19,7 @@ package testclient
 import (
 	"strings"
 
-	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
 	"k8s.io/kubernetes/pkg/runtime"
@@ -44,21 +44,37 @@ func NewGetAction(resource, namespace, name string) GetActionImpl {
 	return action
 }
 
-func NewRootListAction(resource string, label labels.Selector, field fields.Selector) ListActionImpl {
+func NewRootListAction(resource string, opts unversioned.ListOptions) ListActionImpl {
 	action := ListActionImpl{}
 	action.Verb = "list"
 	action.Resource = resource
-	action.ListRestrictions = ListRestrictions{label, field}
+	labelSelector := opts.LabelSelector.Selector
+	if labelSelector == nil {
+		labelSelector = labels.Everything()
+	}
+	fieldSelector := opts.FieldSelector.Selector
+	if fieldSelector == nil {
+		fieldSelector = fields.Everything()
+	}
+	action.ListRestrictions = ListRestrictions{labelSelector, fieldSelector}
 
 	return action
 }
 
-func NewListAction(resource, namespace string, label labels.Selector, field fields.Selector) ListActionImpl {
+func NewListAction(resource, namespace string, opts unversioned.ListOptions) ListActionImpl {
 	action := ListActionImpl{}
 	action.Verb = "list"
 	action.Resource = resource
 	action.Namespace = namespace
-	action.ListRestrictions = ListRestrictions{label, field}
+	labelSelector := opts.LabelSelector.Selector
+	if labelSelector == nil {
+		labelSelector = labels.Everything()
+	}
+	fieldSelector := opts.FieldSelector.Selector
+	if fieldSelector == nil {
+		fieldSelector = fields.Everything()
+	}
+	action.ListRestrictions = ListRestrictions{labelSelector, fieldSelector}
 
 	return action
 }
@@ -150,31 +166,49 @@ func NewDeleteAction(resource, namespace, name string) DeleteActionImpl {
 	return action
 }
 
-func NewRootWatchAction(resource string, label labels.Selector, field fields.Selector, opts api.ListOptions) WatchActionImpl {
+func NewRootWatchAction(resource string, opts unversioned.ListOptions) WatchActionImpl {
 	action := WatchActionImpl{}
 	action.Verb = "watch"
 	action.Resource = resource
-	action.WatchRestrictions = WatchRestrictions{label, field, opts.ResourceVersion}
+	labelSelector := opts.LabelSelector.Selector
+	if labelSelector == nil {
+		labelSelector = labels.Everything()
+	}
+	fieldSelector := opts.FieldSelector.Selector
+	if fieldSelector == nil {
+		fieldSelector = fields.Everything()
+	}
+	action.WatchRestrictions = WatchRestrictions{labelSelector, fieldSelector, opts.ResourceVersion}
 
 	return action
 }
 
-func NewWatchAction(resource, namespace string, label labels.Selector, field fields.Selector, opts api.ListOptions) WatchActionImpl {
+func NewWatchAction(resource, namespace string, opts unversioned.ListOptions) WatchActionImpl {
 	action := WatchActionImpl{}
 	action.Verb = "watch"
 	action.Resource = resource
 	action.Namespace = namespace
-	action.WatchRestrictions = WatchRestrictions{label, field, opts.ResourceVersion}
+	labelSelector := opts.LabelSelector.Selector
+	if labelSelector == nil {
+		labelSelector = labels.Everything()
+	}
+	fieldSelector := opts.FieldSelector.Selector
+	if fieldSelector == nil {
+		fieldSelector = fields.Everything()
+	}
+	action.WatchRestrictions = WatchRestrictions{labelSelector, fieldSelector, opts.ResourceVersion}
 
 	return action
 }
 
-func NewProxyGetAction(resource, namespace, name, path string, params map[string]string) ProxyGetActionImpl {
+func NewProxyGetAction(resource, namespace, scheme, name, port, path string, params map[string]string) ProxyGetActionImpl {
 	action := ProxyGetActionImpl{}
 	action.Verb = "get"
 	action.Resource = resource
 	action.Namespace = namespace
+	action.Scheme = scheme
 	action.Name = name
+	action.Port = port
 	action.Path = path
 	action.Params = params
 	return action
@@ -235,7 +269,9 @@ type WatchAction interface {
 
 type ProxyGetAction interface {
 	Action
+	GetScheme() string
 	GetName() string
+	GetPort() string
 	GetPath() string
 	GetParams() map[string]string
 }
@@ -338,13 +374,23 @@ func (a WatchActionImpl) GetWatchRestrictions() WatchRestrictions {
 
 type ProxyGetActionImpl struct {
 	ActionImpl
+	Scheme string
 	Name   string
+	Port   string
 	Path   string
 	Params map[string]string
 }
 
+func (a ProxyGetActionImpl) GetScheme() string {
+	return a.Scheme
+}
+
 func (a ProxyGetActionImpl) GetName() string {
 	return a.Name
+}
+
+func (a ProxyGetActionImpl) GetPort() string {
+	return a.Port
 }
 
 func (a ProxyGetActionImpl) GetPath() string {

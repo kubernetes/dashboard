@@ -16,6 +16,7 @@ package main
 
 import (
 	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
@@ -35,7 +36,11 @@ func getRawReplicaSetWithPods(client *client.Client, namespace string, name stri
 	}
 
 	labelSelector := labels.SelectorFromSet(replicaSet.Spec.Selector)
-	pods, err := client.Pods(namespace).List(labelSelector, fields.Everything())
+	pods, err := client.Pods(namespace).List(
+		unversioned.ListOptions{
+			LabelSelector: unversioned.LabelSelector{labelSelector},
+			FieldSelector: unversioned.FieldSelector{fields.Everything()},
+		})
 
 	if err != nil {
 		return nil, err

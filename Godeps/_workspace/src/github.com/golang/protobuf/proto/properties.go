@@ -37,6 +37,7 @@ package proto
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"reflect"
 	"sort"
@@ -90,6 +91,9 @@ type oneofMarshaler func(Message, *Buffer) error
 // A oneofUnmarshaler does the unmarshaling for a oneof field in a message.
 type oneofUnmarshaler func(Message, int, int, *Buffer) (bool, error)
 
+// A oneofSizer does the sizing for all oneof fields in a message.
+type oneofSizer func(Message) int
+
 // tagMap is an optimization over map[int]int for typical protocol buffer
 // use-cases. Encoded protocol buffers are often in tag order with small tag
 // numbers.
@@ -141,6 +145,7 @@ type StructProperties struct {
 
 	oneofMarshaler   oneofMarshaler
 	oneofUnmarshaler oneofUnmarshaler
+	oneofSizer       oneofSizer
 	stype            reflect.Type
 
 	// OneofTypes contains information about the oneof fields in this message.
@@ -711,11 +716,11 @@ func getPropertiesLocked(t reflect.Type) *StructProperties {
 	sort.Sort(prop)
 
 	type oneofMessage interface {
-		XXX_OneofFuncs() (func(Message, *Buffer) error, func(Message, int, int, *Buffer) (bool, error), []interface{})
+		XXX_OneofFuncs() (func(Message, *Buffer) error, func(Message, int, int, *Buffer) (bool, error), func(Message) int, []interface{})
 	}
 	if om, ok := reflect.Zero(reflect.PtrTo(t)).Interface().(oneofMessage); ok {
 		var oots []interface{}
-		prop.oneofMarshaler, prop.oneofUnmarshaler, oots = om.XXX_OneofFuncs()
+		prop.oneofMarshaler, prop.oneofUnmarshaler, prop.oneofSizer, oots = om.XXX_OneofFuncs()
 		prop.stype = t
 
 		// Interpret oneof metadata.
@@ -809,3 +814,29 @@ func RegisterEnum(typeName string, unusedNameMap map[int32]string, valueMap map[
 func EnumValueMap(enumType string) map[string]int32 {
 	return enumValueMaps[enumType]
 }
+
+// A registry of all linked message types.
+// The string is a fully-qualified proto name ("pkg.Message").
+var (
+	protoTypes    = make(map[string]reflect.Type)
+	revProtoTypes = make(map[reflect.Type]string)
+)
+
+// RegisterType is called from generated code and maps from the fully qualified
+// proto name to the type (pointer to struct) of the protocol buffer.
+func RegisterType(x Message, name string) {
+	if _, ok := protoTypes[name]; ok {
+		// TODO: Some day, make this a panic.
+		log.Printf("proto: duplicate proto type registered: %s", name)
+		return
+	}
+	t := reflect.TypeOf(x)
+	protoTypes[name] = t
+	revProtoTypes[t] = name
+}
+
+// MessageName returns the fully-qualified proto name for the given message type.
+func MessageName(x Message) string { return revProtoTypes[reflect.TypeOf(x)] }
+
+// MessageType returns the message type (pointer to struct) for a named message.
+func MessageType(name string) reflect.Type { return protoTypes[name] }

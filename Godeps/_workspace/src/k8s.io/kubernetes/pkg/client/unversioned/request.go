@@ -32,6 +32,8 @@ import (
 	"github.com/golang/glog"
 	"k8s.io/kubernetes/pkg/api/errors"
 	"k8s.io/kubernetes/pkg/api/unversioned"
+	"k8s.io/kubernetes/pkg/api/v1"
+	"k8s.io/kubernetes/pkg/api/validation"
 	"k8s.io/kubernetes/pkg/client/metrics"
 	"k8s.io/kubernetes/pkg/conversion/queryparams"
 	"k8s.io/kubernetes/pkg/fields"
@@ -46,6 +48,10 @@ import (
 // specialParams lists parameters that are handled specially and which users of Request
 // are therefore not allowed to set manually.
 var specialParams = sets.NewString("timeout")
+
+func init() {
+	metrics.Register()
+}
 
 // HTTPClient is an interface for testing a request object.
 type HTTPClient interface {
@@ -94,7 +100,7 @@ type Request struct {
 	selector     labels.Selector
 	timeout      time.Duration
 
-	apiVersion string
+	groupVersion unversioned.GroupVersion
 
 	// output
 	err  error
@@ -106,16 +112,14 @@ type Request struct {
 }
 
 // NewRequest creates a new request helper object for accessing runtime.Objects on a server.
-func NewRequest(client HTTPClient, verb string, baseURL *url.URL, apiVersion string,
-	codec runtime.Codec) *Request {
-	metrics.Register()
+func NewRequest(client HTTPClient, verb string, baseURL *url.URL, groupVersion unversioned.GroupVersion, codec runtime.Codec) *Request {
 	return &Request{
-		client:     client,
-		verb:       verb,
-		baseURL:    baseURL,
-		path:       baseURL.Path,
-		apiVersion: apiVersion,
-		codec:      codec,
+		client:       client,
+		verb:         verb,
+		baseURL:      baseURL,
+		path:         baseURL.Path,
+		groupVersion: groupVersion,
+		codec:        codec,
 	}
 }
 
@@ -149,6 +153,10 @@ func (r *Request) Resource(resource string) *Request {
 		r.err = fmt.Errorf("resource already set to %q, cannot change to %q", r.resource, resource)
 		return r
 	}
+	if ok, msg := validation.IsValidPathSegmentName(resource); !ok {
+		r.err = fmt.Errorf("invalid resource %q: %s", resource, msg)
+		return r
+	}
 	r.resource = resource
 	return r
 }
@@ -163,6 +171,12 @@ func (r *Request) SubResource(subresources ...string) *Request {
 	if len(r.subresource) != 0 {
 		r.err = fmt.Errorf("subresource already set to %q, cannot change to %q", r.resource, subresource)
 		return r
+	}
+	for _, s := range subresources {
+		if ok, msg := validation.IsValidPathSegmentName(s); !ok {
+			r.err = fmt.Errorf("invalid subresource %q: %s", s, msg)
+			return r
+		}
 	}
 	r.subresource = subresource
 	return r
@@ -181,6 +195,10 @@ func (r *Request) Name(resourceName string) *Request {
 		r.err = fmt.Errorf("resource name already set to %q, cannot change to %q", r.resourceName, resourceName)
 		return r
 	}
+	if ok, msg := validation.IsValidPathSegmentName(resourceName); !ok {
+		r.err = fmt.Errorf("invalid resource name %q: %s", resourceName, msg)
+		return r
+	}
 	r.resourceName = resourceName
 	return r
 }
@@ -194,6 +212,10 @@ func (r *Request) Namespace(namespace string) *Request {
 		r.err = fmt.Errorf("namespace already set to %q, cannot change to %q", r.namespace, namespace)
 		return r
 	}
+	if ok, msg := validation.IsValidPathSegmentName(namespace); !ok {
+		r.err = fmt.Errorf("invalid namespace %q: %s", namespace, msg)
+		return r
+	}
 	r.namespaceSet = true
 	r.namespace = namespace
 	return r
@@ -204,23 +226,6 @@ func (r *Request) NamespaceIfScoped(namespace string, scoped bool) *Request {
 	if scoped {
 		return r.Namespace(namespace)
 	}
-	return r
-}
-
-// UnversionedPath strips the apiVersion from the baseURL before appending segments.
-func (r *Request) UnversionedPath(segments ...string) *Request {
-	if r.err != nil {
-		return r
-	}
-	upath := path.Clean(r.baseURL.Path)
-	//TODO(jdef) this is a pretty hackish version test
-	if strings.HasPrefix(path.Base(upath), "v") {
-		upath = path.Dir(upath)
-		if upath == "." {
-			upath = "/"
-		}
-	}
-	r.path = path.Join(append([]string{upath}, segments...)...)
 	return r
 }
 
@@ -273,6 +278,7 @@ const (
 
 	EventReason                  = "reason"
 	EventSource                  = "source"
+	EventType                    = "type"
 	EventInvolvedKind            = "involvedObject.kind"
 	EventInvolvedNamespace       = "involvedObject.namespace"
 	EventInvolvedName            = "involvedObject.name"
@@ -302,25 +308,25 @@ func (r resourceTypeToFieldMapping) filterField(resourceType, field, value strin
 	return fMapping.filterField(field, value)
 }
 
-type versionToResourceToFieldMapping map[string]resourceTypeToFieldMapping
+type versionToResourceToFieldMapping map[unversioned.GroupVersion]resourceTypeToFieldMapping
 
-func (v versionToResourceToFieldMapping) filterField(apiVersion, resourceType, field, value string) (newField, newValue string, err error) {
-	rMapping, ok := v[apiVersion]
+func (v versionToResourceToFieldMapping) filterField(groupVersion unversioned.GroupVersion, resourceType, field, value string) (newField, newValue string, err error) {
+	rMapping, ok := v[groupVersion]
 	if !ok {
-		glog.Warningf("Field selector: %v - %v - %v - %v: need to check if this is versioned correctly.", apiVersion, resourceType, field, value)
+		glog.Warningf("Field selector: %v - %v - %v - %v: need to check if this is versioned correctly.", groupVersion, resourceType, field, value)
 		return field, value, nil
 	}
 	newField, newValue, err = rMapping.filterField(resourceType, field, value)
 	if err != nil {
 		// This is only a warning until we find and fix all of the client's usages.
-		glog.Warningf("Field selector: %v - %v - %v - %v: need to check if this is versioned correctly.", apiVersion, resourceType, field, value)
+		glog.Warningf("Field selector: %v - %v - %v - %v: need to check if this is versioned correctly.", groupVersion, resourceType, field, value)
 		return field, value, nil
 	}
 	return newField, newValue, nil
 }
 
 var fieldMappings = versionToResourceToFieldMapping{
-	"v1": resourceTypeToFieldMapping{
+	v1.SchemeGroupVersion: resourceTypeToFieldMapping{
 		"nodes": clientFieldNameToAPIVersionFieldName{
 			ObjectNameField:   ObjectNameField,
 			NodeUnschedulable: NodeUnschedulable,
@@ -365,13 +371,13 @@ func (r *Request) FieldsSelectorParam(s fields.Selector) *Request {
 		return r
 	}
 	s2, err := s.Transform(func(field, value string) (newField, newValue string, err error) {
-		return fieldMappings.filterField(r.apiVersion, r.resource, field, value)
+		return fieldMappings.filterField(r.groupVersion, r.resource, field, value)
 	})
 	if err != nil {
 		r.err = err
 		return r
 	}
-	return r.setParam(unversioned.FieldSelectorQueryParam(r.apiVersion), s2.String())
+	return r.setParam(unversioned.FieldSelectorQueryParam(r.groupVersion.String()), s2.String())
 }
 
 // LabelsSelectorParam adds the given selector as a query parameter
@@ -385,7 +391,7 @@ func (r *Request) LabelsSelectorParam(s labels.Selector) *Request {
 	if s.Empty() {
 		return r
 	}
-	return r.setParam(unversioned.LabelSelectorQueryParam(r.apiVersion), s.String())
+	return r.setParam(unversioned.LabelSelectorQueryParam(r.groupVersion.String()), s.String())
 }
 
 // UintParam creates a query parameter with the given value.
@@ -411,7 +417,7 @@ func (r *Request) VersionedParams(obj runtime.Object, convertor runtime.ObjectCo
 	if r.err != nil {
 		return r
 	}
-	versioned, err := convertor.ConvertToVersion(obj, r.apiVersion)
+	versioned, err := convertor.ConvertToVersion(obj, r.groupVersion.String())
 	if err != nil {
 		r.err = err
 		return r
@@ -422,8 +428,42 @@ func (r *Request) VersionedParams(obj runtime.Object, convertor runtime.ObjectCo
 		return r
 	}
 	for k, v := range params {
-		for _, vv := range v {
-			r.setParam(k, vv)
+		for _, value := range v {
+			// TODO: Move it to setParam method, once we get rid of
+			// FieldSelectorParam & LabelSelectorParam methods.
+			if k == unversioned.LabelSelectorQueryParam(r.groupVersion.String()) && value == "" {
+				// Don't set an empty selector for backward compatibility.
+				// Since there is no way to get the difference between empty
+				// and unspecified string, we don't set it to avoid having
+				// labelSelector= param in every request.
+				continue
+			}
+			if k == unversioned.FieldSelectorQueryParam(r.groupVersion.String()) {
+				if value == "" {
+					// Don't set an empty selector for backward compatibility.
+					// Since there is no way to get the difference between empty
+					// and unspecified string, we don't set it to avoid having
+					// fieldSelector= param in every request.
+					continue
+				}
+				// TODO: Filtering should be handled somewhere else.
+				selector, err := fields.ParseSelector(value)
+				if err != nil {
+					r.err = fmt.Errorf("unparsable field selector: %v", err)
+					return r
+				}
+				filteredSelector, err := selector.Transform(
+					func(field, value string) (newField, newValue string, err error) {
+						return fieldMappings.filterField(r.groupVersion, r.resource, field, value)
+					})
+				if err != nil {
+					r.err = fmt.Errorf("untransformable field selector: %v", err)
+					return r
+				}
+				value = filteredSelector.String()
+			}
+
+			r.setParam(k, value)
 		}
 	}
 	return r
@@ -456,19 +496,6 @@ func (r *Request) Timeout(d time.Duration) *Request {
 		return r
 	}
 	r.timeout = d
-	return r
-}
-
-// Timeout makes the request use the given duration as a timeout. Sets the "timeoutSeconds"
-// parameter.
-func (r *Request) TimeoutSeconds(d time.Duration) *Request {
-	if r.err != nil {
-		return r
-	}
-	if d != 0 {
-		timeout := int64(d.Seconds())
-		r.Param("timeoutSeconds", strconv.FormatInt(timeout, 10))
-	}
 	return r
 }
 
@@ -584,6 +611,7 @@ func (r *Request) Watch() (watch.Interface, error) {
 		client = http.DefaultClient
 	}
 	resp, err := client.Do(req)
+	updateURLMetrics(r, resp, err)
 	if err != nil {
 		// The watch stream mechanism handles many common partial data errors, so closed
 		// connections can be retried in many cases.
@@ -599,6 +627,23 @@ func (r *Request) Watch() (watch.Interface, error) {
 		return nil, fmt.Errorf("for request '%+v', got status: %v", url, resp.StatusCode)
 	}
 	return watch.NewStreamWatcher(watchjson.NewDecoder(resp.Body, r.codec)), nil
+}
+
+// updateURLMetrics is a convenience function for pushing metrics.
+// It also handles corner cases for incomplete/invalid request data.
+func updateURLMetrics(req *Request, resp *http.Response, err error) {
+	url := "none"
+	if req.baseURL != nil {
+		url = req.baseURL.Host
+	}
+
+	// If we have an error (i.e. apiserver down) we report that as a metric label.
+	if err != nil {
+		metrics.RequestResult.WithLabelValues(err.Error(), req.verb, url).Inc()
+	} else {
+		//Metrics for failure codes
+		metrics.RequestResult.WithLabelValues(strconv.Itoa(resp.StatusCode), req.verb, url).Inc()
+	}
 }
 
 // Stream formats and executes the request, and offers streaming of the response.
@@ -619,6 +664,7 @@ func (r *Request) Stream() (io.ReadCloser, error) {
 		client = http.DefaultClient
 	}
 	resp, err := client.Do(req)
+	updateURLMetrics(r, resp, err)
 	if err != nil {
 		return nil, err
 	}
@@ -655,6 +701,12 @@ func (r *Request) Stream() (io.ReadCloser, error) {
 // fn at most once. It will return an error if a problem occurred prior to connecting to the
 // server - the provided function is responsible for handling server errors.
 func (r *Request) request(fn func(*http.Request, *http.Response)) error {
+	//Metrics for total request latency
+	start := time.Now()
+	defer func() {
+		metrics.RequestLatency.WithLabelValues(r.verb, r.finalURLTemplate()).Observe(metrics.SinceInMicroseconds(start))
+	}()
+
 	if r.err != nil {
 		return r.err
 	}
@@ -685,6 +737,7 @@ func (r *Request) request(fn func(*http.Request, *http.Response)) error {
 		req.Header = r.headers
 
 		resp, err := client.Do(req)
+		updateURLMetrics(r, resp, err)
 		if err != nil {
 			return err
 		}
@@ -718,10 +771,6 @@ func (r *Request) request(fn func(*http.Request, *http.Response)) error {
 //  * If the server responds with a status: *errors.StatusError or *errors.UnexpectedObjectError
 //  * http.Client.Do errors are returned directly.
 func (r *Request) Do() Result {
-	start := time.Now()
-	defer func() {
-		metrics.RequestLatency.WithLabelValues(r.verb, r.finalURLTemplate()).Observe(metrics.SinceInMicroseconds(start))
-	}()
 	var result Result
 	err := r.request(func(req *http.Request, resp *http.Response) {
 		result = r.transformResponse(resp, req)
@@ -734,10 +783,6 @@ func (r *Request) Do() Result {
 
 // DoRaw executes the request but does not process the response body.
 func (r *Request) DoRaw() ([]byte, error) {
-	start := time.Now()
-	defer func() {
-		metrics.RequestLatency.WithLabelValues(r.verb, r.finalURLTemplate()).Observe(metrics.SinceInMicroseconds(start))
-	}()
 	var result Result
 	err := r.request(func(req *http.Request, resp *http.Response) {
 		result.body, result.err = ioutil.ReadAll(resp.Body)
@@ -839,7 +884,10 @@ func isTextResponse(resp *http.Response) bool {
 // checkWait returns true along with a number of seconds if the server instructed us to wait
 // before retrying.
 func checkWait(resp *http.Response) (int, bool) {
-	if resp.StatusCode != errors.StatusTooManyRequests {
+	switch r := resp.StatusCode; {
+	// any 500 error code and 429 can trigger a wait
+	case r == errors.StatusTooManyRequests, r >= 500:
+	default:
 		return 0, false
 	}
 	i, ok := retryAfterSeconds(resp)

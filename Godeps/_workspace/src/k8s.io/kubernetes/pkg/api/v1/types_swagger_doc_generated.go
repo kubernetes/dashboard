@@ -343,6 +343,7 @@ var map_Event = map[string]string{
 	"firstTimestamp": "The time at which the event was first recorded. (Time of server receipt is in TypeMeta.)",
 	"lastTimestamp":  "The time at which the most recent occurrence of this event was recorded.",
 	"count":          "The number of times this event has occurred.",
+	"type":           "Type of this event (Normal, Warning), new types could be added in the future",
 }
 
 func (Event) SwaggerDoc() map[string]string {
@@ -415,6 +416,7 @@ var map_GitRepoVolumeSource = map[string]string{
 	"":           "GitRepoVolumeSource represents a volume that is pulled from git when the pod is created.",
 	"repository": "Repository URL",
 	"revision":   "Commit hash for the specified revision.",
+	"directory":  "Target directory name. Must not contain or start with '..'.  If '.' is supplied, the volume directory will be the git repository.  Otherwise, if specified, the volume will contain the git repository in the subdirectory with the given name.",
 }
 
 func (GitRepoVolumeSource) SwaggerDoc() map[string]string {
@@ -1068,9 +1070,12 @@ func (PodTemplateSpec) SwaggerDoc() map[string]string {
 }
 
 var map_Probe = map[string]string{
-	"": "Probe describes a liveness probe to be examined to the container.",
+	"": "Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.",
 	"initialDelaySeconds": "Number of seconds after the container has started before liveness probes are initiated. More info: http://releases.k8s.io/HEAD/docs/user-guide/pod-states.md#container-probes",
-	"timeoutSeconds":      "Number of seconds after which liveness probes timeout. Defaults to 1 second. More info: http://releases.k8s.io/HEAD/docs/user-guide/pod-states.md#container-probes",
+	"timeoutSeconds":      "Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: http://releases.k8s.io/HEAD/docs/user-guide/pod-states.md#container-probes",
+	"periodSeconds":       "How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.",
+	"successThreshold":    "Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness. Minimum value is 1.",
+	"failureThreshold":    "Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.",
 }
 
 func (Probe) SwaggerDoc() map[string]string {

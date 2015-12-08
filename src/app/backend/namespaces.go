@@ -16,6 +16,7 @@ package main
 
 import (
 	api "k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
@@ -48,7 +49,10 @@ func CreateNamespace(spec *NamespaceSpec, client *client.Client) error {
 
 // Returns a list of all namespaces in the cluster.
 func GetNamespaceList(client *client.Client) (*NamespaceList, error) {
-	list, err := client.Namespaces().List(labels.Everything(), fields.Everything())
+	list, err := client.Namespaces().List(unversioned.ListOptions{
+		LabelSelector: unversioned.LabelSelector{labels.Everything()},
+		FieldSelector: unversioned.FieldSelector{fields.Everything()},
+	})
 
 	if err != nil {
 		return nil, err

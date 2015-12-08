@@ -1,10 +1,10 @@
 package mount
 
-// Info reveals information about a particular mounted filesystem. This
+// MountInfo reveals information about a particular mounted filesystem. This
 // struct is populated from the content in the /proc/<pid>/mountinfo file.
-type Info struct {
-	// ID is a unique identifier of the mount (may be reused after umount).
-	ID int
+type MountInfo struct {
+	// Id is a unique identifier of the mount (may be reused after umount).
+	Id int
 
 	// Parent indicates the ID of the mount parent (or of self for the top of the
 	// mount tree).

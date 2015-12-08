@@ -36,6 +36,9 @@ func (c *CompressingResponseWriter) WriteHeader(status int) {
 // Write is part of http.ResponseWriter interface
 // It is passed through the compressor
 func (c *CompressingResponseWriter) Write(bytes []byte) (int, error) {
+	if c.isCompressorClosed() {
+		return -1, errors.New("Compressing error: tried to write data using closed compressor")
+	}
 	return c.compressor.Write(bytes)
 }
 
@@ -45,7 +48,11 @@ func (c *CompressingResponseWriter) CloseNotify() <-chan bool {
 }
 
 // Close the underlying compressor
-func (c *CompressingResponseWriter) Close() {
+func (c *CompressingResponseWriter) Close() error {
+	if c.isCompressorClosed() {
+		return errors.New("Compressing error: tried to close already closed compressor")
+	}
+
 	c.compressor.Close()
 	if ENCODING_GZIP == c.encoding {
 		currentCompressorProvider.ReleaseGzipWriter(c.compressor.(*gzip.Writer))
@@ -55,6 +62,11 @@ func (c *CompressingResponseWriter) Close() {
 	}
 	// gc hint needed?
 	c.compressor = nil
+	return nil
+}
+
+func (c *CompressingResponseWriter) isCompressorClosed() bool {
+	return nil == c.compressor
 }
 
 // WantsCompressedResponse reads the Accept-Encoding header to see if and which encoding is requested.

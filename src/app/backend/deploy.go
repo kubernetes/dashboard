@@ -17,7 +17,7 @@ package main
 import (
 	api "k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
-	"k8s.io/kubernetes/pkg/util"
+	"k8s.io/kubernetes/pkg/util/intstr"
 )
 
 const (
@@ -58,7 +58,7 @@ type PortMapping struct {
 	Port int `json:"port"`
 
 	// Docker image path for the application.
-	TargetPort int `json:"targetPort"`
+	TargetPort int32 `json:"targetPort"`
 
 	// IP protocol for the mapping, e.g., "TCP" or "UDP".
 	Protocol api.Protocol `json:"protocol"`
@@ -131,8 +131,8 @@ func DeployApp(spec *AppDeploymentSpec, client *client.Client) error {
 				api.ServicePort{
 					Protocol: portMapping.Protocol,
 					Port:     portMapping.Port,
-					TargetPort: util.IntOrString{
-						Kind:   util.IntstrInt,
+					TargetPort: intstr.IntOrString{
+						Type:   intstr.Int,
 						IntVal: portMapping.TargetPort,
 					},
 				}

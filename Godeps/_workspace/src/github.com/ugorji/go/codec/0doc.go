@@ -64,6 +64,7 @@ Rich Feature Set includes:
   - Never silently skip data when decoding.
     User decides whether to return an error or silently skip data when keys or indexes
     in the data stream do not map to fields in the struct.
+  - Detect and error when encoding a cyclic reference (instead of stack overflow shutdown)
   - Encode/Decode from/to chan types (for iterative streaming support)
   - Drop-in replacement for encoding/json. `json:` key in struct tag supported.
   - Provides a RPC Server and Client Codec for net/rpc communication protocol.
@@ -98,7 +99,21 @@ with the standard net/rpc package.
 
 Usage
 
-Typical usage model:
+The Handle is SAFE for concurrent READ, but NOT SAFE for concurrent modification.
+
+The Encoder and Decoder are NOT safe for concurrent use.
+
+Consequently, the usage model is basically:
+
+    - Create and initialize the Handle before any use.
+      Once created, DO NOT modify it.
+    - Multiple Encoders or Decoders can now use the Handle concurrently.
+      They only read information off the Handle (never write).
+    - However, each Encoder or Decoder MUST not be used concurrently
+    - To re-use an Encoder/Decoder, call Reset(...) on it first.
+      This allows you use state maintained on the Encoder/Decoder.
+
+Sample usage model:
 
     // create and configure Handle
     var (
@@ -148,3 +163,37 @@ Typical usage model:
 */
 package codec
 
+// Benefits of go-codec:
+//
+//    - encoding/json always reads whole file into memory first.
+//      This makes it unsuitable for parsing very large files.
+//    - encoding/xml cannot parse into a map[string]interface{}
+//      I found this out on reading https://github.com/clbanning/mxj
+
+// TODO:
+//
+//   - optimization for codecgen:
+//     if len of entity is <= 3 words, then support a value receiver for encode.
+//   - (En|De)coder should store an error when it occurs.
+//     Until reset, subsequent calls return that error that was stored.
+//     This means that free panics must go away.
+//     All errors must be raised through errorf method.
+//   - Decoding using a chan is good, but incurs concurrency costs.
+//     This is because there's no fast way to use a channel without it
+//     having to switch goroutines constantly.
+//     Callback pattern is still the best. Maybe cnsider supporting something like:
+//        type X struct {
+//             Name string
+//             Ys []Y
+//             Ys chan <- Y
+//             Ys func(interface{}) -> call this interface for each entry in there.
+//        }
+//    - Consider adding a isZeroer interface { isZero() bool }
+//      It is used within isEmpty, for omitEmpty support.
+//    - Consider making Handle used AS-IS within the encoding/decoding session.
+//      This means that we don't cache Handle information within the (En|De)coder,
+//      except we really need it at Reset(...)
+//    - Consider adding math/big support
+//    - Consider reducing the size of the generated functions:
+//      Maybe use one loop, and put the conditionals in the loop.
+//      for ... { if cLen > 0 { if j == cLen { break } } else if dd.CheckBreak() { break } }

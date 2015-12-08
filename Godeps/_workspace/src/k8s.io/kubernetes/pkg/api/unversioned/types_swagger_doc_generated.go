@@ -76,14 +76,14 @@ func (APIVersions) SwaggerDoc() map[string]string {
 	return map_APIVersions
 }
 
-var map_GroupVersion = map[string]string{
+var map_GroupVersionForDiscovery = map[string]string{
 	"":             "GroupVersion contains the \"group/version\" and \"version\" string of a version. It is made a struct to keep extensiblity.",
 	"groupVersion": "groupVersion specifies the API group and version in the form \"group/version\"",
 	"version":      "version specifies the version in the form of \"version\". This is to save the clients the trouble of splitting the GroupVersion.",
 }
 
-func (GroupVersion) SwaggerDoc() map[string]string {
-	return map_GroupVersion
+func (GroupVersionForDiscovery) SwaggerDoc() map[string]string {
+	return map_GroupVersionForDiscovery
 }
 
 var map_ListMeta = map[string]string{
@@ -94,6 +94,19 @@ var map_ListMeta = map[string]string{
 
 func (ListMeta) SwaggerDoc() map[string]string {
 	return map_ListMeta
+}
+
+var map_ListOptions = map[string]string{
+	"":                "ListOptions is the query options to a standard REST list/watch calls.",
+	"labelSelector":   "A selector to restrict the list of returned objects by their labels. Defaults to everything.",
+	"fieldSelector":   "A selector to restrict the list of returned objects by their fields. Defaults to everything.",
+	"watch":           "Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.",
+	"resourceVersion": "When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.",
+	"timeoutSeconds":  "Timeout for the list/watch call.",
+}
+
+func (ListOptions) SwaggerDoc() map[string]string {
+	return map_ListOptions
 }
 
 var map_Patch = map[string]string{

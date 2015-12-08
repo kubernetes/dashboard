@@ -230,7 +230,7 @@ func (sws SwaggerService) composeDeclaration(ws *restful.WebService, pathPrefix 
 		}
 	}
 	pathToRoutes.Do(func(path string, routes []restful.Route) {
-		api := Api{Path: strings.TrimSuffix(path, "/"), Description: ws.Documentation()}
+		api := Api{Path: strings.TrimSuffix(withoutWildcard(path), "/"), Description: ws.Documentation()}
 		voidString := "void"
 		for _, route := range routes {
 			operation := Operation{
@@ -261,6 +261,13 @@ func (sws SwaggerService) composeDeclaration(ws *restful.WebService, pathPrefix 
 		decl.Apis = append(decl.Apis, api)
 	})
 	return decl
+}
+
+func withoutWildcard(path string) string {
+	if strings.HasSuffix(path, ":*}") {
+		return path[0:len(path)-3] + "}"
+	}
+	return path
 }
 
 // composeResponseMessages takes the ResponseErrors (if any) and creates ResponseMessages from them.
