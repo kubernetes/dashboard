@@ -55,9 +55,9 @@ type DiscoveryClient struct {
 // Convert unversioned.APIVersions to unversioned.APIGroup. APIVersions is used by legacy v1, so
 // group would be "".
 func apiVersionsToAPIGroup(apiVersions *unversioned.APIVersions) (apiGroup unversioned.APIGroup) {
-	groupVersions := []unversioned.GroupVersion{}
+	groupVersions := []unversioned.GroupVersionForDiscovery{}
 	for _, version := range apiVersions.Versions {
-		groupVersion := unversioned.GroupVersion{
+		groupVersion := unversioned.GroupVersionForDiscovery{
 			GroupVersion: version,
 			Version:      version,
 		}
@@ -140,7 +140,7 @@ func (d *DiscoveryClient) ServerResources() (map[string]*unversioned.APIResource
 
 func setDiscoveryDefaults(config *Config) error {
 	config.Prefix = ""
-	config.Version = ""
+	config.GroupVersion = nil
 	// Discovery client deals with unversioned objects, so we use api.Codec.
 	config.Codec = api.Codec
 	return nil

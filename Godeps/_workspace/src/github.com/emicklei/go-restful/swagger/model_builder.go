@@ -132,9 +132,11 @@ func (b modelBuilder) buildProperty(field reflect.StructField, model *Model, mod
 		modelDescription = tag
 	}
 
-	fieldType := field.Type
-
 	prop.setPropertyMetadata(field)
+	if prop.Type != nil {
+		return jsonName, modelDescription, prop
+	}
+	fieldType := field.Type
 
 	// check if type is doing its own marshalling
 	marshalerType := reflect.TypeOf((*json.Marshaler)(nil)).Elem()
@@ -212,8 +214,12 @@ func hasNamedJSONTag(field reflect.StructField) bool {
 }
 
 func (b modelBuilder) buildStructTypeProperty(field reflect.StructField, jsonName string, model *Model) (nameJson string, prop ModelProperty) {
-	fieldType := field.Type
 	prop.setPropertyMetadata(field)
+	// Check for type override in tag
+	if prop.Type != nil {
+		return jsonName, prop
+	}
+	fieldType := field.Type
 	// check for anonymous
 	if len(fieldType.Name()) == 0 {
 		// anonymous
@@ -263,8 +269,12 @@ func (b modelBuilder) buildStructTypeProperty(field reflect.StructField, jsonNam
 }
 
 func (b modelBuilder) buildArrayTypeProperty(field reflect.StructField, jsonName, modelName string) (nameJson string, prop ModelProperty) {
-	fieldType := field.Type
+	// check for type override in tags
 	prop.setPropertyMetadata(field)
+	if prop.Type != nil {
+		return jsonName, prop
+	}
+	fieldType := field.Type
 	var pType = "array"
 	prop.Type = &pType
 	elemTypeName := b.getElementTypeName(modelName, jsonName, fieldType.Elem())
@@ -284,8 +294,12 @@ func (b modelBuilder) buildArrayTypeProperty(field reflect.StructField, jsonName
 }
 
 func (b modelBuilder) buildPointerTypeProperty(field reflect.StructField, jsonName, modelName string) (nameJson string, prop ModelProperty) {
-	fieldType := field.Type
 	prop.setPropertyMetadata(field)
+	// Check for type override in tags
+	if prop.Type != nil {
+		return jsonName, prop
+	}
+	fieldType := field.Type
 
 	// override type of pointer to list-likes
 	if fieldType.Elem().Kind() == reflect.Slice || fieldType.Elem().Kind() == reflect.Array {

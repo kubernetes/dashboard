@@ -30,7 +30,7 @@ const (
 
 // Parse /proc/self/mountinfo because comparing Dev and ino does not work from
 // bind mounts
-func parseMountTable() ([]*Info, error) {
+func parseMountTable() ([]*MountInfo, error) {
 	f, err := os.Open("/proc/self/mountinfo")
 	if err != nil {
 		return nil, err
@@ -40,10 +40,10 @@ func parseMountTable() ([]*Info, error) {
 	return parseInfoFile(f)
 }
 
-func parseInfoFile(r io.Reader) ([]*Info, error) {
+func parseInfoFile(r io.Reader) ([]*MountInfo, error) {
 	var (
 		s   = bufio.NewScanner(r)
-		out = []*Info{}
+		out = []*MountInfo{}
 	)
 
 	for s.Scan() {
@@ -52,13 +52,13 @@ func parseInfoFile(r io.Reader) ([]*Info, error) {
 		}
 
 		var (
-			p              = &Info{}
+			p              = &MountInfo{}
 			text           = s.Text()
 			optionalFields string
 		)
 
 		if _, err := fmt.Sscanf(text, mountinfoFormat,
-			&p.ID, &p.Parent, &p.Major, &p.Minor,
+			&p.Id, &p.Parent, &p.Major, &p.Minor,
 			&p.Root, &p.Mountpoint, &p.Opts, &optionalFields); err != nil {
 			return nil, fmt.Errorf("Scanning '%s' failed: %s", text, err)
 		}
@@ -84,7 +84,7 @@ func parseInfoFile(r io.Reader) ([]*Info, error) {
 // PidMountInfo collects the mounts for a specific process ID. If the process
 // ID is unknown, it is better to use `GetMounts` which will inspect
 // "/proc/self/mountinfo" instead.
-func PidMountInfo(pid int) ([]*Info, error) {
+func PidMountInfo(pid int) ([]*MountInfo, error) {
 	f, err := os.Open(fmt.Sprintf("/proc/%d/mountinfo", pid))
 	if err != nil {
 		return nil, err

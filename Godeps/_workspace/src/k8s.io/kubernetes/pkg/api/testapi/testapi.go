@@ -25,9 +25,11 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 	_ "k8s.io/kubernetes/pkg/api/install"
 	_ "k8s.io/kubernetes/pkg/apis/extensions/install"
+	_ "k8s.io/kubernetes/pkg/apis/metrics/install"
 
 	"k8s.io/kubernetes/pkg/api/latest"
 	"k8s.io/kubernetes/pkg/api/meta"
+	"k8s.io/kubernetes/pkg/api/unversioned"
 	apiutil "k8s.io/kubernetes/pkg/api/util"
 	"k8s.io/kubernetes/pkg/runtime"
 )
@@ -62,12 +64,12 @@ func init() {
 	// TODO: caesarxuchao: we need a central place to store all available API
 	// groups and their metadata.
 	if _, ok := Groups[""]; !ok {
-		// TODO: The second latest.GroupOrDie("").Version will be latest.GroupVersion after we
+		// TODO: The second latest.GroupOrDie("").GroupVersion.Version will be latest.GroupVersion after we
 		// have multiple group support
-		Groups[""] = TestGroup{"", latest.GroupOrDie("").Version, latest.GroupOrDie("").GroupVersion}
+		Groups[""] = TestGroup{"", latest.GroupOrDie("").GroupVersion.Version, latest.GroupOrDie("").GroupVersion.String()}
 	}
 	if _, ok := Groups["extensions"]; !ok {
-		Groups["extensions"] = TestGroup{"extensions", latest.GroupOrDie("extensions").Version, latest.GroupOrDie("extensions").GroupVersion}
+		Groups["extensions"] = TestGroup{"extensions", latest.GroupOrDie("extensions").GroupVersion.Version, latest.GroupOrDie("extensions").GroupVersion.String()}
 	}
 
 	Default = Groups[""]
@@ -86,25 +88,25 @@ func (g TestGroup) GroupAndVersion() string {
 	return g.GroupVersionUnderTest
 }
 
+func (g TestGroup) GroupVersion() *unversioned.GroupVersion {
+	return &unversioned.GroupVersion{Group: g.Group, Version: g.VersionUnderTest}
+}
+
+// InternalGroupVersion returns the group,version used to identify the internal
+// types for this API
+func (g TestGroup) InternalGroupVersion() unversioned.GroupVersion {
+	return unversioned.GroupVersion{Group: g.Group}
+}
+
 // Codec returns the codec for the API version to test against, as set by the
 // KUBE_TEST_API env var.
 func (g TestGroup) Codec() runtime.Codec {
 	// TODO: caesarxuchao: Restructure the body once we have a central `latest`.
-	if g.Group == "" {
-		interfaces, err := latest.GroupOrDie("").InterfacesFor(g.GroupVersionUnderTest)
-		if err != nil {
-			panic(err)
-		}
-		return interfaces.Codec
+	interfaces, err := latest.GroupOrDie(g.Group).InterfacesFor(g.GroupVersionUnderTest)
+	if err != nil {
+		panic(err)
 	}
-	if g.Group == "extensions" {
-		interfaces, err := latest.GroupOrDie("extensions").InterfacesFor(g.GroupVersionUnderTest)
-		if err != nil {
-			panic(err)
-		}
-		return interfaces.Codec
-	}
-	panic(fmt.Errorf("cannot test group %s", g.Group))
+	return interfaces.Codec
 }
 
 // Converter returns the api.Scheme for the API version to test against, as set by the

@@ -62,7 +62,10 @@ type Event struct {
 
 // Return events for particular namespace or error if occurred.
 func GetEvents(client *client.Client, namespace string) (*Events, error) {
-	list, err := client.Events(namespace).List(labels.Everything(), fields.Everything())
+	list, err := client.Events(namespace).List(unversioned.ListOptions{
+		LabelSelector: unversioned.LabelSelector{labels.Everything()},
+		FieldSelector: unversioned.FieldSelector{fields.Everything()},
+	})
 
 	if err != nil {
 		return nil, err

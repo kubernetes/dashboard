@@ -17,6 +17,7 @@ limitations under the License.
 package meta
 
 import (
+	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/runtime"
 	"k8s.io/kubernetes/pkg/types"
 )
@@ -107,8 +108,6 @@ const (
 )
 
 // RESTScope contains the information needed to deal with REST resources that are in a resource hierarchy
-// TODO After we deprecate v1beta1 and v1beta2, we can look a supporting removing the flexibility of supporting
-// either a query or path param, and instead just support path param
 type RESTScope interface {
 	// Name of the scope
 	Name() RESTScopeName
@@ -126,10 +125,8 @@ type RESTScope interface {
 type RESTMapping struct {
 	// Resource is a string representing the name of this resource as a REST client would see it
 	Resource string
-	// APIVersion represents the APIVersion that represents the resource as presented. It is provided
-	// for convenience for passing around a consistent mapping.
-	APIVersion string
-	Kind       string
+
+	GroupVersionKind unversioned.GroupVersionKind
 
 	// Scope contains the information needed to deal with REST Resources that are in a resource hierarchy
 	Scope RESTScope
@@ -150,11 +147,11 @@ type RESTMapping struct {
 // TODO(caesarxuchao): Add proper multi-group support so that kinds & resources are
 // scoped to groups. See http://issues.k8s.io/12413 and http://issues.k8s.io/10009.
 type RESTMapper interface {
-	VersionAndKindForResource(resource string) (defaultVersion, kind string, err error)
-	// TODO(caesarxuchao): Remove GroupForResource when multi-group support is in (since
-	// group will be part of the version).
-	GroupForResource(resource string) (string, error)
-	RESTMapping(kind string, versions ...string) (*RESTMapping, error)
+	// KindFor takes a resource and returns back the unambiguous Kind (GroupVersionKind)
+	KindFor(resource string) (unversioned.GroupVersionKind, error)
+
+	RESTMapping(gk unversioned.GroupKind, versions ...string) (*RESTMapping, error)
+
 	AliasesForResource(resource string) ([]string, bool)
 	ResourceSingularizer(resource string) (singular string, err error)
 	ResourceIsValid(resource string) bool

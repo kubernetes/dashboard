@@ -294,7 +294,11 @@ func (c *Fake) ServerAPIVersions() (*unversioned.APIVersions, error) {
 	action.Resource = "apiversions"
 
 	c.Invokes(action, nil)
-	return &unversioned.APIVersions{Versions: registered.RegisteredVersions}, nil
+	gvStrings := []string{}
+	for _, gv := range registered.RegisteredGroupVersions {
+		gvStrings = append(gvStrings, gv.String())
+	}
+	return &unversioned.APIVersions{Versions: gvStrings}, nil
 }
 
 func (c *Fake) ComponentStatuses() client.ComponentStatusInterface {
@@ -309,6 +313,11 @@ func (c *Fake) SwaggerSchema(version string) (*swagger.ApiDeclaration, error) {
 
 	c.Invokes(action, nil)
 	return &swagger.ApiDeclaration{}, nil
+}
+
+// NewSimpleFakeExp returns a client that will respond with the provided objects
+func NewSimpleFakeExp(objects ...runtime.Object) *FakeExperimental {
+	return &FakeExperimental{Fake: NewSimpleFake(objects...)}
 }
 
 type FakeExperimental struct {

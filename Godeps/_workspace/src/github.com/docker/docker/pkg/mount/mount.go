@@ -5,7 +5,7 @@ import (
 )
 
 // GetMounts retrieves a list of mounts for the current running process.
-func GetMounts() ([]*Info, error) {
+func GetMounts() ([]*MountInfo, error) {
 	return parseMountTable()
 }
 

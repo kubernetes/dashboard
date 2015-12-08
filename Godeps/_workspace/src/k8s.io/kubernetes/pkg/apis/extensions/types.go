@@ -31,7 +31,7 @@ package extensions
 import (
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
-	"k8s.io/kubernetes/pkg/util"
+	"k8s.io/kubernetes/pkg/util/intstr"
 )
 
 // describes the attributes of a scale subresource
@@ -71,8 +71,6 @@ type ReplicationControllerDummy struct {
 type SubresourceReference struct {
 	// Kind of the referent; More info: http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#types-kinds"
 	Kind string `json:"kind,omitempty"`
-	// Namespace of the referent; More info: http://releases.k8s.io/HEAD/docs/user-guide/namespaces.md
-	Namespace string `json:"namespace,omitempty"`
 	// Name of the referent; More info: http://releases.k8s.io/HEAD/docs/user-guide/identifiers.md#names
 	Name string `json:"name,omitempty"`
 	// API version of the referent
@@ -258,7 +256,7 @@ type RollingUpdateDeployment struct {
 	// can be scaled down further, followed by scaling up the new RC, ensuring
 	// that at least 70% of original number of pods are available at all times
 	// during the update.
-	MaxUnavailable util.IntOrString `json:"maxUnavailable,omitempty"`
+	MaxUnavailable intstr.IntOrString `json:"maxUnavailable,omitempty"`
 
 	// The maximum number of pods that can be scheduled above the original number of
 	// pods.
@@ -270,7 +268,7 @@ type RollingUpdateDeployment struct {
 	// immediately when the rolling update starts. Once old pods have been killed,
 	// new RC can be scaled up further, ensuring that total number of pods running
 	// at any time during the update is atmost 130% of original pods.
-	MaxSurge util.IntOrString `json:"maxSurge,omitempty"`
+	MaxSurge intstr.IntOrString `json:"maxSurge,omitempty"`
 
 	// Minimum number of seconds for which a newly created pod should be ready
 	// without any of its container crashing, for it to be considered available.
@@ -300,7 +298,7 @@ type DaemonSetSpec struct {
 	// Must match in order to be controlled.
 	// If empty, defaulted to labels on Pod template.
 	// More info: http://releases.k8s.io/HEAD/docs/user-guide/labels.md#label-selectors
-	Selector map[string]string `json:"selector,omitempty"`
+	Selector *LabelSelector `json:"selector,omitempty"`
 
 	// Template is the object that describes the pod that will be created.
 	// The DaemonSet will create exactly one copy of this pod on every node
@@ -405,7 +403,7 @@ type JobSpec struct {
 	Completions *int `json:"completions,omitempty"`
 
 	// Selector is a label query over pods that should match the pod count.
-	Selector *PodSelector `json:"selector,omitempty"`
+	Selector *LabelSelector `json:"selector,omitempty"`
 
 	// Template is the object that describes the pod that will be created when
 	// executing a job.
@@ -585,7 +583,7 @@ type IngressBackend struct {
 	ServiceName string `json:"serviceName"`
 
 	// Specifies the port of the referenced service.
-	ServicePort util.IntOrString `json:"servicePort"`
+	ServicePort intstr.IntOrString `json:"servicePort"`
 }
 
 type NodeResource string
@@ -649,26 +647,26 @@ type ClusterAutoscalerList struct {
 	Items []ClusterAutoscaler `json:"items"`
 }
 
-// A pod selector is a label query over a set of pods. The result of matchLabels and
-// matchExpressions are ANDed. An empty pod selector matches all objects. A null
-// pod selector matches no objects.
-type PodSelector struct {
+// A label selector is a label query over a set of resources. The result of matchLabels and
+// matchExpressions are ANDed. An empty label selector matches all objects. A null
+// label selector matches no objects.
+type LabelSelector struct {
 	// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
 	// map is equivalent to an element of matchExpressions, whose key field is "key", the
 	// operator is "In", and the values array contains only "value". The requirements are ANDed.
 	MatchLabels map[string]string `json:"matchLabels,omitempty"`
-	// matchExpressions is a list of pod selector requirements. The requirements are ANDed.
-	MatchExpressions []PodSelectorRequirement `json:"matchExpressions,omitempty"`
+	// matchExpressions is a list of label selector requirements. The requirements are ANDed.
+	MatchExpressions []LabelSelectorRequirement `json:"matchExpressions,omitempty"`
 }
 
-// A pod selector requirement is a selector that contains values, a key, and an operator that
+// A label selector requirement is a selector that contains values, a key, and an operator that
 // relates the key and values.
-type PodSelectorRequirement struct {
+type LabelSelectorRequirement struct {
 	// key is the label key that the selector applies to.
 	Key string `json:"key" patchStrategy:"merge" patchMergeKey:"key"`
 	// operator represents a key's relationship to a set of values.
 	// Valid operators ard In, NotIn, Exists and DoesNotExist.
-	Operator PodSelectorOperator `json:"operator"`
+	Operator LabelSelectorOperator `json:"operator"`
 	// values is an array of string values. If the operator is In or NotIn,
 	// the values array must be non-empty. If the operator is Exists or DoesNotExist,
 	// the values array must be empty. This array is replaced during a strategic
@@ -676,12 +674,12 @@ type PodSelectorRequirement struct {
 	Values []string `json:"values,omitempty"`
 }
 
-// A pod selector operator is the set of operators that can be used in a selector requirement.
-type PodSelectorOperator string
+// A label selector operator is the set of operators that can be used in a selector requirement.
+type LabelSelectorOperator string
 
 const (
-	PodSelectorOpIn           PodSelectorOperator = "In"
-	PodSelectorOpNotIn        PodSelectorOperator = "NotIn"
-	PodSelectorOpExists       PodSelectorOperator = "Exists"
-	PodSelectorOpDoesNotExist PodSelectorOperator = "DoesNotExist"
+	LabelSelectorOpIn           LabelSelectorOperator = "In"
+	LabelSelectorOpNotIn        LabelSelectorOperator = "NotIn"
+	LabelSelectorOpExists       LabelSelectorOperator = "Exists"
+	LabelSelectorOpDoesNotExist LabelSelectorOperator = "DoesNotExist"
 )

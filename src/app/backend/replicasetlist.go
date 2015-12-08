@@ -68,15 +68,21 @@ type ReplicaSet struct {
 
 // Returns a list of all Replica Sets in the cluster.
 func GetReplicaSetList(client *client.Client) (*ReplicaSetList, error) {
-	replicaSets, err := client.ReplicationControllers(api.NamespaceAll).
-		List(labels.Everything(), fields.Everything())
+	replicaSets, err := client.ReplicationControllers(api.NamespaceAll).List(
+		unversioned.ListOptions{
+			LabelSelector: unversioned.LabelSelector{labels.Everything()},
+			FieldSelector: unversioned.FieldSelector{fields.Everything()},
+		})
 
 	if err != nil {
 		return nil, err
 	}
 
-	services, err := client.Services(api.NamespaceAll).
-		List(labels.Everything(), fields.Everything())
+	services, err := client.Services(api.NamespaceAll).List(
+		unversioned.ListOptions{
+			LabelSelector: unversioned.LabelSelector{labels.Everything()},
+			FieldSelector: unversioned.FieldSelector{fields.Everything()},
+		})
 
 	if err != nil {
 		return nil, err
