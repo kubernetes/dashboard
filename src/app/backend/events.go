@@ -63,10 +63,6 @@ type Event struct {
 
 // Return events for particular namespace and replica set or error if occurred.
 func GetEvents(client *client.Client, namespace string, replicaSetName string) (*Events, error) {
-	events := &Events{
-		Namespace: namespace,
-	}
-
 	// Get events for replica set.
 	rsEvents, err := GetReplicaSetEvents(client, namespace, replicaSetName)
 
@@ -74,7 +70,9 @@ func GetEvents(client *client.Client, namespace string, replicaSetName string) (
 		return nil, err
 	}
 
-	AppendEvents(rsEvents, events)
+	events := AppendEvents(rsEvents, Events{
+		Namespace: namespace,
+	})
 
 	// Get events for pods in replica set.
 	podEvents, err := GetReplicaSetPodsEvents(client, namespace, replicaSetName)
@@ -83,9 +81,9 @@ func GetEvents(client *client.Client, namespace string, replicaSetName string) (
 		return nil, err
 	}
 
-	AppendEvents(podEvents, events)
+	events = AppendEvents(podEvents, events)
 
-	return events, nil
+	return &events, nil
 }
 
 // Gets events associated to replica set.
@@ -155,7 +153,7 @@ func GetReplicaSetPodsEvents(client *client.Client, namespace, replicaSetName st
 }
 
 // Appends events from source slice to target events representation.
-func AppendEvents(source []api.Event, target *Events) {
+func AppendEvents(source []api.Event, target Events) Events {
 	for _, element := range source {
 		target.Events = append(target.Events, Event{
 			Message:         element.Message,
@@ -168,4 +166,5 @@ func AppendEvents(source []api.Event, target *Events) {
 			Reason:          element.Reason,
 		})
 	}
+	return target
 }
