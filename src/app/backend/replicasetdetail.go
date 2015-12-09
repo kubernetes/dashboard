@@ -135,6 +135,29 @@ func GetReplicaSetDetail(client *client.Client, namespace string, name string) (
 	return replicaSetDetail, nil
 }
 
+// TODO(floreks): This should be transactional to make sure that RC will not be deleted without
+// TODO(floreks): Should related services be deleted also?
+// Deletes replica set with given name in given namespace and related pods
+func DeleteReplicaSetWithPods(client *client.Client, namespace string, name string) error {
+	pods, err := getRawReplicaSetPods(client, namespace, name)
+	if err != nil {
+		return err
+	}
+
+	if err := client.ReplicationControllers(namespace).Delete(name); err != nil {
+		return err
+	}
+
+	for _, pod := range pods.Items {
+		if err := client.Pods(namespace).Delete(pod.Name, &api.DeleteOptions{}); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+// Returns detailed information about service from given service
 func getServiceDetail(service api.Service) ServiceDetail {
 	var externalEndpoints []string
 	for _, externalIp := range service.Status.LoadBalancer.Ingress {

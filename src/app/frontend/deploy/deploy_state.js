@@ -29,7 +29,7 @@ export default function stateConfig($stateProvider) {
     controllerAs: 'ctrl',
     url: '/deploy',
     resolve: {
-      namespaces: resolveNamespaces,
+      'namespaces': resolveNamespaces,
     },
     templateUrl: 'deploy/deploy.html',
   });
@@ -40,7 +40,7 @@ export default function stateConfig($stateProvider) {
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveNamespaces($resource) {
+function resolveNamespaces($resource) {
   /** @type {!angular.Resource<!backendApi.NamespaceList>} */
   let resource = $resource('/api/namespaces');
 

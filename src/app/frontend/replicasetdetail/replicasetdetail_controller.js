@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import showDeleteReplicaSetDialog from 'replicasetdetail/deletereplicaset_dialog';
+
 // Filter type and source values for events.
 const EVENT_ALL = 'All';
 const EVENT_TYPE_WARNING = 'Warning';
@@ -25,16 +27,26 @@ const EVENT_SOURCE_SYSTEM = 'System';
  */
 export default class ReplicaSetDetailController {
   /**
+   * @param {!md.$dialog} $mdDialog
+   * @param {!ui.router.$state} $state
+   * @param {!angular.$resource} $resource
+   * @param {!angular.$log} $log
    * @param {!backendApi.ReplicaSetDetail} replicaSetDetail
    * @param {!backendApi.Events} replicaSetEvents
+   * @param {!angular.Resource<!backendApi.ReplicaSetDetail>} replicaSetDetailResource
    * @ngInject
    */
-  constructor(replicaSetDetail, replicaSetEvents) {
+  constructor(
+      $mdDialog, $state, $resource, $log, replicaSetDetail, replicaSetEvents,
+      replicaSetDetailResource) {
     /** @export {!backendApi.ReplicaSetDetail} */
     this.replicaSetDetail = replicaSetDetail;
 
     /** @export {!backendApi.Events} */
     this.replicaSetEvents = replicaSetEvents;
+
+    /** @private {!angular.Resource<!backendApi.ReplicaSetDetail>} */
+    this.replicaSetDetailResource_ = replicaSetDetailResource;
 
     /** @export !Array<!backendApi.Event> */
     this.events = replicaSetEvents.events;
@@ -50,6 +62,18 @@ export default class ReplicaSetDetailController {
 
     /** @export {string} */
     this.eventSource = EVENT_ALL;
+
+    /** @private {!md.$dialog} */
+    this.mdDialog_ = $mdDialog;
+
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
+
+    /** @private {!angular.$resource} */
+    this.resource_ = $resource;
+
+    /** @private {!angular.$log} */
+    this.log_ = $log;
   }
 
   /**
@@ -117,4 +141,44 @@ export default class ReplicaSetDetailController {
       return events;
     }
   }
+
+  /**
+   * Handles replica set delete dialog.
+   * @export
+   */
+  handleDeleteReplicaSetDialog() {
+    showDeleteReplicaSetDialog(this.mdDialog_, this.deleteReplicaSet_.bind(this));
+  }
+
+  /**
+   * Callbacks used after clicking dialog confirmation button in order to delete replica set
+   * or log unsuccessful operation error.
+   */
+
+  /**
+   * Deletes replica set based on current replica set namespace and name.
+   * @private
+   */
+  deleteReplicaSet_() {
+    this.replicaSetDetailResource_.delete(
+        this.onReplicaSetDeleteSuccess_.bind(this), this.onReplicaSetDeleteError_.bind(this));
+  }
+
+  /**
+   * Changes state back to replica set list after successful deletion of replica set.
+   * @private
+   */
+  onReplicaSetDeleteSuccess_() {
+    this.log_.info('Replica set successfully deleted.');
+    // State name can not be imported. Related issue: #153
+    this.state_.go('replicasets');
+  }
+
+  /**
+   * TODO(floreks): display message to the user
+   * Logs error after replica set deletion failure.
+   * @param {!angular.$http.Response} err
+   * @private
+   */
+  onReplicaSetDeleteError_(err) { this.log_.error(err); }
 }

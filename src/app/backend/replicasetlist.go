@@ -97,7 +97,7 @@ func GetReplicaSetList(client *client.Client) (*ReplicaSetList, error) {
 func getReplicaSetList(
 	replicaSets []api.ReplicationController, services []api.Service) *ReplicaSetList {
 
-	replicaSetList := &ReplicaSetList{}
+	replicaSetList := &ReplicaSetList{ReplicaSets: make([]ReplicaSet, 0)}
 
 	for _, replicaSet := range replicaSets {
 		var containerImages []string

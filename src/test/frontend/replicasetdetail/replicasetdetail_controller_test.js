@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import ReplicaSetDetailController from 'replicasetdetail/replicasetdetail_controller';
+import replicaSetDetailModule from 'replicasetdetail/replicasetdetail_module';
 
 describe('Replica Set Detail controller', () => {
   /**
@@ -21,7 +22,13 @@ describe('Replica Set Detail controller', () => {
    */
   let ctrl;
 
-  beforeEach(() => { ctrl = new ReplicaSetDetailController([], []); });
+  beforeEach(() => {
+    angular.mock.module(replicaSetDetailModule.name);
+
+    angular.mock.inject(($resource, $log, $state, $mdDialog) => {
+      ctrl = new ReplicaSetDetailController($mdDialog, $state, $resource, $log, [], [], []);
+    });
+  });
 
   it('should not filter any events if all option is selected', () => {
     // given

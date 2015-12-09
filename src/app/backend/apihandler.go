@@ -49,6 +49,9 @@ func CreateHttpApiHandler(client *client.Client) http.Handler {
 			To(apiHandler.handleGetReplicaSetDetail).
 			Writes(ReplicaSetDetail{}))
 	replicaSetWs.Route(
+		replicaSetWs.DELETE("/{namespace}/{replicaSet}").
+			To(apiHandler.handleDeleteReplicaSet))
+	replicaSetWs.Route(
 		replicaSetWs.GET("/pods/{namespace}/{replicaSet}").
 			To(apiHandler.handleGetReplicaSetPods).
 			Writes(ReplicaSetPods{}))
@@ -135,6 +138,21 @@ func (apiHandler *ApiHandler) handleGetReplicaSetDetail(
 	}
 
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles delete Replica Set API call.
+func (apiHandler *ApiHandler) handleDeleteReplicaSet(
+	request *restful.Request, response *restful.Response) {
+
+	namespace := request.PathParameter("namespace")
+	replicaSet := request.PathParameter("replicaSet")
+
+	if err := DeleteReplicaSetWithPods(apiHandler.client, namespace, replicaSet); err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeader(http.StatusOK)
 }
 
 // Handles get Replica Set Pods API call.
