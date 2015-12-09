@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-describe('Deploy view', function() {
-  beforeEach(function() { browser.get('#/deploy'); });
+describe('Deploy view', () => {
+  beforeEach(() => { browser.get('#/deploy'); });
 
-  it('should not contain errors in console', function() {
-    browser.manage().logs().get('browser').then(function(browserLog) {
+  it('should not contain errors in console', () => {
+    browser.manage().logs().get('browser').then((browserLog) => {
       // Filter and search for errors logs
       let filteredLogs = browserLog.filter((log) => { return log.level.value > 900; });
 
