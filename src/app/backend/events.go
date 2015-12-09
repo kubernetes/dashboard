@@ -59,6 +59,9 @@ type Event struct {
 
 	// Reason why this event was generated.
 	Reason string `json:"reason"`
+
+	// Event type (at the moment only normal and warning are supported).
+	Type string `json:"type"`
 }
 
 // Return events for particular namespace and replica set or error if occurred.
@@ -153,17 +156,19 @@ func GetReplicaSetPodsEvents(client *client.Client, namespace, replicaSetName st
 }
 
 // Appends events from source slice to target events representation.
+// TODO(maciaszczykm): Append information about event source (user, system etc.).
 func AppendEvents(source []api.Event, target Events) Events {
-	for _, element := range source {
+	for _, event := range source {
 		target.Events = append(target.Events, Event{
-			Message:         element.Message,
-			SourceComponent: element.Source.Component,
-			SourceHost:      element.Source.Host,
-			SubObject:       element.InvolvedObject.FieldPath,
-			Count:           element.Count,
-			FirstSeen:       element.FirstTimestamp,
-			LastSeen:        element.LastTimestamp,
-			Reason:          element.Reason,
+			Message:         event.Message,
+			SourceComponent: event.Source.Component,
+			SourceHost:      event.Source.Host,
+			SubObject:       event.InvolvedObject.FieldPath,
+			Count:           event.Count,
+			FirstSeen:       event.FirstTimestamp,
+			LastSeen:        event.LastTimestamp,
+			Reason:          event.Reason,
+			Type:            event.Type,
 		})
 	}
 	return target
