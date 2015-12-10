@@ -93,6 +93,14 @@ $replicasetdetails-warning: orange;
   font-size: 0.85em;
 }
 
+.kd-replicasetdetail-sidebar-editpods-button {
+  margin: 0;
+  min-width: 25px;
+  > md-icon {
+    outline: none;
+  }
+}
+
 .kd-replicasetdetail-options {
   margin: 15px;
 }

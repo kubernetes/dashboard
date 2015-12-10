@@ -83,6 +83,12 @@ type ServiceDetail struct {
 	Selector map[string]string `json:"selector"`
 }
 
+// Information needed to update replica set
+type ReplicaSetSpec struct {
+	// Replicas (pods) number in replicas set
+	Replicas int `json:"replicas"`
+}
+
 // Returns detailed information about the given replica set in the given namespace.
 func GetReplicaSetDetail(client *client.Client, namespace string, name string) (
 	*ReplicaSetDetail, error) {
@@ -152,6 +158,24 @@ func DeleteReplicaSetWithPods(client *client.Client, namespace string, name stri
 		if err := client.Pods(namespace).Delete(pod.Name, &api.DeleteOptions{}); err != nil {
 			return err
 		}
+	}
+
+	return nil
+}
+
+// Updates number of replicas in Replica Set based on Replica Set Spec
+func UpdateReplicasCount(client client.Interface, namespace string, name string,
+	replicaSetSpec *ReplicaSetSpec) error {
+	replicaSet, err := client.ReplicationControllers(namespace).Get(name)
+	if err != nil {
+		return err
+	}
+
+	replicaSet.Spec.Replicas = replicaSetSpec.Replicas
+
+	_, err = client.ReplicationControllers(namespace).Update(replicaSet)
+	if err != nil {
+		return err
 	}
 
 	return nil

@@ -22,11 +22,15 @@ describe('Replica Set Detail controller', () => {
    */
   let ctrl;
 
+  /** @type {!md.$dialog} */
+  let mdDialog;
+
   beforeEach(() => {
     angular.mock.module(replicaSetDetailModule.name);
 
     angular.mock.inject(($resource, $log, $state, $mdDialog) => {
-      ctrl = new ReplicaSetDetailController($mdDialog, $state, $resource, $log, [], [], []);
+      mdDialog = $mdDialog;
+      ctrl = new ReplicaSetDetailController(mdDialog, $state, $resource, $log, [], [], []);
     });
   });
 
@@ -74,5 +78,19 @@ describe('Replica Set Detail controller', () => {
 
     // then
     expect(result.length).toEqual(1);
+  });
+
+  it('should show edit replicas dialog', () => {
+    // given
+    ctrl.replicaSetDetail = {
+      pods: [],
+    };
+    spyOn(mdDialog, 'show');
+
+    // when
+    ctrl.handleUpdateReplicasDialog();
+
+    // then
+    expect(mdDialog.show).toHaveBeenCalled();
   });
 });

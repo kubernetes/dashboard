@@ -112,6 +112,13 @@ backendApi.ReplicaSetDetail;
 
 /**
  * @typedef {{
+ *   replicas: number
+ * }}
+ */
+backendApi.ReplicaSetSpec;
+
+/**
+ * @typedef {{
  *   name: string,
  *   startTime: ?string,
  *   podIP: string,
