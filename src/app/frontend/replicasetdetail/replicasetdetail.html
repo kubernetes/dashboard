@@ -129,8 +129,8 @@ limitations under the License.
         <div class="kd-replicasetdetail-options" layout="row">
           <md-input-container class="kd-replicasetdetail-option-picker">
             <label>Type</label>
-            <!-- TODO(maciaszczykm): Handle value change. -->
-            <md-select ng-model="ctrl.eventType" required>
+            <md-select ng-model="ctrl.eventType"
+                       ng-change="ctrl.handleEventFiltering()" required>
               <md-option ng-repeat="type in ctrl.eventTypeFilter" ng-value="type">
                 {{type}}
               </md-option>
@@ -138,8 +138,8 @@ limitations under the License.
           </md-input-container>
           <md-input-container class="kd-replicasetdetail-option-picker">
             <label>Source</label>
-            <!-- TODO(maciaszczykm): Handle value change. -->
-            <md-select ng-model="ctrl.eventSource" required>
+            <md-select ng-model="ctrl.eventSource"
+                       ng-change="ctrl.handleEventFiltering()" required>
               <md-option ng-repeat="source in ctrl.eventSourceFilter" ng-value="source">
                 {{source}}
               </md-option>
@@ -171,8 +171,10 @@ limitations under the License.
           </tr>
           </thead>
           <tbody>
-          <tr ng-repeat="event in ctrl.replicaSetEvents.events">
+          <tr ng-repeat="event in ctrl.events">
             <td class="kd-replicasetdetail-table-cell kd-replicasetdetail-table-message">
+              <i ng-if="ctrl.isEventWarning(event)"
+                 class="material-icons kd-replicasetdetail-warning-icon">warning</i>
               {{event.message}}
             </td>
             <td class="kd-replicasetdetail-table-cell">

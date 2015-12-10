@@ -65,6 +65,7 @@ func TestAppendEvents(t *testing.T) {
 						time.Date(2015, 1, 1, 0, 0, 0, 0, location),
 					},
 					Reason: "my-event-reason",
+					Type:   api.EventTypeNormal,
 					ObjectMeta: api.ObjectMeta{
 						Name:      "my-event",
 						Namespace: "test-namespace",
@@ -90,6 +91,7 @@ func TestAppendEvents(t *testing.T) {
 							time.Date(2015, 1, 1, 0, 0, 0, 0, location),
 						},
 						Reason: "my-event-reason",
+						Type:   api.EventTypeNormal,
 					},
 				},
 			},

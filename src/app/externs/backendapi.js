@@ -64,7 +64,8 @@ backendApi.Events;
  *   count: number,
  *   firstSeen: string,
  *   lastSeen: string,
- *   reason: string
+ *   reason: string,
+ *   type: string
  * }}
  */
 backendApi.Event;
