@@ -18,6 +18,7 @@
 import child from 'child_process';
 import lodash from 'lodash';
 import q from 'q';
+import semver from 'semver';
 
 import conf from './conf';
 
@@ -30,6 +31,11 @@ const devPath = `${process.env.PATH}:${conf.paths.goTools}/bin`;
  * The environment needed for the execution of any go command.
  */
 const env = lodash.merge(process.env, {GOPATH: sourceGopath, PATH: devPath});
+
+/**
+ * Minimum required Go Version
+ */
+const minGoVersion = '1.5.0';
 
 /**
  * Spawns a Go process wrapped with the Godep command after making sure all GO prerequisites are
@@ -48,7 +54,7 @@ export default function spawnGoProcess(args, doneFn) {
  * @return {Q.Promise} A promise object.
  */
 function checkPrerequisites() {
-  return checkGo().then(checkGodep);
+  return checkGo().then(checkGoVersion).then(checkGodep);
 }
 
 /**
@@ -72,6 +78,37 @@ function checkGo() {
         }
         deferred.resolve();
       });
+  return deferred.promise;
+}
+
+/**
+ * Checks if go version fulfills the minimum version prerequisite, promises an error otherwise.
+ * @return {Q.Promise} A promise object.
+ */
+function checkGoVersion() {
+  let deferred = q.defer();
+  child.exec(
+      'go version',
+      {
+        env: env,
+      },
+      function(error, stdout) {
+        let match = /[\d\.]+/.exec(stdout.toString());  // matches version number
+        if (match.length < 1) {
+          deferred.reject(new Error('Go version not found.'));
+          return;
+        }
+        if (semver.lt(match[0], minGoVersion)) {
+          deferred.reject(
+              new Error(
+                  `The current go version "${match[0]}" is older than ` +
+                  `the minimum required version "${minGoVersion}". ` +
+                  `Please upgrade your go version!`));
+          return;
+        }
+        deferred.resolve();
+      });
+
   return deferred.promise;
 }
 
