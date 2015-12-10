@@ -244,7 +244,7 @@ gulp.task(
     function(doneFn) {
       executeKubectlCommand(
           `config set-cluster local --server=http://${conf.backend.apiServerHost}` +
-              `--insecure-skip-tls-verify=true`,
+              ' --insecure-skip-tls-verify=true',
           doneFn);
     });
 
