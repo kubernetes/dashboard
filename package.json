@@ -66,7 +66,7 @@
     "run-sequence": "~1.1.5",
     "semver": "~2.0.0",
     "vinyl-source-stream": "1.1.0",
-    "webpack-stream": "~2.3.0",
+    "webpack-stream": "~3.0.0",
     "wiredep": "~3.0.0-beta",
     "wrench": "~1.5.8"
   },
