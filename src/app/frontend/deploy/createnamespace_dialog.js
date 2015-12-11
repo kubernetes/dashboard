@@ -28,7 +28,7 @@ export default function showNamespaceDialog(mdDialog, event, namespaces) {
     controllerAs: 'ctrl',
     clickOutsideToClose: true,
     targetEvent: event,
-    templateUrl: '/deploy/createnamespace.html',
+    templateUrl: 'deploy/createnamespace.html',
     locals: {
       namespaces: namespaces,
     },

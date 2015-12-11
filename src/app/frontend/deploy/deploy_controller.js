@@ -80,7 +80,6 @@ export default class DeployController {
 
   /**
    * Notifies the child scopes to call their deploy methods.
-   *
    * @export
    */
   deployBySelection() {
@@ -90,8 +89,8 @@ export default class DeployController {
 
   /**
    * Displays new namespace creation dialog.
-   *
    * @param {!angular.Scope.Event} event
+   * @export
    */
   handleNamespaceDialog(event) {
     showNamespaceDialog(this.mdDialog_, event, this.namespaces)

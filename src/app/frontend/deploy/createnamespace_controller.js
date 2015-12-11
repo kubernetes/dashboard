@@ -48,17 +48,22 @@ export default class NamespaceDialogController {
   /**
    * Returns true if new namespace name hasn't been filled by the user, i.e, is empty.
    * @return {boolean}
+   * @export
    */
   isDisabled() {
     return !this.namespace || /^\s*$/.test(!this.namespace) ||
            this.namespaces.indexOf(this.namespace) >= 0;
   }
 
-  /** Cancels the new namespace form. */
+  /**
+   * Cancels the new namespace form.
+   * @export
+   */
   cancel() { this.mdDialog_.cancel(); }
 
   /**
    * Creates new namespace based on the state of the controller.
+   * @export
    */
   createNamespace() {
     /** @type {!backendApi.NamespaceSpec} */
