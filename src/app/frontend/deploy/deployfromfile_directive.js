@@ -19,7 +19,6 @@ export default function deployFromFileDirective() {
     scope: {},
     bindToController: {
       'name': '=',
-      'namespace': '=',
       'detail': '=',
     },
     controller: DeployFromFileController,

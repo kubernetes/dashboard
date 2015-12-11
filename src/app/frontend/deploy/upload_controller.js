@@ -26,12 +26,13 @@ export default class UploadController {
     /**
      * Browse file function which is defined by the clients.
      *
-     * @private {Function} */
-    this.browseFileFunc_ = function() {};
+     * Initialized from the registerBrowseFileFunction method.
+     * @private {(function())|undefined} */
+    this.browseFileFunc_;
   }
 
   /**
-   * @param {Function} func
+   * @param {function()} func
    * @export
    */
   registerBrowseFileFunction(func) {
@@ -47,5 +48,9 @@ export default class UploadController {
    *
    * @export
    */
-  browseFile() { this.browseFileFunc_(); }
+  browseFile() {
+    if (this.browseFileFunc_) {
+      this.browseFileFunc_();
+    }
+  }
 }

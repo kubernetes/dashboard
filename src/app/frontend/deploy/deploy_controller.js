@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import {stateName as zerostate} from 'zerostate/zerostate_state';
-import showNamespaceDialog from 'deploy/createnamespace_dialog';
 
 /**
  * Controller for the deploy view.
@@ -25,11 +24,10 @@ export default class DeployController {
    * @param {!angular.$resource} $resource
    * @param {!angular.$log} $log
    * @param {!ui.router.$state} $state
-   * @param {!md.$dialog} $mdDialog
    * @param {!backendApi.NamespaceList} namespaces
    * @ngInject
    */
-  constructor($resource, $log, $state, $mdDialog, namespaces) {
+  constructor($resource, $log, $state, namespaces) {
     /** @export {!angular.FormController} Initialized from the template */
     this.deployForm;
 
@@ -38,15 +36,26 @@ export default class DeployController {
 
     /**
      * List of available namespaces.
+     * TODO(bryk): Move this to deploy from settings directive. E.g., use activate method when
+     * switching to Angular 1.5.
      * @export {!Array<string>}
      */
     this.namespaces = namespaces.namespaces;
 
     /**
-     * Currently chosen namespace.
-     * @export {(string|undefined)}
+     * Contains the selected directive's controller which has its own deploy logic
+     *
+     * Initialized from the template.
+     * @export {{deploy:function()}|undefined}
      */
-    this.namespace = this.namespaces.length > 0 ? this.namespaces[0] : undefined;
+    this.detail;
+
+    /**
+     * Child directive selection model. The list of possible values is in template. This value
+     * represents the default selection.
+     * @export {string}
+     */
+    this.selection = "Settings";
 
     /** @private {!angular.$resource} */
     this.resource_ = $resource;
@@ -57,25 +66,8 @@ export default class DeployController {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
-    /** @private {!md.$dialog} */
-    this.mdDialog_ = $mdDialog;
-
     /** @private {boolean} */
     this.isDeployInProgress_ = false;
-
-    /**
-     * Contains the selected directive's controller which has its own deploy logic
-     *
-     * @export {{deploy:function()}}
-     */
-    this.detail = {deploy: function() {}};
-
-    /**
-     * Child directive selection model. The list of possible values is in template. This value
-     * represents the default selection.
-     * @export {string}
-     */
-    this.selection = "Settings";
   }
 
   /**
@@ -88,36 +80,13 @@ export default class DeployController {
   }
 
   /**
-   * Displays new namespace creation dialog.
-   * @param {!angular.Scope.Event} event
-   * @export
-   */
-  handleNamespaceDialog(event) {
-    showNamespaceDialog(this.mdDialog_, event, this.namespaces)
-        .then(
-            /**
-             * Handles namespace dialog result. If namespace was created successfully then it
-             * will be selected, otherwise first namespace will be selected.
-             *
-             * @param {string|undefined} answer
-             */
-            (answer) => {
-              if (answer) {
-                this.namespace = answer;
-                this.namespaces = this.namespaces.concat(answer);
-              } else {
-                this.namespace = this.namespaces[0];
-              }
-            },
-            () => { this.namespace = this.namespaces[0]; });
-  }
-
-  /**
    * Returns true when the deploy action should be enabled.
    * @return {boolean}
    * @export
    */
-  isDeployDisabled() { return this.isDeployInProgress_ || this.deployForm.$invalid; }
+  isDeployDisabled() {
+    return this.isDeployInProgress_ || this.deployForm.$invalid || !this.detail;
+  }
 
   /**
    * Cancels the deployment form.

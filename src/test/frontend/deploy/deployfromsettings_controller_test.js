@@ -22,8 +22,8 @@ describe('DeployFromSettings controller', () => {
   beforeEach(() => {
     angular.mock.module(deployModule.name);
 
-    angular.mock.inject(($log, $state, $resource, $q) => {
-      ctrl = new DeployFromSettingController($log, $state, $resource, $q);
+    angular.mock.inject(($controller) => {
+      ctrl = $controller(DeployFromSettingController, {}, {namespaces: []});
     });
   });
 

@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import showNamespaceDialog from './createnamespace_dialog';
 import DeployLabel from './deploylabel';
 import {stateName as replicasetliststate} from 'replicasetlist/replicasetlist_state';
 
 // Label keys for predefined labels
-export const APP_LABEL_KEY = 'app';
-export const VERSION_LABEL_KEY = 'version';
+const APP_LABEL_KEY = 'app';
+const VERSION_LABEL_KEY = 'version';
 
 /**
  * Controller for the deploy from settings directive.
@@ -30,27 +31,16 @@ export default class DeployFromSettingsController {
    * @param {!ui.router.$state} $state
    * @param {!angular.$resource} $resource
    * @param {!angular.$q} $q
+   * @param {!md.$dialog} $mdDialog
    * @ngInject
    */
-  constructor($log, $state, $resource, $q) {
+  constructor($log, $state, $resource, $q, $mdDialog) {
     /**
      * It initializes the scope output parameter
      *
      * @export {!DeployFromSettingsController}
      */
     this.detail = this;
-
-    /** @private {!angular.$q} */
-    this.q_ = $q;
-
-    /** @private {!angular.$resource} */
-    this.resource_ = $resource;
-
-    /** @private {!angular.$log} */
-    this.log_ = $log;
-
-    /** @private {!ui.router.$state} */
-    this.state_ = $state;
 
     /** @export {string} */
     this.containerImage = '';
@@ -80,13 +70,42 @@ export default class DeployFromSettingsController {
       new DeployLabel(VERSION_LABEL_KEY, '', false, this.getContainerImageVersion_.bind(this)),
       new DeployLabel(),
     ];
+
+    /**
+     * List of available namespaces.
+     *
+     * Initialized from the scope.
+     * @export {!Array<string>}
+     */
+    this.namespaces;
+
+    /**
+     * Currently chosen namespace.
+     * @export {(string|undefined)}
+     */
+    this.namespace = this.namespaces.length > 0 ? this.namespaces[0] : undefined;
+
+    /** @private {!angular.$q} */
+    this.q_ = $q;
+
+    /** @private {!angular.$resource} */
+    this.resource_ = $resource;
+
+    /** @private {!angular.$log} */
+    this.log_ = $log;
+
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
+
+    /** @private {!md.$dialog} */
+    this.mdDialog_ = $mdDialog;
   }
 
   /**
    * Deploys the application based on the state of the controller.
    *
-   * @export
    * @return {angular.$q.Promise}
+   * @export
    */
   deploy() {
     // TODO(bryk): Validate input data before sending to the server.
@@ -118,6 +137,32 @@ export default class DeployFromSettingsController {
           this.log_.error('Error deploying application:', err);
         });
     return defer.promise;
+  }
+
+  /**
+   * Displays new namespace creation dialog.
+   *
+   * @param {!angular.Scope.Event} event
+   * @export
+   */
+  handleNamespaceDialog(event) {
+    showNamespaceDialog(this.mdDialog_, event, this.namespaces)
+        .then(
+            /**
+             * Handles namespace dialog result. If namespace was created successfully then it
+             * will be selected, otherwise first namespace will be selected.
+             *
+             * @param {string|undefined} answer
+             */
+            (answer) => {
+              if (answer) {
+                this.namespace = answer;
+                this.namespaces = this.namespaces.concat(answer);
+              } else {
+                this.namespace = this.namespaces[0];
+              }
+            },
+            () => { this.namespace = this.namespaces[0]; });
   }
 
   /**

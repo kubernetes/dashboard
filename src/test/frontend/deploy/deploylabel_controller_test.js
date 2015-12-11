@@ -15,7 +15,7 @@
 import DeployLabelController from 'deploy/deploylabel_controller';
 import DeployLabel from 'deploy/deploylabel';
 
-describe('DeployFromSettings controller', () => {
+describe('DeployLabel controller', () => {
   let ctrl;
   let labelForm;
 

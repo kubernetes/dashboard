@@ -28,10 +28,10 @@ describe('Deploy controller', () => {
   beforeEach(() => {
     angular.mock.module(deployModule.name);
 
-    angular.mock.inject(($resource, $log, $state, $mdDialog, $q) => {
+    angular.mock.inject(($controller, $state) => {
       state = $state;
-      ctrl = new DeployController($resource, $log, state, $mdDialog, {namespaces: []});
-      settingsCtrl = new DeployFromSettingController($log, $state, $resource, $q);
+      ctrl = $controller(DeployController, {namespaces: []});
+      settingsCtrl = $controller(DeployFromSettingController, {}, {namespaces: []});
     });
 
     // prepare and mock
