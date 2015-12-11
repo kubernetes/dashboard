@@ -22,18 +22,26 @@ limitations under the License.
         <label>App name</label>
         <input ng-model="ctrl.name" required>
       </md-input-container>
-      <md-radio-group ng-model="data.group1">
-        <md-radio-button class="md-primary">
+      <md-radio-group ng-model="ctrl.selection">
+        <md-radio-button value="Settings" class="md-primary">
           Specify app details below
         </md-radio-button>
-        <md-radio-button value="bar" class="md-primary">
+        <md-radio-button value="File" class="md-primary">
           Upload a YAML or JSON file
         </md-radio-button>
       </md-radio-group>
-      <deploy-from-settings name="ctrl.name"
-                            namespace="ctrl.namespace"
-                            detail="ctrl.detail">
-      </deploy-from-settings>
+      <div ng-switch="ctrl.selection">
+        <deploy-from-settings ng-switch-when="Settings"
+                              name="ctrl.name"
+                              namespace="ctrl.namespace"
+                              detail="ctrl.detail">
+        </deploy-from-settings>
+        <deploy-from-file ng-switch-when="File"
+                          name="ctrl.name"
+                          namespace="ctrl.namespace"
+                          detail="ctrl.detail">
+        </deploy-from-file>
+      </div>
       <md-input-container class="md-block">
       <label>Namespace</label>
       <md-select ng-model="ctrl.namespace" required>

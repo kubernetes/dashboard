@@ -69,6 +69,13 @@ export default class DeployController {
      * @export {{deploy:function()}}
      */
     this.detail = {deploy: function() {}};
+
+    /**
+     * Child directive selection model. The list of possible values is in template. This value
+     * represents the default selection.
+     * @export {string}
+     */
+    this.selection = "Settings";
   }
 
   /**

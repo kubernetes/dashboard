@@ -15,6 +15,9 @@
 import stateConfig from './deploy_state';
 import deployFromSettingsDirective from './deployfromsettings_directive';
 import deployLabelDirective from './deploylabel_directive';
+import deployFromFileDirective from './deployfromfile_directive';
+import fileReaderDirective from './filereader_directive';
+import uploadDirective from './upload_directive';
 
 /**
  * Angular module for the deploy view.
@@ -30,4 +33,7 @@ export default angular.module(
                           ])
     .config(stateConfig)
     .directive('deployFromSettings', deployFromSettingsDirective)
+    .directive('deployFromFile', deployFromFileDirective)
+    .directive('kdFileReader', fileReaderDirective)
+    .directive('kdUpload', uploadDirective)
     .directive('kdLabel', deployLabelDirective);
