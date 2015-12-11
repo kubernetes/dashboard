@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {stateName as zerostate} from 'zerostate/zerostate_state';
 import ReplicaSetListController from './replicasetlist_controller';
 
 /** Name of the state. Can be used in, e.g., $state.go method. */
@@ -29,10 +30,27 @@ export default function stateConfig($stateProvider) {
     controllerAs: 'ctrl',
     url: '/replicasets',
     resolve: {
-      replicaSets: resolveReplicaSets,
+      'replicaSets': resolveReplicaSets,
     },
     templateUrl: 'replicasetlist/replicasetlist.html',
+    onEnter: redirectIfNeeded,
   });
+}
+
+/**
+ * Avoids entering replica set list page when there are no replica sets.
+ * Used f.e. when last replica set gets deleted.
+ * Transition to: zerostate
+ * @param {!ui.router.$state} $state
+ * @param {!angular.$timeout} $timeout
+ * @param {!backendApi.ReplicaSetList} replicaSets
+ * @ngInject
+ */
+function redirectIfNeeded($state, $timeout, replicaSets) {
+  if (replicaSets.replicaSets.length === 0) {
+    // allow original state change to finish before redirecting to new state to avoid error
+    $timeout(() => { $state.go(zerostate); });
+  }
 }
 
 /**
@@ -40,7 +58,7 @@ export default function stateConfig($stateProvider) {
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveReplicaSets($resource) {
+function resolveReplicaSets($resource) {
   /** @type {!angular.Resource<!backendApi.ReplicaSetList>} */
   let resource = $resource('/api/replicasets');
 

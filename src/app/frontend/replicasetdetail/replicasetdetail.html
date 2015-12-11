@@ -26,15 +26,16 @@ limitations under the License.
     </div>
     <div flex-offset="5" flex layout-align="start start" layout-padding layout="row">
       <div flex layout="column">
-        <div layout="row" class="kd-replicasetdetail-sidebar-buttons">
-          <span flex="55">
-            <i class="material-icons kd-replicasetdetail-sidebar-icon">refresh</i>
+        <div layout="row" flex>
+          <md-button class="md-primary kd-replicasetdetail-sidebar-button">
+            <md-icon class="material-icons">refresh</md-icon>
             ROLLING UPDATE
-          </span>
-          <span flex-offset="5" flex>
-            <i class="material-icons kd-replicasetdetail-sidebar-icon">delete</i>
+          </md-button>
+          <md-button class="md-primary kd-replicasetdetail-sidebar-button"
+                     ng-click="ctrl.handleDeleteReplicaSetDialog()">
+            <md-icon class="material-icons">delete</md-icon>
             DELETE
-          </span>
+          </md-button>
         </div>
         <div flex layout="column" class="kd-replicasetdetail-sidebar-info">
           <span class="kd-replicasetdetail-sidebar-title">
@@ -57,35 +58,35 @@ limitations under the License.
                 ng-repeat="image in ctrl.replicaSetDetail.containerImages">
             {{image}}
           </span>
-          <span class="kd-replicasetdetail-sidebar-title">Service</span>
-          <span class="kd-replicasetdetail-sidebar-line">Label selector</span>
-          <span class="kd-replicasetdetail-sidebar-subline"
+          <div ng-show="ctrl.replicaSetDetail.services" layout="column">
+            <span class="kd-replicasetdetail-sidebar-title">Service</span>
+            <span class="kd-replicasetdetail-sidebar-line">Label selector</span>
+            <span class="kd-replicasetdetail-sidebar-subline"
+                  ng-repeat="service in ctrl.replicaSetDetail.services">
+              {{ctrl.formatLabelString(service.selector)}}
+            </span>
+            <span class="kd-replicasetdetail-sidebar-line">Internal endpoint</span>
+            <div class="kd-replicasetdetail-sidebar-subline"
+                 ng-repeat="service in ctrl.replicaSetDetail.services">
+              <div ng-show="service.internalEndpoint">
+                {{service.internalEndpoint}}
+                <i class="material-icons kd-replicasetdetail-sidebar-service-icon">
+                  help
+                </i>
+              </div>
+              <span ng-hide="service.internalEndpoint">none</span>
+            </div>
+            <span class="kd-replicasetdetail-sidebar-line">External endpoint</span>
+            <div class="kd-replicasetdetail-sidebar-subline"
                 ng-repeat="service in ctrl.replicaSetDetail.services">
-            {{ctrl.formatLabelString(service.selector)}}
-          </span>
-          <span class="kd-replicasetdetail-sidebar-line">Internal endpoint</span>
-          <div class="kd-replicasetdetail-sidebar-subline"
-               ng-repeat="service in ctrl.replicaSetDetail.services">
-            <span ng-show="service.internalEndpoint">
-              {{service.internalEndpoint}}
-            </span>
-            <i ng-show="service.internalEndpoint"
-               class="material-icons kd-replicasetdetail-sidebar-service-icon">
-              help
-            </i>
-            <span ng-hide="service.internalEndpoint">none</span>
-          </div>
-          <span class="kd-replicasetdetail-sidebar-line">External endpoint</span>
-          <div class="kd-replicasetdetail-sidebar-subline"
-               ng-repeat="service in ctrl.replicaSetDetail.services">
-            <span ng-show="service.externalEndpoints">
-              {{service.externalEndpoints}}
-            </span>
-            <i ng-show="service.externalEndpoints"
-               class="material-icons kd-replicasetdetail-sidebar-service-icon">open_in_new</i>
-            <span class="kd-replicasetdetail-sidebar-subline" ng-hide="service.externalEndpoints">
-              none
-            </span>
+              <div ng-show="service.externalEndpoints">
+                {{service.externalEndpoints}}
+                <i class="material-icons kd-replicasetdetail-sidebar-service-icon">open_in_new</i>
+              </div>
+              <span class="kd-replicasetdetail-sidebar-subline" ng-hide="service.externalEndpoints">
+                none
+              </span>
+            </div>
           </div>
         </div>
       </div>

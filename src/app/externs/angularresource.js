@@ -58,3 +58,10 @@ angular.Resource.prototype.get = function(opt_callback, opt_errback) {};
  * @return {!angular.ResourceClass}
  */
 angular.Resource.prototype.query = function(opt_callback, opt_errback) {};
+
+/**
+ * @param {function(!T)=} opt_callback
+ * @param {function(!angular.$http.Response)=} opt_errback
+ * @return {!angular.ResourceClass}
+ */
+angular.Resource.prototype.delete = function(opt_callback, opt_errback) {};

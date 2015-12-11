@@ -50,23 +50,31 @@ export default function stateConfig($stateProvider) {
     url: '/replicasets/:namespace/:replicaSet',
     templateUrl: 'replicasetdetail/replicasetdetail.html',
     resolve: {
-      replicaSetDetail: resolveReplicaSetDetails,
-      replicaSetEvents: resolveReplicaSetEvents,
+      'replicaSetDetailResource': getReplicaSetDetailsResource,
+      'replicaSetDetail': resolveReplicaSetDetails,
+      'replicaSetEvents': resolveReplicaSetEvents,
     },
   });
 }
 
 /**
+ *
  * @param {!StateParams} $stateParams
  * @param {!angular.$resource} $resource
+ * @return {!angular.Resource<!backendApi.ReplicaSetDetail>}
+ * @ngInject
+ */
+function getReplicaSetDetailsResource($stateParams, $resource) {
+  return $resource('/api/replicasets/:namespace/:replicaSet', $stateParams);
+}
+
+/**
+ * @param {!angular.Resource<!backendApi.ReplicaSetDetail>} replicaSetDetailResource
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveReplicaSetDetails($stateParams, $resource) {
-  /** @type {!angular.Resource<!backendApi.ReplicaSetDetail>} */
-  let resource = $resource('/api/replicasets/:namespace/:replicaSet', $stateParams);
-
-  return resource.get().$promise;
+function resolveReplicaSetDetails(replicaSetDetailResource) {
+  return replicaSetDetailResource.get().$promise;
 }
 
 /**
@@ -75,7 +83,7 @@ export function resolveReplicaSetDetails($stateParams, $resource) {
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveReplicaSetEvents($stateParams, $resource) {
+function resolveReplicaSetEvents($stateParams, $resource) {
   /** @type {!angular.Resource<!backendApi.Events>} */
   let resource = $resource('/api/events/:namespace/:replicaSet', $stateParams);
 

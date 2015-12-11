@@ -149,7 +149,7 @@ func TestGetReplicaSetList(t *testing.T) {
 		services    []api.Service
 		expected    *ReplicaSetList
 	}{
-		{nil, nil, &ReplicaSetList{}},
+		{nil, nil, &ReplicaSetList{ReplicaSets: []ReplicaSet{}}},
 		{
 			[]api.ReplicationController{
 				{

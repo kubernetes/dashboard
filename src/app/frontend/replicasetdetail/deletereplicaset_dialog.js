@@ -12,18 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './replicasetdetail_state';
-
 /**
- * Angular module for the Replica Set details view.
- *
- * The view shows detailed view of a Replica Sets.
+ * Opens replica set delete dialog.
+ * @param {!md.$dialog} mdDialog
+ * @param {!function()} deleteReplicaSetFn - callback
  */
-export default angular.module(
-                          'kubernetesDashboard.replicaSetDetail',
-                          [
-                            'ngMaterial',
-                            'ngResource',
-                            'ui.router',
-                          ])
-    .config(stateConfig);
+export default function showDeleteReplicaSetDialog(mdDialog, deleteReplicaSetFn) {
+  mdDialog.show(
+              mdDialog.confirm()
+                  .title('Delete Replica Set')
+                  .textContent(
+                      'All related pods will be deleted. Are you sure you want to' +
+                      ' delete this replica set? ')
+                  .ok('Ok')
+                  .cancel('Cancel'))
+      .then(deleteReplicaSetFn);
+}
