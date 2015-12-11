@@ -15,6 +15,7 @@
 import stateConfig from './deploy_state';
 import deployFromSettingsDirective from './deployfromsettings_directive';
 import deployLabelDirective from './deploylabel_directive';
+import rejectDirective from './reject_directive';
 
 /**
  * Angular module for the deploy view.
@@ -30,4 +31,5 @@ export default angular.module(
                           ])
     .config(stateConfig)
     .directive('deployFromSettings', deployFromSettingsDirective)
-    .directive('kdLabel', deployLabelDirective);
+    .directive('kdLabel', deployLabelDirective)
+    .directive('reject',rejectDirective);

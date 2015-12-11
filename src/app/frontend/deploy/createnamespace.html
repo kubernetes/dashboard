@@ -19,10 +19,21 @@ limitations under the License.
     <h4 class="md-title" >Create a new namespace</h4>
     <p>The new namespace will be added to the cluster.</p>
     <!-- TODO(maciaszczykm): Missing detailed cluster info and learn more link. -->
-    <form id="namespaceForm" ng-submit="ctrl.createNamespace()">
+    <form name="namespaceForm" ng-submit="ctrl.createNamespace()" novalidate>
       <md-input-container class="md-block">
         <label>Namespace name</label>
-        <input ng-model="ctrl.namespace" required>
+        <input name="namespace" ng-model="ctrl.namespace"
+               md-maxlength="{{ctrl.namespaceMaxLength}}"
+               ng-pattern="ctrl.namespacePattern"
+               reject="ctrl.namespaces"
+               required>
+        <div ng-messages="namespaceForm.namespace.$error">
+          <!-- TODO(cheld): better error message -->
+          <div ng-message="pattern">Name must be alphanumeric</div>
+          <div ng-message="md-maxlength">Name is too long</div>
+          <div ng-message="reject">Namespace already exists</div>
+          <div ng-message="required" ng-if="namespaceForm.namespace.$touched">Name is required</div>
+        </div>
       </md-input-container>
       <md-dialog-actions layout="row">
         <md-button ng-disabled="ctrl.isDisabled()" class="md-primary" type="submit">OK</md-button>
