@@ -18,6 +18,9 @@ import ReplicaSetListController from './replicasetlist_controller';
 /** Name of the state. Can be used in, e.g., $state.go method. */
 export const stateName = 'replicasets';
 
+/** Absolute URL of the state. */
+export const stateUrl = '/replicasets';
+
 /**
  * Configures states for the service view.
  *
@@ -28,7 +31,7 @@ export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
     controller: ReplicaSetListController,
     controllerAs: 'ctrl',
-    url: '/replicasets',
+    url: stateUrl,
     resolve: {
       'replicaSets': resolveReplicaSets,
     },

@@ -27,7 +27,7 @@ export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
     controller: ZeroStateController,
     controllerAs: 'ctrl',
-    url: '/',
+    url: '/zerostate',
     templateUrl: 'zerostate/zerostate.html',
   });
 }
