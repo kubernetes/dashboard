@@ -72,7 +72,7 @@ limitations under the License.
                  ng-repeat="service in ctrl.replicaSetDetail.services">
               <div ng-show="service.internalEndpoint">
                 {{service.internalEndpoint}}
-                <i class="material-icons kd-replicasetdetail-sidebar-service-icon">
+                <i class="material-icons kd-replicasetdetail-help-icon">
                   help
                 </i>
               </div>
@@ -80,10 +80,10 @@ limitations under the License.
             </div>
             <span class="kd-replicasetdetail-sidebar-line">External endpoint</span>
             <div class="kd-replicasetdetail-sidebar-subline"
-                ng-repeat="service in ctrl.replicaSetDetail.services">
+                 ng-repeat="service in ctrl.replicaSetDetail.services">
               <div ng-show="service.externalEndpoints">
                 {{service.externalEndpoints}}
-                <i class="material-icons kd-replicasetdetail-sidebar-service-icon">open_in_new</i>
+                <i class="material-icons kd-replicasetdetail-help-icon">open_in_new</i>
               </div>
               <span class="kd-replicasetdetail-sidebar-subline" ng-hide="service.externalEndpoints">
                 none
@@ -97,31 +97,97 @@ limitations under the License.
   <md-tabs flex md-border-bottom md-dynamic-height>
     <md-tab label="Pods">
       <md-content>
-        <table class="kd-replicasetdetail-table" cellspacing="0" cellpadding="15">
+        <table class="kd-replicasetdetail-table" cellspacing="0">
           <thead>
           <tr>
-            <th class="kd-replicasetdetail-table-cell">
-              Pod<i class="material-icons kd-replicasetdetail-table-icon">help</i>
+            <th class="kd-replicasetdetail-table-header">
+              <kd-sorted-header currently-selected-column="ctrl.sortPodsBy"
+                                currently-selected-order="ctrl.podsOrder"
+                                column-name="name">
+                Pod
+              </kd-sorted-header>
             </th>
-            <th class="kd-replicasetdetail-table-cell">
-              Start time<i class="material-icons kd-replicasetdetail-table-icon">help</i>
+            <th class="kd-replicasetdetail-table-header">
+              <kd-sorted-header currently-selected-column="ctrl.sortPodsBy"
+                                currently-selected-order="ctrl.podsOrder"
+                                column-name="restartCount"
+                                tooltip="Restarts count and last restart time of the pod">
+                Restarts
+              </kd-sorted-header>
             </th>
-            <th class="kd-replicasetdetail-table-cell">
-              <i class="material-icons kd-replicasetdetail-table-icon">arrow_downward</i>
-              IP
-              <i class="material-icons kd-replicasetdetail-table-icon">help</i>
+            <th class="kd-replicasetdetail-table-header">
+              <kd-sorted-header currently-selected-column="ctrl.sortPodsBy"
+                                currently-selected-order="ctrl.podsOrder"
+                                column-name="startTime" tooltip="Age of the pod">
+                Age
+              </kd-sorted-header>
             </th>
-            <th class="kd-replicasetdetail-table-cell">
-              Node<i class="material-icons kd-replicasetdetail-table-icon">help</i>
+            <th class="kd-replicasetdetail-table-header">
+              <kd-sorted-header currently-selected-column="ctrl.sortPodsBy"
+                                currently-selected-order="ctrl.podsOrder"
+                                column-name="cpu" tooltip="CPU used by the pod">
+                CPU
+              </kd-sorted-header>
             </th>
+            <th class="kd-replicasetdetail-table-header">
+              <kd-sorted-header currently-selected-column="ctrl.sortPodsBy"
+                                currently-selected-order="ctrl.podsOrder"
+                                column-name="memory" tooltip="Memory used by the pod">
+                Memory
+              </kd-sorted-header>
+            </th>
+            <th class="kd-replicasetdetail-table-header">
+              <kd-sorted-header currently-selected-column="ctrl.sortPodsBy"
+                                currently-selected-order="ctrl.podsOrder"
+                                column-name="podIP" tooltip="IP adress of the pod">
+                IP
+              </kd-sorted-header>
+            </th>
+            <th class="kd-replicasetdetail-table-header">
+              <kd-sorted-header currently-selected-column="ctrl.sortPodsBy"
+                                currently-selected-order="ctrl.podsOrder"
+                                column-name="nodeName"
+                                tooltip="Name of the node, that the pod is running on">
+                Node
+              </kd-sorted-header>
+            </th>
+            <th class="kd-replicasetdetail-table-header">
+              Logs
+              <i class="material-icons kd-replicasetdetail-help-icon">
+                help
+                <md-tooltip>Display logs from the pod</md-tooltip>
+              </i>
+            </th>
+            <th class="kd-replicasetdetail-table-header"/>
           </tr>
           </thead>
           <tbody>
-          <tr ng-repeat="pod in ctrl.replicaSetDetail.pods">
+          <tr ng-repeat="pod in ctrl.replicaSetDetail.pods | orderBy:ctrl.sortPodsBy:ctrl.podsOrder">
             <td class="kd-replicasetdetail-table-cell">{{pod.name}}</td>
-            <td class="kd-replicasetdetail-table-cell">{{pod.startTime | date:'short'}}</td>
+            <td class="kd-replicasetdetail-table-cell">
+              {{pod.restartCount}}<!-- TODO(maciaszczykm): Add info about last restart date. -->
+            </td>
+            <td class="kd-replicasetdetail-table-cell">
+              {{pod.startTime | date:'short'}}<!-- TODO(maciaszczykm): Format data. -->
+            </td>
+            <td class="kd-replicasetdetail-table-cell">
+              0.4 CPU<!-- TODO(maciaszczykm): Fill with data and plot. -->
+            </td>
+            <td class="kd-replicasetdetail-table-cell">
+              12 MB<!-- TODO(maciaszczykm): Fill with data and plot. -->
+            </td>
             <td class="kd-replicasetdetail-table-cell">{{pod.podIP}}</td>
             <td class="kd-replicasetdetail-table-cell">{{pod.nodeName}}</td>
+            <td class="kd-replicasetdetail-table-cell">
+              Logs <i class="material-icons kd-replicasetdetail-logs-icon">arrow_drop_down</i>
+              <!-- TODO(maciaszczykm): Handle it. -->
+            </td>
+            <td class="kd-replicasetdetail-table-cell">
+              <md-button class="md-icon-button">
+                <md-icon md-font-library="material-icons">more_vert</md-icon>
+                <!-- TODO(maciaszczykm): Handle it. -->
+              </md-button>
+            </td>
           </tr>
           </tbody>
         </table>
@@ -152,29 +218,56 @@ limitations under the License.
         <table class="kd-replicasetdetail-table" cellspacing="0" cellpadding="15">
           <thead>
           <tr>
-            <th class="kd-replicasetdetail-table-cell">
-              Message<i class="material-icons kd-replicasetdetail-table-icon">help</i>
+            <th class="kd-replicasetdetail-table-header">
+              <kd-sorted-header currently-selected-column="ctrl.sortEventsBy"
+                                currently-selected-order="ctrl.eventsOrder"
+                                column-name="message" tooltip="Event message">
+                Message
+              </kd-sorted-header>
             </th>
-            <th class="kd-replicasetdetail-table-cell">
-              Source<i class="material-icons kd-replicasetdetail-table-icon">help</i>
+            <th class="kd-replicasetdetail-table-header">
+              <kd-sorted-header currently-selected-column="ctrl.sortEventsBy"
+                                currently-selected-order="ctrl.eventsOrder"
+                                column-name="['sourceComponent','sourceHost']"
+                                tooltip="Source of the event, details of component and host">
+                Source
+              </kd-sorted-header>
             </th>
-            <th class="kd-replicasetdetail-table-cell">
-              Sub-object<i class="material-icons kd-replicasetdetail-table-icon">help</i>
+            <th class="kd-replicasetdetail-table-header">
+              <kd-sorted-header currently-selected-column="ctrl.sortEventsBy"
+                                currently-selected-order="ctrl.eventsOrder"
+                                column-name="object" tooltip="Sub-object of the event">
+                Sub-object
+              </kd-sorted-header>
             </th>
-            <th class="kd-replicasetdetail-table-cell">
-              Count<i class="material-icons kd-replicasetdetail-table-icon">help</i></th>
-            <th class="kd-replicasetdetail-table-cell">
-              First seen<i class="material-icons kd-replicasetdetail-table-icon">help</i>
+            <th class="kd-replicasetdetail-table-header">
+              <kd-sorted-header currently-selected-column="ctrl.sortEventsBy"
+                                currently-selected-order="ctrl.eventsOrder"
+                                column-name="count"
+                                tooltip="Number of times, that the event occured">
+                Count
+              </kd-sorted-header>
             </th>
-            <th class="kd-replicasetdetail-table-cell">
-              <i class="material-icons kd-replicasetdetail-table-icon">arrow_downward</i>
-              Last seen
-              <i class="material-icons kd-replicasetdetail-table-icon">help</i>
+            <th class="kd-replicasetdetail-table-header">
+              <kd-sorted-header currently-selected-column="ctrl.sortEventsBy"
+                                currently-selected-order="ctrl.eventsOrder"
+                                column-name="firstSeen"
+                                tooltip="When the event was seen for the first time">
+                First seen
+              </kd-sorted-header>
+            </th>
+            <th class="kd-replicasetdetail-table-header">
+              <kd-sorted-header currently-selected-column="ctrl.sortEventsBy"
+                                currently-selected-order="ctrl.eventsOrder"
+                                column-name="lastSeen"
+                                tooltip="When the event was seen for the last time">
+                Last seen
+              </kd-sorted-header>
             </th>
           </tr>
           </thead>
           <tbody>
-          <tr ng-repeat="event in ctrl.events">
+          <tr ng-repeat="event in ctrl.events | orderBy:ctrl.sortEventsBy:ctrl.eventsOrder">
             <td class="kd-replicasetdetail-table-cell kd-replicasetdetail-table-message">
               <i ng-if="ctrl.isEventWarning(event)"
                  class="material-icons kd-replicasetdetail-warning-icon">warning</i>

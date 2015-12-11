@@ -12,20 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './replicasetdetail_state';
-import sortedHeaderDirective from './sortedheader_directive';
+import SortedHeaderController from 'replicasetdetail/sortedheader_controller';
 
 /**
- * Angular module for the Replica Set details view.
- *
- * The view shows detailed view of a Replica Sets.
+ * Returns directive definition object for the sorted header directive.
+ * @return {!angular.Directive}
  */
-export default angular.module(
-                          'kubernetesDashboard.replicaSetDetail',
-                          [
-                            'ngMaterial',
-                            'ngResource',
-                            'ui.router',
-                          ])
-    .config(stateConfig)
-    .directive('kdSortedHeader', sortedHeaderDirective);
+export default function sortedHeaderDirective() {
+  return {
+    controller: SortedHeaderController,
+    controllerAs: 'sortCtrl',
+    templateUrl: 'replicasetdetail/sortedheader.html',
+    scope: {},
+    bindToController: {
+      'columnName': '@',
+      'tooltip': '@',
+      'currentlySelectedColumn': '=',
+      'currentlySelectedOrder': '=',
+    },
+    transclude: true,
+  };
+}
