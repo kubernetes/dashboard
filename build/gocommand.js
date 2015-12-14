@@ -98,10 +98,15 @@ function checkGoVersion() {
           deferred.reject(new Error('Go version not found.'));
           return;
         }
-        if (semver.lt(match[0], minGoVersion)) {
+        let currentGoVersion = match[0];
+        // semver requires a patch number, so we'll append '.0' if it isn't present.
+        if (currentGoVersion.split('.').length === 2) {
+          currentGoVersion = `${currentGoVersion}.0`;
+        }
+        if (semver.lt(currentGoVersion, minGoVersion)) {
           deferred.reject(
               new Error(
-                  `The current go version "${match[0]}" is older than ` +
+                  `The current go version "${currentGoVersion}" is older than ` +
                   `the minimum required version "${minGoVersion}". ` +
                   `Please upgrade your go version!`));
           return;
