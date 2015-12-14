@@ -30,7 +30,7 @@ export default function showNamespaceDialog(mdDialog, event, namespaces) {
     targetEvent: event,
     templateUrl: 'deploy/createnamespace.html',
     locals: {
-      namespaces: namespaces,
+      'namespaces': namespaces,
     },
   });
 }
