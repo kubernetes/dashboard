@@ -33,26 +33,14 @@ limitations under the License.
       <div ng-switch="ctrl.selection">
         <deploy-from-settings ng-switch-when="Settings"
                               name="ctrl.name"
-                              namespace="ctrl.namespace"
+                              namespaces="ctrl.namespaces"
                               detail="ctrl.detail">
         </deploy-from-settings>
         <deploy-from-file ng-switch-when="File"
                           name="ctrl.name"
-                          namespace="ctrl.namespace"
                           detail="ctrl.detail">
         </deploy-from-file>
       </div>
-      <md-input-container class="md-block">
-      <label>Namespace</label>
-      <md-select ng-model="ctrl.namespace" required>
-        <md-option ng-repeat="namespace in ctrl.namespaces" ng-value="namespace">
-          {{namespace}}
-        </md-option>
-        <md-option ng-click="ctrl.handleNamespaceDialog($event)">
-          Create a new namespace...
-        </md-option>
-      </md-select>
-    </md-input-container>
       <md-button class="md-raised md-primary" type="submit" ng-disabled="ctrl.isDeployDisabled()">
         Deploy
       </md-button>

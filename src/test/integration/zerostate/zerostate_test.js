@@ -18,7 +18,7 @@ describe('Zero state view', () => {
   let page;
 
   beforeEach(() => {
-    browser.get('/index.html');
+    browser.get('/index.html/#zerostate');
     page = new PageObject();
   });
 

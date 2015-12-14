@@ -15,47 +15,58 @@ limitations under the License.
 -->
 
 <md-input-container class="md-block">
-    <label>Container image</label>
-    <input ng-model="ctrl.containerImage" required>
+  <label>Container image</label>
+  <input ng-model="ctrl.containerImage" required>
 </md-input-container>
 <md-input-container class="md-block">
-    <label>Number of pods</label>
-    <input ng-model="ctrl.replicas" type="number" required min="1">
+  <label>Number of pods</label>
+  <input ng-model="ctrl.replicas" type="number" required min="1">
 </md-input-container>
 <div layout="row" ng-repeat="portMapping in ctrl.portMappings">
-    <md-input-container flex>
-        <label>Port</label>
-        <input ng-model="portMapping.port" type="number" min="0">
-    </md-input-container>
-    <md-input-container flex>
-        <label>Target port</label>
-        <input ng-model="portMapping.targetPort" type="number" min="0">
-    </md-input-container>
-    <md-input-container flex="none">
-        <label>Protocol</label>
-        <md-select ng-model="portMapping.protocol" required>
-            <md-option ng-repeat="protocol in ctrl.protocols" ng-value="protocol">
-                {{protocol}}
-            </md-option>
-        </md-select>
-    </md-input-container>
+  <md-input-container flex>
+    <label>Port</label>
+    <input ng-model="portMapping.port" type="number" min="0">
+  </md-input-container>
+  <md-input-container flex>
+    <label>Target port</label>
+    <input ng-model="portMapping.targetPort" type="number" min="0">
+  </md-input-container>
+  <md-input-container flex="none">
+    <label>Protocol</label>
+    <md-select ng-model="portMapping.protocol" required>
+      <md-option ng-repeat="protocol in ctrl.protocols" ng-value="protocol">
+        {{protocol}}
+      </md-option>
+    </md-select>
+  </md-input-container>
 </div>
 <md-switch ng-model="ctrl.isExternal" class="md-primary">
-    Expose service externally
+  Expose service externally
 </md-switch>
 <md-input-container>
-    <label>Description (optional)</label>
-    <textarea ng-model="ctrl.description"></textarea>
+  <label>Description (optional)</label>
+  <textarea ng-model="ctrl.description"></textarea>
 </md-input-container>
 <div>
-    <div>Labels (optional)</div>
-    <div layout="column">
-        <div layout="row">
-            <p flex>Key</p>
-            <p flex>Value</p>
-        </div>
-        <div ng-repeat="label in ctrl.labels">
-            <kd-label layout="row" flex label="label" labels="ctrl.labels"></kd-label>
-        </div>
+  <div>Labels (optional)</div>
+  <div layout="column">
+    <div layout="row">
+      <p flex>Key</p>
+      <p flex>Value</p>
     </div>
+    <div ng-repeat="label in ctrl.labels">
+      <kd-label layout="row" flex label="label" labels="ctrl.labels"></kd-label>
+    </div>
+  </div>
 </div>
+<md-input-container class="md-block">
+  <label>Namespace</label>
+  <md-select ng-model="ctrl.namespace" required>
+    <md-option ng-repeat="namespace in ctrl.namespaces" ng-value="namespace">
+      {{namespace}}
+    </md-option>
+    <md-option ng-click="ctrl.handleNamespaceDialog($event)">
+      Create a new namespace...
+    </md-option>
+  </md-select>
+</md-input-container>
