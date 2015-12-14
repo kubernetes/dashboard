@@ -19,7 +19,7 @@ limitations under the License.
     <md-input-container class="md-block">
       <label>YAML or JSON file</label>
       <!--TODO: Browse file on focus doesn't work in Firefox. It is to be investigated.-->
-      <input ng-model="ctrl.file.name" ng-focus="ctrl.browseFile()" />
+      <input ng-model="ctrl.file.name" ng-focus="ctrl.browseFile()" ng-readonly="true"/>
       </md-input-container>
   </div>
     <md-button type="button" class="md-raised kd-upload-button" ng-click="ctrl.browseFile()">
