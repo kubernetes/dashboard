@@ -26,8 +26,8 @@ export default function labelDirective() {
     templateUrl: 'deploy/deploylabel.html',
     scope: {},
     bindToController: {
-      label: '=',
-      labels: '=',
+      'label': '=',
+      'labels': '=',
     },
   };
 }

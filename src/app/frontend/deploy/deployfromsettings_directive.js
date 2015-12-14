@@ -22,9 +22,9 @@ export default function deployFromSettingsDirective() {
   return {
     scope: {},
     bindToController: {
-      name: '=',
-      namespace: '=',
-      detail: '=',
+      'name': '=',
+      'namespace': '=',
+      'detail': '=',
     },
     controller: DeployFromSettingsController,
     controllerAs: 'ctrl',
