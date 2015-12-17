@@ -14,59 +14,103 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-input-container class="md-block">
-  <label>Container image</label>
-  <input ng-model="ctrl.containerImage" required>
-</md-input-container>
-<md-input-container class="md-block">
-  <label>Number of pods</label>
-  <input ng-model="ctrl.replicas" type="number" required min="1">
-</md-input-container>
-<div layout="row" ng-repeat="portMapping in ctrl.portMappings">
-  <md-input-container flex>
-    <label>Port</label>
-    <input ng-model="portMapping.port" type="number" min="0">
+<kd-help-section>
+  <md-input-container class="md-block">
+    <label>Container image</label>
+    <input ng-model="ctrl.containerImage" required>
   </md-input-container>
-  <md-input-container flex>
-    <label>Target port</label>
-    <input ng-model="portMapping.targetPort" type="number" min="0">
+  <kd-user-help>
+    Enter the URL of a public image on any registry, or a private image hosted on Docker Hub or Google Container Registry.
+    <a href="">Learn more</a>
+  </kd-user-help>
+</kd-help-section>
+
+<kd-help-section>
+  <md-input-container class="md-block">
+    <label>Number of pods</label>
+    <input ng-model="ctrl.replicas" type="number" required min="1">
   </md-input-container>
-  <md-input-container flex="none">
-    <label>Protocol</label>
-    <md-select ng-model="portMapping.protocol" required>
-      <md-option ng-repeat="protocol in ctrl.protocols" ng-value="protocol">
-        {{protocol}}
+  <kd-user-help>
+    A Replica Set will be created to maintain the desired number of pods across your cluster.
+    <a href="">Learn more</a>
+  </kd-user-help>
+</kd-help-section>
+
+<kd-help-section>
+  <div layout="row" ng-repeat="portMapping in ctrl.portMappings">
+    <md-input-container flex>
+      <label>Port</label>
+      <input ng-model="portMapping.port" type="number" min="0">
+    </md-input-container>
+    <md-input-container flex>
+      <label>Target port</label>
+      <input ng-model="portMapping.targetPort" type="number" min="0">
+    </md-input-container>
+    <md-input-container flex="none">
+      <label>Protocol</label>
+      <md-select ng-model="portMapping.protocol" required>
+        <md-option ng-repeat="protocol in ctrl.protocols" ng-value="protocol">
+          {{protocol}}
+        </md-option>
+      </md-select>
+    </md-input-container>
+  </div>
+  <kd-user-help>
+    Ports are optional. If specified, a Service will be created mapping the Port (incoming) to a target Port seen by the container.
+    <span ng-if="ctrl.name">The internal DNS name for this Service will be: <b>{{ctrl.name}}</b>.</span>
+    <a href="">Learn more</a>
+  </kd-user-help>
+</kd-help-section>
+
+<kd-help-section>
+  <md-switch ng-model="ctrl.isExternal" class="md-primary">
+    Expose service externally
+  </md-switch>
+</kd-help-section>
+
+<kd-help-section>
+  <md-input-container>
+    <label>Description (optional)</label>
+    <textarea ng-model="ctrl.description"></textarea>
+  </md-input-container>
+  <kd-user-help>
+    The description will be added as an annotation to the Replica Set and displayed in the application's details.
+  </kd-user-help>
+</kd-help-section>
+
+<kd-help-section>
+  <div>
+    <div>Labels (optional)</div>
+    <div layout="column">
+      <div layout="row">
+        <p flex>Key</p>
+        <p flex>Value</p>
+      </div>
+      <div ng-repeat="label in ctrl.labels">
+        <kd-label layout="row" flex label="label" labels="ctrl.labels"></kd-label>
+      </div>
+    </div>
+  </div>
+  <kd-user-help>
+    The specified labels will be applied to the created Replica Set, Service (if any) and Pods. Common labels include release, environment, tier, partition and track.
+    <a href="">Learn more</a>
+  </kd-user-help>
+</kd-help-section>
+
+<kd-help-section>
+  <md-input-container class="md-block">
+    <label>Namespace</label>
+    <md-select ng-model="ctrl.namespace" required>
+      <md-option ng-repeat="namespace in ctrl.namespaces" ng-value="namespace">
+        {{namespace}}
+      </md-option>
+      <md-option ng-click="ctrl.handleNamespaceDialog($event)">
+        Create a new namespace...
       </md-option>
     </md-select>
   </md-input-container>
-</div>
-<md-switch ng-model="ctrl.isExternal" class="md-primary">
-  Expose service externally
-</md-switch>
-<md-input-container>
-  <label>Description (optional)</label>
-  <textarea ng-model="ctrl.description"></textarea>
-</md-input-container>
-<div>
-  <div>Labels (optional)</div>
-  <div layout="column">
-    <div layout="row">
-      <p flex>Key</p>
-      <p flex>Value</p>
-    </div>
-    <div ng-repeat="label in ctrl.labels">
-      <kd-label layout="row" flex label="label" labels="ctrl.labels"></kd-label>
-    </div>
-  </div>
-</div>
-<md-input-container class="md-block">
-  <label>Namespace</label>
-  <md-select ng-model="ctrl.namespace" required>
-    <md-option ng-repeat="namespace in ctrl.namespaces" ng-value="namespace">
-      {{namespace}}
-    </md-option>
-    <md-option ng-click="ctrl.handleNamespaceDialog($event)">
-      Create a new namespace...
-    </md-option>
-  </md-select>
-</md-input-container>
+  <kd-user-help>
+    Namespaces let you partition resources into logically named groups.
+    <a href="">Learn more</a>
+  </kd-user-help>
+</kd-help-section>

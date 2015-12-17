@@ -57,13 +57,13 @@ $replicasetdetails-warning: orange;
 .kd-replicasetdetail-sidebar-line {
   padding-bottom: 6px;
   font-size: 11px;
-  color: $line
+  color: $delicate;
 }
 
 .kd-replicasetdetail-sidebar-subline {
   padding-bottom: 8px;
   font-size: 13px;
-  color: $subline
+  color: $muted;
 }
 
 .kd-replicasetdetail-sidebar-icon {
@@ -81,7 +81,7 @@ $replicasetdetails-warning: orange;
 }
 
 .kd-replicasetdetail-sidebar-service-icon {
-  color: $subline;
+  color: $muted;
   padding: 0 3px 0 3px;
   vertical-align: top;
   font-size: 14px;

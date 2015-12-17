@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// TODO(floreks): Find appropriate place for global color definitions.
-$primary: #326DE6;
-$delicate: #AAAAAA;
-$muted: #888888;
-$hoverPrimary: #1254DF;
+// This rule is meant to align items only in the current layout (kd-help-section).
+.kd-help-section > * {
+  flex: 1;
+  padding-right: 50px;
+  margin-bottom: 20px;
+}

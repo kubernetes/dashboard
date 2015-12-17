@@ -12,8 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// TODO(floreks): Find appropriate place for global color definitions.
-$primary: #326DE6;
-$delicate: #AAAAAA;
-$muted: #888888;
-$hoverPrimary: #1254DF;
+/**
+ * Returns a directive definition object for sections with help.
+ * @return {!angular.Directive} the directive definition
+ */
+export default function() {
+  return {
+    scope: {},
+    templateUrl: 'deploy/helpsection/helpsection.html',
+    transclude: true,
+  };
+}

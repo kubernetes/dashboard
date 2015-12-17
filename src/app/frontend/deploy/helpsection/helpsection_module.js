@@ -12,8 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// TODO(floreks): Find appropriate place for global color definitions.
-$primary: #326DE6;
-$delicate: #AAAAAA;
-$muted: #888888;
-$hoverPrimary: #1254DF;
+import helpSectionDirective from './helpsection_directive';
+import userHelpDirective from './userhelp_directive';
+
+/**
+ * Angular module for a reusable section with user help and a preset layout.
+ *
+ */
+export default angular.module('kubernetesDashboard.helpsection', [])
+    .directive('kdHelpSection', helpSectionDirective)
+    .directive('kdUserHelp', userHelpDirective);
