@@ -17,13 +17,17 @@ import deployModule from 'deploy/deploy_module';
 import DeployLabel from 'deploy/deploylabel';
 
 describe('DeployFromSettings controller', () => {
+  /** @type {!DeployFromSettingController} */
   let ctrl;
+  /** @type {!angular.$resource} */
+  let mockResource;
 
   beforeEach(() => {
     angular.mock.module(deployModule.name);
 
     angular.mock.inject(($controller) => {
-      ctrl = $controller(DeployFromSettingController, {}, {namespaces: []});
+      mockResource = jasmine.createSpy('$resource');
+      ctrl = $controller(DeployFromSettingController, {$resource: mockResource}, {namespaces: []});
     });
   });
 
@@ -103,5 +107,54 @@ describe('DeployFromSettings controller', () => {
     ];
 
     expect(result).toEqual(expected);
+  });
+
+  it('should deploy empty description and container commands as nulls', () => {
+    // given
+    let resourceObject = {
+      save: jasmine.createSpy('save'),
+    };
+    mockResource.and.returnValue(resourceObject);
+    resourceObject.save.and.callFake(function(spec) {
+      // then
+      expect(spec.containerCommand).toBeNull();
+      expect(spec.containerCommandArgs).toBeNull();
+      expect(spec.description).toBeNull();
+    });
+    ctrl.labels = [
+      new DeployLabel('key1', 'val1'),
+    ];
+
+    // when
+    ctrl.deploy();
+
+    // then
+    expect(resourceObject.save).toHaveBeenCalled();
+  });
+
+  it('should deploy non empty description and container commands', () => {
+    // given
+    let resourceObject = {
+      save: jasmine.createSpy('save'),
+    };
+    mockResource.and.returnValue(resourceObject);
+    resourceObject.save.and.callFake(function(spec) {
+      // then
+      expect(spec.containerCommand).toBe('command');
+      expect(spec.containerCommandArgs).toBe('commandArgs');
+      expect(spec.description).toBe('desc');
+    });
+    ctrl.labels = [
+      new DeployLabel('key1', 'val1'),
+    ];
+    ctrl.containerCommand = 'command';
+    ctrl.containerCommandArgs = 'commandArgs';
+    ctrl.description = 'desc';
+
+    // when
+    ctrl.deploy();
+
+    // then
+    expect(resourceObject.save).toHaveBeenCalled();
   });
 });

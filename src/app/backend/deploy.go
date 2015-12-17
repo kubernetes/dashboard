@@ -32,6 +32,13 @@ type AppDeploymentSpec struct {
 	// Docker image path for the application.
 	ContainerImage string `json:"containerImage"`
 
+	// Command that is executed instead of container entrypoint, if specified.
+	ContainerCommand *string `json:"containerCommand"`
+
+	// Arguments for the specified container command or container entrypoint (if command is not
+	// specified here).
+	ContainerCommandArgs *string `json:"containerCommandArgs"`
+
 	// Number of replicas of the image to maintain.
 	Replicas int `json:"replicas"`
 
@@ -43,7 +50,7 @@ type AppDeploymentSpec struct {
 	IsExternal bool `json:"isExternal"`
 
 	// Description of the deployment.
-	Description string `json:"description"`
+	Description *string `json:"description"`
 
 	// Target namespace of the application.
 	Namespace string `json:"namespace"`
@@ -77,8 +84,11 @@ type Label struct {
 // App deployment consists of a replication controller and an optional service. Both of them share
 // common labels.
 // TODO(bryk): Write tests for this function.
-func DeployApp(spec *AppDeploymentSpec, client *client.Client) error {
-	annotations := map[string]string{DescriptionAnnotationKey: spec.Description}
+func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
+	annotations := map[string]string{}
+	if spec.Description != nil {
+		annotations[DescriptionAnnotationKey] = *spec.Description
+	}
 	labels := getLabelsMap(spec.Labels)
 	objectMeta := api.ObjectMeta{
 		Annotations: annotations,
@@ -86,13 +96,23 @@ func DeployApp(spec *AppDeploymentSpec, client *client.Client) error {
 		Labels:      labels,
 	}
 
+	containerSpec := api.Container{
+		Name:  spec.Name,
+		Image: spec.ContainerImage,
+	}
+
+	if spec.ContainerCommand != nil {
+		containerSpec.Command = []string{*spec.ContainerCommand}
+	}
+
+	if spec.ContainerCommandArgs != nil {
+		containerSpec.Args = []string{*spec.ContainerCommandArgs}
+	}
+
 	podTemplate := &api.PodTemplateSpec{
 		ObjectMeta: objectMeta,
 		Spec: api.PodSpec{
-			Containers: []api.Container{{
-				Name:  spec.Name,
-				Image: spec.ContainerImage,
-			}},
+			Containers: []api.Container{containerSpec},
 		},
 	}
 

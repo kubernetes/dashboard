@@ -114,3 +114,22 @@ limitations under the License.
     <a href="">Learn more</a>
   </kd-user-help>
 </kd-help-section>
+
+<kd-help-section>
+  <div>
+    <md-input-container class="md-block">
+      <label>Run command (optional)</label>
+      <input ng-model="ctrl.containerCommand">
+    </md-input-container>
+
+    <md-input-container class="md-block">
+      <label>Run command arguments (optional)</label>
+      <input ng-model="ctrl.containerCommandArgs">
+    </md-input-container>
+  </div>
+  <kd-user-help>
+    By default, your containers run the selected image's default entrypoint command. You can use the
+    command options to override the default. 
+    <a href="">Learn more</a>
+  </kd-user-help>
+</kd-help-section>

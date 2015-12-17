@@ -45,6 +45,12 @@ export default class DeployFromSettingsController {
     /** @export {string} */
     this.containerImage = '';
 
+    /** @export {string} */
+    this.containerCommand = '';
+
+    /** @export {string} */
+    this.containerCommandArgs = '';
+
     /** @export {number} */
     this.replicas = 1;
 
@@ -112,9 +118,11 @@ export default class DeployFromSettingsController {
     /** @type {!backendApi.AppDeploymentSpec} */
     let appDeploymentSpec = {
       containerImage: this.containerImage,
+      containerCommand: this.containerCommand ? this.containerCommand : null,
+      containerCommandArgs: this.containerCommandArgs ? this.containerCommandArgs : null,
       isExternal: this.isExternal,
       name: this.name,
-      description: this.description,
+      description: this.description ? this.description : null,
       portMappings: this.portMappings.filter(this.isPortMappingEmpty_),
       replicas: this.replicas,
       namespace: this.namespace,
