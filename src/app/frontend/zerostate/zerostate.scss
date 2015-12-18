@@ -12,6 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+@import "../../assets/styles/color_variables";
+
+.kd-content {
+  background-color: $body;
+}
+
 .kd-zerostate-content {
   position: fixed;
   height: 90%;
