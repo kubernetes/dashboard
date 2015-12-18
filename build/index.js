@@ -57,11 +57,13 @@ function createIndexFile(indexPath) {
 /**
  * Creates frontend application index file with development dependencies injected.
  */
-gulp.task('index', ['scripts', 'styles'], function() { return createIndexFile(conf.paths.serve); });
+gulp.task('index', ['scripts', 'styles', 'soy-templates'], function() {
+  return createIndexFile(conf.paths.serve);
+});
 
 /**
  * Creates frontend application index file with production dependencies injected.
  */
-gulp.task('index:prod', ['scripts:prod', 'styles:prod'], function() {
+gulp.task('index:prod', ['scripts:prod', 'styles:prod', 'soy-templates:prod'], function() {
   return createIndexFile(conf.paths.prodTmp);
 });

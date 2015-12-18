@@ -24,12 +24,14 @@ describe('DeployFromSettings controller', () => {
   let mockResource;
   /** @type {!angular.FormController} */
   let form;
+  /** @type {!angular.Service} */
+  let i18nServiceMock;
 
   beforeEach(() => {
     angular.mock.module(deployModule.name);
-
     angular.mock.inject(($controller) => {
       mockResource = jasmine.createSpy('$resource');
+
       form = {
         $submitted: false,
         name: {
@@ -40,8 +42,15 @@ describe('DeployFromSettings controller', () => {
           },
         },
       };
+
+      i18nServiceMock = {
+        deploy: {userhelp: {appName: () => { return {content: 'App name help message mock'}; }}},
+      };
       ctrl = $controller(
-          DeployFromSettingController, {$resource: mockResource}, {namespaces: [], form: form});
+          DeployFromSettingController, {$resource: mockResource, i18n: i18nServiceMock}, {
+            namespaces: [],
+            form: form,
+          });
     });
   });
 

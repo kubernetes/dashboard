@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file original="SoyMsgBundle" datatype="x-soy-msg-bundle" xml:space="preserve" source-language="en">
+    <body>
+      <trans-unit id="2003907952879960636" datatype="html">
+        <source>An 'app' label with this value will be added to the Replica Set and Service that get deployed.</source>
+        <note priority="1" from="description">Explains the purpose of the app name field in the deploy form</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

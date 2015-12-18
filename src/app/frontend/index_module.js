@@ -19,6 +19,7 @@
 import chromeModule from './chrome/chrome_module';
 import deployModule from './deploy/deploy_module';
 import errorModule from './error/error_module';
+import i18n from './i18n/i18n_service';
 import indexConfig from './index_config';
 import routeConfig from './index_route';
 import logsModule from './logs/logs_module';
@@ -43,4 +44,5 @@ export default angular.module(
                             replicaSetListModule.name,
                           ])
     .config(indexConfig)
-    .config(routeConfig);
+    .config(routeConfig)
+    .factory('i18n', i18n);
