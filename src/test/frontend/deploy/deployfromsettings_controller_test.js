@@ -157,4 +157,18 @@ describe('DeployFromSettings controller', () => {
     // then
     expect(resourceObject.save).toHaveBeenCalled();
   });
+
+  it('should hide more options by default', () => {
+    // this is default behavior so no given/when
+    // then
+    expect(ctrl.isMoreOptionsEnabled()).toBeFalsy();
+  });
+
+  it('should show more options after switch', () => {
+    // when
+    ctrl.switchMoreOptions();
+
+    // then
+    expect(ctrl.isMoreOptionsEnabled()).toBeTruthy();
+  });
 });

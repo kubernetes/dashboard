@@ -42,6 +42,9 @@ export default class DeployFromSettingsController {
      */
     this.detail = this;
 
+    /** @private {boolean} */
+    this.showMoreOptions_ = false;
+
     /** @export {string} */
     this.containerImage = '';
 
@@ -232,4 +235,17 @@ export default class DeployFromSettingsController {
    * @private
    */
   getName_() { return this.name; }
+
+  /**
+   * Returns true if more options have been enabled and should be shown, false otherwise.
+   * @return {boolean}
+   * @export
+   */
+  isMoreOptionsEnabled() { return this.showMoreOptions_; }
+
+  /**
+   * Shows or hides more options.
+   * @export
+   */
+  switchMoreOptions() { this.detail.showMoreOptions_ = !this.detail.showMoreOptions_; }
 }
