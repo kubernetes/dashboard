@@ -15,7 +15,7 @@
 import DeployController from 'deploy/deploy_controller';
 import DeployFromSettingController from 'deploy/deployfromsettings_controller';
 import deployModule from 'deploy/deploy_module';
-import {stateName as zerostate} from 'zerostate/zerostate_state';
+import {stateName as replicasets} from 'replicasetlist/replicasetlist_state';
 
 describe('Deploy controller', () => {
   /** @type {!DeployController} */
@@ -57,7 +57,7 @@ describe('Deploy controller', () => {
     expect(result).toBeFalsy();
   });
 
-  it('should change state to zerostate view on cancel', () => {
+  it('should change state to replica set list view on cancel', () => {
     // given
     spyOn(state, 'go');
 
@@ -65,6 +65,6 @@ describe('Deploy controller', () => {
     ctrl.cancel();
 
     // then
-    expect(state.go).toHaveBeenCalledWith(zerostate);
+    expect(state.go).toHaveBeenCalledWith(replicasets);
   });
 });
