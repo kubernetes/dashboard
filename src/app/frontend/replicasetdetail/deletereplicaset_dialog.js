@@ -22,8 +22,8 @@ export default function showDeleteReplicaSetDialog(mdDialog, deleteReplicaSetFn)
               mdDialog.confirm()
                   .title('Delete Replica Set')
                   .textContent(
-                      'All related pods will be deleted. Are you sure you want to' +
-                      ' delete this replica set? ')
+                      'All related pods will be deleted. Are you sure you want to delete this' +
+                      ' replica set? ')
                   .ok('Ok')
                   .cancel('Cancel'))
       .then(deleteReplicaSetFn);

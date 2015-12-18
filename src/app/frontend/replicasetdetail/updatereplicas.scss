@@ -12,15 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import PageObject from './zerostate_po';
-
-describe('Zero state view', () => {
-  let page;
-
-  beforeEach(() => {
-    browser.get('#/zerostate');
-    page = new PageObject();
-  });
-
-  it('should do something', () => { expect(page.deployButton.getText()).toContain('DEPLOY'); });
-});
+.kd-updatereplicas-pod-status {
+  font-size: 14px;
+}

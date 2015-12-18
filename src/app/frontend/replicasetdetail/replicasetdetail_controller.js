@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import showDeleteReplicaSetDialog from 'replicasetdetail/deletereplicaset_dialog';
+import showUpdateReplicasDialog from 'replicasetdetail/updatereplicas_dialog';
 
 // Filter type and source values for events.
 const EVENT_ALL = 'All';
@@ -34,11 +35,12 @@ export default class ReplicaSetDetailController {
    * @param {!backendApi.ReplicaSetDetail} replicaSetDetail
    * @param {!backendApi.Events} replicaSetEvents
    * @param {!angular.Resource<!backendApi.ReplicaSetDetail>} replicaSetDetailResource
+   * @param {!angular.Resource<!backendApi.ReplicaSetSpec>} replicaSetSpecPodsResource
    * @ngInject
    */
   constructor(
       $mdDialog, $state, $resource, $log, replicaSetDetail, replicaSetEvents,
-      replicaSetDetailResource) {
+      replicaSetDetailResource, replicaSetSpecPodsResource) {
     /** @export {!backendApi.ReplicaSetDetail} */
     this.replicaSetDetail = replicaSetDetail;
 
@@ -47,6 +49,9 @@ export default class ReplicaSetDetailController {
 
     /** @private {!angular.Resource<!backendApi.ReplicaSetDetail>} */
     this.replicaSetDetailResource_ = replicaSetDetailResource;
+
+    /** @private {!angular.Resource<!backendApi.ReplicaSetSpec>} */
+    this.replicaSetSpecPodsResource_ = replicaSetSpecPodsResource;
 
     /** @export !Array<!backendApi.Event> */
     this.events = replicaSetEvents.events;
@@ -143,6 +148,15 @@ export default class ReplicaSetDetailController {
   }
 
   /**
+   * Handles update of replicas count in replica set dialog.
+   * @export
+   */
+  handleUpdateReplicasDialog() {
+    showUpdateReplicasDialog(
+        this.mdDialog_, this.replicaSetDetail, this.updateReplicas_.bind(this));
+  }
+
+  /**
    * Handles replica set delete dialog.
    * @export
    */
@@ -154,6 +168,23 @@ export default class ReplicaSetDetailController {
    * Callbacks used after clicking dialog confirmation button in order to delete replica set
    * or log unsuccessful operation error.
    */
+
+  /**
+   * Updates replicas count in replica set
+   * @param {number} replicasCount
+   * @param {function(!backendApi.ReplicaSetSpec)=} opt_callback
+   * @param {function(!angular.$http.Response)=} opt_errback
+   * @private
+   */
+  updateReplicas_(replicasCount, opt_callback, opt_errback) {
+    /** @type {!backendApi.ReplicaSetSpec} */
+    let replicaSetSpec = {
+      replicas: replicasCount,
+    };
+
+    this.replicaSetSpecPodsResource_.save(replicaSetSpec, opt_callback, opt_errback);
+    // TODO(floreks): Think about refreshing data on this page after update.
+  }
 
   /**
    * Deletes replica set based on current replica set namespace and name.

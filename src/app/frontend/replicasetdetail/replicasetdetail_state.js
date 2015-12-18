@@ -50,6 +50,7 @@ export default function stateConfig($stateProvider) {
     url: '/replicasets/:namespace/:replicaSet',
     templateUrl: 'replicasetdetail/replicasetdetail.html',
     resolve: {
+      'replicaSetSpecPodsResource': getReplicaSetSpecPodsResource,
       'replicaSetDetailResource': getReplicaSetDetailsResource,
       'replicaSetDetail': resolveReplicaSetDetails,
       'replicaSetEvents': resolveReplicaSetEvents,
@@ -58,7 +59,6 @@ export default function stateConfig($stateProvider) {
 }
 
 /**
- *
  * @param {!StateParams} $stateParams
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource<!backendApi.ReplicaSetDetail>}
@@ -66,6 +66,16 @@ export default function stateConfig($stateProvider) {
  */
 function getReplicaSetDetailsResource($stateParams, $resource) {
   return $resource('/api/replicasets/:namespace/:replicaSet', $stateParams);
+}
+
+/**
+ * @param {!StateParams} $stateParams
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource<!backendApi.ReplicaSetSpec>}
+ * @ngInject
+ */
+function getReplicaSetSpecPodsResource($stateParams, $resource) {
+  return $resource('/api/replicasets/:namespace/:replicaSet/update/pods', $stateParams);
 }
 
 /**
