@@ -43,6 +43,21 @@ export default class NamespaceDialogController {
 
     /** @export {string} */
     this.namespace = '';
+
+    /**
+     * Max-length validation rule for namespace
+     * @export {number}
+     */
+    this.namespaceMaxLength = 63;
+
+    /**
+     * Pattern validation rule for namespace
+     * @export {RegExp}
+     */
+    this.namespacePattern = new RegExp('^[a-z0-9]([-a-z0-9]*[a-z0-9])?$');
+
+    /** @export {!angular.FormController} */
+    this.namespaceForm;
   }
 
   /**
@@ -50,10 +65,7 @@ export default class NamespaceDialogController {
    * @return {boolean}
    * @export
    */
-  isDisabled() {
-    return !this.namespace || /^\s*$/.test(!this.namespace) ||
-           this.namespaces.indexOf(this.namespace) >= 0;
-  }
+  isDisabled() { return this.namespaces.indexOf(this.namespace) >= 0; }
 
   /**
    * Cancels the new namespace form.
@@ -66,6 +78,8 @@ export default class NamespaceDialogController {
    * @export
    */
   createNamespace() {
+    if (!this.namespaceForm.$valid) return;
+
     /** @type {!backendApi.NamespaceSpec} */
     let namespaceSpec = {name: this.namespace};
 
