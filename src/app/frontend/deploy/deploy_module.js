@@ -18,6 +18,7 @@ import deployLabelDirective from './deploylabel_directive';
 import deployFromFileDirective from './deployfromfile_directive';
 import fileReaderDirective from './filereader_directive';
 import uploadDirective from './upload_directive';
+import helpSectionModule from './helpsection/helpsection_module';
 
 /**
  * Angular module for the deploy view.
@@ -30,6 +31,7 @@ export default angular.module(
                             'ngMaterial',
                             'ngResource',
                             'ui.router',
+                            helpSectionModule.name,
                           ])
     .config(stateConfig)
     .directive('deployFromSettings', deployFromSettingsDirective)

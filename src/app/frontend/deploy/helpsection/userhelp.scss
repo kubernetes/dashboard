@@ -11,9 +11,22 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+@import "../../../assets/styles/color_variables";
 
-// TODO(floreks): Find appropriate place for global color definitions.
-$primary: #326DE6;
-$delicate: #AAAAAA;
-$muted: #888888;
-$hoverPrimary: #1254DF;
+.kd-user-help * {
+  color: $muted;
+}
+
+.kd-user-help a {
+  color: $primary;
+  opacity: 1;
+  text-decoration: none;
+}
+
+.kd-user-help b {
+  color: black;
+}
+
+.kd-user-help a:hover {
+  color: $hoverPrimary;
+}
