@@ -65,6 +65,9 @@ type ReplicaSetPod struct {
 
 	// Name of the Node this Pod runs on.
 	NodeName string `json:"nodeName"`
+
+	// Count of containers restarts.
+	RestartCount int `json:"restartCount"`
 }
 
 // Detailed information about a Service connected to Replica Set.
@@ -130,10 +133,11 @@ func GetReplicaSetDetail(client *client.Client, namespace string, name string) (
 
 	for _, pod := range pods.Items {
 		podDetail := ReplicaSetPod{
-			Name:      pod.Name,
-			StartTime: pod.Status.StartTime,
-			PodIP:     pod.Status.PodIP,
-			NodeName:  pod.Spec.NodeName,
+			Name:         pod.Name,
+			StartTime:    pod.Status.StartTime,
+			PodIP:        pod.Status.PodIP,
+			NodeName:     pod.Spec.NodeName,
+			RestartCount: getRestartCount(pod),
 		}
 		replicaSetDetail.Pods = append(replicaSetDetail.Pods, podDetail)
 	}
@@ -197,4 +201,13 @@ func getServiceDetail(service api.Service) ServiceDetail {
 	}
 
 	return serviceDetail
+}
+
+// Gets restart count of given pod (total number of its containers restarts).
+func getRestartCount(pod api.Pod) int {
+	restartCount := 0
+	for _, containerStatus := range pod.Status.ContainerStatuses {
+		restartCount += containerStatus.RestartCount
+	}
+	return restartCount
 }

@@ -80,13 +80,6 @@ $replicasetdetails-warning: orange;
   font-size: 24px;
 }
 
-.kd-replicasetdetail-sidebar-service-icon {
-  color: $muted;
-  padding: 0 3px 0 3px;
-  vertical-align: top;
-  font-size: 14px;
-}
-
 .kd-replicasetdetail-sidebar-button {
   padding-left: 0;
   margin: 0;
@@ -114,12 +107,26 @@ $replicasetdetails-warning: orange;
   padding-right: 25px;
 }
 
+.kd-replicasetdetail-table-header {
+  text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+  color: $replicasetdetails-table-cell;
+  border-bottom: 1px solid $replicasetdetails-border;
+  padding: 15px 10px 15px 15px;
+}
+
+.kd-replicasetdetail-pointer {
+  cursor: pointer;
+}
 
 .kd-replicasetdetail-table-cell {
   text-align: left;
   color: $replicasetdetails-table-cell;
   font-size: 13px;
   border-bottom: 1px solid $replicasetdetails-border;
+  height: 40px;
+  padding: 5px 5px 5px 15px;
 }
 
 .kd-replicasetdetail-table-message {
@@ -133,4 +140,12 @@ $replicasetdetails-warning: orange;
   font-size: 14px;
   padding: 0 3px 0 3px;
   vertical-align: top;
+}
+
+.kd-replicasetdetail-help-icon {
+  font-size: 14px;
+  padding: 0 3px 0 3px;
+  vertical-align: middle;
+  cursor: help;
+  color: $muted;
 }

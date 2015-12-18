@@ -122,7 +122,8 @@ backendApi.ReplicaSetSpec;
  *   name: string,
  *   startTime: ?string,
  *   podIP: string,
- *   nodeName: string
+ *   nodeName: string,
+ *   restartCount: number
  * }}
  */
 backendApi.ReplicaSetPod;

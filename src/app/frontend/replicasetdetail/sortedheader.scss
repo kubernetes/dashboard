@@ -12,20 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './replicasetdetail_state';
-import sortedHeaderDirective from './sortedheader_directive';
+@import "../../assets/styles/color_variables";
 
-/**
- * Angular module for the Replica Set details view.
- *
- * The view shows detailed view of a Replica Sets.
- */
-export default angular.module(
-                          'kubernetesDashboard.replicaSetDetail',
-                          [
-                            'ngMaterial',
-                            'ngResource',
-                            'ui.router',
-                          ])
-    .config(stateConfig)
-    .directive('kdSortedHeader', sortedHeaderDirective);
+$sortedheader-font-size: 14px;
+
+.kd-sortedheader-pointer {
+  cursor: pointer;
+}
+
+.kd-sortedheader-help-icon {
+  font-size: $sortedheader-font-size;
+  padding: 0 3px 0 3px;
+  vertical-align: text-top;
+  cursor: help;
+  color: $muted;
+  height: $sortedheader-font-size;
+  width: $sortedheader-font-size;
+}
+
+.kd-sortedheader-sort-icon {
+  font-size: $sortedheader-font-size;
+  padding: 0 3px 0 3px;
+  vertical-align: text-top;
+  height: $sortedheader-font-size;
+  width: $sortedheader-font-size;
+}

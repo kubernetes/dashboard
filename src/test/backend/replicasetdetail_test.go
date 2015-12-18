@@ -17,6 +17,7 @@ package main
 import (
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
+	"reflect"
 	"testing"
 )
 
@@ -65,5 +66,52 @@ func TestUpdateReplicasCount(t *testing.T) {
 			}
 		}
 
+	}
+}
+
+func TestGetRestartCount(t *testing.T) {
+	cases := []struct {
+		pod      api.Pod
+		expected int
+	}{
+		{
+			api.Pod{}, 0,
+		},
+		{
+			api.Pod{
+				Status: api.PodStatus{
+					ContainerStatuses: []api.ContainerStatus{
+						{
+							Name:         "container-1",
+							RestartCount: 1,
+						},
+					},
+				},
+			},
+			1,
+		},
+		{
+			api.Pod{
+				Status: api.PodStatus{
+					ContainerStatuses: []api.ContainerStatus{
+						{
+							Name:         "container-1",
+							RestartCount: 3,
+						},
+						{
+							Name:         "container-2",
+							RestartCount: 2,
+						},
+					},
+				},
+			},
+			5,
+		},
+	}
+	for _, c := range cases {
+		actual := getRestartCount(c.pod)
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("AppendEvents(%#v) == %#v, expected %#v", c.pod, actual, c.expected)
+		}
 	}
 }

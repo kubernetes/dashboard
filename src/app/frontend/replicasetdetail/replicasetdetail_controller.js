@@ -14,6 +14,7 @@
 
 import showDeleteReplicaSetDialog from 'replicasetdetail/deletereplicaset_dialog';
 import showUpdateReplicasDialog from 'replicasetdetail/updatereplicas_dialog';
+import {UPWARDS, DOWNWARDS} from 'replicasetdetail/sortedheader_controller';
 
 // Filter type and source values for events.
 const EVENT_ALL = 'All';
@@ -79,6 +80,30 @@ export default class ReplicaSetDetailController {
 
     /** @private {!angular.$log} */
     this.log_ = $log;
+
+    /**
+     * Name of column, that will be used for pods sorting.
+     * @export {string}
+     */
+    this.sortPodsBy = 'name';
+
+    /**
+     * Pods sorting order.
+     * @export {boolean}
+     */
+    this.podsOrder = UPWARDS;
+
+    /**
+     * Name of column, that will be used for events sorting.
+     * @export {string}
+     */
+    this.sortEventsBy = 'lastSeen';
+
+    /**
+     * Events sorting order.
+     * @export {boolean}
+     */
+    this.eventsOrder = DOWNWARDS;
   }
 
   /**
