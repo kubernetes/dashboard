@@ -1,0 +1,100 @@
+# Copyright 2025 Google Inc. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Configuration file for sass linter.
+# Schema can be found at: https://github.com/sasstools/sass-lint/blob/develop/docs/sass-lint.yml
+
+options:
+  formatter: stylish
+
+rules:
+  # Extends
+  extends-before-mixins: 2
+  extends-before-declarations: 2
+  placeholder-in-extend: 2
+
+  # Mixins
+  mixins-before-declarations: 2
+
+  # Line Spacing
+  one-declaration-per-line: 2
+  empty-line-between-blocks: 2
+  single-line-per-selector: 2
+
+  # Disallows
+  no-color-keywords: 2
+  no-color-literals: 2
+  no-css-comments: 2
+  no-debug: 2
+  no-duplicate-properties: 2
+  no-empty-rulesets: 2
+  no-extends: 0
+  no-ids: 2
+  no-important: 2
+  no-invalid-hex: 2
+  no-mergeable-selectors: 2
+  no-misspelled-properties: 2
+  no-qualifying-elements: 2
+  no-trailing-zero: 2
+  no-transition-all: 2
+  # Disabled because the project includes external fonts.
+  no-url-protocols: 0
+  no-vendor-prefixes: 2
+  no-warn: 2
+  property-units: 2
+
+  # Nesting
+  force-attribute-nesting: 2
+  force-element-nesting: 2
+  force-pseudo-nesting: 2
+
+  # Name Formats
+  class-name-format: 2
+  function-name-format: 2
+  id-name-format: 0
+  mixin-name-format: 2
+  placeholder-name-format: 2
+  variable-name-format: 2
+
+  # Style Guide
+  bem-depth: 0
+  border-zero: 2
+  brace-style: 2
+  clean-import-paths: 2
+  empty-args: 2
+  hex-length: 2
+  hex-notation: 2
+  indentation: 2
+  leading-zero: 2
+  nesting-depth: 2
+  property-sort-order: 2
+  quotes: 2
+  shorthand-values: 2
+  url-quotes: 2
+  variable-for-property: 2
+  zero-unit: 2
+
+  # Inner Spacing
+  space-after-comma: 2
+  space-before-colon: 2
+  space-after-colon: 2
+  space-before-brace: 2
+  space-before-bang: 2
+  space-after-bang: 2
+  space-between-parens: 2
+  space-around-operator: 2
+
+  # Final Items
+  trailing-semicolon: 2
+  final-newline: 2

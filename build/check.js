@@ -18,6 +18,7 @@
 import gulp from 'gulp';
 import gulpClangFormat from 'gulp-clang-format';
 import gulpEslint from 'gulp-eslint';
+import gulpSassLint from 'gulp-sass-lint';
 import runSequence from 'run-sequence';
 import path from 'path';
 
@@ -50,7 +51,7 @@ gulp.task('check:create-cluster', function() {
  * Lints all projects code files.
  * // TODO(bryk): Also lint Go files here.
  */
-gulp.task('lint', ['lint-javascript', 'check-javascript-format']);
+gulp.task('lint', ['lint-javascript', 'check-javascript-format', 'lint-styles']);
 
 /**
  * Lints all projects JavaScript files using ESLint. This includes frontend source code, as well as,
@@ -64,6 +65,16 @@ gulp.task('lint-javascript', function() {
       .pipe(gulpEslint.format())
       // Exit with an error code (1) on a lint error.
       .pipe(gulpEslint.failOnError());
+});
+
+/**
+ * Lints all SASS files in the project.
+ */
+gulp.task('lint-styles', function() {
+  return gulp.src(path.join(conf.paths.src, '**/*.scss'))
+      .pipe(gulpSassLint())
+      .pipe(gulpSassLint.format())
+      .pipe(gulpSassLint.failOnError());
 });
 
 /**

@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import "../../assets/styles/color_variables";
+@import '../../assets/styles/color_variables';
 
 .kd-content {
   background-color: $body;
 }
 
 .kd-zerostate-content {
-  position: fixed;
   height: 90%;
+  position: fixed;
   width: 100%;
 }
 
@@ -30,13 +30,13 @@
 
 .kd-zerostate-card-logo {
   height: 80px;
-  width: 80px;
   padding: 0 0 0 15px;
+  width: 80px;
 }
 
 .kd-zerostate-deploy-card {
+  color: $content-background;
   min-width: 300px;
-  color: white;
 }
 
 .kd-zerostate-deploy-bt {
@@ -48,9 +48,9 @@
   margin-top: 10px;
 
   > .kd-zerostate-lm-list-item {
-    padding: 0;
+    color: $primary;
     min-height: 30px;
-    color: royalblue;
+    padding: 0;
   }
 }
 
@@ -59,10 +59,10 @@
 }
 
 .kd-zerostate-lm-card {
-  min-width: 200px;
   font-size: 15px;
+  min-width: 200px;
 }
 
 .kd-zerostate-lm-text {
-  color: darkgray;
+  color: $muted;
 }

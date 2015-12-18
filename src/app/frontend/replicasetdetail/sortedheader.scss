@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import "../../assets/styles/color_variables";
+@import '../../assets/styles/color_variables';
 
 $sortedheader-font-size: 14px;
 
@@ -21,19 +21,19 @@ $sortedheader-font-size: 14px;
 }
 
 .kd-sortedheader-help-icon {
-  font-size: $sortedheader-font-size;
-  padding: 0 3px 0 3px;
-  vertical-align: text-top;
-  cursor: help;
   color: $muted;
+  cursor: help;
+  font-size: $sortedheader-font-size;
   height: $sortedheader-font-size;
+  padding: 0 3px;
+  vertical-align: text-top;
   width: $sortedheader-font-size;
 }
 
 .kd-sortedheader-sort-icon {
   font-size: $sortedheader-font-size;
-  padding: 0 3px 0 3px;
-  vertical-align: text-top;
   height: $sortedheader-font-size;
+  padding: 0 3px;
+  vertical-align: text-top;
   width: $sortedheader-font-size;
 }

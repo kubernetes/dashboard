@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import "../../assets/styles/color_variables";
+@import '../../assets/styles/color_variables';
 
-$replicasetdetails-sidebar-bg: #FAFAFA;
-$replicasetdetails-border: #DDDDDD;
-$replicasetdetails-table-message: black;
-$replicasetdetails-table-cell: #777777;
-$replicasetdetails-warning: orange;
+$replicasetdetails-sidebar-bg: #fafafa;
+$replicasetdetails-border: #ddd;
+$replicasetdetails-table-message: #000;
+$replicasetdetails-table-cell: #777;
+$replicasetdetails-warning: #ffa500;
 
 .kd-replicasetdetail-sidebar {
   background-color: $replicasetdetails-sidebar-bg;
@@ -30,65 +30,74 @@ $replicasetdetails-warning: orange;
 }
 
 .kd-replicasetdetail-sidebar-header {
-  color: dimgray;
   border-bottom: 1px solid $replicasetdetails-border;
-  min-height: 49px;
+  color: $muted;
   max-height: 49px;
+  min-height: 49px;
 }
 
-.kd-replicasetdetail-sidebar-hedaer-icon {
+.kd-replicasetdetail-sidebar-header-icon {
   font-size: 1.7em;
   vertical-align: middle;
 }
 
 .kd-replicasetdetail-table-message {
-  color: #000000;
+  color: $replicasetdetails-table-message;
   overflow: hidden;
+  text-align: left;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .kd-replicasetdetail-sidebar-title {
+  font-size: 15px;
   padding-bottom: 10px;
   padding-top: 10px;
-  font-size: 15px;
 }
 
 .kd-replicasetdetail-sidebar-line {
-  padding-bottom: 6px;
-  font-size: 11px;
   color: $delicate;
+  font-size: 11px;
+  padding-bottom: 6px;
 }
 
 .kd-replicasetdetail-sidebar-subline {
-  padding-bottom: 8px;
-  font-size: 13px;
   color: $muted;
+  font-size: 13px;
+  padding-bottom: 8px;
 }
 
 .kd-replicasetdetail-sidebar-icon {
   color: $primary;
-  padding: 0 3px 0 3px;
-  vertical-align: top;
   font-size: 20px;
+  padding: 0 3px;
+  vertical-align: top;
 }
 
 .kd-replicasetdetail-warning-icon {
   color: $replicasetdetails-warning;
-  padding: 0 5px 0 5px;
-  vertical-align: middle;
   font-size: 24px;
+  padding: 0 5px;
+  vertical-align: middle;
+}
+
+.kd-replicasetdetail-sidebar-service-icon {
+  color: $muted;
+  font-size: 14px;
+  padding: 0 3px;
+  vertical-align: top;
 }
 
 .kd-replicasetdetail-sidebar-button {
-  padding-left: 0;
+  font-size: .85em;
   margin: 0;
-  font-size: 0.85em;
+  padding-left: 0;
 }
 
 .kd-replicasetdetail-sidebar-editpods-button {
   margin: 0;
   min-width: 25px;
+
   > md-icon {
     outline: none;
   }
@@ -108,12 +117,12 @@ $replicasetdetails-warning: orange;
 }
 
 .kd-replicasetdetail-table-header {
-  text-align: left;
+  border-bottom: 1px solid $replicasetdetails-border;
+  color: $replicasetdetails-table-cell;
   font-size: 14px;
   font-weight: 500;
-  color: $replicasetdetails-table-cell;
-  border-bottom: 1px solid $replicasetdetails-border;
   padding: 15px 10px 15px 15px;
+  text-align: left;
 }
 
 .kd-replicasetdetail-pointer {
@@ -121,31 +130,23 @@ $replicasetdetails-warning: orange;
 }
 
 .kd-replicasetdetail-table-cell {
-  text-align: left;
+  border-bottom: 1px solid $replicasetdetails-border;
   color: $replicasetdetails-table-cell;
   font-size: 13px;
-  border-bottom: 1px solid $replicasetdetails-border;
   height: 40px;
   padding: 5px 5px 5px 15px;
 }
 
-.kd-replicasetdetail-table-message {
-  color: $replicasetdetails-table-message;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .kd-replicasetdetail-table-icon {
   font-size: 14px;
-  padding: 0 3px 0 3px;
+  padding: 0 3px;
   vertical-align: top;
 }
 
 .kd-replicasetdetail-help-icon {
-  font-size: 14px;
-  padding: 0 3px 0 3px;
-  vertical-align: middle;
-  cursor: help;
   color: $muted;
+  cursor: help;
+  font-size: 14px;
+  padding: 0 3px;
+  vertical-align: middle;
 }
