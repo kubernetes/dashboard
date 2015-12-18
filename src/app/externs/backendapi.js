@@ -36,9 +36,11 @@ backendApi.PortMapping;
 /**
  * @typedef {{
  *   containerImage: string,
+ *   containerCommand: ?string,
+ *   containerCommandArgs: ?string,
  *   isExternal: boolean,
  *   name: string,
- *   description: string,
+ *   description: ?string,
  *   portMappings: !Array<!backendApi.PortMapping>,
  *   replicas: number,
  *   namespace: string,
