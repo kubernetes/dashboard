@@ -22,45 +22,59 @@ import (
 
 func TestGetReplicaSetPods(t *testing.T) {
 
+	pods := []api.Pod{
+		{
+			ObjectMeta: api.ObjectMeta{
+				Name: "pod-1",
+			},
+			Status: api.PodStatus{
+				ContainerStatuses: []api.ContainerStatus{
+					{
+						Name:         "container-1",
+						RestartCount: 0,
+					},
+					{
+						Name:         "container-2",
+						RestartCount: 2,
+					},
+				},
+			},
+		},
+		{
+			ObjectMeta: api.ObjectMeta{
+				Name: "pod-2",
+			},
+			Status: api.PodStatus{
+				ContainerStatuses: []api.ContainerStatus{
+					{
+						Name:         "container-3",
+						RestartCount: 10,
+					},
+				},
+			},
+		},
+	}
+
 	cases := []struct {
 		pods     []api.Pod
+		limit    int
 		expected *ReplicaSetPods
 	}{
-		{nil, &ReplicaSetPods{}},
-		{[]api.Pod{
+		{nil, 0, &ReplicaSetPods{}},
+		{pods, 10, &ReplicaSetPods{Pods: []ReplicaSetPodWithContainers{
 			{
-				ObjectMeta: api.ObjectMeta{
-					Name: "pod-1",
-				},
-				Status: api.PodStatus{
-					ContainerStatuses: []api.ContainerStatus{
-						{
-							Name:         "container-1",
-							RestartCount: 0,
-						},
-						{
-							Name:         "container-2",
-							RestartCount: 2,
-						},
+				Name:              "pod-2",
+				TotalRestartCount: 10,
+				PodContainers: []PodContainer{
+					{
+						Name:         "container-3",
+						RestartCount: 10,
 					},
 				},
 			},
 			{
-				ObjectMeta: api.ObjectMeta{
-					Name: "pod-2",
-				},
-				Status: api.PodStatus{
-					ContainerStatuses: []api.ContainerStatus{
-						{
-							Name:         "container-3",
-							RestartCount: 10,
-						},
-					},
-				},
-			},
-		}, &ReplicaSetPods{Pods: []ReplicaSetPodWithContainers{
-			{
-				Name: "pod-1",
+				Name:              "pod-1",
+				TotalRestartCount: 2,
 				PodContainers: []PodContainer{
 					{
 						Name:         "container-1",
@@ -72,8 +86,12 @@ func TestGetReplicaSetPods(t *testing.T) {
 					},
 				},
 			},
+		}},
+		},
+		{pods, 1, &ReplicaSetPods{Pods: []ReplicaSetPodWithContainers{
 			{
-				Name: "pod-2",
+				Name:              "pod-2",
+				TotalRestartCount: 10,
 				PodContainers: []PodContainer{
 					{
 						Name:         "container-3",
@@ -85,7 +103,7 @@ func TestGetReplicaSetPods(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := getReplicaSetPods(c.pods)
+		actual := getReplicaSetPods(c.pods, c.limit)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getReplicaSetPods(%#v) == %#v, expected %#v",
 				c.pods, actual, c.expected)

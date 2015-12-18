@@ -1,0 +1,46 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<md-menu>
+  <md-button ng-click="ctrl.openMenu($mdOpenMenu, $event)" class="kd-replicaset-card-logs">Logs</md-button>
+  <md-menu-content width="6">
+    <md-menu-item class="kd-menu-logs-md-menu-item">
+      <div flex="33">Logs</div>
+    </md-menu-item>
+    <md-menu-item class="kd-menu-logs-md-menu-item">
+      <div flex class="kd-menu-logs-item-header">Pod</div>
+      <div flex="50" class="kd-menu-logs-item-header">Running since</div>
+      <div flex class="kd-menu-logs-item-header">Prior restart</div>
+    </md-menu-item>
+    <md-menu-item ng-repeat="pod in ctrl.replicaSetPodsList" class="kd-menu-logs-md-menu-item">
+      <div flex class="kd-menu-logs-item">{{pod.name | middleEllipsis:10}}</div>
+      <div flex="50" class="kd-menu-logs-item">
+        <a>
+          {{pod.startTime}}<i
+          class="material-icons kd-menu-logs-link-icon">open_in_new</i>
+        </a>
+      </div>
+      <div flex class="kd-menu-logs-item" ng-if="pod.totalRestartCount != 0">
+        <a>
+          Logs<i class="material-icons kd-menu-logs-link-icon">open_in_new</i>
+        </a>
+      </div>
+      <div flex class="kd-menu-logs-item" ng-if="pod.totalRestartCount == 0">
+        -
+      </div>
+    </md-menu-item>
+  </md-menu-content>
+</md-menu>

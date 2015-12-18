@@ -13,6 +13,8 @@
 // limitations under the License.
 
 import stateConfig from './replicasetlist_state';
+import logsMenuDirective from './logsmenu_directive';
+import middleEllipsisFilter from './../common/filters/middleellipsis_filter';
 
 /**
  * Angular module for the Replica Set list view.
@@ -23,6 +25,9 @@ export default angular.module(
                           'kubernetesDashboard.replicaSetList',
                           [
                             'ngMaterial',
+                            'ngResource',
                             'ui.router',
                           ])
-    .config(stateConfig);
+    .config(stateConfig)
+    .filter('middleEllipsis', middleEllipsisFilter)
+    .directive('logsMenu', logsMenuDirective);

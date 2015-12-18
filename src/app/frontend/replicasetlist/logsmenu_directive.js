@@ -12,19 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-.kd-toolbar-logo {
-  height: 42px;
-  width: 42px;
-  margin-right: 1em;
-}
+import LogsMenuController from './logsmenu_controller';
 
-.kd-toolbar {
-  // Apply a little material design shadow at the bottom of the toolbar.
-  box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.14),
-      0px 0px 2px 2px rgba(0, 0, 0, 0.098), 0px 0px 5px 1px rgba(0, 0, 0, 0.084);
-}
-
-.kd-content, body {
-  background-color: #eeeeee;
-  height: 100%;
+/**
+ * Returns directive definition object for logs menu.
+ * @return {!angular.Directive}
+ */
+export default function logsMenuDirective() {
+  return {
+    scope: {},
+    bindToController: {
+      'namespace': '=',
+      'replicaSetName': '=',
+    },
+    controller: LogsMenuController,
+    controllerAs: 'ctrl',
+    templateUrl: 'replicasetlist/logsmenu.html',
+  };
 }
