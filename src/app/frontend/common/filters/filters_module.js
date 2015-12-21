@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import middleEllipsisFilter from './middleellipsis_filter';
+import relativeTimeFilter from './relativetime_filter';
 
 /**
  * Module containing common filters for the application.
@@ -22,4 +23,5 @@ export default angular.module(
                           [
                             'ngMaterial',
                           ])
-    .filter('middleEllipsis', middleEllipsisFilter);
+    .filter('middleEllipsis', middleEllipsisFilter)
+    .filter('relativeTime', relativeTimeFilter);
