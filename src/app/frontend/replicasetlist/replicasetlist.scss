@@ -11,28 +11,30 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    
 // See the License for the specific language governing permissions and   
 // limitations under the License.    
-   
+
+@import '../../assets/styles/color_variables';
+
 .kd-replicaset-card {        
   width: 400px;    
 }
 
+// This override button style to make it look like a link.
 .kd-replicaset-card-logs {
-  color: inherit;
-  text-decoration: none;
-  /* This override button style to make it look like a link */
-  padding: inherit;
-  margin: inherit;
-  min-width: inherit;
-  min-height: inherit;
-  line-height: 0px;
   border-radius: inherit;
+  color: inherit;
   font-size: inherit;
   font-weight: inherit;
+  line-height: 0;
+  margin: inherit;
+  min-height: inherit;
+  min-width: inherit;
+  padding: inherit;
+  text-decoration: none;
   text-transform: inherit;
-}
 
-.kd-replicaset-card-logs:after {
-  content: '\25BC';
+  &:after {
+    content: '\25BC';
+  }
 }
 
 .kd-replicaset-card-divider {
@@ -55,20 +57,20 @@
 }
 
 .kd-menu-logs-md-menu-item {
-  min-height: 30px;
   height: 30px;
+  min-height: 30px;
 }
 
 .kd-menu-logs-item-header {
-  color: rgba(0, 0, 0, 0.5);
-  font-size: 0.8em;
+  color: $muted;
+  font-size: .8em;
   white-space: nowrap;
 }
 
 .kd-menu-logs-item {
-  white-space: nowrap;
+  font-size: .8em;
   overflow: hidden;
-  font-size: 0.8em;
+  white-space: nowrap;
 }
 
 .kd-menu-logs-link-icon {

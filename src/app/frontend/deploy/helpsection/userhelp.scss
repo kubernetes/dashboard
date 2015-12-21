@@ -11,22 +11,25 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-@import "../../../assets/styles/color_variables";
 
-.kd-user-help * {
-  color: $muted;
-}
+@import '../../../assets/styles/color_variables';
 
-.kd-user-help a {
-  color: $primary;
-  opacity: 1;
-  text-decoration: none;
-}
+.kd-user-help {
+  * {
+    color: $muted;
+  }
 
-.kd-user-help b {
-  color: black;
-}
+  a {
+    color: $primary;
+    opacity: 1;
+    text-decoration: none;
 
-.kd-user-help a:hover {
-  color: $hoverPrimary;
+    &:hover {
+      color: $hover-primary;
+    }
+  }
+
+  b {
+    color: $emphasis;
+  }
 }

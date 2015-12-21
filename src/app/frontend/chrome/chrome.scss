@@ -12,18 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import "../../assets/styles/color_variables";
+@import '../../assets/styles/color_variables';
 
 .kd-toolbar-logo {
   height: 42px;
-  width: 42px;
   margin-right: 1em;
+  width: 42px;
 }
 
 .kd-toolbar {
-  // Apply a little material design shadow at the bottom of the toolbar.
-  box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.14),
-      0px 0px 2px 2px rgba(0, 0, 0, 0.098), 0px 0px 5px 1px rgba(0, 0, 0, 0.084);
+  box-shadow: $whiteframe-shadow-z1;
 }
 
 body {

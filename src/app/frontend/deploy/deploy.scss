@@ -12,10 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+@import '../../assets/styles/color_variables';
+
 .kd-deploy-whiteframe {
-  background: white;
+  background: $content-background;
   margin: 1em;
   // TODO(bryk): Find a better, application wide constant for the min width.
-  min-width: 600px;
   max-width: 960px;
+  min-width: 600px;
 }
