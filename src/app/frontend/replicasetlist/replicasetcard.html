@@ -1,0 +1,95 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<md-card>
+  <md-card-content class="kd-replicaset-card">
+    <div layout="row" layout-align="space-between center">
+      <div flex layout="column">
+        <a ng-href="{{::ctrl.getReplicaSetDetailHref()}}" flex>
+          {{::ctrl.replicaSet.name}}
+        </a>
+        <div flex class="md-caption">
+          <span ng-repeat="(label, value) in ::ctrl.replicaSet.labels"
+              class="kd-replicaset-card-label">
+            {{::label}}:{{::value}}
+          </span>
+        </div>
+      </div>
+      <md-button class="md-icon-button">
+        <md-icon md-font-library="material-icons">more_vert</md-icon>
+      </md-button>
+    </div>
+    <div class="md-caption">
+      <div layout="row">
+        <span flex="60">
+          {{::ctrl.replicaSet.podsRunning}} pods running, {{::ctrl.replicaSet.podsPending}} pending
+        </span>
+        <logs-menu flex="40" namespace="::ctrl.replicaSet.namespace"
+                   replica-set-name="::ctrl.replicaSet.name">
+        </logs-menu>
+      </div>
+      <hr class="kd-replicaset-card-divider"></hr>
+      <div layout="row" layout-wrap>
+        <div ng-if="::ctrl.replicaSet.description" flex="100" layout="column"
+            class="kd-replicaset-card-section">
+          <span flex>Description</span>
+          <div flex>
+            {{::ctrl.replicaSet.description}}
+          </div>
+        </div>
+
+        <div flex="60" layout="column" class="kd-replicaset-card-section">
+          <span flex>Image</span>
+          <div flex>
+            <div ng-repeat="image in ::ctrl.replicaSet.containerImages track by $index"
+                class="kd-replicaset-card-section-image">
+              {{::image}}
+            </div>
+          </div>
+        </div>
+
+        <div flex="40" layout="column" class="kd-replicaset-card-section">
+          <span flex="initial">Creation time</span>
+          <span flex>{{::ctrl.replicaSet.creationTime}}</span>
+        </div>
+
+        <div flex="60" layout="column" class="kd-replicaset-card-section">
+          <span flex="initial">Internal Endpoint</span>
+          <div flex>
+            <div ng-repeat="endpoint in ::ctrl.replicaSet.internalEndpoints track by $index">
+              {{::endpoint}}
+            </div>
+            <div ng-if="::!ctrl.replicaSet.internalEndpoints.length">
+              none
+            </div>
+          </div>
+        </div>
+
+        <div flex="40" layout="column" class="kd-replicaset-card-section">
+          <span flex="initial">External Endpoint</span>
+          <div flex>
+            <div ng-repeat="endpoint in ::ctrl.replicaSet.externalEndpoints track by $index">
+              <a ng-href="http://{{::endpoint}}" target="_blank">{{::endpoint}}</a>
+            </div>
+            <div ng-if="::!ctrl.replicaSet.externalEndpoints.length">
+              none
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </md-card-content>
+</md-card>
