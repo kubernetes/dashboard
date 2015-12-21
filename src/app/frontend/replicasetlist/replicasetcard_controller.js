@@ -12,18 +12,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {StateParams} from 'replicasetdetail/replicasetdetail_state';
+import {stateName} from 'replicasetdetail/replicasetdetail_state';
+
 /**
- * Controller for the replica set list view.
+ * Controller for the replica set card.
  *
  * @final
  */
-export default class ReplicaSetListController {
+export default class ReplicaSetCardController {
   /**
-   * @param {!backendApi.ReplicaSetList} replicaSets
+   * @param {!ui.router.$state} $state
    * @ngInject
    */
-  constructor(replicaSets) {
-    /** @export {!Array<!backendApi.ReplicaSet>} */
-    this.replicaSets = replicaSets.replicaSets;
+  constructor($state) {
+    /**
+     * Initialized from the scope.
+     * @export {!backendApi.ReplicaSet}
+     */
+    this.replicaSet;
+
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
+  }
+
+  /**
+   * @return {string}
+   * @export
+   */
+  getReplicaSetDetailHref() {
+    return this.state_.href(
+        stateName, new StateParams(this.replicaSet.namespace, this.replicaSet.name));
   }
 }

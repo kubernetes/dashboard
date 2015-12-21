@@ -12,18 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import ReplicaSetCardController from './replicasetcard_controller';
+
 /**
- * Controller for the replica set list view.
- *
- * @final
+ * Returns directive definition object for logs menu.
+ * @return {!angular.Directive}
  */
-export default class ReplicaSetListController {
-  /**
-   * @param {!backendApi.ReplicaSetList} replicaSets
-   * @ngInject
-   */
-  constructor(replicaSets) {
-    /** @export {!Array<!backendApi.ReplicaSet>} */
-    this.replicaSets = replicaSets.replicaSets;
-  }
+export default function logsMenuDirective() {
+  return {
+    scope: {},
+    bindToController: {
+      'replicaSet': '=',
+    },
+    controller: ReplicaSetCardController,
+    controllerAs: 'ctrl',
+    templateUrl: 'replicasetlist/replicasetcard.html',
+  };
 }

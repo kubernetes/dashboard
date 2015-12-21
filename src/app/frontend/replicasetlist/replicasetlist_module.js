@@ -14,7 +14,9 @@
 
 import stateConfig from './replicasetlist_state';
 import logsMenuDirective from './logsmenu_directive';
-import middleEllipsisFilter from './../common/filters/middleellipsis_filter';
+import middleEllipsisFilter from 'common/filters/middleellipsis_filter';
+import replicaSetCardDirective from './replicasetcard_directive';
+import replicaSetDetailModule from 'replicasetdetail/replicasetdetail_module';
 
 /**
  * Angular module for the Replica Set list view.
@@ -27,7 +29,9 @@ export default angular.module(
                             'ngMaterial',
                             'ngResource',
                             'ui.router',
+                            replicaSetDetailModule.name,
                           ])
     .config(stateConfig)
     .filter('middleEllipsis', middleEllipsisFilter)
-    .directive('logsMenu', logsMenuDirective);
+    .directive('logsMenu', logsMenuDirective)
+    .directive('kdReplicaSetCard', replicaSetCardDirective);
