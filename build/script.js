@@ -77,6 +77,9 @@ gulp.task('scripts:prod', ['angular-templates'], function() {
             conf.paths.nodeModules, 'google-closure-compiler/contrib/externs/angular-material.js'),
         path.join(
             conf.paths.nodeModules, 'google-closure-compiler/contrib/externs/angular_ui_router.js'),
+        path.join(
+            conf.paths.nodeModules,
+            'google-closure-compiler/contrib/externs/angular-1.4-resource.js'),
         path.join(conf.paths.externs, '**/*.js'),
       ],
       generate_exports: null,
