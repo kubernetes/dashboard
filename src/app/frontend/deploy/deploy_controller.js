@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as zerostate} from 'zerostate/zerostate_state';
+import {stateName as replicasets} from 'replicasetlist/replicasetlist_state';
 
 /**
  * Controller for the deploy view.
@@ -92,5 +92,5 @@ export default class DeployController {
    * Cancels the deployment form.
    * @export
    */
-  cancel() { this.state_.go(zerostate); }
+  cancel() { this.state_.go(replicasets); }
 }
