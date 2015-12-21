@@ -35,6 +35,14 @@ backendApi.PortMapping;
 
 /**
  * @typedef {{
+ *  key: string,
+ *  value: string
+ * }}
+ */
+backendApi.Label;
+
+/**
+ * @typedef {{
  *   containerImage: string,
  *   containerCommand: ?string,
  *   containerCommandArgs: ?string,
@@ -42,9 +50,9 @@ backendApi.PortMapping;
  *   name: string,
  *   description: ?string,
  *   portMappings: !Array<!backendApi.PortMapping>,
+ *   labels: !Array<!backendApi.Label>,
  *   replicas: number,
- *   namespace: string,
- *   labels: !Array<!backendApi.Label>
+ *   namespace: string
  * }}
  */
 backendApi.AppDeploymentSpec;
@@ -150,14 +158,6 @@ backendApi.NamespaceSpec;
  * }}
  */
 backendApi.NamespaceList;
-
-/**
- * @typedef {{
- *  key: string,
- *  value: string
- * }}
- */
-backendApi.Label;
 
 /**
  * @typedef {{

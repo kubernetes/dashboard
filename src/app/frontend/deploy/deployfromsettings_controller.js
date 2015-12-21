@@ -89,10 +89,16 @@ export default class DeployFromSettingsController {
     this.namespaces;
 
     /**
-     * Currently chosen namespace.
-     * @export {(string|undefined)}
+     * Initialized from the scope.
+     * @export {string}
      */
-    this.namespace = this.namespaces.length > 0 ? this.namespaces[0] : undefined;
+    this.name;
+
+    /**
+     * Currently chosen namespace.
+     * @export {string}
+     */
+    this.namespace = this.namespaces[0];
 
     /** @private {!angular.$q} */
     this.q_ = $q;
