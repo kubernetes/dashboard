@@ -216,7 +216,7 @@ export default class ReplicaSetDetailController {
    * @private
    */
   deleteReplicaSet_() {
-    this.replicaSetDetailResource_.delete(
+    this.replicaSetDetailResource_.remove(
         this.onReplicaSetDeleteSuccess_.bind(this), this.onReplicaSetDeleteError_.bind(this));
   }
 
