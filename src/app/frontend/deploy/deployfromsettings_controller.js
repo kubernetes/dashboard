@@ -95,6 +95,12 @@ export default class DeployFromSettingsController {
     this.name;
 
     /**
+     * Whether to run the container as privileged user.
+     * @export {boolean}
+     */
+    this.runAsPrivileged = false;
+
+    /**
      * Currently chosen namespace.
      * @export {string}
      */
@@ -136,6 +142,7 @@ export default class DeployFromSettingsController {
       replicas: this.replicas,
       namespace: this.namespace,
       labels: this.toBackendApiLabels_(this.labels),
+      runAsPrivileged: this.runAsPrivileged,
     };
 
     let defer = this.q_.defer();

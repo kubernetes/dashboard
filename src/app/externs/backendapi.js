@@ -52,7 +52,8 @@ backendApi.Label;
  *   portMappings: !Array<!backendApi.PortMapping>,
  *   labels: !Array<!backendApi.Label>,
  *   replicas: number,
- *   namespace: string
+ *   namespace: string,
+ *   runAsPrivileged: boolean,
  * }}
  */
 backendApi.AppDeploymentSpec;

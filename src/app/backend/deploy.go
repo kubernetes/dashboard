@@ -57,6 +57,9 @@ type AppDeploymentSpec struct {
 
 	// Labels that will be defined on Pods/RCs/Services
 	Labels []Label `json:"labels"`
+
+	// Whether to run the container as privileged user (essentially equivalent to root on the host).
+	RunAsPrivileged bool `json:"runAsPrivileged"`
 }
 
 // Port mapping for an application deployment.
@@ -99,6 +102,9 @@ func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 	containerSpec := api.Container{
 		Name:  spec.Name,
 		Image: spec.ContainerImage,
+		SecurityContext: &api.SecurityContext{
+			Privileged: &spec.RunAsPrivileged,
+		},
 	}
 
 	if spec.ContainerCommand != nil {

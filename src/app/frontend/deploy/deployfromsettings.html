@@ -129,9 +129,18 @@ limitations under the License.
       </md-input-container>
     </div>
     <kd-user-help>
-      By default, your containers run the selected image's default entrypoint command. You can use the
-      command options to override the default.
+      By default, your containers run the selected image's default entrypoint command. You can
+      use the command options to override the default.
       <a href="">Learn more</a>
+    </kd-user-help>
+  </kd-help-section>
+  
+  <kd-help-section>
+    <md-switch ng-model="ctrl.runAsPrivileged" class="md-primary">
+      Run as privileged
+    </md-switch>
+    <kd-user-help>
+      Processes in privileged containers are equivalent to be running as root on the host.
     </kd-user-help>
   </kd-help-section>
 </div>
