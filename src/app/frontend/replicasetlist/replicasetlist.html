@@ -14,6 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
+<md-button class="md-fab kd-replicaset-deploy" ng-click="ctrl.redirectToDeployPage()">
+  <md-icon class="material-icons">add</md-icon>
+</md-button>
+
 <div layout="row" layout-wrap layout-margin layout-align="center center">
   <div ng-repeat="replicaSet in ::ctrl.replicaSets">
     <kd-replica-set-card replica-set="::replicaSet"></kd-replica-set-card>

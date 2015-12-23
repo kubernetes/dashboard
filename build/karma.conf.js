@@ -68,13 +68,22 @@ module.exports = function(config) {
       },
     },
 
-    reporters: ['progress'],
+    reporters: ['progress', 'coverage'],
+
+    coverageReporter: {
+      dir: 'coverage/',
+      reporters: [
+        {type: 'html', subdir: 'html'},
+        {type: 'lcovonly', subdir: 'lcov'},
+      ],
+    },
 
     preprocessors: {},  // This field is filled with values later.
 
     plugins: [
       'karma-chrome-launcher',
       'karma-jasmine',
+      'karma-coverage',
       'karma-ng-html2js-preprocessor',
       'karma-sourcemap-loader',
       'karma-browserify',
@@ -87,6 +96,9 @@ module.exports = function(config) {
       // Make 'import ...' statements relative to the following paths.
       paths: [conf.paths.frontendSrc, conf.paths.frontendTest],
       transform: [
+        // Browserify transform for the istanbul code coverage tool. Isparta istrumenter for ES6
+        // code coverage. TODO(floreks): try to make import work instead of require
+        ['browserify-istanbul', {'instrumenter': require('isparta')}],
         // Transform ES6 code into ES5 so that browsers can digest it.
         ['babelify', {'presets': ['es2015']}],
       ],
