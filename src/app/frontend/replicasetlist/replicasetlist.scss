@@ -12,18 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * @param {!md.$mdThemingProvider} $mdThemingProvider
- * @ngInject
- */
-export default function config($mdThemingProvider) {
-  // Create a color palette that uses Kubernetes colors.
-  let kubernetesColorPaletteName = 'kubernetesColorPalette';
-  let kubernetesColorPalette = $mdThemingProvider.extendPalette('blue', {
-    '500': '326de6',
-  });
-
-  // Use the palette as default one.
-  $mdThemingProvider.definePalette(kubernetesColorPaletteName, kubernetesColorPalette);
-  $mdThemingProvider.theme('default').primaryPalette(kubernetesColorPaletteName);
+.md-fab {
+  &.kd-replicaset-deploy {
+    position: absolute;
+    right: 5px;
+    top: 28px;
+  }
 }

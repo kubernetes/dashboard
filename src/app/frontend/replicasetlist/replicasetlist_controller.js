@@ -19,11 +19,21 @@
  */
 export default class ReplicaSetListController {
   /**
+   * @param {!ui.router.$state} $state
    * @param {!backendApi.ReplicaSetList} replicaSets
    * @ngInject
    */
-  constructor(replicaSets) {
+  constructor($state, replicaSets) {
     /** @export {!Array<!backendApi.ReplicaSet>} */
     this.replicaSets = replicaSets.replicaSets;
+
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
   }
+
+  /**
+   * TODO(floreks): Should be changed to state variable. Related issue #153.
+   * @export
+   */
+  redirectToDeployPage() { this.state_.go('deploy'); }
 }
