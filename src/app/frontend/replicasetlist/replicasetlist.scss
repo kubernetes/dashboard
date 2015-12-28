@@ -12,10 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+@import '../variables';
+
 .md-fab {
   &.kd-replicaset-deploy {
     position: absolute;
-    right: 5px;
-    top: 28px;
+    right: 0;
+    top: -56px / 2 - $baseline-grid;
   }
 }

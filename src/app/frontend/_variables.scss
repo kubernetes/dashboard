@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// TODO(floreks): Find appropriate place for global color definitions.
 $primary: #326de6;
 $delicate: #aaa;
 $muted: #888;
@@ -20,6 +19,8 @@ $hover-primary: #1254df;
 $body: #eee;
 $emphasis: #000;
 $content-background: #fff;
-// TODO(bryk): Reference angular_material/src/core/style/variables.scss instead of having
-// this variable here.
-$whiteframe-shadow-z1: 0 2px 5px 0 rgba(0, 0, 0, .26) !default;
+
+// TODO(bryk): Get those variables from Angular Material scss files.
+$layout-breakpoint-lg: 1280px;
+$whiteframe-shadow-1dp: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px rgba(0, 0, 0, .12);
+$baseline-grid: 8px;
