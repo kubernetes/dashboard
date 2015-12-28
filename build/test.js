@@ -15,6 +15,7 @@
 /**
  * @fileoverview Gulp tasks for unit and integration tests.
  */
+import codecov from 'gulp-codecov.io';
 import gulp from 'gulp';
 import gulpProtractor from 'gulp-protractor';
 import karma from 'karma';
@@ -70,6 +71,16 @@ function runProtractorTests(doneFn) {
  * Runs once all unit tests of the application.
  */
 gulp.task('test', ['frontend-test', 'backend-test']);
+
+/**
+ * Execute gulp-codecov task and uploads generated
+ * coverage report to http://codecov.io. Should be used only
+ * by external CI tools, as gulp-codecov plugin is already designed to work
+ * with them. Does not work locally.
+ */
+gulp.task('coverage-codecov-upload', function() {
+  gulp.src(path.join(conf.paths.coverageReport, 'lcov.info')).pipe(codecov());
+});
 
 /**
  * Runs once all unit tests of the frontend application.

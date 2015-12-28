@@ -85,6 +85,7 @@ export default {
     backendTmpSrc: path.join(basePath, '.tmp/backend/src/github.com/kubernetes/dashboard'),
     bowerComponents: path.join(basePath, 'bower_components'),
     build: path.join(basePath, 'build'),
+    coverageReport: path.join(basePath, 'coverage/lcov'),
     deploySrc: path.join(basePath, 'src/app/deploy'),
     dist: path.join(basePath, 'dist'),
     distPublic: path.join(basePath, 'dist/public'),

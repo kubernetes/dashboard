@@ -38,6 +38,7 @@ gulp.task('styles', function() {
   return gulp.src(path.join(conf.paths.frontendSrc, '**/*.scss'))
       .pipe(gulpSourcemaps.init())
       .pipe(gulpSass(sassOptions))
+      .pipe(gulpAutoprefixer())
       .pipe(gulpSourcemaps.write("."))
       .pipe(gulp.dest(conf.paths.serve))
       // If BrowserSync is running, inform it that styles have changed.

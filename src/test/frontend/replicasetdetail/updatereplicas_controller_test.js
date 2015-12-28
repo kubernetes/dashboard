@@ -82,4 +82,15 @@ describe('Replica Set Detail controller', () => {
     expect(log.error).toHaveBeenCalled();
     expect(mdDialog.hide).toHaveBeenCalled();
   });
+
+  it('should close the dialog on cancel', () => {
+    // given
+    spyOn(mdDialog, 'cancel');
+
+    // when
+    ctrl.cancel();
+
+    // then
+    expect(mdDialog.cancel).toHaveBeenCalled();
+  });
 });
