@@ -19,7 +19,7 @@ import del from 'del';
 import gulp from 'gulp';
 import gulpFilter from 'gulp-filter';
 import gulpMinifyCss from 'gulp-minify-css';
-import gulpMinifyHtml from 'gulp-minify-html';
+import gulpHtmlmin from 'gulp-htmlmin';
 import gulpUglify from 'gulp-uglify';
 import gulpUseref from 'gulp-useref';
 import gulpRev from 'gulp-rev';
@@ -70,10 +70,9 @@ gulp.task('build-frontend', ['assets', 'index:prod'], function() {
       .pipe(gulpUseref({searchPath: [conf.paths.prodTmp]}))
       .pipe(gulpRevReplace())
       .pipe(htmlFilter)
-      .pipe(gulpMinifyHtml({
-        empty: true,
-        spare: true,
-        quotes: true,
+      .pipe(gulpHtmlmin({
+        removeComments: true,
+        collapseWhitespace: true,
       }))
       .pipe(htmlFilter.restore)
       .pipe(gulp.dest(conf.paths.distPublic));

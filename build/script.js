@@ -18,7 +18,7 @@
 import gulp from 'gulp';
 import gulpAngularTemplatecache from 'gulp-angular-templatecache';
 import gulpClosureCompiler from 'gulp-closure-compiler';
-import gulpMinifyHtml from 'gulp-minify-html';
+import gulpHtmlmin from 'gulp-htmlmin';
 import path from 'path';
 import webpackStream from 'webpack-stream';
 
@@ -121,10 +121,9 @@ gulp.task('scripts:prod', ['angular-templates'], function() {
  */
 gulp.task('angular-templates', function() {
   return gulp.src(path.join(conf.paths.frontendSrc, '**/!(index).html'))
-      .pipe(gulpMinifyHtml({
-        empty: true,
-        spare: true,
-        quotes: true,
+      .pipe(gulpHtmlmin({
+        removeComments: true,
+        collapseWhitespace: true,
       }))
       .pipe(
           gulpAngularTemplatecache(
