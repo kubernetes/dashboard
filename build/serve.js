@@ -130,9 +130,9 @@ gulp.task('spawn-backend', ['backend', 'kill-backend'], function() {
  * backend process is killed beforehand, if any. In production the backend does serve the frontend
  * pages as well.
  */
-gulp.task('spawn-backend:prod', ['build-frontend', 'backend:prod', 'kill-backend'], function() {
+gulp.task('spawn-backend:prod', ['build-frontend', 'backend', 'kill-backend'], function() {
   runningBackendProcess = child.spawn(
-      path.join(conf.paths.dist, conf.backend.binaryName),
+      path.join(conf.paths.serve, conf.backend.binaryName),
       [
         `--apiserver-host=http://${conf.backend.apiServerHost}`,
         `--port=${conf.frontend.serverPort}`,
