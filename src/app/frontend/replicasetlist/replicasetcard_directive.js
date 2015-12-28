@@ -15,10 +15,11 @@
 import ReplicaSetCardController from './replicasetcard_controller';
 
 /**
- * Returns directive definition object for logs menu.
+ * Returns directive definition object for replica set card directive.
+ *
  * @return {!angular.Directive}
  */
-export default function logsMenuDirective() {
+export default function replicaSetCardDirective() {
   return {
     scope: {},
     bindToController: {
