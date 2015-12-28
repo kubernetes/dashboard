@@ -17,7 +17,10 @@ limitations under the License.
 <kd-help-section>
   <md-input-container class="md-block">
     <label>Container image</label>
-    <input ng-model="ctrl.containerImage" required>
+    <input ng-model="ctrl.containerImage" name="containerImage" required>
+    <ng-messages for="ctrl.form.containerImage.$error" role="alert" multiple>
+      <ng-message when="required">Container image is required.</ng-message>
+    </ng-messages>
   </md-input-container>
   <kd-user-help>
     Enter the URL of a public image on any registry, or a private image hosted on Docker Hub or Google Container Registry.

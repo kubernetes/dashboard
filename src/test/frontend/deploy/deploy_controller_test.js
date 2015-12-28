@@ -28,16 +28,13 @@ describe('Deploy controller', () => {
   beforeEach(() => {
     angular.mock.module(deployModule.name);
 
-    angular.mock.inject(($controller, $state) => {
+    angular.mock.inject(($controller, $state, $q) => {
       state = $state;
-      ctrl = $controller(DeployController, {namespaces: []});
-      settingsCtrl = $controller(DeployFromSettingController, {}, {namespaces: []});
+      settingsCtrl = $controller(
+          DeployFromSettingController, {}, {namespaces: [], deploy: () => $q.defer().promise});
+      ctrl = $controller(
+          DeployController, {namespaces: []}, {detail: settingsCtrl, deployForm: {$valid: true}});
     });
-
-    // prepare and mock
-    ctrl.detail = settingsCtrl;
-    ctrl.deployForm = {$invalid: false};
-    settingsCtrl.deploy = () => { return settingsCtrl.q_.defer().promise; };
   });
 
   it('should return true when deploy in progress', () => {
@@ -46,7 +43,7 @@ describe('Deploy controller', () => {
     let result = ctrl.isDeployDisabled();
 
     // then
-    expect(result).toBeTruthy();
+    expect(result).toBe(true);
   });
 
   it('should return false when deploy not in progress', () => {
@@ -54,7 +51,7 @@ describe('Deploy controller', () => {
     let result = ctrl.isDeployDisabled();
 
     // then
-    expect(result).toBeFalsy();
+    expect(result).toBe(false);
   });
 
   it('should change state to replica set list view on cancel', () => {

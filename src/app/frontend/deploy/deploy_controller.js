@@ -75,8 +75,10 @@ export default class DeployController {
    * @export
    */
   deployBySelection() {
-    this.isDeployInProgress_ = true;
-    this.detail.deploy().finally(() => { this.isDeployInProgress_ = false; });
+    if (this.deployForm.$valid) {
+      this.isDeployInProgress_ = true;
+      this.detail.deploy().finally(() => { this.isDeployInProgress_ = false; });
+    }
   }
 
   /**
@@ -84,9 +86,7 @@ export default class DeployController {
    * @return {boolean}
    * @export
    */
-  isDeployDisabled() {
-    return this.isDeployInProgress_ || this.deployForm.$invalid || !this.detail;
-  }
+  isDeployDisabled() { return this.isDeployInProgress_ || !this.detail; }
 
   /**
    * Cancels the deployment form.
