@@ -24,8 +24,9 @@ import (
 func TestDeployApp(t *testing.T) {
 	namespace := "foo-namespace"
 	spec := &AppDeploymentSpec{
-		Namespace: namespace,
-		Name:      "foo-name",
+		Namespace:       namespace,
+		Name:            "foo-name",
+		RunAsPrivileged: true,
 	}
 	expectedRc := &api.ReplicationController{
 		ObjectMeta: api.ObjectMeta{
@@ -43,6 +44,9 @@ func TestDeployApp(t *testing.T) {
 				Spec: api.PodSpec{
 					Containers: []api.Container{{
 						Name: "foo-name",
+						SecurityContext: &api.SecurityContext{
+							Privileged: &spec.RunAsPrivileged,
+						},
 					}},
 				},
 			},
