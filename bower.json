@@ -5,17 +5,17 @@
   "name": "kubernetes-dashboard",
   "version": "0.0.1",
   "dependencies": {
-    "angular": "~1.4.2",
-    "angular-animate": "~1.4.2",
-    "angular-aria": "~1.4.2",
-    "angular-material": "~1.0.0",
-    "angular-messages": "~1.4.2",
+    "angular": "~1.4.8",
+    "angular-animate": "~1.4.8",
+    "angular-aria": "~1.4.8",
+    "angular-material": "~1.0.1",
+    "angular-messages": "~1.4.8",
     "angular-ui-router": "~0.2.15",
-    "angular-resource": "~1.4.2",
-    "angular-sanitize": "~1.4.2"
+    "angular-resource": "~1.4.8",
+    "angular-sanitize": "~1.4.8"
   },
   "devDependencies": {
-    "angular-mocks": "~1.4.2",
+    "angular-mocks": "~1.4.8",
     "google-closure-library": "*"
   }
 }
