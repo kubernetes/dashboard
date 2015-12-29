@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+@import '../../variables';
+
 $logs-toolbar-color-black: #000;
 $logs-toolbar-color-white: #fff;
 
@@ -32,4 +34,13 @@ md-toolbar {
       color: $logs-toolbar-color-black;
     }
   }
+}
+
+.kd-logs-toolbar-text {
+  font-size: $subhead-font-size-base;
+}
+
+.kd-logs-toolbar-select {
+  margin-bottom: 2 * $baseline-grid;
+  margin-left: auto;
 }

@@ -12,6 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// Function
+//-- Must be defined before variables
+@function rem($multiplier) {
+  $font-size: 10px;
+  @return $multiplier * $font-size;
+}
+
+$subhead-font-size-base:   rem(1.6) !default;
+
 $primary: #326de6;
 $delicate: #aaa;
 $muted: #888;
