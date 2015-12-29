@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {StateParams} from 'logs/logs_state';
+import {stateName as logsStateName} from 'logs/logs_state';
+
 /**
  * Controller for the logs menu view.
  *
@@ -19,11 +22,15 @@
  */
 export default class LogsMenuController {
   /**
+   * @param {!ui.router.$state} $state
    * @param {!angular.$log} $log
    * @param {!angular.$resource} $resource
    * @ngInject
    */
-  constructor($log, $resource) {
+  constructor($state, $log, $resource) {
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
+
     /** @private {!angular.$resource} */
     this.resource_ = $resource;
 
@@ -79,5 +86,43 @@ export default class LogsMenuController {
           this.replicaSetPodsList = replicaSetPods.pods;
         },
         (err) => { this.log_.error('Error fetching Replica Set pods: ', err); });
+  }
+
+  /**
+   * @param {string} podName
+   * @param {string} containerName
+   * @return {string}
+   * @export
+   */
+  getLogsHref(podName, containerName) {
+    return this.state_.href(
+        logsStateName,
+        new StateParams(this.namespace, this.replicaSetName, podName, containerName));
+  }
+
+  /**
+   * Checks if pod contains at least one container. Return true if yes, otherwise false.
+   * @param {!backendApi.ReplicaSetPodWithContainers} pod
+   * @return {boolean}
+   * @export
+   */
+  podContainerExists(pod) {
+    if (pod.podContainers[0].name === undefined) {
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * Checks if pod containers were restarted. Return true if yes, otherwise false.
+   * @param {backendApi.ReplicaSetPodWithContainers} pod
+   * @return {boolean}
+   * @export
+   */
+  podContainersRestarted(pod) {
+    if (pod) {
+      return pod.totalRestartCount > 0;
+    }
+    return false;
   }
 }

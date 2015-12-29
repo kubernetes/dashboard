@@ -12,23 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../assets/styles/color_variables';
+/**
+ * Service class for logs colors management.
+ * @final
+ */
+export class LogColorInversionService {
+  /**
+   * @ngInject
+   */
+  constructor() {
+    /** @private {boolean} */
+    this.inverted_ = false;
+  }
 
-.kd-toolbar-logo {
-  height: 42px;
-  margin-right: 1em;
-  width: 42px;
-}
+  /**
+   * Getter for invertion flag.
+   * @return {boolean}
+   */
+  getInverted() { return this.inverted_; }
 
-.kd-toolbar {
-  box-shadow: $whiteframe-shadow-z1;
-}
-
-body {
-  background-color: $body;
-  height: 100%;
-}
-
-a {
-  text-decoration: inherit;
+  /** Inverts the flag. */
+  invert() { this.inverted_ = !this.inverted_; }
 }

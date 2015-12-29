@@ -12,23 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../assets/styles/color_variables';
+$logs-color-black: #000;
+$logs-color-white: #fff;
 
-.kd-toolbar-logo {
-  height: 42px;
-  margin-right: 1em;
-  width: 42px;
+.kd-logs-text-color-invert {
+  background-color: $logs-color-black;
+  color: $logs-color-white;
 }
 
-.kd-toolbar {
-  box-shadow: $whiteframe-shadow-z1;
+.kd-logs-text-color {
+  background-color: $logs-color-white;
+  color: $logs-color-black;
 }
 
-body {
-  background-color: $body;
-  height: 100%;
-}
-
-a {
-  text-decoration: inherit;
+.kd-logs-element {
+  padding: 0;
 }

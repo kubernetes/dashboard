@@ -21,6 +21,7 @@ import ChromeController from './chrome_controller';
  */
 export default function chromeDirective() {
   return {
+    scope: {},
     bindToController: true,
     controller: ChromeController,
     controllerAs: 'ctrl',

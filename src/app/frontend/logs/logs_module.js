@@ -12,23 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../assets/styles/color_variables';
+import stateConfig from './logs_state';
+import {LogColorInversionService} from './logs_service';
 
-.kd-toolbar-logo {
-  height: 42px;
-  margin-right: 1em;
-  width: 42px;
-}
-
-.kd-toolbar {
-  box-shadow: $whiteframe-shadow-z1;
-}
-
-body {
-  background-color: $body;
-  height: 100%;
-}
-
-a {
-  text-decoration: inherit;
-}
+/**
+ * Angular module for the logs view.
+ *
+ */
+export default angular.module(
+                          'kubernetesDashboard.logs',
+                          [
+                            'ngResource',
+                            'ui.router',
+                          ])
+    .service('logsColorInversionService', LogColorInversionService)
+    .config(stateConfig);

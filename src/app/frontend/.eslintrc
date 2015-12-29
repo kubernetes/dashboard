@@ -13,5 +13,8 @@
     // To allow comparison to undefined variable, because Google Closure Compiler does not
     // understand angular.isDefined correctly.
     "angular/definedundefined": 0,
+    // To disable error 'use factory() instead of service()'.
+    "angular/no-service-method": 0,
+    "valid-jsdoc": [0, {}],
   }
 }
