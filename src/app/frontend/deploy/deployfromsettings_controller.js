@@ -42,6 +42,12 @@ export default class DeployFromSettingsController {
      */
     this.detail = this;
 
+    /**
+     * Initialized from the scope.
+     * @export {!angular.FormController}
+     */
+    this.form;
+
     /** @private {boolean} */
     this.showMoreOptions_ = false;
 
