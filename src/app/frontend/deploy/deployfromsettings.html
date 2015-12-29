@@ -15,6 +15,20 @@ limitations under the License.
 -->
 
 <kd-help-section>
+  <md-input-container class="md-block" ng-model-options="{ updateOn: 'blur' }">
+    <label>App name</label>
+    <input ng-model="ctrl.name" required name="name">
+    <ng-messages for="ctrl.form.name.$error" role="alert" multiple>
+      <ng-message when="required">Application name is required.</ng-message>
+    </ng-messages>
+  </md-input-container>
+  </md-input-container>
+  <kd-user-help>
+    An 'app' label with this value will be added to the Replica Set and Service that get deployed.
+  </kd-user-help>
+</kd-help-section>
+
+<kd-help-section>
   <md-input-container class="md-block">
     <label>Container image</label>
     <input ng-model="ctrl.containerImage" name="containerImage" required>

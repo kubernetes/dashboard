@@ -17,21 +17,8 @@ limitations under the License.
 <div layout="column" layout-padding layout-align="center center">
   <md-whiteframe class="kd-deploy-whiteframe md-whiteframe-5dp" flex flex-gt-md>
     <h3 class="md-headline">Deploy a Containerized App</h3>
+
     <form name="ctrl.deployForm" ng-submit="ctrl.deployBySelection()" novalidate>
-
-      <kd-help-section>
-        <md-input-container class="md-block" ng-model-options="{ updateOn: 'blur' }">
-          <label>App name</label>
-          <input ng-model="ctrl.name" required name="name">
-          <ng-messages for="ctrl.deployForm.name.$error" role="alert" multiple>
-            <ng-message when="required">Application name is required.</ng-message>
-          </ng-messages>
-        </md-input-container>
-        <kd-user-help>
-          An 'app' label with this value will be added to the Replica Set and Service that get deployed.
-        </kd-user-help>
-      </kd-help-section>
-
       <kd-help-section>
         <md-radio-group ng-model="ctrl.selection">
           <md-radio-button value="Settings" class="md-primary">

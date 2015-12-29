@@ -31,9 +31,6 @@ export default class DeployController {
     /** @export {!angular.FormController} Initialized from the template */
     this.deployForm;
 
-    /** @export {string} */
-    this.name = '';
-
     /**
      * List of available namespaces.
      * TODO(bryk): Move this to deploy from settings directive. E.g., use activate method when

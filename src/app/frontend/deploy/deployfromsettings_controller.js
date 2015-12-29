@@ -95,10 +95,9 @@ export default class DeployFromSettingsController {
     this.namespaces;
 
     /**
-     * Initialized from the scope.
      * @export {string}
      */
-    this.name;
+    this.name = '';
 
     /**
      * Whether to run the container as privileged user.
