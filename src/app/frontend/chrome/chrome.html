@@ -16,7 +16,7 @@ limitations under the License.
 
 <md-content class="kd-content">
   <md-toolbar class="kd-toolbar">
-    <div class="md-toolbar-tools">
+    <div class="md-toolbar-tools kd-toolbar-tools">
       <a ui-sref="replicasets">
         <md-icon md-svg-icon="assets/images/kubernetes-logo.svg" class="kd-toolbar-logo"></md-icon>
       </a>
@@ -26,5 +26,7 @@ limitations under the License.
       <div flex ui-view="toolbar"></div>
     </div>
   </md-toolbar>
-  <div ng-transclude></div>
+  <div class="kd-app-content-wrapper">
+    <div ng-transclude class="kd-app-content"></div>
+  </div>
 </md-content>

@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../assets/styles/color_variables';
+@import '../variables';
 
-.kd-replicaset-card {        
-  width: 400px;  
+.kd-replicaset-card {
+  margin: $baseline-grid;
+  width: ($layout-breakpoint-lg - (2 * $baseline-grid) * 2) / 3;  
 }
 
 // This override button style to make it look like a link.
@@ -43,7 +44,7 @@
 }
 
 .kd-replicaset-card-section {
-  margin-top: 1em;
+  margin-top: 2 * $baseline-grid;
 }
 
 .kd-replicaset-card-section-image {
@@ -53,7 +54,7 @@
 }
 
 .kd-replicaset-card-label {
-  margin-right: 1em;
+  margin-right: 2 * $baseline-grid;
 }
 
 .kd-menu-logs-md-menu-item {
@@ -75,5 +76,5 @@
 
 .kd-menu-logs-link-icon {
   font-size: 1em;
-  margin-left: 5px;
+  margin-left: $baseline-grid;
 }
