@@ -89,5 +89,6 @@ gulp.task('assets', function() {
 /**
  * Cleans all build artifacts.
  */
-gulp.task(
-    'clean', function() { return del([conf.paths.dist, conf.paths.goWorkspace, conf.paths.tmp]); });
+gulp.task('clean', function() {
+  return del([conf.paths.dist, conf.paths.goWorkspace, conf.paths.tmp, conf.paths.coverage]);
+});

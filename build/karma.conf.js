@@ -59,6 +59,8 @@ module.exports = function(config) {
 
     browsers: ['Chrome'],
 
+    browserNoActivityTimeout: 60 * 1000,  // 60 seconds.
+
     customLaunchers: {
       // Custom launcher for Travis CI. It is required because Travis environment cannot use
       // sandbox.
@@ -71,7 +73,7 @@ module.exports = function(config) {
     reporters: ['progress', 'coverage'],
 
     coverageReporter: {
-      dir: 'coverage/',
+      dir: conf.paths.coverage,
       reporters: [
         {type: 'html', subdir: 'html'},
         {type: 'lcovonly', subdir: 'lcov'},
@@ -100,7 +102,7 @@ module.exports = function(config) {
         // code coverage. TODO(floreks): try to make import work instead of require
         ['browserify-istanbul', {'instrumenter': require('isparta')}],
         // Transform ES6 code into ES5 so that browsers can digest it.
-        ['babelify', {'presets': ['es2015']}],
+        ['babelify'],
       ],
     },
 
