@@ -18,6 +18,7 @@ import deployLabelDirective from './deploylabel_directive';
 import deployFromFileDirective from './deployfromfile_directive';
 import fileReaderDirective from './filereader_directive';
 import uploadDirective from './upload_directive';
+import uniqueNameDirective from './uniquename_directive';
 import helpSectionModule from './helpsection/helpsection_module';
 
 /**
@@ -36,6 +37,7 @@ export default angular.module(
     .config(stateConfig)
     .directive('deployFromSettings', deployFromSettingsDirective)
     .directive('deployFromFile', deployFromFileDirective)
+    .directive('kdUniqueName', uniqueNameDirective)
     .directive('kdFileReader', fileReaderDirective)
     .directive('kdUpload', uploadDirective)
     .directive('kdLabel', deployLabelDirective);

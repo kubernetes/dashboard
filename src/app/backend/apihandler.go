@@ -36,10 +36,16 @@ func CreateHttpApiHandler(client *client.Client) http.Handler {
 			To(apiHandler.handleDeploy).
 			Reads(AppDeploymentSpec{}).
 			Writes(AppDeploymentSpec{}))
+	deployWs.Route(
+		deployWs.POST("/validate/name").
+			To(apiHandler.handleNameValidity).
+			Reads(AppNameValiditySpec{}).
+			Writes(AppNameValidity{}))
 	wsContainer.Add(deployWs)
 
 	replicaSetWs := new(restful.WebService)
 	replicaSetWs.Path("/api/replicasets").
+		Consumes(restful.MIME_JSON).
 		Produces(restful.MIME_JSON)
 	replicaSetWs.Route(
 		replicaSetWs.GET("").
@@ -115,6 +121,23 @@ func (apiHandler *ApiHandler) handleDeploy(request *restful.Request, response *r
 	}
 
 	response.WriteHeaderAndEntity(http.StatusCreated, appDeploymentSpec)
+}
+
+// Handles app name validation API call.
+func (apiHandler *ApiHandler) handleNameValidity(request *restful.Request, response *restful.Response) {
+	spec := new(AppNameValiditySpec)
+	if err := request.ReadEntity(spec); err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	validity, err := ValidateAppName(spec, apiHandler.client)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, validity)
 }
 
 // Handles get Replica Set list API call.
