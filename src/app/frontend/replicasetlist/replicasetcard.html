@@ -70,7 +70,7 @@ limitations under the License.
           <span flex="initial">Internal Endpoint</span>
           <div flex>
             <div ng-repeat="endpoint in ::ctrl.replicaSet.internalEndpoints track by $index">
-              {{::endpoint}}
+              <kd-service-endpoint endpoint="::endpoint"></kd-service-endpoint>
             </div>
             <div ng-if="::!ctrl.replicaSet.internalEndpoints.length">
               none
@@ -82,7 +82,7 @@ limitations under the License.
           <span flex="initial">External Endpoint</span>
           <div flex>
             <div ng-repeat="endpoint in ::ctrl.replicaSet.externalEndpoints track by $index">
-              <a ng-href="http://{{::endpoint}}" target="_blank">{{::endpoint}}</a>
+              <kd-service-endpoint endpoint="::endpoint"></kd-service-endpoint>
             </div>
             <div ng-if="::!ctrl.replicaSet.externalEndpoints.length">
               none

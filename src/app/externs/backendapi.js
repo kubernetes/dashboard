@@ -98,8 +98,8 @@ backendApi.ReplicaSetList;
  *   podsPending: number,
  *   containerImages: !Array<string>,
  *   creationTime: string,
- *   internalEndpoints: !Array<string>,
- *   externalEndpoints: !Array<string>
+ *   internalEndpoints: !Array<!backendApi.Endpoint>,
+ *   externalEndpoints: !Array<!backendApi.Endpoint>
  * }}
  */
 backendApi.ReplicaSet;
@@ -139,12 +139,20 @@ backendApi.ReplicaSetPod;
 
 /**
  * @typedef {{
- *  internalEndpoint: string,
- *  externalEndpoints: !Array<string>,
+ *  internalEndpoint: !backendApi.Endpoint,
+ *  externalEndpoints: !Array<!backendApi.Endpoint>,
  *  selector: !Object<string, string>
  * }}
  */
 backendApi.ServiceDetail;
+
+/**
+ * @typedef {{
+ *  host: string,
+ *  ports: !Array<{port: number, protocol: string}>
+ * }}
+ */
+backendApi.Endpoint;
 
 /**
  * @typedef {{

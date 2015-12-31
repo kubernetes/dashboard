@@ -60,32 +60,29 @@ limitations under the License.
                 ng-repeat="image in ctrl.replicaSetDetail.containerImages">
             {{image}}
           </span>
-          <div ng-show="ctrl.replicaSetDetail.services" layout="column">
+          <div ng-if="::ctrl.replicaSetDetail.services" layout="column">
             <span class="kd-replicasetdetail-sidebar-title">Service</span>
             <span class="kd-replicasetdetail-sidebar-line">Label selector</span>
             <span class="kd-replicasetdetail-sidebar-subline"
-                  ng-repeat="service in ctrl.replicaSetDetail.services">
-              {{ctrl.formatLabelString(service.selector)}}
+                  ng-repeat="service in ::ctrl.replicaSetDetail.services">
+              {{::ctrl.formatLabelString(service.selector)}}
             </span>
             <span class="kd-replicasetdetail-sidebar-line">Internal endpoint</span>
             <div class="kd-replicasetdetail-sidebar-subline"
-                 ng-repeat="service in ctrl.replicaSetDetail.services">
-              <div ng-show="service.internalEndpoint">
-                {{service.internalEndpoint}}
-                <i class="material-icons kd-replicasetdetail-help-icon">
-                  help
-                </i>
+                 ng-repeat="service in ::ctrl.replicaSetDetail.services">
+              <div ng-if="::service.internalEndpoint">
+                <kd-service-endpoint endpoint="::service.internalEndpoint"></kd-service-endpoint>
               </div>
               <span ng-hide="service.internalEndpoint">none</span>
             </div>
             <span class="kd-replicasetdetail-sidebar-line">External endpoint</span>
             <div class="kd-replicasetdetail-sidebar-subline"
-                 ng-repeat="service in ctrl.replicaSetDetail.services">
-              <div ng-show="service.externalEndpoints">
-                {{service.externalEndpoints}}
-                <i class="material-icons kd-replicasetdetail-help-icon">open_in_new</i>
+                 ng-repeat="service in ::ctrl.replicaSetDetail.services">
+              <div ng-repeat="endpoint in service.externalEndpoints">
+                <kd-service-endpoint endpoint="::endpoint"></kd-service-endpoint>
               </div>
-              <span class="kd-replicasetdetail-sidebar-subline" ng-hide="service.externalEndpoints">
+              <span class="kd-replicasetdetail-sidebar-subline"
+                  ng-hide="::service.externalEndpoints">
                 none
               </span>
             </div>

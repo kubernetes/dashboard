@@ -15,6 +15,7 @@
 package main
 
 import (
+	"bytes"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
@@ -75,15 +76,33 @@ type ServiceDetail struct {
 	// Internal endpoints of all Kubernetes services that have the same label selector as connected
 	// Replica Set.
 	// Endpoint is DNS name merged with ports.
-	InternalEndpoint string `json:"internalEndpoint"`
+	InternalEndpoint Endpoint `json:"internalEndpoint"`
 
 	// External endpoints of all Kubernetes services that have the same label selector as connected
 	// Replica Set.
 	// Endpoint is external IP address name merged with ports.
-	ExternalEndpoints []string `json:"externalEndpoints"`
+	ExternalEndpoints []Endpoint `json:"externalEndpoints"`
 
 	// Label selector of the service.
 	Selector map[string]string `json:"selector"`
+}
+
+// Port and protocol pair of, e.g., a service endpoint.
+type ServicePort struct {
+	// Positive port number.
+	Port int `json:"port"`
+
+	// Protocol name, e.g., TCP or UDP.
+	Protocol api.Protocol `json:"protocol"`
+}
+
+// Describes an endpoint that is host and a list of available ports for that host.
+type Endpoint struct {
+	// Hostname, either as a domain name or IP address.
+	Host string `json:"host"`
+
+	// List of ports opened for this endpoint on the hostname.
+	Ports []ServicePort `json:"ports"`
 }
 
 // Information needed to update replica set
@@ -187,10 +206,10 @@ func UpdateReplicasCount(client client.Interface, namespace string, name string,
 
 // Returns detailed information about service from given service
 func getServiceDetail(service api.Service) ServiceDetail {
-	var externalEndpoints []string
+	var externalEndpoints []Endpoint
 	for _, externalIp := range service.Status.LoadBalancer.Ingress {
 		externalEndpoints = append(externalEndpoints,
-			getExternalEndpoint(externalIp.Hostname, service.Spec.Ports))
+			getExternalEndpoint(externalIp, service.Spec.Ports))
 	}
 
 	serviceDetail := ServiceDetail{
@@ -210,4 +229,45 @@ func getRestartCount(pod api.Pod) int {
 		restartCount += containerStatus.RestartCount
 	}
 	return restartCount
+}
+
+// Returns internal endpoint name for the given service properties, e.g.,
+// "my-service.namespace 80/TCP" or "my-service 53/TCP,53/UDP".
+func getInternalEndpoint(serviceName string, namespace string, ports []api.ServicePort) Endpoint {
+
+	name := serviceName
+	if namespace != api.NamespaceDefault {
+		bufferName := bytes.NewBufferString(name)
+		bufferName.WriteString(".")
+		bufferName.WriteString(namespace)
+		name = bufferName.String()
+	}
+
+	return Endpoint{
+		Host:  name,
+		Ports: getServicePorts(ports),
+	}
+}
+
+// Returns external endpoint name for the given service properties.
+func getExternalEndpoint(ingress api.LoadBalancerIngress, ports []api.ServicePort) Endpoint {
+	var host string
+	if ingress.Hostname != "" {
+		host = ingress.Hostname
+	} else {
+		host = ingress.IP
+	}
+	return Endpoint{
+		Host:  host,
+		Ports: getServicePorts(ports),
+	}
+}
+
+// Gets human readable name for the given service ports list.
+func getServicePorts(apiPorts []api.ServicePort) []ServicePort {
+	var ports []ServicePort
+	for _, port := range apiPorts {
+		ports = append(ports, ServicePort{port.Port, port.Protocol})
+	}
+	return ports
 }
