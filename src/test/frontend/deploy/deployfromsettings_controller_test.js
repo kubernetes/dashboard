@@ -15,19 +15,33 @@
 import DeployFromSettingController from 'deploy/deployfromsettings_controller';
 import deployModule from 'deploy/deploy_module';
 import DeployLabel from 'deploy/deploylabel';
+import {uniqueNameValidationKey} from 'deploy/uniquename_directive';
 
 describe('DeployFromSettings controller', () => {
   /** @type {!DeployFromSettingController} */
   let ctrl;
   /** @type {!angular.$resource} */
   let mockResource;
+  /** @type {!angular.FormController} */
+  let form;
 
   beforeEach(() => {
     angular.mock.module(deployModule.name);
 
     angular.mock.inject(($controller) => {
       mockResource = jasmine.createSpy('$resource');
-      ctrl = $controller(DeployFromSettingController, {$resource: mockResource}, {namespaces: []});
+      form = {
+        $submitted: false,
+        name: {
+          $touched: false,
+          $invalid: false,
+          $error: {
+            [uniqueNameValidationKey]: false,
+          },
+        },
+      };
+      ctrl = $controller(
+          DeployFromSettingController, {$resource: mockResource}, {namespaces: [], form: form});
     });
   });
 
@@ -161,7 +175,7 @@ describe('DeployFromSettings controller', () => {
   it('should hide more options by default', () => {
     // this is default behavior so no given/when
     // then
-    expect(ctrl.isMoreOptionsEnabled()).toBeFalsy();
+    expect(ctrl.isMoreOptionsEnabled()).toBe(false);
   });
 
   it('should show more options after switch', () => {
@@ -169,6 +183,44 @@ describe('DeployFromSettings controller', () => {
     ctrl.switchMoreOptions();
 
     // then
-    expect(ctrl.isMoreOptionsEnabled()).toBeTruthy();
+    expect(ctrl.isMoreOptionsEnabled()).toBe(true);
+  });
+
+  describe('isNameError', () => {
+    it('should show all errors on submit', () => {
+      expect(ctrl.isNameError()).toBe(false);
+
+      form.name.$invalid = true;
+
+      expect(ctrl.isNameError()).toBe(false);
+
+      form.$submitted = true;
+
+      expect(ctrl.isNameError()).toBe(true);
+    });
+
+    it('should show all errors when touched', () => {
+      expect(ctrl.isNameError()).toBe(false);
+
+      form.name.$invalid = true;
+
+      expect(ctrl.isNameError()).toBe(false);
+
+      form.name.$touched = true;
+
+      expect(ctrl.isNameError()).toBe(true);
+    });
+
+    it('should always show name uniqueness errors', () => {
+      expect(ctrl.isNameError()).toBe(false);
+
+      form.name.$error[uniqueNameValidationKey] = true;
+
+      expect(ctrl.isNameError()).toBe(true);
+
+      form.$submitted = true;
+
+      expect(ctrl.isNameError()).toBe(true);
+    });
   });
 });

@@ -15,6 +15,7 @@
 import showNamespaceDialog from './createnamespace_dialog';
 import DeployLabel from './deploylabel';
 import {stateName as replicasetliststate} from 'replicasetlist/replicasetlist_state';
+import {uniqueNameValidationKey} from './uniquename_directive';
 
 // Label keys for predefined labels
 const APP_LABEL_KEY = 'app';
@@ -192,6 +193,20 @@ export default class DeployFromSettingsController {
               }
             },
             () => { this.namespace = this.namespaces[0]; });
+  }
+
+  /**
+   * Returns true when name input should show error. This overrides default behavior to show name
+   * uniqueness errors even in the middle of typing.
+   * @return {boolean}
+   * @export
+   */
+  isNameError() {
+    /** @type {!angular.NgModelController} */
+    let name = this.form['name'];
+
+    return name.$error[uniqueNameValidationKey] ||
+           (name.$invalid && (name.$touched || this.form.$submitted));
   }
 
   /**

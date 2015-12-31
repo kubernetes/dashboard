@@ -193,3 +193,18 @@ backendApi.ReplicaSetPods;
  * }}
  */
 backendApi.Logs;
+
+/**
+ * @typedef {{
+ *   name: string,
+ *   namespace: string
+ * }}
+ */
+backendApi.AppNameValiditySpec;
+
+/**
+ * @typedef {{
+ *   valid: boolean
+ * }}
+ */
+backendApi.AppNameValidity;
