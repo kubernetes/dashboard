@@ -115,3 +115,70 @@ func TestGetRestartCount(t *testing.T) {
 		}
 	}
 }
+
+func TestGetServicePortsName(t *testing.T) {
+	cases := []struct {
+		ports    []api.ServicePort
+		expected []ServicePort
+	}{
+		{nil, nil},
+		{[]api.ServicePort{}, nil},
+		{[]api.ServicePort{{Name: "foo", Port: 8080, Protocol: "TCP"}},
+			[]ServicePort{{Port: 8080, Protocol: "TCP"}}},
+		{[]api.ServicePort{{Name: "foo", Port: 8080, Protocol: "TCP"},
+			{Name: "foo", Port: 9191, Protocol: "UDP"}},
+			[]ServicePort{{Port: 8080, Protocol: "TCP"}, {Port: 9191, Protocol: "UDP"}}},
+	}
+	for _, c := range cases {
+		actual := getServicePorts(c.ports)
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("getServicePortsName(%+v) == %+v, expected %+v", c.ports, actual, c.expected)
+		}
+	}
+}
+
+func TestGetExternalEndpoint(t *testing.T) {
+	cases := []struct {
+		serviceIp api.LoadBalancerIngress
+		ports     []api.ServicePort
+		expected  Endpoint
+	}{
+		{api.LoadBalancerIngress{IP: "127.0.0.1"}, nil, Endpoint{Host: "127.0.0.1"}},
+		{api.LoadBalancerIngress{IP: "127.0.0.1", Hostname: "host"}, nil, Endpoint{Host: "host"}},
+		{api.LoadBalancerIngress{IP: "127.0.0.1"},
+			[]api.ServicePort{{Name: "foo", Port: 8080, Protocol: "TCP"}},
+			Endpoint{Host: "127.0.0.1", Ports: []ServicePort{{Port: 8080, Protocol: "TCP"}}}},
+	}
+	for _, c := range cases {
+		actual := getExternalEndpoint(c.serviceIp, c.ports)
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("getExternalEndpoint(%+v, %+v) == %+v, expected %+v",
+				c.serviceIp, c.ports, actual, c.expected)
+		}
+	}
+}
+
+func TestGetInternalEndpoint(t *testing.T) {
+	cases := []struct {
+		serviceName, namespace string
+		ports                  []api.ServicePort
+		expected               Endpoint
+	}{
+		{"my-service", api.NamespaceDefault, nil, Endpoint{Host: "my-service"}},
+		{"my-service", api.NamespaceDefault,
+			[]api.ServicePort{{Name: "foo", Port: 8080, Protocol: "TCP"}},
+			Endpoint{Host: "my-service", Ports: []ServicePort{{Port: 8080, Protocol: "TCP"}}}},
+		{"my-service", "my-namespace", nil, Endpoint{Host: "my-service.my-namespace"}},
+		{"my-service", "my-namespace",
+			[]api.ServicePort{{Name: "foo", Port: 8080, Protocol: "TCP"}},
+			Endpoint{Host: "my-service.my-namespace",
+				Ports: []ServicePort{{Port: 8080, Protocol: "TCP"}}}},
+	}
+	for _, c := range cases {
+		actual := getInternalEndpoint(c.serviceName, c.namespace, c.ports)
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("getInternalEndpoint(%+v, %+v, %+v) == %+v, expected %+v",
+				c.serviceName, c.namespace, c.ports, actual, c.expected)
+		}
+	}
+}

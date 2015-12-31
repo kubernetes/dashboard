@@ -49,68 +49,6 @@ func TestIsServiceMatchingReplicaSet(t *testing.T) {
 	}
 }
 
-func TestGetServicePortsName(t *testing.T) {
-	cases := []struct {
-		ports    []api.ServicePort
-		expected string
-	}{
-		{nil, ""},
-		{[]api.ServicePort{}, ""},
-		{[]api.ServicePort{{Name: "foo", Port: 8080, Protocol: "TCP"}}, " 8080/TCP"},
-		{[]api.ServicePort{{Name: "foo", Port: 8080, Protocol: "TCP"},
-			{Name: "foo", Port: 9191, Protocol: "UDP"}}, " 8080/TCP,9191/UDP"},
-	}
-	for _, c := range cases {
-		actual := getServicePortsName(c.ports)
-		if actual != c.expected {
-			t.Errorf("getServicePortsName(%+v) == %+v, expected %+v", c.ports, actual, c.expected)
-		}
-	}
-}
-
-func TestGetExternalEndpoint(t *testing.T) {
-	cases := []struct {
-		serviceIp string
-		ports     []api.ServicePort
-		expected  string
-	}{
-		{"127.0.0.1", nil, "127.0.0.1"},
-		{"127.0.0.1", []api.ServicePort{{Name: "foo", Port: 8080, Protocol: "TCP"}},
-			"127.0.0.1 8080/TCP"},
-	}
-	for _, c := range cases {
-		actual := getExternalEndpoint(c.serviceIp, c.ports)
-		if actual != c.expected {
-			t.Errorf("getExternalEndpoint(%+v, %+v) == %+v, expected %+v",
-				c.serviceIp, c.ports, actual, c.expected)
-		}
-	}
-}
-
-func TestGetInternalEndpoint(t *testing.T) {
-	cases := []struct {
-		serviceName, namespace string
-		ports                  []api.ServicePort
-		expected               string
-	}{
-		{"my-service", api.NamespaceDefault, nil, "my-service"},
-		{"my-service", api.NamespaceDefault,
-			[]api.ServicePort{{Name: "foo", Port: 8080, Protocol: "TCP"}},
-			"my-service 8080/TCP"},
-		{"my-service", "my-namespace", nil, "my-service.my-namespace"},
-		{"my-service", "my-namespace",
-			[]api.ServicePort{{Name: "foo", Port: 8080, Protocol: "TCP"}},
-			"my-service.my-namespace 8080/TCP"},
-	}
-	for _, c := range cases {
-		actual := getInternalEndpoint(c.serviceName, c.namespace, c.ports)
-		if actual != c.expected {
-			t.Errorf("getInternalEndpoint(%+v, %+v, %+v) == %+v, expected %+v",
-				c.serviceName, c.namespace, c.ports, actual, c.expected)
-		}
-	}
-}
-
 func TestGetMatchingServices(t *testing.T) {
 	cases := []struct {
 		services   []api.Service
@@ -189,10 +127,10 @@ func TestGetReplicaSetList(t *testing.T) {
 				ReplicaSets: []ReplicaSet{
 					{
 						ContainerImages:   []string{"my-container-image-1"},
-						InternalEndpoints: []string{"my-app-1.namespace-1"},
+						InternalEndpoints: []Endpoint{{Host: "my-app-1.namespace-1"}},
 					}, {
 						ContainerImages:   []string{"my-container-image-2"},
-						InternalEndpoints: []string{"my-app-2.namespace-2"},
+						InternalEndpoints: []Endpoint{{Host: "my-app-2.namespace-2"}},
 					},
 				},
 			},

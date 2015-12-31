@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import serviceEndpointDirective from './serviceendpoint_directive';
 import stateConfig from './replicasetdetail_state';
 import sortedHeaderDirective from './sortedheader_directive';
 
@@ -28,4 +29,5 @@ export default angular.module(
                             'ui.router',
                           ])
     .config(stateConfig)
+    .directive('kdServiceEndpoint', serviceEndpointDirective)
     .directive('kdSortedHeader', sortedHeaderDirective);

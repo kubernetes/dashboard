@@ -20,8 +20,6 @@ import (
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
-	"strconv"
-	"strings"
 )
 
 // List of Replica Sets in the cluster.
@@ -58,12 +56,10 @@ type ReplicaSet struct {
 	CreationTime unversioned.Time `json:"creationTime"`
 
 	// Internal endpoints of all Kubernetes services have the same label selector as this Replica Set.
-	// Endpoint is DNS name merged with ports.
-	InternalEndpoints []string `json:"internalEndpoints"`
+	InternalEndpoints []Endpoint `json:"internalEndpoints"`
 
 	// External endpoints of all Kubernetes services have the same label selector as this Replica Set.
-	// Endpoint is external IP address name merged with ports.
-	ExternalEndpoints []string `json:"externalEndpoints"`
+	ExternalEndpoints []Endpoint `json:"externalEndpoints"`
 }
 
 // Returns a list of all Replica Sets in the cluster.
@@ -106,14 +102,14 @@ func getReplicaSetList(
 		}
 
 		matchingServices := getMatchingServices(services, &replicaSet)
-		var internalEndpoints []string
-		var externalEndpoints []string
+		var internalEndpoints []Endpoint
+		var externalEndpoints []Endpoint
 		for _, service := range matchingServices {
 			internalEndpoints = append(internalEndpoints,
 				getInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports))
 			for _, externalIp := range service.Status.LoadBalancer.Ingress {
 				externalEndpoints = append(externalEndpoints,
-					getExternalEndpoint(externalIp.Hostname, service.Spec.Ports))
+					getExternalEndpoint(externalIp, service.Spec.Ports))
 			}
 		}
 
@@ -132,35 +128,6 @@ func getReplicaSetList(
 	}
 
 	return replicaSetList
-}
-
-// Returns internal endpoint name for the given service properties, e.g.,
-// "my-service.namespace 80/TCP" or "my-service 53/TCP,53/UDP".
-func getInternalEndpoint(serviceName string, namespace string, ports []api.ServicePort) string {
-	name := serviceName
-	if namespace != api.NamespaceDefault {
-		name = name + "." + namespace
-	}
-
-	return name + getServicePortsName(ports)
-}
-
-// Returns external endpoint name for the given service properties.
-func getExternalEndpoint(serviceIp string, ports []api.ServicePort) string {
-	return serviceIp + getServicePortsName(ports)
-}
-
-// Gets human readable name for the given service ports list.
-func getServicePortsName(ports []api.ServicePort) string {
-	var portsString []string
-	for _, port := range ports {
-		portsString = append(portsString, strconv.Itoa(port.Port)+"/"+string(port.Protocol))
-	}
-	if len(portsString) > 0 {
-		return " " + strings.Join(portsString, ",")
-	} else {
-		return ""
-	}
 }
 
 // Returns all services that target the same Pods (or subset) as the given Replica Set.
