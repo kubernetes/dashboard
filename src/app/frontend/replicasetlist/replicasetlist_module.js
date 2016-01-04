@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './replicasetlist_state';
+import stateConfig from './replicasetlist_stateconfig';
 import logsMenuDirective from './logsmenu_directive';
 import middleEllipsisFilter from 'common/filters/middleellipsis_filter';
 import replicaSetCardDirective from './replicasetcard_directive';

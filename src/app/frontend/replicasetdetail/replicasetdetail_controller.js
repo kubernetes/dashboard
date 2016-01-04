@@ -15,6 +15,7 @@
 import showDeleteReplicaSetDialog from 'replicasetdetail/deletereplicaset_dialog';
 import showUpdateReplicasDialog from 'replicasetdetail/updatereplicas_dialog';
 import {UPWARDS, DOWNWARDS} from 'replicasetdetail/sortedheader_controller';
+import {stateName as replicasets} from 'replicasetlist/replicasetlist_state';
 
 // Filter type and source values for events.
 const EVENT_ALL = 'All';
@@ -226,8 +227,7 @@ export default class ReplicaSetDetailController {
    */
   onReplicaSetDeleteSuccess_() {
     this.log_.info('Replica set successfully deleted.');
-    // State name can not be imported. Related issue: #153
-    this.state_.go('replicasets');
+    this.state_.go(replicasets);
   }
 
   /**

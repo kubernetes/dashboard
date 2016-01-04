@@ -12,16 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './zerostate_stateconfig';
+import ZeroStateController from './zerostate_controller';
+import {stateName} from './zerostate_state';
 
 /**
- * Angular module for the zero state view.
+ * Configures states for the zero state view.
  *
- * The view is active on the first launch of the application and is used for onboarding new users.
+ * @param {!ui.router.$stateProvider} $stateProvider
+ * @ngInject
  */
-export default angular.module(
-                          'kubernetesDashboard.zerostate',
-                          [
-                            'ui.router',
-                          ])
-    .config(stateConfig);
+export default function stateConfig($stateProvider) {
+  $stateProvider.state(stateName, {
+    controller: ZeroStateController,
+    controllerAs: 'ctrl',
+    url: '/zerostate',
+    templateUrl: 'zerostate/zerostate.html',
+  });
+}

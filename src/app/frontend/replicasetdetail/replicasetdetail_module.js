@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import serviceEndpointDirective from './serviceendpoint_directive';
-import stateConfig from './replicasetdetail_state';
+import stateConfig from './replicasetdetail_stateconfig';
 import sortedHeaderDirective from './sortedheader_directive';
 
 /**
