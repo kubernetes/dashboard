@@ -27,6 +27,12 @@ func TestGetReplicaSetPods(t *testing.T) {
 			ObjectMeta: api.ObjectMeta{
 				Name: "pod-1",
 			},
+			Spec: api.PodSpec{
+				Containers: []api.Container{
+					{Name: "container-1"},
+					{Name: "container-2"},
+				},
+			},
 			Status: api.PodStatus{
 				ContainerStatuses: []api.ContainerStatus{
 					{
@@ -43,6 +49,11 @@ func TestGetReplicaSetPods(t *testing.T) {
 		{
 			ObjectMeta: api.ObjectMeta{
 				Name: "pod-2",
+			},
+			Spec: api.PodSpec{
+				Containers: []api.Container{
+					{Name: "container-3"},
+				},
 			},
 			Status: api.PodStatus{
 				ContainerStatuses: []api.ContainerStatus{
