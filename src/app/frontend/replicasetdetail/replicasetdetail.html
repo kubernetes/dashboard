@@ -165,7 +165,8 @@ limitations under the License.
               {{pod.restartCount}}<!-- TODO(maciaszczykm): Add info about last restart date. -->
             </td>
             <td class="kd-replicasetdetail-table-cell">
-              {{pod.startTime | date:'short'}}<!-- TODO(maciaszczykm): Format data. -->
+              {{pod.startTime | relativeTime}}
+              <md-tooltip>{{pod.startTime | date : 'yyyy-MM-dd HH:mm:ss'}}</md-tooltip>
             </td>
             <td class="kd-replicasetdetail-table-cell">
               0.4 CPU<!-- TODO(maciaszczykm): Fill with data and plot. -->
