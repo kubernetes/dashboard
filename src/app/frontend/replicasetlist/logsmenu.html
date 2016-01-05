@@ -15,34 +15,33 @@ limitations under the License.
 -->
 
 <md-menu>
-  <md-button ng-click="ctrl.openMenu($mdOpenMenu, $event)" class="kd-replicaset-card-logs">Logs</md-button>
-  <md-menu-content width="6">
+  <md-button ng-click="ctrl.openMenu($mdOpenMenu, $event)" class="kd-replicaset-card-logs-button">Logs</md-button>
+  <md-menu-content>
     <md-menu-item class="kd-menu-logs-md-menu-item">
-      <div flex="33">Logs</div>
+      <div>Logs</div>
     </md-menu-item>
     <md-menu-item class="kd-menu-logs-md-menu-item">
-      <div flex class="kd-menu-logs-item-header">Pod</div>
-      <div flex="50" class="kd-menu-logs-item-header">Running since</div>
-      <div flex class="kd-menu-logs-item-header">Prior restart</div>
+      <div class="kd-menu-logs-item-header kd-menu-logs-item-pods">Pod</div>
+      <div class="kd-menu-logs-item-header kd-menu-logs-item-since">Running since</div>
+      <div class="kd-menu-logs-item-header kd-menu-logs-item-prior">Prior restart</div>
     </md-menu-item>
-    <md-menu-item ng-repeat="pod in ctrl.replicaSetPodsList" class="kd-menu-logs-md-menu-item">
-      <div flex class="kd-menu-logs-item">{{pod.name | middleEllipsis:10}}</div>
-      <div flex="50" class="kd-menu-logs-item" ng-if="ctrl.podContainerExists(pod)">
-        <a ng-href="{{::ctrl.getLogsHref(pod.name, pod.podContainers[0].name)}}">
-          {{pod.startTime}}<i
+    <md-menu-item ng-repeat="pod in ::ctrl.replicaSetPodsList" class="kd-menu-logs-md-menu-item">
+      <div class="kd-menu-logs-item kd-menu-logs-item-pods">
+        {{::(pod.name | middleEllipsis:10)}}
+      </div>
+      <div class="kd-menu-logs-item kd-menu-logs-item-since">
+        <a ng-href="{{::ctrl.getLogsHref(pod.name, pod.podContainers[0].name)}}"
+             ng-if="::ctrl.podContainerExists(pod)">
+          {{pod.startTime | date:"short"}}<i
           class="material-icons kd-menu-logs-link-icon">open_in_new</i>
         </a>
+        <span ng-if="::!ctrl.podContainerExists(pod)">-</span>
       </div>
-      <div flex="50" class="kd-menu-logs-item" ng-if="!ctrl.podContainerExists(pod)">
-        -
-      </div>
-      <div flex class="kd-menu-logs-item" ng-if="ctrl.podContainersRestarted(pod)">
-        <a>
+      <div class="kd-menu-logs-item kd-menu-logs-item-prior">
+        <a ng-if="::ctrl.podContainersRestarted(pod)">
           Logs<i class="material-icons kd-menu-logs-link-icon">open_in_new</i>
         </a>
-      </div>
-      <div flex class="kd-menu-logs-item" ng-if="!ctrl.podContainersRestarted(pod)">
-        -
+        <span ng-if="::!ctrl.podContainersRestarted(pod)">-</span>
       </div>
     </md-menu-item>
   </md-menu-content>
