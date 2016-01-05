@@ -12,37 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import DeployController from './deploy_controller';
-
 /** Name of the state. Can be used in, e.g., $state.go method. */
 export const stateName = 'deploy';
-
-/**
- * Configures states for the deploy view.
- *
- * @param {!ui.router.$stateProvider} $stateProvider
- * @ngInject
- */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    controller: DeployController,
-    controllerAs: 'ctrl',
-    url: '/deploy',
-    resolve: {
-      'namespaces': resolveNamespaces,
-    },
-    templateUrl: 'deploy/deploy.html',
-  });
-}
-
-/**
- * @param {!angular.$resource} $resource
- * @return {!angular.$q.Promise}
- * @ngInject
- */
-function resolveNamespaces($resource) {
-  /** @type {!angular.Resource<!backendApi.NamespaceList>} */
-  let resource = $resource('/api/namespaces');
-
-  return resource.get().$promise;
-}

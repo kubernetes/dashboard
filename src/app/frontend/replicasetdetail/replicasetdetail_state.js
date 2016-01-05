@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ReplicaSetDetailController from './replicasetdetail_controller';
-
 /** Name of the state. Can be used in, e.g., $state.go method. */
 export const stateName = 'replicasetdetail';
 
@@ -35,67 +33,4 @@ export class StateParams {
     /** @export {string} Name of this Replica Set. */
     this.replicaSet = replicaSet;
   }
-}
-
-/**
- * Configures states for the service view.
- *
- * @param {!ui.router.$stateProvider} $stateProvider
- * @ngInject
- */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    controller: ReplicaSetDetailController,
-    controllerAs: 'ctrl',
-    url: '/replicasets/:namespace/:replicaSet',
-    templateUrl: 'replicasetdetail/replicasetdetail.html',
-    resolve: {
-      'replicaSetSpecPodsResource': getReplicaSetSpecPodsResource,
-      'replicaSetDetailResource': getReplicaSetDetailsResource,
-      'replicaSetDetail': resolveReplicaSetDetails,
-      'replicaSetEvents': resolveReplicaSetEvents,
-    },
-  });
-}
-
-/**
- * @param {!StateParams} $stateParams
- * @param {!angular.$resource} $resource
- * @return {!angular.Resource<!backendApi.ReplicaSetDetail>}
- * @ngInject
- */
-function getReplicaSetDetailsResource($stateParams, $resource) {
-  return $resource('/api/replicasets/:namespace/:replicaSet', $stateParams);
-}
-
-/**
- * @param {!StateParams} $stateParams
- * @param {!angular.$resource} $resource
- * @return {!angular.Resource<!backendApi.ReplicaSetSpec>}
- * @ngInject
- */
-function getReplicaSetSpecPodsResource($stateParams, $resource) {
-  return $resource('/api/replicasets/:namespace/:replicaSet/update/pods', $stateParams);
-}
-
-/**
- * @param {!angular.Resource<!backendApi.ReplicaSetDetail>} replicaSetDetailResource
- * @return {!angular.$q.Promise}
- * @ngInject
- */
-function resolveReplicaSetDetails(replicaSetDetailResource) {
-  return replicaSetDetailResource.get().$promise;
-}
-
-/**
- * @param {!StateParams} $stateParams
- * @param {!angular.$resource} $resource
- * @return {!angular.$q.Promise}
- * @ngInject
- */
-function resolveReplicaSetEvents($stateParams, $resource) {
-  /** @type {!angular.Resource<!backendApi.Events>} */
-  let resource = $resource('/api/events/:namespace/:replicaSet', $stateParams);
-
-  return resource.get().$promise;
 }

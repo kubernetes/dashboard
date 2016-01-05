@@ -12,22 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ZeroStateController from './zerostate_controller';
-
 /** Name of the state. Can be used in, e.g., $state.go method. */
 export const stateName = 'zero';
-
-/**
- * Configures states for the zero state view.
- *
- * @param {!ui.router.$stateProvider} $stateProvider
- * @ngInject
- */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    controller: ZeroStateController,
-    controllerAs: 'ctrl',
-    url: '/zerostate',
-    templateUrl: 'zerostate/zerostate.html',
-  });
-}
