@@ -25,9 +25,7 @@ limitations under the License.
           </a>
         </h3>
   
-        <md-button class="md-icon-button kd-replicaset-card-menu-button">
-          <md-icon md-font-library="material-icons">more_vert</md-icon>
-        </md-button>
+        <kd-replica-set-card-menu replica-set="::ctrl.replicaSet"></kd-replica-set-card-menu>
       </div>
       <div flex class="md-caption">
         <span ng-repeat="(label, value) in ::ctrl.replicaSet.labels"

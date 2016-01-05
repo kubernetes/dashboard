@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import showDeleteReplicaSetDialog from 'replicasetdetail/deletereplicaset_dialog';
 import showUpdateReplicasDialog from 'replicasetdetail/updatereplicas_dialog';
 import {UPWARDS, DOWNWARDS} from 'replicasetdetail/sortedheader_controller';
 import {stateName as replicasets} from 'replicasetlist/replicasetlist_state';
@@ -31,6 +30,7 @@ const EVENT_SOURCE_SYSTEM = 'System';
 export default class ReplicaSetDetailController {
   /**
    * @param {!md.$dialog} $mdDialog
+   * @param {!./replicasetdetail_state.StateParams} $stateParams
    * @param {!ui.router.$state} $state
    * @param {!angular.$resource} $resource
    * @param {!angular.$log} $log
@@ -38,11 +38,12 @@ export default class ReplicaSetDetailController {
    * @param {!backendApi.Events} replicaSetEvents
    * @param {!angular.Resource<!backendApi.ReplicaSetDetail>} replicaSetDetailResource
    * @param {!angular.Resource<!backendApi.ReplicaSetSpec>} replicaSetSpecPodsResource
+   * @param {!./deletereplicaset_service.DeleteReplicaSetService} kdDeleteReplicaSetService
    * @ngInject
    */
   constructor(
-      $mdDialog, $state, $resource, $log, replicaSetDetail, replicaSetEvents,
-      replicaSetDetailResource, replicaSetSpecPodsResource) {
+      $mdDialog, $stateParams, $state, $resource, $log, replicaSetDetail, replicaSetEvents,
+      replicaSetDetailResource, replicaSetSpecPodsResource, kdDeleteReplicaSetService) {
     /** @export {!backendApi.ReplicaSetDetail} */
     this.replicaSetDetail = replicaSetDetail;
 
@@ -70,17 +71,23 @@ export default class ReplicaSetDetailController {
     /** @export {string} */
     this.eventSource = EVENT_ALL;
 
-    /** @private {!md.$dialog} */
-    this.mdDialog_ = $mdDialog;
+    /** @private {!./replicasetdetail_state.StateParams} */
+    this.stateParams_ = $stateParams;
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
+
+    /** @private {!md.$dialog} */
+    this.mdDialog_ = $mdDialog;
 
     /** @private {!angular.$resource} */
     this.resource_ = $resource;
 
     /** @private {!angular.$log} */
     this.log_ = $log;
+
+    /** @private {!./deletereplicaset_service.DeleteReplicaSetService} */
+    this.kdDeleteReplicaSetService_ = kdDeleteReplicaSetService;
 
     /**
      * Name of column, that will be used for pods sorting.
@@ -187,7 +194,9 @@ export default class ReplicaSetDetailController {
    * @export
    */
   handleDeleteReplicaSetDialog() {
-    showDeleteReplicaSetDialog(this.mdDialog_, this.deleteReplicaSet_.bind(this));
+    this.kdDeleteReplicaSetService_.showDeleteDialog(
+                                       this.stateParams_.namespace, this.stateParams_.replicaSet)
+        .then(this.onReplicaSetDeleteSuccess_.bind(this), this.onReplicaSetDeleteError_.bind(this));
   }
 
   /**
@@ -210,15 +219,6 @@ export default class ReplicaSetDetailController {
 
     this.replicaSetSpecPodsResource_.save(replicaSetSpec, opt_callback, opt_errback);
     // TODO(floreks): Think about refreshing data on this page after update.
-  }
-
-  /**
-   * Deletes replica set based on current replica set namespace and name.
-   * @private
-   */
-  deleteReplicaSet_() {
-    this.replicaSetDetailResource_.remove(
-        this.onReplicaSetDeleteSuccess_.bind(this), this.onReplicaSetDeleteError_.bind(this));
   }
 
   /**
