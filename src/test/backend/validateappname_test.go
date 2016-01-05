@@ -15,7 +15,6 @@
 package main
 
 import (
-	"fmt"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
 	"k8s.io/kubernetes/pkg/runtime"
@@ -57,7 +56,6 @@ func TestValidateName(t *testing.T) {
 	for _, c := range cases {
 		testClient := testclient.NewSimpleFake(c.objects...)
 		validity, _ := ValidateAppName(c.spec, testClient)
-		fmt.Printf("%#v\n", validity)
 		if validity.Valid != c.expected {
 			t.Errorf("Expected %#v validity to be %#v for objects %#v, but was %#v\n",
 				c.spec, c.expected, c.objects, validity)

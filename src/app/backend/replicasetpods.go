@@ -80,17 +80,28 @@ func getReplicaSetPods(pods []api.Pod, limit int) *ReplicaSetPods {
 	for _, pod := range pods {
 		totalRestartCount := 0
 		replicaSetPodWithContainers := ReplicaSetPodWithContainers{
-			Name:      pod.Name,
-			StartTime: pod.Status.StartTime,
+			Name:          pod.Name,
+			StartTime:     pod.Status.StartTime,
+			PodContainers: make([]PodContainer, 0),
 		}
-		for _, containerStatus := range pod.Status.ContainerStatuses {
-			podContainer := PodContainer{
-				Name:         containerStatus.Name,
-				RestartCount: containerStatus.RestartCount,
-			}
+
+		podContainersByName := make(map[string]*PodContainer)
+
+		for _, container := range pod.Spec.Containers {
+			podContainer := PodContainer{Name: container.Name}
 			replicaSetPodWithContainers.PodContainers =
 				append(replicaSetPodWithContainers.PodContainers, podContainer)
-			totalRestartCount += containerStatus.RestartCount
+
+			podContainersByName[container.Name] = &(replicaSetPodWithContainers.
+				PodContainers[len(replicaSetPodWithContainers.PodContainers)-1])
+		}
+
+		for _, containerStatus := range pod.Status.ContainerStatuses {
+			podContainer, ok := podContainersByName[containerStatus.Name]
+			if ok {
+				podContainer.RestartCount = containerStatus.RestartCount
+				totalRestartCount += containerStatus.RestartCount
+			}
 		}
 		replicaSetPodWithContainers.TotalRestartCount = totalRestartCount
 		replicaSetPods.Pods = append(replicaSetPods.Pods, replicaSetPodWithContainers)
@@ -103,5 +114,6 @@ func getReplicaSetPods(pods []api.Pod, limit int) *ReplicaSetPods {
 		}
 		replicaSetPods.Pods = replicaSetPods.Pods[0:limit]
 	}
+
 	return replicaSetPods
 }
