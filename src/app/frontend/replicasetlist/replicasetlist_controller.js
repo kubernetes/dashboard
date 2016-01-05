@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {stateName as deploy} from 'deploy/deploy_state';
+
 /**
  * Controller for the replica set list view.
  *
@@ -32,8 +34,7 @@ export default class ReplicaSetListController {
   }
 
   /**
-   * TODO(floreks): Should be changed to state variable. Related issue #153.
    * @export
    */
-  redirectToDeployPage() { this.state_.go('deploy'); }
+  redirectToDeployPage() { this.state_.go(deploy); }
 }

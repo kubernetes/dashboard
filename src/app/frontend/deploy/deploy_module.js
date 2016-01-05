@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './deploy_state';
+import stateConfig from './deploy_stateconfig';
 import deployFromSettingsDirective from './deployfromsettings_directive';
 import deployLabelDirective from './deploylabel_directive';
 import deployFromFileDirective from './deployfromfile_directive';

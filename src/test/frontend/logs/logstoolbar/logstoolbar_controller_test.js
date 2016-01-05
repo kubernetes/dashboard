@@ -65,8 +65,9 @@ describe('Logs toolbar controller', () => {
 
     angular.mock.inject(($controller, $state) => {
       state = $state;
-      state.params = stateParams;
-      ctrl = $controller(LogsToolbarController, {replicaSetPods: replicaSetPods}, $state);
+      ctrl = $controller(
+          LogsToolbarController, {replicaSetPods: replicaSetPods, $stateParams: stateParams},
+          $state);
     });
   });
 
