@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {StateParams, stateName as logs} from './../logs_state';
+
 /**
  * Controller for the logs view.
  * @final
@@ -19,17 +21,17 @@
 export default class LogsToolbarController {
   /**
    * @param {!ui.router.$state} $state
+   * @param {!StateParams} $stateParams
    * @param {!backendApi.ReplicaSetPods} replicaSetPods
    * @param {!../logs_service.LogColorInversionService} logsColorInversionService
    * @ngInject
    */
-  constructor($state, replicaSetPods, logsColorInversionService) {
+  constructor($state, $stateParams, replicaSetPods, logsColorInversionService) {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
-    // TODO(zreigz): should be StateParam but can not be import from logstoolbar_state. Issue 153.
-    /** @private {!Object.<string, string, string, string>|null} */
-    this.params = this.state_.params;
+    /** @private {!StateParams} */
+    this.params = $stateParams;
 
     /**
      * Service to notify logs controller if any changes on toolbar.
@@ -86,13 +88,8 @@ export default class LogsToolbarController {
    * @export
    */
   onPodChange(podId) {
-    // TODO(zreigz): state name and StateParam can not be import from logstoolbar_state. Issue 153.
-    return this.state_.transitionTo("logs", {
-      namespace: this.namespace,
-      replicaSet: this.replicaSetName,
-      podId: podId,
-      container: this.container.name,
-    });
+    return this.state_.transitionTo(
+        logs, new StateParams(this.namespace, this.replicaSetName, podId, this.container.name));
   }
 
   /**
@@ -102,13 +99,8 @@ export default class LogsToolbarController {
    * @export
    */
   onContainerChange(container) {
-    // TODO(zreigz): state name and StateParam can not be import from logstoolbar_state. Issue 153.
-    return this.state_.transitionTo("logs", {
-      namespace: this.namespace,
-      replicaSet: this.replicaSetName,
-      podId: this.pod.name,
-      container: container,
-    });
+    return this.state_.transitionTo(
+        logs, new StateParams(this.namespace, this.replicaSetName, this.pod.name, container));
   }
 
   /**

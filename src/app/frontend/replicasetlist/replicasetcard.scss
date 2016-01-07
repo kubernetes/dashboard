@@ -19,37 +19,53 @@
   width: ($layout-breakpoint-lg - (2 * $baseline-grid) * 2) / 3;  
 }
 
-// This override button style to make it look like a link.
-.kd-replicaset-card-logs {
-  border-radius: inherit;
+.kd-replicaset-card-name {
   color: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-  line-height: 0;
-  margin: inherit;
-  min-height: inherit;
-  min-width: inherit;
-  padding: inherit;
+  display: inline-block;
+  font-weight: $regular-font-weight;
   text-decoration: none;
-  text-transform: inherit;
+}
 
-  &:after {
-    content: '\25BC';
-  }
+.kd-replicaset-card-title {
+  margin: 0;
+}
+
+.kd-replicaset-card-title-row {
+  margin-top: -$baseline-grid - 2px;
 }
 
 .kd-replicaset-card-divider {
-  border: 0;
-  border-top: 1px solid;
+  margin-top: $baseline-grid;
+}
+
+// This override button style to make it look like a link.
+.md-button {
+  &.kd-replicaset-card-logs-button {
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: 0;
+    margin: 0;
+    min-height: inherit;
+    min-width: inherit;
+    padding: $baseline-grid 0;
+    text-decoration: none;
+    text-transform: inherit;
+
+    &:after {
+      content: ' \25BE';
+    }
+  }
 }
 
 .kd-replicaset-card-section {
   margin-top: 2 * $baseline-grid;
 }
 
+.kd-replicaset-card-section-title {
+  color: $foreground-2;
+}
+
 .kd-replicaset-card-section-image {
-  overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
@@ -57,24 +73,32 @@
   margin-right: 2 * $baseline-grid;
 }
 
-.kd-menu-logs-md-menu-item {
-  height: 30px;
-  min-height: 30px;
-}
-
 .kd-menu-logs-item-header {
-  color: $muted;
-  font-size: .8em;
+  box-sizing: inherit;
+  color: $foreground-2;
+  font-size: $body-font-size-base;
   white-space: nowrap;
 }
 
 .kd-menu-logs-item {
-  font-size: .8em;
-  overflow: hidden;
+  box-sizing: inherit;
+  font-size: $body-font-size-base;
   white-space: nowrap;
 }
 
+.kd-menu-logs-item-pods {
+  width: 10 * $baseline-grid;
+}
+
+.kd-menu-logs-item-prior {
+  width: 10 * $baseline-grid;
+}
+
+.kd-menu-logs-item-since {
+  width: 15 * $baseline-grid;
+}
+
 .kd-menu-logs-link-icon {
-  font-size: 1em;
+  font-size: $subhead-font-size-base;
   margin-left: $baseline-grid;
 }

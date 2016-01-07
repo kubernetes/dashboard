@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import filtersModule from 'common/filters/filters_module';
 import serviceEndpointDirective from './serviceendpoint_directive';
-import stateConfig from './replicasetdetail_state';
+import stateConfig from './replicasetdetail_stateconfig';
 import sortedHeaderDirective from './sortedheader_directive';
 
 /**
@@ -27,6 +28,7 @@ export default angular.module(
                             'ngMaterial',
                             'ngResource',
                             'ui.router',
+                            filtersModule.name,
                           ])
     .config(stateConfig)
     .directive('kdServiceEndpoint', serviceEndpointDirective)

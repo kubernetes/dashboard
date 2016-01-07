@@ -16,24 +16,28 @@ limitations under the License.
 
 <md-card class="kd-replicaset-card">
   <md-card-content>
-    <div layout="row" layout-align="space-between center">
-      <div flex layout="column">
-        <a ng-href="{{::ctrl.getReplicaSetDetailHref()}}" flex>
-          {{::ctrl.replicaSet.name}}
-        </a>
-        <div flex class="md-caption">
-          <span ng-repeat="(label, value) in ::ctrl.replicaSet.labels"
-              class="kd-replicaset-card-label">
-            {{::label}}:{{::value}}
-          </span>
-        </div>
+    <div layout="column">
+      <div flex layout="row" layout-align="space-between center"
+          class="kd-replicaset-card-title-row">
+        <h3 class="md-title kd-replicaset-card-title">
+          <a ng-href="{{::ctrl.getReplicaSetDetailHref()}}" class="kd-replicaset-card-name" flex>
+            {{::ctrl.replicaSet.name}}
+          </a>
+        </h3>
+  
+        <md-button class="md-icon-button kd-replicaset-card-menu-button">
+          <md-icon md-font-library="material-icons">more_vert</md-icon>
+        </md-button>
       </div>
-      <md-button class="md-icon-button">
-        <md-icon md-font-library="material-icons">more_vert</md-icon>
-      </md-button>
+      <div flex class="md-caption">
+        <span ng-repeat="(label, value) in ::ctrl.replicaSet.labels"
+            class="kd-replicaset-card-label">
+          {{::label}}:{{::value}}
+        </span>
+      </div>
     </div>
     <div class="md-caption">
-      <div layout="row">
+      <div layout="row" layout-align="center end">
         <span flex="60">
           {{::ctrl.replicaSet.podsRunning}} pods running, {{::ctrl.replicaSet.podsPending}} pending
         </span>
@@ -41,33 +45,39 @@ limitations under the License.
                    replica-set-name="::ctrl.replicaSet.name">
         </logs-menu>
       </div>
-      <hr class="kd-replicaset-card-divider"></hr>
+      <md-divider class="kd-replicaset-card-divider"></md-divider>
       <div layout="row" layout-wrap>
         <div ng-if="::ctrl.replicaSet.description" flex="100" layout="column"
             class="kd-replicaset-card-section">
-          <span flex>Description</span>
+          <span flex class="kd-replicaset-card-section-title">Description</span>
           <div flex>
             {{::ctrl.replicaSet.description}}
           </div>
         </div>
 
         <div flex="60" layout="column" class="kd-replicaset-card-section">
-          <span flex>Image</span>
+          <span flex class="kd-replicaset-card-section-title">Image</span>
           <div flex>
             <div ng-repeat="image in ::ctrl.replicaSet.containerImages track by $index"
                 class="kd-replicaset-card-section-image">
-              {{::image}}
+              <md-tooltip>{{::image}}</md-tooltip>
+              {{::(image | middleEllipsis:32)}}
             </div>
           </div>
         </div>
 
         <div flex="40" layout="column" class="kd-replicaset-card-section">
-          <span flex="initial">Creation time</span>
-          <span flex>{{::ctrl.replicaSet.creationTime}}</span>
+          <span flex="initial" class="kd-replicaset-card-section-title">Age</span>
+          <span flex>
+            {{::ctrl.replicaSet.creationTime | relativeTime}}
+            <md-tooltip>
+              {{::ctrl.replicaSet.creationTime | date:'short'}}
+            </md-tooltip>
+          </span>
         </div>
 
         <div flex="60" layout="column" class="kd-replicaset-card-section">
-          <span flex="initial">Internal Endpoint</span>
+          <span flex="initial" class="kd-replicaset-card-section-title">Internal Endpoint</span>
           <div flex>
             <div ng-repeat="endpoint in ::ctrl.replicaSet.internalEndpoints track by $index">
               <kd-service-endpoint endpoint="::endpoint"></kd-service-endpoint>
@@ -79,7 +89,7 @@ limitations under the License.
         </div>
 
         <div flex="40" layout="column" class="kd-replicaset-card-section">
-          <span flex="initial">External Endpoint</span>
+          <span flex="initial" class="kd-replicaset-card-section-title">External Endpoint</span>
           <div flex>
             <div ng-repeat="endpoint in ::ctrl.replicaSet.externalEndpoints track by $index">
               <kd-service-endpoint endpoint="::endpoint"></kd-service-endpoint>

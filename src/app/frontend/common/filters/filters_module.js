@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './zerostate_stateconfig';
+import middleEllipsisFilter from './middleellipsis_filter';
+import relativeTimeFilter from './relativetime_filter';
 
 /**
- * Angular module for the zero state view.
- *
- * The view is active on the first launch of the application and is used for onboarding new users.
+ * Module containing common filters for the application.
  */
 export default angular.module(
-                          'kubernetesDashboard.zerostate',
+                          'kubernetesDashboard.common.flters',
                           [
-                            'ui.router',
+                            'ngMaterial',
                           ])
-    .config(stateConfig);
+    .filter('middleEllipsis', middleEllipsisFilter)
+    .filter('relativeTime', relativeTimeFilter);
