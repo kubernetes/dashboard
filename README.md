@@ -20,7 +20,6 @@ Make sure the following software is installed and added to the `$PATH` variable:
 * go (1.5+)
 * nodejs (4.2.2+)
 * npm (1.3+)
-* etcd (2.2+)
 * java (7+)
 * gulp (3.9+)
 
@@ -31,16 +30,17 @@ $ npm install
 
 ## Run a Kubernetes Cluster
 
-For development it is recommended to run a local Kubernetes cluster. For your convenience, a task is provided that checks out the latest stable version, compiles and runs the script: `<kubernetes>/hack/local-up-cluster.sh`. Open a separate tab in your terminal and run the following command:
+For development it is recommended to run a local Kubernetes cluster. For your convenience, a task is provided that checks out the latest stable version, and runs it inside a Docker container. Open a separate tab in your terminal and run the following command:
 
 ```
 $ gulp local-up-cluster
 ```
-Depending on your environment you might need to run the gulp task with sudo. Also, you might need to propagate the `$PATH` settings to the root user.
+
+This will build and start a lightweight local cluster, consisting of a master and a single node. All processes run locally, in Docker container. The local cluster should behave like a real cluster, however, plugins like heapster are not installed. To shut it down, type the following command that kills all running Docker containers:
+
 ```
-$ sudo env "PATH=$PATH" gulp local-up-cluster
+$ docker kill $(docker ps -aq)
 ```
-This will build and start a lightweight local cluster, consisting of a master and a single node. All processes run locally, without virtual machines. The local cluster should behave like a real cluster, however, plugins like heapster are not installed. Type Control-C to shut it down.
 
 From time to time you might want to use to a real Kubernetes cluster (e.g. GCE, Vagrant) instead of the local one. The most convenient way is to create a proxy. Run the following command instead of the gulp task from above:
 ```

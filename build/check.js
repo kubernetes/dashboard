@@ -19,7 +19,6 @@ import gulp from 'gulp';
 import gulpClangFormat from 'gulp-clang-format';
 import gulpEslint from 'gulp-eslint';
 import gulpSassLint from 'gulp-sass-lint';
-import runSequence from 'run-sequence';
 import path from 'path';
 
 import conf from './conf';
@@ -39,13 +38,7 @@ gulp.task('check', ['lint', 'build', 'test', 'integration-test:prod']);
  * Checks the code quality of Dashboard. In addition a local kubernetes cluster is spawned.
  * NOTE: This is meant as an entry point for CI jobs.
  */
-gulp.task('check:create-cluster', function() {
-  runSequence('local-up-cluster', ['check'], function(err) {
-    if (err) {
-      gulp.start('kill-all');
-    }
-  });
-});
+gulp.task('check:local-cluster', ['lint', 'build', 'test', 'local-cluster-integration-test:prod']);
 
 /**
  * Lints all projects code files.
