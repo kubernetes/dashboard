@@ -8,7 +8,6 @@ bower_components/
 .tmp/
 coverage/
 dist/
-kubernetes/
 .tools/
 
 ## IDE specific files

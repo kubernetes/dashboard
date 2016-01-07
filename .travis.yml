@@ -41,15 +41,5 @@ before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 
-  # Download etcd and make add it to PATH environment variable.
-  # Etcd is used to manage kubernetes cluster coordination and for state management.
-  - curl -fsSL https://github.com/coreos/etcd/releases/download/v2.2.1/etcd-v2.2.1-linux-amd64.tar.gz | tar xzf -
-  - ln -fns etcd-v2.2.1-linux-amd64 etcd
-  - export PATH=$PWD/etcd:$PATH
-
-  # Pull golang image to build local kubernetes cluster.
-  # Local cluster has build process that runs in a Docker container.
-  # This simplifies initial set up and provides a very consistent build and test environment.
-  - docker pull golang:1.4
-script: ./node_modules/.bin/gulp check:create-cluster
+script: ./node_modules/.bin/gulp check:local-cluster
 after_script: ./node_modules/.bin/gulp coverage-codecov-upload
