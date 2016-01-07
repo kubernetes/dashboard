@@ -20,7 +20,7 @@ limitations under the License.
       <a flex-offset="10" ui-sref="replicasets">
         <i class="material-icons kd-replicasetdetail-sidebar-header-icon">keyboard_backspace</i>
       </a>
-      <span flex-offset="5" flex class="md-title">
+      <span flex-offset="5" flex class="md-title kd-replicasetdetail-app-name">
         {{ctrl.replicaSetDetail.name}}
       </span>
     </div>
@@ -166,7 +166,7 @@ limitations under the License.
             </td>
             <td class="kd-replicasetdetail-table-cell">
               {{pod.startTime | relativeTime}}
-              <md-tooltip>{{pod.startTime | date : 'yyyy-MM-dd HH:mm:ss'}}</md-tooltip>
+              <md-tooltip>{{pod.startTime | date:'short'}}</md-tooltip>
             </td>
             <td class="kd-replicasetdetail-table-cell">
               0.4 CPU<!-- TODO(maciaszczykm): Fill with data and plot. -->
@@ -177,7 +177,7 @@ limitations under the License.
             <td class="kd-replicasetdetail-table-cell">{{pod.podIP}}</td>
             <td class="kd-replicasetdetail-table-cell">{{pod.nodeName}}</td>
             <td class="kd-replicasetdetail-table-cell">
-              Logs <i class="material-icons kd-replicasetdetail-logs-icon">arrow_drop_down</i>
+              Logs <i class="material-icons kd-replicasetdetail-table-icon">arrow_drop_down</i>
               <!-- TODO(maciaszczykm): Handle it. -->
             </td>
             <td class="kd-replicasetdetail-table-cell">
@@ -266,13 +266,13 @@ limitations under the License.
           </thead>
           <tbody>
           <tr ng-repeat="event in ctrl.events | orderBy:ctrl.sortEventsBy:ctrl.eventsOrder">
-            <td class="kd-replicasetdetail-table-cell kd-replicasetdetail-table-message">
+            <td class="kd-replicasetdetail-table-message">
               <i ng-if="ctrl.isEventWarning(event)"
                  class="material-icons kd-replicasetdetail-warning-icon">warning</i>
               {{event.message}}
             </td>
             <td class="kd-replicasetdetail-table-cell">
-              {&lt;!&gt;{{event.sourceComponent}} {{event.sourceHost}}&lt;!&gt;}
+              {{event.sourceComponent}} {{event.sourceHost}}
             </td>
             <td class="kd-replicasetdetail-table-cell">{{event.object}}</td>
             <td class="kd-replicasetdetail-table-cell">{{event.count}}</td>
