@@ -71,7 +71,7 @@ limitations under the License.
           <span flex>
             {{::ctrl.replicaSet.creationTime | relativeTime}}
             <md-tooltip>
-              {{::ctrl.replicaSet.creationTime | date : 'yyyy-MM-dd HH:mm:ss'}}
+              {{::ctrl.replicaSet.creationTime | date:'short'}}
             </md-tooltip>
           </span>
         </div>
