@@ -24,6 +24,7 @@ import routeConfig from './index_route';
 import replicaSetDetailModule from './replicasetdetail/replicasetdetail_module';
 import replicaSetListModule from './replicasetlist/replicasetlist_module';
 import zerostateModule from './zerostate/zerostate_module';
+import nodelistModule from './nodelist/nodelist_module';
 
 export default angular.module(
                           'kubernetesDashboard',
@@ -41,6 +42,7 @@ export default angular.module(
                             replicaSetDetailModule.name,
                             replicaSetListModule.name,
                             zerostateModule.name,
+                            nodelistModule.name,
                           ])
     .config(indexConfig)
     .config(routeConfig);
