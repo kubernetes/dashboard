@@ -26,7 +26,11 @@ limitations under the License.
       <div flex ui-view="toolbar"></div>
     </div>
   </md-toolbar>
-  <div class="kd-app-content-wrapper">
-    <div ng-transclude class="kd-app-content"></div>
+  <div class="kd-app-content-wrapper" ng-switch="ctrl.showLoadingSpinner">
+    <div ng-switch-when="true" class="kd-chrome-loading-container">
+      <md-progress-circular md-mode="indeterminate" md-diameter="96">
+      </md-progress-circular>
+    </div>
+    <div ng-switch-when="false" ng-transclude class="kd-app-content"></div>
   </div>
 </md-content>
