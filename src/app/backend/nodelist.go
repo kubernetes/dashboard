@@ -22,6 +22,9 @@ type Node struct {
 
 	// Current status of the Node
 	Status string `json:"status"`
+
+	// Creation timestamp
+	Created unversioned.Time `json:"created"`
 }
 
 // Returns a list of all Nodes in the cluster.
@@ -53,9 +56,10 @@ func getNodeList(nodes []api.Node) *NodeList {
 		}
 
 		nodeList.Nodes = append(nodeList.Nodes, Node{
-			Name:   node.ObjectMeta.Name,
-			Labels: node.ObjectMeta.Labels,
-			Status: string(condition.Type),
+			Name:    node.ObjectMeta.Name,
+			Labels:  node.ObjectMeta.Labels,
+			Status:  string(condition.Type),
+			Created: node.ObjectMeta.CreationTimestamp,
 		})
 	}
 
