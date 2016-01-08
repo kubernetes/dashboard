@@ -15,9 +15,10 @@
 package main
 
 import (
-	"k8s.io/kubernetes/pkg/api/unversioned"
 	"reflect"
 	"testing"
+
+	"k8s.io/kubernetes/pkg/api/unversioned"
 )
 
 func TestGetLogs(t *testing.T) {

@@ -15,11 +15,12 @@
 package main
 
 import (
+	"log"
 	"net/http"
+	"strconv"
 
 	restful "github.com/emicklei/go-restful"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
-	"strconv"
 )
 
 // Creates a new HTTP handler that handles all requests to the API of the backend.
@@ -280,6 +281,7 @@ func (apiHandler *ApiHandler) handleEvents(request *restful.Request, response *r
 
 // Handler that writes the given error to the response and sets appropriate HTTP status headers.
 func handleInternalError(response *restful.Response, err error) {
+	log.Print(err)
 	response.AddHeader("Content-Type", "text/plain")
 	response.WriteErrorString(http.StatusInternalServerError, err.Error()+"\n")
 }

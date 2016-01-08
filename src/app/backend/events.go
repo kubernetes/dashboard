@@ -15,6 +15,8 @@
 package main
 
 import (
+	"log"
+
 	api "k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
@@ -65,7 +67,10 @@ type Event struct {
 }
 
 // Return events for particular namespace and replica set or error if occurred.
-func GetEvents(client *client.Client, namespace string, replicaSetName string) (*Events, error) {
+func GetEvents(client *client.Client, namespace, replicaSetName string) (*Events, error) {
+	log.Printf("Getting events related to %s replica set in %s namespace", replicaSetName,
+		namespace)
+
 	// Get events for replica set.
 	rsEvents, err := GetReplicaSetEvents(client, namespace, replicaSetName)
 
@@ -85,6 +90,9 @@ func GetEvents(client *client.Client, namespace string, replicaSetName string) (
 	}
 
 	events = AppendEvents(podEvents, events)
+
+	log.Printf("Found %d events related to %s replica set in %s namespace", len(events.Events),
+		replicaSetName, namespace)
 
 	return &events, nil
 }

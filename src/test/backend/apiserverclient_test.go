@@ -15,8 +15,9 @@
 package main
 
 import (
-	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"testing"
+
+	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
 var fakeRemoteClient = new(client.Client)

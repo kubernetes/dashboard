@@ -15,10 +15,12 @@
 package main
 
 import (
+	"log"
+	"sort"
+
 	api "k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
-	"sort"
 )
 
 // TotalRestartCountSorter sorts ReplicaSetPodWithContainers by restarts number.
@@ -62,8 +64,11 @@ type ReplicaSetPodWithContainers struct {
 
 // Returns list of pods with containers for the given replica set in the given namespace.
 // Limit specify the number of records to return. There is no limit when given value is zero.
-func GetReplicaSetPods(client *client.Client, namespace string, name string, limit int) (
+func GetReplicaSetPods(client *client.Client, namespace, name string, limit int) (
 	*ReplicaSetPods, error) {
+	log.Printf("Getting list of pods from %s replica set in %s namespace with limit %d", name,
+		namespace, limit)
+
 	pods, err := getRawReplicaSetPods(client, namespace, name)
 	if err != nil {
 		return nil, err

@@ -15,10 +15,11 @@
 package main
 
 import (
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
 	"reflect"
 	"testing"
+
+	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
 )
 
 func TestDeployApp(t *testing.T) {
