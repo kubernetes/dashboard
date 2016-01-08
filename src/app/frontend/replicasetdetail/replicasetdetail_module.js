@@ -16,6 +16,7 @@ import filtersModule from 'common/filters/filters_module';
 import serviceEndpointDirective from './serviceendpoint_directive';
 import stateConfig from './replicasetdetail_stateconfig';
 import sortedHeaderDirective from './sortedheader_directive';
+import {DeleteReplicaSetService} from './deletereplicaset_service';
 
 /**
  * Angular module for the Replica Set details view.
@@ -32,4 +33,5 @@ export default angular.module(
                           ])
     .config(stateConfig)
     .directive('kdServiceEndpoint', serviceEndpointDirective)
-    .directive('kdSortedHeader', sortedHeaderDirective);
+    .directive('kdSortedHeader', sortedHeaderDirective)
+    .service('kdDeleteReplicaSetService', DeleteReplicaSetService);

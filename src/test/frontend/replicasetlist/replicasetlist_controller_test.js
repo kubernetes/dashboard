@@ -16,9 +16,7 @@ import ReplicaSetListController from 'replicasetlist/replicasetlist_controller';
 import replicaSetListModule from 'replicasetlist/replicasetlist_module';
 
 describe('Replica set list controller', () => {
-  /**
-   * @type {!ReplicaSetListController}
-   */
+  /** @type {!ReplicaSetListController} */
   let ctrl;
   /** @type {!ui.router.$state} */
   let state;
