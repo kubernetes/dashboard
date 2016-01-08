@@ -101,6 +101,15 @@ func CreateHttpApiHandler(client *client.Client) http.Handler {
 			Writes(Events{}))
 	wsContainer.Add(eventsWs)
 
+	nodesWs := new(restful.WebService)
+	nodesWs.Path("/api/nodes").
+		Produces(restful.MIME_JSON)
+	nodesWs.Route(
+		nodesWs.GET("").
+			To(apiHandler.handleGetNodes).
+			Writes(NodeList{}))
+	wsContainer.Add(nodesWs)
+
 	return wsContainer
 }
 
@@ -271,6 +280,16 @@ func (apiHandler *ApiHandler) handleEvents(request *restful.Request, response *r
 	namespace := request.PathParameter("namespace")
 	replicaSet := request.PathParameter("replicaSet")
 	result, err := GetEvents(apiHandler.client, namespace, replicaSet)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles nodes API call.
+func (apiHandler *ApiHandler) handleGetNodes(request *restful.Request, response *restful.Response) {
+	result, err := GetNodeList(apiHandler.client)
 	if err != nil {
 		handleInternalError(response, err)
 		return
