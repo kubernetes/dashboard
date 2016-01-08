@@ -19,7 +19,7 @@
         <div flex="50" layout="column" class="kd-replicaset-card-section">
           <span flex="initial" class="kd-replicaset-card-section-title">Age</span>
           <span flex>
-            {{::ctrl.node.age}}
+            {{::ctrl.node.created | relativeTime}}
           </span>
         </div>
 
@@ -32,6 +32,8 @@
             </div>
           </div>
         </div>
+
+
       </div>
     </div>
   </md-card-content>
