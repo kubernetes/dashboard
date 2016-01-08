@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import stateConfig from './deploy_stateconfig';
+import errorHandlingModule from '../common/errorhandling/errorhandling_module';
 import deployFromSettingsDirective from './deployfromsettings_directive';
 import deployLabelDirective from './deploylabel_directive';
 import deployFromFileDirective from './deployfromfile_directive';
@@ -33,6 +34,7 @@ export default angular.module(
                             'ngResource',
                             'ui.router',
                             helpSectionModule.name,
+                            errorHandlingModule.name,
                           ])
     .config(stateConfig)
     .directive('deployFromSettings', deployFromSettingsDirective)
