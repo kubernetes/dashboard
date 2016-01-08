@@ -50,9 +50,7 @@ limitations under the License.
         <div ng-if="::ctrl.replicaSet.description" flex="100" layout="column"
             class="kd-replicaset-card-section">
           <span flex class="kd-replicaset-card-section-title">Description</span>
-          <div flex>
-            {{::ctrl.replicaSet.description}}
-          </div>
+          <div flex class="kd-replicaset-card-description">{{::ctrl.replicaSet.description}}</div>
         </div>
 
         <div flex="60" layout="column" class="kd-replicaset-card-section">

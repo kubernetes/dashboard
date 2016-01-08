@@ -30,6 +30,11 @@
   margin: 0;
 }
 
+.kd-replicaset-card-description {
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
 .kd-replicaset-card-title-row {
   margin-top: -$baseline-grid - 2px;
 }
