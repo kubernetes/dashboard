@@ -3,15 +3,15 @@
  */
 export default class NodeListController {
   /**
+   * @param {!ui.router.$state} $state
+   * @param {!backendApi.NodeList} nodes
    * @ngInject
    */
-  constructor() {
-    /** @export {!Array<{title:string, link:string}>} */
-    this.learnMoreLinks = [
-      {title: 'Dashboard Tour', link: "#"},
-      {title: 'Deploying your App', link: "#"},
-      {title: 'Monitoring your App', link: "#"},
-      {title: 'Troubleshooting', link: "#"},
-    ];
+  constructor($state, nodes) {
+    /** @export {!Array<!backendApi.Node>} */
+    this.nodes = nodes.nodes;
+
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
   }
 }

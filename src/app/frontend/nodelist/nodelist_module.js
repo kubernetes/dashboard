@@ -1,4 +1,5 @@
 import stateConfig from './nodelist_stateconfig';
+import nodeCardDirective from './nodecard_directive';
 
 /**
  * Angular module for the Node list view.
@@ -10,4 +11,5 @@ export default angular.module(
                             'ngResource',
                             'ui.router',
                           ])
-    .config(stateConfig);
+    .config(stateConfig)
+    .directive('kdNodeCard', nodeCardDirective);
