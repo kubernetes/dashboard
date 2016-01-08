@@ -19,8 +19,9 @@ import (
 	"log"
 
 	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
+	unversioned "k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	unversionedClient "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
 )
@@ -71,6 +72,9 @@ type ReplicaSetPod struct {
 
 	// Count of containers restarts.
 	RestartCount int `json:"restartCount"`
+
+	// Pod metrics.
+	Metrics PodMetrics `json:"metrics"`
 }
 
 // Detailed information about a Service connected to Replica Set.
@@ -117,7 +121,8 @@ type ReplicaSetSpec struct {
 }
 
 // Returns detailed information about the given replica set in the given namespace.
-func GetReplicaSetDetail(client *client.Client, namespace, name string) (*ReplicaSetDetail, error) {
+func GetReplicaSetDetail(client *client.Client, heapsterClient *unversionedClient.RESTClient,
+	namespace, name string) (*ReplicaSetDetail, error) {
 	log.Printf("Getting details of %s replica set in %s namespace", name, namespace)
 
 	replicaSetWithPods, err := getRawReplicaSetWithPods(client, namespace, name)
@@ -126,6 +131,11 @@ func GetReplicaSetDetail(client *client.Client, namespace, name string) (*Replic
 	}
 	replicaSet := replicaSetWithPods.ReplicaSet
 	pods := replicaSetWithPods.Pods
+
+	replicaSetMetricsByPod, err := getReplicaSetPodsMetrics(pods, heapsterClient, namespace, name)
+	if err != nil {
+		return nil, err
+	}
 
 	services, err := client.Services(namespace).List(unversioned.ListOptions{
 		LabelSelector: unversioned.LabelSelector{labels.Everything()},
@@ -162,6 +172,7 @@ func GetReplicaSetDetail(client *client.Client, namespace, name string) (*Replic
 			PodIP:        pod.Status.PodIP,
 			NodeName:     pod.Spec.NodeName,
 			RestartCount: getRestartCount(pod),
+			Metrics:      replicaSetMetricsByPod.MetricsMap[pod.Name],
 		}
 		replicaSetDetail.Pods = append(replicaSetDetail.Pods, podDetail)
 	}

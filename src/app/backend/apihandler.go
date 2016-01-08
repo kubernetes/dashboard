@@ -23,6 +23,7 @@ import (
 
 	restful "github.com/emicklei/go-restful"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	unversioned "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
 const (
@@ -67,8 +68,8 @@ func FormatResponseLog(resp *restful.Response, remoteAddr string) string {
 }
 
 // Creates a new HTTP handler that handles all requests to the API of the backend.
-func CreateHttpApiHandler(client *client.Client) http.Handler {
-	apiHandler := ApiHandler{client}
+func CreateHttpApiHandler(client *client.Client, heapsterClient *unversioned.RESTClient) http.Handler {
+	apiHandler := ApiHandler{client, heapsterClient}
 	wsContainer := restful.NewContainer()
 
 	deployWs := new(restful.WebService)
@@ -167,7 +168,8 @@ func CreateHttpApiHandler(client *client.Client) http.Handler {
 }
 
 type ApiHandler struct {
-	client *client.Client
+	client         *client.Client
+	heapsterClient *unversioned.RESTClient
 }
 
 // Handles deploy API call.
@@ -237,7 +239,7 @@ func (apiHandler *ApiHandler) handleGetReplicaSetDetail(
 
 	namespace := request.PathParameter("namespace")
 	replicaSet := request.PathParameter("replicaSet")
-	result, err := GetReplicaSetDetail(apiHandler.client, namespace, replicaSet)
+	result, err := GetReplicaSetDetail(apiHandler.client, apiHandler.heapsterClient, namespace, replicaSet)
 	if err != nil {
 		handleInternalError(response, err)
 		return
