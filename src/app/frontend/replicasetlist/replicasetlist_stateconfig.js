@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as zerostate} from 'zerostate/zerostate_state';
+import {stateName as zerostate} from './zerostate/zerostate_state';
 import {stateName as replicasets} from './replicasetlist_state';
 import {stateUrl as replicasetsUrl} from './replicasetlist_state';
 import ReplicaSetListController from './replicasetlist_controller';
+import ZeroStateController from './zerostate/zerostate_controller';
 
 /**
  * Configures states for the service view.
@@ -33,6 +34,16 @@ export default function stateConfig($stateProvider) {
     },
     templateUrl: 'replicasetlist/replicasetlist.html',
     onEnter: redirectIfNeeded,
+  });
+  $stateProvider.state(zerostate, {
+    views: {
+      '@': {
+        controller: ZeroStateController,
+        controllerAs: 'ctrl',
+        templateUrl: 'replicasetlist/zerostate/zerostate.html',
+      },
+    },
+    url: '/zerostate',
   });
 }
 

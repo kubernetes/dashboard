@@ -12,20 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ZeroStateController from './zerostate_controller';
-import {stateName} from './zerostate_state';
+import ZerostateController from 'replicasetlist/zerostate/zerostate_controller';
 
-/**
- * Configures states for the zero state view.
- *
- * @param {!ui.router.$stateProvider} $stateProvider
- * @ngInject
- */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    controller: ZeroStateController,
-    controllerAs: 'ctrl',
-    url: '/zerostate',
-    templateUrl: 'zerostate/zerostate.html',
+describe('Zerostate controller', () => {
+  let ctrl;
+
+  beforeEach(angular.mock.inject(() => { ctrl = new ZerostateController(); }));
+
+  it('should do something', () => {
+    expect(ctrl.learnMoreLinks).toEqual([
+      {title: 'Dashboard Tour', link: "#"},
+      {title: 'Deploying your App', link: "#"},
+      {title: 'Monitoring your App', link: "#"},
+      {title: 'Troubleshooting', link: "#"},
+    ]);
   });
-}
+});
