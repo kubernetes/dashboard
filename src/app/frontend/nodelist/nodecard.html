@@ -5,7 +5,13 @@
         <h3 class="md-title">
             {{::ctrl.node.name}}
         </h3>
-    </div>
+      </div>
+      <div flex layout="row" layout-align="space-between center">
+        <canvas id="line" class="chart chart-line" chart-data="data" chart-options="options"
+        chart-colours="colors"
+  chart-labels="labels" chart-legend="true" chart-series="series"
+  chart-click="onClick"></canvas>
+      </div>
     <md-divider></md-divider>
     <div class="md-caption">
       <div layout="row" layout-wrap>

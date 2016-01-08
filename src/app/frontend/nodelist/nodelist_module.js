@@ -10,6 +10,7 @@ export default angular.module(
                             'ngMaterial',
                             'ngResource',
                             'ui.router',
+                            'chart.js',
                           ])
     .config(stateConfig)
     .directive('kdNodeCard', nodeCardDirective);

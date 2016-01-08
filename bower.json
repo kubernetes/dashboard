@@ -1,7 +1,5 @@
 {
-  "//": "Specification of this file can be found at:",
   "//": "https://github.com/bower/spec/blob/master/json.md",
-
   "name": "kubernetes-dashboard",
   "version": "0.0.1",
   "dependencies": {
@@ -12,7 +10,8 @@
     "angular-messages": "~1.4.8",
     "angular-ui-router": "~0.2.15",
     "angular-resource": "~1.4.8",
-    "angular-sanitize": "~1.4.8"
+    "angular-sanitize": "~1.4.8",
+    "angular-chart.js": "~0.8.8"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.8",
