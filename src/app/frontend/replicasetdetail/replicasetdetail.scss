@@ -18,6 +18,7 @@ $replicasetdetails-sidebar-bg: #fafafa;
 $replicasetdetails-border: #ddd;
 $replicasetdetails-table-message: #000;
 $replicasetdetails-table-cell: #777;
+$replicasetdetails-sidebar-width: 315px;
 
 .kd-replicasetdetail-app-name {
   color: $foreground-2;
@@ -26,7 +27,8 @@ $replicasetdetails-table-cell: #777;
 
 .kd-replicasetdetail-sidebar {
   background-color: $replicasetdetails-sidebar-bg;
-  min-width: 315px;
+  max-width: $replicasetdetails-sidebar-width;
+  min-width: $replicasetdetails-sidebar-width;
 }
 
 .kd-replicasetdetail-table {
@@ -76,7 +78,6 @@ $replicasetdetails-table-cell: #777;
 .kd-replicasetdetail-sidebar-subline {
   color: $muted;
   font-size: $caption-font-size-base;
-  padding-bottom: 8px;
 }
 
 .kd-replicasetdetail-sidebar-icon {

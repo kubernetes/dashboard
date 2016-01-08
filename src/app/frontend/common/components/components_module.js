@@ -12,16 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import middleEllipsisFilter from './middleellipsis_filter';
-import relativeTimeFilter from './relativetime_filter';
+import labelsDirective from './labels/labels_directive';
 
 /**
- * Module containing common filters for the application.
+ * Module containing common components for the application.
  */
 export default angular.module(
-                          'kubernetesDashboard.common.filters',
+                          'kubernetesDashboard.common.components',
                           [
                             'ngMaterial',
                           ])
-    .filter('middleEllipsis', middleEllipsisFilter)
-    .filter('relativeTime', relativeTimeFilter);
+    .directive('kdLabels', labelsDirective);

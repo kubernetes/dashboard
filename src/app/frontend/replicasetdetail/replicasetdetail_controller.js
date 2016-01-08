@@ -115,19 +115,6 @@ export default class ReplicaSetDetailController {
   }
 
   /**
-   * TODO(floreks): Reuse this in replicasetlist controller.
-   * Formats labels object to readable string.
-   * @param {!Object} object
-   * @return {string}
-   * @export
-   */
-  formatLabelString(object) {
-    let result = '';
-    angular.forEach(object, function(value, key) { result += `,${key}=${value}`; });
-    return result.substring(1);
-  }
-
-  /**
    * Returns true if event is a warning.
    * @param {!backendApi.Event} event
    * @return {boolean}

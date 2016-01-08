@@ -49,7 +49,7 @@ function getFileList() {
  */
 module.exports = function(config) {
   let configuration = {
-    basePath: conf.paths.base,
+    basePath: '.',
 
     files: getFileList(),
 
@@ -109,7 +109,8 @@ module.exports = function(config) {
     // karma-ng-html2js-preprocessor plugin config.
     ngHtml2JsPreprocessor: {
       stripPrefix: `${conf.paths.frontendSrc}/`,
-      moduleName: conf.frontend.moduleName,
+      // Load all template related stuff under ng module as it's loaded with every module.
+      moduleName: 'ng',
     },
   };
 

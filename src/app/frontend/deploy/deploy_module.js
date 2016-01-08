@@ -42,4 +42,4 @@ export default angular.module(
     .directive('kdUniqueName', uniqueNameDirective)
     .directive('kdFileReader', fileReaderDirective)
     .directive('kdUpload', uploadDirective)
-    .directive('kdLabel', deployLabelDirective);
+    .directive('kdDeployLabel', deployLabelDirective);
