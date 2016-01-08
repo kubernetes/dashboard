@@ -46,11 +46,11 @@ func getNodeList(nodes []api.Node) *NodeList {
 	nodeList := &NodeList{Nodes: make([]Node, 0)}
 
 	for _, node := range nodes {
-		var condition api.NodeCondition
 		// find node status
+		status := "Unknown"
 		for _, c := range node.Status.Conditions {
 			if c.Status == "True" {
-				condition = c
+				status = string(c.Type)
 				break
 			}
 		}
@@ -58,7 +58,7 @@ func getNodeList(nodes []api.Node) *NodeList {
 		nodeList.Nodes = append(nodeList.Nodes, Node{
 			Name:    node.ObjectMeta.Name,
 			Labels:  node.ObjectMeta.Labels,
-			Status:  string(condition.Type),
+			Status:  status,
 			Created: node.ObjectMeta.CreationTimestamp,
 		})
 	}
