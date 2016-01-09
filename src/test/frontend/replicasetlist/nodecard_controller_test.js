@@ -12,7 +12,7 @@ describe('Node card controller', () => {
         });
     });
 
-    it('should given updated chart data update scope data and labels', () => {
+    it('should, given updated chart data, update scope data and labels', () => {
         // given
         let data = {
             stats: [
@@ -32,5 +32,17 @@ describe('Node card controller', () => {
         // then
         expect(ctrl._scope.data).toEqual([[12, 12], [66, 66]]);
         expect(ctrl._scope.labels).toEqual(['', '']);
+    });
+
+    describe('getFormattedLabels', () => {
+        it('should return labels key and value merged into a string', () => {
+            ctrl.node = {};
+            ctrl.node.labels = {
+                label: 'value',
+                anotherLabel: 'value',
+            };
+
+            expect(ctrl.getFormattedLabels()).toEqual(['label: value', 'anotherLabel: value']);
+        });
     });
 });
