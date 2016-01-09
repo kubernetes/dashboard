@@ -8,11 +8,13 @@ import (
 	"k8s.io/kubernetes/pkg/labels"
 )
 
+// NodeList resource
 type NodeList struct {
 	// Unordered list of Nodes
 	Nodes []Node `json:"nodes"`
 }
 
+// Single node resource
 type Node struct {
 	// Name of the Node
 	Name string `json:"name"`

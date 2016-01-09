@@ -108,6 +108,10 @@ func CreateHttpApiHandler(client *client.Client) http.Handler {
 		nodesWs.GET("").
 			To(apiHandler.handleGetNodes).
 			Writes(NodeList{}))
+	nodesWs.Route(
+		nodesWs.GET("/{name}/stats").
+			To(apiHandler.handleGetNodeStats).
+			Writes(NodeStats{}))
 	wsContainer.Add(nodesWs)
 
 	return wsContainer
@@ -290,6 +294,17 @@ func (apiHandler *ApiHandler) handleEvents(request *restful.Request, response *r
 // Handles nodes API call.
 func (apiHandler *ApiHandler) handleGetNodes(request *restful.Request, response *restful.Response) {
 	result, err := GetNodeList(apiHandler.client)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handle node stats API call.
+func (apiHandler *ApiHandler) handleGetNodeStats(request *restful.Request, response *restful.Response) {
+	name := request.PathParameter("name")
+	result, err := GetNodeStats(name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
