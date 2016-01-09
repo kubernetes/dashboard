@@ -1,3 +1,4 @@
+
 // Copyright 2015 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,16 +13,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import middleEllipsisFilter from './middleellipsis_filter';
-import relativeTimeFilter from './relativetime_filter';
+import errorDialogService from './errordialog_service';
 
 /**
- * Module containing common filters for the application.
+ * Angular module containing navigation chrome for the application.
  */
 export default angular.module(
-                          'kubernetesDashboard.common.filters',
+                          'kubernetesDashboard.errorhandling',
                           [
                             'ngMaterial',
                           ])
-    .filter('middleEllipsis', middleEllipsisFilter)
-    .filter('relativeTime', relativeTimeFilter);
+    .service('errorDialog', errorDialogService);

@@ -12,16 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import middleEllipsisFilter from './middleellipsis_filter';
-import relativeTimeFilter from './relativetime_filter';
-
 /**
- * Module containing common filters for the application.
+ * Error dialog to display errors which could not be responded properly
+ *
+ * @final
  */
-export default angular.module(
-                          'kubernetesDashboard.common.filters',
-                          [
-                            'ngMaterial',
-                          ])
-    .filter('middleEllipsis', middleEllipsisFilter)
-    .filter('relativeTime', relativeTimeFilter);
+export default class ErrorDialog {
+  /**
+   * @param {!md.$dialog} $mdDialog
+   * @ngInject
+   */
+  constructor($mdDialog) {
+    /** @private {!md.$dialog} */
+    this.mdDialog_ = $mdDialog;
+  }
+
+  /**
+   * Opens a pop-up window that displays the error message
+   *
+   * @param {string} message
+   * @export
+   */
+  open(message) {
+    let alert = this.mdDialog_.alert();
+    alert.title(message);
+    alert.ok('Close');
+    this.mdDialog_.show(alert);
+  }
+}

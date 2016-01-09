@@ -15,7 +15,9 @@
 import stateConfig from './replicasetlist_stateconfig';
 import logsMenuDirective from './logsmenu_directive';
 import filtersModule from 'common/filters/filters_module';
+import componentsModule from 'common/components/components_module';
 import replicaSetCardDirective from './replicasetcard_directive';
+import replicaSetCardMenuDirective from './replicasetcardmenu_directive';
 import replicaSetDetailModule from 'replicasetdetail/replicasetdetail_module';
 import replicaSetListContainer from './replicasetlistcontainer_directive';
 
@@ -32,8 +34,10 @@ export default angular.module(
                             'ui.router',
                             replicaSetDetailModule.name,
                             filtersModule.name,
+                            componentsModule.name,
                           ])
     .config(stateConfig)
     .directive('logsMenu', logsMenuDirective)
     .directive('kdReplicaSetListContainer', replicaSetListContainer)
-    .directive('kdReplicaSetCard', replicaSetCardDirective);
+    .directive('kdReplicaSetCard', replicaSetCardDirective)
+    .directive('kdReplicaSetCardMenu', replicaSetCardMenuDirective);

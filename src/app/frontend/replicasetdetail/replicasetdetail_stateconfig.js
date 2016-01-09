@@ -42,7 +42,7 @@ export default function stateConfig($stateProvider) {
  * @return {!angular.Resource<!backendApi.ReplicaSetDetail>}
  * @ngInject
  */
-function getReplicaSetDetailsResource($stateParams, $resource) {
+export function getReplicaSetDetailsResource($stateParams, $resource) {
   return $resource('/api/replicasets/:namespace/:replicaSet', $stateParams);
 }
 

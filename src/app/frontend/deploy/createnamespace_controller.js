@@ -22,10 +22,12 @@ export default class NamespaceDialogController {
    * @param {!md.$dialog} $mdDialog
    * @param {!angular.$log} $log
    * @param {!angular.$resource} $resource
+   * TODO (cheld) Set correct type after fixing issue #159
+   * @param {!Object} errorDialog
    * @param {!Array<string>} namespaces
    * @ngInject
    */
-  constructor($mdDialog, $log, $resource, namespaces) {
+  constructor($mdDialog, $log, $resource, errorDialog, namespaces) {
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
 
@@ -34,6 +36,12 @@ export default class NamespaceDialogController {
 
     /** @private {!angular.$resource} */
     this.resource_ = $resource;
+
+    /**
+     * TODO (cheld) Set correct type after fixing issue #159
+     * @private {!Object}
+     */
+    this.errorDialog_ = errorDialog;
 
     /**
      * List of available namespaces.
@@ -93,8 +101,9 @@ export default class NamespaceDialogController {
           this.mdDialog_.hide(this.namespace);
         },
         (err) => {
-          this.log_.info('Error creating namespace:', err);
           this.mdDialog_.hide();
+          this.errorDialog_.open('Error creating namespace');
+          this.log_.info('Error creating namespace:', err);
         });
   }
 }

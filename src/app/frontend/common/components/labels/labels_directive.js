@@ -12,19 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import LabelsController from './labels_controller';
+
 /**
- * Opens replica set delete dialog.
- * @param {!md.$dialog} mdDialog
- * @param {!function()} deleteReplicaSetFn - callback
+ * Returns directive definition for label.
+ *
+ * @return {!angular.Directive}
  */
-export default function showDeleteReplicaSetDialog(mdDialog, deleteReplicaSetFn) {
-  mdDialog.show(
-              mdDialog.confirm()
-                  .title('Delete Replica Set')
-                  .textContent(
-                      'All related pods will be deleted. Are you sure you want to delete this' +
-                      ' replica set? ')
-                  .ok('Ok')
-                  .cancel('Cancel'))
-      .then(deleteReplicaSetFn);
+export default function labelsDirective() {
+  return {
+    controller: LabelsController,
+    controllerAs: 'labelsCtrl',
+    templateUrl: 'common/components/labels/labels.html',
+    scope: {},
+    bindToController: {
+      'labels': '=',
+    },
+  };
 }
