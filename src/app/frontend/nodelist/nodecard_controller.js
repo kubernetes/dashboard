@@ -23,18 +23,30 @@ export default class NodeCardController {
         */
         this._nodeService = nodeStatsService;
 
-        /** @export {bool} */
-        this.statsAvailable = this.node.status === 'Ready';
-
         // bind to self
         this.updateData = this.updateData.bind(this);
         this.fetchNodeStatData = this.fetchNodeStatData.bind(this);
+    }
 
-        // only present chart if stats are available
-        if (this.statsAvailable) {
+    /**
+    * @return {bool}
+    * @export
+    */
+    isStatsAvailable() {
+        return this.node.status === 'Ready';
+    }
+
+    /**
+    * Init fetch of chart data
+    * @export
+    */
+    getChartData() {
+        // only load if stats are available
+        if (this.isStatsAvailable()) {
             // initialize chart options
             this.initChartOptions();
 
+            // fetch data
             this.fetchNodeStatData();
             this.pollNodeStatData();
         }

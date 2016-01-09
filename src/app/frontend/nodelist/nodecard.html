@@ -6,8 +6,8 @@
             {{::ctrl.node.name}}
         </h3>
       </div>
-      <div flex layout="row" layout-align="space-between center" ng-if="::ctrl.statsAvailable">
-        <canvas id="line" class="chart chart-line"
+      <div flex layout="row" layout-align="space-between center" ng-if="::ctrl.isStatsAvailable()">
+        <canvas id="line" class="chart chart-line" ng-init="::ctrl.getChartData()"
           chart-data="data"
           chart-options="options"
           chart-colours="colors"
