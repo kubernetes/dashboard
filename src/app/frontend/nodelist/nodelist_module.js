@@ -1,5 +1,6 @@
 import stateConfig from './nodelist_stateconfig';
 import nodeCardDirective from './nodecard_directive';
+import NodeStatsService from './nodestats_service';
 
 /**
  * Angular module for the Node list view.
@@ -13,4 +14,5 @@ export default angular.module(
                             'chart.js',
                           ])
     .config(stateConfig)
-    .directive('kdNodeCard', nodeCardDirective);
+    .directive('kdNodeCard', nodeCardDirective)
+    .service('nodeStatsService', NodeStatsService);

@@ -1,39 +1,52 @@
 export default class NodeListCardController {
-    constructor($state, $scope) {
+    constructor($state, $scope, nodeStatsService) {
         this.node;
 
         this._state = $state;
+        this._scope = $scope;
+        this._nodeService = nodeStatsService;
 
-        $scope.labels = Array.apply(null, Array(12)).map(() => '');
-        $scope.series = ['CPU', 'Memory'];
-        $scope.colors = ['#326DE6', '#e5be32'];
-        $scope.options = {
+        this.updateData = this.updateData.bind(this);
+        this.fetchNodeStatData = this.fetchNodeStatData.bind(this);
+
+        this.initChartOptions();
+
+        if (this.node.status === 'Ready') {
+            this.fetchNodeStatData();
+            this.pollNodeStatData();
+        }
+    }
+
+    initChartOptions() {
+        this._scope.series = ['CPU (%)', 'Memory (%)'];
+        this._scope.colors = ['#326DE6', '#e5be32'];
+        this._scope.options = {
             pointDot: false,
+            animation: false,
         };
-
-        $scope.data = [
-            this.getZeroedValues(),
-            this.getZeroedValues(),
-        ];
-
-        const randVal = () => Math.floor(Math.random() * 100);
-
-        setInterval(() => {
-            this.addNewDataValues($scope, [randVal(), randVal()]);
-        }, 5000);
     }
 
-    addNewDataValues($scope, vals) {
-        $scope.data = $scope.data.map((arr, i) => {
-            arr.shift();
-            arr.push(vals[i]);
-            return arr;
+    pollNodeStatData() {
+        setInterval(this.fetchNodeStatData, 2000);
+    }
+
+    fetchNodeStatData() {
+        this._nodeService
+            .getNodeStats(this.node.name)
+            .then(this.updateData);
+    }
+
+    updateData(data) {
+        let cpu = [];
+        let mem = [];
+
+        data.stats.forEach(stat => {
+            cpu.push(Math.round(stat.cpuPercentage));
+            mem.push(Math.round(stat.memoryPercentage));
         });
-        $scope.$apply();
-    }
 
-    getZeroedValues() {
-        return Array.apply(null, Array(12)).map(() => 0);
+        this._scope.data = [cpu, mem];
+        this._scope.labels = Array.apply(null, Array(cpu.length)).map(() => '');
     }
 
     getFormattedLabels() {
@@ -42,5 +55,3 @@ export default class NodeListCardController {
         });
     }
 }
-
-NodeListCardController.$inject = ['$state', '$scope'];
