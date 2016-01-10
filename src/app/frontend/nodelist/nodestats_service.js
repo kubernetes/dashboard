@@ -1,21 +1,21 @@
 /**
 * Service for fetching node stats
+* @final
 */
-export default class NodeStatsService {
-    /**
-    * @param {$resource} $resource
-    */
-    constructor($resource) {
-        this.$resource = $resource;
-    }
+export class NodeStatsService {
+  /**
+  * @param {!angular.$resource} $resource
+  * @ngInject
+  */
+  constructor($resource) { this.$resource = $resource; }
 
-    /**
-    * Fetch node stats from api
-    * @param {string} host
-    * @return {$q.$promise}
-    */
-    getNodeStats(host) {
-        let resource = this.$resource(`/api/nodes/${host}/stats`);
-        return resource.get().$promise;
-    }
+  /**
+  * Fetch node stats from api
+  * @param {string} host
+  * @return {Promise}
+  */
+  getNodeStats(host) {
+    let resource = this.$resource(`/api/nodes/${host}/stats`);
+    return resource.get().$promise;
+  }
 }

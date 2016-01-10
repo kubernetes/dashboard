@@ -1,5 +1,6 @@
 /**
  * Controller for the node list view
+ * @final
  */
 export default class NodeListController {
   /**

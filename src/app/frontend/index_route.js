@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import {stateUrl as replicaSetStateUrl} from './replicasetlist/replicasetlist_state';
-import {stateUrl as nodesStateUrl} from './nodelist/nodelist_state';
 
 /**
  * Global route configuration for the application.

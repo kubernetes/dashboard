@@ -216,3 +216,40 @@ backendApi.AppNameValiditySpec;
  * }}
  */
 backendApi.AppNameValidity;
+
+/**
+* @typedef {{
+*    name: string,
+*    status: string,
+*    created: string,
+*    labels: !Object<string, string>
+* }}
+*/
+backendApi.Node;
+
+/**
+* @typedef {{
+*    nodes: !Array<!backendApi.Node>
+* }}
+*/
+backendApi.NodeList;
+
+/**
+* @typedef {{
+*    cpu: number,
+*    cpuPercentage: number,
+*    memory: number,
+*    memoryPercentage: number,
+*    timestamp: string
+*}}
+*/
+backendApi.NodeStat;
+
+/**
+* @typedef {{
+*    cpuCores: number,
+*    memoryLimit: number,
+*    stats: !Array<!backendApi.NodeStat>
+*}}
+*/
+backendApi.NodeStats;

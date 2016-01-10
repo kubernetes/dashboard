@@ -13,7 +13,7 @@ export default function stateConfig($stateProvider) {
     controllerAs: 'ctrl',
     url: stateUrl,
     resolve: {
-        'nodes': resolveNodes,
+      'nodes': resolveNodes,
     },
     templateUrl: 'nodelist/nodelist.html',
   });
@@ -25,7 +25,7 @@ export default function stateConfig($stateProvider) {
 * @ngInject
 */
 function resolveNodes($resource) {
-    /** @type {!angular.Resource<!backendApi.NodeList>} */
-    let resource = $resource('/api/nodes');
-    return resource.get().$promise;
+  /** @type {!angular.Resource<!backendApi.NodeList>} */
+  let resource = $resource('/api/nodes');
+  return resource.get().$promise;
 }

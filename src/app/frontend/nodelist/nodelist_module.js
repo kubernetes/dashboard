@@ -1,6 +1,6 @@
 import stateConfig from './nodelist_stateconfig';
 import nodeCardDirective from './nodecard_directive';
-import NodeStatsService from './nodestats_service';
+import {NodeStatsService} from './nodestats_service';
 
 /**
  * Angular module for the Node list view.
