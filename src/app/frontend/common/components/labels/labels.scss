@@ -15,7 +15,7 @@
 @import '../../../variables';
 
 $label-height: $caption-font-size-base + 6;
-$label-margin: 0 $baseline-grid $baseline-grid 0;
+$label-margin: 0 $baseline-grid ($baseline-grid / 2) 0;
 
 // Style taken(mostly) from angular material md-chip style.
 .kd-labels {
@@ -27,4 +27,8 @@ $label-margin: 0 $baseline-grid $baseline-grid 0;
   margin: $label-margin;
   padding: 0 $baseline-grid;
   vertical-align: middle;
+}
+
+.kd-labels-content {
+  background-color: inherit;
 }
