@@ -15,6 +15,8 @@
 package main
 
 import (
+	"log"
+
 	api "k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
@@ -36,6 +38,8 @@ type NamespaceList struct {
 
 // Creates namespace based on given specification.
 func CreateNamespace(spec *NamespaceSpec, client *client.Client) error {
+	log.Printf("Creating namespace %s", spec.Name)
+
 	namespace := &api.Namespace{
 		ObjectMeta: api.ObjectMeta{
 			Name: spec.Name,
@@ -49,6 +53,8 @@ func CreateNamespace(spec *NamespaceSpec, client *client.Client) error {
 
 // Returns a list of all namespaces in the cluster.
 func GetNamespaceList(client *client.Client) (*NamespaceList, error) {
+	log.Printf("Getting namespace list")
+
 	list, err := client.Namespaces().List(unversioned.ListOptions{
 		LabelSelector: unversioned.LabelSelector{labels.Everything()},
 		FieldSelector: unversioned.FieldSelector{fields.Everything()},

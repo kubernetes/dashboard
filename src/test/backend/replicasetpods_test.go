@@ -15,9 +15,10 @@
 package main
 
 import (
-	"k8s.io/kubernetes/pkg/api"
 	"reflect"
 	"testing"
+
+	"k8s.io/kubernetes/pkg/api"
 )
 
 func TestGetReplicaSetPods(t *testing.T) {

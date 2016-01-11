@@ -17,9 +17,9 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"net/http"
 
-	"github.com/golang/glog"
 	"github.com/spf13/pflag"
 )
 
@@ -33,19 +33,18 @@ var (
 
 func main() {
 	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)
-
 	pflag.Parse()
-	glog.Info("Starting HTTP server on port ", *argPort)
-	defer glog.Flush()
+
+	log.Printf("Starting HTTP server on port %d", *argPort)
 
 	apiserverClient, err := CreateApiserverClient(*argApiserverHost, new(ClientFactoryImpl))
 	if err != nil {
-		glog.Fatal(err)
+		log.Print(err)
 	}
 
 	// Run a HTTP server that serves static public files from './public' and handles API calls.
 	// TODO(bryk): Disable directory listing.
 	http.Handle("/", http.FileServer(http.Dir("./public")))
 	http.Handle("/api/", CreateHttpApiHandler(apiserverClient))
-	glog.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", *argPort), nil))
+	log.Print(http.ListenAndServe(fmt.Sprintf(":%d", *argPort), nil))
 }

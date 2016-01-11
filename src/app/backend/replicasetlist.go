@@ -15,6 +15,8 @@
 package main
 
 import (
+	"log"
+
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
@@ -64,6 +66,8 @@ type ReplicaSet struct {
 
 // Returns a list of all Replica Sets in the cluster.
 func GetReplicaSetList(client *client.Client) (*ReplicaSetList, error) {
+	log.Printf("Getting list of all replica sets in the cluster")
+
 	replicaSets, err := client.ReplicationControllers(api.NamespaceAll).List(
 		unversioned.ListOptions{
 			LabelSelector: unversioned.LabelSelector{labels.Everything()},
