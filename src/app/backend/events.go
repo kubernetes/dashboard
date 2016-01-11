@@ -80,6 +80,7 @@ func GetEvents(client *client.Client, namespace, replicaSetName string) (*Events
 
 	events := AppendEvents(rsEvents, Events{
 		Namespace: namespace,
+		Events:    make([]Event, 0),
 	})
 
 	// Get events for pods in replica set.

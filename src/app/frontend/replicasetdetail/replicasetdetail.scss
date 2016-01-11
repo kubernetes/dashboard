@@ -15,10 +15,10 @@
 @import '../variables';
 
 $replicasetdetails-sidebar-bg: #fafafa;
-$replicasetdetails-border: #ddd;
-$replicasetdetails-table-message: #000;
-$replicasetdetails-table-cell: #777;
 $replicasetdetails-sidebar-width: 315px;
+
+$table-cell-height: 6 * $baseline-grid;
+$table-cell-height-half: $table-cell-height / 2;
 
 .kd-replicasetdetail-app-name {
   color: $foreground-2;
@@ -27,8 +27,13 @@ $replicasetdetails-sidebar-width: 315px;
 
 .kd-replicasetdetail-sidebar {
   background-color: $replicasetdetails-sidebar-bg;
-  max-width: $replicasetdetails-sidebar-width;
+  max-width: $replicasetdetails-sidebar-width + 10 * $baseline-grid;
   min-width: $replicasetdetails-sidebar-width;
+}
+
+.kd-replicasetdetail-sidebar-item {
+  padding-left: 2 * $baseline-grid;
+  padding-right: $baseline-grid;  
 }
 
 .kd-replicasetdetail-table {
@@ -36,131 +41,85 @@ $replicasetdetails-sidebar-width: 315px;
 }
 
 .kd-replicasetdetail-sidebar-header {
-  border-bottom: 1px solid $replicasetdetails-border;
-  color: $muted;
-  max-height: 49px;
-  min-height: 49px;
+  height: $table-cell-height;
 }
 
-.kd-replicasetdetail-sidebar-header-icon {
-  color: $muted;
-  font-size: $headline-font-size-base;
-  font-weight: $regular-font-weight;
-  margin-right: 6px;
-  vertical-align: middle;
-}
-
-.kd-replicasetdetail-table-message {
-  border-bottom: 1px solid $replicasetdetails-border;
-  color: $replicasetdetails-table-message;
-  font-size: $caption-font-size-base;
-  font-weight: $regular-font-weight;
-  height: 40px;
-  overflow: hidden;
-  padding: 5px 5px 5px 15px;
-  text-align: left;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.kd-replicasetdetail-sidebar-header-wrapper {
+  border-bottom: 1px solid $foreground-4;
 }
 
 .kd-replicasetdetail-sidebar-title {
   font-size: $subhead-font-size-base;
-  padding-bottom: 10px;
-  padding-top: 10px;
+  font-weight: $bold-font-weight;
+  padding: $baseline-grid 0;
 }
 
 .kd-replicasetdetail-sidebar-line {
-  color: $delicate;
-  font-size: $caption-font-size-base;
-  padding-bottom: 6px;
-}
-
-.kd-replicasetdetail-sidebar-subline {
-  color: $muted;
-  font-size: $caption-font-size-base;
+  color: $foreground-2;
+  font-size: $body-font-size-base;
   padding-bottom: $baseline-grid;
 }
 
-.kd-replicasetdetail-sidebar-icon {
-  color: $primary;
-  font-size: 20px;
-  padding: 0 3px;
-  vertical-align: top;
+.kd-replicasetdetail-sidebar-subline {
+  color: $foreground-1;
+  font-size: $body-font-size-base;
+  overflow: hidden;
+  padding-bottom: $baseline-grid;
+  text-overflow: ellipsis;
 }
 
 .kd-replicasetdetail-warning-icon {
   color: $warning;
-  font-size: 24px;
-  padding: 0 5px;
+  font-size: $table-cell-height-half;
+  padding: 0 $baseline-grid;
   vertical-align: middle;
 }
 
-.kd-replicasetdetail-sidebar-service-icon {
-  color: $muted;
-  font-size: $body-font-size-base;
-  padding: 0 3px;
-  vertical-align: top;
-}
-
-.kd-replicasetdetail-sidebar-button {
-  font-size: .85em;
-  margin: 0;
-  padding-left: 0;
-}
-
-.kd-replicasetdetail-sidebar-editpods-button {
-  margin: 0;
-  min-width: 25px;
-
-  > md-icon {
-    outline: none;
-  }
-}
-
 .kd-replicasetdetail-options {
-  margin: 15px;
+  margin: 2 * $baseline-grid;
 }
 
 .kd-replicasetdetail-sidebar-info {
-  padding-left: 5px;
+  // 6px needed to offset for md-button padding.
+  padding-left: $baseline-grid + 6px;
+}
+
+.kd-replicasetdetail-sidebar-actions {
+  padding-top: $baseline-grid;
 }
 
 .kd-replicasetdetail-option-picker {
-  min-width: 150px;
-  padding-right: 25px;
+  padding-right: 2 * $baseline-grid;
+  width: 15 * $baseline-grid;
 }
 
 .kd-replicasetdetail-table-header {
-  border-bottom: 1px solid $replicasetdetails-border;
-  color: $replicasetdetails-table-cell;
+  border-bottom: 1px solid $foreground-4;
+  color: $foreground-2;
   font-size: $body-font-size-base;
   font-weight: $regular-font-weight;
-  padding: 15px 10px 15px 15px;
+  height: $table-cell-height;
+  padding: 0 0 0 (2 * $baseline-grid);
   text-align: left;
-}
-
-.kd-replicasetdetail-pointer {
-  cursor: pointer;
+  white-space: nowrap;
 }
 
 .kd-replicasetdetail-table-cell {
-  border-bottom: 1px solid $replicasetdetails-border;
-  color: $replicasetdetails-table-cell;
-  font-size: $caption-font-size-base;
-  height: 40px;
-  padding: 5px 5px 5px 15px;
+  border-bottom: 1px solid $foreground-4;
+  font-size: $body-font-size-base;
+  height: $table-cell-height;
+  padding: 0 0 0 (2 * $baseline-grid);
 }
 
 .kd-replicasetdetail-table-icon {
-  font-size: $body-font-size-base;
-  padding: 0 3px;
+  font-size: inherit;
   vertical-align: top;
 }
 
 .kd-replicasetdetail-help-icon {
-  color: $muted;
-  cursor: help;
-  font-size: $body-font-size-base;
-  padding: 0 3px;
-  vertical-align: middle;
+  color: $foreground-2;
+  cursor: default;
+  font-size: inherit;
+  height: inherit;
+  vertical-align: text-top;
 }

@@ -15,83 +15,82 @@ limitations under the License.
 -->
 
 <md-content layout="row" layout-fill flex>
-  <div class="kd-replicasetdetail-sidebar" layout="column">
-    <div class="kd-replicasetdetail-sidebar-header" flex layout-align="start center" layout="row">
-      <a flex-offset="10" ui-sref="replicasets">
-        <i class="material-icons kd-replicasetdetail-sidebar-header-icon">keyboard_backspace</i>
-      </a>
-      <span flex-offset="5" flex class="md-title kd-replicasetdetail-app-name">
-        {{ctrl.replicaSetDetail.name}}
-      </span>
+  <div class="kd-replicasetdetail-sidebar" layout="column" flex="noshrink">
+    <div class="kd-replicasetdetail-sidebar-header-wrapper kd-replicasetdetail-sidebar-item"
+        flex="nogrow">
+      <div class="kd-replicasetdetail-sidebar-header" layout-align="start center" layout="row">
+        <md-button class="md-icon-button" ui-sref="replicasets">
+          <md-icon md-font-library="material-icons">arrow_back</md-icon>
+        </md-button>
+        <h1 flex class="md-title kd-replicasetdetail-app-name">
+          {{ctrl.replicaSetDetail.name}}
+        </h1>
+      </div>
     </div>
-    <div flex-offset="5" flex layout-align="start start" layout-padding layout="row">
-      <div flex layout="column">
-        <div layout="row" flex>
-          <md-button class="md-primary kd-replicasetdetail-sidebar-button">
-            <md-icon class="material-icons">refresh</md-icon>
-            ROLLING UPDATE
-          </md-button>
-          <md-button class="md-primary kd-replicasetdetail-sidebar-button"
-                     ng-click="ctrl.handleDeleteReplicaSetDialog()">
-            <md-icon class="material-icons">delete</md-icon>
-            DELETE
+    <div flex layout="column" class="kd-replicasetdetail-sidebar-item">
+      <div layout="row" flex="nogrow" class="kd-replicasetdetail-sidebar-actions">
+        <md-button class="md-primary" ng-click="ctrl.handleDeleteReplicaSetDialog()">
+          <md-icon class="material-icons">delete</md-icon>
+          DELETE
+        </md-button>
+      </div>
+      <div flex layout="column" class="kd-replicasetdetail-sidebar-info">
+        <div>
+          <span class="kd-replicasetdetail-sidebar-title">
+            {{ctrl.replicaSetDetail.podsDesired}} pods
+          </span>
+          <md-button class="md-icon-button md-primary">
+            <md-icon class="material-icons"
+                ng-click="ctrl.handleUpdateReplicasDialog()">
+              mode_edit
+            </md-icon>
           </md-button>
         </div>
-        <div flex layout="column" class="kd-replicasetdetail-sidebar-info">
-          <span>
-            {{ctrl.replicaSetDetail.podsDesired}} pods
-            <md-button class="kd-replicasetdetail-sidebar-editpods-button">
-              <md-icon class="material-icons md-primary" ng-click="ctrl.handleUpdateReplicasDialog()">
-                mode_edit
-              </md-icon>
-            </md-button>
-          </span>
+        <span class="kd-replicasetdetail-sidebar-line">Label selector</span>
+        <span class="kd-replicasetdetail-sidebar-subline">
+          <kd-labels labels="::ctrl.replicaSetDetail.labelSelector"></kd-labels>
+        </span>
+        <span class="kd-replicasetdetail-sidebar-title">Replica Set</span>
+        <span class="kd-replicasetdetail-sidebar-line">Labels</span>
+        <span class="kd-replicasetdetail-sidebar-subline">
+          <kd-labels labels="::ctrl.replicaSetDetail.labels"></kd-labels>
+        </span>
+        <span class="kd-replicasetdetail-sidebar-line">Images</span>
+        <span class="kd-replicasetdetail-sidebar-subline"
+              ng-repeat="image in ctrl.replicaSetDetail.containerImages">
+          {{image}}
+        </span>
+        <div ng-if="::ctrl.replicaSetDetail.services" layout="column">
+          <span class="kd-replicasetdetail-sidebar-title">Services</span>
           <span class="kd-replicasetdetail-sidebar-line">Label selector</span>
-          <span class="kd-replicasetdetail-sidebar-subline">
-            <kd-labels labels="::ctrl.replicaSetDetail.labelSelector"></kd-labels>
-          </span>
-          <span class="kd-replicasetdetail-sidebar-title">Replica Sets</span>
-          <span class="kd-replicasetdetail-sidebar-line">Labels</span>
-          <span class="kd-replicasetdetail-sidebar-subline">
-            <kd-labels labels="::ctrl.replicaSetDetail.labels"></kd-labels>
-          </span>
-          <span class="kd-replicasetdetail-sidebar-line">Images</span>
           <span class="kd-replicasetdetail-sidebar-subline"
-                ng-repeat="image in ctrl.replicaSetDetail.containerImages">
-            {{image}}
+                ng-repeat="service in ::ctrl.replicaSetDetail.services">
+            <kd-labels labels="::service.selector"></kd-labels>
           </span>
-          <div ng-if="::ctrl.replicaSetDetail.services" layout="column">
-            <span class="kd-replicasetdetail-sidebar-title">Service</span>
-            <span class="kd-replicasetdetail-sidebar-line">Label selector</span>
+          <span class="kd-replicasetdetail-sidebar-line">Internal endpoint</span>
+          <div class="kd-replicasetdetail-sidebar-subline"
+               ng-repeat="service in ::ctrl.replicaSetDetail.services">
+            <div ng-if="::service.internalEndpoint">
+              <kd-service-endpoint endpoint="::service.internalEndpoint"></kd-service-endpoint>
+            </div>
+            <span ng-hide="service.internalEndpoint">none</span>
+          </div>
+          <span class="kd-replicasetdetail-sidebar-line">External endpoint</span>
+          <div class="kd-replicasetdetail-sidebar-subline"
+               ng-repeat="service in ::ctrl.replicaSetDetail.services">
+            <div ng-repeat="endpoint in service.externalEndpoints">
+              <kd-service-endpoint endpoint="::endpoint"></kd-service-endpoint>
+            </div>
             <span class="kd-replicasetdetail-sidebar-subline"
-                  ng-repeat="service in ::ctrl.replicaSetDetail.services">
-              <kd-labels labels="::service.selector"></kd-labels>
+                ng-hide="::service.externalEndpoints">
+              none
             </span>
-            <span class="kd-replicasetdetail-sidebar-line">Internal endpoint</span>
-            <div class="kd-replicasetdetail-sidebar-subline"
-                 ng-repeat="service in ::ctrl.replicaSetDetail.services">
-              <div ng-if="::service.internalEndpoint">
-                <kd-service-endpoint endpoint="::service.internalEndpoint"></kd-service-endpoint>
-              </div>
-              <span ng-hide="service.internalEndpoint">none</span>
-            </div>
-            <span class="kd-replicasetdetail-sidebar-line">External endpoint</span>
-            <div class="kd-replicasetdetail-sidebar-subline"
-                 ng-repeat="service in ::ctrl.replicaSetDetail.services">
-              <div ng-repeat="endpoint in service.externalEndpoints">
-                <kd-service-endpoint endpoint="::endpoint"></kd-service-endpoint>
-              </div>
-              <span class="kd-replicasetdetail-sidebar-subline"
-                  ng-hide="::service.externalEndpoints">
-                none
-              </span>
-            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <md-tabs flex md-border-bottom md-dynamic-height>
+  <md-tabs flex="grow" md-border-bottom md-dynamic-height>
     <md-tab label="Pods">
       <md-content>
         <table class="kd-replicasetdetail-table" cellspacing="0">
@@ -136,8 +135,8 @@ limitations under the License.
             <th class="kd-replicasetdetail-table-header">
               <kd-sorted-header currently-selected-column="ctrl.sortPodsBy"
                                 currently-selected-order="ctrl.podsOrder"
-                                column-name="podIP" tooltip="IP adress of the pod">
-                IP
+                                column-name="podIP" tooltip="In cluster IP adress of the pod">
+                Cluster IP
               </kd-sorted-header>
             </th>
             <th class="kd-replicasetdetail-table-header">
@@ -149,11 +148,12 @@ limitations under the License.
               </kd-sorted-header>
             </th>
             <th class="kd-replicasetdetail-table-header">
-              Logs
-              <i class="material-icons kd-replicasetdetail-help-icon">
-                help
-                <md-tooltip>Display logs from the pod</md-tooltip>
-              </i>
+              <span>Logs
+                <i class="material-icons kd-replicasetdetail-help-icon">
+                  help
+                  <md-tooltip>Display logs from the pod</md-tooltip>
+                </i>
+              <span>
             </th>
             <th class="kd-replicasetdetail-table-header"/>
           </tr>
@@ -177,7 +177,9 @@ limitations under the License.
             <td class="kd-replicasetdetail-table-cell">{{pod.podIP}}</td>
             <td class="kd-replicasetdetail-table-cell">{{pod.nodeName}}</td>
             <td class="kd-replicasetdetail-table-cell">
-              Logs <i class="material-icons kd-replicasetdetail-table-icon">arrow_drop_down</i>
+              <span>
+                Logs<i class="material-icons kd-replicasetdetail-table-icon">arrow_drop_down</i>
+              </span>
               <!-- TODO(maciaszczykm): Handle it. -->
             </td>
             <td class="kd-replicasetdetail-table-cell">
@@ -266,7 +268,7 @@ limitations under the License.
           </thead>
           <tbody>
           <tr ng-repeat="event in ctrl.events | orderBy:ctrl.sortEventsBy:ctrl.eventsOrder">
-            <td class="kd-replicasetdetail-table-message">
+            <td class="kd-replicasetdetail-table-cell">
               <i ng-if="ctrl.isEventWarning(event)"
                  class="material-icons kd-replicasetdetail-warning-icon">warning</i>
               {{event.message}}

@@ -14,26 +14,20 @@
 
 @import '../variables';
 
-$sortedheader-font-size: 14px;
+.kd-replicaset-detail-table-header-button {
+  background: inherit;
+  border: 0;
+  color: inherit;
+  padding: 0;
 
-.kd-sortedheader-pointer {
-  cursor: pointer;
-}
-
-.kd-sortedheader-help-icon {
-  color: $muted;
-  cursor: help;
-  font-size: $sortedheader-font-size;
-  height: $sortedheader-font-size;
-  padding: 0 3px;
-  vertical-align: text-top;
-  width: $sortedheader-font-size;
+  &:focus {
+    outline: none;
+  }
 }
 
 .kd-sortedheader-sort-icon {
-  font-size: $sortedheader-font-size;
-  height: $sortedheader-font-size;
-  padding: 0 3px;
+  font-size: inherit;
+  height: inherit;
   vertical-align: text-top;
-  width: $sortedheader-font-size;
+  width: inherit;
 }
