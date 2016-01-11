@@ -23,13 +23,13 @@ describe('DeployLabel controller', () => {
     ctrl = new DeployLabelController();
 
     angular.mock.inject(($rootScope, $compile) => {
-      let $scope = $rootScope.$new();
+      let scope = $rootScope.$new();
       let template = angular.element(
           '<ng-form name="labelForm"><input name="key"' +
           ' ng-model="label"></ng-form>');
 
-      $compile(template)($scope);
-      labelForm = $scope.labelForm;
+      $compile(template)(scope);
+      labelForm = scope.labelForm;
     });
   });
 
