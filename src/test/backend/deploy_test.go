@@ -19,6 +19,7 @@ import (
 	"testing"
 
 	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api/resource"
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
 )
 
@@ -47,6 +48,9 @@ func TestDeployApp(t *testing.T) {
 						Name: "foo-name",
 						SecurityContext: &api.SecurityContext{
 							Privileged: &spec.RunAsPrivileged,
+						},
+						Resources: api.ResourceRequirements{
+							Requests: make(map[api.ResourceName]resource.Quantity),
 						},
 					}},
 				},
@@ -100,5 +104,34 @@ func TestDeployAppContainerCommands(t *testing.T) {
 	if container.Args[0] != commandArgs {
 		t.Errorf("Expected command args to be %#v but got %#v",
 			commandArgs, container.Args)
+	}
+}
+
+func TestDeployWithResourceRequirements(t *testing.T) {
+	cpuRequirement := resource.Quantity{}
+	memoryRequirement := resource.Quantity{}
+	spec := &AppDeploymentSpec{
+		Namespace:         "foo-namespace",
+		Name:              "foo-name",
+		CpuRequirement:    &cpuRequirement,
+		MemoryRequirement: &memoryRequirement,
+	}
+	expectedResources := api.ResourceRequirements{
+		Requests: map[api.ResourceName]resource.Quantity{
+			api.ResourceMemory: memoryRequirement,
+			api.ResourceCPU:    cpuRequirement,
+		},
+	}
+	testClient := testclient.NewSimpleFake()
+
+	DeployApp(spec, testClient)
+
+	createAction := testClient.Actions()[0].(testclient.CreateActionImpl)
+
+	rc := createAction.GetObject().(*api.ReplicationController)
+	container := rc.Spec.Template.Spec.Containers[0]
+	if !reflect.DeepEqual(container.Resources, expectedResources) {
+		t.Errorf("Expected resource requirements to be %#v but got %#v",
+			expectedResources, container.Resources)
 	}
 }

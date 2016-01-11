@@ -17,7 +17,8 @@ limitations under the License.
 <kd-help-section>
   <md-input-container class="md-block" md-is-error="ctrl.isNameError()">
     <label>App name</label>
-    <input ng-model="ctrl.name" name="name" namespace="ctrl.namespace" required kd-unique-name ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }">
+    <input ng-model="ctrl.name" name="name" namespace="ctrl.namespace" required kd-unique-name
+        ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }">
     <md-progress-linear class="kd-deploy-form-name-progress" md-mode="indeterminate"
         ng-show="ctrl.form.name.$pending">
     </md-progress-linear>
@@ -42,7 +43,8 @@ limitations under the License.
     </ng-messages>
   </md-input-container>
   <kd-user-help>
-    Enter the URL of a public image on any registry, or a private image hosted on Docker Hub or Google Container Registry.
+    Enter the URL of a public image on any registry, or a private image hosted on Docker Hub or
+    Google Container Registry.
     <a href="">Learn more</a>
   </kd-user-help>
 </kd-help-section>
@@ -50,7 +52,11 @@ limitations under the License.
 <kd-help-section>
   <md-input-container class="md-block">
     <label>Number of pods</label>
-    <input ng-model="ctrl.replicas" type="number" required min="1">
+    <input ng-model="ctrl.replicas" type="number" required min="1" name="replicas">
+    <ng-messages for="ctrl.form.replicas.$error" role="alert" multiple>
+      <ng-message when="number">Number of pods must be a positive integer.</ng-message>
+      <ng-message when="min">Number of pods must be positive.</ng-message>
+    </ng-messages>
   </md-input-container>
   <kd-user-help>
     A Replica Set will be created to maintain the desired number of pods across your cluster.
@@ -59,27 +65,40 @@ limitations under the License.
 </kd-help-section>
 
 <kd-help-section>
-  <div layout="row" ng-repeat="portMapping in ctrl.portMappings">
-    <md-input-container flex>
-      <label>Port</label>
-      <input ng-model="portMapping.port" type="number" min="0">
-    </md-input-container>
-    <md-input-container flex>
-      <label>Target port</label>
-      <input ng-model="portMapping.targetPort" type="number" min="0">
-    </md-input-container>
-    <md-input-container flex="none">
-      <label>Protocol</label>
-      <md-select ng-model="portMapping.protocol" required>
-        <md-option ng-repeat="protocol in ctrl.protocols" ng-value="protocol">
-          {{protocol}}
-        </md-option>
-      </md-select>
-    </md-input-container>
+  <div ng-repeat="portMapping in ctrl.portMappings">
+    <ng-form name="portMappingForm" layout="row">
+      <md-input-container flex>
+        <label>Port</label>
+        <input ng-model="portMapping.port" type="number" min="0" name="port">
+        <ng-messages for="portMappingForm.port.$error" role="alert" multiple>
+          <ng-message when="number">Port must be an integer.</ng-message>
+          <ng-message when="min">Port must be non-negative.</ng-message>
+        </ng-messages>
+      </md-input-container>
+      <md-input-container flex>
+        <label>Target port</label>
+        <input ng-model="portMapping.targetPort" type="number" min="0" name="targetPort">
+        <ng-messages for="portMappingForm.targetPort.$error" role="alert" multiple>
+          <ng-message when="number">Target port must be an integer.</ng-message>
+          <ng-message when="min">Target port must be non-negative.</ng-message>
+        </ng-messages>
+      </md-input-container>
+      <md-input-container flex="none">
+        <label>Protocol</label>
+        <md-select ng-model="portMapping.protocol" required>
+          <md-option ng-repeat="protocol in ctrl.protocols" ng-value="protocol">
+            {{protocol}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+    </ng-form>
   </div>
   <kd-user-help>
-    Ports are optional. If specified, a Service will be created mapping the Port (incoming) to a target Port seen by the container.
-    <span ng-if="ctrl.name">The internal DNS name for this Service will be: <b>{{ctrl.name}}</b>.</span>
+    Ports are optional. If specified, a Service will be created mapping the Port (incoming) to a
+    target Port seen by the container.
+    <span ng-if="ctrl.name">
+      The internal DNS name for this Service will be: <b>{{ctrl.name}}</b>.
+    </span>
     <a href="">Learn more</a>
   </kd-user-help>
 </kd-help-section>
@@ -93,17 +112,18 @@ limitations under the License.
 <div ng-show="ctrl.isMoreOptionsEnabled()">
   <kd-help-section>
     <md-input-container>
-      <label>Description (optional)</label>
+      <label>Description</label>
       <textarea ng-model="ctrl.description"></textarea>
     </md-input-container>
     <kd-user-help>
-      The description will be added as an annotation to the Replica Set and displayed in the application's details.
+      The description will be added as an annotation to the Replica Set and displayed in the
+      application's details.
     </kd-user-help>
   </kd-help-section>
 
   <kd-help-section>
     <div>
-      <div>Labels (optional)</div>
+      <div>Labels</div>
       <div layout="column">
         <div layout="row">
           <p flex>Key</p>
@@ -115,7 +135,8 @@ limitations under the License.
       </div>
     </div>
     <kd-user-help>
-      The specified labels will be applied to the created Replica Set, Service (if any) and Pods. Common labels include release, environment, tier, partition and track.
+      The specified labels will be applied to the created Replica Set, Service (if any) and Pods.
+      Common labels include release, environment, tier, partition and track.
       <a href="">Learn more</a>
     </kd-user-help>
   </kd-help-section>
@@ -139,14 +160,39 @@ limitations under the License.
   </kd-help-section>
 
   <kd-help-section>
+    <div layout="row">
+      <md-input-container class="md-block">
+        <label>CPU requirement (cores)</label>
+        <input ng-model="ctrl.cpuRequirement" type="number" name="cpuRequirement" min="0">
+        <ng-messages for="ctrl.form.cpuRequirement.$error" role="alert" multiple>
+          <ng-message when="number">CPU requirement must be a valid number.</ng-message>
+          <ng-message when="min">CPU requirement must be positive.</ng-message>
+        </ng-messages>
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label>Memory requirement (MiB)</label>
+        <input ng-model="ctrl.memoryRequirement" type="number" name="memoryRequirement" min="0">
+        <ng-messages for="ctrl.form.memoryRequirement.$error" role="alert" multiple>
+          <ng-message when="number">Memory requirement must be a valid number.</ng-message>
+          <ng-message when="min">Memory requirement must be positive.</ng-message>
+        </ng-messages>
+      </md-input-container>
+    </div>
+    <kd-user-help>
+      You can specify minimum CPU and memory requirements for the container.
+      <a href="">Learn more</a>
+    </kd-user-help>
+  </kd-help-section>
+
+  <kd-help-section>
     <div>
       <md-input-container class="md-block">
-        <label>Run command (optional)</label>
+        <label>Run command</label>
         <input ng-model="ctrl.containerCommand">
       </md-input-container>
 
       <md-input-container class="md-block">
-        <label>Run command arguments (optional)</label>
+        <label>Run command arguments</label>
         <input ng-model="ctrl.containerCommandArgs">
       </md-input-container>
     </div>

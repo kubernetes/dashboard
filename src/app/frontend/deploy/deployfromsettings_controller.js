@@ -112,6 +112,16 @@ export default class DeployFromSettingsController {
      */
     this.namespace = this.namespaces[0];
 
+    /**
+     * @export {?number}
+     */
+    this.cpuRequirement = null;
+
+    /**
+     * @type {?number}
+     */
+    this.memoryRequirement = null;
+
     /** @private {!angular.$q} */
     this.q_ = $q;
 
@@ -147,6 +157,9 @@ export default class DeployFromSettingsController {
       portMappings: this.portMappings.filter(this.isPortMappingEmpty_),
       replicas: this.replicas,
       namespace: this.namespace,
+      cpuRequirement: angular.isNumber(this.cpuRequirement) ? this.cpuRequirement : null,
+      memoryRequirement: angular.isNumber(this.memoryRequirement) ? `${this.memoryRequirement}Mi` :
+                                                                    null,
       labels: this.toBackendApiLabels_(this.labels),
       runAsPrivileged: this.runAsPrivileged,
     };

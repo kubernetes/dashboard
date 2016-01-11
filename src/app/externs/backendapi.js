@@ -53,6 +53,8 @@ backendApi.Label;
  *   labels: !Array<!backendApi.Label>,
  *   replicas: number,
  *   namespace: string,
+ *   memoryRequirement: ?string,
+ *   cpuRequirement: ?number,
  *   runAsPrivileged: boolean,
  * }}
  */
