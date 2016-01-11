@@ -17,7 +17,8 @@ package main
 import (
 	"log"
 
-	api "k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api/resource"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/util/intstr"
 )
@@ -57,6 +58,12 @@ type AppDeploymentSpec struct {
 	// Target namespace of the application.
 	Namespace string `json:"namespace"`
 
+	// Optional memory requirement for the container.
+	MemoryRequirement *resource.Quantity `json:"memoryRequirement"`
+
+	// Optional CPU requirement for the container.
+	CpuRequirement *resource.Quantity `json:"cpuRequirement"`
+
 	// Labels that will be defined on Pods/RCs/Services
 	Labels []Label `json:"labels"`
 
@@ -88,7 +95,6 @@ type Label struct {
 // Deploys an app based on the given configuration. The app is deployed using the given client.
 // App deployment consists of a replication controller and an optional service. Both of them share
 // common labels.
-// TODO(bryk): Write tests for this function.
 func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 	log.Printf("Deploying %s application into %s namespace", spec.Name, spec.Namespace)
 
@@ -109,14 +115,23 @@ func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 		SecurityContext: &api.SecurityContext{
 			Privileged: &spec.RunAsPrivileged,
 		},
+		Resources: api.ResourceRequirements{
+			Requests: make(map[api.ResourceName]resource.Quantity),
+		},
 	}
 
 	if spec.ContainerCommand != nil {
 		containerSpec.Command = []string{*spec.ContainerCommand}
 	}
-
 	if spec.ContainerCommandArgs != nil {
 		containerSpec.Args = []string{*spec.ContainerCommandArgs}
+	}
+
+	if spec.CpuRequirement != nil {
+		containerSpec.Resources.Requests[api.ResourceCPU] = *spec.CpuRequirement
+	}
+	if spec.MemoryRequirement != nil {
+		containerSpec.Resources.Requests[api.ResourceMemory] = *spec.MemoryRequirement
 	}
 
 	podTemplate := &api.PodTemplateSpec{

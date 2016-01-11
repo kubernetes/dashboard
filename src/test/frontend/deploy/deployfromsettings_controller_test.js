@@ -172,6 +172,48 @@ describe('DeployFromSettings controller', () => {
     expect(resourceObject.save).toHaveBeenCalled();
   });
 
+  it('should deploy with resource requirements', () => {
+    // given
+    let resourceObject = {
+      save: jasmine.createSpy('save'),
+    };
+    mockResource.and.returnValue(resourceObject);
+    resourceObject.save.and.callFake(function(spec) {
+      // then
+      expect(spec.cpuRequirement).toBe(77);
+      expect(spec.memoryRequirement).toBe('88Mi');
+    });
+    ctrl.cpuRequirement = 77;
+    ctrl.memoryRequirement = 88;
+
+    // when
+    ctrl.deploy();
+
+    // then
+    expect(resourceObject.save).toHaveBeenCalled();
+  });
+
+  it('should deploy with empty resource requirements', () => {
+    // given
+    let resourceObject = {
+      save: jasmine.createSpy('save'),
+    };
+    mockResource.and.returnValue(resourceObject);
+    resourceObject.save.and.callFake(function(spec) {
+      // then
+      expect(spec.cpuRequirement).toBe(null);
+      expect(spec.memoryRequirement).toBe(null);
+    });
+    ctrl.cpuRequirement = null;
+    ctrl.memoryRequirement = '';
+
+    // when
+    ctrl.deploy();
+
+    // then
+    expect(resourceObject.save).toHaveBeenCalled();
+  });
+
   it('should hide more options by default', () => {
     // this is default behavior so no given/when
     // then
