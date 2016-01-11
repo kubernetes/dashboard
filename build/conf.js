@@ -46,6 +46,10 @@ export default {
     * Address for the Kubernetes API server.
     */
     apiServerHost: 'localhost:8080',
+    /**
+     * Address for the Heapster API server.
+     */
+    heapsterServerHost: 'localhost:8082',
   },
 
   /**
