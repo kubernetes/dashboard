@@ -18,9 +18,29 @@
  * @final
  */
 export default class ChromeController {
+  /**
+   * @ngInject
+   */
   constructor() {
-    // TODO(bryk): This is for tests only, change to something meaningful later.
-    /** @export {string} */
-    this.clusterName = 'ClusterName';
+    /**
+     * By default this is true to show loading for the first page.
+     * @export {boolean}
+     */
+    this.showLoadingSpinner = true;
   }
+
+  /**
+   * @param {!angular.Scope} scope
+   */
+  registerStateChangeListeners(scope) {
+    scope.$on('$stateChangeStart', () => { this.showLoadingSpinner = true; });
+
+    scope.$on('$stateChangeError', this.hideSpinner_.bind(this));
+    scope.$on('$stateChangeSuccess', this.hideSpinner_.bind(this));
+  }
+
+  /**
+   * @private
+   */
+  hideSpinner_() { this.showLoadingSpinner = false; }
 }

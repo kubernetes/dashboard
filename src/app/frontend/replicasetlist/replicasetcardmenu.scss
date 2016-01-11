@@ -12,9 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export default class ZeroStatePageObject {
-  constructor() {
-    this.deployButtonQuery = by.css('.kd-zerostate-deploy-bt');
-    this.deployButton = element(this.deployButtonQuery);
+@import '../variables';
+
+.md-button {
+  &.kd-replicaset-card-menu-button {
+    margin: 0;
+    position: relative;
+    right: -$baseline-grid;
   }
 }

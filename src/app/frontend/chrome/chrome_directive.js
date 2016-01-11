@@ -22,10 +22,17 @@ import ChromeController from './chrome_controller';
 export default function chromeDirective() {
   return {
     scope: {},
-    bindToController: true,
+    bindToController: {},
     controller: ChromeController,
     controllerAs: 'ctrl',
     templateUrl: 'chrome/chrome.html',
     transclude: true,
+    /**
+     * @param {!angular.Scope} scope
+     * @param {!angular.JQLite} elem
+     * @param {!angular.Attributes} attrs
+     * @param {!ChromeController} ctrl
+     */
+    link: function(scope, elem, attrs, ctrl) { ctrl.registerStateChangeListeners(scope); },
   };
 }
