@@ -16,6 +16,8 @@ package main
 
 import (
 	"bytes"
+	"log"
+
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
@@ -112,8 +114,8 @@ type ReplicaSetSpec struct {
 }
 
 // Returns detailed information about the given replica set in the given namespace.
-func GetReplicaSetDetail(client *client.Client, namespace string, name string) (
-	*ReplicaSetDetail, error) {
+func GetReplicaSetDetail(client *client.Client, namespace, name string) (*ReplicaSetDetail, error) {
+	log.Printf("Getting details of %s replica set in %s namespace", name, namespace)
 
 	replicaSetWithPods, err := getRawReplicaSetWithPods(client, namespace, name)
 	if err != nil {
@@ -167,7 +169,9 @@ func GetReplicaSetDetail(client *client.Client, namespace string, name string) (
 // TODO(floreks): This should be transactional to make sure that RC will not be deleted without
 // TODO(floreks): Should related services be deleted also?
 // Deletes replica set with given name in given namespace and related pods
-func DeleteReplicaSetWithPods(client *client.Client, namespace string, name string) error {
+func DeleteReplicaSetWithPods(client *client.Client, namespace, name string) error {
+	log.Printf("Deleting %s replica set from %s namespace", name, namespace)
+
 	pods, err := getRawReplicaSetPods(client, namespace, name)
 	if err != nil {
 		return err
@@ -183,12 +187,17 @@ func DeleteReplicaSetWithPods(client *client.Client, namespace string, name stri
 		}
 	}
 
+	log.Printf("Successfully deleted %s replica set from %s namespace", name, namespace)
+
 	return nil
 }
 
 // Updates number of replicas in Replica Set based on Replica Set Spec
-func UpdateReplicasCount(client client.Interface, namespace string, name string,
+func UpdateReplicasCount(client client.Interface, namespace, name string,
 	replicaSetSpec *ReplicaSetSpec) error {
+	log.Printf("Updating replicas count to %d for %s replica set from %s namespace",
+		replicaSetSpec.Replicas, name, namespace)
+
 	replicaSet, err := client.ReplicationControllers(namespace).Get(name)
 	if err != nil {
 		return err
@@ -200,6 +209,9 @@ func UpdateReplicasCount(client client.Interface, namespace string, name string,
 	if err != nil {
 		return err
 	}
+
+	log.Printf("Successfully updated replicas count to %d for %s replica set from %s namespace",
+		replicaSetSpec.Replicas, name, namespace)
 
 	return nil
 }
@@ -233,7 +245,7 @@ func getRestartCount(pod api.Pod) int {
 
 // Returns internal endpoint name for the given service properties, e.g.,
 // "my-service.namespace 80/TCP" or "my-service 53/TCP,53/UDP".
-func getInternalEndpoint(serviceName string, namespace string, ports []api.ServicePort) Endpoint {
+func getInternalEndpoint(serviceName, namespace string, ports []api.ServicePort) Endpoint {
 
 	name := serviceName
 	if namespace != api.NamespaceDefault {

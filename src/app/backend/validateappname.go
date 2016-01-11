@@ -15,6 +15,8 @@
 package main
 
 import (
+	"log"
+
 	k8serrors "k8s.io/kubernetes/pkg/api/errors"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
@@ -24,18 +26,20 @@ type AppNameValiditySpec struct {
 	// Name of the application.
 	Name string `json:"name"`
 
-	// Namescpace of the application.
+	// Namespace of the application.
 	Namespace string `json:"namespace"`
 }
 
 // Describes validity of the application name.
 type AppNameValidity struct {
-	// True when the applcation name is valid.
+	// True when the application name is valid.
 	Valid bool `json:"valid"`
 }
 
 // Validates application name. When error is returned, name validity could not be determined.
 func ValidateAppName(spec *AppNameValiditySpec, client client.Interface) (*AppNameValidity, error) {
+	log.Printf("Validating %s application name in %s namespace", spec.Name, spec.Namespace)
+
 	isValidRc := false
 	isValidService := false
 
@@ -57,7 +61,12 @@ func ValidateAppName(spec *AppNameValiditySpec, client client.Interface) (*AppNa
 		}
 	}
 
-	return &AppNameValidity{Valid: isValidRc && isValidService}, nil
+	isValid := isValidRc && isValidService
+
+	log.Printf("Validation result for %s application name in %s namespace is %t", spec.Name,
+		spec.Namespace, isValid)
+
+	return &AppNameValidity{Valid: isValid}, nil
 }
 
 // Returns true when the given error is 404-NotFound error.

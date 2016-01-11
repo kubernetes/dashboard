@@ -15,6 +15,8 @@
 package main
 
 import (
+	"log"
+
 	api "k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/util/intstr"
@@ -88,6 +90,8 @@ type Label struct {
 // common labels.
 // TODO(bryk): Write tests for this function.
 func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
+	log.Printf("Deploying %s application into %s namespace", spec.Name, spec.Namespace)
+
 	annotations := map[string]string{}
 	if spec.Description != nil {
 		annotations[DescriptionAnnotationKey] = *spec.Description
@@ -168,7 +172,6 @@ func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 		_, err = client.Services(spec.Namespace).Create(service)
 
 		// TODO(bryk): Roll back created resources in case of error.
-
 		return err
 	} else {
 		return nil

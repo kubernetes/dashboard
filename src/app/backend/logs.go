@@ -16,10 +16,12 @@ package main
 
 import (
 	"io/ioutil"
+	"log"
+	"strings"
+
 	api "k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
-	"strings"
 )
 
 // Log response structure
@@ -33,8 +35,9 @@ type Logs struct {
 }
 
 // Return logs for particular pod and container or error when occurred.
-func GetPodLogs(client *client.Client, namespace string, podId string, container string) (*Logs,
-	error) {
+func GetPodLogs(client *client.Client, namespace, podId, container string) (*Logs, error) {
+	log.Printf("Getting logs from %s container from %s pod in %s namespace", container, podId,
+		namespace)
 
 	pod, err := client.Pods(namespace).Get(podId)
 	if err != nil {
@@ -52,12 +55,13 @@ func GetPodLogs(client *client.Client, namespace string, podId string, container
 	if err != nil {
 		return nil, err
 	}
+
 	return constructLogs(podId, pod.CreationTimestamp, rawLogs), nil
 }
 
 // Construct a request for getting the logs for a pod and retrieves the logs.
-func getRawPodLogs(client *client.Client, namespace string, podID string,
-	logOptions *api.PodLogOptions) (string, error) {
+func getRawPodLogs(client *client.Client, namespace, podID string, logOptions *api.PodLogOptions) (
+	string, error) {
 	req := client.RESTClient.Get().
 		Namespace(namespace).
 		Name(podID).
@@ -76,6 +80,7 @@ func getRawPodLogs(client *client.Client, namespace string, podID string,
 	if err != nil {
 		return "", err
 	}
+
 	return string(result), nil
 }
 

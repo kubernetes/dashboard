@@ -15,6 +15,8 @@
 package main
 
 import (
+	"log"
+
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
@@ -33,6 +35,7 @@ type ClientFactory interface {
 // apiserverHost param is in the format of protocol://address:port, e.g., http://localhost:8001.
 func CreateApiserverClient(apiserverHost string,
 	clientFactory ClientFactory) (*client.Client, error) {
+	log.Printf("Creating API client for %s", apiserverHost)
 
 	if apiserverHost == "" {
 		return clientFactory.NewInCluster()

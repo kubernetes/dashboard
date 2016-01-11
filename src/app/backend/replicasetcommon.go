@@ -28,7 +28,7 @@ type ReplicaSetWithPods struct {
 }
 
 // Returns structure containing ReplicaSet and Pods for the given replica set.
-func getRawReplicaSetWithPods(client *client.Client, namespace string, name string) (
+func getRawReplicaSetWithPods(client *client.Client, namespace, name string) (
 	*ReplicaSetWithPods, error) {
 	replicaSet, err := client.ReplicationControllers(namespace).Get(name)
 	if err != nil {
@@ -54,8 +54,7 @@ func getRawReplicaSetWithPods(client *client.Client, namespace string, name stri
 }
 
 // Retrieves Pod list that belongs to a Replica Set.
-func getRawReplicaSetPods(client *client.Client, namespace string, name string) (
-	*api.PodList, error) {
+func getRawReplicaSetPods(client *client.Client, namespace, name string) (*api.PodList, error) {
 	replicaSetAndPods, err := getRawReplicaSetWithPods(client, namespace, name)
 	if err != nil {
 		return nil, err
