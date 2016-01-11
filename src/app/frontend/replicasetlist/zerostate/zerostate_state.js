@@ -12,16 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './zerostate_stateconfig';
+import {stateName as replicasets} from './../replicasetlist_state';
 
-/**
- * Angular module for the zero state view.
- *
- * The view is active on the first launch of the application and is used for onboarding new users.
- */
-export default angular.module(
-                          'kubernetesDashboard.zerostate',
-                          [
-                            'ui.router',
-                          ])
-    .config(stateConfig);
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = `${replicasets}.zero`;
