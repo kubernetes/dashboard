@@ -26,6 +26,7 @@ export default function deployFromSettingsDirective() {
       'namespaces': '=',
       'detail': '=',
       'form': '=',
+      'protocols': '=',
     },
     controller: DeployFromSettingsController,
     controllerAs: 'ctrl',

@@ -135,3 +135,13 @@ func TestDeployWithResourceRequirements(t *testing.T) {
 			expectedResources, container.Resources)
 	}
 }
+
+func TestGetAvailableProtocols(t *testing.T) {
+	expected := &Protocols{Protocols: []api.Protocol{"TCP", "UDP"}}
+
+	actual := GetAvailableProtocols()
+	if !reflect.DeepEqual(actual, expected) {
+		t.Errorf("Expected protocols to be %#v but got %#v",
+			expected, actual)
+	}
+}

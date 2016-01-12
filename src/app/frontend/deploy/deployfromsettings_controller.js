@@ -68,11 +68,10 @@ export default class DeployFromSettingsController {
     this.description = '';
 
     /**
-     * List of supported protocols.
-     * TODO(bryk): Do not hardcode the here, move to backend.
-     * @const @export {!Array<string>}
+     * Initialized from the scope.
+     * @export {!Array<string>}
      */
-    this.protocols = ['TCP', 'UDP'];
+    this.protocols;
 
     /** @export {!Array<!backendApi.PortMapping>} */
     this.portMappings = [this.newEmptyPortMapping_(this.protocols[0])];

@@ -14,7 +14,7 @@
 
 import deployModule from 'deploy/deploy_module';
 
-describe('Unique name directive', () => {
+describe('Valid protocol directive', () => {
   /** @type {function(!angular.Scope):!angular.JQLite} */
   let compileFn;
   /** @type {!angular.Scope} */
@@ -26,64 +26,66 @@ describe('Unique name directive', () => {
     angular.mock.module(deployModule.name);
 
     angular.mock.inject(($compile, $rootScope, $httpBackend) => {
-      compileFn = $compile('<div kd-unique-name ng-model="name" namespace="namespace"></div>');
+      compileFn =
+          $compile('<div kd-valid-protocol ng-model="protocol" is-external="isExternal"></div>');
       scope = $rootScope.$new();
       httpBackend = $httpBackend;
     });
   });
 
-  it('should validate name asynchronosuly', () => {
-    scope.name = 'foo-name';
-    scope.namespace = 'foo-namespace';
-    let endpoint = httpBackend.when('POST', 'api/appdeployments/validate/name');
+  it('should validate protocol asynchronosuly', () => {
+    let endpoint = httpBackend.whenPOST('api/appdeployments/validate/protocol');
 
     let elem = compileFn(scope)[0];
     expect(elem.classList).toContain('ng-valid');
     expect(elem.classList).not.toContain('ng-pending');
 
-    endpoint.respond({
-      valid: false,
-    });
     scope.$apply();
-    expect(elem.classList).not.toContain('ng-valid');
-    expect(elem.classList).toContain('ng-pending');
+    expect(elem.classList).not.toContain('ng-invalid');
 
-    httpBackend.flush();
-    expect(elem.classList).toContain('ng-invalid');
-    expect(elem.classList).not.toContain('ng-valid');
-    expect(elem.classList).not.toContain('ng-pending');
-
-    scope.name = 'foo-name2';
+    scope.protocol = 'TCP';
+    scope.isExternal = false;
     endpoint.respond({
       valid: true,
     });
-    scope.$apply();
+
     httpBackend.flush();
     expect(elem.classList).toContain('ng-valid');
-  });
+    expect(elem.classList).not.toContain('ng-invalid');
+    expect(elem.classList).not.toContain('ng-pending');
 
-  it('should validate on namespace change', () => {
-    scope.name = 'foo-name';
-    scope.namespace = 'foo-namespace';
-
-    let elem = compileFn(scope)[0];
-    httpBackend.when('POST', 'api/appdeployments/validate/name').respond({
+    scope.protocol = 'UDP';
+    endpoint.respond({
       valid: false,
     });
+    scope.$apply();
+
+    httpBackend.flush();
+    expect(elem.classList).toContain('ng-invalid');
+  });
+
+  it('should validate on service type change', () => {
+    let elem = compileFn(scope)[0];
+    httpBackend.whenPOST('api/appdeployments/validate/protocol').respond({
+      valid: false,
+    });
+    scope.$apply();
+
+    scope.isExternal = false;
     httpBackend.flush();
     expect(elem.classList).not.toContain('ng-pending');
 
-    scope.namespace = 'foo-namespace2';
+    scope.isExternal = true;
     scope.$apply();
     expect(elem.classList).toContain('ng-pending');
   });
 
-  it('should treat failures as invalid name', () => {
-    scope.name = 'foo-name';
-    scope.namespace = 'foo-namespace';
-
+  it('should treat failures as invalid protocol', () => {
     let elem = compileFn(scope)[0];
-    httpBackend.when('POST', 'api/appdeployments/validate/name').respond(503, '');
+    httpBackend.whenPOST('api/appdeployments/validate/protocol').respond(503, '');
+    scope.$apply();
+
+    scope.isExternal = false;
     httpBackend.flush();
     expect(elem.classList).not.toContain('ng-pending');
     expect(elem.classList).toContain('ng-invalid');

@@ -86,6 +86,15 @@ func CreateHttpApiHandler(client *client.Client) http.Handler {
 			To(apiHandler.handleNameValidity).
 			Reads(AppNameValiditySpec{}).
 			Writes(AppNameValidity{}))
+	deployWs.Route(
+		deployWs.POST("/validate/protocol").
+			To(apiHandler.handleProtocolValidity).
+			Reads(ProtocolValiditySpec{}).
+			Writes(ProtocolValidity{}))
+	deployWs.Route(
+		deployWs.GET("/protocols").
+			To(apiHandler.handleGetAvailableProcotols).
+			Writes(Protocols{}))
 	wsContainer.Add(deployWs)
 
 	replicaSetWs := new(restful.WebService)
@@ -191,6 +200,22 @@ func (apiHandler *ApiHandler) handleNameValidity(request *restful.Request, respo
 	}
 
 	response.WriteHeaderAndEntity(http.StatusCreated, validity)
+}
+
+// Handles protocol validation API call.
+func (apiHandler *ApiHandler) handleProtocolValidity(request *restful.Request, response *restful.Response) {
+	spec := new(ProtocolValiditySpec)
+	if err := request.ReadEntity(spec); err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, ValidateProtocol(spec))
+}
+
+// Handles get available protocols API call.
+func (apiHandler *ApiHandler) handleGetAvailableProcotols(request *restful.Request, response *restful.Response) {
+	response.WriteHeaderAndEntity(http.StatusCreated, GetAvailableProtocols())
 }
 
 // Handles get Replica Set list API call.
