@@ -16,7 +16,7 @@
     "bower": "~1.7.1",
     "browser-sync": "~2.11.0",
     "browser-sync-spa": "~1.0.3",
-    "browserify": "~12.0.1",
+    "browserify": "~13.0.0",
     "browserify-istanbul": "~0.2.1",
     "del": "~2.2.0",
     "eslint-plugin-angular": "~0.15.0",
