@@ -12,44 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../variables';
+import errorModule from 'error/error_module';
 
-.kd-toolbar-logo {
-  height: 42px;
-  margin-right: 1em;
-  width: 42px;
-}
+describe('Error module', () => {
+  beforeEach(angular.mock.module(errorModule.name));
 
-.kd-toolbar {
-  box-shadow: $whiteframe-shadow-1dp;
-}
+  it('should register route error handlers', angular.mock.inject(($rootScope, $state) => {
+    // given
+    let error = {error: 'bar'};
+    expect($state.current.name).toBe('');
 
-body {
-  background-color: $body;
-  height: 100%;
-}
+    // when
+    $rootScope.$broadcast('$stateChangeError', null, null, null, null, error);
+    $rootScope.$apply();
 
-a {
-  text-decoration: inherit;
-}
-
-.kd-toolbar-tools,
-.kd-app-content-wrapper {
-  margin: 0 auto;
-}
-
-.kd-app-content {
-  position: relative;
-}
-
-.kd-center-fixed {
-  align-items: center;
-  bottom: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  left: 0;
-  position: fixed;
-  right: 0;
-  top: 0;
-}
+    // then
+    expect($state.current.name).toBe('internalerror');
+  }));
+});

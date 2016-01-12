@@ -14,42 +14,7 @@
 
 @import '../variables';
 
-.kd-toolbar-logo {
-  height: 42px;
-  margin-right: 1em;
-  width: 42px;
-}
-
-.kd-toolbar {
-  box-shadow: $whiteframe-shadow-1dp;
-}
-
-body {
-  background-color: $body;
-  height: 100%;
-}
-
-a {
-  text-decoration: inherit;
-}
-
-.kd-toolbar-tools,
-.kd-app-content-wrapper {
-  margin: 0 auto;
-}
-
-.kd-app-content {
-  position: relative;
-}
-
-.kd-center-fixed {
-  align-items: center;
-  bottom: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  left: 0;
-  position: fixed;
-  right: 0;
-  top: 0;
+.kd-error-view-icon {
+  color: $foreground-2;
+  font-size: $display-4-font-size-base;
 }
