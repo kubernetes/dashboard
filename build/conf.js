@@ -53,9 +53,18 @@ export default {
    */
   deploy: {
     /**
+     * The release version of the image.
+     */
+    versionRelease: '0.0.1',
+    /**
+     * The canary version name of the image. Canary is an image that is frequently published,
+     * and has no release schedule.
+     */
+    versionCanary: 'canary',
+    /**
      * The name of the Docker image with the application.
      */
-    imageName: 'kubernetes/dashboard',
+    imageName: 'gcr.io/google_containers/kubernetes-dashboard',
   },
 
   /**
@@ -87,7 +96,7 @@ export default {
     build: path.join(basePath, 'build'),
     coverage: path.join(basePath, 'coverage'),
     coverageReport: path.join(basePath, 'coverage/lcov'),
-    deploySrc: path.join(basePath, 'src/app/deploy'),
+    deploySrc: path.join(basePath, 'src/deploy'),
     dist: path.join(basePath, 'dist'),
     distPublic: path.join(basePath, 'dist/public'),
     externs: path.join(basePath, 'src/app/externs'),

@@ -40,27 +40,77 @@ function spawnDockerProcess(args, doneFn) {
 }
 
 /**
- * Creates Docker image for the application. The image is tagged with the image name configuration
- * constant.
- *
- * In order to run the image on a Kubernates cluster, it has to be deployed to a registry.
+ * @param {string} version
+ * @param {function(?Error=)} doneFn
  */
-gulp.task('docker-image', ['build', 'docker-file'], function(doneFn) {
+function buildDockerImage(version, doneFn) {
   spawnDockerProcess(
       [
         'build',
         // Remove intermediate containers after a successful build.
         '--rm=true',
         '--tag',
-        conf.deploy.imageName,
+        `${conf.deploy.imageName}:${version}`,
         conf.paths.dist,
       ],
       doneFn);
+}
+
+/**
+ * @param {string} version
+ * @param {function(?Error=)} doneFn
+ */
+function pushToGcr(version, doneFn) {
+  let imageUri = `${conf.deploy.imageName}:${version}`;
+
+  let childTask = child.spawn('gcloud', ['docker', 'push', imageUri], {stdio: 'inherit'});
+
+  childTask.on('exit', function(code) {
+    if (code === 0) {
+      doneFn();
+    } else {
+      doneFn(new Error(`gcloud command error, code: ${code}`));
+    }
+  });
+}
+
+/**
+ * Creates Docker image for the application. The image is tagged with the image name configuration
+ * constant.
+ *
+ * In order to run the image on a Kubernates cluster, it has to be deployed to a registry.
+ */
+gulp.task('docker-image:canary', ['build', 'docker-file'], function(doneFn) {
+  buildDockerImage(conf.deploy.versionCanary, doneFn);
+});
+
+/**
+ * Creates Docker image for the application. The image is tagged with the image name configuration
+ * constant.
+ *
+ * In order to run the image on a Kubernates cluster, it has to be deployed to a registry.
+ */
+gulp.task('docker-image:release', ['build', 'docker-file'], function(doneFn) {
+  buildDockerImage(conf.deploy.versionRelease, doneFn);
+});
+
+/**
+ * Pushes canary image to GCR.
+ */
+gulp.task('push-to-gcr:canary', ['docker-image:canary'], function(doneFn) {
+  pushToGcr(conf.deploy.versionCanary, doneFn);
+});
+
+/**
+ * Pushes release image to GCR.
+ */
+gulp.task('push-to-gcr:release', ['docker-image:release'], function(doneFn) {
+  pushToGcr(conf.deploy.versionCanary, doneFn);
 });
 
 /**
  * Processes the Docker file and places it in the dist folder for building.
  */
-gulp.task('docker-file', function() {
+gulp.task('docker-file', ['clean-dist'], function() {
   return gulp.src(path.join(conf.paths.deploySrc, 'Dockerfile')).pipe(gulp.dest(conf.paths.dist));
 });

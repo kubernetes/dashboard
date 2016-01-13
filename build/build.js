@@ -43,7 +43,7 @@ gulp.task('build', ['backend:prod', 'build-frontend']);
  *  3. CSS and JS assets are suffixed with version hash.
  *  4. Everything is saved in the dist directory.
  */
-gulp.task('build-frontend', ['assets', 'index:prod'], function() {
+gulp.task('build-frontend', ['assets', 'index:prod', 'clean-dist'], function() {
   let htmlFilter = gulpFilter('*.html', {restore: true});
   let vendorCssFilter = gulpFilter('**/vendor.css', {restore: true});
   let vendorJsFilter = gulpFilter('**/vendor.js', {restore: true});
@@ -82,7 +82,7 @@ gulp.task('build-frontend', ['assets', 'index:prod'], function() {
 /**
  * Copies assets to the dist directory.
  */
-gulp.task('assets', function() {
+gulp.task('assets', ['clean-dist'], function() {
   return gulp.src(path.join(conf.paths.assets, '/**/*'), {base: conf.paths.app})
       .pipe(gulp.dest(conf.paths.distPublic));
 });
@@ -90,6 +90,11 @@ gulp.task('assets', function() {
 /**
  * Cleans all build artifacts.
  */
-gulp.task('clean', function() {
-  return del([conf.paths.dist, conf.paths.goWorkspace, conf.paths.tmp, conf.paths.coverage]);
+gulp.task('clean', ['clean-dist'], function() {
+  return del([conf.paths.goWorkspace, conf.paths.tmp, conf.paths.coverage]);
 });
+
+/**
+ * Cleans all build artifacts in the dist/ folder.
+ */
+gulp.task('clean-dist', function() { return del([conf.paths.dist]); });
