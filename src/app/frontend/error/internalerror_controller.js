@@ -12,44 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../variables';
+/**
+ * @final
+ */
+export class InternalErrorController {
+  /**
+   * @param {!./internalerror_state.StateParams} $stateParams
+   * @ngInject
+   */
+  constructor($stateParams) {
+    /** @export {!angular.$http.Response} */
+    this.error = $stateParams.error;
+  }
 
-.kd-toolbar-logo {
-  height: 42px;
-  margin-right: 1em;
-  width: 42px;
-}
-
-.kd-toolbar {
-  box-shadow: $whiteframe-shadow-1dp;
-}
-
-body {
-  background-color: $body;
-  height: 100%;
-}
-
-a {
-  text-decoration: inherit;
-}
-
-.kd-toolbar-tools,
-.kd-app-content-wrapper {
-  margin: 0 auto;
-}
-
-.kd-app-content {
-  position: relative;
-}
-
-.kd-center-fixed {
-  align-items: center;
-  bottom: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  left: 0;
-  position: fixed;
-  right: 0;
-  top: 0;
+  /**
+   * @export
+   * @return {boolean}
+   */
+  showStatus() { return angular.isNumber(this.error.status) && this.error.status > 0; }
 }

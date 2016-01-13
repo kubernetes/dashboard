@@ -12,44 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../variables';
+import {stateName, StateParams} from './internalerror_state';
+import {InternalErrorController} from './internalerror_controller';
 
-.kd-toolbar-logo {
-  height: 42px;
-  margin-right: 1em;
-  width: 42px;
-}
-
-.kd-toolbar {
-  box-shadow: $whiteframe-shadow-1dp;
-}
-
-body {
-  background-color: $body;
-  height: 100%;
-}
-
-a {
-  text-decoration: inherit;
-}
-
-.kd-toolbar-tools,
-.kd-app-content-wrapper {
-  margin: 0 auto;
-}
-
-.kd-app-content {
-  position: relative;
-}
-
-.kd-center-fixed {
-  align-items: center;
-  bottom: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  left: 0;
-  position: fixed;
-  right: 0;
-  top: 0;
+/**
+ * Configures states for the internal error view.
+ *
+ * @param {!ui.router.$stateProvider} $stateProvider
+ * @ngInject
+ */
+export default function stateConfig($stateProvider) {
+  $stateProvider.state(stateName, {
+    controller: InternalErrorController,
+    controllerAs: 'ctrl',
+    params: new StateParams(/** @type {!angular.$http.Response} */ ({})),
+    templateUrl: 'error/internalerror.html',
+  });
 }
