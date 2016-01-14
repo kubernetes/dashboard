@@ -37,8 +37,11 @@ $content-background: #fff;
 // TODO(bryk): Get those variables from Angular Material scss files.
 $foreground-1: rgba(0, 0, 0, .87);
 $foreground-2: rgba(0, 0, 0, .54);
+$foreground-3: rgba(0, 0, 0, .26);
+$foreground-4: rgba(0, 0, 0, .12);
 
 $regular-font-weight: 400;
+$bold-font-weight: 500;
 
 $layout-breakpoint-lg: 1280px;
 $whiteframe-shadow-1dp: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px rgba(0, 0, 0, .12);

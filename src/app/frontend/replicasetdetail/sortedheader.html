@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<a class="kd-sortedheader-pointer" ng-click="sortCtrl.changeSorting()">
+<button class="kd-replicaset-detail-table-header-button" ng-click="sortCtrl.changeSorting()">
   <md-icon md-font-library="material-icons" ng-show="sortCtrl.isArrowDown()"
            class="kd-sortedheader-sort-icon">
     arrow_downward
@@ -24,9 +24,9 @@ limitations under the License.
     arrow_upward
   </md-icon>
   <ng-transclude></ng-transclude>
-</a>
+</button>
 <md-icon ng-show="sortCtrl.isTooltipAvailable()" md-font-library="material-icons"
-         class="kd-sortedheader-help-icon">
+         class="kd-replicasetdetail-help-icon">
   help
   <md-tooltip>{{sortCtrl.tooltip}}</md-tooltip>
 </md-icon>
