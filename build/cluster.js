@@ -29,7 +29,13 @@ const clusterHealthzUrl = `http://${conf.backend.apiServerHost}/healthz`;
 /**
  * The validate URL of the heapster to check that it is running.
  */
-const heapsterValidateUrl = `http://${conf.backend.heapsterServerHost}/validate`;
+const heapsterValidateUrl =
+    `http://${conf.backend.apiServerHost}/api/v1/namespaces/kube-system/pods`;
+
+/**
+ * Name of running state.
+ */
+const runningState = "Running";
 
 /**
  * A Number, representing the ID value of the timer that is set for function which periodically
@@ -62,8 +68,7 @@ function clusterHealthCheck(doneFn) {
 }
 
 /**
- * Checks if Heapster return debug messages.
- * When Heapster is running then return some debug text otherwise server return error.
+ * Checks if Heapster return running state.
  * @param {function(?Error=)} doneFn
  */
 function heapsterHealthCheck(doneFn) {
@@ -71,7 +76,19 @@ function heapsterHealthCheck(doneFn) {
     if (err) {
       return doneFn(new Error(err));
     }
-    return doneFn(stdout.trim());
+    let podsStatus = JSON.parse(stdout.trim());
+    Object.keys(podsStatus).forEach(function(key) {
+      if (key === 'items') {
+        let podItems = podsStatus.items;
+        for (let pod of podItems) {
+          if (pod.hasOwnProperty("metadata")) {
+            if (pod.metadata.name.includes("heapster")) {
+              return doneFn(pod.status.phase);
+            }
+          }
+        }
+      }
+    });
   });
 }
 
@@ -86,13 +103,27 @@ function heapsterHealthCheck(doneFn) {
  *  * Install golang
  *  * Install etcd
  */
-gulp.task('local-up-cluster', ['spawn-cluster', 'wait-for-cluster', 'wait-for-heapster']);
+gulp.task('local-up-cluster', ['spawn-cluster', 'deploy-heapster', 'wait-for-heapster']);
 
 /**
  * Spawns a local Kubernetes cluster running inside a Docker container.:
  */
 gulp.task('spawn-cluster', function(doneFn) {
   childProcess.execFile(conf.paths.hyperkube, function(err, stdout, stderr) {
+    if (err) {
+      console.log(stdout);
+      console.error(stderr);
+      return doneFn(new Error(err));
+    }
+    return doneFn();
+  });
+});
+
+/**
+ * Deploys Heapster in local cluster.
+ */
+gulp.task('deploy-heapster', ['wait-for-cluster'], function(doneFn) {
+  childProcess.execFile(conf.paths.heapster, function(err, stdout, stderr) {
     if (err) {
       console.log(stdout);
       console.error(stderr);
@@ -113,15 +144,13 @@ gulp.task('wait-for-heapster', function(doneFn) {
 
   function isRunning() {
     if (counter % 10 === 0) {
-      gulpUtil.log(
-          gulpUtil.colors.magenta(
-              `Waiting for a Heapster on ${conf.backend.heapsterServerHost}...`));
+      gulpUtil.log(gulpUtil.colors.magenta(`Waiting for a Heapster ...`));
     }
     counter += 1;
 
     // constantly query the heapster until it is properly running
     heapsterHealthCheck(function(result) {
-      if (result.length > 0) {
+      if (result === runningState) {
         gulpUtil.log(gulpUtil.colors.magenta('Heapster is up and running.'));
         clearTimeout(isHeapsterRunningSetIntervalHandler);
         isHeapsterRunningSetIntervalHandler = null;
