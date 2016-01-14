@@ -124,6 +124,7 @@ gulp.task('angular-templates', function() {
       .pipe(gulpHtmlmin({
         removeComments: true,
         collapseWhitespace: true,
+        conservativeCollapse: true,
       }))
       .pipe(
           gulpAngularTemplatecache(

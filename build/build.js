@@ -73,6 +73,7 @@ gulp.task('build-frontend', ['assets', 'index:prod'], function() {
       .pipe(gulpHtmlmin({
         removeComments: true,
         collapseWhitespace: true,
+        conservativeCollapse: true,
       }))
       .pipe(htmlFilter.restore)
       .pipe(gulp.dest(conf.paths.distPublic));
