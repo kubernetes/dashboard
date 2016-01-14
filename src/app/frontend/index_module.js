@@ -34,6 +34,7 @@ export default angular.module(
                             'ngMessages',
                             'ngResource',
                             'ngSanitize',
+                            'pascalprecht.translate',
                             'ui.router',
                             chromeModule.name,
                             deployModule.name,
