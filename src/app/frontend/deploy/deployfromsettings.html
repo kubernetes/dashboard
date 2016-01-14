@@ -161,7 +161,7 @@ limitations under the License.
 
   <kd-help-section>
     <div layout="row">
-      <md-input-container class="md-block">
+      <md-input-container flex>
         <label>CPU requirement (cores)</label>
         <input ng-model="ctrl.cpuRequirement" type="number" name="cpuRequirement" min="0">
         <ng-messages for="ctrl.form.cpuRequirement.$error" role="alert" multiple>
@@ -169,7 +169,7 @@ limitations under the License.
           <ng-message when="min">CPU requirement must be positive.</ng-message>
         </ng-messages>
       </md-input-container>
-      <md-input-container class="md-block">
+      <md-input-container flex>
         <label>Memory requirement (MiB)</label>
         <input ng-model="ctrl.memoryRequirement" type="number" name="memoryRequirement" min="0">
         <ng-messages for="ctrl.form.memoryRequirement.$error" role="alert" multiple>
