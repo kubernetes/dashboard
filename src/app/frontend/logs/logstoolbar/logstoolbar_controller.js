@@ -56,9 +56,9 @@ export default class LogsToolbarController {
 
     /**
      * Pod creation time.
-     * @export {string}
+     * @export {?string}
      */
-    this.podCreationTime = new Date(Date.parse(this.pod.startTime)).toLocaleString();
+    this.podCreationTime = this.pod.startTime;
 
     /**
      * Namespace.

@@ -60,6 +60,9 @@ type ReplicaSetPod struct {
 	// Name of the Pod.
 	Name string `json:"name"`
 
+	// Status of the Pod. See Kubernetes API for reference.
+	PodPhase api.PodPhase `json:"podPhase"`
+
 	// Time the Pod has started. Empty if not started.
 	StartTime *unversioned.Time `json:"startTime"`
 
@@ -155,6 +158,7 @@ func GetReplicaSetDetail(client *client.Client, namespace, name string) (*Replic
 	for _, pod := range pods.Items {
 		podDetail := ReplicaSetPod{
 			Name:         pod.Name,
+			PodPhase:     pod.Status.Phase,
 			StartTime:    pod.Status.StartTime,
 			PodIP:        pod.Status.PodIP,
 			NodeName:     pod.Spec.NodeName,
