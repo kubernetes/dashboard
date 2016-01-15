@@ -37,6 +37,9 @@ type AppDeploymentSpec struct {
 	// Docker image path for the application.
 	ContainerImage string `json:"containerImage"`
 
+	// The name of an image pull secret in case of a private docker repository.
+	ImagePullSecret *string `json:"imagePullSecret"`
+
 	// Command that is executed instead of container entrypoint, if specified.
 	ContainerCommand *string `json:"containerCommand"`
 
@@ -141,12 +144,16 @@ func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 	if spec.MemoryRequirement != nil {
 		containerSpec.Resources.Requests[api.ResourceMemory] = *spec.MemoryRequirement
 	}
+	podSpec := api.PodSpec{
+		Containers: []api.Container{containerSpec},
+	}
+	if spec.ImagePullSecret != nil {
+		podSpec.ImagePullSecrets = []api.LocalObjectReference{api.LocalObjectReference{Name: *spec.ImagePullSecret}}
+	}
 
 	podTemplate := &api.PodTemplateSpec{
 		ObjectMeta: objectMeta,
-		Spec: api.PodSpec{
-			Containers: []api.Container{containerSpec},
-		},
+		Spec:       podSpec,
 	}
 
 	replicaSet := &api.ReplicationController{

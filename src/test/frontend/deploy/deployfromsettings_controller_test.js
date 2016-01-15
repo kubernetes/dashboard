@@ -24,11 +24,17 @@ describe('DeployFromSettings controller', () => {
   let mockResource;
   /** @type {!angular.FormController} */
   let form;
+  /** @type {!angular.$httpBackend} */
+  let httpBackend;
+  /** @type {!angular.$resource} */
+  let angularResource;
 
   beforeEach(() => {
     angular.mock.module(deployModule.name);
 
-    angular.mock.inject(($controller) => {
+    angular.mock.inject(($controller, $httpBackend, $resource) => {
+      httpBackend = $httpBackend;
+      angularResource = $resource;
       mockResource = jasmine.createSpy('$resource');
       form = {
         $submitted: false,
@@ -125,7 +131,7 @@ describe('DeployFromSettings controller', () => {
     expect(result).toEqual(expected);
   });
 
-  it('should deploy empty description and container commands as nulls', () => {
+  it('should deploy empty description, container commands and image pull secret as nulls', () => {
     // given
     let resourceObject = {
       save: jasmine.createSpy('save'),
@@ -136,6 +142,7 @@ describe('DeployFromSettings controller', () => {
       expect(spec.containerCommand).toBeNull();
       expect(spec.containerCommandArgs).toBeNull();
       expect(spec.description).toBeNull();
+      expect(spec.imagePullSecret).toBeNull();
     });
     ctrl.labels = [
       new DeployLabel('key1', 'val1'),
@@ -159,6 +166,7 @@ describe('DeployFromSettings controller', () => {
       expect(spec.containerCommand).toBe('command');
       expect(spec.containerCommandArgs).toBe('commandArgs');
       expect(spec.description).toBe('desc');
+      expect(spec.imagePullSecret).toBe('mysecret');
     });
     ctrl.labels = [
       new DeployLabel('key1', 'val1'),
@@ -166,6 +174,7 @@ describe('DeployFromSettings controller', () => {
     ctrl.containerCommand = 'command';
     ctrl.containerCommandArgs = 'commandArgs';
     ctrl.description = 'desc';
+    ctrl.imagePullSecret = 'mysecret';
 
     // when
     ctrl.deploy();
@@ -265,6 +274,66 @@ describe('DeployFromSettings controller', () => {
       form.$submitted = true;
 
       expect(ctrl.isNameError()).toBe(true);
+    });
+
+    it('get secrets should update the secrets list', () => {
+      ctrl.resource_ = angularResource;
+      let response = {
+        secrets: ['secret1', 'secret2', 'secret3'],
+      };
+      httpBackend.expectGET('api/secrets/default').respond(200, response);
+      // when
+      ctrl.getSecrets('default');
+      httpBackend.flush();
+      // expect
+      expect(ctrl.secrets).toEqual(response.secrets);
+    });
+
+    it('successful image pull secret creation should update ctrl.imagePullSecret', () => {
+      // given
+      let response = 'newsecret';
+      // mdDialog mock
+      let mdDialogMock = {
+        show: (arg) => {
+          arg;
+          return {
+            then: (success, fail) => {
+              // ignore fail
+              fail;
+              // execute success
+              success(response);
+            },
+          };
+        },
+      };
+      ctrl.mdDialog_ = mdDialogMock;
+      // when
+      ctrl.handleCreateSecretDialog({});
+      // then
+      expect(ctrl.imagePullSecret).toEqual(response);
+    });
+
+    it('unsuccessful image pull secret creation should reset ctrl.imagePullSecret', () => {
+      // given
+      // mdDialog mock
+      let mdDialogMock = {
+        show: (arg) => {
+          arg;
+          return {
+            then: (success, fail) => {
+              // execute fail
+              fail();
+              // ignore success
+              success;
+            },
+          };
+        },
+      };
+      ctrl.mdDialog_ = mdDialogMock;
+      // when
+      ctrl.handleCreateSecretDialog({});
+      // then
+      expect(ctrl.imagePullSecret).toEqual('');
     });
   });
 });

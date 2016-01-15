@@ -21,8 +21,13 @@ describe('Create-Namespace dialog', () => {
   let httpBackend;
   beforeEach(() => {
     angular.mock.module(deployModule.name);
-    angular.mock.inject(($controller, $httpBackend) => {
-      ctrl = $controller(NamespaceDialogController, {'namespaces': []});
+    angular.mock.inject(($controller, $httpBackend, $mdDialog, $log, _errorDialog_) => {
+      ctrl = $controller(NamespaceDialogController, {
+        'namespaces': [],
+        'mdDialog_': $mdDialog,
+        'log_': $log,
+        'errorDialog_': _errorDialog_,
+      });
       httpBackend = $httpBackend;
     });
   });
@@ -90,5 +95,25 @@ describe('Create-Namespace dialog', () => {
 
     // then form data was not sent to backend (thus flush will throw error)
     expect(httpBackend.flush).toThrow();
+  });
+
+  it('should hide creation dialog and open an error dialog if namespace cannot be created', () => {
+    spyOn(ctrl.errorDialog_, 'open');
+    spyOn(ctrl.mdDialog_, 'hide');
+    spyOn(ctrl.log_, 'info');
+    ctrl.namespaceForm = {};
+    ctrl.namespaceForm.$valid = true;
+    /** @type {string} */
+    let errorMessage = 'Something bad happened';
+    // return an erranous response
+    httpBackend.expectPOST('api/namespaces').respond(500, errorMessage);
+    // when
+    ctrl.createNamespace();
+    httpBackend.flush();
+    // expect
+    expect(ctrl.mdDialog_.hide).toHaveBeenCalled();
+    expect(ctrl.errorDialog_.open).toHaveBeenCalledWith('Error creating namespace', errorMessage);
+    expect(ctrl.log_.info).toHaveBeenCalled();
+
   });
 });
