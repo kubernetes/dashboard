@@ -14,6 +14,7 @@
 
 import componentsModule from './../common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
+import logsModule from 'logs/logs_module';
 import serviceEndpointDirective from './serviceendpoint_directive';
 import stateConfig from './replicasetdetail_stateconfig';
 import sortedHeaderDirective from './sortedheader_directive';
@@ -30,8 +31,9 @@ export default angular.module(
                             'ngMaterial',
                             'ngResource',
                             'ui.router',
-                            filtersModule.name,
                             componentsModule.name,
+                            filtersModule.name,
+                            logsModule.name,
                           ])
     .config(stateConfig)
     .directive('kdServiceEndpoint', serviceEndpointDirective)

@@ -24,6 +24,10 @@
   display: inline-block;
   font-weight: $regular-font-weight;
   text-decoration: none;
+
+  &:visited {
+    color: inherit;
+  }
 }
 
 .kd-replicaset-card-title {
@@ -105,9 +109,4 @@
 
 .kd-menu-logs-item-since {
   width: 15 * $baseline-grid;
-}
-
-.kd-menu-logs-link-icon {
-  font-size: $subhead-font-size-base;
-  margin-left: $baseline-grid;
 }

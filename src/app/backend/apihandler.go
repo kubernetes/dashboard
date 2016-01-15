@@ -88,6 +88,10 @@ func CreateHttpApiHandler(client *client.Client) http.Handler {
 	logsWs.Path("/api/logs").
 		Produces(restful.MIME_JSON)
 	logsWs.Route(
+		logsWs.GET("/{namespace}/{podId}").
+			To(apiHandler.handleLogs).
+			Writes(Logs{}))
+	logsWs.Route(
 		logsWs.GET("/{namespace}/{podId}/{container}").
 			To(apiHandler.handleLogs).
 			Writes(Logs{}))
@@ -259,7 +263,11 @@ func (apiHandler *ApiHandler) handleLogs(request *restful.Request, response *res
 	namespace := request.PathParameter("namespace")
 	podId := request.PathParameter("podId")
 	container := request.PathParameter("container")
-	result, err := GetPodLogs(apiHandler.client, namespace, podId, container)
+	var containerPtr *string = nil
+	if len(container) > 0 {
+		containerPtr = &container
+	}
+	result, err := GetPodLogs(apiHandler.client, namespace, podId, containerPtr)
 	if err != nil {
 		handleInternalError(response, err)
 		return

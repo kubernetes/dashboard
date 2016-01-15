@@ -38,7 +38,7 @@ export default function stateConfig($stateProvider) {
   };
 
   $stateProvider.state(stateName, {
-    url: '/logs/:namespace/:replicaSet/:podId/:container',
+    url: '/logs/:namespace/:replicaSet/:podId/:container?',
     resolve: {
       'replicaSetPods': resolveReplicaSetPods,
       'podLogs': resolvePodLogs,
@@ -55,7 +55,8 @@ export default function stateConfig($stateProvider) {
  */
 function resolveReplicaSetPods($stateParams, $resource) {
   /** @type {!angular.Resource<!backendApi.ReplicaSetPods>} */
-  let resource = $resource('/api/replicasets/pods/:namespace/:replicaSet', $stateParams);
+  let resource =
+      $resource(`/api/replicasets/pods/${$stateParams.namespace}/${$stateParams.replicaSet}`);
 
   return resource.get().$promise;
 }
@@ -68,7 +69,7 @@ function resolveReplicaSetPods($stateParams, $resource) {
  */
 function resolvePodLogs($stateParams, $resource) {
   /** @type {!angular.Resource<!backendApi.Logs>} */
-  let resource = $resource('/api/logs/:namespace/:podId/:container', $stateParams);
+  let resource = $resource(`/api/logs/${$stateParams.namespace}/${$stateParams.podId}/${$stateParams.container}`);
 
   return resource.get().$promise;
 }

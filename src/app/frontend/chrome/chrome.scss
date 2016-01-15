@@ -30,7 +30,12 @@ body {
 }
 
 a {
+  color: $primary;
   text-decoration: inherit;
+
+  &:visited {
+    color: $primary;
+  }
 }
 
 .kd-toolbar-tools,
@@ -53,3 +58,10 @@ a {
   right: 0;
   top: 0;
 }
+
+.kd-text-icon {
+  font-size: inherit;
+  height: inherit;
+  vertical-align: middle;
+}
+

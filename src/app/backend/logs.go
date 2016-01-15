@@ -26,17 +26,23 @@ import (
 
 // Log response structure
 type Logs struct {
-	// Pod id
+	// Pod name.
 	PodId string `json:"podId"`
-	// Specific time when logs started
+
+	// Specific time when logs started.
 	SinceTime unversioned.Time `json:"sinceTime"`
-	// Logs string
+
+	// Logs string lines.
 	Logs []string `json:"logs"`
+
+	// The name of the container the logs are for.
+	Container string `json:"container"`
 }
 
-// Return logs for particular pod and container or error when occurred.
-func GetPodLogs(client *client.Client, namespace, podId, container string) (*Logs, error) {
-	log.Printf("Getting logs from %s container from %s pod in %s namespace", container, podId,
+// Return logs for particular pod and container or error when occurred. When container is null,
+// logs for the first one are returned.
+func GetPodLogs(client *client.Client, namespace, podId string, container *string) (*Logs, error) {
+	log.Printf("Getting logs from %v container from %s pod in %s namespace", container, podId,
 		namespace)
 
 	pod, err := client.Pods(namespace).Get(podId)
@@ -44,8 +50,12 @@ func GetPodLogs(client *client.Client, namespace, podId, container string) (*Log
 		return nil, err
 	}
 
+	if container == nil {
+		container = &pod.Spec.Containers[0].Name
+	}
+
 	logOptions := &api.PodLogOptions{
-		Container:  container,
+		Container:  *container,
 		Follow:     false,
 		Previous:   false,
 		Timestamps: true,

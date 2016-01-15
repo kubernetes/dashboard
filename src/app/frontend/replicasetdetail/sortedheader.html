@@ -16,17 +16,17 @@ limitations under the License.
 
 <button class="kd-replicaset-detail-table-header-button" ng-click="sortCtrl.changeSorting()">
   <md-icon md-font-library="material-icons" ng-show="sortCtrl.isArrowDown()"
-           class="kd-sortedheader-sort-icon">
+           class="kd-text-icon">
     arrow_downward
   </md-icon>
   <md-icon md-font-library="material-icons" ng-show="sortCtrl.isArrowUp()"
-           class="kd-sortedheader-sort-icon">
+           class="kd-text-icon">
     arrow_upward
   </md-icon>
   <ng-transclude></ng-transclude>
 </button>
 <md-icon ng-show="sortCtrl.isTooltipAvailable()" md-font-library="material-icons"
-         class="kd-replicasetdetail-help-icon">
+         class="kd-replicasetdetail-help-icon kd-text-icon">
   help
   <md-tooltip>{{sortCtrl.tooltip}}</md-tooltip>
 </md-icon>
