@@ -132,6 +132,7 @@ backendApi.ReplicaSetSpec;
  * @typedef {{
  *   name: string,
  *   startTime: ?string,
+ *   status: string,
  *   podIP: string,
  *   nodeName: string,
  *   restartCount: number
@@ -181,7 +182,7 @@ backendApi.PodContainer;
 /**
  * @typedef {{
  *   name: string,
- *   startTime: string,
+ *   startTime: ?string,
  *   totalRestartCount: number,
  *   podContainers: !Array<!backendApi.PodContainer>
  * }}

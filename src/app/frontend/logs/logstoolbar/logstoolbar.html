@@ -35,12 +35,19 @@ limitations under the License.
       </md-option>
     </md-select>
   </div>
-  <span class="kd-logs-toolbar-text" flex>Running since {{ctrl.podCreationTime}}</span>
+  <span class="kd-logs-toolbar-text" flex>
+    <span ng-if="ctrl.podCreationTime">
+      Running since {{ctrl.podCreationTime | date:'short'}}
+    </span>
+    <span ng-if="!ctrl.podCreationTime">
+      Not running
+    </span>
+  </span>
   <span flex></span>
   <md-button class="kd-icon-button" id="colorText"
              ng-click="ctrl.onTextColorChange()">
     <md-icon md-font-library="material-icons"
-             ng-class=ctrl.getStyleClass()>
+             ng-class="ctrl.getStyleClass()">
       format_color_text
     </md-icon>
   </md-button>
