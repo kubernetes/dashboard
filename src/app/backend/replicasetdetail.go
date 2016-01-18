@@ -25,7 +25,7 @@ import (
 	"k8s.io/kubernetes/pkg/labels"
 )
 
-// Detailed information about a Replica Set.
+// ReplicaSetDetail represents detailed information about a Replica Set.
 type ReplicaSetDetail struct {
 	// Name of the Replica Set.
 	Name string `json:"name"`
@@ -42,11 +42,8 @@ type ReplicaSetDetail struct {
 	// Container image list of the pod template specified by this Replica Set.
 	ContainerImages []string `json:"containerImages"`
 
-	// Number of Pod replicas specified in the spec.
-	PodsDesired int `json:"podsDesired"`
-
-	// Actual number of Pod replicas running.
-	PodsRunning int `json:"podsRunning"`
+	// Aggregate information about pods of this replica set.
+	PodInfo ReplicaSetPodInfo `json:"podInfo"`
 
 	// Detailed information about Pods belonging to this Replica Set.
 	Pods []ReplicaSetPod `json:"pods"`
@@ -78,6 +75,9 @@ type ReplicaSetPod struct {
 
 // Detailed information about a Service connected to Replica Set.
 type ServiceDetail struct {
+	// Name of the service.
+	Name string `json:"name"`
+
 	// Internal endpoints of all Kubernetes services that have the same label selector as connected
 	// Replica Set.
 	// Endpoint is DNS name merged with ports.
@@ -141,8 +141,7 @@ func GetReplicaSetDetail(client *client.Client, namespace, name string) (*Replic
 		Namespace:     replicaSet.Namespace,
 		Labels:        replicaSet.ObjectMeta.Labels,
 		LabelSelector: replicaSet.Spec.Selector,
-		PodsRunning:   replicaSet.Status.Replicas,
-		PodsDesired:   replicaSet.Spec.Replicas,
+		PodInfo:       getReplicaSetPodInfo(replicaSet, pods.Items),
 	}
 
 	matchingServices := getMatchingServices(services.Items, replicaSet)
@@ -229,6 +228,7 @@ func getServiceDetail(service api.Service) ServiceDetail {
 	}
 
 	serviceDetail := ServiceDetail{
+		Name: service.ObjectMeta.Name,
 		InternalEndpoint: getInternalEndpoint(service.Name, service.Namespace,
 			service.Spec.Ports),
 		ExternalEndpoints: externalEndpoints,

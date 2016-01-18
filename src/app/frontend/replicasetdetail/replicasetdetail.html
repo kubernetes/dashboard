@@ -23,36 +23,64 @@ limitations under the License.
           <md-icon md-font-library="material-icons">arrow_back</md-icon>
         </md-button>
         <h1 flex class="md-title kd-replicasetdetail-app-name">
-          {{ctrl.replicaSetDetail.name}}
+          {{::ctrl.replicaSetDetail.name}}
         </h1>
       </div>
     </div>
     <div flex layout="column" class="kd-replicasetdetail-sidebar-item">
-      <div layout="row" flex="nogrow" class="kd-replicasetdetail-sidebar-actions">
+      <span class="kd-replicasetdetail-sidebar-title kd-replicasetdetail-sidebar-info">
+        Replica set
+      </span>
+      <div layout="row" flex="nogrow">
         <md-button class="md-primary" ng-click="ctrl.handleDeleteReplicaSetDialog()">
           <md-icon class="material-icons">delete</md-icon>
           DELETE
         </md-button>
       </div>
       <div flex layout="column" class="kd-replicasetdetail-sidebar-info">
-        <div>
-          <span class="kd-replicasetdetail-sidebar-title">
-            {{ctrl.replicaSetDetail.podsDesired}} pods
-          </span>
-          <md-button class="md-icon-button md-primary">
-            <md-icon class="material-icons"
-                ng-click="ctrl.handleUpdateReplicasDialog()">
-              mode_edit
-            </md-icon>
-          </md-button>
-        </div>
-        <span class="kd-replicasetdetail-sidebar-line">Label selector</span>
+        <span class="kd-replicasetdetail-sidebar-line">Name</span>
         <span class="kd-replicasetdetail-sidebar-subline">
+          {{::ctrl.replicaSetDetail.name}}
+        </span>
+        <span class="kd-replicasetdetail-sidebar-line">Namespace</span>
+        <span class="kd-replicasetdetail-sidebar-subline">
+          {{::ctrl.replicaSetDetail.namespace}}
+        </span>
+        <div layout="row" layout-align="start end">
+          <div flex="nogrow">
+            <span class="kd-replicasetdetail-sidebar-line">Pods</span>
+            <span class="kd-replicasetdetail-sidebar-subline">
+              {{::ctrl.replicaSetDetail.podInfo.current}} created,
+              {{::ctrl.replicaSetDetail.podInfo.desired}} desired
+            </span>
+            </div>
+          <div flex="nogrow">
+            <md-button  class="md-icon-button md-primary">
+              <md-icon class="material-icons"
+                  ng-click="ctrl.handleUpdateReplicasDialog()">
+                mode_edit
+              </md-icon>
+            </md-button>
+          </div>
+        </div>
+        <span class="kd-replicasetdetail-sidebar-line">Pods status</span>
+        <span class="kd-replicasetdetail-sidebar-subline">
+          <span ng-if="::ctrl.replicaSetDetail.podInfo.pending" class="kd-comma-separated-item">
+            {{::ctrl.replicaSetDetail.podInfo.pending}} pending<!-- Collapse whitespace
+          --></span>
+          <span ng-if="::ctrl.replicaSetDetail.podInfo.failed" class="kd-comma-separated-item">
+            {{::ctrl.replicaSetDetail.podInfo.failed}} failed<!-- Collapse whitespace
+          --></span>
+          <span ng-if="::ctrl.replicaSetDetail.podInfo.running" class="kd-comma-separated-item">
+            {{::ctrl.replicaSetDetail.podInfo.running}} running
+          </span>
+        </span>
+        <span class="kd-replicasetdetail-sidebar-line">Label selector</span>
+        <span class="kd-replicasetdetail-sidebar-subline kd-has-labels">
           <kd-labels labels="::ctrl.replicaSetDetail.labelSelector"></kd-labels>
         </span>
-        <span class="kd-replicasetdetail-sidebar-title">Replica Set</span>
         <span class="kd-replicasetdetail-sidebar-line">Labels</span>
-        <span class="kd-replicasetdetail-sidebar-subline">
+        <span class="kd-replicasetdetail-sidebar-subline kd-has-labels">
           <kd-labels labels="::ctrl.replicaSetDetail.labels"></kd-labels>
         </span>
         <span class="kd-replicasetdetail-sidebar-line">Images</span>
@@ -62,29 +90,32 @@ limitations under the License.
         </span>
         <div ng-if="::ctrl.replicaSetDetail.services" layout="column">
           <span class="kd-replicasetdetail-sidebar-title">Services</span>
-          <span class="kd-replicasetdetail-sidebar-line">Label selector</span>
-          <span class="kd-replicasetdetail-sidebar-subline"
-                ng-repeat="service in ::ctrl.replicaSetDetail.services">
-            <kd-labels labels="::service.selector"></kd-labels>
-          </span>
-          <span class="kd-replicasetdetail-sidebar-line">Internal endpoint</span>
-          <div class="kd-replicasetdetail-sidebar-subline"
-               ng-repeat="service in ::ctrl.replicaSetDetail.services">
-            <div ng-if="::service.internalEndpoint">
-              <kd-service-endpoint endpoint="::service.internalEndpoint"></kd-service-endpoint>
-            </div>
-            <span ng-hide="service.internalEndpoint">none</span>
-          </div>
-          <span class="kd-replicasetdetail-sidebar-line">External endpoint</span>
-          <div class="kd-replicasetdetail-sidebar-subline"
-               ng-repeat="service in ::ctrl.replicaSetDetail.services">
-            <div ng-repeat="endpoint in service.externalEndpoints">
-              <kd-service-endpoint endpoint="::endpoint"></kd-service-endpoint>
-            </div>
-            <span class="kd-replicasetdetail-sidebar-subline"
-                ng-hide="::service.externalEndpoints">
-              none
+          <div ng-repeat="service in ::ctrl.replicaSetDetail.services">
+            <span class="kd-replicasetdetail-sidebar-line">Name</span>
+            <span class="kd-replicasetdetail-sidebar-subline">
+              {{::service.name}}
             </span>
+            <span class="kd-replicasetdetail-sidebar-line">Label selector</span>
+            <span class="kd-replicasetdetail-sidebar-subline kd-has-labels">
+              <kd-labels labels="::service.selector"></kd-labels>
+            </span>
+            <span class="kd-replicasetdetail-sidebar-line">Internal endpoint</span>
+            <div class="kd-replicasetdetail-sidebar-subline">
+              <div ng-if="::service.internalEndpoint">
+                <kd-service-endpoint endpoint="::service.internalEndpoint"></kd-service-endpoint>
+              </div>
+              <span ng-hide="service.internalEndpoint">none</span>
+            </div>
+            <span class="kd-replicasetdetail-sidebar-line">External endpoint</span>
+            <div class="kd-replicasetdetail-sidebar-subline">
+              <div ng-repeat="endpoint in service.externalEndpoints">
+                <kd-service-endpoint endpoint="::endpoint"></kd-service-endpoint>
+              </div>
+              <span class="kd-replicasetdetail-sidebar-subline"
+                  ng-hide="::service.externalEndpoints">
+                none
+              </span>
+            </div>
           </div>
         </div>
       </div>

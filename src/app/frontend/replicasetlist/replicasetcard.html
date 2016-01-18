@@ -37,13 +37,15 @@ limitations under the License.
                  when="{'one': '1 pod running,',
                      'other': '{} pods running,'}">
           </ng-pluralize>
-          <span ng-if="::ctrl.replicaSet.pods.waiting" class="kd-replicase-card-pods-stat">
-            {{::ctrl.replicaSet.pods.waiting}} waiting,
-          </span>
-          <span ng-if="::ctrl.replicaSet.pods.failed" class="kd-replicase-card-pods-stat">
-            {{::ctrl.replicaSet.pods.failed}} failed,
-          </span>
-          <span class="kd-replicase-card-pods-stat">
+          <span ng-if="::ctrl.replicaSet.pods.pending"
+              class="kd-replicase-card-pods-stat kd-comma-separated-item">
+            {{::ctrl.replicaSet.pods.pending}} pending<!-- Collapse whitespace
+          --></span>
+          <span ng-if="::ctrl.replicaSet.pods.failed"
+              class="kd-replicase-card-pods-stat kd-comma-separated-item">
+            {{::ctrl.replicaSet.pods.failed}} failed<!-- Collapse whitespace
+          --></span>
+          <span class="kd-replicase-card-pods-stat kd-comma-separated-item">
             {{::ctrl.replicaSet.pods.desired}} desired
           </span>
         </span>
