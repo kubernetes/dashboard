@@ -19,9 +19,10 @@ export default function deployFromFileDirective() {
     scope: {},
     bindToController: {
       'detail': '=',
+      'form': '=',
     },
     controller: DeployFromFileController,
     controllerAs: 'ctrl',
-    template: '<kd-upload file="ctrl.file"></kd-upload>',
+    template: '<kd-upload file="ctrl.file" form="ctrl.form"></kd-upload>',
   };
 }

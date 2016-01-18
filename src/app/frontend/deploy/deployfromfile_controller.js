@@ -30,7 +30,8 @@ export default class DeployFromFileController {
     /**
      * Custom file model for the selected file
      *
-     * @export {{name:string, content:string}} */
+     * @export {{name:string, content:string}}
+     */
     this.file = {name: '', content: ''};
   }
 }
