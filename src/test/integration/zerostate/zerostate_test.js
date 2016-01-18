@@ -12,19 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// import PageObject from './zerostate_po';
+import PageObject from './zerostate_po';
 
 describe('Zero state view', () => {
-  // let page;
+  /** @type {!PageObject} */
+  let page;
 
   beforeEach(() => {
-    browser.get('#/zerostate');
-    // page = new PageObject();
+    browser.get('#/replicasets/zerostate');
+    page = new PageObject();
   });
 
-  // TODO: Enable this test to be able test zerostate page.
-  // Currently after cluster installation the Heapster service is deployed. It causes situation that
-  // zerostate page is redirected to replicasets and never displayed. Some solution is needed to be
-  // able test zerostate page.
-  // it('should do something', () => { expect(page.deployButton.getText()).toContain('DEPLOY'); });
+  it('should do something', () => { expect(page.deployButton.getText()).toContain('DEPLOY'); });
 });
