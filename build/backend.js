@@ -66,8 +66,6 @@ gulp.task('backend:prod', ['package-backend-source'], function(doneFn) {
                 doneFn, {
                   // Disable cgo package. Required to run on scratch docker image.
                   CGO_ENABLED: '0',
-                  // Scratch docker image is linux.
-                  GOOS: 'linux',
                 });
           },
           function(error) { doneFn(error); });
