@@ -30,7 +30,7 @@ limitations under the License.
         {{::(pod.name | middleEllipsis:10)}}
       </div>
       <div class="kd-menu-logs-item kd-menu-logs-item-since">
-        <a ng-href="{{::ctrl.getLogsHref(pod.name, pod.podContainers[0].name)}}"
+        <a ng-href="{{::ctrl.getLogsHref(pod.name)}}"
              ng-if="::ctrl.podContainerExists(pod)">
           <span ng-if="::pod.startTime">
             {{pod.startTime | date:"short"}}
@@ -38,13 +38,13 @@ limitations under the License.
           <span ng-if="::!pod.startTime">
             Not running
           </span>
-          <i class="material-icons kd-menu-logs-link-icon">open_in_new</i>
+          <i class="material-icons kd-text-icon">open_in_new</i>
         </a>
         <span ng-if="::!ctrl.podContainerExists(pod)">-</span>
       </div>
       <div class="kd-menu-logs-item kd-menu-logs-item-prior">
         <a ng-if="::ctrl.podContainersRestarted(pod)">
-          Logs<i class="material-icons kd-menu-logs-link-icon">open_in_new</i>
+          Logs <i class="material-icons kd-text-icon">open_in_new</i>
         </a>
         <span ng-if="::!ctrl.podContainersRestarted(pod)">-</span>
       </div>

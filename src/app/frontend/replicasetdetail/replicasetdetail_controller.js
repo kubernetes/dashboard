@@ -15,6 +15,8 @@
 import showUpdateReplicasDialog from 'replicasetdetail/updatereplicas_dialog';
 import {UPWARDS, DOWNWARDS} from 'replicasetdetail/sortedheader_controller';
 import {stateName as replicasets} from 'replicasetlist/replicasetlist_state';
+import {stateName as logsStateName} from 'logs/logs_state';
+import {StateParams as LogsStateParams} from 'logs/logs_state';
 
 // Filter type and source values for events.
 const EVENT_ALL = 'All';
@@ -129,6 +131,15 @@ export default class ReplicaSetDetailController {
   handleEventFiltering() {
     this.events = this.filterByType(this.replicaSetEvents.events, this.eventType);
     this.events = this.filterBySource(this.events, this.eventSource);
+  }
+
+  /**
+   * @export
+   */
+  getPodLogsHref(pod) {
+    return this.state_.href(
+        logsStateName,
+        new LogsStateParams(this.stateParams_.namespace, this.stateParams_.replicaSet, pod.name));
   }
 
   /**

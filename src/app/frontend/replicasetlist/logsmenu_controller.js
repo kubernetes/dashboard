@@ -90,14 +90,12 @@ export default class LogsMenuController {
 
   /**
    * @param {string} podName
-   * @param {string} containerName
    * @return {string}
    * @export
    */
-  getLogsHref(podName, containerName) {
+  getLogsHref(podName) {
     return this.state_.href(
-        logsStateName,
-        new StateParams(this.namespace, this.replicaSetName, podName, containerName));
+        logsStateName, new StateParams(this.namespace, this.replicaSetName, podName));
   }
 
   /**

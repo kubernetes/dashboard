@@ -81,7 +81,9 @@ func GetReplicaSetPods(client *client.Client, namespace, name string, limit int)
 // Data is sorted by total number of restarts for replica set pod.
 // Result set can be limited
 func getReplicaSetPods(pods []api.Pod, limit int) *ReplicaSetPods {
-	replicaSetPods := &ReplicaSetPods{}
+	replicaSetPods := &ReplicaSetPods{
+		Pods: make([]ReplicaSetPodWithContainers, 0),
+	}
 	for _, pod := range pods {
 		totalRestartCount := 0
 		replicaSetPodWithContainers := ReplicaSetPodWithContainers{

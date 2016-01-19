@@ -48,6 +48,11 @@ describe('Logs toolbar controller', () => {
     ],
   };
 
+  /** @type {!backendApi.Logs} podLogs */
+  const logs = {
+    container: mockContainer,
+  };
+
   /** @type {!StateParams} */
   const stateParams = new StateParams(mockNamespace, mockReplicaSet, mockPodId, mockContainer);
 
@@ -66,8 +71,8 @@ describe('Logs toolbar controller', () => {
     angular.mock.inject(($controller, $state) => {
       state = $state;
       ctrl = $controller(
-          LogsToolbarController, {replicaSetPods: replicaSetPods, $stateParams: stateParams},
-          $state);
+          LogsToolbarController,
+          {replicaSetPods: replicaSetPods, $stateParams: stateParams, podLogs: logs}, $state);
     });
   });
 
