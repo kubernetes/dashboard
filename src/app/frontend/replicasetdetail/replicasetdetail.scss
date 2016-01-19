@@ -118,6 +118,11 @@ $table-cell-height-half: $table-cell-height / 2;
   font-size: $body-font-size-base;
   height: $table-cell-height;
   padding: 0 0 0 (2 * $baseline-grid);
+
+  &.kd-replicasetdetail-message-table-cell {
+    white-space: normal;
+    word-break: break-all;
+  }
 }
 
 .kd-replicasetdetail-table-icon {
