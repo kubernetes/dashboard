@@ -78,7 +78,7 @@ export default class LogsMenuController {
   getReplicaSetPods_() {
     /** @type {!angular.Resource<!backendApi.ReplicaSetPods>} */
     let resource =
-        this.resource_(`/api/replicasets/pods/${this.namespace}/${this.replicaSetName}?limit=10`);
+        this.resource_(`api/replicasets/pods/${this.namespace}/${this.replicaSetName}?limit=10`);
 
     resource.get(
         (replicaSetPods) => {

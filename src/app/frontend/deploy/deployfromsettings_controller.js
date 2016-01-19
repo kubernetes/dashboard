@@ -167,7 +167,7 @@ export default class DeployFromSettingsController {
     let defer = this.q_.defer();
 
     /** @type {!angular.Resource<!backendApi.AppDeploymentSpec>} */
-    let resource = this.resource_('/api/appdeployments');
+    let resource = this.resource_('api/appdeployments');
     resource.save(
         appDeploymentSpec,
         (savedConfig) => {

@@ -35,7 +35,7 @@ describe('DeployFromSettings controller', () => {
   it('should validate name asynchronosuly', () => {
     scope.name = 'foo-name';
     scope.namespace = 'foo-namespace';
-    let endpoint = httpBackend.when('POST', '/api/appdeployments/validate/name');
+    let endpoint = httpBackend.when('POST', 'api/appdeployments/validate/name');
 
     let elem = compileFn(scope)[0];
     expect(elem.classList).toContain('ng-valid');
@@ -67,7 +67,7 @@ describe('DeployFromSettings controller', () => {
     scope.namespace = 'foo-namespace';
 
     let elem = compileFn(scope)[0];
-    httpBackend.when('POST', '/api/appdeployments/validate/name').respond({
+    httpBackend.when('POST', 'api/appdeployments/validate/name').respond({
       valid: false,
     });
     httpBackend.flush();
@@ -83,7 +83,7 @@ describe('DeployFromSettings controller', () => {
     scope.namespace = 'foo-namespace';
 
     let elem = compileFn(scope)[0];
-    httpBackend.when('POST', '/api/appdeployments/validate/name').respond(503, '');
+    httpBackend.when('POST', 'api/appdeployments/validate/name').respond(503, '');
     httpBackend.flush();
     expect(elem.classList).not.toContain('ng-pending');
     expect(elem.classList).toContain('ng-invalid');

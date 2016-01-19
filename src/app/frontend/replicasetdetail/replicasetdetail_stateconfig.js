@@ -43,7 +43,7 @@ export default function stateConfig($stateProvider) {
  * @ngInject
  */
 export function getReplicaSetDetailsResource($stateParams, $resource) {
-  return $resource('/api/replicasets/:namespace/:replicaSet', $stateParams);
+  return $resource(`api/replicasets/${$stateParams.namespace}/${$stateParams.replicaSet}`);
 }
 
 /**
@@ -53,7 +53,7 @@ export function getReplicaSetDetailsResource($stateParams, $resource) {
  * @ngInject
  */
 function getReplicaSetSpecPodsResource($stateParams, $resource) {
-  return $resource('/api/replicasets/:namespace/:replicaSet/update/pods', $stateParams);
+  return $resource(`api/replicasets/${$stateParams.namespace}/${$stateParams.replicaSet}/update/pods`);
 }
 
 /**
@@ -73,7 +73,7 @@ function resolveReplicaSetDetails(replicaSetDetailResource) {
  */
 function resolveReplicaSetEvents($stateParams, $resource) {
   /** @type {!angular.Resource<!backendApi.Events>} */
-  let resource = $resource('/api/events/:namespace/:replicaSet', $stateParams);
+  let resource = $resource(`api/events/${$stateParams.namespace}/${$stateParams.replicaSet}`);
 
   return resource.get().$promise;
 }
