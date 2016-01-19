@@ -20,8 +20,8 @@ limitations under the License.
     <p>Replica set {{ctrl.replicaSetDetail.name}} will be updated to reflect the desired count.
       <br/>
       <span class="kd-updatereplicas-pod-status">
-        Current status: {{ctrl.replicaSetDetail.podsRunning}}
-        running, {{ctrl.replicaSetDetail.podsDesired}} desired
+        Current status: {{ctrl.replicaSetDetail.podsCreated}}
+        created, {{ctrl.replicaSetDetail.podsDesired}} desired
       </span>
     </p>
     <form ng-submit="ctrl.updateReplicasCount()">

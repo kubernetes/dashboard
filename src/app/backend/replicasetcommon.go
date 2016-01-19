@@ -27,6 +27,24 @@ type ReplicaSetWithPods struct {
 	Pods       *api.PodList
 }
 
+// ReplicaSetPodInfo represents aggregate information about replica set pods.
+type ReplicaSetPodInfo struct {
+	// Number of pods that are created.
+	Current int `json:"current"`
+
+	// Number of pods that are desired in this Replica Set.
+	Desired int `json:"desired"`
+
+	// Number of pods that are currently running.
+	Running int `json:"running"`
+
+	// Number of pods that are currently waiting.
+	Pending int `json:"pending"`
+
+	// Number of pods that are failed.
+	Failed int `json:"failed"`
+}
+
 // Returns structure containing ReplicaSet and Pods for the given replica set.
 func getRawReplicaSetWithPods(client *client.Client, namespace, name string) (
 	*ReplicaSetWithPods, error) {
@@ -60,4 +78,25 @@ func getRawReplicaSetPods(client *client.Client, namespace, name string) (*api.P
 		return nil, err
 	}
 	return replicaSetAndPods.Pods, nil
+}
+
+// Returns aggregate information about replica set pods.
+func getReplicaSetPodInfo(replicaSet *api.ReplicationController, pods []api.Pod) ReplicaSetPodInfo {
+	result := ReplicaSetPodInfo{
+		Current: replicaSet.Status.Replicas,
+		Desired: replicaSet.Spec.Replicas,
+	}
+
+	for _, pod := range pods {
+		switch pod.Status.Phase {
+		case api.PodRunning:
+			result.Running++
+		case api.PodPending:
+			result.Pending++
+		case api.PodFailed:
+			result.Failed++
+		}
+	}
+
+	return result
 }

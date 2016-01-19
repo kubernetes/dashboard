@@ -21,12 +21,12 @@ describe('Replica Set Detail controller', () => {
    * @type {!ReplicaSetDetailController}
    */
   let ctrl;
-
   /** @type {!md.$dialog} */
   let mdDialog;
-
   /** @type {!angular.$log} */
   let log;
+  /** @type {!ui.router.$state} */
+  let state;
 
   /**
    * First parameter behavior is changed to indicate successful/failed update.
@@ -45,11 +45,14 @@ describe('Replica Set Detail controller', () => {
   beforeEach(() => {
     angular.mock.module(replicaSetDetailModule.name);
 
-    angular.mock.inject(($resource, $log, $state, $mdDialog) => {
+    angular.mock.inject(($resource, $log, $state, $mdDialog, $controller) => {
       mdDialog = $mdDialog;
       log = $log;
+      state = $state;
 
-      ctrl = new UpdateReplicasDialogController(mdDialog, log, {}, mockUpdateReplicasFn);
+      ctrl = $controller(
+          UpdateReplicasDialogController,
+          {replicaSetDetail: {}, updateReplicasFn: mockUpdateReplicasFn});
     });
   });
 
@@ -57,6 +60,7 @@ describe('Replica Set Detail controller', () => {
     // given
     spyOn(log, 'info');
     spyOn(mdDialog, 'hide');
+    spyOn(state, 'reload');
     // Indicates if there was error during update
     ctrl.replicas = false;
 
@@ -66,6 +70,7 @@ describe('Replica Set Detail controller', () => {
     // then
     expect(log.info).toHaveBeenCalledWith('Successfully updated replica set.');
     expect(mdDialog.hide).toHaveBeenCalled();
+    expect(state.reload).toHaveBeenCalled();
   });
 
   it('should log error after edit replicas and hide the dialog', () => {
@@ -84,6 +89,8 @@ describe('Replica Set Detail controller', () => {
   });
 
   it('should close the dialog on cancel', () => {
+    spyOn(state, 'reload');
+
     // given
     spyOn(mdDialog, 'cancel');
 
@@ -92,5 +99,6 @@ describe('Replica Set Detail controller', () => {
 
     // then
     expect(mdDialog.cancel).toHaveBeenCalled();
+    expect(state.reload).not.toHaveBeenCalled();
   });
 });

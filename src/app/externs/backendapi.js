@@ -92,11 +92,22 @@ backendApi.ReplicaSetList;
 
 /**
  * @typedef {{
+ *   current: number,
+ *   desired: number,
+ *   running: number,
+ *   pending: number,
+ *   failed: number
+ * }}
+ */
+backendApi.ReplicaSetPodInfo;
+
+/**
+ * @typedef {{
  *   name: string,
  *   namespace: string,
  *   description: string,
  *   labels: !Object<string, string>,
- *   pods: {current: number, running: number, desired: number, waiting: number, failed: number},
+ *   pods: !backendApi.ReplicaSetPodInfo,
  *   containerImages: !Array<string>,
  *   creationTime: string,
  *   internalEndpoints: !Array<!backendApi.Endpoint>,
@@ -112,8 +123,7 @@ backendApi.ReplicaSet;
  *   labels: !Object<string, string>,
  *   labelSelector: !Object<string, string>,
  *   containerImages: !Array<string>,
- *   podsDesired: number,
- *   podsRunning: number,
+ *   podInfo: !backendApi.ReplicaSetPodInfo,
  *   pods: !Array<!backendApi.ReplicaSetPod>,
  *   services: !Array<!backendApi.ServiceDetail>
  * }}
@@ -141,6 +151,7 @@ backendApi.ReplicaSetPod;
 
 /**
  * @typedef {{
+ *  name: string,
  *  internalEndpoint: !backendApi.Endpoint,
  *  externalEndpoints: !Array<!backendApi.Endpoint>,
  *  selector: !Object<string, string>

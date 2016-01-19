@@ -207,7 +207,7 @@ func TestGetReplicaSetList(t *testing.T) {
 						InternalEndpoints: []Endpoint{{Host: "my-app-1.namespace-1"}},
 						Pods: ReplicaSetPodInfo{
 							Failed:  2,
-							Waiting: 1,
+							Pending: 1,
 							Running: 1,
 						},
 					}, {

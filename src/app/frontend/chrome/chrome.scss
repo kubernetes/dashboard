@@ -65,3 +65,14 @@ a {
   vertical-align: middle;
 }
 
+.kd-comma-separated-item {
+  &:after {
+    content: ',';
+  }
+
+  &:last-child {
+    &:after {
+      content: '';
+    }
+  }
+}

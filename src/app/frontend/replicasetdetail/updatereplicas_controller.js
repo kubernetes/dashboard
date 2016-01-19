@@ -21,12 +21,13 @@ export default class UpdateReplicasDialogController {
   /**
    * @param {!md.$dialog} $mdDialog
    * @param {!angular.$log} $log
+   * @param {!ui.router.$state} $state
    * @param {!backendApi.ReplicaSetDetail} replicaSetDetail
    * @param {!function(number, function(!backendApi.ReplicaSetSpec),
    * function(!angular.$http.Response)=)} updateReplicasFn
    * @ngInject
    */
-  constructor($mdDialog, $log, replicaSetDetail, updateReplicasFn) {
+  constructor($mdDialog, $log, $state, replicaSetDetail, updateReplicasFn) {
     /** @export {number} */
     this.replicas;
 
@@ -42,6 +43,9 @@ export default class UpdateReplicasDialogController {
 
     /** @private {!angular.$log} */
     this.log_ = $log;
+
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
   }
 
   /**
@@ -68,6 +72,7 @@ export default class UpdateReplicasDialogController {
     this.log_.info('Successfully updated replica set.');
     this.log_.info(updatedSpec);
     this.mdDialog_.hide();
+    this.state_.reload();
   }
 
   /**
