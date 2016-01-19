@@ -32,8 +32,13 @@ limitations under the License.
       <div class="kd-menu-logs-item kd-menu-logs-item-since">
         <a ng-href="{{::ctrl.getLogsHref(pod.name, pod.podContainers[0].name)}}"
              ng-if="::ctrl.podContainerExists(pod)">
-          {{pod.startTime | date:"short"}}<i
-          class="material-icons kd-menu-logs-link-icon">open_in_new</i>
+          <span ng-if="::pod.startTime">
+            {{pod.startTime | date:"short"}}
+          </span>
+          <span ng-if="::!pod.startTime">
+            Not running
+          </span>
+          <i class="material-icons kd-menu-logs-link-icon">open_in_new</i>
         </a>
         <span ng-if="::!ctrl.podContainerExists(pod)">-</span>
       </div>

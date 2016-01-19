@@ -106,6 +106,14 @@ limitations under the License.
             <th class="kd-replicasetdetail-table-header">
               <kd-sorted-header currently-selected-column="ctrl.sortPodsBy"
                                 currently-selected-order="ctrl.podsOrder"
+                                column-name="status"
+                                tooltip="Status of the pod">
+                Status
+              </kd-sorted-header>
+            </th>
+            <th class="kd-replicasetdetail-table-header">
+              <kd-sorted-header currently-selected-column="ctrl.sortPodsBy"
+                                currently-selected-order="ctrl.podsOrder"
                                 column-name="restartCount"
                                 tooltip="Restarts count and last restart time of the pod">
                 Restarts
@@ -162,11 +170,19 @@ limitations under the License.
           <tr ng-repeat="pod in ctrl.replicaSetDetail.pods | orderBy:ctrl.sortPodsBy:ctrl.podsOrder">
             <td class="kd-replicasetdetail-table-cell">{{pod.name}}</td>
             <td class="kd-replicasetdetail-table-cell">
-              {{pod.restartCount}}<!-- TODO(maciaszczykm): Add info about last restart date. -->
+              {{::pod.podPhase}}
             </td>
             <td class="kd-replicasetdetail-table-cell">
-              {{pod.startTime | relativeTime}}
-              <md-tooltip>{{pod.startTime | date:'short'}}</md-tooltip>
+              {{::pod.restartCount}}<!-- TODO(maciaszczykm): Add info about last restart date. -->
+            </td>
+            <td class="kd-replicasetdetail-table-cell">
+              <span ng-if="::pod.startTime">
+                {{::pod.startTime | relativeTime}}
+                <md-tooltip>{{::(pod.startTime | date:'short')}}</md-tooltip>
+              </span>
+              <span ng-if="::!pod.startTime">
+                -
+              </span>
             </td>
             <td class="kd-replicasetdetail-table-cell">
               0.4 CPU<!-- TODO(maciaszczykm): Fill with data and plot. -->
@@ -174,8 +190,22 @@ limitations under the License.
             <td class="kd-replicasetdetail-table-cell">
               12 MB<!-- TODO(maciaszczykm): Fill with data and plot. -->
             </td>
-            <td class="kd-replicasetdetail-table-cell">{{pod.podIP}}</td>
-            <td class="kd-replicasetdetail-table-cell">{{pod.nodeName}}</td>
+            <td class="kd-replicasetdetail-table-cell">
+              <span ng-if="::pod.podIP">
+                {{::pod.podIP}}
+              </span>
+              <span ng-if="::!pod.podIP">
+                -
+              </span>
+            </td>
+            <td class="kd-replicasetdetail-table-cell">
+              <span ng-if="::pod.nodeName">
+                {{::pod.nodeName}}
+              </span>
+              <span ng-if="::!pod.nodeName">
+                -
+              </span>
+            </td>
             <td class="kd-replicasetdetail-table-cell">
               <span>
                 Logs<i class="material-icons kd-replicasetdetail-table-icon">arrow_drop_down</i>

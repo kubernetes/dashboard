@@ -29,6 +29,12 @@ export default class UploadController {
      * Initialized from the registerBrowseFileFunction method.
      * @private {(function())|undefined} */
     this.browseFileFunc_;
+
+    /**
+     * Initialized from the scope.
+     * @export {!angular.FormController}
+     */
+    this.form;
   }
 
   /**
@@ -52,5 +58,17 @@ export default class UploadController {
     if (this.browseFileFunc_) {
       this.browseFileFunc_();
     }
+  }
+
+  /**
+   * Used to deactivate the invalid file name report if the form is not submitted yet.
+   *
+   * @returns {boolean}
+   * @export
+   */
+  isFileNameError() {
+    /** @type {!angular.NgModelController} */
+    let fileName = this.form['fileName'];
+    return this.form.$submitted && fileName.$invalid;
   }
 }
