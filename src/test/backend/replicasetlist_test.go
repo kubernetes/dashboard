@@ -21,7 +21,7 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 )
 
-func TestIsServiceMatchingReplicaSet(t *testing.T) {
+func TestIsLabelSelectorMatching(t *testing.T) {
 	cases := []struct {
 		serviceSelector, replicaSetSelector map[string]string
 		expected                            bool
@@ -42,9 +42,9 @@ func TestIsServiceMatchingReplicaSet(t *testing.T) {
 			map[string]string{"app": "my-name", "version": "1.1"}, true},
 	}
 	for _, c := range cases {
-		actual := isServiceMatchingReplicaSet(c.serviceSelector, c.replicaSetSelector)
+		actual := isLabelSelectorMatching(c.serviceSelector, c.replicaSetSelector)
 		if actual != c.expected {
-			t.Errorf("isServiceMatchingReplicaSet(%+v, %+v) == %+v, expected %+v",
+			t.Errorf("isLabelSelectorMatching(%+v, %+v) == %+v, expected %+v",
 				c.serviceSelector, c.replicaSetSelector, actual, c.expected)
 		}
 	}
@@ -86,12 +86,17 @@ func TestGetReplicaSetList(t *testing.T) {
 	cases := []struct {
 		replicaSets []api.ReplicationController
 		services    []api.Service
+		pods        []api.Pod
 		expected    *ReplicaSetList
 	}{
-		{nil, nil, &ReplicaSetList{ReplicaSets: []ReplicaSet{}}},
+		{nil, nil, nil, &ReplicaSetList{ReplicaSets: []ReplicaSet{}}},
 		{
 			[]api.ReplicationController{
 				{
+					ObjectMeta: api.ObjectMeta{
+						Name:      "my-app-1",
+						Namespace: "namespace-1",
+					},
 					Spec: api.ReplicationControllerSpec{
 						Selector: map[string]string{"app": "my-name-1"},
 						Template: &api.PodTemplateSpec{
@@ -100,6 +105,10 @@ func TestGetReplicaSetList(t *testing.T) {
 					},
 				},
 				{
+					ObjectMeta: api.ObjectMeta{
+						Name:      "my-app-2",
+						Namespace: "namespace-2",
+					},
 					Spec: api.ReplicationControllerSpec{
 						Selector: map[string]string{"app": "my-name-2", "ver": "2"},
 						Template: &api.PodTemplateSpec{
@@ -124,23 +133,98 @@ func TestGetReplicaSetList(t *testing.T) {
 					},
 				},
 			},
+			[]api.Pod{
+				api.Pod{
+					ObjectMeta: api.ObjectMeta{
+						Namespace: "namespace-1",
+						Labels:    map[string]string{"app": "my-name-1"},
+					},
+					Status: api.PodStatus{
+						Phase: api.PodFailed,
+					},
+				},
+				api.Pod{
+					ObjectMeta: api.ObjectMeta{
+						Namespace: "namespace-1",
+						Labels:    map[string]string{"app": "my-name-1"},
+					},
+					Status: api.PodStatus{
+						Phase: api.PodFailed,
+					},
+				},
+				api.Pod{
+					ObjectMeta: api.ObjectMeta{
+						Namespace: "namespace-1",
+						Labels:    map[string]string{"app": "my-name-1"},
+					},
+					Status: api.PodStatus{
+						Phase: api.PodPending,
+					},
+				},
+				api.Pod{
+					ObjectMeta: api.ObjectMeta{
+						Namespace: "namespace-2",
+						Labels:    map[string]string{"app": "my-name-1"},
+					},
+					Status: api.PodStatus{
+						Phase: api.PodPending,
+					},
+				},
+				api.Pod{
+					ObjectMeta: api.ObjectMeta{
+						Namespace: "namespace-1",
+						Labels:    map[string]string{"app": "my-name-1"},
+					},
+					Status: api.PodStatus{
+						Phase: api.PodRunning,
+					},
+				},
+				api.Pod{
+					ObjectMeta: api.ObjectMeta{
+						Namespace: "namespace-1",
+						Labels:    map[string]string{"app": "my-name-1"},
+					},
+					Status: api.PodStatus{
+						Phase: api.PodSucceeded,
+					},
+				},
+				api.Pod{
+					ObjectMeta: api.ObjectMeta{
+						Namespace: "namespace-1",
+						Labels:    map[string]string{"app": "my-name-1"},
+					},
+					Status: api.PodStatus{
+						Phase: api.PodUnknown,
+					},
+				},
+			},
 			&ReplicaSetList{
 				ReplicaSets: []ReplicaSet{
 					{
+						Name:              "my-app-1",
+						Namespace:         "namespace-1",
 						ContainerImages:   []string{"my-container-image-1"},
 						InternalEndpoints: []Endpoint{{Host: "my-app-1.namespace-1"}},
+						Pods: ReplicaSetPodInfo{
+							Failed:  2,
+							Waiting: 1,
+							Running: 1,
+						},
 					}, {
+						Name:              "my-app-2",
+						Namespace:         "namespace-2",
 						ContainerImages:   []string{"my-container-image-2"},
 						InternalEndpoints: []Endpoint{{Host: "my-app-2.namespace-2"}},
+						Pods:              ReplicaSetPodInfo{},
 					},
 				},
 			},
 		},
 	}
 	for _, c := range cases {
-		actual := getReplicaSetList(c.replicaSets, c.services)
+		actual := getReplicaSetList(c.replicaSets, c.services, c.pods)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("getReplicaSetList(%#v, %#v) == %#v, expected %#v",
+			t.Errorf("getReplicaSetList(%#v, %#v) == \n%#v\nexpected \n%#v\n",
 				c.replicaSets, c.services, actual, c.expected)
 		}
 	}

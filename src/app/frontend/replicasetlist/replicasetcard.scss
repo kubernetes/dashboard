@@ -16,7 +16,7 @@
 
 .kd-replicaset-card {
   margin: $baseline-grid;
-  width: ($layout-breakpoint-lg - (2 * $baseline-grid) * 2) / 3;  
+  width: ($layout-breakpoint-lg - (2 * $baseline-grid) * 2) / 3;
 }
 
 .kd-replicaset-card-name {
@@ -76,6 +76,10 @@
 
 .kd-replicaset-card-label {
   margin-right: 2 * $baseline-grid;
+}
+
+.kd-replicase-card-pods-stat {
+  white-space: nowrap;
 }
 
 .kd-menu-logs-item-header {
