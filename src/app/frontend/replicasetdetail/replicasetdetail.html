@@ -157,7 +157,7 @@ limitations under the License.
             </th>
             <th class="kd-replicasetdetail-table-header">
               <span>Logs
-                <i class="material-icons kd-replicasetdetail-help-icon">
+                <i class="material-icons kd-text-icon">
                   help
                   <md-tooltip>Display logs from the pod</md-tooltip>
                 </i>
@@ -208,9 +208,11 @@ limitations under the License.
             </td>
             <td class="kd-replicasetdetail-table-cell">
               <span>
-                Logs<i class="material-icons kd-replicasetdetail-table-icon">arrow_drop_down</i>
+                <a ng-href="{{::ctrl.getPodLogsHref(pod)}}" class="md-primary">
+                  Logs
+                  <i class="material-icons kd-text-icon">open_in_new</i>
+                </a>
               </span>
-              <!-- TODO(maciaszczykm): Handle it. -->
             </td>
             <td class="kd-replicasetdetail-table-cell">
               <md-button class="md-icon-button">

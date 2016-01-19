@@ -26,7 +26,7 @@ export class StateParams {
    * @param {string} namespace
    * @param {string} replicaSet
    * @param {string} podId
-   * @param {string} container
+   * @param {string=} [container]
    */
   constructor(namespace, replicaSet, podId, container) {
     /** @export {string} Namespace of this Replica Set. */
@@ -38,7 +38,7 @@ export class StateParams {
     /** @export {string} Id of this Pod. */
     this.podId = podId;
 
-    /** @export {string} Name of this pod container. */
+    /** @export {string|undefined} Name of this pod container. */
     this.container = container;
   }
 }

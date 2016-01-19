@@ -28,9 +28,15 @@ describe('Replica Set Detail controller', () => {
   beforeEach(() => {
     angular.mock.module(replicaSetDetailModule.name);
 
-    angular.mock.inject(($resource, $log, $state, $mdDialog) => {
+    angular.mock.inject(($controller, $mdDialog, $resource) => {
       mdDialog = $mdDialog;
-      ctrl = new ReplicaSetDetailController(mdDialog, $state, $resource, $log, [], [], []);
+      ctrl = $controller(ReplicaSetDetailController, {
+        replicaSetDetail: {},
+        replicaSetEvents: {},
+        replicaSetDetailResource: $resource('/foo'),
+        replicaSetSpecPodsResource: $resource('/bar'),
+        $stateParams: {replicaSet: 'foo-replicaset', namespace: 'foo-namespace'},
+      });
     });
   });
 
@@ -92,5 +98,10 @@ describe('Replica Set Detail controller', () => {
 
     // then
     expect(mdDialog.show).toHaveBeenCalled();
+  });
+
+  it('should create logs href', () => {
+    expect(ctrl.getPodLogsHref({name: 'foo-pod'}))
+        .toBe('#/logs/foo-namespace/foo-replicaset/foo-pod/');
   });
 });

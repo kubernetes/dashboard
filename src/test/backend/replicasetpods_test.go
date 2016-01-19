@@ -72,7 +72,7 @@ func TestGetReplicaSetPods(t *testing.T) {
 		limit    int
 		expected *ReplicaSetPods
 	}{
-		{nil, 0, &ReplicaSetPods{}},
+		{nil, 0, &ReplicaSetPods{Pods: []ReplicaSetPodWithContainers{}}},
 		{pods, 10, &ReplicaSetPods{Pods: []ReplicaSetPodWithContainers{
 			{
 				Name:              "pod-2",

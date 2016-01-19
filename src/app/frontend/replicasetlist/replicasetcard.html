@@ -24,7 +24,6 @@ limitations under the License.
             {{::ctrl.replicaSet.name}}
           </a>
         </h3>
-  
         <kd-replica-set-card-menu replica-set="::ctrl.replicaSet"></kd-replica-set-card-menu>
       </div>
       <div flex class="md-caption">
@@ -34,7 +33,19 @@ limitations under the License.
     <div class="md-caption">
       <div layout="row" layout-align="center end">
         <span flex="60">
-          {{::ctrl.replicaSet.podsRunning}} pods running, {{::ctrl.replicaSet.podsPending}} pending
+          <ng-pluralize class="kd-replicase-card-pods-stat" count="::ctrl.replicaSet.pods.running"
+                 when="{'one': '1 pod running,',
+                     'other': '{} pods running,'}">
+          </ng-pluralize>
+          <span ng-if="::ctrl.replicaSet.pods.waiting" class="kd-replicase-card-pods-stat">
+            {{::ctrl.replicaSet.pods.waiting}} waiting,
+          </span>
+          <span ng-if="::ctrl.replicaSet.pods.failed" class="kd-replicase-card-pods-stat">
+            {{::ctrl.replicaSet.pods.failed}} failed,
+          </span>
+          <span class="kd-replicase-card-pods-stat">
+            {{::ctrl.replicaSet.pods.desired}} desired
+          </span>
         </span>
         <logs-menu flex="40" namespace="::ctrl.replicaSet.namespace"
                    replica-set-name="::ctrl.replicaSet.name">

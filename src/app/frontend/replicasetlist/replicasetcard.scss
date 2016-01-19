@@ -16,7 +16,7 @@
 
 .kd-replicaset-card {
   margin: $baseline-grid;
-  width: ($layout-breakpoint-lg - (2 * $baseline-grid) * 2) / 3;  
+  width: ($layout-breakpoint-lg - (2 * $baseline-grid) * 2) / 3;
 }
 
 .kd-replicaset-card-name {
@@ -24,6 +24,10 @@
   display: inline-block;
   font-weight: $regular-font-weight;
   text-decoration: none;
+
+  &:visited {
+    color: inherit;
+  }
 }
 
 .kd-replicaset-card-title {
@@ -78,6 +82,10 @@
   margin-right: 2 * $baseline-grid;
 }
 
+.kd-replicase-card-pods-stat {
+  white-space: nowrap;
+}
+
 .kd-menu-logs-item-header {
   box-sizing: inherit;
   color: $foreground-2;
@@ -101,9 +109,4 @@
 
 .kd-menu-logs-item-since {
   width: 15 * $baseline-grid;
-}
-
-.kd-menu-logs-link-icon {
-  font-size: $subhead-font-size-base;
-  margin-left: $baseline-grid;
 }

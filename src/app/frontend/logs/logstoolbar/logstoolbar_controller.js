@@ -23,36 +23,34 @@ export default class LogsToolbarController {
    * @param {!ui.router.$state} $state
    * @param {!StateParams} $stateParams
    * @param {!backendApi.ReplicaSetPods} replicaSetPods
+   * @param {!backendApi.Logs} podLogs
    * @param {!../logs_service.LogColorInversionService} logsColorInversionService
    * @ngInject
    */
-  constructor($state, $stateParams, replicaSetPods, logsColorInversionService) {
+  constructor($state, $stateParams, replicaSetPods, podLogs, logsColorInversionService) {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
-
-    /** @private {!StateParams} */
-    this.params = $stateParams;
 
     /**
      * Service to notify logs controller if any changes on toolbar.
      * @private {!../logs_service.LogColorInversionService}
      */
-    this.logsColorInversionService = logsColorInversionService;
+    this.logsColorInversionService_ = logsColorInversionService;
 
     /** @export {!Array<!backendApi.ReplicaSetPodWithContainers>} */
-    this.pods = replicaSetPods.pods || [];
+    this.pods = replicaSetPods.pods;
 
     /**
      * Currently chosen pod.
      * @export {!backendApi.ReplicaSetPodWithContainers|undefined}
      */
-    this.pod = this.findPodByName_(this.pods, this.params.podId);
+    this.pod = this.findPodByName_(this.pods, $stateParams.podId);
 
     /** @export {!Array<!backendApi.PodContainer>} */
-    this.containers = this.pod.podContainers || [];
+    this.containers = this.pod.podContainers;
 
-    /** @export {!backendApi.PodContainer|undefined} */
-    this.container = this.findContainerByName_(this.containers, this.params.container);
+    /** @export {!backendApi.PodContainer} */
+    this.container = this.initializeContainer_(this.containers, podLogs.container);
 
     /**
      * Pod creation time.
@@ -64,22 +62,22 @@ export default class LogsToolbarController {
      * Namespace.
      * @private {string}
      */
-    this.namespace = this.params.namespace;
+    this.namespace_ = $stateParams.namespace;
 
     /**
      * Replica Set name.
      * @private {string}
      */
-    this.replicaSetName = this.params.replicaSet;
-
-    /**
-     * Indicates state of log area color.
-     * If false: black text is placed on white area. Otherwise colors are inverted.
-     * @export
-     * @return {boolean}
-     */
-    this.isTextColorInverted = function() { return this.logsColorInversionService.getInverted(); };
+    this.replicaSetName_ = $stateParams.replicaSet;
   }
+
+  /**
+   * Indicates state of log area color.
+   * If false: black text is placed on white area. Otherwise colors are inverted.
+   * @export
+   * @return {boolean}
+   */
+  isTextColorInverted() { return this.logsColorInversionService_.getInverted(); }
 
   /**
    * Execute a code when a user changes the selected option of a pod element.
@@ -89,7 +87,7 @@ export default class LogsToolbarController {
    */
   onPodChange(podId) {
     return this.state_.transitionTo(
-        logs, new StateParams(this.namespace, this.replicaSetName, podId, this.container.name));
+        logs, new StateParams(this.namespace_, this.replicaSetName_, podId, this.container.name));
   }
 
   /**
@@ -100,7 +98,7 @@ export default class LogsToolbarController {
    */
   onContainerChange(container) {
     return this.state_.transitionTo(
-        logs, new StateParams(this.namespace, this.replicaSetName, this.pod.name, container));
+        logs, new StateParams(this.namespace_, this.replicaSetName_, this.pod.name, container));
   }
 
   /**
@@ -120,7 +118,7 @@ export default class LogsToolbarController {
    * Execute a code when a user changes the selected option for console color.
    * @export
    */
-  onTextColorChange() { this.logsColorInversionService.invert(); }
+  onTextColorChange() { this.logsColorInversionService_.invert(); }
 
   /**
    * Find Pod by name.
@@ -136,9 +134,15 @@ export default class LogsToolbarController {
    * Find Container by name.
    * Return object or undefined if can not find a object.
    * @param {!Array<!backendApi.PodContainer>} array
-   * @param {!string} name
-   * @return {!backendApi.PodContainer|undefined}
+   * @param {string} name
+   * @return {!backendApi.PodContainer}
    * @private
    */
-  findContainerByName_(array, name) { return array.find((element) => element.name === name); }
+  initializeContainer_(array, name) {
+    let container = array.find((element) => element.name === name);
+    if (!container) {
+      container = array[0];
+    }
+    return container;
+  }
 }

@@ -96,8 +96,7 @@ backendApi.ReplicaSetList;
  *   namespace: string,
  *   description: string,
  *   labels: !Object<string, string>,
- *   podsRunning: number,
- *   podsPending: number,
+ *   pods: {current: number, running: number, desired: number, waiting: number, failed: number},
  *   containerImages: !Array<string>,
  *   creationTime: string,
  *   internalEndpoints: !Array<!backendApi.Endpoint>,
@@ -200,7 +199,8 @@ backendApi.ReplicaSetPods;
  * @typedef {{
  *   podId: string,
  *   sinceTime: string,
- *   logs: !Array<string>
+ *   logs: !Array<string>,
+ *   container: string
  * }}
  */
 backendApi.Logs;
