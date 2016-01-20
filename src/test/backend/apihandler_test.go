@@ -68,7 +68,7 @@ func TestFormatRequestLog(t *testing.T) {
 				},
 			},
 			"192.168.1.1",
-			fmt.Sprintf(RequestLogString, "HTTP 1.1", "GET", "", "192.168.1.1", "[]"),
+			fmt.Sprintf(RequestLogString, "HTTP 1.1", "GET", "", "192.168.1.1"),
 		},
 	}
 	for _, c := range cases {
