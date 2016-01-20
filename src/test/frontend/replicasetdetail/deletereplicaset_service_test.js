@@ -39,7 +39,7 @@ describe('Delete replica set service', () => {
     // given
     let deferred = q.defer();
     spyOn(mdDialog, 'show').and.returnValue(deferred.promise);
-    httpBackend.when('DELETE', '/api/replicasets/foo-namespace/foo-name').respond({});
+    httpBackend.when('DELETE', 'api/replicasets/foo-namespace/foo-name').respond({});
 
     // when
     let promise = service.showDeleteDialog('foo-namespace', 'foo-name');
@@ -54,7 +54,7 @@ describe('Delete replica set service', () => {
     // given
     let deferred = q.defer();
     spyOn(mdDialog, 'show').and.returnValue(deferred.promise);
-    httpBackend.when('DELETE', '/api/replicasets/foo-namespace/foo-name').respond(404, 'Error');
+    httpBackend.when('DELETE', 'api/replicasets/foo-namespace/foo-name').respond(404, 'Error');
 
     // when
     let promise = service.showDeleteDialog('foo-namespace', 'foo-name');

@@ -70,7 +70,7 @@ function redirectIfNeeded($state, $timeout, replicaSets) {
  */
 function resolveReplicaSets($resource) {
   /** @type {!angular.Resource<!backendApi.ReplicaSetList>} */
-  let resource = $resource('/api/replicasets');
+  let resource = $resource('api/replicasets');
 
   return resource.get().$promise;
 }

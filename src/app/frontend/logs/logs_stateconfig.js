@@ -56,7 +56,7 @@ export default function stateConfig($stateProvider) {
 function resolveReplicaSetPods($stateParams, $resource) {
   /** @type {!angular.Resource<!backendApi.ReplicaSetPods>} */
   let resource =
-      $resource(`/api/replicasets/pods/${$stateParams.namespace}/${$stateParams.replicaSet}`);
+      $resource(`api/replicasets/pods/${$stateParams.namespace}/${$stateParams.replicaSet}`);
 
   return resource.get().$promise;
 }
@@ -69,7 +69,7 @@ function resolveReplicaSetPods($stateParams, $resource) {
  */
 function resolvePodLogs($stateParams, $resource) {
   /** @type {!angular.Resource<!backendApi.Logs>} */
-  let resource = $resource(`/api/logs/${$stateParams.namespace}/${$stateParams.podId}/${$stateParams.container}`);
+  let resource = $resource(`api/logs/${$stateParams.namespace}/${$stateParams.podId}/${$stateParams.container}`);
 
   return resource.get().$promise;
 }
