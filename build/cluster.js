@@ -29,13 +29,7 @@ const clusterHealthzUrl = `http://${conf.backend.apiServerHost}/healthz`;
 /**
  * The validate URL of the heapster to check that it is running.
  */
-const heapsterValidateUrl =
-    `http://${conf.backend.apiServerHost}/api/v1/namespaces/kube-system/pods`;
-
-/**
- * Name of running state.
- */
-const runningState = "Running";
+const heapsterValidateUrl = `http://${conf.backend.heapsterServerHost}/api/v1/model/stats/`;
 
 /**
  * A Number, representing the ID value of the timer that is set for function which periodically
@@ -72,23 +66,15 @@ function clusterHealthCheck(doneFn) {
  * @param {function(?Error=)} doneFn
  */
 function heapsterHealthCheck(doneFn) {
-  childProcess.exec(`curl ${heapsterValidateUrl}`, function(err, stdout) {
+  childProcess.exec(`curl --compressed ${heapsterValidateUrl}`, function(err, stdout) {
     if (err) {
       return doneFn(new Error(err));
     }
-    let podsStatus = JSON.parse(stdout.trim());
-    Object.keys(podsStatus).forEach(function(key) {
-      if (key === 'items') {
-        let podItems = podsStatus.items;
-        for (let pod of podItems) {
-          if (pod.hasOwnProperty("metadata")) {
-            if (pod.metadata.name.includes("heapster")) {
-              return doneFn(pod.status.phase);
-            }
-          }
-        }
-      }
-    });
+    let statistics = JSON.parse(stdout.trim());
+    let uptime = statistics.uptime;
+    if (!isNaN(uptime)) {
+      return doneFn();
+    }
   });
 }
 
@@ -103,27 +89,13 @@ function heapsterHealthCheck(doneFn) {
  *  * Install golang
  *  * Install etcd
  */
-gulp.task('local-up-cluster', ['spawn-cluster', 'deploy-heapster', 'wait-for-heapster']);
+gulp.task('local-up-cluster', ['spawn-cluster', 'wait-for-cluster', 'wait-for-heapster']);
 
 /**
  * Spawns a local Kubernetes cluster running inside a Docker container.:
  */
 gulp.task('spawn-cluster', function(doneFn) {
   childProcess.execFile(conf.paths.hyperkube, function(err, stdout, stderr) {
-    if (err) {
-      console.log(stdout);
-      console.error(stderr);
-      return doneFn(new Error(err));
-    }
-    return doneFn();
-  });
-});
-
-/**
- * Deploys Heapster in local cluster.
- */
-gulp.task('deploy-heapster', ['wait-for-cluster'], function(doneFn) {
-  childProcess.execFile(conf.paths.heapster, function(err, stdout, stderr) {
     if (err) {
       console.log(stdout);
       console.error(stderr);
@@ -149,13 +121,11 @@ gulp.task('wait-for-heapster', function(doneFn) {
     counter += 1;
 
     // constantly query the heapster until it is properly running
-    heapsterHealthCheck(function(result) {
-      if (result === runningState) {
-        gulpUtil.log(gulpUtil.colors.magenta('Heapster is up and running.'));
-        clearTimeout(isHeapsterRunningSetIntervalHandler);
-        isHeapsterRunningSetIntervalHandler = null;
-        doneFn();
-      }
+    heapsterHealthCheck(function() {
+      gulpUtil.log(gulpUtil.colors.magenta('Heapster is up and running.'));
+      clearTimeout(isHeapsterRunningSetIntervalHandler);
+      isHeapsterRunningSetIntervalHandler = null;
+      doneFn();
     });
   }
 });
