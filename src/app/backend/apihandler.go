@@ -27,7 +27,7 @@ import (
 
 const (
 	Colon             = ":"
-	RequestLogString  = "Incoming %s %s %s request from %s:\n%v"
+	RequestLogString  = "Incoming %s %s %s request from %s"
 	ResponseLogString = "Outcoming response to %s with %d status code"
 )
 
@@ -49,25 +49,19 @@ func GetRemoteAddr(req *restful.Request) string {
 }
 
 // Formats request log string.
+// TODO(maciaszczykm): Display request body.
 func FormatRequestLog(req *restful.Request, remoteAddr string) string {
-	reqBody := make([]byte, req.Request.ContentLength)
-
-
-	if req.Request.Body != nil {
-		req.Request.Body.Read(reqBody)
-	}
-
 	reqURI := ""
 	if req.Request.URL != nil {
 		reqURI = req.Request.URL.RequestURI()
 	}
 
 	return fmt.Sprintf(RequestLogString, req.Request.Proto, req.Request.Method,
-		reqURI, remoteAddr, reqBody)
+		reqURI, remoteAddr)
 }
 
 // Formats response log string.
-// TODO(maciaszczykm): Display response content too.
+// TODO(maciaszczykm): Display response content.
 func FormatResponseLog(resp *restful.Response, remoteAddr string) string {
 	return fmt.Sprintf(ResponseLogString, remoteAddr, resp.StatusCode())
 }
