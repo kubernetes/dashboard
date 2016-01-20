@@ -15,13 +15,62 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 
 	restful "github.com/emicklei/go-restful"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
+
+const (
+	Colon             = ":"
+	RequestLogString  = "Incoming %s %s %s request from %s:\n%v"
+	ResponseLogString = "Outcoming response to %s with %d status code"
+)
+
+// Web-service filter function used for request and response logging.
+func wsLogger(req *restful.Request, resp *restful.Response, chain *restful.FilterChain) {
+	remoteAddr := GetRemoteAddr(req)
+	log.Printf(FormatRequestLog(req, remoteAddr))
+	chain.ProcessFilter(req, resp)
+	log.Printf(FormatResponseLog(resp, remoteAddr))
+}
+
+// Returns remote address of the request (without port number).
+func GetRemoteAddr(req *restful.Request) string {
+	if strings.Contains(req.Request.RemoteAddr, Colon) {
+		return strings.Split(req.Request.RemoteAddr, Colon)[0]
+	} else {
+		return req.Request.RemoteAddr
+	}
+}
+
+// Formats request log string.
+func FormatRequestLog(req *restful.Request, remoteAddr string) string {
+	reqBody := make([]byte, req.Request.ContentLength)
+
+
+	if req.Request.Body != nil {
+		req.Request.Body.Read(reqBody)
+	}
+
+	reqURI := ""
+	if req.Request.URL != nil {
+		reqURI = req.Request.URL.RequestURI()
+	}
+
+	return fmt.Sprintf(RequestLogString, req.Request.Proto, req.Request.Method,
+		reqURI, remoteAddr, reqBody)
+}
+
+// Formats response log string.
+// TODO(maciaszczykm): Display response content too.
+func FormatResponseLog(resp *restful.Response, remoteAddr string) string {
+	return fmt.Sprintf(ResponseLogString, remoteAddr, resp.StatusCode())
+}
 
 // Creates a new HTTP handler that handles all requests to the API of the backend.
 func CreateHttpApiHandler(client *client.Client) http.Handler {
@@ -29,6 +78,7 @@ func CreateHttpApiHandler(client *client.Client) http.Handler {
 	wsContainer := restful.NewContainer()
 
 	deployWs := new(restful.WebService)
+	deployWs.Filter(wsLogger)
 	deployWs.Path("/api/appdeployments").
 		Consumes(restful.MIME_JSON).
 		Produces(restful.MIME_JSON)
@@ -45,6 +95,7 @@ func CreateHttpApiHandler(client *client.Client) http.Handler {
 	wsContainer.Add(deployWs)
 
 	replicaSetWs := new(restful.WebService)
+	replicaSetWs.Filter(wsLogger)
 	replicaSetWs.Path("/api/replicasets").
 		Consumes(restful.MIME_JSON).
 		Produces(restful.MIME_JSON)
@@ -70,6 +121,7 @@ func CreateHttpApiHandler(client *client.Client) http.Handler {
 	wsContainer.Add(replicaSetWs)
 
 	namespacesWs := new(restful.WebService)
+	namespacesWs.Filter(wsLogger)
 	namespacesWs.Path("/api/namespaces").
 		Consumes(restful.MIME_JSON).
 		Produces(restful.MIME_JSON)
@@ -85,6 +137,7 @@ func CreateHttpApiHandler(client *client.Client) http.Handler {
 	wsContainer.Add(namespacesWs)
 
 	logsWs := new(restful.WebService)
+	logsWs.Filter(wsLogger)
 	logsWs.Path("/api/logs").
 		Produces(restful.MIME_JSON)
 	logsWs.Route(
@@ -98,6 +151,7 @@ func CreateHttpApiHandler(client *client.Client) http.Handler {
 	wsContainer.Add(logsWs)
 
 	eventsWs := new(restful.WebService)
+	eventsWs.Filter(wsLogger)
 	eventsWs.Path("/api/events").
 		Produces(restful.MIME_JSON)
 	eventsWs.Route(
