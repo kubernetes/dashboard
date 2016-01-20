@@ -33,7 +33,7 @@ $table-cell-height-half: $table-cell-height / 2;
 
 .kd-replicasetdetail-sidebar-item {
   padding-left: 2 * $baseline-grid;
-  padding-right: $baseline-grid;  
+  padding-right: $baseline-grid;
 }
 
 .kd-replicasetdetail-table {
@@ -51,21 +51,34 @@ $table-cell-height-half: $table-cell-height / 2;
 .kd-replicasetdetail-sidebar-title {
   font-size: $subhead-font-size-base;
   font-weight: $bold-font-weight;
-  padding: $baseline-grid 0;
+  padding-bottom: $baseline-grid;
+  padding-top: $baseline-grid;
+
+  &.kd-replicasetdetail-sidebar-info {
+    padding-bottom: 0;
+    padding-top: 2 * $baseline-grid;
+  }
 }
 
 .kd-replicasetdetail-sidebar-line {
   color: $foreground-2;
+  display: block;
   font-size: $body-font-size-base;
   padding-bottom: $baseline-grid;
 }
 
 .kd-replicasetdetail-sidebar-subline {
   color: $foreground-1;
+  display: block;
   font-size: $body-font-size-base;
   overflow: hidden;
   padding-bottom: $baseline-grid;
   text-overflow: ellipsis;
+
+  &.kd-has-labels {
+    // To offset for labels margin.
+    margin-bottom: -$baseline-grid / 2;
+  }
 }
 
 .kd-replicasetdetail-warning-icon {
@@ -82,10 +95,6 @@ $table-cell-height-half: $table-cell-height / 2;
 .kd-replicasetdetail-sidebar-info {
   // 6px needed to offset for md-button padding.
   padding-left: $baseline-grid + 6px;
-}
-
-.kd-replicasetdetail-sidebar-actions {
-  padding-top: $baseline-grid;
 }
 
 .kd-replicasetdetail-option-picker {
@@ -109,6 +118,11 @@ $table-cell-height-half: $table-cell-height / 2;
   font-size: $body-font-size-base;
   height: $table-cell-height;
   padding: 0 0 0 (2 * $baseline-grid);
+
+  &.kd-replicasetdetail-message-table-cell {
+    white-space: normal;
+    word-break: break-all;
+  }
 }
 
 .kd-replicasetdetail-table-icon {

@@ -134,7 +134,7 @@ func TestGetReplicaSetList(t *testing.T) {
 				},
 			},
 			[]api.Pod{
-				api.Pod{
+				{
 					ObjectMeta: api.ObjectMeta{
 						Namespace: "namespace-1",
 						Labels:    map[string]string{"app": "my-name-1"},
@@ -143,7 +143,7 @@ func TestGetReplicaSetList(t *testing.T) {
 						Phase: api.PodFailed,
 					},
 				},
-				api.Pod{
+				{
 					ObjectMeta: api.ObjectMeta{
 						Namespace: "namespace-1",
 						Labels:    map[string]string{"app": "my-name-1"},
@@ -152,7 +152,7 @@ func TestGetReplicaSetList(t *testing.T) {
 						Phase: api.PodFailed,
 					},
 				},
-				api.Pod{
+				{
 					ObjectMeta: api.ObjectMeta{
 						Namespace: "namespace-1",
 						Labels:    map[string]string{"app": "my-name-1"},
@@ -161,7 +161,7 @@ func TestGetReplicaSetList(t *testing.T) {
 						Phase: api.PodPending,
 					},
 				},
-				api.Pod{
+				{
 					ObjectMeta: api.ObjectMeta{
 						Namespace: "namespace-2",
 						Labels:    map[string]string{"app": "my-name-1"},
@@ -170,7 +170,7 @@ func TestGetReplicaSetList(t *testing.T) {
 						Phase: api.PodPending,
 					},
 				},
-				api.Pod{
+				{
 					ObjectMeta: api.ObjectMeta{
 						Namespace: "namespace-1",
 						Labels:    map[string]string{"app": "my-name-1"},
@@ -179,7 +179,7 @@ func TestGetReplicaSetList(t *testing.T) {
 						Phase: api.PodRunning,
 					},
 				},
-				api.Pod{
+				{
 					ObjectMeta: api.ObjectMeta{
 						Namespace: "namespace-1",
 						Labels:    map[string]string{"app": "my-name-1"},
@@ -188,7 +188,7 @@ func TestGetReplicaSetList(t *testing.T) {
 						Phase: api.PodSucceeded,
 					},
 				},
-				api.Pod{
+				{
 					ObjectMeta: api.ObjectMeta{
 						Namespace: "namespace-1",
 						Labels:    map[string]string{"app": "my-name-1"},
@@ -207,7 +207,7 @@ func TestGetReplicaSetList(t *testing.T) {
 						InternalEndpoints: []Endpoint{{Host: "my-app-1.namespace-1"}},
 						Pods: ReplicaSetPodInfo{
 							Failed:  2,
-							Waiting: 1,
+							Pending: 1,
 							Running: 1,
 						},
 					}, {

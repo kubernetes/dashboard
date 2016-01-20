@@ -61,24 +61,6 @@ type ReplicaSet struct {
 	ExternalEndpoints []Endpoint `json:"externalEndpoints"`
 }
 
-// ReplicaSetPodInfo represents aggregate information about replica set pods.
-type ReplicaSetPodInfo struct {
-	// Number of pods that are created.
-	Curret int `json:"current"`
-
-	// Number of pods that are desired in this Replica Set.
-	Desired int `json:"desired"`
-
-	// Number of pods that are currently running.
-	Running int `json:"running"`
-
-	// Number of pods that are currently waiting.
-	Waiting int `json:"waiting"`
-
-	// Number of pods that are failed.
-	Failed int `json:"failed"`
-}
-
 // GetReplicaSetList returns a list of all Replica Sets in the cluster.
 func GetReplicaSetList(client *client.Client) (*ReplicaSetList, error) {
 	log.Printf("Getting list of all replica sets in the cluster")
@@ -135,7 +117,14 @@ func getReplicaSetList(replicaSets []api.ReplicationController, services []api.S
 			}
 		}
 
-		podInfo := getReplicaSetPodInfo(&replicaSet, pods)
+		matchingPods := make([]api.Pod, 0)
+		for _, pod := range pods {
+			if pod.ObjectMeta.Namespace == replicaSet.ObjectMeta.Namespace &&
+				isLabelSelectorMatching(replicaSet.Spec.Selector, pod.ObjectMeta.Labels) {
+				matchingPods = append(matchingPods, pod)
+			}
+		}
+		podInfo := getReplicaSetPodInfo(&replicaSet, matchingPods)
 
 		replicaSetList.ReplicaSets = append(replicaSetList.ReplicaSets, ReplicaSet{
 			Name:              replicaSet.ObjectMeta.Name,
@@ -151,29 +140,6 @@ func getReplicaSetList(replicaSets []api.ReplicationController, services []api.S
 	}
 
 	return replicaSetList
-}
-
-func getReplicaSetPodInfo(replicaSet *api.ReplicationController, pods []api.Pod) ReplicaSetPodInfo {
-	result := ReplicaSetPodInfo{
-		Curret:  replicaSet.Status.Replicas,
-		Desired: replicaSet.Spec.Replicas,
-	}
-
-	for _, pod := range pods {
-		if pod.ObjectMeta.Namespace == replicaSet.ObjectMeta.Namespace &&
-			isLabelSelectorMatching(replicaSet.Spec.Selector, pod.ObjectMeta.Labels) {
-			switch pod.Status.Phase {
-			case api.PodRunning:
-				result.Running++
-			case api.PodPending:
-				result.Waiting++
-			case api.PodFailed:
-				result.Failed++
-			}
-		}
-	}
-
-	return result
 }
 
 // Returns all services that target the same Pods (or subset) as the given Replica Set.
