@@ -331,7 +331,7 @@ limitations under the License.
           </thead>
           <tbody>
           <tr ng-repeat="event in ctrl.events | orderBy:ctrl.sortEventsBy:ctrl.eventsOrder">
-            <td class="kd-replicasetdetail-table-cell">
+            <td class="kd-replicasetdetail-table-cell kd-replicasetdetail-message-table-cell">
               <i ng-if="ctrl.isEventWarning(event)"
                  class="material-icons kd-replicasetdetail-warning-icon">warning</i>
               {{event.message}}
