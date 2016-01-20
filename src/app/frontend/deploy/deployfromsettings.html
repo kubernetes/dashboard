@@ -30,7 +30,7 @@ limitations under the License.
     </ng-messages>
   </md-input-container>
   <kd-user-help>
-    An 'app' label with this value will be added to the Replica Set and Service that get deployed.
+    {{ ctrl.appNameHelp }}
   </kd-user-help>
 </kd-help-section>
 
@@ -202,7 +202,7 @@ limitations under the License.
       <a href="">Learn more</a>
     </kd-user-help>
   </kd-help-section>
-  
+
   <kd-help-section>
     <md-switch ng-model="ctrl.runAsPrivileged" class="md-primary">
       Run as privileged

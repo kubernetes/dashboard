@@ -33,9 +33,10 @@ export default class DeployFromSettingsController {
    * @param {!angular.$resource} $resource
    * @param {!angular.$q} $q
    * @param {!md.$dialog} $mdDialog
+   * @param {!Object} i18n dedicated service
    * @ngInject
    */
-  constructor($log, $state, $resource, $q, $mdDialog) {
+  constructor($log, $state, $resource, $q, $mdDialog, i18n) {
     /**
      * It initializes the scope output parameter
      *
@@ -136,6 +137,12 @@ export default class DeployFromSettingsController {
 
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
+
+    /**
+     * Localized user help strings.
+     *@export {string}
+     */
+    this.appNameHelp = i18n.deploy.userhelp.appName().content;
   }
 
   /**

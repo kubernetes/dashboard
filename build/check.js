@@ -51,7 +51,8 @@ gulp.task('lint', ['lint-javascript', 'check-javascript-format', 'lint-styles'])
  * build scripts.
  */
 gulp.task('lint-javascript', function() {
-  return gulp.src([path.join(conf.paths.src, '**/*.js'), path.join(conf.paths.build, '**/*.js')])
+  return gulp
+      .src([path.join(conf.paths.frontendSrc, '**/*.js'), path.join(conf.paths.build, '**/*.js')])
       // Attach lint output to the eslint property of the file.
       .pipe(gulpEslint())
       // Output the lint results to the console.

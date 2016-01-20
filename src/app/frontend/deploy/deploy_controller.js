@@ -53,7 +53,6 @@ export default class DeployController {
      * @export {string}
      */
     this.selection = "Settings";
-
     /** @private {!angular.$resource} */
     this.resource_ = $resource;
 

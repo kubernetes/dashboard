@@ -24,14 +24,22 @@ describe('Deploy controller', () => {
   let settingsCtrl;
   /** @type {!ui.router.$state} */
   let state;
+  /** @type {!angular.Service} */
+  let i18nServiceMock;
 
   beforeEach(() => {
     angular.mock.module(deployModule.name);
 
     angular.mock.inject(($controller, $state, $q) => {
       state = $state;
+
+      i18nServiceMock = {
+        deploy: {userhelp: {appName: () => { return {content: 'App name help message mock'}; }}},
+      };
+
       settingsCtrl = $controller(
-          DeployFromSettingController, {}, {namespaces: [], deploy: () => $q.defer().promise});
+          DeployFromSettingController, {i18n: i18nServiceMock},
+          {namespaces: [], deploy: () => $q.defer().promise});
       ctrl = $controller(
           DeployController, {namespaces: []}, {detail: settingsCtrl, deployForm: {$valid: true}});
     });

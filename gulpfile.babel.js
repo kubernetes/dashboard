@@ -23,11 +23,11 @@ import './build/cluster';
 import './build/backend';
 import './build/build';
 import './build/deploy';
+import './build/i18n';
 import './build/index';
 import './build/script';
 import './build/serve';
 import './build/style';
 import './build/test';
-
 
 // No business logic in this file.
