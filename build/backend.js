@@ -46,7 +46,7 @@ gulp.task('backend', ['package-backend-source'], function(doneFn) {
  * The production binary difference from development binary is only that it contains all
  * dependencies inside it and is targeted for Linux.
  */
-gulp.task('backend:prod', ['package-backend-source'], function(doneFn) {
+gulp.task('backend:prod', ['package-backend-source', 'clean-dist'], function(doneFn) {
   let outputBinaryPath = path.join(conf.paths.dist, conf.backend.binaryName);
 
   // Delete output binary first. This is required because prod build does not override it.

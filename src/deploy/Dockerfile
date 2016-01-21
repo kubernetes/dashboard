@@ -16,7 +16,7 @@
 # be built from the dist directory.
 
 # Scratch can be used as the base image because the backend is compiled to include all
-# its dependencies. 
+# its dependencies.
 FROM scratch
 MAINTAINER Piotr Bryk <bryk@google.com>
 
@@ -26,5 +26,5 @@ ADD . /
 
 # The port that the application listens on.
 # TODO(bryk): Parametrize this argument so that other build tools are aware of the exposed port.
-EXPOSE 8080
-ENTRYPOINT ["/dashboard"]
+EXPOSE 9090
+ENTRYPOINT ["/dashboard", "--port=9090"]
