@@ -65,41 +65,9 @@ limitations under the License.
 </kd-help-section>
 
 <kd-help-section>
-  <div ng-repeat="portMapping in ctrl.portMappings">
-    <ng-form name="portMappingForm" layout="row">
-      <md-input-container flex>
-        <label>Port</label>
-        <input ng-model="portMapping.port" type="number" min="0" name="port">
-        <ng-messages for="portMappingForm.port.$error" role="alert" multiple>
-          <ng-message when="number">Port must be an integer.</ng-message>
-          <ng-message when="min">Port must be non-negative.</ng-message>
-        </ng-messages>
-      </md-input-container>
-      <md-input-container flex>
-        <label>Target port</label>
-        <input ng-model="portMapping.targetPort" type="number" min="0" name="targetPort">
-        <ng-messages for="portMappingForm.targetPort.$error" role="alert" multiple>
-          <ng-message when="number">Target port must be an integer.</ng-message>
-          <ng-message when="min">Target port must be non-negative.</ng-message>
-        </ng-messages>
-      </md-input-container>
-      <md-input-container flex="none">
-        <label>Protocol</label>
-        <md-select ng-model="portMapping.protocol" name="protocol" is-external="ctrl.isExternal"
-                   required kd-valid-protocol>
-          <md-option ng-repeat="protocol in ctrl.protocols" ng-value="protocol">
-            {{protocol}}
-          </md-option>
-        </md-select>
-        <md-progress-linear class="kd-deploy-form-progress" md-mode="indeterminate"
-                            ng-show="portMappingForm.protocol.$pending">
-        </md-progress-linear>
-        <ng-messages for="portMappingForm.protocol.$error" role="alert" multiple>
-          <ng-message when="required">Protocol is required.</ng-message>
-          <ng-message when="validProtocol">Invalid protocol.</ng-message>
-      </md-input-container>
-    </ng-form>
-  </div>
+  <kd-port-mappings port-mappings="ctrl.portMappings" protocols="ctrl.protocols"
+      is-external="ctrl.isExternal">
+  </kd-port-mappings>
   <kd-user-help>
     Ports are optional. If specified, a Service will be created mapping the Port (incoming) to a
     target Port seen by the container.
@@ -210,7 +178,7 @@ limitations under the License.
       <a href="">Learn more</a>
     </kd-user-help>
   </kd-help-section>
-  
+
   <kd-help-section>
     <md-switch ng-model="ctrl.runAsPrivileged" class="md-primary">
       Run as privileged
