@@ -46,6 +46,10 @@ export default {
     * Address for the Kubernetes API server.
     */
     apiServerHost: 'localhost:8080',
+    /**
+     * Address for the Heapster API server.
+     */
+    heapsterServerHost: 'localhost:8082',
   },
 
   /**
@@ -105,7 +109,6 @@ export default {
     goTools: path.join(basePath, '.tools/go'),
     goWorkspace: path.join(basePath, '.go_workspace'),
     hyperkube: path.join(basePath, 'build/hyperkube.sh'),
-    heapster: path.join(basePath, 'build/heapster.sh'),
     integrationTest: path.join(basePath, 'src/test/integration'),
     karmaConf: path.join(basePath, 'build/karma.conf.js'),
     nodeModules: path.join(basePath, 'node_modules'),

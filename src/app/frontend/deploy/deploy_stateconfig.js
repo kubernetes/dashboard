@@ -28,6 +28,8 @@ export default function stateConfig($stateProvider) {
     url: '/deploy',
     resolve: {
       'namespaces': resolveNamespaces,
+      'protocolsResource': getProtocolsResource,
+      'protocols': getDefaultProtocols,
     },
     templateUrl: 'deploy/deploy.html',
   });
@@ -43,4 +45,22 @@ function resolveNamespaces($resource) {
   let resource = $resource('api/namespaces');
 
   return resource.get().$promise;
+}
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource<!backendApi.ReplicaSetSpec>}
+ * @ngInject
+ */
+function getProtocolsResource($resource) {
+  return $resource('api/appdeployments/protocols');
+}
+
+/**
+ * @param {!angular.Resource<!backendApi.Protocols>} protocolsResource
+ * @returns {!angular.$q.Promise}
+ * @ngInject
+ */
+function getDefaultProtocols(protocolsResource) {
+  return protocolsResource.get().$promise;
 }
