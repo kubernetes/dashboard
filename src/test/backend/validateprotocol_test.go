@@ -12,14 +12,38 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-md-progress-linear {
-  &.kd-deploy-form-progress {
-    $bar-height: 2px;
+package main
 
-    clear: left;
-    height: $bar-height;
-    margin-bottom: -$bar-height;
-    overflow: hidden;
-    top: -$bar-height;
-  }
+import (
+	"testing"
+)
+
+func TestValidateProtocol(t *testing.T) {
+	cases := []struct {
+		spec     *ProtocolValiditySpec
+		expected bool
+	}{
+		{
+			&ProtocolValiditySpec{
+				Protocol:   "TCP",
+				IsExternal: false,
+			},
+			true,
+		},
+		{
+			&ProtocolValiditySpec{
+				Protocol:   "UDP",
+				IsExternal: true,
+			},
+			false,
+		},
+	}
+
+	for _, c := range cases {
+		validity := ValidateProtocol(c.spec)
+		if validity.Valid != c.expected {
+			t.Errorf("Expected %#v validity to be %#v, but was %#v\n",
+				c.spec, c.expected, validity)
+		}
+	}
 }

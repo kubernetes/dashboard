@@ -31,9 +31,11 @@ describe('Deploy controller', () => {
     angular.mock.inject(($controller, $state, $q) => {
       state = $state;
       settingsCtrl = $controller(
-          DeployFromSettingController, {}, {namespaces: [], deploy: () => $q.defer().promise});
+          DeployFromSettingController, {},
+          {namespaces: [], protocols: [], deploy: () => $q.defer().promise});
       ctrl = $controller(
-          DeployController, {namespaces: []}, {detail: settingsCtrl, deployForm: {$valid: true}});
+          DeployController, {namespaces: [], protocols: []},
+          {detail: settingsCtrl, deployForm: {$valid: true}});
     });
   });
 

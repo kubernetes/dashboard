@@ -25,9 +25,10 @@ export default class DeployController {
    * @param {!angular.$log} $log
    * @param {!ui.router.$state} $state
    * @param {!backendApi.NamespaceList} namespaces
+   * @param {!backendApi.Protocols} protocols
    * @ngInject
    */
-  constructor($resource, $log, $state, namespaces) {
+  constructor($resource, $log, $state, namespaces, protocols) {
     /** @export {!angular.FormController} Initialized from the template */
     this.deployForm;
 
@@ -38,6 +39,9 @@ export default class DeployController {
      * @export {!Array<string>}
      */
     this.namespaces = namespaces.namespaces;
+
+    /** @export {!Array<string>} */
+    this.protocols = protocols.protocols;
 
     /**
      * Contains the selected directive's controller which has its own deploy logic

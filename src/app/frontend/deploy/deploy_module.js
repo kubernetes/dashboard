@@ -20,6 +20,7 @@ import deployFromFileDirective from './deployfromfile_directive';
 import fileReaderDirective from './filereader_directive';
 import uploadDirective from './upload_directive';
 import uniqueNameDirective from './uniquename_directive';
+import validProtocolDirective from './validprotocol_directive';
 import helpSectionModule from './helpsection/helpsection_module';
 
 /**
@@ -40,6 +41,7 @@ export default angular.module(
     .directive('deployFromSettings', deployFromSettingsDirective)
     .directive('deployFromFile', deployFromFileDirective)
     .directive('kdUniqueName', uniqueNameDirective)
+    .directive('kdValidProtocol', validProtocolDirective)
     .directive('kdFileReader', fileReaderDirective)
     .directive('kdUpload', uploadDirective)
     .directive('kdDeployLabel', deployLabelDirective);

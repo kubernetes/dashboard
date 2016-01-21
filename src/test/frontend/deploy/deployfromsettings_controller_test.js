@@ -41,7 +41,8 @@ describe('DeployFromSettings controller', () => {
         },
       };
       ctrl = $controller(
-          DeployFromSettingController, {$resource: mockResource}, {namespaces: [], form: form});
+          DeployFromSettingController, {$resource: mockResource},
+          {namespaces: [], form: form, protocols: []});
     });
   });
 

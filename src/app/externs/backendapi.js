@@ -230,3 +230,25 @@ backendApi.AppNameValiditySpec;
  * }}
  */
 backendApi.AppNameValidity;
+
+/**
+ * @typedef {{
+ *    protocols: !Array<string>
+ * }}
+ */
+backendApi.Protocols;
+
+/**
+ * @typedef {{
+ *    valid: boolean
+ * }}
+ */
+backendApi.ProtocolValidity;
+
+/**
+ * @typedef {{
+ *    protocol: string,
+ *    isExternal: boolean
+ * }}
+ */
+backendApi.ProtocolValiditySpec;

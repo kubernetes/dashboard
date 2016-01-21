@@ -92,6 +92,12 @@ type Label struct {
 	Value string `json:"value"`
 }
 
+// Structure representing supported protocol types for a service
+type Protocols struct {
+	// Array containing supported protocol types e.g., ["TCP", "UDP"]
+	Protocols []api.Protocol `json:"protocols"`
+}
+
 // Deploys an app based on the given configuration. The app is deployed using the given client.
 // App deployment consists of a replication controller and an optional service. Both of them share
 // common labels.
@@ -191,6 +197,10 @@ func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 	} else {
 		return nil
 	}
+}
+
+func GetAvailableProtocols() *Protocols {
+	return &Protocols{Protocols: []api.Protocol{api.ProtocolTCP, api.ProtocolUDP}}
 }
 
 // Converts array of labels to map[string]string

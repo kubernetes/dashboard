@@ -19,7 +19,7 @@ limitations under the License.
     <label>App name</label>
     <input ng-model="ctrl.name" name="name" namespace="ctrl.namespace" required kd-unique-name
         ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }">
-    <md-progress-linear class="kd-deploy-form-name-progress" md-mode="indeterminate"
+    <md-progress-linear class="kd-deploy-form-progress" md-mode="indeterminate"
         ng-show="ctrl.form.name.$pending">
     </md-progress-linear>
     <ng-messages for="ctrl.form.name.$error" role="alert" multiple>
@@ -85,11 +85,18 @@ limitations under the License.
       </md-input-container>
       <md-input-container flex="none">
         <label>Protocol</label>
-        <md-select ng-model="portMapping.protocol" required>
+        <md-select ng-model="portMapping.protocol" name="protocol" is-external="ctrl.isExternal"
+                   required kd-valid-protocol>
           <md-option ng-repeat="protocol in ctrl.protocols" ng-value="protocol">
             {{protocol}}
           </md-option>
         </md-select>
+        <md-progress-linear class="kd-deploy-form-progress" md-mode="indeterminate"
+                            ng-show="portMappingForm.protocol.$pending">
+        </md-progress-linear>
+        <ng-messages for="portMappingForm.protocol.$error" role="alert" multiple>
+          <ng-message when="required">Protocol is required.</ng-message>
+          <ng-message when="validProtocol">Invalid protocol.</ng-message>
       </md-input-container>
     </ng-form>
   </div>
@@ -104,7 +111,8 @@ limitations under the License.
 </kd-help-section>
 
 <kd-help-section>
-  <md-switch ng-model="ctrl.isExternal" class="md-primary">
+  <md-switch ng-model="ctrl.isExternal" class="md-primary"
+             ng-model-options="{ debounce: { 'default': 500, 'blur': 0 } }">
     Expose service externally
   </md-switch>
 </kd-help-section>
