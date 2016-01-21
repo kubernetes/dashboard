@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {StateParams} from './replicasetdetail_state';
+import {getReplicaSetSpecPodsResource} from './replicasetdetail_stateconfig';
+
 /**
  * Controller for the update replica set dialog.
  *
@@ -22,39 +25,63 @@ export default class UpdateReplicasDialogController {
    * @param {!md.$dialog} $mdDialog
    * @param {!angular.$log} $log
    * @param {!ui.router.$state} $state
-   * @param {!backendApi.ReplicaSetDetail} replicaSetDetail
-   * @param {!function(number, function(!backendApi.ReplicaSetSpec),
-   * function(!angular.$http.Response)=)} updateReplicasFn
+   * @param {!angular.$resource} $resource
+   * @param {!angular.$q} $q
+   * @param {string} namespace
+   * @param {string} replicaSet
+   * @param {number} currentPods
+   * @param {number} desiredPods
    * @ngInject
    */
-  constructor($mdDialog, $log, $state, replicaSetDetail, updateReplicasFn) {
+  constructor(
+      $mdDialog, $log, $state, $resource, $q, namespace, replicaSet, currentPods, desiredPods) {
     /** @export {number} */
     this.replicas;
 
-    /** @export {!backendApi.ReplicaSetDetail} */
-    this.replicaSetDetail = replicaSetDetail;
+    /** @export {number} */
+    this.currentPods = currentPods;
+
+    /** @export {number} */
+    this.desiredPods = desiredPods;
+
+    /** @export {string} */
+    this.replicaSet = replicaSet;
+
+    /** @private {string} */
+    this.namespace_ = namespace;
 
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
-
-    /** @private {!function(number, function(!backendApi.ReplicaSetSpec),
-     * function(!angular.$http.Response)=)} */
-    this.updateReplicasFn_ = updateReplicasFn;
 
     /** @private {!angular.$log} */
     this.log_ = $log;
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
+
+    /** @private {!angular.$resource} */
+    this.resource_ = $resource;
+
+    /** @private {!angular.$q} */
+    this.q_ = $q;
   }
 
   /**
-   * Executes callback function to update replicas count in replica set.
+   * Updates number of replicas in replica set.
+   *
    * @export
    */
-  updateReplicasCount() {
-    this.updateReplicasFn_(
-        this.replicas, this.onUpdateReplicasSuccess_.bind(this),
+  updateReplicas() {
+    let resource = getReplicaSetSpecPodsResource(
+        new StateParams(this.namespace_, this.replicaSet), this.resource_);
+
+    /** @type {!backendApi.ReplicaSetSpec} */
+    let replicaSetSpec = {
+      replicas: this.replicas,
+    };
+
+    resource.save(
+        replicaSetSpec, this.onUpdateReplicasSuccess_.bind(this),
         this.onUpdateReplicasError_.bind(this));
   }
 
@@ -69,8 +96,7 @@ export default class UpdateReplicasDialogController {
    * @private
    */
   onUpdateReplicasSuccess_(updatedSpec) {
-    this.log_.info('Successfully updated replica set.');
-    this.log_.info(updatedSpec);
+    this.log_.info(`Successfully updated replicas number to ${updatedSpec.replicas}`);
     this.mdDialog_.hide();
     this.state_.reload();
   }

@@ -21,15 +21,17 @@ describe('Replica Set Detail controller', () => {
    * @type {!ReplicaSetDetailController}
    */
   let ctrl;
-
-  /** @type {!md.$dialog} */
-  let mdDialog;
+  /** @type {!replicasetdetail/replicaset_service.ReplicaSetService} */
+  let kdReplicaSetService;
+  /** @type {!angular.$q} */
+  let q;
 
   beforeEach(() => {
     angular.mock.module(replicaSetDetailModule.name);
 
-    angular.mock.inject(($controller, $mdDialog, $resource) => {
-      mdDialog = $mdDialog;
+    angular.mock.inject(($controller, $resource, $q, _kdReplicaSetService_) => {
+      q = $q;
+      kdReplicaSetService = _kdReplicaSetService_;
       ctrl = $controller(ReplicaSetDetailController, {
         replicaSetDetail: {},
         replicaSetEvents: {},
@@ -89,19 +91,36 @@ describe('Replica Set Detail controller', () => {
   it('should show edit replicas dialog', () => {
     // given
     ctrl.replicaSetDetail = {
-      pods: [],
+      namespace: 'foo-namespace',
+      name: 'foo-name',
+      podInfo: {
+        current: 3,
+        desired: 3,
+      },
     };
-    spyOn(mdDialog, 'show');
+    spyOn(kdReplicaSetService, 'showUpdateReplicasDialog');
 
     // when
     ctrl.handleUpdateReplicasDialog();
 
     // then
-    expect(mdDialog.show).toHaveBeenCalled();
+    expect(kdReplicaSetService.showUpdateReplicasDialog).toHaveBeenCalled();
   });
 
   it('should create logs href', () => {
     expect(ctrl.getPodLogsHref({name: 'foo-pod'}))
         .toBe('#/logs/foo-namespace/foo-replicaset/foo-pod/');
+  });
+
+  it('should show delete replicas dialog', () => {
+    // given
+    let deferred = q.defer();
+    spyOn(kdReplicaSetService, 'showDeleteDialog').and.returnValue(deferred.promise);
+
+    // when
+    ctrl.handleDeleteReplicaSetDialog();
+
+    // then
+    expect(kdReplicaSetService.showDeleteDialog).toHaveBeenCalled();
   });
 });

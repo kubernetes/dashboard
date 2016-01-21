@@ -15,77 +15,79 @@
 import UpdateReplicasDialogController from 'replicasetdetail/updatereplicas_controller';
 import replicaSetDetailModule from 'replicasetdetail/replicasetdetail_module';
 
-describe('Replica Set Detail controller', () => {
+describe('Update Replicas controller', () => {
   /**
    * Replica Set Detail controller.
-   * @type {!ReplicaSetDetailController}
+   * @type {!UpdateReplicasDialogController}
    */
   let ctrl;
   /** @type {!md.$dialog} */
   let mdDialog;
-  /** @type {!angular.$log} */
-  let log;
   /** @type {!ui.router.$state} */
   let state;
+  /** @type {!angular.$resource} */
+  let resource;
+  /** @type {!angular.$httpBackend} */
+  let httpBackend;
+  /** @type {!angular.$log} */
+  let log;
 
-  /**
-   * First parameter behavior is changed to indicate successful/failed update.
-   * @param {!boolean} isError
-   * @param {!function(!backendApi.ReplicaSetSpec)} onSuccess
-   * @param {!function(!angular.$http.Response)} onError
-   */
-  let mockUpdateReplicasFn = function(isError, onSuccess, onError) {
-    if (isError) {
-      onError();
-    } else {
-      onSuccess();
-    }
-  };
+  /** @type {string} */
+  let namespaceMock = 'foo-namespace';
+  /** @type {string} */
+  let replicaSetMock = 'foo-name';
 
   beforeEach(() => {
     angular.mock.module(replicaSetDetailModule.name);
 
-    angular.mock.inject(($resource, $log, $state, $mdDialog, $controller) => {
+    angular.mock.inject(($log, $state, $mdDialog, $controller, $httpBackend, $resource) => {
       mdDialog = $mdDialog;
-      log = $log;
       state = $state;
+      resource = $resource;
+      httpBackend = $httpBackend;
+      log = $log;
 
-      ctrl = $controller(
-          UpdateReplicasDialogController,
-          {replicaSetDetail: {}, updateReplicasFn: mockUpdateReplicasFn});
+      ctrl = $controller(UpdateReplicasDialogController, {
+        $resource: resource,
+        namespace: namespaceMock,
+        replicaSet: replicaSetMock,
+        currentPods: 1,
+        desiredPods: 1,
+      });
     });
   });
 
-  it('should log success after edit replicas and hide the dialog', () => {
+  it('should update controller replicas to given number and log success', () => {
     // given
+    let replicaSpec = {
+      replicas: 5,
+    };
     spyOn(log, 'info');
-    spyOn(mdDialog, 'hide');
     spyOn(state, 'reload');
-    // Indicates if there was error during update
-    ctrl.replicas = false;
+    httpBackend.whenPOST('api/replicasets/foo-namespace/foo-name/update/pods')
+        .respond(200, replicaSpec);
 
     // when
-    ctrl.updateReplicasCount();
+    ctrl.updateReplicas();
+    httpBackend.flush();
 
     // then
-    expect(log.info).toHaveBeenCalledWith('Successfully updated replica set.');
-    expect(mdDialog.hide).toHaveBeenCalled();
+    expect(log.info)
+        .toHaveBeenCalledWith(`Successfully updated replicas number to ${replicaSpec.replicas}`);
     expect(state.reload).toHaveBeenCalled();
   });
 
-  it('should log error after edit replicas and hide the dialog', () => {
+  it('should log error on failed update', () => {
     // given
     spyOn(log, 'error');
-    spyOn(mdDialog, 'hide');
-    // Indicates if there was error during update
-    ctrl.replicas = true;
+    httpBackend.whenPOST('api/replicasets/foo-namespace/foo-name/update/pods').respond(404);
 
     // when
-    ctrl.updateReplicasCount();
+    ctrl.updateReplicas();
+    httpBackend.flush();
 
     // then
     expect(log.error).toHaveBeenCalled();
-    expect(mdDialog.hide).toHaveBeenCalled();
   });
 
   it('should close the dialog on cancel', () => {

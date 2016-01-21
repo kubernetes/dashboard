@@ -24,11 +24,10 @@ export default class ReplicaSetCardMenuController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!angular.$log} $log
-   * @param {!./../replicasetdetail/deletereplicaset_service.DeleteReplicaSetService}
-   *     kdDeleteReplicaSetService
+   * @param {!./../replicasetdetail/replicaset_service.ReplicaSetService} kdReplicaSetService
    * @ngInject
    */
-  constructor($state, $log, kdDeleteReplicaSetService) {
+  constructor($state, $log, kdReplicaSetService) {
     /**
      * Initialized from the scope.
      * @export {!backendApi.ReplicaSet}
@@ -41,8 +40,8 @@ export default class ReplicaSetCardMenuController {
     /** @private {!angular.$log} */
     this.log_ = $log;
 
-    /** @private {!./../replicasetdetail/deletereplicaset_service.DeleteReplicaSetService} */
-    this.kdDeleteReplicaSetService_ = kdDeleteReplicaSetService;
+    /** @private {!./../replicasetdetail/replicaset_service.ReplicaSetService} */
+    this.kdReplicaSetService_ = kdReplicaSetService;
   }
 
   /**
@@ -63,8 +62,16 @@ export default class ReplicaSetCardMenuController {
    * @export
    */
   showDeleteDialog() {
-    this.kdDeleteReplicaSetService_.showDeleteDialog(
-                                       this.replicaSet.namespace, this.replicaSet.name)
+    this.kdReplicaSetService_.showDeleteDialog(this.replicaSet.namespace, this.replicaSet.name)
         .then(() => this.state_.reload(), () => this.log_.error('Error deleting replica set'));
+  }
+
+  /**
+   * @export
+   */
+  showUpdateReplicasDialog() {
+    this.kdReplicaSetService_.showUpdateReplicasDialog(
+        this.replicaSet.namespace, this.replicaSet.name, this.replicaSet.pods.current,
+        this.replicaSet.pods.desired);
   }
 }

@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import showUpdateReplicasDialog from 'replicasetdetail/updatereplicas_dialog';
 import {UPWARDS, DOWNWARDS} from 'replicasetdetail/sortedheader_controller';
 import {stateName as replicasets} from 'replicasetlist/replicasetlist_state';
 import {stateName as logsStateName} from 'logs/logs_state';
@@ -38,25 +37,17 @@ export default class ReplicaSetDetailController {
    * @param {!angular.$log} $log
    * @param {!backendApi.ReplicaSetDetail} replicaSetDetail
    * @param {!backendApi.Events} replicaSetEvents
-   * @param {!angular.Resource<!backendApi.ReplicaSetDetail>} replicaSetDetailResource
-   * @param {!angular.Resource<!backendApi.ReplicaSetSpec>} replicaSetSpecPodsResource
-   * @param {!./deletereplicaset_service.DeleteReplicaSetService} kdDeleteReplicaSetService
+   * @param {!./replicaset_service.ReplicaSetService} kdReplicaSetService
    * @ngInject
    */
   constructor(
       $mdDialog, $stateParams, $state, $resource, $log, replicaSetDetail, replicaSetEvents,
-      replicaSetDetailResource, replicaSetSpecPodsResource, kdDeleteReplicaSetService) {
+      kdReplicaSetService) {
     /** @export {!backendApi.ReplicaSetDetail} */
     this.replicaSetDetail = replicaSetDetail;
 
     /** @export {!backendApi.Events} */
     this.replicaSetEvents = replicaSetEvents;
-
-    /** @private {!angular.Resource<!backendApi.ReplicaSetDetail>} */
-    this.replicaSetDetailResource_ = replicaSetDetailResource;
-
-    /** @private {!angular.Resource<!backendApi.ReplicaSetSpec>} */
-    this.replicaSetSpecPodsResource_ = replicaSetSpecPodsResource;
 
     /** @export !Array<!backendApi.Event> */
     this.events = replicaSetEvents.events;
@@ -88,8 +79,8 @@ export default class ReplicaSetDetailController {
     /** @private {!angular.$log} */
     this.log_ = $log;
 
-    /** @private {!./deletereplicaset_service.DeleteReplicaSetService} */
-    this.kdDeleteReplicaSetService_ = kdDeleteReplicaSetService;
+    /** @private {!./replicaset_service.ReplicaSetService} */
+    this.kdReplicaSetService_ = kdReplicaSetService;
 
     /**
      * Name of column, that will be used for pods sorting.
@@ -183,8 +174,9 @@ export default class ReplicaSetDetailController {
    * @export
    */
   handleUpdateReplicasDialog() {
-    showUpdateReplicasDialog(
-        this.mdDialog_, this.replicaSetDetail, this.updateReplicas_.bind(this));
+    this.kdReplicaSetService_.showUpdateReplicasDialog(
+        this.replicaSetDetail.namespace, this.replicaSetDetail.name,
+        this.replicaSetDetail.podInfo.current, this.replicaSetDetail.podInfo.desired);
   }
 
   /**
@@ -192,8 +184,8 @@ export default class ReplicaSetDetailController {
    * @export
    */
   handleDeleteReplicaSetDialog() {
-    this.kdDeleteReplicaSetService_.showDeleteDialog(
-                                       this.stateParams_.namespace, this.stateParams_.replicaSet)
+    this.kdReplicaSetService_.showDeleteDialog(
+                                 this.stateParams_.namespace, this.stateParams_.replicaSet)
         .then(this.onReplicaSetDeleteSuccess_.bind(this), this.onReplicaSetDeleteError_.bind(this));
   }
 
@@ -201,23 +193,6 @@ export default class ReplicaSetDetailController {
    * Callbacks used after clicking dialog confirmation button in order to delete replica set
    * or log unsuccessful operation error.
    */
-
-  /**
-   * Updates replicas count in replica set
-   * @param {number} replicasCount
-   * @param {function(!backendApi.ReplicaSetSpec)=} opt_callback
-   * @param {function(!angular.$http.Response)=} opt_errback
-   * @private
-   */
-  updateReplicas_(replicasCount, opt_callback, opt_errback) {
-    /** @type {!backendApi.ReplicaSetSpec} */
-    let replicaSetSpec = {
-      replicas: replicasCount,
-    };
-
-    this.replicaSetSpecPodsResource_.save(replicaSetSpec, opt_callback, opt_errback);
-    // TODO(floreks): Think about refreshing data on this page after update.
-  }
 
   /**
    * Changes state back to replica set list after successful deletion of replica set.
@@ -229,7 +204,6 @@ export default class ReplicaSetDetailController {
   }
 
   /**
-   * TODO(floreks): display message to the user
    * Logs error after replica set deletion failure.
    * @param {!angular.$http.Response} err
    * @private
