@@ -1,0 +1,34 @@
+{
+  "swaggerVersion": "1.2",
+  "apis": [
+   {
+    "path": "/api/v1",
+    "description": "API at /api/v1"
+   },
+   {
+    "path": "/api",
+    "description": "get available API versions"
+   },
+   {
+    "path": "/apis/extensions/v1beta1",
+    "description": "API at /apis/extensions/v1beta1"
+   },
+   {
+    "path": "/apis/extensions",
+    "description": "get information of a group"
+   },
+   {
+    "path": "/apis",
+    "description": "get available API versions"
+   },
+   {
+    "path": "/version",
+    "description": "git code version from which this is built"
+   }
+  ],
+  "apiVersion": "",
+  "info": {
+   "title": "",
+   "description": ""
+  }
+ }
