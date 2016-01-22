@@ -23,40 +23,9 @@ import (
 	restful "github.com/emicklei/go-restful"
 )
 
-func TestGetRemoteAddr(t *testing.T) {
-	cases := []struct {
-		request  *restful.Request
-		expected string
-	}{
-		{
-			&restful.Request{
-				Request: &http.Request{
-					RemoteAddr: "192.168.1.1:8080",
-				},
-			},
-			"192.168.1.1",
-		},
-		{
-			&restful.Request{
-				Request: &http.Request{
-					RemoteAddr: "192.168.1.2",
-				},
-			},
-			"192.168.1.2",
-		},
-	}
-	for _, c := range cases {
-		actual := GetRemoteAddr(c.request)
-		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("GetRemoteAddr(%#v) == %#v, expected %#v", c.request, actual, c.expected)
-		}
-	}
-}
-
 func TestFormatRequestLog(t *testing.T) {
 	cases := []struct {
 		request    *restful.Request
-		remoteAddr string
 		expected   string
 	}{
 		{
@@ -67,15 +36,13 @@ func TestFormatRequestLog(t *testing.T) {
 					Method:     "GET",
 				},
 			},
-			"192.168.1.1",
-			fmt.Sprintf(RequestLogString, "HTTP 1.1", "GET", "", "192.168.1.1"),
+			fmt.Sprintf(RequestLogString, "HTTP 1.1", "GET", "", "192.168.1.1:8080"),
 		},
 	}
 	for _, c := range cases {
-		actual := FormatRequestLog(c.request, c.remoteAddr)
+		actual := FormatRequestLog(c.request,)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("GetRemoteAddr(%#v, %#v) == %#v, expected %#v", c.request, c.remoteAddr,
-				actual, c.expected)
+			t.Errorf("FormatRequestLog(%#v) == %#v, expected %#v", c.request, actual, c.expected)
 		}
 	}
 }
@@ -83,19 +50,23 @@ func TestFormatRequestLog(t *testing.T) {
 func TestFormatResponseLog(t *testing.T) {
 	cases := []struct {
 		response   *restful.Response
-		remoteAddr string
+		request    *restful.Request
 		expected   string
 	}{
 		{
 			&restful.Response{},
-			"192.168.1.1",
+			&restful.Request{
+				Request: &http.Request{
+					RemoteAddr: "192.168.1.1",
+				},
+			},
 			fmt.Sprintf(ResponseLogString, "192.168.1.1", http.StatusOK),
 		},
 	}
 	for _, c := range cases {
-		actual := FormatResponseLog(c.response, c.remoteAddr)
+		actual := FormatResponseLog(c.response, c.request)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("GetRemoteAddr(%#v, %#v) == %#v, expected %#v", c.response, c.remoteAddr,
+			t.Errorf("FormatResponseLog(%#v, %#v) == %#v, expected %#v", c.response, c.request,
 				actual, c.expected)
 		}
 	}

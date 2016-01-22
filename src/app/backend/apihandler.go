@@ -19,7 +19,6 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-	"strings"
 
 	restful "github.com/emicklei/go-restful"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
@@ -27,44 +26,33 @@ import (
 )
 
 const (
-	Colon             = ":"
 	RequestLogString  = "Incoming %s %s %s request from %s"
 	ResponseLogString = "Outcoming response to %s with %d status code"
 )
 
 // Web-service filter function used for request and response logging.
 func wsLogger(req *restful.Request, resp *restful.Response, chain *restful.FilterChain) {
-	remoteAddr := GetRemoteAddr(req)
-	log.Printf(FormatRequestLog(req, remoteAddr))
+	log.Printf(FormatRequestLog(req))
 	chain.ProcessFilter(req, resp)
-	log.Printf(FormatResponseLog(resp, remoteAddr))
-}
-
-// Returns remote address of the request (without port number).
-func GetRemoteAddr(req *restful.Request) string {
-	if strings.Contains(req.Request.RemoteAddr, Colon) {
-		return strings.Split(req.Request.RemoteAddr, Colon)[0]
-	} else {
-		return req.Request.RemoteAddr
-	}
+	log.Printf(FormatResponseLog(resp, req))
 }
 
 // Formats request log string.
 // TODO(maciaszczykm): Display request body.
-func FormatRequestLog(req *restful.Request, remoteAddr string) string {
+func FormatRequestLog(req *restful.Request) string {
 	reqURI := ""
 	if req.Request.URL != nil {
 		reqURI = req.Request.URL.RequestURI()
 	}
 
 	return fmt.Sprintf(RequestLogString, req.Request.Proto, req.Request.Method,
-		reqURI, remoteAddr)
+		reqURI, req.Request.RemoteAddr)
 }
 
 // Formats response log string.
 // TODO(maciaszczykm): Display response content.
-func FormatResponseLog(resp *restful.Response, remoteAddr string) string {
-	return fmt.Sprintf(ResponseLogString, remoteAddr, resp.StatusCode())
+func FormatResponseLog(resp *restful.Response, req *restful.Request) string {
+	return fmt.Sprintf(ResponseLogString, req.Request.RemoteAddr, resp.StatusCode())
 }
 
 // Creates a new HTTP handler that handles all requests to the API of the backend.
