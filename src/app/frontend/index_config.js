@@ -11,12 +11,14 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+import translations from './i18n/translations';
 
 /**
  * @param {!md.$mdThemingProvider} $mdThemingProvider
+ * @param {!TranslateProvider} $translateProvider
  * @ngInject
  */
-export default function config($mdThemingProvider) {
+export default function config($mdThemingProvider, $translateProvider) {
   // Create a color palette that uses Kubernetes colors.
   let kubernetesColorPaletteName = 'kubernetesColorPalette';
   let kubernetesColorPalette = $mdThemingProvider.extendPalette('blue', {
@@ -26,4 +28,9 @@ export default function config($mdThemingProvider) {
   // Use the palette as default one.
   $mdThemingProvider.definePalette(kubernetesColorPaletteName, kubernetesColorPalette);
   $mdThemingProvider.theme('default').primaryPalette(kubernetesColorPaletteName);
+
+  // Angular translate configuration
+  $translateProvider.translations('en', translations().en);
+  $translateProvider.translations('de', translations().de);
+  $translateProvider.preferredLanguage('de');
 }
