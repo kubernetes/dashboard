@@ -16,16 +16,14 @@ package main
 
 import (
 	"fmt"
-	ioutil "io/ioutil"
 	"log"
-	"os"
 	"strings"
 
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/resource"
-	create "k8s.io/kubernetes/pkg/kubectl/cmd"
-	cmdutil "k8s.io/kubernetes/pkg/kubectl/cmd/util"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	cmdutil "k8s.io/kubernetes/pkg/kubectl/cmd/util"
+	kubectlResource "k8s.io/kubernetes/pkg/kubectl/resource"
 	"k8s.io/kubernetes/pkg/util/intstr"
 )
 
@@ -246,26 +244,36 @@ func getLabelsMap(labels []Label) map[string]string {
 }
 
 // Deploys an app based on the given yaml or json file.
-func DeployAppFromFile(spec *AppDeploymentFromFileSpec, client *client.Client) error {
-	// Creates temp file to use it in kubectl command
-	file, err := ioutil.TempFile("", spec.Name)
-	if err != nil {
-		return err
-	}
-	_,err = file.WriteString(spec.Content)
-	if err != nil {
-		return err
-	}
-	// Runs kubectl create command with the temp file
-	options := &create.CreateOptions{
-		Filenames: []string {file.Name()},
-	}
-	cmd := create.NewCmdCreate(cmdutil.NewFactory(nil), os.Stdout)
-	cmd.Flags().Set("filename", file.Name())
-	cmd.Flags().Set("output", "name")
-	err = create.RunCreate(cmdutil.NewFactory(nil), cmd, os.Stdout, options)
+func DeployAppFromFile(spec *AppDeploymentFromFileSpec) error {
+	const (
+		validate      = true
+		emptyCacheDir = ""
+	)
 
-	// Removes the created temp file after using it
-	os.Remove(file.Name())
-	return err
+	factory := cmdutil.NewFactory(nil)
+	schema, err := factory.Validator(validate, emptyCacheDir)
+	if err != nil {
+		return err
+	}
+
+	mapper, typer := factory.Object()
+	reader := strings.NewReader(spec.Content)
+
+	r := kubectlResource.NewBuilder(mapper, typer, factory.ClientMapperForCommand()).
+		Schema(schema).
+		NamespaceParam(api.NamespaceDefault).DefaultNamespace().
+		Stream(reader, spec.Name).
+		Flatten().
+		Do()
+
+	return r.Visit(func(info *kubectlResource.Info, err error) error {
+		// creates an object from input info
+		_, err = kubectlResource.NewHelper(info.Client, info.Mapping).Create(info.Namespace, true, info.Object)
+		if err != nil {
+			return err
+		}
+		log.Printf("%s is deployed", info.Name)
+		return nil
+	})
 }
+

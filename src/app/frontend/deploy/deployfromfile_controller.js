@@ -76,9 +76,9 @@ export default class DeployFromFileController {
     let defer = this.q_.defer();
 
     /** @type {!angular.Resource<!backendApi.AppDeploymentFromFileSpec>} */
-    let resource = this.resource_('/api/appdeploymentfromfile');
+    let resource = this.resource_('api/appdeploymentfromfile');
     resource.save(
-      deploymentSpec,
+        deploymentSpec,
         (savedConfig) => {
           defer.resolve(savedConfig);  // Progress ends
           this.log_.info('Successfully deployed application: ', savedConfig);
@@ -87,7 +87,7 @@ export default class DeployFromFileController {
         (err) => {
           defer.reject(err);  // Progress ends
           this.log_.error('Error deploying application:', err);
-          this.errorDialog_.openWithDetail('File upload failed' ,err.data);
+          this.errorDialog_.open('Deploying file has failed', err.data);
         });
     return defer.promise;
   }

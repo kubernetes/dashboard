@@ -159,3 +159,35 @@ func TestGetAvailableProtocols(t *testing.T) {
 			expected, actual)
 	}
 }
+
+func TestDeployAppFromFileWithValidContent(t *testing.T) {
+	validContent := "{\"kind\": \"Namespace\"," +
+		"\"apiVersion\": \"v1\"," +
+		"\"metadata\": {" +
+		"\"name\": \"development\"," +
+		"\"labels\": {\"name\": \"development\"}}}"
+
+	spec := &AppDeploymentFromFileSpec{
+		Name:    "foo-name",
+		Content: validContent,
+	}
+
+	err := DeployAppFromFile(spec)
+
+	if err != nil {
+		t.Errorf("Expected return value to be %#v but got %#v", nil, err)
+	}
+}
+
+func TestDeployAppFromFileWithInvalidContent(t *testing.T) {
+	spec := &AppDeploymentFromFileSpec{
+		Name:    "foo-name",
+		Content: "foo-content-invalid",
+	}
+
+	err := DeployAppFromFile(spec)
+
+	if err == nil {
+		t.Errorf("Expected return value to be an error but got %#v", nil)
+	}
+}

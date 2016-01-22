@@ -206,13 +206,12 @@ func (apiHandler *ApiHandler) handleDeployFromFile(request *restful.Request, res
 		handleInternalError(response, err)
 		return
 	}
-	if err := DeployAppFromFile(deploymentSpec, apiHandler.client); err != nil {
+	if err := DeployAppFromFile(deploymentSpec); err != nil {
 		handleInternalError(response, err)
 		return
 	}
 
 	response.WriteHeaderAndEntity(http.StatusCreated, deploymentSpec)
-
 }
 
 // Handles app name validation API call.
