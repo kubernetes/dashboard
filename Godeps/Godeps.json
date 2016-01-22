@@ -6,6 +6,11 @@
 	],
 	"Deps": [
 		{
+			"ImportPath": "github.com/Sirupsen/logrus",
+			"Comment": "v0.8.7-55-gf7f79f7",
+			"Rev": "f7f79f729e0fbe2fcc061db48a9ba0263f588252"
+		},
+		{
 			"ImportPath": "github.com/beorn7/perks/quantile",
 			"Rev": "b965b613227fddccbfffe13eae360ed3fa822f8d"
 		},
@@ -19,12 +24,21 @@
 			"Rev": "5215b55f46b2b919f50a1df0eaa5886afe4e3b3d"
 		},
 		{
+			"ImportPath": "github.com/daviddengcn/go-colortext",
+			"Rev": "3b18c8575a432453d41fdafb340099fff5bba2f7"
+		},
+		{
 			"ImportPath": "github.com/docker/docker/pkg/mount",
 			"Comment": "v1.4.1-4045-g2b27fe1",
 			"Rev": "2b27fe17a1b3fb8472fde96d768fa70996adf201"
 		},
 		{
 			"ImportPath": "github.com/docker/docker/pkg/parsers",
+			"Comment": "v1.4.1-4045-g2b27fe1",
+			"Rev": "2b27fe17a1b3fb8472fde96d768fa70996adf201"
+		},
+		{
+			"ImportPath": "github.com/docker/docker/pkg/term",
 			"Comment": "v1.4.1-4045-g2b27fe1",
 			"Rev": "2b27fe17a1b3fb8472fde96d768fa70996adf201"
 		},
@@ -49,9 +63,21 @@
 			"Rev": "83a102cc68a09d890cce3b6c2e5c14c49e6373a0"
 		},
 		{
+			"ImportPath": "github.com/docker/spdystream",
+			"Rev": "c33989bcb56748d2473194d11f8ac3fc563688eb"
+		},
+		{
 			"ImportPath": "github.com/emicklei/go-restful",
 			"Comment": "v1.2",
 			"Rev": "777bb3f19bcafe2575ffb2a3e46af92509ae9594"
+		},
+		{
+			"ImportPath": "github.com/evanphx/json-patch",
+			"Rev": "766277e6183f343431bef432994d06c24459e3ef"
+		},
+		{
+			"ImportPath": "github.com/fsouza/go-dockerclient",
+			"Rev": "f7ec39a98d505deac0b5ef561589f0f273161773"
 		},
 		{
 			"ImportPath": "github.com/ghodss/yaml",
@@ -73,6 +99,15 @@
 		{
 			"ImportPath": "github.com/google/gofuzz",
 			"Rev": "e4af62d086c303f2bed467b227fc0a034b218916"
+		},
+		{
+			"ImportPath": "github.com/imdario/mergo",
+			"Comment": "0.2.1",
+			"Rev": "bc0f15622cd2a38ef83388501e4cd6747665b164"
+		},
+		{
+			"ImportPath": "github.com/inconshreveable/mousetrap",
+			"Rev": "76626ae9c91c4f2a10f34cad8ce83ea42c93bb75"
 		},
 		{
 			"ImportPath": "github.com/juju/ratelimit",
@@ -113,8 +148,12 @@
 			"Rev": "406e5b7bfd8201a36e2bb5f7bdae0b03380c2ce8"
 		},
 		{
+			"ImportPath": "github.com/spf13/cobra",
+			"Rev": "8e91712f174ced10270cf66615e0a9127e7c4de5"
+		},
+		{
 			"ImportPath": "github.com/spf13/pflag",
-			"Rev": "08b1a584251b5b62f458943640fc8ebd4d50aaa5"
+			"Rev": "7f60f83a2c81bc3c3c0d5297f61ddfa68da9d3b7"
 		},
 		{
 			"ImportPath": "github.com/ugorji/go/codec",
@@ -131,6 +170,10 @@
 		{
 			"ImportPath": "golang.org/x/net/context",
 			"Rev": "d5cd7348bfebdf7dbb6dbb18fa488525f9024293"
+		},
+		{
+			"ImportPath": "golang.org/x/sys/unix",
+			"Rev": "20457ee8ea8546920d3f4e19e405da45250dc5a5"
 		},
 		{
 			"ImportPath": "gopkg.in/yaml.v2",
@@ -187,7 +230,22 @@
 			"Rev": "33eda2ffb52c59eff55d30641d2aefae53fa8e48"
 		},
 		{
+			"ImportPath": "k8s.io/kubernetes/pkg/fieldpath",
+			"Comment": "v1.2.0-alpha.4-487-g33eda2f",
+			"Rev": "33eda2ffb52c59eff55d30641d2aefae53fa8e48"
+		},
+		{
 			"ImportPath": "k8s.io/kubernetes/pkg/fields",
+			"Comment": "v1.2.0-alpha.4-487-g33eda2f",
+			"Rev": "33eda2ffb52c59eff55d30641d2aefae53fa8e48"
+		},
+		{
+			"ImportPath": "k8s.io/kubernetes/pkg/kubectl",
+			"Comment": "v1.2.0-alpha.4-487-g33eda2f",
+			"Rev": "33eda2ffb52c59eff55d30641d2aefae53fa8e48"
+		},
+		{
+			"ImportPath": "k8s.io/kubernetes/pkg/kubelet/portforward",
 			"Comment": "v1.2.0-alpha.4-487-g33eda2f",
 			"Rev": "33eda2ffb52c59eff55d30641d2aefae53fa8e48"
 		},
@@ -227,7 +285,22 @@
 			"Rev": "33eda2ffb52c59eff55d30641d2aefae53fa8e48"
 		},
 		{
+			"ImportPath": "k8s.io/kubernetes/third_party/forked/json",
+			"Comment": "v1.2.0-alpha.4-487-g33eda2f",
+			"Rev": "33eda2ffb52c59eff55d30641d2aefae53fa8e48"
+		},
+		{
 			"ImportPath": "k8s.io/kubernetes/third_party/forked/reflect",
+			"Comment": "v1.2.0-alpha.4-487-g33eda2f",
+			"Rev": "33eda2ffb52c59eff55d30641d2aefae53fa8e48"
+		},
+		{
+			"ImportPath": "k8s.io/kubernetes/third_party/golang/netutil",
+			"Comment": "v1.2.0-alpha.4-487-g33eda2f",
+			"Rev": "33eda2ffb52c59eff55d30641d2aefae53fa8e48"
+		},
+		{
+			"ImportPath": "k8s.io/kubernetes/third_party/golang/template",
 			"Comment": "v1.2.0-alpha.4-487-g33eda2f",
 			"Rev": "33eda2ffb52c59eff55d30641d2aefae53fa8e48"
 		},

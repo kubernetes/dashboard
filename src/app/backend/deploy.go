@@ -15,7 +15,9 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"strings"
 
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/resource"
@@ -164,6 +166,7 @@ func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 	}
 
 	if len(spec.PortMappings) > 0 {
+
 		service := &api.Service{
 			ObjectMeta: objectMeta,
 			Spec: api.ServiceSpec{
@@ -182,6 +185,7 @@ func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 				api.ServicePort{
 					Protocol: portMapping.Protocol,
 					Port:     portMapping.Port,
+					Name:     generatePortMappingName(portMapping),
 					TargetPort: intstr.IntOrString{
 						Type:   intstr.Int,
 						IntVal: portMapping.TargetPort,
@@ -201,6 +205,13 @@ func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 
 func GetAvailableProtocols() *Protocols {
 	return &Protocols{Protocols: []api.Protocol{api.ProtocolTCP, api.ProtocolUDP}}
+}
+
+func generatePortMappingName(portMapping PortMapping) string {
+	base := fmt.Sprintf("%s-%d-%d-", strings.ToLower(string(portMapping.Protocol)),
+		portMapping.Port, portMapping.TargetPort)
+
+	return api.SimpleNameGenerator.GenerateName(base)
 }
 
 // Converts array of labels to map[string]string
