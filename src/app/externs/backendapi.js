@@ -62,6 +62,14 @@ backendApi.AppDeploymentSpec;
 
 /**
  * @typedef {{
+ *   name: string,
+ *   content: string
+ * }}
+ */
+backendApi.AppDeploymentFromFileSpec;
+
+/**
+ * @typedef {{
  *   namespace: string,
  *   events: !Array<!backendApi.Event>
  * }}

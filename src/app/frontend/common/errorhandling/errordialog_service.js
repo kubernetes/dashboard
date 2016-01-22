@@ -41,4 +41,19 @@ export default class ErrorDialog {
     alert.ok('Close');
     this.mdDialog_.show(alert);
   }
+
+  /**
+   * Opens a pop-up window that displays the error message with title
+   *
+   * @param {string} title
+   * @param {string} message
+   * @export
+   */
+  openWithDetail(title, message) {
+    let alert = this.mdDialog_.alert();
+    alert.title(title);
+    alert.textContent(message);
+    alert.ok('Close');
+    this.mdDialog_.show(alert);
+  }
 }
