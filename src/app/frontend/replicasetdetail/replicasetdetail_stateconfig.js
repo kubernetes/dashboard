@@ -52,7 +52,7 @@ export function getReplicaSetDetailsResource($stateParams, $resource) {
  * @return {!angular.Resource<!backendApi.ReplicaSetSpec>}
  * @ngInject
  */
-function getReplicaSetSpecPodsResource($stateParams, $resource) {
+export function getReplicaSetSpecPodsResource($stateParams, $resource) {
   return $resource(`api/replicasets/${$stateParams.namespace}/${$stateParams.replicaSet}/update/pods`);
 }
 
