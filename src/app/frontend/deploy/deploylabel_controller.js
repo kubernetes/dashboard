@@ -40,7 +40,6 @@ export default class DeployLabelController {
    */
   check(labelForm) {
     this.addIfNeeded_();
-    this.removeIfNeeded_();
     this.validateKey_(labelForm);
   }
 
@@ -87,19 +86,6 @@ export default class DeployLabelController {
    * @private
    */
   addNewLabel_() { this.labels.push(new DeployLabel()); }
-
-  /**
-   * Removes label from labels list if label is empty and is not last label.
-   * @private
-   */
-  removeIfNeeded_() {
-    /** @type {!DeployLabel} */
-    let lastLabel = this.labels[this.labels.length - 1];
-
-    if (this.isEmpty_(this.label) && this.label !== lastLabel) {
-      this.deleteLabel();
-    }
-  }
 
   /**
    * Validates label withing label form.

@@ -73,8 +73,11 @@ export default class DeployFromSettingsController {
      */
     this.protocols;
 
-    /** @export {!Array<!backendApi.PortMapping>} */
-    this.portMappings = [this.newEmptyPortMapping_(this.protocols[0])];
+    /**
+     * Initialized from the template.
+     * @export {!Array<!backendApi.PortMapping>}
+     */
+    this.portMappings;
 
     /** @export {boolean} */
     this.isExternal = false;
@@ -153,7 +156,7 @@ export default class DeployFromSettingsController {
       isExternal: this.isExternal,
       name: this.name,
       description: this.description ? this.description : null,
-      portMappings: this.portMappings.filter(this.isPortMappingEmpty_),
+      portMappings: this.portMappings.filter(this.isPortMappingFilled_),
       replicas: this.replicas,
       namespace: this.namespace,
       cpuRequirement: angular.isNumber(this.cpuRequirement) ? this.cpuRequirement : null,
@@ -238,21 +241,12 @@ export default class DeployFromSettingsController {
   }
 
   /**
-   * @param {string} defaultProtocol
-   * @return {!backendApi.PortMapping}
-   * @private
-   */
-  newEmptyPortMapping_(defaultProtocol) {
-    return {port: null, targetPort: null, protocol: defaultProtocol};
-  }
-
-  /**
-   * Returns true when the given port mapping hasn't been filled by the user, i.e., is empty.
+   * Returns true when the given port mapping is filled by the user, i.e., is not empty.
    * @param {!backendApi.PortMapping} portMapping
    * @return {boolean}
    * @private
    */
-  isPortMappingEmpty_(portMapping) { return !!portMapping.port && !!portMapping.targetPort; }
+  isPortMappingFilled_(portMapping) { return !!portMapping.port && !!portMapping.targetPort; }
 
   /**
    * Callbacks used in DeployLabel model to make it aware of controller state changes.

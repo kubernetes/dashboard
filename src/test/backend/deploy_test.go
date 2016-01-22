@@ -16,6 +16,7 @@ package main
 
 import (
 	"reflect"
+	"regexp"
 	"testing"
 
 	"k8s.io/kubernetes/pkg/api"
@@ -104,6 +105,19 @@ func TestDeployAppContainerCommands(t *testing.T) {
 	if container.Args[0] != commandArgs {
 		t.Errorf("Expected command args to be %#v but got %#v",
 			commandArgs, container.Args)
+	}
+}
+
+func TestDeployShouldGeneratePortNames(t *testing.T) {
+	spec := PortMapping{Port: 80, TargetPort: 8080, Protocol: api.ProtocolTCP}
+
+	name := generatePortMappingName(spec)
+
+	pattern := "tcp-80-8080-\\w+"
+	match, _ := regexp.MatchString(pattern, name)
+	if !match {
+		t.Errorf("Expected command to match %#v but got %#v",
+			pattern, name)
 	}
 }
 
