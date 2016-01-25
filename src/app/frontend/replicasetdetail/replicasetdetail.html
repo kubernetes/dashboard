@@ -208,7 +208,7 @@ limitations under the License.
             <td class="kd-replicasetdetail-table-cell">
               <span ng-if="::pod.startTime">
                 {{::pod.startTime | relativeTime}}
-                <md-tooltip>{{::(pod.startTime | date:'short')}}</md-tooltip>
+                <md-tooltip>Started at {{::(pod.startTime | date:'short')}}</md-tooltip>
               </span>
               <span ng-if="::!pod.startTime">
                 -
@@ -238,7 +238,7 @@ limitations under the License.
             </td>
             <td class="kd-replicasetdetail-table-cell">
               <span>
-                <a ng-href="{{::ctrl.getPodLogsHref(pod)}}" class="md-primary">
+                <a ng-href="{{::ctrl.getPodLogsHref(pod)}}" target="_blank">
                   Logs
                   <i class="material-icons kd-text-icon">open_in_new</i>
                 </a>
@@ -327,8 +327,12 @@ limitations under the License.
             </td>
             <td class="kd-replicasetdetail-table-cell">{{event.object}}</td>
             <td class="kd-replicasetdetail-table-cell">{{event.count}}</td>
-            <td class="kd-replicasetdetail-table-cell">{{event.firstSeen | date:'short'}}</td>
-            <td class="kd-replicasetdetail-table-cell">{{event.lastSeen | date:'short'}}</td>
+            <td class="kd-replicasetdetail-table-cell">
+              First seen at {{event.firstSeen | date:'short'}}
+            </td>
+            <td class="kd-replicasetdetail-table-cell">
+              Last seen at {{event.lastSeen | date:'short'}}
+            </td>
           </tr>
           </tbody>
         </table>

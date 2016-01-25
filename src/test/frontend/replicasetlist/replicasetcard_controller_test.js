@@ -37,4 +37,11 @@ describe('Logs menu controller', () => {
     // then
     expect(ctrl.getReplicaSetDetailHref()).toEqual('#/replicasets/foo-namespace/foo-name');
   });
+
+  it('should truncate image name', () => {
+    expect(ctrl.shouldTruncate('x')).toBe(false);
+    expect(ctrl.shouldTruncate('x'.repeat(32))).toBe(false);
+    expect(ctrl.shouldTruncate('x'.repeat(33))).toBe(true);
+    expect(ctrl.shouldTruncate('x'.repeat(100))).toBe(true);
+  });
 });

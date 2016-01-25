@@ -12,16 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../variables';
+import DeleteReplicaSetDialogController from './deletereplicaset_controller';
 
-.kd-deploy-whiteframe {
-  background: $content-background;
-  margin: $baseline-grid;
-  // TODO(bryk): Find a better, application wide constant for the min width.
-  max-width: 960px;
-  min-width: 600px;
-}
-
-.kd-deploy-form-title {
-  margin-top: $baseline-grid;
+/**
+ * @param {!md.$dialog} mdDialog
+ * @param {string} namespace
+ * @param {string} replicaSet
+ * @return {!angular.$q.Promise}
+ */
+export default function showDeleteReplicaSetDialog(mdDialog, namespace, replicaSet) {
+  return mdDialog.show({
+    controller: DeleteReplicaSetDialogController,
+    controllerAs: 'ctrl',
+    clickOutsideToClose: true,
+    templateUrl: 'replicasetdetail/deletereplicaset.html',
+    locals: {
+      'namespace': namespace,
+      'replicaSet': replicaSet,
+    },
+  });
 }

@@ -32,9 +32,23 @@ export default class ReplicaSetCardController {
      */
     this.replicaSet;
 
+    /**
+     * Maximum length of container image before it is truncated.
+     * @const
+     * @export {number}
+     */
+    this.imageMaxLength = 32;
+
     /** @private {!ui.router.$state} */
     this.state_ = $state;
   }
+
+  /**
+   * @param {string} imageName
+   * @return {boolean}
+   * @export
+   */
+  shouldTruncate(imageName) { return imageName.length > this.imageMaxLength; }
 
   /**
    * @return {string}
