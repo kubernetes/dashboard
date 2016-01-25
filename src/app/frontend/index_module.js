@@ -25,22 +25,23 @@ import logsModule from './logs/logs_module';
 import replicaSetDetailModule from './replicasetdetail/replicasetdetail_module';
 import replicaSetListModule from './replicasetlist/replicasetlist_module';
 
-export default angular.module(
-                          'kubernetesDashboard',
-                          [
-                            'ngAnimate',
-                            'ngAria',
-                            'ngMaterial',
-                            'ngMessages',
-                            'ngResource',
-                            'ngSanitize',
-                            'ui.router',
-                            chromeModule.name,
-                            deployModule.name,
-                            errorModule.name,
-                            logsModule.name,
-                            replicaSetDetailModule.name,
-                            replicaSetListModule.name,
-                          ])
+export default angular
+    .module(
+        'kubernetesDashboard',
+        [
+          'ngAnimate',
+          'ngAria',
+          'ngMaterial',
+          'ngMessages',
+          'ngResource',
+          'ngSanitize',
+          'ui.router',
+          chromeModule.name,
+          deployModule.name,
+          errorModule.name,
+          logsModule.name,
+          replicaSetDetailModule.name,
+          replicaSetListModule.name,
+        ])
     .config(indexConfig)
     .config(routeConfig);

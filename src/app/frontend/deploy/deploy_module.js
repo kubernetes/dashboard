@@ -29,15 +29,16 @@ import helpSectionModule from './helpsection/helpsection_module';
  *
  * The view allows for deploying applications to Kubernetes clusters.
  */
-export default angular.module(
-                          'kubernetesDashboard.deploy',
-                          [
-                            'ngMaterial',
-                            'ngResource',
-                            'ui.router',
-                            helpSectionModule.name,
-                            errorHandlingModule.name,
-                          ])
+export default angular
+    .module(
+        'kubernetesDashboard.deploy',
+        [
+          'ngMaterial',
+          'ngResource',
+          'ui.router',
+          helpSectionModule.name,
+          errorHandlingModule.name,
+        ])
     .config(stateConfig)
     .directive('deployFromSettings', deployFromSettingsDirective)
     .directive('deployFromFile', deployFromFileDirective)

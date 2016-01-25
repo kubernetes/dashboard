@@ -17,9 +17,10 @@ import labelsDirective from './labels/labels_directive';
 /**
  * Module containing common components for the application.
  */
-export default angular.module(
-                          'kubernetesDashboard.common.components',
-                          [
-                            'ngMaterial',
-                          ])
+export default angular
+    .module(
+        'kubernetesDashboard.common.components',
+        [
+          'ngMaterial',
+        ])
     .directive('kdLabels', labelsDirective);

@@ -184,8 +184,8 @@ export default class ReplicaSetDetailController {
    * @export
    */
   handleDeleteReplicaSetDialog() {
-    this.kdReplicaSetService_.showDeleteDialog(
-                                 this.stateParams_.namespace, this.stateParams_.replicaSet)
+    this.kdReplicaSetService_
+        .showDeleteDialog(this.stateParams_.namespace, this.stateParams_.replicaSet)
         .then(this.onReplicaSetDeleteSuccess_.bind(this), this.onReplicaSetDeleteError_.bind(this));
   }
 

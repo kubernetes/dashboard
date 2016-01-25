@@ -126,11 +126,8 @@ gulp.task('angular-templates', function() {
         collapseWhitespace: true,
         conservativeCollapse: true,
       }))
-      .pipe(
-          gulpAngularTemplatecache(
-              'angular-templates.js',
-              {
-                module: conf.frontend.rootModuleName,
-              }))
+      .pipe(gulpAngularTemplatecache('angular-templates.js', {
+        module: conf.frontend.rootModuleName,
+      }))
       .pipe(gulp.dest(conf.paths.partials));
 });

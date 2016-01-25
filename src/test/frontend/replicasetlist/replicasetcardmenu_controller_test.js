@@ -47,8 +47,8 @@ describe('Replica set card menu controller', () => {
     ctrl.viewDetails();
 
     // then
-    expect(state.go)
-        .toHaveBeenCalledWith('replicasetdetail', new StateParams('foo-namespace', 'foo-name'));
+    expect(state.go).toHaveBeenCalledWith(
+        'replicasetdetail', new StateParams('foo-namespace', 'foo-name'));
   });
 
   it('should open the menu', () => {

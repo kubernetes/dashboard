@@ -25,16 +25,17 @@ import {ReplicaSetService} from './replicaset_service';
  *
  * The view shows detailed view of a Replica Sets.
  */
-export default angular.module(
-                          'kubernetesDashboard.replicaSetDetail',
-                          [
-                            'ngMaterial',
-                            'ngResource',
-                            'ui.router',
-                            componentsModule.name,
-                            filtersModule.name,
-                            logsModule.name,
-                          ])
+export default angular
+    .module(
+        'kubernetesDashboard.replicaSetDetail',
+        [
+          'ngMaterial',
+          'ngResource',
+          'ui.router',
+          componentsModule.name,
+          filtersModule.name,
+          logsModule.name,
+        ])
     .config(stateConfig)
     .directive('kdServiceEndpoint', serviceEndpointDirective)
     .directive('kdSortedHeader', sortedHeaderDirective)
