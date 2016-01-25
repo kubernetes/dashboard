@@ -21,10 +21,10 @@ export default class PortMappingsController {
   /** @ngInject */
   constructor() {
     /**
-     * Initialized from the scope.
+     * Two way data binding from the scope.
      * @export {!Array<!backendApi.PortMapping>}
      */
-    this.portMappings;
+    this.portMappings = [this.newEmptyPortMapping_(this.protocols[0])];
 
     /**
      * Initialized from the scope.
@@ -38,4 +38,44 @@ export default class PortMappingsController {
      */
     this.isExternal;
   }
+
+  /**
+   * @param {string} defaultProtocol
+   * @return {!backendApi.PortMapping}
+   * @private
+   */
+  newEmptyPortMapping_(defaultProtocol) {
+    return {port: null, targetPort: null, protocol: defaultProtocol};
+  }
+
+  /**
+   * @export
+   */
+  addProtocolIfNeeed() {
+    let lastPortMapping = this.portMappings[this.portMappings.length - 1];
+    if (this.isPortMappingFilled_(lastPortMapping)) {
+      this.portMappings.push(this.newEmptyPortMapping_(this.protocols[0]));
+    }
+  }
+
+  /**
+   * @param {number} index
+   * @return {boolean}
+   * @export
+   */
+  isRemovable(index) { return index !== (this.portMappings.length - 1); }
+
+  /**
+   * @param {number} index
+   * @export
+   */
+  remove(index) { this.portMappings.splice(index, 1); }
+
+  /**
+   * Returns true when the given port mapping is filled by the user, i.e., is not empty.
+   * @param {!backendApi.PortMapping} portMapping
+   * @return {boolean}
+   * @private
+   */
+  isPortMappingFilled_(portMapping) { return !!portMapping.port && !!portMapping.targetPort; }
 }

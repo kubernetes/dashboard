@@ -23,15 +23,15 @@ describe('Replica set card menu controller', () => {
   let state;
   /** @type {!angular.Scope} */
   let scope;
-  /** @type {!replicasetdetail/deletereplicaset_service.DeleteReplicaSetService} */
-  let kdDeleteReplicaSetService;
+  /** @type {!replicasetdetail/replicaset_service.ReplicaSetService} */
+  let kdReplicaSetService;
 
   beforeEach(() => {
     angular.mock.module(replicaSetListModule.name);
 
-    angular.mock.inject(($controller, $state, _kdDeleteReplicaSetService_, $rootScope) => {
+    angular.mock.inject(($controller, $state, _kdReplicaSetService_, $rootScope) => {
       state = $state;
-      kdDeleteReplicaSetService = _kdDeleteReplicaSetService_;
+      kdReplicaSetService = _kdReplicaSetService_;
       scope = $rootScope;
       ctrl = $controller(
           ReplicaSetCardMenuController, null,
@@ -67,7 +67,7 @@ describe('Replica set card menu controller', () => {
     // given
     let deferred = $q.defer();
     spyOn(state, 'reload');
-    spyOn(kdDeleteReplicaSetService, 'showDeleteDialog').and.returnValue(deferred.promise);
+    spyOn(kdReplicaSetService, 'showDeleteDialog').and.returnValue(deferred.promise);
 
     // when
     ctrl.showDeleteDialog();
@@ -84,7 +84,7 @@ describe('Replica set card menu controller', () => {
     let deferred = $q.defer();
     spyOn($log, 'error');
     spyOn(state, 'reload');
-    spyOn(kdDeleteReplicaSetService, 'showDeleteDialog').and.returnValue(deferred.promise);
+    spyOn(kdReplicaSetService, 'showDeleteDialog').and.returnValue(deferred.promise);
 
     // when
     ctrl.showDeleteDialog();
@@ -97,4 +97,23 @@ describe('Replica set card menu controller', () => {
     expect(state.reload).not.toHaveBeenCalled();
     expect($log.error).toHaveBeenCalled();
   }));
+
+  it('should show update replicas dialog', () => {
+    // given
+    ctrl.replicaSet = {
+      namespace: '',
+      name: '',
+      pods: {
+        current: 1,
+        desired: 1,
+      },
+    };
+    spyOn(kdReplicaSetService, 'showUpdateReplicasDialog');
+
+    // when
+    ctrl.showUpdateReplicasDialog();
+
+    // then
+    expect(kdReplicaSetService.showUpdateReplicasDialog).toHaveBeenCalled();
+  });
 });

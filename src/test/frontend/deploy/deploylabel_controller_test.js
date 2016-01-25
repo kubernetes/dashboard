@@ -122,21 +122,6 @@ describe('DeployLabel controller', () => {
     expect(ctrl.labels.length).toEqual(2);
   });
 
-  it('should remove label with empty key and value when not last', () => {
-    // given
-    ctrl.label = new DeployLabel();
-    ctrl.labels = [
-      ctrl.label,
-      new DeployLabel(),
-    ];
-
-    // when
-    ctrl.check();
-
-    // then
-    expect(ctrl.labels.length).toEqual(1);
-  });
-
   it('should set validity to false when duplicated key is found', () => {
     // given
     ctrl.label = new DeployLabel('key');

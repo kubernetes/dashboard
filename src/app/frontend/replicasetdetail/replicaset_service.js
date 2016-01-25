@@ -14,13 +14,14 @@
 
 import {StateParams} from './replicasetdetail_state';
 import {getReplicaSetDetailsResource} from './replicasetdetail_stateconfig';
+import showUpdateReplicasDialog from './updatereplicas_dialog';
 
 /**
  * Opens replica set delete dialog.
  *
  * @final
  */
-export class DeleteReplicaSetService {
+export class ReplicaSetService {
   /**
    * @param {!md.$dialog} $mdDialog
    * @param {!angular.$resource} $resource
@@ -39,7 +40,7 @@ export class DeleteReplicaSetService {
   }
 
   /**
-   * Opens a replica set delete dialog. Returns a promise that is resolved/rejeced when user wants
+   * Opens a replica set delete dialog. Returns a promise that is resolved/rejected when user wants
    * to delete the replica. Nothing happens when user clicks cancel on the dialog.
    *
    * @param {string} namespace
@@ -63,5 +64,20 @@ export class DeleteReplicaSetService {
         .then(() => { resource.remove(deferred.resolve, deferred.reject); });
 
     return deferred.promise;
+  }
+
+  /**
+   * Opens an update replica set dialog. Returns a promise that is resolved/rejected when user wants
+   * to update the replicas. Nothing happens when user clicks cancel on the dialog.
+   *
+   * @param {string} namespace
+   * @param {string} replicaSet
+   * @param {number} currentPods
+   * @param {number} desiredPods
+   * @returns {!angular.$q.Promise}
+   */
+  showUpdateReplicasDialog(namespace, replicaSet, currentPods, desiredPods) {
+    return showUpdateReplicasDialog(
+        this.mdDialog_, namespace, replicaSet, currentPods, desiredPods);
   }
 }

@@ -17,20 +17,24 @@ import UpdateReplicasDialogController from 'replicasetdetail/updatereplicas_cont
 /**
  * Opens update replicas dialog.
  * @param {!md.$dialog} mdDialog
- * @param {!backendApi.ReplicaSetDetail} replicaSetDetail
- * @param {!function(number, function(!backendApi.ReplicaSetSpec)=,
- * function(!angular.$http.Response)=)} updateReplicasFn
+ * @param {string} namespace
+ * @param {string} replicaSet
+ * @param {number} currentPods
+ * @param {number} desiredPods
  * @return {!angular.$q.Promise}
  */
-export default function showUpdateReplicasDialog(mdDialog, replicaSetDetail, updateReplicasFn) {
+export default function showUpdateReplicasDialog(
+    mdDialog, namespace, replicaSet, currentPods, desiredPods) {
   return mdDialog.show({
     controller: UpdateReplicasDialogController,
     controllerAs: 'ctrl',
     clickOutsideToClose: true,
     templateUrl: 'replicasetdetail/updatereplicas.html',
     locals: {
-      'updateReplicasFn': updateReplicasFn,
-      'replicaSetDetail': replicaSetDetail,
+      'namespace': namespace,
+      'replicaSet': replicaSet,
+      'currentPods': currentPods,
+      'desiredPods': desiredPods,
     },
   });
 }
