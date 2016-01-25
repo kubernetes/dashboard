@@ -221,7 +221,7 @@ export default class DeployFromSettingsController {
     let name = this.form['name'];
 
     return name.$error[uniqueNameValidationKey] ||
-           (name.$invalid && (name.$touched || this.form.$submitted));
+        (name.$invalid && (name.$touched || this.form.$submitted));
   }
 
   /**

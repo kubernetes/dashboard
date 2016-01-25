@@ -48,16 +48,15 @@ gulp.task('build-frontend', ['assets', 'index:prod', 'clean-dist'], function() {
   let vendorCssFilter = gulpFilter('**/vendor.css', {restore: true});
   let vendorJsFilter = gulpFilter('**/vendor.js', {restore: true});
   let assetsFilter = gulpFilter(['**/*.js', '**/*.css'], {restore: true});
+  let searchPath = [
+    // To resolve local paths.
+    path.relative(conf.paths.base, conf.paths.prodTmp),
+    // To resolve bower_components/... paths.
+    path.relative(conf.paths.base, conf.paths.base),
+  ];
 
   return gulp.src(path.join(conf.paths.prodTmp, '*.html'))
-      .pipe(gulpUseref({
-        searchPath: [
-          // To resolve local paths.
-          path.relative(conf.paths.base, conf.paths.prodTmp),
-          // To resolve bower_components/... paths.
-          path.relative(conf.paths.base, conf.paths.base),
-        ],
-      }))
+      .pipe(gulpUseref({searchPath: searchPath}))
       .pipe(vendorCssFilter)
       .pipe(gulpMinifyCss())
       .pipe(vendorCssFilter.restore)
@@ -67,7 +66,7 @@ gulp.task('build-frontend', ['assets', 'index:prod', 'clean-dist'], function() {
       .pipe(assetsFilter)
       .pipe(gulpRev())
       .pipe(assetsFilter.restore)
-      .pipe(gulpUseref({searchPath: [conf.paths.prodTmp]}))
+      .pipe(gulpUseref({searchPath: searchPath}))
       .pipe(gulpRevReplace())
       .pipe(htmlFilter)
       .pipe(gulpHtmlmin({

@@ -18,9 +18,10 @@ import errorDialogService from './errordialog_service';
 /**
  * Angular module containing navigation chrome for the application.
  */
-export default angular.module(
-                          'kubernetesDashboard.errorhandling',
-                          [
-                            'ngMaterial',
-                          ])
+export default angular
+    .module(
+        'kubernetesDashboard.errorhandling',
+        [
+          'ngMaterial',
+        ])
     .service('errorDialog', errorDialogService);

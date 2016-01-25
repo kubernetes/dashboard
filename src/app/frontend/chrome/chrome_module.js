@@ -17,10 +17,11 @@ import chromeDirective from './chrome_directive';
 /**
  * Angular module containing navigation chrome for the application.
  */
-export default angular.module(
-                          'kubernetesDashboard.chrome',
-                          [
-                            'ngMaterial',
-                            'ui.router',
-                          ])
+export default angular
+    .module(
+        'kubernetesDashboard.chrome',
+        [
+          'ngMaterial',
+          'ui.router',
+        ])
     .directive('chrome', chromeDirective);

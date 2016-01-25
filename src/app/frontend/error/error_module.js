@@ -18,11 +18,12 @@ import stateConfig from './internalerror_stateconfig';
 /**
  * Angular module for error views.
  */
-export default angular.module(
-                          'kubernetesDashboard.error',
-                          [
-                            'ui.router',
-                          ])
+export default angular
+    .module(
+        'kubernetesDashboard.error',
+        [
+          'ui.router',
+        ])
     .config(stateConfig)
     .run(errorConfig);
 
