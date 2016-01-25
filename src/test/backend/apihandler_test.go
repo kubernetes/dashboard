@@ -25,8 +25,8 @@ import (
 
 func TestFormatRequestLog(t *testing.T) {
 	cases := []struct {
-		request    *restful.Request
-		expected   string
+		request  *restful.Request
+		expected string
 	}{
 		{
 			&restful.Request{
@@ -40,7 +40,7 @@ func TestFormatRequestLog(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := FormatRequestLog(c.request,)
+		actual := FormatRequestLog(c.request)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("FormatRequestLog(%#v) == %#v, expected %#v", c.request, actual, c.expected)
 		}
@@ -49,9 +49,9 @@ func TestFormatRequestLog(t *testing.T) {
 
 func TestFormatResponseLog(t *testing.T) {
 	cases := []struct {
-		response   *restful.Response
-		request    *restful.Request
-		expected   string
+		response *restful.Response
+		request  *restful.Request
+		expected string
 	}{
 		{
 			&restful.Response{},

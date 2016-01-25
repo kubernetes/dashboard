@@ -29,6 +29,10 @@
   }
 }
 
+.kd-replicationcontroller-card-status-icon {
+  margin-left: $baseline-grid;
+}
+
 .kd-replicationcontroller-card-title {
   font-weight: $regular-font-weight;
   margin: 0;
@@ -36,6 +40,12 @@
   &:hover {
     text-decoration: underline;
   }
+}
+
+.kd-replicationcontroller-card-error {
+  color: $secondary;
+  margin-top: $baseline-grid / 2;
+  word-wrap: break-word;
 }
 
 .kd-replicationcontroller-card-description {
@@ -87,6 +97,6 @@
   margin-right: 2 * $baseline-grid;
 }
 
-.kd-replicase-card-pods-stat {
+.kd-replicationcontroller-card-pods-stat {
   white-space: nowrap;
 }

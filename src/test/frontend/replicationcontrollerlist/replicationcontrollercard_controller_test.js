@@ -15,7 +15,7 @@
 import ReplicationControllerCardController from 'replicationcontrollerlist/replicationcontrollercard_controller';
 import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
 
-describe('Logs menu controller', () => {
+describe('Replication controller card controller', () => {
   /**
    * @type {!ReplicationControllerCardController}
    */
@@ -71,5 +71,74 @@ describe('Logs menu controller', () => {
 
     // then
     expect(ctrl.areDesiredPodsRunning()).toBeFalsy();
+  });
+
+  it('should return true when at least one replication controller pod has warning', () => {
+    // given
+    ctrl.replicationController = {
+      pods: {
+        warnings: [{
+          message: "test-error",
+          reason: "test-reason",
+        }],
+      },
+    };
+
+    // then
+    expect(ctrl.hasWarnings()).toBeTruthy();
+  });
+
+  it('should return false when there are no errors related to replication controller pods', () => {
+    // given
+    ctrl.replicationController = {
+      pods: {
+        warnings: [],
+      },
+    };
+
+    // then
+    expect(ctrl.hasWarnings()).toBeFalsy();
+  });
+
+  it('should return true when there are no warnings and at least one pod is in pending state',
+     () => {
+       // given
+       ctrl.replicationController = {
+         pods: {
+           warnings: [],
+           pending: 1,
+         },
+       };
+
+       // then
+       expect(ctrl.isPending()).toBeTruthy();
+     });
+
+  it('should return false when there is warning related to replication controller pods', () => {
+    // given
+    ctrl.replicationController = {
+      pods: {
+        warnings: [{
+          message: "test-error",
+          reason: "test-reason",
+        }],
+      },
+    };
+
+    // then
+    expect(ctrl.isPending()).toBeFalsy();
+  });
+
+  it('should return false when there are no warnings and there is no pod in pending state', () => {
+    // given
+    ctrl.replicationController = {
+      pods: {
+        warnings: [],
+        pending: 0,
+      },
+    };
+
+    // then
+    expect(ctrl.isPending()).toBeFalsy();
   });
 });

@@ -67,4 +67,19 @@ export default class ReplicationControllerCardController {
   areDesiredPodsRunning() {
     return this.replicationController.pods.running === this.replicationController.pods.desired;
   }
+
+  /**
+   * Returns true if any of replication controller pods has warning, false otherwise
+   * @return {boolean}
+   * @export
+   */
+  hasWarnings() { return this.replicationController.pods.warnings.length > 0; }
+
+  /**
+   * Returns true if replication controller pods have no warnings and there is at least one pod
+   * in pending state, false otherwise
+   * @return {boolean}
+   * @export
+   */
+  isPending() { return !this.hasWarnings() && this.replicationController.pods.pending > 0; }
 }

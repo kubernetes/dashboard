@@ -137,19 +137,22 @@ func GetReplicationControllerPodsEvents(client *client.Client, namespace, replic
 		return nil, err
 	}
 
+	events, err := GetPodsEvents(client, pods)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return events, nil
+}
+
+// Gets events associated to given list of pods
+// TODO(floreks): refactor this to make single API call instead of N api calls
+func GetPodsEvents(client *client.Client, pods *api.PodList) ([]api.Event, error) {
 	events := make([]api.Event, 0, 0)
 
 	for _, pod := range pods.Items {
-		fieldSelector, err := fields.ParseSelector("involvedObject.name=" + pod.Name)
-
-		if err != nil {
-			return nil, err
-		}
-
-		list, err := client.Events(namespace).List(unversioned.ListOptions{
-			LabelSelector: unversioned.LabelSelector{labels.Everything()},
-			FieldSelector: unversioned.FieldSelector{fieldSelector},
-		})
+		list, err := GetPodEvents(client, pod)
 
 		if err != nil {
 			return nil, err
@@ -162,6 +165,26 @@ func GetReplicationControllerPodsEvents(client *client.Client, namespace, replic
 	}
 
 	return events, nil
+}
+
+// Gets events associated to given pod
+func GetPodEvents(client client.Interface, pod api.Pod) (*api.EventList, error) {
+	fieldSelector, err := fields.ParseSelector("involvedObject.name=" + pod.Name)
+
+	if err != nil {
+		return nil, err
+	}
+
+	list, err := client.Events(pod.Namespace).List(unversioned.ListOptions{
+		LabelSelector: unversioned.LabelSelector{labels.Everything()},
+		FieldSelector: unversioned.FieldSelector{fieldSelector},
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return list, nil
 }
 
 // Appends events from source slice to target events representation.

@@ -19,11 +19,23 @@ limitations under the License.
     <div layout="column">
       <div flex layout="row" layout-align="space-between center"
           class="kd-replicationcontroller-card-title-row">
-          <a ng-href="{{::ctrl.getReplicationControllerDetailHref()}}" class="kd-replicationcontroller-card-name" flex>
-            <h3 class="md-title kd-replicationcontroller-card-title">
+        <span layout="row" flex>
+          <a ng-href="{{::ctrl.getReplicationControllerDetailHref()}}" class="kd-replicationcontroller-card-name">
+            <span class="md-title kd-replicationcontroller-card-title">
               {{::ctrl.replicationController.name}}
-            </h3>
+            </span>
           </a>
+          <md-icon class="material-icons md-warn kd-replicationcontroller-card-status-icon"
+                   ng-if="::ctrl.hasWarnings()">
+            error
+            <md-tooltip>One or more pods have errors</md-tooltip>
+          </md-icon>
+          <md-icon class="material-icons kd-replicationcontroller-card-status-icon"
+                   ng-if="::ctrl.isPending()">
+            timelapse
+            <md-tooltip>One or more pods are in pending state</md-tooltip>
+          </md-icon>
+        </span>
         <kd-replication-controller-card-menu replication-controller="::ctrl.replicationController"></kd-replication-controller-card-menu>
       </div>
       <div flex class="md-caption">
@@ -33,7 +45,7 @@ limitations under the License.
     <div class="md-caption">
       <div layout="row" layout-align="center end">
         <span flex="60">
-          <ng-pluralize class="kd-replicase-card-pods-stat kd-comma-separated-item"
+          <ng-pluralize class="kd-replicationcontroller-card-pods-stat kd-comma-separated-item"
                         count="::ctrl.replicationController.pods.running"
                         when="{'one': '1 pod running', 'other': '{} pods running'}">
           </ng-pluralize>
@@ -104,6 +116,15 @@ limitations under the License.
             <div ng-if="::!ctrl.replicationController.externalEndpoints.length">
               none
             </div>
+          </div>
+        </div>
+      </div>
+      <div layout="column" ng-if="::ctrl.hasWarnings()">
+        <md-divider class="kd-replicationcontroller-card-divider"></md-divider>
+        <div layout-wrap>
+          <div flex class="kd-replicationcontroller-card-section"
+               ng-repeat="warning in ::ctrl.replicationController.pods.warnings">
+            <span class="kd-replicationcontroller-card-error">{{::warning.message}}</span>
           </div>
         </div>
       </div>
