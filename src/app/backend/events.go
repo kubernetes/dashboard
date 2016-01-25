@@ -165,7 +165,6 @@ func GetReplicaSetPodsEvents(client *client.Client, namespace, replicaSetName st
 }
 
 // Appends events from source slice to target events representation.
-// TODO(maciaszczykm): Append information about event source (user, system etc.).
 func AppendEvents(source []api.Event, target Events) Events {
 	for _, event := range source {
 		target.Events = append(target.Events, Event{

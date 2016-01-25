@@ -262,15 +262,7 @@ limitations under the License.
               </md-option>
             </md-select>
           </md-input-container>
-          <md-input-container class="kd-replicasetdetail-option-picker">
-            <label>Source</label>
-            <md-select ng-model="ctrl.eventSource"
-                       ng-change="ctrl.handleEventFiltering()" required>
-              <md-option ng-repeat="source in ctrl.eventSourceFilter" ng-value="source">
-                {{source}}
-              </md-option>
-            </md-select>
-          </md-input-container>
+          <!-- TODO(maciaszczykm): Add event filtering by source (all, system and user). -->
         </div>
         <table class="kd-replicasetdetail-table" cellspacing="0" cellpadding="15">
           <thead>
