@@ -108,8 +108,9 @@ describe('Replica Set Detail controller', () => {
   });
 
   it('should create logs href', () => {
-    expect(ctrl.getPodLogsHref({name: 'foo-pod'}))
-        .toBe('#/logs/foo-namespace/foo-replicaset/foo-pod/');
+    expect(ctrl.getPodLogsHref({
+      name: 'foo-pod',
+    })).toBe('#/logs/foo-namespace/foo-replicaset/foo-pod/');
   });
 
   it('should show delete replicas dialog', () => {

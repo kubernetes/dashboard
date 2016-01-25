@@ -26,16 +26,17 @@ import replicaSetListContainer from './replicasetlistcontainer_directive';
  *
  * The view shows Replica Sets running in the cluster and allows to manage them.
  */
-export default angular.module(
-                          'kubernetesDashboard.replicaSetList',
-                          [
-                            'ngMaterial',
-                            'ngResource',
-                            'ui.router',
-                            replicaSetDetailModule.name,
-                            filtersModule.name,
-                            componentsModule.name,
-                          ])
+export default angular
+    .module(
+        'kubernetesDashboard.replicaSetList',
+        [
+          'ngMaterial',
+          'ngResource',
+          'ui.router',
+          replicaSetDetailModule.name,
+          filtersModule.name,
+          componentsModule.name,
+        ])
     .config(stateConfig)
     .directive('logsMenu', logsMenuDirective)
     .directive('kdReplicaSetListContainer', replicaSetListContainer)

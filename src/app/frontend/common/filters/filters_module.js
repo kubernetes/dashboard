@@ -18,10 +18,11 @@ import relativeTimeFilter from './relativetime_filter';
 /**
  * Module containing common filters for the application.
  */
-export default angular.module(
-                          'kubernetesDashboard.common.filters',
-                          [
-                            'ngMaterial',
-                          ])
+export default angular
+    .module(
+        'kubernetesDashboard.common.filters',
+        [
+          'ngMaterial',
+        ])
     .filter('middleEllipsis', middleEllipsisFilter)
     .filter('relativeTime', relativeTimeFilter);

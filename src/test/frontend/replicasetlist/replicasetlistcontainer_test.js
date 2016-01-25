@@ -59,7 +59,7 @@ describe('Replica set list container', () => {
       let actual = binarySearchOptimalHeight(heights, numColumns);
       expect(actual).toBe(
           expected, `Expected height to be ${expected} but was ${actual}. ` +
-                        `Required number of columns: ${numColumns}, heights: [${heights}]`);
+              `Required number of columns: ${numColumns}, heights: [${heights}]`);
     }
   });
 });

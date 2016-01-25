@@ -72,8 +72,8 @@ describe('Update Replicas controller', () => {
     httpBackend.flush();
 
     // then
-    expect(log.info)
-        .toHaveBeenCalledWith(`Successfully updated replicas number to ${replicaSpec.replicas}`);
+    expect(log.info).toHaveBeenCalledWith(
+        `Successfully updated replicas number to ${replicaSpec.replicas}`);
     expect(state.reload).toHaveBeenCalled();
   });
 
