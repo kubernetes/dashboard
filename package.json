@@ -56,7 +56,7 @@
     "karma-jasmine": "~0.3.6",
     "karma-ng-html2js-preprocessor": "~0.2.0",
     "karma-sourcemap-loader": "~0.3.6",
-    "lodash": "~4.0.0",
+    "lodash": "~4.0.1",
     "proxy-middleware": "~0.15.0",
     "q": "~1.4.1",
     "semver": "~5.1.0",
