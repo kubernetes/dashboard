@@ -122,6 +122,20 @@ export default class DeployFromSettingsController {
     this.name = '';
 
     /**
+     * Checks that a name begins and ends with a lowercase letter
+     * and contains nothing but lowercase letters and hyphens ("-")
+     * (leading and trailing spaces are ignored by default)
+     * @export {RegExp}
+     */
+    this.namePattern = new RegExp('^[a-z0-9]([-a-z0-9]*[a-z0-9])?$');
+
+    /**
+     * Maximum length for Application name
+     * @export {string}
+     */
+    this.nameMaxLength = '63';
+
+    /**
      * Whether to run the container as privileged user.
      * @export {boolean}
      */

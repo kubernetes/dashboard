@@ -359,4 +359,83 @@ describe('DeployFromSettings controller', () => {
       expect(ctrl.imagePullSecret).toEqual('');
     });
   });
+
+  /**
+   * The value entered for ‘App Name” is used implicitly as the name for several resources (pod, rc,
+   * svc, label). Therefore, the app-name validation pattern is based on the RC-pattern, but must
+   * conform with all validation patterns of all the created resources.
+   * Currently, the ui pattern that conforms with all patterns is alpha-numeric with dashes between.
+   */
+  it('should allow strings that conform to the patterns of all created resources', () => {
+    // given the pattern used by the App Name field in the UI
+    let namePattern = ctrl.namePattern;
+    // given the patterns of all the names that are implicitly created
+    let allPatterns = {
+      servicePattern: '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*',
+      labelPattern: '(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?',
+      rcPattern: '[a-z0-9]([-a-z0-9]*[a-z0-9])?',
+      appNamePattern: namePattern,
+    };
+
+    // then
+    for (let pattern in allPatterns) {
+      expect('mylowercasename'.match(allPatterns[pattern])).toBeDefined();
+      expect('my-name-with-dashes-between'.match(allPatterns[pattern])).toBeDefined();
+      expect('my-n4m3-with-numb3r5'.match(allPatterns[pattern])).toBeDefined();
+    }
+  });
+
+  /**
+   * The value entered for 'App Name' is used implicitly as the name for several resources (pod, rc,
+   * svc, label).
+   * Remark: The app-name pattern excludes some service names and label values, which could be
+   * created manually. This is a restriction of the current design.
+   */
+  it('should reject names that fail to conform to appNamePattern', () => {
+
+    // given
+    let appNamePattern = ctrl.namePattern;
+
+    // then the following valid service names will be rejected
+    expect('validservice.com'.match(appNamePattern)).toBeNull();
+    expect('validservice/path'.match(appNamePattern)).toBeNull();
+
+    // then the following valid label names will be rejected
+    expect('valid_label'.match(appNamePattern)).toBeNull();
+    expect('ValidLabel'.match(appNamePattern)).toBeNull();
+    expect('validLabel'.match(appNamePattern)).toBeNull();
+
+    // then these input values will be rejected
+    expect('@myname-with-illegal-char-prefix'.match(appNamePattern)).toBeNull();
+    expect('myname-with-illegal-char-suffix#'.match(appNamePattern)).toBeNull();
+    expect('myname-with-illegal_char-in-middle'.match(appNamePattern)).toBeNull();
+    expect('-myname-with-hyphen-prefix'.match(appNamePattern)).toBeNull();
+    expect('myname-with-hyphen-suffix-'.match(appNamePattern)).toBeNull();
+    expect('Myname-With-Capital-Letters'.match(appNamePattern)).toBeNull();
+    expect('myname-with-german-umlaut-äö'.match(appNamePattern)).toBeNull();
+    expect('my name with spaces'.match(appNamePattern)).toBeNull();
+    expect('  '.match(appNamePattern)).toBeNull();
+  });
+
+  /**
+   * The data from the App Name field of the deploy form is used implicitly for the creation of
+   * Service Name, Label Name and RC name. Pod names are truncated by the api server and therefore
+   * ignored.
+   * Remark: The maximum characters number should match all three, thereby excluding
+   * service names of more than 63 chars via this form, while it is possible to create service names
+   * of 253 chars manually. This is a restriction of the current design.
+   *
+   * ctrl.maxNameLength = 63
+   */
+  it('should limit input that conforms to all created resources', () => {
+
+    // service names are max. 253 chars
+    expect(ctrl.maxNameLength <= 253);
+
+    //  label are max. 63 chars. the 256 prefix cannot be entered
+    expect(ctrl.maxNameLength <= 63);
+
+    // RC name are max. 63 chars.
+    expect(ctrl.maxNameLength <= 63);
+  });
 });
