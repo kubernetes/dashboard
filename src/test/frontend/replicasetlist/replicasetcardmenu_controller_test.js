@@ -79,25 +79,6 @@ describe('Replica set card menu controller', () => {
     expect(state.reload).toHaveBeenCalled();
   }));
 
-  it('should log on delete error', angular.mock.inject(($q, $log) => {
-    // given
-    let deferred = $q.defer();
-    spyOn($log, 'error');
-    spyOn(state, 'reload');
-    spyOn(kdReplicaSetService, 'showDeleteDialog').and.returnValue(deferred.promise);
-
-    // when
-    ctrl.showDeleteDialog();
-    deferred.reject();
-
-    // then
-    expect(state.reload).not.toHaveBeenCalled();
-    expect($log.error).not.toHaveBeenCalled();
-    scope.$apply();
-    expect(state.reload).not.toHaveBeenCalled();
-    expect($log.error).toHaveBeenCalled();
-  }));
-
   it('should show update replicas dialog', () => {
     // given
     ctrl.replicaSet = {

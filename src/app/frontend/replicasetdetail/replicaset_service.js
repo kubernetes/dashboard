@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StateParams} from './replicasetdetail_state';
-import {getReplicaSetDetailsResource} from './replicasetdetail_stateconfig';
+import showDeleteReplicaSetDialog from './deletereplicaset_dialog';
 import showUpdateReplicasDialog from './updatereplicas_dialog';
 
 /**
@@ -24,19 +23,11 @@ import showUpdateReplicasDialog from './updatereplicas_dialog';
 export class ReplicaSetService {
   /**
    * @param {!md.$dialog} $mdDialog
-   * @param {!angular.$resource} $resource
-   * @param {!angular.$q} $q
    * @ngInject
    */
-  constructor($mdDialog, $resource, $q) {
+  constructor($mdDialog) {
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
-
-    /** @private {!angular.$resource} */
-    this.resource_ = $resource;
-
-    /** @private {!angular.$q} */
-    this.q_ = $q;
   }
 
   /**
@@ -48,22 +39,7 @@ export class ReplicaSetService {
    * @return {!angular.$q.Promise}
    */
   showDeleteDialog(namespace, replicaSet) {
-    let resource =
-        getReplicaSetDetailsResource(new StateParams(namespace, replicaSet), this.resource_);
-    let deferred = this.q_.defer();
-
-    this.mdDialog_
-        .show(
-            this.mdDialog_.confirm()
-                .title('Delete Replica Set')
-                .textContent(
-                    `Delete replica set ${replicaSet} in namespace ${namespace}. Pods managed by ` +
-                    `the replica set will be also deleted. Are you sure?`)
-                .ok('Ok')
-                .cancel('Cancel'))
-        .then(() => { resource.remove(deferred.resolve, deferred.reject); });
-
-    return deferred.promise;
+    return showDeleteReplicaSetDialog(this.mdDialog_, namespace, replicaSet);
   }
 
   /**

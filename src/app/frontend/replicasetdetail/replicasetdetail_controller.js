@@ -186,7 +186,7 @@ export default class ReplicaSetDetailController {
   handleDeleteReplicaSetDialog() {
     this.kdReplicaSetService_
         .showDeleteDialog(this.stateParams_.namespace, this.stateParams_.replicaSet)
-        .then(this.onReplicaSetDeleteSuccess_.bind(this), this.onReplicaSetDeleteError_.bind(this));
+        .then(this.onReplicaSetDeleteSuccess_.bind(this));
   }
 
   /**
@@ -202,11 +202,4 @@ export default class ReplicaSetDetailController {
     this.log_.info('Replica set successfully deleted.');
     this.state_.go(replicasets);
   }
-
-  /**
-   * Logs error after replica set deletion failure.
-   * @param {!angular.$http.Response} err
-   * @private
-   */
-  onReplicaSetDeleteError_(err) { this.log_.error(err); }
 }

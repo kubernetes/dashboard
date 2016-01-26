@@ -63,7 +63,7 @@ export default class ReplicaSetCardMenuController {
    */
   showDeleteDialog() {
     this.kdReplicaSetService_.showDeleteDialog(this.replicaSet.namespace, this.replicaSet.name)
-        .then(() => this.state_.reload(), () => this.log_.error('Error deleting replica set'));
+        .then(() => this.state_.reload());
   }
 
   /**

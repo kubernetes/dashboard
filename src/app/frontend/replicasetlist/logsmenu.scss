@@ -14,14 +14,23 @@
 
 @import '../variables';
 
-.kd-deploy-whiteframe {
-  background: $content-background;
-  margin: $baseline-grid;
-  // TODO(bryk): Find a better, application wide constant for the min width.
-  max-width: 960px;
-  min-width: 600px;
+.kd-replicaset-card-logs-menu {
+  font-size: $body-font-size-base;
 }
 
-.kd-deploy-form-title {
-  margin-top: $baseline-grid;
+.kd-menu-logs-item-header {
+  box-sizing: inherit;
+  color: $foreground-2;
+  font-size: $body-font-size-base;
+  white-space: nowrap;
+}
+
+.kd-menu-logs-item {
+  box-sizing: inherit;
+  font-size: $body-font-size-base;
+  white-space: nowrap;
+}
+
+.kd-menu-logs-item-since {
+  width: 19 * $baseline-grid;
 }

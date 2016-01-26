@@ -15,25 +15,30 @@ limitations under the License.
 -->
 
 <md-menu>
-  <md-button ng-click="ctrl.openMenu($mdOpenMenu, $event)" class="kd-replicaset-card-logs-button">Logs</md-button>
-  <md-menu-content>
+  <md-button ng-click="ctrl.openMenu($mdOpenMenu, $event)" class="kd-replicaset-card-logs-button">
+    Logs
+  </md-button>
+  <md-menu-content class="kd-replicaset-card-logs-menu" width="6">
     <md-menu-item class="kd-menu-logs-md-menu-item">
       <div>Logs</div>
     </md-menu-item>
-    <md-menu-item class="kd-menu-logs-md-menu-item">
-      <div class="kd-menu-logs-item-header kd-menu-logs-item-pods">Pod</div>
-      <div class="kd-menu-logs-item-header kd-menu-logs-item-since">Running since</div>
-      <div class="kd-menu-logs-item-header kd-menu-logs-item-prior">Prior restart</div>
-    </md-menu-item>
-    <md-menu-item ng-repeat="pod in ::ctrl.replicaSetPodsList" class="kd-menu-logs-md-menu-item">
-      <div class="kd-menu-logs-item kd-menu-logs-item-pods">
-        {{::(pod.name | middleEllipsis:10)}}
+    <md-menu-item class="kd-menu-logs-md-menu-item" layout>
+      <div class="kd-menu-logs-item-header">Pod</div>
+      <div class="kd-menu-logs-item-header kd-menu-logs-item-since" flex="none">
+        Running since
       </div>
-      <div class="kd-menu-logs-item kd-menu-logs-item-since">
+    </md-menu-item>
+    <md-menu-item ng-repeat="pod in ::ctrl.replicaSetPodsList"
+        class="kd-menu-logs-md-menu-item" layout>
+      <div class="kd-menu-logs-item">
+        {{::pod.name}}
+      </div>
+      <div class="kd-menu-logs-item kd-menu-logs-item-since" flex="none">
         <a ng-href="{{::ctrl.getLogsHref(pod.name)}}"
-             ng-if="::ctrl.podContainerExists(pod)">
+            ng-if="::ctrl.podContainerExists(pod)"
+            target="_blank">
           <span ng-if="::pod.startTime">
-            {{pod.startTime | date:"short"}}
+            {{::(pod.startTime | date:"short")}}
           </span>
           <span ng-if="::!pod.startTime">
             Not running
@@ -41,12 +46,6 @@ limitations under the License.
           <i class="material-icons kd-text-icon">open_in_new</i>
         </a>
         <span ng-if="::!ctrl.podContainerExists(pod)">-</span>
-      </div>
-      <div class="kd-menu-logs-item kd-menu-logs-item-prior">
-        <a ng-if="::ctrl.podContainersRestarted(pod)">
-          Logs <i class="material-icons kd-text-icon">open_in_new</i>
-        </a>
-        <span ng-if="::!ctrl.podContainersRestarted(pod)">-</span>
       </div>
     </md-menu-item>
   </md-menu-content>

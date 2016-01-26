@@ -14,6 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div class="kd-labels" ng-repeat="(key, value) in ::labelsCtrl.labels">
-  {{key}}: {{value}}
-</div>
+<md-dialog aria-label="Delete Replica Set" layout="column" layout-padding>
+  <md-content layout-padding>
+    <h4 class="md-title">Delete Replica Set</h4>
+    <p>
+      Delete replica set {{::ctrl.replicaSet}} in namespace {{::ctrl.namespace}}.<br>
+      Pods managed by the replica set will be also deleted.
+    </p>
+    <md-dialog-actions>
+      <md-button class="md-primary" ng-click="ctrl.cancel()">Cancel</md-button>
+      <md-button class="md-primary" ng-click="ctrl.remove()">Delete</md-button>
+    </md-dialog-actions>
+  </md-content>
+</md-dialog>

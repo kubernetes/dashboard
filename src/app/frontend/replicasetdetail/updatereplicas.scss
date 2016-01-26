@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+@import '../variables';
+
 .kd-updatereplicas-pod-status {
-  font-size: 14px;
+  font-size: $body-font-size-base;
 }
