@@ -223,10 +223,10 @@ limitations under the License.
               </span>
             </td>
             <td class="kd-replicasetdetail-table-cell">
-              0.4 CPU<!-- TODO(maciaszczykm): Fill with data and plot. -->
+              {{::pod.metrics.cpuUsage}}
             </td>
             <td class="kd-replicasetdetail-table-cell">
-              12 MB<!-- TODO(maciaszczykm): Fill with data and plot. -->
+              {{::(pod.metrics.memoryUsage | kdMemory)}}
             </td>
             <td class="kd-replicasetdetail-table-cell">
               <span ng-if="::pod.podIP">
