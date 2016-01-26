@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import showNamespaceDialog from './createnamespace_dialog';
+import showCreateSecretDialog from './createsecret_dialog';
 import DeployLabel from './deploylabel';
 import {stateName as replicasetliststate} from 'replicasetlist/replicasetlist_state';
 import {uniqueNameValidationKey} from './uniquename_directive';
@@ -56,6 +57,9 @@ export default class DeployFromSettingsController {
     this.containerImage = '';
 
     /** @export {string} */
+    this.imagePullSecret = '';
+
+    /** @export {string} */
     this.containerCommand = '';
 
     /** @export {string} */
@@ -96,6 +100,13 @@ export default class DeployFromSettingsController {
      * @export {!Array<string>}
      */
     this.namespaces;
+
+    /**
+     * List of available secrets.
+     * It is updated every time the user clicks on the imagePullSecret field.
+     * @export {!Array<string>}
+     */
+    this.secrets = [];
 
     /**
      * @export {string}
@@ -151,6 +162,7 @@ export default class DeployFromSettingsController {
     /** @type {!backendApi.AppDeploymentSpec} */
     let appDeploymentSpec = {
       containerImage: this.containerImage,
+      imagePullSecret: this.imagePullSecret ? this.imagePullSecret : null,
       containerCommand: this.containerCommand ? this.containerCommand : null,
       containerCommandArgs: this.containerCommandArgs ? this.containerCommandArgs : null,
       isExternal: this.isExternal,
@@ -209,6 +221,51 @@ export default class DeployFromSettingsController {
             },
             () => { this.namespace = this.namespaces[0]; });
   }
+
+  /**
+   * Displays new secret creation dialog.
+   *
+   * @param {!angular.Scope.Event} event
+   * @export
+   */
+  handleCreateSecretDialog(event) {
+    showCreateSecretDialog(this.mdDialog_, event, this.namespace)
+        .then(
+            /**
+             * Handles create secret dialog result. If the secret was created successfully, then it
+             * will be selected,
+             * otherwise None is selected.
+             * @param {string|undefined} response
+             */
+            (response) => {
+              if (response) {
+                this.imagePullSecret = response;
+                this.secrets = this.secrets.concat(this.imagePullSecret);
+              } else {
+                this.imagePullSecret = '';
+              }
+            },
+            () => { this.imagePullSecret = ''; });
+  }
+
+  /**
+   * Queries all secrets for the given namespace.
+   * @param {string} namespace
+   * @export
+   */
+  getSecrets(namespace) {
+    /** @type {!angular.Resource<!backendApi.SecretsList>} */
+    let resource = this.resource_(`api/secrets/${namespace}`);
+    resource.get(
+        (res) => { this.secrets = res.secrets; },
+        (err) => { this.log_.log(`Error getting secrets: ${err}`); });
+  }
+
+  /**
+   * Resets the currently selected image pull secret.
+   * @export
+   */
+  resetImagePullSecret() { this.imagePullSecret = ''; }
 
   /**
    * Returns true when name input should show error. This overrides default behavior to show name

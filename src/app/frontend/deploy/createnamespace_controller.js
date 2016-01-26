@@ -102,7 +102,7 @@ export default class NamespaceDialogController {
         },
         (err) => {
           this.mdDialog_.hide();
-          this.errorDialog_.open('Error creating namespace');
+          this.errorDialog_.open('Error creating namespace', err.data);
           this.log_.info('Error creating namespace:', err);
         });
   }

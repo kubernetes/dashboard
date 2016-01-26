@@ -12,35 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import replicaSetDetailModule from 'replicasetdetail/replicasetdetail_module';
+import errorhandlingModule from 'common/errorhandling/errorhandling_module';
 
-describe('Replica set service', () => {
-  /** @type {!ReplicaSetService} */
-  let service;
+describe('Errorhandling service', () => {
+  /** @type {!ErrorDialog} */
+  let errorDialog;
   /** @type {!md.$dialog} */
   let mdDialog;
-  /** @type {!angular.$q} */
 
   beforeEach(() => {
-    angular.mock.module(replicaSetDetailModule.name);
-
-    angular.mock.inject((kdReplicaSetService, $mdDialog) => {
-      service = kdReplicaSetService;
+    angular.mock.module(errorhandlingModule.name);
+    angular.mock.inject(($mdDialog, _errorDialog_) => {
+      errorDialog = _errorDialog_;
       mdDialog = $mdDialog;
     });
   });
 
-  it('should show edit replicas dialog', () => {
-    // given
-    let namespace = 'foo-namespace';
-    let replicaSet = 'foo-name';
-    let currentPods = 3;
+  it('should show error title and error message in the md dialog', () => {
     spyOn(mdDialog, 'show');
-
-    // when
-    service.showUpdateReplicasDialog(namespace, replicaSet, currentPods, currentPods);
-
-    // then
+    /** @type {string} */
+    let errorTitle = "Error title";
+    /** @type {string} */
+    let errorMessage = "Error message";
+    // open the error dialog
+    errorDialog.open(errorTitle, errorMessage);
+    // and expect it to show
     expect(mdDialog.show).toHaveBeenCalled();
   });
 });

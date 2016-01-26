@@ -152,6 +152,19 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient *unversioned.RES
 			Writes(Events{}))
 	wsContainer.Add(eventsWs)
 
+	secretsWs := new(restful.WebService)
+	secretsWs.Path("/api/secrets").Produces(restful.MIME_JSON)
+	secretsWs.Route(
+		secretsWs.GET("/{namespace}").
+			To(apiHandler.handleGetSecrets).
+			Writes(SecretsList{}))
+	secretsWs.Route(
+		secretsWs.POST("").
+			To(apiHandler.handleCreateImagePullSecret).
+			Reads(ImagePullSecretSpec{}).
+			Writes(Secret{}))
+	wsContainer.Add(secretsWs)
+
 	return wsContainer
 }
 
@@ -319,6 +332,32 @@ func (apiHandler *ApiHandler) handleGetNamespaces(
 	}
 
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles image pull secret creation API call.
+func (apiHandler *ApiHandler) handleCreateImagePullSecret(request *restful.Request, response *restful.Response) {
+	secretSpec := new(ImagePullSecretSpec)
+	if err := request.ReadEntity(secretSpec); err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	secret, err := CreateSecret(apiHandler.client, secretSpec)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusCreated, secret)
+}
+
+// Handles get secrets list API call.
+func (apiHandler *ApiHandler) handleGetSecrets(request *restful.Request, response *restful.Response) {
+	namespace := request.PathParameter("namespace")
+	result, err := GetSecrets(apiHandler.client, namespace)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles log API call.

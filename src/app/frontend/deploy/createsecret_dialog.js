@@ -12,24 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../variables';
+import CreateSecretController from 'deploy/createsecret_controller';
 
-.kd-user-help {
-  .kd-emphasized {
-    color: $emphasis;
-  }
-
-  * {
-    color: $muted;
-  }
-
-  a {
-    color: $primary;
-    opacity: 1;
-    text-decoration: none;
-
-    &:hover {
-      color: $hover-primary;
-    }
-  }
+/**
+ * Displays new secret creation dialog.
+ *
+ * @param {!md.$dialog} mdDialog
+ * @param {!angular.Scope.Event} event
+ * @param {string} namespace - the currently selected namespace
+ * @return {!angular.$q.Promise}
+ */
+export default function showSecretDialog(mdDialog, event, namespace) {
+  return mdDialog.show({
+    controller: CreateSecretController,
+    controllerAs: 'ctrl',
+    clickOutsideToClose: true,
+    targetEvent: event,
+    templateUrl: 'deploy/createsecret.html',
+    locals: {
+      'namespace': namespace,
+    },
+  });
 }
