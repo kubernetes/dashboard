@@ -252,3 +252,19 @@ backendApi.ProtocolValidity;
  * }}
  */
 backendApi.ProtocolValiditySpec;
+
+/**
+ *  @typedef {{
+ *    name: string,
+ *    namespace: string,
+ *    data: string,
+ *  }}
+ */
+backendApi.SecretSpec;
+
+/**
+ * @typedef {{
+ *   secrets: !Array<string>
+ * }}
+ */
+backendApi.SecretsList;

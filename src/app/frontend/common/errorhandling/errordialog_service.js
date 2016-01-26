@@ -30,12 +30,14 @@ export default class ErrorDialog {
   /**
    * Opens a pop-up window that displays the error message
    *
-   * @param {string} message
+   * @param {string} title
+   * @param {string} text
    * @export
    */
-  open(message) {
+  open(title, text) {
     let alert = this.mdDialog_.alert();
-    alert.title(message);
+    alert.title(title);
+    alert.textContent(text);
     alert.ok('Close');
     this.mdDialog_.show(alert);
   }

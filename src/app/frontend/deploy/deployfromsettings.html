@@ -72,7 +72,7 @@ limitations under the License.
     Ports are optional. If specified, a Service will be created mapping the Port (incoming) to a
     target Port seen by the container.
     <span ng-if="ctrl.name">
-      The internal DNS name for this Service will be: <b>{{ctrl.name}}</b>.
+      The internal DNS name for this Service will be: <span class="kd-emphasized">{{ctrl.name}}</span>.
     </span>
     <a href="">Learn more</a>
   </kd-user-help>
@@ -120,7 +120,7 @@ limitations under the License.
   <kd-help-section>
     <md-input-container class="md-block">
       <label>Namespace</label>
-      <md-select ng-model="ctrl.namespace" required>
+      <md-select ng-model="ctrl.namespace" ng-click="ctrl.resetImagePullSecret()" required>
         <md-option ng-repeat="namespace in ctrl.namespaces" ng-value="namespace">
           {{namespace}}
         </md-option>
@@ -131,6 +131,25 @@ limitations under the License.
     </md-input-container>
     <kd-user-help>
       Namespaces let you partition resources into logically named groups.
+      <a href="">Learn more</a>
+    </kd-user-help>
+  </kd-help-section>
+
+  <kd-help-section>
+    <md-input-container class="md-block">
+      <label>Image Pull Secret</label>
+      <md-select ng-model="ctrl.imagePullSecret" ng-click="ctrl.getSecrets(ctrl.namespace)">
+        <md-option ng-repeat="secret in ctrl.secrets" ng-value="secret">
+          {{secret}}
+        </md-option>
+        <md-option ng-click="ctrl.handleCreateSecretDialog($event)">
+          Create a new secret...
+        </md-option>
+      </md-select>
+    </md-input-container>
+    <kd-user-help>
+      The specified image could require a pull secret credential if it is private. You may choose an
+      existing secret or create a new one.
       <a href="">Learn more</a>
     </kd-user-help>
   </kd-help-section>
