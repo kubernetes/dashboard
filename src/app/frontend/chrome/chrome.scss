@@ -22,6 +22,8 @@
 
 .kd-toolbar {
   box-shadow: $whiteframe-shadow-1dp;
+  height: $toolbar-height-size-base;
+  position: fixed;
 }
 
 body {
@@ -38,9 +40,12 @@ a {
   }
 }
 
-.kd-toolbar-tools,
-.kd-app-content-wrapper {
+.kd-toolbar-tools {
   margin: 0 auto;
+}
+
+.kd-app-content-wrapper {
+  margin-top: $toolbar-height-size-base;
 }
 
 .kd-app-content {

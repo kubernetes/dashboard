@@ -16,8 +16,8 @@
 
 .md-fab {
   &.kd-replicaset-deploy {
-    position: absolute;
+    position: fixed;
     right: 0;
-    top: -56px / 2 - $baseline-grid;
+    top: $toolbar-height-size-base - $baseline-grid * 3.5 - $baseline-grid;
   }
 }
