@@ -50,7 +50,7 @@
     "gulp-watch": "~4.3.5",
     "isparta": "~4.0.0",
     "karma": "0.13.19",
-    "karma-browserify": "~4.4.2",
+    "karma-browserify": "~5.0.1",
     "karma-chrome-launcher": "~0.2.2",
     "karma-coverage": "~0.5.3",
     "karma-jasmine": "~0.3.6",
