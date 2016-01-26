@@ -53,18 +53,13 @@ $table-cell-height-half: $table-cell-height / 2;
   font-weight: $bold-font-weight;
   padding-bottom: $baseline-grid;
   padding-top: $baseline-grid;
-
-  &.kd-replicasetdetail-sidebar-info {
-    padding-bottom: 0;
-    padding-top: 2 * $baseline-grid;
-  }
 }
 
 .kd-replicasetdetail-sidebar-line {
   color: $foreground-2;
   display: block;
   font-size: $body-font-size-base;
-  padding-bottom: $baseline-grid;
+  padding-bottom: 0;
 }
 
 .kd-replicasetdetail-sidebar-subline {
@@ -133,4 +128,28 @@ $table-cell-height-half: $table-cell-height / 2;
 .kd-replicasetdetail-help-icon {
   color: $foreground-2;
   cursor: default;
+}
+
+.kd-replicasetdetail-no-events {
+  margin-top: 4 * $baseline-grid;
+  text-align: center;
+}
+
+md-icon {
+  &.kd-replicasetdetail-no-events-icon {
+    color: $muted;
+    font-size: $display-1-font-size-base;
+    margin: 0 (2 * $baseline-grid) (2 * $baseline-grid) 0;
+  }
+}
+
+.kd-replicasetdetail-no-events-text {
+  color: $muted;
+  font-size: $headline-font-size-base;
+  margin-bottom: $baseline-grid;
+}
+
+.kd-replicasetdetail-no-events-info {
+  color: $delicate;
+  font-size: $subhead-font-size-base;
 }

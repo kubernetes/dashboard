@@ -81,3 +81,8 @@ a {
     }
   }
 }
+
+// Disables animation on md-tab switch. Avoids some flickering and is simpler.
+[role='tabpanel'] {
+  transition: none;
+}

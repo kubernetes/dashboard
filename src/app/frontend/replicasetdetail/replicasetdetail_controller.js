@@ -116,6 +116,14 @@ export default class ReplicaSetDetailController {
   isEventWarning(event) { return event.type === EVENT_TYPE_WARNING; }
 
   /**
+   * Returns true if there are events to display.
+   *
+   * @returns {boolean}
+   * @export
+   */
+  hasEvents() { return this.events !== undefined && this.events.length > 0; }
+
+  /**
    * Handles event filtering by type and source.
    * @export
    */
