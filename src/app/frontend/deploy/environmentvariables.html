@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div class="kd-environment-variables-title">Environment variables</div>
+<div class="kd-environment-variables-title md-body-2">Environment variables</div>
 <div ng-repeat="variable in ctrl.variables">
   <ng-form name="variablesForm" layout="row">
     <md-input-container flex class="kd-deploy-input-row">
@@ -25,6 +25,7 @@ limitations under the License.
         <ng-message when="pattern">Variable name must be a valid C identifier.</ng-message>
       </ng-messages>
     </md-input-container>
+    <div flex="5"></div>
     <md-input-container flex class="kd-deploy-input-row">
       <label>Value</label>
       <input ng-model="variable.value" name="value">
