@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-dialog aria-label="Create a new namespace" layout="column" layout-padding>
-  <md-content layout-padding>
+<md-dialog aria-label="Create a new namespace" layout="column">
+  <md-dialog-content layout-padding>
     <h4 class="md-title">Set desired number of pods</h4>
-    <p>Replica set {{ctrl.replicaSet}} will be updated to reflect the desired count.
-      <br/>
+    <div>
+      Replica set {{ctrl.replicaSet}} will be updated to reflect the desired count.<br/>
       <span class="kd-updatereplicas-pod-status">
         Current status: {{ctrl.currentPods}}
         created, {{ctrl.desiredPods}} desired
       </span>
-    </p>
+    </div>
     <form ng-submit="ctrl.updateReplicas()">
       <md-input-container class="md-block">
         <label>Number of pods</label>
@@ -34,5 +34,5 @@ limitations under the License.
         <md-button class="md-primary" type="submit">OK</md-button>
       </md-dialog-actions>
     </form>
-  </md-content>
+  </md-dialog-content>
 </md-dialog>
