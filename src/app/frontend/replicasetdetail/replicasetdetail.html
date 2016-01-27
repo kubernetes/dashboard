@@ -34,9 +34,12 @@ limitations under the License.
       <div layout="row" flex="nogrow">
         <md-button class="md-primary" ng-click="ctrl.handleDeleteReplicaSetDialog()">
           <md-icon class="material-icons">delete</md-icon>
-          DELETE
+          DELETE REPLICA SET
         </md-button>
       </div>
+      <span class="kd-replicasetdetail-sidebar-title kd-replicasetdetail-sidebar-info">
+        Replica set
+      </span>
       <div flex layout="column" class="kd-replicasetdetail-sidebar-info">
         <span class="kd-replicasetdetail-sidebar-line">Name</span>
         <span class="kd-replicasetdetail-sidebar-subline">
@@ -251,7 +254,7 @@ limitations under the License.
       </md-content>
     </md-tab>
     <md-tab label="Events">
-      <md-content flex>
+      <md-content flex ng-if="ctrl.hasEvents()">
         <div class="kd-replicasetdetail-options" layout="row">
           <md-input-container class="kd-replicasetdetail-option-picker">
             <label>Type</label>
@@ -270,7 +273,7 @@ limitations under the License.
             <th class="kd-replicasetdetail-table-header">
               <kd-sorted-header currently-selected-column="ctrl.sortEventsBy"
                                 currently-selected-order="ctrl.eventsOrder"
-                                column-name="message" tooltip="Event message">
+                                column-name="message">
                 Message
               </kd-sorted-header>
             </th>
@@ -285,7 +288,7 @@ limitations under the License.
             <th class="kd-replicasetdetail-table-header">
               <kd-sorted-header currently-selected-column="ctrl.sortEventsBy"
                                 currently-selected-order="ctrl.eventsOrder"
-                                column-name="object" tooltip="Sub-object of the event">
+                                column-name="object">
                 Sub-object
               </kd-sorted-header>
             </th>
@@ -336,6 +339,15 @@ limitations under the License.
           </tr>
           </tbody>
         </table>
+      </md-content>
+      <md-content class="kd-replicasetdetail-no-events" ng-if="!ctrl.hasEvents()">
+        <md-icon class="material-icons kd-replicasetdetail-no-events-icon">info_outline</md-icon>
+        <div class="kd-replicasetdetail-no-events-text">No events were found</div>
+        <span class="kd-replicasetdetail-no-events-info">
+          There are no events to display. It's possible that all of them have expired.
+          <a href="">Learn more</a>
+        </span>
+      </md-content>
     </md-tab>
   </md-tabs>
 </md-content>

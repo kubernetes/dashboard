@@ -124,4 +124,23 @@ describe('Replica Set Detail controller', () => {
     // then
     expect(kdReplicaSetService.showDeleteDialog).toHaveBeenCalled();
   });
+
+  it('should return true when there are events to display', () => {
+    // given
+    ctrl.events = ["Some event"];
+
+    // when
+    let result = ctrl.hasEvents();
+
+    // then
+    expect(result).toBeTruthy();
+  });
+
+  it('should return false if there are no events to display', () => {
+    // when
+    let result = ctrl.hasEvents();
+
+    // then
+    expect(result).toBeFalsy();
+  });
 });
