@@ -15,8 +15,8 @@ limitations under the License.
 -->
 
 <div>
-  {{::endpoint.host}}
   <span ng-repeat="port in ::endpoint.ports">
-    {{::port.port}}/{{::port.protocol}}<span ng-if="::!$last">,</span>
+    {{::endpoint.host}}:{{::port.port}} {{::port.protocol}}
+    <br ng-if="::!$last">
   </span>
 </div>

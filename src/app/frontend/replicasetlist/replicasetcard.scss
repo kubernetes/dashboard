@@ -32,6 +32,10 @@
 .kd-replicaset-card-title {
   font-weight: $regular-font-weight;
   margin: 0;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .kd-replicaset-card-description {
@@ -67,7 +71,8 @@
 }
 
 .kd-replicaset-card-section {
-  margin-top: 2 * $baseline-grid;
+  margin-top: $baseline-grid;
+  padding-right: $baseline-grid / 2;
 }
 
 .kd-replicaset-card-section-title {

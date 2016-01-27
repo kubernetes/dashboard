@@ -79,10 +79,10 @@ limitations under the License.
 </kd-help-section>
 
 <kd-help-section>
-  <md-switch ng-model="ctrl.isExternal" class="md-primary"
+  <md-checkbox ng-model="ctrl.isExternal" class="md-primary"
              ng-model-options="{ debounce: { 'default': 500, 'blur': 0 } }">
     Expose service externally
-  </md-switch>
+  </md-checkbox>
 </kd-help-section>
 
 <div ng-show="ctrl.isMoreOptionsEnabled()">
