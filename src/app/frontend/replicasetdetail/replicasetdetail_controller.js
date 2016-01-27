@@ -178,6 +178,14 @@ export default class ReplicaSetDetailController {
   }
 
   /**
+   * @return {boolean}
+   * @export
+   */
+  areDesiredPodsRunning() {
+    return this.replicaSetDetail.podInfo.running === this.replicaSetDetail.podInfo.desired;
+  }
+
+  /**
    * Handles update of replicas count in replica set dialog.
    * @export
    */

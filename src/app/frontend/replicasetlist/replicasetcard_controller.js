@@ -58,4 +58,10 @@ export default class ReplicaSetCardController {
     return this.state_.href(
         stateName, new StateParams(this.replicaSet.namespace, this.replicaSet.name));
   }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  areDesiredPodsRunning() { return this.replicaSet.pods.running === this.replicaSet.pods.desired; }
 }

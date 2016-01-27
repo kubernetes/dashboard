@@ -52,11 +52,14 @@ limitations under the License.
         <div layout="row" layout-align="start end">
           <div flex="nogrow">
             <span class="kd-replicasetdetail-sidebar-line">Pods</span>
-            <span class="kd-replicasetdetail-sidebar-subline">
+            <span class="kd-replicasetdetail-sidebar-subline" ng-if="!ctrl.areDesiredPodsRunning()">
               {{::ctrl.replicaSetDetail.podInfo.current}} created,
               {{::ctrl.replicaSetDetail.podInfo.desired}} desired
             </span>
-            </div>
+            <span class="kd-replicasetdetail-sidebar-subline" ng-if="ctrl.areDesiredPodsRunning()">
+              {{::ctrl.replicaSetDetail.podInfo.running}} running
+            </span>
+          </div>
           <div flex="nogrow">
             <md-button  class="md-icon-button md-primary">
               <md-icon class="material-icons"
@@ -66,18 +69,20 @@ limitations under the License.
             </md-button>
           </div>
         </div>
-        <span class="kd-replicasetdetail-sidebar-line">Pods status</span>
-        <span class="kd-replicasetdetail-sidebar-subline">
-          <span ng-if="::ctrl.replicaSetDetail.podInfo.pending" class="kd-comma-separated-item">
-            {{::ctrl.replicaSetDetail.podInfo.pending}} pending<!-- Collapse whitespace
-          --></span>
-          <span ng-if="::ctrl.replicaSetDetail.podInfo.failed" class="kd-comma-separated-item">
-            {{::ctrl.replicaSetDetail.podInfo.failed}} failed<!-- Collapse whitespace
-          --></span>
-          <span ng-if="::ctrl.replicaSetDetail.podInfo.running" class="kd-comma-separated-item">
-            {{::ctrl.replicaSetDetail.podInfo.running}} running
+        <div ng-if="!ctrl.areDesiredPodsRunning()">
+          <span class="kd-replicasetdetail-sidebar-line">Pods status</span>
+          <span class="kd-replicasetdetail-sidebar-subline">
+            <span ng-if="::ctrl.replicaSetDetail.podInfo.pending" class="kd-comma-separated-item">
+              {{::ctrl.replicaSetDetail.podInfo.pending}} pending<!-- Collapse whitespace
+            --></span>
+            <span ng-if="::ctrl.replicaSetDetail.podInfo.failed" class="kd-comma-separated-item">
+              {{::ctrl.replicaSetDetail.podInfo.failed}} failed<!-- Collapse whitespace
+            --></span>
+            <span ng-if="::ctrl.replicaSetDetail.podInfo.running" class="kd-comma-separated-item">
+              {{::ctrl.replicaSetDetail.podInfo.running}} running
+            </span>
           </span>
-        </span>
+        </div>
         <span class="kd-replicasetdetail-sidebar-line">Label selector</span>
         <span class="kd-replicasetdetail-sidebar-subline kd-has-labels">
           <kd-labels labels="::ctrl.replicaSetDetail.labelSelector"></kd-labels>

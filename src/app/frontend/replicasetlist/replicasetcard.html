@@ -33,9 +33,9 @@ limitations under the License.
     <div class="md-caption">
       <div layout="row" layout-align="center end">
         <span flex="60">
-          <ng-pluralize class="kd-replicase-card-pods-stat" count="::ctrl.replicaSet.pods.running"
-                 when="{'one': '1 pod running,',
-                     'other': '{} pods running,'}">
+          <ng-pluralize class="kd-replicase-card-pods-stat kd-comma-separated-item"
+                        count="::ctrl.replicaSet.pods.running"
+                        when="{'one': '1 pod running', 'other': '{} pods running'}">
           </ng-pluralize>
           <span ng-if="::ctrl.replicaSet.pods.pending"
               class="kd-replicase-card-pods-stat kd-comma-separated-item">
@@ -45,7 +45,8 @@ limitations under the License.
               class="kd-replicase-card-pods-stat kd-comma-separated-item">
             {{::ctrl.replicaSet.pods.failed}} failed<!-- Collapse whitespace
           --></span>
-          <span class="kd-replicase-card-pods-stat kd-comma-separated-item">
+          <span ng-if="!ctrl.areDesiredPodsRunning()"
+                class="kd-replicase-card-pods-stat kd-comma-separated-item">
             {{::ctrl.replicaSet.pods.desired}} desired
           </span>
         </span>

@@ -71,14 +71,11 @@ a {
 }
 
 .kd-comma-separated-item {
-  &:after {
-    content: ',';
-  }
-
-  &:last-child {
+  &:not(:last-child) {
     &:after {
-      content: '';
+      content: ',';
     }
+
   }
 }
 

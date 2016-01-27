@@ -44,4 +44,30 @@ describe('Logs menu controller', () => {
     expect(ctrl.shouldTruncate('x'.repeat(33))).toBe(true);
     expect(ctrl.shouldTruncate('x'.repeat(100))).toBe(true);
   });
+
+  it('should return true when all desired pods are running', () => {
+    // given
+    ctrl.replicaSet = {
+      pods: {
+        running: 0,
+        desired: 0,
+      },
+    };
+
+    // then
+    expect(ctrl.areDesiredPodsRunning()).toBeTruthy();
+  });
+
+  it('should return false when not all desired pods are running', () => {
+    // given
+    ctrl.replicaSet = {
+      pods: {
+        running: 0,
+        desired: 1,
+      },
+    };
+
+    // then
+    expect(ctrl.areDesiredPodsRunning()).toBeFalsy();
+  });
 });

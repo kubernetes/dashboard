@@ -143,4 +143,30 @@ describe('Replica Set Detail controller', () => {
     // then
     expect(result).toBeFalsy();
   });
+
+  it('should return true when all desired pods are running', () => {
+    // given
+    ctrl.replicaSetDetail = {
+      podInfo: {
+        running: 0,
+        desired: 0,
+      },
+    };
+
+    // then
+    expect(ctrl.areDesiredPodsRunning()).toBeTruthy();
+  });
+
+  it('should return false when not all desired pods are running', () => {
+    // given
+    ctrl.replicaSetDetail = {
+      podInfo: {
+        running: 0,
+        desired: 1,
+      },
+    };
+
+    // then
+    expect(ctrl.areDesiredPodsRunning()).toBeFalsy();
+  });
 });
