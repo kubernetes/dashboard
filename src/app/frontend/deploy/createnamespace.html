@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-dialog aria-label="Create a new namespace" layout="column" layout-padding>
-  <md-content layout-padding>
+<md-dialog aria-label="Create a new namespace" layout="column">
+  <md-dialog-content layout-padding>
     <h4 class="md-title" >Create a new namespace</h4>
-    <p>The new namespace will be added to the cluster.</p>
+    <div>The new namespace will be added to the cluster.</div>
     <!-- TODO(maciaszczykm): Missing detailed cluster info. -->
     <form name="ctrl.namespaceForm" ng-submit="ctrl.createNamespace()"
           novalidate>
@@ -38,5 +38,5 @@ limitations under the License.
         <md-button ng-click="ctrl.cancel()">Cancel</md-button>
       </md-dialog-actions>
     </form>
-  </md-content>
+  </md-dialog-content>
 </md-dialog>
