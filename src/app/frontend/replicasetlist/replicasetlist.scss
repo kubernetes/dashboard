@@ -16,8 +16,15 @@
 
 .md-fab {
   &.kd-replicaset-deploy {
+    background-color: $secondary;
     position: fixed;
     right: 0;
     top: $toolbar-height-size-base - $baseline-grid * 3.5 - $baseline-grid;
+
+    &:not([disabled]) {
+      &:hover {
+        background-color: $hover-secondary;
+      }
+    }
   }
 }
