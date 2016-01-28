@@ -15,9 +15,10 @@
 package main
 
 import (
-	heapster "k8s.io/heapster/api/v1/types"
 	"reflect"
 	"testing"
+
+	heapster "k8s.io/heapster/api/v1/types"
 )
 
 func TestCreateMetricPath(t *testing.T) {
@@ -27,9 +28,9 @@ func TestCreateMetricPath(t *testing.T) {
 		metricName string
 		expected   string
 	}{
-		{"", make([]string, 0), "", "/api/v1/model/namespaces//pod-list//metrics/"},
+		{"", make([]string, 0), "", "/model/namespaces//pod-list//metrics/"},
 		{"default", []string{"a", "b"}, "cpu-usage",
-			"/api/v1/model/namespaces/default/pod-list/a,b/metrics/cpu-usage"},
+			"/model/namespaces/default/pod-list/a,b/metrics/cpu-usage"},
 	}
 	for _, c := range cases {
 		actual := createMetricPath(c.namespace, c.podNames, c.metricName)

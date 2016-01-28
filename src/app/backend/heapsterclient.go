@@ -29,17 +29,17 @@ import (
 func CreateHeapsterRESTClient(heapsterHost string, apiclient *client.Client) (
 	*unversioned.RESTClient, error) {
 
-	cfg := client.Config{
-		Host: heapsterHost,
-	}
+	cfg := client.Config{}
 
 	if heapsterHost == "" {
 		bufferProxyHost := bytes.NewBufferString("http://")
 		bufferProxyHost.WriteString(apiclient.RESTClient.Get().URL().Host)
-		bufferProxyHost.WriteString("/api/v1/proxy/namespaces/kube-system/services/heapster/")
 		cfg.Host = bufferProxyHost.String()
+		cfg.Prefix = "/api/v1/proxy/namespaces/kube-system/services/heapster/api"
+	} else {
+		cfg.Host = heapsterHost
 	}
-	log.Printf("Creating Heapster REST client for %s", cfg.Host)
+	log.Printf("Creating Heapster REST client for %s%s", cfg.Host, cfg.Prefix)
 	clientFactory := new(ClientFactoryImpl)
 	heapsterClient, err := clientFactory.New(&cfg)
 	if err != nil {

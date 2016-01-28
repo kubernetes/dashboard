@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import replicasetlistModule from 'replicasetlist/replicasetlist_module';
+import filtersModule from 'common/filters/filters_module';
 
 describe('Relative time filter', () => {
 
-  let currentTime = new Date(
+  const currentTime = new Date(
       2015,  // year
       11,    // month
       29,    // day
@@ -25,15 +25,22 @@ describe('Relative time filter', () => {
       59     // second
       );
 
-  beforeEach(function() {
+  /** @type {function(!Date):string} */
+  let relativeTimeFilter;
+  /** @type {!Date} */
+  let givenTime;
+
+  beforeEach(() => {
     jasmine.clock().mockDate(currentTime);
-    angular.mock.module(replicasetlistModule.name);
+    angular.mock.module(filtersModule.name);
+    angular.mock.inject((_relativeTimeFilter_) => { relativeTimeFilter = _relativeTimeFilter_; });
+
+    givenTime = new Date(currentTime);
   });
 
   it(`should return 'didn't happen yet' string if given time is (a year ahead) in the future`,
-     angular.mock.inject(function(relativeTimeFilter) {
+     () => {
        // given
-       let givenTime = new Date(currentTime);
        givenTime.setYear(givenTime.getFullYear() + 1);
 
        // when
@@ -41,181 +48,152 @@ describe('Relative time filter', () => {
 
        // then
        expect(relativeTime).toEqual(`didn't happen yet`);
-     }));
+     });
 
-  it("should return 'just now' string if given time is the same as current time",
-     angular.mock.inject(function(relativeTimeFilter) {
-       // given
-       let givenTime = new Date(currentTime);
+  it("should return 'just now' string if given time is the same as current time", () => {
+    // when
+    let relativeTime = relativeTimeFilter(givenTime);
 
-       // when
-       let relativeTime = relativeTimeFilter(givenTime);
+    // then
+    expect(relativeTime).toEqual('just now');
+  });
 
-       // then
-       expect(relativeTime).toEqual('just now');
-     }));
+  it("should return 'a second' string if given time is a second before current time", () => {
+    // given
+    givenTime.setSeconds(givenTime.getSeconds() - 1);
 
-  it("should return 'a second' string if given time is a second before current time",
-     angular.mock.inject(function(relativeTimeFilter) {
-       // given
-       let givenTime = new Date(currentTime);
-       givenTime.setSeconds(givenTime.getSeconds() - 1);
+    // when
+    let relativeTime = relativeTimeFilter(givenTime);
 
-       // when
-       let relativeTime = relativeTimeFilter(givenTime);
+    // then
+    expect(relativeTime).toEqual('a second');
+  });
 
-       // then
-       expect(relativeTime).toEqual('a second');
-     }));
+  it("should return '15 seconds' string if given time is 15 seconds before current time", () => {
+    // given
+    givenTime.setSeconds(givenTime.getSeconds() - 15);
 
-  it("should return '15 seconds' string if given time is 15 seconds before current time",
-     angular.mock.inject(function(relativeTimeFilter) {
-       // given
-       let givenTime = new Date(currentTime);
-       givenTime.setSeconds(givenTime.getSeconds() - 15);
+    // when
+    let relativeTime = relativeTimeFilter(givenTime);
 
-       // when
-       let relativeTime = relativeTimeFilter(givenTime);
+    // then
+    expect(relativeTime).toEqual('15 seconds');
+  });
 
-       // then
-       expect(relativeTime).toEqual('15 seconds');
-     }));
+  it("should return 'a minute' string if given time is a minute before current time", () => {
+    // given
+    givenTime.setMinutes(givenTime.getMinutes() - 1);
 
-  it("should return 'a minute' string if given time is a minute before current time",
-     angular.mock.inject(function(relativeTimeFilter) {
-       // given
-       let givenTime = new Date(currentTime);
-       givenTime.setMinutes(givenTime.getMinutes() - 1);
+    // when
+    let relativeTime = relativeTimeFilter(givenTime);
 
-       // when
-       let relativeTime = relativeTimeFilter(givenTime);
+    // then
+    expect(relativeTime).toEqual('a minute');
+  });
 
-       // then
-       expect(relativeTime).toEqual('a minute');
-     }));
+  it("should return '30 minutes' string if given time is 30 minutes before current time", () => {
+    // given
+    givenTime.setMinutes(givenTime.getMinutes() - 30);
 
-  it("should return '30 minutes' string if given time is 30 minutes before current time",
-     angular.mock.inject(function(relativeTimeFilter) {
-       // given
-       let givenTime = new Date(currentTime);
-       givenTime.setMinutes(givenTime.getMinutes() - 30);
+    // when
+    let relativeTime = relativeTimeFilter(givenTime);
 
-       // when
-       let relativeTime = relativeTimeFilter(givenTime);
+    // then
+    expect(relativeTime).toEqual('30 minutes');
+  });
 
-       // then
-       expect(relativeTime).toEqual('30 minutes');
-     }));
+  it("should return 'an hour' string if given time is an hour before current time", () => {
+    // given
+    givenTime.setHours(givenTime.getHours() - 1);
 
-  it("should return 'an hour' string if given time is an hour before current time",
-     angular.mock.inject(function(relativeTimeFilter) {
-       // given
-       let givenTime = new Date(currentTime);
-       givenTime.setHours(givenTime.getHours() - 1);
+    // when
+    let relativeTime = relativeTimeFilter(givenTime);
 
-       // when
-       let relativeTime = relativeTimeFilter(givenTime);
+    // then
+    expect(relativeTime).toEqual('an hour');
+  });
 
-       // then
-       expect(relativeTime).toEqual('an hour');
-     }));
+  it("should return '3 hours' string if given time is 3 hours before current time", () => {
+    // given
+    givenTime.setHours(givenTime.getHours() - 3);
 
-  it("should return '3 hours' string if given time is 3 hours before current time",
-     angular.mock.inject(function(relativeTimeFilter) {
-       // given
-       let givenTime = new Date(currentTime);
-       givenTime.setHours(givenTime.getHours() - 3);
+    // when
+    let relativeTime = relativeTimeFilter(givenTime);
 
-       // when
-       let relativeTime = relativeTimeFilter(givenTime);
+    // then
+    expect(relativeTime).toEqual('3 hours');
+  });
 
-       // then
-       expect(relativeTime).toEqual('3 hours');
-     }));
+  it("should return 'a day' string if given time is a day before current time", () => {
+    // given
+    givenTime.setDate(givenTime.getDate() - 1);
 
-  it("should return 'a day' string if given time is a day before current time",
-     angular.mock.inject(function(relativeTimeFilter) {
-       // given
-       let givenTime = new Date(currentTime);
-       givenTime.setDate(givenTime.getDate() - 1);
+    // when
+    let relativeTime = relativeTimeFilter(givenTime);
 
-       // when
-       let relativeTime = relativeTimeFilter(givenTime);
+    // then
+    expect(relativeTime).toEqual('a day');
+  });
 
-       // then
-       expect(relativeTime).toEqual('a day');
-     }));
+  it("should return '8 days' string if given time is 8 days before current time", () => {
+    // given
+    givenTime.setDate(givenTime.getDate() - 8);
 
-  it("should return '8 days' string if given time is 8 days before current time",
-     angular.mock.inject(function(relativeTimeFilter) {
-       // given
-       let givenTime = new Date(currentTime);
-       givenTime.setDate(givenTime.getDate() - 8);
+    // when
+    let relativeTime = relativeTimeFilter(givenTime);
 
-       // when
-       let relativeTime = relativeTimeFilter(givenTime);
+    // then
+    expect(relativeTime).toEqual('8 days');
+  });
 
-       // then
-       expect(relativeTime).toEqual('8 days');
-     }));
+  it("should return 'a month' string if given time is a month before current time", () => {
+    // given
+    givenTime.setMonth(givenTime.getMonth() - 1);
 
-  it("should return 'a month' string if given time is a month before current time",
-     angular.mock.inject(function(relativeTimeFilter) {
-       // given
-       let givenTime = new Date(currentTime);
-       givenTime.setMonth(givenTime.getMonth() - 1);
+    // when
+    let relativeTime = relativeTimeFilter(givenTime);
 
-       // when
-       let relativeTime = relativeTimeFilter(givenTime);
+    // then
+    expect(relativeTime).toEqual('a month');
+  });
 
-       // then
-       expect(relativeTime).toEqual('a month');
-     }));
+  it("should return '11 months' string if given time is 11 months before current time", () => {
+    // given
+    givenTime.setMonth(givenTime.getMonth() - 11);
 
-  it("should return '11 months' string if given time is 11 months before current time",
-     angular.mock.inject(function(relativeTimeFilter) {
-       // given
-       let givenTime = new Date(currentTime);
-       givenTime.setMonth(givenTime.getMonth() - 11);
+    // when
+    let relativeTime = relativeTimeFilter(givenTime);
 
-       // when
-       let relativeTime = relativeTimeFilter(givenTime);
+    // then
+    expect(relativeTime).toEqual('11 months');
+  });
 
-       // then
-       expect(relativeTime).toEqual('11 months');
-     }));
+  it("should return 'a year' string if given time is a year before current time", () => {
+    // given
+    givenTime.setYear(givenTime.getFullYear() - 1);
 
-  it("should return 'a year' string if given time is a year before current time",
-     angular.mock.inject(function(relativeTimeFilter) {
-       // given
-       let givenTime = new Date(currentTime);
-       givenTime.setYear(givenTime.getFullYear() - 1);
+    // when
+    let relativeTime = relativeTimeFilter(givenTime);
 
-       // when
-       let relativeTime = relativeTimeFilter(givenTime);
+    // then
+    expect(relativeTime).toEqual('a year');
+  });
 
-       // then
-       expect(relativeTime).toEqual('a year');
-     }));
+  it("should return '134 years' string if given time is 134 years before current time", () => {
+    // given
+    givenTime.setYear(givenTime.getFullYear() - 134);
 
-  it("should return '134 years' string if given time is 134 years before current time",
-     angular.mock.inject(function(relativeTimeFilter) {
-       // given
-       let givenTime = new Date(currentTime);
-       givenTime.setYear(givenTime.getFullYear() - 134);
+    // when
+    let relativeTime = relativeTimeFilter(givenTime);
 
-       // when
-       let relativeTime = relativeTimeFilter(givenTime);
-
-       // then
-       expect(relativeTime).toEqual('134 years');
-     }));
+    // then
+    expect(relativeTime).toEqual('134 years');
+  });
 
   it("should return '11 months' string if given time is 11 months, 7 days, 5 hours and 3 minutes" +
          " before current time",
-     angular.mock.inject(function(relativeTimeFilter) {
+     () => {
        // given
-       let givenTime = new Date(currentTime);
        givenTime.setMonth(givenTime.getMonth() - 11);
        givenTime.setDate(givenTime.getDate() - 7);
        givenTime.setHours(givenTime.getHours() - 5);
@@ -226,5 +204,5 @@ describe('Relative time filter', () => {
 
        // then
        expect(relativeTime).toEqual('11 months');
-     }));
+     });
 });

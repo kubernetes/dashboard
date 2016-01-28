@@ -19,10 +19,11 @@ import (
 
 	"encoding/json"
 	"fmt"
+	"strings"
+
 	heapster "k8s.io/heapster/api/v1/types"
 	"k8s.io/kubernetes/pkg/api"
 	unversioned "k8s.io/kubernetes/pkg/client/unversioned"
-	"strings"
 )
 
 const (
@@ -86,7 +87,7 @@ func getReplicaSetPodsMetrics(podList *api.PodList, heapsterClient *unversioned.
 
 // Create URL path for metrics.
 func createMetricPath(namespace string, podNames []string, metricName string) string {
-	return fmt.Sprintf("/api/v1/model/namespaces/%s/pod-list/%s/metrics/%s",
+	return fmt.Sprintf("/model/namespaces/%s/pod-list/%s/metrics/%s",
 		namespace,
 		strings.Join(podNames, ","),
 		metricName)
@@ -95,7 +96,7 @@ func createMetricPath(namespace string, podNames []string, metricName string) st
 // Retrieves raw metrics from Heapster.
 func getRawMetrics(heapsterClient *unversioned.RESTClient, metricPath string) ([]byte, error) {
 
-	resultRaw, err := heapsterClient.Get().RequestURI(metricPath).DoRaw()
+	resultRaw, err := heapsterClient.Get().Suffix(metricPath).DoRaw()
 
 	if err != nil {
 		return make([]byte, 0), err
