@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import memoryFilter from './memory_filter';
 import middleEllipsisFilter from './middleellipsis_filter';
 import relativeTimeFilter from './relativetime_filter';
 
@@ -25,4 +26,5 @@ export default angular
           'ngMaterial',
         ])
     .filter('middleEllipsis', middleEllipsisFilter)
+    .filter('kdMemory', memoryFilter)
     .filter('relativeTime', relativeTimeFilter);
