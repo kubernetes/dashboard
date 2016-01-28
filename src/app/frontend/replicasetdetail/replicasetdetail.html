@@ -256,7 +256,7 @@ limitations under the License.
       </md-content>
     </md-tab>
     <md-tab label="Events">
-      <md-content flex ng-if="ctrl.hasEvents()">
+      <md-content flex>
         <div class="kd-replicasetdetail-options" layout="row">
           <md-input-container class="kd-replicasetdetail-option-picker">
             <label>Type</label>
@@ -269,7 +269,7 @@ limitations under the License.
           </md-input-container>
           <!-- TODO(maciaszczykm): Add event filtering by source (all, system and user). -->
         </div>
-        <table class="kd-replicasetdetail-table" cellspacing="0" cellpadding="15">
+        <table class="kd-replicasetdetail-table" cellspacing="0" cellpadding="15" ng-if="ctrl.hasEvents()">
           <thead>
           <tr>
             <th class="kd-replicasetdetail-table-header">
@@ -341,14 +341,15 @@ limitations under the License.
           </tr>
           </tbody>
         </table>
-      </md-content>
-      <md-content class="kd-replicasetdetail-no-events" ng-if="!ctrl.hasEvents()">
-        <md-icon class="material-icons kd-replicasetdetail-no-events-icon">info_outline</md-icon>
-        <div class="kd-replicasetdetail-no-events-text">No events were found</div>
-        <span class="kd-replicasetdetail-no-events-info">
-          There are no events to display. It's possible that all of them have expired.
-          <a href="">Learn more</a>
-        </span>
+      
+	<div class="kd-replicasetdetail-no-events" ng-if="!ctrl.hasEvents()">
+          <md-icon class="material-icons kd-replicasetdetail-no-events-icon">info_outline</md-icon>
+          <div class="kd-replicasetdetail-no-events-text">No events were found</div>
+          <span class="kd-replicasetdetail-no-events-info">
+            There are no events to display. It's possible that all of them have expired.
+            <a href="">Learn more</a>
+          </span>
+	</div>
       </md-content>
     </md-tab>
   </md-tabs>
