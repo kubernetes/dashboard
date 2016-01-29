@@ -16,27 +16,32 @@ Kubernetes Dashboard project consists of two main components. They are called he
 ## Preparation
 
 Make sure the following software is installed and added to the `$PATH` variable:
-* Docker (1.3+)
+* docker (1.3+)
 * go (1.5+)
 * nodejs (4.2.2+)
 * npm (1.3+)
 * java (7+)
 * gulp (3.9+)
+* bash 
 
 Clone the repository and install the dependencies:
 ```
 $ npm install
 ```
 
+## Run dashboard inside a container
+
+It's possible to run `gulp` and all the dependencies inside a development container. To do this, just replace `gulp [some arg]` commands with `build/run-gulp-in-docker.sh [some arg]`. If you do this, the only dependency is `docker`, and required commands such as `npm install` will be run automatically.
+
 ## Run a Kubernetes Cluster
 
-For development it is recommended to run a local Kubernetes cluster. For your convenience, a task is provided that checks out the latest stable version, and runs it inside a Docker container. Open a separate tab in your terminal and run the following command:
+For development it is recommended to run a local Kubernetes cluster. For your convenience, a task is provided that runs a small Kubernetes cluster inside Docker containers. Run the following command:
 
 ```
 $ gulp local-up-cluster
 ```
 
-This will build and start a lightweight local cluster, consisting of a master and a single node. All processes run locally, in Docker container. The local cluster should behave like a real cluster, however, plugins like heapster are not installed. To shut it down, type the following command that kills all running Docker containers:
+This will start a lightweight local cluster. All processes run locally, in Docker containers. The local cluster should behave like a real cluster, but it has some shortcomings. See issues related to https://github.com/kubernetes/kubernetes/tree/master/docs/getting-started-guides/docker.md for more details. To shut it down, you can type the following command that kills all running Docker containers:
 
 ```
 $ docker kill $(docker ps -aq)
@@ -91,11 +96,9 @@ Open a browser and access the UI under `localhost:9090.` The following processes
 
 Dashboard backend (9090)  ---> Kubernetes API server (8080)
 
-
-
 In order to package everything into a ready-to-run Docker image, use the following task:
 ```
-$ gulp docker-image
+$ gulp docker-image:canary
 ```
 You might notice that the Docker image is very small and requires only a few MB. Only Dashboard assets are added to a scratch image. This is possible, because the `dashboard` binary has no external dependencies. Awesome!
 
