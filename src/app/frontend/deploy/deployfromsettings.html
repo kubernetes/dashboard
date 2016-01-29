@@ -30,7 +30,8 @@ limitations under the License.
     </ng-messages>
   </md-input-container>
   <kd-user-help>
-    An 'app' label with this value will be added to the Replica Set and Service that get deployed.
+    An 'app' label with this value will be added to the Replication Controller and Service that get deployed.
+    <a href="http://kubernetes.io/v1.1/docs/user-guide/labels.html">Learn more</a>
   </kd-user-help>
 </kd-help-section>
 
@@ -45,7 +46,7 @@ limitations under the License.
   <kd-user-help>
     Enter the URL of a public image on any registry, or a private image hosted on Docker Hub or
     Google Container Registry.
-    <a href="">Learn more</a>
+    <a href="http://kubernetes.io/v1.1/docs/user-guide/images.html">Learn more</a>
   </kd-user-help>
 </kd-help-section>
 
@@ -59,8 +60,8 @@ limitations under the License.
     </ng-messages>
   </md-input-container>
   <kd-user-help>
-    A Replica Set will be created to maintain the desired number of pods across your cluster.
-    <a href="">Learn more</a>
+    A Replication Controller will be created to maintain the desired number of pods across your cluster.
+    <a href="http://kubernetes.io/v1.1/docs/user-guide/replication-controller.html">Learn more</a>
   </kd-user-help>
 </kd-help-section>
 
@@ -74,7 +75,7 @@ limitations under the License.
     <span ng-if="ctrl.name">
       The internal DNS name for this Service will be: <span class="kd-emphasized">{{ctrl.name}}</span>.
     </span>
-    <a href="">Learn more</a>
+    <a href="http://kubernetes.io/v1.1/docs/user-guide/services.html">Learn more</a>
   </kd-user-help>
 </kd-help-section>
 
@@ -92,7 +93,7 @@ limitations under the License.
       <textarea ng-model="ctrl.description"></textarea>
     </md-input-container>
     <kd-user-help>
-      The description will be added as an annotation to the Replica Set and displayed in the
+      The description will be added as an annotation to the Replication Controller and displayed in the
       application's details.
     </kd-user-help>
   </kd-help-section>
@@ -111,9 +112,9 @@ limitations under the License.
       </div>
     </div>
     <kd-user-help>
-      The specified labels will be applied to the created Replica Set, Service (if any) and Pods.
+      The specified labels will be applied to the created Replication Controller, Service (if any) and Pods.
       Common labels include release, environment, tier, partition and track.
-      <a href="">Learn more</a>
+      <a href="http://kubernetes.io/v1.1/docs/user-guide/labels.html">Learn more</a>
     </kd-user-help>
   </kd-help-section>
 
@@ -131,7 +132,7 @@ limitations under the License.
     </md-input-container>
     <kd-user-help>
       Namespaces let you partition resources into logically named groups.
-      <a href="">Learn more</a>
+      <a href="http://kubernetes.io/v1.1/docs/admin/namespaces.html">Learn more</a>
     </kd-user-help>
   </kd-help-section>
 
@@ -150,7 +151,7 @@ limitations under the License.
     <kd-user-help>
       The specified image could require a pull secret credential if it is private. You may choose an
       existing secret or create a new one.
-      <a href="">Learn more</a>
+      <a href="http://kubernetes.io/v1.1/docs/user-guide/secrets.html">Learn more</a>
     </kd-user-help>
   </kd-help-section>
 
@@ -160,22 +161,22 @@ limitations under the License.
         <label>CPU requirement (cores)</label>
         <input ng-model="ctrl.cpuRequirement" type="number" name="cpuRequirement" min="0">
         <ng-messages for="ctrl.form.cpuRequirement.$error" role="alert" multiple>
-          <ng-message when="number">CPU requirement must be a valid number.</ng-message>
-          <ng-message when="min">CPU requirement must be positive.</ng-message>
+          <ng-message when="number">CPU requirement must be given as a valid number.</ng-message>
+          <ng-message when="min">CPU requirement must be given as a positive number.</ng-message>
         </ng-messages>
       </md-input-container>
       <md-input-container flex>
         <label>Memory requirement (MiB)</label>
         <input ng-model="ctrl.memoryRequirement" type="number" name="memoryRequirement" min="0">
         <ng-messages for="ctrl.form.memoryRequirement.$error" role="alert" multiple>
-          <ng-message when="number">Memory requirement must be a valid number.</ng-message>
-          <ng-message when="min">Memory requirement must be positive.</ng-message>
+          <ng-message when="number">Memory requirement must be given as a valid number.</ng-message>
+          <ng-message when="min">Memory requirement must be given as a positive number.</ng-message>
         </ng-messages>
       </md-input-container>
     </div>
     <kd-user-help>
       You can specify minimum CPU and memory requirements for the container.
-      <a href="">Learn more</a>
+      <a href="http://kubernetes.io/v1.1/docs/admin/limitrange/README.html">Learn more</a>
     </kd-user-help>
   </kd-help-section>
 
@@ -194,7 +195,7 @@ limitations under the License.
     <kd-user-help>
       By default, your containers run the selected image's default entrypoint command. You can
       use the command options to override the default.
-      <a href="">Learn more</a>
+      <a href="http://kubernetes.io/v1.1/docs/user-guide/containers.html">Learn more</a>
     </kd-user-help>
   </kd-help-section>
 
@@ -203,7 +204,7 @@ limitations under the License.
       Run as privileged
     </md-switch>
     <kd-user-help>
-      Processes in privileged containers are equivalent to be running as root on the host.
+      Processes in privileged containers are equivalent to processes running as root on the host.
     </kd-user-help>
   </kd-help-section>
 </div>

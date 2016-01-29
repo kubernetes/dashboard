@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+@import '../variables';
+
 $logs-color-black: #000;
 $logs-color-white: #fff;
 
@@ -26,6 +28,6 @@ $logs-color-white: #fff;
 }
 
 .kd-logs-element {
-  padding: 0;
+  padding: 0 (2 * $baseline-grid) 0 (2 * $baseline-grid);
   word-wrap: break-word;
 }
