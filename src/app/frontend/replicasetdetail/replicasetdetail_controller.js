@@ -206,6 +206,24 @@ export default class ReplicaSetDetailController {
   }
 
   /**
+   * @param {!backendApi.ReplicaSetPod} pod
+   * @return {boolean}
+   * @export
+   */
+  hasCpuUsage(pod) {
+    return !!pod.metrics && (!!pod.metrics.cpuUsage || pod.metrics.cpuUsage === 0);
+  }
+
+  /**
+   * @param {!backendApi.ReplicaSetPod} pod
+   * @return {boolean}
+   * @export
+   */
+  hasMemoryUsage(pod) {
+    return !!pod.metrics && (!!pod.metrics.memoryUsage || pod.metrics.memoryUsage === 0);
+  }
+
+  /**
    * Callbacks used after clicking dialog confirmation button in order to delete replica set
    * or log unsuccessful operation error.
    */

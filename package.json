@@ -61,6 +61,7 @@
     "q": "~1.4.1",
     "semver": "~5.1.0",
     "uglify-save-license": "~0.4.1",
+    "watchify": "^3.7.0",
     "webpack-stream": "~3.1.0",
     "wiredep": "~3.0.0",
     "wrench": "~1.5.8"

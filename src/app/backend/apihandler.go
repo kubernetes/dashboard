@@ -22,7 +22,6 @@ import (
 
 	restful "github.com/emicklei/go-restful"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
-	unversioned "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
 const (
@@ -56,7 +55,7 @@ func FormatResponseLog(resp *restful.Response, req *restful.Request) string {
 }
 
 // Creates a new HTTP handler that handles all requests to the API of the backend.
-func CreateHttpApiHandler(client *client.Client, heapsterClient *unversioned.RESTClient) http.Handler {
+func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient) http.Handler {
 	apiHandler := ApiHandler{client, heapsterClient}
 	wsContainer := restful.NewContainer()
 
@@ -181,7 +180,7 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient *unversioned.RES
 
 type ApiHandler struct {
 	client         *client.Client
-	heapsterClient *unversioned.RESTClient
+	heapsterClient HeapsterClient
 }
 
 // Handles deploy API call.

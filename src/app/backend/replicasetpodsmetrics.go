@@ -23,7 +23,6 @@ import (
 
 	heapster "k8s.io/heapster/api/v1/types"
 	"k8s.io/kubernetes/pkg/api"
-	unversioned "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
 const (
@@ -40,19 +39,16 @@ type ReplicaSetMetricsByPod struct {
 // Pod metrics structure.
 type PodMetrics struct {
 	// Cumulative CPU usage on all cores in nanoseconds.
-	CpuUsage uint64 `json:"cpuUsage"`
+	CpuUsage *uint64 `json:"cpuUsage"`
 	// Pod memory usage in bytes.
-	MemoryUsage uint64 `json:"memoryUsage"`
+	MemoryUsage *uint64 `json:"memoryUsage"`
 }
 
 // Return Pods metrics for Replica Set or error when occurred.
-func getReplicaSetPodsMetrics(podList *api.PodList, heapsterClient *unversioned.RESTClient,
+func getReplicaSetPodsMetrics(podList *api.PodList, heapsterClient HeapsterClient,
 	namespace string, replicaSet string) (*ReplicaSetMetricsByPod, error) {
 	log.Printf("Getting Pods metrics for Replica Set %s in %s namespace", replicaSet, namespace)
 	podNames := make([]string, 0)
-	emptyMetrics := &ReplicaSetMetricsByPod{
-		MetricsMap: make(map[string]PodMetrics),
-	}
 
 	pods := podList.Items
 	for _, pod := range pods {
@@ -64,14 +60,12 @@ func getReplicaSetPodsMetrics(podList *api.PodList, heapsterClient *unversioned.
 
 	resultCpuUsageRaw, err := getRawMetrics(heapsterClient, metricCpuUsagePath)
 	if err != nil {
-		log.Print(err)
-		return emptyMetrics, nil
+		return nil, err
 	}
 
 	resultMemUsageRaw, err := getRawMetrics(heapsterClient, metricMemUsagePath)
 	if err != nil {
-		log.Print(err)
-		return emptyMetrics, nil
+		return nil, err
 	}
 
 	cpuMetricResult, err := unmarshalMetrics(resultCpuUsageRaw)
@@ -94,7 +88,7 @@ func createMetricPath(namespace string, podNames []string, metricName string) st
 }
 
 // Retrieves raw metrics from Heapster.
-func getRawMetrics(heapsterClient *unversioned.RESTClient, metricPath string) ([]byte, error) {
+func getRawMetrics(heapsterClient HeapsterClient, metricPath string) ([]byte, error) {
 
 	resultRaw, err := heapsterClient.Get().Suffix(metricPath).DoRaw()
 
@@ -121,15 +115,15 @@ func createResponse(cpuMetrics []heapster.MetricResult, memMetrics []heapster.Me
 
 	if len(cpuMetrics) == len(podNames) && len(memMetrics) == len(podNames) {
 		for iterator, podName := range podNames {
-			var memValue uint64
-			var cpuValue uint64
+			var memValue *uint64
+			var cpuValue *uint64
 			memMetricsList := memMetrics[iterator].Metrics
 			cpuMetricsList := cpuMetrics[iterator].Metrics
 			if len(memMetricsList) > 0 {
-				memValue = memMetricsList[0].Value
+				memValue = &memMetricsList[0].Value
 			}
 			if len(cpuMetricsList) > 0 {
-				cpuValue = cpuMetricsList[0].Value
+				cpuValue = &cpuMetricsList[0].Value
 			}
 			podResources := PodMetrics{
 				CpuUsage:    cpuValue,
