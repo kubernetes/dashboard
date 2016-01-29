@@ -151,14 +151,14 @@ limitations under the License.
               <kd-sorted-header currently-selected-column="ctrl.sortPodsBy"
                                 currently-selected-order="ctrl.podsOrder"
                                 column-name="restartCount"
-                                tooltip="Restarts count and last restart time of the pod">
+                                tooltip="Number of restarts and last restart time of the pod">
                 Restarts
               </kd-sorted-header>
             </th>
             <th class="kd-replicasetdetail-table-header">
               <kd-sorted-header currently-selected-column="ctrl.sortPodsBy"
                                 currently-selected-order="ctrl.podsOrder"
-                                column-name="startTime" tooltip="Age of the pod">
+                                column-name="startTime" tooltip="Time the pod was last started">
                 Age
               </kd-sorted-header>
             </th>
@@ -179,7 +179,7 @@ limitations under the License.
             <th class="kd-replicasetdetail-table-header">
               <kd-sorted-header currently-selected-column="ctrl.sortPodsBy"
                                 currently-selected-order="ctrl.podsOrder"
-                                column-name="podIP" tooltip="In cluster IP adress of the pod">
+                                column-name="podIP" tooltip="IP adress of the pod in the cluster">
                 Cluster IP
               </kd-sorted-header>
             </th>
@@ -187,7 +187,7 @@ limitations under the License.
               <kd-sorted-header currently-selected-column="ctrl.sortPodsBy"
                                 currently-selected-order="ctrl.podsOrder"
                                 column-name="nodeName"
-                                tooltip="Name of the node, that the pod is running on">
+                                tooltip="Name of the node the pod is running on">
                 Node
               </kd-sorted-header>
             </th>
@@ -298,7 +298,7 @@ limitations under the License.
               <kd-sorted-header currently-selected-column="ctrl.sortEventsBy"
                                 currently-selected-order="ctrl.eventsOrder"
                                 column-name="count"
-                                tooltip="Number of times, that the event occured">
+                                tooltip="Number of times the event occurred">
                 Count
               </kd-sorted-header>
             </th>
@@ -306,7 +306,7 @@ limitations under the License.
               <kd-sorted-header currently-selected-column="ctrl.sortEventsBy"
                                 currently-selected-order="ctrl.eventsOrder"
                                 column-name="firstSeen"
-                                tooltip="When the event was seen for the first time">
+                                tooltip="Time the event was seen for the first time">
                 First seen
               </kd-sorted-header>
             </th>
@@ -314,7 +314,7 @@ limitations under the License.
               <kd-sorted-header currently-selected-column="ctrl.sortEventsBy"
                                 currently-selected-order="ctrl.eventsOrder"
                                 column-name="lastSeen"
-                                tooltip="When the event was seen for the last time">
+                                tooltip="Time the event was seen for the last time">
                 Last seen
               </kd-sorted-header>
             </th>
@@ -341,7 +341,7 @@ limitations under the License.
           </tr>
           </tbody>
         </table>
-      
+
 	<div class="kd-replicasetdetail-no-events" ng-if="!ctrl.hasEvents()">
           <md-icon class="material-icons kd-replicasetdetail-no-events-icon">info_outline</md-icon>
           <div class="kd-replicasetdetail-no-events-text">No events were found</div>
