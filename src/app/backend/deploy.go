@@ -22,6 +22,8 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/resource"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	cmdutil "k8s.io/kubernetes/pkg/kubectl/cmd/util"
+	kubectlResource "k8s.io/kubernetes/pkg/kubectl/resource"
 	"k8s.io/kubernetes/pkg/util/intstr"
 )
 
@@ -74,6 +76,15 @@ type AppDeploymentSpec struct {
 
 	// Whether to run the container as privileged user (essentially equivalent to root on the host).
 	RunAsPrivileged bool `json:"runAsPrivileged"`
+}
+
+// Specification for deployment from file
+type AppDeploymentFromFileSpec struct {
+	// Name of the file
+	Name string `json:"name"`
+
+	// File content
+	Content string `json:"content"`
 }
 
 // Port mapping for an application deployment.
@@ -231,3 +242,38 @@ func getLabelsMap(labels []Label) map[string]string {
 
 	return result
 }
+
+// Deploys an app based on the given yaml or json file.
+func DeployAppFromFile(spec *AppDeploymentFromFileSpec) error {
+	const (
+		validate      = true
+		emptyCacheDir = ""
+	)
+
+	factory := cmdutil.NewFactory(nil)
+	schema, err := factory.Validator(validate, emptyCacheDir)
+	if err != nil {
+		return err
+	}
+
+	mapper, typer := factory.Object()
+	reader := strings.NewReader(spec.Content)
+
+	r := kubectlResource.NewBuilder(mapper, typer, factory.ClientMapperForCommand()).
+		Schema(schema).
+		NamespaceParam(api.NamespaceDefault).DefaultNamespace().
+		Stream(reader, spec.Name).
+		Flatten().
+		Do()
+
+	return r.Visit(func(info *kubectlResource.Info, err error) error {
+		// creates an object from input info
+		_, err = kubectlResource.NewHelper(info.Client, info.Mapping).Create(info.Namespace, true, info.Object)
+		if err != nil {
+			return err
+		}
+		log.Printf("%s is deployed", info.Name)
+		return nil
+	})
+}
+

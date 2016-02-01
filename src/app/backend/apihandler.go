@@ -86,6 +86,17 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient *unversioned.RES
 			Writes(Protocols{}))
 	wsContainer.Add(deployWs)
 
+	deployFromFileWs := new(restful.WebService)
+	deployFromFileWs.Path("/api/appdeploymentfromfile").
+	Consumes(restful.MIME_JSON).
+	Produces(restful.MIME_JSON)
+	deployFromFileWs.Route(
+		deployFromFileWs.POST("").
+		To(apiHandler.handleDeployFromFile).
+		Reads(AppDeploymentFromFileSpec{}).
+		Writes(AppDeploymentFromFileSpec{}))
+	wsContainer.Add(deployFromFileWs)
+
 	replicaSetWs := new(restful.WebService)
 	replicaSetWs.Filter(wsLogger)
 	replicaSetWs.Path("/api/replicasets").
@@ -186,6 +197,21 @@ func (apiHandler *ApiHandler) handleDeploy(request *restful.Request, response *r
 	}
 
 	response.WriteHeaderAndEntity(http.StatusCreated, appDeploymentSpec)
+}
+
+// Handles deploy from file API call.
+func (apiHandler *ApiHandler) handleDeployFromFile(request *restful.Request, response *restful.Response) {
+	deploymentSpec := new(AppDeploymentFromFileSpec)
+	if err := request.ReadEntity(deploymentSpec); err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	if err := DeployAppFromFile(deploymentSpec); err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, deploymentSpec)
 }
 
 // Handles app name validation API call.
