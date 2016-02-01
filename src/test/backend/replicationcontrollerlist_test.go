@@ -91,9 +91,10 @@ func TestGetReplicationControllerList(t *testing.T) {
 		replicationControllers []api.ReplicationController
 		services               []api.Service
 		pods                   []api.Pod
+		getNodeFn              GetNodeFunc
 		expected               *ReplicationControllerList
 	}{
-		{nil, nil, nil, &ReplicationControllerList{ReplicationControllers: []ReplicationController{}}},
+		{nil, nil, nil, nil, &ReplicationControllerList{ReplicationControllers: []ReplicationController{}}},
 		{
 			[]api.ReplicationController{
 				{
@@ -202,6 +203,19 @@ func TestGetReplicationControllerList(t *testing.T) {
 					},
 				},
 			},
+			func(nodeName string) (*api.Node, error) {
+				return &api.Node{
+						Status: api.NodeStatus{
+							Addresses: []api.NodeAddress{
+								{
+									Type:    api.NodeExternalIP,
+									Address: "192.168.1.108",
+								},
+							},
+						},
+					},
+					nil
+			},
 			&ReplicationControllerList{
 				ReplicationControllers: []ReplicationController{
 					{
@@ -230,7 +244,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 	}
 	for _, c := range cases {
 		actual, _ := getReplicationControllerList(c.replicationControllers, c.services, c.pods,
-			getPodsErrorFnMock)
+			getPodsErrorFnMock, c.getNodeFn)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getReplicationControllerList(%#v, %#v) == \n%#v\nexpected \n%#v\n",
 				c.replicationControllers, c.services, actual, c.expected)

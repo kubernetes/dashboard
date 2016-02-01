@@ -208,7 +208,7 @@ func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 		if spec.IsExternal {
 			service.Spec.Type = api.ServiceTypeLoadBalancer
 		} else {
-			service.Spec.Type = api.ServiceTypeNodePort
+			service.Spec.Type = api.ServiceTypeClusterIP
 		}
 
 		for _, portMapping := range spec.PortMappings {
