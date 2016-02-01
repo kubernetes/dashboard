@@ -43,7 +43,6 @@ export default function stateConfig($stateProvider) {
         templateUrl: 'replicasetlist/zerostate/zerostate.html',
       },
     },
-    url: '/zerostate',
   });
 }
 
