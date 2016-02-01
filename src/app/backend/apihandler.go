@@ -87,13 +87,13 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient) 
 
 	deployFromFileWs := new(restful.WebService)
 	deployFromFileWs.Path("/api/appdeploymentfromfile").
-	Consumes(restful.MIME_JSON).
-	Produces(restful.MIME_JSON)
+		Consumes(restful.MIME_JSON).
+		Produces(restful.MIME_JSON)
 	deployFromFileWs.Route(
 		deployFromFileWs.POST("").
-		To(apiHandler.handleDeployFromFile).
-		Reads(AppDeploymentFromFileSpec{}).
-		Writes(AppDeploymentFromFileSpec{}))
+			To(apiHandler.handleDeployFromFile).
+			Reads(AppDeploymentFromFileSpec{}).
+			Writes(AppDeploymentFromFileSpec{}))
 	wsContainer.Add(deployFromFileWs)
 
 	replicaSetWs := new(restful.WebService)
@@ -205,7 +205,7 @@ func (apiHandler *ApiHandler) handleDeployFromFile(request *restful.Request, res
 		handleInternalError(response, err)
 		return
 	}
-	if err := DeployAppFromFile(deploymentSpec); err != nil {
+	if err := DeployAppFromFile(deploymentSpec, CreateObjectFromInfoFn); err != nil {
 		handleInternalError(response, err)
 		return
 	}

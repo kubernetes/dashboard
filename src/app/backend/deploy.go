@@ -243,8 +243,16 @@ func getLabelsMap(labels []Label) map[string]string {
 	return result
 }
 
+type createObjectFromInfo func(info *kubectlResource.Info) error
+
+// Implementation of createObjectFromInfo
+var CreateObjectFromInfoFn = func(info *kubectlResource.Info) error {
+	_, err := kubectlResource.NewHelper(info.Client, info.Mapping).Create(info.Namespace, true, info.Object)
+	return err
+}
+
 // Deploys an app based on the given yaml or json file.
-func DeployAppFromFile(spec *AppDeploymentFromFileSpec) error {
+func DeployAppFromFile(spec *AppDeploymentFromFileSpec, createObjectFromInfoFn createObjectFromInfo) error {
 	const (
 		validate      = true
 		emptyCacheDir = ""
@@ -267,8 +275,7 @@ func DeployAppFromFile(spec *AppDeploymentFromFileSpec) error {
 		Do()
 
 	return r.Visit(func(info *kubectlResource.Info, err error) error {
-		// creates an object from input info
-		_, err = kubectlResource.NewHelper(info.Client, info.Mapping).Create(info.Namespace, true, info.Object)
+		err = createObjectFromInfoFn(info)
 		if err != nil {
 			return err
 		}
@@ -276,4 +283,3 @@ func DeployAppFromFile(spec *AppDeploymentFromFileSpec) error {
 		return nil
 	})
 }
-
