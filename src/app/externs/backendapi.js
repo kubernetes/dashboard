@@ -133,7 +133,8 @@ backendApi.ReplicaSet;
  *   containerImages: !Array<string>,
  *   podInfo: !backendApi.ReplicaSetPodInfo,
  *   pods: !Array<!backendApi.ReplicaSetPod>,
- *   services: !Array<!backendApi.ServiceDetail>
+ *   services: !Array<!backendApi.ServiceDetail>,
+ *   hasMetrics: boolean
  * }}
  */
 backendApi.ReplicaSetDetail;
@@ -152,7 +153,8 @@ backendApi.ReplicaSetSpec;
  *   status: string,
  *   podIP: string,
  *   nodeName: string,
- *   restartCount: number
+ *   restartCount: number,
+ *   metrics: {cpuUsage: ?number, memoryUsage: ?number}
  * }}
  */
 backendApi.ReplicaSetPod;

@@ -15,19 +15,23 @@
 package main
 
 import (
+	"bytes"
 	"log"
 
-	"k8s.io/kubernetes/pkg/client/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
-
-	"bytes"
 )
+
+// Clients for making requests to a Heapster instance.
+type HeapsterClient interface {
+	// Creates a new GET http request to heapster.
+	Get() *client.Request
+}
 
 // Creates new Heapster REST client. When heapsterHost param is empty string the function
 // assumes that it is running inside a Kubernetes cluster and connects via service proxy.
 // heapsterHost param is in the format of protocol://address:port, e.g., http://localhost:8002.
 func CreateHeapsterRESTClient(heapsterHost string, apiclient *client.Client) (
-	*unversioned.RESTClient, error) {
+	HeapsterClient, error) {
 
 	cfg := client.Config{}
 

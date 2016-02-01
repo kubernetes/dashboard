@@ -21,7 +21,6 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 	unversioned "k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
-	unversionedClient "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
 )
@@ -51,6 +50,9 @@ type ReplicaSetDetail struct {
 
 	// Detailed information about service related to Replica Set.
 	Services []ServiceDetail `json:"services"`
+
+	// True when the data contains at least one pod with metrics information, false otherwise.
+	HasMetrics bool `json:"hasMetrics"`
 }
 
 // Detailed information about a Pod that belongs to a Replica Set.
@@ -74,7 +76,7 @@ type ReplicaSetPod struct {
 	RestartCount int `json:"restartCount"`
 
 	// Pod metrics.
-	Metrics PodMetrics `json:"metrics"`
+	Metrics *PodMetrics `json:"metrics"`
 }
 
 // Detailed information about a Service connected to Replica Set.
@@ -121,7 +123,7 @@ type ReplicaSetSpec struct {
 }
 
 // Returns detailed information about the given replica set in the given namespace.
-func GetReplicaSetDetail(client *client.Client, heapsterClient *unversionedClient.RESTClient,
+func GetReplicaSetDetail(client client.Interface, heapsterClient HeapsterClient,
 	namespace, name string) (*ReplicaSetDetail, error) {
 	log.Printf("Getting details of %s replica set in %s namespace", name, namespace)
 
@@ -134,7 +136,7 @@ func GetReplicaSetDetail(client *client.Client, heapsterClient *unversionedClien
 
 	replicaSetMetricsByPod, err := getReplicaSetPodsMetrics(pods, heapsterClient, namespace, name)
 	if err != nil {
-		return nil, err
+		log.Printf("Skipping Heapster metrics because of error: %s\n", err)
 	}
 
 	services, err := client.Services(namespace).List(unversioned.ListOptions{
@@ -172,7 +174,11 @@ func GetReplicaSetDetail(client *client.Client, heapsterClient *unversionedClien
 			PodIP:        pod.Status.PodIP,
 			NodeName:     pod.Spec.NodeName,
 			RestartCount: getRestartCount(pod),
-			Metrics:      replicaSetMetricsByPod.MetricsMap[pod.Name],
+		}
+		if replicaSetMetricsByPod != nil {
+			metric := replicaSetMetricsByPod.MetricsMap[pod.Name]
+			podDetail.Metrics = &metric
+			replicaSetDetail.HasMetrics = true
 		}
 		replicaSetDetail.Pods = append(replicaSetDetail.Pods, podDetail)
 	}
@@ -183,7 +189,7 @@ func GetReplicaSetDetail(client *client.Client, heapsterClient *unversionedClien
 // TODO(floreks): This should be transactional to make sure that RC will not be deleted without
 // TODO(floreks): Should related services be deleted also?
 // Deletes replica set with given name in given namespace and related pods
-func DeleteReplicaSetWithPods(client *client.Client, namespace, name string) error {
+func DeleteReplicaSetWithPods(client client.Interface, namespace, name string) error {
 	log.Printf("Deleting %s replica set from %s namespace", name, namespace)
 
 	pods, err := getRawReplicaSetPods(client, namespace, name)
