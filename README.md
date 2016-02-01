@@ -20,7 +20,7 @@ Make sure the following software is installed and added to the `$PATH` variable:
 * go (1.5+)
 * nodejs (4.2.2+)
 * npm (1.3+)
-* java (7+)
+* Java (Java Development Kit 7+)
 * gulp (3.9+)
 * bash 
 
