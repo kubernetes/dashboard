@@ -22,6 +22,7 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/resource"
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
+	kubectlResource "k8s.io/kubernetes/pkg/kubectl/resource"
 )
 
 func TestDeployApp(t *testing.T) {
@@ -161,19 +162,21 @@ func TestGetAvailableProtocols(t *testing.T) {
 }
 
 func TestDeployAppFromFileWithValidContent(t *testing.T) {
+	const (
+		testNamespace = "test-deployfile-namespace"
+	)
 	validContent := "{\"kind\": \"Namespace\"," +
 		"\"apiVersion\": \"v1\"," +
 		"\"metadata\": {" +
-		"\"name\": \"development\"," +
+		"\"name\": \"" + testNamespace + "\"," +
 		"\"labels\": {\"name\": \"development\"}}}"
-
 	spec := &AppDeploymentFromFileSpec{
 		Name:    "foo-name",
 		Content: validContent,
 	}
+	fakeCreateObjectFromInfo := func(info *kubectlResource.Info) error { return nil }
 
-	err := DeployAppFromFile(spec)
-
+	err := DeployAppFromFile(spec, fakeCreateObjectFromInfo)
 	if err != nil {
 		t.Errorf("Expected return value to be %#v but got %#v", nil, err)
 	}
@@ -184,9 +187,9 @@ func TestDeployAppFromFileWithInvalidContent(t *testing.T) {
 		Name:    "foo-name",
 		Content: "foo-content-invalid",
 	}
+	fakeCreateObjectFromInfo := func(info *kubectlResource.Info) error { return nil }
 
-	err := DeployAppFromFile(spec)
-
+	err := DeployAppFromFile(spec, fakeCreateObjectFromInfo)
 	if err == nil {
 		t.Errorf("Expected return value to be an error but got %#v", nil)
 	}
