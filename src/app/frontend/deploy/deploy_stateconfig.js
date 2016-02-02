@@ -49,7 +49,7 @@ function resolveNamespaces($resource) {
 
 /**
  * @param {!angular.$resource} $resource
- * @return {!angular.Resource<!backendApi.ReplicaSetSpec>}
+ * @return {!angular.Resource<!backendApi.ReplicationControllerSpec>}
  * @ngInject
  */
 function getProtocolsResource($resource) {

@@ -19,7 +19,7 @@ describe('Zero state view', () => {
   let page;
 
   beforeEach(() => {
-    browser.get('#/replicasets/zerostate');
+    browser.get('#/replicationcontrollers/zerostate');
     page = new PageObject();
   });
 

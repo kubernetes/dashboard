@@ -24,16 +24,16 @@ export const stateName = 'logs';
 export class StateParams {
   /**
    * @param {string} namespace
-   * @param {string} replicaSet
+   * @param {string} replicationController
    * @param {string} podId
    * @param {string=} [container]
    */
-  constructor(namespace, replicaSet, podId, container) {
-    /** @export {string} Namespace of this Replica Set. */
+  constructor(namespace, replicationController, podId, container) {
+    /** @export {string} Namespace of this Replication Controller. */
     this.namespace = namespace;
 
-    /** @export {string} Name of this Replica Set. */
-    this.replicaSet = replicaSet;
+    /** @export {string} Name of this Replication Controller. */
+    this.replicationController = replicationController;
 
     /** @export {string} Id of this Pod. */
     this.podId = podId;

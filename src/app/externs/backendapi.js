@@ -93,10 +93,10 @@ backendApi.Event;
 
 /**
  * @typedef {{
- *   replicaSets: !Array<!backendApi.ReplicaSet>
+ *   replicationControllers: !Array<!backendApi.ReplicationController>
  * }}
  */
-backendApi.ReplicaSetList;
+backendApi.ReplicationControllerList;
 
 /**
  * @typedef {{
@@ -107,7 +107,7 @@ backendApi.ReplicaSetList;
  *   failed: number
  * }}
  */
-backendApi.ReplicaSetPodInfo;
+backendApi.ReplicationControllerPodInfo;
 
 /**
  * @typedef {{
@@ -115,14 +115,14 @@ backendApi.ReplicaSetPodInfo;
  *   namespace: string,
  *   description: string,
  *   labels: !Object<string, string>,
- *   pods: !backendApi.ReplicaSetPodInfo,
+ *   pods: !backendApi.ReplicationControllerPodInfo,
  *   containerImages: !Array<string>,
  *   creationTime: string,
  *   internalEndpoints: !Array<!backendApi.Endpoint>,
  *   externalEndpoints: !Array<!backendApi.Endpoint>
  * }}
  */
-backendApi.ReplicaSet;
+backendApi.ReplicationController;
 
 /**
  * @typedef {{
@@ -131,20 +131,20 @@ backendApi.ReplicaSet;
  *   labels: !Object<string, string>,
  *   labelSelector: !Object<string, string>,
  *   containerImages: !Array<string>,
- *   podInfo: !backendApi.ReplicaSetPodInfo,
- *   pods: !Array<!backendApi.ReplicaSetPod>,
+ *   podInfo: !backendApi.ReplicationControllerPodInfo,
+ *   pods: !Array<!backendApi.ReplicationControllerPod>,
  *   services: !Array<!backendApi.ServiceDetail>,
  *   hasMetrics: boolean
  * }}
  */
-backendApi.ReplicaSetDetail;
+backendApi.ReplicationControllerDetail;
 
 /**
  * @typedef {{
  *   replicas: number
  * }}
  */
-backendApi.ReplicaSetSpec;
+backendApi.ReplicationControllerSpec;
 
 /**
  * @typedef {{
@@ -157,7 +157,7 @@ backendApi.ReplicaSetSpec;
  *   metrics: {cpuUsage: ?number, memoryUsage: ?number}
  * }}
  */
-backendApi.ReplicaSetPod;
+backendApi.ReplicationControllerPod;
 
 /**
  * @typedef {{
@@ -207,14 +207,14 @@ backendApi.PodContainer;
  *   podContainers: !Array<!backendApi.PodContainer>
  * }}
  */
-backendApi.ReplicaSetPodWithContainers;
+backendApi.ReplicationControllerPodWithContainers;
 
 /**
  * @typedef {{
- *   pods: !Array<!backendApi.ReplicaSetPodWithContainers>
+ *   pods: !Array<!backendApi.ReplicationControllerPodWithContainers>
  * }}
  */
-backendApi.ReplicaSetPods;
+backendApi.ReplicationControllerPods;
 
 /**
  * @typedef {{

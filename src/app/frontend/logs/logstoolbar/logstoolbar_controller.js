@@ -22,12 +22,12 @@ export default class LogsToolbarController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!StateParams} $stateParams
-   * @param {!backendApi.ReplicaSetPods} replicaSetPods
+   * @param {!backendApi.ReplicationControllerPods} replicationControllerPods
    * @param {!backendApi.Logs} podLogs
    * @param {!../logs_service.LogColorInversionService} logsColorInversionService
    * @ngInject
    */
-  constructor($state, $stateParams, replicaSetPods, podLogs, logsColorInversionService) {
+  constructor($state, $stateParams, replicationControllerPods, podLogs, logsColorInversionService) {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
@@ -37,12 +37,12 @@ export default class LogsToolbarController {
      */
     this.logsColorInversionService_ = logsColorInversionService;
 
-    /** @export {!Array<!backendApi.ReplicaSetPodWithContainers>} */
-    this.pods = replicaSetPods.pods;
+    /** @export {!Array<!backendApi.ReplicationControllerPodWithContainers>} */
+    this.pods = replicationControllerPods.pods;
 
     /**
      * Currently chosen pod.
-     * @export {!backendApi.ReplicaSetPodWithContainers|undefined}
+     * @export {!backendApi.ReplicationControllerPodWithContainers|undefined}
      */
     this.pod = this.findPodByName_(this.pods, $stateParams.podId);
 
@@ -65,10 +65,10 @@ export default class LogsToolbarController {
     this.namespace_ = $stateParams.namespace;
 
     /**
-     * Replica Set name.
+     * Replication Controller name.
      * @private {string}
      */
-    this.replicaSetName_ = $stateParams.replicaSet;
+    this.replicationControllerName_ = $stateParams.replicationController;
   }
 
   /**
@@ -87,7 +87,8 @@ export default class LogsToolbarController {
    */
   onPodChange(podId) {
     return this.state_.transitionTo(
-        logs, new StateParams(this.namespace_, this.replicaSetName_, podId, this.container.name));
+        logs, new StateParams(
+                  this.namespace_, this.replicationControllerName_, podId, this.container.name));
   }
 
   /**
@@ -98,7 +99,8 @@ export default class LogsToolbarController {
    */
   onContainerChange(container) {
     return this.state_.transitionTo(
-        logs, new StateParams(this.namespace_, this.replicaSetName_, this.pod.name, container));
+        logs, new StateParams(
+                  this.namespace_, this.replicationControllerName_, this.pod.name, container));
   }
 
   /**
@@ -123,9 +125,9 @@ export default class LogsToolbarController {
   /**
    * Find Pod by name.
    * Return object or undefined if can not find a object.
-   * @param {!Array<!backendApi.ReplicaSetPodWithContainers>} array
+   * @param {!Array<!backendApi.ReplicationControllerPodWithContainers>} array
    * @param {!string} name
-   * @return {!backendApi.ReplicaSetPodWithContainers|undefined}
+   * @return {!backendApi.ReplicationControllerPodWithContainers|undefined}
    * @private
    */
   findPodByName_(array, name) { return array.find((element) => element.name === name); }

@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import replicasetlistModule from 'replicasetlist/replicasetlist_module';
+import replicationcontrollerlistModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
 
 describe('Apply ellipsis filter', () => {
   const testedString = 'podName';
-  beforeEach(function() { angular.mock.module(replicasetlistModule.name); });
+  beforeEach(function() { angular.mock.module(replicationcontrollerlistModule.name); });
 
   it('has a applyMiddleEllipsis filter',
      angular.mock.inject(function($filter) { expect($filter('middleEllipsis')).not.toBeNull(); }));

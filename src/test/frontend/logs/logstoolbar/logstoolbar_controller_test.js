@@ -25,7 +25,7 @@ describe('Logs toolbar controller', () => {
   const mockNamespace = 'namespace';
 
   /** @type {string} */
-  const mockReplicaSet = 'replicaSet';
+  const mockReplicationController = 'replicationController';
 
   /** @type {string} */
   const mockPodId = 'pod2';
@@ -36,11 +36,11 @@ describe('Logs toolbar controller', () => {
   /** @type {!backendApi.PodContainer} */
   const expectedContainer = {name: mockContainer};
 
-  /** @type {!backendApi.ReplicaSetPodWithContainers} */
+  /** @type {!backendApi.ReplicationControllerPodWithContainers} */
   const expectedPod = {name: mockPodId, podContainers: [{name: 'con21'}, expectedContainer]};
 
-  /** @type {!Array<!backendApi.ReplicaSetPodWithContainers>} */
-  const replicaSetPods = {
+  /** @type {!Array<!backendApi.ReplicationControllerPodWithContainers>} */
+  const replicationControllerPods = {
     pods: [
       {name: 'pod1', podContainers: [{name: 'con1'}]},
       expectedPod,
@@ -54,7 +54,8 @@ describe('Logs toolbar controller', () => {
   };
 
   /** @type {!StateParams} */
-  const stateParams = new StateParams(mockNamespace, mockReplicaSet, mockPodId, mockContainer);
+  const stateParams =
+      new StateParams(mockNamespace, mockReplicationController, mockPodId, mockContainer);
 
   /**
    * Logs menu controller.
@@ -71,8 +72,12 @@ describe('Logs toolbar controller', () => {
     angular.mock.inject(($controller, $state) => {
       state = $state;
       ctrl = $controller(
-          LogsToolbarController,
-          {replicaSetPods: replicaSetPods, $stateParams: stateParams, podLogs: logs}, $state);
+          LogsToolbarController, {
+            replicationControllerPods: replicationControllerPods,
+            $stateParams: stateParams,
+            podLogs: logs,
+          },
+          $state);
     });
   });
 

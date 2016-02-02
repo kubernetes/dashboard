@@ -12,7 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as replicasets} from 'replicasetlist/replicasetlist_state';
+import {
+  stateName as replicationcontrollers,
+} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 
 /**
  * Controller for the deploy view.
@@ -93,5 +95,5 @@ export default class DeployController {
    * Cancels the deployment form.
    * @export
    */
-  cancel() { this.state_.go(replicasets); }
+  cancel() { this.state_.go(replicationcontrollers); }
 }
