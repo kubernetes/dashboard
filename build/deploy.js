@@ -105,7 +105,7 @@ gulp.task('push-to-gcr:canary', ['docker-image:canary'], function(doneFn) {
  * Pushes release image to GCR.
  */
 gulp.task('push-to-gcr:release', ['docker-image:release'], function(doneFn) {
-  pushToGcr(conf.deploy.versionCanary, doneFn);
+  pushToGcr(conf.deploy.versionRelease, doneFn);
 });
 
 /**
