@@ -157,6 +157,13 @@ backendApi.ReplicationControllerSpec;
 
 /**
  * @typedef {{
+ *   deleteServices: boolean
+ * }}
+ */
+backendApi.DeleteReplicationControllerSpec;
+
+/**
+ * @typedef {{
  *   name: string,
  *   startTime: ?string,
  *   status: string,

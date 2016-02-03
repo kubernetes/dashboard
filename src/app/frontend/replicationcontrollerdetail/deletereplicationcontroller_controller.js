@@ -35,6 +35,9 @@ export default class DeleteReplicationControllerDialogController {
     /** @export {string} */
     this.namespace = namespace;
 
+    /** @export {boolean} */
+    this.deleteServices = false;
+
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
 
@@ -50,7 +53,15 @@ export default class DeleteReplicationControllerDialogController {
   remove() {
     let resource = getReplicationControllerDetailsResource(
         new StateParams(this.namespace, this.replicationController), this.resource_);
-    resource.remove(() => { this.mdDialog_.hide(); }, () => { this.mdDialog_.cancel(); });
+
+    /** @type {!backendApi.DeleteReplicationControllerSpec} */
+    let deleteReplicationControllerSpec = {
+      deleteServices: this.deleteServices,
+    };
+
+    resource.remove(
+        deleteReplicationControllerSpec, () => { this.mdDialog_.hide(); },
+        () => { this.mdDialog_.cancel(); });
   }
 
   /**

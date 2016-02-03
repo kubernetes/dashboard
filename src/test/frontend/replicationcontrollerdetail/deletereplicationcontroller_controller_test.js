@@ -51,12 +51,28 @@ describe('Delete replication controller dialog controller', () => {
     expect(mdDialog.cancel).toHaveBeenCalled();
   });
 
-  it('should delete', () => {
+  it('should delete without services', () => {
     // given
     spyOn(mdDialog, 'hide');
 
     // when
-    httpBackend.whenDELETE('api/replicationcontrollers/foo-namespace/foo-name').respond(200, {});
+    httpBackend.whenDELETE('api/replicationcontrollers/foo-namespace/foo-name?deleteServices=false')
+        .respond(200, {});
+    ctrl.remove();
+    httpBackend.flush();
+
+    // then
+    expect(mdDialog.hide).toHaveBeenCalled();
+  });
+
+  it('should delete with services', () => {
+    // given
+    spyOn(mdDialog, 'hide');
+    ctrl.deleteServices = true;
+
+    // when
+    httpBackend.whenDELETE('api/replicationcontrollers/foo-namespace/foo-name?deleteServices=true')
+        .respond(200, {});
     ctrl.remove();
     httpBackend.flush();
 
@@ -69,7 +85,8 @@ describe('Delete replication controller dialog controller', () => {
     spyOn(mdDialog, 'cancel');
 
     // when
-    httpBackend.whenDELETE('api/replicationcontrollers/foo-namespace/foo-name').respond(503, {});
+    httpBackend.whenDELETE('api/replicationcontrollers/foo-namespace/foo-name?deleteServices=false')
+        .respond(503, {});
     ctrl.remove();
     httpBackend.flush();
 
