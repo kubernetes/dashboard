@@ -24,6 +24,9 @@ import (
 	"k8s.io/kubernetes/pkg/labels"
 )
 
+// Callback function in order to get the pod status errors
+type GetPodsEventWarningsFunc func(pods []api.Pod) ([]PodEvent, error)
+
 // ReplicationControllerList contains a list of Replication Controllers in the cluster.
 type ReplicationControllerList struct {
 	// Unordered list of Replication Controllers.
@@ -45,7 +48,7 @@ type ReplicationController struct {
 	// Label of this Replication Controller.
 	Labels map[string]string `json:"labels"`
 
-	// Aggergate information about pods belonging to this repolica set.
+	// Aggregate information about pods belonging to this repolica set.
 	Pods ReplicationControllerPodInfo `json:"pods"`
 
 	// Container images of the Replication Controller.
@@ -88,14 +91,34 @@ func GetReplicationControllerList(client *client.Client) (*ReplicationController
 		return nil, err
 	}
 
-	return getReplicationControllerList(replicationControllers.Items, services.Items, pods.Items), nil
+	// Anonymous callback function to get pods warnings.
+	// Function fulfils GetPodsEventWarningsFunc type contract.
+	// Based on list of api pods returns list of pod related warning events
+	getPodsEventWarningsFn := func(pods []api.Pod) ([]PodEvent, error) {
+		errors, err := GetPodsEventWarnings(client, pods)
+
+		if err != nil {
+			return nil, err
+		}
+
+		return errors, nil
+	}
+
+	result, err := getReplicationControllerList(replicationControllers.Items, services.Items, pods.Items, getPodsEventWarningsFn)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
 }
 
 // Returns a list of all Replication Controller model objects in the cluster, based on all Kubernetes
 // Replication Controller and Service API objects.
 // The function processes all Replication Controllers API objects and finds matching Services for them.
-func getReplicationControllerList(replicationControllers []api.ReplicationController, services []api.Service,
-	pods []api.Pod) *ReplicationControllerList {
+func getReplicationControllerList(replicationControllers []api.ReplicationController,
+	services []api.Service, pods []api.Pod, getPodsEventWarningsFn GetPodsEventWarningsFunc) (
+	*ReplicationControllerList, error) {
 
 	replicationControllerList := &ReplicationControllerList{ReplicationControllers: make([]ReplicationController, 0)}
 
@@ -125,6 +148,13 @@ func getReplicationControllerList(replicationControllers []api.ReplicationContro
 			}
 		}
 		podInfo := getReplicationControllerPodInfo(&replicationController, matchingPods)
+		podErrors, err := getPodsEventWarningsFn(matchingPods)
+
+		if err != nil {
+			return nil, err
+		}
+
+		podInfo.Warnings = podErrors
 
 		replicationControllerList.ReplicationControllers = append(replicationControllerList.ReplicationControllers, ReplicationController{
 			Name:              replicationController.ObjectMeta.Name,
@@ -139,7 +169,7 @@ func getReplicationControllerList(replicationControllers []api.ReplicationContro
 		})
 	}
 
-	return replicationControllerList
+	return replicationControllerList, nil
 }
 
 // Returns all services that target the same Pods (or subset) as the given Replication Controller.

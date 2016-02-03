@@ -159,7 +159,7 @@ func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 		Containers: []api.Container{containerSpec},
 	}
 	if spec.ImagePullSecret != nil {
-		podSpec.ImagePullSecrets = []api.LocalObjectReference{api.LocalObjectReference{Name: *spec.ImagePullSecret}}
+		podSpec.ImagePullSecrets = []api.LocalObjectReference{{Name: *spec.ImagePullSecret}}
 	}
 
 	podTemplate := &api.PodTemplateSpec{

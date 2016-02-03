@@ -24,7 +24,7 @@ import (
 
 type ReplicationControllerWithPods struct {
 	ReplicationController *api.ReplicationController
-	Pods       *api.PodList
+	Pods                  *api.PodList
 }
 
 // ReplicationControllerPodInfo represents aggregate information about replication controller pods.
@@ -43,6 +43,9 @@ type ReplicationControllerPodInfo struct {
 
 	// Number of pods that are failed.
 	Failed int `json:"failed"`
+
+	// Unique warning messages related to pods in this Replication Controller.
+	Warnings []PodEvent `json:"warnings"`
 }
 
 // Returns structure containing ReplicationController and Pods for the given replication controller.
@@ -66,7 +69,7 @@ func getRawReplicationControllerWithPods(client client.Interface, namespace, nam
 
 	replicationControllerAndPods := &ReplicationControllerWithPods{
 		ReplicationController: replicationController,
-		Pods:       pods,
+		Pods: pods,
 	}
 	return replicationControllerAndPods, nil
 }

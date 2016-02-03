@@ -24,7 +24,7 @@ import (
 func TestIsLabelSelectorMatching(t *testing.T) {
 	cases := []struct {
 		serviceSelector, replicationControllerSelector map[string]string
-		expected                            bool
+		expected                                       bool
 	}{
 		{nil, nil, false},
 		{nil, map[string]string{}, false},
@@ -52,9 +52,9 @@ func TestIsLabelSelectorMatching(t *testing.T) {
 
 func TestGetMatchingServices(t *testing.T) {
 	cases := []struct {
-		services   []api.Service
+		services              []api.Service
 		replicationController *api.ReplicationController
-		expected   []api.Service
+		expected              []api.Service
 	}{
 		{nil, nil, nil},
 		{
@@ -83,11 +83,15 @@ func TestGetMatchingServices(t *testing.T) {
 }
 
 func TestGetReplicationControllerList(t *testing.T) {
+	getPodsErrorFnMock := func(pods []api.Pod) ([]PodEvent, error) {
+		return []PodEvent{}, nil
+	}
+
 	cases := []struct {
 		replicationControllers []api.ReplicationController
-		services    []api.Service
-		pods        []api.Pod
-		expected    *ReplicationControllerList
+		services               []api.Service
+		pods                   []api.Pod
+		expected               *ReplicationControllerList
 	}{
 		{nil, nil, nil, &ReplicationControllerList{ReplicationControllers: []ReplicationController{}}},
 		{
@@ -206,23 +210,27 @@ func TestGetReplicationControllerList(t *testing.T) {
 						ContainerImages:   []string{"my-container-image-1"},
 						InternalEndpoints: []Endpoint{{Host: "my-app-1.namespace-1"}},
 						Pods: ReplicationControllerPodInfo{
-							Failed:  2,
-							Pending: 1,
-							Running: 1,
+							Failed:   2,
+							Pending:  1,
+							Running:  1,
+							Warnings: []PodEvent{},
 						},
 					}, {
 						Name:              "my-app-2",
 						Namespace:         "namespace-2",
 						ContainerImages:   []string{"my-container-image-2"},
 						InternalEndpoints: []Endpoint{{Host: "my-app-2.namespace-2"}},
-						Pods:              ReplicationControllerPodInfo{},
+						Pods: ReplicationControllerPodInfo{
+							Warnings: []PodEvent{},
+						},
 					},
 				},
 			},
 		},
 	}
 	for _, c := range cases {
-		actual := getReplicationControllerList(c.replicationControllers, c.services, c.pods)
+		actual, _ := getReplicationControllerList(c.replicationControllers, c.services, c.pods,
+			getPodsErrorFnMock)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getReplicationControllerList(%#v, %#v) == \n%#v\nexpected \n%#v\n",
 				c.replicationControllers, c.services, actual, c.expected)
