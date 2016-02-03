@@ -17,6 +17,7 @@ package main
 import (
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
+	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
@@ -102,4 +103,48 @@ func getReplicationControllerPodInfo(replicationController *api.ReplicationContr
 	}
 
 	return result
+}
+
+// Transforms simple selector map to labels.Selector object that can be used when querying for
+// object.
+func toLabelSelector(selector map[string]string) (labels.Selector, error) {
+	labelSelector, err := extensions.LabelSelectorAsSelector(&extensions.LabelSelector{MatchLabels: selector})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return labelSelector, nil
+}
+
+// Based on given selector returns list of services that are candidates for deletion.
+// Services are matched by replication controllers' label selector. They are deleted if given
+// label selector is targeting only 1 replication controller.
+func getServicesForDeletion(client client.Interface, labelSelector labels.Selector,
+	namespace string) ([]api.Service, error) {
+
+	replicationControllers, err := client.ReplicationControllers(namespace).List(unversioned.ListOptions{
+		LabelSelector: unversioned.LabelSelector{labelSelector},
+		FieldSelector: unversioned.FieldSelector{fields.Everything()},
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	// if label selector is targeting only 1 replication controller
+	// then we can delete services targeted by this label selector,
+	// otherwise we can not delete any services so just return empty list
+	if len(replicationControllers.Items) != 1 {
+		return []api.Service{}, nil
+	}
+
+	services, err := client.Services(namespace).List(unversioned.ListOptions{
+		LabelSelector: unversioned.LabelSelector{labelSelector},
+		FieldSelector: unversioned.FieldSelector{fields.Everything()},
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return services.Items, nil
 }

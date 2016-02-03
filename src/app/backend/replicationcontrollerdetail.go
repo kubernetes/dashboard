@@ -186,11 +186,19 @@ func GetReplicationControllerDetail(client client.Interface, heapsterClient Heap
 	return replicationControllerDetail, nil
 }
 
-// TODO(floreks): This should be transactional to make sure that RC will not be deleted without
-// TODO(floreks): Should related services be deleted also?
-// Deletes replication controller with given name in given namespace and related pods
-func DeleteReplicationControllerWithPods(client client.Interface, namespace, name string) error {
+// TODO(floreks): This should be transactional to make sure that RC will not be deleted without pods
+// Deletes replication controller with given name in given namespace and related pods.
+// Also deletes services related to replication controller if deleteServices is true.
+func DeleteReplicationController(client client.Interface, namespace, name string,
+	deleteServices bool) error {
+
 	log.Printf("Deleting %s replication controller from %s namespace", name, namespace)
+
+	if deleteServices {
+		if err := DeleteReplicationControllerServices(client, namespace, name); err != nil {
+			return err
+		}
+	}
 
 	pods, err := getRawReplicationControllerPods(client, namespace, name)
 	if err != nil {
@@ -208,6 +216,38 @@ func DeleteReplicationControllerWithPods(client client.Interface, namespace, nam
 	}
 
 	log.Printf("Successfully deleted %s replication controller from %s namespace", name, namespace)
+
+	return nil
+}
+
+// Deletes services related to replication controller with given name in given namespace.
+func DeleteReplicationControllerServices(client client.Interface, namespace, name string) error {
+	log.Printf("Deleting services related to %s replication controller from %s namespace", name,
+		namespace)
+
+	replicationController, err := client.ReplicationControllers(namespace).Get(name)
+	if err != nil {
+		return err
+	}
+
+	labelSelector, err := toLabelSelector(replicationController.Spec.Selector)
+	if err != nil {
+		return err
+	}
+
+	services, err := getServicesForDeletion(client, labelSelector, namespace)
+	if err != nil {
+		return err
+	}
+
+	for _, service := range services {
+		if err := client.Services(namespace).Delete(service.Name); err != nil {
+			return err
+		}
+	}
+
+	log.Printf("Successfully deleted services related to %s replication controller from %s namespace",
+		name, namespace)
 
 	return nil
 }

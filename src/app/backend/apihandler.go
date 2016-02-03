@@ -297,13 +297,20 @@ func (apiHandler *ApiHandler) handleUpdateReplicasCount(
 }
 
 // Handles delete Replication Controller API call.
+// TODO(floreks): there has to be some kind of transaction here
 func (apiHandler *ApiHandler) handleDeleteReplicationController(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := request.PathParameter("namespace")
 	replicationController := request.PathParameter("replicationController")
+	deleteServices, err := strconv.ParseBool(request.QueryParameter("deleteServices"))
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
 
-	if err := DeleteReplicationControllerWithPods(apiHandler.client, namespace, replicationController); err != nil {
+	if err := DeleteReplicationController(apiHandler.client, namespace,
+		replicationController, deleteServices); err != nil {
 		handleInternalError(response, err)
 		return
 	}
