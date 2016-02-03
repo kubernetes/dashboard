@@ -66,13 +66,13 @@ type Event struct {
 	Type string `json:"type"`
 }
 
-// Return events for particular namespace and replica set or error if occurred.
-func GetEvents(client *client.Client, namespace, replicaSetName string) (*Events, error) {
-	log.Printf("Getting events related to %s replica set in %s namespace", replicaSetName,
+// Return events for particular namespace and replication controller or error if occurred.
+func GetEvents(client *client.Client, namespace, replicationControllerName string) (*Events, error) {
+	log.Printf("Getting events related to %s replication controller in %s namespace", replicationControllerName,
 		namespace)
 
-	// Get events for replica set.
-	rsEvents, err := GetReplicaSetEvents(client, namespace, replicaSetName)
+	// Get events for replication controller.
+	rsEvents, err := GetReplicationControllerEvents(client, namespace, replicationControllerName)
 
 	if err != nil {
 		return nil, err
@@ -83,8 +83,8 @@ func GetEvents(client *client.Client, namespace, replicaSetName string) (*Events
 		Events:    make([]Event, 0),
 	})
 
-	// Get events for pods in replica set.
-	podEvents, err := GetReplicaSetPodsEvents(client, namespace, replicaSetName)
+	// Get events for pods in replication controller.
+	podEvents, err := GetReplicationControllerPodsEvents(client, namespace, replicationControllerName)
 
 	if err != nil {
 		return nil, err
@@ -92,16 +92,16 @@ func GetEvents(client *client.Client, namespace, replicaSetName string) (*Events
 
 	events = AppendEvents(podEvents, events)
 
-	log.Printf("Found %d events related to %s replica set in %s namespace", len(events.Events),
-		replicaSetName, namespace)
+	log.Printf("Found %d events related to %s replication controller in %s namespace", len(events.Events),
+		replicationControllerName, namespace)
 
 	return &events, nil
 }
 
-// Gets events associated to replica set.
-func GetReplicaSetEvents(client *client.Client, namespace, replicaSetName string) ([]api.Event,
+// Gets events associated to replication controller.
+func GetReplicationControllerEvents(client *client.Client, namespace, replicationControllerName string) ([]api.Event,
 	error) {
-	fieldSelector, err := fields.ParseSelector("involvedObject.name=" + replicaSetName)
+	fieldSelector, err := fields.ParseSelector("involvedObject.name=" + replicationControllerName)
 
 	if err != nil {
 		return nil, err
@@ -119,17 +119,17 @@ func GetReplicaSetEvents(client *client.Client, namespace, replicaSetName string
 	return list.Items, nil
 }
 
-// Gets events associated to pods in replica set.
-func GetReplicaSetPodsEvents(client *client.Client, namespace, replicaSetName string) ([]api.Event,
+// Gets events associated to pods in replication controller.
+func GetReplicationControllerPodsEvents(client *client.Client, namespace, replicationControllerName string) ([]api.Event,
 	error) {
-	replicaSet, err := client.ReplicationControllers(namespace).Get(replicaSetName)
+	replicationController, err := client.ReplicationControllers(namespace).Get(replicationControllerName)
 
 	if err != nil {
 		return nil, err
 	}
 
 	pods, err := client.Pods(namespace).List(unversioned.ListOptions{
-		LabelSelector: unversioned.LabelSelector{labels.SelectorFromSet(replicaSet.Spec.Selector)},
+		LabelSelector: unversioned.LabelSelector{labels.SelectorFromSet(replicationController.Spec.Selector)},
 		FieldSelector: unversioned.FieldSelector{fields.Everything()},
 	})
 

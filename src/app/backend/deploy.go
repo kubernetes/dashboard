@@ -167,7 +167,7 @@ func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 		Spec:       podSpec,
 	}
 
-	replicaSet := &api.ReplicationController{
+	replicationController := &api.ReplicationController{
 		ObjectMeta: objectMeta,
 		Spec: api.ReplicationControllerSpec{
 			Replicas: spec.Replicas,
@@ -176,7 +176,7 @@ func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 		},
 	}
 
-	_, err := client.ReplicationControllers(spec.Namespace).Create(replicaSet)
+	_, err := client.ReplicationControllers(spec.Namespace).Create(replicationController)
 
 	if err != nil {
 		// TODO(bryk): Roll back created resources in case of error.

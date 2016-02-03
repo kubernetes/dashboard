@@ -38,9 +38,9 @@ export default function stateConfig($stateProvider) {
   };
 
   $stateProvider.state(stateName, {
-    url: '/logs/:namespace/:replicaSet/:podId/:container?',
+    url: '/logs/:namespace/:replicationController/:podId/:container?',
     resolve: {
-      'replicaSetPods': resolveReplicaSetPods,
+      'replicationControllerPods': resolveReplicationControllerPods,
       'podLogs': resolvePodLogs,
     },
     views: views,
@@ -53,10 +53,10 @@ export default function stateConfig($stateProvider) {
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-function resolveReplicaSetPods($stateParams, $resource) {
-  /** @type {!angular.Resource<!backendApi.ReplicaSetPods>} */
-  let resource =
-      $resource(`api/replicasets/pods/${$stateParams.namespace}/${$stateParams.replicaSet}`);
+function resolveReplicationControllerPods($stateParams, $resource) {
+  /** @type {!angular.Resource<!backendApi.ReplicationControllerPods>} */
+  let resource = $resource(
+      `api/replicationcontrollers/pods/${$stateParams.namespace}/${$stateParams.replicationController}`);
 
   return resource.get().$promise;
 }

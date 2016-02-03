@@ -96,31 +96,31 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient) 
 			Writes(AppDeploymentFromFileSpec{}))
 	wsContainer.Add(deployFromFileWs)
 
-	replicaSetWs := new(restful.WebService)
-	replicaSetWs.Filter(wsLogger)
-	replicaSetWs.Path("/api/replicasets").
+	replicationControllerWs := new(restful.WebService)
+	replicationControllerWs.Filter(wsLogger)
+	replicationControllerWs.Path("/api/replicationcontrollers").
 		Consumes(restful.MIME_JSON).
 		Produces(restful.MIME_JSON)
-	replicaSetWs.Route(
-		replicaSetWs.GET("").
-			To(apiHandler.handleGetReplicaSetList).
-			Writes(ReplicaSetList{}))
-	replicaSetWs.Route(
-		replicaSetWs.GET("/{namespace}/{replicaSet}").
-			To(apiHandler.handleGetReplicaSetDetail).
-			Writes(ReplicaSetDetail{}))
-	replicaSetWs.Route(
-		replicaSetWs.POST("/{namespace}/{replicaSet}/update/pods").
+	replicationControllerWs.Route(
+		replicationControllerWs.GET("").
+			To(apiHandler.handleGetReplicationControllerList).
+			Writes(ReplicationControllerList{}))
+	replicationControllerWs.Route(
+		replicationControllerWs.GET("/{namespace}/{replicationController}").
+			To(apiHandler.handleGetReplicationControllerDetail).
+			Writes(ReplicationControllerDetail{}))
+	replicationControllerWs.Route(
+		replicationControllerWs.POST("/{namespace}/{replicationController}/update/pods").
 			To(apiHandler.handleUpdateReplicasCount).
-			Reads(ReplicaSetSpec{}))
-	replicaSetWs.Route(
-		replicaSetWs.DELETE("/{namespace}/{replicaSet}").
-			To(apiHandler.handleDeleteReplicaSet))
-	replicaSetWs.Route(
-		replicaSetWs.GET("/pods/{namespace}/{replicaSet}").
-			To(apiHandler.handleGetReplicaSetPods).
-			Writes(ReplicaSetPods{}))
-	wsContainer.Add(replicaSetWs)
+			Reads(ReplicationControllerSpec{}))
+	replicationControllerWs.Route(
+		replicationControllerWs.DELETE("/{namespace}/{replicationController}").
+			To(apiHandler.handleDeleteReplicationController))
+	replicationControllerWs.Route(
+		replicationControllerWs.GET("/pods/{namespace}/{replicationController}").
+			To(apiHandler.handleGetReplicationControllerPods).
+			Writes(ReplicationControllerPods{}))
+	wsContainer.Add(replicationControllerWs)
 
 	namespacesWs := new(restful.WebService)
 	namespacesWs.Filter(wsLogger)
@@ -157,7 +157,7 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient) 
 	eventsWs.Path("/api/events").
 		Produces(restful.MIME_JSON)
 	eventsWs.Route(
-		eventsWs.GET("/{namespace}/{replicaSet}").
+		eventsWs.GET("/{namespace}/{replicationController}").
 			To(apiHandler.handleEvents).
 			Writes(Events{}))
 	wsContainer.Add(eventsWs)
@@ -246,11 +246,11 @@ func (apiHandler *ApiHandler) handleGetAvailableProcotols(request *restful.Reque
 	response.WriteHeaderAndEntity(http.StatusCreated, GetAvailableProtocols())
 }
 
-// Handles get Replica Set list API call.
-func (apiHandler *ApiHandler) handleGetReplicaSetList(
+// Handles get Replication Controller list API call.
+func (apiHandler *ApiHandler) handleGetReplicationControllerList(
 	request *restful.Request, response *restful.Response) {
 
-	result, err := GetReplicaSetList(apiHandler.client)
+	result, err := GetReplicationControllerList(apiHandler.client)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -259,13 +259,13 @@ func (apiHandler *ApiHandler) handleGetReplicaSetList(
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
-// Handles get Replica Set detail API call.
-func (apiHandler *ApiHandler) handleGetReplicaSetDetail(
+// Handles get Replication Controller detail API call.
+func (apiHandler *ApiHandler) handleGetReplicationControllerDetail(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := request.PathParameter("namespace")
-	replicaSet := request.PathParameter("replicaSet")
-	result, err := GetReplicaSetDetail(apiHandler.client, apiHandler.heapsterClient, namespace, replicaSet)
+	replicationController := request.PathParameter("replicationController")
+	result, err := GetReplicationControllerDetail(apiHandler.client, apiHandler.heapsterClient, namespace, replicationController)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -274,21 +274,21 @@ func (apiHandler *ApiHandler) handleGetReplicaSetDetail(
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
-// Handles update of Replica Set pods update API call.
+// Handles update of Replication Controller pods update API call.
 func (apiHandler *ApiHandler) handleUpdateReplicasCount(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := request.PathParameter("namespace")
-	replicaSetName := request.PathParameter("replicaSet")
-	replicaSetSpec := new(ReplicaSetSpec)
+	replicationControllerName := request.PathParameter("replicationController")
+	replicationControllerSpec := new(ReplicationControllerSpec)
 
-	if err := request.ReadEntity(replicaSetSpec); err != nil {
+	if err := request.ReadEntity(replicationControllerSpec); err != nil {
 		handleInternalError(response, err)
 		return
 	}
 
-	if err := UpdateReplicasCount(apiHandler.client, namespace, replicaSetName,
-		replicaSetSpec); err != nil {
+	if err := UpdateReplicasCount(apiHandler.client, namespace, replicationControllerName,
+		replicationControllerSpec); err != nil {
 		handleInternalError(response, err)
 		return
 	}
@@ -296,14 +296,14 @@ func (apiHandler *ApiHandler) handleUpdateReplicasCount(
 	response.WriteHeader(http.StatusAccepted)
 }
 
-// Handles delete Replica Set API call.
-func (apiHandler *ApiHandler) handleDeleteReplicaSet(
+// Handles delete Replication Controller API call.
+func (apiHandler *ApiHandler) handleDeleteReplicationController(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := request.PathParameter("namespace")
-	replicaSet := request.PathParameter("replicaSet")
+	replicationController := request.PathParameter("replicationController")
 
-	if err := DeleteReplicaSetWithPods(apiHandler.client, namespace, replicaSet); err != nil {
+	if err := DeleteReplicationControllerWithPods(apiHandler.client, namespace, replicationController); err != nil {
 		handleInternalError(response, err)
 		return
 	}
@@ -311,17 +311,17 @@ func (apiHandler *ApiHandler) handleDeleteReplicaSet(
 	response.WriteHeader(http.StatusOK)
 }
 
-// Handles get Replica Set Pods API call.
-func (apiHandler *ApiHandler) handleGetReplicaSetPods(
+// Handles get Replication Controller Pods API call.
+func (apiHandler *ApiHandler) handleGetReplicationControllerPods(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := request.PathParameter("namespace")
-	replicaSet := request.PathParameter("replicaSet")
+	replicationController := request.PathParameter("replicationController")
 	limit, err := strconv.Atoi(request.QueryParameter("limit"))
 	if err != nil {
 		limit = 0
 	}
-	result, err := GetReplicaSetPods(apiHandler.client, namespace, replicaSet, limit)
+	result, err := GetReplicationControllerPods(apiHandler.client, namespace, replicationController, limit)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -405,8 +405,8 @@ func (apiHandler *ApiHandler) handleLogs(request *restful.Request, response *res
 // Handles event API call.
 func (apiHandler *ApiHandler) handleEvents(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
-	replicaSet := request.PathParameter("replicaSet")
-	result, err := GetEvents(apiHandler.client, namespace, replicaSet)
+	replicationController := request.PathParameter("replicationController")
+	result, err := GetEvents(apiHandler.client, namespace, replicationController)
 	if err != nil {
 		handleInternalError(response, err)
 		return

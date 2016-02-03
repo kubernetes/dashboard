@@ -15,7 +15,9 @@
 import showNamespaceDialog from './createnamespace_dialog';
 import showCreateSecretDialog from './createsecret_dialog';
 import DeployLabel from './deploylabel';
-import {stateName as replicasetliststate} from 'replicasetlist/replicasetlist_state';
+import {
+  stateName as replicationcontrollerliststate,
+} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 import {uniqueNameValidationKey} from './uniquename_directive';
 
 // Label keys for predefined labels
@@ -187,7 +189,7 @@ export default class DeployFromSettingsController {
         (savedConfig) => {
           defer.resolve(savedConfig);  // Progress ends
           this.log_.info('Successfully deployed application: ', savedConfig);
-          this.state_.go(replicasetliststate);
+          this.state_.go(replicationcontrollerliststate);
         },
         (err) => {
           defer.reject(err);  // Progress ends

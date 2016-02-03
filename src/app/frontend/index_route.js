@@ -12,7 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateUrl as replicaSetStateUrl} from './replicasetlist/replicasetlist_state';
+import {
+  stateUrl as replicationControllerStateUrl,
+} from './replicationcontrollerlist/replicationcontrollerlist_state';
 
 /**
  * Global route configuration for the application.
@@ -22,5 +24,5 @@ import {stateUrl as replicaSetStateUrl} from './replicasetlist/replicasetlist_st
  */
 export default function routeConfig($urlRouterProvider) {
   // When no state is matched by an URL, redirect to default one.
-  $urlRouterProvider.otherwise(replicaSetStateUrl);
+  $urlRouterProvider.otherwise(replicationControllerStateUrl);
 }

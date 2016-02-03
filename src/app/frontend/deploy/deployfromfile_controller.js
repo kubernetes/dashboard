@@ -12,7 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as replicasetliststate} from 'replicasetlist/replicasetlist_state';
+import {
+  stateName as replicationcontrollerliststate,
+} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 
 /**
  * Controller for the deploy from file directive.
@@ -82,7 +84,7 @@ export default class DeployFromFileController {
         (savedConfig) => {
           defer.resolve(savedConfig);  // Progress ends
           this.log_.info('Successfully deployed application: ', savedConfig);
-          this.state_.go(replicasetliststate);
+          this.state_.go(replicationcontrollerliststate);
         },
         (err) => {
           defer.reject(err);  // Progress ends
