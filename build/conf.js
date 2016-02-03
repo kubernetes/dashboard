@@ -59,7 +59,7 @@ export default {
     /**
      * The release version of the image.
      */
-    versionRelease: '0.0.1',
+    versionRelease: 'v0.1.0',
     /**
      * The canary version name of the image. Canary is an image that is frequently published,
      * and has no release schedule.
