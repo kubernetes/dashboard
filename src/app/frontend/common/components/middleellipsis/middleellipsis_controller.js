@@ -12,25 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../variables';
+/**
+ * @final
+ */
+export default class MiddleEllipsisController {
+  /**
+   * Constructs middle ellipsis controller.
+   * @ngInject
+   */
+  constructor() {
+    /** @export {string} Initialized from the scope. */
+    this.displayString;
 
-.kd-user-help {
-  .kd-emphasized {
-    color: $emphasis;
-    word-wrap: break-word;
+    /** @export {number} Calculated during directive linking phase. */
+    this.maxLength;
   }
 
-  * {
-    color: $muted;
-  }
-
-  a {
-    color: $primary;
-    opacity: 1;
-    text-decoration: none;
-
-    &:hover {
-      color: $hover-primary;
-    }
-  }
+  /**
+   * Checks whether text fulfills length restrictions. If it is too long then returns true, false
+   * otherwise.
+   *
+   * @return {boolean}
+   * @export
+   */
+  shouldTruncate() { return this.displayString.length > this.maxLength; }
 }

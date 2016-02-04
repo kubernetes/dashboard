@@ -14,9 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div>
-  <span ng-repeat="port in ::endpoint.ports">
-    <kd-middle-ellipsis display-string="{{::endpoint.host}}:{{::port.port}} {{::port.protocol}}">
-    </kd-middle-ellipsis>
-  </span>
+<div class="kd-middleellipsis-container">
+  <md-tooltip ng-if="::ellipsisCtrl.shouldTruncate()">
+    {{::ellipsisCtrl.displayString}}
+  </md-tooltip>
+  <span class="kd-middleellipsis"><!-- Collapse whitespace
+    -->{{::(ellipsisCtrl.displayString | middleEllipsis:ellipsisCtrl.maxLength)}}<!-- Collapse whitespace
+  --></span>
 </div>

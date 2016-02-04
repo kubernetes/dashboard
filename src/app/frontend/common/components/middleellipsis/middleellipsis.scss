@@ -12,25 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../variables';
+.kd-middleellipsis {
+  white-space: nowrap;
+}
 
-.kd-user-help {
-  .kd-emphasized {
-    color: $emphasis;
-    word-wrap: break-word;
-  }
-
-  * {
-    color: $muted;
-  }
-
-  a {
-    color: $primary;
-    opacity: 1;
-    text-decoration: none;
-
-    &:hover {
-      color: $hover-primary;
-    }
-  }
+.kd-middleellipsis-container {
+  display: block;
+  width: 100%;
 }
