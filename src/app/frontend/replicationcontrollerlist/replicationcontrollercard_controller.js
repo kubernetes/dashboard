@@ -39,16 +39,16 @@ export default class ReplicationControllerCardController {
      */
     this.imageMaxLength = 32;
 
+    /**
+     * Maximum length of name before it is truncated.
+     * @const
+     * @export {number}
+     */
+    this.nameMaxLength = 16;
+
     /** @private {!ui.router.$state} */
     this.state_ = $state;
   }
-
-  /**
-   * @param {string} imageName
-   * @return {boolean}
-   * @export
-   */
-  shouldTruncate(imageName) { return imageName.length > this.imageMaxLength; }
 
   /**
    * @return {string}

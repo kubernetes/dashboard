@@ -40,13 +40,6 @@ describe('Replication controller card controller', () => {
         .toEqual('#/replicationcontrollers/foo-namespace/foo-name');
   });
 
-  it('should truncate image name', () => {
-    expect(ctrl.shouldTruncate('x')).toBe(false);
-    expect(ctrl.shouldTruncate('x'.repeat(32))).toBe(false);
-    expect(ctrl.shouldTruncate('x'.repeat(33))).toBe(true);
-    expect(ctrl.shouldTruncate('x'.repeat(100))).toBe(true);
-  });
-
   it('should return true when all desired pods are running', () => {
     // given
     ctrl.replicationController = {

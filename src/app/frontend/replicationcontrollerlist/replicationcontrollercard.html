@@ -22,7 +22,9 @@ limitations under the License.
         <span layout="row" flex>
           <a ng-href="{{::ctrl.getReplicationControllerDetailHref()}}" class="kd-replicationcontroller-card-name">
             <span class="md-title kd-replicationcontroller-card-title">
-              {{::ctrl.replicationController.name}}
+              <kd-middle-ellipsis display-string="{{::ctrl.replicationController.name}}"
+                                  max-length="{{::ctrl.nameMaxLength}}">
+              </kd-middle-ellipsis>
             </span>
           </a>
           <md-icon class="material-icons md-warn kd-replicationcontroller-card-status-icon"
@@ -79,8 +81,9 @@ limitations under the License.
           <div flex>
             <div ng-repeat="image in ::ctrl.replicationController.containerImages track by $index"
                 class="kd-replicationcontroller-card-section-image">
-              <md-tooltip ng-if="::ctrl.shouldTruncate(image)">{{::image}}</md-tooltip>
-              {{::(image | middleEllipsis:ctrl.imageMaxLength)}}
+              <kd-middle-ellipsis display-string="{{::image}}"
+                                  max-length="{{::ctrl.imageMaxLength}}">
+              </kd-middle-ellipsis>
             </div>
           </div>
         </div>

@@ -12,25 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../variables';
+import MiddleEllipsisController from './middleellipsis_controller';
 
-.kd-user-help {
-  .kd-emphasized {
-    color: $emphasis;
-    word-wrap: break-word;
-  }
-
-  * {
-    color: $muted;
-  }
-
-  a {
-    color: $primary;
-    opacity: 1;
-    text-decoration: none;
-
-    &:hover {
-      color: $hover-primary;
-    }
-  }
+/**
+ * Returns directive definition for middle ellipsis.
+ *
+ * @return {!angular.Directive}
+ */
+export default function middleEllipsisDirective() {
+  return {
+    controller: MiddleEllipsisController,
+    controllerAs: 'ellipsisCtrl',
+    templateUrl: 'common/components/middleellipsis/middleellipsis.html',
+    scope: {},
+    bindToController: {
+      'displayString': '@',
+      'maxLength': '@',
+    },
+  };
 }

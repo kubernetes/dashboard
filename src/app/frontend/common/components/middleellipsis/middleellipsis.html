@@ -14,8 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div class="kd-labels" ng-repeat="(key, value) in ::labelsCtrl.labels">
-  <kd-middle-ellipsis display-string="{{::key}}: {{::value}}"
-                      max-length="{{::labelsCtrl.labelMaxLength}}">
-  </kd-middle-ellipsis>
-</div>
+<md-tooltip ng-if="::ellipsisCtrl.shouldTruncate()">
+  {{::ellipsisCtrl.displayString}}
+</md-tooltip>
+<span class="kd-middleellipsis-nowrap">
+  {{::(ellipsisCtrl.displayString | middleEllipsis:ellipsisCtrl.maxLength)}}
+</span>
