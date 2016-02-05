@@ -85,6 +85,12 @@ export default class DeployFromSettingsController {
      */
     this.portMappings;
 
+    /**
+     * Initialized from the template.
+     * @export {!Array<!backendApi.EnvironmentVariable>}
+     */
+    this.variables;
+
     /** @export {boolean} */
     this.isExternal = false;
 
@@ -171,6 +177,7 @@ export default class DeployFromSettingsController {
       name: this.name,
       description: this.description ? this.description : null,
       portMappings: this.portMappings.filter(this.isPortMappingFilled_),
+      variables: this.variables.filter(this.isVariableFilled_),
       replicas: this.replicas,
       namespace: this.namespace,
       cpuRequirement: angular.isNumber(this.cpuRequirement) ? this.cpuRequirement : null,
@@ -306,6 +313,14 @@ export default class DeployFromSettingsController {
    * @private
    */
   isPortMappingFilled_(portMapping) { return !!portMapping.port && !!portMapping.targetPort; }
+
+  /**
+   * Returns true when the given environment variable is filled by the user, i.e., is not empty.
+   * @param {!backendApi.EnvironmentVariable} variable
+   * @return {boolean}
+   * @private
+   */
+  isVariableFilled_(variable) { return !!variable.name; }
 
   /**
    * Callbacks used in DeployLabel model to make it aware of controller state changes.

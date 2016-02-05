@@ -109,6 +109,26 @@ func TestDeployAppContainerCommands(t *testing.T) {
 	}
 }
 
+func TestDeployShouldPopulateEnvVars(t *testing.T) {
+	spec := &AppDeploymentSpec{
+		Namespace: "foo-namespace",
+		Name:      "foo-name",
+		Variables: []EnvironmentVariable{{"foo", "bar"}},
+	}
+	testClient := testclient.NewSimpleFake()
+
+	DeployApp(spec, testClient)
+
+	createAction := testClient.Actions()[0].(testclient.CreateActionImpl)
+
+	rc := createAction.GetObject().(*api.ReplicationController)
+	container := rc.Spec.Template.Spec.Containers[0]
+	if !reflect.DeepEqual(container.Env, []api.EnvVar{api.EnvVar{Name: "foo", Value: "bar"}}) {
+		t.Errorf("Expected environment variables to be %#v but got %#v",
+			[]api.EnvVar{api.EnvVar{Name: "foo", Value: "bar"}}, container.Env)
+	}
+}
+
 func TestDeployShouldGeneratePortNames(t *testing.T) {
 	spec := PortMapping{Port: 80, TargetPort: 8080, Protocol: api.ProtocolTCP}
 

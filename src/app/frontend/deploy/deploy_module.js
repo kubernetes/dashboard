@@ -19,6 +19,7 @@ import deployLabelDirective from './deploylabel_directive';
 import deployFromFileDirective from './deployfromfile_directive';
 import fileReaderDirective from './filereader_directive';
 import portMappingsDirective from './portmappings_directive';
+import environmentVariablesDirective from './environmentvariables_directive';
 import uploadDirective from './upload_directive';
 import uniqueNameDirective from './uniquename_directive';
 import validProtocolDirective from './validprotocol_directive';
@@ -47,4 +48,5 @@ export default angular
     .directive('kdFileReader', fileReaderDirective)
     .directive('kdUpload', uploadDirective)
     .directive('kdPortMappings', portMappingsDirective)
+    .directive('kdEnvironmentVariables', environmentVariablesDirective)
     .directive('kdDeployLabel', deployLabelDirective);
