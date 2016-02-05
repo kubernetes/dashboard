@@ -35,6 +35,14 @@ backendApi.PortMapping;
 
 /**
  * @typedef {{
+ *   name: string,
+ *   value: string
+ * }}
+ */
+backendApi.EnvironmentVariable;
+
+/**
+ * @typedef {{
  *  key: string,
  *  value: string
  * }}

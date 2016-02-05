@@ -56,6 +56,9 @@ type AppDeploymentSpec struct {
 	// one port mapping.
 	PortMappings []PortMapping `json:"portMappings"`
 
+	// List of user-defined environment variables.
+	Variables []EnvironmentVariable `json:"variables"`
+
 	// Whether the created service is external.
 	IsExternal bool `json:"isExternal"`
 
@@ -99,6 +102,15 @@ type PortMapping struct {
 	Protocol api.Protocol `json:"protocol"`
 }
 
+// EnvironmentVariable represents a named variable accessible for containers.
+type EnvironmentVariable struct {
+	// Name of the variable. Must be a C_IDENTIFIER.
+	Name string `json:"name"`
+
+	// Value of the variable, as defined in Kubernetes core API.
+	Value string `json:"value"`
+}
+
 // Structure representing label assignable to Pod/RC/Service
 type Label struct {
 	// Label key
@@ -140,6 +152,7 @@ func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 		Resources: api.ResourceRequirements{
 			Requests: make(map[api.ResourceName]resource.Quantity),
 		},
+		Env: convertEnvVarsSpec(spec.Variables),
 	}
 
 	if spec.ContainerCommand != nil {
@@ -225,6 +238,14 @@ func GetAvailableProtocols() *Protocols {
 	return &Protocols{Protocols: []api.Protocol{api.ProtocolTCP, api.ProtocolUDP}}
 }
 
+func convertEnvVarsSpec(variables []EnvironmentVariable) []api.EnvVar {
+	var result []api.EnvVar
+	for _, variable := range variables {
+		result = append(result, api.EnvVar{Name: variable.Name, Value: variable.Value})
+	}
+	return result
+}
+
 func generatePortMappingName(portMapping PortMapping) string {
 	base := fmt.Sprintf("%s-%d-%d-", strings.ToLower(string(portMapping.Protocol)),
 		portMapping.Port, portMapping.TargetPort)
@@ -246,7 +267,7 @@ func getLabelsMap(labels []Label) map[string]string {
 type createObjectFromInfo func(info *kubectlResource.Info) error
 
 // Implementation of createObjectFromInfo
-var CreateObjectFromInfoFn = func(info *kubectlResource.Info) error {
+func CreateObjectFromInfoFn(info *kubectlResource.Info) error {
 	_, err := kubectlResource.NewHelper(info.Client, info.Mapping).Create(info.Namespace, true, info.Object)
 	return err
 }

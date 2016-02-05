@@ -207,6 +207,16 @@ limitations under the License.
       Processes in privileged containers are equivalent to processes running as root on the host.
     </kd-user-help>
   </kd-help-section>
+
+  <kd-help-section>
+    <kd-environment-variables variables="ctrl.variables">
+    </kd-environment-variables>
+    <kd-user-help>
+      Environment variables available for use in the container. Values can reference other variables
+      using $(VAR_NAME) syntax.
+      <a href="http://kubernetes.io/v1.1/docs/design/expansion.html" target="_blank">Learn more</a>
+    </kd-user-help>
+  </kd-help-section>
 </div>
 
 <md-button class="md-primary kd-deploy-moreoptions-button" type="button"

@@ -50,6 +50,7 @@ describe('DeployFromSettings controller', () => {
           DeployFromSettingController, {$resource: mockResource},
           {namespaces: [], form: form, protocols: []});
       ctrl.portMappings = [];
+      ctrl.variables = [];
     });
   });
 
@@ -311,6 +312,28 @@ describe('DeployFromSettings controller', () => {
       ctrl.handleCreateSecretDialog({});
       // then
       expect(ctrl.imagePullSecret).toEqual(response);
+    });
+
+    it('should filter out empty variables', () => {
+      // given
+      ctrl.variables = [{name: 'foo', value: 'bar'}, {}, {name: ''}];
+      let resourceObject = {
+        save: jasmine.createSpy('save'),
+      };
+      mockResource.and.returnValue(resourceObject);
+      resourceObject.save.and.callFake(function(spec) {
+        // then
+        expect(spec.variables).toEqual([{name: 'foo', value: 'bar'}]);
+      });
+      ctrl.cpuRequirement = 77;
+      ctrl.memoryRequirement = 88;
+
+      // when
+      ctrl.deploy();
+
+      // then
+      expect(resourceObject.save).toHaveBeenCalled();
+
     });
 
     it('unsuccessful image pull secret creation should reset ctrl.imagePullSecret', () => {

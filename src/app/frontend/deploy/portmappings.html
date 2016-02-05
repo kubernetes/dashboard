@@ -27,7 +27,7 @@ limitations under the License.
     </md-input-container>
     <md-input-container flex class="kd-deploy-input-row">
       <label>Target port</label>
-      <input ng-model="portMapping.targetPort"  ng-change="ctrl.addProtocolIfNeeed()"
+      <input ng-model="portMapping.targetPort" ng-change="ctrl.addProtocolIfNeeed()"
           type="number" min="0" name="targetPort">
       <ng-messages for="portMappingForm.targetPort.$error" role="alert" multiple>
         <ng-message when="number">Target port must be an integer.</ng-message>

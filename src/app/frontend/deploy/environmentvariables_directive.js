@@ -12,15 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../variables';
+import {EnvironmentVariablesController} from './environmentvariables_controller';
 
-// This rule is meant to align items only in the current layout (kd-help-section).
-.kd-help-section > * {
-  flex: 1;
-  margin: $baseline-grid 0;
-  padding-right: 4 * $baseline-grid;
-
-  &:last-child {
-    padding-right: 0;
-  }
+/**
+ * Returns directive definition for the environment variables input widget.
+ *
+ * @return {!angular.Directive}
+ */
+export default function environmentVariablesDirective() {
+  return {
+    controller: EnvironmentVariablesController,
+    controllerAs: 'ctrl',
+    templateUrl: 'deploy/environmentvariables.html',
+    scope: {},
+    bindToController: {
+      'variables': '=',
+    },
+  };
 }
