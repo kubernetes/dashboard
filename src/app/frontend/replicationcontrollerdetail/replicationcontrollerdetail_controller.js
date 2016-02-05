@@ -108,6 +108,20 @@ export default class ReplicationControllerDetailController {
      * @export {boolean}
      */
     this.eventsOrder = DOWNWARDS;
+
+    /**
+     * Maximum length of name before it is truncated.
+     * @const
+     * @export {number}
+     */
+    this.nameMaxLength = 16;
+
+    /**
+     * Maximum length of container image before it is truncated.
+     * @const
+     * @export {number}
+     */
+    this.imageMaxLength = 32;
   }
 
   /**

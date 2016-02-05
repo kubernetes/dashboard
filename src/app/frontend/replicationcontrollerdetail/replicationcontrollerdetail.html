@@ -23,7 +23,9 @@ limitations under the License.
           <md-icon md-font-library="material-icons">arrow_back</md-icon>
         </md-button>
         <h1 flex class="md-title kd-replicationcontrollerdetail-app-name">
-          {{::ctrl.replicationControllerDetail.name}}
+          <kd-middle-ellipsis display-string="{{::ctrl.replicationControllerDetail.name}}"
+                              max-length="{{::ctrl.nameMaxLength}}">
+          </kd-middle-ellipsis>
         </h1>
       </div>
     </div>
@@ -40,7 +42,9 @@ limitations under the License.
       <div flex layout="column" class="kd-replicationcontrollerdetail-sidebar-info">
         <span class="kd-replicationcontrollerdetail-sidebar-line">Name</span>
         <span class="kd-replicationcontrollerdetail-sidebar-subline">
-          {{::ctrl.replicationControllerDetail.name}}
+          <kd-middle-ellipsis display-string="{{::ctrl.replicationControllerDetail.name}}"
+                              max-length="{{::ctrl.nameMaxLength}}">
+          </kd-middle-ellipsis>
         </span>
         <span class="kd-replicationcontrollerdetail-sidebar-line">Namespace</span>
         <span class="kd-replicationcontrollerdetail-sidebar-subline">
@@ -91,7 +95,9 @@ limitations under the License.
         <span class="kd-replicationcontrollerdetail-sidebar-line">Images</span>
         <span class="kd-replicationcontrollerdetail-sidebar-subline"
               ng-repeat="image in ctrl.replicationControllerDetail.containerImages">
-          {{image}}
+              <kd-middle-ellipsis display-string="{{::image}}"
+                                  max-length="{{::ctrl.imageMaxLength}}">
+              </kd-middle-ellipsis>
         </span>
         <div ng-if="::ctrl.replicationControllerDetail.services" layout="column">
           <span class="kd-replicationcontrollerdetail-sidebar-title">Services</span>

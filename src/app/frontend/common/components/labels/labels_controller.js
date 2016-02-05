@@ -23,5 +23,8 @@ export default class LabelsController {
   constructor() {
     /** @export {Object<string, string>} Initialized from the scope. */
     this.labels;
+
+    /** @export {number} Maximum length of label before it's truncated. */
+    this.labelMaxLength = 28;
   }
 }

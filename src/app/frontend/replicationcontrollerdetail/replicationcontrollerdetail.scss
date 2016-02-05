@@ -23,6 +23,7 @@ $table-cell-height-half: $table-cell-height / 2;
 .kd-replicationcontrollerdetail-app-name {
   color: $foreground-2;
   font-weight: $regular-font-weight;
+  margin-right: $baseline-grid;
 }
 
 .kd-replicationcontrollerdetail-sidebar {
