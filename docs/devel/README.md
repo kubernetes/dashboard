@@ -2,5 +2,6 @@
 
 The developer guide is for anyone wanting to contribute code to Dashboard
 
-## Setup
-* Getting started ([getting-started.md](getting-started.md))
+## Index
+* Getting started guide ([getting-started.md](getting-started.md))
+* Release process ([release.md](release.md))
