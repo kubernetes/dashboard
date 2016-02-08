@@ -19,19 +19,21 @@ limitations under the License.
     <md-input-container flex class="kd-deploy-input-row">
       <label>Port</label>
       <input ng-model="portMapping.port" ng-change="ctrl.addProtocolIfNeeed()"
-          type="number" min="0" name="port">
+             type="number" min="1" max="65535" name="port">
       <ng-messages for="portMappingForm.port.$error" role="alert" multiple>
         <ng-message when="number">Port must be an integer.</ng-message>
-        <ng-message when="min">Port must be non-negative.</ng-message>
+        <ng-message when="min">Port must greater than 0.</ng-message>
+        <ng-message when="max">Port must less than 65536.</ng-message>
       </ng-messages>
     </md-input-container>
     <md-input-container flex class="kd-deploy-input-row">
       <label>Target port</label>
       <input ng-model="portMapping.targetPort" ng-change="ctrl.addProtocolIfNeeed()"
-          type="number" min="0" name="targetPort">
+             type="number" min="1" max="65535" name="targetPort">
       <ng-messages for="portMappingForm.targetPort.$error" role="alert" multiple>
         <ng-message when="number">Target port must be an integer.</ng-message>
-        <ng-message when="min">Target port must be non-negative.</ng-message>
+        <ng-message when="min">Target port must greater than 0.</ng-message>
+        <ng-message when="max">Target port must less than 65536.</ng-message>
       </ng-messages>
     </md-input-container>
     <md-input-container flex="none" class="kd-deploy-input-row">
