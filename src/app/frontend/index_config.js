@@ -21,7 +21,7 @@ export default function config($mdThemingProvider) {
   let kubernetesColorPaletteName = 'kubernetesColorPalette';
   let kubernetesAccentPaletteName = 'kubernetesAccentPallete';
   let kubernetesColorPalette = $mdThemingProvider.extendPalette('blue', {
-    '500': '326de6',
+    '500': 'EC0404',
   });
 
   // Use the palette as default one.

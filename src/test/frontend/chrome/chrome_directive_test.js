@@ -25,7 +25,7 @@ describe('Chrome directive', () => {
     angular.mock.inject(($compile, $rootScope, $httpBackend) => {
       scope = $rootScope.$new();
       compileFn = $compile('<chrome></chrome>');
-      $httpBackend.when('GET', 'assets/images/kubernetes-logo.svg').respond(404);
+      $httpBackend.when('GET', 'assets/images/fujitsu-logo.svg').respond(404);
     });
   });
 
