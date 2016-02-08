@@ -109,4 +109,4 @@ It's possible to run `gulp` and all the dependencies inside a development contai
 
 ## Contribute
 
-Wish to contribute !! Great start [here](CONTRIBUTING.md).
+Wish to contribute !! Great start [here](../../CONTRIBUTING.md).
