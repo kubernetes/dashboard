@@ -13,9 +13,6 @@
 // limitations under the License.
 
 import {UPWARDS, DOWNWARDS} from 'replicationcontrollerdetail/sortedheader_controller';
-import {
-  stateName as replicationcontrollers,
-} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 import {stateName as logsStateName} from 'logs/logs_state';
 import {StateParams as LogsStateParams} from 'logs/logs_state';
 
@@ -32,6 +29,7 @@ const EVENT_SOURCE_SYSTEM = 'System';
  */
 export default class ReplicationControllerDetailController {
   /**
+   * @param {function(string):boolean} $mdMedia Angular Material $mdMedia service
    * @param {!md.$dialog} $mdDialog
    * @param {!./replicationcontrollerdetail_state.StateParams} $stateParams
    * @param {!ui.router.$state} $state
@@ -39,13 +37,14 @@ export default class ReplicationControllerDetailController {
    * @param {!angular.$log} $log
    * @param {!backendApi.ReplicationControllerDetail} replicationControllerDetail
    * @param {!backendApi.Events} replicationControllerEvents
-   * @param {!./replicationcontroller_service.ReplicationControllerService}
-   * kdReplicationControllerService
    * @ngInject
    */
   constructor(
-      $mdDialog, $stateParams, $state, $resource, $log, replicationControllerDetail,
-      replicationControllerEvents, kdReplicationControllerService) {
+      $mdMedia, $mdDialog, $stateParams, $state, $resource, $log, replicationControllerDetail,
+      replicationControllerEvents) {
+    /** @export {function(string):boolean} */
+    this.mdMedia = $mdMedia;
+
     /** @export {!backendApi.ReplicationControllerDetail} */
     this.replicationControllerDetail = replicationControllerDetail;
 
@@ -82,9 +81,6 @@ export default class ReplicationControllerDetailController {
     /** @private {!angular.$log} */
     this.log_ = $log;
 
-    /** @private {!./replicationcontroller_service.ReplicationControllerService} */
-    this.kdReplicationControllerService_ = kdReplicationControllerService;
-
     /**
      * Name of column, that will be used for pods sorting.
      * @export {string}
@@ -109,6 +105,13 @@ export default class ReplicationControllerDetailController {
      */
     this.eventsOrder = DOWNWARDS;
   }
+
+  /**
+   * Returns true if sidebar is visible, false if it is hidden.
+   * @returns {boolean}
+   * @export
+   */
+  isSidebarVisible() { return this.mdMedia('gt-sm'); }
 
   /**
    * Returns true if event is a warning.
@@ -182,36 +185,6 @@ export default class ReplicationControllerDetailController {
   }
 
   /**
-   * @return {boolean}
-   * @export
-   */
-  areDesiredPodsRunning() {
-    return this.replicationControllerDetail.podInfo.running ===
-        this.replicationControllerDetail.podInfo.desired;
-  }
-
-  /**
-   * Handles update of replicas count in replication controller dialog.
-   * @export
-   */
-  handleUpdateReplicasDialog() {
-    this.kdReplicationControllerService_.showUpdateReplicasDialog(
-        this.replicationControllerDetail.namespace, this.replicationControllerDetail.name,
-        this.replicationControllerDetail.podInfo.current,
-        this.replicationControllerDetail.podInfo.desired);
-  }
-
-  /**
-   * Handles replication controller delete dialog.
-   * @export
-   */
-  handleDeleteReplicationControllerDialog() {
-    this.kdReplicationControllerService_
-        .showDeleteDialog(this.stateParams_.namespace, this.stateParams_.replicationController)
-        .then(this.onReplicationControllerDeleteSuccess_.bind(this));
-  }
-
-  /**
    * @param {!backendApi.ReplicationControllerPod} pod
    * @return {boolean}
    * @export
@@ -227,21 +200,5 @@ export default class ReplicationControllerDetailController {
    */
   hasMemoryUsage(pod) {
     return !!pod.metrics && (!!pod.metrics.memoryUsage || pod.metrics.memoryUsage === 0);
-  }
-
-  /**
-   * Callbacks used after clicking dialog confirmation button in order to delete replication
-   * controller
-   * or log unsuccessful operation error.
-   */
-
-  /**
-   * Changes state back to replication controller list after successful deletion of replication
-   * controller.
-   * @private
-   */
-  onReplicationControllerDeleteSuccess_() {
-    this.log_.info('Replication controller successfully deleted.');
-    this.state_.go(replicationcontrollers);
   }
 }

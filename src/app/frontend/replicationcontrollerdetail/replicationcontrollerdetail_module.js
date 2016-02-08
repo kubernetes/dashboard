@@ -15,6 +15,7 @@
 import componentsModule from './../common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
 import logsModule from 'logs/logs_module';
+import replicationControllerInfo from './replicationcontrollerinfo_directive';
 import serviceEndpointDirective from './serviceendpoint_directive';
 import stateConfig from './replicationcontrollerdetail_stateconfig';
 import sortedHeaderDirective from './sortedheader_directive';
@@ -37,6 +38,7 @@ export default angular
           logsModule.name,
         ])
     .config(stateConfig)
+    .directive('kdReplicationControllerInfo', replicationControllerInfo)
     .directive('kdServiceEndpoint', serviceEndpointDirective)
     .directive('kdSortedHeader', sortedHeaderDirective)
     .service('kdReplicationControllerService', ReplicationControllerService);
