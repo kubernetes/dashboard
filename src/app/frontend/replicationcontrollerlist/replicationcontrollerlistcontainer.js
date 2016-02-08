@@ -94,7 +94,8 @@ function getActualColumnCount(heights, leftHeight, rightHeight) {
 
   let sizeRightChunks = 0;
   let currentRightHeight = 0;
-  for (let item of heights) {
+  for (let i = 0; i < heights.length; i++) {
+    let item = heights[i];
     if (item > leftHeight) {
       doesNotFitLeftHeight = true;
     }

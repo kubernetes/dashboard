@@ -57,11 +57,12 @@ describe('Replication controller list container', () => {
       [[237, 237, 197, 197, 197, 197, 10000, 204, 237, 246, 204, 197, 211, 232, 211], 0, 13004],
     ];
 
-    for (let [heights, numColumns, expected] of testData) {
+    testData.forEach((testData) => {
+      let [heights, numColumns, expected] = testData;
       let actual = binarySearchOptimalHeight(heights, numColumns);
       expect(actual).toBe(
           expected, `Expected height to be ${expected} but was ${actual}. ` +
               `Required number of columns: ${numColumns}, heights: [${heights}]`);
-    }
+    });
   });
 });

@@ -130,7 +130,14 @@ export default class LogsToolbarController {
    * @return {!backendApi.ReplicationControllerPodWithContainers|undefined}
    * @private
    */
-  findPodByName_(array, name) { return array.find((element) => element.name === name); }
+  findPodByName_(array, name) {
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].name === name) {
+        return array[i];
+      }
+    }
+    return undefined;
+  }
 
   /**
    * Find Container by name.
@@ -141,7 +148,13 @@ export default class LogsToolbarController {
    * @private
    */
   initializeContainer_(array, name) {
-    let container = array.find((element) => element.name === name);
+    let container = undefined;
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].name === name) {
+        container = array[i];
+        break;
+      }
+    }
     if (!container) {
       container = array[0];
     }

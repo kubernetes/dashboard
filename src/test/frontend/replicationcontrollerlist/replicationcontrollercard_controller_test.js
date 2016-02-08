@@ -42,9 +42,9 @@ describe('Replication controller card controller', () => {
 
   it('should truncate image name', () => {
     expect(ctrl.shouldTruncate('x')).toBe(false);
-    expect(ctrl.shouldTruncate('x'.repeat(32))).toBe(false);
-    expect(ctrl.shouldTruncate('x'.repeat(33))).toBe(true);
-    expect(ctrl.shouldTruncate('x'.repeat(100))).toBe(true);
+    expect(ctrl.shouldTruncate((new Array(33)).join('x'))).toBe(false);
+    expect(ctrl.shouldTruncate((new Array(34)).join('x'))).toBe(true);
+    expect(ctrl.shouldTruncate((new Array(100)).join('x'))).toBe(true);
   });
 
   it('should return true when all desired pods are running', () => {
