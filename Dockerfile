@@ -37,24 +37,7 @@ RUN curl -sSL https://get.docker.com/builds/Linux/x86_64/docker-1.9.1 > /usr/bin
 # Current directory is always /dashboard
 WORKDIR /dashboard
 
-# Make an normal user, required for npm and bower, they are user programs and should not be called as root
-RUN useradd normaluser -m -s /bin/bash && \
-    chown -R normaluser /dashboard
-# Our normal user should have access to /dashboard
-
-# Switch user to normaluser
-USER normaluser
-
-# Copy over package.json bower.json and postinstall.sh.
-# Why? Because of docker caching, npm install will only run again if one of these have changed
-COPY package.json bower.json ./
-COPY build/postinstall.sh build/
-
-# Install all npm deps, bower deps and godep. This will take a while.
-RUN npm install
-
-# Copy over the rest of the source
 COPY ./ ./
 
-# Switch back to the root user when where going to communicate with docker
-USER root
+# Install all npm deps, bower deps and godep. This will take a while.
+RUN npm install --unsafe-perm

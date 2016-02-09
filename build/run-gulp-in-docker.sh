@@ -14,7 +14,7 @@
 # limitations under the License.
 
 # This is a script that runs gulp in a docker container,
-# for machines that doesn't have nodejs, go and java installed.
+# for machines that don't have nodejs, go and java installed.
 
 DOCKER_RUN_OPTS=${DOCKER_RUN_OPTS:-}
 DASHBOARD_IMAGE_NAME="kubernetes-dashboard-build-image"
