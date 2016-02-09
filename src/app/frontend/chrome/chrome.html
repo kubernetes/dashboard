@@ -18,10 +18,10 @@ limitations under the License.
   <md-toolbar class="kd-toolbar">
     <div class="md-toolbar-tools kd-toolbar-tools">
       <a ui-sref="replicationcontrollers" ui-sref-opts="{ reload: true }">
-        <md-icon md-svg-icon="assets/images/kubernetes-logo.svg" class="kd-toolbar-logo"></md-icon>
+        <md-icon md-svg-icon="assets/images/<%= logo %>" class="kd-toolbar-logo"></md-icon>
       </a>
       <h2>
-        <span>kubernetes</span>
+        <span><%= toolbarTitle %></span>
       </h2>
       <div flex ui-view="toolbar"></div>
     </div>

@@ -25,6 +25,7 @@ import gulpUseref from 'gulp-useref';
 import gulpRev from 'gulp-rev';
 import gulpRevReplace from 'gulp-rev-replace';
 import uglifySaveLicense from 'uglify-save-license';
+import template from 'gulp-template';
 import path from 'path';
 
 import conf from './conf';
@@ -75,6 +76,7 @@ gulp.task('build-frontend', ['assets', 'index:prod', 'clean-dist'], function() {
         conservativeCollapse: true,
       }))
       .pipe(htmlFilter.restore)
+      .pipe(template(conf.branding))
       .pipe(gulp.dest(conf.paths.distPublic));
 });
 
