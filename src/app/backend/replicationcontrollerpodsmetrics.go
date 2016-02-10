@@ -89,8 +89,7 @@ func createMetricPath(namespace string, podNames []string, metricName string) st
 
 // Retrieves raw metrics from Heapster.
 func getRawMetrics(heapsterClient HeapsterClient, metricPath string) ([]byte, error) {
-
-	resultRaw, err := heapsterClient.Get().Suffix(metricPath).DoRaw()
+	resultRaw, err := heapsterClient.Get(metricPath).DoRaw()
 
 	if err != nil {
 		return make([]byte, 0), err
