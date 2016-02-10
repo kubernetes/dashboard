@@ -13,6 +13,14 @@
 // limitations under the License.
 
 /**
+ * The template value is overwritten during the build process
+ * according to the branding configuration
+ *
+ * @type {string}
+ */
+const themeColor = '<%= themeColor %>';
+
+/**
  * @param {!md.$mdThemingProvider} $mdThemingProvider
  * @ngInject
  */
@@ -21,7 +29,7 @@ export default function config($mdThemingProvider) {
   let kubernetesColorPaletteName = 'kubernetesColorPalette';
   let kubernetesAccentPaletteName = 'kubernetesAccentPallete';
   let kubernetesColorPalette = $mdThemingProvider.extendPalette('blue', {
-    '500': '326de6',
+    '500': themeColor,
   });
 
   // Use the palette as default one.

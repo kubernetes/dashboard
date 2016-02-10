@@ -119,4 +119,11 @@ export default {
     src: path.join(basePath, 'src'),
     tmp: path.join(basePath, '.tmp'),
   },
+  branding: {
+    logo: 'kubernetes-logo.svg',
+    favicon: 'kubernetes-logo.png',
+    title: 'Kubernetes Dashboard',
+    toolbarTitle: 'kubernetes',
+    themeColor: '326de6'
+  },
 };
