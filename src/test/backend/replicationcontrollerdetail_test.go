@@ -236,6 +236,263 @@ func TestGetExternalEndpoint(t *testing.T) {
 	}
 }
 
+func TestIsExternalIPUniqe(t *testing.T) {
+	cases := []struct {
+		externalIPs []string
+		externalIP  string
+		expected    bool
+	}{
+		{
+			[]string{"127.0.0.1", "192.168.1.1"},
+			"172.0.0.1",
+			true,
+		},
+		{
+			[]string{"127.0.0.1", "192.168.1.1", "172.0.0.1"},
+			"172.0.0.1",
+			false,
+		},
+		{
+			[]string{},
+			"172.0.0.1",
+			true,
+		},
+	}
+	for _, c := range cases {
+		actual := isExternalIPUniqe(c.externalIPs, c.externalIP)
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("isExternalIPUniqe(%+v, %+v) == %+v, expected %+v", c.externalIPs,
+				c.externalIP, actual, c.expected)
+		}
+	}
+}
+
+func TestFilterReplicationControllerPods(t *testing.T) {
+	firstLabelSelectorMap := make(map[string]string)
+	firstLabelSelectorMap["name"] = "app-name-first"
+	secondLabelSelectorMap := make(map[string]string)
+	secondLabelSelectorMap["name"] = "app-name-second"
+	cases := []struct {
+		replicationController api.ReplicationController
+		pods                  []api.Pod
+		expected              []api.Pod
+	}{
+		{
+			api.ReplicationController{
+				Spec: api.ReplicationControllerSpec{
+					Selector: firstLabelSelectorMap,
+				},
+			},
+			[]api.Pod{
+				{
+					ObjectMeta: api.ObjectMeta{
+						Name:   "first-pod-ok",
+						Labels: firstLabelSelectorMap,
+					},
+				},
+				{
+					ObjectMeta: api.ObjectMeta{
+						Name:   "second-pod-ok",
+						Labels: firstLabelSelectorMap,
+					},
+				},
+				{
+					ObjectMeta: api.ObjectMeta{
+						Name:   "third-pod-wrong",
+						Labels: secondLabelSelectorMap,
+					},
+				},
+			},
+			[]api.Pod{
+				{
+					ObjectMeta: api.ObjectMeta{
+						Name:   "first-pod-ok",
+						Labels: firstLabelSelectorMap,
+					},
+				},
+				{
+					ObjectMeta: api.ObjectMeta{
+						Name:   "second-pod-ok",
+						Labels: firstLabelSelectorMap,
+					},
+				},
+			},
+		},
+	}
+	for _, c := range cases {
+		actual := filterReplicationControllerPods(c.replicationController, c.pods)
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("getExternalEndpoints(%+v, %+v) == %+v, expected %+v",
+				c.replicationController, c.pods, actual, c.expected)
+		}
+	}
+}
+
+func TestGetExternalEndpoints(t *testing.T) {
+	labelSelectorMap := make(map[string]string)
+	labelSelectorMap["name"] = "app-name"
+	cases := []struct {
+		replicationController api.ReplicationController
+		pods                  []api.Pod
+		service               api.Service
+		getNodeFn             GetNodeFunc
+		expected              []Endpoint
+	}{
+		{
+			api.ReplicationController{
+				Spec: api.ReplicationControllerSpec{
+					Selector: labelSelectorMap,
+				},
+			},
+			[]api.Pod{
+				{
+					Spec: api.PodSpec{
+						NodeName: "node",
+					},
+					ObjectMeta: api.ObjectMeta{
+						Labels: labelSelectorMap,
+					},
+				},
+			},
+			api.Service{
+				Spec: api.ServiceSpec{
+					Type: api.ServiceTypeNodePort,
+					Ports: []api.ServicePort{
+						{
+							Protocol: "TCP",
+							NodePort: 30100,
+						},
+						{
+							Protocol: "TCP",
+							NodePort: 30101,
+						},
+					},
+				},
+			},
+			func(nodeName string) (*api.Node, error) {
+				return &api.Node{
+						Status: api.NodeStatus{
+							Addresses: []api.NodeAddress{
+								{
+									Type:    api.NodeExternalIP,
+									Address: "192.168.1.108",
+								},
+							},
+						},
+					},
+					nil
+			},
+			[]Endpoint{
+				{
+					Host: "192.168.1.108",
+					Ports: []ServicePort{
+						{
+							Port: 30100, Protocol: "TCP",
+						},
+					},
+				},
+				{
+					Host: "192.168.1.108",
+					Ports: []ServicePort{
+						{
+							Port: 30101, Protocol: "TCP",
+						},
+					},
+				},
+			},
+		},
+	}
+	for _, c := range cases {
+		actual := getExternalEndpoints(c.replicationController, c.pods, c.service, c.getNodeFn)
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("getExternalEndpoints(%+v, %+v, %+v, %+v) == %+v, expected %+v",
+				c.replicationController, c.pods, c.service, c.getNodeFn, actual, c.expected)
+		}
+	}
+}
+
+func TestGetNodePortEndpoints(t *testing.T) {
+	cases := []struct {
+		pods      []api.Pod
+		service   api.Service
+		getNodeFn GetNodeFunc
+		expected  []Endpoint
+	}{
+		{
+			[]api.Pod{
+				{
+					Status: api.PodStatus{
+						HostIP: "192.168.1.108",
+					},
+				},
+				{
+					Status: api.PodStatus{
+						HostIP: "192.168.1.108",
+					},
+				},
+				{
+					Status: api.PodStatus{
+						HostIP: "192.168.1.109",
+					},
+				},
+			},
+			api.Service{
+				Spec: api.ServiceSpec{
+					Type: api.ServiceTypeNodePort,
+					Ports: []api.ServicePort{
+						{
+							Protocol: "TCP",
+							NodePort: 30100,
+						},
+						{
+							Protocol: "TCP",
+							NodePort: 30101,
+						},
+					},
+				},
+			},
+			func(nodeName string) (*api.Node, error) {
+				return &api.Node{
+						Status: api.NodeStatus{
+							Addresses: []api.NodeAddress{
+								{
+									Type:    api.NodeExternalIP,
+									Address: "192.168.1.108",
+								},
+							},
+						},
+					},
+					nil
+			},
+			[]Endpoint{
+				{
+					Host: "192.168.1.108",
+					Ports: []ServicePort{
+						{
+							Port: 30100, Protocol: "TCP",
+						},
+					},
+				},
+				{
+					Host: "192.168.1.108",
+					Ports: []ServicePort{
+						{
+							Port: 30101, Protocol: "TCP",
+						},
+					},
+				},
+			},
+		},
+	}
+	for _, c := range cases {
+		actual := getNodePortEndpoints(c.pods, c.service, c.getNodeFn)
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("getNodePortEndpoints(%+v, %+v, %+v) == %+v, expected %+v", c.pods, c.service,
+				c.getNodeFn, actual, c.expected)
+		}
+	}
+}
+
 func TestGetInternalEndpoint(t *testing.T) {
 	cases := []struct {
 		serviceName, namespace string

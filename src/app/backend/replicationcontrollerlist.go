@@ -27,6 +27,9 @@ import (
 // Callback function in order to get the pod status errors
 type GetPodsEventWarningsFunc func(pods []api.Pod) ([]PodEvent, error)
 
+// Callback function in order to get node by name.
+type GetNodeFunc func(nodeName string) (*api.Node, error)
+
 // ReplicationControllerList contains a list of Replication Controllers in the cluster.
 type ReplicationControllerList struct {
 	// Unordered list of Replication Controllers.
@@ -104,7 +107,13 @@ func GetReplicationControllerList(client *client.Client) (*ReplicationController
 		return errors, nil
 	}
 
-	result, err := getReplicationControllerList(replicationControllers.Items, services.Items, pods.Items, getPodsEventWarningsFn)
+	// Anonymous callback function to get nodes by their names.
+	getNodeFn := func(nodeName string) (*api.Node, error) {
+		return client.Nodes().Get(nodeName)
+	}
+
+	result, err := getReplicationControllerList(replicationControllers.Items, services.Items,
+		pods.Items, getPodsEventWarningsFn, getNodeFn)
 
 	if err != nil {
 		return nil, err
@@ -117,8 +126,8 @@ func GetReplicationControllerList(client *client.Client) (*ReplicationController
 // Replication Controller and Service API objects.
 // The function processes all Replication Controllers API objects and finds matching Services for them.
 func getReplicationControllerList(replicationControllers []api.ReplicationController,
-	services []api.Service, pods []api.Pod, getPodsEventWarningsFn GetPodsEventWarningsFunc) (
-	*ReplicationControllerList, error) {
+	services []api.Service, pods []api.Pod, getPodsEventWarningsFn GetPodsEventWarningsFunc,
+	getNodeFn GetNodeFunc) (*ReplicationControllerList, error) {
 
 	replicationControllerList := &ReplicationControllerList{ReplicationControllers: make([]ReplicationController, 0)}
 
@@ -134,10 +143,8 @@ func getReplicationControllerList(replicationControllers []api.ReplicationContro
 		for _, service := range matchingServices {
 			internalEndpoints = append(internalEndpoints,
 				getInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports))
-			for _, externalIP := range service.Status.LoadBalancer.Ingress {
-				externalEndpoints = append(externalEndpoints,
-					getExternalEndpoint(externalIP, service.Spec.Ports))
-			}
+			externalEndpoints = getExternalEndpoints(replicationController, pods, service,
+				getNodeFn)
 		}
 
 		matchingPods := make([]api.Pod, 0)
@@ -156,17 +163,18 @@ func getReplicationControllerList(replicationControllers []api.ReplicationContro
 
 		podInfo.Warnings = podErrors
 
-		replicationControllerList.ReplicationControllers = append(replicationControllerList.ReplicationControllers, ReplicationController{
-			Name:              replicationController.ObjectMeta.Name,
-			Namespace:         replicationController.ObjectMeta.Namespace,
-			Description:       replicationController.Annotations[DescriptionAnnotationKey],
-			Labels:            replicationController.ObjectMeta.Labels,
-			Pods:              podInfo,
-			ContainerImages:   containerImages,
-			CreationTime:      replicationController.ObjectMeta.CreationTimestamp,
-			InternalEndpoints: internalEndpoints,
-			ExternalEndpoints: externalEndpoints,
-		})
+		replicationControllerList.ReplicationControllers = append(replicationControllerList.ReplicationControllers,
+			ReplicationController{
+				Name:              replicationController.ObjectMeta.Name,
+				Namespace:         replicationController.ObjectMeta.Namespace,
+				Description:       replicationController.Annotations[DescriptionAnnotationKey],
+				Labels:            replicationController.ObjectMeta.Labels,
+				Pods:              podInfo,
+				ContainerImages:   containerImages,
+				CreationTime:      replicationController.ObjectMeta.CreationTimestamp,
+				InternalEndpoints: internalEndpoints,
+				ExternalEndpoints: externalEndpoints,
+			})
 	}
 
 	return replicationControllerList, nil
