@@ -15,13 +15,7 @@
 describe('Deploy view', () => {
   beforeEach(() => { browser.get('#/deploy'); });
 
-  it('should not contain errors in console', () => {
-    browser.manage().logs().get('browser').then((browserLog) => {
-      // Filter and search for errors logs
-      let filteredLogs = browserLog.filter((log) => { return log.level.value > 900; });
-
-      // Expect no error logs
-      expect(filteredLogs.length).toBe(0);
-    });
-  });
+  it('should do something', () => {
+                                // TODO(bryk): Write the test.
+                            });
 });
