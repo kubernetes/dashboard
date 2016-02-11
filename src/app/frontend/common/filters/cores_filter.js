@@ -21,7 +21,7 @@ const powerSuffixes = ['m', '', 'k', 'M', 'G'];
 /**
  * Returns filter function that formats cores usage.
  * @param {function(number): string} numberFilter
- * @return {Function}
+ * @return {function(number): string}
  * @ngInject
  */
 export default function coresFilter(numberFilter) {

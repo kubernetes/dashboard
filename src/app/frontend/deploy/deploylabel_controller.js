@@ -127,14 +127,6 @@ export default class DeployLabelController {
   }
 
   /**
-   * Returns true if label key and value are empty, false otherwise.
-   * @param {!DeployLabel} label
-   * @return {boolean}
-   * @private
-   */
-  isEmpty_(label) { return label.key.length === 0 && label.value().length === 0; }
-
-  /**
    * Returns true if label key and value are not empty, false otherwise.
    * @param {!DeployLabel} label
    * @return {boolean}
