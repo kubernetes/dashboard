@@ -13,11 +13,10 @@
 // limitations under the License.
 
 @import '../variables';
+$bar-height: 2px;
 
 md-progress-linear {
   &.kd-deploy-form-progress {
-    $bar-height: 2px;
-
     clear: left;
     height: $bar-height;
     margin-bottom: -$bar-height;
