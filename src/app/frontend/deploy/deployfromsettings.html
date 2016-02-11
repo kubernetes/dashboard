@@ -17,18 +17,22 @@ limitations under the License.
 <kd-help-section>
   <md-input-container class="md-block" md-is-error="ctrl.isNameError()">
     <label>App name</label>
-    <input ng-model="ctrl.name" name="name" namespace="ctrl.namespace" required kd-unique-name
-        ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }">
-    <md-progress-linear class="kd-deploy-form-progress" md-mode="indeterminate"
-        ng-show="ctrl.form.name.$pending">
+    <input ng-model="ctrl.name" name="name" namespace="ctrl.namespace" required ng-pattern="ctrl.namePattern"
+           ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" kd-unique-name
+           ng-maxlength="ctrl.nameMaxLength">
+    <md-progress-linear class="kd-deploy-form-progress" md-mode="indeterminate" ng-show="ctrl.form.name.$pending">
     </md-progress-linear>
     <ng-messages for="ctrl.form.name.$error" role="alert" multiple>
       <ng-message when="required">Application name is required.</ng-message>
-      <ng-message when="uniqueName">
-        Application with this name already exists within namespace <i>{{ctrl.namespace}}</i>.
+      <ng-message when="uniqueName">Application with this name
+        already exists within namespace <i>{{ctrl.namespace}}</i>.</ng-message>
+      <ng-message when="pattern">Application name should contain only lowercase letters, numbers, and '-' between words
       </ng-message>
+      <ng-message when="maxlength">Application name should have no more than 63 characters</ng-message>
     </ng-messages>
+
   </md-input-container>
+
   <kd-user-help>
     An 'app' label with this value will be added to the Replication Controller and Service that get deployed.
     <a href="http://kubernetes.io/v1.1/docs/user-guide/labels.html" target="_blank">Learn more</a>
@@ -55,8 +59,9 @@ limitations under the License.
     <label>Number of pods</label>
     <input ng-model="ctrl.replicas" type="number" required min="1" name="replicas">
     <ng-messages for="ctrl.form.replicas.$error" role="alert" multiple>
+      <ng-message when="required">Number of pods is required.</ng-message>
       <ng-message when="number">Number of pods must be a positive integer.</ng-message>
-      <ng-message when="min">Number of pods must be positive.</ng-message>
+      <ng-message when="min">Number of pods must be at least 1.</ng-message>
     </ng-messages>
   </md-input-container>
   <kd-user-help>
@@ -81,11 +86,12 @@ limitations under the License.
 
 <kd-help-section>
   <md-checkbox ng-model="ctrl.isExternal" class="md-primary"
-             ng-model-options="{ debounce: { 'default': 500, 'blur': 0 } }">
+               ng-model-options="{ debounce: { 'default': 500, 'blur': 0 } }">
     Expose service externally
   </md-checkbox>
 </kd-help-section>
 
+<!-- advanced options -->
 <div ng-show="ctrl.isMoreOptionsEnabled()">
   <kd-help-section>
     <md-input-container>
@@ -99,18 +105,18 @@ limitations under the License.
   </kd-help-section>
 
   <kd-help-section>
-    <div>
-      <div>Labels</div>
-      <div layout="column">
-        <div layout="row">
-          <p flex>Key</p>
-          <p flex>Value</p>
-        </div>
-        <div ng-repeat="label in ctrl.labels">
-          <kd-deploy-label layout="row" flex label="label" labels="ctrl.labels"></kd-deploy-label>
-        </div>
+    <div layout="column">
+      <div class="kd-label-title md-body-2">Labels</div>
+      <div layout="row" class="kd-label-header-row">
+        <div flex="45">Key</div>
+        <div flex="5"></div>
+        <div flex="40">Value</div>
+      </div>
+      <div ng-repeat="label in ctrl.labels">
+         <kd-deploy-label layout="row" flex label="label" labels="ctrl.labels"></kd-deploy-label>
       </div>
     </div>
+
     <kd-user-help>
       The specified labels will be applied to the created Replication Controller, Service (if any) and Pods.
       Common labels include release, environment, tier, partition and track.
@@ -165,6 +171,7 @@ limitations under the License.
           <ng-message when="min">CPU requirement must be given as a positive number.</ng-message>
         </ng-messages>
       </md-input-container>
+      <div flex="5"></div>
       <md-input-container flex>
         <label>Memory requirement (MiB)</label>
         <input ng-model="ctrl.memoryRequirement" type="number" name="memoryRequirement" min="0">
@@ -200,9 +207,11 @@ limitations under the License.
   </kd-help-section>
 
   <kd-help-section>
-    <md-switch ng-model="ctrl.runAsPrivileged" class="md-primary">
-      Run as privileged
-    </md-switch>
+    <div class="md-block">
+      <md-checkbox ng-model="ctrl.runAsPrivileged" class="md-primary">
+        Run as privileged
+      </md-checkbox>
+    </div>
     <kd-user-help>
       Processes in privileged containers are equivalent to processes running as root on the host.
     </kd-user-help>
@@ -219,14 +228,14 @@ limitations under the License.
   </kd-help-section>
 </div>
 
+<!-- show/hide advanced options toggle -->
 <md-button class="md-primary kd-deploy-moreoptions-button" type="button"
            ng-click="ctrl.switchMoreOptions()"
            ng-hide="ctrl.isMoreOptionsEnabled()">
-  <md-icon>arrow_drop_down</md-icon>More options
+  <md-icon>arrow_drop_down</md-icon>show advanced options
 </md-button>
-
 <md-button class="md-primary kd-deploy-moreoptions-button" type="button"
            ng-click="ctrl.switchMoreOptions()"
            ng-show="ctrl.isMoreOptionsEnabled()">
-  <md-icon>arrow_drop_up</md-icon>Less options
+  <md-icon>arrow_drop_up</md-icon>hide advanced options
 </md-button>

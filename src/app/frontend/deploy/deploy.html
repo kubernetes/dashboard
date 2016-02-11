@@ -31,10 +31,11 @@ limitations under the License.
       </kd-help-section>
 
       <div ng-switch="ctrl.selection">
-        <deploy-from-settings ng-switch-when="Settings" name="ctrl.name"
+        <deploy-from-settings ng-switch-when="Settings" class="md-body-1" name="ctrl.name"
             namespaces="ctrl.namespaces" detail="ctrl.detail" form="ctrl.deployForm" protocols="ctrl.protocols">
         </deploy-from-settings>
-        <deploy-from-file ng-switch-when="File" name="ctrl.name" detail="ctrl.detail" form="ctrl.deployForm">
+        <deploy-from-file ng-switch-when="File" class="md-body-1" name="ctrl.name" detail="ctrl.detail"
+            form="ctrl.deployForm">
         </deploy-from-file>
       </div>
 
