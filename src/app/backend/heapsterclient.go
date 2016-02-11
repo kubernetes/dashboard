@@ -15,7 +15,6 @@
 package main
 
 import (
-	"bytes"
 	"log"
 
 	client "k8s.io/kubernetes/pkg/client/unversioned"
@@ -23,8 +22,33 @@ import (
 
 // Clients for making requests to a Heapster instance.
 type HeapsterClient interface {
-	// Creates a new GET http request to heapster.
-	Get() *client.Request
+	// Creates a new GET HTTP request to heapster, specified by the path param, to the V1 API
+	// endpoint. The path param is without the API prefix, e.g.,
+	// /model/namespaces/default/pod-list/foo/metrics/memory-usage
+
+	Get(path string) *client.Request
+}
+
+// In-cluster implementation of heapster client. Talks with heapster through service proxy.
+type InClusterHeapsterClient struct {
+	client *client.Client
+}
+
+func (c InClusterHeapsterClient) Get(path string) *client.Request {
+	return c.client.Get().Prefix("proxy").
+		Namespace("kube-system").
+		Resource("services").
+		Name("heapster").
+		Suffix("/api/v1" + path)
+}
+
+// Remote heapster client based implementation. Talks with heapster through raw RESTClient.
+type RemoteHeapsterClient struct {
+	client *client.RESTClient
+}
+
+func (c RemoteHeapsterClient) Get(path string) *client.Request {
+	return c.client.Get().Suffix(path)
 }
 
 // Creates new Heapster REST client. When heapsterHost param is empty string the function
@@ -33,21 +57,16 @@ type HeapsterClient interface {
 func CreateHeapsterRESTClient(heapsterHost string, apiclient *client.Client) (
 	HeapsterClient, error) {
 
-	cfg := client.Config{}
-
 	if heapsterHost == "" {
-		bufferProxyHost := bytes.NewBufferString("http://")
-		bufferProxyHost.WriteString(apiclient.RESTClient.Get().URL().Host)
-		cfg.Host = bufferProxyHost.String()
-		cfg.Prefix = "/api/v1/proxy/namespaces/kube-system/services/heapster/api"
+		log.Printf("Creating in-cluster Heapster client")
+		return InClusterHeapsterClient{client: apiclient}, nil
 	} else {
-		cfg.Host = heapsterHost
+		cfg := &client.Config{Host: heapsterHost}
+		restClient, err := client.New(cfg)
+		if err != nil {
+			return nil, err
+		}
+		log.Printf("Creating remote Heapster client for %s", heapsterHost)
+		return RemoteHeapsterClient{client: restClient.RESTClient}, nil
 	}
-	log.Printf("Creating Heapster REST client for %s%s", cfg.Host, cfg.Prefix)
-	clientFactory := new(ClientFactoryImpl)
-	heapsterClient, err := clientFactory.New(&cfg)
-	if err != nil {
-		return nil, err
-	}
-	return heapsterClient.RESTClient, nil
 }
