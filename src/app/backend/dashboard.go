@@ -33,6 +33,7 @@ var (
 		"to connect to in the format of protocol://address:port, e.g., "+
 		"http://localhost:8082. If not specified, the assumption is that the binary runs inside a"+
 		"Kubernetes cluster and service proxy will be used.")
+	argNamespace = pflag.String("namespace", "", "Restrict the dashboard to the specified Namespace")
 )
 
 func main() {
@@ -54,6 +55,6 @@ func main() {
 	// Run a HTTP server that serves static public files from './public' and handles API calls.
 	// TODO(bryk): Disable directory listing.
 	http.Handle("/", http.FileServer(http.Dir("./public")))
-	http.Handle("/api/", CreateHttpApiHandler(apiserverClient, heapsterRESTClient, config))
+	http.Handle("/api/", CreateHttpApiHandler(apiserverClient, heapsterRESTClient, config, *argNamespace))
 	log.Print(http.ListenAndServe(fmt.Sprintf(":%d", *argPort), nil))
 }
