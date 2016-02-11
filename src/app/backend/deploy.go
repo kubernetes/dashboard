@@ -281,7 +281,7 @@ type createObjectFromInfo func(info *kubectlResource.Info) (bool, error)
 // Implementation of createObjectFromInfo
 func CreateObjectFromInfoFn(info *kubectlResource.Info) (bool, error) {
 	createdResource, err := kubectlResource.NewHelper(info.Client, info.Mapping).Create(info.Namespace, true, info.Object)
-	return createdResource != nil , err
+	return createdResource != nil, err
 }
 
 // Deploys an app based on the given yaml or json file.
@@ -307,12 +307,12 @@ func DeployAppFromFile(spec *AppDeploymentFromFileSpec, createObjectFromInfoFn c
 		Flatten().
 		Do()
 
-	deployedResourcesCount:= 0
+	deployedResourcesCount := 0
 
 	err = r.Visit(func(info *kubectlResource.Info, err error) error {
 		isDeployed, err := createObjectFromInfoFn(info)
 		if isDeployed {
-			deployedResourcesCount ++
+			deployedResourcesCount++
 			log.Printf("%s is deployed", info.Name)
 		}
 		return err
