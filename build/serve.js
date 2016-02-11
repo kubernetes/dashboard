@@ -36,9 +36,9 @@ export const browserSyncInstance = browserSync.create();
  * @type {!Array<string>}
  */
 const backendDevArgs = [
-  `--apiserver-host=http://${conf.backend.apiServerHost}`,
+  `--apiserver-host=${conf.backend.apiServerHost}`,
   `--port=${conf.backend.devServerPort}`,
-  `--heapster-host=http://${conf.backend.heapsterServerHost}`,
+  `--heapster-host=${conf.backend.heapsterServerHost}`,
 ];
 
 /**
@@ -47,9 +47,9 @@ const backendDevArgs = [
  * @type {!Array<string>}
  */
 const backendArgs = [
-  `--apiserver-host=http://${conf.backend.apiServerHost}`,
+  `--apiserver-host=${conf.backend.apiServerHost}`,
   `--port=${conf.frontend.serverPort}`,
-  `--heapster-host=http://${conf.backend.heapsterServerHost}`,
+  `--heapster-host=${conf.backend.heapsterServerHost}`,
 ];
 
 /**

@@ -24,12 +24,12 @@ import conf from './conf';
 /**
  * The healthz URL of the cluster to check that it is running.
  */
-const clusterHealthzUrl = `http://${conf.backend.apiServerHost}/healthz`;
+const clusterHealthzUrl = `${conf.backend.apiServerHost}/healthz`;
 
 /**
  * The validate URL of the heapster to check that it is running.
  */
-const heapsterValidateUrl = `http://${conf.backend.heapsterServerHost}/api/v1/model/stats/`;
+const heapsterValidateUrl = `${conf.backend.heapsterServerHost}/api/v1/model/stats/`;
 
 /**
  * A Number, representing the ID value of the timer that is set for function which periodically
@@ -143,7 +143,7 @@ gulp.task('wait-for-cluster', function(doneFn) {
     if (counter % 10 === 0) {
       gulpUtil.log(
           gulpUtil.colors.magenta(
-              `Waiting for a Kubernetes cluster on ${conf.backend.apiServerHost}...`));
+              `Waiting for a Kubernetes cluster at ${conf.backend.apiServerHost}...`));
     }
     counter += 1;
 
