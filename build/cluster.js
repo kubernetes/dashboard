@@ -149,7 +149,7 @@ gulp.task('wait-for-cluster', function(doneFn) {
 
     // constantly query the cluster until it is properly running
     clusterHealthCheck(function(result) {
-      if (result === 'ok') {
+      if (result === 'ok' && isRunningSetIntervalHandler !== null) {
         gulpUtil.log(gulpUtil.colors.magenta('Kubernetes cluster is up and running.'));
         clearTimeout(isRunningSetIntervalHandler);
         isRunningSetIntervalHandler = null;

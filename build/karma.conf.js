@@ -57,20 +57,9 @@ module.exports = function(config) {
 
     frameworks: ['jasmine', 'browserify'],
 
-    browsers: ['Chrome'],
-
     browserNoActivityTimeout: 60 * 1000,  // 60 seconds.
 
-    customLaunchers: {
-      // Custom launcher for Travis CI. It is required because Travis environment cannot use
-      // sandbox.
-      chromeTravis: {
-        base: 'Chrome',
-        flags: ['--no-sandbox'],
-      },
-    },
-
-    reporters: ['progress', 'coverage'],
+    reporters: ['dots', 'coverage'],
 
     coverageReporter: {
       dir: conf.paths.coverage,
@@ -89,6 +78,7 @@ module.exports = function(config) {
       'karma-ng-html2js-preprocessor',
       'karma-sourcemap-loader',
       'karma-browserify',
+      'karma-sauce-launcher',
     ],
 
     // karma-browserify plugin config.
@@ -115,8 +105,34 @@ module.exports = function(config) {
   };
 
   // Use custom browser configuration when running on Travis CI.
-  if (process.env.TRAVIS) {
-    configuration.browsers = ['chromeTravis'];
+  if (conf.test.useSauceLabs) {
+    configuration.reporters.push('saucelabs');
+
+    let testName;
+    if (process.env.TRAVIS) {
+      testName = `Karma tests ${process.env.TRAVIS_REPO_SLUG}, build ` +
+          `${process.env.TRAVIS_BUILD_NUMBER}`;
+      if (process.env.TRAVIS_PULL_REQUEST !== 'false') {
+        testName += `, PR: https://github.com/${process.env.TRAVIS_REPO_SLUG}/pull/` +
+            `${process.env.TRAVIS_PULL_REQUEST}`;
+      }
+    } else {
+      testName = 'Local karma tests';
+    }
+
+    configuration.sauceLabs = {
+      testName: testName,
+      connectOptions: {port: 5757, logfile: 'sauce_connect.log'},
+      public: 'public',
+    },
+    configuration.customLaunchers = {
+      sl_chrome: {base: 'SauceLabs', browserName: 'chrome'},
+      sl_firefox: {base: 'SauceLabs', browserName: 'firefox'},
+      sl_ie: {base: 'SauceLabs', browserName: 'internet explorer'},
+    };
+    configuration.browsers = Object.keys(configuration.customLaunchers);
+  } else {
+    configuration.browsers = ['Chrome'];
   }
 
   // Convert all JS code written ES6 with modules to ES5 bundles that browsers can digest.

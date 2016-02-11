@@ -86,6 +86,17 @@ export default {
   },
 
   /**
+   * Configuration for tests.
+   */
+  test: {
+    /**
+     * Whether to use sauce labs for running tests that require a browser.
+     */
+    useSauceLabs:
+        !!process.env.SAUCE_USERNAME && !!process.env.SAUCE_ACCESS_KEY && !!process.env.TRAVIS,
+  },
+
+  /**
    * Absolute paths to known directories, e.g., to source directory.
    */
   paths: {
