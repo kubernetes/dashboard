@@ -65,7 +65,7 @@ function createConfig() {
     ];
 
   } else {
-    config.capabilities = {'browserName': 'chrome'};
+    config.capabilities = {'browserName': 'firefox'};
   }
 
   return config;
