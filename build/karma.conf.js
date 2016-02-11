@@ -57,7 +57,7 @@ module.exports = function(config) {
 
     frameworks: ['jasmine', 'browserify'],
 
-    browserNoActivityTimeout: 60 * 1000,  // 60 seconds.
+    browserNoActivityTimeout: 5 * 60 * 1000,  // 5 minutes.
 
     reporters: ['dots', 'coverage'],
 
