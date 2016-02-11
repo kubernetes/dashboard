@@ -36,6 +36,14 @@ addons:
     username: k8s-dashboard-ci
     access_key: "18b7e71b-60e9-4177-9a7f-e769977dbb39"
 
+before_script:
+  # Prepare environment for the Chrome browser. This is required for PRs from forks where
+  # tests do not run on Saucelabs.
+  # TODO(bryk): Make tests run only on Saucelabs.
+  - export CHROME_BIN=chromium-browser
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+
 # Docker is required to set up a simple, single node Kubernetes cluster.
 # Local Docker-based cluster is the simplest way to create kubernetes on the host machine.
 services:
