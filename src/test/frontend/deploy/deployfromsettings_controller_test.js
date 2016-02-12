@@ -282,7 +282,7 @@ describe('DeployFromSettings controller', () => {
       let response = {
         secrets: ['secret1', 'secret2', 'secret3'],
       };
-      httpBackend.expectGET('api/secrets/default').respond(200, response);
+      httpBackend.expectGET('api/v1/secrets/default').respond(200, response);
       // when
       ctrl.getSecrets('default');
       httpBackend.flush();

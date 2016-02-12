@@ -61,7 +61,7 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient) 
 
 	deployWs := new(restful.WebService)
 	deployWs.Filter(wsLogger)
-	deployWs.Path("/api/appdeployments").
+	deployWs.Path("/api/v1/appdeployments").
 		Consumes(restful.MIME_JSON).
 		Produces(restful.MIME_JSON)
 	deployWs.Route(
@@ -86,7 +86,7 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient) 
 	wsContainer.Add(deployWs)
 
 	deployFromFileWs := new(restful.WebService)
-	deployFromFileWs.Path("/api/appdeploymentfromfile").
+	deployFromFileWs.Path("/api/v1/appdeploymentfromfile").
 		Consumes(restful.MIME_JSON).
 		Produces(restful.MIME_JSON)
 	deployFromFileWs.Route(
@@ -98,7 +98,7 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient) 
 
 	replicationControllerWs := new(restful.WebService)
 	replicationControllerWs.Filter(wsLogger)
-	replicationControllerWs.Path("/api/replicationcontrollers").
+	replicationControllerWs.Path("/api/v1/replicationcontrollers").
 		Consumes(restful.MIME_JSON).
 		Produces(restful.MIME_JSON)
 	replicationControllerWs.Route(
@@ -124,7 +124,7 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient) 
 
 	namespacesWs := new(restful.WebService)
 	namespacesWs.Filter(wsLogger)
-	namespacesWs.Path("/api/namespaces").
+	namespacesWs.Path("/api/v1/namespaces").
 		Consumes(restful.MIME_JSON).
 		Produces(restful.MIME_JSON)
 	namespacesWs.Route(
@@ -140,7 +140,7 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient) 
 
 	logsWs := new(restful.WebService)
 	logsWs.Filter(wsLogger)
-	logsWs.Path("/api/logs").
+	logsWs.Path("/api/v1/logs").
 		Produces(restful.MIME_JSON)
 	logsWs.Route(
 		logsWs.GET("/{namespace}/{podId}").
@@ -154,7 +154,7 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient) 
 
 	eventsWs := new(restful.WebService)
 	eventsWs.Filter(wsLogger)
-	eventsWs.Path("/api/events").
+	eventsWs.Path("/api/v1/events").
 		Produces(restful.MIME_JSON)
 	eventsWs.Route(
 		eventsWs.GET("/{namespace}/{replicationController}").
@@ -163,7 +163,7 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient) 
 	wsContainer.Add(eventsWs)
 
 	secretsWs := new(restful.WebService)
-	secretsWs.Path("/api/secrets").Produces(restful.MIME_JSON)
+	secretsWs.Path("/api/v1/secrets").Produces(restful.MIME_JSON)
 	secretsWs.Route(
 		secretsWs.GET("/{namespace}").
 			To(apiHandler.handleGetSecrets).

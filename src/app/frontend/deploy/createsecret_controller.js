@@ -102,7 +102,7 @@ export default class CreateSecretController {
       data: this.data,
     };
     /** @type {!angular.Resource<!backendApi.SecretSpec>} */
-    let resource = this.resource_(`api/secrets/`);
+    let resource = this.resource_(`api/v1/secrets/`);
 
     resource.save(
         secretSpec,

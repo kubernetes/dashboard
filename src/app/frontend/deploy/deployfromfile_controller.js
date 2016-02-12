@@ -78,7 +78,7 @@ export default class DeployFromFileController {
     let defer = this.q_.defer();
 
     /** @type {!angular.Resource<!backendApi.AppDeploymentFromFileSpec>} */
-    let resource = this.resource_('api/appdeploymentfromfile');
+    let resource = this.resource_('api/v1/appdeploymentfromfile');
     resource.save(
         deploymentSpec,
         (savedConfig) => {

@@ -68,7 +68,7 @@ function validate(ngModelController, externalChanged, protocol, isExternal, reso
   }
 
   /** @type {!angular.Resource<!backendApi.ProtocolValiditySpec>} */
-  let resourceClass = resource('api/appdeployments/validate/protocol');
+  let resourceClass = resource('api/v1/appdeployments/validate/protocol');
   /** @type {!backendApi.ProtocolValiditySpec} */
   let spec = {protocol: protocol, isExternal: isExternal};
   resourceClass.save(

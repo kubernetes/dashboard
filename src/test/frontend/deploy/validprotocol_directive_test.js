@@ -34,7 +34,7 @@ describe('Valid protocol directive', () => {
   });
 
   it('should validate protocol asynchronosuly', () => {
-    let endpoint = httpBackend.whenPOST('api/appdeployments/validate/protocol');
+    let endpoint = httpBackend.whenPOST('api/v1/appdeployments/validate/protocol');
 
     let elem = compileFn(scope)[0];
     expect(elem.classList).toContain('ng-valid');
@@ -66,7 +66,7 @@ describe('Valid protocol directive', () => {
 
   it('should validate on service type change', () => {
     let elem = compileFn(scope)[0];
-    httpBackend.whenPOST('api/appdeployments/validate/protocol').respond({
+    httpBackend.whenPOST('api/v1/appdeployments/validate/protocol').respond({
       valid: false,
     });
     scope.$apply();
@@ -82,7 +82,7 @@ describe('Valid protocol directive', () => {
 
   it('should treat failures as invalid protocol', () => {
     let elem = compileFn(scope)[0];
-    httpBackend.whenPOST('api/appdeployments/validate/protocol').respond(503, '');
+    httpBackend.whenPOST('api/v1/appdeployments/validate/protocol').respond(503, '');
     scope.$apply();
 
     scope.isExternal = false;
