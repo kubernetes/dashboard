@@ -29,3 +29,11 @@ md-progress-linear {
   margin-bottom: $baseline-grid;
   margin-top: $baseline-grid;
 }
+
+.kd-deploy-form-name-container {
+  margin-bottom: $baseline-grid * 8;
+}
+
+.kd-deploy-form-name-validation-container {
+  height: $bar-height;
+}
