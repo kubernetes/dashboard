@@ -56,7 +56,8 @@ describe('Delete replication controller dialog controller', () => {
     spyOn(mdDialog, 'hide');
 
     // when
-    httpBackend.whenDELETE('api/replicationcontrollers/foo-namespace/foo-name?deleteServices=false')
+    httpBackend
+        .whenDELETE('api/v1/replicationcontrollers/foo-namespace/foo-name?deleteServices=false')
         .respond(200, {});
     ctrl.remove();
     httpBackend.flush();
@@ -71,7 +72,8 @@ describe('Delete replication controller dialog controller', () => {
     ctrl.deleteServices = true;
 
     // when
-    httpBackend.whenDELETE('api/replicationcontrollers/foo-namespace/foo-name?deleteServices=true')
+    httpBackend
+        .whenDELETE('api/v1/replicationcontrollers/foo-namespace/foo-name?deleteServices=true')
         .respond(200, {});
     ctrl.remove();
     httpBackend.flush();
@@ -85,7 +87,8 @@ describe('Delete replication controller dialog controller', () => {
     spyOn(mdDialog, 'cancel');
 
     // when
-    httpBackend.whenDELETE('api/replicationcontrollers/foo-namespace/foo-name?deleteServices=false')
+    httpBackend
+        .whenDELETE('api/v1/replicationcontrollers/foo-namespace/foo-name?deleteServices=false')
         .respond(503, {});
     ctrl.remove();
     httpBackend.flush();

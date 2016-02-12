@@ -69,7 +69,7 @@ function redirectIfNeeded($state, $timeout, replicationControllers) {
  */
 function resolveReplicationControllers($resource) {
   /** @type {!angular.Resource<!backendApi.ReplicationControllerList>} */
-  let resource = $resource('api/replicationcontrollers');
+  let resource = $resource('api/v1/replicationcontrollers');
 
   return resource.get().$promise;
 }

@@ -104,7 +104,7 @@ describe('Create-Secret dialog', () => {
         `MzTjNiM0prTVRJSyIsICJlbWFpbCI6` + `ICJqZG9lQGV4YW1wbGUuY29tIiB9IH0K`;
     httpBackend
         .expect(
-            'POST', 'api/secrets',
+            'POST', 'api/v1/secrets',
             {name: ctrl.secretName, namespace: ctrl.namespace, data: ctrl.data})
         .respond(201, 'success');
     // when trying to submit
@@ -122,7 +122,7 @@ describe('Create-Secret dialog', () => {
     /** @type {string} */
     let errorMessage = 'Something bad happened';
     // return an erranous response
-    httpBackend.expectPOST('api/secrets').respond(500, errorMessage);
+    httpBackend.expectPOST('api/v1/secrets').respond(500, errorMessage);
     // when
     ctrl.createSecret();
     httpBackend.flush();

@@ -204,7 +204,7 @@ export default class DeployFromSettingsController {
     let defer = this.q_.defer();
 
     /** @type {!angular.Resource<!backendApi.AppDeploymentSpec>} */
-    let resource = this.resource_('api/appdeployments');
+    let resource = this.resource_('api/v1/appdeployments');
     resource.save(
         appDeploymentSpec,
         (savedConfig) => {
@@ -278,7 +278,7 @@ export default class DeployFromSettingsController {
    */
   getSecrets(namespace) {
     /** @type {!angular.Resource<!backendApi.SecretsList>} */
-    let resource = this.resource_(`api/secrets/${namespace}`);
+    let resource = this.resource_(`api/v1/secrets/${namespace}`);
     resource.get(
         (res) => { this.secrets = res.secrets; },
         (err) => { this.log_.log(`Error getting secrets: ${err}`); });

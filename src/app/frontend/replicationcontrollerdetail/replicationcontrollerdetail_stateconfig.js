@@ -44,7 +44,8 @@ export default function stateConfig($stateProvider) {
  */
 export function getReplicationControllerDetailsResource($stateParams, $resource) {
   return $resource(
-      `api/replicationcontrollers/${$stateParams.namespace}/${$stateParams.replicationController}`);
+      `api/v1/replicationcontrollers/${$stateParams.namespace}/` +
+      `${$stateParams.replicationController}`);
 }
 
 /**
@@ -54,7 +55,9 @@ export function getReplicationControllerDetailsResource($stateParams, $resource)
  * @ngInject
  */
 export function getReplicationControllerSpecPodsResource($stateParams, $resource) {
-  return $resource(`api/replicationcontrollers/${$stateParams.namespace}/${$stateParams.replicationController}/update/pods`);
+  return $resource(
+      `api/v1/replicationcontrollers/${$stateParams.namespace}/` +
+      `${$stateParams.replicationController}/update/pods`);
 }
 
 /**
@@ -76,7 +79,7 @@ function resolveReplicationControllerDetails(replicationControllerDetailResource
 function resolveReplicationControllerEvents($stateParams, $resource) {
   /** @type {!angular.Resource<!backendApi.Events>} */
   let resource =
-      $resource(`api/events/${$stateParams.namespace}/${$stateParams.replicationController}`);
+      $resource(`api/v1/events/${$stateParams.namespace}/${$stateParams.replicationController}`);
 
   return resource.get().$promise;
 }

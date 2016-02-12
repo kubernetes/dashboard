@@ -106,7 +106,7 @@ describe('Create-Namespace dialog', () => {
     /** @type {string} */
     let errorMessage = 'Something bad happened';
     // return an erranous response
-    httpBackend.expectPOST('api/namespaces').respond(500, errorMessage);
+    httpBackend.expectPOST('api/v1/namespaces').respond(500, errorMessage);
     // when
     ctrl.createNamespace();
     httpBackend.flush();

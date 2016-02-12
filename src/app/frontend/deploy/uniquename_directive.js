@@ -53,7 +53,7 @@ function validate(name, namespace, resource, q) {
   let deferred = q.defer();
 
   /** @type {!angular.Resource<!backendApi.AppNameValiditySpec>} */
-  let resourceClass = resource('api/appdeployments/validate/name');
+  let resourceClass = resource('api/v1/appdeployments/validate/name');
   /** @type {!backendApi.AppNameValiditySpec} */
   let spec = {name: name, namespace: namespace};
   resourceClass.save(
