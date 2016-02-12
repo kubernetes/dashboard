@@ -330,9 +330,7 @@ func getExternalEndpoints(replicationController api.ReplicationController, pods 
 
 	if service.Spec.Type == api.ServiceTypeNodePort {
 		externalEndpoints = getNodePortEndpoints(replicationControllerPods, service, getNodeFn)
-	}
-
-	if service.Spec.Type == api.ServiceTypeLoadBalancer {
+	} else if service.Spec.Type == api.ServiceTypeLoadBalancer {
 		for _, ingress := range service.Status.LoadBalancer.Ingress {
 			externalEndpoints = append(externalEndpoints, getExternalEndpoint(ingress,
 				service.Spec.Ports))
@@ -343,6 +341,28 @@ func getExternalEndpoints(replicationController api.ReplicationController, pods 
 		}
 	}
 
+	if len(externalEndpoints) == 0 && (service.Spec.Type == api.ServiceTypeNodePort ||
+		service.Spec.Type == api.ServiceTypeLoadBalancer) {
+		externalEndpoints = getLocalhostEndpoints(service)
+	}
+
+	return externalEndpoints
+}
+
+// Returns localhost endpoints for specified node port or load balancer service.
+func getLocalhostEndpoints(service api.Service) []Endpoint {
+	var externalEndpoints []Endpoint
+	for _, port := range service.Spec.Ports {
+		externalEndpoints = append(externalEndpoints, Endpoint{
+			Host: "localhost",
+			Ports: []ServicePort{
+				{
+					Protocol: port.Protocol,
+					Port:     port.NodePort,
+				},
+			},
+		})
+	}
 	return externalEndpoints
 }
 

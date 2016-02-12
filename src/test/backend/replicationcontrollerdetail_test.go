@@ -493,6 +493,57 @@ func TestGetNodePortEndpoints(t *testing.T) {
 	}
 }
 
+func TestGetLocalhostEndpoints(t *testing.T) {
+	cases := []struct {
+		service  api.Service
+		expected []Endpoint
+	}{
+		{
+			api.Service{
+				Spec: api.ServiceSpec{
+					Ports: []api.ServicePort{
+						{
+							Protocol: "TCP",
+							NodePort: 30100,
+						},
+						{
+							Protocol: "TCP",
+							NodePort: 30101,
+						},
+					},
+				},
+			},
+			[]Endpoint{
+				{
+					Host: "localhost",
+					Ports: []ServicePort{
+						{
+							Port: 30100,
+							Protocol: "TCP",
+						},
+					},
+				},
+				{
+					Host: "localhost",
+					Ports: []ServicePort{
+						{
+							Port: 30101,
+							Protocol: "TCP",
+						},
+					},
+				},
+			},
+		},
+	}
+	for _, c := range cases {
+		actual := getLocalhostEndpoints(c.service)
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("getLocalhostEndpoints(%+v) == %+v, expected %+v", c.service, actual,
+				c.expected)
+		}
+	}
+}
+
 func TestGetInternalEndpoint(t *testing.T) {
 	cases := []struct {
 		serviceName, namespace string
