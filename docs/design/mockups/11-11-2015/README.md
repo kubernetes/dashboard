@@ -26,8 +26,7 @@
 ![Deploy form pull secret menu with upload](10_deploy form pull secret menu with upload.png)  
 ### Deploy form pull secret upload
 ![Deploy form pull secret upload](11_deploy form pull secret upload.png)  
-### Deploy form pull secret upload
-![](12_deploy form pull secret upload.png)  
+![Deploy form pull secret upload](12_deploy form pull secret upload.png)  
 ### Deploy form pull secret specified
 ![Deploy form pull secret specified](13_deploy form pull secret specified.png)  
 ### Deploy more
@@ -37,7 +36,7 @@
 ### Card variations
 ![Card variations](16_card variations.png)  
 ### Job detals
-![](17_job details.png)  
+![Job detals](17_job details.png)  
 ### Node hover
 ![Node hover](18_node hover.png)  
 ### Events
