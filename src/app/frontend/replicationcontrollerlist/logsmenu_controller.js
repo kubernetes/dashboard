@@ -58,7 +58,7 @@ export default class LogsMenuController {
 
   /**
    * Opens menu with pods and link to logs.
-   * @param  {!function(MouseEvent)} $mdOpenMenu
+   * @param  {!function(!MouseEvent)} $mdOpenMenu
    * @param  {!MouseEvent} $event
    * @export
    */

@@ -30,17 +30,15 @@ const EVENT_SOURCE_SYSTEM = 'System';
 export default class ReplicationControllerDetailController {
   /**
    * @param {function(string):boolean} $mdMedia Angular Material $mdMedia service
-   * @param {!md.$dialog} $mdDialog
    * @param {!./replicationcontrollerdetail_state.StateParams} $stateParams
    * @param {!ui.router.$state} $state
-   * @param {!angular.$resource} $resource
    * @param {!angular.$log} $log
    * @param {!backendApi.ReplicationControllerDetail} replicationControllerDetail
    * @param {!backendApi.Events} replicationControllerEvents
    * @ngInject
    */
   constructor(
-      $mdMedia, $mdDialog, $stateParams, $state, $resource, $log, replicationControllerDetail,
+      $mdMedia, $stateParams, $state, $resource, $log, replicationControllerDetail,
       replicationControllerEvents) {
     /** @export {function(string):boolean} */
     this.mdMedia = $mdMedia;
@@ -71,12 +69,6 @@ export default class ReplicationControllerDetailController {
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
-
-    /** @private {!md.$dialog} */
-    this.mdDialog_ = $mdDialog;
-
-    /** @private {!angular.$resource} */
-    this.resource_ = $resource;
 
     /** @private {!angular.$log} */
     this.log_ = $log;
@@ -139,6 +131,7 @@ export default class ReplicationControllerDetailController {
   }
 
   /**
+   * @param {!backendApi.ReplicationControllerPod} pod
    * @export
    */
   getPodLogsHref(pod) {

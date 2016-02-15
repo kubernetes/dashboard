@@ -23,14 +23,12 @@ import {
  */
 export default class DeployController {
   /**
-   * @param {!angular.$resource} $resource
-   * @param {!angular.$log} $log
    * @param {!ui.router.$state} $state
    * @param {!backendApi.NamespaceList} namespaces
    * @param {!backendApi.Protocols} protocols
    * @ngInject
    */
-  constructor($resource, $log, $state, namespaces, protocols) {
+  constructor($state, namespaces, protocols) {
     /** @export {!angular.FormController} Initialized from the template */
     this.deployForm;
 
@@ -59,12 +57,6 @@ export default class DeployController {
      * @export {string}
      */
     this.selection = "Settings";
-
-    /** @private {!angular.$resource} */
-    this.resource_ = $resource;
-
-    /** @private {!angular.$log} */
-    this.log_ = $log;
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;

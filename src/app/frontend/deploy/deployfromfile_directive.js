@@ -14,6 +14,10 @@
 
 import DeployFromFileController from './deployfromfile_controller';
 
+/**
+ * Returns directive definition object for the deploy from file directive.
+ * @return {!angular.Directive}
+ */
 export default function deployFromFileDirective() {
   return {
     scope: {},

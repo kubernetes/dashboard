@@ -23,13 +23,12 @@ import {stateName} from 'replicationcontrollerdetail/replicationcontrollerdetail
 export default class ReplicationControllerCardMenuController {
   /**
    * @param {!ui.router.$state} $state
-   * @param {!angular.$log} $log
    * @param
    * {!./../replicationcontrollerdetail/replicationcontroller_service.ReplicationControllerService}
    * kdReplicationControllerService
    * @ngInject
    */
-  constructor($state, $log, kdReplicationControllerService) {
+  constructor($state, kdReplicationControllerService) {
     /**
      * Initialized from the scope.
      * @export {!backendApi.ReplicationController}
@@ -39,9 +38,6 @@ export default class ReplicationControllerCardMenuController {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
-    /** @private {!angular.$log} */
-    this.log_ = $log;
-
     /** @private
      * {!./../replicationcontrollerdetail/replicationcontroller_service.ReplicationControllerService}
      */
@@ -49,7 +45,7 @@ export default class ReplicationControllerCardMenuController {
   }
 
   /**
-   * @param {!function(MouseEvent)} $mdOpenMenu
+   * @param {!function(!MouseEvent)} $mdOpenMenu
    * @param {!MouseEvent} $event
    * @export
    */

@@ -22,7 +22,7 @@ export default class DeployLabel {
    * @param {string} key
    * @param {string} value
    * @param {boolean} editable
-   * @param {function(string): string} derivedValueGetterFn - callback
+   * @param {function(string): string|undefined} derivedValueGetterFn - callback
    */
   constructor(key = '', value = '', editable = true, derivedValueGetterFn = undefined) {
     /** @export {boolean} */
@@ -39,7 +39,7 @@ export default class DeployLabel {
   }
 
   /**
-   * @param {string} [newValue]
+   * @param {string=} [newValue]
    * @return {string}
    * @export
    */

@@ -60,7 +60,7 @@ export default class NamespaceDialogController {
 
     /**
      * Pattern validation rule for namespace
-     * @export {RegExp}
+     * @export {!RegExp}
      */
     this.namespacePattern = new RegExp('^[a-z0-9]([-a-z0-9]*[a-z0-9])?$');
 

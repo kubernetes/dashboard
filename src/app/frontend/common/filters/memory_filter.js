@@ -21,7 +21,7 @@ const powerSuffixes = ['', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi'];
 /**
  * Returns filter function that formats memory in bytes.
  * @param {function(number): string} numberFilter
- * @return {Function}
+ * @return {function(number): string}
  * @ngInject
  */
 export default function memoryFilter(numberFilter) {

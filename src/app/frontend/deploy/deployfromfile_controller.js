@@ -27,7 +27,10 @@ export default class DeployFromFileController {
    * @param {!ui.router.$state} $state
    * @param {!angular.$resource} $resource
    * @param {!angular.$q} $q
-   * @ngInject */
+   * TODO (cheld) Set correct type after fixing issue #159
+   * @param {!Object} errorDialog
+   * @ngInject
+   */
   constructor($log, $state, $resource, $q, errorDialog) {
     /**
      * It initializes the scope output parameter
@@ -66,7 +69,7 @@ export default class DeployFromFileController {
    * Deploys the application based on the state of the controller.
    *
    * @export
-   * @return {angular.$q.Promise}
+   * @return {!angular.$q.Promise}
    */
   deploy() {
     /** @type {!backendApi.AppDeploymentFromFileSpec} */

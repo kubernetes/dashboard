@@ -21,7 +21,7 @@ export default class LabelsController {
    * @ngInject
    */
   constructor() {
-    /** @export {Object<string, string>} Initialized from the scope. */
+    /** @export {!Object<string, string>} Initialized from the scope. */
     this.labels;
   }
 }

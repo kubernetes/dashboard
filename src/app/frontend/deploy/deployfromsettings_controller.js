@@ -125,7 +125,7 @@ export default class DeployFromSettingsController {
      * Checks that a name begins and ends with a lowercase letter
      * and contains nothing but lowercase letters and hyphens ("-")
      * (leading and trailing spaces are ignored by default)
-     * @export {RegExp}
+     * @export {!RegExp}
      */
     this.namePattern = new RegExp('^[a-z0-9]([-a-z0-9]*[a-z0-9])?$');
 
@@ -176,7 +176,7 @@ export default class DeployFromSettingsController {
   /**
    * Deploys the application based on the state of the controller.
    *
-   * @return {angular.$q.Promise}
+   * @return {!angular.$q.Promise}
    * @export
    */
   deploy() {

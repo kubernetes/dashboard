@@ -50,7 +50,7 @@ const TimeConstants = {
 
 /**
  * Returns filter function to display relative time since given date.
- * @return {Function}
+ * @return {function(string): string}
  */
 export default function relativeTimeFilter() {
   /**

@@ -29,6 +29,9 @@ export const DOWNWARDS = true;
  * @final
  */
 export default class SortedHeaderController {
+  /**
+   * @ngInject
+   */
   constructor() {
     /**
      * Tooltip message for current header column. Initialized from the scope (read-only).

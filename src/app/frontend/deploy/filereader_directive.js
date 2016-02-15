@@ -30,7 +30,7 @@ export default function fileReaderDirective($log) {
       uploadController.registerBrowseFileFunction(() => (element[0].click()));
 
       element.bind('change', (changeEvent) => {
-        /** @type {File} */
+        /** @type {?File} */
         let file = changeEvent.target.files[0];
         if (!file) {
           $log.error('Error invalid file: ', file);
