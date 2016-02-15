@@ -78,7 +78,7 @@ export default class LogsMenuController {
   getReplicationControllerPods_() {
     /** @type {!angular.Resource<!backendApi.ReplicationControllerPods>} */
     let resource = this.resource_(
-        `api/v1replicationcontrollers/pods/${this.namespace}/` +
+        `api/v1/replicationcontrollers/pods/${this.namespace}/` +
         `${this.replicationControllerName}?limit=10`);
 
     resource.get(
