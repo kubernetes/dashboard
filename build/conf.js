@@ -131,4 +131,16 @@ export default {
     src: path.join(basePath, 'src'),
     tmp: path.join(basePath, '.tmp'),
   },
+
+  /**
+   * HTML code formatting options. More details at https://github.com/beautify-web/js-beautify.
+   */
+  htmlFormatting: {
+    indent_size: 2,
+    wrap_line_length: 100,
+    end_with_newline: true,
+    brace_style: "expand",
+    preserve_newlines: true,
+    max_preserve_newlines: 0,
+  },
 };

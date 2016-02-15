@@ -13,36 +13,31 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-
 <kd-help-section>
   <md-input-container class="md-block" md-is-error="ctrl.isNameError()">
     <label>App name</label>
     <div class="kd-deploy-form-name-container">
       <input ng-model="ctrl.name" name="name" namespace="ctrl.namespace" required ng-pattern="ctrl.namePattern"
-             ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" kd-unique-name
-             ng-maxlength="ctrl.nameMaxLength">
+        ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" kd-unique-name
+        ng-maxlength="ctrl.nameMaxLength">
       <div class="kd-deploy-form-name-validation-container">
         <ng-messages for="ctrl.form.name.$error" role="alert" multiple>
           <ng-message when="required">Application name is required.</ng-message>
-          <ng-message when="uniqueName">Application with this name
-            already exists within namespace <i>{{ctrl.namespace}}</i>.</ng-message>
+          <ng-message when="uniqueName">Application with this name already exists within namespace <i>{{ctrl.namespace}}</i>.</ng-message>
           <ng-message when="pattern">Application name should contain only lowercase letters, numbers, and '-' between words
           </ng-message>
           <ng-message when="maxlength">Application name should have no more than 63 characters</ng-message>
         </ng-messages>
-
         <md-progress-linear class="kd-deploy-form-progress" md-mode="indeterminate" ng-show="ctrl.form.name.$pending">
         </md-progress-linear>
       </div>
     </div>
   </md-input-container>
-
   <kd-user-help>
     An 'app' label with this value will be added to the Replication Controller and Service that get deployed.
     <a href="http://kubernetes.io/v1.1/docs/user-guide/labels.html" target="_blank">Learn more</a>
   </kd-user-help>
 </kd-help-section>
-
 <kd-help-section>
   <md-input-container class="md-block">
     <label>Container image</label>
@@ -52,12 +47,11 @@ limitations under the License.
     </ng-messages>
   </md-input-container>
   <kd-user-help>
-    Enter the URL of a public image on any registry, or a private image hosted on Docker Hub or
-    Google Container Registry.
+    Enter the URL of a public image on any registry, or a private image hosted on Docker Hub or Google Container
+    Registry.
     <a href="http://kubernetes.io/v1.1/docs/user-guide/images.html" target="_blank">Learn more</a>
   </kd-user-help>
 </kd-help-section>
-
 <kd-help-section>
   <md-input-container class="md-block">
     <label>Number of pods</label>
@@ -73,28 +67,23 @@ limitations under the License.
     <a href="http://kubernetes.io/v1.1/docs/user-guide/replication-controller.html" target="_blank">Learn more</a>
   </kd-user-help>
 </kd-help-section>
-
 <kd-help-section>
-  <kd-port-mappings port-mappings="ctrl.portMappings" protocols="ctrl.protocols"
-      is-external="ctrl.isExternal">
+  <kd-port-mappings port-mappings="ctrl.portMappings" protocols="ctrl.protocols" is-external="ctrl.isExternal">
   </kd-port-mappings>
   <kd-user-help>
-    Ports are optional. If specified, a Service will be created mapping the Port (incoming) to a
-    target Port seen by the container.
+    Ports are optional. If specified, a Service will be created mapping the Port (incoming) to a target Port
+    seen by the container.
     <span ng-if="ctrl.name">
       The internal DNS name for this Service will be: <span class="kd-emphasized">{{ctrl.name}}</span>.
     </span>
     <a href="http://kubernetes.io/v1.1/docs/user-guide/services.html" target="_blank">Learn more</a>
   </kd-user-help>
 </kd-help-section>
-
 <kd-help-section>
-  <md-checkbox ng-model="ctrl.isExternal" class="md-primary"
-               ng-model-options="{ debounce: { 'default': 500, 'blur': 0 } }">
+  <md-checkbox ng-model="ctrl.isExternal" class="md-primary" ng-model-options="{ debounce: { 'default': 500, 'blur': 0 } }">
     Expose service externally
   </md-checkbox>
 </kd-help-section>
-
 <!-- advanced options -->
 <div ng-show="ctrl.isMoreOptionsEnabled()">
   <kd-help-section>
@@ -103,11 +92,10 @@ limitations under the License.
       <textarea ng-model="ctrl.description"></textarea>
     </md-input-container>
     <kd-user-help>
-      The description will be added as an annotation to the Replication Controller and displayed in the
-      application's details.
+      The description will be added as an annotation to the Replication Controller and displayed in the application's
+      details.
     </kd-user-help>
   </kd-help-section>
-
   <kd-help-section>
     <div layout="column">
       <div class="kd-label-title md-body-2">Labels</div>
@@ -117,17 +105,15 @@ limitations under the License.
         <div flex="40">Value</div>
       </div>
       <div ng-repeat="label in ctrl.labels">
-         <kd-deploy-label layout="row" flex label="label" labels="ctrl.labels"></kd-deploy-label>
+        <kd-deploy-label layout="row" flex label="label" labels="ctrl.labels"></kd-deploy-label>
       </div>
     </div>
-
     <kd-user-help>
       The specified labels will be applied to the created Replication Controller, Service (if any) and Pods.
       Common labels include release, environment, tier, partition and track.
       <a href="http://kubernetes.io/v1.1/docs/user-guide/labels.html" target="_blank">Learn more</a>
     </kd-user-help>
   </kd-help-section>
-
   <kd-help-section>
     <md-input-container class="md-block">
       <label>Namespace</label>
@@ -145,7 +131,6 @@ limitations under the License.
       <a href="http://kubernetes.io/v1.1/docs/admin/namespaces.html" target="_blank">Learn more</a>
     </kd-user-help>
   </kd-help-section>
-
   <kd-help-section>
     <md-input-container class="md-block">
       <label>Image Pull Secret</label>
@@ -159,12 +144,11 @@ limitations under the License.
       </md-select>
     </md-input-container>
     <kd-user-help>
-      The specified image could require a pull secret credential if it is private. You may choose an
-      existing secret or create a new one.
+      The specified image could require a pull secret credential if it is private. You may choose an existing
+      secret or create a new one.
       <a href="http://kubernetes.io/v1.1/docs/user-guide/secrets.html" target="_blank">Learn more</a>
     </kd-user-help>
   </kd-help-section>
-
   <kd-help-section>
     <div layout="row">
       <md-input-container flex>
@@ -190,26 +174,23 @@ limitations under the License.
       <a href="http://kubernetes.io/v1.1/docs/admin/limitrange/README.html" target="_blank">Learn more</a>
     </kd-user-help>
   </kd-help-section>
-
   <kd-help-section>
     <div>
       <md-input-container class="md-block">
         <label>Run command</label>
         <input ng-model="ctrl.containerCommand">
       </md-input-container>
-
       <md-input-container class="md-block">
         <label>Run command arguments</label>
         <input ng-model="ctrl.containerCommandArgs">
       </md-input-container>
     </div>
     <kd-user-help>
-      By default, your containers run the selected image's default entrypoint command. You can
-      use the command options to override the default.
+      By default, your containers run the selected image's default entrypoint command. You can use the command
+      options to override the default.
       <a href="http://kubernetes.io/v1.1/docs/user-guide/containers.html" target="_blank">Learn more</a>
     </kd-user-help>
   </kd-help-section>
-
   <kd-help-section>
     <div class="md-block">
       <md-checkbox ng-model="ctrl.runAsPrivileged" class="md-primary">
@@ -220,26 +201,22 @@ limitations under the License.
       Processes in privileged containers are equivalent to processes running as root on the host.
     </kd-user-help>
   </kd-help-section>
-
   <kd-help-section>
     <kd-environment-variables variables="ctrl.variables">
     </kd-environment-variables>
     <kd-user-help>
-      Environment variables available for use in the container. Values can reference other variables
-      using $(VAR_NAME) syntax.
+      Environment variables available for use in the container. Values can reference other variables using
+      $(VAR_NAME) syntax.
       <a href="http://kubernetes.io/v1.1/docs/design/expansion.html" target="_blank">Learn more</a>
     </kd-user-help>
   </kd-help-section>
 </div>
-
 <!-- show/hide advanced options toggle -->
-<md-button class="md-primary kd-deploy-moreoptions-button" type="button"
-           ng-click="ctrl.switchMoreOptions()"
-           ng-hide="ctrl.isMoreOptionsEnabled()">
+<md-button class="md-primary kd-deploy-moreoptions-button" type="button" ng-click="ctrl.switchMoreOptions()"
+  ng-hide="ctrl.isMoreOptionsEnabled()">
   <md-icon>arrow_drop_down</md-icon>show advanced options
 </md-button>
-<md-button class="md-primary kd-deploy-moreoptions-button" type="button"
-           ng-click="ctrl.switchMoreOptions()"
-           ng-show="ctrl.isMoreOptionsEnabled()">
+<md-button class="md-primary kd-deploy-moreoptions-button" type="button" ng-click="ctrl.switchMoreOptions()"
+  ng-show="ctrl.isMoreOptionsEnabled()">
   <md-icon>arrow_drop_up</md-icon>hide advanced options
 </md-button>

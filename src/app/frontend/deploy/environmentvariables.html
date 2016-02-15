@@ -13,14 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-
 <div class="kd-environment-variables-title md-body-2">Environment variables</div>
 <div ng-repeat="variable in ctrl.variables">
   <ng-form name="variablesForm" layout="row">
     <md-input-container flex class="kd-deploy-input-row">
       <label>Name</label>
-      <input ng-model="variable.name" name="name" ng-change="ctrl.addVariableIfNeeed()"
-          ng-pattern="ctrl.namePattern">
+      <input ng-model="variable.name" name="name" ng-change="ctrl.addVariableIfNeeed()" ng-pattern="ctrl.namePattern">
       <ng-messages for="variablesForm.name.$error" role="alert" multiple>
         <ng-message when="pattern">Variable name must be a valid C identifier.</ng-message>
       </ng-messages>
@@ -31,9 +29,7 @@ limitations under the License.
       <input ng-model="variable.value" name="value">
     </md-input-container>
     <div flex="10">
-      <md-button type="button" ng-if="ctrl.isRemovable($index)"
-                 ng-click="ctrl.remove($index)"
-                 class="material-icons md-icon-button">
+      <md-button type="button" ng-if="ctrl.isRemovable($index)" ng-click="ctrl.remove($index)" class="material-icons md-icon-button">
         delete
       </md-button>
     </div>
