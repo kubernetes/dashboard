@@ -13,28 +13,24 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-
 <md-card class="kd-replicationcontroller-card">
   <md-card-content>
     <div layout="column">
-      <div flex layout="row" layout-align="space-between center"
-          class="kd-replicationcontroller-card-title-row">
+      <div flex layout="row" layout-align="space-between center" class="kd-replicationcontroller-card-title-row">
         <span layout="row" flex>
           <a ng-href="{{::ctrl.getReplicationControllerDetailHref()}}" class="kd-replicationcontroller-card-name">
             <span class="md-title kd-replicationcontroller-card-title">
               {{::ctrl.replicationController.name}}
             </span>
-          </a>
-          <md-icon class="material-icons md-warn kd-replicationcontroller-card-status-icon"
-                   ng-if="::ctrl.hasWarnings()">
-            error
-            <md-tooltip>One or more pods have errors</md-tooltip>
-          </md-icon>
-          <md-icon class="material-icons kd-replicationcontroller-card-status-icon"
-                   ng-if="::ctrl.isPending()">
-            timelapse
-            <md-tooltip>One or more pods are in pending state</md-tooltip>
-          </md-icon>
+        </a>
+        <md-icon class="material-icons md-warn kd-replicationcontroller-card-status-icon" ng-if="::ctrl.hasWarnings()">
+          error
+          <md-tooltip>One or more pods have errors</md-tooltip>
+        </md-icon>
+        <md-icon class="material-icons kd-replicationcontroller-card-status-icon" ng-if="::ctrl.isPending()">
+          timelapse
+          <md-tooltip>One or more pods are in pending state</md-tooltip>
+        </md-icon>
         </span>
         <kd-replication-controller-card-menu replication-controller="::ctrl.replicationController"></kd-replication-controller-card-menu>
       </div>
@@ -53,38 +49,31 @@ limitations under the License.
               class="kd-replicase-card-pods-stat kd-comma-separated-item">
             {{::ctrl.replicationController.pods.pending}} pending<!-- Collapse whitespace
           --></span>
-          <span ng-if="::ctrl.replicationController.pods.failed"
-              class="kd-replicase-card-pods-stat kd-comma-separated-item">
+        <span ng-if="::ctrl.replicationController.pods.failed" class="kd-replicase-card-pods-stat kd-comma-separated-item">
             {{::ctrl.replicationController.pods.failed}} failed<!-- Collapse whitespace
           --></span>
-          <span ng-if="!ctrl.areDesiredPodsRunning()"
-                class="kd-replicase-card-pods-stat kd-comma-separated-item">
+        <span ng-if="!ctrl.areDesiredPodsRunning()" class="kd-replicase-card-pods-stat kd-comma-separated-item">
             {{::ctrl.replicationController.pods.desired}} desired
           </span>
         </span>
-        <logs-menu flex="40" namespace="::ctrl.replicationController.namespace"
-                   replication-controller-name="::ctrl.replicationController.name">
+        <logs-menu flex="40" namespace="::ctrl.replicationController.namespace" replication-controller-name="::ctrl.replicationController.name">
         </logs-menu>
       </div>
       <md-divider class="kd-replicationcontroller-card-divider"></md-divider>
       <div layout="row" layout-wrap>
-        <div ng-if="::ctrl.replicationController.description" flex="100" layout="column"
-            class="kd-replicationcontroller-card-section">
+        <div ng-if="::ctrl.replicationController.description" flex="100" layout="column" class="kd-replicationcontroller-card-section">
           <span flex class="kd-replicationcontroller-card-section-title">Description</span>
           <div flex class="kd-replicationcontroller-card-description">{{::ctrl.replicationController.description}}</div>
         </div>
-
         <div flex="60" layout="column" class="kd-replicationcontroller-card-section">
           <span flex class="kd-replicationcontroller-card-section-title">Image</span>
           <div flex>
-            <div ng-repeat="image in ::ctrl.replicationController.containerImages track by $index"
-                class="kd-replicationcontroller-card-section-image">
+            <div ng-repeat="image in ::ctrl.replicationController.containerImages track by $index" class="kd-replicationcontroller-card-section-image">
               <md-tooltip ng-if="::ctrl.shouldTruncate(image)">{{::image}}</md-tooltip>
               {{::(image | middleEllipsis:ctrl.imageMaxLength)}}
             </div>
           </div>
         </div>
-
         <div flex="40" layout="column" class="kd-replicationcontroller-card-section">
           <span flex="initial" class="kd-replicationcontroller-card-section-title">Age</span>
           <span flex="nogrow">
@@ -94,7 +83,6 @@ limitations under the License.
             </md-tooltip>
           </span>
         </div>
-
         <div flex="60" layout="column" class="kd-replicationcontroller-card-section">
           <span flex="initial" class="kd-replicationcontroller-card-section-title">Internal endpoint</span>
           <div flex>
@@ -106,7 +94,6 @@ limitations under the License.
             </div>
           </div>
         </div>
-
         <div flex="40" layout="column" class="kd-replicationcontroller-card-section">
           <span flex="initial" class="kd-replicationcontroller-card-section-title">External endpoint</span>
           <div flex>
@@ -122,8 +109,7 @@ limitations under the License.
       <div layout="column" ng-if="::ctrl.hasWarnings()">
         <md-divider class="kd-replicationcontroller-card-divider"></md-divider>
         <div layout-wrap>
-          <div flex class="kd-replicationcontroller-card-section"
-               ng-repeat="warning in ::ctrl.replicationController.pods.warnings">
+          <div flex class="kd-replicationcontroller-card-section" ng-repeat="warning in ::ctrl.replicationController.pods.warnings">
             <span class="kd-replicationcontroller-card-error">{{::warning.message}}</span>
           </div>
         </div>

@@ -13,11 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-
 <div layout="column" layout-padding layout-align="center center">
   <md-whiteframe class="kd-deploy-whiteframe md-whiteframe-5dp" flex flex-gt-md>
     <h3 class="md-headline kd-deploy-form-title">Deploy a Containerized App</h3>
-
     <form name="ctrl.deployForm" ng-submit="ctrl.deployBySelection()" novalidate>
       <kd-help-section>
         <md-radio-group ng-model="ctrl.selection">
@@ -29,21 +27,17 @@ limitations under the License.
           </md-radio-button>
         </md-radio-group>
       </kd-help-section>
-
       <div ng-switch="ctrl.selection">
-        <deploy-from-settings ng-switch-when="Settings" class="md-body-1" name="ctrl.name"
-            namespaces="ctrl.namespaces" detail="ctrl.detail" form="ctrl.deployForm" protocols="ctrl.protocols">
+        <deploy-from-settings ng-switch-when="Settings" class="md-body-1" name="ctrl.name" namespaces="ctrl.namespaces"
+          detail="ctrl.detail" form="ctrl.deployForm" protocols="ctrl.protocols">
         </deploy-from-settings>
-        <deploy-from-file ng-switch-when="File" class="md-body-1" name="ctrl.name" detail="ctrl.detail"
-            form="ctrl.deployForm">
+        <deploy-from-file ng-switch-when="File" class="md-body-1" name="ctrl.name" detail="ctrl.detail" form="ctrl.deployForm">
         </deploy-from-file>
       </div>
-
       <md-button class="md-raised md-primary" type="submit" ng-disabled="ctrl.isDeployDisabled()">
         Deploy
       </md-button>
       <md-button class="md-raised" ng-click="ctrl.cancel()">Cancel</md-button>
-
     </form>
   </md-whiteframe>
 </div>

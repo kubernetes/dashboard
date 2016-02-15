@@ -13,7 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-
 <div flex="nogrow" class="kd-replicationcontrollerinfo-item">
   <md-button class="md-primary" ng-click="infoCtrl.handleDeleteReplicationControllerDialog()">
     <md-icon class="material-icons">delete</md-icon>
@@ -36,8 +35,7 @@ limitations under the License.
     <div layout="row" layout-align="start end">
       <div flex="nogrow">
         <span class="kd-replicationcontrollerinfo-line">Pods</span>
-        <span class="kd-replicationcontrollerinfo-subline"
-              ng-if="!infoCtrl.areDesiredPodsRunning()">
+        <span class="kd-replicationcontrollerinfo-subline" ng-if="!infoCtrl.areDesiredPodsRunning()">
           {{::infoCtrl.details.podInfo.current}} created,
           {{::infoCtrl.details.podInfo.desired}} desired
         </span>
@@ -59,10 +57,10 @@ limitations under the License.
         <span ng-if="::infoCtrl.details.podInfo.pending" class="kd-comma-separated-item">
           {{::infoCtrl.details.podInfo.pending}} pending<!-- Collapse whitespace
         --></span>
-        <span ng-if="::infoCtrl.details.podInfo.failed" class="kd-comma-separated-item">
+      <span ng-if="::infoCtrl.details.podInfo.failed" class="kd-comma-separated-item">
           {{::infoCtrl.details.podInfo.failed}} failed<!-- Collapse whitespace
         --></span>
-        <span ng-if="::infoCtrl.details.podInfo.running" class="kd-comma-separated-item">
+      <span ng-if="::infoCtrl.details.podInfo.running" class="kd-comma-separated-item">
           {{::infoCtrl.details.podInfo.running}} running
         </span>
       </span>
@@ -76,8 +74,7 @@ limitations under the License.
       <kd-labels labels="::infoCtrl.details.labels"></kd-labels>
     </span>
     <span class="kd-replicationcontrollerinfo-line">Images</span>
-    <span class="kd-replicationcontrollerinfo-subline"
-          ng-repeat="image in infoCtrl.details.containerImages">
+    <span class="kd-replicationcontrollerinfo-subline" ng-repeat="image in infoCtrl.details.containerImages">
       {{image}}
     </span>
   </div>

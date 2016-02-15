@@ -13,7 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-
 <button class="kd-replicationcontroller-detail-table-header-button" ng-click="sortCtrl.changeSorting()">
   <md-icon md-font-library="material-icons" ng-show="sortCtrl.isArrowDown()"
            class="kd-text-icon">
@@ -25,8 +24,7 @@ limitations under the License.
   </md-icon>
   <ng-transclude></ng-transclude>
 </button>
-<md-icon ng-show="sortCtrl.isTooltipAvailable()" md-font-library="material-icons"
-         class="kd-replicationcontrollerdetail-help-icon kd-text-icon">
+<md-icon ng-show="sortCtrl.isTooltipAvailable()" md-font-library="material-icons" class="kd-replicationcontrollerdetail-help-icon kd-text-icon">
   help
   <md-tooltip>{{sortCtrl.tooltip}}</md-tooltip>
 </md-icon>

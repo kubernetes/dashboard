@@ -20,6 +20,7 @@ import gulpClangFormat from 'gulp-clang-format';
 import gulpEslint from 'gulp-eslint';
 import gulpSassLint from 'gulp-sass-lint';
 import path from 'path';
+import prettify from 'gulp-prettify';
 
 import conf from './conf';
 
@@ -89,4 +90,13 @@ gulp.task('format-javascript', function() {
           {base: conf.paths.base})
       .pipe(gulpClangFormat.format('file'))
       .pipe(gulp.dest(conf.paths.base));
+});
+
+/**
+ * Formats all project's HTML files using gulp-prettify.
+ */
+gulp.task('format-html', function() {
+  gulp.src([path.join(conf.paths.frontendSrc, '**/*.html')])
+      .pipe(prettify(conf.htmlFormatting))
+      .pipe(gulp.dest(conf.paths.frontendSrc));
 });

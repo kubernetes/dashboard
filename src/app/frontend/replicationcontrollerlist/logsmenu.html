@@ -13,7 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-
 <md-menu>
   <md-button ng-click="ctrl.openMenu($mdOpenMenu, $event)" class="kd-replicationcontroller-card-logs-button">
     Logs
@@ -28,15 +27,13 @@ limitations under the License.
         Running since
       </div>
     </md-menu-item>
-    <md-menu-item ng-repeat="pod in ::ctrl.replicationControllerPodsList"
-        class="kd-menu-logs-md-menu-item" layout>
+    <md-menu-item ng-repeat="pod in ::ctrl.replicationControllerPodsList" class="kd-menu-logs-md-menu-item"
+      layout>
       <div class="kd-menu-logs-item">
         {{::pod.name}}
       </div>
       <div class="kd-menu-logs-item kd-menu-logs-item-since" flex="none">
-        <a ng-href="{{::ctrl.getLogsHref(pod.name)}}"
-            ng-if="::ctrl.podContainerExists(pod)"
-            target="_blank">
+        <a ng-href="{{::ctrl.getLogsHref(pod.name)}}" ng-if="::ctrl.podContainerExists(pod)" target="_blank">
           <span ng-if="::pod.startTime">
             {{::(pod.startTime | date:"short")}}
           </span>
