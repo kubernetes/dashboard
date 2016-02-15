@@ -21,18 +21,11 @@ describe('Replication Controller Detail controller', () => {
    * @type {!ReplicationControllerDetailController}
    */
   let ctrl;
-  /** @type
-   * {!replicationcontrollerdetail/replicationcontroller_service.ReplicationControllerService} */
-  let kdReplicationControllerService;
-  /** @type {!angular.$q} */
-  let q;
 
   beforeEach(() => {
     angular.mock.module(replicationControllerDetailModule.name);
 
-    angular.mock.inject(($controller, $resource, $q, _kdReplicationControllerService_) => {
-      q = $q;
-      kdReplicationControllerService = _kdReplicationControllerService_;
+    angular.mock.inject(($controller, $resource) => {
       ctrl = $controller(ReplicationControllerDetailController, {
         replicationControllerDetail: {},
         replicationControllerEvents: {},
@@ -90,41 +83,10 @@ describe('Replication Controller Detail controller', () => {
     expect(result.length).toEqual(1);
   });
 
-  it('should show edit replicas dialog', () => {
-    // given
-    ctrl.replicationControllerDetail = {
-      namespace: 'foo-namespace',
-      name: 'foo-name',
-      podInfo: {
-        current: 3,
-        desired: 3,
-      },
-    };
-    spyOn(kdReplicationControllerService, 'showUpdateReplicasDialog');
-
-    // when
-    ctrl.handleUpdateReplicasDialog();
-
-    // then
-    expect(kdReplicationControllerService.showUpdateReplicasDialog).toHaveBeenCalled();
-  });
-
   it('should create logs href', () => {
     expect(ctrl.getPodLogsHref({
       name: 'foo-pod',
     })).toBe('#/logs/foo-namespace/foo-replicationcontroller/foo-pod/');
-  });
-
-  it('should show delete replicas dialog', () => {
-    // given
-    let deferred = q.defer();
-    spyOn(kdReplicationControllerService, 'showDeleteDialog').and.returnValue(deferred.promise);
-
-    // when
-    ctrl.handleDeleteReplicationControllerDialog();
-
-    // then
-    expect(kdReplicationControllerService.showDeleteDialog).toHaveBeenCalled();
   });
 
   it('should return true when there are events to display', () => {
@@ -144,32 +106,6 @@ describe('Replication Controller Detail controller', () => {
 
     // then
     expect(result).toBeFalsy();
-  });
-
-  it('should return true when all desired pods are running', () => {
-    // given
-    ctrl.replicationControllerDetail = {
-      podInfo: {
-        running: 0,
-        desired: 0,
-      },
-    };
-
-    // then
-    expect(ctrl.areDesiredPodsRunning()).toBeTruthy();
-  });
-
-  it('should return false when not all desired pods are running', () => {
-    // given
-    ctrl.replicationControllerDetail = {
-      podInfo: {
-        running: 0,
-        desired: 1,
-      },
-    };
-
-    // then
-    expect(ctrl.areDesiredPodsRunning()).toBeFalsy();
   });
 
   it('should show/hide cpu and memory metrics for pods', () => {

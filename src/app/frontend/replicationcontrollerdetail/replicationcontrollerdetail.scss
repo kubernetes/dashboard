@@ -48,34 +48,6 @@ $table-cell-height-half: $table-cell-height / 2;
   border-bottom: 1px solid $foreground-4;
 }
 
-.kd-replicationcontrollerdetail-sidebar-title {
-  font-size: $subhead-font-size-base;
-  font-weight: $bold-font-weight;
-  padding-bottom: $baseline-grid;
-  padding-top: $baseline-grid;
-}
-
-.kd-replicationcontrollerdetail-sidebar-line {
-  color: $foreground-2;
-  display: block;
-  font-size: $body-font-size-base;
-  padding-bottom: 0;
-}
-
-.kd-replicationcontrollerdetail-sidebar-subline {
-  color: $foreground-1;
-  display: block;
-  font-size: $body-font-size-base;
-  overflow: hidden;
-  padding-bottom: $baseline-grid;
-  text-overflow: ellipsis;
-
-  &.kd-has-labels {
-    // To offset for labels margin.
-    margin-bottom: -$baseline-grid / 2;
-  }
-}
-
 .kd-replicationcontrollerdetail-warning-icon {
   color: $warning;
   font-size: $table-cell-height-half;
@@ -85,11 +57,6 @@ $table-cell-height-half: $table-cell-height / 2;
 
 .kd-replicationcontrollerdetail-options {
   margin: 2 * $baseline-grid;
-}
-
-.kd-replicationcontrollerdetail-sidebar-info {
-  // 6px needed to offset for md-button padding.
-  padding-left: $baseline-grid + 6px;
 }
 
 .kd-replicationcontrollerdetail-option-picker {
@@ -131,7 +98,7 @@ $table-cell-height-half: $table-cell-height / 2;
 }
 
 .kd-replicationcontrollerdetail-no-events {
-  margin-top: 4 * $baseline-grid;
+  margin: (4 * $baseline-grid) 0 (4 * $baseline-grid);
   text-align: center;
 }
 
