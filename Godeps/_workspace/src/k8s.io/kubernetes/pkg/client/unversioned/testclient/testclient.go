@@ -23,8 +23,8 @@ import (
 	"github.com/emicklei/go-restful/swagger"
 
 	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/registered"
 	"k8s.io/kubernetes/pkg/api/unversioned"
+	"k8s.io/kubernetes/pkg/api/v1"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/runtime"
 	"k8s.io/kubernetes/pkg/version"
@@ -33,7 +33,7 @@ import (
 
 // NewSimpleFake returns a client that will respond with the provided objects
 func NewSimpleFake(objects ...runtime.Object) *Fake {
-	o := NewObjects(api.Scheme, api.Scheme)
+	o := NewObjects(api.Scheme, api.Codecs.UniversalDecoder())
 	for _, obj := range objects {
 		if err := o.Add(obj); err != nil {
 			panic(err)
@@ -230,6 +230,10 @@ func (c *Fake) Nodes() client.NodeInterface {
 	return &FakeNodes{Fake: c}
 }
 
+func (c *Fake) PodSecurityPolicies() client.PodSecurityPolicyInterface {
+	return &FakePodSecurityPolicy{Fake: c}
+}
+
 func (c *Fake) Events(namespace string) client.EventInterface {
 	return &FakeEvents{Fake: c, Namespace: namespace}
 }
@@ -278,38 +282,23 @@ func (c *Fake) Discovery() client.DiscoveryInterface {
 	return &FakeDiscovery{c}
 }
 
-func (c *Fake) ServerVersion() (*version.Info, error) {
-	action := ActionImpl{}
-	action.Verb = "get"
-	action.Resource = "version"
-
-	c.Invokes(action, nil)
-	versionInfo := version.Get()
-	return &versionInfo, nil
-}
-
-func (c *Fake) ServerAPIVersions() (*unversioned.APIVersions, error) {
-	action := ActionImpl{}
-	action.Verb = "get"
-	action.Resource = "apiversions"
-
-	c.Invokes(action, nil)
-	gvStrings := []string{}
-	for _, gv := range registered.RegisteredGroupVersions {
-		gvStrings = append(gvStrings, gv.String())
-	}
-	return &unversioned.APIVersions{Versions: gvStrings}, nil
-}
-
 func (c *Fake) ComponentStatuses() client.ComponentStatusInterface {
 	return &FakeComponentStatuses{Fake: c}
 }
 
+func (c *Fake) ConfigMaps(namespace string) client.ConfigMapsInterface {
+	return &FakeConfigMaps{Fake: c, Namespace: namespace}
+}
+
 // SwaggerSchema returns an empty swagger.ApiDeclaration for testing
-func (c *Fake) SwaggerSchema(version string) (*swagger.ApiDeclaration, error) {
+func (c *Fake) SwaggerSchema(version unversioned.GroupVersion) (*swagger.ApiDeclaration, error) {
 	action := ActionImpl{}
 	action.Verb = "get"
-	action.Resource = "/swaggerapi/api/" + version
+	if version == v1.SchemeGroupVersion {
+		action.Resource = "/swaggerapi/api/" + version.Version
+	} else {
+		action.Resource = "/swaggerapi/apis/" + version.Group + "/" + version.Version
+	}
 
 	c.Invokes(action, nil)
 	return &swagger.ApiDeclaration{}, nil
@@ -348,6 +337,14 @@ func (c *FakeExperimental) Ingress(namespace string) client.IngressInterface {
 	return &FakeIngress{Fake: c, Namespace: namespace}
 }
 
+func (c *FakeExperimental) ThirdPartyResources(namespace string) client.ThirdPartyResourceInterface {
+	return &FakeThirdPartyResources{Fake: c, Namespace: namespace}
+}
+
+func (c *FakeExperimental) ReplicaSets(namespace string) client.ReplicaSetInterface {
+	return &FakeReplicaSets{Fake: c, Namespace: namespace}
+}
+
 type FakeDiscovery struct {
 	*Fake
 }
@@ -372,4 +369,14 @@ func (c *FakeDiscovery) ServerResources() (map[string]*unversioned.APIResourceLi
 
 func (c *FakeDiscovery) ServerGroups() (*unversioned.APIGroupList, error) {
 	return nil, nil
+}
+
+func (c *FakeDiscovery) ServerVersion() (*version.Info, error) {
+	action := ActionImpl{}
+	action.Verb = "get"
+	action.Resource = "version"
+
+	c.Invokes(action, nil)
+	versionInfo := version.Get()
+	return &versionInfo, nil
 }

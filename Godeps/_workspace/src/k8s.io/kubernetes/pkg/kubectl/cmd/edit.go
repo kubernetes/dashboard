@@ -23,17 +23,18 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"runtime"
+	gruntime "runtime"
 	"strings"
 
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/errors"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/kubectl"
 	cmdutil "k8s.io/kubernetes/pkg/kubectl/cmd/util"
 	"k8s.io/kubernetes/pkg/kubectl/cmd/util/editor"
 	"k8s.io/kubernetes/pkg/kubectl/cmd/util/jsonmerge"
 	"k8s.io/kubernetes/pkg/kubectl/resource"
+	"k8s.io/kubernetes/pkg/runtime"
 	"k8s.io/kubernetes/pkg/util"
 	"k8s.io/kubernetes/pkg/util/strategicpatch"
 	"k8s.io/kubernetes/pkg/util/yaml"
@@ -94,8 +95,9 @@ func NewCmdEdit(f *cmdutil.Factory, out io.Writer) *cobra.Command {
 	kubectl.AddJsonFilenameFlag(cmd, &filenames, usage)
 	cmd.Flags().StringP("output", "o", "yaml", "Output format. One of: yaml|json.")
 	cmd.Flags().String("output-version", "", "Output the formatted object with the given version (default api-version).")
-	cmd.Flags().Bool("windows-line-endings", runtime.GOOS == "windows", "Use Windows line-endings (default Unix line-endings)")
+	cmd.Flags().Bool("windows-line-endings", gruntime.GOOS == "windows", "Use Windows line-endings (default Unix line-endings)")
 	cmdutil.AddApplyAnnotationFlags(cmd)
+	cmdutil.AddRecordFlag(cmd)
 	return cmd
 }
 
@@ -119,13 +121,14 @@ func RunEdit(f *cmdutil.Factory, out io.Writer, cmd *cobra.Command, args []strin
 	}
 
 	mapper, typer := f.Object()
-	rmap := &resource.Mapper{
+	resourceMapper := &resource.Mapper{
 		ObjectTyper:  typer,
 		RESTMapper:   mapper,
-		ClientMapper: f.ClientMapperForCommand(),
+		ClientMapper: resource.ClientMapperFunc(f.ClientForMapping),
+		Decoder:      f.Decoder(true),
 	}
 
-	r := resource.NewBuilder(mapper, typer, f.ClientMapperForCommand()).
+	r := resource.NewBuilder(mapper, typer, resource.ClientMapperFunc(f.ClientForMapping), f.Decoder(true)).
 		NamespaceParam(cmdNamespace).DefaultNamespace().
 		FilenameParam(enforceNamespace, filenames...).
 		ResourceTypeOrNameArgs(true, args...).
@@ -147,12 +150,17 @@ func RunEdit(f *cmdutil.Factory, out io.Writer, cmd *cobra.Command, args []strin
 		return err
 	}
 
+	encoder := f.JSONEncoder()
+
 	windowsLineEndings := cmdutil.GetFlagBool(cmd, "windows-line-endings")
 	edit := editor.NewDefaultEditor(f.EditorEnvs())
-	defaultVersion := cmdutil.OutputVersionFromGroupVersion(cmd, clientConfig.GroupVersion)
+	defaultVersion, err := cmdutil.OutputVersion(cmd, clientConfig.GroupVersion)
+	if err != nil {
+		return err
+	}
 	results := editResults{}
 	for {
-		objs, err := resource.AsVersionedObjects(infos, defaultVersion)
+		objs, err := resource.AsVersionedObjects(infos, defaultVersion.String(), encoder)
 		if err != nil {
 			return preservedFile(err, results.file, out)
 		}
@@ -216,21 +224,27 @@ func RunEdit(f *cmdutil.Factory, out io.Writer, cmd *cobra.Command, args []strin
 			}
 
 			// parse the edited file
-			updates, err := rmap.InfoForData(edited, "edited-file")
+			updates, err := resourceMapper.InfoForData(edited, "edited-file")
 			if err != nil {
 				return fmt.Errorf("The edited file had a syntax error: %v", err)
 			}
 
 			// put configuration annotation in "updates"
-			if err := kubectl.CreateOrUpdateAnnotation(cmdutil.GetFlagBool(cmd, cmdutil.ApplyAnnotationsFlag), updates); err != nil {
+			if err := kubectl.CreateOrUpdateAnnotation(cmdutil.GetFlagBool(cmd, cmdutil.ApplyAnnotationsFlag), updates, encoder); err != nil {
 				return preservedFile(err, file, out)
 			}
+			if cmdutil.ShouldRecord(cmd, updates) {
+				err = cmdutil.RecordChangeCause(updates.Object, f.Command())
+				if err != nil {
+					return err
+				}
+			}
 			// encode updates back to "edited" since we'll only generate patch from "edited"
-			if edited, err = updates.Mapping.Codec.Encode(updates.Object); err != nil {
+			if edited, err = runtime.Encode(encoder, updates.Object); err != nil {
 				return preservedFile(err, file, out)
 			}
 
-			visitor := resource.NewFlattenListVisitor(updates, rmap)
+			visitor := resource.NewFlattenListVisitor(updates, resourceMapper)
 
 			// need to make sure the original namespace wasn't changed while editing
 			if err = visitor.Visit(resource.RequireNamespace(cmdNamespace)); err != nil {
@@ -356,7 +370,7 @@ type editResults struct {
 	edit      []*resource.Info
 	file      string
 
-	version string
+	version unversioned.GroupVersion
 }
 
 func (r *editResults) addError(err error, info *resource.Info) string {
@@ -366,7 +380,7 @@ func (r *editResults) addError(err error, info *resource.Info) string {
 		reason := editReason{
 			head: fmt.Sprintf("%s %s was not valid", info.Mapping.Kind, info.Name),
 		}
-		if err, ok := err.(client.APIStatus); ok {
+		if err, ok := err.(errors.APIStatus); ok {
 			if details := err.Status().Details; details != nil {
 				for _, cause := range details.Causes {
 					reason.other = append(reason.other, cause.Message)

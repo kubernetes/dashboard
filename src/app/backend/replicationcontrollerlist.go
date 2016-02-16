@@ -71,9 +71,9 @@ type ReplicationController struct {
 func GetReplicationControllerList(client *client.Client) (*ReplicationControllerList, error) {
 	log.Printf("Getting list of all replication controllers in the cluster")
 
-	listEverything := unversioned.ListOptions{
-		LabelSelector: unversioned.LabelSelector{labels.Everything()},
-		FieldSelector: unversioned.FieldSelector{fields.Everything()},
+	listEverything := api.ListOptions{
+		LabelSelector: labels.Everything(),
+		FieldSelector: fields.Everything(),
 	}
 
 	replicationControllers, err := client.ReplicationControllers(api.NamespaceAll).List(listEverything)

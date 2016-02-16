@@ -17,7 +17,6 @@ package main
 import (
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
-	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
@@ -59,9 +58,9 @@ func getRawReplicationControllerWithPods(client client.Interface, namespace, nam
 
 	labelSelector := labels.SelectorFromSet(replicationController.Spec.Selector)
 	pods, err := client.Pods(namespace).List(
-		unversioned.ListOptions{
-			LabelSelector: unversioned.LabelSelector{labelSelector},
-			FieldSelector: unversioned.FieldSelector{fields.Everything()},
+		api.ListOptions{
+			LabelSelector: labelSelector,
+			FieldSelector: fields.Everything(),
 		})
 
 	if err != nil {
@@ -108,7 +107,7 @@ func getReplicationControllerPodInfo(replicationController *api.ReplicationContr
 // Transforms simple selector map to labels.Selector object that can be used when querying for
 // object.
 func toLabelSelector(selector map[string]string) (labels.Selector, error) {
-	labelSelector, err := extensions.LabelSelectorAsSelector(&extensions.LabelSelector{MatchLabels: selector})
+	labelSelector, err := unversioned.LabelSelectorAsSelector(&unversioned.LabelSelector{MatchLabels: selector})
 
 	if err != nil {
 		return nil, err
@@ -123,9 +122,9 @@ func toLabelSelector(selector map[string]string) (labels.Selector, error) {
 func getServicesForDeletion(client client.Interface, labelSelector labels.Selector,
 	namespace string) ([]api.Service, error) {
 
-	replicationControllers, err := client.ReplicationControllers(namespace).List(unversioned.ListOptions{
-		LabelSelector: unversioned.LabelSelector{labelSelector},
-		FieldSelector: unversioned.FieldSelector{fields.Everything()},
+	replicationControllers, err := client.ReplicationControllers(namespace).List(api.ListOptions{
+		LabelSelector: labelSelector,
+		FieldSelector: fields.Everything(),
 	})
 	if err != nil {
 		return nil, err
@@ -138,9 +137,9 @@ func getServicesForDeletion(client client.Interface, labelSelector labels.Select
 		return []api.Service{}, nil
 	}
 
-	services, err := client.Services(namespace).List(unversioned.ListOptions{
-		LabelSelector: unversioned.LabelSelector{labelSelector},
-		FieldSelector: unversioned.FieldSelector{fields.Everything()},
+	services, err := client.Services(namespace).List(api.ListOptions{
+		LabelSelector: labelSelector,
+		FieldSelector: fields.Everything(),
 	})
 	if err != nil {
 		return nil, err

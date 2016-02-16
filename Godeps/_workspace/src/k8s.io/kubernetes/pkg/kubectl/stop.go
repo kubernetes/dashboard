@@ -22,6 +22,7 @@ import (
 	"time"
 
 	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api/errors"
 	"k8s.io/kubernetes/pkg/api/meta"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
@@ -62,6 +63,9 @@ func ReaperFor(kind unversioned.GroupKind, c client.Interface) (Reaper, error) {
 	case api.Kind("ReplicationController"):
 		return &ReplicationControllerReaper{c, Interval, Timeout}, nil
 
+	case extensions.Kind("ReplicaSet"):
+		return &ReplicaSetReaper{c, Interval, Timeout}, nil
+
 	case extensions.Kind("DaemonSet"):
 		return &DaemonSetReaper{c, Interval, Timeout}, nil
 
@@ -73,6 +77,9 @@ func ReaperFor(kind unversioned.GroupKind, c client.Interface) (Reaper, error) {
 
 	case extensions.Kind("Job"):
 		return &JobReaper{c, Interval, Timeout}, nil
+
+	case extensions.Kind("Deployment"):
+		return &DeploymentReaper{c, Interval, Timeout}, nil
 
 	}
 	return nil, &NoSuchReaperError{kind}
@@ -86,11 +93,19 @@ type ReplicationControllerReaper struct {
 	client.Interface
 	pollInterval, timeout time.Duration
 }
+type ReplicaSetReaper struct {
+	client.Interface
+	pollInterval, timeout time.Duration
+}
 type DaemonSetReaper struct {
 	client.Interface
 	pollInterval, timeout time.Duration
 }
 type JobReaper struct {
+	client.Interface
+	pollInterval, timeout time.Duration
+}
+type DeploymentReaper struct {
 	client.Interface
 	pollInterval, timeout time.Duration
 }
@@ -103,12 +118,12 @@ type ServiceReaper struct {
 
 type objInterface interface {
 	Delete(name string) error
-	Get(name string) (meta.Interface, error)
+	Get(name string) (meta.Object, error)
 }
 
 // getOverlappingControllers finds rcs that this controller overlaps, as well as rcs overlapping this controller.
 func getOverlappingControllers(c client.ReplicationControllerInterface, rc *api.ReplicationController) ([]api.ReplicationController, error) {
-	rcs, err := c.List(unversioned.ListOptions{})
+	rcs, err := c.List(api.ListOptions{})
 	if err != nil {
 		return nil, fmt.Errorf("error getting replication controllers: %v", err)
 	}
@@ -183,7 +198,79 @@ func (reaper *ReplicationControllerReaper) Stop(namespace, name string, timeout 
 			return err
 		}
 	}
-	if err := rc.Delete(name); err != nil {
+	return rc.Delete(name)
+}
+
+// TODO(madhusudancs): Implement it when controllerRef is implemented - https://github.com/kubernetes/kubernetes/issues/2210
+// getOverlappingReplicaSets finds ReplicaSets that this ReplicaSet overlaps, as well as ReplicaSets overlapping this ReplicaSet.
+func getOverlappingReplicaSets(c client.ReplicaSetInterface, rs *extensions.ReplicaSet) ([]extensions.ReplicaSet, []extensions.ReplicaSet, error) {
+	var overlappingRSs, exactMatchRSs []extensions.ReplicaSet
+	return overlappingRSs, exactMatchRSs, nil
+}
+
+func (reaper *ReplicaSetReaper) Stop(namespace, name string, timeout time.Duration, gracePeriod *api.DeleteOptions) error {
+	rsc := reaper.Extensions().ReplicaSets(namespace)
+	scaler, err := ScalerFor(extensions.Kind("ReplicaSet"), *reaper)
+	if err != nil {
+		return err
+	}
+	rs, err := rsc.Get(name)
+	if err != nil {
+		return err
+	}
+	if timeout == 0 {
+		timeout = Timeout + time.Duration(10*rs.Spec.Replicas)*time.Second
+	}
+
+	// The ReplicaSet controller will try and detect all matching ReplicaSets
+	// for a pod's labels, and only sync the oldest one. This means if we have
+	// a pod with labels [(k1: v1), (k2: v2)] and two ReplicaSets: rs1 with
+	// selector [(k1=v1)], and rs2 with selector [(k1=v1),(k2=v2)], the
+	// ReplicaSet controller will sync the older of the two ReplicaSets.
+	//
+	// If there are ReplicaSets with a superset of labels, eg:
+	// deleting: (k1=v1), superset: (k2=v2, k1=v1)
+	//	- It isn't safe to delete the ReplicaSet because there could be a pod
+	//    with labels (k1=v1) that isn't managed by the superset ReplicaSet.
+	//    We can't scale it down either, because there could be a pod
+	//    (k2=v2, k1=v1) that it deletes causing a fight with the superset
+	//    ReplicaSet.
+	// If there are ReplicaSets with a subset of labels, eg:
+	// deleting: (k2=v2, k1=v1), subset: (k1=v1), superset: (k2=v2, k1=v1, k3=v3)
+	//  - Even if it's safe to delete this ReplicaSet without a scale down because
+	//    all it's pods are being controlled by the subset ReplicaSet the code
+	//    returns an error.
+
+	// In theory, creating overlapping ReplicaSets is user error, so the loop below
+	// tries to account for this logic only in the common case, where we end up
+	// with multiple ReplicaSets that have an exact match on selectors.
+
+	// TODO(madhusudancs): Re-evaluate again when controllerRef is implemented -
+	// https://github.com/kubernetes/kubernetes/issues/2210
+	overlappingRSs, exactMatchRSs, err := getOverlappingReplicaSets(rsc, rs)
+	if err != nil {
+		return fmt.Errorf("error getting ReplicaSets: %v", err)
+	}
+
+	if len(overlappingRSs) > 0 {
+		var names []string
+		for _, overlappingRS := range overlappingRSs {
+			names = append(names, overlappingRS.Name)
+		}
+		return fmt.Errorf(
+			"Detected overlapping ReplicaSets for ReplicaSet %v: %v, please manage deletion individually with --cascade=false.",
+			rs.Name, strings.Join(names, ","))
+	}
+	if len(exactMatchRSs) == 0 {
+		// No overlapping ReplicaSets.
+		retry := NewRetryParams(reaper.pollInterval, reaper.timeout)
+		waitForReplicas := NewRetryParams(reaper.pollInterval, timeout)
+		if err = scaler.Scale(namespace, name, 0, nil, retry, waitForReplicas); err != nil {
+			return err
+		}
+	}
+
+	if err := rsc.Delete(name, gracePeriod); err != nil {
 		return err
 	}
 	return nil
@@ -220,10 +307,7 @@ func (reaper *DaemonSetReaper) Stop(namespace, name string, timeout time.Duratio
 		return err
 	}
 
-	if err := reaper.Extensions().DaemonSets(namespace).Delete(name); err != nil {
-		return err
-	}
-	return nil
+	return reaper.Extensions().DaemonSets(namespace).Delete(name)
 }
 
 func (reaper *JobReaper) Stop(namespace, name string, timeout time.Duration, gracePeriod *api.DeleteOptions) error {
@@ -250,8 +334,8 @@ func (reaper *JobReaper) Stop(namespace, name string, timeout time.Duration, gra
 		return err
 	}
 	// at this point only dead pods are left, that should be removed
-	selector, _ := extensions.LabelSelectorAsSelector(job.Spec.Selector)
-	options := unversioned.ListOptions{LabelSelector: unversioned.LabelSelector{selector}}
+	selector, _ := unversioned.LabelSelectorAsSelector(job.Spec.Selector)
+	options := api.ListOptions{LabelSelector: selector}
 	podList, err := pods.List(options)
 	if err != nil {
 		return err
@@ -259,17 +343,102 @@ func (reaper *JobReaper) Stop(namespace, name string, timeout time.Duration, gra
 	errList := []error{}
 	for _, pod := range podList.Items {
 		if err := pods.Delete(pod.Name, gracePeriod); err != nil {
-			errList = append(errList, err)
+			// ignores the error when the pod isn't found
+			if !errors.IsNotFound(err) {
+				errList = append(errList, err)
+			}
 		}
 	}
 	if len(errList) > 0 {
 		return utilerrors.NewAggregate(errList)
 	}
 	// once we have all the pods removed we can safely remove the job itself
-	if err := jobs.Delete(name, gracePeriod); err != nil {
+	return jobs.Delete(name, gracePeriod)
+}
+
+func (reaper *DeploymentReaper) Stop(namespace, name string, timeout time.Duration, gracePeriod *api.DeleteOptions) error {
+	deployments := reaper.Extensions().Deployments(namespace)
+	replicaSets := reaper.Extensions().ReplicaSets(namespace)
+	rsReaper, _ := ReaperFor(extensions.Kind("ReplicaSet"), reaper)
+
+	deployment, err := deployments.Get(name)
+	if err != nil {
 		return err
 	}
-	return nil
+
+	// set deployment's history and scale to 0
+	// TODO replace with patch when available: https://github.com/kubernetes/kubernetes/issues/20527
+	zero := 0
+	deployment.Spec.RevisionHistoryLimit = &zero
+	deployment.Spec.Replicas = 0
+	// TODO: un-pausing should not be necessary, remove when this is fixed:
+	// https://github.com/kubernetes/kubernetes/issues/20966
+	// Instead deployment should be Paused at this point and not at next TODO.
+	deployment.Spec.Paused = false
+	deployment, err = deployments.Update(deployment)
+	if err != nil {
+		return err
+	}
+
+	// wait for total no of pods drop to 0
+	if err := wait.Poll(reaper.pollInterval, reaper.timeout, func() (bool, error) {
+		curr, err := deployments.Get(name)
+		// if deployment was not found it must have been deleted, error out
+		if err != nil && errors.IsNotFound(err) {
+			return false, err
+		}
+		// if other errors happen, retry
+		if err != nil {
+			return false, nil
+		}
+		// check if deployment wasn't recreated with the same name
+		// TODO use generations when deployment will have them
+		if curr.UID != deployment.UID {
+			return false, errors.NewNotFound(extensions.Resource("Deployment"), name)
+		}
+		return curr.Status.Replicas == 0, nil
+	}); err != nil {
+		return err
+	}
+
+	// TODO: When deployments will allow running cleanup policy while being
+	// paused, move pausing to above update operation. Without it, we need to
+	// pause deployment before stopping RSs, to prevent creating new RSs.
+	// See https://github.com/kubernetes/kubernetes/issues/20966
+	deployment, err = deployments.Get(name)
+	if err != nil {
+		return err
+	}
+	deployment.Spec.Paused = true
+	deployment, err = deployments.Update(deployment)
+	if err != nil {
+		return err
+	}
+
+	// remove remaining RSs
+	selector, err := unversioned.LabelSelectorAsSelector(deployment.Spec.Selector)
+	if err != nil {
+		return err
+	}
+	options := api.ListOptions{LabelSelector: selector}
+	rsList, err := replicaSets.List(options)
+	if err != nil {
+		return err
+	}
+	errList := []error{}
+	for _, rc := range rsList.Items {
+		if err := rsReaper.Stop(rc.Namespace, rc.Name, timeout, gracePeriod); err != nil {
+			if !errors.IsNotFound(err) {
+				errList = append(errList, err)
+			}
+		}
+	}
+	if len(errList) > 0 {
+		return utilerrors.NewAggregate(errList)
+	}
+
+	// and finally deployment
+	return deployments.Delete(name, gracePeriod)
 }
 
 func (reaper *PodReaper) Stop(namespace, name string, timeout time.Duration, gracePeriod *api.DeleteOptions) error {
@@ -278,11 +447,7 @@ func (reaper *PodReaper) Stop(namespace, name string, timeout time.Duration, gra
 	if err != nil {
 		return err
 	}
-	if err := pods.Delete(name, gracePeriod); err != nil {
-		return err
-	}
-
-	return nil
+	return pods.Delete(name, gracePeriod)
 }
 
 func (reaper *ServiceReaper) Stop(namespace, name string, timeout time.Duration, gracePeriod *api.DeleteOptions) error {
@@ -291,8 +456,5 @@ func (reaper *ServiceReaper) Stop(namespace, name string, timeout time.Duration,
 	if err != nil {
 		return err
 	}
-	if err := services.Delete(name); err != nil {
-		return err
-	}
-	return nil
+	return services.Delete(name)
 }

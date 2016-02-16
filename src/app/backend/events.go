@@ -107,9 +107,9 @@ func GetReplicationControllerEvents(client *client.Client, namespace, replicatio
 		return nil, err
 	}
 
-	list, err := client.Events(namespace).List(unversioned.ListOptions{
-		LabelSelector: unversioned.LabelSelector{labels.Everything()},
-		FieldSelector: unversioned.FieldSelector{fieldSelector},
+	list, err := client.Events(namespace).List(api.ListOptions{
+		LabelSelector: labels.Everything(),
+		FieldSelector: fieldSelector,
 	})
 
 	if err != nil {
@@ -128,9 +128,9 @@ func GetReplicationControllerPodsEvents(client *client.Client, namespace, replic
 		return nil, err
 	}
 
-	pods, err := client.Pods(namespace).List(unversioned.ListOptions{
-		LabelSelector: unversioned.LabelSelector{labels.SelectorFromSet(replicationController.Spec.Selector)},
-		FieldSelector: unversioned.FieldSelector{fields.Everything()},
+	pods, err := client.Pods(namespace).List(api.ListOptions{
+		LabelSelector: labels.SelectorFromSet(replicationController.Spec.Selector),
+		FieldSelector: fields.Everything(),
 	})
 
 	if err != nil {
@@ -175,9 +175,9 @@ func GetPodEvents(client client.Interface, pod api.Pod) (*api.EventList, error) 
 		return nil, err
 	}
 
-	list, err := client.Events(pod.Namespace).List(unversioned.ListOptions{
-		LabelSelector: unversioned.LabelSelector{labels.Everything()},
-		FieldSelector: unversioned.FieldSelector{fieldSelector},
+	list, err := client.Events(pod.Namespace).List(api.ListOptions{
+		LabelSelector: labels.Everything(),
+		FieldSelector: fieldSelector,
 	})
 
 	if err != nil {

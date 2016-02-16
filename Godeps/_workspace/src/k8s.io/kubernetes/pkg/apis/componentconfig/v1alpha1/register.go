@@ -17,25 +17,27 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/runtime"
 )
 
+// GroupName is the group name use in this package
+const GroupName = "componentconfig"
+
 // SchemeGroupVersion is group version used to register these objects
-var SchemeGroupVersion = unversioned.GroupVersion{Group: "componentconfig", Version: "v1alpha1"}
+var SchemeGroupVersion = unversioned.GroupVersion{Group: GroupName, Version: "v1alpha1"}
 
-var Codec = runtime.CodecFor(api.Scheme, SchemeGroupVersion.String())
-
-func init() {
-	addKnownTypes()
-	addDefaultingFuncs()
+func AddToScheme(scheme *runtime.Scheme) {
+	addKnownTypes(scheme)
+	addDefaultingFuncs(scheme)
 }
 
-func addKnownTypes() {
-	api.Scheme.AddKnownTypes(SchemeGroupVersion,
+func addKnownTypes(scheme *runtime.Scheme) {
+	scheme.AddKnownTypes(SchemeGroupVersion,
 		&KubeProxyConfiguration{},
+		&KubeSchedulerConfiguration{},
 	)
 }
 
-func (_ *KubeProxyConfiguration) IsAnAPIObject() {}
+func (obj *KubeProxyConfiguration) GetObjectKind() unversioned.ObjectKind     { return &obj.TypeMeta }
+func (obj *KubeSchedulerConfiguration) GetObjectKind() unversioned.ObjectKind { return &obj.TypeMeta }
