@@ -55,7 +55,11 @@ module.exports = function(config) {
 
     logLevel: 'WARN',
 
-    frameworks: ['jasmine', 'browserify'],
+    // Jasmine jquery is needed to allow angular to use JQuery in tests instead of JQLite.
+    // This allows to get elements by selector(angular.element('body')), use find function to
+    // search elements by class(element.find(class)) and the most important it allows to
+    // directly test DOM changes on elements, f.e. changes of element width/height.
+    frameworks: ['jasmine-jquery', 'jasmine', 'browserify'],
 
     browserNoActivityTimeout: 5 * 60 * 1000,  // 5 minutes.
 
@@ -74,6 +78,7 @@ module.exports = function(config) {
     plugins: [
       'karma-chrome-launcher',
       'karma-jasmine',
+      'karma-jasmine-jquery',
       'karma-coverage',
       'karma-ng-html2js-preprocessor',
       'karma-sourcemap-loader',

@@ -24,8 +24,9 @@ limitations under the License.
         <md-button class="md-icon-button" ui-sref="replicationcontrollers">
           <md-icon md-font-library="material-icons">arrow_back</md-icon>
         </md-button>
-        <h1 flex class="md-title kd-replicationcontrollerdetail-app-name">
-          {{::ctrl.replicationControllerDetail.name}}
+        <h1 flex="85" class="md-title kd-replicationcontrollerdetail-app-name">
+          <kd-middle-ellipsis display-string="{{::ctrl.replicationControllerDetail.name}}">
+          </kd-middle-ellipsis>
         </h1>
       </div>
     </div>

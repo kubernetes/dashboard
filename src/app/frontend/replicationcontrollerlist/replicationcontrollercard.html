@@ -18,13 +18,8 @@ limitations under the License.
   <md-card-content>
     <div layout="column">
       <div flex layout="row" layout-align="space-between center"
-          class="kd-replicationcontroller-card-title-row">
-        <span layout="row" flex>
-          <a ng-href="{{::ctrl.getReplicationControllerDetailHref()}}" class="kd-replicationcontroller-card-name">
-            <span class="md-title kd-replicationcontroller-card-title">
-              {{::ctrl.replicationController.name}}
-            </span>
-          </a>
+            class="kd-replicationcontroller-card-title-row">
+        <span layout="row" flex="85">
           <md-icon class="material-icons md-warn kd-replicationcontroller-card-status-icon"
                    ng-if="::ctrl.hasWarnings()">
             error
@@ -35,10 +30,18 @@ limitations under the License.
             timelapse
             <md-tooltip>One or more pods are in pending state</md-tooltip>
           </md-icon>
+          <a ng-href="{{::ctrl.getReplicationControllerDetailHref()}}"
+             class="kd-replicationcontroller-card-name">
+            <span class="md-title kd-replicationcontroller-card-title">
+              <kd-middle-ellipsis display-string="{{::ctrl.replicationController.name}}">
+              </kd-middle-ellipsis>
+            </span>
+          </a>
         </span>
-        <kd-replication-controller-card-menu replication-controller="::ctrl.replicationController"></kd-replication-controller-card-menu>
+        <kd-replication-controller-card-menu replication-controller="::ctrl.replicationController">
+        </kd-replication-controller-card-menu>
       </div>
-      <div flex class="md-caption">
+      <div class="md-caption">
         <kd-labels labels="::ctrl.replicationController.labels"></kd-labels>
       </div>
     </div>
@@ -75,13 +78,10 @@ limitations under the License.
         </div>
 
         <div flex="60" layout="column" class="kd-replicationcontroller-card-section">
-          <span flex class="kd-replicationcontroller-card-section-title">Image</span>
-          <div flex>
-            <div ng-repeat="image in ::ctrl.replicationController.containerImages track by $index"
-                class="kd-replicationcontroller-card-section-image">
-              <md-tooltip ng-if="::ctrl.shouldTruncate(image)">{{::image}}</md-tooltip>
-              {{::(image | middleEllipsis:ctrl.imageMaxLength)}}
-            </div>
+          <span class="kd-replicationcontroller-card-section-title">Image</span>
+          <div ng-repeat="image in ::ctrl.replicationController.containerImages track by $index"
+               class="kd-replicationcontroller-card-section-image">
+            <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
           </div>
         </div>
 

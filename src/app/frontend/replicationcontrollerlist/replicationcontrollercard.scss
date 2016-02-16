@@ -21,8 +21,9 @@
 
 .kd-replicationcontroller-card-name {
   color: inherit;
-  display: block;
+  display: inline-block;
   text-decoration: none;
+  width: 100%;
 
   &:visited {
     color: inherit;
@@ -30,7 +31,8 @@
 }
 
 .kd-replicationcontroller-card-status-icon {
-  margin-left: $baseline-grid;
+  margin-right: $baseline-grid;
+  vertical-align: top;
 }
 
 .kd-replicationcontroller-card-title {

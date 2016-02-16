@@ -27,7 +27,8 @@ limitations under the License.
     </span>
     <span class="kd-replicationcontrollerinfo-line">Name</span>
     <span class="kd-replicationcontrollerinfo-subline">
-      {{infoCtrl.details.name}}
+      <kd-middle-ellipsis display-string="{{::infoCtrl.details.name}}">
+      </kd-middle-ellipsis>
     </span>
     <span class="kd-replicationcontrollerinfo-line">Namespace</span>
     <span class="kd-replicationcontrollerinfo-subline">
@@ -78,7 +79,7 @@ limitations under the License.
     <span class="kd-replicationcontrollerinfo-line">Images</span>
     <span class="kd-replicationcontrollerinfo-subline"
           ng-repeat="image in infoCtrl.details.containerImages">
-      {{image}}
+      <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
     </span>
   </div>
   <div flex layout="column" class="kd-replicationcontrollerinfo-info">
