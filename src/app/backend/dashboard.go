@@ -43,7 +43,7 @@ func main() {
 
 	apiserverClient, err := CreateApiserverClient(*argApiserverHost, new(ClientFactoryImpl))
 	if err != nil {
-		log.Print(err)
+		log.Fatalf("Error while initializing connection to Kubernetes master: %s. Quitting.", err)
 	}
 
 	heapsterRESTClient, err := CreateHeapsterRESTClient(*argHeapsterHost, apiserverClient)
