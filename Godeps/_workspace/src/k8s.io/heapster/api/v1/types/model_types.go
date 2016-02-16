@@ -21,6 +21,10 @@ import (
 type MetricPoint struct {
 	Timestamp time.Time `json:"timestamp"`
 	Value     uint64    `json:"value"`
+	// This will be populated only for float custom metrics. In that case
+	// "value" will be zero. This is a temporary hack. Overall most likely
+	// we will need a new api versioned in the similar way as K8S api.
+	FloatValue *float64 `json:"floatValue,omitempty"`
 }
 
 type MetricResult struct {

@@ -64,6 +64,7 @@ func NewCmdAutoscale(f *cmdutil.Factory, out io.Writer) *cobra.Command {
 	usage := "Filename, directory, or URL to a file identifying the resource to autoscale."
 	kubectl.AddJsonFilenameFlag(cmd, &filenames, usage)
 	cmdutil.AddApplyAnnotationFlags(cmd)
+	cmdutil.AddRecordFlag(cmd)
 	return cmd
 }
 
@@ -79,7 +80,7 @@ func RunAutoscale(f *cmdutil.Factory, out io.Writer, cmd *cobra.Command, args []
 	}
 
 	mapper, typer := f.Object()
-	r := resource.NewBuilder(mapper, typer, f.ClientMapperForCommand()).
+	r := resource.NewBuilder(mapper, typer, resource.ClientMapperFunc(f.ClientForMapping), f.Decoder(true)).
 		ContinueOnError().
 		NamespaceParam(namespace).DefaultNamespace().
 		FilenameParam(enforceNamespace, filenames...).
@@ -95,13 +96,14 @@ func RunAutoscale(f *cmdutil.Factory, out io.Writer, cmd *cobra.Command, args []
 	}
 	info := infos[0]
 	mapping := info.ResourceMapping()
-	if err := f.CanBeAutoscaled(mapping.GroupVersionKind.Kind); err != nil {
+	if err := f.CanBeAutoscaled(mapping.GroupVersionKind.GroupKind()); err != nil {
 		return err
 	}
 
 	// Get the generator, setup and validate all required parameters
 	generatorName := cmdutil.GetFlagString(cmd, "generator")
-	generator, found := f.Generator(generatorName)
+	generators := f.Generators("autoscale")
+	generator, found := generators[generatorName]
 	if !found {
 		return cmdutil.UsageError(cmd, fmt.Sprintf("generator %q not found.", generatorName))
 	}
@@ -117,6 +119,10 @@ func RunAutoscale(f *cmdutil.Factory, out io.Writer, cmd *cobra.Command, args []
 	if err = kubectl.ValidateParams(names, params); err != nil {
 		return err
 	}
+	// Check for invalid flags used against the present generator.
+	if err := kubectl.EnsureFlagsValid(cmd, generators, generatorName); err != nil {
+		return err
+	}
 
 	// Generate new object
 	object, err := generator.Generate(params)
@@ -124,17 +130,28 @@ func RunAutoscale(f *cmdutil.Factory, out io.Writer, cmd *cobra.Command, args []
 		return err
 	}
 
-	resourceMapper := &resource.Mapper{ObjectTyper: typer, RESTMapper: mapper, ClientMapper: f.ClientMapperForCommand()}
+	resourceMapper := &resource.Mapper{
+		ObjectTyper:  typer,
+		RESTMapper:   mapper,
+		ClientMapper: resource.ClientMapperFunc(f.ClientForMapping),
+		Decoder:      f.Decoder(true),
+	}
 	hpa, err := resourceMapper.InfoForObject(object)
 	if err != nil {
 		return err
+	}
+	if cmdutil.ShouldRecord(cmd, hpa) {
+		if err := cmdutil.RecordChangeCause(hpa.Object, f.Command()); err != nil {
+			return err
+		}
+		object = hpa.Object
 	}
 	// TODO: extract this flag to a central location, when such a location exists.
 	if cmdutil.GetFlagBool(cmd, "dry-run") {
 		return f.PrintObject(cmd, object, out)
 	}
 
-	if err := kubectl.CreateOrUpdateAnnotation(cmdutil.GetFlagBool(cmd, cmdutil.ApplyAnnotationsFlag), hpa); err != nil {
+	if err := kubectl.CreateOrUpdateAnnotation(cmdutil.GetFlagBool(cmd, cmdutil.ApplyAnnotationsFlag), hpa, f.JSONEncoder()); err != nil {
 		return err
 	}
 

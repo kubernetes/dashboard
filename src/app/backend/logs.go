@@ -77,7 +77,7 @@ func getRawPodLogs(client *client.Client, namespace, podID string, logOptions *a
 		Name(podID).
 		Resource("pods").
 		SubResource("log").
-		VersionedParams(logOptions, api.Scheme)
+		VersionedParams(logOptions, api.ParameterCodec)
 
 	readCloser, err := req.Stream()
 	if err != nil {

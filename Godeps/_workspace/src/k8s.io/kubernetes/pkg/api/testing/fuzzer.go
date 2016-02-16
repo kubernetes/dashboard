@@ -25,8 +25,8 @@ import (
 
 	docker "github.com/fsouza/go-dockerclient"
 	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/registered"
 	"k8s.io/kubernetes/pkg/api/resource"
+	"k8s.io/kubernetes/pkg/api/testapi"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	"k8s.io/kubernetes/pkg/fields"
@@ -39,7 +39,7 @@ import (
 )
 
 // FuzzerFor can randomly populate api objects that are destined for version.
-func FuzzerFor(t *testing.T, version string, src rand.Source) *fuzz.Fuzzer {
+func FuzzerFor(t *testing.T, version unversioned.GroupVersion, src rand.Source) *fuzz.Fuzzer {
 	f := fuzz.New().NilChance(.5).NumElements(1, 1)
 	if src != nil {
 		f.RandSource(src)
@@ -56,8 +56,8 @@ func FuzzerFor(t *testing.T, version string, src rand.Source) *fuzz.Fuzzer {
 				*j = nil
 			}
 		},
-		func(j *runtime.PluginBase, c fuzz.Continue) {
-			// Do nothing; this struct has only a Kind field and it must stay blank in memory.
+		func(q *resource.Quantity, c fuzz.Continue) {
+			*q = *resource.NewQuantity(c.Int63n(1000), resource.DecimalExponent)
 		},
 		func(j *runtime.TypeMeta, c fuzz.Continue) {
 			// We have to customize the randomization of TypeMetas because their
@@ -97,12 +97,11 @@ func FuzzerFor(t *testing.T, version string, src rand.Source) *fuzz.Fuzzer {
 			j.ResourceVersion = strconv.FormatUint(c.RandUint64(), 10)
 			j.SelfLink = c.RandString()
 		},
-		func(j *unversioned.ListOptions, c fuzz.Continue) {
-			// TODO: add some parsing
+		func(j *api.ListOptions, c fuzz.Continue) {
 			label, _ := labels.Parse("a=b")
-			j.LabelSelector = unversioned.LabelSelector{label}
+			j.LabelSelector = label
 			field, _ := fields.ParseSelector("a=b")
-			j.FieldSelector = unversioned.FieldSelector{field}
+			j.FieldSelector = field
 		},
 		func(j *api.PodExecOptions, c fuzz.Continue) {
 			j.Stdout = true
@@ -175,8 +174,8 @@ func FuzzerFor(t *testing.T, version string, src rand.Source) *fuzz.Fuzzer {
 			// TODO: uncomment when round trip starts from a versioned object
 			if true { //c.RandBool() {
 				*j = &runtime.Unknown{
-					TypeMeta: runtime.TypeMeta{Kind: "Something", APIVersion: "unknown"},
-					RawJSON:  []byte(`{"apiVersion":"unknown","kind":"Something","someKey":"someValue"}`),
+					// We do not set TypeMeta here because it is not carried through a round trip
+					RawJSON: []byte(`{"apiVersion":"unknown.group/unknown","kind":"Something","someKey":"someValue"}`),
 				}
 			} else {
 				types := []runtime.Object{&api.Pod{}, &api.ReplicationController{}}
@@ -202,7 +201,9 @@ func FuzzerFor(t *testing.T, version string, src rand.Source) *fuzz.Fuzzer {
 		},
 		func(q *api.ResourceRequirements, c fuzz.Continue) {
 			randomQuantity := func() resource.Quantity {
-				return *resource.NewQuantity(c.Int63n(1000), resource.DecimalExponent)
+				var q resource.Quantity
+				c.Fuzz(&q)
+				return q
 			}
 			q.Limits = make(api.ResourceList)
 			q.Requests = make(api.ResourceList)
@@ -217,10 +218,8 @@ func FuzzerFor(t *testing.T, version string, src rand.Source) *fuzz.Fuzzer {
 			q.Requests[api.ResourceStorage] = *storageLimit.Copy()
 		},
 		func(q *api.LimitRangeItem, c fuzz.Continue) {
-			randomQuantity := func() resource.Quantity {
-				return *resource.NewQuantity(c.Int63n(1000), resource.DecimalExponent)
-			}
-			cpuLimit := randomQuantity()
+			var cpuLimit resource.Quantity
+			c.Fuzz(&cpuLimit)
 
 			q.Type = api.LimitTypeContainer
 			q.Default = make(api.ResourceList)
@@ -264,6 +263,12 @@ func FuzzerFor(t *testing.T, version string, src rand.Source) *fuzz.Fuzzer {
 				c.Fuzz(t.Interface())
 			}
 		},
+		func(i *api.ISCSIVolumeSource, c fuzz.Continue) {
+			i.ISCSIInterface = c.RandString()
+			if i.ISCSIInterface == "" {
+				i.ISCSIInterface = "default"
+			}
+		},
 		func(d *api.DNSPolicy, c fuzz.Continue) {
 			policies := []api.DNSPolicy{api.DNSClusterFirst, api.DNSDefault}
 			*d = policies[c.Rand.Intn(len(policies))]
@@ -304,7 +309,10 @@ func FuzzerFor(t *testing.T, version string, src rand.Source) *fuzz.Fuzzer {
 				ev.ValueFrom = &api.EnvVarSource{}
 				ev.ValueFrom.FieldRef = &api.ObjectFieldSelector{}
 
-				versions := registered.RegisteredGroupVersions
+				var versions []unversioned.GroupVersion
+				for _, testGroup := range testapi.Groups {
+					versions = append(versions, *testGroup.GroupVersion())
+				}
 
 				ev.ValueFrom.FieldRef.APIVersion = versions[c.Rand.Intn(len(versions))].String()
 				ev.ValueFrom.FieldRef.FieldPath = c.RandString()
@@ -374,6 +382,10 @@ func FuzzerFor(t *testing.T, version string, src rand.Source) *fuzz.Fuzzer {
 			c.FuzzNoCustom(n)
 			n.Spec.ExternalID = "external"
 		},
+		func(s *api.NodeStatus, c fuzz.Continue) {
+			c.FuzzNoCustom(s)
+			s.Allocatable = s.Capacity
+		},
 		func(s *extensions.APIVersion, c fuzz.Continue) {
 			// We can't use c.RandString() here because it may generate empty
 			// string, which will cause tests failure.
@@ -384,6 +396,13 @@ func FuzzerFor(t *testing.T, version string, src rand.Source) *fuzz.Fuzzer {
 			minReplicas := int(c.Rand.Int31())
 			s.MinReplicas = &minReplicas
 			s.CPUUtilization = &extensions.CPUTargetUtilization{TargetPercentage: int(int32(c.RandUint64()))}
+		},
+		func(psp *extensions.PodSecurityPolicySpec, c fuzz.Continue) {
+			c.FuzzNoCustom(psp) // fuzz self without calling this function again
+			userTypes := []extensions.RunAsUserStrategy{extensions.RunAsUserStrategyMustRunAsNonRoot, extensions.RunAsUserStrategyMustRunAs, extensions.RunAsUserStrategyRunAsAny}
+			psp.RunAsUser.Type = userTypes[c.Rand.Intn(len(userTypes))]
+			seLinuxTypes := []extensions.SELinuxContextStrategy{extensions.SELinuxStrategyRunAsAny, extensions.SELinuxStrategyMustRunAs}
+			psp.SELinuxContext.Type = seLinuxTypes[c.Rand.Intn(len(seLinuxTypes))]
 		},
 	)
 	return f

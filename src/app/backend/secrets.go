@@ -16,7 +16,6 @@ package main
 
 import (
 	api "k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
@@ -75,9 +74,9 @@ type SecretsList struct {
 func GetSecrets(client *client.Client, namespace string) (*SecretsList,
 	error) {
 	secretsList := &SecretsList{}
-	secrets, err := client.Secrets(namespace).List(unversioned.ListOptions{
-		LabelSelector: unversioned.LabelSelector{labels.Everything()},
-		FieldSelector: unversioned.FieldSelector{fields.Everything()},
+	secrets, err := client.Secrets(namespace).List(api.ListOptions{
+		LabelSelector: labels.Everything(),
+		FieldSelector: fields.Everything(),
 	})
 	if err != nil {
 		return nil, err

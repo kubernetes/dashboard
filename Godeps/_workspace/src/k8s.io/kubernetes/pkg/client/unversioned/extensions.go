@@ -17,13 +17,9 @@ limitations under the License.
 package unversioned
 
 import (
-	"encoding/json"
-	"fmt"
-	"strings"
-
-	"k8s.io/kubernetes/pkg/api/latest"
-	"k8s.io/kubernetes/pkg/api/unversioned"
-	"k8s.io/kubernetes/pkg/version"
+	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/apimachinery/registered"
+	"k8s.io/kubernetes/pkg/apis/extensions"
 )
 
 // Interface holds the experimental methods for clients of Kubernetes
@@ -31,13 +27,15 @@ import (
 // Features of Extensions group are not supported and may be changed or removed in
 // incompatible ways at any time.
 type ExtensionsInterface interface {
-	VersionInterface
 	HorizontalPodAutoscalersNamespacer
 	ScaleNamespacer
 	DaemonSetsNamespacer
 	DeploymentsNamespacer
 	JobsNamespacer
 	IngressNamespacer
+	ThirdPartyResourceNamespacer
+	ReplicaSetsNamespacer
+	PodSecurityPoliciesInterface
 }
 
 // ExtensionsClient is used to interact with experimental Kubernetes features.
@@ -47,33 +45,8 @@ type ExtensionsClient struct {
 	*RESTClient
 }
 
-// ServerVersion retrieves and parses the server's version.
-func (c *ExtensionsClient) ServerVersion() (*version.Info, error) {
-	body, err := c.Get().AbsPath("/version").Do().Raw()
-	if err != nil {
-		return nil, err
-	}
-	var info version.Info
-	err = json.Unmarshal(body, &info)
-	if err != nil {
-		return nil, fmt.Errorf("got '%s': %v", string(body), err)
-	}
-	return &info, nil
-}
-
-// ServerAPIVersions retrieves and parses the list of experimental API versions the
-// server supports.
-func (c *ExtensionsClient) ServerAPIVersions() (*unversioned.APIVersions, error) {
-	body, err := c.Get().AbsPath("/apis/extensions").Do().Raw()
-	if err != nil {
-		return nil, err
-	}
-	var v unversioned.APIVersions
-	err = json.Unmarshal(body, &v)
-	if err != nil {
-		return nil, fmt.Errorf("got '%s': %v", string(body), err)
-	}
-	return &v, nil
+func (c *ExtensionsClient) PodSecurityPolicies() PodSecurityPolicyInterface {
+	return newPodSecurityPolicy(c)
 }
 
 func (c *ExtensionsClient) HorizontalPodAutoscalers(namespace string) HorizontalPodAutoscalerInterface {
@@ -98,6 +71,14 @@ func (c *ExtensionsClient) Jobs(namespace string) JobInterface {
 
 func (c *ExtensionsClient) Ingress(namespace string) IngressInterface {
 	return newIngress(c, namespace)
+}
+
+func (c *ExtensionsClient) ThirdPartyResources(namespace string) ThirdPartyResourceInterface {
+	return newThirdPartyResources(c, namespace)
+}
+
+func (c *ExtensionsClient) ReplicaSets(namespace string) ReplicaSetInterface {
+	return newReplicaSets(c, namespace)
 }
 
 // NewExtensions creates a new ExtensionsClient for the given config. This client
@@ -130,11 +111,11 @@ func NewExtensionsOrDie(c *Config) *ExtensionsClient {
 
 func setExtensionsDefaults(config *Config) error {
 	// if experimental group is not registered, return an error
-	g, err := latest.Group("extensions")
+	g, err := registered.Group(extensions.GroupName)
 	if err != nil {
 		return err
 	}
-	config.Prefix = "apis/"
+	config.APIPath = defaultAPIPath
 	if config.UserAgent == "" {
 		config.UserAgent = DefaultKubernetesUserAgent()
 	}
@@ -144,12 +125,7 @@ func setExtensionsDefaults(config *Config) error {
 	config.GroupVersion = &copyGroupVersion
 	//}
 
-	versionInterfaces, err := g.InterfacesFor(config.GroupVersion.String())
-	if err != nil {
-		return fmt.Errorf("Extensions API group/version '%v' is not recognized (valid values: %s)",
-			config.GroupVersion, strings.Join(latest.GroupOrDie("extensions").Versions, ", "))
-	}
-	config.Codec = versionInterfaces.Codec
+	config.Codec = api.Codecs.LegacyCodec(*config.GroupVersion)
 	if config.QPS == 0 {
 		config.QPS = 5
 	}

@@ -139,9 +139,9 @@ func GetReplicationControllerDetail(client client.Interface, heapsterClient Heap
 		log.Printf("Skipping Heapster metrics because of error: %s\n", err)
 	}
 
-	services, err := client.Services(namespace).List(unversioned.ListOptions{
-		LabelSelector: unversioned.LabelSelector{labels.Everything()},
-		FieldSelector: unversioned.FieldSelector{fields.Everything()},
+	services, err := client.Services(namespace).List(api.ListOptions{
+		LabelSelector: labels.Everything(),
+		FieldSelector: fields.Everything(),
 	})
 
 	if err != nil {

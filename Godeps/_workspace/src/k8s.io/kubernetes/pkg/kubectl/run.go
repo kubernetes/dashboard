@@ -23,6 +23,7 @@ import (
 
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/resource"
+	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	"k8s.io/kubernetes/pkg/runtime"
 	"k8s.io/kubernetes/pkg/util/validation"
@@ -102,14 +103,13 @@ func (DeploymentV1Beta1) Generate(genericParams map[string]interface{}) (runtime
 		},
 		Spec: extensions.DeploymentSpec{
 			Replicas: count,
-			Selector: labels,
+			Selector: &unversioned.LabelSelector{MatchLabels: labels},
 			Template: api.PodTemplateSpec{
 				ObjectMeta: api.ObjectMeta{
 					Labels: labels,
 				},
 				Spec: *podSpec,
 			},
-			UniqueLabelKey: "deployment.kubernetes.io/podTemplateHash",
 		},
 	}
 	return &deployment, nil
@@ -266,7 +266,7 @@ func (JobV1Beta1) Generate(genericParams map[string]interface{}) (runtime.Object
 			Labels: labels,
 		},
 		Spec: extensions.JobSpec{
-			Selector: &extensions.LabelSelector{
+			Selector: &unversioned.LabelSelector{
 				MatchLabels: labels,
 			},
 			Template: api.PodTemplateSpec{
@@ -593,11 +593,16 @@ func (BasicPod) Generate(genericParams map[string]interface{}) (runtime.Object, 
 func parseEnvs(envArray []string) ([]api.EnvVar, error) {
 	envs := []api.EnvVar{}
 	for _, env := range envArray {
-		parts := strings.Split(env, "=")
-		if len(parts) != 2 || !validation.IsCIdentifier(parts[0]) || len(parts[1]) == 0 {
+		pos := strings.Index(env, "=")
+		if pos == -1 {
 			return nil, fmt.Errorf("invalid env: %v", env)
 		}
-		envVar := api.EnvVar{Name: parts[0], Value: parts[1]}
+		name := env[:pos]
+		value := env[pos+1:]
+		if len(name) == 0 || !validation.IsCIdentifier(name) || len(value) == 0 {
+			return nil, fmt.Errorf("invalid env: %v", env)
+		}
+		envVar := api.EnvVar{Name: name, Value: value}
 		envs = append(envs, envVar)
 	}
 	return envs, nil

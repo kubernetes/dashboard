@@ -19,9 +19,9 @@ import (
 	"testing"
 
 	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
 	"k8s.io/kubernetes/pkg/labels"
-	"k8s.io/kubernetes/pkg/util/sets"
 )
 
 func TestGetReplicationControllerPodInfo(t *testing.T) {
@@ -66,19 +66,20 @@ func TestGetReplicationControllerPodInfo(t *testing.T) {
 }
 
 func TestToLabelSelector(t *testing.T) {
-	requirement, _ := labels.NewRequirement("app", labels.InOperator, sets.NewString("test"))
+	selector, _ := unversioned.LabelSelectorAsSelector(
+		&unversioned.LabelSelector{MatchLabels: map[string]string{"app": "test"}})
 
 	cases := []struct {
 		selector map[string]string
-		expected labels.LabelSelector
+		expected labels.Selector
 	}{
 		{
 			map[string]string{},
-			labels.LabelSelector{},
+			labels.SelectorFromSet(nil),
 		},
 		{
 			map[string]string{"app": "test"},
-			labels.LabelSelector{*requirement},
+			selector,
 		},
 	}
 
@@ -92,8 +93,6 @@ func TestToLabelSelector(t *testing.T) {
 }
 
 func TestGetServicesForDeletion(t *testing.T) {
-	requirement, _ := labels.NewRequirement("app", labels.InOperator, sets.NewString("test"))
-
 	cases := []struct {
 		labelSelector             labels.Selector
 		replicationControllerList *api.ReplicationControllerList
@@ -101,7 +100,7 @@ func TestGetServicesForDeletion(t *testing.T) {
 		expectedActions           []string
 	}{
 		{
-			labels.LabelSelector{*requirement},
+			labels.SelectorFromSet(map[string]string{"app": "test"}),
 			&api.ReplicationControllerList{
 				Items: []api.ReplicationController{
 					{Spec: api.ReplicationControllerSpec{Selector: map[string]string{"app": "test"}}},
@@ -115,7 +114,7 @@ func TestGetServicesForDeletion(t *testing.T) {
 			[]string{"list", "list"},
 		},
 		{
-			labels.LabelSelector{*requirement},
+			labels.SelectorFromSet(map[string]string{"app": "test"}),
 			&api.ReplicationControllerList{
 				Items: []api.ReplicationController{
 					{Spec: api.ReplicationControllerSpec{Selector: map[string]string{"app": "test"}}},
@@ -130,7 +129,7 @@ func TestGetServicesForDeletion(t *testing.T) {
 			[]string{"list"},
 		},
 		{
-			labels.LabelSelector{*requirement},
+			labels.SelectorFromSet(map[string]string{"app": "test"}),
 			&api.ReplicationControllerList{},
 			&api.ServiceList{
 				Items: []api.Service{
