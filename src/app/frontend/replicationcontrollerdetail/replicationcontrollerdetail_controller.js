@@ -103,7 +103,7 @@ export default class ReplicationControllerDetailController {
    * @returns {boolean}
    * @export
    */
-  isSidebarVisible() { return this.mdMedia('gt-sm'); }
+  isSidebarVisible() { return this.mdMedia('gt-md'); }
 
   /**
    * Returns true if event is a warning.
@@ -183,7 +183,7 @@ export default class ReplicationControllerDetailController {
    * @export
    */
   hasCpuUsage(pod) {
-    return !!pod.metrics && (!!pod.metrics.cpuUsage || pod.metrics.cpuUsage === 0);
+    return !!pod.metrics && !!pod.metrics.cpuUsageHistory && pod.metrics.cpuUsageHistory.length > 0;
   }
 
   /**
@@ -192,6 +192,19 @@ export default class ReplicationControllerDetailController {
    * @export
    */
   hasMemoryUsage(pod) {
-    return !!pod.metrics && (!!pod.metrics.memoryUsage || pod.metrics.memoryUsage === 0);
+    return !!pod.metrics && !!pod.metrics.memoryUsageHistory &&
+        pod.metrics.memoryUsageHistory.length > 0;
   }
+
+  /**
+   * Returns either 1 (if the table cells containing sparklines should
+   * shrink around their contents) or undefined (if those table cells
+   * should obey regular layout rules). The idiosyncratic return
+   * protocol is for compatibility with ng-attr's behavior - we want
+   * to generate either "width=1" or nothing at all.
+   *
+   * @return {(number|undefined)}
+   * @export
+   */
+  shouldShrinkSparklineCells() { return (this.mdMedia('gt-xs') || undefined) && 1; }
 }

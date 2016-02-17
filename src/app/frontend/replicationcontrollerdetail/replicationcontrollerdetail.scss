@@ -117,3 +117,45 @@ md-icon {
   color: $delicate;
   font-size: $subhead-font-size-base;
 }
+
+.kd-replicationcontrollerdetail-labeled-sparkline-label {
+  white-space: nowrap;
+  word-spacing: normal;
+}
+
+.kd-sparkline {
+  background-color: $body;
+  height: 2.5 * $baseline-grid;
+  vertical-align: -$baseline-grid / 2; // 20% below baseline, to flow with text
+  width: 12.5 * $baseline-grid;
+
+  @media only screen and (min-width: $layout-breakpoint-lg) {
+    margin-left: $baseline-grid;
+  }
+
+  @media only screen and (min-width: $layout-breakpoint-xs) and (max-width: $layout-breakpoint-lg) {
+    margin-top: $baseline-grid / 2;
+  }
+}
+
+.kd-sparkline-series {
+  fill: $chart-1;
+}
+
+.kd-replicationcontrollerdetail-labeled-sparkline {
+  @media only screen and (min-width: $layout-breakpoint-lg) {
+    display: block;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  @media only screen and (min-width: $layout-breakpoint-xs) and (max-width: $layout-breakpoint-lg) {
+    display: block;
+    padding-bottom: $baseline-grid;
+    padding-top: $baseline-grid;
+  }
+
+  @media only screen and (max-width: $layout-breakpoint-xs) {
+    word-spacing: $baseline-grid;
+  }
+}

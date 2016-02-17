@@ -135,21 +135,31 @@ limitations under the License.
                   -
                 </span>
               </td>
-              <td kd-responsive-header="CPU" class="kd-replicationcontrollerdetail-table-cell"
-                  ng-if="::ctrl.replicationControllerDetail.hasMetrics">
-                <span ng-if="::ctrl.hasCpuUsage(pod)">
-                  {{::(pod.metrics.cpuUsage | kdCores)}}
+              <!-- width=1 is a hack to shrink-wrap the column around its content -->
+              <td kd-responsive-header="CPU"
+                  class="kd-replicationcontrollerdetail-table-cell kd-replicationcontrollerdetail-sparkline-table-cell"
+                  ng-if="::ctrl.replicationControllerDetail.hasMetrics"
+                  ng-attr-width="{{ctrl.shouldShrinkSparklineCells()}}">
+                <span ng-if="::ctrl.hasCpuUsage(pod)" class="kd-replicationcontrollerdetail-labeled-sparkline">
+                  <span class="kd-replicationcontrollerdetail-labeled-sparkline-label"
+                       >{{::(pod.metrics.cpuUsage | kdCores)}}</span>
+                  <kd-sparkline timeseries="pod.metrics.cpuUsageHistory"></kd-sparkline>
                 </span>
-                <span ng-if="::!ctrl.hasCpuUsage(pod)">
+                <span ng-if="::(!ctrl.hasCpuUsage(pod))">
                   -
                 </span>
               </td>
-              <td kd-responsive-header="Memory" class="kd-replicationcontrollerdetail-table-cell"
-                  ng-if="::ctrl.replicationControllerDetail.hasMetrics">
-                <span ng-if="::ctrl.hasMemoryUsage(pod)">
-                  {{::(pod.metrics.memoryUsage | kdMemory)}}
+              <!-- width=1 is a hack to shrink-wrap the column around its content -->
+              <td kd-responsive-header="Memory"
+                  class="kd-replicationcontrollerdetail-table-cell kd-replicationcontrollerdetail-sparkline-table-cell"
+                  ng-if="::ctrl.replicationControllerDetail.hasMetrics"
+                  ng-attr-width="{{ctrl.shouldShrinkSparklineCells()}}">
+                <span ng-if="::ctrl.hasMemoryUsage(pod)" class="kd-replicationcontrollerdetail-labeled-sparkline">
+                  <span class="kd-replicationcontrollerdetail-labeled-sparkline-label"
+                       >{{::(pod.metrics.memoryUsage | kdMemory)}}</span>
+                  <kd-sparkline timeseries="pod.metrics.memoryUsageHistory"></kd-sparkline>
                 </span>
-                <span ng-if="::!ctrl.hasMemoryUsage(pod)">
+                <span ng-if="::(!ctrl.hasMemoryUsage(pod))">
                   -
                 </span>
               </td>
