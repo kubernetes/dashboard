@@ -85,6 +85,15 @@ $table-cell-height-half: $table-cell-height / 2;
     white-space: normal;
     word-break: break-all;
   }
+
+  &.kd-replicationcontrollerdetail-metric-table-cell {
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  &.kd-replicationcontrollerdetail-sparkline-table-cell {
+    padding-left: 1.25 * $baseline-grid;
+  }
 }
 
 .kd-replicationcontrollerdetail-table-icon {
@@ -119,4 +128,16 @@ md-icon {
 .kd-replicationcontrollerdetail-no-events-info {
   color: $delicate;
   font-size: $subhead-font-size-base;
+}
+
+.kd-sparkline {
+  width: 100px;
+  height: 20px;
+  vertical-align: -5px;
+  margin-left: 4px;
+  background-color: $body;
+}
+
+.kd-sparkline-series {
+  fill: $chart-1;
 }

@@ -183,7 +183,7 @@ export default class ReplicationControllerDetailController {
    * @export
    */
   hasCpuUsage(pod) {
-    return !!pod.metrics && (!!pod.metrics.cpuUsage || pod.metrics.cpuUsage === 0);
+    return !!pod.metrics && !!pod.metrics.cpuUsageHistory && pod.metrics.cpuUsageHistory.length > 0;
   }
 
   /**
@@ -192,6 +192,22 @@ export default class ReplicationControllerDetailController {
    * @export
    */
   hasMemoryUsage(pod) {
-    return !!pod.metrics && (!!pod.metrics.memoryUsage || pod.metrics.memoryUsage === 0);
+    return !!pod.metrics && !!pod.metrics.memoryUsageHistory && pod.metrics.memoryUsageHistory.length > 0;
+  }
+
+  /**
+   * Produces the last value of the last element of an array of MetricsResults.
+   * @param {!Array<!backendApi.MetricResult>} ts
+   * @return {number}
+   * @export
+   */
+  latestTimeseriesValue(ts) {
+    if (ts.length === 0) {
+      throw new Error(
+        "a zero-length time series has no latest value"
+      )
+    }
+    let sorted = ts.slice().sort(({timestamp}) => timestamp);
+    return sorted[sorted.length - 1].value;
   }
 }
