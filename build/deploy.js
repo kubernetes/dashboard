@@ -17,9 +17,11 @@
  */
 import child from 'child_process';
 import gulp from 'gulp';
+import lodash from 'lodash';
 import path from 'path';
 
 import conf from './conf';
+import {multiDest} from './multidest';
 
 /**
  * @param {!Array<string>} args
@@ -40,20 +42,89 @@ function spawnDockerProcess(args, doneFn) {
 }
 
 /**
- * @param {string} version
- * @param {function(?Error=)} doneFn
+ * Creates canary Docker image for the application for current architecture.
+ * The image is tagged with the image name configuration constant.
  */
-function buildDockerImage(version, doneFn) {
-  spawnDockerProcess(
-      [
-        'build',
-        // Remove intermediate containers after a successful build.
-        '--rm=true',
-        '--tag',
-        `${conf.deploy.imageName}:${version}`,
-        conf.paths.dist,
-      ],
-      doneFn);
+gulp.task('docker-image:canary', ['build', 'docker-file'], function(doneFn) {
+  buildDockerImage([[conf.deploy.canaryImageName, conf.paths.dist]], doneFn);
+});
+
+/**
+ * Creates release Docker image for the application for current architecture.
+ * The image is tagged with the image name configuration constant.
+ */
+gulp.task('docker-image:release', ['build', 'docker-file'], function(doneFn) {
+  buildDockerImage([[conf.deploy.releaseImageName, conf.paths.dist]], doneFn);
+});
+
+/**
+ * Creates canary Docker image for the application for all architectures.
+ * The image is tagged with the image name configuration constant.
+ */
+gulp.task('docker-image:canary:cross', ['build:cross', 'docker-file:cross'], function(doneFn) {
+  buildDockerImage(lodash.zip(conf.deploy.canaryImageNames, conf.paths.distCross), doneFn);
+});
+
+/**
+ * Creates release Docker image for the application for all architectures.
+ * The image is tagged with the image name configuration constant.
+ */
+gulp.task('docker-image:release:cross', ['build:cross', 'docker-file:cross'], function(doneFn) {
+  buildDockerImage(lodash.zip(conf.deploy.releaseImageNames, conf.paths.distCross), doneFn);
+});
+
+/**
+ * Pushes cross-compiled canary images to GCR.
+ */
+gulp.task('push-to-gcr:canary', ['docker-image:canary:cross'], function(doneFn) {
+  pushToGcr(conf.deploy.versionCanary, doneFn);
+});
+
+/**
+ * Pushes cross-compiled release images to GCR.
+ */
+gulp.task('push-to-gcr:release', ['docker-image:release:cross'], function(doneFn) {
+  pushToGcr(conf.deploy.versionRelease, doneFn);
+});
+
+/**
+ * Processes the Docker file and places it in the dist folder for building.
+ */
+gulp.task('docker-file', ['clean-dist'], function() { dockerFile(conf.paths.dist); });
+
+/**
+ * Processes the Docker file and places it in the dist folder for all architectures.
+ */
+gulp.task('docker-file:cross', ['clean-dist'], function() { dockerFile(conf.paths.distCross); });
+
+/**
+ * @param {!Array<!Array<string>>} imageNamesAndDirs (image name, directory) pairs
+ * @return {!Promise}
+ */
+function buildDockerImage(imageNamesAndDirs) {
+  let spawnPromises = imageNamesAndDirs.map((imageNameAndDir) => {
+    let [imageName, dir] = imageNameAndDir;
+    return new Promise((resolve, reject) => {
+      spawnDockerProcess(
+          [
+            'build',
+            // Remove intermediate containers after a successful build.
+            '--rm=true',
+            '--tag',
+            imageName,
+            dir,
+          ],
+          (err) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve();
+            }
+          });
+    });
+  });
+
+  return Promise.all(spawnPromises);
 }
 
 /**
@@ -75,42 +146,9 @@ function pushToGcr(version, doneFn) {
 }
 
 /**
- * Creates Docker image for the application. The image is tagged with the image name configuration
- * constant.
- *
- * In order to run the image on a Kubernates cluster, it has to be deployed to a registry.
+ * @param {string|!Array<string>} outputDirs
+ * @return {stream}
  */
-gulp.task('docker-image:canary', ['build', 'docker-file'], function(doneFn) {
-  buildDockerImage(conf.deploy.versionCanary, doneFn);
-});
-
-/**
- * Creates Docker image for the application. The image is tagged with the image name configuration
- * constant.
- *
- * In order to run the image on a Kubernates cluster, it has to be deployed to a registry.
- */
-gulp.task('docker-image:release', ['build', 'docker-file'], function(doneFn) {
-  buildDockerImage(conf.deploy.versionRelease, doneFn);
-});
-
-/**
- * Pushes canary image to GCR.
- */
-gulp.task('push-to-gcr:canary', ['docker-image:canary'], function(doneFn) {
-  pushToGcr(conf.deploy.versionCanary, doneFn);
-});
-
-/**
- * Pushes release image to GCR.
- */
-gulp.task('push-to-gcr:release', ['docker-image:release'], function(doneFn) {
-  pushToGcr(conf.deploy.versionRelease, doneFn);
-});
-
-/**
- * Processes the Docker file and places it in the dist folder for building.
- */
-gulp.task('docker-file', ['clean-dist'], function() {
-  return gulp.src(path.join(conf.paths.deploySrc, 'Dockerfile')).pipe(gulp.dest(conf.paths.dist));
-});
+function dockerFile(outputDirs) {
+  return gulp.src(path.join(conf.paths.deploySrc, 'Dockerfile')).pipe(multiDest(outputDirs));
+}
