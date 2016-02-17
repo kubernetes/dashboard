@@ -23,6 +23,29 @@ import (
 	"github.com/spf13/pflag"
 )
 
+// Represents hostname string i.e. http://localhost:8080
+type Hostname string
+
+// Normalizes hostname by replacing any backslashes with slashes and removing
+// any trailing slashes
+func (host Hostname) normalize() string {
+	hostStr := string(host)
+
+	// Replace any backslashes with slashes
+	for i, char := range hostStr {
+		if char == '\\' {
+			hostStr = hostStr[:i] + string('/') + hostStr[i+1:]
+		}
+	}
+
+	// Remove any trailing slashes
+	for length := len(hostStr); length > 0 && hostStr[length-1] == '/'; length-- {
+		hostStr = hostStr[0 : length-1]
+	}
+
+	return hostStr
+}
+
 var (
 	argPort          = pflag.Int("port", 9090, "The port to listen to for incoming HTTP requests")
 	argApiserverHost = pflag.String("apiserver-host", "", "The address of the Kubernetes Apiserver "+
@@ -39,14 +62,17 @@ func main() {
 	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)
 	pflag.Parse()
 
+	apiserverHost := Hostname(*argApiserverHost)
+	heapsterHost := Hostname(*argHeapsterHost)
+
 	log.Printf("Starting HTTP server on port %d", *argPort)
 
-	apiserverClient, err := CreateApiserverClient(*argApiserverHost, new(ClientFactoryImpl))
+	apiserverClient, err := CreateApiserverClient(apiserverHost.normalize(), new(ClientFactoryImpl))
 	if err != nil {
 		log.Fatalf("Error while initializing connection to Kubernetes master: %s. Quitting.", err)
 	}
 
-	heapsterRESTClient, err := CreateHeapsterRESTClient(*argHeapsterHost, apiserverClient)
+	heapsterRESTClient, err := CreateHeapsterRESTClient(heapsterHost.normalize(), apiserverClient)
 	if err != nil {
 		log.Print(err)
 	}
