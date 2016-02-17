@@ -31,6 +31,7 @@ $primary: #326de6;
 $secondary: #f51200;
 $warning: #ffa500;
 $delicate: #aaa;
+$border: #ddd;
 $muted: #888;
 $hover-primary: #1254df;
 $hover-secondary: #ff1c19;
@@ -48,5 +49,8 @@ $regular-font-weight: 400;
 $bold-font-weight: 500;
 
 $layout-breakpoint-lg: 1280px;
+$layout-breakpoint-xs: 600px;
 $whiteframe-shadow-1dp: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px rgba(0, 0, 0, .12);
 $baseline-grid: 8px;
+$table-cell-height: 6 * $baseline-grid;
+$table-cell-height-half: $table-cell-height / 2;
