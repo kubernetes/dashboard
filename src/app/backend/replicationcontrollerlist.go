@@ -25,7 +25,7 @@ import (
 )
 
 // Callback function in order to get the pod status errors
-type GetPodsEventWarningsFunc func(pods []api.Pod) ([]PodEvent, error)
+type GetPodsEventWarningsFunc func(pods []api.Pod) ([]Event, error)
 
 // Callback function in order to get node by name.
 type GetNodeFunc func(nodeName string) (*api.Node, error)
@@ -51,7 +51,7 @@ type ReplicationController struct {
 	// Label of this Replication Controller.
 	Labels map[string]string `json:"labels"`
 
-	// Aggregate information about pods belonging to this repolica set.
+	// Aggregate information about pods belonging to this Replication Controller.
 	Pods ReplicationControllerPodInfo `json:"pods"`
 
 	// Container images of the Replication Controller.
@@ -97,7 +97,7 @@ func GetReplicationControllerList(client *client.Client) (*ReplicationController
 	// Anonymous callback function to get pods warnings.
 	// Function fulfils GetPodsEventWarningsFunc type contract.
 	// Based on list of api pods returns list of pod related warning events
-	getPodsEventWarningsFn := func(pods []api.Pod) ([]PodEvent, error) {
+	getPodsEventWarningsFn := func(pods []api.Pod) ([]Event, error) {
 		errors, err := GetPodsEventWarnings(client, pods)
 
 		if err != nil {

@@ -108,20 +108,12 @@ backendApi.ReplicationControllerList;
 
 /**
  * @typedef {{
- *   reason: string,
- *   message: string
- * }}
- */
-backendApi.PodEvent;
-
-/**
- * @typedef {{
  *   current: number,
  *   desired: number,
  *   running: number,
  *   pending: number,
  *   failed: number,
- *   warnings: !Array<!backendApi.PodEvent>
+ *   warnings: !Array<!backendApi.Event>
  * }}
  */
 backendApi.ReplicationControllerPodInfo;

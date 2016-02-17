@@ -35,7 +35,7 @@ type Events struct {
 
 // Single event representation.
 type Event struct {
-	// Event message.
+	// A human-readable description of the status of related object.
 	Message string `json:"message"`
 
 	// Component from which the event is generated.
@@ -59,7 +59,8 @@ type Event struct {
 	// The time at which the most recent occurrence of this event was recorded.
 	LastSeen unversioned.Time `json:"lastSeen"`
 
-	// Reason why this event was generated.
+	// Short, machine understandable string that gives the reason
+	// for this event being generated.
 	Reason string `json:"reason"`
 
 	// Event type (at the moment only normal and warning are supported).
@@ -78,11 +79,6 @@ func GetEvents(client *client.Client, namespace, replicationControllerName strin
 		return nil, err
 	}
 
-	events := AppendEvents(rsEvents, Events{
-		Namespace: namespace,
-		Events:    make([]Event, 0),
-	})
-
 	// Get events for pods in replication controller.
 	podEvents, err := GetReplicationControllerPodsEvents(client, namespace, replicationControllerName)
 
@@ -90,7 +86,16 @@ func GetEvents(client *client.Client, namespace, replicationControllerName strin
 		return nil, err
 	}
 
-	events = AppendEvents(podEvents, events)
+	apiEvents := append(rsEvents, podEvents...)
+
+	if !isTypeFilled(apiEvents) {
+		apiEvents = fillEventsType(apiEvents)
+	}
+
+	events := AppendEvents(apiEvents, Events{
+		Namespace: namespace,
+		Events:    make([]Event, 0),
+	})
 
 	log.Printf("Found %d events related to %s replication controller in %s namespace", len(events.Events),
 		replicationControllerName, namespace)
