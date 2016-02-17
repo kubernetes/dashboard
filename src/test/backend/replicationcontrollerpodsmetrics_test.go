@@ -107,11 +107,23 @@ func TestCreateResponse(t *testing.T) {
 			&ReplicationControllerMetricsByPod{
 				MetricsMap: map[string]PodMetrics{
 					"a": {
-						CpuUsage:    &cpuUsage1,
+						CpuUsage: &cpuUsage1,
+						CpuUsageHistory: []MetricResult{
+							{Value: cpuUsage1},
+						},
 						MemoryUsage: &memoryUsage,
+						MemoryUsageHistory: []MetricResult{
+							{Value: memoryUsage},
+						},
 					}, "b": {
-						CpuUsage:    &cpuUsage2,
+						CpuUsage: &cpuUsage2,
+						CpuUsageHistory: []MetricResult{
+							{Value: cpuUsage2},
+						},
 						MemoryUsage: &memoryUsage,
+						MemoryUsageHistory: []MetricResult{
+							{Value: memoryUsage},
+						},
 					},
 				},
 			},
