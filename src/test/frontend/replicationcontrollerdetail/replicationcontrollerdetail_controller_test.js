@@ -111,21 +111,23 @@ describe('Replication Controller Detail controller', () => {
   it('should show/hide cpu and memory metrics for pods', () => {
     expect(ctrl.hasMemoryUsage({})).toBe(false);
     expect(ctrl.hasMemoryUsage({metrics: {}})).toBe(false);
-    expect(ctrl.hasMemoryUsage({metrics: {memoryUsage: 0}})).toBe(true);
-    expect(ctrl.hasMemoryUsage({metrics: {memoryUsage: 1}})).toBe(true);
-    expect(ctrl.hasMemoryUsage({metrics: {memoryUsage: null}})).toBe(false);
-    expect(ctrl.hasMemoryUsage({metrics: {memoryUsage: undefined}})).toBe(false);
-    expect(ctrl.hasMemoryUsage({metrics: {cpuUsage: 1}})).toBe(false);
+    expect(ctrl.hasMemoryUsage({metrics: {memoryUsageHistory: []}})).toBe(false);
+    expect(ctrl.hasMemoryUsage({metrics: {memoryUsageHistory: [0]}})).toBe(true);
+    expect(ctrl.hasMemoryUsage({metrics: {memoryUsageHistory: [1]}})).toBe(true);
+    expect(ctrl.hasMemoryUsage({metrics: {memoryUsageHistory: null}})).toBe(false);
+    expect(ctrl.hasMemoryUsage({metrics: {memoryUsageHistory: undefined}})).toBe(false);
+    expect(ctrl.hasMemoryUsage({metrics: {cpuUsageHistory: [1]}})).toBe(false);
 
     expect(ctrl.hasCpuUsage({})).toBe(false);
     expect(ctrl.hasCpuUsage({metrics: {}})).toBe(false);
-    expect(ctrl.hasCpuUsage({metrics: {memoryUsage: 0}})).toBe(false);
-    expect(ctrl.hasCpuUsage({metrics: {memoryUsage: 1}})).toBe(false);
-    expect(ctrl.hasCpuUsage({metrics: {memoryUsage: null}})).toBe(false);
-    expect(ctrl.hasCpuUsage({metrics: {memoryUsage: undefined}})).toBe(false);
-    expect(ctrl.hasCpuUsage({metrics: {cpuUsage: 1}})).toBe(true);
-    expect(ctrl.hasCpuUsage({metrics: {cpuUsage: 0}})).toBe(true);
-    expect(ctrl.hasCpuUsage({metrics: {cpuUsage: null}})).toBe(false);
-    expect(ctrl.hasCpuUsage({metrics: {cpuUsage: undefined}})).toBe(false);
+    expect(ctrl.hasCpuUsage({metrics: {memoryUsageHistory: []}})).toBe(false);
+    expect(ctrl.hasCpuUsage({metrics: {memoryUsageHistory: [1]}})).toBe(false);
+    expect(ctrl.hasCpuUsage({metrics: {memoryUsageHistory: null}})).toBe(false);
+    expect(ctrl.hasCpuUsage({metrics: {memoryUsageHistory: undefined}})).toBe(false);
+    expect(ctrl.hasCpuUsage({metrics: {cpuUsageHistory: [1]}})).toBe(true);
+    expect(ctrl.hasCpuUsage({metrics: {cpuUsageHistory: [0]}})).toBe(true);
+    expect(ctrl.hasCpuUsage({metrics: {cpuUsageHistory: []}})).toBe(false);
+    expect(ctrl.hasCpuUsage({metrics: {cpuUsageHistory: null}})).toBe(false);
+    expect(ctrl.hasCpuUsage({metrics: {cpuUsageHistory: undefined}})).toBe(false);
   });
 });

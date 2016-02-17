@@ -81,7 +81,8 @@ limitations under the License.
                 </kd-sorted-header>
               </th>
               <th class="kd-replicationcontrollerdetail-table-header"
-                  ng-if="::ctrl.replicationControllerDetail.hasMetrics">
+                  ng-if="::ctrl.replicationControllerDetail.hasMetrics"
+                  colspan="2">
                 <kd-sorted-header currently-selected-column="ctrl.sortPodsBy"
                                   currently-selected-order="ctrl.podsOrder" column-name="cpu"
                                   tooltip="CPU used by the pod">
@@ -89,7 +90,8 @@ limitations under the License.
                 </kd-sorted-header>
               </th>
               <th class="kd-replicationcontrollerdetail-table-header"
-                  ng-if="::ctrl.replicationControllerDetail.hasMetrics">
+                  ng-if="::ctrl.replicationControllerDetail.hasMetrics"
+                  colspan="2">
                 <kd-sorted-header currently-selected-column="ctrl.sortPodsBy"
                                   currently-selected-order="ctrl.podsOrder" column-name="memory"
                                   tooltip="Memory used by the pod">
@@ -135,22 +137,32 @@ limitations under the License.
                   -
                 </span>
               </td>
-              <td kd-responsive-header="CPU" class="kd-replicationcontrollerdetail-table-cell"
-                  ng-if="::ctrl.replicationControllerDetail.hasMetrics">
+              <!-- width=1 is a hack to shrink-wrap the column around its content -->
+              <td kd-responsive-header="CPU" class="kd-replicationcontrollerdetail-table-cell kd-replicationcontrollerdetail-metric-table-cell"
+                  ng-if="::ctrl.replicationControllerDetail.hasMetrics"
+                  width="1">
                 <span ng-if="::ctrl.hasCpuUsage(pod)">
-                  {{::(pod.metrics.cpuUsage | kdCores)}}
-                </span>
-                <span ng-if="::!ctrl.hasCpuUsage(pod)">
-                  -
+                  {{::(ctrl.latestTimeseriesValue(pod.metrics.cpuUsageHistory) | kdCores)}}
                 </span>
               </td>
-              <td kd-responsive-header="Memory" class="kd-replicationcontrollerdetail-table-cell"
+              <td class="kd-replicationcontrollerdetail-table-cell kd-replicationcontrollerdetail-sparkline-table-cell"
+                  ng-if="::ctrl.replicationControllerDetail.hasMetrics">
+                <span ng-if="::ctrl.hasCpuUsage(pod)">
+                  <kd-sparkline timeseries="pod.metrics.cpuUsageHistory"></kd-sparkline>
+                </span>
+              </td>
+              <!-- width=1 is a hack to shrink-wrap the column around its content -->
+              <td class="kd-replicationcontrollerdetail-table-cell kd-replicationcontrollerdetail-metric-table-cell"
+                  ng-if="::ctrl.replicationControllerDetail.hasMetrics"
+                  width="1">
+                <span ng-if="::ctrl.hasMemoryUsage(pod)">
+                  {{::(ctrl.latestTimeseriesValue(pod.metrics.memoryUsageHistory) | kdMemory)}}
+                </span>
+              </td>
+              <td kd-responsive-header="Memory" class="kd-replicationcontrollerdetail-table-cell kd-replicationcontrollerdetail-sparkline-table-cell"
                   ng-if="::ctrl.replicationControllerDetail.hasMetrics">
                 <span ng-if="::ctrl.hasMemoryUsage(pod)">
-                  {{::(pod.metrics.memoryUsage | kdMemory)}}
-                </span>
-                <span ng-if="::!ctrl.hasMemoryUsage(pod)">
-                  -
+                  <kd-sparkline timeseries="pod.metrics.memoryUsageHistory"></kd-sparkline>
                 </span>
               </td>
               <td kd-responsive-header="Cluster IP" class="kd-replicationcontrollerdetail-table-cell">
