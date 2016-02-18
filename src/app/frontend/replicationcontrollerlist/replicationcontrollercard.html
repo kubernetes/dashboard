@@ -111,7 +111,7 @@ limitations under the License.
           <span flex="initial" class="kd-replicationcontroller-card-section-title">External endpoint</span>
           <div flex>
             <div ng-repeat="endpoint in ::ctrl.replicationController.externalEndpoints track by $index">
-              <kd-service-endpoint endpoint="::endpoint"></kd-service-endpoint>
+              <kd-service-endpoint endpoint="::endpoint" url="true"></kd-service-endpoint>
             </div>
             <div ng-if="::!ctrl.replicationController.externalEndpoints.length">
               none

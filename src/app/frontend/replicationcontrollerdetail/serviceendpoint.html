@@ -16,7 +16,15 @@ limitations under the License.
 
 <div>
   <span ng-repeat="port in ::endpoint.ports">
-    <kd-middle-ellipsis display-string="{{::endpoint.host}}:{{::port.port}} {{::port.protocol}}">
-    </kd-middle-ellipsis>
+    <div ng-if="url">
+      <a href="http://{{::endpoint.host}}:{{::port.port}}" target="_blank">
+        <kd-middle-ellipsis display-string="{{::endpoint.host}}:{{::port.port}} {{::port.protocol}}">
+        </kd-middle-ellipsis>
+      </a>
+    </div>
+    <div ng-if="!url">
+      <kd-middle-ellipsis display-string="{{::endpoint.host}}:{{::port.port}} {{::port.protocol}}">
+      </kd-middle-ellipsis>
+    </div>
   </span>
 </div>

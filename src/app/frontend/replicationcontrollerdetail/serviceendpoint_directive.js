@@ -22,6 +22,7 @@ export default function serviceEndpointDirective() {
     templateUrl: 'replicationcontrollerdetail/serviceendpoint.html',
     scope: {
       'endpoint': '=',
+      'url': '@',
     },
   };
 }
