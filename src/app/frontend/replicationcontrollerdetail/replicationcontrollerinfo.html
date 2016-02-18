@@ -20,8 +20,8 @@ limitations under the License.
     DELETE REPLICATION CONTROLLER
   </md-button>
 </div>
-<div flex layout="column" class="kd-replicationcontrollerinfo-item">
-  <div flex layout="column" class="kd-replicationcontrollerinfo-info">
+<div flex="auto" layout="column" class="kd-replicationcontrollerinfo-item">
+  <div flex="auto" layout="column" class="kd-replicationcontrollerinfo-info">
     <span class="kd-replicationcontrollerinfo-title">
       Replication controller
     </span>
@@ -82,7 +82,7 @@ limitations under the License.
       <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
     </span>
   </div>
-  <div flex layout="column" class="kd-replicationcontrollerinfo-info">
+  <div flex="auto" layout="column" class="kd-replicationcontrollerinfo-info">
     <div ng-if="::infoCtrl.details.services" layout="column">
       <span class="kd-replicationcontrollerinfo-title">Services</span>
       <div ng-repeat="service in ::infoCtrl.details.services">

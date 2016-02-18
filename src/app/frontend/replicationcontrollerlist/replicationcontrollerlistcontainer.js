@@ -24,7 +24,6 @@
 export default function computeContainerHeight(container, mdMedia) {
   /** @type {!Array<number>} */
   let childHeights = Array.prototype.map.call(container.children, (child) => child.offsetHeight);
-
   let columnCount = computeColumnCount(mdMedia);
   return binarySearchOptimalHeight(childHeights, columnCount);
 }

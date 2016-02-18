@@ -23,10 +23,10 @@ limitations under the License.
       <h2>
         <span>kubernetes</span>
       </h2>
-      <div flex ui-view="toolbar"></div>
+      <div flex="auto" ui-view="toolbar"></div>
     </div>
   </md-toolbar>
-  <div class="kd-app-content-wrapper" ng-switch="ctrl.showLoadingSpinner">
+  <div class="kd-app-content-wrapper" ng-switch="ctrl.showLoadingSpinner" flex="auto" >
     <div ng-switch-when="true" class="kd-center-fixed">
       <md-progress-circular md-mode="indeterminate" md-diameter="96">
       </md-progress-circular>

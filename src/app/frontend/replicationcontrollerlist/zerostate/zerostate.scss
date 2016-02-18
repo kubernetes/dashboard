@@ -29,9 +29,10 @@
 }
 
 .kd-zerostate-card-logo {
-  height: 80px;
+  height: $logo-height;
+  min-width: $logo-width;
   padding: 0 0 0 15px;
-  width: 80px;
+  width: $logo-width;
 }
 
 .kd-zerostate-deploy-card {

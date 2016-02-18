@@ -17,7 +17,7 @@ limitations under the License.
 <md-card class="kd-replicationcontroller-card">
   <md-card-content>
     <div layout="column">
-      <div flex layout="row" layout-align="space-between center"
+      <div flex="auto" layout="row" layout-align="space-between center"
             class="kd-replicationcontroller-card-title-row">
         <span layout="row" flex="85">
           <md-icon class="material-icons md-warn kd-replicationcontroller-card-status-icon"
@@ -73,8 +73,8 @@ limitations under the License.
       <div layout="row" layout-wrap>
         <div ng-if="::ctrl.replicationController.description" flex="100" layout="column"
             class="kd-replicationcontroller-card-section">
-          <span flex class="kd-replicationcontroller-card-section-title">Description</span>
-          <div flex class="kd-replicationcontroller-card-description">{{::ctrl.replicationController.description}}</div>
+          <span flex="auto" class="kd-replicationcontroller-card-section-title">Description</span>
+          <div flex="auto" class="kd-replicationcontroller-card-description">{{::ctrl.replicationController.description}}</div>
         </div>
 
         <div flex="60" layout="column" class="kd-replicationcontroller-card-section">
@@ -97,7 +97,7 @@ limitations under the License.
 
         <div flex="60" layout="column" class="kd-replicationcontroller-card-section">
           <span flex="initial" class="kd-replicationcontroller-card-section-title">Internal endpoint</span>
-          <div flex>
+          <div flex="auto" >
             <div ng-repeat="endpoint in ::ctrl.replicationController.internalEndpoints track by $index">
               <kd-service-endpoint endpoint="::endpoint"></kd-service-endpoint>
             </div>
@@ -109,7 +109,7 @@ limitations under the License.
 
         <div flex="40" layout="column" class="kd-replicationcontroller-card-section">
           <span flex="initial" class="kd-replicationcontroller-card-section-title">External endpoint</span>
-          <div flex>
+          <div flex="auto" >
             <div ng-repeat="endpoint in ::ctrl.replicationController.externalEndpoints track by $index">
               <kd-service-endpoint endpoint="::endpoint"></kd-service-endpoint>
             </div>
@@ -122,7 +122,7 @@ limitations under the License.
       <div layout="column" ng-if="::ctrl.hasWarnings()">
         <md-divider class="kd-replicationcontroller-card-divider"></md-divider>
         <div layout-wrap>
-          <div flex class="kd-replicationcontroller-card-section"
+          <div flex="auto" class="kd-replicationcontroller-card-section"
                ng-repeat="warning in ::ctrl.replicationController.pods.warnings">
             <span class="kd-replicationcontroller-card-error">{{::warning.message}}</span>
           </div>
