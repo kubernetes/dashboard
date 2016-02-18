@@ -23,21 +23,11 @@ import (
 
 // Partial string to correctly filter warning events.
 // Has to be lower case for correct case insensitive comparison.
-const FAILED_REASON_PARTIAL = "failed"
-
-// Contains basic information about event related to a pod
-type PodEvent struct {
-	// Short, machine understandable string that gives the reason
-	// for this event being generated.
-	Reason string `json:"reason"`
-
-	// A human-readable description of the status of related pod.
-	Message string `json:"message"`
-}
+const FailedReasonPartial = "failed"
 
 // Returns warning pod events based on given list of pods.
 // TODO(floreks) : Import and use Set instead of custom function to get rid of duplicates
-func GetPodsEventWarnings(client client.Interface, pods []api.Pod) (result []PodEvent, err error) {
+func GetPodsEventWarnings(client client.Interface, pods []api.Pod) (result []Event, err error) {
 	for _, pod := range pods {
 		if !isRunningOrSucceeded(pod) {
 			log.Printf("Getting warning events from pod: %s", pod.Name)
@@ -56,20 +46,21 @@ func GetPodsEventWarnings(client client.Interface, pods []api.Pod) (result []Pod
 
 // Returns list of Pod Event model objects based on kubernetes API event list object
 // Event list object is filtered to get only warning events.
-func getPodsEventWarnings(eventList *api.EventList) []PodEvent {
-	result := make([]PodEvent, 0)
+func getPodsEventWarnings(eventList *api.EventList) []Event {
+	result := make([]Event, 0)
 
 	var events []api.Event
-	if isTypeFilled(eventList.Items) {
-		events = filterEventsByType(eventList.Items, api.EventTypeWarning)
-	} else {
-		events = filterEventsByReason(eventList.Items, FAILED_REASON_PARTIAL)
+	if !isTypeFilled(eventList.Items) {
+		eventList.Items = fillEventsType(eventList.Items)
 	}
 
+	events = filterEventsByType(eventList.Items, api.EventTypeWarning)
+
 	for _, event := range events {
-		result = append(result, PodEvent{
+		result = append(result, Event{
 			Message: event.Message,
 			Reason:  event.Reason,
+			Type:    event.Type,
 		})
 	}
 
@@ -93,23 +84,6 @@ func filterEventsByType(events []api.Event, eventType string) []api.Event {
 	return result
 }
 
-// Filters kubernetes API event objects based on reason property.
-// Empty string will return all events.
-func filterEventsByReason(events []api.Event, partial string) []api.Event {
-	if len(partial) == 0 || len(events) == 0 {
-		return events
-	}
-
-	result := make([]api.Event, 0)
-	for _, event := range events {
-		if strings.Contains(strings.ToLower(event.Reason), partial) {
-			result = append(result, event)
-		}
-	}
-
-	return result
-}
-
 // Returns true if all given events type is filled, false otherwise.
 // This is needed as some older versions of kubernetes do not have Type property filled.
 func isTypeFilled(events []api.Event) bool {
@@ -126,10 +100,23 @@ func isTypeFilled(events []api.Event) bool {
 	return true
 }
 
+// Based on event Reason fills event Type in order to allow correct filtering by Type.
+func fillEventsType(events []api.Event) []api.Event {
+	for i, _ := range events {
+		if strings.Contains(strings.ToLower(events[i].Reason), FailedReasonPartial) {
+			events[i].Type = api.EventTypeWarning
+		} else {
+			events[i].Type = api.EventTypeNormal
+		}
+	}
+
+	return events
+}
+
 // Removes duplicate strings from the slice
-func removeDuplicates(slice []PodEvent) []PodEvent {
+func removeDuplicates(slice []Event) []Event {
 	visited := make(map[string]bool, 0)
-	result := make([]PodEvent, 0)
+	result := make([]Event, 0)
 
 	for _, elem := range slice {
 		if !visited[elem.Reason] {

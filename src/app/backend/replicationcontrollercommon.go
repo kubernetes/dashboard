@@ -45,7 +45,7 @@ type ReplicationControllerPodInfo struct {
 	Failed int `json:"failed"`
 
 	// Unique warning messages related to pods in this Replication Controller.
-	Warnings []PodEvent `json:"warnings"`
+	Warnings []Event `json:"warnings"`
 }
 
 // Returns structure containing ReplicationController and Pods for the given replication controller.

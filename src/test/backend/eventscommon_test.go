@@ -68,9 +68,9 @@ func TestGetPodsEventWarningsApi(t *testing.T) {
 func TestGetPodsEventWarnings(t *testing.T) {
 	cases := []struct {
 		events   *api.EventList
-		expected []PodEvent
+		expected []Event
 	}{
-		{&api.EventList{Items: nil}, []PodEvent{}},
+		{&api.EventList{Items: nil}, []Event{}},
 		{
 			&api.EventList{
 				Items: []api.Event{
@@ -81,10 +81,11 @@ func TestGetPodsEventWarnings(t *testing.T) {
 					},
 				},
 			},
-			[]PodEvent{
+			[]Event{
 				{
 					Message: "msg",
 					Reason:  "reason",
+					Type:    api.EventTypeWarning,
 				},
 			},
 		},
@@ -97,10 +98,11 @@ func TestGetPodsEventWarnings(t *testing.T) {
 					},
 				},
 			},
-			[]PodEvent{
+			[]Event{
 				{
 					Message: "msg",
 					Reason:  "failed",
+					Type:    api.EventTypeWarning,
 				},
 			},
 		},
@@ -113,7 +115,7 @@ func TestGetPodsEventWarnings(t *testing.T) {
 					},
 				},
 			},
-			[]PodEvent{},
+			[]Event{},
 		},
 	}
 
@@ -171,38 +173,38 @@ func TestFilterEventsByType(t *testing.T) {
 
 func TestRemoveDuplicates(t *testing.T) {
 	cases := []struct {
-		slice    []PodEvent
-		expected []PodEvent
+		slice    []Event
+		expected []Event
 	}{
-		{nil, []PodEvent{}},
+		{nil, []Event{}},
 		{
-			[]PodEvent{
+			[]Event{
 				{Reason: "test"},
 				{Reason: "test2"},
 				{Reason: "test"},
 			},
-			[]PodEvent{
+			[]Event{
 				{Reason: "test"},
 				{Reason: "test2"},
 			},
 		},
 		{
-			[]PodEvent{
+			[]Event{
 				{Reason: "test"},
 				{Reason: "test"},
 				{Reason: "test"},
 			},
-			[]PodEvent{
+			[]Event{
 				{Reason: "test"},
 			},
 		},
 		{
-			[]PodEvent{
+			[]Event{
 				{Reason: "test"},
 				{Reason: "test2"},
 				{Reason: "test3"},
 			},
-			[]PodEvent{
+			[]Event{
 				{Reason: "test"},
 				{Reason: "test2"},
 				{Reason: "test3"},
@@ -267,44 +269,6 @@ func TestIsRunningOrSucceeded(t *testing.T) {
 	}
 }
 
-func TestFilterEventsByReason(t *testing.T) {
-	cases := []struct {
-		events   []api.Event
-		partial  string
-		expected []api.Event
-	}{
-		{nil, "", nil},
-		{nil, "failed", nil},
-		{
-			[]api.Event{
-				{
-					Message: "msg",
-					Reason:  "reason",
-				},
-				{
-					Message: "msg-2",
-					Reason:  "failed",
-				},
-			},
-			"failed",
-			[]api.Event{
-				{
-					Message: "msg-2",
-					Reason:  "failed",
-				},
-			},
-		},
-	}
-
-	for _, c := range cases {
-		actual := filterEventsByReason(c.events, c.partial)
-		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("filterEventsByReason(%#v, %#v) == \n%#v\nexpected \n%#v\n",
-				c.events, c.partial, actual, c.expected)
-		}
-	}
-}
-
 func TestIsTypeFilled(t *testing.T) {
 	cases := []struct {
 		events   []api.Event
@@ -335,6 +299,34 @@ func TestIsTypeFilled(t *testing.T) {
 		actual := isTypeFilled(c.events)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("isTypeFilled(%#v) == \n%#v\nexpected \n%#v\n",
+				c.events, actual, c.expected)
+		}
+	}
+}
+
+func TestFillEventsType(t *testing.T) {
+	cases := []struct {
+		events   []api.Event
+		expected []api.Event
+	}{
+		{nil, nil},
+		{[]api.Event{}, []api.Event{}},
+		{
+			[]api.Event{
+				{Reason: "failed"},
+				{Reason: "test"},
+			},
+			[]api.Event{
+				{Reason: "failed", Type: api.EventTypeWarning},
+				{Reason: "test", Type: api.EventTypeNormal},
+			},
+		},
+	}
+
+	for _, c := range cases {
+		actual := fillEventsType(c.events)
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("fillEventsType(%#v) == \n%#v\nexpected \n%#v\n",
 				c.events, actual, c.expected)
 		}
 	}

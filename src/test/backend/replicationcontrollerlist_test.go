@@ -83,8 +83,8 @@ func TestGetMatchingServices(t *testing.T) {
 }
 
 func TestGetReplicationControllerList(t *testing.T) {
-	getPodsErrorFnMock := func(pods []api.Pod) ([]PodEvent, error) {
-		return []PodEvent{}, nil
+	getPodsErrorFnMock := func(pods []api.Pod) ([]Event, error) {
+		return []Event{}, nil
 	}
 
 	cases := []struct {
@@ -227,7 +227,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 							Failed:   2,
 							Pending:  1,
 							Running:  1,
-							Warnings: []PodEvent{},
+							Warnings: []Event{},
 						},
 					}, {
 						Name:              "my-app-2",
@@ -235,7 +235,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 						ContainerImages:   []string{"my-container-image-2"},
 						InternalEndpoints: []Endpoint{{Host: "my-app-2.namespace-2"}},
 						Pods: ReplicationControllerPodInfo{
-							Warnings: []PodEvent{},
+							Warnings: []Event{},
 						},
 					},
 				},
