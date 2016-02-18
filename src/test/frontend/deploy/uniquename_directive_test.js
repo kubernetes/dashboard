@@ -86,6 +86,6 @@ describe('Unique name directive', () => {
     httpBackend.when('POST', 'api/v1/appdeployments/validate/name').respond(503, '');
     httpBackend.flush();
     expect(elem.classList).not.toContain('ng-pending');
-    expect(elem.classList).toContain('ng-invalid');
+    expect(elem.classList).toContain('ng-valid');
   });
 });
