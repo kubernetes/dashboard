@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<svg viewBox="0,0 1,1"
+<svg ng-if="::sparklineCtrl.series"
+     viewBox="0,0 1,1"
      preserveAspectRatio="none"
      class="kd-sparkline">
   <polygon
-     ng-if="sparklineCtrl.series"
      ng-attr-points="0,1 {{::sparklineCtrl.polygonPoints(sparklineCtrl.series)}} 1,1"
      class="kd-sparkline-series"/>
 </svg>
