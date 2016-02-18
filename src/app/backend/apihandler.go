@@ -93,7 +93,7 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient) 
 		deployFromFileWs.POST("").
 			To(apiHandler.handleDeployFromFile).
 			Reads(AppDeploymentFromFileSpec{}).
-			Writes(AppDeploymentFromFileSpec{}))
+			Writes(AppDeploymentFromFileResponse{}))
 	wsContainer.Add(deployFromFileWs)
 
 	replicationControllerWs := new(restful.WebService)
@@ -205,12 +205,23 @@ func (apiHandler *ApiHandler) handleDeployFromFile(request *restful.Request, res
 		handleInternalError(response, err)
 		return
 	}
-	if err := DeployAppFromFile(deploymentSpec, CreateObjectFromInfoFn); err != nil {
+
+	isDeployed, err := DeployAppFromFile(deploymentSpec, CreateObjectFromInfoFn)
+	if !isDeployed {
 		handleInternalError(response, err)
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, deploymentSpec)
+	errorMessage := ""
+	if err != nil {
+		errorMessage = err.Error()
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, AppDeploymentFromFileResponse{
+		Name: deploymentSpec.Name,
+		Content: deploymentSpec.Content,
+		Error: errorMessage,
+	})
 }
 
 // Handles app name validation API call.
