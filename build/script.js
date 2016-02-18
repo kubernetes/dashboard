@@ -62,17 +62,17 @@ gulp.task('scripts:prod', ['angular-templates'], function() {
     // "foo_flag: null" means that a flag is enabled.
     compilerFlags: {
       angular_pass: null,
-      closure_entry_point: 'module$index_module',
+      entry_point: 'index_module',
       compilation_level: 'ADVANCED_OPTIMIZATIONS',
       export_local_property_definitions: null,
       externs: [
-        path.join(conf.paths.nodeModules, 'google-closure-compiler/contrib/externs/angular-1.4.js'),
+        path.join(conf.paths.nodeModules, 'google-closure-compiler/contrib/externs/angular-1.5.js'),
         path.join(
             conf.paths.nodeModules,
-            'google-closure-compiler/contrib/externs/angular-1.4-http-promise_templated.js'),
+            'google-closure-compiler/contrib/externs/angular-1.5-http-promise_templated.js'),
         path.join(
             conf.paths.nodeModules,
-            'google-closure-compiler/contrib/externs/angular-1.4-q_templated.js'),
+            'google-closure-compiler/contrib/externs/angular-1.5-q_templated.js'),
         path.join(
             conf.paths.nodeModules, 'google-closure-compiler/contrib/externs/angular-material.js'),
         path.join(
@@ -92,10 +92,14 @@ gulp.task('scripts:prod', ['angular-templates'], function() {
         'inferredConstCheck',
         // Let ESLint handle all lint checks.
         'lintChecks',
+        // This checks aren't working with current google-closure-library version. Will be deleted
+        // once it's fixed there.
+        'unnecessaryCasts',
+        'analyzerChecks',
       ],
       language_in: 'ECMASCRIPT6_STRICT',
       language_out: 'ECMASCRIPT3',
-      manage_closure_dependencies: true,
+      dependency_mode: 'LOOSE',
       use_types_for_optimization: null,
     },
     compilerPath: path.join(conf.paths.nodeModules, 'google-closure-compiler/compiler.jar'),
