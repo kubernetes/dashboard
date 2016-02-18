@@ -97,14 +97,14 @@ limitations under the License.
         <span class="kd-replicationcontrollerinfo-line">Internal endpoint</span>
         <div class="kd-replicationcontrollerinfo-subline">
           <div ng-if="::service.internalEndpoint">
-            <kd-service-endpoint endpoint="::service.internalEndpoint"></kd-service-endpoint>
+            <kd-internal-endpoint endpoint="::service.internalEndpoint"></kd-internal-endpoint>
           </div>
           <span ng-hide="service.internalEndpoint">none</span>
         </div>
         <span class="kd-replicationcontrollerinfo-line">External endpoint</span>
         <div class="kd-replicationcontrollerinfo-subline">
           <div ng-repeat="endpoint in service.externalEndpoints">
-            <kd-service-endpoint endpoint="::endpoint"></kd-service-endpoint>
+            <kd-external-endpoint endpoint="::endpoint"></kd-external-endpoint>
           </div>
           <span class="kd-replicationcontrollerinfo-subline" ng-hide="::service.externalEndpoints">
             none
