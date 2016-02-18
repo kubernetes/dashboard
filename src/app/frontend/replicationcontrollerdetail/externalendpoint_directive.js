@@ -19,7 +19,7 @@
  */
 export default function serviceEndpointDirective() {
   return {
-    templateUrl: 'replicationcontrollerdetail/serviceendpoint.html',
+    templateUrl: 'replicationcontrollerdetail/externalendpoint.html',
     scope: {
       'endpoint': '=',
     },

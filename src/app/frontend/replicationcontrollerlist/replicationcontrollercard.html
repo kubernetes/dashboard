@@ -99,7 +99,7 @@ limitations under the License.
           <span flex="initial" class="kd-replicationcontroller-card-section-title">Internal endpoint</span>
           <div flex>
             <div ng-repeat="endpoint in ::ctrl.replicationController.internalEndpoints track by $index">
-              <kd-service-endpoint endpoint="::endpoint"></kd-service-endpoint>
+              <kd-internal-endpoint endpoint="::endpoint"></kd-internal-endpoint>
             </div>
             <div ng-if="::!ctrl.replicationController.internalEndpoints.length">
               none
@@ -111,7 +111,7 @@ limitations under the License.
           <span flex="initial" class="kd-replicationcontroller-card-section-title">External endpoint</span>
           <div flex>
             <div ng-repeat="endpoint in ::ctrl.replicationController.externalEndpoints track by $index">
-              <kd-service-endpoint endpoint="::endpoint"></kd-service-endpoint>
+              <kd-external-endpoint endpoint="::endpoint"></kd-external-endpoint>
             </div>
             <div ng-if="::!ctrl.replicationController.externalEndpoints.length">
               none
