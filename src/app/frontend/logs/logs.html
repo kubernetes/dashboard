@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div layout="row" flex layout-fill>
-  <md-content layout-padding flex layout-fill ng-class=ctrl.getStyleClass()>
+<div layout="row" flex="auto" layout-fill>
+  <md-content layout-padding flex="auto" layout-fill ng-class=ctrl.getStyleClass()>
     <div ng-repeat="n in ctrl.logsSet" class="kd-logs-element">
       <pre>{{n}}</pre>
     </div>

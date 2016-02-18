@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-content layout="row" layout-fill flex>
+<md-content layout="row" layout-fill flex="auto" >
   <div class="kd-replicationcontrollerdetail-sidebar" layout="column" flex="noshrink"
        ng-show="ctrl.isSidebarVisible()">
     <div class="kd-replicationcontrollerdetail-sidebar-header-wrapper kd-replicationcontrollerdetail-sidebar-item"
@@ -33,7 +33,7 @@ limitations under the License.
     <kd-replication-controller-info details="::ctrl.replicationControllerDetail">
     </kd-replication-controller-info>
   </div>
-  <div flex>
+  <div flex="auto" >
   <div class="kd-replicationcontrollerdetail-sidebar-header-wrapper kd-replicationcontrollerdetail-sidebar-item"
        flex="nogrow" ng-show="!ctrl.isSidebarVisible()">
     <div class="kd-replicationcontrollerdetail-sidebar-header" layout-align="start center"
@@ -41,12 +41,12 @@ limitations under the License.
       <md-button class="md-icon-button" ui-sref="replicationcontrollers">
         <md-icon md-font-library="material-icons">arrow_back</md-icon>
       </md-button>
-      <h1 flex class="md-title kd-replicationcontrollerdetail-app-name">
+      <h1 flex="auto" class="md-title kd-replicationcontrollerdetail-app-name">
         {{::ctrl.replicationControllerDetail.name}}
       </h1>
     </div>
   </div>
-  <md-tabs flex="grow" md-border-bottom md-dynamic-height>
+  <md-tabs flex="auto" md-border-bottom md-dynamic-height>
     <md-tab label="Pods">
       <md-content>
         <table class="kd-replicationcontrollerdetail-table" cellspacing="0">
@@ -187,7 +187,7 @@ limitations under the License.
       </md-content>
     </md-tab>
     <md-tab label="Events">
-      <md-content flex>
+      <md-content flex="auto" >
         <div class="kd-replicationcontrollerdetail-options" layout="row">
           <md-input-container class="kd-replicationcontrollerdetail-option-picker">
             <label>Type</label>

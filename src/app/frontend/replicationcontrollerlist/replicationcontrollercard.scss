@@ -15,6 +15,7 @@
 @import '../variables';
 
 .kd-replicationcontroller-card {
+  display: block;
   margin: 0;
   width: ($layout-breakpoint-lg - (2 * $baseline-grid) * 4) / 3;
 }

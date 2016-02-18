@@ -117,7 +117,7 @@ limitations under the License.
         <div flex="40">Value</div>
       </div>
       <div ng-repeat="label in ctrl.labels">
-         <kd-deploy-label layout="row" flex label="label" labels="ctrl.labels"></kd-deploy-label>
+         <kd-deploy-label layout="row" flex="auto" label="label" labels="ctrl.labels"></kd-deploy-label>
       </div>
     </div>
 
@@ -167,7 +167,7 @@ limitations under the License.
 
   <kd-help-section>
     <div layout="row">
-      <md-input-container flex>
+      <md-input-container flex="auto" >
         <label>CPU requirement (cores)</label>
         <input ng-model="ctrl.cpuRequirement" type="number" name="cpuRequirement" min="0">
         <ng-messages for="ctrl.form.cpuRequirement.$error" role="alert" multiple>
@@ -176,7 +176,7 @@ limitations under the License.
         </ng-messages>
       </md-input-container>
       <div flex="5"></div>
-      <md-input-container flex>
+      <md-input-container flex="auto" >
         <label>Memory requirement (MiB)</label>
         <input ng-model="ctrl.memoryRequirement" type="number" name="memoryRequirement" min="0">
         <ng-messages for="ctrl.form.memoryRequirement.$error" role="alert" multiple>
