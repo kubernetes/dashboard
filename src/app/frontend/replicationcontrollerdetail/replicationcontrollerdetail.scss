@@ -89,7 +89,7 @@ $replicationcontrollerdetails-sidebar-width: 315px;
   }
 
   &.kd-replicationcontrollerdetail-sparkline-table-cell {
-    padding-left: 1.25 * $baseline-grid;
+    padding-left: $baseline-grid;
   }
 }
 
@@ -128,10 +128,8 @@ md-icon {
 }
 
 .kd-sparkline {
-  width: 100px;
-  height: 20px;
-  vertical-align: -5px;
-  margin-left: 4px;
+  width: 12.5 * $baseline-grid;
+  height: 2.5 * $baseline-grid;
   background-color: $body;
 }
 
