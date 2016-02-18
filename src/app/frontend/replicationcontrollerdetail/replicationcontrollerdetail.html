@@ -142,7 +142,7 @@ limitations under the License.
                   ng-if="::ctrl.replicationControllerDetail.hasMetrics"
                   width="1">
                 <span ng-if="::ctrl.hasCpuUsage(pod)">
-                  {{::(ctrl.latestTimeseriesValue(pod.metrics.cpuUsageHistory) | kdCores)}}
+                  {{::(pod.metrics.cpuUsage | kdCores)}}
                 </span>
               </td>
               <td class="kd-replicationcontrollerdetail-table-cell kd-replicationcontrollerdetail-sparkline-table-cell"
@@ -156,7 +156,7 @@ limitations under the License.
                   ng-if="::ctrl.replicationControllerDetail.hasMetrics"
                   width="1">
                 <span ng-if="::ctrl.hasMemoryUsage(pod)">
-                  {{::(ctrl.latestTimeseriesValue(pod.metrics.memoryUsageHistory) | kdMemory)}}
+                  {{::(pod.metrics.memoryUsage | kdMemory)}}
                 </span>
               </td>
               <td kd-responsive-header="Memory" class="kd-replicationcontrollerdetail-table-cell kd-replicationcontrollerdetail-sparkline-table-cell"
