@@ -22,25 +22,12 @@ export default class sparklineController {
    */
   constructor($scope) {
     /**
-     * An array of [x,y] pairs. The first values of each pair must be
-     * unique, and the second value must be greater than or equal to
-     * zero. Exactly one of series or timeseries should be specified by
-     * the scope.
-     * @export {!Array<!Array<number>>} Initialized from the scope.
-     */
-    this.series;
-
-    /**
      * An array of {backendAPI.MetricResult} objects. The timestamp
      * values of each object must be unique, and value must be greater
-     * than or equal to zero. Exactly one of series or timeseries
-     * should be specified by the scope.
+     * than or equal to zero.
      * @export {!Array<!backendApi.MetricResult>} Initialized from the scope.
      */
     this.timeseries;
-
-    $scope.$watch('timeseries', this.onSeriesUpdate_.bind(this), true);
-    $scope.$watch('series', this.onSeriesUpdate_.bind(this), true);
   }
 
   /**
@@ -48,7 +35,8 @@ export default class sparklineController {
    * @return string
    * @export
    */
-  polygonPoints(series) {
+  polygonPoints() {
+    const series = this.timeseries.map(({timestamp, value}) => [Date.parse(timestamp), value]);
     const sorted = series.slice().sort((a,b) => a[0] - b[0]);
     const xShift = Math.min(...sorted.map(([x,_]) => x));
     const shifted = sorted.map(([x,y]) => [x - xShift, y]);
@@ -56,31 +44,5 @@ export default class sparklineController {
     const yScale = Math.max(...shifted.map(([_,y]) => y)) || 1;
     const scaled = shifted.map(([x,y]) => [x/xScale, y/yScale]);
     return scaled.map(([x,y]) => x + ',' + (1 - y)).join(' ');
-  }
-
-  /**
-   * Renders a series of coordinates into properties that can be used
-   * to see those coordinates as a sparkline.
-   * @private
-   */
-  onSeriesUpdate_() {
-    if (this.timeseries) {
-      this.series = this.timeseries.map(({timestamp, value}) => [Date.parse(timestamp), value]);
-    }
-
-    const sorted = this.series.slice().sort((a,b) => a[0] - b[0]);
-    if (sorted.find(([_,y]) => y < 0)) {
-      throw new Error(
-        "sparkline doesn't support negative y values"
-      );
-    }
-
-    for (let i = 0; i < sorted.length - 1; i++) {
-      if (sorted[i][0] == sorted[i + 1][0]) {
-        throw new Error(
-          "sparkline doesn't support duplicate x values"
-        )
-      }
-    }
   }
 }
