@@ -90,6 +90,18 @@ type AppDeploymentFromFileSpec struct {
 	Content string `json:"content"`
 }
 
+// Specification for deployment from file
+type AppDeploymentFromFileResponse struct {
+	// Name of the file
+	Name string `json:"name"`
+
+	// File content
+	Content string `json:"content"`
+
+	// Error after create resource
+	Error string `json:"error"`
+}
+
 // Port mapping for an application deployment.
 type PortMapping struct {
 	// Port that will be exposed on the service.
@@ -264,16 +276,16 @@ func getLabelsMap(labels []Label) map[string]string {
 	return result
 }
 
-type createObjectFromInfo func(info *kubectlResource.Info) error
+type createObjectFromInfo func(info *kubectlResource.Info) (bool, error)
 
 // Implementation of createObjectFromInfo
-func CreateObjectFromInfoFn(info *kubectlResource.Info) error {
-	_, err := kubectlResource.NewHelper(info.Client, info.Mapping).Create(info.Namespace, true, info.Object)
-	return err
+func CreateObjectFromInfoFn(info *kubectlResource.Info) (bool, error) {
+	createdResource, err := kubectlResource.NewHelper(info.Client, info.Mapping).Create(info.Namespace, true, info.Object)
+	return createdResource != nil , err
 }
 
 // Deploys an app based on the given yaml or json file.
-func DeployAppFromFile(spec *AppDeploymentFromFileSpec, createObjectFromInfoFn createObjectFromInfo) error {
+func DeployAppFromFile(spec *AppDeploymentFromFileSpec, createObjectFromInfoFn createObjectFromInfo) (bool, error) {
 	const (
 		validate      = true
 		emptyCacheDir = ""
@@ -282,7 +294,7 @@ func DeployAppFromFile(spec *AppDeploymentFromFileSpec, createObjectFromInfoFn c
 	factory := cmdutil.NewFactory(nil)
 	schema, err := factory.Validator(validate, emptyCacheDir)
 	if err != nil {
-		return err
+		return false, err
 	}
 
 	mapper, typer := factory.Object()
@@ -295,12 +307,16 @@ func DeployAppFromFile(spec *AppDeploymentFromFileSpec, createObjectFromInfoFn c
 		Flatten().
 		Do()
 
-	return r.Visit(func(info *kubectlResource.Info, err error) error {
-		err = createObjectFromInfoFn(info)
-		if err != nil {
-			return err
+	deployedResourcesCount:= 0
+
+	err = r.Visit(func(info *kubectlResource.Info, err error) error {
+		isDeployed, err := createObjectFromInfoFn(info)
+		if isDeployed {
+			deployedResourcesCount ++
+			log.Printf("%s is deployed", info.Name)
 		}
-		log.Printf("%s is deployed", info.Name)
-		return nil
+		return err
 	})
+
+	return deployedResourcesCount > 0, err
 }

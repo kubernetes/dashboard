@@ -84,9 +84,12 @@ export default class DeployFromFileController {
     let resource = this.resource_('api/v1/appdeploymentfromfile');
     resource.save(
         deploymentSpec,
-        (savedConfig) => {
-          defer.resolve(savedConfig);  // Progress ends
-          this.log_.info('Successfully deployed application: ', savedConfig);
+        (response) => {
+          defer.resolve(response);  // Progress ends
+          this.log_.info('Deployment is completed: ', response);
+          if (response.error.length > 0) {
+            this.errorDialog_.open('Deployment has been partly completed', response.error);
+          }
           this.state_.go(replicationcontrollerliststate);
         },
         (err) => {
