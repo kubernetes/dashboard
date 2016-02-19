@@ -347,10 +347,19 @@ export default class DeployFromSettingsController {
    */
   getContainerImageVersion_() {
     /** @type {number} */
-    let index = (this.containerImage || '').lastIndexOf(':');
+    let index = (this.containerImage || '').lastIndexOf('/');
+
+    let imagename;
+    if (index > -1) {
+	imagename = this.containerImage.substring(index + 1);
+    } else {
+	imagename = this.containerImage;
+    }
+
+    index = (imagename || '').lastIndexOf(':');
 
     if (index > -1) {
-      return this.containerImage.substring(index + 1);
+      return imagename.substring(index + 1);
     }
 
     return '';

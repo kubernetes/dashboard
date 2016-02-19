@@ -100,6 +100,29 @@ describe('DeployFromSettings controller', () => {
     expect(result).toEqual('1');
   });
 
+  it('should return part of the string after `:` delimiter', () => {
+    // given
+    ctrl.containerImage = 'private.registry:5000/test:1';
+
+    // when
+    let result = ctrl.getContainerImageVersion_();
+
+    // then
+    expect(result).toEqual('1');
+  });
+
+  it('should return empty string when containerImage is not empty and does not containe `:`' +
+     ' delimiter after `/` delimiter', () => {
+    // given
+    ctrl.containerImage = 'private.registry:5000/test';
+
+    // when
+    let result = ctrl.getContainerImageVersion_();
+
+    // then
+    expect(result).toEqual('');
+  });
+
   it('should return empty array when labels array is empty', () => {
     // given
     let labels = [];
