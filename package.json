@@ -20,7 +20,7 @@
     "browserify-istanbul": "~0.2.1",
     "del": "~2.2.0",
     "eslint-plugin-angular": "~0.15.0",
-    "google-closure-compiler": "~20151216.2.0",
+    "google-closure-compiler": "~20160208.1.0",
     "gulp": "~3.9.0",
     "gulp-angular-templatecache": "~1.8.0",
     "gulp-autoprefixer": "~3.1.0",
