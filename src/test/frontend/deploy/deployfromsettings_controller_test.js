@@ -112,16 +112,17 @@ describe('DeployFromSettings controller', () => {
   });
 
   it('should return empty string when containerImage is not empty and does not containe `:`' +
-     ' delimiter after `/` delimiter', () => {
-    // given
-    ctrl.containerImage = 'private.registry:5000/test';
+         ' delimiter after `/` delimiter',
+     () => {
+       // given
+       ctrl.containerImage = 'private.registry:5000/test';
 
-    // when
-    let result = ctrl.getContainerImageVersion_();
+       // when
+       let result = ctrl.getContainerImageVersion_();
 
-    // then
-    expect(result).toEqual('');
-  });
+       // then
+       expect(result).toEqual('');
+     });
 
   it('should return empty array when labels array is empty', () => {
     // given

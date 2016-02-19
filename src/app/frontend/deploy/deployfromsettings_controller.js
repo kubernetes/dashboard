@@ -351,9 +351,9 @@ export default class DeployFromSettingsController {
 
     let imagename;
     if (index > -1) {
-	imagename = this.containerImage.substring(index + 1);
+      imagename = this.containerImage.substring(index + 1);
     } else {
-	imagename = this.containerImage;
+      imagename = this.containerImage;
     }
 
     index = (imagename || '').lastIndexOf(':');
