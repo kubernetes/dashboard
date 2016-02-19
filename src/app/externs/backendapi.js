@@ -108,6 +108,32 @@ backendApi.ReplicationControllerList;
 
 /**
  * @typedef {{
+ *   timestamp: string,
+ *   value: number
+ * }}
+ */
+backendApi.MetricResult;
+
+/**
+ * @typedef {{
+ *   reason: string,
+ *   message: string
+ * }}
+ */
+backendApi.PodEvent;
+
+/**
+ * @typedef {{
+ *   cpuUsage: ?number,
+ *   memoryUsage: ?number,
+ *   cpuUsageHistory: !Array<!backendApi.MetricResult>,
+ *   memoryUsageHistory: !Array<!backendApi.MetricResult>
+ * }}
+ */
+backendApi.PodMetrics;
+
+/**
+ * @typedef {{
  *   current: number,
  *   desired: number,
  *   running: number,
@@ -170,7 +196,7 @@ backendApi.DeleteReplicationControllerSpec;
  *   podIP: string,
  *   nodeName: string,
  *   restartCount: number,
- *   metrics: {cpuUsage: ?number, memoryUsage: ?number}
+ *   metrics: backendApi.PodMetrics
  * }}
  */
 backendApi.ReplicationControllerPod;
