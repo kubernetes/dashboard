@@ -26,7 +26,7 @@ RUN curl -sL https://deb.nodesource.com/setup_5.x | bash - \
 	file \
 	python \
 	openjdk-7-jre \
-  nodejs \
+	nodejs \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& apt-get clean
 
@@ -37,7 +37,13 @@ RUN curl -sSL https://get.docker.com/builds/Linux/x86_64/docker-1.9.1 > /usr/bin
 # Current directory is always /dashboard
 WORKDIR /dashboard
 
-COPY ./ ./
+# Copy over package.json bower.json and postinstall.sh.
+# Why? Because of docker caching, npm install will only run again if one of these have changed
+COPY package.json bower.json ./
+COPY build/postinstall.sh build/
 
 # Install all npm deps, bower deps and godep. This will take a while.
 RUN npm install --unsafe-perm
+
+# Copy over the rest of the source
+COPY ./ ./
