@@ -331,3 +331,25 @@ func TestFillEventsType(t *testing.T) {
 		}
 	}
 }
+
+func TestIsFailedReason(t *testing.T) {
+	cases := []struct {
+		reason         string
+		failedPartials []string
+		expected       bool
+	}{
+		{"", nil, false},
+		{"", []string{}, false},
+		{"FailedReason", []string{"failed"}, true},
+		{"ErrReason", []string{"failed"}, false},
+		{"ErrReason", []string{"failed", "err"}, true},
+	}
+
+	for _, c := range cases {
+		actual := isFailedReason(c.reason, c.failedPartials...)
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("fillEventsType(%#v, %#v) == \n%#v\nexpected \n%#v\n",
+				c.reason, c.failedPartials, actual, c.expected)
+		}
+	}
+}
