@@ -63,6 +63,7 @@
     "proxy-middleware": "~0.15.0",
     "q": "~1.4.1",
     "semver": "~5.1.0",
+    "through2": "^2.0.1",
     "uglify-save-license": "~0.4.1",
     "watchify": "^3.7.0",
     "webpack-stream": "~3.1.0",

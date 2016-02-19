@@ -23,6 +23,40 @@ import path from 'path';
 const basePath = path.join(__dirname, '../');
 
 /**
+ * Compilation architecture configuration.
+ */
+const arch = {
+  /**
+   * Default architecture that the project is compiled to. Used for local development and testing.
+   * TODO(bryk): Dynamically determine this based on current arch.
+   */
+  default: 'amd64',
+  /**
+   * List of all supported architectures by this project.
+   */
+  list: ['amd64', 'arm', 'arm64', 'ppc64le'],
+};
+
+/**
+ * Package version information.
+ */
+const version = {
+  /**
+   * Current release version of the project.
+   */
+  release: 'v0.1.0',
+  /**
+   * Version name of the canary release of the project.
+   */
+  canary: 'canary',
+};
+
+/**
+ * Base name for the docker image.
+ */
+const imageNameBase = 'gcr.io/google_containers/kubernetes-dashboard';
+
+/**
  * Exported configuration object with common constants used in build pipeline.
  */
 export default {
@@ -54,22 +88,38 @@ export default {
   },
 
   /**
+   * Project compilation architecture info.
+   */
+  arch: arch,
+
+  /**
    * Deployment constants configuration.
    */
   deploy: {
     /**
-     * The release version of the image.
+     * Project version info.
      */
-    versionRelease: 'v0.1.0',
+    version: version,
+
     /**
-     * The canary version name of the image. Canary is an image that is frequently published,
-     * and has no release schedule.
+     * Image name for the canary release for current architecture.
      */
-    versionCanary: 'canary',
+    canaryImageName: `${imageNameBase}-${arch.default}:${version.canary}`,
+
     /**
-     * The name of the Docker image with the application.
+     * Image name for the versioned release for current architecture.
      */
-    imageName: 'gcr.io/google_containers/kubernetes-dashboard',
+    releaseImageName: `${imageNameBase}-${arch.default}:${version.release}`,
+
+    /**
+     * Image name for the canary release for all supported architecture.
+     */
+    canaryImageNames: arch.list.map((arch) => `${imageNameBase}-${arch}:${version.canary}`),
+
+    /**
+     * Image name for the versioned release for all supported architecture.
+     */
+    releaseImageNames: arch.list.map((arch) => `${imageNameBase}-${arch}:${version.release}`),
   },
 
   /**
@@ -113,8 +163,11 @@ export default {
     coverage: path.join(basePath, 'coverage'),
     coverageReport: path.join(basePath, 'coverage/lcov'),
     deploySrc: path.join(basePath, 'src/deploy'),
-    dist: path.join(basePath, 'dist'),
-    distPublic: path.join(basePath, 'dist/public'),
+    dist: path.join(basePath, 'dist', arch.default),
+    distCross: arch.list.map((arch) => path.join(basePath, 'dist', arch)),
+    distPublic: path.join(basePath, 'dist', arch.default, 'public'),
+    distPublicCross: arch.list.map((arch) => path.join(basePath, 'dist', arch, 'public')),
+    distRoot: path.join(basePath, 'dist'),
     externs: path.join(basePath, 'src/app/externs'),
     frontendSrc: path.join(basePath, 'src/app/frontend'),
     frontendTest: path.join(basePath, 'src/test/frontend'),
