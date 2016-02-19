@@ -192,6 +192,7 @@ export default class ReplicationControllerDetailController {
    * @export
    */
   hasMemoryUsage(pod) {
-    return !!pod.metrics && !!pod.metrics.memoryUsageHistory && pod.metrics.memoryUsageHistory.length > 0;
+    return !!pod.metrics && !!pod.metrics.memoryUsageHistory &&
+        pod.metrics.memoryUsageHistory.length > 0;
   }
 }

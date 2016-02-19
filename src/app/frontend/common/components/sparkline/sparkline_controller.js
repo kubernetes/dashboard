@@ -20,7 +20,7 @@ export default class sparklineController {
    * Constructs sparkline controller.
    * @ngInject
    */
-  constructor($scope) {
+  constructor() {
     /**
      * An array of {backendAPI.MetricResult} objects. The timestamp
      * values of each object must be unique, and value must be greater
@@ -37,12 +37,12 @@ export default class sparklineController {
    */
   polygonPoints() {
     const series = this.timeseries.map(({timestamp, value}) => [Date.parse(timestamp), value]);
-    const sorted = series.slice().sort((a,b) => a[0] - b[0]);
-    const xShift = Math.min(...sorted.map(([x,_]) => x));
-    const shifted = sorted.map(([x,y]) => [x - xShift, y]);
-    const xScale = Math.max(...shifted.map(([x,_]) => x)) || 1;
-    const yScale = Math.max(...shifted.map(([_,y]) => y)) || 1;
-    const scaled = shifted.map(([x,y]) => [x/xScale, y/yScale]);
-    return scaled.map(([x,y]) => x + ',' + (1 - y)).join(' ');
+    const sorted = series.slice().sort((a, b) => a[0] - b[0]);
+    const xShift = Math.min(...sorted.map((pt) => pt[0]));
+    const shifted = sorted.map(([x, y]) => [x - xShift, y]);
+    const xScale = Math.max(...shifted.map((pt) => pt[0])) || 1;
+    const yScale = Math.max(...shifted.map((pt) => pt[1])) || 1;
+    const scaled = shifted.map(([x, y]) => [x / xScale, y / yScale]);
+    return scaled.map(([x, y]) => `${x},${(1 - y)}`).join(' ');
   }
 }

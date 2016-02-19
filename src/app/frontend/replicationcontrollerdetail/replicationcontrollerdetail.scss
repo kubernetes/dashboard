@@ -131,9 +131,9 @@ md-icon {
 }
 
 .kd-sparkline {
-  width: 12.5 * $baseline-grid;
-  height: 2.5 * $baseline-grid;
   background-color: $body;
+  height: 2.5 * $baseline-grid;
+  width: 12.5 * $baseline-grid;
 }
 
 .kd-sparkline-series {
