@@ -84,3 +84,53 @@ a {
 [role='tabpanel'] {
   transition: none;
 }
+
+// Responsive table style.
+@media only screen and (max-width: $layout-breakpoint-xs) {
+  .kd-responsive-table {
+    width: 100%;
+
+    // Switches table to blocks.
+    thead,
+    tbody,
+    tr,
+    th {
+      display: block;
+    }
+
+    // Removes table headers.
+    thead {
+      tr,
+      th {
+        display: none;
+      }
+    }
+
+    // Adds border between records.
+    tr {
+      &:not(:last-child) {
+        border-bottom: $baseline-grid / 2 solid $border;
+      }
+    }
+
+    // Row data style.
+    td {
+      border-bottom: 1px solid $border;
+      display: block;
+      height: auto;
+      line-height: $table-cell-height;
+      padding-left: 50%;
+      position: relative;
+
+      // Row title style.
+      &::before {
+        content: attr(kd-responsive-header);
+        font-weight: $bold-font-weight;
+        left: $baseline-grid * 2;
+        padding-right: $baseline-grid * 2;
+        position: absolute;
+        word-wrap: break-word;
+      }
+    }
+  }
+}

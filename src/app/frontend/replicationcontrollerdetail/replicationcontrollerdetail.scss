@@ -17,9 +17,6 @@
 $replicationcontrollerdetails-sidebar-bg: #fafafa;
 $replicationcontrollerdetails-sidebar-width: 315px;
 
-$table-cell-height: 6 * $baseline-grid;
-$table-cell-height-half: $table-cell-height / 2;
-
 .kd-replicationcontrollerdetail-app-name {
   color: $foreground-2;
   font-weight: $regular-font-weight;
@@ -45,7 +42,7 @@ $table-cell-height-half: $table-cell-height / 2;
 }
 
 .kd-replicationcontrollerdetail-sidebar-header-wrapper {
-  border-bottom: 1px solid $foreground-4;
+  border-bottom: 1px solid $border;
 }
 
 .kd-replicationcontrollerdetail-warning-icon {
@@ -65,7 +62,7 @@ $table-cell-height-half: $table-cell-height / 2;
 }
 
 .kd-replicationcontrollerdetail-table-header {
-  border-bottom: 1px solid $foreground-4;
+  border-bottom: 1px solid $border;
   color: $foreground-2;
   font-size: $body-font-size-base;
   font-weight: $regular-font-weight;
@@ -76,7 +73,7 @@ $table-cell-height-half: $table-cell-height / 2;
 }
 
 .kd-replicationcontrollerdetail-table-cell {
-  border-bottom: 1px solid $foreground-4;
+  border-bottom: 1px solid $border;
   font-size: $body-font-size-base;
   height: $table-cell-height;
   padding: 0 0 0 (2 * $baseline-grid);

@@ -49,7 +49,7 @@ limitations under the License.
   <md-tabs flex="grow" md-border-bottom md-dynamic-height>
     <md-tab label="Pods">
       <md-content>
-        <table class="kd-replicationcontrollerdetail-table" cellspacing="0">
+        <table class="kd-replicationcontrollerdetail-table kd-responsive-table" cellspacing="0">
           <thead>
             <tr>
               <th class="kd-replicationcontrollerdetail-table-header">
@@ -111,25 +111,22 @@ limitations under the License.
                 </kd-sorted-header>
               </th>
               <th class="kd-replicationcontrollerdetail-table-header">
-                <span>Logs
-                  <i class="material-icons kd-text-icon">
-                    help
-                    <md-tooltip>Logs from the pod</md-tooltip>
-                  </i>
-                </span>
+                <span>Logs</span>
               </th>
             </tr>
           </thead>
           <tbody>
             <tr ng-repeat="pod in ctrl.replicationControllerDetail.pods | orderBy:ctrl.sortPodsBy:ctrl.podsOrder">
-              <td class="kd-replicationcontrollerdetail-table-cell">{{pod.name}}</td>
-              <td class="kd-replicationcontrollerdetail-table-cell">
+              <td kd-responsive-header="Pod" class="kd-replicationcontrollerdetail-table-cell">
+                {{pod.name}}
+              </td>
+              <td kd-responsive-header="Status" class="kd-replicationcontrollerdetail-table-cell">
                 {{::pod.podPhase}}
               </td>
-              <td class="kd-replicationcontrollerdetail-table-cell">
+              <td kd-responsive-header="Restarts" class="kd-replicationcontrollerdetail-table-cell">
                 {{::pod.restartCount}}<!-- TODO(maciaszczykm): Add info about last restart date. -->
               </td>
-              <td class="kd-replicationcontrollerdetail-table-cell">
+              <td kd-responsive-header="Age" class="kd-replicationcontrollerdetail-table-cell">
                 <span ng-if="::pod.startTime">
                   {{::pod.startTime | relativeTime}}
                   <md-tooltip>Started at {{::(pod.startTime | date:'short')}}</md-tooltip>
@@ -138,7 +135,7 @@ limitations under the License.
                   -
                 </span>
               </td>
-              <td class="kd-replicationcontrollerdetail-table-cell"
+              <td kd-responsive-header="CPU" class="kd-replicationcontrollerdetail-table-cell"
                   ng-if="::ctrl.replicationControllerDetail.hasMetrics">
                 <span ng-if="::ctrl.hasCpuUsage(pod)">
                   {{::(pod.metrics.cpuUsage | kdCores)}}
@@ -147,7 +144,7 @@ limitations under the License.
                   -
                 </span>
               </td>
-              <td class="kd-replicationcontrollerdetail-table-cell"
+              <td kd-responsive-header="Memory" class="kd-replicationcontrollerdetail-table-cell"
                   ng-if="::ctrl.replicationControllerDetail.hasMetrics">
                 <span ng-if="::ctrl.hasMemoryUsage(pod)">
                   {{::(pod.metrics.memoryUsage | kdMemory)}}
@@ -156,7 +153,7 @@ limitations under the License.
                   -
                 </span>
               </td>
-              <td class="kd-replicationcontrollerdetail-table-cell">
+              <td kd-responsive-header="Cluster IP" class="kd-replicationcontrollerdetail-table-cell">
                 <span ng-if="::pod.podIP">
                   {{::pod.podIP}}
                 </span>
@@ -164,7 +161,7 @@ limitations under the License.
                   -
                 </span>
               </td>
-              <td class="kd-replicationcontrollerdetail-table-cell">
+              <td kd-responsive-header="Node" class="kd-replicationcontrollerdetail-table-cell">
                 <span ng-if="::pod.nodeName">
                   {{::pod.nodeName}}
                 </span>
@@ -172,7 +169,7 @@ limitations under the License.
                   -
                 </span>
               </td>
-              <td class="kd-replicationcontrollerdetail-table-cell">
+              <td kd-responsive-header="Logs" class="kd-replicationcontrollerdetail-table-cell">
                 <span>
                   <a ng-href="{{::ctrl.getPodLogsHref(pod)}}" target="_blank">
                     Logs
@@ -198,10 +195,9 @@ limitations under the License.
               </md-option>
             </md-select>
           </md-input-container>
-          <!-- TODO(maciaszczykm): Add event filtering by source (all, system and user). -->
         </div>
-        <table class="kd-replicationcontrollerdetail-table" cellspacing="0" cellpadding="15"
-               ng-if="ctrl.hasEvents()">
+        <table class="kd-replicationcontrollerdetail-table kd-responsive-table" cellspacing="0"
+               cellpadding="15" ng-if="ctrl.hasEvents()">
           <thead>
           <tr>
             <th class="kd-replicationcontrollerdetail-table-header">
@@ -249,20 +245,25 @@ limitations under the License.
           </thead>
           <tbody>
           <tr ng-repeat="event in ctrl.events | orderBy:ctrl.sortEventsBy:ctrl.eventsOrder">
-            <td class="kd-replicationcontrollerdetail-table-cell kd-replicationcontrollerdetail-message-table-cell">
+            <td kd-responsive-header="Message"
+                class="kd-replicationcontrollerdetail-table-cell kd-replicationcontrollerdetail-message-table-cell">
               <i ng-if="ctrl.isEventWarning(event)"
                  class="material-icons kd-replicationcontrollerdetail-warning-icon">warning</i>
               {{event.message}}
             </td>
-            <td class="kd-replicationcontrollerdetail-table-cell">
+            <td kd-responsive-header="Source" class="kd-replicationcontrollerdetail-table-cell">
               {{event.sourceComponent}} {{event.sourceHost}}
             </td>
-            <td class="kd-replicationcontrollerdetail-table-cell">{{event.object}}</td>
-            <td class="kd-replicationcontrollerdetail-table-cell">{{event.count}}</td>
-            <td class="kd-replicationcontrollerdetail-table-cell">
+            <td kd-responsive-header="Sub-object" class="kd-replicationcontrollerdetail-table-cell">
+              {{event.object}}
+            </td>
+            <td kd-responsive-header="Count" class="kd-replicationcontrollerdetail-table-cell">
+              {{event.count}}
+            </td>
+            <td kd-responsive-header="First seen" class="kd-replicationcontrollerdetail-table-cell">
               First seen at {{event.firstSeen | date:'short'}}
             </td>
-            <td class="kd-replicationcontrollerdetail-table-cell">
+            <td kd-responsive-header="Last seen" class="kd-replicationcontrollerdetail-table-cell">
               Last seen at {{event.lastSeen | date:'short'}}
             </td>
           </tr>
