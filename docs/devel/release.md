@@ -8,7 +8,8 @@ So you want to release a new version of Kubernetes Dashboard? Great, you just ne
 the steps below.
 
 1. Send a pull request that increases Kubernetes Dashboard version number in `build/conf.js`.
-   The property name is `deploy.versionRelease`. Follow versioning guidelines.
+   The property name is `deploy.version.release`. Follow versioning guidelines.
+   Keep `package.json` version in sync.
 1. Get the pull request reviewed and merged.
 1. Create a git [release tag](https://github.com/kubernetes/dashboard/releases/) for the merged
    pull request. Release description should include changelog.
