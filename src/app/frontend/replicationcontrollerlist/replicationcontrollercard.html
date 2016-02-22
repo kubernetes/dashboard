@@ -20,7 +20,8 @@ limitations under the License.
       <div flex="auto" layout="row" layout-align="space-between center"
             class="kd-replicationcontroller-card-title-row">
         <span layout="row" flex="85">
-          <md-icon class="material-icons md-warn kd-replicationcontroller-card-status-icon"
+          <md-icon id="kd-replicationcontroller-card-error-icon"
+                   class="material-icons md-warn kd-replicationcontroller-card-status-icon"
                    ng-if="::ctrl.hasWarnings()">
             error
             <md-tooltip>One or more pods have errors</md-tooltip>
