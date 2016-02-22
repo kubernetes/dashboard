@@ -196,7 +196,9 @@ limitations under the License.
             </md-select>
           </md-input-container>
         </div>
-        <table class="kd-replicationcontrollerdetail-table kd-responsive-table" cellspacing="0"
+        <table id="kd-replicationcontrollerdetail-events-table"
+               class="kd-replicationcontrollerdetail-table kd-responsive-table"
+               cellspacing="0"
                cellpadding="15" ng-if="ctrl.hasEvents()">
           <thead>
           <tr>
