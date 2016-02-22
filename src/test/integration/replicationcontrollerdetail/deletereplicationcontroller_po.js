@@ -12,20 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import PageObject from './zerostate_po';
-
-describe('Zero state view', () => {
-  /** @type {!PageObject} */
-  let page;
-
-  beforeEach(() => {
-    /**
-     * This will be valid when cluster is empty as zerostate is child of
-     * replicationcontrollers state and is shown only where there are no RCs to display.
-     */
-    browser.get('#/replicationcontrollers');
-    page = new PageObject();
-  });
-
-  it('should do something', () => { expect(page.deployButton.getText()).toContain('DEPLOY'); });
-});
+export default class DeleteReplicationControllerDialogObject {
+  constructor() {
+    this.deleteAppButtonQuery = by.xpath('//md-dialog-actions/button[2]');
+    this.deleteAppButton = element(this.deleteAppButtonQuery);
+  }
+}
