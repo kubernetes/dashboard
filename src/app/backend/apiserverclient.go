@@ -18,42 +18,42 @@ import (
 	"log"
 
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
+	clientcmdapi "k8s.io/kubernetes/pkg/client/unversioned/clientcmd/api"
 )
-
-// Factory that creates Kubernetes API clients.
-type ClientFactory interface {
-	// Creates new API client assuming that the binary runs in a cluster.
-	NewInCluster() (*client.Client, error)
-
-	// Creates new API client from the given config.
-	New(*client.Config) (*client.Client, error)
-}
 
 // Creates new Kubernetes Apiserver client. When apiserverHost param is empty string the function
 // assumes that it is running inside a Kubernetes cluster and attempts to discover the Apiserver.
 // Otherwise, it connects to the Apiserver specified.
-// apiserverHost param is in the format of protocol://address:port, e.g., http://localhost:8001.
-func CreateApiserverClient(apiserverHost string,
-	clientFactory ClientFactory) (*client.Client, error) {
-	log.Printf("Creating API client for %s", apiserverHost)
+//
+// apiserverHost param is in the format of protocol://address:port/pathPrefix, e.g.,
+// http://localhost:8001.
+//
+// Returns created client and its configuration.
+func CreateApiserverClient(apiserverHost string) (*client.Client, clientcmd.ClientConfig, error) {
 
-	if apiserverHost == "" {
-		return clientFactory.NewInCluster()
-	} else {
-		cfg := client.Config{
-			Host: apiserverHost,
-		}
-		return clientFactory.New(&cfg)
+	overrides := &clientcmd.ConfigOverrides{}
+
+	if apiserverHost != "" {
+		overrides.ClusterInfo = clientcmdapi.Cluster{Server: apiserverHost}
 	}
-}
 
-// Default implementation of the ClientFactory. It uses k8s.io package API.
-type ClientFactoryImpl struct{}
+	clientConfig := clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
+		&clientcmd.ClientConfigLoadingRules{}, overrides)
 
-func (ClientFactoryImpl) New(cfg *client.Config) (*client.Client, error) {
-	return client.New(cfg)
-}
+	cfg, err := clientConfig.ClientConfig()
 
-func (ClientFactoryImpl) NewInCluster() (*client.Client, error) {
-	return client.NewInCluster()
+	if err != nil {
+		return nil, nil, err
+	}
+
+	log.Printf("Creating API server client for %s", cfg.Host)
+
+	client, err := client.New(cfg)
+
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return client, clientConfig, nil
 }

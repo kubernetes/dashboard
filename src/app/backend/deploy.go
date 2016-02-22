@@ -22,6 +22,7 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/resource"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
 	cmdutil "k8s.io/kubernetes/pkg/kubectl/cmd/util"
 	kubectlResource "k8s.io/kubernetes/pkg/kubectl/resource"
 	"k8s.io/kubernetes/pkg/util/intstr"
@@ -281,17 +282,18 @@ type createObjectFromInfo func(info *kubectlResource.Info) (bool, error)
 // Implementation of createObjectFromInfo
 func CreateObjectFromInfoFn(info *kubectlResource.Info) (bool, error) {
 	createdResource, err := kubectlResource.NewHelper(info.Client, info.Mapping).Create(info.Namespace, true, info.Object)
-	return createdResource != nil , err
+	return createdResource != nil, err
 }
 
 // Deploys an app based on the given yaml or json file.
-func DeployAppFromFile(spec *AppDeploymentFromFileSpec, createObjectFromInfoFn createObjectFromInfo) (bool, error) {
+func DeployAppFromFile(spec *AppDeploymentFromFileSpec,
+	createObjectFromInfoFn createObjectFromInfo, clientConfig clientcmd.ClientConfig) (bool, error) {
 	const (
 		validate      = true
 		emptyCacheDir = ""
 	)
 
-	factory := cmdutil.NewFactory(nil)
+	factory := cmdutil.NewFactory(clientConfig)
 	schema, err := factory.Validator(validate, emptyCacheDir)
 	if err != nil {
 		return false, err
@@ -307,12 +309,12 @@ func DeployAppFromFile(spec *AppDeploymentFromFileSpec, createObjectFromInfoFn c
 		Flatten().
 		Do()
 
-	deployedResourcesCount:= 0
+	deployedResourcesCount := 0
 
 	err = r.Visit(func(info *kubectlResource.Info, err error) error {
 		isDeployed, err := createObjectFromInfoFn(info)
 		if isDeployed {
-			deployedResourcesCount ++
+			deployedResourcesCount++
 			log.Printf("%s is deployed", info.Name)
 		}
 		return err
