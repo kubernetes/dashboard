@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<ng-form layout="row" flex name="labelForm">
+<ng-form layout="row" flex="auto" name="labelForm">
   <md-input-container md-no-float class="kd-deploy-input-row" flex="45">
     <input name="key" ng-model="labelCtrl.label.key" ng-change="labelCtrl.check(labelForm)"
            placeholder="{{labelCtrl.label.key}}" ng-disabled="!labelCtrl.label.editable">

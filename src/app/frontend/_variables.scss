@@ -52,5 +52,7 @@ $layout-breakpoint-lg: 1280px;
 $layout-breakpoint-xs: 600px;
 $whiteframe-shadow-1dp: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px rgba(0, 0, 0, .12);
 $baseline-grid: 8px;
+$logo-width: 8 * $baseline-grid;
+$logo-height: 8 * $baseline-grid;
 $table-cell-height: 6 * $baseline-grid;
 $table-cell-height-half: $table-cell-height / 2;

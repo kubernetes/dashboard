@@ -17,7 +17,7 @@ limitations under the License.
 <div class="kd-environment-variables-title md-body-2">Environment variables</div>
 <div ng-repeat="variable in ctrl.variables">
   <ng-form name="variablesForm" layout="row">
-    <md-input-container flex class="kd-deploy-input-row">
+    <md-input-container flex="auto" class="kd-deploy-input-row">
       <label>Name</label>
       <input ng-model="variable.name" name="name" ng-change="ctrl.addVariableIfNeeed()"
           ng-pattern="ctrl.namePattern">
@@ -26,7 +26,7 @@ limitations under the License.
       </ng-messages>
     </md-input-container>
     <div flex="5"></div>
-    <md-input-container flex class="kd-deploy-input-row">
+    <md-input-container flex="auto" class="kd-deploy-input-row">
       <label>Value</label>
       <input ng-model="variable.value" name="value">
     </md-input-container>

@@ -16,7 +16,7 @@ limitations under the License.
 
 <div ng-repeat="portMapping in ctrl.portMappings">
   <ng-form name="portMappingForm" layout="row">
-    <md-input-container flex class="kd-deploy-input-row">
+    <md-input-container flex="auto" class="kd-deploy-input-row">
       <label>Port</label>
       <input ng-model="portMapping.port" ng-change="ctrl.addProtocolIfNeeed()"
              type="number" min="1" max="65535" name="port">
@@ -27,7 +27,7 @@ limitations under the License.
       </ng-messages>
     </md-input-container>
     <div flex="5"></div>
-    <md-input-container flex class="kd-deploy-input-row">
+    <md-input-container flex="auto" class="kd-deploy-input-row">
       <label>Target port</label>
       <input ng-model="portMapping.targetPort" ng-change="ctrl.addProtocolIfNeeed()"
              type="number" min="1" max="65535" name="targetPort">
