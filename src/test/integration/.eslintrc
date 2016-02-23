@@ -1,6 +1,8 @@
 {
   "env": {
     "jasmine": true,
-    "protractor": true
+    "protractor": true,
+    // Build files are written in node.
+    "node": true
   }
 }
