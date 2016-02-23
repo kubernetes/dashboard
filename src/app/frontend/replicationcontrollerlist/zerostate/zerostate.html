@@ -28,6 +28,11 @@ limitations under the License.
         <md-button ui-sref="deploy" class="md-raised md-primary kd-zerostate-deploy-bt">Deploy an
           app
         </md-button>
+        <div></div>
+        <a class="md-raised md-primary kd-zerostate-deploy-bt" ng-if="ctrl.containsOnlyKubeSystemRCs"
+           ui-sref="replicationcontrollers">
+          There are replication controllers in namespace "kube-system" - click to show.
+        </a>
       </md-card-content>
     </md-card>
     <md-card flex="15" class="kd-zerostate-lm-card">
