@@ -14,6 +14,7 @@
 
 import ReplicationControllerListController from 'replicationcontrollerlist/replicationcontrollerlist_controller';
 import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
+import redirectIfNeeded from 'replicationcontrollerlist/replicationcontrollerlist_stateconfig';
 
 describe('Replication controller list controller', () => {
   /** @type {!ReplicationControllerListController} */

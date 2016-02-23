@@ -16,3 +16,18 @@ import {stateName as replicationcontrollers} from './../replicationcontrollerlis
 
 /** Name of the state. Can be used in, e.g., $state.go method. */
 export const stateName = `${replicationcontrollers}.zero`;
+
+/**
+ * Parameters for this state.
+ * All properties are @exported and in sync with URL param names.
+ *
+ */
+export class StateParams {
+    /**
+     * @param containsOnlyKubeSystemRCs
+     */
+    constructor(containsOnlyKubeSystemRCs) {
+        /** @type {boolean} whether there are only RCs in namespace "kube-system" */
+        this.containsOnlyKubeSystemRCs = containsOnlyKubeSystemRCs;
+    }
+}

@@ -15,6 +15,7 @@
 import {stateName as zerostate} from './zerostate/zerostate_state';
 import {stateName as replicationcontrollers} from './replicationcontrollerlist_state';
 import {stateUrl as replicationcontrollersUrl} from './replicationcontrollerlist_state';
+import {StateParams} from './zerostate/zerostate_state';
 import ReplicationControllerListController from './replicationcontrollerlist_controller';
 import ZeroStateController from './zerostate/zerostate_controller';
 
@@ -43,22 +44,41 @@ export default function stateConfig($stateProvider) {
         templateUrl: 'replicationcontrollerlist/zerostate/zerostate.html',
       },
     },
+    // this is to declare non-url state params
+    params: new StateParams(false),
   });
 }
 
 /**
- * Avoids entering replication controller list page when there are no replication controllers.
- * Used f.e. when last replication controller gets deleted.
+ * Avoids entering replication controller list page when there are no replication controllers
+ * or when the only replication controllers are in the kube-system namespace.
+ * Used f.e. when last replication controller that is not in the kube-system namespace gets
+ * deleted.
  * Transition to: zerostate
  * @param {!ui.router.$state} $state
+ * @param {!./zerostate/zerostate_state.StateParams} $stateParams
  * @param {!angular.$timeout} $timeout
  * @param {!backendApi.ReplicationControllerList} replicationControllers
  * @ngInject
  */
-function redirectIfNeeded($state, $timeout, replicationControllers) {
-  if (replicationControllers.replicationControllers.length === 0) {
+function redirectIfNeeded($state, $stateParams, $timeout, replicationControllers) {
+  let params = new StateParams(false);
+  /** @type {boolean} */
+  let isEmpty = replicationControllers.replicationControllers.length === 0;
+  // should only display RC list if RCs exist that are not in the kube-system namespace,
+  // otherwise should redirect to zero state
+  let containsOnlyKubeSystemRCs =
+      !isEmpty && replicationControllers.replicationControllers.every((rc) => {
+        return rc.namespace === 'kube-system';
+      });
+
+  if (isEmpty || containsOnlyKubeSystemRCs) {
     // allow original state change to finish before redirecting to new state to avoid error
-    $timeout(() => { $state.go(zerostate); });
+
+    $timeout(() => {
+      let stateParams = new StateParams(containsOnlyKubeSystemRCs);
+      $state.go(zerostate, stateParams);
+    });
   }
 }
 

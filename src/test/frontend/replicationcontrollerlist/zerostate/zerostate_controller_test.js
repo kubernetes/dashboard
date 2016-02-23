@@ -13,11 +13,15 @@
 // limitations under the License.
 
 import ZerostateController from 'replicationcontrollerlist/zerostate/zerostate_controller';
+import {StateParams} from './zerostate_state_state';
 
 describe('Zerostate controller', () => {
   let ctrl;
 
-  beforeEach(angular.mock.inject(() => { ctrl = new ZerostateController(); }));
+  /** @type {!StateParams} */
+  const stateParams = new StateParams();
+
+  beforeEach(() => {angular.mock.inject(($controller) => { ctrl = $controller(stateParams); })});
 
   it('should do something', () => {
     expect(ctrl.learnMoreLinks).toEqual([
@@ -26,5 +30,6 @@ describe('Zerostate controller', () => {
       {title: 'Monitoring your App', link: "#"},
       {title: 'Troubleshooting', link: "#"},
     ]);
+    expect(ctrl.containsOnlyKubeSystemRCs).toEqual(stateParams.containsOnlyKubeSystemRCs);
   });
 });
