@@ -22,6 +22,7 @@ import (
 
 	restful "github.com/emicklei/go-restful"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
 )
 
 const (
@@ -55,8 +56,10 @@ func FormatResponseLog(resp *restful.Response, req *restful.Request) string {
 }
 
 // Creates a new HTTP handler that handles all requests to the API of the backend.
-func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient) http.Handler {
-	apiHandler := ApiHandler{client, heapsterClient}
+func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
+	clientConfig clientcmd.ClientConfig) http.Handler {
+
+	apiHandler := ApiHandler{client, heapsterClient, clientConfig}
 	wsContainer := restful.NewContainer()
 
 	deployWs := new(restful.WebService)
@@ -181,6 +184,7 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient) 
 type ApiHandler struct {
 	client         *client.Client
 	heapsterClient HeapsterClient
+	clientConfig   clientcmd.ClientConfig
 }
 
 // Handles deploy API call.
@@ -206,7 +210,8 @@ func (apiHandler *ApiHandler) handleDeployFromFile(request *restful.Request, res
 		return
 	}
 
-	isDeployed, err := DeployAppFromFile(deploymentSpec, CreateObjectFromInfoFn)
+	isDeployed, err := DeployAppFromFile(
+		deploymentSpec, CreateObjectFromInfoFn, apiHandler.clientConfig)
 	if !isDeployed {
 		handleInternalError(response, err)
 		return
@@ -218,9 +223,9 @@ func (apiHandler *ApiHandler) handleDeployFromFile(request *restful.Request, res
 	}
 
 	response.WriteHeaderAndEntity(http.StatusCreated, AppDeploymentFromFileResponse{
-		Name: deploymentSpec.Name,
+		Name:    deploymentSpec.Name,
 		Content: deploymentSpec.Content,
-		Error: errorMessage,
+		Error:   errorMessage,
 	})
 }
 

@@ -41,7 +41,7 @@ func main() {
 
 	log.Printf("Starting HTTP server on port %d", *argPort)
 
-	apiserverClient, err := CreateApiserverClient(*argApiserverHost, new(ClientFactoryImpl))
+	apiserverClient, config, err := CreateApiserverClient(*argApiserverHost)
 	if err != nil {
 		log.Fatalf("Error while initializing connection to Kubernetes master: %s. Quitting.", err)
 	}
@@ -54,6 +54,6 @@ func main() {
 	// Run a HTTP server that serves static public files from './public' and handles API calls.
 	// TODO(bryk): Disable directory listing.
 	http.Handle("/", http.FileServer(http.Dir("./public")))
-	http.Handle("/api/", CreateHttpApiHandler(apiserverClient, heapsterRESTClient))
+	http.Handle("/api/", CreateHttpApiHandler(apiserverClient, heapsterRESTClient, config))
 	log.Print(http.ListenAndServe(fmt.Sprintf(":%d", *argPort), nil))
 }
