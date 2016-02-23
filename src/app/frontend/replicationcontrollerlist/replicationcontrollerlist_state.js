@@ -17,3 +17,16 @@ export const stateName = 'replicationcontrollers';
 
 /** Absolute URL of the state. */
 export const stateUrl = '/replicationcontrollers';
+
+/**
+ * Parameters for this state.
+ *
+ * All properties are @exported and in sync with URL param names.
+ *
+ */
+export class StateParams {
+  constructor() {
+    /** @export {boolean} whether there are only RCs in namespace "kube-system" */
+    this.containsOnlyKubeSystemRCs = false;
+  }
+}

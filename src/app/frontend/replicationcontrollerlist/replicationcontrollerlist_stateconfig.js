@@ -15,6 +15,7 @@
 import {stateName as zerostate} from './zerostate/zerostate_state';
 import {stateName as replicationcontrollers} from './replicationcontrollerlist_state';
 import {stateUrl as replicationcontrollersUrl} from './replicationcontrollerlist_state';
+import {StateParams} from './replicationcontrollerlist_state';
 import ReplicationControllerListController from './replicationcontrollerlist_controller';
 import ZeroStateController from './zerostate/zerostate_controller';
 
@@ -29,6 +30,7 @@ export default function stateConfig($stateProvider) {
     controller: ReplicationControllerListController,
     controllerAs: 'ctrl',
     url: replicationcontrollersUrl,
+    params: new StateParams(),
     resolve: {
       'replicationControllers': resolveReplicationControllers,
     },
@@ -47,16 +49,28 @@ export default function stateConfig($stateProvider) {
 }
 
 /**
- * Avoids entering replication controller list page when there are no replication controllers.
- * Used f.e. when last replication controller gets deleted.
+ * Avoids entering replication controller list page when there are no replication controllers
+ * or when the only replication controllers are in the kube-system namespace.
+ * Used f.e. when last replication controller that is not in the kube-system namespace gets
+ * deleted.
  * Transition to: zerostate
+ * @param {!./replicationcontrollerlist_state.StateParams} $stateParams
  * @param {!ui.router.$state} $state
  * @param {!angular.$timeout} $timeout
  * @param {!backendApi.ReplicationControllerList} replicationControllers
  * @ngInject
  */
-function redirectIfNeeded($state, $timeout, replicationControllers) {
-  if (replicationControllers.replicationControllers.length === 0) {
+function redirectIfNeeded($state, $stateParams, $timeout, replicationControllers) {
+  /** @type {boolean} */
+  let isEmpty = replicationControllers.replicationControllers.length === 0;
+  // should only display RC list if RCs exist that are not in the kube-system namespace,
+  // otherwise should redirect to zero state
+  $stateParams.containsOnlyKubeSystemRCs =
+      !isEmpty && replicationControllers.replicationControllers.every((rc) => {
+        return rc.namespace === 'kube-system';
+      });
+
+  if (isEmpty || $stateParams.containsOnlyKubeSystemRCs) {
     // allow original state change to finish before redirecting to new state to avoid error
     $timeout(() => { $state.go(zerostate); });
   }
