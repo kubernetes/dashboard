@@ -55,6 +55,6 @@ export default class DockerImageIdentifier {
     if (index > -1) {
       return last_block.substring(index + 1);
     }
-    return ''
+    return '';
   }
 }
