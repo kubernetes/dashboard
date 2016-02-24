@@ -64,6 +64,9 @@ function createConfig() {
       },
     ];
 
+    // Limit concurrency to not exhaust saucelabs resources for the CI user.
+    config.maxSessions = 1;
+
   } else {
     config.capabilities = {'browserName': 'firefox'};
   }

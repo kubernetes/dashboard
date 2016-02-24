@@ -136,6 +136,12 @@ module.exports = function(config) {
       sl_ie: {base: 'SauceLabs', browserName: 'internet explorer'},
     };
     configuration.browsers = Object.keys(configuration.customLaunchers);
+
+    // Set large capture timeout to prevent timeouts when executing on saucelabs.
+    configuration.captureTimeout = 5 * 60 * 1000;  // 5 minutes.
+
+    // Limit concurrency to not exhaust saucelabs resources for the CI user.
+    configuration.concurrency = 1;
   } else {
     configuration.browsers = ['Chrome'];
   }
