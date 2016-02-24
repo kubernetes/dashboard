@@ -13,13 +13,13 @@
 // limitations under the License.
 
 /**
- * Returns directive definition object for the component that displays service
- * endpoint (type {backendApi.Endpoint}).
+ * Returns directive definition object for the component that displays the service
+ * endpoint (type {backendApi.Endpoint}) which is accessible only from the inside of the cluster
  * @return {!angular.Directive}
  */
-export default function serviceEndpointDirective() {
+export default function internalEndpointDirective() {
   return {
-    templateUrl: 'replicationcontrollerdetail/serviceendpoint.html',
+    templateUrl: 'replicationcontrollerdetail/internalendpoint.html',
     scope: {
       'endpoint': '=',
     },
