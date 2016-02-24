@@ -24,7 +24,6 @@
  */
 
 export default class DockerImageIdentifier {
-
   /**
    * Constructs DockerUri object.
    *
