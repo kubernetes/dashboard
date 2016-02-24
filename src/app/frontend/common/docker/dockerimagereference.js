@@ -19,8 +19,6 @@
  *   [REGISTRY_HOST[:REGISTRY_PORT]/]NAME[:TAG]
  * REGISTRY can be omitted and NAME can contain '/' as delimiters for NAMESPACE.
  *
- * So only TAG is specified.
- *
  */
 
 export default class DockerImageIdentifier {
@@ -29,18 +27,18 @@ export default class DockerImageIdentifier {
    *
    * @param {string} identifier
    */
-  constructor(identifier = '') { this.identifier = identifier; }
+  constructor(identifier) { this.identifier = identifier; }
 
   /**
    * Returns tag
    *
    * TAG cannot contain ':' and '/'.
-   * Not if TAG is omitted, last block text(separated by '/') contains TAG.
+   * If TAG is not omitted, last block text(separated by '/') contains TAG.
    * @return {string}
    */
   tag() {
     /** @type {number} **/
-    let index = this.identifier.lastIndexOf('/');
+    let index = (this.identifier || '').lastIndexOf('/');
 
     /** @type {string} **/
     let last_block = '';
@@ -50,7 +48,7 @@ export default class DockerImageIdentifier {
       last_block = this.identifier;
     }
 
-    index = last_block.lastIndexOf(':');
+    index = (last_block || '').lastIndexOf(':');
     if (index > -1) {
       return last_block.substring(index + 1);
     }
