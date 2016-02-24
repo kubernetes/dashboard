@@ -120,51 +120,46 @@ md-icon {
 
 .kd-replicationcontrollerdetail-labeled-sparkline-label {
   white-space: nowrap;
+  word-spacing: normal;
 }
 
 .kd-sparkline {
   background-color: $body;
   height: 2.5 * $baseline-grid;
+  vertical-align: -$baseline-grid / 2; // 20% below baseline, to flow with text
   width: 12.5 * $baseline-grid;
-  vertical-align: -0.5 * $baseline-grid; // 20% below baseline, to flow with text
+
+  @media only screen and (min-width: $layout-breakpoint-lg) {
+    margin-left: $baseline-grid;
+  }
+
+  @media only screen and (min-width: $layout-breakpoint-xs) and (max-width: $layout-breakpoint-lg) {
+    margin-top: $baseline-grid / 2;
+  }
 }
 
 .kd-sparkline-series {
   fill: $chart-1;
 }
 
-@media only screen and (min-width: $layout-breakpoint-lg) {
-  .kd-replicationcontrollerdetail-sparkline-table-cell {
+.kd-replicationcontrollerdetail-sparkline-table-cell {
+  @media only screen and (min-width: $layout-breakpoint-lg) {
     text-align: right;
-  }
-
-  .kd-replicationcontrollerdetail-labeled-sparkline {
-    white-space: nowrap;
-  }
-
-  .kd-sparkline {
-    margin-left: $baseline-grid;
   }
 }
 
-@media only screen and (min-width: $layout-breakpoint-xs) and (max-width: $layout-breakpoint-lg) {
-  .kd-sparkline {
-    margin-top: $baseline-grid / 2;
+.kd-replicationcontrollerdetail-labeled-sparkline {
+  @media only screen and (min-width: $layout-breakpoint-lg) {
+    white-space: nowrap;
   }
 
-  .kd-replicationcontrollerdetail-labeled-sparkline {
+  @media only screen and (min-width: $layout-breakpoint-xs) and (max-width: $layout-breakpoint-lg) {
     display: block;
     padding-bottom: $baseline-grid;
     padding-top: $baseline-grid;
   }
-}
 
-@media only screen and (max-width: $layout-breakpoint-xs) {
-  .kd-replicationcontrollerdetail-labeled-sparkline {
+  @media only screen and (max-width: $layout-breakpoint-xs) {
     word-spacing: $baseline-grid;
-  }
-
-  .kd-replicationcontrollerdetail-labeled-sparkline-label {
-    word-spacing: normal;
   }
 }
