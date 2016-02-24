@@ -44,11 +44,11 @@ export default class DockerImageIdentifier {
     let index = this.identifier.lastIndexOf('/');
 
     /** @type {string} **/
-    let last_block;
+    let last_block = '';
     if (index > -1) {
       last_block = this.identifier.substring(index + 1);
     } else {
-      last_block = this.identifier
+      last_block = this.identifier;
     }
 
     index = last_block.lastIndexOf(':');
