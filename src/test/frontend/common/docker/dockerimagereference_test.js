@@ -64,17 +64,6 @@ describe('DokcerImageReference', () => {
 
   it('should return part of the string after `:` delimiter', () => {
     // given
-    let reference = 'test:1';
-
-    // when
-    let result = new DockerImageReference(reference).tag();
-
-    // then
-    expect(result).toEqual('1');
-  });
-
-  it('should return part of the string after `:` delimiter', () => {
-    // given
     let reference = 'private.registry:5000/test:1';
 
     // when
@@ -157,4 +146,38 @@ describe('DokcerImageReference', () => {
        // then
        expect(result).toEqual('');
      });
+
+  it('should retrun empty when containerImage is `::`', () => {
+    // given
+    let reference = '::';
+
+    // when
+    let result = new DockerImageReference(reference).tag();
+
+    // then
+    expect(result).toEqual('');
+  });
+
+  it('should retrun empty when containerImage is not empty and ends with `:` delimiter', () => {
+    // given
+    let reference = "test:";
+
+    // when
+    let result = new DockerImageReference(reference).tag();
+
+    // then
+    expect(result).toEqual('');
+  });
+
+  it('should retrun empty when containerImage is not empty and ends with `/` delimiter', () => {
+    // given
+    let reference = "test/";
+
+    // when
+    let result = new DockerImageReference(reference).tag();
+
+    // then
+    expect(result).toEqual('');
+  });
+
 });
