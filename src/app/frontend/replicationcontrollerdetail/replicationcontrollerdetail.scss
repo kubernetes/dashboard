@@ -148,6 +148,22 @@ md-icon {
 
 @media only screen and (min-width: $layout-breakpoint-xs) and (max-width: $layout-breakpoint-sm) {
   .kd-sparkline {
-    margin-top: $baseline-grid / 4;
+    margin-top: $baseline-grid / 2;
+  }
+
+  .kd-replicationcontrollerdetail-labeled-sparkline {
+    display: block;
+    padding-bottom: $baseline-grid;
+    padding-top: $baseline-grid;
+  }
+}
+
+@media only screen and (max-width: $layout-breakpoint-xs) {
+  .kd-replicationcontrollerdetail-labeled-sparkline {
+    word-spacing: $baseline-grid;
+  }
+
+  .kd-replicationcontrollerdetail-labeled-sparkline-label {
+    word-spacing: normal;
   }
 }
