@@ -142,14 +142,10 @@ md-icon {
   fill: $chart-1;
 }
 
-.kd-replicationcontrollerdetail-sparkline-table-cell {
-  @media only screen and (min-width: $layout-breakpoint-lg) {
-    text-align: right;
-  }
-}
-
 .kd-replicationcontrollerdetail-labeled-sparkline {
   @media only screen and (min-width: $layout-breakpoint-lg) {
+    display: block;
+    text-align: right;
     white-space: nowrap;
   }
 
