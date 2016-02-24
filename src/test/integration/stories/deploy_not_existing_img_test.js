@@ -54,23 +54,6 @@ describe('Deploy not existing image story', () => {
   let appName = 'test';
   let containerImage = 'test';
 
-  /**
-   * Waits for element to be present on the page. It doesn't have to be displayed yet.
-   * Additional logic can be given in 'isPresentConditionFn' to f.e. refresh page periodically
-   * until given element appears on the page.
-   * @param {!Element} elm
-   * @param {?function(boolean): boolean} isPresentConditionFn
-   */
-  function waitUntilPresent(elm, isPresentConditionFn) {
-    browser.driver.wait(() => {
-      if (!isPresentConditionFn) {
-        return elm.isPresent();
-      }
-
-      return elm.isPresent().then(isPresentConditionFn);
-    });
-  }
-
   beforeAll(() => {
     // For empty cluster this should actually redirect to zerostate page
     browser.get('#/replicationcontrollers');
@@ -86,7 +69,6 @@ describe('Deploy not existing image story', () => {
   it('should go to deploy page', () => {
     // when
     zeroStatePage.deployButton.click();
-    waitUntilPresent(deployPage.appNameField);
 
     // then
     expect(browser.getCurrentUrl()).toContain('deploy');
@@ -94,14 +76,11 @@ describe('Deploy not existing image story', () => {
 
   it('should deploy app and go to replication controllers list page', () => {
     // given
-    let cardDetailsPageLink = replicationControllersPage.getElementByAppName(
-        replicationControllersPage.cardDetailsPageLinkQuery, appName);
     deployPage.appNameField.sendKeys(appName);
     deployPage.containerImageField.sendKeys(containerImage);
 
     // when
     deployPage.deployButton.click();
-    waitUntilPresent(cardDetailsPageLink);
 
     // then
     expect(browser.getCurrentUrl()).toContain('replicationcontrollers');
@@ -115,17 +94,18 @@ describe('Deploy not existing image story', () => {
         replicationControllersPage.cardErrorIconQuery, appName);
 
     // when
-    waitUntilPresent(cardErrorIcon, (result) => {
-      if (result) {
-        return true;
-      }
+    browser.driver.wait(() => {
+      return cardErrorIcon.isPresent().then((result) => {
+        if (result) {
+          return true;
+        }
 
-      browser.driver.navigate().refresh();
-      return false;
+        browser.driver.navigate().refresh();
+        return false;
+      });
     });
 
     // then
-
     expect(cardErrorIcon.isDisplayed()).toBeTruthy();
     cardErrors.then((errors) => { expect(errors.length).not.toBe(0); });
   });
@@ -137,7 +117,6 @@ describe('Deploy not existing image story', () => {
 
     // when
     cardDetailsPageLink.click();
-    waitUntilPresent(replicationControllerDetailPage.mdTabsItem);
 
     // then
     expect(browser.getCurrentUrl()).toContain(`replicationcontrollers/default/${appName}`);
@@ -147,16 +126,13 @@ describe('Deploy not existing image story', () => {
     // when
     // Switch to events tab
     replicationControllerDetailPage.eventsTab.click();
-    waitUntilPresent(replicationControllerDetailPage.eventsTypeFilter);
 
     // Filter events by warnings
     replicationControllerDetailPage.eventsTypeFilter.click().then(() => {
-      waitUntilPresent(replicationControllerDetailPage.eventsTypeWarning);
       replicationControllerDetailPage.eventsTypeWarning.click();
     });
 
     // then
-    waitUntilPresent(replicationControllerDetailPage.eventsTable);
     expect(replicationControllerDetailPage.eventsTable.isDisplayed()).toBeTruthy();
   });
 
@@ -164,7 +140,6 @@ describe('Deploy not existing image story', () => {
     // when
     // Switch to pods tab
     replicationControllerDetailPage.podsTab.click();
-    waitUntilPresent(replicationControllerDetailPage.podLogsLink);
 
     // Click pod log link
     replicationControllerDetailPage.podLogsLink.click();
@@ -193,11 +168,9 @@ describe('Deploy not existing image story', () => {
         replicationControllersPage.cardMenuButtonQuery, appName);
 
     browser.get('#/replicationcontrollers');
-    waitUntilPresent(cardMenuButton);
 
     cardMenuButton.click();
     replicationControllersPage.deleteAppButton.click().then(() => {
-      waitUntilPresent(deleteDialog.deleteAppButton);
       deleteDialog.deleteAppButton.click();
     });
   });
