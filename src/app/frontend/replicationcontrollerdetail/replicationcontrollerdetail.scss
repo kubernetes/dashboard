@@ -82,15 +82,6 @@ $replicationcontrollerdetails-sidebar-width: 315px;
     white-space: normal;
     word-break: break-all;
   }
-
-  &.kd-replicationcontrollerdetail-metric-table-cell {
-    text-align: right;
-    white-space: nowrap;
-  }
-
-  &.kd-replicationcontrollerdetail-sparkline-table-cell {
-    padding-left: $baseline-grid;
-  }
 }
 
 .kd-replicationcontrollerdetail-table-icon {
@@ -127,6 +118,10 @@ md-icon {
   font-size: $subhead-font-size-base;
 }
 
+.kd-replicationcontrollerdetail-labeled-sparkline-label {
+  white-space: nowrap;
+}
+
 .kd-sparkline {
   background-color: $body;
   height: 2.5 * $baseline-grid;
@@ -135,4 +130,24 @@ md-icon {
 
 .kd-sparkline-series {
   fill: $chart-1;
+}
+
+@media only screen and (min-width: $layout-breakpoint-sm) {
+  .kd-replicationcontrollerdetail-sparkline-table-cell {
+    text-align: right;
+  }
+
+  .kd-replicationcontrollerdetail-labeled-sparkline {
+    white-space: nowrap;
+  }
+
+  .kd-sparkline {
+    margin-left: $baseline-grid;
+  }
+}
+
+@media only screen and (min-width: $layout-breakpoint-xs) and (max-width: $layout-breakpoint-sm) {
+  .kd-sparkline {
+    margin-top: $baseline-grid / 4;
+  }
 }
