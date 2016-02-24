@@ -103,7 +103,7 @@ export default class ReplicationControllerDetailController {
    * @returns {boolean}
    * @export
    */
-  isSidebarVisible() { return this.mdMedia('gt-sm'); }
+  isSidebarVisible() { return this.mdMedia('gt-md'); }
 
   /**
    * Returns true if event is a warning.

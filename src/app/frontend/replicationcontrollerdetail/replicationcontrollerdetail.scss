@@ -133,7 +133,7 @@ md-icon {
   fill: $chart-1;
 }
 
-@media only screen and (min-width: $layout-breakpoint-sm) {
+@media only screen and (min-width: $layout-breakpoint-lg) {
   .kd-replicationcontrollerdetail-sparkline-table-cell {
     text-align: right;
   }
@@ -147,7 +147,7 @@ md-icon {
   }
 }
 
-@media only screen and (min-width: $layout-breakpoint-xs) and (max-width: $layout-breakpoint-sm) {
+@media only screen and (min-width: $layout-breakpoint-xs) and (max-width: $layout-breakpoint-lg) {
   .kd-sparkline {
     margin-top: $baseline-grid / 2;
   }
