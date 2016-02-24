@@ -126,6 +126,7 @@ md-icon {
   background-color: $body;
   height: 2.5 * $baseline-grid;
   width: 12.5 * $baseline-grid;
+  vertical-align: -0.5 * $baseline-grid; // 20% below baseline, to flow with text
 }
 
 .kd-sparkline-series {
