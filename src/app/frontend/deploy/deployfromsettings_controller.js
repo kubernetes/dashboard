@@ -19,6 +19,7 @@ import {
   stateName as replicationcontrollerliststate,
 } from 'replicationcontrollerlist/replicationcontrollerlist_state';
 import {uniqueNameValidationKey} from './uniquename_directive';
+import DockerImageReference from '../common/docker/dockerimagereference';
 
 // Label keys for predefined labels
 const APP_LABEL_KEY = 'app';
@@ -345,16 +346,7 @@ export default class DeployFromSettingsController {
    * @return {string}
    * @private
    */
-  getContainerImageVersion_() {
-    /** @type {number} */
-    let index = (this.containerImage || '').lastIndexOf(':');
-
-    if (index > -1) {
-      return this.containerImage.substring(index + 1);
-    }
-
-    return '';
-  }
+  getContainerImageVersion_() { return new DockerImageReference(this.containerImage).tag(); }
 
   /**
    * Returns application name.
