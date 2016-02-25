@@ -43,6 +43,9 @@ export default class SparklineController {
     const xScale = Math.max(...shifted.map((pt) => pt[0])) || 1;
     const yScale = Math.max(...shifted.map((pt) => pt[1])) || 1;
     const scaled = shifted.map(([x, y]) => [x / xScale, y / yScale]);
+
+    // Invert Y because SVG Y=0 is at the top, and we want low values
+    // of Y to be closer to the bottom of the graphic
     return scaled.map(([x, y]) => `${x},${(1 - y)}`).join(' ');
   }
 }
