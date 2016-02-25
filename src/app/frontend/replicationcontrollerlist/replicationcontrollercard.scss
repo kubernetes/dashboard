@@ -47,8 +47,9 @@
 
 .kd-replicationcontroller-card-error {
   color: $secondary;
+  display: inline-block;
   margin-top: $baseline-grid / 2;
-  word-wrap: break-word;
+  word-break: break-all;
 }
 
 .kd-replicationcontroller-card-description {
