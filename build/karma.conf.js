@@ -39,6 +39,12 @@ function getFileList() {
     path.join(conf.paths.frontendTest, '**/*.js'),
     path.join(conf.paths.frontendSrc, '**/*.js'),
     path.join(conf.paths.frontendSrc, '**/*.html'),
+    path.join(conf.paths.bowerComponents, 'google-closure-library/closure/goog/base.js'),
+    {
+      pattern: path.join(conf.paths.bowerComponents, 'google-closure-library/closure/goog/deps.js'),
+      included: false,
+      served: false,
+    },
   ]);
 }
 
@@ -59,7 +65,7 @@ module.exports = function(config) {
     // This allows to get elements by selector(angular.element('body')), use find function to
     // search elements by class(element.find(class)) and the most important it allows to
     // directly test DOM changes on elements, f.e. changes of element width/height.
-    frameworks: ['jasmine-jquery', 'jasmine', 'browserify'],
+    frameworks: ['jasmine-jquery', 'jasmine', 'browserify', 'closure'],
 
     browserNoActivityTimeout: 5 * 60 * 1000,  // 5 minutes.
 
@@ -77,6 +83,7 @@ module.exports = function(config) {
 
     plugins: [
       'karma-chrome-launcher',
+      'karma-closure',
       'karma-jasmine',
       'karma-jasmine-jquery',
       'karma-coverage',
@@ -147,8 +154,13 @@ module.exports = function(config) {
   }
 
   // Convert all JS code written ES6 with modules to ES5 bundles that browsers can digest.
-  configuration.preprocessors[path.join(conf.paths.frontendTest, '**/*.js')] = ['browserify'];
-  configuration.preprocessors[path.join(conf.paths.frontendSrc, '**/*.js')] = ['browserify'];
+  configuration.preprocessors[path.join(conf.paths.frontendTest, '**/*.js')] =
+      ['browserify', 'closure', 'closure-iit'];
+  configuration.preprocessors[path.join(conf.paths.frontendSrc, '**/*.js')] =
+      ['browserify', 'closure'];
+  configuration.preprocessors[path.join(
+      conf.paths.bowerComponents, 'google-closure-library/closure/goog/deps.js')] =
+      ['closure-deps'];
 
   // Convert HTML templates into JS files that serve code through $templateCache.
   configuration.preprocessors[path.join(conf.paths.frontendSrc, '**/*.html')] = ['ng-html2js'];

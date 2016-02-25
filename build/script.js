@@ -15,10 +15,12 @@
 /**
  * Gulp tasks for processing and compiling frontend JavaScript files.
  */
+import async from 'async';
 import gulp from 'gulp';
 import gulpAngularTemplatecache from 'gulp-angular-templatecache';
 import gulpClosureCompiler from 'gulp-closure-compiler';
 import gulpHtmlmin from 'gulp-htmlmin';
+import mergeStream from 'merge-stream';
 import path from 'path';
 import webpackStream from 'webpack-stream';
 
@@ -47,77 +49,101 @@ gulp.task('scripts', function() {
     quiet: true,
   };
 
-  return gulp.src(path.join(conf.paths.frontendSrc, 'index_module.js'))
-      .pipe(webpackStream(webpackOptions))
-      .pipe(gulp.dest(conf.paths.serve));
+  let devCode = gulp.src([
+                      path.join(conf.paths.frontendSrc, 'index_module.js'),
+                    ])
+                    .pipe(webpackStream(webpackOptions));
+
+  let goog = gulp.src([
+    path.join(conf.paths.bowerComponents, 'google-closure-library/closure/goog/deps.js'),
+    path.join(conf.paths.bowerComponents, 'google-closure-library/closure/goog/base.js'),
+  ]);
+  // important: goog comes first
+  let merged = mergeStream(goog, devCode);
+  return merged.pipe(gulp.dest(conf.paths.serve));
 });
 
 /**
  * Compiles frontend JavaScript files into production bundle located in {conf.paths.prodTmp}
  * directory.
  */
-gulp.task('scripts:prod', ['angular-templates'], function() {
-  let closureCompilerConfig = {
-    fileName: 'app.js',
-    // "foo_flag: null" means that a flag is enabled.
-    compilerFlags: {
-      angular_pass: null,
-      entry_point: 'index_module',
-      compilation_level: 'ADVANCED_OPTIMIZATIONS',
-      export_local_property_definitions: null,
-      externs: [
-        path.join(conf.paths.nodeModules, 'google-closure-compiler/contrib/externs/angular-1.5.js'),
-        path.join(
-            conf.paths.nodeModules,
-            'google-closure-compiler/contrib/externs/angular-1.5-http-promise_templated.js'),
-        path.join(
-            conf.paths.nodeModules,
-            'google-closure-compiler/contrib/externs/angular-1.5-q_templated.js'),
-        path.join(
-            conf.paths.nodeModules, 'google-closure-compiler/contrib/externs/angular-material.js'),
-        path.join(
-            conf.paths.nodeModules, 'google-closure-compiler/contrib/externs/angular_ui_router.js'),
-        path.join(
-            conf.paths.nodeModules,
-            'google-closure-compiler/contrib/externs/angular-1.4-resource.js'),
-        path.join(conf.paths.externs, '**/*.js'),
-      ],
-      generate_exports: null,
-      js_module_root: path.relative(conf.paths.base, conf.paths.frontendSrc),
-      // Enable all compiler checks by default and make them errors.
-      jscomp_error: '*',
-      // Disable checks that are not applicable to the project.
-      jscomp_off: [
-        // This check does not work correctly with ES6.
-        'inferredConstCheck',
-        // Let ESLint handle all lint checks.
-        'lintChecks',
-        // This checks aren't working with current google-closure-library version. Will be deleted
-        // once it's fixed there.
-        'unnecessaryCasts',
-        'analyzerChecks',
-      ],
-      language_in: 'ECMASCRIPT6_STRICT',
-      language_out: 'ECMASCRIPT3',
-      dependency_mode: 'LOOSE',
-      use_types_for_optimization: null,
-    },
-    compilerPath: path.join(conf.paths.nodeModules, 'google-closure-compiler/compiler.jar'),
-    // This makes the compiler faster. Requires Java 7+.
-    tieredCompilation: true,
-  };
+gulp.task('scripts:prod', ['angular-templates', 'extract-translations'], function(doneFn) {
+  let buildSteps = [];
+  // add a compilation step to stream for each translation file
+  conf.translations.forEach((translation) => {
+    let closureCompilerConfig = {
+      fileName: `app.js`,
+      // "foo_flag: null" means that a flag is enabled.
+      compilerFlags: {
+        angular_pass: null,
+        entry_point: 'index_module',
+        compilation_level: 'ADVANCED_OPTIMIZATIONS',
+        export_local_property_definitions: null,
+        externs: [
+          path.join(
+              conf.paths.nodeModules, 'google-closure-compiler/contrib/externs/angular-1.5.js'),
+          path.join(
+              conf.paths.nodeModules,
+              'google-closure-compiler/contrib/externs/angular-1.5-http-promise_templated.js'),
+          path.join(
+              conf.paths.nodeModules,
+              'google-closure-compiler/contrib/externs/angular-1.5-q_templated.js'),
+          path.join(
+              conf.paths.nodeModules,
+              'google-closure-compiler/contrib/externs/angular-material.js'),
+          path.join(
+              conf.paths.nodeModules,
+              'google-closure-compiler/contrib/externs/angular_ui_router.js'),
+          path.join(
+              conf.paths.nodeModules,
+              'google-closure-compiler/contrib/externs/angular-1.4-resource.js'),
+          path.join(conf.paths.externs, '**/*.js'),
+        ],
+        generate_exports: null,
+        js_module_root: path.relative(conf.paths.base, conf.paths.frontendSrc),
+        // Enable all compiler checks by default and make them errors.
+        jscomp_error: '*',
+        // Disable checks that are not applicable to the project.
+        jscomp_off: [
+          // This check does not work correctly with ES6.
+          'inferredConstCheck',
+          // Let ESLint handle all lint checks.
+          'lintChecks',
+          // This checks aren't working with current google-closure-library version. Will be deleted
+          // once it's fixed there.
+          'unnecessaryCasts',
+          'analyzerChecks',
+        ],
+        language_in: 'ECMASCRIPT6_STRICT',
+        language_out: 'ECMASCRIPT3',
+        dependency_mode: 'LOOSE',
+        translations_file: translation.path,
+        use_types_for_optimization: null,
+      },
+      compilerPath: path.join(conf.paths.nodeModules, 'google-closure-compiler/compiler.jar'),
+      // This makes the compiler faster. Requires Java 7+.
+      tieredCompilation: true,
+    };
 
-  return gulp
-      .src([
-        // Application source files.
-        path.join(conf.paths.frontendSrc, '**/*.js'),
-        // Partials generated by other tasks, e.g., Angular templates.
-        path.join(conf.paths.partials, '**/*.js'),
-        // Include base.js to enable some compiler functions, e.g., @export annotation handling.
-        path.join(conf.paths.bowerComponents, 'google-closure-library/closure/goog/base.js'),
-      ])
-      .pipe(gulpClosureCompiler(closureCompilerConfig))
-      .pipe(gulp.dest(conf.paths.prodTmp));
+    let buildStep =
+        ((next) =>
+             gulp.src([
+                   // Application source files.
+                   path.join(conf.paths.frontendSrc, '**/*.js'),
+                   // Partials generated by other tasks, e.g., Angular templates.
+                   path.join(conf.paths.partials, '**/*.js'),
+                   // Include base.js to enable some compiler functions, e.g., @export annotation
+                   // handling and getMsg() translations.
+                   path.join(
+                       conf.paths.bowerComponents, 'google-closure-library/closure/goog/base.js'),
+                 ])
+                 .pipe(gulpClosureCompiler(closureCompilerConfig))
+                 .pipe(gulp.dest(path.join(conf.paths.prodTmp, `/${translation.key}`)))
+                 .on('end', next));
+    buildSteps.push(buildStep);
+  });
+
+  async.series(buildSteps, doneFn);
 });
 
 /**

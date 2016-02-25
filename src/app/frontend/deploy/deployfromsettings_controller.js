@@ -175,6 +175,14 @@ export default class DeployFromSettingsController {
 
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
+
+    /**
+     * @export
+     * @type string
+     * @desc app name help text in deploy page
+     */
+    this.MSG_HELLO_WORLD = goog.getMsg(
+        `An 'app' label with this value will be added to the Replication Controller and Service that get deployed.`);
   }
 
   /**
