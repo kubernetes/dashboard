@@ -15,13 +15,13 @@
 /**
  * @fileoverview Gulp tasks for deploying and releasing the application.
  */
+import async from 'async';
 import child from 'child_process';
 import gulp from 'gulp';
 import lodash from 'lodash';
 import path from 'path';
 
 import conf from './conf';
-import {multiDest} from './multidest';
 
 /**
  * @param {!Array<string>} args
@@ -90,12 +90,14 @@ gulp.task('push-to-gcr:release', ['docker-image:release:cross'], function(doneFn
 /**
  * Processes the Docker file and places it in the dist folder for building.
  */
-gulp.task('docker-file', ['clean-dist'], function() { dockerFile(conf.paths.dist); });
+gulp.task('docker-file', ['clean-dist'], function(doneFn) { dockerFile(conf.paths.dist, doneFn); });
 
 /**
  * Processes the Docker file and places it in the dist folder for all architectures.
  */
-gulp.task('docker-file:cross', ['clean-dist'], function() { dockerFile(conf.paths.distCross); });
+gulp.task('docker-file:cross', ['clean-dist'], function(doneFn) {
+  dockerFile(conf.paths.distCross, doneFn);
+});
 
 /**
  * @param {!Array<!Array<string>>} imageNamesAndDirs (image name, directory) pairs
@@ -147,8 +149,15 @@ function pushToGcr(version, doneFn) {
 
 /**
  * @param {string|!Array<string>} outputDirs
- * @return {stream}
+ * @param {function(?Error=)} doneFn - callback
  */
-function dockerFile(outputDirs) {
-  return gulp.src(path.join(conf.paths.deploySrc, 'Dockerfile')).pipe(multiDest(outputDirs));
+function dockerFile(outputDirs, doneFn) {
+  let buildSteps = [];
+  outputDirs.forEach((outputDir) => {
+    buildSteps.push(
+        (next) => gulp.src(path.join(conf.paths.deploySrc, 'Dockerfile'))
+                      .pipe(outputDir)
+                      .on('end', next));
+  });
+  async.series(buildSteps, doneFn);
 }

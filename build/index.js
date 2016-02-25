@@ -15,6 +15,7 @@
 /**
  * @fileoverview Gulp tasks that index files with dependencies (e.g., CSS or JS) injected.
  */
+import async from 'async';
 import browserSync from 'browser-sync';
 import gulp from 'gulp';
 import gulpInject from 'gulp-inject';
@@ -50,18 +51,25 @@ function createIndexFile(indexPath) {
       .pipe(gulpInject(injectStyles, injectOptions))
       .pipe(gulpInject(injectScripts, injectOptions))
       .pipe(wiredep.stream(wiredepOptions))
-      .pipe(gulp.dest(indexPath))
-      .pipe(browserSync.stream());
+      .pipe(gulp.dest(indexPath));
 }
 
 /**
  * Creates frontend application index file with development dependencies injected.
  */
-gulp.task('index', ['scripts', 'styles'], function() { return createIndexFile(conf.paths.serve); });
+gulp.task('index', ['scripts', 'styles'], function() {
+  return createIndexFile(conf.paths.serve).pipe(browserSync.stream());
+});
 
 /**
  * Creates frontend application index file with production dependencies injected.
  */
-gulp.task('index:prod', ['scripts:prod', 'styles:prod'], function() {
-  return createIndexFile(conf.paths.prodTmp);
+gulp.task('index:prod', ['scripts:prod', 'styles:prod'], function(doneFn) {
+  let buildSteps = [];
+  conf.translations.forEach((translation) => {
+    // create a seprate index file for each locale language
+    buildSteps.push(
+        (next) => createIndexFile(`${conf.paths.prodTmp}/${translation.key}`).on('end', next));
+  });
+  return async.series(buildSteps, doneFn);
 });

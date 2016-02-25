@@ -1,6 +1,6 @@
 {
   // This file contains root configuration for ESLint. Its rules may be overriden in a specific
-  // folder (e.g., tests) by placing .eslintrc in it. 
+  // folder (e.g., tests) by placing .eslintrc in it.
   // All lint rules should be placed here unless they do not apply to entire JavaScript codebase.
   // For example, indentation rules should be here (applies to all JS files), but Protractor
   // should not (applies only to integration tests files).
@@ -42,8 +42,6 @@
     "no-multiple-empty-lines": [2, {"max": 1}],
     // Disallow the use of ternary operators when a simpler alternative exists.
     "no-unneeded-ternary": 2,
-    // Avoid code that looks like two expressions but is actually one.
-    "no-unexpected-multiline": 2,
     // Disallow trailing spaces. This is to unify code because editors may have different
     // settings.
     "no-trailing-spaces": 2,

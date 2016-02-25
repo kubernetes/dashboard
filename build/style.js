@@ -15,6 +15,7 @@
 /**
  * @fileoverview Gulp tasks for processing stylesheets.
  */
+import async from 'async';
 import gulp from 'gulp';
 import gulpAutoprefixer from 'gulp-autoprefixer';
 import gulpMinifyCss from 'gulp-minify-css';
@@ -49,18 +50,26 @@ gulp.task('styles', function() {
  * Compiles stylesheets and places them into the prod tmp folder. Styles are compiled and minified
  * into a single file.
  */
-gulp.task('styles:prod', function() {
+gulp.task('styles:prod', function(doneFn) {
   let sassOptions = {
     style: 'compressed',
   };
 
-  return gulp.src(path.join(conf.paths.frontendSrc, '**/*.scss'))
-      .pipe(gulpSass(sassOptions))
-      .pipe(gulpAutoprefixer())
-      .pipe(gulpConcat('app.css'))
-      .pipe(gulpMinifyCss({
-        // Do not process @import statements. This breaks Angular Material font icons.
-        processImport: false,
-      }))
-      .pipe(gulp.dest(conf.paths.prodTmp));
+  let buildSteps = [];
+  // add a compilation step for each translation file
+  conf.translations.forEach((translation) => {
+    let buildStep = (next) =>
+        gulp.src(path.join(conf.paths.frontendSrc, '**/*.scss'))
+            .pipe(gulpSass(sassOptions))
+            .pipe(gulpAutoprefixer())
+            .pipe(gulpConcat('app.css'))
+            .pipe(gulpMinifyCss({
+              // Do not process @import statements. This breaks Angular Material font icons.
+              processImport: false,
+            }))
+            .pipe(gulp.dest(`${conf.paths.prodTmp}/${translation.key}`))
+            .on('end', next);
+    buildSteps.push(buildStep);
+  });
+  return async.series(buildSteps, doneFn);
 });
