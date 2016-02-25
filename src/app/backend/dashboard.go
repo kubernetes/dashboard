@@ -53,7 +53,7 @@ func main() {
 
 	// Run a HTTP server that serves static public files from './public' and handles API calls.
 	// TODO(bryk): Disable directory listing.
-	http.Handle("/", http.FileServer(http.Dir("./public")))
+	http.HandleFunc("/", LocaleHandler)
 	http.Handle("/api/", CreateHttpApiHandler(apiserverClient, heapsterRESTClient, config))
 	log.Print(http.ListenAndServe(fmt.Sprintf(":%d", *argPort), nil))
 }
