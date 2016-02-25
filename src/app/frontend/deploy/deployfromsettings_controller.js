@@ -127,13 +127,13 @@ export default class DeployFromSettingsController {
      * (leading and trailing spaces are ignored by default)
      * @export {!RegExp}
      */
-    this.namePattern = new RegExp('^[a-z0-9]([-a-z0-9]*[a-z0-9])?$');
+    this.namePattern = new RegExp('^[a-z]([-a-z0-9]*[a-z0-9])?$');
 
     /**
      * Maximum length for Application name
      * @export {string}
      */
-    this.nameMaxLength = '63';
+    this.nameMaxLength = '24';
 
     /**
      * Whether to run the container as privileged user.

@@ -362,16 +362,17 @@ describe('DeployFromSettings controller', () => {
 
   /**
    * The value entered for ‘App Name” is used implicitly as the name for several resources (pod, rc,
-   * svc, label). Therefore, the app-name validation pattern is based on the RC-pattern, but must
-   * conform with all validation patterns of all the created resources.
-   * Currently, the ui pattern that conforms with all patterns is alpha-numeric with dashes between.
+   * svc, label). Therefore, the app-name validation pattern is based on the servicePattern, but
+   * must conform with all validation patterns of all the created resources.
+   * Currently, the ui pattern that conforms with all patterns starts with a lowercase letter,
+   * is lowercase alpha-numeric with dashes between.
    */
   it('should allow strings that conform to the patterns of all created resources', () => {
     // given the pattern used by the App Name field in the UI
     let namePattern = ctrl.namePattern;
     // given the patterns of all the names that are implicitly created
     let allPatterns = {
-      servicePattern: '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*',
+      servicePattern: '[a-z]([-a-z0-9]*[a-z0-9])?',
       labelPattern: '(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?',
       rcPattern: '[a-z0-9]([-a-z0-9]*[a-z0-9])?',
       appNamePattern: namePattern,
@@ -388,7 +389,7 @@ describe('DeployFromSettings controller', () => {
   /**
    * The value entered for 'App Name' is used implicitly as the name for several resources (pod, rc,
    * svc, label).
-   * Remark: The app-name pattern excludes some service names and label values, which could be
+   * Remark: The app-name pattern excludes some RC names and label values, which could be
    * created manually. This is a restriction of the current design.
    */
   it('should reject names that fail to conform to appNamePattern', () => {
