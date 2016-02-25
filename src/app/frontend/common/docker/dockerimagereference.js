@@ -21,13 +21,18 @@
  *
  */
 
-export default class DockerImageIdentifier {
+export default class DockerImageReference {
   /**
-   * Constructs DockerUri object.
+   * Constructs DockerImageReference object.
    *
-   * @param {string} identifier
+   * @param {string} reference
    */
-  constructor(identifier) { this.identifier = identifier; }
+  constructor(reference) {
+    /**
+     * @private {string}
+     */
+    this.reference_ = reference;
+  }
 
   /**
    * Returns tag
@@ -38,14 +43,14 @@ export default class DockerImageIdentifier {
    */
   tag() {
     /** @type {number} **/
-    let index = (this.identifier || '').lastIndexOf('/');
+    let index = (this.reference_ || '').lastIndexOf('/');
 
     /** @type {string} **/
     let last_block = '';
     if (index > -1) {
-      last_block = this.identifier.substring(index + 1);
+      last_block = this.reference_.substring(index + 1);
     } else {
-      last_block = this.identifier;
+      last_block = this.reference_;
     }
 
     index = (last_block || '').lastIndexOf(':');
