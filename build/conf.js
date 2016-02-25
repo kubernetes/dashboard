@@ -148,6 +148,14 @@ export default {
   },
 
   /**
+   * Configuration for i18n & l10n.
+   */
+  translations: [
+    {path: path.join(basePath, 'i18n/messages-en.xtb'), key: 'en'},
+    {path: path.join(basePath, 'i18n/messages-ja.xtb'), key: 'ja'},
+  ],
+
+  /**
    * Absolute paths to known directories, e.g., to source directory.
    */
   paths: {
@@ -183,5 +191,6 @@ export default {
     serve: path.join(basePath, '.tmp/serve'),
     src: path.join(basePath, 'src'),
     tmp: path.join(basePath, '.tmp'),
+    xtbgenerator: path.join(basePath, '.tools/xtbgenerator/bin/XtbGenerator.jar'),
   },
 };
