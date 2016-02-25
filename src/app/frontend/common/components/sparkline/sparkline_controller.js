@@ -15,7 +15,7 @@
 /**
  * @final
  */
-export default class sparklineController {
+export default class SparklineController {
   /**
    * Constructs sparkline controller.
    * @ngInject
