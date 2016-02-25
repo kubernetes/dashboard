@@ -195,4 +195,18 @@ export default class ReplicationControllerDetailController {
     return !!pod.metrics && !!pod.metrics.memoryUsageHistory &&
         pod.metrics.memoryUsageHistory.length > 0;
   }
+
+  /**
+   * Returns either 1 (if the table cells containing sparklines should
+   * shrink around their contents) or undefined (if those table cells
+   * should obey regular layout rules). The idiosyncratic return
+   * protocol is for compatibility with ng-attr's behavior - we want
+   * to generate either "width=1" or nothing at all.
+   *
+   * @return {(number|undefined)}
+   * @export
+   */
+  shouldShrinkSparklineCells() {
+    return (this.mdMedia('gt-xs') || undefined) && 1;
+  }
 }
