@@ -29,6 +29,10 @@ var (
 		"to connect to in the format of protocol://address:port, e.g., "+
 		"http://localhost:8080. If not specified, the assumption is that the binary runs inside a"+
 		"Kubernetes cluster and local discovery is attempted.")
+	argHeapsterHost = pflag.String("heapster-host", "", "The address of the Heapster Apiserver "+
+		"to connect to in the format of protocol://address:port, e.g., "+
+		"http://localhost:8082. If not specified, the assumption is that the binary runs inside a"+
+		"Kubernetes cluster and service proxy will be used.")
 )
 
 func main() {
@@ -37,7 +41,12 @@ func main() {
 
 	log.Printf("Starting HTTP server on port %d", *argPort)
 
-	apiserverClient, err := CreateApiserverClient(*argApiserverHost, new(ClientFactoryImpl))
+	apiserverClient, config, err := CreateApiserverClient(*argApiserverHost)
+	if err != nil {
+		log.Fatalf("Error while initializing connection to Kubernetes master: %s. Quitting.", err)
+	}
+
+	heapsterRESTClient, err := CreateHeapsterRESTClient(*argHeapsterHost, apiserverClient)
 	if err != nil {
 		log.Print(err)
 	}
@@ -45,6 +54,6 @@ func main() {
 	// Run a HTTP server that serves static public files from './public' and handles API calls.
 	// TODO(bryk): Disable directory listing.
 	http.Handle("/", http.FileServer(http.Dir("./public")))
-	http.Handle("/api/", CreateHttpApiHandler(apiserverClient))
+	http.Handle("/api/", CreateHttpApiHandler(apiserverClient, heapsterRESTClient, config))
 	log.Print(http.ListenAndServe(fmt.Sprintf(":%d", *argPort), nil))
 }

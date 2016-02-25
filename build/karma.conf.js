@@ -55,22 +55,15 @@ module.exports = function(config) {
 
     logLevel: 'WARN',
 
-    frameworks: ['jasmine', 'browserify'],
+    // Jasmine jquery is needed to allow angular to use JQuery in tests instead of JQLite.
+    // This allows to get elements by selector(angular.element('body')), use find function to
+    // search elements by class(element.find(class)) and the most important it allows to
+    // directly test DOM changes on elements, f.e. changes of element width/height.
+    frameworks: ['jasmine-jquery', 'jasmine', 'browserify'],
 
-    browsers: ['Chrome'],
+    browserNoActivityTimeout: 5 * 60 * 1000,  // 5 minutes.
 
-    browserNoActivityTimeout: 60 * 1000,  // 60 seconds.
-
-    customLaunchers: {
-      // Custom launcher for Travis CI. It is required because Travis environment cannot use
-      // sandbox.
-      chromeTravis: {
-        base: 'Chrome',
-        flags: ['--no-sandbox'],
-      },
-    },
-
-    reporters: ['progress', 'coverage'],
+    reporters: ['dots', 'coverage'],
 
     coverageReporter: {
       dir: conf.paths.coverage,
@@ -85,10 +78,12 @@ module.exports = function(config) {
     plugins: [
       'karma-chrome-launcher',
       'karma-jasmine',
+      'karma-jasmine-jquery',
       'karma-coverage',
       'karma-ng-html2js-preprocessor',
       'karma-sourcemap-loader',
       'karma-browserify',
+      'karma-sauce-launcher',
     ],
 
     // karma-browserify plugin config.
@@ -115,8 +110,40 @@ module.exports = function(config) {
   };
 
   // Use custom browser configuration when running on Travis CI.
-  if (process.env.TRAVIS) {
-    configuration.browsers = ['chromeTravis'];
+  if (conf.test.useSauceLabs) {
+    configuration.reporters.push('saucelabs');
+
+    let testName;
+    if (process.env.TRAVIS) {
+      testName = `Karma tests ${process.env.TRAVIS_REPO_SLUG}, build ` +
+          `${process.env.TRAVIS_BUILD_NUMBER}`;
+      if (process.env.TRAVIS_PULL_REQUEST !== 'false') {
+        testName += `, PR: https://github.com/${process.env.TRAVIS_REPO_SLUG}/pull/` +
+            `${process.env.TRAVIS_PULL_REQUEST}`;
+      }
+    } else {
+      testName = 'Local karma tests';
+    }
+
+    configuration.sauceLabs = {
+      testName: testName,
+      connectOptions: {port: 5757, logfile: 'sauce_connect.log'},
+      public: 'public',
+    },
+    configuration.customLaunchers = {
+      sl_chrome: {base: 'SauceLabs', browserName: 'chrome'},
+      sl_firefox: {base: 'SauceLabs', browserName: 'firefox'},
+      sl_ie: {base: 'SauceLabs', browserName: 'internet explorer'},
+    };
+    configuration.browsers = Object.keys(configuration.customLaunchers);
+
+    // Set large capture timeout to prevent timeouts when executing on saucelabs.
+    configuration.captureTimeout = 5 * 60 * 1000;  // 5 minutes.
+
+    // Limit concurrency to not exhaust saucelabs resources for the CI user.
+    configuration.concurrency = 1;
+  } else {
+    configuration.browsers = ['Chrome'];
   }
 
   // Convert all JS code written ES6 with modules to ES5 bundles that browsers can digest.

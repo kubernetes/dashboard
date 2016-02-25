@@ -35,6 +35,14 @@ backendApi.PortMapping;
 
 /**
  * @typedef {{
+ *   name: string,
+ *   value: string
+ * }}
+ */
+backendApi.EnvironmentVariable;
+
+/**
+ * @typedef {{
  *  key: string,
  *  value: string
  * }}
@@ -53,10 +61,20 @@ backendApi.Label;
  *   labels: !Array<!backendApi.Label>,
  *   replicas: number,
  *   namespace: string,
+ *   memoryRequirement: ?string,
+ *   cpuRequirement: ?number,
  *   runAsPrivileged: boolean,
  * }}
  */
 backendApi.AppDeploymentSpec;
+
+/**
+ * @typedef {{
+ *   name: string,
+ *   content: string
+ * }}
+ */
+backendApi.AppDeploymentFromFileSpec;
 
 /**
  * @typedef {{
@@ -83,10 +101,48 @@ backendApi.Event;
 
 /**
  * @typedef {{
- *   replicaSets: !Array<!backendApi.ReplicaSet>
+ *   replicationControllers: !Array<!backendApi.ReplicationController>
  * }}
  */
-backendApi.ReplicaSetList;
+backendApi.ReplicationControllerList;
+
+/**
+ * @typedef {{
+ *   timestamp: string,
+ *   value: number
+ * }}
+ */
+backendApi.MetricResult;
+
+/**
+ * @typedef {{
+ *   reason: string,
+ *   message: string
+ * }}
+ */
+backendApi.PodEvent;
+
+/**
+ * @typedef {{
+ *   cpuUsage: ?number,
+ *   memoryUsage: ?number,
+ *   cpuUsageHistory: !Array<!backendApi.MetricResult>,
+ *   memoryUsageHistory: !Array<!backendApi.MetricResult>
+ * }}
+ */
+backendApi.PodMetrics;
+
+/**
+ * @typedef {{
+ *   current: number,
+ *   desired: number,
+ *   running: number,
+ *   pending: number,
+ *   failed: number,
+ *   warnings: !Array<!backendApi.Event>
+ * }}
+ */
+backendApi.ReplicationControllerPodInfo;
 
 /**
  * @typedef {{
@@ -94,15 +150,14 @@ backendApi.ReplicaSetList;
  *   namespace: string,
  *   description: string,
  *   labels: !Object<string, string>,
- *   podsRunning: number,
- *   podsPending: number,
+ *   pods: !backendApi.ReplicationControllerPodInfo,
  *   containerImages: !Array<string>,
  *   creationTime: string,
  *   internalEndpoints: !Array<!backendApi.Endpoint>,
  *   externalEndpoints: !Array<!backendApi.Endpoint>
  * }}
  */
-backendApi.ReplicaSet;
+backendApi.ReplicationController;
 
 /**
  * @typedef {{
@@ -111,34 +166,44 @@ backendApi.ReplicaSet;
  *   labels: !Object<string, string>,
  *   labelSelector: !Object<string, string>,
  *   containerImages: !Array<string>,
- *   podsDesired: number,
- *   podsRunning: number,
- *   pods: !Array<!backendApi.ReplicaSetPod>,
- *   services: !Array<!backendApi.ServiceDetail>
+ *   podInfo: !backendApi.ReplicationControllerPodInfo,
+ *   pods: !Array<!backendApi.ReplicationControllerPod>,
+ *   services: !Array<!backendApi.ServiceDetail>,
+ *   hasMetrics: boolean
  * }}
  */
-backendApi.ReplicaSetDetail;
+backendApi.ReplicationControllerDetail;
 
 /**
  * @typedef {{
  *   replicas: number
  * }}
  */
-backendApi.ReplicaSetSpec;
+backendApi.ReplicationControllerSpec;
+
+/**
+ * @typedef {{
+ *   deleteServices: boolean
+ * }}
+ */
+backendApi.DeleteReplicationControllerSpec;
 
 /**
  * @typedef {{
  *   name: string,
  *   startTime: ?string,
+ *   status: string,
  *   podIP: string,
  *   nodeName: string,
- *   restartCount: number
+ *   restartCount: number,
+ *   metrics: backendApi.PodMetrics
  * }}
  */
-backendApi.ReplicaSetPod;
+backendApi.ReplicationControllerPod;
 
 /**
  * @typedef {{
+ *  name: string,
  *  internalEndpoint: !backendApi.Endpoint,
  *  externalEndpoints: !Array<!backendApi.Endpoint>,
  *  selector: !Object<string, string>
@@ -179,25 +244,26 @@ backendApi.PodContainer;
 /**
  * @typedef {{
  *   name: string,
- *   startTime: string,
+ *   startTime: ?string,
  *   totalRestartCount: number,
  *   podContainers: !Array<!backendApi.PodContainer>
  * }}
  */
-backendApi.ReplicaSetPodWithContainers;
+backendApi.ReplicationControllerPodWithContainers;
 
 /**
  * @typedef {{
- *   pods: !Array<!backendApi.ReplicaSetPodWithContainers>
+ *   pods: !Array<!backendApi.ReplicationControllerPodWithContainers>
  * }}
  */
-backendApi.ReplicaSetPods;
+backendApi.ReplicationControllerPods;
 
 /**
  * @typedef {{
  *   podId: string,
  *   sinceTime: string,
- *   logs: !Array<string>
+ *   logs: !Array<string>,
+ *   container: string
  * }}
  */
 backendApi.Logs;
@@ -253,3 +319,41 @@ backendApi.NodeStat;
 *}}
 */
 backendApi.NodeStats;
+
+/**
+ * @typedef {{
+ *    protocols: !Array<string>
+ * }}
+ */
+backendApi.Protocols;
+
+/**
+ * @typedef {{
+ *    valid: boolean
+ * }}
+ */
+backendApi.ProtocolValidity;
+
+/**
+ * @typedef {{
+ *    protocol: string,
+ *    isExternal: boolean
+ * }}
+ */
+backendApi.ProtocolValiditySpec;
+
+/**
+ *  @typedef {{
+ *    name: string,
+ *    namespace: string,
+ *    data: string,
+ *  }}
+ */
+backendApi.SecretSpec;
+
+/**
+ * @typedef {{
+ *   secrets: !Array<string>
+ * }}
+ */
+backendApi.SecretsList;

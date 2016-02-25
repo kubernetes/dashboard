@@ -60,7 +60,7 @@ export default class NamespaceDialogController {
 
     /**
      * Pattern validation rule for namespace
-     * @export {RegExp}
+     * @export {!RegExp}
      */
     this.namespacePattern = new RegExp('^[a-z0-9]([-a-z0-9]*[a-z0-9])?$');
 
@@ -92,7 +92,7 @@ export default class NamespaceDialogController {
     let namespaceSpec = {name: this.namespace};
 
     /** @type {!angular.Resource<!backendApi.NamespaceSpec>} */
-    let resource = this.resource_('/api/namespaces');
+    let resource = this.resource_('api/v1/namespaces');
 
     resource.save(
         namespaceSpec,
@@ -102,7 +102,7 @@ export default class NamespaceDialogController {
         },
         (err) => {
           this.mdDialog_.hide();
-          this.errorDialog_.open('Error creating namespace');
+          this.errorDialog_.open('Error creating namespace', err.data);
           this.log_.info('Error creating namespace:', err);
         });
   }

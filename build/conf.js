@@ -23,6 +23,40 @@ import path from 'path';
 const basePath = path.join(__dirname, '../');
 
 /**
+ * Compilation architecture configuration.
+ */
+const arch = {
+  /**
+   * Default architecture that the project is compiled to. Used for local development and testing.
+   * TODO(bryk): Dynamically determine this based on current arch.
+   */
+  default: 'amd64',
+  /**
+   * List of all supported architectures by this project.
+   */
+  list: ['amd64', 'arm', 'arm64', 'ppc64le'],
+};
+
+/**
+ * Package version information.
+ */
+const version = {
+  /**
+   * Current release version of the project.
+   */
+  release: 'v1.0.0-beta1',
+  /**
+   * Version name of the canary release of the project.
+   */
+  canary: 'canary',
+};
+
+/**
+ * Base name for the docker image.
+ */
+const imageNameBase = 'gcr.io/google_containers/kubernetes-dashboard';
+
+/**
  * Exported configuration object with common constants used in build pipeline.
  */
 export default {
@@ -45,21 +79,47 @@ export default {
     /**
     * Address for the Kubernetes API server.
     */
-    apiServerHost: 'localhost:8080',
+    apiServerHost: 'http://localhost:8080',
     /**
-     * Address for the Heapster API server.
+     * Address for the Heapster API server. If blank, the dashboard
+     * will attempt to connect to Heapster via a service proxy.
      */
-    heapsterServerHost: 'localhost:8082',
+    heapsterServerHost: 'http://localhost:8082',
   },
+
+  /**
+   * Project compilation architecture info.
+   */
+  arch: arch,
 
   /**
    * Deployment constants configuration.
    */
   deploy: {
     /**
-     * The name of the Docker image with the application.
+     * Project version info.
      */
-    imageName: 'kubernetes/dashboard',
+    version: version,
+
+    /**
+     * Image name for the canary release for current architecture.
+     */
+    canaryImageName: `${imageNameBase}-${arch.default}:${version.canary}`,
+
+    /**
+     * Image name for the versioned release for current architecture.
+     */
+    releaseImageName: `${imageNameBase}-${arch.default}:${version.release}`,
+
+    /**
+     * Image name for the canary release for all supported architecture.
+     */
+    canaryImageNames: arch.list.map((arch) => `${imageNameBase}-${arch}:${version.canary}`),
+
+    /**
+     * Image name for the versioned release for all supported architecture.
+     */
+    releaseImageNames: arch.list.map((arch) => `${imageNameBase}-${arch}:${version.release}`),
   },
 
   /**
@@ -77,6 +137,17 @@ export default {
   },
 
   /**
+   * Configuration for tests.
+   */
+  test: {
+    /**
+     * Whether to use sauce labs for running tests that require a browser.
+     */
+    useSauceLabs:
+        !!process.env.SAUCE_USERNAME && !!process.env.SAUCE_ACCESS_KEY && !!process.env.TRAVIS,
+  },
+
+  /**
    * Absolute paths to known directories, e.g., to source directory.
    */
   paths: {
@@ -91,9 +162,12 @@ export default {
     build: path.join(basePath, 'build'),
     coverage: path.join(basePath, 'coverage'),
     coverageReport: path.join(basePath, 'coverage/lcov'),
-    deploySrc: path.join(basePath, 'src/app/deploy'),
-    dist: path.join(basePath, 'dist'),
-    distPublic: path.join(basePath, 'dist/public'),
+    deploySrc: path.join(basePath, 'src/deploy'),
+    dist: path.join(basePath, 'dist', arch.default),
+    distCross: arch.list.map((arch) => path.join(basePath, 'dist', arch)),
+    distPublic: path.join(basePath, 'dist', arch.default, 'public'),
+    distPublicCross: arch.list.map((arch) => path.join(basePath, 'dist', arch, 'public')),
+    distRoot: path.join(basePath, 'dist'),
     externs: path.join(basePath, 'src/app/externs'),
     frontendSrc: path.join(basePath, 'src/app/frontend'),
     frontendTest: path.join(basePath, 'src/test/frontend'),

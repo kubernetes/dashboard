@@ -12,14 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import filtersModule from '../filters/filters_module';
 import labelsDirective from './labels/labels_directive';
+import middleEllipsisDirective from './middleellipsis/middleellipsis_directive';
 
 /**
  * Module containing common components for the application.
  */
-export default angular.module(
-                          'kubernetesDashboard.common.components',
-                          [
-                            'ngMaterial',
-                          ])
-    .directive('kdLabels', labelsDirective);
+export default angular
+    .module(
+        'kubernetesDashboard.common.components',
+        [
+          'ngMaterial',
+          filtersModule.name,
+        ])
+    .directive('kdLabels', labelsDirective)
+    .directive('kdMiddleEllipsis', middleEllipsisDirective);

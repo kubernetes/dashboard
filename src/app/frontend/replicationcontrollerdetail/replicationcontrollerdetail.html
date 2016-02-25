@@ -1,0 +1,290 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<md-content layout="row" layout-fill flex="auto" >
+  <div class="kd-replicationcontrollerdetail-sidebar" layout="column" flex="noshrink"
+       ng-show="ctrl.isSidebarVisible()">
+    <div class="kd-replicationcontrollerdetail-sidebar-header-wrapper kd-replicationcontrollerdetail-sidebar-item"
+        flex="nogrow">
+      <div class="kd-replicationcontrollerdetail-sidebar-header" layout-align="start center"
+           layout="row">
+        <md-button class="md-icon-button" ui-sref="replicationcontrollers">
+          <md-icon md-font-library="material-icons">arrow_back</md-icon>
+        </md-button>
+        <h1 flex="85" class="md-title kd-replicationcontrollerdetail-app-name">
+          <kd-middle-ellipsis display-string="{{::ctrl.replicationControllerDetail.name}}">
+          </kd-middle-ellipsis>
+        </h1>
+      </div>
+    </div>
+    <kd-replication-controller-info details="::ctrl.replicationControllerDetail">
+    </kd-replication-controller-info>
+  </div>
+  <div flex="auto" >
+  <div class="kd-replicationcontrollerdetail-sidebar-header-wrapper kd-replicationcontrollerdetail-sidebar-item"
+       flex="nogrow" ng-show="!ctrl.isSidebarVisible()">
+    <div class="kd-replicationcontrollerdetail-sidebar-header" layout-align="start center"
+         layout="row">
+      <md-button class="md-icon-button" ui-sref="replicationcontrollers">
+        <md-icon md-font-library="material-icons">arrow_back</md-icon>
+      </md-button>
+      <h1 flex="auto" class="md-title kd-replicationcontrollerdetail-app-name">
+        {{::ctrl.replicationControllerDetail.name}}
+      </h1>
+    </div>
+  </div>
+  <md-tabs flex="auto" md-border-bottom md-dynamic-height>
+    <md-tab label="Pods">
+      <md-content>
+        <table class="kd-replicationcontrollerdetail-table kd-responsive-table" cellspacing="0">
+          <thead>
+            <tr>
+              <th class="kd-replicationcontrollerdetail-table-header">
+                <kd-sorted-header currently-selected-column="ctrl.sortPodsBy"
+                                  currently-selected-order="ctrl.podsOrder" column-name="name">
+                  Pod
+                </kd-sorted-header>
+              </th>
+              <th class="kd-replicationcontrollerdetail-table-header">
+                <kd-sorted-header currently-selected-column="ctrl.sortPodsBy"
+                                  currently-selected-order="ctrl.podsOrder" column-name="status"
+                                  tooltip="Status of the pod">
+                  Status
+                </kd-sorted-header>
+              </th>
+              <th class="kd-replicationcontrollerdetail-table-header">
+                <kd-sorted-header currently-selected-column="ctrl.sortPodsBy"
+                                  currently-selected-order="ctrl.podsOrder"
+                                  column-name="restartCount"
+                                  tooltip="Number of restarts and last restart time of the pod">
+                  Restarts
+                </kd-sorted-header>
+              </th>
+              <th class="kd-replicationcontrollerdetail-table-header">
+                <kd-sorted-header currently-selected-column="ctrl.sortPodsBy"
+                                  currently-selected-order="ctrl.podsOrder" column-name="startTime"
+                                  tooltip="Time the pod was last started">
+                  Age
+                </kd-sorted-header>
+              </th>
+              <th class="kd-replicationcontrollerdetail-table-header"
+                  ng-if="::ctrl.replicationControllerDetail.hasMetrics">
+                <kd-sorted-header currently-selected-column="ctrl.sortPodsBy"
+                                  currently-selected-order="ctrl.podsOrder" column-name="cpu"
+                                  tooltip="CPU used by the pod">
+                  CPU
+                </kd-sorted-header>
+              </th>
+              <th class="kd-replicationcontrollerdetail-table-header"
+                  ng-if="::ctrl.replicationControllerDetail.hasMetrics">
+                <kd-sorted-header currently-selected-column="ctrl.sortPodsBy"
+                                  currently-selected-order="ctrl.podsOrder" column-name="memory"
+                                  tooltip="Memory used by the pod">
+                  Memory
+                </kd-sorted-header>
+              </th>
+              <th class="kd-replicationcontrollerdetail-table-header">
+                <kd-sorted-header currently-selected-column="ctrl.sortPodsBy"
+                                  currently-selected-order="ctrl.podsOrder" column-name="podIP"
+                                  tooltip="IP adress of the pod in the cluster">
+                  Cluster IP
+                </kd-sorted-header>
+              </th>
+              <th class="kd-replicationcontrollerdetail-table-header">
+                <kd-sorted-header currently-selected-column="ctrl.sortPodsBy"
+                                  currently-selected-order="ctrl.podsOrder" column-name="nodeName"
+                                  tooltip="Name of the node the pod is running on">
+                  Node
+                </kd-sorted-header>
+              </th>
+              <th class="kd-replicationcontrollerdetail-table-header">
+                <span>Logs</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="pod in ctrl.replicationControllerDetail.pods | orderBy:ctrl.sortPodsBy:ctrl.podsOrder">
+              <td kd-responsive-header="Pod" class="kd-replicationcontrollerdetail-table-cell">
+                {{pod.name}}
+              </td>
+              <td kd-responsive-header="Status" class="kd-replicationcontrollerdetail-table-cell">
+                {{::pod.podPhase}}
+              </td>
+              <td kd-responsive-header="Restarts" class="kd-replicationcontrollerdetail-table-cell">
+                {{::pod.restartCount}}<!-- TODO(maciaszczykm): Add info about last restart date. -->
+              </td>
+              <td kd-responsive-header="Age" class="kd-replicationcontrollerdetail-table-cell">
+                <span ng-if="::pod.startTime">
+                  {{::pod.startTime | relativeTime}}
+                  <md-tooltip>Started at {{::(pod.startTime | date:'short')}}</md-tooltip>
+                </span>
+                <span ng-if="::!pod.startTime">
+                  -
+                </span>
+              </td>
+              <td kd-responsive-header="CPU" class="kd-replicationcontrollerdetail-table-cell"
+                  ng-if="::ctrl.replicationControllerDetail.hasMetrics">
+                <span ng-if="::ctrl.hasCpuUsage(pod)">
+                  {{::(pod.metrics.cpuUsage | kdCores)}}
+                </span>
+                <span ng-if="::!ctrl.hasCpuUsage(pod)">
+                  -
+                </span>
+              </td>
+              <td kd-responsive-header="Memory" class="kd-replicationcontrollerdetail-table-cell"
+                  ng-if="::ctrl.replicationControllerDetail.hasMetrics">
+                <span ng-if="::ctrl.hasMemoryUsage(pod)">
+                  {{::(pod.metrics.memoryUsage | kdMemory)}}
+                </span>
+                <span ng-if="::!ctrl.hasMemoryUsage(pod)">
+                  -
+                </span>
+              </td>
+              <td kd-responsive-header="Cluster IP" class="kd-replicationcontrollerdetail-table-cell">
+                <span ng-if="::pod.podIP">
+                  {{::pod.podIP}}
+                </span>
+                <span ng-if="::!pod.podIP">
+                  -
+                </span>
+              </td>
+              <td kd-responsive-header="Node" class="kd-replicationcontrollerdetail-table-cell">
+                <span ng-if="::pod.nodeName">
+                  {{::pod.nodeName}}
+                </span>
+                <span ng-if="::!pod.nodeName">
+                  -
+                </span>
+              </td>
+              <td kd-responsive-header="Logs" class="kd-replicationcontrollerdetail-table-cell">
+                <span>
+                  <a ng-href="{{::ctrl.getPodLogsHref(pod)}}" target="_blank">
+                    Logs
+                    <i class="material-icons kd-text-icon">open_in_new</i>
+                  </a>
+                </span>
+              </td>
+              <!-- TODO(maciaszczykm): Add menu with access to logs of previous instances? -->
+            </tr>
+          </tbody>
+        </table>
+      </md-content>
+    </md-tab>
+    <md-tab label="Events">
+      <md-content flex="auto" >
+        <div class="kd-replicationcontrollerdetail-options" layout="row">
+          <md-input-container class="kd-replicationcontrollerdetail-option-picker">
+            <label>Type</label>
+            <md-select ng-model="ctrl.eventType"
+                       ng-change="ctrl.handleEventFiltering()" required>
+              <md-option ng-repeat="type in ctrl.eventTypeFilter" ng-value="type">
+                {{type}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+        </div>
+        <table class="kd-replicationcontrollerdetail-table kd-responsive-table" cellspacing="0"
+               cellpadding="15" ng-if="ctrl.hasEvents()">
+          <thead>
+          <tr>
+            <th class="kd-replicationcontrollerdetail-table-header">
+              <kd-sorted-header currently-selected-column="ctrl.sortEventsBy"
+                                currently-selected-order="ctrl.eventsOrder" column-name="message">
+                Message
+              </kd-sorted-header>
+            </th>
+            <th class="kd-replicationcontrollerdetail-table-header">
+              <kd-sorted-header currently-selected-column="ctrl.sortEventsBy"
+                                currently-selected-order="ctrl.eventsOrder"
+                                column-name="['sourceComponent','sourceHost']"
+                                tooltip="Source of the event, details of component and host">
+                Source
+              </kd-sorted-header>
+            </th>
+            <th class="kd-replicationcontrollerdetail-table-header">
+              <kd-sorted-header currently-selected-column="ctrl.sortEventsBy"
+                                currently-selected-order="ctrl.eventsOrder" column-name="object">
+                Sub-object
+              </kd-sorted-header>
+            </th>
+            <th class="kd-replicationcontrollerdetail-table-header">
+              <kd-sorted-header currently-selected-column="ctrl.sortEventsBy"
+                                currently-selected-order="ctrl.eventsOrder"
+                                column-name="count" tooltip="Number of times the event occurred">
+                Count
+              </kd-sorted-header>
+            </th>
+            <th class="kd-replicationcontrollerdetail-table-header">
+              <kd-sorted-header currently-selected-column="ctrl.sortEventsBy"
+                                currently-selected-order="ctrl.eventsOrder" column-name="firstSeen"
+                                tooltip="Time the event was seen for the first time">
+                First seen
+              </kd-sorted-header>
+            </th>
+            <th class="kd-replicationcontrollerdetail-table-header">
+              <kd-sorted-header currently-selected-column="ctrl.sortEventsBy"
+                                currently-selected-order="ctrl.eventsOrder" column-name="lastSeen"
+                                tooltip="Time the event was seen for the last time">
+                Last seen
+              </kd-sorted-header>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="event in ctrl.events | orderBy:ctrl.sortEventsBy:ctrl.eventsOrder">
+            <td kd-responsive-header="Message"
+                class="kd-replicationcontrollerdetail-table-cell kd-replicationcontrollerdetail-message-table-cell">
+              <i ng-if="ctrl.isEventWarning(event)"
+                 class="material-icons kd-replicationcontrollerdetail-warning-icon">warning</i>
+              {{event.message}}
+            </td>
+            <td kd-responsive-header="Source" class="kd-replicationcontrollerdetail-table-cell">
+              {{event.sourceComponent}} {{event.sourceHost}}
+            </td>
+            <td kd-responsive-header="Sub-object" class="kd-replicationcontrollerdetail-table-cell">
+              {{event.object}}
+            </td>
+            <td kd-responsive-header="Count" class="kd-replicationcontrollerdetail-table-cell">
+              {{event.count}}
+            </td>
+            <td kd-responsive-header="First seen" class="kd-replicationcontrollerdetail-table-cell">
+              First seen at {{event.firstSeen | date:'short'}}
+            </td>
+            <td kd-responsive-header="Last seen" class="kd-replicationcontrollerdetail-table-cell">
+              Last seen at {{event.lastSeen | date:'short'}}
+            </td>
+          </tr>
+          </tbody>
+        </table>
+	        <div class="kd-replicationcontrollerdetail-no-events" ng-if="!ctrl.hasEvents()">
+            <md-icon class="material-icons kd-replicationcontrollerdetail-no-events-icon">
+              info_outline
+            </md-icon>
+            <div class="kd-replicationcontrollerdetail-no-events-text">No events were found</div>
+            <span class="kd-replicationcontrollerdetail-no-events-info">
+              There are no events to display. It's possible that all of them have expired.
+              <a href="">Learn more</a>
+            </span>
+	        </div>
+      </md-content>
+      </md-tab>
+      <md-tab label="Details" ng-if="!ctrl.isSidebarVisible()">
+        <kd-replication-controller-info details="::ctrl.replicationControllerDetail">
+        </kd-replication-controller-info>
+      </md-tab>
+    </md-tabs>
+  </div>
+</md-content>

@@ -18,7 +18,7 @@ limitations under the License.
   <span flex="10"></span>
 
   <div layout="row" layout-wrap layout-margin layout-align="center center">
-    <span class="kd-logs-toolbar-text">Logs from pod</span>
+    <span class="kd-logs-toolbar-text">Logs from pod:</span>
     <md-select class="kd-logs-toolbar-select" aria-label="Logs from pod" ng-model="ctrl.pod"
                md-on-close="ctrl.onPodChange(ctrl.pod.name)"
                required>
@@ -26,7 +26,7 @@ limitations under the License.
         <span class="kd-logs-toolbar-text">{{item.name}}</span>
       </md-option>
     </md-select>
-    <span class="kd-logs-toolbar-text">container</span>
+    <span class="kd-logs-toolbar-text">Container:</span>
     <md-select class="kd-logs-toolbar-select" aria-label="Containers" ng-model="ctrl.container"
                md-on-close="ctrl.onContainerChange(ctrl.container.name)"
                required>
@@ -35,12 +35,19 @@ limitations under the License.
       </md-option>
     </md-select>
   </div>
-  <span class="kd-logs-toolbar-text" flex>Running since {{ctrl.podCreationTime}}</span>
-  <span flex></span>
+  <span class="kd-logs-toolbar-text" flex="auto" >
+    <span ng-if="ctrl.podCreationTime">
+      Running since {{ctrl.podCreationTime | date:'short'}}
+    </span>
+    <span ng-if="!ctrl.podCreationTime">
+      Not running
+    </span>
+  </span>
+  <span flex="auto" ></span>
   <md-button class="kd-icon-button" id="colorText"
              ng-click="ctrl.onTextColorChange()">
     <md-icon md-font-library="material-icons"
-             ng-class=ctrl.getStyleClass()>
+             ng-class="ctrl.getStyleClass()">
       format_color_text
     </md-icon>
   </md-button>

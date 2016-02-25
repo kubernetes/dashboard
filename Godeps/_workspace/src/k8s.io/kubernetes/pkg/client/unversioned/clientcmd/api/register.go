@@ -26,7 +26,7 @@ var Scheme = runtime.NewScheme()
 
 // SchemeGroupVersion is group version used to register these objects
 // TODO this should be in the "kubeconfig" group
-var SchemeGroupVersion = unversioned.GroupVersion{Group: "", Version: ""}
+var SchemeGroupVersion = unversioned.GroupVersion{Group: "", Version: runtime.APIVersionInternal}
 
 func init() {
 	Scheme.AddKnownTypes(SchemeGroupVersion,
@@ -34,4 +34,10 @@ func init() {
 	)
 }
 
-func (*Config) IsAnAPIObject() {}
+func (obj *Config) GetObjectKind() unversioned.ObjectKind { return obj }
+func (obj *Config) SetGroupVersionKind(gvk *unversioned.GroupVersionKind) {
+	obj.APIVersion, obj.Kind = gvk.ToAPIVersionAndKind()
+}
+func (obj *Config) GroupVersionKind() *unversioned.GroupVersionKind {
+	return unversioned.FromAPIVersionAndKind(obj.APIVersion, obj.Kind)
+}

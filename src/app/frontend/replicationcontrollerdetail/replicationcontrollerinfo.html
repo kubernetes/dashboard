@@ -1,0 +1,116 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<div flex="nogrow" class="kd-replicationcontrollerinfo-item">
+  <md-button class="md-primary" ng-click="infoCtrl.handleDeleteReplicationControllerDialog()">
+    <md-icon class="material-icons">delete</md-icon>
+    DELETE REPLICATION CONTROLLER
+  </md-button>
+</div>
+<div flex="auto" layout="column" class="kd-replicationcontrollerinfo-item">
+  <div flex="auto" layout="column" class="kd-replicationcontrollerinfo-info">
+    <span class="kd-replicationcontrollerinfo-title">
+      Replication controller
+    </span>
+    <span class="kd-replicationcontrollerinfo-line">Name</span>
+    <span class="kd-replicationcontrollerinfo-subline">
+      <kd-middle-ellipsis display-string="{{::infoCtrl.details.name}}">
+      </kd-middle-ellipsis>
+    </span>
+    <span class="kd-replicationcontrollerinfo-line">Namespace</span>
+    <span class="kd-replicationcontrollerinfo-subline">
+      {{::infoCtrl.details.namespace}}
+    </span>
+    <div layout="row" layout-align="start end">
+      <div flex="nogrow">
+        <span class="kd-replicationcontrollerinfo-line">Pods</span>
+        <span class="kd-replicationcontrollerinfo-subline"
+              ng-if="!infoCtrl.areDesiredPodsRunning()">
+          {{::infoCtrl.details.podInfo.current}} created,
+          {{::infoCtrl.details.podInfo.desired}} desired
+        </span>
+        <span class="kd-replicationcontrollerinfo-subline" ng-if="infoCtrl.areDesiredPodsRunning()">
+          {{::infoCtrl.details.podInfo.running}} running
+        </span>
+      </div>
+      <div flex="nogrow">
+        <md-button class="md-icon-button md-primary">
+          <md-icon class="material-icons" ng-click="infoCtrl.handleUpdateReplicasDialog()">
+            mode_edit
+          </md-icon>
+        </md-button>
+      </div>
+    </div>
+    <div ng-if="!infoCtrl.areDesiredPodsRunning()">
+      <span class="kd-replicationcontrollerinfo-line">Pods status</span>
+      <span class="kd-replicationcontrollerinfo-subline">
+        <span ng-if="::infoCtrl.details.podInfo.pending" class="kd-comma-separated-item">
+          {{::infoCtrl.details.podInfo.pending}} pending<!-- Collapse whitespace
+        --></span>
+        <span ng-if="::infoCtrl.details.podInfo.failed" class="kd-comma-separated-item">
+          {{::infoCtrl.details.podInfo.failed}} failed<!-- Collapse whitespace
+        --></span>
+        <span ng-if="::infoCtrl.details.podInfo.running" class="kd-comma-separated-item">
+          {{::infoCtrl.details.podInfo.running}} running
+        </span>
+      </span>
+    </div>
+    <span class="kd-replicationcontrollerinfo-line">Label selector</span>
+    <span class="kd-replicationcontrollerinfo-subline kd-has-labels">
+      <kd-labels labels="::infoCtrl.details.labelSelector"></kd-labels>
+    </span>
+    <span class="kd-replicationcontrollerinfo-line">Labels</span>
+    <span class="kd-replicationcontrollerinfo-subline kd-has-labels">
+      <kd-labels labels="::infoCtrl.details.labels"></kd-labels>
+    </span>
+    <span class="kd-replicationcontrollerinfo-line">Images</span>
+    <span class="kd-replicationcontrollerinfo-subline"
+          ng-repeat="image in infoCtrl.details.containerImages">
+      <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
+    </span>
+  </div>
+  <div flex="auto" layout="column" class="kd-replicationcontrollerinfo-info">
+    <div ng-if="::infoCtrl.details.services" layout="column">
+      <span class="kd-replicationcontrollerinfo-title">Services</span>
+      <div ng-repeat="service in ::infoCtrl.details.services">
+        <span class="kd-replicationcontrollerinfo-line">Name</span>
+        <span class="kd-replicationcontrollerinfo-subline">
+          {{::service.name}}
+        </span>
+        <span class="kd-replicationcontrollerinfo-line">Label selector</span>
+        <span class="kd-replicationcontrollerinfo-subline kd-has-labels">
+          <kd-labels labels="::service.selector"></kd-labels>
+        </span>
+        <span class="kd-replicationcontrollerinfo-line">Internal endpoint</span>
+        <div class="kd-replicationcontrollerinfo-subline">
+          <div ng-if="::service.internalEndpoint">
+            <kd-internal-endpoint endpoint="::service.internalEndpoint"></kd-internal-endpoint>
+          </div>
+          <span ng-hide="service.internalEndpoint">none</span>
+        </div>
+        <span class="kd-replicationcontrollerinfo-line">External endpoint</span>
+        <div class="kd-replicationcontrollerinfo-subline">
+          <div ng-repeat="endpoint in service.externalEndpoints">
+            <kd-external-endpoint endpoint="::endpoint"></kd-external-endpoint>
+          </div>
+          <span class="kd-replicationcontrollerinfo-subline" ng-hide="::service.externalEndpoints">
+            none
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

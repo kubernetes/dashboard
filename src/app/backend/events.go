@@ -35,7 +35,7 @@ type Events struct {
 
 // Single event representation.
 type Event struct {
-	// Event message.
+	// A human-readable description of the status of related object.
 	Message string `json:"message"`
 
 	// Component from which the event is generated.
@@ -59,56 +59,62 @@ type Event struct {
 	// The time at which the most recent occurrence of this event was recorded.
 	LastSeen unversioned.Time `json:"lastSeen"`
 
-	// Reason why this event was generated.
+	// Short, machine understandable string that gives the reason
+	// for this event being generated.
 	Reason string `json:"reason"`
 
 	// Event type (at the moment only normal and warning are supported).
 	Type string `json:"type"`
 }
 
-// Return events for particular namespace and replica set or error if occurred.
-func GetEvents(client *client.Client, namespace, replicaSetName string) (*Events, error) {
-	log.Printf("Getting events related to %s replica set in %s namespace", replicaSetName,
+// Return events for particular namespace and replication controller or error if occurred.
+func GetEvents(client *client.Client, namespace, replicationControllerName string) (*Events, error) {
+	log.Printf("Getting events related to %s replication controller in %s namespace", replicationControllerName,
 		namespace)
 
-	// Get events for replica set.
-	rsEvents, err := GetReplicaSetEvents(client, namespace, replicaSetName)
+	// Get events for replication controller.
+	rsEvents, err := GetReplicationControllerEvents(client, namespace, replicationControllerName)
 
 	if err != nil {
 		return nil, err
 	}
 
-	events := AppendEvents(rsEvents, Events{
+	// Get events for pods in replication controller.
+	podEvents, err := GetReplicationControllerPodsEvents(client, namespace, replicationControllerName)
+
+	if err != nil {
+		return nil, err
+	}
+
+	apiEvents := append(rsEvents, podEvents...)
+
+	if !isTypeFilled(apiEvents) {
+		apiEvents = fillEventsType(apiEvents)
+	}
+
+	events := AppendEvents(apiEvents, Events{
 		Namespace: namespace,
+		Events:    make([]Event, 0),
 	})
 
-	// Get events for pods in replica set.
-	podEvents, err := GetReplicaSetPodsEvents(client, namespace, replicaSetName)
-
-	if err != nil {
-		return nil, err
-	}
-
-	events = AppendEvents(podEvents, events)
-
-	log.Printf("Found %d events related to %s replica set in %s namespace", len(events.Events),
-		replicaSetName, namespace)
+	log.Printf("Found %d events related to %s replication controller in %s namespace", len(events.Events),
+		replicationControllerName, namespace)
 
 	return &events, nil
 }
 
-// Gets events associated to replica set.
-func GetReplicaSetEvents(client *client.Client, namespace, replicaSetName string) ([]api.Event,
+// Gets events associated to replication controller.
+func GetReplicationControllerEvents(client *client.Client, namespace, replicationControllerName string) ([]api.Event,
 	error) {
-	fieldSelector, err := fields.ParseSelector("involvedObject.name=" + replicaSetName)
+	fieldSelector, err := fields.ParseSelector("involvedObject.name=" + replicationControllerName)
 
 	if err != nil {
 		return nil, err
 	}
 
-	list, err := client.Events(namespace).List(unversioned.ListOptions{
-		LabelSelector: unversioned.LabelSelector{labels.Everything()},
-		FieldSelector: unversioned.FieldSelector{fieldSelector},
+	list, err := client.Events(namespace).List(api.ListOptions{
+		LabelSelector: labels.Everything(),
+		FieldSelector: fieldSelector,
 	})
 
 	if err != nil {
@@ -118,37 +124,40 @@ func GetReplicaSetEvents(client *client.Client, namespace, replicaSetName string
 	return list.Items, nil
 }
 
-// Gets events associated to pods in replica set.
-func GetReplicaSetPodsEvents(client *client.Client, namespace, replicaSetName string) ([]api.Event,
+// Gets events associated to pods in replication controller.
+func GetReplicationControllerPodsEvents(client *client.Client, namespace, replicationControllerName string) ([]api.Event,
 	error) {
-	replicaSet, err := client.ReplicationControllers(namespace).Get(replicaSetName)
+	replicationController, err := client.ReplicationControllers(namespace).Get(replicationControllerName)
 
 	if err != nil {
 		return nil, err
 	}
 
-	pods, err := client.Pods(namespace).List(unversioned.ListOptions{
-		LabelSelector: unversioned.LabelSelector{labels.SelectorFromSet(replicaSet.Spec.Selector)},
-		FieldSelector: unversioned.FieldSelector{fields.Everything()},
+	pods, err := client.Pods(namespace).List(api.ListOptions{
+		LabelSelector: labels.SelectorFromSet(replicationController.Spec.Selector),
+		FieldSelector: fields.Everything(),
 	})
 
 	if err != nil {
 		return nil, err
 	}
 
+	events, err := GetPodsEvents(client, pods)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return events, nil
+}
+
+// Gets events associated to given list of pods
+// TODO(floreks): refactor this to make single API call instead of N api calls
+func GetPodsEvents(client *client.Client, pods *api.PodList) ([]api.Event, error) {
 	events := make([]api.Event, 0, 0)
 
 	for _, pod := range pods.Items {
-		fieldSelector, err := fields.ParseSelector("involvedObject.name=" + pod.Name)
-
-		if err != nil {
-			return nil, err
-		}
-
-		list, err := client.Events(namespace).List(unversioned.ListOptions{
-			LabelSelector: unversioned.LabelSelector{labels.Everything()},
-			FieldSelector: unversioned.FieldSelector{fieldSelector},
-		})
+		list, err := GetPodEvents(client, pod)
 
 		if err != nil {
 			return nil, err
@@ -163,8 +172,27 @@ func GetReplicaSetPodsEvents(client *client.Client, namespace, replicaSetName st
 	return events, nil
 }
 
+// Gets events associated to given pod
+func GetPodEvents(client client.Interface, pod api.Pod) (*api.EventList, error) {
+	fieldSelector, err := fields.ParseSelector("involvedObject.name=" + pod.Name)
+
+	if err != nil {
+		return nil, err
+	}
+
+	list, err := client.Events(pod.Namespace).List(api.ListOptions{
+		LabelSelector: labels.Everything(),
+		FieldSelector: fieldSelector,
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return list, nil
+}
+
 // Appends events from source slice to target events representation.
-// TODO(maciaszczykm): Append information about event source (user, system etc.).
 func AppendEvents(source []api.Event, target Events) Events {
 	for _, event := range source {
 		target.Events = append(target.Events, Event{

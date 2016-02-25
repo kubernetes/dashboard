@@ -13,5 +13,8 @@
 // limitations under the License.
 
 export default class ZeroStatePageObject {
-  constructor() { this.deployButton = element(by.css('.kd-zerostate-deploy-bt')); }
+  constructor() {
+    this.deployButtonQuery = by.css('.kd-zerostate-deploy-bt');
+    this.deployButton = element(this.deployButtonQuery);
+  }
 }

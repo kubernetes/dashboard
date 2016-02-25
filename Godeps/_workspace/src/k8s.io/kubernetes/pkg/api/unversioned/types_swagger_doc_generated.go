@@ -51,6 +51,7 @@ var map_APIResource = map[string]string{
 	"":           "APIResource specifies the name of a resource and whether it is namespaced.",
 	"name":       "name is the name of the resource.",
 	"namespaced": "namespaced indicates if a resource is namespaced or not.",
+	"kind":       "kind is the kind for the resource (e.g. 'Foo' is the kind for a resource 'foo')",
 }
 
 func (APIResource) SwaggerDoc() map[string]string {
@@ -76,6 +77,16 @@ func (APIVersions) SwaggerDoc() map[string]string {
 	return map_APIVersions
 }
 
+var map_ExportOptions = map[string]string{
+	"":       "ExportOptions is the query options to the standard REST get call.",
+	"export": "Should this value be exported.  Export strips fields that a user can not specify.`",
+	"exact":  "Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'",
+}
+
+func (ExportOptions) SwaggerDoc() map[string]string {
+	return map_ExportOptions
+}
+
 var map_GroupVersionForDiscovery = map[string]string{
 	"":             "GroupVersion contains the \"group/version\" and \"version\" string of a version. It is made a struct to keep extensiblity.",
 	"groupVersion": "groupVersion specifies the API group and version in the form \"group/version\"",
@@ -86,6 +97,27 @@ func (GroupVersionForDiscovery) SwaggerDoc() map[string]string {
 	return map_GroupVersionForDiscovery
 }
 
+var map_LabelSelector = map[string]string{
+	"":                 "A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects.",
+	"matchLabels":      "matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is \"key\", the operator is \"In\", and the values array contains only \"value\". The requirements are ANDed.",
+	"matchExpressions": "matchExpressions is a list of label selector requirements. The requirements are ANDed.",
+}
+
+func (LabelSelector) SwaggerDoc() map[string]string {
+	return map_LabelSelector
+}
+
+var map_LabelSelectorRequirement = map[string]string{
+	"":         "A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.",
+	"key":      "key is the label key that the selector applies to.",
+	"operator": "operator represents a key's relationship to a set of values. Valid operators ard In, NotIn, Exists and DoesNotExist.",
+	"values":   "values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.",
+}
+
+func (LabelSelectorRequirement) SwaggerDoc() map[string]string {
+	return map_LabelSelectorRequirement
+}
+
 var map_ListMeta = map[string]string{
 	"":                "ListMeta describes metadata that synthetic resources must have, including lists and various status objects. A resource may have only one of {ObjectMeta, ListMeta}.",
 	"selfLink":        "SelfLink is a URL representing this object. Populated by the system. Read-only.",
@@ -94,19 +126,6 @@ var map_ListMeta = map[string]string{
 
 func (ListMeta) SwaggerDoc() map[string]string {
 	return map_ListMeta
-}
-
-var map_ListOptions = map[string]string{
-	"":                "ListOptions is the query options to a standard REST list/watch calls.",
-	"labelSelector":   "A selector to restrict the list of returned objects by their labels. Defaults to everything.",
-	"fieldSelector":   "A selector to restrict the list of returned objects by their fields. Defaults to everything.",
-	"watch":           "Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.",
-	"resourceVersion": "When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history.",
-	"timeoutSeconds":  "Timeout for the list/watch call.",
-}
-
-func (ListOptions) SwaggerDoc() map[string]string {
-	return map_ListOptions
 }
 
 var map_Patch = map[string]string{
@@ -154,6 +173,7 @@ func (StatusCause) SwaggerDoc() map[string]string {
 var map_StatusDetails = map[string]string{
 	"":                  "StatusDetails is a set of additional properties that MAY be set by the server to provide additional information about a response. The Reason field of a Status object defines what attributes will be set. Clients must ignore fields that do not match the defined type of each attribute, and should assume that any attribute may be empty, invalid, or under defined.",
 	"name":              "The name attribute of the resource associated with the status StatusReason (when there is a single name which can be described).",
+	"group":             "The group attribute of the resource associated with the status StatusReason.",
 	"kind":              "The kind attribute of the resource associated with the status StatusReason. On some operations may differ from the requested resource Kind. More info: http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#types-kinds",
 	"causes":            "The Causes array includes more details associated with the StatusReason failure. Not all StatusReasons may provide detailed causes.",
 	"retryAfterSeconds": "If specified, the time in seconds before the operation should be retried.",

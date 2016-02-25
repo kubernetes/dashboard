@@ -51,7 +51,8 @@ gulp.task('lint', ['lint-javascript', 'check-javascript-format', 'lint-styles'])
  * build scripts.
  */
 gulp.task('lint-javascript', function() {
-  return gulp.src([path.join(conf.paths.src, '**/*.js'), path.join(conf.paths.build, '**/*.js')])
+  return gulp
+      .src([path.join(conf.paths.src, '**/*.js'), path.join(conf.paths.build, '**/*.js')])
       // Attach lint output to the eslint property of the file.
       .pipe(gulpEslint())
       // Output the lint results to the console.
@@ -82,9 +83,10 @@ gulp.task('check-javascript-format', function() {
  * Formats all project's JavaScript files using clang-format.
  */
 gulp.task('format-javascript', function() {
-  return gulp.src(
-                 [path.join(conf.paths.src, '**/*.js'), path.join(conf.paths.build, '**/*.js')],
-                 {base: conf.paths.base})
+  return gulp
+      .src(
+          [path.join(conf.paths.src, '**/*.js'), path.join(conf.paths.build, '**/*.js')],
+          {base: conf.paths.base})
       .pipe(gulpClangFormat.format('file'))
       .pipe(gulp.dest(conf.paths.base));
 });

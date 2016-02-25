@@ -12,16 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import coresFilter from './cores_filter';
+import memoryFilter from './memory_filter';
 import middleEllipsisFilter from './middleellipsis_filter';
 import relativeTimeFilter from './relativetime_filter';
 
 /**
  * Module containing common filters for the application.
  */
-export default angular.module(
-                          'kubernetesDashboard.common.filters',
-                          [
-                            'ngMaterial',
-                          ])
+export default angular
+    .module(
+        'kubernetesDashboard.common.filters',
+        [
+          'ngMaterial',
+        ])
     .filter('middleEllipsis', middleEllipsisFilter)
+    .filter('kdMemory', memoryFilter)
+    .filter('kdCores', coresFilter)
     .filter('relativeTime', relativeTimeFilter);

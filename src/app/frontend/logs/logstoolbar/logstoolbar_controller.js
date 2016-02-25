@@ -22,64 +22,62 @@ export default class LogsToolbarController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!StateParams} $stateParams
-   * @param {!backendApi.ReplicaSetPods} replicaSetPods
+   * @param {!backendApi.ReplicationControllerPods} replicationControllerPods
+   * @param {!backendApi.Logs} podLogs
    * @param {!../logs_service.LogColorInversionService} logsColorInversionService
    * @ngInject
    */
-  constructor($state, $stateParams, replicaSetPods, logsColorInversionService) {
+  constructor($state, $stateParams, replicationControllerPods, podLogs, logsColorInversionService) {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
-
-    /** @private {!StateParams} */
-    this.params = $stateParams;
 
     /**
      * Service to notify logs controller if any changes on toolbar.
      * @private {!../logs_service.LogColorInversionService}
      */
-    this.logsColorInversionService = logsColorInversionService;
+    this.logsColorInversionService_ = logsColorInversionService;
 
-    /** @export {!Array<!backendApi.ReplicaSetPodWithContainers>} */
-    this.pods = replicaSetPods.pods || [];
+    /** @export {!Array<!backendApi.ReplicationControllerPodWithContainers>} */
+    this.pods = replicationControllerPods.pods;
 
     /**
      * Currently chosen pod.
-     * @export {!backendApi.ReplicaSetPodWithContainers|undefined}
+     * @export {!backendApi.ReplicationControllerPodWithContainers|undefined}
      */
-    this.pod = this.findPodByName_(this.pods, this.params.podId);
+    this.pod = this.findPodByName_(this.pods, $stateParams.podId);
 
     /** @export {!Array<!backendApi.PodContainer>} */
-    this.containers = this.pod.podContainers || [];
+    this.containers = this.pod.podContainers;
 
-    /** @export {!backendApi.PodContainer|undefined} */
-    this.container = this.findContainerByName_(this.containers, this.params.container);
+    /** @export {!backendApi.PodContainer} */
+    this.container = this.initializeContainer_(this.containers, podLogs.container);
 
     /**
      * Pod creation time.
-     * @export {string}
+     * @export {?string}
      */
-    this.podCreationTime = new Date(Date.parse(this.pod.startTime)).toLocaleString();
+    this.podCreationTime = this.pod.startTime;
 
     /**
      * Namespace.
      * @private {string}
      */
-    this.namespace = this.params.namespace;
+    this.namespace_ = $stateParams.namespace;
 
     /**
-     * Replica Set name.
+     * Replication Controller name.
      * @private {string}
      */
-    this.replicaSetName = this.params.replicaSet;
-
-    /**
-     * Indicates state of log area color.
-     * If false: black text is placed on white area. Otherwise colors are inverted.
-     * @export
-     * @return {boolean}
-     */
-    this.isTextColorInverted = function() { return this.logsColorInversionService.getInverted(); };
+    this.replicationControllerName_ = $stateParams.replicationController;
   }
+
+  /**
+   * Indicates state of log area color.
+   * If false: black text is placed on white area. Otherwise colors are inverted.
+   * @export
+   * @return {boolean}
+   */
+  isTextColorInverted() { return this.logsColorInversionService_.getInverted(); }
 
   /**
    * Execute a code when a user changes the selected option of a pod element.
@@ -89,7 +87,8 @@ export default class LogsToolbarController {
    */
   onPodChange(podId) {
     return this.state_.transitionTo(
-        logs, new StateParams(this.namespace, this.replicaSetName, podId, this.container.name));
+        logs, new StateParams(
+                  this.namespace_, this.replicationControllerName_, podId, this.container.name));
   }
 
   /**
@@ -100,7 +99,8 @@ export default class LogsToolbarController {
    */
   onContainerChange(container) {
     return this.state_.transitionTo(
-        logs, new StateParams(this.namespace, this.replicaSetName, this.pod.name, container));
+        logs, new StateParams(
+                  this.namespace_, this.replicationControllerName_, this.pod.name, container));
   }
 
   /**
@@ -120,25 +120,44 @@ export default class LogsToolbarController {
    * Execute a code when a user changes the selected option for console color.
    * @export
    */
-  onTextColorChange() { this.logsColorInversionService.invert(); }
+  onTextColorChange() { this.logsColorInversionService_.invert(); }
 
   /**
    * Find Pod by name.
    * Return object or undefined if can not find a object.
-   * @param {!Array<!backendApi.ReplicaSetPodWithContainers>} array
+   * @param {!Array<!backendApi.ReplicationControllerPodWithContainers>} array
    * @param {!string} name
-   * @return {!backendApi.ReplicaSetPodWithContainers|undefined}
+   * @return {!backendApi.ReplicationControllerPodWithContainers|undefined}
    * @private
    */
-  findPodByName_(array, name) { return array.find((element) => element.name === name); }
+  findPodByName_(array, name) {
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].name === name) {
+        return array[i];
+      }
+    }
+    return undefined;
+  }
 
   /**
    * Find Container by name.
    * Return object or undefined if can not find a object.
    * @param {!Array<!backendApi.PodContainer>} array
-   * @param {!string} name
-   * @return {!backendApi.PodContainer|undefined}
+   * @param {string} name
+   * @return {!backendApi.PodContainer}
    * @private
    */
-  findContainerByName_(array, name) { return array.find((element) => element.name === name); }
+  initializeContainer_(array, name) {
+    let container = undefined;
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].name === name) {
+        container = array[i];
+        break;
+      }
+    }
+    if (!container) {
+      container = array[0];
+    }
+    return container;
+  }
 }

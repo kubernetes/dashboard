@@ -28,11 +28,54 @@ import uglifySaveLicense from 'uglify-save-license';
 import path from 'path';
 
 import conf from './conf';
+import {multiDest} from './multidest';
 
 /**
- * Builds production package and places it in the dist directory.
+ * Builds production package for current architecture and places it in the dist directory.
  */
 gulp.task('build', ['backend:prod', 'build-frontend']);
+
+/**
+ * Builds production packages for all supported architecures and places them in the dist directory.
+ */
+gulp.task('build:cross', ['backend:prod:cross', 'build-frontend:cross']);
+
+/**
+ * Builds production version of the frontend application for the current architecture.
+ */
+gulp.task('build-frontend', ['assets', 'index:prod', 'clean-dist'], function() {
+  return buildFrontend(conf.paths.distPublic);
+});
+
+/**
+ * Builds production version of the frontend application for all architecures.
+ */
+gulp.task('build-frontend:cross', ['assets:cross', 'index:prod', 'clean-dist'], function() {
+  return buildFrontend(conf.paths.distPublicCross);
+});
+
+/**
+ * Copies assets to the dist directory for current architecture.
+ */
+gulp.task('assets', ['clean-dist'], function() { return assets([conf.paths.distPublic]); });
+
+/**
+ * Copies assets to the dist directory for all architectures.
+ */
+gulp.task(
+    'assets:cross', ['clean-dist'], function() { return assets(conf.paths.distPublicCross); });
+
+/**
+ * Cleans all build artifacts.
+ */
+gulp.task('clean', ['clean-dist'], function() {
+  return del([conf.paths.goWorkspace, conf.paths.tmp, conf.paths.coverage]);
+});
+
+/**
+ * Cleans all build artifacts in the dist/ folder.
+ */
+gulp.task('clean-dist', function() { return del([conf.paths.distRoot]); });
 
 /**
  * Builds production version of the frontend application.
@@ -42,22 +85,23 @@ gulp.task('build', ['backend:prod', 'build-frontend']);
  *  2. index.html is minified.
  *  3. CSS and JS assets are suffixed with version hash.
  *  4. Everything is saved in the dist directory.
+ * @param {string|!Array<string>} outputDirs
+ * @return {stream}
  */
-gulp.task('build-frontend', ['assets', 'index:prod'], function() {
+function buildFrontend(outputDirs) {
   let htmlFilter = gulpFilter('*.html', {restore: true});
   let vendorCssFilter = gulpFilter('**/vendor.css', {restore: true});
   let vendorJsFilter = gulpFilter('**/vendor.js', {restore: true});
   let assetsFilter = gulpFilter(['**/*.js', '**/*.css'], {restore: true});
+  let searchPath = [
+    // To resolve local paths.
+    path.relative(conf.paths.base, conf.paths.prodTmp),
+    // To resolve bower_components/... paths.
+    path.relative(conf.paths.base, conf.paths.base),
+  ];
 
   return gulp.src(path.join(conf.paths.prodTmp, '*.html'))
-      .pipe(gulpUseref({
-        searchPath: [
-          // To resolve local paths.
-          path.relative(conf.paths.base, conf.paths.prodTmp),
-          // To resolve bower_components/... paths.
-          path.relative(conf.paths.base, conf.paths.base),
-        ],
-      }))
+      .pipe(gulpUseref({searchPath: searchPath}))
       .pipe(vendorCssFilter)
       .pipe(gulpMinifyCss())
       .pipe(vendorCssFilter.restore)
@@ -67,28 +111,23 @@ gulp.task('build-frontend', ['assets', 'index:prod'], function() {
       .pipe(assetsFilter)
       .pipe(gulpRev())
       .pipe(assetsFilter.restore)
-      .pipe(gulpUseref({searchPath: [conf.paths.prodTmp]}))
+      .pipe(gulpUseref({searchPath: searchPath}))
       .pipe(gulpRevReplace())
       .pipe(htmlFilter)
       .pipe(gulpHtmlmin({
         removeComments: true,
         collapseWhitespace: true,
+        conservativeCollapse: true,
       }))
       .pipe(htmlFilter.restore)
-      .pipe(gulp.dest(conf.paths.distPublic));
-});
+      .pipe(multiDest(outputDirs));
+}
 
 /**
- * Copies assets to the dist directory.
+ * @param {string|!Array<string>} outputDirs
+ * @return {stream}
  */
-gulp.task('assets', function() {
+function assets(outputDirs) {
   return gulp.src(path.join(conf.paths.assets, '/**/*'), {base: conf.paths.app})
-      .pipe(gulp.dest(conf.paths.distPublic));
-});
-
-/**
- * Cleans all build artifacts.
- */
-gulp.task('clean', function() {
-  return del([conf.paths.dist, conf.paths.goWorkspace, conf.paths.tmp, conf.paths.coverage]);
-});
+      .pipe(multiDest(outputDirs));
+}

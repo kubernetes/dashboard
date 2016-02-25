@@ -24,12 +24,12 @@ import conf from './conf';
 /**
  * The healthz URL of the cluster to check that it is running.
  */
-const clusterHealthzUrl = `http://${conf.backend.apiServerHost}/healthz`;
+const clusterHealthzUrl = `${conf.backend.apiServerHost}/healthz`;
 
 /**
  * The validate URL of the heapster to check that it is running.
  */
-const heapsterValidateUrl = `http://${conf.backend.heapsterServerHost}/validate`;
+const heapsterValidateUrl = `${conf.backend.heapsterServerHost}/api/v1/model/stats/`;
 
 /**
  * A Number, representing the ID value of the timer that is set for function which periodically
@@ -62,16 +62,19 @@ function clusterHealthCheck(doneFn) {
 }
 
 /**
- * Checks if Heapster return debug messages.
- * When Heapster is running then return some debug text otherwise server return error.
+ * Checks if Heapster return running state.
  * @param {function(?Error=)} doneFn
  */
 function heapsterHealthCheck(doneFn) {
-  childProcess.exec(`curl ${heapsterValidateUrl}`, function(err, stdout) {
+  childProcess.exec(`curl --compressed ${heapsterValidateUrl}`, function(err, stdout) {
     if (err) {
       return doneFn(new Error(err));
     }
-    return doneFn(stdout.trim());
+    let statistics = JSON.parse(stdout.trim());
+    let uptime = statistics.uptime;
+    if (!isNaN(uptime)) {
+      return doneFn();
+    }
   });
 }
 
@@ -113,20 +116,16 @@ gulp.task('wait-for-heapster', function(doneFn) {
 
   function isRunning() {
     if (counter % 10 === 0) {
-      gulpUtil.log(
-          gulpUtil.colors.magenta(
-              `Waiting for a Heapster on ${conf.backend.heapsterServerHost}...`));
+      gulpUtil.log(gulpUtil.colors.magenta(`Waiting for a Heapster ...`));
     }
     counter += 1;
 
     // constantly query the heapster until it is properly running
-    heapsterHealthCheck(function(result) {
-      if (result.length > 0) {
-        gulpUtil.log(gulpUtil.colors.magenta('Heapster is up and running.'));
-        clearTimeout(isHeapsterRunningSetIntervalHandler);
-        isHeapsterRunningSetIntervalHandler = null;
-        doneFn();
-      }
+    heapsterHealthCheck(function() {
+      gulpUtil.log(gulpUtil.colors.magenta('Heapster is up and running.'));
+      clearTimeout(isHeapsterRunningSetIntervalHandler);
+      isHeapsterRunningSetIntervalHandler = null;
+      doneFn();
     });
   }
 });
@@ -144,13 +143,13 @@ gulp.task('wait-for-cluster', function(doneFn) {
     if (counter % 10 === 0) {
       gulpUtil.log(
           gulpUtil.colors.magenta(
-              `Waiting for a Kubernetes cluster on ${conf.backend.apiServerHost}...`));
+              `Waiting for a Kubernetes cluster at ${conf.backend.apiServerHost}...`));
     }
     counter += 1;
 
     // constantly query the cluster until it is properly running
     clusterHealthCheck(function(result) {
-      if (result === 'ok') {
+      if (result === 'ok' && isRunningSetIntervalHandler !== null) {
         gulpUtil.log(gulpUtil.colors.magenta('Kubernetes cluster is up and running.'));
         clearTimeout(isRunningSetIntervalHandler);
         isRunningSetIntervalHandler = null;

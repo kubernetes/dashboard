@@ -18,6 +18,8 @@
 
 # Version of kubernetes to use.
 K8S_VERSION="1.1.2"
+# Version heapster to use.
+HEAPSTER_VERSION="0.18.3"
 # Port of the apiserver to serve on.
 PORT=8080
 # Port of the heapster to serve on.
@@ -47,5 +49,5 @@ docker run -d --net=host --privileged gcr.io/google_containers/hyperkube:v${K8S_
     /hyperkube proxy --master=http://127.0.0.1:${PORT} --v=2
 
 # Runs Heapster in standalone mode
-docker run --net=host -d kubernetes/heapster -port ${HEAPSTER_PORT}\
+docker run --net=host -d kubernetes/heapster:v${HEAPSTER_VERSION} -port ${HEAPSTER_PORT} \
     --source=kubernetes:http://127.0.0.1:${PORT}?inClusterConfig=false&auth=""

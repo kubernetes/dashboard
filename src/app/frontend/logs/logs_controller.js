@@ -29,15 +29,15 @@ export class LogsController {
 
     /** @private {!./logs_service.LogColorInversionService} */
     this.logsColorInversionService_ = logsColorInversionService;
-
-    /**
-     * Indicates color state of log area.
-     * If false: black text is placed on white area. Otherwise colors are inverted.
-     * @export
-     * @return {boolean}
-     */
-    this.isTextColorInverted = function() { return this.logsColorInversionService_.getInverted(); };
   }
+
+  /**
+   * Indicates state of log area color.
+   * If false: black text is placed on white area. Otherwise colors are inverted.
+   * @export
+   * @return {boolean}
+   */
+  isTextColorInverted() { return this.logsColorInversionService_.getInverted(); }
 
   /**
    * Return proper style class for logs content.

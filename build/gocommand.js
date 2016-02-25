@@ -44,9 +44,13 @@ const minGoVersion = '1.5.0';
  *
  * @param {!Array<string>} args - Arguments of the go command.
  * @param {function(?Error=)} doneFn - Callback.
+ * @param {!Object<string, string>=} [envOverride] optional environment variables overrides map.
  */
-export default function spawnGoProcess(args, doneFn) {
-  checkPrerequisites().then(() => spawnProcess(args)).then(doneFn).fail((error) => doneFn(error));
+export default function spawnGoProcess(args, doneFn, envOverride) {
+  checkPrerequisites()
+      .then(() => spawnProcess(args, envOverride))
+      .then(doneFn)
+      .fail((error) => doneFn(error));
 }
 
 /**
@@ -64,8 +68,7 @@ function checkPrerequisites() {
 function checkGo() {
   let deferred = q.defer();
   child.exec(
-      'which go',
-      {
+      'which go', {
         env: env,
       },
       function(error, stdout, stderror) {
@@ -88,8 +91,7 @@ function checkGo() {
 function checkGoVersion() {
   let deferred = q.defer();
   child.exec(
-      'go version',
-      {
+      'go version', {
         env: env,
       },
       function(error, stdout) {
@@ -124,8 +126,7 @@ function checkGoVersion() {
 function checkGodep() {
   let deferred = q.defer();
   child.exec(
-      'which godep',
-      {
+      'which godep', {
         env: env,
       },
       function(error, stdout, stderror) {
@@ -146,12 +147,14 @@ function checkGodep() {
  * Promises an error if the go command process fails.
  *
  * @param {!Array<string>} args - Arguments of the go command.
+ * @param {!Object<string, string>=} [envOverride] optional environment variables overrides map.
  * @return {Q.Promise} A promise object.
  */
-function spawnProcess(args) {
+function spawnProcess(args, envOverride) {
   let deferred = q.defer();
+  let envLocal = lodash.merge(env, envOverride);
   let goTask = child.spawn('godep', ['go'].concat(args), {
-    env: env,
+    env: envLocal,
     stdio: 'inherit',
   });
   // Call Gulp callback on task exit. This has to be done to make Gulp dependency management

@@ -14,7 +14,7 @@
 
 /**
  * Returns filter function to apply middle ellipsis when string is longer then max parameter.
- * @return {Function}
+ * @return {function(string, number): string}
  */
 export default function middleEllipsisFilter() {
   /**

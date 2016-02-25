@@ -1,7 +1,7 @@
 {
   "//": "Specification of this file can be found at: https://docs.npmjs.com/files/package.json",
   "name": "kubernetes-dashboard",
-  "version": "0.0.1",
+  "version": "1.0.0-beta1",
   "repository": {
     "type": "git",
     "url": "https://github.com/kubernetes/dashboard.git"
@@ -14,13 +14,13 @@
     "babel-preset-es2015": "~6.3.13",
     "babelify": "~7.2.0",
     "bower": "~1.7.1",
-    "browser-sync": "~2.11.0",
+    "browser-sync": "~2.11.1",
     "browser-sync-spa": "~1.0.3",
-    "browserify": "~12.0.1",
+    "browserify": "~13.0.0",
     "browserify-istanbul": "~0.2.1",
     "del": "~2.2.0",
     "eslint-plugin-angular": "~0.15.0",
-    "google-closure-compiler": "~20151216.1.0",
+    "google-closure-compiler": "~20160208.1.0",
     "gulp": "~3.9.0",
     "gulp-angular-templatecache": "~1.8.0",
     "gulp-autoprefixer": "~3.1.0",
@@ -50,17 +50,22 @@
     "gulp-watch": "~4.3.5",
     "isparta": "~4.0.0",
     "karma": "0.13.19",
-    "karma-browserify": "~4.4.2",
+    "karma-browserify": "~5.0.1",
     "karma-chrome-launcher": "~0.2.2",
     "karma-coverage": "~0.5.3",
+    "karma-firefox-launcher": "^0.1.7",
     "karma-jasmine": "~0.3.6",
+    "karma-jasmine-jquery": "~0.1.1",
     "karma-ng-html2js-preprocessor": "~0.2.0",
+    "karma-sauce-launcher": "^0.3.0",
     "karma-sourcemap-loader": "~0.3.6",
-    "lodash": "~3.10.1",
+    "lodash": "~4.1.0",
     "proxy-middleware": "~0.15.0",
     "q": "~1.4.1",
     "semver": "~5.1.0",
+    "through2": "^2.0.1",
     "uglify-save-license": "~0.4.1",
+    "watchify": "^3.7.0",
     "webpack-stream": "~3.1.0",
     "wiredep": "~3.0.0",
     "wrench": "~1.5.8"
@@ -69,6 +74,6 @@
     "node": ">=4.2.2"
   },
   "scripts": {
-    "postinstall": "./build/postinstall.sh"
+    "postinstall": "build/postinstall.sh"
   }
 }

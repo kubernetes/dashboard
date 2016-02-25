@@ -12,14 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {
+  stateName as replicationcontrollerliststate,
+} from 'replicationcontrollerlist/replicationcontrollerlist_state';
+
 /**
  * Controller for the deploy from file directive.
  *
  * @final
  */
 export default class DeployFromFileController {
-  /** @ngInject */
-  constructor() {
+  /**
+   * @param {!angular.$log} $log
+   * @param {!ui.router.$state} $state
+   * @param {!angular.$resource} $resource
+   * @param {!angular.$q} $q
+   * TODO (cheld) Set correct type after fixing issue #159
+   * @param {!Object} errorDialog
+   * @ngInject
+   */
+  constructor($log, $state, $resource, $q, errorDialog) {
     /**
      * It initializes the scope output parameter
      *
@@ -30,7 +42,61 @@ export default class DeployFromFileController {
     /**
      * Custom file model for the selected file
      *
-     * @export {{name:string, content:string}} */
+     * @export {{name:string, content:string}}
+     */
     this.file = {name: '', content: ''};
+
+    /** @private {!angular.$q} */
+    this.q_ = $q;
+
+    /** @private {!angular.$resource} */
+    this.resource_ = $resource;
+
+    /** @private {!angular.$log} */
+    this.log_ = $log;
+
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
+
+    /**
+     * TODO (cheld) Set correct type after fixing issue #159
+     * @private {!Object}
+     */
+    this.errorDialog_ = errorDialog;
+  }
+
+  /**
+   * Deploys the application based on the state of the controller.
+   *
+   * @export
+   * @return {!angular.$q.Promise}
+   */
+  deploy() {
+    /** @type {!backendApi.AppDeploymentFromFileSpec} */
+    let deploymentSpec = {
+      name: this.file.name,
+      content: this.file.content,
+    };
+
+    let defer = this.q_.defer();
+
+    /** @type {!angular.Resource<!backendApi.AppDeploymentFromFileSpec>} */
+    let resource = this.resource_('api/v1/appdeploymentfromfile');
+    resource.save(
+        deploymentSpec,
+        (response) => {
+          defer.resolve(response);  // Progress ends
+          this.log_.info('Deployment is completed: ', response);
+          if (response.error.length > 0) {
+            this.errorDialog_.open('Deployment has been partly completed', response.error);
+          }
+          this.state_.go(replicationcontrollerliststate);
+        },
+        (err) => {
+          defer.reject(err);  // Progress ends
+          this.log_.error('Error deploying application:', err);
+          this.errorDialog_.open('Deploying file has failed', err.data);
+        });
+    return defer.promise;
   }
 }

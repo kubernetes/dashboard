@@ -12,14 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-md-progress-linear {
-  &.kd-deploy-form-name-progress {
-    $bar-height: 2px;
+@import '../variables';
+$bar-height: 2px;
 
+md-progress-linear {
+  &.kd-deploy-form-progress {
     clear: left;
     height: $bar-height;
     margin-bottom: -$bar-height;
     overflow: hidden;
     top: -$bar-height;
   }
+}
+
+.kd-deploy-input-row {
+  margin-bottom: $baseline-grid;
+  margin-top: $baseline-grid;
+}
+
+.kd-deploy-form-name-container {
+  margin-bottom: $baseline-grid * 8;
+}
+
+.kd-deploy-form-name-validation-container {
+  height: $bar-height;
 }

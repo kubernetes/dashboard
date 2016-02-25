@@ -138,7 +138,7 @@ gulp.task('integration-test:prod', ['serve:prod', 'webdriver-update'], runProtra
  * Runs application integration tests. Uses production version of the application.
  */
 gulp.task(
-    'local-cluster-integration-test:prod', ['serve:prod', 'webdriver-update', 'local-up-cluster'],
+    'local-cluster-integration-test:prod', ['serve:prod', 'local-up-cluster', 'webdriver-update'],
     runProtractorTests);
 
 /**

@@ -15,6 +15,11 @@
 @import '../../variables';
 
 .kd-user-help {
+  .kd-emphasized {
+    color: $emphasis;
+    word-wrap: break-word;
+  }
+
   * {
     color: $muted;
   }
@@ -27,9 +32,5 @@
     &:hover {
       color: $hover-primary;
     }
-  }
-
-  b {
-    color: $emphasis;
   }
 }

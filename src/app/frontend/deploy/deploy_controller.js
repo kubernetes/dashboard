@@ -12,7 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as replicasets} from 'replicasetlist/replicasetlist_state';
+import {
+  stateName as replicationcontrollers,
+} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 
 /**
  * Controller for the deploy view.
@@ -21,13 +23,12 @@ import {stateName as replicasets} from 'replicasetlist/replicasetlist_state';
  */
 export default class DeployController {
   /**
-   * @param {!angular.$resource} $resource
-   * @param {!angular.$log} $log
    * @param {!ui.router.$state} $state
    * @param {!backendApi.NamespaceList} namespaces
+   * @param {!backendApi.Protocols} protocols
    * @ngInject
    */
-  constructor($resource, $log, $state, namespaces) {
+  constructor($state, namespaces, protocols) {
     /** @export {!angular.FormController} Initialized from the template */
     this.deployForm;
 
@@ -38,6 +39,9 @@ export default class DeployController {
      * @export {!Array<string>}
      */
     this.namespaces = namespaces.namespaces;
+
+    /** @export {!Array<string>} */
+    this.protocols = protocols.protocols;
 
     /**
      * Contains the selected directive's controller which has its own deploy logic
@@ -53,12 +57,6 @@ export default class DeployController {
      * @export {string}
      */
     this.selection = "Settings";
-
-    /** @private {!angular.$resource} */
-    this.resource_ = $resource;
-
-    /** @private {!angular.$log} */
-    this.log_ = $log;
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
@@ -89,5 +87,5 @@ export default class DeployController {
    * Cancels the deployment form.
    * @export
    */
-  cancel() { this.state_.go(replicasets); }
+  cancel() { this.state_.go(replicationcontrollers); }
 }

@@ -1,0 +1,53 @@
+// Copyright 2015 Google Inc. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+@import '../variables';
+
+.kd-replicationcontrollerinfo-item {
+  padding-left: 2 * $baseline-grid;
+  padding-right: $baseline-grid;
+}
+
+.kd-replicationcontrollerinfo-title {
+  font-size: $subhead-font-size-base;
+  font-weight: $bold-font-weight;
+  padding-bottom: $baseline-grid;
+  padding-top: $baseline-grid;
+}
+
+.kd-replicationcontrollerinfo-line {
+  color: $foreground-2;
+  display: block;
+  font-size: $body-font-size-base;
+  padding-bottom: 0;
+}
+
+.kd-replicationcontrollerinfo-subline {
+  color: $foreground-1;
+  display: block;
+  font-size: $body-font-size-base;
+  overflow: hidden;
+  padding-bottom: $baseline-grid;
+  text-overflow: ellipsis;
+
+  &.kd-has-labels {
+    // To offset for labels margin.
+    margin-bottom: -$baseline-grid / 2;
+  }
+}
+
+.kd-replicationcontrollerinfo-info {
+  // 6px needed to offset for md-button padding.
+  padding-left: $baseline-grid + 6px;
+}

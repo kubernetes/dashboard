@@ -17,10 +17,7 @@ limitations under the License.
 package unversioned
 
 import (
-	"fmt"
-
 	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/watch"
 )
 
@@ -31,11 +28,11 @@ type NodesInterface interface {
 type NodeInterface interface {
 	Get(name string) (result *api.Node, err error)
 	Create(node *api.Node) (*api.Node, error)
-	List(opts unversioned.ListOptions) (*api.NodeList, error)
+	List(opts api.ListOptions) (*api.NodeList, error)
 	Delete(name string) error
 	Update(*api.Node) (*api.Node, error)
 	UpdateStatus(*api.Node) (*api.Node, error)
-	Watch(opts unversioned.ListOptions) (watch.Interface, error)
+	Watch(opts api.ListOptions) (watch.Interface, error)
 }
 
 // nodes implements NodesInterface
@@ -61,9 +58,9 @@ func (c *nodes) Create(node *api.Node) (*api.Node, error) {
 }
 
 // List takes a selector, and returns the list of nodes that match that selector in the cluster.
-func (c *nodes) List(opts unversioned.ListOptions) (*api.NodeList, error) {
+func (c *nodes) List(opts api.ListOptions) (*api.NodeList, error) {
 	result := &api.NodeList{}
-	err := c.r.Get().Resource(c.resourceName()).VersionedParams(&opts, api.Scheme).Do().Into(result)
+	err := c.r.Get().Resource(c.resourceName()).VersionedParams(&opts, api.ParameterCodec).Do().Into(result)
 	return result, err
 }
 
@@ -82,30 +79,22 @@ func (c *nodes) Delete(name string) error {
 // Update updates an existing node.
 func (c *nodes) Update(node *api.Node) (*api.Node, error) {
 	result := &api.Node{}
-	if len(node.ResourceVersion) == 0 {
-		err := fmt.Errorf("invalid update object, missing resource version: %v", node)
-		return nil, err
-	}
 	err := c.r.Put().Resource(c.resourceName()).Name(node.Name).Body(node).Do().Into(result)
 	return result, err
 }
 
 func (c *nodes) UpdateStatus(node *api.Node) (*api.Node, error) {
 	result := &api.Node{}
-	if len(node.ResourceVersion) == 0 {
-		err := fmt.Errorf("invalid update object, missing resource version: %v", node)
-		return nil, err
-	}
 	err := c.r.Put().Resource(c.resourceName()).Name(node.Name).SubResource("status").Body(node).Do().Into(result)
 	return result, err
 }
 
 // Watch returns a watch.Interface that watches the requested nodes.
-func (c *nodes) Watch(opts unversioned.ListOptions) (watch.Interface, error) {
+func (c *nodes) Watch(opts api.ListOptions) (watch.Interface, error) {
 	return c.r.Get().
 		Prefix("watch").
 		Namespace(api.NamespaceAll).
 		Resource(c.resourceName()).
-		VersionedParams(&opts, api.Scheme).
+		VersionedParams(&opts, api.ParameterCodec).
 		Watch()
 }

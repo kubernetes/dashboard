@@ -31,6 +31,28 @@ import conf from './conf';
 export const browserSyncInstance = browserSync.create();
 
 /**
+ * Dashboard backend arguments used for development mode.
+ *
+ * @type {!Array<string>}
+ */
+const backendDevArgs = [
+  `--apiserver-host=${conf.backend.apiServerHost}`,
+  `--port=${conf.backend.devServerPort}`,
+  `--heapster-host=${conf.backend.heapsterServerHost}`,
+];
+
+/**
+ * Dashboard backend arguments used for production mode.
+ *
+ * @type {!Array<string>}
+ */
+const backendArgs = [
+  `--apiserver-host=${conf.backend.apiServerHost}`,
+  `--port=${conf.frontend.serverPort}`,
+  `--heapster-host=${conf.backend.heapsterServerHost}`,
+];
+
+/**
  * Currently running backend process object. Null if the backend is not running.
  *
  * @type {?child.ChildProcess}
@@ -112,12 +134,7 @@ gulp.task('serve:prod', ['spawn-backend:prod']);
  */
 gulp.task('spawn-backend', ['backend', 'kill-backend'], function() {
   runningBackendProcess = child.spawn(
-      path.join(conf.paths.serve, conf.backend.binaryName),
-      [
-        `--apiserver-host=http://${conf.backend.apiServerHost}`,
-        `--port=${conf.backend.devServerPort}`,
-      ],
-      {stdio: 'inherit'});
+      path.join(conf.paths.serve, conf.backend.binaryName), backendDevArgs, {stdio: 'inherit'});
 
   runningBackendProcess.on('exit', function() {
     // Mark that there is no backend process running anymore.
@@ -132,11 +149,7 @@ gulp.task('spawn-backend', ['backend', 'kill-backend'], function() {
  */
 gulp.task('spawn-backend:prod', ['build-frontend', 'backend', 'kill-backend'], function() {
   runningBackendProcess = child.spawn(
-      path.join(conf.paths.serve, conf.backend.binaryName),
-      [
-        `--apiserver-host=http://${conf.backend.apiServerHost}`,
-        `--port=${conf.frontend.serverPort}`,
-      ],
+      path.join(conf.paths.serve, conf.backend.binaryName), backendArgs,
       {stdio: 'inherit', cwd: conf.paths.dist});
 
   runningBackendProcess.on('exit', function() {

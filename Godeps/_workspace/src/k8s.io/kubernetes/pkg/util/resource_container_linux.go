@@ -22,8 +22,8 @@ import (
 	"os"
 	"syscall"
 
-	"github.com/docker/libcontainer/cgroups/fs"
-	"github.com/docker/libcontainer/configs"
+	"github.com/opencontainers/runc/libcontainer/cgroups/fs"
+	"github.com/opencontainers/runc/libcontainer/configs"
 )
 
 // Creates resource-only containerName if it does not already exist and moves
@@ -33,8 +33,11 @@ import (
 func RunInResourceContainer(containerName string) error {
 	manager := fs.Manager{
 		Cgroups: &configs.Cgroup{
-			Name:            containerName,
-			AllowAllDevices: true,
+			Parent: "/",
+			Name:   containerName,
+			Resources: &configs.Resources{
+				AllowAllDevices: true,
+			},
 		},
 	}
 

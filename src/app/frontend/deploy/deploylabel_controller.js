@@ -40,7 +40,6 @@ export default class DeployLabelController {
    */
   check(labelForm) {
     this.addIfNeeded_();
-    this.removeIfNeeded_();
     this.validateKey_(labelForm);
   }
 
@@ -89,19 +88,6 @@ export default class DeployLabelController {
   addNewLabel_() { this.labels.push(new DeployLabel()); }
 
   /**
-   * Removes label from labels list if label is empty and is not last label.
-   * @private
-   */
-  removeIfNeeded_() {
-    /** @type {!DeployLabel} */
-    let lastLabel = this.labels[this.labels.length - 1];
-
-    if (this.isEmpty_(this.label) && this.label !== lastLabel) {
-      this.deleteLabel();
-    }
-  }
-
-  /**
    * Validates label withing label form.
    * Current checks:
    *  - duplicated key
@@ -139,14 +125,6 @@ export default class DeployLabelController {
 
     return duplications > 1;
   }
-
-  /**
-   * Returns true if label key and value are empty, false otherwise.
-   * @param {!DeployLabel} label
-   * @return {boolean}
-   * @private
-   */
-  isEmpty_(label) { return label.key.length === 0 && label.value().length === 0; }
 
   /**
    * Returns true if label key and value are not empty, false otherwise.

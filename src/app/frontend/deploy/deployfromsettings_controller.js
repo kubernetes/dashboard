@@ -13,8 +13,11 @@
 // limitations under the License.
 
 import showNamespaceDialog from './createnamespace_dialog';
+import showCreateSecretDialog from './createsecret_dialog';
 import DeployLabel from './deploylabel';
-import {stateName as replicasetliststate} from 'replicasetlist/replicasetlist_state';
+import {
+  stateName as replicationcontrollerliststate,
+} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 import {uniqueNameValidationKey} from './uniquename_directive';
 
 // Label keys for predefined labels
@@ -56,6 +59,9 @@ export default class DeployFromSettingsController {
     this.containerImage = '';
 
     /** @export {string} */
+    this.imagePullSecret = '';
+
+    /** @export {string} */
     this.containerCommand = '';
 
     /** @export {string} */
@@ -68,14 +74,22 @@ export default class DeployFromSettingsController {
     this.description = '';
 
     /**
-     * List of supported protocols.
-     * TODO(bryk): Do not hardcode the here, move to backend.
-     * @const @export {!Array<string>}
+     * Initialized from the scope.
+     * @export {!Array<string>}
      */
-    this.protocols = ['TCP', 'UDP'];
+    this.protocols;
 
-    /** @export {!Array<!backendApi.PortMapping>} */
-    this.portMappings = [this.newEmptyPortMapping_(this.protocols[0])];
+    /**
+     * Initialized from the template.
+     * @export {!Array<!backendApi.PortMapping>}
+     */
+    this.portMappings;
+
+    /**
+     * Initialized from the template.
+     * @export {!Array<!backendApi.EnvironmentVariable>}
+     */
+    this.variables;
 
     /** @export {boolean} */
     this.isExternal = false;
@@ -96,9 +110,30 @@ export default class DeployFromSettingsController {
     this.namespaces;
 
     /**
+     * List of available secrets.
+     * It is updated every time the user clicks on the imagePullSecret field.
+     * @export {!Array<string>}
+     */
+    this.secrets = [];
+
+    /**
      * @export {string}
      */
     this.name = '';
+
+    /**
+     * Checks that a name begins and ends with a lowercase letter
+     * and contains nothing but lowercase letters and hyphens ("-")
+     * (leading and trailing spaces are ignored by default)
+     * @export {!RegExp}
+     */
+    this.namePattern = new RegExp('^[a-z0-9]([-a-z0-9]*[a-z0-9])?$');
+
+    /**
+     * Maximum length for Application name
+     * @export {string}
+     */
+    this.nameMaxLength = '63';
 
     /**
      * Whether to run the container as privileged user.
@@ -111,6 +146,16 @@ export default class DeployFromSettingsController {
      * @export {string}
      */
     this.namespace = this.namespaces[0];
+
+    /**
+     * @export {?number}
+     */
+    this.cpuRequirement = null;
+
+    /**
+     * @type {?number}
+     */
+    this.memoryRequirement = null;
 
     /** @private {!angular.$q} */
     this.q_ = $q;
@@ -131,7 +176,7 @@ export default class DeployFromSettingsController {
   /**
    * Deploys the application based on the state of the controller.
    *
-   * @return {angular.$q.Promise}
+   * @return {!angular.$q.Promise}
    * @export
    */
   deploy() {
@@ -139,14 +184,19 @@ export default class DeployFromSettingsController {
     /** @type {!backendApi.AppDeploymentSpec} */
     let appDeploymentSpec = {
       containerImage: this.containerImage,
+      imagePullSecret: this.imagePullSecret ? this.imagePullSecret : null,
       containerCommand: this.containerCommand ? this.containerCommand : null,
       containerCommandArgs: this.containerCommandArgs ? this.containerCommandArgs : null,
       isExternal: this.isExternal,
       name: this.name,
       description: this.description ? this.description : null,
-      portMappings: this.portMappings.filter(this.isPortMappingEmpty_),
+      portMappings: this.portMappings.filter(this.isPortMappingFilled_),
+      variables: this.variables.filter(this.isVariableFilled_),
       replicas: this.replicas,
       namespace: this.namespace,
+      cpuRequirement: angular.isNumber(this.cpuRequirement) ? this.cpuRequirement : null,
+      memoryRequirement: angular.isNumber(this.memoryRequirement) ? `${this.memoryRequirement}Mi` :
+                                                                    null,
       labels: this.toBackendApiLabels_(this.labels),
       runAsPrivileged: this.runAsPrivileged,
     };
@@ -154,13 +204,13 @@ export default class DeployFromSettingsController {
     let defer = this.q_.defer();
 
     /** @type {!angular.Resource<!backendApi.AppDeploymentSpec>} */
-    let resource = this.resource_('/api/appdeployments');
+    let resource = this.resource_('api/v1/appdeployments');
     resource.save(
         appDeploymentSpec,
         (savedConfig) => {
           defer.resolve(savedConfig);  // Progress ends
           this.log_.info('Successfully deployed application: ', savedConfig);
-          this.state_.go(replicasetliststate);
+          this.state_.go(replicationcontrollerliststate);
         },
         (err) => {
           defer.reject(err);  // Progress ends
@@ -196,6 +246,51 @@ export default class DeployFromSettingsController {
   }
 
   /**
+   * Displays new secret creation dialog.
+   *
+   * @param {!angular.Scope.Event} event
+   * @export
+   */
+  handleCreateSecretDialog(event) {
+    showCreateSecretDialog(this.mdDialog_, event, this.namespace)
+        .then(
+            /**
+             * Handles create secret dialog result. If the secret was created successfully, then it
+             * will be selected,
+             * otherwise None is selected.
+             * @param {string|undefined} response
+             */
+            (response) => {
+              if (response) {
+                this.imagePullSecret = response;
+                this.secrets = this.secrets.concat(this.imagePullSecret);
+              } else {
+                this.imagePullSecret = '';
+              }
+            },
+            () => { this.imagePullSecret = ''; });
+  }
+
+  /**
+   * Queries all secrets for the given namespace.
+   * @param {string} namespace
+   * @export
+   */
+  getSecrets(namespace) {
+    /** @type {!angular.Resource<!backendApi.SecretsList>} */
+    let resource = this.resource_(`api/v1/secrets/${namespace}`);
+    resource.get(
+        (res) => { this.secrets = res.secrets; },
+        (err) => { this.log_.log(`Error getting secrets: ${err}`); });
+  }
+
+  /**
+   * Resets the currently selected image pull secret.
+   * @export
+   */
+  resetImagePullSecret() { this.imagePullSecret = ''; }
+
+  /**
    * Returns true when name input should show error. This overrides default behavior to show name
    * uniqueness errors even in the middle of typing.
    * @return {boolean}
@@ -206,7 +301,7 @@ export default class DeployFromSettingsController {
     let name = this.form['name'];
 
     return name.$error[uniqueNameValidationKey] ||
-           (name.$invalid && (name.$touched || this.form.$submitted));
+        (name.$invalid && (name.$touched || this.form.$submitted));
   }
 
   /**
@@ -226,21 +321,20 @@ export default class DeployFromSettingsController {
   }
 
   /**
-   * @param {string} defaultProtocol
-   * @return {!backendApi.PortMapping}
-   * @private
-   */
-  newEmptyPortMapping_(defaultProtocol) {
-    return {port: null, targetPort: null, protocol: defaultProtocol};
-  }
-
-  /**
-   * Returns true when the given port mapping hasn't been filled by the user, i.e., is empty.
+   * Returns true when the given port mapping is filled by the user, i.e., is not empty.
    * @param {!backendApi.PortMapping} portMapping
    * @return {boolean}
    * @private
    */
-  isPortMappingEmpty_(portMapping) { return !!portMapping.port && !!portMapping.targetPort; }
+  isPortMappingFilled_(portMapping) { return !!portMapping.port && !!portMapping.targetPort; }
+
+  /**
+   * Returns true when the given environment variable is filled by the user, i.e., is not empty.
+   * @param {!backendApi.EnvironmentVariable} variable
+   * @return {boolean}
+   * @private
+   */
+  isVariableFilled_(variable) { return !!variable.name; }
 
   /**
    * Callbacks used in DeployLabel model to make it aware of controller state changes.

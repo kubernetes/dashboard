@@ -23,13 +23,13 @@ describe('DeployLabel controller', () => {
     ctrl = new DeployLabelController();
 
     angular.mock.inject(($rootScope, $compile) => {
-      let $scope = $rootScope.$new();
+      let scope = $rootScope.$new();
       let template = angular.element(
           '<ng-form name="labelForm"><input name="key"' +
           ' ng-model="label"></ng-form>');
 
-      $compile(template)($scope);
-      labelForm = $scope.labelForm;
+      $compile(template)(scope);
+      labelForm = scope.labelForm;
     });
   });
 
@@ -120,21 +120,6 @@ describe('DeployLabel controller', () => {
 
     // then
     expect(ctrl.labels.length).toEqual(2);
-  });
-
-  it('should remove label with empty key and value when not last', () => {
-    // given
-    ctrl.label = new DeployLabel();
-    ctrl.labels = [
-      ctrl.label,
-      new DeployLabel(),
-    ];
-
-    // when
-    ctrl.check();
-
-    // then
-    expect(ctrl.labels.length).toEqual(1);
   });
 
   it('should set validity to false when duplicated key is found', () => {

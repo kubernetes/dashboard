@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div layout="column" layout-padding layout-align="center center">
-  <md-whiteframe class="kd-deploy-whiteframe md-whiteframe-5dp" flex flex-gt-md>
-    <h3 class="md-headline">Deploy a Containerized App</h3>
+<div layout="column" layout-padding layout-align="center center" flex="auto" >
+  <md-whiteframe class="kd-deploy-whiteframe md-whiteframe-5dp" flex="auto">
+    <h3 class="md-headline kd-deploy-form-title">Deploy a Containerized App</h3>
 
     <form name="ctrl.deployForm" ng-submit="ctrl.deployBySelection()" novalidate>
       <kd-help-section>
@@ -31,10 +31,11 @@ limitations under the License.
       </kd-help-section>
 
       <div ng-switch="ctrl.selection">
-        <deploy-from-settings ng-switch-when="Settings" name="ctrl.name"
-            namespaces="ctrl.namespaces" detail="ctrl.detail" form="ctrl.deployForm">
+        <deploy-from-settings ng-switch-when="Settings" class="md-body-1" name="ctrl.name"
+            namespaces="ctrl.namespaces" detail="ctrl.detail" form="ctrl.deployForm" protocols="ctrl.protocols">
         </deploy-from-settings>
-        <deploy-from-file ng-switch-when="File" name="ctrl.name" detail="ctrl.detail">
+        <deploy-from-file ng-switch-when="File" class="md-body-1" name="ctrl.name" detail="ctrl.detail"
+            form="ctrl.deployForm">
         </deploy-from-file>
       </div>
 

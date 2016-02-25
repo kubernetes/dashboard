@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-content class="kd-labels-content">
-  <div class="kd-labels" ng-repeat="(key, value) in ::labelsCtrl.labels">
-    {{key}}={{value}}
-  </div>
-</md-content>
+<div flex="95" class="kd-labels" ng-repeat="(key, value) in ::labelsCtrl.labels">
+  <kd-middle-ellipsis display-string="{{::key}}: {{::value}}">
+  </kd-middle-ellipsis>
+</div>

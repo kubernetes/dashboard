@@ -15,7 +15,9 @@
 import DeployController from 'deploy/deploy_controller';
 import DeployFromSettingController from 'deploy/deployfromsettings_controller';
 import deployModule from 'deploy/deploy_module';
-import {stateName as replicasets} from 'replicasetlist/replicasetlist_state';
+import {
+  stateName as replicationcontrollers,
+} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 
 describe('Deploy controller', () => {
   /** @type {!DeployController} */
@@ -31,9 +33,11 @@ describe('Deploy controller', () => {
     angular.mock.inject(($controller, $state, $q) => {
       state = $state;
       settingsCtrl = $controller(
-          DeployFromSettingController, {}, {namespaces: [], deploy: () => $q.defer().promise});
+          DeployFromSettingController, {},
+          {namespaces: [], protocols: [], secrets: [], deploy: () => $q.defer().promise});
       ctrl = $controller(
-          DeployController, {namespaces: []}, {detail: settingsCtrl, deployForm: {$valid: true}});
+          DeployController, {namespaces: [], protocols: []},
+          {detail: settingsCtrl, deployForm: {$valid: true}});
     });
   });
 
@@ -54,7 +58,7 @@ describe('Deploy controller', () => {
     expect(result).toBe(false);
   });
 
-  it('should change state to replica set list view on cancel', () => {
+  it('should change state to replication controller list view on cancel', () => {
     // given
     spyOn(state, 'go');
 
@@ -62,6 +66,6 @@ describe('Deploy controller', () => {
     ctrl.cancel();
 
     // then
-    expect(state.go).toHaveBeenCalledWith(replicasets);
+    expect(state.go).toHaveBeenCalledWith(replicationcontrollers);
   });
 });

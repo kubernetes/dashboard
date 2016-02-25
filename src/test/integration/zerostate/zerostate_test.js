@@ -15,10 +15,11 @@
 import PageObject from './zerostate_po';
 
 describe('Zero state view', () => {
+  /** @type {!PageObject} */
   let page;
 
   beforeEach(() => {
-    browser.get('#/zerostate');
+    browser.get('#/replicationcontrollers/zerostate');
     page = new PageObject();
   });
 

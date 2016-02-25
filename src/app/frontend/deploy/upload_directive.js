@@ -25,6 +25,7 @@ export default function uploadDirective() {
     scope: {},
     bindToController: {
       'file': '=',
+      'form': '=',
     },
     controller: UploadController,
     controllerAs: 'ctrl',
