@@ -106,7 +106,8 @@ export default class NodeCardController {
   * @export
   */
   getFormattedLabels() {
-    return Object.keys(this.node.labels)
-        .map((key) => { return `${key}: ${this.node.labels[key]}`; });
+    return Object.keys(this.node.labels).map((key) => {
+      return `${key}: ${this.node.labels[key]}`;
+    });
   }
 }
