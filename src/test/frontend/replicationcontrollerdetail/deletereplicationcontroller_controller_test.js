@@ -54,6 +54,7 @@ describe('Delete replication controller dialog controller', () => {
   it('should delete without services', () => {
     // given
     spyOn(mdDialog, 'hide');
+    ctrl.deleteServices = false;
 
     // when
     httpBackend
@@ -69,7 +70,6 @@ describe('Delete replication controller dialog controller', () => {
   it('should delete with services', () => {
     // given
     spyOn(mdDialog, 'hide');
-    ctrl.deleteServices = true;
 
     // when
     httpBackend
@@ -88,7 +88,7 @@ describe('Delete replication controller dialog controller', () => {
 
     // when
     httpBackend
-        .whenDELETE('api/v1/replicationcontrollers/foo-namespace/foo-name?deleteServices=false')
+        .whenDELETE('api/v1/replicationcontrollers/foo-namespace/foo-name?deleteServices=true')
         .respond(503, {});
     ctrl.remove();
     httpBackend.flush();
