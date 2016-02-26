@@ -32,9 +32,9 @@ type Node struct {
 // Returns a list of all Nodes in the cluster.
 func GetNodeList(client *client.Client) (*NodeList, error) {
 	nodes, err := client.Nodes().List(
-		unversioned.ListOptions{
-			LabelSelector: unversioned.LabelSelector{labels.Everything()},
-			FieldSelector: unversioned.FieldSelector{fields.Everything()},
+		api.ListOptions{
+			LabelSelector: labels.Everything(),
+			FieldSelector: fields.Everything(),
 		})
 
 	if err != nil {
