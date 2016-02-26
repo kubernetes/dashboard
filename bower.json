@@ -10,7 +10,7 @@
     "angular-messages": "~1.5.0",
     "angular-ui-router": "~0.2.15",
     "angular-resource": "~1.5.0",
-    "angular-sanitize": "~1.5.0"
+    "angular-sanitize": "~1.5.0",
     "angular-chart.js": "~0.8.8"
   },
   "devDependencies": {
