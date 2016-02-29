@@ -51,4 +51,11 @@ md-toolbar {
       }
     }
   }
+
+  // Fixes pickers placement issue on Internet Explorer.
+  .md-select-value {
+    .kd-logs-toolbar-text {
+      -ms-transform: translateY(-1px);
+    }
+  }
 }
