@@ -12,20 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import PageObject from './zerostate_po';
+export default class DeployPageObject {
+  constructor() {
+    this.deployButtonQuery = by.buttonText('Deploy');
+    this.deployButton = element(this.deployButtonQuery);
 
-describe('Zero state view', () => {
-  /** @type {!PageObject} */
-  let page;
+    this.appNameFieldQuery = by.model('ctrl.name');
+    this.appNameField = element(this.appNameFieldQuery);
 
-  beforeEach(() => {
-    /**
-     * This will be valid when cluster is empty as zerostate is child of
-     * replicationcontrollers state and is shown only where there are no RCs to display.
-     */
-    browser.get('#/replicationcontrollers');
-    page = new PageObject();
-  });
-
-  it('should do something', () => { expect(page.deployButton.getText()).toContain('DEPLOY'); });
-});
+    this.containerImageFieldQuery = by.model('ctrl.containerImage');
+    this.containerImageField = element(this.containerImageFieldQuery);
+  }
+}
