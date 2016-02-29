@@ -21,9 +21,14 @@ import (
 	"strings"
 )
 
-// Partial string to correctly filter warning events.
-// Has to be lower case for correct case insensitive comparison.
-const FailedReasonPartial = "failed"
+// Partial strings to correctly filter warning events.
+// Have to be lower case for correct case insensitive comparison.
+// Based on k8s official events reason file:
+// https://github.com/kubernetes/kubernetes/blob/53f0f9d59860131c2be301a0054adfc86e43945d/pkg/kubelet/container/event.go
+// Partial strings that are not in event.go file are added in order to support
+// older versions of k8s which contained additional event reason messages.
+var FailedReasonPartials = []string{"failed", "err", "exceeded", "invalid", "unhealthy",
+	"mismatch", "insufficient", "conflict", "outof", "nil"}
 
 // Returns warning pod events based on given list of pods.
 // TODO(floreks) : Import and use Set instead of custom function to get rid of duplicates
@@ -100,10 +105,22 @@ func isTypeFilled(events []api.Event) bool {
 	return true
 }
 
+// Returns true if reason string contains any partial string indicating that this may be a
+// warning, false otherwise
+func isFailedReason(reason string, partials ...string) bool {
+	for _, partial := range partials {
+		if strings.Contains(strings.ToLower(reason), partial) {
+			return true
+		}
+	}
+
+	return false
+}
+
 // Based on event Reason fills event Type in order to allow correct filtering by Type.
 func fillEventsType(events []api.Event) []api.Event {
 	for i, _ := range events {
-		if strings.Contains(strings.ToLower(events[i].Reason), FailedReasonPartial) {
+		if isFailedReason(events[i].Reason, FailedReasonPartials...) {
 			events[i].Type = api.EventTypeWarning
 		} else {
 			events[i].Type = api.EventTypeNormal
