@@ -50,7 +50,11 @@ rules:
   no-transition-all: 2
   # Disabled because the project includes external fonts.
   no-url-protocols: 0
-  no-vendor-prefixes: 2
+  # Excluded Internet Explorer prefix (ms), because some of bug fixes require it.
+  no-vendor-prefixes:
+      - 2
+      - additional-identifiers: []
+        excluded-identifiers: [ms]
   no-warn: 2
   property-units: 2
 

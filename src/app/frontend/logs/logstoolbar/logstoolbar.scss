@@ -51,4 +51,12 @@ md-toolbar {
       }
     }
   }
+
+  // Fixes pickers placement issue on Internet Explorer. It's caused by Angular Material
+  // stylesheets, which apply 'transform: translate3d(0, 2px, 0)' on 'md-select-value' elements.
+  .md-select-value {
+    .kd-logs-toolbar-text {
+      -ms-transform: translateY(-1px);
+    }
+  }
 }
