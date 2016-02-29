@@ -40,6 +40,7 @@ export default function replicationControllerListContainerDirective($mdMedia) {
       let nonNullContainer = container;
       scope.$watch(() => computeContainerHeight(nonNullContainer, $mdMedia), (newHeight) => {
         container.style.height = `${newHeight}px`;
+        container.style.minHeight = `${newHeight + 1}px`;
       });
     },
     templateUrl: 'replicationcontrollerlist/replicationcontrollerlistcontainer.html',
