@@ -27,28 +27,31 @@ func TestGetLogs(t *testing.T) {
 		podId     string
 		sinceTime unversioned.Time
 		rawLogs   string
+		container string
 		expected  *Logs
 	}{
-		{"", unversioned.Time{}, "",
+		{"", unversioned.Time{}, "", "",
 			&Logs{
 				PodId:     "",
 				SinceTime: unversioned.Time{},
 				Logs:      []string{""},
+				Container: "",
 			},
 		},
-		{"pod-1", unversioned.Time{}, "log1\nlog2\nlog3",
+		{"pod-1", unversioned.Time{}, "log1\nlog2\nlog3", "test",
 			&Logs{
 				PodId:     "pod-1",
 				SinceTime: unversioned.Time{},
 				Logs:      []string{"log1", "log2", "log3"},
+				Container: "test",
 			},
 		},
 	}
 	for _, c := range cases {
-		actual := constructLogs(c.podId, c.sinceTime, c.rawLogs)
+		actual := constructLogs(c.podId, c.sinceTime, c.rawLogs, c.container)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("constructLogs(%+v, %+v, %+v) == %#v, expected %#v",
-				c.podId, c.sinceTime, c.rawLogs, actual, c.expected)
+			t.Errorf("constructLogs(%+v, %+v, %+v, %+v) == %#v, expected %#v",
+				c.podId, c.sinceTime, c.rawLogs, c.container, actual, c.expected)
 		}
 	}
 }

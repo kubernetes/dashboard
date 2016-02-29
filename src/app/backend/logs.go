@@ -19,7 +19,7 @@ import (
 	"log"
 	"strings"
 
-	api "k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
@@ -41,8 +41,8 @@ type Logs struct {
 
 // Return logs for particular pod and container or error when occurred. When container is null,
 // logs for the first one are returned.
-func GetPodLogs(client *client.Client, namespace, podId string, container *string) (*Logs, error) {
-	log.Printf("Getting logs from %v container from %s pod in %s namespace", container, podId,
+func GetPodLogs(client *client.Client, namespace, podId string, container string) (*Logs, error) {
+	log.Printf("Getting logs from %s container from %s pod in %s namespace", container, podId,
 		namespace)
 
 	pod, err := client.Pods(namespace).Get(podId)
@@ -50,12 +50,12 @@ func GetPodLogs(client *client.Client, namespace, podId string, container *strin
 		return nil, err
 	}
 
-	if container == nil {
-		container = &pod.Spec.Containers[0].Name
+	if len(container) == 0 {
+		container = pod.Spec.Containers[0].Name
 	}
 
 	logOptions := &api.PodLogOptions{
-		Container:  *container,
+		Container:  container,
 		Follow:     false,
 		Previous:   false,
 		Timestamps: true,
@@ -66,7 +66,7 @@ func GetPodLogs(client *client.Client, namespace, podId string, container *strin
 		return nil, err
 	}
 
-	return constructLogs(podId, pod.CreationTimestamp, rawLogs), nil
+	return constructLogs(podId, pod.CreationTimestamp, rawLogs, container), nil
 }
 
 // Construct a request for getting the logs for a pod and retrieves the logs.
@@ -95,11 +95,12 @@ func getRawPodLogs(client *client.Client, namespace, podID string, logOptions *a
 }
 
 // Return Logs structure for given parameters.
-func constructLogs(podId string, sinceTime unversioned.Time, rawLogs string) *Logs {
+func constructLogs(podId string, sinceTime unversioned.Time, rawLogs string, container string) *Logs {
 	logs := &Logs{
 		PodId:     podId,
 		SinceTime: sinceTime,
 		Logs:      strings.Split(rawLogs, "\n"),
+		Container: container,
 	}
 	return logs
 }
