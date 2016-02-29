@@ -413,11 +413,8 @@ func (apiHandler *ApiHandler) handleLogs(request *restful.Request, response *res
 	namespace := request.PathParameter("namespace")
 	podId := request.PathParameter("podId")
 	container := request.PathParameter("container")
-	var containerPtr *string = nil
-	if len(container) > 0 {
-		containerPtr = &container
-	}
-	result, err := GetPodLogs(apiHandler.client, namespace, podId, containerPtr)
+
+	result, err := GetPodLogs(apiHandler.client, namespace, podId, container)
 	if err != nil {
 		handleInternalError(response, err)
 		return
