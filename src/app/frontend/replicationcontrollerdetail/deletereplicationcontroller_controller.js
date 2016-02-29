@@ -36,7 +36,7 @@ export default class DeleteReplicationControllerDialogController {
     this.namespace = namespace;
 
     /** @export {boolean} */
-    this.deleteServices = false;
+    this.deleteServices = true;
 
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
