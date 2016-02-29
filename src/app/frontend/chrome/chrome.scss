@@ -115,20 +115,29 @@ a {
 
     // Row data style.
     td {
-      border-bottom: 1px solid $border;
-      display: block;
+      align-items: center;
+      display: flex;
       height: auto;
-      line-height: $table-cell-height;
-      padding-left: 50%;
+      min-height: $table-cell-height - 2 * $baseline-grid;
+      padding: $baseline-grid $baseline-grid $baseline-grid 50%;
       position: relative;
+
+      // Adds border between rows.
+      &:not(:last-child) {
+        border-bottom: 1px solid $border;
+      }
 
       // Row title style.
       &::before {
+        align-items: center;
+        bottom: 0;
         content: attr(kd-responsive-header);
+        display: flex;
         font-weight: $bold-font-weight;
         left: $baseline-grid * 2;
         padding-right: $baseline-grid * 2;
         position: absolute;
+        top: 0;
         word-wrap: break-word;
       }
     }
