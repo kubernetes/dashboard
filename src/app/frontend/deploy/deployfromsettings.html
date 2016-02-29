@@ -26,9 +26,10 @@ limitations under the License.
           <ng-message when="required">Application name is required.</ng-message>
           <ng-message when="uniqueName">Application with this name
             already exists within namespace <i>{{ctrl.namespace}}</i>.</ng-message>
-          <ng-message when="pattern">Application name should contain only lowercase letters, numbers, and '-' between words
+          <ng-message when="pattern">Application name should start with a lowercase letter
+            , and contain only lowercase letters, numbers, and '-' between words
           </ng-message>
-          <ng-message when="maxlength">Application name should have no more than 63 characters</ng-message>
+          <ng-message when="maxlength">Application name should have no more than 24 characters</ng-message>
         </ng-messages>
 
         <md-progress-linear class="kd-deploy-form-progress" md-mode="indeterminate" ng-show="ctrl.form.name.$pending">
