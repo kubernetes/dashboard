@@ -9,9 +9,7 @@ itself.
 
 The Dashboard is currently under active development and is not ready for production use (yet!). To run the latest _unstable_ version execute the following command:
 
-```
-kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard-canary.yaml
-```
+`kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard-canary.yaml`
 
 ## Documentation
 
