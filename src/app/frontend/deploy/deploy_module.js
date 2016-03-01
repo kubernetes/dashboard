@@ -22,6 +22,7 @@ import portMappingsDirective from './portmappings_directive';
 import environmentVariablesDirective from './environmentvariables_directive';
 import uploadDirective from './upload_directive';
 import uniqueNameDirective from './uniquename_directive';
+import validImageReferenceDirective from './validimagereference_directive';
 import validProtocolDirective from './validprotocol_directive';
 import helpSectionModule from './helpsection/helpsection_module';
 
@@ -44,6 +45,7 @@ export default angular
     .directive('deployFromSettings', deployFromSettingsDirective)
     .directive('deployFromFile', deployFromFileDirective)
     .directive('kdUniqueName', uniqueNameDirective)
+    .directive('kdValidImagereference', validImageReferenceDirective)
     .directive('kdValidProtocol', validProtocolDirective)
     .directive('kdFileReader', fileReaderDirective)
     .directive('kdUpload', uploadDirective)
