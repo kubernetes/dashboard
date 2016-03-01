@@ -15,15 +15,15 @@ limitations under the License.
 -->
 
 <div flex="nogrow" class="kd-replicationcontrollerinfo-item">
-  <md-button class="md-primary" ng-click="infoCtrl.handleDeleteReplicationControllerDialog()">
-    <md-icon class="material-icons">delete</md-icon>
-    DELETE REPLICATION CONTROLLER
-  </md-button>
 </div>
 <div flex="auto" layout="column" class="kd-replicationcontrollerinfo-item">
   <div flex="auto" layout="column" class="kd-replicationcontrollerinfo-info">
     <span class="kd-replicationcontrollerinfo-title">
-      Replication controller
+      <span>Replication controller</span>
+      <md-button class="md-primary" ng-click="infoCtrl.handleDeleteReplicationControllerDialog()">
+        <md-icon class="material-icons">delete</md-icon>
+        Delete
+      </md-button>
     </span>
     <span class="kd-replicationcontrollerinfo-line">Name</span>
     <span class="kd-replicationcontrollerinfo-subline">

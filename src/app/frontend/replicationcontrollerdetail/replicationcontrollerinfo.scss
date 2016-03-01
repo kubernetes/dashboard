@@ -22,8 +22,7 @@
 .kd-replicationcontrollerinfo-title {
   font-size: $subhead-font-size-base;
   font-weight: $bold-font-weight;
-  padding-bottom: $baseline-grid;
-  padding-top: $baseline-grid;
+  line-height: $button-height;
 }
 
 .kd-replicationcontrollerinfo-line {
