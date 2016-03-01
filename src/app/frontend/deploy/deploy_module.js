@@ -24,6 +24,7 @@ import uploadDirective from './upload_directive';
 import uniqueNameDirective from './uniquename_directive';
 import validProtocolDirective from './validprotocol_directive';
 import helpSectionModule from './helpsection/helpsection_module';
+import validatorsModule from '../common/validators/validators_module';
 
 /**
  * Angular module for the deploy view.
@@ -39,6 +40,7 @@ export default angular
           'ui.router',
           helpSectionModule.name,
           errorHandlingModule.name,
+          validatorsModule.name,
         ])
     .config(stateConfig)
     .directive('deployFromSettings', deployFromSettingsDirective)
