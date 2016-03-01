@@ -15,21 +15,27 @@ limitations under the License.
 -->
 
 <div flex="nogrow" class="kd-replicationcontrollerinfo-item">
-  <md-button class="md-primary" ng-click="infoCtrl.handleDeleteReplicationControllerDialog()">
-    <md-icon class="material-icons">delete</md-icon>
-    DELETE REPLICATION CONTROLLER
-  </md-button>
 </div>
 <div flex="auto" layout="column" class="kd-replicationcontrollerinfo-item">
   <div flex="auto" layout="column" class="kd-replicationcontrollerinfo-info">
     <span class="kd-replicationcontrollerinfo-title">
-      Replication controller
+      <span>Replication controller</span>
     </span>
-    <span class="kd-replicationcontrollerinfo-line">Name</span>
-    <span class="kd-replicationcontrollerinfo-subline">
-      <kd-middle-ellipsis display-string="{{::infoCtrl.details.name}}">
-      </kd-middle-ellipsis>
-    </span>
+    <div layout="row">
+      <div flex="nogrow">
+        <span class="kd-replicationcontrollerinfo-line">Name</span>
+        <span class="kd-replicationcontrollerinfo-subline">
+          <kd-middle-ellipsis display-string="{{::infoCtrl.details.name}}">
+          </kd-middle-ellipsis>
+        </span>
+      </div>
+      <div flex="nogrow">
+        <md-button class="md-primary md-icon-button"
+            ng-click="infoCtrl.handleDeleteReplicationControllerDialog()">
+          <md-icon class="material-icons">delete</md-icon>
+        </md-button>
+      </div>
+    </div>
     <span class="kd-replicationcontrollerinfo-line">Namespace</span>
     <span class="kd-replicationcontrollerinfo-subline">
       {{::infoCtrl.details.namespace}}
