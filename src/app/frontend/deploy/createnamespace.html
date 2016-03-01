@@ -28,13 +28,17 @@ limitations under the License.
             ng-pattern="ctrl.namespacePattern"
             required>
         <div ng-messages="ctrl.namespaceForm.namespace.$error">
-            <div ng-message="pattern">Name must be alphanumeric and may contain dashes</div>
-            <div ng-message="md-maxlength">Name is too long</div>
-            <div ng-message="required">Name is required</div>
+            <div ng-message="pattern">Name must be alphanumeric and may contain dashes.</div>
+            <div ng-message="maxlength">
+              Name must be up to {{ctrl.namespaceMaxLength}} characters long.
+            </div>
+            <div ng-message="required">Name is required.</div>
         </div>
       </md-input-container>
       <md-dialog-actions layout="row">
-        <md-button ng-disabled="ctrl.isDisabled()" class="md-primary" type="submit">OK</md-button>
+        <md-button ng-disabled="ctrl.isDisabled()" class="md-primary" type="submit">
+          Create
+        </md-button>
         <md-button ng-click="ctrl.cancel()">Cancel</md-button>
       </md-dialog-actions>
     </form>

@@ -18,21 +18,28 @@ limitations under the License.
   <md-input-container class="md-block" md-is-error="ctrl.isNameError()">
     <label>App name</label>
     <div class="kd-deploy-form-name-container">
-      <input ng-model="ctrl.name" name="name" namespace="ctrl.namespace" required ng-pattern="ctrl.namePattern"
-             ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" kd-unique-name
-             ng-maxlength="ctrl.nameMaxLength">
+      <input ng-model="ctrl.name" name="name" namespace="ctrl.namespace" required
+             ng-pattern="ctrl.namePattern"
+             ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }"
+             kd-unique-name md-maxlength="{{ctrl.nameMaxLength}}">
       <div class="kd-deploy-form-name-validation-container">
         <ng-messages for="ctrl.form.name.$error" role="alert" multiple>
           <ng-message when="required">Application name is required.</ng-message>
-          <ng-message when="uniqueName">Application with this name
-            already exists within namespace <i>{{ctrl.namespace}}</i>.</ng-message>
-          <ng-message when="pattern">Application name should start with a lowercase letter
-            , and contain only lowercase letters, numbers, and '-' between words
+          <ng-message when="uniqueName">
+            Application with this name
+            already exists within namespace <i>{{ctrl.namespace}}</i>.
           </ng-message>
-          <ng-message when="maxlength">Application name should have no more than 24 characters</ng-message>
+          <ng-message when="pattern">
+            Application name must start with a lowercase letter,
+            and contain only lowercase letters, numbers, and '-' between words.
+          </ng-message>
+          <ng-message when="maxlength">
+            Name must be up to {{ctrl.nameMaxLength}} characters long.
+          </ng-message>
         </ng-messages>
 
-        <md-progress-linear class="kd-deploy-form-progress" md-mode="indeterminate" ng-show="ctrl.form.name.$pending">
+        <md-progress-linear class="kd-deploy-form-progress" md-mode="indeterminate"
+            ng-show="ctrl.form.name.$pending">
         </md-progress-linear>
       </div>
     </div>
