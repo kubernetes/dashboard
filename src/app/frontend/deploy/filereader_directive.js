@@ -37,13 +37,13 @@ export default function fileReaderDirective($log) {
           return;
         }
         let reader = new FileReader();
-        reader.onload = () => {
+        reader.onload = (event) => {
           /** @type {!angular.NgModelController} */
           let ngModelController = ctrls[1];
-          ngModelController.$setViewValue({name: file.name, content: reader.result});
+          ngModelController.$setViewValue({name: file.name, content: event.target.result});
         };
         reader.onerror = (error) => $log.error('Error reading file:', error);
-        reader.readAsBinaryString(file);
+        reader.readAsText(file);
       });
     },
   };
