@@ -29,10 +29,10 @@ describe('Deploy and delete replication controller user story test', () => {
   let replicationControllersPage;
 
   /** @type {string} */
-  let applicationName = generateRandomString();
+  let applicationName = `nginx-${generateRandomString()}`;
 
   /** @type {string} */
-  let containerImage = "ngix";
+  let containerImage = "nginx";
 
   /** @type {string} */
   let applicationCardXPath = `//chrome/md-content//span[text() = '${applicationName}']`;
