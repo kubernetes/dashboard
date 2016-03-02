@@ -17,10 +17,7 @@
 .kd-deploy-whiteframe {
   background: $content-background;
   margin: $baseline-grid;
-  // TODO(bryk): Find a better, application wide constant for the min width.
-  max-width: 960px;
-  min-width: 600px;
-  width: 50%;
+  width: $layout-breakpoint-sm;
 }
 
 .kd-deploy-form-title {
