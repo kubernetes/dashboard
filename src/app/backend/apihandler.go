@@ -78,6 +78,11 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 			Reads(AppNameValiditySpec{}).
 			Writes(AppNameValidity{}))
 	deployWs.Route(
+		deployWs.POST("/validate/imagereference").
+			To(apiHandler.handleImageReferenceValidity).
+			Reads(ImageReferenceValiditySpec{}).
+			Writes(ImageReferenceValidity{}))
+	deployWs.Route(
 		deployWs.POST("/validate/protocol").
 			To(apiHandler.handleProtocolValidity).
 			Reads(ProtocolValiditySpec{}).
@@ -243,6 +248,22 @@ func (apiHandler *ApiHandler) handleNameValidity(request *restful.Request, respo
 		return
 	}
 
+	response.WriteHeaderAndEntity(http.StatusCreated, validity)
+}
+
+// Handles image reference validation API call.
+func (ApiHandler *ApiHandler) handleImageReferenceValidity(request *restful.Request, response *restful.Response){
+	spec := new(ImageReferenceValiditySpec)
+	if err := request.ReadEntity(spec); err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	
+	validity, err := ValidateImageReference(spec)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
 	response.WriteHeaderAndEntity(http.StatusCreated, validity)
 }
 

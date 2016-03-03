@@ -54,9 +54,10 @@ limitations under the License.
 <kd-help-section>
   <md-input-container class="md-block">
     <label>Container image</label>
-    <input ng-model="ctrl.containerImage" name="containerImage" required>
+    <input ng-model="ctrl.containerImage" name="containerImage" required kd-valid-imagereference >
     <ng-messages for="ctrl.form.containerImage.$error" role="alert" multiple>
       <ng-message when="required">Container image is required.</ng-message>
+      <ng-message when="validImageReference">Container image is invalid format.</ng-message>
     </ng-messages>
   </md-input-container>
   <kd-user-help>
