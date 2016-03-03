@@ -69,10 +69,10 @@ limitations under the License.
 <kd-help-section>
   <md-input-container class="md-block">
     <label>Number of pods</label>
-    <input ng-model="ctrl.replicas" type="number" required min="1" name="replicas">
+    <input ng-model="ctrl.replicas" type="number" required min="1" name="replicas" kd-validate="integer">
     <ng-messages for="ctrl.form.replicas.$error" role="alert" multiple>
       <ng-message when="required">Number of pods is required.</ng-message>
-      <ng-message when="number">Number of pods must be a positive integer.</ng-message>
+      <ng-message when="number, kdValid">Number of pods must be a positive integer.</ng-message>
       <ng-message when="min">Number of pods must be at least 1.</ng-message>
     </ng-messages>
   </md-input-container>
