@@ -16,6 +16,7 @@ package common
 
 import (
 	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api/unversioned"
 )
 
 func FilterNamespacedPodsBySelector(pods []api.Pod, namespace string,
@@ -24,7 +25,7 @@ func FilterNamespacedPodsBySelector(pods []api.Pod, namespace string,
 	var matchingPods []api.Pod
 	for _, pod := range pods {
 		if pod.ObjectMeta.Namespace == namespace &&
-			IsLabelSelectorMatching(resourceSelector, pod.Labels) {
+			IsSelectorMatching(resourceSelector, pod.Labels) {
 			matchingPods = append(matchingPods, pod)
 		}
 	}
@@ -37,7 +38,18 @@ func FilterPodsBySelector(pods []api.Pod, resourceSelector map[string]string) []
 
 	var matchingPods []api.Pod
 	for _, pod := range pods {
-		if IsLabelSelectorMatching(resourceSelector, pod.Labels) {
+		if IsSelectorMatching(resourceSelector, pod.Labels) {
+			matchingPods = append(matchingPods, pod)
+		}
+	}
+	return matchingPods
+}
+
+func FilterPodsByLabelSelector(pods []api.Pod, labelSelector *unversioned.LabelSelector) []api.Pod {
+
+	var matchingPods []api.Pod
+	for _, pod := range pods {
+		if IsLabelSelectorMatching(pod.Labels, labelSelector) {
 			matchingPods = append(matchingPods, pod)
 		}
 	}
