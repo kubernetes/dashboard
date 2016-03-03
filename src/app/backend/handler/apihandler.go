@@ -197,6 +197,27 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 			To(apiHandler.handleGetDeployments).
 			Writes(deployment.DeploymentList{}))
 	wsContainer.Add(deploymentsWs)
+	daemonSetWs := new(restful.WebService)
+	daemonSetWs.Filter(wsLogger)
+	daemonSetWs.Path("/api/v1/daemonsets").
+		Consumes(restful.MIME_JSON).
+		Produces(restful.MIME_JSON)
+	daemonSetWs.Route(
+		daemonSetWs.GET("").
+			To(apiHandler.handleGetDaemonSetList).
+			Writes(DaemonSetList{}))
+	daemonSetWs.Route(
+		daemonSetWs.GET("/{namespace}/{daemonSet}").
+			To(apiHandler.handleGetDaemonSetDetail).
+			Writes(DaemonSetDetail{}))
+	daemonSetWs.Route(
+		daemonSetWs.DELETE("/{namespace}/{daemonSet}").
+			To(apiHandler.handleDeleteDaemonSet))
+	daemonSetWs.Route(
+		daemonSetWs.GET("/pods/{namespace}/{daemonSet}").
+			To(apiHandler.handleGetDaemonSetPods).
+			Writes(DaemonSetPods{}))
+	wsContainer.Add(daemonSetWs)
 
 	namespacesWs := new(restful.WebService)
 	namespacesWs.Filter(wsLogger)
@@ -612,4 +633,73 @@ func handleInternalError(response *restful.Response, err error) {
 	log.Print(err)
 	response.AddHeader("Content-Type", "text/plain")
 	response.WriteErrorString(http.StatusInternalServerError, err.Error()+"\n")
+}
+
+// Handles get Daemon Set list API call.
+func (apiHandler *ApiHandler) handleGetDaemonSetList(
+	request *restful.Request, response *restful.Response) {
+
+	namespace := request.PathParameter("namespace")
+	result, err := GetDaemonSetList(apiHandler.client, namespace)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get Daemon Set detail API call.
+func (apiHandler *ApiHandler) handleGetDaemonSetDetail(
+	request *restful.Request, response *restful.Response) {
+
+	namespace := request.PathParameter("namespace")
+	daemonSet := request.PathParameter("daemonSet")
+	result, err := GetDaemonSetDetail(apiHandler.client, apiHandler.heapsterClient, namespace, daemonSet)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get Daemon Set Pods API call.
+func (apiHandler *ApiHandler) handleGetDaemonSetPods(
+	request *restful.Request, response *restful.Response) {
+
+	namespace := request.PathParameter("namespace")
+	daemonSet := request.PathParameter("daemonSet")
+	limit, err := strconv.Atoi(request.QueryParameter("limit"))
+	if err != nil {
+		limit = 0
+	}
+	result, err := GetDaemonSetPods(apiHandler.client, namespace, daemonSet, limit)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles delete Daemon Set API call.
+func (apiHandler *ApiHandler) handleDeleteDaemonSet(
+	request *restful.Request, response *restful.Response) {
+
+	namespace := request.PathParameter("namespace")
+	daemonSet := request.PathParameter("daemonSet")
+	deleteServices, err := strconv.ParseBool(request.QueryParameter("deleteServices"))
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	if err := DeleteDaemonSet(apiHandler.client, namespace,
+		daemonSet, deleteServices); err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeader(http.StatusOK)
 }
