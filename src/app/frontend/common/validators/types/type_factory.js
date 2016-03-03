@@ -23,9 +23,10 @@ export class TypeFactory {
    */
   constructor() {
     /** @private {Map<Array<string, !./type.Type>>} */
-    this.typeMap_ = new Map([
-      ['integer', new IntegerType()],
-    ]);
+    this.typeMap_ = new Map();
+
+    // Initialize map with supported types
+    this.typeMap_.set('integer', new IntegerType());
   }
 
   /**
