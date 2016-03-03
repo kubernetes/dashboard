@@ -1,0 +1,220 @@
+// Copyright 2015 Google Inc. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+package daemonset
+
+import (
+	"log"
+
+	"github.com/kubernetes/dashboard/client"
+	"github.com/kubernetes/dashboard/resource/common"
+	"github.com/kubernetes/dashboard/resource/pod"
+	"github.com/kubernetes/dashboard/resource/replicationcontroller"
+	resourceService "github.com/kubernetes/dashboard/resource/service"
+	"k8s.io/kubernetes/pkg/api"
+	unversioned "k8s.io/kubernetes/pkg/api/unversioned"
+	"k8s.io/kubernetes/pkg/apis/extensions"
+	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
+	"k8s.io/kubernetes/pkg/fields"
+	"k8s.io/kubernetes/pkg/labels"
+)
+
+// DaemonSeDetail represents detailed information about a Daemon Set.
+type DaemonSetDetail struct {
+	ObjectMeta common.ObjectMeta `json:"objectMeta"`
+	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+
+	// Label selector of the Daemon Set.
+	LabelSelector *unversioned.LabelSelector `json:"labelSelector,omitempty"`
+
+	// Container image list of the pod template specified by this Daemon Set.
+	ContainerImages []string `json:"containerImages"`
+
+	// Aggregate information about pods of this daemon set.
+	PodInfo common.PodInfo `json:"podInfo"`
+
+	// Detailed information about Pods belonging to this Daemon Set.
+	Pods pod.PodList `json:"pods"`
+
+	// Detailed information about service related to Daemon Set.
+	Services []resourceService.Service `json:"services"`
+
+	// True when the data contains at least one pod with metrics information, false otherwise.
+	HasMetrics bool `json:"hasMetrics"`
+}
+
+// Returns detailed information about the given daemon set in the given namespace.
+func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
+	namespace, name string) (*DaemonSetDetail, error) {
+	log.Printf("Getting details of %s daemon set in %s namespace", name, namespace)
+
+	daemonSetWithPods, err := getRawDaemonSetWithPods(client, namespace, name)
+	if err != nil {
+		return nil, err
+	}
+	daemonSet := daemonSetWithPods.DaemonSet
+	pods := daemonSetWithPods.Pods
+
+	services, err := client.Services(namespace).List(api.ListOptions{
+		LabelSelector: labels.Everything(),
+		FieldSelector: fields.Everything(),
+	})
+
+	nodes, err := client.Nodes().List(api.ListOptions{
+		LabelSelector: labels.Everything(),
+		FieldSelector: fields.Everything(),
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	daemonSetDetail := &DaemonSetDetail{
+		ObjectMeta:    common.CreateObjectMeta(daemonSet.ObjectMeta),
+		TypeMeta:      common.CreateTypeMeta(daemonSet.TypeMeta),
+		LabelSelector: daemonSet.Spec.Selector,
+		PodInfo:       getDaemonSetPodInfo(daemonSet, pods.Items),
+	}
+
+	matchingServices := getMatchingServicesforDS(services.Items, daemonSet)
+
+	for _, service := range matchingServices {
+		daemonSetDetail.Services = append(daemonSetDetail.Services,
+			getService(service, *daemonSet, pods.Items, nodes.Items))
+	}
+
+	for _, container := range daemonSet.Spec.Template.Spec.Containers {
+		daemonSetDetail.ContainerImages = append(daemonSetDetail.ContainerImages,
+			container.Image)
+	}
+
+	daemonSetDetail.Pods = pod.CreatePodList(pods.Items, heapsterClient)
+
+	return daemonSetDetail, nil
+}
+
+// TODO(floreks): This should be transactional to make sure that DS will not be deleted without pods
+// Deletes daemon set with given name in given namespace and related pods.
+// Also deletes services related to daemon set if deleteServices is true.
+func DeleteDaemonSet(client k8sClient.Interface, namespace, name string,
+	deleteServices bool) error {
+
+	log.Printf("Deleting %s daemon set from %s namespace", name, namespace)
+
+	if deleteServices {
+		if err := DeleteDaemonSetServices(client, namespace, name); err != nil {
+			return err
+		}
+	}
+
+	pods, err := getRawDaemonSetPods(client, namespace, name)
+	if err != nil {
+		return err
+	}
+
+	if err := client.Extensions().DaemonSets(namespace).Delete(name); err != nil {
+		return err
+	}
+
+	for _, pod := range pods.Items {
+		if err := client.Pods(namespace).Delete(pod.Name, &api.DeleteOptions{}); err != nil {
+			return err
+		}
+	}
+
+	log.Printf("Successfully deleted %s daemon set from %s namespace", name, namespace)
+
+	return nil
+}
+
+// Deletes services related to daemon set with given name in given namespace.
+func DeleteDaemonSetServices(client k8sClient.Interface, namespace, name string) error {
+	log.Printf("Deleting services related to %s daemon set from %s namespace", name,
+		namespace)
+
+	daemonSet, err := client.Extensions().DaemonSets(namespace).Get(name)
+	if err != nil {
+		return err
+	}
+
+	labelSelector, err := unversioned.LabelSelectorAsSelector(daemonSet.Spec.Selector)
+	if err != nil {
+		return err
+	}
+
+	services, err := getServicesForDSDeletion(client, labelSelector, namespace)
+	if err != nil {
+		return err
+	}
+
+	for _, service := range services {
+		if err := client.Services(namespace).Delete(service.Name); err != nil {
+			return err
+		}
+	}
+
+	log.Printf("Successfully deleted services related to %s daemon set from %s namespace",
+		name, namespace)
+
+	return nil
+}
+
+// Returns detailed information about service from given service
+func getService(service api.Service, daemonSet extensions.DaemonSet,
+	pods []api.Pod, nodes []api.Node) resourceService.Service {
+
+	result := resourceService.ToService(&service)
+	result.ExternalEndpoints = getExternalEndpoints(daemonSet, pods, service, nodes)
+
+	return result
+}
+
+// Returns array of external endpoints for a daemon set.
+func getExternalEndpoints(daemonSet extensions.DaemonSet, pods []api.Pod,
+	service api.Service, nodes []api.Node) []common.Endpoint {
+	var externalEndpoints []common.Endpoint
+	daemonSetPods := filterDaemonSetPods(daemonSet, pods)
+
+	if service.Spec.Type == api.ServiceTypeNodePort {
+		externalEndpoints = replicationcontroller.GetNodePortEndpoints(daemonSetPods, service, nodes)
+	} else if service.Spec.Type == api.ServiceTypeLoadBalancer {
+		for _, ingress := range service.Status.LoadBalancer.Ingress {
+			externalEndpoints = append(externalEndpoints, replicationcontroller.GetExternalEndpoint(ingress,
+				service.Spec.Ports))
+		}
+
+		if len(externalEndpoints) == 0 {
+			externalEndpoints = replicationcontroller.GetNodePortEndpoints(daemonSetPods, service, nodes)
+		}
+	}
+
+	if len(externalEndpoints) == 0 && (service.Spec.Type == api.ServiceTypeNodePort ||
+		service.Spec.Type == api.ServiceTypeLoadBalancer) {
+		externalEndpoints = replicationcontroller.GetLocalhostEndpoints(service)
+	}
+
+	return externalEndpoints
+}
+
+// Returns pods that belong to specified daemon set.
+func filterDaemonSetPods(daemonSet extensions.DaemonSet,
+	allPods []api.Pod) []api.Pod {
+	var pods []api.Pod
+	for _, pod := range allPods {
+		if common.IsLabelSelectorMatching(pod.Labels, daemonSet.Spec.Selector) {
+			pods = append(pods, pod)
+		}
+	}
+	return pods
+}
