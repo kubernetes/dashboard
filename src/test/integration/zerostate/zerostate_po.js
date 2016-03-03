@@ -17,4 +17,13 @@ export default class ZeroStatePageObject {
     this.deployButtonQuery = by.css('.kd-zerostate-deploy-bt');
     this.deployButton = element(this.deployButtonQuery);
   }
+
+  /**
+   * Helper method used to avoid flakiness of the tests which end with zero state page redirection
+   *
+   * @export
+   */
+  waitUntilZeroStatePageLoaded() {
+    browser.driver.wait(protractor.until.elementLocated(this.deployButtonQuery));
+  }
 }
