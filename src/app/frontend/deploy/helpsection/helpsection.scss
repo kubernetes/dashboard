@@ -17,8 +17,10 @@
 // This rule is meant to align items only in the current layout (kd-help-section).
 .kd-help-section > * {
   flex: 1;
+  flex-basis: auto;
   margin: $baseline-grid 0;
   padding-right: 4 * $baseline-grid;
+  width: 100%;
 
   &:last-child {
     padding-right: 0;
