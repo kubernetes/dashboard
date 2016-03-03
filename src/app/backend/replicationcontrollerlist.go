@@ -32,6 +32,11 @@ type GetNodeFunc func(nodeName string) (*api.Node, error)
 
 // ReplicationControllerList contains a list of Replication Controllers in the cluster.
 type ReplicationControllerList struct {
+	Namespaces []ReplicationControllerNamespace `json:"namespaces"`
+}
+
+type ReplicationControllerNamespace struct {
+	Name string `json:"name"`
 	// Unordered list of Replication Controllers.
 	ReplicationControllers []ReplicationController `json:"replicationControllers"`
 }
@@ -76,7 +81,8 @@ func GetReplicationControllerList(client *client.Client) (*ReplicationController
 		FieldSelector: fields.Everything(),
 	}
 
-	replicationControllers, err := client.ReplicationControllers(api.NamespaceAll).List(listEverything)
+	replicationControllers, err := client.ReplicationControllers(
+		api.NamespaceAll).List(listEverything)
 
 	if err != nil {
 		return nil, err
@@ -129,7 +135,7 @@ func getReplicationControllerList(replicationControllers []api.ReplicationContro
 	services []api.Service, pods []api.Pod, getPodsEventWarningsFn GetPodsEventWarningsFunc,
 	getNodeFn GetNodeFunc) (*ReplicationControllerList, error) {
 
-	replicationControllerList := &ReplicationControllerList{ReplicationControllers: make([]ReplicationController, 0)}
+	rcsByNamespace := make(map[string][]ReplicationController)
 
 	for _, replicationController := range replicationControllers {
 		var containerImages []string
@@ -163,18 +169,29 @@ func getReplicationControllerList(replicationControllers []api.ReplicationContro
 
 		podInfo.Warnings = podErrors
 
-		replicationControllerList.ReplicationControllers = append(replicationControllerList.ReplicationControllers,
-			ReplicationController{
-				Name:              replicationController.ObjectMeta.Name,
-				Namespace:         replicationController.ObjectMeta.Namespace,
-				Description:       replicationController.Annotations[DescriptionAnnotationKey],
-				Labels:            replicationController.ObjectMeta.Labels,
-				Pods:              podInfo,
-				ContainerImages:   containerImages,
-				CreationTime:      replicationController.ObjectMeta.CreationTimestamp,
-				InternalEndpoints: internalEndpoints,
-				ExternalEndpoints: externalEndpoints,
-			})
+		rc := ReplicationController{
+			Name:              replicationController.ObjectMeta.Name,
+			Namespace:         replicationController.ObjectMeta.Namespace,
+			Description:       replicationController.Annotations[DescriptionAnnotationKey],
+			Labels:            replicationController.ObjectMeta.Labels,
+			Pods:              podInfo,
+			ContainerImages:   containerImages,
+			CreationTime:      replicationController.ObjectMeta.CreationTimestamp,
+			InternalEndpoints: internalEndpoints,
+			ExternalEndpoints: externalEndpoints,
+		}
+
+		rcsByNamespace[replicationController.ObjectMeta.Namespace] = append(
+			rcsByNamespace[replicationController.ObjectMeta.Namespace], rc)
+	}
+	replicationControllerList := &ReplicationControllerList{Namespaces: make([]ReplicationControllerNamespace, 0)}
+
+	for namespace, rcs := range rcsByNamespace {
+		rcNamespace := ReplicationControllerNamespace{
+			Name:              namespace,
+			ReplicationControllers: rcs,
+		}
+		replicationControllerList.Namespaces = append(replicationControllerList.Namespaces, rcNamespace)
 	}
 
 	return replicationControllerList, nil

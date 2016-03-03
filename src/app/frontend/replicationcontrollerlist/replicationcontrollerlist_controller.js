@@ -26,8 +26,8 @@ export default class ReplicationControllerListController {
    * @ngInject
    */
   constructor($state, replicationControllers) {
-    /** @export {!Array<!backendApi.ReplicationController>} */
-    this.replicationControllers = replicationControllers.replicationControllers;
+    /** @export {!Array<{name: string, replicationControllers: Array<backendApi.ReplicationController>}>} */
+    this.namespaces = replicationControllers.namespaces;
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;

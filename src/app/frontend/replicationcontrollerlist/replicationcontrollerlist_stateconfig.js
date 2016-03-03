@@ -62,12 +62,12 @@ export default function stateConfig($stateProvider) {
  */
 export function redirectIfNeeded($state, $timeout, replicationControllers) {
   /** @type {boolean} */
-  let isEmpty = replicationControllers.replicationControllers.length === 0;
+  let isEmpty = replicationControllers.namespaces.length === 0;
   // should only display RC list if RCs exist that are not in the kube-system namespace,
   // otherwise should redirect to zero state
   let containsOnlyKubeSystemRCs =
-      !isEmpty && replicationControllers.replicationControllers.every((rc) => {
-        return rc.namespace === 'kube-system';
+      !isEmpty && replicationControllers.namespaces.every((ns) => {
+        return ns.name === 'kube-system';
       });
 
   if (isEmpty || containsOnlyKubeSystemRCs) {
