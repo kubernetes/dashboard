@@ -60,3 +60,30 @@ md-toolbar {
     }
   }
 }
+
+.md-button {
+  &.kd-logs-toolbar-icon {
+    min-width: 4 * $baseline-grid;
+  }
+}
+
+.kd-logs-toolbar-menu-button {
+  color: $content-background;
+
+  &:after {
+    content: '\25BC';
+    display: inline-block;
+    position: relative;
+    transform: scaleY(0.9) scaleX(1.3);
+  }
+}
+
+.kd-logs-toolbar-menu-bar {
+  .kd-logs-toolbar-menu-button {
+    background: none;
+  }
+}
+
+.kd-logs-toolbar {
+  margin-bottom: $baseline-grid / 2;
+}
