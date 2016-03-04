@@ -15,7 +15,7 @@
 /** The name of this directive. */
 export const validImageReferenceValidationKey = 'validImageReference';
 
-const errorMessage = 'errorMessage';
+const invalidImageErrorMessage = 'invalidImageErrorMessage';
 
 /**
  * Validates image reference
@@ -30,7 +30,7 @@ export default function validImageReferenceDirective($resource, $q) {
     restrict: 'A',
     require: 'ngModel',
     scope: {
-      [errorMessage]: '=',
+      [invalidImageErrorMessage]: '=',
     },
     link: function(scope, element, attrs, ctrl) {
       /** @type {!angular.NgModelController} */
@@ -62,15 +62,15 @@ function validate(reference, scope, resource, q) {
        */
       (validity) => {
         if (validity.valid === true) {
-          scope[errorMessage] = '';
+          scope[invalidImageErrorMessage] = '';
           deferred.resolve();
         } else {
-          scope[errorMessage] = validity.reason;
-          deferred.reject(scope[errorMessage]);
+          scope[invalidImageErrorMessage] = validity.reason;
+          deferred.reject(scope[invalidImageErrorMessage]);
         }
       },
       (err) => {
-        scope[errorMessage] = err.data;
+        scope[invalidImageErrorMessage] = err.data;
         deferred.reject();
       });
 

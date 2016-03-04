@@ -27,7 +27,7 @@ describe('Valid ImageReference directive', () => {
 
     angular.mock.inject(($compile, $rootScope, $httpBackend) => {
       compileFn = $compile(
-          '<div kd-valid-imagereference ng-model="containerImage" error-message="errorMessage"></div>');
+          '<div kd-valid-imagereference ng-model="containerImage" invalid-image-error-message="errorMessage"></div>');
       scope = $rootScope.$new();
       httpBackend = $httpBackend;
     });
