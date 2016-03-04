@@ -403,11 +403,11 @@ describe('DeployFromSettings controller', () => {
     };
 
     // then
-    for (let pattern in allPatterns) {
+    Object.keys(allPatterns).forEach((pattern) => {
       expect('mylowercasename'.match(allPatterns[pattern])).toBeDefined();
       expect('my-name-with-dashes-between'.match(allPatterns[pattern])).toBeDefined();
       expect('my-n4m3-with-numb3r5'.match(allPatterns[pattern])).toBeDefined();
-    }
+    });
   });
 
   /**
