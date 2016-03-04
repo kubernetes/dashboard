@@ -285,6 +285,21 @@ backendApi.AppNameValidity;
 
 /**
  * @typedef {{
+ *   reference: string
+ * }}
+ */
+backendApi.ImageReferenceValiditySpec;
+
+/**
+ * @typedef {{
+ *   valid: boolean,
+ *   reason: string
+ * }}
+ */
+backendApi.ImageReferenceValidity;
+
+/**
+ * @typedef {{
  *    protocols: !Array<string>
  * }}
  */
