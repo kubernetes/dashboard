@@ -20,6 +20,14 @@ limitations under the License.
            placeholder="{{labelCtrl.label.key}}" ng-disabled="!labelCtrl.label.editable">
     <ng-messages for="labelForm.key.$error" ng-if="labelForm.key.$invalid">
       <ng-message when="unique">{{labelCtrl.label.key}} is not unique.</ng-message>
+      <ng-message when="prefixPattern">
+        Prefix (before slash) is not a valid DNS subdomain prefix. Example: my-domain.com
+      </ng-message>
+      <ng-message when="namePattern">
+        Label key name should be lower or upper-case alphanumeric with '-', '_' and '.' between words only
+      </ng-message>
+      <ng-message when="prefixLength">Prefix should not exceed 253 characters</ng-message>
+      <ng-message when="nameLength">Label Key name should not exceed 63 characters</ng-message>
     </ng-messages>
   </md-input-container>
   <p flex="5"></p>
