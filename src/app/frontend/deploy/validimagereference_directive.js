@@ -15,6 +15,8 @@
 /** The name of this directive. */
 export const validImageReferenceValidationKey = 'validImageReference';
 
+const errorMessage = 'errorMessage';
+
 /**
  * Validates image reference
  *
@@ -27,12 +29,15 @@ export default function validImageReferenceDirective($resource, $q) {
   return {
     restrict: 'A',
     require: 'ngModel',
+    scope: {
+      [errorMessage]: '=',
+    },
     link: function(scope, element, attrs, ctrl) {
       /** @type {!angular.NgModelController} */
       let ngModelController = ctrl;
 
       ngModelController.$asyncValidators[validImageReferenceValidationKey] =
-          (reference) => { return validate(reference, $resource, $q); };
+          (reference) => { return validate(reference, scope, $resource, $q); };
     },
   };
 }
@@ -42,13 +47,14 @@ export default function validImageReferenceDirective($resource, $q) {
  * @param {!angular.$resource} resource
  * @param {!angular.$q} q
  */
-function validate(reference, resource, q) {
+function validate(reference, scope, resource, q) {
   let deferred = q.defer();
 
   /** @type {!angular.Resource<!backendApi.ImageReferenceValiditySpec>} */
   let resourceClass = resource('api/v1/appdeployments/validate/imagereference');
   /** @type {!backendApi.ImageReferenceValiditySpec} */
   let spec = {reference: reference};
+
   resourceClass.save(
       spec,
       /**
@@ -56,12 +62,17 @@ function validate(reference, resource, q) {
        */
       (validity) => {
         if (validity.valid === true) {
+          scope[errorMessage] = '';
           deferred.resolve();
         } else {
-          deferred.reject(validity.reason);
+          scope[errorMessage] = validity.reason;
+          deferred.reject(scope[errorMessage]);
         }
       },
-      () => { deferred.reject(); });
+      (err) => {
+        scope[errorMessage] = err.data;
+        deferred.reject();
+      });
 
   return deferred.promise;
 }

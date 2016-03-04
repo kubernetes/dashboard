@@ -60,6 +60,9 @@ export default class DeployFromSettingsController {
     this.containerImage = '';
 
     /** @export {string} */
+    this.containerImageErrorMessage = '';
+
+    /** @export {string} */
     this.imagePullSecret = '';
 
     /** @export {string} */
