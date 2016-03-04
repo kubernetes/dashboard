@@ -24,17 +24,17 @@ describe('Cores filter', () => {
   });
 
   it('should format CPU', () => {
-    expect(filter(0)).toEqual('0 mCPU');
-    expect(filter(1)).toEqual('1 mCPU');
-    expect(filter(2)).toEqual('2 mCPU');
-    expect(filter(1000)).toEqual('1,000 mCPU');
-    expect(filter(1024)).toEqual('1.024 CPU');
-    expect(filter(1025)).toEqual('1.025 CPU');
-    expect(filter(7896)).toEqual('7.896 CPU');
-    expect(filter(109809)).toEqual('109.809 CPU');
-    expect(filter(768689899)).toEqual('768.690 kCPU');
-    expect(filter(768689899789)).toEqual('768.690 MCPU');
-    expect(filter(76868989978978)).toEqual('76.869 GCPU');
-    expect(filter(7686898997897878)).toEqual('7,686.899 GCPU');
+    expect(filter(0)).toEqual('0');
+    expect(filter(1)).toEqual('0.001');
+    expect(filter(2)).toEqual('0.002');
+    expect(filter(1000)).toEqual('1');
+    expect(filter(1024)).toEqual('1.024');
+    expect(filter(1025)).toEqual('1.025');
+    expect(filter(7896)).toEqual('7.896');
+    expect(filter(109809)).toEqual('109.809');
+    expect(filter(768689899)).toEqual('768.690 k');
+    expect(filter(768689899789)).toEqual('768.690 M');
+    expect(filter(76868989978978)).toEqual('76.869 G');
+    expect(filter(7686898997897878)).toEqual('7.687 T');
   });
 });

@@ -84,16 +84,16 @@ limitations under the License.
                   ng-if="::ctrl.replicationControllerDetail.hasMetrics">
                 <kd-sorted-header currently-selected-column="ctrl.sortPodsBy"
                                   currently-selected-order="ctrl.podsOrder" column-name="cpu"
-                                  tooltip="CPU used by the pod">
-                  CPU
+                                  tooltip="CPU cores used by the pod">
+                  CPU (cores)
                 </kd-sorted-header>
               </th>
               <th class="kd-replicationcontrollerdetail-table-header"
                   ng-if="::ctrl.replicationControllerDetail.hasMetrics">
                 <kd-sorted-header currently-selected-column="ctrl.sortPodsBy"
                                   currently-selected-order="ctrl.podsOrder" column-name="memory"
-                                  tooltip="Memory used by the pod">
-                  Memory
+                                  tooltip="Memory in bytes used by the pod">
+                  Memory (B)
                 </kd-sorted-header>
               </th>
               <th class="kd-replicationcontrollerdetail-table-header">
@@ -136,7 +136,7 @@ limitations under the License.
                 </span>
               </td>
               <!-- width=1 is a hack to shrink-wrap the column around its content -->
-              <td kd-responsive-header="CPU"
+              <td kd-responsive-header="CPU (cores)"
                   class="kd-replicationcontrollerdetail-table-cell kd-replicationcontrollerdetail-sparkline-table-cell"
                   ng-if="::ctrl.replicationControllerDetail.hasMetrics"
                   ng-attr-width="{{ctrl.shouldShrinkSparklineCells()}}">
@@ -150,7 +150,7 @@ limitations under the License.
                 </span>
               </td>
               <!-- width=1 is a hack to shrink-wrap the column around its content -->
-              <td kd-responsive-header="Memory"
+              <td kd-responsive-header="Memory (B)"
                   class="kd-replicationcontrollerdetail-table-cell kd-replicationcontrollerdetail-sparkline-table-cell"
                   ng-if="::ctrl.replicationControllerDetail.hasMetrics"
                   ng-attr-width="{{ctrl.shouldShrinkSparklineCells()}}">

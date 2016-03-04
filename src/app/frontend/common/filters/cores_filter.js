@@ -16,7 +16,7 @@
 const base = 1000;
 
 /** Names of the suffixes where I-th name is for base^I suffix. */
-const powerSuffixes = ['m', '', 'k', 'M', 'G'];
+const powerSuffixes = ['', 'k', 'M', 'G', 'T'];
 
 /**
  * Returns filter function that formats cores usage.
@@ -31,6 +31,9 @@ export default function coresFilter(numberFilter) {
    * @return {string}
    */
   let formatCores = function(value) {
+    // Convert millicores to cores.
+    value = value / 1000;
+
     let divider = 1;
     let power = 0;
 
@@ -39,7 +42,8 @@ export default function coresFilter(numberFilter) {
       power += 1;
     }
     let formatted = numberFilter(value / divider);
-    return `${formatted} ${powerSuffixes[power]}CPU`;
+    let suffix = powerSuffixes[power];
+    return suffix ? `${formatted} ${suffix}` : formatted;
   };
 
   return formatCores;
