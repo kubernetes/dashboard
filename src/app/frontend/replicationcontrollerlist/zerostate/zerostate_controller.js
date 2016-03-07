@@ -23,14 +23,6 @@ export default class ZeroStateController {
    * @ngInject
    */
   constructor($stateParams) {
-    /** @export {!Array<{title:string, link:string}>} */
-    this.learnMoreLinks = [
-      {title: 'Dashboard Tour', link: "#"},
-      {title: 'Deploying your App', link: "#"},
-      {title: 'Monitoring your App', link: "#"},
-      {title: 'Troubleshooting', link: "#"},
-    ];
-
     /** @export {boolean} */
     this.containsOnlyKubeSystemRCs = $stateParams.containsOnlyKubeSystemRCs;
   }
