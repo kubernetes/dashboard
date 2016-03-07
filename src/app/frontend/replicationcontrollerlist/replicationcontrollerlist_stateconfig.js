@@ -72,8 +72,7 @@ export function redirectIfNeeded($state, $timeout, replicationControllers) {
 
   if (isEmpty || containsOnlyKubeSystemRCs) {
     // allow original state change to finish before redirecting to new state to avoid error
-
-    $timeout(() => {
+    $state.transition.then(() => {
       let stateParams = new StateParams(containsOnlyKubeSystemRCs);
       $state.go(zerostate, stateParams);
     });
