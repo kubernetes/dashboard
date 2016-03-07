@@ -252,13 +252,13 @@ func (apiHandler *ApiHandler) handleNameValidity(request *restful.Request, respo
 }
 
 // Handles image reference validation API call.
-func (ApiHandler *ApiHandler) handleImageReferenceValidity(request *restful.Request, response *restful.Response){
+func (ApiHandler *ApiHandler) handleImageReferenceValidity(request *restful.Request, response *restful.Response) {
 	spec := new(ImageReferenceValiditySpec)
 	if err := request.ReadEntity(spec); err != nil {
 		handleInternalError(response, err)
 		return
 	}
-	
+
 	validity, err := ValidateImageReference(spec)
 	if err != nil {
 		handleInternalError(response, err)
