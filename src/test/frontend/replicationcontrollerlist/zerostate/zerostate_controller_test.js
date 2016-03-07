@@ -24,17 +24,10 @@ describe('Zerostate controller', () => {
 
   beforeEach(() => {
     angular.mock.module(replicationControllerListModule.name);
-
     angular.mock.inject(($controller) => { ctrl = $controller(ZerostateController, stateParams); });
   });
 
   it('should do something', () => {
-    expect(ctrl.learnMoreLinks).toEqual([
-      {title: 'Dashboard Tour', link: "#"},
-      {title: 'Deploying your App', link: "#"},
-      {title: 'Monitoring your App', link: "#"},
-      {title: 'Troubleshooting', link: "#"},
-    ]);
     expect(ctrl.containsOnlyKubeSystemRCs).toEqual(stateParams.containsOnlyKubeSystemRCs);
   });
 });
