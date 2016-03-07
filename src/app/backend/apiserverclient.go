@@ -29,7 +29,7 @@ import (
 // apiserverHost param is in the format of protocol://address:port/pathPrefix, e.g.,
 // http://localhost:8001.
 //
-// Returns created client and its configuration.
+// CreateApiserverClient returns created client and its configuration.
 func CreateApiserverClient(apiserverHost string) (*client.Client, clientcmd.ClientConfig, error) {
 
 	overrides := &clientcmd.ConfigOverrides{}

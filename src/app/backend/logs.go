@@ -24,7 +24,7 @@ import (
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
-// Log response structure
+// Logs is a representation of logs response structure.
 type Logs struct {
 	// Pod name.
 	PodId string `json:"podId"`
@@ -39,8 +39,8 @@ type Logs struct {
 	Container string `json:"container"`
 }
 
-// Return logs for particular pod and container or error when occurred. When container is null,
-// logs for the first one are returned.
+// GetPodLogs returns logs for particular pod and container or error when occurred. When container
+// is null, logs for the first one are returned.
 func GetPodLogs(client *client.Client, namespace, podId string, container string) (*Logs, error) {
 	log.Printf("Getting logs from %s container from %s pod in %s namespace", container, podId,
 		namespace)

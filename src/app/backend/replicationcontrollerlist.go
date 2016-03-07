@@ -24,10 +24,10 @@ import (
 	"k8s.io/kubernetes/pkg/labels"
 )
 
-// Callback function in order to get the pod status errors
+// GetPodsEventWarningsFunc is a callback function used to get the pod status errors.
 type GetPodsEventWarningsFunc func(pods []api.Pod) ([]Event, error)
 
-// Callback function in order to get node by name.
+// GetNodeFunc is a callback function used to get nodes by names.
 type GetNodeFunc func(nodeName string) (*api.Node, error)
 
 // ReplicationControllerList contains a list of Replication Controllers in the cluster.

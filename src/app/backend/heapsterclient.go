@@ -60,13 +60,13 @@ func CreateHeapsterRESTClient(heapsterHost string, apiclient *client.Client) (
 	if heapsterHost == "" {
 		log.Printf("Creating in-cluster Heapster client")
 		return InClusterHeapsterClient{client: apiclient}, nil
-	} else {
-		cfg := &client.Config{Host: heapsterHost}
-		restClient, err := client.New(cfg)
-		if err != nil {
-			return nil, err
-		}
-		log.Printf("Creating remote Heapster client for %s", heapsterHost)
-		return RemoteHeapsterClient{client: restClient.RESTClient}, nil
 	}
+
+	cfg := &client.Config{Host: heapsterHost}
+	restClient, err := client.New(cfg)
+	if err != nil {
+		return nil, err
+	}
+	log.Printf("Creating remote Heapster client for %s", heapsterHost)
+	return RemoteHeapsterClient{client: restClient.RESTClient}, nil
 }

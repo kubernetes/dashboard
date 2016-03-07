@@ -23,19 +23,19 @@ import (
 	"k8s.io/kubernetes/pkg/labels"
 )
 
-// Specification of namespace to be created.
+// NamespaceSpec is a specification of namespace to create.
 type NamespaceSpec struct {
 	// Name of the namespace.
 	Name string `json:"name"`
 }
 
-// List of Namespaces in the cluster.
+// NamespaceList is a list of namespaces in the cluster.
 type NamespaceList struct {
 	// Unordered list of Namespaces.
 	Namespaces []string `json:"namespaces"`
 }
 
-// Creates namespace based on given specification.
+// CreateNamespace creates namespace based on given specification.
 func CreateNamespace(spec *NamespaceSpec, client *client.Client) error {
 	log.Printf("Creating namespace %s", spec.Name)
 
@@ -50,7 +50,7 @@ func CreateNamespace(spec *NamespaceSpec, client *client.Client) error {
 	return err
 }
 
-// Returns a list of all namespaces in the cluster.
+// GetNamespaceList returns a list of all namespaces in the cluster.
 func GetNamespaceList(client *client.Client) (*NamespaceList, error) {
 	log.Printf("Getting namespace list")
 

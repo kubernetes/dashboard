@@ -15,8 +15,8 @@
 package main
 
 import (
-	"log"
 	distreference "github.com/docker/distribution/reference"
+	"log"
 )
 
 // Specification for image referecne validation request.

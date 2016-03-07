@@ -20,8 +20,8 @@ import (
 
 func TestValidateImageReference(t *testing.T) {
 	cases := []struct {
-		reference  string
-		expected   bool
+		reference string
+		expected  bool
 	}{
 		{
 			"test",
@@ -86,7 +86,7 @@ func TestValidateImageReference(t *testing.T) {
 		{
 			"test image:1",
 			false,
-		},			
+		},
 	}
 
 	for _, c := range cases {

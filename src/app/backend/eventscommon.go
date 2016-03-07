@@ -119,7 +119,7 @@ func isFailedReason(reason string, partials ...string) bool {
 
 // Based on event Reason fills event Type in order to allow correct filtering by Type.
 func fillEventsType(events []api.Event) []api.Event {
-	for i, _ := range events {
+	for i := range events {
 		if isFailedReason(events[i].Reason, FailedReasonPartials...) {
 			events[i].Type = api.EventTypeWarning
 		} else {

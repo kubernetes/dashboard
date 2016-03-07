@@ -22,6 +22,7 @@ import (
 	"k8s.io/kubernetes/pkg/labels"
 )
 
+// ReplicationControllerWithPods is a structure representing replication controller and its pods.
 type ReplicationControllerWithPods struct {
 	ReplicationController *api.ReplicationController
 	Pods                  *api.PodList
