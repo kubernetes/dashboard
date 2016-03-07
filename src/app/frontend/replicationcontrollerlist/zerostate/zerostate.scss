@@ -31,39 +31,36 @@
 .kd-zerostate-card-logo {
   height: $logo-height;
   min-width: $logo-width;
-  padding: 0 0 0 15px;
+  padding-left: $baseline-grid * 2;
   width: $logo-width;
 }
 
 .kd-zerostate-deploy-card {
   color: $content-background;
-  min-width: 300px;
+  min-width: 500px;
 }
 
 .kd-zerostate-deploy-bt {
-  font-size: 12px;
+  font-size: $caption-font-size-base;
   min-width: 120px;
 }
 
-.kd-zerostate-lm-list {
-  margin-top: 10px;
-
-  > .kd-zerostate-lm-list-item {
-    color: $primary;
-    min-height: 30px;
-    padding: 0;
-  }
-}
-
 .kd-zerostate-ext-link-icon {
-  font-size: 1em;
+  font-size: $body-font-size-base;
+  vertical-align: middle;
 }
 
-.kd-zerostate-lm-card {
-  font-size: 15px;
-  min-width: 200px;
+.kd-zerostate-deploy-card-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
-.kd-zerostate-lm-text {
+.kd-zerostate-lm {
   color: $muted;
+  font-size: $subhead-font-size-base;
+}
+
+.kd-zerostate-rcs {
+  padding-top: $baseline-grid * 2;
 }
