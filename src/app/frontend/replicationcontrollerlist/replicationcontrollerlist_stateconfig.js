@@ -56,11 +56,10 @@ export default function stateConfig($stateProvider) {
  * deleted.
  * Transition to: zerostate
  * @param {!ui.router.$state} $state
- * @param {!angular.$timeout} $timeout
  * @param {!backendApi.ReplicationControllerList} replicationControllers
  * @ngInject
  */
-export function redirectIfNeeded($state, $timeout, replicationControllers) {
+export function redirectIfNeeded($state, replicationControllers) {
   /** @type {boolean} */
   let isEmpty = replicationControllers.replicationControllers.length === 0;
   // should only display RC list if RCs exist that are not in the kube-system namespace,
@@ -71,12 +70,8 @@ export function redirectIfNeeded($state, $timeout, replicationControllers) {
       });
 
   if (isEmpty || containsOnlyKubeSystemRCs) {
-    // allow original state change to finish before redirecting to new state to avoid error
-
-    $timeout(() => {
-      let stateParams = new StateParams(containsOnlyKubeSystemRCs);
-      $state.go(zerostate, stateParams);
-    });
+    let stateParams = new StateParams(containsOnlyKubeSystemRCs);
+    $state.transition.then(() => { $state.go(zerostate, stateParams); });
   }
 }
 
@@ -88,6 +83,5 @@ export function redirectIfNeeded($state, $timeout, replicationControllers) {
 function resolveReplicationControllers($resource) {
   /** @type {!angular.Resource<!backendApi.ReplicationControllerList>} */
   let resource = $resource('api/v1/replicationcontrollers');
-
   return resource.get().$promise;
 }

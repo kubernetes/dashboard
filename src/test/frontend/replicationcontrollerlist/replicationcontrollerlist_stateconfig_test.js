@@ -14,19 +14,20 @@
 
 import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
 import {redirectIfNeeded} from 'replicationcontrollerlist/replicationcontrollerlist_stateconfig';
-
 describe('StateConfig for replication controller list', () => {
   /** @type {!ui.router.$state} */
   let state;
-  /** @type {!angular.$timeout} */
-  let timeout;
+  let deferred;
+  let $rootScope;
+
   beforeEach(() => {
     angular.mock.module(replicationControllerListModule.name);
-
-    angular.mock.inject(($state, $timeout) => {
+    angular.mock.inject(($state, $q, _$rootScope_) => {
       state = $state;
-      timeout = $timeout;
+      $rootScope = _$rootScope_;
+      deferred = $q.defer();
     });
+    state.transition = deferred.promise;
   });
 
   it('should redirect to zerostate when RCs exist only in namespace kube-system', () => {
@@ -39,9 +40,8 @@ describe('StateConfig for replication controller list', () => {
     };
 
     // when
-    redirectIfNeeded(state, timeout, replicationControllers);
-    timeout.flush();
-
+    redirectIfNeeded(state, replicationControllers);
+    resolveStateTransitionPromise();
     // then
     expect(state.go).toHaveBeenCalled();
   });
@@ -52,8 +52,8 @@ describe('StateConfig for replication controller list', () => {
     let replicationControllers = {replicationControllers: []};
 
     // when
-    redirectIfNeeded(state, timeout, replicationControllers);
-    timeout.flush();
+    redirectIfNeeded(state, replicationControllers);
+    resolveStateTransitionPromise();
 
     // then
     expect(state.go).toHaveBeenCalled();
@@ -70,7 +70,8 @@ describe('StateConfig for replication controller list', () => {
        };
 
        // when
-       redirectIfNeeded(state, timeout, replicationControllers);
+       redirectIfNeeded(state, replicationControllers);
+       resolveStateTransitionPromise();
 
        // then
        expect(state.go).not.toHaveBeenCalled();
@@ -88,9 +89,20 @@ describe('StateConfig for replication controller list', () => {
        };
 
        // when
-       redirectIfNeeded(state, timeout, replicationControllers);
+       redirectIfNeeded(state, replicationControllers);
+       resolveStateTransitionPromise();
 
        // then
        expect(state.go).not.toHaveBeenCalled();
      });
+
+  /**
+   * Resolves the mocked state transition promise
+   *
+   * @export
+   */
+  function resolveStateTransitionPromise() {
+    deferred.resolve();
+    $rootScope.$apply();
+  }
 });
