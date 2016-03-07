@@ -39,7 +39,8 @@ export default function memoryFilter(numberFilter) {
       power += 1;
     }
     let formatted = numberFilter(value / divider);
-    return `${formatted} ${powerSuffixes[power]}B`;
+    let suffix = powerSuffixes[power];
+    return suffix ? `${formatted} ${suffix}` : formatted;
   };
 
   return formatMemory;
