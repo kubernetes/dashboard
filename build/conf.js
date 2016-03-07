@@ -44,7 +44,7 @@ const version = {
   /**
    * Current release version of the project.
    */
-  release: 'v1.0.0-beta1',
+  release: 'v1.0.0',
   /**
    * Version name of the canary release of the project.
    */
