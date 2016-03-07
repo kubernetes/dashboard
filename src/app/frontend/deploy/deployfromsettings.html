@@ -28,8 +28,8 @@ limitations under the License.
       <ng-messages for="ctrl.form.name.$error" role="alert" multiple>
         <ng-message when="required">Application name is required.</ng-message>
         <ng-message when="uniqueName">
-          Application with this name
-          already exists within namespace <i>{{ctrl.namespace}}</i>.
+          Replication controller or service with this name already exists within namespace
+          <i>{{ctrl.namespace}}</i>.
         </ng-message>
         <ng-message when="pattern">
           Application name must start with a lowercase letter
