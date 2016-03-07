@@ -15,9 +15,17 @@
 @import '../../variables';
 
 .kd-user-help {
+  font-size: $body-font-size-base;
+
   .kd-emphasized {
     color: $emphasis;
     word-wrap: break-word;
+  }
+
+  .material-icons {
+    color: $primary;
+    font-size: $caption-font-size-base;
+    vertical-align: middle;
   }
 
   * {
