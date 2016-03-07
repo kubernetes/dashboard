@@ -19,33 +19,28 @@ limitations under the License.
     <md-card flex="50" class="kd-zerostate-deploy-card">
       <md-toolbar layout="row" class="md-primary kd-zerostate-card-header"
                   layout-align="center center" flex="auto" >
-        <md-icon md-svg-icon="assets/images/kubernetes-logo.svg"
-                 class="kd-zerostate-card-logo"></md-icon>
-        <span class="md-padding" flex="auto" >The <b>Kubernetes Dashboard</b> lets you deploy, monitor
-          and troubleshoot containerized applications and services</span>
+        <md-icon md-svg-icon="assets/images/kubernetes-logo.svg" class="kd-zerostate-card-logo">
+        </md-icon>
+        <span class="md-padding" flex="auto" >
+          The <b>Kubernetes Dashboard</b> lets you deploy, monitor and troubleshoot containerized
+          applications and services
+        </span>
       </md-toolbar>
-      <md-card-content layout-align="center center">
-        <md-button ui-sref="deploy" class="md-raised md-primary kd-zerostate-deploy-bt">Deploy an
-          app
+      <md-card-content class="kd-zerostate-deploy-card-bottom" layout-align="center center">
+        <md-button ui-sref="deploy" class="md-raised md-primary kd-zerostate-deploy-bt">
+          Deploy an app
         </md-button>
-        <div></div>
-        <a class="md-raised md-primary kd-zerostate-deploy-bt" ng-if="ctrl.containsOnlyKubeSystemRCs"
+        <div class="kd-zerostate-lm">
+          To learn more,
+          <a href="http://kubernetes.github.io/docs/user-guide/ui/" target="_blank">
+            take the Dashboard Tour
+            <i class="material-icons kd-zerostate-ext-link-icon">open_in_new</i>
+          </a>
+        </div>
+        <a class="md-raised md-primary kd-zerostate-rcs" ng-if="ctrl.containsOnlyKubeSystemRCs"
            ui-sref="replicationcontrollers">
-          There are replication controllers in namespace "kube-system" - click to show.
+          There are replication controllers in kube-system namespace,<br>click to show them
         </a>
-      </md-card-content>
-    </md-card>
-    <md-card flex="15" class="kd-zerostate-lm-card">
-      <md-card-content>
-        <md-text-float class="kd-zerostate-lm-text"><b>Learn more</b></md-text-float>
-        <md-list class="kd-zerostate-lm-list">
-          <md-list-item class="kd-zerostate-lm-list-item"
-                        ng-repeat="option in ctrl.learnMoreLinks">
-            <a ui-sref="{{option.link}}">
-              {{option.title}} <i class="material-icons kd-zerostate-ext-link-icon">open_in_new</i>
-            </a>
-          </md-list-item>
-        </md-list>
       </md-card-content>
     </md-card>
   </md-content>
