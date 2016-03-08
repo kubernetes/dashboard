@@ -123,9 +123,9 @@ func TestDeployShouldPopulateEnvVars(t *testing.T) {
 
 	rc := createAction.GetObject().(*api.ReplicationController)
 	container := rc.Spec.Template.Spec.Containers[0]
-	if !reflect.DeepEqual(container.Env, []api.EnvVar{api.EnvVar{Name: "foo", Value: "bar"}}) {
+	if !reflect.DeepEqual(container.Env, []api.EnvVar{{Name: "foo", Value: "bar"}}) {
 		t.Errorf("Expected environment variables to be %#v but got %#v",
-			[]api.EnvVar{api.EnvVar{Name: "foo", Value: "bar"}}, container.Env)
+			[]api.EnvVar{{Name: "foo", Value: "bar"}}, container.Env)
 	}
 }
 

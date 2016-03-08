@@ -55,7 +55,7 @@ type ReplicationControllerDetail struct {
 	HasMetrics bool `json:"hasMetrics"`
 }
 
-// Detailed information about a Pod that belongs to a Replication Controller.
+// ReplicationControllerPod is a representation of a Pod that belongs to a Replication Controller.
 type ReplicationControllerPod struct {
 	// Name of the Pod.
 	Name string `json:"name"`
@@ -79,7 +79,7 @@ type ReplicationControllerPod struct {
 	Metrics *PodMetrics `json:"metrics"`
 }
 
-// Detailed information about a Service connected to Replication Controller.
+// ServiceDetail is a representation of a Service connected to Replication Controller.
 type ServiceDetail struct {
 	// Name of the service.
 	Name string `json:"name"`
@@ -98,7 +98,7 @@ type ServiceDetail struct {
 	Selector map[string]string `json:"selector"`
 }
 
-// Port and protocol pair of, e.g., a service endpoint.
+// ServicePort is a pair of port and protocol, e.g. a service endpoint.
 type ServicePort struct {
 	// Positive port number.
 	Port int `json:"port"`
@@ -107,7 +107,7 @@ type ServicePort struct {
 	Protocol api.Protocol `json:"protocol"`
 }
 
-// Describes an endpoint that is host and a list of available ports for that host.
+// Endpoint describes an endpoint that is host and a list of available ports for that host.
 type Endpoint struct {
 	// Hostname, either as a domain name or IP address.
 	Host string `json:"host"`

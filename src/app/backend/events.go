@@ -33,7 +33,7 @@ type Events struct {
 	Events []Event `json:"events"`
 }
 
-// Single event representation.
+// Event is a single event representation.
 type Event struct {
 	// A human-readable description of the status of related object.
 	Message string `json:"message"`
@@ -67,7 +67,7 @@ type Event struct {
 	Type string `json:"type"`
 }
 
-// Return events for particular namespace and replication controller or error if occurred.
+// GetEvents returns events for particular namespace and replication controller or error if occurred.
 func GetEvents(client *client.Client, namespace, replicationControllerName string) (*Events, error) {
 	log.Printf("Getting events related to %s replication controller in %s namespace", replicationControllerName,
 		namespace)
@@ -103,7 +103,7 @@ func GetEvents(client *client.Client, namespace, replicationControllerName strin
 	return &events, nil
 }
 
-// Gets events associated to replication controller.
+// GetReplicationControllerEvents gets events associated to replication controller.
 func GetReplicationControllerEvents(client *client.Client, namespace, replicationControllerName string) ([]api.Event,
 	error) {
 	fieldSelector, err := fields.ParseSelector("involvedObject.name=" + replicationControllerName)
@@ -124,7 +124,7 @@ func GetReplicationControllerEvents(client *client.Client, namespace, replicatio
 	return list.Items, nil
 }
 
-// Gets events associated to pods in replication controller.
+// GetReplicationControllerPodsEvents gets events associated to pods in replication controller.
 func GetReplicationControllerPodsEvents(client *client.Client, namespace, replicationControllerName string) ([]api.Event,
 	error) {
 	replicationController, err := client.ReplicationControllers(namespace).Get(replicationControllerName)
@@ -151,7 +151,7 @@ func GetReplicationControllerPodsEvents(client *client.Client, namespace, replic
 	return events, nil
 }
 
-// Gets events associated to given list of pods
+// GetPodsEvents gets events associated to given list of pods
 // TODO(floreks): refactor this to make single API call instead of N api calls
 func GetPodsEvents(client *client.Client, pods *api.PodList) ([]api.Event, error) {
 	events := make([]api.Event, 0, 0)
@@ -172,7 +172,7 @@ func GetPodsEvents(client *client.Client, pods *api.PodList) ([]api.Event, error
 	return events, nil
 }
 
-// Gets events associated to given pod
+// GetPodEvents gets events associated to given pod
 func GetPodEvents(client client.Interface, pod api.Pod) (*api.EventList, error) {
 	fieldSelector, err := fields.ParseSelector("involvedObject.name=" + pod.Name)
 
@@ -192,7 +192,7 @@ func GetPodEvents(client client.Interface, pod api.Pod) (*api.EventList, error) 
 	return list, nil
 }
 
-// Appends events from source slice to target events representation.
+// AppendEvents appends events from source slice to target events representation.
 func AppendEvents(source []api.Event, target Events) Events {
 	for _, event := range source {
 		target.Events = append(target.Events, Event{

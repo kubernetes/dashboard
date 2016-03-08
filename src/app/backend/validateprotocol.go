@@ -20,7 +20,7 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 )
 
-// Specification for protocol validation request.
+// ProtocolValiditySpec is a specification of protocol validation request.
 type ProtocolValiditySpec struct {
 	// Protocol type
 	Protocol api.Protocol `json:"protocol"`
@@ -29,15 +29,17 @@ type ProtocolValiditySpec struct {
 	IsExternal bool `json:"isExternal"`
 }
 
-// Describes validity of the protocol.
+// ProtocolValidity describes validity of the protocol.
 type ProtocolValidity struct {
 	// True when the selected protocol is valid for selected service type.
 	Valid bool `json:"valid"`
 }
 
-// Validates protocol based on whether created service is set to NodePort or NodeBalancer type.
+// ValidateProtocol validates protocol based on whether created service is set to NodePort or
+// NodeBalancer type.
 func ValidateProtocol(spec *ProtocolValiditySpec) *ProtocolValidity {
-	log.Printf("Validating %s protocol for service with external set to %v", spec.Protocol, spec.IsExternal)
+	log.Printf("Validating %s protocol for service with external set to %v", spec.Protocol,
+		spec.IsExternal)
 
 	isValid := true
 

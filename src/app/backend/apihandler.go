@@ -26,7 +26,10 @@ import (
 )
 
 const (
+	// RequestLogString is a template for request log message.
 	RequestLogString  = "Incoming %s %s %s request from %s"
+
+	// ResponseLogString is a template for response log message.
 	ResponseLogString = "Outcoming response to %s with %d status code"
 )
 
@@ -37,7 +40,7 @@ func wsLogger(req *restful.Request, resp *restful.Response, chain *restful.Filte
 	log.Printf(FormatResponseLog(resp, req))
 }
 
-// Formats request log string.
+// FormatRequestLog formats request log string.
 // TODO(maciaszczykm): Display request body.
 func FormatRequestLog(req *restful.Request) string {
 	reqURI := ""
@@ -49,13 +52,13 @@ func FormatRequestLog(req *restful.Request) string {
 		reqURI, req.Request.RemoteAddr)
 }
 
-// Formats response log string.
+// FormatResponseLog formats response log string.
 // TODO(maciaszczykm): Display response content.
 func FormatResponseLog(resp *restful.Response, req *restful.Request) string {
 	return fmt.Sprintf(ResponseLogString, req.Request.RemoteAddr, resp.StatusCode())
 }
 
-// Creates a new HTTP handler that handles all requests to the API of the backend.
+// CreateHttpApiHandler creates a new HTTP handler that handles all requests to the API of the backend.
 func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 	clientConfig clientcmd.ClientConfig) http.Handler {
 
@@ -252,13 +255,13 @@ func (apiHandler *ApiHandler) handleNameValidity(request *restful.Request, respo
 }
 
 // Handles image reference validation API call.
-func (ApiHandler *ApiHandler) handleImageReferenceValidity(request *restful.Request, response *restful.Response){
+func (ApiHandler *ApiHandler) handleImageReferenceValidity(request *restful.Request, response *restful.Response) {
 	spec := new(ImageReferenceValiditySpec)
 	if err := request.ReadEntity(spec); err != nil {
 		handleInternalError(response, err)
 		return
 	}
-	
+
 	validity, err := ValidateImageReference(spec)
 	if err != nil {
 		handleInternalError(response, err)

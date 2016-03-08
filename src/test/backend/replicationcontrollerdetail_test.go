@@ -518,7 +518,7 @@ func TestGetLocalhostEndpoints(t *testing.T) {
 					Host: "localhost",
 					Ports: []ServicePort{
 						{
-							Port: 30100,
+							Port:     30100,
 							Protocol: "TCP",
 						},
 					},
@@ -527,7 +527,7 @@ func TestGetLocalhostEndpoints(t *testing.T) {
 					Host: "localhost",
 					Ports: []ServicePort{
 						{
-							Port: 30101,
+							Port:     30101,
 							Protocol: "TCP",
 						},
 					},
