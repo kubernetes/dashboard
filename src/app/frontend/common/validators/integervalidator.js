@@ -12,12 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Type} from 'common/validators/types/type';
+import {Validator} from './validator';
 
-describe('Type', () => {
-  it('should not be instantiable', () => {
-    expect(() => {
-      new Type();
-    }).toThrow(new TypeError('Abstract class "Type" cannot be instantiated directly.'));
-  });
-});
+/**
+ * @final
+ * @extends {Validator}
+ */
+export class IntegerValidator extends Validator {
+  constructor() { super(); }
+
+  /**
+   * Returns true if given value is a correct integer value, false otherwise.
+   * When value is undefined or empty then it is considered as correct value in order
+   * to not conflict with other validations like 'required'.
+   *
+   * @override
+   */
+  isValid(value) { return (Number(value) === value && value % 1 === 0) || !value; }
+}

@@ -58,12 +58,12 @@ describe('Validate directive', () => {
   it('should throw an error when wrong type is provided', () => {
     // given
     let typeName = 'invalid';
-    let compileFn = compile(`<input ng-model='replicas' type='number'kd-validate='${typeName}'>`);
+    let compileFn = compile(`<input ng-model='replicas' type='number' kd-validate='${typeName}'>`);
 
     // when and then
     expect(() => {
       compileFn(scope)[0];
       scope.$digest();
-    }).toThrow(new TypeError(`Given type '${typeName}' is not supported.`));
+    }).toThrow(new TypeError(`Given validator '${typeName}' is not supported.`));
   });
 });

@@ -12,37 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {IntegerType} from './integertype';
+// As this is abstract class then we have to allow unused variables in methods
+/*eslint no-unused-vars: 0*/
 
 /**
- * @final
+ * Abstract class representing Type that needs to be validated.
+ *
+ * @class
  */
-export class TypeFactory {
-  /**
-   * @constructs TypeFactory
-   */
+export class Validator {
   constructor() {
-    /** @private {Map<Array<string, !./type.Type>>} */
-    this.typeMap_ = new Map();
-
-    // Initialize map with supported types
-    this.typeMap_.set('integer', new IntegerType());
+    if (this.constructor === Validator) {
+      throw new TypeError('Abstract class "Validator" cannot be instantiated directly.');
+    }
   }
 
   /**
-   * Returns specific Type class based on given type name.
+   * Should be implemented to return true when the given value meets the requirements
+   * of the expected Type or given value is undefined|empty in order to not conflict with
+   * other check such as 'required', false otherwise.
    *
-   * @method
-   * @param typeName
-   * @returns {!./type.Type}
+   * @param {*} value
+   * @return {boolean}
    */
-  getType(typeName) {
-    let typeObject = this.typeMap_.get(typeName);
-
-    if (!typeObject) {
-      throw new Error(`Given type '${typeName}' is not supported.`);
-    }
-
-    return typeObject;
-  }
+  isValid(value) {}
 }
