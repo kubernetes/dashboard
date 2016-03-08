@@ -17,7 +17,8 @@ import path from 'path';
 import DeployFromFilePageObject from '../deploy/deployfromfile_po';
 
 // Test assumes, that there are no replication controllers in the cluster at the beginning.
-describe('Deploy from invalid file user story test', () => {
+// TODO(#494): Reenable this test when fixed.
+xdescribe('Deploy from invalid file user story test', () => {
 
   /** @type {!DeployFromFilePageObject} */
   let deployFromFilePage;
