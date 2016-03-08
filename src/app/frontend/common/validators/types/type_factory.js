@@ -13,6 +13,11 @@
 // limitations under the License.
 
 import {IntegerType} from './integertype';
+import {LabelKeyNameLengthType} from './labelkeynamelengthtype';
+import {LabelKeyPrefixLengthType} from './labelkeyprefixlengthtype';
+import {LabelKeyNamePatternType} from './labelkeynamepatterntype';
+import {LabelKeyPrefixPatternType} from './labelkeyprefixpatterntype';
+import {LabelValuePatternType} from './labelvaluepatterntype';
 
 /**
  * @final
@@ -27,6 +32,11 @@ export class TypeFactory {
 
     // Initialize map with supported types
     this.typeMap_.set('integer', new IntegerType());
+    this.typeMap_.set('labelKeyNameLength', new LabelKeyNameLengthType());
+    this.typeMap_.set('labelKeyPrefixLength', new LabelKeyPrefixLengthType());
+    this.typeMap_.set('labelKeyNamePattern', new LabelKeyNamePatternType());
+    this.typeMap_.set('labelKeyPrefixPattern', new LabelKeyPrefixPatternType());
+    this.typeMap_.set('labelValuePattern', new LabelValuePatternType());
   }
 
   /**
