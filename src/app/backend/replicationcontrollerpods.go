@@ -32,7 +32,7 @@ func (a TotalRestartCountSorter) Less(i, j int) bool {
 	return a[i].TotalRestartCount > a[j].TotalRestartCount
 }
 
-// Information about a Container that belongs to a Pod.
+// PodContainer is a representation of a Container that belongs to a Pod.
 type PodContainer struct {
 	// Name of a Container.
 	Name string `json:"name"`
@@ -41,13 +41,15 @@ type PodContainer struct {
 	RestartCount int `json:"restartCount"`
 }
 
-// List of pods that belongs to a Replication Controller.
+// ReplicationControllerPods is a representation of pods list that belongs to a Replication
+// Controller.
 type ReplicationControllerPods struct {
 	// List of pods that belongs to a Replication Controller.
 	Pods []ReplicationControllerPodWithContainers `json:"pods"`
 }
 
-// Detailed information about a Pod that belongs to a Replication Controller.
+// ReplicationControllerPodWithContainers is a representation of a Pod that belongs to a Replication
+// Controller.
 type ReplicationControllerPodWithContainers struct {
 	// Name of the Pod.
 	Name string `json:"name"`
@@ -62,8 +64,9 @@ type ReplicationControllerPodWithContainers struct {
 	PodContainers []PodContainer `json:"podContainers"`
 }
 
-// Returns list of pods with containers for the given replication controller in the given namespace.
-// Limit specify the number of records to return. There is no limit when given value is zero.
+// GetReplicationControllerPods returns list of pods with containers for the given replication
+// controller in the given namespace. Limit specify the number of records to return. There is no
+// limit when given value is zero.
 func GetReplicationControllerPods(client *client.Client, namespace, name string, limit int) (
 	*ReplicationControllerPods, error) {
 	log.Printf("Getting list of pods from %s replication controller in %s namespace with limit %d", name,

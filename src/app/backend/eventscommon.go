@@ -21,7 +21,7 @@ import (
 	"strings"
 )
 
-// Partial strings to correctly filter warning events.
+// FailedReasonPartials  is an array of partial strings to correctly filter warning events.
 // Have to be lower case for correct case insensitive comparison.
 // Based on k8s official events reason file:
 // https://github.com/kubernetes/kubernetes/blob/53f0f9d59860131c2be301a0054adfc86e43945d/pkg/kubelet/container/event.go
@@ -30,7 +30,7 @@ import (
 var FailedReasonPartials = []string{"failed", "err", "exceeded", "invalid", "unhealthy",
 	"mismatch", "insufficient", "conflict", "outof", "nil"}
 
-// Returns warning pod events based on given list of pods.
+// GetPodsEventWarnings returns warning pod events based on given list of pods.
 // TODO(floreks) : Import and use Set instead of custom function to get rid of duplicates
 func GetPodsEventWarnings(client client.Interface, pods []api.Pod) (result []Event, err error) {
 	for _, pod := range pods {

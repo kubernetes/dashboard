@@ -21,7 +21,7 @@ import (
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
-// Specification for application name validation request.
+// AppNameValiditySpec is a specification for application name validation request.
 type AppNameValiditySpec struct {
 	// Name of the application.
 	Name string `json:"name"`
@@ -30,13 +30,14 @@ type AppNameValiditySpec struct {
 	Namespace string `json:"namespace"`
 }
 
-// Describes validity of the application name.
+// AppNameValidity describes validity of the application name.
 type AppNameValidity struct {
 	// True when the application name is valid.
 	Valid bool `json:"valid"`
 }
 
-// Validates application name. When error is returned, name validity could not be determined.
+// ValidateAppName validates application name. When error is returned, name validity could not be
+// determined.
 func ValidateAppName(spec *AppNameValiditySpec, client client.Interface) (*AppNameValidity, error) {
 	log.Printf("Validating %s application name in %s namespace", spec.Name, spec.Namespace)
 

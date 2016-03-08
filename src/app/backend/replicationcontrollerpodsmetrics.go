@@ -31,20 +31,21 @@ const (
 	memoryUsage = "memory-usage"
 )
 
-// Metrics map by pod name.
+// ReplicationControllerMetricsByPod is a metrics map by pod name.
 type ReplicationControllerMetricsByPod struct {
 	// Metrics map by pod name
 	MetricsMap map[string]PodMetrics `json:"metricsMap"`
 }
 
-// Some sample measurement of a non-negative, integer quantity
+// MetricResult is a some sample measurement of a non-negative, integer quantity
 // (for example, memory usage in bytes observed at some moment)
 type MetricResult struct {
 	Timestamp time.Time `json:"timestamp"`
 	Value     uint64    `json:"value"`
 }
 
-// Pod metrics structure.
+// PodMetrics is a structure representing pods metrics, contains information about CPU and memory
+// usage.
 type PodMetrics struct {
 	// Most recent measure of CPU usage on all cores in nanoseconds.
 	CpuUsage *uint64 `json:"cpuUsage"`
