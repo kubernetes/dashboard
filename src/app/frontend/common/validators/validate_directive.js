@@ -23,6 +23,11 @@
  *
  * usage:
  *  `<input type="number" kd-validate="integer">`
+ *  `<input type="string" kd-validate="labelKeyNameLength">`
+ *  `<input type="string" kd-validate="labelKeyNamePattern">`
+ *  `<input type="string" kd-validate="labelKeyPrefixLength">`
+ *  `<input type="string" kd-validate="labelKeyPrefixPattern">`
+ *  `<input type="string" kd-validate="labelKeyNameLength">`
  *
  * @param {!./types/type_factory.TypeFactory} kdTypeFactory
  * @return {!angular.Directive}
@@ -41,10 +46,18 @@ export default function validateDirective(kdTypeFactory) {
      * @param {!angular.NgModelController} ctrl
      */
     link: (scope, element, attrs, ctrl) => {
-      /** @type {!./types/type.Type} */
-      let type = kdTypeFactory.getType(attrs[validateType]);
+      let validateTypeNames = attrs[validateType].split(',');
 
-      ctrl.$validators['kdValid'] = (value) => { return type.isValid(value); };
+      validateTypeNames.forEach((validateTypeName) => {
+        validateTypeName = validateTypeName.trim();
+        /** @type {!./types/type.Type} */
+        let type = kdTypeFactory.getType(validateTypeName);
+        // To preserve camel case on validator name
+        let validatorName =
+            `kdValid${validateTypeName[0].toUpperCase()}${validateTypeName.substr(1)}`;
+
+        ctrl.$validators[validatorName] = (value) => { return type.isValid(value); };
+      });
     },
   };
 }
