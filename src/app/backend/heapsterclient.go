@@ -20,7 +20,7 @@ import (
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
-// Clients for making requests to a Heapster instance.
+// HeapsterClient  is a client used to make requests to a Heapster instance.
 type HeapsterClient interface {
 	// Creates a new GET HTTP request to heapster, specified by the path param, to the V1 API
 	// endpoint. The path param is without the API prefix, e.g.,
@@ -29,11 +29,13 @@ type HeapsterClient interface {
 	Get(path string) *client.Request
 }
 
-// In-cluster implementation of heapster client. Talks with heapster through service proxy.
+// InClusterHeapsterClient is a in-cluster implementation of a Heapster client. Talks with Heapster
+// through service proxy.
 type InClusterHeapsterClient struct {
 	client *client.Client
 }
 
+// InClusterHeapsterClient.Get creates request to given path.
 func (c InClusterHeapsterClient) Get(path string) *client.Request {
 	return c.client.Get().Prefix("proxy").
 		Namespace("kube-system").
@@ -42,18 +44,21 @@ func (c InClusterHeapsterClient) Get(path string) *client.Request {
 		Suffix("/api/v1" + path)
 }
 
-// Remote heapster client based implementation. Talks with heapster through raw RESTClient.
+// RemoteHeapsterClient is an implementation of a remote Heapster client. Talks with Heapster
+// through raw RESTClient.
 type RemoteHeapsterClient struct {
 	client *client.RESTClient
 }
 
+// RemoteHeapsterClient.Get creates request to given path.
 func (c RemoteHeapsterClient) Get(path string) *client.Request {
 	return c.client.Get().Suffix(path)
 }
 
-// Creates new Heapster REST client. When heapsterHost param is empty string the function
-// assumes that it is running inside a Kubernetes cluster and connects via service proxy.
-// heapsterHost param is in the format of protocol://address:port, e.g., http://localhost:8002.
+// CreateHeapsterRESTClient creates new Heapster REST client. When heapsterHost param is empty
+// string the function assumes that it is running inside a Kubernetes cluster and connects via
+// service proxy. heapsterHost param is in the format of protocol://address:port,
+// e.g., http://localhost:8002.
 func CreateHeapsterRESTClient(heapsterHost string, apiclient *client.Client) (
 	HeapsterClient, error) {
 

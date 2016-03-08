@@ -60,10 +60,10 @@ func TestAppendEvents(t *testing.T) {
 					},
 					Count: 7,
 					FirstTimestamp: unversioned.Time{
-						time.Date(2015, 1, 1, 0, 0, 0, 0, location),
+						Time: time.Date(2015, 1, 1, 0, 0, 0, 0, location),
 					},
 					LastTimestamp: unversioned.Time{
-						time.Date(2015, 1, 1, 0, 0, 0, 0, location),
+						Time: time.Date(2015, 1, 1, 0, 0, 0, 0, location),
 					},
 					Reason: "my-event-reason",
 					Type:   api.EventTypeNormal,
@@ -86,10 +86,12 @@ func TestAppendEvents(t *testing.T) {
 						SubObject:       "my-event-subobject",
 						Count:           7,
 						FirstSeen: unversioned.Time{
-							time.Date(2015, 1, 1, 0, 0, 0, 0, location),
+							Time: time.Date(2015, 1, 1, 0, 0, 0, 0,
+								location),
 						},
 						LastSeen: unversioned.Time{
-							time.Date(2015, 1, 1, 0, 0, 0, 0, location),
+							Time: time.Date(2015, 1, 1, 0, 0, 0, 0,
+								location),
 						},
 						Reason: "my-event-reason",
 						Type:   api.EventTypeNormal,

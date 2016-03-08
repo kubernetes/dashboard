@@ -27,7 +27,7 @@ import (
 
 const (
 	// RequestLogString is a template for request log message.
-	RequestLogString  = "Incoming %s %s %s request from %s"
+	RequestLogString = "Incoming %s %s %s request from %s"
 
 	// ResponseLogString is a template for response log message.
 	ResponseLogString = "Outcoming response to %s with %d status code"
@@ -189,6 +189,8 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 	return wsContainer
 }
 
+// ApiHandler is a representation of API handler. Structure contains client, Heaptster client and
+// client configuration.
 type ApiHandler struct {
 	client         *client.Client
 	heapsterClient HeapsterClient

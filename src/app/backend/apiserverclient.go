@@ -22,14 +22,12 @@ import (
 	clientcmdapi "k8s.io/kubernetes/pkg/client/unversioned/clientcmd/api"
 )
 
-// Creates new Kubernetes Apiserver client. When apiserverHost param is empty string the function
-// assumes that it is running inside a Kubernetes cluster and attempts to discover the Apiserver.
-// Otherwise, it connects to the Apiserver specified.
+// CreateApiserverClient creates new Kubernetes Apiserver client. When apiserverHost param is empty
+// string the function assumes that it is running inside a Kubernetes cluster and attempts to
+// discover the Apiserver. Otherwise, it connects to the Apiserver specified.
 //
 // apiserverHost param is in the format of protocol://address:port/pathPrefix, e.g.,
 // http://localhost:8001.
-//
-// CreateApiserverClient returns created client and its configuration.
 func CreateApiserverClient(apiserverHost string) (*client.Client, clientcmd.ClientConfig, error) {
 
 	overrides := &clientcmd.ConfigOverrides{}
