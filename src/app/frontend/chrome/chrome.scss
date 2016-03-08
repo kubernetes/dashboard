@@ -23,7 +23,7 @@
 .kd-toolbar {
   box-shadow: $whiteframe-shadow-1dp;
   height: $toolbar-height-size-base;
-  position: fixed;
+  position: fixed !important;
   top: 0;
 }
 
