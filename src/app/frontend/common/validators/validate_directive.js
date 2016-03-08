@@ -22,7 +22,7 @@
  *    field i.e.: integer, appName, pullSecret
  *
  * usage:
- *  `<input type="number" kd-validate="integer">`
+ *  `<input type="number" kd-validate="integer">
  *
  * @param {!./types/type_factory.TypeFactory} kdTypeFactory
  * @return {!angular.Directive}
@@ -41,10 +41,17 @@ export default function validateDirective(kdTypeFactory) {
      * @param {!angular.NgModelController} ctrl
      */
     link: (scope, element, attrs, ctrl) => {
-      /** @type {!./types/type.Type} */
-      let type = kdTypeFactory.getType(attrs[validateType]);
+      let validateTypeNames = attrs[validateType].split(',');
 
-      ctrl.$validators['kdValid'] = (value) => { return type.isValid(value); };
+      validateTypeNames.forEach((validateTypeName) => {
+        /** @type {!./types/type.Type} */
+        let type = kdTypeFactory.getType(validateTypeName.trim());
+        // To preserve camel case on validator name
+        let validatorName = 'kdValid'.concat(
+            validateTypeName[0].toUpperCase().concat(validateTypeName.trim().substr(1)));
+
+        ctrl.$validators[validatorName] = (value) => { return type.isValid(value); };
+      });
     },
   };
 }
