@@ -31,7 +31,7 @@ limitations under the License.
                required>
         <ng-messages for="ctrl.updateReplicasForm.podCount.$error" role="alert">
           <ng-message when="required">Number of pods is required.</ng-message>
-          <ng-message when="number,kdValid">Must be a positive integer.</ng-message>
+          <ng-message when="number,kdValidInteger">Must be a positive integer.</ng-message>
         </ng-messages>
       </md-input-container>
       <md-dialog-actions layout="row">
