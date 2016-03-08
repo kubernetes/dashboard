@@ -29,10 +29,11 @@ import (
 )
 
 const (
+	// DescriptionAnnotationKey is annotation key for a description.
 	DescriptionAnnotationKey = "description"
 )
 
-// Specification for an app deployment.
+// AppDeploymentSpec is a specification for an app deployment.
 type AppDeploymentSpec struct {
 	// Name of the application.
 	Name string `json:"name"`
@@ -82,7 +83,7 @@ type AppDeploymentSpec struct {
 	RunAsPrivileged bool `json:"runAsPrivileged"`
 }
 
-// Specification for deployment from file
+// AppDeploymentFromFileSpec is a specification for deployment from file
 type AppDeploymentFromFileSpec struct {
 	// Name of the file
 	Name string `json:"name"`
@@ -91,7 +92,7 @@ type AppDeploymentFromFileSpec struct {
 	Content string `json:"content"`
 }
 
-// Specification for deployment from file
+// AppDeploymentFromFileResponse is a specification for deployment from file
 type AppDeploymentFromFileResponse struct {
 	// Name of the file
 	Name string `json:"name"`
@@ -103,7 +104,7 @@ type AppDeploymentFromFileResponse struct {
 	Error string `json:"error"`
 }
 
-// Port mapping for an application deployment.
+// PortMapping is a specification of port mapping for an application deployment.
 type PortMapping struct {
 	// Port that will be exposed on the service.
 	Port int `json:"port"`
@@ -124,7 +125,7 @@ type EnvironmentVariable struct {
 	Value string `json:"value"`
 }
 
-// Structure representing label assignable to Pod/RC/Service
+// Label is a structure representing label assignable to Pod/RC/Service
 type Label struct {
 	// Label key
 	Key string `json:"key"`
@@ -133,15 +134,15 @@ type Label struct {
 	Value string `json:"value"`
 }
 
-// Structure representing supported protocol types for a service
+// Protocols is a structure representing supported protocol types for a service
 type Protocols struct {
 	// Array containing supported protocol types e.g., ["TCP", "UDP"]
 	Protocols []api.Protocol `json:"protocols"`
 }
 
-// Deploys an app based on the given configuration. The app is deployed using the given client.
-// App deployment consists of a replication controller and an optional service. Both of them share
-// common labels.
+// DeployApp deploys an app based on the given configuration. The app is deployed using the given
+// client. App deployment consists of a replication controller and an optional service. Both of them
+// share common labels.
 func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 	log.Printf("Deploying %s application into %s namespace", spec.Name, spec.Namespace)
 
@@ -247,6 +248,7 @@ func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 	}
 }
 
+// GetAvailableProtocols returns list of available protocols. Currently it is TCP and UDP.
 func GetAvailableProtocols() *Protocols {
 	return &Protocols{Protocols: []api.Protocol{api.ProtocolTCP, api.ProtocolUDP}}
 }
@@ -279,13 +281,13 @@ func getLabelsMap(labels []Label) map[string]string {
 
 type createObjectFromInfo func(info *kubectlResource.Info) (bool, error)
 
-// Implementation of createObjectFromInfo
+// CreateObjectFromInfoFn is a implementation of createObjectFromInfo
 func CreateObjectFromInfoFn(info *kubectlResource.Info) (bool, error) {
 	createdResource, err := kubectlResource.NewHelper(info.Client, info.Mapping).Create(info.Namespace, true, info.Object)
 	return createdResource != nil, err
 }
 
-// Deploys an app based on the given yaml or json file.
+// DeployAppFromFile deploys an app based on the given yaml or json file.
 func DeployAppFromFile(spec *AppDeploymentFromFileSpec,
 	createObjectFromInfoFn createObjectFromInfo, clientConfig clientcmd.ClientConfig) (bool, error) {
 	const (

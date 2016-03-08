@@ -84,13 +84,13 @@ type ServiceDetail struct {
 	// Name of the service.
 	Name string `json:"name"`
 
-	// Internal endpoints of all Kubernetes services that have the same label selector as connected
-	// Replication Controller.
+	// Internal endpoints of all Kubernetes services that have the same label selector as
+	// connected Replication Controller.
 	// Endpoint is DNS name merged with ports.
 	InternalEndpoint Endpoint `json:"internalEndpoint"`
 
-	// External endpoints of all Kubernetes services that have the same label selector as connected
-	// Replication Controller.
+	// External endpoints of all Kubernetes services that have the same label selector as
+	// connected Replication Controller.
 	// Endpoint is external IP address name merged with ports.
 	ExternalEndpoints []Endpoint `json:"externalEndpoints"`
 
@@ -116,13 +116,14 @@ type Endpoint struct {
 	Ports []ServicePort `json:"ports"`
 }
 
-// Information needed to update replication controller
+// ReplicationControllerSpec contains information needed to update replication controller.
 type ReplicationControllerSpec struct {
 	// Replicas (pods) number in replicas set
 	Replicas int `json:"replicas"`
 }
 
-// Returns detailed information about the given replication controller in the given namespace.
+// GetReplicationControllerDetail returns detailed information about the given replication
+// controller in the given namespace.
 func GetReplicationControllerDetail(client client.Interface, heapsterClient HeapsterClient,
 	namespace, name string) (*ReplicationControllerDetail, error) {
 	log.Printf("Getting details of %s replication controller in %s namespace", name, namespace)
@@ -194,8 +195,8 @@ func GetReplicationControllerDetail(client client.Interface, heapsterClient Heap
 }
 
 // TODO(floreks): This should be transactional to make sure that RC will not be deleted without pods
-// Deletes replication controller with given name in given namespace and related pods.
-// Also deletes services related to replication controller if deleteServices is true.
+// DeleteReplicationController deletes replication controller with given name in given namespace and
+// related pods. Also deletes services related to replication controller if deleteServices is true.
 func DeleteReplicationController(client client.Interface, namespace, name string,
 	deleteServices bool) error {
 
@@ -227,7 +228,8 @@ func DeleteReplicationController(client client.Interface, namespace, name string
 	return nil
 }
 
-// Deletes services related to replication controller with given name in given namespace.
+// DeleteReplicationControllerServices deletes services related to replication controller with given
+// name in given namespace.
 func DeleteReplicationControllerServices(client client.Interface, namespace, name string) error {
 	log.Printf("Deleting services related to %s replication controller from %s namespace", name,
 		namespace)
@@ -259,7 +261,8 @@ func DeleteReplicationControllerServices(client client.Interface, namespace, nam
 	return nil
 }
 
-// Updates number of replicas in Replication Controller based on Replication Controller Spec
+// UpdateReplicasCount updates number of replicas in Replication Controller based on Replication
+// Controller Spec
 func UpdateReplicasCount(client client.Interface, namespace, name string,
 	replicationControllerSpec *ReplicationControllerSpec) error {
 	log.Printf("Updating replicas count to %d for %s replication controller from %s namespace",
