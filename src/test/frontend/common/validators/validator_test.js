@@ -12,27 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {IntegerType} from 'common/validators/types/integertype';
+import {Validator} from 'common/validators/validator';
 
-describe('Integer type', () => {
-  /** @type {!IntegerType} */
-  let integerType;
-
-  beforeEach(() => { angular.mock.inject(() => { integerType = new IntegerType(); }); });
-
-  it('should return true when valid integer', () => {
-    // given
-    let number = 5;
-
-    // then
-    expect(integerType.isValid(number)).toBeTruthy();
-  });
-
-  it('should return false when invalid integer', () => {
-    // given
-    let number = 5.1;
-
-    // then
-    expect(integerType.isValid(number)).toBeFalsy();
+describe('Validator', () => {
+  it('should not be instantiable', () => {
+    expect(() => {
+      new Validator();
+    }).toThrow(new TypeError('Abstract class "Validator" cannot be instantiated directly.'));
   });
 });

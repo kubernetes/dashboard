@@ -17,25 +17,34 @@ limitations under the License.
 <ng-form layout="row" flex="auto" name="labelForm">
   <md-input-container md-no-float class="kd-deploy-input-row" flex="45">
     <input name="key" ng-model="labelCtrl.label.key" ng-change="labelCtrl.check(labelForm)"
-           placeholder="{{labelCtrl.label.key}}" ng-disabled="!labelCtrl.label.editable">
-    <ng-messages for="labelForm.key.$error" ng-if="labelForm.key.$invalid">
+           placeholder="{{labelCtrl.label.key}}" ng-disabled="!labelCtrl.label.editable"
+           kd-validate="labelKeyNameLength,labelKeyPrefixLength,labelKeyNamePattern,labelKeyPrefixPattern"
+           ng-model-options="{allowInvalid: true}">
+    <ng-messages for="labelForm.key.$error" ng-if="labelForm.key.$touched && labelForm.key.$invalid">
       <ng-message when="unique">{{labelCtrl.label.key}} is not unique.</ng-message>
-      <ng-message when="prefixPattern">
-        Prefix (before slash) is not a valid DNS subdomain prefix. Example: my-domain.com
+      <ng-message when="kdValidLabelKeyPrefixPattern">
+        Prefix is not a valid DNS subdomain prefix. Example: my-domain.com
       </ng-message>
-      <ng-message when="namePattern">
-        Label key name should be lower or upper-case alphanumeric with '-', '_' and '.' between words only
+      <ng-message when="kdValidLabelKeyNamePattern">
+        Label key name must be alphanumeric separated by '-', '_' or '.',
+        optionally prefixed by a DNS subdomain and '/'
       </ng-message>
-      <ng-message when="prefixLength">Prefix should not exceed 253 characters</ng-message>
-      <ng-message when="nameLength">Label Key name should not exceed 63 characters</ng-message>
+      <ng-message when="kdValidLabelKeyPrefixLength">Prefix should not exceed 253 characters</ng-message>
+      <ng-message when="kdValidLabelKeyNameLength">Label Key name should not exceed 63 characters</ng-message>
     </ng-messages>
   </md-input-container>
   <p flex="5"></p>
   <md-input-container md-no-float class="kd-deploy-input-row" flex="40">
-    <input ng-model="labelCtrl.label.value" ng-change="labelCtrl.check()"
+    <input name="value" ng-model="labelCtrl.label.value"
            placeholder="{{labelCtrl.label.value}}" ng-disabled="!labelCtrl.label.editable"
-           ng-model-options="{ getterSetter: true }">
-    <ng-messages ng-if="labelForm.key.$error.unique"></ng-messages>
+           kd-validate="labelValuePattern" ng-change="labelCtrl.check()" md-maxlength="253"
+           ng-model-options="{ getterSetter: true, allowInvalid: true }">
+    <ng-messages for="labelForm.value.$error" ng-if="labelForm.value.$touched && labelForm.value.$invalid">
+      <ng-message when="kdValidLabelValuePattern">
+        Label value must be alphanumeric separated by '.' , '-' or '_'
+      </ng-message>
+      <ng-message when="maxlength">Label Value must not exceed 253 characters</ng-message>
+    </ng-messages>
   </md-input-container>
   <md-button type="button" ng-show="labelCtrl.isRemovable()"
              ng-click="labelCtrl.deleteLabel()"
