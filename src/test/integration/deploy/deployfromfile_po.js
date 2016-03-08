@@ -27,9 +27,29 @@ export default class DeployFromFilePageObject {
     this.inputContainer = element(this.inputContainerQuery);
 
     this.filePickerQuery = by.css('.kd-upload-file-picker');
-    this.filePicker = element(this.filePickerQuery);
+    this.filePicker_ = element(this.filePickerQuery);
 
     this.mdDialogQuery = by.tagName('md-dialog');
     this.mdDialog = element(this.mdDialogQuery);
   }
+
+  /**
+   * Make visible filePicker input
+   * Firefox does not allow sendKeys to invisible input[type=file] element
+   */
+  makeInputVisible() {
+    browser.driver.executeScript(function() {
+      /* global document */
+      let filePickerDomElement = document.getElementsByClassName('kd-upload-file-picker')[0];
+      filePickerDomElement.style.visibility = 'visible';
+      filePickerDomElement.style.height = '1px';
+      filePickerDomElement.style.width = '1px';
+    });
+  }
+
+  /**
+   * Sets file into filePicker
+   * @param {string} filePath
+   */
+  setFile(filePath) { this.filePicker_.sendKeys(filePath); }
 }

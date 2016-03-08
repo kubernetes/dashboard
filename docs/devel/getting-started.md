@@ -15,7 +15,7 @@ Make sure the following software is installed and added to the `$PATH` variable:
 * Docker (1.3+)
 * go (1.5+)
 * nodejs (4.2.2+)
-* npm (1.3+)
+* npm (3+)
 * java (7+)
 * gulp (3.9+)
 
