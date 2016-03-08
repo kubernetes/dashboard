@@ -80,10 +80,10 @@ describe('Deploy not existing image story', () => {
     deployPage.containerImageField.sendKeys(containerImage);
 
     // when
-    deployPage.deployButton.click();
-
-    // then
-    expect(browser.getCurrentUrl()).toContain('replicationcontrollers');
+    deployPage.deployButton.click().then(() => {
+      // then
+      expect(browser.getCurrentUrl()).toContain('replicationcontrollers');
+    });
   });
 
   it('should wait for card to be in error state', () => {

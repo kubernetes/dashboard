@@ -14,7 +14,7 @@
 
 export default class ZeroStatePageObject {
   constructor() {
-    this.deployButtonQuery = by.css('.kd-zerostate-deploy-bt');
+    this.deployButtonQuery = by.xpath(`//md-card/md-card-content/a[@ui-sref='deploy']`);
     this.deployButton = element(this.deployButtonQuery);
   }
 

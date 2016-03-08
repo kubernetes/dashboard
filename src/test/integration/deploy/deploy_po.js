@@ -14,7 +14,7 @@
 
 export default class DeployPageObject {
   constructor() {
-    this.deployButtonQuery = by.buttonText('Deploy');
+    this.deployButtonQuery = by.xpath(`//form[@name='ctrl.deployForm']/button[1]`);
     this.deployButton = element(this.deployButtonQuery);
 
     this.appNameFieldQuery = by.model('ctrl.name');
