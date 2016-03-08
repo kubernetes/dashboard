@@ -28,7 +28,7 @@ cache:
 # Use Node.js as primary language because Gulp is the build system used in the project.
 language: node_js
 node_js:
-  - 4.2.2
+  - 5.1.1
 
 addons:
   # Run tests that require a browser on SauceLabs CI provider. Learn more at: https://saucelabs.com
