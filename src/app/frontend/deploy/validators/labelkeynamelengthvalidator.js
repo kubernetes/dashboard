@@ -12,21 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Type} from './type';
+import {Validator} from 'common/validators/validator';
 
 /**
  * @final
- * @extends {Type}
+ * @extends {Validator}
  */
-export class IntegerType extends Type {
-  constructor() { super(); }
+export class LabelKeyNameLengthValidator extends Validator {
+  constructor() {
+    super();
+    /** @type {number} */
+    this.maxKeyLength = 63;
+  }
 
   /**
-   * Returns true if given value is a correct integer value, false otherwise.
-   * When value is undefined or empty then it is considered as correct value in order
-   * to not conflict with other validations like 'required'.
+   * Returns true if the label key name (after the "/" if there is one) is equal or shorter than 63
+   * characters, otherwise returns false.
    *
    * @override
    */
-  isValid(value) { return (Number(value) === value && value % 1 === 0) || !value; }
+  isValid(value) {
+    /** @type {number} */
+    let slashPosition = value.indexOf('/');
+    /** @type {string} */
+    let labelKeyName = slashPosition > -1 ? value.substring(slashPosition + 1) : value;
+
+    return labelKeyName.length <= this.maxKeyLength;
+  }
 }

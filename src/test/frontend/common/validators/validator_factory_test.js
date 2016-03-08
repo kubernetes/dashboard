@@ -13,36 +13,36 @@
 // limitations under the License.
 
 import validatorsModule from 'common/validators/validators_module';
-import {IntegerType} from 'common/validators/types/integertype';
+import {IntegerValidator} from 'common/validators/integervalidator';
 
-describe('Type factory', () => {
-  /** @type {!TypeFactory} */
-  let typeFactory;
+describe('Validator factory', () => {
+  /** @type {!ValidatorFactory} */
+  let validatorFactory;
 
   beforeEach(() => {
     angular.mock.module(validatorsModule.name);
 
-    angular.mock.inject((kdTypeFactory) => { typeFactory = kdTypeFactory; });
+    angular.mock.inject((kdValidatorFactory) => { validatorFactory = kdValidatorFactory; });
   });
 
   it('should return integer type', () => {
     // given
-    let typeName = 'integer';
+    let validatorName = 'integer';
 
     // when
-    let typeObject = typeFactory.getType(typeName);
+    let validatorObject = validatorFactory.getValidator(validatorName);
 
     // then
-    expect(typeObject).toEqual(jasmine.any(IntegerType));
+    expect(validatorObject).toEqual(jasmine.any(IntegerValidator));
   });
 
   it('should throw an error', () => {
     // given
-    let typeName = 'notExistingType';
+    let validatorName = 'notExistingValidator';
 
     // then
     expect(() => {
-      typeFactory.getType(typeName);
-    }).toThrow(new Error(`Given type '${typeName}' is not supported.`));
+      validatorFactory.getValidator(validatorName);
+    }).toThrow(new Error(`Given validator '${validatorName}' is not supported.`));
   });
 });

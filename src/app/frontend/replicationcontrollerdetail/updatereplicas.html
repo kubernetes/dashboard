@@ -31,7 +31,7 @@ limitations under the License.
                required kd-warn-threshold="100" kd-warn-threshold-bind="showWarning">
         <ng-messages for="ctrl.updateReplicasForm.podCount.$error" role="alert">
           <ng-message when="required">Number of pods is required.</ng-message>
-          <ng-message when="number,kdValid">Must be a positive integer.</ng-message>
+          <ng-message when="number,kdValidInteger">Must be a positive integer.</ng-message>
         </ng-messages>
         <span class="kd-warn-threshold" ng-show="showWarning">
           Setting high number of pods may cause performance issues of the cluster and Dashboard UI.

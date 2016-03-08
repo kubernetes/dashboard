@@ -12,17 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import validateDirective from './validate_directive';
-import {ValidatorFactory} from './validator_factory';
+import {IntegerValidator} from 'common/validators/integervalidator';
 
-/**
- * Module containing validators for the application.
- */
-export default angular
-    .module(
-        'kubernetesDashboard.common.validators',
-        [
-          'ngMaterial',
-        ])
-    .service('kdValidatorFactory', ValidatorFactory)
-    .directive('kdValidate', validateDirective);
+describe('Integer type', () => {
+  /** @type {!IntegerValidator} */
+  let integerValidator;
+
+  beforeEach(() => { angular.mock.inject(() => { integerValidator = new IntegerValidator(); }); });
+
+  it('should return true when valid integer', () => {
+    // given
+    let number = 5;
+
+    // then
+    expect(integerValidator.isValid(number)).toBeTruthy();
+  });
+
+  it('should return false when invalid integer', () => {
+    // given
+    let number = 5.1;
+
+    // then
+    expect(integerValidator.isValid(number)).toBeFalsy();
+  });
+});
