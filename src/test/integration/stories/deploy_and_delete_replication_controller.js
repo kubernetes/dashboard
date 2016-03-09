@@ -64,10 +64,10 @@ describe('Deploy and delete replication controller user story test', () => {
   });
 
   it('should deploy replication controller', () => {
-    deployPage.deployButton.click();
-
-    expect(browser.getCurrentUrl()).toContain('replicationcontrollers');
-    expect(element(by.xpath(applicationCardXPath))).not.toBeNull();
+    deployPage.deployButton.click().then(() => {
+      expect(browser.getCurrentUrl()).toContain('replicationcontrollers');
+      expect(element(by.xpath(applicationCardXPath))).not.toBeNull();
+    });
   });
 
   it('should open delete replication controller dialog', () => {

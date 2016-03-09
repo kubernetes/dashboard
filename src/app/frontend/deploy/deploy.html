@@ -45,7 +45,8 @@ limitations under the License.
         </deploy-from-file>
       </div>
 
-      <md-button class="md-raised md-primary" type="submit" ng-disabled="ctrl.isDeployDisabled()">
+      <md-button id="kd-deploy-btn" class="md-raised md-primary" type="submit"
+                 ng-disabled="ctrl.isDeployDisabled()">
         Deploy
       </md-button>
       <md-button class="md-raised" ng-click="ctrl.cancel()">Cancel</md-button>
