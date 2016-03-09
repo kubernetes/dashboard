@@ -17,7 +17,8 @@ import DeployPageObject from '../deploy/deploy_po';
 import ReplicationControllersPageObject from '../replicationcontrollerslist/replicationcontrollers_po';
 
 // Test assumes, that there are no replication controllers in the cluster at the beginning.
-describe('Deploy and delete replication controller user story test', () => {
+// TODO(#494): Reenable this test when fixed.
+xdescribe('Deploy and delete replication controller user story test', () => {
 
   /** @type {!DeployPageObject} */
   let deployPage;
