@@ -1,4 +1,4 @@
-# Replication controller list
+# Logs
 
 ## Prerequisites
 Cluster with few deployed applications, where: 
@@ -9,25 +9,19 @@ Cluster with few deployed applications, where:
 ## Expected result
 Page displays correctly, especially:
 
-* cards are displayed correctly even when page is scaled down/up
-* application details are valid and matching data from `kubectl` command
-* logs menu display correct pods information
-* all application actions are available
-* invalid applications have warning symbols and error messages
+* toolbar is displayed correctly
+* logs are displayed correctly
 
 ## Specific factors
 
-| Factor                               | 1                             | 2                                   | 3              | 4            | 5               | 6                         | 7          | 8      | Comment                                                                                     |
-|--------------------------------------|-------------------------------|-------------------------------------|----------------|--------------|-----------------|---------------------------|------------|--------|---------------------------------------------------------------------------------------------|
-| Replication controller count on page | 1                             | odd                                 | even           | 20-30        |                 |                           |            |        |                                                                                             |
-| Screen size                          | normal                        | mobile                              | narrow         | wide         | active resizing |                           |            |        |                                                                                             |
-| Replication controller status        | valid state                   | error state                         |                |              |                 |                           |            |        | error increases height of the card, error state can be caused by setting non-existing image |
-| Replication controller fields        | normal                        | max length                          | high pod count |              |                 |                           |            |        |                                                                                             |
-| Replication controller labels        | normal                        | long text (253 prefix and 63 label) | 1              | odd          | even            | short and long text mixed | 20-30      |        | labels increase height of the card                                                          |
-| Actions                              | view details                  | edit pod count                      | delete         | display logs |                 |                           |            |        |                                                                                             |
-| Edit pod count                       | negative                      | 0                                   | 1              | less than 10 | more than 30    | empty                     | scale down | cancel |                                                                                             |
-| Delete replication controller action | normal                        | with checkbox checked               | cancel         |              |                 |                           |            |        |                                                                                             |
-| Concurrency                          | delete replication controller | edit pod count                      |                |              |                 |                           |            |        |                                                                                             |
+| Factor                        | 1               | 2                   | 3            | 4           | 5    | 6               | 7 | 8 | Comment |
+|-------------------------------|-----------------|---------------------|--------------|-------------|------|-----------------|---|---|---------|
+| Screen size                   | normal          | mobile              | narrow       | middle size | wide | active resizing |   |   |         |
+| Pods count                    | 1               | odd                 | even         | 20-30       |      |                 |   |   |         |
+| Container count               | 0               | 0-10                | more than 10 |             |      |                 |   |   |         |
+| Replication Controller status | valid state     | invalid error state |              |             |      |                 |   |   |         |
+| Page style                    | default (light) | dark                |              |             |      |                 |   |   |         |
+| Actions                       | switching pods  | switchings pods     |              |             |      |                 |   |   |         |
 
 ## Common Factors
 
