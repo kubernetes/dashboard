@@ -36,6 +36,7 @@ addons:
     username: k8s-dashboard-ci
     access_key: "18b7e71b-60e9-4177-9a7f-e769977dbb39"
 
+before_install: if [[ `npm -v` != 3* ]]; then npm i -g npm@3; fi
 before_script:
   # Prepare environment for the Chrome browser. This is required for PRs from forks where
   # tests do not run on Saucelabs.

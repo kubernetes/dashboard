@@ -19,8 +19,7 @@ import ReplicationControllersPageObject from '../replicationcontrollerslist/repl
 import DeleteReplicationControllerDialogObject from '../replicationcontrollerdetail/deletereplicationcontroller_po';
 import ZeroStatePageObject from '../zerostate/zerostate_po';
 
-import remote from '../../../../node_modules/gulp-protractor/node_modules/protractor/node_\
-modules/selenium-webdriver/remote';
+import remote from '../../../../node_modules/selenium-webdriver/remote';
 
 // Test assumes, that there are no replication controllers in the cluster at the beginning.
 // TODO(#494): Reenable this test when fixed.
