@@ -16,14 +16,17 @@ import path from 'path';
 
 import DeployFromFilePageObject from '../deploy/deployfromfile_po';
 
+import remote from '../../../../node_modules/selenium-webdriver/remote';
+
 // Test assumes, that there are no replication controllers in the cluster at the beginning.
 // TODO(#494): Reenable this test when fixed.
-xdescribe('Deploy from invalid file user story test', () => {
+describe('Deploy from invalid file user story test', () => {
 
   /** @type {!DeployFromFilePageObject} */
   let deployFromFilePage;
 
   beforeAll(() => {
+    browser.driver.setFileDetector(new remote.FileDetector());
     deployFromFilePage = new DeployFromFilePageObject();
     browser.get('#/deploy');
     // switches to deploy from file
@@ -36,6 +39,7 @@ xdescribe('Deploy from invalid file user story test', () => {
     let absolutePath = path.resolve(__dirname, fileToUpload);
 
     // when
+    browser.driver.executeScript(deployFromFilePage.makeInputVisible);
     deployFromFilePage.filePicker.sendKeys(absolutePath);
     deployFromFilePage.deployButton.click();
 
