@@ -32,4 +32,16 @@ export default class DeployFromFilePageObject {
     this.mdDialogQuery = by.tagName('md-dialog');
     this.mdDialog = element(this.mdDialogQuery);
   }
+
+  /**
+   * Firefox does not allow sendKeys to invisible input[type=file] element.
+   * You need to call 'browser.driver.executeScript(makeInputVisible)' before sendKeys.
+   */
+  makeInputVisible() {
+    /* global document */
+    let filePickerDomElement = document.getElementsByClassName('kd-upload-file-picker')[0];
+    filePickerDomElement.style.visibility = 'visible';
+    filePickerDomElement.style.height = '1px';
+    filePickerDomElement.style.width = '1px';
+  }
 }

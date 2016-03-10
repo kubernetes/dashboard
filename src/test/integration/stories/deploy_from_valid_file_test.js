@@ -57,6 +57,7 @@ describe('Deploy from valid file user story test', () => {
     let absolutePath = path.resolve(__dirname, fileToUpload);
 
     // when
+    browser.driver.executeScript(deployFromFilePage.makeInputVisible);
     deployFromFilePage.filePicker.sendKeys(absolutePath);
     deployFromFilePage.deployButton.click();
 
