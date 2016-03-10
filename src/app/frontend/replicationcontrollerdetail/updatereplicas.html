@@ -18,16 +18,21 @@ limitations under the License.
   <md-dialog-content layout-padding>
     <h4 class="md-title">Set desired number of pods</h4>
     <div>
-      Replication controller {{ctrl.replicationController}} will be updated to reflect the desired count.<br/>
+      Replication controller {{ctrl.replicationController}} will be updated to reflect the desired
+      count.<br/>
       <span class="kd-updatereplicas-pod-status">
-        Current status: {{ctrl.currentPods}}
-        created, {{ctrl.desiredPods}} desired
+        Current status: {{ctrl.currentPods}} created, {{ctrl.desiredPods}} desired
       </span>
     </div>
-    <form ng-submit="ctrl.updateReplicas()">
+    <form name="ctrl.updateReplicasForm" ng-submit="ctrl.updateReplicas()" novalidate>
       <md-input-container class="md-block">
         <label>Number of pods</label>
-        <input type="number" min="1" ng-model="ctrl.replicas" required>
+        <input name="podCount" type="number" kd-validate="integer" min="1" ng-model="ctrl.replicas"
+               required>
+        <ng-messages for="ctrl.updateReplicasForm.podCount.$error" role="alert">
+          <ng-message when="required">Number of pods is required.</ng-message>
+          <ng-message when="number,kdValid">Must be a positive integer.</ng-message>
+        </ng-messages>
       </md-input-container>
       <md-dialog-actions layout="row">
         <md-button class="md-primary" ng-click="ctrl.cancel()">Cancel</md-button>
