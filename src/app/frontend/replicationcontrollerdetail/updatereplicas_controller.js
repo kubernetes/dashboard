@@ -61,6 +61,9 @@ export default class UpdateReplicasDialogController {
 
     /** @private {!angular.$resource} */
     this.resource_ = $resource;
+
+    /** @export {!angular.FormController} Initialized from the template */
+    this.updateReplicasForm;
   }
 
   /**
@@ -69,17 +72,19 @@ export default class UpdateReplicasDialogController {
    * @export
    */
   updateReplicas() {
-    let resource = getReplicationControllerSpecPodsResource(
-        new StateParams(this.namespace_, this.replicationController), this.resource_);
+    if (this.updateReplicasForm.$valid) {
+      let resource = getReplicationControllerSpecPodsResource(
+          new StateParams(this.namespace_, this.replicationController), this.resource_);
 
-    /** @type {!backendApi.ReplicationControllerSpec} */
-    let replicationControllerSpec = {
-      replicas: this.replicas,
-    };
+      /** @type {!backendApi.ReplicationControllerSpec} */
+      let replicationControllerSpec = {
+        replicas: this.replicas,
+      };
 
-    resource.save(
-        replicationControllerSpec, this.onUpdateReplicasSuccess_.bind(this),
-        this.onUpdateReplicasError_.bind(this));
+      resource.save(
+          replicationControllerSpec, this.onUpdateReplicasSuccess_.bind(this),
+          this.onUpdateReplicasError_.bind(this));
+    }
   }
 
   /**
