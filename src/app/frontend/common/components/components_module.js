@@ -16,6 +16,7 @@ import filtersModule from '../filters/filters_module';
 import labelsDirective from './labels/labels_directive';
 import middleEllipsisDirective from './middleellipsis/middleellipsis_directive';
 import sparklineDirective from './sparkline/sparkline_directive';
+import warnThresholdDirective from './warnthreshold/warnthreshold_directive';
 
 /**
  * Module containing common components for the application.
@@ -29,4 +30,5 @@ export default angular
         ])
     .directive('kdLabels', labelsDirective)
     .directive('kdMiddleEllipsis', middleEllipsisDirective)
-    .directive('kdSparkline', sparklineDirective);
+    .directive('kdSparkline', sparklineDirective)
+    .directive('kdWarnThreshold', warnThresholdDirective);
