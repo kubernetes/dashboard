@@ -28,11 +28,14 @@ limitations under the License.
       <md-input-container class="md-block">
         <label>Number of pods</label>
         <input name="podCount" type="number" kd-validate="integer" min="1" ng-model="ctrl.replicas"
-               required>
+               required kd-max="100">
         <ng-messages for="ctrl.updateReplicasForm.podCount.$error" role="alert">
           <ng-message when="required">Number of pods is required.</ng-message>
           <ng-message when="number,kdValid">Must be a positive integer.</ng-message>
         </ng-messages>
+        <span class="kd-max" ng-show="ctrl.updateReplicasForm.podCount.kdMax">
+          Setting high number of pods may cause performance issues.
+        </span>
       </md-input-container>
       <md-dialog-actions layout="row">
         <md-button class="md-primary" ng-click="ctrl.cancel()">Cancel</md-button>
