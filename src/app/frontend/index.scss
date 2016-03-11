@@ -13,8 +13,7 @@
 // limitations under the License.
 
 // Import Roboto material design font. It is recommended by the Angular Material spec.
-// TODO(bryk): Bundle the fonts with production binary to not import from external sites.
-@import url('//fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic');
+@import '../../bower_components/roboto-fontface/css/roboto-fontface.css';
 
 // Angular Material icon font. It allows to use the icons as fonts.
-@import url('//fonts.googleapis.com/icon?family=Material+Icons');
+@import '../../bower_components/material-design-icons-iconfont/dist/material-design-icons.css';
