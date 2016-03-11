@@ -1,0 +1,13 @@
+@import '../variables';
+
+.kd-node-card-title {
+  margin: 0 auto .5em;
+}
+
+.kd-node-card-section {
+  margin-top: 2 * $baseline-grid;
+}
+
+.kd-node-card-section-title {
+  color: $foreground-2;
+}

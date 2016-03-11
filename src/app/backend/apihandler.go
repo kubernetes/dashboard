@@ -173,7 +173,20 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 			Writes(Events{}))
 	wsContainer.Add(eventsWs)
 
-	secretsWs := new(restful.WebService)
+	nodesWs := new(restful.WebService)
+	nodesWs.Path("/api/nodes").
+		Produces(restful.MIME_JSON)
+	nodesWs.Route(
+		nodesWs.GET("").
+			To(apiHandler.handleGetNodes).
+			Writes(NodeList{}))
+	nodesWs.Route(
+		nodesWs.GET("/{name}/stats").
+			To(apiHandler.handleGetNodeStats).
+			Writes(NodeStats{}))
+	wsContainer.Add(nodesWs)
+	
+    secretsWs := new(restful.WebService)
 	secretsWs.Path("/api/v1/secrets").Produces(restful.MIME_JSON)
 	secretsWs.Route(
 		secretsWs.GET("/{namespace}").
@@ -453,6 +466,27 @@ func (apiHandler *ApiHandler) handleEvents(request *restful.Request, response *r
 	namespace := request.PathParameter("namespace")
 	replicationController := request.PathParameter("replicationController")
 	result, err := GetEvents(apiHandler.client, namespace, replicationController)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles nodes API call.
+func (apiHandler *ApiHandler) handleGetNodes(request *restful.Request, response *restful.Response) {
+	result, err := GetNodeList(apiHandler.client)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handle node stats API call.
+func (apiHandler *ApiHandler) handleGetNodeStats(request *restful.Request, response *restful.Response) {
+	name := request.PathParameter("name")
+	result, err := GetNodeStats(name)
 	if err != nil {
 		handleInternalError(response, err)
 		return

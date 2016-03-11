@@ -1,0 +1,50 @@
+<md-card class="kd-node-card">
+  <md-card-content>
+    <div layout="column">
+      <div flex layout="row" layout-align="space-between center">
+        <h3 class="md-title kd-node-card-title">
+            {{::ctrl.node.name}}
+        </h3>
+      </div>
+      <div flex layout="row" layout-align="space-between center" ng-if="::ctrl.isStatsAvailable()">
+        <canvas id="line" class="chart chart-line" ng-init="::ctrl.getChartData()"
+          chart-data="data"
+          chart-options="options"
+          chart-colours="colors"
+          chart-labels="labels"
+          chart-legend="true"
+          chart-series="series">
+        </canvas>
+      </div>
+
+      <md-divider></md-divider>
+
+      <div class="md-caption">
+        <div layout="row" layout-wrap>
+          <div flex="50" layout="column" class="kd-node-card-section">
+            <span flex="initial" class="kd-node-card-section-title">Status</span>
+            <span flex>
+              {{::ctrl.node.status}}
+            </span>
+          </div>
+
+          <div flex="50" layout="column" class="kd-node-card-section">
+            <span flex="initial" class="kd-node-card-section-title">Age</span>
+            <span flex>
+              {{::ctrl.node.created | relativeTime}}
+            </span>
+          </div>
+
+          <div flex="100" layout="column" class="kd-node-card-section">
+            <span flex class="kd-node-card-section-title">Labels</span>
+            <div flex>
+              <div ng-repeat="label in ::ctrl.getFormattedLabels()">
+                {{::label}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </md-card-content>
+</md-card>
