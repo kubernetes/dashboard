@@ -77,12 +77,15 @@ limitations under the License.
   <md-input-container class="md-block">
     <label>Number of pods</label>
     <input ng-model="ctrl.replicas" type="number" required min="1" name="replicas"
-           kd-validate="integer">
+           kd-validate="integer" kd-warn-threshold="100">
     <ng-messages for="ctrl.form.replicas.$error" role="alert" multiple>
       <ng-message when="required">Number of pods is required.</ng-message>
       <ng-message when="number, kdValid">Number of pods must be a positive integer.</ng-message>
       <ng-message when="min">Number of pods must be at least 1.</ng-message>
     </ng-messages>
+    <span class="kd-warn-threshold" ng-show="ctrl.form.replicas.kdWarnThreshold">
+      Setting high number of pods may cause performance issues.
+    </span>
   </md-input-container>
   <kd-user-help>
     A Replication Controller will be created to maintain the desired number of pods across your
