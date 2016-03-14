@@ -1,6 +1,6 @@
 # Kubernetes Dashboard
 [![Build Status](https://travis-ci.org/kubernetes/dashboard.svg?branch=master)](https://travis-ci.org/kubernetes/dashboard)
-[![Coverage Status](https://codecov.io/github/bryk/dashboard/coverage.svg?branch=master)](https://codecov.io/github/bryk/dashboard?branch=master)
+[![Coverage Status](https://codecov.io/github/kubernetes/dashboard/coverage.svg?branch=master)](https://codecov.io/github/kubernetes/dashboard?branch=master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/kubernetes/dashboard)](https://goreportcard.com/report/github.com/kubernetes/dashboard)
 
 Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters. It allows users to
