@@ -46,7 +46,7 @@ export default class DeployLabel {
   value(newValue) {
     if (this.derivedValueGetter_ !== undefined) {
       if (newValue !== undefined) {
-        throw Error("Can not set value of derived label.");
+        throw Error('Can not set value of derived label.');
       }
 
       return this.derivedValueGetter_(this.key);

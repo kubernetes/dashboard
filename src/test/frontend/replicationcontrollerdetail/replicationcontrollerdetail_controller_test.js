@@ -42,12 +42,12 @@ describe('Replication Controller Detail controller', () => {
     let eventType = 'All';
     let events = [
       {
-        type: "Warning",
-        message: "event-1",
+        type: 'Warning',
+        message: 'event-1',
       },
       {
-        type: "Normal",
-        message: "event-2",
+        type: 'Normal',
+        message: 'event-2',
       },
     ];
 
@@ -63,16 +63,16 @@ describe('Replication Controller Detail controller', () => {
     let eventType = 'Warning';
     let events = [
       {
-        type: "Warning",
-        message: "event-1",
+        type: 'Warning',
+        message: 'event-1',
       },
       {
-        type: "Normal",
-        message: "event-2",
+        type: 'Normal',
+        message: 'event-2',
       },
       {
-        type: "Normal",
-        message: "event-3",
+        type: 'Normal',
+        message: 'event-3',
       },
     ];
 
@@ -91,7 +91,7 @@ describe('Replication Controller Detail controller', () => {
 
   it('should return true when there are events to display', () => {
     // given
-    ctrl.events = ["Some event"];
+    ctrl.events = ['Some event'];
 
     // when
     let result = ctrl.hasEvents();

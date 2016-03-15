@@ -29,7 +29,7 @@ describe('DokcerImageReference', () => {
 
   it('should return empty string when containerImage is empty', () => {
     // given
-    let reference = "";
+    let reference = '';
 
     // when
     let result = new DockerImageReference(reference).tag();
@@ -160,7 +160,7 @@ describe('DokcerImageReference', () => {
 
   it('should retrun empty when containerImage is not empty and ends with `:` delimiter', () => {
     // given
-    let reference = "test:";
+    let reference = 'test:';
 
     // when
     let result = new DockerImageReference(reference).tag();
@@ -171,7 +171,7 @@ describe('DokcerImageReference', () => {
 
   it('should retrun empty when containerImage is not empty and ends with `/` delimiter', () => {
     // given
-    let reference = "test/";
+    let reference = 'test/';
 
     // when
     let result = new DockerImageReference(reference).tag();

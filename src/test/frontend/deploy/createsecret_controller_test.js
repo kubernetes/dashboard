@@ -39,9 +39,9 @@ describe('Create-Secret dialog', () => {
     let rule = ctrl.secretNamePattern;
 
     // then the following secret names should be accepted
-    expect("mysecret".match(rule)).toBeDefined();
-    expect("my.secret.com".match(rule)).toBeDefined();
-    expect("my-secret32.com".match(rule)).toBeDefined();
+    expect('mysecret'.match(rule)).toBeDefined();
+    expect('my.secret.com'.match(rule)).toBeDefined();
+    expect('my-secret32.com'.match(rule)).toBeDefined();
   });
 
   it('should validate inproper secret names as incorrect', () => {
@@ -49,14 +49,14 @@ describe('Create-Secret dialog', () => {
     let rule = ctrl.secretNamePattern;
 
     // then the following secret names should be rejected
-    expect("illegalsecret§$".match(rule)).toBeNull();
-    expect(".dotpreffix.com".match(rule)).toBeNull();
-    expect("dotsuffix.com.".match(rule)).toBeNull();
-    expect("-dashprefix.com".match(rule)).toBeNull();
-    expect("dashsuffix-".match(rule)).toBeNull();
-    expect("umlautsÖÄ.not.allowed".match(rule)).toBeNull();
-    expect("name with spaces".match(rule)).toBeNull();
-    expect("  ".match(rule)).toBeNull();
+    expect('illegalsecret§$'.match(rule)).toBeNull();
+    expect('.dotpreffix.com'.match(rule)).toBeNull();
+    expect('dotsuffix.com.'.match(rule)).toBeNull();
+    expect('-dashprefix.com'.match(rule)).toBeNull();
+    expect('dashsuffix-'.match(rule)).toBeNull();
+    expect('umlautsÖÄ.not.allowed'.match(rule)).toBeNull();
+    expect('name with spaces'.match(rule)).toBeNull();
+    expect('  '.match(rule)).toBeNull();
   });
 
   /**
@@ -79,10 +79,10 @@ describe('Create-Secret dialog', () => {
     let rule = ctrl.dataPattern;
 
     // then the following data strings should be rejected
-    expect("aaa".match(rule)).toBeNull();
-    expect("=asd8".match(rule)).toBeNull();
-    expect("==aaa".match(rule)).toBeNull();
-    expect("abcde".match(rule)).toBeNull();
+    expect('aaa'.match(rule)).toBeNull();
+    expect('=asd8'.match(rule)).toBeNull();
+    expect('==aaa'.match(rule)).toBeNull();
+    expect('abcde'.match(rule)).toBeNull();
   });
 
   it('should not submit if the form has validation errors', () => {
@@ -99,7 +99,7 @@ describe('Create-Secret dialog', () => {
     // given no validation error in the html form
     ctrl.secretForm = {};
     ctrl.secretForm.$valid = true;
-    ctrl.secretName = "mysecret";
+    ctrl.secretName = 'mysecret';
     ctrl.data = `eyAiaHR0cHM6Ly9pbmRleC5kb2NrZXIuaW8` + `vdjEvIjogeyAiYXV0aCI6ICJabUZyWlhCaG` +
         `MzTjNiM0prTVRJSyIsICJlbWFpbCI6` + `ICJqZG9lQGV4YW1wbGUuY29tIiB9IH0K`;
     httpBackend

@@ -21,37 +21,37 @@ describe('Apply ellipsis filter', () => {
   it('has a applyMiddleEllipsis filter',
      angular.mock.inject(function($filter) { expect($filter('middleEllipsis')).not.toBeNull(); }));
 
-  it("should return the same value if max parameter is undefined",
+  it('should return the same value if max parameter is undefined',
      angular.mock.inject(function(middleEllipsisFilter) {
        expect(middleEllipsisFilter(testedString)).toEqual('podName');
      }));
 
-  it("should return the same value if length less then given max length parameter",
+  it('should return the same value if length less then given max length parameter',
      angular.mock.inject(function(middleEllipsisFilter) {
        expect(middleEllipsisFilter(testedString, 10)).toEqual('podName');
      }));
 
-  it("should return the same value when max = 0",
+  it('should return the same value when max = 0',
      angular.mock.inject(function(middleEllipsisFilter) {
        expect(middleEllipsisFilter(testedString, 0)).toEqual('podName');
      }));
 
-  it("should return truncated value with ellipsis as tail",
+  it('should return truncated value with ellipsis as tail',
      angular.mock.inject(function(middleEllipsisFilter) {
        expect(middleEllipsisFilter(testedString, 1)).toEqual('p...');
      }));
 
-  it("should return truncated value with the ellipsis in the middle",
+  it('should return truncated value with the ellipsis in the middle',
      angular.mock.inject(function(middleEllipsisFilter) {
        expect(middleEllipsisFilter(testedString, 2)).toEqual('p...e');
      }));
 
-  it("should return truncated value with the ellipsis in the middle",
+  it('should return truncated value with the ellipsis in the middle',
      angular.mock.inject(function(middleEllipsisFilter) {
        expect(middleEllipsisFilter(testedString, 3)).toEqual('po...e');
      }));
 
-  it("should return truncated value with the ellipsis in the middle",
+  it('should return truncated value with the ellipsis in the middle',
      angular.mock.inject(function(middleEllipsisFilter) {
        expect(middleEllipsisFilter(testedString, 5)).toEqual('pod...me');
      }));

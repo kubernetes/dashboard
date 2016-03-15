@@ -14,7 +14,7 @@
 
 export default class DeleteReplicationControllerDialogObject {
   constructor() {
-    let deleteDialogXPath = "//md-dialog[@aria-label='Delete Replication Controller']";
+    let deleteDialogXPath = '//md-dialog[@aria-label=\'Delete Replication Controller\']';
     this.deleteDialogQuery = by.xpath(deleteDialogXPath);
     this.deleteDialog = element(this.deleteDialogQuery);
 

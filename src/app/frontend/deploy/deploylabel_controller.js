@@ -108,7 +108,7 @@ export default class DeployLabelController {
       /** @type {boolean} */
       let isPrefixed = PrefixPattern.test(this.label.key);
       /** @type {number} */
-      let slashPosition = isPrefixed ? this.label.key.indexOf("/") : -1;
+      let slashPosition = isPrefixed ? this.label.key.indexOf('/') : -1;
 
       /** @type {boolean} */
       let isUnique = !this.isKeyDuplicated_();
@@ -165,7 +165,7 @@ export default class DeployLabelController {
     /** @type {!RegExp} */
     let labelKeyPrefixPattern = /^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$/;
     /** @type {string} */
-    let labelPrefix = isPrefixed ? this.label.key.substring(0, slashPosition) : "valid-pattern";
+    let labelPrefix = isPrefixed ? this.label.key.substring(0, slashPosition) : 'valid-pattern';
 
     return (labelKeyPrefixPattern.test(labelPrefix));
   }

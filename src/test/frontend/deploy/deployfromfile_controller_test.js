@@ -36,12 +36,12 @@ describe('DeployFromFile controller', () => {
     let resourceObject = {
       save: jasmine.createSpy('save'),
     };
-    ctrl.file.name = "test.yaml";
-    ctrl.file.content = "test_content";
+    ctrl.file.name = 'test.yaml';
+    ctrl.file.content = 'test_content';
     mockResource.and.returnValue(resourceObject);
     resourceObject.save.and.callFake((spec) => {
       // then
-      expect(spec.name).toBe("test.yaml");
+      expect(spec.name).toBe('test.yaml');
       expect(spec.content).toBe('test_content');
     });
     // when
@@ -99,7 +99,7 @@ describe('DeployFromFile controller', () => {
     it('should not redirect the page and but open error dialog', () => {
       spyOn(ctrl.errorDialog_, 'open');
       spyOn(ctrl.state_, 'go');
-      httpBackend.expectPOST('api/v1/appdeploymentfromfile').respond(500, "Deployment failed");
+      httpBackend.expectPOST('api/v1/appdeploymentfromfile').respond(500, 'Deployment failed');
       // when
       ctrl.deploy();
       httpBackend.flush();

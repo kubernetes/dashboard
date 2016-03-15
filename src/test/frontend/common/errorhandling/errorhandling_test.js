@@ -31,9 +31,9 @@ describe('Errorhandling service', () => {
   it('should show error title and error message in the md dialog', () => {
     spyOn(mdDialog, 'show');
     /** @type {string} */
-    let errorTitle = "Error title";
+    let errorTitle = 'Error title';
     /** @type {string} */
-    let errorMessage = "Error message";
+    let errorMessage = 'Error message';
     // open the error dialog
     errorDialog.open(errorTitle, errorMessage);
     // and expect it to show

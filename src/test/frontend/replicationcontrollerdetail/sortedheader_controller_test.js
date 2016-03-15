@@ -27,8 +27,8 @@ describe('Sorted header controller', () => {
   it('should switch sorting direction after clicking same column twice', () => {
     // given "selected-column" is sorted upwards
     ctrl.currentlySelectedOrder = UPWARDS;
-    ctrl.currentlySelectedColumn = "selected-column";
-    ctrl.columnName = "selected-column";
+    ctrl.currentlySelectedColumn = 'selected-column';
+    ctrl.columnName = 'selected-column';
 
     // when user clicks "selected-column" once more
     ctrl.changeSorting();
@@ -42,9 +42,9 @@ describe('Sorted header controller', () => {
 
   it('should switch sorting column after clicking second column', () => {
     // given "first-column", however sorting is on "second-column"
-    ctrl.columnName = "first-column";
+    ctrl.columnName = 'first-column';
     ctrl.currentlySelectedOrder = UPWARDS;
-    ctrl.currentlySelectedColumn = "second-column";
+    ctrl.currentlySelectedColumn = 'second-column';
 
     // when user clicks "first-column"
     ctrl.changeSorting();

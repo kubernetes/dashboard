@@ -44,13 +44,13 @@ describe('Logs menu controller', () => {
   it('should clear replicationControllerPodsList on open menu', () => {
     ctrl.replicationControllerPodsList = [
       {
-        "name": "frontend-i0vvd",
-        "startTime": "2015-12-08T09:00:34Z",
-        "totalRestartCount": 0,
-        "podContainers": [
+        'name': 'frontend-i0vvd',
+        'startTime': '2015-12-08T09:00:34Z',
+        'totalRestartCount': 0,
+        'podContainers': [
           {
-            "name": "php-redis",
-            "restartCount": 0,
+            'name': 'php-redis',
+            'restartCount': 0,
           },
         ],
       },
@@ -68,7 +68,7 @@ describe('Logs menu controller', () => {
     spyOn(state, 'href');
 
     // when
-    ctrl.getLogsHref("podName", "containerName");
+    ctrl.getLogsHref('podName', 'containerName');
 
     // then
     expect(state.href).toHaveBeenCalled();
@@ -77,7 +77,7 @@ describe('Logs menu controller', () => {
   it('should return false when pod does not have any container', () => {
     // when
     let pod = {
-      "podContainers": [{}],
+      'podContainers': [{}],
     };
     // then
     expect(ctrl.podContainerExists(pod)).toBeFalsy();
@@ -86,9 +86,9 @@ describe('Logs menu controller', () => {
   it('should return true when pod has one container', () => {
     // when
     let pod = {
-      "podContainers": [
+      'podContainers': [
         {
-          "name": "php-redis",
+          'name': 'php-redis',
         },
       ],
     };
@@ -99,7 +99,7 @@ describe('Logs menu controller', () => {
   it('should return false when pod containers were not restarted', () => {
     // when
     let pod = {
-      "totalRestartCount": 0,
+      'totalRestartCount': 0,
     };
     // then
     expect(ctrl.podContainersRestarted(pod)).toBeFalsy();
@@ -108,7 +108,7 @@ describe('Logs menu controller', () => {
   it('should return true when pod containers were restarted', () => {
     // when
     let pod = {
-      "totalRestartCount": 1,
+      'totalRestartCount': 1,
     };
     // then
     expect(ctrl.podContainersRestarted(pod)).toBeTruthy();

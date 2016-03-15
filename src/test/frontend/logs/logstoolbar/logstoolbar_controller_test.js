@@ -106,7 +106,7 @@ describe('Logs toolbar controller', () => {
     spyOn(state, 'transitionTo');
 
     // when
-    ctrl.onPodChange("pod3");
+    ctrl.onPodChange('pod3');
 
     // then
     expect(state.transitionTo).toHaveBeenCalled();
@@ -117,7 +117,7 @@ describe('Logs toolbar controller', () => {
     spyOn(state, 'transitionTo');
 
     // when
-    ctrl.onContainerChange("container");
+    ctrl.onContainerChange('container');
 
     // then
     expect(state.transitionTo).toHaveBeenCalled();
