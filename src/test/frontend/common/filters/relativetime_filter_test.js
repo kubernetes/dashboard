@@ -50,7 +50,7 @@ describe('Relative time filter', () => {
        expect(relativeTime).toEqual(`didn't happen yet`);
      });
 
-  it("should return 'just now' string if given time is the same as current time", () => {
+  it('should return \'just now\' string if given time is the same as current time', () => {
     // when
     let relativeTime = relativeTimeFilter(givenTime);
 
@@ -58,7 +58,7 @@ describe('Relative time filter', () => {
     expect(relativeTime).toEqual('just now');
   });
 
-  it("should return 'a second' string if given time is a second before current time", () => {
+  it('should return \'a second\' string if given time is a second before current time', () => {
     // given
     givenTime.setSeconds(givenTime.getSeconds() - 1);
 
@@ -69,7 +69,7 @@ describe('Relative time filter', () => {
     expect(relativeTime).toEqual('a second');
   });
 
-  it("should return '15 seconds' string if given time is 15 seconds before current time", () => {
+  it('should return \'15 seconds\' string if given time is 15 seconds before current time', () => {
     // given
     givenTime.setSeconds(givenTime.getSeconds() - 15);
 
@@ -80,7 +80,7 @@ describe('Relative time filter', () => {
     expect(relativeTime).toEqual('15 seconds');
   });
 
-  it("should return 'a minute' string if given time is a minute before current time", () => {
+  it('should return \'a minute\' string if given time is a minute before current time', () => {
     // given
     givenTime.setMinutes(givenTime.getMinutes() - 1);
 
@@ -91,7 +91,7 @@ describe('Relative time filter', () => {
     expect(relativeTime).toEqual('a minute');
   });
 
-  it("should return '30 minutes' string if given time is 30 minutes before current time", () => {
+  it('should return \'30 minutes\' string if given time is 30 minutes before current time', () => {
     // given
     givenTime.setMinutes(givenTime.getMinutes() - 30);
 
@@ -102,7 +102,7 @@ describe('Relative time filter', () => {
     expect(relativeTime).toEqual('30 minutes');
   });
 
-  it("should return 'an hour' string if given time is an hour before current time", () => {
+  it('should return \'an hour\' string if given time is an hour before current time', () => {
     // given
     givenTime.setHours(givenTime.getHours() - 1);
 
@@ -113,7 +113,7 @@ describe('Relative time filter', () => {
     expect(relativeTime).toEqual('an hour');
   });
 
-  it("should return '3 hours' string if given time is 3 hours before current time", () => {
+  it('should return \'3 hours\' string if given time is 3 hours before current time', () => {
     // given
     givenTime.setHours(givenTime.getHours() - 3);
 
@@ -124,7 +124,7 @@ describe('Relative time filter', () => {
     expect(relativeTime).toEqual('3 hours');
   });
 
-  it("should return 'a day' string if given time is a day before current time", () => {
+  it('should return \'a day\' string if given time is a day before current time', () => {
     // given
     givenTime.setDate(givenTime.getDate() - 1);
 
@@ -135,7 +135,7 @@ describe('Relative time filter', () => {
     expect(relativeTime).toEqual('a day');
   });
 
-  it("should return '8 days' string if given time is 8 days before current time", () => {
+  it('should return \'8 days\' string if given time is 8 days before current time', () => {
     // given
     givenTime.setDate(givenTime.getDate() - 8);
 
@@ -146,7 +146,7 @@ describe('Relative time filter', () => {
     expect(relativeTime).toEqual('8 days');
   });
 
-  it("should return 'a month' string if given time is a month before current time", () => {
+  it('should return \'a month\' string if given time is a month before current time', () => {
     // given
     givenTime.setMonth(givenTime.getMonth() - 1);
 
@@ -157,7 +157,7 @@ describe('Relative time filter', () => {
     expect(relativeTime).toEqual('a month');
   });
 
-  it("should return '11 months' string if given time is 11 months before current time", () => {
+  it('should return \'11 months\' string if given time is 11 months before current time', () => {
     // given
     givenTime.setMonth(givenTime.getMonth() - 11);
 
@@ -168,7 +168,7 @@ describe('Relative time filter', () => {
     expect(relativeTime).toEqual('11 months');
   });
 
-  it("should return 'a year' string if given time is a year before current time", () => {
+  it('should return \'a year\' string if given time is a year before current time', () => {
     // given
     givenTime.setYear(givenTime.getFullYear() - 1);
 
@@ -179,7 +179,7 @@ describe('Relative time filter', () => {
     expect(relativeTime).toEqual('a year');
   });
 
-  it("should return '134 years' string if given time is 134 years before current time", () => {
+  it('should return \'134 years\' string if given time is 134 years before current time', () => {
     // given
     givenTime.setYear(givenTime.getFullYear() - 134);
 
@@ -190,8 +190,8 @@ describe('Relative time filter', () => {
     expect(relativeTime).toEqual('134 years');
   });
 
-  it("should return '11 months' string if given time is 11 months, 7 days, 5 hours and 3 minutes" +
-         " before current time",
+  it('should return \'11 months\' string if given time is 11 months, 7 days, 5 hours and 3 minutes' +
+         ' before current time',
      () => {
        // given
        givenTime.setMonth(givenTime.getMonth() - 11);

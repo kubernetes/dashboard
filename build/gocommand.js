@@ -108,8 +108,8 @@ function checkGoVersion() {
         if (semver.lt(currentGoVersion, minGoVersion)) {
           deferred.reject(
               new Error(
-                  `The current go version "${currentGoVersion}" is older than ` +
-                  `the minimum required version "${minGoVersion}". ` +
+                  `The current go version '${currentGoVersion}' is older than ` +
+                  `the minimum required version '${minGoVersion}'. ` +
                   `Please upgrade your go version!`));
           return;
         }

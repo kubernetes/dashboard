@@ -58,7 +58,7 @@ describe('Valid ImageReference directive', () => {
     scope.containerImage = 'private.registry:5000/test:1';
     endpoint.respond({
       valid: true,
-      reason: "",
+      reason: '',
     });
     scope.$apply();
     httpBackend.flush();

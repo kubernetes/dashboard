@@ -43,9 +43,9 @@ describe('Middle ellipsis', () => {
     }
 
     return angular.element(`
-    <div style="width: ${availableWidth}px; display: block;" id="fixture">
-      <div style="width: 100%; display: block;" class="kd-middleellipsis-container">
-        <span class="kd-middleellipsis">${displayText}</span>
+    <div style='width: ${availableWidth}px; display: block;' id='fixture'>
+      <div style='width: 100%; display: block;' class='kd-middleellipsis-container'>
+        <span class='kd-middleellipsis'>${displayText}</span>
       </div>
     </div>`);
   }

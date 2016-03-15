@@ -56,7 +56,7 @@ export default class DeployController {
      * represents the default selection.
      * @export {string}
      */
-    this.selection = "Settings";
+    this.selection = 'Settings';
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;

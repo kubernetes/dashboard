@@ -58,7 +58,7 @@ describe('Validate directive', () => {
   it('should throw an error when wrong type is provided', () => {
     // given
     let typeName = 'invalid';
-    let compileFn = compile(`<input ng-model="replicas" type="number"kd-validate="${typeName}">`);
+    let compileFn = compile(`<input ng-model='replicas' type='number'kd-validate='${typeName}'>`);
 
     // when and then
     expect(() => {
