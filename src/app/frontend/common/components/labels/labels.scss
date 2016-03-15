@@ -26,3 +26,9 @@ $label-margin: 0 $baseline-grid ($baseline-grid / 2) 0;
   padding: ($baseline-grid / 4) $baseline-grid;
   vertical-align: middle;
 }
+
+.kd-labels-switch {
+  color: $primary;
+  cursor: pointer;
+  outline: none;
+}
