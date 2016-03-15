@@ -23,5 +23,44 @@ export default class LabelsController {
   constructor() {
     /** @export {!Object<string, string>} Initialized from the scope. */
     this.labels;
+
+    /** @type {boolean} */
+    this.isShowingAllLabels = false;
+
+    /** @type {number} */
+    this.alwaysVisibleLabelsNumber = 8;
   }
+
+  /**
+   * Returns true if element at index position should be visible.
+   *
+   * @param index
+   * @return {boolean}
+   * @export
+   */
+  isVisible(index) { return this.isShowingAllLabels || index < this.alwaysVisibleLabelsNumber; }
+
+  /**
+   * Returns true if more labels than alwaysVisibleLabelsNumber is available.
+   *
+   * @return {boolean}
+   * @export
+   */
+  isMoreAvailable() { return Object.keys(this.labels).length > this.alwaysVisibleLabelsNumber; }
+
+  /**
+   * Returns true if all labels are showed.
+   *
+   * @return {boolean}
+   * @export
+   */
+  isShowingAll() { return this.isShowingAllLabels; }
+
+  /**
+   * Switches labels view between two states, which are showing only alwaysVisibleLabelsNumber of
+   * labels and showing all labels.
+   *
+   * @export
+   */
+  switchLabelsView() { this.isShowingAllLabels = !this.isShowingAllLabels; }
 }
