@@ -22,6 +22,7 @@ import './build/check';
 import './build/cluster';
 import './build/backend';
 import './build/build';
+import './build/dependencies';
 import './build/deploy';
 import './build/index';
 import './build/script';
