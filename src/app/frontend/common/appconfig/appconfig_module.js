@@ -1,3 +1,4 @@
+
 // Copyright 2015 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,23 +13,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import coresFilter from './cores_filter';
-import memoryFilter from './memory_filter';
-import middleEllipsisFilter from './middleellipsis_filter';
-import relativeTimeFilter from './relativetime_filter';
-import appConfigModule from '../appconfig/appconfig_module';
+import appConfigServiceProvider from './appconfig_serviceprovider';
 
 /**
- * Module containing common filters for the application.
+ * Angular module containing application configuration.
  */
 export default angular
     .module(
-        'kubernetesDashboard.common.filters',
+        'kubernetesDashboard.appconfig',
         [
           'ngMaterial',
-          appConfigModule.name,
         ])
-    .filter('middleEllipsis', middleEllipsisFilter)
-    .filter('kdMemory', memoryFilter)
-    .filter('kdCores', coresFilter)
-    .filter('relativeTime', relativeTimeFilter);
+    .provider('kdAppConfigService', appConfigServiceProvider)
+    // TODO(maciaszczykm): Fix 'appConfig_DO_NOT_USE_DIRECTLY is not defined' error.
+    .value('appConfig', appConfig_DO_NOT_USE_DIRECTLY);
