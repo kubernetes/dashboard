@@ -14,6 +14,7 @@
 
 /**
  * Unit name constants (singular and plural form), that will be used by the filter.
+ *
  * @enum {!Array<string>}
  */
 const Units = {
@@ -27,6 +28,7 @@ const Units = {
 
 /**
  * Unit conversion constants.
+ *
  * @enum {number}
  */
 const UnitConversions = {
@@ -41,6 +43,7 @@ const UnitConversions = {
 
 /**
  * Time constants.
+ *
  * @enum {string}
  */
 const TimeConstants = {
@@ -48,19 +51,26 @@ const TimeConstants = {
   NOW: `just now`,
 };
 
+// TODO(maciaszczykm): Fix kdAppConfigService type annotation.
 /**
  * Returns filter function to display relative time since given date.
- * @return {function(string): string}
+ *
+ * @param {!Object} kdAppConfigService
+ * @return {function(string, ?string): string}
  */
-export default function relativeTimeFilter() {
+export default function relativeTimeFilter(kdAppConfigService) {
   /**
    * Filter function to display relative time since given date.
+   *
    * @param {string} value Filtered value.
    * @return {string}
    */
   let filterFunction = function(value) {
+    // Current server time in miliseconds.
+    let serverTime = kdAppConfigService.getServerTime();
+
     // Current and given times in miliseconds.
-    let currentTime = (new Date()).getTime();  // TODO(maciaszczykm): Use server time.
+    let currentTime = getCurrentTime(serverTime);
     let givenTime = (new Date(value)).getTime();
 
     // Time differences between current time and given time in specific units.
@@ -92,11 +102,25 @@ export default function relativeTimeFilter() {
       return formatOutputTimeString_(diffInYears, Units.YEAR);
     }
   };
+
   return filterFunction;
 }
 
 /**
+ * Returns current time. If appConfig.serverTime is provided then it will be returned, otherwise current
+ * client time will be used.
+ *
+ * @param {number} serverTime
+ * @return {number}
+ * @private
+ */
+function getCurrentTime(serverTime) {
+  return serverTime ? serverTime : (new Date()).getTime();
+}
+
+/**
  * Formats relative time string. Sample results look following: 'a year', '2 days' or '14 hours'.
+ *
  * @param {number} timeValue Time value in specified unit.
  * @param {!Array<string>} timeUnit Specified unit.
  * @return {string} Formatted time string.

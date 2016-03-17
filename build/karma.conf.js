@@ -36,6 +36,7 @@ function getFileList() {
   };
 
   return wiredep(wiredepOptions).js.concat([
+    path.join(conf.paths.frontendTest, '**/*.json'),
     path.join(conf.paths.frontendTest, '**/*.js'),
     path.join(conf.paths.frontendSrc, '**/*.js'),
     path.join(conf.paths.frontendSrc, '**/*.html'),

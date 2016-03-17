@@ -38,7 +38,7 @@ export default class ReplicationControllerDetailController {
    * @ngInject
    */
   constructor(
-      $mdMedia, $stateParams, $state, $resource, $log, replicationControllerDetail,
+      $mdMedia, $stateParams, $state, $log, replicationControllerDetail,
       replicationControllerEvents) {
     /** @export {function(string):boolean} */
     this.mdMedia = $mdMedia;
