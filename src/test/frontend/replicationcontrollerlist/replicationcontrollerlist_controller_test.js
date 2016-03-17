@@ -28,7 +28,7 @@ describe('Replication controller list controller', () => {
       state = $state;
       ctrl = $controller(
           ReplicationControllerListController,
-          {replicationControllers: {replicationControllers: []}});
+          {serverTime: {}, replicationControllers: {replicationControllers: []}});
     });
   });
 

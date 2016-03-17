@@ -128,7 +128,7 @@ limitations under the License.
               </td>
               <td kd-responsive-header="Age" class="kd-replicationcontrollerdetail-table-cell">
                 <span ng-if="::pod.startTime">
-                  {{::pod.startTime | relativeTime}}
+                  {{::pod.startTime | relativeTime:ctrl.currentServerTime}}
                   <md-tooltip>Started at {{::(pod.startTime | date:'short')}}</md-tooltip>
                 </span>
                 <span ng-if="::!pod.startTime">

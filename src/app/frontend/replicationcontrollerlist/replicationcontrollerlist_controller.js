@@ -23,14 +23,21 @@ export default class ReplicationControllerListController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!backendApi.ReplicationControllerList} replicationControllers
+   * @param {!backendApi.ServerTime} serverTime
    * @ngInject
    */
-  constructor($state, replicationControllers) {
+  constructor($state, replicationControllers, serverTime) {
     /** @export {!Array<!backendApi.ReplicationController>} */
     this.replicationControllers = replicationControllers.replicationControllers;
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
+
+    /**
+     * Current server time.
+     * @export {string}
+     */
+    this.currentServerTime = serverTime.currentTime;
   }
 
   /**
