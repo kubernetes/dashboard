@@ -61,6 +61,7 @@ func main() {
 	// TODO(bryk): Disable directory listing.
 	http.Handle("/", http.FileServer(http.Dir("./public")))
 	http.Handle("/api/", CreateHttpApiHandler(apiserverClient, heapsterRESTClient, config))
+	http.Handle("/api/appConfig.js", AppHandler(configHandler))
 	log.Print(http.ListenAndServe(fmt.Sprintf(":%d", *argPort), nil))
 }
 
