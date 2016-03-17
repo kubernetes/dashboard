@@ -17,8 +17,8 @@ package main
 import (
 	"log"
 
-	client "k8s.io/kubernetes/pkg/client/unversioned"
 	restclient "k8s.io/kubernetes/pkg/client/restclient"
+	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
 // HeapsterClient  is a client used to make requests to a Heapster instance.
