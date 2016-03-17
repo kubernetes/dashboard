@@ -335,3 +335,10 @@ backendApi.SecretSpec;
  * }}
  */
 backendApi.SecretsList;
+
+/**
+ * @typedef {{
+ *   currentTime: string
+ * }}
+ */
+backendApi.ServerTime;
