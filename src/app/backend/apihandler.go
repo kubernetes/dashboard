@@ -186,6 +186,16 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 			Writes(Secret{}))
 	wsContainer.Add(secretsWs)
 
+	timeWs := new(restful.WebService)
+	timeWs.Filter(wsLogger)
+	timeWs.Path("/api/v1/time").
+		Produces(restful.MIME_JSON)
+	timeWs.Route(
+		timeWs.GET("").
+			To(apiHandler.handleTime).
+			Writes(ServerTime{}))
+	wsContainer.Add(timeWs)
+
 	return wsContainer
 }
 
@@ -458,6 +468,11 @@ func (apiHandler *ApiHandler) handleEvents(request *restful.Request, response *r
 		return
 	}
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles time API call.
+func (apiHandler *ApiHandler) handleTime(request *restful.Request, response *restful.Response) {
+	response.WriteHeaderAndEntity(http.StatusCreated, GetServerTime(apiHandler.client))
 }
 
 // Handler that writes the given error to the response and sets appropriate HTTP status headers.

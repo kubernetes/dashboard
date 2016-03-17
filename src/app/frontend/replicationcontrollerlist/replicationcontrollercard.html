@@ -88,7 +88,7 @@ limitations under the License.
         <div flex="40" layout="column" class="kd-replicationcontroller-card-section">
           <span flex="initial" class="kd-replicationcontroller-card-section-title">Age</span>
           <span flex="nogrow">
-            {{::ctrl.replicationController.creationTime | relativeTime}}
+            {{::ctrl.replicationController.creationTime | relativeTime:ctrl.currentServerTime}}
             <md-tooltip>
               Created at {{::ctrl.replicationController.creationTime | date:'short'}}
             </md-tooltip>

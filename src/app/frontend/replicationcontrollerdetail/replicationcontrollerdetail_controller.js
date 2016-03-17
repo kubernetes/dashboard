@@ -35,11 +35,12 @@ export default class ReplicationControllerDetailController {
    * @param {!angular.$log} $log
    * @param {!backendApi.ReplicationControllerDetail} replicationControllerDetail
    * @param {!backendApi.Events} replicationControllerEvents
+   * @param {!backendApi.ServerTime} serverTime
    * @ngInject
    */
   constructor(
-      $mdMedia, $stateParams, $state, $resource, $log, replicationControllerDetail,
-      replicationControllerEvents) {
+      $mdMedia, $stateParams, $state, $log, replicationControllerDetail,
+      replicationControllerEvents, serverTime) {
     /** @export {function(string):boolean} */
     this.mdMedia = $mdMedia;
 
@@ -96,6 +97,12 @@ export default class ReplicationControllerDetailController {
      * @export {boolean}
      */
     this.eventsOrder = DOWNWARDS;
+
+    /**
+     * Current server time.
+     * @export {string}
+     */
+    this.currentServerTime = serverTime.currentTime;
   }
 
   /**
