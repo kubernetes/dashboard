@@ -16,6 +16,10 @@ import filtersModule from 'common/filters/filters_module';
 
 describe('Relative time filter', () => {
 
+  /**
+   * Current time mock.
+   * @type {Date}
+   */
   const currentTime = new Date(
       2015,  // year
       11,    // month
@@ -205,4 +209,25 @@ describe('Relative time filter', () => {
        // then
        expect(relativeTime).toEqual('11 months');
      });
+
+  it('should return \'a month\' string if given time is a month and 3 minutes before current time',
+     () => {
+       // given
+       givenTime.setMonth(givenTime.getMonth() - 1);
+       givenTime.setMinutes(givenTime.getMinutes() - 3);
+
+       // when
+       let relativeTime = relativeTimeFilter(givenTime, currentTime);
+
+       // then
+       expect(relativeTime).toEqual('a month');
+     });
+
+  it('should return \'just now\' string if compared times are the same', () => {
+    // when
+    let relativeTime = relativeTimeFilter(givenTime, givenTime);
+
+    // then
+    expect(relativeTime).toEqual('just now');
+  });
 });
