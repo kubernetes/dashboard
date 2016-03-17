@@ -32,6 +32,7 @@ export default function stateConfig($stateProvider) {
     url: replicationcontrollersUrl,
     resolve: {
       'replicationControllers': resolveReplicationControllers,
+      'serverTime': resolveServerTime,
     },
     templateUrl: 'replicationcontrollerlist/replicationcontrollerlist.html',
     onEnter: redirectIfNeeded,
@@ -73,6 +74,17 @@ export function redirectIfNeeded($state, replicationControllers) {
     let stateParams = new StateParams(containsOnlyKubeSystemRCs);
     $state.transition.then(() => { $state.go(zerostate, stateParams); });
   }
+}
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.$q.Promise}
+ * @ngInject
+ */
+function resolveServerTime($resource) {
+  /** @type {!angular.Resource<!backendApi.ServerTime>} */
+  let resource = $resource('api/v1/time');
+  return resource.get().$promise;
 }
 
 /**

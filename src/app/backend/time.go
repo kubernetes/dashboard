@@ -12,22 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ReplicationControllerCardController from './replicationcontrollercard_controller';
+package main
 
-/**
- * Returns directive definition object for replication controller card directive.
- *
- * @return {!angular.Directive}
- */
-export default function replicationControllerCardDirective() {
-  return {
-    scope: {},
-    bindToController: {
-      'replicationController': '=',
-      'currentServerTime': '=',
-    },
-    controller: ReplicationControllerCardController,
-    controllerAs: 'ctrl',
-    templateUrl: 'replicationcontrollerlist/replicationcontrollercard.html',
-  };
+import (
+	"log"
+	"time"
+
+	client "k8s.io/kubernetes/pkg/client/unversioned"
+)
+
+// ServerTime is a representation of server time.
+type ServerTime struct {
+	// CurrentTime is current server time.
+	CurrentTime time.Time `json:"currentTime"`
+}
+
+// GetServerTime returns current server time.
+func GetServerTime(client *client.Client) (*ServerTime, error) {
+	log.Printf("Getting current server time")
+
+	time := &ServerTime{
+		CurrentTime: time.Now(),
+	}
+
+	log.Printf("Current server time is %s",
+		time.CurrentTime.Format("2006-01-02T15:04:05.999999-07:00"))
+
+	return time, nil
 }

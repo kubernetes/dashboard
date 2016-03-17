@@ -186,6 +186,16 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 			Writes(Secret{}))
 	wsContainer.Add(secretsWs)
 
+	timeWs := new(restful.WebService)
+	timeWs.Filter(wsLogger)
+	timeWs.Path("/api/v1/time").
+		Produces(restful.MIME_JSON)
+	timeWs.Route(
+		timeWs.GET("").
+			To(apiHandler.handleTime).
+			Writes(ServerTime{}))
+	wsContainer.Add(timeWs)
+
 	return wsContainer
 }
 
@@ -453,6 +463,16 @@ func (apiHandler *ApiHandler) handleEvents(request *restful.Request, response *r
 	namespace := request.PathParameter("namespace")
 	replicationController := request.PathParameter("replicationController")
 	result, err := GetEvents(apiHandler.client, namespace, replicationController)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles time API call.
+func (apiHandler *ApiHandler) handleTime(request *restful.Request, response *restful.Response) {
+	result, err := GetServerTime(apiHandler.client)
 	if err != nil {
 		handleInternalError(response, err)
 		return

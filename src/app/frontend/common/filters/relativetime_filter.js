@@ -14,6 +14,7 @@
 
 /**
  * Unit name constants (singular and plural form), that will be used by the filter.
+ *
  * @enum {!Array<string>}
  */
 const Units = {
@@ -27,6 +28,7 @@ const Units = {
 
 /**
  * Unit conversion constants.
+ *
  * @enum {number}
  */
 const UnitConversions = {
@@ -41,6 +43,7 @@ const UnitConversions = {
 
 /**
  * Time constants.
+ *
  * @enum {string}
  */
 const TimeConstants = {
@@ -50,17 +53,20 @@ const TimeConstants = {
 
 /**
  * Returns filter function to display relative time since given date.
- * @return {function(string): string}
+ *
+ * @return {function(string, string): string}
  */
 export default function relativeTimeFilter() {
   /**
    * Filter function to display relative time since given date.
+   *
    * @param {string} value Filtered value.
+   * @param {string} serverTime Current server time, if not provided then client time will be used.
    * @return {string}
    */
-  let filterFunction = function(value) {
+  let filterFunction = function(value, serverTime) {
     // Current and given times in miliseconds.
-    let currentTime = (new Date()).getTime();  // TODO(maciaszczykm): Use server time.
+    let currentTime = getCurrentTime(serverTime);
     let givenTime = (new Date(value)).getTime();
 
     // Time differences between current time and given time in specific units.
@@ -96,7 +102,24 @@ export default function relativeTimeFilter() {
 }
 
 /**
+ * Returns current time. If currentServerTime is provided then it will be parsed, otherwise current
+ * client time will be used.
+ *
+ * @param currentServerTime
+ * @return {number}
+ * @private
+ */
+function getCurrentTime(currentServerTime) {
+  if (currentServerTime) {
+    return (new Date(currentServerTime)).getTime();
+  } else {
+    return (new Date()).getTime();
+  }
+}
+
+/**
  * Formats relative time string. Sample results look following: 'a year', '2 days' or '14 hours'.
+ *
  * @param {number} timeValue Time value in specified unit.
  * @param {!Array<string>} timeUnit Specified unit.
  * @return {string} Formatted time string.

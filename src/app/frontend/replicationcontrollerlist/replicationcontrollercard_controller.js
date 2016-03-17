@@ -32,6 +32,12 @@ export default class ReplicationControllerCardController {
      */
     this.replicationController;
 
+    /**
+     * Initialized from the scope.
+     * @export {!backendApi.ServerTime}
+     */
+    this.currentServerTime;
+
     /** @private {!ui.router.$state} */
     this.state_ = $state;
   }

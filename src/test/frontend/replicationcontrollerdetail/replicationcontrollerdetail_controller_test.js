@@ -29,6 +29,7 @@ describe('Replication Controller Detail controller', () => {
       ctrl = $controller(ReplicationControllerDetailController, {
         replicationControllerDetail: {},
         replicationControllerEvents: {},
+        serverTime: {},
         replicationControllerDetailResource: $resource('/foo'),
         replicationControllerSpecPodsResource: $resource('/bar'),
         $stateParams:
