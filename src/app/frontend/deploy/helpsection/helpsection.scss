@@ -19,10 +19,9 @@
   flex: 1;
   flex-basis: auto;
   margin: $baseline-grid 0;
-  padding-right: 4 * $baseline-grid;
   width: 100%;
 
   &:last-child {
-    padding-right: 0;
+    padding: 0 0 0 (2 * $baseline-grid);
   }
 }
