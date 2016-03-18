@@ -15,6 +15,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -60,9 +61,10 @@ func FormatResponseLog(resp *restful.Response, req *restful.Request) string {
 
 // CreateHttpApiHandler creates a new HTTP handler that handles all requests to the API of the backend.
 func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
-	clientConfig clientcmd.ClientConfig) http.Handler {
+	clientConfig clientcmd.ClientConfig, namespace string) http.Handler {
 
-	apiHandler := ApiHandler{client, heapsterClient, clientConfig}
+	apiHandler := ApiHandler{client, heapsterClient, clientConfig, namespace}
+
 	wsContainer := restful.NewContainer()
 
 	deployWs := new(restful.WebService)
@@ -195,6 +197,7 @@ type ApiHandler struct {
 	client         *client.Client
 	heapsterClient HeapsterClient
 	clientConfig   clientcmd.ClientConfig
+	namespace      string
 }
 
 // Handles deploy API call.
@@ -203,6 +206,9 @@ func (apiHandler *ApiHandler) handleDeploy(request *restful.Request, response *r
 	if err := request.ReadEntity(appDeploymentSpec); err != nil {
 		handleInternalError(response, err)
 		return
+	}
+	if apiHandler.namespace != "" {
+		appDeploymentSpec.Namespace = apiHandler.namespace
 	}
 	if err := DeployApp(appDeploymentSpec, apiHandler.client); err != nil {
 		handleInternalError(response, err)
@@ -221,7 +227,7 @@ func (apiHandler *ApiHandler) handleDeployFromFile(request *restful.Request, res
 	}
 
 	isDeployed, err := DeployAppFromFile(
-		deploymentSpec, CreateObjectFromInfoFn, apiHandler.clientConfig)
+		deploymentSpec, CreateObjectFromInfoFn, apiHandler.clientConfig, apiHandler.namespace)
 	if !isDeployed {
 		handleInternalError(response, err)
 		return
@@ -292,7 +298,7 @@ func (apiHandler *ApiHandler) handleGetAvailableProcotols(request *restful.Reque
 func (apiHandler *ApiHandler) handleGetReplicationControllerList(
 	request *restful.Request, response *restful.Response) {
 
-	result, err := GetReplicationControllerList(apiHandler.client)
+	result, err := GetReplicationControllerList(apiHandler.client, apiHandler.namespace)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -306,6 +312,9 @@ func (apiHandler *ApiHandler) handleGetReplicationControllerDetail(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := request.PathParameter("namespace")
+	if apiHandler.namespace != "" {
+		namespace = apiHandler.namespace
+	}
 	replicationController := request.PathParameter("replicationController")
 	result, err := GetReplicationControllerDetail(apiHandler.client, apiHandler.heapsterClient, namespace, replicationController)
 	if err != nil {
@@ -321,6 +330,9 @@ func (apiHandler *ApiHandler) handleUpdateReplicasCount(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := request.PathParameter("namespace")
+	if apiHandler.namespace != "" {
+		namespace = apiHandler.namespace
+	}
 	replicationControllerName := request.PathParameter("replicationController")
 	replicationControllerSpec := new(ReplicationControllerSpec)
 
@@ -344,6 +356,9 @@ func (apiHandler *ApiHandler) handleDeleteReplicationController(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := request.PathParameter("namespace")
+	if apiHandler.namespace != "" {
+		namespace = apiHandler.namespace
+	}
 	replicationController := request.PathParameter("replicationController")
 	deleteServices, err := strconv.ParseBool(request.QueryParameter("deleteServices"))
 	if err != nil {
@@ -365,6 +380,9 @@ func (apiHandler *ApiHandler) handleGetReplicationControllerPods(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := request.PathParameter("namespace")
+	if apiHandler.namespace != "" {
+		namespace = apiHandler.namespace
+	}
 	replicationController := request.PathParameter("replicationController")
 	limit, err := strconv.Atoi(request.QueryParameter("limit"))
 	if err != nil {
@@ -382,6 +400,11 @@ func (apiHandler *ApiHandler) handleGetReplicationControllerPods(
 // Handles namespace creation API call.
 func (apiHandler *ApiHandler) handleCreateNamespace(request *restful.Request,
 	response *restful.Response) {
+	if apiHandler.namespace != "" {
+		err := errors.New("Namespace restriction enable server-side")
+		handleInternalError(response, err)
+		return
+	}
 	namespaceSpec := new(NamespaceSpec)
 	if err := request.ReadEntity(namespaceSpec); err != nil {
 		handleInternalError(response, err)
@@ -403,6 +426,14 @@ func (apiHandler *ApiHandler) handleGetNamespaces(
 	if err != nil {
 		handleInternalError(response, err)
 		return
+	}
+	if apiHandler.namespace != "" {
+		for _, namespaceName := range result.Namespaces {
+			if namespaceName == apiHandler.namespace {
+				result.Namespaces = []string{namespaceName}
+				fmt.Print(namespaceName)
+			}
+		}
 	}
 
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
@@ -426,6 +457,9 @@ func (apiHandler *ApiHandler) handleCreateImagePullSecret(request *restful.Reque
 // Handles get secrets list API call.
 func (apiHandler *ApiHandler) handleGetSecrets(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
+	if apiHandler.namespace != "" {
+		namespace = apiHandler.namespace
+	}
 	result, err := GetSecrets(apiHandler.client, namespace)
 	if err != nil {
 		handleInternalError(response, err)
@@ -437,6 +471,9 @@ func (apiHandler *ApiHandler) handleGetSecrets(request *restful.Request, respons
 // Handles log API call.
 func (apiHandler *ApiHandler) handleLogs(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
+	if apiHandler.namespace != "" {
+		namespace = apiHandler.namespace
+	}
 	podId := request.PathParameter("podId")
 	container := request.PathParameter("container")
 
@@ -451,6 +488,9 @@ func (apiHandler *ApiHandler) handleLogs(request *restful.Request, response *res
 // Handles event API call.
 func (apiHandler *ApiHandler) handleEvents(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
+	if apiHandler.namespace != "" {
+		namespace = apiHandler.namespace
+	}
 	replicationController := request.PathParameter("replicationController")
 	result, err := GetEvents(apiHandler.client, namespace, replicationController)
 	if err != nil {

@@ -289,7 +289,7 @@ func CreateObjectFromInfoFn(info *kubectlResource.Info) (bool, error) {
 
 // DeployAppFromFile deploys an app based on the given yaml or json file.
 func DeployAppFromFile(spec *AppDeploymentFromFileSpec,
-	createObjectFromInfoFn createObjectFromInfo, clientConfig clientcmd.ClientConfig) (bool, error) {
+	createObjectFromInfoFn createObjectFromInfo, clientConfig clientcmd.ClientConfig, namespace string) (bool, error) {
 	const (
 		validate      = true
 		emptyCacheDir = ""
@@ -303,10 +303,12 @@ func DeployAppFromFile(spec *AppDeploymentFromFileSpec,
 
 	mapper, typer := factory.Object()
 	reader := strings.NewReader(spec.Content)
-
+	if namespace == "" {
+		namespace = api.NamespaceDefault
+	}
 	r := kubectlResource.NewBuilder(mapper, typer, kubectlResource.ClientMapperFunc(factory.ClientForMapping), factory.Decoder(true)).
 		Schema(schema).
-		NamespaceParam(api.NamespaceDefault).DefaultNamespace().
+		NamespaceParam(namespace).DefaultNamespace().
 		Stream(reader, spec.Name).
 		Flatten().
 		Do()

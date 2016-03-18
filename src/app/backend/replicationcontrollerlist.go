@@ -68,27 +68,30 @@ type ReplicationController struct {
 }
 
 // GetReplicationControllerList returns a list of all Replication Controllers in the cluster.
-func GetReplicationControllerList(client *client.Client) (*ReplicationControllerList, error) {
+func GetReplicationControllerList(client *client.Client, namespace string) (*ReplicationControllerList, error) {
 	log.Printf("Getting list of all replication controllers in the cluster")
+	if namespace == "" {
+		namespace = api.NamespaceAll
+	}
 
 	listEverything := api.ListOptions{
 		LabelSelector: labels.Everything(),
 		FieldSelector: fields.Everything(),
 	}
 
-	replicationControllers, err := client.ReplicationControllers(api.NamespaceAll).List(listEverything)
+	replicationControllers, err := client.ReplicationControllers(namespace).List(listEverything)
 
 	if err != nil {
 		return nil, err
 	}
 
-	services, err := client.Services(api.NamespaceAll).List(listEverything)
+	services, err := client.Services(namespace).List(listEverything)
 
 	if err != nil {
 		return nil, err
 	}
 
-	pods, err := client.Pods(api.NamespaceAll).List(listEverything)
+	pods, err := client.Pods(namespace).List(listEverything)
 
 	if err != nil {
 		return nil, err
