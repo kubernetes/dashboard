@@ -14,15 +14,10 @@
 
 export default class DeleteReplicationControllerDialogObject {
   constructor() {
-    let deleteDialogXPath = '//md-dialog[@aria-label=\'Delete Replication Controller\']';
-    this.deleteDialogQuery = by.xpath(deleteDialogXPath);
-    this.deleteDialog = element(this.deleteDialogQuery);
-
-    this.deleteAppButtonQuery =
-        by.xpath(`${deleteDialogXPath}//md-dialog-actions//span[text() = 'Delete']/..`);
+    this.deleteAppButtonQuery = by.css('.kd-delete-btn');
     this.deleteAppButton = element(this.deleteAppButtonQuery);
 
-    this.deleteServicesCheckboxQuery = by.xpath(`${deleteDialogXPath}//md-checkbox`);
+    this.deleteServicesCheckboxQuery = by.css('.kd-deletedialog-services-checkbox');
     this.deleteServicesCheckbox = element(this.deleteServicesCheckboxQuery);
   }
 }
