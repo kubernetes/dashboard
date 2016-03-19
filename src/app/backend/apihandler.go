@@ -18,6 +18,9 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"net/url"
+	"io/ioutil"
+	"os"
 	"strconv"
 
 	restful "github.com/emicklei/go-restful"
@@ -106,6 +109,15 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 			Reads(AppDeploymentFromFileSpec{}).
 			Writes(AppDeploymentFromFileResponse{}))
 	wsContainer.Add(deployFromFileWs)
+
+	deployFromKpmWs := new(restful.WebService)
+	deployFromKpmWs.Path("/api/v1/appdeploymentfromkpm").
+		Consumes(restful.MIME_JSON).
+		Produces(restful.MIME_JSON)
+	deployFromKpmWs.Route(
+		deployFromKpmWs.POST("/{namespace}/{organization}/{package}/{action}").
+			To(apiHandler.handleDeployFromKpm))
+	wsContainer.Add(deployFromKpmWs)
 
 	replicationControllerWs := new(restful.WebService)
 	replicationControllerWs.Filter(wsLogger)
@@ -237,6 +249,45 @@ func (apiHandler *ApiHandler) handleDeployFromFile(request *restful.Request, res
 		Content: deploymentSpec.Content,
 		Error:   errorMessage,
 	})
+}
+
+// Handles KPM package deployment
+// Proxy calls to KPM backend
+func (apiHandler *ApiHandler) handleDeployFromKpm(request *restful.Request, response *restful.Response) {
+	kpm_backend_url := os.Getenv("KPM_BACKEND_URL"); if kpm_backend_url == "" {
+		kpm_backend_url = "http://localhost:5000"
+	}
+
+	organization := request.PathParameter("organization")
+	packagename := request.PathParameter("package")
+	action := request.PathParameter("action")
+
+	dryRun, err := strconv.ParseBool(request.QueryParameter("dryRun"))
+
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	namespace := request.PathParameter("namespace")
+	kpm_response, err := http.PostForm(fmt.Sprintf("%s/api/v1/%s/%s/%s",
+		kpm_backend_url, action, organization, packagename),
+		url.Values{"namespace": {namespace}, "dry": {strconv.FormatBool(dryRun)}})
+
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	defer kpm_response.Body.Close()
+        contents, err := ioutil.ReadAll(kpm_response.Body)
+
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.Header().Set(restful.HEADER_ContentType, restful.MIME_JSON)
+	response.Write(contents)
 }
 
 // Handles app name validation API call.
