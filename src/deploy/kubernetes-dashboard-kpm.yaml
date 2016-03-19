@@ -1,0 +1,78 @@
+---
+kind: List
+apiVersion: v1
+items:
+- kind: ReplicationController
+  apiVersion: v1
+  metadata:
+    labels:
+      app: kubernetes-dashboard-kpm
+      version: kpm
+    name: kubernetes-dashboard-kpm
+  spec:
+    replicas: 1
+    selector:
+      app: kubernetes-dashboard-kpm
+      version: kpm
+    template:
+      metadata:
+        labels:
+          app: kubernetes-dashboard-kpm
+          version: kpm
+      spec:
+        containers:
+        - name: kubernetes-dashboard-kpm
+          image: quay.io/kubespray/kubernetes-dashboard:canary
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 9090
+            protocol: TCP
+            name: dashboard
+          args:
+            # Uncomment the following line to manually specify Kubernetes API server Host
+            # If not specified, Dashboard will attempt to auto discover the API server and connect
+            # to it. Uncomment only if the default does not work.
+            # - --apiserver-host=http://my-address:port
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 9090
+            initialDelaySeconds: 30
+            timeoutSeconds: 30
+          env:
+            - name: KPM_BACKEND_URL
+              value: http://localhost:5000
+
+          # The backend should/can run in an another RC/Pod
+        - name: kpm-backend
+          image: quay.io/kubespray/kpm-backend:canary
+          imagePullPolicy: Always
+          command:
+            - python
+            - kpmbackend/api/app.py
+          ports:
+            - name: kpm-backend
+              protocol: TCP
+              containerPort: 5000
+
+        - name: kubectl
+          image: quay.io/ant31/kubernetes-hyperkube:v1.2.0
+          imagePullPolicy: Always
+          command:
+            - /kubectl
+            - proxy
+
+- kind: Service
+  apiVersion: v1
+  metadata:
+    labels:
+      app: kubernetes-dashboard-kpm
+    name: kubernetes-dashboard-kpm
+  spec:
+    type: NodePort
+    ports:
+    - port: 80
+      targetPort: 9090
+      name: dashboard
+    selector:
+      app: kubernetes-dashboard-kpm

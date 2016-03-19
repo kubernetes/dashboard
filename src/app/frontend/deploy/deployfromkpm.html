@@ -1,0 +1,105 @@
+<div class="kpm-query" ng-switch="ctrl.deployStatus">
+  <div ng-switch-when="none">
+    <kd-help-section>
+      <md-autocomplete
+        md-search-text="ctrl.packageName"
+        md-items="item in ctrl.querySearch(ctrl.packageName)"
+        md-item-text="item.name"
+        md-floating-label="Package name">
+        <md-item-template>
+          <span md-highlight-text="ctrl.packageName" md-highlight-flags="^i">
+            {{item.name}}
+          </span>
+        </md-item-template>
+        <md-not-found>
+          No packages matching "{{ctrl.packageName}}" were found.
+        </md-not-found>
+      </md-autocomplete>
+      <kd-user-help>
+        Package to deploy.
+        <a href="http://github.com/kubespray/kpm" target="_blank" tabindex="-1">
+          learn more about KPM<i class="material-icons">open_in_new</i>
+        </a>
+      </kd-user-help>
+    </kd-help-section>
+
+    <kd-help-section>
+      <md-input-container class="md-block">
+        <label>Namespace</label>
+        <md-select ng-model="ctrl.namespace" ng-click="ctrl.resetImagePullSecret()" required>
+          <md-option ng-repeat="namespace in ctrl.namespaces" ng-value="namespace">
+            {{namespace}}
+          </md-option>
+          <md-option ng-click="ctrl.handleNamespaceDialog($event)">
+            Create a new namespace...
+          </md-option>
+        </md-select>
+      </md-input-container>
+      <kd-user-help>
+        Namespaces let you partition resources into logically named groups.
+        <a href="http://kubernetes.github.io/docs/admin/namespaces/" target="_blank" tabindex="-1">
+          Learn more
+        </a>
+      </kd-user-help>
+    </kd-help-section>
+
+    <kd-help-section>
+      <md-input-container class="md-block">
+      <md-checkbox ng-model="ctrl.dryRun" class="md-primary"
+        ng-model-options="{ debounce: { 'default': 500, 'blur': 0 } }">
+        Dry run
+      </md-checkbox>
+      </md-input-container>
+      <kd-user-help>
+        Dry run, verify changes that would be perform without applying them.
+      </kd-user-help>
+    </kd-help-section>
+
+  </div>
+  <div ng-switch-when="ongoing" class="loader">
+    <md-progress-circular md-mode="indeterminate" md-diameter="96">
+    </md-progress-circular>
+  </div>
+  <table ng-switch-when="success" class="kpm-results">
+    <tr>
+      <th>Order</th>
+      <th>Kind</th>
+      <th>Name</th>
+      <th>Namespace</th>
+      <th>Package</th>
+      <th>Status</th>
+      <th>Version</th>
+    </tr>
+    <tr ng-repeat="resource in ctrl.resources">
+      <td>{{$index + 1}}</td>
+      <td>{{resource.kind}}</td>
+      <td>{{resource.name}}</td>
+      <td>{{resource.namespace}}</td>
+      <td>{{resource.package}}</td>
+      <td>
+        <span class="status {{resource.status}}">{{resource.status}}</span>
+      </td>
+      <td>{{resource.version}}</td>
+    </tr>
+  </table>
+  <div ng-switch-when="error">
+    Sorry, but something went wrong.
+  </div>
+</div>
+<div ng-if="ctrl.deployStatus != 'success'">
+  <md-button class="md-raised md-primary kd-deploy-btn" ng-click="ctrl.deploy()"
+    ng-disabled="ctrl.isdeploydisabled()">
+    Deploy
+  </md-button>
+  <md-button class="md-raised md-warn" ng-click="ctrl.remove()">
+    Remove
+  </md-button>
+  <md-button class="md-raised" ng-click="ctrl.cancel()">
+    Cancel
+  </md-button>
+</div>
+<div ng-if="ctrl.deployStatus == 'success'">
+  <md-button class="md-raised md-primary" ng-click="ctrl.back()">
+    Next
+  </md-button>
+</div>

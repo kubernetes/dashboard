@@ -27,6 +27,9 @@ limitations under the License.
           <md-radio-button value="File" class="md-primary">
             Upload a YAML or JSON file
           </md-radio-button>
+          <md-radio-button value="KPM" class="md-primary">
+            Use an external package manager (Helm, KPM...)
+          </md-radio-button>
         </md-radio-group>
         <kd-user-help>
           To learn more,
@@ -43,14 +46,18 @@ limitations under the License.
         <deploy-from-file ng-switch-when="File" class="md-body-1" name="ctrl.name" detail="ctrl.detail"
             form="ctrl.deployForm">
         </deploy-from-file>
+        <deploy-from-kpm ng-switch-when="KPM" class="md-body-1" name="ctrl.name"
+            namespaces="ctrl.namespaces" detail="ctrl.detail" form="ctrl.deployForm" protocols="ctrl.protocols">
+        </deploy-from-kpm>
       </div>
 
       <md-button class="md-raised md-primary kd-deploy-btn" type="submit"
-                 ng-disabled="ctrl.isDeployDisabled()">
+                 ng-disabled="ctrl.isDeployDisbaled()" ng-if="ctrl.selection != 'KPM'">
         Deploy
       </md-button>
-      <md-button class="md-raised" ng-click="ctrl.cancel()">Cancel</md-button>
-
+      <md-button class="md-raised" ng-click="ctrl.cancel()" ng-if="ctrl.selection != 'KPM'">
+        Cancel
+      </md-button>
     </form>
   </md-whiteframe>
 </div>
