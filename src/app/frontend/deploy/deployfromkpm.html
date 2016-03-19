@@ -1,0 +1,90 @@
+<div class="kpm-query" ng-switch="ctrl.deployStatus">
+  <div ng-switch-when="none">
+    <kd-help-section>
+      <md-input-container>
+        <md-autocomplete
+          md-search-text="ctrl.packageName"
+          md-items="item in ctrl.querySearch(ctrl.packageName)"
+          md-item-text="item.name"
+          placeholder="package name"
+          md-floating-label="Package name">
+          <md-item-template>
+            <span md-highlight-text="ctrl.packageName" md-highlight-flags="^i">
+              {{item.name}}
+            </span>
+          </md-item-template>
+          <md-not-found>
+            No packages matching "{{ctrl.packageName}}" were found.
+          </md-not-found>
+        </md-autocomplete>
+      </md-input-container>
+      <kd-user-help>
+        Name of your package on the KPM registry.
+      </kd-user-help>
+    </kd-help-section>
+    <kd-help-section>
+      <md-input-container>
+        <label>Namespace:</label>
+        <input ng-model="ctrl.namespace" type="text" />
+      </md-input-container>
+      <kd-user-help>
+        Kubernetes Namespace
+      </kd-user-help>
+    </kd-help-section>
+    <kd-help-section>
+      <md-input-container>
+        <label>KPM backend URL:</label>
+        <input ng-model="ctrl.kpmBackendUrl" type="text" />
+      </md-input-container>
+      <kd-user-help>
+        URL of the KPM backend
+      </kd-user-help>
+    </kd-help-section>
+  </div>
+  <div ng-switch-when="ongoing" class="loader">
+    <md-progress-circular md-mode="indeterminate" md-diameter="96">
+    </md-progress-circular>
+  </div>
+  <table ng-switch-when="success" class="kpm-results">
+    <tr>
+      <th>Order</th>
+      <th>Kind</th>
+      <th>Name</th>
+      <th>Namespace</th>
+      <th>Package</th>
+      <th>Status</th>
+      <th>Version</th>
+    </tr>
+    <tr ng-repeat="resource in ctrl.resources">
+      <td>{{$index + 1}}</td>
+      <td>{{resource.kind}}</td>
+      <td>{{resource.name}}</td>
+      <td>{{resource.namespace}}</td>
+      <td>{{resource.package}}</td>
+      <td>
+        <span class="status {{resource.status}}">{{resource.status}}</span>
+      </td>
+      <td>{{resource.version}}</td>
+    </tr>
+  </table>
+  <div ng-switch-when="error">
+    Sorry, but something went wrong.
+  </div>
+</div>
+<div ng-if="ctrl.deployStatus != 'success'">
+  <md-button class="md-raised md-primary kd-deploy-btn" ng-click="ctrl.deploy()"
+    ng-disabled="ctrl.isdeploydisabled()">
+    Deploy
+  </md-button>
+  <md-button class="md-raised md-warn" ng-click="ctrl.remove()">
+    Remove
+  </md-button>
+  <md-button class="md-raised" ng-click="ctrl.cancel()">
+    Cancel
+  </md-button>
+</div>
+<div ng-if="ctrl.deployStatus == 'success'">
+  <md-button class="md-raised md-primary" ng-click="ctrl.back()">
+    Next
+  </md-button>
+</div>
