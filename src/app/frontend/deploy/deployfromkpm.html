@@ -22,15 +22,27 @@
         Name of your package on the KPM registry.
       </kd-user-help>
     </kd-help-section>
+
     <kd-help-section>
-      <md-input-container>
-        <label>Namespace:</label>
-        <input ng-model="ctrl.namespace" type="text" />
+      <md-input-container class="md-block">
+	<label>Namespace</label>
+	<md-select ng-model="ctrl.namespace" ng-click="ctrl.resetImagePullSecret()" required>
+          <md-option ng-repeat="namespace in ctrl.namespaces" ng-value="namespace">
+            {{namespace}}
+          </md-option>
+        <md-option ng-click="ctrl.handleNamespaceDialog($event)">
+          Create a new namespace...
+        </md-option>
+	</md-select>
       </md-input-container>
       <kd-user-help>
-        Kubernetes Namespace
+	Namespaces let you partition resources into logically named groups.
+	<a href="http://kubernetes.github.io/docs/admin/namespaces/" target="_blank" tabindex="-1">
+          Learn more
+	</a>
       </kd-user-help>
     </kd-help-section>
+
     <kd-help-section>
       <md-input-container>
         <label>KPM backend URL:</label>
@@ -40,6 +52,14 @@
         URL of the KPM backend
       </kd-user-help>
     </kd-help-section>
+
+    <kd-help-section>
+      <md-checkbox ng-model="ctrl.isExternal" class="md-primary"
+		   ng-model-options="{ debounce: { 'default': 500, 'blur': 0 } }">
+	Check (dry-run)
+      </md-checkbox>
+    </kd-help-section>
+
   </div>
   <div ng-switch-when="ongoing" class="loader">
     <md-progress-circular md-mode="indeterminate" md-diameter="96">
