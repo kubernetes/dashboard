@@ -79,7 +79,7 @@ export default class DeployFromKpmController {
     }
 
     performQuery(method) {
-	console.log(this.dryRun);
+
 	var url = this.backend_url(method);
 	var self = this;
 	this.deployStatus = 'ongoing';

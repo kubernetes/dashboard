@@ -268,7 +268,6 @@ func (apiHandler *ApiHandler) handleDeployFromKpm(request *restful.Request, resp
 	}
 
 	namespace := request.PathParameter("namespace")
-	log.Printf(FormatRequestLog(request))
 	kpm_response, err := http.PostForm(fmt.Sprintf("%s/api/v1/%s/%s/%s",
 		kpm_backend_url, action, organization, packagename),
 		url.Values{"namespace": {namespace}, "dry": {strconv.FormatBool(dryRun)}})
