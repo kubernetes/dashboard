@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Configuration to deploy canary version of the Dashboard UI.
+# Configuration to deploy release version of the Dashboard UI.
 #
 # Example usage: kubectl create -f <this_file>
 
@@ -40,7 +40,7 @@ items:
       spec:
         containers:
         - name: kubernetes-dashboard-canary
-          image: gcr.io/google_containers/kubernetes-dashboard-amd64:canary
+          image: gcr.io/google_containers/kubernetes-dashboard-amd64:v1.0.0
           imagePullPolicy: Always
           ports:
           - containerPort: 9090
