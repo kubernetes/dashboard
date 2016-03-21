@@ -7,20 +7,30 @@ Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters.
 manage applications running in the cluster and troubleshoot them, as well as manage the cluster
 itself.
 
-## Users questionnaire 
+## Users questionnaire
 Fill out the form to prioritize our work and help us make the UI better: http://goo.gl/forms/DloIYjsJBr
 
 ## Usage
 
-The Dashboard is currently under active development and is not ready for production use (yet!). To run the latest _unstable_ version execute the following command:
+It is likely that Dashboard is already installed on your cluster. To access it navigate in your
+browser to one of the following URLs: `https://<kubernetes-master>/ui` which redirects to
+`https://<kubernetes-master>/api/v1/proxy/namespaces/kube-system/services/kubernetes-dashboard`.
 
-`kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard-canary.yaml`
+If you find that you’re not able to access the Dashboard you can install and open the latest
+stable release by running the following commands:
+```bash
+kubectl create -f https://rawgit.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml
+kubectl proxy --port=8080
+```
+And then navigate to `http://localhost:8080/api/v1/proxy/namespaces/kube-system/services/kubernetes-dashboard`
 
 ## Documentation
 
-* The [Design overview](docs/design/README.md) describes design concepts of Dashboard
+* The [user guide](http://kubernetes.io/docs/user-guide/ui/) is an entry point for users of Dashboard
 
-* The [Developer guide](docs/devel/README.md) is for anyone wanting to contribute to Dashboard
+* The [design overview](docs/design/README.md) describes design concepts of Dashboard
+
+* The [developer guide](docs/devel/README.md) is for anyone wanting to contribute to Dashboard
 
 
 ## License
