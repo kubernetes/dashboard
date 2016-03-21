@@ -261,10 +261,12 @@ func (apiHandler *ApiHandler) handleDeployFromKpm(request *restful.Request, resp
 	organization := request.PathParameter("organization")
 	packagename := request.PathParameter("package")
 	action := request.PathParameter("action")
+
 	dryRun, err := strconv.ParseBool(request.QueryParameter("dryRun"))
 
 	if err != nil {
-		dryRun = true
+		handleInternalError(response, err)
+		return
 	}
 
 	namespace := request.PathParameter("namespace")

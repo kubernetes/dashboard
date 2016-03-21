@@ -118,10 +118,10 @@ export default class DeployFromKpmController {
     this._http({
       method: 'POST',
       url:  url,
-      data: {
-        namespace: this.namespace,
+      params: {
         dryRun: this.dryRun
-      }
+      },
+      data: {}
     })
     .success(function(data) {
       self.deployStatus = 'success';
