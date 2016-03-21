@@ -2,18 +2,17 @@
   <div ng-switch-when="none">
     <kd-help-section>
       <md-autocomplete
-        md-search-text="ctrl.searchText"
-        md-items="item in ctrl.querySearch(ctrl.searchText)"
+        md-search-text="ctrl.packageName"
+        md-items="item in ctrl.querySearch(ctrl.packageName)"
         md-item-text="item.name"
-        md-selected-item="ctrl.package"
         md-floating-label="Package name">
         <md-item-template>
-          <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">
+          <span md-highlight-text="ctrl.packageName" md-highlight-flags="^i">
             {{item.name}}
           </span>
         </md-item-template>
         <md-not-found>
-          No packages matching "{{ctrl.searchText}}" were found.
+          No packages matching "{{ctrl.packageName}}" were found.
         </md-not-found>
       </md-autocomplete>
       <kd-user-help>

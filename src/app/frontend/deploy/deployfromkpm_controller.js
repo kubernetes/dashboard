@@ -14,31 +14,57 @@ export default class DeployFromKpmController {
    * @param {!md.$dialog} $mdDialog
    * @ngInject
    */
-  constructor($http, $scope, $log, $state, $resource, $q, $mdDialog) {
+  constructor($log, $http, $state, $resource, $q, $mdDialog) {
     // Dependencies
+
+
     this._http = $http;
-    this._state = $state;
-    this._q = $q;
-    this._resource = $resource;
+
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
+
+    /** @private {!angular.$q} */
+    this.q_ = $q;
+
+    /** @private {!angular.$log} */
+    this.log_= $log
+
+    /** @private {!angular.$resource} */
+    this.resource_ = $resource;
+
+    /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
 
-    this.package = null;
+    /** @export {string} */
+    this.packageName = "";
 
     /**
-      * List of available namespaces.
-      *
-      * Initialized from the scope.
-      * @export {!Array<string>}
-      */
+     * List of available namespaces.
+     *
+     * Initialized from the scope.
+     * @export {!Array<string>}
+     */
     this.namespaces;
+
+    /**
+     * Currently chosen namespace.
+     * @export {string}
+     */
     this.namespace = this.namespaces[0];
+
+    /** @export {boolean} */
     this.dryRun = false;
+
+    /** @export {string} */
     this.deployStatus = 'none';
+
+    /** @export  */
     this.resources = [];
   }
 
   /**
    * Perform POST request on KPM backend
+   * @export
    */
   deploy() {
     return this.performQuery('deploy');
@@ -46,6 +72,7 @@ export default class DeployFromKpmController {
 
   /**
    * Perform DELETE request on KPM backend
+   * @export
    */
   remove() {
     return this.performQuery('delete');
@@ -78,6 +105,12 @@ export default class DeployFromKpmController {
       () => { this.namespace = this.namespaces[0]; });
   }
 
+
+  /**
+   * Queries all secrets for the given namespace.
+   * @param {string} method
+   * @export
+   */
   performQuery(method) {
     var url = this.backend_url(method);
     var self = this;
@@ -98,25 +131,36 @@ export default class DeployFromKpmController {
       self.deployStatus = 'error';
       self.resources = [];
     });
-    return console.log("deploy " + this.package.name);
+    return console.log("deploy " + this.packageName);
   }
 
+  /**
+   * Queries all secrets for the given namespace.
+   * @param {string} method
+   * @return {string} url
+   * @export
+   */
   backend_url(method) {
     var url = "/api/v1/appdeploymentfromkpm/" + this.namespace +
-      "/" + this.package.name  + "/" + method;
-    return url
+      "/" + this.packageName  + "/" + method;
+    return url;
   }
 
+  /**
+   * Return to home
+   * @export
+   */
   back() {
-    return this._state.go('replicationcontrollers');
+    return this.state_.go('replicationcontrollers');
   }
 
   /**
    * Search package names matching user input
    * @return promise
+   * @export
    */
   querySearch(search) {
-    var deferred = this._q.defer();
+    var deferred = this.q_.defer();
     this._http({
       method: 'GET',
       url: 'https://api.kpm.sh/api/v1/packages.json'

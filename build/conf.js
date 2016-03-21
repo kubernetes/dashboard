@@ -54,7 +54,7 @@ const version = {
 /**
  * Base name for the docker image.
  */
-const imageNameBase = 'gcr.io/google_containers/kubernetes-dashboard';
+const imageNameBase = 'quay.io/kubespray/kubernetes-dashboard';
 
 /**
  * Exported configuration object with common constants used in build pipeline.
