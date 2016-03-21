@@ -1,3 +1,4 @@
+---
 kind: List
 apiVersion: v1
 items:
@@ -5,27 +6,28 @@ items:
   apiVersion: v1
   metadata:
     labels:
-      app: kubernetes-dashboard-canary
-      version: canary
-    name: kubernetes-dashboard-canary
+      app: kubernetes-dashboard-kpm
+      version: kpm
+    name: kubernetes-dashboard-kpm
   spec:
     replicas: 1
     selector:
-      app: kubernetes-dashboard-canary
-      version: canary
+      app: kubernetes-dashboard-kpm
+      version: kpm
     template:
       metadata:
         labels:
-          app: kubernetes-dashboard-canary
-          version: canary
+          app: kubernetes-dashboard-kpm
+          version: kpm
       spec:
         containers:
-        - name: kubernetes-dashboard-canary
+        - name: kubernetes-dashboard-kpm
           image: quay.io/kubespray/kubernetes-dashboard:canary
           imagePullPolicy: Always
           ports:
           - containerPort: 9090
             protocol: TCP
+            name: dashboard
           args:
             # Uncomment the following line to manually specify Kubernetes API server Host
             # If not specified, Dashboard will attempt to auto discover the API server and connect
@@ -43,13 +45,11 @@ items:
 
           # The backend should/can run in an another RC/Pod
         - name: kpm-backend
-          image: registry.kubespray.io/kpm-backend:v1.0.5
+          image: quay.io/kubespray/kpm-backend:canary
+          imagePullPolicy: Always
           command:
             - python
             - kpmbackend/api/app.py
-          env:
-            - name: KPM_URI
-              value: http://kpm-api.kpm.svc.cluster.local
           ports:
             - name: kpm-backend
               protocol: TCP
@@ -66,12 +66,13 @@ items:
   apiVersion: v1
   metadata:
     labels:
-      app: kubernetes-dashboard-canary
-    name: dashboard-canary
+      app: kubernetes-dashboard-kpm
+    name: kubernetes-dashboard-kpm
   spec:
     type: NodePort
     ports:
     - port: 80
       targetPort: 9090
+      name: dashboard
     selector:
-      app: kubernetes-dashboard-canary
+      app: kubernetes-dashboard-kpm
