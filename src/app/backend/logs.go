@@ -81,7 +81,7 @@ func getRawPodLogs(client *client.Client, namespace, podID string, logOptions *a
 
 	readCloser, err := req.Stream()
 	if err != nil {
-		return "", err
+		return err.Error(), nil
 	}
 
 	defer readCloser.Close()
