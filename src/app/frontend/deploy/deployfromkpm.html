@@ -19,7 +19,10 @@
         </md-autocomplete>
       </md-input-container>
       <kd-user-help>
-        Name of your package on the KPM registry.
+	Package to deploy.
+        <a href="http://github/kubespray/kpm" target="_blank" tabindex="-1">
+          learn more about KPM<i class="material-icons">open_in_new</i>
+        </a>
       </kd-user-help>
     </kd-help-section>
 
@@ -44,20 +47,15 @@
     </kd-help-section>
 
     <kd-help-section>
-      <md-input-container>
-        <label>KPM backend URL:</label>
-        <input ng-model="ctrl.kpmBackendUrl" type="text" />
+      <md-input-container class="md-block">
+	<md-checkbox ng-model="ctrl.dryRun" class="md-primary"
+		     ng-model-options="{ debounce: { 'default': 500, 'blur': 0 } }">
+	  Check
+	</md-checkbox>
       </md-input-container>
       <kd-user-help>
-        URL of the KPM backend
+	Dry run, verify changes that would be perform without applying them.
       </kd-user-help>
-    </kd-help-section>
-
-    <kd-help-section>
-      <md-checkbox ng-model="ctrl.isExternal" class="md-primary"
-		   ng-model-options="{ debounce: { 'default': 500, 'blur': 0 } }">
-	Check (dry-run)
-      </md-checkbox>
     </kd-help-section>
 
   </div>
