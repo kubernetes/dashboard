@@ -1,26 +1,24 @@
 <div class="kpm-query" ng-switch="ctrl.deployStatus">
   <div ng-switch-when="none">
     <kd-help-section>
-      <md-input-container>
-        <md-autocomplete
-          md-search-text="ctrl.packageName"
-          md-items="item in ctrl.querySearch(ctrl.packageName)"
-          md-item-text="item.name"
-          placeholder="package name"
-          md-floating-label="Package name">
-          <md-item-template>
-            <span md-highlight-text="ctrl.packageName" md-highlight-flags="^i">
-              {{item.name}}
-            </span>
-          </md-item-template>
-          <md-not-found>
-            No packages matching "{{ctrl.packageName}}" were found.
-          </md-not-found>
-        </md-autocomplete>
-      </md-input-container>
+      <md-autocomplete
+        md-search-text="ctrl.searchText"
+        md-items="item in ctrl.querySearch(ctrl.searchText)"
+        md-item-text="item.name"
+        md-selected-item="ctrl.package"
+        md-floating-label="Package name">
+        <md-item-template>
+          <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">
+            {{item.name}}
+          </span>
+        </md-item-template>
+        <md-not-found>
+          No packages matching "{{ctrl.searchText}}" were found.
+        </md-not-found>
+      </md-autocomplete>
       <kd-user-help>
-	Package to deploy.
-        <a href="http://github/kubespray/kpm" target="_blank" tabindex="-1">
+        Package to deploy.
+        <a href="http://github.com/kubespray/kpm" target="_blank" tabindex="-1">
           learn more about KPM<i class="material-icons">open_in_new</i>
         </a>
       </kd-user-help>
@@ -28,33 +26,33 @@
 
     <kd-help-section>
       <md-input-container class="md-block">
-	<label>Namespace</label>
-	<md-select ng-model="ctrl.namespace" ng-click="ctrl.resetImagePullSecret()" required>
+        <label>Namespace</label>
+        <md-select ng-model="ctrl.namespace" ng-click="ctrl.resetImagePullSecret()" required>
           <md-option ng-repeat="namespace in ctrl.namespaces" ng-value="namespace">
             {{namespace}}
           </md-option>
-        <md-option ng-click="ctrl.handleNamespaceDialog($event)">
-          Create a new namespace...
-        </md-option>
-	</md-select>
+          <md-option ng-click="ctrl.handleNamespaceDialog($event)">
+            Create a new namespace...
+          </md-option>
+        </md-select>
       </md-input-container>
       <kd-user-help>
-	Namespaces let you partition resources into logically named groups.
-	<a href="http://kubernetes.github.io/docs/admin/namespaces/" target="_blank" tabindex="-1">
+        Namespaces let you partition resources into logically named groups.
+        <a href="http://kubernetes.github.io/docs/admin/namespaces/" target="_blank" tabindex="-1">
           Learn more
-	</a>
+        </a>
       </kd-user-help>
     </kd-help-section>
 
     <kd-help-section>
       <md-input-container class="md-block">
-	<md-checkbox ng-model="ctrl.dryRun" class="md-primary"
-		     ng-model-options="{ debounce: { 'default': 500, 'blur': 0 } }">
-	  Check
-	</md-checkbox>
+      <md-checkbox ng-model="ctrl.dryRun" class="md-primary"
+        ng-model-options="{ debounce: { 'default': 500, 'blur': 0 } }">
+        Dry run
+      </md-checkbox>
       </md-input-container>
       <kd-user-help>
-	Dry run, verify changes that would be perform without applying them.
+        Dry run, verify changes that would be perform without applying them.
       </kd-user-help>
     </kd-help-section>
 
