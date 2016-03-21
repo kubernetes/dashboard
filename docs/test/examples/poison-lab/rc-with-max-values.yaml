@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: a-replication-controller-name-with-max-length-a123456789b123456789c123456789d123456789e123456789f123456789g123456789h123456789i123456789j123456789k123456789l123456789m123456789n123456789o123456789p123456789q123456789r123456789s123456789t123456789-1-end
+  labels:
+    app: hello-world
+    test: some-value
+    rc.label.prefix.segment.with.253.chars.a123456789b123456789c123456789d123456789e123456789f123456789g123456789h123456789i123456789j123456789k123456789j123456789l123456789m123456789n123456789o123456789p123456789q123456789r123456789s123456789t.fujitsu.com/label-name-segment-with-63-chars-a123456789b123456789c1234-end: label-max-value-with-63-chars-a123456789b123456789c1234567-end
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        rc.label.prefix.segment.with.253.chars.a123456789b123456789c123456789d123456789e123456789f123456789g123456789h123456789i123456789j123456789k123456789j123456789l123456789m123456789n123456789o123456789p123456789q123456789r123456789s123456789t.fujitsu.com/label-name-segment-with-63-chars-a123456789b123456789c1234-end: label-max-value-with-63-chars-a123456789b123456789c1234567-end
+        kind: testing
+    spec:
+      containers:
+      - name: tutum-hello-world-container-with-63-chars-a123456789b12345-end
+        image: tutum/hello-world
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 80
