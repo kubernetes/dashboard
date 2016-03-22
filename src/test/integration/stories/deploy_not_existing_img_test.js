@@ -32,8 +32,7 @@ import ZeroStatePageObject from '../zerostate/zerostate_po';
  *  - [Logs Page] - Check if pod logs show that pod is in pending state.
  *  - Clean up and delete created resources
  */
-// TODO(#494): Reenable this test when fixed.
-xdescribe('Deploy not existing image story', () => {
+describe('Deploy not existing image story', () => {
   /** @type {!ZeroStatePageObject} */
   let zeroStatePage;
 
