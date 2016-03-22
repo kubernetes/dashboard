@@ -43,16 +43,17 @@ gulp.task('build:cross', ['backend:prod:cross', 'build-frontend:cross']);
 /**
  * Builds production version of the frontend application for the current architecture.
  */
-gulp.task('build-frontend', ['assets', 'index:prod', 'clean-dist'], function() {
+gulp.task('build-frontend', ['fonts', 'icons', 'assets', 'index:prod', 'clean-dist'], function() {
   return buildFrontend(conf.paths.distPublic);
 });
 
 /**
  * Builds production version of the frontend application for all architecures.
  */
-gulp.task('build-frontend:cross', ['assets:cross', 'index:prod', 'clean-dist'], function() {
-  return buildFrontend(conf.paths.distPublicCross);
-});
+gulp.task(
+    'build-frontend:cross',
+    ['fonts:cross', 'icons:cross', 'assets:cross', 'index:prod', 'clean-dist'],
+    function() { return buildFrontend(conf.paths.distPublicCross); });
 
 /**
  * Copies assets to the dist directory for current architecture.
@@ -64,6 +65,28 @@ gulp.task('assets', ['clean-dist'], function() { return assets([conf.paths.distP
  */
 gulp.task(
     'assets:cross', ['clean-dist'], function() { return assets(conf.paths.distPublicCross); });
+
+/**
+ * Copies icons to the dist directory for current architecture.
+ */
+gulp.task('icons', ['clean-dist'], function() { return icons(conf.paths.iconsDistPublic); });
+
+/**
+ * Copies icons to the dist directory for all architectures.
+ */
+gulp.task(
+    'icons:cross', ['clean-dist'], function() { return icons(conf.paths.iconsDistPublicCross); });
+
+/**
+ * Copies fonts to the dist directory for current architecture.
+ */
+gulp.task('fonts', ['clean-dist'], function() { return fonts(conf.paths.fontsDistPublic); });
+
+/**
+ * Copies fonts to the dist directory for all architectures.
+ */
+gulp.task(
+    'fonts:cross', ['clean-dist'], function() { return fonts(conf.paths.fontsDistPublicCross); });
 
 /**
  * Cleans all build artifacts.
@@ -129,5 +152,29 @@ function buildFrontend(outputDirs) {
  */
 function assets(outputDirs) {
   return gulp.src(path.join(conf.paths.assets, '/**/*'), {base: conf.paths.app})
+      .pipe(multiDest(outputDirs));
+}
+
+/**
+ * @param {string|!Array<string>} outputDirs
+ * @return {stream}
+ */
+function icons(outputDirs) {
+  let iconAssetsFilter = gulpFilter(['*.woff2', '*.woff', '*.eot', '*.ttf']);
+
+  return gulp.src(path.join(conf.paths.materialIcons, '*'), {base: conf.paths.materialIcons})
+      .pipe(iconAssetsFilter)
+      .pipe(multiDest(outputDirs));
+}
+
+/**
+ * @param {string|!Array<string>} outputDirs
+ * @return {stream}
+ */
+function fonts(outputDirs) {
+  let fontFilter = gulpFilter(['*.woff2']);
+
+  return gulp.src(path.join(conf.paths.robotoFonts, '*'), {base: conf.paths.robotoFonts})
+      .pipe(fontFilter)
       .pipe(multiDest(outputDirs));
 }

@@ -9,7 +9,17 @@
     "angular-messages": "~1.5.0",
     "angular-ui-router": "~0.2.15",
     "angular-resource": "~1.5.0",
-    "angular-sanitize": "~1.5.0"
+    "angular-sanitize": "~1.5.0",
+    "material-design-icons": "~2.2.2",
+    "roboto-fontface": "~0.4.5"
+  },
+  "overrides": {
+    "material-design-icons": {
+      "main": "iconfont/material-icons.css"
+    },
+    "roboto-fontface": {
+      "main": "css/roboto-fontface.css"
+    }
   },
   "devDependencies": {
     "angular-mocks": "~1.5.0",
