@@ -17,9 +17,9 @@ If you find that you’re not able to access the Dashboard you can install and o
 stable release by running the following commands:
 ```bash
 kubectl create -f https://rawgit.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml
-kubectl proxy --port=8080
+kubectl proxy --port=9090
 ```
-And then navigate to `http://localhost:8080/api/v1/proxy/namespaces/kube-system/services/kubernetes-dashboard`
+And then navigate to `http://localhost:9090/api/v1/proxy/namespaces/kube-system/services/kubernetes-dashboard`
 
 ## Documentation
 
