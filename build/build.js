@@ -160,10 +160,10 @@ function assets(outputDirs) {
  * @return {stream}
  */
 function icons(outputDirs) {
-  let iconAssetsFilter = gulpFilter(['*.woff2', '*.woff', '*.eot', '*.ttf']);
-
-  return gulp.src(path.join(conf.paths.materialIcons, '*'), {base: conf.paths.materialIcons})
-      .pipe(iconAssetsFilter)
+  return gulp
+      .src(
+          path.join(conf.paths.materialIcons, '/**/*.+(woff2|woff|eot|ttf)'),
+          {base: conf.paths.materialIcons})
       .pipe(multiDest(outputDirs));
 }
 
@@ -172,9 +172,7 @@ function icons(outputDirs) {
  * @return {stream}
  */
 function fonts(outputDirs) {
-  let fontFilter = gulpFilter(['*.woff2']);
-
-  return gulp.src(path.join(conf.paths.robotoFonts, '*'), {base: conf.paths.robotoFonts})
-      .pipe(fontFilter)
+  return gulp
+      .src(path.join(conf.paths.robotoFonts, '/**/*.+(woff2)'), {base: conf.paths.robotoFonts})
       .pipe(multiDest(outputDirs));
 }
