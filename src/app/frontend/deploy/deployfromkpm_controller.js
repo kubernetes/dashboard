@@ -35,8 +35,8 @@ export default class DeployFromKpmController {
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
 
-    /** @export {string} */
-    this.packageName = "";
+    /** @export */
+    this.package = null;
 
     /**
      * List of available namespaces.
@@ -119,7 +119,8 @@ export default class DeployFromKpmController {
       method: 'POST',
       url:  url,
       params: {
-        dryRun: this.dryRun
+        dryRun: this.dryRun,
+        version: this.package.version
       },
       data: {}
     })
@@ -131,7 +132,7 @@ export default class DeployFromKpmController {
       self.deployStatus = 'error';
       self.resources = [];
     });
-    return console.log("deploy " + this.packageName);
+    return console.log("deploy " + this.package.name);
   }
 
   /**
@@ -142,7 +143,7 @@ export default class DeployFromKpmController {
    */
   backend_url(method) {
     var url = "/api/v1/appdeploymentfromkpm/" + this.namespace +
-      "/" + this.packageName  + "/" + method;
+      "/" + this.package.name  + "/" + method;
     return url;
   }
 
@@ -163,13 +164,10 @@ export default class DeployFromKpmController {
     var deferred = this.q_.defer();
     this._http({
       method: 'GET',
-      url: 'https://api.kpm.sh/api/v1/packages.json'
+      url: 'https://api.kpm.sh/api/v1/packages.json?named_like=' + search
     })
     .success(function(data) {
-//      var names = data.map((item) => item.name);
- //     console.log(names);
-      // FIXME: perform filtering server-side
-      deferred.resolve(data.filter((item) => item.name.indexOf(search) != -1));
+      deferred.resolve(data);
     })
     return deferred.promise;
   }

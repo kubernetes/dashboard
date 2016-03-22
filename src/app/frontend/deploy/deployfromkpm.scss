@@ -4,6 +4,9 @@ div.kpm-query {
     display: flex;
     justify-content: center;
   }
+  md-input-container {
+    padding-bottom: 26px;
+  }
   table.kpm-results {
     width: 100%;
     border-collapse: collpase;

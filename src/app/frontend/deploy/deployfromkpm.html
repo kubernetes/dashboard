@@ -3,6 +3,7 @@
     <kd-help-section>
       <md-autocomplete
         md-search-text="ctrl.packageName"
+        md-selected-item="ctrl.package"
         md-items="item in ctrl.querySearch(ctrl.packageName)"
         md-item-text="item.name"
         md-floating-label="Package name">
@@ -20,6 +21,20 @@
         <a href="http://github.com/kubespray/kpm" target="_blank" tabindex="-1">
           learn more about KPM<i class="material-icons">open_in_new</i>
         </a>
+      </kd-user-help>
+    </kd-help-section>
+
+    <kd-help-section ng-if="ctrl.package">
+      <md-input-container>
+        <label>Version</label>
+        <md-select ng-model="ctrl.package.version">
+          <md-option ng-repeat="version in ctrl.package.available_versions" value="{{version}}">
+            {{version}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+      <kd-user-help>
+        Select the package version you want to deploy.
       </kd-user-help>
     </kd-help-section>
 
