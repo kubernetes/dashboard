@@ -61,6 +61,7 @@ items:
   metadata:
     labels:
       app: kubernetes-dashboard-canary
+      kubernetes.io/cluster-service: "true"
     name: dashboard-canary
     namespace: kube-system
   spec:
