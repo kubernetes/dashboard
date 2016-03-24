@@ -19,24 +19,41 @@ import (
 	"testing"
 
 	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
 )
 
 func TestGetPodsEventWarningsApi(t *testing.T) {
 	cases := []struct {
-		pods            []api.Pod
-		expectedActions []string
+		pods      []api.Pod
+		eventList *api.EventList
+		expected  []Event
 	}{
-		{nil, []string{}},
+		{nil, nil, []Event{}},
 		{
 			[]api.Pod{
 				{
+					ObjectMeta: api.ObjectMeta{
+						Name: "FailedPod",
+					},
 					Status: api.PodStatus{
 						Phase: api.PodFailed,
 					},
 				},
 			},
-			[]string{"get"},
+			&api.EventList{Items: []api.Event{
+				{
+					Type:    api.EventTypeWarning,
+					Message: "Test Message",
+					InvolvedObject: api.ObjectReference{
+						Name: "FailedPod",
+					},
+				},
+			}},
+			[]Event{
+				{
+					Message: "Test Message",
+					Type:    api.EventTypeWarning,
+				},
+			},
 		},
 		{
 			[]api.Pod{
@@ -46,31 +63,27 @@ func TestGetPodsEventWarningsApi(t *testing.T) {
 					},
 				},
 			},
-			[]string{},
+			&api.EventList{},
+			[]Event{},
 		},
 	}
 
 	for _, c := range cases {
-		eventList := &api.EventList{}
-		fakeClient := testclient.NewSimpleFake(eventList)
+		actual := GetPodsEventWarnings(c.eventList, c.pods)
 
-		GetPodsEventWarnings(fakeClient, c.pods)
-
-		actions := fakeClient.Actions()
-		if len(actions) != len(c.expectedActions) {
-			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
-				len(c.expectedActions), len(actions))
-			continue
+		if len(actual) != len(c.expected) || !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("GetPodsEventWarnings(%#v, %#v) == \n%#v\nexpected \n%#v\n",
+				c.eventList, c.pods, actual, c.expected)
 		}
 	}
 }
 
-func TestGetPodsEventWarnings(t *testing.T) {
+func TestGetWarningEvents(t *testing.T) {
 	cases := []struct {
 		events   *api.EventList
-		expected []Event
+		expected []api.Event
 	}{
-		{&api.EventList{Items: nil}, []Event{}},
+		{&api.EventList{Items: []api.Event{}}, []api.Event{}},
 		{
 			&api.EventList{
 				Items: []api.Event{
@@ -81,7 +94,7 @@ func TestGetPodsEventWarnings(t *testing.T) {
 					},
 				},
 			},
-			[]Event{
+			[]api.Event{
 				{
 					Message: "msg",
 					Reason:  "reason",
@@ -98,7 +111,7 @@ func TestGetPodsEventWarnings(t *testing.T) {
 					},
 				},
 			},
-			[]Event{
+			[]api.Event{
 				{
 					Message: "msg",
 					Reason:  "failed",
@@ -115,14 +128,14 @@ func TestGetPodsEventWarnings(t *testing.T) {
 					},
 				},
 			},
-			[]Event{},
+			[]api.Event{},
 		},
 	}
 
 	for _, c := range cases {
-		actual := getPodsEventWarnings(c.events)
+		actual := getWarningEvents(c.events)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("getPodsEventErrors(%#v) == \n%#v\nexpected \n%#v\n",
+			t.Errorf("getWarningEvents(%#v) == \n%#v\nexpected \n%#v\n",
 				c.events, actual, c.expected)
 		}
 	}
@@ -173,38 +186,38 @@ func TestFilterEventsByType(t *testing.T) {
 
 func TestRemoveDuplicates(t *testing.T) {
 	cases := []struct {
-		slice    []Event
-		expected []Event
+		slice    []api.Event
+		expected []api.Event
 	}{
-		{nil, []Event{}},
+		{nil, []api.Event{}},
 		{
-			[]Event{
+			[]api.Event{
 				{Reason: "test"},
 				{Reason: "test2"},
 				{Reason: "test"},
 			},
-			[]Event{
+			[]api.Event{
 				{Reason: "test"},
 				{Reason: "test2"},
 			},
 		},
 		{
-			[]Event{
+			[]api.Event{
 				{Reason: "test"},
 				{Reason: "test"},
 				{Reason: "test"},
 			},
-			[]Event{
+			[]api.Event{
 				{Reason: "test"},
 			},
 		},
 		{
-			[]Event{
+			[]api.Event{
 				{Reason: "test"},
 				{Reason: "test2"},
 				{Reason: "test3"},
 			},
-			[]Event{
+			[]api.Event{
 				{Reason: "test"},
 				{Reason: "test2"},
 				{Reason: "test3"},
@@ -350,6 +363,50 @@ func TestIsFailedReason(t *testing.T) {
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("fillEventsType(%#v, %#v) == \n%#v\nexpected \n%#v\n",
 				c.reason, c.failedPartials, actual, c.expected)
+		}
+	}
+}
+
+func TestFilterEventsByPodsUID(t *testing.T) {
+	cases := []struct {
+		events   []api.Event
+		pods     []api.Pod
+		expected []api.Event
+	}{
+		{nil, nil, []api.Event{}},
+		{
+			[]api.Event{
+				{InvolvedObject: api.ObjectReference{UID: "TestPod"}},
+				{InvolvedObject: api.ObjectReference{UID: "TestObject"}},
+			},
+			[]api.Pod{
+				{ObjectMeta: api.ObjectMeta{UID: "TestPod"}},
+			},
+			[]api.Event{
+				{InvolvedObject: api.ObjectReference{UID: "TestPod"}},
+			},
+		},
+		{
+			// To check whether multiple events targeting same object are correctly filtered
+			[]api.Event{
+				{InvolvedObject: api.ObjectReference{UID: "TestPod"}},
+				{InvolvedObject: api.ObjectReference{UID: "TestPod"}},
+			},
+			[]api.Pod{
+				{ObjectMeta: api.ObjectMeta{UID: "TestPod"}},
+			},
+			[]api.Event{
+				{InvolvedObject: api.ObjectReference{UID: "TestPod"}},
+				{InvolvedObject: api.ObjectReference{UID: "TestPod"}},
+			},
+		},
+	}
+
+	for _, c := range cases {
+		actual := filterEventsByPodsUID(c.events, c.pods)
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("filterEventsByPodsName(%#v, %#v) == \n%#v\nexpected \n%#v\n",
+				c.events, c.pods, actual, c.expected)
 		}
 	}
 }

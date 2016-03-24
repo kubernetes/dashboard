@@ -25,7 +25,7 @@ import (
 )
 
 // GetPodsEventWarningsFunc is a callback function used to get the pod status errors.
-type GetPodsEventWarningsFunc func(pods []api.Pod) ([]Event, error)
+type GetPodsEventWarningsFunc func(pods []api.Pod) []Event
 
 // GetNodeFunc is a callback function used to get nodes by names.
 type GetNodeFunc func(nodeName string) (*api.Node, error)
@@ -94,17 +94,20 @@ func GetReplicationControllerList(client *client.Client) (*ReplicationController
 		return nil, err
 	}
 
+	eventsList, err := client.Events(api.NamespaceAll).List(api.ListOptions{
+		LabelSelector: labels.Everything(),
+		FieldSelector: fields.Everything(),
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
 	// Anonymous callback function to get pods warnings.
 	// Function fulfils GetPodsEventWarningsFunc type contract.
 	// Based on list of api pods returns list of pod related warning events
-	getPodsEventWarningsFn := func(pods []api.Pod) ([]Event, error) {
-		errors, err := GetPodsEventWarnings(client, pods)
-
-		if err != nil {
-			return nil, err
-		}
-
-		return errors, nil
+	getPodsEventWarningsFn := func(pods []api.Pod) []Event {
+		return GetPodsEventWarnings(eventsList, pods)
 	}
 
 	// Anonymous callback function to get nodes by their names.
@@ -155,11 +158,7 @@ func getReplicationControllerList(replicationControllers []api.ReplicationContro
 			}
 		}
 		podInfo := getReplicationControllerPodInfo(&replicationController, matchingPods)
-		podErrors, err := getPodsEventWarningsFn(matchingPods)
-
-		if err != nil {
-			return nil, err
-		}
+		podErrors := getPodsEventWarningsFn(matchingPods)
 
 		podInfo.Warnings = podErrors
 
