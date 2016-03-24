@@ -83,7 +83,7 @@ func TestGetMatchingServices(t *testing.T) {
 }
 
 func TestGetReplicationControllerList(t *testing.T) {
-	getPodsErrorFnMock := func(pods []api.Pod) ([]Event, error) {
+	getPodsErrorFnMock := func(namespace string, pods []api.Pod) ([]Event, error) {
 		return []Event{}, nil
 	}
 
