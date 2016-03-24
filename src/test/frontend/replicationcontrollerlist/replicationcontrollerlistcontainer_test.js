@@ -12,9 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  binarySearchOptimalHeight,
-} from 'replicationcontrollerlist/replicationcontrollerlistcontainer';
+import {binarySearchOptimalHeight} from 'replicationcontrollerlist/replicationcontrollerlistcontainer';
 
 describe('Replication controller list container', () => {
 

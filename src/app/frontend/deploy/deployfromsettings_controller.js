@@ -15,9 +15,7 @@
 import showNamespaceDialog from './createnamespace_dialog';
 import showCreateSecretDialog from './createsecret_dialog';
 import DeployLabel from './deploylabel';
-import {
-  stateName as replicationcontrollerliststate,
-} from 'replicationcontrollerlist/replicationcontrollerlist_state';
+import {stateName as replicationcontrollerliststate} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 import {uniqueNameValidationKey} from './uniquename_directive';
 import DockerImageReference from '../common/docker/dockerimagereference';
 

@@ -14,9 +14,7 @@
 
 import ReplicationControllerInfoController from 'replicationcontrollerdetail/replicationcontrollerinfo_controller';
 import replicationControllerDetailModule from 'replicationcontrollerdetail/replicationcontrollerdetail_module';
-import {
-  stateName as replicationcontrollers,
-} from 'replicationcontrollerlist/replicationcontrollerlist_state';
+import {stateName as replicationcontrollers} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 
 describe('Replication Controller Detail controller', () => {
   /**
