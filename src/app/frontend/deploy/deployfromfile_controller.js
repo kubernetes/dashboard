@@ -12,9 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  stateName as replicationcontrollerliststate,
-} from 'replicationcontrollerlist/replicationcontrollerlist_state';
+import {stateName as replicationcontrollerliststate} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 
 /**
  * Controller for the deploy from file directive.

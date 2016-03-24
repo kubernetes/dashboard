@@ -141,9 +141,8 @@ gulp.task('wait-for-cluster', function(doneFn) {
 
   function isRunning() {
     if (counter % 10 === 0) {
-      gulpUtil.log(
-          gulpUtil.colors.magenta(
-              `Waiting for a Kubernetes cluster at ${conf.backend.apiServerHost}...`));
+      gulpUtil.log(gulpUtil.colors.magenta(
+          `Waiting for a Kubernetes cluster at ${conf.backend.apiServerHost}...`));
     }
     counter += 1;
 

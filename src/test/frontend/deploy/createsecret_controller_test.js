@@ -67,10 +67,9 @@ describe('Create-Secret dialog', () => {
     let rule = ctrl.dataPattern;
 
     // then the following data should be accepted
-    expect(
-        (`eyAiaHR0cHM6Ly9pbmRleC5kb2NrZXIuaW8` + `vdjEvIjogeyAiYXV0aCI6ICJabUZyWlhCaG` +
-         `MzTjNiM0prTVRJSyIsICJlbWFpbCI6` + `ICJqZG9lQGV4YW1wbGUuY29tIiB9IH0K`)
-            .match(rule))
+    expect((`eyAiaHR0cHM6Ly9pbmRleC5kb2NrZXIuaW8` + `vdjEvIjogeyAiYXV0aCI6ICJabUZyWlhCaG` +
+            `MzTjNiM0prTVRJSyIsICJlbWFpbCI6` + `ICJqZG9lQGV4YW1wbGUuY29tIiB9IH0K`)
+               .match(rule))
         .toBeDefined();
   });
 

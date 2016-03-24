@@ -89,11 +89,10 @@ function checkDependencies(packageManager) {
                                     .join('');
 
           if (dependenciesStr.length !== 0) {
-            gulputil.log(
-                gulputil.colors.yellow(
-                    `Dependencies needed to update:\n${dependenciesStr}\n` +
-                    `Run: 'gulp update-${packageManager}-dependencies', then '${packageManager} install' to update` +
-                    ' dependencies.\n'));
+            gulputil.log(gulputil.colors.yellow(
+                `Dependencies needed to update:\n${dependenciesStr}\n` +
+                `Run: 'gulp update-${packageManager}-dependencies', then '${packageManager} install' to update` +
+                ' dependencies.\n'));
           }
 
           cb();
