@@ -1,0 +1,38 @@
+div.kpm-query {
+  font-size: 1.2em;
+  div.loader {
+    display: flex;
+    justify-content: center;
+  }
+  md-input-container {
+    padding-bottom: 26px;
+  }
+  table.kpm-results {
+    width: 100%;
+    border-collapse: collpase;
+    margin-bottom: 1em;
+    th {
+      text-align: left;
+      padding: 4px;
+    }
+    td {
+      border-top: 1px solid #f0f0f0;
+      padding: 4px;
+    }
+    span.status {
+      display: inline-block;
+      color: white;
+      font-size: 0.9em;
+      font-weight: bold;
+      text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+      border-radius: 2px;
+      padding: 0 8px;
+      &.ok        { background: #4CAF50; }
+      &.created   { background: #F0A000; }
+      &.updated   { background: #F0A000; }
+      &.absent    { background: #4CAF50; }
+      &.deleted   { background: #FF8A65; }
+      &.protected { background: #64B5F6; }
+    }
+  }
+}
