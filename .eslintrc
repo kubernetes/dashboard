@@ -12,9 +12,9 @@
     // Enables all ES6 features except modules.
     "es6": true,
   },
-  "ecmaFeatures": {
+  "parserOptions": {
     // Enable ES6 modules to have all language features covered.
-    "modules": true,
+    "sourceType": "module"
   },
   "rules": {
     // Require parens in arrow function arguments.

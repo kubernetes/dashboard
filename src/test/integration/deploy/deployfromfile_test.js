@@ -44,7 +44,7 @@ describe('Deploy from file view', () => {
     page.cancelButton.click();
 
     // then
-    expect(zeroState.deployButton.isPresent()).toBeTruthy();
+    expect(zeroState.deployButton.isPresent()).toBe(true);
   });
 
 });

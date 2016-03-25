@@ -17,10 +17,10 @@ export default class DeployFromFilePageObject {
     this.deployFromFileRadioButtonQuery = by.xpath('//md-radio-button[@value="File"]');
     this.deployFromFileRadioButton = element(this.deployFromFileRadioButtonQuery);
 
-    this.deployButtonQuery = by.xpath('//button[@type="submit"]');
+    this.deployButtonQuery = by.css('.kd-deploy-submit-button');
     this.deployButton = element(this.deployButtonQuery);
 
-    this.cancelButtonQuery = by.xpath('//button[@ng-click="ctrl.cancel()"]');
+    this.cancelButtonQuery = by.css('.kd-deploy-cancel-button');
     this.cancelButton = element(this.cancelButtonQuery);
 
     this.inputContainerQuery = by.tagName('md-input-container');

@@ -14,7 +14,7 @@
 
 export default class DeployPageObject {
   constructor() {
-    this.deployButtonQuery = by.css('.kd-deploy-btn');
+    this.deployButtonQuery = by.css('.kd-deploy-submit-button');
     this.deployButton = element(this.deployButtonQuery);
 
     this.appNameFieldQuery = by.model('ctrl.name');
