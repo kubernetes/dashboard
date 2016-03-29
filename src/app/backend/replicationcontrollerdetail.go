@@ -178,7 +178,7 @@ func GetReplicationControllerDetail(client client.Interface, heapsterClient Heap
 		podDetail := ReplicationControllerPod{
 			Name:         pod.Name,
 			PodPhase:     pod.Status.Phase,
-			StartTime:    pod.Status.StartTime,
+			StartTime:    &pod.CreationTimestamp,
 			PodIP:        pod.Status.PodIP,
 			NodeName:     pod.Spec.NodeName,
 			RestartCount: getRestartCount(pod),
