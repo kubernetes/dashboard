@@ -88,8 +88,6 @@ gulp.task('scripts:prod', ['angular-templates'], function() {
       jscomp_error: '*',
       // Disable checks that are not applicable to the project.
       jscomp_off: [
-        // This check does not work correctly with ES6.
-        'inferredConstCheck',
         // Let ESLint handle all lint checks.
         'lintChecks',
         // This checks aren't working with current google-closure-library version. Will be deleted
