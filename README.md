@@ -21,6 +21,9 @@ kubectl proxy --port=9090
 ```
 And then navigate to `http://localhost:9090/api/v1/proxy/namespaces/kube-system/services/kubernetes-dashboard`
 
+If it asks password, use `$ kubectl config view` to find it.
+
+
 ## Documentation
 
 * The [user guide](http://kubernetes.io/docs/user-guide/ui/) is an entry point for users of Dashboard
