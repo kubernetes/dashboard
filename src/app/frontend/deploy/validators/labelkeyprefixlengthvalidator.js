@@ -12,28 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// As this is abstract class then we have to allow unused variables in methods
-/*eslint no-unused-vars: 0*/
+import {Validator} from 'common/validators/validator';
 
 /**
- * Abstract class representing Type that needs to be validated.
- *
- * @class
+ * @final
+ * @extends {Validator}
  */
-export class Type {
+export class LabelKeyPrefixLengthValidator extends Validator {
   constructor() {
-    if (this.constructor === Type) {
-      throw new TypeError('Abstract class "Type" cannot be instantiated directly.');
-    }
+    super();
+    /** @type {number} */
+    this.maxKeyLength = 253;
   }
 
   /**
-   * Should be implemented to return true when the given value meets the requirements
-   * of the expected Type or given value is undefined|empty in order to not conflict with
-   * other check such as 'required', false otherwise.
+   * Returns true if the label key prefix (before the "/" if there is one) is equal or shorter than
+   * 253 characters, otherwise returns false.
    *
-   * @param {*} value
-   * @return {boolean}
+   * @override
    */
-  isValid(value) {}
+  isValid(value) {
+    /** @type {number} */
+    let slashPosition = value.indexOf('/');
+    /** @type {string} */
+    let labelKeyPrefix = slashPosition > -1 ? value.substring(0, slashPosition) : '';
+
+    return labelKeyPrefix.length <= this.maxKeyLength;
+  }
 }
