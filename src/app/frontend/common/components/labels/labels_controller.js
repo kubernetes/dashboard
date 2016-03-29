@@ -37,7 +37,7 @@ export default class LabelsController {
   /**
    * Returns true if element at index position should be visible.
    *
-   * @param index
+   * @param {number} index
    * @return {boolean}
    * @export
    */
