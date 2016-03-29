@@ -24,7 +24,7 @@ export const stateName = `${replicationcontrollers}.zero`;
  */
 export class StateParams {
   /**
-   * @param containsOnlyKubeSystemRCs
+   * @param {boolean} containsOnlyKubeSystemRCs
    */
   constructor(containsOnlyKubeSystemRCs) {
     /** @type {boolean} whether there are only RCs in namespace "kube-system" */

@@ -32,7 +32,7 @@ export default class SparklineController {
 
   /**
    * Formats the underlying series suitable for display as an SVG polygon.
-   * @return string
+   * @return {string}
    * @export
    */
   polygonPoints() {

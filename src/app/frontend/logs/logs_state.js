@@ -26,9 +26,9 @@ export class StateParams {
    * @param {string} namespace
    * @param {string} replicationController
    * @param {string} podId
-   * @param {string=} [container]
+   * @param {string=} opt_container
    */
-  constructor(namespace, replicationController, podId, container) {
+  constructor(namespace, replicationController, podId, opt_container) {
     /** @export {string} Namespace of this Replication Controller. */
     this.namespace = namespace;
 
@@ -39,6 +39,6 @@ export class StateParams {
     this.podId = podId;
 
     /** @export {string|undefined} Name of this pod container. */
-    this.container = container;
+    this.container = opt_container;
   }
 }

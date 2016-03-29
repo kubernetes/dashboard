@@ -22,7 +22,7 @@ export class TypeFactory {
    * @constructs TypeFactory
    */
   constructor() {
-    /** @private {Map<Array<string, !./type.Type>>} */
+    /** @private {!Map<string, !./type.Type>} */
     this.typeMap_ = new Map();
 
     // Initialize map with supported types
@@ -32,8 +32,7 @@ export class TypeFactory {
   /**
    * Returns specific Type class based on given type name.
    *
-   * @method
-   * @param typeName
+   * @param {string} typeName
    * @returns {!./type.Type}
    */
   getType(typeName) {
