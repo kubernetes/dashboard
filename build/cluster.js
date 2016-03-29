@@ -29,7 +29,7 @@ const clusterHealthzUrl = `${conf.backend.apiServerHost}/healthz`;
 /**
  * The validate URL of the heapster to check that it is running.
  */
-const heapsterValidateUrl = `${conf.backend.heapsterServerHost}/api/v1/model/stats/`;
+const heapsterValidateUrl = `${conf.backend.heapsterServerHost}/api/v1/model/metrics/uptime`;
 
 /**
  * A Number, representing the ID value of the timer that is set for function which periodically
@@ -70,11 +70,12 @@ function heapsterHealthCheck(doneFn) {
     if (err) {
       return doneFn(new Error(err));
     }
-    let statistics = JSON.parse(stdout.trim());
-    let uptime = statistics.uptime;
-    if (!isNaN(uptime)) {
-      return doneFn();
+    try {
+      JSON.parse(stdout.trim());
+    } catch (err) {
+      return doneFn(err);
     }
+    return doneFn('ok');
   });
 }
 
@@ -121,11 +122,13 @@ gulp.task('wait-for-heapster', function(doneFn) {
     counter += 1;
 
     // constantly query the heapster until it is properly running
-    heapsterHealthCheck(function() {
-      gulpUtil.log(gulpUtil.colors.magenta('Heapster is up and running.'));
-      clearTimeout(isHeapsterRunningSetIntervalHandler);
-      isHeapsterRunningSetIntervalHandler = null;
-      doneFn();
+    heapsterHealthCheck(function(result) {
+      if (result === 'ok' && isHeapsterRunningSetIntervalHandler !== null) {
+        gulpUtil.log(gulpUtil.colors.magenta('Heapster is up and running.'));
+        clearTimeout(isHeapsterRunningSetIntervalHandler);
+        isHeapsterRunningSetIntervalHandler = null;
+        doneFn();
+      }
     });
   }
 });
