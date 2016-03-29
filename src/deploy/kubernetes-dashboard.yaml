@@ -59,6 +59,7 @@ items:
   metadata:
     labels:
       app: kubernetes-dashboard
+      kubernetes.io/cluster-service: "true"
     name: kubernetes-dashboard
     namespace: kube-system
   spec:
