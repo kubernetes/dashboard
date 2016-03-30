@@ -64,7 +64,7 @@ type ReplicationControllerPod struct {
 	PodPhase api.PodPhase `json:"podPhase"`
 
 	// Time the Pod has started. Empty if not started.
-	StartTime *unversioned.Time `json:"startTime"`
+	StartTime unversioned.Time `json:"startTime"`
 
 	// IP address of the Pod.
 	PodIP string `json:"podIP"`
@@ -178,7 +178,7 @@ func GetReplicationControllerDetail(client client.Interface, heapsterClient Heap
 		podDetail := ReplicationControllerPod{
 			Name:         pod.Name,
 			PodPhase:     pod.Status.Phase,
-			StartTime:    pod.Status.StartTime,
+			StartTime:    pod.CreationTimestamp,
 			PodIP:        pod.Status.PodIP,
 			NodeName:     pod.Spec.NodeName,
 			RestartCount: getRestartCount(pod),
