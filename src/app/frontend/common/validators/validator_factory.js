@@ -13,13 +13,15 @@
 // limitations under the License.
 
 import {IntegerValidator} from './integervalidator';
-import {LabelKeyNameLengthValidator} from 'deploy/validators/labelkeynamelengthvalidator';
-import {LabelKeyPrefixLengthValidator} from 'deploy/validators/labelkeyprefixlengthvalidator';
-import {LabelKeyNamePatternValidator} from 'deploy/validators/labelkeynamepatternvalidator';
-import {LabelKeyPrefixPatternValidator} from 'deploy/validators/labelkeyprefixpatternvalidator';
-import {LabelValuePatternValidator} from 'deploy/validators/labelvaluepatternvalidator';
 
 /**
+ * Validators factory allows to register component related validators on demand in place where
+ * they are used. Simply inject 'kdValidatorFactory' into controller and register validator
+ * using 'registerValidator' method.
+ *
+ * Validator object has to fulfill validator object contract which is to implement 'Validator'
+ * class and 'isValid(value)' method.
+ *
  * @final
  */
 export class ValidatorFactory {
@@ -27,23 +29,31 @@ export class ValidatorFactory {
    * @constructs ValidatorFactory
    */
   constructor() {
-    /** @private {Map<Array<string, !./validator.Validator>>} */
+    /** @private {Map<string, !./validator.Validator>} */
     this.validatorMap_ = new Map();
 
-    // Initialize map with supported types
-    this.validatorMap_.set('integer', new IntegerValidator());
-    this.validatorMap_.set('labelKeyNameLength', new LabelKeyNameLengthValidator());
-    this.validatorMap_.set('labelKeyPrefixLength', new LabelKeyPrefixLengthValidator());
-    this.validatorMap_.set('labelKeyNamePattern', new LabelKeyNamePatternValidator());
-    this.validatorMap_.set('labelKeyPrefixPattern', new LabelKeyPrefixPatternValidator());
-    this.validatorMap_.set('labelValuePattern', new LabelValuePatternValidator());
+    // Register common validators here
+    this.registerValidator('integer', new IntegerValidator());
+  }
+
+  /**
+   * Used to register validators on demand.
+   *
+   * @param {string} validatorName
+   * @param {!./validator.Validator} validatorObject
+   */
+  registerValidator(validatorName, validatorObject) {
+    if (this.validatorMap_.has(validatorName)) {
+      throw new Error(`Validator with name ${validatorName} is already registered.`);
+    }
+
+    this.validatorMap_.set(validatorName, validatorObject);
   }
 
   /**
    * Returns specific Type class based on given type name.
    *
-   * @method
-   * @param validatorName
+   * @param {string} validatorName
    * @returns {!./validator.Validator}
    */
   getValidator(validatorName) {
