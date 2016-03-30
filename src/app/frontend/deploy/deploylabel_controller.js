@@ -13,6 +13,11 @@
 // limitations under the License.
 
 import DeployLabel from './deploylabel';
+import {LabelKeyNameLengthValidator} from './validators/labelkeynamelengthvalidator';
+import {LabelKeyPrefixLengthValidator} from './validators/labelkeyprefixlengthvalidator';
+import {LabelKeyNamePatternValidator} from './validators/labelkeynamepatternvalidator';
+import {LabelKeyPrefixPatternValidator} from './validators/labelkeyprefixpatternvalidator';
+import {LabelValuePatternValidator} from './validators/labelvaluepatternvalidator';
 
 /**
  * Service used for handling label actions like: hover, showing duplicated key error, etc.
@@ -21,13 +26,25 @@ import DeployLabel from './deploylabel';
 export default class DeployLabelController {
   /**
    * Constructs our label controller.
+   *
+   * @param {!./../common/validators/validator_factory.ValidatorFactory} kdValidatorFactory
+   * @ngInject
    */
-  constructor() {
+  constructor(kdValidatorFactory) {
     /** @export {!DeployLabel} Initialized from the scope. */
     this.label;
 
     /** @export {!Array<!DeployLabel>} Initialized from the scope. */
     this.labels;
+
+    // Register label related validators
+    kdValidatorFactory.registerValidator('labelKeyNameLength', new LabelKeyNameLengthValidator());
+    kdValidatorFactory.registerValidator(
+        'labelKeyPrefixLength', new LabelKeyPrefixLengthValidator());
+    kdValidatorFactory.registerValidator('labelKeyNamePattern', new LabelKeyNamePatternValidator());
+    kdValidatorFactory.registerValidator(
+        'labelKeyPrefixPattern', new LabelKeyPrefixPatternValidator());
+    kdValidatorFactory.registerValidator('labelValuePattern', new LabelValuePatternValidator());
   }
 
   /**

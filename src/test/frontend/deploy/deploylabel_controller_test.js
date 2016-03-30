@@ -14,21 +14,23 @@
 
 import DeployLabelController from 'deploy/deploylabel_controller';
 import DeployLabel from 'deploy/deploylabel';
+import deployModule from 'deploy/deploy_module';
 
 describe('DeployLabel controller', () => {
   let ctrl;
   let labelForm;
 
   beforeEach(() => {
-    ctrl = new DeployLabelController();
+    angular.mock.module(deployModule.name);
 
-    angular.mock.inject(($rootScope, $compile) => {
+    angular.mock.inject(($rootScope, $compile, $controller, kdValidatorFactory) => {
       let scope = $rootScope.$new();
       let template = angular.element(
           '<ng-form name="labelForm"><input name="key"' +
           ' ng-model="label"></ng-form>');
 
       $compile(template)(scope);
+      ctrl = $controller(DeployLabelController, {kdValidatorFactory: kdValidatorFactory});
       labelForm = scope.labelForm;
     });
   });

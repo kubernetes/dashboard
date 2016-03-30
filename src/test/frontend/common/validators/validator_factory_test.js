@@ -14,6 +14,7 @@
 
 import validatorsModule from 'common/validators/validators_module';
 import {IntegerValidator} from 'common/validators/integervalidator';
+import {LabelKeyNameLengthValidator} from 'deploy/validators/labelkeynamelengthvalidator';
 
 describe('Validator factory', () => {
   /** @type {!ValidatorFactory} */
@@ -44,5 +45,16 @@ describe('Validator factory', () => {
     expect(() => {
       validatorFactory.getValidator(validatorName);
     }).toThrow(new Error(`Given validator '${validatorName}' is not supported.`));
+  });
+
+  it('should register validator', () => {
+    // given
+    let validator = new LabelKeyNameLengthValidator();
+
+    // when
+    validatorFactory.registerValidator('testValidator', validator);
+
+    // then
+    expect(validatorFactory.getValidator('testValidator')).toEqual(validator);
   });
 });

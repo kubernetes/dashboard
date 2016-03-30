@@ -16,7 +16,7 @@
 /*eslint no-unused-vars: 0*/
 
 /**
- * Abstract class representing Type that needs to be validated.
+ * Abstract class representing Validator.
  *
  * @class
  */
