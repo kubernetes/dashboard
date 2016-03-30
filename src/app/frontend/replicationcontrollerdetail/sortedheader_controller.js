@@ -40,7 +40,8 @@ export default class SortedHeaderController {
     this.tooltip;
 
     /**
-     * Name of current header column. Initialized from the scope (read-only).
+     * Name of current header column. Must match at least one of sorted object members. Initialized
+     * from the scope (read-only).
      * @export {string}
      */
     this.columnName;

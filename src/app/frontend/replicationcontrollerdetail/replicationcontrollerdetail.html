@@ -60,7 +60,7 @@ limitations under the License.
               </th>
               <th class="kd-replicationcontrollerdetail-table-header">
                 <kd-sorted-header currently-selected-column="ctrl.sortPodsBy"
-                                  currently-selected-order="ctrl.podsOrder" column-name="status"
+                                  currently-selected-order="ctrl.podsOrder" column-name="podPhase"
                                   tooltip="Status of the pod">
                   Status
                 </kd-sorted-header>
@@ -219,7 +219,7 @@ limitations under the License.
             <th class="kd-replicationcontrollerdetail-table-header">
               <kd-sorted-header currently-selected-column="ctrl.sortEventsBy"
                                 currently-selected-order="ctrl.eventsOrder"
-                                column-name="['sourceComponent','sourceHost']"
+                                column-name="[sourceComponent,sourceHost]"
                                 tooltip="Source of the event, details of component and host">
                 Source
               </kd-sorted-header>
