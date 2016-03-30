@@ -143,8 +143,8 @@ export default {
     /**
      * Whether to use sauce labs for running tests that require a browser.
      */
-    useSauceLabs:
-        !!process.env.SAUCE_USERNAME && !!process.env.SAUCE_ACCESS_KEY && !!process.env.TRAVIS,
+    useSauceLabs: !!process.env.SAUCE_USERNAME && !!process.env.SAUCE_ACCESS_KEY &&
+        !!process.env.TRAVIS && process.env.TRAVIS_PULL_REQUEST == 'false',
   },
 
   /**
