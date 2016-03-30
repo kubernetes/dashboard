@@ -16,7 +16,7 @@ limitations under the License.
 
 package unversioned
 
-// This file contains a collection of methods that can be used from go-resful to
+// This file contains a collection of methods that can be used from go-restful to
 // generate Swagger API documentation for its models. Please read this PR for more
 // information on the implementation: https://github.com/emicklei/go-restful/pull/215
 //
@@ -28,10 +28,11 @@ package unversioned
 
 // AUTO-GENERATED FUNCTIONS START HERE
 var map_APIGroup = map[string]string{
-	"":                 "APIGroup contains the name, the supported versions, and the preferred version of a group.",
-	"name":             "name is the name of the group.",
-	"versions":         "versions are the versions supported in this group.",
-	"preferredVersion": "preferredVersion is the version preferred by the API server, which probably is the storage version.",
+	"":                           "APIGroup contains the name, the supported versions, and the preferred version of a group.",
+	"name":                       "name is the name of the group.",
+	"versions":                   "versions are the versions supported in this group.",
+	"preferredVersion":           "preferredVersion is the version preferred by the API server, which probably is the storage version.",
+	"serverAddressByClientCIDRs": "a map of client CIDR to server address that is serving this group. This is to help clients reach servers in the most network-efficient way possible. Clients can use the appropriate server address as per the CIDR that they match. In case of multiple matches, clients should use the longest matching CIDR. The server returns only those CIDRs that it thinks that the client can match. For example: the master will return an internal IP CIDR only, if the client reaches the server using an internal IP. Server looks at X-Forwarded-For header or X-Real-Ip header or request.RemoteAddr (in that order) to get the client IP.",
 }
 
 func (APIGroup) SwaggerDoc() map[string]string {
@@ -69,8 +70,9 @@ func (APIResourceList) SwaggerDoc() map[string]string {
 }
 
 var map_APIVersions = map[string]string{
-	"":         "APIVersions lists the versions that are available, to allow clients to discover the API at /api, which is the root path of the legacy v1 API.",
-	"versions": "versions are the api versions that are available.",
+	"":                           "APIVersions lists the versions that are available, to allow clients to discover the API at /api, which is the root path of the legacy v1 API.",
+	"versions":                   "versions are the api versions that are available.",
+	"serverAddressByClientCIDRs": "a map of client CIDR to server address that is serving this group. This is to help clients reach servers in the most network-efficient way possible. Clients can use the appropriate server address as per the CIDR that they match. In case of multiple matches, clients should use the longest matching CIDR. The server returns only those CIDRs that it thinks that the client can match. For example: the master will return an internal IP CIDR only, if the client reaches the server using an internal IP. Server looks at X-Forwarded-For header or X-Real-Ip header or request.RemoteAddr (in that order) to get the client IP.",
 }
 
 func (APIVersions) SwaggerDoc() map[string]string {
@@ -121,7 +123,7 @@ func (LabelSelectorRequirement) SwaggerDoc() map[string]string {
 var map_ListMeta = map[string]string{
 	"":                "ListMeta describes metadata that synthetic resources must have, including lists and various status objects. A resource may have only one of {ObjectMeta, ListMeta}.",
 	"selfLink":        "SelfLink is a URL representing this object. Populated by the system. Read-only.",
-	"resourceVersion": "String that identifies the server's internal version of this object that can be used by clients to determine when objects have changed. Value must be treated as opaque by clients and passed unmodified back to the server. Populated by the system. Read-only. More info: http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#concurrency-control-and-consistency",
+	"resourceVersion": "String that identifies the server's internal version of this object that can be used by clients to determine when objects have changed. Value must be treated as opaque by clients and passed unmodified back to the server. Populated by the system. Read-only. More info: http://releases.k8s.io/release-1.2/docs/devel/api-conventions.md#concurrency-control-and-consistency",
 }
 
 func (ListMeta) SwaggerDoc() map[string]string {
@@ -145,10 +147,20 @@ func (RootPaths) SwaggerDoc() map[string]string {
 	return map_RootPaths
 }
 
+var map_ServerAddressByClientCIDR = map[string]string{
+	"":              "ServerAddressByClientCIDR helps the client to determine the server address that they should use, depending on the clientCIDR that they match.",
+	"clientCIDR":    "The CIDR with which clients can match their IP to figure out the server address that they should use.",
+	"serverAddress": "Address of this server, suitable for a client that matches the above CIDR. This can be a hostname, hostname:port, IP or IP:port.",
+}
+
+func (ServerAddressByClientCIDR) SwaggerDoc() map[string]string {
+	return map_ServerAddressByClientCIDR
+}
+
 var map_Status = map[string]string{
 	"":         "Status is a return value for calls that don't return other objects.",
-	"metadata": "Standard list metadata. More info: http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#types-kinds",
-	"status":   "Status of the operation. One of: \"Success\" or \"Failure\". More info: http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#spec-and-status",
+	"metadata": "Standard list metadata. More info: http://releases.k8s.io/release-1.2/docs/devel/api-conventions.md#types-kinds",
+	"status":   "Status of the operation. One of: \"Success\" or \"Failure\". More info: http://releases.k8s.io/release-1.2/docs/devel/api-conventions.md#spec-and-status",
 	"message":  "A human-readable description of the status of this operation.",
 	"reason":   "A machine-readable description of why this operation is in the \"Failure\" status. If this value is empty there is no information available. A Reason clarifies an HTTP status code but does not override it.",
 	"details":  "Extended data associated with the reason.  Each reason may define its own extended details. This field is optional and the data returned is not guaranteed to conform to any schema except that defined by the reason type.",
@@ -174,7 +186,7 @@ var map_StatusDetails = map[string]string{
 	"":                  "StatusDetails is a set of additional properties that MAY be set by the server to provide additional information about a response. The Reason field of a Status object defines what attributes will be set. Clients must ignore fields that do not match the defined type of each attribute, and should assume that any attribute may be empty, invalid, or under defined.",
 	"name":              "The name attribute of the resource associated with the status StatusReason (when there is a single name which can be described).",
 	"group":             "The group attribute of the resource associated with the status StatusReason.",
-	"kind":              "The kind attribute of the resource associated with the status StatusReason. On some operations may differ from the requested resource Kind. More info: http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#types-kinds",
+	"kind":              "The kind attribute of the resource associated with the status StatusReason. On some operations may differ from the requested resource Kind. More info: http://releases.k8s.io/release-1.2/docs/devel/api-conventions.md#types-kinds",
 	"causes":            "The Causes array includes more details associated with the StatusReason failure. Not all StatusReasons may provide detailed causes.",
 	"retryAfterSeconds": "If specified, the time in seconds before the operation should be retried.",
 }
@@ -185,8 +197,8 @@ func (StatusDetails) SwaggerDoc() map[string]string {
 
 var map_TypeMeta = map[string]string{
 	"":           "TypeMeta describes an individual object in an API response or request with strings representing the type of the object and its API schema version. Structures that are versioned or persisted should inline TypeMeta.",
-	"kind":       "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#types-kinds",
-	"apiVersion": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#resources",
+	"kind":       "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: http://releases.k8s.io/release-1.2/docs/devel/api-conventions.md#types-kinds",
+	"apiVersion": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: http://releases.k8s.io/release-1.2/docs/devel/api-conventions.md#resources",
 }
 
 func (TypeMeta) SwaggerDoc() map[string]string {

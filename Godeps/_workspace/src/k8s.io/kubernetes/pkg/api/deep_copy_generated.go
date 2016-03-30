@@ -104,6 +104,7 @@ func init() {
 		DeepCopy_api_NodeCondition,
 		DeepCopy_api_NodeDaemonEndpoints,
 		DeepCopy_api_NodeList,
+		DeepCopy_api_NodeProxyOptions,
 		DeepCopy_api_NodeResources,
 		DeepCopy_api_NodeSelector,
 		DeepCopy_api_NodeSelectorRequirement,
@@ -163,6 +164,7 @@ func init() {
 		DeepCopy_api_ServiceAccountList,
 		DeepCopy_api_ServiceList,
 		DeepCopy_api_ServicePort,
+		DeepCopy_api_ServiceProxyOptions,
 		DeepCopy_api_ServiceSpec,
 		DeepCopy_api_ServiceStatus,
 		DeepCopy_api_TCPSocketAction,
@@ -494,14 +496,14 @@ func DeepCopy_api_Container(in Container, out *Container, c *conversion.Cloner) 
 }
 
 func DeepCopy_api_ContainerImage(in ContainerImage, out *ContainerImage, c *conversion.Cloner) error {
-	if in.RepoTags != nil {
-		in, out := in.RepoTags, &out.RepoTags
+	if in.Names != nil {
+		in, out := in.Names, &out.Names
 		*out = make([]string, len(in))
 		copy(*out, in)
 	} else {
-		out.RepoTags = nil
+		out.Names = nil
 	}
-	out.Size = in.Size
+	out.SizeBytes = in.SizeBytes
 	return nil
 }
 
@@ -1398,6 +1400,14 @@ func DeepCopy_api_NodeList(in NodeList, out *NodeList, c *conversion.Cloner) err
 	} else {
 		out.Items = nil
 	}
+	return nil
+}
+
+func DeepCopy_api_NodeProxyOptions(in NodeProxyOptions, out *NodeProxyOptions, c *conversion.Cloner) error {
+	if err := DeepCopy_unversioned_TypeMeta(in.TypeMeta, &out.TypeMeta, c); err != nil {
+		return err
+	}
+	out.Path = in.Path
 	return nil
 }
 
@@ -2390,6 +2400,7 @@ func DeepCopy_api_ReplicationControllerSpec(in ReplicationControllerSpec, out *R
 
 func DeepCopy_api_ReplicationControllerStatus(in ReplicationControllerStatus, out *ReplicationControllerStatus, c *conversion.Cloner) error {
 	out.Replicas = in.Replicas
+	out.FullyLabeledReplicas = in.FullyLabeledReplicas
 	out.ObservedGeneration = in.ObservedGeneration
 	return nil
 }
@@ -2444,6 +2455,15 @@ func DeepCopy_api_ResourceQuotaSpec(in ResourceQuotaSpec, out *ResourceQuotaSpec
 		}
 	} else {
 		out.Hard = nil
+	}
+	if in.Scopes != nil {
+		in, out := in.Scopes, &out.Scopes
+		*out = make([]ResourceQuotaScope, len(in))
+		for i := range in {
+			(*out)[i] = in[i]
+		}
+	} else {
+		out.Scopes = nil
 	}
 	return nil
 }
@@ -2732,6 +2752,14 @@ func DeepCopy_api_ServicePort(in ServicePort, out *ServicePort, c *conversion.Cl
 		return err
 	}
 	out.NodePort = in.NodePort
+	return nil
+}
+
+func DeepCopy_api_ServiceProxyOptions(in ServiceProxyOptions, out *ServiceProxyOptions, c *conversion.Cloner) error {
+	if err := DeepCopy_unversioned_TypeMeta(in.TypeMeta, &out.TypeMeta, c); err != nil {
+		return err
+	}
+	out.Path = in.Path
 	return nil
 }
 
