@@ -32,9 +32,7 @@ node_js:
 
 addons:
   # Run tests that require a browser on SauceLabs CI provider. Learn more at: https://saucelabs.com
-  sauce_connect:
-    username: k8s-dashboard-ci
-    access_key: "18b7e71b-60e9-4177-9a7f-e769977dbb39"
+  sauce_connect: true
 
 before_script:
   # Prepare environment for the Chrome browser. This is required for PRs from forks where
