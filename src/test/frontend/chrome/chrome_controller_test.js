@@ -14,18 +14,22 @@
 
 import ChromeController from 'chrome/chrome_controller';
 import chromeModule from 'chrome/chrome_module';
+import {actionbarViewName} from 'chrome/chrome_state';
 
 describe('Chrome controller', () => {
   /** @type {ChromeController} */
   let ctrl;
   /** @type {!angular.Scope} */
   let scope;
+  /** @type {!ui.router.$state} */
+  let state;
 
   beforeEach(() => {
     angular.mock.module(chromeModule.name);
-    angular.mock.inject(($controller, $rootScope) => {
+    angular.mock.inject(($controller, $rootScope, $state) => {
       ctrl = $controller(ChromeController);
       scope = $rootScope;
+      state = $state;
     });
   });
 
@@ -61,5 +65,34 @@ describe('Chrome controller', () => {
 
     // then
     expect(ctrl.showLoadingSpinner).toBe(false);
+  });
+
+  it('should show and hide toolbar based on view state', () => {
+    // Initially no action bar;
+    expect(ctrl.isActionbarVisible()).toBe(false);
+
+    // Even when loaded.
+    ctrl.showLoadingSpinner = false;
+    expect(ctrl.isActionbarVisible()).toBe(false);
+
+    // No view loaded.
+    state.current = null;
+    expect(ctrl.isActionbarVisible()).toBe(false);
+
+    // Dummy view loaded.
+    state.current = {};
+    expect(ctrl.isActionbarVisible()).toBe(false);
+
+    // Simple view loaded.
+    state.current.views = {};
+    expect(ctrl.isActionbarVisible()).toBe(false);
+
+    // View with action bar loaded.
+    state.current.views[actionbarViewName] = {};
+    expect(ctrl.isActionbarVisible()).toBe(true);
+
+    // Transitioning to another view.
+    ctrl.showLoadingSpinner = true;
+    expect(ctrl.isActionbarVisible()).toBe(false);
   });
 });

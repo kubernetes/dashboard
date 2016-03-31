@@ -24,7 +24,18 @@
   box-shadow: $whiteframe-shadow-1dp;
   height: $toolbar-height-size-base;
   position: fixed !important;
-  top: 0;
+}
+
+.kd-chrome-actionbar {
+  top: $toolbar-height-size-base;
+}
+
+.kd-chrome-content {
+  padding-top: $toolbar-height-size-base;
+}
+
+.kd-chrome-has-actionbar {
+  padding-top: 2 * $toolbar-height-size-base;
 }
 
 body {
@@ -45,11 +56,8 @@ a {
   margin: auto;
 }
 
-.kd-app-content-wrapper {
-  margin-top: $toolbar-height-size-base;
-}
-
 .kd-app-content {
+  background-color: $body;
   position: relative;
 }
 

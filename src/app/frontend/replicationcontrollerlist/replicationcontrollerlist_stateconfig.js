@@ -27,14 +27,18 @@ import ZeroStateController from './zerostate/zerostate_controller';
  */
 export default function stateConfig($stateProvider) {
   $stateProvider.state(replicationcontrollers, {
-    controller: ReplicationControllerListController,
-    controllerAs: 'ctrl',
     url: replicationcontrollersUrl,
     resolve: {
       'replicationControllers': resolveReplicationControllers,
     },
-    templateUrl: 'replicationcontrollerlist/replicationcontrollerlist.html',
     onEnter: redirectIfNeeded,
+    views: {
+      '': {
+        controller: ReplicationControllerListController,
+        controllerAs: 'ctrl',
+        templateUrl: 'replicationcontrollerlist/replicationcontrollerlist.html',
+      },
+    },
   });
   $stateProvider.state(zerostate, {
     views: {
