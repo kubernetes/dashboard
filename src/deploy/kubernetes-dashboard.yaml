@@ -24,7 +24,7 @@ items:
   metadata:
     labels:
       app: kubernetes-dashboard
-      version: v1.0.0
+      version: v1.0.1
     name: kubernetes-dashboard
     namespace: kube-system
   spec:
@@ -38,7 +38,7 @@ items:
       spec:
         containers:
         - name: kubernetes-dashboard
-          image: gcr.io/google_containers/kubernetes-dashboard-amd64:v1.0.0
+          image: gcr.io/google_containers/kubernetes-dashboard-amd64:v1.0.1
           imagePullPolicy: Always
           ports:
           - containerPort: 9090
