@@ -16,8 +16,7 @@ package main
 
 import (
 	"k8s.io/kubernetes/pkg/api"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
-	"log"
+	"k8s.io/kubernetes/pkg/types"
 	"strings"
 )
 
@@ -30,36 +29,28 @@ import (
 var FailedReasonPartials = []string{"failed", "err", "exceeded", "invalid", "unhealthy",
 	"mismatch", "insufficient", "conflict", "outof", "nil"}
 
-// GetPodsEventWarnings returns warning pod events based on given list of pods.
+// GetPodsEventWarnings returns warning pod events by filtering out events targeting only given pods
 // TODO(floreks) : Import and use Set instead of custom function to get rid of duplicates
-func GetPodsEventWarnings(client client.Interface, pods []api.Pod) (result []Event, err error) {
+func GetPodsEventWarnings(eventList *api.EventList, pods []api.Pod) []Event {
+	result := make([]Event, 0)
+	if eventList == nil {
+		return result
+	}
+
+	// Filter out only warning events
+	events := getWarningEvents(eventList)
+	failedPods := make([]api.Pod, 0)
+
+	// Filter out only 'failed' pods
 	for _, pod := range pods {
 		if !isRunningOrSucceeded(pod) {
-			log.Printf("Getting warning events from pod: %s", pod.Name)
-			events, err := GetPodEvents(client, pod)
-
-			if err != nil {
-				return nil, err
-			}
-
-			result = getPodsEventWarnings(events)
+			failedPods = append(failedPods, pod)
 		}
 	}
 
-	return removeDuplicates(result), nil
-}
-
-// Returns list of Pod Event model objects based on kubernetes API event list object
-// Event list object is filtered to get only warning events.
-func getPodsEventWarnings(eventList *api.EventList) []Event {
-	result := make([]Event, 0)
-
-	var events []api.Event
-	if !isTypeFilled(eventList.Items) {
-		eventList.Items = fillEventsType(eventList.Items)
-	}
-
-	events = filterEventsByType(eventList.Items, api.EventTypeWarning)
+	// Filter events by failed pods UID
+	events = filterEventsByPodsUID(events, failedPods)
+	events = removeDuplicates(events)
 
 	for _, event := range events {
 		result = append(result, Event{
@@ -70,6 +61,39 @@ func getPodsEventWarnings(eventList *api.EventList) []Event {
 	}
 
 	return result
+}
+
+// Returns filtered list of event objects.
+// Events list is filtered to get only events targeting pods on the list.
+func filterEventsByPodsUID(events []api.Event, pods []api.Pod) []api.Event {
+	result := make([]api.Event, 0)
+	podEventMap := make(map[types.UID]bool, 0)
+
+	if len(pods) == 0 || len(events) == 0 {
+		return result
+	}
+
+	for _, pod := range pods {
+		podEventMap[pod.UID] = true
+	}
+
+	for _, event := range events {
+		if _, exists := podEventMap[event.InvolvedObject.UID]; exists {
+			result = append(result, event)
+		}
+	}
+
+	return result
+}
+
+// Returns filtered list of event objects.
+// Event list object is filtered to get only warning events.
+func getWarningEvents(eventList *api.EventList) []api.Event {
+	if !isTypeFilled(eventList.Items) {
+		eventList.Items = fillEventsType(eventList.Items)
+	}
+
+	return filterEventsByType(eventList.Items, api.EventTypeWarning)
 }
 
 // Filters kubernetes API event objects based on event type.
@@ -131,9 +155,9 @@ func fillEventsType(events []api.Event) []api.Event {
 }
 
 // Removes duplicate strings from the slice
-func removeDuplicates(slice []Event) []Event {
+func removeDuplicates(slice []api.Event) []api.Event {
 	visited := make(map[string]bool, 0)
-	result := make([]Event, 0)
+	result := make([]api.Event, 0)
 
 	for _, elem := range slice {
 		if !visited[elem.Reason] {

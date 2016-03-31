@@ -17,7 +17,7 @@ package main
 import (
 	"log"
 
-	api "k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
@@ -142,54 +142,18 @@ func GetReplicationControllerPodsEvents(client *client.Client, namespace, replic
 		return nil, err
 	}
 
-	events, err := GetPodsEvents(client, pods)
-
-	if err != nil {
-		return nil, err
-	}
-
-	return events, nil
-}
-
-// GetPodsEvents gets events associated to given list of pods
-// TODO(floreks): refactor this to make single API call instead of N api calls
-func GetPodsEvents(client *client.Client, pods *api.PodList) ([]api.Event, error) {
-	events := make([]api.Event, 0, 0)
-
-	for _, pod := range pods.Items {
-		list, err := GetPodEvents(client, pod)
-
-		if err != nil {
-			return nil, err
-		}
-
-		for _, event := range list.Items {
-			events = append(events, event)
-		}
-
-	}
-
-	return events, nil
-}
-
-// GetPodEvents gets events associated to given pod
-func GetPodEvents(client client.Interface, pod api.Pod) (*api.EventList, error) {
-	fieldSelector, err := fields.ParseSelector("involvedObject.name=" + pod.Name)
-
-	if err != nil {
-		return nil, err
-	}
-
-	list, err := client.Events(pod.Namespace).List(api.ListOptions{
+	eventList, err := client.Events(namespace).List(api.ListOptions{
 		LabelSelector: labels.Everything(),
-		FieldSelector: fieldSelector,
+		FieldSelector: fields.Everything(),
 	})
 
 	if err != nil {
 		return nil, err
 	}
 
-	return list, nil
+	events := filterEventsByPodsUID(eventList.Items, pods.Items)
+
+	return events, nil
 }
 
 // AppendEvents appends events from source slice to target events representation.
