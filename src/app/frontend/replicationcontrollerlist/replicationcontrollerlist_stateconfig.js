@@ -27,14 +27,33 @@ import ZeroStateController from './zerostate/zerostate_controller';
  */
 export default function stateConfig($stateProvider) {
   $stateProvider.state(replicationcontrollers, {
-    controller: ReplicationControllerListController,
-    controllerAs: 'ctrl',
     url: replicationcontrollersUrl,
     resolve: {
       'replicationControllers': resolveReplicationControllers,
     },
-    templateUrl: 'replicationcontrollerlist/replicationcontrollerlist.html',
     onEnter: redirectIfNeeded,
+    views: {
+      '': {
+        controller: ReplicationControllerListController,
+        controllerAs: 'ctrl',
+        templateUrl: 'replicationcontrollerlist/replicationcontrollerlist.html',
+      },
+      'actionbar': {
+        // ~~~~~~~~~~~~~~~~~~ DO NOT MERGE - for tests only
+        template: `
+            <div  class="md-toolbar-tools" layout="row">
+              <span flex="none" style="width:50px"></span>
+              <h2>
+                <span>Replication Controllers</span>
+              </h2>
+              <span flex="none" style="width:100px"></span>
+              <md-button class="md-raised" aria-label="Learn More" ng-click="ctrl.redirectToDeployPage()">
+                Create
+              </md-button>
+            </div>`,
+        // ~~~~~~~~~~~~~~~~~~ DO NOT MERGE - for tests only
+      },
+    },
   });
   $stateProvider.state(zerostate, {
     views: {

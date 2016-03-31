@@ -14,19 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-content class="kd-content">
-  <md-toolbar class="kd-toolbar">
-    <div class="md-toolbar-tools kd-toolbar-tools">
-      <a ui-sref="replicationcontrollers" ui-sref-opts="{ reload: true }" tabindex="-1">
-        <md-icon md-svg-icon="assets/images/kubernetes-logo.svg" class="kd-toolbar-logo"></md-icon>
-      </a>
-      <h2>
-        <span>kubernetes</span>
-      </h2>
-      <div flex="auto" ui-view="toolbar"></div>
-    </div>
-  </md-toolbar>
-  <div class="kd-app-content-wrapper" ng-switch="ctrl.showLoadingSpinner" flex="auto" >
+<md-toolbar class="kd-toolbar">
+  <div class="md-toolbar-tools kd-toolbar-tools">
+    <a ui-sref="replicationcontrollers" ui-sref-opts="{ reload: true }" tabindex="-1">
+      <md-icon md-svg-icon="assets/images/kubernetes-logo.svg" class="kd-toolbar-logo"></md-icon>
+    </a>
+    <h2>
+      <span>kubernetes</span>
+    </h2>
+    <div flex="auto" ui-view="toolbar"></div>
+  </div>
+</md-toolbar>
+
+<md-toolbar ng-if="ctrl.isActionbarVisible()" ui-view="actionbar"
+    class="kd-toolbar kd-chrome-actionbar md-hue-1">
+</md-toolbar>
+
+<md-content
+    ng-class="{'kd-chrome-content': true, 'kd-chrome-has-actionbar': ctrl.isActionbarVisible()}">
+  <div ng-switch="ctrl.showLoadingSpinner" flex="auto" >
     <div ng-switch-when="true" class="kd-center-fixed">
       <md-progress-circular md-mode="indeterminate" md-diameter="96">
       </md-progress-circular>

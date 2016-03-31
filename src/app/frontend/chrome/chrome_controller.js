@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {actionbarViewName} from './chrome_state';
+
 /**
  * Controller for the chrome directive.
  *
@@ -19,14 +21,27 @@
  */
 export default class ChromeController {
   /**
+   * @param {!ui.router.$state} $state
    * @ngInject
    */
-  constructor() {
+  constructor($state) {
     /**
      * By default this is true to show loading for the first page.
      * @export {boolean}
      */
     this.showLoadingSpinner = true;
+
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
+  }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  isActionbarVisible() {
+    return !!this.state_.current && !!this.state_.current.views &&
+        !!this.state_.current.views[actionbarViewName] && !this.showLoadingSpinner;
   }
 
   /**
