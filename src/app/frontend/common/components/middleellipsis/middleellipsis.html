@@ -15,10 +15,10 @@ limitations under the License.
 -->
 
 <div class="kd-middleellipsis-container">
-  <md-tooltip ng-if="::ellipsisCtrl.shouldTruncate()">
-    {{::ellipsisCtrl.displayString}}
+  <md-tooltip ng-if="ellipsisCtrl.shouldTruncate()">
+    {{ellipsisCtrl.displayString}}
   </md-tooltip>
   <span class="kd-middleellipsis"><!-- Collapse whitespace
-    -->{{::(ellipsisCtrl.displayString | middleEllipsis:ellipsisCtrl.maxLength)}}<!-- Collapse whitespace
+    -->{{(ellipsisCtrl.displayString | middleEllipsis:ellipsisCtrl.maxLength)}}<!-- Collapse whitespace
   --></span>
 </div>

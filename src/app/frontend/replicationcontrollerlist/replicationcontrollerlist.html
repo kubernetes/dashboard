@@ -13,11 +13,38 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<md-button class="md-fab kd-replicationcontroller-deploy" ng-click="ctrl.redirectToDeployPage()">
-  <md-icon class="material-icons">add</md-icon>
-</md-button>
-
 <kd-replication-controller-list-container>
+
+  <div class="kd-resource-list-container" layout="row" style="padding: 16px;padding-bottom:0;">
+    <div style="width: 20px; min-width: 20px; padding-left: 0" flex="none">
+    </div>
+    <div style="width: 200px; min-width: 150px;" flex="grow">
+      Name
+    </div>
+    <div style="width: 200px; min-width: 150px;" flex="grow">
+      Labels
+    </div>
+    <span style="width: 150px" flex="none">
+      Pods
+    </span>
+    <div style="width: 200px; min-width: 150px;" flex="grow">
+      Images
+    </div>
+    <span style="width: 100px" flex="none">
+      Creation time
+    </span>
+    <div style="width: 200px; min-width: 100px" flex="grow">
+      Internal endpoints
+    </div>
+    <div style="width: 200px; min-width: 100px" flex="grow">
+      Extetrnal endpoints
+    </div>
+    <div style="width: 120px" flex="none">
+      Actions
+    </div>
+  </div>
+
+
   <kd-replication-controller-card ng-repeat="replicationController in ::ctrl.replicationControllers"
                                   replication-controller="::replicationController">
   </kd-replication-controller-card>

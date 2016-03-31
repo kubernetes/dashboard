@@ -38,11 +38,11 @@ export default function replicationControllerListContainerDirective($mdMedia) {
             'Required child element .kd-replication-controller-list-container not found');
       }
       let nonNullContainer = container;
-      scope.$watch(() => computeContainerHeight(nonNullContainer, $mdMedia), (newHeight) => {
-        container.style.height = `${newHeight}px`;
-        // This is needed to make it work on IE
-        container.style.minHeight = `${newHeight + 1}px`;
-      });
+      // scope.$watch(() => computeContainerHeight(nonNullContainer, $mdMedia), (newHeight) => {
+      //   container.style.height = `${newHeight}px`;
+      //   // This is needed to make it work on IE
+      //   container.style.minHeight = `${newHeight + 1}px`;
+      // });
     },
     templateUrl: 'replicationcontrollerlist/replicationcontrollerlistcontainer.html',
   };
