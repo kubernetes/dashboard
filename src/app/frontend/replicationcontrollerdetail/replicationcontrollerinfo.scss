@@ -26,6 +26,11 @@
   padding-top: $baseline-grid;
 }
 
+.kd-replicationcontrollerinfo-name {
+  // To allow middle ellipsis formatting for long names container width has to be limited
+  max-width: 90%;
+}
+
 .kd-replicationcontrollerinfo-line {
   color: $foreground-2;
   display: block;
