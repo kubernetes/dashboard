@@ -14,6 +14,8 @@
 
 import validatorsModule from 'common/validators/validators_module';
 import {IntegerValidator} from 'common/validators/integervalidator';
+import {LabelKeyNameLengthValidator} from 'deploy/validators/labelkeynamelengthvalidator';
+import {LabelKeyNamePatternValidator} from 'deploy/validators/labelkeynamepatternvalidator';
 
 describe('Validator factory', () => {
   /** @type {!ValidatorFactory} */
@@ -44,5 +46,30 @@ describe('Validator factory', () => {
     expect(() => {
       validatorFactory.getValidator(validatorName);
     }).toThrow(new Error(`Given validator '${validatorName}' is not supported.`));
+  });
+
+  it('should register validator', () => {
+    // given
+    let validator = new LabelKeyNameLengthValidator();
+
+    // when
+    validatorFactory.registerValidator('testValidator', validator);
+
+    // then
+    expect(validatorFactory.getValidator('testValidator')).toEqual(validator);
+  });
+
+  it('should throw an error when trying to override validator', () => {
+    // given
+    let nameValidator = new LabelKeyNameLengthValidator();
+    let patternValidator = new LabelKeyNamePatternValidator();
+
+    // when
+    validatorFactory.registerValidator('testValidator', nameValidator);
+
+    // then
+    expect(() => {
+      validatorFactory.registerValidator('testValidator', patternValidator);
+    }).toThrow(new Error(`Validator with name testValidator is already registered.`));
   });
 });
