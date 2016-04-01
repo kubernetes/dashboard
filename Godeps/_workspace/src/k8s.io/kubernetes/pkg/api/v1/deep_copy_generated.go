@@ -349,15 +349,15 @@ func deepCopy_v1_Container(in Container, out *Container, c *conversion.Cloner) e
 }
 
 func deepCopy_v1_ContainerImage(in ContainerImage, out *ContainerImage, c *conversion.Cloner) error {
-	if in.RepoTags != nil {
-		out.RepoTags = make([]string, len(in.RepoTags))
-		for i := range in.RepoTags {
-			out.RepoTags[i] = in.RepoTags[i]
+	if in.Names != nil {
+		out.Names = make([]string, len(in.Names))
+		for i := range in.Names {
+			out.Names[i] = in.Names[i]
 		}
 	} else {
-		out.RepoTags = nil
+		out.Names = nil
 	}
-	out.Size = in.Size
+	out.SizeBytes = in.SizeBytes
 	return nil
 }
 
@@ -1155,6 +1155,14 @@ func deepCopy_v1_NodeList(in NodeList, out *NodeList, c *conversion.Cloner) erro
 	} else {
 		out.Items = nil
 	}
+	return nil
+}
+
+func deepCopy_v1_NodeProxyOptions(in NodeProxyOptions, out *NodeProxyOptions, c *conversion.Cloner) error {
+	if err := deepCopy_unversioned_TypeMeta(in.TypeMeta, &out.TypeMeta, c); err != nil {
+		return err
+	}
+	out.Path = in.Path
 	return nil
 }
 
@@ -2023,6 +2031,7 @@ func deepCopy_v1_ReplicationControllerSpec(in ReplicationControllerSpec, out *Re
 
 func deepCopy_v1_ReplicationControllerStatus(in ReplicationControllerStatus, out *ReplicationControllerStatus, c *conversion.Cloner) error {
 	out.Replicas = in.Replicas
+	out.FullyLabeledReplicas = in.FullyLabeledReplicas
 	out.ObservedGeneration = in.ObservedGeneration
 	return nil
 }
@@ -2075,6 +2084,14 @@ func deepCopy_v1_ResourceQuotaSpec(in ResourceQuotaSpec, out *ResourceQuotaSpec,
 		}
 	} else {
 		out.Hard = nil
+	}
+	if in.Scopes != nil {
+		out.Scopes = make([]ResourceQuotaScope, len(in.Scopes))
+		for i := range in.Scopes {
+			out.Scopes[i] = in.Scopes[i]
+		}
+	} else {
+		out.Scopes = nil
 	}
 	return nil
 }
@@ -2347,6 +2364,14 @@ func deepCopy_v1_ServicePort(in ServicePort, out *ServicePort, c *conversion.Clo
 		return err
 	}
 	out.NodePort = in.NodePort
+	return nil
+}
+
+func deepCopy_v1_ServiceProxyOptions(in ServiceProxyOptions, out *ServiceProxyOptions, c *conversion.Cloner) error {
+	if err := deepCopy_unversioned_TypeMeta(in.TypeMeta, &out.TypeMeta, c); err != nil {
+		return err
+	}
+	out.Path = in.Path
 	return nil
 }
 
@@ -2679,6 +2704,7 @@ func init() {
 		deepCopy_v1_NodeCondition,
 		deepCopy_v1_NodeDaemonEndpoints,
 		deepCopy_v1_NodeList,
+		deepCopy_v1_NodeProxyOptions,
 		deepCopy_v1_NodeSpec,
 		deepCopy_v1_NodeStatus,
 		deepCopy_v1_NodeSystemInfo,
@@ -2733,6 +2759,7 @@ func init() {
 		deepCopy_v1_ServiceAccountList,
 		deepCopy_v1_ServiceList,
 		deepCopy_v1_ServicePort,
+		deepCopy_v1_ServiceProxyOptions,
 		deepCopy_v1_ServiceSpec,
 		deepCopy_v1_ServiceStatus,
 		deepCopy_v1_TCPSocketAction,

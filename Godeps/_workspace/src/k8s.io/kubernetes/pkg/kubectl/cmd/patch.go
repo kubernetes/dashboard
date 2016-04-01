@@ -44,7 +44,7 @@ const (
 
 JSON and YAML formats are accepted.
 
-Please refer to the models in https://htmlpreview.github.io/?https://github.com/kubernetes/kubernetes/blob/HEAD/docs/api-reference/v1/definitions.html to find if a field is mutable.`
+Please refer to the models in https://htmlpreview.github.io/?https://github.com/kubernetes/kubernetes/blob/release-1.2/docs/api-reference/v1/definitions.html to find if a field is mutable.`
 	patch_example = `
 # Partially update a node using strategic merge patch
 kubectl patch node k8s-node-1 -p '{"spec":{"unschedulable":true}}'
@@ -139,18 +139,17 @@ func RunPatch(f *cmdutil.Factory, out io.Writer, cmd *cobra.Command, args []stri
 	}
 
 	helper := resource.NewHelper(client, mapping)
-	_, err = helper.Patch(namespace, name, patchType, patchBytes)
+	patchedObject, err := helper.Patch(namespace, name, patchType, patchBytes)
 	if err != nil {
 		return err
 	}
 	if cmdutil.ShouldRecord(cmd, info) {
-		patchBytes, err = cmdutil.ChangeResourcePatch(info, f.Command())
-		if err != nil {
-			return err
-		}
-		_, err = helper.Patch(namespace, name, api.StrategicMergePatchType, patchBytes)
-		if err != nil {
-			return err
+		if err := cmdutil.RecordChangeCause(patchedObject, f.Command()); err == nil {
+			// don't return an error on failure.  The patch itself succeeded, its only the hint for that change that failed
+			// don't bother checking for failures of this replace, because a failure to indicate the hint doesn't fail the command
+			// also, don't force the replacement.  If the replacement fails on a resourceVersion conflict, then it means this
+			// record hint is likely to be invalid anyway, so avoid the bad hint
+			resource.NewHelper(client, mapping).Replace(namespace, name, false, patchedObject)
 		}
 	}
 	cmdutil.PrintSuccess(mapper, shortOutput, out, "", name, "patched")

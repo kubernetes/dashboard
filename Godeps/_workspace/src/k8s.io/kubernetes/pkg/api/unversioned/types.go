@@ -35,13 +35,13 @@ type TypeMeta struct {
 	// Servers may infer this from the endpoint the client submits requests to.
 	// Cannot be updated.
 	// In CamelCase.
-	// More info: http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#types-kinds
+	// More info: http://releases.k8s.io/release-1.2/docs/devel/api-conventions.md#types-kinds
 	Kind string `json:"kind,omitempty"`
 
 	// APIVersion defines the versioned schema of this representation of an object.
 	// Servers should convert recognized schemas to the latest internal value, and
 	// may reject unrecognized values.
-	// More info: http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#resources
+	// More info: http://releases.k8s.io/release-1.2/docs/devel/api-conventions.md#resources
 	APIVersion string `json:"apiVersion,omitempty"`
 }
 
@@ -58,7 +58,7 @@ type ListMeta struct {
 	// Value must be treated as opaque by clients and passed unmodified back to the server.
 	// Populated by the system.
 	// Read-only.
-	// More info: http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#concurrency-control-and-consistency
+	// More info: http://releases.k8s.io/release-1.2/docs/devel/api-conventions.md#concurrency-control-and-consistency
 	ResourceVersion string `json:"resourceVersion,omitempty"`
 }
 
@@ -75,12 +75,12 @@ type ExportOptions struct {
 type Status struct {
 	TypeMeta `json:",inline"`
 	// Standard list metadata.
-	// More info: http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#types-kinds
+	// More info: http://releases.k8s.io/release-1.2/docs/devel/api-conventions.md#types-kinds
 	ListMeta `json:"metadata,omitempty"`
 
 	// Status of the operation.
 	// One of: "Success" or "Failure".
-	// More info: http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#spec-and-status
+	// More info: http://releases.k8s.io/release-1.2/docs/devel/api-conventions.md#spec-and-status
 	Status string `json:"status,omitempty"`
 	// A human-readable description of the status of this operation.
 	Message string `json:"message,omitempty"`
@@ -112,7 +112,7 @@ type StatusDetails struct {
 	Group string `json:"group,omitempty"`
 	// The kind attribute of the resource associated with the status StatusReason.
 	// On some operations may differ from the requested resource Kind.
-	// More info: http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#types-kinds
+	// More info: http://releases.k8s.io/release-1.2/docs/devel/api-conventions.md#types-kinds
 	Kind string `json:"kind,omitempty"`
 	// The Causes array includes more details associated with the StatusReason
 	// failure. Not all StatusReasons may provide detailed causes.
@@ -308,6 +308,14 @@ type APIVersions struct {
 	TypeMeta `json:",inline"`
 	// versions are the api versions that are available.
 	Versions []string `json:"versions"`
+	// a map of client CIDR to server address that is serving this group.
+	// This is to help clients reach servers in the most network-efficient way possible.
+	// Clients can use the appropriate server address as per the CIDR that they match.
+	// In case of multiple matches, clients should use the longest matching CIDR.
+	// The server returns only those CIDRs that it thinks that the client can match.
+	// For example: the master will return an internal IP CIDR only, if the client reaches the server using an internal IP.
+	// Server looks at X-Forwarded-For header or X-Real-Ip header or request.RemoteAddr (in that order) to get the client IP.
+	ServerAddressByClientCIDRs []ServerAddressByClientCIDR `json:"serverAddressByClientCIDRs"`
 }
 
 // APIGroupList is a list of APIGroup, to allow clients to discover the API at
@@ -329,6 +337,23 @@ type APIGroup struct {
 	// preferredVersion is the version preferred by the API server, which
 	// probably is the storage version.
 	PreferredVersion GroupVersionForDiscovery `json:"preferredVersion,omitempty"`
+	// a map of client CIDR to server address that is serving this group.
+	// This is to help clients reach servers in the most network-efficient way possible.
+	// Clients can use the appropriate server address as per the CIDR that they match.
+	// In case of multiple matches, clients should use the longest matching CIDR.
+	// The server returns only those CIDRs that it thinks that the client can match.
+	// For example: the master will return an internal IP CIDR only, if the client reaches the server using an internal IP.
+	// Server looks at X-Forwarded-For header or X-Real-Ip header or request.RemoteAddr (in that order) to get the client IP.
+	ServerAddressByClientCIDRs []ServerAddressByClientCIDR `json:"serverAddressByClientCIDRs"`
+}
+
+// ServerAddressByClientCIDR helps the client to determine the server address that they should use, depending on the clientCIDR that they match.
+type ServerAddressByClientCIDR struct {
+	// The CIDR with which clients can match their IP to figure out the server address that they should use.
+	ClientCIDR string `json:"clientCIDR"`
+	// Address of this server, suitable for a client that matches the above CIDR.
+	// This can be a hostname, hostname:port, IP or IP:port.
+	ServerAddress string `json:"serverAddress"`
 }
 
 // GroupVersion contains the "group/version" and "version" string of a version.

@@ -252,6 +252,11 @@ type LogConfig struct {
 	Config map[string]string `json:"Config,omitempty" yaml:"Config,omitempty"`
 }
 
+type BuildArg struct {
+	Name  string `json:"Name,omitempty" yaml:"Name,omitempty"`
+	Value string `json:"Value,omitempty" yaml:"Value,omitempty"`
+}
+
 // ULimit defines system-wide resource limitations
 // This can help a lot in system administration, e.g. when a user starts too many processes and therefore makes the system unresponsive for other users.
 type ULimit struct {
@@ -510,6 +515,7 @@ type HostConfig struct {
 	BlkioWeight      int64                  `json:"BlkioWeight,omitempty" yaml:"BlkioWeight"`
 	Ulimits          []ULimit               `json:"Ulimits,omitempty" yaml:"Ulimits,omitempty"`
 	VolumeDriver     string                 `json:"VolumeDriver,omitempty" yaml:"VolumeDriver,omitempty"`
+	OomScoreAdj      int                    `json:"OomScoreAdj,omitempty" yaml:"OomScoreAdj,omitempty"`
 }
 
 // StartContainer starts a container, returning an error in case of failure.
@@ -638,6 +644,7 @@ func (c *Client) TopContainer(id string, psArgs string) (TopResult, error) {
 // See https://goo.gl/GNmLHb for more details.
 type Stats struct {
 	Read        time.Time               `json:"read,omitempty" yaml:"read,omitempty"`
+	Network     NetworkStats            `json:"network,omitempty" yaml:"network,omitempty"`
 	Networks    map[string]NetworkStats `json:"networks,omitempty" yaml:"networks,omitempty"`
 	MemoryStats struct {
 		Stats struct {
@@ -670,6 +677,8 @@ type Stats struct {
 			Pgfault                 uint64 `json:"pgfault,omitempty" yaml:"pgfault,omitempty"`
 			InactiveFile            uint64 `json:"inactive_file,omitempty" yaml:"inactive_file,omitempty"`
 			TotalPgpgin             uint64 `json:"total_pgpgin,omitempty" yaml:"total_pgpgin,omitempty"`
+			HierarchicalMemswLimit  uint64 `json:"hierarchical_memsw_limit,omitempty" yaml:"hierarchical_memsw_limit,omitempty"`
+			Swap                    uint64 `json:"swap,omitempty" yaml:"swap,omitempty"`
 		} `json:"stats,omitempty" yaml:"stats,omitempty"`
 		MaxUsage uint64 `json:"max_usage,omitempty" yaml:"max_usage,omitempty"`
 		Usage    uint64 `json:"usage,omitempty" yaml:"usage,omitempty"`

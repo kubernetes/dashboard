@@ -443,8 +443,8 @@ func (s *DockerServer) createContainer(w http.ResponseWriter, r *http.Request) {
 	s.cMut.Unlock()
 	w.WriteHeader(http.StatusCreated)
 	s.notify(&container)
-	var c = struct{ ID string }{ID: container.ID}
-	json.NewEncoder(w).Encode(c)
+
+	json.NewEncoder(w).Encode(container)
 }
 
 func (s *DockerServer) generateID() string {

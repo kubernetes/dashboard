@@ -16,6 +16,7 @@ Many of the most widely used Go projects are built using Cobra including:
 * [Bleve](http://www.blevesearch.com/)
 * [ProjectAtomic (enterprise)](http://www.projectatomic.io/)
 * [Parse (CLI)](https://parse.com/)
+* [GiantSwarm's swarm](https://github.com/giantswarm/cli)
 * [Nanobox](https://github.com/nanobox-io/nanobox)/[Nanopack](https://github.com/nanopack)
 
 
@@ -535,7 +536,7 @@ around it. In fact, you can provide your own if you want.
 
 ### Defining your own help
 
-You can provide your own Help command or you own template for the default command to use.
+You can provide your own Help command or your own template for the default command to use.
 
 The default help command is
 

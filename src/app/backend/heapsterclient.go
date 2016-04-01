@@ -18,6 +18,7 @@ import (
 	"log"
 
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	restclient "k8s.io/kubernetes/pkg/client/restclient"
 )
 
 // HeapsterClient  is a client used to make requests to a Heapster instance.
@@ -26,7 +27,7 @@ type HeapsterClient interface {
 	// endpoint. The path param is without the API prefix, e.g.,
 	// /model/namespaces/default/pod-list/foo/metrics/memory-usage
 
-	Get(path string) *client.Request
+	Get(path string) *restclient.Request
 }
 
 // InClusterHeapsterClient is an in-cluster implementation of a Heapster client. Talks with Heapster
@@ -36,7 +37,7 @@ type InClusterHeapsterClient struct {
 }
 
 // InClusterHeapsterClient.Get creates request to given path.
-func (c InClusterHeapsterClient) Get(path string) *client.Request {
+func (c InClusterHeapsterClient) Get(path string) *restclient.Request {
 	return c.client.Get().Prefix("proxy").
 		Namespace("kube-system").
 		Resource("services").
@@ -47,11 +48,11 @@ func (c InClusterHeapsterClient) Get(path string) *client.Request {
 // RemoteHeapsterClient is an implementation of a remote Heapster client. Talks with Heapster
 // through raw RESTClient.
 type RemoteHeapsterClient struct {
-	client *client.RESTClient
+	client *restclient.RESTClient
 }
 
 // RemoteHeapsterClient.Get creates request to given path.
-func (c RemoteHeapsterClient) Get(path string) *client.Request {
+func (c RemoteHeapsterClient) Get(path string) *restclient.Request {
 	return c.client.Get().Suffix(path)
 }
 
@@ -67,7 +68,7 @@ func CreateHeapsterRESTClient(heapsterHost string, apiclient *client.Client) (
 		return InClusterHeapsterClient{client: apiclient}, nil
 	}
 
-	cfg := &client.Config{Host: heapsterHost}
+	cfg := &restclient.Config{Host: heapsterHost}
 	restClient, err := client.New(cfg)
 	if err != nil {
 		return nil, err

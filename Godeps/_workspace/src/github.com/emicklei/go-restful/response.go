@@ -184,6 +184,15 @@ func (r *Response) WriteErrorString(httpStatus int, errorReason string) error {
 	return nil
 }
 
+// Flush implements http.Flusher interface, which sends any buffered data to the client.
+func (r *Response) Flush() {
+	if f, ok := r.ResponseWriter.(http.Flusher); ok {
+		f.Flush()
+	} else if trace {
+		traceLogger.Printf("ResponseWriter %v doesn't support Flush", r)
+	}
+}
+
 // WriteHeader is overridden to remember the Status Code that has been written.
 // Changes to the Header of the response have no effect after this.
 func (r *Response) WriteHeader(httpStatus int) {

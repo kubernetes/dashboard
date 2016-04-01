@@ -218,6 +218,9 @@ func matchesValue(av, bv interface{}) bool {
 			}
 		}
 		return true
+	case []interface{}:
+		bt := bv.([]interface{})
+		return matchesArray(at, bt)
 	}
 	return false
 }

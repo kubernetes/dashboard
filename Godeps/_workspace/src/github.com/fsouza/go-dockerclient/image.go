@@ -410,6 +410,8 @@ type BuildImageOptions struct {
 	Memory              int64              `qs:"memory"`
 	Memswap             int64              `qs:"memswap"`
 	CPUShares           int64              `qs:"cpushares"`
+	CPUQuota            int64              `qs:"cpuquota"`
+	CPUPeriod           int64              `qs:"cpuperiod"`
 	CPUSetCPUs          string             `qs:"cpusetcpus"`
 	InputStream         io.Reader          `qs:"-"`
 	OutputStream        io.Writer          `qs:"-"`
@@ -419,6 +421,7 @@ type BuildImageOptions struct {
 	AuthConfigs         AuthConfigurations `qs:"-"` // for newer docker X-Registry-Config header
 	ContextDir          string             `qs:"-"`
 	Ulimits             []ULimit           `qs:"-"`
+	BuildArgs           []BuildArg         `qs:"-"`
 }
 
 // BuildImage builds an image from a tarball's url or a Dockerfile in the input
@@ -457,6 +460,14 @@ func (c *Client) BuildImage(opts BuildImageOptions) error {
 		if b, err := json.Marshal(opts.Ulimits); err == nil {
 			item := url.Values(map[string][]string{})
 			item.Add("ulimits", string(b))
+			qs = fmt.Sprintf("%s&%s", qs, item.Encode())
+		}
+	}
+
+	if len(opts.BuildArgs) > 0 {
+		if b, err := json.Marshal(opts.BuildArgs); err == nil {
+			item := url.Values(map[string][]string{})
+			item.Add("buildargs", string(b))
 			qs = fmt.Sprintf("%s&%s", qs, item.Encode())
 		}
 	}
