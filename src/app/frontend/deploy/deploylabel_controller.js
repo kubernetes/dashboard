@@ -33,7 +33,6 @@ export default class DeployLabelController {
   /**
    * Calls checks on label:
    *  - adds label if last empty label has been filled
-   *  - removes label if some label in the middle has key and value empty
    *  - checks for duplicated key and sets validity of element
    * @param {!angular.FormController|undefined} labelForm
    * @export
@@ -96,7 +95,7 @@ export default class DeployLabelController {
   validateKey_(labelForm) {
     if (angular.isDefined(labelForm)) {
       /** @type {!angular.NgModelController} */
-      let elem = labelForm.key;
+      let elem = labelForm['key'];
 
       /** @type {boolean} */
       let isUnique = !this.isKeyDuplicated_();
