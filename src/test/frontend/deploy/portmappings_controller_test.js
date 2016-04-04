@@ -18,12 +18,21 @@ import PortMappingsController from 'deploy/portmappings_controller';
 describe('PortMappingsController controller', () => {
   /** @type {!PortMappingsController} */
   let ctrl;
+  let portMappingForm;
 
   beforeEach(() => {
     angular.mock.module(deployModule.name);
 
-    angular.mock.inject(($controller) => {
+    angular.mock.inject(($controller, $rootScope, $compile) => {
       ctrl = $controller(PortMappingsController, undefined, {protocols: ['FOO', 'BAR']});
+      let scope = $rootScope.$new();
+      let template = angular.element(`<ng-form name="portMappingForm">
+            <input name="port" ng-model="port">
+            <input name="targetPort" ng-model="targetPort">
+           </ng-form>`);
+
+      $compile(template)(scope);
+      portMappingForm = scope.portMappingForm;
     });
   });
 
@@ -34,13 +43,13 @@ describe('PortMappingsController controller', () => {
   it('should add new mappings when needed', () => {
     expect(ctrl.portMappings.length).toBe(1);
 
-    ctrl.addProtocolIfNeeed();
+    ctrl.checkPortMapping(undefined, 0);
     expect(ctrl.portMappings.length).toBe(1);
 
     ctrl.portMappings[0].port = 80;
     ctrl.portMappings[0].targetPort = 8080;
 
-    ctrl.addProtocolIfNeeed();
+    ctrl.checkPortMapping(undefined, 0);
     expect(ctrl.portMappings.length).toBe(2);
   });
 
@@ -48,17 +57,40 @@ describe('PortMappingsController controller', () => {
     expect(ctrl.isRemovable(0)).toBe(false);
     ctrl.portMappings[0].port = 80;
     ctrl.portMappings[0].targetPort = 8080;
-    ctrl.addProtocolIfNeeed();
+    ctrl.checkPortMapping(undefined, 0);
     expect(ctrl.isRemovable(0)).toBe(true);
   });
 
   it('should remove port mappings', () => {
     ctrl.portMappings[0].port = 80;
     ctrl.portMappings[0].targetPort = 8080;
-    ctrl.addProtocolIfNeeed();
+    ctrl.checkPortMapping(undefined, 0);
     expect(ctrl.portMappings.length).toBe(2);
     ctrl.remove(0);
     expect(ctrl.portMappings.length).toBe(1);
     expect(ctrl.portMappings[0].port).toBeNull();
+  });
+
+  it('should validate port mapping', () => {
+    let testData = [
+      ['', '', true, true],
+      ['', 80, false, true],
+      [80, '', true, false],
+      [80, 80, true, true],
+    ];
+
+    testData.forEach((testData) => {
+      // given
+      let [port, targetPort, portValidity, targetPortValidity] = testData;
+      ctrl.portMappings[0].port = port;
+      ctrl.portMappings[0].targetPort = targetPort;
+
+      // when
+      ctrl.checkPortMapping(portMappingForm, 0);
+
+      // then
+      expect(portMappingForm.port.$valid).toEqual(portValidity);
+      expect(portMappingForm.targetPort.$valid).toEqual(targetPortValidity);
+    });
   });
 });
