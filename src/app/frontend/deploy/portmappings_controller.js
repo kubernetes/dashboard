@@ -40,6 +40,19 @@ export default class PortMappingsController {
   }
 
   /**
+   * Call checks on port mapping:
+   *  - adds new port mapping when last empty port mapping has been filled
+   *  - validates port mapping
+   * @param {!angular.FormController|undefined} portMappingForm
+   * @param {number} portMappingIndex
+   * @export
+   */
+  checkPortMapping(portMappingForm, portMappingIndex) {
+    this.addProtocolIfNeeed_();
+    this.validatePortMapping_(portMappingForm, portMappingIndex);
+  }
+
+  /**
    * @param {string} defaultProtocol
    * @return {!backendApi.PortMapping}
    * @private
@@ -51,10 +64,38 @@ export default class PortMappingsController {
   /**
    * @export
    */
-  addProtocolIfNeeed() {
+  addProtocolIfNeeed_() {
     let lastPortMapping = this.portMappings[this.portMappings.length - 1];
     if (this.isPortMappingFilled_(lastPortMapping)) {
       this.portMappings.push(this.newEmptyPortMapping_(this.protocols[0]));
+    }
+  }
+
+  /**
+   * Validates port mapping. In case when only one port is specified it is considered as invalid.
+   * @param {!angular.FormController|undefined} portMappingForm
+   * @param {number} portIndex
+   * @private
+   * @suppress {missingProperties}
+   */
+  validatePortMapping_(portMappingForm, portIndex) {
+    if (angular.isDefined(portMappingForm)) {
+      /** @type {!backendApi.PortMapping} */
+      let portMapping = this.portMappings[portIndex];
+
+      /** @type {!angular.NgModelController} */
+      let portElem = portMappingForm.port;
+      /** @type {!angular.NgModelController} */
+      let targetPortElem = portMappingForm.targetPort;
+
+      /** @type {boolean} */
+      let isValidPort = this.isPortMappingFilledOrEmpty_(portMapping) || !!portMapping.port;
+      /** @type {boolean} */
+      let isValidTargetPort =
+          this.isPortMappingFilledOrEmpty_(portMapping) || !!portMapping.targetPort;
+
+      portElem.$setValidity('empty', isValidPort);
+      targetPortElem.$setValidity('empty', isValidTargetPort);
     }
   }
 
@@ -78,4 +119,12 @@ export default class PortMappingsController {
    * @private
    */
   isPortMappingFilled_(portMapping) { return !!portMapping.port && !!portMapping.targetPort; }
+
+  /**
+   * Returns true when the given port mapping is filled or empty (both ports), false otherwise.
+   * @param {!backendApi.PortMapping} portMapping
+   * @return {boolean}
+   * @private
+   */
+  isPortMappingFilledOrEmpty_(portMapping) { return !portMapping.port === !portMapping.targetPort; }
 }

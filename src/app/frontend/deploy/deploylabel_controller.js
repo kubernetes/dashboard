@@ -33,7 +33,6 @@ export default class DeployLabelController {
   /**
    * Calls checks on label:
    *  - adds label if last empty label has been filled
-   *  - removes label if some label in the middle has key and value empty
    *  - checks for duplicated key and sets validity of element
    * @param {!angular.FormController|undefined} labelForm
    * @export
