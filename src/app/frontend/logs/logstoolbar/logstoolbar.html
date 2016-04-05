@@ -36,7 +36,7 @@ limitations under the License.
 
   <span class="kd-logs-toolbar-text" flex="auto">
     <span ng-if="ctrl.podCreationTime">
-      Running since {{ctrl.podCreationTime | date:'short'}}
+      Running since {{ctrl.podCreationTime | date:'d/M/yy HH:mm':'UTC'}} UTC
     </span>
     <span ng-if="!ctrl.podCreationTime">
       Not running

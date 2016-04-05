@@ -38,7 +38,7 @@ limitations under the License.
             ng-if="::ctrl.podContainerExists(pod)"
             target="_blank">
           <span ng-if="::pod.startTime">
-            {{::(pod.startTime | date:"short")}}
+            {{::(pod.startTime | date:'d/M/yy HH:mm':'UTC')}} UTC
           </span>
           <span ng-if="::!pod.startTime">
             Not running

@@ -129,7 +129,7 @@ limitations under the License.
               <td kd-responsive-header="Age" class="kd-replicationcontrollerdetail-table-cell">
                 <span ng-if="::pod.startTime">
                   {{::pod.startTime | relativeTime}}
-                  <md-tooltip>Started at {{::(pod.startTime | date:'short')}}</md-tooltip>
+                  <md-tooltip>Started at {{::(pod.startTime | date:'d/M/yy HH:mm':'UTC')}} UTC</md-tooltip>
                 </span>
                 <span ng-if="::!pod.startTime">
                   -
@@ -271,10 +271,10 @@ limitations under the License.
               {{event.count}}
             </td>
             <td kd-responsive-header="First seen" class="kd-replicationcontrollerdetail-table-cell">
-              First seen at {{event.firstSeen | date:'short'}}
+              First seen at {{event.firstSeen | date:'d/M/yy HH:mm':'UTC'}} UTC
             </td>
             <td kd-responsive-header="Last seen" class="kd-replicationcontrollerdetail-table-cell">
-              Last seen at {{event.lastSeen | date:'short'}}
+              Last seen at {{event.lastSeen | date:'d/M/yy HH:mm':'UTC'}} UTC
             </td>
           </tr>
           </tbody>
