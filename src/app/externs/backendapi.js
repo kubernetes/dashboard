@@ -101,7 +101,10 @@ backendApi.Event;
 
 /**
  * @typedef {{
- *   replicationControllers: !Array<!backendApi.ReplicationController>
+ *   namespaces: !Array<{
+ *     name: string,
+ *     replicationControllers: !Array<!backendApi.ReplicationController>
+ *   }>
  * }}
  */
 backendApi.ReplicationControllerList;

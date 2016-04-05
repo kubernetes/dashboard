@@ -16,9 +16,11 @@ limitations under the License.
 <md-button class="md-fab kd-replicationcontroller-deploy" ng-click="ctrl.redirectToDeployPage()">
   <md-icon class="material-icons">add</md-icon>
 </md-button>
-
+<div ng-repeat="rcNamespace in ::ctrl.namespaces">
+  <span style="padding-left: 32px;">Namespace: {{rcNamespace.name}}</span>
 <kd-replication-controller-list-container>
-  <kd-replication-controller-card ng-repeat="replicationController in ::ctrl.replicationControllers"
+  <kd-replication-controller-card ng-repeat="replicationController in ::rcNamespace.replicationControllers"
                                   replication-controller="::replicationController">
   </kd-replication-controller-card>
 </kd-replication-controller-list-container>
+</div>
