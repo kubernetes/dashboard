@@ -17,7 +17,7 @@
  *
  * @final
  */
-export default class UploadController {
+export class UploadController {
   /** @ngInject */
   constructor() {
     /** @private {boolean} */

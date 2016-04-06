@@ -1,6 +1,7 @@
 {
   "env": {
     "jasmine": true,
+    "browser": true,
   },
   // Define missing global Angular testing environment variables.
   "globals": {
