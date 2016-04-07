@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import UploadController from './upload_controller';
+import {UploadController} from './upload_controller';
 
 /**
  * Provides upload file mechanism and updates the model with file parameter for the selected file.

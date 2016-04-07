@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import UploadController from 'deploy/upload_controller.js';
+import {UploadController} from 'deploy/upload_controller.js';
 
 describe('Upload Controller', () => {
   /** @type {!UploadController} */

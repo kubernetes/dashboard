@@ -25,7 +25,7 @@ export default function fileReaderDirective($log) {
     restrict: 'A',
     require: ['^kdUpload', 'ngModel'],
     link: function(scope, element, attrs, ctrls) {
-      // TODO: Annotate Type UploadController
+      /** @type {./upload_controller.UploadController} */
       let uploadController = ctrls[0];
       uploadController.registerBrowseFileFunction(() => (element[0].click()));
 
