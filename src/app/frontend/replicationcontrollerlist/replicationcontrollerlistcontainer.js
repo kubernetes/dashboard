@@ -34,7 +34,7 @@ export default function computeContainerHeight(container, mdMedia) {
  * @param {function(string):boolean} mdMedia Angular Material $mdMedia service
  * @return {number}
  */
-function computeColumnCount(mdMedia) {
+export function computeColumnCount(mdMedia) {
   if (mdMedia('gt-md')) {
     return 3;
   } else if (mdMedia('md')) {
