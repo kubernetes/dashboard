@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {binarySearchOptimalHeight} from 'replicationcontrollerlist/replicationcontrollerlistcontainer';
+import {binarySearchOptimalHeight, computeColumnCount} from 'replicationcontrollerlist/replicationcontrollerlistcontainer';
 
 describe('Replication controller list container', () => {
 
@@ -62,5 +62,16 @@ describe('Replication controller list container', () => {
           expected, `Expected height to be ${expected} but was ${actual}. ` +
               `Required number of columns: ${numColumns}, heights: [${heights}]`);
     });
+  });
+
+  it('should compute column count', () => {
+    let mdMedia = (media) => { return media === 'gt-md'; };
+    expect(computeColumnCount(mdMedia)).toBe(3);
+
+    mdMedia = (media) => { return media === 'md'; };
+    expect(computeColumnCount(mdMedia)).toBe(2);
+
+    mdMedia = () => { return false; };
+    expect(computeColumnCount(mdMedia)).toBe(1);
   });
 });
