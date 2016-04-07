@@ -43,12 +43,18 @@ func main() {
 
 	apiserverClient, config, err := CreateApiserverClient(*argApiserverHost)
 	if err != nil {
-		log.Fatalf("Error while initializing connection to Kubernetes master: %s. Quitting.", err)
+		handleFatalInitError(err)
 	}
+
+	versionInfo, err := apiserverClient.ServerVersion()
+	if err != nil {
+		handleFatalInitError(err)
+	}
+	log.Printf("Successful initial request to the apiserver, version: %s", versionInfo.String())
 
 	heapsterRESTClient, err := CreateHeapsterRESTClient(*argHeapsterHost, apiserverClient)
 	if err != nil {
-		log.Print(err)
+		log.Print("Could not create heapster client: %s. Continuing.", err)
 	}
 
 	// Run a HTTP server that serves static public files from './public' and handles API calls.
@@ -56,4 +62,15 @@ func main() {
 	http.Handle("/", http.FileServer(http.Dir("./public")))
 	http.Handle("/api/", CreateHttpApiHandler(apiserverClient, heapsterRESTClient, config))
 	log.Print(http.ListenAndServe(fmt.Sprintf(":%d", *argPort), nil))
+}
+
+/**
+ * Handles fatal init error that prevents server from doing any work. Prints verbose error
+ * message and quits the server.
+ */
+func handleFatalInitError(err error) {
+	log.Fatalf("Error while initializing connection to Kubernetes apiserver. "+
+		"This most likely means that the cluster is misconfigured (e.g., it has "+
+		"invalid apiserver certificates or service accounts configuration) or the "+
+		"--apiserver-host param points to a server that does not exist. Reason: %s", err)
 }
