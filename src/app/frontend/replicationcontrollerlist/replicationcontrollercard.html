@@ -90,7 +90,7 @@ limitations under the License.
           <span flex="nogrow">
             {{::ctrl.replicationController.creationTime | relativeTime}}
             <md-tooltip>
-              Created at {{::ctrl.replicationController.creationTime | date:'short'}}
+              Created at {{::ctrl.replicationController.creationTime | date:'d/M/yy HH:mm':'UTC'}} UTC
             </md-tooltip>
           </span>
         </div>
