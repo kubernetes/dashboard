@@ -1,0 +1,82 @@
+// Copyright 2015 Google Inc. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+/**
+ * Controller for the resource card component.
+ * @final
+ */
+export class ResourceCardController {
+  /**
+   * TODO(#629): change type to {!angular.$transclude}
+   * @param {!Object} $transclude
+   * @ngInject
+   */
+  constructor($transclude) {
+    /**
+     * Initialized from a binding.
+     * @export {!backendApi.ResourceMetadata}
+     */
+    this.resourceMetadata;
+
+    // TODO(#629): change type to /** @private {!angular.$transclude} */
+    /** @private {!Object} */
+    this.transclude_ = $transclude;
+  }
+
+  /**
+   * @return {boolean} true when this card has footer, false otherwise.
+   * @export
+   */
+  hasFooter() {
+    // TODO(#629): Use dot notation.
+    return this.transclude_['isSlotFilled']('footer');
+  }
+}
+
+/**
+ * Represents a resource card in a tabularized list. Should always be used when showing
+ * lists of resources.
+ *
+ * Usage:
+ * <kd-resource-card>
+ *   <kd-resource-card-status>X</kd-resource-card-status>
+ *   <kd-resource-card-columns>
+ *     <kd-resource-card-column>
+ *        MY CUSTOM CONTENT
+ *     </kd-resource-card-column>
+ *     <kd-resource-card-column>
+ *       MY CUSTOM CONTENT
+ *     </kd-resource-card-column>
+ *     <kd-resource-card-column>
+ *       MY CUSTOM CONTENT
+ *     </kd-resource-card-column>
+ *   </kd-resource-card-columns>
+ *   <kd-resource-card-footer>MY CUSTOM FOOTER</kd-resource-card-footer>
+ * </kd-resource-card>
+ *
+ * @type {!angular.Component}
+ */
+export const resourceCardComponent = {
+  bindings: {
+    /** type {!backendApi.ResourceMetadata} Metadata of the resource displayed in the card. */
+    'resourceMetadata': '<',
+  },
+  controller: ResourceCardController,
+  templateUrl: 'common/components/resourcecard/resourcecard.html',
+  transclude: /** @type {undefined} TODO(bryk): Remove this when externs are fixed */ ({
+    'status': '?kdResourceCardStatus',
+    'columns': '?kdResourceCardColumns',
+    'footer': '?kdResourceCardFooter',
+  }),
+};

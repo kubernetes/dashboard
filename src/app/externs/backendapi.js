@@ -163,6 +163,15 @@ backendApi.ReplicationController;
  * @typedef {{
  *   name: string,
  *   namespace: string,
+ *   type: string
+ * }}
+ */
+backendApi.ResourceMetadata;
+
+/**
+ * @typedef {{
+ *   name: string,
+ *   namespace: string,
  *   labels: !Object<string, string>,
  *   labelSelector: !Object<string, string>,
  *   containerImages: !Array<string>,

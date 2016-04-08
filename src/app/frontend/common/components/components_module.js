@@ -17,6 +17,7 @@ import labelsDirective from './labels/labels_directive';
 import middleEllipsisDirective from './middleellipsis/middleellipsis_directive';
 import sparklineDirective from './sparkline/sparkline_directive';
 import warnThresholdDirective from './warnthreshold/warnthreshold_directive';
+import resourceCardModule from './resourcecard/resourcecard_module';
 
 /**
  * Module containing common components for the application.
@@ -27,6 +28,7 @@ export default angular
         [
           'ngMaterial',
           filtersModule.name,
+          resourceCardModule.name,
         ])
     .directive('kdLabels', labelsDirective)
     .directive('kdMiddleEllipsis', middleEllipsisDirective)
