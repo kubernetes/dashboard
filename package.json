@@ -60,7 +60,7 @@
     "karma-ng-html2js-preprocessor": "~0.2.0",
     "karma-sauce-launcher": "~0.3.0",
     "karma-sourcemap-loader": "~0.3.6",
-    "lodash": "~4.8.2",
+    "lodash": "~4.9.0",
     "npm-check-updates": "~2.5.8",
     "proxy-middleware": "~0.15.0",
     "q": "~1.4.1",
