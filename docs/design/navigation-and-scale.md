@@ -101,6 +101,22 @@ Details of an individual resource instance are shown on a views which displays
 its properites and all related objects (e.g., Services that target a Pod).
 ![Details page template](mockups/23-03-2016-scale-and-navigation/details-page-template.png)
 
+## Future work
+* Make it possible to add/remove columns from resource lists. This is to
+  accommodate different use cases and needs that different users have. This
+  can be based on individual user's preference or their profiles. The profiles
+  may be, e.g., "Debugging", "Release" or "Resource Management".
+* Pivot labels into columns. For example, for every replica set in a list
+  have a column named `env` which displays the value of this label
+  (e.g., `dev`, `prod`, `test`). The pivot is user configurable.
+* Design application menu categories. Tracked in
+  https://github.com/kubernetes/kubernetes/issues/22687
+* Design individual resource lists and detail pages (for, e.g., Pods, Services,
+  Replica Sets, etc.)
+* Advanced resource list filtering that supports label and field matching
+* Better handling large number of resources: customized pagination and
+  section collapsing.
+
 ## Concrete pages
 This section shows how templates proposed in the "View templates" section
 can be applied to real examples.
