@@ -37,6 +37,10 @@ $replicationcontrollerdetails-sidebar-width: 315px;
   width: 100%;
 }
 
+.kd-replicationcontrollerdetail-container {
+  overflow: hidden;
+}
+
 .kd-replicationcontrollerdetail-sidebar-header {
   height: $table-cell-height;
 }

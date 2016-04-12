@@ -31,11 +31,9 @@ limitations under the License.
             <md-tooltip>One or more pods are in pending state</md-tooltip>
           </md-icon>
           <a ng-href="{{::ctrl.getReplicationControllerDetailHref()}}"
-             class="kd-replicationcontroller-card-name">
-            <span class="md-title kd-replicationcontroller-card-title">
-              <kd-middle-ellipsis display-string="{{::ctrl.replicationController.name}}">
-              </kd-middle-ellipsis>
-            </span>
+             class="kd-replicationcontroller-card-name md-title kd-replicationcontroller-card-title">
+            <kd-middle-ellipsis display-string="{{::ctrl.replicationController.name}}">
+            </kd-middle-ellipsis>
           </a>
         </span>
         <kd-replication-controller-card-menu replication-controller="::ctrl.replicationController">
@@ -110,12 +108,6 @@ limitations under the License.
         <div flex="40" layout="column" class="kd-replicationcontroller-card-section">
           <span flex="initial" class="kd-replicationcontroller-card-section-title">External endpoint</span>
           <div flex="auto" >
-            <div ng-repeat="endpoint in ::ctrl.replicationController.externalEndpoints track by $index">
-              <kd-external-endpoint endpoint="::endpoint"></kd-external-endpoint>
-            </div>
-            <div ng-if="::!ctrl.replicationController.externalEndpoints.length">
-              none
-            </div>
           </div>
         </div>
       </div>

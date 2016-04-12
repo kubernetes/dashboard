@@ -21,49 +21,30 @@
  * inner element and not exceed boundaries of outer container. It's the best to style container
  * with display: [block|inline-block] and width: 100% and disable text wrapping for the element.
  *
- * @param {!Element} container - outer element contains 'element'. Its role is to be bounding
- * box of inner element.
- * @param {!Element} element - inner element of document that contains text to be trimmed
+ * @param {number} availableWidth - the width of outer container element that is available
+ *     for filling content into
+ * @param {!Element} element - element that content text will be added to
+ * @param {!Element} measurementElement - element that width will be measured when ellipsing
+ *     the text
  * @param {!function(string, number): string} filter - middle ellipsis filter function used to
- * truncate string
+ *     truncate string
  * @param {string} displayString - original display string (not truncated)
- *
  * @return {number}
  */
-export default function computeTextLength(container, element, filter, displayString) {
-  let availableWidth = container.offsetWidth;
-  // Browsers are using floating numbers and element returns integer.
-  // Reduce by 1px in case of rounding problem.
-  let width = element.offsetWidth - 1;
-
-  // If it already fits then do not change
-  if (availableWidth >= width) {
-    return element.textContent.length;
-  }
-
-  return binarySearchLength(availableWidth, element, filter, displayString);
-}
-
-/**
- * Does binary search to find minimal integer I such that given string with length I fits into
- * available space and with length I + 1 it does not.
- *
- * @param {number} availableWidth - width to which length of text should be scaled to
- * @param {!Element} element - element with text that should be truncated to fit available width
- * @param {!function(string, number): string} filter - filter function used to truncate string
- * @param {string} displayString - original display string (not truncated)
- *
- * @return {number}
- */
-export function binarySearchLength(availableWidth, element, filter, displayString) {
-  let [left, right] = [0, displayString.length];
+export default function computeTextLength(
+    availableWidth, element, measurementElement, filter, displayString) {
+  // Does binary search to find minimal integer I such that given string with length I fits into
+  // available space and with length I + 1 it does not.
+  // Make right displayString.length * 2 to start binary search with max length, which should be
+  // most common case.
+  let [left, right] = [0, displayString.length * 2];
   let [width, length] = [0, 0];
 
   while (left <= right) {
     length = Math.ceil((left + right) / 2);
 
     element.textContent = filter(displayString, length);
-    width = element.offsetWidth;
+    width = measurementElement.offsetWidth;
 
     if (width < availableWidth) {
       left = length + 1;
@@ -78,5 +59,5 @@ export function binarySearchLength(availableWidth, element, filter, displayStrin
     }
   }
 
-  return length;
+  return Math.min(length, displayString.length);
 }

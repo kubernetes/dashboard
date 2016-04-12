@@ -25,7 +25,7 @@ export default function middleEllipsisFilter() {
    */
   let filterFunction = function(value, limit) {
     limit = parseInt(limit, 10);
-    if (!limit) return value;
+    if (!limit) return '';
     if (!value) return value;
     if (value.length <= limit) return value;
     if (limit === 1) return `${value[0]}...`;
