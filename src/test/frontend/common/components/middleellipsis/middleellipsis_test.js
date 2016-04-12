@@ -32,7 +32,7 @@ describe('Middle ellipsis', () => {
    * @param {string} str
    * @param {number} textLength
    *
-   * @return {!angular.JQLite}
+   * @return {!Array<!angular.JQLite|number>}
    */
   function getFixtureElement(availableWidth, str, textLength) {
     let displayText;
@@ -42,12 +42,15 @@ describe('Middle ellipsis', () => {
       displayText = str;
     }
 
-    return angular.element(`
-    <div style='width: ${availableWidth}px; display: block;' id='fixture'>
-      <div style='width: 100%; display: block;' class='kd-middleellipsis-container'>
-        <span class='kd-middleellipsis'>${displayText}</span>
-      </div>
-    </div>`);
+    return [
+      angular.element(
+          `<div style="width: ${availableWidth}px; display: block; overflow: hidden;" id="fixture">
+          <div style="width: 100%; display: block;" class="kd-middleellipsis-container">
+            <span class="kd-middleellipsis">${displayText}</span>
+          </div>
+        </div>`),
+      availableWidth,
+    ];
   }
 
   beforeEach(() => {
@@ -98,22 +101,21 @@ describe('Middle ellipsis', () => {
 
     testData.forEach((testData) => {
       // given
-      let [fixture, filter, expected] = testData;
+      let [[fixture, availableWidth], filter, expected] = testData;
 
       fixture = compile(fixture)(scope);
       angular.element('body').append(fixture);
 
-      let container = fixture.find('.kd-middleellipsis-container')[0];
       let element = fixture.find('.kd-middleellipsis')[0];
       let displayText = element.textContent;
 
       // when
-      let actual = computeTextLength(container, element, filter, displayText);
+      let actual = computeTextLength(availableWidth, element, element, filter, displayText);
 
       // then
       expect(actual).toBe(
           expected,
-          `Expected length to be ${expected} but was ${actual} ` + `for text: ${displayText}`);
+          `Expected length to be ${expected} but was ${actual} for text: ${displayText}`);
 
       // Clean up
       fixture.remove();
