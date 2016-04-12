@@ -33,8 +33,25 @@ $replicationcontrollerdetails-sidebar-width: 315px;
   padding-right: $baseline-grid;
 }
 
-.kd-replicationcontrollerdetail-table {
+.kd-replicationcontrollerdetail-table,
+.kd-replicationcontrollerdetail-table-cell-ellipsised {
   width: 100%;
+}
+
+.kd-replicationcontrollerdetail-table .kd-small-fixed-column {
+   width: 10 * $baseline-grid;
+}
+
+.kd-replicationcontrollerdetail-table .kd-medium-fixed-column {
+   width: 18 * $baseline-grid;
+}
+
+.kd-replicationcontrollerdetail-table {
+  table-layout: fixed;
+}
+
+.kd-replicationcontrollerdetail-no-overflow {
+  overflow: hidden;
 }
 
 .kd-replicationcontrollerdetail-sidebar-header {

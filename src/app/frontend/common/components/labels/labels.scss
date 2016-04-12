@@ -21,10 +21,12 @@ $label-margin: 0 $baseline-grid ($baseline-grid / 2) 0;
   background-color: $body;
   border-radius: $baseline-grid;
   display: inline-block;
-  font-size: inherit;
   margin: $label-margin;
   padding: ($baseline-grid / 4) $baseline-grid;
-  vertical-align: middle;
+}
+
+kd-labels {
+  display: block;
 }
 
 .kd-labels-switch {

@@ -29,6 +29,9 @@ export default function middleEllipsisDirective(middleEllipsisFilter) {
     controllerAs: 'ellipsisCtrl',
     templateUrl: 'common/components/middleellipsis/middleellipsis.html',
     scope: {},
+    bindToController: {
+      'displayString': '@',
+    },
     /**
      * @param {!angular.Scope} scope
      * @param {!angular.JQLite} jQLiteElem
@@ -38,7 +41,7 @@ export default function middleEllipsisDirective(middleEllipsisFilter) {
     link: function(scope, jQLiteElem, attr, ctrl) {
       /** @type {!Element} */
       let element = jQLiteElem[0];
-      let container = element.querySelector('.kd-middleellipsis-container');
+      let container = element.parentElement;
       let ellipsisElem = element.querySelector('.kd-middleellipsis');
 
       if (!container) {
@@ -50,16 +53,14 @@ export default function middleEllipsisDirective(middleEllipsisFilter) {
         throw new Error('Required element with class .kd-middleellipsis-nowrap not found');
       }
 
-      let nonNullContainer = container;
       let nonNullElement = ellipsisElem;
 
-      scope.$watch(() => ctrl.displayString, (displayString) => {
-        ctrl.maxLength = computeTextLength(
-            nonNullContainer, nonNullElement, middleEllipsisFilter, displayString);
-      });
-    },
-    bindToController: {
-      'displayString': '@',
+      scope.$watch(
+          () => [container.offsetWidth, ctrl.displayString], ([containerWidth, displayString]) => {
+            let newLength = computeTextLength(
+                containerWidth, nonNullElement, element, middleEllipsisFilter, displayString);
+            ctrl.maxLength = newLength;
+          }, true);
     },
   };
 }
