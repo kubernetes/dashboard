@@ -21,9 +21,9 @@ describe('Apply ellipsis filter', () => {
   it('has a applyMiddleEllipsis filter',
      angular.mock.inject(function($filter) { expect($filter('middleEllipsis')).not.toBeNull(); }));
 
-  it('should return the same value if max parameter is undefined',
+  it('should return empty value if max parameter is undefined',
      angular.mock.inject(function(middleEllipsisFilter) {
-       expect(middleEllipsisFilter(testedString)).toEqual('podName');
+       expect(middleEllipsisFilter(testedString)).toEqual('');
      }));
 
   it('should return the same value if length less then given max length parameter',
@@ -31,10 +31,9 @@ describe('Apply ellipsis filter', () => {
        expect(middleEllipsisFilter(testedString, 10)).toEqual('podName');
      }));
 
-  it('should return the same value when max = 0',
-     angular.mock.inject(function(middleEllipsisFilter) {
-       expect(middleEllipsisFilter(testedString, 0)).toEqual('podName');
-     }));
+  it('should return empty value when max = 0', angular.mock.inject(function(middleEllipsisFilter) {
+    expect(middleEllipsisFilter(testedString, 0)).toEqual('');
+  }));
 
   it('should return truncated value with ellipsis as tail',
      angular.mock.inject(function(middleEllipsisFilter) {
