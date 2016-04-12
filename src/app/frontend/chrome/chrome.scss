@@ -96,6 +96,7 @@ a {
 // Responsive table style.
 @media only screen and (max-width: $layout-breakpoint-xs) {
   .kd-responsive-table {
+    table-layout: fixed;
     width: 100%;
 
     // Switches table to blocks.
@@ -127,7 +128,7 @@ a {
       display: flex;
       height: auto;
       min-height: $table-cell-height - 2 * $baseline-grid;
-      padding: $baseline-grid $baseline-grid $baseline-grid 50%;
+      padding: $baseline-grid $baseline-grid $baseline-grid 12 * $baseline-grid;
       position: relative;
 
       // Adds border between rows.

@@ -21,13 +21,13 @@ limitations under the License.
     <span class="kd-replicationcontrollerinfo-title">
       <span>Replication controller</span>
     </span>
-    <div layout="row">
-      <div class="kd-replicationcontrollerinfo-name">
+    <div layout="row" class="kd-replicationcontrollerinfo-subline-box">
+      <div flex="grow" class="kd-replicationcontrollerinfo-subline-box">
         <span class="kd-replicationcontrollerinfo-line">Name</span>
-        <span class="kd-replicationcontrollerinfo-subline">
+        <div class="kd-replicationcontrollerinfo-subline">
           <kd-middle-ellipsis display-string="{{::infoCtrl.details.name}}">
           </kd-middle-ellipsis>
-        </span>
+        </div>
       </div>
       <div flex="nogrow">
         <md-button class="md-primary md-icon-button"
@@ -41,7 +41,7 @@ limitations under the License.
       {{::infoCtrl.details.namespace}}
     </span>
     <div layout="row" layout-align="start end">
-      <div flex="nogrow">
+      <div flex="grow">
         <span class="kd-replicationcontrollerinfo-line">Pods</span>
         <span class="kd-replicationcontrollerinfo-subline"
               ng-if="!infoCtrl.areDesiredPodsRunning()">
@@ -82,10 +82,10 @@ limitations under the License.
       <kd-labels labels="::infoCtrl.details.labels"></kd-labels>
     </span>
     <span class="kd-replicationcontrollerinfo-line">Images</span>
-    <span class="kd-replicationcontrollerinfo-subline"
+    <div class="kd-replicationcontrollerinfo-subline"
           ng-repeat="image in infoCtrl.details.containerImages">
       <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
-    </span>
+    </div>
   </div>
   <div flex="auto" layout="column" class="kd-replicationcontrollerinfo-info">
     <div ng-if="::infoCtrl.details.services" layout="column">
