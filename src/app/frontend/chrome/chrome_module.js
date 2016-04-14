@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import chromeDirective from './chrome_directive';
+import componentsModule from 'common/components/components_module';
 
 /**
  * Angular module containing navigation chrome for the application.
@@ -23,5 +24,6 @@ export default angular
         [
           'ngMaterial',
           'ui.router',
+          componentsModule.name,
         ])
     .directive('chrome', chromeDirective);
