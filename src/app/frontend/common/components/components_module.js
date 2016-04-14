@@ -13,6 +13,8 @@
 // limitations under the License.
 
 import filtersModule from '../filters/filters_module';
+import actionbarDirective from './actionbar/actionbar_directive';
+import breadcrumbsDirective from './breadcrumbs/breadcrumbs_directive';
 import labelsDirective from './labels/labels_directive';
 import middleEllipsisDirective from './middleellipsis/middleellipsis_directive';
 import sparklineDirective from './sparkline/sparkline_directive';
@@ -33,4 +35,6 @@ export default angular
     .directive('kdLabels', labelsDirective)
     .directive('kdMiddleEllipsis', middleEllipsisDirective)
     .directive('kdSparkline', sparklineDirective)
-    .directive('kdWarnThreshold', warnThresholdDirective);
+    .directive('kdWarnThreshold', warnThresholdDirective)
+    .directive('kdActionbar', actionbarDirective)
+    .directive('kdBreadcrumbs', breadcrumbsDirective);

@@ -14,8 +14,4 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-replication-controller-list-container>
-  <kd-replication-controller-card ng-repeat="replicationController in ::ctrl.replicationControllers"
-                                  replication-controller="::replicationController">
-  </kd-replication-controller-card>
-</kd-replication-controller-list-container>
+<md-button class="md-raised" ng-click="ctrl.redirectToDeployPage()">Create</md-button>
