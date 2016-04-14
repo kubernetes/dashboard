@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as deploy} from 'deploy/deploy_state';
-
 /**
  * Controller for the replication controller list view.
  *
@@ -21,20 +19,11 @@ import {stateName as deploy} from 'deploy/deploy_state';
  */
 export default class ReplicationControllerListController {
   /**
-   * @param {!ui.router.$state} $state
    * @param {!backendApi.ReplicationControllerList} replicationControllers
    * @ngInject
    */
-  constructor($state, replicationControllers) {
+  constructor(replicationControllers) {
     /** @export {!Array<!backendApi.ReplicationController>} */
     this.replicationControllers = replicationControllers.replicationControllers;
-
-    /** @private {!ui.router.$state} */
-    this.state_ = $state;
   }
-
-  /**
-   * @export
-   */
-  redirectToDeployPage() { this.state_.go(deploy); }
 }

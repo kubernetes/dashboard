@@ -12,18 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import chromeDirective from './chrome_directive';
-import componentsModule from 'common/components/components_module';
+import {stateName as deploy} from 'deploy/deploy_state';
 
 /**
- * Angular module containing navigation chrome for the application.
+ * @final
  */
-export default angular
-    .module(
-        'kubernetesDashboard.chrome',
-        [
-          'ngMaterial',
-          'ui.router',
-          componentsModule.name,
-        ])
-    .directive('chrome', chromeDirective);
+export default class ReplicationControllerListActionBarController {
+  /**
+   * @param {!ui.router.$state} $state
+   * @ngInject
+   */
+  constructor($state) {
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
+  }
+
+  /**
+   * @export
+   */
+  redirectToDeployPage() { this.state_.go(deploy); }
+}

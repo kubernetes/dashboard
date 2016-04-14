@@ -28,11 +28,6 @@ $replicationcontrollerdetails-sidebar-width: 315px;
   min-width: $replicationcontrollerdetails-sidebar-width;
 }
 
-.kd-replicationcontrollerdetail-sidebar-item {
-  padding-left: 2 * $baseline-grid;
-  padding-right: $baseline-grid;
-}
-
 .kd-replicationcontrollerdetail-table,
 .kd-replicationcontrollerdetail-table-cell-ellipsised {
   width: 100%;
@@ -54,12 +49,8 @@ $replicationcontrollerdetails-sidebar-width: 315px;
   overflow: hidden;
 }
 
-.kd-replicationcontrollerdetail-sidebar-header {
-  height: $table-cell-height;
-}
-
-.kd-replicationcontrollerdetail-sidebar-header-wrapper {
-  border-bottom: 1px solid $border;
+.kd-replicationcontrollerdetail-sidebar-info {
+  padding-top: 2 * $baseline-grid;
 }
 
 .kd-replicationcontrollerdetail-warning-icon {

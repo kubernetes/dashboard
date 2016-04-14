@@ -14,8 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-replication-controller-list-container>
-  <kd-replication-controller-card ng-repeat="replicationController in ::ctrl.replicationControllers"
-                                  replication-controller="::replicationController">
-  </kd-replication-controller-card>
-</kd-replication-controller-list-container>
+<md-toolbar class="kd-toolbar kd-actionbar">
+  <div class="md-toolbar-tools" layout="row">
+    <kd-breadcrumbs class="kd-actionbar-breadcrumbs" limit="2"></kd-breadcrumbs>
+    <span flex></span>
+    <ng-transclude ui-view="actionbar"></ng-transclude>
+  </div>
+</md-toolbar>
