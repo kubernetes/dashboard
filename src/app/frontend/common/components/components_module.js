@@ -12,12 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {actionbarComponent} from './actionbar/actionbar_component';
+import {breadcrumbsComponent} from './breadcrumbs/breadcrumbs_component';
 import filtersModule from '../filters/filters_module';
 import labelsDirective from './labels/labels_directive';
 import middleEllipsisDirective from './middleellipsis/middleellipsis_directive';
+import resourceCardModule from './resourcecard/resourcecard_module';
 import sparklineDirective from './sparkline/sparkline_directive';
 import warnThresholdDirective from './warnthreshold/warnthreshold_directive';
-import resourceCardModule from './resourcecard/resourcecard_module';
 
 /**
  * Module containing common components for the application.
@@ -27,10 +29,13 @@ export default angular
         'kubernetesDashboard.common.components',
         [
           'ngMaterial',
+          'ui.router',
           filtersModule.name,
           resourceCardModule.name,
         ])
     .directive('kdLabels', labelsDirective)
     .directive('kdMiddleEllipsis', middleEllipsisDirective)
     .directive('kdSparkline', sparklineDirective)
-    .directive('kdWarnThreshold', warnThresholdDirective);
+    .directive('kdWarnThreshold', warnThresholdDirective)
+    .component('kdActionbar', actionbarComponent)
+    .component('kdBreadcrumbs', breadcrumbsComponent);

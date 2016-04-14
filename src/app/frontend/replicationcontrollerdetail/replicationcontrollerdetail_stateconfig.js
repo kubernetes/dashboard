@@ -13,7 +13,10 @@
 // limitations under the License.
 
 import ReplicationControllerDetailController from './replicationcontrollerdetail_controller';
+import ReplicationControllerDetailActionBarController from './replicationcontrollerdetailactionbar_controller';
 import {stateName} from './replicationcontrollerdetail_state';
+import {actionbarViewName} from 'chrome/chrome_state';
+import {stateName as replicationControllers} from 'replicationcontrollerlistdeprecated/replicationcontrollerlist_state';
 
 /**
  * Configures states for the service view.
@@ -23,15 +26,30 @@ import {stateName} from './replicationcontrollerdetail_state';
  */
 export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
-    controller: ReplicationControllerDetailController,
-    controllerAs: 'ctrl',
     url: '/replicationcontrollers/:namespace/:replicationController',
-    templateUrl: 'replicationcontrollerdetail/replicationcontrollerdetail.html',
     resolve: {
       'replicationControllerSpecPodsResource': getReplicationControllerSpecPodsResource,
       'replicationControllerDetailResource': getReplicationControllerDetailsResource,
       'replicationControllerDetail': resolveReplicationControllerDetails,
       'replicationControllerEvents': resolveReplicationControllerEvents,
+    },
+    data: {
+      'kdBreadcrumbs': {
+        'label': '{{$stateParams.replicationController}}',
+        'parent': replicationControllers,
+      },
+    },
+    views: {
+      '': {
+        controller: ReplicationControllerDetailController,
+        controllerAs: 'ctrl',
+        templateUrl: 'replicationcontrollerdetail/replicationcontrollerdetail.html',
+      },
+      [actionbarViewName]: {
+        controller: ReplicationControllerDetailActionBarController,
+        controllerAs: 'ctrl',
+        templateUrl: 'replicationcontrollerdetail/replicationcontrollerdetailactionbar.html',
+      },
     },
   });
 }
