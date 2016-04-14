@@ -99,13 +99,6 @@ export default class ReplicationControllerDetailController {
   }
 
   /**
-   * Returns true if sidebar is visible, false if it is hidden.
-   * @returns {boolean}
-   * @export
-   */
-  isSidebarVisible() { return this.mdMedia('gt-md'); }
-
-  /**
    * Returns true if event is a warning.
    * @param {!backendApi.Event} event
    * @return {boolean}

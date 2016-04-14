@@ -13,24 +13,20 @@
 // limitations under the License.
 
 /**
- * Controller for the replication controller info directive.
  * @final
  */
-export default class ReplicationControllerInfoController {
+export default class Breadcrumb {
   /**
-   * Constructs replication controller info object.
+   * Constructs breadcrumb object.
    */
   constructor() {
-    /**
-     * Replication controller details. Initialized from the scope.
-     * @export {!backendApi.ReplicationControllerDetail}
-     */
-    this.details;
-  }
+    /** @export {string} */
+    this.label;
 
-  /**
-   * @return {boolean}
-   * @export
-   */
-  areDesiredPodsRunning() { return this.details.podInfo.running === this.details.podInfo.desired; }
+    /** @export {string} */
+    this.stateLink;
+
+    /** @export {string} */
+    this.parent;
+  }
 }

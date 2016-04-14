@@ -13,24 +13,11 @@
 // limitations under the License.
 
 /**
- * Controller for the replication controller info directive.
- * @final
+ * Returns actionbar component.
+ *
+ * @return {!angular.Directive}
  */
-export default class ReplicationControllerInfoController {
-  /**
-   * Constructs replication controller info object.
-   */
-  constructor() {
-    /**
-     * Replication controller details. Initialized from the scope.
-     * @export {!backendApi.ReplicationControllerDetail}
-     */
-    this.details;
-  }
-
-  /**
-   * @return {boolean}
-   * @export
-   */
-  areDesiredPodsRunning() { return this.details.podInfo.running === this.details.podInfo.desired; }
-}
+export const actionbarComponent = {
+  templateUrl: 'common/components/actionbar/actionbar.html',
+  transclude: true,
+};
