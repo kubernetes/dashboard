@@ -29,12 +29,6 @@ limitations under the License.
           </kd-middle-ellipsis>
         </div>
       </div>
-      <div flex="nogrow">
-        <md-button class="md-primary md-icon-button"
-            ng-click="infoCtrl.handleDeleteReplicationControllerDialog()">
-          <md-icon class="material-icons">delete</md-icon>
-        </md-button>
-      </div>
     </div>
     <span class="kd-replicationcontrollerinfo-line">Namespace</span>
     <span class="kd-replicationcontrollerinfo-subline">
@@ -51,12 +45,6 @@ limitations under the License.
         <span class="kd-replicationcontrollerinfo-subline" ng-if="infoCtrl.areDesiredPodsRunning()">
           {{::infoCtrl.details.podInfo.running}} running
         </span>
-      </div>
-      <div flex="nogrow">
-        <md-button class="md-icon-button md-primary"
-                   ng-click="infoCtrl.handleUpdateReplicasDialog()">
-          <md-icon class="material-icons">mode_edit</md-icon>
-        </md-button>
       </div>
     </div>
     <div ng-if="!infoCtrl.areDesiredPodsRunning()">

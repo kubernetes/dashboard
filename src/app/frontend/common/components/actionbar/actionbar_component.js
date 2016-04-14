@@ -12,18 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import chromeDirective from './chrome_directive';
-import componentsModule from 'common/components/components_module';
+/** Name of the view - can be used in state config to enable actionbar */
+export const viewName = 'actionbar';
 
 /**
- * Angular module containing navigation chrome for the application.
+ * Returns actionbar component.
+ *
+ * @return {!angular.Directive}
  */
-export default angular
-    .module(
-        'kubernetesDashboard.chrome',
-        [
-          'ngMaterial',
-          'ui.router',
-          componentsModule.name,
-        ])
-    .directive('chrome', chromeDirective);
+export const actionbarComponent = {
+  templateUrl: 'common/components/actionbar/actionbar.html',
+  transclude: true,
+};

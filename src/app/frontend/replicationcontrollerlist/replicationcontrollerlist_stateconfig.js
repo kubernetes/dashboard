@@ -12,11 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {viewName as actionbar} from 'common/components/actionbar/actionbar_component';
 import {stateName as zerostate} from './zerostate/zerostate_state';
 import {stateName as replicationcontrollers} from './replicationcontrollerlist_state';
 import {stateUrl as replicationcontrollersUrl} from './replicationcontrollerlist_state';
 import {StateParams} from './zerostate/zerostate_state';
 import ReplicationControllerListController from './replicationcontrollerlist_controller';
+import ReplicationControllerListActionBarController from './replicationcontrollerlistactionbar_controller';
 import ZeroStateController from './zerostate/zerostate_controller';
 
 /**
@@ -31,12 +33,20 @@ export default function stateConfig($stateProvider) {
     resolve: {
       'replicationControllers': resolveReplicationControllers,
     },
+    'kdBreadcrumbs': {
+      'label': 'Replication Controllers',
+    },
     onEnter: redirectIfNeeded,
     views: {
       '': {
         controller: ReplicationControllerListController,
         controllerAs: 'ctrl',
         templateUrl: 'replicationcontrollerlist/replicationcontrollerlist.html',
+      },
+      [actionbar]: {
+        controller: ReplicationControllerListActionBarController,
+        controllerAs: 'ctrl',
+        templateUrl: 'replicationcontrollerlist/replicationcontrollerlistactionbar.html',
       },
     },
   });

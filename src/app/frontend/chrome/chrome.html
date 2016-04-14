@@ -26,9 +26,7 @@ limitations under the License.
   </div>
 </md-toolbar>
 
-<md-toolbar ng-if="ctrl.isActionbarVisible()" ui-view="actionbar"
-    class="kd-toolbar kd-chrome-actionbar md-hue-1">
-</md-toolbar>
+<kd-actionbar ng-if="ctrl.isActionbarVisible()"></kd-actionbar>
 
 <md-content
     ng-class="{'kd-chrome-content': true, 'kd-chrome-has-actionbar': ctrl.isActionbarVisible()}">
