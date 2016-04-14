@@ -12,18 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import chromeDirective from './chrome_directive';
-import componentsModule from 'common/components/components_module';
-
 /**
- * Angular module containing navigation chrome for the application.
+ * @final
  */
-export default angular
-    .module(
-        'kubernetesDashboard.chrome',
-        [
-          'ngMaterial',
-          'ui.router',
-          componentsModule.name,
-        ])
-    .directive('chrome', chromeDirective);
+export default class Breadcrumb {
+  /**
+   * Constructs breadcrumb object.
+   */
+  constructor() {
+    /** @export {string} */
+    this.label;
+
+    /** @export {string} */
+    this.stateLink;
+
+    /** @export {string} */
+    this.parent;
+  }
+}
