@@ -17,7 +17,7 @@ export default class ReplicationControllersPageObject {
     this.cardMenuButtonQuery =
         `md-menu/button[contains(@class, 'kd-replicationcontroller-card-menu-button')]`;
     this.cardErrorIconQuery = `span/md-icon[contains(@class, 'md-warn')]`;
-    this.cardDetailsPageLinkQuery = `a[@class='kd-replicationcontroller-card-name']`;
+    this.cardDetailsPageLinkQuery = `a[contains(@class, 'kd-replicationcontroller-card-name')]`;
     this.cardErrorsQuery = `span[contains(@class, 'kd-replicationcontroller-card-error')]`;
     this.deleteAppButtonQuery =
         by.xpath('//div[@aria-hidden="false"]/md-menu-content/md-menu-item[3]/button');

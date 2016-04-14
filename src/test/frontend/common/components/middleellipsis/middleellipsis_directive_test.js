@@ -25,9 +25,8 @@ describe('Middle ellipsis directive', () => {
 
     angular.mock.inject(($rootScope, $compile) => {
       scope = $rootScope.$new();
-      compileFn = $compile(
-          '<kd-middle-ellipsis display-string="{{displayString}}" max-length="{{maxLength}}">' +
-          '</kd-middle-ellipsis>');
+      compileFn = $compile(`<div><kd-middle-ellipsis display-string="{{displayString}}"
+          max-length="{{maxLength}}"></kd-middle-ellipsis></div>`);
     });
   });
 
@@ -35,13 +34,28 @@ describe('Middle ellipsis directive', () => {
     // given
     let stringLength = 16;
     scope.displayString = new Array(stringLength + 1).join('x');
+    let element = compileFn(scope);
+    document.body.appendChild(element[0]);
 
     // when
-    let element = compileFn(scope);
+    element[0].style.width = '500px';
     scope.$digest();
 
     // then
-    let actual = element.text().trim();
-    expect(actual.length).toEqual(stringLength);
+    expect(element.text().trim().length).toEqual(stringLength);
+
+    // when
+    element[0].style.width = '1px';
+    scope.$digest();
+
+    // then
+    expect(element.text().trim().length).toEqual(0);
+
+    // when
+    element[0].style.width = '50px';
+    scope.$digest();
+
+    // then
+    expect(element.text().trim().length).toEqual(7);
   });
 });

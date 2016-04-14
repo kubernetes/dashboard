@@ -64,7 +64,7 @@ describe('Deploy from valid file user story test', () => {
 
     let cardNameLink = replicationControllersPage.getElementByAppName(
         replicationControllersPage.cardDetailsPageLinkQuery, appName);
-    expect(cardNameLink.isPresent()).toBeTruthy();
+    expect(cardNameLink.isPresent()).toBe(true);
   });
 
   afterAll(() => {
