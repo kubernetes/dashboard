@@ -12,13 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ReplicationControllerListController from 'replicationcontrollerlist/replicationcontrollerlist_controller';
+import ReplicationControllerListActionBarController from 'replicationcontrollerlist/replicationcontrollerlistactionbar_controller';
 import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
+import {stateName as deploy} from 'deploy/deploy_state';
 
-describe('Replication controller list controller', () => {
-  /** @type {!ReplicationControllerListController} */
+describe('Replication Controller Detail Action Bar controller', () => {
+  /**
+   * Replication Controller List controller.
+   * @type {!ReplicationControllerListController}
+   */
   let ctrl;
-  /** @type {!ui.router.$state} */
+  /** @type {ui.router.$state} */
   let state;
 
   beforeEach(() => {
@@ -26,13 +30,13 @@ describe('Replication controller list controller', () => {
 
     angular.mock.inject(($controller, $state) => {
       state = $state;
-      ctrl = $controller(
-          ReplicationControllerListController,
-          {replicationControllers: {replicationControllers: []}});
+      ctrl = $controller(ReplicationControllerListActionBarController, {
+        $state: state,
+      });
     });
   });
 
-  it('should change state to deploy view on plus button click', () => {
+  it('should redirect to deploy page', () => {
     // given
     spyOn(state, 'go');
 
@@ -40,6 +44,6 @@ describe('Replication controller list controller', () => {
     ctrl.redirectToDeployPage();
 
     // then
-    expect(state.go).toHaveBeenCalledWith('deploy');
+    expect(state.go).toHaveBeenCalledWith(deploy);
   });
 });

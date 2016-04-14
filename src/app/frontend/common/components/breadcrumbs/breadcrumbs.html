@@ -14,8 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-replication-controller-list-container>
-  <kd-replication-controller-card ng-repeat="replicationController in ::ctrl.replicationControllers"
-                                  replication-controller="::replicationController">
-  </kd-replication-controller-card>
-</kd-replication-controller-list-container>
+<span ng-switch="$last" ng-repeat="breadcrumb in ::ctrl.breadcrumbs">
+  <a ng-switch-when="false" href="{{::breadcrumb.stateLink}}">
+    {{::breadcrumb.label}}
+  </a>
+  <span ng-switch-when="true" class="kd-breadcrumbs-ellipsised">
+    <kd-middle-ellipsis display-string="{{::breadcrumb.label}}"></kd-middle-ellipsis>
+  </span>
+  <span ng-switch-when="false">></span>
+</span>

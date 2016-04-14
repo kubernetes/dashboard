@@ -14,23 +14,10 @@
 
 @import '../variables';
 
-$replicationcontrollerdetails-sidebar-bg: #fafafa;
-$replicationcontrollerdetails-sidebar-width: 315px;
 
 .kd-replicationcontrollerdetail-app-name {
   color: $foreground-2;
   font-weight: $regular-font-weight;
-}
-
-.kd-replicationcontrollerdetail-sidebar {
-  background-color: $replicationcontrollerdetails-sidebar-bg;
-  max-width: $replicationcontrollerdetails-sidebar-width + 10 * $baseline-grid;
-  min-width: $replicationcontrollerdetails-sidebar-width;
-}
-
-.kd-replicationcontrollerdetail-sidebar-item {
-  padding-left: 2 * $baseline-grid;
-  padding-right: $baseline-grid;
 }
 
 .kd-replicationcontrollerdetail-table,
@@ -52,14 +39,6 @@ $replicationcontrollerdetails-sidebar-width: 315px;
 
 .kd-replicationcontrollerdetail-no-overflow {
   overflow: hidden;
-}
-
-.kd-replicationcontrollerdetail-sidebar-header {
-  height: $table-cell-height;
-}
-
-.kd-replicationcontrollerdetail-sidebar-header-wrapper {
-  border-bottom: 1px solid $border;
 }
 
 .kd-replicationcontrollerdetail-warning-icon {

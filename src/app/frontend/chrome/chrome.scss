@@ -26,16 +26,16 @@
   position: fixed !important;
 }
 
-.kd-chrome-actionbar {
-  top: $toolbar-height-size-base;
-}
-
 .kd-chrome-content {
   padding-top: $toolbar-height-size-base;
 }
 
 .kd-chrome-has-actionbar {
   padding-top: 2 * $toolbar-height-size-base;
+
+  @media only screen and (max-width: $layout-breakpoint-sm) {
+    padding-top: $toolbar-height-size-base + $toolbar-height-size-base-sm;
+  }
 }
 
 body {
