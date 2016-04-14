@@ -51,6 +51,5 @@
 }
 
 .kd-replicationcontrollerinfo-info {
-  // 6px needed to offset for md-button padding.
-  padding-left: $baseline-grid + 6px;
+  padding-top: $baseline-grid;
 }
