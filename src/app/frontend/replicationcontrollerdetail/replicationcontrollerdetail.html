@@ -14,47 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-content layout="row" layout-fill flex="auto" >
+<md-content layout="row" layout-fill flex="auto">
   <div class="kd-replicationcontrollerdetail-sidebar" layout="column" flex="noshrink"
        ng-show="ctrl.isSidebarVisible()">
-    <div class="kd-replicationcontrollerdetail-sidebar-header-wrapper kd-replicationcontrollerdetail-sidebar-item"
-        flex="nogrow">
-      <div class="kd-replicationcontrollerdetail-sidebar-header" layout-align="start center"
-           layout="row">
-        <div flex="none">
-          <md-button class="md-icon-button" ui-sref="replicationcontrollers">
-            <md-icon md-font-library="material-icons">arrow_back</md-icon>
-          </md-button>
-        </div>
-        <div flex="auto" class="kd-replicationcontrollerdetail-no-overflow">
-          <h1 class="md-title kd-replicationcontrollerdetail-app-name">
-            <kd-middle-ellipsis display-string="{{::ctrl.replicationControllerDetail.name}}">
-            </kd-middle-ellipsis>
-          </h1>
-        </div>
-      </div>
-    </div>
-    <kd-replication-controller-info details="::ctrl.replicationControllerDetail">
+    <kd-replication-controller-info class="kd-replicationcontrollerdetail-sidebar-info"
+                                    details="::ctrl.replicationControllerDetail" flex="nogrow">
     </kd-replication-controller-info>
   </div>
   <div flex="auto" class="kd-replicationcontrollerdetail-no-overflow">
-    <div class="kd-replicationcontrollerdetail-sidebar-header-wrapper kd-replicationcontrollerdetail-sidebar-item"
-         flex="nogrow" ng-show="!ctrl.isSidebarVisible()">
-      <div class="kd-replicationcontrollerdetail-sidebar-header" layout-align="start center"
-           layout="row">
-        <div flex="none">
-          <md-button class="md-icon-button" ui-sref="replicationcontrollers">
-            <md-icon md-font-library="material-icons">arrow_back</md-icon>
-          </md-button>
-        </div>
-        <div flex="auto" class="kd-replicationcontrollerdetail-no-overflow">
-          <h1 class="md-title kd-replicationcontrollerdetail-app-name">
-            <kd-middle-ellipsis display-string="{{::ctrl.replicationControllerDetail.name}}">
-            </kd-middle-ellipsis>
-          </h1>
-        </div>
-      </div>
-    </div>
     <md-tabs flex="auto" md-border-bottom md-dynamic-height>
       <md-tab label="Pods">
         <md-content>
