@@ -38,6 +38,19 @@ export default function stateConfig($stateProvider) {
         controllerAs: 'ctrl',
         templateUrl: 'replicationcontrollerlist/replicationcontrollerlist.html',
       },
+      'actionbar': {
+        template: `
+            <div  class="md-toolbar-tools" layout="row">
+              <span flex="none" style="width:50px"></span>
+              <h2>
+                <span>Replication Controllers</span>
+              </h2>
+              <span flex="none" style="width:100px"></span>
+              <md-button class="md-raised" aria-label="Learn More" ng-click="ctrl.redirectToDeployPage()">
+                Create
+              </md-button>
+            </div>`,
+      },
     },
   });
   $stateProvider.state(zerostate, {

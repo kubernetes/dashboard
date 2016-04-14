@@ -15,117 +15,94 @@ limitations under the License.
 -->
 
 <md-card class="kd-replicationcontroller-card">
-  <md-card-content>
-    <div layout="column">
-      <div flex="auto" layout="row" layout-align="space-between center"
-            class="kd-replicationcontroller-card-title-row">
-        <span layout="row" flex="85">
-          <md-icon class="material-icons md-warn kd-replicationcontroller-card-status-icon"
-                   ng-if="::ctrl.hasWarnings()">
-            error
-            <md-tooltip>One or more pods have errors</md-tooltip>
-          </md-icon>
-          <md-icon class="material-icons kd-replicationcontroller-card-status-icon"
-                   ng-if="::ctrl.isPending()">
-            timelapse
-            <md-tooltip>One or more pods are in pending state</md-tooltip>
-          </md-icon>
-          <a ng-href="{{::ctrl.getReplicationControllerDetailHref()}}"
-             class="kd-replicationcontroller-card-name">
-            <span class="md-title kd-replicationcontroller-card-title">
-              <kd-middle-ellipsis display-string="{{::ctrl.replicationController.name}}">
-              </kd-middle-ellipsis>
+  <md-card-content class="kd-replicationcontroller-card-content">
+    <div class="kd-resource-list-container" layout="row">
+      <div style="width: 20px; min-width: 20px; padding-left: 0" flex="none">
+        <md-icon class="material-icons md-warn kd-replicationcontroller-card-status-icon"
+                 ng-if="::ctrl.hasWarnings()">
+          error
+          <md-tooltip>One or more pods have errors</md-tooltip>
+        </md-icon>
+        <md-icon class="material-icons kd-replicationcontroller-card-status-icon"
+                 ng-if="::ctrl.isPending()">
+          timelapse
+          <md-tooltip>One or more pods are in pending state</md-tooltip>
+        </md-icon>
+      </div>
+      <div style="width: 200px; min-width: 150px;" flex="grow">
+        <a ng-href="{{::ctrl.getReplicationControllerDetailHref()}}"
+           class="kd-replicationcontroller-card-name kd-replicationcontroller-card-title">
+          <kd-middle-ellipsis display-string="{{ctrl.replicationController.name}}">
+          </kd-middle-ellipsis>
+        </a>
+      </div>
+      <div style="width: 200px;min-width: 150px;" flex="grow">
+        <kd-labels labels="ctrl.replicationController.labels"></kd-labels>
+      </div>
+      <span style="width: 150px" flex="none">
+        <ng-pluralize class="kd-replicationcontroller-card-pods-stat kd-comma-separated-item"
+                      count="::ctrl.replicationController.pods.running"
+                      when="{'one': '1 running', 'other': '{} running'}">
+        </ng-pluralize>
+        <span ng-if="::ctrl.replicationController.pods.pending"
+            class="kd-replicase-card-pods-stat kd-comma-separated-item">
+          {{::ctrl.replicationController.pods.pending}} pending<!-- Collapse whitespace
+        --></span>
+        <span ng-if="::ctrl.replicationController.pods.failed"
+            class="kd-replicase-card-pods-stat kd-comma-separated-item">
+          {{::ctrl.replicationController.pods.failed}} failed<!-- Collapse whitespace
+        --></span>
+        <span ng-if="!ctrl.areDesiredPodsRunning()"
+              class="kd-replicase-card-pods-stat kd-comma-separated-item">
+          {{::ctrl.replicationController.pods.desired}} desired
+        </span>
+      </span>
+          <div style="width: 200px; min-width: 150px;" flex="grow">
+            <span ng-repeat="image in ::ctrl.replicationController.containerImages track by $index"
+                 class="kd-replicationcontroller-card-section-image">
+              <kd-middle-ellipsis display-string="{{image}}"></kd-middle-ellipsis>
             </span>
-          </a>
-        </span>
-        <kd-replication-controller-card-menu replication-controller="::ctrl.replicationController">
-        </kd-replication-controller-card-menu>
-      </div>
-      <div class="md-caption">
-        <kd-labels labels="::ctrl.replicationController.labels"></kd-labels>
-      </div>
-    </div>
-    <div class="md-caption">
-      <div layout="row" layout-align="center end">
-        <span flex="60">
-          <ng-pluralize class="kd-replicationcontroller-card-pods-stat kd-comma-separated-item"
-                        count="::ctrl.replicationController.pods.running"
-                        when="{'one': '1 pod running', 'other': '{} pods running'}">
-          </ng-pluralize>
-          <span ng-if="::ctrl.replicationController.pods.pending"
-              class="kd-replicase-card-pods-stat kd-comma-separated-item">
-            {{::ctrl.replicationController.pods.pending}} pending<!-- Collapse whitespace
-          --></span>
-          <span ng-if="::ctrl.replicationController.pods.failed"
-              class="kd-replicase-card-pods-stat kd-comma-separated-item">
-            {{::ctrl.replicationController.pods.failed}} failed<!-- Collapse whitespace
-          --></span>
-          <span ng-if="!ctrl.areDesiredPodsRunning()"
-                class="kd-replicase-card-pods-stat kd-comma-separated-item">
-            {{::ctrl.replicationController.pods.desired}} desired
-          </span>
-        </span>
-        <logs-menu flex="40" namespace="::ctrl.replicationController.namespace"
-                   replication-controller-name="::ctrl.replicationController.name">
-        </logs-menu>
-      </div>
-      <md-divider class="kd-replicationcontroller-card-divider"></md-divider>
-      <div layout="row" layout-wrap>
-        <div ng-if="::ctrl.replicationController.description" flex="100" layout="column"
-            class="kd-replicationcontroller-card-section">
-          <span flex="auto" class="kd-replicationcontroller-card-section-title">Description</span>
-          <div flex="auto" class="kd-replicationcontroller-card-description">{{::ctrl.replicationController.description}}</div>
-        </div>
-
-        <div flex="60" layout="column" class="kd-replicationcontroller-card-section">
-          <span class="kd-replicationcontroller-card-section-title">Image</span>
-          <div ng-repeat="image in ::ctrl.replicationController.containerImages track by $index"
-               class="kd-replicationcontroller-card-section-image">
-            <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
           </div>
-        </div>
 
-        <div flex="40" layout="column" class="kd-replicationcontroller-card-section">
-          <span flex="initial" class="kd-replicationcontroller-card-section-title">Age</span>
-          <span flex="nogrow">
+          <span style="width: 100px" flex="none">
             {{::ctrl.replicationController.creationTime | relativeTime}}
             <md-tooltip>
               Created at {{::ctrl.replicationController.creationTime | date:'d/M/yy HH:mm':'UTC'}} UTC
             </md-tooltip>
           </span>
-        </div>
 
-        <div flex="60" layout="column" class="kd-replicationcontroller-card-section">
-          <span flex="initial" class="kd-replicationcontroller-card-section-title">Internal endpoint</span>
-          <div flex="auto" >
-            <div ng-repeat="endpoint in ::ctrl.replicationController.internalEndpoints track by $index">
+          <div style="width: 200px; min-width: 100px" flex="grow">
+            <span ng-repeat="endpoint in ::ctrl.replicationController.internalEndpoints track by $index">
               <kd-internal-endpoint endpoint="::endpoint"></kd-internal-endpoint>
-            </div>
-            <div ng-if="::!ctrl.replicationController.internalEndpoints.length">
+            </span>
+            <span ng-if="::!ctrl.replicationController.internalEndpoints.length">
               none
-            </div>
+            </span>
           </div>
-        </div>
 
-        <div flex="40" layout="column" class="kd-replicationcontroller-card-section">
-          <span flex="initial" class="kd-replicationcontroller-card-section-title">External endpoint</span>
-          <div flex="auto" >
-            <div ng-repeat="endpoint in ::ctrl.replicationController.externalEndpoints track by $index">
+          <div style="width: 200px; min-width: 100px" flex="grow">
+            <span ng-repeat="endpoint in ::ctrl.replicationController.externalEndpoints track by $index">
               <kd-external-endpoint endpoint="::endpoint"></kd-external-endpoint>
-            </div>
-            <div ng-if="::!ctrl.replicationController.externalEndpoints.length">
+            </span>
+            <span ng-if="::!ctrl.replicationController.externalEndpoints.length">
               none
-            </div>
+            </span>
           </div>
-        </div>
+      <div style="width: 120px" flex="none">
+        <logs-menu namespace="::ctrl.replicationController.namespace"
+                   replication-controller-name="::ctrl.replicationController.name">
+        </logs-menu>
+        <kd-replication-controller-card-menu replication-controller="::ctrl.replicationController">
+        </kd-replication-controller-card-menu>
       </div>
-      <div layout="column" ng-if="::ctrl.hasWarnings()">
-        <md-divider class="kd-replicationcontroller-card-divider"></md-divider>
-        <div layout-wrap>
-          <div flex="auto" class="kd-replicationcontroller-card-section"
-               ng-repeat="warning in ::ctrl.replicationController.pods.warnings">
-            <span class="kd-replicationcontroller-card-error">{{::warning.message}}</span>
-          </div>
+    </div>
+
+    <div layout="column" ng-if="::ctrl.hasWarnings()">
+      <md-divider class="kd-replicationcontroller-card-divider"></md-divider>
+      <div layout-wrap>
+        <div flex="auto" class="kd-replicationcontroller-card-section"
+             ng-repeat="warning in ::ctrl.replicationController.pods.warnings">
+          <span class="kd-replicationcontroller-card-error">{{::warning.message}}</span>
         </div>
       </div>
     </div>

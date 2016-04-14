@@ -53,10 +53,14 @@ export default function middleEllipsisDirective(middleEllipsisFilter) {
       let nonNullContainer = container;
       let nonNullElement = ellipsisElem;
 
-      scope.$watch(() => ctrl.displayString, (displayString) => {
-        ctrl.maxLength = computeTextLength(
-            nonNullContainer, nonNullElement, middleEllipsisFilter, displayString);
-      });
+      scope.$watch(
+          () => {
+
+            let ret = computeTextLength(
+                nonNullContainer, nonNullElement, middleEllipsisFilter, ctrl.displayString);
+            return ret;
+          },
+          (len) => { ctrl.maxLength = len; });
     },
     bindToController: {
       'displayString': '@',

@@ -14,30 +14,38 @@
 
 @import '../variables';
 
+.kd-resource-list-container {
+    width: 100% ;
+    &> * {
+      padding-left: 2*$baseline-grid;
+    }
+}
+
 .kd-replicationcontroller-card {
   display: block;
-  margin: 0;
-  width: ($layout-breakpoint-lg - (2 * $baseline-grid) * 4) / 3;
+  margin-bottom: $baseline-grid;
+  margin-top: $baseline-grid;
+}
+
+.kd-replicationcontroller-card-content {
+  padding: $baseline-grid;
 }
 
 .kd-replicationcontroller-card-name {
-  color: inherit;
   display: inline-block;
-  text-decoration: none;
-  width: 100%;
 
   &:visited {
-    color: inherit;
   }
 }
 
 .kd-replicationcontroller-card-status-icon {
+  font-size: $subhead-font-size-base;
   margin-right: $baseline-grid;
   vertical-align: top;
 }
 
 .kd-replicationcontroller-card-title {
-  font-weight: $regular-font-weight;
+  // font-weight: $regular-font-weight;
   margin: 0;
 
   &:hover {

@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div flex="95" class="kd-labels" ng-repeat="(key, value) in ::labelsCtrl.labels"
+<div flex="95" class="kd-labels" ng-repeat="(key, value) in labelsCtrl.labels"
      ng-if="labelsCtrl.isVisible($index)">
-  <kd-middle-ellipsis display-string="{{::key}}: {{::value}}"></kd-middle-ellipsis>
+  <kd-middle-ellipsis display-string="{{key}}: {{value}}"></kd-middle-ellipsis>
 </div>
 <div class="kd-labels kd-labels-switch" ng-show="labelsCtrl.isMoreAvailable()"
      ng-click="labelsCtrl.switchLabelsView()">

@@ -31,6 +31,7 @@
 }
 
 .kd-chrome-content {
+  background-color: $body;
   padding-top: $toolbar-height-size-base;
 }
 
@@ -58,6 +59,7 @@ a {
 
 .kd-app-content {
   background-color: $body;
+  font-size: $body-font-size-base;
   position: relative;
 }
 
