@@ -368,4 +368,15 @@ export default class DeployFromSettingsController {
    * @export
    */
   switchMoreOptions() { this.detail.showMoreOptions_ = !this.detail.showMoreOptions_; }
+
+  /**
+   * Returns true if at leat one port mapping has been defined and is completly filled.
+   * @return {boolean}
+   * @export
+   */
+  isExposeEnabled() {
+    return (
+        this.portMappings != undefined &&
+        this.portMappings.filter(this.isPortMappingFilled_).length > 0);
+  }
 }
