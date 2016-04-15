@@ -13,8 +13,11 @@
 // limitations under the License.
 
 import {resourceCardComponent} from './resourcecard_component';
+import {resourceCardListComponent} from './resourcecardlist_component';
 import {resourceCardColumnComponent} from './resourcecardcolumn_component';
 import {resourceCardColumnsComponent} from './resourcecardcolumns_component';
+import {resourceCardHeaderColumnComponent} from './resourcecardheadercolumn_component';
+import {resourceCardHeaderColumnsComponent} from './resourcecardheadercolumns_component';
 import {resourceCardFooterComponent} from './resourcecardfooter_component';
 
 /**
@@ -28,6 +31,9 @@ export default angular
           'ngMaterial',
         ])
     .component('kdResourceCard', resourceCardComponent)
+    .component('kdResourceCardList', resourceCardListComponent)
     .component('kdResourceCardColumn', resourceCardColumnComponent)
     .component('kdResourceCardColumns', resourceCardColumnsComponent)
+    .component('kdResourceCardHeaderColumn', resourceCardHeaderColumnComponent)
+    .component('kdResourceCardHeaderColumns', resourceCardHeaderColumnsComponent)
     .component('kdResourceCardFooter', resourceCardFooterComponent);
