@@ -14,13 +14,4 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div class="kd-resource-card" layout="column">
-  <div layout="row" class="kd-resource-card-columns-container" flex="grow">
-    <ng-transclude ng-transclude-slot="status" class="kd-resource-card-status" flex="none">
-    </ng-transclude>
-    <ng-transclude ng-transclude-slot="columns" class="kd-resource-card-columns-slot" flex="shrink">
-    </ng-transclude>
-  </div>
-  <ng-transclude ng-transclude-slot="footer" class="kd-resource-card-footer-slot">
-  </ng-transclude>
-</div>
+<ng-transclude class="kd-resource-card-header-column-container"></ng-transclude>

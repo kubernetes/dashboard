@@ -14,6 +14,33 @@
 
 @import '../../../variables';
 
-.kd-resource-card-footer {
-  display: block;
+kd-resource-card-header-column,
+kd-resource-card-column {
+  &.kd-column-grow-nogrow {
+    flex-grow: 0;
+  }
+
+  &.kd-column-grow-1 {
+    flex-grow: 1;
+  }
+
+  &.kd-column-grow-2 {
+    flex-grow: 2;
+  }
+
+  &.kd-column-grow-4 {
+    flex-grow: 4;
+  }
+
+  &.kd-column-size-small {
+    width: 10 * $baseline-grid;
+  }
+
+  &.kd-column-size-medium {
+    width: 20 * $baseline-grid;
+  }
+
+  &.kd-column-size-large {
+    width: 30 * $baseline-grid;
+  }
 }

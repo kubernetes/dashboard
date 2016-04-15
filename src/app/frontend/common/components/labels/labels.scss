@@ -27,6 +27,7 @@ $label-margin: 0 $baseline-grid ($baseline-grid / 2) 0;
 
 kd-labels {
   display: block;
+  margin-bottom: -($baseline-grid / 2);
 }
 
 .kd-labels-switch {

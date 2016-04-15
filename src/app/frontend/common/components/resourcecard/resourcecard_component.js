@@ -31,25 +31,7 @@ export class ResourceCardController {
 
 /**
  * Represents a resource card in a tabularized list. Should always be used when showing
- * lists of resources.
- *
- * Usage:
- * <kd-resource-card>
- *   <kd-resource-card-status>X</kd-resource-card-status>
- *   <kd-resource-card-columns>
- *     <kd-resource-card-column>
- *        MY CUSTOM COLUMN 1
- *     </kd-resource-card-column>
- *     <kd-resource-card-column>
- *       MY CUSTOM COLUMN 2
- *     </kd-resource-card-column>
- *     <kd-resource-card-column>
- *       MY CUSTOM COLUMN 3
- *     </kd-resource-card-column>
- *   </kd-resource-card-columns>
- *   <kd-resource-card-footer>MY CUSTOM FOOTER</kd-resource-card-footer>
- * </kd-resource-card>
- *
+ * lists of resources. See resource card list component for documentation.
  * @type {!angular.Component}
  */
 export const resourceCardComponent = {
