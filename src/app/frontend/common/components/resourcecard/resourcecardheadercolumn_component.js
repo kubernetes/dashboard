@@ -16,7 +16,7 @@
  * Controller for the resource card component.
  * @final
  */
-export class ResourceCardColumnController {
+export class ResourceCardHeaderColumnController {
   /**
    * @param {!angular.JQLite} $element
    * @ngInject
@@ -24,9 +24,21 @@ export class ResourceCardColumnController {
   constructor($element) {
     /**
      * Initialized from require just before $onInit is callled.
-     * @export {!./resourcecardcolumns_component.ResourceCardColumnsController}
+     * @export {!./resourcecardheadercolumns_component.ResourceCardHeaderColumnsController}
      */
-    this.resourceCardColumnsCtrl;
+    this.resourceCardHeaderColumnsCtrl;
+
+    /**
+     * Initialized from a binding.
+     * @export {string|undefined}
+     */
+    this.size;
+
+    /**
+     * Initialized from a binding.
+     * @export {string|undefined}
+     */
+    this.grow;
 
     /** @private {!angular.JQLite} */
     this.element_ = $element;
@@ -35,18 +47,23 @@ export class ResourceCardColumnController {
   /**
    * @export
    */
-  $onInit() { this.resourceCardColumnsCtrl.addAndSizeColumn(this.element_); }
+  $onInit() { this.resourceCardHeaderColumnsCtrl.addAndSizeHeaderColumn(this, this.element_); }
 }
 
 /**
  * Resource card column component. See resource card for documentation.
  * @type {!angular.Component}
  */
-export const resourceCardColumnComponent = {
-  templateUrl: 'common/components/resourcecard/resourcecardcolumn.html',
+export const resourceCardHeaderColumnComponent = {
+  templateUrl: 'common/components/resourcecard/resourcecardheadercolumn.html',
   transclude: true,
-  require: {
-    'resourceCardColumnsCtrl': '^kdResourceCardColumns',
+  bindings: {
+    'size': '@',
+    'grow': '@',
   },
-  controller: ResourceCardColumnController,
+  bindToController: true,
+  require: {
+    'resourceCardHeaderColumnsCtrl': '^kdResourceCardHeaderColumns',
+  },
+  controller: ResourceCardHeaderColumnController,
 };

@@ -13,10 +13,44 @@
 // limitations under the License.
 
 /**
+ * Controller for the resource card component.
+ * @final
+ */
+export class ResourceCardColumnsController {
+  /**
+   * @ngInject
+   */
+  constructor() {
+    /**
+     * Initialized from require just before $onInit is callled.
+     * @export {!./resourcecardlist_component.ResourceCardListController}
+     */
+    this.resourceCardListCtrl;
+
+    /**
+     * @private {number}
+     */
+    this.numColumnsAdded_ = 0;
+  }
+
+  /**
+   * @param {!angular.JQLite} columnElement
+   */
+  addAndSizeColumn(columnElement) {
+    this.resourceCardListCtrl.sizeBodyColumn(columnElement, this.numColumnsAdded_);
+    this.numColumnsAdded_ += 1;
+  }
+}
+
+/**
  * Resource card columns component. See resource card for documentation.
  * @type {!angular.Component}
  */
 export const resourceCardColumnsComponent = {
   templateUrl: 'common/components/resourcecard/resourcecardcolumns.html',
   transclude: true,
+  require: {
+    'resourceCardListCtrl': '^kdResourceCardList',
+  },
+  controller: ResourceCardColumnsController,
 };

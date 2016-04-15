@@ -14,6 +14,15 @@
 
 @import '../../../variables';
 
-.kd-resource-card-footer {
-  display: block;
+.kd-resource-card-header-columns,
+kd-resource-card-header-columns {
+  display: flex;
+  width: 100%;
+}
+
+.kd-resource-card-header-columns {
+  color: $foreground-2;
+  min-height: 4 * $baseline-grid;
+  padding: $baseline-grid;
+  padding-left: 8 * $baseline-grid;
 }
