@@ -61,7 +61,7 @@
     "karma-sauce-launcher": "~0.3.0",
     "karma-sourcemap-loader": "~0.3.6",
     "lodash": "~4.11.1",
-    "npm-check-updates": "~2.5.8",
+    "npm-check-updates": "~2.6.2",
     "proxy-middleware": "~0.15.0",
     "q": "~1.4.1",
     "semver": "~5.1.0",
