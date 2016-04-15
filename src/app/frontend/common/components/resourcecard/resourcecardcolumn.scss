@@ -16,12 +16,24 @@
 
 kd-resource-card-column {
   display: flex;
-  flex-grow: 1;
+  flex-basis: auto;
   min-width: $baseline-grid * 10;
   overflow: hidden;
-  width: $baseline-grid * 20;
+  padding-left: 2 * $baseline-grid;
+
+  // Add this class to kd-resource-card-column to make it layout its children in a row.
+  &.kd-row-layout-column {
+    .kd-resource-card-column-container {
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+    }
+  }
 }
 
-.kd-resoure-card-column-container {
+.kd-resource-card-column-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   width: 100%;
 }
