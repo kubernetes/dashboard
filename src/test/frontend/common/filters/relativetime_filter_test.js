@@ -16,6 +16,10 @@ import filtersModule from 'common/filters/filters_module';
 
 describe('Relative time filter', () => {
 
+  /**
+   * Current time mock.
+   * @type {Date}
+   */
   const currentTime = new Date(
       2015,  // year
       11,    // month
