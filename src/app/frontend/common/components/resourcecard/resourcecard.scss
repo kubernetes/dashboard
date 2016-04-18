@@ -14,12 +14,31 @@
 
 @import '../../../variables';
 
+$cell-base-size: 6 * $baseline-grid;
+
 .kd-resource-card-status {
-  max-width: $baseline-grid * 3;
-  width: $baseline-grid * 3;
+  align-items: center;
+  display: flex;
+  margin-left: $baseline-grid;
+  width: $cell-base-size;
 }
 
-.kd-resource-card-columns {
-  display: block;
-  width: 100%;
+.kd-resource-card {
+  border-top: 1px solid $border;
+  box-sizing: border-box;
+  min-height: $cell-base-size;
+  padding: $baseline-grid;
+}
+
+.kd-resource-card-columns-container {
+  justify-content: flex-start;
+}
+
+.kd-resource-card-columns-slot {
+  display: flex;
+}
+
+.kd-resource-card-footer-slot {
+  display: flex;
+  margin-left: $cell-base-size + 3 * $baseline-grid;
 }
