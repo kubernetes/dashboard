@@ -18,7 +18,6 @@ kd-resource-card-column {
   display: flex;
   flex-basis: auto;
   min-width: $baseline-grid * 10;
-  overflow: hidden;
   padding-left: 2 * $baseline-grid;
 
   // Add this class to kd-resource-card-column to make it layout its children in a row.
@@ -28,6 +27,21 @@ kd-resource-card-column {
       display: flex;
       flex-direction: row;
     }
+  }
+
+  // Add this class kd-resource-card-column to make it a compact column with icons.
+  &.kd-icon-column {
+    .md-button {
+      margin: 0;
+    }
+  }
+
+  &:not(:last-child) {
+    overflow: hidden;
+  }
+
+  &:first-child {
+    padding-left: $baseline-grid;
   }
 }
 

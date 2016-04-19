@@ -14,4 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div class="kd-resource-card-list" ng-transclude></div>
+<div class="kd-resource-card-list"
+    ng-class="{'kd-resource-card-list-selectable': $ctrl.selectable, 'kd-resource-card-list-with-statuses': $ctrl.withStatuses}"
+    ng-transclude>
+</div>

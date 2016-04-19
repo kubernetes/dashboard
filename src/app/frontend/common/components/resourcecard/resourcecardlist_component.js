@@ -21,6 +21,20 @@ export class ResourceCardListController {
    */
   constructor() {
     /**
+     * Whether to make list items selectable.
+     * Initialized from a bingind.
+     * @export {boolean|undefined}
+     */
+    this.selectable;
+
+    /**
+     * Whether to make show statuses for list items.
+     * Initialized from a bingind.
+     * @export {boolean|undefined}
+     */
+    this.withStatuses;
+
+    /**
      * @private {!./resourcecardheadercolumns_component.ResourceCardHeaderColumnsController}
      */
     this.headerColumns_;
@@ -50,7 +64,7 @@ export class ResourceCardListController {
  * of header and body columns must be exactly the same.
  *
  * Sample usage:
- *   <kd-resource-card-list>
+ *   <kd-resource-card-list selectable="true" with-statuses="true">
  *     <kd-resource-card-header-columns>
  *       <kd-resource-card-header-column size="medium" grow="2">
  *         Name
@@ -86,4 +100,11 @@ export const resourceCardListComponent = {
   templateUrl: 'common/components/resourcecard/resourcecardlist.html',
   transclude: true,
   controller: ResourceCardListController,
+  bindings: {
+    /** {boolean|undefined} whether to make list items selectable */
+    'selectable': '<',
+    /** {boolean|undefined} whether to show statuses for list items */
+    'withStatuses': '<',
+  },
+  bindToController: true,
 };
