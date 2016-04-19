@@ -26,7 +26,25 @@ export class ResourceCardController {
      * @export {!backendApi.ResourceMetadata}
      */
     this.resourceMetadata;
+
+    /**
+     * Initialized from require just before $onInit is called.
+     * @export {!./resourcecardlist_component.ResourceCardListController}
+     */
+    this.resourceCardListCtrl;
   }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  isSelectable() { return !!this.resourceCardListCtrl.selectable; }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  hasStatus() { return !!this.resourceCardListCtrl.withStatuses; }
 }
 
 /**
@@ -46,4 +64,7 @@ export const resourceCardComponent = {
     'columns': '?kdResourceCardColumns',
     'footer': '?kdResourceCardFooter',
   }),
+  require: {
+    'resourceCardListCtrl': '^kdResourceCardList',
+  },
 };

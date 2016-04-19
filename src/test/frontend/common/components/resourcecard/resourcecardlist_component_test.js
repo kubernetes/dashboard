@@ -31,7 +31,7 @@ describe('Resource card list', () => {
 
   it('should fill the card layout', () => {
     let compileFn = compile(`
-      <kd-resource-card-list>
+      <kd-resource-card-list selectable="selectable" with-statuses="withStatuses">
         <kd-resource-card-header-columns>
           <kd-resource-card-header-column size="small" grow="nogrow">
             NAME_COLUMN
@@ -88,7 +88,17 @@ describe('Resource card list', () => {
     expect(elem.html()).toContain('FIRST_COLUMN2');
     expect(elem.html()).toContain('SECOND_COLUMN2');
     expect(elem.html()).toContain('THIRD_COLUMN2');
-    expect(elem.html()).toContain('STATUS');
+    expect(elem.html()).not.toContain('STATUS');
     expect(elem.html()).toContain('FOOTER');
+    expect(elem.html()).not.toContain('md-checkbox');
+
+    scope.withStatuses = true;
+    scope.$digest();
+    expect(elem.html()).toContain('STATUS');
+    expect(elem.html()).not.toContain('md-checkbox');
+
+    scope.selectable = true;
+    scope.$digest();
+    expect(elem.html()).toContain('md-checkbox');
   });
 });

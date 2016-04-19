@@ -17,10 +17,20 @@
 $cell-base-size: 6 * $baseline-grid;
 
 .kd-resource-card-status {
-  align-items: center;
   display: flex;
-  margin-left: $baseline-grid;
-  width: $cell-base-size;
+  justify-content: center;
+  width: 4 * $baseline-grid;
+}
+
+.kd-resource-card-select {
+  display: flex;
+  justify-content: center;
+  padding-left: $baseline-grid;
+  width: 5 * $baseline-grid;
+
+  md-checkbox {
+    margin-bottom: 0;
+  }
 }
 
 .kd-resource-card {
@@ -36,9 +46,4 @@ $cell-base-size: 6 * $baseline-grid;
 
 .kd-resource-card-columns-slot {
   display: flex;
-}
-
-.kd-resource-card-footer-slot {
-  display: flex;
-  margin-left: $cell-base-size + 3 * $baseline-grid;
 }

@@ -21,6 +21,10 @@ kd-resource-card-header-column {
   min-width: $baseline-grid * 10;
   overflow: hidden;
   padding-left: 2 * $baseline-grid;
+
+  &:first-child {
+    padding-left: 1 * $baseline-grid;
+  }
 }
 
 .kd-resource-card-header-column-container {

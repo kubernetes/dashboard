@@ -15,5 +15,24 @@
 @import '../../../variables';
 
 .kd-resource-card-footer {
-  display: block;
+  display: flex;
+  padding-left: $baseline-grid;
+}
+
+.kd-resource-card-list-selectable {
+  .kd-resource-card-footer {
+    padding-left: 6 * $baseline-grid;
+  }
+
+  &.kd-resource-card-list-with-statuses {
+    .kd-resource-card-footer {
+      padding-left: 10 * $baseline-grid;
+    }
+  }
+}
+
+.kd-resource-card-list-with-statuses {
+  .kd-resource-card-footer {
+    padding-left: 5 * $baseline-grid;
+  }
 }
