@@ -15,10 +15,12 @@
 @import '../../../variables';
 
 kd-resource-card-column {
+  border-top: 1px solid $border;
   display: flex;
   flex-basis: auto;
   min-width: $baseline-grid * 10;
   padding-left: 2 * $baseline-grid;
+  padding-top: $baseline-grid;
 
   // Add this class to kd-resource-card-column to make it layout its children in a row.
   &.kd-row-layout-column {
@@ -42,6 +44,10 @@ kd-resource-card-column {
 
   &:not(:last-child) {
     overflow: hidden;
+  }
+
+  &:last-child {
+    padding-right: $baseline-grid;
   }
 
   &:first-child {

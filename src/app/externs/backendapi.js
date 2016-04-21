@@ -108,6 +108,14 @@ backendApi.ReplicationControllerList;
 
 /**
  * @typedef {{
+ *   replicationControllers: !Array<!backendApi.ReplicationControllerList>,
+ *   replicaSets: !Array<!backendApi.ReplicaSetList>
+ * }}
+ */
+backendApi.Workloads;
+
+/**
+ * @typedef {{
  *   timestamp: string,
  *   value: number
  * }}

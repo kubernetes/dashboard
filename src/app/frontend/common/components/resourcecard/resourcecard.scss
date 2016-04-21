@@ -17,8 +17,11 @@
 $cell-base-size: 6 * $baseline-grid;
 
 .kd-resource-card-status {
+  border-top: 1px solid $border;
+  box-sizing: content-box;
   display: flex;
   justify-content: center;
+  padding-left: $baseline-grid;
   width: 4 * $baseline-grid;
 }
 
@@ -34,10 +37,9 @@ $cell-base-size: 6 * $baseline-grid;
 }
 
 .kd-resource-card {
-  border-top: 1px solid $border;
   box-sizing: border-box;
   min-height: $cell-base-size;
-  padding: $baseline-grid;
+  padding-bottom: $baseline-grid;
 }
 
 .kd-resource-card-columns-container {
