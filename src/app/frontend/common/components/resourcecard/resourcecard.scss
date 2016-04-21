@@ -17,16 +17,28 @@
 $cell-base-size: 6 * $baseline-grid;
 
 .kd-resource-card-status {
+  box-sizing: content-box;
   display: flex;
   justify-content: center;
   width: 4 * $baseline-grid;
+
+  &:first-child {
+    padding-left: $baseline-grid;
+  }
+}
+
+.kd-resource-card-select,
+.kd-resource-card-status {
+  border-top: 1px solid $border;
+  padding-top: $baseline-grid;
 }
 
 .kd-resource-card-select {
+  box-sizing: content-box;
   display: flex;
   justify-content: center;
   padding-left: $baseline-grid;
-  width: 5 * $baseline-grid;
+  width: 6 * $baseline-grid;
 
   md-checkbox {
     margin-bottom: 0;
@@ -34,10 +46,9 @@ $cell-base-size: 6 * $baseline-grid;
 }
 
 .kd-resource-card {
-  border-top: 1px solid $border;
   box-sizing: border-box;
   min-height: $cell-base-size;
-  padding: $baseline-grid;
+  padding-bottom: $baseline-grid;
 }
 
 .kd-resource-card-columns-container {
