@@ -23,7 +23,8 @@ import indexConfig from './index_config';
 import routeConfig from './index_route';
 import logsModule from './logs/logs_module';
 import replicationControllerDetailModule from './replicationcontrollerdetail/replicationcontrollerdetail_module';
-import replicationControllerListModule from './replicationcontrollerlistdeprecated/replicationcontrollerlist_module';
+import replicationControllerListModule from './replicationcontrollerlist/replicationcontrollerlist_module';
+import deprecatedReplicationControllerListModule from './replicationcontrollerlistdeprecated/replicationcontrollerlist_module';
 
 export default angular
     .module(
@@ -42,6 +43,7 @@ export default angular
           logsModule.name,
           replicationControllerDetailModule.name,
           replicationControllerListModule.name,
+          deprecatedReplicationControllerListModule.name,
         ])
     .config(indexConfig)
     .config(routeConfig);

@@ -1,0 +1,52 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<md-menu md-position-mode="target-right target">
+  <md-button ng-click="$ctrl.openMenu($mdOpenMenu, $event)" class="md-icon-button">
+    <md-icon md-font-library="material-icons">subject</md-icon>
+  </md-button>
+  <md-menu-content class="kd-replicationcontroller-card-logs-menu" width="6">
+    <md-menu-item class="kd-menu-logs-md-menu-item">
+      <div>Logs</div>
+    </md-menu-item>
+    <md-menu-item class="kd-menu-logs-md-menu-item" layout>
+      <div class="kd-menu-logs-item-header">Pod</div>
+      <div class="kd-menu-logs-item-header kd-menu-logs-item-since" flex="none">
+        Running since
+      </div>
+    </md-menu-item>
+    <md-menu-item ng-repeat="pod in ::$ctrl.replicationControllerPodsList"
+        class="kd-menu-logs-md-menu-item" layout>
+      <div class="kd-menu-logs-item">
+        {{::pod.name}}
+      </div>
+      <div class="kd-menu-logs-item kd-menu-logs-item-since" flex="none">
+        <a ng-href="{{::$ctrl.getLogsHref(pod.name)}}"
+            ng-if="::$ctrl.podContainerExists(pod)"
+            target="_blank">
+          <span ng-if="::pod.startTime">
+            {{::(pod.startTime | date:'d/M/yy HH:mm':'UTC')}} UTC
+          </span>
+          <span ng-if="::!pod.startTime">
+            Not running
+          </span>
+          <i class="material-icons kd-text-icon">open_in_new</i>
+        </a>
+        <span ng-if="::!$ctrl.podContainerExists(pod)">-</span>
+      </div>
+    </md-menu-item>
+  </md-menu-content>
+</md-menu>
