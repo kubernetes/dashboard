@@ -133,6 +133,28 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 			Writes(ReplicationControllerPods{}))
 	wsContainer.Add(replicationControllerWs)
 
+	workloadsWs := new(restful.WebService)
+	workloadsWs.Filter(wsLogger)
+	workloadsWs.Path("/api/v1/workloads").
+		Consumes(restful.MIME_JSON).
+		Produces(restful.MIME_JSON)
+	workloadsWs.Route(
+		workloadsWs.GET("").
+			To(apiHandler.handleGetWorkloads).
+			Writes(Workloads{}))
+	wsContainer.Add(workloadsWs)
+
+	replicaSetsWs := new(restful.WebService)
+	replicaSetsWs.Filter(wsLogger)
+	replicaSetsWs.Path("/api/v1/replicasets").
+		Consumes(restful.MIME_JSON).
+		Produces(restful.MIME_JSON)
+	replicaSetsWs.Route(
+		replicaSetsWs.GET("").
+			To(apiHandler.handleGetReplicaSets).
+			Writes(ReplicaSetList{}))
+	wsContainer.Add(replicaSetsWs)
+
 	namespacesWs := new(restful.WebService)
 	namespacesWs.Filter(wsLogger)
 	namespacesWs.Path("/api/v1/namespaces").
@@ -293,6 +315,32 @@ func (apiHandler *ApiHandler) handleGetReplicationControllerList(
 	request *restful.Request, response *restful.Response) {
 
 	result, err := GetReplicationControllerList(apiHandler.client)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get Workloads list API call.
+func (apiHandler *ApiHandler) handleGetWorkloads(
+	request *restful.Request, response *restful.Response) {
+
+	result, err := GetWorkloads(apiHandler.client)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get Replica Sets list API call.
+func (apiHandler *ApiHandler) handleGetReplicaSets(
+	request *restful.Request, response *restful.Response) {
+
+	result, err := GetReplicaSetList(apiHandler.client)
 	if err != nil {
 		handleInternalError(response, err)
 		return
