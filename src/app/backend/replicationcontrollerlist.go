@@ -15,13 +15,12 @@
 package main
 
 import (
+	"errors"
 	"log"
 
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
-	"k8s.io/kubernetes/pkg/fields"
-	"k8s.io/kubernetes/pkg/labels"
 )
 
 // GetPodsEventWarningsFunc is a callback function used to get the pod status errors.
@@ -71,35 +70,44 @@ type ReplicationController struct {
 func GetReplicationControllerList(client *client.Client) (*ReplicationControllerList, error) {
 	log.Printf("Getting list of all replication controllers in the cluster")
 
-	listEverything := api.ListOptions{
-		LabelSelector: labels.Everything(),
-		FieldSelector: fields.Everything(),
+	channels := &ResourceChannels{
+		ReplicationControllerList: getReplicationControllerListChannel(client, 1),
+		ServiceList:               getServiceListChannel(client, 1),
+		PodList:                   getPodListChannel(client, 1),
+		EventList:                 getEventListChannel(client, 1),
+		NodeList:                  getNodeListChannel(client, 1),
 	}
 
-	replicationControllers, err := client.ReplicationControllers(api.NamespaceAll).List(listEverything)
+	return GetReplicationControllerListFromChannels(channels)
+}
 
-	if err != nil {
+// GetReplicationControllerList returns a list of all Replication Controllers in the cluster
+// reading required resource list once from the channels.
+func GetReplicationControllerListFromChannels(channels *ResourceChannels) (
+	*ReplicationControllerList, error) {
+
+	replicationControllers := <-channels.ReplicationControllerList.List
+	if err := <-channels.ReplicationControllerList.Error; err != nil {
 		return nil, err
 	}
 
-	services, err := client.Services(api.NamespaceAll).List(listEverything)
-
-	if err != nil {
+	services := <-channels.ServiceList.List
+	if err := <-channels.ServiceList.Error; err != nil {
 		return nil, err
 	}
 
-	pods, err := client.Pods(api.NamespaceAll).List(listEverything)
-
-	if err != nil {
+	pods := <-channels.PodList.List
+	if err := <-channels.PodList.Error; err != nil {
 		return nil, err
 	}
 
-	eventsList, err := client.Events(api.NamespaceAll).List(api.ListOptions{
-		LabelSelector: labels.Everything(),
-		FieldSelector: fields.Everything(),
-	})
+	events := <-channels.EventList.List
+	if err := <-channels.EventList.Error; err != nil {
+		return nil, err
+	}
 
-	if err != nil {
+	nodes := <-channels.NodeList.List
+	if err := <-channels.NodeList.Error; err != nil {
 		return nil, err
 	}
 
@@ -107,12 +115,17 @@ func GetReplicationControllerList(client *client.Client) (*ReplicationController
 	// Function fulfils GetPodsEventWarningsFunc type contract.
 	// Based on list of api pods returns list of pod related warning events
 	getPodsEventWarningsFn := func(pods []api.Pod) []Event {
-		return GetPodsEventWarnings(eventsList, pods)
+		return GetPodsEventWarnings(events, pods)
 	}
 
 	// Anonymous callback function to get nodes by their names.
 	getNodeFn := func(nodeName string) (*api.Node, error) {
-		return client.Nodes().Get(nodeName)
+		for _, node := range nodes.Items {
+			if node.ObjectMeta.Name == nodeName {
+				return &node, nil
+			}
+		}
+		return nil, errors.New("Cannot find node " + nodeName)
 	}
 
 	result, err := getReplicationControllerList(replicationControllers.Items, services.Items,
