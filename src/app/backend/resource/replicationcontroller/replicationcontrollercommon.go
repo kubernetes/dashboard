@@ -150,3 +150,12 @@ func getServicesForDeletion(client client.Interface, labelSelector labels.Select
 
 	return services.Items, nil
 }
+
+// GetContainerImages returns container image strings from the given pod spec.
+func GetContainerImages(podTemplate *api.PodSpec) []string {
+	var containerImages []string
+	for _, container := range podTemplate.Containers {
+		containerImages = append(containerImages, container.Image)
+	}
+	return containerImages
+}

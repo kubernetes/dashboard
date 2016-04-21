@@ -160,7 +160,7 @@ func getReplicationControllerList(replicationControllers []api.ReplicationContro
 				Description:       replicationController.Annotations[DescriptionAnnotationKey],
 				Labels:            replicationController.ObjectMeta.Labels,
 				Pods:              podInfo,
-				ContainerImages:   getContainerImages(&replicationController.Spec.Template.Spec),
+				ContainerImages:   GetContainerImages(&replicationController.Spec.Template.Spec),
 				CreationTime:      replicationController.ObjectMeta.CreationTimestamp,
 				InternalEndpoints: internalEndpoints,
 				ExternalEndpoints: externalEndpoints,
@@ -168,15 +168,6 @@ func getReplicationControllerList(replicationControllers []api.ReplicationContro
 	}
 
 	return replicationControllerList
-}
-
-// getContainerImages returns container image strings from the given pod spec.
-func getContainerImages(podTemplate *api.PodSpec) []string {
-	var containerImages []string
-	for _, container := range podTemplate.Containers {
-		containerImages = append(containerImages, container.Image)
-	}
-	return containerImages
 }
 
 // Returns all services that target the same Pods (or subset) as the given Replication Controller.

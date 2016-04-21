@@ -77,16 +77,7 @@ export default {
      */
     testCommandArgs: [
       'test',
-      'github.com/kubernetes/dashboard',
-      'github.com/kubernetes/dashboard/client',
-      'github.com/kubernetes/dashboard/handler',
-      'github.com/kubernetes/dashboard/resource/common',
-      'github.com/kubernetes/dashboard/resource/container',
-      'github.com/kubernetes/dashboard/resource/event',
-      'github.com/kubernetes/dashboard/resource/namespace',
-      'github.com/kubernetes/dashboard/resource/replicationcontroller',
-      'github.com/kubernetes/dashboard/resource/secret',
-      'github.com/kubernetes/dashboard/validation',
+      'github.com/kubernetes/dashboard/...',
     ],
     /**
      * Port number of the backend server. Only used during development.
