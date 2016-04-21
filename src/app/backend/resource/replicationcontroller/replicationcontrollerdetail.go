@@ -15,13 +15,13 @@
 package replicationcontroller
 
 import (
-	"bytes"
 	"log"
 
 	. "github.com/kubernetes/dashboard/client"
 	"github.com/kubernetes/dashboard/resource/common"
+	. "github.com/kubernetes/dashboard/resource/service"
 	"k8s.io/kubernetes/pkg/api"
-	unversioned "k8s.io/kubernetes/pkg/api/unversioned"
+	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
@@ -51,7 +51,7 @@ type ReplicationControllerDetail struct {
 	Pods []ReplicationControllerPod `json:"pods"`
 
 	// Detailed information about service related to Replication Controller.
-	Services []ServiceDetail `json:"services"`
+	Services []Service `json:"services"`
 
 	// True when the data contains at least one pod with metrics information, false otherwise.
 	HasMetrics bool `json:"hasMetrics"`
@@ -79,43 +79,6 @@ type ReplicationControllerPod struct {
 
 	// Pod metrics.
 	Metrics *PodMetrics `json:"metrics"`
-}
-
-// ServiceDetail is a representation of a Service connected to Replication Controller.
-type ServiceDetail struct {
-	// Name of the service.
-	Name string `json:"name"`
-
-	// Internal endpoints of all Kubernetes services that have the same label selector as
-	// connected Replication Controller.
-	// Endpoint is DNS name merged with ports.
-	InternalEndpoint Endpoint `json:"internalEndpoint"`
-
-	// External endpoints of all Kubernetes services that have the same label selector as
-	// connected Replication Controller.
-	// Endpoint is external IP address name merged with ports.
-	ExternalEndpoints []Endpoint `json:"externalEndpoints"`
-
-	// Label selector of the service.
-	Selector map[string]string `json:"selector"`
-}
-
-// ServicePort is a pair of port and protocol, e.g. a service endpoint.
-type ServicePort struct {
-	// Positive port number.
-	Port int `json:"port"`
-
-	// Protocol name, e.g., TCP or UDP.
-	Protocol api.Protocol `json:"protocol"`
-}
-
-// Endpoint describes an endpoint that is host and a list of available ports for that host.
-type Endpoint struct {
-	// Hostname, either as a domain name or IP address.
-	Host string `json:"host"`
-
-	// List of ports opened for this endpoint on the hostname.
-	Ports []ServicePort `json:"ports"`
 }
 
 // ReplicationControllerSpec contains information needed to update replication controller.
@@ -290,10 +253,10 @@ func UpdateReplicasCount(client client.Interface, namespace, name string,
 
 // Returns detailed information about service from given service
 func getServiceDetail(service api.Service, replicationController api.ReplicationController,
-	pods []api.Pod, nodes []api.Node) ServiceDetail {
-	return ServiceDetail{
+	pods []api.Pod, nodes []api.Node) Service {
+	return Service{
 		Name: service.ObjectMeta.Name,
-		InternalEndpoint: getInternalEndpoint(service.Name, service.Namespace,
+		InternalEndpoint: common.GetInternalEndpoint(service.Name, service.Namespace,
 			service.Spec.Ports),
 		ExternalEndpoints: getExternalEndpoints(replicationController, pods, service, nodes),
 		Selector:          service.Spec.Selector,
@@ -309,28 +272,10 @@ func getRestartCount(pod api.Pod) int {
 	return restartCount
 }
 
-// Returns internal endpoint name for the given service properties, e.g.,
-// "my-service.namespace 80/TCP" or "my-service 53/TCP,53/UDP".
-func getInternalEndpoint(serviceName, namespace string, ports []api.ServicePort) Endpoint {
-
-	name := serviceName
-	if namespace != api.NamespaceDefault {
-		bufferName := bytes.NewBufferString(name)
-		bufferName.WriteString(".")
-		bufferName.WriteString(namespace)
-		name = bufferName.String()
-	}
-
-	return Endpoint{
-		Host:  name,
-		Ports: getServicePorts(ports),
-	}
-}
-
 // Returns array of external endpoints for a replication controller.
 func getExternalEndpoints(replicationController api.ReplicationController, pods []api.Pod,
-	service api.Service, nodes []api.Node) []Endpoint {
-	var externalEndpoints []Endpoint
+	service api.Service, nodes []api.Node) []common.Endpoint {
+	var externalEndpoints []common.Endpoint
 	replicationControllerPods := filterReplicationControllerPods(replicationController, pods)
 
 	if service.Spec.Type == api.ServiceTypeNodePort {
@@ -355,12 +300,12 @@ func getExternalEndpoints(replicationController api.ReplicationController, pods 
 }
 
 // Returns localhost endpoints for specified node port or load balancer service.
-func getLocalhostEndpoints(service api.Service) []Endpoint {
-	var externalEndpoints []Endpoint
+func getLocalhostEndpoints(service api.Service) []common.Endpoint {
+	var externalEndpoints []common.Endpoint
 	for _, port := range service.Spec.Ports {
-		externalEndpoints = append(externalEndpoints, Endpoint{
+		externalEndpoints = append(externalEndpoints, common.Endpoint{
 			Host: "localhost",
-			Ports: []ServicePort{
+			Ports: []common.ServicePort{
 				{
 					Protocol: port.Protocol,
 					Port:     port.NodePort,
@@ -394,8 +339,8 @@ func getNodeByName(nodes []api.Node, nodeName string) *api.Node {
 }
 
 // Returns array of external endpoints for specified pods.
-func getNodePortEndpoints(pods []api.Pod, service api.Service, nodes []api.Node) []Endpoint {
-	var externalEndpoints []Endpoint
+func getNodePortEndpoints(pods []api.Pod, service api.Service, nodes []api.Node) []common.Endpoint {
+	var externalEndpoints []common.Endpoint
 	var externalIPs []string
 	for _, pod := range pods {
 		node := getNodeByName(nodes, pod.Spec.NodeName)
@@ -407,9 +352,9 @@ func getNodePortEndpoints(pods []api.Pod, service api.Service, nodes []api.Node)
 				isExternalIPUniqe(externalIPs, adress.Address) {
 				externalIPs = append(externalIPs, adress.Address)
 				for _, port := range service.Spec.Ports {
-					externalEndpoints = append(externalEndpoints, Endpoint{
+					externalEndpoints = append(externalEndpoints, common.Endpoint{
 						Host: adress.Address,
-						Ports: []ServicePort{
+						Ports: []common.ServicePort{
 							{
 								Protocol: port.Protocol,
 								Port:     port.NodePort,
@@ -434,24 +379,15 @@ func isExternalIPUniqe(externalIPs []string, externalIP string) bool {
 }
 
 // Returns external endpoint name for the given service properties.
-func getExternalEndpoint(ingress api.LoadBalancerIngress, ports []api.ServicePort) Endpoint {
+func getExternalEndpoint(ingress api.LoadBalancerIngress, ports []api.ServicePort) common.Endpoint {
 	var host string
 	if ingress.Hostname != "" {
 		host = ingress.Hostname
 	} else {
 		host = ingress.IP
 	}
-	return Endpoint{
+	return common.Endpoint{
 		Host:  host,
-		Ports: getServicePorts(ports),
+		Ports: common.GetServicePorts(ports),
 	}
-}
-
-// Gets human readable name for the given service ports list.
-func getServicePorts(apiPorts []api.ServicePort) []ServicePort {
-	var ports []ServicePort
-	for _, port := range apiPorts {
-		ports = append(ports, ServicePort{port.Port, port.Protocol})
-	}
-	return ports
 }
