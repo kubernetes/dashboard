@@ -19,7 +19,7 @@ import (
 	"log"
 
 	"k8s.io/kubernetes/pkg/api"
-	unversioned "k8s.io/kubernetes/pkg/api/unversioned"
+	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
@@ -49,7 +49,7 @@ type ReplicationControllerDetail struct {
 	Pods []ReplicationControllerPod `json:"pods"`
 
 	// Detailed information about service related to Replication Controller.
-	Services []ServiceDetail `json:"services"`
+	Services []Service `json:"services"`
 
 	// True when the data contains at least one pod with metrics information, false otherwise.
 	HasMetrics bool `json:"hasMetrics"`
@@ -77,25 +77,6 @@ type ReplicationControllerPod struct {
 
 	// Pod metrics.
 	Metrics *PodMetrics `json:"metrics"`
-}
-
-// ServiceDetail is a representation of a Service connected to Replication Controller.
-type ServiceDetail struct {
-	// Name of the service.
-	Name string `json:"name"`
-
-	// Internal endpoints of all Kubernetes services that have the same label selector as
-	// connected Replication Controller.
-	// Endpoint is DNS name merged with ports.
-	InternalEndpoint Endpoint `json:"internalEndpoint"`
-
-	// External endpoints of all Kubernetes services that have the same label selector as
-	// connected Replication Controller.
-	// Endpoint is external IP address name merged with ports.
-	ExternalEndpoints []Endpoint `json:"externalEndpoints"`
-
-	// Label selector of the service.
-	Selector map[string]string `json:"selector"`
 }
 
 // ServicePort is a pair of port and protocol, e.g. a service endpoint.
@@ -288,8 +269,8 @@ func UpdateReplicasCount(client client.Interface, namespace, name string,
 
 // Returns detailed information about service from given service
 func getServiceDetail(service api.Service, replicationController api.ReplicationController,
-	pods []api.Pod, getNodeFn GetNodeFunc) ServiceDetail {
-	return ServiceDetail{
+	pods []api.Pod, getNodeFn GetNodeFunc) Service {
+	return Service{
 		Name: service.ObjectMeta.Name,
 		InternalEndpoint: getInternalEndpoint(service.Name, service.Namespace,
 			service.Spec.Ports),

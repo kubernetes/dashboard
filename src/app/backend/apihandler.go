@@ -33,6 +33,14 @@ const (
 	ResponseLogString = "Outcoming response to %s with %d status code"
 )
 
+// ApiHandler is a representation of API handler. Structure contains client, Heapster client and
+// client configuration.
+type ApiHandler struct {
+	client         *client.Client
+	heapsterClient HeapsterClient
+	clientConfig   clientcmd.ClientConfig
+}
+
 // Web-service filter function used for request and response logging.
 func wsLogger(req *restful.Request, resp *restful.Response, chain *restful.FilterChain) {
 	log.Printf(FormatRequestLog(req))
@@ -186,15 +194,45 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 			Writes(Secret{}))
 	wsContainer.Add(secretsWs)
 
+	servicesWs := new(restful.WebService)
+	servicesWs.Filter(wsLogger)
+	servicesWs.Path("/api/v1/services").
+		Consumes(restful.MIME_JSON).
+		Produces(restful.MIME_JSON)
+	servicesWs.Route(
+		servicesWs.GET("").
+			To(apiHandler.handleGetServiceList).
+			Writes(ServiceList{}))
+	servicesWs.Route(
+		servicesWs.GET("/{namespace}/{service}").
+			To(apiHandler.handleGetService).
+			Writes(Service{}))
+	wsContainer.Add(servicesWs)
+
 	return wsContainer
 }
 
-// ApiHandler is a representation of API handler. Structure contains client, Heaptster client and
-// client configuration.
-type ApiHandler struct {
-	client         *client.Client
-	heapsterClient HeapsterClient
-	clientConfig   clientcmd.ClientConfig
+// Handles get Replication Controller list API call.
+func (apiHandler *ApiHandler) handleGetServiceList(request *restful.Request, response *restful.Response) {
+	result, err := GetServiceList(apiHandler.client)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get service detail API call.
+func (apiHandler *ApiHandler) handleGetService(request *restful.Request, response *restful.Response) {
+	namespace := request.PathParameter("namespace")
+	service := request.PathParameter("service")
+	result, err := GetService(apiHandler.client, apiHandler.heapsterClient, namespace, service)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
 // Handles deploy API call.
