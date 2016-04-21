@@ -13,13 +13,12 @@
 // limitations under the License.
 
 import {actionbarViewName} from 'chrome/chrome_state';
-import {stateName, stateUrl} from './replicationcontrollerlist_state';
-import {ReplicationControllerListController} from './replicationcontrollerlist_controller';
-import ReplicationControllerListActionBarController from './replicationcontrollerlistactionbar_controller';
+import {stateName} from './workloads_state';
+import {stateUrl} from './workloads_state';
+import {WorkloadsController} from './workloads_controller';
+import {WorkloadsActionBarController} from './workloadsactionbar_controller';
 
 /**
- * Configures states for the service view.
- *
  * @param {!ui.router.$stateProvider} $stateProvider
  * @ngInject
  */
@@ -27,23 +26,23 @@ export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
     url: stateUrl,
     resolve: {
-      'replicationControllers': resolveReplicationControllers,
+      'workloads': resolveWorkloads,
     },
     data: {
       'kdBreadcrumbs': {
-        'label': 'Replication Controllers',
+        'label': 'Workloads',
       },
     },
     views: {
       '': {
-        controller: ReplicationControllerListController,
+        controller: WorkloadsController,
         controllerAs: '$ctrl',
-        templateUrl: 'replicationcontrollerlist/replicationcontrollerlist.html',
+        templateUrl: 'workloads/workloads.html',
       },
       [actionbarViewName]: {
-        controller: ReplicationControllerListActionBarController,
+        controller: WorkloadsActionBarController,
         controllerAs: '$ctrl',
-        templateUrl: 'replicationcontrollerlist/replicationcontrollerlistactionbar.html',
+        templateUrl: 'workloads/workloadsactionbar.html',
       },
     },
   });
@@ -54,8 +53,8 @@ export default function stateConfig($stateProvider) {
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveReplicationControllers($resource) {
-  /** @type {!angular.Resource<!backendApi.ReplicationControllerList>} */
-  let resource = $resource('api/v1/replicationcontrollers');
+export function resolveWorkloads($resource) {
+  /** @type {!angular.Resource<!backendApi.Workloads>} */
+  let resource = $resource('api/v1/workloads');
   return resource.get().$promise;
 }
