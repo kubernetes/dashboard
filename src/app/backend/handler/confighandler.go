@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package handler
 
 import (
 	"encoding/json"
@@ -59,7 +59,7 @@ func getAppConfigJSON() string {
 	return string(json)
 }
 
-func configHandler(w http.ResponseWriter, r *http.Request) (int, error) {
+func ConfigHandler(w http.ResponseWriter, r *http.Request) (int, error) {
 	template, err := template.New(ConfigTemplateName).Parse(ConfigTemplate)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

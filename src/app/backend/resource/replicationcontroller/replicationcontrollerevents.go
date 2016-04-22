@@ -12,60 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package replicationcontroller
 
 import (
 	"log"
 
+	. "github.com/kubernetes/dashboard/resource/event"
 	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
 )
-
-// Events response structure.
-type Events struct {
-	// Namespace.
-	Namespace string `json:"namespace"`
-
-	// List of events from given namespace.
-	Events []Event `json:"events"`
-}
-
-// Event is a single event representation.
-type Event struct {
-	// A human-readable description of the status of related object.
-	Message string `json:"message"`
-
-	// Component from which the event is generated.
-	SourceComponent string `json:"sourceComponent"`
-
-	// Host name on which the event is generated.
-	SourceHost string `json:"sourceHost"`
-
-	// Reference to a piece of an object, which triggered an event. For example
-	// "spec.containers{name}" refers to container within pod with given name, if no container
-	// name is specified, for example "spec.containers[2]", then it refers to container with
-	// index 2 in this pod.
-	SubObject string `json:"object"`
-
-	// The number of times this event has occurred.
-	Count int `json:"count"`
-
-	// The time at which the event was first recorded.
-	FirstSeen unversioned.Time `json:"firstSeen"`
-
-	// The time at which the most recent occurrence of this event was recorded.
-	LastSeen unversioned.Time `json:"lastSeen"`
-
-	// Short, machine understandable string that gives the reason
-	// for this event being generated.
-	Reason string `json:"reason"`
-
-	// Event type (at the moment only normal and warning are supported).
-	Type string `json:"type"`
-}
 
 // GetEvents returns events for particular namespace and replication controller or error if occurred.
 func GetEvents(client *client.Client, namespace, replicationControllerName string) (*Events, error) {
@@ -88,8 +45,8 @@ func GetEvents(client *client.Client, namespace, replicationControllerName strin
 
 	apiEvents := append(rsEvents, podEvents...)
 
-	if !isTypeFilled(apiEvents) {
-		apiEvents = fillEventsType(apiEvents)
+	if !IsTypeFilled(apiEvents) {
+		apiEvents = FillEventsType(apiEvents)
 	}
 
 	events := AppendEvents(apiEvents, Events{
@@ -151,7 +108,7 @@ func GetReplicationControllerPodsEvents(client *client.Client, namespace, replic
 		return nil, err
 	}
 
-	events := filterEventsByPodsUID(eventList.Items, pods.Items)
+	events := FilterEventsByPodsUID(eventList.Items, pods.Items)
 
 	return events, nil
 }

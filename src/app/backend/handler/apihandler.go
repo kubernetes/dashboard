@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package handler
 
 import (
 	"fmt"
@@ -21,6 +21,13 @@ import (
 	"strconv"
 
 	restful "github.com/emicklei/go-restful"
+	. "github.com/kubernetes/dashboard/client"
+	. "github.com/kubernetes/dashboard/resource/container"
+	. "github.com/kubernetes/dashboard/resource/event"
+	. "github.com/kubernetes/dashboard/resource/namespace"
+	. "github.com/kubernetes/dashboard/resource/replicationcontroller"
+	. "github.com/kubernetes/dashboard/resource/secret"
+	. "github.com/kubernetes/dashboard/validation"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
 )

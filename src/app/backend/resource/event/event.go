@@ -12,14 +12,58 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package event
 
 import (
 	"strings"
 
 	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/types"
 )
+
+// Events response structure.
+type Events struct {
+	// Namespace.
+	Namespace string `json:"namespace"`
+
+	// List of events from given namespace.
+	Events []Event `json:"events"`
+}
+
+// Event is a single event representation.
+type Event struct {
+	// A human-readable description of the status of related object.
+	Message string `json:"message"`
+
+	// Component from which the event is generated.
+	SourceComponent string `json:"sourceComponent"`
+
+	// Host name on which the event is generated.
+	SourceHost string `json:"sourceHost"`
+
+	// Reference to a piece of an object, which triggered an event. For example
+	// "spec.containers{name}" refers to container within pod with given name, if no container
+	// name is specified, for example "spec.containers[2]", then it refers to container with
+	// index 2 in this pod.
+	SubObject string `json:"object"`
+
+	// The number of times this event has occurred.
+	Count int `json:"count"`
+
+	// The time at which the event was first recorded.
+	FirstSeen unversioned.Time `json:"firstSeen"`
+
+	// The time at which the most recent occurrence of this event was recorded.
+	LastSeen unversioned.Time `json:"lastSeen"`
+
+	// Short, machine understandable string that gives the reason
+	// for this event being generated.
+	Reason string `json:"reason"`
+
+	// Event type (at the moment only normal and warning are supported).
+	Type string `json:"type"`
+}
 
 // FailedReasonPartials  is an array of partial strings to correctly filter warning events.
 // Have to be lower case for correct case insensitive comparison.
@@ -47,7 +91,7 @@ func GetPodsEventWarnings(events []api.Event, pods []api.Pod) []Event {
 	}
 
 	// Filter events by failed pods UID
-	events = filterEventsByPodsUID(events, failedPods)
+	events = FilterEventsByPodsUID(events, failedPods)
 	events = removeDuplicates(events)
 
 	for _, event := range events {
@@ -61,9 +105,9 @@ func GetPodsEventWarnings(events []api.Event, pods []api.Pod) []Event {
 	return result
 }
 
-// Returns filtered list of event objects.
+// FilterEventsByPodsUID returns filtered list of event objects.
 // Events list is filtered to get only events targeting pods on the list.
-func filterEventsByPodsUID(events []api.Event, pods []api.Pod) []api.Event {
+func FilterEventsByPodsUID(events []api.Event, pods []api.Pod) []api.Event {
 	result := make([]api.Event, 0)
 	podEventMap := make(map[types.UID]bool, 0)
 
@@ -87,8 +131,8 @@ func filterEventsByPodsUID(events []api.Event, pods []api.Pod) []api.Event {
 // Returns filtered list of event objects.
 // Event list object is filtered to get only warning events.
 func getWarningEvents(events []api.Event) []api.Event {
-	if !isTypeFilled(events) {
-		events = fillEventsType(events)
+	if !IsTypeFilled(events) {
+		events = FillEventsType(events)
 	}
 
 	return filterEventsByType(events, api.EventTypeWarning)
@@ -111,9 +155,9 @@ func filterEventsByType(events []api.Event, eventType string) []api.Event {
 	return result
 }
 
-// Returns true if all given events type is filled, false otherwise.
+// IsTypeFilled returns true if all given events type is filled, false otherwise.
 // This is needed as some older versions of kubernetes do not have Type property filled.
-func isTypeFilled(events []api.Event) bool {
+func IsTypeFilled(events []api.Event) bool {
 	if len(events) == 0 {
 		return false
 	}
@@ -127,9 +171,9 @@ func isTypeFilled(events []api.Event) bool {
 	return true
 }
 
-// Returns true if reason string contains any partial string indicating that this may be a
+// IsFailedReason returns true if reason string contains any partial string indicating that this may be a
 // warning, false otherwise
-func isFailedReason(reason string, partials ...string) bool {
+func IsFailedReason(reason string, partials ...string) bool {
 	for _, partial := range partials {
 		if strings.Contains(strings.ToLower(reason), partial) {
 			return true
@@ -140,9 +184,9 @@ func isFailedReason(reason string, partials ...string) bool {
 }
 
 // Based on event Reason fills event Type in order to allow correct filtering by Type.
-func fillEventsType(events []api.Event) []api.Event {
+func FillEventsType(events []api.Event) []api.Event {
 	for i := range events {
-		if isFailedReason(events[i].Reason, FailedReasonPartials...) {
+		if IsFailedReason(events[i].Reason, FailedReasonPartials...) {
 			events[i].Type = api.EventTypeWarning
 		} else {
 			events[i].Type = api.EventTypeNormal
