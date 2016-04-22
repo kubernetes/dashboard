@@ -68,7 +68,7 @@
     "through2": "~2.0.1",
     "uglify-save-license": "~0.4.1",
     "watchify": "~3.7.0",
-    "webpack-stream": "~3.1.0",
+    "webpack-stream": "~3.2.0",
     "wiredep": "~4.0.0",
     "wrench": "~1.5.8"
   },
