@@ -71,7 +71,23 @@ export default {
     /**
      * Name of the main backend package that is used in go build command.
      */
-    packageName: 'github.com/kubernetes/dashboard',
+    mainPackageName: 'github.com/kubernetes/dashboard',
+    /**
+     * Names of all backend packages prefixed with 'test' command.
+     */
+    testCommandArgs: [
+      'test',
+      'github.com/kubernetes/dashboard',
+      'github.com/kubernetes/dashboard/client',
+      'github.com/kubernetes/dashboard/handler',
+      'github.com/kubernetes/dashboard/resource/common',
+      'github.com/kubernetes/dashboard/resource/container',
+      'github.com/kubernetes/dashboard/resource/event',
+      'github.com/kubernetes/dashboard/resource/namespace',
+      'github.com/kubernetes/dashboard/resource/replicationcontroller',
+      'github.com/kubernetes/dashboard/resource/secret',
+      'github.com/kubernetes/dashboard/validation',
+    ],
     /**
      * Port number of the backend server. Only used during development.
      */
