@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package replicationcontroller
 
 import (
 	"log"
@@ -22,6 +22,7 @@ import (
 	"strings"
 	"time"
 
+	. "github.com/kubernetes/dashboard/client"
 	heapster "k8s.io/heapster/api/v1/types"
 	"k8s.io/kubernetes/pkg/api"
 )

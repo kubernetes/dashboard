@@ -1,4 +1,4 @@
-package main
+package common
 
 import (
 	"k8s.io/kubernetes/pkg/api"
@@ -52,7 +52,7 @@ var listEverything api.ListOptions = api.ListOptions{
 
 // Returns a pair of channels to a Service list and errors that both must be read
 // numReads times.
-func getServiceListChannel(client *client.Client, numReads int) ServiceListChannel {
+func GetServiceListChannel(client *client.Client, numReads int) ServiceListChannel {
 	channel := ServiceListChannel{
 		List:  make(chan *api.ServiceList, numReads),
 		Error: make(chan error, numReads),
@@ -77,7 +77,7 @@ type NodeListChannel struct {
 
 // Returns a pair of channels to a Node list and errors that both must be read
 // numReads times.
-func getNodeListChannel(client *client.Client, numReads int) NodeListChannel {
+func GetNodeListChannel(client *client.Client, numReads int) NodeListChannel {
 	channel := NodeListChannel{
 		List:  make(chan *api.NodeList, numReads),
 		Error: make(chan error, numReads),
@@ -103,7 +103,7 @@ type EventListChannel struct {
 
 // Returns a pair of channels to an Event list and errors that both must be read
 // numReads times.
-func getEventListChannel(client *client.Client, numReads int) EventListChannel {
+func GetEventListChannel(client *client.Client, numReads int) EventListChannel {
 	channel := EventListChannel{
 		List:  make(chan *api.EventList, numReads),
 		Error: make(chan error, numReads),
@@ -129,7 +129,7 @@ type PodListChannel struct {
 
 // Returns a pair of channels to a Pod list and errors that both must be read
 // numReads times.
-func getPodListChannel(client *client.Client, numReads int) PodListChannel {
+func GetPodListChannel(client *client.Client, numReads int) PodListChannel {
 	channel := PodListChannel{
 		List:  make(chan *api.PodList, numReads),
 		Error: make(chan error, numReads),
@@ -155,7 +155,7 @@ type ReplicationControllerListChannel struct {
 
 // Returns a pair of channels to a Replication Controller list and errors that both must be read
 // numReads times.
-func getReplicationControllerListChannel(client *client.Client, numReads int) ReplicationControllerListChannel {
+func GetReplicationControllerListChannel(client *client.Client, numReads int) ReplicationControllerListChannel {
 	channel := ReplicationControllerListChannel{
 		List:  make(chan *api.ReplicationControllerList, numReads),
 		Error: make(chan error, numReads),
@@ -180,7 +180,7 @@ type ReplicaSetListChannel struct {
 
 // Returns a pair of channels to a ReplicaSet list and errors that both must be read
 // numReads times.
-func getReplicaSetListChannel(client *client.Client, numReads int) ReplicaSetListChannel {
+func GetReplicaSetListChannel(client *client.Client, numReads int) ReplicaSetListChannel {
 	channel := ReplicaSetListChannel{
 		List:  make(chan *extensions.ReplicaSetList, numReads),
 		Error: make(chan error, numReads),

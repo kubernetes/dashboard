@@ -12,12 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package replicationcontroller
 
 import (
 	"errors"
 	"log"
 
+	. "github.com/kubernetes/dashboard/resource/common"
+	. "github.com/kubernetes/dashboard/resource/event"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
@@ -71,11 +73,11 @@ func GetReplicationControllerList(client *client.Client) (*ReplicationController
 	log.Printf("Getting list of all replication controllers in the cluster")
 
 	channels := &ResourceChannels{
-		ReplicationControllerList: getReplicationControllerListChannel(client, 1),
-		ServiceList:               getServiceListChannel(client, 1),
-		PodList:                   getPodListChannel(client, 1),
-		EventList:                 getEventListChannel(client, 1),
-		NodeList:                  getNodeListChannel(client, 1),
+		ReplicationControllerList: GetReplicationControllerListChannel(client, 1),
+		ServiceList:               GetServiceListChannel(client, 1),
+		PodList:                   GetPodListChannel(client, 1),
+		EventList:                 GetEventListChannel(client, 1),
+		NodeList:                  GetNodeListChannel(client, 1),
 	}
 
 	return GetReplicationControllerListFromChannels(channels)
