@@ -335,7 +335,7 @@ func TestGetExternalEndpoints(t *testing.T) {
 		replicationController api.ReplicationController
 		pods                  []api.Pod
 		service               api.Service
-		getNodeFn             GetNodeFunc
+		nodes                 []api.Node
 		expected              []Endpoint
 	}{
 		{
@@ -369,19 +369,19 @@ func TestGetExternalEndpoints(t *testing.T) {
 					},
 				},
 			},
-			func(nodeName string) (*api.Node, error) {
-				return &api.Node{
-						Status: api.NodeStatus{
-							Addresses: []api.NodeAddress{
-								{
-									Type:    api.NodeExternalIP,
-									Address: "192.168.1.108",
-								},
-							},
+			[]api.Node{{
+				ObjectMeta: api.ObjectMeta{
+					Name: "node",
+				},
+				Status: api.NodeStatus{
+					Addresses: []api.NodeAddress{
+						{
+							Type:    api.NodeExternalIP,
+							Address: "192.168.1.108",
 						},
 					},
-					nil
-			},
+				},
+			}},
 			[]Endpoint{
 				{
 					Host: "192.168.1.108",
@@ -403,20 +403,20 @@ func TestGetExternalEndpoints(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := getExternalEndpoints(c.replicationController, c.pods, c.service, c.getNodeFn)
+		actual := getExternalEndpoints(c.replicationController, c.pods, c.service, c.nodes)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getExternalEndpoints(%+v, %+v, %+v, %+v) == %+v, expected %+v",
-				c.replicationController, c.pods, c.service, c.getNodeFn, actual, c.expected)
+				c.replicationController, c.pods, c.service, c.nodes, actual, c.expected)
 		}
 	}
 }
 
 func TestGetNodePortEndpoints(t *testing.T) {
 	cases := []struct {
-		pods      []api.Pod
-		service   api.Service
-		getNodeFn GetNodeFunc
-		expected  []Endpoint
+		pods     []api.Pod
+		service  api.Service
+		nodes    []api.Node
+		expected []Endpoint
 	}{
 		{
 			[]api.Pod{
@@ -451,18 +451,17 @@ func TestGetNodePortEndpoints(t *testing.T) {
 					},
 				},
 			},
-			func(nodeName string) (*api.Node, error) {
-				return &api.Node{
-						Status: api.NodeStatus{
-							Addresses: []api.NodeAddress{
-								{
-									Type:    api.NodeExternalIP,
-									Address: "192.168.1.108",
-								},
+			[]api.Node{
+				{
+					Status: api.NodeStatus{
+						Addresses: []api.NodeAddress{
+							{
+								Type:    api.NodeExternalIP,
+								Address: "192.168.1.108",
 							},
 						},
 					},
-					nil
+				},
 			},
 			[]Endpoint{
 				{
@@ -485,10 +484,10 @@ func TestGetNodePortEndpoints(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := getNodePortEndpoints(c.pods, c.service, c.getNodeFn)
+		actual := getNodePortEndpoints(c.pods, c.service, c.nodes)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getNodePortEndpoints(%+v, %+v, %+v) == %+v, expected %+v", c.pods, c.service,
-				c.getNodeFn, actual, c.expected)
+				c.nodes, actual, c.expected)
 		}
 	}
 }

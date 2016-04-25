@@ -68,7 +68,7 @@ func CreateHeapsterRESTClient(heapsterHost string, apiclient *client.Client) (
 		return InClusterHeapsterClient{client: apiclient}, nil
 	}
 
-	cfg := &restclient.Config{Host: heapsterHost}
+	cfg := &restclient.Config{Host: heapsterHost, QPS: defaultQPS, Burst: defaultBurst}
 	restClient, err := client.New(cfg)
 	if err != nil {
 		return nil, err

@@ -24,7 +24,7 @@ import (
 func TestGetPodsEventWarningsApi(t *testing.T) {
 	cases := []struct {
 		pods      []api.Pod
-		eventList *api.EventList
+		eventList []api.Event
 		expected  []Event
 	}{
 		{nil, nil, []Event{}},
@@ -39,7 +39,7 @@ func TestGetPodsEventWarningsApi(t *testing.T) {
 					},
 				},
 			},
-			&api.EventList{Items: []api.Event{
+			[]api.Event{
 				{
 					Type:    api.EventTypeWarning,
 					Message: "Test Message",
@@ -47,7 +47,7 @@ func TestGetPodsEventWarningsApi(t *testing.T) {
 						Name: "FailedPod",
 					},
 				},
-			}},
+			},
 			[]Event{
 				{
 					Message: "Test Message",
@@ -63,7 +63,7 @@ func TestGetPodsEventWarningsApi(t *testing.T) {
 					},
 				},
 			},
-			&api.EventList{},
+			nil,
 			[]Event{},
 		},
 	}
@@ -133,7 +133,7 @@ func TestGetWarningEvents(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := getWarningEvents(c.events)
+		actual := getWarningEvents(c.events.Items)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getWarningEvents(%#v) == \n%#v\nexpected \n%#v\n",
 				c.events, actual, c.expected)
