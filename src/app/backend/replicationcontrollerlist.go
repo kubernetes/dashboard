@@ -15,7 +15,6 @@
 package main
 
 import (
-	"errors"
 	"log"
 
 	"k8s.io/kubernetes/pkg/api"
@@ -111,29 +110,8 @@ func GetReplicationControllerListFromChannels(channels *ResourceChannels) (
 		return nil, err
 	}
 
-	// Anonymous callback function to get pods warnings.
-	// Function fulfils GetPodsEventWarningsFunc type contract.
-	// Based on list of api pods returns list of pod related warning events
-	getPodsEventWarningsFn := func(pods []api.Pod) []Event {
-		return GetPodsEventWarnings(events, pods)
-	}
-
-	// Anonymous callback function to get nodes by their names.
-	getNodeFn := func(nodeName string) (*api.Node, error) {
-		for _, node := range nodes.Items {
-			if node.ObjectMeta.Name == nodeName {
-				return &node, nil
-			}
-		}
-		return nil, errors.New("Cannot find node " + nodeName)
-	}
-
-	result, err := getReplicationControllerList(replicationControllers.Items, services.Items,
-		pods.Items, getPodsEventWarningsFn, getNodeFn)
-
-	if err != nil {
-		return nil, err
-	}
+	result := getReplicationControllerList(replicationControllers.Items, services.Items,
+		pods.Items, events.Items, nodes.Items)
 
 	return result, nil
 }
@@ -142,16 +120,14 @@ func GetReplicationControllerListFromChannels(channels *ResourceChannels) (
 // Replication Controller and Service API objects.
 // The function processes all Replication Controllers API objects and finds matching Services for them.
 func getReplicationControllerList(replicationControllers []api.ReplicationController,
-	services []api.Service, pods []api.Pod, getPodsEventWarningsFn GetPodsEventWarningsFunc,
-	getNodeFn GetNodeFunc) (*ReplicationControllerList, error) {
+	services []api.Service, pods []api.Pod, events []api.Event,
+	nodes []api.Node) *ReplicationControllerList {
 
-	replicationControllerList := &ReplicationControllerList{ReplicationControllers: make([]ReplicationController, 0)}
+	replicationControllerList := &ReplicationControllerList{
+		ReplicationControllers: make([]ReplicationController, 0),
+	}
 
 	for _, replicationController := range replicationControllers {
-		var containerImages []string
-		for _, container := range replicationController.Spec.Template.Spec.Containers {
-			containerImages = append(containerImages, container.Image)
-		}
 
 		matchingServices := getMatchingServices(services, &replicationController)
 		var internalEndpoints []Endpoint
@@ -159,8 +135,7 @@ func getReplicationControllerList(replicationControllers []api.ReplicationContro
 		for _, service := range matchingServices {
 			internalEndpoints = append(internalEndpoints,
 				getInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports))
-			externalEndpoints = getExternalEndpoints(replicationController, pods, service,
-				getNodeFn)
+			externalEndpoints = getExternalEndpoints(replicationController, pods, service, nodes)
 		}
 
 		matchingPods := make([]api.Pod, 0)
@@ -171,7 +146,7 @@ func getReplicationControllerList(replicationControllers []api.ReplicationContro
 			}
 		}
 		podInfo := getReplicationControllerPodInfo(&replicationController, matchingPods)
-		podErrors := getPodsEventWarningsFn(matchingPods)
+		podErrors := GetPodsEventWarnings(events, matchingPods)
 
 		podInfo.Warnings = podErrors
 
@@ -182,14 +157,23 @@ func getReplicationControllerList(replicationControllers []api.ReplicationContro
 				Description:       replicationController.Annotations[DescriptionAnnotationKey],
 				Labels:            replicationController.ObjectMeta.Labels,
 				Pods:              podInfo,
-				ContainerImages:   containerImages,
+				ContainerImages:   getContainerImages(&replicationController.Spec.Template.Spec),
 				CreationTime:      replicationController.ObjectMeta.CreationTimestamp,
 				InternalEndpoints: internalEndpoints,
 				ExternalEndpoints: externalEndpoints,
 			})
 	}
 
-	return replicationControllerList, nil
+	return replicationControllerList
+}
+
+// getContainerImages returns container image strings from the given pod spec.
+func getContainerImages(podTemplate *api.PodSpec) []string {
+	var containerImages []string
+	for _, container := range podTemplate.Containers {
+		containerImages = append(containerImages, container.Image)
+	}
+	return containerImages
 }
 
 // Returns all services that target the same Pods (or subset) as the given Replication Controller.

@@ -145,6 +145,11 @@ func GetReplicationControllerDetail(client client.Interface, heapsterClient Heap
 		FieldSelector: fields.Everything(),
 	})
 
+	nodes, err := client.Nodes().List(api.ListOptions{
+		LabelSelector: labels.Everything(),
+		FieldSelector: fields.Everything(),
+	})
+
 	if err != nil {
 		return nil, err
 	}
@@ -159,14 +164,9 @@ func GetReplicationControllerDetail(client client.Interface, heapsterClient Heap
 
 	matchingServices := getMatchingServices(services.Items, replicationController)
 
-	// Anonymous callback function to get nodes by their names.
-	getNodeFn := func(nodeName string) (*api.Node, error) {
-		return client.Nodes().Get(nodeName)
-	}
-
 	for _, service := range matchingServices {
 		replicationControllerDetail.Services = append(replicationControllerDetail.Services,
-			getServiceDetail(service, *replicationController, pods.Items, getNodeFn))
+			getServiceDetail(service, *replicationController, pods.Items, nodes.Items))
 	}
 
 	for _, container := range replicationController.Spec.Template.Spec.Containers {
@@ -288,12 +288,12 @@ func UpdateReplicasCount(client client.Interface, namespace, name string,
 
 // Returns detailed information about service from given service
 func getServiceDetail(service api.Service, replicationController api.ReplicationController,
-	pods []api.Pod, getNodeFn GetNodeFunc) ServiceDetail {
+	pods []api.Pod, nodes []api.Node) ServiceDetail {
 	return ServiceDetail{
 		Name: service.ObjectMeta.Name,
 		InternalEndpoint: getInternalEndpoint(service.Name, service.Namespace,
 			service.Spec.Ports),
-		ExternalEndpoints: getExternalEndpoints(replicationController, pods, service, getNodeFn),
+		ExternalEndpoints: getExternalEndpoints(replicationController, pods, service, nodes),
 		Selector:          service.Spec.Selector,
 	}
 }
@@ -327,12 +327,12 @@ func getInternalEndpoint(serviceName, namespace string, ports []api.ServicePort)
 
 // Returns array of external endpoints for a replication controller.
 func getExternalEndpoints(replicationController api.ReplicationController, pods []api.Pod,
-	service api.Service, getNodeFn GetNodeFunc) []Endpoint {
+	service api.Service, nodes []api.Node) []Endpoint {
 	var externalEndpoints []Endpoint
 	replicationControllerPods := filterReplicationControllerPods(replicationController, pods)
 
 	if service.Spec.Type == api.ServiceTypeNodePort {
-		externalEndpoints = getNodePortEndpoints(replicationControllerPods, service, getNodeFn)
+		externalEndpoints = getNodePortEndpoints(replicationControllerPods, service, nodes)
 	} else if service.Spec.Type == api.ServiceTypeLoadBalancer {
 		for _, ingress := range service.Status.LoadBalancer.Ingress {
 			externalEndpoints = append(externalEndpoints, getExternalEndpoint(ingress,
@@ -340,7 +340,7 @@ func getExternalEndpoints(replicationController api.ReplicationController, pods 
 		}
 
 		if len(externalEndpoints) == 0 {
-			externalEndpoints = getNodePortEndpoints(replicationControllerPods, service, getNodeFn)
+			externalEndpoints = getNodePortEndpoints(replicationControllerPods, service, nodes)
 		}
 	}
 
@@ -381,13 +381,23 @@ func filterReplicationControllerPods(replicationController api.ReplicationContro
 	return pods
 }
 
+// getNodeByName returns the node with the given name from the list
+func getNodeByName(nodes []api.Node, nodeName string) *api.Node {
+	for _, node := range nodes {
+		if node.ObjectMeta.Name == nodeName {
+			return &node
+		}
+	}
+	return nil
+}
+
 // Returns array of external endpoints for specified pods.
-func getNodePortEndpoints(pods []api.Pod, service api.Service, getNodeFn GetNodeFunc) []Endpoint {
+func getNodePortEndpoints(pods []api.Pod, service api.Service, nodes []api.Node) []Endpoint {
 	var externalEndpoints []Endpoint
 	var externalIPs []string
 	for _, pod := range pods {
-		node, err := getNodeFn(pod.Spec.NodeName)
-		if err != nil {
+		node := getNodeByName(nodes, pod.Spec.NodeName)
+		if node == nil {
 			continue
 		}
 		for _, adress := range node.Status.Addresses {

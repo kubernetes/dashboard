@@ -22,6 +22,16 @@ import (
 	clientcmdapi "k8s.io/kubernetes/pkg/client/unversioned/clientcmd/api"
 )
 
+// Dashboard UI default values for client configs.
+const (
+	// High enough QPS to fit all expected use cases. QPS=0 is not set here, because
+	// client code is overriding it.
+	defaultQPS = 1e6
+	// High enough Burst to fit all expected use cases. Burst=0 is not set here, because
+	// client code is overriding it.
+	defaultBurst = 1e6
+)
+
 // CreateApiserverClient creates new Kubernetes Apiserver client. When apiserverHost param is empty
 // string the function assumes that it is running inside a Kubernetes cluster and attempts to
 // discover the Apiserver. Otherwise, it connects to the Apiserver specified.
@@ -40,6 +50,8 @@ func CreateApiserverClient(apiserverHost string) (*client.Client, clientcmd.Clie
 		&clientcmd.ClientConfigLoadingRules{}, overrides)
 
 	cfg, err := clientConfig.ClientConfig()
+	cfg.QPS = defaultQPS
+	cfg.Burst = defaultBurst
 
 	if err != nil {
 		return nil, nil, err
@@ -52,6 +64,5 @@ func CreateApiserverClient(apiserverHost string) (*client.Client, clientcmd.Clie
 	if err != nil {
 		return nil, nil, err
 	}
-
 	return client, clientConfig, nil
 }
