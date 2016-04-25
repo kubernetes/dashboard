@@ -15,9 +15,10 @@
 package main
 
 import (
+	"strings"
+
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/types"
-	"strings"
 )
 
 // FailedReasonPartials  is an array of partial strings to correctly filter warning events.
@@ -31,14 +32,11 @@ var FailedReasonPartials = []string{"failed", "err", "exceeded", "invalid", "unh
 
 // GetPodsEventWarnings returns warning pod events by filtering out events targeting only given pods
 // TODO(floreks) : Import and use Set instead of custom function to get rid of duplicates
-func GetPodsEventWarnings(eventList *api.EventList, pods []api.Pod) []Event {
+func GetPodsEventWarnings(events []api.Event, pods []api.Pod) []Event {
 	result := make([]Event, 0)
-	if eventList == nil {
-		return result
-	}
 
 	// Filter out only warning events
-	events := getWarningEvents(eventList)
+	events = getWarningEvents(events)
 	failedPods := make([]api.Pod, 0)
 
 	// Filter out only 'failed' pods
@@ -88,12 +86,12 @@ func filterEventsByPodsUID(events []api.Event, pods []api.Pod) []api.Event {
 
 // Returns filtered list of event objects.
 // Event list object is filtered to get only warning events.
-func getWarningEvents(eventList *api.EventList) []api.Event {
-	if !isTypeFilled(eventList.Items) {
-		eventList.Items = fillEventsType(eventList.Items)
+func getWarningEvents(events []api.Event) []api.Event {
+	if !isTypeFilled(events) {
+		events = fillEventsType(events)
 	}
 
-	return filterEventsByType(eventList.Items, api.EventTypeWarning)
+	return filterEventsByType(events, api.EventTypeWarning)
 }
 
 // Filters kubernetes API event objects based on event type.
