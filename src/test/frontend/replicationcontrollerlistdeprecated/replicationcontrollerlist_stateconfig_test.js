@@ -14,6 +14,7 @@
 
 import replicationControllerListModule from 'replicationcontrollerlistdeprecated/replicationcontrollerlist_module';
 import {redirectIfNeeded} from 'replicationcontrollerlistdeprecated/replicationcontrollerlist_stateconfig';
+
 describe('StateConfig for replication controller list', () => {
   /** @type {!ui.router.$state} */
   let state;

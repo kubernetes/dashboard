@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-replication-controller-list-container-deprecated>
-  <kd-replication-controller-card-deprecated ng-repeat="replicationController in ::ctrl.replicationControllers"
-                                  replication-controller="::replicationController">
-  </kd-replication-controller-card-deprecated>
-</kd-replication-controller-list-container-deprecated>
+<md-button class="md-icon-button" ng-click="ctrl.redirectToDeployPage()">
+  <md-icon class="kd-rc-detail-actionbar-icon">add</md-icon>
+  <md-tooltip md-direction="left">Deploy a containerized app</md-tooltip>
+</md-button>
