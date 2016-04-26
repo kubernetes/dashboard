@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import {StateParams} from 'replicationcontrollerdetail/replicationcontrollerdetail_state';
-import ReplicationControllerCardMenuController from 'replicationcontrollerlist/replicationcontrollercardmenu_controller';
-import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
+import ReplicationControllerCardMenuController from 'replicationcontrollerlistdeprecated/replicationcontrollercardmenu_controller';
+import replicationControllerListModule from 'replicationcontrollerlistdeprecated/replicationcontrollerlist_module';
 
 describe('Replication controller card menu controller', () => {
   /** @type {!ReplicationControllerCardMenuController} */

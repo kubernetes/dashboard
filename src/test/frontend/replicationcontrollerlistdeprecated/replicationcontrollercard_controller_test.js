@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ReplicationControllerCardController from 'replicationcontrollerlist/replicationcontrollercard_controller';
-import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
+import ReplicationControllerCardController from 'replicationcontrollerlistdeprecated/replicationcontrollercard_controller';
+import replicationControllerListModule from 'replicationcontrollerlistdeprecated/replicationcontrollerlist_module';
 
 describe('Replication controller card controller', () => {
   /**

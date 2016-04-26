@@ -22,13 +22,15 @@ import replicationControllerDetailModule from 'replicationcontrollerdetail/repli
 import replicationControllerListContainer from './replicationcontrollerlistcontainer_directive';
 
 /**
+ * DEPRECATED: Do not add new features here. I'll be replaced by V2 soon.
+ *
  * Angular module for the Replication Controller list view.
  *
  * The view shows Replication Controllers running in the cluster and allows to manage them.
  */
 export default angular
     .module(
-        'kubernetesDashboard.replicationControllerList',
+        'kubernetesDashboard.replicationControllerListDeprecated',
         [
           'ngMaterial',
           'ngResource',

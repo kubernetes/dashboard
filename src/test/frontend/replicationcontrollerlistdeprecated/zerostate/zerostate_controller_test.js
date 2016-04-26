@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
-import ZerostateController from 'replicationcontrollerlist/zerostate/zerostate_controller';
-import {StateParams} from 'replicationcontrollerlist/zerostate/zerostate_state';
+import replicationControllerListModule from 'replicationcontrollerlistdeprecated/replicationcontrollerlist_module';
+import ZerostateController from 'replicationcontrollerlistdeprecated/zerostate/zerostate_controller';
+import {StateParams} from 'replicationcontrollerlistdeprecated/zerostate/zerostate_state';
 
 describe('Zerostate controller', () => {
   let ctrl;

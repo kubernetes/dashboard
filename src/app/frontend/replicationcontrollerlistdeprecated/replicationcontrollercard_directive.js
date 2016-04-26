@@ -12,8 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'replicationcontrollers';
+import ReplicationControllerCardController from './replicationcontrollercard_controller';
 
-/** Absolute URL of the state. */
-export const stateUrl = '/replicationcontrollers';
+/**
+ * Returns directive definition object for replication controller card directive.
+ *
+ * @return {!angular.Directive}
+ */
+export default function replicationControllerCardDirective() {
+  return {
+    scope: {},
+    bindToController: {
+      'replicationController': '=',
+    },
+    controller: ReplicationControllerCardController,
+    controllerAs: 'ctrl',
+    templateUrl: 'replicationcontrollerlistdeprecated/replicationcontrollercard.html',
+  };
+}

@@ -12,21 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ReplicationControllerCardController from './replicationcontrollercard_controller';
+import ReplicationControllerCardMenuController from './replicationcontrollercardmenu_controller';
 
 /**
- * Returns directive definition object for replication controller card directive.
- *
+ * Returns directive definition object for logs menu.
  * @return {!angular.Directive}
  */
-export default function replicationControllerCardDirective() {
+export default function replicationControllerCardMenuDirective() {
   return {
     scope: {},
     bindToController: {
       'replicationController': '=',
     },
-    controller: ReplicationControllerCardController,
+    controller: ReplicationControllerCardMenuController,
     controllerAs: 'ctrl',
-    templateUrl: 'replicationcontrollerlist/replicationcontrollercard.html',
+    templateUrl: 'replicationcontrollerlistdeprecated/replicationcontrollercardmenu.html',
   };
 }

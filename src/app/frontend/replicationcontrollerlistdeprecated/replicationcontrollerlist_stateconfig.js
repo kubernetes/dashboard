@@ -36,7 +36,7 @@ export default function stateConfig($stateProvider) {
       '': {
         controller: ReplicationControllerListController,
         controllerAs: 'ctrl',
-        templateUrl: 'replicationcontrollerlist/replicationcontrollerlist.html',
+        templateUrl: 'replicationcontrollerlistdeprecated/replicationcontrollerlist.html',
       },
     },
   });
@@ -45,7 +45,7 @@ export default function stateConfig($stateProvider) {
       '@': {
         controller: ZeroStateController,
         controllerAs: 'ctrl',
-        templateUrl: 'replicationcontrollerlist/zerostate/zerostate.html',
+        templateUrl: 'replicationcontrollerlistdeprecated/zerostate/zerostate.html',
       },
     },
     // this is to declare non-url state params

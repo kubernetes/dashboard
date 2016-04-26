@@ -44,6 +44,6 @@ export default function replicationControllerListContainerDirective($mdMedia) {
         container.style.minHeight = `${newHeight + 1}px`;
       });
     },
-    templateUrl: 'replicationcontrollerlist/replicationcontrollerlistcontainer.html',
+    templateUrl: 'replicationcontrollerlistdeprecated/replicationcontrollerlistcontainer.html',
   };
 }
