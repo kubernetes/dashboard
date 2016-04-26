@@ -26,8 +26,10 @@ import (
 	. "github.com/kubernetes/dashboard/resource/container"
 	. "github.com/kubernetes/dashboard/resource/event"
 	. "github.com/kubernetes/dashboard/resource/namespace"
+	"github.com/kubernetes/dashboard/resource/replicaset"
 	. "github.com/kubernetes/dashboard/resource/replicationcontroller"
 	. "github.com/kubernetes/dashboard/resource/secret"
+	"github.com/kubernetes/dashboard/resource/workload"
 	. "github.com/kubernetes/dashboard/validation"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
@@ -140,6 +142,28 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 			To(apiHandler.handleGetReplicationControllerPods).
 			Writes(ReplicationControllerPods{}))
 	wsContainer.Add(replicationControllerWs)
+
+	workloadsWs := new(restful.WebService)
+	workloadsWs.Filter(wsLogger)
+	workloadsWs.Path("/api/v1/workloads").
+		Consumes(restful.MIME_JSON).
+		Produces(restful.MIME_JSON)
+	workloadsWs.Route(
+		workloadsWs.GET("").
+			To(apiHandler.handleGetWorkloads).
+			Writes(workload.Workloads{}))
+	wsContainer.Add(workloadsWs)
+
+	replicaSetsWs := new(restful.WebService)
+	replicaSetsWs.Filter(wsLogger)
+	replicaSetsWs.Path("/api/v1/replicasets").
+		Consumes(restful.MIME_JSON).
+		Produces(restful.MIME_JSON)
+	replicaSetsWs.Route(
+		replicaSetsWs.GET("").
+			To(apiHandler.handleGetReplicaSets).
+			Writes(replicaset.ReplicaSetList{}))
+	wsContainer.Add(replicaSetsWs)
 
 	namespacesWs := new(restful.WebService)
 	namespacesWs.Filter(wsLogger)
@@ -301,6 +325,32 @@ func (apiHandler *ApiHandler) handleGetReplicationControllerList(
 	request *restful.Request, response *restful.Response) {
 
 	result, err := GetReplicationControllerList(apiHandler.client)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get Workloads list API call.
+func (apiHandler *ApiHandler) handleGetWorkloads(
+	request *restful.Request, response *restful.Response) {
+
+	result, err := workload.GetWorkloads(apiHandler.client)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get Replica Sets list API call.
+func (apiHandler *ApiHandler) handleGetReplicaSets(
+	request *restful.Request, response *restful.Response) {
+
+	result, err := replicaset.GetReplicaSetList(apiHandler.client)
 	if err != nil {
 		handleInternalError(response, err)
 		return
