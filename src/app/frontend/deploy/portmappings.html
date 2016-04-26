@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-
+<ng-form name="exposeServiceForm">
 <div ng-repeat="portMapping in ctrl.portMappings">
-  <ng-form name="portMappingForm" layout="row">
+  <ng-form name="portMappingForm" layout="column">
+    <div layout="row">
     <md-input-container flex="50" class="kd-deploy-input-row">
       <label>Port</label>
       <input ng-model="portMapping.port" ng-change="ctrl.checkPortMapping(portMappingForm, $index)"
@@ -58,10 +59,22 @@ limitations under the License.
     </md-input-container>
     <div flex="10">
       <md-button type="button" ng-if="ctrl.isRemovable($index)"
-                 ng-click="ctrl.remove($index)"
+                 ng-click="ctrl.remove(portMappingForm, $index)"
                  class="material-icons md-icon-button">
         delete
       </md-button>
     </div>
+  </div>
   </ng-form>
 </div>
+
+<md-input-container class="md-block">
+    <md-checkbox ng-model="ctrl.isExternal" class="md-primary md-align-top-left" name="exposeService"
+                 ng-model-options="{ debounce: { 'default': 500, 'blur': 0 } }"
+                 ng-change="ctrl.validateExposeService(exposeServiceForm)">
+      Expose service externally<br/>
+    <ng-messages for="exposeServiceForm.exposeService.$error" role="alert" multiple  >
+      <ng-message when="portMappingRequired">Expose service externally cannot be selected without a port mapping.</ng-message>
+    </ng-messages>
+</md-input-container>
+</ng-form>

@@ -173,8 +173,6 @@ export default class DeployFromSettingsController {
 
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
-
-    $scope.$watch('ctrl.portMappings', () => { this.validateExposeService(); }, true);
   }
 
   /**
@@ -370,13 +368,4 @@ export default class DeployFromSettingsController {
    * @export
    */
   switchMoreOptions() { this.detail.showMoreOptions_ = !this.detail.showMoreOptions_; }
-
-  validateExposeService() {
-    let noPortMapping =
-        (this.portMappings !== undefined &&
-         this.portMappings.filter(this.isPortMappingFilled_).length === 0);
-    let isValid = !(this.isExternal && noPortMapping);
-
-    this.form['exposeService'].$setValidity('portMappingRequired', isValid);
-  }
 }

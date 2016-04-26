@@ -113,19 +113,6 @@ limitations under the License.
   </kd-user-help>
 </kd-help-section>
 
-<kd-help-section>
-  <md-input-container class="md-block">
-      <md-checkbox ng-model="ctrl.isExternal" class="md-primary md-align-top-left" name="exposeService"
-                   ng-model-options="{ debounce: { 'default': 500, 'blur': 0 } }"
-                   ng-change="ctrl.validateExposeService()">
-        Expose service externally<br/>
-      <ng-messages for="ctrl.form.exposeService.$error" role="alert" multiple  >
-        <ng-message when="portMappingRequired">Expose service externally cannot be selected without a port mapping.</ng-message>
-      </ng-messages>
-  </md-input-container>
-  <kd-user-help>
-  </kd-user-help>
-</kd-help-section>
 
 <!-- advanced options -->
 <div ng-show="ctrl.isMoreOptionsEnabled()">
