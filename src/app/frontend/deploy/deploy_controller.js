@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as replicationcontrollers} from 'replicationcontrollerlist/replicationcontrollerlist_state';
+import {stateName as replicationcontrollers} from 'replicationcontrollerlistdeprecated/replicationcontrollerlist_state';
 
 /**
  * Controller for the deploy view.

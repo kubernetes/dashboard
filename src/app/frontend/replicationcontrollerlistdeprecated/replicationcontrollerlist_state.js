@@ -12,21 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import LogsMenuController from './logsmenu_controller';
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'replicationcontrollersdeprecated';
 
-/**
- * Returns directive definition object for logs menu.
- * @return {!angular.Directive}
- */
-export default function logsMenuDirective() {
-  return {
-    scope: {},
-    bindToController: {
-      'namespace': '=',
-      'replicationControllerName': '=',
-    },
-    controller: LogsMenuController,
-    controllerAs: 'ctrl',
-    templateUrl: 'replicationcontrollerlist/logsmenu.html',
-  };
-}
+/** Absolute URL of the state. */
+export const stateUrl = '/replicationcontrollers';

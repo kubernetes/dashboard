@@ -36,8 +36,8 @@ limitations under the License.
             </kd-middle-ellipsis>
           </a>
         </span>
-        <kd-replication-controller-card-menu replication-controller="::ctrl.replicationController">
-        </kd-replication-controller-card-menu>
+        <kd-replication-controller-card-menu-deprecated replication-controller="::ctrl.replicationController">
+        </kd-replication-controller-card-menu-deprecated>
       </div>
       <div class="md-caption">
         <kd-labels labels="::ctrl.replicationController.labels"></kd-labels>
@@ -63,9 +63,9 @@ limitations under the License.
             {{::ctrl.replicationController.pods.desired}} desired
           </span>
         </span>
-        <logs-menu flex="40" namespace="::ctrl.replicationController.namespace"
+        <logs-menu-deprecated flex="40" namespace="::ctrl.replicationController.namespace"
                    replication-controller-name="::ctrl.replicationController.name">
-        </logs-menu>
+        </logs-menu-deprecated>
       </div>
       <md-divider class="kd-replicationcontroller-card-divider"></md-divider>
       <div layout="row" layout-wrap>

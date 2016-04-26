@@ -12,25 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../variables';
+import LogsMenuController from './logsmenu_controller';
 
-.kd-replicationcontroller-card-logs-menu {
-  font-size: $body-font-size-base;
-}
-
-.kd-menu-logs-item-header {
-  box-sizing: inherit;
-  color: $foreground-2;
-  font-size: $body-font-size-base;
-  white-space: nowrap;
-}
-
-.kd-menu-logs-item {
-  box-sizing: inherit;
-  font-size: $body-font-size-base;
-  white-space: nowrap;
-}
-
-.kd-menu-logs-item-since {
-  width: 19 * $baseline-grid;
+/**
+ * Returns directive definition object for logs menu.
+ * @return {!angular.Directive}
+ */
+export default function logsMenuDirective() {
+  return {
+    scope: {},
+    bindToController: {
+      'namespace': '=',
+      'replicationControllerName': '=',
+    },
+    controller: LogsMenuController,
+    controllerAs: 'ctrl',
+    templateUrl: 'replicationcontrollerlistdeprecated/logsmenu.html',
+  };
 }
