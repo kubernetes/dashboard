@@ -32,10 +32,10 @@ export default function replicationControllerListContainerDirective($mdMedia) {
     link: function(scope, jQliteElem) {
       /** @type {!Element} */
       let element = jQliteElem[0];
-      let container = element.querySelector('.kd-replication-controller-list-container');
+      let container = element.querySelector('.kd-replication-controller-list-container-deprecated');
       if (!container) {
         throw new Error(
-            'Required child element .kd-replication-controller-list-container not found');
+            'Required child element .kd-replication-controller-list-container-deprecated not found');
       }
       let nonNullContainer = container;
       scope.$watch(() => computeContainerHeight(nonNullContainer, $mdMedia), (newHeight) => {
@@ -44,6 +44,6 @@ export default function replicationControllerListContainerDirective($mdMedia) {
         container.style.minHeight = `${newHeight + 1}px`;
       });
     },
-    templateUrl: 'replicationcontrollerlist/replicationcontrollerlistcontainer.html',
+    templateUrl: 'replicationcontrollerlistdeprecated/replicationcontrollerlistcontainer.html',
   };
 }

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
-import {redirectIfNeeded} from 'replicationcontrollerlist/replicationcontrollerlist_stateconfig';
+import replicationControllerListModule from 'replicationcontrollerlistdeprecated/replicationcontrollerlist_module';
+import {redirectIfNeeded} from 'replicationcontrollerlistdeprecated/replicationcontrollerlist_stateconfig';
 describe('StateConfig for replication controller list', () => {
   /** @type {!ui.router.$state} */
   let state;

@@ -12,11 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../variables';
+import ReplicationControllerCardController from './replicationcontrollercard_controller';
 
-.kd-replication-controller-list-container {
-  align-content: center;
-  align-items: center;
-  display: flex;
-  flex-flow: column wrap;
+/**
+ * Returns directive definition object for replication controller card directive.
+ *
+ * @return {!angular.Directive}
+ */
+export default function replicationControllerCardDirective() {
+  return {
+    scope: {},
+    bindToController: {
+      'replicationController': '=',
+    },
+    controller: ReplicationControllerCardController,
+    controllerAs: 'ctrl',
+    templateUrl: 'replicationcontrollerlistdeprecated/replicationcontrollercard.html',
+  };
 }

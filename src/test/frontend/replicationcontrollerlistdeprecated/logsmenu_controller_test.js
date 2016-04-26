@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import LogsMenuController from 'replicationcontrollerlist/logsmenu_controller';
-import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
+import LogsMenuController from 'replicationcontrollerlistdeprecated/logsmenu_controller';
+import replicationControllerListModule from 'replicationcontrollerlistdeprecated/replicationcontrollerlist_module';
 
 describe('Logs menu controller', () => {
   /**

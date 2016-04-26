@@ -13,5 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
+<md-button class="md-fab kd-replicationcontroller-deploy" ng-click="ctrl.redirectToDeployPage()">
+  <md-icon class="material-icons">add</md-icon>
+</md-button>
 
-<div class="kd-replication-controller-list-container" layout-padding ng-transclude></div>
+<kd-replication-controller-list-container-deprecated>
+  <kd-replication-controller-card-deprecated ng-repeat="replicationController in ::ctrl.replicationControllers"
+                                  replication-controller="::replicationController">
+  </kd-replication-controller-card-deprecated>
+</kd-replication-controller-list-container-deprecated>

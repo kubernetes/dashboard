@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateUrl as replicationControllerStateUrl} from './replicationcontrollerlist/replicationcontrollerlist_state';
+import {stateUrl as replicationControllerStateUrl} from './replicationcontrollerlistdeprecated/replicationcontrollerlist_state';
 
 /**
  * Global route configuration for the application.
