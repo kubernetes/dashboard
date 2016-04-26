@@ -20,6 +20,9 @@ import (
 	"log"
 	"net/http"
 
+	// TODO(maciaszczykm): Avoid using dot-imports.
+	. "github.com/kubernetes/dashboard/client"
+	. "github.com/kubernetes/dashboard/handler"
 	"github.com/spf13/pflag"
 )
 
@@ -62,7 +65,7 @@ func main() {
 	http.Handle("/", http.FileServer(http.Dir("./public")))
 	http.Handle("/api/", CreateHttpApiHandler(apiserverClient, heapsterRESTClient, config))
 	// TODO(maciaszczykm): Move to /appConfig.json as it was discussed in #640.
-	http.Handle("/api/appConfig.json", AppHandler(configHandler))
+	http.Handle("/api/appConfig.json", AppHandler(ConfigHandler))
 	log.Print(http.ListenAndServe(fmt.Sprintf(":%d", *argPort), nil))
 }
 

@@ -91,12 +91,7 @@ gulp.task('frontend-test', function(doneFn) { runFrontendUnitTests(true, doneFn)
  * Runs once all unit tests of the backend application.
  */
 gulp.task('backend-test', ['package-backend-source'], function(doneFn) {
-  goCommand(
-      [
-        'test',
-        conf.backend.packageName,
-      ],
-      doneFn);
+  goCommand(conf.backend.testCommandArgs, doneFn);
 });
 
 /**

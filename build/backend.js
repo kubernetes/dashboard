@@ -34,7 +34,7 @@ gulp.task('backend', ['package-backend-source'], function(doneFn) {
         '-i',
         '-o',
         path.join(conf.paths.serve, conf.backend.binaryName),
-        conf.backend.packageName,
+        conf.backend.mainPackageName,
       ],
       doneFn);
 });
@@ -93,7 +93,7 @@ function backendProd(outputBinaryPathsAndArchs) {
             'cgo',
             '-o',
             path,
-            conf.backend.packageName,
+            conf.backend.mainPackageName,
           ],
           (err) => {
             if (err) {
