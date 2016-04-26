@@ -36,6 +36,7 @@ items:
         labels:
           app: kubernetes-dashboard
       spec:
+        hostNetwork: true
         containers:
         - name: kubernetes-dashboard
           image: gcr.io/google_containers/kubernetes-dashboard-amd64:v1.0.1
