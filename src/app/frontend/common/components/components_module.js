@@ -17,10 +17,13 @@ import filtersModule from '../filters/filters_module';
 import labelsDirective from './labels/labels_directive';
 import middleEllipsisDirective from './middleellipsis/middleellipsis_directive';
 import contentCardModule from './contentcard/contentcard_module';
+import infoCardModule from './infocard/infocard_module';
 import resourceCardModule from './resourcecard/resourcecard_module';
 import actionbarModule from './actionbar/actionbar_module';
 import sparklineDirective from './sparkline/sparkline_directive';
 import warnThresholdDirective from './warnthreshold/warnthreshold_directive';
+import {internalEndpointComponent} from './endpoint/internalendpoint_component';
+import {externalEndpointComponent} from './endpoint/externalendpoint_component';
 
 /**
  * Module containing common components for the application.
@@ -34,10 +37,13 @@ export default angular
           filtersModule.name,
           actionbarModule.name,
           contentCardModule.name,
+          infoCardModule.name,
           resourceCardModule.name,
         ])
     .directive('kdLabels', labelsDirective)
     .directive('kdMiddleEllipsis', middleEllipsisDirective)
     .directive('kdSparkline', sparklineDirective)
     .directive('kdWarnThreshold', warnThresholdDirective)
+    .component('kdInternalEndpoint', internalEndpointComponent)
+    .component('kdExternalEndpoint', externalEndpointComponent)
     .component('kdBreadcrumbs', breadcrumbsComponent);

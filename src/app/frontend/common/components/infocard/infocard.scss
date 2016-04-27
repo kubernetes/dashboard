@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../variables';
+@import '../../../variables';
 
-.kd-replicationcontroller-detail-table-header-button {
-  background-color: $content-background;
-  border: 0;
-  color: inherit;
-  padding: 0;
+.kd-info-card-content {
+  flex-wrap: wrap;
+  font-size: $subhead-font-size-base;
+  font-weight: $bold-font-weight;
 
-  &:focus {
-    outline: none;
+  kd-info-card-group {
+    flex: 1;
+    padding-right: 2 * $baseline-grid;
   }
 }

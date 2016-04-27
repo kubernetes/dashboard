@@ -12,25 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
-
-.kd-content-card-content {
-  background-color: $content-background;
-  box-shadow:  $whiteframe-shadow-1dp;
-  padding-bottom: $baseline-grid;
-  padding-top: $baseline-grid;
-}
-
-.kd-content-card {
-  padding-bottom: 4 * $baseline-grid;
-}
-
-.kd-content-card-content-title {
-  border-bottom: 1px solid $border;
-  margin: 0;
-  padding-bottom: 2 * $baseline-grid;
-
-  kd-title {
-    font-weight: $light-font-weight;
-  }
-}
+/**
+ * Definition object for the component that displays replication controller services card.
+ *
+ * @type {!angular.Component}
+ */
+export const replicationControllerServicesComponent = {
+  templateUrl: 'replicationcontrollerdetail/replicationcontrollerservices.html',
+  bindings: {
+    /** {!Array<!backendApi.ServiceDetail>} */
+    'services': '=',
+  },
+};

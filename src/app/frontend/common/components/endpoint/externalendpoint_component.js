@@ -12,20 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ReplicationControllerInfoController from 'replicationcontrollerdetail/replicationcontrollerinfo_controller';
-
 /**
- * Returns directive definition object for the component that displays replication controller info.
+ * Returns directive definition object for the component that displays the service
+ * endpoint (type {backendApi.Endpoint}) which is accessible from the outside of the cluster
  * @return {!angular.Directive}
  */
-export default function replicationControllerInfoDirective() {
-  return {
-    controller: ReplicationControllerInfoController,
-    controllerAs: 'infoCtrl',
-    templateUrl: 'replicationcontrollerdetail/replicationcontrollerinfo.html',
-    scope: {},
-    bindToController: {
-      'details': '=',
-    },
-  };
-}
+export const externalEndpointComponent = {
+  templateUrl: 'common/components/endpoint/externalendpoint.html',
+  bindings: {
+    /** {backendApi.Endpoint} */
+    'endpoint': '<',
+  },
+};
