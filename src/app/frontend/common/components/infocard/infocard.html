@@ -14,9 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div>
-  <span ng-repeat="port in ::endpoint.ports">
-    <kd-middle-ellipsis display-string="{{::endpoint.host}}:{{::port.port}} {{::port.protocol}}">
-    </kd-middle-ellipsis>
-  </span>
-</div>
+<kd-content-card>
+  <kd-title ng-transclude="header"></kd-title>
+  <kd-content>
+    <div layout="column">
+      <div class="kd-info-card-content" ng-transclude="group" layout="row" layout-padding>
+      </div>
+    </div>
+  </kd-content>
+</kd-content-card>

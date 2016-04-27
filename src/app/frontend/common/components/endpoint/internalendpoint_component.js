@@ -12,25 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
-
-.kd-content-card-content {
-  background-color: $content-background;
-  box-shadow:  $whiteframe-shadow-1dp;
-  padding-bottom: $baseline-grid;
-  padding-top: $baseline-grid;
-}
-
-.kd-content-card {
-  padding-bottom: 4 * $baseline-grid;
-}
-
-.kd-content-card-content-title {
-  border-bottom: 1px solid $border;
-  margin: 0;
-  padding-bottom: 2 * $baseline-grid;
-
-  kd-title {
-    font-weight: $light-font-weight;
-  }
-}
+/**
+ * Returns directive definition object for the component that displays the service
+ * endpoint (type {backendApi.Endpoint}) which is accessible only from the inside of the cluster
+ * @return {!angular.Directive}
+ */
+export const internalEndpointComponent = {
+  templateUrl: 'common/components/endpoint/internalendpoint.html',
+  bindings: {
+    /** {backendApi.Endpoint} */
+    'endpoint': '<',
+  },
+};

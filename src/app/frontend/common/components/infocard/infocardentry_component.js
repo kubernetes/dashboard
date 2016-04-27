@@ -13,15 +13,30 @@
 // limitations under the License.
 
 /**
- * Returns directive definition object for the component that displays the service
- * endpoint (type {backendApi.Endpoint}) which is accessible only from the inside of the cluster
- * @return {!angular.Directive}
+ * @final
  */
-export default function internalEndpointDirective() {
-  return {
-    templateUrl: 'replicationcontrollerdetail/internalendpoint.html',
-    scope: {
-      'endpoint': '=',
-    },
-  };
+export class InfoCardEntryController {
+  /**
+   * @ngInject
+   */
+  constructor() {
+    /** @export {string|undefined} - Initialized from binding */
+    this.title;
+  }
 }
+
+/**
+ * Represents single entry in the info card group shown in format: <title>: <content>
+ * See info card component for documentation.
+ *
+ * @type {!angular.Component}
+ */
+export const infoCardEntryComponent = {
+  templateUrl: 'common/components/infocard/infocardentry.html',
+  transclude: true,
+  controller: InfoCardEntryController,
+  bindings: {
+    /** {string|undefined} */
+    'title': '@',
+  },
+};
