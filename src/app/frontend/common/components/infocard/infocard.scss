@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Returns directive definition object for the component that displays the service
- * endpoint (type {backendApi.Endpoint}) which is accessible from the outside of the cluster
- * @return {!angular.Directive}
- */
-export default function externalEndpointDirective() {
-  return {
-    templateUrl: 'replicationcontrollerdetail/externalendpoint.html',
-    scope: {
-      'endpoint': '=',
-    },
-  };
+@import '../../../variables';
+
+.kd-info-card-section {
+  flex-wrap: wrap;
+  font-size: $subhead-font-size-base;
+  font-weight: $bold-font-weight;
+
+  kd-info-card-section {
+    display: flex;
+    flex-grow: 1;
+    padding-right: 2 * $baseline-grid;
+  }
 }

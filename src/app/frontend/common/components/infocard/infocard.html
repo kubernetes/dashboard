@@ -14,10 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div class="kd-content-card">
-  <div class="kd-content-card-content">
-    <h1 ng-if="$ctrl.isTitleSlotFilled()" layout-padding class="kd-content-card-content-title"
-        ng-transclude="title"></h1>
-    <div ng-transclude="content"></div>
-  </div>
-</div>
+<kd-content-card>
+  <kd-title ng-transclude="header"></kd-title>
+  <kd-content>
+    <div layout="column">
+      <div class="kd-info-card-section" ng-transclude="section" layout="row" layout-padding>
+      </div>
+    </div>
+  </kd-content>
+</kd-content-card>

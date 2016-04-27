@@ -44,8 +44,8 @@ describe('Labels controller', () => {
     expect(ctrl.isMoreAvailable()).toBe(true);
     expect(ctrl.isShowingAll()).toBe(false);
     expect(ctrl.isVisible(0)).toBe(true);
-    expect(ctrl.isVisible(7)).toBe(true);
-    expect(ctrl.isVisible(8)).toBe(false);
+    expect(ctrl.isVisible(4)).toBe(true);
+    expect(ctrl.isVisible(5)).toBe(false);
 
     // when
     ctrl.switchLabelsView();
@@ -57,7 +57,7 @@ describe('Labels controller', () => {
     expect(ctrl.isVisible(8)).toBe(true);
   });
 
-  it('should not display switch if there are less than 8 labels', () => {
+  it('should not display switch if there are less than 5 labels', () => {
     // given
     ctrl.labels = {
       'label-1': 'value-1',
@@ -65,7 +65,6 @@ describe('Labels controller', () => {
       'label-3': 'value-3',
       'label-4': 'value-4',
       'label-5': 'value-5',
-      'label-6': 'value-6',
     };
 
     // then

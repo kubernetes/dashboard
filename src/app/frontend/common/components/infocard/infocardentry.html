@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div>
-  <span ng-repeat="port in ::endpoint.ports">
-    <kd-middle-ellipsis display-string="{{::endpoint.host}}:{{::port.port}} {{::port.protocol}}">
-    </kd-middle-ellipsis>
-  </span>
+<div layout="row" class="kd-info-card-entry">
+  <div>{{$ctrl.title}}:</div>
+  <!-- TODO avoid using specified flex number -->
+  <div flex="90" class="kd-info-card-entry-content" ng-transclude></div>
 </div>

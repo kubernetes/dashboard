@@ -12,15 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../variables';
-
-.kd-replicationcontroller-detail-table-header-button {
-  background-color: $content-background;
-  border: 0;
-  color: inherit;
-  padding: 0;
-
-  &:focus {
-    outline: none;
-  }
-}
+/**
+ * Represents single info card group. See info card component for documentation.
+ *
+ * @type {!angular.Component}
+ */
+export const infoCardSectionComponent = {
+  templateUrl: 'common/components/infocard/infocardsection.html',
+  transclude: /** @type {undefined} TODO(bryk): Remove this when externs are fixed */ ({
+    'entry': 'kdInfoCardEntry',
+  }),
+  bindings: {
+    /** {string|undefined} */
+    'name': '@',
+  },
+};
