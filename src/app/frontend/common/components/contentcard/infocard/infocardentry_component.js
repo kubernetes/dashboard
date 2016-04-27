@@ -12,24 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
-
-.kd-content-card-content {
-  background-color: $content-background;
-  box-shadow:  $whiteframe-shadow-1dp;
-  padding-top: $baseline-grid;
-}
-
-.kd-content-card {
-  padding-bottom: 4 * $baseline-grid;
-}
-
-.kd-content-card-content-title {
-  border-bottom: 1px solid $border;
-  margin: 0;
-  padding-bottom: 2 * $baseline-grid;
-
-  kd-title {
-    font-weight: 300;
+/**
+ * @final
+ */
+export class InfoCardEntryController {
+  /**
+   * @ngInject
+   */
+  constructor() {
+    /** @export {string|undefined} - Initialized from binding */
+    this.title;
   }
 }
+
+/**
+ * TODO(floreks): add doc
+ * @type {!angular.Component}
+ */
+export const infoCardEntryComponent = {
+  templateUrl: 'common/components/contentcard/infocard/infocardentry.html',
+  transclude: true,
+  controller: InfoCardEntryController,
+  bindings: {
+    /** {string|undefined} */
+    'title': '@',
+  },
+};

@@ -12,24 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import SortedHeaderController from 'replicationcontrollerdetail/sortedheader_controller';
+@import '../../../../variables';
 
-/**
- * Returns directive definition object for the sorted header directive.
- * @return {!angular.Directive}
- */
-export default function sortedHeaderDirective() {
-  return {
-    controller: SortedHeaderController,
-    controllerAs: 'sortCtrl',
-    templateUrl: 'replicationcontrollerdetail/sortedheader.html',
-    scope: {},
-    bindToController: {
-      'columnName': '@',
-      'tooltip': '@',
-      'currentlySelectedColumn': '=',
-      'currentlySelectedOrder': '=',
-    },
-    transclude: true,
-  };
+.kd-info-card-group-name {
+  padding-bottom: $baseline-grid;
 }

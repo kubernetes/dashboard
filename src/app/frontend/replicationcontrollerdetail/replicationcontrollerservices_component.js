@@ -12,24 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
-
-.kd-content-card-content {
-  background-color: $content-background;
-  box-shadow:  $whiteframe-shadow-1dp;
-  padding-top: $baseline-grid;
-}
-
-.kd-content-card {
-  padding-bottom: 4 * $baseline-grid;
-}
-
-.kd-content-card-content-title {
-  border-bottom: 1px solid $border;
-  margin: 0;
-  padding-bottom: 2 * $baseline-grid;
-
-  kd-title {
-    font-weight: 300;
+export class ReplicationControllerServicesController {
+  /**
+   * @ngInject
+   */
+  constructor() {
+    /**
+     * Replication controller services. Initialized from the scope.
+     * @export {!Array<!backendApi.ServiceDetail>}
+     */
+    this.services;
   }
 }
+
+/**
+ * TODO(floreks): add doc
+ * @type {!angular.Component}
+ */
+export const replicationControllerServicesComponent = {
+  templateUrl: 'replicationcontrollerdetail/replicationcontrollerservices.html',
+  controller: ReplicationControllerServicesController,
+  bindings: {
+    /** {!Array<!backendApi.ServiceDetail>} */
+    'services': '=',
+  },
+};

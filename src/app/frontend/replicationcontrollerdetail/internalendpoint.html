@@ -15,8 +15,10 @@ limitations under the License.
 -->
 
 <div>
-  <span ng-repeat="port in ::endpoint.ports">
-    <kd-middle-ellipsis display-string="{{::endpoint.host}}:{{::port.port}} {{::port.protocol}}">
-    </kd-middle-ellipsis>
-  </span>
+  <div ng-repeat="port in ::endpoint.ports">
+    <div>
+      <kd-middle-ellipsis display-string="{{::endpoint.host}}:{{::port.port}} {{::port.protocol}}">
+      </kd-middle-ellipsis>
+    </div>
+  </div>
 </div>

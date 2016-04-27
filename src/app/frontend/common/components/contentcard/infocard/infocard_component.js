@@ -12,24 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
-
-.kd-content-card-content {
-  background-color: $content-background;
-  box-shadow:  $whiteframe-shadow-1dp;
-  padding-top: $baseline-grid;
-}
-
-.kd-content-card {
-  padding-bottom: 4 * $baseline-grid;
-}
-
-.kd-content-card-content-title {
-  border-bottom: 1px solid $border;
-  margin: 0;
-  padding-bottom: 2 * $baseline-grid;
-
-  kd-title {
-    font-weight: 300;
-  }
-}
+/**
+ * TODO(floreks): add doc
+ * @type {!angular.Component}
+ */
+export const infoCardComponent = {
+  templateUrl: 'common/components/contentcard/infocard/infocard.html',
+  transclude: /** @type {undefined} TODO(bryk): Remove this when externs are fixed */ ({
+    'header': 'kdInfoCardHeader',
+    'group': 'kdInfoCardGroup',
+  }),
+};

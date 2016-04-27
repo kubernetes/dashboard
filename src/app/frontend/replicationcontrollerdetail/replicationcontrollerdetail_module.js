@@ -19,8 +19,10 @@ import replicationControllerInfo from './replicationcontrollerinfo_directive';
 import internalEndpointDirective from './internalendpoint_directive';
 import externalEndpointDirective from './externalendpoint_directive';
 import stateConfig from './replicationcontrollerdetail_stateconfig';
-import sortedHeaderDirective from './sortedheader_directive';
 import {ReplicationControllerService} from './replicationcontroller_service';
+import {replicationControllerPodsComponent} from './replicationcontrollerpods_component';
+import {replicationControllerServicesComponent} from './replicationcontrollerservices_component';
+import {replicationControllerEventsComponent} from './replicationcontrollerevents_component';
 
 /**
  * Angular module for the Replication Controller details view.
@@ -42,5 +44,7 @@ export default angular
     .directive('kdReplicationControllerInfo', replicationControllerInfo)
     .directive('kdInternalEndpoint', internalEndpointDirective)
     .directive('kdExternalEndpoint', externalEndpointDirective)
-    .directive('kdSortedHeader', sortedHeaderDirective)
-    .service('kdReplicationControllerService', ReplicationControllerService);
+    .service('kdReplicationControllerService', ReplicationControllerService)
+    .component('kdReplicationControllerPods', replicationControllerPodsComponent)
+    .component('kdReplicationControllerServices', replicationControllerServicesComponent)
+    .component('kdReplicationControllerEvents', replicationControllerEventsComponent);
