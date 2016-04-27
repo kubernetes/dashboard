@@ -12,24 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import SortedHeaderController from 'replicationcontrollerdetail/sortedheader_controller';
+import {infoCardComponent} from './infocard_component';
+import {infoCardEntryComponent} from './infocardentry_component';
+import {infoCardSectionComponent} from './infocardsection_component';
 
 /**
- * Returns directive definition object for the sorted header directive.
- * @return {!angular.Directive}
+ * Module containing common components for cards that can carry any content.
  */
-export default function sortedHeaderDirective() {
-  return {
-    controller: SortedHeaderController,
-    controllerAs: 'sortCtrl',
-    templateUrl: 'replicationcontrollerdetail/sortedheader.html',
-    scope: {},
-    bindToController: {
-      'columnName': '@',
-      'tooltip': '@',
-      'currentlySelectedColumn': '=',
-      'currentlySelectedOrder': '=',
-    },
-    transclude: true,
-  };
-}
+export default angular
+    .module(
+        'kubernetesDashboard.common.components.infocard',
+        [
+          'ngMaterial',
+        ])
+    .component('kdInfoCard', infoCardComponent)
+    .component('kdInfoCardEntry', infoCardEntryComponent)
+    .component('kdInfoCardSection', infoCardSectionComponent);

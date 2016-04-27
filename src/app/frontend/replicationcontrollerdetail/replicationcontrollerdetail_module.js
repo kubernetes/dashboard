@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import stateConfig from './replicationcontrollerdetail_stateconfig';
 import componentsModule from './../common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
 import logsModule from 'logs/logs_module';
-import replicationControllerInfo from './replicationcontrollerinfo_directive';
-import internalEndpointDirective from './internalendpoint_directive';
-import externalEndpointDirective from './externalendpoint_directive';
-import stateConfig from './replicationcontrollerdetail_stateconfig';
-import sortedHeaderDirective from './sortedheader_directive';
+import {replicationControllerInfoComponent} from './replicationcontrollerinfo_component';
+import {replicationControllerPodsComponent} from './replicationcontrollerpods_component';
+import {replicationControllerServicesComponent} from './replicationcontrollerservices_component';
+import {replicationControllerEventsComponent} from './replicationcontrollerevents_component';
 import {ReplicationControllerService} from './replicationcontroller_service';
 
 /**
@@ -39,8 +39,8 @@ export default angular
           logsModule.name,
         ])
     .config(stateConfig)
-    .directive('kdReplicationControllerInfo', replicationControllerInfo)
-    .directive('kdInternalEndpoint', internalEndpointDirective)
-    .directive('kdExternalEndpoint', externalEndpointDirective)
-    .directive('kdSortedHeader', sortedHeaderDirective)
+    .component('kdReplicationControllerInfo', replicationControllerInfoComponent)
+    .component('kdReplicationControllerPods', replicationControllerPodsComponent)
+    .component('kdReplicationControllerServices', replicationControllerServicesComponent)
+    .component('kdReplicationControllerEvents', replicationControllerEventsComponent)
     .service('kdReplicationControllerService', ReplicationControllerService);

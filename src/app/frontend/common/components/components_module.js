@@ -12,11 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {breadcrumbsComponent} from './breadcrumbs/breadcrumbs_component';
 import filtersModule from '../filters/filters_module';
 import labelsDirective from './labels/labels_directive';
 import middleEllipsisDirective from './middleellipsis/middleellipsis_directive';
 import contentCardModule from './contentcard/contentcard_module';
+import endpointModule from './endpoint/endpoint_module';
+import infoCardModule from './infocard/infocard_module';
 import resourceCardModule from './resourcecard/resourcecard_module';
 import actionbarModule from './actionbar/actionbar_module';
 import sparklineDirective from './sparkline/sparkline_directive';
@@ -34,10 +35,11 @@ export default angular
           filtersModule.name,
           actionbarModule.name,
           contentCardModule.name,
+          endpointModule.name,
+          infoCardModule.name,
           resourceCardModule.name,
         ])
     .directive('kdLabels', labelsDirective)
     .directive('kdMiddleEllipsis', middleEllipsisDirective)
     .directive('kdSparkline', sparklineDirective)
-    .directive('kdWarnThreshold', warnThresholdDirective)
-    .component('kdBreadcrumbs', breadcrumbsComponent);
+    .directive('kdWarnThreshold', warnThresholdDirective);

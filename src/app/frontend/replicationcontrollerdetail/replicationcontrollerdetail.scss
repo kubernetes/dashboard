@@ -41,17 +41,6 @@
   overflow: hidden;
 }
 
-.kd-replicationcontrollerdetail-warning-icon {
-  color: $warning;
-  font-size: $table-cell-height-half;
-  padding: 0 $baseline-grid;
-  vertical-align: middle;
-}
-
-.kd-replicationcontrollerdetail-options {
-  margin: 2 * $baseline-grid;
-}
-
 .kd-replicationcontrollerdetail-option-picker {
   padding-right: 2 * $baseline-grid;
   width: 15 * $baseline-grid;
@@ -88,30 +77,6 @@
 .kd-replicationcontrollerdetail-help-icon {
   color: $foreground-2;
   cursor: default;
-}
-
-.kd-replicationcontrollerdetail-no-events {
-  margin: (4 * $baseline-grid) 0 (4 * $baseline-grid);
-  text-align: center;
-}
-
-md-icon {
-  &.kd-replicationcontrollerdetail-no-events-icon {
-    color: $muted;
-    font-size: $display-1-font-size-base;
-    margin: 0 (2 * $baseline-grid) (2 * $baseline-grid) 0;
-  }
-}
-
-.kd-replicationcontrollerdetail-no-events-text {
-  color: $muted;
-  font-size: $headline-font-size-base;
-  margin-bottom: $baseline-grid;
-}
-
-.kd-replicationcontrollerdetail-no-events-info {
-  color: $delicate;
-  font-size: $subhead-font-size-base;
 }
 
 .kd-replicationcontrollerdetail-labeled-sparkline-label {

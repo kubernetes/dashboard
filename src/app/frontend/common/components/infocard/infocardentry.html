@@ -14,10 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div class="kd-content-card">
-  <div class="kd-content-card-content">
-    <h1 ng-if="$ctrl.isTitleSlotFilled()" layout-padding class="kd-content-card-content-title"
-        ng-transclude="title"></h1>
-    <div ng-transclude="content"></div>
-  </div>
+<div layout="row" class="kd-info-card-entry">
+  <div>{{$ctrl.title}}:</div>
+  <div flex="90" class="kd-info-card-entry-content" ng-transclude></div>
 </div>

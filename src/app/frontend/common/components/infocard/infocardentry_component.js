@@ -12,20 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ReplicationControllerInfoController from 'replicationcontrollerdetail/replicationcontrollerinfo_controller';
-
 /**
- * Returns directive definition object for the component that displays replication controller info.
- * @return {!angular.Directive}
+ * Represents single entry in the info card group shown in format: <title>: <content>
+ * See info card component for documentation.
+ *
+ * @type {!angular.Component}
  */
-export default function replicationControllerInfoDirective() {
-  return {
-    controller: ReplicationControllerInfoController,
-    controllerAs: 'infoCtrl',
-    templateUrl: 'replicationcontrollerdetail/replicationcontrollerinfo.html',
-    scope: {},
-    bindToController: {
-      'details': '=',
-    },
-  };
-}
+export const infoCardEntryComponent = {
+  templateUrl: 'common/components/infocard/infocardentry.html',
+  transclude: true,
+  bindings: {
+    /** {string|undefined} */
+    'title': '@',
+  },
+};
