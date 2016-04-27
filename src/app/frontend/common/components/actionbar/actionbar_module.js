@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {actionbarComponent} from './actionbar_component';
-
+import {breadcrumbsComponent} from './../breadcrumbs/breadcrumbs_component';
 /**
  * Module containing common actionbar.
  */
@@ -22,5 +22,7 @@ export default angular
         'kubernetesDashboard.common.components.actionbar',
         [
           'ngMaterial',
+          'ui.router',
         ])
-    .component('kdActionbar', actionbarComponent);
+    .component('kdActionbar', actionbarComponent)
+    .component('kdBreadcrumbs', breadcrumbsComponent);
