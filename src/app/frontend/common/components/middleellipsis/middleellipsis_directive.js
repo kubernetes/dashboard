@@ -45,12 +45,11 @@ export default function middleEllipsisDirective(middleEllipsisFilter) {
       let ellipsisElem = element.querySelector('.kd-middleellipsis');
 
       if (!container) {
-        throw new Error(
-            `Required parent element with class .kd-middleellipsis-container not found`);
+        throw new Error(`Required parent container not found`);
       }
 
       if (!ellipsisElem) {
-        throw new Error('Required element with class .kd-middleellipsis-nowrap not found');
+        throw new Error('Required element with class .kd-middleellipsis not found');
       }
 
       let nonNullElement = ellipsisElem;

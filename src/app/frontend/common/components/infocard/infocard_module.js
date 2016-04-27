@@ -12,16 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {infoCardComponent} from './infocard_component';
+import {infoCardEntryComponent} from './infocardentry_component';
+import {infoCardGroupComponent} from './infocardgroup_component';
+
 /**
- * Returns directive definition object for the component that displays the service
- * endpoint (type {backendApi.Endpoint}) which is accessible from the outside of the cluster
- * @return {!angular.Directive}
+ * Module containing common components for cards that can carry any content.
  */
-export default function externalEndpointDirective() {
-  return {
-    templateUrl: 'replicationcontrollerdetail/externalendpoint.html',
-    scope: {
-      'endpoint': '=',
-    },
-  };
-}
+export default angular
+    .module(
+        'kubernetesDashboard.common.components.infocard',
+        [
+          'ngMaterial',
+        ])
+    .component('kdInfoCard', infoCardComponent)
+    .component('kdInfoCardEntry', infoCardEntryComponent)
+    .component('kdInfoCardGroup', infoCardGroupComponent);

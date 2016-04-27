@@ -12,24 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import SortedHeaderController from 'replicationcontrollerdetail/sortedheader_controller';
-
 /**
- * Returns directive definition object for the sorted header directive.
- * @return {!angular.Directive}
+ * TODO(floreks): add doc
+ * @type {!angular.Component}
  */
-export default function sortedHeaderDirective() {
-  return {
-    controller: SortedHeaderController,
-    controllerAs: 'sortCtrl',
-    templateUrl: 'replicationcontrollerdetail/sortedheader.html',
-    scope: {},
-    bindToController: {
-      'columnName': '@',
-      'tooltip': '@',
-      'currentlySelectedColumn': '=',
-      'currentlySelectedOrder': '=',
-    },
-    transclude: true,
-  };
-}
+export const replicationControllerServicesComponent = {
+  templateUrl: 'replicationcontrollerdetail/replicationcontrollerservices.html',
+  bindings: {
+    /** {!Array<!backendApi.ServiceDetail>} */
+    'services': '=',
+  },
+};

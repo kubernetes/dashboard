@@ -15,38 +15,28 @@
 /**
  * @final
  */
-export class ContentCardController {
+export class InfoCardGroupController {
   /**
-   * @param {Object} $transclude TODO(floreks) fix this when externs are fixed
    * @ngInject
    */
-  constructor($transclude) {
-    /** @private {Object} */
-    this.transclude_ = $transclude;
+  constructor() {
+    /** @export {string|undefined} - Initialized from binding */
+    this.name;
   }
-
-  /**
-   * Returns true if transclusion slot 'title' has been filled.
-   * @export
-   */
-  isTitleSlotFilled() { return this.transclude_['isSlotFilled']('title'); }
 }
 
 /**
- * Represents a card that can carry any content in views.
- * Usage:
- *  <kd-content-card>
- *    <kd-title>My Title</kd-title>
- *    <kd-content>My Content</kd-content>
- *  </kd-content-card>
- *
+ * TODO(floreks): add doc
  * @type {!angular.Component}
  */
-export const contentCardComponent = {
-  templateUrl: 'common/components/contentcard/contentcard.html',
-  controller: ContentCardController,
+export const infoCardGroupComponent = {
+  templateUrl: 'common/components/infocard/infocardgroup.html',
   transclude: /** @type {undefined} TODO(bryk): Remove this when externs are fixed */ ({
-    'title': '?kdTitle',
-    'content': '?kdContent',
+    'entry': 'kdInfoCardEntry',
   }),
+  controller: InfoCardGroupController,
+  bindings: {
+    /** {string|undefined} */
+    'name': '@',
+  },
 };

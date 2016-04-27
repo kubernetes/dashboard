@@ -25,87 +25,12 @@ describe('Replication Controller Detail controller', () => {
   beforeEach(() => {
     angular.mock.module(replicationControllerDetailModule.name);
 
-    angular.mock.inject(($controller, $resource) => {
+    angular.mock.inject(($controller) => {
       ctrl = $controller(ReplicationControllerDetailController, {
         replicationControllerDetail: {},
         replicationControllerEvents: {},
-        replicationControllerDetailResource: $resource('/foo'),
-        replicationControllerSpecPodsResource: $resource('/bar'),
-        $stateParams:
-            {replicationController: 'foo-replicationcontroller', namespace: 'foo-namespace'},
       });
     });
-  });
-
-  it('should not filter any events if all option is selected', () => {
-    // given
-    let eventType = 'All';
-    let events = [
-      {
-        type: 'Warning',
-        message: 'event-1',
-      },
-      {
-        type: 'Normal',
-        message: 'event-2',
-      },
-    ];
-
-    // when
-    let result = ctrl.filterByType(events, eventType);
-
-    // then
-    expect(result.length).toEqual(2);
-  });
-
-  it('should filter all non-warning events if warning option is selected', () => {
-    // given
-    let eventType = 'Warning';
-    let events = [
-      {
-        type: 'Warning',
-        message: 'event-1',
-      },
-      {
-        type: 'Normal',
-        message: 'event-2',
-      },
-      {
-        type: 'Normal',
-        message: 'event-3',
-      },
-    ];
-
-    // when
-    let result = ctrl.filterByType(events, eventType);
-
-    // then
-    expect(result.length).toEqual(1);
-  });
-
-  it('should create logs href', () => {
-    expect(ctrl.getPodLogsHref({
-      name: 'foo-pod',
-    })).toBe('#/logs/foo-namespace/foo-replicationcontroller/foo-pod/');
-  });
-
-  it('should return true when there are events to display', () => {
-    // given
-    ctrl.events = ['Some event'];
-
-    // when
-    let result = ctrl.hasEvents();
-
-    // then
-    expect(result).toBeTruthy();
-  });
-
-  it('should return false if there are no events to display', () => {
-    // when
-    let result = ctrl.hasEvents();
-
-    // then
-    expect(result).toBeFalsy();
   });
 
   it('should show/hide cpu and memory metrics for pods', () => {

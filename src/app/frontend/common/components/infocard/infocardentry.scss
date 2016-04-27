@@ -14,23 +14,16 @@
 
 @import '../../../variables';
 
-.kd-content-card-content {
-  background-color: $content-background;
-  box-shadow:  $whiteframe-shadow-1dp;
+.kd-info-card-entry {
+  font-size: $body-font-size-base;
+  font-weight: $bold-font-weight;
   padding-bottom: $baseline-grid;
-  padding-top: $baseline-grid;
+  white-space: nowrap;
 }
 
-.kd-content-card {
-  padding-bottom: 4 * $baseline-grid;
-}
-
-.kd-content-card-content-title {
-  border-bottom: 1px solid $border;
-  margin: 0;
-  padding-bottom: 2 * $baseline-grid;
-
-  kd-title {
-    font-weight: $light-font-weight;
-  }
+.kd-info-card-entry-content {
+  font-weight: $regular-font-weight;
+  margin-left: $baseline-grid / 2;
+  white-space: normal;
+  width: 100%;
 }
