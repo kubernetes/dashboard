@@ -12,29 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
+import {actionbarComponent} from './actionbar_component';
 
-.kd-toolbar {
-  &.kd-actionbar {
-    background: $content-background;
-    color: $muted;
-    height: $toolbar-height-size-base;
-    top: $toolbar-height-size-base;
-
-    @media only screen and (min-width: 0) and (max-width: $layout-breakpoint-sm) {
-      height: $toolbar-height-size-base-sm;
-    }
-  }
-}
-
-.kd-actionbar-not-scrolled {
-  .kd-actionbar {
-    border-bottom: 1px solid $border;
-    box-shadow: none;
-  }
-}
-
-.kd-actionbar-breadcrumbs {
-  flex-grow: 2;
-  white-space: nowrap;
-}
+/**
+ * Module containing common actionbar.
+ */
+export default angular
+    .module(
+        'kubernetesDashboard.common.components.actionbar',
+        [
+          'ngMaterial',
+        ])
+    .component('kdActionbar', actionbarComponent);
