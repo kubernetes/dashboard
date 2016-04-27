@@ -12,16 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Returns directive definition object for the component that displays the service
- * endpoint (type {backendApi.Endpoint}) which is accessible only from the inside of the cluster
- * @return {!angular.Directive}
- */
-export default function internalEndpointDirective() {
-  return {
-    templateUrl: 'replicationcontrollerdetail/internalendpoint.html',
-    scope: {
-      'endpoint': '=',
-    },
-  };
+@import '../../../../variables';
+
+.kd-info-card-group-name {
+  padding-bottom: $baseline-grid;
 }

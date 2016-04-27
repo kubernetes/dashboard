@@ -12,25 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
+@import '../../../../variables';
 
-.kd-content-card-content {
-  background-color: $content-background;
-  box-shadow:  $whiteframe-shadow-1dp;
-  padding-bottom: $baseline-grid;
-  padding-top: $baseline-grid;
+.kd-info-card-entry {
+  font-size: $body-font-size-base;
+  font-weight: $regular-font-weight;
+  padding-bottom: $baseline-grid / 4;
+  white-space: nowrap;
 }
 
-.kd-content-card {
-  padding-bottom: 4 * $baseline-grid;
-}
-
-.kd-content-card-content-title {
-  border-bottom: 1px solid $border;
-  margin: 0;
-  padding-bottom: 2 * $baseline-grid;
-
-  kd-title {
-    font-weight: 300;
-  }
+.kd-info-card-entry-content {
+  font-weight: $light-font-weight;
+  white-space: normal;
+  width: 100%;
 }

@@ -13,6 +13,22 @@
 // limitations under the License.
 
 /**
+ * @final
+ */
+export class ContentCardController {
+  /**
+   * @param {Object} $transclude TODO(floreks) fix this when externs are fixed
+   * @ngInject
+   */
+  constructor($transclude) { this.transclude_ = $transclude; }
+
+  /**
+   * Returns true if transclusion slot 'title' has been filled.
+   */
+  isTitleSlotFilled() { return this.transclude_['isSlotFilled']('title'); }
+}
+
+/**
  * Represents a card that can carry any content in views.
  * Usage:
  *  <kd-content-card>
@@ -24,6 +40,7 @@
  */
 export const contentCardComponent = {
   templateUrl: 'common/components/contentcard/contentcard.html',
+  controller: ContentCardController,
   transclude: /** @type {undefined} TODO(bryk): Remove this when externs are fixed */ ({
     'title': '?kdTitle',
     'content': '?kdContent',

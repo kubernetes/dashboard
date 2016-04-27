@@ -1,0 +1,83 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-content-card>
+  <kd-content>
+    <div class="kd-replicationcontrollerevents-options" layout="row">
+      <md-input-container>
+        <label>Type</label>
+        <md-select ng-model="$ctrl.eventType" ng-change="$ctrl.handleEventFiltering()" required>
+          <md-option ng-repeat="type in $ctrl.eventTypeFilter" ng-value="type">
+            {{type}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+    </div>
+
+    <kd-resource-card-list selectable="false" with-statuses="true" ng-if="$ctrl.hasEvents()">
+      <kd-resource-card-header-columns>
+        <kd-resource-card-header-column size="medium" grow="4">
+          Message
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column>Source</kd-resource-card-header-column>
+        <kd-resource-card-header-column>Sub-object</kd-resource-card-header-column>
+        <kd-resource-card-header-column>Count</kd-resource-card-header-column>
+        <kd-resource-card-header-column>First seen</kd-resource-card-header-column>
+        <kd-resource-card-header-column>Last seen</kd-resource-card-header-column>
+      </kd-resource-card-header-columns>
+
+      <kd-resource-card ng-repeat="event in $ctrl.filteredEvents">
+        <kd-resource-card-status>
+          <i ng-if="$ctrl.isEventWarning(event)"
+             class="material-icons kd-replicationcontrollerevents-warning-icon">warning</i>
+        </kd-resource-card-status>
+
+        <kd-resource-card-columns>
+          <kd-resource-card-column>
+            <div class="kd-replicationcontrollerevents-message">
+              {{event.message}}
+            </div>
+          </kd-resource-card-column>
+          <kd-resource-card-column>
+            {{event.sourceComponent}} {{event.sourceHost}}
+          </kd-resource-card-column>
+          <kd-resource-card-column>
+            <div ng-if="event.object">{{event.object}}</div>
+            <div ng-if="!event.object">-</div>
+          </kd-resource-card-column>
+          <kd-resource-card-column>{{event.count}}</kd-resource-card-column>
+          <kd-resource-card-column>
+            First seen at {{event.firstSeen | date:'d/M/yy HH:mm':'UTC'}} UTC
+          </kd-resource-card-column>
+          <kd-resource-card-column>
+            Last seen at {{event.lastSeen | date:'d/M/yy HH:mm':'UTC'}} UTC
+          </kd-resource-card-column>
+        </kd-resource-card-columns>
+      </kd-resource-card>
+    </kd-resource-card-list>
+
+    <div class="kd-replicationcontrollerevents-no-events" ng-if="!$ctrl.hasEvents()">
+      <md-icon class="material-icons kd-replicationcontrollerevents-no-events-icon">
+        info_outline
+      </md-icon>
+      <div class="kd-replicationcontrollerevents-no-events-text">No events were found</div>
+      <div class="kd-replicationcontrollerevents-no-events-info">
+        There are no events to display. It's possible that all of them have expired.
+        <a href="">Learn more</a>
+      </div>
+    </div>
+  </kd-content>
+</kd-content-card>

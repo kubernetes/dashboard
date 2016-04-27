@@ -16,7 +16,7 @@
  * Number of labels, that are always visible.
  * @type {number}
  */
-const alwaysVisibleLabelsNumber = 8;
+const alwaysVisibleLabelsNumber = 5;
 
 /**
  * @final

@@ -13,6 +13,9 @@
 // limitations under the License.
 
 import {contentCardComponent} from './contentcard_component';
+import {infoCardComponent} from './infocard/infocard_component';
+import {infoCardEntryComponent} from './infocard/infocardentry_component';
+import {infoCardGroupComponent} from './infocard/infocardgroup_component';
 
 /**
  * Module containing common components for cards that can carry any content.
@@ -23,4 +26,7 @@ export default angular
         [
           'ngMaterial',
         ])
-    .component('kdContentCard', contentCardComponent);
+    .component('kdContentCard', contentCardComponent)
+    .component('kdInfoCard', infoCardComponent)
+    .component('kdInfoCardEntry', infoCardEntryComponent)
+    .component('kdInfoCardGroup', infoCardGroupComponent);
