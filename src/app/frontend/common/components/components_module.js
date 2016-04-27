@@ -17,6 +17,7 @@ import {breadcrumbsComponent} from './breadcrumbs/breadcrumbs_component';
 import filtersModule from '../filters/filters_module';
 import labelsDirective from './labels/labels_directive';
 import middleEllipsisDirective from './middleellipsis/middleellipsis_directive';
+import contentCardModule from './contentcard/contentcard_module';
 import resourceCardModule from './resourcecard/resourcecard_module';
 import sparklineDirective from './sparkline/sparkline_directive';
 import warnThresholdDirective from './warnthreshold/warnthreshold_directive';
@@ -31,6 +32,7 @@ export default angular
           'ngMaterial',
           'ui.router',
           filtersModule.name,
+          contentCardModule.name,
           resourceCardModule.name,
         ])
     .directive('kdLabels', labelsDirective)

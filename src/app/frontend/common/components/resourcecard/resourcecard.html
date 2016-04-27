@@ -17,7 +17,7 @@ limitations under the License.
 <div class="kd-resource-card" layout="column">
   <div layout="row" class="kd-resource-card-columns-container" flex="grow">
     <div ng-if="$ctrl.isSelectable()" flex="none" class="kd-resource-card-select">
-      <md-checkbox></md-checkbox>
+      <md-checkbox aria-label="Select the resource"></md-checkbox>
     </div>
     <ng-transclude ng-if="$ctrl.hasStatus()" ng-transclude-slot="status"
         class="kd-resource-card-status" flex="none">
