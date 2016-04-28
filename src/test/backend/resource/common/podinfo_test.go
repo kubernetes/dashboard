@@ -18,6 +18,7 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/kubernetes/dashboard/resource/event"
 	"k8s.io/kubernetes/pkg/api"
 )
 
@@ -67,11 +68,12 @@ func TestGetControllerPodInfo(t *testing.T) {
 				},
 			},
 			ControllerPodInfo{
-				Current: 5,
-				Desired: 4,
-				Running: 1,
-				Pending: 0,
-				Failed:  0,
+				Current:  5,
+				Desired:  4,
+				Running:  1,
+				Pending:  0,
+				Failed:   0,
+				Warnings: make([]event.Event, 0),
 			},
 		},
 	}

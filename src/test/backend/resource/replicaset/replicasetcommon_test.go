@@ -22,6 +22,7 @@ import (
 	"k8s.io/kubernetes/pkg/apis/extensions"
 
 	"github.com/kubernetes/dashboard/resource/common"
+	"github.com/kubernetes/dashboard/resource/event"
 )
 
 func TestGetReplicaSetPodInfo(t *testing.T) {
@@ -47,11 +48,12 @@ func TestGetReplicaSetPodInfo(t *testing.T) {
 				},
 			},
 			common.ControllerPodInfo{
-				Current: 5,
-				Desired: 4,
-				Running: 1,
-				Pending: 0,
-				Failed:  0,
+				Current:  5,
+				Desired:  4,
+				Running:  1,
+				Pending:  0,
+				Failed:   0,
+				Warnings: []event.Event{},
 			},
 		},
 	}

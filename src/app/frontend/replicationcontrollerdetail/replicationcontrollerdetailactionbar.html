@@ -16,15 +16,15 @@ limitations under the License.
 
 <div hide show-gt-sm>
   <md-button class="md-icon-button" ng-click="ctrl.redirectToDeployPage()">
-    <md-icon class="kd-rc-detail-actionbar-icon">add</md-icon>
+    <md-icon class="kd-actionbar-icon-button">add</md-icon>
     <md-tooltip md-direction="bottom">Deploy a containerized app</md-tooltip>
   </md-button>
   <md-button class="md-icon-button" ng-click="ctrl.handleUpdateReplicasDialog()">
-    <md-icon class="kd-rc-detail-actionbar-icon">mode_edit</md-icon>
+    <md-icon class="kd-actionbar-icon-button">mode_edit</md-icon>
     <md-tooltip md-direction="bottom">Edit number of pods</md-tooltip>
   </md-button>
   <md-button class="md-icon-button" ng-click="ctrl.handleDeleteReplicationControllerDialog()">
-    <md-icon class="kd-rc-detail-actionbar-icon">delete</md-icon>
+    <md-icon class="kd-actionbar-icon-button">delete</md-icon>
     <md-tooltip md-direction="bottom">Delete replication controller</md-tooltip>
   </md-button>
 </div>
@@ -34,20 +34,20 @@ limitations under the License.
                      ng-mouseenter="ctrl.showIcons()" ng-mouseleave="ctrl.hideIcons()">
     <md-fab-trigger>
       <md-button aria-label="menu" class="md-icon-button">
-        <md-icon class="kd-rc-detail-actionbar-icon">menu</md-icon>
+        <md-icon class="kd-actionbar-icon-button">menu</md-icon>
       </md-button>
     </md-fab-trigger>
     <md-fab-actions>
       <md-button class="md-fab md-raised md-mini" ng-click="ctrl.handleDeleteReplicationControllerDialog()">
-        <md-icon class="kd-rc-detail-actionbar-icon">delete</md-icon>
+        <md-icon class="kd-actionbar-icon-button">delete</md-icon>
         <md-tooltip md-direction="bottom">Delete replication controller</md-tooltip>
       </md-button>
       <md-button class="md-fab md-raised md-mini" ng-click="ctrl.handleUpdateReplicasDialog()">
-        <md-icon class="kd-rc-detail-actionbar-icon">mode_edit</md-icon>
+        <md-icon class="kd-actionbar-icon-button">mode_edit</md-icon>
         <md-tooltip md-direction="bottom">Edit number of pods</md-tooltip>
       </md-button>
       <md-button class="md-fab md-raised md-mini" ng-click="ctrl.redirectToDeployPage()">
-        <md-icon class="kd-rc-detail-actionbar-icon">add</md-icon>
+        <md-icon class="kd-actionbar-icon-button">add</md-icon>
         <md-tooltip md-direction="bottom">Deploy a containerized app</md-tooltip>
       </md-button>
     </md-fab-actions>
