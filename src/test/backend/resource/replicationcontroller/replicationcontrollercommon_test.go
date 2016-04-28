@@ -24,6 +24,7 @@ import (
 	"k8s.io/kubernetes/pkg/labels"
 
 	"github.com/kubernetes/dashboard/resource/common"
+	"github.com/kubernetes/dashboard/resource/event"
 )
 
 func TestGetReplicationControllerPodInfo(t *testing.T) {
@@ -49,11 +50,12 @@ func TestGetReplicationControllerPodInfo(t *testing.T) {
 				},
 			},
 			common.ControllerPodInfo{
-				Current: 5,
-				Desired: 4,
-				Running: 1,
-				Pending: 0,
-				Failed:  0,
+				Current:  5,
+				Desired:  4,
+				Running:  1,
+				Pending:  0,
+				Failed:   0,
+				Warnings: []event.Event{},
 			},
 		},
 	}
