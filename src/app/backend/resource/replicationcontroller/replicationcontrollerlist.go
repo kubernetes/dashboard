@@ -17,19 +17,13 @@ package replicationcontroller
 import (
 	"log"
 
+	"github.com/kubernetes/dashboard/resource/common"
 	// TODO(maciaszczykm): Avoid using dot-imports.
-	. "github.com/kubernetes/dashboard/resource/common"
 	. "github.com/kubernetes/dashboard/resource/event"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
-
-// GetPodsEventWarningsFunc is a callback function used to get the pod status errors.
-type GetPodsEventWarningsFunc func(pods []api.Pod) []Event
-
-// GetNodeFunc is a callback function used to get nodes by names.
-type GetNodeFunc func(nodeName string) (*api.Node, error)
 
 // ReplicationControllerList contains a list of Replication Controllers in the cluster.
 type ReplicationControllerList struct {
@@ -53,7 +47,7 @@ type ReplicationController struct {
 	Labels map[string]string `json:"labels"`
 
 	// Aggregate information about pods belonging to this Replication Controller.
-	Pods ReplicationControllerPodInfo `json:"pods"`
+	Pods common.ControllerPodInfo `json:"pods"`
 
 	// Container images of the Replication Controller.
 	ContainerImages []string `json:"containerImages"`
@@ -72,12 +66,12 @@ type ReplicationController struct {
 func GetReplicationControllerList(client *client.Client) (*ReplicationControllerList, error) {
 	log.Printf("Getting list of all replication controllers in the cluster")
 
-	channels := &ResourceChannels{
-		ReplicationControllerList: GetReplicationControllerListChannel(client, 1),
-		ServiceList:               GetServiceListChannel(client, 1),
-		PodList:                   GetPodListChannel(client, 1),
-		EventList:                 GetEventListChannel(client, 1),
-		NodeList:                  GetNodeListChannel(client, 1),
+	channels := &common.ResourceChannels{
+		ReplicationControllerList: common.GetReplicationControllerListChannel(client, 1),
+		ServiceList:               common.GetServiceListChannel(client, 1),
+		PodList:                   common.GetPodListChannel(client, 1),
+		EventList:                 common.GetEventListChannel(client, 1),
+		NodeList:                  common.GetNodeListChannel(client, 1),
 	}
 
 	return GetReplicationControllerListFromChannels(channels)
@@ -85,7 +79,7 @@ func GetReplicationControllerList(client *client.Client) (*ReplicationController
 
 // GetReplicationControllerList returns a list of all Replication Controllers in the cluster
 // reading required resource list once from the channels.
-func GetReplicationControllerListFromChannels(channels *ResourceChannels) (
+func GetReplicationControllerListFromChannels(channels *common.ResourceChannels) (
 	*ReplicationControllerList, error) {
 
 	replicationControllers := <-channels.ReplicationControllerList.List
@@ -144,7 +138,7 @@ func getReplicationControllerList(replicationControllers []api.ReplicationContro
 		matchingPods := make([]api.Pod, 0)
 		for _, pod := range pods {
 			if pod.ObjectMeta.Namespace == replicationController.ObjectMeta.Namespace &&
-				isLabelSelectorMatching(replicationController.Spec.Selector, pod.ObjectMeta.Labels) {
+				common.IsLabelSelectorMatching(replicationController.Spec.Selector, pod.ObjectMeta.Labels) {
 				matchingPods = append(matchingPods, pod)
 			}
 		}
@@ -177,27 +171,10 @@ func getMatchingServices(services []api.Service,
 	var matchingServices []api.Service
 	for _, service := range services {
 		if service.ObjectMeta.Namespace == replicationController.ObjectMeta.Namespace &&
-			isLabelSelectorMatching(service.Spec.Selector, replicationController.Spec.Selector) {
+			common.IsLabelSelectorMatching(service.Spec.Selector, replicationController.Spec.Selector) {
 
 			matchingServices = append(matchingServices, service)
 		}
 	}
 	return matchingServices
-}
-
-// Returns true when a Service with the given selector targets the same Pods (or subset) that
-// a Replication Controller with the given selector.
-func isLabelSelectorMatching(labelSelector map[string]string,
-	testedObjectLabels map[string]string) bool {
-
-	// If service has no selectors, then assume it targets different Pods.
-	if len(labelSelector) == 0 {
-		return false
-	}
-	for label, value := range labelSelector {
-		if rsValue, ok := testedObjectLabels[label]; !ok || rsValue != value {
-			return false
-		}
-	}
-	return true
 }
