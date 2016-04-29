@@ -22,13 +22,15 @@ import (
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
 	"k8s.io/kubernetes/pkg/labels"
+
+	"github.com/kubernetes/dashboard/resource/common"
 )
 
 func TestGetReplicationControllerPodInfo(t *testing.T) {
 	cases := []struct {
 		controller *api.ReplicationController
 		pods       []api.Pod
-		expected   ReplicationControllerPodInfo
+		expected   common.ControllerPodInfo
 	}{
 		{
 			&api.ReplicationController{
@@ -46,7 +48,7 @@ func TestGetReplicationControllerPodInfo(t *testing.T) {
 					},
 				},
 			},
-			ReplicationControllerPodInfo{
+			common.ControllerPodInfo{
 				Current: 5,
 				Desired: 4,
 				Running: 1,

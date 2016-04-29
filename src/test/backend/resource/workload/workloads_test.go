@@ -54,13 +54,13 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 			},
 			[]replicationcontroller.ReplicationController{{
 				Name: "rc-name",
-				Pods: replicationcontroller.ReplicationControllerPodInfo{
+				Pods: common.ControllerPodInfo{
 					Warnings: []event.Event{},
 				},
 			}},
 			[]replicaset.ReplicaSet{{
 				Name: "rs-name",
-				Pods: replicationcontroller.ReplicationControllerPodInfo{
+				Pods: common.ControllerPodInfo{
 					Warnings: []event.Event(nil),
 				},
 			}},

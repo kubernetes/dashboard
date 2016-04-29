@@ -19,6 +19,7 @@ import (
 	"log"
 
 	. "github.com/kubernetes/dashboard/client"
+	"github.com/kubernetes/dashboard/resource/common"
 	"k8s.io/kubernetes/pkg/api"
 	unversioned "k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
@@ -44,7 +45,7 @@ type ReplicationControllerDetail struct {
 	ContainerImages []string `json:"containerImages"`
 
 	// Aggregate information about pods of this replication controller.
-	PodInfo ReplicationControllerPodInfo `json:"podInfo"`
+	PodInfo common.ControllerPodInfo `json:"podInfo"`
 
 	// Detailed information about Pods belonging to this Replication Controller.
 	Pods []ReplicationControllerPod `json:"pods"`
@@ -375,7 +376,7 @@ func filterReplicationControllerPods(replicationController api.ReplicationContro
 	allPods []api.Pod) []api.Pod {
 	var pods []api.Pod
 	for _, pod := range allPods {
-		if isLabelSelectorMatching(replicationController.Spec.Selector, pod.Labels) {
+		if common.IsLabelSelectorMatching(replicationController.Spec.Selector, pod.Labels) {
 			pods = append(pods, pod)
 		}
 	}

@@ -46,7 +46,7 @@ type ReplicaSet struct {
 	Labels map[string]string `json:"labels"`
 
 	// Aggregate information about pods belonging to this Replica Set.
-	Pods replicationcontroller.ReplicationControllerPodInfo `json:"pods"`
+	Pods common.ControllerPodInfo `json:"pods"`
 
 	// Container images of the Replica Set.
 	ContainerImages []string `json:"containerImages"`
@@ -118,12 +118,17 @@ func getReplicaSetList(replicaSets []extensions.ReplicaSet,
 	}
 
 	for _, replicaSet := range replicaSets {
+
+		matchingPods := getMatchingPods(replicaSet.Spec.Selector, replicaSet.ObjectMeta.Namespace, pods)
+		podInfo := getPodInfo(&replicaSet, matchingPods)
+
 		replicaSetList.ReplicaSets = append(replicaSetList.ReplicaSets,
 			ReplicaSet{
 				Name:            replicaSet.ObjectMeta.Name,
 				Namespace:       replicaSet.ObjectMeta.Namespace,
 				Labels:          replicaSet.ObjectMeta.Labels,
 				ContainerImages: replicationcontroller.GetContainerImages(&replicaSet.Spec.Template.Spec),
+				Pods:            podInfo,
 				CreationTime:    replicaSet.ObjectMeta.CreationTimestamp,
 			})
 	}

@@ -18,38 +18,10 @@ import (
 	"reflect"
 	"testing"
 
-	. "github.com/kubernetes/dashboard/resource/event"
+	"github.com/kubernetes/dashboard/resource/common"
+	"github.com/kubernetes/dashboard/resource/event"
 	"k8s.io/kubernetes/pkg/api"
 )
-
-func TestIsLabelSelectorMatching(t *testing.T) {
-	cases := []struct {
-		serviceSelector, replicationControllerSelector map[string]string
-		expected                                       bool
-	}{
-		{nil, nil, false},
-		{nil, map[string]string{}, false},
-		{map[string]string{}, nil, false},
-		{map[string]string{}, map[string]string{}, false},
-		{map[string]string{"app": "my-name"}, map[string]string{}, false},
-		{map[string]string{"app": "my-name", "version": "2"},
-			map[string]string{"app": "my-name", "version": "1.1"}, false},
-		{map[string]string{"app": "my-name", "env": "prod"},
-			map[string]string{"app": "my-name", "version": "1.1"}, false},
-		{map[string]string{"app": "my-name"}, map[string]string{"app": "my-name"}, true},
-		{map[string]string{"app": "my-name", "version": "1.1"},
-			map[string]string{"app": "my-name", "version": "1.1"}, true},
-		{map[string]string{"app": "my-name"},
-			map[string]string{"app": "my-name", "version": "1.1"}, true},
-	}
-	for _, c := range cases {
-		actual := isLabelSelectorMatching(c.serviceSelector, c.replicationControllerSelector)
-		if actual != c.expected {
-			t.Errorf("isLabelSelectorMatching(%+v, %+v) == %+v, expected %+v",
-				c.serviceSelector, c.replicationControllerSelector, actual, c.expected)
-		}
-	}
-}
 
 func TestGetMatchingServices(t *testing.T) {
 	cases := []struct {
@@ -220,19 +192,19 @@ func TestGetReplicationControllerList(t *testing.T) {
 						Namespace:         "namespace-1",
 						ContainerImages:   []string{"my-container-image-1"},
 						InternalEndpoints: []Endpoint{{Host: "my-app-1.namespace-1"}},
-						Pods: ReplicationControllerPodInfo{
+						Pods: common.ControllerPodInfo{
 							Failed:   2,
 							Pending:  1,
 							Running:  1,
-							Warnings: []Event{},
+							Warnings: []event.Event{},
 						},
 					}, {
 						Name:              "my-app-2",
 						Namespace:         "namespace-2",
 						ContainerImages:   []string{"my-container-image-2"},
 						InternalEndpoints: []Endpoint{{Host: "my-app-2.namespace-2"}},
-						Pods: ReplicationControllerPodInfo{
-							Warnings: []Event{},
+						Pods: common.ControllerPodInfo{
+							Warnings: []event.Event{},
 						},
 					},
 				},

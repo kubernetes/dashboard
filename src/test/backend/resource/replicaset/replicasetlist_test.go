@@ -26,49 +26,55 @@ import (
 
 	"github.com/kubernetes/dashboard/resource/common"
 	"github.com/kubernetes/dashboard/resource/event"
-	"github.com/kubernetes/dashboard/resource/replicationcontroller"
 )
 
 func TestGetReplicaSetListFromChannels(t *testing.T) {
 	cases := []struct {
 		k8sRs         extensions.ReplicaSetList
 		k8sRsError    error
+		pods          *api.PodList
 		expected      *ReplicaSetList
 		expectedError error
 	}{
 		{
 			extensions.ReplicaSetList{},
 			nil,
+			&api.PodList{},
 			&ReplicaSetList{[]ReplicaSet{}},
 			nil,
 		},
 		{
 			extensions.ReplicaSetList{},
 			errors.New("MyCustomError"),
+			&api.PodList{},
 			nil,
 			errors.New("MyCustomError"),
 		},
 		{
 			extensions.ReplicaSetList{},
 			&k8serrors.StatusError{},
+			&api.PodList{},
 			nil,
 			&k8serrors.StatusError{},
 		},
 		{
 			extensions.ReplicaSetList{},
 			&k8serrors.StatusError{ErrStatus: unversioned.Status{}},
+			&api.PodList{},
 			nil,
 			&k8serrors.StatusError{ErrStatus: unversioned.Status{}},
 		},
 		{
 			extensions.ReplicaSetList{},
 			&k8serrors.StatusError{ErrStatus: unversioned.Status{Reason: "foo-bar"}},
+			&api.PodList{},
 			nil,
 			&k8serrors.StatusError{ErrStatus: unversioned.Status{Reason: "foo-bar"}},
 		},
 		{
 			extensions.ReplicaSetList{},
 			&k8serrors.StatusError{ErrStatus: unversioned.Status{Reason: "NotFound"}},
+			&api.PodList{},
 			nil,
 			nil,
 		},
@@ -81,16 +87,44 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 						Labels:            map[string]string{"key": "value"},
 						CreationTimestamp: unversioned.Unix(111, 222),
 					},
+					Spec: extensions.ReplicaSetSpec{
+						Selector: &unversioned.LabelSelector{MatchLabels: map[string]string{"foo": "bar"}},
+						Replicas: 21,
+					},
+					Status: extensions.ReplicaSetStatus{
+						Replicas: 7,
+					},
 				}},
 			},
 			nil,
+			&api.PodList{
+				Items: []api.Pod{
+					{
+						ObjectMeta: api.ObjectMeta{
+							Namespace: "rs-namespace",
+							Labels:    map[string]string{"foo": "bar"},
+						},
+						Status: api.PodStatus{Phase: api.PodFailed},
+					},
+					{
+						ObjectMeta: api.ObjectMeta{
+							Namespace: "rs-namespace",
+							Labels:    map[string]string{"foo": "baz"},
+						},
+						Status: api.PodStatus{Phase: api.PodFailed},
+					},
+				},
+			},
 			&ReplicaSetList{
 				[]ReplicaSet{{
 					Name:         "rs-name",
 					Namespace:    "rs-namespace",
 					Labels:       map[string]string{"key": "value"},
 					CreationTime: unversioned.Unix(111, 222),
-					Pods: replicationcontroller.ReplicationControllerPodInfo{
+					Pods: common.ControllerPodInfo{
+						Current:  7,
+						Desired:  21,
+						Failed:   1,
 						Warnings: []event.Event(nil),
 					},
 				}},
@@ -132,7 +166,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 		channels.ServiceList.List <- &api.ServiceList{}
 		channels.ServiceList.Error <- nil
 
-		channels.PodList.List <- &api.PodList{}
+		channels.PodList.List <- c.pods
 		channels.PodList.Error <- nil
 
 		channels.EventList.List <- &api.EventList{}

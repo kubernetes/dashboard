@@ -15,8 +15,7 @@
 package replicationcontroller
 
 import (
-	// TODO(maciaszczykm): Avoid using dot-imports.
-	. "github.com/kubernetes/dashboard/resource/event"
+	"github.com/kubernetes/dashboard/resource/common"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
@@ -28,27 +27,6 @@ import (
 type ReplicationControllerWithPods struct {
 	ReplicationController *api.ReplicationController
 	Pods                  *api.PodList
-}
-
-// ReplicationControllerPodInfo represents aggregate information about replication controller pods.
-type ReplicationControllerPodInfo struct {
-	// Number of pods that are created.
-	Current int `json:"current"`
-
-	// Number of pods that are desired in this Replication Controller.
-	Desired int `json:"desired"`
-
-	// Number of pods that are currently running.
-	Running int `json:"running"`
-
-	// Number of pods that are currently waiting.
-	Pending int `json:"pending"`
-
-	// Number of pods that are failed.
-	Failed int `json:"failed"`
-
-	// Unique warning messages related to pods in this Replication Controller.
-	Warnings []Event `json:"warnings"`
 }
 
 // Returns structure containing ReplicationController and Pods for the given replication controller.
@@ -86,25 +64,12 @@ func getRawReplicationControllerPods(client client.Interface, namespace, name st
 	return replicationControllerAndPods.Pods, nil
 }
 
-// Returns aggregate information about replication controller pods.
-func getReplicationControllerPodInfo(replicationController *api.ReplicationController, pods []api.Pod) ReplicationControllerPodInfo {
-	result := ReplicationControllerPodInfo{
-		Current: replicationController.Status.Replicas,
-		Desired: replicationController.Spec.Replicas,
-	}
+// getReplicationControllerPodInfo returns aggregate information about replication controller pods.
+func getReplicationControllerPodInfo(replicationController *api.ReplicationController,
+	pods []api.Pod) common.ControllerPodInfo {
 
-	for _, pod := range pods {
-		switch pod.Status.Phase {
-		case api.PodRunning:
-			result.Running++
-		case api.PodPending:
-			result.Pending++
-		case api.PodFailed:
-			result.Failed++
-		}
-	}
-
-	return result
+	return common.GetPodInfo(replicationController.Status.Replicas,
+		replicationController.Spec.Replicas, pods)
 }
 
 // Transforms simple selector map to labels.Selector object that can be used when querying for
