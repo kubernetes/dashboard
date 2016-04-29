@@ -12,28 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
+import {stateName as deploy} from 'deploy/deploy_state';
 
-.kd-resource-card-footer {
-  display: flex;
-  flex-direction: column;
-  padding-left: $baseline-grid;
-}
-
-.kd-resource-card-list-selectable {
-  .kd-resource-card-footer {
-    padding-left: 6 * $baseline-grid;
+/**
+ * @final
+ */
+export default class ReplicationControllerListActionBarController {
+  /**
+   * @param {!ui.router.$state} $state
+   * @ngInject
+   */
+  constructor($state) {
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
   }
 
-  &.kd-resource-card-list-with-statuses {
-    .kd-resource-card-footer {
-      padding-left: 10 * $baseline-grid;
-    }
-  }
-}
-
-.kd-resource-card-list-with-statuses {
-  .kd-resource-card-footer {
-    padding-left: 5 * $baseline-grid;
-  }
+  /**
+   * @export
+   */
+  redirectToDeployPage() { this.state_.go(deploy); }
 }

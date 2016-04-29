@@ -12,28 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'replicationcontrollers';
 
-.kd-resource-card-footer {
-  display: flex;
-  flex-direction: column;
-  padding-left: $baseline-grid;
-}
-
-.kd-resource-card-list-selectable {
-  .kd-resource-card-footer {
-    padding-left: 6 * $baseline-grid;
-  }
-
-  &.kd-resource-card-list-with-statuses {
-    .kd-resource-card-footer {
-      padding-left: 10 * $baseline-grid;
-    }
-  }
-}
-
-.kd-resource-card-list-with-statuses {
-  .kd-resource-card-footer {
-    padding-left: 5 * $baseline-grid;
-  }
-}
+/** Absolute URL of the state. */
+export const stateUrl = '/replicationcontrollersv2';

@@ -12,28 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
-
-.kd-resource-card-footer {
-  display: flex;
-  flex-direction: column;
-  padding-left: $baseline-grid;
-}
-
-.kd-resource-card-list-selectable {
-  .kd-resource-card-footer {
-    padding-left: 6 * $baseline-grid;
-  }
-
-  &.kd-resource-card-list-with-statuses {
-    .kd-resource-card-footer {
-      padding-left: 10 * $baseline-grid;
-    }
-  }
-}
-
-.kd-resource-card-list-with-statuses {
-  .kd-resource-card-footer {
-    padding-left: 5 * $baseline-grid;
+/**
+ * Controller for the replication controller list view.
+ *
+ * @final
+ */
+export class ReplicationControllerListController {
+  /**
+   * @param {!backendApi.ReplicationControllerList} replicationControllers
+   * @ngInject
+   */
+  constructor(replicationControllers) {
+    /** @export {!Array<!backendApi.ReplicationController>} */
+    this.replicationControllers = replicationControllers.replicationControllers;
   }
 }

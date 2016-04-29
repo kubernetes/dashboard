@@ -52,6 +52,14 @@ a {
   }
 }
 
+.kd-success {
+  color: $success-color;
+}
+
+.kd-error {
+  color: $error-color;
+}
+
 .kd-toolbar-tools {
   margin: auto;
 }
