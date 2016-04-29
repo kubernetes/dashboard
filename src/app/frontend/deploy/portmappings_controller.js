@@ -95,6 +95,8 @@ export default class PortMappingsController {
 
       portElem.$setValidity('empty', isValidPort);
       targetPortElem.$setValidity('empty', isValidTargetPort);
+
+      this.validateExposeService(portMappingForm.$$parentForm);
     }
   }
 
@@ -109,7 +111,10 @@ export default class PortMappingsController {
    * @param {number} index
    * @export
    */
-  remove(index) { this.portMappings.splice(index, 1); }
+  remove(portMappingForm, index) {
+    this.portMappings.splice(index, 1);
+    this.validateExposeService(portMappingForm.$$parentForm);
+  }
 
   /**
    * Returns true when the given port mapping is filled by the user, i.e., is not empty.
@@ -126,4 +131,16 @@ export default class PortMappingsController {
    * @private
    */
   isPortMappingFilledOrEmpty_(portMapping) { return !portMapping.port === !portMapping.targetPort; }
+
+  validateExposeService(exposeForm) {
+        if (angular.isDefined(exposeForm)) {
+    let noPortMapping =
+        (this.portMappings !== undefined &&
+         this.portMappings.filter(this.isPortMappingFilled_).length === 0);
+    let isValid = !(this.isExternal && noPortMapping);
+
+    exposeForm['exposeService'].$setValidity('portMappingRequired', isValid);
+    console.log('asdf'+isValid);
+  }
+  }
 }
