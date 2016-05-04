@@ -58,7 +58,7 @@
     "karma-jasmine": "~1.0.2",
     "karma-jasmine-jquery": "~0.1.1",
     "karma-ng-html2js-preprocessor": "~1.0.0",
-    "karma-sauce-launcher": "~0.3.0",
+    "karma-sauce-launcher": "~1.0.0",
     "karma-sourcemap-loader": "~0.3.6",
     "lodash": "~4.11.1",
     "npm-check-updates": "~2.6.2",
