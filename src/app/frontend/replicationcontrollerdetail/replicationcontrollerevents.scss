@@ -43,19 +43,8 @@ md-icon {
 
 .kd-replicationcontrollerevents-warning-icon {
   color: $warning;
-  font-size: $table-cell-height-half;
-  padding: 0 $baseline-grid;
-  vertical-align: middle;
 }
 
 .kd-replicationcontrollerevents-message {
   word-break: break-all;
-}
-
-md-tabs {
-  background: $body;
-
-  md-tabs-canvas {
-    background: $content-background;
-  }
 }
