@@ -38,3 +38,21 @@
   flex-grow: 2;
   white-space: nowrap;
 }
+
+md-toolbar {
+  .md-button {
+    &.md-raised {
+      md-icon {
+        &.kd-actionbar-icon-button {
+          color: $muted;
+        }
+      }
+    }
+  }
+
+  md-icon {
+    &.kd-actionbar-icon-button {
+      color: $muted;
+    }
+  }
+}

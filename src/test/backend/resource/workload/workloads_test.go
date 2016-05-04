@@ -61,7 +61,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 			[]replicaset.ReplicaSet{{
 				Name: "rs-name",
 				Pods: common.ControllerPodInfo{
-					Warnings: []event.Event(nil),
+					Warnings: []event.Event{},
 				},
 			}},
 		},

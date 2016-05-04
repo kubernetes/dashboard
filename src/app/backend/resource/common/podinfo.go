@@ -44,8 +44,9 @@ type ControllerPodInfo struct {
 // GetPodInfo returns aggregate information about replication controller pods.
 func GetPodInfo(current int, desired int, pods []api.Pod) ControllerPodInfo {
 	result := ControllerPodInfo{
-		Current: current,
-		Desired: desired,
+		Current:  current,
+		Desired:  desired,
+		Warnings: make([]event.Event, 0),
 	}
 
 	for _, pod := range pods {

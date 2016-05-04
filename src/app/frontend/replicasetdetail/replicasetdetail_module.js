@@ -12,22 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../variables';
+import filtersModule from 'common/filters/filters_module';
+import componentsModule from 'common/components/components_module';
+import stateConfig from './replicasetdetail_stateconfig';
 
-md-toolbar {
-  .md-button {
-    &.md-raised {
-      md-icon {
-        &.kd-rc-detail-actionbar-icon {
-          color: $muted;
-        }
-      }
-    }
-  }
-
-  md-icon {
-    &.kd-rc-detail-actionbar-icon {
-      color: $muted;
-    }
-  }
-}
+/**
+ * Angular module for the Replica Set details view.
+ *
+ * The view shows detailed view of a Replica Set.
+ */
+export default angular
+    .module(
+        'kubernetesDashboard.replicasetdetail',
+        [
+          'ngMaterial',
+          'ngResource',
+          'ui.router',
+          componentsModule.name,
+          filtersModule.name,
+        ])
+    .config(stateConfig);

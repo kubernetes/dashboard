@@ -125,7 +125,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 						Current:  7,
 						Desired:  21,
 						Failed:   1,
-						Warnings: []event.Event(nil),
+						Warnings: []event.Event{},
 					},
 				}},
 			},
