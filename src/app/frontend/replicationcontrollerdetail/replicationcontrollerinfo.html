@@ -14,96 +14,50 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div flex="nogrow" class="kd-replicationcontrollerinfo-item">
-</div>
-<div flex="auto" layout="column" class="kd-replicationcontrollerinfo-item">
-  <div flex="auto" layout="column" class="kd-replicationcontrollerinfo-info">
-    <span class="kd-replicationcontrollerinfo-title">
-      <span>Replication controller</span>
-    </span>
-    <div layout="row" class="kd-replicationcontrollerinfo-subline-box">
-      <div flex="grow" class="kd-replicationcontrollerinfo-subline-box">
-        <span class="kd-replicationcontrollerinfo-line">Name</span>
-        <div class="kd-replicationcontrollerinfo-subline">
-          <kd-middle-ellipsis display-string="{{::infoCtrl.details.name}}">
-          </kd-middle-ellipsis>
-        </div>
-      </div>
-    </div>
-    <span class="kd-replicationcontrollerinfo-line">Namespace</span>
-    <span class="kd-replicationcontrollerinfo-subline">
+<kd-info-card>
+  <kd-info-card-header>Resource details</kd-info-card-header>
+  <kd-info-card-section name="Details">
+    <kd-info-card-entry title="Name">
+      <kd-middle-ellipsis display-string="{{::infoCtrl.details.name}}"></kd-middle-ellipsis>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="Namespace">
       {{::infoCtrl.details.namespace}}
-    </span>
-    <div layout="row" layout-align="start end">
-      <div flex="grow">
-        <span class="kd-replicationcontrollerinfo-line">Pods</span>
-        <span class="kd-replicationcontrollerinfo-subline"
-              ng-if="!infoCtrl.areDesiredPodsRunning()">
-          {{::infoCtrl.details.podInfo.current}} created,
-          {{::infoCtrl.details.podInfo.desired}} desired
-        </span>
-        <span class="kd-replicationcontrollerinfo-subline" ng-if="infoCtrl.areDesiredPodsRunning()">
-          {{::infoCtrl.details.podInfo.running}} running
-        </span>
-      </div>
-    </div>
-    <div ng-if="!infoCtrl.areDesiredPodsRunning()">
-      <span class="kd-replicationcontrollerinfo-line">Pods status</span>
-      <span class="kd-replicationcontrollerinfo-subline">
-        <span ng-if="::infoCtrl.details.podInfo.pending" class="kd-comma-separated-item">
-          {{::infoCtrl.details.podInfo.pending}} pending<!-- Collapse whitespace
-        --></span>
-        <span ng-if="::infoCtrl.details.podInfo.failed" class="kd-comma-separated-item">
-          {{::infoCtrl.details.podInfo.failed}} failed<!-- Collapse whitespace
-        --></span>
-        <span ng-if="::infoCtrl.details.podInfo.running" class="kd-comma-separated-item">
-          {{::infoCtrl.details.podInfo.running}} running
-        </span>
-      </span>
-    </div>
-    <span class="kd-replicationcontrollerinfo-line">Label selector</span>
-    <span class="kd-replicationcontrollerinfo-subline kd-has-labels">
+    </kd-info-card-entry>
+    <kd-info-card-entry title="Label selector">
       <kd-labels labels="::infoCtrl.details.labelSelector"></kd-labels>
-    </span>
-    <span class="kd-replicationcontrollerinfo-line">Labels</span>
-    <span class="kd-replicationcontrollerinfo-subline kd-has-labels">
+    </kd-info-card-entry>
+    <kd-info-card-entry title="Labels">
       <kd-labels labels="::infoCtrl.details.labels"></kd-labels>
-    </span>
-    <span class="kd-replicationcontrollerinfo-line">Images</span>
-    <div class="kd-replicationcontrollerinfo-subline"
-          ng-repeat="image in infoCtrl.details.containerImages">
-      <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
-    </div>
-  </div>
-  <div flex="auto" layout="column" class="kd-replicationcontrollerinfo-info">
-    <div ng-if="::infoCtrl.details.services" layout="column">
-      <span class="kd-replicationcontrollerinfo-title">Services</span>
-      <div ng-repeat="service in ::infoCtrl.details.services">
-        <span class="kd-replicationcontrollerinfo-line">Name</span>
-        <span class="kd-replicationcontrollerinfo-subline">
-          {{::service.name}}
-        </span>
-        <span class="kd-replicationcontrollerinfo-line">Label selector</span>
-        <span class="kd-replicationcontrollerinfo-subline kd-has-labels">
-          <kd-labels labels="::service.selector"></kd-labels>
-        </span>
-        <span class="kd-replicationcontrollerinfo-line">Internal endpoint</span>
-        <div class="kd-replicationcontrollerinfo-subline">
-          <div ng-if="::service.internalEndpoint">
-            <kd-internal-endpoint endpoint="::service.internalEndpoint"></kd-internal-endpoint>
-          </div>
-          <span ng-hide="service.internalEndpoint">none</span>
-        </div>
-        <span class="kd-replicationcontrollerinfo-line">External endpoint</span>
-        <div class="kd-replicationcontrollerinfo-subline">
-          <div ng-repeat="endpoint in service.externalEndpoints">
-            <kd-external-endpoint endpoint="::endpoint"></kd-external-endpoint>
-          </div>
-          <span class="kd-replicationcontrollerinfo-subline" ng-hide="::service.externalEndpoints">
-            none
-          </span>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="Images">
+      <div ng-repeat="image in infoCtrl.details.containerImages">
+        <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
+      </div>
+    </kd-info-card-entry>
+  </kd-info-card-section>
+
+  <kd-info-card-section name="Status">
+    <kd-info-card-entry title="Pods">
+      <div ng-if="!infoCtrl.areDesiredPodsRunning()">
+        {{::infoCtrl.details.podInfo.current}} created,
+        {{::infoCtrl.details.podInfo.desired}} desired
+      </div>
+      <div ng-if="infoCtrl.areDesiredPodsRunning()">
+        {{::infoCtrl.details.podInfo.running}} running
+      </div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="Pods status" ng-if="!infoCtrl.areDesiredPodsRunning()">
+      <div ng-if="!infoCtrl.areDesiredPodsRunning()">
+        <div ng-if="::infoCtrl.details.podInfo.pending" class="kd-comma-separated-item">
+          {{::infoCtrl.details.podInfo.pending}} pending<!-- Collapse whitespace
+      --></div>
+        <div ng-if="::infoCtrl.details.podInfo.failed" class="kd-comma-separated-item">
+          {{::infoCtrl.details.podInfo.failed}} failed<!-- Collapse whitespace
+      --></div>
+        <div ng-if="::infoCtrl.details.podInfo.running" class="kd-comma-separated-item">
+          {{::infoCtrl.details.podInfo.running}} running
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </kd-info-card-entry>
+  </kd-info-card-section>
+</kd-info-card>

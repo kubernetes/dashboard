@@ -13,7 +13,6 @@
 // limitations under the License.
 
 /**
- * Controller for the replication controller info directive.
  * @final
  */
 export default class ReplicationControllerInfoController {
@@ -34,3 +33,18 @@ export default class ReplicationControllerInfoController {
    */
   areDesiredPodsRunning() { return this.details.podInfo.running === this.details.podInfo.desired; }
 }
+
+/**
+ * Definition object for the component that displays replication controller info.
+ *
+ * @return {!angular.Directive}
+ */
+export const replicationControllerInfoComponent = {
+  controller: ReplicationControllerInfoController,
+  controllerAs: 'infoCtrl',
+  templateUrl: 'replicationcontrollerdetail/replicationcontrollerinfo.html',
+  bindings: {
+    /** {!backendApi.ReplicationControllerDetail} */
+    'details': '=',
+  },
+};

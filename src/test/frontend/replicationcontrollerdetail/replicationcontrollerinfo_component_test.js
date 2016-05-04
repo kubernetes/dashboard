@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ReplicationControllerInfoController from 'replicationcontrollerdetail/replicationcontrollerinfo_controller';
 import replicationControllerDetailModule from 'replicationcontrollerdetail/replicationcontrollerdetail_module';
 
 describe('Replication Controller Detail controller', () => {
@@ -25,8 +24,9 @@ describe('Replication Controller Detail controller', () => {
   beforeEach(() => {
     angular.mock.module(replicationControllerDetailModule.name);
 
-    angular.mock.inject(
-        ($controller) => { ctrl = $controller(ReplicationControllerInfoController, {}); });
+    angular.mock.inject(($componentController) => {
+      ctrl = $componentController('kdReplicationControllerInfo', {});
+    });
   });
 
   it('should return true when all desired pods are running', () => {
