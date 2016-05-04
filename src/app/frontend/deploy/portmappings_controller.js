@@ -23,8 +23,9 @@ export default class PortMappingsController {
     /**
      * Two way data binding from the scope.
      * @export {!Array<!backendApi.PortMapping>}
+     *
      */
-    this.portMappings = [this.newEmptyPortMapping_(this.protocols[0])];
+    this.portMappings = [];
 
     /**
      * Initialized from the scope.
@@ -37,6 +38,8 @@ export default class PortMappingsController {
      * @export {boolean}
      */
     this.isExternal;
+
+    this.serviceType;
   }
 
   /**
@@ -93,8 +96,8 @@ export default class PortMappingsController {
       let isValidTargetPort =
           this.isPortMappingFilledOrEmpty_(portMapping) || !!portMapping.targetPort;
 
-      portElem.$setValidity('empty', isValidPort);
-      targetPortElem.$setValidity('empty', isValidTargetPort);
+      portElem.$setValidity('incomplete', isValidPort);
+      targetPortElem.$setValidity('incomplete', isValidTargetPort);
     }
   }
 
@@ -126,4 +129,30 @@ export default class PortMappingsController {
    * @private
    */
   isPortMappingFilledOrEmpty_(portMapping) { return !portMapping.port === !portMapping.targetPort; }
+
+  changeServiceType(){
+
+    // add or remove port mappings
+    if (this.serviceType==='None'){
+      this.portMappings = [];
+    } else if (this.portMappings.length ===0 ) {
+      this.portMappings = [this.newEmptyPortMapping_(this.protocols[0])];
+    }
+
+    // TODO use object & do some refactoring in parent controller
+    if (this.serviceType == 'External'){
+      this.isExternal = true;
+    } else {
+      this.isExternal = false;
+    }
+  }
+
+  // firt port mapping is required
+  // TODO better name
+  isRequired(portIndex){
+    if (portIndex == 0){
+      return true;
+    }
+    return false;
+  }
 }

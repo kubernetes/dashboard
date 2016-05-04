@@ -98,11 +98,11 @@ limitations under the License.
 </kd-help-section>
 
 <kd-help-section>
-  <kd-port-mappings port-mappings="ctrl.portMappings" protocols="ctrl.protocols"
-      is-external="ctrl.isExternal">
-  </kd-port-mappings>
+    <kd-port-mappings port-mappings="ctrl.portMappings" protocols="ctrl.protocols"
+        is-external="ctrl.isExternal">
+    </kd-port-mappings>
   <kd-user-help>
-    Ports are optional. If specified, a Service will be created mapping the Port (incoming) to a
+    Service is optional. If specified, it will mapp the Port (incoming) to a
     target Port seen by the container.
     <span ng-if="ctrl.name">
       The internal DNS name for this Service will be: <span class="kd-emphasized">{{ctrl.name}}</span>.
@@ -113,16 +113,7 @@ limitations under the License.
   </kd-user-help>
 </kd-help-section>
 
-<kd-help-section>
-  <div class="md-block">
-    <md-checkbox ng-model="ctrl.isExternal" class="md-primary"
-                 ng-model-options="{ debounce: { 'default': 500, 'blur': 0 } }">
-      Expose service externally
-    </md-checkbox>
-  </div>
-  <kd-user-help>
-  </kd-user-help>
-</kd-help-section>
+
 
 <!-- advanced options -->
 <div ng-show="ctrl.isMoreOptionsEnabled()">
