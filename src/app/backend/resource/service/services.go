@@ -18,7 +18,6 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/resource/common"
-	. "github.com/kubernetes/dashboard/client"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
@@ -57,7 +56,7 @@ type ServiceList struct {
 }
 
 // GetService gets service details.
-func GetService(client client.Interface, heapsterClient HeapsterClient, namespace, name string) (*Service, error) {
+func GetService(client client.Interface, namespace, name string) (*Service, error) {
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 
 	// TODO(maciaszczykm): Use channels.
@@ -71,7 +70,7 @@ func GetService(client client.Interface, heapsterClient HeapsterClient, namespac
 }
 
 // GetServiceList returns a list of all services in the cluster.
-func GetServiceList(client *client.Client) (*ServiceList, error) {
+func GetServiceList(client client.Interface) (*ServiceList, error) {
 	log.Printf("Getting list of all services in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -98,7 +97,7 @@ func getServiceDetails(service *api.Service) Service {
 		CreationTimestamp: service.CreationTimestamp,
 		Labels:            service.Labels,
 		InternalEndpoint:  common.GetInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports),
-		ExternalEndpoints: []common.Endpoint{}, // TODO(maciaszczykm): Fill it with data.
-		Selector:          service.Spec.Selector,
+		// TODO(maciaszczykm): Fill ExternalEndpoints with data.
+		Selector: service.Spec.Selector,
 	}
 }

@@ -26,10 +26,10 @@ import (
 	. "github.com/kubernetes/dashboard/resource/container"
 	. "github.com/kubernetes/dashboard/resource/event"
 	. "github.com/kubernetes/dashboard/resource/namespace"
-	. "github.com/kubernetes/dashboard/resource/service"
 	"github.com/kubernetes/dashboard/resource/replicaset"
 	. "github.com/kubernetes/dashboard/resource/replicationcontroller"
 	. "github.com/kubernetes/dashboard/resource/secret"
+	resourceService "github.com/kubernetes/dashboard/resource/service"
 	"github.com/kubernetes/dashboard/resource/workload"
 	. "github.com/kubernetes/dashboard/validation"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
@@ -235,19 +235,19 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 	servicesWs.Route(
 		servicesWs.GET("").
 			To(apiHandler.handleGetServiceList).
-			Writes(ServiceList{}))
+			Writes(resourceService.ServiceList{}))
 	servicesWs.Route(
 		servicesWs.GET("/{namespace}/{service}").
 			To(apiHandler.handleGetService).
-			Writes(Service{}))
+			Writes(resourceService.Service{}))
 	wsContainer.Add(servicesWs)
 
 	return wsContainer
 }
 
-// Handles get Replication Controller list API call.
+// Handles get service list API call.
 func (apiHandler *ApiHandler) handleGetServiceList(request *restful.Request, response *restful.Response) {
-	result, err := GetServiceList(apiHandler.client)
+	result, err := resourceService.GetServiceList(apiHandler.client)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -260,7 +260,7 @@ func (apiHandler *ApiHandler) handleGetServiceList(request *restful.Request, res
 func (apiHandler *ApiHandler) handleGetService(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
 	service := request.PathParameter("service")
-	result, err := GetService(apiHandler.client, apiHandler.heapsterClient, namespace, service)
+	result, err := resourceService.GetService(apiHandler.client, namespace, service)
 	if err != nil {
 		handleInternalError(response, err)
 		return

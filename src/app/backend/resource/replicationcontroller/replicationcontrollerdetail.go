@@ -19,7 +19,7 @@ import (
 
 	. "github.com/kubernetes/dashboard/client"
 	"github.com/kubernetes/dashboard/resource/common"
-	. "github.com/kubernetes/dashboard/resource/service"
+	resourceService "github.com/kubernetes/dashboard/resource/service"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
@@ -51,7 +51,7 @@ type ReplicationControllerDetail struct {
 	Pods []ReplicationControllerPod `json:"pods"`
 
 	// Detailed information about service related to Replication Controller.
-	Services []Service `json:"services"`
+	Services []resourceService.Service `json:"services"`
 
 	// True when the data contains at least one pod with metrics information, false otherwise.
 	HasMetrics bool `json:"hasMetrics"`
@@ -253,8 +253,8 @@ func UpdateReplicasCount(client client.Interface, namespace, name string,
 
 // Returns detailed information about service from given service
 func getServiceDetail(service api.Service, replicationController api.ReplicationController,
-	pods []api.Pod, nodes []api.Node) Service {
-	return Service{
+	pods []api.Pod, nodes []api.Node) resourceService.Service {
+	return resourceService.Service{
 		Name: service.ObjectMeta.Name,
 		InternalEndpoint: common.GetInternalEndpoint(service.Name, service.Namespace,
 			service.Spec.Ports),
