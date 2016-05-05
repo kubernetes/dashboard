@@ -32,7 +32,7 @@
     "gulp-eslint": "~2.0.0",
     "gulp-flatten": "~0.2.0",
     "gulp-htmlmin": "~2.0.0",
-    "gulp-if": "~2.0.0",
+    "gulp-if": "~2.0.1",
     "gulp-inject": "~4.0.0",
     "gulp-minify-css": "~1.2.2",
     "gulp-protractor": "~2.3.0",
