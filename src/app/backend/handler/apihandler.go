@@ -26,10 +26,10 @@ import (
 	. "github.com/kubernetes/dashboard/resource/container"
 	. "github.com/kubernetes/dashboard/resource/event"
 	. "github.com/kubernetes/dashboard/resource/namespace"
-	. "github.com/kubernetes/dashboard/resource/service"
 	"github.com/kubernetes/dashboard/resource/replicaset"
 	. "github.com/kubernetes/dashboard/resource/replicationcontroller"
 	. "github.com/kubernetes/dashboard/resource/secret"
+	. "github.com/kubernetes/dashboard/resource/service"
 	"github.com/kubernetes/dashboard/resource/workload"
 	. "github.com/kubernetes/dashboard/validation"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
@@ -260,7 +260,7 @@ func (apiHandler *ApiHandler) handleGetServiceList(request *restful.Request, res
 func (apiHandler *ApiHandler) handleGetService(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
 	service := request.PathParameter("service")
-	result, err := GetService(apiHandler.client, apiHandler.heapsterClient, namespace, service)
+	result, err := GetService(apiHandler.client, namespace, service)
 	if err != nil {
 		handleInternalError(response, err)
 		return

@@ -15,8 +15,8 @@
 package common
 
 import (
-	"k8s.io/kubernetes/pkg/api"
 	"bytes"
+	"k8s.io/kubernetes/pkg/api"
 )
 
 // Endpoint describes an endpoint that is host and a list of available ports for that host.
@@ -42,7 +42,7 @@ type ServicePort struct {
 func GetInternalEndpoint(serviceName, namespace string, ports []api.ServicePort) Endpoint {
 
 	name := serviceName
-	if namespace != api.NamespaceDefault {
+	if namespace != api.NamespaceDefault && len(namespace) > 0 && len(serviceName) > 0 {
 		bufferName := bytes.NewBufferString(name)
 		bufferName.WriteString(".")
 		bufferName.WriteString(namespace)
@@ -54,7 +54,6 @@ func GetInternalEndpoint(serviceName, namespace string, ports []api.ServicePort)
 		Ports: GetServicePorts(ports),
 	}
 }
-
 
 // Gets human readable name for the given service ports list.
 func GetServicePorts(apiPorts []api.ServicePort) []ServicePort {
