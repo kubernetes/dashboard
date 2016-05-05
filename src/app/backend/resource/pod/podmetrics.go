@@ -28,8 +28,8 @@ import (
 )
 
 const (
-	cpuUsage    = "cpu-usage"
-	memoryUsage = "memory-usage"
+	CpuUsage    = "cpu-usage"
+	MemoryUsage = "memory-usage"
 )
 
 // MetricsByPod is a metrics map by pod name.

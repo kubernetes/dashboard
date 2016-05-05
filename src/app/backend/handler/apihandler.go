@@ -25,6 +25,7 @@ import (
 	. "github.com/kubernetes/dashboard/client"
 	. "github.com/kubernetes/dashboard/resource/container"
 	"github.com/kubernetes/dashboard/resource/deployment"
+	. "github.com/kubernetes/dashboard/resource/daemonset"
 	. "github.com/kubernetes/dashboard/resource/event"
 	. "github.com/kubernetes/dashboard/resource/namespace"
 	"github.com/kubernetes/dashboard/resource/pod"

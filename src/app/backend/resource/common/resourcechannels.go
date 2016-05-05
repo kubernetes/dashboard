@@ -43,6 +43,9 @@ type ResourceChannels struct {
 	// List and error channels to Deployments.
 	DeploymentList DeploymentListChannel
 
+	// List and error channels to Daemon Sets.
+	DaemonSetList DaemonSetListChannel
+
 	// List and error channels to Services.
 	ServiceList ServiceListChannel
 
@@ -232,6 +235,31 @@ func GetReplicaSetListChannel(client client.ReplicaSetsNamespacer, numReads int)
 
 	go func() {
 		rcs, err := client.ReplicaSets(api.NamespaceAll).List(listEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- rcs
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// List and error channels to Nodes.
+type DaemonSetListChannel struct {
+	List  chan *extensions.DaemonSetList
+	Error chan error
+}
+
+// Returns a pair of channels to a ReplicaSet list and errors that both must be read
+// numReads times.
+func GetDaemonSetListChannel(client client.DaemonSetsNamespacer, numReads int) DaemonSetListChannel {
+	channel := DaemonSetListChannel{
+		List:  make(chan *extensions.DaemonSetList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		rcs, err := client.DaemonSets(api.NamespaceAll).List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- rcs
 			channel.Error <- err
