@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {stateName as logsStateName} from 'logs/logs_state';
+import {StateParams as LogsStateParams} from 'logs/logs_state';
+
 /**
  * Controller for the replication controller details view.
  *
@@ -22,9 +25,12 @@ export default class ReplicationControllerDetailController {
    * @param {function(string):boolean} $mdMedia Angular Material $mdMedia service
    * @param {!backendApi.ReplicationControllerDetail} replicationControllerDetail
    * @param {!backendApi.Events} replicationControllerEvents
+   * @param {!ui.router.$state} $state
+   * @param {!../logs/logs_state.StateParams} $stateParams
    * @ngInject
    */
-  constructor($mdMedia, replicationControllerDetail, replicationControllerEvents) {
+  constructor(
+      $mdMedia, replicationControllerDetail, replicationControllerEvents, $state, $stateParams) {
     /** @export {function(string):boolean} */
     this.mdMedia = $mdMedia;
 
@@ -33,6 +39,12 @@ export default class ReplicationControllerDetailController {
 
     /** @export !Array<!backendApi.Event> */
     this.events = replicationControllerEvents.events;
+
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
+
+    /** @private {!../logs/logs_state.StateParams} */
+    this.stateParams_ = $stateParams;
   }
 
   /**
@@ -52,5 +64,17 @@ export default class ReplicationControllerDetailController {
   hasMemoryUsage(pod) {
     return !!pod.metrics && !!pod.metrics.memoryUsageHistory &&
         pod.metrics.memoryUsageHistory.length > 0;
+  }
+
+  /**
+   * @param {!backendApi.ReplicationControllerPod} pod
+   * @return {string}
+   * @export
+   */
+  getPodLogsHref(pod) {
+    return this.state_.href(
+        logsStateName,
+        new LogsStateParams(
+            this.stateParams_.namespace, this.stateParams_.replicationController, pod.name));
   }
 }
