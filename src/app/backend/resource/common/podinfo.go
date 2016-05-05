@@ -100,3 +100,20 @@ func GetMatchingPods(labelSelector *unversioned.LabelSelector, namespace string,
 
 	return matchingPods
 }
+
+// Returns true when a Service with the given selector targets the same Pods (or subset) that
+// a Daemon Set with the given selector.
+func IsLabelSelectorMatchingforDS(labelSelector map[string]string,
+	testedObjectLabels *unversioned.LabelSelector) bool {
+
+	// If service has no selectors, then assume it targets different Pods.
+	if len(labelSelector) == 0 {
+		return false
+	}
+	for label, value := range labelSelector {
+		if rsValue, ok := testedObjectLabels.MatchLabels[label]; !ok || rsValue != value {
+			return false
+		}
+	}
+	return true
+}

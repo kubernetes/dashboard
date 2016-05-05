@@ -29,8 +29,8 @@ import (
 )
 
 const (
-	cpuUsage    = "cpu-usage"
-	memoryUsage = "memory-usage"
+	CpuUsage    = "cpu-usage"
+	MemoryUsage = "memory-usage"
 )
 
 // ReplicationControllerMetricsByPod is a metrics map by pod name.
@@ -70,24 +70,24 @@ func getReplicationControllerPodsMetrics(podList *api.PodList, heapsterClient He
 		podNames = append(podNames, pod.Name)
 	}
 
-	metricCpuUsagePath := createMetricPath(namespace, podNames, cpuUsage)
-	metricMemUsagePath := createMetricPath(namespace, podNames, memoryUsage)
+	metricCpuUsagePath := CreateMetricPath(namespace, podNames, CpuUsage)
+	metricMemUsagePath := CreateMetricPath(namespace, podNames, MemoryUsage)
 
-	resultCpuUsageRaw, err := getRawMetrics(heapsterClient, metricCpuUsagePath)
+	resultCpuUsageRaw, err := GetRawMetrics(heapsterClient, metricCpuUsagePath)
 	if err != nil {
 		return nil, err
 	}
 
-	resultMemUsageRaw, err := getRawMetrics(heapsterClient, metricMemUsagePath)
+	resultMemUsageRaw, err := GetRawMetrics(heapsterClient, metricMemUsagePath)
 	if err != nil {
 		return nil, err
 	}
 
-	cpuMetricResult, err := unmarshalMetrics(resultCpuUsageRaw)
+	cpuMetricResult, err := UnmarshalMetrics(resultCpuUsageRaw)
 	if err != nil {
 		return nil, err
 	}
-	memMetricResult, err := unmarshalMetrics(resultMemUsageRaw)
+	memMetricResult, err := UnmarshalMetrics(resultMemUsageRaw)
 	if err != nil {
 		return nil, err
 	}
@@ -95,7 +95,7 @@ func getReplicationControllerPodsMetrics(podList *api.PodList, heapsterClient He
 }
 
 // Create URL path for metrics.
-func createMetricPath(namespace string, podNames []string, metricName string) string {
+func CreateMetricPath(namespace string, podNames []string, metricName string) string {
 	return fmt.Sprintf("/model/namespaces/%s/pod-list/%s/metrics/%s",
 		namespace,
 		strings.Join(podNames, ","),
@@ -103,7 +103,7 @@ func createMetricPath(namespace string, podNames []string, metricName string) st
 }
 
 // Retrieves raw metrics from Heapster.
-func getRawMetrics(heapsterClient HeapsterClient, metricPath string) ([]byte, error) {
+func GetRawMetrics(heapsterClient HeapsterClient, metricPath string) ([]byte, error) {
 	resultRaw, err := heapsterClient.Get(metricPath).DoRaw()
 
 	if err != nil {
@@ -113,7 +113,7 @@ func getRawMetrics(heapsterClient HeapsterClient, metricPath string) ([]byte, er
 }
 
 // Deserialize raw metrics to object.
-func unmarshalMetrics(rawData []byte) ([]heapster.MetricResult, error) {
+func UnmarshalMetrics(rawData []byte) ([]heapster.MetricResult, error) {
 	metricResultList := &heapster.MetricResultList{}
 	err := json.Unmarshal(rawData, metricResultList)
 	if err != nil {

@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package daemonset
 
 import (
 	"log"
 	"sort"
 
+	"github.com/kubernetes/dashboard/resource/replicationcontroller"
 	api "k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
@@ -50,7 +51,7 @@ type DaemonSetPodWithContainers struct {
 	TotalRestartCount int `json:"totalRestartCount"`
 
 	// List of Containers that belongs to particular Pod.
-	PodContainers []PodContainer `json:"podContainers"`
+	PodContainers []replicationcontroller.PodContainer `json:"podContainers"`
 }
 
 // Returns list of pods with containers for the given daemon set in the given namespace.
@@ -80,13 +81,13 @@ func getDaemonSetPods(pods []api.Pod, limit int) *DaemonSetPods {
 		daemonSetPodWithContainers := DaemonSetPodWithContainers{
 			Name:          pod.Name,
 			StartTime:     pod.Status.StartTime,
-			PodContainers: make([]PodContainer, 0),
+			PodContainers: make([]replicationcontroller.PodContainer, 0),
 		}
 
-		podContainersByName := make(map[string]*PodContainer)
+		podContainersByName := make(map[string]*replicationcontroller.PodContainer)
 
 		for _, container := range pod.Spec.Containers {
-			podContainer := PodContainer{Name: container.Name}
+			podContainer := replicationcontroller.PodContainer{Name: container.Name}
 			daemonSetPodWithContainers.PodContainers =
 				append(daemonSetPodWithContainers.PodContainers, podContainer)
 

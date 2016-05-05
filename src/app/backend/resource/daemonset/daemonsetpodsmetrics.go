@@ -12,11 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package daemonset
 
 import (
 	"log"
 
+	. "github.com/kubernetes/dashboard/client"
+	. "github.com/kubernetes/dashboard/resource/replicationcontroller"
 	heapster "k8s.io/heapster/api/v1/types"
 	"k8s.io/kubernetes/pkg/api"
 )
@@ -38,24 +40,24 @@ func getDaemonSetPodsMetrics(podList *api.PodList, heapsterClient HeapsterClient
 		podNames = append(podNames, pod.Name)
 	}
 
-	metricCpuUsagePath := createMetricPath(namespace, podNames, cpuUsage)
-	metricMemUsagePath := createMetricPath(namespace, podNames, memoryUsage)
+	metricCpuUsagePath := CreateMetricPath(namespace, podNames, CpuUsage)
+	metricMemUsagePath := CreateMetricPath(namespace, podNames, MemoryUsage)
 
-	resultCpuUsageRaw, err := getRawMetrics(heapsterClient, metricCpuUsagePath)
+	resultCpuUsageRaw, err := GetRawMetrics(heapsterClient, metricCpuUsagePath)
 	if err != nil {
 		return nil, err
 	}
 
-	resultMemUsageRaw, err := getRawMetrics(heapsterClient, metricMemUsagePath)
+	resultMemUsageRaw, err := GetRawMetrics(heapsterClient, metricMemUsagePath)
 	if err != nil {
 		return nil, err
 	}
 
-	cpuMetricResult, err := unmarshalMetrics(resultCpuUsageRaw)
+	cpuMetricResult, err := UnmarshalMetrics(resultCpuUsageRaw)
 	if err != nil {
 		return nil, err
 	}
-	memMetricResult, err := unmarshalMetrics(resultMemUsageRaw)
+	memMetricResult, err := UnmarshalMetrics(resultMemUsageRaw)
 	if err != nil {
 		return nil, err
 	}

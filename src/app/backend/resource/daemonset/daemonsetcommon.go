@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package daemonset
 
 import (
+	"github.com/kubernetes/dashboard/resource/event"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
@@ -41,7 +42,7 @@ type DaemonSetPodInfo struct {
 	Failed int `json:"failed"`
 
 	// Unique warning messages related to pods in this Daemon Set.
-	Warnings []Event `json:"warnings"`
+	Warnings []event.Event `json:"warnings"`
 }
 
 // Returns structure containing DaemonSet and Pods for the given daemon set.
