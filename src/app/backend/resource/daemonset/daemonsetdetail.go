@@ -12,11 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package daemonset
 
 import (
+	"bytes"
 	"log"
 
+	. "github.com/kubernetes/dashboard/client"
+	"github.com/kubernetes/dashboard/resource/common"
+	"github.com/kubernetes/dashboard/resource/replicationcontroller"
 	"k8s.io/kubernetes/pkg/api"
 	unversioned "k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
@@ -49,7 +53,7 @@ type DaemonSetDetail struct {
 	Pods []DaemonSetPod `json:"pods"`
 
 	// Detailed information about service related to Daemon Set.
-	Services []ServiceDetail `json:"services"`
+	Services []replicationcontroller.ServiceDetail `json:"services"`
 
 	// True when the data contains at least one pod with metrics information, false otherwise.
 	HasMetrics bool `json:"hasMetrics"`
@@ -64,7 +68,7 @@ type DaemonSetPod struct {
 	PodPhase api.PodPhase `json:"podPhase"`
 
 	// Time the Pod has started. Empty if not started.
-	StartTime *unversioned.Time `json:"startTime"`
+	StartTime unversioned.Time `json:"startTime"`
 
 	// IP address of the Pod.
 	PodIP string `json:"podIP"`
@@ -101,6 +105,11 @@ func GetDaemonSetDetail(client client.Interface, heapsterClient HeapsterClient,
 		FieldSelector: fields.Everything(),
 	})
 
+	nodes, err := client.Nodes().List(api.ListOptions{
+		LabelSelector: labels.Everything(),
+		FieldSelector: fields.Everything(),
+	})
+
 	if err != nil {
 		return nil, err
 	}
@@ -115,14 +124,9 @@ func GetDaemonSetDetail(client client.Interface, heapsterClient HeapsterClient,
 
 	matchingServices := getMatchingServicesforDS(services.Items, daemonSet)
 
-	// Anonymous callback function to get nodes by their names.
-	getNodeFn := func(nodeName string) (*api.Node, error) {
-		return client.Nodes().Get(nodeName)
-	}
-
 	for _, service := range matchingServices {
 		daemonSetDetail.Services = append(daemonSetDetail.Services,
-			getServiceDetailforDS(service, *daemonSet, pods.Items, getNodeFn))
+			getServiceDetailforDS(service, *daemonSet, pods.Items, nodes.Items))
 	}
 
 	for _, container := range daemonSet.Spec.Template.Spec.Containers {
@@ -134,7 +138,7 @@ func GetDaemonSetDetail(client client.Interface, heapsterClient HeapsterClient,
 		podDetail := DaemonSetPod{
 			Name:         pod.Name,
 			PodPhase:     pod.Status.Phase,
-			StartTime:    pod.Status.StartTime,
+			StartTime:    pod.CreationTimestamp,
 			PodIP:        pod.Status.PodIP,
 			NodeName:     pod.Spec.NodeName,
 			RestartCount: getRestartCount(pod),
@@ -218,24 +222,24 @@ func DeleteDaemonSetServices(client client.Interface, namespace, name string) er
 
 // Returns detailed information about service from given service
 func getServiceDetailforDS(service api.Service, daemonSet extensions.DaemonSet,
-	pods []api.Pod, getNodeFn GetNodeFunc) ServiceDetail {
+	pods []api.Pod, nodes []api.Node) ServiceDetail {
 	return ServiceDetail{
 		Name: service.ObjectMeta.Name,
-		InternalEndpoint: getInternalEndpoint(service.Name, service.Namespace,
+		InternalEndpoint: replicationcontroller.getInternalEndpoint(service.Name, service.Namespace,
 			service.Spec.Ports),
-		ExternalEndpoints: getExternalEndpointsforDS(daemonSet, pods, service, getNodeFn),
+		ExternalEndpoints: getExternalEndpointsforDS(daemonSet, pods, service, nodes),
 		Selector:          service.Spec.Selector,
 	}
 }
 
 // Returns array of external endpoints for a daemon set.
 func getExternalEndpointsforDS(daemonSet extensions.DaemonSet, pods []api.Pod,
-	service api.Service, getNodeFn GetNodeFunc) []Endpoint {
+	service api.Service, nodes []api.Node) []Endpoint {
 	var externalEndpoints []Endpoint
 	daemonSetPods := filterDaemonSetPods(daemonSet, pods)
 
 	if service.Spec.Type == api.ServiceTypeNodePort {
-		externalEndpoints = getNodePortEndpoints(daemonSetPods, service, getNodeFn)
+		externalEndpoints = replicationcontroller.getNodePortEndpoints(daemonSetPods, service, nodes)
 	} else if service.Spec.Type == api.ServiceTypeLoadBalancer {
 		for _, ingress := range service.Status.LoadBalancer.Ingress {
 			externalEndpoints = append(externalEndpoints, getExternalEndpoint(ingress,
@@ -243,13 +247,13 @@ func getExternalEndpointsforDS(daemonSet extensions.DaemonSet, pods []api.Pod,
 		}
 
 		if len(externalEndpoints) == 0 {
-			externalEndpoints = getNodePortEndpoints(daemonSetPods, service, getNodeFn)
+			externalEndpoints = replicationcontroller.getNodePortEndpoints(daemonSetPods, service, nodes)
 		}
 	}
 
 	if len(externalEndpoints) == 0 && (service.Spec.Type == api.ServiceTypeNodePort ||
 		service.Spec.Type == api.ServiceTypeLoadBalancer) {
-		externalEndpoints = getLocalhostEndpoints(service)
+		externalEndpoints = replicationcontroller.getLocalhostEndpoints(service)
 	}
 
 	return externalEndpoints

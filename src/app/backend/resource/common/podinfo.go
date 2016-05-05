@@ -18,6 +18,7 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 
 	"github.com/kubernetes/dashboard/resource/event"
+	"k8s.io/kubernetes/pkg/api/unversioned"
 )
 
 // ControllerPodInfo represents aggregate information about controller's pods.
@@ -74,6 +75,23 @@ func IsLabelSelectorMatching(labelSelector map[string]string,
 	}
 	for label, value := range labelSelector {
 		if rsValue, ok := testedObjectLabels[label]; !ok || rsValue != value {
+			return false
+		}
+	}
+	return true
+}
+
+// Returns true when a Service with the given selector targets the same Pods (or subset) that
+// a Daemon Set with the given selector.
+func isLabelSelectorMatchingforDS(labelSelector map[string]string,
+	testedObjectLabels *unversioned.LabelSelector) bool {
+
+	// If service has no selectors, then assume it targets different Pods.
+	if len(labelSelector) == 0 {
+		return false
+	}
+	for label, value := range labelSelector {
+		if rsValue, ok := testedObjectLabels.MatchLabels[label]; !ok || rsValue != value {
 			return false
 		}
 	}

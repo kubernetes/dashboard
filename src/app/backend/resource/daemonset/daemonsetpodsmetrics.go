@@ -12,11 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package daemonset
 
 import (
 	"log"
 
+	"github.com/kubernetes/dashboard/resource/replicationcontroller"
 	heapster "k8s.io/heapster/api/v1/types"
 	"k8s.io/kubernetes/pkg/api"
 )
@@ -24,7 +25,7 @@ import (
 // Metrics map by pod name.
 type DaemonSetMetricsByPod struct {
 	// Metrics map by pod name
-	MetricsMap map[string]PodMetrics `json:"metricsMap"`
+	MetricsMap map[string]replicationcontroller.PodMetrics `json:"metricsMap"`
 }
 
 // Return Pods metrics for Daemon Set or error when occurred.
@@ -38,24 +39,24 @@ func getDaemonSetPodsMetrics(podList *api.PodList, heapsterClient HeapsterClient
 		podNames = append(podNames, pod.Name)
 	}
 
-	metricCpuUsagePath := createMetricPath(namespace, podNames, cpuUsage)
-	metricMemUsagePath := createMetricPath(namespace, podNames, memoryUsage)
+	metricCpuUsagePath := replicationcontroller.createMetricPath(namespace, podNames, cpuUsage)
+	metricMemUsagePath := replicationcontroller.createMetricPath(namespace, podNames, memoryUsage)
 
-	resultCpuUsageRaw, err := getRawMetrics(heapsterClient, metricCpuUsagePath)
+	resultCpuUsageRaw, err := replicationcontroller.getRawMetrics(heapsterClient, metricCpuUsagePath)
 	if err != nil {
 		return nil, err
 	}
 
-	resultMemUsageRaw, err := getRawMetrics(heapsterClient, metricMemUsagePath)
+	resultMemUsageRaw, err := replicationcontroller.getRawMetrics(heapsterClient, metricMemUsagePath)
 	if err != nil {
 		return nil, err
 	}
 
-	cpuMetricResult, err := unmarshalMetrics(resultCpuUsageRaw)
+	cpuMetricResult, err := replicationcontroller.unmarshalMetrics(resultCpuUsageRaw)
 	if err != nil {
 		return nil, err
 	}
-	memMetricResult, err := unmarshalMetrics(resultMemUsageRaw)
+	memMetricResult, err := replicationcontroller.unmarshalMetrics(resultMemUsageRaw)
 	if err != nil {
 		return nil, err
 	}
@@ -95,7 +96,7 @@ func createResponseforDS(cpuMetrics []heapster.MetricResult, memMetrics []heapst
 				memHistory[i].Timestamp = memMeasure.Timestamp
 			}
 
-			podResources := PodMetrics{
+			podResources := replicationcontroller.PodMetrics{
 				CpuUsage:           cpuValue,
 				MemoryUsage:        memValue,
 				CpuUsageHistory:    cpuHistory,

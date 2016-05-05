@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package daemonset
 
 import (
 	"log"
 	"sort"
 
+	"github.com/kubernetes/dashboard/resource/replicationcontroller"
 	api "k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
@@ -50,7 +51,7 @@ type DaemonSetPodWithContainers struct {
 	TotalRestartCount int `json:"totalRestartCount"`
 
 	// List of Containers that belongs to particular Pod.
-	PodContainers []PodContainer `json:"podContainers"`
+	PodContainers []replicationcontroller.PodContainer `json:"podContainers"`
 }
 
 // Returns list of pods with containers for the given daemon set in the given namespace.

@@ -12,17 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package daemonset
 
 import (
 	"log"
 
+	"github.com/kubernetes/dashboard/resource/common"
+	"github.com/kubernetes/dashboard/resource/replicationcontroller"
+	// TODO(maciaszczykm): Avoid using dot-imports.
+	. "github.com/kubernetes/dashboard/resource/event"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
-	"k8s.io/kubernetes/pkg/fields"
-	"k8s.io/kubernetes/pkg/labels"
 )
 
 // DaemonSetList contains a list of Daemon Sets in the cluster.
@@ -65,57 +67,49 @@ type DaemonSet struct {
 // GetDaemonSetList returns a list of all Daemon Set in the cluster.
 func GetDaemonSetList(client *client.Client, namespace string) (*DaemonSetList, error) {
 	log.Printf("Getting list of all daemon sets in the cluster")
-	if namespace == "" {
-		namespace = api.NamespaceAll
+	channels := &common.ResourceChannels{
+		DaemonSetList: common.GetDaemonSetListChannel(client, 1),
+		ServiceList:   common.GetServiceListChannel(client, 1),
+		PodList:       common.GetPodListChannel(client, 1),
+		EventList:     common.GetEventListChannel(client, 1),
+		NodeList:      common.GetNodeListChannel(client, 1),
 	}
 
-	listEverything := api.ListOptions{
-		LabelSelector: labels.Everything(),
-		FieldSelector: fields.Everything(),
-	}
+	return GetReplicationControllerListFromChannels(channels)
+}
 
-	daemonSets, err := client.Extensions().DaemonSets(namespace).List(listEverything)
+// GetDaemonSetList returns a list of all Daemon Seet in the cluster
+// reading required resource list once from the channels.
+func GetDaemonSetListFromChannels(channels *common.ResourceChannels) (
+	*DaemonSetList, error) {
 
-	if err != nil {
+	daemonSets := <-channels.DaemonSetList.List
+	if err := <-channels.DaemonSetList.Error; err != nil {
 		return nil, err
 	}
 
-	services, err := client.Services(namespace).List(listEverything)
-
-	if err != nil {
+	services := <-channels.ServiceList.List
+	if err := <-channels.ServiceList.Error; err != nil {
 		return nil, err
 	}
 
-	pods, err := client.Pods(namespace).List(listEverything)
-
-	if err != nil {
+	pods := <-channels.PodList.List
+	if err := <-channels.PodList.Error; err != nil {
 		return nil, err
 	}
 
-	// Anonymous callback function to get pods warnings.
-	// Function fulfils GetPodsEventWarningsFunc type contract.
-	// Based on list of api pods returns list of pod related warning events
-	getPodsEventWarningsFn := func(pods []api.Pod) ([]Event, error) {
-		errors, err := GetPodsEventWarnings(client, pods)
-
-		if err != nil {
-			return nil, err
-		}
-
-		return errors, nil
-	}
-
-	// Anonymous callback function to get nodes by their names.
-	getNodeFn := func(nodeName string) (*api.Node, error) {
-		return client.Nodes().Get(nodeName)
-	}
-
-	result, err := getDaemonSetList(daemonSets.Items, services.Items,
-		pods.Items, getPodsEventWarningsFn, getNodeFn)
-
-	if err != nil {
+	events := <-channels.EventList.List
+	if err := <-channels.EventList.Error; err != nil {
 		return nil, err
 	}
+
+	nodes := <-channels.NodeList.List
+	if err := <-channels.NodeList.Error; err != nil {
+		return nil, err
+	}
+
+	result := getReplicationControllerList(daemonSets.Items, services.Items,
+		pods.Items, events.Items, nodes.Items)
 
 	return result, nil
 }
@@ -124,16 +118,12 @@ func GetDaemonSetList(client *client.Client, namespace string) (*DaemonSetList, 
 // Daemon Set and Service API objects.
 // The function processes all Daemon Set API objects and finds matching Services for them.
 func getDaemonSetList(daemonSets []extensions.DaemonSet,
-	services []api.Service, pods []api.Pod, getPodsEventWarningsFn GetPodsEventWarningsFunc,
-	getNodeFn GetNodeFunc) (*DaemonSetList, error) {
+	services []api.Service, pods []api.Pod, events []api.Event,
+	nodes []api.Node) *DaemonSetList {
 
 	daemonSetList := &DaemonSetList{DaemonSets: make([]DaemonSet, 0)}
 
 	for _, daemonSet := range daemonSets {
-		var containerImages []string
-		for _, container := range daemonSet.Spec.Template.Spec.Containers {
-			containerImages = append(containerImages, container.Image)
-		}
 
 		matchingServices := getMatchingServicesforDS(services, &daemonSet)
 		var internalEndpoints []Endpoint
@@ -141,23 +131,18 @@ func getDaemonSetList(daemonSets []extensions.DaemonSet,
 		for _, service := range matchingServices {
 			internalEndpoints = append(internalEndpoints,
 				getInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports))
-			externalEndpoints = getExternalEndpointsforDS(daemonSet, pods, service,
-				getNodeFn)
+			externalEndpoints = getExternalEndpointsforDS(daemonSet, pods, service, nodes)
 		}
 
 		matchingPods := make([]api.Pod, 0)
 		for _, pod := range pods {
 			if pod.ObjectMeta.Namespace == daemonSet.ObjectMeta.Namespace &&
-				isLabelSelectorMatchingforDS(pod.ObjectMeta.Labels, daemonSet.Spec.Selector) {
+				common.isLabelSelectorMatchingforDS(pod.ObjectMeta.Labels, daemonSet.Spec.Selector) {
 				matchingPods = append(matchingPods, pod)
 			}
 		}
 		podInfo := getDaemonSetPodInfo(&daemonSet, matchingPods)
-		podErrors, err := getPodsEventWarningsFn(matchingPods)
-
-		if err != nil {
-			return nil, err
-		}
+		podErrors := GetPodsEventWarnings(events, matchingPods)
 
 		podInfo.Warnings = podErrors
 
@@ -168,14 +153,14 @@ func getDaemonSetList(daemonSets []extensions.DaemonSet,
 				Description:       daemonSet.Annotations[DescriptionAnnotationKey],
 				Labels:            daemonSet.ObjectMeta.Labels,
 				Pods:              podInfo,
-				ContainerImages:   containerImages,
+				ContainerImages:   replicationcontroller.GetContainerImages(&daemonSet.Spec.Template.Spec),
 				CreationTime:      daemonSet.ObjectMeta.CreationTimestamp,
 				InternalEndpoints: internalEndpoints,
 				ExternalEndpoints: externalEndpoints,
 			})
 	}
 
-	return daemonSetList, nil
+	return daemonSetList
 }
 
 // Returns all services that target the same Pods (or subset) as the given Daemon Set.
@@ -185,27 +170,10 @@ func getMatchingServicesforDS(services []api.Service,
 	var matchingServices []api.Service
 	for _, service := range services {
 		if service.ObjectMeta.Namespace == daemonSet.ObjectMeta.Namespace &&
-			isLabelSelectorMatchingforDS(service.Spec.Selector, daemonSet.Spec.Selector) {
+			common.isLabelSelectorMatchingforDS(service.Spec.Selector, daemonSet.Spec.Selector) {
 
 			matchingServices = append(matchingServices, service)
 		}
 	}
 	return matchingServices
-}
-
-// Returns true when a Service with the given selector targets the same Pods (or subset) that
-// a Daemon Set with the given selector.
-func isLabelSelectorMatchingforDS(labelSelector map[string]string,
-	testedObjectLabels *unversioned.LabelSelector) bool {
-
-	// If service has no selectors, then assume it targets different Pods.
-	if len(labelSelector) == 0 {
-		return false
-	}
-	for label, value := range labelSelector {
-		if rsValue, ok := testedObjectLabels.MatchLabels[label]; !ok || rsValue != value {
-			return false
-		}
-	}
-	return true
 }
