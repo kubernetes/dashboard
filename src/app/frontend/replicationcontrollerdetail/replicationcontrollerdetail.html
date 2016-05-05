@@ -24,8 +24,9 @@ limitations under the License.
         <kd-replication-controller-services services="::ctrl.replicationControllerDetail.services">
         </kd-replication-controller-services>
 
-        <kd-replication-controller-pods pods="::ctrl.replicationControllerDetail.pods">
-        </kd-replication-controller-pods>
+        <kd-pods-card-list pods="::ctrl.replicationControllerDetail.pods"
+                      logs-href-fn="::ctrl.getPodLogsHref(pod)">
+        </kd-pods-card-list>
       </md-tab>
       <md-tab label="Events">
         <kd-replication-controller-events events="::ctrl.events">
