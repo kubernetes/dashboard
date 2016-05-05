@@ -17,10 +17,10 @@
  */
 import del from 'del';
 import gulp from 'gulp';
-import gulpFilter from 'gulp-filter';
 import gulpMinifyCss from 'gulp-minify-css';
 import gulpHtmlmin from 'gulp-htmlmin';
 import gulpUglify from 'gulp-uglify';
+import gulpIf from 'gulp-if';
 import gulpUseref from 'gulp-useref';
 import gulpRev from 'gulp-rev';
 import gulpRevReplace from 'gulp-rev-replace';
@@ -112,10 +112,6 @@ gulp.task('clean-dist', function() { return del([conf.paths.distRoot]); });
  * @return {stream}
  */
 function buildFrontend(outputDirs) {
-  let htmlFilter = gulpFilter('*.html', {restore: true});
-  let vendorCssFilter = gulpFilter('**/vendor.css', {restore: true});
-  let vendorJsFilter = gulpFilter('**/vendor.js', {restore: true});
-  let assetsFilter = gulpFilter(['**/*.js', '**/*.css'], {restore: true});
   let searchPath = [
     // To resolve local paths.
     path.relative(conf.paths.base, conf.paths.prodTmp),
@@ -125,24 +121,16 @@ function buildFrontend(outputDirs) {
 
   return gulp.src(path.join(conf.paths.prodTmp, '*.html'))
       .pipe(gulpUseref({searchPath: searchPath}))
-      .pipe(vendorCssFilter)
-      .pipe(gulpMinifyCss())
-      .pipe(vendorCssFilter.restore)
-      .pipe(vendorJsFilter)
-      .pipe(gulpUglify({preserveComments: uglifySaveLicense}))
-      .pipe(vendorJsFilter.restore)
-      .pipe(assetsFilter)
-      .pipe(gulpRev())
-      .pipe(assetsFilter.restore)
+      .pipe(gulpIf('**/vendor.css', gulpMinifyCss()))
+      .pipe(gulpIf('**/vendor.js', gulpUglify({preserveComments: uglifySaveLicense})))
+      .pipe(gulpIf(['**/*.js', '**/*.css'], gulpRev()))
       .pipe(gulpUseref({searchPath: searchPath}))
       .pipe(gulpRevReplace())
-      .pipe(htmlFilter)
-      .pipe(gulpHtmlmin({
-        removeComments: true,
-        collapseWhitespace: true,
-        conservativeCollapse: true,
-      }))
-      .pipe(htmlFilter.restore)
+      .pipe(gulpIf('*.html', gulpHtmlmin({
+                     removeComments: true,
+                     collapseWhitespace: true,
+                     conservativeCollapse: true,
+                   })))
       .pipe(multiDest(outputDirs));
 }
 
