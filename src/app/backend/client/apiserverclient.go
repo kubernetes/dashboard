@@ -47,7 +47,7 @@ func CreateApiserverClient(apiserverHost string) (*client.Client, clientcmd.Clie
 	}
 
 	clientConfig := clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
-		&clientcmd.ClientConfigLoadingRules{}, overrides)
+		clientcmd.NewDefaultClientConfigLoadingRules(), overrides)
 
 	cfg, err := clientConfig.ClientConfig()
 	cfg.QPS = defaultQPS
