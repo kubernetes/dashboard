@@ -17,7 +17,6 @@ import componentsModule from './../common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
 import logsModule from 'logs/logs_module';
 import {replicationControllerInfoComponent} from './replicationcontrollerinfo_component';
-import {replicationControllerPodsComponent} from './replicationcontrollerpods_component';
 import {replicationControllerServicesComponent} from './replicationcontrollerservices_component';
 import {replicationControllerEventsComponent} from './replicationcontrollerevents_component';
 import {ReplicationControllerService} from './replicationcontroller_service';
@@ -40,7 +39,6 @@ export default angular
         ])
     .config(stateConfig)
     .component('kdReplicationControllerInfo', replicationControllerInfoComponent)
-    .component('kdReplicationControllerPods', replicationControllerPodsComponent)
     .component('kdReplicationControllerServices', replicationControllerServicesComponent)
     .component('kdReplicationControllerEvents', replicationControllerEventsComponent)
     .service('kdReplicationControllerService', ReplicationControllerService);
