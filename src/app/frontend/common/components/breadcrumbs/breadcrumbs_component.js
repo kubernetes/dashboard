@@ -14,6 +14,9 @@
 
 import Breadcrumb from './breadcrumb';
 
+/** Breadcrumbs config string used on state config. **/
+export const breadcrumbsConfig = 'kdBreadcrumbs';
+
 /**
  * @final
  */
@@ -93,7 +96,7 @@ export default class BreadcrumbsController {
     let conf = state['data'];
 
     if (conf) {
-      conf = conf['kdBreadcrumbs'];
+      conf = conf[breadcrumbsConfig];
     }
 
     return conf;

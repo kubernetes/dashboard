@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_component';
 import componentsModule from 'common/components/components_module';
 
 describe('Breadcrumbs controller ', () => {
@@ -35,7 +36,7 @@ describe('Breadcrumbs controller ', () => {
     return {
       name: stateName,
       data: {
-        kdBreadcrumbs: {
+        [breadcrumbsConfig]: {
           label: stateLabel,
         },
       },

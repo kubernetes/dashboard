@@ -13,8 +13,9 @@
 // limitations under the License.
 
 import {actionbarViewName} from 'chrome/chrome_state';
-import {stateName, stateUrl} from './replicationcontrollerlist_state';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_component';
 import {ReplicationControllerListController} from './replicationcontrollerlist_controller';
+import {stateName, stateUrl} from './replicationcontrollerlist_state';
 import ReplicationControllerListActionBarController from './replicationcontrollerlistactionbar_controller';
 
 /**
@@ -30,7 +31,7 @@ export default function stateConfig($stateProvider) {
       'replicationControllers': resolveReplicationControllers,
     },
     data: {
-      'kdBreadcrumbs': {
+      [breadcrumbsConfig]: {
         'label': 'Replication Controllers',
       },
     },
