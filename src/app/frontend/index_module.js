@@ -26,6 +26,7 @@ import replicationControllerDetailModule from './replicationcontrollerdetail/rep
 import replicationControllerListModule from './replicationcontrollerlist/replicationcontrollerlist_module';
 import deprecatedReplicationControllerListModule from './replicationcontrollerlistdeprecated/replicationcontrollerlist_module';
 import replicaSetListModule from './replicasetlist/replicasetlist_module';
+import workloadsModule from './workloads/workloads_module';
 
 export default angular
     .module(
@@ -46,6 +47,7 @@ export default angular
           replicationControllerListModule.name,
           deprecatedReplicationControllerListModule.name,
           replicaSetListModule.name,
+          workloadsModule.name,
         ])
     .config(indexConfig)
     .config(routeConfig);
