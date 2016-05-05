@@ -12,11 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ReplicationControllerDetailController from './replicationcontrollerdetail_controller';
-import ReplicationControllerDetailActionBarController from './replicationcontrollerdetailactionbar_controller';
-import {stateName} from './replicationcontrollerdetail_state';
 import {actionbarViewName} from 'chrome/chrome_state';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_component';
+import {stateName} from './replicationcontrollerdetail_state';
 import {stateName as replicationControllers} from 'replicationcontrollerlistdeprecated/replicationcontrollerlist_state';
+import ReplicationControllerDetailActionBarController from './replicationcontrollerdetailactionbar_controller';
+import ReplicationControllerDetailController from './replicationcontrollerdetail_controller';
 
 /**
  * Configures states for the service view.
@@ -34,7 +35,7 @@ export default function stateConfig($stateProvider) {
       'replicationControllerEvents': resolveReplicationControllerEvents,
     },
     data: {
-      'kdBreadcrumbs': {
+      [breadcrumbsConfig]: {
         'label': '{{$stateParams.replicationController}}',
         'parent': replicationControllers,
       },
