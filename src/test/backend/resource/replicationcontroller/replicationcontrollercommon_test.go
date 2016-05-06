@@ -27,11 +27,11 @@ import (
 	"github.com/kubernetes/dashboard/resource/event"
 )
 
-func TestGetReplicationControllerPodInfo(t *testing.T) {
+func TestGetReplicationPodInfo(t *testing.T) {
 	cases := []struct {
 		controller *api.ReplicationController
 		pods       []api.Pod
-		expected   common.ControllerPodInfo
+		expected   common.PodInfo
 	}{
 		{
 			&api.ReplicationController{
@@ -49,7 +49,7 @@ func TestGetReplicationControllerPodInfo(t *testing.T) {
 					},
 				},
 			},
-			common.ControllerPodInfo{
+			common.PodInfo{
 				Current:  5,
 				Desired:  4,
 				Running:  1,
@@ -61,7 +61,7 @@ func TestGetReplicationControllerPodInfo(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := getReplicationControllerPodInfo(c.controller, c.pods)
+		actual := getReplicationPodInfo(c.controller, c.pods)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getReplicaSetPodInfo(%#v, %#v) == \n%#v\nexpected \n%#v\n",
 				c.controller, c.pods, actual, c.expected)

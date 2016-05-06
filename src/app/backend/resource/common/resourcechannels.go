@@ -40,6 +40,9 @@ type ResourceChannels struct {
 	// List and error channels to Replica Sets.
 	ReplicaSetList ReplicaSetListChannel
 
+	// List and error channels to Deployments.
+	DeploymentList DeploymentListChannel
+
 	// List and error channels to Services.
 	ServiceList ServiceListChannel
 
@@ -188,7 +191,32 @@ func GetReplicationControllerListChannel(client client.ReplicationControllersNam
 	return channel
 }
 
-// List and error channels to Nodes.
+// List and error channels to Deployments.
+type DeploymentListChannel struct {
+	List  chan *extensions.DeploymentList
+	Error chan error
+}
+
+// Returns a pair of channels to a Deployment list and errors that both must be read
+// numReads times.
+func GetDeploymentListChannel(client client.DeploymentsNamespacer, numReads int) DeploymentListChannel {
+	channel := DeploymentListChannel{
+		List:  make(chan *extensions.DeploymentList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		rcs, err := client.Deployments(api.NamespaceAll).List(listEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- rcs
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// List and error channels to Replica Sets.
 type ReplicaSetListChannel struct {
 	List  chan *extensions.ReplicaSetList
 	Error chan error

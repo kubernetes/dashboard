@@ -18,6 +18,7 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/resource/common"
+	"github.com/kubernetes/dashboard/resource/deployment"
 	"github.com/kubernetes/dashboard/resource/replicaset"
 	"github.com/kubernetes/dashboard/resource/replicationcontroller"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
@@ -25,6 +26,8 @@ import (
 
 // Workloads stucture contains all resource lists grouped into the workloads category.
 type Workloads struct {
+	DeploymentList deployment.DeploymentList `json:"deploymentList"`
+
 	ReplicaSetList replicaset.ReplicaSetList `json:"replicaSetList"`
 
 	ReplicationControllerList replicationcontroller.ReplicationControllerList `json:"replicationControllerList"`
@@ -36,10 +39,11 @@ func GetWorkloads(client client.Interface) (*Workloads, error) {
 	channels := &common.ResourceChannels{
 		ReplicationControllerList: common.GetReplicationControllerListChannel(client, 1),
 		ReplicaSetList:            common.GetReplicaSetListChannel(client.Extensions(), 1),
-		ServiceList:               common.GetServiceListChannel(client, 2),
-		PodList:                   common.GetPodListChannel(client, 2),
-		EventList:                 common.GetEventListChannel(client, 2),
-		NodeList:                  common.GetNodeListChannel(client, 2),
+		DeploymentList:            common.GetDeploymentListChannel(client.Extensions(), 1),
+		ServiceList:               common.GetServiceListChannel(client, 3),
+		PodList:                   common.GetPodListChannel(client, 3),
+		EventList:                 common.GetEventListChannel(client, 3),
+		NodeList:                  common.GetNodeListChannel(client, 3),
 	}
 
 	return GetWorkloadsFromChannels(channels)
@@ -49,8 +53,9 @@ func GetWorkloads(client client.Interface) (*Workloads, error) {
 // channel sources.
 func GetWorkloadsFromChannels(channels *common.ResourceChannels) (*Workloads, error) {
 	rsChan := make(chan *replicaset.ReplicaSetList)
+	deploymentChan := make(chan *deployment.DeploymentList)
 	rcChan := make(chan *replicationcontroller.ReplicationControllerList)
-	errChan := make(chan error, 2)
+	errChan := make(chan error, 3)
 
 	go func() {
 		rcList, err := replicationcontroller.GetReplicationControllerListFromChannels(channels)
@@ -62,6 +67,12 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels) (*Workloads, er
 		rsList, err := replicaset.GetReplicaSetListFromChannels(channels)
 		errChan <- err
 		rsChan <- rsList
+	}()
+
+	go func() {
+		deploymentList, err := deployment.GetDeploymentListFromChannels(channels)
+		errChan <- err
+		deploymentChan <- deploymentList
 	}()
 
 	rcList := <-rcChan
@@ -76,9 +87,16 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels) (*Workloads, er
 		return nil, err
 	}
 
+	deploymentList := <-deploymentChan
+	err = <-errChan
+	if err != nil {
+		return nil, err
+	}
+
 	workloads := &Workloads{
 		ReplicaSetList:            *rsList,
 		ReplicationControllerList: *rcList,
+		DeploymentList:            *deploymentList,
 	}
 
 	return workloads, nil

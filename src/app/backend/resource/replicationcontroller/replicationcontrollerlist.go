@@ -47,7 +47,7 @@ type ReplicationController struct {
 	Labels map[string]string `json:"labels"`
 
 	// Aggregate information about pods belonging to this Replication Controller.
-	Pods common.ControllerPodInfo `json:"pods"`
+	Pods common.PodInfo `json:"pods"`
 
 	// Container images of the Replication Controller.
 	ContainerImages []string `json:"containerImages"`
@@ -142,7 +142,7 @@ func getReplicationControllerList(replicationControllers []api.ReplicationContro
 				matchingPods = append(matchingPods, pod)
 			}
 		}
-		podInfo := getReplicationControllerPodInfo(&replicationController, matchingPods)
+		podInfo := getReplicationPodInfo(&replicationController, matchingPods)
 		podErrors := GetPodsEventWarnings(events, matchingPods)
 
 		podInfo.Warnings = podErrors

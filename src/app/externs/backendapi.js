@@ -150,7 +150,7 @@ backendApi.PodMetrics;
  *   warnings: !Array<!backendApi.Event>
  * }}
  */
-backendApi.ControllerPodInfo;
+backendApi.PodInfo;
 
 /**
  * @typedef {{
@@ -158,7 +158,7 @@ backendApi.ControllerPodInfo;
  *   namespace: string,
  *   description: string,
  *   labels: !Object<string, string>,
- *   pods: !backendApi.ControllerPodInfo,
+ *   pods: !backendApi.PodInfo,
  *   containerImages: !Array<string>,
  *   creationTime: string,
  *   internalEndpoints: !Array<!backendApi.Endpoint>,
@@ -172,7 +172,7 @@ backendApi.ReplicationController;
  *   name: string,
  *   namespace: string,
  *   labels: !Object<string, string>,
- *   pods: !backendApi.ControllerPodInfo,
+ *   pods: !backendApi.PodInfo,
  *   containerImages: !Array<string>,
  *   creationTime: string,
  * }}
@@ -202,7 +202,7 @@ backendApi.ResourceMetadata;
  *   labels: !Object<string, string>,
  *   labelSelector: !Object<string, string>,
  *   containerImages: !Array<string>,
- *   podInfo: !backendApi.ControllerPodInfo,
+ *   podInfo: !backendApi.PodInfo,
  *   pods: !Array<!backendApi.ReplicationControllerPod>,
  *   services: !Array<!backendApi.ServiceDetail>,
  *   hasMetrics: boolean
