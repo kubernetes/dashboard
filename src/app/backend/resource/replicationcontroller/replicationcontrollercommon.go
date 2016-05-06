@@ -64,9 +64,9 @@ func getRawReplicationControllerPods(client client.Interface, namespace, name st
 	return replicationControllerAndPods.Pods, nil
 }
 
-// getReplicationControllerPodInfo returns aggregate information about replication controller pods.
-func getReplicationControllerPodInfo(replicationController *api.ReplicationController,
-	pods []api.Pod) common.ControllerPodInfo {
+// getReplicationPodInfo returns aggregate information about replication controller pods.
+func getReplicationPodInfo(replicationController *api.ReplicationController,
+	pods []api.Pod) common.PodInfo {
 
 	return common.GetPodInfo(replicationController.Status.Replicas,
 		replicationController.Spec.Replicas, pods)

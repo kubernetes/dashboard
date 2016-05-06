@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package replicaset
+package deployment
 
 import (
 	"github.com/kubernetes/dashboard/resource/common"
@@ -20,8 +20,8 @@ import (
 	"k8s.io/kubernetes/pkg/apis/extensions"
 )
 
-// getPodInfo returns aggregate information about replica set pods.
-func getPodInfo(resource *extensions.ReplicaSet,
+// getPodInfo returns aggregate information about deployment pods.
+func getPodInfo(resource *extensions.Deployment,
 	pods []api.Pod) common.PodInfo {
 
 	return common.GetPodInfo(resource.Status.Replicas, resource.Spec.Replicas, pods)

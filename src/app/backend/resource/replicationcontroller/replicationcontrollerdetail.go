@@ -45,7 +45,7 @@ type ReplicationControllerDetail struct {
 	ContainerImages []string `json:"containerImages"`
 
 	// Aggregate information about pods of this replication controller.
-	PodInfo common.ControllerPodInfo `json:"podInfo"`
+	PodInfo common.PodInfo `json:"podInfo"`
 
 	// Detailed information about Pods belonging to this Replication Controller.
 	Pods []ReplicationControllerPod `json:"pods"`
@@ -161,7 +161,7 @@ func GetReplicationControllerDetail(client client.Interface, heapsterClient Heap
 		Namespace:     replicationController.Namespace,
 		Labels:        replicationController.ObjectMeta.Labels,
 		LabelSelector: replicationController.Spec.Selector,
-		PodInfo:       getReplicationControllerPodInfo(replicationController, pods.Items),
+		PodInfo:       getReplicationPodInfo(replicationController, pods.Items),
 	}
 
 	matchingServices := getMatchingServices(services.Items, replicationController)
