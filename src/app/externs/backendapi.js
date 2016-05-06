@@ -203,7 +203,7 @@ backendApi.ResourceMetadata;
  *   labelSelector: !Object<string, string>,
  *   containerImages: !Array<string>,
  *   podInfo: !backendApi.PodInfo,
- *   pods: !Array<!backendApi.ReplicationControllerPod>,
+ *   pods: !Array<!backendApi.Pod>,
  *   services: !Array<!backendApi.ServiceDetail>,
  *   hasMetrics: boolean
  * }}
@@ -236,6 +236,19 @@ backendApi.DeleteReplicationControllerSpec;
  * }}
  */
 backendApi.ReplicationControllerPod;
+
+/**
+ * @typedef {{
+ *   name: string,
+ *   startTime: ?string,
+ *   status: string,
+ *   podIP: string,
+ *   nodeName: string,
+ *   restartCount: number,
+ *   metrics: backendApi.PodMetrics
+ * }}
+ */
+backendApi.Pod;
 
 /**
  * @typedef {{

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-content-card>
+<kd-content-card ng-if="::$ctrl.pods">
   <kd-title>Pods</kd-title>
   <kd-content>
     <kd-resource-card-list selectable="false" with-statuses="false">

@@ -29,6 +29,8 @@ describe('Replication Controller Detail controller', () => {
       ctrl = $controller(ReplicationControllerDetailController, {
         replicationControllerDetail: {},
         replicationControllerEvents: {},
+        $stateParams:
+            {replicationController: 'foo-replicationcontroller', namespace: 'foo-namespace'},
       });
     });
   });
@@ -54,5 +56,11 @@ describe('Replication Controller Detail controller', () => {
     expect(ctrl.hasCpuUsage({metrics: {cpuUsageHistory: []}})).toBe(false);
     expect(ctrl.hasCpuUsage({metrics: {cpuUsageHistory: null}})).toBe(false);
     expect(ctrl.hasCpuUsage({metrics: {cpuUsageHistory: undefined}})).toBe(false);
+  });
+
+  it('should create logs href', () => {
+    expect(ctrl.getPodLogsHref({
+      name: 'foo-pod',
+    })).toBe('#/logs/foo-namespace/foo-replicationcontroller/foo-pod/');
   });
 });
