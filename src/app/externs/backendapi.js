@@ -196,6 +196,23 @@ backendApi.ReplicaSetList;
 
 /**
  * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   pods: !backendApi.PodInfo,
+ *   containerImages: !Array<string>,
+ * }}
+ */
+backendApi.Deployment;
+
+/**
+ * @typedef {{
+ *   deployments: !Array<!backendApi.Deployment>
+ * }}
+ */
+backendApi.DeploymentList;
+
+/**
+ * @typedef {{
  *   pods: !Array<!backendApi.Pod>
  * }}
  */
