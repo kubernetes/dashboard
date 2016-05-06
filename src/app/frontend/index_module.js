@@ -19,6 +19,7 @@
 import chromeModule from './chrome/chrome_module';
 import deployModule from './deploy/deploy_module';
 import deprecatedReplicationControllerListModule from './replicationcontrollerlistdeprecated/replicationcontrollerlist_module';
+import deploymentListModule from './deploymentlist/deploymentlist_module';
 import errorModule from './error/error_module';
 import indexConfig from './index_config';
 import logsModule from './logs/logs_module';
@@ -49,6 +50,7 @@ export default angular
           replicationControllerListModule.name,
           deprecatedReplicationControllerListModule.name,
           replicaSetListModule.name,
+          deploymentListModule.name,
           workloadsModule.name,
           serviceDetailModule.name,
           serviceListModule.name,
