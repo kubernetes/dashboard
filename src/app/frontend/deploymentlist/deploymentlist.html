@@ -13,34 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-
 <kd-content-card>
-  <kd-title>
-    Deployments
-  </kd-title>
   <kd-content>
-    <kd-deployment-card-list deployments="$ctrl.workloads.deploymentList.deployments">
+    <kd-deployment-card-list deployments="$ctrl.deployments">
     </kd-deployment-card-list>
-  </kd-content>
-</kd-content-card>
-
-<kd-content-card>
-  <kd-title>
-    Replica Sets
-  </kd-title>
-  <kd-content>
-    <kd-replica-set-card-list replica-sets="$ctrl.workloads.replicaSetList.replicaSets">
-    </kd-replica-set-card-list>
-  </kd-content>
-</kd-content-card>
-
-<kd-content-card>
-  <kd-title>
-    Replication Controllers
-  </kd-title>
-  <kd-content>
-    <kd-replication-controller-card-list
-        replication-controllers="$ctrl.workloads.replicationControllerList.replicationControllers">
-    </kd-replication-controller-card-list>
   </kd-content>
 </kd-content-card>

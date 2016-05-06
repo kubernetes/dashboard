@@ -190,6 +190,25 @@ backendApi.ReplicaSetList;
  * @typedef {{
  *   name: string,
  *   namespace: string,
+ *   labels: !Object<string, string>,
+ *   pods: !backendApi.ControllerPodInfo,
+ *   containerImages: !Array<string>,
+ *   creationTime: string,
+ * }}
+ */
+backendApi.Deployment;
+
+/**
+ * @typedef {{
+ *   deployments: !Array<!backendApi.Deployment>
+ * }}
+ */
+backendApi.DeploymentList;
+
+/**
+ * @typedef {{
+ *   name: string,
+ *   namespace: string,
  *   type: string
  * }}
  */
