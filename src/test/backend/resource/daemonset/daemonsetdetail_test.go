@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package daemonset
 
 import (
 	"reflect"
 	"testing"
 
+	"github.com/kubernetes/dashboard/resource/common"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
@@ -206,8 +207,8 @@ func TestGetExternalEndpointsforDS(t *testing.T) {
 		DaemonSet extensions.DaemonSet
 		pods      []api.Pod
 		service   api.Service
-		getNodeFn GetNodeFunc
-		expected  []Endpoint
+		nodes     []api.Node
+		expected  []common.Endpoint
 	}{
 		{
 			extensions.DaemonSet{
@@ -240,23 +241,23 @@ func TestGetExternalEndpointsforDS(t *testing.T) {
 					},
 				},
 			},
-			func(nodeName string) (*api.Node, error) {
-				return &api.Node{
-						Status: api.NodeStatus{
-							Addresses: []api.NodeAddress{
-								{
-									Type:    api.NodeExternalIP,
-									Address: "192.168.1.108",
-								},
-							},
+			[]api.Node{{
+				ObjectMeta: api.ObjectMeta{
+					Name: "node",
+				},
+				Status: api.NodeStatus{
+					Addresses: []api.NodeAddress{
+						{
+							Type:    api.NodeExternalIP,
+							Address: "192.168.1.108",
 						},
 					},
-					nil
-			},
-			[]Endpoint{
+				},
+			}},
+			[]common.Endpoint{
 				{
 					Host: "192.168.1.108",
-					Ports: []ServicePort{
+					Ports: []common.ServicePort{
 						{
 							Port: 30100, Protocol: "TCP",
 						},
@@ -264,7 +265,7 @@ func TestGetExternalEndpointsforDS(t *testing.T) {
 				},
 				{
 					Host: "192.168.1.108",
-					Ports: []ServicePort{
+					Ports: []common.ServicePort{
 						{
 							Port: 30101, Protocol: "TCP",
 						},
@@ -274,10 +275,10 @@ func TestGetExternalEndpointsforDS(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := getExternalEndpointsforDS(c.DaemonSet, c.pods, c.service, c.getNodeFn)
+		actual := getExternalEndpointsforDS(c.DaemonSet, c.pods, c.service, c.nodes)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getExternalEndpoints(%+v, %+v, %+v, %+v) == %+v, expected %+v",
-				c.DaemonSet, c.pods, c.service, c.getNodeFn, actual, c.expected)
+				c.DaemonSet, c.pods, c.service, c.nodes, actual, c.expected)
 		}
 	}
 }

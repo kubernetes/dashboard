@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package daemonset
 
 import (
 	"reflect"
 	"testing"
 
+	"github.com/kubernetes/dashboard/resource/replicationcontroller"
 	"k8s.io/kubernetes/pkg/api"
 )
 
@@ -77,7 +78,7 @@ func TestGetDaemonSetPods(t *testing.T) {
 			{
 				Name:              "pod-2",
 				TotalRestartCount: 10,
-				PodContainers: []PodContainer{
+				PodContainers: []replicationcontroller.PodContainer{
 					{
 						Name:         "container-3",
 						RestartCount: 10,
@@ -87,7 +88,7 @@ func TestGetDaemonSetPods(t *testing.T) {
 			{
 				Name:              "pod-1",
 				TotalRestartCount: 2,
-				PodContainers: []PodContainer{
+				PodContainers: []replicationcontroller.PodContainer{
 					{
 						Name:         "container-1",
 						RestartCount: 0,
@@ -104,7 +105,7 @@ func TestGetDaemonSetPods(t *testing.T) {
 			{
 				Name:              "pod-2",
 				TotalRestartCount: 10,
-				PodContainers: []PodContainer{
+				PodContainers: []replicationcontroller.PodContainer{
 					{
 						Name:         "container-3",
 						RestartCount: 10,
