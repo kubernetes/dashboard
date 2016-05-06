@@ -191,7 +191,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 						Name:              "my-app-1",
 						Namespace:         "namespace-1",
 						ContainerImages:   []string{"my-container-image-1"},
-						InternalEndpoints: []Endpoint{{Host: "my-app-1.namespace-1"}},
+						InternalEndpoints: []common.Endpoint{{Host: "my-app-1.namespace-1"}},
 						Pods: common.ControllerPodInfo{
 							Failed:   2,
 							Pending:  1,
@@ -202,7 +202,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 						Name:              "my-app-2",
 						Namespace:         "namespace-2",
 						ContainerImages:   []string{"my-container-image-2"},
-						InternalEndpoints: []Endpoint{{Host: "my-app-2.namespace-2"}},
+						InternalEndpoints: []common.Endpoint{{Host: "my-app-2.namespace-2"}},
 						Pods: common.ControllerPodInfo{
 							Warnings: []event.Event{},
 						},

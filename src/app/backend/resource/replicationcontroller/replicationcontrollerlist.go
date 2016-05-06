@@ -56,10 +56,10 @@ type ReplicationController struct {
 	CreationTime unversioned.Time `json:"creationTime"`
 
 	// Internal endpoints of all Kubernetes services have the same label selector as this Replication Controller.
-	InternalEndpoints []Endpoint `json:"internalEndpoints"`
+	InternalEndpoints []common.Endpoint `json:"internalEndpoints"`
 
 	// External endpoints of all Kubernetes services have the same label selector as this Replication Controller.
-	ExternalEndpoints []Endpoint `json:"externalEndpoints"`
+	ExternalEndpoints []common.Endpoint `json:"externalEndpoints"`
 }
 
 // GetReplicationControllerList returns a list of all Replication Controllers in the cluster.
@@ -127,11 +127,11 @@ func getReplicationControllerList(replicationControllers []api.ReplicationContro
 	for _, replicationController := range replicationControllers {
 
 		matchingServices := getMatchingServices(services, &replicationController)
-		var internalEndpoints []Endpoint
-		var externalEndpoints []Endpoint
+		var internalEndpoints []common.Endpoint
+		var externalEndpoints []common.Endpoint
 		for _, service := range matchingServices {
 			internalEndpoints = append(internalEndpoints,
-				getInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports))
+				common.GetInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports))
 			externalEndpoints = getExternalEndpoints(replicationController, pods, service, nodes)
 		}
 

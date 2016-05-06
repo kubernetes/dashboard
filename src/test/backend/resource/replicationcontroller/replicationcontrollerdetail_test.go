@@ -18,6 +18,7 @@ import (
 	"reflect"
 	"testing"
 
+	. "github.com/kubernetes/dashboard/resource/common"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
 )
@@ -208,7 +209,7 @@ func TestGetServicePortsName(t *testing.T) {
 			[]ServicePort{{Port: 8080, Protocol: "TCP"}, {Port: 9191, Protocol: "UDP"}}},
 	}
 	for _, c := range cases {
-		actual := getServicePorts(c.ports)
+		actual := GetServicePorts(c.ports)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getServicePortsName(%+v) == %+v, expected %+v", c.ports, actual, c.expected)
 		}
@@ -539,31 +540,6 @@ func TestGetLocalhostEndpoints(t *testing.T) {
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getLocalhostEndpoints(%+v) == %+v, expected %+v", c.service, actual,
 				c.expected)
-		}
-	}
-}
-
-func TestGetInternalEndpoint(t *testing.T) {
-	cases := []struct {
-		serviceName, namespace string
-		ports                  []api.ServicePort
-		expected               Endpoint
-	}{
-		{"my-service", api.NamespaceDefault, nil, Endpoint{Host: "my-service"}},
-		{"my-service", api.NamespaceDefault,
-			[]api.ServicePort{{Name: "foo", Port: 8080, Protocol: "TCP"}},
-			Endpoint{Host: "my-service", Ports: []ServicePort{{Port: 8080, Protocol: "TCP"}}}},
-		{"my-service", "my-namespace", nil, Endpoint{Host: "my-service.my-namespace"}},
-		{"my-service", "my-namespace",
-			[]api.ServicePort{{Name: "foo", Port: 8080, Protocol: "TCP"}},
-			Endpoint{Host: "my-service.my-namespace",
-				Ports: []ServicePort{{Port: 8080, Protocol: "TCP"}}}},
-	}
-	for _, c := range cases {
-		actual := getInternalEndpoint(c.serviceName, c.namespace, c.ports)
-		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("getInternalEndpoint(%+v, %+v, %+v) == %+v, expected %+v",
-				c.serviceName, c.namespace, c.ports, actual, c.expected)
 		}
 	}
 }
