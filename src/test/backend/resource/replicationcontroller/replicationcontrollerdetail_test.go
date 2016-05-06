@@ -188,7 +188,7 @@ func TestGetRestartCount(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := getRestartCount(c.pod)
+		actual := GetRestartCount(c.pod)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("AppendEvents(%#v) == %#v, expected %#v", c.pod, actual, c.expected)
 		}
@@ -229,9 +229,9 @@ func TestGetExternalEndpoint(t *testing.T) {
 			Endpoint{Host: "127.0.0.1", Ports: []ServicePort{{Port: 8080, Protocol: "TCP"}}}},
 	}
 	for _, c := range cases {
-		actual := getExternalEndpoint(c.serviceIp, c.ports)
+		actual := GetExternalEndpoint(c.serviceIp, c.ports)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("getExternalEndpoint(%+v, %+v) == %+v, expected %+v",
+			t.Errorf("GetExternalEndpoint(%+v, %+v) == %+v, expected %+v",
 				c.serviceIp, c.ports, actual, c.expected)
 		}
 	}
@@ -485,9 +485,9 @@ func TestGetNodePortEndpoints(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := getNodePortEndpoints(c.pods, c.service, c.nodes)
+		actual := GetNodePortEndpoints(c.pods, c.service, c.nodes)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("getNodePortEndpoints(%+v, %+v, %+v) == %+v, expected %+v", c.pods, c.service,
+			t.Errorf("GetNodePortEndpoints(%+v, %+v, %+v) == %+v, expected %+v", c.pods, c.service,
 				c.nodes, actual, c.expected)
 		}
 	}
@@ -536,9 +536,9 @@ func TestGetLocalhostEndpoints(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := getLocalhostEndpoints(c.service)
+		actual := GetLocalhostEndpoints(c.service)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("getLocalhostEndpoints(%+v) == %+v, expected %+v", c.service, actual,
+			t.Errorf("GetLocalhostEndpoints(%+v) == %+v, expected %+v", c.service, actual,
 				c.expected)
 		}
 	}

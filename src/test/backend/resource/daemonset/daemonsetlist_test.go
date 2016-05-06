@@ -12,12 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package daemonset
 
 import (
 	"reflect"
 	"testing"
 
+	"github.com/kubernetes/dashboard/resource/common"
+	"github.com/kubernetes/dashboard/resource/event"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
@@ -54,7 +56,7 @@ func TestIsLabelSelectorMatchingforDS(t *testing.T) {
 			true},
 	}
 	for _, c := range cases {
-		actual := isLabelSelectorMatchingforDS(c.serviceSelector, c.daemonSetselector)
+		actual := common.IsLabelSelectorMatchingforDS(c.serviceSelector, c.daemonSetselector)
 		if actual != c.expected {
 			t.Errorf("isLabelSelectorMatching(%+v, %+v) == %+v, expected %+v",
 				c.serviceSelector, c.daemonSetselector, actual, c.expected)
@@ -105,15 +107,13 @@ func TestGetMatchingServicesforDS(t *testing.T) {
 }
 
 func TestGetDaemonSetList(t *testing.T) {
-	getPodsErrorFnMock := func(pods []api.Pod) ([]Event, error) {
-		return []Event{}, nil
-	}
+	events := []api.Event{}
 
 	cases := []struct {
 		daemonSets []extensions.DaemonSet
 		services   []api.Service
 		pods       []api.Pod
-		getNodeFn  GetNodeFunc
+		nodes      []api.Node
 		expected   *DaemonSetList
 	}{
 		{nil, nil, nil, nil, &DaemonSetList{DaemonSets: []DaemonSet{}}},
@@ -229,18 +229,16 @@ func TestGetDaemonSetList(t *testing.T) {
 					},
 				},
 			},
-			func(nodeName string) (*api.Node, error) {
-				return &api.Node{
-						Status: api.NodeStatus{
-							Addresses: []api.NodeAddress{
-								{
-									Type:    api.NodeExternalIP,
-									Address: "192.168.1.108",
-								},
-							},
+			[]api.Node{{
+				Status: api.NodeStatus{
+					Addresses: []api.NodeAddress{
+						{
+							Type:    api.NodeExternalIP,
+							Address: "192.168.1.108",
 						},
 					},
-					nil
+				},
+			},
 			},
 			&DaemonSetList{
 				DaemonSets: []DaemonSet{
@@ -248,20 +246,20 @@ func TestGetDaemonSetList(t *testing.T) {
 						Name:              "my-app-1",
 						Namespace:         "namespace-1",
 						ContainerImages:   []string{"my-container-image-1"},
-						InternalEndpoints: []Endpoint{{Host: "my-app-1.namespace-1"}},
+						InternalEndpoints: []common.Endpoint{{Host: "my-app-1.namespace-1"}},
 						Pods: DaemonSetPodInfo{
 							Failed:   2,
 							Pending:  1,
 							Running:  1,
-							Warnings: []Event{},
+							Warnings: []event.Event{},
 						},
 					}, {
 						Name:              "my-app-2",
 						Namespace:         "namespace-2",
 						ContainerImages:   []string{"my-container-image-2"},
-						InternalEndpoints: []Endpoint{{Host: "my-app-2.namespace-2"}},
+						InternalEndpoints: []common.Endpoint{{Host: "my-app-2.namespace-2"}},
 						Pods: DaemonSetPodInfo{
-							Warnings: []Event{},
+							Warnings: []event.Event{},
 						},
 					},
 				},
@@ -269,8 +267,8 @@ func TestGetDaemonSetList(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual, _ := getDaemonSetList(c.daemonSets, c.services, c.pods,
-			getPodsErrorFnMock, c.getNodeFn)
+		actual := getDaemonSetList(c.daemonSets, c.services, c.pods,
+			events, c.nodes)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getDaemonSetList(%#v, %#v) == \n%#v\nexpected \n%#v\n",
 				c.daemonSets, c.services, actual, c.expected)

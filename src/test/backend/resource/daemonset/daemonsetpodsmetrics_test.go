@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package daemonset
 
 import (
 	"reflect"
 	"testing"
 
+	"github.com/kubernetes/dashboard/resource/replicationcontroller"
 	heapster "k8s.io/heapster/api/v1/types"
 )
 
@@ -33,7 +34,7 @@ func TestCreateResponseforDS(t *testing.T) {
 	}{
 		{make([]heapster.MetricResult, 0), make([]heapster.MetricResult, 0), make([]string, 0),
 			&DaemonSetMetricsByPod{
-				MetricsMap: map[string]PodMetrics{},
+				MetricsMap: map[string]replicationcontroller.PodMetrics{},
 			}},
 		{[]heapster.MetricResult{
 			{Metrics: []heapster.MetricPoint{
@@ -47,7 +48,7 @@ func TestCreateResponseforDS(t *testing.T) {
 			},
 			[]string{"a", "b"},
 			&DaemonSetMetricsByPod{
-				MetricsMap: map[string]PodMetrics{},
+				MetricsMap: map[string]replicationcontroller.PodMetrics{},
 			},
 		},
 		{[]heapster.MetricResult{
@@ -68,23 +69,23 @@ func TestCreateResponseforDS(t *testing.T) {
 			},
 			[]string{"a", "b"},
 			&DaemonSetMetricsByPod{
-				MetricsMap: map[string]PodMetrics{
+				MetricsMap: map[string]replicationcontroller.PodMetrics{
 					"a": {
 						CpuUsage: &cpuUsage1,
-						CpuUsageHistory: []MetricResult{
+						CpuUsageHistory: []replicationcontroller.MetricResult{
 							{Value: cpuUsage1},
 						},
 						MemoryUsage: &memoryUsage,
-						MemoryUsageHistory: []MetricResult{
+						MemoryUsageHistory: []replicationcontroller.MetricResult{
 							{Value: memoryUsage},
 						},
 					}, "b": {
 						CpuUsage: &cpuUsage2,
-						CpuUsageHistory: []MetricResult{
+						CpuUsageHistory: []replicationcontroller.MetricResult{
 							{Value: cpuUsage2},
 						},
 						MemoryUsage: &memoryUsage,
-						MemoryUsageHistory: []MetricResult{
+						MemoryUsageHistory: []replicationcontroller.MetricResult{
 							{Value: memoryUsage},
 						},
 					},

@@ -33,7 +33,7 @@ func TestCreateMetricPath(t *testing.T) {
 			"/model/namespaces/default/pod-list/a,b/metrics/cpu-usage"},
 	}
 	for _, c := range cases {
-		actual := createMetricPath(c.namespace, c.podNames, c.metricName)
+		actual := CreateMetricPath(c.namespace, c.podNames, c.metricName)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getReplicationControllerPods(%#v, %#v, %#v) == %#v, expected %#v",
 				c.namespace, c.podNames, c.metricName, actual, c.expected)
@@ -49,10 +49,10 @@ func TestUnmarshalMetrics(t *testing.T) {
 		{make([]byte, 0), []heapster.MetricResult{}},
 	}
 	for _, c := range cases {
-		actual, _ := unmarshalMetrics(c.rawData)
+		actual, _ := UnmarshalMetrics(c.rawData)
 
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("unmarshalMetrics(%#v) == %#v, expected %#v",
+			t.Errorf("UnmarshalMetrics(%#v) == %#v, expected %#v",
 				c.rawData, actual, c.expected)
 		}
 	}
