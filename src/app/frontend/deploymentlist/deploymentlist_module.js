@@ -12,28 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './workloads_stateconfig';
+import stateConfig from './deploymentlist_stateconfig';
 import filtersModule from 'common/filters/filters_module';
 import componentsModule from 'common/components/components_module';
-import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
-import replicaSetListModule from 'replicasetlist/replicasetlist_module';
-import deploymentListModule from 'deploymentlist/deploymentlist_module';
+import {deploymentCardComponent} from './deploymentcard_component';
+import {deploymentCardListComponent} from './deploymentcardlist_component';
+import deploymentDetailModule from 'deploymentdetail/deploymentdetail_module';
 
 /**
- * Module with a view that displays resources categorized as workloads, e.g., Replica Sets or
- * Deployments.
+ * Angular module for the Replication Controller list view.
+ *
+ * The view shows Replication Controllers running in the cluster and allows to manage them.
  */
 export default angular
     .module(
-        'kubernetesDashboard.workloads',
+        'kubernetesDashboard.deploymentList',
         [
           'ngMaterial',
           'ngResource',
           'ui.router',
           filtersModule.name,
           componentsModule.name,
-          replicationControllerListModule.name,
-          replicaSetListModule.name,
-          deploymentListModule.name,
+          deploymentDetailModule.name,
         ])
-    .config(stateConfig);
+    .config(stateConfig)
+    .component('kdDeploymentCardList', deploymentCardListComponent)
+    .component('kdDeploymentCard', deploymentCardComponent);
