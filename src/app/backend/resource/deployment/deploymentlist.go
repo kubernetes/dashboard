@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package replicaset
+package deployment
 
 import (
 	"log"
@@ -26,60 +26,60 @@ import (
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
-// ReplicationSetList contains a list of Replica Sets in the cluster.
-type ReplicaSetList struct {
-	// Unordered list of Replica Sets.
-	ReplicaSets []ReplicaSet `json:"replicaSets"`
+// ReplicationSetList contains a list of Deployments in the cluster.
+type DeploymentList struct {
+	// Unordered list of Deployments.
+	Deployments []Deployment `json:"deployments"`
 }
 
-// ReplicaSet is a presentation layer view of Kubernetes Replica Set resource. This means
-// it is Replica Set plus additional augumented data we can get from other sources
+// Deployment is a presentation layer view of Kubernetes Deployment resource. This means
+// it is Deployment plus additional augumented data we can get from other sources
 // (like services that target the same pods).
-type ReplicaSet struct {
-	// Name of the Replica Set.
+type Deployment struct {
+	// Name of the Deployment.
 	Name string `json:"name"`
 
-	// Namespace this Replica Set is in.
+	// Namespace this Deployment is in.
 	Namespace string `json:"namespace"`
 
-	// Label of this Replica Set.
+	// Label of this Deployment.
 	Labels map[string]string `json:"labels"`
 
-	// Aggregate information about pods belonging to this Replica Set.
+	// Aggregate information about pods belonging to this Deployment.
 	Pods common.ControllerPodInfo `json:"pods"`
 
-	// Container images of the Replica Set.
+	// Container images of the Deployment.
 	ContainerImages []string `json:"containerImages"`
 
 	// Time the replication controller was created.
 	CreationTime unversioned.Time `json:"creationTime"`
 }
 
-// GetReplicaSetList returns a list of all Replica Sets in the cluster.
-func GetReplicaSetList(client client.Interface) (*ReplicaSetList, error) {
+// GetDeploymentList returns a list of all Deployments in the cluster.
+func GetDeploymentList(client client.Interface) (*DeploymentList, error) {
 	log.Printf("Getting list of all replica sets in the cluster")
 
 	channels := &common.ResourceChannels{
-		ReplicaSetList: common.GetReplicaSetListChannel(client.Extensions(), 1),
+		DeploymentList: common.GetDeploymentListChannel(client.Extensions(), 1),
 		ServiceList:    common.GetServiceListChannel(client, 1),
 		PodList:        common.GetPodListChannel(client, 1),
 		EventList:      common.GetEventListChannel(client, 1),
 		NodeList:       common.GetNodeListChannel(client, 1),
 	}
 
-	return GetReplicaSetListFromChannels(channels)
+	return GetDeploymentListFromChannels(channels)
 }
 
-// GetReplicaSetList returns a list of all Replica Sets in the cluster
+// GetDeploymentList returns a list of all Deployments in the cluster
 // reading required resource list once from the channels.
-func GetReplicaSetListFromChannels(channels *common.ResourceChannels) (
-	*ReplicaSetList, error) {
+func GetDeploymentListFromChannels(channels *common.ResourceChannels) (
+	*DeploymentList, error) {
 
-	replicaSets := <-channels.ReplicaSetList.List
-	if err := <-channels.ReplicaSetList.Error; err != nil {
+	deployments := <-channels.DeploymentList.List
+	if err := <-channels.DeploymentList.Error; err != nil {
 		statusErr, ok := err.(*k8serrors.StatusError)
 		if ok && statusErr.ErrStatus.Reason == "NotFound" {
-			// NotFound - this means that the server does not support Replica Set objects, which
+			// NotFound - this means that the server does not support Deployment objects, which
 			// is fine.
 			return nil, nil
 		}
@@ -106,33 +106,33 @@ func GetReplicaSetListFromChannels(channels *common.ResourceChannels) (
 		return nil, err
 	}
 
-	return getReplicaSetList(replicaSets.Items, services.Items, pods.Items, events.Items,
+	return getDeploymentList(deployments.Items, services.Items, pods.Items, events.Items,
 		nodes.Items), nil
 }
 
-func getReplicaSetList(replicaSets []extensions.ReplicaSet,
+func getDeploymentList(deployments []extensions.Deployment,
 	services []api.Service, pods []api.Pod, events []api.Event,
-	nodes []api.Node) *ReplicaSetList {
+	nodes []api.Node) *DeploymentList {
 
-	replicaSetList := &ReplicaSetList{
-		ReplicaSets: make([]ReplicaSet, 0),
+	deploymentList := &DeploymentList{
+		Deployments: make([]Deployment, 0),
 	}
 
-	for _, replicaSet := range replicaSets {
+	for _, deployment := range deployments {
 
-		matchingPods := getMatchingPods(replicaSet.Spec.Selector, replicaSet.ObjectMeta.Namespace, pods)
-		podInfo := getPodInfo(&replicaSet, matchingPods)
+		matchingPods := getMatchingPods(deployment.Spec.Selector, deployment.ObjectMeta.Namespace, pods)
+		podInfo := getPodInfo(&deployment, matchingPods)
 
-		replicaSetList.ReplicaSets = append(replicaSetList.ReplicaSets,
-			ReplicaSet{
-				Name:            replicaSet.ObjectMeta.Name,
-				Namespace:       replicaSet.ObjectMeta.Namespace,
-				Labels:          replicaSet.ObjectMeta.Labels,
-				ContainerImages: replicationcontroller.GetContainerImages(&replicaSet.Spec.Template.Spec),
+		deploymentList.Deployments = append(deploymentList.Deployments,
+			Deployment{
+				Name:            deployment.ObjectMeta.Name,
+				Namespace:       deployment.ObjectMeta.Namespace,
+				Labels:          deployment.ObjectMeta.Labels,
+				ContainerImages: replicationcontroller.GetContainerImages(&deployment.Spec.Template.Spec),
 				Pods:            podInfo,
-				CreationTime:    replicaSet.ObjectMeta.CreationTimestamp,
+				CreationTime:    deployment.ObjectMeta.CreationTimestamp,
 			})
 	}
 
-	return replicaSetList
+	return deploymentList
 }

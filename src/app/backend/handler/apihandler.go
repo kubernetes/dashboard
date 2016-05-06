@@ -24,6 +24,7 @@ import (
 	// TODO(maciaszczykm): Avoid using dot-imports.
 	. "github.com/kubernetes/dashboard/client"
 	. "github.com/kubernetes/dashboard/resource/container"
+	"github.com/kubernetes/dashboard/resource/deployment"
 	. "github.com/kubernetes/dashboard/resource/event"
 	. "github.com/kubernetes/dashboard/resource/namespace"
 	"github.com/kubernetes/dashboard/resource/replicaset"
@@ -164,6 +165,17 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 			To(apiHandler.handleGetReplicaSets).
 			Writes(replicaset.ReplicaSetList{}))
 	wsContainer.Add(replicaSetsWs)
+
+	deploymentsWs := new(restful.WebService)
+	deploymentsWs.Filter(wsLogger)
+	deploymentsWs.Path("/api/v1/deployments").
+		Consumes(restful.MIME_JSON).
+		Produces(restful.MIME_JSON)
+	deploymentsWs.Route(
+		deploymentsWs.GET("").
+			To(apiHandler.handleGetDeployments).
+			Writes(deployment.DeploymentList{}))
+	wsContainer.Add(deploymentsWs)
 
 	namespacesWs := new(restful.WebService)
 	namespacesWs.Filter(wsLogger)
@@ -351,6 +363,19 @@ func (apiHandler *ApiHandler) handleGetReplicaSets(
 	request *restful.Request, response *restful.Response) {
 
 	result, err := replicaset.GetReplicaSetList(apiHandler.client)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get Deployment list API call.
+func (apiHandler *ApiHandler) handleGetDeployments(
+	request *restful.Request, response *restful.Response) {
+
+	result, err := deployment.GetDeploymentList(apiHandler.client)
 	if err != nil {
 		handleInternalError(response, err)
 		return
