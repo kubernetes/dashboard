@@ -20,6 +20,7 @@ import (
 
 	"github.com/kubernetes/dashboard/resource/event"
 	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api/unversioned"
 )
 
 func TestIsLabelSelectorMatching(t *testing.T) {
@@ -51,11 +52,11 @@ func TestIsLabelSelectorMatching(t *testing.T) {
 	}
 }
 
-func TestGetControllerPodInfo(t *testing.T) {
+func TestGetPodInfo(t *testing.T) {
 	cases := []struct {
 		current, desired int
 		pods             []api.Pod
-		expected         ControllerPodInfo
+		expected         PodInfo
 	}{
 		{
 			5,
@@ -67,7 +68,7 @@ func TestGetControllerPodInfo(t *testing.T) {
 					},
 				},
 			},
-			ControllerPodInfo{
+			PodInfo{
 				Current:  5,
 				Desired:  4,
 				Running:  1,
@@ -81,8 +82,47 @@ func TestGetControllerPodInfo(t *testing.T) {
 	for _, c := range cases {
 		actual := GetPodInfo(c.current, c.desired, c.pods)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("getControllerPodInfo(%#v, %#v, %#v) == \n%#v\nexpected \n%#v\n",
+			t.Errorf("getPodInfo(%#v, %#v, %#v) == \n%#v\nexpected \n%#v\n",
 				c.current, c.desired, c.pods, actual, c.expected)
+		}
+	}
+}
+
+func TestGetMatchingPods(t *testing.T) {
+	cases := []struct {
+		labelSelector *unversioned.LabelSelector
+		namespace     string
+		pods          []api.Pod
+		expected      []api.Pod
+	}{
+		{nil, api.NamespaceDefault, nil, nil},
+		{nil, api.NamespaceDefault, []api.Pod{}, nil},
+		{nil, api.NamespaceDefault, []api.Pod{{}}, nil},
+		{&unversioned.LabelSelector{}, api.NamespaceDefault, []api.Pod{{
+			ObjectMeta: api.ObjectMeta{Labels: map[string]string{"foo": "bar"}},
+		}}, nil},
+		{
+			&unversioned.LabelSelector{},
+			api.NamespaceDefault,
+			[]api.Pod{{
+				ObjectMeta: api.ObjectMeta{
+					Labels:    map[string]string{"foo": "bar"},
+					Namespace: api.NamespaceDefault,
+				},
+			}},
+			[]api.Pod{{
+				ObjectMeta: api.ObjectMeta{
+					Labels:    map[string]string{"foo": "bar"},
+					Namespace: api.NamespaceDefault,
+				},
+			}},
+		},
+	}
+	for _, c := range cases {
+		actual := GetMatchingPods(c.labelSelector, c.namespace, c.pods)
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("GetMatchingPods(%+v, %+v, %+v) == %+v, expected %+v",
+				c.labelSelector, c.namespace, c.pods, actual, c.expected)
 		}
 	}
 }

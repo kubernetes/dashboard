@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package replicaset
+package deployment
 
 import (
 	"errors"
@@ -28,70 +28,70 @@ import (
 	"github.com/kubernetes/dashboard/resource/event"
 )
 
-func TestGetReplicaSetListFromChannels(t *testing.T) {
+func TestGetDeploymentListFromChannels(t *testing.T) {
 	cases := []struct {
-		k8sRs         extensions.ReplicaSetList
-		k8sRsError    error
-		pods          *api.PodList
-		expected      *ReplicaSetList
-		expectedError error
+		k8sDeployment      extensions.DeploymentList
+		k8sDeploymentError error
+		pods               *api.PodList
+		expected           *DeploymentList
+		expectedError      error
 	}{
 		{
-			extensions.ReplicaSetList{},
+			extensions.DeploymentList{},
 			nil,
 			&api.PodList{},
-			&ReplicaSetList{[]ReplicaSet{}},
+			&DeploymentList{[]Deployment{}},
 			nil,
 		},
 		{
-			extensions.ReplicaSetList{},
+			extensions.DeploymentList{},
 			errors.New("MyCustomError"),
 			&api.PodList{},
 			nil,
 			errors.New("MyCustomError"),
 		},
 		{
-			extensions.ReplicaSetList{},
+			extensions.DeploymentList{},
 			&k8serrors.StatusError{},
 			&api.PodList{},
 			nil,
 			&k8serrors.StatusError{},
 		},
 		{
-			extensions.ReplicaSetList{},
+			extensions.DeploymentList{},
 			&k8serrors.StatusError{ErrStatus: unversioned.Status{}},
 			&api.PodList{},
 			nil,
 			&k8serrors.StatusError{ErrStatus: unversioned.Status{}},
 		},
 		{
-			extensions.ReplicaSetList{},
+			extensions.DeploymentList{},
 			&k8serrors.StatusError{ErrStatus: unversioned.Status{Reason: "foo-bar"}},
 			&api.PodList{},
 			nil,
 			&k8serrors.StatusError{ErrStatus: unversioned.Status{Reason: "foo-bar"}},
 		},
 		{
-			extensions.ReplicaSetList{},
+			extensions.DeploymentList{},
 			&k8serrors.StatusError{ErrStatus: unversioned.Status{Reason: "NotFound"}},
 			&api.PodList{},
 			nil,
 			nil,
 		},
 		{
-			extensions.ReplicaSetList{
-				Items: []extensions.ReplicaSet{{
+			extensions.DeploymentList{
+				Items: []extensions.Deployment{{
 					ObjectMeta: api.ObjectMeta{
 						Name:              "rs-name",
 						Namespace:         "rs-namespace",
 						Labels:            map[string]string{"key": "value"},
 						CreationTimestamp: unversioned.Unix(111, 222),
 					},
-					Spec: extensions.ReplicaSetSpec{
+					Spec: extensions.DeploymentSpec{
 						Selector: &unversioned.LabelSelector{MatchLabels: map[string]string{"foo": "bar"}},
 						Replicas: 21,
 					},
-					Status: extensions.ReplicaSetStatus{
+					Status: extensions.DeploymentStatus{
 						Replicas: 7,
 					},
 				}},
@@ -115,8 +115,8 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 					},
 				},
 			},
-			&ReplicaSetList{
-				[]ReplicaSet{{
+			&DeploymentList{
+				[]Deployment{{
 					Name:         "rs-name",
 					Namespace:    "rs-namespace",
 					Labels:       map[string]string{"key": "value"},
@@ -135,8 +135,8 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 
 	for _, c := range cases {
 		channels := &common.ResourceChannels{
-			ReplicaSetList: common.ReplicaSetListChannel{
-				List:  make(chan *extensions.ReplicaSetList, 1),
+			DeploymentList: common.DeploymentListChannel{
+				List:  make(chan *extensions.DeploymentList, 1),
 				Error: make(chan error, 1),
 			},
 			NodeList: common.NodeListChannel{
@@ -157,8 +157,8 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 			},
 		}
 
-		channels.ReplicaSetList.Error <- c.k8sRsError
-		channels.ReplicaSetList.List <- &c.k8sRs
+		channels.DeploymentList.Error <- c.k8sDeploymentError
+		channels.DeploymentList.List <- &c.k8sDeployment
 
 		channels.NodeList.List <- &api.NodeList{}
 		channels.NodeList.Error <- nil
@@ -172,12 +172,12 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 		channels.EventList.List <- &api.EventList{}
 		channels.EventList.Error <- nil
 
-		actual, err := GetReplicaSetListFromChannels(channels)
+		actual, err := GetDeploymentListFromChannels(channels)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("GetReplicaSetListChannels() ==\n          %#v\nExpected: %#v", actual, c.expected)
+			t.Errorf("GetDeploymentListFromChannels() ==\n          %#v\nExpected: %#v", actual, c.expected)
 		}
 		if !reflect.DeepEqual(err, c.expectedError) {
-			t.Errorf("GetReplicaSetListChannels() ==\n          %#v\nExpected: %#v", err, c.expectedError)
+			t.Errorf("GetDeploymentListFromChannels() ==\n          %#v\nExpected: %#v", err, c.expectedError)
 		}
 	}
 }

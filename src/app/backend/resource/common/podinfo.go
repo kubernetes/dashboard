@@ -16,12 +16,14 @@ package common
 
 import (
 	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api/unversioned"
+	"k8s.io/kubernetes/pkg/labels"
 
 	"github.com/kubernetes/dashboard/resource/event"
 )
 
-// ControllerPodInfo represents aggregate information about controller's pods.
-type ControllerPodInfo struct {
+// PodInfo represents aggregate information about controller's pods.
+type PodInfo struct {
 	// Number of pods that are created.
 	Current int `json:"current"`
 
@@ -42,8 +44,8 @@ type ControllerPodInfo struct {
 }
 
 // GetPodInfo returns aggregate information about replication controller pods.
-func GetPodInfo(current int, desired int, pods []api.Pod) ControllerPodInfo {
-	result := ControllerPodInfo{
+func GetPodInfo(current int, desired int, pods []api.Pod) PodInfo {
+	result := PodInfo{
 		Current:  current,
 		Desired:  desired,
 		Warnings: make([]event.Event, 0),
@@ -63,7 +65,8 @@ func GetPodInfo(current int, desired int, pods []api.Pod) ControllerPodInfo {
 	return result
 }
 
-// Returns true when a Service with the given selector targets the same Pods (or subset) that
+// IsLabelSelectorMatching returns true when a Service with the given
+// selector targets the same Pods (or subset) that
 // a Replication Controller with the given selector.
 func IsLabelSelectorMatching(labelSelector map[string]string,
 	testedObjectLabels map[string]string) bool {
@@ -78,4 +81,22 @@ func IsLabelSelectorMatching(labelSelector map[string]string,
 		}
 	}
 	return true
+}
+
+// GetMatchingPods returns pods matching the given selector and namespace
+func GetMatchingPods(labelSelector *unversioned.LabelSelector, namespace string,
+	pods []api.Pod) []api.Pod {
+
+	selector, _ := unversioned.LabelSelectorAsSelector(labelSelector)
+
+	var matchingPods []api.Pod
+	for _, pod := range pods {
+		if pod.ObjectMeta.Namespace == namespace &&
+			selector.Matches(labels.Set(pod.ObjectMeta.Labels)) {
+			matchingPods = append(matchingPods, pod)
+		}
+		return matchingPods
+	}
+
+	return matchingPods
 }

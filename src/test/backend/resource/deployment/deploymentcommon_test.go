@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package replicaset
+package deployment
 
 import (
 	"reflect"
@@ -25,18 +25,18 @@ import (
 	"github.com/kubernetes/dashboard/resource/event"
 )
 
-func TestGetReplicaSetPodInfo(t *testing.T) {
+func TestGetDeploymentPodInfo(t *testing.T) {
 	cases := []struct {
-		controller *extensions.ReplicaSet
+		controller *extensions.Deployment
 		pods       []api.Pod
 		expected   common.PodInfo
 	}{
 		{
-			&extensions.ReplicaSet{
-				Status: extensions.ReplicaSetStatus{
+			&extensions.Deployment{
+				Status: extensions.DeploymentStatus{
 					Replicas: 5,
 				},
-				Spec: extensions.ReplicaSetSpec{
+				Spec: extensions.DeploymentSpec{
 					Replicas: 4,
 				},
 			},
@@ -61,7 +61,7 @@ func TestGetReplicaSetPodInfo(t *testing.T) {
 	for _, c := range cases {
 		actual := getPodInfo(c.controller, c.pods)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("getReplicaSetPodInfo(%#v, %#v) == \n%#v\nexpected \n%#v\n",
+			t.Errorf("getDeploymentPodInfo(%#v, %#v) == \n%#v\nexpected \n%#v\n",
 				c.controller, c.pods, actual, c.expected)
 		}
 	}
