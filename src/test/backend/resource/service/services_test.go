@@ -134,7 +134,7 @@ func TestGetServiceList(t *testing.T) {
 	}
 }
 
-func TestGetServices(t *testing.T) {
+func TestGetServiceDetails(t *testing.T) {
 	cases := []struct {
 		service  *api.Service
 		expected Service
@@ -157,7 +157,7 @@ func TestGetServices(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := getServices(c.service)
+		actual := GetServiceDetails(c.service)
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getServices(%#v) == \ngot %#v, \nexpected %#v", c.service, actual,

@@ -203,14 +203,11 @@ func UpdateReplicasCount(client k8sClient.Interface, namespace, name string,
 // Returns detailed information about service from given service
 func getService(service api.Service, replicationController api.ReplicationController,
 	pods []api.Pod, nodes []api.Node) resourceService.Service {
-	return resourceService.Service{
-		ObjectMeta: common.CreateObjectMeta(service.ObjectMeta),
-		TypeMeta:   common.CreateTypeMeta(service.TypeMeta),
-		InternalEndpoint: common.GetInternalEndpoint(service.Name, service.Namespace,
-			service.Spec.Ports),
-		ExternalEndpoints: getExternalEndpoints(replicationController, pods, service, nodes),
-		Selector:          service.Spec.Selector,
-	}
+
+	result := resourceService.GetServiceDetails(&service);
+	result.ExternalEndpoints = getExternalEndpoints(replicationController, pods, service, nodes)
+
+	return result;
 }
 
 // Returns array of external endpoints for a replication controller.
