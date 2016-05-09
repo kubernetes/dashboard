@@ -12,19 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './podlist_stateconfig';
-import {podCardListComponent} from './podcardlist_component';
+import {stateName as deploy} from 'deploy/deploy_state';
 
 /**
- * Module containing endpoint components.
+ * @final
  */
-export default angular
-    .module(
-        'kubernetesDashboard.podsList',
-        [
-          'ngMaterial',
-          'ngResource',
-          'ui.router',
-        ])
-    .config(stateConfig)
-    .component('kdPodCardList', podCardListComponent);
+export class PodListActionBarController {
+  /**
+   * @param {!ui.router.$state} $state
+   * @ngInject
+   */
+  constructor($state) {
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
+  }
+
+  /**
+   * @export
+   */
+  redirectToDeployPage() { this.state_.go(deploy); }
+}
