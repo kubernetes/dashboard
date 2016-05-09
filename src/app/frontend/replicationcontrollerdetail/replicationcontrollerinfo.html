@@ -15,22 +15,23 @@ limitations under the License.
 -->
 
 <kd-info-card>
-  <kd-info-card-header>Resource details</kd-info-card-header>
+  <kd-info-card-header>Resource Details</kd-info-card-header>
   <kd-info-card-section name="Details">
     <kd-info-card-entry title="Name">
-      <kd-middle-ellipsis display-string="{{::infoCtrl.details.name}}"></kd-middle-ellipsis>
+      <kd-middle-ellipsis 
+              display-string="{{::$ctrl.replicationController.name}}"></kd-middle-ellipsis>
     </kd-info-card-entry>
     <kd-info-card-entry title="Namespace">
-      {{::infoCtrl.details.namespace}}
+      {{::$ctrl.replicationController.namespace}}
     </kd-info-card-entry>
     <kd-info-card-entry title="Label selector">
-      <kd-labels labels="::infoCtrl.details.labelSelector"></kd-labels>
+      <kd-labels labels="::$ctrl.replicationController.labelSelector"></kd-labels>
     </kd-info-card-entry>
     <kd-info-card-entry title="Labels">
-      <kd-labels labels="::infoCtrl.details.labels"></kd-labels>
+      <kd-labels labels="::$ctrl.replicationController.labels"></kd-labels>
     </kd-info-card-entry>
     <kd-info-card-entry title="Images">
-      <div ng-repeat="image in infoCtrl.details.containerImages">
+      <div ng-repeat="image in $ctrl.replicationController.containerImages">
         <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
       </div>
     </kd-info-card-entry>
@@ -38,24 +39,24 @@ limitations under the License.
 
   <kd-info-card-section name="Status">
     <kd-info-card-entry title="Pods">
-      <div ng-if="!infoCtrl.areDesiredPodsRunning()">
-        {{::infoCtrl.details.podInfo.current}} created,
-        {{::infoCtrl.details.podInfo.desired}} desired
+      <div ng-if="!$ctrl.areDesiredPodsRunning()">
+        {{::$ctrl.replicationController.podInfo.current}} created,
+        {{::$ctrl.replicationController.podInfo.desired}} desired
       </div>
-      <div ng-if="infoCtrl.areDesiredPodsRunning()">
-        {{::infoCtrl.details.podInfo.running}} running
+      <div ng-if="$ctrl.areDesiredPodsRunning()">
+        {{::$ctrl.replicationController.podInfo.running}} running
       </div>
     </kd-info-card-entry>
-    <kd-info-card-entry title="Pods status" ng-if="!infoCtrl.areDesiredPodsRunning()">
-      <div ng-if="!infoCtrl.areDesiredPodsRunning()">
-        <div ng-if="::infoCtrl.details.podInfo.pending" class="kd-comma-separated-item">
-          {{::infoCtrl.details.podInfo.pending}} pending<!-- Collapse whitespace
+    <kd-info-card-entry title="Pods status" ng-if="!$ctrl.areDesiredPodsRunning()">
+      <div ng-if="!$ctrl.areDesiredPodsRunning()">
+        <div ng-if="::$ctrl.replicationController.podInfo.pending" class="kd-comma-separated-item">
+          {{::$ctrl.replicationController.podInfo.pending}} pending<!-- Collapse whitespace
       --></div>
-        <div ng-if="::infoCtrl.details.podInfo.failed" class="kd-comma-separated-item">
-          {{::infoCtrl.details.podInfo.failed}} failed<!-- Collapse whitespace
+        <div ng-if="::$ctrl.replicationController.podInfo.failed" class="kd-comma-separated-item">
+          {{::$ctrl.replicationController.podInfo.failed}} failed<!-- Collapse whitespace
       --></div>
-        <div ng-if="::infoCtrl.details.podInfo.running" class="kd-comma-separated-item">
-          {{::infoCtrl.details.podInfo.running}} running
+        <div ng-if="::$ctrl.replicationController.podInfo.running" class="kd-comma-separated-item">
+          {{::$ctrl.replicationController.podInfo.running}} running
         </div>
       </div>
     </kd-info-card-entry>

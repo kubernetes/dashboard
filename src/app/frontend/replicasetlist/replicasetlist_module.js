@@ -20,9 +20,9 @@ import {replicaSetCardListComponent} from './replicasetcardlist_component';
 import replicaSetDetailModule from 'replicasetdetail/replicasetdetail_module';
 
 /**
- * Angular module for the Replication Controller list view.
+ * Angular module for the Replica Set list view.
  *
- * The view shows Replication Controllers running in the cluster and allows to manage them.
+ * The view shows Replica Set running in the cluster and allows to manage them.
  */
 export default angular
     .module(

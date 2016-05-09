@@ -12,17 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {podCardListComponent} from './podcardlist_component';
-
 /**
- * Angular module for the Pods list view.
- *
- * The view shows Pods running in the cluster and allows to manage them.
+ * @final
  */
-export default angular
-    .module(
-        'kubernetesDashboard.podsList',
-        [
-          'ngMaterial',
-        ])
-    .component('kdPodCardList', podCardListComponent);
+export default class ServiceListController {
+  /**
+   * @param {!backendApi.ServiceList} serviceList
+   */
+  constructor(serviceList) {
+    /** @export {!backendApi.ServiceList} */
+    this.serviceList = serviceList;
+  }
+}

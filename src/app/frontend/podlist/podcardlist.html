@@ -14,52 +14,47 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-content-card ng-if="::$ctrl.podList.pods">
-  <kd-title>Pods</kd-title>
-  <kd-content>
-    <kd-resource-card-list selectable="false" with-statuses="false">
-      <kd-resource-card-header-columns>
-        <kd-resource-card-header-column size="medium" grow="4">Name</kd-resource-card-header-column>
-        <kd-resource-card-header-column>Status</kd-resource-card-header-column>
-        <kd-resource-card-header-column size="small" grow="nogrow">
-          Restarts
-        </kd-resource-card-header-column>
-        <kd-resource-card-header-column>Age</kd-resource-card-header-column>
-        <kd-resource-card-header-column>Cluster IP</kd-resource-card-header-column>
-        <kd-resource-card-header-column>Logs</kd-resource-card-header-column>
-      </kd-resource-card-header-columns>
+<kd-resource-card-list selectable="false" with-statuses="false">
+  <kd-resource-card-header-columns>
+    <kd-resource-card-header-column size="medium" grow="4">Name</kd-resource-card-header-column>
+    <kd-resource-card-header-column>Status</kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small" grow="nogrow">
+      Restarts
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column>Age</kd-resource-card-header-column>
+    <kd-resource-card-header-column>Cluster IP</kd-resource-card-header-column>
+    <kd-resource-card-header-column>Logs</kd-resource-card-header-column>
+  </kd-resource-card-header-columns>
 
-      <kd-resource-card ng-repeat="pod in $ctrl.podList.pods">
-        <kd-resource-card-columns>
-          <kd-resource-card-column>
-            <div>
-              <kd-middle-ellipsis display-string="{{::pod.name}}">
-              </kd-middle-ellipsis>
-            </div>
-          </kd-resource-card-column>
-          <kd-resource-card-column>{{::pod.podPhase}}</kd-resource-card-column>
-          <kd-resource-card-column>{{::pod.restartCount}}</kd-resource-card-column>
-          <kd-resource-card-column>
-            <div ng-if="::pod.startTime">
-              {{::pod.startTime | relativeTime}}
-              <md-tooltip>
-                Started at {{::(pod.startTime | date:'d/M/yy HH:mm':'UTC')}} UTC
-              </md-tooltip>
-            </div>
-            <div ng-if="::!pod.startTime">-</div>
-          </kd-resource-card-column>
-          <kd-resource-card-column>
-            <div ng-if="::pod.podIP">{{::pod.podIP}}</div>
-            <div ng-if="::!pod.podIP">-</div>
-          </kd-resource-card-column>
-          <kd-resource-card-column>
-            <a ng-href="{{::$ctrl.getPodLogsHref(pod)}}" target="_blank">
-              Logs
-              <i class="material-icons kd-text-icon">open_in_new</i>
-            </a>
-          </kd-resource-card-column>
-        </kd-resource-card-columns>
-      </kd-resource-card>
-    </kd-resource-card-list>
-  </kd-content>
-</kd-content-card>
+  <kd-resource-card ng-repeat="pod in $ctrl.podList">
+    <kd-resource-card-columns>
+      <kd-resource-card-column>
+        <div>
+          <kd-middle-ellipsis display-string="{{::pod.name}}">
+          </kd-middle-ellipsis>
+        </div>
+      </kd-resource-card-column>
+      <kd-resource-card-column>{{::pod.podPhase}}</kd-resource-card-column>
+      <kd-resource-card-column>{{::pod.restartCount}}</kd-resource-card-column>
+      <kd-resource-card-column>
+        <div ng-if="::pod.startTime">
+          {{::pod.startTime | relativeTime}}
+          <md-tooltip>
+            Started at {{::(pod.startTime | date:'d/M/yy HH:mm':'UTC')}} UTC
+          </md-tooltip>
+        </div>
+        <div ng-if="::!pod.startTime">-</div>
+      </kd-resource-card-column>
+      <kd-resource-card-column>
+        <div ng-if="::pod.podIP">{{::pod.podIP}}</div>
+        <div ng-if="::!pod.podIP">-</div>
+      </kd-resource-card-column>
+      <kd-resource-card-column>
+        <a ng-href="{{::$ctrl.getPodLogsHref(pod)}}" target="_blank">
+          Logs
+          <i class="material-icons kd-text-icon">open_in_new</i>
+        </a>
+      </kd-resource-card-column>
+    </kd-resource-card-columns>
+  </kd-resource-card>
+</kd-resource-card-list>
