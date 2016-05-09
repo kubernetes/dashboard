@@ -202,10 +202,6 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 	daemonSetWs.Route(
 		daemonSetWs.DELETE("/{namespace}/{daemonSet}").
 			To(apiHandler.handleDeleteDaemonSet))
-	daemonSetWs.Route(
-		daemonSetWs.GET("/pods/{namespace}/{daemonSet}").
-			To(apiHandler.handleGetDaemonSetPods).
-			Writes(daemonset.DaemonSetPods{}))
 	wsContainer.Add(daemonSetWs)
 
 	namespacesWs := new(restful.WebService)
@@ -632,25 +628,6 @@ func (apiHandler *ApiHandler) handleGetDaemonSetDetail(
 	namespace := request.PathParameter("namespace")
 	daemonSet := request.PathParameter("daemonSet")
 	result, err := daemonset.GetDaemonSetDetail(apiHandler.client, apiHandler.heapsterClient, namespace, daemonSet)
-	if err != nil {
-		handleInternalError(response, err)
-		return
-	}
-
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
-}
-
-// Handles get Daemon Set Pods API call.
-func (apiHandler *ApiHandler) handleGetDaemonSetPods(
-	request *restful.Request, response *restful.Response) {
-
-	namespace := request.PathParameter("namespace")
-	daemonSet := request.PathParameter("daemonSet")
-	limit, err := strconv.Atoi(request.QueryParameter("limit"))
-	if err != nil {
-		limit = 0
-	}
-	result, err := daemonset.GetDaemonSetPods(apiHandler.client, namespace, daemonSet, limit)
 	if err != nil {
 		handleInternalError(response, err)
 		return
