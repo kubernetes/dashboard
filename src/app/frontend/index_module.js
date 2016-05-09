@@ -18,14 +18,16 @@
  */
 import chromeModule from './chrome/chrome_module';
 import deployModule from './deploy/deploy_module';
+import deprecatedReplicationControllerListModule from './replicationcontrollerlistdeprecated/replicationcontrollerlist_module';
 import errorModule from './error/error_module';
 import indexConfig from './index_config';
-import routeConfig from './index_route';
 import logsModule from './logs/logs_module';
+import replicaSetListModule from './replicasetlist/replicasetlist_module';
 import replicationControllerDetailModule from './replicationcontrollerdetail/replicationcontrollerdetail_module';
 import replicationControllerListModule from './replicationcontrollerlist/replicationcontrollerlist_module';
-import deprecatedReplicationControllerListModule from './replicationcontrollerlistdeprecated/replicationcontrollerlist_module';
-import replicaSetListModule from './replicasetlist/replicasetlist_module';
+import routeConfig from './index_route';
+import serviceDetailModule from './servicedetail/servicedetail_module';
+import serviceListModule from './servicelist/servicelist_module';
 import workloadsModule from './workloads/workloads_module';
 
 export default angular
@@ -48,6 +50,8 @@ export default angular
           deprecatedReplicationControllerListModule.name,
           replicaSetListModule.name,
           workloadsModule.name,
+          serviceDetailModule.name,
+          serviceListModule.name,
         ])
     .config(indexConfig)
     .config(routeConfig);

@@ -47,6 +47,13 @@ type Service struct {
 
 	// Label selector of the service.
 	Selector map[string]string `json:"selector"`
+
+	// Type determines how the service will be exposed.  Valid options: ClusterIP, NodePort, LoadBalancer
+	Type api.ServiceType `json:"type"`
+
+	// ClusterIP is usually assigned by the master. Valid values are None, empty string (""), or
+	// a valid IP address. None can be specified for headless services when proxying is not required
+	ClusterIP string `json:"clusterIP"`
 }
 
 // ServiceList contains a list of services in the cluster.
@@ -65,7 +72,7 @@ func GetService(client client.Interface, namespace, name string) (*Service, erro
 		return nil, err
 	}
 
-	service := getServiceDetails(serviceData)
+	service := GetServiceDetails(serviceData)
 	return &service, nil
 }
 
@@ -84,13 +91,14 @@ func GetServiceList(client client.Interface) (*ServiceList, error) {
 
 	serviceList := &ServiceList{Services: make([]Service, 0)}
 	for _, service := range services.Items {
-		serviceList.Services = append(serviceList.Services, getServiceDetails(&service))
+		serviceList.Services = append(serviceList.Services, GetServiceDetails(&service))
 	}
 
 	return serviceList, nil
 }
 
-func getServiceDetails(service *api.Service) Service {
+// GetServiceDetails returns api service object based on kubernetes service object
+func GetServiceDetails(service *api.Service) Service {
 	return Service{
 		Name:              service.Name,
 		Namespace:         service.Namespace,
@@ -98,6 +106,8 @@ func getServiceDetails(service *api.Service) Service {
 		Labels:            service.Labels,
 		InternalEndpoint:  common.GetInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports),
 		// TODO(maciaszczykm): Fill ExternalEndpoints with data.
-		Selector: service.Spec.Selector,
+		Selector:  service.Spec.Selector,
+		ClusterIP: service.Spec.ClusterIP,
+		Type:      service.Spec.Type,
 	}
 }

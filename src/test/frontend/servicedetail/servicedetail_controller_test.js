@@ -12,21 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './podlist_stateconfig';
-import {podCardListComponent} from './podcardlist_component';
+import {ServiceDetailController} from 'servicedetail/servicedetail_controller';
+import serviceDetailModule from 'servicedetail/servicedetail_module';
 
-/**
- * Angular module for the Pods list view.
- *
- * The view shows Pods running in the cluster and allows to manage them.
- */
-export default angular
-    .module(
-        'kubernetesDashboard.podsList',
-        [
-          'ngMaterial',
-          'ngResource',
-          'ui.router',
-        ])
-    .config(stateConfig)
-    .component('kdPodCardList', podCardListComponent);
+describe('Service detail controller', () => {
+
+  beforeEach(() => { angular.mock.module(serviceDetailModule.name); });
+
+  it('should initialize controller', angular.mock.inject(($controller) => {
+    let data = {serviceDetail: {}};
+    /** @type {!ServiceDetailController} */
+    let ctrl = $controller(ServiceDetailController, {serviceDetail: data});
+
+    expect(ctrl.serviceDetail).toBe(data);
+  }));
+});

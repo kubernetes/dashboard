@@ -14,7 +14,7 @@
 
 import replicationControllerDetailModule from 'replicationcontrollerdetail/replicationcontrollerdetail_module';
 
-describe('Replication Controller Detail controller', () => {
+describe('Replication Controller Info controller', () => {
   /**
    * Replication Controller Detail controller.
    * @type {!ReplicationControllerDetailController}
@@ -31,7 +31,7 @@ describe('Replication Controller Detail controller', () => {
 
   it('should return true when all desired pods are running', () => {
     // given
-    ctrl.details = {
+    ctrl.replicationController = {
       podInfo: {
         running: 0,
         desired: 0,
@@ -44,7 +44,7 @@ describe('Replication Controller Detail controller', () => {
 
   it('should return false when not all desired pods are running', () => {
     // given
-    ctrl.details = {
+    ctrl.replicationController = {
       podInfo: {
         running: 0,
         desired: 1,

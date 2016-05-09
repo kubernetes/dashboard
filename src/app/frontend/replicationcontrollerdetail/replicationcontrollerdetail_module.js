@@ -16,11 +16,11 @@ import componentsModule from './../common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
 import logsModule from 'logs/logs_module';
 import podListModule from 'podlist/podlist_module';
+import serviceListModule from 'servicelist/servicelist_module';
 import stateConfig from './replicationcontrollerdetail_stateconfig';
 import {replicationControllerEventsComponent} from './replicationcontrollerevents_component';
 import {replicationControllerInfoComponent} from './replicationcontrollerinfo_component';
 import {ReplicationControllerService} from './replicationcontroller_service';
-import {replicationControllerServicesComponent} from './replicationcontrollerservices_component';
 
 /**
  * Angular module for the Replication Controller details view.
@@ -38,9 +38,9 @@ export default angular
           filtersModule.name,
           logsModule.name,
           podListModule.name,
+          serviceListModule.name,
         ])
     .config(stateConfig)
     .component('kdReplicationControllerInfo', replicationControllerInfoComponent)
-    .component('kdReplicationControllerServices', replicationControllerServicesComponent)
     .component('kdReplicationControllerEvents', replicationControllerEventsComponent)
     .service('kdReplicationControllerService', ReplicationControllerService);
