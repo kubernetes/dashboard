@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package replicationcontroller
+package pod
 
 import (
 	"log"
@@ -22,8 +22,7 @@ import (
 	"strings"
 	"time"
 
-	// TODO(maciaszczykm): Avoid using dot-imports.
-	. "github.com/kubernetes/dashboard/client"
+	"github.com/kubernetes/dashboard/client"
 	heapster "k8s.io/heapster/api/v1/types"
 	"k8s.io/kubernetes/pkg/api"
 )
@@ -33,10 +32,10 @@ const (
 	memoryUsage = "memory-usage"
 )
 
-// ReplicationControllerMetricsByPod is a metrics map by pod name.
-type ReplicationControllerMetricsByPod struct {
-	// Metrics map by pod name
-	MetricsMap map[string]PodMetrics `json:"metricsMap"`
+// MetricsByPod is a metrics map by pod name.
+type MetricsByPod struct {
+	// Metrics by namespace and name of a pod.
+	MetricsMap map[string]map[string]PodMetrics `json:"metricsMap"`
 }
 
 // MetricResult is a some sample measurement of a non-negative, integer quantity
@@ -60,38 +59,56 @@ type PodMetrics struct {
 }
 
 // Return Pods metrics for Replication Controller or error when occurred.
-func getReplicationControllerPodsMetrics(podList *api.PodList, heapsterClient HeapsterClient,
-	namespace string, replicationController string) (*ReplicationControllerMetricsByPod, error) {
-	log.Printf("Getting Pods metrics for Replication Controller %s in %s namespace", replicationController, namespace)
-	podNames := make([]string, 0)
+func getReplicationControllerPodsMetrics(pods []api.Pod,
+	heapsterClient client.HeapsterClient) (*MetricsByPod, error) {
+	log.Printf("Getting pod metrics")
 
-	pods := podList.Items
+	podsByNamespace := make(map[string][]api.Pod)
+
 	for _, pod := range pods {
-		podNames = append(podNames, pod.Name)
+		podsByNamespace[pod.ObjectMeta.Namespace] = append(podsByNamespace[pod.ObjectMeta.Namespace], pod)
 	}
 
-	metricCpuUsagePath := createMetricPath(namespace, podNames, cpuUsage)
-	metricMemUsagePath := createMetricPath(namespace, podNames, memoryUsage)
+	result := &MetricsByPod{MetricsMap: make(map[string]map[string]PodMetrics)}
 
-	resultCpuUsageRaw, err := getRawMetrics(heapsterClient, metricCpuUsagePath)
-	if err != nil {
-		return nil, err
+	for namespace, pods := range podsByNamespace {
+		podNames := make([]string, 0)
+
+		for _, pod := range pods {
+			podNames = append(podNames, pod.Name)
+		}
+
+		metricCpuUsagePath := createMetricPath(namespace, podNames, cpuUsage)
+		metricMemUsagePath := createMetricPath(namespace, podNames, memoryUsage)
+
+		resultCpuUsageRaw, err := getRawMetrics(heapsterClient, metricCpuUsagePath)
+		if err != nil {
+			return nil, err
+		}
+
+		resultMemUsageRaw, err := getRawMetrics(heapsterClient, metricMemUsagePath)
+		if err != nil {
+			return nil, err
+		}
+
+		cpuMetricResult, err := unmarshalMetrics(resultCpuUsageRaw)
+		if err != nil {
+			return nil, err
+		}
+		memMetricResult, err := unmarshalMetrics(resultMemUsageRaw)
+		if err != nil {
+			return nil, err
+		}
+
+		if result.MetricsMap[namespace] == nil {
+			result.MetricsMap[namespace] = make(map[string]PodMetrics)
+		}
+
+		fillPodMetrics(cpuMetricResult, memMetricResult, podNames,
+			result.MetricsMap[namespace])
 	}
 
-	resultMemUsageRaw, err := getRawMetrics(heapsterClient, metricMemUsagePath)
-	if err != nil {
-		return nil, err
-	}
-
-	cpuMetricResult, err := unmarshalMetrics(resultCpuUsageRaw)
-	if err != nil {
-		return nil, err
-	}
-	memMetricResult, err := unmarshalMetrics(resultMemUsageRaw)
-	if err != nil {
-		return nil, err
-	}
-	return createResponse(cpuMetricResult, memMetricResult, podNames), nil
+	return result, nil
 }
 
 // Create URL path for metrics.
@@ -103,7 +120,7 @@ func createMetricPath(namespace string, podNames []string, metricName string) st
 }
 
 // Retrieves raw metrics from Heapster.
-func getRawMetrics(heapsterClient HeapsterClient, metricPath string) ([]byte, error) {
+func getRawMetrics(heapsterClient client.HeapsterClient, metricPath string) ([]byte, error) {
 	resultRaw, err := heapsterClient.Get(metricPath).DoRaw()
 
 	if err != nil {
@@ -123,10 +140,8 @@ func unmarshalMetrics(rawData []byte) ([]heapster.MetricResult, error) {
 }
 
 // Create response structure for API call.
-func createResponse(cpuMetrics []heapster.MetricResult, memMetrics []heapster.MetricResult,
-	podNames []string) *ReplicationControllerMetricsByPod {
-	replicationControllerPodsResources := make(map[string]PodMetrics)
-
+func fillPodMetrics(cpuMetrics []heapster.MetricResult, memMetrics []heapster.MetricResult,
+	podNames []string, result map[string]PodMetrics) {
 	if len(cpuMetrics) == len(podNames) && len(memMetrics) == len(podNames) {
 		for iterator, podName := range podNames {
 			var memValue *uint64
@@ -161,10 +176,7 @@ func createResponse(cpuMetrics []heapster.MetricResult, memMetrics []heapster.Me
 				CpuUsageHistory:    cpuHistory,
 				MemoryUsageHistory: memHistory,
 			}
-			replicationControllerPodsResources[podName] = podResources
+			result[podName] = podResources
 		}
-	}
-	return &ReplicationControllerMetricsByPod{
-		MetricsMap: replicationControllerPodsResources,
 	}
 }

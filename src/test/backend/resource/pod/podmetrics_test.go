@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package replicationcontroller
+package pod
 
 import (
 	"reflect"
@@ -66,12 +66,10 @@ func TestCreateResponse(t *testing.T) {
 		cpuMetrics []heapster.MetricResult
 		memMetrics []heapster.MetricResult
 		podNames   []string
-		expected   *ReplicationControllerMetricsByPod
+		expected   map[string]PodMetrics
 	}{
 		{make([]heapster.MetricResult, 0), make([]heapster.MetricResult, 0), make([]string, 0),
-			&ReplicationControllerMetricsByPod{
-				MetricsMap: map[string]PodMetrics{},
-			}},
+			map[string]PodMetrics{}},
 		{[]heapster.MetricResult{
 			{Metrics: []heapster.MetricPoint{
 				{Value: 0},
@@ -83,9 +81,7 @@ func TestCreateResponse(t *testing.T) {
 				}},
 			},
 			[]string{"a", "b"},
-			&ReplicationControllerMetricsByPod{
-				MetricsMap: map[string]PodMetrics{},
-			},
+			map[string]PodMetrics{},
 		},
 		{[]heapster.MetricResult{
 			{Metrics: []heapster.MetricPoint{
@@ -104,33 +100,32 @@ func TestCreateResponse(t *testing.T) {
 				}},
 			},
 			[]string{"a", "b"},
-			&ReplicationControllerMetricsByPod{
-				MetricsMap: map[string]PodMetrics{
-					"a": {
-						CpuUsage: &cpuUsage1,
-						CpuUsageHistory: []MetricResult{
-							{Value: cpuUsage1},
-						},
-						MemoryUsage: &memoryUsage,
-						MemoryUsageHistory: []MetricResult{
-							{Value: memoryUsage},
-						},
-					}, "b": {
-						CpuUsage: &cpuUsage2,
-						CpuUsageHistory: []MetricResult{
-							{Value: cpuUsage2},
-						},
-						MemoryUsage: &memoryUsage,
-						MemoryUsageHistory: []MetricResult{
-							{Value: memoryUsage},
-						},
+			map[string]PodMetrics{
+				"a": {
+					CpuUsage: &cpuUsage1,
+					CpuUsageHistory: []MetricResult{
+						{Value: cpuUsage1},
+					},
+					MemoryUsage: &memoryUsage,
+					MemoryUsageHistory: []MetricResult{
+						{Value: memoryUsage},
+					},
+				}, "b": {
+					CpuUsage: &cpuUsage2,
+					CpuUsageHistory: []MetricResult{
+						{Value: cpuUsage2},
+					},
+					MemoryUsage: &memoryUsage,
+					MemoryUsageHistory: []MetricResult{
+						{Value: memoryUsage},
 					},
 				},
 			},
 		},
 	}
 	for _, c := range cases {
-		actual := createResponse(c.cpuMetrics, c.memMetrics, c.podNames)
+		actual := make(map[string]PodMetrics)
+		fillPodMetrics(c.cpuMetrics, c.memMetrics, c.podNames, actual)
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("createResponse(%#v, %#v, %#v) == %#v, expected %#v",

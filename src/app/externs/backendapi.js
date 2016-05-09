@@ -188,6 +188,13 @@ backendApi.ReplicaSetList;
 
 /**
  * @typedef {{
+ *   pods: !Array<!backendApi.Pod>
+ * }}
+ */
+backendApi.PodList;
+
+/**
+ * @typedef {{
  *   name: string,
  *   namespace: string,
  *   type: string
@@ -203,7 +210,7 @@ backendApi.ResourceMetadata;
  *   labelSelector: !Object<string, string>,
  *   containerImages: !Array<string>,
  *   podInfo: !backendApi.PodInfo,
- *   pods: !Array<!backendApi.Pod>,
+ *   pods: !backendApi.PodList,
  *   services: !Array<!backendApi.ServiceDetail>,
  *   hasMetrics: boolean
  * }}
@@ -235,7 +242,7 @@ backendApi.DeleteReplicationControllerSpec;
  *   metrics: backendApi.PodMetrics
  * }}
  */
-backendApi.ReplicationControllerPod;
+backendApi.Pod;
 
 /**
  * @typedef {{
