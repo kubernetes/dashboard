@@ -12,21 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './podlist_stateconfig';
-import {podCardListComponent} from './podcardlist_component';
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'services';
 
-/**
- * Angular module for the Pods list view.
- *
- * The view shows Pods running in the cluster and allows to manage them.
- */
-export default angular
-    .module(
-        'kubernetesDashboard.podsList',
-        [
-          'ngMaterial',
-          'ngResource',
-          'ui.router',
-        ])
-    .config(stateConfig)
-    .component('kdPodCardList', podCardListComponent);
+/** Absolute URL of the state. */
+export const stateUrl = '/services';

@@ -157,7 +157,7 @@ func TestGetServices(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := getServices(c.service)
+		actual := GetServiceDetails(c.service)
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getServices(%#v) == \ngot %#v, \nexpected %#v", c.service, actual,

@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card-list selectable="false" with-statuses="false" ng-if="::$ctrl.podList.pods">
+<kd-resource-card-list selectable="::$ctrl.selectable" with-statuses="::$ctrl.withStatuses"
+                       ng-if="::$ctrl.podList.pods">
   <kd-resource-card-header-columns>
     <kd-resource-card-header-column size="medium" grow="4">Name</kd-resource-card-header-column>
     <kd-resource-card-header-column>Status</kd-resource-card-header-column>

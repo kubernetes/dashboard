@@ -18,19 +18,22 @@ limitations under the License.
   <md-content>
     <md-tabs md-border-bottom md-dynamic-height>
       <md-tab label="Overview">
-        <kd-replication-controller-info details="::ctrl.replicationControllerDetail">
+        <kd-replication-controller-info replication-controller="::ctrl.replicationControllerDetail">
         </kd-replication-controller-info>
 
-        <kd-replication-controller-services services="::ctrl.replicationControllerDetail.services">
-        </kd-replication-controller-services>
+        <kd-content-card ng-if="::ctrl.replicationControllerDetail.services">
+          <kd-title>Services</kd-title>
+          <kd-content>
+            <kd-service-card-list services="::ctrl.replicationControllerDetail.services">
+            </kd-service-card-list>
+          </kd-content>
+        </kd-content-card>
 
         <kd-content-card>
-          <kd-title>
-            Pods
-          </kd-title>
+          <kd-title>Pods</kd-title>
           <kd-content>
             <kd-pod-card-list pod-list="::ctrl.replicationControllerDetail.pods"
-                logs-href-fn="::ctrl.getPodLogsHref(pod)">
+                              logs-href-fn="::ctrl.getPodLogsHref(pod)">
             </kd-pod-card-list>
           </kd-content>
         </kd-content-card>

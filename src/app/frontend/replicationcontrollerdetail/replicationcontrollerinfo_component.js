@@ -24,14 +24,17 @@ export default class ReplicationControllerInfoController {
      * Replication controller details. Initialized from the scope.
      * @export {!backendApi.ReplicationControllerDetail}
      */
-    this.details;
+    this.replicationController;
   }
 
   /**
    * @return {boolean}
    * @export
    */
-  areDesiredPodsRunning() { return this.details.podInfo.running === this.details.podInfo.desired; }
+  areDesiredPodsRunning() {
+    return this.replicationController.podInfo.running ===
+        this.replicationController.podInfo.desired;
+  }
 }
 
 /**
@@ -41,10 +44,9 @@ export default class ReplicationControllerInfoController {
  */
 export const replicationControllerInfoComponent = {
   controller: ReplicationControllerInfoController,
-  controllerAs: 'infoCtrl',
   templateUrl: 'replicationcontrollerdetail/replicationcontrollerinfo.html',
   bindings: {
     /** {!backendApi.ReplicationControllerDetail} */
-    'details': '=',
+    'replicationController': '<',
   },
 };

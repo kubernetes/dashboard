@@ -12,48 +12,40 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {StateParams, stateName} from 'servicedetail/servicedetail_state';
+
 /**
  * @final
  */
-export class PodCardListController {
+export class ServiceCardListController {
   /**
+   * @param {!ui.router.$state} $state
    * @ngInject
    */
-  constructor() {
-    /**
-     * List of pods. Initialized from the scope.
-     * @export {!backendApi.PodList}
-     */
-    this.podList;
-
-    /**
-     * Callback function that returns link to pod logs. Initialized from the scope.
-     * @export {!function({pod: !backendApi.Pod}): string}
-     */
-    this.logsHrefFn;
-  }
+  constructor($state) { this.state_ = $state; }
 
   /**
-   * @param {!backendApi.Pod} pod
+   * @param {!backendApi.ServiceDetail} service
    * @return {string}
    * @export
    */
-  getPodLogsHref(pod) { return this.logsHrefFn({pod: pod}); }
+  getServiceDetailHref(service) {
+    return this.state_.href(
+        stateName, new StateParams(service.objectMeta.namespace, service.objectMeta.name));
+  }
 }
 
 /**
- * Definition object for the component that displays pods list card.
+ * Definition object for the component that displays service card list.
  *
  * @type {!angular.Component}
  */
-export const podCardListComponent = {
-  templateUrl: 'podlist/podcardlist.html',
-  controller: PodCardListController,
+export const serviceCardListComponent = {
+  templateUrl: 'servicelist/servicecardlist.html',
+  controller: ServiceCardListController,
   bindings: {
-    /** {!backendApi.PodList} */
-    'podList': '<',
-    /** {!function({pod: !backendApi.Pod}): string} */
-    'logsHrefFn': '&',
+    /** {!Array<!backendApi.ServiceDetail>} */
+    'services': '<',
     /** {boolean} */
     'selectable': '<',
     /** {boolean} */
