@@ -15,7 +15,8 @@
 package daemonset
 
 import (
-	"github.com/kubernetes/dashboard/resource/event"
+	"github.com/kubernetes/dashboard/resource/common"
+	//	"github.com/kubernetes/dashboard/resource/event"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
@@ -27,22 +28,6 @@ import (
 type DaemonSetWithPods struct {
 	DaemonSet *extensions.DaemonSet
 	Pods      *api.PodList
-}
-
-// DaemonSetPodInfo represents aggregate information about deamon set pods.
-type DaemonSetPodInfo struct {
-
-	// Number of pods that are currently running.
-	Running int `json:"running"`
-
-	// Number of pods that are currently waiting.
-	Pending int `json:"pending"`
-
-	// Number of pods that are failed.
-	Failed int `json:"failed"`
-
-	// Unique warning messages related to pods in this Daemon Set.
-	Warnings []event.Event `json:"warnings"`
 }
 
 // Returns structure containing DaemonSet and Pods for the given daemon set.
@@ -85,8 +70,8 @@ func getRawDaemonSetPods(client client.Interface, namespace, name string) (*api.
 }
 
 // Returns aggregate information about daemon set pods.
-func getDaemonSetPodInfo(daemonSet *extensions.DaemonSet, pods []api.Pod) DaemonSetPodInfo {
-	result := DaemonSetPodInfo{}
+func getDaemonSetPodInfo(daemonSet *extensions.DaemonSet, pods []api.Pod) common.PodInfo {
+	result := common.PodInfo{}
 	for _, pod := range pods {
 		switch pod.Status.Phase {
 		case api.PodRunning:

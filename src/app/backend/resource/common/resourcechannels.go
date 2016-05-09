@@ -250,7 +250,7 @@ type DaemonSetListChannel struct {
 	Error chan error
 }
 
-// Returns a pair of channels to a ReplicaSet list and errors that both must be read
+// Returns a pair of channels to a DaemonSet list and errors that both must be read
 // numReads times.
 func GetDaemonSetListChannel(client client.DaemonSetsNamespacer, numReads int) DaemonSetListChannel {
 	channel := DaemonSetListChannel{

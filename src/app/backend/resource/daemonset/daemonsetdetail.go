@@ -17,14 +17,14 @@ package daemonset
 import (
 	"log"
 
-	. "github.com/kubernetes/dashboard/client"
-	. "github.com/kubernetes/dashboard/resource/common"
-	. "github.com/kubernetes/dashboard/resource/replicationcontroller"
+	"github.com/kubernetes/dashboard/client"
+	"github.com/kubernetes/dashboard/resource/common"
+	"github.com/kubernetes/dashboard/resource/replicationcontroller"
 	resourceService "github.com/kubernetes/dashboard/resource/service"
 	"k8s.io/kubernetes/pkg/api"
 	unversioned "k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
 )
@@ -47,7 +47,7 @@ type DaemonSetDetail struct {
 	ContainerImages []string `json:"containerImages"`
 
 	// Aggregate information about pods of this daemon set.
-	PodInfo DaemonSetPodInfo `json:"podInfo"`
+	PodInfo common.PodInfo `json:"podInfo"`
 
 	// Detailed information about Pods belonging to this Daemon Set.
 	Pods []DaemonSetPod `json:"pods"`
@@ -80,11 +80,11 @@ type DaemonSetPod struct {
 	RestartCount int `json:"restartCount"`
 
 	// Pod metrics.
-	Metrics *PodMetrics `json:"metrics"`
+	Metrics *replicationcontroller.PodMetrics `json:"metrics"`
 }
 
 // Returns detailed information about the given daemon set in the given namespace.
-func GetDaemonSetDetail(client client.Interface, heapsterClient HeapsterClient,
+func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
 	namespace, name string) (*DaemonSetDetail, error) {
 	log.Printf("Getting details of %s daemon set in %s namespace", name, namespace)
 
@@ -141,7 +141,7 @@ func GetDaemonSetDetail(client client.Interface, heapsterClient HeapsterClient,
 			StartTime:    pod.CreationTimestamp,
 			PodIP:        pod.Status.PodIP,
 			NodeName:     pod.Spec.NodeName,
-			RestartCount: GetRestartCount(pod),
+			RestartCount: replicationcontroller.GetRestartCount(pod),
 		}
 		if daemonSetMetricsByPod != nil {
 			metric := daemonSetMetricsByPod.MetricsMap[pod.Name]
@@ -157,7 +157,7 @@ func GetDaemonSetDetail(client client.Interface, heapsterClient HeapsterClient,
 // TODO(floreks): This should be transactional to make sure that DS will not be deleted without pods
 // Deletes daemon set with given name in given namespace and related pods.
 // Also deletes services related to daemon set if deleteServices is true.
-func DeleteDaemonSet(client client.Interface, namespace, name string,
+func DeleteDaemonSet(client k8sClient.Interface, namespace, name string,
 	deleteServices bool) error {
 
 	log.Printf("Deleting %s daemon set from %s namespace", name, namespace)
@@ -189,7 +189,7 @@ func DeleteDaemonSet(client client.Interface, namespace, name string,
 }
 
 // Deletes services related to daemon set with given name in given namespace.
-func DeleteDaemonSetServices(client client.Interface, namespace, name string) error {
+func DeleteDaemonSetServices(client k8sClient.Interface, namespace, name string) error {
 	log.Printf("Deleting services related to %s daemon set from %s namespace", name,
 		namespace)
 
@@ -225,7 +225,7 @@ func getServiceDetailforDS(service api.Service, daemonSet extensions.DaemonSet,
 	pods []api.Pod, nodes []api.Node) resourceService.Service {
 	return resourceService.Service{
 		Name: service.ObjectMeta.Name,
-		InternalEndpoint: GetInternalEndpoint(service.Name, service.Namespace,
+		InternalEndpoint: common.GetInternalEndpoint(service.Name, service.Namespace,
 			service.Spec.Ports),
 		ExternalEndpoints: getExternalEndpointsforDS(daemonSet, pods, service, nodes),
 		Selector:          service.Spec.Selector,
@@ -234,26 +234,26 @@ func getServiceDetailforDS(service api.Service, daemonSet extensions.DaemonSet,
 
 // Returns array of external endpoints for a daemon set.
 func getExternalEndpointsforDS(daemonSet extensions.DaemonSet, pods []api.Pod,
-	service api.Service, nodes []api.Node) []Endpoint {
-	var externalEndpoints []Endpoint
+	service api.Service, nodes []api.Node) []common.Endpoint {
+	var externalEndpoints []common.Endpoint
 	daemonSetPods := filterDaemonSetPods(daemonSet, pods)
 
 	if service.Spec.Type == api.ServiceTypeNodePort {
-		externalEndpoints = GetNodePortEndpoints(daemonSetPods, service, nodes)
+		externalEndpoints = replicationcontroller.GetNodePortEndpoints(daemonSetPods, service, nodes)
 	} else if service.Spec.Type == api.ServiceTypeLoadBalancer {
 		for _, ingress := range service.Status.LoadBalancer.Ingress {
-			externalEndpoints = append(externalEndpoints, GetExternalEndpoint(ingress,
+			externalEndpoints = append(externalEndpoints, replicationcontroller.GetExternalEndpoint(ingress,
 				service.Spec.Ports))
 		}
 
 		if len(externalEndpoints) == 0 {
-			externalEndpoints = GetNodePortEndpoints(daemonSetPods, service, nodes)
+			externalEndpoints = replicationcontroller.GetNodePortEndpoints(daemonSetPods, service, nodes)
 		}
 	}
 
 	if len(externalEndpoints) == 0 && (service.Spec.Type == api.ServiceTypeNodePort ||
 		service.Spec.Type == api.ServiceTypeLoadBalancer) {
-		externalEndpoints = GetLocalhostEndpoints(service)
+		externalEndpoints = replicationcontroller.GetLocalhostEndpoints(service)
 	}
 
 	return externalEndpoints
@@ -264,7 +264,7 @@ func filterDaemonSetPods(daemonSet extensions.DaemonSet,
 	allPods []api.Pod) []api.Pod {
 	var pods []api.Pod
 	for _, pod := range allPods {
-		if IsLabelSelectorMatchingforDS(pod.Labels, daemonSet.Spec.Selector) {
+		if common.IsLabelSelectorMatchingforDS(pod.Labels, daemonSet.Spec.Selector) {
 			pods = append(pods, pod)
 		}
 	}

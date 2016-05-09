@@ -18,9 +18,8 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/resource/common"
-	. "github.com/kubernetes/dashboard/resource/replicationcontroller"
-	// TODO(maciaszczykm): Avoid using dot-imports.
-	. "github.com/kubernetes/dashboard/resource/event"
+	"github.com/kubernetes/dashboard/resource/event"
+	"github.com/kubernetes/dashboard/resource/replicationcontroller"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
@@ -49,7 +48,7 @@ type DaemonSet struct {
 	Labels map[string]string `json:"labels"`
 
 	// Aggregate information about pods belonging to this Daemon Set.
-	Pods DaemonSetPodInfo `json:"pods"`
+	Pods common.PodInfo `json:"pods"`
 
 	// Container images of the Daemon Set.
 	ContainerImages []string `json:"containerImages"`
@@ -142,7 +141,7 @@ func getDaemonSetList(daemonSets []extensions.DaemonSet,
 			}
 		}
 		podInfo := getDaemonSetPodInfo(&daemonSet, matchingPods)
-		podErrors := GetPodsEventWarnings(events, matchingPods)
+		podErrors := event.GetPodsEventWarnings(events, matchingPods)
 
 		podInfo.Warnings = podErrors
 
@@ -150,10 +149,10 @@ func getDaemonSetList(daemonSets []extensions.DaemonSet,
 			DaemonSet{
 				Name:              daemonSet.ObjectMeta.Name,
 				Namespace:         daemonSet.ObjectMeta.Namespace,
-				Description:       daemonSet.Annotations[DescriptionAnnotationKey],
+				Description:       daemonSet.Annotations[replicationcontroller.DescriptionAnnotationKey],
 				Labels:            daemonSet.ObjectMeta.Labels,
 				Pods:              podInfo,
-				ContainerImages:   GetContainerImages(&daemonSet.Spec.Template.Spec),
+				ContainerImages:   replicationcontroller.GetContainerImages(&daemonSet.Spec.Template.Spec),
 				CreationTime:      daemonSet.ObjectMeta.CreationTimestamp,
 				InternalEndpoints: internalEndpoints,
 				ExternalEndpoints: externalEndpoints,

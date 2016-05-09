@@ -24,8 +24,8 @@ import (
 	// TODO(maciaszczykm): Avoid using dot-imports.
 	. "github.com/kubernetes/dashboard/client"
 	. "github.com/kubernetes/dashboard/resource/container"
+	"github.com/kubernetes/dashboard/resource/daemonset"
 	"github.com/kubernetes/dashboard/resource/deployment"
-	. "github.com/kubernetes/dashboard/resource/daemonset"
 	. "github.com/kubernetes/dashboard/resource/event"
 	. "github.com/kubernetes/dashboard/resource/namespace"
 	"github.com/kubernetes/dashboard/resource/replicaset"
@@ -194,18 +194,18 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 	daemonSetWs.Route(
 		daemonSetWs.GET("").
 			To(apiHandler.handleGetDaemonSetList).
-			Writes(DaemonSetList{}))
+			Writes(daemonset.DaemonSetList{}))
 	daemonSetWs.Route(
 		daemonSetWs.GET("/{namespace}/{daemonSet}").
 			To(apiHandler.handleGetDaemonSetDetail).
-			Writes(DaemonSetDetail{}))
+			Writes(daemonset.DaemonSetDetail{}))
 	daemonSetWs.Route(
 		daemonSetWs.DELETE("/{namespace}/{daemonSet}").
 			To(apiHandler.handleDeleteDaemonSet))
 	daemonSetWs.Route(
 		daemonSetWs.GET("/pods/{namespace}/{daemonSet}").
 			To(apiHandler.handleGetDaemonSetPods).
-			Writes(DaemonSetPods{}))
+			Writes(daemonset.DaemonSetPods{}))
 	wsContainer.Add(daemonSetWs)
 
 	namespacesWs := new(restful.WebService)
@@ -616,7 +616,7 @@ func (apiHandler *ApiHandler) handleGetDaemonSetList(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := request.PathParameter("namespace")
-	result, err := GetDaemonSetList(apiHandler.client, namespace)
+	result, err := daemonset.GetDaemonSetList(apiHandler.client, namespace)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -631,7 +631,7 @@ func (apiHandler *ApiHandler) handleGetDaemonSetDetail(
 
 	namespace := request.PathParameter("namespace")
 	daemonSet := request.PathParameter("daemonSet")
-	result, err := GetDaemonSetDetail(apiHandler.client, apiHandler.heapsterClient, namespace, daemonSet)
+	result, err := daemonset.GetDaemonSetDetail(apiHandler.client, apiHandler.heapsterClient, namespace, daemonSet)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -650,7 +650,7 @@ func (apiHandler *ApiHandler) handleGetDaemonSetPods(
 	if err != nil {
 		limit = 0
 	}
-	result, err := GetDaemonSetPods(apiHandler.client, namespace, daemonSet, limit)
+	result, err := daemonset.GetDaemonSetPods(apiHandler.client, namespace, daemonSet, limit)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -671,7 +671,7 @@ func (apiHandler *ApiHandler) handleDeleteDaemonSet(
 		return
 	}
 
-	if err := DeleteDaemonSet(apiHandler.client, namespace,
+	if err := daemonset.DeleteDaemonSet(apiHandler.client, namespace,
 		daemonSet, deleteServices); err != nil {
 		handleInternalError(response, err)
 		return
