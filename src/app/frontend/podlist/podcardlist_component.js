@@ -22,9 +22,9 @@ export class PodCardListController {
   constructor() {
     /**
      * List of pods. Initialized from the scope.
-     * @export {!Array<!backendApi.Pod>}
+     * @export {!backendApi.PodList}
      */
-    this.pods;
+    this.podList;
 
     /**
      * Callback function that returns link to pod logs. Initialized from the scope.
@@ -50,8 +50,8 @@ export const podCardListComponent = {
   templateUrl: 'podlist/podcardlist.html',
   controller: PodCardListController,
   bindings: {
-    /** {!Array<!backendApi.Pod>} */
-    'pods': '<',
+    /** {!backendApi.PodList} */
+    'podList': '<',
     /** {!function({pod: !backendApi.Pod}): string} */
     'logsHrefFn': '&',
   },

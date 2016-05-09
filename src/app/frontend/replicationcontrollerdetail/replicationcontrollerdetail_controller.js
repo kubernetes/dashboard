@@ -48,7 +48,7 @@ export default class ReplicationControllerDetailController {
   }
 
   /**
-   * @param {!backendApi.ReplicationControllerPod} pod
+   * @param {!backendApi.Pod} pod
    * @return {boolean}
    * @export
    */
@@ -57,7 +57,7 @@ export default class ReplicationControllerDetailController {
   }
 
   /**
-   * @param {!backendApi.ReplicationControllerPod} pod
+   * @param {!backendApi.Pod} pod
    * @return {boolean}
    * @export
    */
@@ -67,7 +67,7 @@ export default class ReplicationControllerDetailController {
   }
 
   /**
-   * @param {!backendApi.ReplicationControllerPod} pod
+   * @param {!backendApi.Pod} pod
    * @return {string}
    * @export
    */

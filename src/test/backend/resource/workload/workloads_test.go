@@ -24,6 +24,7 @@ import (
 	"github.com/kubernetes/dashboard/resource/common"
 	"github.com/kubernetes/dashboard/resource/deployment"
 	"github.com/kubernetes/dashboard/resource/event"
+	"github.com/kubernetes/dashboard/resource/pod"
 	"github.com/kubernetes/dashboard/resource/replicaset"
 	"github.com/kubernetes/dashboard/resource/replicationcontroller"
 )
@@ -33,17 +34,21 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		k8sRs         extensions.ReplicaSetList
 		k8sDeployment extensions.DeploymentList
 		k8sRc         api.ReplicationControllerList
+		k8sPod        api.PodList
 		rcs           []replicationcontroller.ReplicationController
 		rs            []replicaset.ReplicaSet
 		deployment    []deployment.Deployment
+		pod           []pod.Pod
 	}{
 		{
 			extensions.ReplicaSetList{},
 			extensions.DeploymentList{},
 			api.ReplicationControllerList{},
+			api.PodList{},
 			[]replicationcontroller.ReplicationController{},
 			[]replicaset.ReplicaSet{},
 			[]deployment.Deployment{},
+			[]pod.Pod{},
 		},
 		{
 			extensions.ReplicaSetList{
@@ -60,6 +65,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 					},
 				}},
 			},
+			api.PodList{},
 			[]replicationcontroller.ReplicationController{{
 				Name: "rc-name",
 				Pods: common.PodInfo{
@@ -78,6 +84,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 					Warnings: []event.Event{},
 				},
 			}},
+			[]pod.Pod{},
 		},
 	}
 
@@ -91,6 +98,9 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 			},
 			DeploymentList: deployment.DeploymentList{
 				Deployments: c.deployment,
+			},
+			PodList: pod.PodList{
+				Pods: c.pod,
 			},
 		}
 		var expectedErr error = nil
@@ -117,8 +127,8 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				Error: make(chan error, 3),
 			},
 			PodList: common.PodListChannel{
-				List:  make(chan *api.PodList, 3),
-				Error: make(chan error, 3),
+				List:  make(chan *api.PodList, 4),
+				Error: make(chan error, 4),
 			},
 			EventList: common.EventListChannel{
 				List:  make(chan *api.EventList, 3),
@@ -151,7 +161,9 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		channels.ServiceList.List <- serviceList
 		channels.ServiceList.Error <- nil
 
-		podList := &api.PodList{}
+		podList := &c.k8sPod
+		channels.PodList.List <- podList
+		channels.PodList.Error <- nil
 		channels.PodList.List <- podList
 		channels.PodList.Error <- nil
 		channels.PodList.List <- podList
@@ -167,7 +179,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		channels.EventList.List <- eventList
 		channels.EventList.Error <- nil
 
-		actual, err := GetWorkloadsFromChannels(channels)
+		actual, err := GetWorkloadsFromChannels(channels, nil)
 		if !reflect.DeepEqual(actual, expected) {
 			t.Errorf("GetWorkloadsFromChannels() ==\n          %#v\nExpected: %#v", actual, expected)
 		}

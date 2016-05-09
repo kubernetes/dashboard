@@ -27,6 +27,7 @@ import (
 	"github.com/kubernetes/dashboard/resource/deployment"
 	. "github.com/kubernetes/dashboard/resource/event"
 	. "github.com/kubernetes/dashboard/resource/namespace"
+	"github.com/kubernetes/dashboard/resource/pod"
 	"github.com/kubernetes/dashboard/resource/replicaset"
 	. "github.com/kubernetes/dashboard/resource/replicationcontroller"
 	. "github.com/kubernetes/dashboard/resource/secret"
@@ -174,6 +175,17 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 			To(apiHandler.handleGetReplicaSets).
 			Writes(replicaset.ReplicaSetList{}))
 	wsContainer.Add(replicaSetsWs)
+
+	podsWs := new(restful.WebService)
+	podsWs.Filter(wsLogger)
+	podsWs.Path("/api/v1/pods").
+		Consumes(restful.MIME_JSON).
+		Produces(restful.MIME_JSON)
+	podsWs.Route(
+		podsWs.GET("").
+			To(apiHandler.handleGetPods).
+			Writes(pod.PodList{}))
+	wsContainer.Add(podsWs)
 
 	deploymentsWs := new(restful.WebService)
 	deploymentsWs.Filter(wsLogger)
@@ -388,7 +400,7 @@ func (apiHandler *ApiHandler) handleGetReplicationControllerList(
 func (apiHandler *ApiHandler) handleGetWorkloads(
 	request *restful.Request, response *restful.Response) {
 
-	result, err := workload.GetWorkloads(apiHandler.client)
+	result, err := workload.GetWorkloads(apiHandler.client, apiHandler.heapsterClient)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -415,6 +427,19 @@ func (apiHandler *ApiHandler) handleGetDeployments(
 	request *restful.Request, response *restful.Response) {
 
 	result, err := deployment.GetDeploymentList(apiHandler.client)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get Pod list API call.
+func (apiHandler *ApiHandler) handleGetPods(
+	request *restful.Request, response *restful.Response) {
+
+	result, err := pod.GetPodList(apiHandler.client, apiHandler.heapsterClient)
 	if err != nil {
 		handleInternalError(response, err)
 		return

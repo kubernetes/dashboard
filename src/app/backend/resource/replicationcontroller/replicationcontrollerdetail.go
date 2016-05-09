@@ -17,12 +17,12 @@ package replicationcontroller
 import (
 	"log"
 
-	. "github.com/kubernetes/dashboard/client"
+	"github.com/kubernetes/dashboard/client"
 	"github.com/kubernetes/dashboard/resource/common"
+	"github.com/kubernetes/dashboard/resource/pod"
 	resourceService "github.com/kubernetes/dashboard/resource/service"
 	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
 )
@@ -48,37 +48,13 @@ type ReplicationControllerDetail struct {
 	PodInfo common.PodInfo `json:"podInfo"`
 
 	// Detailed information about Pods belonging to this Replication Controller.
-	Pods []ReplicationControllerPod `json:"pods"`
+	Pods pod.PodList `json:"pods"`
 
 	// Detailed information about service related to Replication Controller.
 	Services []resourceService.Service `json:"services"`
 
 	// True when the data contains at least one pod with metrics information, false otherwise.
 	HasMetrics bool `json:"hasMetrics"`
-}
-
-// ReplicationControllerPod is a representation of a Pod that belongs to a Replication Controller.
-type ReplicationControllerPod struct {
-	// Name of the Pod.
-	Name string `json:"name"`
-
-	// Status of the Pod. See Kubernetes API for reference.
-	PodPhase api.PodPhase `json:"podPhase"`
-
-	// Time the Pod has started. Empty if not started.
-	StartTime unversioned.Time `json:"startTime"`
-
-	// IP address of the Pod.
-	PodIP string `json:"podIP"`
-
-	// Name of the Node this Pod runs on.
-	NodeName string `json:"nodeName"`
-
-	// Count of containers restarts.
-	RestartCount int `json:"restartCount"`
-
-	// Pod metrics.
-	Metrics *PodMetrics `json:"metrics"`
 }
 
 // ReplicationControllerSpec contains information needed to update replication controller.
@@ -89,7 +65,7 @@ type ReplicationControllerSpec struct {
 
 // GetReplicationControllerDetail returns detailed information about the given replication
 // controller in the given namespace.
-func GetReplicationControllerDetail(client client.Interface, heapsterClient HeapsterClient,
+func GetReplicationControllerDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
 	namespace, name string) (*ReplicationControllerDetail, error) {
 	log.Printf("Getting details of %s replication controller in %s namespace", name, namespace)
 
@@ -99,11 +75,6 @@ func GetReplicationControllerDetail(client client.Interface, heapsterClient Heap
 	}
 	replicationController := replicationControllerWithPods.ReplicationController
 	pods := replicationControllerWithPods.Pods
-
-	replicationControllerMetricsByPod, err := getReplicationControllerPodsMetrics(pods, heapsterClient, namespace, name)
-	if err != nil {
-		log.Printf("Skipping Heapster metrics because of error: %s\n", err)
-	}
 
 	services, err := client.Services(namespace).List(api.ListOptions{
 		LabelSelector: labels.Everything(),
@@ -139,22 +110,7 @@ func GetReplicationControllerDetail(client client.Interface, heapsterClient Heap
 			container.Image)
 	}
 
-	for _, pod := range pods.Items {
-		podDetail := ReplicationControllerPod{
-			Name:         pod.Name,
-			PodPhase:     pod.Status.Phase,
-			StartTime:    pod.CreationTimestamp,
-			PodIP:        pod.Status.PodIP,
-			NodeName:     pod.Spec.NodeName,
-			RestartCount: getRestartCount(pod),
-		}
-		if replicationControllerMetricsByPod != nil {
-			metric := replicationControllerMetricsByPod.MetricsMap[pod.Name]
-			podDetail.Metrics = &metric
-			replicationControllerDetail.HasMetrics = true
-		}
-		replicationControllerDetail.Pods = append(replicationControllerDetail.Pods, podDetail)
-	}
+	replicationControllerDetail.Pods = pod.CreatePodList(pods.Items, heapsterClient)
 
 	return replicationControllerDetail, nil
 }
@@ -162,7 +118,7 @@ func GetReplicationControllerDetail(client client.Interface, heapsterClient Heap
 // TODO(floreks): This should be transactional to make sure that RC will not be deleted without pods
 // DeleteReplicationController deletes replication controller with given name in given namespace and
 // related pods. Also deletes services related to replication controller if deleteServices is true.
-func DeleteReplicationController(client client.Interface, namespace, name string,
+func DeleteReplicationController(client k8sClient.Interface, namespace, name string,
 	deleteServices bool) error {
 
 	log.Printf("Deleting %s replication controller from %s namespace", name, namespace)
@@ -195,7 +151,7 @@ func DeleteReplicationController(client client.Interface, namespace, name string
 
 // DeleteReplicationControllerServices deletes services related to replication controller with given
 // name in given namespace.
-func DeleteReplicationControllerServices(client client.Interface, namespace, name string) error {
+func DeleteReplicationControllerServices(client k8sClient.Interface, namespace, name string) error {
 	log.Printf("Deleting services related to %s replication controller from %s namespace", name,
 		namespace)
 
@@ -228,7 +184,7 @@ func DeleteReplicationControllerServices(client client.Interface, namespace, nam
 
 // UpdateReplicasCount updates number of replicas in Replication Controller based on Replication
 // Controller Spec
-func UpdateReplicasCount(client client.Interface, namespace, name string,
+func UpdateReplicasCount(client k8sClient.Interface, namespace, name string,
 	replicationControllerSpec *ReplicationControllerSpec) error {
 	log.Printf("Updating replicas count to %d for %s replication controller from %s namespace",
 		replicationControllerSpec.Replicas, name, namespace)
@@ -261,15 +217,6 @@ func getServiceDetail(service api.Service, replicationController api.Replication
 		ExternalEndpoints: getExternalEndpoints(replicationController, pods, service, nodes),
 		Selector:          service.Spec.Selector,
 	}
-}
-
-// Gets restart count of given pod (total number of its containers restarts).
-func getRestartCount(pod api.Pod) int {
-	restartCount := 0
-	for _, containerStatus := range pod.Status.ContainerStatuses {
-		restartCount += containerStatus.RestartCount
-	}
-	return restartCount
 }
 
 // Returns array of external endpoints for a replication controller.
