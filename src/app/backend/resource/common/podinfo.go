@@ -27,7 +27,7 @@ type PodInfo struct {
 	// Number of pods that are created.
 	Current int `json:"current"`
 
-	// Number of pods that are desired in this Replication Controller.
+	// Number of pods that are desired.
 	Desired int `json:"desired"`
 
 	// Number of pods that are currently running.
@@ -39,11 +39,11 @@ type PodInfo struct {
 	// Number of pods that are failed.
 	Failed int `json:"failed"`
 
-	// Unique warning messages related to pods in this Replication Controller.
+	// Unique warning messages related to pods in this resource.
 	Warnings []event.Event `json:"warnings"`
 }
 
-// GetPodInfo returns aggregate information about replication controller pods.
+// GetPodInfo returns aggregate information about a group of pods.
 func GetPodInfo(current int, desired int, pods []api.Pod) PodInfo {
 	result := PodInfo{
 		Current:  current,
@@ -65,9 +65,9 @@ func GetPodInfo(current int, desired int, pods []api.Pod) PodInfo {
 	return result
 }
 
-// IsLabelSelectorMatching returns true when a Service with the given
+// IsLabelSelectorMatching returns true when an object with the given
 // selector targets the same Pods (or subset) that
-// a Replication Controller with the given selector.
+// the tested object with the given selector.
 func IsLabelSelectorMatching(labelSelector map[string]string,
 	testedObjectLabels map[string]string) bool {
 
