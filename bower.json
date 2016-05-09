@@ -19,6 +19,9 @@
     },
     "roboto-fontface": {
       "main": "css/roboto-fontface.css"
+    },
+    "google-closure-library": {
+      "main": ["closure/goog/base.js", "closure/goog/deps.js"]
     }
   },
   "devDependencies": {
