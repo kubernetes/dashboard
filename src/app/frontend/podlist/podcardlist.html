@@ -37,13 +37,13 @@ limitations under the License.
       <kd-resource-card-column>{{::pod.podPhase}}</kd-resource-card-column>
       <kd-resource-card-column>{{::pod.restartCount}}</kd-resource-card-column>
       <kd-resource-card-column>
-        <div ng-if="::pod.startTime">
-          {{::pod.startTime | relativeTime}}
+        <div ng-if="::pod.creationTime">
+          {{::pod.creationTime | relativeTime}}
           <md-tooltip>
-            Started at {{::(pod.startTime | date:'d/M/yy HH:mm':'UTC')}} UTC
+            Started at {{::(pod.creationTime | date:'d/M/yy HH:mm':'UTC')}} UTC
           </md-tooltip>
         </div>
-        <div ng-if="::!pod.startTime">-</div>
+        <div ng-if="::!pod.creationTime">-</div>
       </kd-resource-card-column>
       <kd-resource-card-column>
         <div ng-if="::pod.podIP">{{::pod.podIP}}</div>

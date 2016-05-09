@@ -234,7 +234,7 @@ backendApi.DeleteReplicationControllerSpec;
 /**
  * @typedef {{
  *   name: string,
- *   startTime: ?string,
+ *   creationTime: ?string,
  *   status: string,
  *   podIP: string,
  *   nodeName: string,
@@ -247,12 +247,23 @@ backendApi.Pod;
 /**
  * @typedef {{
  *  name: string,
+ *  namespace: string,
  *  internalEndpoint: !backendApi.Endpoint,
  *  externalEndpoints: !Array<!backendApi.Endpoint>,
- *  selector: !Object<string, string>
+ *  selector: !Object<string, string>,
+ *  labels: !Object<string, string>,
+ *  clusterIP: string,
+ *  type: string
  * }}
  */
 backendApi.ServiceDetail;
+
+/**
+ * @typedef {{
+ *  services: !Array<backendApi.ServiceDetail>
+ * }}
+ */
+backendApi.ServiceList;
 
 /**
  * @typedef {{
