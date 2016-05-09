@@ -12,19 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './podlist_stateconfig';
-import {podCardListComponent} from './podcardlist_component';
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'pods';
 
-/**
- * Module containing endpoint components.
- */
-export default angular
-    .module(
-        'kubernetesDashboard.podsList',
-        [
-          'ngMaterial',
-          'ngResource',
-          'ui.router',
-        ])
-    .config(stateConfig)
-    .component('kdPodCardList', podCardListComponent);
+/** Absolute URL of the state. */
+export const stateUrl = '/pods';

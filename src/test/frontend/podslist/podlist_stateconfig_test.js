@@ -12,19 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './podlist_stateconfig';
-import {podCardListComponent} from './podcardlist_component';
+import podListModule from 'podlist/podlist_module';
+import {resolvePodList} from 'podlist/podlist_stateconfig';
 
-/**
- * Module containing endpoint components.
- */
-export default angular
-    .module(
-        'kubernetesDashboard.podsList',
-        [
-          'ngMaterial',
-          'ngResource',
-          'ui.router',
-        ])
-    .config(stateConfig)
-    .component('kdPodCardList', podCardListComponent);
+describe('StateConfig for pod list', () => {
+  beforeEach(() => { angular.mock.module(podListModule.name); });
+
+  it('should resolve pods', angular.mock.inject(($q) => {
+    let promise = $q.defer().promise;
+
+    let resource = jasmine.createSpy('$resource');
+    resource.and.returnValue({get: function() { return {$promise: promise}; }});
+
+    let actual = resolvePodList(resource);
+
+    expect(resource).toHaveBeenCalledWith('api/v1/pods');
+    expect(actual).toBe(promise);
+  }));
+});
