@@ -247,7 +247,7 @@ func TestGetDaemonSetList(t *testing.T) {
 						Namespace:         "namespace-1",
 						ContainerImages:   []string{"my-container-image-1"},
 						InternalEndpoints: []common.Endpoint{{Host: "my-app-1.namespace-1"}},
-						Pods: DaemonSetPodInfo{
+						Pods: common.PodInfo{
 							Failed:   2,
 							Pending:  1,
 							Running:  1,
@@ -258,7 +258,7 @@ func TestGetDaemonSetList(t *testing.T) {
 						Namespace:         "namespace-2",
 						ContainerImages:   []string{"my-container-image-2"},
 						InternalEndpoints: []common.Endpoint{{Host: "my-app-2.namespace-2"}},
-						Pods: DaemonSetPodInfo{
+						Pods: common.PodInfo{
 							Warnings: []event.Event{},
 						},
 					},

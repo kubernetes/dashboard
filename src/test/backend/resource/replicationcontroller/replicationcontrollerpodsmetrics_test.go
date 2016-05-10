@@ -18,6 +18,7 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/kubernetes/dashboard/resource/common"
 	heapster "k8s.io/heapster/api/v1/types"
 )
 
@@ -70,7 +71,7 @@ func TestCreateResponse(t *testing.T) {
 	}{
 		{make([]heapster.MetricResult, 0), make([]heapster.MetricResult, 0), make([]string, 0),
 			&ReplicationControllerMetricsByPod{
-				MetricsMap: map[string]PodMetrics{},
+				MetricsMap: map[string]common.PodMetrics{},
 			}},
 		{[]heapster.MetricResult{
 			{Metrics: []heapster.MetricPoint{
@@ -84,7 +85,7 @@ func TestCreateResponse(t *testing.T) {
 			},
 			[]string{"a", "b"},
 			&ReplicationControllerMetricsByPod{
-				MetricsMap: map[string]PodMetrics{},
+				MetricsMap: map[string]common.PodMetrics{},
 			},
 		},
 		{[]heapster.MetricResult{
@@ -105,23 +106,23 @@ func TestCreateResponse(t *testing.T) {
 			},
 			[]string{"a", "b"},
 			&ReplicationControllerMetricsByPod{
-				MetricsMap: map[string]PodMetrics{
+				MetricsMap: map[string]common.PodMetrics{
 					"a": {
 						CpuUsage: &cpuUsage1,
-						CpuUsageHistory: []MetricResult{
+						CpuUsageHistory: []common.MetricResult{
 							{Value: cpuUsage1},
 						},
 						MemoryUsage: &memoryUsage,
-						MemoryUsageHistory: []MetricResult{
+						MemoryUsageHistory: []common.MetricResult{
 							{Value: memoryUsage},
 						},
 					}, "b": {
 						CpuUsage: &cpuUsage2,
-						CpuUsageHistory: []MetricResult{
+						CpuUsageHistory: []common.MetricResult{
 							{Value: cpuUsage2},
 						},
 						MemoryUsage: &memoryUsage,
-						MemoryUsageHistory: []MetricResult{
+						MemoryUsageHistory: []common.MetricResult{
 							{Value: memoryUsage},
 						},
 					},

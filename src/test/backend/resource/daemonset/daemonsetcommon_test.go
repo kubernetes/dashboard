@@ -18,6 +18,7 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/kubernetes/dashboard/resource/common"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
@@ -29,7 +30,7 @@ func TestGetDaemonSetPodInfo(t *testing.T) {
 	cases := []struct {
 		daemonset *extensions.DaemonSet
 		pods      []api.Pod
-		expected  DaemonSetPodInfo
+		expected  common.PodInfo
 	}{
 		{
 			&extensions.DaemonSet{
@@ -43,7 +44,7 @@ func TestGetDaemonSetPodInfo(t *testing.T) {
 					},
 				},
 			},
-			DaemonSetPodInfo{
+			common.PodInfo{
 				Running: 1,
 				Pending: 0,
 				Failed:  0,
