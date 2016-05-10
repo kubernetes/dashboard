@@ -18,8 +18,6 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/labels"
-
-	"github.com/kubernetes/dashboard/resource/event"
 )
 
 // PodInfo represents aggregate information about controller's pods.
@@ -40,7 +38,7 @@ type PodInfo struct {
 	Failed int `json:"failed"`
 
 	// Unique warning messages related to pods in this resource.
-	Warnings []event.Event `json:"warnings"`
+	Warnings []Event `json:"warnings"`
 }
 
 // GetPodInfo returns aggregate information about a group of pods.
@@ -48,7 +46,7 @@ func GetPodInfo(current int, desired int, pods []api.Pod) PodInfo {
 	result := PodInfo{
 		Current:  current,
 		Desired:  desired,
-		Warnings: make([]event.Event, 0),
+		Warnings: make([]Event, 0),
 	}
 
 	for _, pod := range pods {
@@ -95,7 +93,6 @@ func GetMatchingPods(labelSelector *unversioned.LabelSelector, namespace string,
 			selector.Matches(labels.Set(pod.ObjectMeta.Labels)) {
 			matchingPods = append(matchingPods, pod)
 		}
-		return matchingPods
 	}
 
 	return matchingPods

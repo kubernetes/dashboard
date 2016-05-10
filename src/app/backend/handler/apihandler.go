@@ -23,9 +23,9 @@ import (
 	restful "github.com/emicklei/go-restful"
 	// TODO(maciaszczykm): Avoid using dot-imports.
 	. "github.com/kubernetes/dashboard/client"
+	"github.com/kubernetes/dashboard/resource/common"
 	. "github.com/kubernetes/dashboard/resource/container"
 	"github.com/kubernetes/dashboard/resource/deployment"
-	. "github.com/kubernetes/dashboard/resource/event"
 	. "github.com/kubernetes/dashboard/resource/namespace"
 	"github.com/kubernetes/dashboard/resource/pod"
 	"github.com/kubernetes/dashboard/resource/replicaset"
@@ -174,6 +174,10 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 		replicaSetsWs.GET("").
 			To(apiHandler.handleGetReplicaSets).
 			Writes(replicaset.ReplicaSetList{}))
+	replicaSetsWs.Route(
+		replicaSetsWs.GET("/{namespace}/{replicaSet}").
+			To(apiHandler.handleGetReplicaSetDetail).
+			Writes(replicaset.ReplicaSetDetail{}))
 	wsContainer.Add(replicaSetsWs)
 
 	podsWs := new(restful.WebService)
@@ -235,7 +239,7 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 	eventsWs.Route(
 		eventsWs.GET("/{namespace}/{replicationController}").
 			To(apiHandler.handleEvents).
-			Writes(Events{}))
+			Writes(common.EventList{}))
 	wsContainer.Add(eventsWs)
 
 	secretsWs := new(restful.WebService)
@@ -422,6 +426,22 @@ func (apiHandler *ApiHandler) handleGetReplicaSets(
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
+func (apiHandler *ApiHandler) handleGetReplicaSetDetail(
+	request *restful.Request, response *restful.Response) {
+
+	namespace := request.PathParameter("namespace")
+	replicaSet := request.PathParameter("replicaSet")
+	result, err := replicaset.GetReplicaSetDetail(apiHandler.client, apiHandler.heapsterClient,
+		namespace, replicaSet)
+
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
 // Handles get Deployment list API call.
 func (apiHandler *ApiHandler) handleGetDeployments(
 	request *restful.Request, response *restful.Response) {
@@ -599,7 +619,7 @@ func (apiHandler *ApiHandler) handleLogs(request *restful.Request, response *res
 func (apiHandler *ApiHandler) handleEvents(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
 	replicationController := request.PathParameter("replicationController")
-	result, err := GetEvents(apiHandler.client, namespace, replicationController)
+	result, err := GetReplicationControllerEvents(apiHandler.client, namespace, replicationController)
 	if err != nil {
 		handleInternalError(response, err)
 		return

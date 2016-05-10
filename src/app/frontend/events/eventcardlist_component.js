@@ -19,13 +19,13 @@ const EVENT_TYPE_WARNING = 'Warning';
 /**
  * @final
  */
-export class ReplicationControllerEventsController {
+export class EventCardListController {
   /**
    * @ngInject
    */
   constructor() {
     /**
-     * Replication controller events. Initialized from the scope.
+     * Initialized from the scope.
      * @export {!Array<!backendApi.Event>}
      */
     this.events;
@@ -54,7 +54,7 @@ export class ReplicationControllerEventsController {
    * @returns {boolean}
    * @export
    */
-  hasEvents() { return this.events !== undefined && this.events.length > 0; }
+  hasEvents() { return this.filteredEvents !== undefined && this.filteredEvents.length > 0; }
 
   /**
    * Handles event filtering by type and source.
@@ -84,9 +84,9 @@ export class ReplicationControllerEventsController {
  *
  * @type {!angular.Component}
  */
-export const replicationControllerEventsComponent = {
-  templateUrl: 'replicationcontrollerdetail/replicationcontrollerevents.html',
-  controller: ReplicationControllerEventsController,
+export const eventCardListComponent = {
+  templateUrl: 'events/eventcardlist.html',
+  controller: EventCardListController,
   bindings: {
     /** {!Array<!backendApi.Event>} */
     'events': '=',

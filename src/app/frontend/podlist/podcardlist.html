@@ -51,10 +51,13 @@ limitations under the License.
         <div ng-if="::!pod.podIP">-</div>
       </kd-resource-card-column>
       <kd-resource-card-column>
-        <a ng-href="{{::$ctrl.getPodLogsHref(pod)}}" target="_blank">
-          Logs
-          <i class="material-icons kd-text-icon">open_in_new</i>
-        </a>
+        <div ng-if="::$ctrl.getPodLogsHref(pod)">
+          <a ng-href="{{::$ctrl.getPodLogsHref(pod)}}" target="_blank">
+            Logs
+            <i class="material-icons kd-text-icon">open_in_new</i>
+          </a>
+        </div>
+        <div ng-hide="::$ctrl.getPodLogsHref(pod)">-</div>
       </kd-resource-card-column>
     </kd-resource-card-columns>
   </kd-resource-card>

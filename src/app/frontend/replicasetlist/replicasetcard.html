@@ -51,9 +51,9 @@ limitations under the License.
       </span>
     </kd-resource-card-column>
     <kd-resource-card-column>
-      {{::$ctrl.replicaSet.creationTimestamp | relativeTime}}
+      {{::$ctrl.replicaSet.objectMeta.creationTimestamp | relativeTime}}
       <md-tooltip>
-        Created at {{::$ctrl.replicaSet.creationTimestamp | date:'short'}}
+        Created at {{::$ctrl.replicaSet.objectMeta.creationTimestamp | date:'short'}}
       </md-tooltip>
     </kd-resource-card-column>
     <kd-resource-card-column>

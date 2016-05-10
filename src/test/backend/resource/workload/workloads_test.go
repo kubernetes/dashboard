@@ -23,7 +23,6 @@ import (
 
 	"github.com/kubernetes/dashboard/resource/common"
 	"github.com/kubernetes/dashboard/resource/deployment"
-	"github.com/kubernetes/dashboard/resource/event"
 	"github.com/kubernetes/dashboard/resource/pod"
 	"github.com/kubernetes/dashboard/resource/replicaset"
 	"github.com/kubernetes/dashboard/resource/replicationcontroller"
@@ -71,7 +70,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 					Name: "rc-name",
 				},
 				Pods: common.PodInfo{
-					Warnings: []event.Event{},
+					Warnings: []common.Event{},
 				},
 			}},
 			[]replicaset.ReplicaSet{{
@@ -79,7 +78,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 					Name: "rs-name",
 				},
 				Pods: common.PodInfo{
-					Warnings: []event.Event{},
+					Warnings: []common.Event{},
 				},
 			}},
 			[]deployment.Deployment{{
@@ -87,7 +86,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 					Name: "deployment-name",
 				},
 				Pods: common.PodInfo{
-					Warnings: []event.Event{},
+					Warnings: []common.Event{},
 				},
 			}},
 			[]pod.Pod{},
