@@ -23,9 +23,9 @@ export class ResourceCardController {
   constructor() {
     /**
      * Initialized from a binding.
-     * @export {!backendApi.ResourceMetadata}
+     * @export {!backendApi.ObjectMeta}
      */
-    this.resourceMetadata;
+    this.objectMeta;
 
     /**
      * Initialized from require just before $onInit is called.
@@ -54,8 +54,8 @@ export class ResourceCardController {
  */
 export const resourceCardComponent = {
   bindings: {
-    /** type {!backendApi.ResourceMetadata} Metadata of the resource displayed in the card. */
-    'resourceMetadata': '<',
+    /** type {!backendApi.ObjectMeta} Metadata of the resource displayed in the card. */
+    'objectMeta': '<',
   },
   controller: ResourceCardController,
   templateUrl: 'common/components/resourcecard/resourcecard.html',

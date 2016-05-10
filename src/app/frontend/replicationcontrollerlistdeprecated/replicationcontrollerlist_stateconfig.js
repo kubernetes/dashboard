@@ -83,7 +83,7 @@ export function redirectIfNeeded($state, replicationControllers) {
   // otherwise should redirect to zero state
   let containsOnlyKubeSystemRCs =
       !isEmpty && replicationControllers.replicationControllers.every((rc) => {
-        return rc.namespace === 'kube-system';
+        return rc.objectMeta.namespace === 'kube-system';
       });
 
   if (isEmpty || containsOnlyKubeSystemRCs) {

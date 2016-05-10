@@ -42,8 +42,10 @@ func TestGetService(t *testing.T) {
 			namespace: "test-namespace", name: "test-name",
 			expectedActions: []string{"get"},
 			expected: &Service{
-				Name:             "test-service",
-				Namespace:        "test-namespace",
+				ObjectMeta: common.ObjectMeta{
+					Name:      "test-service",
+					Namespace: "test-namespace",
+				},
 				InternalEndpoint: common.Endpoint{Host: "test-service.test-namespace"},
 			},
 		},
@@ -82,7 +84,7 @@ func TestGetServiceList(t *testing.T) {
 		expected        *ServiceList
 	}{
 		{
-			serviceList:   &api.ServiceList{},
+			serviceList:     &api.ServiceList{},
 			expectedActions: []string{"list"},
 			expected:        &ServiceList{Services: make([]Service, 0)},
 		}, {
@@ -96,8 +98,10 @@ func TestGetServiceList(t *testing.T) {
 			expected: &ServiceList{
 				Services: []Service{
 					{
-						Name:             "test-service",
-						Namespace:        "test-namespace",
+						ObjectMeta: common.ObjectMeta{
+							Name:      "test-service",
+							Namespace: "test-namespace",
+						},
 						InternalEndpoint: common.Endpoint{Host: "test-service.test-namespace"},
 					},
 				},
@@ -130,7 +134,7 @@ func TestGetServiceList(t *testing.T) {
 	}
 }
 
-func TestGetServiceDetails(t *testing.T) {
+func TestGetServices(t *testing.T) {
 	cases := []struct {
 		service  *api.Service
 		expected Service
@@ -143,18 +147,20 @@ func TestGetServiceDetails(t *testing.T) {
 					Name: "test-service", Namespace: "test-namespace",
 				}},
 			expected: Service{
-				Name:             "test-service",
-				Namespace:        "test-namespace",
+				ObjectMeta: common.ObjectMeta{
+					Name:      "test-service",
+					Namespace: "test-namespace",
+				},
 				InternalEndpoint: common.Endpoint{Host: "test-service.test-namespace"},
 			},
 		},
 	}
 
 	for _, c := range cases {
-		actual := getServiceDetails(c.service)
+		actual := getServices(c.service)
 
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("getServiceDetails(%#v) == \ngot %#v, \nexpected %#v", c.service, actual,
+			t.Errorf("getServices(%#v) == \ngot %#v, \nexpected %#v", c.service, actual,
 				c.expected)
 		}
 	}

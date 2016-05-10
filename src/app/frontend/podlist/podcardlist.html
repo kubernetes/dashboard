@@ -30,20 +30,20 @@ limitations under the License.
     <kd-resource-card-columns>
       <kd-resource-card-column>
         <div>
-          <kd-middle-ellipsis display-string="{{::pod.name}}">
+          <kd-middle-ellipsis display-string="{{::pod.objectMeta.name}}">
           </kd-middle-ellipsis>
         </div>
       </kd-resource-card-column>
       <kd-resource-card-column>{{::pod.podPhase}}</kd-resource-card-column>
       <kd-resource-card-column>{{::pod.restartCount}}</kd-resource-card-column>
       <kd-resource-card-column>
-        <div ng-if="::pod.startTime">
-          {{::pod.startTime | relativeTime}}
+        <div ng-if="::pod.objectMeta.creationTimestamp">
+          {{::pod.objectMeta.creationTimestamp | relativeTime}}
           <md-tooltip>
-            Started at {{::(pod.startTime | date:'d/M/yy HH:mm':'UTC')}} UTC
+            Started at {{::(pod.objectMeta.creationTimestamp | date:'d/M/yy HH:mm':'UTC')}} UTC
           </md-tooltip>
         </div>
-        <div ng-if="::!pod.startTime">-</div>
+        <div ng-if="::!pod.objectMeta.creationTimestamp">-</div>
       </kd-resource-card-column>
       <kd-resource-card-column>
         <div ng-if="::pod.podIP">{{::pod.podIP}}</div>

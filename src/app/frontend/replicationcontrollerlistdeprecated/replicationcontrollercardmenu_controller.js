@@ -56,8 +56,9 @@ export default class ReplicationControllerCardMenuController {
    */
   viewDetails() {
     this.state_.go(
-        stateName,
-        new StateParams(this.replicationController.namespace, this.replicationController.name));
+        stateName, new StateParams(
+                       this.replicationController.objectMeta.namespace,
+                       this.replicationController.objectMeta.name));
   }
 
   /**
@@ -65,7 +66,9 @@ export default class ReplicationControllerCardMenuController {
    */
   showDeleteDialog() {
     this.kdReplicationControllerService_
-        .showDeleteDialog(this.replicationController.namespace, this.replicationController.name)
+        .showDeleteDialog(
+            this.replicationController.objectMeta.namespace,
+            this.replicationController.objectMeta.name)
         .then(() => this.state_.reload());
   }
 
@@ -74,7 +77,7 @@ export default class ReplicationControllerCardMenuController {
    */
   showUpdateReplicasDialog() {
     this.kdReplicationControllerService_.showUpdateReplicasDialog(
-        this.replicationController.namespace, this.replicationController.name,
+        this.replicationController.objectMeta.namespace, this.replicationController.objectMeta.name,
         this.replicationController.pods.current, this.replicationController.pods.desired);
   }
 }

@@ -36,7 +36,7 @@ describe('Replication controller card menu controller', () => {
       scope = $rootScope;
       ctrl = $controller(
           ReplicationControllerCardMenuController, null,
-          {replicationController: {name: 'foo-name', namespace: 'foo-namespace'}});
+          {replicationController: {objectMeta: {name: 'foo-name', namespace: 'foo-namespace'}}});
     });
   });
 
@@ -83,8 +83,10 @@ describe('Replication controller card menu controller', () => {
   it('should show update replicas dialog', () => {
     // given
     ctrl.replicationController = {
-      namespace: '',
-      name: '',
+      objectMeta: {
+        namespace: '',
+        name: '',
+      },
       pods: {
         current: 1,
         desired: 1,

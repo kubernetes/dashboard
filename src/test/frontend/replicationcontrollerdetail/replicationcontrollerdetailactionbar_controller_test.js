@@ -45,8 +45,10 @@ describe('Replication Controller Detail Action Bar controller', () => {
 
           ctrl = $controller(ReplicationControllerDetailActionBarController, {
             $state: state,
-            $stateParams:
-                {replicationController: 'foo-replicationcontroller', namespace: 'foo-namespace'},
+            $stateParams: {
+              replicationController:
+                  {objectMeta: {name: 'foo-replicationcontroller', namespace: 'foo-namespace'}},
+            },
             replicationControllerDetail: {},
             kdReplicationControllerService: _kdReplicationControllerService_,
           });
@@ -56,8 +58,10 @@ describe('Replication Controller Detail Action Bar controller', () => {
   it('should show edit replicas dialog', () => {
     // given
     ctrl.details_ = {
-      namespace: 'foo-namespace',
-      name: 'foo-name',
+      objectMeta: {
+        namespace: 'foo-namespace',
+        name: 'foo-name',
+      },
       podInfo: {
         current: 3,
         desired: 3,

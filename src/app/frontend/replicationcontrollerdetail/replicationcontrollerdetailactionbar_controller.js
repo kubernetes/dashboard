@@ -72,8 +72,8 @@ export default class ReplicationControllerDetailActionBarController {
    */
   handleUpdateReplicasDialog() {
     this.kdReplicationControllerService_.showUpdateReplicasDialog(
-        this.details_.namespace, this.details_.name, this.details_.podInfo.current,
-        this.details_.podInfo.desired);
+        this.details_.objectMeta.namespace, this.details_.objectMeta.name,
+        this.details_.podInfo.current, this.details_.podInfo.desired);
   }
 
   /**

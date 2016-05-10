@@ -20,7 +20,6 @@ import (
 	"github.com/kubernetes/dashboard/client"
 	"github.com/kubernetes/dashboard/resource/common"
 	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
@@ -34,20 +33,11 @@ type PodList struct {
 // it is Pod plus additional augumented data we can get from other sources
 // (like services that target it).
 type Pod struct {
-	// Name of the Pod.
-	Name string `json:"name"`
-
-	// Namespace this Pod is in.
-	Namespace string `json:"namespace"`
-
-	// Label of this Pod.
-	Labels map[string]string `json:"labels"`
+	ObjectMeta common.ObjectMeta `json:"objectMeta"`
+	TypeMeta   common.TypeMeta   `json:"typeMeta"`
 
 	// Container images of the Pod.
 	ContainerImages []string `json:"containerImages"`
-
-	// Time the replication controller was created.
-	CreationTime unversioned.Time `json:"creationTime"`
 
 	// Status of the Pod. See Kubernetes API for reference.
 	PodPhase api.PodPhase `json:"podPhase"`
@@ -102,11 +92,10 @@ func CreatePodList(pods []api.Pod, heapsterClient client.HeapsterClient) PodList
 
 	for _, pod := range pods {
 		podDetail := Pod{
-			Name:         pod.Name,
+			ObjectMeta:   common.CreateObjectMeta(pod.ObjectMeta),
+			TypeMeta:     common.CreateTypeMeta(pod.TypeMeta),
 			PodPhase:     pod.Status.Phase,
-			CreationTime: pod.ObjectMeta.CreationTimestamp,
 			PodIP:        pod.Status.PodIP,
-			NodeName:     pod.Spec.NodeName,
 			RestartCount: getRestartCount(pod),
 		}
 		if metrics != nil && metrics.MetricsMap[pod.Namespace] != nil {

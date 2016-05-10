@@ -36,9 +36,9 @@ describe('Replication controller card menu controller', () => {
           state = $state;
           kdReplicationControllerService = _kdReplicationControllerService_;
           scope = $rootScope;
-          ctrl = $componentController(
-              'kdReplicationControllerCardMenu', null,
-              {replicationController: {name: 'foo-name', namespace: 'foo-namespace'}});
+          ctrl = $componentController('kdReplicationControllerCardMenu', null, {
+            replicationController: {objectMeta: {name: 'foo-name', namespace: 'foo-namespace'}},
+          });
         });
   });
 
@@ -85,8 +85,10 @@ describe('Replication controller card menu controller', () => {
   it('should show update replicas dialog', () => {
     // given
     ctrl.replicationController = {
-      namespace: '',
-      name: '',
+      objectMeta: {
+        namespace: '',
+        name: '',
+      },
       pods: {
         current: 1,
         desired: 1,

@@ -21,7 +21,6 @@ import (
 	"github.com/kubernetes/dashboard/resource/replicationcontroller"
 	"k8s.io/kubernetes/pkg/api"
 	k8serrors "k8s.io/kubernetes/pkg/api/errors"
-	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
@@ -36,28 +35,19 @@ type DeploymentList struct {
 // it is Deployment plus additional augumented data we can get from other sources
 // (like services that target the same pods).
 type Deployment struct {
-	// Name of the Deployment.
-	Name string `json:"name"`
-
-	// Namespace this Deployment is in.
-	Namespace string `json:"namespace"`
-
-	// Label of this Deployment.
-	Labels map[string]string `json:"labels"`
+	ObjectMeta common.ObjectMeta `json:"objectMeta"`
+	TypeMeta   common.TypeMeta   `json:"typeMeta"`
 
 	// Aggregate information about pods belonging to this Deployment.
 	Pods common.PodInfo `json:"pods"`
 
 	// Container images of the Deployment.
 	ContainerImages []string `json:"containerImages"`
-
-	// Time the replication controller was created.
-	CreationTime unversioned.Time `json:"creationTime"`
 }
 
 // GetDeploymentList returns a list of all Deployments in the cluster.
 func GetDeploymentList(client client.Interface) (*DeploymentList, error) {
-	log.Printf("Getting list of all replica sets in the cluster")
+	log.Printf("Getting list of all deployments in the cluster")
 
 	channels := &common.ResourceChannels{
 		DeploymentList: common.GetDeploymentListChannel(client.Extensions(), 1),
@@ -126,12 +116,10 @@ func getDeploymentList(deployments []extensions.Deployment,
 
 		deploymentList.Deployments = append(deploymentList.Deployments,
 			Deployment{
-				Name:            deployment.ObjectMeta.Name,
-				Namespace:       deployment.ObjectMeta.Namespace,
-				Labels:          deployment.ObjectMeta.Labels,
+				ObjectMeta:      common.CreateObjectMeta(deployment.ObjectMeta),
+				TypeMeta:        common.CreateTypeMeta(deployment.TypeMeta),
 				ContainerImages: replicationcontroller.GetContainerImages(&deployment.Spec.Template.Spec),
 				Pods:            podInfo,
-				CreationTime:    deployment.ObjectMeta.CreationTimestamp,
 			})
 	}
 

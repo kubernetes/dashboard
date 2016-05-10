@@ -19,23 +19,13 @@ import (
 
 	"github.com/kubernetes/dashboard/resource/common"
 	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
 // Service is a representation of a service.
 type Service struct {
-	// Name of the service.
-	Name string `json:"name"`
-
-	// Namespace of the service.
-	Namespace string `json:"namespace"`
-
-	// CreationTimestamp of the service.
-	CreationTimestamp unversioned.Time `json:"creationTimestamp"`
-
-	// Label mapping of the service.
-	Labels map[string]string `json:"labels"`
+	ObjectMeta common.ObjectMeta `json:"objectMeta"`
+	TypeMeta   common.TypeMeta   `json:"typeMeta"`
 
 	// InternalEndpoint of all Kubernetes services that have the same label selector as connected Replication
 	// Controller. Endpoint is DNS name merged with ports.
@@ -65,7 +55,7 @@ func GetService(client client.Interface, namespace, name string) (*Service, erro
 		return nil, err
 	}
 
-	service := getServiceDetails(serviceData)
+	service := getServices(serviceData)
 	return &service, nil
 }
 
@@ -84,19 +74,17 @@ func GetServiceList(client client.Interface) (*ServiceList, error) {
 
 	serviceList := &ServiceList{Services: make([]Service, 0)}
 	for _, service := range services.Items {
-		serviceList.Services = append(serviceList.Services, getServiceDetails(&service))
+		serviceList.Services = append(serviceList.Services, getServices(&service))
 	}
 
 	return serviceList, nil
 }
 
-func getServiceDetails(service *api.Service) Service {
+func getServices(service *api.Service) Service {
 	return Service{
-		Name:              service.Name,
-		Namespace:         service.Namespace,
-		CreationTimestamp: service.CreationTimestamp,
-		Labels:            service.Labels,
-		InternalEndpoint:  common.GetInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports),
+		ObjectMeta:       common.CreateObjectMeta(service.ObjectMeta),
+		TypeMeta:         common.CreateTypeMeta(service.TypeMeta),
+		InternalEndpoint: common.GetInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports),
 		// TODO(maciaszczykm): Fill ExternalEndpoints with data.
 		Selector: service.Spec.Selector,
 	}

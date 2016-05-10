@@ -108,8 +108,9 @@ backendApi.ReplicationControllerList;
 
 /**
  * @typedef {{
- *   replicationControllers: !Array<!backendApi.ReplicationControllerList>,
- *   replicaSets: !Array<!backendApi.ReplicaSetList>
+ *   replicationControllers: !backendApi.ReplicationControllerList,
+ *   replicaSets: !backendApi.ReplicaSetList,
+ *   pods: !backendApi.PodList
  * }}
  */
 backendApi.Workloads;
@@ -154,13 +155,10 @@ backendApi.PodInfo;
 
 /**
  * @typedef {{
- *   name: string,
- *   namespace: string,
- *   description: string,
- *   labels: !Object<string, string>,
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
  *   pods: !backendApi.PodInfo,
  *   containerImages: !Array<string>,
- *   creationTime: string,
  *   internalEndpoints: !Array<!backendApi.Endpoint>,
  *   externalEndpoints: !Array<!backendApi.Endpoint>
  * }}
@@ -169,12 +167,10 @@ backendApi.ReplicationController;
 
 /**
  * @typedef {{
- *   name: string,
- *   namespace: string,
- *   labels: !Object<string, string>,
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
  *   pods: !backendApi.PodInfo,
  *   containerImages: !Array<string>,
- *   creationTime: string,
  * }}
  */
 backendApi.ReplicaSet;
@@ -197,21 +193,28 @@ backendApi.PodList;
  * @typedef {{
  *   name: string,
  *   namespace: string,
- *   type: string
+ *   labels: !Object<string, string>,
+ *   creationTimestamp: string
  * }}
  */
-backendApi.ResourceMetadata;
+backendApi.ObjectMeta;
 
 /**
  * @typedef {{
- *   name: string,
- *   namespace: string,
- *   labels: !Object<string, string>,
+ *   kind: string,
+ * }}
+ */
+backendApi.TypeMeta;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
  *   labelSelector: !Object<string, string>,
  *   containerImages: !Array<string>,
  *   podInfo: !backendApi.PodInfo,
  *   pods: !backendApi.PodList,
- *   services: !Array<!backendApi.ServiceDetail>,
+ *   services: !Array<!backendApi.Service>,
  *   hasMetrics: boolean
  * }}
  */
@@ -233,8 +236,8 @@ backendApi.DeleteReplicationControllerSpec;
 
 /**
  * @typedef {{
- *   name: string,
- *   startTime: ?string,
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
  *   status: string,
  *   podIP: string,
  *   nodeName: string,
@@ -246,13 +249,14 @@ backendApi.Pod;
 
 /**
  * @typedef {{
- *  name: string,
+ *  objectMeta: !backendApi.ObjectMeta,
+ *  typeMeta: !backendApi.TypeMeta,
  *  internalEndpoint: !backendApi.Endpoint,
  *  externalEndpoints: !Array<!backendApi.Endpoint>,
  *  selector: !Object<string, string>
  * }}
  */
-backendApi.ServiceDetail;
+backendApi.Service;
 
 /**
  * @typedef {{

@@ -31,8 +31,10 @@ describe('Replication controller card controller', () => {
   it('should construct details href', () => {
     // given
     ctrl.replicationController = {
-      name: 'foo-name',
-      namespace: 'foo-namespace',
+      objectMeta: {
+        name: 'foo-name',
+        namespace: 'foo-namespace',
+      },
     };
 
     // then

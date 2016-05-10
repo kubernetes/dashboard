@@ -117,10 +117,12 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 			},
 			&ReplicaSetList{
 				[]ReplicaSet{{
-					Name:         "rs-name",
-					Namespace:    "rs-namespace",
-					Labels:       map[string]string{"key": "value"},
-					CreationTime: unversioned.Unix(111, 222),
+					ObjectMeta: common.ObjectMeta{
+						Name:              "rs-name",
+						Namespace:         "rs-namespace",
+						Labels:            map[string]string{"key": "value"},
+						CreationTimestamp: unversioned.Unix(111, 222),
+					},
 					Pods: common.PodInfo{
 						Current:  7,
 						Desired:  21,

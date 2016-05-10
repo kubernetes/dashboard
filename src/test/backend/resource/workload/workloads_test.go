@@ -67,19 +67,25 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 			},
 			api.PodList{},
 			[]replicationcontroller.ReplicationController{{
-				Name: "rc-name",
+				ObjectMeta: common.ObjectMeta{
+					Name: "rc-name",
+				},
 				Pods: common.PodInfo{
 					Warnings: []event.Event{},
 				},
 			}},
 			[]replicaset.ReplicaSet{{
-				Name: "rs-name",
+				ObjectMeta: common.ObjectMeta{
+					Name: "rs-name",
+				},
 				Pods: common.PodInfo{
 					Warnings: []event.Event{},
 				},
 			}},
 			[]deployment.Deployment{{
-				Name: "deployment-name",
+				ObjectMeta: common.ObjectMeta{
+					Name: "deployment-name",
+				},
 				Pods: common.PodInfo{
 					Warnings: []event.Event{},
 				},
