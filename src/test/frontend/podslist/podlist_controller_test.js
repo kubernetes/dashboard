@@ -12,19 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './podlist_stateconfig';
-import {podCardListComponent} from './podcardlist_component';
+import {PodListController} from 'podlist/podlist_controller';
+import podListModule from 'podlist/podlist_module';
 
-/**
- * Module containing endpoint components.
- */
-export default angular
-    .module(
-        'kubernetesDashboard.podsList',
-        [
-          'ngMaterial',
-          'ngResource',
-          'ui.router',
-        ])
-    .config(stateConfig)
-    .component('kdPodCardList', podCardListComponent);
+describe('Replica Set list controller', () => {
+
+  beforeEach(() => { angular.mock.module(podListModule.name); });
+
+  it('should initialize replication controllers', angular.mock.inject(($controller) => {
+    let data = {pods: {}};
+    /** @type {!PodListController} */
+    let ctrl = $controller(PodListController, {podList: data});
+
+    expect(ctrl.podList).toBe(data);
+  }));
+});

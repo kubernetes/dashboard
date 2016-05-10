@@ -12,19 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './podlist_stateconfig';
-import {podCardListComponent} from './podcardlist_component';
-
 /**
- * Module containing endpoint components.
+ * Controller for the pod list view.
+ *
+ * @final
  */
-export default angular
-    .module(
-        'kubernetesDashboard.podsList',
-        [
-          'ngMaterial',
-          'ngResource',
-          'ui.router',
-        ])
-    .config(stateConfig)
-    .component('kdPodCardList', podCardListComponent);
+export class PodListController {
+  /**
+   * @param {!backendApi.PodList} podList
+   * @ngInject
+   */
+  constructor(podList) {
+    /** @export {!backendApi.PodList} */
+    this.podList = podList;
+  }
+}
