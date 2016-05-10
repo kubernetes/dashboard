@@ -20,7 +20,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
-	"time"
 
 	"github.com/kubernetes/dashboard/client"
 	heapster "k8s.io/heapster/api/v1/types"
