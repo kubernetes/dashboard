@@ -78,7 +78,7 @@ type ReplicationControllerPod struct {
 	RestartCount int `json:"restartCount"`
 
 	// Pod metrics.
-	Metrics *PodMetrics `json:"metrics"`
+	Metrics *common.PodMetrics `json:"metrics"`
 }
 
 // ReplicationControllerSpec contains information needed to update replication controller.

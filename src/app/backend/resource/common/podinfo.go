@@ -15,6 +15,9 @@
 package common
 
 import (
+	"time"
+
+	heapster "k8s.io/heapster/api/v1/types"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/labels"
@@ -41,6 +44,31 @@ type PodInfo struct {
 
 	// Unique warning messages related to pods in this Replication Controller.
 	Warnings []event.Event `json:"warnings"`
+}
+
+const (
+	CpuUsage    = "cpu-usage"
+	MemoryUsage = "memory-usage"
+)
+
+// MetricResult is a some sample measurement of a non-negative, integer quantity
+// (for example, memory usage in bytes observed at some moment)
+type MetricResult struct {
+	Timestamp time.Time `json:"timestamp"`
+	Value     uint64    `json:"value"`
+}
+
+// PodMetrics is a structure representing pods metrics, contains information about CPU and memory
+// usage.
+type PodMetrics struct {
+	// Most recent measure of CPU usage on all cores in nanoseconds.
+	CpuUsage *uint64 `json:"cpuUsage"`
+	// Pod memory usage in bytes.
+	MemoryUsage *uint64 `json:"memoryUsage"`
+	// Timestamped samples of CpuUsage over some short period of history
+	CpuUsageHistory []MetricResult `json:"cpuUsageHistory"`
+	// Timestamped samples of pod memory usage over some short period of history
+	MemoryUsageHistory []MetricResult `json:"memoryUsageHistory"`
 }
 
 // GetPodInfo returns aggregate information about replication controller pods.
@@ -99,6 +127,53 @@ func GetMatchingPods(labelSelector *unversioned.LabelSelector, namespace string,
 	}
 
 	return matchingPods
+}
+
+// GetPodMetric initialize PodMetrics map with metrics (cpu and mem) for each pods given
+func GetPodMetrics(cpuMetrics []heapster.MetricResult, memMetrics []heapster.MetricResult,
+	podNames []string) map[string]PodMetrics {
+
+	PodsResources := make(map[string]PodMetrics)
+
+	if len(cpuMetrics) == len(podNames) && len(memMetrics) == len(podNames) {
+		for iterator, podName := range podNames {
+			var memValue *uint64
+			var cpuValue *uint64
+			memMetricsList := memMetrics[iterator].Metrics
+			cpuMetricsList := cpuMetrics[iterator].Metrics
+
+			if len(memMetricsList) > 0 {
+				memValue = &memMetricsList[0].Value
+			}
+
+			if len(cpuMetricsList) > 0 {
+				cpuValue = &cpuMetricsList[0].Value
+			}
+
+			cpuHistory := make([]MetricResult, len(cpuMetricsList))
+			memHistory := make([]MetricResult, len(memMetricsList))
+
+			for i, cpuMeasure := range cpuMetricsList {
+				cpuHistory[i].Value = cpuMeasure.Value
+				cpuHistory[i].Timestamp = cpuMeasure.Timestamp
+			}
+
+			for i, memMeasure := range memMetricsList {
+				memHistory[i].Value = memMeasure.Value
+				memHistory[i].Timestamp = memMeasure.Timestamp
+			}
+
+			podResources := PodMetrics{
+				CpuUsage:           cpuValue,
+				MemoryUsage:        memValue,
+				CpuUsageHistory:    cpuHistory,
+				MemoryUsageHistory: memHistory,
+			}
+			PodsResources[podName] = podResources
+		}
+	}
+
+	return PodsResources
 }
 
 // Returns true when a Service with the given selector targets the same Pods (or subset) that

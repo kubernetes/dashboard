@@ -17,8 +17,9 @@ package daemonset
 import (
 	"log"
 
-	. "github.com/kubernetes/dashboard/client"
-	. "github.com/kubernetes/dashboard/resource/replicationcontroller"
+	"github.com/kubernetes/dashboard/client"
+	"github.com/kubernetes/dashboard/resource/common"
+	"github.com/kubernetes/dashboard/resource/replicationcontroller"
 	heapster "k8s.io/heapster/api/v1/types"
 	"k8s.io/kubernetes/pkg/api"
 )
@@ -26,11 +27,11 @@ import (
 // Metrics map by pod name.
 type DaemonSetMetricsByPod struct {
 	// Metrics map by pod name
-	MetricsMap map[string]PodMetrics `json:"metricsMap"`
+	MetricsMap map[string]common.PodMetrics `json:"metricsMap"`
 }
 
 // Return Pods metrics for Daemon Set or error when occurred.
-func getDaemonSetPodsMetrics(podList *api.PodList, heapsterClient HeapsterClient,
+func getDaemonSetPodsMetrics(podList *api.PodList, heapsterClient client.HeapsterClient,
 	namespace string, daemonSet string) (*DaemonSetMetricsByPod, error) {
 	log.Printf("Getting Pods metrics for Daemon Set %s in %s namespace", daemonSet, namespace)
 	podNames := make([]string, 0)
@@ -40,73 +41,35 @@ func getDaemonSetPodsMetrics(podList *api.PodList, heapsterClient HeapsterClient
 		podNames = append(podNames, pod.Name)
 	}
 
-	metricCpuUsagePath := CreateMetricPath(namespace, podNames, CpuUsage)
-	metricMemUsagePath := CreateMetricPath(namespace, podNames, MemoryUsage)
+	metricCpuUsagePath := replicationcontroller.CreateMetricPath(namespace, podNames, common.CpuUsage)
+	metricMemUsagePath := replicationcontroller.CreateMetricPath(namespace, podNames, common.MemoryUsage)
 
-	resultCpuUsageRaw, err := GetRawMetrics(heapsterClient, metricCpuUsagePath)
-	if err != nil {
-		return nil, err
-	}
-
-	resultMemUsageRaw, err := GetRawMetrics(heapsterClient, metricMemUsagePath)
+	resultCpuUsageRaw, err := replicationcontroller.GetRawMetrics(heapsterClient, metricCpuUsagePath)
 	if err != nil {
 		return nil, err
 	}
 
-	cpuMetricResult, err := UnmarshalMetrics(resultCpuUsageRaw)
+	resultMemUsageRaw, err := replicationcontroller.GetRawMetrics(heapsterClient, metricMemUsagePath)
 	if err != nil {
 		return nil, err
 	}
-	memMetricResult, err := UnmarshalMetrics(resultMemUsageRaw)
+
+	cpuMetricResult, err := replicationcontroller.UnmarshalMetrics(resultCpuUsageRaw)
 	if err != nil {
 		return nil, err
 	}
-	return createResponseforDS(cpuMetricResult, memMetricResult, podNames), nil
+	memMetricResult, err := replicationcontroller.UnmarshalMetrics(resultMemUsageRaw)
+	if err != nil {
+		return nil, err
+	}
+	return createResponse(cpuMetricResult, memMetricResult, podNames), nil
 }
 
 // Create response structure for API call.
-func createResponseforDS(cpuMetrics []heapster.MetricResult, memMetrics []heapster.MetricResult,
+func createResponse(cpuMetrics []heapster.MetricResult, memMetrics []heapster.MetricResult,
 	podNames []string) *DaemonSetMetricsByPod {
-	daemonSetPodsResources := make(map[string]PodMetrics)
 
-	if len(cpuMetrics) == len(podNames) && len(memMetrics) == len(podNames) {
-		for iterator, podName := range podNames {
-			var memValue *uint64
-			var cpuValue *uint64
-			memMetricsList := memMetrics[iterator].Metrics
-			cpuMetricsList := cpuMetrics[iterator].Metrics
-
-			if len(memMetricsList) > 0 {
-				memValue = &memMetricsList[0].Value
-			}
-
-			if len(cpuMetricsList) > 0 {
-				cpuValue = &cpuMetricsList[0].Value
-			}
-
-			cpuHistory := make([]MetricResult, len(cpuMetricsList))
-			memHistory := make([]MetricResult, len(memMetricsList))
-
-			for i, cpuMeasure := range cpuMetricsList {
-				cpuHistory[i].Value = cpuMeasure.Value
-				cpuHistory[i].Timestamp = cpuMeasure.Timestamp
-			}
-
-			for i, memMeasure := range memMetricsList {
-				memHistory[i].Value = memMeasure.Value
-				memHistory[i].Timestamp = memMeasure.Timestamp
-			}
-
-			podResources := PodMetrics{
-				CpuUsage:           cpuValue,
-				MemoryUsage:        memValue,
-				CpuUsageHistory:    cpuHistory,
-				MemoryUsageHistory: memHistory,
-			}
-			daemonSetPodsResources[podName] = podResources
-		}
-	}
 	return &DaemonSetMetricsByPod{
-		MetricsMap: daemonSetPodsResources,
+		MetricsMap: common.GetPodMetrics(cpuMetrics, memMetrics, podNames),
 	}
 }

@@ -20,43 +20,18 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
-	"time"
 
+	"github.com/kubernetes/dashboard/resource/common"
 	// TODO(maciaszczykm): Avoid using dot-imports.
 	. "github.com/kubernetes/dashboard/client"
 	heapster "k8s.io/heapster/api/v1/types"
 	"k8s.io/kubernetes/pkg/api"
 )
 
-const (
-	CpuUsage    = "cpu-usage"
-	MemoryUsage = "memory-usage"
-)
-
 // ReplicationControllerMetricsByPod is a metrics map by pod name.
 type ReplicationControllerMetricsByPod struct {
 	// Metrics map by pod name
-	MetricsMap map[string]PodMetrics `json:"metricsMap"`
-}
-
-// MetricResult is a some sample measurement of a non-negative, integer quantity
-// (for example, memory usage in bytes observed at some moment)
-type MetricResult struct {
-	Timestamp time.Time `json:"timestamp"`
-	Value     uint64    `json:"value"`
-}
-
-// PodMetrics is a structure representing pods metrics, contains information about CPU and memory
-// usage.
-type PodMetrics struct {
-	// Most recent measure of CPU usage on all cores in nanoseconds.
-	CpuUsage *uint64 `json:"cpuUsage"`
-	// Pod memory usage in bytes.
-	MemoryUsage *uint64 `json:"memoryUsage"`
-	// Timestamped samples of CpuUsage over some short period of history
-	CpuUsageHistory []MetricResult `json:"cpuUsageHistory"`
-	// Timestamped samples of pod memory usage over some short period of history
-	MemoryUsageHistory []MetricResult `json:"memoryUsageHistory"`
+	MetricsMap map[string]common.PodMetrics `json:"metricsMap"`
 }
 
 // Return Pods metrics for Replication Controller or error when occurred.
@@ -70,8 +45,8 @@ func getReplicationControllerPodsMetrics(podList *api.PodList, heapsterClient He
 		podNames = append(podNames, pod.Name)
 	}
 
-	metricCpuUsagePath := CreateMetricPath(namespace, podNames, CpuUsage)
-	metricMemUsagePath := CreateMetricPath(namespace, podNames, MemoryUsage)
+	metricCpuUsagePath := CreateMetricPath(namespace, podNames, common.CpuUsage)
+	metricMemUsagePath := CreateMetricPath(namespace, podNames, common.MemoryUsage)
 
 	resultCpuUsageRaw, err := GetRawMetrics(heapsterClient, metricCpuUsagePath)
 	if err != nil {
@@ -125,46 +100,8 @@ func UnmarshalMetrics(rawData []byte) ([]heapster.MetricResult, error) {
 // Create response structure for API call.
 func createResponse(cpuMetrics []heapster.MetricResult, memMetrics []heapster.MetricResult,
 	podNames []string) *ReplicationControllerMetricsByPod {
-	replicationControllerPodsResources := make(map[string]PodMetrics)
 
-	if len(cpuMetrics) == len(podNames) && len(memMetrics) == len(podNames) {
-		for iterator, podName := range podNames {
-			var memValue *uint64
-			var cpuValue *uint64
-			memMetricsList := memMetrics[iterator].Metrics
-			cpuMetricsList := cpuMetrics[iterator].Metrics
-
-			if len(memMetricsList) > 0 {
-				memValue = &memMetricsList[0].Value
-			}
-
-			if len(cpuMetricsList) > 0 {
-				cpuValue = &cpuMetricsList[0].Value
-			}
-
-			cpuHistory := make([]MetricResult, len(cpuMetricsList))
-			memHistory := make([]MetricResult, len(memMetricsList))
-
-			for i, cpuMeasure := range cpuMetricsList {
-				cpuHistory[i].Value = cpuMeasure.Value
-				cpuHistory[i].Timestamp = cpuMeasure.Timestamp
-			}
-
-			for i, memMeasure := range memMetricsList {
-				memHistory[i].Value = memMeasure.Value
-				memHistory[i].Timestamp = memMeasure.Timestamp
-			}
-
-			podResources := PodMetrics{
-				CpuUsage:           cpuValue,
-				MemoryUsage:        memValue,
-				CpuUsageHistory:    cpuHistory,
-				MemoryUsageHistory: memHistory,
-			}
-			replicationControllerPodsResources[podName] = podResources
-		}
-	}
 	return &ReplicationControllerMetricsByPod{
-		MetricsMap: replicationControllerPodsResources,
+		MetricsMap: common.GetPodMetrics(cpuMetrics, memMetrics, podNames),
 	}
 }

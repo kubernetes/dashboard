@@ -80,7 +80,7 @@ type DaemonSetPod struct {
 	RestartCount int `json:"restartCount"`
 
 	// Pod metrics.
-	Metrics *replicationcontroller.PodMetrics `json:"metrics"`
+	Metrics *common.PodMetrics `json:"metrics"`
 }
 
 // Returns detailed information about the given daemon set in the given namespace.
