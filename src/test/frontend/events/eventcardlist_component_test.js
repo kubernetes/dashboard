@@ -12,22 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import replicationControllerDetailModule from 'replicationcontrollerdetail/replicationcontrollerdetail_module';
+import eventsModule from 'events/events_module';
 
-describe('Replication Controller Events controller', () => {
+describe('Event Card List controller', () => {
   /**
-   * Replication Controller Events controller.
-   * @type
-   * {!replicationcontrollerdetail/replicationcontrollerevents_component.ReplicationControllerEventsController}
+   * Event Card List controller.
+   * @type {!events/eventcardlist_component.EventCardListController}
    */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(replicationControllerDetailModule.name);
+    angular.mock.module(eventsModule.name);
 
-    angular.mock.inject(($componentController) => {
-      ctrl = $componentController('kdReplicationControllerEvents', {});
-    });
+    angular.mock.inject(
+        ($componentController) => { ctrl = $componentController('kdEventCardList', {}); });
   });
 
   it('should not filter any events if all option is selected', () => {
@@ -78,7 +76,7 @@ describe('Replication Controller Events controller', () => {
 
   it('should return true when there are events to display', () => {
     // given
-    ctrl.events = ['Some event'];
+    ctrl.filteredEvents = ['Some event'];
 
     // when
     let result = ctrl.hasEvents();

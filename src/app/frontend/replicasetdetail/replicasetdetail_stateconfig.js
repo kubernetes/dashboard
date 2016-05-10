@@ -12,6 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {actionbarViewName} from 'chrome/chrome_state';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_component';
+import {ReplicaSetDetailController} from './replicasetdetail_controller';
+import {stateName as replicaSetList, stateUrl} from 'replicasetlist/replicasetlist_state';
 import {stateName} from './replicasetdetail_state';
 
 /**
@@ -22,6 +26,41 @@ import {stateName} from './replicasetdetail_state';
  */
 export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
-    url: '/replicasets/:namespace/:replicaSet',
+    url: `${stateUrl}/:namespace/:replicaSet`,
+    resolve: {
+      'replicaSetDetailResource': getReplicaSetDetailResource,
+      'replicaSetDetail': getReplicaSetDetail,
+    },
+    data: {
+      [breadcrumbsConfig]: {
+        'label': '{{$stateParams.replicaSet}}',
+        'parent': replicaSetList,
+      },
+    },
+    views: {
+      '': {
+        controller: ReplicaSetDetailController,
+        controllerAs: 'ctrl',
+        templateUrl: 'replicasetdetail/replicasetdetail.html',
+      },
+      [actionbarViewName]: {},
+    },
   });
+}
+
+/**
+ * @param {!./replicasetdetail_state.StateParams} $stateParams
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource<!backendApi.ReplicaSetDetail>}
+ */
+export function getReplicaSetDetailResource($resource, $stateParams) {
+  return $resource(`api/v1/replicasets/${$stateParams.namespace}/${$stateParams.replicaSet}`);
+}
+
+/**
+ * @param {!angular.Resource<!backendApi.ReplicaSetDetail>} replicaSetDetailResource
+ * @return {!angular.$q.Promise}
+ */
+export function getReplicaSetDetail(replicaSetDetailResource) {
+  return replicaSetDetailResource.get().$promise;
 }

@@ -82,7 +82,7 @@ backendApi.AppDeploymentFromFileSpec;
  *   events: !Array<!backendApi.Event>
  * }}
  */
-backendApi.Events;
+backendApi.EventList;
 
 /**
  * @typedef {{
@@ -174,6 +174,18 @@ backendApi.ReplicationController;
  * }}
  */
 backendApi.ReplicaSet;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   podInfo: !backendApi.PodInfo,
+ *   podList: !backendApi.PodList,
+ *   containerImages: !Array<string>,
+ *   eventList: !backendApi.EventList
+ * }}
+ */
+backendApi.ReplicaSetDetail;
 
 /**
  * @typedef {{

@@ -19,15 +19,17 @@ import (
 	"testing"
 
 	"k8s.io/kubernetes/pkg/api"
+
+	"github.com/kubernetes/dashboard/resource/common"
 )
 
 func TestGetPodsEventWarningsApi(t *testing.T) {
 	cases := []struct {
 		pods      []api.Pod
 		eventList []api.Event
-		expected  []Event
+		expected  []common.Event
 	}{
-		{nil, nil, []Event{}},
+		{nil, nil, []common.Event{}},
 		{
 			[]api.Pod{
 				{
@@ -48,7 +50,7 @@ func TestGetPodsEventWarningsApi(t *testing.T) {
 					},
 				},
 			},
-			[]Event{
+			[]common.Event{
 				{
 					Message: "Test Message",
 					Type:    api.EventTypeWarning,
@@ -64,7 +66,7 @@ func TestGetPodsEventWarningsApi(t *testing.T) {
 				},
 			},
 			nil,
-			[]Event{},
+			[]common.Event{},
 		},
 	}
 

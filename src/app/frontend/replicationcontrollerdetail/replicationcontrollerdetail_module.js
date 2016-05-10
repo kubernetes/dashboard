@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import componentsModule from './../common/components/components_module';
+import componentsModule from 'common/components/components_module';
+import eventsModule from 'events/events_module';
 import filtersModule from 'common/filters/filters_module';
 import logsModule from 'logs/logs_module';
 import podListModule from 'podlist/podlist_module';
 import serviceListModule from 'servicelist/servicelist_module';
 import stateConfig from './replicationcontrollerdetail_stateconfig';
-import {replicationControllerEventsComponent} from './replicationcontrollerevents_component';
 import {replicationControllerInfoComponent} from './replicationcontrollerinfo_component';
 import {ReplicationControllerService} from './replicationcontroller_service';
 
@@ -39,8 +39,8 @@ export default angular
           logsModule.name,
           podListModule.name,
           serviceListModule.name,
+          eventsModule.name,
         ])
     .config(stateConfig)
     .component('kdReplicationControllerInfo', replicationControllerInfoComponent)
-    .component('kdReplicationControllerEvents', replicationControllerEventsComponent)
     .service('kdReplicationControllerService', ReplicationControllerService);

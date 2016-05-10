@@ -25,7 +25,6 @@ import (
 	"k8s.io/kubernetes/pkg/apis/extensions"
 
 	"github.com/kubernetes/dashboard/resource/common"
-	"github.com/kubernetes/dashboard/resource/event"
 )
 
 func TestGetReplicaSetListFromChannels(t *testing.T) {
@@ -127,7 +126,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 						Current:  7,
 						Desired:  21,
 						Failed:   1,
-						Warnings: []event.Event{},
+						Warnings: []common.Event{},
 					},
 				}},
 			},

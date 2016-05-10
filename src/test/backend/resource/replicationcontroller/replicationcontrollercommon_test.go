@@ -24,7 +24,6 @@ import (
 	"k8s.io/kubernetes/pkg/labels"
 
 	"github.com/kubernetes/dashboard/resource/common"
-	"github.com/kubernetes/dashboard/resource/event"
 )
 
 func TestGetReplicationPodInfo(t *testing.T) {
@@ -55,7 +54,7 @@ func TestGetReplicationPodInfo(t *testing.T) {
 				Running:  1,
 				Pending:  0,
 				Failed:   0,
-				Warnings: []event.Event{},
+				Warnings: []common.Event{},
 			},
 		},
 	}
