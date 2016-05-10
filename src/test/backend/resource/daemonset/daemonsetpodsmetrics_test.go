@@ -18,7 +18,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/resource/replicationcontroller"
+	"github.com/kubernetes/dashboard/resource/common"
 	heapster "k8s.io/heapster/api/v1/types"
 )
 
@@ -34,7 +34,7 @@ func TestCreateResponseforDS(t *testing.T) {
 	}{
 		{make([]heapster.MetricResult, 0), make([]heapster.MetricResult, 0), make([]string, 0),
 			&DaemonSetMetricsByPod{
-				MetricsMap: map[string]replicationcontroller.PodMetrics{},
+				MetricsMap: map[string]common.PodMetrics{},
 			}},
 		{[]heapster.MetricResult{
 			{Metrics: []heapster.MetricPoint{
@@ -48,7 +48,7 @@ func TestCreateResponseforDS(t *testing.T) {
 			},
 			[]string{"a", "b"},
 			&DaemonSetMetricsByPod{
-				MetricsMap: map[string]replicationcontroller.PodMetrics{},
+				MetricsMap: map[string]common.PodMetrics{},
 			},
 		},
 		{[]heapster.MetricResult{
@@ -69,23 +69,23 @@ func TestCreateResponseforDS(t *testing.T) {
 			},
 			[]string{"a", "b"},
 			&DaemonSetMetricsByPod{
-				MetricsMap: map[string]replicationcontroller.PodMetrics{
+				MetricsMap: map[string]common.PodMetrics{
 					"a": {
 						CpuUsage: &cpuUsage1,
-						CpuUsageHistory: []replicationcontroller.MetricResult{
+						CpuUsageHistory: []common.MetricResult{
 							{Value: cpuUsage1},
 						},
 						MemoryUsage: &memoryUsage,
-						MemoryUsageHistory: []replicationcontroller.MetricResult{
+						MemoryUsageHistory: []common.MetricResult{
 							{Value: memoryUsage},
 						},
 					}, "b": {
 						CpuUsage: &cpuUsage2,
-						CpuUsageHistory: []replicationcontroller.MetricResult{
+						CpuUsageHistory: []common.MetricResult{
 							{Value: cpuUsage2},
 						},
 						MemoryUsage: &memoryUsage,
-						MemoryUsageHistory: []replicationcontroller.MetricResult{
+						MemoryUsageHistory: []common.MetricResult{
 							{Value: memoryUsage},
 						},
 					},
@@ -94,7 +94,7 @@ func TestCreateResponseforDS(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := createResponseforDS(c.cpuMetrics, c.memMetrics, c.podNames)
+		actual := createResponse(c.cpuMetrics, c.memMetrics, c.podNames)
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("createResponse(%#v, %#v, %#v) == %#v, expected %#v",

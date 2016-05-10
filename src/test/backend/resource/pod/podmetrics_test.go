@@ -18,6 +18,7 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/kubernetes/dashboard/resource/common"
 	heapster "k8s.io/heapster/api/v1/types"
 )
 
