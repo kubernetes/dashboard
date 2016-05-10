@@ -36,7 +36,7 @@ describe('StateConfig for replication controller list', () => {
     spyOn(state, 'go');
     let replicationControllers = {
       replicationControllers: [
-        {namespace: 'kube-system'},
+        {objectMeta: {namespace: 'kube-system'}},
       ],
     };
 
@@ -66,7 +66,7 @@ describe('StateConfig for replication controller list', () => {
        spyOn(state, 'go');
        let replicationControllers = {
          replicationControllers: [
-           {namespace: 'foo-namespace'},
+           {objectMeta: {namespace: 'foo-namespace'}},
          ],
        };
 
@@ -84,8 +84,8 @@ describe('StateConfig for replication controller list', () => {
        spyOn(state, 'go');
        let replicationControllers = {
          replicationControllers: [
-           {namespace: 'foo-namespace'},
-           {namespace: 'kube-system'},
+           {objectMeta: {namespace: 'foo-namespace'}},
+           {objectMeta: {namespace: 'kube-system'}},
          ],
        };
 

@@ -18,10 +18,8 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/resource/common"
-	// TODO(maciaszczykm): Avoid using dot-imports.
-	. "github.com/kubernetes/dashboard/resource/event"
+	"github.com/kubernetes/dashboard/resource/event"
 	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
@@ -34,26 +32,14 @@ type ReplicationControllerList struct {
 // ReplicationController (aka. Replication Controller) plus zero or more Kubernetes services that
 // target the Replication Controller.
 type ReplicationController struct {
-	// Name of the Replication Controller.
-	Name string `json:"name"`
-
-	// Namespace this Replication Controller is in.
-	Namespace string `json:"namespace"`
-
-	// Human readable description of this Replication Controller.
-	Description string `json:"description"`
-
-	// Label of this Replication Controller.
-	Labels map[string]string `json:"labels"`
+	ObjectMeta common.ObjectMeta `json:"objectMeta"`
+	TypeMeta   common.TypeMeta   `json:"typeMeta"`
 
 	// Aggregate information about pods belonging to this Replication Controller.
 	Pods common.PodInfo `json:"pods"`
 
 	// Container images of the Replication Controller.
 	ContainerImages []string `json:"containerImages"`
-
-	// Time the replication controller was created.
-	CreationTime unversioned.Time `json:"creationTime"`
 
 	// Internal endpoints of all Kubernetes services have the same label selector as this Replication Controller.
 	InternalEndpoints []common.Endpoint `json:"internalEndpoints"`
@@ -143,19 +129,16 @@ func getReplicationControllerList(replicationControllers []api.ReplicationContro
 			}
 		}
 		podInfo := getReplicationPodInfo(&replicationController, matchingPods)
-		podErrors := GetPodsEventWarnings(events, matchingPods)
+		podErrors := event.GetPodsEventWarnings(events, matchingPods)
 
 		podInfo.Warnings = podErrors
 
 		replicationControllerList.ReplicationControllers = append(replicationControllerList.ReplicationControllers,
 			ReplicationController{
-				Name:              replicationController.ObjectMeta.Name,
-				Namespace:         replicationController.ObjectMeta.Namespace,
-				Description:       replicationController.Annotations[DescriptionAnnotationKey],
-				Labels:            replicationController.ObjectMeta.Labels,
+				ObjectMeta:        common.CreateObjectMeta(replicationController.ObjectMeta),
+				TypeMeta:          common.CreateTypeMeta(replicationController.TypeMeta),
 				Pods:              podInfo,
 				ContainerImages:   GetContainerImages(&replicationController.Spec.Template.Spec),
-				CreationTime:      replicationController.ObjectMeta.CreationTimestamp,
 				InternalEndpoints: internalEndpoints,
 				ExternalEndpoints: externalEndpoints,
 			})

@@ -20,7 +20,7 @@
 export const replicationControllerServicesComponent = {
   templateUrl: 'replicationcontrollerdetail/replicationcontrollerservices.html',
   bindings: {
-    /** {!Array<!backendApi.ServiceDetail>} */
+    /** {!Array<!backendApi.Service>} */
     'services': '=',
   },
 };

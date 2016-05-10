@@ -30,8 +30,10 @@ describe('Replica Set card', () => {
   it('should construct details href', () => {
     // given
     ctrl.replicaSet = {
-      name: 'foo-name',
-      namespace: 'foo-namespace',
+      objectMeta: {
+        name: 'foo-name',
+        namespace: 'foo-namespace',
+      },
     };
 
     // then

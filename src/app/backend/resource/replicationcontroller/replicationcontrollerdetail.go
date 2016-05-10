@@ -29,14 +29,8 @@ import (
 
 // ReplicationControllerDetail represents detailed information about a Replication Controller.
 type ReplicationControllerDetail struct {
-	// Name of the Replication Controller.
-	Name string `json:"name"`
-
-	// Namespace the Replication Controller is in.
-	Namespace string `json:"namespace"`
-
-	// Label mapping of the Replication Controller.
-	Labels map[string]string `json:"labels"`
+	ObjectMeta common.ObjectMeta `json:"objectMeta"`
+	TypeMeta   common.TypeMeta   `json:"typeMeta"`
 
 	// Label selector of the Replication Controller.
 	LabelSelector map[string]string `json:"labelSelector"`
@@ -91,9 +85,8 @@ func GetReplicationControllerDetail(client k8sClient.Interface, heapsterClient c
 	}
 
 	replicationControllerDetail := &ReplicationControllerDetail{
-		Name:          replicationController.Name,
-		Namespace:     replicationController.Namespace,
-		Labels:        replicationController.ObjectMeta.Labels,
+		ObjectMeta:    common.CreateObjectMeta(replicationController.ObjectMeta),
+		TypeMeta:      common.CreateTypeMeta(replicationController.TypeMeta),
 		LabelSelector: replicationController.Spec.Selector,
 		PodInfo:       getReplicationPodInfo(replicationController, pods.Items),
 	}
@@ -102,7 +95,7 @@ func GetReplicationControllerDetail(client k8sClient.Interface, heapsterClient c
 
 	for _, service := range matchingServices {
 		replicationControllerDetail.Services = append(replicationControllerDetail.Services,
-			getServiceDetail(service, *replicationController, pods.Items, nodes.Items))
+			getService(service, *replicationController, pods.Items, nodes.Items))
 	}
 
 	for _, container := range replicationController.Spec.Template.Spec.Containers {
@@ -208,10 +201,11 @@ func UpdateReplicasCount(client k8sClient.Interface, namespace, name string,
 }
 
 // Returns detailed information about service from given service
-func getServiceDetail(service api.Service, replicationController api.ReplicationController,
+func getService(service api.Service, replicationController api.ReplicationController,
 	pods []api.Pod, nodes []api.Node) resourceService.Service {
 	return resourceService.Service{
-		Name: service.ObjectMeta.Name,
+		ObjectMeta: common.CreateObjectMeta(service.ObjectMeta),
+		TypeMeta:   common.CreateTypeMeta(service.TypeMeta),
 		InternalEndpoint: common.GetInternalEndpoint(service.Name, service.Namespace,
 			service.Spec.Ports),
 		ExternalEndpoints: getExternalEndpoints(replicationController, pods, service, nodes),

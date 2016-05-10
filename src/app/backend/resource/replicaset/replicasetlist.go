@@ -21,7 +21,6 @@ import (
 	"github.com/kubernetes/dashboard/resource/replicationcontroller"
 	"k8s.io/kubernetes/pkg/api"
 	k8serrors "k8s.io/kubernetes/pkg/api/errors"
-	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
@@ -36,23 +35,14 @@ type ReplicaSetList struct {
 // it is Replica Set plus additional augumented data we can get from other sources
 // (like services that target the same pods).
 type ReplicaSet struct {
-	// Name of the Replica Set.
-	Name string `json:"name"`
-
-	// Namespace this Replica Set is in.
-	Namespace string `json:"namespace"`
-
-	// Label of this Replica Set.
-	Labels map[string]string `json:"labels"`
+	ObjectMeta common.ObjectMeta `json:"objectMeta"`
+	TypeMeta   common.TypeMeta   `json:"typeMeta"`
 
 	// Aggregate information about pods belonging to this Replica Set.
 	Pods common.PodInfo `json:"pods"`
 
 	// Container images of the Replica Set.
 	ContainerImages []string `json:"containerImages"`
-
-	// Time the replication controller was created.
-	CreationTime unversioned.Time `json:"creationTime"`
 }
 
 // GetReplicaSetList returns a list of all Replica Sets in the cluster.
@@ -126,12 +116,10 @@ func getReplicaSetList(replicaSets []extensions.ReplicaSet,
 
 		replicaSetList.ReplicaSets = append(replicaSetList.ReplicaSets,
 			ReplicaSet{
-				Name:            replicaSet.ObjectMeta.Name,
-				Namespace:       replicaSet.ObjectMeta.Namespace,
-				Labels:          replicaSet.ObjectMeta.Labels,
+				ObjectMeta:      common.CreateObjectMeta(replicaSet.ObjectMeta),
+				TypeMeta:        common.CreateTypeMeta(replicaSet.TypeMeta),
 				ContainerImages: replicationcontroller.GetContainerImages(&replicaSet.Spec.Template.Spec),
 				Pods:            podInfo,
-				CreationTime:    replicaSet.ObjectMeta.CreationTimestamp,
 			})
 	}
 

@@ -32,7 +32,7 @@ limitations under the License.
           </md-icon>
           <a ng-href="{{::ctrl.getReplicationControllerDetailHref()}}"
              class="kd-replicationcontroller-card-name md-title kd-replicationcontroller-card-title">
-            <kd-middle-ellipsis display-string="{{::ctrl.replicationController.name}}">
+            <kd-middle-ellipsis display-string="{{::ctrl.replicationController.objectMeta.name}}">
             </kd-middle-ellipsis>
           </a>
         </span>
@@ -40,7 +40,7 @@ limitations under the License.
         </kd-replication-controller-card-menu-deprecated>
       </div>
       <div class="md-caption">
-        <kd-labels labels="::ctrl.replicationController.labels"></kd-labels>
+        <kd-labels labels="::ctrl.replicationController.objectMeta.labels"></kd-labels>
       </div>
     </div>
     <div class="md-caption">
@@ -63,8 +63,8 @@ limitations under the License.
             {{::ctrl.replicationController.pods.desired}} desired
           </span>
         </span>
-        <logs-menu-deprecated flex="40" namespace="::ctrl.replicationController.namespace"
-                   replication-controller-name="::ctrl.replicationController.name">
+        <logs-menu-deprecated flex="40" namespace="::ctrl.replicationController.objectMeta.namespace"
+                   replication-controller-name="::ctrl.replicationController.objectMeta.name">
         </logs-menu-deprecated>
       </div>
       <md-divider class="kd-replicationcontroller-card-divider"></md-divider>
@@ -86,9 +86,9 @@ limitations under the License.
         <div flex="40" layout="column" class="kd-replicationcontroller-card-section">
           <span flex="initial" class="kd-replicationcontroller-card-section-title">Age</span>
           <span flex="nogrow">
-            {{::ctrl.replicationController.creationTime | relativeTime}}
+            {{::ctrl.replicationController.objectMeta.creationTimestamp | relativeTime}}
             <md-tooltip>
-              Created at {{::ctrl.replicationController.creationTime | date:'d/M/yy HH:mm':'UTC'}} UTC
+              Created at {{::ctrl.replicationController.objectMeta.creationTimestamp | date:'d/M/yy HH:mm':'UTC'}} UTC
             </md-tooltip>
           </span>
         </div>

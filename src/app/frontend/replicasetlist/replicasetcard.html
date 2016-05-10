@@ -36,13 +36,13 @@ limitations under the License.
     <kd-resource-card-column>
       <div>
         <a ng-href="{{::$ctrl.getReplicaSetDetailHref()}}" style="display: block;">
-          <kd-middle-ellipsis display-string="{{$ctrl.replicaSet.name}}">
+          <kd-middle-ellipsis display-string="{{$ctrl.replicaSet.objectMeta.name}}">
           </kd-middle-ellipsis>
         </a>
       </div>
     </kd-resource-card-column>
     <kd-resource-card-column>
-      <kd-labels labels="::$ctrl.replicaSet.labels"></kd-labels>
+      <kd-labels labels="::$ctrl.replicaSet.objectMeta.labels"></kd-labels>
     </kd-resource-card-column>
     <kd-resource-card-column>
       <span class="kd-replicase-card-pods-stat">
@@ -51,9 +51,9 @@ limitations under the License.
       </span>
     </kd-resource-card-column>
     <kd-resource-card-column>
-      {{::$ctrl.replicaSet.creationTime | relativeTime}}
+      {{::$ctrl.replicaSet.creationTimestamp | relativeTime}}
       <md-tooltip>
-        Created at {{::$ctrl.replicaSet.creationTime | date:'short'}}
+        Created at {{::$ctrl.replicaSet.creationTimestamp | date:'short'}}
       </md-tooltip>
     </kd-resource-card-column>
     <kd-resource-card-column>
