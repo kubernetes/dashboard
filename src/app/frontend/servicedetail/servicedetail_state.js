@@ -12,15 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'serviceDetail';
+
 /**
- * Definition object for the component that displays replication controller services card.
+ * Parameters for this state.
  *
- * @type {!angular.Component}
+ * All properties are @exported and in sync with URL param names.
+ * @final
  */
-export const replicationControllerServicesComponent = {
-  templateUrl: 'replicationcontrollerdetail/replicationcontrollerservices.html',
-  bindings: {
-    /** {!Array<!backendApi.Service>} */
-    'services': '=',
-  },
-};
+export class StateParams {
+  /**
+   * @param {string} namespace
+   * @param {string} service
+   */
+  constructor(namespace, service) {
+    /** @export {string} Namespace of this Service. */
+    this.namespace = namespace;
+
+    /** @export {string} Name of this Service. */
+    this.service = service;
+  }
+}

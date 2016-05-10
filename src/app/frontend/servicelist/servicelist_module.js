@@ -12,29 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './replicasetlist_stateconfig';
+import componentsModule from './../common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
-import componentsModule from 'common/components/components_module';
-import {replicaSetCardComponent} from './replicasetcard_component';
-import {replicaSetCardListComponent} from './replicasetcardlist_component';
-import replicaSetDetailModule from 'replicasetdetail/replicasetdetail_module';
+import stateConfig from './servicelist_stateconfig';
+import {serviceCardListComponent} from './servicecardlist_component';
 
 /**
- * Angular module for the Replica Set list view.
+ * Angular module for the Service list view.
  *
- * The view shows Replica Set running in the cluster and allows to manage them.
+ * The view shows Service running in the cluster and allows to manage them.
  */
 export default angular
     .module(
-        'kubernetesDashboard.replicaSetList',
+        'kubernetesDashboard.serviceList',
         [
           'ngMaterial',
           'ngResource',
           'ui.router',
           filtersModule.name,
           componentsModule.name,
-          replicaSetDetailModule.name,
         ])
     .config(stateConfig)
-    .component('kdReplicaSetCardList', replicaSetCardListComponent)
-    .component('kdReplicaSetCard', replicaSetCardComponent);
+    .component('kdServiceCardList', serviceCardListComponent);
