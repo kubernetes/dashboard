@@ -22,18 +22,13 @@ import {StateParams as LogsStateParams} from 'logs/logs_state';
  */
 export default class ReplicationControllerDetailController {
   /**
-   * @param {function(string):boolean} $mdMedia Angular Material $mdMedia service
    * @param {!backendApi.ReplicationControllerDetail} replicationControllerDetail
-   * @param {!backendApi.Events} replicationControllerEvents
+   * @param {!backendApi.EventList} replicationControllerEvents
    * @param {!ui.router.$state} $state
    * @param {!../logs/logs_state.StateParams} $stateParams
    * @ngInject
    */
-  constructor(
-      $mdMedia, replicationControllerDetail, replicationControllerEvents, $state, $stateParams) {
-    /** @export {function(string):boolean} */
-    this.mdMedia = $mdMedia;
-
+  constructor(replicationControllerDetail, replicationControllerEvents, $state, $stateParams) {
     /** @export {!backendApi.ReplicationControllerDetail} */
     this.replicationControllerDetail = replicationControllerDetail;
 
@@ -73,8 +68,8 @@ export default class ReplicationControllerDetailController {
    */
   getPodLogsHref(pod) {
     return this.state_.href(
-        logsStateName,
-        new LogsStateParams(
-            this.stateParams_.namespace, this.stateParams_.replicationController, pod.name));
+        logsStateName, new LogsStateParams(
+                           this.stateParams_.namespace, this.stateParams_.replicationController,
+                           pod.objectMeta.name));
   }
 }

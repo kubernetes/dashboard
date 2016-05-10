@@ -19,7 +19,6 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/resource/common"
-	"github.com/kubernetes/dashboard/resource/event"
 	"k8s.io/kubernetes/pkg/api"
 )
 
@@ -198,7 +197,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 							Failed:   2,
 							Pending:  1,
 							Running:  1,
-							Warnings: []event.Event{},
+							Warnings: []common.Event{},
 						},
 					}, {
 						ObjectMeta: common.ObjectMeta{
@@ -208,7 +207,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 						ContainerImages:   []string{"my-container-image-2"},
 						InternalEndpoints: []common.Endpoint{{Host: "my-app-2.namespace-2"}},
 						Pods: common.PodInfo{
-							Warnings: []event.Event{},
+							Warnings: []common.Event{},
 						},
 					},
 				},
