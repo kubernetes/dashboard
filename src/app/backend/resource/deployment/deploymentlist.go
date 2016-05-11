@@ -116,8 +116,8 @@ func getDeploymentList(deployments []extensions.Deployment,
 
 		deploymentList.Deployments = append(deploymentList.Deployments,
 			Deployment{
-				ObjectMeta:      common.CreateObjectMeta(deployment.ObjectMeta),
-				TypeMeta:        common.CreateTypeMeta(deployment.TypeMeta),
+				ObjectMeta:      common.NewObjectMeta(deployment.ObjectMeta),
+				TypeMeta:        common.NewTypeMeta(common.ResourceKindDeployment),
 				ContainerImages: replicationcontroller.GetContainerImages(&deployment.Spec.Template.Spec),
 				Pods:            podInfo,
 			})

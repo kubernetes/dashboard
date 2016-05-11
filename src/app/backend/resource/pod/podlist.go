@@ -92,8 +92,8 @@ func CreatePodList(pods []api.Pod, heapsterClient client.HeapsterClient) PodList
 
 	for _, pod := range pods {
 		podDetail := Pod{
-			ObjectMeta:   common.CreateObjectMeta(pod.ObjectMeta),
-			TypeMeta:     common.CreateTypeMeta(pod.TypeMeta),
+			ObjectMeta:   common.NewObjectMeta(pod.ObjectMeta),
+			TypeMeta:     common.NewTypeMeta(common.ResourceKindPod),
 			PodPhase:     pod.Status.Phase,
 			PodIP:        pod.Status.PodIP,
 			RestartCount: getRestartCount(pod),

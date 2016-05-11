@@ -34,7 +34,9 @@ func TestGetService(t *testing.T) {
 			service:   &api.Service{},
 			namespace: "test-namespace", name: "test-name",
 			expectedActions: []string{"get"},
-			expected:        &Service{},
+			expected: &Service{
+				TypeMeta: common.TypeMeta{Kind: common.ResourceKindService},
+			},
 		}, {
 			service: &api.Service{ObjectMeta: api.ObjectMeta{
 				Name: "test-service", Namespace: "test-namespace",
@@ -46,6 +48,7 @@ func TestGetService(t *testing.T) {
 					Name:      "test-service",
 					Namespace: "test-namespace",
 				},
+				TypeMeta:         common.TypeMeta{Kind: common.ResourceKindService},
 				InternalEndpoint: common.Endpoint{Host: "test-service.test-namespace"},
 			},
 		},
@@ -102,6 +105,7 @@ func TestGetServiceList(t *testing.T) {
 							Name:      "test-service",
 							Namespace: "test-namespace",
 						},
+						TypeMeta:         common.TypeMeta{Kind: common.ResourceKindService},
 						InternalEndpoint: common.Endpoint{Host: "test-service.test-namespace"},
 					},
 				},
@@ -129,7 +133,7 @@ func TestGetServiceList(t *testing.T) {
 		}
 
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("GetServiceList(client) == \ngot %#v, \nexpected %#v", actual, c.expected)
+			t.Errorf("GetServiceList(client) == got\n%#v, expected\n %#v", actual, c.expected)
 		}
 	}
 }
@@ -140,7 +144,9 @@ func TestGetServiceDetails(t *testing.T) {
 		expected Service
 	}{
 		{
-			service: &api.Service{}, expected: Service{},
+			service: &api.Service{}, expected: Service{
+				TypeMeta: common.TypeMeta{Kind: common.ResourceKindService},
+			},
 		}, {
 			service: &api.Service{
 				ObjectMeta: api.ObjectMeta{
@@ -151,6 +157,7 @@ func TestGetServiceDetails(t *testing.T) {
 					Name:      "test-service",
 					Namespace: "test-namespace",
 				},
+				TypeMeta:         common.TypeMeta{Kind: common.ResourceKindService},
 				InternalEndpoint: common.Endpoint{Host: "test-service.test-namespace"},
 			},
 		},

@@ -23,6 +23,7 @@ import (
 	restful "github.com/emicklei/go-restful"
 	// TODO(maciaszczykm): Avoid using dot-imports.
 	. "github.com/kubernetes/dashboard/client"
+	"github.com/kubernetes/dashboard/resource/common"
 	. "github.com/kubernetes/dashboard/resource/container"
 	"github.com/kubernetes/dashboard/resource/deployment"
 	. "github.com/kubernetes/dashboard/resource/event"
@@ -52,6 +53,7 @@ type ApiHandler struct {
 	client         *client.Client
 	heapsterClient HeapsterClient
 	clientConfig   clientcmd.ClientConfig
+	verber         common.ResourceVerber
 }
 
 // Web-service filter function used for request and response logging.
@@ -83,7 +85,8 @@ func FormatResponseLog(resp *restful.Response, req *restful.Request) string {
 func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 	clientConfig clientcmd.ClientConfig) http.Handler {
 
-	apiHandler := ApiHandler{client, heapsterClient, clientConfig}
+	verber := common.NewResourceVerber(client.RESTClient)
+	apiHandler := ApiHandler{client, heapsterClient, clientConfig, verber}
 	wsContainer := restful.NewContainer()
 
 	deployWs := new(restful.WebService)
@@ -265,6 +268,16 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 			To(apiHandler.handleGetService).
 			Writes(resourceService.Service{}))
 	wsContainer.Add(servicesWs)
+
+	resourceVerberWs := new(restful.WebService)
+	resourceVerberWs.Filter(wsLogger)
+	resourceVerberWs.Path("/api/v1").
+		Consumes(restful.MIME_JSON).
+		Produces(restful.MIME_JSON)
+	resourceVerberWs.Route(
+		resourceVerberWs.DELETE("/{kind}/namespace/{namespace}/name/{name}").
+			To(apiHandler.handleDeleteResource))
+	wsContainer.Add(resourceVerberWs)
 
 	return wsContainer
 }
@@ -500,6 +513,20 @@ func (apiHandler *ApiHandler) handleDeleteReplicationController(
 
 	if err := DeleteReplicationController(apiHandler.client, namespace,
 		replicationController, deleteServices); err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeader(http.StatusOK)
+}
+
+func (apiHandler *ApiHandler) handleDeleteResource(
+	request *restful.Request, response *restful.Response) {
+	kind := request.PathParameter("kind")
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("name")
+
+	if err := apiHandler.verber.Delete(kind, namespace, name); err != nil {
 		handleInternalError(response, err)
 		return
 	}

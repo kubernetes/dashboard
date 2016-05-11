@@ -85,8 +85,8 @@ func GetReplicationControllerDetail(client k8sClient.Interface, heapsterClient c
 	}
 
 	replicationControllerDetail := &ReplicationControllerDetail{
-		ObjectMeta:    common.CreateObjectMeta(replicationController.ObjectMeta),
-		TypeMeta:      common.CreateTypeMeta(replicationController.TypeMeta),
+		ObjectMeta:    common.NewObjectMeta(replicationController.ObjectMeta),
+		TypeMeta:      common.NewTypeMeta(common.ResourceKindReplicationController),
 		LabelSelector: replicationController.Spec.Selector,
 		PodInfo:       getReplicationPodInfo(replicationController, pods.Items),
 	}
@@ -204,10 +204,8 @@ func UpdateReplicasCount(client k8sClient.Interface, namespace, name string,
 func getService(service api.Service, replicationController api.ReplicationController,
 	pods []api.Pod, nodes []api.Node) resourceService.Service {
 
-	result := resourceService.GetServiceDetails(&service);
+	result := resourceService.GetServiceDetails(&service)
 	result.ExternalEndpoints = getExternalEndpoints(replicationController, pods, service, nodes)
-
-	return result;
 }
 
 // Returns array of external endpoints for a replication controller.

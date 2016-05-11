@@ -21,28 +21,7 @@ import (
 	"k8s.io/kubernetes/pkg/api/unversioned"
 )
 
-type ResourceType string
-
-const (
-	ResourceTypeReplicaSet            = "replicaset"
-	ResourceTypeReplicationController = "replicationcontroller"
-)
-
-func CreateObjectMeta(k8SObjectMeta api.ObjectMeta) ObjectMeta {
-	return ObjectMeta{
-		Name:              k8SObjectMeta.Name,
-		Namespace:         k8SObjectMeta.Namespace,
-		Labels:            k8SObjectMeta.Labels,
-		CreationTimestamp: k8SObjectMeta.CreationTimestamp,
-	}
-}
-
-func CreateTypeMeta(k8STypeMeta unversioned.TypeMeta) TypeMeta {
-	return TypeMeta{
-		Kind: k8STypeMeta.Kind,
-	}
-}
-
+// ObjectMeta is metadata about an instance of a resource.
 type ObjectMeta struct {
 	// Name is unique within a namespace. Name is primarily intended for creation
 	// idempotence and configuration definition.
@@ -83,7 +62,7 @@ type TypeMeta struct {
 	// Servers may infer this from the endpoint the client submits requests to.
 	// In smalllettercase.
 	// More info: http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#types-kinds
-	Kind string `json:"kind,omitempty"`
+	Kind ResourceKind `json:"kind,omitempty"`
 }
 
 // Endpoint describes an endpoint that is host and a list of available ports for that host.
@@ -104,7 +83,49 @@ type ServicePort struct {
 	Protocol api.Protocol `json:"protocol"`
 }
 
-// Returns internal endpoint name for the given service properties, e.g.,
+// NewObjectMeta creates a new instance of ObjectMeta struct based on K8s object meta.
+func NewObjectMeta(k8SObjectMeta api.ObjectMeta) ObjectMeta {
+	return ObjectMeta{
+		Name:              k8SObjectMeta.Name,
+		Namespace:         k8SObjectMeta.Namespace,
+		Labels:            k8SObjectMeta.Labels,
+		CreationTimestamp: k8SObjectMeta.CreationTimestamp,
+	}
+}
+
+// NewTypeMeta creates new type mete for the resource kind.
+func NewTypeMeta(kind ResourceKind) TypeMeta {
+	return TypeMeta{
+		Kind: kind,
+	}
+}
+
+// ResourceKind is an unique name for each resource. It can used for API discovery and generic
+// code that does things based on the kind. For example, there may be a generic "deleter"
+// that based on resource kind, name and namespace deletes it.
+type ResourceKind string
+
+// List of all resource kinds supported by the UI.
+const (
+	ResourceKindReplicaSet            = "replicaset"
+	ResourceKindService               = "service"
+	ResourceKindDeployment            = "deployment"
+	ResourceKindPod                   = "pod"
+	ResourceKindReplicationController = "replicationcontroller"
+)
+
+// Mapping from resource kind to K8s apiserver API path. This is mostly pluralization, because
+// K8s apiserver uses plural paths and this project singular.
+// Must be kept in sync with the list of supported kinds.
+var kindToAPIPathMapping = map[string]string{
+	ResourceKindService:               "services",
+	ResourceKindPod:                   "pods",
+	ResourceKindReplicationController: "replicationcontrollers",
+	ResourceKindDeployment:            "deployments",
+	ResourceKindReplicaSet:            "replicasets",
+}
+
+// GetInternalEndpoint returns internal endpoint name for the given service properties, e.g.,
 // "my-service.namespace 80/TCP" or "my-service 53/TCP,53/UDP".
 func GetInternalEndpoint(serviceName, namespace string, ports []api.ServicePort) Endpoint {
 
@@ -122,7 +143,7 @@ func GetInternalEndpoint(serviceName, namespace string, ports []api.ServicePort)
 	}
 }
 
-// Gets human readable name for the given service ports list.
+// GetServicePorts returns human readable name for the given service ports list.
 func GetServicePorts(apiPorts []api.ServicePort) []ServicePort {
 	var ports []ServicePort
 	for _, port := range apiPorts {
