@@ -25,45 +25,6 @@ import (
 	"k8s.io/kubernetes/pkg/apis/extensions"
 )
 
-func TestIsLabelSelectorMatchingforDS(t *testing.T) {
-	cases := []struct {
-		serviceSelector   map[string]string
-		daemonSetselector *unversioned.LabelSelector
-		expected          bool
-	}{
-		{nil, nil, false},
-		{nil, &unversioned.LabelSelector{MatchLabels: map[string]string{}}, false},
-		{map[string]string{}, nil, false},
-		{map[string]string{}, &unversioned.LabelSelector{MatchLabels: map[string]string{}},
-			false},
-		{map[string]string{"app": "my-name"},
-			&unversioned.LabelSelector{MatchLabels: map[string]string{}},
-			false},
-		{map[string]string{"app": "my-name", "version": "2"},
-			&unversioned.LabelSelector{MatchLabels: map[string]string{"app": "my-name", "version": "1.1"}},
-			false},
-		{map[string]string{"app": "my-name", "env": "prod"},
-			&unversioned.LabelSelector{MatchLabels: map[string]string{"app": "my-name", "version": "1.1"}},
-			false},
-		{map[string]string{"app": "my-name"},
-			&unversioned.LabelSelector{MatchLabels: map[string]string{"app": "my-name"}},
-			true},
-		{map[string]string{"app": "my-name", "version": "1.1"},
-			&unversioned.LabelSelector{MatchLabels: map[string]string{"app": "my-name", "version": "1.1"}},
-			true},
-		{map[string]string{"app": "my-name"},
-			&unversioned.LabelSelector{MatchLabels: map[string]string{"app": "my-name", "version": "1.1"}},
-			true},
-	}
-	for _, c := range cases {
-		actual := common.IsLabelSelectorMatchingforDS(c.serviceSelector, c.daemonSetselector)
-		if actual != c.expected {
-			t.Errorf("isLabelSelectorMatching(%+v, %+v) == %+v, expected %+v",
-				c.serviceSelector, c.daemonSetselector, actual, c.expected)
-		}
-	}
-}
-
 func TestGetMatchingServicesforDS(t *testing.T) {
 	cases := []struct {
 		services  []api.Service
