@@ -264,7 +264,7 @@ func filterDaemonSetPods(daemonSet extensions.DaemonSet,
 	allPods []api.Pod) []api.Pod {
 	var pods []api.Pod
 	for _, pod := range allPods {
-		if common.IsLabelSelectorMatchingforDS(pod.Labels, daemonSet.Spec.Selector) {
+		if common.IsLabelSelectorMatching(pod.Labels, daemonSet.Spec.Selector) {
 			pods = append(pods, pod)
 		}
 	}

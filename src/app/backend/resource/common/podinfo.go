@@ -93,10 +93,10 @@ func GetPodInfo(current int, desired int, pods []api.Pod) PodInfo {
 	return result
 }
 
-// IsLabelSelectorMatching returns true when an object with the given
+// IsSelectorMatching returns true when an object with the given
 // selector targets the same Pods (or subset) that
 // the tested object with the given selector.
-func IsLabelSelectorMatching(labelSelector map[string]string,
+func IsSelectorMatching(labelSelector map[string]string,
 	testedObjectLabels map[string]string) bool {
 
 	// If service has no selectors, then assume it targets different Pods.
@@ -176,17 +176,17 @@ func GetPodMetrics(cpuMetrics []heapster.MetricResult, memMetrics []heapster.Met
 	return PodsResources
 }
 
-// Returns true when a Service with the given selector targets the same Pods (or subset) that
-// a Daemon Set with the given selector.
-func IsLabelSelectorMatchingforDS(labelSelector map[string]string,
-	testedObjectLabels *unversioned.LabelSelector) bool {
+// Returns true when a resrouce (Service / Pod) with the given selector targets
+// the same Pod (or itself) that a Daemon Set with the given selector.
+func IsLabelSelectorMatching(selector map[string]string,
+	labelSelector *unversioned.LabelSelector) bool {
 
-	// If service has no selectors, then assume it targets different Pods.
-	if len(labelSelector) == 0 {
+	// If the resrouce has no selectors, then assume it targets different Pods.
+	if len(selector) == 0 {
 		return false
 	}
-	for label, value := range labelSelector {
-		if rsValue, ok := testedObjectLabels.MatchLabels[label]; !ok || rsValue != value {
+	for label, value := range selector {
+		if rsValue, ok := labelSelector.MatchLabels[label]; !ok || rsValue != value {
 			return false
 		}
 	}

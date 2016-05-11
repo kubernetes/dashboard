@@ -261,7 +261,7 @@ func filterReplicationControllerPods(replicationController api.ReplicationContro
 	allPods []api.Pod) []api.Pod {
 	var pods []api.Pod
 	for _, pod := range allPods {
-		if common.IsLabelSelectorMatching(replicationController.Spec.Selector, pod.Labels) {
+		if common.IsSelectorMatching(replicationController.Spec.Selector, pod.Labels) {
 			pods = append(pods, pod)
 		}
 	}

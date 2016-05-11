@@ -136,7 +136,7 @@ func getDaemonSetList(daemonSets []extensions.DaemonSet,
 		matchingPods := make([]api.Pod, 0)
 		for _, pod := range pods {
 			if pod.ObjectMeta.Namespace == daemonSet.ObjectMeta.Namespace &&
-				common.IsLabelSelectorMatchingforDS(pod.ObjectMeta.Labels, daemonSet.Spec.Selector) {
+				common.IsLabelSelectorMatching(pod.ObjectMeta.Labels, daemonSet.Spec.Selector) {
 				matchingPods = append(matchingPods, pod)
 			}
 		}
@@ -169,7 +169,7 @@ func getMatchingServicesforDS(services []api.Service,
 	var matchingServices []api.Service
 	for _, service := range services {
 		if service.ObjectMeta.Namespace == daemonSet.ObjectMeta.Namespace &&
-			common.IsLabelSelectorMatchingforDS(service.Spec.Selector, daemonSet.Spec.Selector) {
+			common.IsLabelSelectorMatching(service.Spec.Selector, daemonSet.Spec.Selector) {
 
 			matchingServices = append(matchingServices, service)
 		}
