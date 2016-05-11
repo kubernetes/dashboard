@@ -116,8 +116,8 @@ func getReplicaSetList(replicaSets []extensions.ReplicaSet,
 
 		replicaSetList.ReplicaSets = append(replicaSetList.ReplicaSets,
 			ReplicaSet{
-				ObjectMeta:      common.CreateObjectMeta(replicaSet.ObjectMeta),
-				TypeMeta:        common.CreateTypeMeta(replicaSet.TypeMeta),
+				ObjectMeta:      common.NewObjectMeta(replicaSet.ObjectMeta),
+				TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicaSet),
 				ContainerImages: replicationcontroller.GetContainerImages(&replicaSet.Spec.Template.Spec),
 				Pods:            podInfo,
 			})

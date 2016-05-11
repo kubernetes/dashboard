@@ -86,8 +86,8 @@ func getReplicaSetDetail(replicaSet *extensions.ReplicaSet, heapsterClient clien
 	podInfo := getPodInfo(replicaSet, matchingPods)
 
 	return ReplicaSetDetail{
-		ObjectMeta:      common.CreateObjectMeta(replicaSet.ObjectMeta),
-		TypeMeta:        common.CreateTypeMeta(replicaSet.TypeMeta),
+		ObjectMeta:      common.NewObjectMeta(replicaSet.ObjectMeta),
+		TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicaSet),
 		ContainerImages: replicationcontroller.GetContainerImages(&replicaSet.Spec.Template.Spec),
 		PodInfo:         podInfo,
 		PodList:         pod.CreatePodList(matchingPods, heapsterClient),

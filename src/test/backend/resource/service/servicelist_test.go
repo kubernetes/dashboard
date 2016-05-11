@@ -18,10 +18,9 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/kubernetes/dashboard/resource/common"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
-
-	"github.com/kubernetes/dashboard/resource/common"
 )
 
 func TestGetServiceList(t *testing.T) {
@@ -49,6 +48,7 @@ func TestGetServiceList(t *testing.T) {
 							Name:      "test-service",
 							Namespace: "test-namespace",
 						},
+						TypeMeta:         common.TypeMeta{Kind: common.ResourceKindService},
 						InternalEndpoint: common.Endpoint{Host: "test-service.test-namespace"},
 					},
 				},
@@ -76,7 +76,7 @@ func TestGetServiceList(t *testing.T) {
 		}
 
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("GetServiceList(client) == \ngot %#v, \nexpected %#v", actual, c.expected)
+			t.Errorf("GetServiceList(client) == got\n%#v, expected\n %#v", actual, c.expected)
 		}
 	}
 }

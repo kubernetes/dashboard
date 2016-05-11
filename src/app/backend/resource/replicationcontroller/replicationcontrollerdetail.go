@@ -85,8 +85,8 @@ func GetReplicationControllerDetail(client k8sClient.Interface, heapsterClient c
 	}
 
 	replicationControllerDetail := &ReplicationControllerDetail{
-		ObjectMeta:    common.CreateObjectMeta(replicationController.ObjectMeta),
-		TypeMeta:      common.CreateTypeMeta(replicationController.TypeMeta),
+		ObjectMeta:    common.NewObjectMeta(replicationController.ObjectMeta),
+		TypeMeta:      common.NewTypeMeta(common.ResourceKindReplicationController),
 		LabelSelector: replicationController.Spec.Selector,
 		PodInfo:       getReplicationPodInfo(replicationController, pods.Items),
 		ServiceList:   resourceService.ServiceList{Services: make([]resourceService.Service, 0)},

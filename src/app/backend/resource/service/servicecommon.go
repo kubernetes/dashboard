@@ -23,8 +23,8 @@ import (
 // ToService returns api service object based on kubernetes service object
 func ToService(service *api.Service) Service {
 	return Service{
-		ObjectMeta:       common.CreateObjectMeta(service.ObjectMeta),
-		TypeMeta:         common.CreateTypeMeta(service.TypeMeta),
+		ObjectMeta:       common.NewObjectMeta(service.ObjectMeta),
+		TypeMeta:         common.NewTypeMeta(common.ResourceKindService),
 		InternalEndpoint: common.GetInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports),
 		// TODO(maciaszczykm): Fill ExternalEndpoints with data.
 		Selector:  service.Spec.Selector,
@@ -35,8 +35,8 @@ func ToService(service *api.Service) Service {
 // ToServiceDetails returns api service object based on kubernetes service object
 func ToServiceDetail(service *api.Service) ServiceDetail {
 	return ServiceDetail{
-		ObjectMeta:       common.CreateObjectMeta(service.ObjectMeta),
-		TypeMeta:         common.CreateTypeMeta(service.TypeMeta),
+		ObjectMeta:       common.NewObjectMeta(service.ObjectMeta),
+		TypeMeta:         common.NewTypeMeta(common.ResourceKindService),
 		InternalEndpoint: common.GetInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports),
 		// TODO(maciaszczykm): Fill ExternalEndpoints with data.
 		Selector:  service.Spec.Selector,

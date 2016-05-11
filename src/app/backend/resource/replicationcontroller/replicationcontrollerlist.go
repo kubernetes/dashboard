@@ -135,8 +135,8 @@ func getReplicationControllerList(replicationControllers []api.ReplicationContro
 
 		replicationControllerList.ReplicationControllers = append(replicationControllerList.ReplicationControllers,
 			ReplicationController{
-				ObjectMeta:        common.CreateObjectMeta(replicationController.ObjectMeta),
-				TypeMeta:          common.CreateTypeMeta(replicationController.TypeMeta),
+				ObjectMeta:        common.NewObjectMeta(replicationController.ObjectMeta),
+				TypeMeta:          common.NewTypeMeta(common.ResourceKindReplicationController),
 				Pods:              podInfo,
 				ContainerImages:   GetContainerImages(&replicationController.Spec.Template.Spec),
 				InternalEndpoints: internalEndpoints,
