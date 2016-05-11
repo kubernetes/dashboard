@@ -25,9 +25,12 @@ limitations under the License.
     <kd-resource-card-header-column>Age</kd-resource-card-header-column>
     <kd-resource-card-header-column>Cluster IP</kd-resource-card-header-column>
     <kd-resource-card-header-column>Logs</kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small" grow="nogrow">
+    </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
 
-  <kd-resource-card ng-repeat="pod in $ctrl.podList.pods">
+  <kd-resource-card ng-repeat="pod in $ctrl.podList.pods"
+      type-meta="pod.typeMeta" object-meta="pod.objectMeta">
     <kd-resource-card-columns>
       <kd-resource-card-column>
         <div>
@@ -58,6 +61,12 @@ limitations under the License.
           </a>
         </div>
         <div ng-hide="::$ctrl.getPodLogsHref(pod)">-</div>
+      </kd-resource-card-column>
+      <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
+        <kd-resource-card-menu>
+          <kd-resource-card-delete-menu-item>
+          </kd-resource-card-delete-menu-item>
+        </kd-resource-card-menu>
       </kd-resource-card-column>
     </kd-resource-card-columns>
   </kd-resource-card>

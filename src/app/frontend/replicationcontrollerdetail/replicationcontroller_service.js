@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import showDeleteReplicationControllerDialog from './deletereplicationcontroller_dialog';
 import showUpdateReplicasDialog from './updatereplicas_dialog';
 
 /**
@@ -23,24 +22,25 @@ import showUpdateReplicasDialog from './updatereplicas_dialog';
 export class ReplicationControllerService {
   /**
    * @param {!md.$dialog} $mdDialog
+   * @param {!./../common/resource/verber_service.VerberService} kdResourceVerberService
    * @ngInject
    */
-  constructor($mdDialog) {
+  constructor($mdDialog, kdResourceVerberService) {
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
+
+    /** @private {!./../common/resource/verber_service.VerberService}*/
+    this.kdResourceVerberService_ = kdResourceVerberService;
   }
 
   /**
-   * Opens a replication controller delete dialog. Returns a promise that is resolved/rejected when
-   * user wants
-   * to delete the replica. Nothing happens when user clicks cancel on the dialog.
-   *
-   * @param {string} namespace
-   * @param {string} replicationController
+   * @param {!backendApi.TypeMeta} typeMeta
+   * @param {!backendApi.ObjectMeta} objectMeta
    * @return {!angular.$q.Promise}
    */
-  showDeleteDialog(namespace, replicationController) {
-    return showDeleteReplicationControllerDialog(this.mdDialog_, namespace, replicationController);
+  showDeleteDialog(typeMeta, objectMeta) {
+    return this.kdResourceVerberService_.showDeleteDialog(
+        'Replication Controller', typeMeta, objectMeta);
   }
 
   /**

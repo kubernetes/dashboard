@@ -41,7 +41,8 @@ limitations under the License.
         <kd-resource-card-header-column>Last seen</kd-resource-card-header-column>
       </kd-resource-card-header-columns>
 
-      <kd-resource-card ng-repeat="event in $ctrl.filteredEvents">
+      <kd-resource-card ng-repeat="event in $ctrl.filteredEvents"
+          object-meta="event.objectMeta" type-meta="event.typeMeta">
         <kd-resource-card-status>
           <i ng-if="$ctrl.isEventWarning(event)"
              class="material-icons kd-replicationcontrollerevents-warning-icon">warning</i>

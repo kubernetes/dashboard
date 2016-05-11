@@ -43,7 +43,7 @@ describe('Resource card list', () => {
             LABELS_COLUMN
           </kd-resource-card-header-column>
         </kd-resource-card-header-columns>
-        <kd-resource-card>
+        <kd-resource-card object-meta="{}" type-meta="{}">
           <kd-resource-card-status>STATUS</kd-resource-card-status>
             <kd-resource-card-columns>
               <kd-resource-card-column>
@@ -58,7 +58,7 @@ describe('Resource card list', () => {
             </kd-resource-card-columns>
           <kd-resource-card-footer>FOOTER</kd-resource-card-footer>
         </kd-resource-card>
-        <kd-resource-card>
+        <kd-resource-card  object-meta="{}" type-meta="{}">
           <kd-resource-card-status>STATUS</kd-resource-card-status>
             <kd-resource-card-columns>
               <kd-resource-card-column>
@@ -100,5 +100,51 @@ describe('Resource card list', () => {
     scope.selectable = true;
     scope.$digest();
     expect(elem.html()).toContain('md-checkbox');
+  });
+
+  it('should throw an error when no object meta', () => {
+    let compileFn = compile(`
+      <kd-resource-card-list selectable="selectable" with-statuses="withStatuses">
+        <kd-resource-card-header-columns>
+          <kd-resource-card-header-column size="small" grow="nogrow">
+            NAME_COLUMN
+          </kd-resource-card-header-column>
+        </kd-resource-card-header-columns>
+        <kd-resource-card type-meta="{}">
+            <kd-resource-card-columns>
+              <kd-resource-card-column>
+                FIRST_COLUMN1
+              </kd-resource-card-column>
+            </kd-resource-card-columns>
+        </kd-resource-card>
+      </kd-resource-card-list>
+      `);
+
+    compileFn(scope);
+    expect(scope.$digest)
+        .toThrow(new Error('object-meta binding is required for resource card component'));
+  });
+
+  it('should throw an error when no type meta', () => {
+    let compileFn = compile(`
+    <kd-resource-card-list selectable="selectable" with-statuses="withStatuses">
+      <kd-resource-card-header-columns>
+        <kd-resource-card-header-column size="small" grow="nogrow">
+          NAME_COLUMN
+        </kd-resource-card-header-column>
+      </kd-resource-card-header-columns>
+      <kd-resource-card object-meta="{}">
+          <kd-resource-card-columns>
+            <kd-resource-card-column>
+              FIRST_COLUMN1
+            </kd-resource-card-column>
+          </kd-resource-card-columns>
+      </kd-resource-card>
+    </kd-resource-card-list>
+    `);
+
+    compileFn(scope);
+    expect(scope.$digest)
+        .toThrow(new Error('type-meta binding is required for resource card component'));
   });
 });

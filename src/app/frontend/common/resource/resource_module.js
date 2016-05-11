@@ -1,3 +1,4 @@
+
 // Copyright 2015 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,17 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../variables';
+import {VerberService} from './verber_service';
 
-md-checkbox {
-  &.kd-deletedialog-services-checkbox {
-    margin: $baseline-grid 0 0 $baseline-grid;
-  }
-}
-
-.kd-deletedialog-info-icon {
-  font-size: $subhead-font-size-base;
-  height: $subhead-font-size-base;
-  line-height: $caption-font-size-base;
-  margin-left: $baseline-grid / 2;
-}
+/**
+ * Angular module containing navigation chrome for the application.
+ */
+export default angular
+    .module(
+        'kubernetesDashboard.common.resource',
+        [
+          'ngMaterial',
+          'ngResource',
+        ])
+    .service('kdResourceVerberService', VerberService);
