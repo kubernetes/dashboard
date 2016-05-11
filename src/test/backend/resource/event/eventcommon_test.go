@@ -188,6 +188,8 @@ func TestAppendEvents(t *testing.T) {
 				Namespace: "test-namespace",
 				Events: []common.Event{
 					{
+						ObjectMeta:      common.ObjectMeta{Name: "my-event", Namespace: "test-namespace"},
+						TypeMeta:        common.TypeMeta{common.ResourceKindEvent},
 						Message:         "my-event-msg",
 						SourceComponent: "my-event-src-component",
 						SourceHost:      "my-event-src-host",
@@ -211,7 +213,7 @@ func TestAppendEvents(t *testing.T) {
 	for _, c := range cases {
 		actual := AppendEvents(c.source, c.target)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("AppendEvents(%#v, %#v) == %#v, expected %#v",
+			t.Errorf("AppendEvents(%#v, %#v) == \n%#v, expected \n%#v",
 				c.source, c.target, actual, c.expected)
 		}
 	}
