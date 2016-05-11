@@ -21,10 +21,11 @@ limitations under the License.
         <kd-replication-controller-info replication-controller="::ctrl.replicationControllerDetail">
         </kd-replication-controller-info>
 
-        <kd-content-card ng-if="::ctrl.replicationControllerDetail.services">
+        <kd-content-card ng-if="::ctrl.replicationControllerDetail.serviceList.services">
           <kd-title>Services</kd-title>
           <kd-content>
-            <kd-service-card-list services="::ctrl.replicationControllerDetail.services">
+            <kd-service-card-list
+                    services="::ctrl.replicationControllerDetail.serviceList.services">
             </kd-service-card-list>
           </kd-content>
         </kd-content-card>

@@ -17,13 +17,14 @@ package service
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/resource/common"
 	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+
+	"github.com/kubernetes/dashboard/resource/common"
 )
 
 // Service is a representation of a service.
-type Service struct {
+type ServiceDetail struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
 	TypeMeta   common.TypeMeta   `json:"typeMeta"`
 
@@ -46,14 +47,8 @@ type Service struct {
 	ClusterIP string `json:"clusterIP"`
 }
 
-// ServiceList contains a list of services in the cluster.
-type ServiceList struct {
-	// Unordered list of services.
-	Services []Service `json:"services"`
-}
-
-// GetService gets service details.
-func GetService(client client.Interface, namespace, name string) (*Service, error) {
+// GetServiceDetail gets service details.
+func GetServiceDetail(client client.Interface, namespace, name string) (*ServiceDetail, error) {
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 
 	// TODO(maciaszczykm): Use channels.
@@ -62,40 +57,6 @@ func GetService(client client.Interface, namespace, name string) (*Service, erro
 		return nil, err
 	}
 
-	service := GetServiceDetails(serviceData)
+	service := ToServiceDetail(serviceData)
 	return &service, nil
-}
-
-// GetServiceList returns a list of all services in the cluster.
-func GetServiceList(client client.Interface) (*ServiceList, error) {
-	log.Printf("Getting list of all services in the cluster")
-
-	channels := &common.ResourceChannels{
-		ServiceList: common.GetServiceListChannel(client, 1),
-	}
-
-	services := <-channels.ServiceList.List
-	if err := <-channels.ServiceList.Error; err != nil {
-		return nil, err
-	}
-
-	serviceList := &ServiceList{Services: make([]Service, 0)}
-	for _, service := range services.Items {
-		serviceList.Services = append(serviceList.Services, GetServiceDetails(&service))
-	}
-
-	return serviceList, nil
-}
-
-// GetServiceDetails returns api service object based on kubernetes service object
-func GetServiceDetails(service *api.Service) Service {
-	return Service{
-		ObjectMeta:       common.CreateObjectMeta(service.ObjectMeta),
-		TypeMeta:         common.CreateTypeMeta(service.TypeMeta),
-		InternalEndpoint: common.GetInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports),
-		// TODO(maciaszczykm): Fill ExternalEndpoints with data.
-		Selector:  service.Spec.Selector,
-		ClusterIP: service.Spec.ClusterIP,
-		Type:      service.Spec.Type,
-	}
 }
