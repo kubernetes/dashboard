@@ -45,7 +45,7 @@ type ReplicationControllerDetail struct {
 	Pods pod.PodList `json:"pods"`
 
 	// Detailed information about service related to Replication Controller.
-	Services []resourceService.Service `json:"services"`
+	ServiceList resourceService.ServiceList `json:"serviceList"`
 
 	// True when the data contains at least one pod with metrics information, false otherwise.
 	HasMetrics bool `json:"hasMetrics"`
@@ -89,12 +89,14 @@ func GetReplicationControllerDetail(client k8sClient.Interface, heapsterClient c
 		TypeMeta:      common.CreateTypeMeta(replicationController.TypeMeta),
 		LabelSelector: replicationController.Spec.Selector,
 		PodInfo:       getReplicationPodInfo(replicationController, pods.Items),
+		ServiceList:   resourceService.ServiceList{Services: make([]resourceService.Service, 0)},
 	}
 
 	matchingServices := getMatchingServices(services.Items, replicationController)
 
 	for _, service := range matchingServices {
-		replicationControllerDetail.Services = append(replicationControllerDetail.Services,
+		replicationControllerDetail.ServiceList.Services = append(
+			replicationControllerDetail.ServiceList.Services,
 			getService(service, *replicationController, pods.Items, nodes.Items))
 	}
 
@@ -204,10 +206,10 @@ func UpdateReplicasCount(client k8sClient.Interface, namespace, name string,
 func getService(service api.Service, replicationController api.ReplicationController,
 	pods []api.Pod, nodes []api.Node) resourceService.Service {
 
-	result := resourceService.GetServiceDetails(&service);
+	result := resourceService.ToService(&service)
 	result.ExternalEndpoints = getExternalEndpoints(replicationController, pods, service, nodes)
 
-	return result;
+	return result
 }
 
 // Returns array of external endpoints for a replication controller.

@@ -214,7 +214,7 @@ backendApi.TypeMeta;
  *   containerImages: !Array<string>,
  *   podInfo: !backendApi.PodInfo,
  *   pods: !backendApi.PodList,
- *   services: !Array<!backendApi.ServiceDetail>,
+ *   serviceList: !backendApi.ServiceList,
  *   hasMetrics: boolean
  * }}
  */
@@ -254,16 +254,27 @@ backendApi.Pod;
  *  internalEndpoint: !backendApi.Endpoint,
  *  externalEndpoints: !Array<!backendApi.Endpoint>,
  *  selector: !Object<string, string>,
- *  labels: !Object<string, string>,
- *  clusterIP: string,
- *  type: string
+ *  type: string,
+ *  clusterIP: string
  * }}
  */
 backendApi.ServiceDetail;
 
 /**
  * @typedef {{
- *  services: !Array<backendApi.ServiceDetail>
+ *  objectMeta: !backendApi.ObjectMeta,
+ *  typeMeta: !backendApi.TypeMeta,
+ *  internalEndpoint: !backendApi.Endpoint,
+ *  externalEndpoints: !Array<!backendApi.Endpoint>,
+ *  selector: !Object<string, string>,
+ *  clusterIP: string
+ * }}
+ */
+backendApi.Service;
+
+/**
+ * @typedef {{
+ *  services: !Array<backendApi.Service>
  * }}
  */
 backendApi.ServiceList;

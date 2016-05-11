@@ -25,7 +25,7 @@ export class ServiceCardListController {
   constructor($state) { this.state_ = $state; }
 
   /**
-   * @param {!backendApi.ServiceDetail} service
+   * @param {!backendApi.Service} service
    * @return {string}
    * @export
    */
@@ -44,7 +44,7 @@ export const serviceCardListComponent = {
   templateUrl: 'servicelist/servicecardlist.html',
   controller: ServiceCardListController,
   bindings: {
-    /** {!Array<!backendApi.ServiceDetail>} */
+    /** {!Array<!backendApi.Service>} */
     'services': '<',
     /** {boolean} */
     'selectable': '<',

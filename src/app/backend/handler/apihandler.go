@@ -262,8 +262,8 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 			Writes(resourceService.ServiceList{}))
 	servicesWs.Route(
 		servicesWs.GET("/{namespace}/{service}").
-			To(apiHandler.handleGetService).
-			Writes(resourceService.Service{}))
+			To(apiHandler.handleGetServiceDetail).
+			Writes(resourceService.ServiceDetail{}))
 	wsContainer.Add(servicesWs)
 
 	return wsContainer
@@ -281,10 +281,10 @@ func (apiHandler *ApiHandler) handleGetServiceList(request *restful.Request, res
 }
 
 // Handles get service detail API call.
-func (apiHandler *ApiHandler) handleGetService(request *restful.Request, response *restful.Response) {
+func (apiHandler *ApiHandler) handleGetServiceDetail(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
 	service := request.PathParameter("service")
-	result, err := resourceService.GetService(apiHandler.client, namespace, service)
+	result, err := resourceService.GetServiceDetail(apiHandler.client, namespace, service)
 	if err != nil {
 		handleInternalError(response, err)
 		return
