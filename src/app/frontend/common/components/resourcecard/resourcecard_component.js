@@ -28,10 +28,27 @@ export class ResourceCardController {
     this.objectMeta;
 
     /**
+     * Initialized from a binding.
+     * @export {!backendApi.TypeMeta}
+     */
+    this.typeMeta;
+
+    /**
      * Initialized from require just before $onInit is called.
      * @export {!./resourcecardlist_component.ResourceCardListController}
      */
     this.resourceCardListCtrl;
+  }
+
+  /** @export */
+  $onInit() {
+    if (!this.objectMeta) {
+      throw new Error('object-meta binding is required for resource card component');
+    }
+
+    if (!this.typeMeta) {
+      throw new Error('type-meta binding is required for resource card component');
+    }
   }
 
   /**
@@ -54,8 +71,10 @@ export class ResourceCardController {
  */
 export const resourceCardComponent = {
   bindings: {
-    /** type {!backendApi.ObjectMeta} Metadata of the resource displayed in the card. */
+    /** type {!backendApi.ObjectMeta} Object metadata of the resource displayed in the card. */
     'objectMeta': '<',
+    /** type {!backendApi.TypeMeta} Type metadata of the resource displayed in the card. */
+    'typeMeta': '<',
   },
   controller: ResourceCardController,
   templateUrl: 'common/components/resourcecard/resourcecard.html',

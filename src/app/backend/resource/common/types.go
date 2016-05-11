@@ -94,6 +94,9 @@ type EventList struct {
 
 // Event is a single event representation.
 type Event struct {
+	ObjectMeta ObjectMeta `json:"objectMeta"`
+	TypeMeta   TypeMeta   `json:"typeMeta"`
+
 	// A human-readable description of the status of related object.
 	Message string `json:"message"`
 
@@ -155,6 +158,7 @@ const (
 	ResourceKindService               = "service"
 	ResourceKindDeployment            = "deployment"
 	ResourceKindPod                   = "pod"
+	ResourceKindEvent                 = "event"
 	ResourceKindReplicationController = "replicationcontroller"
 )
 
@@ -164,6 +168,7 @@ const (
 var kindToAPIPathMapping = map[string]string{
 	ResourceKindService:               "services",
 	ResourceKindPod:                   "pods",
+	ResourceKindEvent:                 "events",
 	ResourceKindReplicationController: "replicationcontrollers",
 	ResourceKindDeployment:            "deployments",
 	ResourceKindReplicaSet:            "replicasets",
