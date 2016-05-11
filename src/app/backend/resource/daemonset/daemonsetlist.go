@@ -21,7 +21,6 @@ import (
 	"github.com/kubernetes/dashboard/resource/event"
 	"github.com/kubernetes/dashboard/resource/replicationcontroller"
 	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
@@ -35,26 +34,14 @@ type DaemonSetList struct {
 // DaemonSet (aka. Daemon Set) plus zero or more Kubernetes services that
 // target the Daemon Set.
 type DaemonSet struct {
-	// Name of the Daemon Set
-	Name string `json:"name"`
-
-	// Namespace this Daemon Set is in.
-	Namespace string `json:"namespace"`
-
-	// Human readable description of this Daemon Set.
-	Description string `json:"description"`
-
-	// Label of this Daemon Set.
-	Labels map[string]string `json:"labels"`
+	ObjectMeta common.ObjectMeta `json:"objectMeta"`
+	TypeMeta   common.TypeMeta   `json:"typeMeta"`
 
 	// Aggregate information about pods belonging to this Daemon Set.
 	Pods common.PodInfo `json:"pods"`
 
 	// Container images of the Daemon Set.
 	ContainerImages []string `json:"containerImages"`
-
-	// Time the daemon set was created.
-	CreationTime unversioned.Time `json:"creationTime"`
 
 	// Internal endpoints of all Kubernetes services have the same label selector as this Daemon Set.
 	InternalEndpoints []common.Endpoint `json:"internalEndpoints"`
@@ -130,7 +117,7 @@ func getDaemonSetList(daemonSets []extensions.DaemonSet,
 		for _, service := range matchingServices {
 			internalEndpoints = append(internalEndpoints,
 				common.GetInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports))
-			externalEndpoints = getExternalEndpointsforDS(daemonSet, pods, service, nodes)
+			externalEndpoints = getExternalEndpoints(daemonSet, pods, service, nodes)
 		}
 
 		matchingPods := make([]api.Pod, 0)
@@ -147,13 +134,10 @@ func getDaemonSetList(daemonSets []extensions.DaemonSet,
 
 		daemonSetList.DaemonSets = append(daemonSetList.DaemonSets,
 			DaemonSet{
-				Name:              daemonSet.ObjectMeta.Name,
-				Namespace:         daemonSet.ObjectMeta.Namespace,
-				Description:       daemonSet.Annotations[replicationcontroller.DescriptionAnnotationKey],
-				Labels:            daemonSet.ObjectMeta.Labels,
+				ObjectMeta:        common.CreateObjectMeta(daemonSet.ObjectMeta),
+				TypeMeta:          common.CreateTypeMeta(daemonSet.TypeMeta),
 				Pods:              podInfo,
 				ContainerImages:   replicationcontroller.GetContainerImages(&daemonSet.Spec.Template.Spec),
-				CreationTime:      daemonSet.ObjectMeta.CreationTimestamp,
 				InternalEndpoints: internalEndpoints,
 				ExternalEndpoints: externalEndpoints,
 			})

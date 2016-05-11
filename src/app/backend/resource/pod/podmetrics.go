@@ -20,6 +20,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/kubernetes/dashboard/client"
 	heapster "k8s.io/heapster/api/v1/types"
@@ -27,8 +28,8 @@ import (
 )
 
 const (
-	CpuUsage    = "cpu-usage"
-	MemoryUsage = "memory-usage"
+	cpuUsage    = "cpu-usage"
+	memoryUsage = "memory-usage"
 )
 
 // MetricsByPod is a metrics map by pod name.

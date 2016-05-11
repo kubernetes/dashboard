@@ -19,6 +19,7 @@ import (
 
 	"github.com/kubernetes/dashboard/client"
 	"github.com/kubernetes/dashboard/resource/common"
+	"github.com/kubernetes/dashboard/resource/pod"
 	"github.com/kubernetes/dashboard/resource/replicationcontroller"
 	resourceService "github.com/kubernetes/dashboard/resource/service"
 	"k8s.io/kubernetes/pkg/api"
@@ -31,14 +32,8 @@ import (
 
 // DaemonSeDetail represents detailed information about a Daemon Set.
 type DaemonSetDetail struct {
-	// Name of the Daemon Set.
-	Name string `json:"name"`
-
-	// Namespace the Daemon Set is in.
-	Namespace string `json:"namespace"`
-
-	// Label mapping of the Daemon Set.
-	Labels map[string]string `json:"labels"`
+	ObjectMeta common.ObjectMeta `json:"objectMeta"`
+	TypeMeta   common.TypeMeta   `json:"typeMeta"`
 
 	// Label selector of the Daemon Set.
 	LabelSelector *unversioned.LabelSelector `json:"labelSelector,omitempty"`
@@ -50,37 +45,13 @@ type DaemonSetDetail struct {
 	PodInfo common.PodInfo `json:"podInfo"`
 
 	// Detailed information about Pods belonging to this Daemon Set.
-	Pods []DaemonSetPod `json:"pods"`
+	Pods pod.PodList `json:"pods"`
 
 	// Detailed information about service related to Daemon Set.
 	Services []resourceService.Service `json:"services"`
 
 	// True when the data contains at least one pod with metrics information, false otherwise.
 	HasMetrics bool `json:"hasMetrics"`
-}
-
-// Detailed information about a Pod that belongs to a Daemon Set
-type DaemonSetPod struct {
-	// Name of the Pod.
-	Name string `json:"name"`
-
-	// Status of the Pod. See Kubernetes API for reference.
-	PodPhase api.PodPhase `json:"podPhase"`
-
-	// Time the Pod has started. Empty if not started.
-	StartTime unversioned.Time `json:"startTime"`
-
-	// IP address of the Pod.
-	PodIP string `json:"podIP"`
-
-	// Name of the Node this Pod runs on.
-	NodeName string `json:"nodeName"`
-
-	// Count of containers restarts.
-	RestartCount int `json:"restartCount"`
-
-	// Pod metrics.
-	Metrics *common.PodMetrics `json:"metrics"`
 }
 
 // Returns detailed information about the given daemon set in the given namespace.
@@ -94,11 +65,6 @@ func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient client.Heapst
 	}
 	daemonSet := daemonSetWithPods.DaemonSet
 	pods := daemonSetWithPods.Pods
-
-	daemonSetMetricsByPod, err := getDaemonSetPodsMetrics(pods, heapsterClient, namespace, name)
-	if err != nil {
-		log.Printf("Skipping Heapster metrics because of error: %s\n", err)
-	}
 
 	services, err := client.Services(namespace).List(api.ListOptions{
 		LabelSelector: labels.Everything(),
@@ -115,9 +81,8 @@ func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient client.Heapst
 	}
 
 	daemonSetDetail := &DaemonSetDetail{
-		Name:          daemonSet.Name,
-		Namespace:     daemonSet.Namespace,
-		Labels:        daemonSet.ObjectMeta.Labels,
+		ObjectMeta:    common.CreateObjectMeta(daemonSet.ObjectMeta),
+		TypeMeta:      common.CreateTypeMeta(daemonSet.TypeMeta),
 		LabelSelector: daemonSet.Spec.Selector,
 		PodInfo:       getDaemonSetPodInfo(daemonSet, pods.Items),
 	}
@@ -126,7 +91,7 @@ func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient client.Heapst
 
 	for _, service := range matchingServices {
 		daemonSetDetail.Services = append(daemonSetDetail.Services,
-			getServiceDetailforDS(service, *daemonSet, pods.Items, nodes.Items))
+			getService(service, *daemonSet, pods.Items, nodes.Items))
 	}
 
 	for _, container := range daemonSet.Spec.Template.Spec.Containers {
@@ -134,22 +99,7 @@ func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient client.Heapst
 			container.Image)
 	}
 
-	for _, pod := range pods.Items {
-		podDetail := DaemonSetPod{
-			Name:         pod.Name,
-			PodPhase:     pod.Status.Phase,
-			StartTime:    pod.CreationTimestamp,
-			PodIP:        pod.Status.PodIP,
-			NodeName:     pod.Spec.NodeName,
-			RestartCount: replicationcontroller.GetRestartCount(pod),
-		}
-		if daemonSetMetricsByPod != nil {
-			metric := daemonSetMetricsByPod.MetricsMap[pod.Name]
-			podDetail.Metrics = &metric
-			daemonSetDetail.HasMetrics = true
-		}
-		daemonSetDetail.Pods = append(daemonSetDetail.Pods, podDetail)
-	}
+	daemonSetDetail.Pods = pod.CreatePodList(pods.Items, heapsterClient)
 
 	return daemonSetDetail, nil
 }
@@ -221,19 +171,17 @@ func DeleteDaemonSetServices(client k8sClient.Interface, namespace, name string)
 }
 
 // Returns detailed information about service from given service
-func getServiceDetailforDS(service api.Service, daemonSet extensions.DaemonSet,
+func getService(service api.Service, daemonSet extensions.DaemonSet,
 	pods []api.Pod, nodes []api.Node) resourceService.Service {
-	return resourceService.Service{
-		Name: service.ObjectMeta.Name,
-		InternalEndpoint: common.GetInternalEndpoint(service.Name, service.Namespace,
-			service.Spec.Ports),
-		ExternalEndpoints: getExternalEndpointsforDS(daemonSet, pods, service, nodes),
-		Selector:          service.Spec.Selector,
-	}
+
+	result := resourceService.ToService(&service)
+	result.ExternalEndpoints = getExternalEndpoints(daemonSet, pods, service, nodes)
+
+	return result
 }
 
 // Returns array of external endpoints for a daemon set.
-func getExternalEndpointsforDS(daemonSet extensions.DaemonSet, pods []api.Pod,
+func getExternalEndpoints(daemonSet extensions.DaemonSet, pods []api.Pod,
 	service api.Service, nodes []api.Node) []common.Endpoint {
 	var externalEndpoints []common.Endpoint
 	daemonSetPods := filterDaemonSetPods(daemonSet, pods)
