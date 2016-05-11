@@ -197,7 +197,7 @@ func TestFilterDaemonSetPodsforDS(t *testing.T) {
 	}
 }
 
-func TestGetExternalEndpointsforDS(t *testing.T) {
+func TestGetExternalEndpoints(t *testing.T) {
 	labelSelectorMap := make(map[string]string)
 	labelSelectorMap["name"] = "app-name"
 	labelSelector := unversioned.LabelSelector{
@@ -275,7 +275,7 @@ func TestGetExternalEndpointsforDS(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := getExternalEndpointsforDS(c.DaemonSet, c.pods, c.service, c.nodes)
+		actual := getExternalEndpoints(c.DaemonSet, c.pods, c.service, c.nodes)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getExternalEndpoints(%+v, %+v, %+v, %+v) == %+v, expected %+v",
 				c.DaemonSet, c.pods, c.service, c.nodes, actual, c.expected)

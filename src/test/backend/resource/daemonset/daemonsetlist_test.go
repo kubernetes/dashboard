@@ -204,8 +204,10 @@ func TestGetDaemonSetList(t *testing.T) {
 			&DaemonSetList{
 				DaemonSets: []DaemonSet{
 					{
-						Name:              "my-app-1",
-						Namespace:         "namespace-1",
+						ObjectMeta: common.ObjectMeta{
+							Name:      "my-app-1",
+							Namespace: "namespace-1",
+						},
 						ContainerImages:   []string{"my-container-image-1"},
 						InternalEndpoints: []common.Endpoint{{Host: "my-app-1.namespace-1"}},
 						Pods: common.PodInfo{
@@ -215,8 +217,10 @@ func TestGetDaemonSetList(t *testing.T) {
 							Warnings: []event.Event{},
 						},
 					}, {
-						Name:              "my-app-2",
-						Namespace:         "namespace-2",
+						ObjectMeta: common.ObjectMeta{
+							Name:      "my-app-2",
+							Namespace: "namespace-2",
+						},
 						ContainerImages:   []string{"my-container-image-2"},
 						InternalEndpoints: []common.Endpoint{{Host: "my-app-2.namespace-2"}},
 						Pods: common.PodInfo{
