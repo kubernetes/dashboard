@@ -62,13 +62,13 @@ export default class ReplicationControllerCardMenuController {
   }
 
   /**
-   * @export
-   */
+  * @export
+  */
   showDeleteDialog() {
     this.kdReplicationControllerService_
         .showDeleteDialog(
-            this.replicationController.objectMeta.namespace,
-            this.replicationController.objectMeta.name)
+            this.replicationController.typeMeta,
+            this.replicationController.objectMeta)
         .then(() => this.state_.reload());
   }
 

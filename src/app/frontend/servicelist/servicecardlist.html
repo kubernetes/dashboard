@@ -21,9 +21,12 @@ limitations under the License.
     <kd-resource-card-header-column>Cluster IP</kd-resource-card-header-column>
     <kd-resource-card-header-column>Internal endpoints</kd-resource-card-header-column>
     <kd-resource-card-header-column>External endpoints</kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small" grow="nogrow">
+    </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
 
-  <kd-resource-card ng-repeat="service in ::$ctrl.services">
+  <kd-resource-card ng-repeat="service in ::$ctrl.services"
+      object-meta="service.objectMeta" type-meta="service.typeMeta">
     <kd-resource-card-columns>
       <kd-resource-card-column>
         <a ng-href="{{::$ctrl.getServiceDetailHref(service)}}">
@@ -46,6 +49,12 @@ limitations under the License.
           <kd-external-endpoint endpoint="endpoint"></kd-external-endpoint>
         </div>
         <div ng-hide="service.externalEndpoints">-</div>
+      </kd-resource-card-column>
+      <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
+        <kd-resource-card-menu>
+          <kd-resource-card-delete-menu-item resource-kind-name="Service">
+          </kd-resource-card-delete-menu-item>
+        </kd-resource-card-menu>
       </kd-resource-card-column>
     </kd-resource-card-columns>
   </kd-resource-card>

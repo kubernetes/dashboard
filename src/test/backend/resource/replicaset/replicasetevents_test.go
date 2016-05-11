@@ -49,8 +49,9 @@ func TestGetReplicaSetEvents(t *testing.T) {
 			&common.EventList{
 				Namespace: "test-namespace",
 				Events: []common.Event{{
-					Message: "test-message",
-					Type:    api.EventTypeNormal,
+					TypeMeta: common.TypeMeta{common.ResourceKindEvent},
+					Message:  "test-message",
+					Type:     api.EventTypeNormal,
 				}}},
 		},
 	}

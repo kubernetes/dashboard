@@ -14,6 +14,7 @@
 
 import componentsModule from 'common/components/components_module';
 import eventsModule from 'events/events_module';
+import resourceModule from 'common/resource/resource_module';
 import filtersModule from 'common/filters/filters_module';
 import logsModule from 'logs/logs_module';
 import podListModule from 'podlist/podlist_module';
@@ -40,6 +41,7 @@ export default angular
           podListModule.name,
           serviceListModule.name,
           eventsModule.name,
+          resourceModule.name,
         ])
     .config(stateConfig)
     .component('kdReplicationControllerInfo', replicationControllerInfoComponent)

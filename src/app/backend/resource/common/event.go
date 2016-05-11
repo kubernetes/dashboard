@@ -29,6 +29,9 @@ type EventList struct {
 
 // Event is a single event representation.
 type Event struct {
+	ObjectMeta ObjectMeta `json:"objectMeta"`
+	TypeMeta   TypeMeta   `json:"typeMeta"`
+
 	// A human-readable description of the status of related object.
 	Message string `json:"message"`
 

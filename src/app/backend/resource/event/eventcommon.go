@@ -79,6 +79,8 @@ func GetPodsEvents(client client.Interface, namespace string, resourceSelector m
 func AppendEvents(source []api.Event, target common.EventList) common.EventList {
 	for _, event := range source {
 		target.Events = append(target.Events, common.Event{
+			ObjectMeta:      common.NewObjectMeta(event.ObjectMeta),
+			TypeMeta:        common.NewTypeMeta(common.ResourceKindEvent),
 			Message:         event.Message,
 			SourceComponent: event.Source.Component,
 			SourceHost:      event.Source.Host,
