@@ -83,7 +83,7 @@ func TestIsLabelSelectorMatching(t *testing.T) {
 			true},
 	}
 	for _, c := range cases {
-		actual := common.IsLabelSelectorMatching(c.serviceSelector, c.daemonSetselector)
+		actual := IsLabelSelectorMatching(c.serviceSelector, c.daemonSetselector)
 		if actual != c.expected {
 			t.Errorf("isLabelSelectorMatching(%+v, %+v) == %+v, expected %+v",
 				c.serviceSelector, c.daemonSetselector, actual, c.expected)
