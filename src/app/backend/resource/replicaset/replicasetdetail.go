@@ -80,8 +80,8 @@ func GetReplicaSetDetail(client k8sClient.Interface, heapsterClient client.Heaps
 func getReplicaSetDetail(replicaSet *extensions.ReplicaSet, heapsterClient client.HeapsterClient,
 	events *common.EventList, pods []api.Pod) ReplicaSetDetail {
 
-	matchingPods := common.GetMatchingPods(replicaSet.Spec.Selector,
-		replicaSet.ObjectMeta.Namespace, pods)
+	matchingPods := common.FilterNamespacedPodsBySelector(pods, replicaSet.ObjectMeta.Namespace,
+		replicaSet.Spec.Selector.MatchLabels)
 
 	podInfo := getPodInfo(replicaSet, matchingPods)
 

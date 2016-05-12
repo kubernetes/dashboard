@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package common
+package node
 
 import (
 	"reflect"
@@ -21,38 +21,36 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 )
 
-func TestGetPodInfo(t *testing.T) {
+func TestGetNodeByName(t *testing.T) {
 	cases := []struct {
-		current, desired int
-		pods             []api.Pod
-		expected         PodInfo
+		nodes    []api.Node
+		nodeName string
+		expected *api.Node
 	}{
+		{[]api.Node{}, "test-node", nil},
 		{
-			5,
-			4,
-			[]api.Pod{
-				{
-					Status: api.PodStatus{
-						Phase: api.PodRunning,
-					},
-				},
+			[]api.Node{
+				{ObjectMeta: api.ObjectMeta{Name: "test-node-1"}},
+				{ObjectMeta: api.ObjectMeta{Name: "test-node-2"}},
 			},
-			PodInfo{
-				Current:  5,
-				Desired:  4,
-				Running:  1,
-				Pending:  0,
-				Failed:   0,
-				Warnings: make([]Event, 0),
+			"test-node-1",
+			&api.Node{ObjectMeta: api.ObjectMeta{Name: "test-node-1"}},
+		},
+		{
+			[]api.Node{
+				{ObjectMeta: api.ObjectMeta{Name: "test-node-1"}},
+				{ObjectMeta: api.ObjectMeta{Name: "test-node-2"}},
 			},
+			"test-node-3",
+			nil,
 		},
 	}
 
 	for _, c := range cases {
-		actual := GetPodInfo(c.current, c.desired, c.pods)
+		actual := GetNodeByName(c.nodes, c.nodeName)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("getPodInfo(%#v, %#v, %#v) == \n%#v\nexpected \n%#v\n",
-				c.current, c.desired, c.pods, actual, c.expected)
+			t.Errorf("GetNodeByName(%+v, %+v) == %+v, expected %+v",
+				c.nodes, c.nodeName, actual, c.expected)
 		}
 	}
 }

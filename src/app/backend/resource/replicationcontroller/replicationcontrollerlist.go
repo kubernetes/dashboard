@@ -118,7 +118,8 @@ func getReplicationControllerList(replicationControllers []api.ReplicationContro
 		for _, service := range matchingServices {
 			internalEndpoints = append(internalEndpoints,
 				common.GetInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports))
-			externalEndpoints = getExternalEndpoints(replicationController, pods, service, nodes)
+			externalEndpoints = common.GetExternalEndpoints(replicationController.Spec.Selector,
+				pods, service, nodes)
 		}
 
 		matchingPods := make([]api.Pod, 0)

@@ -15,8 +15,6 @@
 package common
 
 import (
-	"bytes"
-
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 )
@@ -63,15 +61,6 @@ type TypeMeta struct {
 	// In smalllettercase.
 	// More info: http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#types-kinds
 	Kind ResourceKind `json:"kind,omitempty"`
-}
-
-// Endpoint describes an endpoint that is host and a list of available ports for that host.
-type Endpoint struct {
-	// Hostname, either as a domain name or IP address.
-	Host string `json:"host"`
-
-	// List of ports opened for this endpoint on the hostname.
-	Ports []ServicePort `json:"ports"`
 }
 
 // ServicePort is a pair of port and protocol, e.g. a service endpoint.
@@ -169,24 +158,6 @@ var kindToAPIPathMapping = map[string]string{
 	ResourceKindReplicaSet:            "replicasets",
 }
 
-// GetInternalEndpoint returns internal endpoint name for the given service properties, e.g.,
-// "my-service.namespace 80/TCP" or "my-service 53/TCP,53/UDP".
-func GetInternalEndpoint(serviceName, namespace string, ports []api.ServicePort) Endpoint {
-
-	name := serviceName
-	if namespace != api.NamespaceDefault && len(namespace) > 0 && len(serviceName) > 0 {
-		bufferName := bytes.NewBufferString(name)
-		bufferName.WriteString(".")
-		bufferName.WriteString(namespace)
-		name = bufferName.String()
-	}
-
-	return Endpoint{
-		Host:  name,
-		Ports: GetServicePorts(ports),
-	}
-}
-
 // GetServicePorts returns human readable name for the given service ports list.
 func GetServicePorts(apiPorts []api.ServicePort) []ServicePort {
 	var ports []ServicePort
@@ -194,4 +165,50 @@ func GetServicePorts(apiPorts []api.ServicePort) []ServicePort {
 		ports = append(ports, ServicePort{port.Port, port.Protocol})
 	}
 	return ports
+}
+
+// IsLabelSelectorMatching returns true when an object with the given
+// selector targets the same Resources (or subset) that
+// the tested object with the given selector.
+func IsLabelSelectorMatching(labelSelector map[string]string,
+	testedObjectLabels map[string]string) bool {
+
+	// If there are no label selectors, then assume it targets different Resource.
+	if len(labelSelector) == 0 {
+		return false
+	}
+
+	for label, value := range labelSelector {
+		if rsValue, ok := testedObjectLabels[label]; !ok || rsValue != value {
+			return false
+		}
+	}
+
+	return true
+}
+
+func FilterNamespacedPodsBySelector(pods []api.Pod, namespace string,
+	resourceSelector map[string]string) []api.Pod {
+
+	var matchingPods []api.Pod
+	for _, pod := range pods {
+		if pod.ObjectMeta.Namespace == namespace &&
+			IsLabelSelectorMatching(resourceSelector, pod.Labels) {
+			matchingPods = append(matchingPods, pod)
+		}
+	}
+
+	return matchingPods
+}
+
+// Returns pods targeted by given selector.
+func FilterPodsBySelector(pods []api.Pod, resourceSelector map[string]string) []api.Pod {
+
+	var matchingPods []api.Pod
+	for _, pod := range pods {
+		if IsLabelSelectorMatching(resourceSelector, pod.Labels) {
+			matchingPods = append(matchingPods, pod)
+		}
+	}
+	return matchingPods
 }

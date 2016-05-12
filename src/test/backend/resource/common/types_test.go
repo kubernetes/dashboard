@@ -60,3 +60,146 @@ func TestGetServicePorts(t *testing.T) {
 		}
 	}
 }
+
+func TestIsLabelSelectorMatching(t *testing.T) {
+	cases := []struct {
+		serviceSelector, replicationControllerSelector map[string]string
+		expected                                       bool
+	}{
+		{nil, nil, false},
+		{nil, map[string]string{}, false},
+		{map[string]string{}, nil, false},
+		{map[string]string{}, map[string]string{}, false},
+		{map[string]string{"app": "my-name"}, map[string]string{}, false},
+		{map[string]string{"app": "my-name", "version": "2"},
+			map[string]string{"app": "my-name", "version": "1.1"}, false},
+		{map[string]string{"app": "my-name", "env": "prod"},
+			map[string]string{"app": "my-name", "version": "1.1"}, false},
+		{map[string]string{"app": "my-name"}, map[string]string{"app": "my-name"}, true},
+		{map[string]string{"app": "my-name", "version": "1.1"},
+			map[string]string{"app": "my-name", "version": "1.1"}, true},
+		{map[string]string{"app": "my-name"},
+			map[string]string{"app": "my-name", "version": "1.1"}, true},
+	}
+	for _, c := range cases {
+		actual := IsLabelSelectorMatching(c.serviceSelector, c.replicationControllerSelector)
+		if actual != c.expected {
+			t.Errorf("isLabelSelectorMatching(%+v, %+v) == %+v, expected %+v",
+				c.serviceSelector, c.replicationControllerSelector, actual, c.expected)
+		}
+	}
+}
+
+func TestFilterPodsBySelector(t *testing.T) {
+	firstLabelSelectorMap := make(map[string]string)
+	firstLabelSelectorMap["name"] = "app-name-first"
+	secondLabelSelectorMap := make(map[string]string)
+	secondLabelSelectorMap["name"] = "app-name-second"
+
+	cases := []struct {
+		selector map[string]string
+		pods     []api.Pod
+		expected []api.Pod
+	}{
+		{
+			firstLabelSelectorMap,
+			[]api.Pod{
+				{
+					ObjectMeta: api.ObjectMeta{
+						Name:   "first-pod-ok",
+						Labels: firstLabelSelectorMap,
+					},
+				},
+				{
+					ObjectMeta: api.ObjectMeta{
+						Name:   "second-pod-ok",
+						Labels: firstLabelSelectorMap,
+					},
+				},
+				{
+					ObjectMeta: api.ObjectMeta{
+						Name:   "third-pod-wrong",
+						Labels: secondLabelSelectorMap,
+					},
+				},
+			},
+			[]api.Pod{
+				{
+					ObjectMeta: api.ObjectMeta{
+						Name:   "first-pod-ok",
+						Labels: firstLabelSelectorMap,
+					},
+				},
+				{
+					ObjectMeta: api.ObjectMeta{
+						Name:   "second-pod-ok",
+						Labels: firstLabelSelectorMap,
+					},
+				},
+			},
+		},
+	}
+	for _, c := range cases {
+		actual := FilterPodsBySelector(c.pods, c.selector)
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("FilterPodsBySelector(%+v, %+v) == %+v, expected %+v",
+				c.pods, c.selector, actual, c.expected)
+		}
+	}
+}
+
+func TestFilterNamespacedPodsBySelector(t *testing.T) {
+	firstLabelSelectorMap := make(map[string]string)
+	firstLabelSelectorMap["name"] = "app-name-first"
+	secondLabelSelectorMap := make(map[string]string)
+	secondLabelSelectorMap["name"] = "app-name-second"
+
+	cases := []struct {
+		selector  map[string]string
+		namespace string
+		pods      []api.Pod
+		expected  []api.Pod
+	}{
+		{
+			firstLabelSelectorMap, "test-ns-1",
+			[]api.Pod{
+				{
+					ObjectMeta: api.ObjectMeta{
+						Name:      "first-pod-ok",
+						Labels:    firstLabelSelectorMap,
+						Namespace: "test-ns-1",
+					},
+				},
+				{
+					ObjectMeta: api.ObjectMeta{
+						Name:      "second-pod-ok",
+						Labels:    firstLabelSelectorMap,
+						Namespace: "test-ns-2",
+					},
+				},
+				{
+					ObjectMeta: api.ObjectMeta{
+						Name:   "third-pod-wrong",
+						Labels: secondLabelSelectorMap,
+					},
+				},
+			},
+			[]api.Pod{
+				{
+					ObjectMeta: api.ObjectMeta{
+						Name:      "first-pod-ok",
+						Labels:    firstLabelSelectorMap,
+						Namespace: "test-ns-1",
+					},
+				},
+			},
+		},
+	}
+	for _, c := range cases {
+		actual := FilterNamespacedPodsBySelector(c.pods, c.namespace, c.selector)
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("FilterNamespacedPodsBySelector(%+v, %+v) == %+v, expected %+v",
+				c.pods, c.selector, actual, c.expected)
+		}
+	}
+}
