@@ -12,11 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import componentsModule from 'common/components/components_module';
-import eventsModule from 'events/events_module';
 import filtersModule from 'common/filters/filters_module';
-import stateConfig from './replicasetdetail_stateconfig';
-import {replicaSetInfoComponent} from './replicasetinfo_component';
+import componentsModule from 'common/components/components_module';
+import {eventCardListComponent} from './eventcardlist_component';
 
 /**
  * Angular module for the Replica Set details view.
@@ -25,14 +23,10 @@ import {replicaSetInfoComponent} from './replicasetinfo_component';
  */
 export default angular
     .module(
-        'kubernetesDashboard.replicaSetDetail',
+        'kubernetesDashboard.events',
         [
           'ngMaterial',
-          'ngResource',
-          'ui.router',
           componentsModule.name,
           filtersModule.name,
-          eventsModule.name,
         ])
-    .config(stateConfig)
-    .component('kdReplicaSetInfo', replicaSetInfoComponent);
+    .component('kdEventCardList', eventCardListComponent);

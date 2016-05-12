@@ -18,30 +18,19 @@ limitations under the License.
   <md-content>
     <md-tabs md-border-bottom md-dynamic-height>
       <md-tab label="Overview">
-        <kd-replication-controller-info replication-controller="::ctrl.replicationControllerDetail">
-        </kd-replication-controller-info>
-
-        <kd-content-card ng-if="::ctrl.replicationControllerDetail.serviceList.services.length">
-          <kd-title>Services</kd-title>
-          <kd-content>
-            <kd-service-card-list
-                    services="::ctrl.replicationControllerDetail.serviceList.services">
-            </kd-service-card-list>
-          </kd-content>
-        </kd-content-card>
+        <kd-replica-set-info replica-set="::ctrl.replicaSetDetail"></kd-replica-set-info>
 
         <kd-content-card>
           <kd-title>Pods</kd-title>
           <kd-content>
-            <kd-pod-card-list pod-list="::ctrl.replicationControllerDetail.pods"
+            <kd-pod-card-list pod-list="::ctrl.replicaSetDetail.podList"
                               logs-href-fn="::ctrl.getPodLogsHref(pod)">
             </kd-pod-card-list>
           </kd-content>
         </kd-content-card>
       </md-tab>
       <md-tab label="Events">
-        <kd-event-card-list events="::ctrl.events">
-        </kd-event-card-list>
+        <kd-event-card-list events="::ctrl.replicaSetDetail.eventList.events"></kd-event-card-list>
       </md-tab>
     </md-tabs>
   </md-content>

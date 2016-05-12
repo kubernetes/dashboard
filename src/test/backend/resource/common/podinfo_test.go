@@ -18,7 +18,6 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/resource/event"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 )
@@ -74,7 +73,7 @@ func TestGetPodInfo(t *testing.T) {
 				Running:  1,
 				Pending:  0,
 				Failed:   0,
-				Warnings: make([]event.Event, 0),
+				Warnings: make([]Event, 0),
 			},
 		},
 	}

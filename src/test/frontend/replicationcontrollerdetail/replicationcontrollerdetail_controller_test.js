@@ -60,7 +60,9 @@ describe('Replication Controller Detail controller', () => {
 
   it('should create logs href', () => {
     expect(ctrl.getPodLogsHref({
-      name: 'foo-pod',
+      objectMeta: {
+        name: 'foo-pod',
+      },
     })).toBe('#/logs/foo-namespace/foo-replicationcontroller/foo-pod/');
   });
 });

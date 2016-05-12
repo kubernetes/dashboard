@@ -138,6 +138,26 @@ func GetEventListChannel(client client.EventNamespacer, numReads int) EventListC
 	return channel
 }
 
+func GetNamespacedEventListChannel(client client.EventNamespacer, numReads int,
+	namespace string, options api.ListOptions) EventListChannel {
+
+	channel := EventListChannel{
+		List:  make(chan *api.EventList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		events, err := client.Events(namespace).List(options)
+
+		for i := 0; i < numReads; i++ {
+			channel.List <- events
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
 // List and error channels to Nodes.
 type PodListChannel struct {
 	List  chan *api.PodList
@@ -154,6 +174,26 @@ func GetPodListChannel(client client.PodsNamespacer, numReads int) PodListChanne
 
 	go func() {
 		pods, err := client.Pods(api.NamespaceAll).List(listEverything)
+
+		for i := 0; i < numReads; i++ {
+			channel.List <- pods
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+func GetNamespacedPodListChannel(client client.PodsNamespacer, numReads int,
+	namespace string, options api.ListOptions) PodListChannel {
+
+	channel := PodListChannel{
+		List:  make(chan *api.PodList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		pods, err := client.Pods(namespace).List(options)
 
 		for i := 0; i < numReads; i++ {
 			channel.List <- pods
