@@ -69,6 +69,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				ObjectMeta: common.ObjectMeta{
 					Name: "rc-name",
 				},
+				TypeMeta: common.TypeMeta{Kind: common.ResourceKindReplicationController},
 				Pods: common.PodInfo{
 					Warnings: []common.Event{},
 				},
@@ -77,6 +78,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				ObjectMeta: common.ObjectMeta{
 					Name: "rs-name",
 				},
+				TypeMeta: common.TypeMeta{Kind: common.ResourceKindReplicaSet},
 				Pods: common.PodInfo{
 					Warnings: []common.Event{},
 				},
@@ -85,6 +87,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				ObjectMeta: common.ObjectMeta{
 					Name: "deployment-name",
 				},
+				TypeMeta: common.TypeMeta{Kind: common.ResourceKindDeployment},
 				Pods: common.PodInfo{
 					Warnings: []common.Event{},
 				},

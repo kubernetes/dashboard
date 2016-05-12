@@ -29,7 +29,9 @@ func TestToServiceDetail(t *testing.T) {
 		expected ServiceDetail
 	}{
 		{
-			service: &api.Service{}, expected: ServiceDetail{},
+			service: &api.Service{}, expected: ServiceDetail{
+				TypeMeta: common.TypeMeta{Kind: common.ResourceKindService},
+			},
 		}, {
 			service: &api.Service{
 				ObjectMeta: api.ObjectMeta{
@@ -40,6 +42,7 @@ func TestToServiceDetail(t *testing.T) {
 					Name:      "test-service",
 					Namespace: "test-namespace",
 				},
+				TypeMeta:         common.TypeMeta{Kind: common.ResourceKindService},
 				InternalEndpoint: common.Endpoint{Host: "test-service.test-namespace"},
 			},
 		},
@@ -61,7 +64,9 @@ func TestToService(t *testing.T) {
 		expected Service
 	}{
 		{
-			service: &api.Service{}, expected: Service{},
+			service: &api.Service{}, expected: Service{
+				TypeMeta: common.TypeMeta{Kind: common.ResourceKindService},
+			},
 		}, {
 			service: &api.Service{
 				ObjectMeta: api.ObjectMeta{
@@ -72,6 +77,7 @@ func TestToService(t *testing.T) {
 					Name:      "test-service",
 					Namespace: "test-namespace",
 				},
+				TypeMeta:         common.TypeMeta{Kind: common.ResourceKindService},
 				InternalEndpoint: common.Endpoint{Host: "test-service.test-namespace"},
 			},
 		},

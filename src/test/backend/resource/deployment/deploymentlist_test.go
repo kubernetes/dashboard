@@ -122,6 +122,7 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 						Labels:            map[string]string{"key": "value"},
 						CreationTimestamp: unversioned.Unix(111, 222),
 					},
+					TypeMeta: common.TypeMeta{Kind: common.ResourceKindDeployment},
 					Pods: common.PodInfo{
 						Current:  7,
 						Desired:  21,

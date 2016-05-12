@@ -35,7 +35,9 @@ func TestGetServiceDetail(t *testing.T) {
 			service:   &api.Service{},
 			namespace: "test-namespace", name: "test-name",
 			expectedActions: []string{"get"},
-			expected:        &ServiceDetail{},
+			expected: &ServiceDetail{
+				TypeMeta: common.TypeMeta{Kind: common.ResourceKindService},
+			},
 		}, {
 			service: &api.Service{ObjectMeta: api.ObjectMeta{
 				Name: "test-service", Namespace: "test-namespace",
@@ -47,6 +49,7 @@ func TestGetServiceDetail(t *testing.T) {
 					Name:      "test-service",
 					Namespace: "test-namespace",
 				},
+				TypeMeta:         common.TypeMeta{Kind: common.ResourceKindService},
 				InternalEndpoint: common.Endpoint{Host: "test-service.test-namespace"},
 			},
 		},
