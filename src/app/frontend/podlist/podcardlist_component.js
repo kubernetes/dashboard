@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {StateParams} from 'poddetail/poddetail_state';
+import {stateName} from 'poddetail/poddetail_state';
+
 /**
  * @final
  */
@@ -19,7 +22,7 @@ export class PodCardListController {
   /**
    * @ngInject
    */
-  constructor() {
+  constructor($state) {
     /**
      * List of pods. Initialized from the scope.
      * @export {!backendApi.PodList}
@@ -31,6 +34,9 @@ export class PodCardListController {
      * @export {!function({pod: !backendApi.Pod}): string}
      */
     this.logsHrefFn;
+
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
   }
 
   /**
@@ -39,6 +45,16 @@ export class PodCardListController {
    * @export
    */
   getPodLogsHref(pod) { return this.logsHrefFn({pod: pod}); }
+
+  /**
+   * @param {!backendApi.Pod} pod
+   * @return {string}
+   * @export
+   */
+  getPodDetailHref(pod) {
+    return this.state_.href(
+        stateName, new StateParams(pod.objectMeta.namespace, pod.objectMeta.name));
+  }
 }
 
 /**
