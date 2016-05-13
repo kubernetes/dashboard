@@ -15,14 +15,14 @@
 package pod
 
 import (
-	"log"
-
 	"encoding/json"
 	"fmt"
+	"log"
 	"strings"
 	"time"
 
 	"github.com/kubernetes/dashboard/client"
+
 	heapster "k8s.io/heapster/api/v1/types"
 	"k8s.io/kubernetes/pkg/api"
 )

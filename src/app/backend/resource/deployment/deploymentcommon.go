@@ -16,13 +16,12 @@ package deployment
 
 import (
 	"github.com/kubernetes/dashboard/resource/common"
+
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 )
 
 // getPodInfo returns aggregate information about deployment pods.
-func getPodInfo(resource *extensions.Deployment,
-	pods []api.Pod) common.PodInfo {
-
+func getPodInfo(resource *extensions.Deployment, pods []api.Pod) common.PodInfo {
 	return common.GetPodInfo(resource.Status.Replicas, resource.Spec.Replicas, pods)
 }

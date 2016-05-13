@@ -18,7 +18,6 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/resource/common"
-	"github.com/kubernetes/dashboard/resource/replicationcontroller"
 
 	"k8s.io/kubernetes/pkg/api"
 	k8serrors "k8s.io/kubernetes/pkg/api/errors"
@@ -118,7 +117,7 @@ func getReplicaSetList(replicaSets []extensions.ReplicaSet,
 			ReplicaSet{
 				ObjectMeta:      common.NewObjectMeta(replicaSet.ObjectMeta),
 				TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicaSet),
-				ContainerImages: replicationcontroller.GetContainerImages(&replicaSet.Spec.Template.Spec),
+				ContainerImages: common.GetContainerImages(&replicaSet.Spec.Template.Spec),
 				Pods:            podInfo,
 			})
 	}

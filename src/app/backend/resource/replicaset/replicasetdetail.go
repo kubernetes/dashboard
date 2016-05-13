@@ -24,7 +24,6 @@ import (
 	"github.com/kubernetes/dashboard/client"
 	"github.com/kubernetes/dashboard/resource/common"
 	"github.com/kubernetes/dashboard/resource/pod"
-	"github.com/kubernetes/dashboard/resource/replicationcontroller"
 )
 
 // ReplicaSetDetail is a presentation layer view of Kubernetes Replica Set resource. This means
@@ -88,7 +87,7 @@ func getReplicaSetDetail(replicaSet *extensions.ReplicaSet, heapsterClient clien
 	return ReplicaSetDetail{
 		ObjectMeta:      common.NewObjectMeta(replicaSet.ObjectMeta),
 		TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicaSet),
-		ContainerImages: replicationcontroller.GetContainerImages(&replicaSet.Spec.Template.Spec),
+		ContainerImages: common.GetContainerImages(&replicaSet.Spec.Template.Spec),
 		PodInfo:         podInfo,
 		PodList:         pod.CreatePodList(matchingPods, heapsterClient),
 		EventList:       *events,
