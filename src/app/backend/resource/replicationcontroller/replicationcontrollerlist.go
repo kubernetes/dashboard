@@ -19,6 +19,7 @@ import (
 
 	"github.com/kubernetes/dashboard/resource/common"
 	"github.com/kubernetes/dashboard/resource/event"
+
 	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
@@ -139,7 +140,7 @@ func getReplicationControllerList(replicationControllers []api.ReplicationContro
 				ObjectMeta:        common.NewObjectMeta(replicationController.ObjectMeta),
 				TypeMeta:          common.NewTypeMeta(common.ResourceKindReplicationController),
 				Pods:              podInfo,
-				ContainerImages:   GetContainerImages(&replicationController.Spec.Template.Spec),
+				ContainerImages:   common.GetContainerImages(&replicationController.Spec.Template.Spec),
 				InternalEndpoints: internalEndpoints,
 				ExternalEndpoints: externalEndpoints,
 			})

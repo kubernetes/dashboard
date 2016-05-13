@@ -12,18 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package replicaset
+package common
 
 import (
-	"github.com/kubernetes/dashboard/resource/common"
-
 	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/apis/extensions"
 )
 
-// getPodInfo returns aggregate information about replica set pods.
-func getPodInfo(resource *extensions.ReplicaSet,
-	pods []api.Pod) common.PodInfo {
+// ServicePort is a pair of port and protocol, e.g. a service endpoint.
+type ServicePort struct {
+	// Positive port number.
+	Port int `json:"port"`
 
-	return common.GetPodInfo(resource.Status.Replicas, resource.Spec.Replicas, pods)
+	// Protocol name, e.g., TCP or UDP.
+	Protocol api.Protocol `json:"protocol"`
+}
+
+// GetServicePorts returns human readable name for the given service ports list.
+func GetServicePorts(apiPorts []api.ServicePort) []ServicePort {
+	var ports []ServicePort
+	for _, port := range apiPorts {
+		ports = append(ports, ServicePort{port.Port, port.Protocol})
+	}
+	return ports
 }

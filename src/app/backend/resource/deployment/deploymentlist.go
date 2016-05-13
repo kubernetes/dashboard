@@ -18,7 +18,7 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/resource/common"
-	"github.com/kubernetes/dashboard/resource/replicationcontroller"
+
 	"k8s.io/kubernetes/pkg/api"
 	k8serrors "k8s.io/kubernetes/pkg/api/errors"
 	"k8s.io/kubernetes/pkg/apis/extensions"
@@ -118,7 +118,7 @@ func getDeploymentList(deployments []extensions.Deployment,
 			Deployment{
 				ObjectMeta:      common.NewObjectMeta(deployment.ObjectMeta),
 				TypeMeta:        common.NewTypeMeta(common.ResourceKindDeployment),
-				ContainerImages: replicationcontroller.GetContainerImages(&deployment.Spec.Template.Spec),
+				ContainerImages: common.GetContainerImages(&deployment.Spec.Template.Spec),
 				Pods:            podInfo,
 			})
 	}

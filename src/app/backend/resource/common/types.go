@@ -63,58 +63,6 @@ type TypeMeta struct {
 	Kind ResourceKind `json:"kind,omitempty"`
 }
 
-// ServicePort is a pair of port and protocol, e.g. a service endpoint.
-type ServicePort struct {
-	// Positive port number.
-	Port int `json:"port"`
-
-	// Protocol name, e.g., TCP or UDP.
-	Protocol api.Protocol `json:"protocol"`
-}
-
-// Events response structure.
-type EventList struct {
-	// Namespace.
-	Namespace string `json:"namespace"`
-
-	// List of events from given namespace.
-	Events []Event `json:"events"`
-}
-
-// Event is a single event representation.
-type Event struct {
-	// A human-readable description of the status of related object.
-	Message string `json:"message"`
-
-	// Component from which the event is generated.
-	SourceComponent string `json:"sourceComponent"`
-
-	// Host name on which the event is generated.
-	SourceHost string `json:"sourceHost"`
-
-	// Reference to a piece of an object, which triggered an event. For example
-	// "spec.containers{name}" refers to container within pod with given name, if no container
-	// name is specified, for example "spec.containers[2]", then it refers to container with
-	// index 2 in this pod.
-	SubObject string `json:"object"`
-
-	// The number of times this event has occurred.
-	Count int `json:"count"`
-
-	// The time at which the event was first recorded.
-	FirstSeen unversioned.Time `json:"firstSeen"`
-
-	// The time at which the most recent occurrence of this event was recorded.
-	LastSeen unversioned.Time `json:"lastSeen"`
-
-	// Short, machine understandable string that gives the reason
-	// for this event being generated.
-	Reason string `json:"reason"`
-
-	// Event type (at the moment only normal and warning are supported).
-	Type string `json:"type"`
-}
-
 // Returns internal endpoint name for the given service properties, e.g.,
 // NewObjectMeta creates a new instance of ObjectMeta struct based on K8s object meta.
 func NewObjectMeta(k8SObjectMeta api.ObjectMeta) ObjectMeta {
@@ -158,15 +106,6 @@ var kindToAPIPathMapping = map[string]string{
 	ResourceKindReplicaSet:            "replicasets",
 }
 
-// GetServicePorts returns human readable name for the given service ports list.
-func GetServicePorts(apiPorts []api.ServicePort) []ServicePort {
-	var ports []ServicePort
-	for _, port := range apiPorts {
-		ports = append(ports, ServicePort{port.Port, port.Protocol})
-	}
-	return ports
-}
-
 // IsLabelSelectorMatching returns true when an object with the given
 // selector targets the same Resources (or subset) that
 // the tested object with the given selector.
@@ -185,30 +124,4 @@ func IsLabelSelectorMatching(labelSelector map[string]string,
 	}
 
 	return true
-}
-
-func FilterNamespacedPodsBySelector(pods []api.Pod, namespace string,
-	resourceSelector map[string]string) []api.Pod {
-
-	var matchingPods []api.Pod
-	for _, pod := range pods {
-		if pod.ObjectMeta.Namespace == namespace &&
-			IsLabelSelectorMatching(resourceSelector, pod.Labels) {
-			matchingPods = append(matchingPods, pod)
-		}
-	}
-
-	return matchingPods
-}
-
-// Returns pods targeted by given selector.
-func FilterPodsBySelector(pods []api.Pod, resourceSelector map[string]string) []api.Pod {
-
-	var matchingPods []api.Pod
-	for _, pod := range pods {
-		if IsLabelSelectorMatching(resourceSelector, pod.Labels) {
-			matchingPods = append(matchingPods, pod)
-		}
-	}
-	return matchingPods
 }
