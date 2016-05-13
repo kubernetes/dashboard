@@ -16,9 +16,9 @@ import {PodListActionBarController} from 'podlist/podlistactionbar_controller';
 import podListModule from 'podlist/podlist_module';
 import {stateName as deploy} from 'deploy/deploy_state';
 
-describe('Replica Set List Action Bar controller', () => {
+describe('Pod List Action Bar controller', () => {
   /**
-   * Replica Set List controller.
+   * Pod List controller.
    * @type {!PodListController}
    */
   let ctrl;

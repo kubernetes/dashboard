@@ -12,18 +12,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {PodListController} from 'podlist/podlist_controller';
-import podListModule from 'podlist/podlist_module';
+/**
+ * @final
+ */
+export default class PodInfoController {
+  /**
+   * Constructs pod info object.
+   */
+  constructor() {
+    /**
+     * Pod details. Initialized from the scope.
+     * @export {!backendApi.PodDetail}
+     */
+    this.pod;
+  }
+}
 
-describe('Replica Set list controller', () => {
-
-  beforeEach(() => { angular.mock.module(podListModule.name); });
-
-  it('should initialize replication controllers', angular.mock.inject(($controller) => {
-    let data = {pods: {}};
-    /** @type {!PodListController} */
-    let ctrl = $controller(PodListController, {podList: data});
-
-    expect(ctrl.podList).toBe(data);
-  }));
-});
+/**
+ * Definition object for the component that displays pod info.
+ *
+ * @return {!angular.Directive}
+ */
+export const podInfoComponent = {
+  controller: PodInfoController,
+  templateUrl: 'poddetail/podinfo.html',
+  bindings: {
+    /** {!backendApi.PodDetail} */
+    'pod': '<',
+  },
+};

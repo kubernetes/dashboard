@@ -191,6 +191,10 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 		podsWs.GET("").
 			To(apiHandler.handleGetPods).
 			Writes(pod.PodList{}))
+	podsWs.Route(
+		podsWs.GET("/{namespace}/{pod}").
+		To(apiHandler.handleGetPodDetail).
+		Writes(pod.PodDetail{}))
 	wsContainer.Add(podsWs)
 
 	deploymentsWs := new(restful.WebService)
@@ -473,6 +477,20 @@ func (apiHandler *ApiHandler) handleGetPods(
 	request *restful.Request, response *restful.Response) {
 
 	result, err := pod.GetPodList(apiHandler.client, apiHandler.heapsterClient)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get Pod detail API call.
+func (apiHandler *ApiHandler) handleGetPodDetail(request *restful.Request, response *restful.Response) {
+
+	namespace := request.PathParameter("namespace")
+	podName := request.PathParameter("pod")
+	result, err := pod.GetPodDetail(apiHandler.client, apiHandler.heapsterClient, namespace, podName)
 	if err != nil {
 		handleInternalError(response, err)
 		return

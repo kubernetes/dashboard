@@ -31,8 +31,10 @@ limitations under the License.
     <kd-resource-card-columns>
       <kd-resource-card-column>
         <div>
-          <kd-middle-ellipsis display-string="{{::pod.objectMeta.name}}">
-          </kd-middle-ellipsis>
+          <a ng-href="{{::$ctrl.getPodDetailHref(pod)}}" class="kd-middle-ellipsised-link">
+            <kd-middle-ellipsis display-string="{{::pod.objectMeta.name}}">
+            </kd-middle-ellipsis>
+          </a>
         </div>
       </kd-resource-card-column>
       <kd-resource-card-column>{{::pod.podPhase}}</kd-resource-card-column>
