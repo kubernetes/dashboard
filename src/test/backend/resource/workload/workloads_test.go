@@ -19,6 +19,7 @@ import (
 	"testing"
 
 	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 
 	"github.com/kubernetes/dashboard/resource/common"
@@ -51,10 +52,18 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		},
 		{
 			extensions.ReplicaSetList{
-				Items: []extensions.ReplicaSet{{ObjectMeta: api.ObjectMeta{Name: "rs-name"}}},
+				Items: []extensions.ReplicaSet{
+					{
+						ObjectMeta: api.ObjectMeta{Name: "rs-name"},
+						Spec:       extensions.ReplicaSetSpec{Selector: &unversioned.LabelSelector{}},
+					}},
 			},
 			extensions.DeploymentList{
-				Items: []extensions.Deployment{{ObjectMeta: api.ObjectMeta{Name: "deployment-name"}}},
+				Items: []extensions.Deployment{
+					{
+						ObjectMeta: api.ObjectMeta{Name: "deployment-name"},
+						Spec:       extensions.DeploymentSpec{Selector: &unversioned.LabelSelector{}},
+					}},
 			},
 			api.ReplicationControllerList{
 				Items: []api.ReplicationController{{

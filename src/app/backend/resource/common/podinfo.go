@@ -16,8 +16,6 @@ package common
 
 import (
 	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
-	"k8s.io/kubernetes/pkg/labels"
 )
 
 // PodInfo represents aggregate information about controller's pods.
@@ -61,39 +59,4 @@ func GetPodInfo(current int, desired int, pods []api.Pod) PodInfo {
 	}
 
 	return result
-}
-
-// IsLabelSelectorMatching returns true when an object with the given
-// selector targets the same Pods (or subset) that
-// the tested object with the given selector.
-func IsLabelSelectorMatching(labelSelector map[string]string,
-	testedObjectLabels map[string]string) bool {
-
-	// If service has no selectors, then assume it targets different Pods.
-	if len(labelSelector) == 0 {
-		return false
-	}
-	for label, value := range labelSelector {
-		if rsValue, ok := testedObjectLabels[label]; !ok || rsValue != value {
-			return false
-		}
-	}
-	return true
-}
-
-// GetMatchingPods returns pods matching the given selector and namespace
-func GetMatchingPods(labelSelector *unversioned.LabelSelector, namespace string,
-	pods []api.Pod) []api.Pod {
-
-	selector, _ := unversioned.LabelSelectorAsSelector(labelSelector)
-
-	var matchingPods []api.Pod
-	for _, pod := range pods {
-		if pod.ObjectMeta.Namespace == namespace &&
-			selector.Matches(labels.Set(pod.ObjectMeta.Labels)) {
-			matchingPods = append(matchingPods, pod)
-		}
-	}
-
-	return matchingPods
 }

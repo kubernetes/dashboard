@@ -110,8 +110,8 @@ func getDeploymentList(deployments []extensions.Deployment,
 
 	for _, deployment := range deployments {
 
-		matchingPods := common.GetMatchingPods(deployment.Spec.Selector,
-			deployment.ObjectMeta.Namespace, pods)
+		matchingPods := common.FilterNamespacedPodsBySelector(pods, deployment.ObjectMeta.Namespace,
+			deployment.Spec.Selector.MatchLabels)
 		podInfo := getPodInfo(&deployment, matchingPods)
 
 		deploymentList.Deployments = append(deploymentList.Deployments,
