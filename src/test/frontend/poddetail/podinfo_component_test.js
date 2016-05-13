@@ -12,33 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import podsListModule from 'podlist/podlist_module';
+import podDetailModule from 'poddetail/poddetail_module';
 
-describe('Pods list controller', () => {
+describe('Pod Info controller', () => {
   /**
-   * @type {!podlist/podcardlist_component.PodCardListController}
+   * Pod Info controller.
+   * @type {!PodInfoController}
    */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(podsListModule.name);
+    angular.mock.module(podDetailModule.name);
 
-    angular.mock.inject(($componentController) => {
-      ctrl = $componentController('kdPodCardList', {}, {
-        logsHrefFn: function() {},
-      });
-    });
+    angular.mock.inject(
+        ($componentController) => { ctrl = $componentController('kdPodInfo', {}); });
   });
 
-  it('should execute logs href callback function', () => {
-    // given
-    let pod = {name: 'test-pod'};
-    spyOn(ctrl, 'logsHrefFn');
-
-    // when
-    ctrl.getPodLogsHref(pod);
-
-    // then
-    expect(ctrl.logsHrefFn).toHaveBeenCalledWith({pod: pod});
-  });
+  it('should instantiate the controller properly', () => { expect(ctrl).not.toBeUndefined(); });
 });
