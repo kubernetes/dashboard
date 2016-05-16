@@ -19,21 +19,22 @@ import (
 	"testing"
 
 	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
+	"k8s.io/kubernetes/pkg/client/restclient"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
 
+	"github.com/kubernetes/dashboard/client"
 	"github.com/kubernetes/dashboard/resource/common"
 	"github.com/kubernetes/dashboard/resource/pod"
-	"k8s.io/kubernetes/pkg/api/unversioned"
-	"k8s.io/kubernetes/pkg/client/restclient"
 )
 
 type FakeHeapsterClient struct {
 	client k8sClient.Interface
 }
 
-func (c FakeHeapsterClient) Get(path string) *restclient.Request {
+func (c FakeHeapsterClient) Get(path string) client.RequestInterface {
 	return &restclient.Request{}
 }
 

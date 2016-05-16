@@ -284,7 +284,8 @@ backendApi.Pod;
  *  externalEndpoints: !Array<!backendApi.Endpoint>,
  *  selector: !Object<string, string>,
  *  type: string,
- *  clusterIP: string
+ *  clusterIP: string,
+ *  podList: !backendApi.PodList
  * }}
  */
 backendApi.ServiceDetail;

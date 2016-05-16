@@ -300,7 +300,8 @@ func (apiHandler *ApiHandler) handleGetServiceList(request *restful.Request, res
 func (apiHandler *ApiHandler) handleGetServiceDetail(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
 	service := request.PathParameter("service")
-	result, err := resourceService.GetServiceDetail(apiHandler.client, namespace, service)
+	result, err := resourceService.GetServiceDetail(apiHandler.client, apiHandler.heapsterClient,
+		namespace, service)
 	if err != nil {
 		handleInternalError(response, err)
 		return

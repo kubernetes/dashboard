@@ -15,3 +15,10 @@ limitations under the License.
 -->
 
 <kd-service-info service="ctrl.serviceDetail"></kd-service-info>
+
+<kd-content-card ng-if="ctrl.serviceDetail.podList.pods.length">
+  <kd-title>Pods</kd-title>
+  <kd-content>
+    <kd-pod-card-list pod-list="ctrl.serviceDetail.podList"></kd-pod-card-list>
+  </kd-content>
+</kd-content-card>

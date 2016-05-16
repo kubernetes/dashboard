@@ -18,9 +18,11 @@ import (
 	"log"
 
 	"k8s.io/kubernetes/pkg/api"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 
+	"github.com/kubernetes/dashboard/client"
 	"github.com/kubernetes/dashboard/resource/common"
+	"github.com/kubernetes/dashboard/resource/pod"
 )
 
 // Service is a representation of a service.
@@ -45,10 +47,15 @@ type ServiceDetail struct {
 	// ClusterIP is usually assigned by the master. Valid values are None, empty string (""), or
 	// a valid IP address. None can be specified for headless services when proxying is not required
 	ClusterIP string `json:"clusterIP"`
+
+	// PodList represents list of pods targeted by same label selector as this service.
+	PodList pod.PodList `json:"podList"`
 }
 
 // GetServiceDetail gets service details.
-func GetServiceDetail(client client.Interface, namespace, name string) (*ServiceDetail, error) {
+func GetServiceDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
+	namespace, name string) (*ServiceDetail, error) {
+
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 
 	// TODO(maciaszczykm): Use channels.
@@ -57,6 +64,32 @@ func GetServiceDetail(client client.Interface, namespace, name string) (*Service
 		return nil, err
 	}
 
+	podList, err := GetServicePods(client, heapsterClient, namespace, serviceData.Spec.Selector)
+	if err != nil {
+		return nil, err
+	}
+
 	service := ToServiceDetail(serviceData)
+	service.PodList = *podList
+
 	return &service, nil
+}
+
+// GetServicePods gets list of pods targeted by given label selector in given namespace.
+func GetServicePods(client k8sClient.Interface, heapsterClient client.HeapsterClient,
+	namespace string, serviceSelector map[string]string) (*pod.PodList, error) {
+
+	channels := &common.ResourceChannels{
+		PodList: common.GetPodListChannel(client, 1),
+	}
+
+	apiPodList := <-channels.PodList.List
+	if err := <-channels.PodList.Error; err != nil {
+		return nil, err
+	}
+
+	apiPods := common.FilterNamespacedPodsBySelector(apiPodList.Items, namespace, serviceSelector)
+	podList := pod.CreatePodList(apiPods, heapsterClient)
+
+	return &podList, nil
 }

@@ -19,10 +19,27 @@ import (
 	"testing"
 
 	"k8s.io/kubernetes/pkg/api"
+	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
 
+	"github.com/kubernetes/dashboard/client"
 	"github.com/kubernetes/dashboard/resource/common"
+	"github.com/kubernetes/dashboard/resource/pod"
 )
+
+type FakeHeapsterClient struct {
+	client k8sClient.Interface
+}
+
+type FakeRequest struct{}
+
+func (FakeRequest) DoRaw() ([]byte, error) {
+	return nil, nil
+}
+
+func (c FakeHeapsterClient) Get(path string) client.RequestInterface {
+	return FakeRequest{}
+}
 
 func TestGetServiceDetail(t *testing.T) {
 	cases := []struct {
@@ -33,17 +50,18 @@ func TestGetServiceDetail(t *testing.T) {
 	}{
 		{
 			service:   &api.Service{},
-			namespace: "test-namespace", name: "test-name",
-			expectedActions: []string{"get"},
+			namespace: "test-namespace-1", name: "test-name",
+			expectedActions: []string{"get", "list"},
 			expected: &ServiceDetail{
 				TypeMeta: common.TypeMeta{Kind: common.ResourceKindService},
+				PodList:  pod.PodList{Pods: []pod.Pod{}},
 			},
 		}, {
 			service: &api.Service{ObjectMeta: api.ObjectMeta{
 				Name: "test-service", Namespace: "test-namespace",
 			}},
-			namespace: "test-namespace", name: "test-name",
-			expectedActions: []string{"get"},
+			namespace: "test-namespace-2", name: "test-name",
+			expectedActions: []string{"get", "list"},
 			expected: &ServiceDetail{
 				ObjectMeta: common.ObjectMeta{
 					Name:      "test-service",
@@ -51,14 +69,16 @@ func TestGetServiceDetail(t *testing.T) {
 				},
 				TypeMeta:         common.TypeMeta{Kind: common.ResourceKindService},
 				InternalEndpoint: common.Endpoint{Host: "test-service.test-namespace"},
+				PodList:          pod.PodList{Pods: []pod.Pod{}},
 			},
 		},
 	}
 
 	for _, c := range cases {
 		fakeClient := testclient.NewSimpleFake(c.service)
+		fakeHeapsterClient := FakeHeapsterClient{client: testclient.NewSimpleFake()}
 
-		actual, _ := GetServiceDetail(fakeClient, c.namespace, c.name)
+		actual, _ := GetServiceDetail(fakeClient, fakeHeapsterClient, c.namespace, c.name)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {
@@ -77,6 +97,75 @@ func TestGetServiceDetail(t *testing.T) {
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetServiceDetail(client, %#v, %#v) == \ngot %#v, \nexpected %#v", c.namespace,
 				c.name, actual, c.expected)
+		}
+	}
+}
+
+func TestGetServicePods(t *testing.T) {
+	firstSelector := map[string]string{"app": "selector-1"}
+	secondSelector := map[string]string{"app": "selector-2"}
+	cases := []struct {
+		namespace       string
+		serviceSelector map[string]string
+		podList         *api.PodList
+		expectedActions []string
+		expected        *pod.PodList
+	}{
+		{
+			"test-namespace-1", firstSelector,
+			&api.PodList{Items: []api.Pod{}}, []string{"list"}, &pod.PodList{Pods: []pod.Pod{}},
+		}, {
+			"test-namespace-2",
+			firstSelector,
+			&api.PodList{Items: []api.Pod{{ObjectMeta: api.ObjectMeta{
+				Name:   "test-pod",
+				Labels: secondSelector,
+			}}}},
+			[]string{"list"},
+			&pod.PodList{Pods: []pod.Pod{}},
+		}, {
+			"test-namespace-3",
+			firstSelector,
+			&api.PodList{Items: []api.Pod{{ObjectMeta: api.ObjectMeta{
+				Name:      "test-pod",
+				Labels:    firstSelector,
+				Namespace: "test-namespace-3",
+			}}}},
+			[]string{"list"},
+			&pod.PodList{Pods: []pod.Pod{{
+				ObjectMeta: common.ObjectMeta{
+					Name:      "test-pod",
+					Labels:    firstSelector,
+					Namespace: "test-namespace-3",
+				},
+				TypeMeta: common.TypeMeta{Kind: common.ResourceKindPod},
+			}}},
+		},
+	}
+
+	for _, c := range cases {
+		fakeClient := testclient.NewSimpleFake(c.podList)
+		fakeHeapsterClient := FakeHeapsterClient{client: testclient.NewSimpleFake()}
+
+		actual, _ := GetServicePods(fakeClient, fakeHeapsterClient, c.namespace, c.serviceSelector)
+
+		actions := fakeClient.Actions()
+		if len(actions) != len(c.expectedActions) {
+			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
+				len(c.expectedActions), len(actions))
+			continue
+		}
+
+		for i, verb := range c.expectedActions {
+			if actions[i].GetVerb() != verb {
+				t.Errorf("Unexpected action: %+v, expected %s",
+					actions[i], verb)
+			}
+		}
+
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("GetServicePods(client, heapsterClient, %#v, %#v) == \ngot %#v, \nexpected %#v",
+				c.namespace, c.serviceSelector, actual, c.expected)
 		}
 	}
 }
