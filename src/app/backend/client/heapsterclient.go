@@ -26,8 +26,13 @@ type HeapsterClient interface {
 	// Creates a new GET HTTP request to heapster, specified by the path param, to the V1 API
 	// endpoint. The path param is without the API prefix, e.g.,
 	// /model/namespaces/default/pod-list/foo/metrics/memory-usage
+	Get(path string) RequestInterface
+}
 
-	Get(path string) *restclient.Request
+// RequestInterface is an interface that allows to make operations on pure request object.
+// Separation is done to allow testing.
+type RequestInterface interface {
+	DoRaw() ([]byte, error)
 }
 
 // InClusterHeapsterClient is an in-cluster implementation of a Heapster client. Talks with Heapster
@@ -37,7 +42,7 @@ type InClusterHeapsterClient struct {
 }
 
 // InClusterHeapsterClient.Get creates request to given path.
-func (c InClusterHeapsterClient) Get(path string) *restclient.Request {
+func (c InClusterHeapsterClient) Get(path string) RequestInterface {
 	return c.client.Get().Prefix("proxy").
 		Namespace("kube-system").
 		Resource("services").
@@ -52,7 +57,7 @@ type RemoteHeapsterClient struct {
 }
 
 // RemoteHeapsterClient.Get creates request to given path.
-func (c RemoteHeapsterClient) Get(path string) *restclient.Request {
+func (c RemoteHeapsterClient) Get(path string) RequestInterface {
 	return c.client.Get().Suffix(path)
 }
 
