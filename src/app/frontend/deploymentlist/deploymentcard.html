@@ -60,6 +60,12 @@ limitations under the License.
         <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
       </div>
     </kd-resource-card-column>
+    <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
+      <kd-resource-card-menu>
+        <kd-resource-card-delete-menu-item resource-kind-name="Deployment">
+        </kd-resource-card-delete-menu-item>
+      </kd-resource-card-menu>
+    </kd-resource-card-column>
   </kd-resource-card-columns>
   <kd-resource-card-footer ng-if="::$ctrl.hasWarnings()">
       <div ng-repeat="warning in ::$ctrl.deployment.pods.warnings">

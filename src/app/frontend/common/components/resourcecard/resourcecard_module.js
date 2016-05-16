@@ -12,8 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import resourceModule from 'common/resource/resource_module';
 import {resourceCardComponent} from './resourcecard_component';
 import {resourceCardListComponent} from './resourcecardlist_component';
+import {resourceCardMenuComponent} from './resourcecardmenu_component';
+import {resourceCardDeleteMenuItemComponent} from './resourcecarddeletemenuitem_component';
 import {resourceCardColumnComponent} from './resourcecardcolumn_component';
 import {resourceCardColumnsComponent} from './resourcecardcolumns_component';
 import {resourceCardHeaderColumnComponent} from './resourcecardheadercolumn_component';
@@ -29,9 +32,13 @@ export default angular
         'kubernetesDashboard.common.components.resourcecard',
         [
           'ngMaterial',
+          'ui.router',
+          resourceModule.name,
         ])
     .component('kdResourceCard', resourceCardComponent)
     .component('kdResourceCardList', resourceCardListComponent)
+    .component('kdResourceCardMenu', resourceCardMenuComponent)
+    .component('kdResourceCardDeleteMenuItem', resourceCardDeleteMenuItemComponent)
     .component('kdResourceCardColumn', resourceCardColumnComponent)
     .component('kdResourceCardColumns', resourceCardColumnsComponent)
     .component('kdResourceCardHeaderColumn', resourceCardHeaderColumnComponent)

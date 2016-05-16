@@ -22,8 +22,6 @@ describe('Replication controller card menu controller', () => {
   let ctrl;
   /** @type {!ui.router.$state} */
   let state;
-  /** @type {!angular.Scope} */
-  let scope;
   /** @type
    * {!replicationcontrollerdetail/replicationcontroller_service.ReplicationControllerService} */
   let kdReplicationControllerService;
@@ -31,15 +29,13 @@ describe('Replication controller card menu controller', () => {
   beforeEach(() => {
     angular.mock.module(replicationControllerListModule.name);
 
-    angular.mock.inject(
-        ($componentController, $state, _kdReplicationControllerService_, $rootScope) => {
-          state = $state;
-          kdReplicationControllerService = _kdReplicationControllerService_;
-          scope = $rootScope;
-          ctrl = $componentController('kdReplicationControllerCardMenu', null, {
-            replicationController: {objectMeta: {name: 'foo-name', namespace: 'foo-namespace'}},
-          });
-        });
+    angular.mock.inject(($componentController, $state, _kdReplicationControllerService_) => {
+      state = $state;
+      kdReplicationControllerService = _kdReplicationControllerService_;
+      ctrl = $componentController('kdReplicationControllerCardMenu', null, {
+        replicationController: {objectMeta: {name: 'foo-name', namespace: 'foo-namespace'}},
+      });
+    });
   });
 
   it('should view details', () => {
@@ -65,22 +61,6 @@ describe('Replication controller card menu controller', () => {
     // then
     expect(openMenuFn).toHaveBeenCalledWith(event);
   });
-
-  it('should reload on successful delete', angular.mock.inject(($q) => {
-    // given
-    let deferred = $q.defer();
-    spyOn(state, 'reload');
-    spyOn(kdReplicationControllerService, 'showDeleteDialog').and.returnValue(deferred.promise);
-
-    // when
-    ctrl.showDeleteDialog();
-    deferred.resolve();
-
-    // then
-    expect(state.reload).not.toHaveBeenCalled();
-    scope.$apply();
-    expect(state.reload).toHaveBeenCalled();
-  }));
 
   it('should show update replicas dialog', () => {
     // given

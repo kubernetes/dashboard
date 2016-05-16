@@ -86,6 +86,8 @@ backendApi.EventList;
 
 /**
  * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
  *   message: string,
  *   sourceComponent: string,
  *   sourceHost: string,

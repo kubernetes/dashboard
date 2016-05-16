@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card>
+<kd-resource-card object-meta="$ctrl.replicaSet.objectMeta" type-meta="$ctrl.replicaSet.typeMeta">
   <kd-resource-card-status layout="row">
     <md-icon class="material-icons md-warn"
              ng-if="::$ctrl.hasWarnings()">
@@ -60,6 +60,12 @@ limitations under the License.
       <div ng-repeat="image in ::$ctrl.replicaSet.containerImages track by $index">
         <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
       </div>
+    </kd-resource-card-column>
+    <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
+      <kd-resource-card-menu>
+        <kd-resource-card-delete-menu-item resource-kind-name="Replica Set">
+        </kd-resource-card-delete-menu-item>
+      </kd-resource-card-menu>
     </kd-resource-card-column>
   </kd-resource-card-columns>
   <kd-resource-card-footer ng-if="::$ctrl.hasWarnings()">

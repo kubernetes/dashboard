@@ -14,17 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card-menu>
-  <md-menu-item>
-    <md-button ng-click="$ctrl.viewDetails()">
-      View details
-    </md-button>
-  </md-menu-item>
-  <md-menu-item>
-    <md-button ng-click="$ctrl.showUpdateReplicasDialog()">
-      Edit pod count
-    </md-button>
-  </md-menu-item>
-  <kd-resource-card-delete-menu-item resource-kind-name="Replication Controller">
-  </kd-resource-card-delete-menu-item>
+<md-menu>
+  <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button">
+    <md-icon md-font-library="material-icons">more_vert</md-icon>
+    <md-tooltip>Actions</md-tooltip>
+  </md-button>
+  <md-menu-content ng-transclude>
+  </md-menu-content>
 </md-menu>

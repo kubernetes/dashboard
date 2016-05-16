@@ -92,6 +92,7 @@ const (
 	ResourceKindService               = "service"
 	ResourceKindDeployment            = "deployment"
 	ResourceKindPod                   = "pod"
+	ResourceKindEvent                 = "event"
 	ResourceKindReplicationController = "replicationcontroller"
 )
 
@@ -101,6 +102,7 @@ const (
 var kindToAPIPathMapping = map[string]string{
 	ResourceKindService:               "services",
 	ResourceKindPod:                   "pods",
+	ResourceKindEvent:                 "events",
 	ResourceKindReplicationController: "replicationcontrollers",
 	ResourceKindDeployment:            "deployments",
 	ResourceKindReplicaSet:            "replicasets",
