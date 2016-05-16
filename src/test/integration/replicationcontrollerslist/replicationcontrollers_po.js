@@ -14,13 +14,12 @@
 
 export default class ReplicationControllersPageObject {
   constructor() {
-    this.cardMenuButtonQuery =
-        `md-menu/button[contains(@class, 'kd-replicationcontroller-card-menu-button')]`;
-    this.cardErrorIconQuery = `span/md-icon[contains(@class, 'md-warn')]`;
-    this.cardDetailsPageLinkQuery = `a[contains(@class, 'kd-replicationcontroller-card-name')]`;
-    this.cardErrorsQuery = `span[contains(@class, 'kd-replicationcontroller-card-error')]`;
+    this.cardMenuButtonQuery = `kd-resource-card-menu//md-menu/button`;
+    this.cardErrorIconQuery = `md-icon[contains(@class, 'kd-error')]`;
+    this.cardDetailsPageLinkQuery = `a`;
+    this.cardErrorsQuery = `span[contains(@class, 'kd-error')]`;
     this.deleteAppButtonQuery =
-        by.xpath('//div[@aria-hidden="false"]/md-menu-content/md-menu-item[3]/button');
+        by.xpath('//div[@aria-hidden="false"]//kd-resource-card-delete-menu-item//button');
 
     this.deleteAppButton = element(this.deleteAppButtonQuery);
   }
@@ -32,7 +31,8 @@ export default class ReplicationControllersPageObject {
    * @return {!Element}
    */
   getElementByAppName(xpathString, appName, isArray) {
-    let elemQuery = by.xpath(`//*[text()='${appName}']/ancestor::md-card-content//${xpathString}`);
+    let elemQuery = by.xpath(
+        `//*[@href='#/replicationcontrollers/default/${appName}']/ancestor::kd-resource-card//${xpathString}`);
     if (isArray) {
       return element.all(elemQuery);
     }

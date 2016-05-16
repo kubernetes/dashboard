@@ -14,7 +14,7 @@
 
 import ReplicationControllerDetailActionBarController from 'replicationcontrollerdetail/replicationcontrollerdetailactionbar_controller';
 import replicationControllerDetailModule from 'replicationcontrollerdetail/replicationcontrollerdetail_module';
-import {stateName as replicationcontrollers} from 'replicationcontrollerlistdeprecated/replicationcontrollerlist_state';
+import {stateName as replicationcontrollers} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 import {stateName as deploy} from 'deploy/deploy_state';
 
 describe('Replication Controller Detail Action Bar controller', () => {

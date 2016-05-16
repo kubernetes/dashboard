@@ -16,4 +16,4 @@
 export const stateName = 'replicationcontrollers';
 
 /** Absolute URL of the state. */
-export const stateUrl = '/replicationcontrollersv2';
+export const stateUrl = '/replicationcontrollers';

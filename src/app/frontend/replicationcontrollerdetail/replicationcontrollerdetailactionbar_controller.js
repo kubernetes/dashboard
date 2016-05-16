@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {stateName as deploy} from 'deploy/deploy_state';
-import {stateName as replicationcontrollers} from 'replicationcontrollerlistdeprecated/replicationcontrollerlist_state';
+import {stateName as replicationcontrollers} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 
 /**
  * @final

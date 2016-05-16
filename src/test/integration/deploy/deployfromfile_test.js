@@ -13,17 +13,12 @@
 // limitations under the License.
 
 import DeployFromFilePageObject from './deployfromfile_po';
-import ZeroStatePageObject from '../zerostate/zerostate_po';
 
 describe('Deploy from file view', () => {
   /** @type {!DeployFromFilePageObject} */
   let page;
 
-  /** @type {ZeroStatePageObject} */
-  let zeroState;
-
   beforeEach(() => {
-    zeroState = new ZeroStatePageObject();
     page = new DeployFromFilePageObject();
 
     browser.get('#/deploy');
@@ -38,13 +33,4 @@ describe('Deploy from file view', () => {
     // then
     expect(page.inputContainer.getAttribute('class')).toContain('md-input-invalid');
   });
-
-  it('should be directed to zero state after clicking cancel', () => {
-    // when
-    page.cancelButton.click();
-
-    // then
-    expect(zeroState.deployButton.isPresent()).toBe(true);
-  });
-
 });
