@@ -19,7 +19,6 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/resource/common"
-	"github.com/kubernetes/dashboard/resource/event"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
@@ -208,23 +207,25 @@ func TestGetDaemonSetList(t *testing.T) {
 							Name:      "my-app-1",
 							Namespace: "namespace-1",
 						},
+						TypeMeta:          common.TypeMeta{Kind: common.ResourceKindDaemonSet},
 						ContainerImages:   []string{"my-container-image-1"},
 						InternalEndpoints: []common.Endpoint{{Host: "my-app-1.namespace-1"}},
 						Pods: common.PodInfo{
 							Failed:   2,
 							Pending:  1,
 							Running:  1,
-							Warnings: []event.Event{},
+							Warnings: []common.Event{},
 						},
 					}, {
 						ObjectMeta: common.ObjectMeta{
 							Name:      "my-app-2",
 							Namespace: "namespace-2",
 						},
+						TypeMeta:          common.TypeMeta{Kind: common.ResourceKindDaemonSet},
 						ContainerImages:   []string{"my-container-image-2"},
 						InternalEndpoints: []common.Endpoint{{Host: "my-app-2.namespace-2"}},
 						Pods: common.PodInfo{
-							Warnings: []event.Event{},
+							Warnings: []common.Event{},
 						},
 					},
 				},
