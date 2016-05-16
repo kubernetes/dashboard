@@ -20,7 +20,6 @@ import (
 	"github.com/kubernetes/dashboard/client"
 	"github.com/kubernetes/dashboard/resource/common"
 	"github.com/kubernetes/dashboard/resource/pod"
-	"github.com/kubernetes/dashboard/resource/replicationcontroller"
 	resourceService "github.com/kubernetes/dashboard/resource/service"
 	"k8s.io/kubernetes/pkg/api"
 	unversioned "k8s.io/kubernetes/pkg/api/unversioned"
@@ -48,7 +47,7 @@ type DaemonSetDetail struct {
 	Pods pod.PodList `json:"pods"`
 
 	// Detailed information about service related to Daemon Set.
-	Services []resourceService.Service `json:"services"`
+	ServiceList resourceService.ServiceList `json:"serviceList"`
 
 	// True when the data contains at least one pod with metrics information, false otherwise.
 	HasMetrics bool `json:"hasMetrics"`
@@ -81,16 +80,17 @@ func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient client.Heapst
 	}
 
 	daemonSetDetail := &DaemonSetDetail{
-		ObjectMeta:    common.CreateObjectMeta(daemonSet.ObjectMeta),
-		TypeMeta:      common.CreateTypeMeta(daemonSet.TypeMeta),
+		ObjectMeta:    common.NewObjectMeta(daemonSet.ObjectMeta),
+		TypeMeta:      common.NewTypeMeta(common.ResourceKindDaemonSet),
 		LabelSelector: daemonSet.Spec.Selector,
 		PodInfo:       getDaemonSetPodInfo(daemonSet, pods.Items),
+		ServiceList:   resourceService.ServiceList{Services: make([]resourceService.Service, 0)},
 	}
 
 	matchingServices := getMatchingServicesforDS(services.Items, daemonSet)
 
 	for _, service := range matchingServices {
-		daemonSetDetail.Services = append(daemonSetDetail.Services,
+		daemonSetDetail.ServiceList.Services = append(daemonSetDetail.ServiceList.Services,
 			getService(service, *daemonSet, pods.Items, nodes.Items))
 	}
 
@@ -181,40 +181,30 @@ func getService(service api.Service, daemonSet extensions.DaemonSet,
 }
 
 // Returns array of external endpoints for a daemon set.
+// Can't use common.GetExternalEndpoints for now because daemonset.spec.selector
+// is not resourceSelector (map[string]string)
 func getExternalEndpoints(daemonSet extensions.DaemonSet, pods []api.Pod,
 	service api.Service, nodes []api.Node) []common.Endpoint {
 	var externalEndpoints []common.Endpoint
-	daemonSetPods := filterDaemonSetPods(daemonSet, pods)
+	daemonSetPods := common.FilterPodsByLabelSelector(pods, daemonSet.Spec.Selector)
 
 	if service.Spec.Type == api.ServiceTypeNodePort {
-		externalEndpoints = replicationcontroller.GetNodePortEndpoints(daemonSetPods, service, nodes)
+		externalEndpoints = common.GetNodePortEndpoints(daemonSetPods, service, nodes)
 	} else if service.Spec.Type == api.ServiceTypeLoadBalancer {
 		for _, ingress := range service.Status.LoadBalancer.Ingress {
-			externalEndpoints = append(externalEndpoints, replicationcontroller.GetExternalEndpoint(ingress,
+			externalEndpoints = append(externalEndpoints, common.GetExternalEndpoint(ingress,
 				service.Spec.Ports))
 		}
 
 		if len(externalEndpoints) == 0 {
-			externalEndpoints = replicationcontroller.GetNodePortEndpoints(daemonSetPods, service, nodes)
+			externalEndpoints = common.GetNodePortEndpoints(daemonSetPods, service, nodes)
 		}
 	}
 
 	if len(externalEndpoints) == 0 && (service.Spec.Type == api.ServiceTypeNodePort ||
 		service.Spec.Type == api.ServiceTypeLoadBalancer) {
-		externalEndpoints = replicationcontroller.GetLocalhostEndpoints(service)
+		externalEndpoints = common.GetLocalhostEndpoints(service)
 	}
 
 	return externalEndpoints
-}
-
-// Returns pods that belong to specified daemon set.
-func filterDaemonSetPods(daemonSet extensions.DaemonSet,
-	allPods []api.Pod) []api.Pod {
-	var pods []api.Pod
-	for _, pod := range allPods {
-		if common.IsLabelSelectorMatching(pod.Labels, daemonSet.Spec.Selector) {
-			pods = append(pods, pod)
-		}
-	}
-	return pods
 }

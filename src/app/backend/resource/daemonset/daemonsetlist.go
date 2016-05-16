@@ -19,7 +19,6 @@ import (
 
 	"github.com/kubernetes/dashboard/resource/common"
 	"github.com/kubernetes/dashboard/resource/event"
-	"github.com/kubernetes/dashboard/resource/replicationcontroller"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
@@ -134,10 +133,10 @@ func getDaemonSetList(daemonSets []extensions.DaemonSet,
 
 		daemonSetList.DaemonSets = append(daemonSetList.DaemonSets,
 			DaemonSet{
-				ObjectMeta:        common.CreateObjectMeta(daemonSet.ObjectMeta),
-				TypeMeta:          common.CreateTypeMeta(daemonSet.TypeMeta),
+				ObjectMeta:        common.NewObjectMeta(daemonSet.ObjectMeta),
+				TypeMeta:          common.NewTypeMeta(common.ResourceKindDaemonSet),
 				Pods:              podInfo,
-				ContainerImages:   replicationcontroller.GetContainerImages(&daemonSet.Spec.Template.Spec),
+				ContainerImages:   common.GetContainerImages(&daemonSet.Spec.Template.Spec),
 				InternalEndpoints: internalEndpoints,
 				ExternalEndpoints: externalEndpoints,
 			})

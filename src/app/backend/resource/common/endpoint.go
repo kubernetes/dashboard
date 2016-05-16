@@ -40,22 +40,22 @@ func GetExternalEndpoints(resourceSelector map[string]string, allPods []api.Pod,
 	resourcePods := FilterPodsBySelector(allPods, resourceSelector)
 
 	if service.Spec.Type == api.ServiceTypeNodePort {
-		externalEndpoints = getNodePortEndpoints(resourcePods, service, nodes)
+		externalEndpoints = GetNodePortEndpoints(resourcePods, service, nodes)
 	} else if service.Spec.Type == api.ServiceTypeLoadBalancer {
 		for _, ingress := range service.Status.LoadBalancer.Ingress {
-			externalEndpoints = append(externalEndpoints, getExternalEndpoint(
+			externalEndpoints = append(externalEndpoints, GetExternalEndpoint(
 				ingress, service.Spec.Ports))
 		}
 
 		if len(externalEndpoints) == 0 {
-			externalEndpoints = getNodePortEndpoints(resourcePods,
+			externalEndpoints = GetNodePortEndpoints(resourcePods,
 				service, nodes)
 		}
 	}
 
 	if len(externalEndpoints) == 0 && (service.Spec.Type == api.ServiceTypeNodePort ||
 		service.Spec.Type == api.ServiceTypeLoadBalancer) {
-		externalEndpoints = getLocalhostEndpoints(service)
+		externalEndpoints = GetLocalhostEndpoints(service)
 	}
 
 	return externalEndpoints
@@ -80,7 +80,7 @@ func GetInternalEndpoint(serviceName, namespace string, ports []api.ServicePort)
 }
 
 // Returns array of external endpoints for specified pods.
-func getNodePortEndpoints(pods []api.Pod, service api.Service, nodes []api.Node) []Endpoint {
+func GetNodePortEndpoints(pods []api.Pod, service api.Service, nodes []api.Node) []Endpoint {
 	var externalEndpoints []Endpoint
 	var addresses []api.NodeAddress
 
@@ -113,7 +113,7 @@ func getNodePortEndpoints(pods []api.Pod, service api.Service, nodes []api.Node)
 }
 
 // Returns localhost endpoints for specified node port or load balancer service.
-func getLocalhostEndpoints(service api.Service) []Endpoint {
+func GetLocalhostEndpoints(service api.Service) []Endpoint {
 	var externalEndpoints []Endpoint
 	for _, port := range service.Spec.Ports {
 		externalEndpoints = append(externalEndpoints, Endpoint{
@@ -130,7 +130,7 @@ func getLocalhostEndpoints(service api.Service) []Endpoint {
 }
 
 // Returns external endpoint name for the given service properties.
-func getExternalEndpoint(ingress api.LoadBalancerIngress, ports []api.ServicePort) Endpoint {
+func GetExternalEndpoint(ingress api.LoadBalancerIngress, ports []api.ServicePort) Endpoint {
 	var host string
 	if ingress.Hostname != "" {
 		host = ingress.Hostname

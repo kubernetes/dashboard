@@ -94,6 +94,7 @@ const (
 	ResourceKindPod                   = "pod"
 	ResourceKindEvent                 = "event"
 	ResourceKindReplicationController = "replicationcontroller"
+	ResourceKindDaemonSet             = "daemonset"
 )
 
 // Mapping from resource kind to K8s apiserver API path. This is mostly pluralization, because
@@ -106,24 +107,40 @@ var kindToAPIPathMapping = map[string]string{
 	ResourceKindReplicationController: "replicationcontrollers",
 	ResourceKindDeployment:            "deployments",
 	ResourceKindReplicaSet:            "replicasets",
+	ResourceKindDaemonSet:             "daemonsets",
 }
 
-// IsLabelSelectorMatching returns true when an object with the given
+// IsSelectorMatching returns true when an object with the given
 // selector targets the same Resources (or subset) that
 // the tested object with the given selector.
-func IsLabelSelectorMatching(labelSelector map[string]string,
+func IsSelectorMatching(labelSelector map[string]string,
 	testedObjectLabels map[string]string) bool {
 
-	// If there are no label selectors, then assume it targets different Resource.
+	// If service has no selectors, then assume it targets different Resource.
 	if len(labelSelector) == 0 {
 		return false
 	}
-
 	for label, value := range labelSelector {
 		if rsValue, ok := testedObjectLabels[label]; !ok || rsValue != value {
 			return false
 		}
 	}
+	return true
+}
 
+// Returns true when a resrouce (Service / Pod) with the given selector targets
+// the same Pod (or itself) that a Daemon Set with the given selector.
+func IsLabelSelectorMatching(selector map[string]string,
+	labelSelector *unversioned.LabelSelector) bool {
+
+	// If the resrouce has no selectors, then assume it targets different Pods.
+	if len(selector) == 0 {
+		return false
+	}
+	for label, value := range selector {
+		if rsValue, ok := labelSelector.MatchLabels[label]; !ok || rsValue != value {
+			return false
+		}
+	}
 	return true
 }
