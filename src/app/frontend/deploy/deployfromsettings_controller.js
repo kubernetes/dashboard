@@ -177,9 +177,9 @@ export default class DeployFromSettingsController {
     /**
      * @export
      * @type string
-     * @desc app name help text in deploy page
+     * @desc User help text for the "App name" on the deploy page.
      */
-    this.MSG_HELLO_WORLD = goog.getMsg(
+    this.MSG_DEPLOY_APP_NAME_USER_HELP = goog.getMsg(
         `An 'app' label with this value will be added to the Replication Controller and Service that get deployed.`);
   }
 

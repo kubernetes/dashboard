@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE translationbundle>
 <translationbundle lang="cs">
-	<translation id="2869930599919902352" key="MSG_HELLO_WORLD" source="/home/mirchev/go_workspace/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="app name help text in deploy page">An 'app' label with this value will be added to the Replication Controller and Service that get deployed.</translation>
+	<translation id="8895655645940102616" key="MSG_DEPLOY_APP_NAME_USER_HELP" source="/home/mirchev/go_workspace/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="User help text for the &quot;App name&quot; on the deploy page.">An 'app' label with this value will be added to the Replication Controller and Service that get deployed.</translation>
 </translationbundle>
