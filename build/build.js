@@ -22,9 +22,9 @@ import gulpHtmlmin from 'gulp-htmlmin';
 import gulpUglify from 'gulp-uglify';
 import gulpIf from 'gulp-if';
 import gulpUseref from 'gulp-useref';
+import GulpRevAll from 'gulp-rev-all';
+import mergeStream from 'merge-stream';
 import path from 'path';
-import RevAll from 'gulp-rev-all';
-import runTasks from 'run-sequence';
 import uglifySaveLicense from 'uglify-save-license';
 
 import conf from './conf';
@@ -39,25 +39,32 @@ gulp.task('build', ['backend:prod', 'build-frontend']);
  */
 gulp.task('build:cross', ['backend:prod:cross', 'build-frontend:cross']);
 
+/**
+ * Builds production version of the frontend application for the default architecture.
+ */
 gulp.task(
     'build-frontend', ['localize', 'locales-for-backend'], function() { return doRevision(); });
 
+/**
+ * Builds production version of the frontend application for all supported architectures.
+ */
 gulp.task('build-frontend:cross', ['localize:cross', 'locales-for-backend:cross'], function() {
   return doRevision();
 });
 
 /**
- * Create a subdirectory for each locale in the default arch directory.
+ * Localizes all pre-created frontend copies for the default arch, so that they are ready to serve.
  */
-gulp.task('localize', ['distribute-files'], function(doneFn) {
-  localize([path.join(conf.paths.distPre, conf.arch.default, 'public')], doneFn);
+gulp.task('localize', ['frontend-copies'], function() {
+  return localize([path.join(conf.paths.distPre, conf.arch.default, 'public')]);
 });
 
 /**
- * Create a subdirectory for each locale in each of the arch directories.
+ * Localizes all pre-created frontend copies in all cross-arch directories, so that they are ready
+ * to serve.
  */
-gulp.task('localize:cross', ['distribute-files:cross'], function(doneFn) {
-  localize(conf.arch.list.map((arch) => path.join(conf.paths.distPre, arch, 'public')), doneFn);
+gulp.task('localize:cross', ['frontend-copies:cross'], function() {
+  return localize(conf.arch.list.map((arch) => path.join(conf.paths.distPre, arch, 'public')));
 });
 
 /**
@@ -65,7 +72,7 @@ gulp.task('localize:cross', ['distribute-files:cross'], function(doneFn) {
  * This configuration file is then used by the backend to localize dashboard.
  */
 gulp.task('locales-for-backend', ['clean-dist'], function() {
-  return localesForBackend([conf.paths.distPublic]);
+  return localesForBackend([conf.paths.dist]);
 });
 
 /**
@@ -73,25 +80,25 @@ gulp.task('locales-for-backend', ['clean-dist'], function() {
  * This configuration file is then used by the backend to localize dashboard.
  */
 gulp.task('locales-for-backend:cross', ['clean-dist'], function() {
-  return localesForBackend(conf.paths.distPublicCross);
+  return localesForBackend(conf.paths.distCross);
 });
 
 /**
  * Builds production version of the frontend application for the default architecture
- * and places it under .tmp, preparing it for localization and revision.
+ * (one copy per locale) and plcaes it under .tmp/dist , preparing it for localization and revision.
  */
-gulp.task('distribute-files', ['fonts', 'icons', 'assets', 'index:prod', 'clean-dist'], function() {
-  return distributeFiles([path.join(conf.paths.distPre, conf.arch.default, 'public')]);
+gulp.task('frontend-copies', ['fonts', 'icons', 'assets', 'index:prod', 'clean-dist'], function() {
+  return createFrontendCopies([path.join(conf.paths.distPre, conf.arch.default, 'public')]);
 });
 
 /**
  * Builds production versions of the frontend application for all architecures
- * and places them under .tmp, preparing them for localization and revision.
+ * (one copy per locale) and places them under .tmp, preparing them for localization and revision.
  */
 gulp.task(
-    'distribute-files:cross',
+    'frontend-copies:cross',
     ['fonts:cross', 'icons:cross', 'assets:cross', 'index:prod', 'clean-dist'], function() {
-      return distributeFiles(
+      return createFrontendCopies(
           conf.arch.list.map((arch) => path.join(conf.paths.distPre, arch, 'public')));
     });
 
@@ -139,16 +146,18 @@ gulp.task('clean', ['clean-dist'], function() {
 gulp.task('clean-dist', function() { return del([conf.paths.distRoot, conf.paths.distPre]); });
 
 /**
- * Builds production version of the frontend application.
+ * Builds production version of the frontend application and copies it to all
+ * the specified outputDirs, creating one copy per (outputDir x locale) tuple.
  *
  * Following steps are done here:
  *  1. Vendor CSS and JS files are concatenated and minified.
  *  2. index.html is minified.
- *  4. Everything is saved in the .tmp/dist directory, ready to be localized and revisioned.
+ *  3. Everything is saved in the .tmp/dist directory, ready to be localized and revisioned.
+ *
  * @param {!Array<string>} outputDirs
  * @return {stream}
  */
-function distributeFiles(outputDirs) {
+function createFrontendCopies(outputDirs) {
   // create an output for each locale
   let localizedOutputDirs = outputDirs.reduce((localizedDirs, outputDir) => {
     return localizedDirs.concat(
@@ -184,29 +193,27 @@ function distributeFiles(outputDirs) {
 function doRevision() {
   // Do not update references other than in index.html. Do not rev index.html itself.
   let revAll =
-      new RevAll({dontRenameFile: ['index.html'], dontSearchFile: [/^(?!.*index\.html$).*$/]});
+      new GulpRevAll({dontRenameFile: ['index.html'], dontSearchFile: [/^(?!.*index\.html$).*$/]});
   return gulp.src([path.join(conf.paths.distPre, '**'), '!**/assets/**/*'])
       .pipe(revAll.revision())
       .pipe(gulp.dest(conf.paths.distRoot));
 }
 
 /**
- * Replaces the main app.js proprietary logic with a localized version
- * for each supported language in each of the arch directories.
+ * Replaces the main app.js logic with a localized version for each supported language in each of
+ * the specified outputDirs.
  * @param {!Array<string>} outputDirs - list of all arch directories
- * @param {function(?Error=)} doneFn - callback
+ * @return {stream}
  */
-function localize(outputDirs, doneFn) {
-  let tasks = conf.translations.map((translation) => {
+function localize(outputDirs) {
+  let streams = conf.translations.map((translation) => {
     let localizedOutputDirs =
         outputDirs.map((outputDir) => { return path.join(outputDir, translation.key, 'static'); });
-    gulp.task(`localize:${translation.key}`, function(doneFn) {
-      gulp.src(path.join(conf.paths.i18nProd, translation.key, '*.js'))
-          .pipe(multiDest(localizedOutputDirs, doneFn));
-    });
-    return `localize:${translation.key}`;
+    return gulp.src(path.join(conf.paths.i18nProd, translation.key, '*.js'))
+        .pipe(multiDest(localizedOutputDirs));
   });
-  runTasks(tasks, doneFn);
+
+  return mergeStream.apply(null, streams);
 }
 
 /**
@@ -226,12 +233,7 @@ function localesForBackend(outputDirs) {
  * @return {stream}
  */
 function assets(outputDirs) {
-  // build for each language and cross-arch
-  let localizedOutputDirs = outputDirs.reduce((localizedDirs, outputDir) => {
-    return localizedDirs.concat(
-        conf.translations.map((translation) => { return path.join(outputDir, translation.key); }));
-  }, []);
-
+  let localizedOutputDirs = createLocalizedOutputs(outputDirs);
   return gulp.src(path.join(conf.paths.assets, '/**/*'), {base: conf.paths.app})
       .pipe(multiDest(localizedOutputDirs));
 }
@@ -242,11 +244,7 @@ function assets(outputDirs) {
  * @return {stream}
  */
 function icons(outputDirs) {
-  let localizedOutputDirs = outputDirs.reduce((localizedDirs, outputDir) => {
-    return localizedDirs.concat(conf.translations.map(
-        (translation) => { return path.join(outputDir, translation.key, 'static'); }));
-  }, []);
-
+  let localizedOutputDirs = createLocalizedOutputs(outputDirs, 'static');
   return gulp
       .src(
           path.join(conf.paths.materialIcons, '/**/*.+(woff2|woff|eot|ttf)'),
@@ -260,12 +258,26 @@ function icons(outputDirs) {
  * @return {stream}
  */
 function fonts(outputDirs) {
-  let localizedOutputDirs = outputDirs.reduce((localizedDirs, outputDir) => {
-    return localizedDirs.concat(conf.translations.map(
-        (translation) => { return path.join(outputDir, translation.key, 'fonts'); }));
-  }, []);
-
+  let localizedOutputDirs = createLocalizedOutputs(outputDirs, 'fonts');
   return gulp
       .src(path.join(conf.paths.robotoFonts, '/**/*.+(woff2)'), {base: conf.paths.robotoFonts})
       .pipe(multiDest(localizedOutputDirs));
+}
+
+/**
+ * Returns one subdirectory path for each supported locale inside all of the specified
+ * outputDirs. Optionally, a subdirectory structure can be passed to append after each locale path.
+ * @param {!Array<string>} outputDirs
+ * @param {undefined|string} opt_subdir - an optional sub directory inside each locale directory.
+ * @return {!Array<string>} localized output directories
+ */
+function createLocalizedOutputs(outputDirs, opt_subdir) {
+  return outputDirs.reduce((localizedDirs, outputDir) => {
+    return localizedDirs.concat(conf.translations.map((translation) => {
+      if (opt_subdir) {
+        return path.join(outputDir, translation.key, opt_subdir);
+      }
+      return path.join(outputDir, translation.key);
+    }));
+  }, []);
 }
