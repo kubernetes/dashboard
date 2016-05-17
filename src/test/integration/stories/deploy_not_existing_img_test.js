@@ -14,10 +14,8 @@
 
 import DeployPageObject from '../deploy/deploy_po';
 import DeleteReplicationControllerDialogObject from '../replicationcontrollerdetail/deletereplicationcontroller_po';
-import LogsPageObject from '../logs/logs_po';
 import ReplicationControllersPageObject from '../replicationcontrollerslist/replicationcontrollers_po';
 import ReplicationControllerDetailPageObject from '../replicationcontrollerdetail/replicationcontrollerdetail_po';
-import ZeroStatePageObject from '../zerostate/zerostate_po';
 
 /**
  * This integration test will check complete user story in given order:
@@ -32,10 +30,7 @@ import ZeroStatePageObject from '../zerostate/zerostate_po';
  *  - [Logs Page] - Check if pod logs show that pod is in pending state.
  *  - Clean up and delete created resources
  */
-// TODO(#494): Reenable this test when fixed.
-xdescribe('Deploy not existing image story', () => {
-  /** @type {!ZeroStatePageObject} */
-  let zeroStatePage;
+describe('Deploy not existing image story', () => {
 
   /** @type {!DeployPageObject} */
   let deployPage;
@@ -49,33 +44,19 @@ xdescribe('Deploy not existing image story', () => {
   /** @type {!ReplicationControllerDetailPageObject} */
   let replicationControllerDetailPage;
 
-  /** @type {!LogsPageObject} */
-  let logsPage;
-
-  let appName = 'test';
+  let appName = `test-${Date.now()}`;
   let containerImage = 'test';
 
   beforeAll(() => {
-    // For empty cluster this should actually redirect to zerostate page
-    browser.get('#/replicationcontrollers');
-
-    zeroStatePage = new ZeroStatePageObject();
     deployPage = new DeployPageObject();
     replicationControllersPage = new ReplicationControllersPageObject();
     deleteDialog = new DeleteReplicationControllerDialogObject();
     replicationControllerDetailPage = new ReplicationControllerDetailPageObject();
-    logsPage = new LogsPageObject();
   });
 
-  it('should go to deploy page', () => {
-    // when
-    zeroStatePage.deployButton.click();
-
-    // then
-    expect(browser.getCurrentUrl()).toContain('deploy');
-  });
-
-  it('should deploy app and go to replication controllers list page', () => {
+  it('should deploy app and go to replication controllers list page', (doneFn) => {
+    // For empty cluster this should actually redirect to zerostate page
+    browser.get('#/deploy');
     // given
     deployPage.appNameField.sendKeys(appName);
     deployPage.containerImageField.sendKeys(containerImage);
@@ -84,6 +65,7 @@ xdescribe('Deploy not existing image story', () => {
     deployPage.deployButton.click().then(() => {
       // then
       expect(browser.getCurrentUrl()).toContain('replicationcontrollers');
+      doneFn();
     });
   });
 
@@ -154,23 +136,17 @@ xdescribe('Deploy not existing image story', () => {
     });
   });
 
-  it('pod logs should show pending state', () => {
-    logsPage.logEntries.then((logEntries) => {
-      expect(logEntries.length).toBe(1);
-      let logEntryText = logEntries[0].getText();
-      expect(logEntryText).toContain('State: "Pending"');
-    });
-  });
-
   // Clean up and delete created resources
-  afterAll(() => {
+  afterAll((doneFn) => {
     let cardMenuButton = replicationControllersPage.getElementByAppName(
         replicationControllersPage.cardMenuButtonQuery, appName);
 
     browser.get('#/replicationcontrollers');
 
     cardMenuButton.click();
-    replicationControllersPage.deleteAppButton.click().then(
-        () => { deleteDialog.deleteAppButton.click(); });
+    replicationControllersPage.deleteAppButton.click().then(() => {
+      deleteDialog.deleteAppButton.click();
+      doneFn();
+    });
   });
 });

@@ -18,7 +18,6 @@ import remote from 'selenium-webdriver/remote';
 import DeployFromFilePageObject from '../deploy/deployfromfile_po';
 import ReplicationControllersPageObject from '../replicationcontrollerslist/replicationcontrollers_po';
 import DeleteReplicationControllerDialogObject from '../replicationcontrollerdetail/deletereplicationcontroller_po';
-import ZeroStatePageObject from '../zerostate/zerostate_po';
 
 // Test assumes, that there are no replication controllers in the cluster at the beginning.
 describe('Deploy from valid file user story test', () => {
@@ -28,9 +27,6 @@ describe('Deploy from valid file user story test', () => {
 
   /** @type {!ReplicationControllersPageObject} */
   let replicationControllersPage;
-
-  /** @type {!ZeroStatePageObject} */
-  let zeroStatePage;
 
   /** @type {!DeleteReplicationControllerDialogObject} */
   let deleteDialog;
@@ -43,7 +39,6 @@ describe('Deploy from valid file user story test', () => {
     deployFromFilePage = new DeployFromFilePageObject();
     replicationControllersPage = new ReplicationControllersPageObject();
     deleteDialog = new DeleteReplicationControllerDialogObject();
-    zeroStatePage = new ZeroStatePageObject();
     browser.get('#/deploy');
     // switches to deploy from file
     deployFromFilePage.deployFromFileRadioButton.click();
@@ -75,6 +70,5 @@ describe('Deploy from valid file user story test', () => {
     cardMenuButton.click();
     replicationControllersPage.deleteAppButton.click().then(
         () => { deleteDialog.deleteAppButton.click(); });
-    zeroStatePage.waitUntilZeroStatePageLoaded();
   });
 });

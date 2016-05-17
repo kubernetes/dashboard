@@ -15,7 +15,7 @@
 import DeployController from 'deploy/deploy_controller';
 import DeployFromSettingController from 'deploy/deployfromsettings_controller';
 import deployModule from 'deploy/deploy_module';
-import {stateName as replicationcontrollers} from 'replicationcontrollerlistdeprecated/replicationcontrollerlist_state';
+import {stateName as replicationcontrollers} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 
 describe('Deploy controller', () => {
   /** @type {!DeployController} */

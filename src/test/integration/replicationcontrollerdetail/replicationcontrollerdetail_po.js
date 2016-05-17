@@ -22,16 +22,16 @@ export default class ReplicationControllerDetailPageObject {
     this.mdTabsItemQuery = by.css('md-tabs');
     this.mdTabsItem = element(this.mdTabsItemQuery);
 
-    this.eventsTypeFilterQuery = by.model('ctrl.eventType');
+    this.eventsTypeFilterQuery = by.model('$ctrl.eventType');
     this.eventsTypeFilter = element(this.eventsTypeFilterQuery);
 
     this.eventsTypeWarningQuery = by.css('md-option[value="Warning"]');
     this.eventsTypeWarning = element(this.eventsTypeWarningQuery);
 
-    this.eventsTableQuery = by.xpath('//md-tab-content[2]//md-content/table');
+    this.eventsTableQuery = by.xpath('//kd-event-card-list');
     this.eventsTable = element(this.eventsTableQuery);
 
-    this.podLogsLinkQuery = by.css('td[kd-responsive-header="Logs"');
-    this.podLogsLink = element(this.podLogsLinkQuery).element(by.css('a'));
+    this.podLogsLinkQuery = by.xpath(`//a[contains(@href, 'logs')]`);
+    this.podLogsLink = element(this.podLogsLinkQuery);
   }
 }
