@@ -14,6 +14,7 @@
 
 import deployModule from 'deploy/deploy_module';
 import PortMappingsController from 'deploy/portmappings_controller';
+import * as serviceTypes from 'deploy/portmappings_controller';
 
 describe('PortMappingsController controller', () => {
   /** @type {!PortMappingsController} */
@@ -36,37 +37,75 @@ describe('PortMappingsController controller', () => {
     });
   });
 
-  it('should initialize first value', () => {
-    expect(ctrl.portMappings).toEqual([{port: null, targetPort: null, protocol: 'FOO'}]);
+  it('should be initialized without port mapping line', () => {
+    expect(ctrl.portMappings.length).toBe(0);
   });
 
-  it('should add new mappings when needed', () => {
+
+  it('should add or remove port mappings, depending on service type', () => {
+
+    // select internal service will add an empty port mapping
+    ctrl.serviceType = serviceTypes.INT_SERVICE;
+    ctrl.changeServiceType();
     expect(ctrl.portMappings.length).toBe(1);
 
-    ctrl.checkPortMapping(undefined, 0);
-    expect(ctrl.portMappings.length).toBe(1);
+    // select no service will remove all port mappings
+    ctrl.serviceType = serviceTypes.NO_SERVICE;
+    ctrl.changeServiceType();
+    expect(ctrl.portMappings.length).toBe(0);
+  });
 
+  it('should add one additional port mapping when ports are filled', () => {
+
+    // given is an empty port mapping line
+    ctrl.serviceType = serviceTypes.INT_SERVICE;
+    ctrl.changeServiceType();
+
+    // when filling
     ctrl.portMappings[0].port = 80;
     ctrl.portMappings[0].targetPort = 8080;
-
     ctrl.checkPortMapping(undefined, 0);
+
+    // then another line is added
     expect(ctrl.portMappings.length).toBe(2);
   });
 
-  it('should determine removability', () => {
+  it('should not allow removal if no port mapping line would be left over', () => {
+
+    // given is one (empty) port mapping line
+    ctrl.serviceType = serviceTypes.INT_SERVICE;
+    ctrl.changeServiceType();
+
+    // then it cannot be removed
     expect(ctrl.isRemovable(0)).toBe(false);
+  });
+
+  it('should allow removal of one line if another is left over ', () => {
+
+    // given is a filled and an empty port mapping line
+    ctrl.serviceType = serviceTypes.INT_SERVICE;
+    ctrl.changeServiceType();
     ctrl.portMappings[0].port = 80;
     ctrl.portMappings[0].targetPort = 8080;
     ctrl.checkPortMapping(undefined, 0);
+
+    // then the first line is removable
     expect(ctrl.isRemovable(0)).toBe(true);
   });
 
   it('should remove port mappings', () => {
+
+    // given is a filled and an empty port mapping line
+    ctrl.serviceType = serviceTypes.INT_SERVICE;
+    ctrl.changeServiceType();
     ctrl.portMappings[0].port = 80;
     ctrl.portMappings[0].targetPort = 8080;
     ctrl.checkPortMapping(undefined, 0);
-    expect(ctrl.portMappings.length).toBe(2);
+
+    // when removing the first line
     ctrl.remove(0);
+
+    // then the empty line is left over
     expect(ctrl.portMappings.length).toBe(1);
     expect(ctrl.portMappings[0].port).toBeNull();
   });
@@ -82,6 +121,8 @@ describe('PortMappingsController controller', () => {
     testData.forEach((testData) => {
       // given
       let [port, targetPort, portValidity, targetPortValidity] = testData;
+      ctrl.serviceType = serviceTypes.INT_SERVICE;
+      ctrl.changeServiceType();
       ctrl.portMappings[0].port = port;
       ctrl.portMappings[0].targetPort = targetPort;
 
@@ -92,5 +133,10 @@ describe('PortMappingsController controller', () => {
       expect(portMappingForm.port.$valid).toEqual(portValidity);
       expect(portMappingForm.targetPort.$valid).toEqual(targetPortValidity);
     });
+  });
+
+  it('should identify first index', () => {
+    expect(ctrl.isFirst(0)).toEqual(true);
+    expect(ctrl.isFirst(1)).toEqual(false);
   });
 });

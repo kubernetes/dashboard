@@ -13,6 +13,32 @@
 // limitations under the License.
 
 /**
+ * @typedef {{
+ *   label: string,
+ *   external: boolean
+ * }}
+ */
+let ServiceType;
+
+/** @type {ServiceType} */
+export const NO_SERVICE = {
+  label: 'None',
+  external: false
+};
+
+/** @type {ServiceType} */
+export const INT_SERVICE = {
+  label: 'Internal',
+  external: false
+};
+
+/** @type {ServiceType} */
+export const EXT_SERVICE = {
+  label: 'External',
+  external: true
+};
+
+/**
  * Controller for the port mappings directive.
  *
  * @final
@@ -24,7 +50,7 @@ export default class PortMappingsController {
      * Two way data binding from the scope.
      * @export {!Array<!backendApi.PortMapping>}
      */
-    this.portMappings = [this.newEmptyPortMapping_(this.protocols[0])];
+    this.portMappings = [];
 
     /**
      * Initialized from the scope.
@@ -33,10 +59,22 @@ export default class PortMappingsController {
     this.protocols;
 
     /**
-     * Initialized from the scope.
+     * Binding to outer scope.
      * @export {boolean}
      */
     this.isExternal;
+
+    /**
+     * Available service types
+     * @export {!Array<ServiceType>}
+     */
+    this.serviceTypes = [NO_SERVICE, INT_SERVICE, EXT_SERVICE];
+
+    /**
+     * Selected service type. Binding to outer scope.
+     * @export {ServiceType}
+     */
+    this.serviceType;
   }
 
   /**
@@ -126,4 +164,27 @@ export default class PortMappingsController {
    * @private
    */
   isPortMappingFilledOrEmpty_(portMapping) { return !portMapping.port === !portMapping.targetPort; }
+
+  /**
+   * Change the service type. Port mappings are adjusted and external flag.
+   * @export
+   */
+  changeServiceType() {
+    // add or remove port mappings
+    if (this.serviceType === NO_SERVICE) {
+      this.portMappings = [];
+    } else if (this.portMappings.length === 0) {
+      this.portMappings = [this.newEmptyPortMapping_(this.protocols[0])];
+    }
+
+    // set flag
+    this.isExternal = this.serviceType.external;
+  }
+
+  /**
+   * Returns true if the given port mapping is the first in the list.
+   * @param {number} index
+   * @export
+   */
+  isFirst(index) { return (index === 0); }
 }
