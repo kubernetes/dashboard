@@ -269,14 +269,27 @@ backendApi.DeleteReplicationControllerSpec;
  * @typedef {{
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
- *   status: string,
+ *   podPhase: string,
+ *   podIP: string,
+ *   restartCount: number,
+ *   metrics: backendApi.PodMetrics
+ * }}
+ */
+backendApi.Pod;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   containerImages: !Array<string>,
+ *   podPhase: string,
  *   podIP: string,
  *   nodeName: string,
  *   restartCount: number,
  *   metrics: backendApi.PodMetrics
  * }}
  */
-backendApi.Pod;
+backendApi.PodDetail;
 
 /**
  * @typedef {{

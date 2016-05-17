@@ -37,17 +37,11 @@ type Pod struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
 	TypeMeta   common.TypeMeta   `json:"typeMeta"`
 
-	// Container images of the Pod.
-	ContainerImages []string `json:"containerImages"`
-
 	// Status of the Pod. See Kubernetes API for reference.
 	PodPhase api.PodPhase `json:"podPhase"`
 
 	// IP address of the Pod.
 	PodIP string `json:"podIP"`
-
-	// Name of the Node this Pod runs on.
-	NodeName string `json:"nodeName"`
 
 	// Count of containers restarts.
 	RestartCount int `json:"restartCount"`
@@ -92,28 +86,9 @@ func CreatePodList(pods []api.Pod, heapsterClient client.HeapsterClient) PodList
 	}
 
 	for _, pod := range pods {
-		podDetail := Pod{
-			ObjectMeta:   common.NewObjectMeta(pod.ObjectMeta),
-			TypeMeta:     common.NewTypeMeta(common.ResourceKindPod),
-			PodPhase:     pod.Status.Phase,
-			PodIP:        pod.Status.PodIP,
-			RestartCount: getRestartCount(pod),
-		}
-		if metrics != nil && metrics.MetricsMap[pod.Namespace] != nil {
-			metric := metrics.MetricsMap[pod.Namespace][pod.Name]
-			podDetail.Metrics = &metric
-		}
+		podDetail := ToPod(&pod, metrics)
 		podList.Pods = append(podList.Pods, podDetail)
 	}
 
 	return podList
-}
-
-// Gets restart count of given pod (total number of its containers restarts).
-func getRestartCount(pod api.Pod) int {
-	restartCount := 0
-	for _, containerStatus := range pod.Status.ContainerStatuses {
-		restartCount += containerStatus.RestartCount
-	}
-	return restartCount
 }
