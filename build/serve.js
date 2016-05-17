@@ -132,9 +132,10 @@ gulp.task('serve:prod', ['spawn-backend:prod']);
  * Spawns new backend application process and finishes the task immediately. Previously spawned
  * backend process is killed beforehand, if any. The frontend pages are served by BrowserSync.
  */
-gulp.task('spawn-backend', ['backend', 'kill-backend'], function() {
+gulp.task('spawn-backend', ['backend', 'kill-backend', 'locales-for-backend:dev'], function() {
   runningBackendProcess = child.spawn(
-      path.join(conf.paths.serve, conf.backend.binaryName), backendDevArgs, {stdio: 'inherit'});
+      path.join(conf.paths.serve, conf.backend.binaryName), backendDevArgs,
+      {stdio: 'inherit', cwd: conf.paths.serve});
 
   runningBackendProcess.on('exit', function() {
     // Mark that there is no backend process running anymore.
@@ -156,6 +157,14 @@ gulp.task('spawn-backend:prod', ['build-frontend', 'backend', 'kill-backend'], f
     // Mark that there is no backend process running anymore.
     runningBackendProcess = null;
   });
+});
+
+/**
+ * Copies the locales configuration to the serve directory.
+ * In development, this configuration plays no significant role and serves as a stub.
+ */
+gulp.task('locales-for-backend:dev', function() {
+  return gulp.src(path.join(conf.paths.base, 'i18n', '*.json')).pipe(gulp.dest(conf.paths.serve));
 });
 
 /**
