@@ -14,13 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
+<md-input-container class="md-block">
+  <label>Service</label>
+<md-select ng-model="ctrl.serviceType" ng-change="ctrl.changeServiceType()">
+  <md-option ng-repeat="serviceType in ctrl.serviceTypes" ng-value="serviceType">
+    {{serviceType.label}}
+  </md-option>
+</md-select>
+</md-input-container>
 <div ng-repeat="portMapping in ctrl.portMappings">
   <ng-form name="portMappingForm" layout="row">
     <md-input-container flex="50" class="kd-deploy-input-row">
       <label>Port</label>
       <input ng-model="portMapping.port" ng-change="ctrl.checkPortMapping(portMappingForm, $index)"
-             type="number" min="1" max="65535" name="port">
-      <ng-messages for="portMappingForm.port.$error" role="alert" multiple>
+             type="number" min="1" max="65535" name="port" ng-required="ctrl.isFirst($index)">
+      <ng-messages for="portMappingForm.port.$error" role="alert" >
         <ng-message when="number">Port must be an integer.</ng-message>
         <ng-message when="min">Port must greater than 0.</ng-message>
         <ng-message when="max">Port must less than 65536.</ng-message>
@@ -32,8 +40,8 @@ limitations under the License.
       <label>Target port</label>
       <input ng-model="portMapping.targetPort"
              ng-change="ctrl.checkPortMapping(portMappingForm, $index)"
-             type="number" min="1" max="65535" name="targetPort">
-      <ng-messages for="portMappingForm.targetPort.$error" role="alert" multiple>
+             type="number" min="1" max="65535" name="targetPort" ng-required="ctrl.isFirst($index)">
+      <ng-messages for="portMappingForm.targetPort.$error" role="alert" >
         <ng-message when="number">Target port must be an integer.</ng-message>
         <ng-message when="min">Target port must greater than 0.</ng-message>
         <ng-message when="max">Target port must less than 65536.</ng-message>
