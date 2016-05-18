@@ -207,6 +207,10 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 		deploymentsWs.GET("").
 			To(apiHandler.handleGetDeployments).
 			Writes(deployment.DeploymentList{}))
+	deploymentsWs.Route(
+		deploymentsWs.GET("/{namespace}/{deployment}").
+			To(apiHandler.handleGetDeploymentDetail).
+			Writes(deployment.DeploymentDetail{}))
 	wsContainer.Add(deploymentsWs)
 	daemonSetWs := new(restful.WebService)
 	daemonSetWs.Filter(wsLogger)
@@ -488,6 +492,22 @@ func (apiHandler *ApiHandler) handleGetDeployments(
 	}
 
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get Deployment detail API call.
+func (apiHandler *ApiHandler) handleGetDeploymentDetail(
+	request *restful.Request, response *restful.Response) {
+
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("deployment")
+	result, err := deployment.GetDeploymentDetail(apiHandler.client, namespace,
+		name)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Pod list API call.
