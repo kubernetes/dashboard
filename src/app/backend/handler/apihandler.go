@@ -176,6 +176,11 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 			Writes(deployment.DeploymentList{}))
 
 	apiV1Ws.Route(
+		apiV1Ws.GET("/deployment/{namespace}/{deployment}").
+			To(apiHandler.handleGetDeploymentDetail).
+			Writes(deployment.DeploymentDetail{}))
+
+	apiV1Ws.Route(
 		apiV1Ws.GET("/daemonset").
 			To(apiHandler.handleGetDaemonSetList).
 			Writes(daemonset.DaemonSetList{}))
@@ -418,6 +423,22 @@ func (apiHandler *ApiHandler) handleGetDeployments(
 	}
 
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get Deployment detail API call.
+func (apiHandler *ApiHandler) handleGetDeploymentDetail(
+	request *restful.Request, response *restful.Response) {
+
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("deployment")
+	result, err := deployment.GetDeploymentDetail(apiHandler.client, namespace,
+		name)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Pod list API call.
