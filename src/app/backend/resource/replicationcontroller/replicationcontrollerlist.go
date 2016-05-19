@@ -126,7 +126,7 @@ func getReplicationControllerList(replicationControllers []api.ReplicationContro
 		matchingPods := make([]api.Pod, 0)
 		for _, pod := range pods {
 			if pod.ObjectMeta.Namespace == replicationController.ObjectMeta.Namespace &&
-				common.IsLabelSelectorMatching(replicationController.Spec.Selector, pod.ObjectMeta.Labels) {
+				common.IsSelectorMatching(replicationController.Spec.Selector, pod.ObjectMeta.Labels) {
 				matchingPods = append(matchingPods, pod)
 			}
 		}
@@ -156,7 +156,7 @@ func getMatchingServices(services []api.Service,
 	var matchingServices []api.Service
 	for _, service := range services {
 		if service.ObjectMeta.Namespace == replicationController.ObjectMeta.Namespace &&
-			common.IsLabelSelectorMatching(service.Spec.Selector, replicationController.Spec.Selector) {
+			common.IsSelectorMatching(service.Spec.Selector, replicationController.Spec.Selector) {
 
 			matchingServices = append(matchingServices, service)
 		}
