@@ -14,9 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-content-card ng-if=$ctrl.workloads.deploymentList.deployments>
+<kd-content-card>
   <kd-title>
-    Deployments
+    <a ui-sref="services">
+      Services
+    </a>
+  </kd-title>
+  <kd-content>
+    <kd-service-card-list services="$ctrl.workloads.serviceList.services">
+    </kd-service-card-list>
+  </kd-content>
+</kd-content-card>
+
+<kd-content-card ng-if=$ctrl.workloads.deploymentList.deployments.length>
+  <kd-title>
+    <a ui-sref="deployments">
+      Deployments
+    </a>
   </kd-title>
   <kd-content>
     <kd-deployment-card-list deployments="$ctrl.workloads.deploymentList.deployments">
@@ -24,9 +38,11 @@ limitations under the License.
   </kd-content>
 </kd-content-card>
 
-<kd-content-card>
+<kd-content-card ng-if="$ctrl.workloads.replicaSetList.replicaSets.length">
   <kd-title>
-    Replica Sets
+    <a ui-sref="replicasets">
+      Replica Sets
+    </a>
   </kd-title>
   <kd-content>
     <kd-replica-set-card-list replica-sets="$ctrl.workloads.replicaSetList.replicaSets">
@@ -34,20 +50,24 @@ limitations under the License.
   </kd-content>
 </kd-content-card>
 
-<kd-content-card>
+<kd-content-card ng-if="$ctrl.workloads.replicationControllerList.replicationControllers.length">
   <kd-title>
-    Replication Controllers
+    <a ui-sref="replicationcontrollers">
+      Replication Controllers
+    </a>
   </kd-title>
   <kd-content>
     <kd-replication-controller-card-list
-        replication-controllers="$ctrl.workloads.replicationControllerList.replicationControllers">
+            replication-controllers="$ctrl.workloads.replicationControllerList.replicationControllers">
     </kd-replication-controller-card-list>
   </kd-content>
 </kd-content-card>
 
-<kd-content-card>
+<kd-content-card ng-if="$ctrl.workloads.podList.pods.length">
   <kd-title>
-    Pods
+    <a ui-sref="pods">
+      Pods
+    </a>
   </kd-title>
   <kd-content>
     <kd-pod-card-list pod-list="$ctrl.workloads.podList">

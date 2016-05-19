@@ -18,6 +18,7 @@
 export class ReplicaSetDetailController {
   /**
    * @param {!backendApi.ReplicaSetDetail} replicaSetDetail
+   * @ngInject
    */
   constructor(replicaSetDetail) {
     /** @export {!backendApi.ReplicaSetDetail} */

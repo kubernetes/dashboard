@@ -69,3 +69,18 @@ func GetServiceList(client client.Interface) (*ServiceList, error) {
 
 	return serviceList, nil
 }
+
+// GetServiceListFromChannels returns a list of all services in the cluster.
+func GetServiceListFromChannels(channels *common.ResourceChannels) (*ServiceList, error) {
+	services := <-channels.ServiceList.List
+	if err := <-channels.ServiceList.Error; err != nil {
+		return nil, err
+	}
+
+	serviceList := &ServiceList{Services: make([]Service, 0)}
+	for _, service := range services.Items {
+		serviceList.Services = append(serviceList.Services, ToService(&service))
+	}
+
+	return serviceList, nil
+}

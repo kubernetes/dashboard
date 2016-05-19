@@ -18,6 +18,7 @@
 export class ServiceListController {
   /**
    * @param {!backendApi.ServiceList} serviceList
+   * @ngInject
    */
   constructor(serviceList) {
     /** @export {!backendApi.ServiceList} */

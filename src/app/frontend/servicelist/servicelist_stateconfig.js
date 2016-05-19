@@ -16,6 +16,7 @@ import {ServiceListController} from './servicelist_controller';
 import {actionbarViewName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_component';
 import {stateName, stateUrl} from './servicelist_state';
+import {stateName as workloadsState} from 'workloads/workloads_state';
 
 /**
  * Configures states for the service list view.
@@ -33,6 +34,7 @@ export default function stateConfig($stateProvider) {
     data: {
       [breadcrumbsConfig]: {
         'label': 'Services',
+        'parent': workloadsState,
       },
     },
     views: {
@@ -49,6 +51,7 @@ export default function stateConfig($stateProvider) {
 /**
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource<!backendApi.ServiceList>}
+ * @ngInject
  */
 export function getServiceListResource($resource) {
   return $resource('api/v1/services');
@@ -57,6 +60,7 @@ export function getServiceListResource($resource) {
 /**
  * @param {!angular.Resource<!backendApi.ServiceList>} serviceListResource
  * @return {!angular.$q.Promise}
+ * @ngInject
  */
 export function resolveServiceList(serviceListResource) {
   return serviceListResource.get().$promise;
