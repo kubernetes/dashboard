@@ -40,4 +40,19 @@ export class VerberService {
   showDeleteDialog(resourceKindName, typeMeta, objectMeta) {
     return showDeleteDialog(this.mdDialog_, resourceKindName, typeMeta, objectMeta);
   }
+
+  /**
+   * Callback function to show dialog with error message if resource deletion fails.
+   *
+   * @param {angular.$http.Response|null} err
+   */
+  deleteErrorCallback(err) {
+    if (err) {
+      // Show dialog if there was an error, not user canceling dialog.
+      this.mdDialog_.show(this.mdDialog_.alert()
+                              .ok('Ok')
+                              .title(err.statusText || 'Internal server error')
+                              .textContent(err.data || 'Could not delete the resource'));
+    }
+  }
 }
