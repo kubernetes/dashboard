@@ -37,11 +37,11 @@ type DeploymentDetail struct {
 	// OldReplicaSets
 	OldReplicaSets []extensions.ReplicaSet `json:"oldReplicaSets"`
 
-	// NewReplicaSet
+	// New replica set used by this deployment
 	NewReplicaSet extensions.ReplicaSet `json:"newReplicaSet"`
 
-	// Events
-	// TODO
+	// List of events related to this Deployment
+	EventList common.EventList `json:"eventList"`
 }
 
 func GetDeploymentDetail(client client.Interface, namespace string, name string) (*DeploymentDetail, error) {
@@ -78,10 +78,15 @@ func GetDeploymentDetail(client client.Interface, namespace string, name string)
 		return nil, err
 	}
 
-	return getDeploymentDetail(deploymentData, oldReplicaSets, newReplicaSet), nil
+	events, err := GetDeploymentEvents(client, namespace, name)
+	if err != nil {
+		return nil, err
+	}
+
+	return getDeploymentDetail(deploymentData, oldReplicaSets, newReplicaSet, events), nil
 }
 
-func getDeploymentDetail(deployment *extensions.Deployment, old []*extensions.ReplicaSet, newReplicaSet *extensions.ReplicaSet) *DeploymentDetail {
+func getDeploymentDetail(deployment *extensions.Deployment, old []*extensions.ReplicaSet, newReplicaSet *extensions.ReplicaSet, events *common.EventList) *DeploymentDetail {
 
 	oldReplicaSets := make([]extensions.ReplicaSet, len(old))
 	for i, replicaSet := range old {
@@ -101,5 +106,6 @@ func getDeploymentDetail(deployment *extensions.Deployment, old []*extensions.Re
 		},
 		OldReplicaSets: oldReplicaSets,
 		NewReplicaSet:  *newReplicaSet,
+		EventList:      *events,
 	}
 }
