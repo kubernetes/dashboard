@@ -4,9 +4,9 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/resource/common"
-
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	deploymentutil "k8s.io/kubernetes/pkg/util/deployment"
 )
 
 type RollingUpdateStrategy struct {
@@ -31,15 +31,17 @@ type DeploymentDetail struct {
 	// Min ready seconds
 	MinReadySeconds int `json:"minReadySeconds"`
 
-	// Rolling update strategy
-	//	1 max unavailable, 1 max surge
+	// Rolling update strategy containing maxSurge and maxUnavailable
 	RollingUpdateStrategy `json:"rollingUpdateStrategy,omitempty"`
 
-	//OldReplicaSets
+	// OldReplicaSets
+	OldReplicaSets []extensions.ReplicaSet `json:"oldReplicaSets"`
 
-	//NewReplicaSet
+	// NewReplicaSet
+	NewReplicaSet extensions.ReplicaSet `json:"newReplicaSet"`
 
-	//Events
+	// Events
+	// TODO
 }
 
 func GetDeploymentDetail(client client.Interface, namespace string, name string) (*DeploymentDetail, error) {
@@ -51,10 +53,40 @@ func GetDeploymentDetail(client client.Interface, namespace string, name string)
 		return nil, err
 	}
 
-	return getDeploymentDetail(deploymentData), nil
+	channels := &common.ResourceChannels{
+		ReplicaSetList: common.GetReplicaSetListChannel(client.Extensions(), 1),
+		PodList:        common.GetPodListChannel(client, 1),
+	}
+
+	replicaSetList := <-channels.ReplicaSetList.List
+	if err := <-channels.ReplicaSetList.Error; err != nil {
+		return nil, err
+	}
+
+	pods := <-channels.PodList.List
+	if err := <-channels.PodList.Error; err != nil {
+		return nil, err
+	}
+
+	oldReplicaSets, _, err := deploymentutil.FindOldReplicaSets(deploymentData, replicaSetList.Items, pods)
+	if err != nil {
+		return nil, err
+	}
+
+	//newReplicaSet, err := deploymentutil.FindNewReplicaSet(deploymentData, replicaSetList.Items)
+	//if err != nil {
+	//return nil, err
+	//}
+
+	return getDeploymentDetail(deploymentData, oldReplicaSets), nil
 }
 
-func getDeploymentDetail(deployment *extensions.Deployment) *DeploymentDetail {
+func getDeploymentDetail(deployment *extensions.Deployment, old []*extensions.ReplicaSet) *DeploymentDetail {
+
+	oldReplicaSets := make([]extensions.ReplicaSet, len(old))
+	for i, replicaSet := range old {
+		oldReplicaSets[i] = *replicaSet
+	}
 
 	return &DeploymentDetail{
 		ObjectMeta:      common.NewObjectMeta(deployment.ObjectMeta),
@@ -67,5 +99,7 @@ func getDeploymentDetail(deployment *extensions.Deployment) *DeploymentDetail {
 			MaxSurge:       deployment.Spec.Strategy.RollingUpdate.MaxSurge.IntValue(),
 			MaxUnavailable: deployment.Spec.Strategy.RollingUpdate.MaxUnavailable.IntValue(),
 		},
+		OldReplicaSets: oldReplicaSets,
+		//NewReplicaSet:  *newReplicaSet,
 	}
 }
