@@ -19,7 +19,9 @@ limitations under the License.
     <div class="kd-replicationcontrollerevents-options" layout="row">
       <md-input-container>
         <label>Type</label>
-        <md-select ng-model="$ctrl.eventType" ng-change="$ctrl.handleEventFiltering()" required>
+        <md-select aria-label="Event Type" ng-model="$ctrl.eventType"
+                   ng-change="$ctrl.handleEventFiltering()"
+                   required>
           <md-option ng-repeat="type in $ctrl.eventTypeFilter" ng-value="type">
             {{type}}
           </md-option>

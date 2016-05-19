@@ -21,6 +21,7 @@ export class DeleteResourceController {
   /**
    * @param {!md.$dialog} $mdDialog
    * @param {!angular.$resource} $resource
+   * @param {string} resourceKindName
    * @param {!backendApi.TypeMeta} typeMeta
    * @param {!backendApi.ObjectMeta} objectMeta
    * @ngInject

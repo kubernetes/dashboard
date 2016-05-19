@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_component';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import componentsModule from 'common/components/components_module';
 
 describe('Breadcrumbs controller ', () => {
@@ -66,13 +66,14 @@ describe('Breadcrumbs controller ', () => {
   beforeEach(() => {
     angular.mock.module(componentsModule.name);
 
-    angular.mock.inject(($componentController, $state, $interpolate) => {
+    angular.mock.inject(($componentController, $state, $interpolate, _kdBreadcrumbsService_) => {
       state = $state;
       interpolate = $interpolate;
       ctrl = $componentController(
           'kdBreadcrumbs', {
             $state: state,
             $interpolate: interpolate,
+            kdBreadcrumbsService: _kdBreadcrumbsService_,
           },
           {
             limit: breadcrumbsLimit,
@@ -144,30 +145,6 @@ describe('Breadcrumbs controller ', () => {
     expect(canBeAdded).toBeFalsy();
   });
 
-  it('should return parent state when breadcrumb parent is not defined', () => {
-    // given
-    state.parent = getStateMock('parentState');
-
-    // when
-    let parent = ctrl.getParentState_(state);
-
-    // expect
-    expect(parent).toEqual(state.parent);
-  });
-
-  it('should return defined parent when breadcrumb parent is defined', () => {
-    // given
-    state.data = {kdBreadcrumbs: {parent: 'parentState'}};
-    let parent = getStateMock('parentState');
-    spyOn(state, 'get').and.returnValue(parent);
-
-    // when
-    let result = ctrl.getParentState_(state);
-
-    // expect
-    expect(result).toEqual(parent);
-  });
-
   it('should return breadcrumb object', () => {
     // given
     spyOn(state, 'href').and.returnValue('stateLink');
@@ -220,24 +197,5 @@ describe('Breadcrumbs controller ', () => {
 
     // then
     expect(result).toEqual(state.name);
-  });
-
-  it('should return breadcrumb config when it is defined', () => {
-    // given
-    let stateMock = getStateMock('testState');
-
-    // when
-    let result = ctrl.getBreadcrumbConfig_(stateMock);
-
-    // then
-    expect(result).toBeDefined();
-  });
-
-  it('should return undefined when breadcrumb config is not defined', () => {
-    // when
-    let result = ctrl.getBreadcrumbConfig_(state);
-
-    // then
-    expect(result).toBeUndefined();
   });
 });
