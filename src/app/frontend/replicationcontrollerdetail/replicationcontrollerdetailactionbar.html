@@ -23,10 +23,9 @@ limitations under the License.
     <md-icon class="kd-actionbar-icon-button">mode_edit</md-icon>
     <md-tooltip md-direction="bottom">Edit number of pods</md-tooltip>
   </md-button>
-  <md-button class="md-icon-button" ng-click="ctrl.handleDeleteReplicationControllerDialog()">
-    <md-icon class="kd-actionbar-icon-button">delete</md-icon>
-    <md-tooltip md-direction="bottom">Delete replication controller</md-tooltip>
-  </md-button>
+  <kd-actionbar-delete-item resource-kind-name="Pod" type-meta="ctrl.details.typeMeta"
+                            object-meta="ctrl.details.objectMeta">
+  </kd-actionbar-delete-item>
 </div>
 
 <div hide-gt-sm>
@@ -38,10 +37,9 @@ limitations under the License.
       </md-button>
     </md-fab-trigger>
     <md-fab-actions>
-      <md-button class="md-fab md-raised md-mini" ng-click="ctrl.handleDeleteReplicationControllerDialog()">
-        <md-icon class="kd-actionbar-icon-button">delete</md-icon>
-        <md-tooltip md-direction="bottom">Delete replication controller</md-tooltip>
-      </md-button>
+      <kd-actionbar-delete-item resource-kind-name="Pod" type-meta="ctrl.details.typeMeta"
+                                object-meta="ctrl.details.objectMeta" is-fab-button="true">
+      </kd-actionbar-delete-item>
       <md-button class="md-fab md-raised md-mini" ng-click="ctrl.handleUpdateReplicasDialog()">
         <md-icon class="kd-actionbar-icon-button">mode_edit</md-icon>
         <md-tooltip md-direction="bottom">Edit number of pods</md-tooltip>

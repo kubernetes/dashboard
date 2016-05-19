@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {actionbarViewName} from 'chrome/chrome_state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_component';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {ReplicaSetListController} from './replicasetlist_controller';
 import {stateName, stateUrl} from './replicasetlist_state';
 import ReplicaSetListActionBarController from './replicasetlistactionbar_controller';

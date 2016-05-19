@@ -13,7 +13,10 @@
 // limitations under the License.
 
 import {actionbarComponent} from './actionbar_component';
+import {actionbarDeleteItemComponent} from './actionbardeleteitem_component';
 import {breadcrumbsComponent} from './../breadcrumbs/breadcrumbs_component';
+import {BreadcrumbsService} from './../breadcrumbs/breadcrumbs_service';
+
 /**
  * Module containing common actionbar.
  */
@@ -25,4 +28,6 @@ export default angular
           'ui.router',
         ])
     .component('kdActionbar', actionbarComponent)
-    .component('kdBreadcrumbs', breadcrumbsComponent);
+    .component('kdBreadcrumbs', breadcrumbsComponent)
+    .component('kdActionbarDeleteItem', actionbarDeleteItemComponent)
+    .service('kdBreadcrumbsService', BreadcrumbsService);

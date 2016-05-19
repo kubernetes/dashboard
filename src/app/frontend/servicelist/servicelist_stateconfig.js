@@ -14,7 +14,7 @@
 
 import {ServiceListController} from './servicelist_controller';
 import {actionbarViewName} from 'chrome/chrome_state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_component';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {stateName, stateUrl} from './servicelist_state';
 
 /**

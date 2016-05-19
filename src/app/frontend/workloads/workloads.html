@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-content-card ng-if=$ctrl.workloads.deploymentList.deployments>
+<kd-content-card ng-if=$ctrl.workloads.deploymentList.deployments.length>
   <kd-title>
     Deployments
   </kd-title>
@@ -24,7 +24,7 @@ limitations under the License.
   </kd-content>
 </kd-content-card>
 
-<kd-content-card>
+<kd-content-card ng-if="$ctrl.workloads.replicaSetList.replicaSets.length">
   <kd-title>
     Replica Sets
   </kd-title>
@@ -34,7 +34,7 @@ limitations under the License.
   </kd-content>
 </kd-content-card>
 
-<kd-content-card>
+<kd-content-card ng-if="$ctrl.workloads.replicationControllerList.replicationControllers.length">
   <kd-title>
     Replication Controllers
   </kd-title>
@@ -45,7 +45,7 @@ limitations under the License.
   </kd-content>
 </kd-content-card>
 
-<kd-content-card>
+<kd-content-card ng-if="$ctrl.workloads.podList.pods.length">
   <kd-title>
     Pods
   </kd-title>
