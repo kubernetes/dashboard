@@ -20,10 +20,9 @@ export class ResourceCardDeleteMenuItemController {
   /**
    * @param {!./../../resource/verber_service.VerberService} kdResourceVerberService
    * @param {!ui.router.$state} $state
-   * @param {!md.$dialog} $mdDialog
    * @ngInject
    */
-  constructor(kdResourceVerberService, $state, $mdDialog) {
+  constructor(kdResourceVerberService, $state) {
     /**
      * Initialized from require just before $onInit is called.
      * @export {!./resourcecard_component.ResourceCardController}
@@ -38,9 +37,6 @@ export class ResourceCardDeleteMenuItemController {
 
     /** @private {!ui.router.$state}} */
     this.state_ = $state;
-
-    /** @private {!md.$dialog} */
-    this.mdDialog_ = $mdDialog;
   }
 
   /**
@@ -50,20 +46,13 @@ export class ResourceCardDeleteMenuItemController {
     this.kdResourceVerberService_
         .showDeleteDialog(
             this.resourceKindName, this.resourceCardCtrl.typeMeta, this.resourceCardCtrl.objectMeta)
-        .then(
-            () => {
-              // For now just reload the state. Later we can remove the item in place.
-              this.state_.reload();
-            },
-            (/** angular.$http.Response|null */ err) => {
-              if (err) {
-                // Show dialog if there was an error, not user canceling dialog.
-                this.mdDialog_.show(this.mdDialog_.alert()
-                                        .ok('Ok')
-                                        .title(err.statusText || 'Internal server error')
-                                        .textContent(err.data || 'Could not delete the resource'));
-              }
-            });
+        .then((data) => {
+          // Do not execute if cancel was clicked
+          if (data) {
+            // For now just reload the state. Later we can remove the item in place.
+            this.state_.reload();
+          }
+        });
   }
 }
 
