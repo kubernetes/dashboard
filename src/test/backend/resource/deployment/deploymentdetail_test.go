@@ -8,12 +8,63 @@ import (
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
+	deploymentutil "k8s.io/kubernetes/pkg/util/deployment"
 	"k8s.io/kubernetes/pkg/util/intstr"
 
 	"github.com/kubernetes/dashboard/resource/common"
 )
 
-func TestGetDeploymentDetailFromChannels(t *testing.T) {
+func TestGetDeploymentDetail(t *testing.T) {
+	podList := &api.PodList{}
+
+	deployment := &extensions.Deployment{
+		ObjectMeta: api.ObjectMeta{
+			Name:   "test-name",
+			Labels: map[string]string{"track": "beta"},
+		},
+		Spec: extensions.DeploymentSpec{
+			Selector:        &unversioned.LabelSelector{MatchLabels: map[string]string{"foo": "bar"}},
+			Replicas:        4,
+			MinReadySeconds: 5,
+			Strategy: extensions.DeploymentStrategy{
+				Type: extensions.RollingUpdateDeploymentStrategyType,
+				RollingUpdate: &extensions.RollingUpdateDeployment{
+					MaxSurge:       intstr.FromInt(1),
+					MaxUnavailable: intstr.FromString("1"),
+				},
+			},
+			Template: api.PodTemplateSpec{
+				ObjectMeta: api.ObjectMeta{
+					Name:   "test-pod-name",
+					Labels: map[string]string{"track": "beta"},
+				},
+			},
+		},
+		Status: extensions.DeploymentStatus{
+			Replicas:            4,
+			UpdatedReplicas:     2,
+			AvailableReplicas:   3,
+			UnavailableReplicas: 1,
+		},
+	}
+
+	podTemplateSpec := deploymentutil.GetNewReplicaSetTemplate(deployment)
+
+	newReplicaSet := extensions.ReplicaSet{
+		ObjectMeta: api.ObjectMeta{Name: "replica-set-1"},
+		Spec: extensions.ReplicaSetSpec{
+			Template: podTemplateSpec,
+		},
+	}
+
+	replicaSetList := &extensions.ReplicaSetList{
+		Items: []extensions.ReplicaSet{
+			newReplicaSet,
+			{
+				ObjectMeta: api.ObjectMeta{Name: "replica-set-2"},
+			},
+		},
+	}
 
 	cases := []struct {
 		namespace, name string
@@ -23,32 +74,15 @@ func TestGetDeploymentDetailFromChannels(t *testing.T) {
 	}{
 		{
 			"test-namespace", "test-name",
-			[]string{"get"},
-			&extensions.Deployment{
-				ObjectMeta: api.ObjectMeta{Name: "test-name"},
-				Spec: extensions.DeploymentSpec{
-					Selector:        &unversioned.LabelSelector{MatchLabels: map[string]string{"foo": "bar"}},
-					Replicas:        4,
-					MinReadySeconds: 5,
-					Strategy: extensions.DeploymentStrategy{
-						Type: extensions.RollingUpdateDeploymentStrategyType,
-						RollingUpdate: &extensions.RollingUpdateDeployment{
-							MaxSurge:       intstr.FromInt(1),
-							MaxUnavailable: intstr.FromString("1"),
-						},
-					},
-				},
-				Status: extensions.DeploymentStatus{
-					Replicas:            4,
-					UpdatedReplicas:     2,
-					AvailableReplicas:   3,
-					UnavailableReplicas: 1,
-				},
-			},
+			[]string{"get", "list", "list"},
+			deployment,
 			&DeploymentDetail{
-				ObjectMeta: common.ObjectMeta{Name: "test-name"},
-				TypeMeta:   common.TypeMeta{Kind: common.ResourceKindDeployment},
-				Selector:   map[string]string{"foo": "bar"},
+				ObjectMeta: common.ObjectMeta{
+					Name:   "test-name",
+					Labels: map[string]string{"track": "beta"},
+				},
+				TypeMeta: common.TypeMeta{Kind: common.ResourceKindDeployment},
+				Selector: map[string]string{"foo": "bar"},
 				Status: extensions.DeploymentStatus{
 					Replicas:            4,
 					UpdatedReplicas:     2,
@@ -61,13 +95,15 @@ func TestGetDeploymentDetailFromChannels(t *testing.T) {
 					MaxSurge:       1,
 					MaxUnavailable: 1,
 				},
+				OldReplicaSets: []extensions.ReplicaSet{},
+				//NewReplicaSet:  newReplicaSet,
 			},
 		},
 	}
 
 	for _, c := range cases {
 
-		fakeClient := testclient.NewSimpleFake(c.deployment)
+		fakeClient := testclient.NewSimpleFake(c.deployment, replicaSetList, podList)
 
 		actual, _ := GetDeploymentDetail(fakeClient, c.namespace, c.name)
 
