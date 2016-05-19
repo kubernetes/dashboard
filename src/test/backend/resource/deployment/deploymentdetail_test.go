@@ -16,6 +16,7 @@ import (
 
 func TestGetDeploymentDetail(t *testing.T) {
 	podList := &api.PodList{}
+	eventList := &api.EventList{}
 
 	deployment := &extensions.Deployment{
 		ObjectMeta: api.ObjectMeta{
@@ -74,7 +75,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 	}{
 		{
 			"test-namespace", "test-name",
-			[]string{"get", "list", "list"},
+			[]string{"get", "list", "list", "list"},
 			deployment,
 			&DeploymentDetail{
 				ObjectMeta: common.ObjectMeta{
@@ -97,13 +98,17 @@ func TestGetDeploymentDetail(t *testing.T) {
 				},
 				OldReplicaSets: []extensions.ReplicaSet{},
 				NewReplicaSet:  newReplicaSet,
+				EventList: common.EventList{
+					Namespace: "test-namespace",
+					Events:    []common.Event{},
+				},
 			},
 		},
 	}
 
 	for _, c := range cases {
 
-		fakeClient := testclient.NewSimpleFake(c.deployment, replicaSetList, podList)
+		fakeClient := testclient.NewSimpleFake(c.deployment, replicaSetList, podList, eventList)
 
 		actual, _ := GetDeploymentDetail(fakeClient, c.namespace, c.name)
 
@@ -123,7 +128,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetDeploymentDetail(client, namespace, name) == \ngot: %#v, \nexpected %#v",
-				c.namespace, c.name, actual, c.expected)
+				actual, c.expected)
 		}
 	}
 }
