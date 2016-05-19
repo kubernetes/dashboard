@@ -50,12 +50,13 @@ describe('Delete resource menu item', () => {
 
   it('should delete the resource', () => {
     let deferred = q.defer();
+    let httpStatusOk = 200;
     spyOn(kdResourceVerberService, 'showDeleteDialog').and.returnValue(deferred.promise);
     spyOn(state, 'reload');
     ctrl.remove();
 
     expect(state.reload).not.toHaveBeenCalled();
-    deferred.resolve();
+    deferred.resolve(httpStatusOk);
     scope.$digest();
     expect(state.reload).toHaveBeenCalled();
   });
@@ -71,18 +72,5 @@ describe('Delete resource menu item', () => {
     scope.$digest();
     expect(state.reload).not.toHaveBeenCalled();
     expect(mdDialog.alert).not.toHaveBeenCalled();
-  });
-
-  it('should show alert window on error', () => {
-    let deferred = q.defer();
-    spyOn(kdResourceVerberService, 'showDeleteDialog').and.returnValue(deferred.promise);
-    spyOn(state, 'reload');
-    spyOn(mdDialog, 'alert').and.callThrough();
-    ctrl.remove();
-
-    deferred.reject({data: 'foo-data', statusText: 'foo-text'});
-    scope.$digest();
-    expect(state.reload).not.toHaveBeenCalled();
-    expect(mdDialog.alert).toHaveBeenCalled();
   });
 });

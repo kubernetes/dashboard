@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {actionbarViewName} from 'chrome/chrome_state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_component';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {PodListController} from './podlist_controller';
 import {stateName, stateUrl} from './podlist_state';
 import {stateName as workloadsState} from 'workloads/workloads_state';

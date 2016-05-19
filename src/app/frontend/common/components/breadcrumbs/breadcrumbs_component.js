@@ -14,9 +14,6 @@
 
 import Breadcrumb from './breadcrumb';
 
-/** Breadcrumbs config string used on state config. **/
-export const breadcrumbsConfig = 'kdBreadcrumbs';
-
 /**
  * @final
  */
@@ -26,9 +23,10 @@ export default class BreadcrumbsController {
    *
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
+   * @param {!./../breadcrumbs/breadcrumbs_service.BreadcrumbsService} kdBreadcrumbsService
    * @ngInject
    */
-  constructor($state, $interpolate) {
+  constructor($state, $interpolate, kdBreadcrumbsService) {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
@@ -40,6 +38,9 @@ export default class BreadcrumbsController {
 
     /** @export {!Array<!Breadcrumb>} - Initialized in $onInit method. Used in template */
     this.breadcrumbs;
+
+    /** @private {!./breadcrumbs_service.BreadcrumbsService} */
+    this.kdBreadcrumbsService_ = kdBreadcrumbsService;
   }
 
   /**
@@ -67,7 +68,7 @@ export default class BreadcrumbsController {
         breadcrumbs.push(breadcrumb);
       }
 
-      state = this.getParentState_(state);
+      state = this.kdBreadcrumbsService_.getParentState(state);
     }
 
     return breadcrumbs.reverse();
@@ -83,42 +84,6 @@ export default class BreadcrumbsController {
    */
   canAddBreadcrumb_(breadcrumbs) {
     return this.limit === undefined || this.limit > breadcrumbs.length;
-  }
-
-  /**
-   * Returns breadcrumb config object if it is defined on state, undefined otherwise.
-   *
-   * @param {!ui.router.$state} state
-   * @return {Object}
-   * @private
-   */
-  getBreadcrumbConfig_(state) {
-    let conf = state['data'];
-
-    if (conf) {
-      conf = conf[breadcrumbsConfig];
-    }
-
-    return conf;
-  }
-
-  /**
-   * Returns parent state of the given state based on defined state parent name or if it is not
-   * defined then based on direct parent state.
-   *
-   * @param {!ui.router.$state} state
-   * @return {!ui.router.$state}
-   * @private
-   */
-  getParentState_(state) {
-    let conf = this.getBreadcrumbConfig_(state);
-    let result = state['parent'];
-
-    if (conf && conf.parent) {
-      result = this.state_.get(conf.parent);
-    }
-
-    return result;
   }
 
   /**
@@ -149,7 +114,7 @@ export default class BreadcrumbsController {
    * @private
    */
   getDisplayName_(state) {
-    let conf = this.getBreadcrumbConfig_(state);
+    let conf = this.kdBreadcrumbsService_.getBreadcrumbConfig(state);
     let areLocalsDefined = !!state['locals'];
     let interpolationContext = state;
 
