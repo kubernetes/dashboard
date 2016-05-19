@@ -96,7 +96,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 					MaxUnavailable: 1,
 				},
 				OldReplicaSets: []extensions.ReplicaSet{},
-				//NewReplicaSet:  newReplicaSet,
+				NewReplicaSet:  newReplicaSet,
 			},
 		},
 	}
