@@ -73,15 +73,15 @@ func GetDeploymentDetail(client client.Interface, namespace string, name string)
 		return nil, err
 	}
 
-	//newReplicaSet, err := deploymentutil.FindNewReplicaSet(deploymentData, replicaSetList.Items)
-	//if err != nil {
-	//return nil, err
-	//}
+	newReplicaSet, err := deploymentutil.FindNewReplicaSet(deploymentData, replicaSetList.Items)
+	if err != nil {
+		return nil, err
+	}
 
-	return getDeploymentDetail(deploymentData, oldReplicaSets), nil
+	return getDeploymentDetail(deploymentData, oldReplicaSets, newReplicaSet), nil
 }
 
-func getDeploymentDetail(deployment *extensions.Deployment, old []*extensions.ReplicaSet) *DeploymentDetail {
+func getDeploymentDetail(deployment *extensions.Deployment, old []*extensions.ReplicaSet, newReplicaSet *extensions.ReplicaSet) *DeploymentDetail {
 
 	oldReplicaSets := make([]extensions.ReplicaSet, len(old))
 	for i, replicaSet := range old {
@@ -100,6 +100,6 @@ func getDeploymentDetail(deployment *extensions.Deployment, old []*extensions.Re
 			MaxUnavailable: deployment.Spec.Strategy.RollingUpdate.MaxUnavailable.IntValue(),
 		},
 		OldReplicaSets: oldReplicaSets,
-		//NewReplicaSet:  *newReplicaSet,
+		NewReplicaSet:  *newReplicaSet,
 	}
 }
