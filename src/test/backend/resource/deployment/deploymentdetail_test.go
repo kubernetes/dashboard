@@ -85,11 +85,11 @@ func TestGetDeploymentDetail(t *testing.T) {
 				},
 				TypeMeta: common.TypeMeta{Kind: common.ResourceKindDeployment},
 				Selector: map[string]string{"foo": "bar"},
-				Status: extensions.DeploymentStatus{
-					Replicas:            4,
-					UpdatedReplicas:     2,
-					AvailableReplicas:   3,
-					UnavailableReplicas: 1,
+				StatusInfo: StatusInfo{
+					Replicas:    4,
+					Updated:     2,
+					Available:   3,
+					Unavailable: 1,
 				},
 				Strategy:        "RollingUpdate",
 				MinReadySeconds: 5,
