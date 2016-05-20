@@ -12,6 +12,7 @@ import (
 	"k8s.io/kubernetes/pkg/util/intstr"
 
 	"github.com/kubernetes/dashboard/resource/common"
+	"github.com/kubernetes/dashboard/resource/replicaset"
 )
 
 func TestGetDeploymentDetail(t *testing.T) {
@@ -96,8 +97,12 @@ func TestGetDeploymentDetail(t *testing.T) {
 					MaxSurge:       1,
 					MaxUnavailable: 1,
 				},
-				OldReplicaSets: []extensions.ReplicaSet{},
-				NewReplicaSet:  newReplicaSet,
+				OldReplicaSetList: replicaset.ReplicaSetList{ReplicaSets: []replicaset.ReplicaSet{}},
+				NewReplicaSet: replicaset.ReplicaSet{
+					ObjectMeta: common.NewObjectMeta(newReplicaSet.ObjectMeta),
+					TypeMeta:   common.NewTypeMeta(common.ResourceKindReplicaSet),
+					Pods:       common.PodInfo{Warnings: []common.Event{}},
+				},
 				EventList: common.EventList{
 					Namespace: "test-namespace",
 					Events:    []common.Event{},
