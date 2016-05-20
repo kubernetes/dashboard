@@ -17,34 +17,43 @@ import actionbarCardModule from 'common/components/actionbar/actionbar_module';
 describe('Action bar', () => {
   beforeEach(() => angular.mock.module(actionbarCardModule.name));
 
-  it('should add shadow on scroll',
-     angular.mock.inject(($rootScope, $window, $document, $compile) => {
-       let elem = $compile('<kd-actionbar></kd-actionbar>')($rootScope);
+  it('should add shadow on scroll', angular.mock.inject(($rootScope, $compile) => {
+    let elem = $compile(`
+           <div>
+             <kd-actionbar></kd-actionbar>
+             <md-content>foo</md-content>
+           </div>`)($rootScope);
 
-       // Start with no state.
-       expect(elem[0].classList).not.toContain('kd-actionbar-not-scrolled');
+    let mdContent = elem.find('md-content');
+    let actionbar = elem.find('kd-actionbar');
 
-       $rootScope.$digest();
-       // On initial load go with not scrolled state.
-       expect(elem[0].classList).toContain('kd-actionbar-not-scrolled');
+    // Start with no state.
+    expect(actionbar[0].classList).not.toContain('kd-actionbar-not-scrolled');
 
-       $window.scrollY = 70;
-       $document.trigger('scroll');
-       $rootScope.$digest();
-       // Now it is scrolled
-       expect(elem[0].classList).not.toContain('kd-actionbar-not-scrolled');
+    $rootScope.$digest();
+    let abCtrl = actionbar.controller('kdActionbar');
+    // On initial load go with not scrolled state.
+    expect(actionbar[0].classList).toContain('kd-actionbar-not-scrolled');
 
-       $window.scrollY = 0;
-       $document.trigger('scroll');
-       $rootScope.$digest();
-       // Go back.
-       expect(elem[0].classList).toContain('kd-actionbar-not-scrolled');
+    abCtrl.computeScrollClass_({scrollTop: 1});
+    // Now it is scrolled
+    expect(actionbar[0].classList).not.toContain('kd-actionbar-not-scrolled');
 
-       $rootScope.$destroy();
-       $window.scrollY = 70;
-       $document.trigger('scroll');
-       $rootScope.$digest();
-       // After $destroy - nothing happens.
-       expect(elem[0].classList).toContain('kd-actionbar-not-scrolled');
-     }));
+    mdContent.trigger('scroll');
+    $rootScope.$digest();
+    // Go back.
+    expect(actionbar[0].classList).toContain('kd-actionbar-not-scrolled');
+
+    $rootScope.$destroy();
+    mdContent.trigger('scroll');
+    $rootScope.$digest();
+    // After $destroy - nothing happens.
+    expect(actionbar[0].classList).toContain('kd-actionbar-not-scrolled');
+  }));
+
+
+  it('should throw an error on no content', angular.mock.inject(($rootScope, $compile) => {
+    $compile('<kd-actionbar></kd-actionbar>')($rootScope)
+    expect(() => {$rootScope.$digest()}).toThrow();
+  }))
 });
