@@ -18,12 +18,6 @@
   &.kd-actionbar {
     background: $content-background;
     color: $muted;
-    height: $toolbar-height-size-base;
-    top: $toolbar-height-size-base;
-
-    @media only screen and (min-width: 0) and (max-width: $layout-breakpoint-sm) {
-      height: $toolbar-height-size-base-sm;
-    }
   }
 }
 
