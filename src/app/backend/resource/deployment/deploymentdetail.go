@@ -4,6 +4,8 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/resource/common"
+	"github.com/kubernetes/dashboard/resource/replicaset"
+	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	deploymentutil "k8s.io/kubernetes/pkg/util/deployment"
@@ -25,7 +27,8 @@ type DeploymentDetail struct {
 	// Status
 	Status extensions.DeploymentStatus `json:"status"`
 
-	// The deployment strategy to use to replace existing pods with new ones.  Valid options: Recreate, RollingUpdate
+	// The deployment strategy to use to replace existing pods with new ones.
+	// Valid options: Recreate, RollingUpdate
 	Strategy string `json:"strategy"`
 
 	// Min ready seconds
@@ -34,17 +37,18 @@ type DeploymentDetail struct {
 	// Rolling update strategy containing maxSurge and maxUnavailable
 	RollingUpdateStrategy `json:"rollingUpdateStrategy,omitempty"`
 
-	// OldReplicaSets
-	OldReplicaSets []extensions.ReplicaSet `json:"oldReplicaSets"`
+	// RepliaSetList containing old replica sets from the deployment
+	OldReplicaSetList replicaset.ReplicaSetList `json:"oldReplicaSetList"`
 
 	// New replica set used by this deployment
-	NewReplicaSet extensions.ReplicaSet `json:"newReplicaSet"`
+	NewReplicaSet replicaset.ReplicaSet `json:"newReplicaSet"`
 
 	// List of events related to this Deployment
 	EventList common.EventList `json:"eventList"`
 }
 
-func GetDeploymentDetail(client client.Interface, namespace string, name string) (*DeploymentDetail, error) {
+func GetDeploymentDetail(client client.Interface, namespace string,
+	name string) (*DeploymentDetail, error) {
 
 	log.Printf("Getting details of %s deployment in %s namespace", name, namespace)
 
@@ -68,7 +72,8 @@ func GetDeploymentDetail(client client.Interface, namespace string, name string)
 		return nil, err
 	}
 
-	oldReplicaSets, _, err := deploymentutil.FindOldReplicaSets(deploymentData, replicaSetList.Items, pods)
+	oldReplicaSets, _, err := deploymentutil.FindOldReplicaSets(
+		deploymentData, replicaSetList.Items, pods)
 	if err != nil {
 		return nil, err
 	}
@@ -83,15 +88,22 @@ func GetDeploymentDetail(client client.Interface, namespace string, name string)
 		return nil, err
 	}
 
-	return getDeploymentDetail(deploymentData, oldReplicaSets, newReplicaSet, events), nil
+	return getDeploymentDetail(deploymentData, oldReplicaSets, newReplicaSet,
+		pods.Items, events), nil
 }
 
-func getDeploymentDetail(deployment *extensions.Deployment, old []*extensions.ReplicaSet, newReplicaSet *extensions.ReplicaSet, events *common.EventList) *DeploymentDetail {
+func getDeploymentDetail(deployment *extensions.Deployment,
+	oldRs []*extensions.ReplicaSet, newRs *extensions.ReplicaSet,
+	pods []api.Pod, events *common.EventList) *DeploymentDetail {
 
-	oldReplicaSets := make([]extensions.ReplicaSet, len(old))
-	for i, replicaSet := range old {
+	newRsPodInfo := common.GetPodInfo(newRs.Status.Replicas, newRs.Spec.Replicas, pods)
+	newReplicaSet := toReplicaSet(newRs, &newRsPodInfo)
+
+	oldReplicaSets := make([]extensions.ReplicaSet, len(oldRs))
+	for i, replicaSet := range oldRs {
 		oldReplicaSets[i] = *replicaSet
 	}
+	oldReplicaSetList := toReplicaSetList(oldReplicaSets, pods)
 
 	return &DeploymentDetail{
 		ObjectMeta:      common.NewObjectMeta(deployment.ObjectMeta),
@@ -104,8 +116,33 @@ func getDeploymentDetail(deployment *extensions.Deployment, old []*extensions.Re
 			MaxSurge:       deployment.Spec.Strategy.RollingUpdate.MaxSurge.IntValue(),
 			MaxUnavailable: deployment.Spec.Strategy.RollingUpdate.MaxUnavailable.IntValue(),
 		},
-		OldReplicaSets: oldReplicaSets,
-		NewReplicaSet:  *newReplicaSet,
-		EventList:      *events,
+		OldReplicaSetList: oldReplicaSetList,
+		NewReplicaSet:     newReplicaSet,
+		EventList:         *events,
+	}
+}
+
+func toReplicaSetList(resourceList []extensions.ReplicaSet, pods []api.Pod) replicaset.ReplicaSetList {
+	replicaSetList := replicaset.ReplicaSetList{
+		ReplicaSets: make([]replicaset.ReplicaSet, 0),
+	}
+
+	for _, replicaSet := range resourceList {
+		matchingPods := common.FilterNamespacedPodsBySelector(pods, replicaSet.ObjectMeta.Namespace,
+			replicaSet.Spec.Selector.MatchLabels)
+		podInfo := common.GetPodInfo(replicaSet.Status.Replicas, replicaSet.Spec.Replicas, matchingPods)
+
+		replicaSetList.ReplicaSets = append(replicaSetList.ReplicaSets, toReplicaSet(&replicaSet, &podInfo))
+	}
+
+	return replicaSetList
+}
+
+func toReplicaSet(replicaSet *extensions.ReplicaSet, podInfo *common.PodInfo) replicaset.ReplicaSet {
+	return replicaset.ReplicaSet{
+		ObjectMeta:      common.NewObjectMeta(replicaSet.ObjectMeta),
+		TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicaSet),
+		ContainerImages: common.GetContainerImages(&replicaSet.Spec.Template.Spec),
+		Pods:            *podInfo,
 	}
 }
