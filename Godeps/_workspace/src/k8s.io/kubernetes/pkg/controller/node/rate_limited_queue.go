@@ -22,7 +22,7 @@ import (
 	"time"
 
 	"github.com/golang/glog"
-	"k8s.io/kubernetes/pkg/util"
+	"k8s.io/kubernetes/pkg/util/flowcontrol"
 	"k8s.io/kubernetes/pkg/util/sets"
 )
 
@@ -133,15 +133,27 @@ func (q *UniqueQueue) Head() (TimedValue, bool) {
 	return *result, true
 }
 
+// Clear removes all items from the queue and duplication preventing set.
+func (q *UniqueQueue) Clear() {
+	q.lock.Lock()
+	defer q.lock.Unlock()
+	if q.queue.Len() > 0 {
+		q.queue = make(TimedQueue, 0)
+	}
+	if len(q.set) > 0 {
+		q.set = sets.NewString()
+	}
+}
+
 // RateLimitedTimedQueue is a unique item priority queue ordered by the expected next time
 // of execution. It is also rate limited.
 type RateLimitedTimedQueue struct {
 	queue   UniqueQueue
-	limiter util.RateLimiter
+	limiter flowcontrol.RateLimiter
 }
 
 // Creates new queue which will use given RateLimiter to oversee execution.
-func NewRateLimitedTimedQueue(limiter util.RateLimiter) *RateLimitedTimedQueue {
+func NewRateLimitedTimedQueue(limiter flowcontrol.RateLimiter) *RateLimitedTimedQueue {
 	return &RateLimitedTimedQueue{
 		queue: UniqueQueue{
 			queue: TimedQueue{},
@@ -164,7 +176,7 @@ func (q *RateLimitedTimedQueue) Try(fn ActionFunc) {
 	for ok {
 		// rate limit the queue checking
 		if !q.limiter.TryAccept() {
-			glog.V(10).Info("Try rate limitted...")
+			glog.V(10).Info("Try rate limited...")
 			// Try again later
 			break
 		}
@@ -198,4 +210,9 @@ func (q *RateLimitedTimedQueue) Add(value string) bool {
 // Removes Node from the Evictor. The Node won't be processed until added again.
 func (q *RateLimitedTimedQueue) Remove(value string) bool {
 	return q.queue.Remove(value)
+}
+
+// Removes all items from the queue
+func (q *RateLimitedTimedQueue) Clear() {
+	q.queue.Clear()
 }

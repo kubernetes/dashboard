@@ -22,16 +22,16 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"net/http"
 	"net/url"
 	"os"
 	"strings"
 	"time"
 
-	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/errors"
 	"k8s.io/kubernetes/pkg/api/meta"
 	"k8s.io/kubernetes/pkg/api/unversioned"
+	"k8s.io/kubernetes/pkg/apimachinery/registered"
+	"k8s.io/kubernetes/pkg/client/typed/discovery"
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
 	"k8s.io/kubernetes/pkg/kubectl"
 	"k8s.io/kubernetes/pkg/kubectl/resource"
@@ -171,10 +171,15 @@ func StandardErrorMessage(err error) (string, bool) {
 	if debugErr, ok := err.(debugError); ok {
 		glog.V(4).Infof(debugErr.DebugError())
 	}
-	_, isStatus := err.(errors.APIStatus)
+	status, isStatus := err.(errors.APIStatus)
 	switch {
 	case isStatus:
-		return fmt.Sprintf("Error from server: %s", err.Error()), true
+		switch s := status.Status(); {
+		case s.Reason == "Unauthorized":
+			return fmt.Sprintf("error: You must be logged in to the server (%s)", s.Message), true
+		default:
+			return fmt.Sprintf("Error from server: %s", err.Error()), true
+		}
 	case errors.IsUnexpectedObjectError(err):
 		return fmt.Sprintf("Server returned an unexpected response: %s", err.Error()), true
 	}
@@ -324,6 +329,16 @@ func GetFlagDuration(cmd *cobra.Command, flag string) time.Duration {
 func AddValidateFlags(cmd *cobra.Command) {
 	cmd.Flags().Bool("validate", true, "If true, use a schema to validate the input before sending it")
 	cmd.Flags().String("schema-cache-dir", fmt.Sprintf("~/%s/%s", clientcmd.RecommendedHomeDir, clientcmd.RecommendedSchemaName), fmt.Sprintf("If non-empty, load/store cached API schemas in this directory, default is '$HOME/%s/%s'", clientcmd.RecommendedHomeDir, clientcmd.RecommendedSchemaName))
+	cmd.MarkFlagFilename("schema-cache-dir")
+}
+
+func AddRecursiveFlag(cmd *cobra.Command, value *bool) {
+	cmd.Flags().BoolVarP(value, "recursive", "R", *value, "If true, process directory recursively.")
+}
+
+// AddDryRunFlag adds dry-run flag to a command. Usually used by mutations.
+func AddDryRunFlag(cmd *cobra.Command) {
+	cmd.Flags().Bool("dry-run", false, "If true, only print the object that would be sent, without sending it.")
 }
 
 func AddApplyAnnotationFlags(cmd *cobra.Command) {
@@ -334,7 +349,7 @@ func AddApplyAnnotationFlags(cmd *cobra.Command) {
 // TODO: need to take a pass at other generator commands to use this set of flags
 func AddGeneratorFlags(cmd *cobra.Command, defaultGenerator string) {
 	cmd.Flags().String("generator", defaultGenerator, "The name of the API generator to use.")
-	cmd.Flags().Bool("dry-run", false, "If true, only print the object that would be sent, without sending it.")
+	AddDryRunFlag(cmd)
 }
 
 func ReadConfigDataFromReader(reader io.Reader, source string) ([]byte, error) {
@@ -348,45 +363,6 @@ func ReadConfigDataFromReader(reader io.Reader, source string) ([]byte, error) {
 	}
 
 	return data, nil
-}
-
-// ReadConfigData reads the bytes from the specified filesystem or network
-// location or from stdin if location == "-".
-// TODO: replace with resource.Builder
-func ReadConfigData(location string) ([]byte, error) {
-	if len(location) == 0 {
-		return nil, fmt.Errorf("location given but empty")
-	}
-
-	if location == "-" {
-		// Read from stdin.
-		return ReadConfigDataFromReader(os.Stdin, "stdin ('-')")
-	}
-
-	// Use the location as a file path or URL.
-	return ReadConfigDataFromLocation(location)
-}
-
-// TODO: replace with resource.Builder
-func ReadConfigDataFromLocation(location string) ([]byte, error) {
-	// we look for http:// or https:// to determine if valid URL, otherwise do normal file IO
-	if strings.Index(location, "http://") == 0 || strings.Index(location, "https://") == 0 {
-		resp, err := http.Get(location)
-		if err != nil {
-			return nil, fmt.Errorf("unable to access URL %s: %v\n", location, err)
-		}
-		defer resp.Body.Close()
-		if resp.StatusCode != 200 {
-			return nil, fmt.Errorf("unable to read URL, server reported %d %s", resp.StatusCode, resp.Status)
-		}
-		return ReadConfigDataFromReader(resp.Body, location)
-	} else {
-		file, err := os.Open(location)
-		if err != nil {
-			return nil, fmt.Errorf("unable to read %s: %v\n", location, err)
-		}
-		return ReadConfigDataFromReader(file, location)
-	}
 }
 
 // Merge requires JSON serialization
@@ -462,16 +438,22 @@ func GetRecordFlag(cmd *cobra.Command) bool {
 	return GetFlagBool(cmd, "record")
 }
 
+func GetDryRunFlag(cmd *cobra.Command) bool {
+	return GetFlagBool(cmd, "dry-run")
+}
+
 // RecordChangeCause annotate change-cause to input runtime object.
 func RecordChangeCause(obj runtime.Object, changeCause string) error {
-	meta, err := api.ObjectMetaFor(obj)
+	accessor, err := meta.Accessor(obj)
 	if err != nil {
 		return err
 	}
-	if meta.Annotations == nil {
-		meta.Annotations = make(map[string]string)
+	annotations := accessor.GetAnnotations()
+	if annotations == nil {
+		annotations = make(map[string]string)
 	}
-	meta.Annotations[kubectl.ChangeCauseAnnotation] = changeCause
+	annotations[kubectl.ChangeCauseAnnotation] = changeCause
+	accessor.SetAnnotations(annotations)
 	return nil
 }
 
@@ -504,4 +486,111 @@ func ContainsChangeCause(info *resource.Info) bool {
 // ShouldRecord checks if we should record current change cause
 func ShouldRecord(cmd *cobra.Command, info *resource.Info) bool {
 	return GetRecordFlag(cmd) || ContainsChangeCause(info)
+}
+
+func GetThirdPartyGroupVersions(discovery discovery.DiscoveryInterface) ([]unversioned.GroupVersion, []unversioned.GroupVersionKind, error) {
+	result := []unversioned.GroupVersion{}
+	gvks := []unversioned.GroupVersionKind{}
+
+	groupList, err := discovery.ServerGroups()
+	if err != nil {
+		// On forbidden or not found, just return empty lists.
+		if errors.IsForbidden(err) || errors.IsNotFound(err) {
+			return result, gvks, nil
+		}
+
+		return nil, nil, err
+	}
+
+	for ix := range groupList.Groups {
+		group := &groupList.Groups[ix]
+		for jx := range group.Versions {
+			gv, err2 := unversioned.ParseGroupVersion(group.Versions[jx].GroupVersion)
+			if err2 != nil {
+				return nil, nil, err
+			}
+			// Skip GroupVersionKinds that have been statically registered.
+			if registered.IsRegisteredVersion(gv) {
+				continue
+			}
+			result = append(result, gv)
+
+			resourceList, err := discovery.ServerResourcesForGroupVersion(group.Versions[jx].GroupVersion)
+			if err != nil {
+				return nil, nil, err
+			}
+			for kx := range resourceList.APIResources {
+				gvks = append(gvks, gv.WithKind(resourceList.APIResources[kx].Kind))
+			}
+		}
+	}
+	return result, gvks, nil
+}
+
+func GetIncludeThirdPartyAPIs(cmd *cobra.Command) bool {
+	if cmd.Flags().Lookup("include-extended-apis") == nil {
+		return false
+	}
+	return GetFlagBool(cmd, "include-extended-apis")
+}
+
+func AddInclude3rdPartyFlags(cmd *cobra.Command) {
+	cmd.Flags().Bool("include-extended-apis", true, "If true, include definitions of new APIs via calls to the API server. [default true]")
+}
+
+// GetResourcesAndPairs retrieves resources and "KEY=VALUE or KEY-" pair args from given args
+func GetResourcesAndPairs(args []string, pairType string) (resources []string, pairArgs []string, err error) {
+	foundPair := false
+	for _, s := range args {
+		nonResource := strings.Contains(s, "=") || strings.HasSuffix(s, "-")
+		switch {
+		case !foundPair && nonResource:
+			foundPair = true
+			fallthrough
+		case foundPair && nonResource:
+			pairArgs = append(pairArgs, s)
+		case !foundPair && !nonResource:
+			resources = append(resources, s)
+		case foundPair && !nonResource:
+			err = fmt.Errorf("all resources must be specified before %s changes: %s", pairType, s)
+			return
+		}
+	}
+	return
+}
+
+// ParsePairs retrieves new and remove pairs (if supportRemove is true) from "KEY=VALUE or KEY-" pair args
+func ParsePairs(pairArgs []string, pairType string, supportRemove bool) (newPairs map[string]string, removePairs []string, err error) {
+	newPairs = map[string]string{}
+	if supportRemove {
+		removePairs = []string{}
+	}
+	var invalidBuf bytes.Buffer
+
+	for _, pairArg := range pairArgs {
+		if strings.Index(pairArg, "=") != -1 {
+			parts := strings.SplitN(pairArg, "=", 2)
+			if len(parts) != 2 || len(parts[1]) == 0 {
+				if invalidBuf.Len() > 0 {
+					invalidBuf.WriteString(", ")
+				}
+				invalidBuf.WriteString(fmt.Sprintf(pairArg))
+			} else {
+				newPairs[parts[0]] = parts[1]
+			}
+		} else if supportRemove && strings.HasSuffix(pairArg, "-") {
+			removePairs = append(removePairs, pairArg[:len(pairArg)-1])
+		} else {
+			if invalidBuf.Len() > 0 {
+				invalidBuf.WriteString(", ")
+			}
+			invalidBuf.WriteString(fmt.Sprintf(pairArg))
+		}
+	}
+	if invalidBuf.Len() > 0 {
+		err = fmt.Errorf("invalid %s format: %s", pairType, invalidBuf.String())
+		return
+	}
+
+	return
 }

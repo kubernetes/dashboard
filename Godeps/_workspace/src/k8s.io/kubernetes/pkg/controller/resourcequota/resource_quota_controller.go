@@ -29,6 +29,7 @@ import (
 	"k8s.io/kubernetes/pkg/controller/framework"
 	"k8s.io/kubernetes/pkg/quota"
 	"k8s.io/kubernetes/pkg/runtime"
+	"k8s.io/kubernetes/pkg/util/metrics"
 	utilruntime "k8s.io/kubernetes/pkg/util/runtime"
 	"k8s.io/kubernetes/pkg/util/wait"
 	"k8s.io/kubernetes/pkg/util/workqueue"
@@ -61,7 +62,7 @@ type ResourceQuotaController struct {
 	// Watches changes to all resource quota
 	rqController *framework.Controller
 	// ResourceQuota objects that need to be synchronized
-	queue *workqueue.Type
+	queue workqueue.RateLimitingInterface
 	// To allow injection of syncUsage for testing.
 	syncHandler func(key string) error
 	// function that controls full recalculation of quota usage
@@ -69,19 +70,21 @@ type ResourceQuotaController struct {
 	// knows how to calculate usage
 	registry quota.Registry
 	// controllers monitoring to notify for replenishment
-	replenishmentControllers []*framework.Controller
+	replenishmentControllers []framework.ControllerInterface
 }
 
 func NewResourceQuotaController(options *ResourceQuotaControllerOptions) *ResourceQuotaController {
 	// build the resource quota controller
 	rq := &ResourceQuotaController{
 		kubeClient:               options.KubeClient,
-		queue:                    workqueue.New(),
+		queue:                    workqueue.NewRateLimitingQueue(workqueue.DefaultControllerRateLimiter()),
 		resyncPeriod:             options.ResyncPeriod,
 		registry:                 options.Registry,
-		replenishmentControllers: []*framework.Controller{},
+		replenishmentControllers: []framework.ControllerInterface{},
 	}
-
+	if options.KubeClient != nil && options.KubeClient.Core().GetRESTClient().GetRateLimiter() != nil {
+		metrics.RegisterMetricAndTrackRateLimiterUsage("resource_quota_controller", options.KubeClient.Core().GetRESTClient().GetRateLimiter())
+	}
 	// set the synchronization handler
 	rq.syncHandler = rq.syncResourceQuotaFromKey
 
@@ -160,19 +163,26 @@ func (rq *ResourceQuotaController) enqueueResourceQuota(obj interface{}) {
 // worker runs a worker thread that just dequeues items, processes them, and marks them done.
 // It enforces that the syncHandler is never invoked concurrently with the same key.
 func (rq *ResourceQuotaController) worker() {
+	workFunc := func() bool {
+		key, quit := rq.queue.Get()
+		if quit {
+			return true
+		}
+		defer rq.queue.Done(key)
+		err := rq.syncHandler(key.(string))
+		if err == nil {
+			rq.queue.Forget(key)
+			return false
+		}
+		utilruntime.HandleError(err)
+		rq.queue.AddRateLimited(key)
+		return false
+	}
 	for {
-		func() {
-			key, quit := rq.queue.Get()
-			if quit {
-				return
-			}
-			defer rq.queue.Done(key)
-			err := rq.syncHandler(key.(string))
-			if err != nil {
-				utilruntime.HandleError(err)
-				rq.queue.Add(key)
-			}
-		}()
+		if quit := workFunc(); quit {
+			glog.Infof("resource quota controller worker shutting down")
+			return
+		}
 	}
 }
 

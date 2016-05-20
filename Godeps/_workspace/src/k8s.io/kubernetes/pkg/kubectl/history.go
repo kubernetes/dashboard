@@ -19,16 +19,15 @@ package kubectl
 import (
 	"fmt"
 	"io"
-	"sort"
-	"strconv"
 
 	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api/meta"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	clientset "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 	"k8s.io/kubernetes/pkg/runtime"
 	deploymentutil "k8s.io/kubernetes/pkg/util/deployment"
-	"k8s.io/kubernetes/pkg/util/errors"
+	sliceutil "k8s.io/kubernetes/pkg/util/slice"
 )
 
 const (
@@ -75,7 +74,10 @@ func (h *DeploymentHistoryViewer) History(namespace, name string) (HistoryInfo, 
 	if err != nil {
 		return historyInfo, fmt.Errorf("failed to retrieve new replica set from deployment %s: %v", name, err)
 	}
-	allRSs := append(allOldRSs, newRS)
+	allRSs := allOldRSs
+	if newRS != nil {
+		allRSs = append(allRSs, newRS)
+	}
 	for _, rs := range allRSs {
 		v, err := deploymentutil.Revision(rs)
 		if err != nil {
@@ -86,7 +88,9 @@ func (h *DeploymentHistoryViewer) History(namespace, name string) (HistoryInfo, 
 		if historyInfo.RevisionToTemplate[v].Annotations == nil {
 			historyInfo.RevisionToTemplate[v].Annotations = make(map[string]string)
 		}
-		historyInfo.RevisionToTemplate[v].Annotations[ChangeCauseAnnotation] = changeCause
+		if len(changeCause) > 0 {
+			historyInfo.RevisionToTemplate[v].Annotations[ChangeCauseAnnotation] = changeCause
+		}
 	}
 	return historyInfo, nil
 }
@@ -97,38 +101,32 @@ func PrintRolloutHistory(historyInfo HistoryInfo, resource, name string) (string
 		return fmt.Sprintf("No rollout history found in %s %q", resource, name), nil
 	}
 	// Sort the revisionToChangeCause map by revision
-	var revisions []string
-	for k := range historyInfo.RevisionToTemplate {
-		revisions = append(revisions, strconv.FormatInt(k, 10))
+	revisions := make([]int64, 0, len(historyInfo.RevisionToTemplate))
+	for r := range historyInfo.RevisionToTemplate {
+		revisions = append(revisions, r)
 	}
-	sort.Strings(revisions)
+	sliceutil.SortInts64(revisions)
 
 	return tabbedString(func(out io.Writer) error {
 		fmt.Fprintf(out, "%s %q:\n", resource, name)
 		fmt.Fprintf(out, "REVISION\tCHANGE-CAUSE\n")
-		errs := []error{}
 		for _, r := range revisions {
 			// Find the change-cause of revision r
-			r64, err := strconv.ParseInt(r, 10, 64)
-			if err != nil {
-				errs = append(errs, err)
-				continue
-			}
-			changeCause := historyInfo.RevisionToTemplate[r64].Annotations[ChangeCauseAnnotation]
+			changeCause := historyInfo.RevisionToTemplate[r].Annotations[ChangeCauseAnnotation]
 			if len(changeCause) == 0 {
 				changeCause = "<none>"
 			}
-			fmt.Fprintf(out, "%s\t%s\n", r, changeCause)
+			fmt.Fprintf(out, "%d\t%s\n", r, changeCause)
 		}
-		return errors.NewAggregate(errs)
+		return nil
 	})
 }
 
 // getChangeCause returns the change-cause annotation of the input object
 func getChangeCause(obj runtime.Object) string {
-	meta, err := api.ObjectMetaFor(obj)
+	accessor, err := meta.Accessor(obj)
 	if err != nil {
 		return ""
 	}
-	return meta.Annotations[ChangeCauseAnnotation]
+	return accessor.GetAnnotations()[ChangeCauseAnnotation]
 }

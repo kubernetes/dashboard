@@ -21,11 +21,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"regexp"
 	"strings"
 
 	"github.com/golang/glog"
 	"github.com/spf13/cobra"
 	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api/meta"
 	"k8s.io/kubernetes/pkg/kubectl"
 	cmdutil "k8s.io/kubernetes/pkg/kubectl/cmd/util"
 	"k8s.io/kubernetes/pkg/kubectl/resource"
@@ -52,9 +54,18 @@ type AnnotateOptions struct {
 	f   *cmdutil.Factory
 	out io.Writer
 	cmd *cobra.Command
+
+	recursive bool
 }
 
 const (
+	annotate_resources = `
+  pod (po), service (svc), replicationcontroller (rc),
+  node (no), event (ev), componentstatuse (cs),
+  limitrange (limits), persistentvolume (pv), persistentvolumeclaim (pvc),
+  horizontalpodautoscaler (hpa), resourcequota (quota), secret
+`
+
 	annotate_long = `Update the annotations on one or more resources.
 
 An annotation is a key/value pair that can hold larger (compared to a label), and possibly not human-readable, data.
@@ -62,10 +73,8 @@ It is intended to store non-identifying auxiliary data, especially data manipula
 If --overwrite is true, then existing annotations can be overwritten, otherwise attempting to overwrite an annotation will result in an error.
 If --resource-version is specified, then updates will use this resource version, otherwise the existing resource-version will be used.
 
-Possible resources include (case insensitive): pods (po), services (svc),
-replicationcontrollers (rc), nodes (no), events (ev), componentstatuses (cs),
-limitranges (limits), persistentvolumes (pv), persistentvolumeclaims (pvc),
-horizontalpodautoscalers (hpa), resourcequotas (quota) or secrets.`
+Possible resources include (case insensitive):` + annotate_resources
+
 	annotate_example = `# Update pod 'foo' with the annotation 'description' and the value 'my frontend'.
 # If the same annotation is set multiple times, only the last value will be applied
 kubectl annotate pods foo description='my frontend'
@@ -90,6 +99,13 @@ kubectl annotate pods foo description-`
 func NewCmdAnnotate(f *cmdutil.Factory, out io.Writer) *cobra.Command {
 	options := &AnnotateOptions{}
 
+	validArgs, argAliases := []string{}, []string{}
+	resources := regexp.MustCompile(`\s*,`).Split(annotate_resources, -1)
+	for _, r := range resources {
+		validArgs = append(validArgs, strings.Fields(r)[0])
+		argAliases = kubectl.ResourceAliases(validArgs)
+	}
+
 	cmd := &cobra.Command{
 		Use:     "annotate [--overwrite] (-f FILENAME | TYPE NAME) KEY_1=VAL_1 ... KEY_N=VAL_N [--resource-version=version]",
 		Short:   "Update the annotations on a resource",
@@ -106,14 +122,18 @@ func NewCmdAnnotate(f *cmdutil.Factory, out io.Writer) *cobra.Command {
 				cmdutil.CheckErr(err)
 			}
 		},
+		ValidArgs:  validArgs,
+		ArgAliases: argAliases,
 	}
 	cmdutil.AddPrinterFlags(cmd)
+	cmdutil.AddInclude3rdPartyFlags(cmd)
 	cmd.Flags().StringVarP(&options.selector, "selector", "l", "", "Selector (label query) to filter on")
 	cmd.Flags().BoolVar(&options.overwrite, "overwrite", false, "If true, allow annotations to be overwritten, otherwise reject annotation updates that overwrite existing annotations.")
 	cmd.Flags().BoolVar(&options.all, "all", false, "select all resources in the namespace of the specified resource types")
 	cmd.Flags().StringVar(&options.resourceVersion, "resource-version", "", "If non-empty, the annotation update will only succeed if this is the current resource-version for the object. Only valid when specifying a single resource.")
 	usage := "Filename, directory, or URL to a file identifying the resource to update the annotation"
 	kubectl.AddJsonFilenameFlag(cmd, &options.filenames, usage)
+	cmdutil.AddRecursiveFlag(cmd, &options.recursive)
 	cmdutil.AddRecordFlag(cmd)
 	return cmd
 }
@@ -128,22 +148,11 @@ func (o *AnnotateOptions) Complete(f *cmdutil.Factory, out io.Writer, cmd *cobra
 
 	// retrieves resource and annotation args from args
 	// also checks args to verify that all resources are specified before annotations
-	annotationArgs := []string{}
-	metAnnotaionArg := false
-	for _, s := range args {
-		isAnnotation := strings.Contains(s, "=") || strings.HasSuffix(s, "-")
-		switch {
-		case !metAnnotaionArg && isAnnotation:
-			metAnnotaionArg = true
-			fallthrough
-		case metAnnotaionArg && isAnnotation:
-			annotationArgs = append(annotationArgs, s)
-		case !metAnnotaionArg && !isAnnotation:
-			o.resources = append(o.resources, s)
-		case metAnnotaionArg && !isAnnotation:
-			return fmt.Errorf("all resources must be specified before annotation changes: %s", s)
-		}
+	resources, annotationArgs, err := cmdutil.GetResourcesAndPairs(args, "annotation")
+	if err != nil {
+		return err
 	}
+	o.resources = resources
 	if len(o.resources) < 1 && len(o.filenames) == 0 {
 		return fmt.Errorf("one or more resources must be specified as <resource> <name> or <resource>/<name>")
 	}
@@ -158,11 +167,11 @@ func (o *AnnotateOptions) Complete(f *cmdutil.Factory, out io.Writer, cmd *cobra
 	o.recordChangeCause = cmdutil.GetRecordFlag(cmd)
 	o.changeCause = f.Command()
 
-	mapper, typer := f.Object()
+	mapper, typer := f.Object(cmdutil.GetIncludeThirdPartyAPIs(cmd))
 	o.builder = resource.NewBuilder(mapper, typer, resource.ClientMapperFunc(f.ClientForMapping), f.Decoder(true)).
 		ContinueOnError().
 		NamespaceParam(namespace).DefaultNamespace().
-		FilenameParam(enforceNamespace, o.filenames...).
+		FilenameParam(enforceNamespace, o.recursive, o.filenames...).
 		SelectorParam(o.selector).
 		ResourceTypeOrNameArgs(o.all, o.resources...).
 		Flatten().
@@ -201,7 +210,7 @@ func (o AnnotateOptions) RunAnnotate() error {
 			return err
 		}
 
-		obj, err := info.Mapping.ConvertToVersion(info.Object, info.Mapping.GroupVersionKind.GroupVersion().String())
+		obj, err := info.Mapping.ConvertToVersion(info.Object, info.Mapping.GroupVersionKind.GroupVersion())
 		if err != nil {
 			return err
 		}
@@ -243,11 +252,13 @@ func (o AnnotateOptions) RunAnnotate() error {
 		if err != nil {
 			return err
 		}
+
+		mapper, _ := o.f.Object(cmdutil.GetIncludeThirdPartyAPIs(o.cmd))
 		outputFormat := cmdutil.GetFlagString(o.cmd, "output")
 		if outputFormat != "" {
-			return o.f.PrintObject(o.cmd, outputObj, o.out)
+			return o.f.PrintObject(o.cmd, mapper, outputObj, o.out)
 		}
-		mapper, _ := o.f.Object()
+
 		cmdutil.PrintSuccess(mapper, false, o.out, info.Mapping.Resource, info.Name, "annotated")
 		return nil
 	})
@@ -255,34 +266,7 @@ func (o AnnotateOptions) RunAnnotate() error {
 
 // parseAnnotations retrieves new and remove annotations from annotation args
 func parseAnnotations(annotationArgs []string) (map[string]string, []string, error) {
-	var invalidBuf bytes.Buffer
-	newAnnotations := map[string]string{}
-	removeAnnotations := []string{}
-	for _, annotationArg := range annotationArgs {
-		if strings.Index(annotationArg, "=") != -1 {
-			parts := strings.SplitN(annotationArg, "=", 2)
-			if len(parts) != 2 || len(parts[1]) == 0 {
-				if invalidBuf.Len() > 0 {
-					invalidBuf.WriteString(", ")
-				}
-				invalidBuf.WriteString(fmt.Sprintf(annotationArg))
-			} else {
-				newAnnotations[parts[0]] = parts[1]
-			}
-		} else if strings.HasSuffix(annotationArg, "-") {
-			removeAnnotations = append(removeAnnotations, annotationArg[:len(annotationArg)-1])
-		} else {
-			if invalidBuf.Len() > 0 {
-				invalidBuf.WriteString(", ")
-			}
-			invalidBuf.WriteString(fmt.Sprintf(annotationArg))
-		}
-	}
-	if invalidBuf.Len() > 0 {
-		return newAnnotations, removeAnnotations, fmt.Errorf("invalid annotation format: %s", invalidBuf.String())
-	}
-
-	return newAnnotations, removeAnnotations, nil
+	return cmdutil.ParsePairs(annotationArgs, "annotation", true)
 }
 
 // validateAnnotations checks the format of annotation args and checks removed annotations aren't in the new annotations map
@@ -304,14 +288,14 @@ func validateAnnotations(removeAnnotations []string, newAnnotations map[string]s
 }
 
 // validateNoAnnotationOverwrites validates that when overwrite is false, to-be-updated annotations don't exist in the object annotation map (yet)
-func validateNoAnnotationOverwrites(meta *api.ObjectMeta, annotations map[string]string) error {
+func validateNoAnnotationOverwrites(accessor meta.Object, annotations map[string]string) error {
 	var buf bytes.Buffer
 	for key := range annotations {
 		// change-cause annotation can always be overwritten
 		if key == kubectl.ChangeCauseAnnotation {
 			continue
 		}
-		if value, found := meta.Annotations[key]; found {
+		if value, found := accessor.GetAnnotations()[key]; found {
 			if buf.Len() > 0 {
 				buf.WriteString("; ")
 			}
@@ -326,29 +310,31 @@ func validateNoAnnotationOverwrites(meta *api.ObjectMeta, annotations map[string
 
 // updateAnnotations updates annotations of obj
 func (o AnnotateOptions) updateAnnotations(obj runtime.Object) error {
-	meta, err := api.ObjectMetaFor(obj)
+	accessor, err := meta.Accessor(obj)
 	if err != nil {
 		return err
 	}
 	if !o.overwrite {
-		if err := validateNoAnnotationOverwrites(meta, o.newAnnotations); err != nil {
+		if err := validateNoAnnotationOverwrites(accessor, o.newAnnotations); err != nil {
 			return err
 		}
 	}
 
-	if meta.Annotations == nil {
-		meta.Annotations = make(map[string]string)
+	annotations := accessor.GetAnnotations()
+	if annotations == nil {
+		annotations = make(map[string]string)
 	}
 
 	for key, value := range o.newAnnotations {
-		meta.Annotations[key] = value
+		annotations[key] = value
 	}
 	for _, annotation := range o.removeAnnotations {
-		delete(meta.Annotations, annotation)
+		delete(annotations, annotation)
 	}
+	accessor.SetAnnotations(annotations)
 
 	if len(o.resourceVersion) != 0 {
-		meta.ResourceVersion = o.resourceVersion
+		accessor.SetResourceVersion(o.resourceVersion)
 	}
 	return nil
 }

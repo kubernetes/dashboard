@@ -21,26 +21,26 @@ import (
 // PodInfo represents aggregate information about controller's pods.
 type PodInfo struct {
 	// Number of pods that are created.
-	Current int `json:"current"`
+	Current int32 `json:"current"`
 
 	// Number of pods that are desired.
-	Desired int `json:"desired"`
+	Desired int32 `json:"desired"`
 
 	// Number of pods that are currently running.
-	Running int `json:"running"`
+	Running int32 `json:"running"`
 
 	// Number of pods that are currently waiting.
-	Pending int `json:"pending"`
+	Pending int32 `json:"pending"`
 
 	// Number of pods that are failed.
-	Failed int `json:"failed"`
+	Failed int32 `json:"failed"`
 
 	// Unique warning messages related to pods in this resource.
 	Warnings []Event `json:"warnings"`
 }
 
 // GetPodInfo returns aggregate information about a group of pods.
-func GetPodInfo(current int, desired int, pods []api.Pod) PodInfo {
+func GetPodInfo(current int32, desired int32, pods []api.Pod) PodInfo {
 	result := PodInfo{
 		Current:  current,
 		Desired:  desired,

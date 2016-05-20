@@ -55,7 +55,7 @@ type ReplicationControllerDetail struct {
 // ReplicationControllerSpec contains information needed to update replication controller.
 type ReplicationControllerSpec struct {
 	// Replicas (pods) number in replicas set
-	Replicas int `json:"replicas"`
+	Replicas int32 `json:"replicas"`
 }
 
 // GetReplicationControllerDetail returns detailed information about the given replication

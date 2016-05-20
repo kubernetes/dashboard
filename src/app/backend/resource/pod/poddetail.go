@@ -44,7 +44,7 @@ type PodDetail struct {
 	NodeName        string `json:"nodeName"`
 
 	// Count of containers restarts.
-	RestartCount    int `json:"restartCount"`
+	RestartCount    int32 `json:"restartCount"`
 
 	// Pod metrics.
 	Metrics         *PodMetrics `json:"metrics"`

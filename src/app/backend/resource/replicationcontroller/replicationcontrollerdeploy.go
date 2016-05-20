@@ -52,7 +52,7 @@ type AppDeploymentSpec struct {
 	ContainerCommandArgs *string `json:"containerCommandArgs"`
 
 	// Number of replicas of the image to maintain.
-	Replicas int `json:"replicas"`
+	Replicas int32 `json:"replicas"`
 
 	// Port mappings for the service that is created. The service is created if there is at least
 	// one port mapping.
@@ -107,7 +107,7 @@ type AppDeploymentFromFileResponse struct {
 // PortMapping is a specification of port mapping for an application deployment.
 type PortMapping struct {
 	// Port that will be exposed on the service.
-	Port int `json:"port"`
+	Port int32 `json:"port"`
 
 	// Docker image path for the application.
 	TargetPort int32 `json:"targetPort"`
@@ -301,7 +301,7 @@ func DeployAppFromFile(spec *AppDeploymentFromFileSpec,
 		return false, err
 	}
 
-	mapper, typer := factory.Object()
+	mapper, typer := factory.Object(false)
 	reader := strings.NewReader(spec.Content)
 
 	r := kubectlResource.NewBuilder(mapper, typer, kubectlResource.ClientMapperFunc(factory.ClientForMapping), factory.Decoder(true)).

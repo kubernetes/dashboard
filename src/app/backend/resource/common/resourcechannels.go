@@ -16,6 +16,7 @@ package common
 
 import (
 	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/apis/apps"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
@@ -330,6 +331,28 @@ func GetDaemonSetListChannel(client client.DaemonSetsNamespacer,
 		}
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+type PetSetListChannel struct {
+	List  chan *apps.PetSetList
+	Error chan error
+}
+
+func GetPetSetListChannel(client client.PetSetNamespacer, numReads int) PetSetListChannel {
+	channel := PetSetListChannel{
+		List:  make(chan *apps.PetSetList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		petSets, err := client.PetSets(api.NamespaceAll).List(listEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- petSets
 			channel.Error <- err
 		}
 	}()
