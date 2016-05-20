@@ -100,14 +100,19 @@ const (
 // Mapping from resource kind to K8s apiserver API path. This is mostly pluralization, because
 // K8s apiserver uses plural paths and this project singular.
 // Must be kept in sync with the list of supported kinds.
-var kindToAPIPathMapping = map[string]string{
-	ResourceKindService:               "services",
-	ResourceKindPod:                   "pods",
-	ResourceKindEvent:                 "events",
-	ResourceKindReplicationController: "replicationcontrollers",
-	ResourceKindDeployment:            "deployments",
-	ResourceKindReplicaSet:            "replicasets",
-	ResourceKindDaemonSet:             "daemonsets",
+var kindToAPIMapping = map[string]struct {
+	// K8s resource name
+	Resource string
+	// Whether extensions client should be used. True for extensions client, false for normal.
+	Extension bool
+}{
+	ResourceKindService:               {"services", false},
+	ResourceKindPod:                   {"pods", false},
+	ResourceKindEvent:                 {"events", false},
+	ResourceKindReplicationController: {"replicationcontrollers", false},
+	ResourceKindDeployment:            {"deployments", true},
+	ResourceKindReplicaSet:            {"replicasets", true},
+	ResourceKindDaemonSet:             {"daemonsets", false},
 }
 
 // IsSelectorMatching returns true when an object with the given
