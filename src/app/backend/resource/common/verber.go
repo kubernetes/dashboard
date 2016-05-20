@@ -15,7 +15,6 @@
 package common
 
 import (
-	"errors"
 	"fmt"
 
 	"k8s.io/kubernetes/pkg/client/restclient"
@@ -24,29 +23,38 @@ import (
 // ResourceVerber is a struct responsible for doing common verb operations on resources, like
 // DELETE, PUT, UPDATE.
 type ResourceVerber struct {
-	client RESTClient
+	client           RESTClient
+	extensionsClient RESTClient
 }
 
+// RESTClient is an interface for REST operations used in this file.
 type RESTClient interface {
 	Delete() *restclient.Request
 }
 
 // NewResourceVerber creates a new resource verber that uses the given client for performing
 // operations.
-func NewResourceVerber(client RESTClient) ResourceVerber {
-	return ResourceVerber{client}
+func NewResourceVerber(client RESTClient, extensionsClient RESTClient) ResourceVerber {
+	return ResourceVerber{client, extensionsClient}
 }
 
 // Delete deletes the resource of the given kind in the given namespace with the given name.
 func (verber *ResourceVerber) Delete(kind string, namespace string, name string) error {
-	apiPath, ok := kindToAPIPathMapping[kind]
+	resourceSpec, ok := kindToAPIMapping[kind]
 	if !ok {
-		return errors.New(fmt.Sprintf("Unknown resource kind: %s", kind))
+		return fmt.Errorf("Unknown resource kind: %s", kind)
 	}
 
-	return verber.client.Delete().
+	var client RESTClient
+	if resourceSpec.Extension {
+		client = verber.extensionsClient
+	} else {
+		client = verber.client
+	}
+
+	return client.Delete().
 		Namespace(namespace).
-		Resource(apiPath).
+		Resource(resourceSpec.Resource).
 		Name(name).
 		Do().
 		Error()

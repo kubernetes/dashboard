@@ -85,7 +85,7 @@ func FormatResponseLog(resp *restful.Response, req *restful.Request) string {
 func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 	clientConfig clientcmd.ClientConfig) http.Handler {
 
-	verber := common.NewResourceVerber(client.RESTClient)
+	verber := common.NewResourceVerber(client.RESTClient, client.ExtensionsClient.RESTClient)
 	apiHandler := ApiHandler{client, heapsterClient, clientConfig, verber}
 	wsContainer := restful.NewContainer()
 
@@ -194,8 +194,8 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 			Writes(pod.PodList{}))
 	podsWs.Route(
 		podsWs.GET("/{namespace}/{pod}").
-		To(apiHandler.handleGetPodDetail).
-		Writes(pod.PodDetail{}))
+			To(apiHandler.handleGetPodDetail).
+			Writes(pod.PodDetail{}))
 	wsContainer.Add(podsWs)
 
 	deploymentsWs := new(restful.WebService)
