@@ -16,6 +16,7 @@ import {actionbarViewName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_component';
 import {PodListController} from './podlist_controller';
 import {stateName, stateUrl} from './podlist_state';
+import {stateName as workloadsState} from 'workloads/workloads_state';
 import {PodListActionBarController} from './podlistactionbar_controller';
 
 /**
@@ -33,6 +34,7 @@ export default function stateConfig($stateProvider) {
     data: {
       [breadcrumbsConfig]: {
         'label': 'Pods',
+        'parent': workloadsState,
       },
     },
     views: {

@@ -18,6 +18,7 @@
 export class ServiceDetailController {
   /**
    * @param {!backendApi.ServiceDetail} serviceDetail
+   * @ngInject
    */
   constructor(serviceDetail) {
     /** @export {!backendApi.ServiceDetail} */
