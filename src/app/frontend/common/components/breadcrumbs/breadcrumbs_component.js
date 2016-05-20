@@ -207,7 +207,7 @@ export default class BreadcrumbsController {
  * @return {!angular.Component}
  */
 export const breadcrumbsComponent = {
-  binding: {
+  bindings: {
     'limit': '<',
   },
   controller: BreadcrumbsController,
