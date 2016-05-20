@@ -1,7 +1,7 @@
 {
   "//": "Specification of this file can be found at: https://docs.npmjs.com/files/package.json",
   "name": "kubernetes-dashboard",
-  "version": "1.0.1",
+  "version": "1.1.0-beta1",
   "repository": {
     "type": "git",
     "url": "https://github.com/kubernetes/dashboard.git"
