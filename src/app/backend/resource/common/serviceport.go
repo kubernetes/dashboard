@@ -21,7 +21,7 @@ import (
 // ServicePort is a pair of port and protocol, e.g. a service endpoint.
 type ServicePort struct {
 	// Positive port number.
-	Port int `json:"port"`
+	Port int32 `json:"port"`
 
 	// Protocol name, e.g., TCP or UDP.
 	Protocol api.Protocol `json:"protocol"`

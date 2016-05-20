@@ -102,7 +102,7 @@ func TestUpdateReplicasCount(t *testing.T) {
 	cases := []struct {
 		namespace, replicationControllerName string
 		replicationControllerSpec            *ReplicationControllerSpec
-		expected                             int
+		expected                             int32
 		expectedActions                      []string
 	}{
 		{

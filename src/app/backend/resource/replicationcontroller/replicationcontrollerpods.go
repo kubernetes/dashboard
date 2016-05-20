@@ -38,7 +38,7 @@ type PodContainer struct {
 	Name string `json:"name"`
 
 	// Number of restarts.
-	RestartCount int `json:"restartCount"`
+	RestartCount int32 `json:"restartCount"`
 }
 
 // ReplicationControllerPods is a representation of pods list that belongs to a Replication
@@ -58,7 +58,7 @@ type ReplicationControllerPodWithContainers struct {
 	StartTime *unversioned.Time `json:"startTime"`
 
 	// Total number of restarts.
-	TotalRestartCount int `json:"totalRestartCount"`
+	TotalRestartCount int32 `json:"totalRestartCount"`
 
 	// List of Containers that belongs to particular Pod.
 	PodContainers []PodContainer `json:"podContainers"`
@@ -88,7 +88,7 @@ func getReplicationControllerPods(pods []api.Pod, limit int) *ReplicationControl
 		Pods: make([]ReplicationControllerPodWithContainers, 0),
 	}
 	for _, pod := range pods {
-		totalRestartCount := 0
+		var totalRestartCount int32 = 0
 		replicationControllerPodWithContainers := ReplicationControllerPodWithContainers{
 			Name:          pod.Name,
 			StartTime:     pod.Status.StartTime,

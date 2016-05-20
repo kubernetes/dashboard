@@ -23,7 +23,7 @@ import (
 
 func TestGetPodInfo(t *testing.T) {
 	cases := []struct {
-		current, desired int
+		current, desired int32
 		pods             []api.Pod
 		expected         PodInfo
 	}{

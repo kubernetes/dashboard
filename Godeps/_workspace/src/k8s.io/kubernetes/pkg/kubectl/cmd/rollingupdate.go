@@ -97,10 +97,13 @@ func NewCmdRollingUpdate(f *cmdutil.Factory, out io.Writer) *cobra.Command {
 	cmd.MarkFlagRequired("image")
 	cmd.Flags().String("deployment-label-key", "deployment", "The key to use to differentiate between two different controllers, default 'deployment'.  Only relevant when --image is specified, ignored otherwise")
 	cmd.Flags().String("container", "", "Container name which will have its image upgraded. Only relevant when --image is specified, ignored otherwise. Required when using --image on a multi-container pod")
-	cmd.Flags().Bool("dry-run", false, "If true, print out the changes that would be made, but don't actually make them.")
+	cmd.Flags().String("image-pull-policy", "", "Explicit policy for when to pull container images. Required when --image is same as existing image, ignored otherwise.")
 	cmd.Flags().Bool("rollback", false, "If true, this is a request to abort an existing rollout that is partially rolled out. It effectively reverses current and next and runs a rollout")
+	cmdutil.AddDryRunFlag(cmd)
 	cmdutil.AddValidateFlags(cmd)
 	cmdutil.AddPrinterFlags(cmd)
+	cmdutil.AddInclude3rdPartyFlags(cmd)
+
 	return cmd
 }
 
@@ -148,12 +151,13 @@ func RunRollingUpdate(f *cmdutil.Factory, out io.Writer, cmd *cobra.Command, arg
 	deploymentKey := cmdutil.GetFlagString(cmd, "deployment-label-key")
 	filename := ""
 	image := cmdutil.GetFlagString(cmd, "image")
+	pullPolicy := cmdutil.GetFlagString(cmd, "image-pull-policy")
 	oldName := args[0]
 	rollback := cmdutil.GetFlagBool(cmd, "rollback")
 	period := cmdutil.GetFlagDuration(cmd, "update-period")
 	interval := cmdutil.GetFlagDuration(cmd, "poll-interval")
 	timeout := cmdutil.GetFlagDuration(cmd, "timeout")
-	dryrun := cmdutil.GetFlagBool(cmd, "dry-run")
+	dryrun := cmdutil.GetDryRunFlag(cmd)
 	outputFormat := cmdutil.GetFlagString(cmd, "output")
 	container := cmdutil.GetFlagString(cmd, "container")
 
@@ -189,7 +193,7 @@ func RunRollingUpdate(f *cmdutil.Factory, out io.Writer, cmd *cobra.Command, arg
 	var keepOldName bool
 	var replicasDefaulted bool
 
-	mapper, typer := f.Object()
+	mapper, typer := f.Object(cmdutil.GetIncludeThirdPartyAPIs(cmd))
 
 	if len(filename) != 0 {
 		schema, err := f.Validator(cmdutil.GetFlagBool(cmd, "validate"), cmdutil.GetFlagString(cmd, "schema-cache-dir"))
@@ -200,7 +204,7 @@ func RunRollingUpdate(f *cmdutil.Factory, out io.Writer, cmd *cobra.Command, arg
 		request := resource.NewBuilder(mapper, typer, resource.ClientMapperFunc(f.ClientForMapping), f.Decoder(true)).
 			Schema(schema).
 			NamespaceParam(cmdNamespace).DefaultNamespace().
-			FilenameParam(enforceNamespace, filename).
+			FilenameParam(enforceNamespace, false, filename).
 			Do()
 		obj, err := request.Object()
 		if err != nil {
@@ -217,8 +221,8 @@ func RunRollingUpdate(f *cmdutil.Factory, out io.Writer, cmd *cobra.Command, arg
 		}
 		newRc, ok = obj.(*api.ReplicationController)
 		if !ok {
-			if gvk, err := typer.ObjectKind(obj); err == nil {
-				return cmdutil.UsageError(cmd, "%s contains a %v not a ReplicationController", filename, gvk)
+			if gvks, _, err := typer.ObjectKinds(obj); err == nil {
+				return cmdutil.UsageError(cmd, "%s contains a %v not a ReplicationController", filename, gvks[0])
 			}
 			glog.V(4).Infof("Object %#v is not a ReplicationController", obj)
 			return cmdutil.UsageError(cmd, "%s does not specify a valid ReplicationController", filename)
@@ -231,8 +235,8 @@ func RunRollingUpdate(f *cmdutil.Factory, out io.Writer, cmd *cobra.Command, arg
 		}
 	}
 	// If the --image option is specified, we need to create a new rc with at least one different selector
-	// than the old rc. This selector is the hash of the rc, which will differ because the new rc has a
-	// different image.
+	// than the old rc. This selector is the hash of the rc, with a suffix to provide uniqueness for
+	// same-image updates.
 	if len(image) != 0 {
 		codec := api.Codecs.LegacyCodec(client.APIVersion())
 		keepOldName = len(args) == 1
@@ -246,10 +250,21 @@ func RunRollingUpdate(f *cmdutil.Factory, out io.Writer, cmd *cobra.Command, arg
 			}
 			fmt.Fprintf(out, "Found existing update in progress (%s), resuming.\n", newRc.Name)
 		} else {
-			if oldRc.Spec.Template.Spec.Containers[0].Image == image {
-				return cmdutil.UsageError(cmd, "Specified --image must be distinct from existing container image")
+			config := &kubectl.NewControllerConfig{
+				Namespace:     cmdNamespace,
+				OldName:       oldName,
+				NewName:       newName,
+				Image:         image,
+				Container:     container,
+				DeploymentKey: deploymentKey,
 			}
-			newRc, err = kubectl.CreateNewControllerFromCurrentController(client, codec, cmdNamespace, oldName, newName, image, container, deploymentKey)
+			if oldRc.Spec.Template.Spec.Containers[0].Image == image {
+				if len(pullPolicy) == 0 {
+					return cmdutil.UsageError(cmd, "--image-pull-policy (Always|Never|IfNotPresent) must be provided when --image is the same as existing container image")
+				}
+				config.PullPolicy = api.PullPolicy(pullPolicy)
+			}
+			newRc, err = kubectl.CreateNewControllerFromCurrentController(client, codec, config)
 			if err != nil {
 				return err
 			}
@@ -260,6 +275,8 @@ func RunRollingUpdate(f *cmdutil.Factory, out io.Writer, cmd *cobra.Command, arg
 		if err != nil {
 			return err
 		}
+		// If new image is same as old, the hash may not be distinct, so add a suffix.
+		oldHash += "-orig"
 		oldRc, err = kubectl.UpdateExistingReplicationController(client, oldRc, cmdNamespace, newRc.Name, deploymentKey, oldHash, out)
 		if err != nil {
 			return err
@@ -310,10 +327,10 @@ func RunRollingUpdate(f *cmdutil.Factory, out io.Writer, cmd *cobra.Command, arg
 			oldRcData.WriteString(oldRc.Name)
 			newRcData.WriteString(newRc.Name)
 		} else {
-			if err := f.PrintObject(cmd, oldRc, oldRcData); err != nil {
+			if err := f.PrintObject(cmd, mapper, oldRc, oldRcData); err != nil {
 				return err
 			}
-			if err := f.PrintObject(cmd, newRc, newRcData); err != nil {
+			if err := f.PrintObject(cmd, mapper, newRc, newRcData); err != nil {
 				return err
 			}
 		}
@@ -358,13 +375,13 @@ func RunRollingUpdate(f *cmdutil.Factory, out io.Writer, cmd *cobra.Command, arg
 		return err
 	}
 	if outputFormat != "" {
-		return f.PrintObject(cmd, newRc, out)
+		return f.PrintObject(cmd, mapper, newRc, out)
 	}
-	kind, err := api.Scheme.ObjectKind(newRc)
+	kinds, _, err := api.Scheme.ObjectKinds(newRc)
 	if err != nil {
 		return err
 	}
-	_, res := meta.KindToResource(kind)
+	_, res := meta.KindToResource(kinds[0])
 	cmdutil.PrintSuccess(mapper, false, out, res.Resource, oldName, message)
 	return nil
 }
