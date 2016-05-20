@@ -16,7 +16,7 @@ limitations under the License.
 
 <md-toolbar class="kd-toolbar">
   <div class="md-toolbar-tools kd-toolbar-tools">
-    <a ui-sref="replicationcontrollersdeprecated" ui-sref-opts="{ reload: true }" tabindex="-1">
+    <a ui-sref="workloads" ui-sref-opts="{ reload: true }" tabindex="-1">
       <md-icon md-svg-icon="assets/images/kubernetes-logo.svg" class="kd-toolbar-logo"></md-icon>
     </a>
     <h2>
@@ -28,8 +28,7 @@ limitations under the License.
 
 <kd-actionbar ng-if="ctrl.isActionbarVisible()"></kd-actionbar>
 
-<md-content
-    ng-class="{'kd-chrome-content': true, 'kd-chrome-has-actionbar': ctrl.isActionbarVisible()}">
+<md-content flex="auto" class="kd-app-content">
   <div ng-switch="ctrl.showLoadingSpinner" flex="auto" >
     <div ng-switch-when="true" class="kd-center-fixed">
       <md-progress-circular md-mode="indeterminate" md-diameter="96">
