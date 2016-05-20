@@ -16,6 +16,21 @@ type RollingUpdateStrategy struct {
 	MaxUnavailable int `json:"maxUnavailable"`
 }
 
+type StatusInfo struct {
+	// Total number of desired replicas on the deployment
+	Replicas int `json:"replicas"`
+
+	// Number of non-terminated pods that have the desired template spec
+	Updated int `json:"updated"`
+
+	// Number of available pods (ready for at least minReadySeconds)
+	// targeted by this deployment
+	Available int `json:"available"`
+
+	// Total number of unavailable pods targeted by this deployment.
+	Unavailable int `json:"unavailable"`
+}
+
 // ReplicaSetDetail is a presentation layer view of Kubernetes Replica Set resource. This means
 type DeploymentDetail struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
@@ -24,8 +39,8 @@ type DeploymentDetail struct {
 	// Label selector of the service.
 	Selector map[string]string `json:"selector"`
 
-	// Status
-	Status extensions.DeploymentStatus `json:"status"`
+	// Status information on the deployment
+	StatusInfo `json:"status"`
 
 	// The deployment strategy to use to replace existing pods with new ones.
 	// Valid options: Recreate, RollingUpdate
@@ -109,7 +124,7 @@ func getDeploymentDetail(deployment *extensions.Deployment,
 		ObjectMeta:      common.NewObjectMeta(deployment.ObjectMeta),
 		TypeMeta:        common.NewTypeMeta(common.ResourceKindDeployment),
 		Selector:        deployment.Spec.Selector.MatchLabels,
-		Status:          deployment.Status,
+		StatusInfo:      GetStatusInfo(&deployment.Status),
 		Strategy:        string(deployment.Spec.Strategy.Type),
 		MinReadySeconds: deployment.Spec.MinReadySeconds,
 		RollingUpdateStrategy: RollingUpdateStrategy{
@@ -144,5 +159,14 @@ func toReplicaSet(replicaSet *extensions.ReplicaSet, podInfo *common.PodInfo) re
 		TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicaSet),
 		ContainerImages: common.GetContainerImages(&replicaSet.Spec.Template.Spec),
 		Pods:            *podInfo,
+	}
+}
+
+func GetStatusInfo(deploymentStatus *extensions.DeploymentStatus) StatusInfo {
+	return StatusInfo{
+		Replicas:    deploymentStatus.Replicas,
+		Updated:     deploymentStatus.UpdatedReplicas,
+		Available:   deploymentStatus.AvailableReplicas,
+		Unavailable: deploymentStatus.UnavailableReplicas,
 	}
 }
