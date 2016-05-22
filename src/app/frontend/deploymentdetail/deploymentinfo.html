@@ -1,0 +1,52 @@
+<kd-info-card>
+  <kd-info-card-header>Resource details</kd-info-card-header>
+  <kd-info-card-section name="Details">
+    <kd-info-card-entry title="Name">
+      <kd-middle-ellipsis
+              display-string="{{::$ctrl.deployment.objectMeta.name}}">
+      </kd-middle-ellipsis>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="Namespace">
+      {{::$ctrl.deployment.objectMeta.namespace}}
+    </kd-info-card-entry>
+    <kd-info-card-entry title="Labels">
+      <kd-labels labels="::$ctrl.deployment.objectMeta.labels"></kd-labels>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="Selector">
+      <kd-labels labels="::$ctrl.deployment.selector"></kd-labels>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="Strategy">
+      {{::$ctrl.deployment.strategy}}
+    </kd-info-card-entry>
+    <kd-info-card-entry title="Min Ready Seconds">
+      {{::$ctrl.deployment.minReadySeconds}}
+    </kd-info-card-entry>
+
+    <kd-info-card-entry title="Rolling Update Strategy" ng-if="$ctrl.rollingUpdateStrategy()">
+      Max Surge: {{::$ctrl.deployment.rollingUpdateStrategy.maxSurge}}
+      Max Unavailable: {{::$ctrl.deployment.rollingUpdateStrategy.maxUnavailable}}
+    </kd-info-card-entry>
+
+  </kd-info-card-section>
+
+  <kd-info-card-section>
+    <kd-info-card-entry title="Status">
+    {{::$ctrl.deployment.status.updated}} updated, 
+    {{::$ctrl.deployment.status.replicas}} total, 
+    {{::$ctrl.deployment.status.available}} available, 
+    {{::$ctrl.deployment.status.unavailable}} unavailable
+    </kd-info-card-entry>
+    <kd-info-card-entry title="New Replica Set">
+      <kd-middle-ellipsis display-string="{{$ctrl.deployment.newReplicaSet.objectMeta.name}}">
+      </kd-middle-ellipsis>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="Old Replica Sets">
+      <div ng-repeat="rs in $ctrl.deployment.oldReplicaSets.replicaSets">
+        {{rs.objectMeta.name}}
+      </div>
+      <div ng-if="!$ctrl.deployment.oldReplicaSets.replicaSets.length">
+        None
+      </div>
+    </kd-info-card-entry>
+  </kd-info-card-section>
+</kd-info-card>
