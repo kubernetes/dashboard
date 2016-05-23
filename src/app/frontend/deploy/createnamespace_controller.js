@@ -66,6 +66,12 @@ export default class NamespaceDialogController {
 
     /** @export {!angular.FormController} */
     this.namespaceForm;
+
+    /**
+     * @export
+     * {!Object<string, string>}
+     */
+    this.messages = createNamespaceMessages;
   }
 
   /**
@@ -107,3 +113,26 @@ export default class NamespaceDialogController {
         });
   }
 }
+
+const createNamespaceMessages = {
+  /** @export @type string @desc Create namespace dialog title. The message appears at the top of the dialog box. */
+  MSG_NAMESPACE_CREATE_DIALOG_TITLE: goog.getMsg(`Create a new namespace`),
+
+  /** @export @type string @desc Create namespace dialog subtitle. Appears right below the title. */
+  MSG_NAMESPACE_CREATE_DIALOG_SUBTITLE:
+      goog.getMsg(`The new namespace will be added to the cluster.`),
+
+  /** @export @type string @desc Label 'Namespace name', which appears as a placeholder in an empty input field in the create namespace dialog. */
+  MSG_NAMESPACE_NAME_LABEL: goog.getMsg(`Namespace name`),
+
+  /** @export @type string @desc The text appears when the namespace name does not match the expected pattern. */
+  MSG_NAMESPACE_NAME_PATTERN_WARNING:
+      goog.getMsg(`Name must be alphanumeric and may contain dashes.`),
+
+  /** @export @type string @desc The text appears when the namespace name exceeds the maximal length. */
+  MSG_NAMESPACE_NAME_LENGTH_WARNING:
+      goog.getMsg('Name must be up to {$maxLength} characters long.', {'maxLength': '63'}),
+
+  /** @export @type string @desc Warning which tells the user that the namespace name is required. */
+  MSG_NAMESPACE_NAME_REQUIRED_WARNING: goog.getMsg('Name is required.'),
+};

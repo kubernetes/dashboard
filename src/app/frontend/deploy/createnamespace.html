@@ -16,23 +16,21 @@ limitations under the License.
 
 <md-dialog aria-label="Create a new namespace" layout="column">
   <md-dialog-content layout-padding>
-    <h4 class="md-title" >Create a new namespace</h4>
-    <div>The new namespace will be added to the cluster.</div>
+    <h4 class="md-title" >{{ctrl.messages.MSG_NAMESPACE_CREATE_DIALOG_TITLE}}</h4>
+    <div>{{ctrl.messages.MSG_NAMESPACE_CREATE_DIALOG_SUBTITLE}}</div>
     <!-- TODO(maciaszczykm): Missing detailed cluster info. -->
     <form name="ctrl.namespaceForm" ng-submit="ctrl.createNamespace()"
           novalidate>
       <md-input-container class="md-block">
-        <label>Namespace name</label>
+        <label>{{ctrl.messages.MSG_NAMESPACE_NAME_LABEL}}</label>
         <input name="namespace" ng-model="ctrl.namespace"
             md-maxlength="{{ctrl.namespaceMaxLength}}"
             ng-pattern="ctrl.namespacePattern"
             required>
         <div ng-messages="ctrl.namespaceForm.namespace.$error">
-            <div ng-message="pattern">Name must be alphanumeric and may contain dashes.</div>
-            <div ng-message="maxlength">
-              Name must be up to {{ctrl.namespaceMaxLength}} characters long.
-            </div>
-            <div ng-message="required">Name is required.</div>
+            <div ng-message="pattern">{{ctrl.messages.MSG_NAMESPACE_NAME_PATTERN_WARNING}}</div>
+            <div ng-message="maxlength">{{ctrl.messages.MSG_NAMESPACE_NAME_LENGTH_WARNING}}</div>
+            <div ng-message="required">{{ctrl.messages.MSG_NAMESPACE_NAME_REQUIRED_WARNING}}</div>
         </div>
       </md-input-container>
       <md-dialog-actions layout="row">
