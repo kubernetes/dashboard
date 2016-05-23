@@ -47,7 +47,7 @@
     "gulp-uglify": "~1.5.1",
     "gulp-useref": "~3.1.0",
     "gulp-util": "~3.0.7",
-    "gulp-watch": "~4.3.5",
+    "gulp-watch": "~4.3.6",
     "html-minifier": "~2.1.0",
     "isparta": "~4.0.0",
     "karma": "0.13.22",
