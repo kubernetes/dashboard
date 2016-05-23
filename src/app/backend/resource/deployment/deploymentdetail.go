@@ -40,7 +40,7 @@ type DeploymentDetail struct {
 	Selector map[string]string `json:"selector"`
 
 	// Status information on the deployment
-	StatusInfo `json:"status"`
+	StatusInfo `json:"statusInfo"`
 
 	// The deployment strategy to use to replace existing pods with new ones.
 	// Valid options: Recreate, RollingUpdate
@@ -112,13 +112,14 @@ func getDeploymentDetail(deployment *extensions.Deployment,
 	pods []api.Pod, events *common.EventList) *DeploymentDetail {
 
 	newRsPodInfo := common.GetPodInfo(newRs.Status.Replicas, newRs.Spec.Replicas, pods)
-	newReplicaSet := toReplicaSet(newRs, &newRsPodInfo)
+	newReplicaSet := replicaset.ToReplicaSet(newRs, &newRsPodInfo)
 
 	oldReplicaSets := make([]extensions.ReplicaSet, len(oldRs))
 	for i, replicaSet := range oldRs {
 		oldReplicaSets[i] = *replicaSet
 	}
-	oldReplicaSetList := toReplicaSetList(oldReplicaSets, pods)
+	oldReplicaSetList := replicaset.ToReplicaSetList(oldReplicaSets,
+		[]api.Service{}, pods, []api.Event{}, []api.Node{})
 
 	return &DeploymentDetail{
 		ObjectMeta:      common.NewObjectMeta(deployment.ObjectMeta),
@@ -131,34 +132,9 @@ func getDeploymentDetail(deployment *extensions.Deployment,
 			MaxSurge:       deployment.Spec.Strategy.RollingUpdate.MaxSurge.IntValue(),
 			MaxUnavailable: deployment.Spec.Strategy.RollingUpdate.MaxUnavailable.IntValue(),
 		},
-		OldReplicaSetList: oldReplicaSetList,
+		OldReplicaSetList: *oldReplicaSetList,
 		NewReplicaSet:     newReplicaSet,
 		EventList:         *events,
-	}
-}
-
-func toReplicaSetList(resourceList []extensions.ReplicaSet, pods []api.Pod) replicaset.ReplicaSetList {
-	replicaSetList := replicaset.ReplicaSetList{
-		ReplicaSets: make([]replicaset.ReplicaSet, 0),
-	}
-
-	for _, replicaSet := range resourceList {
-		matchingPods := common.FilterNamespacedPodsBySelector(pods, replicaSet.ObjectMeta.Namespace,
-			replicaSet.Spec.Selector.MatchLabels)
-		podInfo := common.GetPodInfo(replicaSet.Status.Replicas, replicaSet.Spec.Replicas, matchingPods)
-
-		replicaSetList.ReplicaSets = append(replicaSetList.ReplicaSets, toReplicaSet(&replicaSet, &podInfo))
-	}
-
-	return replicaSetList
-}
-
-func toReplicaSet(replicaSet *extensions.ReplicaSet, podInfo *common.PodInfo) replicaset.ReplicaSet {
-	return replicaset.ReplicaSet{
-		ObjectMeta:      common.NewObjectMeta(replicaSet.ObjectMeta),
-		TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicaSet),
-		ContainerImages: common.GetContainerImages(&replicaSet.Spec.Template.Spec),
-		Pods:            *podInfo,
 	}
 }
 

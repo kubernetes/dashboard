@@ -99,11 +99,11 @@ func GetReplicaSetListFromChannels(channels *common.ResourceChannels) (
 		return nil, err
 	}
 
-	return getReplicaSetList(replicaSets.Items, services.Items, pods.Items, events.Items,
+	return ToReplicaSetList(replicaSets.Items, services.Items, pods.Items, events.Items,
 		nodes.Items), nil
 }
 
-func getReplicaSetList(replicaSets []extensions.ReplicaSet,
+func ToReplicaSetList(replicaSets []extensions.ReplicaSet,
 	services []api.Service, pods []api.Pod, events []api.Event,
 	nodes []api.Node) *ReplicaSetList {
 
@@ -116,14 +116,17 @@ func getReplicaSetList(replicaSets []extensions.ReplicaSet,
 			replicaSet.Spec.Selector.MatchLabels)
 		podInfo := getPodInfo(&replicaSet, matchingPods)
 
-		replicaSetList.ReplicaSets = append(replicaSetList.ReplicaSets,
-			ReplicaSet{
-				ObjectMeta:      common.NewObjectMeta(replicaSet.ObjectMeta),
-				TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicaSet),
-				ContainerImages: common.GetContainerImages(&replicaSet.Spec.Template.Spec),
-				Pods:            podInfo,
-			})
+		replicaSetList.ReplicaSets = append(replicaSetList.ReplicaSets, ToReplicaSet(&replicaSet, &podInfo))
 	}
 
 	return replicaSetList
+}
+
+func ToReplicaSet(replicaSet *extensions.ReplicaSet, podInfo *common.PodInfo) ReplicaSet {
+	return ReplicaSet{
+		ObjectMeta:      common.NewObjectMeta(replicaSet.ObjectMeta),
+		TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicaSet),
+		ContainerImages: common.GetContainerImages(&replicaSet.Spec.Template.Spec),
+		Pods:            *podInfo,
+	}
 }
