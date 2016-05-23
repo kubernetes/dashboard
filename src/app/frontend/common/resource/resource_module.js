@@ -23,6 +23,7 @@ export default angular
         'kubernetesDashboard.common.resource',
         [
           'ngMaterial',
+          'ui.router',
           'ngResource',
         ])
     .service('kdResourceVerberService', VerberService);

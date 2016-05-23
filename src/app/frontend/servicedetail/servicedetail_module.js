@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import componentsModule from './../common/components/components_module';
+import filtersModule from 'common/filters/filters_module';
 import stateConfig from './servicedetail_stateconfig';
 import {serviceInfoComponent} from './servicedetailinfo_component';
 
@@ -26,6 +27,9 @@ export default angular
         'kubernetesDashboard.serviceDetail',
         [
           'ngMaterial',
+          'ngResource',
+          'ui.router',
+          filtersModule.name,
           componentsModule.name,
         ])
     .config(stateConfig)

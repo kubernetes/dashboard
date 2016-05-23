@@ -49,9 +49,13 @@ kd-resource-card-column {
   &:last-child {
     padding-right: $baseline-grid;
   }
+}
 
-  &:first-child {
-    padding-left: $baseline-grid;
+.kd-resource-card-list-with-statuses {
+  kd-resource-card-column {
+    &:first-child {
+      padding-left: $baseline-grid;
+    }
   }
 }
 

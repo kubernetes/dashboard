@@ -17,42 +17,42 @@
  */
 export class ActionbarComponent {
   /**
-   * @param {!angular.JQLite} $document
    * @param {!angular.JQLite} $element
    * @param {!angular.Scope} $scope
-   * @param {!angular.$window} $window
    * @ngInject
    */
-  constructor($document, $element, $scope, $window) {
-    /** @private {!angular.JQLite} */
-    this.document_ = $document;
+  constructor($element, $scope) {
     /** @private {!angular.JQLite}} */
     this.element_ = $element;
     /** @private {!angular.Scope} */
     this.scope_ = $scope;
-    /** @private {!angular.$window} */
-    this.window_ = $window;
   }
 
   /**
    * @export
    */
   $onInit() {
-    this.computeScrollClass_();
+    let closestContent = this.element_.parent().find('md-content');
+    if (!closestContent || closestContent.length === 0) {
+      throw new Error('Actionbar component requires sibling md-content element');
+    }
 
-    let computeScrollClassCallback = () => { this.computeScrollClass_(); };
+    this.computeScrollClass_(closestContent[0]);  // Initialize scroll state at first.
 
-    this.document_.on('scroll', computeScrollClassCallback);
+    let computeScrollClassCallback =
+        (/** !Event */ e) => { this.computeScrollClass_(/** @type {!Element} */ (e.target)); };
+    closestContent.on('scroll', computeScrollClassCallback);
     this.scope_.$on(
-        '$destroy', () => { this.document_.off('scroll', computeScrollClassCallback); });
+        '$destroy', () => { closestContent.off('scroll', computeScrollClassCallback); });
   }
 
   /**
    * Computes scroll class based on scroll position and applies it to current element.
+   * @param {!Element} mdContentElement
    * @private
    */
-  computeScrollClass_() {
-    if (this.window_.scrollY > 0) {
+  computeScrollClass_(mdContentElement) {
+    if (mdContentElement.scrollTop > 0) {
       this.element_.removeClass('kd-actionbar-not-scrolled');
     } else {
       this.element_.addClass('kd-actionbar-not-scrolled');

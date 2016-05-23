@@ -26,25 +26,16 @@
 
 .kd-toolbar {
   box-shadow: $whiteframe-shadow-1dp;
-  height: $toolbar-height-size-base;
-  position: fixed !important;
 }
 
-.kd-chrome-content {
-  padding-top: $toolbar-height-size-base;
+chrome {
+  display: block;
+  overflow: hidden;
 }
 
-.kd-chrome-has-actionbar {
-  padding-top: 2 * $toolbar-height-size-base;
-
-  @media only screen and (max-width: $layout-breakpoint-sm) {
-    padding-top: $toolbar-height-size-base + $toolbar-height-size-base-sm;
-  }
-}
-
-body {
+body,
+.kd-app-content {
   background-color: $body;
-  height: 100%;
 }
 
 a {

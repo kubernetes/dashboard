@@ -26,10 +26,19 @@ func (c *FakeRESTClient) Delete() *restclient.Request {
 	}), "DELETE", nil, "/api/v1", restclient.ContentConfig{}, nil, nil)
 }
 
-func TestDeleteShouldPropagateErrors(t *testing.T) {
-	verber := ResourceVerber{client: &FakeRESTClient{err: errors.New("err")}}
+func TestDeleteShouldPropagateErrorsAndChoseClient(t *testing.T) {
+	verber := ResourceVerber{
+		client:           &FakeRESTClient{err: errors.New("err")},
+		extensionsClient: &FakeRESTClient{err: errors.New("err from extensions")},
+	}
 
 	err := verber.Delete("replicaset", "bar", "baz")
+
+	if !reflect.DeepEqual(err, errors.New("err from extensions")) {
+		t.Fatalf("Expected error on verber delete but got %#v", err)
+	}
+
+	err = verber.Delete("service", "bar", "baz")
 
 	if !reflect.DeepEqual(err, errors.New("err")) {
 		t.Fatalf("Expected error on verber delete but got %#v", err)

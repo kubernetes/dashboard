@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {actionbarViewName} from 'chrome/chrome_state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_component';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {stateName} from './servicedetail_state';
 import {stateName as serviceList, stateUrl} from './../servicelist/servicelist_state';
 import {ServiceDetailController} from './servicedetail_controller';
@@ -52,6 +52,7 @@ export default function stateConfig($stateProvider) {
  * @param {!./servicedetail_state.StateParams} $stateParams
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource<!backendApi.ServiceDetail>}
+ * @ngInject
  */
 export function getServiceDetailResource($stateParams, $resource) {
   return $resource(`api/v1/services/${$stateParams.namespace}/${$stateParams.service}`);
@@ -60,6 +61,7 @@ export function getServiceDetailResource($stateParams, $resource) {
 /**
  * @param {!angular.Resource<!backendApi.ServiceDetail>} serviceDetailResource
  * @return {!angular.$q.Promise}
+ * @ngInject
  */
 export function resolveServiceDetail(serviceDetailResource) {
   return serviceDetailResource.get().$promise;

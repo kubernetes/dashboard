@@ -13,9 +13,10 @@
 // limitations under the License.
 
 import {actionbarViewName} from 'chrome/chrome_state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_component';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {DeploymentListController} from './deploymentlist_controller';
 import {stateName, stateUrl} from './deploymentlist_state';
+import {stateName as workloadsState} from 'workloads/workloads_state';
 import {DeploymentListActionBarController} from './deploymentlistactionbar_controller';
 
 /**
@@ -33,6 +34,7 @@ export default function stateConfig($stateProvider) {
     data: {
       [breadcrumbsConfig]: {
         'label': 'Deployments',
+        'parent': workloadsState,
       },
     },
     views: {
