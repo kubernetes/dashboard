@@ -26,7 +26,7 @@ describe('StateConfig for replication controller list', () => {
 
     let actual = resolveWorkloads(resource);
 
-    expect(resource).toHaveBeenCalledWith('api/v1/workloads');
+    expect(resource).toHaveBeenCalledWith('api/v1/workload');
     expect(actual).toBe(promise);
   }));
 });

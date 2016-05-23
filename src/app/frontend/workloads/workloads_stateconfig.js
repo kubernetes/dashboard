@@ -55,6 +55,6 @@ export default function stateConfig($stateProvider) {
  */
 export function resolveWorkloads($resource) {
   /** @type {!angular.Resource<!backendApi.Workloads>} */
-  let resource = $resource('api/v1/workloads');
+  let resource = $resource('api/v1/workload');
   return resource.get().$promise;
 }

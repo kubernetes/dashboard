@@ -55,7 +55,7 @@ export default function stateConfig($stateProvider) {
  * @ngInject
  */
 export function getServiceDetailResource($stateParams, $resource) {
-  return $resource(`api/v1/services/${$stateParams.namespace}/${$stateParams.service}`);
+  return $resource(`api/v1/service/${$stateParams.namespace}/${$stateParams.service}`);
 }
 
 /**

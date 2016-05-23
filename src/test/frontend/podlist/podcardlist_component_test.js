@@ -50,6 +50,6 @@ describe('Pod card list controller', () => {
         name: 'foo-pod',
         namespace: 'foo-namespace',
       },
-    })).toBe('#/pods/foo-namespace/foo-pod');
+    })).toBe('#/pod/foo-namespace/foo-pod');
   });
 });

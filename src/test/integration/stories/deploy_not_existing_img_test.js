@@ -64,7 +64,7 @@ describe('Deploy not existing image story', () => {
     // when
     deployPage.deployButton.click().then(() => {
       // then
-      expect(browser.getCurrentUrl()).toContain('replicationcontrollers');
+      expect(browser.getCurrentUrl()).toContain('replicationcontroller');
       doneFn();
     });
   });
@@ -102,7 +102,7 @@ describe('Deploy not existing image story', () => {
     cardDetailsPageLink.click();
 
     // then
-    expect(browser.getCurrentUrl()).toContain(`replicationcontrollers/default/${appName}`);
+    expect(browser.getCurrentUrl()).toContain(`replicationcontroller/default/${appName}`);
   });
 
   it('should switch to events tab and check for errors', () => {
@@ -130,7 +130,7 @@ describe('Deploy not existing image story', () => {
       browser.getAllWindowHandles().then((handles) => {
         let logsWindowHandle = handles[1];
         browser.switchTo().window(logsWindowHandle).then(() => {
-          expect(browser.getCurrentUrl()).toContain(`logs/default/${appName}`);
+          expect(browser.getCurrentUrl()).toContain(`log/default/${appName}`);
         });
       });
     });
@@ -141,7 +141,7 @@ describe('Deploy not existing image story', () => {
     let cardMenuButton = replicationControllersPage.getElementByAppName(
         replicationControllersPage.cardMenuButtonQuery, appName);
 
-    browser.get('#/replicationcontrollers');
+    browser.get('#/replicationcontroller');
 
     cardMenuButton.click();
     replicationControllersPage.deleteAppButton.click().then(() => {

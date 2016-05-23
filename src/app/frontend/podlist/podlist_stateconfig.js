@@ -59,6 +59,6 @@ export default function stateConfig($stateProvider) {
  */
 export function resolvePodList($resource) {
   /** @type {!angular.Resource<!backendApi.PodList>} */
-  let resource = $resource('api/v1/pods');
+  let resource = $resource('api/v1/pod');
   return resource.get().$promise;
 }

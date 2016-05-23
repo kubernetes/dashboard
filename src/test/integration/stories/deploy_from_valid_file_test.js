@@ -55,7 +55,7 @@ describe('Deploy from valid file user story test', () => {
     deployFromFilePage.deployButton.click();
 
     // then
-    expect(browser.getCurrentUrl()).toContain('replicationcontrollers');
+    expect(browser.getCurrentUrl()).toContain('replicationcontroller');
 
     let cardNameLink = replicationControllersPage.getElementByAppName(
         replicationControllersPage.cardDetailsPageLinkQuery, appName);
@@ -66,7 +66,7 @@ describe('Deploy from valid file user story test', () => {
     // clean up
     let cardMenuButton = replicationControllersPage.getElementByAppName(
         replicationControllersPage.cardMenuButtonQuery, appName);
-    browser.get('#/replicationcontrollers');
+    browser.get('#/replicationcontroller');
     cardMenuButton.click();
     replicationControllersPage.deleteAppButton.click().then(
         () => { deleteDialog.deleteAppButton.click(); });

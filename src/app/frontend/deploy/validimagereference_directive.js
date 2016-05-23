@@ -51,7 +51,7 @@ function validate(reference, scope, resource, q) {
   let deferred = q.defer();
 
   /** @type {!angular.Resource<!backendApi.ImageReferenceValiditySpec>} */
-  let resourceClass = resource('api/v1/appdeployments/validate/imagereference');
+  let resourceClass = resource('api/v1/appdeployment/validate/imagereference');
   /** @type {!backendApi.ImageReferenceValiditySpec} */
   let spec = {reference: reference};
 

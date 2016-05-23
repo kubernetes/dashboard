@@ -35,7 +35,7 @@ describe('Valid ImageReference directive', () => {
 
   it('should validate image reference', () => {
     scope.containerImage = 'Test';
-    let endpoint = httpBackend.when('POST', 'api/v1/appdeployments/validate/imagereference');
+    let endpoint = httpBackend.when('POST', 'api/v1/appdeployment/validate/imagereference');
 
     let elem = compileFn(scope)[0];
     expect(elem.classList).toContain('ng-valid');
@@ -69,7 +69,7 @@ describe('Valid ImageReference directive', () => {
     scope.containerImage = 'test';
 
     let elem = compileFn(scope)[0];
-    httpBackend.when('POST', 'api/v1/appdeployments/validate/imagereference')
+    httpBackend.when('POST', 'api/v1/appdeployment/validate/imagereference')
         .respond(503, 'Service Unavailable');
     httpBackend.flush();
     expect(elem.classList).not.toContain('ng-pending');

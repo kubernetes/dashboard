@@ -66,7 +66,7 @@ xdescribe('Deploy and delete replication controller user story test', () => {
 
   it('should deploy replication controller', () => {
     deployPage.deployButton.click().then(() => {
-      expect(browser.getCurrentUrl()).toContain('replicationcontrollers');
+      expect(browser.getCurrentUrl()).toContain('replicationcontroller');
       expect(element(by.xpath(applicationCardXPath))).not.toBeNull();
     });
   });

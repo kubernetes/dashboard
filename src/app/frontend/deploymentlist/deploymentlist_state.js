@@ -13,7 +13,7 @@
 // limitations under the License.
 
 /** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'deployments';
+export const stateName = 'deployment';
 
 /** Absolute URL of the state. */
-export const stateUrl = '/deployments';
+export const stateUrl = '/deployment';

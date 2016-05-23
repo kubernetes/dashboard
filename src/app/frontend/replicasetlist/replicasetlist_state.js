@@ -13,7 +13,7 @@
 // limitations under the License.
 
 /** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'replicasets';
+export const stateName = 'replicaset';
 
 /** Absolute URL of the state. */
-export const stateUrl = '/replicasets';
+export const stateUrl = '/replicaset';
