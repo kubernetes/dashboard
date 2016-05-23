@@ -15,7 +15,7 @@
 import {actionbarViewName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_component';
 import {DeploymentDetailController} from './deploymentdetail_controller';
-import {stateName as deploymentList, stateUrl} from 'deploymentlist/deploymentlist_state';
+import {stateName as deploymentList} from 'deploymentlist/deploymentlist_state';
 import {stateName} from './deploymentdetail_state';
 
 /**
