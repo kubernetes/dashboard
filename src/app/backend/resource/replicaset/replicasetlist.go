@@ -71,7 +71,10 @@ func GetReplicaSetListFromChannels(channels *common.ResourceChannels) (
 		if ok && statusErr.ErrStatus.Reason == "NotFound" {
 			// NotFound - this means that the server does not support Replica Set objects, which
 			// is fine.
-			return nil, nil
+			emptyList := &ReplicaSetList{
+				ReplicaSets: make([]ReplicaSet, 0),
+			}
+			return emptyList, nil
 		}
 		return nil, err
 	}
