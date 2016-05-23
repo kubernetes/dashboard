@@ -74,7 +74,9 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 			extensions.ReplicaSetList{},
 			&k8serrors.StatusError{ErrStatus: unversioned.Status{Reason: "NotFound"}},
 			&api.PodList{},
-			nil,
+			&ReplicaSetList{
+				ReplicaSets: make([]ReplicaSet, 0),
+			},
 			nil,
 		},
 		{

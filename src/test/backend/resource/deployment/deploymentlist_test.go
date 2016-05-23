@@ -74,7 +74,9 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 			extensions.DeploymentList{},
 			&k8serrors.StatusError{ErrStatus: unversioned.Status{Reason: "NotFound"}},
 			&api.PodList{},
-			nil,
+			&DeploymentList{
+				Deployments: make([]Deployment, 0),
+			},
 			nil,
 		},
 		{

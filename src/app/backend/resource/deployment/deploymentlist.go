@@ -71,7 +71,10 @@ func GetDeploymentListFromChannels(channels *common.ResourceChannels) (
 		if ok && statusErr.ErrStatus.Reason == "NotFound" {
 			// NotFound - this means that the server does not support Deployment objects, which
 			// is fine.
-			return nil, nil
+			emptyList := &DeploymentList{
+				Deployments: make([]Deployment, 0),
+			}
+			return emptyList, nil
 		}
 		return nil, err
 	}
