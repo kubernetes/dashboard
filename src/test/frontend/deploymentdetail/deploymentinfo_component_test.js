@@ -11,7 +11,7 @@ describe('Deployment Info controller', () => {
     angular.mock.module(deploymentDetailModule.name);
 
     angular.mock.inject(
-      ($componentController) => { ctrl = $componentController('kdDeploymentInfo', {}); });
+        ($componentController) => { ctrl = $componentController('kdDeploymentInfo', {}); });
   });
 
   describe('#rollingUpdateStrategy', () => {
