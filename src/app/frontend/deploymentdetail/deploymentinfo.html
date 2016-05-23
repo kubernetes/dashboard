@@ -31,10 +31,10 @@
 
   <kd-info-card-section>
     <kd-info-card-entry title="Status">
-    {{::$ctrl.deployment.status.updated}} updated, 
-    {{::$ctrl.deployment.status.replicas}} total, 
-    {{::$ctrl.deployment.status.available}} available, 
-    {{::$ctrl.deployment.status.unavailable}} unavailable
+    {{::$ctrl.deployment.statusInfo.updated}} updated, 
+    {{::$ctrl.deployment.statusInfo.replicas}} total, 
+    {{::$ctrl.deployment.statusInfo.available}} available, 
+    {{::$ctrl.deployment.statusInfo.unavailable}} unavailable
     </kd-info-card-entry>
     <kd-info-card-entry title="New Replica Set">
       <kd-middle-ellipsis display-string="{{$ctrl.deployment.newReplicaSet.objectMeta.name}}">
