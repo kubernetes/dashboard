@@ -14,6 +14,7 @@ export default class DeploymentInfoController {
   }
 
   /**
+   * Returns true if the deployment strategy is RollingUpdate
    * @return {boolean}
    * @export
    */

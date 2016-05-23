@@ -15,6 +15,9 @@
 /** Name of the state. Can be used in, e.g., $state.go method. */
 export const stateName = 'deploymentdetail';
 
+/** Absolute URL of the state. */
+export const stateUrl = '/api/v1/deployment/:namespace/:deployment';
+
 /**
  * Parameters for this state.
  *
