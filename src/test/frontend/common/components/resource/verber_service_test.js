@@ -19,18 +19,29 @@ describe('Verber service', () => {
   let verber;
   /** @type {!md.$dialog} */
   let mdDialog;
+  /** @type {!angular.$q} **/
+  let q;
+  /** @type {!angular.$scope} **/
+  let scope;
+  /** @type {!ui.router.State} **/
+  let state;
 
   beforeEach(() => angular.mock.module(resourceModule.name));
 
-  beforeEach(angular.mock.inject((kdResourceVerberService, $mdDialog) => {
+  beforeEach(angular.mock.inject((kdResourceVerberService, $mdDialog, $q, $rootScope, $state) => {
     verber = kdResourceVerberService;
     mdDialog = $mdDialog;
+    q = $q;
+    scope = $rootScope.$new();
+    state = $state;
   }));
 
   it('should show delete dialog resource', () => {
-    let promise = {};
-    spyOn(mdDialog, 'show').and.returnValue(promise);
-    let actual = verber.showDeleteDialog('Foo resource', {foo: 'bar'}, {baz: 'qux'});
+    let deferred = q.defer();
+    spyOn(mdDialog, 'show').and.returnValue(deferred.promise);
+
+    verber.showDeleteDialog('Foo resource', {foo: 'bar'}, {baz: 'qux'});
+
     expect(mdDialog.show).toHaveBeenCalledWith(jasmine.objectContaining({
       locals: {
         'resourceKindName': 'Foo resource',
@@ -38,6 +49,18 @@ describe('Verber service', () => {
         'objectMeta': {baz: 'qux'},
       },
     }));
-    expect(actual).toBe(promise);
+  });
+
+  it('should show alert window on error', () => {
+    let deferred = q.defer();
+    spyOn(mdDialog, 'show').and.returnValue(deferred.promise);
+    spyOn(state, 'reload');
+    spyOn(mdDialog, 'alert').and.callThrough();
+    verber.showDeleteDialog();
+
+    deferred.reject({data: 'foo-data', statusText: 'foo-text'});
+    scope.$digest();
+    expect(state.reload).not.toHaveBeenCalled();
+    expect(mdDialog.alert).toHaveBeenCalled();
   });
 });

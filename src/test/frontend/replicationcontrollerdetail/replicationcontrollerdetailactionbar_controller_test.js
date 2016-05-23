@@ -12,52 +12,40 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ReplicationControllerDetailActionBarController from 'replicationcontrollerdetail/replicationcontrollerdetailactionbar_controller';
+import {ReplicationControllerDetailActionBarController} from 'replicationcontrollerdetail/replicationcontrollerdetailactionbar_controller';
 import replicationControllerDetailModule from 'replicationcontrollerdetail/replicationcontrollerdetail_module';
-import {stateName as replicationcontrollers} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 import {stateName as deploy} from 'deploy/deploy_state';
 
 describe('Replication Controller Detail Action Bar controller', () => {
   /**
-   * Replication Controller Detail controller.
-   * @type {!ReplicationControllerDetailController}
+   * Replication Controller Detail Action Bar controller.
+   * @type {!ReplicationControllerDetailActionBarController}
    */
   let ctrl;
   /** @type
    * {!replicationcontrollerdetail/replicationcontroller_service.ReplicationControllerService} */
   let kdReplicationControllerService;
-  /** @type {!angular.$q} */
-  let q;
   /** @type {!ui.router.$state} */
   let state;
-  /** @type {!angular.$log} */
-  let log;
 
   beforeEach(() => {
     angular.mock.module(replicationControllerDetailModule.name);
 
-    angular.mock.inject(
-        ($controller, $state, $log, $resource, $q, _kdReplicationControllerService_) => {
-          q = $q;
-          state = $state;
-          log = $log;
-          kdReplicationControllerService = _kdReplicationControllerService_;
+    angular.mock.inject(($controller, $state, $resource, _kdReplicationControllerService_) => {
+      state = $state;
+      kdReplicationControllerService = _kdReplicationControllerService_;
 
-          ctrl = $controller(ReplicationControllerDetailActionBarController, {
-            $state: state,
-            $stateParams: {
-              replicationController:
-                  {objectMeta: {name: 'foo-replicationcontroller', namespace: 'foo-namespace'}},
-            },
-            replicationControllerDetail: {},
-            kdReplicationControllerService: _kdReplicationControllerService_,
-          });
-        });
+      ctrl = $controller(ReplicationControllerDetailActionBarController, {
+        $state: state,
+        replicationControllerDetail: {},
+        kdReplicationControllerService: _kdReplicationControllerService_,
+      });
+    });
   });
 
   it('should show edit replicas dialog', () => {
     // given
-    ctrl.details_ = {
+    ctrl.details = {
       objectMeta: {
         namespace: 'foo-namespace',
         name: 'foo-name',
@@ -74,31 +62,6 @@ describe('Replication Controller Detail Action Bar controller', () => {
 
     // then
     expect(kdReplicationControllerService.showUpdateReplicasDialog).toHaveBeenCalled();
-  });
-
-  it('should show delete replicas dialog', () => {
-    // given
-    let deferred = q.defer();
-    spyOn(kdReplicationControllerService, 'showDeleteDialog').and.returnValue(deferred.promise);
-
-    // when
-    ctrl.handleDeleteReplicationControllerDialog();
-
-    // then
-    expect(kdReplicationControllerService.showDeleteDialog).toHaveBeenCalled();
-  });
-
-  it('should change state to replication controller and log on delete success', () => {
-    // given
-    spyOn(state, 'go');
-    spyOn(log, 'info');
-
-    // when
-    ctrl.onReplicationControllerDeleteSuccess_();
-
-    // then
-    expect(state.go).toHaveBeenCalledWith(replicationcontrollers);
-    expect(log.info).toHaveBeenCalledWith('Replication controller successfully deleted.');
   });
 
   it('should redirect to deploy page', () => {

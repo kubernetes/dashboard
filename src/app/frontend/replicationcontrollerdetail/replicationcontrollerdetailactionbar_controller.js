@@ -13,39 +13,29 @@
 // limitations under the License.
 
 import {stateName as deploy} from 'deploy/deploy_state';
-import {stateName as replicationcontrollers} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 
 /**
  * @final
  */
-export default class ReplicationControllerDetailActionBarController {
+export class ReplicationControllerDetailActionBarController {
   /**
    * Constructs action bar on rc detail page.
    *
    * @param {ui.router.$state} $state
-   * @param {!./replicationcontrollerdetail_state.StateParams} $stateParams
-   * @param {!angular.$log} $log
    * @param {!backendApi.ReplicationControllerDetail} replicationControllerDetail
    * @param {!./replicationcontroller_service.ReplicationControllerService}
    * kdReplicationControllerService
    * @ngInject
    */
-  constructor(
-      $state, $stateParams, $log, replicationControllerDetail, kdReplicationControllerService) {
+  constructor($state, replicationControllerDetail, kdReplicationControllerService) {
     /** @private {ui.router.$state} */
     this.state_ = $state;
-
-    /** @private {!./replicationcontrollerdetail_state.StateParams} */
-    this.stateParams_ = $stateParams;
-
-    /** @private {!angular.$log} */
-    this.log_ = $log;
 
     /** @private {!./replicationcontroller_service.ReplicationControllerService} */
     this.kdReplicationControllerService_ = kdReplicationControllerService;
 
-    /** @private {!backendApi.ReplicationControllerDetail} */
-    this.details_ = replicationControllerDetail;
+    /** @export {!backendApi.ReplicationControllerDetail} */
+    this.details = replicationControllerDetail;
 
     /** @export {boolean} */
     this.showFabIcons = false;
@@ -72,32 +62,7 @@ export default class ReplicationControllerDetailActionBarController {
    */
   handleUpdateReplicasDialog() {
     this.kdReplicationControllerService_.showUpdateReplicasDialog(
-        this.details_.objectMeta.namespace, this.details_.objectMeta.name,
-        this.details_.podInfo.current, this.details_.podInfo.desired);
-  }
-
-  /**
-   * Handles replication controller delete dialog.
-   * @export
-   */
-  handleDeleteReplicationControllerDialog() {
-    this.kdReplicationControllerService_
-        .showDeleteDialog(this.details_.typeMeta, this.details_.objectMeta)
-        .then(this.onReplicationControllerDeleteSuccess_.bind(this));
-  }
-
-  /**
-   * Callbacks used after clicking dialog confirmation button in order to delete replication
-   * controller or log unsuccessful operation error.
-   */
-
-  /**
-   * Changes state back to replication controller list after successful deletion of replication
-   * controller.
-   * @private
-   */
-  onReplicationControllerDeleteSuccess_() {
-    this.log_.info('Replication controller successfully deleted.');
-    this.state_.go(replicationcontrollers);
+        this.details.objectMeta.namespace, this.details.objectMeta.name,
+        this.details.podInfo.current, this.details.podInfo.desired);
   }
 }
