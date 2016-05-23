@@ -59,6 +59,6 @@ export default function stateConfig($stateProvider) {
  */
 export function resolveReplicationControllers($resource) {
   /** @type {!angular.Resource<!backendApi.ReplicationControllerList>} */
-  let resource = $resource('api/v1/replicationcontrollers');
+  let resource = $resource('api/v1/replicationcontroller');
   return resource.get().$promise;
 }

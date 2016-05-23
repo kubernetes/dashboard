@@ -42,7 +42,7 @@ export default function stateConfig($stateProvider) {
  */
 function resolveNamespaces($resource) {
   /** @type {!angular.Resource<!backendApi.NamespaceList>} */
-  let resource = $resource('api/v1/namespaces');
+  let resource = $resource('api/v1/namespace');
 
   return resource.get().$promise;
 }
@@ -53,7 +53,7 @@ function resolveNamespaces($resource) {
  * @ngInject
  */
 function getProtocolsResource($resource) {
-  return $resource('api/v1/appdeployments/protocols');
+  return $resource('api/v1/appdeployment/protocols');
 }
 
 /**

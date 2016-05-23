@@ -92,7 +92,7 @@ export default class NamespaceDialogController {
     let namespaceSpec = {name: this.namespace};
 
     /** @type {!angular.Resource<!backendApi.NamespaceSpec>} */
-    let resource = this.resource_('api/v1/namespaces');
+    let resource = this.resource_('api/v1/namespace');
 
     resource.save(
         namespaceSpec,

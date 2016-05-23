@@ -38,7 +38,7 @@ describe('Replication controller card', () => {
 
     // then
     expect(ctrl.getReplicationControllerDetailHref())
-        .toEqual('#/replicationcontrollers/foo-namespace/foo-name');
+        .toEqual('#/replicationcontroller/foo-namespace/foo-name');
   });
 
   it('should return true when at least one replication controller pod has warning', () => {

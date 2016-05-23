@@ -26,7 +26,7 @@ describe('StateConfig for replication controller list', () => {
 
     let actual = resolveReplicaSets(resource);
 
-    expect(resource).toHaveBeenCalledWith('api/v1/replicasets');
+    expect(resource).toHaveBeenCalledWith('api/v1/replicaset');
     expect(actual).toBe(promise);
   }));
 });

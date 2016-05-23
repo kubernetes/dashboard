@@ -13,7 +13,7 @@
 // limitations under the License.
 
 /** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'pods';
+export const stateName = 'pod';
 
 /** Absolute URL of the state. */
-export const stateUrl = '/pods';
+export const stateUrl = '/pod';

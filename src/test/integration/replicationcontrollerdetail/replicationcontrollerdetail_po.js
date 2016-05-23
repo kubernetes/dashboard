@@ -31,7 +31,7 @@ export default class ReplicationControllerDetailPageObject {
     this.eventsTableQuery = by.xpath('//kd-event-card-list');
     this.eventsTable = element(this.eventsTableQuery);
 
-    this.podLogsLinkQuery = by.xpath(`//a[contains(@href, 'logs')]`);
+    this.podLogsLinkQuery = by.xpath(`//a[contains(@href, 'log')]`);
     this.podLogsLink = element(this.podLogsLinkQuery);
   }
 }

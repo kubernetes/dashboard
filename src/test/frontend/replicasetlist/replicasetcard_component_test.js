@@ -37,7 +37,7 @@ describe('Replica Set card', () => {
     };
 
     // then
-    expect(ctrl.getReplicaSetDetailHref()).toEqual('#/replicasets/foo-namespace/foo-name');
+    expect(ctrl.getReplicaSetDetailHref()).toEqual('#/replicaset/foo-namespace/foo-name');
   });
 
   it('should return true when at least one replication controller pod has warning', () => {

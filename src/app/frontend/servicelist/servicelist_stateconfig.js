@@ -52,7 +52,7 @@ export default function stateConfig($stateProvider) {
  * @ngInject
  */
 export function getServiceListResource($resource) {
-  return $resource('api/v1/services');
+  return $resource('api/v1/service');
 }
 
 /**

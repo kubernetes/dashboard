@@ -35,6 +35,6 @@ describe('Service list controller', () => {
         name: 'foo-service',
         namespace: 'foo-namespace',
       },
-    })).toBe('#/services/foo-namespace/foo-service');
+    })).toBe('#/service/foo-namespace/foo-service');
   });
 });

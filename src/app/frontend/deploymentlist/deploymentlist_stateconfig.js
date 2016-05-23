@@ -59,6 +59,6 @@ export default function stateConfig($stateProvider) {
  */
 export function resolveDeployments($resource) {
   /** @type {!angular.Resource<!backendApi.DeploymentList>} */
-  let resource = $resource('api/v1/deployments');
+  let resource = $resource('api/v1/deployment');
   return resource.get().$promise;
 }

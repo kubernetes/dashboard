@@ -37,7 +37,7 @@ describe('Deployment card', () => {
     };
 
     // then
-    expect(ctrl.getDeploymentDetailHref()).toEqual('#/deployments/foo-namespace/foo-name');
+    expect(ctrl.getDeploymentDetailHref()).toEqual('#/deployment/foo-namespace/foo-name');
   });
 
   it('should return true when at least one replication controller pod has warning', () => {

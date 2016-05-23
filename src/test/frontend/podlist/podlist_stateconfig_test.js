@@ -26,7 +26,7 @@ describe('StateConfig for pod list', () => {
 
     let actual = resolvePodList(resource);
 
-    expect(resource).toHaveBeenCalledWith('api/v1/pods');
+    expect(resource).toHaveBeenCalledWith('api/v1/pod');
     expect(actual).toBe(promise);
   }));
 });

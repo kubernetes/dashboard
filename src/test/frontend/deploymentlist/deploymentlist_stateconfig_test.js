@@ -26,7 +26,7 @@ describe('StateConfig for replication controller list', () => {
 
     let actual = resolveDeployments(resource);
 
-    expect(resource).toHaveBeenCalledWith('api/v1/deployments');
+    expect(resource).toHaveBeenCalledWith('api/v1/deployment');
     expect(actual).toBe(promise);
   }));
 });

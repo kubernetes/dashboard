@@ -55,7 +55,7 @@ export default function stateConfig($stateProvider) {
  * @ngInject
  */
 export function getPodDetailResource($resource, $stateParams) {
-  return $resource(`api/v1/pods/${$stateParams.namespace}/${$stateParams.pod}`);
+  return $resource(`api/v1/pod/${$stateParams.namespace}/${$stateParams.pod}`);
 }
 
 /**

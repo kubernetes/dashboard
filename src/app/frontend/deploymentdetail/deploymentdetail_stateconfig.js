@@ -22,6 +22,6 @@ import {stateName} from './deploymentdetail_state';
  */
 export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
-    url: '/deployments/:namespace/:deployment',
+    url: '/deployment/:namespace/:deployment',
   });
 }

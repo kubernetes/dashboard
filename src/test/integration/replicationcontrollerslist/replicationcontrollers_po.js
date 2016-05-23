@@ -32,7 +32,7 @@ export default class ReplicationControllersPageObject {
    */
   getElementByAppName(xpathString, appName, isArray) {
     let elemQuery = by.xpath(
-        `//*[@href='#/replicationcontrollers/default/${appName}']/ancestor::kd-resource-card//${xpathString}`);
+        `//*[@href='#/replicationcontroller/default/${appName}']/ancestor::kd-resource-card//${xpathString}`);
     if (isArray) {
       return element.all(elemQuery);
     }

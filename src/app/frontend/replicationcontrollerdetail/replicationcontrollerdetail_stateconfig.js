@@ -27,7 +27,7 @@ import ReplicationControllerDetailController from './replicationcontrollerdetail
  */
 export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
-    url: '/replicationcontrollers/:namespace/:replicationController',
+    url: '/replicationcontroller/:namespace/:replicationController',
     resolve: {
       'replicationControllerSpecPodsResource': getReplicationControllerSpecPodsResource,
       'replicationControllerDetailResource': getReplicationControllerDetailsResource,
@@ -63,7 +63,7 @@ export default function stateConfig($stateProvider) {
  */
 export function getReplicationControllerDetailsResource($stateParams, $resource) {
   return $resource(
-      `api/v1/replicationcontrollers/${$stateParams.namespace}/` +
+      `api/v1/replicationcontroller/${$stateParams.namespace}/` +
       `${$stateParams.replicationController}`);
 }
 
@@ -75,8 +75,8 @@ export function getReplicationControllerDetailsResource($stateParams, $resource)
  */
 export function getReplicationControllerSpecPodsResource($stateParams, $resource) {
   return $resource(
-      `api/v1/replicationcontrollers/${$stateParams.namespace}/` +
-      `${$stateParams.replicationController}/update/pods`);
+      `api/v1/replicationcontroller/${$stateParams.namespace}/` +
+      `${$stateParams.replicationController}/update/pod`);
 }
 
 /**
@@ -98,7 +98,7 @@ function resolveReplicationControllerDetails(replicationControllerDetailResource
 function resolveReplicationControllerEvents($stateParams, $resource) {
   /** @type {!angular.Resource<!backendApi.Events>} */
   let resource =
-      $resource(`api/v1/events/${$stateParams.namespace}/${$stateParams.replicationController}`);
+      $resource(`api/v1/event/${$stateParams.namespace}/${$stateParams.replicationController}`);
 
   return resource.get().$promise;
 }

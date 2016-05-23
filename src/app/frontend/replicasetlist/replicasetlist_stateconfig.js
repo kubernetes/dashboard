@@ -59,6 +59,6 @@ export default function stateConfig($stateProvider) {
  */
 export function resolveReplicaSets($resource) {
   /** @type {!angular.Resource<!backendApi.ReplicaSetList>} */
-  let resource = $resource('api/v1/replicasets');
+  let resource = $resource('api/v1/replicaset');
   return resource.get().$promise;
 }

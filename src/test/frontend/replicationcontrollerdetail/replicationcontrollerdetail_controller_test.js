@@ -63,6 +63,6 @@ describe('Replication Controller Detail controller', () => {
       objectMeta: {
         name: 'foo-pod',
       },
-    })).toBe('#/logs/foo-namespace/foo-replicationcontroller/foo-pod/');
+    })).toBe('#/log/foo-namespace/foo-replicationcontroller/foo-pod/');
   });
 });

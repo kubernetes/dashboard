@@ -89,220 +89,150 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 	apiHandler := ApiHandler{client, heapsterClient, clientConfig, verber}
 	wsContainer := restful.NewContainer()
 
-	deployWs := new(restful.WebService)
-	deployWs.Filter(wsLogger)
-	deployWs.Path("/api/v1/appdeployments").
+	apiV1Ws := new(restful.WebService)
+	apiV1Ws.Filter(wsLogger)
+	apiV1Ws.Path("/api/v1").
 		Consumes(restful.MIME_JSON).
 		Produces(restful.MIME_JSON)
-	deployWs.Route(
-		deployWs.POST("").
+	wsContainer.Add(apiV1Ws)
+
+	apiV1Ws.Route(
+		apiV1Ws.POST("/appdeployment").
 			To(apiHandler.handleDeploy).
 			Reads(AppDeploymentSpec{}).
 			Writes(AppDeploymentSpec{}))
-	deployWs.Route(
-		deployWs.POST("/validate/name").
+	apiV1Ws.Route(
+		apiV1Ws.POST("/appdeployment/validate/name").
 			To(apiHandler.handleNameValidity).
 			Reads(AppNameValiditySpec{}).
 			Writes(AppNameValidity{}))
-	deployWs.Route(
-		deployWs.POST("/validate/imagereference").
+	apiV1Ws.Route(
+		apiV1Ws.POST("/appdeployment/validate/imagereference").
 			To(apiHandler.handleImageReferenceValidity).
 			Reads(ImageReferenceValiditySpec{}).
 			Writes(ImageReferenceValidity{}))
-	deployWs.Route(
-		deployWs.POST("/validate/protocol").
+	apiV1Ws.Route(
+		apiV1Ws.POST("/appdeployment/validate/protocol").
 			To(apiHandler.handleProtocolValidity).
 			Reads(ProtocolValiditySpec{}).
 			Writes(ProtocolValidity{}))
-	deployWs.Route(
-		deployWs.GET("/protocols").
+	apiV1Ws.Route(
+		apiV1Ws.GET("/appdeployment/protocols").
 			To(apiHandler.handleGetAvailableProcotols).
 			Writes(Protocols{}))
-	wsContainer.Add(deployWs)
 
-	deployFromFileWs := new(restful.WebService)
-	deployFromFileWs.Path("/api/v1/appdeploymentfromfile").
-		Consumes(restful.MIME_JSON).
-		Produces(restful.MIME_JSON)
-	deployFromFileWs.Route(
-		deployFromFileWs.POST("").
+	apiV1Ws.Route(
+		apiV1Ws.POST("/appdeploymentfromfile").
 			To(apiHandler.handleDeployFromFile).
 			Reads(AppDeploymentFromFileSpec{}).
 			Writes(AppDeploymentFromFileResponse{}))
-	wsContainer.Add(deployFromFileWs)
 
-	replicationControllerWs := new(restful.WebService)
-	replicationControllerWs.Filter(wsLogger)
-	replicationControllerWs.Path("/api/v1/replicationcontrollers").
-		Consumes(restful.MIME_JSON).
-		Produces(restful.MIME_JSON)
-	replicationControllerWs.Route(
-		replicationControllerWs.GET("").
+	apiV1Ws.Route(
+		apiV1Ws.GET("/replicationcontroller").
 			To(apiHandler.handleGetReplicationControllerList).
 			Writes(ReplicationControllerList{}))
-	replicationControllerWs.Route(
-		replicationControllerWs.GET("/{namespace}/{replicationController}").
+	apiV1Ws.Route(
+		apiV1Ws.GET("/replicationcontroller/{namespace}/{replicationController}").
 			To(apiHandler.handleGetReplicationControllerDetail).
 			Writes(ReplicationControllerDetail{}))
-	replicationControllerWs.Route(
-		replicationControllerWs.POST("/{namespace}/{replicationController}/update/pods").
+	apiV1Ws.Route(
+		apiV1Ws.POST("/replicationcontroller/{namespace}/{replicationController}/update/pod").
 			To(apiHandler.handleUpdateReplicasCount).
 			Reads(ReplicationControllerSpec{}))
-	replicationControllerWs.Route(
-		replicationControllerWs.DELETE("/{namespace}/{replicationController}").
+	apiV1Ws.Route(
+		apiV1Ws.DELETE("/replicationcontroller/{namespace}/{replicationController}").
 			To(apiHandler.handleDeleteReplicationController))
-	replicationControllerWs.Route(
-		replicationControllerWs.GET("/pods/{namespace}/{replicationController}").
+	apiV1Ws.Route(
+		apiV1Ws.GET("/replicationcontroller/pod/{namespace}/{replicationController}").
 			To(apiHandler.handleGetReplicationControllerPods).
 			Writes(ReplicationControllerPods{}))
-	wsContainer.Add(replicationControllerWs)
 
-	workloadsWs := new(restful.WebService)
-	workloadsWs.Filter(wsLogger)
-	workloadsWs.Path("/api/v1/workloads").
-		Consumes(restful.MIME_JSON).
-		Produces(restful.MIME_JSON)
-	workloadsWs.Route(
-		workloadsWs.GET("").
+	apiV1Ws.Route(
+		apiV1Ws.GET("/workload").
 			To(apiHandler.handleGetWorkloads).
 			Writes(workload.Workloads{}))
-	wsContainer.Add(workloadsWs)
 
-	replicaSetsWs := new(restful.WebService)
-	replicaSetsWs.Filter(wsLogger)
-	replicaSetsWs.Path("/api/v1/replicasets").
-		Consumes(restful.MIME_JSON).
-		Produces(restful.MIME_JSON)
-	replicaSetsWs.Route(
-		replicaSetsWs.GET("").
+	apiV1Ws.Route(
+		apiV1Ws.GET("/replicaset").
 			To(apiHandler.handleGetReplicaSets).
 			Writes(replicaset.ReplicaSetList{}))
-	replicaSetsWs.Route(
-		replicaSetsWs.GET("/{namespace}/{replicaSet}").
+	apiV1Ws.Route(
+		apiV1Ws.GET("/replicaset/{namespace}/{replicaSet}").
 			To(apiHandler.handleGetReplicaSetDetail).
 			Writes(replicaset.ReplicaSetDetail{}))
-	wsContainer.Add(replicaSetsWs)
 
-	podsWs := new(restful.WebService)
-	podsWs.Filter(wsLogger)
-	podsWs.Path("/api/v1/pods").
-		Consumes(restful.MIME_JSON).
-		Produces(restful.MIME_JSON)
-	podsWs.Route(
-		podsWs.GET("").
+	apiV1Ws.Route(
+		apiV1Ws.GET("/pod").
 			To(apiHandler.handleGetPods).
 			Writes(pod.PodList{}))
-	podsWs.Route(
-		podsWs.GET("/{namespace}/{pod}").
+	apiV1Ws.Route(
+		apiV1Ws.GET("/pod/{namespace}/{pod}").
 			To(apiHandler.handleGetPodDetail).
 			Writes(pod.PodDetail{}))
-	wsContainer.Add(podsWs)
 
-	deploymentsWs := new(restful.WebService)
-	deploymentsWs.Filter(wsLogger)
-	deploymentsWs.Path("/api/v1/deployments").
-		Consumes(restful.MIME_JSON).
-		Produces(restful.MIME_JSON)
-	deploymentsWs.Route(
-		deploymentsWs.GET("").
+	apiV1Ws.Route(
+		apiV1Ws.GET("/deployment").
 			To(apiHandler.handleGetDeployments).
 			Writes(deployment.DeploymentList{}))
-	wsContainer.Add(deploymentsWs)
-	daemonSetWs := new(restful.WebService)
-	daemonSetWs.Filter(wsLogger)
-	daemonSetWs.Path("/api/v1/daemonsets").
-		Consumes(restful.MIME_JSON).
-		Produces(restful.MIME_JSON)
-	daemonSetWs.Route(
-		daemonSetWs.GET("").
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/daemonset").
 			To(apiHandler.handleGetDaemonSetList).
 			Writes(daemonset.DaemonSetList{}))
-	daemonSetWs.Route(
-		daemonSetWs.GET("/{namespace}/{daemonSet}").
+	apiV1Ws.Route(
+		apiV1Ws.GET("/daemonset/{namespace}/{daemonSet}").
 			To(apiHandler.handleGetDaemonSetDetail).
 			Writes(daemonset.DaemonSetDetail{}))
-	daemonSetWs.Route(
-		daemonSetWs.DELETE("/{namespace}/{daemonSet}").
+	apiV1Ws.Route(
+		apiV1Ws.DELETE("/daemonset/{namespace}/{daemonSet}").
 			To(apiHandler.handleDeleteDaemonSet))
-	wsContainer.Add(daemonSetWs)
 
-	namespacesWs := new(restful.WebService)
-	namespacesWs.Filter(wsLogger)
-	namespacesWs.Path("/api/v1/namespaces").
-		Consumes(restful.MIME_JSON).
-		Produces(restful.MIME_JSON)
-	namespacesWs.Route(
-		namespacesWs.POST("").
+	apiV1Ws.Route(
+		apiV1Ws.POST("/namespace").
 			To(apiHandler.handleCreateNamespace).
 			Reads(NamespaceSpec{}).
 			Writes(NamespaceSpec{}))
-	namespacesWs.Route(
-		namespacesWs.GET("").
+	apiV1Ws.Route(
+		apiV1Ws.GET("/namespace").
 			To(apiHandler.handleGetNamespaces).
 			Writes(NamespaceList{}))
-	wsContainer.Add(namespacesWs)
 
-	logsWs := new(restful.WebService)
-	logsWs.Filter(wsLogger)
-	logsWs.Path("/api/v1/logs").
-		Produces(restful.MIME_JSON)
-	logsWs.Route(
-		logsWs.GET("/{namespace}/{podId}").
+	apiV1Ws.Route(
+		apiV1Ws.GET("/log/{namespace}/{podId}").
 			To(apiHandler.handleLogs).
 			Writes(Logs{}))
-	logsWs.Route(
-		logsWs.GET("/{namespace}/{podId}/{container}").
+	apiV1Ws.Route(
+		apiV1Ws.GET("/log/{namespace}/{podId}/{container}").
 			To(apiHandler.handleLogs).
 			Writes(Logs{}))
-	wsContainer.Add(logsWs)
 
-	eventsWs := new(restful.WebService)
-	eventsWs.Filter(wsLogger)
-	eventsWs.Path("/api/v1/events").
-		Produces(restful.MIME_JSON)
-	eventsWs.Route(
-		eventsWs.GET("/{namespace}/{replicationController}").
+	apiV1Ws.Route(
+		apiV1Ws.GET("/event/{namespace}/{replicationController}").
 			To(apiHandler.handleEvents).
 			Writes(common.EventList{}))
-	wsContainer.Add(eventsWs)
 
-	secretsWs := new(restful.WebService)
-	secretsWs.Path("/api/v1/secrets").Produces(restful.MIME_JSON)
-	secretsWs.Route(
-		secretsWs.GET("/{namespace}").
+	apiV1Ws.Route(
+		apiV1Ws.GET("/secret/{namespace}").
 			To(apiHandler.handleGetSecrets).
 			Writes(SecretsList{}))
-	secretsWs.Route(
-		secretsWs.POST("").
+	apiV1Ws.Route(
+		apiV1Ws.POST("/secret").
 			To(apiHandler.handleCreateImagePullSecret).
 			Reads(ImagePullSecretSpec{}).
 			Writes(Secret{}))
-	wsContainer.Add(secretsWs)
 
-	servicesWs := new(restful.WebService)
-	servicesWs.Filter(wsLogger)
-	servicesWs.Path("/api/v1/services").
-		Consumes(restful.MIME_JSON).
-		Produces(restful.MIME_JSON)
-	servicesWs.Route(
-		servicesWs.GET("").
+	apiV1Ws.Route(
+		apiV1Ws.GET("/service").
 			To(apiHandler.handleGetServiceList).
 			Writes(resourceService.ServiceList{}))
-	servicesWs.Route(
-		servicesWs.GET("/{namespace}/{service}").
+	apiV1Ws.Route(
+		apiV1Ws.GET("/service/{namespace}/{service}").
 			To(apiHandler.handleGetServiceDetail).
 			Writes(resourceService.ServiceDetail{}))
-	wsContainer.Add(servicesWs)
 
-	resourceVerberWs := new(restful.WebService)
-	resourceVerberWs.Filter(wsLogger)
-	resourceVerberWs.Path("/api/v1").
-		Consumes(restful.MIME_JSON).
-		Produces(restful.MIME_JSON)
-	resourceVerberWs.Route(
-		resourceVerberWs.DELETE("/{kind}/namespace/{namespace}/name/{name}").
+	apiV1Ws.Route(
+		apiV1Ws.DELETE("/{kind}/namespace/{namespace}/name/{name}").
 			To(apiHandler.handleDeleteResource))
-	wsContainer.Add(resourceVerberWs)
 
 	return wsContainer
 }

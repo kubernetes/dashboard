@@ -66,7 +66,7 @@ describe('Update Replicas controller', () => {
     };
     spyOn(log, 'info');
     spyOn(state, 'reload');
-    httpBackend.whenPOST('api/v1/replicationcontrollers/foo-namespace/foo-name/update/pods')
+    httpBackend.whenPOST('api/v1/replicationcontroller/foo-namespace/foo-name/update/pod')
         .respond(200, replicaSpec);
 
     // when
@@ -82,7 +82,7 @@ describe('Update Replicas controller', () => {
   it('should log error on failed update', () => {
     // given
     spyOn(log, 'error');
-    httpBackend.whenPOST('api/v1/replicationcontrollers/foo-namespace/foo-name/update/pods')
+    httpBackend.whenPOST('api/v1/replicationcontroller/foo-namespace/foo-name/update/pod')
         .respond(404);
 
     // when
