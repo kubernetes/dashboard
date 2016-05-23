@@ -18,9 +18,10 @@ import through from 'through2';
 /**
  * Utility function for specifying multiple gulp.dest destinations.
  * @param {string|!Array<string>} outputDirs destinations for the gulp dest function calls
+ * @param {function(?Error=)|undefined} opt_doneFn - Callback.
  * @return {stream}
  */
-export function multiDest(outputDirs) {
+export function multiDest(outputDirs, opt_doneFn) {
   if (!Array.isArray(outputDirs)) {
     outputDirs = [outputDirs];
   }
@@ -29,6 +30,17 @@ export function multiDest(outputDirs) {
 
   outputStream.on('data', (data) => outputs.forEach((dest) => { dest.write(data); }));
   outputStream.on('end', () => outputs.forEach((dest) => { dest.end(); }));
+
+  // build a closure to track all streams
+  let stillRunning = outputs.length;
+  if (opt_doneFn) {
+    outputs.forEach((output) => output.on('finish', () => {
+      stillRunning--;
+      if (stillRunning === 0) {
+        opt_doneFn();
+      }
+    }));
+  }
 
   return outputStream;
 }

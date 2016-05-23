@@ -29,6 +29,6 @@ import './build/script';
 import './build/serve';
 import './build/style';
 import './build/test';
-
+import './build/i18n';
 
 // No business logic in this file.

@@ -18,6 +18,11 @@
 import path from 'path';
 
 /**
+ * Load the i18n and l10n configuration. Used when dashboard is built in production.
+ */
+let localization = require('../i18n/locale_conf.json');
+
+/**
  * Base path for all other paths.
  */
 const basePath = path.join(__dirname, '../');
@@ -155,6 +160,13 @@ export default {
   },
 
   /**
+   * Configuration for i18n & l10n.
+   */
+  translations: localization.translations.map((translation) => {
+    return {path: path.join(basePath, 'i18n', translation.file), key: translation.key};
+  }),
+
+  /**
    * Absolute paths to known directories, e.g., to source directory.
    */
   paths: {
@@ -172,21 +184,17 @@ export default {
     deploySrc: path.join(basePath, 'src/deploy'),
     dist: path.join(basePath, 'dist', arch.default),
     distCross: arch.list.map((arch) => path.join(basePath, 'dist', arch)),
+    distPre: path.join(basePath, '.tmp/dist'),
     distPublic: path.join(basePath, 'dist', arch.default, 'public'),
     distPublicCross: arch.list.map((arch) => path.join(basePath, 'dist', arch, 'public')),
     distRoot: path.join(basePath, 'dist'),
     externs: path.join(basePath, 'src/app/externs'),
-    fontsDistPublic: path.join(basePath, 'dist', arch.default, 'public/fonts'),
-    fontsDistPublicCross:
-        arch.list.map((arch) => path.join(basePath, 'dist', arch, 'public/fonts')),
     frontendSrc: path.join(basePath, 'src/app/frontend'),
     frontendTest: path.join(basePath, 'src/test/frontend'),
     goTools: path.join(basePath, '.tools/go'),
     goWorkspace: path.join(basePath, '.go_workspace'),
     hyperkube: path.join(basePath, 'build/hyperkube.sh'),
-    iconsDistPublic: path.join(basePath, 'dist', arch.default, 'public/static'),
-    iconsDistPublicCross:
-        arch.list.map((arch) => path.join(basePath, 'dist', arch, 'public/static')),
+    i18nProd: path.join(basePath, '.tmp/i18n'),
     integrationTest: path.join(basePath, 'src/test/integration'),
     karmaConf: path.join(basePath, 'build/karma.conf.js'),
     materialIcons: path.join(basePath, 'bower_components/material-design-icons/iconfont'),
@@ -198,5 +206,6 @@ export default {
     serve: path.join(basePath, '.tmp/serve'),
     src: path.join(basePath, 'src'),
     tmp: path.join(basePath, '.tmp'),
+    xtbgenerator: path.join(basePath, '.tools/xtbgenerator/bin/XtbGenerator.jar'),
   },
 };

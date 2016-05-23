@@ -58,12 +58,12 @@ func main() {
 
 	heapsterRESTClient, err := CreateHeapsterRESTClient(*argHeapsterHost, apiserverClient)
 	if err != nil {
-		log.Print("Could not create heapster client: %s. Continuing.", err)
+		log.Printf("Could not create heapster client: %s. Continuing.", err)
 	}
 
 	// Run a HTTP server that serves static public files from './public' and handles API calls.
 	// TODO(bryk): Disable directory listing.
-	http.Handle("/", http.FileServer(http.Dir("./public")))
+	http.Handle("/", CreateLocaleHandler())
 	http.Handle("/api/", CreateHttpApiHandler(apiserverClient, heapsterRESTClient, config))
 	// TODO(maciaszczykm): Move to /appConfig.json as it was discussed in #640.
 	http.Handle("/api/appConfig.json", AppHandler(ConfigHandler))
