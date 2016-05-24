@@ -14,6 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
+<kd-content-card ng-if="$ctrl.workloads.daemonSetList.daemonSets.length">
+  <kd-title>
+    <a ui-sref="daemonset">
+      Daemon sets
+    </a>
+  </kd-title>
+  <kd-content>
+    <kd-daemon-set-card-list daemon-sets="$ctrl.workloads.daemonSetList">
+    </kd-daemon-set-card-list>
+  </kd-content>
+</kd-content-card>
+
 <kd-content-card ng-if=$ctrl.workloads.deploymentList.deployments.length>
   <kd-title>
     <a ui-sref="deployment">

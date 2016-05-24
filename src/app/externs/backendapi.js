@@ -359,6 +359,18 @@ backendApi.Service;
 backendApi.ServiceList;
 
 /**
+ * @typedef {{}}
+ */
+backendApi.DaemonSet;
+
+/**
+ * @typedef {{
+ *  daemonSets: !Array<backendApi.DaemonSet>
+ * }}
+ */
+backendApi.DaemonSetList;
+
+/**
  * @typedef {{
  *  host: string,
  *  ports: !Array<{port: number, protocol: string}>
