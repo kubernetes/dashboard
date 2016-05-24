@@ -50,11 +50,11 @@ type ServiceList struct {
 }
 
 // GetServiceList returns a list of all services in the cluster.
-func GetServiceList(client client.Interface) (*ServiceList, error) {
+func GetServiceList(client client.Interface, nsQuery *common.NamespaceQuery) (*ServiceList, error) {
 	log.Printf("Getting list of all services in the cluster")
 
 	channels := &common.ResourceChannels{
-		ServiceList: common.GetServiceListChannel(client, 1),
+		ServiceList: common.GetServiceListChannel(client, nsQuery, 1),
 	}
 
 	services := <-channels.ServiceList.List

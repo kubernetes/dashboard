@@ -33,11 +33,14 @@ func GetEvents(client client.EventNamespacer, namespace, resourceName string) ([
 	}
 
 	channels := &common.ResourceChannels{
-		EventList: common.GetNamespacedEventListChannel(client, 1, namespace,
+		EventList: common.GetEventListChannelWithOptions(
+			client,
+			common.NewSameNamespaceQuery(namespace),
 			api.ListOptions{
 				LabelSelector: labels.Everything(),
 				FieldSelector: fieldSelector,
-			}),
+			},
+			1),
 	}
 
 	eventList := <-channels.EventList.List
@@ -53,11 +56,15 @@ func GetPodsEvents(client client.Interface, namespace string, resourceSelector m
 	[]api.Event, error) {
 
 	channels := &common.ResourceChannels{
-		PodList: common.GetNamespacedPodListChannel(client, 1, namespace, api.ListOptions{
-			LabelSelector: labels.SelectorFromSet(resourceSelector),
-			FieldSelector: fields.Everything(),
-		}),
-		EventList: common.GetEventListChannel(client, 1),
+		PodList: common.GetPodListChannelWithOptions(
+			client,
+			common.NewSameNamespaceQuery(namespace),
+			api.ListOptions{
+				LabelSelector: labels.SelectorFromSet(resourceSelector),
+				FieldSelector: fields.Everything(),
+			},
+			1),
+		EventList: common.GetEventListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
 	}
 
 	podList := <-channels.PodList.List

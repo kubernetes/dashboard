@@ -46,15 +46,15 @@ type ReplicaSet struct {
 }
 
 // GetReplicaSetList returns a list of all Replica Sets in the cluster.
-func GetReplicaSetList(client client.Interface) (*ReplicaSetList, error) {
+func GetReplicaSetList(client client.Interface, nsQuery *common.NamespaceQuery) (*ReplicaSetList, error) {
 	log.Printf("Getting list of all replica sets in the cluster")
 
 	channels := &common.ResourceChannels{
-		ReplicaSetList: common.GetReplicaSetListChannel(client.Extensions(), 1),
-		ServiceList:    common.GetServiceListChannel(client, 1),
-		PodList:        common.GetPodListChannel(client, 1),
-		EventList:      common.GetEventListChannel(client, 1),
-		NodeList:       common.GetNodeListChannel(client, 1),
+		ReplicaSetList: common.GetReplicaSetListChannel(client.Extensions(), nsQuery, 1),
+		ServiceList:    common.GetServiceListChannel(client, nsQuery, 1),
+		PodList:        common.GetPodListChannel(client, nsQuery, 1),
+		EventList:      common.GetEventListChannel(client, nsQuery, 1),
+		NodeList:       common.GetNodeListChannel(client, nsQuery, 1),
 	}
 
 	return GetReplicaSetListFromChannels(channels)
