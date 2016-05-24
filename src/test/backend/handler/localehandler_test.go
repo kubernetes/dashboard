@@ -118,7 +118,7 @@ func TestDetermineLocale(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		func(){
+		func() {
 			if c.createDir {
 				err := os.Mkdir("./public", 0777)
 				if err != nil {

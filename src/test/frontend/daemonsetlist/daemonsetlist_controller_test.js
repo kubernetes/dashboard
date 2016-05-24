@@ -12,20 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {InternalErrorController} from './internalerror_controller';
-import {stateName, StateParams} from './internalerror_state';
+import {DaemonSetListController} from 'daemonsetlist/daemonsetlist_controller';
+import daemonSetListModule from 'daemonsetlist/daemonsetlist_module';
 
-/**
- * Configures states for the internal error view.
- *
- * @param {!ui.router.$stateProvider} $stateProvider
- * @ngInject
- */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    controller: InternalErrorController,
-    controllerAs: 'ctrl',
-    params: new StateParams(/** @type {!angular.$http.Response} */ ({})),
-    templateUrl: 'error/internalerror.html',
-  });
-}
+describe('Daemon Set list controller', () => {
+
+  beforeEach(() => { angular.mock.module(daemonSetListModule.name); });
+
+  it('should initialize daemon set', angular.mock.inject(($controller) => {
+    let ds = {};
+    /** @type {!DaemonSetListController} */
+    let ctrl = $controller(DaemonSetListController, {daemonSetList: ds});
+
+    expect(ctrl.daemonSetList).toBe(ds);
+  }));
+});

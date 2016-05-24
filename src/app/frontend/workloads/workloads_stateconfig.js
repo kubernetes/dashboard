@@ -13,9 +13,10 @@
 // limitations under the License.
 
 import {actionbarViewName} from 'chrome/chrome_state';
+
+import {WorkloadsController} from './workloads_controller';
 import {stateName} from './workloads_state';
 import {stateUrl} from './workloads_state';
-import {WorkloadsController} from './workloads_controller';
 import {WorkloadsActionBarController} from './workloadsactionbar_controller';
 
 /**

@@ -12,20 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {InternalErrorController} from './internalerror_controller';
-import {stateName, StateParams} from './internalerror_state';
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'daemonset';
 
-/**
- * Configures states for the internal error view.
- *
- * @param {!ui.router.$stateProvider} $stateProvider
- * @ngInject
- */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    controller: InternalErrorController,
-    controllerAs: 'ctrl',
-    params: new StateParams(/** @type {!angular.$http.Response} */ ({})),
-    templateUrl: 'error/internalerror.html',
-  });
-}
+/** Absolute URL of the state. */
+export const stateUrl = '/daemonset';

@@ -14,35 +14,35 @@
 
 import {actionbarViewName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
-import {stateName as deploymentList} from 'deploymentlist/deploymentlist_state';
+import {stateName as daemonSetList, stateUrl} from 'daemonsetlist/daemonsetlist_state';
 
-import {DeploymentDetailController} from './deploymentdetail_controller';
-import {stateName, stateUrl} from './deploymentdetail_state';
+import {DaemonSetDetailController} from './daemonsetdetail_controller';
+import {stateName} from './daemonsetdetail_state';
 
 /**
- * Configures states for the deployment detail view.
+ * Configures states for the daemon set details view.
  *
  * @param {!ui.router.$stateProvider} $stateProvider
  * @ngInject
  */
 export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
-    url: stateUrl,
+    url: `${stateUrl}/:namespace/:daemonSet`,
     resolve: {
-      'deploymentDetailResource': getDeploymentDetailResource,
-      'deploymentDetail': getDeploymentDetail,
+      'daemonSetDetailResource': getDaemonSetDetailResource,
+      'daemonSetDetail': getDaemonSetDetail,
     },
     data: {
       [breadcrumbsConfig]: {
-        'label': '{{$stateParams.deployment}}',
-        'parent': deploymentList,
+        'label': '{{$stateParams.daemonSet}}',
+        'parent': daemonSetList,
       },
     },
     views: {
       '': {
-        controller: DeploymentDetailController,
+        controller: DaemonSetDetailController,
         controllerAs: 'ctrl',
-        templateUrl: 'deploymentdetail/deploymentdetail.html',
+        templateUrl: 'daemonsetdetail/daemonsetdetail.html',
       },
       [actionbarViewName]: {},
     },
@@ -50,20 +50,20 @@ export default function stateConfig($stateProvider) {
 }
 
 /**
- * @param {!./deploymentdetail_state.StateParams} $stateParams
+ * @param {!./daemonsetdetail_state.StateParams} $stateParams
  * @param {!angular.$resource} $resource
- * @return {!angular.Resource<!backendApi.DeploymentDetail>}
+ * @return {!angular.Resource<!backendApi.DaemonSetDetail>}
  * @ngInject
  */
-export function getDeploymentDetailResource($resource, $stateParams) {
-  return $resource(`api/v1/deployment/${$stateParams.namespace}/${$stateParams.deployment}`);
+export function getDaemonSetDetailResource($resource, $stateParams) {
+  return $resource(`api/v1/daemonset/${$stateParams.namespace}/${$stateParams.daemonSet}`);
 }
 
 /**
- * @param {!angular.Resource<!backendApi.DeploymentDetail>} deploymentDetailResource
+ * @param {!angular.Resource<!backendApi.DaemonSetDetail>} daemonSetDetailResource
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function getDeploymentDetail(deploymentDetailResource) {
-  return deploymentDetailResource.get().$promise;
+export function getDaemonSetDetail(daemonSetDetailResource) {
+  return daemonSetDetailResource.get().$promise;
 }

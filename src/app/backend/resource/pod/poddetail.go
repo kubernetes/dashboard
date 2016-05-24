@@ -28,26 +28,26 @@ import (
 // This means it is PodDetail plus additional augumented data we can get
 // from other sources (like services that target it).
 type PodDetail struct {
-	ObjectMeta      common.ObjectMeta `json:"objectMeta"`
-	TypeMeta        common.TypeMeta   `json:"typeMeta"`
+	ObjectMeta common.ObjectMeta `json:"objectMeta"`
+	TypeMeta   common.TypeMeta   `json:"typeMeta"`
 
 	// Container images of the Pod.
 	ContainerImages []string `json:"containerImages"`
 
 	// Status of the Pod. See Kubernetes API for reference.
-	PodPhase        api.PodPhase `json:"podPhase"`
+	PodPhase api.PodPhase `json:"podPhase"`
 
 	// IP address of the Pod.
-	PodIP           string `json:"podIP"`
+	PodIP string `json:"podIP"`
 
 	// Name of the Node this Pod runs on.
-	NodeName        string `json:"nodeName"`
+	NodeName string `json:"nodeName"`
 
 	// Count of containers restarts.
-	RestartCount    int32 `json:"restartCount"`
+	RestartCount int32 `json:"restartCount"`
 
 	// Pod metrics.
-	Metrics         *PodMetrics `json:"metrics"`
+	Metrics *PodMetrics `json:"metrics"`
 }
 
 // GetPodDetail returns the details (PodDetail) of a named Pod from a particular
@@ -70,4 +70,4 @@ func GetPodDetail(client k8sClient.Interface, heapsterClient client.HeapsterClie
 
 	podDetail := ToPodDetail(pod, metrics)
 	return &podDetail, nil
-};
+}
