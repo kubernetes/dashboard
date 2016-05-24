@@ -67,8 +67,8 @@ describe('Create-Secret dialog', () => {
     let rule = ctrl.dataPattern;
 
     // then the following data should be accepted
-    expect((`eyAiaHR0cHM6Ly9pbmRleC5kb2NrZXIuaW8` + `vdjEvIjogeyAiYXV0aCI6ICJabUZyWlhCaG` +
-            `MzTjNiM0prTVRJSyIsICJlbWFpbCI6` + `ICJqZG9lQGV4YW1wbGUuY29tIiB9IH0K`)
+    expect((`eyAiaHR0cHM6Ly9pbmRleC5kb2NrZXIuaW8vdjEvIjogeyAiYXV0aCI6ICJabUZyWlhCaG` +
+            `MzTjNiM0prTVRJSyIsICJlbWFpbCI6ICJqZG9lQGV4YW1wbGUuY29tIiB9IH0K`)
                .match(rule))
         .toBeDefined();
   });
@@ -99,8 +99,8 @@ describe('Create-Secret dialog', () => {
     ctrl.secretForm = {};
     ctrl.secretForm.$valid = true;
     ctrl.secretName = 'mysecret';
-    ctrl.data = `eyAiaHR0cHM6Ly9pbmRleC5kb2NrZXIuaW8` + `vdjEvIjogeyAiYXV0aCI6ICJabUZyWlhCaG` +
-        `MzTjNiM0prTVRJSyIsICJlbWFpbCI6` + `ICJqZG9lQGV4YW1wbGUuY29tIiB9IH0K`;
+    ctrl.data = `eyAiaHR0cHM6Ly9pbmRleC5kb2NrZXIuaW8vdjEvIjogeyAiYXV0aCI6ICJabUZyWlhCaG` +
+        `MzTjNiM0prTVRJSyIsICJlbWFpbCI6ICJqZG9lQGV4YW1wbGUuY29tIiB9IH0K`;
     httpBackend
         .expect(
             'POST', 'api/v1/secret',
