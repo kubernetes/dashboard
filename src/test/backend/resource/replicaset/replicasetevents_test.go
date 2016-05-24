@@ -37,7 +37,9 @@ func TestGetReplicaSetEvents(t *testing.T) {
 	}{
 		{
 			"test-namespace", "test-name",
-			&api.EventList{Items: []api.Event{{Message: "test-message"}}},
+			&api.EventList{Items: []api.Event{
+				{Message: "test-message", ObjectMeta: api.ObjectMeta{Namespace: "test-namespace"}},
+			}},
 			&api.PodList{Items: []api.Pod{{ObjectMeta: api.ObjectMeta{Name: "test-pod"}}}},
 			&extensions.ReplicaSet{
 				ObjectMeta: api.ObjectMeta{Name: "test-replicaset"},
@@ -49,9 +51,10 @@ func TestGetReplicaSetEvents(t *testing.T) {
 			&common.EventList{
 				Namespace: "test-namespace",
 				Events: []common.Event{{
-					TypeMeta: common.TypeMeta{common.ResourceKindEvent},
-					Message:  "test-message",
-					Type:     api.EventTypeNormal,
+					TypeMeta:   common.TypeMeta{Kind: common.ResourceKindEvent},
+					ObjectMeta: common.ObjectMeta{Namespace: "test-namespace"},
+					Message:    "test-message",
+					Type:       api.EventTypeNormal,
 				}}},
 		},
 	}
@@ -94,16 +97,18 @@ func TestGetReplicaSetPodsEvents(t *testing.T) {
 	}{
 		{
 			"test-namespace", "test-name",
-			&api.EventList{Items: []api.Event{{Message: "test-message"}}},
-			&api.PodList{Items: []api.Pod{{ObjectMeta: api.ObjectMeta{Name: "test-pod"}}}},
+			&api.EventList{Items: []api.Event{
+				{Message: "test-message", ObjectMeta: api.ObjectMeta{Namespace: "test-namespace"}},
+			}},
+			&api.PodList{Items: []api.Pod{{ObjectMeta: api.ObjectMeta{Name: "test-pod", Namespace: "test-namespace"}}}},
 			&extensions.ReplicaSet{
-				ObjectMeta: api.ObjectMeta{Name: "test-replicaset"},
+				ObjectMeta: api.ObjectMeta{Name: "test-replicaset", Namespace: "test-namespace"},
 				Spec: extensions.ReplicaSetSpec{
 					Selector: &unversioned.LabelSelector{
 						MatchLabels: map[string]string{},
 					}}},
 			[]string{"get", "list", "list"},
-			[]api.Event{{Message: "test-message"}},
+			[]api.Event{{Message: "test-message", ObjectMeta: api.ObjectMeta{Namespace: "test-namespace"}}},
 		},
 	}
 

@@ -59,7 +59,7 @@ func GetReplicaSetDetail(client k8sClient.Interface, heapsterClient client.Heaps
 	}
 
 	channels := &common.ResourceChannels{
-		PodList: common.GetPodListChannel(client, 1),
+		PodList: common.GetPodListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
 	}
 
 	pods := <-channels.PodList.List

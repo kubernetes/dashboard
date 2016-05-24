@@ -50,14 +50,14 @@ type DaemonSet struct {
 }
 
 // GetDaemonSetList returns a list of all Daemon Set in the cluster.
-func GetDaemonSetList(client *client.Client, namespace string) (*DaemonSetList, error) {
+func GetDaemonSetList(client *client.Client, nsQuery *common.NamespaceQuery) (*DaemonSetList, error) {
 	log.Printf("Getting list of all daemon sets in the cluster")
 	channels := &common.ResourceChannels{
-		DaemonSetList: common.GetDaemonSetListChannel(client, 1),
-		ServiceList:   common.GetServiceListChannel(client, 1),
-		PodList:       common.GetPodListChannel(client, 1),
-		EventList:     common.GetEventListChannel(client, 1),
-		NodeList:      common.GetNodeListChannel(client, 1),
+		DaemonSetList: common.GetDaemonSetListChannel(client, nsQuery, 1),
+		ServiceList:   common.GetServiceListChannel(client, nsQuery, 1),
+		PodList:       common.GetPodListChannel(client, nsQuery, 1),
+		EventList:     common.GetEventListChannel(client, nsQuery, 1),
+		NodeList:      common.GetNodeListChannel(client, nsQuery, 1),
 	}
 
 	return GetDaemonSetListFromChannels(channels)

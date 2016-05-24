@@ -46,15 +46,15 @@ type Deployment struct {
 }
 
 // GetDeploymentList returns a list of all Deployments in the cluster.
-func GetDeploymentList(client client.Interface) (*DeploymentList, error) {
+func GetDeploymentList(client client.Interface, nsQuery *common.NamespaceQuery) (*DeploymentList, error) {
 	log.Printf("Getting list of all deployments in the cluster")
 
 	channels := &common.ResourceChannels{
-		DeploymentList: common.GetDeploymentListChannel(client.Extensions(), 1),
-		ServiceList:    common.GetServiceListChannel(client, 1),
-		PodList:        common.GetPodListChannel(client, 1),
-		EventList:      common.GetEventListChannel(client, 1),
-		NodeList:       common.GetNodeListChannel(client, 1),
+		DeploymentList: common.GetDeploymentListChannel(client.Extensions(), nsQuery, 1),
+		ServiceList:    common.GetServiceListChannel(client, nsQuery, 1),
+		PodList:        common.GetPodListChannel(client, nsQuery, 1),
+		EventList:      common.GetEventListChannel(client, nsQuery, 1),
+		NodeList:       common.GetNodeListChannel(client, nsQuery, 1),
 	}
 
 	return GetDeploymentListFromChannels(channels)

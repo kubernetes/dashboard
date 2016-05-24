@@ -51,11 +51,12 @@ type Pod struct {
 }
 
 // GetPodList returns a list of all Pods in the cluster.
-func GetPodList(client k8sClient.Interface, heapsterClient client.HeapsterClient) (*PodList, error) {
+func GetPodList(client k8sClient.Interface, heapsterClient client.HeapsterClient,
+	nsQuery *common.NamespaceQuery) (*PodList, error) {
 	log.Printf("Getting list of all pods in the cluster")
 
 	channels := &common.ResourceChannels{
-		PodList: common.GetPodListChannel(client, 1),
+		PodList: common.GetPodListChannel(client, nsQuery, 1),
 	}
 
 	return GetPodListFromChannels(channels, heapsterClient)

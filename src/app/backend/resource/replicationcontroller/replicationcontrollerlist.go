@@ -50,15 +50,15 @@ type ReplicationController struct {
 }
 
 // GetReplicationControllerList returns a list of all Replication Controllers in the cluster.
-func GetReplicationControllerList(client *client.Client) (*ReplicationControllerList, error) {
+func GetReplicationControllerList(client *client.Client, nsQuery *common.NamespaceQuery) (*ReplicationControllerList, error) {
 	log.Printf("Getting list of all replication controllers in the cluster")
 
 	channels := &common.ResourceChannels{
-		ReplicationControllerList: common.GetReplicationControllerListChannel(client, 1),
-		ServiceList:               common.GetServiceListChannel(client, 1),
-		PodList:                   common.GetPodListChannel(client, 1),
-		EventList:                 common.GetEventListChannel(client, 1),
-		NodeList:                  common.GetNodeListChannel(client, 1),
+		ReplicationControllerList: common.GetReplicationControllerListChannel(client, nsQuery, 1),
+		ServiceList:               common.GetServiceListChannel(client, nsQuery, 1),
+		PodList:                   common.GetPodListChannel(client, nsQuery, 1),
+		EventList:                 common.GetEventListChannel(client, nsQuery, 1),
+		NodeList:                  common.GetNodeListChannel(client, nsQuery, 1),
 	}
 
 	return GetReplicationControllerListFromChannels(channels)

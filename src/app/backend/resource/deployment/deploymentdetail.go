@@ -11,6 +11,7 @@ import (
 	deploymentutil "k8s.io/kubernetes/pkg/util/deployment"
 )
 
+// RollingUpdateStrategy is behavior of a rolling update. See RollingUpdateDeployment K8s object.
 type RollingUpdateStrategy struct {
 	MaxSurge       int `json:"maxSurge"`
 	MaxUnavailable int `json:"maxUnavailable"`
@@ -31,7 +32,7 @@ type StatusInfo struct {
 	Unavailable int `json:"unavailable"`
 }
 
-// ReplicaSetDetail is a presentation layer view of Kubernetes Replica Set resource. This means
+// DeploymentDetail is a presentation layer view of Kubernetes Deployment resource.
 type DeploymentDetail struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
 	TypeMeta   common.TypeMeta   `json:"typeMeta"`
@@ -62,6 +63,7 @@ type DeploymentDetail struct {
 	EventList common.EventList `json:"eventList"`
 }
 
+// GetDeploymentDetail returns model object of deployment and error, if any.
 func GetDeploymentDetail(client client.Interface, namespace string,
 	name string) (*DeploymentDetail, error) {
 
@@ -73,8 +75,9 @@ func GetDeploymentDetail(client client.Interface, namespace string,
 	}
 
 	channels := &common.ResourceChannels{
-		ReplicaSetList: common.GetReplicaSetListChannel(client.Extensions(), 1),
-		PodList:        common.GetPodListChannel(client, 1),
+		ReplicaSetList: common.GetReplicaSetListChannel(client.Extensions(),
+			common.NewSameNamespaceQuery(namespace), 1),
+		PodList: common.GetPodListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
 	}
 
 	replicaSetList := <-channels.ReplicaSetList.List
