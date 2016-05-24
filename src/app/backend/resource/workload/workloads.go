@@ -19,6 +19,7 @@ import (
 
 	"github.com/kubernetes/dashboard/client"
 	"github.com/kubernetes/dashboard/resource/common"
+	"github.com/kubernetes/dashboard/resource/daemonset"
 	"github.com/kubernetes/dashboard/resource/deployment"
 	"github.com/kubernetes/dashboard/resource/pod"
 	"github.com/kubernetes/dashboard/resource/replicaset"
@@ -35,6 +36,8 @@ type Workloads struct {
 	ReplicationControllerList replicationcontroller.ReplicationControllerList `json:"replicationControllerList"`
 
 	PodList pod.PodList `json:"podList"`
+
+	DaemonSetList daemonset.DaemonSetList `json:"daemonSetList"`
 }
 
 // GetWorkloads returns a list of all workloads in the cluster.
@@ -46,10 +49,11 @@ func GetWorkloads(client k8sClient.Interface,
 		ReplicationControllerList: common.GetReplicationControllerListChannel(client, 1),
 		ReplicaSetList:            common.GetReplicaSetListChannel(client.Extensions(), 1),
 		DeploymentList:            common.GetDeploymentListChannel(client.Extensions(), 1),
-		ServiceList:               common.GetServiceListChannel(client, 3),
-		PodList:                   common.GetPodListChannel(client, 4),
-		EventList:                 common.GetEventListChannel(client, 3),
-		NodeList:                  common.GetNodeListChannel(client, 3),
+		DaemonSetList:             common.GetDaemonSetListChannel(client.Extensions(), 1),
+		ServiceList:               common.GetServiceListChannel(client, 4),
+		PodList:                   common.GetPodListChannel(client, 5),
+		EventList:                 common.GetEventListChannel(client, 4),
+		NodeList:                  common.GetNodeListChannel(client, 4),
 	}
 
 	return GetWorkloadsFromChannels(channels, heapsterClient)
@@ -64,7 +68,8 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels,
 	deploymentChan := make(chan *deployment.DeploymentList)
 	rcChan := make(chan *replicationcontroller.ReplicationControllerList)
 	podChan := make(chan *pod.PodList)
-	errChan := make(chan error, 4)
+	dsChan := make(chan *daemonset.DaemonSetList)
+	errChan := make(chan error, 5)
 
 	go func() {
 		rcList, err := replicationcontroller.GetReplicationControllerListFromChannels(channels)
@@ -88,6 +93,12 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels,
 		podList, err := pod.GetPodListFromChannels(channels, heapsterClient)
 		errChan <- err
 		podChan <- podList
+	}()
+
+	go func() {
+		dsList, err := daemonset.GetDaemonSetListFromChannels(channels)
+		errChan <- err
+		dsChan <- dsList
 	}()
 
 	rcList := <-rcChan
@@ -114,11 +125,18 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels,
 		return nil, err
 	}
 
+	dsList := <-dsChan
+	err = <-errChan
+	if err != nil {
+		return nil, err
+	}
+
 	workloads := &Workloads{
 		ReplicaSetList:            *rsList,
 		ReplicationControllerList: *rcList,
 		DeploymentList:            *deploymentList,
 		PodList:                   *podList,
+		DaemonSetList:             *dsList,
 	}
 
 	return workloads, nil

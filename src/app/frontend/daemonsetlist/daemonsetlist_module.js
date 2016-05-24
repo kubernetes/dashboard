@@ -12,30 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import componentsModule from 'common/components/components_module';
-import deploymentListModule from 'deploymentlist/deploymentlist_module';
-import daemonSetListModule from 'daemonsetlist/daemonsetlist_module';
+import componentsModule from './../common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
-import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
-import replicaSetListModule from 'replicasetlist/replicasetlist_module';
-import stateConfig from './workloads_stateconfig';
+import stateConfig from './daemonsetlist_stateconfig';
+import {daemonSetCardListComponent} from './daemonsetlist_component';
+import daemonSetDetailModule from 'daemonsetdetail/daemonsetdetail_module';
 
 /**
- * Module with a view that displays resources categorized as workloads, e.g., Replica Sets or
- * Deployments.
+ * Angular module for the Daemon Set list view.
+ *
+ * The view shows Daemon Set running in the cluster and allows to manage them.
  */
 export default angular
     .module(
-        'kubernetesDashboard.workloads',
+        'kubernetesDashboard.daemonSetList',
         [
           'ngMaterial',
           'ngResource',
           'ui.router',
           filtersModule.name,
           componentsModule.name,
-          replicationControllerListModule.name,
-          replicaSetListModule.name,
-          deploymentListModule.name,
-          daemonSetListModule.name,
+          daemonSetDetailModule.name,
+
         ])
-    .config(stateConfig);
+    .config(stateConfig)
+    .component('kdDaemonSetCardList', daemonSetCardListComponent);

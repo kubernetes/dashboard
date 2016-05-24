@@ -41,7 +41,7 @@ var (
 func main() {
 	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)
 	pflag.Parse()
-	flag.CommandLine.Parse(make([]string,0))  // Init for glog calls in kubernetes packages
+	flag.CommandLine.Parse(make([]string, 0)) // Init for glog calls in kubernetes packages
 
 	log.Printf("Starting HTTP server on port %d", *argPort)
 

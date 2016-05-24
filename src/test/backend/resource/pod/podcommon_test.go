@@ -78,9 +78,8 @@ func TestToPodDetail(t *testing.T) {
 	}{
 		{
 			pod: &api.Pod{}, metrics: &MetricsByPod{}, expected: PodDetail{
-			TypeMeta:  common.TypeMeta{Kind: common.ResourceKindPod},
-		},
-
+				TypeMeta: common.TypeMeta{Kind: common.ResourceKindPod},
+			},
 		}, {
 			pod: &api.Pod{
 				ObjectMeta: api.ObjectMeta{
@@ -88,7 +87,7 @@ func TestToPodDetail(t *testing.T) {
 				}},
 			metrics: &MetricsByPod{},
 			expected: PodDetail{
-				TypeMeta:  common.TypeMeta{Kind: common.ResourceKindPod},
+				TypeMeta: common.TypeMeta{Kind: common.ResourceKindPod},
 				ObjectMeta: common.ObjectMeta{
 					Name:      "test-pod",
 					Namespace: "test-namespace",
@@ -115,16 +114,16 @@ func TestToPod(t *testing.T) {
 	}{
 		{
 			pod: &api.Pod{}, metrics: &MetricsByPod{}, expected: Pod{
-			TypeMeta:  common.TypeMeta{Kind: common.ResourceKindPod},
-		},
+				TypeMeta: common.TypeMeta{Kind: common.ResourceKindPod},
+			},
 		}, {
 			pod: &api.Pod{
 				ObjectMeta: api.ObjectMeta{
 					Name: "test-pod", Namespace: "test-namespace",
 				}},
-		metrics: &MetricsByPod{},
-		expected: Pod{
-				TypeMeta:  common.TypeMeta{Kind: common.ResourceKindPod},
+			metrics: &MetricsByPod{},
+			expected: Pod{
+				TypeMeta: common.TypeMeta{Kind: common.ResourceKindPod},
 				ObjectMeta: common.ObjectMeta{
 					Name:      "test-pod",
 					Namespace: "test-namespace",

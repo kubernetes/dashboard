@@ -36,7 +36,8 @@ function extractForLanguage(langKey) {
   let translationBundle = path.join(conf.paths.base, `i18n/messages-${langKey}.xtb`);
   let codeSource = path.join(conf.paths.serve, '*.js');
   let command = `java -jar ${conf.paths.xtbgenerator} --lang ${langKey}` +
-      ` --xtb_output_file ${translationBundle}` + ` --js ${codeSource}`;
+      ` --xtb_output_file ${translationBundle}` +
+      ` --js ${codeSource}`;
   if (fileExists(translationBundle)) {
     command = `${command} --translations_file ${translationBundle}`;
   }

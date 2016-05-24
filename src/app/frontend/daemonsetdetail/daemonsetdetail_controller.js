@@ -12,20 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {InternalErrorController} from './internalerror_controller';
-import {stateName, StateParams} from './internalerror_state';
-
 /**
- * Configures states for the internal error view.
- *
- * @param {!ui.router.$stateProvider} $stateProvider
- * @ngInject
+ * @final
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    controller: InternalErrorController,
-    controllerAs: 'ctrl',
-    params: new StateParams(/** @type {!angular.$http.Response} */ ({})),
-    templateUrl: 'error/internalerror.html',
-  });
+export class DaemonSetDetailController {
+  /**
+   * @param {!backendApi.DaemonSetDetail} daemonSetDetail
+   * @ngInject
+   */
+  constructor(daemonSetDetail) {
+    /** @export {!backendApi.DaemonSetDetail} */
+    this.daemonSetDetail = daemonSetDetail;
+  }
 }

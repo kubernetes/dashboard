@@ -14,9 +14,11 @@
 
 import {actionbarViewName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
-import {stateName} from './replicationcontrollerdetail_state';
 import {stateName as replicationControllers} from 'replicationcontrollerlist/replicationcontrollerlist_state';
+
+import {stateName} from './replicationcontrollerdetail_state';
 import {ReplicationControllerDetailActionBarController} from './replicationcontrollerdetailactionbar_controller';
+
 import ReplicationControllerDetailController from './replicationcontrollerdetail_controller';
 
 /**
