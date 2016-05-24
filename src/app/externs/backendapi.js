@@ -215,6 +215,40 @@ backendApi.DeploymentList;
 
 /**
  * @typedef {{
+ *   maxSurge: !number,
+ *   maxUnavailabe: !number,
+ * }}
+ */
+backendApi.RollingUpdateStrategy;
+
+/**
+ * @typedef {{
+ *   replicas: !number,
+ *   updated: !number,
+ *   available: !number,
+ *   unavailable: !number,
+ * }}
+ */
+backendApi.DeploymentInfo;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   selector: !Array<backendApi.Label>,
+ *   status: !backendApi.DeploymentInfo,
+ *   strategy: !string,
+ *   minReadySeconds: !number,
+ *   rollingUpdateStrategy: !backendApi.RollingUpdateStrategy,
+ *   oldReplicaSetList: !backendApi.ReplicaSetList,
+ *   newReplicaSet: !backendApi.ReplicaSet,
+ *   events: !backendApi.EventList,
+ * }}
+ */
+backendApi.DeploymentDetail;
+
+/**
+ * @typedef {{
  *   pods: !Array<!backendApi.Pod>
  * }}
  */

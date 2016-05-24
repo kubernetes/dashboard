@@ -12,16 +12,57 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName} from './deploymentdetail_state';
+import {actionbarViewName} from 'chrome/chrome_state';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {DeploymentDetailController} from './deploymentdetail_controller';
+import {stateName as deploymentList} from 'deploymentlist/deploymentlist_state';
+import {stateName, stateUrl} from './deploymentdetail_state';
 
 /**
- * Configures states for the replica set details view.
+ * Configures states for the deployment detail view.
  *
  * @param {!ui.router.$stateProvider} $stateProvider
  * @ngInject
  */
 export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
-    url: '/deployment/:namespace/:deployment',
+    url: stateUrl,
+    resolve: {
+      'deploymentDetailResource': getDeploymentDetailResource,
+      'deploymentDetail': getDeploymentDetail,
+    },
+    data: {
+      [breadcrumbsConfig]: {
+        'label': '{{$stateParams.deployment}}',
+        'parent': deploymentList,
+      },
+    },
+    views: {
+      '': {
+        controller: DeploymentDetailController,
+        controllerAs: 'ctrl',
+        templateUrl: 'deploymentdetail/deploymentdetail.html',
+      },
+      [actionbarViewName]: {},
+    },
   });
+}
+
+/**
+ * @param {!./deploymentdetail_state.StateParams} $stateParams
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource<!backendApi.DeploymentDetail>}
+ * @ngInject
+ */
+export function getDeploymentDetailResource($resource, $stateParams) {
+  return $resource(`api/v1/deployment/${$stateParams.namespace}/${$stateParams.deployment}`);
+}
+
+/**
+ * @param {!angular.Resource<!backendApi.DeploymentDetail>} deploymentDetailResource
+ * @return {!angular.$q.Promise}
+ * @ngInject
+ */
+export function getDeploymentDetail(deploymentDetailResource) {
+  return deploymentDetailResource.get().$promise;
 }
