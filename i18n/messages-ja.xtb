@@ -24,4 +24,5 @@
 	<translation id="413516354763358070" key="MSG_IMAGE_PULL_SECRET_CREATE_ACTION" source="/home/mirchev/go_workspace/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="The text is put on the 'Create' button in the image pull secret creation dialog.">Create</translation>
 	<translation id="919509716730095946" key="MSG_IMAGE_PULL_SECRET_CANCEL_ACTION" source="/home/mirchev/go_workspace/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="The text is put on the 'Cancel' button in the image pull secret creation dialog.">Cancel</translation>
 	<translation id="7394607899033025775" key="MSG_IMAGE_PULL_SECRET_LEARN_MORE_ACTION" source="/home/mirchev/go_workspace/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="The text is used as a 'Learn more' link text in the image pull secret creation dialog">Learn more</translation>
+	<translation id="2997495891426796243" key="MSG_NAMESPACE_NOT_SELECTED" source="/usr/local/google/home/bryk/src/github.com/dashboard/.tmp/serve/app-dev.js" desc="Text for dropdown item that indicates that no namespace was selected">namespace not selected</translation>
 </translationbundle>

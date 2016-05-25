@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {actionbarViewName} from './chrome_state';
+import {stateName as workloadState} from 'workloads/workloads_state';
 
 /**
  * Controller for the chrome directive.
@@ -34,6 +35,12 @@ export default class ChromeController {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
   }
+
+  /**
+   * @return {string}
+   * @export
+   */
+  getLogoHref() { return this.state_.href(workloadState); }
 
   /**
    * @return {boolean}

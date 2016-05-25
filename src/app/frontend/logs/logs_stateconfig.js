@@ -16,6 +16,7 @@ import {LogsController} from './logs_controller';
 import {stateName} from './logs_state';
 import LogsToolbarController from './logstoolbar/logstoolbar_controller';
 import {toolbarViewName} from '../chrome/chrome_state';
+import {stateName as namespaceStateName} from 'common/namespace/namespace_state';
 
 /**
  * Configures states for the logs view.
@@ -38,7 +39,8 @@ export default function stateConfig($stateProvider) {
   };
 
   $stateProvider.state(stateName, {
-    url: '/log/:namespace/:replicationController/:podId/:container?',
+    url: '/log/:rcNamespace/:replicationController/:podId/:container?',
+    parent: namespaceStateName,
     resolve: {
       'replicationControllerPods': resolveReplicationControllerPods,
       'podLogs': resolvePodLogs,
@@ -56,7 +58,8 @@ export default function stateConfig($stateProvider) {
 function resolveReplicationControllerPods($stateParams, $resource) {
   /** @type {!angular.Resource<!backendApi.ReplicationControllerPods>} */
   let resource = $resource(
-      `api/v1/replicationcontroller/pod/${$stateParams.namespace}/${$stateParams.replicationController}`);
+      `api/v1/replicationcontroller/pod/` +
+      `${$stateParams.rcNamespace}/${$stateParams.replicationController}`);
 
   return resource.get().$promise;
 }
@@ -69,7 +72,7 @@ function resolveReplicationControllerPods($stateParams, $resource) {
  */
 function resolvePodLogs($stateParams, $resource) {
   /** @type {!angular.Resource<!backendApi.Logs>} */
-  let resource = $resource(`api/v1/log/${$stateParams.namespace}/${$stateParams.podId}/${$stateParams.container}`);
+  let resource = $resource(`api/v1/log/` + `${$stateParams.rcNamespace}/${$stateParams.podId}/${$stateParams.container}`);
 
   return resource.get().$promise;
 }

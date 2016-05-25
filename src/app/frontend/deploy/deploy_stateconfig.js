@@ -14,6 +14,7 @@
 
 import DeployController from './deploy_controller';
 import {stateName} from './deploy_state';
+import {stateName as namespaceStateName} from 'common/namespace/namespace_state';
 
 /**
  * Configures states for the deploy view.
@@ -26,6 +27,7 @@ export default function stateConfig($stateProvider) {
     controller: DeployController,
     controllerAs: 'ctrl',
     url: '/deploy',
+    parent: namespaceStateName,
     resolve: {
       'namespaces': resolveNamespaces,
       'protocolsResource': getProtocolsResource,

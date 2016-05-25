@@ -14,23 +14,3 @@
 
 /** Name of the state. Can be used in, e.g., $state.go method. */
 export const stateName = 'replicationcontrollerdetail';
-
-/**
- * Parameters for this state.
- *
- * All properties are @exported and in sync with URL param names.
- * @final
- */
-export class StateParams {
-  /**
-   * @param {string} namespace
-   * @param {string} replicationController
-   */
-  constructor(namespace, replicationController) {
-    /** @export {string} Namespace of this Replication Controller. */
-    this.namespace = namespace;
-
-    /** @export {string} Name of this Replication Controller. */
-    this.replicationController = replicationController;
-  }
-}

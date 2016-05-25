@@ -37,7 +37,7 @@ describe('Chrome directive', () => {
     scope.$apply();
 
     // then
-    expect(elem.find('md-progress-circular')[0]).not.toBeUndefined();
+    expect(elem.find('.kd-center-fixed')[0]).not.toBeUndefined();
 
     // given
     scope.$broadcast('$stateChangeSuccess');
@@ -46,6 +46,6 @@ describe('Chrome directive', () => {
     scope.$apply();
 
     // then
-    expect(elem.find('md-progress-circular')[0]).toBeUndefined();
+    expect(elem.find('.kd-center-fixed')[0]).toBeUndefined();
   });
 });

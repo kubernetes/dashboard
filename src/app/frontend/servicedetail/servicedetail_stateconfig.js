@@ -17,6 +17,8 @@ import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_servi
 import {stateName} from './servicedetail_state';
 import {stateName as serviceList, stateUrl} from './../servicelist/servicelist_state';
 import {ServiceDetailController} from './servicedetail_controller';
+import {stateName as namespaceStateName} from 'common/namespace/namespace_state';
+import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 
 /**
  * Configures states for the service details view.
@@ -26,7 +28,8 @@ import {ServiceDetailController} from './servicedetail_controller';
  */
 export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
-    url: `${stateUrl}/:namespace/:service`,
+    url: appendDetailParamsToUrl(stateUrl),
+    parent: namespaceStateName,
     resolve: {
       'serviceDetailResource': getServiceDetailResource,
       'serviceDetail': resolveServiceDetail,
@@ -49,13 +52,13 @@ export default function stateConfig($stateProvider) {
 }
 
 /**
- * @param {!./servicedetail_state.StateParams} $stateParams
+ * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource<!backendApi.ServiceDetail>}
  * @ngInject
  */
 export function getServiceDetailResource($stateParams, $resource) {
-  return $resource(`api/v1/service/${$stateParams.namespace}/${$stateParams.service}`);
+  return $resource(`api/v1/service/${$stateParams.objectNamespace}/${$stateParams.objectName}`);
 }
 
 /**

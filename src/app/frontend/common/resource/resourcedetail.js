@@ -12,21 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import chromeDirective from './chrome_directive';
-import componentsModule from 'common/components/components_module';
-import namespaceModule from 'common/namespace/namespace_module';
-
 /**
- * Angular module containing navigation chrome for the application.
+ * Parameters for this state.
+ *
+ * All properties are @exported and in sync with URL param names.
+ * @final
  */
-export default angular
-    .module(
-        'kubernetesDashboard.chrome',
-        [
-          'ngMaterial',
-          'ngResource',
-          'ui.router',
-          componentsModule.name,
-          namespaceModule.name,
-        ])
-    .directive('chrome', chromeDirective);
+export class StateParams {
+  /**
+   * @param {string} objectNamespace
+   * @param {string} objectName
+  */
+  constructor(objectNamespace, objectName) {
+    /** @export {string} Namespace of this object. */
+    this.objectNamespace = objectNamespace;
+
+    /** @export {string} Name of this object. */
+    this.objectName = objectName;
+  }
+}
+
+export function appendDetailParamsToUrl(baseUrl) {
+  return `${baseUrl}/:objectNamespace/:objectName`;
+}

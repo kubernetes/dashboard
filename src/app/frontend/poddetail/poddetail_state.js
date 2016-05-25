@@ -14,23 +14,3 @@
 
 /** Name of the state. Can be used in, e.g., $state.go method. */
 export const stateName = 'poddetail';
-
-/**
- * Parameters for this state.
- *
- * All properties are @exported and in sync with URL param names.
- * @final
- */
-export class StateParams {
-  /**
-   * @param {string} namespace
-   * @param {string} pod
-   */
-  constructor(namespace, pod) {
-    /** @export {string} Namespace of this Pod. */
-    this.namespace = namespace;
-
-    /** @export {string} Name of this Pod. */
-    this.pod = pod;
-  }
-}
