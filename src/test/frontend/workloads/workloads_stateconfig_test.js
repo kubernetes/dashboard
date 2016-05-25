@@ -18,15 +18,27 @@ import {resolveWorkloads} from 'workloads/workloads_stateconfig';
 describe('StateConfig for replication controller list', () => {
   beforeEach(() => { angular.mock.module(workloadListModule.name); });
 
+  it('should resolve replication controllers with no namespace', angular.mock.inject(($q) => {
+    let promise = $q.defer().promise;
+
+    let resource = jasmine.createSpy('$resource');
+    resource.and.returnValue({get: function() { return {$promise: promise}; }});
+
+    let actual = resolveWorkloads(resource, {});
+
+    expect(resource).toHaveBeenCalledWith('api/v1/workload/');
+    expect(actual).toBe(promise);
+  }));
+
   it('should resolve replication controllers', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
 
     let resource = jasmine.createSpy('$resource');
     resource.and.returnValue({get: function() { return {$promise: promise}; }});
 
-    let actual = resolveWorkloads(resource);
+    let actual = resolveWorkloads(resource, {namespace: 'foo'});
 
-    expect(resource).toHaveBeenCalledWith('api/v1/workload');
+    expect(resource).toHaveBeenCalledWith('api/v1/workload/foo');
     expect(actual).toBe(promise);
   }));
 });

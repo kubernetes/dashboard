@@ -24,9 +24,21 @@ describe('StateConfig for replication controller list', () => {
     let resource = jasmine.createSpy('$resource');
     resource.and.returnValue({get: function() { return {$promise: promise}; }});
 
-    let actual = resolveReplicationControllers(resource);
+    let actual = resolveReplicationControllers(resource, {namespace: 'foo'});
 
-    expect(resource).toHaveBeenCalledWith('api/v1/replicationcontroller');
+    expect(resource).toHaveBeenCalledWith('api/v1/replicationcontroller/foo');
+    expect(actual).toBe(promise);
+  }));
+
+  it('should resolve replication controllers with no namespace', angular.mock.inject(($q) => {
+    let promise = $q.defer().promise;
+
+    let resource = jasmine.createSpy('$resource');
+    resource.and.returnValue({get: function() { return {$promise: promise}; }});
+
+    let actual = resolveReplicationControllers(resource, {});
+
+    expect(resource).toHaveBeenCalledWith('api/v1/replicationcontroller/');
     expect(actual).toBe(promise);
   }));
 });

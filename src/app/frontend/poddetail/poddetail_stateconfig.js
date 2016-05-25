@@ -18,6 +18,8 @@ import {stateName as podList, stateUrl} from 'podlist/podlist_state';
 
 import {PodDetailController} from './poddetail_controller';
 import {stateName} from './poddetail_state';
+import {stateName as namespaceStateName} from 'common/namespace/namespace_state';
+import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 
 /**
  * Configures states for the pod details view.
@@ -27,7 +29,8 @@ import {stateName} from './poddetail_state';
  */
 export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
-    url: `${stateUrl}/:namespace/:pod`,
+    url: appendDetailParamsToUrl(stateUrl),
+    parent: namespaceStateName,
     resolve: {
       'podDetailResource': getPodDetailResource,
       'podDetail': getPodDetail,
@@ -50,13 +53,13 @@ export default function stateConfig($stateProvider) {
 }
 
 /**
- * @param {!./poddetail_state.StateParams} $stateParams
+ * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource<!backendApi.PodDetail>}
  * @ngInject
  */
 export function getPodDetailResource($resource, $stateParams) {
-  return $resource(`api/v1/pod/${$stateParams.namespace}/${$stateParams.pod}`);
+  return $resource(`api/v1/pod/${$stateParams.objectNamespace}/${$stateParams.objectName}`);
 }
 
 /**

@@ -41,20 +41,22 @@ export class BreadcrumbsService {
   }
 
   /**
-   * Returns parent state of the given state based on defined state parent name or if it is not
-   * defined then based on direct parent state.
+   * Returns parent state of the given state based on defined breadcrumbs config state parent name.
    *
    * @param {!ui.router.$state} state
-   * @return {!ui.router.$state}
+   * @return {ui.router.$state}
    */
   getParentState(state) {
     let conf = this.getBreadcrumbConfig(state);
-    let result = state['parent'];
+    let result = null;
 
     if (conf && conf.parent) {
-      result = this.state_.get(conf.parent);
+      if (typeof conf.parent === 'string') {
+        result = this.state_.get(conf.parent);
+      } else {
+        result = conf.parent;
+      }
     }
-
     return result;
   }
 

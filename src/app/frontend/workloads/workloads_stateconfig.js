@@ -18,6 +18,8 @@ import {WorkloadsController} from './workloads_controller';
 import {stateName} from './workloads_state';
 import {stateUrl} from './workloads_state';
 import {WorkloadsActionBarController} from './workloadsactionbar_controller';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {stateName as namespaceStateName} from 'common/namespace/namespace_state';
 
 /**
  * @param {!ui.router.$stateProvider} $stateProvider
@@ -26,11 +28,12 @@ import {WorkloadsActionBarController} from './workloadsactionbar_controller';
 export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
     url: stateUrl,
+    parent: namespaceStateName,
     resolve: {
       'workloads': resolveWorkloads,
     },
     data: {
-      'kdBreadcrumbs': {
+      [breadcrumbsConfig]: {
         'label': 'Workloads',
       },
     },
@@ -51,11 +54,12 @@ export default function stateConfig($stateProvider) {
 
 /**
  * @param {!angular.$resource} $resource
+ * @param {!./../common/namespace/namespace_state.StateParams} $stateParams
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveWorkloads($resource) {
+export function resolveWorkloads($resource, $stateParams) {
   /** @type {!angular.Resource<!backendApi.Workloads>} */
-  let resource = $resource('api/v1/workload');
+  let resource = $resource(`api/v1/workload/${$stateParams.namespace || ''}`);
   return resource.get().$promise;
 }

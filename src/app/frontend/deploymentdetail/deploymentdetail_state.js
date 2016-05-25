@@ -16,24 +16,4 @@
 export const stateName = 'deploymentdetail';
 
 /** Absolute URL of the state. */
-export const stateUrl = '/deployment/:namespace/:deployment';
-
-/**
- * Parameters for this state.
- *
- * All properties are @exported and in sync with URL param names.
- * @final
- */
-export class StateParams {
-  /**
-   * @param {string} namespace
-   * @param {string} deployment
-   */
-  constructor(namespace, deployment) {
-    /** @export {string} Namespace of this Deployment. */
-    this.namespace = namespace;
-
-    /** @export {string} Name of this Deployment. */
-    this.deployment = deployment;
-  }
-}
+export const stateUrl = '/deployment';
