@@ -19,9 +19,9 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-	"strings"
 
 	"github.com/golang/glog"
+	"golang.org/x/text/language"
 )
 
 const defaultDir = "./public/en"
@@ -88,19 +88,24 @@ func (handler *LocaleHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 }
 
 func (handler *LocaleHandler) determineLocalizedDir(locale string) string {
-	tokens := strings.Split(locale, "-")
-	if len(tokens) == 0 {
+	tags, _, err := language.ParseAcceptLanguage(locale)
+	if (err != nil) || (len(tags) == 0) {
 		return defaultDir
 	}
-	matchedLocale := ""
-	for _, l := range handler.SupportedLocales {
-		if l == tokens[0] {
-			matchedLocale = l
+
+	for _, tag := range tags {
+		matchedLocale := ""
+		for _, l := range handler.SupportedLocales {
+			base, _ := tag.Base()
+			if l == base.String() {
+				matchedLocale = l
+				break
+			}
 		}
-	}
-	localeDir := "./public/" + matchedLocale
-	if matchedLocale != "" && handler.dirExists(localeDir) {
-		return localeDir
+		localeDir := "./public/" + matchedLocale
+		if matchedLocale != "" && handler.dirExists(localeDir) {
+			return localeDir
+		}
 	}
 	return defaultDir
 }
