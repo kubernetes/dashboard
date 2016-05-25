@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import namespaceModule from 'common/namespace/namespace_module';
 import stateConfig from './podlist_stateconfig';
 import {podCardListComponent} from './podcardlist_component';
 
@@ -27,6 +28,7 @@ export default angular
           'ngMaterial',
           'ngResource',
           'ui.router',
+          namespaceModule.name,
         ])
     .config(stateConfig)
     .component('kdPodCardList', podCardListComponent);

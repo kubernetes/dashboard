@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import componentsModule from 'common/components/components_module';
+import namespaceModule from 'common/namespace/namespace_module';
 import deploymentListModule from 'deploymentlist/deploymentlist_module';
 import daemonSetListModule from 'daemonsetlist/daemonsetlist_module';
 import filtersModule from 'common/filters/filters_module';
@@ -33,6 +34,7 @@ export default angular
           'ui.router',
           filtersModule.name,
           componentsModule.name,
+          namespaceModule.name,
           replicationControllerListModule.name,
           replicaSetListModule.name,
           deploymentListModule.name,

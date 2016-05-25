@@ -20,6 +20,7 @@ import {ReplicationControllerListController} from './replicationcontrollerlist_c
 import {stateName, stateUrl} from './replicationcontrollerlist_state';
 
 import ReplicationControllerListActionBarController from './replicationcontrollerlistactionbar_controller';
+import {stateName as namespaceStateName} from 'common/namespace/namespace_state';
 
 /**
  * Configures states for the service view.
@@ -30,6 +31,7 @@ import ReplicationControllerListActionBarController from './replicationcontrolle
 export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
     url: stateUrl,
+    parent: namespaceStateName,
     resolve: {
       'replicationControllers': resolveReplicationControllers,
     },
@@ -56,11 +58,12 @@ export default function stateConfig($stateProvider) {
 
 /**
  * @param {!angular.$resource} $resource
+ * @param {!./../common/namespace/namespace_state.StateParams} $stateParams
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveReplicationControllers($resource) {
+export function resolveReplicationControllers($resource, $stateParams) {
   /** @type {!angular.Resource<!backendApi.ReplicationControllerList>} */
-  let resource = $resource('api/v1/replicationcontroller');
+  let resource = $resource(`api/v1/replicationcontroller/${$stateParams.namespace || ''}`);
   return resource.get().$promise;
 }

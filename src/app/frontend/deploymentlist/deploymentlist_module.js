@@ -15,6 +15,7 @@
 import stateConfig from './deploymentlist_stateconfig';
 import filtersModule from 'common/filters/filters_module';
 import componentsModule from 'common/components/components_module';
+import namespaceModule from 'common/namespace/namespace_module';
 import {deploymentCardComponent} from './deploymentcard_component';
 import {deploymentCardListComponent} from './deploymentcardlist_component';
 import deploymentDetailModule from 'deploymentdetail/deploymentdetail_module';
@@ -33,6 +34,7 @@ export default angular
           'ui.router',
           filtersModule.name,
           componentsModule.name,
+          namespaceModule.name,
           deploymentDetailModule.name,
         ])
     .config(stateConfig)

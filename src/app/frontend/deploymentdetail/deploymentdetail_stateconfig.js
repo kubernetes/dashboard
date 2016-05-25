@@ -18,6 +18,8 @@ import {stateName as deploymentList} from 'deploymentlist/deploymentlist_state';
 
 import {DeploymentDetailController} from './deploymentdetail_controller';
 import {stateName, stateUrl} from './deploymentdetail_state';
+import {stateName as namespaceStateName} from 'common/namespace/namespace_state';
+import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 
 /**
  * Configures states for the deployment detail view.
@@ -27,7 +29,8 @@ import {stateName, stateUrl} from './deploymentdetail_state';
  */
 export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
-    url: stateUrl,
+    url: appendDetailParamsToUrl(stateUrl),
+    parent: namespaceStateName,
     resolve: {
       'deploymentDetailResource': getDeploymentDetailResource,
       'deploymentDetail': getDeploymentDetail,
@@ -50,13 +53,13 @@ export default function stateConfig($stateProvider) {
 }
 
 /**
- * @param {!./deploymentdetail_state.StateParams} $stateParams
+ * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource<!backendApi.DeploymentDetail>}
  * @ngInject
  */
 export function getDeploymentDetailResource($resource, $stateParams) {
-  return $resource(`api/v1/deployment/${$stateParams.namespace}/${$stateParams.deployment}`);
+  return $resource(`api/v1/deployment/${$stateParams.objectNamespace}/${$stateParams.objectName}`);
 }
 
 /**

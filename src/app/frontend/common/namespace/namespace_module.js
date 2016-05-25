@@ -1,3 +1,4 @@
+
 // Copyright 2015 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,27 +13,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import componentsModule from 'common/components/components_module';
-import namespaceModule from 'common/namespace/namespace_module';
-import filtersModule from 'common/filters/filters_module';
-import stateConfig from './servicelist_stateconfig';
-import {serviceCardListComponent} from './servicecardlist_component';
+import {namespaceSelectComponent} from './namespaceselect_component';
+import stateConfig from './namespace_stateconfig';
 
 /**
- * Angular module for the Service list view.
- *
- * The view shows Service running in the cluster and allows to manage them.
+ * Angular module global namespace selection components.
  */
 export default angular
     .module(
-        'kubernetesDashboard.serviceList',
+        'kubernetesDashboard.common.namespace',
         [
           'ngMaterial',
-          'ngResource',
           'ui.router',
-          filtersModule.name,
-          componentsModule.name,
-          namespaceModule.name,
+          'ngResource',
         ])
-    .config(stateConfig)
-    .component('kdServiceCardList', serviceCardListComponent);
+    .component('kdNamespaceSelect', namespaceSelectComponent)
+    .config(stateConfig);

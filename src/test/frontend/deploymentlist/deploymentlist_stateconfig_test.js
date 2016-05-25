@@ -15,18 +15,30 @@
 import deploymentListModule from 'deploymentlist/deploymentlist_module';
 import {resolveDeployments} from 'deploymentlist/deploymentlist_stateconfig';
 
-describe('StateConfig for replication controller list', () => {
+describe('StateConfig for deployment list', () => {
   beforeEach(() => { angular.mock.module(deploymentListModule.name); });
 
-  it('should resolve replication controllers', angular.mock.inject(($q) => {
+  it('should resolve deployments', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
 
     let resource = jasmine.createSpy('$resource');
     resource.and.returnValue({get: function() { return {$promise: promise}; }});
 
-    let actual = resolveDeployments(resource);
+    let actual = resolveDeployments(resource, {namespace: 'foo'});
 
-    expect(resource).toHaveBeenCalledWith('api/v1/deployment');
+    expect(resource).toHaveBeenCalledWith('api/v1/deployment/foo');
+    expect(actual).toBe(promise);
+  }));
+
+  it('should resolve deployments with no namespace', angular.mock.inject(($q) => {
+    let promise = $q.defer().promise;
+
+    let resource = jasmine.createSpy('$resource');
+    resource.and.returnValue({get: function() { return {$promise: promise}; }});
+
+    let actual = resolveDeployments(resource, {});
+
+    expect(resource).toHaveBeenCalledWith('api/v1/deployment/');
     expect(actual).toBe(promise);
   }));
 });

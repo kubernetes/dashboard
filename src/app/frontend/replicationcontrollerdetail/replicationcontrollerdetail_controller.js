@@ -69,7 +69,7 @@ export default class ReplicationControllerDetailController {
   getPodLogsHref(pod) {
     return this.state_.href(
         logsStateName, new LogsStateParams(
-                           this.stateParams_.namespace, this.stateParams_.replicationController,
+                           this.stateParams_.rcNamespace, this.stateParams_.replicationController,
                            pod.objectMeta.name));
   }
 }
