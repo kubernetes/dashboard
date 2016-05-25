@@ -29,18 +29,20 @@ func TestGetSupportedLocales(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		configFile, err := ioutil.TempFile("", "test-locale-config")
-		if err != nil {
-			t.Fatalf("%s", err)
-		}
-		defer os.Remove(configFile.Name())
+		func(){
+			configFile, err := ioutil.TempFile("", "test-locale-config")
+			if err != nil {
+				t.Fatalf("%s", err)
+			}
+			defer os.Remove(configFile.Name())
 
-		fileContent, _ := json.Marshal(c.localization)
-		configFile.Write(fileContent)
-		actual, _ := getSupportedLocales(configFile.Name())
-		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("getSupportedLocales() returns %#v, expected %#v", actual, c.expected)
-		}
+			fileContent, _ := json.Marshal(c.localization)
+			configFile.Write(fileContent)
+			actual, _ := getSupportedLocales(configFile.Name())
+			if !reflect.DeepEqual(actual, c.expected) {
+				t.Errorf("getSupportedLocales() returns %#v, expected %#v", actual, c.expected)
+			}
+		}()
 	}
 }
 
@@ -83,23 +85,59 @@ func TestDetermineLocale(t *testing.T) {
 			"ja",
 			"./public/ja",
 		},
+		{
+			&LocaleHandler{
+				SupportedLocales: []string{"en", "ja"},
+			},
+			true,
+			"ja,en-US;q=0.8,en;q=0.6",
+			"./public/ja",
+		},
+		{
+			&LocaleHandler{
+				SupportedLocales: []string{"en", "ja"},
+			},
+			true,
+			"af,ja,en-US;q=0.8,en;q=0.6",
+			"./public/ja",
+		},
+		{
+                        &LocaleHandler{
+				SupportedLocales: []string{"en", "ja"},
+                        },
+                        true,
+                        "af,en-US;q=0.8,en;q=0.6",
+                        "./public/en",
+                },
+		{
+			&LocaleHandler{
+				SupportedLocales: []string{"en", "ja"},
+			},
+			true,
+			"",
+			defaultDir,
+		},
 	}
 
 	for _, c := range cases {
-		if c.createDir {
-			err := os.Mkdir("./public", 0777)
-			if err != nil {
-				t.Fatalf("%s", err)
+		func(){
+			if c.createDir {
+				err := os.Mkdir("./public", 0777)
+				if err != nil {
+					t.Fatalf("%s", err)
+				}
+				for _, lang := range c.handler.SupportedLocales {
+					err = os.Mkdir("./public/"+lang, 0777)
+					if err != nil {
+						t.Fatalf("%s", err)
+					}
+				}
+				defer os.RemoveAll("./public")
 			}
-			err = os.Mkdir("./public/"+c.acceptLanguageKey, 0777)
-			if err != nil {
-				t.Fatalf("%s", err)
+			actual := c.handler.determineLocalizedDir(c.acceptLanguageKey)
+			if !reflect.DeepEqual(actual, c.expected) {
+				t.Errorf("localeHandler.determineLocalizedDir() returns %#v, expected %#v", actual, c.expected)
 			}
-			defer os.RemoveAll("./public")
-		}
-		actual := c.handler.determineLocalizedDir(c.acceptLanguageKey)
-		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("localeHandler.determineLocalizedDir() returns %#v, expected %#v", actual, c.expected)
-		}
+		}()
 	}
 }
