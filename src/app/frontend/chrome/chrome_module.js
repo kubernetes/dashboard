@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import chromeDirective from './chrome_directive';
+import stateConfig from './chrome_stateconfig';
 import componentsModule from 'common/components/components_module';
+import namespaceModule from 'common/namespace/namespace_module';
 
 /**
  * Angular module containing navigation chrome for the application.
@@ -25,5 +26,6 @@ export default angular
           'ngMaterial',
           'ui.router',
           componentsModule.name,
+          namespaceModule.name,
         ])
-    .directive('chrome', chromeDirective);
+    .config(stateConfig);

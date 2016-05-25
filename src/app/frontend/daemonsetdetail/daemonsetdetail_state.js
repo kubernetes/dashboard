@@ -14,23 +14,3 @@
 
 /** Name of the state. Can be used in, e.g., $state.go method. */
 export const stateName = 'daemonsetdetail';
-
-/**
- * Parameters for this state.
- *
- * All properties are @exported and in sync with URL param names.
- * @final
- */
-export class StateParams {
-  /**
-   * @param {string} namespace
-   * @param {string} daemonSet
-   */
-  constructor(namespace, daemonSet) {
-    /** @export {string} Namespace of this Daemon Set. */
-    this.namespace = namespace;
-
-    /** @export {string} Name of this Daemon Set. */
-    this.daemonSet = daemonSet;
-  }
-}

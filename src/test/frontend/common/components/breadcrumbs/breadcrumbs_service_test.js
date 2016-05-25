@@ -51,7 +51,7 @@ describe('Breadcrumbs service ', () => {
     });
   });
 
-  it('should return parent state when breadcrumb parent is not defined', () => {
+  it('should not return parent state when breadcrumb parent is not defined', () => {
     // given
     state.parent = getStateMock('parentState');
 
@@ -59,7 +59,7 @@ describe('Breadcrumbs service ', () => {
     let parent = breadcrumbsService.getParentState(state);
 
     // expect
-    expect(parent).toEqual(state.parent);
+    expect(parent).toBeNull();
   });
 
   it('should return defined parent when breadcrumb parent is defined', () => {
