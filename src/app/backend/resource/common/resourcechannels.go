@@ -333,7 +333,7 @@ func GetDaemonSetListChannel(client client.DaemonSetsNamespacer,
 				filteredItems = append(filteredItems, item)
 			}
 		}
-		list.Items = filteredItems;
+		list.Items = filteredItems
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -366,8 +366,7 @@ func GetPetSetListChannel(client client.PetSetNamespacer,
 				filteredItems = append(filteredItems, item)
 			}
 		}
-
-		petSets.Items = filteredItems;
+		petSets.Items = filteredItems
 		for i := 0; i < numReads; i++ {
 			channel.List <- petSets
 			channel.Error <- err

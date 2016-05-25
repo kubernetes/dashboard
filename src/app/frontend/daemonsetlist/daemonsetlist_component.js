@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StateParams, stateName} from 'daemonsetdetail/daemonsetdetail_state';
+import {StateParams} from 'common/resource/resourcedetail';
+import {stateName} from 'daemonsetdetail/daemonsetdetail_state';
 
 /**
  * @final

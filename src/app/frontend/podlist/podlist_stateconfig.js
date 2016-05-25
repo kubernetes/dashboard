@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName} from 'chrome/chrome_state';
+import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {stateName as workloadsState} from 'workloads/workloads_state';
 
@@ -29,6 +29,7 @@ import {PodListActionBarController} from './podlistactionbar_controller';
 export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
     url: stateUrl,
+    parent: chromeStateName,
     resolve: {
       'podList': resolvePodList,
     },
@@ -55,11 +56,12 @@ export default function stateConfig($stateProvider) {
 
 /**
  * @param {!angular.$resource} $resource
+ * @param {!./../chrome/chrome_state.StateParams} $stateParams
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolvePodList($resource) {
+export function resolvePodList($resource, $stateParams) {
   /** @type {!angular.Resource<!backendApi.PodList>} */
-  let resource = $resource('api/v1/pod');
+  let resource = $resource(`api/v1/pod/${$stateParams.namespace || ''}`);
   return resource.get().$promise;
 }

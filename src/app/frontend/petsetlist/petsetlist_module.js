@@ -15,6 +15,7 @@
 import stateConfig from './petsetlist_stateconfig';
 import filtersModule from 'common/filters/filters_module';
 import componentsModule from 'common/components/components_module';
+import chromeModule from 'chrome/chrome_module';
 import {petSetCardComponent} from './petsetcard_component';
 import {petSetCardListComponent} from './petsetcardlist_component';
 
@@ -32,6 +33,7 @@ export default angular
           'ui.router',
           filtersModule.name,
           componentsModule.name,
+          chromeModule.name,
         ])
     .config(stateConfig)
     .component('kdPetSetCardList', petSetCardListComponent)

@@ -12,5 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'poddetail';
+import module from 'chrome/chrome_module';
+
+describe('Namespace stateconfig ', () => {
+  it('should reject states with no parents', () => {
+    let fakeModule = angular.module('fakeModule', []);
+    fakeModule.config(($stateProvider) => {
+      $stateProvider.state('fakeState', {
+        url: 'fakeStateUrl',
+        template: '<ui-view>Foo</ui-view>',
+      });
+    });
+    angular.mock.module(module.name);
+    angular.mock.module(fakeModule.name);
+
+    let initInjector = () => { angular.mock.inject(($state) => { $state.go('fakeState'); }); };
+
+    expect(initInjector).toThrow();
+  });
+});

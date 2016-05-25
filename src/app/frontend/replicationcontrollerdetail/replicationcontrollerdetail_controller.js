@@ -25,7 +25,7 @@ export default class ReplicationControllerDetailController {
    * @param {!backendApi.ReplicationControllerDetail} replicationControllerDetail
    * @param {!backendApi.EventList} replicationControllerEvents
    * @param {!ui.router.$state} $state
-   * @param {!../logs/logs_state.StateParams} $stateParams
+   * @param {!../common/resource/resourcedetail.StateParams} $stateParams
    * @ngInject
    */
   constructor(replicationControllerDetail, replicationControllerEvents, $state, $stateParams) {
@@ -38,7 +38,7 @@ export default class ReplicationControllerDetailController {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
-    /** @private {!../logs/logs_state.StateParams} */
+    /** @private {!../common/resource/resourcedetail.StateParams} */
     this.stateParams_ = $stateParams;
   }
 
@@ -68,8 +68,8 @@ export default class ReplicationControllerDetailController {
    */
   getPodLogsHref(pod) {
     return this.state_.href(
-        logsStateName, new LogsStateParams(
-                           this.stateParams_.namespace, this.stateParams_.replicationController,
-                           pod.objectMeta.name));
+        logsStateName,
+        new LogsStateParams(
+            this.stateParams_.objectNamespace, this.stateParams_.objectName, pod.objectMeta.name));
   }
 }

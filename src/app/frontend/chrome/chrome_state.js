@@ -12,6 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/**
+* Name of the namespace state. This state should be used as a parent state for all root states.
+* It provides gobal namespace option for all URLs.
+*/
+export const stateName = 'chrome';
+
 /** Name of the view. Can be used in state config to define toolbar view */
 export const toolbarViewName = 'toolbar';
 
@@ -20,3 +26,22 @@ export const toolbarViewName = 'toolbar';
  * be used for, e.g., breadcrumbs or view-specific action buttons.
  */
 export const actionbarViewName = 'actionbar';
+
+/**
+ * Parameter name of the namespace selection param. Mostly for internal use.
+ */
+export const namespaceParam = 'namespace';
+
+/**
+ * All properties are @exported and in sync with URL param names.
+ * @final
+ */
+export class StateParams {
+  /**
+   * @param {string|undefined} namespace
+  */
+  constructor(namespace) {
+    /** @export {string|undefined} */
+    this.namespace = namespace;
+  }
+}

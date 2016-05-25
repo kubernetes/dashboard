@@ -62,7 +62,7 @@ export default class LogsToolbarController {
      * Namespace.
      * @private {string}
      */
-    this.namespace_ = $stateParams.namespace;
+    this.namespace_ = $stateParams.rcNamespace;
 
     /**
      * Replication Controller name.

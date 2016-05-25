@@ -15,18 +15,30 @@
 import replicaSetListModule from 'replicasetlist/replicasetlist_module';
 import {resolveReplicaSets} from 'replicasetlist/replicasetlist_stateconfig';
 
-describe('StateConfig for replication controller list', () => {
+describe('StateConfig for replica set list', () => {
   beforeEach(() => { angular.mock.module(replicaSetListModule.name); });
 
-  it('should resolve replica set controllers', angular.mock.inject(($q) => {
+  it('should resolve replica sets', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
 
     let resource = jasmine.createSpy('$resource');
     resource.and.returnValue({get: function() { return {$promise: promise}; }});
 
-    let actual = resolveReplicaSets(resource);
+    let actual = resolveReplicaSets(resource, {namespace: 'foo'});
 
-    expect(resource).toHaveBeenCalledWith('api/v1/replicaset');
+    expect(resource).toHaveBeenCalledWith('api/v1/replicaset/foo');
+    expect(actual).toBe(promise);
+  }));
+
+  it('should resolve replica sets with no namespace', angular.mock.inject(($q) => {
+    let promise = $q.defer().promise;
+
+    let resource = jasmine.createSpy('$resource');
+    resource.and.returnValue({get: function() { return {$promise: promise}; }});
+
+    let actual = resolveReplicaSets(resource, {});
+
+    expect(resource).toHaveBeenCalledWith('api/v1/replicaset/');
     expect(actual).toBe(promise);
   }));
 });

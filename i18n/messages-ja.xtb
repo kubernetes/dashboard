@@ -138,4 +138,6 @@
 	<translation id="2586490478144382446" key="MSG_PET_SET_LIST_HEADER_PODS" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Pet set list header: pods.">Pods</translation>
 	<translation id="1017086337822469058" key="MSG_PET_SET_LIST_HEADER_AGE" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Pet set list header: age.">Age</translation>
 	<translation id="5744665687208066898" key="MSG_PET_SET_LIST_HEADER_IMAGES" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Pet set list header: images.">Images</translation>
+	<translation id="2997495891426796243" key="MSG_NAMESPACE_NOT_SELECTED" source="/usr/local/google/home/bryk/src/github.com/dashboard/.tmp/serve/app-dev.js" desc="Text for dropdown item that indicates that no namespace was selected">namespace not selected</translation>
+	<translation id="5143266087600531180" key="MSG_NAMESPACE_SELECT_ARIA_LABEL" source="/usr/local/google/home/bryk/src/github.com/dashboard/.tmp/serve/app-dev.js" desc="Text describing what namespace selector is">Selector for namespaces</translation>
 </translationbundle>
