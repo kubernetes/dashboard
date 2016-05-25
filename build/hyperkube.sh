@@ -17,17 +17,13 @@
 # Learn more at https://github.com/kubernetes/kubernetes/blob/master/docs/getting-started-guides/docker.md
 
 # Version of kubernetes to use.
-K8S_VERSION="1.1.2"
+K8S_VERSION="v1.2.4" 
 # Version heapster to use.
-HEAPSTER_VERSION="0.20.0-alpha9"
+HEAPSTER_VERSION="v1.0.2"
 # Port of the apiserver to serve on.
 PORT=8080
 # Port of the heapster to serve on.
 HEAPSTER_PORT=8082
-
-docker run --net=host -d gcr.io/google_containers/etcd:2.0.12 \
-   /usr/local/bin/etcd --addr=127.0.0.1:4001 --bind-addr=0.0.0.0:4001 --data-dir=/var/etcd/data
-
 
 docker run \
     --volume=/:/rootfs:ro \
@@ -40,14 +36,16 @@ docker run \
     --pid=host \
     --privileged=true \
     -d \
-    gcr.io/google_containers/hyperkube:v${K8S_VERSION} \
-    /hyperkube kubelet --containerized --hostname-override="127.0.0.1" \
-        --address="0.0.0.0" --api-servers=http://localhost:${PORT} \
-        --config=/etc/kubernetes/manifests
-
-docker run -d --net=host --privileged gcr.io/google_containers/hyperkube:v${K8S_VERSION} \
-    /hyperkube proxy --master=http://127.0.0.1:${PORT} --v=2
+    gcr.io/google_containers/hyperkube:${K8S_VERSION} \
+    /hyperkube kubelet \
+        --allow-privileged=true \
+        --containerized \
+        --hostname-override="127.0.0.1" \
+        --address="0.0.0.0" \
+        --api-servers=http://localhost:${PORT} \
+        --config=/etc/kubernetes/manifests \
+        --v=2
 
 # Runs Heapster in standalone mode
-docker run --net=host -d gcr.io/google_containers/heapster:v${HEAPSTER_VERSION} -port ${HEAPSTER_PORT} \
+docker run --net=host -d gcr.io/google_containers/heapster:${HEAPSTER_VERSION} -port ${HEAPSTER_PORT} \
     --source=kubernetes:http://127.0.0.1:${PORT}?inClusterConfig=false&auth=""
