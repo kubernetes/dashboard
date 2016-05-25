@@ -12,21 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import chromeDirective from './chrome_directive';
-import componentsModule from 'common/components/components_module';
-import namespaceModule from 'common/namespace/namespace_module';
+import module from 'common/namespace/namespace_module';
 
-/**
- * Angular module containing navigation chrome for the application.
- */
-export default angular
-    .module(
-        'kubernetesDashboard.chrome',
-        [
-          'ngMaterial',
-          'ngResource',
-          'ui.router',
-          componentsModule.name,
-          namespaceModule.name,
-        ])
-    .directive('chrome', chromeDirective);
+describe('Namespace stateconfig ', () => {
+  it('should reject states with no parents', () => {
+    let fakeModule = angular.module('fakeModule', []);
+    fakeModule.config(($stateProvider) => {
+      $stateProvider.state('fakeState', {
+        url: 'fakeStateUrl',
+        template: '<ui-view>Foo</ui-view>',
+      });
+    });
+    angular.mock.module(module.name);
+    angular.mock.module(fakeModule.name);
+
+    let initInjector = () => { angular.mock.inject(($state) => { $state.go('.'); }); };
+
+    expect(initInjector).toThrow();
+  });
+});

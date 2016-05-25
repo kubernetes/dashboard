@@ -17,6 +17,8 @@ import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_servi
 import {ReplicaSetDetailController} from './replicasetdetail_controller';
 import {stateName as replicaSetList, stateUrl} from 'replicasetlist/replicasetlist_state';
 import {stateName} from './replicasetdetail_state';
+import {stateName as namespaceStateName} from 'common/namespace/namespace_state';
+import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 
 /**
  * Configures states for the replica set details view.
@@ -26,7 +28,8 @@ import {stateName} from './replicasetdetail_state';
  */
 export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
-    url: `${stateUrl}/:namespace/:replicaSet`,
+    url: appendDetailParamsToUrl(stateUrl),
+    parent: namespaceStateName,
     resolve: {
       'replicaSetDetailResource': getReplicaSetDetailResource,
       'replicaSetDetail': getReplicaSetDetail,
@@ -49,13 +52,13 @@ export default function stateConfig($stateProvider) {
 }
 
 /**
- * @param {!./replicasetdetail_state.StateParams} $stateParams
+ * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource<!backendApi.ReplicaSetDetail>}
  * @ngInject
  */
 export function getReplicaSetDetailResource($resource, $stateParams) {
-  return $resource(`api/v1/replicaset/${$stateParams.namespace}/${$stateParams.replicaSet}`);
+  return $resource(`api/v1/replicaset/${$stateParams.objectNamespace}/${$stateParams.objectName}`);
 }
 
 /**

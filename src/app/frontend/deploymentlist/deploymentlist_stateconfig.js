@@ -18,6 +18,7 @@ import {DeploymentListController} from './deploymentlist_controller';
 import {stateName, stateUrl} from './deploymentlist_state';
 import {stateName as workloadsState} from 'workloads/workloads_state';
 import {DeploymentListActionBarController} from './deploymentlistactionbar_controller';
+import {stateName as namespaceStateName} from 'common/namespace/namespace_state';
 
 /**
  * Configures states for the service view.
@@ -28,6 +29,7 @@ import {DeploymentListActionBarController} from './deploymentlistactionbar_contr
 export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
     url: stateUrl,
+    parent: namespaceStateName,
     resolve: {
       'deployments': resolveDeployments,
     },
@@ -54,11 +56,12 @@ export default function stateConfig($stateProvider) {
 
 /**
  * @param {!angular.$resource} $resource
+ * @param {!./../common/namespace/namespace_state.StateParams} $stateParams
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveDeployments($resource) {
+export function resolveDeployments($resource, $stateParams) {
   /** @type {!angular.Resource<!backendApi.DeploymentList>} */
-  let resource = $resource('api/v1/deployment');
+  let resource = $resource(`api/v1/deployment/${$stateParams.namespace || ''}`);
   return resource.get().$promise;
 }

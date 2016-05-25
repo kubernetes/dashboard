@@ -18,6 +18,7 @@ import {PodListController} from './podlist_controller';
 import {stateName, stateUrl} from './podlist_state';
 import {stateName as workloadsState} from 'workloads/workloads_state';
 import {PodListActionBarController} from './podlistactionbar_controller';
+import {stateName as namespaceStateName} from 'common/namespace/namespace_state';
 
 /**
  * Configures states for the service view.
@@ -28,6 +29,7 @@ import {PodListActionBarController} from './podlistactionbar_controller';
 export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
     url: stateUrl,
+    parent: namespaceStateName,
     resolve: {
       'podList': resolvePodList,
     },
@@ -54,11 +56,12 @@ export default function stateConfig($stateProvider) {
 
 /**
  * @param {!angular.$resource} $resource
+ * @param {!./../common/namespace/namespace_state.StateParams} $stateParams
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolvePodList($resource) {
+export function resolvePodList($resource, $stateParams) {
   /** @type {!angular.Resource<!backendApi.PodList>} */
-  let resource = $resource('api/v1/pod');
+  let resource = $resource(`api/v1/pod/${$stateParams.namespace || ''}`);
   return resource.get().$promise;
 }

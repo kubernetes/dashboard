@@ -18,6 +18,8 @@ import {stateName} from './replicationcontrollerdetail_state';
 import {stateName as replicationControllers} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 import {ReplicationControllerDetailActionBarController} from './replicationcontrollerdetailactionbar_controller';
 import ReplicationControllerDetailController from './replicationcontrollerdetail_controller';
+import {stateName as namespaceStateName} from 'common/namespace/namespace_state';
+import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 
 /**
  * Configures states for the service view.
@@ -27,7 +29,8 @@ import ReplicationControllerDetailController from './replicationcontrollerdetail
  */
 export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
-    url: '/replicationcontroller/:namespace/:replicationController',
+    url: appendDetailParamsToUrl('/replicationcontroller'),
+    parent: namespaceStateName,
     resolve: {
       'replicationControllerSpecPodsResource': getReplicationControllerSpecPodsResource,
       'replicationControllerDetailResource': getReplicationControllerDetailsResource,
@@ -56,27 +59,27 @@ export default function stateConfig($stateProvider) {
 }
 
 /**
- * @param {!./replicationcontrollerdetail_state.StateParams} $stateParams
+ * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource<!backendApi.ReplicationControllerDetail>}
  * @ngInject
  */
 export function getReplicationControllerDetailsResource($stateParams, $resource) {
   return $resource(
-      `api/v1/replicationcontroller/${$stateParams.namespace}/` +
-      `${$stateParams.replicationController}`);
+      `api/v1/replicationcontroller/${$stateParams.objectNamespace}/` +
+      `${$stateParams.objectName}`);
 }
 
 /**
- * @param {!./replicationcontrollerdetail_state.StateParams} $stateParams
+ * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource<!backendApi.ReplicationControllerSpec>}
  * @ngInject
  */
 export function getReplicationControllerSpecPodsResource($stateParams, $resource) {
   return $resource(
-      `api/v1/replicationcontroller/${$stateParams.namespace}/` +
-      `${$stateParams.replicationController}/update/pod`);
+      `api/v1/replicationcontroller/${$stateParams.objectNamespace}/` +
+      `${$stateParams.objectName}/update/pod`);
 }
 
 /**
@@ -90,7 +93,7 @@ function resolveReplicationControllerDetails(replicationControllerDetailResource
 }
 
 /**
- * @param {!./replicationcontrollerdetail_state.StateParams} $stateParams
+ * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
  * @return {!angular.$q.Promise}
  * @ngInject
@@ -98,7 +101,7 @@ function resolveReplicationControllerDetails(replicationControllerDetailResource
 function resolveReplicationControllerEvents($stateParams, $resource) {
   /** @type {!angular.Resource<!backendApi.Events>} */
   let resource =
-      $resource(`api/v1/event/${$stateParams.namespace}/${$stateParams.replicationController}`);
+      $resource(`api/v1/event/${$stateParams.objectNamespace}/${$stateParams.objectName}`);
 
   return resource.get().$promise;
 }

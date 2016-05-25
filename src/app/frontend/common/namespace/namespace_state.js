@@ -12,21 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import chromeDirective from './chrome_directive';
-import componentsModule from 'common/components/components_module';
-import namespaceModule from 'common/namespace/namespace_module';
+/**
+ * Name of the namespace state. This state should be used as a parent state for all root states.
+ * It provides gobal namespace option for all URLs.
+ */
+export const stateName = 'namespace';
 
 /**
- * Angular module containing navigation chrome for the application.
+ * Parameter name of the namespace selection param. Mostly for internal use.
  */
-export default angular
-    .module(
-        'kubernetesDashboard.chrome',
-        [
-          'ngMaterial',
-          'ngResource',
-          'ui.router',
-          componentsModule.name,
-          namespaceModule.name,
-        ])
-    .directive('chrome', chromeDirective);
+export const namespaceParam = 'namespace';
+
+/**
+ * All properties are @exported and in sync with URL param names.
+ * @final
+ */
+export class StateParams {
+  /**
+   * @param {string|undefined} namespace
+  */
+  constructor(namespace) {
+    /** @export {string|undefined} */
+    this.namespace = namespace;
+  }
+}

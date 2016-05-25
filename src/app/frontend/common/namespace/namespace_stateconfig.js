@@ -1,3 +1,4 @@
+
 // Copyright 2015 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,22 +13,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName, StateParams} from './internalerror_state';
-import {InternalErrorController} from './internalerror_controller';
-import {stateName as namespaceStateName} from 'common/namespace/namespace_state';
+import {stateName, namespaceParam} from './namespace_state';
 
 /**
- * Configures states for the internal error view.
- *
  * @param {!ui.router.$stateProvider} $stateProvider
  * @ngInject
  */
 export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
-    controller: InternalErrorController,
-    parent: namespaceStateName,
-    controllerAs: 'ctrl',
-    params: new StateParams(/** @type {!angular.$http.Response} */ ({})),
-    templateUrl: 'error/internalerror.html',
+    url: `?${namespaceParam}`,
+    abstract: true,
+    template: '<ui-view></ui-view>',
   });
+  // TODO(bryk): Remove array notation when this is in externs.
+  $stateProvider['decorator']('parent', requireParentState);
+}
+
+/**
+ * @param {!Object} stateExtend
+ * @param {function(?):!ui.router.$state} parentFn
+ * @return {!ui.router.$state}
+ */
+function requireParentState(stateExtend, parentFn) {
+  /** @type {!ui.router.$state} */
+  let state = stateExtend['self'];
+  if (state.parent !== stateName && state.name !== stateName) {
+    throw new Error(
+        `State "${state.name}" requires parent state to be set to ` +
+        `${stateName}. This is likely a programming error.`);
+  }
+  return parentFn(stateExtend);
 }
