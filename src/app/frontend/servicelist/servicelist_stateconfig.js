@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName} from 'chrome/chrome_state';
+import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 
 import {ServiceListController} from './servicelist_controller';
@@ -27,6 +27,7 @@ import {stateName, stateUrl} from './servicelist_state';
 export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
     url: stateUrl,
+    parent: chromeStateName,
     resolve: {
       'serviceListResource': getServiceListResource,
       'serviceList': resolveServiceList,
@@ -49,11 +50,12 @@ export default function stateConfig($stateProvider) {
 
 /**
  * @param {!angular.$resource} $resource
+ * @param {!./../chrome/chrome_state.StateParams} $stateParams
  * @return {!angular.Resource<!backendApi.ServiceList>}
  * @ngInject
  */
-export function getServiceListResource($resource) {
-  return $resource('api/v1/service');
+export function getServiceListResource($resource, $stateParams) {
+  return $resource(`api/v1/service/${$stateParams.namespace || ''}`);
 }
 
 /**

@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName} from 'chrome/chrome_state';
+import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 
 import {stateName as serviceList, stateUrl} from './../servicelist/servicelist_state';
 import {ServiceDetailController} from './servicedetail_controller';
@@ -27,7 +28,8 @@ import {stateName} from './servicedetail_state';
  */
 export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
-    url: `${stateUrl}/:namespace/:service`,
+    url: appendDetailParamsToUrl(stateUrl),
+    parent: chromeStateName,
     resolve: {
       'serviceDetailResource': getServiceDetailResource,
       'serviceDetail': resolveServiceDetail,
@@ -50,13 +52,13 @@ export default function stateConfig($stateProvider) {
 }
 
 /**
- * @param {!./servicedetail_state.StateParams} $stateParams
+ * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource<!backendApi.ServiceDetail>}
  * @ngInject
  */
 export function getServiceDetailResource($stateParams, $resource) {
-  return $resource(`api/v1/service/${$stateParams.namespace}/${$stateParams.service}`);
+  return $resource(`api/v1/service/${$stateParams.objectNamespace}/${$stateParams.objectName}`);
 }
 
 /**

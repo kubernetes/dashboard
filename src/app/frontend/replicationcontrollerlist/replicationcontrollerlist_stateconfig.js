@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName} from 'chrome/chrome_state';
+import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {stateName as workloadsState} from 'workloads/workloads_state';
 
 import {ReplicationControllerListController} from './replicationcontrollerlist_controller';
 import {stateName, stateUrl} from './replicationcontrollerlist_state';
-
 import ReplicationControllerListActionBarController from './replicationcontrollerlistactionbar_controller';
 
 /**
@@ -30,6 +29,7 @@ import ReplicationControllerListActionBarController from './replicationcontrolle
 export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
     url: stateUrl,
+    parent: chromeStateName,
     resolve: {
       'replicationControllers': resolveReplicationControllers,
     },
@@ -56,11 +56,12 @@ export default function stateConfig($stateProvider) {
 
 /**
  * @param {!angular.$resource} $resource
+ * @param {!./../chrome/chrome_state.StateParams} $stateParams
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveReplicationControllers($resource) {
+export function resolveReplicationControllers($resource, $stateParams) {
   /** @type {!angular.Resource<!backendApi.ReplicationControllerList>} */
-  let resource = $resource('api/v1/replicationcontroller');
+  let resource = $resource(`api/v1/replicationcontroller/${$stateParams.namespace || ''}`);
   return resource.get().$promise;
 }

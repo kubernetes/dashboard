@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName} from 'chrome/chrome_state';
+import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {stateName as workloadsState} from 'workloads/workloads_state';
 
 import {ReplicaSetListController} from './replicasetlist_controller';
 import {stateName, stateUrl} from './replicasetlist_state';
-
 import ReplicaSetListActionBarController from './replicasetlistactionbar_controller';
 
 /**
@@ -30,6 +29,7 @@ import ReplicaSetListActionBarController from './replicasetlistactionbar_control
 export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
     url: stateUrl,
+    parent: chromeStateName,
     resolve: {
       'replicaSets': resolveReplicaSets,
     },
@@ -56,11 +56,12 @@ export default function stateConfig($stateProvider) {
 
 /**
  * @param {!angular.$resource} $resource
+ * @param {!./../chrome/chrome_state.StateParams} $stateParams
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveReplicaSets($resource) {
+export function resolveReplicaSets($resource, $stateParams) {
   /** @type {!angular.Resource<!backendApi.ReplicaSetList>} */
-  let resource = $resource('api/v1/replicaset');
+  let resource = $resource(`api/v1/replicaset/${$stateParams.namespace || ''}`);
   return resource.get().$promise;
 }

@@ -29,15 +29,14 @@ describe('Breadcrumbs controller ', () => {
    * Create simple mock object for state.
    *
    * @param {string} stateName
-   * @param {string} stateLabel
    * @return {{name: string, kdBreadcrumbs: {label: string}}}
    */
-  function getStateMock(stateName, stateLabel) {
+  function getStateMock(stateName) {
     return {
       name: stateName,
       data: {
         [breadcrumbsConfig]: {
-          label: stateLabel,
+          label: stateName,
         },
       },
     };
@@ -56,8 +55,9 @@ describe('Breadcrumbs controller ', () => {
   function addStateParents(state, parentsNr, stateNamePrefix) {
     let parentState = state;
     for (let i = 0; i < parentsNr; i++) {
-      state.parent = getStateMock(`${stateNamePrefix}-${i+1}`);
-      state = state.parent;
+      let parent = getStateMock(`${stateNamePrefix}-${i+1}`);
+      state.data[breadcrumbsConfig].parent = parent;
+      state = parent;
     }
 
     return parentState;

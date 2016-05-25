@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {actionbarViewName} from './chrome_state';
+import {stateName as workloadState} from 'workloads/workloads_state';
 
 /**
  * Controller for the chrome directive.
@@ -22,9 +23,10 @@ import {actionbarViewName} from './chrome_state';
 export default class ChromeController {
   /**
    * @param {!ui.router.$state} $state
+   * @param {!angular.Scope} $scope
    * @ngInject
    */
-  constructor($state) {
+  constructor($state, $scope) {
     /**
      * By default this is true to show loading for the first page.
      * @export {boolean}
@@ -33,7 +35,15 @@ export default class ChromeController {
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
+
+    this.registerStateChangeListeners($scope);
   }
+
+  /**
+   * @return {string}
+   * @export
+   */
+  getLogoHref() { return this.state_.href(workloadState); }
 
   /**
    * @return {boolean}
