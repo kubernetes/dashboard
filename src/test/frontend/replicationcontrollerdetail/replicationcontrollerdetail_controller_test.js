@@ -30,7 +30,7 @@ describe('Replication Controller Detail controller', () => {
         replicationControllerDetail: {},
         replicationControllerEvents: {},
         $stateParams:
-            {replicationController: 'foo-replicationcontroller', namespace: 'foo-namespace'},
+            {objectName: 'foo-replicationcontroller', objectNamespace: 'foo-namespace'},
       });
     });
   });

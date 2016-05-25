@@ -17,7 +17,7 @@ limitations under the License.
 <kd-help-section>
   <div layout="row" layout-align="space-between start">
     <div flex="auto" >
-      <md-input-container class="md-block" md-is-error="ctrl.isFileNameError()">
+      <md-input-container class="md-block kd-upload-file-container" md-is-error="ctrl.isFileNameError()">
         <label>{{::ctrl.i18n.MSG_DEPLOY_UPLOAD_FILE_YAML_OR_JSON_LABEL}}</label>
         <!--TODO: Browse file on focus doesn't work in Firefox. It is to be investigated.-->
         <input ng-model="ctrl.file.name" ng-focus="ctrl.browseFile()" ng-readonly="true" name="fileName" required/>

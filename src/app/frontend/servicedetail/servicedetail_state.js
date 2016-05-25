@@ -14,23 +14,3 @@
 
 /** Name of the state. Can be used in, e.g., $state.go method. */
 export const stateName = 'serviceDetail';
-
-/**
- * Parameters for this state.
- *
- * All properties are @exported and in sync with URL param names.
- * @final
- */
-export class StateParams {
-  /**
-   * @param {string} namespace
-   * @param {string} service
-   */
-  constructor(namespace, service) {
-    /** @export {string} Namespace of this Service. */
-    this.namespace = namespace;
-
-    /** @export {string} Name of this Service. */
-    this.service = service;
-  }
-}
