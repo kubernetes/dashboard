@@ -1,3 +1,4 @@
+
 // Copyright 2015 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,5 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'poddetail';
+import {namespaceSelectComponent} from './namespaceselect_component';
+
+/**
+ * Angular module global namespace selection components.
+ */
+export default angular
+    .module(
+        'kubernetesDashboard.common.namespace',
+        [
+          'ngMaterial',
+          'ngResource',
+        ])
+    .component('kdNamespaceSelect', namespaceSelectComponent);

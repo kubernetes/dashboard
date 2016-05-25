@@ -16,13 +16,14 @@ limitations under the License.
 
 <md-toolbar class="kd-toolbar">
   <div class="md-toolbar-tools kd-toolbar-tools">
-    <a ui-sref="workload" ui-sref-opts="{ reload: true }" tabindex="-1">
+    <a ng-href="{{ctrl.getLogoHref()}}" tabindex="-1">
       <md-icon md-svg-icon="assets/images/kubernetes-logo.svg" class="kd-toolbar-logo"></md-icon>
     </a>
     <h2>
       <span>kubernetes</span>
     </h2>
     <div flex="auto" ui-view="toolbar"></div>
+    <kd-namespace-select></kd-namespace-select>
   </div>
 </md-toolbar>
 
@@ -34,6 +35,8 @@ limitations under the License.
       <md-progress-circular md-mode="indeterminate" md-diameter="96">
       </md-progress-circular>
     </div>
-    <div ng-switch-when="false" ng-transclude class="kd-app-content"></div>
+    <div ng-switch-when="false" class="kd-app-content">
+      <div ui-view></div>
+    </div>
   </div>
 </md-content>

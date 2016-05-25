@@ -12,5 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'poddetail';
+/**
+ * Parameters for this state.
+ *
+ * All properties are @exported and in sync with URL param names.
+ * @final
+ */
+export class StateParams {
+  /**
+   * @param {string} objectNamespace
+   * @param {string} objectName
+  */
+  constructor(objectNamespace, objectName) {
+    /** @export {string} Namespace of this object. */
+    this.objectNamespace = objectNamespace;
+
+    /** @export {string} Name of this object. */
+    this.objectName = objectName;
+  }
+}
+
+export function appendDetailParamsToUrl(baseUrl) {
+  return `${baseUrl}/:objectNamespace/:objectName`;
+}
