@@ -14,20 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div class="kd-environment-variables-title md-body-2">Environment variables</div>
+<div class="kd-environment-variables-title md-body-2">{{::ctrl.i18n.MSG_DEPLOY_ENV_VARS_TITLE}}</div>
 <div ng-repeat="variable in ctrl.variables">
   <ng-form name="variablesForm" layout="row">
     <md-input-container flex="auto" class="kd-deploy-input-row">
-      <label>Name</label>
+      <label>{{::ctrl.i18n.MSG_DEPLOY_ENV_VARS_NAME_LABEL}}</label>
       <input ng-model="variable.name" name="name" ng-change="ctrl.addVariableIfNeeed()"
           ng-pattern="ctrl.namePattern">
       <ng-messages for="variablesForm.name.$error" role="alert" multiple>
-        <ng-message when="pattern">Variable name must be a valid C identifier.</ng-message>
+        <ng-message when="pattern">{{::ctrl.i18n.MSG_DEPLOY_ENV_VARS_NAME_PATTERN_WARNING}}</ng-message>
       </ng-messages>
     </md-input-container>
     <div flex="5"></div>
     <md-input-container flex="auto" class="kd-deploy-input-row">
-      <label>Value</label>
+      <label>{{::ctrl.i18n.MSG_DEPLOY_ENV_VARS_VALUE_LABEL}}</label>
       <input ng-model="variable.value" name="value">
     </md-input-container>
     <div flex="10">
