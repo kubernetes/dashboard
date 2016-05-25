@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName} from 'chrome/chrome_state';
+import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {stateName as workloadsState} from 'workloads/workloads_state';
 
@@ -29,6 +29,7 @@ import {DeploymentListActionBarController} from './deploymentlistactionbar_contr
 export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
     url: stateUrl,
+    parent: chromeStateName,
     resolve: {
       'deployments': resolveDeployments,
     },
@@ -55,11 +56,12 @@ export default function stateConfig($stateProvider) {
 
 /**
  * @param {!angular.$resource} $resource
+ * @param {!./../chrome/chrome_state.StateParams} $stateParams
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveDeployments($resource) {
+export function resolveDeployments($resource, $stateParams) {
   /** @type {!angular.Resource<!backendApi.DeploymentList>} */
-  let resource = $resource('api/v1/deployment');
+  let resource = $resource(`api/v1/deployment/${$stateParams.namespace || ''}`);
   return resource.get().$promise;
 }
