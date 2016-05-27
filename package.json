@@ -15,7 +15,7 @@
     "babel-preset-es2015": "~6.9.0",
     "babelify": "~7.3.0",
     "bower": "~1.7.9",
-    "browser-sync": "~2.12.8",
+    "browser-sync": "~2.12.9",
     "browser-sync-spa": "~1.0.3",
     "browserify": "~13.0.1",
     "browserify-istanbul": "~2.0.0",
