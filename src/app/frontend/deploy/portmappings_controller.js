@@ -12,25 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** @final */
-class ServiceType {
-  constructor(label, external) {
-    /** @export {string} */
-    this.label = label;
-    /** @export {boolean} */
-    this.external = external;
-  }
-}
-
-/** @type {ServiceType} */
-export const NO_SERVICE = new ServiceType('None', false);
-
-/** @type {ServiceType} */
-export const INT_SERVICE = new ServiceType('Internal', false);
-
-/** @type {ServiceType} */
-export const EXT_SERVICE = new ServiceType('External', true);
-
 /**
  * Controller for the port mappings directive.
  *
@@ -68,6 +49,9 @@ export default class PortMappingsController {
      * @export {ServiceType}
      */
     this.serviceType;
+
+    /** @export */
+    this.i18n = i18n;
   }
 
   /**
@@ -181,3 +165,63 @@ export default class PortMappingsController {
    */
   isFirst(index) { return (index === 0); }
 }
+
+const i18n = {
+  /** @export {string} @desc Label 'Service' above the service type selection box on the deploy page.*/
+  MSG_PORT_MAPPINGS_SERVICE_LABEL: goog.getMsg('Service'),
+  /** @export {string} @desc Label 'None', which appears as an option in the service type selection box on the deploy page.*/
+  MSG_PORT_MAPPINGS_SERVICE_TYPE_NONE_LABEL: goog.getMsg('None'),
+  /** @export {string} @desc Label 'Internal', which appears as an option in the service type selection box on the deploy page.*/
+  MSG_PORT_MAPPINGS_SERVICE_TYPE_INTERNAL_LABEL: goog.getMsg('Internal'),
+  /** @export {string} @desc Label 'External', which appears as an option in the service type selection box on the deploy page.*/
+  MSG_PORT_MAPPINGS_SERVICE_TYPE_EXTERNAL_LABEL: goog.getMsg('External'),
+  /** @export {string} @desc Label 'Port', which serves as a placeholder for the port input field in the port mappings section on the deploy page.*/
+  MSG_PORT_MAPPINGS_PORT_LABEL: goog.getMsg('Port'),
+  /** @export {string} @desc This warning appears when the user specifies a non-integer port number in the port mappings section on the deploy page.*/
+  MSG_PORT_MAPPINGS_PORT_INTEGER_WARNING: goog.getMsg('Port must be an integer'),
+  /** @export {string} @desc This warning appears when the user specifies a negative port number in the port mappings section on the deploy page.*/
+  MSG_PORT_MAPPINGS_PORT_NEGATIVE_WARNING: goog.getMsg('Port must greater than 0'),
+  /** @export {string} @desc This warning appears when a typed in port number exceeds the maximum allowed value (in the port mappings section on the deploy page).*/
+  MSG_PORT_MAPPINGS_PORT_MAX_VALUE_WARNING: goog.getMsg('Port must less than 65536'),
+  /** @export {string} @desc This warning appears when the user specifies an empty port number and a target port number is already there (in the port mappings section on the deploy page).*/
+  MSG_PORT_MAPPINGS_PORT_EMPTY_WARNING:
+      goog.getMsg(`Port can't be empty when target port is specified.`),
+  /** @export {string} @desc Label 'Target port', which serves as a placeholder for the target port input field in the port mappings section on the deploy page.*/
+  MSG_PORT_MAPPINGS_TARGET_PORT_LABEL: goog.getMsg('Target port'),
+  /** @export {string} @desc This warning appears when the user specifies a non-integer target port number in the port mappings section on the deploy page.*/
+  MSG_PORT_MAPPINGS_TARGET_PORT_INTEGER_WARNING: goog.getMsg('Target port must be an integer'),
+  /** @export {string} @desc This warning appears when the user specifies a negative target port number in the port mappings section on the deploy page.*/
+  MSG_PORT_MAPPINGS_TARGET_PORT_NEGATIVE_WARNING: goog.getMsg('Target port must greater than 0'),
+  /** @export {string} @desc This warning appears when a typed in target port number exceeds the maximum allowed value (in the port mappings section on the deploy page).*/
+  MSG_PORT_MAPPINGS_TARGET_PORT_MAX_VALUE_WARNING: goog.getMsg('Target port must less than 65536'),
+  /** @export {string} @desc This warning appears when the user specifies an empty target port number and a port number is already there (in the port mappings section on the deploy page).*/
+  MSG_PORT_MAPPINGS_TARGET_PORT_EMPTY_WARNING:
+      goog.getMsg(`Target port can't be empty when port is specified.`),
+  /** @export {string} @desc Label 'Protocol' above the protocol selection box in the port mappings section, on the deploy page.*/
+  MSG_PORT_MAPPINGS_PROTOCOL_LABEL: goog.getMsg('Protocol'),
+  /** @export {string} @desc This warning appears when the user does not specify a protocol for an existing port mapping (in the port mappings section, on the deploy page).*/
+  MSG_PORT_MAPPINGS_PROTOCOL_REQUIRED_WARNING: goog.getMsg('Protocol is required'),
+  /** @export {string} @desc This warning appears when the user specifies an invalid protocol for a port mapping (in the port mappings section, on the deploy page).*/
+  MSG_PORT_MAPPINGS_PROTOCOL_INVALID_WARNING: goog.getMsg('Invalid protocol'),
+};
+
+/** @final */
+class ServiceType {
+  constructor(label, external) {
+    /** @export {string} */
+    this.label = label;
+    /** @export {boolean} */
+    this.external = external;
+  }
+}
+
+/** @type {ServiceType} */
+export const NO_SERVICE = new ServiceType(i18n.MSG_PORT_MAPPINGS_SERVICE_TYPE_NONE_LABEL, false);
+
+/** @type {ServiceType} */
+export const INT_SERVICE =
+    new ServiceType(i18n.MSG_PORT_MAPPINGS_SERVICE_TYPE_INTERNAL_LABEL, false);
+
+/** @type {ServiceType} */
+export const EXT_SERVICE =
+    new ServiceType(i18n.MSG_PORT_MAPPINGS_SERVICE_TYPE_EXTERNAL_LABEL, true);
