@@ -16,7 +16,7 @@ limitations under the License.
 
 <kd-help-section>
   <md-input-container class="md-block" md-is-error="ctrl.isNameError()">
-    <label>App name</label>
+    <label>{{::ctrl.i18n.MSG_DEPLOY_SETTINGS_APP_NAME_LABEL}}</label>
     <div>
       <input ng-model="ctrl.name" name="name" namespace="ctrl.namespace" required
              ng-pattern="ctrl.namePattern"
@@ -26,72 +26,69 @@ limitations under the License.
         ng-class="{'kd-deploy-form-progress-show': ctrl.form.name.$pending}">
       </md-progress-linear>
       <ng-messages for="ctrl.form.name.$error" role="alert" multiple>
-        <ng-message when="required">Application name is required.</ng-message>
+        <ng-message when="required">{{::ctrl.i18n.MSG_DEPLOY_SETTINGS_APP_NAME_REQUIRED_WARNING}}</ng-message>
         <ng-message when="uniqueName">
-          Replication controller or service with this name already exists within namespace
+          {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_APP_NAME_ALREADY_EXISTS_WARNING}}
           <i>{{ctrl.namespace}}</i>.
         </ng-message>
         <ng-message when="pattern">
-          Application name must start with a lowercase letter and contain only lowercase letters,
-          numbers, and '-' between words.
+          {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_APP_NAME_PATTERN_WARNING}}
         </ng-message>
         <ng-message when="maxlength">
-          Name must be up to {{ctrl.nameMaxLength}} characters long.
+          {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_APP_NAME_MAX_LENGTH_WARNING}}
         </ng-message>
       </ng-messages>
     </div>
   </md-input-container>
 
   <kd-user-help>
-    {{ctrl.MSG_DEPLOY_APP_NAME_USER_HELP}}
+    {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_APP_NAME_USER_HELP}}
     <a href="http://kubernetes.io/docs/user-guide/labels/" target="_blank" tabindex="-1">
-      Learn more <i class="material-icons">open_in_new</i>
+      {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_LEARN_MORE_ACTION}} <i class="material-icons">open_in_new</i>
     </a>
   </kd-user-help>
 </kd-help-section>
 
 <kd-help-section>
   <md-input-container class="md-block">
-    <label>Container image</label>
+    <label>{{::ctrl.i18n.MSG_DEPLOY_SETTINGS_CONTAINER_IMAGE_LABEL}}</label>
     <input ng-model="ctrl.containerImage" name="containerImage" required
            ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }"
            kd-valid-imagereference invalid-image-error-message="ctrl.containerImageErrorMessage">
     <ng-messages for="ctrl.form.containerImage.$error" role="alert" multiple>
-      <ng-message when="required">Container image is required.</ng-message>
+      <ng-message when="required">{{::ctrl.i18n.MSG_DEPLOY_SETTINGS_CONTAINER_IMAGE_REQUIRED_WARNING}}</ng-message>
       <ng-message when="validImageReference">
-        Container image is invalid: {{ ctrl.containerImageErrorMessage }}
+        {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_CONTAINER_IMAGE_INVALID_WARNING}} {{ ctrl.containerImageErrorMessage }}
       </ng-message>
     </ng-messages>
   </md-input-container>
   <kd-user-help>
-    Enter the URL of a public image on any registry, or a private image hosted on Docker Hub or
-    Google Container Registry.
+  {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_CONTAINER_IMAGE_USER_HELP}}
     <a href="http://kubernetes.io/docs/user-guide/images/" target="_blank" tabindex="-1">
-      Learn more <i class="material-icons">open_in_new</i>
+      {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_LEARN_MORE_ACTION}} <i class="material-icons">open_in_new</i>
     </a>
   </kd-user-help>
 </kd-help-section>
 
 <kd-help-section>
   <md-input-container class="md-block">
-    <label>Number of pods</label>
+    <label>{{ctrl.MSG_DEPLOY_SETTINGS_NUMBER_OF_PODS_LABEL}}</label>
     <input ng-model="ctrl.replicas" type="number" required min="1" name="replicas"
            kd-validate="integer" kd-warn-threshold="100" kd-warn-threshold-bind="showWarning">
     <ng-messages for="ctrl.form.replicas.$error" role="alert" multiple>
-      <ng-message when="required">Number of pods is required.</ng-message>
-      <ng-message when="number, kdValidInteger">Number of pods must be a positive integer.</ng-message>
-      <ng-message when="min">Number of pods must be at least 1.</ng-message>
+      <ng-message when="required">{{::ctrl.i18n.MSG_DEPLOY_SETTINGS_NUMBER_OF_PODS_REQUIRED_WARNING}}</ng-message>
+      <ng-message when="number, kdValidInteger">{{::ctrl.i18n.MSG_DEPLOY_SETTINGS_NUMBER_OF_PODS_INTEGER_WARNING}}</ng-message>
+      <ng-message when="min">{{::ctrl.i18n.MSG_DEPLOY_SETTINGS_NUMBER_OF_PODS_MIN_WARNING}}</ng-message>
     </ng-messages>
     <span class="kd-warn-threshold" ng-show="showWarning">
-      Setting high number of pods may cause performance issues of the cluster and Dashboard UI.
+      {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_NUMBER_OF_PODS_HIGH_WARNING}}
     </span>
   </md-input-container>
   <kd-user-help>
-    A Replication Controller will be created to maintain the desired number of pods across your
-    cluster.
+    {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_NUMBER_OF_PODS_USER_HELP}}
     <a href="http://kubernetes.io/docs/user-guide/replication-controller/" target="_blank"
        tabindex="-1">
-      Learn more <i class="material-icons">open_in_new</i>
+      {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_LEARN_MORE_ACTION}} <i class="material-icons">open_in_new</i>
     </a>
   </kd-user-help>
 </kd-help-section>
@@ -101,13 +98,12 @@ limitations under the License.
       is-external="ctrl.isExternal">
   </kd-port-mappings>
   <kd-user-help>
-    Ports are optional. If specified, a Service will be created mapping the Port (incoming) to a
-    target Port seen by the container.
+    {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_PORT_MAPPINGS_USER_HELP}}
     <span ng-if="ctrl.name">
-      The internal DNS name for this Service will be: <span class="kd-emphasized">{{ctrl.name}}</span>.
+      {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_SERVICE_DNS_NAME_USER_HELP}} <span class="kd-emphasized">{{ctrl.name}}</span>.
     </span>
     <a href="http://kubernetes.io/docs/user-guide/services/" target="_blank" tabindex="-1">
-      Learn more <i class="material-icons">open_in_new</i>
+      {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_LEARN_MORE_ACTION}} <i class="material-icons">open_in_new</i>
     </a>
   </kd-user-help>
 </kd-help-section>
@@ -116,22 +112,21 @@ limitations under the License.
 <div ng-show="ctrl.isMoreOptionsEnabled()">
   <kd-help-section>
     <md-input-container>
-      <label>Description</label>
+      <label>{{::ctrl.i18n.MSG_DEPLOY_SETTINGS_DESCRIPTION_LABEL}}</label>
       <textarea ng-model="ctrl.description"></textarea>
     </md-input-container>
     <kd-user-help>
-      The description will be added as an annotation to the Replication Controller and displayed in
-      the application's details.
+      {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_DESCRIPTION_USER_HELP}}
     </kd-user-help>
   </kd-help-section>
 
   <kd-help-section>
     <div layout="column">
-      <div class="kd-label-title md-body-2">Labels</div>
+      <div class="kd-label-title md-body-2">{{::ctrl.i18n.MSG_DEPLOY_SETTINGS_LABELS_TITLE}}</div>
       <div layout="row" class="kd-label-header-row">
-        <div flex="45">Key</div>
+        <div flex="45">{{::ctrl.i18n.MSG_DEPLOY_SETTINGS_LABELS_KEY_LABEL}}</div>
         <div flex="5"></div>
-        <div flex="40">Value</div>
+        <div flex="40">{{::ctrl.i18n.MSG_DEPLOY_SETTINGS_LABELS_VALUE_LABEL}}</div>
       </div>
       <div ng-repeat="label in ctrl.labels">
          <kd-deploy-label layout="row" flex="auto" label="label" labels="ctrl.labels">
@@ -140,51 +135,49 @@ limitations under the License.
     </div>
 
     <kd-user-help>
-      The specified labels will be applied to the created Replication Controller, Service (if any)
-      and Pods. Common labels include release, environment, tier, partition and track.
+      {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_LABELS_USER_HELP}}
       <a href="http://kubernetes.io/docs/user-guide/labels/" target="_blank" tabindex="-1">
-        Learn more <i class="material-icons">open_in_new</i>
+        {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_LEARN_MORE_ACTION}} <i class="material-icons">open_in_new</i>
       </a>
     </kd-user-help>
   </kd-help-section>
 
   <kd-help-section>
     <md-input-container class="md-block">
-      <label>Namespace</label>
+      <label>{{::ctrl.i18n.MSG_DEPLOY_SETTINGS_NAMESPACE_LABEL}}</label>
       <md-select ng-model="ctrl.namespace" ng-click="ctrl.resetImagePullSecret()" required>
         <md-option ng-repeat="namespace in ctrl.namespaces" ng-value="namespace">
           {{namespace}}
         </md-option>
         <md-option ng-click="ctrl.handleNamespaceDialog($event)">
-          Create a new namespace...
+          {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_NAMESPACE_CREATE_ACTION}}
         </md-option>
       </md-select>
     </md-input-container>
     <kd-user-help>
-      Namespaces let you partition resources into logically named groups.
+      {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_NAMESPACE_USER_HELP}}
       <a href="http://kubernetes.io/docs/admin/namespaces/" target="_blank" tabindex="-1">
-        Learn more <i class="material-icons">open_in_new</i>
+        {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_LEARN_MORE_ACTION}} <i class="material-icons">open_in_new</i>
       </a>
     </kd-user-help>
   </kd-help-section>
 
   <kd-help-section>
     <md-input-container class="md-block">
-      <label>Image Pull Secret</label>
+      <label>{{::ctrl.i18n.MSG_DEPLOY_SETTINGS_IMAGE_PULL_SECRET_LABEL}}</label>
       <md-select ng-model="ctrl.imagePullSecret" ng-click="ctrl.getSecrets(ctrl.namespace)">
         <md-option ng-repeat="secret in ctrl.secrets" ng-value="secret">
           {{secret}}
         </md-option>
         <md-option ng-click="ctrl.handleCreateSecretDialog($event)">
-          Create a new secret...
+          {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_IMAGE_PULL_SECRET_CREATE_ACTION}}
         </md-option>
       </md-select>
     </md-input-container>
     <kd-user-help>
-      The specified image could require a pull secret credential if it is private. You may choose an
-      existing secret or create a new one.
+      {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_IMAGE_PULL_SECRET_USER_HELP}}
       <a href="http://kubernetes.io/docs/user-guide/secrets/" target="_blank" tabindex="-1">
-        Learn more <i class="material-icons">open_in_new</i>
+        {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_LEARN_MORE_ACTION}} <i class="material-icons">open_in_new</i>
       </a>
     </kd-user-help>
   </kd-help-section>
@@ -192,27 +185,27 @@ limitations under the License.
   <kd-help-section>
     <div layout="row">
       <md-input-container flex="auto" >
-        <label>CPU requirement (cores)</label>
+        <label>{{::ctrl.i18n.MSG_DEPLOY_SETTINGS_CPU_REQUIREMENT_LABEL}}</label>
         <input ng-model="ctrl.cpuRequirement" type="number" name="cpuRequirement" min="0">
         <ng-messages for="ctrl.form.cpuRequirement.$error" role="alert" multiple>
-          <ng-message when="number">CPU requirement must be given as a valid number.</ng-message>
-          <ng-message when="min">CPU requirement must be given as a positive number.</ng-message>
+          <ng-message when="number">{{::ctrl.i18n.MSG_DEPLOY_SETTINGS_CPU_NOT_A_NUMBER_WARNING}}</ng-message>
+          <ng-message when="min">{{::ctrl.i18n.MSG_DEPLOY_SETTINGS_CPU_NEGATIVE_WARNING}}</ng-message>
         </ng-messages>
       </md-input-container>
       <div flex="5"></div>
       <md-input-container flex="auto" >
-        <label>Memory requirement (MiB)</label>
+        <label>{{::ctrl.i18n.MSG_DEPLOY_SETTINGS_MEMORY_REQUIREMENT_LABEL}}</label>
         <input ng-model="ctrl.memoryRequirement" type="number" name="memoryRequirement" min="0">
         <ng-messages for="ctrl.form.memoryRequirement.$error" role="alert" multiple>
-          <ng-message when="number">Memory requirement must be given as a valid number.</ng-message>
-          <ng-message when="min">Memory requirement must be given as a positive number.</ng-message>
+          <ng-message when="number">{{::ctrl.i18n.MSG_DEPLOY_SETTINGS_MEMORY_NOT_A_NUMBER_WARNING}}</ng-message>
+          <ng-message when="min">{{::ctrl.i18n.MSG_DEPLOY_SETTINGS_MEMORY_NEGATIVE_WARNING}}</ng-message>
         </ng-messages>
       </md-input-container>
     </div>
     <kd-user-help>
-      You can specify minimum CPU and memory requirements for the container.
+      {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_CPU_MEM_USER_HELP}}
       <a href="http://kubernetes.io/docs/admin/limitrange/" target="_blank" tabindex="-1">
-        Learn more <i class="material-icons">open_in_new</i>
+        {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_LEARN_MORE_ACTION}} <i class="material-icons">open_in_new</i>
       </a>
     </kd-user-help>
   </kd-help-section>
@@ -220,21 +213,20 @@ limitations under the License.
   <kd-help-section>
     <div>
       <md-input-container class="md-block">
-        <label>Run command</label>
+        <label>{{::ctrl.i18n.MSG_DEPLOY_SETTINGS_RUN_COMMAND_LABEL}}</label>
         <input ng-model="ctrl.containerCommand">
       </md-input-container>
 
       <md-input-container class="md-block">
-        <label>Run command arguments</label>
+        <label>{{::ctrl.i18n.MSG_DEPLOY_SETTINGS_RUN_COMMAND_ARGUMENTS_LABEL}}</label>
         <input ng-model="ctrl.containerCommandArgs">
       </md-input-container>
     </div>
     <kd-user-help>
-      By default, your containers run the selected image's default entrypoint command. You can
-      use the command options to override the default.
+      {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_RUN_COMMAND_USER_HELP}}
       <a href="http://kubernetes.io/docs/user-guide/containers/" target="_blank"
          tabindex="-1">
-        Learn more <i class="material-icons">open_in_new</i>
+        {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_LEARN_MORE_ACTION}} <i class="material-icons">open_in_new</i>
       </a>
     </kd-user-help>
   </kd-help-section>
@@ -242,14 +234,14 @@ limitations under the License.
   <kd-help-section>
     <div class="md-block">
       <md-checkbox ng-model="ctrl.runAsPrivileged" class="md-primary">
-        Run as privileged
+        {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_RUN_AS_PRIVILEGED_LABEL}}
       </md-checkbox>
     </div>
     <kd-user-help>
-      Processes in privileged containers are equivalent to processes running as root on the host.
+      {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_RUN_PRIVILEGED_USER_HELP}}
       <a href="http://kubernetes.io/docs/user-guide/pods/#privileged-mode-for-pod-containers"
          target="_blank" tabindex="-1">
-        Learn more <i class="material-icons">open_in_new</i>
+        {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_LEARN_MORE_ACTION}} <i class="material-icons">open_in_new</i>
       </a>
     </kd-user-help>
   </kd-help-section>
@@ -258,11 +250,10 @@ limitations under the License.
     <kd-environment-variables variables="ctrl.variables">
     </kd-environment-variables>
     <kd-user-help>
-      Environment variables available for use in the container. Values can reference other variables
-      using $(VAR_NAME) syntax.
+      {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_ENV_VARIABLES_USER_HELP}}
       <a href="http://kubernetes.io/docs/user-guide/configuring-containers/#environment-variables-and-variable-expansion"
          target="_blank" tabindex="-1">
-        Learn more <i class="material-icons">open_in_new</i>
+        {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_LEARN_MORE_ACTION}} <i class="material-icons">open_in_new</i>
       </a>
     </kd-user-help>
   </kd-help-section>
