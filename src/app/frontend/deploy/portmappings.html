@@ -15,7 +15,7 @@ limitations under the License.
 -->
 
 <md-input-container class="md-block">
-  <label>Service</label>
+  <label>{{::ctrl.i18n.MSG_PORT_MAPPINGS_SERVICE_LABEL}}</label>
 <md-select ng-model="ctrl.serviceType" ng-change="ctrl.changeServiceType()">
   <md-option ng-repeat="serviceType in ctrl.serviceTypes" ng-value="serviceType">
     {{serviceType.label}}
@@ -25,32 +25,32 @@ limitations under the License.
 <div ng-repeat="portMapping in ctrl.portMappings">
   <ng-form name="portMappingForm" layout="row">
     <md-input-container flex="50" class="kd-deploy-input-row">
-      <label>Port</label>
+      <label>{{::ctrl.i18n.MSG_PORT_MAPPINGS_PORT_LABEL}}</label>
       <input ng-model="portMapping.port" ng-change="ctrl.checkPortMapping(portMappingForm, $index)"
              type="number" min="1" max="65535" name="port" ng-required="ctrl.isFirst($index)">
       <ng-messages for="portMappingForm.port.$error" role="alert" >
-        <ng-message when="number">Port must be an integer.</ng-message>
-        <ng-message when="min">Port must greater than 0.</ng-message>
-        <ng-message when="max">Port must less than 65536.</ng-message>
-        <ng-message when="empty">Port can't be empty when target port is specified.</ng-message>
+        <ng-message when="number">{{::ctrl.i18n.MSG_PORT_MAPPINGS_PORT_INTEGER_WARNING}}</ng-message>
+        <ng-message when="min">{{::ctrl.i18n.MSG_PORT_MAPPINGS_PORT_NEGATIVE_WARNING}}</ng-message>
+        <ng-message when="max">{{::ctrl.i18n.MSG_PORT_MAPPINGS_PORT_MAX_VALUE_WARNING}}</ng-message>
+        <ng-message when="empty">{{::ctrl.i18n.MSG_PORT_MAPPINGS_PORT_EMPTY_WARNING}}</ng-message>
       </ng-messages>
     </md-input-container>
     <div flex="5"></div>
     <md-input-container flex="50" class="kd-deploy-input-row">
-      <label>Target port</label>
+      <label>{{::ctrl.i18n.MSG_PORT_MAPPINGS_TARGET_PORT_LABEL}}</label>
       <input ng-model="portMapping.targetPort"
              ng-change="ctrl.checkPortMapping(portMappingForm, $index)"
              type="number" min="1" max="65535" name="targetPort" ng-required="ctrl.isFirst($index)">
       <ng-messages for="portMappingForm.targetPort.$error" role="alert" >
-        <ng-message when="number">Target port must be an integer.</ng-message>
-        <ng-message when="min">Target port must greater than 0.</ng-message>
-        <ng-message when="max">Target port must less than 65536.</ng-message>
-        <ng-message when="empty">Target port can't be empty when port is specified.</ng-message>
+        <ng-message when="number">{{::ctrl.i18n.MSG_PORT_MAPPINGS_TARGET_PORT_INTEGER_WARNING}}</ng-message>
+        <ng-message when="min">{{::ctrl.i18n.MSG_PORT_MAPPINGS_TARGET_PORT_NEGATIVE_WARNING}}</ng-message>
+        <ng-message when="max">{{::ctrl.i18n.MSG_PORT_MAPPINGS_TARGET_PORT_MAX_VALUE_WARNING}}</ng-message>
+        <ng-message when="empty">{{::ctrl.i18n.MSG_PORT_MAPPINGS_TARGET_PORT_EMPTY_WARNING}}</ng-message>
       </ng-messages>
     </md-input-container>
     <div flex="5"></div>
     <md-input-container flex="none" class="kd-deploy-input-row">
-      <label>Protocol</label>
+      <label>{{::ctrl.i18n.MSG_PORT_MAPPINGS_PROTOCOL_LABEL}}</label>
       <md-select ng-model="portMapping.protocol" name="protocol" is-external="ctrl.isExternal"
                  required kd-valid-protocol>
         <md-option ng-repeat="protocol in ctrl.protocols" ng-value="protocol">
@@ -61,8 +61,8 @@ limitations under the License.
                           ng-show="portMappingForm.protocol.$pending">
       </md-progress-linear>
       <ng-messages for="portMappingForm.protocol.$error" role="alert" multiple>
-        <ng-message when="required">Protocol is required.</ng-message>
-        <ng-message when="validProtocol">Invalid protocol.</ng-message>
+        <ng-message when="required">{{::ctrl.i18n.MSG_PORT_MAPPINGS_PROTOCOL_REQUIRED_WARNING}}</ng-message>
+        <ng-message when="validProtocol">{{::ctrl.i18n.MSG_PORT_MAPPINGS_PROTOCOL_INVALID_WARNING}}</ng-message>
     </md-input-container>
     <div flex="10">
       <md-button type="button" ng-if="ctrl.isRemovable($index)"

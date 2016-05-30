@@ -21,16 +21,17 @@ limitations under the License.
            kd-validate="labelKeyNameLength,labelKeyPrefixLength,labelKeyNamePattern,labelKeyPrefixPattern"
            ng-model-options="{allowInvalid: true}">
     <ng-messages for="labelForm.key.$error" ng-if="labelForm.key.$touched && labelForm.key.$invalid">
-      <ng-message when="unique">{{labelCtrl.label.key}} is not unique.</ng-message>
+      <ng-message when="unique">
+        {{labelCtrl.label.key}} {{::labelCtrl.i18n.MSG_DEPLOY_LABEL_KEY_NOT_UNIQUE_WARNING}}
+      </ng-message>
       <ng-message when="kdValidLabelKeyPrefixPattern">
-        Prefix is not a valid DNS subdomain prefix. Example: my-domain.com
+        {{::labelCtrl.i18n.MSG_DEPLOY_LABEL_KEY_PREFIX_PATTERN_WARNING}}
       </ng-message>
       <ng-message when="kdValidLabelKeyNamePattern">
-        Label key name must be alphanumeric separated by '-', '_' or '.',
-        optionally prefixed by a DNS subdomain and '/'
+        {{::labelCtrl.i18n.MSG_DEPLOY_LABEL_KEY_NAME_PATTERN_WARNING}}
       </ng-message>
-      <ng-message when="kdValidLabelKeyPrefixLength">Prefix should not exceed 253 characters</ng-message>
-      <ng-message when="kdValidLabelKeyNameLength">Label Key name should not exceed 63 characters</ng-message>
+      <ng-message when="kdValidLabelKeyPrefixLength">{{::labelCtrl.i18n.MSG_DEPLOY_LABEL_KEY_PREFIX_MAX_LENGTH_WARNING}}</ng-message>
+      <ng-message when="kdValidLabelKeyNameLength">{{::labelCtrl.i18n.MSG_DEPLOY_LABEL_KEY_NAME_MAX_LENGTH_WARNING}}</ng-message>
     </ng-messages>
   </md-input-container>
   <p flex="5"></p>
@@ -41,9 +42,9 @@ limitations under the License.
            ng-model-options="{ getterSetter: true, allowInvalid: true }">
     <ng-messages for="labelForm.value.$error" ng-if="labelForm.value.$touched && labelForm.value.$invalid">
       <ng-message when="kdValidLabelValuePattern">
-        Label value must be alphanumeric separated by '.' , '-' or '_'
+        {{::labelCtrl.i18n.MSG_DEPLOY_LABEL_VALUE_PATTERN_WARNING}}
       </ng-message>
-      <ng-message when="maxlength">Label Value must not exceed 253 characters</ng-message>
+      <ng-message when="maxlength">{{::labelCtrl.i18n.MSG_DEPLOY_LABEL_VALUE_MAX_LENGTH_WARNING}}</ng-message>
     </ng-messages>
   </md-input-container>
   <md-button type="button" ng-show="labelCtrl.isRemovable()"
