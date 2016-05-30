@@ -80,7 +80,7 @@ func GetServicePods(client k8sClient.Interface, heapsterClient client.HeapsterCl
 	namespace string, serviceSelector map[string]string) (*pod.PodList, error) {
 
 	channels := &common.ResourceChannels{
-		PodList: common.GetPodListChannel(client, 1),
+		PodList: common.GetPodListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
 	}
 
 	apiPodList := <-channels.PodList.List

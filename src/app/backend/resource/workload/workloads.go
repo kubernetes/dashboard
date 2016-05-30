@@ -39,17 +39,17 @@ type Workloads struct {
 
 // GetWorkloads returns a list of all workloads in the cluster.
 func GetWorkloads(client k8sClient.Interface,
-	heapsterClient client.HeapsterClient) (*Workloads, error) {
+	heapsterClient client.HeapsterClient, nsQuery *common.NamespaceQuery) (*Workloads, error) {
 
 	log.Printf("Getting lists of all workloads")
 	channels := &common.ResourceChannels{
-		ReplicationControllerList: common.GetReplicationControllerListChannel(client, 1),
-		ReplicaSetList:            common.GetReplicaSetListChannel(client.Extensions(), 1),
-		DeploymentList:            common.GetDeploymentListChannel(client.Extensions(), 1),
-		ServiceList:               common.GetServiceListChannel(client, 3),
-		PodList:                   common.GetPodListChannel(client, 4),
-		EventList:                 common.GetEventListChannel(client, 3),
-		NodeList:                  common.GetNodeListChannel(client, 3),
+		ReplicationControllerList: common.GetReplicationControllerListChannel(client, nsQuery, 1),
+		ReplicaSetList:            common.GetReplicaSetListChannel(client.Extensions(), nsQuery, 1),
+		DeploymentList:            common.GetDeploymentListChannel(client.Extensions(), nsQuery, 1),
+		ServiceList:               common.GetServiceListChannel(client, nsQuery, 3),
+		PodList:                   common.GetPodListChannel(client, nsQuery, 4),
+		EventList:                 common.GetEventListChannel(client, nsQuery, 3),
+		NodeList:                  common.GetNodeListChannel(client, nsQuery, 3),
 	}
 
 	return GetWorkloadsFromChannels(channels, heapsterClient)

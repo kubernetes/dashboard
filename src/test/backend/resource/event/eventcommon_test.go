@@ -37,10 +37,14 @@ func TestGetEvents(t *testing.T) {
 		{
 			"test-namespace", "test-name",
 			&api.EventList{
-				Items: []api.Event{{Message: "test-event-msg"}},
+				Items: []api.Event{
+					{Message: "test-event-msg", ObjectMeta: api.ObjectMeta{Namespace: "test-namespace"}},
+				},
 			},
 			[]string{"list"},
-			[]api.Event{{Message: "test-event-msg"}},
+			[]api.Event{
+				{Message: "test-event-msg", ObjectMeta: api.ObjectMeta{Namespace: "test-namespace"}},
+			},
 		},
 	}
 
@@ -83,23 +87,27 @@ func TestGetPodsEvents(t *testing.T) {
 			"test-namespace", map[string]string{"app": "test"},
 			&api.PodList{Items: []api.Pod{{
 				ObjectMeta: api.ObjectMeta{
-					Name:   "test-pod",
-					UID:    "test-uid",
-					Labels: map[string]string{"app": "test"},
+					Name:      "test-pod",
+					Namespace: "test-namespace",
+					UID:       "test-uid",
+					Labels:    map[string]string{"app": "test"},
 				}}, {
 				ObjectMeta: api.ObjectMeta{
-					Name:   "test-pod",
-					UID:    "test-uid",
-					Labels: map[string]string{"app": "test-app"},
+					Name:      "test-pod",
+					Namespace: "test-namespace",
+					UID:       "test-uid",
+					Labels:    map[string]string{"app": "test-app"},
 				}},
 			}},
 			&api.EventList{Items: []api.Event{{
 				Message:        "event-test-msg",
+				ObjectMeta:     api.ObjectMeta{Namespace: "test-namespace"},
 				InvolvedObject: api.ObjectReference{UID: "test-uid"},
 			}}},
 			[]string{"list", "list"},
 			[]api.Event{{
 				Message:        "event-test-msg",
+				ObjectMeta:     api.ObjectMeta{Namespace: "test-namespace"},
 				InvolvedObject: api.ObjectReference{UID: "test-uid"},
 			}},
 		},

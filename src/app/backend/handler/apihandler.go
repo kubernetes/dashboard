@@ -19,6 +19,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 
 	restful "github.com/emicklei/go-restful"
 	// TODO(maciaszczykm): Avoid using dot-imports.
@@ -132,6 +133,10 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 			To(apiHandler.handleGetReplicationControllerList).
 			Writes(ReplicationControllerList{}))
 	apiV1Ws.Route(
+		apiV1Ws.GET("/replicationcontroller/{namespace}").
+			To(apiHandler.handleGetReplicationControllerList).
+			Writes(ReplicationControllerList{}))
+	apiV1Ws.Route(
 		apiV1Ws.GET("/replicationcontroller/{namespace}/{replicationController}").
 			To(apiHandler.handleGetReplicationControllerDetail).
 			Writes(ReplicationControllerDetail{}))
@@ -151,9 +156,17 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 		apiV1Ws.GET("/workload").
 			To(apiHandler.handleGetWorkloads).
 			Writes(workload.Workloads{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/workload/{namespace}").
+			To(apiHandler.handleGetWorkloads).
+			Writes(workload.Workloads{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/replicaset").
+			To(apiHandler.handleGetReplicaSets).
+			Writes(replicaset.ReplicaSetList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/replicaset/{namespace}").
 			To(apiHandler.handleGetReplicaSets).
 			Writes(replicaset.ReplicaSetList{}))
 	apiV1Ws.Route(
@@ -166,6 +179,10 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 			To(apiHandler.handleGetPods).
 			Writes(pod.PodList{}))
 	apiV1Ws.Route(
+		apiV1Ws.GET("/pod/{namespace}").
+			To(apiHandler.handleGetPods).
+			Writes(pod.PodList{}))
+	apiV1Ws.Route(
 		apiV1Ws.GET("/pod/{namespace}/{pod}").
 			To(apiHandler.handleGetPodDetail).
 			Writes(pod.PodDetail{}))
@@ -174,7 +191,10 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 		apiV1Ws.GET("/deployment").
 			To(apiHandler.handleGetDeployments).
 			Writes(deployment.DeploymentList{}))
-
+	apiV1Ws.Route(
+		apiV1Ws.GET("/deployment/{namespace}").
+			To(apiHandler.handleGetDeployments).
+			Writes(deployment.DeploymentList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/deployment/{namespace}/{deployment}").
 			To(apiHandler.handleGetDeploymentDetail).
@@ -182,6 +202,10 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/daemonset").
+			To(apiHandler.handleGetDaemonSetList).
+			Writes(daemonset.DaemonSetList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/daemonset/{namespace}").
 			To(apiHandler.handleGetDaemonSetList).
 			Writes(daemonset.DaemonSetList{}))
 	apiV1Ws.Route(
@@ -231,6 +255,10 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 			To(apiHandler.handleGetServiceList).
 			Writes(resourceService.ServiceList{}))
 	apiV1Ws.Route(
+		apiV1Ws.GET("/service/{namespace}").
+			To(apiHandler.handleGetServiceList).
+			Writes(resourceService.ServiceList{}))
+	apiV1Ws.Route(
 		apiV1Ws.GET("/service/{namespace}/{service}").
 			To(apiHandler.handleGetServiceDetail).
 			Writes(resourceService.ServiceDetail{}))
@@ -244,7 +272,8 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 
 // Handles get service list API call.
 func (apiHandler *ApiHandler) handleGetServiceList(request *restful.Request, response *restful.Response) {
-	result, err := resourceService.GetServiceList(apiHandler.client)
+	namespace := parseNamespacePathParameter(request)
+	result, err := resourceService.GetServiceList(apiHandler.client, namespace)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -361,7 +390,8 @@ func (apiHandler *ApiHandler) handleGetAvailableProcotols(request *restful.Reque
 func (apiHandler *ApiHandler) handleGetReplicationControllerList(
 	request *restful.Request, response *restful.Response) {
 
-	result, err := GetReplicationControllerList(apiHandler.client)
+	namespace := parseNamespacePathParameter(request)
+	result, err := GetReplicationControllerList(apiHandler.client, namespace)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -374,7 +404,8 @@ func (apiHandler *ApiHandler) handleGetReplicationControllerList(
 func (apiHandler *ApiHandler) handleGetWorkloads(
 	request *restful.Request, response *restful.Response) {
 
-	result, err := workload.GetWorkloads(apiHandler.client, apiHandler.heapsterClient)
+	namespace := parseNamespacePathParameter(request)
+	result, err := workload.GetWorkloads(apiHandler.client, apiHandler.heapsterClient, namespace)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -387,7 +418,8 @@ func (apiHandler *ApiHandler) handleGetWorkloads(
 func (apiHandler *ApiHandler) handleGetReplicaSets(
 	request *restful.Request, response *restful.Response) {
 
-	result, err := replicaset.GetReplicaSetList(apiHandler.client)
+	namespace := parseNamespacePathParameter(request)
+	result, err := replicaset.GetReplicaSetList(apiHandler.client, namespace)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -416,7 +448,8 @@ func (apiHandler *ApiHandler) handleGetReplicaSetDetail(
 func (apiHandler *ApiHandler) handleGetDeployments(
 	request *restful.Request, response *restful.Response) {
 
-	result, err := deployment.GetDeploymentList(apiHandler.client)
+	namespace := parseNamespacePathParameter(request)
+	result, err := deployment.GetDeploymentList(apiHandler.client, namespace)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -445,7 +478,8 @@ func (apiHandler *ApiHandler) handleGetDeploymentDetail(
 func (apiHandler *ApiHandler) handleGetPods(
 	request *restful.Request, response *restful.Response) {
 
-	result, err := pod.GetPodList(apiHandler.client, apiHandler.heapsterClient)
+	namespace := parseNamespacePathParameter(request)
+	result, err := pod.GetPodList(apiHandler.client, apiHandler.heapsterClient, namespace)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -652,7 +686,7 @@ func handleInternalError(response *restful.Response, err error) {
 func (apiHandler *ApiHandler) handleGetDaemonSetList(
 	request *restful.Request, response *restful.Response) {
 
-	namespace := request.PathParameter("namespace")
+	namespace := parseNamespacePathParameter(request)
 	result, err := daemonset.GetDaemonSetList(apiHandler.client, namespace)
 	if err != nil {
 		handleInternalError(response, err)
@@ -696,4 +730,20 @@ func (apiHandler *ApiHandler) handleDeleteDaemonSet(
 	}
 
 	response.WriteHeader(http.StatusOK)
+}
+
+// parseNamespacePathParameter parses namespace selector for list pages in path paramater.
+// The namespace selector is a comma separated list of namespaces that are trimmed.
+// No namespaces means "view all user namespaces", i.e., everything except kube-system.
+func parseNamespacePathParameter(request *restful.Request) *common.NamespaceQuery {
+	namespace := request.PathParameter("namespace")
+	namespaces := strings.Split(namespace, ",")
+	var nonEmptyNamespaces []string
+	for _, n := range namespaces {
+		n = strings.Trim(n, " ")
+		if len(n) > 0 {
+			nonEmptyNamespaces = append(nonEmptyNamespaces, n)
+		}
+	}
+	return common.NewNamespaceQuery(nonEmptyNamespaces)
 }

@@ -22,7 +22,9 @@ func TestGetDeploymentEvents(t *testing.T) {
 	}{
 		{
 			"test-namespace", "test-name",
-			&api.EventList{Items: []api.Event{{Message: "test-message"}}},
+			&api.EventList{Items: []api.Event{
+				{Message: "test-message", ObjectMeta: api.ObjectMeta{Namespace: "test-namespace"}},
+			}},
 			&extensions.Deployment{
 				ObjectMeta: api.ObjectMeta{Name: "test-replicaset"},
 				Spec: extensions.DeploymentSpec{
@@ -33,9 +35,10 @@ func TestGetDeploymentEvents(t *testing.T) {
 			&common.EventList{
 				Namespace: "test-namespace",
 				Events: []common.Event{{
-					TypeMeta: common.TypeMeta{common.ResourceKindEvent},
-					Message:  "test-message",
-					Type:     api.EventTypeNormal,
+					TypeMeta:   common.TypeMeta{Kind: common.ResourceKindEvent},
+					ObjectMeta: common.ObjectMeta{Namespace: "test-namespace"},
+					Message:    "test-message",
+					Type:       api.EventTypeNormal,
 				}}},
 		},
 	}
