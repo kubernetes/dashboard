@@ -31,6 +31,19 @@ limitations under the License.
 
   <kd-resource-card ng-repeat="pod in $ctrl.podList.pods"
       type-meta="pod.typeMeta" object-meta="pod.objectMeta">
+    <kd-resource-card-status layout="row">
+      <md-icon class="material-icons kd-error" ng-if="::pod.podPhase=='Failed'">
+        error
+        <md-tooltip md-direction="right">{{::ctrl.i18n.MSG_POD_IS_FAILED_TOOLTIP}}</md-tooltip>
+      </md-icon>
+      <md-icon class="material-icons" ng-if="::pod.podPhase=='Pending'">
+        timelapse
+        <md-tooltip md-direction="right">{{::ctrl.i18n.MSG_POD_IS_PENDING_TOOLTIP}}</md-tooltip>
+      </md-icon>
+      <md-icon class="material-icons kd-success" ng-if="::pod.podPhase=='Running'">
+        beenhere
+      </md-icon>
+    </kd-resource-card-status>
     <kd-resource-card-columns>
       <kd-resource-card-column>
         <div>
