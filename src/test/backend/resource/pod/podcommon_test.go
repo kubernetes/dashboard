@@ -26,7 +26,7 @@ import (
 func TestGetRestartCount(t *testing.T) {
 	cases := []struct {
 		pod      api.Pod
-		expected int
+		expected int32
 	}{
 		{
 			api.Pod{}, 0,

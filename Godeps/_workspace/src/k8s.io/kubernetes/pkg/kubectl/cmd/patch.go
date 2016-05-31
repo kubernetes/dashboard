@@ -37,6 +37,7 @@ var patchTypes = map[string]api.PatchType{"json": api.JSONPatchType, "merge": ap
 // referencing the cmd.Flags()
 type PatchOptions struct {
 	Filenames []string
+	Recursive bool
 }
 
 const (
@@ -44,7 +45,7 @@ const (
 
 JSON and YAML formats are accepted.
 
-Please refer to the models in https://htmlpreview.github.io/?https://github.com/kubernetes/kubernetes/blob/release-1.2/docs/api-reference/v1/definitions.html to find if a field is mutable.`
+Please refer to the models in https://htmlpreview.github.io/?https://github.com/kubernetes/kubernetes/blob/HEAD/docs/api-reference/v1/definitions.html to find if a field is mutable.`
 	patch_example = `
 # Partially update a node using strategic merge patch
 kubectl patch node k8s-node-1 -p '{"spec":{"unschedulable":true}}'
@@ -62,6 +63,15 @@ kubectl patch pod valid-pod -type='json' -p='[{"op": "replace", "path": "/spec/c
 func NewCmdPatch(f *cmdutil.Factory, out io.Writer) *cobra.Command {
 	options := &PatchOptions{}
 
+	// retrieve a list of handled resources from printer as valid args
+	validArgs, argAliases := []string{}, []string{}
+	p, err := f.Printer(nil, false, false, false, false, false, false, []string{})
+	cmdutil.CheckErr(err)
+	if p != nil {
+		validArgs = p.HandledResources()
+		argAliases = kubectl.ResourceAliases(validArgs)
+	}
+
 	cmd := &cobra.Command{
 		Use:     "patch (-f FILENAME | TYPE NAME) -p PATCH",
 		Short:   "Update field(s) of a resource using strategic merge patch.",
@@ -73,15 +83,19 @@ func NewCmdPatch(f *cmdutil.Factory, out io.Writer) *cobra.Command {
 			err := RunPatch(f, out, cmd, args, shortOutput, options)
 			cmdutil.CheckErr(err)
 		},
+		ValidArgs:  validArgs,
+		ArgAliases: argAliases,
 	}
 	cmd.Flags().StringP("patch", "p", "", "The patch to be applied to the resource JSON file.")
 	cmd.MarkFlagRequired("patch")
 	cmd.Flags().String("type", "strategic", fmt.Sprintf("The type of patch being provided; one of %v", sets.StringKeySet(patchTypes).List()))
 	cmdutil.AddOutputFlagsForMutation(cmd)
 	cmdutil.AddRecordFlag(cmd)
+	cmdutil.AddInclude3rdPartyFlags(cmd)
 
 	usage := "Filename, directory, or URL to a file identifying the resource to update"
 	kubectl.AddJsonFilenameFlag(cmd, &options.Filenames, usage)
+	cmdutil.AddRecursiveFlag(cmd, &options.Recursive)
 	return cmd
 }
 
@@ -110,11 +124,11 @@ func RunPatch(f *cmdutil.Factory, out io.Writer, cmd *cobra.Command, args []stri
 		return fmt.Errorf("unable to parse %q: %v", patch, err)
 	}
 
-	mapper, typer := f.Object()
+	mapper, typer := f.Object(cmdutil.GetIncludeThirdPartyAPIs(cmd))
 	r := resource.NewBuilder(mapper, typer, resource.ClientMapperFunc(f.ClientForMapping), f.Decoder(true)).
 		ContinueOnError().
 		NamespaceParam(cmdNamespace).DefaultNamespace().
-		FilenameParam(enforceNamespace, options.Filenames...).
+		FilenameParam(enforceNamespace, options.Recursive, options.Filenames...).
 		ResourceTypeOrNameArgs(false, args...).
 		Flatten().
 		Do()
@@ -123,35 +137,41 @@ func RunPatch(f *cmdutil.Factory, out io.Writer, cmd *cobra.Command, args []stri
 		return err
 	}
 
-	infos, err := r.Infos()
-	if err != nil {
-		return err
-	}
-	if len(infos) > 1 {
-		return fmt.Errorf("multiple resources provided")
-	}
-	info := infos[0]
-	name, namespace := info.Name, info.Namespace
-	mapping := info.ResourceMapping()
-	client, err := f.ClientForMapping(mapping)
-	if err != nil {
-		return err
-	}
-
-	helper := resource.NewHelper(client, mapping)
-	patchedObject, err := helper.Patch(namespace, name, patchType, patchBytes)
-	if err != nil {
-		return err
-	}
-	if cmdutil.ShouldRecord(cmd, info) {
-		if err := cmdutil.RecordChangeCause(patchedObject, f.Command()); err == nil {
-			// don't return an error on failure.  The patch itself succeeded, its only the hint for that change that failed
-			// don't bother checking for failures of this replace, because a failure to indicate the hint doesn't fail the command
-			// also, don't force the replacement.  If the replacement fails on a resourceVersion conflict, then it means this
-			// record hint is likely to be invalid anyway, so avoid the bad hint
-			resource.NewHelper(client, mapping).Replace(namespace, name, false, patchedObject)
+	count := 0
+	err = r.Visit(func(info *resource.Info, err error) error {
+		if err != nil {
+			return err
 		}
+		name, namespace := info.Name, info.Namespace
+		mapping := info.ResourceMapping()
+		client, err := f.ClientForMapping(mapping)
+		if err != nil {
+			return err
+		}
+
+		helper := resource.NewHelper(client, mapping)
+		patchedObject, err := helper.Patch(namespace, name, patchType, patchBytes)
+		if err != nil {
+			return err
+		}
+		if cmdutil.ShouldRecord(cmd, info) {
+			if err := cmdutil.RecordChangeCause(patchedObject, f.Command()); err == nil {
+				// don't return an error on failure.  The patch itself succeeded, its only the hint for that change that failed
+				// don't bother checking for failures of this replace, because a failure to indicate the hint doesn't fail the command
+				// also, don't force the replacement.  If the replacement fails on a resourceVersion conflict, then it means this
+				// record hint is likely to be invalid anyway, so avoid the bad hint
+				resource.NewHelper(client, mapping).Replace(namespace, name, false, patchedObject)
+			}
+		}
+		count++
+		cmdutil.PrintSuccess(mapper, shortOutput, out, "", name, "patched")
+		return nil
+	})
+	if err != nil {
+		return err
 	}
-	cmdutil.PrintSuccess(mapper, shortOutput, out, "", name, "patched")
+	if count == 0 {
+		return fmt.Errorf("no objects passed to patch")
+	}
 	return nil
 }

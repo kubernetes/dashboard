@@ -35,11 +35,13 @@ import (
 // add them here instead of referencing the cmd.Flags()
 type ApplyOptions struct {
 	Filenames []string
+	Recursive bool
 }
 
 const (
 	apply_long = `Apply a configuration to a resource by filename or stdin.
 The resource will be created if it doesn't exist yet. 
+To use 'apply', always create the resource initially with either 'apply' or 'create --save-config'.
 
 JSON and YAML formats are accepted.`
 	apply_example = `# Apply the configuration in pod.json to a pod.
@@ -68,8 +70,10 @@ func NewCmdApply(f *cmdutil.Factory, out io.Writer) *cobra.Command {
 	kubectl.AddJsonFilenameFlag(cmd, &options.Filenames, usage)
 	cmd.MarkFlagRequired("filename")
 	cmdutil.AddValidateFlags(cmd)
+	cmdutil.AddRecursiveFlag(cmd, &options.Recursive)
 	cmdutil.AddOutputFlagsForMutation(cmd)
 	cmdutil.AddRecordFlag(cmd)
+	cmdutil.AddInclude3rdPartyFlags(cmd)
 	return cmd
 }
 
@@ -93,12 +97,12 @@ func RunApply(f *cmdutil.Factory, cmd *cobra.Command, out io.Writer, options *Ap
 		return err
 	}
 
-	mapper, typer := f.Object()
+	mapper, typer := f.Object(cmdutil.GetIncludeThirdPartyAPIs(cmd))
 	r := resource.NewBuilder(mapper, typer, resource.ClientMapperFunc(f.ClientForMapping), f.Decoder(true)).
 		Schema(schema).
 		ContinueOnError().
 		NamespaceParam(cmdNamespace).DefaultNamespace().
-		FilenameParam(enforceNamespace, options.Filenames...).
+		FilenameParam(enforceNamespace, options.Recursive, options.Filenames...).
 		Flatten().
 		Do()
 	err = r.Err()

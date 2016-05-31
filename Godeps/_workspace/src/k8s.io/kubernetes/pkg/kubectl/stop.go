@@ -314,9 +314,9 @@ func (reaper *DaemonSetReaper) Stop(namespace, name string, timeout time.Duratio
 }
 
 func (reaper *JobReaper) Stop(namespace, name string, timeout time.Duration, gracePeriod *api.DeleteOptions) error {
-	jobs := reaper.Extensions().Jobs(namespace)
+	jobs := reaper.Batch().Jobs(namespace)
 	pods := reaper.Pods(namespace)
-	scaler, err := ScalerFor(extensions.Kind("Job"), *reaper)
+	scaler, err := ScalerFor(batch.Kind("Job"), *reaper)
 	if err != nil {
 		return err
 	}
@@ -367,7 +367,7 @@ func (reaper *DeploymentReaper) Stop(namespace, name string, timeout time.Durati
 	deployment, err := reaper.updateDeploymentWithRetries(namespace, name, func(d *extensions.Deployment) {
 		// set deployment's history and scale to 0
 		// TODO replace with patch when available: https://github.com/kubernetes/kubernetes/issues/20527
-		d.Spec.RevisionHistoryLimit = util.IntPtr(0)
+		d.Spec.RevisionHistoryLimit = util.Int32Ptr(0)
 		d.Spec.Replicas = 0
 		d.Spec.Paused = true
 	})
@@ -378,7 +378,7 @@ func (reaper *DeploymentReaper) Stop(namespace, name string, timeout time.Durati
 	// Use observedGeneration to determine if the deployment controller noticed the pause.
 	if err := deploymentutil.WaitForObservedDeployment(func() (*extensions.Deployment, error) {
 		return deployments.Get(name)
-	}, deployment.Generation, 10*time.Millisecond, 1*time.Minute); err != nil {
+	}, deployment.Generation, 1*time.Second, 1*time.Minute); err != nil {
 		return err
 	}
 
@@ -396,7 +396,8 @@ func (reaper *DeploymentReaper) Stop(namespace, name string, timeout time.Durati
 	errList := []error{}
 	for _, rc := range rsList.Items {
 		if err := rsReaper.Stop(rc.Namespace, rc.Name, timeout, gracePeriod); err != nil {
-			if !errors.IsNotFound(err) {
+			scaleGetErr, ok := err.(*ScaleError)
+			if !errors.IsNotFound(err) || ok && !errors.IsNotFound(scaleGetErr.ActualError) {
 				errList = append(errList, err)
 			}
 		}

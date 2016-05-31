@@ -51,6 +51,7 @@ func NewCmdCreateNamespace(f *cmdutil.Factory, cmdOut io.Writer) *cobra.Command 
 	cmdutil.AddValidateFlags(cmd)
 	cmdutil.AddPrinterFlags(cmd)
 	cmdutil.AddGeneratorFlags(cmd, cmdutil.NamespaceV1GeneratorName)
+
 	return cmd
 }
 
@@ -70,7 +71,7 @@ func CreateNamespace(f *cmdutil.Factory, cmdOut io.Writer, cmd *cobra.Command, a
 	return RunCreateSubcommand(f, cmd, cmdOut, &CreateSubcommandOptions{
 		Name:                name,
 		StructuredGenerator: generator,
-		DryRun:              cmdutil.GetFlagBool(cmd, "dry-run"),
+		DryRun:              cmdutil.GetDryRunFlag(cmd),
 		OutputFormat:        cmdutil.GetFlagString(cmd, "output"),
 	})
 }

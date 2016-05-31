@@ -50,6 +50,7 @@ func NewCmdCreateServiceAccount(f *cmdutil.Factory, cmdOut io.Writer) *cobra.Com
 	cmdutil.AddApplyAnnotationFlags(cmd)
 	cmdutil.AddValidateFlags(cmd)
 	cmdutil.AddPrinterFlags(cmd)
+	cmdutil.AddInclude3rdPartyFlags(cmd)
 	cmdutil.AddGeneratorFlags(cmd, cmdutil.ServiceAccountV1GeneratorName)
 	return cmd
 }
@@ -70,7 +71,7 @@ func CreateServiceAccount(f *cmdutil.Factory, cmdOut io.Writer, cmd *cobra.Comma
 	return RunCreateSubcommand(f, cmd, cmdOut, &CreateSubcommandOptions{
 		Name:                name,
 		StructuredGenerator: generator,
-		DryRun:              cmdutil.GetFlagBool(cmd, "dry-run"),
+		DryRun:              cmdutil.GetDryRunFlag(cmd),
 		OutputFormat:        cmdutil.GetFlagString(cmd, "output"),
 	})
 }

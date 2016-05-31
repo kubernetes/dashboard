@@ -20,8 +20,8 @@ import (
 )
 
 // Gets restart count of given pod (total number of its containers restarts).
-func getRestartCount(pod api.Pod) int {
-	restartCount := 0
+func getRestartCount(pod api.Pod) int32 {
+	var restartCount int32 = 0
 	for _, containerStatus := range pod.Status.ContainerStatuses {
 		restartCount += containerStatus.RestartCount
 	}

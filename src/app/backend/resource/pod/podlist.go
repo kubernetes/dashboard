@@ -44,7 +44,7 @@ type Pod struct {
 	PodIP string `json:"podIP"`
 
 	// Count of containers restarts.
-	RestartCount int `json:"restartCount"`
+	RestartCount int32 `json:"restartCount"`
 
 	// Pod metrics.
 	Metrics *PodMetrics `json:"metrics"`

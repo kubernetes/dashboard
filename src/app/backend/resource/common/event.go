@@ -48,7 +48,7 @@ type Event struct {
 	SubObject string `json:"object"`
 
 	// The number of times this event has occurred.
-	Count int `json:"count"`
+	Count int32 `json:"count"`
 
 	// The time at which the event was first recorded.
 	FirstSeen unversioned.Time `json:"firstSeen"`

@@ -36,6 +36,7 @@ import (
 // referencing the cmd.Flags()
 type DescribeOptions struct {
 	Filenames []string
+	Recursive bool
 }
 
 const (
@@ -49,11 +50,7 @@ $ kubectl describe TYPE NAME_PREFIX
 will first check for an exact match on TYPE and NAME_PREFIX. If no such resource
 exists, it will output details for every resource that has a name prefixed with NAME_PREFIX
 
-Possible resource types include (case insensitive): pods (po), services (svc),
-replicationcontrollers (rc), nodes (no), events (ev), limitranges (limits),
-persistentvolumes (pv), persistentvolumeclaims (pvc), resourcequotas (quota),
-namespaces (ns), serviceaccounts, horizontalpodautoscalers (hpa),
-endpoints (ep) or secrets.`
+` + kubectl.PossibleResourceTypes
 	describe_example = `# Describe a node
 kubectl describe nodes kubernetes-minion-emt8.c.myproject.internal
 
@@ -76,6 +73,10 @@ kubectl describe pods frontend`
 
 func NewCmdDescribe(f *cmdutil.Factory, out io.Writer) *cobra.Command {
 	options := &DescribeOptions{}
+	describerSettings := &kubectl.DescriberSettings{}
+
+	validArgs := kubectl.DescribableResources()
+	argAliases := kubectl.ResourceAliases(validArgs)
 
 	cmd := &cobra.Command{
 		Use:     "describe (-f FILENAME | TYPE [NAME_PREFIX | -l label] | TYPE/NAME)",
@@ -83,18 +84,22 @@ func NewCmdDescribe(f *cmdutil.Factory, out io.Writer) *cobra.Command {
 		Long:    describe_long,
 		Example: describe_example,
 		Run: func(cmd *cobra.Command, args []string) {
-			err := RunDescribe(f, out, cmd, args, options)
+			err := RunDescribe(f, out, cmd, args, options, describerSettings)
 			cmdutil.CheckErr(err)
 		},
-		ValidArgs: kubectl.DescribableResources(),
+		ValidArgs:  validArgs,
+		ArgAliases: argAliases,
 	}
 	usage := "Filename, directory, or URL to a file containing the resource to describe"
 	kubectl.AddJsonFilenameFlag(cmd, &options.Filenames, usage)
+	cmdutil.AddRecursiveFlag(cmd, &options.Recursive)
 	cmd.Flags().StringP("selector", "l", "", "Selector (label query) to filter on")
+	cmd.Flags().BoolVar(&describerSettings.ShowEvents, "show-events", true, "If true, display events related to the described object.")
+	cmdutil.AddInclude3rdPartyFlags(cmd)
 	return cmd
 }
 
-func RunDescribe(f *cmdutil.Factory, out io.Writer, cmd *cobra.Command, args []string, options *DescribeOptions) error {
+func RunDescribe(f *cmdutil.Factory, out io.Writer, cmd *cobra.Command, args []string, options *DescribeOptions, describerSettings *kubectl.DescriberSettings) error {
 	selector := cmdutil.GetFlagString(cmd, "selector")
 	cmdNamespace, enforceNamespace, err := f.DefaultNamespace()
 	if err != nil {
@@ -105,11 +110,11 @@ func RunDescribe(f *cmdutil.Factory, out io.Writer, cmd *cobra.Command, args []s
 		return cmdutil.UsageError(cmd, "Required resource not specified.")
 	}
 
-	mapper, typer := f.Object()
+	mapper, typer := f.Object(cmdutil.GetIncludeThirdPartyAPIs(cmd))
 	r := resource.NewBuilder(mapper, typer, resource.ClientMapperFunc(f.ClientForMapping), f.Decoder(true)).
 		ContinueOnError().
 		NamespaceParam(cmdNamespace).DefaultNamespace().
-		FilenameParam(enforceNamespace, options.Filenames...).
+		FilenameParam(enforceNamespace, options.Recursive, options.Filenames...).
 		SelectorParam(selector).
 		ResourceTypeOrNameArgs(true, args...).
 		Flatten().
@@ -123,7 +128,7 @@ func RunDescribe(f *cmdutil.Factory, out io.Writer, cmd *cobra.Command, args []s
 	infos, err := r.Infos()
 	if err != nil {
 		if apierrors.IsNotFound(err) && len(args) == 2 {
-			return DescribeMatchingResources(mapper, typer, f, cmdNamespace, args[0], args[1], out, err)
+			return DescribeMatchingResources(mapper, typer, f, cmdNamespace, args[0], args[1], describerSettings, out, err)
 		}
 		allErrs = append(allErrs, err)
 	}
@@ -135,7 +140,7 @@ func RunDescribe(f *cmdutil.Factory, out io.Writer, cmd *cobra.Command, args []s
 			allErrs = append(allErrs, err)
 			continue
 		}
-		s, err := describer.Describe(info.Namespace, info.Name)
+		s, err := describer.Describe(info.Namespace, info.Name, *describerSettings)
 		if err != nil {
 			allErrs = append(allErrs, err)
 			continue
@@ -146,7 +151,7 @@ func RunDescribe(f *cmdutil.Factory, out io.Writer, cmd *cobra.Command, args []s
 	return utilerrors.NewAggregate(allErrs)
 }
 
-func DescribeMatchingResources(mapper meta.RESTMapper, typer runtime.ObjectTyper, f *cmdutil.Factory, namespace, rsrc, prefix string, out io.Writer, originalError error) error {
+func DescribeMatchingResources(mapper meta.RESTMapper, typer runtime.ObjectTyper, f *cmdutil.Factory, namespace, rsrc, prefix string, describerSettings *kubectl.DescriberSettings, out io.Writer, originalError error) error {
 	r := resource.NewBuilder(mapper, typer, resource.ClientMapperFunc(f.ClientForMapping), f.Decoder(true)).
 		NamespaceParam(namespace).DefaultNamespace().
 		ResourceTypeOrNameArgs(true, rsrc).
@@ -170,7 +175,7 @@ func DescribeMatchingResources(mapper meta.RESTMapper, typer runtime.ObjectTyper
 		info := infos[ix]
 		if strings.HasPrefix(info.Name, prefix) {
 			isFound = true
-			s, err := describer.Describe(info.Namespace, info.Name)
+			s, err := describer.Describe(info.Namespace, info.Name, *describerSettings)
 			if err != nil {
 				return err
 			}

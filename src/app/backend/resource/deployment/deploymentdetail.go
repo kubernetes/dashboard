@@ -19,17 +19,17 @@ type RollingUpdateStrategy struct {
 
 type StatusInfo struct {
 	// Total number of desired replicas on the deployment
-	Replicas int `json:"replicas"`
+	Replicas int32 `json:"replicas"`
 
 	// Number of non-terminated pods that have the desired template spec
-	Updated int `json:"updated"`
+	Updated int32 `json:"updated"`
 
 	// Number of available pods (ready for at least minReadySeconds)
 	// targeted by this deployment
-	Available int `json:"available"`
+	Available int32 `json:"available"`
 
 	// Total number of unavailable pods targeted by this deployment.
-	Unavailable int `json:"unavailable"`
+	Unavailable int32 `json:"unavailable"`
 }
 
 // DeploymentDetail is a presentation layer view of Kubernetes Deployment resource.
@@ -48,7 +48,7 @@ type DeploymentDetail struct {
 	Strategy string `json:"strategy"`
 
 	// Min ready seconds
-	MinReadySeconds int `json:"minReadySeconds"`
+	MinReadySeconds int32 `json:"minReadySeconds"`
 
 	// Rolling update strategy containing maxSurge and maxUnavailable
 	RollingUpdateStrategy `json:"rollingUpdateStrategy,omitempty"`

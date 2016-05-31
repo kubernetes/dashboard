@@ -18,6 +18,7 @@ package util
 
 import (
 	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api/resource"
 )
 
 const (
@@ -46,9 +47,70 @@ func isResourceBestEffort(container *api.Container, resource api.ResourceName) b
 	return !hasReq || req.Value() == 0
 }
 
-// GetQos returns a mapping of resource name to QoS class of a container
-func GetQoS(container *api.Container) map[api.ResourceName]string {
-	resourceToQoS := map[api.ResourceName]string{}
+// GetPodQos returns the QoS class of a pod.
+// A pod is besteffort if none of its containers have specified any requests or limits.
+// A pod is guaranteed only when requests and limits are specified for all the containers and they are equal.
+// A pod is burstable if limits and requests do not match across all containers.
+func GetPodQos(pod *api.Pod) string {
+	requests := api.ResourceList{}
+	limits := api.ResourceList{}
+	zeroQuantity := resource.MustParse("0")
+	isGuaranteed := true
+	for _, container := range pod.Spec.Containers {
+		// process requests
+		for name, quantity := range container.Resources.Requests {
+			if quantity.Cmp(zeroQuantity) == 1 {
+				delta := quantity.Copy()
+				if _, exists := requests[name]; !exists {
+					requests[name] = *delta
+				} else {
+					delta.Add(requests[name])
+					requests[name] = *delta
+				}
+			}
+		}
+		// process limits
+		for name, quantity := range container.Resources.Limits {
+			if quantity.Cmp(zeroQuantity) == 1 {
+				delta := quantity.Copy()
+				if _, exists := limits[name]; !exists {
+					limits[name] = *delta
+				} else {
+					delta.Add(limits[name])
+					limits[name] = *delta
+				}
+			}
+		}
+		if len(container.Resources.Limits) != len(supportedComputeResources) {
+			isGuaranteed = false
+		}
+	}
+	if len(requests) == 0 && len(limits) == 0 {
+		return BestEffort
+	}
+	// Check is requests match limits for all resources.
+	if isGuaranteed {
+		for name, req := range requests {
+			if lim, exists := limits[name]; !exists || lim.Cmp(req) != 0 {
+				isGuaranteed = false
+				break
+			}
+		}
+	}
+	if isGuaranteed &&
+		len(requests) == len(limits) &&
+		len(limits) == len(supportedComputeResources) {
+		return Guaranteed
+	}
+	return Burstable
+}
+
+// QoSList is a set of (resource name, QoS class) pairs.
+type QoSList map[api.ResourceName]string
+
+// GetQoS returns a mapping of resource name to QoS class of a container
+func GetQoS(container *api.Container) QoSList {
+	resourceToQoS := QoSList{}
 	for resource := range allResources(container) {
 		switch {
 		case isResourceGuaranteed(container, resource):
