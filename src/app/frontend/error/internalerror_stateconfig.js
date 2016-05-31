@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName, StateParams} from './internalerror_state';
 import {InternalErrorController} from './internalerror_controller';
+import {stateName, StateParams} from './internalerror_state';
+
 
 /**
  * Configures states for the internal error view.

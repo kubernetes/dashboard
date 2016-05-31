@@ -56,6 +56,29 @@ export class PodCardListController {
     return this.state_.href(
         stateName, new StateParams(pod.objectMeta.namespace, pod.objectMeta.name));
   }
+
+  /**
+   * Returns true if pod has warning, false otherwise
+   * @return {boolean}
+   * @export
+   */
+  hasWarnings() {
+    console.log(this);
+    return pod.running;
+  }
+
+  /**
+   * Returns true if pod is in pending state, false otherwise
+   * @return {boolean}
+   * @export
+   */
+  isPending() { return this.podPhase == 'Pending'; }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  isSuccess() { return this.podPhase == 'Running'; }
 }
 
 /**

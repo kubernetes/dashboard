@@ -69,7 +69,8 @@ function resolveReplicationControllerPods($stateParams, $resource) {
  */
 function resolvePodLogs($stateParams, $resource) {
   /** @type {!angular.Resource<!backendApi.Logs>} */
-  let resource = $resource(`api/v1/log/${$stateParams.namespace}/${$stateParams.podId}/${$stateParams.container}`);
+  let resource = $resource(
+      `api/v1/log/${$stateParams.namespace}/${$stateParams.podId}/${$stateParams.container}`);
 
   return resource.get().$promise;
 }

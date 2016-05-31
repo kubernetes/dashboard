@@ -12,10 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ServiceListController} from './servicelist_controller';
 import {actionbarViewName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+
+import {ServiceListController} from './servicelist_controller';
 import {stateName, stateUrl} from './servicelist_state';
+
 
 /**
  * Configures states for the service list view.

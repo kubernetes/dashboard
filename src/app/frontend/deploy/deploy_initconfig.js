@@ -13,10 +13,11 @@
 // limitations under the License.
 
 import {LabelKeyNameLengthValidator} from './validators/labelkeynamelengthvalidator';
-import {LabelKeyPrefixLengthValidator} from './validators/labelkeyprefixlengthvalidator';
 import {LabelKeyNamePatternValidator} from './validators/labelkeynamepatternvalidator';
+import {LabelKeyPrefixLengthValidator} from './validators/labelkeyprefixlengthvalidator';
 import {LabelKeyPrefixPatternValidator} from './validators/labelkeyprefixpatternvalidator';
 import {LabelValuePatternValidator} from './validators/labelvaluepatternvalidator';
+
 
 /**
  * Configures deploy view related components.
