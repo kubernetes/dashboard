@@ -38,6 +38,11 @@ export class PodCardListController {
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
+
+    /**
+     * @export
+     */
+    this.i18n = i18n;
   }
 
   /**
@@ -76,4 +81,12 @@ export const podCardListComponent = {
     /** {boolean} */
     'withStatuses': '<',
   },
+};
+
+const i18n = {
+  /** @export {string} @desc tooltip for failed pod card icon */
+  MSG_POD_IS_FAILED_TOOLTIP: goog.getMsg('This pod has errors.'),
+
+  /** @export {string} @desc tooltip for pending pod card icon */
+  MSG_POD_IS_PENDING_TOOLTIP: goog.getMsg('This pod is in a pending state.'),
 };
