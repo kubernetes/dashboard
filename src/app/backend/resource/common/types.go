@@ -95,6 +95,7 @@ const (
 	ResourceKindEvent                 = "event"
 	ResourceKindReplicationController = "replicationcontroller"
 	ResourceKindDaemonSet             = "daemonset"
+	ResourceKindJob                   = "job"
 )
 
 // Mapping from resource kind to K8s apiserver API path. This is mostly pluralization, because
@@ -113,6 +114,7 @@ var kindToAPIMapping = map[string]struct {
 	ResourceKindDeployment:            {"deployments", true},
 	ResourceKindReplicaSet:            {"replicasets", true},
 	ResourceKindDaemonSet:             {"daemonsets", false},
+	ResourceKindJob:                   {"jobs", true},
 }
 
 // IsSelectorMatching returns true when an object with the given
