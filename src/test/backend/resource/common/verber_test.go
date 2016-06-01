@@ -26,6 +26,18 @@ func (c *FakeRESTClient) Delete() *restclient.Request {
 	}), "DELETE", nil, "/api/v1", restclient.ContentConfig{}, restclient.Serializers{}, nil, nil)
 }
 
+func (c *FakeRESTClient) Put() *restclient.Request {
+	return restclient.NewRequest(clientFunc(func(req *http.Request) (*http.Response, error) {
+		return c.response, c.err
+	}), "PUT", nil, "/api/v1", restclient.ContentConfig{}, restclient.Serializers{}, nil, nil)
+}
+
+func (c *FakeRESTClient) Get() *restclient.Request {
+	return restclient.NewRequest(clientFunc(func(req *http.Request) (*http.Response, error) {
+		return c.response, c.err
+	}), "GET", nil, "/api/v1", restclient.ContentConfig{}, restclient.Serializers{}, nil, nil)
+}
+
 func TestDeleteShouldPropagateErrorsAndChoseClient(t *testing.T) {
 	verber := ResourceVerber{
 		client:           &FakeRESTClient{err: errors.New("err")},
@@ -52,6 +64,32 @@ func TestDeleteShouldPropagateErrorsAndChoseClient(t *testing.T) {
 	}
 }
 
+func TestGetShouldPropagateErrorsAndChoseClient(t *testing.T) {
+	verber := ResourceVerber{
+		client:           &FakeRESTClient{err: errors.New("err")},
+		extensionsClient: &FakeRESTClient{err: errors.New("err from extensions")},
+		appsClient:       &FakeRESTClient{err: errors.New("err from apps")},
+	}
+
+	_, err := verber.Get("replicaset", "bar", "baz")
+
+	if !reflect.DeepEqual(err, errors.New("err from extensions")) {
+		t.Fatalf("Expected error on verber delete but got %#v", err)
+	}
+
+	_, err = verber.Get("service", "bar", "baz")
+
+	if !reflect.DeepEqual(err, errors.New("err")) {
+		t.Fatalf("Expected error on verber delete but got %#v", err)
+	}
+
+	_, err = verber.Get("petset", "bar", "baz")
+
+	if !reflect.DeepEqual(err, errors.New("err from apps")) {
+		t.Fatalf("Expected error on verber delete but got %#v", err)
+	}
+}
+
 func TestDeleteShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
 	verber := ResourceVerber{client: &FakeRESTClient{}}
 
@@ -59,5 +97,25 @@ func TestDeleteShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
 
 	if !reflect.DeepEqual(err, errors.New("Unknown resource kind: foo")) {
 		t.Fatalf("Expected error on verber delete but got %#v", err)
+	}
+}
+
+func TestGetShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
+	verber := ResourceVerber{client: &FakeRESTClient{}}
+
+	_, err := verber.Get("foo", "bar", "baz")
+
+	if !reflect.DeepEqual(err, errors.New("Unknown resource kind: foo")) {
+		t.Fatalf("Expected error on verber get but got %#v", err)
+	}
+}
+
+func TestPutShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
+	verber := ResourceVerber{client: &FakeRESTClient{}}
+
+	err := verber.Put("foo", "bar", "baz", nil)
+
+	if !reflect.DeepEqual(err, errors.New("Unknown resource kind: foo")) {
+		t.Fatalf("Expected error on verber put but got %#v", err)
 	}
 }

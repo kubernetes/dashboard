@@ -40,6 +40,7 @@ import (
 	. "github.com/kubernetes/dashboard/validation"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
+	"k8s.io/kubernetes/pkg/runtime"
 )
 
 const (
@@ -291,7 +292,12 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 	apiV1Ws.Route(
 		apiV1Ws.DELETE("/{kind}/namespace/{namespace}/name/{name}").
 			To(apiHandler.handleDeleteResource))
-
+	apiV1Ws.Route(
+		apiV1Ws.GET("/{kind}/namespace/{namespace}/name/{name}").
+			To(apiHandler.handleGetResource))
+	apiV1Ws.Route(
+		apiV1Ws.PUT("/{kind}/namespace/{namespace}/name/{name}").
+			To(apiHandler.handlePutResource))
 	return wsContainer
 }
 
@@ -592,6 +598,40 @@ func (apiHandler *ApiHandler) handleDeleteReplicationController(
 
 	if err := DeleteReplicationController(apiHandler.client, namespace,
 		replicationController, deleteServices); err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeader(http.StatusOK)
+}
+
+func (apiHandler *ApiHandler) handleGetResource(
+	request *restful.Request, response *restful.Response) {
+	kind := request.PathParameter("kind")
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("name")
+
+	result, err := apiHandler.verber.Get(kind, namespace, name)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+func (apiHandler *ApiHandler) handlePutResource(
+	request *restful.Request, response *restful.Response) {
+	kind := request.PathParameter("kind")
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("name")
+	putSpec := &runtime.Unknown{}
+	if err := request.ReadEntity(putSpec); err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	if err := apiHandler.verber.Put(kind, namespace, name, putSpec); err != nil {
 		handleInternalError(response, err)
 		return
 	}

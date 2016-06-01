@@ -14,17 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-dialog aria-label="Delete a {{$ctrl.resourceKindName}}" layout="column">
-  <md-dialog-content layout-padding>
-    <h4 class="md-title">Delete a {{$ctrl.resourceKindName}}</h4>
-    <div>
-      Are you sure you want to delete {{$ctrl.resourceKindName}}
-      <kd-middle-ellipsis display-string="{{$ctrl.objectMeta.name}}"></kd-middle-ellipsis>
-      in namespace {{$ctrl.objectMeta.namespace}}?
+<md-dialog aria-label="JSON for a {{$ctrl.resourceKindName}}" layout="column">
+  <md-dialog-content layout-padding class="kd-json-edit-dialog-content">
+    <h4 class="md-title">JSON for a {{$ctrl.resourceKindName}}</h4>
+    <div ng-if="$ctrl.data" ng-jsoneditor ng-model="$ctrl.data"
+         options="{ mode: 'tree', name: $ctrl.resourceKindName, history: false, expanded: true}"
+         class="kd-json-edit-editor">
     </div>
     <md-dialog-actions>
       <md-button class="md-primary kd-cancel-btn" ng-click="$ctrl.cancel()">Cancel</md-button>
-      <md-button class="md-primary kd-delete-btn" ng-click="$ctrl.remove()">Delete</md-button>
+      <md-button class="md-primary kd-delete-btn" ng-click="$ctrl.update()">Update</md-button>
     </md-dialog-actions>
   </md-dialog-content>
 </md-dialog>
