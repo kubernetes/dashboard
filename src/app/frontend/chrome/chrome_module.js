@@ -24,7 +24,6 @@ export default angular
         'kubernetesDashboard.chrome',
         [
           'ngMaterial',
-          'ngResource',
           'ui.router',
           componentsModule.name,
           namespaceModule.name,
