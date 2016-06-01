@@ -88,9 +88,11 @@ gulp.task('locales-for-backend:cross', ['clean-dist'], function() {
  * Builds production version of the frontend application for the default architecture
  * (one copy per locale) and plcaes it under .tmp/dist , preparing it for localization and revision.
  */
-gulp.task('frontend-copies', ['fonts', 'icons', 'assets', 'index:prod', 'clean-dist'], function() {
-  return createFrontendCopies([path.join(conf.paths.distPre, conf.arch.default, 'public')]);
-});
+gulp.task(
+    'frontend-copies',
+    ['fonts', 'icons', 'assets', 'dependency-images', 'index:prod', 'clean-dist'], function() {
+      return createFrontendCopies([path.join(conf.paths.distPre, conf.arch.default, 'public')]);
+    });
 
 /**
  * Builds production versions of the frontend application for all architecures
@@ -98,7 +100,15 @@ gulp.task('frontend-copies', ['fonts', 'icons', 'assets', 'index:prod', 'clean-d
  */
 gulp.task(
     'frontend-copies:cross',
-    ['fonts:cross', 'icons:cross', 'assets:cross', 'index:prod', 'clean-dist'], function() {
+    [
+      'fonts:cross',
+      'icons:cross',
+      'assets:cross',
+      'dependency-images:cross',
+      'index:prod',
+      'clean-dist',
+    ],
+    function() {
       return createFrontendCopies(
           conf.arch.list.map((arch) => path.join(conf.paths.distPre, arch, 'public')));
     });
@@ -133,6 +143,20 @@ gulp.task('fonts', ['clean-dist'], function() { return fonts([conf.paths.distPub
  * Copies fonts to the dist directory for all architectures.
  */
 gulp.task('fonts:cross', ['clean-dist'], function() { return fonts(conf.paths.distPublicCross); });
+
+/**
+ * Copies images from dependencies to the dist directory for current architecture.
+ */
+gulp.task('dependency-images', ['clean-dist'], function() {
+  return dependencyImages([conf.paths.distPublic]);
+});
+
+/**
+ * Copies images from dependencies to the dist directory for all architectures.
+ */
+gulp.task('dependency-images:cross', ['clean-dist'], function() {
+  return dependencyImages(conf.paths.distPublicCross);
+});
 
 /**
  * Cleans all build artifacts.
@@ -175,7 +199,13 @@ function createFrontendCopies(outputDirs) {
   return gulp.src(path.join(conf.paths.prodTmp, '*.html'))
       .pipe(gulpUseref({searchPath: searchPath}))
       .pipe(gulpIf('**/vendor.css', gulpMinifyCss()))
-      .pipe(gulpIf('**/vendor.js', gulpUglify({preserveComments: uglifySaveLicense})))
+      .pipe(gulpIf('**/vendor.js', gulpUglify({
+                     preserveComments: uglifySaveLicense,
+                     // Disable compression of unused vars. This speeds up minification a lot (like
+                     // 10 times).
+                     // See https://github.com/mishoo/UglifyJS2/issues/321
+                     compress: {unused: false},
+                   })))
       .pipe(gulpIf('*.html', gulpHtmlmin({
                      removeComments: true,
                      collapseWhitespace: true,
@@ -262,6 +292,18 @@ function fonts(outputDirs) {
   let localizedOutputDirs = createLocalizedOutputs(outputDirs, 'fonts');
   return gulp
       .src(path.join(conf.paths.robotoFonts, '/**/*.+(woff2)'), {base: conf.paths.robotoFonts})
+      .pipe(multiDest(localizedOutputDirs));
+}
+
+/**
+ * Copies the font files to all dist directories per arch and locale.
+ * @param {!Array<string>} outputDirs
+ * @return {stream}
+ */
+function dependencyImages(outputDirs) {
+  let localizedOutputDirs = createLocalizedOutputs(outputDirs, 'static/img');
+  return gulp
+      .src(path.join(conf.paths.jsoneditorImages, '*.png'), {base: conf.paths.jsoneditorImages})
       .pipe(multiDest(localizedOutputDirs));
 }
 

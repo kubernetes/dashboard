@@ -155,4 +155,11 @@
 	<translation id="3762856444030194375" key="MSG_PET_SET_INFO_STATUS_SECTION" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Pet set info status section name.">Status</translation>
 	<translation id="1744330140020758003" key="MSG_PET_SET_INFO_PODS_ENTRY" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Pet set info status section pods entry.">Pods</translation>
 	<translation id="6654869080140416303" key="MSG_PET_SET_INFO_PODS_STATUS_ENTRY" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Pet set info status section pods status entry.">Pods status</translation>
+	<translation id="6480734540585386902" key="MSG_DELETE_RESOURCE_DIALOG_TITLE" source="/usr/local/google/home/bryk/src/github.com/dashboard/.tmp/serve/app-dev.js" desc="Title for a delete resource dialog">Delete a <ph name="RESOURCE_KIND_NAME" /></translation>
+	<translation id="1743501197722607271" key="MSG_DELETE_RESOURCE_DIALOG_CANCEL" source="/usr/local/google/home/bryk/src/github.com/dashboard/.tmp/serve/app-dev.js" desc="Label for cancel button">Cancel</translation>
+	<translation id="1375098876763337363" key="MSG_DELETE_RESOURCE_DIALOG_DELETE" source="/usr/local/google/home/bryk/src/github.com/dashboard/.tmp/serve/app-dev.js" desc="Label for delete button">Delete</translation>
+	<translation id="7770496538218207073" key="MSG_EDIT_RESOURCE_DIALOG_TITLE" source="/usr/local/google/home/bryk/src/github.com/dashboard/.tmp/serve/app-dev.js" desc="Title for a delete resource dialog">Edit a <ph name="RESOURCE_KIND_NAME" /></translation>
+	<translation id="5059373780898524627" key="MSG_EDIT_RESOURCE_DIALOG_CANCEL" source="/usr/local/google/home/bryk/src/github.com/dashboard/.tmp/serve/app-dev.js" desc="Label for cancel button">Cancel</translation>
+	<translation id="8463528551217463399" key="MSG_EDIT_RESOURCE_DIALOG_UPDATE" source="/usr/local/google/home/bryk/src/github.com/dashboard/.tmp/serve/app-dev.js" desc="Label for update button">Update</translation>
+	<translation id="6420130406957025720" key="MSG_YAML_EDIT_MENU_LABEL" source="/usr/local/google/home/bryk/src/github.com/dashboard/.tmp/serve/app-dev.js" desc="Label for YAML edit menu item.">View/edit JSON</translation>
 </translationbundle>

@@ -11,7 +11,8 @@
     "angular-resource": "~1.5.0",
     "angular-sanitize": "~1.5.0",
     "material-design-icons": "~2.2.2",
-    "roboto-fontface": "~0.4.5"
+    "roboto-fontface": "~0.4.5",
+    "ng-jsoneditor": "angular-tools/ng-jsoneditor#~1.0.0"
   },
   "overrides": {
     "material-design-icons": {
@@ -21,7 +22,10 @@
       "main": "css/roboto-fontface.css"
     },
     "google-closure-library": {
-      "main": ["closure/goog/base.js", "closure/goog/deps.js"]
+      "main": [
+        "closure/goog/base.js",
+        "closure/goog/deps.js"
+      ]
     }
   },
   "devDependencies": {
