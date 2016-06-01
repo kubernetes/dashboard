@@ -20,11 +20,13 @@ import (
 
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
+	"k8s.io/kubernetes/pkg/apis/apps"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 
 	"github.com/kubernetes/dashboard/resource/common"
 	"github.com/kubernetes/dashboard/resource/daemonset"
 	"github.com/kubernetes/dashboard/resource/deployment"
+	"github.com/kubernetes/dashboard/resource/petset"
 	"github.com/kubernetes/dashboard/resource/pod"
 	"github.com/kubernetes/dashboard/resource/replicaset"
 	"github.com/kubernetes/dashboard/resource/replicationcontroller"
@@ -37,11 +39,13 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		k8sDeployment extensions.DeploymentList
 		k8sRc         api.ReplicationControllerList
 		k8sPod        api.PodList
+		k8sPetSet     apps.PetSetList
 		rcs           []replicationcontroller.ReplicationController
 		rs            []replicaset.ReplicaSet
 		daemonset     []daemonset.DaemonSet
 		deployment    []deployment.Deployment
 		pod           []pod.Pod
+		petSet        []petset.PetSet
 	}{
 		{
 			extensions.ReplicaSetList{},
@@ -49,11 +53,13 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 			extensions.DeploymentList{},
 			api.ReplicationControllerList{},
 			api.PodList{},
+			apps.PetSetList{},
 			[]replicationcontroller.ReplicationController{},
 			[]replicaset.ReplicaSet{},
 			[]daemonset.DaemonSet{},
 			[]deployment.Deployment{},
 			[]pod.Pod{},
+			[]petset.PetSet{},
 		},
 		{
 			extensions.ReplicaSetList{
@@ -86,6 +92,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				}},
 			},
 			api.PodList{},
+			apps.PetSetList{},
 			[]replicationcontroller.ReplicationController{{
 				ObjectMeta: common.ObjectMeta{
 					Name: "rc-name",
@@ -123,6 +130,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				},
 			}},
 			[]pod.Pod{},
+			[]petset.PetSet{},
 		},
 	}
 
@@ -142,6 +150,9 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 			},
 			PodList: pod.PodList{
 				Pods: c.pod,
+			},
+			PetSetList: petset.PetSetList{
+				PetSets: c.petSet,
 			},
 		}
 		var expectedErr error = nil
@@ -163,21 +174,25 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				List:  make(chan *extensions.DeploymentList, 1),
 				Error: make(chan error, 1),
 			},
+			PetSetList: common.PetSetListChannel{
+				List: make(chan *apps.PetSetList, 1),
+				Error: make(chan error, 1),
+			},
 			NodeList: common.NodeListChannel{
-				List:  make(chan *api.NodeList, 4),
-				Error: make(chan error, 4),
-			},
-			ServiceList: common.ServiceListChannel{
-				List:  make(chan *api.ServiceList, 4),
-				Error: make(chan error, 4),
-			},
-			PodList: common.PodListChannel{
-				List:  make(chan *api.PodList, 5),
+				List:  make(chan *api.NodeList, 5),
 				Error: make(chan error, 5),
 			},
+			ServiceList: common.ServiceListChannel{
+				List:  make(chan *api.ServiceList, 5),
+				Error: make(chan error, 5),
+			},
+			PodList: common.PodListChannel{
+				List:  make(chan *api.PodList, 6),
+				Error: make(chan error, 6),
+			},
 			EventList: common.EventListChannel{
-				List:  make(chan *api.EventList, 4),
-				Error: make(chan error, 4),
+				List:  make(chan *api.EventList, 5),
+				Error: make(chan error, 5),
 			},
 		}
 
@@ -193,7 +208,12 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		channels.ReplicationControllerList.List <- &c.k8sRc
 		channels.ReplicationControllerList.Error <- nil
 
+		channels.PetSetList.List <- &c.k8sPetSet
+		channels.PetSetList.Error <- nil
+
 		nodeList := &api.NodeList{}
+		channels.NodeList.List <- nodeList
+		channels.NodeList.Error <- nil
 		channels.NodeList.List <- nodeList
 		channels.NodeList.Error <- nil
 		channels.NodeList.List <- nodeList
@@ -204,6 +224,8 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		channels.NodeList.Error <- nil
 
 		serviceList := &api.ServiceList{}
+		channels.ServiceList.List <- serviceList
+		channels.ServiceList.Error <- nil
 		channels.ServiceList.List <- serviceList
 		channels.ServiceList.Error <- nil
 		channels.ServiceList.List <- serviceList
@@ -224,8 +246,12 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		channels.PodList.Error <- nil
 		channels.PodList.List <- podList
 		channels.PodList.Error <- nil
+		channels.PodList.List <- podList
+		channels.PodList.Error <- nil
 
 		eventList := &api.EventList{}
+		channels.EventList.List <- eventList
+		channels.EventList.Error <- nil
 		channels.EventList.List <- eventList
 		channels.EventList.Error <- nil
 		channels.EventList.List <- eventList

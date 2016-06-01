@@ -16,6 +16,7 @@ import componentsModule from 'common/components/components_module';
 import deploymentListModule from 'deploymentlist/deploymentlist_module';
 import daemonSetListModule from 'daemonsetlist/daemonsetlist_module';
 import filtersModule from 'common/filters/filters_module';
+import petSetListModule from 'petsetlist/petsetlist_module';
 import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
 import replicaSetListModule from 'replicasetlist/replicasetlist_module';
 import stateConfig from './workloads_stateconfig';
@@ -37,5 +38,6 @@ export default angular
           replicaSetListModule.name,
           deploymentListModule.name,
           daemonSetListModule.name,
+          petSetListModule.name,
         ])
     .config(stateConfig);

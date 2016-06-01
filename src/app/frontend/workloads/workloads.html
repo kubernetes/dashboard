@@ -38,6 +38,18 @@ limitations under the License.
   </kd-content>
 </kd-content-card>
 
+<kd-content-card ng-if="$ctrl.workloads.petSetList.petSets.length">
+  <kd-title>
+    <a ui-sref="petset">
+      {{::$ctrl.i18n.MSG_WORKLOADS_PET_SETS_LABEL}}
+    </a>
+  </kd-title>
+  <kd-content>
+    <kd-pet-set-card-list pet-sets="$ctrl.workloads.petSetList.petSets">
+    </kd-pet-set-card-list>
+  </kd-content>
+</kd-content-card>
+
 <kd-content-card ng-if="$ctrl.workloads.replicaSetList.replicaSets.length">
   <kd-title>
     <a ui-sref="replicaset">
