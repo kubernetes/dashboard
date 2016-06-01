@@ -30,6 +30,7 @@ func TestDeleteShouldPropagateErrorsAndChoseClient(t *testing.T) {
 	verber := ResourceVerber{
 		client:           &FakeRESTClient{err: errors.New("err")},
 		extensionsClient: &FakeRESTClient{err: errors.New("err from extensions")},
+		appsClient:       &FakeRESTClient{err: errors.New("err from apps")},
 	}
 
 	err := verber.Delete("replicaset", "bar", "baz")
@@ -41,6 +42,12 @@ func TestDeleteShouldPropagateErrorsAndChoseClient(t *testing.T) {
 	err = verber.Delete("service", "bar", "baz")
 
 	if !reflect.DeepEqual(err, errors.New("err")) {
+		t.Fatalf("Expected error on verber delete but got %#v", err)
+	}
+
+	err = verber.Delete("petset", "bar", "baz")
+
+	if !reflect.DeepEqual(err, errors.New("err from apps")) {
 		t.Fatalf("Expected error on verber delete but got %#v", err)
 	}
 }

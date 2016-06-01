@@ -12,18 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ReplicaSetListController} from 'replicasetlist/replicasetlist_controller';
-import replicaSetListModule from 'replicasetlist/replicasetlist_module';
+import {stateName as deploy} from 'deploy/deploy_state';
 
-describe('Replica Set list controller', () => {
+/**
+ * @final
+ */
+export default class PetSetListActionBarController {
+  /**
+   * @param {!ui.router.$state} $state
+   * @ngInject
+   */
+  constructor($state) {
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
+  }
 
-  beforeEach(() => { angular.mock.module(replicaSetListModule.name); });
-
-  it('should initialize replica set controller', angular.mock.inject(($controller) => {
-    let ctrls = {};
-    /** @type {!ReplicaSetListController} */
-    let ctrl = $controller(ReplicaSetListController, {replicaSets: {replicaSets: ctrls}});
-
-    expect(ctrl.replicaSets).toBe(ctrls);
-  }));
-});
+  /**
+   * @export
+   */
+  redirectToDeployPage() { this.state_.go(deploy); }
+}

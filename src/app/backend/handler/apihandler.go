@@ -29,6 +29,7 @@ import (
 	"github.com/kubernetes/dashboard/resource/daemonset"
 	"github.com/kubernetes/dashboard/resource/deployment"
 	. "github.com/kubernetes/dashboard/resource/namespace"
+	"github.com/kubernetes/dashboard/resource/petset"
 	"github.com/kubernetes/dashboard/resource/pod"
 	"github.com/kubernetes/dashboard/resource/replicaset"
 	. "github.com/kubernetes/dashboard/resource/replicationcontroller"
@@ -86,7 +87,8 @@ func FormatResponseLog(resp *restful.Response, req *restful.Request) string {
 func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 	clientConfig clientcmd.ClientConfig) http.Handler {
 
-	verber := common.NewResourceVerber(client.RESTClient, client.ExtensionsClient.RESTClient)
+	verber := common.NewResourceVerber(client.RESTClient, client.ExtensionsClient.RESTClient,
+		client.AppsClient.RESTClient)
 	apiHandler := ApiHandler{client, heapsterClient, clientConfig, verber}
 	wsContainer := restful.NewContainer()
 
@@ -264,10 +266,32 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 			Writes(resourceService.ServiceDetail{}))
 
 	apiV1Ws.Route(
+		apiV1Ws.GET("/petset").
+			To(apiHandler.handleGetPetSetList).
+			Writes(resourceService.ServiceList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/petset/{namespace}").
+			To(apiHandler.handleGetPetSetList).
+			Writes(resourceService.ServiceList{}))
+
+	apiV1Ws.Route(
 		apiV1Ws.DELETE("/{kind}/namespace/{namespace}/name/{name}").
 			To(apiHandler.handleDeleteResource))
 
 	return wsContainer
+}
+
+// Handles get pet set list API call.
+func (apiHandler *ApiHandler) handleGetPetSetList(request *restful.Request,
+	response *restful.Response) {
+	namespace := parseNamespacePathParameter(request)
+	result, err := petset.GetPetSetList(apiHandler.client, namespace)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
 // Handles get service list API call.

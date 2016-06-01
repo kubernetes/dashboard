@@ -11,25 +11,25 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import replicaSetListModule from 'replicasetlist/replicasetlist_module';
+import petSetListModule from 'petsetlist/petsetlist_module';
 
-describe('Replica Set card', () => {
+describe('Pet Set card', () => {
   /**
    * @type
-   * {!replicasetlist/replicasetcard_component.ReplicaSetCardController}
+   * {!petsetlist/petsetcard_component.PetSetCardController}
    */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(replicaSetListModule.name);
+    angular.mock.module(petSetListModule.name);
 
     angular.mock.inject(
-        ($componentController) => { ctrl = $componentController('kdReplicaSetCard'); });
+        ($componentController) => { ctrl = $componentController('kdPetSetCard'); });
   });
 
   it('should construct details href', () => {
     // given
-    ctrl.replicaSet = {
+    ctrl.petSet = {
       objectMeta: {
         name: 'foo-name',
         namespace: 'foo-namespace',
@@ -37,12 +37,12 @@ describe('Replica Set card', () => {
     };
 
     // then
-    expect(ctrl.getReplicaSetDetailHref()).toEqual('#/replicaset/foo-namespace/foo-name');
+    expect(ctrl.getPetSetDetailHref()).toEqual('#/petset/foo-namespace/foo-name');
   });
 
-  it('should return true when at least one replica set controller pod has warning', () => {
+  it('should return true when at least one pet set controller pod has warning', () => {
     // given
-    ctrl.replicaSet = {
+    ctrl.petSet = {
       pods: {
         warnings: [{
           message: 'test-error',
@@ -55,9 +55,9 @@ describe('Replica Set card', () => {
     expect(ctrl.hasWarnings()).toBeTruthy();
   });
 
-  it('should return false when there are no errors related to replica set controller pods', () => {
+  it('should return false when there are no errors related to pet set controller pods', () => {
     // given
-    ctrl.replicaSet = {
+    ctrl.petSet = {
       pods: {
         warnings: [],
       },
@@ -71,7 +71,7 @@ describe('Replica Set card', () => {
   it('should return true when there are no warnings and at least one pod is in pending state',
      () => {
        // given
-       ctrl.replicaSet = {
+       ctrl.petSet = {
          pods: {
            warnings: [],
            pending: 1,
@@ -83,9 +83,9 @@ describe('Replica Set card', () => {
        expect(ctrl.isSuccess()).toBe(false);
      });
 
-  it('should return false when there is warning related to replica set controller pods', () => {
+  it('should return false when there is warning related to pet set controller pods', () => {
     // given
-    ctrl.replicaSet = {
+    ctrl.petSet = {
       pods: {
         warnings: [{
           message: 'test-error',
@@ -102,7 +102,7 @@ describe('Replica Set card', () => {
 
   it('should return false when there are no warnings and there is no pod in pending state', () => {
     // given
-    ctrl.replicaSet = {
+    ctrl.petSet = {
       pods: {
         warnings: [],
         pending: 0,
