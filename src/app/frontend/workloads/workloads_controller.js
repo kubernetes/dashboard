@@ -23,5 +23,31 @@ export class WorkloadsController {
   constructor(workloads) {
     /** @export {!backendApi.Workloads} */
     this.workloads = workloads;
+
+    /**
+     * @export
+     * {!Object}
+     */
+    this.i18n = i18n;
   }
 }
+
+const i18n = {
+  /** @export {string} @desc Workloads resource list title for daemon sets. */
+  MSG_WORKLOADS_DAEMON_SETS_TILE: goog.getMsg('Daemon sets'),
+
+  /** @export {string} @desc Workloads resource list title for deployments. */
+  MSG_WORKLOADS_DEPLOYMENTS_TITLE: goog.getMsg('Deployments'),
+
+  /** @export {string} @desc Workloads resource list title for pet sets. */
+  MSG_WORKLOADS_PET_SETS_TITLE: goog.getMsg('Pet Sets'),
+
+  /** @export {string} @desc Workloads resource list title for replica sets. */
+  MSG_WORKLOADS_REPLICA_SETS_TITLE: goog.getMsg('Replica Sets'),
+
+  /** @export {string} @desc Workloads resource list title for replication controller. */
+  MSG_WORKLOADS_REPLICATION_CONTROLLERS_TITLE: goog.getMsg('Replication Controller'),
+
+  /** @export {string} @desc Workloads resource list title for pods. */
+  MSG_WORKLOADS_PODS_TITLE: goog.getMsg('Pods'),
+};

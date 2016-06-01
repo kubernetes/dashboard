@@ -204,6 +204,23 @@ backendApi.ReplicaSetList;
  *   containerImages: !Array<string>,
  * }}
  */
+backendApi.PetSet;
+
+/**
+ * @typedef {{
+ *   petSets: !Array<!backendApi.PetSet>
+ * }}
+ */
+backendApi.PetSetList;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   pods: !backendApi.PodInfo,
+ *   containerImages: !Array<string>,
+ * }}
+ */
 backendApi.Deployment;
 
 /**

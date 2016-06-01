@@ -12,18 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ReplicaSetListController} from 'replicasetlist/replicasetlist_controller';
-import replicaSetListModule from 'replicasetlist/replicasetlist_module';
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'petset';
 
-describe('Replica Set list controller', () => {
-
-  beforeEach(() => { angular.mock.module(replicaSetListModule.name); });
-
-  it('should initialize replica set controller', angular.mock.inject(($controller) => {
-    let ctrls = {};
-    /** @type {!ReplicaSetListController} */
-    let ctrl = $controller(ReplicaSetListController, {replicaSets: {replicaSets: ctrls}});
-
-    expect(ctrl.replicaSets).toBe(ctrls);
-  }));
-});
+/** Absolute URL of the state. */
+export const stateUrl = '/petset';

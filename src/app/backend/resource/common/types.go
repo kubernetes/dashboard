@@ -95,6 +95,19 @@ const (
 	ResourceKindEvent                 = "event"
 	ResourceKindReplicationController = "replicationcontroller"
 	ResourceKindDaemonSet             = "daemonset"
+	ResourceKindPetSet                = "petset"
+)
+
+// ClientType represents type of client that is used to perform generic operations on resources.
+// Different resources belong to different client, i.e. Deployments belongs to extension client
+// and PetSets to apps client.
+type ClientType string
+
+// List of client types supported by the UI.
+const (
+	ClientTypeDefault = "restclient"
+	ClientTypeExtensionClient = "extensionclient"
+	ClientTypeAppsClient = "appsclient"
 )
 
 // Mapping from resource kind to K8s apiserver API path. This is mostly pluralization, because
@@ -103,16 +116,18 @@ const (
 var kindToAPIMapping = map[string]struct {
 	// K8s resource name
 	Resource string
-	// Whether extensions client should be used. True for extensions client, false for normal.
-	Extension bool
+	// Client type used by given resource, i.e. deployments are using extension client and pet
+	// sets apps client.
+	ClientType ClientType
 }{
-	ResourceKindService:               {"services", false},
-	ResourceKindPod:                   {"pods", false},
-	ResourceKindEvent:                 {"events", false},
-	ResourceKindReplicationController: {"replicationcontrollers", false},
-	ResourceKindDeployment:            {"deployments", true},
-	ResourceKindReplicaSet:            {"replicasets", true},
-	ResourceKindDaemonSet:             {"daemonsets", false},
+	ResourceKindService:               {"services", ClientTypeDefault},
+	ResourceKindPod:                   {"pods", ClientTypeDefault},
+	ResourceKindEvent:                 {"events", ClientTypeDefault},
+	ResourceKindReplicationController: {"replicationcontrollers", ClientTypeDefault},
+	ResourceKindDeployment:            {"deployments", ClientTypeExtensionClient},
+	ResourceKindReplicaSet:            {"replicasets", ClientTypeExtensionClient},
+	ResourceKindDaemonSet:             {"daemonsets", ClientTypeDefault},
+	ResourceKindPetSet:                {"petsets", ClientTypeAppsClient},
 }
 
 // IsSelectorMatching returns true when an object with the given

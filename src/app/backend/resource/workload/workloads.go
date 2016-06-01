@@ -21,6 +21,7 @@ import (
 	"github.com/kubernetes/dashboard/resource/common"
 	"github.com/kubernetes/dashboard/resource/daemonset"
 	"github.com/kubernetes/dashboard/resource/deployment"
+	"github.com/kubernetes/dashboard/resource/petset"
 	"github.com/kubernetes/dashboard/resource/pod"
 	"github.com/kubernetes/dashboard/resource/replicaset"
 	"github.com/kubernetes/dashboard/resource/replicationcontroller"
@@ -38,11 +39,13 @@ type Workloads struct {
 	PodList pod.PodList `json:"podList"`
 
 	DaemonSetList daemonset.DaemonSetList `json:"daemonSetList"`
+
+	PetSetList petset.PetSetList `json:"petSetList"`
 }
 
 // GetWorkloads returns a list of all workloads in the cluster.
-func GetWorkloads(client k8sClient.Interface,
-	heapsterClient client.HeapsterClient, nsQuery *common.NamespaceQuery) (*Workloads, error) {
+func GetWorkloads(client *k8sClient.Client, heapsterClient client.HeapsterClient,
+	nsQuery *common.NamespaceQuery) (*Workloads, error) {
 
 	log.Printf("Getting lists of all workloads")
 	channels := &common.ResourceChannels{
@@ -50,10 +53,11 @@ func GetWorkloads(client k8sClient.Interface,
 		ReplicaSetList:            common.GetReplicaSetListChannel(client.Extensions(), nsQuery, 1),
 		DaemonSetList:             common.GetDaemonSetListChannel(client.Extensions(), nsQuery, 1),
 		DeploymentList:            common.GetDeploymentListChannel(client.Extensions(), nsQuery, 1),
-		ServiceList:               common.GetServiceListChannel(client, nsQuery, 4),
-		PodList:                   common.GetPodListChannel(client, nsQuery, 5),
-		EventList:                 common.GetEventListChannel(client, nsQuery, 4),
-		NodeList:                  common.GetNodeListChannel(client, nsQuery, 4),
+		PetSetList:                common.GetPetSetListChannel(client.Apps(), nsQuery, 1),
+		ServiceList:               common.GetServiceListChannel(client, nsQuery, 5),
+		PodList:                   common.GetPodListChannel(client, nsQuery, 6),
+		EventList:                 common.GetEventListChannel(client, nsQuery, 5),
+		NodeList:                  common.GetNodeListChannel(client, nsQuery, 5),
 	}
 
 	return GetWorkloadsFromChannels(channels, heapsterClient)
@@ -69,7 +73,8 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels,
 	rcChan := make(chan *replicationcontroller.ReplicationControllerList)
 	podChan := make(chan *pod.PodList)
 	dsChan := make(chan *daemonset.DaemonSetList)
-	errChan := make(chan error, 5)
+	psChan := make(chan *petset.PetSetList)
+	errChan := make(chan error, 6)
 
 	go func() {
 		rcList, err := replicationcontroller.GetReplicationControllerListFromChannels(channels)
@@ -99,6 +104,12 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels,
 		dsList, err := daemonset.GetDaemonSetListFromChannels(channels)
 		errChan <- err
 		dsChan <- dsList
+	}()
+
+	go func() {
+		psList, err := petset.GetPetSetListFromChannels(channels)
+		errChan <- err
+		psChan <- psList
 	}()
 
 	rcList := <-rcChan
@@ -131,12 +142,19 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels,
 		return nil, err
 	}
 
+	psList := <-psChan
+	err = <-errChan
+	if err != nil {
+		return nil, err
+	}
+
 	workloads := &Workloads{
 		ReplicaSetList:            *rsList,
 		ReplicationControllerList: *rcList,
 		DeploymentList:            *deploymentList,
 		PodList:                   *podList,
 		DaemonSetList:             *dsList,
+		PetSetList:                *psList,
 	}
 
 	return workloads, nil
