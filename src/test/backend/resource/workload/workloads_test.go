@@ -18,39 +18,44 @@ import (
 	"reflect"
 	"testing"
 
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
-	"k8s.io/kubernetes/pkg/apis/extensions"
-
 	"github.com/kubernetes/dashboard/resource/common"
 	"github.com/kubernetes/dashboard/resource/daemonset"
 	"github.com/kubernetes/dashboard/resource/deployment"
+	"github.com/kubernetes/dashboard/resource/job"
 	"github.com/kubernetes/dashboard/resource/pod"
 	"github.com/kubernetes/dashboard/resource/replicaset"
 	"github.com/kubernetes/dashboard/resource/replicationcontroller"
+	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api/unversioned"
+	"k8s.io/kubernetes/pkg/apis/batch"
+	"k8s.io/kubernetes/pkg/apis/extensions"
 )
 
 func TestGetWorkloadsFromChannels(t *testing.T) {
 	cases := []struct {
 		k8sRs         extensions.ReplicaSetList
+		k8sJobs       batch.JobList
 		k8sDaemonSet  extensions.DaemonSetList
 		k8sDeployment extensions.DeploymentList
 		k8sRc         api.ReplicationControllerList
 		k8sPod        api.PodList
 		rcs           []replicationcontroller.ReplicationController
 		rs            []replicaset.ReplicaSet
+		jobs          []job.Job
 		daemonset     []daemonset.DaemonSet
 		deployment    []deployment.Deployment
 		pod           []pod.Pod
 	}{
 		{
 			extensions.ReplicaSetList{},
+			batch.JobList{},
 			extensions.DaemonSetList{},
 			extensions.DeploymentList{},
 			api.ReplicationControllerList{},
 			api.PodList{},
 			[]replicationcontroller.ReplicationController{},
 			[]replicaset.ReplicaSet{},
+			[]job.Job{},
 			[]daemonset.DaemonSet{},
 			[]deployment.Deployment{},
 			[]pod.Pod{},
@@ -61,6 +66,13 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 					{
 						ObjectMeta: api.ObjectMeta{Name: "rs-name"},
 						Spec:       extensions.ReplicaSetSpec{Selector: &unversioned.LabelSelector{}},
+					}},
+			},
+			batch.JobList{
+				Items: []batch.Job{
+					{
+						ObjectMeta: api.ObjectMeta{Name: "job-name"},
+						Spec:       batch.JobSpec{Selector: &unversioned.LabelSelector{}},
 					}},
 			},
 			extensions.DaemonSetList{
@@ -104,6 +116,15 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 					Warnings: []common.Event{},
 				},
 			}},
+			[]job.Job{{
+				ObjectMeta: common.ObjectMeta{
+					Name: "job-name",
+				},
+				TypeMeta: common.TypeMeta{Kind: common.ResourceKindJob},
+				Pods: common.PodInfo{
+					Warnings: []common.Event{},
+				},
+			}},
 			[]daemonset.DaemonSet{{
 				ObjectMeta: common.ObjectMeta{
 					Name: "ds-name",
@@ -134,6 +155,9 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 			ReplicaSetList: replicaset.ReplicaSetList{
 				ReplicaSets: c.rs,
 			},
+			JobList: job.JobList{
+				Jobs: c.jobs,
+			},
 			DaemonSetList: daemonset.DaemonSetList{
 				DaemonSets: c.daemonset,
 			},
@@ -151,6 +175,10 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				List:  make(chan *extensions.ReplicaSetList, 1),
 				Error: make(chan error, 1),
 			},
+			JobList: common.JobListChannel{
+				List:  make(chan *batch.JobList, 1),
+				Error: make(chan error, 1),
+			},
 			ReplicationControllerList: common.ReplicationControllerListChannel{
 				List:  make(chan *api.ReplicationControllerList, 1),
 				Error: make(chan error, 1),
@@ -164,25 +192,28 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				Error: make(chan error, 1),
 			},
 			NodeList: common.NodeListChannel{
-				List:  make(chan *api.NodeList, 4),
-				Error: make(chan error, 4),
-			},
-			ServiceList: common.ServiceListChannel{
-				List:  make(chan *api.ServiceList, 4),
-				Error: make(chan error, 4),
-			},
-			PodList: common.PodListChannel{
-				List:  make(chan *api.PodList, 5),
+				List:  make(chan *api.NodeList, 5),
 				Error: make(chan error, 5),
 			},
+			ServiceList: common.ServiceListChannel{
+				List:  make(chan *api.ServiceList, 5),
+				Error: make(chan error, 5),
+			},
+			PodList: common.PodListChannel{
+				List:  make(chan *api.PodList, 6),
+				Error: make(chan error, 6),
+			},
 			EventList: common.EventListChannel{
-				List:  make(chan *api.EventList, 4),
-				Error: make(chan error, 4),
+				List:  make(chan *api.EventList, 5),
+				Error: make(chan error, 5),
 			},
 		}
 
 		channels.ReplicaSetList.Error <- nil
 		channels.ReplicaSetList.List <- &c.k8sRs
+
+		channels.JobList.Error <- nil
+		channels.JobList.List <- &c.k8sJobs
 
 		channels.DaemonSetList.Error <- nil
 		channels.DaemonSetList.List <- &c.k8sDaemonSet
@@ -202,8 +233,12 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		channels.NodeList.Error <- nil
 		channels.NodeList.List <- nodeList
 		channels.NodeList.Error <- nil
+		channels.NodeList.List <- nodeList
+		channels.NodeList.Error <- nil
 
 		serviceList := &api.ServiceList{}
+		channels.ServiceList.List <- serviceList
+		channels.ServiceList.Error <- nil
 		channels.ServiceList.List <- serviceList
 		channels.ServiceList.Error <- nil
 		channels.ServiceList.List <- serviceList
@@ -224,8 +259,12 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		channels.PodList.Error <- nil
 		channels.PodList.List <- podList
 		channels.PodList.Error <- nil
+		channels.PodList.List <- podList
+		channels.PodList.Error <- nil
 
 		eventList := &api.EventList{}
+		channels.EventList.List <- eventList
+		channels.EventList.Error <- nil
 		channels.EventList.List <- eventList
 		channels.EventList.Error <- nil
 		channels.EventList.List <- eventList
