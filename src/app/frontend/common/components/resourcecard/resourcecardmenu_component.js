@@ -13,10 +13,27 @@
 // limitations under the License.
 
 /**
+ * Controller for the resource card menu.
+ * @final
+ */
+export class ResourceCardMenuController {
+  constructor() {
+    /** @export */
+    this.i18n = i18n;
+  }
+}
+
+/**
  * Resource card header columns component. See resource card list for documentation.
  * @type {!angular.Component}
  */
 export const resourceCardMenuComponent = {
   templateUrl: 'common/components/resourcecard/resourcecardmenu.html',
   transclude: true,
+  controller: ResourceCardMenuController,
+};
+
+const i18n = {
+  /** @export {string} @desc Tooltip "Actions", which appears when you hover over the menu icon on any resource card. */
+  MSG_RESOURCE_CARD_MENU_TOOLTIP: goog.getMsg('Actions'),
 };

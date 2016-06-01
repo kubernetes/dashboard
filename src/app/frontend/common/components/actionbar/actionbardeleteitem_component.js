@@ -46,6 +46,9 @@ export class ActionbarDeleteItemController {
 
     /** @private {!ui.router.$state}} */
     this.state_ = $state;
+
+    /** @export */
+    this.i18n = i18n;
   }
 
   /**
@@ -79,4 +82,9 @@ export const actionbarDeleteItemComponent = {
   bindToController: true,
   replace: true,
   controller: ActionbarDeleteItemController,
+};
+
+const i18n = {
+  /** @export {string} @desc Generic "Delete some resource" tooltip text which appears over the delete icon on the global action bar. */
+  MSG_ACTION_BAR_DELETE_TOOLTIP: goog.getMsg('Delete {$resourceName}', {resourceName: ''}),
 };

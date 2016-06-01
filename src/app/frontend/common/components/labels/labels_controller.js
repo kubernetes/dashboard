@@ -32,6 +32,9 @@ export default class LabelsController {
 
     /** @private {boolean} */
     this.isShowingAllLabels_ = false;
+
+    /** @export */
+    this.i18n = i18n;
   }
 
   /**
@@ -67,3 +70,10 @@ export default class LabelsController {
    */
   switchLabelsView() { this.isShowingAllLabels_ = !this.isShowingAllLabels_; }
 }
+
+const i18n = {
+  /** @export {string} @desc Tooltip on the "show less" button for the labels of any kubernetes resource. Usually appears on the resource details pages. */
+  MSG_LABELS_SHOW_LESS_TOOLTIP: goog.getMsg('show less labels'),
+  /** @export {string} @desc Tooltip on the "show all" button for the labels of any kubernetes resource. Usually appears on the resource details pages. */
+  MSG_LABELS_SHOW_ALL_TOOLTIP: goog.getMsg('show all labels'),
+};
