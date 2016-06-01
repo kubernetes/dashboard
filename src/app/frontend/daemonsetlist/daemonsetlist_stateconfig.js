@@ -15,6 +15,7 @@
 import {actionbarViewName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {stateName as workloadsState} from 'workloads/workloads_state';
+import {stateName as namespaceStateName} from 'common/namespace/namespace_state';
 
 import {DaemonSetListController} from './daemonsetlist_controller';
 import {stateName, stateUrl} from './daemonsetlist_state';
@@ -28,6 +29,7 @@ import {stateName, stateUrl} from './daemonsetlist_state';
 export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
     url: stateUrl,
+    parent: namespaceStateName,
     resolve: {
       'daemonSetList': resolveDaemonSetList,
     },

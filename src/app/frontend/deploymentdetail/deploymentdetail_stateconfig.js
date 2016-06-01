@@ -15,11 +15,11 @@
 import {actionbarViewName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {stateName as deploymentList} from 'deploymentlist/deploymentlist_state';
+import {stateName as namespaceStateName} from 'common/namespace/namespace_state';
+import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 
 import {DeploymentDetailController} from './deploymentdetail_controller';
 import {stateName, stateUrl} from './deploymentdetail_state';
-import {stateName as namespaceStateName} from 'common/namespace/namespace_state';
-import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 
 /**
  * Configures states for the deployment detail view.

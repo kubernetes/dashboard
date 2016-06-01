@@ -15,6 +15,8 @@
 import {actionbarViewName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {stateName as daemonSetList, stateUrl} from 'daemonsetlist/daemonsetlist_state';
+import {stateName as namespaceStateName} from 'common/namespace/namespace_state';
+import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 
 import {DaemonSetDetailController} from './daemonsetdetail_controller';
 import {stateName} from './daemonsetdetail_state';
@@ -27,7 +29,8 @@ import {stateName} from './daemonsetdetail_state';
  */
 export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
-    url: `${stateUrl}/:namespace/:daemonSet`,
+    url: appendDetailParamsToUrl(stateUrl),
+    parent: namespaceStateName,
     resolve: {
       'daemonSetDetailResource': getDaemonSetDetailResource,
       'daemonSetDetail': getDaemonSetDetail,
@@ -50,13 +53,13 @@ export default function stateConfig($stateProvider) {
 }
 
 /**
- * @param {!./daemonsetdetail_state.StateParams} $stateParams
+ * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource<!backendApi.DaemonSetDetail>}
  * @ngInject
  */
 export function getDaemonSetDetailResource($resource, $stateParams) {
-  return $resource(`api/v1/daemonset/${$stateParams.namespace}/${$stateParams.daemonSet}`);
+  return $resource(`api/v1/daemonset/${$stateParams.objectNamespace}/${$stateParams.objectName}`);
 }
 
 /**
