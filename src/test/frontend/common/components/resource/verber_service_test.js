@@ -36,11 +36,11 @@ describe('Verber service', () => {
     state = $state;
   }));
 
-  it('should show delete dialog resource', () => {
+  it('should show delete dialog resource', (doneFn) => {
     let deferred = q.defer();
     spyOn(mdDialog, 'show').and.returnValue(deferred.promise);
 
-    verber.showDeleteDialog('Foo resource', {foo: 'bar'}, {baz: 'qux'});
+    let promise = verber.showDeleteDialog('Foo resource', {foo: 'bar'}, {baz: 'qux'});
 
     expect(mdDialog.show).toHaveBeenCalledWith(jasmine.objectContaining({
       locals: {
@@ -49,18 +49,61 @@ describe('Verber service', () => {
         'objectMeta': {baz: 'qux'},
       },
     }));
+
+    deferred.resolve();
+    promise.then(doneFn);
+    scope.$digest();
   });
 
-  it('should show alert window on error', () => {
+  it('should show alert window on delete error', (doneFn) => {
     let deferred = q.defer();
     spyOn(mdDialog, 'show').and.returnValue(deferred.promise);
     spyOn(state, 'reload');
     spyOn(mdDialog, 'alert').and.callThrough();
-    verber.showDeleteDialog();
+    let promise = verber.showDeleteDialog();
 
     deferred.reject({data: 'foo-data', statusText: 'foo-text'});
     scope.$digest();
     expect(state.reload).not.toHaveBeenCalled();
     expect(mdDialog.alert).toHaveBeenCalled();
+
+    deferred.resolve();
+    promise.catch(doneFn);
+    scope.$digest();
+  });
+
+  it('should show edit dialog resource', (doneFn) => {
+    let deferred = q.defer();
+    spyOn(mdDialog, 'show').and.returnValue(deferred.promise);
+
+    let promise = verber.showEditDialog('Foo resource', {foo: 'bar'}, {baz: 'qux'});
+
+    expect(mdDialog.show).toHaveBeenCalledWith(jasmine.objectContaining({
+      locals: {
+        'resourceKindName': 'Foo resource',
+        'typeMeta': {foo: 'bar'},
+        'objectMeta': {baz: 'qux'},
+      },
+    }));
+    deferred.resolve();
+    promise.then(doneFn);
+    scope.$digest();
+  });
+
+  it('should show alert window on edit error', (doneFn) => {
+    let deferred = q.defer();
+    spyOn(mdDialog, 'show').and.returnValue(deferred.promise);
+    spyOn(state, 'reload');
+    spyOn(mdDialog, 'alert').and.callThrough();
+    let promise = verber.showEditDialog();
+
+    deferred.reject({data: 'foo-data', statusText: 'foo-text'});
+    scope.$digest();
+    expect(state.reload).not.toHaveBeenCalled();
+    expect(mdDialog.alert).toHaveBeenCalled();
+
+    deferred.resolve();
+    promise.catch(doneFn);
+    scope.$digest();
   });
 });

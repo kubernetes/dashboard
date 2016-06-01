@@ -1,4 +1,3 @@
-
 // Copyright 2015 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,18 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {VerberService} from './verber_service';
 
-/**
- * Angular module containing navigation chrome for the application.
- */
-export default angular
-    .module(
-        'kubernetesDashboard.common.resource',
-        [
-          'ngMaterial',
-          'ui.router',
-          'ngResource',
-          'ng.jsoneditor',
-        ])
-    .service('kdResourceVerberService', VerberService);
+.kd-json-edit-dialog-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.kd-json-edit-editor {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.jsoneditor {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  height: initial;
+  overflow: hidden;
+
+  .outer {
+    display: flex;
+    flex: 1;
+  }
+}

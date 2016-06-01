@@ -18,6 +18,7 @@ import (
 	"fmt"
 
 	"k8s.io/kubernetes/pkg/client/restclient"
+	"k8s.io/kubernetes/pkg/runtime"
 )
 
 // ResourceVerber is a struct responsible for doing common verb operations on resources, like
@@ -29,9 +30,24 @@ type ResourceVerber struct {
 	batchClient      RESTClient
 }
 
+func (verber *ResourceVerber) getRESTClientByType(clientType ClientType) RESTClient {
+	switch clientType {
+	case ClientTypeExtensionClient:
+		return verber.extensionsClient
+	case ClientTypeAppsClient:
+		return verber.appsClient
+	case ClientTypeBatchClient:
+		return verber.batchClient
+	default:
+		return verber.client
+	}
+}
+
 // RESTClient is an interface for REST operations used in this file.
 type RESTClient interface {
 	Delete() *restclient.Request
+	Put() *restclient.Request
+	Get() *restclient.Request
 }
 
 // NewResourceVerber creates a new resource verber that uses the given client for performing
@@ -58,15 +74,42 @@ func (verber *ResourceVerber) Delete(kind string, namespace string, name string)
 		Error()
 }
 
-func (verber *ResourceVerber) getRESTClientByType(clientType ClientType) RESTClient {
-	switch clientType {
-	case ClientTypeExtensionClient:
-		return verber.extensionsClient
-	case ClientTypeAppsClient:
-		return verber.appsClient
-	case ClientTypeBatchClient:
-		return verber.batchClient
-	default:
-		return verber.client
+// Put puts new resource version of the given kind in the given namespace with the given name.
+func (verber *ResourceVerber) Put(kind string, namespace string, name string,
+	object runtime.Object) error {
+
+	resourceSpec, ok := kindToAPIMapping[kind]
+	if !ok {
+		return fmt.Errorf("Unknown resource kind: %s", kind)
 	}
+
+	client := verber.getRESTClientByType(resourceSpec.ClientType)
+
+	return client.Put().
+		Namespace(namespace).
+		Resource(resourceSpec.Resource).
+		Name(name).
+		Body(object).
+		Do().
+		Error()
+}
+
+// Get gets the resource of the given kind in the given namespace with the given name.
+func (verber *ResourceVerber) Get(kind string, namespace string, name string) (runtime.Object, error) {
+	resourceSpec, ok := kindToAPIMapping[kind]
+	if !ok {
+		return nil, fmt.Errorf("Unknown resource kind: %s", kind)
+	}
+
+	client := verber.getRESTClientByType(resourceSpec.ClientType)
+
+	result := &runtime.Unknown{}
+	err := client.Get().
+		Namespace(namespace).
+		Resource(resourceSpec.Resource).
+		Name(name).
+		Do().
+		Into(result)
+
+	return result, err
 }
