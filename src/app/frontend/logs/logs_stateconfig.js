@@ -16,6 +16,7 @@ import {LogsController} from './logs_controller';
 import {stateName} from './logs_state';
 import LogsToolbarController from './logstoolbar/logstoolbar_controller';
 import {toolbarViewName} from '../chrome/chrome_state';
+
 import {stateName as namespaceStateName} from 'common/namespace/namespace_state';
 
 /**

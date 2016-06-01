@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import componentsModule from './../common/components/components_module';
+import componentsModule from 'common/components/components_module';
+import namespaceModule from 'common/namespace/namespace_module';
 import filtersModule from 'common/filters/filters_module';
 import stateConfig from './daemonsetlist_stateconfig';
 import {daemonSetCardListComponent} from './daemonsetlist_component';
@@ -32,8 +33,8 @@ export default angular
           'ui.router',
           filtersModule.name,
           componentsModule.name,
+          namespaceModule.name,
           daemonSetDetailModule.name,
-
         ])
     .config(stateConfig)
     .component('kdDaemonSetCardList', daemonSetCardListComponent);

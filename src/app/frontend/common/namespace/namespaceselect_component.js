@@ -140,4 +140,4 @@ export const namespaceSelectComponent = {
 const i18n = {
   /** @export {string} @desc Text for dropdown item that indicates that no namespace was selected */
   MSG_NAMESPACE_NOT_SELECTED: goog.getMsg('namespace not selected'),
-}
+};
