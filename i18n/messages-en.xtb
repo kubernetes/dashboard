@@ -142,4 +142,6 @@
 	<translation id="5744665687208066898" key="MSG_PET_SET_LIST_HEADER_IMAGES" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Pet set list header: images.">Images</translation>
 	<translation id="2997495891426796243" key="MSG_NAMESPACE_NOT_SELECTED" source="/usr/local/google/home/bryk/src/github.com/dashboard/.tmp/serve/app-dev.js" desc="Text for dropdown item that indicates that no namespace was selected">namespace not selected</translation>
 	<translation id="5143266087600531180" key="MSG_NAMESPACE_SELECT_ARIA_LABEL" source="/usr/local/google/home/bryk/src/github.com/dashboard/.tmp/serve/app-dev.js" desc="Text describing what namespace selector is">Selector for namespaces</translation>
+	<translation id="7612562063769289643" key="MSG_PODS_ARE_FAILED_TOOLTIP" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="tooltip for failed pod card icon">One or more pods have errors.</translation>
+	<translation id="7471636163011126552" key="MSG_PODS_ARE_PENDING_TOOLTIP" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="tooltip for pending pod card icon">One or more pods are in pending state.</translation>
 </translationbundle>

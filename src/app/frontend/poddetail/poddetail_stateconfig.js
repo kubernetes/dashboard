@@ -14,11 +14,12 @@
 
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 import {stateName as podList, stateUrl} from 'podlist/podlist_state';
 
 import {PodDetailController} from './poddetail_controller';
 import {stateName} from './poddetail_state';
-import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
+
 
 /**
  * Configures states for the pod details view.

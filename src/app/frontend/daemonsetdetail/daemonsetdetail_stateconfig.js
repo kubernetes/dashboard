@@ -14,11 +14,12 @@
 
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
-import {stateName as daemonSetList, stateUrl} from 'daemonsetlist/daemonsetlist_state';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
+import {stateName as daemonSetList, stateUrl} from 'daemonsetlist/daemonsetlist_state';
 
 import {DaemonSetDetailController} from './daemonsetdetail_controller';
 import {stateName} from './daemonsetdetail_state';
+
 
 /**
  * Configures states for the daemon set details view.

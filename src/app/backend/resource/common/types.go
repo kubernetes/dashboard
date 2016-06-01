@@ -95,6 +95,7 @@ const (
 	ResourceKindEvent                 = "event"
 	ResourceKindReplicationController = "replicationcontroller"
 	ResourceKindDaemonSet             = "daemonset"
+	ResourceKindJob                   = "job"
 	ResourceKindPetSet                = "petset"
 )
 
@@ -105,9 +106,10 @@ type ClientType string
 
 // List of client types supported by the UI.
 const (
-	ClientTypeDefault = "restclient"
+	ClientTypeDefault         = "restclient"
 	ClientTypeExtensionClient = "extensionclient"
-	ClientTypeAppsClient = "appsclient"
+	ClientTypeAppsClient      = "appsclient"
+	ClientTypeBatchClient     = "batchclient"
 )
 
 // Mapping from resource kind to K8s apiserver API path. This is mostly pluralization, because
@@ -128,6 +130,7 @@ var kindToAPIMapping = map[string]struct {
 	ResourceKindReplicaSet:            {"replicasets", ClientTypeExtensionClient},
 	ResourceKindDaemonSet:             {"daemonsets", ClientTypeDefault},
 	ResourceKindPetSet:                {"petsets", ClientTypeAppsClient},
+	ResourceKindJob:                   {"jobs", ClientTypeBatchClient},
 }
 
 // IsSelectorMatching returns true when an object with the given

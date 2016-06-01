@@ -14,11 +14,12 @@
 
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 import {stateName as replicaSetList, stateUrl} from 'replicasetlist/replicasetlist_state';
 
 import {ReplicaSetDetailController} from './replicasetdetail_controller';
 import {stateName} from './replicasetdetail_state';
-import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
+
 
 /**
  * Configures states for the replica set details view.
