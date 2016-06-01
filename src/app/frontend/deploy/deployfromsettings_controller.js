@@ -399,7 +399,7 @@ const i18n = {
   MSG_DEPLOY_SETTINGS_APP_NAME_MAX_LENGTH_WARNING:
       goog.getMsg(`Name must be up to {$maxLength} characters long.`,
                   {
-                    maxLength: '24',
+                    'maxLength': '24',
                   }),
 
   /** @export {string} @desc User help for the `App name` input on the deploy from settings page. */

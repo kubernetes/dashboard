@@ -106,22 +106,24 @@ const i18n = {
      YAML/JSON file to deploy from on the deploy page. */
   MSG_DEPLOY_FILE_UPLOAD_ACTION: goog.getMsg('Upload a YAML or JSON file'),
 
-  /** @export {string} @desc The text is put on the 'Deploy' button at the end of the deploy page.
+  /** @export {string} @desc The text is put on the 'Deploy' button at the end of the deploy
+   * page.
      */
   MSG_DEPLOY_DEPLOY_ACTION: goog.getMsg('Deploy'),
 
-  /** @export {string} @desc The text is put on the 'Cancel' button at the end of the deploy page.
+  /** @export {string} @desc The text is put on the 'Cancel' button at the end of the deploy
+   * page.
      */
   MSG_DEPLOY_CANCEL_ACTION: goog.getMsg('Cancel'),
 
-  /** @export {string} @desc User help with a link redirecting to the "Dashboard tour" on the deploy
-     page. */
+  /** @export {string} @desc User help with a link redirecting to the "Dashboard tour" on the
+     deploy page. */
   MSG_DEPLOY_DASHBOARD_TOUR_USER_HELP: goog.getMsg(
       `To learn more, {$openLink} take the Dashboard Tour {$linkIcon} {$closeLink}`,
       {
-        openLink:
+        'openLink':
             `<a href="http://kubernetes.io/docs/user-guide/ui/" target="_blank" tabindex="-1">`,
-        closeLink: `</a>`,
-        linkIcon: `<i class="material-icons">open_in_new</i>`,
+        'closeLink': `</a>`,
+        'linkIcon': `<i class="material-icons">open_in_new</i>`,
       }),
 };

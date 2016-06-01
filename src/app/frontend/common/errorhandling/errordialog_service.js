@@ -38,7 +38,13 @@ export default class ErrorDialog {
     let alert = this.mdDialog_.alert();
     alert.title(title);
     alert.textContent(text);
-    alert.ok('Close');
+    alert.ok(i18n.MSG_ERROR_HANDLING_DIALOG_CLOSE_ACTION);
     this.mdDialog_.show(alert);
   }
 }
+
+const i18n = {
+  /** @export {string} @desc Action "Close" which appears at the bottom of any displayed error
+     dialog. */
+  MSG_ERROR_HANDLING_DIALOG_CLOSE_ACTION: goog.getMsg('Close'),
+};

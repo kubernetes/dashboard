@@ -13,45 +13,6 @@
 // limitations under the License.
 
 /**
- * Unit name constants (singular and plural form), that will be used by the filter.
- *
- * @enum {!Array<string>}
- */
-const Units = {
-  SECOND: ['a second', 'seconds'],
-  MINUTE: ['a minute', 'minutes'],
-  HOUR: ['an hour', 'hours'],
-  DAY: ['a day', 'days'],
-  MONTH: ['a month', 'months'],
-  YEAR: ['a year', 'years'],
-};
-
-/**
- * Unit conversion constants.
- *
- * @enum {number}
- */
-const UnitConversions = {
-  MILLISECONDS_PER_SECOND: 1000,
-  SECONDS_PER_MINUTE: 60,
-  MINUTES_PER_HOUR: 60,
-  HOURS_PER_DAY: 24,
-  DAYS_PER_MONTH: 30,
-  DAYS_PER_YEAR: 365,
-  MONTHS_PER_YEAR: 12,
-};
-
-/**
- * Time constants.
- *
- * @enum {string}
- */
-const TimeConstants = {
-  NOT_YET: `didn't happen yet`,
-  NOW: `just now`,
-};
-
-/**
  * Returns filter function to display relative time since given date.
  *
  * @param {!../appconfig/appconfig_service.AppConfigService} kdAppConfigService
@@ -134,3 +95,73 @@ function formatOutputTimeString_(timeValue, timeUnit) {
     return timeUnit[0];
   }
 }
+
+const i18n = {
+  /** @export {string} @desc Time units label, a single second.*/
+  MSG_TIME_UNIT_SECOND_LABEL: goog.getMsg('a second'),
+  /** @export {string} @desc Time units label, many seconds (plural).*/
+  MSG_TIME_UNIT_SECONDS_LABEL: goog.getMsg('seconds'),
+  /** @export {string} @desc Time units label, a single minute.*/
+  MSG_TIME_UNIT_MINUTE_LABEL: goog.getMsg('a minute'),
+  /** @export {string} @desc Time units label, many minutes (plural).*/
+  MSG_TIME_UNIT_MINUTES_LABEL: goog.getMsg('minutes'),
+  /** @export {string} @desc Time units label, a single hour.*/
+  MSG_TIME_UNIT_HOUR_LABEL: goog.getMsg('an hour'),
+  /** @export {string} @desc Time units label, many hours (plural).*/
+  MSG_TIME_UNIT_HOURS_LABEL: goog.getMsg('hours'),
+  /** @export {string} @desc Time units label, a single day.*/
+  MSG_TIME_UNIT_DAY_LABEL: goog.getMsg('a day'),
+  /** @export {string} @desc Time units label, many days (plural).*/
+  MSG_TIME_UNIT_DAYS_LABEL: goog.getMsg('days'),
+  /** @export {string} @desc Time units label, a single month.*/
+  MSG_TIME_UNIT_MONTH_LABEL: goog.getMsg('a month'),
+  /** @export {string} @desc Time units label, many months (plural).*/
+  MSG_TIME_UNIT_MONTHS_LABEL: goog.getMsg('months'),
+  /** @export {string} @desc Time units label, a single year.*/
+  MSG_TIME_UNIT_YEAR_LABEL: goog.getMsg('a year'),
+  /** @export {string} @desc Time units label, many years (plural).*/
+  MSG_TIME_UNIT_YEARS_LABEL: goog.getMsg('years'),
+  /** @export {string} @desc Label saying that a certain action has not happened yet.*/
+  MSG_TIME_NOT_YET_LABEL: goog.getMsg(`didn't happen yet`),
+  /** @export {string} @desc Label saying that a certain action happened just now. */
+  MSG_TIME_NOW_LABEL: goog.getMsg(`just now`),
+};
+
+/**
+ * Unit name constants (singular and plural form), that will be used by the filter.
+ *
+ * @enum {!Array<string>}
+ */
+const Units = {
+  SECOND: [i18n.MSG_TIME_UNIT_SECOND_LABEL, i18n.MSG_TIME_UNIT_SECONDS_LABEL],
+  MINUTE: [i18n.MSG_TIME_UNIT_MINUTE_LABEL, i18n.MSG_TIME_UNIT_MINUTES_LABEL],
+  HOUR: [i18n.MSG_TIME_UNIT_HOUR_LABEL, i18n.MSG_TIME_UNIT_HOURS_LABEL],
+  DAY: [i18n.MSG_TIME_UNIT_DAY_LABEL, i18n.MSG_TIME_UNIT_DAYS_LABEL],
+  MONTH: [i18n.MSG_TIME_UNIT_MONTH_LABEL, i18n.MSG_TIME_UNIT_MONTHS_LABEL],
+  YEAR: [i18n.MSG_TIME_UNIT_YEAR_LABEL, i18n.MSG_TIME_UNIT_YEARS_LABEL],
+};
+
+/**
+ * Unit conversion constants.
+ *
+ * @enum {number}
+ */
+const UnitConversions = {
+  MILLISECONDS_PER_SECOND: 1000,
+  SECONDS_PER_MINUTE: 60,
+  MINUTES_PER_HOUR: 60,
+  HOURS_PER_DAY: 24,
+  DAYS_PER_MONTH: 30,
+  DAYS_PER_YEAR: 365,
+  MONTHS_PER_YEAR: 12,
+};
+
+/**
+ * Time constants.
+ *
+ * @enum {string}
+ */
+const TimeConstants = {
+  NOT_YET: i18n.MSG_TIME_NOT_YET_LABEL,
+  NOW: i18n.MSG_TIME_NOW_LABEL,
+};
