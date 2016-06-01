@@ -1,0 +1,77 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-resource-card-list selectable="::$ctrl.selectable" with-statuses="::$ctrl.withStatuses">
+  <kd-resource-card-header-columns>
+    <kd-resource-card-header-column>Name</kd-resource-card-header-column>
+    <kd-resource-card-header-column>Labels</kd-resource-card-header-column>
+    <kd-resource-card-header-column>Pods</kd-resource-card-header-column>
+    <kd-resource-card-header-column>Age</kd-resource-card-header-column>
+    <kd-resource-card-header-column>Internal endpoints</kd-resource-card-header-column>
+    <kd-resource-card-header-column>External endpoints</kd-resource-card-header-column>
+    <kd-resource-card-header-column>Images</kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small" grow="nogrow">
+    </kd-resource-card-header-column>
+  </kd-resource-card-header-columns>
+  <kd-resource-card ng-repeat="daemonSet in ::$ctrl.daemonSets.daemonSets"
+      object-meta="daemonSet.objectMeta" type-meta="daemonSet.typeMeta">
+    <kd-resource-card-columns>
+      <kd-resource-card-column>
+        <a ng-href="{{::$ctrl.getDaemonSetDetailHref(daemonSet)}}">
+          <kd-middle-ellipsis display-string="{{::daemonSet.objectMeta.name}}"></kd-middle-ellipsis>
+        </a>
+      </kd-resource-card-column>
+      <kd-resource-card-column>
+        <kd-labels labels="::daemonSet.objectMeta.labels"></kd-labels>
+      </kd-resource-card-column>
+      <kd-resource-card-column>
+      <span class="kd-replicase-card-pods-stat">
+        {{::daemonSet.pods.running}} / {{::daemonSet.pods.desired}}
+      </span>
+      </kd-resource-card-column>
+      <kd-resource-card-column>
+        {{::daemonSet.objectMeta.creationTimestamp | relativeTime}}
+        <md-tooltip>
+          Created at {{::daemonSet.objectMeta.creationTimestamp | date:'short'}}
+        </md-tooltip>
+      </kd-resource-card-column>
+      <kd-resource-card-column>
+        <div ng-if="::daemonSet.internalEndpoint">
+          <kd-internal-endpoint endpoint="::daemonSet.internalEndpoint"></kd-internal-endpoint>
+        </div>
+        <div ng-hide="daemonSet.internalEndpoint">-</div>
+      </kd-resource-card-column>
+      <kd-resource-card-column>
+        <div ng-if="::daemonSet.externalEndpoints"
+             ng-repeat="endpoint in ::daemonSet.externalEndpoints">
+          <kd-external-endpoint endpoint="endpoint"></kd-external-endpoint>
+        </div>
+        <div ng-hide="daemonSet.externalEndpoints">-</div>
+      </kd-resource-card-column>
+      <kd-resource-card-column>
+        <div ng-repeat="image in ::daemonSet.containerImages track by $index">
+          <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
+        </div>
+      </kd-resource-card-column>
+      <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
+        <kd-resource-card-menu>
+          <kd-resource-card-delete-menu-item resource-kind-name="Daemon Set">
+          </kd-resource-card-delete-menu-item>
+        </kd-resource-card-menu>
+      </kd-resource-card-column>
+    </kd-resource-card-columns>
+  </kd-resource-card>
+</kd-resource-card-list>

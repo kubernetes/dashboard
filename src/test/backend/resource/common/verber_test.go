@@ -23,7 +23,7 @@ type FakeRESTClient struct {
 func (c *FakeRESTClient) Delete() *restclient.Request {
 	return restclient.NewRequest(clientFunc(func(req *http.Request) (*http.Response, error) {
 		return c.response, c.err
-	}), "DELETE", nil, "/api/v1", restclient.ContentConfig{},restclient.Serializers{}, nil, nil)
+	}), "DELETE", nil, "/api/v1", restclient.ContentConfig{}, restclient.Serializers{}, nil, nil)
 }
 
 func TestDeleteShouldPropagateErrorsAndChoseClient(t *testing.T) {

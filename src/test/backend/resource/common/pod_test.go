@@ -132,7 +132,7 @@ func TestGetContainerImages(t *testing.T) {
 			&api.PodSpec{
 				Containers: []api.Container{{Image: "container-1"}, {Image: "container-2"}},
 			},
-			[]string{"container-1","container-2"},
+			[]string{"container-1", "container-2"},
 		},
 	}
 

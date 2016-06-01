@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {internalEndpointComponent} from './internalendpoint_component';
 import {externalEndpointComponent} from './externalendpoint_component';
+import {internalEndpointComponent} from './internalendpoint_component';
 
 /**
  * Module containing endpoint components.

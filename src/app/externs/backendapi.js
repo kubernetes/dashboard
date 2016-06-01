@@ -360,6 +360,27 @@ backendApi.ServiceList;
 
 /**
  * @typedef {{
+ *  objectMeta: !backendApi.ObjectMeta,
+ *  typeMeta: !backendApi.TypeMeta,
+ *  labelSelector: !Object<string, string>,
+ *  containerImages: !Array<string>,
+ *  podInfo: !backendApi.PodInfo,
+ *  pods: !backendApi.PodList,
+ *  serviceList: !backendApi.ServiceList,
+ *  hasMetrics: boolean
+ * }}
+ */
+backendApi.DaemonSet;
+
+/**
+ * @typedef {{
+ *  daemonSets: !Array<backendApi.DaemonSet>
+ * }}
+ */
+backendApi.DaemonSetList;
+
+/**
+ * @typedef {{
  *  host: string,
  *  ports: !Array<{port: number, protocol: string}>
  * }}
