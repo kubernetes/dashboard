@@ -20,5 +20,6 @@ limitations under the License.
 </kd-middle-ellipsis>
 <div class="kd-labels kd-labels-switch" ng-show="labelsCtrl.isMoreAvailable()"
      ng-click="labelsCtrl.switchLabelsView()">
-  {{labelsCtrl.isShowingAll() ? "show less labels" : "show all labels"}}
+  {{labelsCtrl.isShowingAll() ?
+    labelsCtrl.i18n.MSG_LABELS_SHOW_LESS_TOOLTIP : labelsCtrl.i18n.MSG_LABELS_SHOW_ALL_TOOLTIP}}
 </div>

@@ -133,12 +133,21 @@ export default class DeployLabelController {
    * @private
    */
   isFilled_(label) { return label.key.length !== 0 && label.value().length !== 0; }
+
+  /**
+   * @export
+   * @return {string}
+   */
+  getLabelKeyUniqueWarning() {
+    /** @type {string} @desc This warning appears when the key of a specified kubernetes label on
+     * the deploy page is not unique.*/
+    let MSG_DEPLOY_LABEL_KEY_NOT_UNIQUE_WARNING =
+        goog.getMsg('{$labelKey} is not unique.', {'labelKey': this.label.key});
+    return MSG_DEPLOY_LABEL_KEY_NOT_UNIQUE_WARNING;
+  }
 }
 
 const i18n = {
-  /** @export {string} @desc This warning appears when the key of a specified kubernetes label on the deploy page is not unique.*/
-  MSG_DEPLOY_LABEL_KEY_NOT_UNIQUE_WARNING:
-      goog.getMsg('{$labelKey} is not unique.', {labelKey: ''}),
   /** @export {string} @desc This warning appears when the key of a specified kubernetes label (on the deploy page) does not start with a proper prefix. */
   MSG_DEPLOY_LABEL_KEY_PREFIX_PATTERN_WARNING:
       goog.getMsg('Prefix is not a valid DNS subdomain prefix. Example: my-domain.com'),

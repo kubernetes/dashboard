@@ -130,7 +130,7 @@ const i18n = {
 
   /** @export {string} @desc The text appears when the namespace name exceeds the maximal length. */
   MSG_NAMESPACE_NAME_LENGTH_WARNING:
-      goog.getMsg('Name must be up to {$maxLength} characters long', {maxLength: '63'}),
+      goog.getMsg('Name must be up to {$maxLength} characters long', {'maxLength': '63'}),
 
   /** @export {string} @desc Warning which tells the user that the namespace name is required. */
   MSG_NAMESPACE_NAME_REQUIRED_WARNING: goog.getMsg('Name is required'),

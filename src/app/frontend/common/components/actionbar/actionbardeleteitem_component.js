@@ -60,6 +60,20 @@ export class ActionbarDeleteItemController {
           this.state_.go(parentStateName);
         });
   }
+
+  /**
+   * @export
+   * @return {string}
+   */
+  getDeleteTooltip() {
+    /**
+     * @type {string} @desc Generic "Delete some resource" tooltip text which appears over the
+     * delete icon on the global action bar.
+     */
+    let MSG_ACTION_BAR_DELETE_TOOLTIP =
+        goog.getMsg('Delete {$resourceName}', {'resourceName': this.resourceKindName});
+    return MSG_ACTION_BAR_DELETE_TOOLTIP;
+  }
 }
 
 /**

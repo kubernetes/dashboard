@@ -393,7 +393,7 @@ const i18n = {
   /** @export {string} @desc Appears when the typed in app name on the deploy from settings page exceeds the maximal allowed length. */
   MSG_DEPLOY_SETTINGS_APP_NAME_MAX_LENGTH_WARNING:
       goog.getMsg(`Name must be up to {$maxLength} characters long.`, {
-        maxLength: '24',
+        'maxLength': '24',
       }),
 
   /** @export {string} @desc User help for the `App name` input on the deploy from settings page. */
