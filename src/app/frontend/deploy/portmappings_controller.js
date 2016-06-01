@@ -67,7 +67,7 @@ export default class PortMappingsController {
      * Selected service type. Binding to outer scope.
      * @export {ServiceType}
      */
-    this.serviceType;
+    this.serviceType = NO_SERVICE;
   }
 
   /**
