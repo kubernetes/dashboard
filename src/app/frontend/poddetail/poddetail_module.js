@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import componentsModule from 'common/components/components_module';
+import namespaceModule from 'common/namespace/namespace_module';
 import eventsModule from 'events/events_module';
 import filtersModule from 'common/filters/filters_module';
 import stateConfig from './poddetail_stateconfig';
@@ -31,6 +32,7 @@ export default angular
           'ngResource',
           'ui.router',
           componentsModule.name,
+          namespaceModule.name,
           filtersModule.name,
           eventsModule.name,
         ])

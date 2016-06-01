@@ -16,6 +16,11 @@
 import {stateName, namespaceParam} from './namespace_state';
 
 /**
+ * namespace is an abstract state with no path, but with one parameter ?namespace= that
+ * is always be accepted (since namespace is above all).
+ *
+ * This state must always be the root in a state tree. This is enforced during app startup.
+ *
  * @param {!ui.router.$stateProvider} $stateProvider
  * @ngInject
  */
@@ -37,7 +42,7 @@ export default function stateConfig($stateProvider) {
 function requireParentState(stateExtend, parentFn) {
   /** @type {!ui.router.$state} */
   let state = stateExtend['self'];
-  if (state.parent !== stateName && state.name !== stateName) {
+  if (!!state.parent && state.name !== stateName) {
     throw new Error(
         `State "${state.name}" requires parent state to be set to ` +
         `${stateName}. This is likely a programming error.`);
