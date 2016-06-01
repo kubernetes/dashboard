@@ -17,5 +17,7 @@ limitations under the License.
 <md-button ng-class="$ctrl.buttonClasses"
            ng-click="$ctrl.remove()">
   <md-icon class="kd-actionbar-icon-button">delete</md-icon>
-  <md-tooltip md-direction="bottom">Delete {{::$ctrl.resourceKindName}}</md-tooltip>
+  <md-tooltip md-direction="bottom">
+    {{::$ctrl.getDeleteTooltip()}}
+  </md-tooltip>
 </md-button>
