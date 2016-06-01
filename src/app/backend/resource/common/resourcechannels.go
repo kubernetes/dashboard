@@ -17,6 +17,7 @@ package common
 import (
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/apps"
+	"k8s.io/kubernetes/pkg/apis/batch"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
@@ -46,6 +47,9 @@ type ResourceChannels struct {
 
 	// List and error channels to Daemon Sets.
 	DaemonSetList DaemonSetListChannel
+
+	// List and error channels to Jobs.
+	JobList JobListChannel
 
 	// List and error channels to Services.
 	ServiceList ServiceListChannel
@@ -324,6 +328,38 @@ func GetDaemonSetListChannel(client client.DaemonSetsNamespacer,
 	go func() {
 		list, err := client.DaemonSets(nsQuery.ToRequestParam()).List(listEverything)
 		var filteredItems []extensions.DaemonSet
+		for _, item := range list.Items {
+			if nsQuery.Matches(item.ObjectMeta.Namespace) {
+				filteredItems = append(filteredItems, item)
+			}
+		}
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// JobListChannel is a list and error channels to Nodes.
+type JobListChannel struct {
+	List  chan *batch.JobList
+	Error chan error
+}
+
+// GetJobListChannel returns a pair of channels to a Job list and errors that
+// both must be read numReads times.
+func GetJobListChannel(client client.JobsNamespacer,
+	nsQuery *NamespaceQuery, numReads int) JobListChannel {
+	channel := JobListChannel{
+		List:  make(chan *batch.JobList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.Jobs(nsQuery.ToRequestParam()).List(listEverything)
+		var filteredItems []batch.Job
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
 				filteredItems = append(filteredItems, item)
