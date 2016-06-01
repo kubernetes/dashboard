@@ -16,7 +16,7 @@ limitations under the License.
 
 <md-input-container class="md-block">
   <label>Service</label>
-<md-select ng-model="ctrl.serviceType" ng-change="ctrl.changeServiceType()">
+<md-select ng-model="ctrl.serviceType" ng-change="ctrl.changeServiceType()" required>
   <md-option ng-repeat="serviceType in ctrl.serviceTypes" ng-value="serviceType">
     {{serviceType.label}}
   </md-option>
