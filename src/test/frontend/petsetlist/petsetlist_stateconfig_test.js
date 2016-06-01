@@ -12,21 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import replicaSetListModule from 'replicasetlist/replicasetlist_module';
-import {resolveReplicaSets} from 'replicasetlist/replicasetlist_stateconfig';
+import petSetListModule from 'petsetlist/petsetlist_module';
+import {resolvePetSets} from 'petsetlist/petsetlist_stateconfig';
 
-describe('StateConfig for replication controller list', () => {
-  beforeEach(() => { angular.mock.module(replicaSetListModule.name); });
+describe('StateConfig for pettion controller list', () => {
+  beforeEach(() => { angular.mock.module(petSetListModule.name); });
 
-  it('should resolve replica set controllers', angular.mock.inject(($q) => {
+  it('should resolve pet set controllers', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
 
     let resource = jasmine.createSpy('$resource');
     resource.and.returnValue({get: function() { return {$promise: promise}; }});
 
-    let actual = resolveReplicaSets(resource);
+    let actual = resolvePetSets(resource);
 
-    expect(resource).toHaveBeenCalledWith('api/v1/replicaset');
+    expect(resource).toHaveBeenCalledWith('api/v1/petset');
     expect(actual).toBe(promise);
   }));
 });

@@ -16,17 +16,14 @@ limitations under the License.
 
 <kd-resource-card type-meta="$ctrl.deployment.typeMeta" object-meta="$ctrl.deployment.objectMeta">
   <kd-resource-card-status layout="row">
-    <md-icon class="material-icons md-warn"
-             ng-if="::$ctrl.hasWarnings()">
+    <md-icon class="material-icons kd-error" ng-if="::$ctrl.hasWarnings()">
       error
-      <md-tooltip>One or more pods have errors</md-tooltip>
+      <md-tooltip md-direction="right">One or more pods have errors</md-tooltip>
     </md-icon>
-    <md-icon class="material-icons"
-             ng-if="::$ctrl.isPending()">
+    <md-icon class="material-icons" ng-if="::$ctrl.isPending()">
       timelapse
-      <md-tooltip>One or more pods are in pending state</md-tooltip>
+      <md-tooltip md-direction="right">One or more pods are in pending state</md-tooltip>
     </md-icon>
-
     <md-icon class="material-icons kd-success" ng-if="::$ctrl.isSuccess()">
       beenhere
     </md-icon>
@@ -50,9 +47,9 @@ limitations under the License.
       </span>
     </kd-resource-card-column>
     <kd-resource-card-column>
-      {{::$ctrl.deployment.objectMeta.creationTime | relativeTime}}
+      {{::$ctrl.deployment.objectMeta.creationTimestamp | relativeTime}}
       <md-tooltip>
-        Created at {{::$ctrl.deployment.objectMeta.creationTime | date:'short'}}
+        Created at {{::$ctrl.deployment.objectMeta.creationTimestamp | date:'short'}}
       </md-tooltip>
     </kd-resource-card-column>
     <kd-resource-card-column>
@@ -69,7 +66,7 @@ limitations under the License.
   </kd-resource-card-columns>
   <kd-resource-card-footer ng-if="::$ctrl.hasWarnings()">
       <div ng-repeat="warning in ::$ctrl.deployment.pods.warnings">
-        <span class="kd-deployment-card-error">{{::warning.message}}</span>
+        <span class="kd-error">{{::warning.message}}</span>
       </div>
   </kd-resource-card-footer>
 </kd-resource-card>

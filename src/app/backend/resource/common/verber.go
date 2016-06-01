@@ -25,6 +25,7 @@ import (
 type ResourceVerber struct {
 	client           RESTClient
 	extensionsClient RESTClient
+	appsClient       RESTClient
 }
 
 // RESTClient is an interface for REST operations used in this file.
@@ -34,8 +35,8 @@ type RESTClient interface {
 
 // NewResourceVerber creates a new resource verber that uses the given client for performing
 // operations.
-func NewResourceVerber(client RESTClient, extensionsClient RESTClient) ResourceVerber {
-	return ResourceVerber{client, extensionsClient}
+func NewResourceVerber(client, extensionsClient, appsClient RESTClient) ResourceVerber {
+	return ResourceVerber{client, extensionsClient, appsClient}
 }
 
 // Delete deletes the resource of the given kind in the given namespace with the given name.
@@ -46,9 +47,14 @@ func (verber *ResourceVerber) Delete(kind string, namespace string, name string)
 	}
 
 	var client RESTClient
-	if resourceSpec.Extension {
+	switch resourceSpec.ClientType {
+	case ClientTypeDefault:
+		client = verber.client
+	case ClientTypeExtensionClient:
 		client = verber.extensionsClient
-	} else {
+	case ClientTypeAppsClient:
+		client = verber.appsClient
+	default:
 		client = verber.client
 	}
 

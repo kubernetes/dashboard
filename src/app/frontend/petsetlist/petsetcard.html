@@ -14,62 +14,58 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card object-meta="$ctrl.replicaSet.objectMeta" type-meta="$ctrl.replicaSet.typeMeta">
+<kd-resource-card object-meta="$ctrl.petSet.objectMeta" type-meta="$ctrl.petSet.typeMeta">
   <kd-resource-card-status layout="row">
-    <md-icon class="material-icons md-warn"
-             ng-if="::$ctrl.hasWarnings()">
+    <md-icon class="material-icons kd-error" ng-if="::$ctrl.hasWarnings()">
       error
-      <md-tooltip>One or more pods have errors</md-tooltip>
+      <md-tooltip md-direction="right">One or more pods have errors</md-tooltip>
     </md-icon>
-    <md-icon class="material-icons"
-             ng-if="::$ctrl.isPending()">
+    <md-icon class="material-icons" ng-if="::$ctrl.isPending()">
       timelapse
-      <md-tooltip>One or more pods are in pending state</md-tooltip>
+      <md-tooltip md-direction="right">One or more pods are in pending state</md-tooltip>
     </md-icon>
-
-    <md-icon class="material-icons" style="color: green";
-             ng-if="::$ctrl.isSuccess()">
+    <md-icon class="material-icons kd-success" ng-if="::$ctrl.isSuccess()">
       beenhere
     </md-icon>
   </kd-resource-card-status>
   <kd-resource-card-columns>
     <kd-resource-card-column>
       <div>
-        <a ng-href="{{::$ctrl.getReplicaSetDetailHref()}}" class="kd-middle-ellipsised-link">
-          <kd-middle-ellipsis display-string="{{$ctrl.replicaSet.objectMeta.name}}">
+        <a ng-href="{{::$ctrl.getPetSetDetailHref()}}" class="kd-middle-ellipsised-link">
+          <kd-middle-ellipsis display-string="{{$ctrl.petSet.objectMeta.name}}">
           </kd-middle-ellipsis>
         </a>
       </div>
     </kd-resource-card-column>
     <kd-resource-card-column>
-      <kd-labels labels="::$ctrl.replicaSet.objectMeta.labels"></kd-labels>
+      <kd-labels labels="::$ctrl.petSet.objectMeta.labels"></kd-labels>
     </kd-resource-card-column>
     <kd-resource-card-column>
-      <span class="kd-replicase-card-pods-stat">
-        {{::$ctrl.replicaSet.pods.running}} /
-        {{::$ctrl.replicaSet.pods.desired}}
+      <span class="kd-petse-card-pods-stat">
+        {{::$ctrl.petSet.pods.running}} /
+        {{::$ctrl.petSet.pods.desired}}
       </span>
     </kd-resource-card-column>
     <kd-resource-card-column>
-      {{::$ctrl.replicaSet.objectMeta.creationTimestamp | relativeTime}}
+      {{::$ctrl.petSet.objectMeta.creationTimestamp | relativeTime}}
       <md-tooltip>
-        Created at {{::$ctrl.replicaSet.objectMeta.creationTimestamp | date:'short'}}
+        Created at {{::$ctrl.petSet.objectMeta.creationTimestamp | date:'short'}}
       </md-tooltip>
     </kd-resource-card-column>
     <kd-resource-card-column>
-      <div ng-repeat="image in ::$ctrl.replicaSet.containerImages track by $index">
+      <div ng-repeat="image in ::$ctrl.petSet.containerImages track by $index">
         <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
       </div>
     </kd-resource-card-column>
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
       <kd-resource-card-menu>
-        <kd-resource-card-delete-menu-item resource-kind-name="Replica Set">
+        <kd-resource-card-delete-menu-item resource-kind-name="Pet Set">
         </kd-resource-card-delete-menu-item>
       </kd-resource-card-menu>
     </kd-resource-card-column>
   </kd-resource-card-columns>
   <kd-resource-card-footer ng-if="::$ctrl.hasWarnings()">
-      <div ng-repeat="warning in ::$ctrl.replicaSet.pods.warnings">
+      <div ng-repeat="warning in ::$ctrl.petSet.pods.warnings">
         <span class="kd-error">{{::warning.message}}</span>
       </div>
   </kd-resource-card-footer>

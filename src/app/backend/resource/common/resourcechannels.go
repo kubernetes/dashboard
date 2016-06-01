@@ -58,6 +58,9 @@ type ResourceChannels struct {
 
 	// List and error channels to Nodes.
 	NodeList NodeListChannel
+
+	// List and error channels to PetSets.
+	PetSetList PetSetListChannel
 }
 
 // ServiceListChannel is a list and error channels to Services.
@@ -297,6 +300,7 @@ func GetReplicaSetListChannel(client client.ReplicaSetsNamespacer,
 				filteredItems = append(filteredItems, item)
 			}
 		}
+		list.Items = filteredItems
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -329,6 +333,7 @@ func GetDaemonSetListChannel(client client.DaemonSetsNamespacer,
 				filteredItems = append(filteredItems, item)
 			}
 		}
+		list.Items = filteredItems;
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -346,14 +351,23 @@ type PetSetListChannel struct {
 
 // GetPetSetListChannel returns a pair of channels to a PetSet list and errors that
 // both must be read numReads times.
-func GetPetSetListChannel(client client.PetSetNamespacer, numReads int) PetSetListChannel {
+func GetPetSetListChannel(client client.PetSetNamespacer,
+	nsQuery *NamespaceQuery, numReads int) PetSetListChannel {
 	channel := PetSetListChannel{
 		List:  make(chan *apps.PetSetList, numReads),
 		Error: make(chan error, numReads),
 	}
 
 	go func() {
-		petSets, err := client.PetSets(api.NamespaceAll).List(listEverything)
+		petSets, err := client.PetSets(nsQuery.ToRequestParam()).List(listEverything)
+		var filteredItems []apps.PetSet
+		for _, item := range petSets.Items {
+			if nsQuery.Matches(item.ObjectMeta.Namespace) {
+				filteredItems = append(filteredItems, item)
+			}
+		}
+
+		petSets.Items = filteredItems;
 		for i := 0; i < numReads; i++ {
 			channel.List <- petSets
 			channel.Error <- err

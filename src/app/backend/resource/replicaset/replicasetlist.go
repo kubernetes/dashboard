@@ -19,6 +19,7 @@ import (
 
 	"github.com/kubernetes/dashboard/resource/common"
 
+	"github.com/kubernetes/dashboard/resource/event"
 	"k8s.io/kubernetes/pkg/api"
 	k8serrors "k8s.io/kubernetes/pkg/api/errors"
 	"k8s.io/kubernetes/pkg/apis/extensions"
@@ -115,6 +116,7 @@ func ToReplicaSetList(replicaSets []extensions.ReplicaSet,
 		matchingPods := common.FilterNamespacedPodsBySelector(pods, replicaSet.ObjectMeta.Namespace,
 			replicaSet.Spec.Selector.MatchLabels)
 		podInfo := getPodInfo(&replicaSet, matchingPods)
+		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 
 		replicaSetList.ReplicaSets = append(replicaSetList.ReplicaSets, ToReplicaSet(&replicaSet, &podInfo))
 	}

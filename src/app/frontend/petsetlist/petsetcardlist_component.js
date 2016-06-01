@@ -12,18 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ReplicaSetListController} from 'replicasetlist/replicasetlist_controller';
-import replicaSetListModule from 'replicasetlist/replicasetlist_module';
-
-describe('Replica Set list controller', () => {
-
-  beforeEach(() => { angular.mock.module(replicaSetListModule.name); });
-
-  it('should initialize replica set controller', angular.mock.inject(($controller) => {
-    let ctrls = {};
-    /** @type {!ReplicaSetListController} */
-    let ctrl = $controller(ReplicaSetListController, {replicaSets: {replicaSets: ctrls}});
-
-    expect(ctrl.replicaSets).toBe(ctrls);
-  }));
-});
+/**
+ * @return {!angular.Component}
+ */
+export const petSetCardListComponent = {
+  transclude: true,
+  bindings: {
+    'petSets': '<',
+  },
+  templateUrl: 'petsetlist/petsetcardlist.html',
+};
