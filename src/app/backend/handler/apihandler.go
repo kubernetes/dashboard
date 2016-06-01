@@ -28,6 +28,7 @@ import (
 	. "github.com/kubernetes/dashboard/resource/container"
 	"github.com/kubernetes/dashboard/resource/daemonset"
 	"github.com/kubernetes/dashboard/resource/deployment"
+	"github.com/kubernetes/dashboard/resource/job"
 	. "github.com/kubernetes/dashboard/resource/namespace"
 	"github.com/kubernetes/dashboard/resource/petset"
 	"github.com/kubernetes/dashboard/resource/pod"
@@ -88,7 +89,7 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 	clientConfig clientcmd.ClientConfig) http.Handler {
 
 	verber := common.NewResourceVerber(client.RESTClient, client.ExtensionsClient.RESTClient,
-		client.AppsClient.RESTClient)
+		client.AppsClient.RESTClient, client.BatchClient.RESTClient)
 	apiHandler := ApiHandler{client, heapsterClient, clientConfig, verber}
 	wsContainer := restful.NewContainer()
 
@@ -217,6 +218,19 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 	apiV1Ws.Route(
 		apiV1Ws.DELETE("/daemonset/{namespace}/{daemonSet}").
 			To(apiHandler.handleDeleteDaemonSet))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/job").
+			To(apiHandler.handleGetJobs).
+			Writes(job.JobList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/job/{namespace}").
+			To(apiHandler.handleGetJobs).
+			Writes(job.JobList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/job/{namespace}/{job}").
+			To(apiHandler.handleGetJobDetail).
+			Writes(job.JobDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.POST("/namespace").
@@ -754,6 +768,32 @@ func (apiHandler *ApiHandler) handleDeleteDaemonSet(
 	}
 
 	response.WriteHeader(http.StatusOK)
+}
+
+// Handles get Jobs list API call.
+func (apiHandler *ApiHandler) handleGetJobs(request *restful.Request, response *restful.Response) {
+	namespace := parseNamespacePathParameter(request)
+
+	result, err := job.GetJobList(apiHandler.client, namespace)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+func (apiHandler *ApiHandler) handleGetJobDetail(request *restful.Request, response *restful.Response) {
+	namespace := request.PathParameter("namespace")
+	jobParam := request.PathParameter("job")
+
+	result, err := job.GetJobDetail(apiHandler.client, apiHandler.heapsterClient, namespace, jobParam)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
 // parseNamespacePathParameter parses namespace selector for list pages in path paramater.

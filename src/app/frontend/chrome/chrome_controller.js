@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName} from './chrome_state';
 import {stateName as workloadState} from 'workloads/workloads_state';
+
+import {actionbarViewName} from './chrome_state';
 
 /**
  * Controller for the chrome directive.

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {stateName as chromeStateName} from 'chrome/chrome_state';
+
 import {InternalErrorController} from './internalerror_controller';
 import {stateName, StateParams} from './internalerror_state';
-
-import {stateName as chromeStateName} from 'chrome/chrome_state';
 
 /**
  * Configures states for the internal error view.

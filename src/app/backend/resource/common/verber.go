@@ -26,6 +26,7 @@ type ResourceVerber struct {
 	client           RESTClient
 	extensionsClient RESTClient
 	appsClient       RESTClient
+	batchClient      RESTClient
 }
 
 // RESTClient is an interface for REST operations used in this file.
@@ -35,8 +36,9 @@ type RESTClient interface {
 
 // NewResourceVerber creates a new resource verber that uses the given client for performing
 // operations.
-func NewResourceVerber(client, extensionsClient, appsClient RESTClient) ResourceVerber {
-	return ResourceVerber{client, extensionsClient, appsClient}
+func NewResourceVerber(client, extensionsClient, appsClient,
+	batchClient RESTClient) ResourceVerber {
+	return ResourceVerber{client, extensionsClient, appsClient, batchClient}
 }
 
 // Delete deletes the resource of the given kind in the given namespace with the given name.
@@ -62,6 +64,8 @@ func (verber *ResourceVerber) getRESTClientByType(clientType ClientType) RESTCli
 		return verber.extensionsClient
 	case ClientTypeAppsClient:
 		return verber.appsClient
+	case ClientTypeBatchClient:
+		return verber.batchClient
 	default:
 		return verber.client
 	}
