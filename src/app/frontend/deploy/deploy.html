@@ -16,23 +16,20 @@ limitations under the License.
 
 <div layout="column" layout-padding-gt-md layout-align="center center" flex="auto">
   <md-whiteframe class="kd-deploy-whiteframe md-whiteframe-5dp" flex="auto">
-    <h3 class="md-headline kd-deploy-form-title">Deploy a Containerized App</h3>
+    <h3 class="md-headline kd-deploy-form-title">{{::ctrl.i18n.MSG_DEPLOY_PAGE_TITLE}}</h3>
 
     <form name="ctrl.deployForm" ng-submit="ctrl.deployBySelection()" novalidate>
       <kd-help-section>
         <md-radio-group ng-model="ctrl.selection">
           <md-radio-button value="Settings" class="md-primary">
-            Specify app details below
+            {{::ctrl.i18n.MSG_DEPLOY_SPECIFY_APP_DETAILS_ACTION}}
           </md-radio-button>
           <md-radio-button value="File" class="md-primary">
-            Upload a YAML or JSON file
+            {{::ctrl.i18n.MSG_DEPLOY_FILE_UPLOAD_ACTION}}
           </md-radio-button>
         </md-radio-group>
         <kd-user-help>
-          To learn more,
-          <a href="http://kubernetes.io/docs/user-guide/ui/" target="_blank" tabindex="-1">
-            take the Dashboard Tour <i class="material-icons">open_in_new</i>
-          </a>
+          <span ng-bind-html="::ctrl.i18n.MSG_DEPLOY_DASHBOARD_TOUR_USER_HELP"></span>
         </kd-user-help>
       </kd-help-section>
 
@@ -47,9 +44,9 @@ limitations under the License.
 
       <md-button class="md-raised md-primary kd-deploy-submit-button" type="submit"
                  ng-disabled="ctrl.isDeployDisabled()">
-        Deploy
+        {{::ctrl.i18n.MSG_DEPLOY_DEPLOY_ACTION}}
       </md-button>
-      <md-button class="md-raised kd-deploy-cancel-button" ng-click="ctrl.cancel()">Cancel</md-button>
+      <md-button class="md-raised kd-deploy-cancel-button" ng-click="ctrl.cancel()">{{::ctrl.i18n.MSG_DEPLOY_CANCEL_ACTION}}</md-button>
     </form>
   </md-whiteframe>
 </div>
