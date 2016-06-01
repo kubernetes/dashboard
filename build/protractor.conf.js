@@ -57,11 +57,12 @@ function createConfig() {
         'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
         'name': name,
       },
-      {
-        'browserName': 'internet explorer',
-        'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-        'name': name,
-      },
+      // {
+      //    TODO: disable for now until IE compatibility issues are fixed
+      //    'browserName': 'internet explorer',
+      //    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+      //    'name': name,
+      // },
     ];
 
     // Limit concurrency to not exhaust saucelabs resources for the CI user.
