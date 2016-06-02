@@ -15,15 +15,15 @@ limitations under the License.
 -->
 
 <kd-info-card>
-  <kd-info-card-header>Resource Details</kd-info-card-header>
-  <kd-info-card-section name="Details">
-    <kd-info-card-entry title="Name">
+  <kd-info-card-header>{{::$ctrl.i18n.MSG_SERVICE_DETAIL_RESOURCE_DETAILS_TITLE}}</kd-info-card-header>
+  <kd-info-card-section name="{{::$ctrl.i18n.MSG_SERVICE_DETAIL_DETAILS_SUBTITLE}}">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_SERVICE_DETAIL_NAME_LABEL}}">
       <kd-middle-ellipsis display-string="{{::$ctrl.service.objectMeta.name}}"></kd-middle-ellipsis>
     </kd-info-card-entry>
-    <kd-info-card-entry title="Namespace">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_SERVICE_DETAIL_NAMESPACE_LABEL}}">
       {{::$ctrl.service.objectMeta.namespace}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="Label selector">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_SERVICE_DETAIL_LABEL_SELECTOR_LABEL}}">
       <div ng-if="::$ctrl.service.selector">
         <kd-labels labels="::$ctrl.service.selector"></kd-labels>
       </div>
@@ -31,7 +31,7 @@ limitations under the License.
         none
       </div>
     </kd-info-card-entry>
-    <kd-info-card-entry title="Labels">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_SERVICE_DETAIL_LABELS_LABEL}}">
       <div ng-if="::$ctrl.service.objectMeta.labels">
         <kd-labels labels="::$ctrl.service.objectMeta.labels"></kd-labels>
       </div>
@@ -39,19 +39,19 @@ limitations under the License.
         none
       </div>
     </kd-info-card-entry>
-    <kd-info-card-entry title="Type">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_SERVICE_DETAIL_TYPE_LABEL}}">
       {{::$ctrl.service.type}}
     </kd-info-card-entry>
   </kd-info-card-section>
 
-  <kd-info-card-section name="Connection">
-    <kd-info-card-entry title="Cluster IP">
+  <kd-info-card-section name="{{::$ctrl.i18n.MSG_SERVICE_DETAIL_CONNECTION_SUBTITLE}}">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_SERVICE_DETAIL_CLUSTER_IP_LABEL}}">
       {{::$ctrl.service.clusterIP}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="Internal endpoints" ng-if="::$ctrl.service.internalEndpoint">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_SERVICE_DETAIL_INTERNAL_ENDPOINTS_LABEL}}" ng-if="::$ctrl.service.internalEndpoint">
       <kd-internal-endpoint endpoint="::$ctrl.service.internalEndpoint"></kd-internal-endpoint>
     </kd-info-card-entry>
-    <kd-info-card-entry title="External endpoints" ng-if="::$ctrl.detail.externalEndpoints">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_SERVICE_DETAIL_EXTERNAL_ENDPOINTS_LABEL}}" ng-if="::$ctrl.detail.externalEndpoints">
       <kd-external-endpoint endpoint="::$ctrl.service.internalEndpoint"></kd-external-endpoint>
     </kd-info-card-entry>
   </kd-info-card-section>

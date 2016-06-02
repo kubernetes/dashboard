@@ -25,6 +25,9 @@ export class WorkloadsActionBarController {
   constructor($state) {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
+
+    /** @export */
+    this.i18n = i18n;
   }
 
   /**
@@ -32,3 +35,8 @@ export class WorkloadsActionBarController {
    */
   redirectToDeployPage() { this.state_.go(deploy); }
 }
+
+const i18n = {
+  /** @export {string} @desc This tooltip appears when the user hovers over the "+" (Deploy) button on the workloads page. */
+  MSG_WORKLOADS_ACTION_BAR_DEPLOY_TOOLTIP: goog.getMsg('Deploy a containerized app'),
+};
