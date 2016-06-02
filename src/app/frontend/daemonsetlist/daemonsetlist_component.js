@@ -32,6 +32,11 @@ export class DaemonSetCardListController {
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
+
+    /**
+     * @export
+     */
+    this.i18n = i18n;
   }
 
   /**
@@ -43,6 +48,27 @@ export class DaemonSetCardListController {
     return this.state_.href(
         stateName, new StateParams(daemonSet.objectMeta.namespace, daemonSet.objectMeta.name));
   }
+
+  /**
+   * Returns true if any of the object's pods have warning, false otherwise
+   * @return {boolean}
+   * @export
+   */
+  hasWarnings(daemonSet) { return daemonSet.pods.failed > 0; }
+
+  /**
+   * Returns true if the object's pods have no warnings and there is at least one pod
+   * in pending state, false otherwise
+   * @return {boolean}
+   * @export
+   */
+  isPending(daemonSet) { return !this.hasWarnings(daemonSet) && daemonSet.pods.pending > 0; }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  isSuccess(daemonSet) { return !this.isPending(daemonSet) && !this.hasWarnings(daemonSet); }
 }
 
 /**
@@ -61,4 +87,12 @@ export const daemonSetCardListComponent = {
     /** {boolean} */
     'withStatuses': '<',
   },
+};
+
+const i18n = {
+  /** @export {string} @desc tooltip for failed pod card icon */
+  MSG_PODS_ARE_FAILED_TOOLTIP: goog.getMsg('One or more pods have errors.'),
+
+  /** @export {string} @desc tooltip for pending pod card icon */
+  MSG_PODS_ARE_PENDING_TOOLTIP: goog.getMsg('One or more pods are in pending state.'),
 };
