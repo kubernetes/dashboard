@@ -13,12 +13,12 @@
 // limitations under the License.
 
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 
 import {WorkloadsController} from './workloads_controller';
 import {stateName} from './workloads_state';
 import {stateUrl} from './workloads_state';
 import {WorkloadsActionBarController} from './workloadsactionbar_controller';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 
 /**
  * @param {!ui.router.$stateProvider} $stateProvider
