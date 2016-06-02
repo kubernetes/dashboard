@@ -28,6 +28,19 @@ limitations under the License.
   </kd-resource-card-header-columns>
   <kd-resource-card ng-repeat="daemonSet in ::$ctrl.daemonSets.daemonSets"
       object-meta="daemonSet.objectMeta" type-meta="daemonSet.typeMeta">
+    <kd-resource-card-status layout="row">
+      <md-icon class="material-icons kd-error" ng-if="::$ctrl.hasWarnings(daemonSet)">
+        error
+        <md-tooltip md-direction="right">{{::$ctrl.i18n.MSG_PODS_ARE_FAILED_TOOLTIP}}</md-tooltip>
+      </md-icon>
+      <md-icon class="material-icons" ng-if="::$ctrl.isPending(daemonSet)">
+        timelapse
+        <md-tooltip md-direction="right">{{::$ctrl.i18n.MSG_PODS_ARE_PENDING_TOOLTIP}}</md-tooltip>
+      </md-icon>
+      <md-icon class="material-icons kd-success" ng-if="::$ctrl.isSuccess(daemonSet)">
+        beenhere
+      </md-icon>
+    </kd-resource-card-status>
     <kd-resource-card-columns>
       <kd-resource-card-column>
         <a ng-href="{{::$ctrl.getDaemonSetDetailHref(daemonSet)}}">

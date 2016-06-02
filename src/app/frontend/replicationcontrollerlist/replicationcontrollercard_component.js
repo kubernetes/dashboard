@@ -48,14 +48,14 @@ export default class ReplicationControllerCardController {
   }
 
   /**
-   * Returns true if any of replication controller pods has warning, false otherwise
+   * Returns true if any of the replication controller's pods have warning, false otherwise
    * @return {boolean}
    * @export
    */
   hasWarnings() { return this.replicationController.pods.warnings.length > 0; }
 
   /**
-   * Returns true if replication controller pods have no warnings and there is at least one pod
+   * Returns true if the replication controller's pods have no warnings and there is at least one pod
    * in pending state, false otherwise
    * @return {boolean}
    * @export
