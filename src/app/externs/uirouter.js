@@ -12,5 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'poddetail';
+/**
+ * @fileoverview Externs for angular UI router that are missing from official ones.
+ *
+ * @externs
+ */
+
+const kdUiRouter = {};
+
+/**
+ * @constructor
+ */
+kdUiRouter.$stateProvider = function() {};
+
+/**
+ * @param {string} parent
+ * @param {Function} callback
+ */
+kdUiRouter.$stateProvider.prototype.decorator = function(parent, callback) {};

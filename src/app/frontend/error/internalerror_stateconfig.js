@@ -15,6 +15,8 @@
 import {InternalErrorController} from './internalerror_controller';
 import {stateName, StateParams} from './internalerror_state';
 
+import {stateName as chromeStateName} from 'chrome/chrome_state';
+
 /**
  * Configures states for the internal error view.
  *
@@ -24,6 +26,7 @@ import {stateName, StateParams} from './internalerror_state';
 export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
     controller: InternalErrorController,
+    parent: chromeStateName,
     controllerAs: 'ctrl',
     params: new StateParams(/** @type {!angular.$http.Response} */ ({})),
     templateUrl: 'error/internalerror.html',

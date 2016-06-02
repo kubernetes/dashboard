@@ -54,7 +54,7 @@ describe('Deploy not existing image story', () => {
     replicationControllerDetailPage = new ReplicationControllerDetailPageObject();
   });
 
-  it('should deploy app and go to replication controllers list page', (doneFn) => {
+  it('should deploy app', (doneFn) => {
     // For empty cluster this should actually redirect to zerostate page
     browser.get('#/deploy');
     // given
@@ -67,9 +67,9 @@ describe('Deploy not existing image story', () => {
       expect(browser.getCurrentUrl()).toContain('replicationcontroller');
       doneFn();
     });
-  });
 
-  it('should wait for card to be in error state', () => {
+    // it should wait for card to be in error state
+
     // given
     let cardErrors = replicationControllersPage.getElementByAppName(
         replicationControllersPage.cardErrorsQuery, appName, true);
@@ -91,9 +91,9 @@ describe('Deploy not existing image story', () => {
     // then
     expect(cardErrorIcon.isDisplayed()).toBeTruthy();
     cardErrors.then((errors) => { expect(errors.length).not.toBe(0); });
-  });
 
-  it('should go to details page', () => {
+    // it should go to details page
+
     // given
     let cardDetailsPageLink = replicationControllersPage.getElementByAppName(
         replicationControllersPage.cardDetailsPageLinkQuery, appName);
@@ -103,9 +103,9 @@ describe('Deploy not existing image story', () => {
 
     // then
     expect(browser.getCurrentUrl()).toContain(`replicationcontroller/default/${appName}`);
-  });
 
-  it('should switch to events tab and check for errors', () => {
+    // it should switch to events tab and check for errors
+
     // when
     // Switch to events tab
     replicationControllerDetailPage.eventsTab.click();
@@ -116,9 +116,9 @@ describe('Deploy not existing image story', () => {
 
     // then
     expect(replicationControllerDetailPage.eventsTable.isDisplayed()).toBeTruthy();
-  });
 
-  it('should switch to pods tab and go to pod logs page', () => {
+    // it should switch to pods tab and go to pod logs page
+
     // when
     // Switch to pods tab
     replicationControllerDetailPage.podsTab.click();

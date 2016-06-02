@@ -14,6 +14,7 @@
 
 import {stateName, StateParams} from './internalerror_state';
 import stateConfig from './internalerror_stateconfig';
+import chromeModule from 'chrome/chrome_module';
 
 /**
  * Angular module for error views.
@@ -23,6 +24,7 @@ export default angular
         'kubernetesDashboard.error',
         [
           'ui.router',
+          chromeModule.name,
         ])
     .config(stateConfig)
     .run(errorConfig);

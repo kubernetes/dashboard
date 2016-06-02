@@ -27,7 +27,7 @@ describe('Chrome controller', () => {
   beforeEach(() => {
     angular.mock.module(chromeModule.name);
     angular.mock.inject(($controller, $rootScope, $state) => {
-      ctrl = $controller(ChromeController);
+      ctrl = $controller(ChromeController, {$scope: $rootScope});
       scope = $rootScope;
       state = $state;
     });
@@ -38,14 +38,6 @@ describe('Chrome controller', () => {
     expect(ctrl.showLoadingSpinner).toBe(true);
 
     // when
-    scope.$broadcast('$stateChangeSuccess');
-    scope.$apply();
-
-    // Then nothing happens when scope is not registered.
-    expect(ctrl.showLoadingSpinner).toBe(true);
-
-    // when
-    ctrl.registerStateChangeListeners(scope);
     scope.$broadcast('$stateChangeSuccess');
     scope.$apply();
 

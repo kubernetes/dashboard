@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName} from 'chrome/chrome_state';
+import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {stateName as workloadsState} from 'workloads/workloads_state';
 
@@ -30,6 +30,7 @@ import PetSetListActionBarController from './petsetlistactionbar_controller';
 export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
     url: stateUrl,
+    parent: chromeStateName,
     resolve: {
       'petSets': resolvePetSets,
     },

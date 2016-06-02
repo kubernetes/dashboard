@@ -54,7 +54,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 
 	newReplicaSet := extensions.ReplicaSet{
 		ObjectMeta: api.ObjectMeta{
-			Name: "replica-set-1",
+			Name:      "replica-set-1",
 			Namespace: "test-namespace",
 		},
 		Spec: extensions.ReplicaSetSpec{
@@ -67,7 +67,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 			newReplicaSet,
 			{
 				ObjectMeta: api.ObjectMeta{
-					Name: "replica-set-2",
+					Name:      "replica-set-2",
 					Namespace: "test-namespace",
 				},
 			},
