@@ -15,6 +15,7 @@
 import stateConfig from './deploymentdetail_stateconfig';
 import filtersModule from 'common/filters/filters_module';
 import componentsModule from 'common/components/components_module';
+import namespaceModule from 'common/namespace/namespace_module';
 import {deploymentInfoComponent} from './deploymentinfo_component';
 
 /**
@@ -30,6 +31,7 @@ export default angular
           'ngResource',
           'ui.router',
           componentsModule.name,
+          namespaceModule.name,
           filtersModule.name,
         ])
     .config(stateConfig)

@@ -16,8 +16,8 @@
 import {stateName, namespaceParam} from './namespace_state';
 
 /**
- * namespace is an abstract state with no path, but with one parameter ?namespace= that
- * is always be accepted (since namespace is above all).
+ * Namespace is an abstract state with no path, but with one parameter ?namespace= that
+ * is always accepted (since namespace is above all).
  *
  * This state must always be the root in a state tree. This is enforced during app startup.
  *

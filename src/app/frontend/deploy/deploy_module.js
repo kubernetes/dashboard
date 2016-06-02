@@ -27,6 +27,7 @@ import validImageReferenceDirective from './validimagereference_directive';
 import validProtocolDirective from './validprotocol_directive';
 import helpSectionModule from './helpsection/helpsection_module';
 import validatorsModule from '../common/validators/validators_module';
+import namespaceModule from 'common/namespace/namespace_module';
 
 /**
  * Angular module for the deploy view.
@@ -43,6 +44,7 @@ export default angular
           helpSectionModule.name,
           errorHandlingModule.name,
           validatorsModule.name,
+          namespaceModule.name,
         ])
     .config(stateConfig)
     .run(initConfig)
