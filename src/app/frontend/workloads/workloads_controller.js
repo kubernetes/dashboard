@@ -34,6 +34,8 @@ const i18n = {
   MSG_WORKLOADS_DEAMON_SETS_LABEL: goog.getMsg('Daemon sets'),
   /** @export {string} @desc Label "Deployments", which appears above the deployments list on the workloads page.*/
   MSG_WORKLOADS_DEPLOYMENTS_LABEL: goog.getMsg('Deployments'),
+  /** @export {string} @desc Label "Pet Sets", which appears above the replica set list on the workloads page.*/
+  MSG_WORKLOADS_PET_SETS_LABEL: goog.getMsg('Pet Sets'),
   /** @export {string} @desc Label "Replica sets", which appears above the replica sets list on the workloads page.*/
   MSG_WORKLOADS_REPLICA_SETS_LABEL: goog.getMsg('Replica sets'),
   /** @export {string} @desc Label "Replication controllers", which appears above the replication controllers list on the workloads page.*/

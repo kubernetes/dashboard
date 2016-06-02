@@ -53,7 +53,10 @@ func TestGetDeploymentDetail(t *testing.T) {
 	podTemplateSpec := deploymentutil.GetNewReplicaSetTemplate(deployment)
 
 	newReplicaSet := extensions.ReplicaSet{
-		ObjectMeta: api.ObjectMeta{Name: "replica-set-1"},
+		ObjectMeta: api.ObjectMeta{
+			Name: "replica-set-1",
+			Namespace: "test-namespace",
+		},
 		Spec: extensions.ReplicaSetSpec{
 			Template: podTemplateSpec,
 		},
@@ -63,7 +66,10 @@ func TestGetDeploymentDetail(t *testing.T) {
 		Items: []extensions.ReplicaSet{
 			newReplicaSet,
 			{
-				ObjectMeta: api.ObjectMeta{Name: "replica-set-2"},
+				ObjectMeta: api.ObjectMeta{
+					Name: "replica-set-2",
+					Namespace: "test-namespace",
+				},
 			},
 		},
 	}

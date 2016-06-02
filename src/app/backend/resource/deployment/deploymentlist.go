@@ -18,6 +18,7 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/resource/common"
+	"github.com/kubernetes/dashboard/resource/event"
 
 	"k8s.io/kubernetes/pkg/api"
 	k8serrors "k8s.io/kubernetes/pkg/api/errors"
@@ -116,6 +117,7 @@ func getDeploymentList(deployments []extensions.Deployment,
 		matchingPods := common.FilterNamespacedPodsBySelector(pods, deployment.ObjectMeta.Namespace,
 			deployment.Spec.Selector.MatchLabels)
 		podInfo := getPodInfo(&deployment, matchingPods)
+		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 
 		deploymentList.Deployments = append(deploymentList.Deployments,
 			Deployment{

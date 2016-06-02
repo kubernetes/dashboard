@@ -30,6 +30,7 @@ import serviceDetailModule from './servicedetail/servicedetail_module';
 import serviceListModule from './servicelist/servicelist_module';
 import workloadsModule from './workloads/workloads_module';
 import podDetailModule from './poddetail/poddetail_module';
+import petSetListModule from './petsetlist/petsetlist_module';
 
 export default angular
     .module(
@@ -54,6 +55,7 @@ export default angular
           serviceDetailModule.name,
           serviceListModule.name,
           podDetailModule.name,
+          petSetListModule.name,
         ])
     .config(indexConfig)
     .config(routeConfig);
