@@ -62,6 +62,18 @@ limitations under the License.
   </kd-content>
 </kd-content-card>
 
+<kd-content-card ng-if="$ctrl.workloads.jobList.jobs.length">
+  <kd-title>
+    <a ui-sref="job">
+      {{::$ctrl.i18n.MSG_WORKLOADS_JOBS_LABEL}}
+    </a>
+  </kd-title>
+  <kd-content>
+    <kd-job-card-list jobs="$ctrl.workloads.jobList.jobs">
+    </kd-job-card-list>
+  </kd-content>
+</kd-content-card>
+
 <kd-content-card ng-if="$ctrl.workloads.replicationControllerList.replicationControllers.length">
   <kd-title>
     <a ui-sref="replicationcontroller">

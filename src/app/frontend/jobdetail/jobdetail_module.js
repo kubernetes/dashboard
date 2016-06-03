@@ -14,32 +14,25 @@
 
 import componentsModule from 'common/components/components_module';
 import chromeModule from 'chrome/chrome_module';
-import deploymentListModule from 'deploymentlist/deploymentlist_module';
-import daemonSetListModule from 'daemonsetlist/daemonsetlist_module';
-import jobListModule from 'joblist/joblist_module';
+import eventsModule from 'events/events_module';
 import filtersModule from 'common/filters/filters_module';
-import petSetListModule from 'petsetlist/petsetlist_module';
-import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
-import replicaSetListModule from 'replicasetlist/replicasetlist_module';
-import stateConfig from './workloads_stateconfig';
+import stateConfig from './jobdetail_stateconfig';
+import {jobInfoComponent} from './jobinfo_component';
 
 /**
- * Module with a view that displays resources categorized as workloads, e.g., Replica Sets or
- * Deployments.
+ * Angular module for the Job details view.
+ *
+ * The view shows detailed view of a Job.
  */
-export default angular.module('kubernetesDashboard.workloads',
+export default angular.module('kubernetesDashboard.jobDetail',
                               [
                                 'ngMaterial',
                                 'ngResource',
                                 'ui.router',
-                                filtersModule.name,
                                 componentsModule.name,
                                 chromeModule.name,
-                                jobListModule.name,
-                                replicationControllerListModule.name,
-                                replicaSetListModule.name,
-                                deploymentListModule.name,
-                                daemonSetListModule.name,
-                                petSetListModule.name,
+                                filtersModule.name,
+                                eventsModule.name,
                               ])
-    .config(stateConfig);
+    .config(stateConfig)
+    .component('kdJobInfo', jobInfoComponent);
