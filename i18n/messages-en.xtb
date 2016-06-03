@@ -182,4 +182,18 @@
 	<translation id="270964281826728358" key="MSG_TIME_UNIT_YEARS_LABEL" source="/home/mirchev/go_workspace/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Time units label, many years (plural).">years</translation>
 	<translation id="6450429370516938913" key="MSG_TIME_NOT_YET_LABEL" source="/home/mirchev/go_workspace/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Label saying that a certain action has not happened yet.">didn't happen yet</translation>
 	<translation id="3299077321377208801" key="MSG_TIME_NOW_LABEL" source="/home/mirchev/go_workspace/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Label saying that a certain action happened just now.">just now</translation>
+	<translation id="2654637773125741729" key="MSG_WORKLOADS_JOBS_LABEL" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="Label &quot;Job&quot;, which appears above the replica sets list on the workloads page.">Jobs</translation>
+	<translation id="7580638224255214566" key="MSG_JOB_RESOURCE_DETAILS" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="Resource details header. Appears on top of the page.">Resource details</translation>
+	<translation id="9069442902328610253" key="MSG_JOB_DETAILS" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="Details section header. Appears below main header.">Details</translation>
+	<translation id="7686453291952549299" key="MSG_JOB_NAME" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="Job name. Appears in details section.">Name</translation>
+	<translation id="7558473828636932468" key="MSG_JOB_NAMESPACE" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="Job namespace. Appears in details section.">Namespace</translation>
+	<translation id="8163083126193456298" key="MSG_JOB_LABELS" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="Job labels. Appears in details section.">Labels</translation>
+	<translation id="7788315896863763846" key="MSG_JOB_IMAGES" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="Job images. Appears in details section.">Images</translation>
+	<translation id="3935199608753533539" key="MSG_JOB_STATUS" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="Job status. Appears in details section.">Status</translation>
+	<translation id="8414020124021085200" key="MSG_JOB_PODS_SUCCEEDED" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="Status of succeeded pods. Appears next to number of succeeded pods.">succeeded</translation>
+	<translation id="8886503654312436063" key="MSG_JOB_PODS_ACTIVE" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="Status of active pods. Appears next to number of active pods.">active</translation>
+	<translation id="6712354334142473632" key="MSG_JOB_PODS_FAILED" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="Status of failed pods. Appears next to number of failed pods.">failed</translation>
+	<translation id="7089872537244155228" key="MSG_JOB_PODS" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="Pod status section header. Appears below main header.">Pods</translation>
+	<translation id="8441658278143071101" key="MSG_JOB_COMPLETIONS" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="Job completions. Appears in details section.">Completions</translation>
+	<translation id="5453693199707406345" key="MSG_JOB_PARALLEISM" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="Job paralleism. Appears in details section.">Paralleism</translation>
 </translationbundle>

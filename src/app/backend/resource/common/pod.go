@@ -46,12 +46,12 @@ func FilterPodsBySelector(pods []api.Pod, resourceSelector map[string]string) []
 }
 
 func FilterNamespacedPodsByLabelSelector(pods []api.Pod, namespace string,
-labelSelector *unversioned.LabelSelector) []api.Pod {
+	labelSelector *unversioned.LabelSelector) []api.Pod {
 
 	var matchingPods []api.Pod
 	for _, pod := range pods {
 		if pod.ObjectMeta.Namespace == namespace &&
-		IsLabelSelectorMatching(pod.Labels, labelSelector) {
+			IsLabelSelectorMatching(pod.Labels, labelSelector) {
 			matchingPods = append(matchingPods, pod)
 		}
 	}

@@ -195,10 +195,11 @@ func TestGetReplicationControllerList(t *testing.T) {
 						ContainerImages:   []string{"my-container-image-1"},
 						InternalEndpoints: []common.Endpoint{{Host: "my-app-1.namespace-1"}},
 						Pods: common.PodInfo{
-							Failed:   2,
-							Pending:  1,
-							Running:  1,
-							Warnings: []common.Event{},
+							Failed:    2,
+							Pending:   1,
+							Running:   1,
+							Succeeded: 1,
+							Warnings:  []common.Event{},
 						},
 					}, {
 						ObjectMeta: common.ObjectMeta{

@@ -150,6 +150,7 @@ backendApi.PodMetrics;
  *   running: number,
  *   pending: number,
  *   failed: number,
+ *   succeeded: number,
  *   warnings: !Array<!backendApi.Event>
  * }}
  */
@@ -202,6 +203,37 @@ backendApi.ReplicaSetList;
  *   typeMeta: !backendApi.TypeMeta,
  *   pods: !backendApi.PodInfo,
  *   containerImages: !Array<string>
+ * }}
+ */
+backendApi.Job;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   podInfo: !backendApi.PodInfo,
+ *   podList: !backendApi.PodList,
+ *   containerImages: !Array<string>,
+ *   eventList: !backendApi.EventList,
+ *   paralleism: number,
+ *   completions: number
+ * }}
+ */
+backendApi.JobDetail;
+
+/**
+ * @typedef {{
+ *   jobs: !Array<!backendApi.Job>
+ * }}
+ */
+backendApi.JobList;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   pods: !backendApi.PodInfo,
+ *   containerImages: !Array<string>,
  * }}
  */
 backendApi.PetSet;
