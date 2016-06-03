@@ -14,20 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-dialog aria-label="{{::$ctrl.i18n.MSG_DELETE_RESOURCE_DIALOG_TITLE}}" layout="column">
-  <md-dialog-content layout-padding>
-    <h4 class="md-title">{{::$ctrl.i18n.MSG_DELETE_RESOURCE_DIALOG_TITLE}}</h4>
-    <div>
-      Are you sure you want to delete {{$ctrl.resourceKindName}}
-      <kd-middle-ellipsis display-string="{{$ctrl.objectMeta.name}}"></kd-middle-ellipsis>
-      in namespace {{$ctrl.objectMeta.namespace}}?
+<md-dialog aria-label="{{::$ctrl.i18n.MSG_EDIT_RESOURCE_DIALOG_TITLE}}" layout="column">
+  <md-dialog-content layout-padding class="kd-json-edit-dialog-content">
+    <h4 class="md-title">{{::$ctrl.i18n.MSG_EDIT_RESOURCE_DIALOG_TITLE}}</h4>
+    <div ng-if="$ctrl.data" ng-jsoneditor ng-model="$ctrl.data"
+         options="{ mode: 'tree', name: $ctrl.resourceKindName, history: false, expanded: true}"
+         class="kd-json-edit-editor">
     </div>
     <md-dialog-actions>
       <md-button class="md-primary kd-cancel-btn" ng-click="$ctrl.cancel()">
-        {{::$ctrl.i18n.MSG_DELETE_RESOURCE_DIALOG_CANCEL}}
+        {{::$ctrl.i18n.MSG_EDIT_RESOURCE_DIALOG_CANCEL}}
       </md-button>
-      <md-button class="md-primary kd-delete-btn" ng-click="$ctrl.remove()">
-        {{::$ctrl.i18n.MSG_DELETE_RESOURCE_DIALOG_DELETE}}
+      <md-button class="md-primary kd-delete-btn" ng-click="$ctrl.update()">
+        {{::$ctrl.i18n.MSG_EDIT_RESOURCE_DIALOG_UPDATE}}
       </md-button>
     </md-dialog-actions>
   </md-dialog-content>

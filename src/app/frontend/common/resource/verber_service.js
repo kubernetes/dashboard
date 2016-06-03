@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import showDeleteDialog from './deleteresource_dialog';
+import showEditDialog from './editresource_dialog';
 
 /**
  * Verber service for performing common verb operations on resources, e.g., deleting or editing
@@ -55,6 +56,27 @@ export class VerberService {
   }
 
   /**
+   * Opens a resource update dialog. Returns a promise that is resolved/rejected when
+   * user wants to update the resource. Nothing happens when user clicks cancel on the dialog.
+   * @param {string} resourceKindName
+   * @param {!backendApi.TypeMeta} typeMeta
+   * @param {!backendApi.ObjectMeta} objectMeta
+   * @return {!angular.$q.Promise}
+   */
+  showEditDialog(resourceKindName, typeMeta, objectMeta) {
+    let deferred = this.q_.defer();
+
+    showEditDialog(this.mdDialog_, resourceKindName, typeMeta, objectMeta)
+        .then(() => { deferred.resolve(); })
+        .catch((err) => {
+          this.editErrorCallback(err);
+          deferred.reject(err);
+        });
+
+    return deferred.promise;
+  }
+
+  /**
    * Callback function to show dialog with error message if resource deletion fails.
    *
    * @param {angular.$http.Response|null} err
@@ -66,6 +88,21 @@ export class VerberService {
                               .ok('Ok')
                               .title(err.statusText || 'Internal server error')
                               .textContent(err.data || 'Could not delete the resource'));
+    }
+  }
+
+  /**
+   * Callback function to show dialog with error message if resource edit fails.
+   *
+   * @param {angular.$http.Response|null} err
+   */
+  editErrorCallback(err) {
+    if (err) {
+      // Show dialog if there was an error, not user canceling dialog.
+      this.mdDialog_.show(this.mdDialog_.alert()
+                              .ok('Ok')
+                              .title(err.statusText || 'Internal server error')
+                              .textContent(err.data || 'Could not edit the resource'));
     }
   }
 }

@@ -14,19 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card-menu>
-  <md-menu-item>
-    <md-button ng-click="$ctrl.viewDetails()">
-      View details
-    </md-button>
-  </md-menu-item>
-  <md-menu-item>
-    <md-button ng-click="$ctrl.showUpdateReplicasDialog()">
-      Edit pod count
-    </md-button>
-  </md-menu-item>
-  <kd-resource-card-delete-menu-item resource-kind-name="Replication Controller">
-  </kd-resource-card-delete-menu-item>
-  <kd-resource-card-edit-menu-item resource-kind-name="Replication Controller">
-  </kd-resource-card-edit-menu-item>
-</md-menu>
+<md-menu-item>
+  <md-button ng-click="$ctrl.edit()">
+    {{::$ctrl.i18n.MSG_YAML_EDIT_MENU_LABEL}}
+  </md-button>
+</md-menu-item>

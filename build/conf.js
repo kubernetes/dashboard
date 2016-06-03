@@ -196,6 +196,7 @@ export default {
     hyperkube: path.join(basePath, 'build/hyperkube.sh'),
     i18nProd: path.join(basePath, '.tmp/i18n'),
     integrationTest: path.join(basePath, 'src/test/integration'),
+    jsoneditorImages: path.join(basePath, 'bower_components/jsoneditor/src/css/img'),
     karmaConf: path.join(basePath, 'build/karma.conf.js'),
     materialIcons: path.join(basePath, 'bower_components/material-design-icons/iconfont'),
     nodeModules: path.join(basePath, 'node_modules'),
