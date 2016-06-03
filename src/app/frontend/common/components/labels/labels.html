@@ -16,10 +16,11 @@ limitations under the License.
 
 <kd-middle-ellipsis display-string="{{::key}}: {{::value}}" class="kd-labels"
     ng-repeat="(key, value) in ::labelsCtrl.labels"
-    ng-if="labelsCtrl.isVisible($index)">
+    ng-if="labelsCtrl.isVisible($index)" ng-if="::labelsCtrl.labels">
 </kd-middle-ellipsis>
+<div ng-hide="::labelsCtrl.labels">-</div>
 <div class="kd-labels kd-labels-switch" ng-show="labelsCtrl.isMoreAvailable()"
-     ng-click="labelsCtrl.switchLabelsView()">
+     ng-click="labelsCtrl.switchLabelsView()" ng-if="::labelsCtrl.labels">
   {{labelsCtrl.isShowingAll() ?
     labelsCtrl.i18n.MSG_LABELS_SHOW_LESS_TOOLTIP : labelsCtrl.i18n.MSG_LABELS_SHOW_ALL_TOOLTIP}}
 </div>

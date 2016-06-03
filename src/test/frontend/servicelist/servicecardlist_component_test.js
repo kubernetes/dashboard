@@ -38,4 +38,61 @@ describe('Service list controller', () => {
       },
     })).toBe('#/service/foo-namespace/foo-service');
   });
+
+  it('should return true when service.clusterIP is null', () => {
+    expect(ctrl.isPending({
+      clusterIP: null,
+    })).toBeTruthy();
+  });
+
+  it('should return false when service.clusterIP is set', () => {
+    expect(ctrl.isPending({
+      clusterIP: "10.67.252.103",
+    })).toBeFalsy();
+  });
+
+  it('should return true when service.type is LoadBalancer AND service.externalEndpoints is null',
+     () => {
+       expect(ctrl.isPending({
+         clusterIP: "10.67.252.103",
+         type: "LoadBalancer",
+         externalEndpoints: null,
+       })).toBeTruthy();
+     });
+
+  it('should return true when service.type is NodePort AND service.externalEndpoints is null',
+     () => {
+       expect(ctrl.isPending({
+         clusterIP: "10.67.252.103",
+         type: "NodePort",
+         externalEndpoints: null,
+       })).toBeTruthy();
+     });
+
+  it('should return true when service.type is LoadBalancer AND service.externalEndpoints is set',
+     () => {
+       expect(ctrl.isSuccess({
+         clusterIP: "10.67.252.103",
+         type: "LoadBalancer",
+         externalEndpoints: ["10.64.0.4:80", "10.64.1.5:80", "10.64.2.4:80"],
+       })).toBeTruthy();
+     });
+
+  it('should return true when service.type is NodePort AND service.externalEndpoints is set',
+     () => {
+       expect(ctrl.isSuccess({
+         clusterIP: "10.67.252.103",
+         type: "NodePort",
+         externalEndpoints: ["10.64.0.4:80", "10.64.1.5:80", "10.64.2.4:80"],
+       })).toBeTruthy();
+     });
+
+  it('should return true when service.type is ClusterIP and service.externalEndpoints is null',
+     () => {
+       expect(ctrl.isSuccess({
+         clusterIP: "10.67.252.103",
+         type: "ClusterIP",
+         externalEndpoints: null,
+       })).toBeTruthy();
+     });
 });
