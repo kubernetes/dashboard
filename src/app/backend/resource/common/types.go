@@ -151,12 +151,12 @@ func IsSelectorMatching(labelSelector map[string]string,
 	return true
 }
 
-// Returns true when a resrouce (Service / Pod) with the given selector targets
-// the same Pod (or itself) that a Daemon Set with the given selector.
+// Returns true when a resource with the given selector targets the same Resources(or subset)
+// that a tested object selector with the given selector.
 func IsLabelSelectorMatching(selector map[string]string,
 	labelSelector *unversioned.LabelSelector) bool {
 
-	// If the resrouce has no selectors, then assume it targets different Pods.
+	// If the resource has no selectors, then assume it targets different Pods.
 	if len(selector) == 0 {
 		return false
 	}

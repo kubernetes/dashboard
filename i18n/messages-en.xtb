@@ -144,4 +144,15 @@
 	<translation id="5143266087600531180" key="MSG_NAMESPACE_SELECT_ARIA_LABEL" source="/usr/local/google/home/bryk/src/github.com/dashboard/.tmp/serve/app-dev.js" desc="Text describing what namespace selector is">Selector for namespaces</translation>
 	<translation id="7612562063769289643" key="MSG_PODS_ARE_FAILED_TOOLTIP" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="tooltip for failed pod card icon">One or more pods have errors.</translation>
 	<translation id="7471636163011126552" key="MSG_PODS_ARE_PENDING_TOOLTIP" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="tooltip for pending pod card icon">One or more pods are in pending state.</translation>
+	<translation id="5059203627384479637" key="MSG_PET_SET_DETAIL_OVERVIEW_TAB" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Overview tab label on the pet set detail page.">Overview</translation>
+	<translation id="6998996832659188031" key="MSG_PET_SET_DETAIL_PODS_CARD_TITLE" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Related pods card title on the pet set detail page.">Pods</translation>
+	<translation id="8707615799932704635" key="MSG_PET_SET_DETAIL_EVENTS_TAB" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Events tab label on the pet set detail page.">Events</translation>
+	<translation id="1061534452415111025" key="MSG_PET_SET_INFO_DETAILS_SECTION" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Pet set info details section name.">Details</translation>
+	<translation id="5246158437544347926" key="MSG_PET_SET_INFO_NAME_ENTRY" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Pet set info details section name entry.">Name</translation>
+	<translation id="1965909741930893667" key="MSG_PET_SET_INFO_NAMESPACE_ENTRY" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Pet set info details section namespace entry.">Namespace</translation>
+	<translation id="6096611116725653973" key="MSG_PET_SET_INFO_LABELS_ENTRY" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Pet set info details section labels entry.">Labels</translation>
+	<translation id="1079594048788916996" key="MSG_PET_SET_INFO_IMAGES_ENTRY" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Pet set info details section images entry.">Images</translation>
+	<translation id="3762856444030194375" key="MSG_PET_SET_INFO_STATUS_SECTION" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Pet set info status section name.">Status</translation>
+	<translation id="1744330140020758003" key="MSG_PET_SET_INFO_PODS_ENTRY" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Pet set info status section pods entry.">Pods</translation>
+	<translation id="6654869080140416303" key="MSG_PET_SET_INFO_PODS_STATUS_ENTRY" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Pet set info status section pods status entry.">Pods status</translation>
 </translationbundle>

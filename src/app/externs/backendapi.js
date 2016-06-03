@@ -201,10 +201,22 @@ backendApi.ReplicaSetList;
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
  *   pods: !backendApi.PodInfo,
- *   containerImages: !Array<string>,
+ *   containerImages: !Array<string>
  * }}
  */
 backendApi.PetSet;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   podInfo: !backendApi.PodInfo,
+ *   podList: !backendApi.PodList,
+ *   containerImages: !Array<string>,
+ *   eventList: !backendApi.EventList
+ * }}
+ */
+backendApi.PetSetDetail;
 
 /**
  * @typedef {{
