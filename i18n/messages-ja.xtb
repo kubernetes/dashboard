@@ -155,4 +155,5 @@
 	<translation id="3762856444030194375" key="MSG_PET_SET_INFO_STATUS_SECTION" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Pet set info status section name.">Status</translation>
 	<translation id="1744330140020758003" key="MSG_PET_SET_INFO_PODS_ENTRY" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Pet set info status section pods entry.">Pods</translation>
 	<translation id="6654869080140416303" key="MSG_PET_SET_INFO_PODS_STATUS_ENTRY" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Pet set info status section pods status entry.">Pods status</translation>
+	<translation id="2654637773125741729" key="MSG_WORKLOADS_JOBS_LABEL" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="Label &quot;Job&quot;, which appears above the replica sets list on the workloads page.">Jobs</translation>
 </translationbundle>

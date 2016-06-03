@@ -38,6 +38,8 @@ const i18n = {
   MSG_WORKLOADS_PET_SETS_LABEL: goog.getMsg('Pet Sets'),
   /** @export {string} @desc Label "Replica sets", which appears above the replica sets list on the workloads page.*/
   MSG_WORKLOADS_REPLICA_SETS_LABEL: goog.getMsg('Replica sets'),
+  /** @export {string} @desc Label "Job", which appears above the replica sets list on the workloads page.*/
+  MSG_WORKLOADS_JOBS_LABEL: goog.getMsg('Jobs'),
   /** @export {string} @desc Label "Replication controllers", which appears above the replication controllers list on the workloads page.*/
   MSG_WORKLOADS_REPLICATION_CONTROLLERS_LABEL: goog.getMsg('Replication controllers'),
   /** @export {string} @desc Label "Pods", which appears above the pods list on the workloads page.*/
