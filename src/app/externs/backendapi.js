@@ -375,6 +375,7 @@ backendApi.ServiceDetail;
  *  internalEndpoint: !backendApi.Endpoint,
  *  externalEndpoints: !Array<!backendApi.Endpoint>,
  *  selector: !Object<string, string>,
+ *  type: string,
  *  clusterIP: string
  * }}
  */
