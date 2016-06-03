@@ -1,0 +1,63 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-info-card>
+  <kd-info-card-header>Resource details</kd-info-card-header>
+  <kd-info-card-section name="{{::$ctrl.i18n.MSG_PET_SET_INFO_DETAILS_SECTION}}">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_PET_SET_INFO_NAME_ENTRY}}">
+      <kd-middle-ellipsis
+              display-string="{{::$ctrl.petSet.objectMeta.name}}">
+      </kd-middle-ellipsis>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_PET_SET_INFO_NAMESPACE_ENTRY}}">
+      {{::$ctrl.petSet.objectMeta.namespace}}
+    </kd-info-card-entry>
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_PET_SET_INFO_LABELS_ENTRY}}">
+      <kd-labels labels="::$ctrl.petSet.objectMeta.labels"></kd-labels>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_PET_SET_INFO_IMAGES_ENTRY}}">
+      <div ng-repeat="image in $ctrl.petSet.containerImages">
+        <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
+      </div>
+    </kd-info-card-entry>
+  </kd-info-card-section>
+
+  <kd-info-card-section name="{{::$ctrl.i18n.MSG_PET_SET_INFO_STATUS_SECTION}}">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_PET_SET_INFO_PODS_ENTRY}}">
+      <div ng-if="!$ctrl.areDesiredPodsRunning()">
+        {{::$ctrl.petSet.podInfo.current}} created,
+        {{::$ctrl.petSet.podInfo.desired}} desired
+      </div>
+      <div ng-if="$ctrl.areDesiredPodsRunning()">
+        {{::$ctrl.petSet.podInfo.running}} running
+      </div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_PET_SET_INFO_PODS_STATUS_ENTRY}}"
+                        ng-if="!$ctrl.areDesiredPodsRunning()">
+      <div ng-if="!$ctrl.areDesiredPodsRunning()">
+        <div ng-if="::$ctrl.petSet.podInfo.pending" class="kd-comma-separated-item">
+          {{::$ctrl.petSet.podInfo.pending}} pending<!-- Collapse whitespace
+      --></div>
+        <div ng-if="::$ctrl.petSet.podInfo.failed" class="kd-comma-separated-item">
+          {{::$ctrl.petSet.podInfo.failed}} failed<!-- Collapse whitespace
+      --></div>
+        <div ng-if="::$ctrl.petSet.podInfo.running" class="kd-comma-separated-item">
+          {{::$ctrl.petSet.podInfo.running}} running
+        </div>
+      </div>
+    </kd-info-card-entry>
+  </kd-info-card-section>
+</kd-info-card>

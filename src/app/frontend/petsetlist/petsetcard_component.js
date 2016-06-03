@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {StateParams} from 'common/resource/resourcedetail';
+import {stateName} from 'petsetdetail/petsetdetail_state';
+
 /**
  * Controller for the pet set card.
  *
@@ -19,17 +22,30 @@
  */
 export default class PetSetCardController {
   /**
+   * @param {!ui.router.$state} $state
    * @ngInject
    */
-  constructor() {
+  constructor($state) {
     /**
      * Initialized from the scope.
      * @export {!backendApi.PetSet}
      */
     this.petSet;
 
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
+
     /** @export */
     this.i18n = i18n;
+  }
+
+  /**
+   * @return {string}
+   * @export
+   */
+  getPetSetDetailHref() {
+    return this.state_.href(
+        stateName, new StateParams(this.petSet.objectMeta.namespace, this.petSet.objectMeta.name));
   }
 
   /**

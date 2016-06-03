@@ -282,11 +282,15 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 	apiV1Ws.Route(
 		apiV1Ws.GET("/petset").
 			To(apiHandler.handleGetPetSetList).
-			Writes(resourceService.ServiceList{}))
+			Writes(petset.PetSetList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/petset/{namespace}").
 			To(apiHandler.handleGetPetSetList).
-			Writes(resourceService.ServiceList{}))
+			Writes(petset.PetSetList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/petset/{namespace}/{petset}").
+			To(apiHandler.handleGetPetSetDetail).
+			Writes(petset.PetSetDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.DELETE("/{kind}/namespace/{namespace}/name/{name}").
@@ -305,6 +309,20 @@ func (apiHandler *ApiHandler) handleGetPetSetList(request *restful.Request,
 		return
 	}
 
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get pet set detail API call.
+func (apiHandler *ApiHandler) handleGetPetSetDetail(request *restful.Request,
+	response *restful.Response) {
+	namespace := request.PathParameter("namespace")
+	service := request.PathParameter("petset")
+	result, err := petset.GetPetSetDetail(apiHandler.client, apiHandler.heapsterClient,
+		namespace, service)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
