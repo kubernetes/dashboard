@@ -36,7 +36,7 @@ export default function stateConfig($stateProvider) {
     },
     data: {
       [breadcrumbsConfig]: {
-        'label': '{{$stateParams.service}}',
+        'label': '{{$stateParams.objectName}}',
         'parent': serviceList,
       },
     },

@@ -60,7 +60,7 @@ export class EditResourceController {
    */
   init_() {
     let promise = this.http_.get(
-        `api/v1/${this.typeMeta_.kind}/namespace/` + `${this.objectMeta.namespace}/name/${this.objectMeta.name}`);
+        `api/v1/${this.typeMeta_.kind}/namespace/${this.objectMeta.namespace}/name/${this.objectMeta.name}`);
     promise.then(
         (/** !angular.$http.Response<Object>*/ response) => { this.data = response.data; });
   }
