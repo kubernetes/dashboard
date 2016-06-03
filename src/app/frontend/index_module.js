@@ -21,6 +21,8 @@ import deployModule from './deploy/deploy_module';
 import deploymentListModule from './deploymentlist/deploymentlist_module';
 import errorModule from './error/error_module';
 import indexConfig from './index_config';
+import jobListModule from './joblist/joblist_module';
+import jobDetailModule from './jobdetail/jobdetail_module';
 import logsModule from './logs/logs_module';
 import replicaSetListModule from './replicasetlist/replicasetlist_module';
 import replicationControllerDetailModule from './replicationcontrollerdetail/replicationcontrollerdetail_module';
@@ -44,6 +46,8 @@ export default angular.module('kubernetesDashboard',
                                 chromeModule.name,
                                 deployModule.name,
                                 errorModule.name,
+                                jobListModule.name,
+                                jobDetailModule.name,
                                 logsModule.name,
                                 replicationControllerDetailModule.name,
                                 replicationControllerListModule.name,
