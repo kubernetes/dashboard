@@ -40,7 +40,7 @@ export default function stateConfig($stateProvider) {
     },
     data: {
       [breadcrumbsConfig]: {
-        'label': '{{$stateParams.replicationController}}',
+        'label': '{{$stateParams.objectName}}',
         'parent': replicationControllers,
       },
     },

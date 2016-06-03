@@ -110,7 +110,7 @@ export default class BreadcrumbsController {
    * If label string is empty then state name is returned.
    *
    * @param {!ui.router.$state} state
-   * @returns {string}
+   * @return {string}
    * @private
    */
   getDisplayName_(state) {
@@ -125,10 +125,32 @@ export default class BreadcrumbsController {
 
     if (areLocalsDefined) {
       // Set context to default view scope
-      interpolationContext = state['locals']['@'];
+      interpolationContext = this.getInterpolationContext(state['locals'], '$stateParams');
     }
 
     return this.interpolate_(conf.label)(interpolationContext).toString();
+  }
+
+  /**
+   * Returns object that contains property we want to interpolate against,
+   * given context is returned if it doesn't have such object as property.
+   *
+   * @param {!Object} context
+   * @param {string} interpolateAgainst
+   * @return {!Object}
+   * @private
+   */
+  getInterpolationContext(context, interpolateAgainst) {
+    for (let prop in context) {
+      // skip loop if the property is from prototype
+      if (!context.hasOwnProperty(prop)) continue;
+
+      if (context[prop].hasOwnProperty(interpolateAgainst)) {
+        return context[prop];
+      }
+    }
+
+    return context;
   }
 }
 
