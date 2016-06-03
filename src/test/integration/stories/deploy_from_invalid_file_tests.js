@@ -20,29 +20,29 @@ import DeployFromFilePageObject from '../deploy/deployfromfile_po';
 // Test assumes, that there are no replication controllers in the cluster at the beginning.
 describe('Deploy from invalid file user story test', () => {
 
-  /** @type {!DeployFromFilePageObject} */
-  let deployFromFilePage;
+    /** @type {!DeployFromFilePageObject} */
+    let deployFromFilePage;
 
-  beforeAll(() => {
-    browser.driver.setFileDetector(new remote.FileDetector());
-    deployFromFilePage = new DeployFromFilePageObject();
-    browser.get('#/deploy');
-    // switches to deploy from file
-    deployFromFilePage.deployFromFileRadioButton.click();
-  });
+    beforeAll(() => {
+        browser.driver.setFileDetector(new remote.FileDetector());
+        deployFromFilePage = new DeployFromFilePageObject();
+        browser.get('#/deploy');
+        // switches to deploy from file
+        deployFromFilePage.deployFromFileRadioButton.click();
+    });
 
-  it('should pop up error dialog after uploading the invalid file', () => {
-    // given
-    let fileToUpload = '../deploy/invalid-rc.yaml';
-    let absolutePath = path.resolve(__dirname, fileToUpload);
+    it('should pop up error dialog after uploading the invalid file', () => {
+        // given
+        let fileToUpload = '../deploy/invalid-rc.yaml';
+        let absolutePath = path.resolve(__dirname, fileToUpload);
 
-    // when
-    deployFromFilePage.makeInputVisible();
-    deployFromFilePage.setFile(absolutePath);
-    deployFromFilePage.deployButton.click();
+        // when
+        deployFromFilePage.makeInputVisible();
+        deployFromFilePage.setFile(absolutePath);
+        deployFromFilePage.deployButton.click();
 
-    // then
-    expect(deployFromFilePage.mdDialog.isPresent()).toBeTruthy();
-    expect(browser.getCurrentUrl()).toContain('deploy');
-  });
+        // then
+        expect(deployFromFilePage.mdDialog.isPresent()).toBeTruthy();
+        expect(browser.getCurrentUrl()).toContain('deploy');
+    });
 });

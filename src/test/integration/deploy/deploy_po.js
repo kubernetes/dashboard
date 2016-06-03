@@ -1,4 +1,3 @@
-// Copyright 2015 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,14 +12,14 @@
 // limitations under the License.
 
 export default class DeployPageObject {
-  constructor() {
-    this.deployButtonQuery = by.css('.kd-deploy-submit-button');
-    this.deployButton = element(this.deployButtonQuery);
+    constructor() {
+        this.deployButtonQuery = by.css('.kd-deploy-submit-button');
+        this.deployButton = element(this.deployButtonQuery);
 
-    this.appNameFieldQuery = by.model('ctrl.name');
-    this.appNameField = element(this.appNameFieldQuery);
+        this.appNameFieldQuery = by.model('ctrl.name');
+        this.appNameField = element(this.appNameFieldQuery);
 
-    this.containerImageFieldQuery = by.model('ctrl.containerImage');
-    this.containerImageField = element(this.containerImageFieldQuery);
-  }
+        this.containerImageFieldQuery = by.model('ctrl.containerImage');
+        this.containerImageField = element(this.containerImageFieldQuery);
+    }
 }

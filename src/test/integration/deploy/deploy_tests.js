@@ -13,9 +13,9 @@
 // limitations under the License.
 
 describe('Deploy view', () => {
-  beforeEach(() => { browser.get('#/deploy'); });
+    beforeEach(() => { browser.get('#/deploy'); });
 
-  it('should do something', () => {
-                                // TODO(bryk): Write the test.
-                            });
+    it('should do something', () => {
+        // TODO(bryk): Write the test.
+    });
 });
