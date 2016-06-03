@@ -43,6 +43,14 @@ type JobDetail struct {
 
 	// List of events related to this Job.
 	EventList common.EventList `json:"eventList"`
+
+	// Parallelism specifies the maximum desired number of pods the job should run at any given
+	// time.
+	Parallelism int32 `json:"paralleism"`
+
+	// Completions specifies the desired number of successfully finished pods the job should be
+	// run with.
+	Completions int32 `json:"completions"`
 }
 
 // GetJobDetail gets job details.
@@ -90,5 +98,7 @@ func getJobDetail(job *batch.Job, heapsterClient client.HeapsterClient,
 		PodInfo:         podInfo,
 		PodList:         pod.CreatePodList(matchingPods, heapsterClient),
 		EventList:       *events,
+		Parallelism:     *job.Spec.Parallelism,
+		Completions:     *job.Spec.Completions,
 	}
 }
