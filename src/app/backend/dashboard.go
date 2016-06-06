@@ -24,6 +24,7 @@ import (
 	. "github.com/kubernetes/dashboard/client"
 	. "github.com/kubernetes/dashboard/handler"
 	"github.com/spf13/pflag"
+	"os"
 )
 
 var (
@@ -39,6 +40,9 @@ var (
 )
 
 func main() {
+	// Set logging output to standard console out
+	log.SetOutput(os.Stdout)
+
 	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)
 	pflag.Parse()
 	flag.CommandLine.Parse(make([]string, 0)) // Init for glog calls in kubernetes packages
