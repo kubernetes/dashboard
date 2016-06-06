@@ -17,10 +17,10 @@ limitations under the License.
 <div layout="column">
   <md-content>
     <md-tabs md-border-bottom md-dynamic-height>
-      <md-tab label="Overview">
+      <md-tab label="{{::ctrl.i18n.MSG_DAEMON_SET_DETAIL_OVERVIEW_LABEL}}">
         <kd-daemon-set-info daemon-set="::ctrl.daemonSetDetail"></kd-daemon-set-info>
         <kd-content-card>
-          <kd-title>Pods</kd-title>
+          <kd-title>{{::ctrl.i18n.MSG_DAEMON_SET_DETAIL_PODS_TITLE}}</kd-title>
           <kd-content>
             <kd-pod-card-list pod-list="::ctrl.daemonSetDetail.pods"
                               logs-href-fn="::ctrl.getPodLogsHref(pod)">
@@ -28,7 +28,7 @@ limitations under the License.
           </kd-content>
         </kd-content-card>
       </md-tab>
-      <md-tab label="Events">
+      <md-tab label="{{::ctrl.i18n.MSG_DAEMON_SET_DETAIL_EVENTS_LABEL}}">
         <kd-event-card-list events="::ctrl.daemonSetDetail.eventList.events"></kd-event-card-list>
       </md-tab>
     </md-tabs>
