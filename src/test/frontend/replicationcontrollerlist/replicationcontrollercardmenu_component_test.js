@@ -29,13 +29,14 @@ describe('Replication controller card menu controller', () => {
   beforeEach(() => {
     angular.mock.module(replicationControllerListModule.name);
 
-    angular.mock.inject(($componentController, $state, _kdReplicationControllerService_) => {
-      state = $state;
-      kdReplicationControllerService = _kdReplicationControllerService_;
-      ctrl = $componentController('kdReplicationControllerCardMenu', null, {
-        replicationController: {objectMeta: {name: 'foo-name', namespace: 'foo-namespace'}},
-      });
-    });
+    angular.mock.inject(
+        ($componentController, $state, _kdReplicationControllerService_, $rootScope) => {
+          state = $state;
+          kdReplicationControllerService = _kdReplicationControllerService_;
+          ctrl = $componentController('kdReplicationControllerCardMenu', {$scope: $rootScope}, {
+            replicationController: {objectMeta: {name: 'foo-name', namespace: 'foo-namespace'}},
+          });
+        });
   });
 
   it('should view details', () => {

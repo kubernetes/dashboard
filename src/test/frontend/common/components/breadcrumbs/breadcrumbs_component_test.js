@@ -66,19 +66,21 @@ describe('Breadcrumbs controller ', () => {
   beforeEach(() => {
     angular.mock.module(componentsModule.name);
 
-    angular.mock.inject(($componentController, $state, $interpolate, _kdBreadcrumbsService_) => {
-      state = $state;
-      interpolate = $interpolate;
-      ctrl = $componentController('kdBreadcrumbs',
-                                  {
-                                    $state: state,
-                                    $interpolate: interpolate,
-                                    kdBreadcrumbsService: _kdBreadcrumbsService_,
-                                  },
-                                  {
-                                    limit: breadcrumbsLimit,
-                                  });
-    });
+    angular.mock.inject(
+        ($componentController, $state, $interpolate, _kdBreadcrumbsService_, $rootScope) => {
+          state = $state;
+          interpolate = $interpolate;
+          ctrl = $componentController('kdBreadcrumbs',
+                                      {
+                                        $state: state,
+                                        $interpolate: interpolate,
+                                        kdBreadcrumbsService: _kdBreadcrumbsService_,
+                                        $scope: $rootScope,
+                                      },
+                                      {
+                                        limit: breadcrumbsLimit,
+                                      });
+        });
   });
 
   it('should call init breadcrumbs', () => {

@@ -24,8 +24,9 @@ describe('Replica Set Info controller', () => {
   beforeEach(() => {
     angular.mock.module(replicaSetDetailModule.name);
 
-    angular.mock.inject(
-        ($componentController) => { ctrl = $componentController('kdReplicaSetInfo', {}); });
+    angular.mock.inject(($componentController, $rootScope) => {
+      ctrl = $componentController('kdReplicaSetInfo', {$scope: $rootScope});
+    });
   });
 
   it('should return true when all desired pods are running', () => {

@@ -17,7 +17,7 @@ import {stateName as deploy} from 'deploy/deploy_state';
 /**
  * @final
  */
-export class ReplicationControllerDetailActionBarController {
+export class ActionBarController {
   /**
    * Constructs action bar on rc detail page.
    *

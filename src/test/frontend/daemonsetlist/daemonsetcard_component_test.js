@@ -22,8 +22,9 @@ describe('Daemon Set card', () => {
   beforeEach(() => {
     angular.mock.module(daemonSetListModule.name);
 
-    angular.mock.inject(
-        ($componentController) => { ctrl = $componentController('kdDaemonSetCardList'); });
+    angular.mock.inject(($componentController, $rootScope) => {
+      ctrl = $componentController('kdDaemonSetCardList', {$scope: $rootScope});
+    });
   });
 
   it('should construct details href', () => {

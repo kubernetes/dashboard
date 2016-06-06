@@ -14,9 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-button class="md-icon-button" ng-click="$ctrl.remove()">
-  <md-icon class="kd-actionbar-icon-button">delete</md-icon>
-  <md-tooltip md-direction="bottom">
-    {{::$ctrl.getDeleteTooltip()}}
-  </md-tooltip>
-</md-button>
+<kd-actionbar-edit-item resource-kind-name="{{$ctrl.resourceKindName}}"
+                        type-meta="$ctrl.typeMeta"
+                        object-meta="$ctrl.objectMeta">
+</kd-actionbar-edit-item>
+<kd-actionbar-delete-item resource-kind-name="{{$ctrl.resourceKindName}}"
+                          type-meta="$ctrl.typeMeta"
+                          object-meta="$ctrl.objectMeta">
+</kd-actionbar-delete-item>

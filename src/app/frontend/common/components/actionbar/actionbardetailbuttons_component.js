@@ -12,39 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../variables';
-
-.kd-json-edit-dialog-content {
-  display: flex;
-  flex-direction: column;
-  min-height: $layout-breakpoint-xs / 2;
-  min-width: $layout-breakpoint-xs / 2;
-}
-
-.kd-json-edit-editor {
-  display: flex;
-  flex: 1;
-  overflow: hidden;
-}
-
-.jsoneditor {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  height: initial;
-  overflow: hidden;
-
-  div {
-    &.outer {
-      display: flex;
-      flex: 1;
-      margin: 0;
-      overflow: auto;
-      padding: 0;
-    }
-  }
-
-  .menu {
-    flex-shrink: 0;
-  }
-}
+/**
+ * Contains common buttons for detail pages.
+ *
+ * @type {!angular.Component}
+ */
+export const actionbarDetailButtonsComponent = {
+  templateUrl: 'common/components/actionbar/actionbardetailbuttons.html',
+  bindings: {
+    'resourceKindName': '@',
+    'typeMeta': '<',
+    'objectMeta': '<',
+  },
+};

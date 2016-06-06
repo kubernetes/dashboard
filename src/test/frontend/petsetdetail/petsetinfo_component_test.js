@@ -24,8 +24,9 @@ describe('Pet Set Info controller', () => {
   beforeEach(() => {
     angular.mock.module(petSetDetailModule.name);
 
-    angular.mock.inject(
-        ($componentController) => { ctrl = $componentController('kdPetSetInfo', {}); });
+    angular.mock.inject(($componentController, $rootScope) => {
+      ctrl = $componentController('kdPetSetInfo', {$scope: $rootScope});
+    });
   });
 
   it('should return true when all desired pods are running', () => {
