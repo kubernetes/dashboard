@@ -31,8 +31,17 @@
   height: initial;
   overflow: hidden;
 
-  .outer {
-    display: flex;
-    flex: 1;
+  div {
+    &.outer {
+      display: flex;
+      flex: 1;
+      margin: 0;
+      overflow: auto;
+      padding: 0;
+    }
+  }
+
+  .menu {
+    flex-shrink: 0;
   }
 }
