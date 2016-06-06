@@ -22,7 +22,7 @@ limitations under the License.
            ng-model-options="{allowInvalid: true}">
     <ng-messages for="labelForm.key.$error" ng-if="labelForm.key.$touched && labelForm.key.$invalid">
       <ng-message when="unique">
-        {{labelCtrl.label.key}} {{::labelCtrl.i18n.MSG_DEPLOY_LABEL_KEY_NOT_UNIQUE_WARNING}}
+        {{::labelCtrl.getLabelKeyUniqueWarning()}}
       </ng-message>
       <ng-message when="kdValidLabelKeyPrefixPattern">
         {{::labelCtrl.i18n.MSG_DEPLOY_LABEL_KEY_PREFIX_PATTERN_WARNING}}
