@@ -102,4 +102,7 @@ describe('Pod card list controller', () => {
     })).toBeFalsy();
   });
 
+  it('should format the "pod start date" tooltip correctly', () => {
+    expect(ctrl.getStartedAtTooltip('2016-06-06T09:13:12Z')).toBe('Started at 6/6/16 09:13 UTC');
+  });
 });

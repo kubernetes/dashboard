@@ -17,14 +17,14 @@ limitations under the License.
 <kd-resource-card-list selectable="::$ctrl.selectable" with-statuses="::$ctrl.withStatuses"
                        ng-if="::$ctrl.podList.pods">
   <kd-resource-card-header-columns>
-    <kd-resource-card-header-column size="medium" grow="4">Name</kd-resource-card-header-column>
-    <kd-resource-card-header-column>Status</kd-resource-card-header-column>
+    <kd-resource-card-header-column size="medium" grow="4">{{::$ctrl.i18n.MSG_POD_LIST_NAME_LABEL}}</kd-resource-card-header-column>
+    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_POD_LIST_STATUS_LABEL}}</kd-resource-card-header-column>
     <kd-resource-card-header-column size="small" grow="nogrow">
-      Restarts
+      {{::$ctrl.i18n.MSG_POD_LIST_RESTARTS_LABEL}}
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column>Age</kd-resource-card-header-column>
-    <kd-resource-card-header-column>Cluster IP</kd-resource-card-header-column>
-    <kd-resource-card-header-column>Logs</kd-resource-card-header-column>
+    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_POD_LIST_AGE_LABEL}}</kd-resource-card-header-column>
+    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_POD_LIST_CLUSTER_IP_LABEL}}</kd-resource-card-header-column>
+    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_POD_LIST_LOGS_LABEL}}</kd-resource-card-header-column>
     <kd-resource-card-header-column size="small" grow="nogrow">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
@@ -59,7 +59,7 @@ limitations under the License.
         <div ng-if="::pod.objectMeta.creationTimestamp">
           {{::pod.objectMeta.creationTimestamp | relativeTime}}
           <md-tooltip>
-            Started at {{::(pod.objectMeta.creationTimestamp | date:'d/M/yy HH:mm':'UTC')}} UTC
+            {{::$ctrl.getStartedAtTooltip(pod.objectMeta.creationTimestamp)}}
           </md-tooltip>
         </div>
         <div ng-if="::!pod.objectMeta.creationTimestamp">-</div>
@@ -71,7 +71,7 @@ limitations under the License.
       <kd-resource-card-column>
         <div ng-if="::$ctrl.getPodLogsHref(pod)">
           <a ng-href="{{::$ctrl.getPodLogsHref(pod)}}" target="_blank">
-            Logs
+            {{::$ctrl.i18n.MSG_POD_LIST_LOGS_LABEL}}
             <i class="material-icons kd-text-icon">open_in_new</i>
           </a>
         </div>
@@ -79,9 +79,9 @@ limitations under the License.
       </kd-resource-card-column>
       <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
         <kd-resource-card-menu>
-          <kd-resource-card-delete-menu-item resource-kind-name="Pod">
+          <kd-resource-card-delete-menu-item resource-kind-name="{{::$ctrl.i18n.MSG_POD_LIST_POD_TITLE}}">
           </kd-resource-card-delete-menu-item>
-          <kd-resource-card-edit-menu-item resource-kind-name="Pod">
+          <kd-resource-card-edit-menu-item resource-kind-name="{{::$ctrl.i18n.MSG_POD_LIST_POD_TITLE}}">
           </kd-resource-card-edit-menu-item>
         </kd-resource-card-menu>
       </kd-resource-card-column>
