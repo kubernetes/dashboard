@@ -17,6 +17,7 @@ import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_servi
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 import {stateName as replicaSetList, stateUrl} from 'replicasetlist/replicasetlist_state';
 
+import {ActionBarController} from './actionbar_controller';
 import {ReplicaSetDetailController} from './replicasetdetail_controller';
 import {stateName} from './replicasetdetail_state';
 
@@ -46,7 +47,11 @@ export default function stateConfig($stateProvider) {
         controllerAs: 'ctrl',
         templateUrl: 'replicasetdetail/replicasetdetail.html',
       },
-      [actionbarViewName]: {},
+      [actionbarViewName]: {
+        controller: ActionBarController,
+        controllerAs: '$ctrl',
+        templateUrl: 'replicasetdetail/actionbar.html',
+      },
     },
   });
 }

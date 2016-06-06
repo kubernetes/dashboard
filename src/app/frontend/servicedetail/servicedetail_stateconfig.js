@@ -17,6 +17,7 @@ import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_servi
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 
 import {stateName as serviceList, stateUrl} from './../servicelist/servicelist_state';
+import {ActionBarController} from './actionbar_controller';
 import {ServiceDetailController} from './servicedetail_controller';
 import {stateName} from './servicedetail_state';
 
@@ -46,7 +47,11 @@ export default function stateConfig($stateProvider) {
         controllerAs: 'ctrl',
         templateUrl: 'servicedetail/servicedetail.html',
       },
-      [actionbarViewName]: {},
+      [actionbarViewName]: {
+        controller: ActionBarController,
+        controllerAs: '$ctrl',
+        templateUrl: 'servicedetail/actionbar.html',
+      },
     },
   });
 }

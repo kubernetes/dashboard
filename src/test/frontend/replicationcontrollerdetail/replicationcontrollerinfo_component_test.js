@@ -24,8 +24,8 @@ describe('Replication Controller Info controller', () => {
   beforeEach(() => {
     angular.mock.module(replicationControllerDetailModule.name);
 
-    angular.mock.inject(($componentController) => {
-      ctrl = $componentController('kdReplicationControllerInfo', {});
+    angular.mock.inject(($componentController, $rootScope) => {
+      ctrl = $componentController('kdReplicationControllerInfo', {$scope: $rootScope});
     });
   });
 

@@ -23,8 +23,9 @@ describe('Deployment card', () => {
   beforeEach(() => {
     angular.mock.module(deploymentListModule.name);
 
-    angular.mock.inject(
-        ($componentController) => { ctrl = $componentController('kdDeploymentCard'); });
+    angular.mock.inject(($componentController, $rootScope) => {
+      ctrl = $componentController('kdDeploymentCard', {$scope: $rootScope});
+    });
   });
 
   it('should construct details href', () => {
