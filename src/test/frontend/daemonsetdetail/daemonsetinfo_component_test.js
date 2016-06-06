@@ -23,9 +23,18 @@ describe('Daemon Set Info controller', () => {
 
   beforeEach(() => {
     angular.mock.module(daemonSetDetailModule.name);
-
     angular.mock.inject(($componentController, $rootScope) => {
-      ctrl = $componentController('kdDaemonSetInfo', {$scope: $rootScope});
+      ctrl = $componentController('kdDaemonSetInfo', {$scope: $rootScope}, {
+        daemonSet: {
+          podInfo: {
+            running: 0,
+            desired: 0,
+            failed: 0,
+            current: 0,
+            pending: 0,
+          },
+        },
+      });
     });
   });
 

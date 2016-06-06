@@ -15,46 +15,45 @@ limitations under the License.
 -->
 
 <kd-info-card>
-  <kd-info-card-header>Resource details</kd-info-card-header>
-  <kd-info-card-section name="Details">
-    <kd-info-card-entry title="Name">
+  <kd-info-card-header>{{::$ctrl.i18n.MSG_DAEMON_SET_INFO_RESOURCE_DETAILS_TITLE}}</kd-info-card-header>
+  <kd-info-card-section name="{{::$ctrl.i18n.MSG_DAEMON_SET_INFO_DETAILS_SUBTITLE}}">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DAEMON_SET_INFO_NAME_LABEL}}">
       <kd-middle-ellipsis
               display-string="{{::$ctrl.daemonSet.objectMeta.name}}">
       </kd-middle-ellipsis>
     </kd-info-card-entry>
-    <kd-info-card-entry title="Namespace">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DAEMON_SET_INFO_NAMESPACE_LABEL}}">
       {{::$ctrl.daemonSet.objectMeta.namespace}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="Labels">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DAEMON_SET_INFO_LABELS_LABEL}}">
       <kd-labels labels="::$ctrl.daemonSet.objectMeta.labels"></kd-labels>
     </kd-info-card-entry>
-    <kd-info-card-entry title="Images">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DAEMON_SET_INFO_IMAGES_LABEL}}">
       <div ng-repeat="image in $ctrl.daemonSet.containerImages">
         <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
       </div>
     </kd-info-card-entry>
   </kd-info-card-section>
 
-  <kd-info-card-section name="Status">
-    <kd-info-card-entry title="Pods">
+  <kd-info-card-section name="{{::$ctrl.i18n.MSG_DAEMON_SET_INFO_STATUS_SUBTITLE}}">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DAEMON_SET_INFO_PODS_LABEL}}">
       <div ng-if="!$ctrl.areDesiredPodsRunning()">
-        {{::$ctrl.daemonSet.podInfo.current}} created,
-        {{::$ctrl.daemonSet.podInfo.desired}} desired
+        {{::$ctrl.i18n.MSG_DAEMON_SET_INFO_PODS_CREATED_LABEL}},
+        {{::$ctrl.i18n.MSG_DAEMON_SET_INFO_PODS_DESIRED_LABEL}}
       </div>
       <div ng-if="$ctrl.areDesiredPodsRunning()">
-        {{::$ctrl.daemonSet.podInfo.running}} running
+        {{::$ctrl.i18n.MSG_DAEMON_SET_INFO_PODS_RUNNING_LABEL}}
       </div>
     </kd-info-card-entry>
-    <kd-info-card-entry title="Pods status" ng-if="!$ctrl.areDesiredPodsRunning()">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DAEMON_SET_INFO_PODS_STATUS_LABEL}}" ng-if="!$ctrl.areDesiredPodsRunning()">
       <div ng-if="!$ctrl.areDesiredPodsRunning()">
         <div ng-if="::$ctrl.daemonSet.podInfo.pending" class="kd-comma-separated-item">
-          {{::$ctrl.daemonSet.podInfo.pending}} pending<!-- Collapse whitespace
-      --></div>
+          {{::$ctrl.i18n.MSG_DAEMON_SET_INFO_PODS_PENDING_LABEL}}
+        </div>
         <div ng-if="::$ctrl.daemonSet.podInfo.failed" class="kd-comma-separated-item">
-          {{::$ctrl.daemonSet.podInfo.failed}} failed<!-- Collapse whitespace
-      --></div>
+          {{::$ctrl.i18n.MSG_DAEMON_SET_INFO_PODS_FAILED_LABEL}}></div>
         <div ng-if="::$ctrl.daemonSet.podInfo.running" class="kd-comma-separated-item">
-          {{::$ctrl.daemonSet.podInfo.running}} running
+          {{::$ctrl.i18n.MSG_DAEMON_SET_INFO_PODS_RUNNING_LABEL}}
         </div>
       </div>
     </kd-info-card-entry>
