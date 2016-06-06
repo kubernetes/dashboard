@@ -17,10 +17,8 @@ import {contentCardComponent} from './contentcard_component';
 /**
  * Module containing common components for cards that can carry any content.
  */
-export default angular
-    .module(
-        'kubernetesDashboard.common.components.contentcard',
-        [
-          'ngMaterial',
-        ])
+export default angular.module('kubernetesDashboard.common.components.contentcard',
+                              [
+                                'ngMaterial',
+                              ])
     .component('kdContentCard', contentCardComponent);

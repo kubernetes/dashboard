@@ -12,7 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ReplicationControllerDetailActionBarController} from 'replicationcontrollerdetail/replicationcontrollerdetailactionbar_controller';
+import {
+  ReplicationControllerDetailActionBarController,
+} from 'replicationcontrollerdetail/replicationcontrollerdetailactionbar_controller';
 import replicationControllerDetailModule from 'replicationcontrollerdetail/replicationcontrollerdetail_module';
 import {stateName as deploy} from 'deploy/deploy_state';
 

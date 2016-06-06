@@ -69,15 +69,15 @@ describe('Breadcrumbs controller ', () => {
     angular.mock.inject(($componentController, $state, $interpolate, _kdBreadcrumbsService_) => {
       state = $state;
       interpolate = $interpolate;
-      ctrl = $componentController(
-          'kdBreadcrumbs', {
-            $state: state,
-            $interpolate: interpolate,
-            kdBreadcrumbsService: _kdBreadcrumbsService_,
-          },
-          {
-            limit: breadcrumbsLimit,
-          });
+      ctrl = $componentController('kdBreadcrumbs',
+                                  {
+                                    $state: state,
+                                    $interpolate: interpolate,
+                                    kdBreadcrumbsService: _kdBreadcrumbsService_,
+                                  },
+                                  {
+                                    limit: breadcrumbsLimit,
+                                  });
     });
   });
 

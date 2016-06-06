@@ -44,10 +44,12 @@ describe('Deployment card', () => {
     // given
     ctrl.deployment = {
       pods: {
-        warnings: [{
-          message: 'test-error',
-          reason: 'test-reason',
-        }],
+        warnings: [
+          {
+            message: 'test-error',
+            reason: 'test-reason',
+          },
+        ],
       },
     };
 
@@ -87,10 +89,12 @@ describe('Deployment card', () => {
     // given
     ctrl.deployment = {
       pods: {
-        warnings: [{
-          message: 'test-error',
-          reason: 'test-reason',
-        }],
+        warnings: [
+          {
+            message: 'test-error',
+            reason: 'test-reason',
+          },
+        ],
       },
     };
 

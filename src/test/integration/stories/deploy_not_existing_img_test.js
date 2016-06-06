@@ -129,9 +129,9 @@ describe('Deploy not existing image story', () => {
       // Logs page is opened in new window so we have to switch browser focus to that window.
       browser.getAllWindowHandles().then((handles) => {
         let logsWindowHandle = handles[1];
-        browser.switchTo().window(logsWindowHandle).then(() => {
-          expect(browser.getCurrentUrl()).toContain(`log/default/${appName}`);
-        });
+        browser.switchTo()
+            .window(logsWindowHandle)
+            .then(() => { expect(browser.getCurrentUrl()).toContain(`log/default/${appName}`); });
       });
     });
   });

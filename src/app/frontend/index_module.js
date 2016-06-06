@@ -32,30 +32,28 @@ import workloadsModule from './workloads/workloads_module';
 import podDetailModule from './poddetail/poddetail_module';
 import petSetListModule from './petsetlist/petsetlist_module';
 
-export default angular
-    .module(
-        'kubernetesDashboard',
-        [
-          'ngAnimate',
-          'ngAria',
-          'ngMaterial',
-          'ngMessages',
-          'ngResource',
-          'ngSanitize',
-          'ui.router',
-          chromeModule.name,
-          deployModule.name,
-          errorModule.name,
-          logsModule.name,
-          replicationControllerDetailModule.name,
-          replicationControllerListModule.name,
-          replicaSetListModule.name,
-          deploymentListModule.name,
-          workloadsModule.name,
-          serviceDetailModule.name,
-          serviceListModule.name,
-          podDetailModule.name,
-          petSetListModule.name,
-        ])
+export default angular.module('kubernetesDashboard',
+                              [
+                                'ngAnimate',
+                                'ngAria',
+                                'ngMaterial',
+                                'ngMessages',
+                                'ngResource',
+                                'ngSanitize',
+                                'ui.router',
+                                chromeModule.name,
+                                deployModule.name,
+                                errorModule.name,
+                                logsModule.name,
+                                replicationControllerDetailModule.name,
+                                replicationControllerListModule.name,
+                                replicaSetListModule.name,
+                                deploymentListModule.name,
+                                workloadsModule.name,
+                                serviceDetailModule.name,
+                                serviceListModule.name,
+                                podDetailModule.name,
+                                petSetListModule.name,
+                              ])
     .config(indexConfig)
     .config(routeConfig);

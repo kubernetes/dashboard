@@ -46,9 +46,9 @@ export class ResourceCardEditMenuItemController {
    * @export
    */
   edit() {
-    this.kdResourceVerberService_
-        .showEditDialog(
-            this.resourceKindName, this.resourceCardCtrl.typeMeta, this.resourceCardCtrl.objectMeta)
+    this.kdResourceVerberService_.showEditDialog(this.resourceKindName,
+                                                 this.resourceCardCtrl.typeMeta,
+                                                 this.resourceCardCtrl.objectMeta)
         .then(() => {
           // For now just reload the state. Later we can update the item in place.
           this.state_.reload();

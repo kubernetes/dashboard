@@ -12,7 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as replicationcontrollerliststate} from 'replicationcontrollerlist/replicationcontrollerlist_state';
+import {
+  stateName as replicationcontrollerliststate,
+} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 
 /**
  * Controller for the deploy from file directive.
@@ -80,21 +82,21 @@ export default class DeployFromFileController {
 
     /** @type {!angular.Resource<!backendApi.AppDeploymentFromFileSpec>} */
     let resource = this.resource_('api/v1/appdeploymentfromfile');
-    resource.save(
-        deploymentSpec,
-        (response) => {
-          defer.resolve(response);  // Progress ends
-          this.log_.info('Deployment is completed: ', response);
-          if (response.error.length > 0) {
-            this.errorDialog_.open('Deployment has been partly completed', response.error);
-          }
-          this.state_.go(replicationcontrollerliststate);
-        },
-        (err) => {
-          defer.reject(err);  // Progress ends
-          this.log_.error('Error deploying application:', err);
-          this.errorDialog_.open('Deploying file has failed', err.data);
-        });
+    resource.save(deploymentSpec,
+                  (response) => {
+                    defer.resolve(response);  // Progress ends
+                    this.log_.info('Deployment is completed: ', response);
+                    if (response.error.length > 0) {
+                      this.errorDialog_.open('Deployment has been partly completed',
+                                             response.error);
+                    }
+                    this.state_.go(replicationcontrollerliststate);
+                  },
+                  (err) => {
+                    defer.reject(err);  // Progress ends
+                    this.log_.error('Error deploying application:', err);
+                    this.errorDialog_.open('Deploying file has failed', err.data);
+                  });
     return defer.promise;
   }
 }

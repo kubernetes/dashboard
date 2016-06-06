@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as replicationcontrollers} from 'replicationcontrollerlist/replicationcontrollerlist_state';
+import {stateName as rcs} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 
 /**
  * Controller for the deploy view.
@@ -91,28 +91,34 @@ export default class DeployController {
    * Cancels the deployment form.
    * @export
    */
-  cancel() { this.state_.go(replicationcontrollers); }
+  cancel() { this.state_.go(rcs); }
 }
 
 const i18n = {
   /** @export {string} @desc Title text which appears on top of the deploy page. */
   MSG_DEPLOY_PAGE_TITLE: goog.getMsg('Deploy a Containerized App'),
 
-  /** @export {string} @desc Text for a selection option, which the user must click to manually enter the app details on the deploy page. */
+  /** @export {string} @desc Text for a selection option, which the user must click to manually
+     enter the app details on the deploy page. */
   MSG_DEPLOY_SPECIFY_APP_DETAILS_ACTION: goog.getMsg('Specify app details below'),
 
-  /** @export {string} @desc Text for a selection option, which the user must click to upload a YAML/JSON file to deploy from on the deploy page. */
+  /** @export {string} @desc Text for a selection option, which the user must click to upload a
+     YAML/JSON file to deploy from on the deploy page. */
   MSG_DEPLOY_FILE_UPLOAD_ACTION: goog.getMsg('Upload a YAML or JSON file'),
 
-  /** @export {string} @desc The text is put on the 'Deploy' button at the end of the deploy page. */
+  /** @export {string} @desc The text is put on the 'Deploy' button at the end of the deploy page.
+     */
   MSG_DEPLOY_DEPLOY_ACTION: goog.getMsg('Deploy'),
 
-  /** @export {string} @desc The text is put on the 'Cancel' button at the end of the deploy page. */
+  /** @export {string} @desc The text is put on the 'Cancel' button at the end of the deploy page.
+     */
   MSG_DEPLOY_CANCEL_ACTION: goog.getMsg('Cancel'),
 
-  /** @export {string} @desc User help with a link redirecting to the "Dashboard tour" on the deploy page. */
-  MSG_DEPLOY_DASHBOARD_TOUR_USER_HELP:
-      goog.getMsg(`To learn more, {$openLink} take the Dashboard Tour {$linkIcon} {$closeLink}`, {
+  /** @export {string} @desc User help with a link redirecting to the "Dashboard tour" on the deploy
+     page. */
+  MSG_DEPLOY_DASHBOARD_TOUR_USER_HELP: goog.getMsg(
+      `To learn more, {$openLink} take the Dashboard Tour {$linkIcon} {$closeLink}`,
+      {
         openLink:
             `<a href="http://kubernetes.io/docs/user-guide/ui/" target="_blank" tabindex="-1">`,
         closeLink: `</a>`,

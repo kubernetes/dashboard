@@ -28,14 +28,12 @@ import {resourceCardFooterComponent} from './resourcecardfooter_component';
  * Module containing common components for resource cards. A resource card should be used
  * for displaying every kind of Kubernetes resource (e.g., Services, Secrets or Replica Sets).
  */
-export default angular
-    .module(
-        'kubernetesDashboard.common.components.resourcecard',
-        [
-          'ngMaterial',
-          'ui.router',
-          resourceModule.name,
-        ])
+export default angular.module('kubernetesDashboard.common.components.resourcecard',
+                              [
+                                'ngMaterial',
+                                'ui.router',
+                                resourceModule.name,
+                              ])
     .component('kdResourceCard', resourceCardComponent)
     .component('kdResourceCardList', resourceCardListComponent)
     .component('kdResourceCardMenu', resourceCardMenuComponent)

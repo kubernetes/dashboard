@@ -41,10 +41,9 @@ export default class ReplicationControllerCardController {
    * @export
    */
   getReplicationControllerDetailHref() {
-    return this.state_.href(
-        stateName, new StateParams(
-                       this.replicationController.objectMeta.namespace,
-                       this.replicationController.objectMeta.name));
+    return this.state_.href(stateName,
+                            new StateParams(this.replicationController.objectMeta.namespace,
+                                            this.replicationController.objectMeta.name));
   }
 
   /**
@@ -55,7 +54,8 @@ export default class ReplicationControllerCardController {
   hasWarnings() { return this.replicationController.pods.warnings.length > 0; }
 
   /**
-   * Returns true if the replication controller's pods have no warnings and there is at least one pod
+   * Returns true if the replication controller's pods have no warnings and there is at least one
+   * pod
    * in pending state, false otherwise
    * @return {boolean}
    * @export

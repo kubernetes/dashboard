@@ -42,13 +42,14 @@ describe('Verber service', () => {
 
     let promise = verber.showDeleteDialog('Foo resource', {foo: 'bar'}, {baz: 'qux'});
 
-    expect(mdDialog.show).toHaveBeenCalledWith(jasmine.objectContaining({
-      locals: {
-        'resourceKindName': 'Foo resource',
-        'typeMeta': {foo: 'bar'},
-        'objectMeta': {baz: 'qux'},
-      },
-    }));
+    expect(mdDialog.show)
+        .toHaveBeenCalledWith(jasmine.objectContaining({
+          locals: {
+            'resourceKindName': 'Foo resource',
+            'typeMeta': {foo: 'bar'},
+            'objectMeta': {baz: 'qux'},
+          },
+        }));
 
     deferred.resolve();
     promise.then(doneFn);
@@ -78,13 +79,14 @@ describe('Verber service', () => {
 
     let promise = verber.showEditDialog('Foo resource', {foo: 'bar'}, {baz: 'qux'});
 
-    expect(mdDialog.show).toHaveBeenCalledWith(jasmine.objectContaining({
-      locals: {
-        'resourceKindName': 'Foo resource',
-        'typeMeta': {foo: 'bar'},
-        'objectMeta': {baz: 'qux'},
-      },
-    }));
+    expect(mdDialog.show)
+        .toHaveBeenCalledWith(jasmine.objectContaining({
+          locals: {
+            'resourceKindName': 'Foo resource',
+            'typeMeta': {foo: 'bar'},
+            'objectMeta': {baz: 'qux'},
+          },
+        }));
     deferred.resolve();
     promise.then(doneFn);
     scope.$digest();

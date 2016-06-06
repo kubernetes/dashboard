@@ -58,8 +58,8 @@ export class PodCardListController {
    * @export
    */
   getPodDetailHref(pod) {
-    return this.state_.href(
-        stateName, new StateParams(pod.objectMeta.namespace, pod.objectMeta.name));
+    return this.state_.href(stateName,
+                            new StateParams(pod.objectMeta.namespace, pod.objectMeta.name));
   }
 }
 

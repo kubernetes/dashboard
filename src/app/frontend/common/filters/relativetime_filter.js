@@ -107,7 +107,8 @@ export default function relativeTimeFilter(kdAppConfigService) {
 }
 
 /**
- * Returns current time. If appConfig.serverTime is provided then it will be returned, otherwise current
+ * Returns current time. If appConfig.serverTime is provided then it will be returned, otherwise
+ * current
  * client time will be used.
  *
  * @param {?Date} serverTime

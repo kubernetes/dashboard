@@ -37,6 +37,7 @@ export class WorkloadsActionBarController {
 }
 
 const i18n = {
-  /** @export {string} @desc This tooltip appears when the user hovers over the "+" (Deploy) button on the workloads page. */
+  /** @export {string} @desc This tooltip appears when the user hovers over the "+" (Deploy)
+     button on the workloads page. */
   MSG_WORKLOADS_ACTION_BAR_DEPLOY_TOOLTIP: goog.getMsg('Deploy a containerized app'),
 };

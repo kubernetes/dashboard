@@ -43,8 +43,8 @@ export default function validProtocolDirective($resource, $q) {
       });
 
       ngModelController.$asyncValidators[validProtocolValidationKey] = (protocol) => {
-        return validate(
-            ngModelController, externalChanged, protocol, scope[isExternalParam], $resource, $q);
+        return validate(ngModelController, externalChanged, protocol, scope[isExternalParam],
+                        $resource, $q);
       };
     },
   };
@@ -71,19 +71,18 @@ function validate(ngModelController, externalChanged, protocol, isExternal, reso
   let resourceClass = resource('api/v1/appdeployment/validate/protocol');
   /** @type {!backendApi.ProtocolValiditySpec} */
   let spec = {protocol: protocol, isExternal: isExternal};
-  resourceClass.save(
-      spec,
-      /**
-       * @param {!backendApi.ProtocolValidity} validity
-       */
-      (validity) => {
-        if (validity.valid === true) {
-          deferred.resolve();
-        } else {
-          deferred.reject();
-        }
-      },
-      () => { deferred.reject(); });
+  resourceClass.save(spec,
+                     /**
+                      * @param {!backendApi.ProtocolValidity} validity
+                      */
+                     (validity) => {
+                       if (validity.valid === true) {
+                         deferred.resolve();
+                       } else {
+                         deferred.reject();
+                       }
+                     },
+                     () => { deferred.reject(); });
 
   return deferred.promise;
 }

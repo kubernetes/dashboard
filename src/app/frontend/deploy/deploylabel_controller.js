@@ -136,26 +136,33 @@ export default class DeployLabelController {
 }
 
 const i18n = {
-  /** @export {string} @desc This warning appears when the key of a specified kubernetes label on the deploy page is not unique.*/
+  /** @export {string} @desc This warning appears when the key of a specified kubernetes label
+     on the deploy page is not unique.*/
   MSG_DEPLOY_LABEL_KEY_NOT_UNIQUE_WARNING:
       goog.getMsg('{$labelKey} is not unique.', {labelKey: ''}),
-  /** @export {string} @desc This warning appears when the key of a specified kubernetes label (on the deploy page) does not start with a proper prefix. */
+  /** @export {string} @desc This warning appears when the key of a specified kubernetes label
+     (on the deploy page) does not start with a proper prefix. */
   MSG_DEPLOY_LABEL_KEY_PREFIX_PATTERN_WARNING:
       goog.getMsg('Prefix is not a valid DNS subdomain prefix. Example: my-domain.com'),
-  /** @export {string} @desc This warning appears when the key name of a specified kubernetes label (on the deploy page) does not match the required pattern.*/
-  MSG_DEPLOY_LABEL_KEY_NAME_PATTERN_WARNING: goog.getMsg(
-      `Label key name must be alphanumeric separated by '-', '_' or '.', ` +
-      `optionally prefixed by a DNS subdomain and '/'`),
-  /** @export {string} @desc This warning appears when the key prefix of a specified kubernetes label (on the deploy page) is too long.*/
+  /** @export {string} @desc This warning appears when the key name of a specified kubernetes
+     label (on the deploy page) does not match the required pattern.*/
+  MSG_DEPLOY_LABEL_KEY_NAME_PATTERN_WARNING:
+      goog.getMsg(`Label key name must be alphanumeric separated by '-', '_' or '.', ` +
+                  `optionally prefixed by a DNS subdomain and '/'`),
+  /** @export {string} @desc This warning appears when the key prefix of a specified kubernetes
+     label (on the deploy page) is too long.*/
   MSG_DEPLOY_LABEL_KEY_PREFIX_MAX_LENGTH_WARNING:
       goog.getMsg('Prefix should not exceed 253 characters'),
-  /** @export {string} @desc This warning appears when the key name of a specified kubernetes label (on the deploy page) is too long.*/
+  /** @export {string} @desc This warning appears when the key name of a specified kubernetes
+     label (on the deploy page) is too long.*/
   MSG_DEPLOY_LABEL_KEY_NAME_MAX_LENGTH_WARNING:
       goog.getMsg('Label Key name should not exceed 63 characters'),
-  /** @export {string} @desc This warning appears when the value of a specified kubernetes label (on the deploy page) does not match the required pattern.*/
+  /** @export {string} @desc This warning appears when the value of a specified kubernetes label
+     (on the deploy page) does not match the required pattern.*/
   MSG_DEPLOY_LABEL_VALUE_PATTERN_WARNING:
       goog.getMsg(`Label value must be alphanumeric separated by '.' , '-' or '_'`),
-  /** @export {string} @desc This warning appears when the value of a specified kubernetes label (on the deploy page) is too long.*/
+  /** @export {string} @desc This warning appears when the value of a specified kubernetes label
+     (on the deploy page) is too long.*/
   MSG_DEPLOY_LABEL_VALUE_MAX_LENGTH_WARNING:
       goog.getMsg('Label Value must not exceed 253 characters'),
 

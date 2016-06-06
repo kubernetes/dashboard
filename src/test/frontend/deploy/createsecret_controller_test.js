@@ -100,11 +100,9 @@ describe('Create-Secret dialog', () => {
     ctrl.secretForm.$valid = true;
     ctrl.secretName = 'mysecret';
     ctrl.data = `eyAiaHR0cHM6Ly9pbmRleC5kb2NrZXIuaW8vdjEvIjogeyAiYXV0aCI6ICJabUZyWlhCaG` +
-        `MzTjNiM0prTVRJSyIsICJlbWFpbCI6ICJqZG9lQGV4YW1wbGUuY29tIiB9IH0K`;
-    httpBackend
-        .expect(
-            'POST', 'api/v1/secret',
-            {name: ctrl.secretName, namespace: ctrl.namespace, data: ctrl.data})
+                `MzTjNiM0prTVRJSyIsICJlbWFpbCI6ICJqZG9lQGV4YW1wbGUuY29tIiB9IH0K`;
+    httpBackend.expect('POST', 'api/v1/secret',
+                       {name: ctrl.secretName, namespace: ctrl.namespace, data: ctrl.data})
         .respond(201, 'success');
     // when trying to submit
     ctrl.createSecret();

@@ -15,7 +15,9 @@
 import showNamespaceDialog from './createnamespace_dialog';
 import showCreateSecretDialog from './createsecret_dialog';
 import DeployLabel from './deploylabel';
-import {stateName as replicationcontrollerliststate} from 'replicationcontrollerlist/replicationcontrollerlist_state';
+import {
+  stateName as replicationcontrollerliststate,
+} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 import {uniqueNameValidationKey} from './uniquename_directive';
 import DockerImageReference from '../common/docker/dockerimagereference';
 
@@ -212,17 +214,16 @@ export default class DeployFromSettingsController {
 
     /** @type {!angular.Resource<!backendApi.AppDeploymentSpec>} */
     let resource = this.resource_('api/v1/appdeployment');
-    resource.save(
-        appDeploymentSpec,
-        (savedConfig) => {
-          defer.resolve(savedConfig);  // Progress ends
-          this.log_.info('Successfully deployed application: ', savedConfig);
-          this.state_.go(replicationcontrollerliststate);
-        },
-        (err) => {
-          defer.reject(err);  // Progress ends
-          this.log_.error('Error deploying application:', err);
-        });
+    resource.save(appDeploymentSpec,
+                  (savedConfig) => {
+                    defer.resolve(savedConfig);  // Progress ends
+                    this.log_.info('Successfully deployed application: ', savedConfig);
+                    this.state_.go(replicationcontrollerliststate);
+                  },
+                  (err) => {
+                    defer.reject(err);  // Progress ends
+                    this.log_.error('Error deploying application:', err);
+                  });
     return defer.promise;
   }
 
@@ -286,9 +287,8 @@ export default class DeployFromSettingsController {
   getSecrets(namespace) {
     /** @type {!angular.Resource<!backendApi.SecretsList>} */
     let resource = this.resource_(`api/v1/secret/${namespace}`);
-    resource.get(
-        (res) => { this.secrets = res.secrets; },
-        (err) => { this.log_.log(`Error getting secrets: ${err}`); });
+    resource.get((res) => { this.secrets = res.secrets; },
+                 (err) => { this.log_.log(`Error getting secrets: ${err}`); });
   }
 
   /**
@@ -308,7 +308,7 @@ export default class DeployFromSettingsController {
     let name = this.form['name'];
 
     return name.$error[uniqueNameValidationKey] ||
-        (name.$invalid && (name.$touched || this.form.$submitted));
+           (name.$invalid && (name.$touched || this.form.$submitted));
   }
 
   /**
@@ -376,159 +376,202 @@ export default class DeployFromSettingsController {
 }
 
 const i18n = {
-  /** @export {string} @desc Label 'App name', which appears as a placeholder in an empty input field on the deploy from settings page. */
+  /** @export {string} @desc Label 'App name', which appears as a placeholder in an empty input
+     field on the deploy from settings page. */
   MSG_DEPLOY_SETTINGS_APP_NAME_LABEL: goog.getMsg(`App name`),
 
-  /** @export {string} @desc Appears to tell the user that app name input on the deploy from settings page is required.*/
+  /** @export {string} @desc Appears to tell the user that app name input on the deploy from
+     settings page is required.*/
   MSG_DEPLOY_SETTINGS_APP_NAME_REQUIRED_WARNING: goog.getMsg(`Application name is required.`),
 
-  /** @export {string} @desc Appears as warning when the user has typed in an app name that already exists. The text is followed by a specific namespace name. */
+  /** @export {string} @desc Appears as warning when the user has typed in an app name that already
+     exists. The text is followed by a specific namespace name. */
   MSG_DEPLOY_SETTINGS_APP_NAME_ALREADY_EXISTS_WARNING: goog.getMsg(
       `Replication controller or service with this name already exists within namespace`),
 
-  /** @export {string} @desc Appears when the app name input on the deploy from settings page does not match the expected pattern. */
+  /** @export {string} @desc Appears when the app name input on the deploy from settings page does
+     not match the expected pattern. */
   MSG_DEPLOY_SETTINGS_APP_NAME_PATTERN_WARNING: goog.getMsg(
       `Application name must start with a lowercase letter and contain only lowercase letters, numbers, and '-' between words.`),
 
-  /** @export {string} @desc Appears when the typed in app name on the deploy from settings page exceeds the maximal allowed length. */
+  /** @export {string} @desc Appears when the typed in app name on the deploy from settings page
+     exceeds the maximal allowed length. */
   MSG_DEPLOY_SETTINGS_APP_NAME_MAX_LENGTH_WARNING:
-      goog.getMsg(`Name must be up to {$maxLength} characters long.`, {
-        maxLength: '24',
-      }),
+      goog.getMsg(`Name must be up to {$maxLength} characters long.`,
+                  {
+                    maxLength: '24',
+                  }),
 
   /** @export {string} @desc User help for the `App name` input on the deploy from settings page. */
   MSG_DEPLOY_SETTINGS_APP_NAME_USER_HELP: goog.getMsg(
       `An 'app' label with this value will be added to the Replication Controller and Service that get deployed.`),
 
-  /** @export {string} @desc The text is used as a 'Learn more' link text on the deploy from settings page. */
+  /** @export {string} @desc The text is used as a 'Learn more' link text on the deploy from
+     settings page. */
   MSG_DEPLOY_SETTINGS_LEARN_MORE_ACTION: goog.getMsg('Learn more'),
 
-  /** @export {string} @desc Label "Container image", which appears as a placeholder in an empty input field for a container image on the deploy from settings page. */
+  /** @export {string} @desc Label "Container image", which appears as a placeholder in an empty
+     input field for a container image on the deploy from settings page. */
   MSG_DEPLOY_SETTINGS_CONTAINER_IMAGE_LABEL: goog.getMsg(`Container image`),
 
-  /** @export {string} @desc Appears to tell the user that the container image input on the deploy from settings page is required.*/
+  /** @export {string} @desc Appears to tell the user that the container image input on the deploy
+     from settings page is required.*/
   MSG_DEPLOY_SETTINGS_CONTAINER_IMAGE_REQUIRED_WARNING: goog.getMsg(`Container image is required`),
 
-  /** @export {string} @desc Appears to tell the user that the typed in container image is invalid. This text must end with a colon. */
+  /** @export {string} @desc Appears to tell the user that the typed in container image is invalid.
+     This text must end with a colon. */
   MSG_DEPLOY_SETTINGS_CONTAINER_IMAGE_INVALID_WARNING: goog.getMsg(`Container image is invalid:`),
 
-  /** @export {string} @desc User helpfor the container image input on the deploy from settings page.*/
+  /** @export {string} @desc User helpfor the container image input on the deploy from settings
+     page.*/
   MSG_DEPLOY_SETTINGS_CONTAINER_IMAGE_USER_HELP: goog.getMsg(
       `Enter the URL of a public image on any registry, or a private image hosted on Docker Hub or Google Container Registry.`),
 
-  /** @export {string} @desc Label "Number of pods", which appears as a placeholder in an empty input field for the number of pods on the deploy from settings page.*/
+  /** @export {string} @desc Label "Number of pods", which appears as a placeholder in an empty
+     input field for the number of pods on the deploy from settings page.*/
   MSG_DEPLOY_SETTINGS_NUMBER_OF_PODS_LABEL: goog.getMsg(`Number of pods`),
 
-  /** @export {string} @desc Appears to tell the user that the "number of pods" input on the deploy from settings page is required. */
+  /** @export {string} @desc Appears to tell the user that the "number of pods" input on the deploy
+     from settings page is required. */
   MSG_DEPLOY_SETTINGS_NUMBER_OF_PODS_REQUIRED_WARNING: goog.getMsg(`Number of pods is required`),
 
-  /** @export {string} @desc Appears to tell the user that the number of pods on the deploy from settings page must be non-negative or integer. */
+  /** @export {string} @desc Appears to tell the user that the number of pods on the deploy from
+     settings page must be non-negative or integer. */
   MSG_DEPLOY_SETTINGS_NUMBER_OF_PODS_INT_WARNING:
       goog.getMsg(`Number of pods must be a positive integer`),
 
-  /** @export {string} @desc Appears to tell the user that the number of pods on the deploy from settings page must be at least 1. */
+  /** @export {string} @desc Appears to tell the user that the number of pods on the deploy from
+     settings page must be at least 1. */
   MSG_DEPLOY_SETTINGS_NUMBER_OF_PODS_MIN_WARNING: goog.getMsg(`Number of pods must be at least 1`),
 
-  /** @export {string} @desc Appears as a warning when the user has specified a really high number of pods on the deploy from settings page. */
+  /** @export {string} @desc Appears as a warning when the user has specified a really high number
+     of pods on the deploy from settings page. */
   MSG_DEPLOY_SETTINGS_NUMBER_OF_PODS_HIGH_WARNING: goog.getMsg(
       `Setting high number of pods may cause performance issues of the cluster and Dashboard UI.`),
 
-  /** @export {string} @desc User help for the "number of pods" input on the deploy from settings page. */
+  /** @export {string} @desc User help for the "number of pods" input on the deploy from settings
+     page. */
   MSG_DEPLOY_SETTINGS_NUMBER_OF_PODS_USER_HELP: goog.getMsg(
       `A Replication Controller will be created to maintain the desired number of pods across your cluster.`),
 
-  /** @export {string} @desc User help for the "port mappings" input on the deploy from settings page. */
+  /** @export {string} @desc User help for the "port mappings" input on the deploy from settings
+     page. */
   MSG_DEPLOY_SETTINGS_PORT_MAPPINGS_USER_HELP: goog.getMsg(
       `Ports are optional. If specified, a Service will be created mapping the Port (incoming) to a target Port seen by the container.`),
 
-  /** @export {string} @desc User help, tells the user what the DNS name of his deployed service (on the deploy page) is going to be. The actual name will follow, so this text must end with a colon. */
+  /** @export {string} @desc User help, tells the user what the DNS name of his deployed service (on
+     the deploy page) is going to be. The actual name will follow, so this text must end with a
+     colon. */
   MSG_DEPLOY_SETTINGS_SERVICE_DNS_NAME_USER_HELP:
       goog.getMsg(`The internal DNS name for this Service will be:`),
 
-  /** @export {string} @desc Label "Description", which appears as a placeholder in the empty description input on the deploy from settings page. */
+  /** @export {string} @desc Label "Description", which appears as a placeholder in the empty
+     description input on the deploy from settings page. */
   MSG_DEPLOY_SETTINGS_DESCRIPTION_LABEL: goog.getMsg(`Description`),
 
-  /** @export {string} @desc User help for the "Description" input on the deploy from settings page.*/
+  /** @export {string} @desc User help for the "Description" input on the deploy from settings
+     page.*/
   MSG_DEPLOY_SETTINGS_DESCRIPTION_USER_HELP: goog.getMsg(
       `The description will be added as an annotation to the Replication Controller and displayed in the application's details.`),
 
   /** @export {string} @desc Title of the labels input section on the deploy from settings page. */
   MSG_DEPLOY_SETTINGS_LABELS_TITLE: goog.getMsg(`Labels`),
 
-  /** @export {string} @desc Label "Key" for the key input fields, in the labels section on the deploy from settings page. */
+  /** @export {string} @desc Label "Key" for the key input fields, in the labels section on the
+     deploy from settings page. */
   MSG_DEPLOY_SETTINGS_LABELS_KEY_LABEL: goog.getMsg(`Key`),
 
-  /** @export {string} @desc Label "Value" for the value input fields, in the labels section on the deploy from settings page. */
+  /** @export {string} @desc Label "Value" for the value input fields, in the labels section on the
+     deploy from settings page. */
   MSG_DEPLOY_SETTINGS_LABELS_VALUE_LABEL: goog.getMsg(`Value`),
 
   /** @export {string} @desc User help for the "Labels" section on the deploy from settings page. */
   MSG_DEPLOY_SETTINGS_LABELS_USER_HELP: goog.getMsg(
       `The specified labels will be applied to the created Replication Controller, Service (if any) and Pods. Common labels include release, environment, tier, partition and track.`),
 
-  /** @export {string} @desc Label "Namespace" label, for the namespace selection box on the deploy from settings page. */
+  /** @export {string} @desc Label "Namespace" label, for the namespace selection box on the deploy
+     from settings page. */
   MSG_DEPLOY_SETTINGS_NAMESPACE_LABEL: goog.getMsg(`Namespace`),
 
-  /** @export {string} @desc The text appears in the namespace selection box on the deploy from settings page, and acts as a button. Clicking it creates a new namespace. */
+  /** @export {string} @desc The text appears in the namespace selection box on the deploy from
+     settings page, and acts as a button. Clicking it creates a new namespace. */
   MSG_DEPLOY_SETTINGS_NAMESPACE_CREATE_ACTION: goog.getMsg(`Create a new namespace...`),
 
-  /** @export {string} @desc User help for the namespace selection on the deploy from settings page. */
+  /** @export {string} @desc User help for the namespace selection on the deploy from settings page.
+     */
   MSG_DEPLOY_SETTINGS_NAMESPACE_USER_HELP:
       goog.getMsg(`Namespaces let you partition resources into logically named groups.`),
 
-  /** @export {string} @desc Label "Image Pull Secret", which appears as a placeholder in the image pull secret selection box on the deploy from settings page. */
+  /** @export {string} @desc Label "Image Pull Secret", which appears as a placeholder in the image
+     pull secret selection box on the deploy from settings page. */
   MSG_DEPLOY_SETTINGS_IMAGE_PULL_SECRET_LABEL: goog.getMsg(`Image Pull Secret`),
 
-  /** @export {string} @desc The text appears in the image pull secret selection box on the deploy from settings page and acts as a button. Pressing it creates a new image pull secret.*/
+  /** @export {string} @desc The text appears in the image pull secret selection box on the deploy
+     from settings page and acts as a button. Pressing it creates a new image pull secret.*/
   MSG_DEPLOY_SETTINGS_IMAGE_PULL_SECRET_CREATE_ACTION: goog.getMsg(`Create a new secret...`),
 
-  /** @export {string} @desc User help for the "Image Pull Secret" selection box on the deploy from settings page. */
+  /** @export {string} @desc User help for the "Image Pull Secret" selection box on the deploy from
+     settings page. */
   MSG_DEPLOY_SETTINGS_IMAGE_PULL_SECRET_USER_HELP: goog.getMsg(
       `The specified image could require a pull secret credential if it is private. You may choose an existing secret or create a new one.`),
 
-  /** @export {string} @desc Label "CPU requirement", which appears as a placeholder for the cpu input on the deploy from settings page. */
+  /** @export {string} @desc Label "CPU requirement", which appears as a placeholder for the cpu
+     input on the deploy from settings page. */
   MSG_DEPLOY_SETTINGS_CPU_REQUIREMENT_LABEL: goog.getMsg(`CPU requirement (cores)`),
 
-  /** @export {string} @desc Appears to tell the user that the typed in CPU cores count on the deploy page is not a number. */
+  /** @export {string} @desc Appears to tell the user that the typed in CPU cores count on the
+     deploy page is not a number. */
   MSG_DEPLOY_SETTINGS_CPU_NOT_A_NUMBER_WARNING:
       goog.getMsg(`CPU requirement must be given as a valid number.`),
 
-  /** @export {string} @desc Appears to tell the user that the typed in number of CPU cores (on the deploy page) cannot be negative. */
+  /** @export {string} @desc Appears to tell the user that the typed in number of CPU cores (on the
+     deploy page) cannot be negative. */
   MSG_DEPLOY_SETTINGS_CPU_NEGATIVE_WARNING:
       goog.getMsg(`CPU requirement must be given as a positive number.`),
 
-  /** @export {string} @desc Label "Memory requirement", which appears as a placeholder for the memory input on the deploy from settings page. */
+  /** @export {string} @desc Label "Memory requirement", which appears as a placeholder for the
+     memory input on the deploy from settings page. */
   MSG_DEPLOY_SETTINGS_MEMORY_REQUIREMENT_LABEL: goog.getMsg(`Memory requirement (MiB)`),
 
-  /** @export {string} @desc Appears to tell the user that the typed in memory on the deploy page is not a number. */
+  /** @export {string} @desc Appears to tell the user that the typed in memory on the deploy page is
+     not a number. */
   MSG_DEPLOY_SETTINGS_MEMORY_NOT_A_NUMBER_WARNING:
       goog.getMsg(`Memory requirement must be given as a valid number.`),
 
-  /** @export {string} @desc Appears to tell the user that the typed in memory (on the deploy page) cannot be negative. */
+  /** @export {string} @desc Appears to tell the user that the typed in memory (on the deploy page)
+     cannot be negative. */
   MSG_DEPLOY_SETTINGS_MEMORY_NEGATIVE_WARNING:
       goog.getMsg(`Memory requirement must be given as a positive number.`),
 
-  /** @export {string} @desc User help for the memory and cpu requirement inputs on the deploy from settings page.*/
+  /** @export {string} @desc User help for the memory and cpu requirement inputs on the deploy from
+     settings page.*/
   MSG_DEPLOY_SETTINGS_CPU_MEM_USER_HELP:
       goog.getMsg(`You can specify minimum CPU and memory requirements for the container.`),
 
-  /** @export {string} @desc Label "Run command" (a noun, not a verb), which serves as a placeholder for the 'Command' input on the deploy from settings page.*/
+  /** @export {string} @desc Label "Run command" (a noun, not a verb), which serves as a placeholder
+     for the 'Command' input on the deploy from settings page.*/
   MSG_DEPLOY_SETTINGS_RUN_COMMAND_LABEL: goog.getMsg(`Run command`),
 
-  /** @export {string} @desc Label "Run command arguments", which serves as a placeholder for the command arguments input on the deploy from settings page. */
+  /** @export {string} @desc Label "Run command arguments", which serves as a placeholder for the
+     command arguments input on the deploy from settings page. */
   MSG_DEPLOY_SETTINGS_RUN_COMMAND_ARGUMENTS_LABEL: goog.getMsg(`Run command arguments`),
 
-  /** @export {string} @desc User help for the "Run command" input on the deploy from settings page.*/
+  /** @export {string} @desc User help for the "Run command" input on the deploy from settings
+     page.*/
   MSG_DEPLOY_SETTINGS_RUN_COMMAND_USER_HELP: goog.getMsg(
       `By default, your containers run the selected image's default entrypoint command. You can use the command options to override the default.`),
 
-  /** @export {string} @desc Label "Run as privileged" for the corresponding checkbox on the deploy from settings page. */
+  /** @export {string} @desc Label "Run as privileged" for the corresponding checkbox on the deploy
+     from settings page. */
   MSG_DEPLOY_SETTINGS_RUN_AS_PRIVILEGED_LABEL: goog.getMsg(`Run as privileged`),
 
-  /** @export {string} @desc User help for the "Run as privileged" checkbox input on the deploy from settings page. */
+  /** @export {string} @desc User help for the "Run as privileged" checkbox input on the deploy from
+     settings page. */
   MSG_DEPLOY_SETTINGS_RUN_PRIVILEGED_USER_HELP: goog.getMsg(
       `Processes in privileged containers are equivalent to processes running as root on the host.`),
 
-  /** @export {string} @desc User help for the "Environment variables" section on the deploy from settings page. */
+  /** @export {string} @desc User help for the "Environment variables" section on the deploy from
+     settings page. */
   MSG_DEPLOY_SETTINGS_ENV_VARIABLES_USER_HELP: goog.getMsg(
       `Environment variables available for use in the container. Values can reference other variables using $(VAR_NAME) syntax.`),
 };

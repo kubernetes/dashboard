@@ -22,15 +22,13 @@ import {deploymentInfoComponent} from './deploymentinfo_component';
  *
  * The view shows detailed view of a Deployment.
  */
-export default angular
-    .module(
-        'kubernetesDashboard.deploymentdetail',
-        [
-          'ngMaterial',
-          'ngResource',
-          'ui.router',
-          componentsModule.name,
-          filtersModule.name,
-        ])
+export default angular.module('kubernetesDashboard.deploymentdetail',
+                              [
+                                'ngMaterial',
+                                'ngResource',
+                                'ui.router',
+                                componentsModule.name,
+                                filtersModule.name,
+                              ])
     .config(stateConfig)
     .component('kdDeploymentInfo', deploymentInfoComponent);

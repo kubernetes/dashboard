@@ -30,10 +30,12 @@ describe('Pet Set card', () => {
     // given
     ctrl.petSet = {
       pods: {
-        warnings: [{
-          message: 'test-error',
-          reason: 'test-reason',
-        }],
+        warnings: [
+          {
+            message: 'test-error',
+            reason: 'test-reason',
+          },
+        ],
       },
     };
 
@@ -73,10 +75,12 @@ describe('Pet Set card', () => {
     // given
     ctrl.petSet = {
       pods: {
-        warnings: [{
-          message: 'test-error',
-          reason: 'test-reason',
-        }],
+        warnings: [
+          {
+            message: 'test-error',
+            reason: 'test-reason',
+          },
+        ],
       },
     };
 
