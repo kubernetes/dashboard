@@ -19,9 +19,7 @@ import {
 } from 'replicationcontrollerlist/replicationcontrollerlist_state';
 
 import {stateName} from './replicationcontrollerdetail_state';
-import {
-  ReplicationControllerDetailActionBarController,
-} from './replicationcontrollerdetailactionbar_controller';
+import {ActionBarController} from './actionbar_controller';
 
 import ReplicationControllerDetailController from './replicationcontrollerdetail_controller';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
@@ -55,9 +53,9 @@ export default function stateConfig($stateProvider) {
         templateUrl: 'replicationcontrollerdetail/replicationcontrollerdetail.html',
       },
       [actionbarViewName]: {
-        controller: ReplicationControllerDetailActionBarController,
-        controllerAs: 'ctrl',
-        templateUrl: 'replicationcontrollerdetail/replicationcontrollerdetailactionbar.html',
+        controller: ActionBarController,
+        controllerAs: '$ctrl',
+        templateUrl: 'replicationcontrollerdetail/actionbar.html',
       },
     },
   });

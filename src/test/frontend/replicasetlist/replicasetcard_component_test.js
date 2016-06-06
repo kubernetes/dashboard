@@ -23,8 +23,9 @@ describe('Replica Set card', () => {
   beforeEach(() => {
     angular.mock.module(replicaSetListModule.name);
 
-    angular.mock.inject(
-        ($componentController) => { ctrl = $componentController('kdReplicaSetCard'); });
+    angular.mock.inject(($componentController, $rootScope) => {
+      ctrl = $componentController('kdReplicaSetCard', {$scope: $rootScope});
+    });
   });
 
   it('should construct details href', () => {

@@ -12,39 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../variables';
+import {
+  ActionBarController,
+} from 'petsetdetail/actionbar_controller';
+import module from 'petsetdetail/petsetdetail_module';
 
-.kd-json-edit-dialog-content {
-  display: flex;
-  flex-direction: column;
-  min-height: $layout-breakpoint-xs / 2;
-  min-width: $layout-breakpoint-xs / 2;
-}
+describe('Action Bar controller', () => {
+  /** @type {!ActionBarController} */
+  let ctrl;
+  let details = {};
 
-.kd-json-edit-editor {
-  display: flex;
-  flex: 1;
-  overflow: hidden;
-}
+  beforeEach(() => {
+    angular.mock.module(module.name);
 
-.jsoneditor {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  height: initial;
-  overflow: hidden;
+    angular.mock.inject(
+        ($controller) => { ctrl = $controller(ActionBarController, {petSetDetail: details}); });
+  });
 
-  div {
-    &.outer {
-      display: flex;
-      flex: 1;
-      margin: 0;
-      overflow: auto;
-      padding: 0;
-    }
-  }
-
-  .menu {
-    flex-shrink: 0;
-  }
-}
+  it('should initialize details', () => { expect(ctrl.details).toBe(details); });
+});

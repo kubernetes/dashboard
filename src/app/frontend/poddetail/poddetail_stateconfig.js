@@ -17,6 +17,7 @@ import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_servi
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 import {stateName as podList, stateUrl} from 'podlist/podlist_state';
 
+import {ActionBarController} from './actionbar_controller';
 import {PodDetailController} from './poddetail_controller';
 import {stateName} from './poddetail_state';
 
@@ -46,7 +47,11 @@ export default function stateConfig($stateProvider) {
         controllerAs: 'ctrl',
         templateUrl: 'poddetail/poddetail.html',
       },
-      [actionbarViewName]: {},
+      [actionbarViewName]: {
+        controller: ActionBarController,
+        controllerAs: '$ctrl',
+        templateUrl: 'poddetail/actionbar.html',
+      },
     },
   });
 }

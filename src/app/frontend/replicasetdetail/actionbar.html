@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-button class="md-icon-button" ng-click="$ctrl.remove()">
-  <md-icon class="kd-actionbar-icon-button">delete</md-icon>
-  <md-tooltip md-direction="bottom">Delete {{::$ctrl.resourceKindName}}</md-tooltip>
-</md-button>
+<kd-actionbar-detail-buttons resource-kind-name="Replica Set"
+                        type-meta="$ctrl.details.typeMeta"
+                        object-meta="$ctrl.details.objectMeta">
+</kd-actionbar-detail-buttons>

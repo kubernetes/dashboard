@@ -23,7 +23,9 @@ describe('Pet Set card', () => {
   beforeEach(() => {
     angular.mock.module(petSetListModule.name);
 
-    angular.mock.inject(($componentController) => { ctrl = $componentController('kdPetSetCard'); });
+    angular.mock.inject(($componentController, $rootScope) => {
+      ctrl = $componentController('kdPetSetCard', {$scope: $rootScope});
+    });
   });
 
   it('should return true when at least one pet set controller pod has warning', () => {

@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import {
-  ReplicationControllerDetailActionBarController,
-} from 'replicationcontrollerdetail/replicationcontrollerdetailactionbar_controller';
+  ActionBarController,
+} from 'replicationcontrollerdetail/actionbar_controller';
 import replicationControllerDetailModule from 'replicationcontrollerdetail/replicationcontrollerdetail_module';
 import {stateName as deploy} from 'deploy/deploy_state';
 
@@ -37,7 +37,7 @@ describe('Replication Controller Detail Action Bar controller', () => {
       state = $state;
       kdReplicationControllerService = _kdReplicationControllerService_;
 
-      ctrl = $controller(ReplicationControllerDetailActionBarController, {
+      ctrl = $controller(ActionBarController, {
         $state: state,
         replicationControllerDetail: {},
         kdReplicationControllerService: _kdReplicationControllerService_,

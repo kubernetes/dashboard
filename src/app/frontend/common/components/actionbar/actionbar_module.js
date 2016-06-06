@@ -16,6 +16,8 @@ import {breadcrumbsComponent} from './../breadcrumbs/breadcrumbs_component';
 import {BreadcrumbsService} from './../breadcrumbs/breadcrumbs_service';
 import {actionbarComponent} from './actionbar_component';
 import {actionbarDeleteItemComponent} from './actionbardeleteitem_component';
+import {actionbarDetailButtonsComponent} from './actionbardetailbuttons_component';
+import {actionbarEditItemComponent} from './actionbaredititem_component';
 
 import resourceModule from 'common/resource/resource_module';
 
@@ -31,4 +33,6 @@ export default angular.module('kubernetesDashboard.common.components.actionbar',
     .component('kdActionbar', actionbarComponent)
     .component('kdBreadcrumbs', breadcrumbsComponent)
     .component('kdActionbarDeleteItem', actionbarDeleteItemComponent)
+    .component('kdActionbarEditItem', actionbarEditItemComponent)
+    .component('kdActionbarDetailButtons', actionbarDetailButtonsComponent)
     .service('kdBreadcrumbsService', BreadcrumbsService);

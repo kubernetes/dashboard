@@ -61,6 +61,7 @@ describe('Actionbar delete item component', () => {
                                     $state: state,
                                     kdBreadcrumbsService: _kdBreadcrumbsService_,
                                     kdResourceVerberService: _kdResourceVerberService_,
+                                    $scope: scope,
                                   },
                                   {
                                     resourceKindName: 'resource',

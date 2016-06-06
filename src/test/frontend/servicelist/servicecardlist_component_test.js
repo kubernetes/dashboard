@@ -25,8 +25,9 @@ describe('Service list controller', () => {
     angular.mock.module(serviceListModule.name);
     angular.mock.module(serviceDetailModule.name);
 
-    angular.mock.inject(
-        ($componentController) => { ctrl = $componentController('kdServiceCardList', {}, {}); });
+    angular.mock.inject(($componentController, $rootScope) => {
+      ctrl = $componentController('kdServiceCardList', {$scope: $rootScope}, {});
+    });
   });
 
   it('should return service details link', () => {

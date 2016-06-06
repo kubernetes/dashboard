@@ -10,8 +10,9 @@ describe('Deployment Info controller', () => {
   beforeEach(() => {
     angular.mock.module(deploymentDetailModule.name);
 
-    angular.mock.inject(
-        ($componentController) => { ctrl = $componentController('kdDeploymentInfo', {}); });
+    angular.mock.inject(($componentController, $rootScope) => {
+      ctrl = $componentController('kdDeploymentInfo', {$scope: $rootScope});
+    });
   });
 
   describe('#rollingUpdateStrategy', () => {

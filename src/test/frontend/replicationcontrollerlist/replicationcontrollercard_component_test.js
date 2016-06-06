@@ -23,8 +23,9 @@ describe('Replication controller card', () => {
   beforeEach(() => {
     angular.mock.module(replicationControllerListModule.name);
 
-    angular.mock.inject(
-        ($componentController) => { ctrl = $componentController('kdReplicationControllerCard'); });
+    angular.mock.inject(($componentController, $rootScope) => {
+      ctrl = $componentController('kdReplicationControllerCard', {$scope: $rootScope});
+    });
   });
 
   it('should construct details href', () => {
