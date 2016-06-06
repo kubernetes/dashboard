@@ -3,6 +3,24 @@
     <md-tabs md-border-bottom md-dynamic-height>
       <md-tab label="Overview">
         <kd-deployment-info deployment="::ctrl.deploymentDetail"></kd-deployment-info>
+
+        <kd-content-card>
+          <kd-title>New Replica Set</kd-title>
+          <kd-content>
+            <kd-replica-set-card-list
+                    replica-sets="::[ctrl.deploymentDetail.newReplicaSet]">
+            </kd-replica-set-card-list>
+          </kd-content>
+        </kd-content-card>
+
+        <kd-content-card>
+          <kd-title>Old Replica Sets</kd-title>
+          <kd-content>
+            <kd-replica-set-card-list
+                    replica-sets="::ctrl.deploymentDetail.oldReplicaSetList.replicaSets">
+            </kd-replica-set-card-list>
+          </kd-content>
+        </kd-content-card>
       </md-tab>
       <md-tab label="Events">
         <kd-event-card-list events="::ctrl.deploymentDetail.eventList.events"></kd-event-card-list>
