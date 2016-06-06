@@ -35,14 +35,14 @@ describe('Delete resource menu item', () => {
 
     angular.mock.inject(
         ($rootScope, $componentController, _kdResourceVerberService_, $q, $state, $mdDialog) => {
-          ctrl = $componentController('kdResourceCardDeleteMenuItem');
+          scope = $rootScope;
+          ctrl = $componentController('kdResourceCardDeleteMenuItem', {$scope: $rootScope});
           ctrl.resourceCardCtrl = {
             objectMeta: {name: 'foo-name', namespace: 'foo-namespace'},
             typeMeta: {kind: 'foo'},
           };
           state = $state;
           kdResourceVerberService = _kdResourceVerberService_;
-          scope = $rootScope;
           q = $q;
           mdDialog = $mdDialog;
         });

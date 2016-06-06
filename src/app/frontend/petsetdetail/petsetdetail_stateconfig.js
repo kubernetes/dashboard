@@ -17,6 +17,7 @@ import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_servi
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 import {stateName as petSetList, stateUrl} from 'petsetlist/petsetlist_state';
 
+import {ActionBarController} from './actionbar_controller';
 import {PetSetDetailController} from './petsetdetail_controller';
 import {stateName} from './petsetdetail_state';
 
@@ -46,7 +47,11 @@ export default function stateConfig($stateProvider) {
         controllerAs: 'ctrl',
         templateUrl: 'petsetdetail/petsetdetail.html',
       },
-      [actionbarViewName]: {},
+      [actionbarViewName]: {
+        controller: ActionBarController,
+        controllerAs: '$ctrl',
+        templateUrl: 'petsetdetail/actionbar.html',
+      },
     },
   });
 }

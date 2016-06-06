@@ -18,14 +18,13 @@
  *
  * @final
  */
-export class ActionbarDeleteItemController {
+export class ActionbarEditItemController {
   /**
    * @param {!./../../resource/verber_service.VerberService} kdResourceVerberService
-   * @param {!./../breadcrumbs/breadcrumbs_service.BreadcrumbsService} kdBreadcrumbsService
    * @param {!ui.router.$state} $state
    * @ngInject
    */
-  constructor(kdResourceVerberService, kdBreadcrumbsService, $state) {
+  constructor(kdResourceVerberService, $state) {
     /** @export {string} Initialized from a binding. */
     this.resourceKindName;
 
@@ -38,9 +37,6 @@ export class ActionbarDeleteItemController {
     /** @private {!./../../resource/verber_service.VerberService} */
     this.kdResourceVerberService_ = kdResourceVerberService;
 
-    /** @private {!./../breadcrumbs/breadcrumbs_service.BreadcrumbsService} */
-    this.kdBreadcrumbsService_ = kdBreadcrumbsService;
-
     /** @private {!ui.router.$state}} */
     this.state_ = $state;
   }
@@ -48,44 +44,26 @@ export class ActionbarDeleteItemController {
   /**
    * @export
    */
-  remove() {
-    this.kdResourceVerberService_.showDeleteDialog(this.resourceKindName, this.typeMeta,
-                                                   this.objectMeta)
-        .then(() => {
-          let parentStateName =
-              this.kdBreadcrumbsService_.getParentStateName(this.state_['$current']);
-          this.state_.go(parentStateName);
-        });
-  }
-
-  /**
-   * @export
-   * @return {string}
-   */
-  getDeleteTooltip() {
-    /**
-     * @type {string} @desc Generic "Delete some resource" tooltip text which appears over the
-     * delete icon on the global action bar.
-     */
-    let MSG_ACTION_BAR_DELETE_TOOLTIP =
-        goog.getMsg('Delete {$resourceName}', {'resourceName': this.resourceKindName});
-    return MSG_ACTION_BAR_DELETE_TOOLTIP;
+  edit() {
+    this.kdResourceVerberService_.showEditDialog(this.resourceKindName, this.typeMeta,
+                                                 this.objectMeta)
+        .then(() => { this.state_.reload(); });
   }
 }
 
 /**
- * Action bar delete item component should be used only on resource details page in order to
- * add button that allows deletion of this resource.
+ * Action bar edit item component is to be used on resource details page in order to
+ * add button that allows for edit.
  *
  * @type {!angular.Component}
  */
-export const actionbarDeleteItemComponent = {
-  templateUrl: 'common/components/actionbar/actionbardeleteitem.html',
+export const actionbarEditItemComponent = {
+  templateUrl: 'common/components/actionbar/actionbaredititem.html',
   bindings: {
     'resourceKindName': '@',
     'typeMeta': '<',
     'objectMeta': '<',
   },
   bindToController: true,
-  controller: ActionbarDeleteItemController,
+  controller: ActionbarEditItemController,
 };

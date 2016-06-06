@@ -24,7 +24,9 @@ describe('Middle ellipsis controller', () => {
   beforeEach(() => {
     angular.mock.module(componentsModule.name);
 
-    angular.mock.inject(($controller) => { ctrl = $controller(MiddleEllipsisController); });
+    angular.mock.inject(($controller, $rootScope) => {
+      ctrl = $controller(MiddleEllipsisController, {$scope: $rootScope});
+    });
   });
 
   it('should truncate display string', () => {

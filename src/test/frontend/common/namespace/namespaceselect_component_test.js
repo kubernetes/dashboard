@@ -40,8 +40,8 @@ describe('Namespace select component ', () => {
     angular.mock.module(chromeModule.name);
 
     angular.mock.inject(($componentController, $rootScope, $httpBackend, $state) => {
-      ctrl = $componentController('kdNamespaceSelect');
       scope = $rootScope;
+      ctrl = $componentController('kdNamespaceSelect', {$scope: $rootScope});
       httpBackend = $httpBackend;
       state = $state;
     });

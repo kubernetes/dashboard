@@ -24,8 +24,9 @@ describe('Pod Info controller', () => {
   beforeEach(() => {
     angular.mock.module(podDetailModule.name);
 
-    angular.mock.inject(
-        ($componentController) => { ctrl = $componentController('kdPodInfo', {}); });
+    angular.mock.inject(($componentController, $rootScope) => {
+      ctrl = $componentController('kdPodInfo', {$scope: $rootScope});
+    });
   });
 
   it('should instantiate the controller properly', () => { expect(ctrl).not.toBeUndefined(); });
