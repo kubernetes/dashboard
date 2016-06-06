@@ -16,13 +16,13 @@ limitations under the License.
 
 <kd-resource-card-list selectable="::$ctrl.selectable" with-statuses="::$ctrl.withStatuses">
   <kd-resource-card-header-columns>
-    <kd-resource-card-header-column>Name</kd-resource-card-header-column>
-    <kd-resource-card-header-column>Labels</kd-resource-card-header-column>
-    <kd-resource-card-header-column>Pods</kd-resource-card-header-column>
-    <kd-resource-card-header-column>Age</kd-resource-card-header-column>
-    <kd-resource-card-header-column>Internal endpoints</kd-resource-card-header-column>
-    <kd-resource-card-header-column>External endpoints</kd-resource-card-header-column>
-    <kd-resource-card-header-column>Images</kd-resource-card-header-column>
+    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_NAME_LABEL}}</kd-resource-card-header-column>
+    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_LABELS_LABEL}}</kd-resource-card-header-column>
+    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_PODS_LABEL}}</kd-resource-card-header-column>
+    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_AGE_LABEL}}</kd-resource-card-header-column>
+    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_INTERNAL_ENDPOINTS_LABEL}}</kd-resource-card-header-column>
+    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_EXTERNAL_ENDPOINTS_LABEL}}</kd-resource-card-header-column>
+    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_IMAGES_LABEL}}</kd-resource-card-header-column>
     <kd-resource-card-header-column size="small" grow="nogrow">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
@@ -58,7 +58,7 @@ limitations under the License.
       <kd-resource-card-column>
         {{::daemonSet.objectMeta.creationTimestamp | relativeTime}}
         <md-tooltip>
-          Created at {{::daemonSet.objectMeta.creationTimestamp | date:'short'}}
+          {{::$ctrl.getCreatedAtTooltip(daemonSet.objectMeta.creationTimestamp)}}
         </md-tooltip>
       </kd-resource-card-column>
       <kd-resource-card-column>
@@ -81,9 +81,9 @@ limitations under the License.
       </kd-resource-card-column>
       <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
         <kd-resource-card-menu>
-          <kd-resource-card-delete-menu-item resource-kind-name="Daemon Set">
+          <kd-resource-card-delete-menu-item resource-kind-name="{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_DAEMON_SET_TITLE}}">
           </kd-resource-card-delete-menu-item>
-          <kd-resource-card-edit-menu-item resource-kind-name="Daemon Set">
+          <kd-resource-card-edit-menu-item resource-kind-name="{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_DAEMON_SET_TITLE}}">
           </kd-resource-card-edit-menu-item>
         </kd-resource-card-menu>
       </kd-resource-card-column>
