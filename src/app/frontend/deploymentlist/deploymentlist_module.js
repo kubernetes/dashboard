@@ -25,18 +25,16 @@ import deploymentDetailModule from 'deploymentdetail/deploymentdetail_module';
  *
  * The view shows Replication Controllers running in the cluster and allows to manage them.
  */
-export default angular
-    .module(
-        'kubernetesDashboard.deploymentList',
-        [
-          'ngMaterial',
-          'ngResource',
-          'ui.router',
-          filtersModule.name,
-          componentsModule.name,
-          chromeModule.name,
-          deploymentDetailModule.name,
-        ])
+export default angular.module('kubernetesDashboard.deploymentList',
+                              [
+                                'ngMaterial',
+                                'ngResource',
+                                'ui.router',
+                                filtersModule.name,
+                                componentsModule.name,
+                                chromeModule.name,
+                                deploymentDetailModule.name,
+                              ])
     .config(stateConfig)
     .component('kdDeploymentCardList', deploymentCardListComponent)
     .component('kdDeploymentCard', deploymentCardComponent);

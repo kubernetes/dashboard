@@ -19,13 +19,11 @@ import chromeModule from 'chrome/chrome_module';
 /**
  * Angular module for error views.
  */
-export default angular
-    .module(
-        'kubernetesDashboard.error',
-        [
-          'ui.router',
-          chromeModule.name,
-        ])
+export default angular.module('kubernetesDashboard.error',
+                              [
+                                'ui.router',
+                                chromeModule.name,
+                              ])
     .config(stateConfig)
     .run(errorConfig);
 

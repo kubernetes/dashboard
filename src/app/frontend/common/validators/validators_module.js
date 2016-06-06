@@ -18,11 +18,9 @@ import {ValidatorFactory} from './validator_factory';
 /**
  * Module containing validators for the application.
  */
-export default angular
-    .module(
-        'kubernetesDashboard.common.validators',
-        [
-          'ngMaterial',
-        ])
+export default angular.module('kubernetesDashboard.common.validators',
+                              [
+                                'ngMaterial',
+                              ])
     .service('kdValidatorFactory', ValidatorFactory)
     .directive('kdValidate', validateDirective);

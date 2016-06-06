@@ -25,18 +25,16 @@ import {petSetCardListComponent} from './petsetcardlist_component';
  *
  * The view shows Pet Set running in the cluster and allows to manage them.
  */
-export default angular
-    .module(
-        'kubernetesDashboard.petSetList',
-        [
-          'ngMaterial',
-          'ngResource',
-          'ui.router',
-          filtersModule.name,
-          componentsModule.name,
-          petSetDetailModule.name,
-          chromeModule.name,
-        ])
+export default angular.module('kubernetesDashboard.petSetList',
+                              [
+                                'ngMaterial',
+                                'ngResource',
+                                'ui.router',
+                                filtersModule.name,
+                                componentsModule.name,
+                                petSetDetailModule.name,
+                                chromeModule.name,
+                              ])
     .config(stateConfig)
     .component('kdPetSetCardList', petSetCardListComponent)
     .component('kdPetSetCard', petSetCardComponent);

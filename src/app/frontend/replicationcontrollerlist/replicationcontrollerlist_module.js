@@ -26,17 +26,15 @@ import replicationControllerDetailModule from 'replicationcontrollerdetail/repli
  *
  * The view shows Replication Controllers running in the cluster and allows to manage them.
  */
-export default angular
-    .module(
-        'kubernetesDashboard.replicationControllerList',
-        [
-          'ngMaterial',
-          'ngResource',
-          'ui.router',
-          filtersModule.name,
-          componentsModule.name,
-          replicationControllerDetailModule.name,
-        ])
+export default angular.module('kubernetesDashboard.replicationControllerList',
+                              [
+                                'ngMaterial',
+                                'ngResource',
+                                'ui.router',
+                                filtersModule.name,
+                                componentsModule.name,
+                                replicationControllerDetailModule.name,
+                              ])
     .config(stateConfig)
     .component('kdPodLogsMenu', podLogsMenuComponent)
     .component('kdReplicationControllerCardList', replicationControllerCardListComponent)

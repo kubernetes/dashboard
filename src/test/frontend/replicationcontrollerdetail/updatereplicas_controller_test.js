@@ -47,15 +47,15 @@ describe('Update Replicas controller', () => {
       httpBackend = $httpBackend;
       log = $log;
 
-      ctrl = $controller(
-          UpdateReplicasDialogController, {
-            $resource: resource,
-            namespace: namespaceMock,
-            replicationController: replicationControllerMock,
-            currentPods: 1,
-            desiredPods: 1,
-          },
-          {updateReplicasForm: {$valid: true}});
+      ctrl = $controller(UpdateReplicasDialogController,
+                         {
+                           $resource: resource,
+                           namespace: namespaceMock,
+                           replicationController: replicationControllerMock,
+                           currentPods: 1,
+                           desiredPods: 1,
+                         },
+                         {updateReplicasForm: {$valid: true}});
     });
   });
 
@@ -74,8 +74,8 @@ describe('Update Replicas controller', () => {
     httpBackend.flush();
 
     // then
-    expect(log.info).toHaveBeenCalledWith(
-        `Successfully updated replicas number to ${replicaSpec.replicas}`);
+    expect(log.info)
+        .toHaveBeenCalledWith(`Successfully updated replicas number to ${replicaSpec.replicas}`);
     expect(state.reload).toHaveBeenCalled();
   });
 

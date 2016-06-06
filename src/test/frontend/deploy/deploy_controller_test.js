@@ -15,7 +15,7 @@
 import DeployController from 'deploy/deploy_controller';
 import DeployFromSettingController from 'deploy/deployfromsettings_controller';
 import deployModule from 'deploy/deploy_module';
-import {stateName as replicationcontrollers} from 'replicationcontrollerlist/replicationcontrollerlist_state';
+import {stateName as rcs} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 
 describe('Deploy controller', () => {
   /** @type {!DeployController} */
@@ -33,9 +33,8 @@ describe('Deploy controller', () => {
       settingsCtrl = $controller(
           DeployFromSettingController, {},
           {namespaces: [], protocols: [], secrets: [], deploy: () => $q.defer().promise});
-      ctrl = $controller(
-          DeployController, {namespaces: [], protocols: []},
-          {detail: settingsCtrl, deployForm: {$valid: true}});
+      ctrl = $controller(DeployController, {namespaces: [], protocols: []},
+                         {detail: settingsCtrl, deployForm: {$valid: true}});
     });
   });
 
@@ -64,6 +63,6 @@ describe('Deploy controller', () => {
     ctrl.cancel();
 
     // then
-    expect(state.go).toHaveBeenCalledWith(replicationcontrollers);
+    expect(state.go).toHaveBeenCalledWith(rcs);
   });
 });

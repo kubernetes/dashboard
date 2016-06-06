@@ -38,10 +38,10 @@ function createConfig() {
 
   if (conf.test.useSauceLabs) {
     let name = `Integration tests ${process.env.TRAVIS_REPO_SLUG}, build ` +
-        `${process.env.TRAVIS_BUILD_NUMBER}`;
+               `${process.env.TRAVIS_BUILD_NUMBER}`;
     if (process.env.TRAVIS_PULL_REQUEST !== 'false') {
       name += `, PR: https://github.com/${process.env.TRAVIS_REPO_SLUG}/pull/` +
-          `${process.env.TRAVIS_PULL_REQUEST}`;
+              `${process.env.TRAVIS_PULL_REQUEST}`;
     }
 
     config.sauceUser = process.env.SAUCE_USERNAME;

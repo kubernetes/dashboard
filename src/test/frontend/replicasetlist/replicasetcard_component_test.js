@@ -44,10 +44,12 @@ describe('Replica Set card', () => {
     // given
     ctrl.replicaSet = {
       pods: {
-        warnings: [{
-          message: 'test-error',
-          reason: 'test-reason',
-        }],
+        warnings: [
+          {
+            message: 'test-error',
+            reason: 'test-reason',
+          },
+        ],
       },
     };
 
@@ -87,10 +89,12 @@ describe('Replica Set card', () => {
     // given
     ctrl.replicaSet = {
       pods: {
-        warnings: [{
-          message: 'test-error',
-          reason: 'test-reason',
-        }],
+        warnings: [
+          {
+            message: 'test-error',
+            reason: 'test-reason',
+          },
+        ],
       },
     };
 

@@ -45,10 +45,12 @@ describe('Replication controller card', () => {
     // given
     ctrl.replicationController = {
       pods: {
-        warnings: [{
-          message: 'test-error',
-          reason: 'test-reason',
-        }],
+        warnings: [
+          {
+            message: 'test-error',
+            reason: 'test-reason',
+          },
+        ],
       },
     };
 
@@ -88,10 +90,12 @@ describe('Replication controller card', () => {
     // given
     ctrl.replicationController = {
       pods: {
-        warnings: [{
-          message: 'test-error',
-          reason: 'test-reason',
-        }],
+        warnings: [
+          {
+            message: 'test-error',
+            reason: 'test-reason',
+          },
+        ],
       },
     };
 

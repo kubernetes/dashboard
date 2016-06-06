@@ -44,9 +44,8 @@ export class ResourceCardColumnsController {
    */
   addAndSizeColumn(columnElement) {
     if (!this.initialized_) {
-      throw new Error(
-          'Resource card columns component must be initialized before adding' +
-          'columns');
+      throw new Error('Resource card columns component must be initialized before adding' +
+                      'columns');
     }
     this.resourceCardListCtrl.sizeBodyColumn(columnElement, this.numColumnsAdded_);
     this.numColumnsAdded_ += 1;

@@ -75,9 +75,10 @@ describe('Pod logs menu controller', () => {
     ctrl.openMenu(mdOpenMenu);
 
     let pods = {};
-    $httpBackend.whenGET('api/v1/replicationcontroller/pod/undefined/undefined?limit=10').respond({
-      pods: pods,
-    });
+    $httpBackend.whenGET('api/v1/replicationcontroller/pod/undefined/undefined?limit=10')
+        .respond({
+          pods: pods,
+        });
     $rootScope.$digest();
     expect(ctrl.replicationControllerPodsList).toEqual(undefined);
 

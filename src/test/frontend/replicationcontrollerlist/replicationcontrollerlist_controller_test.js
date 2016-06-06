@@ -12,7 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ReplicationControllerListController} from 'replicationcontrollerlist/replicationcontrollerlist_controller';
+import {
+  ReplicationControllerListController,
+} from 'replicationcontrollerlist/replicationcontrollerlist_controller';
 import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
 
 describe('Replication controller list controller', () => {
@@ -22,9 +24,8 @@ describe('Replication controller list controller', () => {
   it('should initialize replication controllers', angular.mock.inject(($controller) => {
     let ctrls = {};
     /** @type {!ReplicationControllerListController} */
-    let ctrl = $controller(
-        ReplicationControllerListController,
-        {replicationControllers: {replicationControllers: ctrls}});
+    let ctrl = $controller(ReplicationControllerListController,
+                           {replicationControllers: {replicationControllers: ctrls}});
 
     expect(ctrl.replicationControllers).toBe(ctrls);
   }));

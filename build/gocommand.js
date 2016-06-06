@@ -67,19 +67,19 @@ function checkPrerequisites() {
  */
 function checkGo() {
   let deferred = q.defer();
-  child.exec(
-      'which go', {
-        env: env,
-      },
-      function(error, stdout, stderror) {
-        if (error || stderror || !stdout) {
-          deferred.reject(new Error(
-              'Go is not on the path. Please pass the PATH variable when you run ' +
-              'the gulp task with "PATH=$PATH" or install go if you have not yet.'));
-          return;
-        }
-        deferred.resolve();
-      });
+  child.exec('which go',
+             {
+               env: env,
+             },
+             function(error, stdout, stderror) {
+               if (error || stderror || !stdout) {
+                 deferred.reject(new Error(
+                     'Go is not on the path. Please pass the PATH variable when you run ' +
+                     'the gulp task with "PATH=$PATH" or install go if you have not yet.'));
+                 return;
+               }
+               deferred.resolve();
+             });
   return deferred.promise;
 }
 
@@ -90,7 +90,8 @@ function checkGo() {
 function checkGoVersion() {
   let deferred = q.defer();
   child.exec(
-      'go version', {
+      'go version',
+      {
         env: env,
       },
       function(error, stdout) {
@@ -105,10 +106,9 @@ function checkGoVersion() {
           currentGoVersion = `${currentGoVersion}.0`;
         }
         if (semver.lt(currentGoVersion, minGoVersion)) {
-          deferred.reject(new Error(
-              `The current go version '${currentGoVersion}' is older than ` +
-              `the minimum required version '${minGoVersion}'. ` +
-              `Please upgrade your go version!`));
+          deferred.reject(new Error(`The current go version '${currentGoVersion}' is older than ` +
+                                    `the minimum required version '${minGoVersion}'. ` +
+                                    `Please upgrade your go version!`));
           return;
         }
         deferred.resolve();
@@ -123,19 +123,19 @@ function checkGoVersion() {
  */
 function checkGodep() {
   let deferred = q.defer();
-  child.exec(
-      'which godep', {
-        env: env,
-      },
-      function(error, stdout, stderror) {
-        if (error || stderror || !stdout) {
-          deferred.reject(new Error(
-              'Godep is not on the path. ' +
-              'Please run "npm install" in the base directory of the project.'));
-          return;
-        }
-        deferred.resolve();
-      });
+  child.exec('which godep',
+             {
+               env: env,
+             },
+             function(error, stdout, stderror) {
+               if (error || stderror || !stdout) {
+                 deferred.reject(
+                     new Error('Godep is not on the path. ' +
+                               'Please run "npm install" in the base directory of the project.'));
+                 return;
+               }
+               deferred.resolve();
+             });
   return deferred.promise;
 }
 

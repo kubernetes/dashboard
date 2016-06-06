@@ -21,13 +21,11 @@ import appConfigModule from '../appconfig/appconfig_module';
 /**
  * Module containing common filters for the application.
  */
-export default angular
-    .module(
-        'kubernetesDashboard.common.filters',
-        [
-          'ngMaterial',
-          appConfigModule.name,
-        ])
+export default angular.module('kubernetesDashboard.common.filters',
+                              [
+                                'ngMaterial',
+                                appConfigModule.name,
+                              ])
     .filter('middleEllipsis', middleEllipsisFilter)
     .filter('kdMemory', memoryFilter)
     .filter('kdCores', coresFilter)

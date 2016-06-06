@@ -19,12 +19,10 @@ import {LogColorInversionService} from './logs_service';
  * Angular module for the logs view.
  *
  */
-export default angular
-    .module(
-        'kubernetesDashboard.logs',
-        [
-          'ngResource',
-          'ui.router',
-        ])
+export default angular.module('kubernetesDashboard.logs',
+                              [
+                                'ngResource',
+                                'ui.router',
+                              ])
     .service('logsColorInversionService', LogColorInversionService)
     .config(stateConfig);

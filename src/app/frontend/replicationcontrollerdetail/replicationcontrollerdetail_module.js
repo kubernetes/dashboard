@@ -29,22 +29,20 @@ import {ReplicationControllerService} from './replicationcontroller_service';
  *
  * The view shows detailed view of a Replication Controllers.
  */
-export default angular
-    .module(
-        'kubernetesDashboard.replicationControllerDetail',
-        [
-          'ngMaterial',
-          'ngResource',
-          'ui.router',
-          componentsModule.name,
-          chromeModule.name,
-          filtersModule.name,
-          logsModule.name,
-          podListModule.name,
-          serviceListModule.name,
-          eventsModule.name,
-          resourceModule.name,
-        ])
+export default angular.module('kubernetesDashboard.replicationControllerDetail',
+                              [
+                                'ngMaterial',
+                                'ngResource',
+                                'ui.router',
+                                componentsModule.name,
+                                chromeModule.name,
+                                filtersModule.name,
+                                logsModule.name,
+                                podListModule.name,
+                                serviceListModule.name,
+                                eventsModule.name,
+                                resourceModule.name,
+                              ])
     .config(stateConfig)
     .component('kdReplicationControllerInfo', replicationControllerInfoComponent)
     .service('kdReplicationControllerService', ReplicationControllerService);

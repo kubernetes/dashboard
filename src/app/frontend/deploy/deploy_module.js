@@ -33,17 +33,15 @@ import validatorsModule from '../common/validators/validators_module';
  *
  * The view allows for deploying applications to Kubernetes clusters.
  */
-export default angular
-    .module(
-        'kubernetesDashboard.deploy',
-        [
-          'ngMaterial',
-          'ngResource',
-          'ui.router',
-          helpSectionModule.name,
-          errorHandlingModule.name,
-          validatorsModule.name,
-        ])
+export default angular.module('kubernetesDashboard.deploy',
+                              [
+                                'ngMaterial',
+                                'ngResource',
+                                'ui.router',
+                                helpSectionModule.name,
+                                errorHandlingModule.name,
+                                validatorsModule.name,
+                              ])
     .config(stateConfig)
     .run(initConfig)
     .directive('deployFromSettings', deployFromSettingsDirective)

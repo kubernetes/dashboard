@@ -26,20 +26,18 @@ import stateConfig from './workloads_stateconfig';
  * Module with a view that displays resources categorized as workloads, e.g., Replica Sets or
  * Deployments.
  */
-export default angular
-    .module(
-        'kubernetesDashboard.workloads',
-        [
-          'ngMaterial',
-          'ngResource',
-          'ui.router',
-          filtersModule.name,
-          componentsModule.name,
-          chromeModule.name,
-          replicationControllerListModule.name,
-          replicaSetListModule.name,
-          deploymentListModule.name,
-          daemonSetListModule.name,
-          petSetListModule.name,
-        ])
+export default angular.module('kubernetesDashboard.workloads',
+                              [
+                                'ngMaterial',
+                                'ngResource',
+                                'ui.router',
+                                filtersModule.name,
+                                componentsModule.name,
+                                chromeModule.name,
+                                replicationControllerListModule.name,
+                                replicaSetListModule.name,
+                                deploymentListModule.name,
+                                daemonSetListModule.name,
+                                petSetListModule.name,
+                              ])
     .config(stateConfig);

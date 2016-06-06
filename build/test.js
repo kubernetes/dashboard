@@ -90,9 +90,8 @@ gulp.task('frontend-test', function(doneFn) { runFrontendUnitTests(true, doneFn)
 /**
  * Runs once all unit tests of the backend application.
  */
-gulp.task('backend-test', ['package-backend-source'], function(doneFn) {
-  goCommand(conf.backend.testCommandArgs, doneFn);
-});
+gulp.task('backend-test', ['package-backend-source'],
+          function(doneFn) { goCommand(conf.backend.testCommandArgs, doneFn); });
 
 /**
  * Runs all unit tests of the application. Watches for changes in the source files to rerun
@@ -132,9 +131,8 @@ gulp.task('integration-test:prod', ['serve:prod', 'webdriver-update'], runProtra
 /**
  * Runs application integration tests. Uses production version of the application.
  */
-gulp.task(
-    'local-cluster-integration-test:prod', ['serve:prod', 'local-up-cluster', 'webdriver-update'],
-    runProtractorTests);
+gulp.task('local-cluster-integration-test:prod',
+          ['serve:prod', 'local-up-cluster', 'webdriver-update'], runProtractorTests);
 
 /**
  * Downloads and updates webdriver. Required to keep it up to date.

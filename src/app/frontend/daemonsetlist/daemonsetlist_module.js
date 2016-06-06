@@ -24,17 +24,15 @@ import daemonSetDetailModule from 'daemonsetdetail/daemonsetdetail_module';
  *
  * The view shows Daemon Set running in the cluster and allows to manage them.
  */
-export default angular
-    .module(
-        'kubernetesDashboard.daemonSetList',
-        [
-          'ngMaterial',
-          'ngResource',
-          'ui.router',
-          filtersModule.name,
-          componentsModule.name,
-          chromeModule.name,
-          daemonSetDetailModule.name,
-        ])
+export default angular.module('kubernetesDashboard.daemonSetList',
+                              [
+                                'ngMaterial',
+                                'ngResource',
+                                'ui.router',
+                                filtersModule.name,
+                                componentsModule.name,
+                                chromeModule.name,
+                                daemonSetDetailModule.name,
+                              ])
     .config(stateConfig)
     .component('kdDaemonSetCardList', daemonSetCardListComponent);

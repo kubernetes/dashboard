@@ -40,25 +40,35 @@ export const serviceInfoComponent = {
 const i18n = {
   /** @export {string} @desc Title 'Resource details' at the top service details view. */
   MSG_SERVICE_DETAIL_RESOURCE_DETAILS_TITLE: goog.getMsg('Resource Details'),
-  /** @export {string} @desc Subtitle 'Details' at the top of the resource details column at the service detail view. */
+  /** @export {string} @desc Subtitle 'Details' at the top of the resource details column at the
+     service detail view. */
   MSG_SERVICE_DETAIL_DETAILS_SUBTITLE: goog.getMsg('Details'),
-  /** @export {string} @desc Label 'Name' for the service name in details part (left) of the service details view. */
+  /** @export {string} @desc Label 'Name' for the service name in details part (left) of the service
+     details view. */
   MSG_SERVICE_DETAIL_NAME_LABEL: goog.getMsg('Name'),
-  /** @export {string} @desc Label 'Namespace' for the service namespace in the details part (left) of the service details view. */
+  /** @export {string} @desc Label 'Namespace' for the service namespace in the details part (left)
+     of the service details view. */
   MSG_SERVICE_DETAIL_NAMESPACE_LABEL: goog.getMsg('Namespace'),
-  /** @export {string} @desc Label 'Label selector' for the service's label selector in the details part (left) of the service details view. */
+  /** @export {string} @desc Label 'Label selector' for the service's label selector in the details
+     part (left) of the service details view. */
   MSG_SERVICE_DETAIL_LABEL_SELECTOR_LABEL: goog.getMsg('Label selector'),
-  /** @export {string} @desc Label 'Labels' for the service labels in the details part (left) of the service details view. */
+  /** @export {string} @desc Label 'Labels' for the service labels in the details part (left) of the
+     service details view. */
   MSG_SERVICE_DETAIL_LABELS_LABEL: goog.getMsg('Labels'),
-  /** @export {string} @desc Label 'Type' for the service type in the details part (left) of the service details view. */
+  /** @export {string} @desc Label 'Type' for the service type in the details part (left) of the
+     service details view. */
   MSG_SERVICE_DETAIL_TYPE_LABEL: goog.getMsg('Type'),
-  /** @export {string} @desc Subtitle 'Connection' at the top of the column about network connectivity (right) at the service detail view.*/
+  /** @export {string} @desc Subtitle 'Connection' at the top of the column about network
+     connectivity (right) at the service detail view.*/
   MSG_SERVICE_DETAIL_CONNECTION_SUBTITLE: goog.getMsg('Connection'),
-  /** @export {string} @desc Label 'Cluster IP' for the service IP in the cluster, appears in the connectivity part (right) of the service details view.*/
+  /** @export {string} @desc Label 'Cluster IP' for the service IP in the cluster, appears in the
+     connectivity part (right) of the service details view.*/
   MSG_SERVICE_DETAIL_CLUSTER_IP_LABEL: goog.getMsg('Cluster IP'),
-  /** @export {string} @desc Label 'Internal endpoints' for the internal endpoints of the service, appears in the connectivity part (right) of the service details view.*/
+  /** @export {string} @desc Label 'Internal endpoints' for the internal endpoints of the service,
+     appears in the connectivity part (right) of the service details view.*/
   MSG_SERVICE_DETAIL_INTERNAL_ENDPOINTS_LABEL: goog.getMsg('Internal endpoints'),
-  /** @export {string} @desc Label 'External endpoints' for the external endpoints of the service, appears in the connectivity part (right) of the service details view. */
+  /** @export {string} @desc Label 'External endpoints' for the external endpoints of the service,
+     appears in the connectivity part (right) of the service details view. */
   MSG_SERVICE_DETAIL_EXTERNAL_ENDPOINTS_LABEL: goog.getMsg('External endpoints'),
 
 };

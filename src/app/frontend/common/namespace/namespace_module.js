@@ -18,11 +18,9 @@ import {namespaceSelectComponent} from './namespaceselect_component';
 /**
  * Angular module global namespace selection components.
  */
-export default angular
-    .module(
-        'kubernetesDashboard.common.namespace',
-        [
-          'ngMaterial',
-          'ngResource',
-        ])
+export default angular.module('kubernetesDashboard.common.namespace',
+                              [
+                                'ngMaterial',
+                                'ngResource',
+                              ])
     .component('kdNamespaceSelect', namespaceSelectComponent);
