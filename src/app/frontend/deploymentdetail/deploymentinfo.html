@@ -39,12 +39,15 @@
     <kd-info-card-entry title="New Replica Set">
       <kd-middle-ellipsis display-string="{{$ctrl.deployment.newReplicaSet.objectMeta.name}}">
       </kd-middle-ellipsis>
+      <div ng-if="!$ctrl.deployment.newReplicaSet.objectMeta.name">
+        None
+      </div>
     </kd-info-card-entry>
     <kd-info-card-entry title="Old Replica Sets">
-      <div ng-repeat="rs in $ctrl.deployment.oldReplicaSets.replicaSets">
+      <div ng-repeat="rs in $ctrl.deployment.oldReplicaSetList.replicaSets">
         {{rs.objectMeta.name}}
       </div>
-      <div ng-if="!$ctrl.deployment.oldReplicaSets.replicaSets.length">
+      <div ng-if="!$ctrl.deployment.oldReplicaSetList.replicaSets.length">
         None
       </div>
     </kd-info-card-entry>
