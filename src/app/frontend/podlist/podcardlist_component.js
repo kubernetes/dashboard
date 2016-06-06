@@ -22,8 +22,9 @@ export class PodCardListController {
   /**
    * @ngInject
    * @param {!ui.router.$state} $state
+   * @param {!angular.$interpolate} $interpolate
    */
-  constructor($state) {
+  constructor($state, $interpolate) {
     /**
      * List of pods. Initialized from the scope.
      * @export {!backendApi.PodList}
@@ -38,6 +39,9 @@ export class PodCardListController {
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
+
+    /** @private {!angular.$interpolate} */
+    this.interpolate_ = $interpolate;
 
     /**
      * @export
@@ -60,6 +64,20 @@ export class PodCardListController {
   getPodDetailHref(pod) {
     return this.state_.href(stateName,
                             new StateParams(pod.objectMeta.namespace, pod.objectMeta.name));
+  }
+
+  /**
+   * @export
+   * @param  {string} startDate - start date of the pod
+   * @return {string} localized tooltip with the formated creation date
+   */
+  getStartedAtTooltip(startDate) {
+    let filter = this.interpolate_(`{{date | date:'d/M/yy HH:mm':'UTC'}}`);
+    /** @type {string} @desc Tooltip 'Started at [some date]' showing the exact start time of
+     * the pod.*/
+    let MSG_POD_LIST_STARTED_AT_TOOLTIP =
+        goog.getMsg('Started at {$startDate} UTC', {'startDate': filter({'date': startDate})});
+    return MSG_POD_LIST_STARTED_AT_TOOLTIP;
   }
 }
 
@@ -86,7 +104,27 @@ export const podCardListComponent = {
 const i18n = {
   /** @export {string} @desc tooltip for failed pod card icon */
   MSG_POD_IS_FAILED_TOOLTIP: goog.getMsg('This pod has errors.'),
-
   /** @export {string} @desc tooltip for pending pod card icon */
   MSG_POD_IS_PENDING_TOOLTIP: goog.getMsg('This pod is in a pending state.'),
+  /** @export {string} @desc Label 'Name' which appears as a column label in the table of
+     pods (pod list view). */
+  MSG_POD_LIST_NAME_LABEL: goog.getMsg('Name'),
+  /** @export {string} @desc Label 'Status' which appears as a column label in the table of
+     pods (pod list view). */
+  MSG_POD_LIST_STATUS_LABEL: goog.getMsg('Status'),
+  /** @export {string} @desc Label 'Restarts' which appears as a column label in the
+     table of pods (pod list view). */
+  MSG_POD_LIST_RESTARTS_LABEL: goog.getMsg('Restarts'),
+  /** @export {string} @desc Label 'Age' which appears as a column label in the
+     table of pods (pod list view). */
+  MSG_POD_LIST_AGE_LABEL: goog.getMsg('Age'),
+  /** @export {string} @desc Label 'Cluster IP' which appears as a column label in the table of
+     pods (pod list view). */
+  MSG_POD_LIST_CLUSTER_IP_LABEL: goog.getMsg('Cluster IP'),
+  /** @export {string} @desc Label 'Logs' for the pod's logs which appears as a column label in the
+     table of pods (pod list view). */
+  MSG_POD_LIST_LOGS_LABEL: goog.getMsg('Logs'),
+  /** @export {string} @desc Title 'Pod' which is used as a title for the delete/update
+     dialogs (that can be opened from the pod list view.) */
+  MSG_POD_LIST_POD_TITLE: goog.getMsg('Pod'),
 };
