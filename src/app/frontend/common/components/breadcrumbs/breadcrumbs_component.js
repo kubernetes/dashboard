@@ -110,7 +110,7 @@ export default class BreadcrumbsController {
    * If label string is empty then state name is returned.
    *
    * @param {!ui.router.$state} state
-   * @returns {string}
+   * @return {string}
    * @private
    */
   getDisplayName_(state) {
@@ -125,7 +125,7 @@ export default class BreadcrumbsController {
 
     if (areLocalsDefined) {
       // Set context to default view scope
-      interpolationContext = state['locals']['@'];
+      interpolationContext = state['locals'][`@${state.parent.name}`];
     }
 
     return this.interpolate_(conf.label)(interpolationContext).toString();

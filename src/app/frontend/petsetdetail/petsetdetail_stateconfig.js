@@ -36,7 +36,7 @@ export default function stateConfig($stateProvider) {
     },
     data: {
       [breadcrumbsConfig]: {
-        'label': '{{$stateParams.petSet}}',
+        'label': '{{$stateParams.objectName}}',
         'parent': petSetList,
       },
     },

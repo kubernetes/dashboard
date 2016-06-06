@@ -158,16 +158,17 @@ describe('Breadcrumbs controller ', () => {
     expect(breadcrumb.stateLink).toEqual('stateLink');
   });
 
-  it('should interpolated string as display name', () => {
+  it('should show interpolated string as display name', () => {
     // given
     let stateContextVarName = 'stateLabel';
     let stateName = 'Test state';
     state.locals = {
-      '@': {
+      '@chrome': {
         [stateContextVarName]: stateName,
       },
     };
     state.data = {kdBreadcrumbs: {label: `{{${stateContextVarName}}}`}};
+    state.parent = {name: 'chrome'};
 
     // when
     let result = ctrl.getDisplayName_(state);
@@ -180,6 +181,7 @@ describe('Breadcrumbs controller ', () => {
     // given
     state.locals = {};
     state.data = {kdBreadcrumbs: {label: 'Test state'}};
+    state.parent = {name: ''};
 
     // when
     let result = ctrl.getDisplayName_(state);
