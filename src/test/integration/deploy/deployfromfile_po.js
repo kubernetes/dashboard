@@ -14,7 +14,7 @@
 
 export default class DeployFromFilePageObject {
   constructor() {
-    this.deployFromFileRadioButtonQuery = by.xpath('//md-radio-button[@value="File"]');
+    this.deployFromFileRadioButtonQuery = by.xpath('//md-radio-button[@value="deployFile"]');
     this.deployFromFileRadioButton = element(this.deployFromFileRadioButtonQuery);
 
     this.deployButtonQuery = by.css('.kd-deploy-submit-button');

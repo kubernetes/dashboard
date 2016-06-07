@@ -18,7 +18,6 @@ import {stateName as workloadsState} from 'workloads/workloads_state';
 
 import {DeploymentListController} from './deploymentlist_controller';
 import {stateName, stateUrl} from './deploymentlist_state';
-import {DeploymentListActionBarController} from './deploymentlistactionbar_controller';
 
 /**
  * Configures states for the service view.
@@ -46,9 +45,7 @@ export default function stateConfig($stateProvider) {
         templateUrl: 'deploymentlist/deploymentlist.html',
       },
       [actionbarViewName]: {
-        controller: DeploymentListActionBarController,
-        controllerAs: 'ctrl',
-        templateUrl: 'deploymentlist/deploymentlistactionbar.html',
+        templateUrl: 'deploymentlist/actionbar.html',
       },
     },
   });

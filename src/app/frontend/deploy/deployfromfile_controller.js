@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {stateName as replicationcontrollerliststate} from 'replicationcontrollerlist/replicationcontrollerlist_state';
+import {stateName as workloads} from 'workloads/workloads_state';
 
 /**
  * Controller for the deploy from file directive.
@@ -31,11 +32,10 @@ export default class DeployFromFileController {
    */
   constructor($log, $state, $resource, $q, errorDialog) {
     /**
-     * It initializes the scope output parameter
-     *
-     * @export {!DeployFromFileController}
+     * Initialized the template.
+     * @export {!angular.FormController}
      */
-    this.detail = this;
+    this.form;
 
     /**
      * Custom file model for the selected file
@@ -61,40 +61,71 @@ export default class DeployFromFileController {
      * @private {!Object}
      */
     this.errorDialog_ = errorDialog;
+
+    /** @private {boolean} */
+    this.isDeployInProgress_ = false;
+
+    /** @export */
+    this.i18n = i18n;
   }
 
   /**
    * Deploys the application based on the state of the controller.
    *
    * @export
-   * @return {!angular.$q.Promise}
    */
   deploy() {
-    /** @type {!backendApi.AppDeploymentFromFileSpec} */
-    let deploymentSpec = {
-      name: this.file.name,
-      content: this.file.content,
-    };
+    if (this.form.$valid) {
+      /** @type {!backendApi.AppDeploymentFromFileSpec} */
+      let deploymentSpec = {
+        name: this.file.name,
+        content: this.file.content,
+      };
 
-    let defer = this.q_.defer();
+      let defer = this.q_.defer();
 
-    /** @type {!angular.Resource<!backendApi.AppDeploymentFromFileSpec>} */
-    let resource = this.resource_('api/v1/appdeploymentfromfile');
-    resource.save(
-        deploymentSpec,
-        (response) => {
-          defer.resolve(response);  // Progress ends
-          this.log_.info('Deployment is completed: ', response);
-          if (response.error.length > 0) {
-            this.errorDialog_.open('Deployment has been partly completed', response.error);
-          }
-          this.state_.go(replicationcontrollerliststate);
-        },
-        (err) => {
-          defer.reject(err);  // Progress ends
-          this.log_.error('Error deploying application:', err);
-          this.errorDialog_.open('Deploying file has failed', err.data);
-        });
-    return defer.promise;
+      /** @type {!angular.Resource<!backendApi.AppDeploymentFromFileSpec>} */
+      let resource = this.resource_('api/v1/appdeploymentfromfile');
+      this.isDeployInProgress_ = true;
+      resource.save(
+          deploymentSpec,
+          (response) => {
+            defer.resolve(response);  // Progress ends
+            this.log_.info('Deployment is completed: ', response);
+            if (response.error.length > 0) {
+              this.errorDialog_.open('Deployment has been partly completed', response.error);
+            }
+            this.state_.go(replicationcontrollerliststate);
+          },
+          (err) => {
+            defer.reject(err);  // Progress ends
+            this.log_.error('Error deploying application:', err);
+            this.errorDialog_.open('Deploying file has failed', err.data);
+          });
+      defer.promise.finally(() => { this.isDeployInProgress_ = false; });
+    }
   }
+
+  /**
+   * Returns true when the deploy action should be enabled.
+   * @return {boolean}
+   * @export
+   */
+  isDeployDisabled() { return this.isDeployInProgress_; }
+
+  /**
+   * Cancels the deployment form.
+   * @export
+   */
+  cancel() { this.state_.go(workloads); }
 }
+
+const i18n = {
+  /** @export {string} @desc The text is put on the button at the end of the YAML upload
+   * page. */
+  MSG_UPLOAD_FILE_ACTION: goog.getMsg('Upload'),
+
+  /** @export {string} @desc The text is put on the 'Cancel' button at the end of the YAML upload
+   * page. */
+  MSG_UPLOAD_FILE_ACTION_CANCEL: goog.getMsg('Cancel'),
+};

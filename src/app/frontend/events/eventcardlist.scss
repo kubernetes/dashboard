@@ -15,11 +15,11 @@
 @import '../variables';
 
 .kd-replicationcontrollerevents-options {
-  margin: 2 * $baseline-grid;
+  padding: 2 * $baseline-grid;
 }
 
 .kd-replicationcontrollerevents-no-events {
-  margin: (4 * $baseline-grid) 0 (4 * $baseline-grid);
+  padding: (4 * $baseline-grid) 0 (4 * $baseline-grid);
   text-align: center;
 }
 

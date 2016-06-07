@@ -44,9 +44,6 @@ export const deploymentInfoComponent = {
  */
 function i18n(deployment) {
   return {
-    /** @export {string} @desc Title 'Resource details' at the top of the deployment
-        details page.*/
-    MSG_DEPLOYMENT_DETAIL_RESOURCE_DETAILS_TITLE: goog.getMsg('Resource details'),
     /** @export {string} @desc Subtitle 'Details' for the left section with general information
         about a deployment on the deployment details page.*/
     MSG_DEPLOYMENT_DETAIL_DETAILS_SUBTITLE: goog.getMsg('Details'),

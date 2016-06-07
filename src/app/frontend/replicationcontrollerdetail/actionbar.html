@@ -14,19 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-button class="md-icon-button" ng-click="$ctrl.redirectToDeployPage()">
-  <md-icon class="kd-actionbar-icon-button">add</md-icon>
-  <md-tooltip md-direction="bottom">
-    {{::$ctrl.i18n.MSG_RC_DETAIL_ACTION_BAR_DEPLOY_TOOLTIP}}
-  </md-tooltip>
-</md-button>
-<md-button class="md-icon-button" ng-click="$ctrl.handleUpdateReplicasDialog()">
-  <md-icon class="kd-actionbar-icon-button">mode_edit</md-icon>
+<md-button ng-click="$ctrl.handleUpdateReplicasDialog()">
+  <md-icon class="kd-actionbar-icon-button">linear_scale</md-icon>
   <md-tooltip md-direction="bottom">
     {{::$ctrl.i18n.MSG_RC_DETAIL_ACTION_BAR_EDIT_PODS_TOOLTIP}}
   </md-tooltip>
+  {{::$ctrl.i18n.MSG_RC_DETAIL_ACTION_BAR_EDIT_PODS_LABEL}}
 </md-button>
-<kd-actionbar-detail-buttons resource-kind-name="{{::$ctrl.i18n.MSG_RC_DETAIL_REPLICATION_CONTROLLER_LABEL}}"
-                        type-meta="$ctrl.details.typeMeta"
-                        object-meta="$ctrl.details.objectMeta">
+<kd-actionbar-detail-buttons
+    resource-kind-name="{{::$ctrl.i18n.MSG_RC_DETAIL_REPLICATION_CONTROLLER_LABEL}}"
+    type-meta="$ctrl.details.typeMeta"
+    object-meta="$ctrl.details.objectMeta">
 </kd-actionbar-detail-buttons>

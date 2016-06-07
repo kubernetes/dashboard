@@ -13,14 +13,34 @@
 // limitations under the License.
 
 /**
+ * @final
+ */
+export class InfoCardController {
+  /**
+   * @param {Object} $transclude TODO(floreks) fix this when externs are fixed
+   * @ngInject
+   */
+  constructor($transclude) {
+    /** @private {Object} */
+    this.transclude_ = $transclude;
+  }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  isHeaderFilled() { return this.transclude_['isSlotFilled']('header'); }
+}
+
+/**
  * Represents a card that can be used to display grouped detail info about any resource.
  * Usage:
  * <kd-info-card>
  *  <kd-info-card-header>Resource details</kd-info-card-header>
- *  <kd-info-card-group name="Details">
+ *  <kd-info-card-section name="Details">
  *    <kd-info-card-entry title="Name">MyName</kd-info-card-entry>
  *    <kd-info-card-entry title="Namespace">MyNamespace</kd-info-card-entry>
- *  </kd-info-card-group>
+ *  </kd-info-card-section>
  * </kd-info-card>
  *
  * @type {!angular.Component}
@@ -28,7 +48,8 @@
 export const infoCardComponent = {
   templateUrl: 'common/components/infocard/infocard.html',
   transclude: /** @type {undefined} TODO(bryk): Remove this when externs are fixed */ ({
-    'header': 'kdInfoCardHeader',
+    'header': '?kdInfoCardHeader',
     'section': 'kdInfoCardSection',
   }),
+  controller: InfoCardController,
 };

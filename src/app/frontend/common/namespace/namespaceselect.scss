@@ -12,23 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as deploy} from 'deploy/deploy_state';
+@import '../../variables';
 
-/**
- * @final
- */
-export default class JobListActionBarController {
-  /**
-   * @param {!ui.router.$state} $state
-   * @ngInject
-   */
-  constructor($state) {
-    /** @private {!ui.router.$state} */
-    this.state_ = $state;
+.kd-namespace-select {
+  font-size: $subhead-font-size-base;
+
+  .md-select-value {
+    .md-select-icon {
+      width: auto;
+    }
   }
-
-  /**
-   * @export
-   */
-  redirectToDeployPage() { this.state_.go(deploy); }
 }

@@ -60,9 +60,6 @@ export const replicationControllerInfoComponent = {
  */
 function i18n(rcDetail) {
   return {
-    /** @export {string} @desc Title 'Resource details' at the top of the replication controller
-        details page.*/
-    MSG_RC_DETAIL_RESOURCE_DETAILS_TITLE: goog.getMsg('Resource details'),
     /** @export {string} @desc Subtitle 'Details' for the left section with general information
         about a replication controller on the replication controller details page.*/
     MSG_RC_DETAIL_DETAILS_SUBTITLE: goog.getMsg('Details'),
