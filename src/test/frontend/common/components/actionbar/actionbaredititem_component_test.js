@@ -14,7 +14,7 @@
 
 import componentsModule from 'common/components/components_module';
 
-fdescribe('Actionbar edit item component', () => {
+describe('Actionbar edit item component', () => {
   /** @type {BreadcrumbsController} */
   let ctrl;
   /** @type {ui.router.$state} */
