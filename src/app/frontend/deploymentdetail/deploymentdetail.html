@@ -4,7 +4,7 @@
       <md-tab label="Overview">
         <kd-deployment-info deployment="::ctrl.deploymentDetail"></kd-deployment-info>
 
-        <kd-content-card>
+        <kd-content-card ng-if="ctrl.deploymentDetail.newReplicaSet.objectMeta.name">
           <kd-title>New Replica Set</kd-title>
           <kd-content>
             <kd-replica-set-card-list
@@ -13,7 +13,7 @@
           </kd-content>
         </kd-content-card>
 
-        <kd-content-card>
+        <kd-content-card ng-if="ctrl.deploymentDetail.oldReplicaSetList.replicaSets.length">
           <kd-title>Old Replica Sets</kd-title>
           <kd-content>
             <kd-replica-set-card-list
