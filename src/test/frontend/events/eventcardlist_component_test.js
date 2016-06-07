@@ -24,8 +24,9 @@ describe('Event Card List controller', () => {
   beforeEach(() => {
     angular.mock.module(eventsModule.name);
 
-    angular.mock.inject(
-        ($componentController) => { ctrl = $componentController('kdEventCardList', {}); });
+    angular.mock.inject(($componentController, $rootScope) => {
+      ctrl = $componentController('kdEventCardList', {$scope: $rootScope});
+    });
   });
 
   it('should not filter any events if all option is selected', () => {

@@ -32,9 +32,9 @@ describe('Pod logs menu controller', () => {
   beforeEach(() => {
     angular.mock.module(replicationControllerListModule.name);
 
-    angular.mock.inject(($componentController, $state) => {
+    angular.mock.inject(($componentController, $state, $rootScope) => {
       state = $state;
-      ctrl = $componentController('kdPodLogsMenu', $state);
+      ctrl = $componentController('kdPodLogsMenu', {$scope: $rootScope});
     });
   });
 

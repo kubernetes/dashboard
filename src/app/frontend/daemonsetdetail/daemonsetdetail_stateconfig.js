@@ -17,6 +17,7 @@ import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_servi
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 import {stateName as daemonSetList, stateUrl} from 'daemonsetlist/daemonsetlist_state';
 
+import {ActionBarController} from './actionbar_controller';
 import {DaemonSetDetailController} from './daemonsetdetail_controller';
 import {stateName} from './daemonsetdetail_state';
 
@@ -46,7 +47,11 @@ export default function stateConfig($stateProvider) {
         controllerAs: 'ctrl',
         templateUrl: 'daemonsetdetail/daemonsetdetail.html',
       },
-      [actionbarViewName]: {},
+      [actionbarViewName]: {
+        controller: ActionBarController,
+        controllerAs: '$ctrl',
+        templateUrl: 'daemonsetdetail/actionbar.html',
+      },
     },
   });
 }
