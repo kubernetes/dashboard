@@ -40,6 +40,26 @@ export class ServiceCardListController {
     return this.state_.href(stateName,
                             new StateParams(service.objectMeta.namespace, service.objectMeta.name));
   }
+
+  /**
+   * Returns true if Service has no assigned Cluster IP
+   * or if Service is a load balancer and doesn't have an external endpoint IP
+   * @return {boolean}
+   * @export
+   */
+  isPending(service) {
+    return service.clusterIP === null ||
+        ((service.type === "LoadBalancer" || service.type === "NodePort") &&
+        service.externalEndpoints === null);
+  }
+
+  /**
+   * Returns true if Service has no assigned Cluster IP
+   * or if Service is a load balancer and doesn't have an external endpoint IP
+   * @return {boolean}
+   * @export
+   */
+  isSuccess(service) { return !this.isPending(service); }
 }
 
 /**
@@ -76,4 +96,6 @@ const i18n = {
   /** @export {string} @desc Label 'External endpoints' which appears as a column label in the
      table of services (service list view). */
   MSG_SERVICE_LIST_EXTERNAL_ENDPOINTS_LABEL: goog.getMsg('External endpoints'),
+  /** @export {string} @desc tooltip for pending pod card icon */
+  MSG_SERVICE_IS_PENDING_TOOLTIP: goog.getMsg('This service is in a pending state.'),
 };
