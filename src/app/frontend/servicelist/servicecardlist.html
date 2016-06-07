@@ -27,6 +27,15 @@ limitations under the License.
 
   <kd-resource-card ng-repeat="service in ::$ctrl.services"
       object-meta="service.objectMeta" type-meta="service.typeMeta">
+    <kd-resource-card-status layout="row">
+      <md-icon class="material-icons" ng-if="::$ctrl.isPending(service)">
+        timelapse
+        <md-tooltip md-direction="right">{{::$ctrl.i18n.MSG_POD_IS_PENDING_TOOLTIP}}</md-tooltip>
+      </md-icon>
+      <md-icon class="material-icons kd-success" ng-if="::$ctrl.isSuccess(service)">
+        check_circle
+      </md-icon>
+    </kd-resource-card-status>
     <kd-resource-card-columns>
       <kd-resource-card-column>
         <a ng-href="{{::$ctrl.getServiceDetailHref(service)}}">
@@ -36,7 +45,10 @@ limitations under the License.
       <kd-resource-card-column>
         <kd-labels labels="::service.objectMeta.labels"></kd-labels>
       </kd-resource-card-column>
-      <kd-resource-card-column>{{::service.clusterIP}}</kd-resource-card-column>
+      <kd-resource-card-column>
+        <div ng-if="::service.clusterIP">{{::service.clusterIP}}</div>
+        <div ng-hide="service.clusterIP">-</div>
+      </kd-resource-card-column>
       <kd-resource-card-column>
         <div ng-if="::service.internalEndpoint">
           <kd-internal-endpoint endpoint="::service.internalEndpoint"></kd-internal-endpoint>
