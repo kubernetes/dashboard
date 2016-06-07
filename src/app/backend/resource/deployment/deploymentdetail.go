@@ -6,6 +6,7 @@ import (
 	"github.com/kubernetes/dashboard/resource/common"
 	"github.com/kubernetes/dashboard/resource/replicaset"
 	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	deploymentutil "k8s.io/kubernetes/pkg/util/deployment"
@@ -45,7 +46,7 @@ type DeploymentDetail struct {
 
 	// The deployment strategy to use to replace existing pods with new ones.
 	// Valid options: Recreate, RollingUpdate
-	Strategy string `json:"strategy"`
+	Strategy extensions.DeploymentStrategyType `json:"strategy"`
 
 	// Min ready seconds
 	MinReadySeconds int32 `json:"minReadySeconds"`
@@ -69,34 +70,39 @@ func GetDeploymentDetail(client client.Interface, namespace string,
 
 	log.Printf("Getting details of %s deployment in %s namespace", name, namespace)
 
-	deploymentData, err := client.Extensions().Deployments(namespace).Get(name)
+	deployment, err := client.Extensions().Deployments(namespace).Get(name)
 	if err != nil {
 		return nil, err
 	}
 
+	selector, err := unversioned.LabelSelectorAsSelector(deployment.Spec.Selector)
+	if err != nil {
+		return nil, err
+	}
+	options := api.ListOptions{LabelSelector: selector}
 	channels := &common.ResourceChannels{
-		ReplicaSetList: common.GetReplicaSetListChannel(client.Extensions(),
-			common.NewSameNamespaceQuery(namespace), 1),
-		PodList: common.GetPodListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
+		ReplicaSetList: common.GetReplicaSetListChannelWithOptions(client.Extensions(),
+			common.NewSameNamespaceQuery(namespace), options, 1),
+		PodList: common.GetPodListChannelWithOptions(client,
+			common.NewSameNamespaceQuery(namespace), options, 1),
 	}
 
-	replicaSetList := <-channels.ReplicaSetList.List
+	rsList := <-channels.ReplicaSetList.List
 	if err := <-channels.ReplicaSetList.Error; err != nil {
 		return nil, err
 	}
 
-	pods := <-channels.PodList.List
+	podList := <-channels.PodList.List
 	if err := <-channels.PodList.Error; err != nil {
 		return nil, err
 	}
 
-	oldReplicaSets, _, err := deploymentutil.FindOldReplicaSets(
-		deploymentData, replicaSetList.Items, pods)
+	oldReplicaSets, _, err := deploymentutil.FindOldReplicaSets(deployment, rsList.Items, podList)
 	if err != nil {
 		return nil, err
 	}
 
-	newReplicaSet, err := deploymentutil.FindNewReplicaSet(deploymentData, replicaSetList.Items)
+	newReplicaSet, err := deploymentutil.FindNewReplicaSet(deployment, rsList.Items)
 	if err != nil {
 		return nil, err
 	}
@@ -106,16 +112,19 @@ func GetDeploymentDetail(client client.Interface, namespace string,
 		return nil, err
 	}
 
-	return getDeploymentDetail(deploymentData, oldReplicaSets, newReplicaSet,
-		pods.Items, events), nil
+	return getDeploymentDetail(deployment, oldReplicaSets, newReplicaSet,
+		podList.Items, events), nil
 }
 
 func getDeploymentDetail(deployment *extensions.Deployment,
 	oldRs []*extensions.ReplicaSet, newRs *extensions.ReplicaSet,
 	pods []api.Pod, events *common.EventList) *DeploymentDetail {
+	var newReplicaSet replicaset.ReplicaSet
 
-	newRsPodInfo := common.GetPodInfo(newRs.Status.Replicas, newRs.Spec.Replicas, pods)
-	newReplicaSet := replicaset.ToReplicaSet(newRs, &newRsPodInfo)
+	if newRs != nil {
+		newRsPodInfo := common.GetPodInfo(newRs.Status.Replicas, newRs.Spec.Replicas, pods)
+		newReplicaSet = replicaset.ToReplicaSet(newRs, &newRsPodInfo)
+	}
 
 	oldReplicaSets := make([]extensions.ReplicaSet, len(oldRs))
 	for i, replicaSet := range oldRs {
@@ -129,7 +138,7 @@ func getDeploymentDetail(deployment *extensions.Deployment,
 		TypeMeta:        common.NewTypeMeta(common.ResourceKindDeployment),
 		Selector:        deployment.Spec.Selector.MatchLabels,
 		StatusInfo:      GetStatusInfo(&deployment.Status),
-		Strategy:        string(deployment.Spec.Strategy.Type),
+		Strategy:        deployment.Spec.Strategy.Type,
 		MinReadySeconds: deployment.Spec.MinReadySeconds,
 		RollingUpdateStrategy: RollingUpdateStrategy{
 			MaxSurge:       deployment.Spec.Strategy.RollingUpdate.MaxSurge.IntValue(),

@@ -291,13 +291,20 @@ type ReplicaSetListChannel struct {
 // errors that both must be read numReads times.
 func GetReplicaSetListChannel(client client.ReplicaSetsNamespacer,
 	nsQuery *NamespaceQuery, numReads int) ReplicaSetListChannel {
+	return GetReplicaSetListChannelWithOptions(client, nsQuery, listEverything, numReads)
+}
+
+// GetReplicaSetListChannelWithOptions returns a pair of channels to a ReplicaSet list filtered
+// by provided options and errors that both must be read numReads times.
+func GetReplicaSetListChannelWithOptions(client client.ReplicaSetsNamespacer,
+	nsQuery *NamespaceQuery, options api.ListOptions, numReads int) ReplicaSetListChannel {
 	channel := ReplicaSetListChannel{
 		List:  make(chan *extensions.ReplicaSetList, numReads),
 		Error: make(chan error, numReads),
 	}
 
 	go func() {
-		list, err := client.ReplicaSets(nsQuery.ToRequestParam()).List(listEverything)
+		list, err := client.ReplicaSets(nsQuery.ToRequestParam()).List(options)
 		var filteredItems []extensions.ReplicaSet
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {

@@ -27,26 +27,11 @@
       Max Unavailable: {{::$ctrl.deployment.rollingUpdateStrategy.maxUnavailable}}
     </kd-info-card-entry>
 
-  </kd-info-card-section>
-
-  <kd-info-card-section>
     <kd-info-card-entry title="Status">
-    {{::$ctrl.deployment.statusInfo.updated}} updated, 
-    {{::$ctrl.deployment.statusInfo.replicas}} total, 
-    {{::$ctrl.deployment.statusInfo.available}} available, 
-    {{::$ctrl.deployment.statusInfo.unavailable}} unavailable
-    </kd-info-card-entry>
-    <kd-info-card-entry title="New Replica Set">
-      <kd-middle-ellipsis display-string="{{$ctrl.deployment.newReplicaSet.objectMeta.name}}">
-      </kd-middle-ellipsis>
-    </kd-info-card-entry>
-    <kd-info-card-entry title="Old Replica Sets">
-      <div ng-repeat="rs in $ctrl.deployment.oldReplicaSets.replicaSets">
-        {{rs.objectMeta.name}}
-      </div>
-      <div ng-if="!$ctrl.deployment.oldReplicaSets.replicaSets.length">
-        None
-      </div>
+      {{::$ctrl.deployment.statusInfo.updated}} updated,
+      {{::$ctrl.deployment.statusInfo.replicas}} total,
+      {{::$ctrl.deployment.statusInfo.available}} available,
+      {{::$ctrl.deployment.statusInfo.unavailable}} unavailable
     </kd-info-card-entry>
   </kd-info-card-section>
 </kd-info-card>
