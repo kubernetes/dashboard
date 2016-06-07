@@ -29,6 +29,7 @@ func ToService(service *api.Service) Service {
 		// TODO(maciaszczykm): Fill ExternalEndpoints with data.
 		Selector:  service.Spec.Selector,
 		ClusterIP: service.Spec.ClusterIP,
+		Type:      service.Spec.Type,
 	}
 }
 

@@ -40,6 +40,37 @@ export class ServiceCardListController {
     return this.state_.href(
         stateName, new StateParams(service.objectMeta.namespace, service.objectMeta.name));
   }
+
+  /**
+   * Returns true if Service has no assigned Cluster IP
+   * or if Service type is LoadBalancer or NodePort and doesn't have an external endpoint IP
+   * @param {!backendApi.Service} service
+   * @return {boolean}
+   * @export
+   */
+  isPending(service) {
+    return service.clusterIP === null ||
+        ((service.type === 'LoadBalancer' || service.type === 'NodePort') &&
+         service.externalEndpoints === null);
+  }
+
+  /**
+   * Returns true if Service has ClusterIP assigned and one of the following conditions is met:
+   *  - Service type is LoadBalancer or NodePort and has an external endpoint IP
+   *  - Service type is not LoadBalancer or NodePort
+   * @param {!backendApi.Service} service
+   * @return {boolean}
+   * @export
+   */
+  isSuccess(service) { return !this.isPending(service); }
+
+  /**
+   * Returns the service's clusterIP or a dash ('-') if it is not yet set
+   * @param {!backendApi.Service} service
+   * @return {string}
+   * @export
+   */
+  getServiceClusterIP(service) { return service.clusterIP ? service.clusterIP : '-'; }
 }
 
 /**
@@ -76,4 +107,6 @@ const i18n = {
   /** @export {string} @desc Label 'External endpoints' which appears as a column label in the
      table of services (service list view). */
   MSG_SERVICE_LIST_EXTERNAL_ENDPOINTS_LABEL: goog.getMsg('External endpoints'),
+  /** @export {string} @desc tooltip for pending pod card icon */
+  MSG_SERVICE_IS_PENDING_TOOLTIP: goog.getMsg('This service is in a pending state.'),
 };
