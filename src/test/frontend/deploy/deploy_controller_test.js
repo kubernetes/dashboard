@@ -13,57 +13,30 @@
 // limitations under the License.
 
 import DeployController from 'deploy/deploy_controller';
-import DeployFromSettingController from 'deploy/deployfromsettings_controller';
 import deployModule from 'deploy/deploy_module';
-import {stateName as rcs} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 
 describe('Deploy controller', () => {
   /** @type {!DeployController} */
   let ctrl;
-  /** @type {!DeployFromSettingsController} */
-  let settingsCtrl;
   /** @type {!ui.router.$state} */
   let state;
 
   beforeEach(() => {
     angular.mock.module(deployModule.name);
 
-    angular.mock.inject(($controller, $state, $q) => {
+    angular.mock.inject(($controller, $state) => {
       state = $state;
-      settingsCtrl = $controller(
-          DeployFromSettingController, {},
-          {namespaces: [], protocols: [], secrets: [], deploy: () => $q.defer().promise});
-      ctrl = $controller(
-          DeployController, {namespaces: [], protocols: []},
-          {detail: settingsCtrl, deployForm: {$valid: true}});
+      state.current.name = 'current-state';
+      spyOn(state, 'go');
+      ctrl = $controller(DeployController);
     });
   });
 
-  it('should return true when deploy in progress', () => {
-    // when
-    ctrl.deployBySelection();
-    let result = ctrl.isDeployDisabled();
+  it('should change selection', () => {
+    expect(ctrl.selection).toBe('current-state');
 
-    // then
-    expect(result).toBe(true);
-  });
+    ctrl.changeSelection();
 
-  it('should return false when deploy not in progress', () => {
-    // when
-    let result = ctrl.isDeployDisabled();
-
-    // then
-    expect(result).toBe(false);
-  });
-
-  it('should change state to replication controller list view on cancel', () => {
-    // given
-    spyOn(state, 'go');
-
-    // when
-    ctrl.cancel();
-
-    // then
-    expect(state.go).toHaveBeenCalledWith(rcs);
+    expect(state.go).toHaveBeenCalledWith('current-state');
   });
 });

@@ -47,8 +47,9 @@ describe('DeployFromSettings controller', () => {
         },
       };
       ctrl = $controller(
-          DeployFromSettingController, {$resource: mockResource},
-          {namespaces: [], form: form, protocols: []});
+          DeployFromSettingController,
+          {$resource: mockResource, namespaces: {namespaces: []}, protocols: {protocols: []}},
+          {form: form});
       ctrl.portMappings = [];
       ctrl.variables = [];
     });
@@ -174,6 +175,7 @@ describe('DeployFromSettings controller', () => {
     ];
 
     // when
+    form.$valid = true;
     ctrl.deploy();
 
     // then
@@ -202,6 +204,7 @@ describe('DeployFromSettings controller', () => {
     ctrl.imagePullSecret = 'mysecret';
 
     // when
+    form.$valid = true;
     ctrl.deploy();
 
     // then
@@ -223,6 +226,7 @@ describe('DeployFromSettings controller', () => {
     ctrl.memoryRequirement = 88;
 
     // when
+    form.$valid = true;
     ctrl.deploy();
 
     // then
@@ -244,6 +248,7 @@ describe('DeployFromSettings controller', () => {
     ctrl.memoryRequirement = '';
 
     // when
+    form.$valid = true;
     ctrl.deploy();
 
     // then
@@ -353,6 +358,7 @@ describe('DeployFromSettings controller', () => {
       ctrl.memoryRequirement = 88;
 
       // when
+      form.$valid = true;
       ctrl.deploy();
 
       // then

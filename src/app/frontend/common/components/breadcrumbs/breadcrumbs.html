@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<span ng-switch="$last" ng-repeat="breadcrumb in ::ctrl.breadcrumbs">
+<h1 ng-switch="$last" ng-repeat="breadcrumb in ::ctrl.breadcrumbs" class="md-title"
+   style="display: inline">
   <a ng-switch-when="false" href="{{::breadcrumb.stateLink}}">
     {{::breadcrumb.label}}
   </a>

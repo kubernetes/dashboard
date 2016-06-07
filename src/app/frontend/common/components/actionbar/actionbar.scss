@@ -17,7 +17,7 @@
 .kd-toolbar {
   &.kd-actionbar {
     background: $content-background;
-    color: $muted;
+    color: $foreground-1;
   }
 }
 
@@ -33,20 +33,16 @@
   white-space: nowrap;
 }
 
-md-toolbar {
-  .md-button {
-    &.md-raised {
-      md-icon {
-        &.kd-actionbar-icon-button {
-          color: $muted;
+.kd-actionbar {
+  &.kd-toolbar {
+    button {
+      &.md-button {
+        color: $primary;
+
+        md-icon {
+          color: $primary;
         }
       }
-    }
-  }
-
-  md-icon {
-    &.kd-actionbar-icon-button {
-      color: $muted;
     }
   }
 }

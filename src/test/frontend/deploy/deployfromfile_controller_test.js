@@ -27,6 +27,9 @@ describe('DeployFromFile controller', () => {
 
     angular.mock.inject(($controller) => {
       mockResource = jasmine.createSpy('$resource');
+      form = {
+        $valid: true,
+      };
       ctrl = $controller(DeployFromFileController, {$resource: mockResource}, {form: form});
     });
   });

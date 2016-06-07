@@ -16,21 +16,18 @@
 
 .kd-content-card-content {
   background-color: $content-background;
-  box-shadow:  $whiteframe-shadow-1dp;
-  padding-bottom: $baseline-grid;
-  padding-top: $baseline-grid;
+  box-shadow: $whiteframe-shadow-1dp;
 }
 
 .kd-content-card {
-  padding-bottom: 4 * $baseline-grid;
+  padding-bottom: 1 * $baseline-grid;
 }
 
 .kd-content-card-content-title {
   border-bottom: 1px solid $border;
   margin: 0;
-  padding-bottom: 2 * $baseline-grid;
 
   kd-title {
-    font-weight: $light-font-weight;
+    font-weight: $regular-font-weight;
   }
 }
