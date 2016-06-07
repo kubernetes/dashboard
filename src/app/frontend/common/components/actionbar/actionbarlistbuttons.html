@@ -14,7 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-button class="md-icon-button" ng-click="ctrl.redirectToDeployPage()">
+<md-button ng-click="$ctrl.deployApp()">
   <md-icon class="kd-actionbar-icon-button">add</md-icon>
-  <md-tooltip md-direction="left">{{::ctrl.i18n.MSG_REPLICA_SET_LIST_DEPLOY_TOOLTIP}}</md-tooltip>
+  {{::$ctrl.i18n.MSG_LIST_ACTION_BAR_DEPLOY_LABEL}}
+</md-button>
+
+<md-button ng-click="$ctrl.deployFile()">
+  <md-icon class="kd-actionbar-icon-button">file_upload</md-icon>
+  {{::$ctrl.i18n.MSG_LIST_ACTION_BAR_UPLOAD_YAML_LABEL}}
 </md-button>

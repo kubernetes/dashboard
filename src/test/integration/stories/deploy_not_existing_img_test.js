@@ -56,7 +56,7 @@ describe('Deploy not existing image story', () => {
 
   it('should deploy app', (doneFn) => {
     // For empty cluster this should actually redirect to zerostate page
-    browser.get('#/deploy');
+    browser.get('#/deploy/app');
     // given
     deployPage.appNameField.sendKeys(appName);
     deployPage.containerImageField.sendKeys(containerImage);

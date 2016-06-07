@@ -18,6 +18,7 @@ import DeployLabel from './deploylabel';
 import {stateName as replicationcontrollerliststate} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 import {uniqueNameValidationKey} from './uniquename_directive';
 import DockerImageReference from '../common/docker/dockerimagereference';
+import {stateName as workloads} from 'workloads/workloads_state';
 
 // Label keys for predefined labels
 const APP_LABEL_KEY = 'app';
@@ -30,6 +31,8 @@ const VERSION_LABEL_KEY = 'version';
  */
 export default class DeployFromSettingsController {
   /**
+   * @param {!backendApi.NamespaceList} namespaces
+   * @param {!backendApi.Protocols} protocols
    * @param {!angular.$log} $log
    * @param {!ui.router.$state} $state
    * @param {!angular.$resource} $resource
@@ -37,16 +40,9 @@ export default class DeployFromSettingsController {
    * @param {!md.$dialog} $mdDialog
    * @ngInject
    */
-  constructor($log, $state, $resource, $q, $mdDialog) {
+  constructor(namespaces, protocols, $log, $state, $resource, $q, $mdDialog) {
     /**
-     * It initializes the scope output parameter
-     *
-     * @export {!DeployFromSettingsController}
-     */
-    this.detail = this;
-
-    /**
-     * Initialized from the scope.
+     * Initialized from the template.
      * @export {!angular.FormController}
      */
     this.form;
@@ -76,10 +72,9 @@ export default class DeployFromSettingsController {
     this.description = '';
 
     /**
-     * Initialized from the scope.
      * @export {!Array<string>}
      */
-    this.protocols;
+    this.protocols = protocols.protocols;
 
     /**
      * Initialized from the template.
@@ -105,11 +100,9 @@ export default class DeployFromSettingsController {
 
     /**
      * List of available namespaces.
-     *
-     * Initialized from the scope.
      * @export {!Array<string>}
      */
-    this.namespaces;
+    this.namespaces = namespaces.namespaces;
 
     /**
      * List of available secrets.
@@ -174,6 +167,8 @@ export default class DeployFromSettingsController {
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
 
+    this.isDeployInProgress_ = false;
+
     /**
      * @export
      */
@@ -181,49 +176,64 @@ export default class DeployFromSettingsController {
   }
 
   /**
+   * Returns true when the deploy action should be enabled.
+   * @return {boolean}
+   * @export
+   */
+  isDeployDisabled() { return this.isDeployInProgress_; }
+
+  /**
+   * Cancels the deployment form.
+   * @export
+   */
+  cancel() { this.state_.go(workloads); }
+
+  /**
    * Deploys the application based on the state of the controller.
    *
-   * @return {!angular.$q.Promise}
    * @export
    */
   deploy() {
-    // TODO(bryk): Validate input data before sending to the server.
-    /** @type {!backendApi.AppDeploymentSpec} */
-    let appDeploymentSpec = {
-      containerImage: this.containerImage,
-      imagePullSecret: this.imagePullSecret ? this.imagePullSecret : null,
-      containerCommand: this.containerCommand ? this.containerCommand : null,
-      containerCommandArgs: this.containerCommandArgs ? this.containerCommandArgs : null,
-      isExternal: this.isExternal,
-      name: this.name,
-      description: this.description ? this.description : null,
-      portMappings: this.portMappings.filter(this.isPortMappingFilled_),
-      variables: this.variables.filter(this.isVariableFilled_),
-      replicas: this.replicas,
-      namespace: this.namespace,
-      cpuRequirement: angular.isNumber(this.cpuRequirement) ? this.cpuRequirement : null,
-      memoryRequirement: angular.isNumber(this.memoryRequirement) ? `${this.memoryRequirement}Mi` :
-                                                                    null,
-      labels: this.toBackendApiLabels_(this.labels),
-      runAsPrivileged: this.runAsPrivileged,
-    };
+    if (this.form.$valid) {
+      // TODO(bryk): Validate input data before sending to the server.
+      /** @type {!backendApi.AppDeploymentSpec} */
+      let appDeploymentSpec = {
+        containerImage: this.containerImage,
+        imagePullSecret: this.imagePullSecret ? this.imagePullSecret : null,
+        containerCommand: this.containerCommand ? this.containerCommand : null,
+        containerCommandArgs: this.containerCommandArgs ? this.containerCommandArgs : null,
+        isExternal: this.isExternal,
+        name: this.name,
+        description: this.description ? this.description : null,
+        portMappings: this.portMappings.filter(this.isPortMappingFilled_),
+        variables: this.variables.filter(this.isVariableFilled_),
+        replicas: this.replicas,
+        namespace: this.namespace,
+        cpuRequirement: angular.isNumber(this.cpuRequirement) ? this.cpuRequirement : null,
+        memoryRequirement:
+            angular.isNumber(this.memoryRequirement) ? `${this.memoryRequirement}Mi` : null,
+        labels: this.toBackendApiLabels_(this.labels),
+        runAsPrivileged: this.runAsPrivileged,
+      };
 
-    let defer = this.q_.defer();
+      let defer = this.q_.defer();
 
-    /** @type {!angular.Resource<!backendApi.AppDeploymentSpec>} */
-    let resource = this.resource_('api/v1/appdeployment');
-    resource.save(
-        appDeploymentSpec,
-        (savedConfig) => {
-          defer.resolve(savedConfig);  // Progress ends
-          this.log_.info('Successfully deployed application: ', savedConfig);
-          this.state_.go(replicationcontrollerliststate);
-        },
-        (err) => {
-          defer.reject(err);  // Progress ends
-          this.log_.error('Error deploying application:', err);
-        });
-    return defer.promise;
+      /** @type {!angular.Resource<!backendApi.AppDeploymentSpec>} */
+      let resource = this.resource_('api/v1/appdeployment');
+      this.isDeployInProgress_ = true;
+      resource.save(
+          appDeploymentSpec,
+          (savedConfig) => {
+            defer.resolve(savedConfig);  // Progress ends
+            this.log_.info('Successfully deployed application: ', savedConfig);
+            this.state_.go(replicationcontrollerliststate);
+          },
+          (err) => {
+            defer.reject(err);  // Progress ends
+            this.log_.error('Error deploying application:', err);
+          });
+      defer.promise.finally(() => { this.isDeployInProgress_ = false; });
+    }
   }
 
   /**
@@ -372,7 +382,7 @@ export default class DeployFromSettingsController {
    * Shows or hides more options.
    * @export
    */
-  switchMoreOptions() { this.detail.showMoreOptions_ = !this.detail.showMoreOptions_; }
+  switchMoreOptions() { this.showMoreOptions_ = !this.showMoreOptions_; }
 }
 
 const i18n = {
@@ -573,4 +583,12 @@ const i18n = {
      settings page. */
   MSG_DEPLOY_SETTINGS_ENV_VARIABLES_USER_HELP: goog.getMsg(
       `Environment variables available for use in the container. Values can reference other variables using $(VAR_NAME) syntax.`),
+
+  /** @export {string} @desc The text is put on the 'Deploy' button at the end of the deploy
+   * page. */
+  MSG_DEPLOY_APP_DEPLOY_ACTION: goog.getMsg('Deploy'),
+
+  /** @export {string} @desc The text is put on the 'Cancel' button at the end of the deploy
+   * page. */
+  MSG_DEPLOY_APP_CANCEL_ACTION: goog.getMsg('Cancel'),
 };

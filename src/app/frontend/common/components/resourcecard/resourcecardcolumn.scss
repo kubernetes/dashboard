@@ -20,7 +20,7 @@ kd-resource-card-column {
   flex-basis: auto;
   min-width: $baseline-grid * 10;
   padding-left: 2 * $baseline-grid;
-  padding-top: $baseline-grid;
+  padding-top: $baseline-grid / 2;
 
   // Add this class to kd-resource-card-column to make it layout its children in a row.
   &.kd-row-layout-column {
@@ -34,7 +34,9 @@ kd-resource-card-column {
   // Add this class kd-resource-card-column to make it a compact column with icons.
   &.kd-icon-column {
     .md-button {
+      height: auto;
       margin: 0;
+      padding: 0;
     }
 
     .kd-resource-card-column-container {

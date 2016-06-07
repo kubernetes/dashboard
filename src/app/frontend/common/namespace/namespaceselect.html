@@ -1,6 +1,7 @@
 <md-input-container>
   <md-select ng-model="$ctrl.selectedNamespace" md-on-open="$ctrl.loadNamespacesIfNeeded()"
       md-on-close="$ctrl.changeNamespace()"
+      class="kd-namespace-select"
       aria-label="{{::$ctrl.i18n.MSG_NAMESPACE_SELECT_ARIA_LABEL}}">
     <md-option ng-value="namespace" ng-repeat="namespace in $ctrl.namespaces">
       {{$ctrl.formatNamespace(namespace)}}

@@ -18,7 +18,6 @@ import {stateName as workloadsState} from 'workloads/workloads_state';
 
 import {ReplicaSetListController} from './replicasetlist_controller';
 import {stateName, stateUrl} from './replicasetlist_state';
-import ReplicaSetListActionBarController from './replicasetlistactionbar_controller';
 
 /**
  * Configures states for the service view.
@@ -46,9 +45,7 @@ export default function stateConfig($stateProvider) {
         templateUrl: 'replicasetlist/replicasetlist.html',
       },
       [actionbarViewName]: {
-        controller: ReplicaSetListActionBarController,
-        controllerAs: 'ctrl',
-        templateUrl: 'replicasetlist/replicasetlistactionbar.html',
+        templateUrl: 'replicasetlist/actionbar.html',
       },
     },
   });

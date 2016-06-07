@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as rcs} from 'replicationcontrollerlist/replicationcontrollerlist_state';
+import {deployAppStateName, deployFileStateName} from './deploy_state';
 
 /**
  * Controller for the deploy view.
@@ -22,76 +22,27 @@ import {stateName as rcs} from 'replicationcontrollerlist/replicationcontrollerl
 export default class DeployController {
   /**
    * @param {!ui.router.$state} $state
-   * @param {!backendApi.NamespaceList} namespaces
-   * @param {!backendApi.Protocols} protocols
    * @ngInject
    */
-  constructor($state, namespaces, protocols) {
-    /** @export {!angular.FormController} Initialized from the template */
-    this.deployForm;
+  constructor($state) {
+    /** @export {string} */
+    this.selection = $state.current.name;
 
-    /**
-     * List of available namespaces.
-     * TODO(bryk): Move this to deploy from settings directive. E.g., use activate method when
-     * switching to Angular 1.5.
-     * @export {!Array<string>}
-     */
-    this.namespaces = namespaces.namespaces;
+    /** @export {string} */
+    this.appOption = deployAppStateName;
 
-    /** @export {!Array<string>} */
-    this.protocols = protocols.protocols;
-
-    /**
-     * Contains the selected directive's controller which has its own deploy logic
-     *
-     * Initialized from the template.
-     * @export {{deploy:function()}|undefined}
-     */
-    this.detail;
-
-    /**
-     * Child directive selection model. The list of possible values is in template. This value
-     * represents the default selection.
-     * @export {string}
-     */
-    this.selection = 'Settings';
+    /** @export {string} */
+    this.fileOption = deployFileStateName;
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
-    /** @private {boolean} */
-    this.isDeployInProgress_ = false;
-
-    /**
-     * @export
-     * {!Object}
-     */
+    /** @export */
     this.i18n = i18n;
   }
 
-  /**
-   * Notifies the child scopes to call their deploy methods.
-   * @export
-   */
-  deployBySelection() {
-    if (this.deployForm.$valid) {
-      this.isDeployInProgress_ = true;
-      this.detail.deploy().finally(() => { this.isDeployInProgress_ = false; });
-    }
-  }
-
-  /**
-   * Returns true when the deploy action should be enabled.
-   * @return {boolean}
-   * @export
-   */
-  isDeployDisabled() { return this.isDeployInProgress_ || !this.detail; }
-
-  /**
-   * Cancels the deployment form.
-   * @export
-   */
-  cancel() { this.state_.go(rcs); }
+  /** @export */
+  changeSelection() { this.state_.go(this.selection); }
 }
 
 const i18n = {
@@ -105,16 +56,6 @@ const i18n = {
   /** @export {string} @desc Text for a selection option, which the user must click to upload a
      YAML/JSON file to deploy from on the deploy page. */
   MSG_DEPLOY_FILE_UPLOAD_ACTION: goog.getMsg('Upload a YAML or JSON file'),
-
-  /** @export {string} @desc The text is put on the 'Deploy' button at the end of the deploy
-   * page.
-     */
-  MSG_DEPLOY_DEPLOY_ACTION: goog.getMsg('Deploy'),
-
-  /** @export {string} @desc The text is put on the 'Cancel' button at the end of the deploy
-   * page.
-     */
-  MSG_DEPLOY_CANCEL_ACTION: goog.getMsg('Cancel'),
 
   /** @export {string} @desc User help with a link redirecting to the "Dashboard tour" on the
      deploy page. */

@@ -59,9 +59,6 @@ export const replicaSetInfoComponent = {
  */
 function i18n(replicaSet) {
   return {
-    /** @export {string} @desc Title 'Resource details' at the top of the replica set
-        details page.*/
-    MSG_REPLICA_SET_DETAIL_RESOURCE_DETAILS_TITLE: goog.getMsg('Resource details'),
     /** @export {string} @desc Subtitle 'Details' for the left section with general information
         about a replica set on the replica set details page.*/
     MSG_REPLICA_SET_DETAIL_DETAILS_SUBTITLE: goog.getMsg('Details'),

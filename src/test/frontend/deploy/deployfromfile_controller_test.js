@@ -20,14 +20,23 @@ describe('DeployFromFile controller', () => {
   let ctrl;
   /** @type {!angular.$resource} */
   let mockResource;
+  /** @type {!angular.$resource} */
+  let resource;
   /** @type {!angular.FormController} */
   let form;
+  /** @type {!angular.$httpBackend} */
+  let httpBackend;
   beforeEach(() => {
     angular.mock.module(deployModule.name);
 
-    angular.mock.inject(($controller) => {
+    angular.mock.inject(($controller, $httpBackend, $resource) => {
       mockResource = jasmine.createSpy('$resource');
+      resource = $resource;
+      form = {
+        $valid: true,
+      };
       ctrl = $controller(DeployFromFileController, {$resource: mockResource}, {form: form});
+      httpBackend = $httpBackend;
     });
   });
 
@@ -51,62 +60,63 @@ describe('DeployFromFile controller', () => {
     expect(resourceObject.save).toHaveBeenCalled();
   });
 
-  describe('After deploy', () => {
-    let httpBackend;
-    beforeEach(() => {
-      angular.mock.inject(($controller, $resource, $httpBackend) => {
-        ctrl = $controller(DeployFromFileController, {$resource: $resource}, {form: form});
-        httpBackend = $httpBackend;
-      });
-    });
+  it('should open error dialog and redirect the page', () => {
+    spyOn(ctrl.errorDialog_, 'open');
+    spyOn(ctrl.state_, 'go');
+    let response = {
+      name: 'foo-name',
+      content: 'foo-content',
+      error: 'service already exists',
+    };
+    httpBackend.expectPOST('api/v1/appdeploymentfromfile').respond(201, response);
+    mockResource.and.callFake(resource);
+    expect(ctrl.isDeployDisabled()).toBe(false);
+    ctrl.deploy();
+    expect(ctrl.isDeployDisabled()).toBe(true);
+    httpBackend.flush();
+    expect(ctrl.isDeployDisabled()).toBe(false);
 
-    it('should open error dialog and redirect the page', () => {
-      spyOn(ctrl.errorDialog_, 'open');
-      spyOn(ctrl.state_, 'go');
-      let response = {
-        name: 'foo-name',
-        content: 'foo-content',
-        error: 'service already exists',
-      };
-      httpBackend.expectPOST('api/v1/appdeploymentfromfile').respond(201, response);
-      // when
-      ctrl.deploy();
-      httpBackend.flush();
+    // then
+    expect(ctrl.errorDialog_.open).toHaveBeenCalled();
+    expect(ctrl.state_.go).toHaveBeenCalled();
+  });
 
-      // then
-      expect(ctrl.errorDialog_.open).toHaveBeenCalled();
-      expect(ctrl.state_.go).toHaveBeenCalled();
-    });
+  it('should redirect the page and not open error dialog', () => {
+    spyOn(ctrl.errorDialog_, 'open');
+    spyOn(ctrl.state_, 'go');
+    mockResource.and.callFake(resource);
+    let response = {
+      name: 'foo-name',
+      content: 'foo-content',
+      error: '',
+    };
+    httpBackend.expectPOST('api/v1/appdeploymentfromfile').respond(201, response);
+    // when
+    ctrl.deploy();
+    httpBackend.flush();
 
-    it('should redirect the page and not open error dialog', () => {
-      spyOn(ctrl.errorDialog_, 'open');
-      spyOn(ctrl.state_, 'go');
-      let response = {
-        name: 'foo-name',
-        content: 'foo-content',
-        error: '',
-      };
-      httpBackend.expectPOST('api/v1/appdeploymentfromfile').respond(201, response);
-      // when
-      ctrl.deploy();
-      httpBackend.flush();
+    // then
+    expect(ctrl.errorDialog_.open).not.toHaveBeenCalled();
+    expect(ctrl.state_.go).toHaveBeenCalled();
+  });
 
-      // then
-      expect(ctrl.errorDialog_.open).not.toHaveBeenCalled();
-      expect(ctrl.state_.go).toHaveBeenCalled();
-    });
+  it('should not redirect the page and but open error dialog', () => {
+    spyOn(ctrl.errorDialog_, 'open');
+    spyOn(ctrl.state_, 'go');
+    mockResource.and.callFake(resource);
+    httpBackend.expectPOST('api/v1/appdeploymentfromfile').respond(500, 'Deployment failed');
+    // when
+    ctrl.deploy();
+    httpBackend.flush();
 
-    it('should not redirect the page and but open error dialog', () => {
-      spyOn(ctrl.errorDialog_, 'open');
-      spyOn(ctrl.state_, 'go');
-      httpBackend.expectPOST('api/v1/appdeploymentfromfile').respond(500, 'Deployment failed');
-      // when
-      ctrl.deploy();
-      httpBackend.flush();
+    // then
+    expect(ctrl.errorDialog_.open).toHaveBeenCalled();
+    expect(ctrl.state_.go).not.toHaveBeenCalled();
+  });
 
-      // then
-      expect(ctrl.errorDialog_.open).toHaveBeenCalled();
-      expect(ctrl.state_.go).not.toHaveBeenCalled();
-    });
+  it('should cancel', () => {
+    spyOn(ctrl.state_, 'go');
+    ctrl.cancel();
+    expect(ctrl.state_.go).toHaveBeenCalled();
   });
 });

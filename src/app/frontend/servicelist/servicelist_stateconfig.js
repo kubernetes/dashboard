@@ -43,7 +43,9 @@ export default function stateConfig($stateProvider) {
         controllerAs: 'ctrl',
         templateUrl: 'servicelist/servicelist.html',
       },
-      [actionbarViewName]: {},
+      [actionbarViewName]: {
+        templateUrl: 'servicelist/actionbar.html',
+      },
     },
   });
 }

@@ -22,8 +22,10 @@ kd-resource-card-header-columns {
 
 .kd-resource-card-header-columns {
   color: $foreground-2;
-  min-height: 4 * $baseline-grid;
+  min-height: 3 * $baseline-grid;
   padding: $baseline-grid;
+  padding-bottom: $baseline-grid / 2;
+  padding-top: $baseline-grid / 2;
 }
 
 .kd-resource-card-list-selectable {
