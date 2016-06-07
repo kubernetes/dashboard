@@ -61,6 +61,30 @@ export class PodCardListController {
     return this.state_.href(stateName,
                             new StateParams(pod.objectMeta.namespace, pod.objectMeta.name));
   }
+
+  /**
+   * Checks if pod status is successful, i.e. running or succeeded.
+   * @param pod
+   * @return {boolean}
+   * @export
+   */
+  isStatusSuccessful(pod) { return pod.podPhase === 'Running' || pod.podPhase === 'Succeeded'; }
+
+  /**
+   * Checks if pod status is pending.
+   * @param pod
+   * @return {boolean}
+   * @export
+   */
+  isStatusPending(pod) { return pod.podPhase === 'Pending'; }
+
+  /**
+   * Checks if pod status is failed.
+   * @param pod
+   * @return {boolean}
+   * @export
+   */
+  isStatusFailed(pod) { return pod.podPhase === 'Failed'; }
 }
 
 /**
