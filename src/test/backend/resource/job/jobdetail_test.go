@@ -41,6 +41,7 @@ func TestGetJobDetail(t *testing.T) {
 	eventList := &api.EventList{}
 	podList := &api.PodList{}
 	var jobCompletions int32 = 0
+	var parallelism int32 = 0
 
 	cases := []struct {
 		namespace, name string
@@ -58,14 +59,17 @@ func TestGetJobDetail(t *testing.T) {
 						MatchLabels: map[string]string{},
 					},
 					Completions: &jobCompletions,
+					Parallelism: &parallelism,
 				},
 			},
 			&JobDetail{
-				ObjectMeta: common.ObjectMeta{Name: "test-job"},
-				TypeMeta:   common.TypeMeta{Kind: common.ResourceKindJob},
-				PodInfo:    common.PodInfo{Warnings: []common.Event{}},
-				PodList:    pod.PodList{Pods: []pod.Pod{}},
-				EventList:  common.EventList{Events: []common.Event{}},
+				ObjectMeta:  common.ObjectMeta{Name: "test-job"},
+				TypeMeta:    common.TypeMeta{Kind: common.ResourceKindJob},
+				PodInfo:     common.PodInfo{Warnings: []common.Event{}},
+				PodList:     pod.PodList{Pods: []pod.Pod{}},
+				EventList:   common.EventList{Events: []common.Event{}},
+				Parallelism: &jobCompletions,
+				Completions: &parallelism,
 			},
 		},
 	}

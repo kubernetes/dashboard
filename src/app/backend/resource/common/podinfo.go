@@ -35,6 +35,9 @@ type PodInfo struct {
 	// Number of pods that are failed.
 	Failed int32 `json:"failed"`
 
+	// Number of pods that are succeeded.
+	Succeeded int32 `json:"succeeded"`
+
 	// Unique warning messages related to pods in this resource.
 	Warnings []Event `json:"warnings"`
 }
@@ -55,6 +58,8 @@ func GetPodInfo(current int32, desired int32, pods []api.Pod) PodInfo {
 			result.Pending++
 		case api.PodFailed:
 			result.Failed++
+		case api.PodSucceeded:
+			result.Succeeded++
 		}
 	}
 

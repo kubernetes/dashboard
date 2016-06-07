@@ -89,7 +89,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 						CreationTimestamp: unversioned.Unix(111, 222),
 					},
 					Spec: batch.JobSpec{
-						Selector: &unversioned.LabelSelector{MatchLabels: map[string]string{"foo": "bar"}},
+						Selector:    &unversioned.LabelSelector{MatchLabels: map[string]string{"foo": "bar"}},
 						Completions: &jobCompletions,
 					},
 					Status: batch.JobStatus{
