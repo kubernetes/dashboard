@@ -17,6 +17,7 @@ package service
 import (
 	"log"
 
+	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 
 	"github.com/kubernetes/dashboard/resource/common"
@@ -37,6 +38,9 @@ type Service struct {
 
 	// Label selector of the service.
 	Selector map[string]string `json:"selector"`
+
+	// Type determines how the service will be exposed.  Valid options: ClusterIP, NodePort, LoadBalancer
+	Type api.ServiceType `json:"type"`
 
 	// ClusterIP is usually assigned by the master. Valid values are None, empty string (""), or
 	// a valid IP address. None can be specified for headless services when proxying is not required
