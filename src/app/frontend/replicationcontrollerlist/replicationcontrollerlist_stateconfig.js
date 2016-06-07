@@ -18,7 +18,6 @@ import {stateName as workloadsState} from 'workloads/workloads_state';
 
 import {ReplicationControllerListController} from './replicationcontrollerlist_controller';
 import {stateName, stateUrl} from './replicationcontrollerlist_state';
-import ReplicationControllerListActionBarController from './replicationcontrollerlistactionbar_controller';
 
 /**
  * Configures states for the service view.
@@ -46,9 +45,7 @@ export default function stateConfig($stateProvider) {
         templateUrl: 'replicationcontrollerlist/replicationcontrollerlist.html',
       },
       [actionbarViewName]: {
-        controller: ReplicationControllerListActionBarController,
-        controllerAs: '$ctrl',
-        templateUrl: 'replicationcontrollerlist/replicationcontrollerlistactionbar.html',
+        templateUrl: 'replicationcontrollerlist/actionbar.html',
       },
     },
   });

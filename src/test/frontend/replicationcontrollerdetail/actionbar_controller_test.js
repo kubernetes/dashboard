@@ -14,7 +14,6 @@
 
 import {ActionBarController} from 'replicationcontrollerdetail/actionbar_controller';
 import replicationControllerDetailModule from 'replicationcontrollerdetail/replicationcontrollerdetail_module';
-import {stateName as deploy} from 'deploy/deploy_state';
 
 describe('Replication Controller Detail Action Bar controller', () => {
   /**
@@ -25,18 +24,14 @@ describe('Replication Controller Detail Action Bar controller', () => {
   /** @type
    * {!replicationcontrollerdetail/replicationcontroller_service.ReplicationControllerService} */
   let kdReplicationControllerService;
-  /** @type {!ui.router.$state} */
-  let state;
 
   beforeEach(() => {
     angular.mock.module(replicationControllerDetailModule.name);
 
-    angular.mock.inject(($controller, $state, $resource, _kdReplicationControllerService_) => {
-      state = $state;
+    angular.mock.inject(($controller, $resource, _kdReplicationControllerService_) => {
       kdReplicationControllerService = _kdReplicationControllerService_;
 
       ctrl = $controller(ActionBarController, {
-        $state: state,
         replicationControllerDetail: {},
         kdReplicationControllerService: _kdReplicationControllerService_,
       });
@@ -62,38 +57,5 @@ describe('Replication Controller Detail Action Bar controller', () => {
 
     // then
     expect(kdReplicationControllerService.showUpdateReplicasDialog).toHaveBeenCalled();
-  });
-
-  it('should redirect to deploy page', () => {
-    // given
-    spyOn(state, 'go');
-
-    // when
-    ctrl.redirectToDeployPage();
-
-    // then
-    expect(state.go).toHaveBeenCalledWith(deploy);
-  });
-
-  it('should show icons', () => {
-    // given
-    ctrl.showFabIcons = false;
-
-    // when
-    ctrl.showIcons();
-
-    // then
-    expect(ctrl.showFabIcons).toBeTruthy();
-  });
-
-  it('should hide icons', () => {
-    // given
-    ctrl.showFabIcons = true;
-
-    // when
-    ctrl.hideIcons();
-
-    // then
-    expect(ctrl.showFabIcons).toBeFalsy();
   });
 });

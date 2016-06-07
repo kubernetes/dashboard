@@ -18,7 +18,6 @@ import {stateName as workloadsState} from 'workloads/workloads_state';
 
 import {PodListController} from './podlist_controller';
 import {stateName, stateUrl} from './podlist_state';
-import {PodListActionBarController} from './podlistactionbar_controller';
 
 /**
  * Configures states for the service view.
@@ -46,9 +45,7 @@ export default function stateConfig($stateProvider) {
         templateUrl: 'podlist/podlist.html',
       },
       [actionbarViewName]: {
-        controller: PodListActionBarController,
-        controllerAs: 'ctrl',
-        templateUrl: 'podlist/podlistactionbar.html',
+        templateUrl: 'podlist/actionbar.html',
       },
     },
   });

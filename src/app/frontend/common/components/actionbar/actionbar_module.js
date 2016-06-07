@@ -18,6 +18,7 @@ import {actionbarComponent} from './actionbar_component';
 import {actionbarDeleteItemComponent} from './actionbardeleteitem_component';
 import {actionbarDetailButtonsComponent} from './actionbardetailbuttons_component';
 import {actionbarEditItemComponent} from './actionbaredititem_component';
+import {actionbarListButtonsComponent} from './actionbarlistbuttons_component';
 
 import resourceModule from 'common/resource/resource_module';
 
@@ -37,4 +38,5 @@ export default angular
     .component('kdActionbarDeleteItem', actionbarDeleteItemComponent)
     .component('kdActionbarEditItem', actionbarEditItemComponent)
     .component('kdActionbarDetailButtons', actionbarDetailButtonsComponent)
+    .component('kdActionbarListButtons', actionbarListButtonsComponent)
     .service('kdBreadcrumbsService', BreadcrumbsService);

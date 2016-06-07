@@ -15,9 +15,7 @@
 import stateConfig from './deploy_stateconfig';
 import initConfig from './deploy_initconfig';
 import errorHandlingModule from '../common/errorhandling/errorhandling_module';
-import deployFromSettingsDirective from './deployfromsettings_directive';
 import deployLabelDirective from './deploylabel_directive';
-import deployFromFileDirective from './deployfromfile_directive';
 import fileReaderDirective from './filereader_directive';
 import portMappingsDirective from './portmappings_directive';
 import environmentVariablesDirective from './environmentvariables_directive';
@@ -46,8 +44,6 @@ export default angular
         ])
     .config(stateConfig)
     .run(initConfig)
-    .directive('deployFromSettings', deployFromSettingsDirective)
-    .directive('deployFromFile', deployFromFileDirective)
     .directive('kdUniqueName', uniqueNameDirective)
     .directive('kdValidImagereference', validImageReferenceDirective)
     .directive('kdValidProtocol', validProtocolDirective)

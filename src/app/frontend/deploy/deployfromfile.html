@@ -14,12 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-content-card>
-  <div ng-if="$ctrl.isHeaderFilled()"><kd-title ng-transclude="header"></kd-title></div>
-  <kd-content>
-    <div layout="column">
-      <div class="kd-info-card-section" ng-transclude="section" layout="row" layout-padding>
-      </div>
-    </div>
-  </kd-content>
-</kd-content-card>
+<form name="ctrl.form" ng-submit="ctrl.deploy()" novalidate>
+  <kd-upload file="ctrl.file" form="ctrl.form"></kd-upload>
+  <div></div>
+  <md-button class="md-raised md-primary kd-deploy-submit-button" type="submit"
+             ng-disabled="ctrl.isDeployDisabled()">
+    {{::ctrl.i18n.MSG_UPLOAD_FILE_ACTION}}
+  </md-button>
+  <md-button class="md-raised kd-deploy-cancel-button" ng-click="ctrl.cancel()">
+    {{::ctrl.i18n.MSG_UPLOAD_FILE_ACTION_CANCEL}}
+  </md-button>
+</form>

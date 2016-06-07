@@ -46,8 +46,6 @@ export const podInfoComponent = {
 };
 
 const i18n = {
-  /** @export {string} @desc Title 'Resource details' at the top pod details view. */
-  MSG_POD_DETAIL_RESOURCE_DETAILS_TITLE: goog.getMsg('Resource details'),
   /** @export {string} @desc Subtitle 'Details' at the top of the resource details column at the
      pod detail view.*/
   MSG_POD_DETAIL_DETAILS_SUBTITLE: goog.getMsg('Details'),

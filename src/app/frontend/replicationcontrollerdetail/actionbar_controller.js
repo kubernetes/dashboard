@@ -12,53 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as deploy} from 'deploy/deploy_state';
-
 /**
  * @final
  */
 export class ActionBarController {
   /**
-   * Constructs action bar on rc detail page.
-   *
-   * @param {ui.router.$state} $state
    * @param {!backendApi.ReplicationControllerDetail} replicationControllerDetail
    * @param {!./replicationcontroller_service.ReplicationControllerService}
    * kdReplicationControllerService
    * @ngInject
    */
-  constructor($state, replicationControllerDetail, kdReplicationControllerService) {
-    /** @private {ui.router.$state} */
-    this.state_ = $state;
-
+  constructor(replicationControllerDetail, kdReplicationControllerService) {
     /** @private {!./replicationcontroller_service.ReplicationControllerService} */
     this.kdReplicationControllerService_ = kdReplicationControllerService;
 
     /** @export {!backendApi.ReplicationControllerDetail} */
     this.details = replicationControllerDetail;
 
-    /** @export {boolean} */
-    this.showFabIcons = false;
-
     /** @export */
     this.i18n = i18n;
   }
-
-  /**
-   * @export
-   */
-  showIcons() { this.showFabIcons = true; }
-
-  /**
-   * @export
-   */
-  hideIcons() { this.showFabIcons = false; }
-
-  /**
-   * @export
-   */
-  redirectToDeployPage() { this.state_.go(deploy); }
-
   /**
    * Handles update of replicas count in replication controller dialog.
    * @export
@@ -71,13 +44,10 @@ export class ActionBarController {
 }
 
 const i18n = {
-  /** @export {string} @desc Tooltip for the '+' button on the action bar of a replication
-      controller details view. */
-  MSG_RC_DETAIL_ACTION_BAR_DEPLOY_TOOLTIP: goog.getMsg('Deploy a containerized app'),
-  /** @export {string} @desc Tooltip for the 'edit' button on the action bar of a replication
+  /** @export {string} @desc Tooltip for the 'scale' button on the action bar of a replication
       controller details view.*/
   MSG_RC_DETAIL_ACTION_BAR_EDIT_PODS_TOOLTIP: goog.getMsg('Edit number of pods'),
-  /** @export {string} @desc Label 'Replication Controller' which appears at the top of the
-      delete dialog, opened from a RC details page. */
-  MSG_RC_DETAIL_REPLICATION_CONTROLLER_LABEL: goog.getMsg('Replication Controller'),
+  /** @export {string} @desc Tooltip for the 'scale' button on the action bar of a replication
+      controller details view.*/
+  MSG_RC_DETAIL_ACTION_BAR_EDIT_PODS_LABEL: goog.getMsg('Scale'),
 };
