@@ -59,8 +59,6 @@ export const daemonSetInfoComponent = {
  */
 function i18n(daemonSet) {
   return {
-    /** @export {string} @desc Title 'Resource details' at the top of the daemon set details page.*/
-    MSG_DAEMON_SET_INFO_RESOURCE_DETAILS_TITLE: goog.getMsg('Resource details'),
     /** @export {string} @desc Subtitle 'Details' for the left section with general information
        about a daemon set on the daemonset details page.*/
     MSG_DAEMON_SET_INFO_DETAILS_SUBTITLE: goog.getMsg('Details'),

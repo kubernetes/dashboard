@@ -47,6 +47,12 @@ a {
   }
 }
 
+.md-toolbar-tools {
+  a {
+    color: $primary;
+  }
+}
+
 .kd-success {
   color: $success-color;
 }

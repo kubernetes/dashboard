@@ -18,7 +18,6 @@ import {stateName as workloadsState} from 'workloads/workloads_state';
 
 import {JobListController} from './joblist_controller';
 import {stateName, stateUrl} from './joblist_state';
-import JobListActionBarController from './joblistactionbar_controller';
 
 /**
  * Configures states for the service view.
@@ -46,9 +45,7 @@ export default function stateConfig($stateProvider) {
         templateUrl: 'joblist/joblist.html',
       },
       [actionbarViewName]: {
-        controller: JobListActionBarController,
-        controllerAs: 'ctrl',
-        templateUrl: 'joblist/joblistactionbar.html',
+        templateUrl: 'joblist/actionbar.html',
       },
     },
   });
