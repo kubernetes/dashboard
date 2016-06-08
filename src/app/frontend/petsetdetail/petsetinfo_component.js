@@ -27,7 +27,7 @@ export default class PetSetInfoController {
     this.petSet;
 
     /** @export */
-    this.i18n = i18n;
+    this.i18n = i18n(this.petSet);
   }
 
   /**
@@ -51,21 +51,50 @@ export const petSetInfoComponent = {
   },
 };
 
-const i18n = {
-  /** @export {string} @desc Pet set info details section name. */
-  MSG_PET_SET_INFO_DETAILS_SECTION: goog.getMsg('Details'),
-  /** @export {string} @desc Pet set info details section name entry. */
-  MSG_PET_SET_INFO_NAME_ENTRY: goog.getMsg('Name'),
-  /** @export {string} @desc Pet set info details section namespace entry. */
-  MSG_PET_SET_INFO_NAMESPACE_ENTRY: goog.getMsg('Namespace'),
-  /** @export {string} @desc Pet set info details section labels entry. */
-  MSG_PET_SET_INFO_LABELS_ENTRY: goog.getMsg('Labels'),
-  /** @export {string} @desc Pet set info details section images entry. */
-  MSG_PET_SET_INFO_IMAGES_ENTRY: goog.getMsg('Images'),
-  /** @export {string} @desc Pet set info status section name. */
-  MSG_PET_SET_INFO_STATUS_SECTION: goog.getMsg('Status'),
-  /** @export {string} @desc Pet set info status section pods entry. */
-  MSG_PET_SET_INFO_PODS_ENTRY: goog.getMsg('Pods'),
-  /** @export {string} @desc Pet set info status section pods status entry. */
-  MSG_PET_SET_INFO_PODS_STATUS_ENTRY: goog.getMsg('Pods status'),
-};
+/**
+ * @param  {!backendApi.PetSetDetail} petSet
+ * @return {!Object} a dictionary of translatable messages
+ */
+function i18n(petSet) {
+  return {
+    /** @export {string} @desc Title 'Resource details' at the top of the pet set
+      details page.*/
+    MSG_PET_SET_DETAIL_RESOURCE_DETAILS_TITLE: goog.getMsg('Resource details'),
+    /** @export {string} @desc Pet set info details section name. */
+    MSG_PET_SET_INFO_DETAILS_SECTION: goog.getMsg('Details'),
+    /** @export {string} @desc Pet set info details section name entry. */
+    MSG_PET_SET_INFO_NAME_ENTRY: goog.getMsg('Name'),
+    /** @export {string} @desc Pet set info details section namespace entry. */
+    MSG_PET_SET_INFO_NAMESPACE_ENTRY: goog.getMsg('Namespace'),
+    /** @export {string} @desc Pet set info details section labels entry. */
+    MSG_PET_SET_INFO_LABELS_ENTRY: goog.getMsg('Labels'),
+    /** @export {string} @desc Pet set info details section images entry. */
+    MSG_PET_SET_INFO_IMAGES_ENTRY: goog.getMsg('Images'),
+    /** @export {string} @desc Pet set info status section name. */
+    MSG_PET_SET_INFO_STATUS_SECTION: goog.getMsg('Status'),
+    /** @export {string} @desc Pet set info status section pods entry. */
+    MSG_PET_SET_INFO_PODS_ENTRY: goog.getMsg('Pods'),
+    /** @export {string} @desc Pet set info status section pods status entry. */
+    MSG_PET_SET_INFO_PODS_STATUS_ENTRY: goog.getMsg('Pods status'),
+    /** @export {string} @desc The message says that that many pods were created
+        (pet set details page). */
+    MSG_PET_SET_DETAIL_PODS_CREATED_LABEL:
+        goog.getMsg('{$podsCount} created', {'podsCount': petSet.podInfo.current}),
+    /** @export {string} @desc The message says that that many pods are running
+        (pet set details page). */
+    MSG_PET_SET_DETAIL_PODS_RUNNING_LABEL:
+        goog.getMsg('{$podsCount} running', {'podsCount': petSet.podInfo.running}),
+    /** @export {string} @desc The message says that that many pods are pending
+        (pet set details page). */
+    MSG_PET_SET_DETAIL_PODS_PENDING_LABEL:
+        goog.getMsg('{$podsCount} pending', {'podsCount': petSet.podInfo.pending}),
+    /** @export {string} @desc The message says that that many pods have failed
+        (pet set details page). */
+    MSG_PET_SET_DETAIL_PODS_FAILED_LABEL:
+        goog.getMsg('{$podsCount} failed', {'podsCount': petSet.podInfo.failed}),
+    /** @export {string} @desc The message says that that many pods are desired to run
+        (pet set details page). */
+    MSG_PET_SET_DETAIL_PODS_DESIRED_LABEL:
+        goog.getMsg('{$podsCount} desired', {'podsCount': petSet.podInfo.desired}),
+  };
+}
