@@ -25,6 +25,7 @@ cache:
   directories:
     - node_modules
     - bower_components
+    - .tools
 # Use Node.js as primary language because Gulp is the build system used in the project.
 language: node_js
 node_js:
