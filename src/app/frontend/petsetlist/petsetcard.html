@@ -51,7 +51,7 @@ limitations under the License.
     <kd-resource-card-column>
       {{::$ctrl.petSet.objectMeta.creationTimestamp | relativeTime}}
       <md-tooltip>
-        Created at {{::$ctrl.petSet.objectMeta.creationTimestamp | date:'short'}}
+        {{::$ctrl.getCreatedAtTooltip($ctrl.petSet.objectMeta.creationTimestamp)}}
       </md-tooltip>
     </kd-resource-card-column>
     <kd-resource-card-column>
@@ -61,9 +61,11 @@ limitations under the License.
     </kd-resource-card-column>
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
       <kd-resource-card-menu>
-        <kd-resource-card-delete-menu-item resource-kind-name="Pet Set">
+        <kd-resource-card-delete-menu-item
+              resource-kind-name="{{::$ctrl.i18n.MSG_PET_SET_LIST_PET_SET_LABEL}}">
         </kd-resource-card-delete-menu-item>
-        <kd-resource-card-edit-menu-item resource-kind-name="Pet Set">
+        <kd-resource-card-edit-menu-item
+              resource-kind-name="{{::$ctrl.i18n.MSG_PET_SET_LIST_PET_SET_LABEL}}">
         </kd-resource-card-edit-menu-item>
       </kd-resource-card-menu>
     </kd-resource-card-column>
