@@ -25,6 +25,9 @@ export default class ReplicationControllerListActionBarController {
   constructor($state) {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
+
+    /** @export */
+    this.i18n = i18n;
   }
 
   /**
@@ -32,3 +35,8 @@ export default class ReplicationControllerListActionBarController {
    */
   redirectToDeployPage() { this.state_.go(deploy); }
 }
+
+const i18n = {
+  /** @export {string} @desc Tooltip for the '+' (deploy) button on the replication controller list page. */
+  MSG_RC_LIST_DEPLOY_TOOLTIP: goog.getMsg('Deploy a containerized app'),
+};

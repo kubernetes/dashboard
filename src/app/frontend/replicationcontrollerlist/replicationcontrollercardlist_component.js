@@ -13,6 +13,16 @@
 // limitations under the License.
 
 /**
+ * @final
+ */
+class RCCardListController {
+  constructor() {
+    /** @export */
+    this.i18n = i18n;
+  }
+}
+
+/**
  * @return {!angular.Component}
  */
 export const replicationControllerCardListComponent = {
@@ -21,4 +31,26 @@ export const replicationControllerCardListComponent = {
     'replicationControllers': '<',
   },
   templateUrl: 'replicationcontrollerlist/replicationcontrollercardlist.html',
+  controller: RCCardListController,
+};
+
+const i18n = {
+  /** @export {string} @desc Label 'Name' which appears as a column label in the table of
+      replication controllers (RC list view). */
+  MSG_RC_LIST_NAME_LABEL: goog.getMsg('Name'),
+  /** @export {string} @desc Label 'Labels' which appears as a column label in the table of
+      replication controllers (RC list view). */
+  MSG_RC_LIST_LABELS_LABEL: goog.getMsg('Labels'),
+  /** @export {string} @desc Label 'Pods' which appears as a column label in the table of
+      replication controllers (RC list view). */
+  MSG_RC_LIST_PODS_LABEL: goog.getMsg('Pods'),
+  /** @export {string} @desc Label 'Age' which appears as a column label in the
+      table of replication controllers (RC list view). */
+  MSG_RC_LIST_AGE_LABEL: goog.getMsg('Age'),
+  /** @export {string} @desc Label 'Endpoints' which appears as a column label in the
+      table of replication controllers (RC list view). */
+  MSG_RC_LIST_ENDPOINTS_LABEL: goog.getMsg('Endpoints'),
+  /** @export {string} @desc Label 'Images' which appears as a column label in the
+      table of replication controllers (RC list view). */
+  MSG_RC_LIST_IMAGES_LABEL: goog.getMsg('Images'),
 };

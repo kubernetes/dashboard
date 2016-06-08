@@ -23,9 +23,10 @@ import {stateName} from 'replicationcontrollerdetail/replicationcontrollerdetail
 export default class ReplicationControllerCardController {
   /**
    * @param {!ui.router.$state} $state
+   * @param {!angular.$interpolate} $interpolate
    * @ngInject
    */
-  constructor($state) {
+  constructor($state, $interpolate) {
     /**
      * Initialized from the scope.
      * @export {!backendApi.ReplicationController}
@@ -34,6 +35,12 @@ export default class ReplicationControllerCardController {
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
+
+    /** @private {!angular.$interpolate} */
+    this.interpolate_ = $interpolate;
+
+    /** @export */
+    this.i18n = i18n;
   }
 
   /**
@@ -68,6 +75,20 @@ export default class ReplicationControllerCardController {
    * @export
    */
   isSuccess() { return !this.isPending() && !this.hasWarnings(); }
+
+  /**
+   * @export
+   * @param  {string} creationDate - creation date of the pod
+   * @return {string} localized tooltip with the formated creation date
+   */
+  getCreatedAtTooltip(creationDate) {
+    let filter = this.interpolate_(`{{date | date:'short'}}`);
+    /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
+     * replication controller. */
+    let MSG_RC_LIST_CREATED_AT_TOOLTIP =
+        goog.getMsg('Created at {$creationDate}', {'creationDate': filter({'date': creationDate})});
+    return MSG_RC_LIST_CREATED_AT_TOOLTIP;
+  }
 }
 
 /**
@@ -79,4 +100,11 @@ export const replicationControllerCardComponent = {
   },
   controller: ReplicationControllerCardController,
   templateUrl: 'replicationcontrollerlist/replicationcontrollercard.html',
+};
+
+const i18n = {
+  /** @export {string} @desc Tooltip saying that some pods in a replication controller have errors. */
+  MSG_RC_LIST_PODS_ERRORS_TOOLTIP: goog.getMsg('One or more pods have errors'),
+  /** @export {string} @desc Tooltip saying that some pods in a replication controller are pending. */
+  MSG_RC_LIST_PODS_PENDING_TOOLTIP: goog.getMsg('One or more pods are in pending state'),
 };
