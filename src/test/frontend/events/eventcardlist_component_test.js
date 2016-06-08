@@ -171,4 +171,13 @@ describe('Event Card List controller', () => {
     // then
     expect(result).toBeFalsy();
   });
+
+  it('should format "event first seen" message properly', () => {
+    expect(ctrl.getFirstSeenDateLabel('2016-06-06T09:13:12Z'))
+        .toBe('First seen at 6/6/16 09:13 UTC');
+  });
+
+  it('should format "event last seen" message properly', () => {
+    expect(ctrl.getLastSeenDateLabel('2016-06-06T09:13:12Z')).toBe('Last seen at 6/6/16 09:13 UTC');
+  });
 });
