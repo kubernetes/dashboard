@@ -15,8 +15,13 @@
 /**
  * @final
  */
-class ReplicaSetCardListController {
+export class ReplicaSetCardListController {
+  /**
+   * @ngInject
+   */
   constructor() {
+    /** @export {!Array<!backendApi.ReplicaSet>} Initialized from binding. */
+    this.replicaSets;
     /** @export */
     this.i18n = i18n;
   }

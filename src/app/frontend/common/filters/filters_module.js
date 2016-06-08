@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import coresFilter from './cores_filter';
+import itemsPerPageFilter from './itemsperpage_filter';
 import memoryFilter from './memory_filter';
 import middleEllipsisFilter from './middleellipsis_filter';
 import relativeTimeFilter from './relativetime_filter';
@@ -26,9 +27,11 @@ export default angular
         'kubernetesDashboard.common.filters',
         [
           'ngMaterial',
+          'angularUtils.directives.dirPagination',
           appConfigModule.name,
         ])
     .filter('middleEllipsis', middleEllipsisFilter)
     .filter('kdMemory', memoryFilter)
     .filter('kdCores', coresFilter)
-    .filter('relativeTime', relativeTimeFilter);
+    .filter('relativeTime', relativeTimeFilter)
+    .decorator('itemsPerPageFilter', itemsPerPageFilter);
