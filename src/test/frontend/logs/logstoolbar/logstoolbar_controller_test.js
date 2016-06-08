@@ -127,4 +127,9 @@ describe('Logs toolbar controller', () => {
     // expect
     expect(ctrl.getStyleClass()).toEqual(`${iconColorClassName}`);
   });
+
+  it('should format running since message properly', () => {
+    expect(ctrl.getRunningSinceLabel('2016-06-06T09:13:12Z'))
+        .toBe('Running since 6/6/16 09:13 UTC');
+  });
 });

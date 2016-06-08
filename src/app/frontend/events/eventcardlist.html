@@ -18,7 +18,7 @@ limitations under the License.
   <kd-content>
     <div class="kd-replicationcontrollerevents-options" layout="row">
       <md-input-container>
-        <label>Type</label>
+        <label>{{::$ctrl.i18n.MSG_EVENTS_TYPE_LABEL}}</label>
         <md-select aria-label="Event Type" ng-model="$ctrl.eventType"
                    ng-change="$ctrl.handleEventFiltering()"
                    required>
@@ -32,15 +32,23 @@ limitations under the License.
     <kd-resource-card-list selectable="false" with-statuses="true" ng-if="$ctrl.hasEvents()">
       <kd-resource-card-header-columns>
         <kd-resource-card-header-column size="medium" grow="4">
-          Message
+          {{::$ctrl.i18n.MSG_EVENTS_MESSAGE_LABEL}}
         </kd-resource-card-header-column>
-        <kd-resource-card-header-column>Source</kd-resource-card-header-column>
-        <kd-resource-card-header-column>Sub-object</kd-resource-card-header-column>
+        <kd-resource-card-header-column>
+          {{::$ctrl.i18n.MSG_EVENTS_SOURCE_LABEL}}
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column>
+          {{::$ctrl.i18n.MSG_EVENTS_SUB_OBJECT_LABEL}}
+        </kd-resource-card-header-column>
         <kd-resource-card-header-column size="small" grow="nogrow">
-          Count
+          {{::$ctrl.i18n.MSG_EVENTS_COUNT_LABEL}}
         </kd-resource-card-header-column>
-        <kd-resource-card-header-column>First seen</kd-resource-card-header-column>
-        <kd-resource-card-header-column>Last seen</kd-resource-card-header-column>
+        <kd-resource-card-header-column>
+          {{::$ctrl.i18n.MSG_EVENTS_FIRST_SEEN_LABEL}}
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column>
+          {{::$ctrl.i18n.MSG_EVENTS_LAST_SEEN_LABEL}}
+        </kd-resource-card-header-column>
       </kd-resource-card-header-columns>
 
       <kd-resource-card ng-repeat="event in $ctrl.filteredEvents"
@@ -65,10 +73,10 @@ limitations under the License.
           </kd-resource-card-column>
           <kd-resource-card-column>{{event.count}}</kd-resource-card-column>
           <kd-resource-card-column>
-            First seen at {{event.firstSeen | date:'d/M/yy HH:mm':'UTC'}} UTC
+            {{::$ctrl.getFirstSeenDateLabel(event.firstSeen)}}
           </kd-resource-card-column>
           <kd-resource-card-column>
-            Last seen at {{event.lastSeen | date:'d/M/yy HH:mm':'UTC'}} UTC
+            {{::$ctrl.getLastSeenDateLabel(event.lastSeen)}}
           </kd-resource-card-column>
         </kd-resource-card-columns>
       </kd-resource-card>
@@ -78,10 +86,10 @@ limitations under the License.
       <md-icon class="material-icons kd-replicationcontrollerevents-no-events-icon">
         info_outline
       </md-icon>
-      <div class="kd-replicationcontrollerevents-no-events-text">No events were found</div>
+      <div class="kd-replicationcontrollerevents-no-events-text">{{::$ctrl.i18n.MSG_EVENTS_NO_EVENTS_TITLE}}</div>
       <div class="kd-replicationcontrollerevents-no-events-info">
-        There are no events to display. It's possible that all of them have expired.
-        <a href="">Learn more</a>
+        {{::$ctrl.i18n.MSG_EVENTS_NO_EVENTS_USER_HELP}}
+        <a href="">{{::$ctrl.i18n.MSG_EVENTS_LEARN_MORE_ACTION}}</a>
       </div>
     </div>
   </kd-content>
