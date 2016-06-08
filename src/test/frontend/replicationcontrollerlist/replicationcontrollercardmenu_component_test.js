@@ -47,8 +47,8 @@ describe('Replication controller card menu controller', () => {
     ctrl.viewDetails();
 
     // then
-    expect(state.go).toHaveBeenCalledWith('replicationcontrollerdetail',
-                                          new StateParams('foo-namespace', 'foo-name'));
+    expect(state.go).toHaveBeenCalledWith(
+        'replicationcontrollerdetail', new StateParams('foo-namespace', 'foo-name'));
   });
 
   it('should open the menu', () => {

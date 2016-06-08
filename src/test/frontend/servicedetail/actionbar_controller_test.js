@@ -12,9 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  ActionBarController,
-} from 'servicedetail/actionbar_controller';
+import {ActionBarController} from 'servicedetail/actionbar_controller';
 import module from 'servicedetail/servicedetail_module';
 
 describe('Action Bar controller', () => {

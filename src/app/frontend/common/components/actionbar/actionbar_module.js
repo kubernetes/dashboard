@@ -24,12 +24,14 @@ import resourceModule from 'common/resource/resource_module';
 /**
  * Module containing common actionbar.
  */
-export default angular.module('kubernetesDashboard.common.components.actionbar',
-                              [
-                                'ngMaterial',
-                                'ui.router',
-                                resourceModule.name,
-                              ])
+export default angular
+    .module(
+        'kubernetesDashboard.common.components.actionbar',
+        [
+          'ngMaterial',
+          'ui.router',
+          resourceModule.name,
+        ])
     .component('kdActionbar', actionbarComponent)
     .component('kdBreadcrumbs', breadcrumbsComponent)
     .component('kdActionbarDeleteItem', actionbarDeleteItemComponent)

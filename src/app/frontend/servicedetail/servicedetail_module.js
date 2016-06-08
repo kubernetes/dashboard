@@ -22,13 +22,15 @@ import {serviceInfoComponent} from './servicedetailinfo_component';
  *
  * The view shows detailed view of a Service.
  */
-export default angular.module('kubernetesDashboard.serviceDetail',
-                              [
-                                'ngMaterial',
-                                'ngResource',
-                                'ui.router',
-                                filtersModule.name,
-                                componentsModule.name,
-                              ])
+export default angular
+    .module(
+        'kubernetesDashboard.serviceDetail',
+        [
+          'ngMaterial',
+          'ngResource',
+          'ui.router',
+          filtersModule.name,
+          componentsModule.name,
+        ])
     .config(stateConfig)
     .component('kdServiceInfo', serviceInfoComponent);

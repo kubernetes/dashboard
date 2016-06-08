@@ -43,8 +43,9 @@ describe('Validator factory', () => {
     let validatorName = 'notExistingValidator';
 
     // then
-    expect(() => { validatorFactory.getValidator(validatorName); })
-        .toThrow(new Error(`Given validator '${validatorName}' is not supported.`));
+    expect(() => {
+      validatorFactory.getValidator(validatorName);
+    }).toThrow(new Error(`Given validator '${validatorName}' is not supported.`));
   });
 
   it('should register validator', () => {
@@ -67,7 +68,8 @@ describe('Validator factory', () => {
     validatorFactory.registerValidator('testValidator', nameValidator);
 
     // then
-    expect(() => { validatorFactory.registerValidator('testValidator', patternValidator); })
-        .toThrow(new Error(`Validator with name testValidator is already registered.`));
+    expect(() => {
+      validatorFactory.registerValidator('testValidator', patternValidator);
+    }).toThrow(new Error(`Validator with name testValidator is already registered.`));
   });
 });

@@ -21,10 +21,12 @@ import {eventCardListComponent} from './eventcardlist_component';
  *
  * The view shows detailed view of a Replica Set.
  */
-export default angular.module('kubernetesDashboard.events',
-                              [
-                                'ngMaterial',
-                                componentsModule.name,
-                                filtersModule.name,
-                              ])
+export default angular
+    .module(
+        'kubernetesDashboard.events',
+        [
+          'ngMaterial',
+          componentsModule.name,
+          filtersModule.name,
+        ])
     .component('kdEventCardList', eventCardListComponent);

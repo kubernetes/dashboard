@@ -18,9 +18,11 @@ import appConfigServiceProvider from './appconfig_serviceprovider';
 /**
  * Angular module containing application configuration.
  */
-export default angular.module('kubernetesDashboard.appconfig',
-                              [
-                                'ngMaterial',
-                              ])
+export default angular
+    .module(
+        'kubernetesDashboard.appconfig',
+        [
+          'ngMaterial',
+        ])
     .provider('kdAppConfigService', appConfigServiceProvider)
     .value('appConfig', appConfig_DO_NOT_USE_DIRECTLY);

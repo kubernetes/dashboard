@@ -44,8 +44,9 @@ function requireParentState(stateExtend, parentFn) {
   /** @type {!ui.router.$state} */
   let state = stateExtend['self'];
   if (!state.parent && state.name !== stateName) {
-    throw new Error(`State "${state.name}" requires parent state to be set to ` +
-                    `${stateName}. This is likely a programming error.`);
+    throw new Error(
+        `State "${state.name}" requires parent state to be set to ` +
+        `${stateName}. This is likely a programming error.`);
   }
   return parentFn(stateExtend);
 }

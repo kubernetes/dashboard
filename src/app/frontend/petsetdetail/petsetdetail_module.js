@@ -24,15 +24,17 @@ import {petSetInfoComponent} from './petsetinfo_component';
  *
  * The view shows detailed view of a Pet Set.
  */
-export default angular.module('kubernetesDashboard.petSetDetail',
-                              [
-                                'ngMaterial',
-                                'ngResource',
-                                'ui.router',
-                                componentsModule.name,
-                                filtersModule.name,
-                                eventsModule.name,
-                                chromeModule.name,
-                              ])
+export default angular
+    .module(
+        'kubernetesDashboard.petSetDetail',
+        [
+          'ngMaterial',
+          'ngResource',
+          'ui.router',
+          componentsModule.name,
+          filtersModule.name,
+          eventsModule.name,
+          chromeModule.name,
+        ])
     .config(stateConfig)
     .component('kdPetSetInfo', petSetInfoComponent);

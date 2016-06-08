@@ -52,7 +52,7 @@ export default class ChromeController {
    */
   isActionbarVisible() {
     return !!this.state_.current && !!this.state_.current.views &&
-           !!this.state_.current.views[actionbarViewName] && !this.showLoadingSpinner;
+        !!this.state_.current.views[actionbarViewName] && !this.showLoadingSpinner;
   }
 
   /**

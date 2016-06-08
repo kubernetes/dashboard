@@ -56,8 +56,8 @@ export default function middleEllipsisDirective(middleEllipsisFilter) {
 
       scope.$watch(
           () => [container.offsetWidth, ctrl.displayString], ([containerWidth, displayString]) => {
-            let newLength = computeTextLength(containerWidth, nonNullElement, element,
-                                              middleEllipsisFilter, displayString);
+            let newLength = computeTextLength(
+                containerWidth, nonNullElement, element, middleEllipsisFilter, displayString);
             ctrl.maxLength = newLength;
           }, true);
     },

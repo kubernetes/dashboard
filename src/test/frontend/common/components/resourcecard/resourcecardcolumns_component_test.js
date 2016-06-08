@@ -24,8 +24,8 @@ describe('Resource card columns', () => {
 
     angular.mock.inject(($componentController, $rootScope) => {
       let listCtrl = {sizeBodyColumn: () => {}};
-      ctrl = $componentController('kdResourceCardColumns', {$scope: $rootScope},
-                                  {resourceCardListCtrl: listCtrl});
+      ctrl = $componentController(
+          'kdResourceCardColumns', {$scope: $rootScope}, {resourceCardListCtrl: listCtrl});
     });
   });
 

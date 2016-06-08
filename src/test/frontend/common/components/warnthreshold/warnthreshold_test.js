@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {shouldSetWarning, shouldRemoveWarning} from 'common/components/warnthreshold/warnthreshold';
-import {setWarning, removeWarning} from 'common/components/warnthreshold/warnthreshold';
+import {shouldRemoveWarning, shouldSetWarning} from 'common/components/warnthreshold/warnthreshold';
+import {removeWarning, setWarning} from 'common/components/warnthreshold/warnthreshold';
 
 describe('Warn threshold', () => {
   /**

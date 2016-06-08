@@ -21,12 +21,14 @@ import {podCardListComponent} from './podcardlist_component';
  *
  * The view shows Pods running in the cluster and allows to manage them.
  */
-export default angular.module('kubernetesDashboard.podsList',
-                              [
-                                'ngMaterial',
-                                'ngResource',
-                                'ui.router',
-                                chromeModule.name,
-                              ])
+export default angular
+    .module(
+        'kubernetesDashboard.podsList',
+        [
+          'ngMaterial',
+          'ngResource',
+          'ui.router',
+          chromeModule.name,
+        ])
     .config(stateConfig)
     .component('kdPodCardList', podCardListComponent);

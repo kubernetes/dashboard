@@ -50,25 +50,26 @@ describe('Actionbar delete item component', () => {
   beforeEach(() => {
     angular.mock.module(componentsModule.name);
 
-    angular.mock.inject(($componentController, $state, _kdBreadcrumbsService_,
-                         _kdResourceVerberService_, $q, $rootScope) => {
-      state = $state;
-      kdResourceVerberService = _kdResourceVerberService_;
-      q = $q;
-      scope = $rootScope.$new();
-      ctrl = $componentController('kdActionbarDeleteItem',
-                                  {
-                                    $state: state,
-                                    kdBreadcrumbsService: _kdBreadcrumbsService_,
-                                    kdResourceVerberService: _kdResourceVerberService_,
-                                    $scope: scope,
-                                  },
-                                  {
-                                    resourceKindName: 'resource',
-                                    typeMeta: {},
-                                    objectMeta: {},
-                                  });
-    });
+    angular.mock.inject(
+        ($componentController, $state, _kdBreadcrumbsService_, _kdResourceVerberService_, $q,
+         $rootScope) => {
+          state = $state;
+          kdResourceVerberService = _kdResourceVerberService_;
+          q = $q;
+          scope = $rootScope.$new();
+          ctrl = $componentController(
+              'kdActionbarDeleteItem', {
+                $state: state,
+                kdBreadcrumbsService: _kdBreadcrumbsService_,
+                kdResourceVerberService: _kdResourceVerberService_,
+                $scope: scope,
+              },
+              {
+                resourceKindName: 'resource',
+                typeMeta: {},
+                objectMeta: {},
+              });
+        });
   });
 
   it('should go to parent state on delete success', () => {

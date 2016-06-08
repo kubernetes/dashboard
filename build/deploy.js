@@ -76,14 +76,16 @@ gulp.task('docker-image:release:cross', ['build:cross', 'docker-file:cross'], fu
 /**
  * Pushes cross-compiled canary images to GCR.
  */
-gulp.task('push-to-gcr:canary', ['docker-image:canary:cross'],
-          function(doneFn) { pushToGcr(conf.deploy.versionCanary, doneFn); });
+gulp.task('push-to-gcr:canary', ['docker-image:canary:cross'], function(doneFn) {
+  pushToGcr(conf.deploy.versionCanary, doneFn);
+});
 
 /**
  * Pushes cross-compiled release images to GCR.
  */
-gulp.task('push-to-gcr:release', ['docker-image:release:cross'],
-          function(doneFn) { pushToGcr(conf.deploy.versionRelease, doneFn); });
+gulp.task('push-to-gcr:release', ['docker-image:release:cross'], function(doneFn) {
+  pushToGcr(conf.deploy.versionRelease, doneFn);
+});
 
 /**
  * Processes the Docker file and places it in the dist folder for building.

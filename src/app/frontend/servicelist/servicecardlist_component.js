@@ -37,8 +37,8 @@ export class ServiceCardListController {
    * @export
    */
   getServiceDetailHref(service) {
-    return this.state_.href(stateName,
-                            new StateParams(service.objectMeta.namespace, service.objectMeta.name));
+    return this.state_.href(
+        stateName, new StateParams(service.objectMeta.namespace, service.objectMeta.name));
   }
 }
 

@@ -24,15 +24,17 @@ import {podInfoComponent} from './podinfo_component';
  *
  * The view shows detailed view of a Replica Set.
  */
-export default angular.module('kubernetesDashboard.podDetail',
-                              [
-                                'ngMaterial',
-                                'ngResource',
-                                'ui.router',
-                                componentsModule.name,
-                                chromeModule.name,
-                                filtersModule.name,
-                                eventsModule.name,
-                              ])
+export default angular
+    .module(
+        'kubernetesDashboard.podDetail',
+        [
+          'ngMaterial',
+          'ngResource',
+          'ui.router',
+          componentsModule.name,
+          chromeModule.name,
+          filtersModule.name,
+          eventsModule.name,
+        ])
     .config(stateConfig)
     .component('kdPodInfo', podInfoComponent);

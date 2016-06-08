@@ -58,7 +58,7 @@ export default class ReplicationControllerDetailController {
    */
   hasMemoryUsage(pod) {
     return !!pod.metrics && !!pod.metrics.memoryUsageHistory &&
-           pod.metrics.memoryUsageHistory.length > 0;
+        pod.metrics.memoryUsageHistory.length > 0;
   }
 
   /**
@@ -67,8 +67,9 @@ export default class ReplicationControllerDetailController {
    * @export
    */
   getPodLogsHref(pod) {
-    return this.state_.href(logsStateName,
-                            new LogsStateParams(this.stateParams_.objectNamespace,
-                                                this.stateParams_.objectName, pod.objectMeta.name));
+    return this.state_.href(
+        logsStateName,
+        new LogsStateParams(
+            this.stateParams_.objectNamespace, this.stateParams_.objectName, pod.objectMeta.name));
   }
 }

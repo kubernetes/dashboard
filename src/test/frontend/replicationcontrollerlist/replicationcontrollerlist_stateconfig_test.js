@@ -13,9 +13,7 @@
 // limitations under the License.
 
 import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
-import {
-  resolveReplicationControllers,
-} from 'replicationcontrollerlist/replicationcontrollerlist_stateconfig';
+import {resolveReplicationControllers} from 'replicationcontrollerlist/replicationcontrollerlist_stateconfig';
 
 describe('StateConfig for replication controller list', () => {
   beforeEach(() => { angular.mock.module(replicationControllerListModule.name); });

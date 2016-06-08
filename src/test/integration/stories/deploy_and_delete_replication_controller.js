@@ -72,8 +72,8 @@ xdescribe('Deploy and delete replication controller user story test', () => {
   });
 
   it('should open delete replication controller dialog', () => {
-    replicationControllersPage.getElementByAppName(replicationControllersPage.cardMenuButtonQuery,
-                                                   applicationName, false)
+    replicationControllersPage
+        .getElementByAppName(replicationControllersPage.cardMenuButtonQuery, applicationName, false)
         .click();
     replicationControllersPage.deleteAppButton.click();
 

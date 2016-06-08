@@ -24,15 +24,17 @@ import {jobInfoComponent} from './jobinfo_component';
  *
  * The view shows detailed view of a Job.
  */
-export default angular.module('kubernetesDashboard.jobDetail',
-                              [
-                                'ngMaterial',
-                                'ngResource',
-                                'ui.router',
-                                componentsModule.name,
-                                chromeModule.name,
-                                filtersModule.name,
-                                eventsModule.name,
-                              ])
+export default angular
+    .module(
+        'kubernetesDashboard.jobDetail',
+        [
+          'ngMaterial',
+          'ngResource',
+          'ui.router',
+          componentsModule.name,
+          chromeModule.name,
+          filtersModule.name,
+          eventsModule.name,
+        ])
     .config(stateConfig)
     .component('kdJobInfo', jobInfoComponent);

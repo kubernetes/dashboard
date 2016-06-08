@@ -42,8 +42,8 @@ export class ActionbarComponent {
     let computeScrollClassCallback =
         (/** !Event */ e) => { this.computeScrollClass_(/** @type {!Element} */ (e.target)); };
     closestContent.on('scroll', computeScrollClassCallback);
-    this.scope_.$on('$destroy',
-                    () => { closestContent.off('scroll', computeScrollClassCallback); });
+    this.scope_.$on(
+        '$destroy', () => { closestContent.off('scroll', computeScrollClassCallback); });
   }
 
   /**

@@ -77,14 +77,17 @@ export class PodLogsMenuController {
    */
   getReplicationControllerPods_() {
     /** @type {!angular.Resource<!backendApi.ReplicationControllerPods>} */
-    let resource = this.resource_(`api/v1/replicationcontroller/pod/${this.namespace}/` +
-                                  `${this.replicationControllerName}?limit=10`);
+    let resource = this.resource_(
+        `api/v1/replicationcontroller/pod/${this.namespace}/` +
+        `${this.replicationControllerName}?limit=10`);
 
-    resource.get((replicationControllerPods) => {
-      this.log_.info('Successfully fetched Replication Controller pods: ',
-                     replicationControllerPods);
-      this.replicationControllerPodsList = replicationControllerPods.pods;
-    }, (err) => { this.log_.error('Error fetching Replication Controller pods: ', err); });
+    resource.get(
+        (replicationControllerPods) => {
+          this.log_.info(
+              'Successfully fetched Replication Controller pods: ', replicationControllerPods);
+          this.replicationControllerPodsList = replicationControllerPods.pods;
+        },
+        (err) => { this.log_.error('Error fetching Replication Controller pods: ', err); });
   }
 
   /**

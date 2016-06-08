@@ -99,16 +99,17 @@ export default class NamespaceDialogController {
     /** @type {!angular.Resource<!backendApi.NamespaceSpec>} */
     let resource = this.resource_('api/v1/namespace');
 
-    resource.save(namespaceSpec,
-                  (savedConfig) => {
-                    this.log_.info('Successfully created namespace:', savedConfig);
-                    this.mdDialog_.hide(this.namespace);
-                  },
-                  (err) => {
-                    this.mdDialog_.hide();
-                    this.errorDialog_.open('Error creating namespace', err.data);
-                    this.log_.info('Error creating namespace:', err);
-                  });
+    resource.save(
+        namespaceSpec,
+        (savedConfig) => {
+          this.log_.info('Successfully created namespace:', savedConfig);
+          this.mdDialog_.hide(this.namespace);
+        },
+        (err) => {
+          this.mdDialog_.hide();
+          this.errorDialog_.open('Error creating namespace', err.data);
+          this.log_.info('Error creating namespace:', err);
+        });
   }
 }
 

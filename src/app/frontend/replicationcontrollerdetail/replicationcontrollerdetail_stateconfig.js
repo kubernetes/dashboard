@@ -14,12 +14,10 @@
 
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
-import {
-  stateName as replicationControllers,
-} from 'replicationcontrollerlist/replicationcontrollerlist_state';
+import {stateName as replicationControllers} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 
-import {stateName} from './replicationcontrollerdetail_state';
 import {ActionBarController} from './actionbar_controller';
+import {stateName} from './replicationcontrollerdetail_state';
 
 import ReplicationControllerDetailController from './replicationcontrollerdetail_controller';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
@@ -68,8 +66,9 @@ export default function stateConfig($stateProvider) {
  * @ngInject
  */
 export function getReplicationControllerDetailsResource($stateParams, $resource) {
-  return $resource(`api/v1/replicationcontroller/${$stateParams.objectNamespace}/` +
-                   `${$stateParams.objectName}`);
+  return $resource(
+      `api/v1/replicationcontroller/${$stateParams.objectNamespace}/` +
+      `${$stateParams.objectName}`);
 }
 
 /**
@@ -79,8 +78,9 @@ export function getReplicationControllerDetailsResource($stateParams, $resource)
  * @ngInject
  */
 export function getReplicationControllerSpecPodsResource($stateParams, $resource) {
-  return $resource(`api/v1/replicationcontroller/${$stateParams.objectNamespace}/` +
-                   `${$stateParams.objectName}/update/pod`);
+  return $resource(
+      `api/v1/replicationcontroller/${$stateParams.objectNamespace}/` +
+      `${$stateParams.objectName}/update/pod`);
 }
 
 /**

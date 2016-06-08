@@ -24,15 +24,17 @@ import jobDetailModule from 'jobdetail/jobdetail_module';
  *
  * The view shows Job running in the cluster and allows to manage them.
  */
-export default angular.module('kubernetesDashboard.jobList',
-                              [
-                                'ngMaterial',
-                                'ngResource',
-                                'ui.router',
-                                filtersModule.name,
-                                componentsModule.name,
-                                jobDetailModule.name,
-                              ])
+export default angular
+    .module(
+        'kubernetesDashboard.jobList',
+        [
+          'ngMaterial',
+          'ngResource',
+          'ui.router',
+          filtersModule.name,
+          componentsModule.name,
+          jobDetailModule.name,
+        ])
     .config(stateConfig)
     .component('kdJobCardList', jobCardListComponent)
     .component('kdJobCard', jobCardComponent);

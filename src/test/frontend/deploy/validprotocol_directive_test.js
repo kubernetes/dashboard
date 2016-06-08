@@ -66,10 +66,9 @@ describe('Valid protocol directive', () => {
 
   it('should validate on service type change', () => {
     let elem = compileFn(scope)[0];
-    httpBackend.whenPOST('api/v1/appdeployment/validate/protocol')
-        .respond({
-          valid: false,
-        });
+    httpBackend.whenPOST('api/v1/appdeployment/validate/protocol').respond({
+      valid: false,
+    });
     scope.$apply();
 
     scope.isExternal = false;

@@ -31,8 +31,8 @@
  * @param {string} displayString - original display string (not truncated)
  * @return {number}
  */
-export default function computeTextLength(availableWidth, element, measurementElement, filter,
-                                          displayString) {
+export default function computeTextLength(
+    availableWidth, element, measurementElement, filter, displayString) {
   // Does binary search to find minimal integer I such that given string with length I fits into
   // available space and with length I + 1 it does not.
   // Make right displayString.length * 2 to start binary search with max length, which should be

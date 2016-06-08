@@ -32,8 +32,9 @@ export default class UpdateReplicasDialogController {
    * @param {number} desiredPods
    * @ngInject
    */
-  constructor($mdDialog, $log, $state, $resource, namespace, replicationController, currentPods,
-              desiredPods) {
+  constructor(
+      $mdDialog, $log, $state, $resource, namespace, replicationController, currentPods,
+      desiredPods) {
     /** @export {number} */
     this.replicas;
 
@@ -80,8 +81,9 @@ export default class UpdateReplicasDialogController {
         replicas: this.replicas,
       };
 
-      resource.save(replicationControllerSpec, this.onUpdateReplicasSuccess_.bind(this),
-                    this.onUpdateReplicasError_.bind(this));
+      resource.save(
+          replicationControllerSpec, this.onUpdateReplicasSuccess_.bind(this),
+          this.onUpdateReplicasError_.bind(this));
     }
   }
 

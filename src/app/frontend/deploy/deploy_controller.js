@@ -118,9 +118,8 @@ const i18n = {
 
   /** @export {string} @desc User help with a link redirecting to the "Dashboard tour" on the
      deploy page. */
-  MSG_DEPLOY_DASHBOARD_TOUR_USER_HELP: goog.getMsg(
-      `To learn more, {$openLink} take the Dashboard Tour {$linkIcon} {$closeLink}`,
-      {
+  MSG_DEPLOY_DASHBOARD_TOUR_USER_HELP:
+      goog.getMsg(`To learn more, {$openLink} take the Dashboard Tour {$linkIcon} {$closeLink}`, {
         'openLink':
             `<a href="http://kubernetes.io/docs/user-guide/ui/" target="_blank" tabindex="-1">`,
         'closeLink': `</a>`,
