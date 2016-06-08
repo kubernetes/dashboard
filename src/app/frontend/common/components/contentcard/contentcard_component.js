@@ -17,7 +17,7 @@
  */
 export class ContentCardController {
   /**
-   * @param {Object} $transclude TODO(floreks) fix this when externs are fixed
+   * @param {!angular.$transclude} $transclude
    * @ngInject
    */
   constructor($transclude) {
@@ -29,7 +29,7 @@ export class ContentCardController {
    * Returns true if transclusion slot 'title' has been filled.
    * @export
    */
-  isTitleSlotFilled() { return this.transclude_['isSlotFilled']('title'); }
+  isTitleSlotFilled() { return this.transclude_.isSlotFilled('title'); }
 }
 
 /**
