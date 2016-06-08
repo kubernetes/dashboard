@@ -18,11 +18,15 @@ limitations under the License.
   <kd-resource-card-status layout="row">
     <md-icon class="material-icons kd-error" ng-if="::$ctrl.hasWarnings()">
       error
-      <md-tooltip md-direction="right">One or more pods have errors</md-tooltip>
+      <md-tooltip md-direction="right">
+        {{::$ctrl.i18n.MSG_DEPLOYMENT_LIST_PODS_ERRORS_TOOLTIP}}
+      </md-tooltip>
     </md-icon>
     <md-icon class="material-icons" ng-if="::$ctrl.isPending()">
       timelapse
-      <md-tooltip md-direction="right">One or more pods are in pending state</md-tooltip>
+      <md-tooltip md-direction="right">
+        {{::$ctrl.i18n.MSG_DEPLOYMENT_LIST_PODS_PENDING_TOOLTIP}}
+      </md-tooltip>
     </md-icon>
     <md-icon class="material-icons kd-success" ng-if="::$ctrl.isSuccess()">
       check_circle
@@ -49,7 +53,7 @@ limitations under the License.
     <kd-resource-card-column>
       {{::$ctrl.deployment.objectMeta.creationTimestamp | relativeTime}}
       <md-tooltip>
-        Created at {{::$ctrl.deployment.objectMeta.creationTimestamp | date:'short'}}
+        {{::$ctrl.getCreatedAtTooltip($ctrl.deployment.objectMeta.creationTimestamp)}}
       </md-tooltip>
     </kd-resource-card-column>
     <kd-resource-card-column>
@@ -59,9 +63,9 @@ limitations under the License.
     </kd-resource-card-column>
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
       <kd-resource-card-menu>
-        <kd-resource-card-delete-menu-item resource-kind-name="Deployment">
+        <kd-resource-card-delete-menu-item resource-kind-name="{{::$ctrl.i18n.MSG_DEPLOYMENT_LIST_DEPLOYMENT_LABEL}}">
         </kd-resource-card-delete-menu-item>
-        <kd-resource-card-edit-menu-item resource-kind-name="Deployment">
+        <kd-resource-card-edit-menu-item resource-kind-name="{{::$ctrl.i18n.MSG_DEPLOYMENT_LIST_DEPLOYMENT_LABEL}}">
         </kd-resource-card-edit-menu-item>
       </kd-resource-card-menu>
     </kd-resource-card-column>

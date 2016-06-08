@@ -23,9 +23,10 @@ import {stateName} from 'deploymentdetail/deploymentdetail_state';
 export default class DeploymentCardController {
   /**
    * @param {!ui.router.$state} $state
+   * @param {!angular.$interpolate} $interpolate
    * @ngInject
    */
-  constructor($state) {
+  constructor($state, $interpolate) {
     /**
      * Initialized from the scope.
      * @export {!backendApi.Deployment}
@@ -34,6 +35,12 @@ export default class DeploymentCardController {
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
+
+    /** @private {!angular.$interpolate} */
+    this.interpolate_ = $interpolate;
+
+    /** @export */
+    this.i18n = i18n;
   }
 
   /**
@@ -66,6 +73,20 @@ export default class DeploymentCardController {
    * @export
    */
   isSuccess() { return !this.isPending() && !this.hasWarnings(); }
+
+  /**
+   * @export
+   * @param  {string} creationDate - creation date of the deployment
+   * @return {string} localized tooltip with the formatted creation date
+   */
+  getCreatedAtTooltip(creationDate) {
+    let filter = this.interpolate_(`{{date | date:'short'}}`);
+    /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
+     * a deployment. */
+    let MSG_DEPLOYMENT_LIST_CREATED_AT_TOOLTIP =
+        goog.getMsg('Created at {$creationDate}', {'creationDate': filter({'date': creationDate})});
+    return MSG_DEPLOYMENT_LIST_CREATED_AT_TOOLTIP;
+  }
 }
 
 /**
@@ -77,4 +98,14 @@ export const deploymentCardComponent = {
   },
   controller: DeploymentCardController,
   templateUrl: 'deploymentlist/deploymentcard.html',
+};
+
+const i18n = {
+  /** @export {string} @desc Tooltip saying that some pods in a deployment have errors. */
+  MSG_DEPLOYMENT_LIST_PODS_ERRORS_TOOLTIP: goog.getMsg('One or more pods have errors'),
+  /** @export {string} @desc Tooltip saying that some pods in a deployment are pending. */
+  MSG_DEPLOYMENT_LIST_PODS_PENDING_TOOLTIP: goog.getMsg('One or more pods are in pending state'),
+  /** @export {string} @desc Label 'Deployment' which will appear in the deployment
+      delete dialog opened from a deployment card on the list page.*/
+  MSG_DEPLOYMENT_LIST_DEPLOYMENT_LABEL: goog.getMsg('Deployment'),
 };
