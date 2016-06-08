@@ -19,11 +19,13 @@ import namespaceModule from 'common/namespace/namespace_module';
 /**
  * Angular module containing navigation chrome for the application.
  */
-export default angular.module('kubernetesDashboard.chrome',
-                              [
-                                'ngMaterial',
-                                'ui.router',
-                                componentsModule.name,
-                                namespaceModule.name,
-                              ])
+export default angular
+    .module(
+        'kubernetesDashboard.chrome',
+        [
+          'ngMaterial',
+          'ui.router',
+          componentsModule.name,
+          namespaceModule.name,
+        ])
     .config(stateConfig);

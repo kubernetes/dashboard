@@ -154,9 +154,9 @@ const i18n = {
       goog.getMsg('Prefix is not a valid DNS subdomain prefix. Example: my-domain.com'),
   /** @export {string} @desc This warning appears when the key name of a specified kubernetes
      label (on the deploy page) does not match the required pattern.*/
-  MSG_DEPLOY_LABEL_KEY_NAME_PATTERN_WARNING:
-      goog.getMsg(`Label key name must be alphanumeric separated by '-', '_' or '.', ` +
-                  `optionally prefixed by a DNS subdomain and '/'`),
+  MSG_DEPLOY_LABEL_KEY_NAME_PATTERN_WARNING: goog.getMsg(
+      `Label key name must be alphanumeric separated by '-', '_' or '.', ` +
+      `optionally prefixed by a DNS subdomain and '/'`),
   /** @export {string} @desc This warning appears when the key prefix of a specified kubernetes
      label (on the deploy page) is too long.*/
   MSG_DEPLOY_LABEL_KEY_PREFIX_MAX_LENGTH_WARNING:

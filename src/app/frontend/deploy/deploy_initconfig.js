@@ -29,7 +29,7 @@ export default function initConfig(kdValidatorFactory) {
   kdValidatorFactory.registerValidator('labelKeyNameLength', new LabelKeyNameLengthValidator());
   kdValidatorFactory.registerValidator('labelKeyPrefixLength', new LabelKeyPrefixLengthValidator());
   kdValidatorFactory.registerValidator('labelKeyNamePattern', new LabelKeyNamePatternValidator());
-  kdValidatorFactory.registerValidator('labelKeyPrefixPattern',
-                                       new LabelKeyPrefixPatternValidator());
+  kdValidatorFactory.registerValidator(
+      'labelKeyPrefixPattern', new LabelKeyPrefixPatternValidator());
   kdValidatorFactory.registerValidator('labelValuePattern', new LabelValuePatternValidator());
 }

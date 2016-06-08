@@ -33,7 +33,7 @@ export default class ReplicationControllerInfoController {
    */
   areDesiredPodsRunning() {
     return this.replicationController.podInfo.running ===
-           this.replicationController.podInfo.desired;
+        this.replicationController.podInfo.desired;
   }
 }
 

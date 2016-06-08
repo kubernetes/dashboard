@@ -43,15 +43,15 @@ describe('Actionbar edit item component', () => {
           kdResourceVerberService = _kdResourceVerberService_;
           q = $q;
           scope = $rootScope.$new();
-          ctrl = $componentController('kdActionbarEditItem',
-                                      {
-                                        $scope: scope,
-                                      },
-                                      {
-                                        resourceKindName: 'resource',
-                                        typeMeta: {},
-                                        objectMeta: {},
-                                      });
+          ctrl = $componentController(
+              'kdActionbarEditItem', {
+                $scope: scope,
+              },
+              {
+                resourceKindName: 'resource',
+                typeMeta: {},
+                objectMeta: {},
+              });
           state.go('fakeState');
           scope.$digest();
         });

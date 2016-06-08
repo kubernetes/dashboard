@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {shouldSetWarning, setWarning, shouldRemoveWarning, removeWarning} from './warnthreshold';
+import {removeWarning, setWarning, shouldRemoveWarning, shouldSetWarning} from './warnthreshold';
 import {hasWarningAttr} from './warnthreshold';
 
 /**

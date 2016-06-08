@@ -133,8 +133,9 @@ gulp.task('serve:prod', ['spawn-backend:prod']);
  * backend process is killed beforehand, if any. The frontend pages are served by BrowserSync.
  */
 gulp.task('spawn-backend', ['backend', 'kill-backend', 'locales-for-backend:dev'], function() {
-  runningBackendProcess = child.spawn(path.join(conf.paths.serve, conf.backend.binaryName),
-                                      backendDevArgs, {stdio: 'inherit', cwd: conf.paths.serve});
+  runningBackendProcess = child.spawn(
+      path.join(conf.paths.serve, conf.backend.binaryName), backendDevArgs,
+      {stdio: 'inherit', cwd: conf.paths.serve});
 
   runningBackendProcess.on('exit', function() {
     // Mark that there is no backend process running anymore.
@@ -148,8 +149,9 @@ gulp.task('spawn-backend', ['backend', 'kill-backend', 'locales-for-backend:dev'
  * pages as well.
  */
 gulp.task('spawn-backend:prod', ['build-frontend', 'backend', 'kill-backend'], function() {
-  runningBackendProcess = child.spawn(path.join(conf.paths.serve, conf.backend.binaryName),
-                                      backendArgs, {stdio: 'inherit', cwd: conf.paths.dist});
+  runningBackendProcess = child.spawn(
+      path.join(conf.paths.serve, conf.backend.binaryName), backendArgs,
+      {stdio: 'inherit', cwd: conf.paths.dist});
 
   runningBackendProcess.on('exit', function() {
     // Mark that there is no backend process running anymore.

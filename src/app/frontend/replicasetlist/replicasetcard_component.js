@@ -41,8 +41,9 @@ export default class ReplicaSetCardController {
    * @export
    */
   getReplicaSetDetailHref() {
-    return this.state_.href(stateName, new StateParams(this.replicaSet.objectMeta.namespace,
-                                                       this.replicaSet.objectMeta.name));
+    return this.state_.href(
+        stateName,
+        new StateParams(this.replicaSet.objectMeta.namespace, this.replicaSet.objectMeta.name));
   }
 
   /**

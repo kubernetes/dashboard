@@ -20,13 +20,14 @@ describe('Relative time filter', () => {
    * Current time mock.
    * @type {Date}
    */
-  const currentTime = new Date(2015,  // year
-                               11,    // month
-                               29,    // day
-                               23,    // hour
-                               59,    // minute
-                               59     // second
-                               );
+  const currentTime = new Date(
+      2015,  // year
+      11,    // month
+      29,    // day
+      23,    // hour
+      59,    // minute
+      59     // second
+      );
 
   /** @type {function(!Date):string} */
   let relativeTimeFilter;

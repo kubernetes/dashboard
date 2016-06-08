@@ -35,20 +35,18 @@ function getFileList() {
     devDependencies: true,
   };
 
-  return wiredep(wiredepOptions)
-      .js.concat([
-        path.join(conf.paths.frontendTest, '**/*.json'),
-        path.join(conf.paths.frontendTest, '**/*.js'),
-        path.join(conf.paths.frontendSrc, '**/*.js'),
-        path.join(conf.paths.frontendSrc, '**/*.html'),
-        path.join(conf.paths.bowerComponents, 'google-closure-library/closure/goog/base.js'),
-        {
-          pattern:
-              path.join(conf.paths.bowerComponents, 'google-closure-library/closure/goog/deps.js'),
-          included: false,
-          served: false,
-        },
-      ]);
+  return wiredep(wiredepOptions).js.concat([
+    path.join(conf.paths.frontendTest, '**/*.json'),
+    path.join(conf.paths.frontendTest, '**/*.js'),
+    path.join(conf.paths.frontendSrc, '**/*.js'),
+    path.join(conf.paths.frontendSrc, '**/*.html'),
+    path.join(conf.paths.bowerComponents, 'google-closure-library/closure/goog/base.js'),
+    {
+      pattern: path.join(conf.paths.bowerComponents, 'google-closure-library/closure/goog/deps.js'),
+      included: false,
+      served: false,
+    },
+  ]);
 }
 
 /**
@@ -126,21 +124,20 @@ module.exports = function(config) {
     let testName;
     if (process.env.TRAVIS) {
       testName = `Karma tests ${process.env.TRAVIS_REPO_SLUG}, build ` +
-                 `${process.env.TRAVIS_BUILD_NUMBER}`;
+          `${process.env.TRAVIS_BUILD_NUMBER}`;
       if (process.env.TRAVIS_PULL_REQUEST !== 'false') {
         testName += `, PR: https://github.com/${process.env.TRAVIS_REPO_SLUG}/pull/` +
-                    `${process.env.TRAVIS_PULL_REQUEST}`;
+            `${process.env.TRAVIS_PULL_REQUEST}`;
       }
     } else {
       testName = 'Local karma tests';
     }
 
-    configuration.sauceLabs =
-        {
-          testName: testName,
-          connectOptions: {port: 5757, logfile: 'sauce_connect.log'},
-          public: 'public',
-        },
+    configuration.sauceLabs = {
+      testName: testName,
+      connectOptions: {port: 5757, logfile: 'sauce_connect.log'},
+      public: 'public',
+    },
     configuration.customLaunchers = {
       sl_chrome: {base: 'SauceLabs', browserName: 'chrome'},
       sl_firefox: {base: 'SauceLabs', browserName: 'firefox'},
@@ -162,8 +159,8 @@ module.exports = function(config) {
       ['browserify', 'closure', 'closure-iit'];
   configuration.preprocessors[path.join(conf.paths.frontendSrc, '**/*.js')] =
       ['browserify', 'closure'];
-  configuration.preprocessors[path.join(conf.paths.bowerComponents,
-                                        'google-closure-library/closure/goog/deps.js')] =
+  configuration.preprocessors[path.join(
+      conf.paths.bowerComponents, 'google-closure-library/closure/goog/deps.js')] =
       ['closure-deps'];
 
   // Convert HTML templates into JS files that serve code through $templateCache.

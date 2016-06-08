@@ -109,16 +109,17 @@ export default class CreateSecretController {
     /** @type {!angular.Resource<!backendApi.SecretSpec>} */
     let resource = this.resource_(`api/v1/secret/`);
 
-    resource.save(secretSpec,
-                  (savedConfig) => {
-                    this.log_.info('Successfully created secret:', savedConfig);
-                    this.mdDialog_.hide(this.secretName);
-                  },
-                  (err) => {
-                    this.mdDialog_.hide();
-                    this.errorDialog_.open('Error creating secret', err.data);
-                    this.log_.info('Error creating secret:', err);
-                  });
+    resource.save(
+        secretSpec,
+        (savedConfig) => {
+          this.log_.info('Successfully created secret:', savedConfig);
+          this.mdDialog_.hide(this.secretName);
+        },
+        (err) => {
+          this.mdDialog_.hide();
+          this.errorDialog_.open('Error creating secret', err.data);
+          this.log_.info('Error creating secret:', err);
+        });
   }
 }
 

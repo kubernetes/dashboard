@@ -68,5 +68,6 @@ gulp.task('index', ['scripts', 'styles'], function() {
 /**
  * Creates frontend application index file with production dependencies injected.
  */
-gulp.task('index:prod', ['scripts:prod', 'styles:prod'],
-          function() { return createIndexFile(conf.paths.prodTmp, false); });
+gulp.task('index:prod', ['scripts:prod', 'styles:prod'], function() {
+  return createIndexFile(conf.paths.prodTmp, false);
+});

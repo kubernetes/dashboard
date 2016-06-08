@@ -24,15 +24,17 @@ import {daemonSetInfoComponent} from './daemonsetinfo_component';
  *
  * The view shows detailed view of a daemon Set.
  */
-export default angular.module('kubernetesDashboard.daemonSetDetail',
-                              [
-                                'ngMaterial',
-                                'ngResource',
-                                'ui.router',
-                                componentsModule.name,
-                                chromeModule.name,
-                                filtersModule.name,
-                                eventsModule.name,
-                              ])
+export default angular
+    .module(
+        'kubernetesDashboard.daemonSetDetail',
+        [
+          'ngMaterial',
+          'ngResource',
+          'ui.router',
+          componentsModule.name,
+          chromeModule.name,
+          filtersModule.name,
+          eventsModule.name,
+        ])
     .config(stateConfig)
     .component('kdDaemonSetInfo', daemonSetInfoComponent);

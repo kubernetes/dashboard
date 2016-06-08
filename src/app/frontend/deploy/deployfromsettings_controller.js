@@ -15,9 +15,7 @@
 import showNamespaceDialog from './createnamespace_dialog';
 import showCreateSecretDialog from './createsecret_dialog';
 import DeployLabel from './deploylabel';
-import {
-  stateName as replicationcontrollerliststate,
-} from 'replicationcontrollerlist/replicationcontrollerlist_state';
+import {stateName as replicationcontrollerliststate} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 import {uniqueNameValidationKey} from './uniquename_directive';
 import DockerImageReference from '../common/docker/dockerimagereference';
 
@@ -214,16 +212,17 @@ export default class DeployFromSettingsController {
 
     /** @type {!angular.Resource<!backendApi.AppDeploymentSpec>} */
     let resource = this.resource_('api/v1/appdeployment');
-    resource.save(appDeploymentSpec,
-                  (savedConfig) => {
-                    defer.resolve(savedConfig);  // Progress ends
-                    this.log_.info('Successfully deployed application: ', savedConfig);
-                    this.state_.go(replicationcontrollerliststate);
-                  },
-                  (err) => {
-                    defer.reject(err);  // Progress ends
-                    this.log_.error('Error deploying application:', err);
-                  });
+    resource.save(
+        appDeploymentSpec,
+        (savedConfig) => {
+          defer.resolve(savedConfig);  // Progress ends
+          this.log_.info('Successfully deployed application: ', savedConfig);
+          this.state_.go(replicationcontrollerliststate);
+        },
+        (err) => {
+          defer.reject(err);  // Progress ends
+          this.log_.error('Error deploying application:', err);
+        });
     return defer.promise;
   }
 
@@ -287,8 +286,9 @@ export default class DeployFromSettingsController {
   getSecrets(namespace) {
     /** @type {!angular.Resource<!backendApi.SecretsList>} */
     let resource = this.resource_(`api/v1/secret/${namespace}`);
-    resource.get((res) => { this.secrets = res.secrets; },
-                 (err) => { this.log_.log(`Error getting secrets: ${err}`); });
+    resource.get(
+        (res) => { this.secrets = res.secrets; },
+        (err) => { this.log_.log(`Error getting secrets: ${err}`); });
   }
 
   /**
@@ -308,7 +308,7 @@ export default class DeployFromSettingsController {
     let name = this.form['name'];
 
     return name.$error[uniqueNameValidationKey] ||
-           (name.$invalid && (name.$touched || this.form.$submitted));
+        (name.$invalid && (name.$touched || this.form.$submitted));
   }
 
   /**
@@ -397,10 +397,9 @@ const i18n = {
   /** @export {string} @desc Appears when the typed in app name on the deploy from settings page
      exceeds the maximal allowed length. */
   MSG_DEPLOY_SETTINGS_APP_NAME_MAX_LENGTH_WARNING:
-      goog.getMsg(`Name must be up to {$maxLength} characters long.`,
-                  {
-                    'maxLength': '24',
-                  }),
+      goog.getMsg(`Name must be up to {$maxLength} characters long.`, {
+        'maxLength': '24',
+      }),
 
   /** @export {string} @desc User help for the `App name` input on the deploy from settings page. */
   MSG_DEPLOY_SETTINGS_APP_NAME_USER_HELP: goog.getMsg(

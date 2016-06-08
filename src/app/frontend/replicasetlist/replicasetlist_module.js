@@ -24,15 +24,17 @@ import replicaSetDetailModule from 'replicasetdetail/replicasetdetail_module';
  *
  * The view shows Replica Set running in the cluster and allows to manage them.
  */
-export default angular.module('kubernetesDashboard.replicaSetList',
-                              [
-                                'ngMaterial',
-                                'ngResource',
-                                'ui.router',
-                                filtersModule.name,
-                                componentsModule.name,
-                                replicaSetDetailModule.name,
-                              ])
+export default angular
+    .module(
+        'kubernetesDashboard.replicaSetList',
+        [
+          'ngMaterial',
+          'ngResource',
+          'ui.router',
+          filtersModule.name,
+          componentsModule.name,
+          replicaSetDetailModule.name,
+        ])
     .config(stateConfig)
     .component('kdReplicaSetCardList', replicaSetCardListComponent)
     .component('kdReplicaSetCard', replicaSetCardComponent);

@@ -39,8 +39,8 @@ export class ReplicationControllerService {
    * @return {!angular.$q.Promise}
    */
   showDeleteDialog(typeMeta, objectMeta) {
-    return this.kdResourceVerberService_.showDeleteDialog('Replication Controller', typeMeta,
-                                                          objectMeta);
+    return this.kdResourceVerberService_.showDeleteDialog(
+        'Replication Controller', typeMeta, objectMeta);
   }
 
   /**
@@ -55,7 +55,7 @@ export class ReplicationControllerService {
    * @returns {!angular.$q.Promise}
    */
   showUpdateReplicasDialog(namespace, replicationController, currentPods, desiredPods) {
-    return showUpdateReplicasDialog(this.mdDialog_, namespace, replicationController, currentPods,
-                                    desiredPods);
+    return showUpdateReplicasDialog(
+        this.mdDialog_, namespace, replicationController, currentPods, desiredPods);
   }
 }

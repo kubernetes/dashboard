@@ -55,23 +55,24 @@ function validate(reference, scope, resource, q) {
   /** @type {!backendApi.ImageReferenceValiditySpec} */
   let spec = {reference: reference};
 
-  resourceClass.save(spec,
-                     /**
-                      * @param {!backendApi.ImageReferenceValidity} validity
-                      */
-                     (validity) => {
-                       if (validity.valid === true) {
-                         scope[invalidImageErrorMessage] = '';
-                         deferred.resolve();
-                       } else {
-                         scope[invalidImageErrorMessage] = validity.reason;
-                         deferred.reject(scope[invalidImageErrorMessage]);
-                       }
-                     },
-                     (err) => {
-                       scope[invalidImageErrorMessage] = err.data;
-                       deferred.reject();
-                     });
+  resourceClass.save(
+      spec,
+      /**
+       * @param {!backendApi.ImageReferenceValidity} validity
+       */
+      (validity) => {
+        if (validity.valid === true) {
+          scope[invalidImageErrorMessage] = '';
+          deferred.resolve();
+        } else {
+          scope[invalidImageErrorMessage] = validity.reason;
+          deferred.reject(scope[invalidImageErrorMessage]);
+        }
+      },
+      (err) => {
+        scope[invalidImageErrorMessage] = err.data;
+        deferred.reject();
+      });
 
   return deferred.promise;
 }

@@ -41,8 +41,9 @@ export default class DeploymentCardController {
    * @export
    */
   getDeploymentDetailHref() {
-    return this.state_.href(stateName, new StateParams(this.deployment.objectMeta.namespace,
-                                                       this.deployment.objectMeta.name));
+    return this.state_.href(
+        stateName,
+        new StateParams(this.deployment.objectMeta.namespace, this.deployment.objectMeta.name));
   }
 
   /**

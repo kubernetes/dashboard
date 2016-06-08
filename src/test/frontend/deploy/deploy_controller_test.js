@@ -33,8 +33,9 @@ describe('Deploy controller', () => {
       settingsCtrl = $controller(
           DeployFromSettingController, {},
           {namespaces: [], protocols: [], secrets: [], deploy: () => $q.defer().promise});
-      ctrl = $controller(DeployController, {namespaces: [], protocols: []},
-                         {detail: settingsCtrl, deployForm: {$valid: true}});
+      ctrl = $controller(
+          DeployController, {namespaces: [], protocols: []},
+          {detail: settingsCtrl, deployForm: {$valid: true}});
     });
   });
 

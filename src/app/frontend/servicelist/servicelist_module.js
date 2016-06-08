@@ -23,14 +23,16 @@ import {serviceCardListComponent} from './servicecardlist_component';
  *
  * The view shows Service running in the cluster and allows to manage them.
  */
-export default angular.module('kubernetesDashboard.serviceList',
-                              [
-                                'ngMaterial',
-                                'ngResource',
-                                'ui.router',
-                                filtersModule.name,
-                                componentsModule.name,
-                                chromeModule.name,
-                              ])
+export default angular
+    .module(
+        'kubernetesDashboard.serviceList',
+        [
+          'ngMaterial',
+          'ngResource',
+          'ui.router',
+          filtersModule.name,
+          componentsModule.name,
+          chromeModule.name,
+        ])
     .config(stateConfig)
     .component('kdServiceCardList', serviceCardListComponent);

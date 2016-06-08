@@ -46,8 +46,9 @@ describe('DeployFromSettings controller', () => {
           },
         },
       };
-      ctrl = $controller(DeployFromSettingController, {$resource: mockResource},
-                         {namespaces: [], form: form, protocols: []});
+      ctrl = $controller(
+          DeployFromSettingController, {$resource: mockResource},
+          {namespaces: [], form: form, protocols: []});
       ctrl.portMappings = [];
       ctrl.variables = [];
     });
@@ -402,12 +403,11 @@ describe('DeployFromSettings controller', () => {
     };
 
     // then
-    Object.keys(allPatterns)
-        .forEach((pattern) => {
-          expect('mylowercasename'.match(allPatterns[pattern])).toBeDefined();
-          expect('my-name-with-dashes-between'.match(allPatterns[pattern])).toBeDefined();
-          expect('my-n4m3-with-numb3r5'.match(allPatterns[pattern])).toBeDefined();
-        });
+    Object.keys(allPatterns).forEach((pattern) => {
+      expect('mylowercasename'.match(allPatterns[pattern])).toBeDefined();
+      expect('my-name-with-dashes-between'.match(allPatterns[pattern])).toBeDefined();
+      expect('my-n4m3-with-numb3r5'.match(allPatterns[pattern])).toBeDefined();
+    });
   });
 
   /**

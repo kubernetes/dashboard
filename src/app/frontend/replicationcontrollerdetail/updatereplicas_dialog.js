@@ -23,8 +23,8 @@ import UpdateReplicasDialogController from 'replicationcontrollerdetail/updatere
  * @param {number} desiredPods
  * @return {!angular.$q.Promise}
  */
-export default function showUpdateReplicasDialog(mdDialog, namespace, replicationController,
-                                                 currentPods, desiredPods) {
+export default function showUpdateReplicasDialog(
+    mdDialog, namespace, replicationController, currentPods, desiredPods) {
   return mdDialog.show({
     controller: UpdateReplicasDialogController,
     controllerAs: 'ctrl',

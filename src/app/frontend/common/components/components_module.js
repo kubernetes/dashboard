@@ -26,17 +26,19 @@ import warnThresholdDirective from './warnthreshold/warnthreshold_directive';
 /**
  * Module containing common components for the application.
  */
-export default angular.module('kubernetesDashboard.common.components',
-                              [
-                                'ngMaterial',
-                                'ui.router',
-                                filtersModule.name,
-                                actionbarModule.name,
-                                contentCardModule.name,
-                                endpointModule.name,
-                                infoCardModule.name,
-                                resourceCardModule.name,
-                              ])
+export default angular
+    .module(
+        'kubernetesDashboard.common.components',
+        [
+          'ngMaterial',
+          'ui.router',
+          filtersModule.name,
+          actionbarModule.name,
+          contentCardModule.name,
+          endpointModule.name,
+          infoCardModule.name,
+          resourceCardModule.name,
+        ])
     .directive('kdLabels', labelsDirective)
     .directive('kdMiddleEllipsis', middleEllipsisDirective)
     .directive('kdSparkline', sparklineDirective)

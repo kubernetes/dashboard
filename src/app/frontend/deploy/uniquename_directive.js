@@ -56,23 +56,24 @@ function validate(name, namespace, resource, q) {
   let resourceClass = resource('api/v1/appdeployment/validate/name');
   /** @type {!backendApi.AppNameValiditySpec} */
   let spec = {name: name, namespace: namespace};
-  resourceClass.save(spec,
-                     /**
-                      * @param {!backendApi.AppNameValidity} validity
-                      */
-                     (validity) => {
-                       if (validity.valid === true) {
-                         deferred.resolve();
-                       } else {
-                         deferred.reject();
-                       }
-                     },
-                     () => {
-                       // On error assume that the name is valid. If it is not, the error is caught
-                       // later in the
-                       // deploy pipeline.
-                       deferred.resolve();
-                     });
+  resourceClass.save(
+      spec,
+      /**
+       * @param {!backendApi.AppNameValidity} validity
+       */
+      (validity) => {
+        if (validity.valid === true) {
+          deferred.resolve();
+        } else {
+          deferred.reject();
+        }
+      },
+      () => {
+        // On error assume that the name is valid. If it is not, the error is caught
+        // later in the
+        // deploy pipeline.
+        deferred.resolve();
+      });
 
   return deferred.promise;
 }

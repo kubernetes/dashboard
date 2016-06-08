@@ -18,10 +18,12 @@ import {internalEndpointComponent} from './internalendpoint_component';
 /**
  * Module containing endpoint components.
  */
-export default angular.module('kubernetesDashboard.common.components.endpoint',
-                              [
-                                'ngMaterial',
-                                'ui.router',
-                              ])
+export default angular
+    .module(
+        'kubernetesDashboard.common.components.endpoint',
+        [
+          'ngMaterial',
+          'ui.router',
+        ])
     .component('kdInternalEndpoint', internalEndpointComponent)
     .component('kdExternalEndpoint', externalEndpointComponent);

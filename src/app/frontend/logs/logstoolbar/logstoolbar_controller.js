@@ -87,8 +87,8 @@ export default class LogsToolbarController {
    */
   onPodChange(podId) {
     return this.state_.transitionTo(
-        logs, new StateParams(this.namespace_, this.replicationControllerName_, podId,
-                              this.container.name));
+        logs, new StateParams(
+                  this.namespace_, this.replicationControllerName_, podId, this.container.name));
   }
 
   /**
@@ -99,8 +99,8 @@ export default class LogsToolbarController {
    */
   onContainerChange(container) {
     return this.state_.transitionTo(
-        logs, new StateParams(this.namespace_, this.replicationControllerName_, this.pod.name,
-                              container));
+        logs, new StateParams(
+                  this.namespace_, this.replicationControllerName_, this.pod.name, container));
   }
 
   /**

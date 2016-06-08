@@ -51,8 +51,9 @@ export class ResourceCardHeaderColumnsController {
    */
   sizeBodyColumn(columnElement, index) {
     if (this.columns_.length <= index) {
-      throw new Error('Not enough header columns registered. ' +
-                      'Try adding kd-resource-card-header-column to the list.');
+      throw new Error(
+          'Not enough header columns registered. ' +
+          'Try adding kd-resource-card-header-column to the list.');
     }
     size(columnElement, this.columns_[index].size, this.columns_[index].grow);
   }

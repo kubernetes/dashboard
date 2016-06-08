@@ -67,10 +67,9 @@ describe('Unique name directive', () => {
     scope.namespace = 'foo-namespace';
 
     let elem = compileFn(scope)[0];
-    httpBackend.when('POST', 'api/v1/appdeployment/validate/name')
-        .respond({
-          valid: false,
-        });
+    httpBackend.when('POST', 'api/v1/appdeployment/validate/name').respond({
+      valid: false,
+    });
     httpBackend.flush();
     expect(elem.classList).not.toContain('ng-pending');
 

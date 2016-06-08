@@ -18,11 +18,13 @@ import {VerberService} from './verber_service';
 /**
  * Angular module containing navigation chrome for the application.
  */
-export default angular.module('kubernetesDashboard.common.resource',
-                              [
-                                'ngMaterial',
-                                'ui.router',
-                                'ngResource',
-                                'ng.jsoneditor',
-                              ])
+export default angular
+    .module(
+        'kubernetesDashboard.common.resource',
+        [
+          'ngMaterial',
+          'ui.router',
+          'ngResource',
+          'ng.jsoneditor',
+        ])
     .service('kdResourceVerberService', VerberService);

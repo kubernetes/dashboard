@@ -41,9 +41,10 @@ export default class ReplicationControllerCardController {
    * @export
    */
   getReplicationControllerDetailHref() {
-    return this.state_.href(stateName,
-                            new StateParams(this.replicationController.objectMeta.namespace,
-                                            this.replicationController.objectMeta.name));
+    return this.state_.href(
+        stateName, new StateParams(
+                       this.replicationController.objectMeta.namespace,
+                       this.replicationController.objectMeta.name));
   }
 
   /**

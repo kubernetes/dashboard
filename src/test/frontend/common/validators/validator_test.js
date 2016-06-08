@@ -16,7 +16,8 @@ import {Validator} from 'common/validators/validator';
 
 describe('Validator', () => {
   it('should not be instantiable', () => {
-    expect(() => { new Validator(); })
-        .toThrow(new TypeError('Abstract class "Validator" cannot be instantiated directly.'));
+    expect(() => {
+      new Validator();
+    }).toThrow(new TypeError('Abstract class "Validator" cannot be instantiated directly.'));
   });
 });

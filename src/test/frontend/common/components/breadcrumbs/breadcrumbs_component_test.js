@@ -70,16 +70,16 @@ describe('Breadcrumbs controller ', () => {
         ($componentController, $state, $interpolate, _kdBreadcrumbsService_, $rootScope) => {
           state = $state;
           interpolate = $interpolate;
-          ctrl = $componentController('kdBreadcrumbs',
-                                      {
-                                        $state: state,
-                                        $interpolate: interpolate,
-                                        kdBreadcrumbsService: _kdBreadcrumbsService_,
-                                        $scope: $rootScope,
-                                      },
-                                      {
-                                        limit: breadcrumbsLimit,
-                                      });
+          ctrl = $componentController(
+              'kdBreadcrumbs', {
+                $state: state,
+                $interpolate: interpolate,
+                kdBreadcrumbsService: _kdBreadcrumbsService_,
+                $scope: $rootScope,
+              },
+              {
+                limit: breadcrumbsLimit,
+              });
         });
   });
 

@@ -71,13 +71,13 @@ describe('Logs toolbar controller', () => {
 
     angular.mock.inject(($controller, $state) => {
       state = $state;
-      ctrl = $controller(LogsToolbarController,
-                         {
-                           replicationControllerPods: replicationControllerPods,
-                           $stateParams: stateParams,
-                           podLogs: logs,
-                         },
-                         $state);
+      ctrl = $controller(
+          LogsToolbarController, {
+            replicationControllerPods: replicationControllerPods,
+            $stateParams: stateParams,
+            podLogs: logs,
+          },
+          $state);
     });
   });
 

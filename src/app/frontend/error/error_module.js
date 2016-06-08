@@ -12,18 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName, StateParams} from './internalerror_state';
+import {StateParams, stateName} from './internalerror_state';
+
 import stateConfig from './internalerror_stateconfig';
 import chromeModule from 'chrome/chrome_module';
 
 /**
  * Angular module for error views.
  */
-export default angular.module('kubernetesDashboard.error',
-                              [
-                                'ui.router',
-                                chromeModule.name,
-                              ])
+export default angular
+    .module(
+        'kubernetesDashboard.error',
+        [
+          'ui.router',
+          chromeModule.name,
+        ])
     .config(stateConfig)
     .run(errorConfig);
 

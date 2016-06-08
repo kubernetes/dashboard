@@ -46,9 +46,9 @@ export class ResourceCardDeleteMenuItemController {
    * @export
    */
   remove() {
-    this.kdResourceVerberService_.showDeleteDialog(this.resourceKindName,
-                                                   this.resourceCardCtrl.typeMeta,
-                                                   this.resourceCardCtrl.objectMeta)
+    this.kdResourceVerberService_
+        .showDeleteDialog(
+            this.resourceKindName, this.resourceCardCtrl.typeMeta, this.resourceCardCtrl.objectMeta)
         .then(() => {
           // For now just reload the state. Later we can remove the item in place.
           this.state_.reload();

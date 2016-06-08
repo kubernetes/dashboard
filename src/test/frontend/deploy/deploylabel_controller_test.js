@@ -25,8 +25,9 @@ describe('DeployLabel controller', () => {
 
     angular.mock.inject(($rootScope, $compile, $controller) => {
       let scope = $rootScope.$new();
-      let template = angular.element('<ng-form name="labelForm"><input name="key"' +
-                                     ' ng-model="label"></ng-form>');
+      let template = angular.element(
+          '<ng-form name="labelForm"><input name="key"' +
+          ' ng-model="label"></ng-form>');
 
       $compile(template)(scope);
       ctrl = $controller(DeployLabelController);

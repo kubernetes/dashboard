@@ -19,10 +19,12 @@ import {infoCardSectionComponent} from './infocardsection_component';
 /**
  * Module containing common components for cards that can carry any content.
  */
-export default angular.module('kubernetesDashboard.common.components.infocard',
-                              [
-                                'ngMaterial',
-                              ])
+export default angular
+    .module(
+        'kubernetesDashboard.common.components.infocard',
+        [
+          'ngMaterial',
+        ])
     .component('kdInfoCard', infoCardComponent)
     .component('kdInfoCardEntry', infoCardEntryComponent)
     .component('kdInfoCardSection', infoCardSectionComponent);
