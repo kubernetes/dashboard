@@ -17,16 +17,16 @@ limitations under the License.
 <md-menu md-position-mode="target-right target">
   <md-button ng-click="$ctrl.openMenu($mdOpenMenu, $event)" class="md-icon-button">
     <md-icon md-font-library="material-icons">subject</md-icon>
-    <md-tooltip>Logs</md-tooltip>
+    <md-tooltip>{{::$ctrl.i18n.MSG_RC_LIST_LOGS_TOOLTIP}}</md-tooltip>
   </md-button>
   <md-menu-content class="kd-replicationcontroller-card-logs-menu" width="6">
     <md-menu-item class="kd-menu-logs-md-menu-item">
-      <div>Logs</div>
+      <div>{{::$ctrl.i18n.MSG_RC_LIST_LOGS_LABEL}}</div>
     </md-menu-item>
     <md-menu-item class="kd-menu-logs-md-menu-item" layout>
-      <div class="kd-menu-logs-item-header">Pod</div>
+      <div class="kd-menu-logs-item-header">{{::$ctrl.i18n.MSG_RC_LIST_LOGS_POD_LABEL}}</div>
       <div class="kd-menu-logs-item-header kd-menu-logs-item-since" flex="none">
-        Running since
+        {{::$ctrl.i18n.MSG_RC_LIST_LOGS_RUNNING_SINCE_LABEL}}
       </div>
     </md-menu-item>
     <md-menu-item ng-repeat="pod in ::$ctrl.replicationControllerPodsList"
@@ -42,7 +42,7 @@ limitations under the License.
             {{::(pod.startTime | date:'d/M/yy HH:mm':'UTC')}} UTC
           </span>
           <span ng-if="::!pod.startTime">
-            Not running
+            {{::$ctrl.i18n.MSG_RC_LIST_LOGS_NOT_RUNNING_LABEL}}
           </span>
           <i class="material-icons kd-text-icon">open_in_new</i>
         </a>

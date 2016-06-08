@@ -54,6 +54,9 @@ export class PodLogsMenuController {
      * @export {!Array<!backendApi.ReplicationControllerPodWithContainers>}
      */
     this.replicationControllerPodsList;
+
+    /** @export */
+    this.i18n = i18n;
   }
 
   /**
@@ -138,4 +141,21 @@ export const podLogsMenuComponent = {
   },
   controller: PodLogsMenuController,
   templateUrl: 'replicationcontrollerlist/podlogsmenu.html',
+};
+
+const i18n = {
+  /** @export {string} @desc Tooltip 'Logs' on the logs button on a replication controller card */
+  MSG_RC_LIST_LOGS_TOOLTIP: goog.getMsg('Logs'),
+  /** @export {string} @desc Label 'Logs' at the top of the drop down menu when a user clicks the logs button on
+      a replication controller card. */
+  MSG_RC_LIST_LOGS_LABEL: goog.getMsg('Logs'),
+  /** @export {string} @desc Label 'Pod' for the column with pods in the logs drop down view
+      (opened from a replication controller card). */
+  MSG_RC_LIST_LOGS_POD_LABEL: goog.getMsg('Pod'),
+  /** @export {string} @desc Label 'Running since' for the respective column in the logs drop down view
+      (opened from a replication controller card). */
+  MSG_RC_LIST_LOGS_RUNNING_SINCE_LABEL: goog.getMsg('Running since'),
+  /** @export {string} @desc Label 'Not running' which appears in the pod logs list (opened from a
+      replication controller card) when there are no logs for a given pod. */
+  MSG_RC_LIST_LOGS_NOT_RUNNING_LABEL: goog.getMsg('Not running'),
 };

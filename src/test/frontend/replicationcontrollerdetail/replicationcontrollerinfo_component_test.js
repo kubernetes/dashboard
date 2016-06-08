@@ -25,7 +25,17 @@ describe('Replication Controller Info controller', () => {
     angular.mock.module(replicationControllerDetailModule.name);
 
     angular.mock.inject(($componentController, $rootScope) => {
-      ctrl = $componentController('kdReplicationControllerInfo', {$scope: $rootScope});
+      ctrl = $componentController('kdReplicationControllerInfo', {$scope: $rootScope}, {
+        replicationController: {
+          podInfo: {
+            running: 0,
+            desired: 0,
+            failed: 0,
+            current: 0,
+            pending: 0,
+          },
+        },
+      });
     });
   });
 

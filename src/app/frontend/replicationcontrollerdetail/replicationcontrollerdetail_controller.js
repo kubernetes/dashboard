@@ -40,6 +40,9 @@ export default class ReplicationControllerDetailController {
 
     /** @private {!../common/resource/resourcedetail.StateParams} */
     this.stateParams_ = $stateParams;
+
+    /** @export */
+    this.i18n = i18n;
   }
 
   /**
@@ -73,3 +76,18 @@ export default class ReplicationControllerDetailController {
             this.stateParams_.objectNamespace, this.stateParams_.objectName, pod.objectMeta.name));
   }
 }
+
+const i18n = {
+  /** @export {string} @desc Title 'Pods', which appears at the top of the pods list on the
+      replication controller detail view. */
+  MSG_RC_DETAIL_PODS_TITLE: goog.getMsg('Pods'),
+  /** @export {string} @desc Title 'Service', which appears at the top of the services list on the
+      replication controller detail view. */
+  MSG_RC_DETAIL_SERVICES_TITLE: goog.getMsg('Services'),
+  /** @export {string} @desc Label 'Overview' for the left navigation tab on the replication
+      controller details page. */
+  MSG_RC_DETAIL_OVERVIEW_LABEL: goog.getMsg('Overview'),
+  /** @export {string} @desc Label 'Events' for the right navigation tab on the replication
+      controller details page. */
+  MSG_RC_DETAIL_EVENTS_LABEL: goog.getMsg('Events'),
+};

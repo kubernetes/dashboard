@@ -17,12 +17,12 @@ limitations under the License.
 <div layout="column">
   <md-content>
     <md-tabs md-border-bottom md-dynamic-height>
-      <md-tab label="Overview">
+      <md-tab label="{{::ctrl.i18n.MSG_RC_DETAIL_OVERVIEW_LABEL}}">
         <kd-replication-controller-info replication-controller="::ctrl.replicationControllerDetail">
         </kd-replication-controller-info>
 
         <kd-content-card ng-if="::ctrl.replicationControllerDetail.serviceList.services.length">
-          <kd-title>Services</kd-title>
+          <kd-title>{{::ctrl.i18n.MSG_RC_DETAIL_SERVICES_TITLE}}</kd-title>
           <kd-content>
             <kd-service-card-list
                     services="::ctrl.replicationControllerDetail.serviceList.services">
@@ -31,7 +31,7 @@ limitations under the License.
         </kd-content-card>
 
         <kd-content-card>
-          <kd-title>Pods</kd-title>
+          <kd-title>{{::ctrl.i18n.MSG_RC_DETAIL_PODS_TITLE}}</kd-title>
           <kd-content>
             <kd-pod-card-list pod-list="::ctrl.replicationControllerDetail.pods"
                               logs-href-fn="::ctrl.getPodLogsHref(pod)" with-statuses="true">
@@ -39,7 +39,7 @@ limitations under the License.
           </kd-content>
         </kd-content-card>
       </md-tab>
-      <md-tab label="Events">
+      <md-tab label="{{::ctrl.i18n.MSG_RC_DETAIL_EVENTS_LABEL}}">
         <kd-event-card-list events="::ctrl.events">
         </kd-event-card-list>
       </md-tab>

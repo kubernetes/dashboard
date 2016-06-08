@@ -39,6 +39,9 @@ export class ActionBarController {
 
     /** @export {boolean} */
     this.showFabIcons = false;
+
+    /** @export */
+    this.i18n = i18n;
   }
 
   /**
@@ -66,3 +69,15 @@ export class ActionBarController {
         this.details.podInfo.current, this.details.podInfo.desired);
   }
 }
+
+const i18n = {
+  /** @export {string} @desc Tooltip for the '+' button on the action bar of a replication
+      controller details view. */
+  MSG_RC_DETAIL_ACTION_BAR_DEPLOY_TOOLTIP: goog.getMsg('Deploy a containerized app'),
+  /** @export {string} @desc Tooltip for the 'edit' button on the action bar of a replication
+      controller details view.*/
+  MSG_RC_DETAIL_ACTION_BAR_EDIT_PODS_TOOLTIP: goog.getMsg('Edit number of pods'),
+  /** @export {string} @desc Label 'Replication Controller' which appears at the top of the
+      delete dialog, opened from a RC details page. */
+  MSG_RC_DETAIL_REPLICATION_CONTROLLER_LABEL: goog.getMsg('Replication Controller'),
+};
