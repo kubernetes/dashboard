@@ -23,9 +23,10 @@ import {stateName} from 'petsetdetail/petsetdetail_state';
 export default class PetSetCardController {
   /**
    * @param {!ui.router.$state} $state
+   * @param {!angular.$interpolate} $interpolate
    * @ngInject
    */
-  constructor($state) {
+  constructor($state, $interpolate) {
     /**
      * Initialized from the scope.
      * @export {!backendApi.PetSet}
@@ -34,6 +35,9 @@ export default class PetSetCardController {
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
+
+    /** @private */
+    this.interpolate_ = $interpolate;
 
     /** @export */
     this.i18n = i18n;
@@ -68,6 +72,20 @@ export default class PetSetCardController {
    * @export
    */
   isSuccess() { return !this.isPending() && !this.hasWarnings(); }
+
+  /**
+   * @export
+   * @param  {string} creationDate - creation date of the pet set
+   * @return {string} localized tooltip with the formated creation date
+   */
+  getCreatedAtTooltip(creationDate) {
+    let filter = this.interpolate_(`{{date | date:'short'}}`);
+    /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
+     * pet set. */
+    let MSG_PET_SET_LIST_CREATED_AT_TOOLTIP =
+        goog.getMsg('Created at {$creationDate}', {'creationDate': filter({'date': creationDate})});
+    return MSG_PET_SET_LIST_CREATED_AT_TOOLTIP;
+  }
 }
 
 /**
@@ -86,4 +104,7 @@ const i18n = {
   MSG_PET_SET_CARD_TOOLTIP_ERROR: goog.getMsg('One or more pods have errors'),
   /** @export {string} @desc Tooltip text which appears on pending icon hover. */
   MSG_PET_SET_CARD_TOOLTIP_PENDING: goog.getMsg('One or more pods are in pending state'),
+  /** @export {string} @desc Label 'Pet Set' which will appear in the pet set
+      delete dialog opened from a pet set card on the list page. */
+  MSG_PET_SET_LIST_PET_SET_LABEL: goog.getMsg('Pet Set'),
 };
