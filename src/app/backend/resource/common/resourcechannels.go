@@ -108,8 +108,7 @@ type NodeListChannel struct {
 
 // GetNodeListChannel returns a pair of channels to a Node list and errors that both must be read
 // numReads times.
-func GetNodeListChannel(client client.NodesInterface,
-	nsQuery *NamespaceQuery, numReads int) NodeListChannel {
+func GetNodeListChannel(client client.NodesInterface, numReads int) NodeListChannel {
 	channel := NodeListChannel{
 		List:  make(chan *api.NodeList, numReads),
 		Error: make(chan error, numReads),
@@ -117,13 +116,6 @@ func GetNodeListChannel(client client.NodesInterface,
 
 	go func() {
 		list, err := client.Nodes().List(listEverything)
-		var filteredItems []api.Node
-		for _, item := range list.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
-				filteredItems = append(filteredItems, item)
-			}
-		}
-		list.Items = filteredItems
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err

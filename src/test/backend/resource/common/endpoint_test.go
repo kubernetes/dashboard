@@ -321,3 +321,37 @@ func TestGetUniqueExternalAddresses(t *testing.T) {
 		}
 	}
 }
+
+func TestGetNodeByName(t *testing.T) {
+	cases := []struct {
+		nodes    []api.Node
+		nodeName string
+		expected *api.Node
+	}{
+		{[]api.Node{}, "test-node", nil},
+		{
+			[]api.Node{
+				{ObjectMeta: api.ObjectMeta{Name: "test-node-1"}},
+				{ObjectMeta: api.ObjectMeta{Name: "test-node-2"}},
+			},
+			"test-node-1",
+			&api.Node{ObjectMeta: api.ObjectMeta{Name: "test-node-1"}},
+		},
+		{
+			[]api.Node{
+				{ObjectMeta: api.ObjectMeta{Name: "test-node-1"}},
+				{ObjectMeta: api.ObjectMeta{Name: "test-node-2"}},
+			},
+			"test-node-3",
+			nil,
+		},
+	}
+
+	for _, c := range cases {
+		actual := GetNodeByName(c.nodes, c.nodeName)
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("GetNodeByName(%+v, %+v) == %+v, expected %+v",
+				c.nodes, c.nodeName, actual, c.expected)
+		}
+	}
+}

@@ -61,7 +61,7 @@ func GetWorkloads(client *k8sClient.Client, heapsterClient client.HeapsterClient
 		ServiceList:               common.GetServiceListChannel(client, nsQuery, 6),
 		PodList:                   common.GetPodListChannel(client, nsQuery, 7),
 		EventList:                 common.GetEventListChannel(client, nsQuery, 6),
-		NodeList:                  common.GetNodeListChannel(client, nsQuery, 6),
+		NodeList:                  common.GetNodeListChannel(client, 6),
 	}
 
 	return GetWorkloadsFromChannels(channels, heapsterClient)

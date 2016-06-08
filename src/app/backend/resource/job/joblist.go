@@ -52,7 +52,7 @@ func GetJobList(client client.Interface, nsQuery *common.NamespaceQuery) (*JobLi
 		ServiceList: common.GetServiceListChannel(client, nsQuery, 1),
 		PodList:     common.GetPodListChannel(client, nsQuery, 1),
 		EventList:   common.GetEventListChannel(client, nsQuery, 1),
-		NodeList:    common.GetNodeListChannel(client, nsQuery, 1),
+		NodeList:    common.GetNodeListChannel(client, 1),
 	}
 
 	return GetJobListFromChannels(channels)
