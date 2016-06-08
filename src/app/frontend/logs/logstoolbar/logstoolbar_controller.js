@@ -20,6 +20,7 @@ import {StateParams, stateName as logs} from './../logs_state';
  */
 export default class LogsToolbarController {
   /**
+   * @param {!angular.$interpolate} $interpolate
    * @param {!ui.router.$state} $state
    * @param {!StateParams} $stateParams
    * @param {!backendApi.ReplicationControllerPods} replicationControllerPods
@@ -27,7 +28,9 @@ export default class LogsToolbarController {
    * @param {!../logs_service.LogColorInversionService} logsColorInversionService
    * @ngInject
    */
-  constructor($state, $stateParams, replicationControllerPods, podLogs, logsColorInversionService) {
+  constructor(
+      $interpolate, $state, $stateParams, replicationControllerPods, podLogs,
+      logsColorInversionService) {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
@@ -69,6 +72,12 @@ export default class LogsToolbarController {
      * @private {string}
      */
     this.replicationControllerName_ = $stateParams.replicationController;
+
+    /** @private */
+    this.interpolate_ = $interpolate;
+
+    /** @export */
+    this.i18n = i18n;
   }
 
   /**
@@ -160,4 +169,34 @@ export default class LogsToolbarController {
     }
     return container;
   }
+
+  /**
+   * @export
+   * @param  {string} creationDate - date since the logged pod has been running
+   * @return {string} localized tooltip with the formated creation date
+   */
+  getRunningSinceLabel(creationDate) {
+    let filter = this.interpolate_(`{{date | date:'d/M/yy HH:mm':'UTC'}}`);
+    /** @type {string} @desc Tooltip 'Running since [some date]' showing the point in time
+     * since which the logged pod has been running. */
+    let MSG_LOGS_RUNNING_SINCE_LABEL = goog.getMsg(
+        'Running since {$creationDate} UTC', {'creationDate': filter({'date': creationDate})});
+    return MSG_LOGS_RUNNING_SINCE_LABEL;
+  }
 }
+
+const i18n = {
+  /** @export {string} @desc Label 'Pod' on the toolbar of the logs page. Ends with colon. */
+  MSG_LOGS_POD_LABEL: goog.getMsg('Pod:'),
+  /** @export {string} @desc Label 'Container' on the toolbar of the logs page. Ends with colon. */
+  MSG_LOGS_CONTAINER_LABEL: goog.getMsg('Container:'),
+  /** @export {string} @desc Label 'Not running', which appears on the toolabr of the logs page if
+      the currently selected pod container is not running. */
+  MSG_LOGS_NOT_RUNNING_LABEL: goog.getMsg('Not running'),
+  /** @export {string} @desc Label 'Pods' for a button on the toolbar of the logs page. */
+  MSG_LOGS_PODS_BUTTON_LABEL: goog.getMsg('Pods'),
+  /** @export {string} @desc Label 'Containers' for a button on the toolbar of the logs page.*/
+  MSG_LOGS_CONTAINERS_BUTTON_LABEL: goog.getMsg('Containers'),
+  /** @export {string} @desc Label 'Logs source' for a button on the toolbar of the logs page.*/
+  MSG_LOGS_LOGS_SOURCE_BUTTON_LABEL: goog.getMsg('Logs source'),
+};

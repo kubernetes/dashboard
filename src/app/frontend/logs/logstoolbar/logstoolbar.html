@@ -16,7 +16,7 @@ limitations under the License.
 
 <div layout="row" hide show-gt-sm layout-margin layout-align="center center"
      class="kd-logs-toolbar">
-  <span class="kd-logs-toolbar-text">Pod:</span>
+  <span class="kd-logs-toolbar-text">{{::ctrl.i18n.MSG_LOGS_POD_LABEL}}</span>
   <md-select class="kd-logs-toolbar-select" aria-label="Logs from pod" ng-model="ctrl.pod"
              md-on-close="ctrl.onPodChange(ctrl.pod.name)"
              required>
@@ -25,7 +25,7 @@ limitations under the License.
     </md-option>
   </md-select>
 
-  <span class="kd-logs-toolbar-text">Container:</span>
+  <span class="kd-logs-toolbar-text">{{::ctrl.i18n.MSG_LOGS_CONTAINER_LABEL}}</span>
   <md-select class="kd-logs-toolbar-select" aria-label="Containers" ng-model="ctrl.container"
              md-on-close="ctrl.onContainerChange(ctrl.container.name)"
              required>
@@ -36,10 +36,10 @@ limitations under the License.
 
   <span class="kd-logs-toolbar-text" flex="auto">
     <span ng-if="ctrl.podCreationTime">
-      Running since {{ctrl.podCreationTime | date:'d/M/yy HH:mm':'UTC'}} UTC
+      {{::ctrl.getRunningSinceLabel(ctrl.podCreationTime)}}
     </span>
     <span ng-if="!ctrl.podCreationTime">
-      Not running
+      {{::ctrl.i18n.MSG_LOGS_NOT_RUNNING_LABEL}}
     </span>
   </span>
 
@@ -57,12 +57,14 @@ limitations under the License.
   <md-menu-bar class="kd-logs-toolbar-menu-bar">
     <md-menu>
       <button ng-click="$mdOpenMenu()" class="kd-logs-toolbar-menu-button">
-        Logs source
+        {{::ctrl.i18n.MSG_LOGS_LOGS_SOURCE_BUTTON_LABEL}}
       </button>
       <md-menu-content width="3">
         <md-menu-item>
           <md-menu>
-            <md-button ng-click="$mdOpenMenu()">Pods</md-button>
+            <md-button ng-click="$mdOpenMenu()">
+              {{::ctrl.i18n.MSG_LOGS_PODS_BUTTON_LABEL}}
+            </md-button>
             <md-menu-content width="4">
               <md-button ng-repeat="item in ctrl.pods"
                          ng-click="ctrl.onPodChange(item.name)">{{item.name}}
@@ -72,7 +74,9 @@ limitations under the License.
         </md-menu-item>
         <md-menu-item>
           <md-menu>
-            <md-button ng-click="$mdOpenMenu()">Containers</md-button>
+            <md-button ng-click="$mdOpenMenu()">
+              {{::ctrl.i18n.MSG_LOGS_CONTAINERS_BUTTON_LABEL}}
+            </md-button>
             <md-menu-content width="4">
               <md-button ng-repeat="item in ctrl.containers"
                          ng-click="ctrl.onContainerChange(item.name)">{{item.name}}
