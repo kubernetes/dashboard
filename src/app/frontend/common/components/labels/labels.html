@@ -14,12 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-middle-ellipsis display-string="{{::key}}: {{::value}}" class="kd-labels"
-    ng-repeat="(key, value) in ::labelsCtrl.labels"
-    ng-if="labelsCtrl.isVisible($index)">
-</kd-middle-ellipsis>
-<div class="kd-labels kd-labels-switch" ng-show="labelsCtrl.isMoreAvailable()"
-     ng-click="labelsCtrl.switchLabelsView()">
-  {{labelsCtrl.isShowingAll() ?
-    labelsCtrl.i18n.MSG_LABELS_SHOW_LESS_TOOLTIP : labelsCtrl.i18n.MSG_LABELS_SHOW_ALL_TOOLTIP}}
+<div ng-if="::labelsCtrl.labels">
+  <kd-middle-ellipsis display-string="{{::key}}: {{::value}}" class="kd-labels"
+      ng-repeat="(key, value) in ::labelsCtrl.labels"
+      ng-if="labelsCtrl.isVisible($index)">
+  </kd-middle-ellipsis>
+  <div class="kd-labels kd-labels-switch" ng-show="labelsCtrl.isMoreAvailable()"
+       ng-click="labelsCtrl.switchLabelsView()">
+    {{labelsCtrl.isShowingAll() ?
+      labelsCtrl.i18n.MSG_LABELS_SHOW_LESS_TOOLTIP : labelsCtrl.i18n.MSG_LABELS_SHOW_ALL_TOOLTIP}}
+  </div>
 </div>
+<div ng-hide="::labelsCtrl.labels">-</div>
