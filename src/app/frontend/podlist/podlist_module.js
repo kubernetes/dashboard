@@ -15,6 +15,7 @@
 import chromeModule from 'chrome/chrome_module';
 import stateConfig from './podlist_stateconfig';
 import {podCardListComponent} from './podcardlist_component';
+import paginationModule from 'common/pagination/pagination_module';
 
 /**
  * Angular module for the Pods list view.
@@ -29,6 +30,7 @@ export default angular
           'ngResource',
           'ui.router',
           chromeModule.name,
+          paginationModule.name,
         ])
     .config(stateConfig)
     .component('kdPodCardList', podCardListComponent);

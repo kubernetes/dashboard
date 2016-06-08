@@ -34,7 +34,11 @@ limitations under the License.
     <kd-resource-card-header-column size="small" grow="nogrow">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
-  <kd-replica-set-card ng-repeat="rc in $ctrl.replicaSets"
-      replica-set="rc">
+  <kd-replica-set-card dir-paginate="rc in $ctrl.replicaSets | itemsPerPage: $ctrl.getRowsLimit()"
+                       pagination-id="replicasets" replica-set="rc">
   </kd-replica-set-card>
+  <kd-resource-card-list-footer ng-if="$ctrl.shouldShowPagination()">
+    <dir-pagination-controls boundary-links="true" pagination-id="replicasets">
+    </dir-pagination-controls>
+  </kd-resource-card-list-footer>
 </kd-resource-card-list>
