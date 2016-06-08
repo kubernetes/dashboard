@@ -23,5 +23,14 @@ export class ActionBarController {
   constructor(replicaSetDetail) {
     /** @export {!backendApi.ReplicaSetDetail} */
     this.details = replicaSetDetail;
+
+    /** @export */
+    this.i18n = i18n;
   }
 }
+
+const i18n = {
+  /** @export {string} @desc Label 'Replica Set' which appears at the top of the
+      delete dialog, opened from a replica set details page. */
+  MSG_REPLICA_SET_DETAIL_REPLICA_SET_LABEL: goog.getMsg('Replica Set'),
+};
