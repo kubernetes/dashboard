@@ -23,9 +23,10 @@ import {stateName} from 'replicasetdetail/replicasetdetail_state';
 export default class ReplicaSetCardController {
   /**
    * @param {!ui.router.$state} $state
+   * @param {!angular.$interpolate} $interpolate
    * @ngInject
    */
-  constructor($state) {
+  constructor($state, $interpolate) {
     /**
      * Initialized from the scope.
      * @export {!backendApi.ReplicaSet}
@@ -34,6 +35,12 @@ export default class ReplicaSetCardController {
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
+
+    /** @private */
+    this.interpolate_ = $interpolate;
+
+    /** @export */
+    this.i18n = i18n;
   }
 
   /**
@@ -66,6 +73,20 @@ export default class ReplicaSetCardController {
    * @export
    */
   isSuccess() { return !this.isPending() && !this.hasWarnings(); }
+
+  /**
+   * @export
+   * @param  {string} creationDate - creation date of the replica set
+   * @return {string} localized tooltip with the formated creation date
+   */
+  getCreatedAtTooltip(creationDate) {
+    let filter = this.interpolate_(`{{date | date:'short'}}`);
+    /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
+     * replica set. */
+    let MSG_REPLICA_SET_LIST_CREATED_AT_TOOLTIP =
+        goog.getMsg('Created at {$creationDate}', {'creationDate': filter({'date': creationDate})});
+    return MSG_REPLICA_SET_LIST_CREATED_AT_TOOLTIP;
+  }
 }
 
 /**
@@ -77,4 +98,14 @@ export const replicaSetCardComponent = {
   },
   controller: ReplicaSetCardController,
   templateUrl: 'replicasetlist/replicasetcard.html',
+};
+
+const i18n = {
+  /** @export {string} @desc Tooltip saying that some pods in a replica set have errors. */
+  MSG_REPLICA_SET_LIST_PODS_ERRORS_TOOLTIP: goog.getMsg('One or more pods have errors'),
+  /** @export {string} @desc Tooltip saying that some pods in a replica set are pending. */
+  MSG_REPLICA_SET_LIST_PODS_PENDING_TOOLTIP: goog.getMsg('One or more pods are in pending state'),
+  /** @export {string} @desc Label 'Replica Set' which appears at the top of the
+      delete dialog, opened from a replica set list page. */
+  MSG_REPLICA_SET_LIST_REPLICA_SET_LABEL: goog.getMsg('Replica Set'),
 };

@@ -13,6 +13,16 @@
 // limitations under the License.
 
 /**
+ * @final
+ */
+class ReplicaSetCardListController {
+  constructor() {
+    /** @export */
+    this.i18n = i18n;
+  }
+}
+
+/**
  * @return {!angular.Component}
  */
 export const replicaSetCardListComponent = {
@@ -21,4 +31,23 @@ export const replicaSetCardListComponent = {
     'replicaSets': '<',
   },
   templateUrl: 'replicasetlist/replicasetcardlist.html',
+  controller: ReplicaSetCardListController,
+};
+
+const i18n = {
+  /** @export {string} @desc Label 'Name' which appears as a column label in the table of
+      replica sets (replica set list view). */
+  MSG_REPLICA_SET_LIST_NAME_LABEL: goog.getMsg('Name'),
+  /** @export {string} @desc Label 'Labels' which appears as a column label in the table of
+      replica sets (replica set list view). */
+  MSG_REPLICA_SET_LIST_LABELS_LABEL: goog.getMsg('Labels'),
+  /** @export {string} @desc Label 'Pods' which appears as a column label in the table of
+      replica sets (replica set list view). */
+  MSG_REPLICA_SET_LIST_PODS_LABEL: goog.getMsg('Pods'),
+  /** @export {string} @desc Label 'Age' which appears as a column label in the
+      table of replica sets (replica set list view). */
+  MSG_REPLICA_SET_LIST_AGE_LABEL: goog.getMsg('Age'),
+  /** @export {string} @desc Label 'Images' which appears as a column label in the
+      table of replica sets (replica set list view). */
+  MSG_REPLICA_SET_LIST_IMAGES_LABEL: goog.getMsg('Images'),
 };

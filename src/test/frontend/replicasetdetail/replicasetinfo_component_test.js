@@ -25,7 +25,17 @@ describe('Replica Set Info controller', () => {
     angular.mock.module(replicaSetDetailModule.name);
 
     angular.mock.inject(($componentController, $rootScope) => {
-      ctrl = $componentController('kdReplicaSetInfo', {$scope: $rootScope});
+      ctrl = $componentController('kdReplicaSetInfo', {$scope: $rootScope}, {
+        replicaSet: {
+          podInfo: {
+            running: 0,
+            desired: 0,
+            failed: 0,
+            current: 0,
+            pending: 0,
+          },
+        },
+      });
     });
   });
 
