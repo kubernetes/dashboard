@@ -15,11 +15,25 @@
 /**
  * @final
  */
-class ReplicaSetCardListController {
-  constructor() {
+export class ReplicaSetCardListController {
+  /**
+   * @param {!../common/pagination/pagination_service.PaginationService} kdPaginationService
+   * @ngInject
+   */
+  constructor(kdPaginationService) {
+    /** @export {!Array<!backendApi.ReplicaSet>} Initialized from binding. */
+    this.replicaSets;
+    /** @export {!../common/pagination/pagination_service.PaginationService} */
+    this.paginationService = kdPaginationService;
     /** @export */
     this.i18n = i18n;
   }
+
+  /**
+   * @return {number}
+   * @export
+   */
+  getRowsLimit() { return this.paginationService.getRowsLimit(); }
 }
 
 /**
