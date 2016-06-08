@@ -1,0 +1,28 @@
+@import '../../variables';
+
+.kd-list-pagination {
+  align-items: center;
+  color: $foreground-2;
+  display: flex;
+  justify-content: flex-end;
+
+  > * {
+    align-items: center;
+    display: flex;
+  }
+}
+
+.kd-list-pagination-buttons {
+  margin-right: $baseline-grid;
+
+  > .md-button {
+    &.md-icon-button {
+      margin: 0;
+      padding-top: $baseline-grid / 2;
+    }
+  }
+}
+
+.kd-list-pagination-label {
+  margin-right: $baseline-grid * 2;
+}

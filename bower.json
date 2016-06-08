@@ -12,7 +12,8 @@
     "angular-sanitize": "~1.5.0",
     "material-design-icons": "~2.2.2",
     "roboto-fontface": "~0.4.5",
-    "ng-jsoneditor": "angular-tools/ng-jsoneditor#~1.0.0"
+    "ng-jsoneditor": "angular-tools/ng-jsoneditor#~1.0.0",
+    "angularUtils-pagination": "angular-utils-pagination#^0.11.1"
   },
   "overrides": {
     "material-design-icons": {

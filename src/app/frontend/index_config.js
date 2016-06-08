@@ -14,9 +14,14 @@
 
 /**
  * @param {!md.$mdThemingProvider} $mdThemingProvider
+ * @param {!{setPath: function(string)}} paginationTemplateProvider - This provider is related
+ * to angularUtils pagination module and does not have proper documentation.
  * @ngInject
  */
-export default function config($mdThemingProvider) {
+export default function config($mdThemingProvider, paginationTemplateProvider) {
+  // Set pagination template
+  paginationTemplateProvider.setPath('common/pagination/pagination.tpl.html');
+
   // Create a color palette that uses Kubernetes colors.
   let kubernetesColorPaletteName = 'kubernetesColorPalette';
   let kubernetesAccentPaletteName = 'kubernetesAccentPallete';

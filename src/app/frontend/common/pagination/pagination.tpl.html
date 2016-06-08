@@ -1,0 +1,35 @@
+<div ng-if="pages.length > 1 || !autoHide" class="kd-list-pagination">
+  <div class="kd-list-pagination-label">
+    {{ range.lower }} - {{ range.upper }} of {{ range.total}}
+  </div>
+
+  <div class="kd-list-pagination-buttons">
+    <md-button class="md-icon-button md-button md-ink-ripple"
+               ng-if="boundaryLinks"
+               ng-click="setCurrent(1)"
+               ng-disabled="pagination.current == 1">
+      <md-icon>first_page</md-icon>
+    </md-button>
+
+    <md-button class="md-icon-button md-button md-ink-ripple"
+               ng-if="directionLinks"
+               ng-click="setCurrent(pagination.current - 1)"
+               ng-disabled="pagination.current == 1">
+      <md-icon>chevron_left</md-icon>
+    </md-button>
+
+    <md-button class="md-icon-button md-button md-ink-ripple"
+               ng-if="directionLinks"
+               ng-disabled="pagination.current == pagination.last"
+               ng-click="setCurrent(pagination.current + 1)">
+      <md-icon>chevron_right</md-icon>
+    </md-button>
+
+    <md-button class="md-icon-button md-button md-ink-ripple"
+               ng-if="boundaryLinks"
+               ng-disabled="pagination.current == pagination.last"
+               ng-click="setCurrent(pagination.last)">
+      <md-icon>last_page</md-icon>
+    </md-button>
+  </div>
+</div>

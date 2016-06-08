@@ -29,8 +29,9 @@ limitations under the License.
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
 
-  <kd-resource-card ng-repeat="pod in $ctrl.podList.pods"
-      type-meta="pod.typeMeta" object-meta="pod.objectMeta">
+  <kd-resource-card
+          dir-paginate="pod in $ctrl.podList.pods | itemsPerPage: $ctrl.getRowsLimit()"
+          type-meta="pod.typeMeta" object-meta="pod.objectMeta" pagination-id="pods">
     <kd-resource-card-status layout="row">
       <md-icon class="material-icons kd-error" ng-if="$ctrl.isStatusFailed(pod)">
         error
@@ -87,4 +88,7 @@ limitations under the License.
       </kd-resource-card-column>
     </kd-resource-card-columns>
   </kd-resource-card>
+  <kd-resource-card-list-footer ng-if="$ctrl.shouldShowFooter()">
+    <dir-pagination-controls boundary-links="true" pagination-id="pods"></dir-pagination-controls>
+  </kd-resource-card-list-footer>
 </kd-resource-card-list>

@@ -22,13 +22,17 @@ export class PodCardListController {
   /**
    * @ngInject
    * @param {!ui.router.$state} $state
+   * @param {!../common/pagination/pagination_service.PaginationService} kdPaginationService
    */
-  constructor($state) {
+  constructor($state, kdPaginationService) {
     /**
      * List of pods. Initialized from the scope.
      * @export {!backendApi.PodList}
      */
     this.podList;
+
+    /** @export {!../common/pagination/pagination_service.PaginationService} */
+    this.paginationService = kdPaginationService;
 
     /**
      * Callback function that returns link to pod logs. Initialized from the scope.
@@ -85,6 +89,18 @@ export class PodCardListController {
    * @export
    */
   isStatusFailed(pod) { return pod.podPhase === 'Failed'; }
+
+  /**
+   * @return {number}
+   * @export
+   */
+  getRowsLimit() { return this.paginationService.getRowsLimit(); }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  shouldShowFooter() { return this.podList.pods.length > this.paginationService.getRowsLimit(); }
 }
 
 /**

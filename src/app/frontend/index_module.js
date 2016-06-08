@@ -45,6 +45,7 @@ export default angular
           'ngResource',
           'ngSanitize',
           'ui.router',
+          'angularUtils.directives.dirPagination',
           chromeModule.name,
           deployModule.name,
           errorModule.name,

@@ -13,6 +13,34 @@
 // limitations under the License.
 
 /**
+ * @final
+ */
+export class ReplicaSetCardListController {
+  /**
+   * @param {!../common/pagination/pagination_service.PaginationService} kdPaginationService
+   * @ngInject
+   */
+  constructor(kdPaginationService) {
+    /** @export {!Array<!backendApi.ReplicaSet>} Initialized from binding. */
+    this.replicaSets;
+    /** @export {!../common/pagination/pagination_service.PaginationService} */
+    this.paginationService = kdPaginationService;
+  }
+
+  /**
+   * @return {number}
+   * @export
+   */
+  getRowsLimit() { return this.paginationService.getRowsLimit(); }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  shouldShowFooter() { return this.replicaSets.length > this.paginationService.getRowsLimit(); }
+}
+
+/**
  * @return {!angular.Component}
  */
 export const replicaSetCardListComponent = {
