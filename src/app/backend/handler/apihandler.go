@@ -30,6 +30,7 @@ import (
 	"github.com/kubernetes/dashboard/resource/deployment"
 	"github.com/kubernetes/dashboard/resource/job"
 	. "github.com/kubernetes/dashboard/resource/namespace"
+	"github.com/kubernetes/dashboard/resource/node"
 	"github.com/kubernetes/dashboard/resource/petset"
 	"github.com/kubernetes/dashboard/resource/pod"
 	"github.com/kubernetes/dashboard/resource/replicaset"
@@ -294,6 +295,15 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 			Writes(petset.PetSetDetail{}))
 
 	apiV1Ws.Route(
+		apiV1Ws.GET("/node").
+			To(apiHandler.handleGetNodeList).
+			Writes(node.NodeList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/node/{name}").
+			To(apiHandler.handleGetNodeDetail).
+			Writes(node.NodeDetail{}))
+
+	apiV1Ws.Route(
 		apiV1Ws.DELETE("/{kind}/namespace/{namespace}/name/{name}").
 			To(apiHandler.handleDeleteResource))
 	apiV1Ws.Route(
@@ -350,6 +360,28 @@ func (apiHandler *ApiHandler) handleGetServiceDetail(request *restful.Request, r
 	service := request.PathParameter("service")
 	result, err := resourceService.GetServiceDetail(apiHandler.client, apiHandler.heapsterClient,
 		namespace, service)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get node list API call.
+func (apiHandler *ApiHandler) handleGetNodeList(request *restful.Request, response *restful.Response) {
+	result, err := node.GetNodeList(apiHandler.client)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get node detail API call.
+func (apiHandler *ApiHandler) handleGetNodeDetail(request *restful.Request, response *restful.Response) {
+	name := request.PathParameter("name")
+	result, err := node.GetNodeDetail(apiHandler.client, apiHandler.heapsterClient, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
