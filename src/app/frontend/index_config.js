@@ -14,9 +14,13 @@
 
 /**
  * @param {!md.$mdThemingProvider} $mdThemingProvider
+ * @param {!kdDirPagination.paginationTemplateProvider} paginationTemplateProvider
  * @ngInject
  */
-export default function config($mdThemingProvider) {
+export default function config($mdThemingProvider, paginationTemplateProvider) {
+  // Set pagination template
+  paginationTemplateProvider.setPath('common/pagination/pagination.html');
+
   // Create a color palette that uses Kubernetes colors.
   let kubernetesColorPaletteName = 'kubernetesColorPalette';
   let kubernetesAccentPaletteName = 'kubernetesAccentPallete';

@@ -1,0 +1,51 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<div ng-if="pages.length > 1 || !autoHide">
+  <div class="kd-list-pagination-label">
+    {{ range.lower }} - {{ range.upper }} of {{ range.total}}
+  </div>
+
+  <div class="kd-list-pagination-buttons">
+    <md-button class="md-icon-button md-button md-ink-ripple"
+               ng-if="boundaryLinks"
+               ng-click="setCurrent(1)"
+               ng-disabled="pagination.current == 1">
+      <md-icon>first_page</md-icon>
+    </md-button>
+
+    <md-button class="md-icon-button md-button md-ink-ripple"
+               ng-if="directionLinks"
+               ng-click="setCurrent(pagination.current - 1)"
+               ng-disabled="pagination.current == 1">
+      <md-icon>chevron_left</md-icon>
+    </md-button>
+
+    <md-button class="md-icon-button md-button md-ink-ripple"
+               ng-if="directionLinks"
+               ng-disabled="pagination.current == pagination.last"
+               ng-click="setCurrent(pagination.current + 1)">
+      <md-icon>chevron_right</md-icon>
+    </md-button>
+
+    <md-button class="md-icon-button md-button md-ink-ripple"
+               ng-if="boundaryLinks"
+               ng-disabled="pagination.current == pagination.last"
+               ng-click="setCurrent(pagination.last)">
+      <md-icon>last_page</md-icon>
+    </md-button>
+  </div>
+</div>
