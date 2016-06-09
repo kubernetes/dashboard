@@ -14,7 +14,7 @@
 
 import filtersModule from 'common/filters/filters_module';
 import paginationModule from 'common/pagination/pagination_module';
-import {ROWS_LIMIT} from 'common/pagination/pagination_service';
+import {DEFAULT_ROWS_LIMIT} from 'common/pagination/pagination_service';
 
 describe('Items per page filter', () => {
   /** @type {function(!Array<Object>, number, string): !Array<Object>} */
@@ -41,13 +41,13 @@ describe('Items per page filter', () => {
     // then
     expect(itemsPerPageFilter(new Array(20), 5, paginationId).length).toEqual(5);
     expect(itemsPerPageFilter(new Array(100), 0, paginationId).length).toEqual(100);
-    expect(itemsPerPageFilter(new Array(ROWS_LIMIT + 10), undefined, paginationId).length)
-        .toEqual(ROWS_LIMIT);
-    expect(itemsPerPageFilter(new Array(ROWS_LIMIT + 1), undefined, paginationId).length)
-        .toEqual(ROWS_LIMIT);
-    expect(itemsPerPageFilter(new Array(ROWS_LIMIT), undefined, paginationId).length)
-        .toEqual(ROWS_LIMIT);
-    expect(itemsPerPageFilter(new Array(ROWS_LIMIT - 1), undefined, paginationId).length)
-        .toEqual(ROWS_LIMIT - 1);
+    expect(itemsPerPageFilter(new Array(DEFAULT_ROWS_LIMIT + 10), undefined, paginationId).length)
+        .toEqual(DEFAULT_ROWS_LIMIT);
+    expect(itemsPerPageFilter(new Array(DEFAULT_ROWS_LIMIT + 1), undefined, paginationId).length)
+        .toEqual(DEFAULT_ROWS_LIMIT);
+    expect(itemsPerPageFilter(new Array(DEFAULT_ROWS_LIMIT), undefined, paginationId).length)
+        .toEqual(DEFAULT_ROWS_LIMIT);
+    expect(itemsPerPageFilter(new Array(DEFAULT_ROWS_LIMIT - 1), undefined, paginationId).length)
+        .toEqual(DEFAULT_ROWS_LIMIT - 1);
   });
 });

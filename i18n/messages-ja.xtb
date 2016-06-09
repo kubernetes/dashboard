@@ -525,4 +525,5 @@
 	<translation id="462429506979725356" key="MSG_NODE_DETAIL_CONDITION_LAST_TRANSITION_TIME_HEADER" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="Label 'Last transition time' for the condition table header on the node details page.">最終遷移時間</translation>
 	<translation id="210175108235822936" key="MSG_NODE_DETAIL_CONDITION_REASON_HEADER" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="Label 'Reason' for the condition table header on the node details page.">理由</translation>
 	<translation id="9072625199342670630" key="MSG_NODE_DETAIL_CONDITION_MESSAGE_HEADER" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="Label 'Message' for the condition table header on the node details page.">メッセージ</translation>
+	<translation id="5574079475783065419" key="MSG_RESOURCE_CARD_LIST_PAGINATION_ROW_SELECTOR_LABEL" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Label for pagination rows selector visible on resource lists.">Rows per page</translation>
 </translationbundle>
