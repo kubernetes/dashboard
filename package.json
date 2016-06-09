@@ -19,7 +19,7 @@
     "browser-sync-spa": "~1.0.3",
     "browserify": "~13.0.1",
     "browserify-istanbul": "~2.0.0",
-    "clang-format": "1.0.40",
+    "clang-format": "1.0.41",
     "del": "~2.2.0",
     "eslint-plugin-angular": "~1.0.1",
     "file-exists": "1.0.0",
