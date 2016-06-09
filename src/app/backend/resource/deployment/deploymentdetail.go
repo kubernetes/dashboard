@@ -85,6 +85,8 @@ func GetDeploymentDetail(client client.Interface, namespace string,
 			common.NewSameNamespaceQuery(namespace), options, 1),
 		PodList: common.GetPodListChannelWithOptions(client,
 			common.NewSameNamespaceQuery(namespace), options, 1),
+		EventList: common.GetEventListChannelWithOptions(client,
+			common.NewSameNamespaceQuery(namespace), options, 1),
 	}
 
 	rsList := <-channels.ReplicaSetList.List
@@ -94,6 +96,11 @@ func GetDeploymentDetail(client client.Interface, namespace string,
 
 	podList := <-channels.PodList.List
 	if err := <-channels.PodList.Error; err != nil {
+		return nil, err
+	}
+
+	eventList := <-channels.EventList.List
+	if err := <-channels.EventList.Error; err != nil {
 		return nil, err
 	}
 
@@ -107,18 +114,18 @@ func GetDeploymentDetail(client client.Interface, namespace string,
 		return nil, err
 	}
 
-	events, err := GetDeploymentEvents(client, namespace, name)
+	events, err := GetDeploymentEvents(eventList.Items, namespace, name)
 	if err != nil {
 		return nil, err
 	}
 
 	return getDeploymentDetail(deployment, oldReplicaSets, newReplicaSet,
-		podList.Items, events), nil
+		podList.Items, events, eventList.Items), nil
 }
 
 func getDeploymentDetail(deployment *extensions.Deployment,
 	oldRs []*extensions.ReplicaSet, newRs *extensions.ReplicaSet,
-	pods []api.Pod, events *common.EventList) *DeploymentDetail {
+	pods []api.Pod, events *common.EventList, rawEvents []api.Event) *DeploymentDetail {
 	var newReplicaSet replicaset.ReplicaSet
 
 	if newRs != nil {
@@ -130,8 +137,7 @@ func getDeploymentDetail(deployment *extensions.Deployment,
 	for i, replicaSet := range oldRs {
 		oldReplicaSets[i] = *replicaSet
 	}
-	oldReplicaSetList := replicaset.ToReplicaSetList(oldReplicaSets,
-		[]api.Service{}, pods, []api.Event{}, []api.Node{})
+	oldReplicaSetList := replicaset.ToReplicaSetList(oldReplicaSets, pods, rawEvents)
 
 	return &DeploymentDetail{
 		ObjectMeta:      common.NewObjectMeta(deployment.ObjectMeta),

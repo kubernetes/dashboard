@@ -191,9 +191,8 @@ func TestGetReplicationControllerList(t *testing.T) {
 							Name:      "my-app-1",
 							Namespace: "namespace-1",
 						},
-						TypeMeta:          common.TypeMeta{Kind: common.ResourceKindReplicationController},
-						ContainerImages:   []string{"my-container-image-1"},
-						InternalEndpoints: []common.Endpoint{{Host: "my-app-1.namespace-1"}},
+						TypeMeta:        common.TypeMeta{Kind: common.ResourceKindReplicationController},
+						ContainerImages: []string{"my-container-image-1"},
 						Pods: common.PodInfo{
 							Failed:    2,
 							Pending:   1,
@@ -206,9 +205,8 @@ func TestGetReplicationControllerList(t *testing.T) {
 							Name:      "my-app-2",
 							Namespace: "namespace-2",
 						},
-						TypeMeta:          common.TypeMeta{Kind: common.ResourceKindReplicationController},
-						ContainerImages:   []string{"my-container-image-2"},
-						InternalEndpoints: []common.Endpoint{{Host: "my-app-2.namespace-2"}},
+						TypeMeta:        common.TypeMeta{Kind: common.ResourceKindReplicationController},
+						ContainerImages: []string{"my-container-image-2"},
 						Pods: common.PodInfo{
 							Warnings: []common.Event{},
 						},
@@ -218,8 +216,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := getReplicationControllerList(c.replicationControllers, c.services, c.pods,
-			events, c.nodes)
+		actual := getReplicationControllerList(c.replicationControllers, c.pods, events)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getReplicationControllerList(%#v, %#v) == \n%#v\nexpected \n%#v\n",
 				c.replicationControllers, c.services, actual, c.expected)

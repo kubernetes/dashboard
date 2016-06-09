@@ -52,10 +52,8 @@ func GetDeploymentList(client client.Interface, nsQuery *common.NamespaceQuery) 
 
 	channels := &common.ResourceChannels{
 		DeploymentList: common.GetDeploymentListChannel(client.Extensions(), nsQuery, 1),
-		ServiceList:    common.GetServiceListChannel(client, nsQuery, 1),
 		PodList:        common.GetPodListChannel(client, nsQuery, 1),
 		EventList:      common.GetEventListChannel(client, nsQuery, 1),
-		NodeList:       common.GetNodeListChannel(client, nsQuery, 1),
 	}
 
 	return GetDeploymentListFromChannels(channels)
@@ -80,11 +78,6 @@ func GetDeploymentListFromChannels(channels *common.ResourceChannels) (
 		return nil, err
 	}
 
-	services := <-channels.ServiceList.List
-	if err := <-channels.ServiceList.Error; err != nil {
-		return nil, err
-	}
-
 	pods := <-channels.PodList.List
 	if err := <-channels.PodList.Error; err != nil {
 		return nil, err
@@ -95,18 +88,11 @@ func GetDeploymentListFromChannels(channels *common.ResourceChannels) (
 		return nil, err
 	}
 
-	nodes := <-channels.NodeList.List
-	if err := <-channels.NodeList.Error; err != nil {
-		return nil, err
-	}
-
-	return getDeploymentList(deployments.Items, services.Items, pods.Items, events.Items,
-		nodes.Items), nil
+	return getDeploymentList(deployments.Items, pods.Items, events.Items), nil
 }
 
-func getDeploymentList(deployments []extensions.Deployment,
-	services []api.Service, pods []api.Pod, events []api.Event,
-	nodes []api.Node) *DeploymentList {
+func getDeploymentList(deployments []extensions.Deployment, pods []api.Pod,
+	events []api.Event) *DeploymentList {
 
 	deploymentList := &DeploymentList{
 		Deployments: make([]Deployment, 0),

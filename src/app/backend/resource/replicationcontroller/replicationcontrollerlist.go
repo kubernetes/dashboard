@@ -41,12 +41,6 @@ type ReplicationController struct {
 
 	// Container images of the Replication Controller.
 	ContainerImages []string `json:"containerImages"`
-
-	// Internal endpoints of all Kubernetes services have the same label selector as this Replication Controller.
-	InternalEndpoints []common.Endpoint `json:"internalEndpoints"`
-
-	// External endpoints of all Kubernetes services have the same label selector as this Replication Controller.
-	ExternalEndpoints []common.Endpoint `json:"externalEndpoints"`
 }
 
 // GetReplicationControllerList returns a list of all Replication Controllers in the cluster.
@@ -55,27 +49,20 @@ func GetReplicationControllerList(client *client.Client, nsQuery *common.Namespa
 
 	channels := &common.ResourceChannels{
 		ReplicationControllerList: common.GetReplicationControllerListChannel(client, nsQuery, 1),
-		ServiceList:               common.GetServiceListChannel(client, nsQuery, 1),
 		PodList:                   common.GetPodListChannel(client, nsQuery, 1),
 		EventList:                 common.GetEventListChannel(client, nsQuery, 1),
-		NodeList:                  common.GetNodeListChannel(client, nsQuery, 1),
 	}
 
 	return GetReplicationControllerListFromChannels(channels)
 }
 
-// GetReplicationControllerList returns a list of all Replication Controllers in the cluster
+// GetReplicationControllerListFromChannels returns a list of all Replication Controllers in the cluster
 // reading required resource list once from the channels.
 func GetReplicationControllerListFromChannels(channels *common.ResourceChannels) (
 	*ReplicationControllerList, error) {
 
 	replicationControllers := <-channels.ReplicationControllerList.List
 	if err := <-channels.ReplicationControllerList.Error; err != nil {
-		return nil, err
-	}
-
-	services := <-channels.ServiceList.List
-	if err := <-channels.ServiceList.Error; err != nil {
 		return nil, err
 	}
 
@@ -89,40 +76,21 @@ func GetReplicationControllerListFromChannels(channels *common.ResourceChannels)
 		return nil, err
 	}
 
-	nodes := <-channels.NodeList.List
-	if err := <-channels.NodeList.Error; err != nil {
-		return nil, err
-	}
-
-	result := getReplicationControllerList(replicationControllers.Items, services.Items,
-		pods.Items, events.Items, nodes.Items)
+	result := getReplicationControllerList(replicationControllers.Items, pods.Items, events.Items)
 
 	return result, nil
 }
 
 // Returns a list of all Replication Controller model objects in the cluster, based on all Kubernetes
 // Replication Controller and Service API objects.
-// The function processes all Replication Controllers API objects and finds matching Services for them.
 func getReplicationControllerList(replicationControllers []api.ReplicationController,
-	services []api.Service, pods []api.Pod, events []api.Event,
-	nodes []api.Node) *ReplicationControllerList {
+	pods []api.Pod, events []api.Event) *ReplicationControllerList {
 
 	replicationControllerList := &ReplicationControllerList{
 		ReplicationControllers: make([]ReplicationController, 0),
 	}
 
 	for _, replicationController := range replicationControllers {
-
-		matchingServices := getMatchingServices(services, &replicationController)
-		var internalEndpoints []common.Endpoint
-		var externalEndpoints []common.Endpoint
-		for _, service := range matchingServices {
-			internalEndpoints = append(internalEndpoints,
-				common.GetInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports))
-			externalEndpoints = common.GetExternalEndpoints(replicationController.Spec.Selector,
-				pods, service, nodes)
-		}
-
 		matchingPods := make([]api.Pod, 0)
 		for _, pod := range pods {
 			if pod.ObjectMeta.Namespace == replicationController.ObjectMeta.Namespace &&
@@ -137,12 +105,10 @@ func getReplicationControllerList(replicationControllers []api.ReplicationContro
 
 		replicationControllerList.ReplicationControllers = append(replicationControllerList.ReplicationControllers,
 			ReplicationController{
-				ObjectMeta:        common.NewObjectMeta(replicationController.ObjectMeta),
-				TypeMeta:          common.NewTypeMeta(common.ResourceKindReplicationController),
-				Pods:              podInfo,
-				ContainerImages:   common.GetContainerImages(&replicationController.Spec.Template.Spec),
-				InternalEndpoints: internalEndpoints,
-				ExternalEndpoints: externalEndpoints,
+				ObjectMeta:      common.NewObjectMeta(replicationController.ObjectMeta),
+				TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicationController),
+				Pods:            podInfo,
+				ContainerImages: common.GetContainerImages(&replicationController.Spec.Template.Spec),
 			})
 	}
 

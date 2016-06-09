@@ -3,21 +3,16 @@ package deployment
 import (
 	"log"
 
+	"k8s.io/kubernetes/pkg/api"
+
 	"github.com/kubernetes/dashboard/resource/common"
 	"github.com/kubernetes/dashboard/resource/event"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
-func GetDeploymentEvents(client client.Interface, namespace string, deploymentName string) (*common.EventList, error) {
+func GetDeploymentEvents(dpEvents []api.Event, namespace string, deploymentName string) (*common.EventList, error) {
 
 	log.Printf("Getting events related to %s deployment in %s namespace", deploymentName,
 		namespace)
-
-	// Get events for deployment.
-	dpEvents, err := event.GetEvents(client, namespace, deploymentName)
-	if err != nil {
-		return nil, err
-	}
 
 	if !event.IsTypeFilled(dpEvents) {
 		dpEvents = event.FillEventsType(dpEvents)

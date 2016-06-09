@@ -52,10 +52,8 @@ func GetReplicaSetList(client client.Interface, nsQuery *common.NamespaceQuery) 
 
 	channels := &common.ResourceChannels{
 		ReplicaSetList: common.GetReplicaSetListChannel(client.Extensions(), nsQuery, 1),
-		ServiceList:    common.GetServiceListChannel(client, nsQuery, 1),
 		PodList:        common.GetPodListChannel(client, nsQuery, 1),
 		EventList:      common.GetEventListChannel(client, nsQuery, 1),
-		NodeList:       common.GetNodeListChannel(client, nsQuery, 1),
 	}
 
 	return GetReplicaSetListFromChannels(channels)
@@ -80,11 +78,6 @@ func GetReplicaSetListFromChannels(channels *common.ResourceChannels) (
 		return nil, err
 	}
 
-	services := <-channels.ServiceList.List
-	if err := <-channels.ServiceList.Error; err != nil {
-		return nil, err
-	}
-
 	pods := <-channels.PodList.List
 	if err := <-channels.PodList.Error; err != nil {
 		return nil, err
@@ -95,18 +88,11 @@ func GetReplicaSetListFromChannels(channels *common.ResourceChannels) (
 		return nil, err
 	}
 
-	nodes := <-channels.NodeList.List
-	if err := <-channels.NodeList.Error; err != nil {
-		return nil, err
-	}
-
-	return ToReplicaSetList(replicaSets.Items, services.Items, pods.Items, events.Items,
-		nodes.Items), nil
+	return ToReplicaSetList(replicaSets.Items, pods.Items, events.Items), nil
 }
 
 func ToReplicaSetList(replicaSets []extensions.ReplicaSet,
-	services []api.Service, pods []api.Pod, events []api.Event,
-	nodes []api.Node) *ReplicaSetList {
+	pods []api.Pod, events []api.Event) *ReplicaSetList {
 
 	replicaSetList := &ReplicaSetList{
 		ReplicaSets: make([]ReplicaSet, 0),

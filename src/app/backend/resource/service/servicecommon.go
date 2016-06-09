@@ -23,25 +23,25 @@ import (
 // ToService returns api service object based on kubernetes service object
 func ToService(service *api.Service) Service {
 	return Service{
-		ObjectMeta:       common.NewObjectMeta(service.ObjectMeta),
-		TypeMeta:         common.NewTypeMeta(common.ResourceKindService),
-		InternalEndpoint: common.GetInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports),
-		// TODO(maciaszczykm): Fill ExternalEndpoints with data.
-		Selector:  service.Spec.Selector,
-		ClusterIP: service.Spec.ClusterIP,
-		Type:      service.Spec.Type,
+		ObjectMeta:        common.NewObjectMeta(service.ObjectMeta),
+		TypeMeta:          common.NewTypeMeta(common.ResourceKindService),
+		InternalEndpoint:  common.GetInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports),
+		ExternalEndpoints: common.GetExternalEndpoints(service),
+		Selector:          service.Spec.Selector,
+		ClusterIP:         service.Spec.ClusterIP,
+		Type:              service.Spec.Type,
 	}
 }
 
-// ToServiceDetails returns api service object based on kubernetes service object
+// ToServiceDetail returns api service object based on kubernetes service object
 func ToServiceDetail(service *api.Service) ServiceDetail {
 	return ServiceDetail{
-		ObjectMeta:       common.NewObjectMeta(service.ObjectMeta),
-		TypeMeta:         common.NewTypeMeta(common.ResourceKindService),
-		InternalEndpoint: common.GetInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports),
-		// TODO(maciaszczykm): Fill ExternalEndpoints with data.
-		Selector:  service.Spec.Selector,
-		ClusterIP: service.Spec.ClusterIP,
-		Type:      service.Spec.Type,
+		ObjectMeta:        common.NewObjectMeta(service.ObjectMeta),
+		TypeMeta:          common.NewTypeMeta(common.ResourceKindService),
+		InternalEndpoint:  common.GetInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports),
+		ExternalEndpoints: common.GetExternalEndpoints(service),
+		Selector:          service.Spec.Selector,
+		ClusterIP:         service.Spec.ClusterIP,
+		Type:              service.Spec.Type,
 	}
 }

@@ -20,8 +20,6 @@ limitations under the License.
     <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_LABELS_LABEL}}</kd-resource-card-header-column>
     <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_PODS_LABEL}}</kd-resource-card-header-column>
     <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_AGE_LABEL}}</kd-resource-card-header-column>
-    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_INTERNAL_ENDPOINTS_LABEL}}</kd-resource-card-header-column>
-    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_EXTERNAL_ENDPOINTS_LABEL}}</kd-resource-card-header-column>
     <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_IMAGES_LABEL}}</kd-resource-card-header-column>
     <kd-resource-card-header-column size="small" grow="nogrow">
     </kd-resource-card-header-column>
@@ -60,19 +58,6 @@ limitations under the License.
         <md-tooltip>
           {{::$ctrl.getCreatedAtTooltip(daemonSet.objectMeta.creationTimestamp)}}
         </md-tooltip>
-      </kd-resource-card-column>
-      <kd-resource-card-column>
-        <div ng-if="::daemonSet.internalEndpoint">
-          <kd-internal-endpoint endpoint="::daemonSet.internalEndpoint"></kd-internal-endpoint>
-        </div>
-        <div ng-hide="daemonSet.internalEndpoint">-</div>
-      </kd-resource-card-column>
-      <kd-resource-card-column>
-        <div ng-if="::daemonSet.externalEndpoints"
-             ng-repeat="endpoint in ::daemonSet.externalEndpoints">
-          <kd-external-endpoint endpoint="endpoint"></kd-external-endpoint>
-        </div>
-        <div ng-hide="daemonSet.externalEndpoints">-</div>
       </kd-resource-card-column>
       <kd-resource-card-column>
         <div ng-repeat="image in ::daemonSet.containerImages track by $index">

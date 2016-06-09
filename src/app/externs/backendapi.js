@@ -162,8 +162,6 @@ backendApi.PodInfo;
  *   typeMeta: !backendApi.TypeMeta,
  *   pods: !backendApi.PodInfo,
  *   containerImages: !Array<string>,
- *   internalEndpoints: !Array<!backendApi.Endpoint>,
- *   externalEndpoints: !Array<!backendApi.Endpoint>
  * }}
  */
 backendApi.ReplicationController;
@@ -427,9 +425,6 @@ backendApi.ServiceList;
  *  labelSelector: !Object<string, string>,
  *  containerImages: !Array<string>,
  *  podInfo: !backendApi.PodInfo,
- *  pods: !backendApi.PodList,
- *  serviceList: !backendApi.ServiceList,
- *  hasMetrics: boolean
  * }}
  */
 backendApi.DaemonSet;
