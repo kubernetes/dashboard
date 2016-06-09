@@ -18,13 +18,13 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 )
 
-// GetNodeByName returns the node with the given name from the list
-func GetNodeByName(nodes []api.Node, nodeName string) *api.Node {
-	for _, node := range nodes {
-		if node.ObjectMeta.Name == nodeName {
-			return &node
+//getContainerImages returns container image strings from the given node.
+func getContainerImages(node api.Node) []string {
+	var containerImages []string
+	for _, image := range node.Status.Images {
+		for _, name := range image.Names {
+			containerImages = append(containerImages, name)
 		}
 	}
-
-	return nil
+	return containerImages
 }

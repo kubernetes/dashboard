@@ -18,8 +18,6 @@ import (
 	"bytes"
 
 	"k8s.io/kubernetes/pkg/api"
-
-	"github.com/kubernetes/dashboard/resource/node"
 )
 
 // Endpoint describes an endpoint that is host and a list of available ports for that host.
@@ -85,7 +83,7 @@ func getNodePortEndpoints(pods []api.Pod, service api.Service, nodes []api.Node)
 	var addresses []api.NodeAddress
 
 	for _, pod := range pods {
-		node := node.GetNodeByName(nodes, pod.Spec.NodeName)
+		node := GetNodeByName(nodes, pod.Spec.NodeName)
 		if node == nil {
 			continue
 		}
@@ -156,4 +154,15 @@ func getUniqueExternalAddresses(addresses []api.NodeAddress) []api.NodeAddress {
 	}
 
 	return result
+}
+
+// GetNodeByName returns the node with the given name from the list
+func GetNodeByName(nodes []api.Node, nodeName string) *api.Node {
+	for _, node := range nodes {
+		if node.ObjectMeta.Name == nodeName {
+			return &node
+		}
+	}
+
+	return nil
 }
