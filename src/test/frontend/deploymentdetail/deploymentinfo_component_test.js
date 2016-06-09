@@ -11,7 +11,20 @@ describe('Deployment Info controller', () => {
     angular.mock.module(deploymentDetailModule.name);
 
     angular.mock.inject(($componentController, $rootScope) => {
-      ctrl = $componentController('kdDeploymentInfo', {$scope: $rootScope});
+      ctrl = $componentController('kdDeploymentInfo', {$scope: $rootScope}, {
+        deployment: {
+          status: {
+            updated: 0,
+            replicas: 0,
+            available: 0,
+            unavailable: 0,
+          },
+          rollingUpdateStrategy: {
+            maxUnavailable: 0,
+            maxSurge: 0,
+          },
+        },
+      });
     });
   });
 

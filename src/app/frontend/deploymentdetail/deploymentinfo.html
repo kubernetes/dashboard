@@ -1,37 +1,40 @@
 <kd-info-card>
-  <kd-info-card-header>Resource details</kd-info-card-header>
-  <kd-info-card-section name="Details">
-    <kd-info-card-entry title="Name">
+  <kd-info-card-header>
+    {{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_RESOURCE_DETAILS_TITLE}}
+  </kd-info-card-header>
+  <kd-info-card-section name="{{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_DETAILS_SUBTITLE}}">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_NAME_LABEL}}">
       <kd-middle-ellipsis
               display-string="{{::$ctrl.deployment.objectMeta.name}}">
       </kd-middle-ellipsis>
     </kd-info-card-entry>
-    <kd-info-card-entry title="Namespace">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_NAMESPACE_LABEL}}">
       {{::$ctrl.deployment.objectMeta.namespace}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="Labels">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_LABELS_LABEL}}">
       <kd-labels labels="::$ctrl.deployment.objectMeta.labels"></kd-labels>
     </kd-info-card-entry>
-    <kd-info-card-entry title="Selector">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_LABEL_SELECTOR_LABEL}}">
       <kd-labels labels="::$ctrl.deployment.selector"></kd-labels>
     </kd-info-card-entry>
-    <kd-info-card-entry title="Strategy">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_STRATEGY_LABEL}}">
       {{::$ctrl.deployment.strategy}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="Min Ready Seconds">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_MIN_READY_LABEL}}">
       {{::$ctrl.deployment.minReadySeconds}}
     </kd-info-card-entry>
 
-    <kd-info-card-entry title="Rolling Update Strategy" ng-if="$ctrl.rollingUpdateStrategy()">
-      Max Surge: {{::$ctrl.deployment.rollingUpdateStrategy.maxSurge}}
-      Max Unavailable: {{::$ctrl.deployment.rollingUpdateStrategy.maxUnavailable}}
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_ROLLING_STRATEGY_LABEL}}"
+                        ng-if="$ctrl.rollingUpdateStrategy()">                  
+      {{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_MAX_SURGE_LABEL}},
+      {{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_MAX_UNAVAILABLE_LABEL}}
     </kd-info-card-entry>
 
-    <kd-info-card-entry title="Status">
-      {{::$ctrl.deployment.statusInfo.updated}} updated,
-      {{::$ctrl.deployment.statusInfo.replicas}} total,
-      {{::$ctrl.deployment.statusInfo.available}} available,
-      {{::$ctrl.deployment.statusInfo.unavailable}} unavailable
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_STATUS_LABEL}}">
+      {{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_REPLICAS_UPDATED_LABEL}},
+      {{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_REPLICAS_TOTAL_LABEL}},
+      {{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_REPLICAS_AVAILABLE_LABEL}},
+      {{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_REPLICAS_UNAVAILABLE_LABEL}}
     </kd-info-card-entry>
   </kd-info-card-section>
 </kd-info-card>

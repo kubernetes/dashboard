@@ -13,6 +13,13 @@
 // limitations under the License.
 
 /**
+ * @final
+ */
+class DeploymentCardListController {
+  constructor() { this.i18n = i18n; }
+}
+
+/**
  * @return {!angular.Component}
  */
 export const deploymentCardListComponent = {
@@ -21,4 +28,23 @@ export const deploymentCardListComponent = {
     'deployments': '<',
   },
   templateUrl: 'deploymentlist/deploymentcardlist.html',
+  controller: DeploymentCardListController,
+};
+
+const i18n = {
+  /** @export {string} @desc Label 'Name' which appears as a column label in the table of
+      deployments (deployment list view). */
+  MSG_DEPLOYMENT_LIST_NAME_LABEL: goog.getMsg('Name'),
+  /** @export {string} @desc Label 'Labels' which appears as a column label in the table of
+      deployments (deployment list view). */
+  MSG_DEPLOYMENT_LIST_LABELS_LABEL: goog.getMsg('Labels'),
+  /** @export {string} @desc Label 'Pods' which appears as a column label in the table of
+      deployments (deployment list view). */
+  MSG_DEPLOYMENT_LIST_PODS_LABEL: goog.getMsg('Pods'),
+  /** @export {string} @desc Label 'Age' which appears as a column label in the
+      table of deployments (deployment list view). */
+  MSG_DEPLOYMENT_LIST_AGE_LABEL: goog.getMsg('Age'),
+  /** @export {string} @desc Label 'Images' which appears as a column label in the
+      table of deployments (deployment list view). */
+  MSG_DEPLOYMENT_LIST_IMAGES_LABEL: goog.getMsg('Images'),
 };
