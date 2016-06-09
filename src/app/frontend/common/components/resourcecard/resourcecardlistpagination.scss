@@ -16,12 +16,23 @@
 
 .kd-list-pagination {
   align-items: center;
-  color: $foreground-2;
-  display: flex;
   justify-content: flex-end;
+}
 
+.kd-list-pagination-controls {
   > * {
     align-items: center;
     display: flex;
+  }
+}
+
+md-select {
+  &.kd-list-pagination-row-selector {
+    margin: 0 $baseline-grid * 2 $baseline-grid / 2 0;
+
+    .md-select-value {
+      min-width: 6 * $baseline-grid;
+      width: 100%;
+    }
   }
 }

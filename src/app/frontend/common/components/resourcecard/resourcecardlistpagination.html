@@ -14,6 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<dir-pagination-controls class="kd-list-pagination" boundary-links="true"
-                         pagination-id="$ctrl.paginationId" template-url="common/pagination/pagination.html">
-</dir-pagination-controls>
+<div ng-if="$ctrl.shouldShowPagination()" flex layout="row" class="kd-list-pagination">
+  <div style="margin-right: 8px; line-height: 40px; vertical-align: middle">Rows per page:</div>
+  <md-select ng-model="$ctrl.rowsLimit" class="kd-list-pagination-row-selector"
+             md-selected-text="$ctrl.rowsLimit" ng-change="$ctrl.onRowsLimitUpdate()"
+             aria-label="Rows per page">
+    <md-option ng-repeat="rows in $ctrl.rowsLimitOptions" ng-value="{{rows}}">
+      {{rows}}
+    </md-option>
+  </md-select>
+
+  <dir-pagination-controls pagination-id="$ctrl.paginationId" class="kd-list-pagination-controls"
+                           boundary-links="true" template-url="common/pagination/pagination.html">
+  </dir-pagination-controls>
+</div>

@@ -19,7 +19,7 @@ export class ResourceCardListPaginationController {
   /**
    * @ngInject
    */
-  constructor() {
+  constructor(kdPaginationService) {
     /** @export {!./resourcecardlistfooter_component.ResourceCardListFooterController} -
      * Initialized from require just before $onInit is called. */
     this.resourceCardListFooterCtrl;
@@ -28,12 +28,43 @@ export class ResourceCardListPaginationController {
     /** @export {string} - Unique pagination id. Used together with id on <dir-paginate>
      *  directive */
     this.paginationId;
+    /** @private {!../../pagination/pagination_service.PaginationService} */
+    this.paginationService_ = kdPaginationService;
+    /** @export {number} */
+    this.rowsLimit = this.paginationService_.getRowsLimit(this.paginationId);
+    /** @export {!Array<number>} */
+    this.rowsLimitOptions = this.paginationService_.getRowsLimitOptions();
   }
 
   /**
    * @export
    */
-  $onInit() { this.resourceCardListFooterCtrl.setListPagination(this); }
+  $onInit() {
+    if (this.paginationId === undefined || this.paginationId.length === 0) {
+      throw new Error('Pagination id has to be set.');
+    }
+
+    if (!this.paginationService_.isRegistered(this.paginationId)) {
+      this.paginationService_.registerInstance(this.paginationId);
+    }
+
+    this.resourceCardListFooterCtrl.setListPagination(this);
+  }
+
+  /**
+   * Updates number of rows to display on associated resource list.
+   * @export
+   */
+  onRowsLimitUpdate() { this.paginationService_.setRowsLimit(this.rowsLimit, this.paginationId); }
+
+  /**
+   * Returns true if number of items on the list is bigger
+   * then min available rows limit, false otherwise.
+   *
+   * @return {boolean}
+   * @export
+   */
+  shouldShowPagination() { return this.totalItems > this.paginationService_.getMinRowsLimit(); }
 }
 
 /**

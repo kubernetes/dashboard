@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import paginationModule from 'common/pagination/pagination_module';
-import {ROWS_LIMIT} from 'common/pagination/pagination_service';
+import {DEFAULT_ROWS_LIMIT} from 'common/pagination/pagination_service';
 
 describe('Pagination service', () => {
   /** @type {!common/pagination/pagination_service.PaginationService} */
@@ -26,9 +26,11 @@ describe('Pagination service', () => {
 
   it('should return rows limit', () => {
     // when
-    let rowsLimit = paginationService.getRowsLimit();
+    let paginationId = 'test-id';
+    paginationService.registerInstance(paginationId);
+    let rowsLimit = paginationService.getRowsLimit(paginationId);
 
     // then
-    expect(rowsLimit).toEqual(ROWS_LIMIT);
+    expect(rowsLimit).toEqual(DEFAULT_ROWS_LIMIT);
   });
 });
