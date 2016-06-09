@@ -13,22 +13,91 @@
 // limitations under the License.
 
 import paginationModule from 'common/pagination/pagination_module';
-import {ROWS_LIMIT} from 'common/pagination/pagination_service';
+import {DEFAULT_ROWS_LIMIT, ROWS_LIMIT_OPTIONS} from 'common/pagination/pagination_service';
 
 describe('Pagination service', () => {
   /** @type {!common/pagination/pagination_service.PaginationService} */
   let paginationService;
+  /** @type {string} */
+  let paginationId;
 
   beforeEach(() => angular.mock.module(paginationModule.name));
 
-  beforeEach(
-      angular.mock.inject((kdPaginationService) => { paginationService = kdPaginationService; }));
+  beforeEach(angular.mock.inject((kdPaginationService) => {
+    paginationId = 'test-id';
+    paginationService = kdPaginationService;
+    paginationService.registerInstance(paginationId);
+  }));
 
   it('should return rows limit', () => {
     // when
-    let rowsLimit = paginationService.getRowsLimit();
+    let rowsLimit = paginationService.getRowsLimit(paginationId);
 
     // then
-    expect(rowsLimit).toEqual(ROWS_LIMIT);
+    expect(rowsLimit).toEqual(DEFAULT_ROWS_LIMIT);
   });
+
+  it('should throw an error on get rows limit', () => {
+    // given
+    let wrongPaginationId = 'wrong-id';
+
+    // then
+    expect(() => { paginationService.getRowsLimit(wrongPaginationId); })
+        .toThrow(new Error(
+            `Pagination limit for given pagination id ${wrongPaginationId} does not exist`));
+  });
+
+  it('should register and recognize registered pagination id', () => {
+    // given
+    let paginationId = 'some-id';
+
+    // when
+    paginationService.registerInstance(paginationId);
+    let result = paginationService.isRegistered(paginationId);
+
+    // then
+    expect(result).toBeTruthy();
+  });
+
+  it('should not recognize not registered pagination id', () => {
+    // when
+    let result = paginationService.isRegistered('some-id');
+
+    // then
+    expect(result).toBeFalsy();
+  });
+
+  it('should set rows limit for given pagination id', () => {
+    // given
+    let rowsLimit = 10;
+
+    // when
+    paginationService.setRowsLimit(rowsLimit, paginationId);
+    let result = paginationService.getRowsLimit(paginationId);
+
+    // then
+    expect(result).toEqual(rowsLimit);
+  });
+
+  it('should throw an error on set rows limit', () => {
+    // given
+    let wrongRowsLimit = 5;
+    let notExistingId = 'some-id';
+    let rowsLimit = 10;
+
+    // then
+    expect(() => {
+      paginationService.setRowsLimit(wrongRowsLimit, paginationId);
+    }).toThrow(new Error(`Limit has to be in range ${ROWS_LIMIT_OPTIONS}`));
+
+    expect(() => { paginationService.setRowsLimit(rowsLimit, notExistingId); })
+        .toThrow(
+            new Error(`Pagination limit for given pagination id ${notExistingId} does not exist`));
+  });
+
+  it('should return min rows limit',
+     () => { expect(paginationService.getMinRowsLimit()).toEqual(ROWS_LIMIT_OPTIONS[0]); });
+
+  it('should return rows limit options',
+     () => { expect(paginationService.getRowsLimitOptions()).toEqual(ROWS_LIMIT_OPTIONS); });
 });

@@ -45,14 +45,14 @@ export class ResourceCardListFooterController {
 
   /**
    * Returns true if pagination slot has been filled and number of items on the list is bigger
-   * then max available limit, false otherwise.
+   * then min available rows limit, false otherwise.
    *
    * @return {boolean}
    * @private
    */
   shouldShowPagination_() {
     return this.listPagination_ &&
-        this.listPagination_.totalItems > this.paginationService_.getRowsLimit();
+        this.listPagination_.totalItems > this.paginationService_.getMinRowsLimit();
   }
 
   /**

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import resourceCardModule from 'common/components/resourcecard/resourcecard_module';
+import paginationModule from 'common/pagination/pagination_module';
 
 describe('Resource card list pagination', () => {
   /** @type
@@ -23,21 +24,69 @@ describe('Resource card list pagination', () => {
    *  {!common/components/resourcecard/resourcecardlistfooter_component.ResourceCardListFooterController}
    */
   let resourceCardListFooterCtrl;
+  /** @type {string} */
+  let paginationId = 'test-id';
+  /** @type {!common/pagination/pagination_service.PaginationService} */
+  let paginationService;
 
   beforeEach(() => {
+    angular.mock.module(paginationModule.name);
     angular.mock.module(resourceCardModule.name);
 
-    angular.mock.inject(($componentController) => {
+    angular.mock.inject(($componentController, _kdPaginationService_) => {
       resourceCardListFooterCtrl = {setListPagination: () => {}};
-      ctrl = $componentController(
-          'kdResourceCardListPagination', {},
-          {resourceCardListFooterCtrl: resourceCardListFooterCtrl});
+      paginationService = _kdPaginationService_;
+      paginationService.registerInstance(paginationId);
+      ctrl = $componentController('kdResourceCardListPagination', {}, {
+        paginationId: paginationId,
+        kdPaginationService: paginationService,
+        resourceCardListFooterCtrl: resourceCardListFooterCtrl,
+      });
     });
   });
 
   it('should set pagination controller on resource card list footer ctrl', () => {
+    // given
     spyOn(resourceCardListFooterCtrl, 'setListPagination');
+
+    // when
     ctrl.$onInit();
+
+    // then
     expect(resourceCardListFooterCtrl.setListPagination).toHaveBeenCalledWith(ctrl);
+  });
+
+  it('should show pagination', () => {
+    // given
+    ctrl.totalItems = 50;
+
+    // when
+    let result = ctrl.shouldShowPagination();
+
+    // then
+    expect(result).toBeTruthy();
+  });
+
+  it('should hide pagination', () => {
+    // given
+    ctrl.totalItems = 10;
+
+    // when
+    let result = ctrl.shouldShowPagination();
+
+    // then
+    expect(result).toBeFalsy();
+  });
+
+  it('should update rows limit', () => {
+    // given
+    ctrl.rowsLimit = 100;
+    spyOn(paginationService, 'setRowsLimit');
+
+    // when
+    ctrl.onRowsLimitUpdate();
+
+    // then
+    expect(paginationService.setRowsLimit).toHaveBeenCalledWith(100, paginationId);
   });
 });

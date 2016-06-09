@@ -33,7 +33,11 @@ export default function itemsPerPageFilter($delegate, kdPaginationService) {
    */
   let filterItems = function(collection, itemsPerPage, paginationId) {
     if (itemsPerPage === undefined) {
-      return sourceFilter(collection, kdPaginationService.getRowsLimit(), paginationId);
+      if (!kdPaginationService.isRegistered(paginationId)) {
+        kdPaginationService.registerInstance(paginationId);
+      }
+
+      return sourceFilter(collection, kdPaginationService.getRowsLimit(paginationId), paginationId);
     }
 
     return sourceFilter(collection, itemsPerPage, paginationId);
