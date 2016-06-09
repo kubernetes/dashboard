@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import resourceCardModule from 'common/components/resourcecard/resourcecard_module';
+import paginationModule from 'common/pagination/pagination_module';
 
 describe('Resource card list pagination', () => {
   /** @type
@@ -25,19 +26,28 @@ describe('Resource card list pagination', () => {
   let resourceCardListFooterCtrl;
 
   beforeEach(() => {
+    angular.mock.module(paginationModule.name);
     angular.mock.module(resourceCardModule.name);
 
-    angular.mock.inject(($componentController) => {
+    angular.mock.inject(($componentController, _kdPaginationService_) => {
       resourceCardListFooterCtrl = {setListPagination: () => {}};
-      ctrl = $componentController(
-          'kdResourceCardListPagination', {},
-          {resourceCardListFooterCtrl: resourceCardListFooterCtrl});
+      _kdPaginationService_.registerInstance('test-id');
+      ctrl = $componentController('kdResourceCardListPagination', {}, {
+        paginationId: 'test-id',
+        kdPaginationService: _kdPaginationService_,
+        resourceCardListFooterCtrl: resourceCardListFooterCtrl,
+      });
     });
   });
 
   it('should set pagination controller on resource card list footer ctrl', () => {
+    // given
     spyOn(resourceCardListFooterCtrl, 'setListPagination');
+
+    // when
     ctrl.$onInit();
+
+    // then
     expect(resourceCardListFooterCtrl.setListPagination).toHaveBeenCalledWith(ctrl);
   });
 });

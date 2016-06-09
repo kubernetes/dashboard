@@ -16,4 +16,11 @@
 
 .kd-resource-card-list-footer {
   border-top: 1px solid $border;
+  white-space: nowrap;
+}
+
+.kd-list-pagination-slot {
+  kd-resource-card-list-pagination {
+    flex-grow: 1;
+  }
 }

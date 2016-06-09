@@ -12,8 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/** Available numbers of rows that can be shown on resource list. */
+export const ROWS_LIMIT_OPTIONS = [10, 25, 50, 100];
 /** Defines max number of rows that will be displayed on the list before applying pagination. */
-export const ROWS_LIMIT = 20;
+export const DEFAULT_ROWS_LIMIT = 10;
 
 /**
  * @final
@@ -21,16 +23,72 @@ export const ROWS_LIMIT = 20;
 export class PaginationService {
   /** @ngInject */
   constructor() {
-    /**
-     * @const
-     * @private {number} - Defines max number of rows that will be displayed on the list before
-     * applying pagination.
-     */
-    this.rowsLimit_ = ROWS_LIMIT;
+    this.rowsLimitOptions_ = ROWS_LIMIT_OPTIONS;
+    /** @private {Map<string, number>} */
+    this.instances_ = new Map();
   }
 
   /**
+   * Returns true if given pagination id is registered, false otherwise.
+   *
+   * @param {string} paginationId
+   * @return {boolean}
+   */
+  isRegistered(paginationId) { return this.instances_.has(paginationId); }
+
+  /**
+   * Registers pagination instance for given pagination id.
+   *
+   * @param {string} paginationId
+   */
+  registerInstance(paginationId) { this.instances_.set(paginationId, DEFAULT_ROWS_LIMIT); }
+
+  /**
+   * Returns number of rows that should be displayed on the list based on given pagination id.
+   * If given id is not registered an error is thrown.
+   *
    * @return {number}
    */
-  getRowsLimit() { return this.rowsLimit_; }
+  getRowsLimit(paginationId) {
+    let rowsLimit = this.instances_.get(paginationId);
+
+    if (!rowsLimit) {
+      throw new Error(`Pagination limit for given pagination id ${paginationId} does not exist`);
+    }
+
+    return rowsLimit;
+  }
+
+  /**
+   *
+   * @param limit
+   * @param paginationId
+   */
+  setRowsLimit(limit, paginationId) {
+    let rowsLimit = this.instances_.get(paginationId);
+
+    if (!rowsLimit) {
+      throw new Error(`Pagination limit for given pagination id ${paginationId} does not exist`);
+    }
+
+    if (this.rowsLimitOptions_.indexOf(limit) < 0) {
+      throw new Error(`Limit has to be in range ${ROWS_LIMIT_OPTIONS}`);
+    }
+
+    this.instances_.set(paginationId, limit);
+  }
+
+  /**
+   * Returns minimum available number of rows that can be displayed.
+   *
+   * @return {number}
+   */
+  getMinRowsLimit() { return Math.min.apply(Math, this.rowsLimitOptions_); }
+
+  /**
+   * Returns numbers of rows that can be shown on resource list.
+   *
+   * @return {!Array<number>}
+   */
+  getRowsLimitOptions() { return this.rowsLimitOptions_; }
 }
