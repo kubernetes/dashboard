@@ -15,6 +15,8 @@
 import resourceModule from 'common/resource/resource_module';
 import {resourceCardComponent} from './resourcecard_component';
 import {resourceCardListComponent} from './resourcecardlist_component';
+import {resourceCardListFooterComponent} from './resourcecardlistfooter_component';
+import {resourceCardListPaginationComponent} from './resourcecardlistpagination_component';
 import {resourceCardMenuComponent} from './resourcecardmenu_component';
 import {resourceCardDeleteMenuItemComponent} from './resourcecarddeletemenuitem_component';
 import {resourceCardEditMenuItemComponent} from './resourcecardeditmenuitem_component';
@@ -34,10 +36,13 @@ export default angular
         [
           'ngMaterial',
           'ui.router',
+          'angularUtils.directives.dirPagination',
           resourceModule.name,
         ])
     .component('kdResourceCard', resourceCardComponent)
     .component('kdResourceCardList', resourceCardListComponent)
+    .component('kdResourceCardListFooter', resourceCardListFooterComponent)
+    .component('kdResourceCardListPagination', resourceCardListPaginationComponent)
     .component('kdResourceCardMenu', resourceCardMenuComponent)
     .component('kdResourceCardDeleteMenuItem', resourceCardDeleteMenuItemComponent)
     .component('kdResourceCardEditMenuItem', resourceCardEditMenuItemComponent)

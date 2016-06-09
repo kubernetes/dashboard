@@ -18,6 +18,7 @@ import componentsModule from 'common/components/components_module';
 import {replicaSetCardComponent} from './replicasetcard_component';
 import {replicaSetCardListComponent} from './replicasetcardlist_component';
 import replicaSetDetailModule from 'replicasetdetail/replicasetdetail_module';
+import paginationModule from 'common/pagination/pagination_module';
 
 /**
  * Angular module for the Replica Set list view.
@@ -34,6 +35,7 @@ export default angular
           filtersModule.name,
           componentsModule.name,
           replicaSetDetailModule.name,
+          paginationModule.name,
         ])
     .config(stateConfig)
     .component('kdReplicaSetCardList', replicaSetCardListComponent)
