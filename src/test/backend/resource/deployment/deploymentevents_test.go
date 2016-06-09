@@ -7,7 +7,6 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
-	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
 
 	"github.com/kubernetes/dashboard/resource/common"
 )
@@ -44,23 +43,7 @@ func TestGetDeploymentEvents(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		fakeClient := testclient.NewSimpleFake(c.eventList, c.deployment)
-
-		actual, _ := GetDeploymentEvents(fakeClient, c.namespace, c.name)
-
-		actions := fakeClient.Actions()
-		if len(actions) != len(c.expectedActions) {
-			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
-				len(c.expectedActions), len(actions))
-			continue
-		}
-
-		for i, verb := range c.expectedActions {
-			if actions[i].GetVerb() != verb {
-				t.Errorf("Unexpected action: %+v, expected %s",
-					actions[i], verb)
-			}
-		}
+		actual, _ := GetDeploymentEvents(c.eventList.Items, c.namespace, c.name)
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetDeploymentEvents(client,%#v, %#v) == \ngot: %#v, \nexpected %#v",

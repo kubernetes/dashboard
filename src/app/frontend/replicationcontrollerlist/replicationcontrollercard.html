@@ -54,14 +54,6 @@ limitations under the License.
       </md-tooltip>
     </kd-resource-card-column>
     <kd-resource-card-column>
-      <div ng-repeat="endpoint in ::$ctrl.replicationController.externalEndpoints track by $index">
-        <kd-external-endpoint endpoint="::endpoint"></kd-external-endpoint>
-      </div>
-      <div ng-if="::!$ctrl.replicationController.externalEndpoints.length">
-        -
-      </div>
-    </kd-resource-card-column>
-    <kd-resource-card-column>
       <div ng-repeat="image in ::$ctrl.replicationController.containerImages track by $index">
         <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
       </div>

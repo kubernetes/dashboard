@@ -47,9 +47,6 @@ const i18n = {
   /** @export {string} @desc Label 'Age' which appears as a column label in the
       table of replication controllers (RC list view). */
   MSG_RC_LIST_AGE_LABEL: goog.getMsg('Age'),
-  /** @export {string} @desc Label 'Endpoints' which appears as a column label in the
-      table of replication controllers (RC list view). */
-  MSG_RC_LIST_ENDPOINTS_LABEL: goog.getMsg('Endpoints'),
   /** @export {string} @desc Label 'Images' which appears as a column label in the
       table of replication controllers (RC list view). */
   MSG_RC_LIST_IMAGES_LABEL: goog.getMsg('Images'),

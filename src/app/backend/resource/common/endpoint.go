@@ -29,31 +29,20 @@ type Endpoint struct {
 	Ports []ServicePort `json:"ports"`
 }
 
-// GetExternalEndpoints returns array of external endpoints for resources targeted by given
-// selector.
-func GetExternalEndpoints(resourceSelector map[string]string, allPods []api.Pod,
-	service api.Service, nodes []api.Node) []Endpoint {
-
+// GetExternalEndpoints returns endpoints that are externally reachable for a service.
+func GetExternalEndpoints(service *api.Service) []Endpoint {
 	var externalEndpoints []Endpoint
-	resourcePods := FilterPodsBySelector(allPods, resourceSelector)
-
-	if service.Spec.Type == api.ServiceTypeNodePort {
-		externalEndpoints = getNodePortEndpoints(resourcePods, service, nodes)
-	} else if service.Spec.Type == api.ServiceTypeLoadBalancer {
+	if service.Spec.Type == api.ServiceTypeLoadBalancer {
 		for _, ingress := range service.Status.LoadBalancer.Ingress {
-			externalEndpoints = append(externalEndpoints, getExternalEndpoint(
-				ingress, service.Spec.Ports))
-		}
-
-		if len(externalEndpoints) == 0 {
-			externalEndpoints = getNodePortEndpoints(resourcePods,
-				service, nodes)
+			externalEndpoints = append(externalEndpoints, getExternalEndpoint(ingress, service.Spec.Ports))
 		}
 	}
 
-	if len(externalEndpoints) == 0 && (service.Spec.Type == api.ServiceTypeNodePort ||
-		service.Spec.Type == api.ServiceTypeLoadBalancer) {
-		externalEndpoints = getLocalhostEndpoints(service)
+	for _, ip := range service.Spec.ExternalIPs {
+		externalEndpoints = append(externalEndpoints, Endpoint{
+			Host:  ip,
+			Ports: GetServicePorts(service.Spec.Ports),
+		})
 	}
 
 	return externalEndpoints
@@ -77,56 +66,6 @@ func GetInternalEndpoint(serviceName, namespace string, ports []api.ServicePort)
 	}
 }
 
-// Returns array of external endpoints for specified pods.
-func getNodePortEndpoints(pods []api.Pod, service api.Service, nodes []api.Node) []Endpoint {
-	var externalEndpoints []Endpoint
-	var addresses []api.NodeAddress
-
-	for _, pod := range pods {
-		node := GetNodeByName(nodes, pod.Spec.NodeName)
-		if node == nil {
-			continue
-		}
-
-		addresses = append(addresses, node.Status.Addresses...)
-	}
-
-	addresses = getUniqueExternalAddresses(addresses)
-
-	for _, address := range addresses {
-		for _, port := range service.Spec.Ports {
-			externalEndpoints = append(externalEndpoints, Endpoint{
-				Host: address.Address,
-				Ports: []ServicePort{
-					{
-						Protocol: port.Protocol,
-						Port:     port.NodePort,
-					},
-				},
-			})
-		}
-	}
-
-	return externalEndpoints
-}
-
-// Returns localhost endpoints for specified node port or load balancer service.
-func getLocalhostEndpoints(service api.Service) []Endpoint {
-	var externalEndpoints []Endpoint
-	for _, port := range service.Spec.Ports {
-		externalEndpoints = append(externalEndpoints, Endpoint{
-			Host: "localhost",
-			Ports: []ServicePort{
-				{
-					Protocol: port.Protocol,
-					Port:     port.NodePort,
-				},
-			},
-		})
-	}
-	return externalEndpoints
-}
-
 // Returns external endpoint name for the given service properties.
 func getExternalEndpoint(ingress api.LoadBalancerIngress, ports []api.ServicePort) Endpoint {
 	var host string
@@ -139,21 +78,6 @@ func getExternalEndpoint(ingress api.LoadBalancerIngress, ports []api.ServicePor
 		Host:  host,
 		Ports: GetServicePorts(ports),
 	}
-}
-
-// Returns only unique external ip addresses.
-func getUniqueExternalAddresses(addresses []api.NodeAddress) []api.NodeAddress {
-	visited := make(map[string]bool, 0)
-	result := make([]api.NodeAddress, 0)
-
-	for _, elem := range addresses {
-		if !visited[elem.Address] && elem.Type == api.NodeExternalIP {
-			visited[elem.Address] = true
-			result = append(result, elem)
-		}
-	}
-
-	return result
 }
 
 // GetNodeByName returns the node with the given name from the list

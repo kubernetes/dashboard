@@ -23,7 +23,6 @@ import (
 	resourceService "github.com/kubernetes/dashboard/resource/service"
 	"k8s.io/kubernetes/pkg/api"
 	unversioned "k8s.io/kubernetes/pkg/api/unversioned"
-	"k8s.io/kubernetes/pkg/apis/extensions"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
@@ -70,11 +69,6 @@ func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient client.Heapst
 		FieldSelector: fields.Everything(),
 	})
 
-	nodes, err := client.Nodes().List(api.ListOptions{
-		LabelSelector: labels.Everything(),
-		FieldSelector: fields.Everything(),
-	})
-
 	if err != nil {
 		return nil, err
 	}
@@ -91,7 +85,7 @@ func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient client.Heapst
 
 	for _, service := range matchingServices {
 		daemonSetDetail.ServiceList.Services = append(daemonSetDetail.ServiceList.Services,
-			getService(service, *daemonSet, pods.Items, nodes.Items))
+			resourceService.ToService(&service))
 	}
 
 	for _, container := range daemonSet.Spec.Template.Spec.Containers {
@@ -138,7 +132,7 @@ func DeleteDaemonSet(client k8sClient.Interface, namespace, name string,
 	return nil
 }
 
-// Deletes services related to daemon set with given name in given namespace.
+// DeleteDaemonSetServices deletes services related to daemon set with given name in given namespace.
 func DeleteDaemonSetServices(client k8sClient.Interface, namespace, name string) error {
 	log.Printf("Deleting services related to %s daemon set from %s namespace", name,
 		namespace)
@@ -168,15 +162,4 @@ func DeleteDaemonSetServices(client k8sClient.Interface, namespace, name string)
 		name, namespace)
 
 	return nil
-}
-
-// Returns detailed information about service from given service
-func getService(service api.Service, daemonSet extensions.DaemonSet,
-	pods []api.Pod, nodes []api.Node) resourceService.Service {
-
-	result := resourceService.ToService(&service)
-	// TODO: This may be wrong as we dont use all attributes from selector
-	result.ExternalEndpoints = common.GetExternalEndpoints(daemonSet.Spec.Selector.MatchLabels, pods, service, nodes)
-
-	return result
 }
