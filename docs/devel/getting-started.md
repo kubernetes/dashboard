@@ -133,7 +133,3 @@ It's possible to run `gulp` and all the dependencies inside a development contai
 just replace `gulp [some arg]` commands with `build/run-gulp-in-docker.sh [some arg]`. If you
 do this, the only dependency is `docker`, and required commands such as `npm install`
 will be run automatically.
-
-## Contribute
-
-Wish to contribute? Great, start [here](../../CONTRIBUTING.md).
