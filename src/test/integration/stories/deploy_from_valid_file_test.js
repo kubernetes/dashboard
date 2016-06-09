@@ -39,9 +39,7 @@ describe('Deploy from valid file user story test', () => {
     deployFromFilePage = new DeployFromFilePageObject();
     replicationControllersPage = new ReplicationControllersPageObject();
     deleteDialog = new DeleteReplicationControllerDialogObject();
-    browser.get('#/deploy');
-    // switches to deploy from file
-    deployFromFilePage.deployFromFileRadioButton.click();
+    browser.get('#/deploy/file');
   });
 
   it('should upload the file', () => {

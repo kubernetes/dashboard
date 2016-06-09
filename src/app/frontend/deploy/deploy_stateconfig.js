@@ -13,7 +13,9 @@
 // limitations under the License.
 
 import DeployController from './deploy_controller';
-import {stateName} from './deploy_state';
+import DeployFromSettingsController from './deployfromsettings_controller';
+import DeployFromFileController from './deployfromfile_controller';
+import {baseStateName, deployAppStateName, deployFileStateName} from './deploy_state';
 import {stateName as chromeStateName} from 'chrome/chrome_state';
 
 /**
@@ -23,17 +25,32 @@ import {stateName as chromeStateName} from 'chrome/chrome_state';
  * @ngInject
  */
 export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
+  $stateProvider.state(baseStateName, {
     controller: DeployController,
     controllerAs: 'ctrl',
     url: '/deploy',
     parent: chromeStateName,
+    abstract: true,
+    templateUrl: 'deploy/deploy.html',
+  });
+  $stateProvider.state(deployAppStateName, {
+    controller: DeployFromSettingsController,
+    controllerAs: 'ctrl',
+    url: '/app',
+    parent: baseStateName,
     resolve: {
       'namespaces': resolveNamespaces,
       'protocolsResource': getProtocolsResource,
       'protocols': getDefaultProtocols,
     },
-    templateUrl: 'deploy/deploy.html',
+    templateUrl: 'deploy/deployfromsettings.html',
+  });
+  $stateProvider.state(deployFileStateName, {
+    controller: DeployFromFileController,
+    controllerAs: 'ctrl',
+    url: '/file',
+    parent: baseStateName,
+    templateUrl: 'deploy/deployfromfile.html',
   });
 }
 

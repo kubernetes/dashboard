@@ -47,8 +47,9 @@ describe('DeployFromSettings controller', () => {
         },
       };
       ctrl = $controller(
-          DeployFromSettingController, {$resource: mockResource},
-          {namespaces: [], form: form, protocols: []});
+          DeployFromSettingController,
+          {$resource: mockResource, namespaces: {namespaces: []}, protocols: {protocols: []}},
+          {form: form});
       ctrl.portMappings = [];
       ctrl.variables = [];
     });
@@ -174,6 +175,7 @@ describe('DeployFromSettings controller', () => {
     ];
 
     // when
+    form.$valid = true;
     ctrl.deploy();
 
     // then
@@ -202,6 +204,7 @@ describe('DeployFromSettings controller', () => {
     ctrl.imagePullSecret = 'mysecret';
 
     // when
+    form.$valid = true;
     ctrl.deploy();
 
     // then
@@ -223,6 +226,7 @@ describe('DeployFromSettings controller', () => {
     ctrl.memoryRequirement = 88;
 
     // when
+    form.$valid = true;
     ctrl.deploy();
 
     // then
@@ -244,6 +248,7 @@ describe('DeployFromSettings controller', () => {
     ctrl.memoryRequirement = '';
 
     // when
+    form.$valid = true;
     ctrl.deploy();
 
     // then
@@ -263,6 +268,16 @@ describe('DeployFromSettings controller', () => {
     // then
     expect(ctrl.isMoreOptionsEnabled()).toBe(true);
   });
+
+  it('should cancel', angular.mock.inject(($state) => {
+    spyOn($state, 'go');
+
+    // when
+    ctrl.cancel();
+
+    // then
+    expect($state.go).toHaveBeenCalled();
+  }));
 
   describe('isNameError', () => {
     it('should show all errors on submit', () => {
@@ -353,11 +368,13 @@ describe('DeployFromSettings controller', () => {
       ctrl.memoryRequirement = 88;
 
       // when
+      form.$valid = true;
+      expect(ctrl.isDeployDisabled()).toBe(false);
       ctrl.deploy();
+      expect(ctrl.isDeployDisabled()).toBe(true);
 
       // then
       expect(resourceObject.save).toHaveBeenCalled();
-
     });
 
     it('unsuccessful image pull secret creation should reset ctrl.imagePullSecret', () => {

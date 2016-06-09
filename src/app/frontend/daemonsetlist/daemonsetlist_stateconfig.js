@@ -44,7 +44,9 @@ export default function stateConfig($stateProvider) {
         controllerAs: 'ctrl',
         templateUrl: 'daemonsetlist/daemonsetlist.html',
       },
-      [actionbarViewName]: {},
+      [actionbarViewName]: {
+        templateUrl: 'daemonsetlist/actionbar.html',
+      },
     },
   });
 }

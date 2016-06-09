@@ -73,5 +73,5 @@ export const resourceCardEditMenuItemComponent = {
 
 const i18n = {
   /** @export @desc Label for YAML edit menu item. */
-  MSG_YAML_EDIT_MENU_LABEL: goog.getMsg('View/edit JSON'),
+  MSG_YAML_EDIT_MENU_LABEL: goog.getMsg('View/edit YAML'),
 };

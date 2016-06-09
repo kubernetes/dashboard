@@ -12,38 +12,47 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import PetSetListActionBarController from 'petsetlist/petsetlistactionbar_controller';
-import petSetListModule from 'petsetlist/petsetlist_module';
-import {stateName as deploy} from 'deploy/deploy_state';
+import componentsModule from 'common/components/components_module';
 
-describe('Pet Set List Action Bar controller', () => {
-  /**
-   * Pet Set List controller.
-   * @type {!PetSetListController}
-   */
+describe('Actionbar list buttons component', () => {
+  /** @type {BreadcrumbsController} */
   let ctrl;
   /** @type {ui.router.$state} */
   let state;
 
   beforeEach(() => {
-    angular.mock.module(petSetListModule.name);
+    angular.mock.module(componentsModule.name);
+    let fakeModule = angular.module('fakeModule', []);
+    fakeModule.config(($stateProvider) => {
+      $stateProvider.state('fakeState', {
+        url: 'fakeStateUrl',
+        template: '<ui-view>Foo</ui-view>',
+      });
+    });
+    angular.mock.module(fakeModule.name);
 
-    angular.mock.inject(($controller, $state) => {
+    angular.mock.inject(($componentController, $state) => {
       state = $state;
-      ctrl = $controller(PetSetListActionBarController, {
+      ctrl = $componentController('kdActionbarListButtons', {
         $state: state,
       });
     });
   });
 
-  it('should redirect to deploy page', () => {
+  it('should go to deploy pages', () => {
     // given
     spyOn(state, 'go');
 
     // when
-    ctrl.redirectToDeployPage();
+    ctrl.deployApp();
 
     // then
-    expect(state.go).toHaveBeenCalledWith(deploy);
+    expect(state.go).toHaveBeenCalledWith('deployApp');
+
+    // when
+    ctrl.deployFile();
+
+    // then
+    expect(state.go).toHaveBeenCalledWith('deployFile');
   });
 });

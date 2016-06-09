@@ -19,8 +19,6 @@ import {stateName as workloadsState} from 'workloads/workloads_state';
 import {PetSetListController} from './petsetlist_controller';
 import {stateName, stateUrl} from './petsetlist_state';
 
-import PetSetListActionBarController from './petsetlistactionbar_controller';
-
 /**
  * Configures states for the service view.
  *
@@ -47,9 +45,7 @@ export default function stateConfig($stateProvider) {
         templateUrl: 'petsetlist/petsetlist.html',
       },
       [actionbarViewName]: {
-        controller: PetSetListActionBarController,
-        controllerAs: 'ctrl',
-        templateUrl: 'petsetlist/petsetlistactionbar.html',
+        templateUrl: 'petsetlist/actionbar.html',
       },
     },
   });

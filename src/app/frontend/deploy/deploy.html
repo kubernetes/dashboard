@@ -18,13 +18,12 @@ limitations under the License.
   <md-whiteframe class="kd-deploy-whiteframe md-whiteframe-5dp" flex="auto">
     <h3 class="md-headline kd-deploy-form-title">{{::ctrl.i18n.MSG_DEPLOY_PAGE_TITLE}}</h3>
 
-    <form name="ctrl.deployForm" ng-submit="ctrl.deployBySelection()" novalidate>
       <kd-help-section>
-        <md-radio-group ng-model="ctrl.selection">
-          <md-radio-button value="Settings" class="md-primary">
+        <md-radio-group ng-model="ctrl.selection" ng-change="ctrl.changeSelection()">
+          <md-radio-button value="{{::ctrl.appOption}}" class="md-primary">
             {{::ctrl.i18n.MSG_DEPLOY_SPECIFY_APP_DETAILS_ACTION}}
           </md-radio-button>
-          <md-radio-button value="File" class="md-primary">
+          <md-radio-button value="{{::ctrl.fileOption}}" class="md-primary">
             {{::ctrl.i18n.MSG_DEPLOY_FILE_UPLOAD_ACTION}}
           </md-radio-button>
         </md-radio-group>
@@ -32,21 +31,6 @@ limitations under the License.
           <span ng-bind-html="::ctrl.i18n.MSG_DEPLOY_DASHBOARD_TOUR_USER_HELP"></span>
         </kd-user-help>
       </kd-help-section>
-
-      <div ng-switch="ctrl.selection">
-        <deploy-from-settings ng-switch-when="Settings" class="md-body-1" name="ctrl.name"
-            namespaces="ctrl.namespaces" detail="ctrl.detail" form="ctrl.deployForm" protocols="ctrl.protocols">
-        </deploy-from-settings>
-        <deploy-from-file ng-switch-when="File" class="md-body-1" name="ctrl.name" detail="ctrl.detail"
-            form="ctrl.deployForm">
-        </deploy-from-file>
-      </div>
-
-      <md-button class="md-raised md-primary kd-deploy-submit-button" type="submit"
-                 ng-disabled="ctrl.isDeployDisabled()">
-        {{::ctrl.i18n.MSG_DEPLOY_DEPLOY_ACTION}}
-      </md-button>
-      <md-button class="md-raised kd-deploy-cancel-button" ng-click="ctrl.cancel()">{{::ctrl.i18n.MSG_DEPLOY_CANCEL_ACTION}}</md-button>
-    </form>
+      <div ui-view></div>
   </md-whiteframe>
 </div>

@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as deploy} from 'deploy/deploy_state';
+import {deployAppStateName, deployFileStateName} from 'deploy/deploy_state';
 
 /**
  * @final
  */
-export class DeploymentListActionBarController {
+export class ActionBarController {
   /**
    * @param {!ui.router.$state} $state
    * @ngInject
@@ -33,10 +33,28 @@ export class DeploymentListActionBarController {
   /**
    * @export
    */
-  redirectToDeployPage() { this.state_.go(deploy); }
+  deployApp() { this.state_.go(deployAppStateName); }
+
+  /**
+   * @export
+   */
+  deployFile() { this.state_.go(deployFileStateName); }
 }
 
+/**
+ * Contains common buttons for list pages.
+ *
+ * @type {!angular.Component}
+ */
+export const actionbarListButtonsComponent = {
+  templateUrl: 'common/components/actionbar/actionbarlistbuttons.html',
+  controller: ActionBarController,
+};
+
 const i18n = {
-  /** @export {string} @desc Tooltip for the '+' (deploy) button on the deployment list page. */
-  MSG_DEPLOYMENT_LIST_DEPLOY_TOOLTIP: goog.getMsg('Deploy a containerized app'),
+  /** @export {string} @desc Label for deploy app button. */
+  MSG_LIST_ACTION_BAR_DEPLOY_LABEL: goog.getMsg('Deploy app'),
+
+  /** @export {string} @desc Label for upload YAML button. */
+  MSG_LIST_ACTION_BAR_UPLOAD_YAML_LABEL: goog.getMsg('Upload YAML'),
 };

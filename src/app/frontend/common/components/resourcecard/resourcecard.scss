@@ -30,7 +30,7 @@ $cell-base-size: 6 * $baseline-grid;
 .kd-resource-card-select,
 .kd-resource-card-status {
   border-top: 1px solid $border;
-  padding-top: $baseline-grid;
+  padding-top: $baseline-grid / 2;
 }
 
 .kd-resource-card-select {
@@ -47,8 +47,8 @@ $cell-base-size: 6 * $baseline-grid;
 
 .kd-resource-card {
   box-sizing: border-box;
-  min-height: $cell-base-size;
-  padding-bottom: $baseline-grid;
+  min-height: $cell-base-size - $baseline-grid;
+  padding-bottom: $baseline-grid / 2;
 }
 
 .kd-resource-card-columns-container {

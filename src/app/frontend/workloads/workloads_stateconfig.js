@@ -18,7 +18,6 @@ import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_servi
 import {WorkloadsController} from './workloads_controller';
 import {stateName} from './workloads_state';
 import {stateUrl} from './workloads_state';
-import {WorkloadsActionBarController} from './workloadsactionbar_controller';
 
 /**
  * @param {!ui.router.$stateProvider} $stateProvider
@@ -43,9 +42,7 @@ export default function stateConfig($stateProvider) {
         templateUrl: 'workloads/workloads.html',
       },
       [actionbarViewName]: {
-        controller: WorkloadsActionBarController,
-        controllerAs: '$ctrl',
-        templateUrl: 'workloads/workloadsactionbar.html',
+        templateUrl: 'workloads/actionbar.html',
       },
     },
   });
