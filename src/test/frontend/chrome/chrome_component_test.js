@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ChromeController from 'chrome/chrome_controller';
 import chromeModule from 'chrome/chrome_module';
 import {actionbarViewName} from 'chrome/chrome_state';
 
@@ -26,8 +25,9 @@ describe('Chrome controller', () => {
 
   beforeEach(() => {
     angular.mock.module(chromeModule.name);
-    angular.mock.inject(($controller, $rootScope, $state) => {
-      ctrl = $controller(ChromeController, {$scope: $rootScope});
+    angular.mock.inject(($componentController, $rootScope, $state) => {
+      ctrl = $componentController('kdChrome', {$scope: $rootScope});
+      ctrl.$onInit();
       scope = $rootScope;
       state = $state;
     });

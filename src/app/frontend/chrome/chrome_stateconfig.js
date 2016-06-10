@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ChromeController from './chrome_controller';
-import {stateName, namespaceParam} from './chrome_state';
+import {actionbarViewName, namespaceParam, stateName, toolbarViewName} from './chrome_state';
 
 /**
  * Namespace is an abstract state with no path, but with one parameter ?namespace= that
@@ -28,9 +27,17 @@ export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
     url: `?${namespaceParam}`,
     abstract: true,
-    templateUrl: 'chrome/chrome.html',
-    controller: ChromeController,
-    controllerAs: 'ctrl',
+    views: {
+      '': {
+        template: '<div ui-view></div>',
+      },
+      [toolbarViewName]: {
+        template: `<div ui-view="${toolbarViewName}"></div>`,
+      },
+      [actionbarViewName]: {
+        template: `<div ui-view="${actionbarViewName}"></div>`,
+      },
+    },
   });
   $stateProvider.decorator('parent', requireParentState);
 }

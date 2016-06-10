@@ -21,7 +21,7 @@ import {actionbarViewName} from './chrome_state';
  *
  * @final
  */
-export default class ChromeController {
+export class ChromeController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!angular.Scope} $scope
@@ -37,8 +37,12 @@ export default class ChromeController {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
-    this.registerStateChangeListeners($scope);
+    /** @private {!angular.Scope} */
+    this.scope_ = $scope;
   }
+
+  /** @export */
+  $onInit() { this.registerStateChangeListeners(this.scope_); }
 
   /**
    * @return {string}
@@ -70,3 +74,11 @@ export default class ChromeController {
    */
   hideSpinner_() { this.showLoadingSpinner = false; }
 }
+
+/**
+ * @type {!angular.Component}
+ */
+export const chromeComponent = {
+  controller: ChromeController,
+  templateUrl: 'chrome/chrome.html',
+};

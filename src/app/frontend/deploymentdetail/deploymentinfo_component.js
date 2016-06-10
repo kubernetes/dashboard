@@ -27,7 +27,7 @@ export default class DeploymentInfoController {
 /**
  * Definition object for the component that displays replica set info.
  *
- * @return {!angular.Directive}
+ * @type {!angular.Component}
  */
 export const deploymentInfoComponent = {
   controller: DeploymentInfoController,
