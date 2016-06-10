@@ -16,7 +16,7 @@ limitations under the License.
 
 <md-toolbar class="kd-toolbar">
   <div class="md-toolbar-tools kd-toolbar-tools">
-    <a ng-href="{{ctrl.getLogoHref()}}" tabindex="-1">
+    <a ng-href="{{$ctrl.getLogoHref()}}" tabindex="-1">
       <md-icon md-svg-icon="assets/images/kubernetes-logo.svg" class="kd-toolbar-logo"></md-icon>
     </a>
     <h2>
@@ -27,10 +27,10 @@ limitations under the License.
   </div>
 </md-toolbar>
 
-<kd-actionbar ng-if="ctrl.isActionbarVisible()"></kd-actionbar>
+<kd-actionbar ng-if="$ctrl.isActionbarVisible()"></kd-actionbar>
 
 <md-content flex="auto" class="kd-app-content">
-  <div ng-switch="ctrl.showLoadingSpinner" flex="auto" >
+  <div ng-switch="$ctrl.showLoadingSpinner" flex="auto" >
     <div ng-switch-when="true" class="kd-center-fixed">
       <md-progress-circular md-mode="indeterminate" md-diameter="96">
       </md-progress-circular>
