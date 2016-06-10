@@ -16,7 +16,6 @@
  * Parameters for this state.
  *
  * All properties are @exported and in sync with URL param names.
- * @final
  */
 export class StateParams {
   /**
