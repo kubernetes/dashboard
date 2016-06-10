@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import stateConfig from './chrome_stateconfig';
+import {chromeComponent} from './chrome_component';
 import componentsModule from 'common/components/components_module';
 import namespaceModule from 'common/namespace/namespace_module';
 
@@ -28,4 +29,5 @@ export default angular
           componentsModule.name,
           namespaceModule.name,
         ])
-    .config(stateConfig);
+    .config(stateConfig)
+    .component('kdChrome', chromeComponent);
