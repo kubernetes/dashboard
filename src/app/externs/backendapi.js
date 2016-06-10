@@ -297,7 +297,7 @@ backendApi.DeploymentInfo;
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
  *   selector: !Array<backendApi.Label>,
- *   status: !backendApi.DeploymentInfo,
+ *   statusInfo: !backendApi.DeploymentInfo,
  *   strategy: !string,
  *   minReadySeconds: !number,
  *   rollingUpdateStrategy: !backendApi.RollingUpdateStrategy,
