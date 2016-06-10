@@ -50,6 +50,37 @@ export class PodCardListController {
   }
 
   /**
+   * @return {boolean}
+   * @export
+   */
+  showMetrics() {
+    if (this.podList.pods && this.podList.pods.length > 0) {
+      let firstPod = this.podList.pods[0];
+      return !!firstPod.metrics;
+    }
+    return false;
+  }
+
+  /**
+   * @param {!backendApi.Pod} pod
+   * @return {boolean}
+   * @export
+   */
+  hasMemoryUsage(pod) {
+    return !!pod.metrics && !!pod.metrics.memoryUsageHistory &&
+        pod.metrics.memoryUsageHistory.length > 0;
+  }
+
+  /**
+   * @param {!backendApi.Pod} pod
+   * @return {boolean}
+   * @export
+   */
+  hasCpuUsage(pod) {
+    return !!pod.metrics && !!pod.metrics.cpuUsageHistory && pod.metrics.cpuUsageHistory.length > 0;
+  }
+
+  /**
    * @param {!backendApi.Pod} pod
    * @return {string}
    * @export
