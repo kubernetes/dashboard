@@ -48,11 +48,9 @@ func GetJobList(client client.Interface, nsQuery *common.NamespaceQuery) (*JobLi
 	log.Printf("Getting list of all jobs in the cluster")
 
 	channels := &common.ResourceChannels{
-		JobList:     common.GetJobListChannel(client.Extensions(), nsQuery, 1),
-		ServiceList: common.GetServiceListChannel(client, nsQuery, 1),
-		PodList:     common.GetPodListChannel(client, nsQuery, 1),
-		EventList:   common.GetEventListChannel(client, nsQuery, 1),
-		NodeList:    common.GetNodeListChannel(client, 1),
+		JobList:   common.GetJobListChannel(client.Extensions(), nsQuery, 1),
+		PodList:   common.GetPodListChannel(client, nsQuery, 1),
+		EventList: common.GetEventListChannel(client, nsQuery, 1),
 	}
 
 	return GetJobListFromChannels(channels)
@@ -77,11 +75,6 @@ func GetJobListFromChannels(channels *common.ResourceChannels) (
 		return nil, err
 	}
 
-	services := <-channels.ServiceList.List
-	if err := <-channels.ServiceList.Error; err != nil {
-		return nil, err
-	}
-
 	pods := <-channels.PodList.List
 	if err := <-channels.PodList.Error; err != nil {
 		return nil, err
@@ -92,18 +85,10 @@ func GetJobListFromChannels(channels *common.ResourceChannels) (
 		return nil, err
 	}
 
-	nodes := <-channels.NodeList.List
-	if err := <-channels.NodeList.Error; err != nil {
-		return nil, err
-	}
-
-	return ToJobList(jobs.Items, services.Items, pods.Items, events.Items,
-		nodes.Items), nil
+	return ToJobList(jobs.Items, pods.Items, events.Items), nil
 }
 
-func ToJobList(jobs []batch.Job,
-	services []api.Service, pods []api.Pod, events []api.Event,
-	nodes []api.Node) *JobList {
+func ToJobList(jobs []batch.Job, pods []api.Pod, events []api.Event) *JobList {
 
 	jobList := &JobList{
 		Jobs: make([]Job, 0),

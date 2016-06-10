@@ -41,12 +41,6 @@ type DaemonSet struct {
 
 	// Container images of the Daemon Set.
 	ContainerImages []string `json:"containerImages"`
-
-	// Internal endpoints of all Kubernetes services have the same label selector as this Daemon Set.
-	InternalEndpoints []common.Endpoint `json:"internalEndpoints"`
-
-	// External endpoints of all Kubernetes services have the same label selector as this Daemon Set.
-	ExternalEndpoints []common.Endpoint `json:"externalEndpoints"`
 }
 
 // GetDaemonSetList returns a list of all Daemon Set in the cluster.
@@ -57,7 +51,6 @@ func GetDaemonSetList(client *client.Client, nsQuery *common.NamespaceQuery) (*D
 		ServiceList:   common.GetServiceListChannel(client, nsQuery, 1),
 		PodList:       common.GetPodListChannel(client, nsQuery, 1),
 		EventList:     common.GetEventListChannel(client, nsQuery, 1),
-		NodeList:      common.GetNodeListChannel(client, 1),
 	}
 
 	return GetDaemonSetListFromChannels(channels)
@@ -73,11 +66,6 @@ func GetDaemonSetListFromChannels(channels *common.ResourceChannels) (
 		return nil, err
 	}
 
-	services := <-channels.ServiceList.List
-	if err := <-channels.ServiceList.Error; err != nil {
-		return nil, err
-	}
-
 	pods := <-channels.PodList.List
 	if err := <-channels.PodList.Error; err != nil {
 		return nil, err
@@ -88,13 +76,7 @@ func GetDaemonSetListFromChannels(channels *common.ResourceChannels) (
 		return nil, err
 	}
 
-	nodes := <-channels.NodeList.List
-	if err := <-channels.NodeList.Error; err != nil {
-		return nil, err
-	}
-
-	result := getDaemonSetList(daemonSets.Items, services.Items,
-		pods.Items, events.Items, nodes.Items)
+	result := getDaemonSetList(daemonSets.Items, pods.Items, events.Items)
 
 	return result, nil
 }
@@ -102,23 +84,12 @@ func GetDaemonSetListFromChannels(channels *common.ResourceChannels) (
 // Returns a list of all Daemon Set model objects in the cluster, based on all Kubernetes
 // Daemon Set and Service API objects.
 // The function processes all Daemon Set API objects and finds matching Services for them.
-func getDaemonSetList(daemonSets []extensions.DaemonSet,
-	services []api.Service, pods []api.Pod, events []api.Event,
-	nodes []api.Node) *DaemonSetList {
+func getDaemonSetList(daemonSets []extensions.DaemonSet, pods []api.Pod,
+	events []api.Event) *DaemonSetList {
 
 	daemonSetList := &DaemonSetList{DaemonSets: make([]DaemonSet, 0)}
 
 	for _, daemonSet := range daemonSets {
-
-		matchingServices := getMatchingServicesforDS(services, &daemonSet)
-		var internalEndpoints []common.Endpoint
-		var externalEndpoints []common.Endpoint
-		for _, service := range matchingServices {
-			internalEndpoints = append(internalEndpoints,
-				common.GetInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports))
-			// TODO: This may be wrong as we dont use all attributes from selector
-			externalEndpoints = common.GetExternalEndpoints(daemonSet.Spec.Selector.MatchLabels, pods, service, nodes)
-		}
 
 		matchingPods := make([]api.Pod, 0)
 		for _, pod := range pods {
@@ -134,12 +105,10 @@ func getDaemonSetList(daemonSets []extensions.DaemonSet,
 
 		daemonSetList.DaemonSets = append(daemonSetList.DaemonSets,
 			DaemonSet{
-				ObjectMeta:        common.NewObjectMeta(daemonSet.ObjectMeta),
-				TypeMeta:          common.NewTypeMeta(common.ResourceKindDaemonSet),
-				Pods:              podInfo,
-				ContainerImages:   common.GetContainerImages(&daemonSet.Spec.Template.Spec),
-				InternalEndpoints: internalEndpoints,
-				ExternalEndpoints: externalEndpoints,
+				ObjectMeta:      common.NewObjectMeta(daemonSet.ObjectMeta),
+				TypeMeta:        common.NewTypeMeta(common.ResourceKindDaemonSet),
+				Pods:            podInfo,
+				ContainerImages: common.GetContainerImages(&daemonSet.Spec.Template.Spec),
 			})
 	}
 
