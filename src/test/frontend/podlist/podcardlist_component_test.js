@@ -26,22 +26,8 @@ describe('Pod card list controller', () => {
     angular.mock.module(podDetailModule.name);
 
     angular.mock.inject(($componentController, $rootScope) => {
-      ctrl = $componentController('kdPodCardList', {$scope: $rootScope}, {
-        logsHrefFn: function() {},
-      });
+      ctrl = $componentController('kdPodCardList', {$scope: $rootScope}, {});
     });
-  });
-
-  it('should execute logs href callback function', () => {
-    // given
-    let pod = {name: 'test-pod'};
-    spyOn(ctrl, 'logsHrefFn');
-
-    // when
-    ctrl.getPodLogsHref(pod);
-
-    // then
-    expect(ctrl.logsHrefFn).toHaveBeenCalledWith({pod: pod});
   });
 
   it('should execute logs href callback function', () => {

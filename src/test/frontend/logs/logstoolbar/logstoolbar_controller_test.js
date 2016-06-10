@@ -33,22 +33,7 @@ describe('Logs toolbar controller', () => {
   /** @type {string} */
   const mockContainer = 'con22';
 
-  /** @type {!backendApi.PodContainer} */
-  const expectedContainer = {name: mockContainer};
-
-  /** @type {!backendApi.ReplicationControllerPodWithContainers} */
-  const expectedPod = {name: mockPodId, podContainers: [{name: 'con21'}, expectedContainer]};
-
-  /** @type {!Array<!backendApi.ReplicationControllerPodWithContainers>} */
-  const replicationControllerPods = {
-    pods: [
-      {name: 'pod1', podContainers: [{name: 'con1'}]},
-      expectedPod,
-      {name: 'pod3', podContainers: [{name: 'con3'}]},
-    ],
-  };
-
-  /** @type {!backendApi.Logs} podLogs */
+  /** @type {!backendApi.Logs} */
   const logs = {
     container: mockContainer,
   };
@@ -56,6 +41,9 @@ describe('Logs toolbar controller', () => {
   /** @type {!StateParams} */
   const stateParams =
       new StateParams(mockNamespace, mockReplicationController, mockPodId, mockContainer);
+
+  /** @type {!backendApi.PodContainers} */
+  const podContainers = {containers: ['con1']};
 
   /**
    * Logs menu controller.
@@ -73,9 +61,9 @@ describe('Logs toolbar controller', () => {
       state = $state;
       ctrl = $controller(
           LogsToolbarController, {
-            replicationControllerPods: replicationControllerPods,
             $stateParams: stateParams,
             podLogs: logs,
+            podContainers: podContainers,
           },
           $state);
     });
@@ -92,25 +80,8 @@ describe('Logs toolbar controller', () => {
     expect(ctrl.isTextColorInverted()).toBeTruthy();
   });
 
-  it('should find objects (pod and container) by name passed in state params', () => {
-    // given
-    let resultPod = ctrl.pod;
-    let resulContainer = ctrl.container;
-
-    expect(resultPod).toEqual(expectedPod);
-    expect(resulContainer).toEqual(expectedContainer);
-  });
-
-  it('should call transitionTo on pod change', () => {
-    // given
-    spyOn(state, 'transitionTo');
-
-    // when
-    ctrl.onPodChange('pod3');
-
-    // then
-    expect(state.transitionTo).toHaveBeenCalled();
-  });
+  it('should find objects (pod and container) by name passed in state params',
+     () => { expect(ctrl.container).toEqual('pod2'); });
 
   it('should call transitionTo on container change', () => {
     // given

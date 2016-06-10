@@ -39,6 +39,29 @@ type Logs struct {
 	Container string `json:"container"`
 }
 
+// PodContainerList is a list of containers of a pod.
+type PodContainerList struct {
+	Containers []string `json:"containers"`
+}
+
+// GetPodContainers returns containers that a pod has.
+func GetPodContainers(client *client.Client, namespace, podId string) (*PodContainerList, error) {
+	log.Printf("Getting containers from %s pod in %s namespace", podId, namespace)
+
+	pod, err := client.Pods(namespace).Get(podId)
+	if err != nil {
+		return nil, err
+	}
+
+	containers := &PodContainerList{Containers: make([]string, 0)}
+
+	for _, container := range pod.Spec.Containers {
+		containers.Containers = append(containers.Containers, container.Name)
+	}
+
+	return containers, nil
+}
+
 // GetPodLogs returns logs for particular pod and container or error when occurred. When container
 // is null, logs for the first one are returned.
 func GetPodLogs(client *client.Client, namespace, podId string, container string) (*Logs, error) {

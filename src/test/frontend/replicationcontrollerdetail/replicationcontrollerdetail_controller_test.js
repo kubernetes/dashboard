@@ -56,12 +56,4 @@ describe('Replication Controller Detail controller', () => {
     expect(ctrl.hasCpuUsage({metrics: {cpuUsageHistory: null}})).toBe(false);
     expect(ctrl.hasCpuUsage({metrics: {cpuUsageHistory: undefined}})).toBe(false);
   });
-
-  it('should create logs href', () => {
-    expect(ctrl.getPodLogsHref({
-      objectMeta: {
-        name: 'foo-pod',
-      },
-    })).toBe('#/log/foo-namespace/foo-replicationcontroller/foo-pod/');
-  });
 });

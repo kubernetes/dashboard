@@ -191,6 +191,18 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 		apiV1Ws.GET("/pod/{namespace}/{pod}").
 			To(apiHandler.handleGetPodDetail).
 			Writes(pod.PodDetail{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/pod/{namespace}/{pod}/container").
+			To(apiHandler.handleGetPodContainers).
+			Writes(pod.PodDetail{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/pod/{namespace}/{pod}/log").
+			To(apiHandler.handleLogs).
+			Writes(Logs{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/pod/{namespace}/{pod}/log/{container}").
+			To(apiHandler.handleLogs).
+			Writes(Logs{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/deployment").
@@ -243,15 +255,6 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 		apiV1Ws.GET("/namespace").
 			To(apiHandler.handleGetNamespaces).
 			Writes(NamespaceList{}))
-
-	apiV1Ws.Route(
-		apiV1Ws.GET("/log/{namespace}/{podId}").
-			To(apiHandler.handleLogs).
-			Writes(Logs{}))
-	apiV1Ws.Route(
-		apiV1Ws.GET("/log/{namespace}/{podId}/{container}").
-			To(apiHandler.handleLogs).
-			Writes(Logs{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/event/{namespace}/{replicationController}").
@@ -780,10 +783,22 @@ func (apiHandler *ApiHandler) handleGetSecrets(request *restful.Request, respons
 // Handles log API call.
 func (apiHandler *ApiHandler) handleLogs(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
-	podId := request.PathParameter("podId")
+	podId := request.PathParameter("pod")
 	container := request.PathParameter("container")
 
 	result, err := GetPodLogs(apiHandler.client, namespace, podId, container)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+func (apiHandler *ApiHandler) handleGetPodContainers(request *restful.Request, response *restful.Response) {
+	namespace := request.PathParameter("namespace")
+	podId := request.PathParameter("pod")
+
+	result, err := GetPodContainers(apiHandler.client, namespace, podId)
 	if err != nil {
 		handleInternalError(response, err)
 		return
