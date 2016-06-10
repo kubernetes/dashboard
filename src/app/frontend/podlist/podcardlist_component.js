@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {StateParams} from 'common/resource/resourcedetail';
+import {StateParams as LogsStateParams, stateName as logsStateName} from 'logs/logs_state';
 import {stateName} from 'poddetail/poddetail_state';
 
 /**
@@ -30,12 +31,6 @@ export class PodCardListController {
      * @export {!backendApi.PodList}
      */
     this.podList;
-
-    /**
-     * Callback function that returns link to pod logs. Initialized from the scope.
-     * @export {!function({pod: !backendApi.Pod}): string}
-     */
-    this.logsHrefFn;
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
@@ -85,7 +80,10 @@ export class PodCardListController {
    * @return {string}
    * @export
    */
-  getPodLogsHref(pod) { return this.logsHrefFn({pod: pod}); }
+  getPodLogsHref(pod) {
+    return this.state_.href(
+        logsStateName, new LogsStateParams(pod.objectMeta.namespace, pod.objectMeta.name));
+  }
 
   /**
    * @param {!backendApi.Pod} pod
@@ -147,8 +145,6 @@ export const podCardListComponent = {
   bindings: {
     /** {!backendApi.PodList} */
     'podList': '<',
-    /** {!function({pod: !backendApi.Pod}): string} */
-    'logsHrefFn': '&',
     /** {boolean} */
     'selectable': '<',
     /** {boolean} */

@@ -99,8 +99,7 @@ export class PodLogsMenuController {
    * @export
    */
   getLogsHref(podName) {
-    return this.state_.href(
-        logsStateName, new StateParams(this.namespace, this.replicationControllerName, podName));
+    return this.state_.href(logsStateName, new StateParams(this.namespace, podName));
   }
 
   /**

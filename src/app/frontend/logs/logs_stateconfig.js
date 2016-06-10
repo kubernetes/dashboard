@@ -17,6 +17,7 @@ import {stateName} from './logs_state';
 import LogsToolbarController from './logstoolbar/logstoolbar_controller';
 import {toolbarViewName} from '../chrome/chrome_state';
 
+import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 import {stateName as chromeStateName} from 'chrome/chrome_state';
 
 /**
@@ -40,10 +41,10 @@ export default function stateConfig($stateProvider) {
   };
 
   $stateProvider.state(stateName, {
-    url: '/log/:rcNamespace/:replicationController/:podId/:container',
+    url: `${appendDetailParamsToUrl('/log')}/:container`,
     parent: chromeStateName,
     resolve: {
-      'replicationControllerPods': resolveReplicationControllerPods,
+      'podContainers': resolvePodContainers,
       'podLogs': resolvePodLogs,
     },
     views: views,
@@ -56,12 +57,13 @@ export default function stateConfig($stateProvider) {
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-function resolveReplicationControllerPods($stateParams, $resource) {
-  let namespace = $stateParams.rcNamespace;
-  let rc = $stateParams.replicationController;
+function resolvePodLogs($stateParams, $resource) {
+  let namespace = $stateParams.objectNamespace;
+  let podId = $stateParams.objectName;
+  let container = $stateParams.container || '';
 
-  /** @type {!angular.Resource<!backendApi.ReplicationControllerPods>} */
-  let resource = $resource(`api/v1/replicationcontroller/pod/${namespace}/${rc}`);
+  /** @type {!angular.Resource<!backendApi.Logs>} */
+  let resource = $resource(`api/v1/pod/${namespace}/${podId}/log/${container}`);
 
   return resource.get().$promise;
 }
@@ -72,13 +74,12 @@ function resolveReplicationControllerPods($stateParams, $resource) {
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-function resolvePodLogs($stateParams, $resource) {
-  let namespace = $stateParams.rcNamespace;
-  let podId = $stateParams.podId;
-  let container = $stateParams.container;
+function resolvePodContainers($stateParams, $resource) {
+  let namespace = $stateParams.objectNamespace;
+  let podId = $stateParams.objectName;
 
-  /** @type {!angular.Resource<!backendApi.Logs>} */
-  let resource = $resource(`api/v1/log/${namespace}/${podId}/${container}`);
+  /** @type {!angular.Resource<!backendApi.PodContainerList>} */
+  let resource = $resource(`api/v1/pod/${namespace}/${podId}/container`);
 
   return resource.get().$promise;
 }
