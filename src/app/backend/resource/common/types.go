@@ -129,7 +129,7 @@ var kindToAPIMapping = map[string]struct {
 	ResourceKindReplicationController: {"replicationcontrollers", ClientTypeDefault},
 	ResourceKindDeployment:            {"deployments", ClientTypeExtensionClient},
 	ResourceKindReplicaSet:            {"replicasets", ClientTypeExtensionClient},
-	ResourceKindDaemonSet:             {"daemonsets", ClientTypeDefault},
+	ResourceKindDaemonSet:             {"daemonsets", ClientTypeExtensionClient},
 	ResourceKindPetSet:                {"petsets", ClientTypeAppsClient},
 	ResourceKindJob:                   {"jobs", ClientTypeBatchClient},
 	ResourceKindNode:                  {"nodes", ClientTypeDefault},
