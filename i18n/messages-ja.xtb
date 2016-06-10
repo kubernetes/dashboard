@@ -363,4 +363,5 @@
 	<translation id="8808405168042160441" key="MSG_RC_LIST_EDIT_POD_COUNT_ACTION" source="/usr/local/google/home/bryk/src/github.com/dashboard/.tmp/serve/app-dev.js" desc="Action 'Edit Pod Count' on the drop down menu for a single replication controller (replication controller list page).">Scale</translation>
 	<translation id="1811662550159188281" key="MSG_POD_LIST_CPU_USAGE_LABEL" source="/usr/local/google/home/bryk/src/github.com/dashboard/.tmp/serve/app-dev.js" desc="Label which appears as a column label in the table of pods">CPU (cores)</translation>
 	<translation id="9149343004693743620" key="MSG_POD_LIST_MEMORY_USAGE_LABEL" source="/usr/local/google/home/bryk/src/github.com/dashboard/.tmp/serve/app-dev.js" desc="Label which appears as a column label in the table of pods">Memory (bytes)</translation>
+	<translation id="2278267472990776370" key="MSG_JOB_DETAIL_JOB_LABEL" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Label 'Job' which appears at the top of the dialog, opened from a job details page.">Job</translation>
 </translationbundle>

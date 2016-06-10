@@ -16,7 +16,7 @@ import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_sta
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 import {stateName as jobList, stateUrl} from 'joblist/joblist_state';
-
+import {ActionBarController} from './actionbar_controller';
 import {JobDetailController} from './jobdetail_controller';
 import {stateName} from './jobdetail_state';
 
@@ -46,7 +46,11 @@ export default function stateConfig($stateProvider) {
         controllerAs: 'ctrl',
         templateUrl: 'jobdetail/jobdetail.html',
       },
-      [actionbarViewName]: {},
+      [actionbarViewName]: {
+        templateUrl: 'jobdetail/actionbar.html',
+        controller: ActionBarController,
+        controllerAs: '$ctrl',
+      },
     },
   });
 }
