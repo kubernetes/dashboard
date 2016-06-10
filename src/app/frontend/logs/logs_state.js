@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {StateParams as ResourceStateParams} from 'common/resource/resourcedetail';
+
 /** Name of the state. Can be used in, e.g., $state.go method. */
 export const stateName = 'log';
 
@@ -21,22 +23,14 @@ export const stateName = 'log';
  * All properties are @exported and in sync with URL param names.
  * @final
  */
-export class StateParams {
+export class StateParams extends ResourceStateParams {
   /**
-   * @param {string} rcNamespace
-   * @param {string} replicationController
-   * @param {string} podId
+   * @param {string} objectNamespace
+   * @param {string} objectName
    * @param {string=} opt_container
    */
-  constructor(rcNamespace, replicationController, podId, opt_container) {
-    /** @export {string} Namespace of this Replication Controller. */
-    this.rcNamespace = rcNamespace;
-
-    /** @export {string} Name of this Replication Controller. */
-    this.replicationController = replicationController;
-
-    /** @export {string} Id of this Pod. */
-    this.podId = podId;
+  constructor(objectNamespace, objectName, opt_container) {
+    super(objectNamespace, objectName);
 
     /** @export {string|undefined} Name of this pod container. */
     this.container = opt_container;

@@ -12,9 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as logsStateName} from 'logs/logs_state';
-import {StateParams as LogsStateParams} from 'logs/logs_state';
-
 /**
  * Controller for the replication controller details view.
  *
@@ -62,18 +59,6 @@ export default class ReplicationControllerDetailController {
   hasMemoryUsage(pod) {
     return !!pod.metrics && !!pod.metrics.memoryUsageHistory &&
         pod.metrics.memoryUsageHistory.length > 0;
-  }
-
-  /**
-   * @param {!backendApi.Pod} pod
-   * @return {string}
-   * @export
-   */
-  getPodLogsHref(pod) {
-    return this.state_.href(
-        logsStateName,
-        new LogsStateParams(
-            this.stateParams_.objectNamespace, this.stateParams_.objectName, pod.objectMeta.name));
   }
 }
 

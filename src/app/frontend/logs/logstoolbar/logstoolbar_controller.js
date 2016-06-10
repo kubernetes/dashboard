@@ -22,12 +22,11 @@ export default class LogsToolbarController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!StateParams} $stateParams
-   * @param {!backendApi.ReplicationControllerPods} replicationControllerPods
    * @param {!backendApi.Logs} podLogs
    * @param {!../logs_service.LogColorInversionService} logsColorInversionService
    * @ngInject
    */
-  constructor($state, $stateParams, replicationControllerPods, podLogs, logsColorInversionService) {
+  constructor($state, $stateParams, podLogs, podContainers, logsColorInversionService) {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
@@ -37,38 +36,16 @@ export default class LogsToolbarController {
      */
     this.logsColorInversionService_ = logsColorInversionService;
 
-    /** @export {!Array<!backendApi.ReplicationControllerPodWithContainers>} */
-    this.pods = replicationControllerPods.pods;
+    /** @export {!Array<string>} */
+    this.containers = podContainers.containers;
+
+    /** @export {string} */
+    this.container = $stateParams.container || this.containers[0];
 
     /**
-     * Currently chosen pod.
-     * @export {!backendApi.ReplicationControllerPodWithContainers|undefined}
+     * @export {../logs_state.StateParams}
      */
-    this.pod = this.findPodByName_(this.pods, $stateParams.podId);
-
-    /** @export {!Array<!backendApi.PodContainer>} */
-    this.containers = this.pod.podContainers;
-
-    /** @export {!backendApi.PodContainer} */
-    this.container = this.initializeContainer_(this.containers, podLogs.container);
-
-    /**
-     * Pod creation time.
-     * @export {?string}
-     */
-    this.podCreationTime = this.pod.startTime;
-
-    /**
-     * Namespace.
-     * @private {string}
-     */
-    this.namespace_ = $stateParams.rcNamespace;
-
-    /**
-     * Replication Controller name.
-     * @private {string}
-     */
-    this.replicationControllerName_ = $stateParams.replicationController;
+    this.stateParams = $stateParams;
   }
 
   /**
@@ -80,27 +57,15 @@ export default class LogsToolbarController {
   isTextColorInverted() { return this.logsColorInversionService_.getInverted(); }
 
   /**
-   * Execute a code when a user changes the selected option of a pod element.
-   * @param {string} podId
-   * @return {string}
-   * @export
-   */
-  onPodChange(podId) {
-    return this.state_.transitionTo(
-        logs, new StateParams(
-                  this.namespace_, this.replicationControllerName_, podId, this.container.name));
-  }
-
-  /**
    * Execute a code when a user changes the selected option of a container element.
    * @param {string} container
    * @return {string}
    * @export
    */
   onContainerChange(container) {
-    return this.state_.transitionTo(
-        logs, new StateParams(
-                  this.namespace_, this.replicationControllerName_, this.pod.name, container));
+    return this.state_.go(
+        logs,
+        new StateParams(this.stateParams.objectNamespace, this.stateParams.objectName, container));
   }
 
   /**
