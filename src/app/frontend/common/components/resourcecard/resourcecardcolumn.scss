@@ -33,10 +33,11 @@ kd-resource-card-column {
 
   // Add this class kd-resource-card-column to make it a compact column with icons.
   &.kd-icon-column {
+    margin-bottom: -$baseline-grid / 2;
+    padding-top: 0;
+
     .md-button {
-      height: auto;
       margin: 0;
-      padding: 0;
     }
 
     .kd-resource-card-column-container {

@@ -12,19 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import SparklineController from './sparkline_controller';
+@import '../../../variables';
 
-/**
- * Returns directive definition for sparkline.
- * @return {!angular.Directive}
- */
-export default function sparklineDirective() {
-  return {
-    controller: SparklineController,
-    controllerAs: 'sparklineCtrl',
-    templateUrl: 'common/components/sparkline/sparkline.html',
-    templateNamespace: 'svg',
-    scope: {},
-    bindToController: {'timeseries': '<'},
-  };
+.kd-sparkline {
+  background-color: $body;
+  height: 2.5 * $baseline-grid;
+  vertical-align: -$baseline-grid / 2; // 20% below baseline, to flow with text
+  width: 12.5 * $baseline-grid;
+}
+
+.kd-sparkline-series {
+  fill: $chart-1;
 }

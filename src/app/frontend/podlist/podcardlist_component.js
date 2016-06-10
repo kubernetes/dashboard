@@ -50,6 +50,37 @@ export class PodCardListController {
   }
 
   /**
+   * @return {boolean}
+   * @export
+   */
+  showMetrics() {
+    if (this.podList.pods && this.podList.pods.length > 0) {
+      let firstPod = this.podList.pods[0];
+      return !!firstPod.metrics;
+    }
+    return false;
+  }
+
+  /**
+   * @param {!backendApi.Pod} pod
+   * @return {boolean}
+   * @export
+   */
+  hasMemoryUsage(pod) {
+    return !!pod.metrics && !!pod.metrics.memoryUsageHistory &&
+        pod.metrics.memoryUsageHistory.length > 0;
+  }
+
+  /**
+   * @param {!backendApi.Pod} pod
+   * @return {boolean}
+   * @export
+   */
+  hasCpuUsage(pod) {
+    return !!pod.metrics && !!pod.metrics.cpuUsageHistory && pod.metrics.cpuUsageHistory.length > 0;
+  }
+
+  /**
    * @param {!backendApi.Pod} pod
    * @return {string}
    * @export
@@ -145,6 +176,10 @@ const i18n = {
   /** @export {string} @desc Label 'Cluster IP' which appears as a column label in the table of
      pods (pod list view). */
   MSG_POD_LIST_CLUSTER_IP_LABEL: goog.getMsg('Cluster IP'),
+  /** @export {string} @desc Label which appears as a column label in the table of pods */
+  MSG_POD_LIST_CPU_USAGE_LABEL: goog.getMsg('CPU (cores)'),
+  /** @export {string} @desc Label which appears as a column label in the table of pods */
+  MSG_POD_LIST_MEMORY_USAGE_LABEL: goog.getMsg('Memory (bytes)'),
   /** @export {string} @desc Label 'Logs' for the pod's logs which appears as a column label in the
      table of pods (pod list view). */
   MSG_POD_LIST_LOGS_LABEL: goog.getMsg('Logs'),

@@ -361,4 +361,6 @@
 	<translation id="1076978057900823839" key="MSG_LIST_ACTION_BAR_UPLOAD_YAML_LABEL" source="/usr/local/google/home/bryk/src/github.com/dashboard/.tmp/serve/app-dev.js" desc="Label for upload YAML button.">Upload YAML</translation>
 	<translation id="1984076222529061421" key="MSG_RC_DETAIL_ACTION_BAR_EDIT_PODS_LABEL" source="/usr/local/google/home/bryk/src/github.com/dashboard/.tmp/serve/app-dev.js" desc="Tooltip for the 'scale' button on the action bar of a replication controller details view.">Scale</translation>
 	<translation id="8808405168042160441" key="MSG_RC_LIST_EDIT_POD_COUNT_ACTION" source="/usr/local/google/home/bryk/src/github.com/dashboard/.tmp/serve/app-dev.js" desc="Action 'Edit Pod Count' on the drop down menu for a single replication controller (replication controller list page).">Scale</translation>
+	<translation id="1811662550159188281" key="MSG_POD_LIST_CPU_USAGE_LABEL" source="/usr/local/google/home/bryk/src/github.com/dashboard/.tmp/serve/app-dev.js" desc="Label which appears as a column label in the table of pods">CPU (cores)</translation>
+	<translation id="9149343004693743620" key="MSG_POD_LIST_MEMORY_USAGE_LABEL" source="/usr/local/google/home/bryk/src/github.com/dashboard/.tmp/serve/app-dev.js" desc="Label which appears as a column label in the table of pods">Memory (bytes)</translation>
 </translationbundle>

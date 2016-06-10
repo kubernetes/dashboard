@@ -105,4 +105,38 @@ describe('Pod card list controller', () => {
   it('should format the "pod start date" tooltip correctly', () => {
     expect(ctrl.getStartedAtTooltip('2016-06-06T09:13:12Z')).toBe('Started at 6/6/16 09:13 UTC');
   });
+
+  it('should show and hide metrics', () => {
+    ctrl.podList = {};
+    expect(ctrl.showMetrics()).toBe(false);
+
+    ctrl.podList.pods = [];
+    expect(ctrl.showMetrics()).toBe(false);
+
+    ctrl.podList.pods = [{}];
+    expect(ctrl.showMetrics()).toBe(false);
+
+    ctrl.podList.pods = [{metrics: {}}];
+    expect(ctrl.showMetrics()).toBe(true);
+  });
+
+  it('should show and hide cpu metrics', () => {
+    expect(ctrl.hasCpuUsage({})).toBe(false);
+
+    expect(ctrl.hasCpuUsage({metrics: {}})).toBe(false);
+
+    expect(ctrl.hasCpuUsage({metrics: {cpuUsageHistory: []}})).toBe(false);
+
+    expect(ctrl.hasCpuUsage({metrics: {cpuUsageHistory: [1]}})).toBe(true);
+  });
+
+  it('should show and hide memory metrics', () => {
+    expect(ctrl.hasMemoryUsage({})).toBe(false);
+
+    expect(ctrl.hasMemoryUsage({metrics: {}})).toBe(false);
+
+    expect(ctrl.hasMemoryUsage({metrics: {memoryUsageHistory: []}})).toBe(false);
+
+    expect(ctrl.hasMemoryUsage({metrics: {memoryUsageHistory: [1]}})).toBe(true);
+  });
 });
