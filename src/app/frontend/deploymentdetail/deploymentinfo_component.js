@@ -74,19 +74,19 @@ function i18n(deployment) {
     /** @export {string} @desc The message says that that many replicas were updated in the deployment
         (deployment details page). */
     MSG_DEPLOYMENT_DETAIL_REPLICAS_UPDATED_LABEL:
-        goog.getMsg('{$replicas} updated', {'replicas': deployment.status.updated}),
+        goog.getMsg('{$replicas} updated', {'replicas': deployment.statusInfo.updated}),
     /** @export {string} @desc The message says that that many replicas (in total) are in the deployment
         (deployment details page). */
     MSG_DEPLOYMENT_DETAIL_REPLICAS_TOTAL_LABEL:
-        goog.getMsg('{$replicas} total', {'replicas': deployment.status.replicas}),
+        goog.getMsg('{$replicas} total', {'replicas': deployment.statusInfo.replicas}),
     /** @export {string} @desc The message says that that many replicas are available in the deployment
         (deployment details page). */
     MSG_DEPLOYMENT_DETAIL_REPLICAS_AVAILABLE_LABEL:
-        goog.getMsg('{$replicas} available', {'replicas': deployment.status.available}),
+        goog.getMsg('{$replicas} available', {'replicas': deployment.statusInfo.available}),
     /** @export {string} @desc The message says that that many replicas are unavailable in the deployment
         (deployment details page). */
     MSG_DEPLOYMENT_DETAIL_REPLICAS_UNAVAILABLE_LABEL:
-        goog.getMsg('{$replicas} unavailable', {'replicas': deployment.status.unavailable}),
+        goog.getMsg('{$replicas} unavailable', {'replicas': deployment.statusInfo.unavailable}),
     /** @export {string} @desc The message says how many replicas are allowed to be unavailable during an
         update in the deployment (deployment details page). */
     MSG_DEPLOYMENT_DETAIL_MAX_UNAVAILABLE_LABEL: goog.getMsg(

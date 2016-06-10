@@ -13,7 +13,7 @@ describe('Deployment Info controller', () => {
     angular.mock.inject(($componentController, $rootScope) => {
       ctrl = $componentController('kdDeploymentInfo', {$scope: $rootScope}, {
         deployment: {
-          status: {
+          statusInfo: {
             updated: 0,
             replicas: 0,
             available: 0,
