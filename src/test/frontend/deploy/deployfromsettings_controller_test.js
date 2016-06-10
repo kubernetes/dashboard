@@ -66,6 +66,22 @@ describe('DeployFromSettings controller', () => {
     expect(result).toEqual('');
   });
 
+  it('should select initial namespace', angular.mock.inject(($controller) => {
+    ctrl = $controller(
+        DeployFromSettingController,
+        {namespaces: {namespaces: ['foo', 'bar']}, protocols: {protocols: []}, $stateParams: {}});
+
+    expect(ctrl.namespace).toBe('foo');
+
+    ctrl = $controller(DeployFromSettingController, {
+      namespaces: {namespaces: ['foo', 'bar']},
+      protocols: {protocols: []},
+      $stateParams: {namespace: 'bar'},
+    });
+
+    expect(ctrl.namespace).toBe('bar');
+  }));
+
   it('should return empty string when containerImage is empty', () => {
     // given
     ctrl.containerImage = '';
