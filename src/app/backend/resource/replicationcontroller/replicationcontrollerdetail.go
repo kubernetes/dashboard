@@ -76,11 +76,6 @@ func GetReplicationControllerDetail(client k8sClient.Interface, heapsterClient c
 		FieldSelector: fields.Everything(),
 	})
 
-	nodes, err := client.Nodes().List(api.ListOptions{
-		LabelSelector: labels.Everything(),
-		FieldSelector: fields.Everything(),
-	})
-
 	if err != nil {
 		return nil, err
 	}
@@ -97,8 +92,7 @@ func GetReplicationControllerDetail(client k8sClient.Interface, heapsterClient c
 
 	for _, service := range matchingServices {
 		replicationControllerDetail.ServiceList.Services = append(
-			replicationControllerDetail.ServiceList.Services,
-			getService(service, *replicationController, pods.Items, nodes.Items))
+			replicationControllerDetail.ServiceList.Services, resourceService.ToService(&service))
 	}
 
 	for _, container := range replicationController.Spec.Template.Spec.Containers {
@@ -201,15 +195,4 @@ func UpdateReplicasCount(client k8sClient.Interface, namespace, name string,
 		replicationControllerSpec.Replicas, name, namespace)
 
 	return nil
-}
-
-// Returns detailed information about service from given service
-func getService(service api.Service, replicationController api.ReplicationController,
-	pods []api.Pod, nodes []api.Node) resourceService.Service {
-
-	result := resourceService.ToService(&service)
-	result.ExternalEndpoints = common.GetExternalEndpoints(replicationController.Spec.Selector,
-		pods, service, nodes)
-
-	return result
 }

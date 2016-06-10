@@ -51,11 +51,9 @@ func GetPetSetList(client *client.Client, nsQuery *common.NamespaceQuery) (*PetS
 	log.Printf("Getting list of all pet sets in the cluster")
 
 	channels := &common.ResourceChannels{
-		PetSetList:  common.GetPetSetListChannel(client.Apps(), nsQuery, 1),
-		ServiceList: common.GetServiceListChannel(client, nsQuery, 1),
-		PodList:     common.GetPodListChannel(client, nsQuery, 1),
-		EventList:   common.GetEventListChannel(client, nsQuery, 1),
-		NodeList:    common.GetNodeListChannel(client, 1),
+		PetSetList: common.GetPetSetListChannel(client.Apps(), nsQuery, 1),
+		PodList:    common.GetPodListChannel(client, nsQuery, 1),
+		EventList:  common.GetEventListChannel(client, nsQuery, 1),
 	}
 
 	return GetPetSetListFromChannels(channels)
@@ -80,11 +78,6 @@ func GetPetSetListFromChannels(channels *common.ResourceChannels) (
 		return nil, err
 	}
 
-	services := <-channels.ServiceList.List
-	if err := <-channels.ServiceList.Error; err != nil {
-		return nil, err
-	}
-
 	pods := <-channels.PodList.List
 	if err := <-channels.PodList.Error; err != nil {
 		return nil, err
@@ -95,17 +88,10 @@ func GetPetSetListFromChannels(channels *common.ResourceChannels) (
 		return nil, err
 	}
 
-	nodes := <-channels.NodeList.List
-	if err := <-channels.NodeList.Error; err != nil {
-		return nil, err
-	}
-
-	return ToPetSetList(petSets.Items, services.Items, pods.Items, events.Items,
-		nodes.Items), nil
+	return ToPetSetList(petSets.Items, pods.Items, events.Items), nil
 }
 
-func ToPetSetList(petSets []apps.PetSet, services []api.Service, pods []api.Pod, events []api.Event,
-	nodes []api.Node) *PetSetList {
+func ToPetSetList(petSets []apps.PetSet, pods []api.Pod, events []api.Event) *PetSetList {
 
 	petSetList := &PetSetList{
 		PetSets: make([]PetSet, 0),
