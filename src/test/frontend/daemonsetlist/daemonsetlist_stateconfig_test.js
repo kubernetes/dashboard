@@ -24,9 +24,21 @@ describe('StateConfig for daemon set list', () => {
     let resource = jasmine.createSpy('$resource');
     resource.and.returnValue({get: function() { return {$promise: promise}; }});
 
-    let actual = resolveDaemonSetList(resource);
+    let actual = resolveDaemonSetList(resource, {namespace: 'foo'});
 
-    expect(resource).toHaveBeenCalledWith('api/v1/daemonset');
+    expect(resource).toHaveBeenCalledWith('api/v1/daemonset/foo');
+    expect(actual).toBe(promise);
+  }));
+
+  it('should resolve daemon sets with no namespace', angular.mock.inject(($q) => {
+    let promise = $q.defer().promise;
+
+    let resource = jasmine.createSpy('$resource');
+    resource.and.returnValue({get: function() { return {$promise: promise}; }});
+
+    let actual = resolveDaemonSetList(resource, {});
+
+    expect(resource).toHaveBeenCalledWith('api/v1/daemonset/');
     expect(actual).toBe(promise);
   }));
 });
