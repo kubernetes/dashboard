@@ -34,7 +34,12 @@ limitations under the License.
     <kd-resource-card-header-column grow="nogrow" class="kd-row-layout-column" size="small">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
-  <kd-replication-controller-card ng-repeat="rc in $ctrl.replicationControllers"
-      replication-controller="rc">
+  <kd-replication-controller-card replication-controller="rc" pagination-id="replicationcontrollers"
+                                  dir-paginate="rc in $ctrl.replicationControllers | itemsPerPage: default" >
   </kd-replication-controller-card>
+  <kd-resource-card-list-footer>
+    <kd-resource-card-list-pagination pagination-id="replicationcontrollers"
+                                      total-items="$ctrl.replicationControllers.length">
+    </kd-resource-card-list-pagination>
+  </kd-resource-card-list-footer>
 </kd-resource-card-list>

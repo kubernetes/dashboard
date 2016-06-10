@@ -34,6 +34,12 @@ limitations under the License.
     <kd-resource-card-header-column size="small" grow="nogrow">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
-  <kd-deployment-card ng-repeat="deployment in $ctrl.deployments" deployment="deployment">
+  <kd-deployment-card dir-paginate="deployment in $ctrl.deployments | itemsPerPage: default"
+                      deployment="deployment" pagination-id="deployments">
   </kd-deployment-card>
+  <kd-resource-card-list-footer>
+    <kd-resource-card-list-pagination pagination-id="deployments"
+                                      total-items="$ctrl.deployments.length">
+    </kd-resource-card-list-pagination>
+  </kd-resource-card-list-footer>
 </kd-resource-card-list>
