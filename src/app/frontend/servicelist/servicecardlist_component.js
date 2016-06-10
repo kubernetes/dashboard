@@ -86,8 +86,6 @@ export const serviceCardListComponent = {
     'services': '<',
     /** {boolean} */
     'selectable': '<',
-    /** {boolean} */
-    'withStatuses': '<',
   },
 };
 
