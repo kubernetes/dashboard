@@ -17,8 +17,10 @@ import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_servi
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 import {stateName as jobList, stateUrl} from 'joblist/joblist_state';
 
+import {ActionBarController} from './actionbar_controller';
 import {JobDetailController} from './jobdetail_controller';
 import {stateName} from './jobdetail_state';
+
 
 /**
  * Configures states for the job details view.
@@ -46,7 +48,11 @@ export default function stateConfig($stateProvider) {
         controllerAs: 'ctrl',
         templateUrl: 'jobdetail/jobdetail.html',
       },
-      [actionbarViewName]: {},
+      [actionbarViewName]: {
+        templateUrl: 'jobdetail/actionbar.html',
+        controller: ActionBarController,
+        controllerAs: '$ctrl',
+      },
     },
   });
 }
