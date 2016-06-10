@@ -53,12 +53,13 @@ export default function stateConfig($stateProvider) {
 
 /**
  * @param {!angular.$resource} $resource
+ * @param {!./../chrome/chrome_state.StateParams} $stateParams
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveDaemonSetList($resource) {
+export function resolveDaemonSetList($resource, $stateParams) {
   /** @type {!angular.Resource<!backendApi.DaemonSetList>} */
-  let resource = $resource('api/v1/daemonset');
+  let resource = $resource(`api/v1/daemonset/${$stateParams.namespace || ''}`);
 
   return resource.get().$promise;
 }

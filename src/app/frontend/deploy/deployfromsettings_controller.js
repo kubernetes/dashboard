@@ -38,9 +38,10 @@ export default class DeployFromSettingsController {
    * @param {!angular.$resource} $resource
    * @param {!angular.$q} $q
    * @param {!md.$dialog} $mdDialog
+   * @param {!./../chrome/chrome_state.StateParams} $stateParams
    * @ngInject
    */
-  constructor(namespaces, protocols, $log, $state, $resource, $q, $mdDialog) {
+  constructor(namespaces, protocols, $log, $state, $resource, $q, $mdDialog, $stateParams) {
     /**
      * Initialized from the template.
      * @export {!angular.FormController}
@@ -140,7 +141,7 @@ export default class DeployFromSettingsController {
      * Currently chosen namespace.
      * @export {string}
      */
-    this.namespace = this.namespaces[0];
+    this.namespace = $stateParams.namespace || this.namespaces[0];
 
     /**
      * @export {?number}
