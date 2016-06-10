@@ -18,13 +18,14 @@ limitations under the License.
                        ng-if="::$ctrl.podList.pods">
   <kd-resource-card-header-columns>
     <kd-resource-card-header-column size="medium" grow="4">{{::$ctrl.i18n.MSG_POD_LIST_NAME_LABEL}}</kd-resource-card-header-column>
-    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_POD_LIST_STATUS_LABEL}}</kd-resource-card-header-column>
+    <kd-resource-card-header-column grow="nogrow">{{::$ctrl.i18n.MSG_POD_LIST_STATUS_LABEL}}</kd-resource-card-header-column>
     <kd-resource-card-header-column size="small" grow="nogrow">
       {{::$ctrl.i18n.MSG_POD_LIST_RESTARTS_LABEL}}
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_POD_LIST_AGE_LABEL}}</kd-resource-card-header-column>
-    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_POD_LIST_CLUSTER_IP_LABEL}}</kd-resource-card-header-column>
-    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_POD_LIST_LOGS_LABEL}}</kd-resource-card-header-column>
+    <kd-resource-card-header-column grow="nogrow">{{::$ctrl.i18n.MSG_POD_LIST_AGE_LABEL}}</kd-resource-card-header-column>
+    <kd-resource-card-header-column grow="nogrow">{{::$ctrl.i18n.MSG_POD_LIST_CLUSTER_IP_LABEL}}</kd-resource-card-header-column>
+    <kd-resource-card-header-column ng-if="::$ctrl.showMetrics()">{{::$ctrl.i18n.MSG_POD_LIST_CPU_USAGE_LABEL}}</kd-resource-card-header-column>
+    <kd-resource-card-header-column ng-if="::$ctrl.showMetrics()">{{::$ctrl.i18n.MSG_POD_LIST_MEMORY_USAGE_LABEL}}</kd-resource-card-header-column>
     <kd-resource-card-header-column size="small" grow="nogrow">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
@@ -69,16 +70,26 @@ limitations under the License.
         <div ng-if="::pod.podIP">{{::pod.podIP}}</div>
         <div ng-if="::!pod.podIP">-</div>
       </kd-resource-card-column>
-      <kd-resource-card-column>
-        <div ng-if="::$ctrl.getPodLogsHref(pod)">
-          <a ng-href="{{::$ctrl.getPodLogsHref(pod)}}" target="_blank">
-            {{::$ctrl.i18n.MSG_POD_LIST_LOGS_LABEL}}
-            <i class="material-icons kd-text-icon">open_in_new</i>
-          </a>
+      <kd-resource-card-column ng-if="::$ctrl.showMetrics()">
+        <div ng-if="::$ctrl.hasCpuUsage(pod)">
+          <kd-sparkline timeseries="::pod.metrics.cpuUsageHistory"></kd-sparkline>
+          {{::(pod.metrics.cpuUsage | kdCores)}}
         </div>
-        <div ng-hide="::$ctrl.getPodLogsHref(pod)">-</div>
+        <div ng-if="::!$ctrl.hasCpuUsage(pod)">-</div>
+      </kd-resource-card-column>
+      <kd-resource-card-column ng-if="::$ctrl.showMetrics()">
+        <div ng-if="::$ctrl.hasMemoryUsage(pod)">
+          <kd-sparkline timeseries="::pod.metrics.memoryUsageHistory"></kd-sparkline>
+          {{::(pod.metrics.memoryUsage | kdMemory)}}
+        </div>
+        <div ng-if="::!$ctrl.hasMemoryUsage(pod)">-</div>
       </kd-resource-card-column>
       <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
+        <md-button ng-if="::$ctrl.getPodLogsHref(pod)"
+            ng-href="{{::$ctrl.getPodLogsHref(pod)}}" target="_blank" class="md-icon-button">
+          <md-icon md-font-library="material-icons">subject</md-icon>
+          <md-tooltip>{{::$ctrl.i18n.MSG_POD_LIST_LOGS_LABEL}}</md-tooltip>
+        </md-button>
         <kd-resource-card-menu>
           <kd-resource-card-delete-menu-item resource-kind-name="{{::$ctrl.i18n.MSG_POD_LIST_POD_TITLE}}">
           </kd-resource-card-delete-menu-item>
