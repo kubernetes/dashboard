@@ -12,26 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {GlobalStateParams as ResourceGlobalStateParams} from './globalresourcedetail';
-
 /**
- * Parameters for this state.
- *
- * All properties are @exported and in sync with URL param names.
+ * @final
  */
-export class StateParams extends ResourceGlobalStateParams {
+export class NodeDetailController {
   /**
-   * @param {string} objectNamespace
-   * @param {string} objectName
-  */
-  constructor(objectNamespace, objectName) {
-    super(objectName);
+   * @param {!backendApi.NodeDetail} nodeDetail
+   * @ngInject
+   */
+  constructor(nodeDetail) {
+    /** @export {!backendApi.NodeDetail} */
+    this.nodeDetail = nodeDetail;
 
-    /** @export {string} Namespace of this object. */
-    this.objectNamespace = objectNamespace;
+    /** @export */
+    this.i18n = i18n;
   }
 }
 
-export function appendDetailParamsToUrl(baseUrl) {
-  return `${baseUrl}/:objectNamespace/:objectName`;
-}
+const i18n = {
+  /** @export {string} @desc Label 'Overview' for the left navigation tab on the node details
+      page. */
+  MSG_NODE_DETAIL_OVERVIEW_LABEL: goog.getMsg('Overview'),
+};

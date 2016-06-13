@@ -35,21 +35,6 @@ type NodeList struct {
 type Node struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
 	TypeMeta   common.TypeMeta   `json:"typeMeta"`
-
-	// Container images of the node.
-	ContainerImages []string `json:"containerImages"`
-
-	// External ID of the node assigned by some machine database (e.g. a cloud provider).
-	ExternalID string `json:"externalID"`
-
-	// PodCIDR represents the pod IP range assigned to the node.
-	PodCIDR string `json:"podCIDR"`
-
-	// ID of the node assigned by the cloud provider.
-	ProviderID string `json:"providerID"`
-
-	// Unschedulable controls node schedulability of new pods. By default node is schedulable.
-	Unschedulable bool `json:"unschedulable"`
 }
 
 // GetNodeList returns a list of all Nodes in the cluster.
@@ -82,12 +67,7 @@ func toNodeList(nodes []api.Node) *NodeList {
 
 func toNode(node api.Node) Node {
 	return Node{
-		ObjectMeta:      common.NewObjectMeta(node.ObjectMeta),
-		TypeMeta:        common.NewTypeMeta(common.ResourceKindNode),
-		ContainerImages: getContainerImages(node),
-		ExternalID:      node.Spec.ExternalID,
-		ProviderID:      node.Spec.ProviderID,
-		PodCIDR:         node.Spec.PodCIDR,
-		Unschedulable:   node.Spec.Unschedulable,
+		ObjectMeta: common.NewObjectMeta(node.ObjectMeta),
+		TypeMeta:   common.NewTypeMeta(common.ResourceKindNode),
 	}
 }
