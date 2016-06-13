@@ -34,7 +34,7 @@ export default function stateConfig($stateProvider) {
     },
     data: {
       [breadcrumbsConfig]: {
-        'label': 'Pet Sets',
+        'label': i18n.MSG_BREADCRUMBS_PET_SETS_LABEL,
         'parent': workloadsState,
       },
     },
@@ -61,3 +61,8 @@ export function resolvePetSets($resource) {
   let resource = $resource('api/v1/petset');
   return resource.get().$promise;
 }
+
+const i18n = {
+  /** @type {string} @desc Label 'Pet Sets' that appears as a breadcrumbs on the action bar. */
+  MSG_BREADCRUMBS_PET_SETS_LABEL: goog.getMsg('Pet Sets'),
+};

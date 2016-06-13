@@ -16,6 +16,6 @@ limitations under the License.
 
 <md-button ng-click="$ctrl.edit()">
   <md-icon>edit</md-icon>
-  <md-tooltip md-direction="bottom">Edit {{::$ctrl.resourceKindName}}</md-tooltip>
-  Edit
+  <md-tooltip md-direction="bottom">{{::$ctrl.getEditTooltip()}}</md-tooltip>
+  {{::$ctrl.i18n.MSG_ACTION_BAR_EDIT_ACTION}}
 </md-button>
