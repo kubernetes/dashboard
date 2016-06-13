@@ -62,7 +62,7 @@ describe('DeployFromFile controller', () => {
 
   it('should open error dialog and redirect the page', () => {
     spyOn(ctrl.errorDialog_, 'open');
-    spyOn(ctrl.state_, 'go');
+    spyOn(ctrl.kdHistoryService_, 'back');
     let response = {
       name: 'foo-name',
       content: 'foo-content',
@@ -78,12 +78,12 @@ describe('DeployFromFile controller', () => {
 
     // then
     expect(ctrl.errorDialog_.open).toHaveBeenCalled();
-    expect(ctrl.state_.go).toHaveBeenCalled();
+    expect(ctrl.kdHistoryService_.back).toHaveBeenCalled();
   });
 
   it('should redirect the page and not open error dialog', () => {
     spyOn(ctrl.errorDialog_, 'open');
-    spyOn(ctrl.state_, 'go');
+    spyOn(ctrl.kdHistoryService_, 'back');
     mockResource.and.callFake(resource);
     let response = {
       name: 'foo-name',
@@ -97,12 +97,12 @@ describe('DeployFromFile controller', () => {
 
     // then
     expect(ctrl.errorDialog_.open).not.toHaveBeenCalled();
-    expect(ctrl.state_.go).toHaveBeenCalled();
+    expect(ctrl.kdHistoryService_.back).toHaveBeenCalled();
   });
 
   it('should not redirect the page and but open error dialog', () => {
     spyOn(ctrl.errorDialog_, 'open');
-    spyOn(ctrl.state_, 'go');
+    spyOn(ctrl.kdHistoryService_, 'back');
     mockResource.and.callFake(resource);
     httpBackend.expectPOST('api/v1/appdeploymentfromfile').respond(500, 'Deployment failed');
     // when
@@ -111,12 +111,12 @@ describe('DeployFromFile controller', () => {
 
     // then
     expect(ctrl.errorDialog_.open).toHaveBeenCalled();
-    expect(ctrl.state_.go).not.toHaveBeenCalled();
+    expect(ctrl.kdHistoryService_.back).not.toHaveBeenCalled();
   });
 
   it('should cancel', () => {
-    spyOn(ctrl.state_, 'go');
+    spyOn(ctrl.kdHistoryService_, 'back');
     ctrl.cancel();
-    expect(ctrl.state_.go).toHaveBeenCalled();
+    expect(ctrl.kdHistoryService_.back).toHaveBeenCalled();
   });
 });

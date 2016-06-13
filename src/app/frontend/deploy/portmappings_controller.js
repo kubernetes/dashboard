@@ -207,7 +207,8 @@ const i18n = {
   MSG_PORT_MAPPINGS_TARGET_PORT_NEGATIVE_WARNING: goog.getMsg('Target port must be greater than 0'),
   /** @export {string} @desc This warning appears when a typed in target port number exceeds the
      maximum allowed value (in the port mappings section on the deploy page).*/
-  MSG_PORT_MAPPINGS_TARGET_PORT_MAX_VALUE_WARNING: goog.getMsg('Target port must be less than 65536'),
+  MSG_PORT_MAPPINGS_TARGET_PORT_MAX_VALUE_WARNING:
+      goog.getMsg('Target port must be less than 65536'),
   /** @export {string} @desc This warning appears when the user specifies an empty target port
      number and a port number is already there (in the port mappings section on the deploy
      page).*/
