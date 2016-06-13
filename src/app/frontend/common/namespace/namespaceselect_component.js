@@ -32,7 +32,10 @@ export class NamespaceSelectController {
      * Initialized with all namespaces on first open.
      * @export {!Array<string>}
      */
-    this.namespaces = [NAMESPACE_NOT_SELECTED];
+    this.namespaces = [];
+
+    /** @export {string} */
+    this.NAMESPACE_NOT_SELECTED = NAMESPACE_NOT_SELECTED;
 
     /**
      * Whether the list of namespaces has been initialized from the backend.
@@ -100,7 +103,8 @@ export class NamespaceSelectController {
    * @return {string}
    * @export
    */
-  formatNamespace(namespace) {
+  formatNamespace() {
+    let namespace = this.selectedNamespace;
     if (namespace === NAMESPACE_NOT_SELECTED) {
       return this.i18n.MSG_NAMESPACE_NOT_SELECTED;
     } else {
@@ -128,7 +132,7 @@ export class NamespaceSelectController {
       let resource = this.resource_('api/v1/namespace');
 
       return resource.get().$promise.then((/** !backendApi.NamespaceList */ namespaceList) => {
-        this.namespaces = [NAMESPACE_NOT_SELECTED].concat(namespaceList.namespaces);
+        this.namespaces = namespaceList.namespaces;
         this.namespacesInitialized_ = true;
         if (this.namespaces.indexOf(this.selectedNamespace) === -1) {
           this.selectedNamespace = NAMESPACE_NOT_SELECTED;
@@ -149,7 +153,10 @@ export const namespaceSelectComponent = {
 
 const i18n = {
   /** @export {string} @desc Text for dropdown item that indicates that no namespace was selected */
-  MSG_NAMESPACE_NOT_SELECTED: goog.getMsg('namespace not selected'),
+  MSG_NAMESPACE_NOT_SELECTED: goog.getMsg('all namespaces'),
+
+  /** @export {string} @desc Label atop a list of namespaces */
+  MSG_NAMESPACE_LIST_LABEL: goog.getMsg('namespaces'),
 
   /** @export {string} @desc Text describing what namespace selector is */
   MSG_NAMESPACE_SELECT_ARIA_LABEL: goog.getMsg('Selector for namespaces'),
