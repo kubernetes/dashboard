@@ -1,10 +1,7 @@
 import deploymentDetailModule from 'deploymentdetail/deploymentdetail_module';
 
 describe('Deployment Info controller', () => {
-  /**
-* Deployment Info controller.
-* @type {!DeploymentInfoController}
-*/
+  /** @type {!DeploymentInfoController} */
   let ctrl;
 
   beforeEach(() => {
@@ -37,6 +34,8 @@ describe('Deployment Info controller', () => {
 
       // then
       expect(ctrl.rollingUpdateStrategy()).toBeTruthy();
+      expect(ctrl.i18n.getMaxUnavailableLabel()).toBe('Max unavailable: 0');
+      expect(ctrl.i18n.getMaxSurgeLabel()).toBe('Max surge: 0');
     });
 
     it('returns true when strategy is rolling update', () => {
@@ -48,5 +47,17 @@ describe('Deployment Info controller', () => {
       // then
       expect(ctrl.rollingUpdateStrategy()).toBeFalsy();
     });
+  });
+
+  describe('constructor', () => {
+    it('should work with recreate strategy',
+       angular.mock.inject(($componentController, $rootScope) => {
+         // No error should be thrown.
+         $componentController('kdDeploymentInfo', {$scope: $rootScope}, {
+           deployment: {
+             statusInfo: {},
+           },
+         });
+       }));
   });
 });
