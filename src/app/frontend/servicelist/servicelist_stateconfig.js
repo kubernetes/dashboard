@@ -34,7 +34,7 @@ export default function stateConfig($stateProvider) {
     },
     data: {
       [breadcrumbsConfig]: {
-        'label': 'Services',
+        'label': i18n.MSG_BREADCRUMBS_SERVICES_LABEL,
       },
     },
     views: {
@@ -68,3 +68,8 @@ export function getServiceListResource($resource, $stateParams) {
 export function resolveServiceList(serviceListResource) {
   return serviceListResource.get().$promise;
 }
+
+const i18n = {
+  /** @type {string} @desc Label 'Services' that appears as a breadcrumbs on the action bar. */
+  MSG_BREADCRUMBS_SERVICES_LABEL: goog.getMsg('Services'),
+};

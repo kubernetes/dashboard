@@ -34,7 +34,7 @@ export default function stateConfig($stateProvider) {
     },
     data: {
       [breadcrumbsConfig]: {
-        'label': 'Deployments',
+        'label': i18n.MSG_BREADCRUMBS_DEPLOYMENTS_LABEL,
         'parent': workloadsState,
       },
     },
@@ -62,3 +62,8 @@ export function resolveDeployments($resource, $stateParams) {
   let resource = $resource(`api/v1/deployment/${$stateParams.namespace || ''}`);
   return resource.get().$promise;
 }
+
+const i18n = {
+  /** @type {string} @desc Label 'Deployments' that appears as a breadcrumbs on the action bar. */
+  MSG_BREADCRUMBS_DEPLOYMENTS_LABEL: goog.getMsg('Deployments'),
+};

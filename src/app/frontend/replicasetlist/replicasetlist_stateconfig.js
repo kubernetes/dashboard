@@ -34,7 +34,7 @@ export default function stateConfig($stateProvider) {
     },
     data: {
       [breadcrumbsConfig]: {
-        'label': 'Replica Sets',
+        'label': i18n.MSG_BREADCRUMBS_REPLICA_SETS_LABEL,
         'parent': workloadsState,
       },
     },
@@ -62,3 +62,8 @@ export function resolveReplicaSets($resource, $stateParams) {
   let resource = $resource(`api/v1/replicaset/${$stateParams.namespace || ''}`);
   return resource.get().$promise;
 }
+
+const i18n = {
+  /** @type {string} @desc Label 'Replica Sets' that appears as a breadcrumbs on the action bar. */
+  MSG_BREADCRUMBS_REPLICA_SETS_LABEL: goog.getMsg('Replica Sets'),
+};
