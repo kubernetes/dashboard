@@ -30,7 +30,7 @@ export class NodeDetailController {
 }
 
 const i18n = {
-  /** @export {string} @desc Label 'Overview' for the left navigation tab on the replica
-      set details page. */
+  /** @export {string} @desc Label 'Overview' for the left navigation tab on the node details
+      page. */
   MSG_NODE_DETAIL_OVERVIEW_LABEL: goog.getMsg('Overview'),
 };

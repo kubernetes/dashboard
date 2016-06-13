@@ -79,8 +79,8 @@ function i18n() {
     /** @export {string} @desc Label 'Label selector' for the node's labels list on the node
         details page.*/
     MSG_NODE_DETAIL_LABELS_LABEL: goog.getMsg('Labels'),
-    /** @export {string} @desc Label 'Images' for the list of images used in a replica
-        set, on its details page. */
+    /** @export {string} @desc Label 'Images' for the list of images used in a node, on its details
+        page. */
     MSG_NODE_DETAIL_IMAGES_LABEL: goog.getMsg('Images'),
     /** @export {string} @desc Subtitle 'Status' for the right section with pod status information
         on the node details page.*/
