@@ -65,10 +65,10 @@ limitations under the License.
           </kd-resource-card-column>
           <kd-resource-card-column>{{event.count}}</kd-resource-card-column>
           <kd-resource-card-column>
-            First seen at {{event.firstSeen | date:'d/M/yy HH:mm':'UTC'}} UTC
+            {{event.firstSeen | date:'d/M/yy HH:mm':'UTC'}} UTC
           </kd-resource-card-column>
           <kd-resource-card-column>
-            Last seen at {{event.lastSeen | date:'d/M/yy HH:mm':'UTC'}} UTC
+            {{event.lastSeen | date:'d/M/yy HH:mm':'UTC'}} UTC
           </kd-resource-card-column>
         </kd-resource-card-columns>
       </kd-resource-card>
