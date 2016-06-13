@@ -30,12 +30,13 @@ limitations under the License.
         {{::$ctrl.getCreatedAtTooltip($ctrl.node.objectMeta.creationTimestamp)}}
       </md-tooltip>
     </kd-info-card-entry>
-    <kd-info-card-entry title="Capacity">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_NODE_DETAIL_CAPACITY_LABEL}}" >
       {{$ctrl.node.cpuCapacity}} cores, {{$ctrl.node.memoryCapacity / (1024*1024) | number : 0}} MiB
-      <!-- TODO(maciaszczykm): Add custom byte size filter. -->
+      <!-- TODO(maciaszczykm): Add custom byte size filter and translation. -->
     </kd-info-card-entry>
     <!-- TODO(maciaszczykm): Add pod capacity, like in kubectl. -->
-    <kd-info-card-entry title="External ID" ng-if="::$ctrl.node.externalID">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_NODE_DETAIL_EXTERNAL_ID_LABEL}}"
+                        ng-if="::$ctrl.node.externalID">
       {{$ctrl.node.externalID}}
     </kd-info-card-entry>
     <kd-info-card-entry title="{{::$ctrl.i18n.MSG_NODE_DETAIL_IMAGES_LABEL}}">
@@ -48,35 +49,44 @@ limitations under the License.
     <!-- TODO(maciaszczykm): Use podCIDR, providerID and  unschedulable. -->
   </kd-info-card-section>
   <kd-info-card-section name="{{::$ctrl.i18n.MSG_NODE_DETAIL_SYSTEM_SUBTITLE}}">
-    <kd-info-card-entry title="Machine ID" ng-if="::$ctrl.node.nodeInfo.machineID">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_NODE_DETAIL_MACHINE_ID_LABEL}}"
+                        ng-if="::$ctrl.node.nodeInfo.machineID">
       {{$ctrl.node.nodeInfo.machineID}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="System UUID" ng-if="::$ctrl.node.nodeInfo.systemUUID">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_NODE_DETAIL_SYSTEM_UUID_LABEL}}"
+                        ng-if="::$ctrl.node.nodeInfo.systemUUID">
       {{$ctrl.node.nodeInfo.systemUUID}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="Boot ID" ng-if="::$ctrl.node.nodeInfo.bootID">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_NODE_DETAIL_BOOT_ID_LABEL}}"
+                        ng-if="::$ctrl.node.nodeInfo.bootID">
       {{$ctrl.node.nodeInfo.bootID}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="Kernel Version" ng-if="::$ctrl.node.nodeInfo.kernelVersion">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_NODE_DETAIL_KERNEL_VERSION_LABEL}}"
+                        ng-if="::$ctrl.node.nodeInfo.kernelVersion">
       {{$ctrl.node.nodeInfo.kernelVersion}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="OS Image" ng-if="::$ctrl.node.nodeInfo.osImage">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_NODE_DETAIL_OS_IMAGE_LABEL}}"
+                        ng-if="::$ctrl.node.nodeInfo.osImage">
       {{$ctrl.node.nodeInfo.osImage}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="Container Runtime Version"
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_NODE_DETAIL_CONTAINER_RUNTIME_VERSION_LABEL}}"
                         ng-if="::$ctrl.node.nodeInfo.containerRuntimeVersion">
       {{$ctrl.node.nodeInfo.containerRuntimeVersion}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="Kubelet Version" ng-if="::$ctrl.node.nodeInfo.kubeletVersion">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_NODE_DETAIL_KUBELET_VERSION_LABEL}}"
+                        ng-if="::$ctrl.node.nodeInfo.kubeletVersion">
       {{$ctrl.node.nodeInfo.kubeletVersion}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="Kube-Proxy Version" ng-if="::$ctrl.node.nodeInfo.kubeProxyVersion">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_NODE_DETAIL_KUBEPROXY_VERSION_LABEL}}"
+                        ng-if="::$ctrl.node.nodeInfo.kubeProxyVersion">
       {{$ctrl.node.nodeInfo.kubeProxyVersion}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="Operating system" ng-if="::$ctrl.node.nodeInfo.operatingSystem">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_NODE_DETAIL_OPERATING_SYSTEM_LABEL}}"
+                        ng-if="::$ctrl.node.nodeInfo.operatingSystem">
       {{$ctrl.node.nodeInfo.operatingSystem}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="Architecture" ng-if="::$ctrl.node.nodeInfo.architecture">
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_NODE_DETAIL_ARCHITECTURE_LABEL}}"
+                        ng-if="::$ctrl.node.nodeInfo.architecture">
       {{$ctrl.node.nodeInfo.architecture}}
     </kd-info-card-entry>
   </kd-info-card-section>
