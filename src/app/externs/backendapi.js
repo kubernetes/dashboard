@@ -561,5 +561,56 @@ backendApi.SecretSpec;
  */
 backendApi.SecretsList;
 
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta
+ * }}
+ */
+backendApi.Node;
+
+/**
+ * @typedef {{
+ *   machineID: string,
+ *   systemUUID: string,
+ *   bootID: string,
+ *   kernelVersion: string,
+ *   osImage: string,
+ *   containerRuntimeVersion: string,
+ *   kubeletVersion: string,
+ *   kubeProxyVersion: string,
+ *   operatingSystem: string,
+ *   architecture: string
+ * }}
+ */
+backendApi.NodeInfo;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   containerImages: !Array<string>,
+ *   eventList: !backendApi.EventList
+ *   externalID: string,
+ *   podCIDR: string,
+ *   providerID: string,
+ *   unschedulable: boolean,
+ *   nodeInfo: !backendApi.NodeInfo,
+ *   cpuCapacity: number,
+ *   memoryCapacity: number
+ * }}
+ */
+backendApi.NodeDetail;
+
+/**
+ * @typedef {{
+ *   nodes: !Array<!backendApi.Node>
+ * }}
+ */
+backendApi.NodeList;
+
+
+
 /** @typedef {{serverTime: number}} */
 const appConfig_DO_NOT_USE_DIRECTLY = {};
