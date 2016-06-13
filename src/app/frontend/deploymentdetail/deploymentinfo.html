@@ -20,11 +20,19 @@
     <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_MIN_READY_LABEL}}">
       {{::$ctrl.deployment.minReadySeconds}}
     </kd-info-card-entry>
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_REVISION_HISTORY_LABEL}}">
+      <span ng-if="::$ctrl.deployment.revisionHistoryLimit">
+        {{::$ctrl.deployment.revisionHistoryLimit}}
+      </span>
+      <span ng-if="::!$ctrl.deployment.revisionHistoryLimit">
+        {{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_REVISION_HISTORY_NOT_SET_LABEL}}
+      </span>
+    </kd-info-card-entry>
 
     <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_ROLLING_STRATEGY_LABEL}}"
                         ng-if="$ctrl.rollingUpdateStrategy()">
-      {{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_MAX_SURGE_LABEL}},
-      {{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_MAX_UNAVAILABLE_LABEL}}
+      {{::$ctrl.i18n.getMaxSurgeLabel()}},
+      {{::$ctrl.i18n.getMaxUnavailableLabel()}}
     </kd-info-card-entry>
 
     <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_STATUS_LABEL}}">
