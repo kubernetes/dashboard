@@ -67,10 +67,14 @@ function i18n(deployment) {
     MSG_DEPLOYMENT_DETAIL_STRATEGY_LABEL: goog.getMsg('Strategy'),
     /** @export {string} @desc Label 'Min Ready Seconds' for the deployment
         on the deployment details page.*/
-    MSG_DEPLOYMENT_DETAIL_MIN_READY_LABEL: goog.getMsg('Min Ready Seconds'),
+    MSG_DEPLOYMENT_DETAIL_MIN_READY_LABEL: goog.getMsg('Min ready seconds'),
+    /** @export {string} @desc Label for the deployment property on the deployment details page.*/
+    MSG_DEPLOYMENT_DETAIL_REVISION_HISTORY_LABEL: goog.getMsg('Revision history limit'),
+    /** @export {string} @desc Label for the when revision history limit is not set.*/
+    MSG_DEPLOYMENT_DETAIL_REVISION_HISTORY_NOT_SET_LABEL: goog.getMsg('Not set'),
     /** @export {string} @desc Label 'Rolling Update Strategy' for the deployment's rolling
         update strategy on the deployment details page.*/
-    MSG_DEPLOYMENT_DETAIL_ROLLING_STRATEGY_LABEL: goog.getMsg('Rolling Update Strategy'),
+    MSG_DEPLOYMENT_DETAIL_ROLLING_STRATEGY_LABEL: goog.getMsg('Rolling update strategy'),
     /** @export {string} @desc The message says that that many replicas were updated in the deployment
         (deployment details page). */
     MSG_DEPLOYMENT_DETAIL_REPLICAS_UPDATED_LABEL:
@@ -87,14 +91,23 @@ function i18n(deployment) {
         (deployment details page). */
     MSG_DEPLOYMENT_DETAIL_REPLICAS_UNAVAILABLE_LABEL:
         goog.getMsg('{$replicas} unavailable', {'replicas': deployment.statusInfo.unavailable}),
-    /** @export {string} @desc The message says how many replicas are allowed to be unavailable during an
-        update in the deployment (deployment details page). */
-    MSG_DEPLOYMENT_DETAIL_MAX_UNAVAILABLE_LABEL: goog.getMsg(
-        'Max unavailable: {$replicas}',
-        {'replicas': deployment.rollingUpdateStrategy.maxUnavailable}),
-    /** @export {string} @desc The message says that that many replicas can be created above the desired
-        number of replicas in a deployment (deployment details page). */
-    MSG_DEPLOYMENT_DETAIL_MAX_SURGE_LABEL: goog.getMsg(
-        'Max surge: {$replicas}', {'replicas': deployment.rollingUpdateStrategy.maxSurge}),
+    /** @export @return {string} */
+    getMaxUnavailableLabel: function() {
+      /** @desc The message says how many replicas are allowed to be unavailable during an
+          update in the deployment (deployment details page). */
+      let MSG_DEPLOYMENT_DETAIL_MAX_UNAVAILABLE_LABEL = goog.getMsg(
+          'Max unavailable: {$replicas}',
+          {'replicas': deployment.rollingUpdateStrategy.maxUnavailable});
+      return MSG_DEPLOYMENT_DETAIL_MAX_UNAVAILABLE_LABEL;
+    },
+    /** @export @return {string} */
+    getMaxSurgeLabel: function() {
+      /** @desc The message says that that many replicas can be created above the desired
+      number of replicas in a deployment (deployment details page). */
+      let MSG_DEPLOYMENT_DETAIL_MAX_SURGE_LABEL = goog.getMsg(
+          'Max surge: {$replicas}', {'replicas': deployment.rollingUpdateStrategy.maxSurge});
+
+      return MSG_DEPLOYMENT_DETAIL_MAX_SURGE_LABEL;
+    },
   };
 }

@@ -52,13 +52,16 @@ type DeploymentDetail struct {
 	MinReadySeconds int32 `json:"minReadySeconds"`
 
 	// Rolling update strategy containing maxSurge and maxUnavailable
-	RollingUpdateStrategy `json:"rollingUpdateStrategy,omitempty"`
+	RollingUpdateStrategy *RollingUpdateStrategy `json:"rollingUpdateStrategy,omitempty"`
 
 	// RepliaSetList containing old replica sets from the deployment
 	OldReplicaSetList replicaset.ReplicaSetList `json:"oldReplicaSetList"`
 
 	// New replica set used by this deployment
 	NewReplicaSet replicaset.ReplicaSet `json:"newReplicaSet"`
+
+	// Optional field that specifies the number of old Replica Sets to retain to allow rollback.
+	RevisionHistoryLimit *int32 `json:"revisionHistoryLimit"`
 
 	// List of events related to this Deployment
 	EventList common.EventList `json:"eventList"`
@@ -139,20 +142,26 @@ func getDeploymentDetail(deployment *extensions.Deployment,
 	}
 	oldReplicaSetList := replicaset.ToReplicaSetList(oldReplicaSets, pods, rawEvents)
 
-	return &DeploymentDetail{
-		ObjectMeta:      common.NewObjectMeta(deployment.ObjectMeta),
-		TypeMeta:        common.NewTypeMeta(common.ResourceKindDeployment),
-		Selector:        deployment.Spec.Selector.MatchLabels,
-		StatusInfo:      GetStatusInfo(&deployment.Status),
-		Strategy:        deployment.Spec.Strategy.Type,
-		MinReadySeconds: deployment.Spec.MinReadySeconds,
-		RollingUpdateStrategy: RollingUpdateStrategy{
+	var rollingUpdateStrategy *RollingUpdateStrategy
+	if deployment.Spec.Strategy.RollingUpdate != nil {
+		rollingUpdateStrategy = &RollingUpdateStrategy{
 			MaxSurge:       deployment.Spec.Strategy.RollingUpdate.MaxSurge.IntValue(),
 			MaxUnavailable: deployment.Spec.Strategy.RollingUpdate.MaxUnavailable.IntValue(),
-		},
-		OldReplicaSetList: *oldReplicaSetList,
-		NewReplicaSet:     newReplicaSet,
-		EventList:         *events,
+		}
+	}
+
+	return &DeploymentDetail{
+		ObjectMeta:            common.NewObjectMeta(deployment.ObjectMeta),
+		TypeMeta:              common.NewTypeMeta(common.ResourceKindDeployment),
+		Selector:              deployment.Spec.Selector.MatchLabels,
+		StatusInfo:            GetStatusInfo(&deployment.Status),
+		Strategy:              deployment.Spec.Strategy.Type,
+		MinReadySeconds:       deployment.Spec.MinReadySeconds,
+		RollingUpdateStrategy: rollingUpdateStrategy,
+		OldReplicaSetList:     *oldReplicaSetList,
+		NewReplicaSet:         newReplicaSet,
+		RevisionHistoryLimit:  deployment.Spec.RevisionHistoryLimit,
+		EventList:             *events,
 	}
 }
 

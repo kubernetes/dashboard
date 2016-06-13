@@ -99,7 +99,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 				},
 				Strategy:        "RollingUpdate",
 				MinReadySeconds: 5,
-				RollingUpdateStrategy: RollingUpdateStrategy{
+				RollingUpdateStrategy: &RollingUpdateStrategy{
 					MaxSurge:       1,
 					MaxUnavailable: 1,
 				},
