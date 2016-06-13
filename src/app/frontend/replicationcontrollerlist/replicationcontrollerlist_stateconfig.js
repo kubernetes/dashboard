@@ -34,7 +34,7 @@ export default function stateConfig($stateProvider) {
     },
     data: {
       [breadcrumbsConfig]: {
-        'label': 'Replication Controllers',
+        'label': i18n.MSG_BREADCRUMBS_RC_LABEL,
         'parent': workloadsState,
       },
     },
@@ -62,3 +62,8 @@ export function resolveReplicationControllers($resource, $stateParams) {
   let resource = $resource(`api/v1/replicationcontroller/${$stateParams.namespace || ''}`);
   return resource.get().$promise;
 }
+
+const i18n = {
+  /** @export {string} @desc Label 'Replication Controllers' that appears as a breadcrumbs on the action bar. */
+  MSG_BREADCRUMBS_RC_LABEL: goog.getMsg('Replication Controllers'),
+};

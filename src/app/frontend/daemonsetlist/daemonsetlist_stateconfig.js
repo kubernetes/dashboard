@@ -34,7 +34,7 @@ export default function stateConfig($stateProvider) {
     },
     data: {
       [breadcrumbsConfig]: {
-        'label': 'Daemon Sets',
+        'label': i18n.MSG_BREADCRUMBS_DAEMON_SETS_LABEL,
         'parent': workloadsState,
       },
     },
@@ -63,3 +63,8 @@ export function resolveDaemonSetList($resource, $stateParams) {
 
   return resource.get().$promise;
 }
+
+const i18n = {
+  /** @export {string} @desc Label 'Daemon Sets' that appears as a breadcrumbs on the action bar. */
+  MSG_BREADCRUMBS_DAEMON_SETS_LABEL: goog.getMsg('Daemon Sets'),
+};

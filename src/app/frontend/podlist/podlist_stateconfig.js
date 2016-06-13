@@ -34,7 +34,7 @@ export default function stateConfig($stateProvider) {
     },
     data: {
       [breadcrumbsConfig]: {
-        'label': 'Pods',
+        'label': i18n.MSG_BREADCRUMBS_PODS_LABEL,
         'parent': workloadsState,
       },
     },
@@ -62,3 +62,8 @@ export function resolvePodList($resource, $stateParams) {
   let resource = $resource(`api/v1/pod/${$stateParams.namespace || ''}`);
   return resource.get().$promise;
 }
+
+const i18n = {
+  /** @export {string} @desc Label 'Pods' that appears as a breadcrumbs on the action bar. */
+  MSG_BREADCRUMBS_PODS_LABEL: goog.getMsg('Pods'),
+};
