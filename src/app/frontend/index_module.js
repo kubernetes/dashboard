@@ -24,6 +24,7 @@ import indexConfig from './index_config';
 import jobListModule from './joblist/joblist_module';
 import jobDetailModule from './jobdetail/jobdetail_module';
 import logsModule from './logs/logs_module';
+import nodeListModule from './nodelist/nodelist_module';
 import replicaSetListModule from './replicasetlist/replicasetlist_module';
 import replicationControllerDetailModule from './replicationcontrollerdetail/replicationcontrollerdetail_module';
 import replicationControllerListModule from './replicationcontrollerlist/replicationcontrollerlist_module';
@@ -54,6 +55,7 @@ export default angular
           replicationControllerDetailModule.name,
           replicationControllerListModule.name,
           replicaSetListModule.name,
+          nodeListModule.name,
           deploymentListModule.name,
           workloadsModule.name,
           serviceDetailModule.name,
