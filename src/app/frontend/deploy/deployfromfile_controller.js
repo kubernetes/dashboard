@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as replicationcontrollerliststate} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 import {stateName as workloads} from 'workloads/workloads_state';
 
 /**
@@ -23,14 +22,14 @@ import {stateName as workloads} from 'workloads/workloads_state';
 export default class DeployFromFileController {
   /**
    * @param {!angular.$log} $log
-   * @param {!ui.router.$state} $state
    * @param {!angular.$resource} $resource
    * @param {!angular.$q} $q
    * TODO (cheld) Set correct type after fixing issue #159
    * @param {!Object} errorDialog
+   * @param {!./../common/history/history_service.HistoryService} kdHistoryService
    * @ngInject
    */
-  constructor($log, $state, $resource, $q, errorDialog) {
+  constructor($log, $resource, $q, errorDialog, kdHistoryService) {
     /**
      * Initialized the template.
      * @export {!angular.FormController}
@@ -53,9 +52,6 @@ export default class DeployFromFileController {
     /** @private {!angular.$log} */
     this.log_ = $log;
 
-    /** @private {!ui.router.$state} */
-    this.state_ = $state;
-
     /**
      * TODO (cheld) Set correct type after fixing issue #159
      * @private {!Object}
@@ -64,6 +60,9 @@ export default class DeployFromFileController {
 
     /** @private {boolean} */
     this.isDeployInProgress_ = false;
+
+    /** @private {!./../common/history/history_service.HistoryService} */
+    this.kdHistoryService_ = kdHistoryService;
 
     /** @export */
     this.i18n = i18n;
@@ -95,7 +94,7 @@ export default class DeployFromFileController {
             if (response.error.length > 0) {
               this.errorDialog_.open('Deployment has been partly completed', response.error);
             }
-            this.state_.go(replicationcontrollerliststate);
+            this.kdHistoryService_.back(workloads);
           },
           (err) => {
             defer.reject(err);  // Progress ends
@@ -117,7 +116,7 @@ export default class DeployFromFileController {
    * Cancels the deployment form.
    * @export
    */
-  cancel() { this.state_.go(workloads); }
+  cancel() { this.kdHistoryService_.back(workloads); }
 }
 
 const i18n = {

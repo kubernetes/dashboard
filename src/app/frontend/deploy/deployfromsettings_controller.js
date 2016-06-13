@@ -15,7 +15,6 @@
 import showNamespaceDialog from './createnamespace_dialog';
 import showCreateSecretDialog from './createsecret_dialog';
 import DeployLabel from './deploylabel';
-import {stateName as replicationcontrollerliststate} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 import {uniqueNameValidationKey} from './uniquename_directive';
 import DockerImageReference from '../common/docker/dockerimagereference';
 import {stateName as workloads} from 'workloads/workloads_state';
@@ -39,9 +38,12 @@ export default class DeployFromSettingsController {
    * @param {!angular.$q} $q
    * @param {!md.$dialog} $mdDialog
    * @param {!./../chrome/chrome_state.StateParams} $stateParams
+   * @param {!./../common/history/history_service.HistoryService} kdHistoryService
    * @ngInject
    */
-  constructor(namespaces, protocols, $log, $state, $resource, $q, $mdDialog, $stateParams) {
+  constructor(
+      namespaces, protocols, $log, $state, $resource, $q, $mdDialog, $stateParams,
+      kdHistoryService) {
     /**
      * Initialized from the template.
      * @export {!angular.FormController}
@@ -168,6 +170,10 @@ export default class DeployFromSettingsController {
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
 
+    /** @private {!./../common/history/history_service.HistoryService} */
+    this.kdHistoryService_ = kdHistoryService;
+
+    /** @private {boolean} */
     this.isDeployInProgress_ = false;
 
     /**
@@ -187,7 +193,7 @@ export default class DeployFromSettingsController {
    * Cancels the deployment form.
    * @export
    */
-  cancel() { this.state_.go(workloads); }
+  cancel() { this.kdHistoryService_.back(workloads); }
 
   /**
    * Deploys the application based on the state of the controller.
@@ -227,7 +233,7 @@ export default class DeployFromSettingsController {
           (savedConfig) => {
             defer.resolve(savedConfig);  // Progress ends
             this.log_.info('Successfully deployed application: ', savedConfig);
-            this.state_.go(replicationcontrollerliststate);
+            this.state_.go(workloads);
           },
           (err) => {
             defer.reject(err);  // Progress ends
