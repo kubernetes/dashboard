@@ -12,26 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {GlobalStateParams as ResourceGlobalStateParams} from './globalresourcedetail';
-
 /**
- * Parameters for this state.
+ * Controller for the node list view.
  *
- * All properties are @exported and in sync with URL param names.
+ * @final
  */
-export class StateParams extends ResourceGlobalStateParams {
+export class NodeListController {
   /**
-   * @param {string} objectNamespace
-   * @param {string} objectName
-  */
-  constructor(objectNamespace, objectName) {
-    super(objectName);
-
-    /** @export {string} Namespace of this object. */
-    this.objectNamespace = objectNamespace;
+   * @param {!backendApi.NodeList} nodes
+   * @ngInject
+   */
+  constructor(nodes) {
+    /** @export {!Array<!backendApi.Node>} */
+    this.nodes = nodes.nodes;
   }
-}
-
-export function appendDetailParamsToUrl(baseUrl) {
-  return `${baseUrl}/:objectNamespace/:objectName`;
 }
