@@ -18,21 +18,29 @@ limitations under the License.
   <md-dialog-content layout-padding>
     <h4 class="md-title" >{{::ctrl.i18n.MSG_NAMESPACE_CREATE_DIALOG_TITLE}}</h4>
     <div>{{::ctrl.i18n.MSG_NAMESPACE_CREATE_DIALOG_SUBTITLE}}</div>
-    <!-- TODO(maciaszczykm): Missing detailed cluster info. -->
-    <form name="ctrl.namespaceForm" ng-submit="ctrl.createNamespace()"
-          novalidate>
-      <md-input-container class="md-block">
-        <label>{{::ctrl.i18n.MSG_NAMESPACE_NAME_LABEL}}</label>
-        <input name="namespace" ng-model="ctrl.namespace"
-            md-maxlength="{{ctrl.namespaceMaxLength}}"
-            ng-pattern="ctrl.namespacePattern"
-            required>
-        <div ng-messages="ctrl.namespaceForm.namespace.$error">
+
+    <form name="ctrl.namespaceForm" ng-submit="ctrl.createNamespace()" novalidate>
+      <kd-help-section>
+        <md-input-container class="md-block">
+          <label>{{::ctrl.i18n.MSG_NAMESPACE_NAME_LABEL}}</label>
+          <input name="namespace" ng-model="ctrl.namespace"
+                 md-maxlength="{{ctrl.namespaceMaxLength}}"
+                 ng-pattern="ctrl.namespacePattern"
+                 required>
+          <div ng-messages="ctrl.namespaceForm.namespace.$error">
             <div ng-message="pattern">{{::ctrl.i18n.MSG_NAMESPACE_NAME_PATTERN_WARNING}}</div>
             <div ng-message="md-maxlength">{{::ctrl.i18n.MSG_NAMESPACE_NAME_LENGTH_WARNING}}</div>
             <div ng-message="required">{{::ctrl.i18n.MSG_NAMESPACE_NAME_REQUIRED_WARNING}}</div>
-        </div>
-      </md-input-container>
+          </div>
+        </md-input-container>
+        <kd-user-help>
+          {{::ctrl.i18n.MSG_NAMESPACE_CREATE_DIALOG_USER_HELP}}
+          <a href="http://kubernetes.io/docs/admin/namespaces/" target="_blank" tabindex="-1">
+            {{::ctrl.i18n.MSG_NAMESPACE_CREATE_DIALOG_LEARN_MORE_ACTION}}
+            <i class="material-icons">open_in_new</i>
+          </a>
+        </kd-user-help>
+      </kd-help-section>
       <md-dialog-actions layout="row">
         <md-button ng-disabled="ctrl.isDisabled()" class="md-primary" type="submit">
           {{::ctrl.i18n.MSG_NAMESPACE_CREATE_ACTION}}
