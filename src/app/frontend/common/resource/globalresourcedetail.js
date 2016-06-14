@@ -12,26 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {GlobalStateParams as ResourceGlobalStateParams} from './globalresourcedetail';
-
 /**
  * Parameters for this state.
  *
  * All properties are @exported and in sync with URL param names.
  */
-export class StateParams extends ResourceGlobalStateParams {
+export class GlobalStateParams {
   /**
-   * @param {string} objectNamespace
    * @param {string} objectName
   */
-  constructor(objectNamespace, objectName) {
-    super(objectName);
-
-    /** @export {string} Namespace of this object. */
-    this.objectNamespace = objectNamespace;
+  constructor(objectName) {
+    /** @export {string} Name of this object. */
+    this.objectName = objectName;
   }
 }
 
 export function appendDetailParamsToUrl(baseUrl) {
-  return `${baseUrl}/:objectNamespace/:objectName`;
+  return `${baseUrl}/:objectName`;
 }
