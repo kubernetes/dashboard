@@ -14,17 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-input-container class="md-block">
+<md-input-container class="md-block kd-deploy-input-row ">
   <label>{{::ctrl.i18n.MSG_PORT_MAPPINGS_SERVICE_LABEL}}</label>
 <md-select ng-model="ctrl.serviceType" ng-change="ctrl.changeServiceType()" required>
-  <md-option ng-repeat="serviceType in ctrl.serviceTypes" ng-value="serviceType">
+  <md-option ng-repeat="serviceType in ctrl.serviceTypes" ng-value="serviceType" class="md-block">
     {{serviceType.label}}
   </md-option>
 </md-select>
 </md-input-container>
 <div ng-repeat="portMapping in ctrl.portMappings">
   <ng-form name="portMappingForm" layout="row">
-    <md-input-container flex="50" class="kd-deploy-input-row">
+    <md-input-container flex="50">
       <label>{{::ctrl.i18n.MSG_PORT_MAPPINGS_PORT_LABEL}}</label>
       <input ng-model="portMapping.port" ng-change="ctrl.checkPortMapping(portMappingForm, $index)"
              type="number" min="1" max="65535" name="port" ng-required="ctrl.isFirst($index)">
@@ -36,7 +36,7 @@ limitations under the License.
       </ng-messages>
     </md-input-container>
     <div flex="5"></div>
-    <md-input-container flex="50" class="kd-deploy-input-row">
+    <md-input-container flex="50">
       <label>{{::ctrl.i18n.MSG_PORT_MAPPINGS_TARGET_PORT_LABEL}}</label>
       <input ng-model="portMapping.targetPort"
              ng-change="ctrl.checkPortMapping(portMappingForm, $index)"
@@ -49,7 +49,7 @@ limitations under the License.
       </ng-messages>
     </md-input-container>
     <div flex="5"></div>
-    <md-input-container flex="none" class="kd-deploy-input-row">
+    <md-input-container flex="none">
       <label>{{::ctrl.i18n.MSG_PORT_MAPPINGS_PROTOCOL_LABEL}}</label>
       <md-select ng-model="portMapping.protocol" name="protocol" is-external="ctrl.isExternal"
                  required kd-valid-protocol>

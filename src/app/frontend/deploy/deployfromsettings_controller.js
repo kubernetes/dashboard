@@ -467,7 +467,7 @@ const i18n = {
   /** @export {string} @desc User help for the "port mappings" input on the deploy from settings
      page. */
   MSG_DEPLOY_SETTINGS_PORT_MAPPINGS_USER_HELP: goog.getMsg(
-      `Ports are optional. If specified, a Service will be created mapping the Port (incoming) to a target Port seen by the container.`),
+      `Optionally, an internal or external Service can be defined to map an incoming Port to a target Port seen by the container.`),
 
   /** @export {string} @desc User help, tells the user what the DNS name of his deployed service (on
      the deploy page) is going to be. The actual name will follow, so this text must end with a
