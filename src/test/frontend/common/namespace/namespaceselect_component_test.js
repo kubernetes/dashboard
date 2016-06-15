@@ -61,7 +61,7 @@ describe('Namespace select component ', () => {
     ctrl.loadNamespacesIfNeeded();
     httpBackend.whenGET('api/v1/namespace').respond({namespaces: ['a', 'b', 'c']});
     httpBackend.flush();
-    expect(ctrl.namespaces).toEqual(['__NAMESPACE_NOT_SELECTED__', 'a', 'b', 'c']);
+    expect(ctrl.namespaces).toEqual(['a', 'b', 'c']);
     expect(ctrl.selectedNamespace).toBe('__NAMESPACE_NOT_SELECTED__');
   });
 
@@ -81,7 +81,7 @@ describe('Namespace select component ', () => {
     ctrl.loadNamespacesIfNeeded();
     httpBackend.whenGET('api/v1/namespace').respond({namespaces: ['a', 'b', 'c']});
     httpBackend.flush();
-    expect(ctrl.namespaces).toEqual(['__NAMESPACE_NOT_SELECTED__', 'a', 'b', 'c']);
+    expect(ctrl.namespaces).toEqual(['a', 'b', 'c']);
     expect(ctrl.selectedNamespace).toBe('a');
 
     state.go('fakeState', {namespace: 'b'});
@@ -97,7 +97,9 @@ describe('Namespace select component ', () => {
   });
 
   it('should format namespace', () => {
-    expect(ctrl.formatNamespace('__NAMESPACE_NOT_SELECTED__')).toBe('namespace not selected');
+    ctrl.selectedNamespace = '__NAMESPACE_NOT_SELECTED__';
+    expect(ctrl.formatNamespace()).toBe('All user namespaces');
+    ctrl.selectedNamespace = 'foo';
     expect(ctrl.formatNamespace('foo')).toBe('foo');
   });
 });

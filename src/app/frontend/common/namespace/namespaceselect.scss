@@ -14,12 +14,46 @@
 
 @import '../../variables';
 
-.kd-namespace-select {
-  font-size: $subhead-font-size-base;
+md-select {
+  &.kd-namespace-select {
+    font-size: $subhead-font-size-base;
 
-  .md-select-value {
-    .md-select-icon {
-      width: auto;
+    .md-select-value {
+      .md-select-icon {
+        width: auto;
+      }
     }
+
+    &:focus {
+      .md-select-value {
+        color: inherit;
+      }
+    }
+  }
+}
+
+.kd-namespace-select-container {
+  md-content {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    .kd-namespace-select-namespace-list {
+      overflow: auto;
+    }
+  }
+
+  .kd-namespace-list-header {
+    color: $foreground-2;
+    display: block;
+    font-size: $body-font-size-base;
+    font-weight: $bold-font-weight;
+    padding: 2 * $baseline-grid;
+    text-transform: uppercase;
+  }
+
+  .kd-namespace-select-all {
+    height: $table-cell-height;
+    min-height: $table-cell-height;
   }
 }
