@@ -18,6 +18,7 @@ import eventsModule from 'events/events_module';
 import filtersModule from 'common/filters/filters_module';
 import stateConfig from './nodedetail_stateconfig';
 import {nodeInfoComponent} from './nodeinfo_component';
+import {nodeConditionsComponent} from './nodeconditions_component';
 
 /**
  * Angular module for the Node details view.
@@ -37,4 +38,5 @@ export default angular
           eventsModule.name,
         ])
     .config(stateConfig)
+    .component('kdNodeConditions', nodeConditionsComponent)
     .component('kdNodeInfo', nodeInfoComponent);

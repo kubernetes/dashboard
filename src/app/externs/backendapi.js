@@ -588,6 +588,25 @@ backendApi.NodeInfo;
 
 /**
  * @typedef {{
+ *   type: string,
+ *   status: string,
+ *   lastHeartbeatTime: ?string,
+ *   lastTransitionTime: ?string,
+ *   reason: string,
+ *   message: string
+ * }}
+ */
+backendApi.NodeCondition;
+
+/**
+ * @typedef {{
+ *   nodes: !Array<!backendApi.Node>
+ * }}
+ */
+backendApi.NodeConditionList;
+
+/**
+ * @typedef {{
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
  *   containerImages: !Array<string>,
@@ -598,7 +617,8 @@ backendApi.NodeInfo;
  *   unschedulable: boolean,
  *   nodeInfo: !backendApi.NodeInfo,
  *   cpuCapacity: number,
- *   memoryCapacity: number
+ *   memoryCapacity: number,
+ *   conditions: !backendApi.NodeConditionList,
  * }}
  */
 backendApi.NodeDetail;
