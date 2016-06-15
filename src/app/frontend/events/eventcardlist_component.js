@@ -38,6 +38,9 @@ export class EventCardListController {
 
     /** @export {string} */
     this.eventType = EVENT_ALL;
+
+    /** @export */
+    this.i18n = i18n;
   }
 
   /**
@@ -91,4 +94,28 @@ export const eventCardListComponent = {
     /** {!Array<!backendApi.Event>} */
     'events': '=',
   },
+};
+
+const i18n = {
+  /** @export {string} @desc Label 'Type' for the event type selection box on the events list page. */
+  MSG_EVENTS_TYPE_LABEL: goog.getMsg('Type'),
+  /** @export {string} @desc Label 'Message' for the event message column of the events table (events list page). */
+  MSG_EVENTS_MESSAGE_LABEL: goog.getMsg('Message'),
+  /** @export {string} @desc Label 'Source' for the event source column of the events table (events list page). */
+  MSG_EVENTS_SOURCE_LABEL: goog.getMsg('Source'),
+  /** @export {string} @desc Label 'Sub-object' for the respective column of the events table (events list page). */
+  MSG_EVENTS_SUB_OBJECT_LABEL: goog.getMsg('Sub-object'),
+  /** @export {string} @desc Label 'Count' for event count column of the events table (events list page). */
+  MSG_EVENTS_COUNT_LABEL: goog.getMsg('Count'),
+  /** @export {string} @desc Label 'First seen' for the respective column of the events table (events list page). */
+  MSG_EVENTS_FIRST_SEEN_LABEL: goog.getMsg('First seen'),
+  /** @export {string} @desc Label 'Last seen' for the respective column of the events table (events list page). */
+  MSG_EVENTS_LAST_SEEN_LABEL: goog.getMsg('Last seen'),
+  /** @export {string} @desc Title 'No events were found', which appears in the center of the events page when
+      there are no events to display */
+  MSG_EVENTS_NO_EVENTS_TITLE: goog.getMsg('No events were found'),
+  /** @export {string} @desc User help on the events page when no events are to be displayed. */
+  MSG_EVENTS_NO_EVENTS_USER_HELP: goog.getMsg(
+      `There are no events to display. ` +
+      `It's possible that all of them have expired.`),
 };
