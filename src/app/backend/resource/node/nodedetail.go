@@ -52,6 +52,9 @@ type NodeDetail struct {
 
 	// Memory limit specified (bytes).
 	MemoryCapacity int64 `json:"memoryCapacity"`
+
+	// Conditions is an array of current node conditions.
+	Conditions []api.NodeCondition `json:"conditions"`
 }
 
 // GetNodeDetail gets node details.
@@ -83,5 +86,6 @@ func toNodeDetail(node api.Node) NodeDetail {
 		NodeInfo:        node.Status.NodeInfo,
 		CPUCapacity:     cpuCapacity,
 		MemoryCapacity:  memoryCapacity,
+		Conditions:	 node.Status.Conditions,
 	}
 }
