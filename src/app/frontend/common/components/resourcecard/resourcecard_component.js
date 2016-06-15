@@ -23,6 +23,12 @@ export class ResourceCardController {
   constructor() {
     /**
      * Initialized from a binding.
+     * @export {boolean}
+     */
+    this.omitMeta;
+
+    /**
+     * Initialized from a binding.
      * @export {!backendApi.ObjectMeta}
      */
     this.objectMeta;
@@ -42,12 +48,14 @@ export class ResourceCardController {
 
   /** @export */
   $onInit() {
-    if (!this.objectMeta) {
-      throw new Error('object-meta binding is required for resource card component');
-    }
+    if (!this.omitMeta) {
+      if (!this.objectMeta) {
+        throw new Error('object-meta binding is required for resource card component');
+      }
 
-    if (!this.typeMeta) {
-      throw new Error('type-meta binding is required for resource card component');
+      if (!this.typeMeta) {
+        throw new Error('type-meta binding is required for resource card component');
+      }
     }
   }
 
@@ -71,6 +79,8 @@ export class ResourceCardController {
  */
 export const resourceCardComponent = {
   bindings: {
+    /** type {boolean} Should be set to true if there is no object metadata. */
+    'omitMeta': '<',
     /** type {!backendApi.ObjectMeta} Object metadata of the resource displayed in the card. */
     'objectMeta': '<',
     /** type {!backendApi.TypeMeta} Type metadata of the resource displayed in the card. */

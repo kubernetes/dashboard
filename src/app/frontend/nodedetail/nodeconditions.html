@@ -1,0 +1,66 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-resource-card-list selectable="false" with-statuses="false">
+  <kd-resource-card-header-columns>
+    <kd-resource-card-header-column size="small" grow="2">
+      {{::$ctrl.i18n.MSG_NODE_DETAIL_CONDITION_TYPE_HEADER}}
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small" grow="1">
+      {{::$ctrl.i18n.MSG_NODE_DETAIL_CONDITION_STATUS_HEADER}}
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small" grow="1">
+      {{::$ctrl.i18n.MSG_NODE_DETAIL_CONDITION_LAST_HEARTBEAT_TIME_HEADER}}
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small" grow="1">
+      {{::$ctrl.i18n.MSG_NODE_DETAIL_CONDITION_LAST_TRANSITION_TIME_HEADER}}
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="medium" grow="2">
+      {{::$ctrl.i18n.MSG_NODE_DETAIL_CONDITION_REASON_HEADER}}
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="medium" grow="4">
+      {{::$ctrl.i18n.MSG_NODE_DETAIL_CONDITION_MESSAGE_HEADER}}
+    </kd-resource-card-header-column>
+  </kd-resource-card-header-columns>
+  <kd-resource-card dir-paginate="condition in $ctrl.conditions | itemsPerPage: default"
+                    pagination-id="conditions" omit-meta="true">
+    <kd-resource-card-columns>
+      <kd-resource-card-column>
+        <div>{{condition.type}}</div>
+      </kd-resource-card-column>
+      <kd-resource-card-column>
+        <div>{{condition.status}}</div>
+      </kd-resource-card-column>
+    <kd-resource-card-column>
+      <div>{{condition.lastHeartbeatTime | relativeTime}}</div>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <div>{{condition.lastTransitionTime | relativeTime}}</div>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <div>{{condition.reason}}</div>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <div>{{condition.message}}</div>
+    </kd-resource-card-column>
+    </kd-resource-card-columns>
+  </kd-resource-card>
+  <kd-resource-card-list-footer>
+    <kd-resource-card-list-pagination pagination-id="conditions"
+                                      total-items="$ctrl.conditions.length">
+    </kd-resource-card-list-pagination>
+  </kd-resource-card-list-footer>
+</kd-resource-card-list>
