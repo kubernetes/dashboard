@@ -33,3 +33,10 @@ md-progress-linear {
   margin-bottom: $baseline-grid;
   margin-top: $baseline-grid;
 }
+
+.kd-help-section {
+  & kd-port-mappings {
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+}
