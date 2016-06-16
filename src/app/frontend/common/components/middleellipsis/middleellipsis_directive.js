@@ -19,11 +19,12 @@ import computeTextLength from './middleellipsis';
  * Returns directive definition for middle ellipsis.
  *
  * @param {!function(string, number): string} middleEllipsisFilter
+ * @param {!angular.$window} $window
  *
  * @return {!angular.Directive}
  * @ngInject
  */
-export default function middleEllipsisDirective(middleEllipsisFilter) {
+export default function middleEllipsisDirective(middleEllipsisFilter, $window) {
   return {
     controller: MiddleEllipsisController,
     controllerAs: 'ellipsisCtrl',
@@ -54,12 +55,17 @@ export default function middleEllipsisDirective(middleEllipsisFilter) {
 
       let nonNullElement = ellipsisElem;
 
-      scope.$watch(
-          () => [container.offsetWidth, ctrl.displayString], ([containerWidth, displayString]) => {
-            let newLength = computeTextLength(
-                containerWidth, nonNullElement, element, middleEllipsisFilter, displayString);
-            ctrl.maxLength = newLength;
-          }, true);
+      angular.element($window).ready(() => {
+        ctrl.maxLength = computeTextLength(
+            container.offsetWidth, nonNullElement, element, middleEllipsisFilter,
+            ctrl.displayString);
+      });
+
+      angular.element($window).bind('resize', () => {
+        ctrl.maxLength = computeTextLength(
+            container.offsetWidth, nonNullElement, element, middleEllipsisFilter,
+            ctrl.displayString);
+      });
     },
   };
 }
