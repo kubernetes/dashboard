@@ -79,6 +79,8 @@ function i18n(node, memoryFilter) {
     MSG_NODE_DETAIL_DETAILS_SUBTITLE: goog.getMsg('Details'),
     /** @export {string} @desc Label 'Age' for the node namespace on the node details page.*/
     MSG_NODE_DETAIL_AGE_LABEL: goog.getMsg('Age'),
+    /** @export {string} @desc Label 'Phase' for the node namespace on the node details page.*/
+    MSG_NODE_DETAIL_PHASE_LABEL: goog.getMsg('Phase'),
     /** @export {string} @desc Label 'Name' for the node name on the node details page.*/
     MSG_NODE_DETAIL_NAME_LABEL: goog.getMsg('Name'),
     /** @export {string} @desc Label 'Label selector' for the node's labels list on the node
@@ -121,14 +123,25 @@ function i18n(node, memoryFilter) {
     /** @export {string} @desc Label 'External ID' for the node external ID displayed on its
         details page.*/
     MSG_NODE_DETAIL_EXTERNAL_ID_LABEL: goog.getMsg('External ID'),
+    /** @export {string} @desc Label 'Pod CIDR' for the node external ID displayed on its
+     details page.*/
+    MSG_NODE_DETAIL_POD_CIDR_LABEL: goog.getMsg('Pod CIDR'),
+    /** @export {string} @desc Label 'Provider ID' for the node external ID displayed on its
+     details page.*/
+    MSG_NODE_DETAIL_PROVIDER_ID_LABEL: goog.getMsg('Provider ID'),
+    /** @export {string} @desc Label 'Unschedulable' for the node external ID displayed on its
+     details page.*/
+    MSG_NODE_DETAIL_UNSCHEDULABLE_LABEL: goog.getMsg('Unschedulable'),
     /** @export {string} @desc Label 'Capacity' for the node capacity displayed on its details
         page.*/
     MSG_NODE_DETAIL_CAPACITY_LABEL: goog.getMsg('Capacity'),
     /** @export {string} @desc Value for node 'Capacity' displayed on its details page.*/
-    MSG_NODE_DETAIL_CAPACITY_VALUE: goog.getMsg('{$cpuCapacity} cores, {$memoryCapacity}B', {
-      'cpuCapacity': node.cpuCapacity,
-      'memoryCapacity': memoryFilter(node.memoryCapacity),
-    }),
+    MSG_NODE_DETAIL_CAPACITY_VALUE:
+        goog.getMsg('{$cpuCapacity} cores, {$memoryCapacity}B, {$podCapacity} pods', {
+          'cpuCapacity': node.cpuCapacity,
+          'memoryCapacity': memoryFilter(node.memoryCapacity),
+          'podCapacity': node.podCapacity,
+        }),
     /** @export {string} @desc Label 'Conditions' for the conditions tab on the node details
      page. */
     MSG_NODE_DETAIL_CONDITIONS_LABEL: goog.getMsg('Conditions'),

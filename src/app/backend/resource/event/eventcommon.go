@@ -82,6 +82,33 @@ func GetPodsEvents(client client.Interface, namespace string, resourceSelector m
 	return events, nil
 }
 
+// GetNodeEvents gets events associated to node with given name.
+func GetNodeEvents(client client.EventNamespacer, node api.Node) ([]api.Event, error) {
+	fieldSelector, err := fields.ParseSelector("involvedObject.name=" + node.ObjectMeta.Name)
+
+	if err != nil {
+		return nil, err
+	}
+
+	channels := &common.ResourceChannels{
+		EventList: common.GetEventListChannelWithOptions(
+			client,
+			&common.NamespaceQuery{},
+			api.ListOptions{
+				LabelSelector: labels.Everything(),
+				FieldSelector: fieldSelector,
+			},
+			1),
+	}
+
+	eventList := <-channels.EventList.List
+	if err := <-channels.EventList.Error; err != nil {
+		return nil, err
+	}
+
+	return eventList.Items, nil
+}
+
 // AppendEvents appends events from source slice to target events representation.
 func AppendEvents(source []api.Event, target common.EventList) common.EventList {
 	for _, event := range source {
