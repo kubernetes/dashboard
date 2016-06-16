@@ -129,5 +129,8 @@ function i18n(node, memoryFilter) {
       'cpuCapacity': node.cpuCapacity,
       'memoryCapacity': memoryFilter(node.memoryCapacity),
     }),
+    /** @export {string} @desc Label 'Conditions' for the conditions tab on the node details
+     page. */
+    MSG_NODE_DETAIL_CONDITIONS_LABEL: goog.getMsg('Conditions'),
   };
 }
