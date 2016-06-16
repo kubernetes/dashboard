@@ -20,6 +20,9 @@ limitations under the License.
       <md-tab label="{{::ctrl.i18n.MSG_NODE_DETAIL_OVERVIEW_LABEL}}">
         <kd-node-info node="::ctrl.nodeDetail"></kd-node-info>
       </md-tab>
+      <md-tab label="{{::ctrl.i18n.MSG_NODE_DETAIL_EVENTS_LABEL}}">
+        <kd-event-card-list events="::ctrl.nodeDetail.eventList.events"></kd-event-card-list>
+      </md-tab>
     </md-tabs>
   </md-content>
 </div>

@@ -31,7 +31,7 @@ export class ResourceCardListPaginationController {
     /** @private {!../../pagination/pagination_service.PaginationService} */
     this.paginationService_ = kdPaginationService;
     /** @export {number} */
-    this.rowsLimit = this.paginationService_.getRowsLimit(this.paginationId);
+    this.rowsLimit;
     /** @export {!Array<number>} */
     this.rowsLimitOptions = this.paginationService_.getRowsLimitOptions();
     /** @export */
@@ -51,6 +51,7 @@ export class ResourceCardListPaginationController {
     }
 
     this.resourceCardListFooterCtrl.setListPagination(this);
+    this.rowsLimit = this.paginationService_.getRowsLimit(this.paginationId);
   }
 
   /**

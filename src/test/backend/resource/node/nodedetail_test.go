@@ -20,6 +20,7 @@ import (
 
 	"github.com/kubernetes/dashboard/client"
 	"github.com/kubernetes/dashboard/resource/common"
+	"github.com/kubernetes/dashboard/resource/pod"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/client/restclient"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
@@ -46,7 +47,7 @@ func TestGetNodeDetail(t *testing.T) {
 	}{
 		{
 			"test-namespace", "test-name",
-			[]string{"get"},
+			[]string{"get", "list", "list"},
 			&api.Node{
 				ObjectMeta: api.ObjectMeta{Name: "test-node"},
 				Spec: api.NodeSpec{
@@ -63,6 +64,13 @@ func TestGetNodeDetail(t *testing.T) {
 				PodCIDR:       "127.0.0.1",
 				ProviderID:    "ID-1",
 				Unschedulable: true,
+				PodList: pod.PodList{
+					Pods: []pod.Pod{},
+				},
+				EventList: common.EventList{
+					Namespace: api.NamespaceAll,
+					Events:    []common.Event{},
+				},
 			},
 		},
 	}
@@ -73,19 +81,6 @@ func TestGetNodeDetail(t *testing.T) {
 		fakeHeapsterClient := FakeHeapsterClient{client: testclient.NewSimpleFake()}
 
 		actual, _ := GetNodeDetail(fakeClient, fakeHeapsterClient, c.name)
-
-		actions := fakeClient.Actions()
-		if len(actions) != len(c.expectedActions) {
-			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
-				len(c.expectedActions), len(actions))
-			continue
-		}
-
-		for i, verb := range c.expectedActions {
-			if actions[i].GetVerb() != verb {
-				t.Errorf("Unexpected action: %+v, expected %s", actions[i], verb)
-			}
-		}
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetEvents(client,heapsterClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
