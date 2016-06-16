@@ -23,7 +23,7 @@ limitations under the License.
           {{ctrl.error.statusText}}
         </span>
         <span ng-if="::!ctrl.error.statusText">
-          Unknown Server Error
+          {{::ctrl.i18n.MSG_ERROR_UKNOWN_WARNING}}
         </span>
         <span ng-if="::ctrl.showStatus()">
          ({{ctrl.error.status}})
