@@ -19,8 +19,11 @@ import (
 
 	"github.com/kubernetes/dashboard/client"
 	"github.com/kubernetes/dashboard/resource/common"
+	"github.com/kubernetes/dashboard/resource/event"
+	"github.com/kubernetes/dashboard/resource/pod"
 	"k8s.io/kubernetes/pkg/api"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
+	"k8s.io/kubernetes/pkg/fields"
 )
 
 // NodeDetail is a presentation layer view of Kubernetes Node resource. This means it is Node plus
@@ -29,8 +32,17 @@ type NodeDetail struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
 	TypeMeta   common.TypeMeta   `json:"typeMeta"`
 
-	// Container images of the Node.
-	ContainerImages []string `json:"containerImages"`
+	// NodePhase is the current lifecycle phase of the node.
+	Phase api.NodePhase `json:"phase"`
+
+	// CPU limit specified (core number).
+	CPUCapacity int64 `json:"cpuCapacity"`
+
+	// Memory limit specified (bytes).
+	MemoryCapacity int64 `json:"memoryCapacity"`
+
+	// Pod limit specified (number).
+	PodCapacity int64 `json:"podCapacity"`
 
 	// External ID of the node assigned by some machine database (e.g. a cloud provider).
 	ExternalID string `json:"externalID"`
@@ -47,14 +59,17 @@ type NodeDetail struct {
 	// Set of ids/uuids to uniquely identify the node.
 	NodeInfo api.NodeSystemInfo `json:"nodeInfo"`
 
-	// CPU limit specified (core number).
-	CPUCapacity int64 `json:"cpuCapacity"`
-
-	// Memory limit specified (bytes).
-	MemoryCapacity int64 `json:"memoryCapacity"`
-
 	// Conditions is an array of current node conditions.
 	Conditions []api.NodeCondition `json:"conditions"`
+
+	// Container images of the node.
+	ContainerImages []string `json:"containerImages"`
+
+	// PodList contains information about pods belonging to this node.
+	PodList pod.PodList `json:"podList"`
+
+	// Events is list of events associated to the node.
+	EventList common.EventList `json:"eventList"`
 }
 
 // GetNodeDetail gets node details.
@@ -67,25 +82,62 @@ func GetNodeDetail(client k8sClient.Interface, heapsterClient client.HeapsterCli
 		return nil, err
 	}
 
-	nodeDetails := toNodeDetail(*node)
+	pods, err := getNodePods(client, heapsterClient, *node)
+	if err != nil {
+		return nil, err
+	}
+
+	events, err := event.GetNodeEvents(client, node.Name)
+	if err != nil {
+		return nil, err
+	}
+
+	nodeDetails := toNodeDetail(*node, pods, events)
 	return &nodeDetails, nil
 }
 
-func toNodeDetail(node api.Node) NodeDetail {
+func getNodePods(client k8sClient.Interface, heapsterClient client.HeapsterClient,
+	node api.Node) (pod.PodList, error) {
+
+	fieldSelector, err := fields.ParseSelector("spec.nodeName=" + node.Name +
+		",status.phase!=" + string(api.PodSucceeded) +
+		",status.phase!=" + string(api.PodFailed))
+
+	if err != nil {
+		return pod.PodList{}, err
+	}
+
+	pods, err := client.Pods(api.NamespaceAll).List(api.ListOptions{
+		FieldSelector: fieldSelector,
+	})
+
+	if err != nil {
+		return pod.PodList{}, err
+	}
+
+	return pod.CreatePodList(pods.Items, heapsterClient), nil
+}
+
+func toNodeDetail(node api.Node, pods pod.PodList, eventList common.EventList) NodeDetail {
 	cpuCapacity, _ := node.Status.Capacity.Cpu().AsInt64()
 	memoryCapacity, _ := node.Status.Capacity.Memory().AsInt64()
+	podCapacity, _ := node.Status.Capacity.Pods().AsInt64()
 
 	return NodeDetail{
 		ObjectMeta:      common.NewObjectMeta(node.ObjectMeta),
 		TypeMeta:        common.NewTypeMeta(common.ResourceKindNode),
-		ContainerImages: getContainerImages(node),
+		Phase:           node.Status.Phase,
+		CPUCapacity:     cpuCapacity,
+		MemoryCapacity:  memoryCapacity,
+		PodCapacity:     podCapacity,
 		ExternalID:      node.Spec.ExternalID,
 		ProviderID:      node.Spec.ProviderID,
 		PodCIDR:         node.Spec.PodCIDR,
 		Unschedulable:   node.Spec.Unschedulable,
 		NodeInfo:        node.Status.NodeInfo,
-		CPUCapacity:     cpuCapacity,
-		MemoryCapacity:  memoryCapacity,
-		Conditions:	 node.Status.Conditions,
+		Conditions:      node.Status.Conditions,
+		ContainerImages: getContainerImages(node),
+		PodList:         pods,
+		EventList:       eventList,
 	}
 }

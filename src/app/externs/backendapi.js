@@ -609,16 +609,19 @@ backendApi.NodeConditionList;
  * @typedef {{
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
- *   containerImages: !Array<string>,
- *   eventList: !backendApi.EventList,
+ *   phase: string,
+ *   cpuCapacity: number,
+ *   memoryCapacity: number,
+ *   podCapacity: number,
  *   externalID: string,
  *   podCIDR: string,
  *   providerID: string,
  *   unschedulable: boolean,
  *   nodeInfo: !backendApi.NodeInfo,
- *   cpuCapacity: number,
- *   memoryCapacity: number,
  *   conditions: !backendApi.NodeConditionList,
+ *   containerImages: !Array<string>,
+ *   podList: !backendApi.PodList,
+ *   eventList: !backendApi.EventList
  * }}
  */
 backendApi.NodeDetail;
