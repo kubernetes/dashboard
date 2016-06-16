@@ -30,16 +30,28 @@ limitations under the License.
         {{::$ctrl.getCreatedAtTooltip($ctrl.node.objectMeta.creationTimestamp)}}
       </md-tooltip>
     </kd-info-card-entry>
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_NODE_DETAIL_PHASE_LABEL}}"
+                        ng-if="::$ctrl.node.phase">
+      {{$ctrl.node.phase}}
+    </kd-info-card-entry>
     <kd-info-card-entry title="{{::$ctrl.i18n.MSG_NODE_DETAIL_CAPACITY_LABEL}}" >
       {{::$ctrl.i18n.MSG_NODE_DETAIL_CAPACITY_VALUE}}
     </kd-info-card-entry>
-    <!-- TODO(maciaszczykm): Add pod capacity, like in kubectl. -->
     <kd-info-card-entry title="{{::$ctrl.i18n.MSG_NODE_DETAIL_EXTERNAL_ID_LABEL}}"
                         ng-if="::$ctrl.node.externalID">
       {{$ctrl.node.externalID}}
     </kd-info-card-entry>
-    <!-- TODO(maciaszczykm): Add phase, adresses, pods, resources and events info. Use images,
-    podCIDR, providerID and  unschedulable? -->
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_NODE_DETAIL_POD_CIDR_LABEL}}"
+                        ng-if="::$ctrl.node.podCIDR">
+      {{$ctrl.node.podCIDR}}
+    </kd-info-card-entry>
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_NODE_DETAIL_PROVIDER_ID_LABEL}}"
+                        ng-if="::$ctrl.node.providerID">
+      {{$ctrl.node.providerID}}
+    </kd-info-card-entry>
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_NODE_DETAIL_UNSCHEDULABLE_LABEL}}">
+      {{$ctrl.node.unschedulable}}
+    </kd-info-card-entry>
   </kd-info-card-section>
   <kd-info-card-section name="{{::$ctrl.i18n.MSG_NODE_DETAIL_SYSTEM_SUBTITLE}}">
     <kd-info-card-entry title="{{::$ctrl.i18n.MSG_NODE_DETAIL_MACHINE_ID_LABEL}}"
@@ -84,7 +96,6 @@ limitations under the License.
     </kd-info-card-entry>
   </kd-info-card-section>
 </kd-info-card>
-
 <kd-content-card ng-if="::$ctrl.node.conditions.length">
   <kd-title>{{::$ctrl.i18n.MSG_NODE_DETAIL_CONDITIONS_LABEL}}</kd-title>
   <kd-content>

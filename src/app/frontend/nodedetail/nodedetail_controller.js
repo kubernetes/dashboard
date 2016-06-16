@@ -33,4 +33,6 @@ const i18n = {
   /** @export {string} @desc Label 'Overview' for the left navigation tab on the node details
       page. */
   MSG_NODE_DETAIL_OVERVIEW_LABEL: goog.getMsg('Overview'),
+  /** @export {string} @desc Label 'Pods' for the pods tab on the node details page. */
+  MSG_NODE_DETAIL_PODS_LABEL: goog.getMsg('Pods'),
 };
