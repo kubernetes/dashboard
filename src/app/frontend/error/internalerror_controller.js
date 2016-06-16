@@ -23,6 +23,9 @@ export class InternalErrorController {
   constructor($stateParams) {
     /** @export {!angular.$http.Response} */
     this.error = $stateParams.error;
+
+    /** @export */
+    this.i18n = i18n;
   }
 
   /**
@@ -31,3 +34,9 @@ export class InternalErrorController {
    */
   showStatus() { return angular.isNumber(this.error.status) && this.error.status > 0; }
 }
+
+const i18n = {
+  /** @export {string} @desc This message appears in an error dialog when the returned error code
+      is not recognized. */
+  MSG_ERROR_UKNOWN_WARNING: goog.getMsg('Unknown Server Error'),
+};

@@ -45,7 +45,11 @@ export default class LogsToolbarController {
     /**
      * @export {../logs_state.StateParams}
      */
+
     this.stateParams = $stateParams;
+
+    /** @export */
+    this.i18n = i18n;
   }
 
   /**
@@ -126,3 +130,10 @@ export default class LogsToolbarController {
     return container;
   }
 }
+
+const i18n = {
+  /** @export {string} @desc Label 'Pod' on the toolbar of the logs page. Ends with colon. */
+  MSG_LOGS_POD_LABEL: goog.getMsg('Pod:'),
+  /** @export {string} @desc Label 'Container' on the toolbar of the logs page. Ends with colon. */
+  MSG_LOGS_CONTAINER_LABEL: goog.getMsg('Container:'),
+};
