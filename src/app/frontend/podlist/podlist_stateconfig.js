@@ -15,6 +15,7 @@
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {stateName as workloadsState} from 'workloads/workloads_state';
+import {redirectToZerostate} from 'zerostate/zerostate_stateconfig';
 
 import {PodListController} from './podlist_controller';
 import {stateName, stateUrl} from './podlist_state';
@@ -32,6 +33,7 @@ export default function stateConfig($stateProvider) {
     resolve: {
       'podList': resolvePodList,
     },
+    'onEnter': redirectIfNeeded,
     data: {
       [breadcrumbsConfig]: {
         'label': i18n.MSG_BREADCRUMBS_PODS_LABEL,
@@ -61,6 +63,16 @@ export function resolvePodList($resource, $stateParams) {
   /** @type {!angular.Resource<!backendApi.PodList>} */
   let resource = $resource(`api/v1/pod/${$stateParams.namespace || ''}`);
   return resource.get().$promise;
+}
+
+/**
+ * @param {!backendApi.PodList} podList
+ * @param {!ui.router.$state} $state
+ * @param {!angular.$timeout} $timeout
+ * @ngInject
+ */
+function redirectIfNeeded(podList, $state, $timeout) {
+  redirectToZerostate(podList.pods, $state, stateName, $timeout);
 }
 
 const i18n = {

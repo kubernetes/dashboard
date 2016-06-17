@@ -14,37 +14,24 @@
 
 @import '../variables';
 
-.kd-eventlist-options {
-  padding: 2 * $baseline-grid;
-}
-
-.kd-eventlist-no-events {
+.kd-zerostate-message {
   padding: (4 * $baseline-grid) 0 (4 * $baseline-grid);
   text-align: center;
 }
 
 md-icon {
-  &.kd-eventlist-no-events-icon {
+  &.kd-zerostate-icon {
     color: $muted;
     font-size: $display-1-font-size-base;
     margin: 0 (2 * $baseline-grid) (2 * $baseline-grid) 0;
   }
 }
 
-.kd-eventlist-no-events-text {
+.kd-zerostate-title {
   color: $muted;
   font-size: $headline-font-size-base;
 }
 
-.kd-eventlist-no-events-info {
-  color: $delicate;
-  font-size: $subhead-font-size-base;
-}
-
-.kd-eventlist-warning-icon {
-  color: $warning;
-}
-
-.kd-eventlist-message {
+.kd-zerostate-text {
   word-break: break-all;
 }

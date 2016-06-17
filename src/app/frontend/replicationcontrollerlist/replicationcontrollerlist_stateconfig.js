@@ -15,6 +15,7 @@
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {stateName as workloadsState} from 'workloads/workloads_state';
+import {redirectToZerostate} from 'zerostate/zerostate_stateconfig';
 
 import {ReplicationControllerListController} from './replicationcontrollerlist_controller';
 import {stateName, stateUrl} from './replicationcontrollerlist_state';
@@ -32,6 +33,7 @@ export default function stateConfig($stateProvider) {
     resolve: {
       'replicationControllers': resolveReplicationControllers,
     },
+    'onEnter': redirectIfNeeded,
     data: {
       [breadcrumbsConfig]: {
         'label': i18n.MSG_BREADCRUMBS_RC_LABEL,
@@ -61,6 +63,16 @@ export function resolveReplicationControllers($resource, $stateParams) {
   /** @type {!angular.Resource<!backendApi.ReplicationControllerList>} */
   let resource = $resource(`api/v1/replicationcontroller/${$stateParams.namespace || ''}`);
   return resource.get().$promise;
+}
+
+/**
+ * @param {!backendApi.ReplicationControllerList} replicationControllers
+ * @param {!ui.router.$state} $state
+ * @param {!angular.$timeout} $timeout
+ * @ngInject
+ */
+function redirectIfNeeded(replicationControllers, $state, $timeout) {
+  redirectToZerostate(replicationControllers.replicationControllers, $state, stateName, $timeout);
 }
 
 const i18n = {

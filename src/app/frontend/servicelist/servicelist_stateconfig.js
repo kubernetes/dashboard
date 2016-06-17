@@ -14,6 +14,7 @@
 
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {redirectToZerostate} from 'zerostate/zerostate_stateconfig';
 
 import {ServiceListController} from './servicelist_controller';
 import {stateName, stateUrl} from './servicelist_state';
@@ -32,6 +33,7 @@ export default function stateConfig($stateProvider) {
       'serviceListResource': getServiceListResource,
       'serviceList': resolveServiceList,
     },
+    'onEnter': redirectIfNeeded,
     data: {
       [breadcrumbsConfig]: {
         'label': i18n.MSG_BREADCRUMBS_SERVICES_LABEL,
@@ -67,6 +69,15 @@ export function getServiceListResource($resource, $stateParams) {
  */
 export function resolveServiceList(serviceListResource) {
   return serviceListResource.get().$promise;
+}
+
+/**
+ * @param {!backendApi.ServiceList} serviceList
+ * @param {!ui.router.$state} $state
+ * @param {!angular.$timeout} $timeout
+ */
+function redirectIfNeeded(serviceList, $state, $timeout) {
+  redirectToZerostate(serviceList.services, $state, stateName, $timeout);
 }
 
 const i18n = {

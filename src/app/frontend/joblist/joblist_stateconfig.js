@@ -15,6 +15,7 @@
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {stateName as workloadsState} from 'workloads/workloads_state';
+import {redirectToZerostate} from 'zerostate/zerostate_stateconfig';
 
 import {JobListController} from './joblist_controller';
 import {stateName, stateUrl} from './joblist_state';
@@ -32,6 +33,7 @@ export default function stateConfig($stateProvider) {
     resolve: {
       'jobs': resolveJobs,
     },
+    'onEnter': redirectIfNeeded,
     data: {
       [breadcrumbsConfig]: {
         'label': i18n.MSG_BREADCRUMBS_JOBS_LABEL,
@@ -61,6 +63,16 @@ export function resolveJobs($resource, $stateParams) {
   /** @type {!angular.Resource<!backendApi.JobList>} */
   let resource = $resource(`api/v1/job/${$stateParams.namespace || ''}`);
   return resource.get().$promise;
+}
+
+/**
+ * @param {!backendApi.JobList} jobs
+ * @param {!ui.router.$state} $state
+ * @param {!angular.$timeout} $timeout
+ * @ngInject
+ */
+function redirectIfNeeded(jobs, $state, $timeout) {
+  redirectToZerostate(jobs.jobs, $state, stateName, $timeout);
 }
 
 const i18n = {

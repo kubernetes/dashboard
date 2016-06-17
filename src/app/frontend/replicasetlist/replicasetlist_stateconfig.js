@@ -15,6 +15,7 @@
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {stateName as workloadsState} from 'workloads/workloads_state';
+import {redirectToZerostate} from 'zerostate/zerostate_stateconfig';
 
 import {ReplicaSetListController} from './replicasetlist_controller';
 import {stateName, stateUrl} from './replicasetlist_state';
@@ -32,6 +33,7 @@ export default function stateConfig($stateProvider) {
     resolve: {
       'replicaSets': resolveReplicaSets,
     },
+    'onEnter': redirectIfNeeded,
     data: {
       [breadcrumbsConfig]: {
         'label': i18n.MSG_BREADCRUMBS_REPLICA_SETS_LABEL,
@@ -61,6 +63,16 @@ export function resolveReplicaSets($resource, $stateParams) {
   /** @type {!angular.Resource<!backendApi.ReplicaSetList>} */
   let resource = $resource(`api/v1/replicaset/${$stateParams.namespace || ''}`);
   return resource.get().$promise;
+}
+
+/**
+ * @param {!backendApi.ReplicaSetList} replicaSets
+ * @param {!ui.router.$state} $state
+ * @param {!angular.$timeout} $timeout
+ * @ngInject
+ */
+function redirectIfNeeded(replicaSets, $state, $timeout) {
+  redirectToZerostate(replicaSets.replicaSets, $state, stateName, $timeout);
 }
 
 const i18n = {

@@ -15,6 +15,7 @@
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {stateName as workloadsState} from 'workloads/workloads_state';
+import {redirectToZerostate} from 'zerostate/zerostate_stateconfig';
 
 import {PetSetListController} from './petsetlist_controller';
 import {stateName, stateUrl} from './petsetlist_state';
@@ -32,6 +33,7 @@ export default function stateConfig($stateProvider) {
     resolve: {
       'petSets': resolvePetSets,
     },
+    'onEnter': redirectIfNeeded,
     data: {
       [breadcrumbsConfig]: {
         'label': i18n.MSG_BREADCRUMBS_PET_SETS_LABEL,
@@ -53,13 +55,24 @@ export default function stateConfig($stateProvider) {
 
 /**
  * @param {!angular.$resource} $resource
+ * @param {!./../chrome/chrome_state.StateParams} $stateParams
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolvePetSets($resource) {
+export function resolvePetSets($resource, $stateParams) {
   /** @type {!angular.Resource<!backendApi.PetSetList>} */
-  let resource = $resource('api/v1/petset');
+  let resource = $resource(`api/v1/petset/${$stateParams.namespace || ''}`);
   return resource.get().$promise;
+}
+
+/**
+ * @param {!backendApi.PetSetList} petSets
+ * @param {!ui.router.$state} $state
+ * @param {!angular.$timeout} $timeout
+ * @ngInject
+ */
+function redirectIfNeeded(petSets, $state, $timeout) {
+  redirectToZerostate(petSets.petSets, $state, stateName, $timeout);
 }
 
 const i18n = {

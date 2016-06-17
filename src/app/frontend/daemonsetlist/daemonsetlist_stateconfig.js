@@ -15,6 +15,7 @@
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {stateName as workloadsState} from 'workloads/workloads_state';
+import {redirectToZerostate} from 'zerostate/zerostate_stateconfig';
 
 import {DaemonSetListController} from './daemonsetlist_controller';
 import {stateName, stateUrl} from './daemonsetlist_state';
@@ -32,6 +33,7 @@ export default function stateConfig($stateProvider) {
     resolve: {
       'daemonSetList': resolveDaemonSetList,
     },
+    'onEnter': redirectIfNeeded,
     data: {
       [breadcrumbsConfig]: {
         'label': i18n.MSG_BREADCRUMBS_DAEMON_SETS_LABEL,
@@ -62,6 +64,16 @@ export function resolveDaemonSetList($resource, $stateParams) {
   let resource = $resource(`api/v1/daemonset/${$stateParams.namespace || ''}`);
 
   return resource.get().$promise;
+}
+
+/**
+ * @param {!backendApi.DaemonSetList} daemonSetList
+ * @param {!ui.router.$state} $state
+ * @param {!angular.$timeout} $timeout
+ * @ngInject
+ */
+function redirectIfNeeded(daemonSetList, $state, $timeout) {
+  redirectToZerostate(daemonSetList.daemonSets, $state, stateName, $timeout);
 }
 
 const i18n = {

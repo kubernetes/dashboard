@@ -14,6 +14,7 @@
 
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {redirectToZerostate} from 'zerostate/zerostate_stateconfig';
 
 import {WorkloadsController} from './workloads_controller';
 import {stateName} from './workloads_state';
@@ -30,6 +31,7 @@ export default function stateConfig($stateProvider) {
     resolve: {
       'workloads': resolveWorkloads,
     },
+    'onEnter': redirectIfNeeded,
     data: {
       [breadcrumbsConfig]: {
         'label': i18n.MSG_BREADCRUMBS_WORKLOADS_LABEL,
@@ -58,6 +60,24 @@ export function resolveWorkloads($resource, $stateParams) {
   /** @type {!angular.Resource<!backendApi.Workloads>} */
   let resource = $resource(`api/v1/workload/${$stateParams.namespace || ''}`);
   return resource.get().$promise;
+}
+
+/**
+ * @param {!backendApi.Workloads} workloads
+ * @param {!ui.router.$state} $state
+ * @param {!angular.$timeout} $timeout
+ * @ngInject
+ */
+function redirectIfNeeded(workloads, $state, $timeout) {
+  let combinedArr = [].concat(...workloads.daemonSetList.daemonSets)
+                        .concat(...workloads.deploymentList.deployments)
+                        .concat(...workloads.petSetList.petSets)
+                        .concat(...workloads.replicaSetList.replicaSets)
+                        .concat(...workloads.jobList.jobs)
+                        .concat(...workloads.replicationControllerList.replicationControllers)
+                        .concat(...workloads.podList.pods);
+
+  redirectToZerostate(combinedArr, $state, stateName, $timeout);
 }
 
 const i18n = {

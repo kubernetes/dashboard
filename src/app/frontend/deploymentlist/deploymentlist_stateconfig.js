@@ -15,6 +15,7 @@
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {stateName as workloadsState} from 'workloads/workloads_state';
+import {redirectToZerostate} from 'zerostate/zerostate_stateconfig';
 
 import {DeploymentListController} from './deploymentlist_controller';
 import {stateName, stateUrl} from './deploymentlist_state';
@@ -32,6 +33,7 @@ export default function stateConfig($stateProvider) {
     resolve: {
       'deployments': resolveDeployments,
     },
+    'onEnter': redirectIfNeeded,
     data: {
       [breadcrumbsConfig]: {
         'label': i18n.MSG_BREADCRUMBS_DEPLOYMENTS_LABEL,
@@ -61,6 +63,16 @@ export function resolveDeployments($resource, $stateParams) {
   /** @type {!angular.Resource<!backendApi.DeploymentList>} */
   let resource = $resource(`api/v1/deployment/${$stateParams.namespace || ''}`);
   return resource.get().$promise;
+}
+
+/**
+ * @param {!backendApi.DeploymentList} deployments
+ * @param {!ui.router.$state} $state
+ * @param {!angular.$timeout} $timeout
+ * @ngInject
+ */
+function redirectIfNeeded(deployments, $state, $timeout) {
+  redirectToZerostate(deployments.deployments, $state, stateName, $timeout);
 }
 
 const i18n = {

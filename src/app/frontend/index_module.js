@@ -34,6 +34,7 @@ import serviceListModule from './servicelist/servicelist_module';
 import workloadsModule from './workloads/workloads_module';
 import podDetailModule from './poddetail/poddetail_module';
 import petSetListModule from './petsetlist/petsetlist_module';
+import zeroStateModule from './zerostate/zerostate_module';
 
 export default angular
     .module(
@@ -47,6 +48,7 @@ export default angular
           'ngSanitize',
           'ui.router',
           chromeModule.name,
+          zeroStateModule.name,
           deployModule.name,
           errorModule.name,
           jobListModule.name,
