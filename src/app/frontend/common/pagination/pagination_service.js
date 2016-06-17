@@ -23,8 +23,9 @@ export const DEFAULT_ROWS_LIMIT = 10;
 export class PaginationService {
   /** @ngInject */
   constructor() {
+    /** @private {!Array<number>} */
     this.rowsLimitOptions_ = ROWS_LIMIT_OPTIONS;
-    /** @private {Map<string, number>} */
+    /** @private {!Map<string, number>} */
     this.instances_ = new Map();
   }
 

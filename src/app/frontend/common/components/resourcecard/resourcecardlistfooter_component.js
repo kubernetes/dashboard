@@ -34,6 +34,7 @@ export class ResourceCardListFooterController {
   /**
    * @param {!./resourcecardlistpagination_component.ResourceCardListPaginationController}
    * listPagination
+   * @export
    */
   setListPagination(listPagination) {
     if (this.listPagination_) {
