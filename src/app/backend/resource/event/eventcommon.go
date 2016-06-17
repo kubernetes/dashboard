@@ -15,12 +15,14 @@
 package event
 
 import (
-	"github.com/kubernetes/dashboard/resource/common"
+	"log"
 
+	"github.com/kubernetes/dashboard/resource/common"
 	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
+	"k8s.io/kubernetes/pkg/types"
 )
 
 // GetEvents gets events associated to resource with given name.
@@ -80,6 +82,26 @@ func GetPodsEvents(client client.Interface, namespace string, resourceSelector m
 	events := FilterEventsByPodsUID(eventList.Items, podList.Items)
 
 	return events, nil
+}
+
+// GetNodeEvents gets events associated to node with given name.
+func GetNodeEvents(client client.Interface, nodeName string) (common.EventList, error) {
+	eventList := common.EventList{
+		Namespace: api.NamespaceAll,
+		Events:    make([]common.Event, 0),
+	}
+
+	mc := client.Nodes()
+	node, _ := mc.Get(nodeName)
+	if ref, err := api.GetReference(node); err == nil {
+		ref.UID = types.UID(ref.Name)
+		events, _ := client.Events(api.NamespaceAll).Search(ref)
+		AppendEvents(events.Items, eventList)
+	} else {
+		log.Print(err)
+	}
+
+	return eventList, nil
 }
 
 // AppendEvents appends events from source slice to target events representation.
