@@ -14,6 +14,7 @@
 
 import resourceCardModule from 'common/components/resourcecard/resourcecard_module';
 import paginationModule from 'common/pagination/pagination_module';
+import {DEFAULT_ROWS_LIMIT} from 'common/pagination/pagination_service';
 
 describe('Resource card list footer', () => {
   /** @type
@@ -63,7 +64,7 @@ describe('Resource card list footer', () => {
 
   it('should show pagination', () => {
     // given
-    let listPaginationCtrl = {totalItems: 100};
+    let listPaginationCtrl = {totalItems: DEFAULT_ROWS_LIMIT + 1};
 
     // when
     ctrl.setListPagination(listPaginationCtrl);
@@ -75,7 +76,7 @@ describe('Resource card list footer', () => {
 
   it('should hide pagination', () => {
     // given
-    let listPaginationCtrl = {totalItems: 20};
+    let listPaginationCtrl = {totalItems: DEFAULT_ROWS_LIMIT};
 
     // when
     ctrl.setListPagination(listPaginationCtrl);
