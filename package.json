@@ -33,7 +33,7 @@
     "gulp-codecov.io": "~1.0.1",
     "gulp-concat": "~2.6.0",
     "gulp-eslint": "~2.0.0",
-    "gulp-flatten": "~0.2.0",
+    "gulp-flatten": "~0.3.0",
     "gulp-htmlmin": "~2.0.0",
     "gulp-if": "~2.0.1",
     "gulp-inject": "~4.1.0",
