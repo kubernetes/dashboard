@@ -109,7 +109,9 @@ $ sudo service docker start
 $ sudo docker run hello-world
 ```
 
-#### Configure Docker
+You should receive a message that includes: `This message shows that your installatiin appears to be qorking correctly`.
+
+#### Configure Docker for your user
 Based on instructions from https://docs.docker.com/engine/installation/linux/ubuntulinux/#create-a-docker-group
 
 The example below uses "username" as a placeholder. Please substitute with the user you are logged in as, which can be seen by using `$ id`.
@@ -122,6 +124,9 @@ $ env
 $ sudo reboot
 $ docker run hello-world
 ```
+
+You should get the same message as above, that includes: `This message shows that your installatiin appears to be qorking correctly`.
+
 `$ status docker` --> should say  "docker start/running, process [some number]"
 `$ docker ps` --> should show a table of information (or at least headers)
 
