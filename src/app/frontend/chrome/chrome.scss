@@ -90,7 +90,7 @@ a {
 
 .kd-comma-separated-item {
   &:not(:last-child) {
-    &:after {
+    &::after {
       content: ',';
     }
   }
