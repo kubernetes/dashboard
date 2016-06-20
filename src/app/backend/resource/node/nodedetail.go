@@ -22,9 +22,51 @@ import (
 	"github.com/kubernetes/dashboard/resource/event"
 	"github.com/kubernetes/dashboard/resource/pod"
 	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api/resource"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 )
+
+// NodeAllocatedResources describes node allocated resources.
+type NodeAllocatedResources struct {
+	// CPURequests is number of allocated milicores.
+	CPURequests int64 `json:"cpuRequests"`
+
+	// CPURequestsFraction is a fraction of CPU, that is allocated.
+	CPURequestsFraction float64 `json:"cpuRequestsFraction"`
+
+	// CPULimits is defined CPU limit.
+	CPULimits int64 `json:"cpuLimits"`
+
+	// CPULimitsFraction is a fraction of defined CPU limit, can be over 100%, i.e.
+	// overcommited.
+	CPULimitsFraction float64 `json:"cpuLimitsFraction"`
+
+	// CPUCapacity is specified node CPU capacity in milicores.
+	CPUCapacity int64 `json:"cpuCapacity"`
+
+	// MemoryRequests is a fraction of memory, that is allocated.
+	MemoryRequests int64 `json:"memoryRequests"`
+
+	// MemoryRequestsFraction is a fraction of memory, that is allocated.
+	MemoryRequestsFraction float64 `json:"memoryRequestsFraction"`
+
+	// MemoryLimits is defined memory limit.
+	MemoryLimits int64 `json:"memoryLimits"`
+
+	// MemoryLimitsFraction is a fraction of defined memory limit, can be over 100%, i.e.
+	// overcommited.
+	MemoryLimitsFraction float64 `json:"memoryLimitsFraction"`
+
+	// MemoryCapacity is specified node memory capacity in bytes.
+	MemoryCapacity int64 `json:"memoryCapacity"`
+
+	// AllocatedPods in number of currently allocated pods on the node.
+	AllocatedPods int `json:"allocatedPods"`
+
+	// PodCapacity is maximum number of pods, that can be allocated on the node.
+	PodCapacity int64 `json:"podCapacity"`
+}
 
 // NodeDetail is a presentation layer view of Kubernetes Node resource. This means it is Node plus
 // additional augmented data we can get from other sources.
@@ -35,14 +77,8 @@ type NodeDetail struct {
 	// NodePhase is the current lifecycle phase of the node.
 	Phase api.NodePhase `json:"phase"`
 
-	// CPU limit specified (core number).
-	CPUCapacity int64 `json:"cpuCapacity"`
-
-	// Memory limit specified (bytes).
-	MemoryCapacity int64 `json:"memoryCapacity"`
-
-	// Pod limit specified (number).
-	PodCapacity int64 `json:"podCapacity"`
+	// Resources allocated by node.
+	AllocatedResources NodeAllocatedResources `json:"allocatedResources"`
 
 	// External ID of the node assigned by some machine database (e.g. a cloud provider).
 	ExternalID string `json:"externalID"`
@@ -82,62 +118,114 @@ func GetNodeDetail(client k8sClient.Interface, heapsterClient client.HeapsterCli
 		return nil, err
 	}
 
-	pods, err := getNodePods(client, heapsterClient, *node)
+	pods, err := getNodePods(client, *node)
 	if err != nil {
 		return nil, err
 	}
+
+	podList := pod.CreatePodList(pods.Items, heapsterClient)
 
 	events, err := event.GetNodeEvents(client, node.Name)
 	if err != nil {
 		return nil, err
 	}
 
-	nodeDetails := toNodeDetail(*node, pods, events)
+	allocatedResources, err := getNodeAllocatedResources(*node, pods)
+	if err != nil {
+		return nil, err
+	}
+
+	nodeDetails := toNodeDetail(*node, podList, events, allocatedResources)
 	return &nodeDetails, nil
 }
 
-func getNodePods(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	node api.Node) (pod.PodList, error) {
+func getNodeAllocatedResources(node api.Node, podList *api.PodList) (NodeAllocatedResources, error) {
+	reqs, limits := map[api.ResourceName]resource.Quantity{}, map[api.ResourceName]resource.Quantity{}
 
+	for _, pod := range podList.Items {
+		podReqs, podLimits, err := api.PodRequestsAndLimits(&pod)
+		if err != nil {
+			return NodeAllocatedResources{}, err
+		}
+		for podReqName, podReqValue := range podReqs {
+			if value, ok := reqs[podReqName]; !ok {
+				reqs[podReqName] = *podReqValue.Copy()
+			} else {
+				value.Add(podReqValue)
+				reqs[podReqName] = value
+			}
+		}
+		for podLimitName, podLimitValue := range podLimits {
+			if value, ok := limits[podLimitName]; !ok {
+				limits[podLimitName] = *podLimitValue.Copy()
+			} else {
+				value.Add(podLimitValue)
+				limits[podLimitName] = value
+			}
+		}
+	}
+
+	cpuRequests, cpuLimits, memoryRequests, memoryLimits := reqs[api.ResourceCPU],
+		limits[api.ResourceCPU], reqs[api.ResourceMemory], limits[api.ResourceMemory]
+
+	var cpuRequestsFraction, cpuLimitsFraction float64 = 0, 0
+	if capacity := float64(node.Status.Capacity.Cpu().MilliValue()); capacity > 0 {
+		cpuRequestsFraction = float64(cpuRequests.MilliValue()) / capacity * 100
+		cpuLimitsFraction = float64(cpuLimits.MilliValue()) / capacity * 100
+	}
+
+	var memoryRequestsFraction, memoryLimitsFraction float64 = 0, 0
+	if capacity := float64(node.Status.Capacity.Memory().MilliValue()); capacity > 0 {
+		memoryRequestsFraction = float64(memoryRequests.MilliValue()) / capacity * 100
+		memoryLimitsFraction = float64(memoryLimits.MilliValue()) / capacity * 100
+	}
+
+	return NodeAllocatedResources{
+		CPURequests:            cpuRequests.MilliValue(),
+		CPURequestsFraction:    cpuRequestsFraction,
+		CPULimits:              cpuLimits.MilliValue(),
+		CPULimitsFraction:      cpuLimitsFraction,
+		CPUCapacity:            node.Status.Capacity.Cpu().MilliValue(),
+		MemoryRequests:         memoryRequests.Value(),
+		MemoryRequestsFraction: memoryRequestsFraction,
+		MemoryLimits:           memoryLimits.Value(),
+		MemoryLimitsFraction:   memoryLimitsFraction,
+		MemoryCapacity:         node.Status.Capacity.Memory().Value(),
+		AllocatedPods:          len(podList.Items),
+		PodCapacity:            node.Status.Capacity.Pods().Value(),
+	}, nil
+}
+
+func getNodePods(client k8sClient.Interface, node api.Node) (*api.PodList, error) {
 	fieldSelector, err := fields.ParseSelector("spec.nodeName=" + node.Name +
 		",status.phase!=" + string(api.PodSucceeded) +
 		",status.phase!=" + string(api.PodFailed))
 
 	if err != nil {
-		return pod.PodList{}, err
+		return nil, err
 	}
 
-	pods, err := client.Pods(api.NamespaceAll).List(api.ListOptions{
+	return client.Pods(api.NamespaceAll).List(api.ListOptions{
 		FieldSelector: fieldSelector,
 	})
-
-	if err != nil {
-		return pod.PodList{}, err
-	}
-
-	return pod.CreatePodList(pods.Items, heapsterClient), nil
 }
 
-func toNodeDetail(node api.Node, pods pod.PodList, eventList common.EventList) NodeDetail {
-	cpuCapacity, _ := node.Status.Capacity.Cpu().AsInt64()
-	memoryCapacity, _ := node.Status.Capacity.Memory().AsInt64()
-	podCapacity, _ := node.Status.Capacity.Pods().AsInt64()
+func toNodeDetail(node api.Node, pods pod.PodList, eventList common.EventList,
+	allocatedResources NodeAllocatedResources) NodeDetail {
 
 	return NodeDetail{
-		ObjectMeta:      common.NewObjectMeta(node.ObjectMeta),
-		TypeMeta:        common.NewTypeMeta(common.ResourceKindNode),
-		Phase:           node.Status.Phase,
-		CPUCapacity:     cpuCapacity,
-		MemoryCapacity:  memoryCapacity,
-		PodCapacity:     podCapacity,
-		ExternalID:      node.Spec.ExternalID,
-		ProviderID:      node.Spec.ProviderID,
-		PodCIDR:         node.Spec.PodCIDR,
-		Unschedulable:   node.Spec.Unschedulable,
-		NodeInfo:        node.Status.NodeInfo,
-		Conditions:      node.Status.Conditions,
-		ContainerImages: getContainerImages(node),
-		PodList:         pods,
-		EventList:       eventList,
+		ObjectMeta:         common.NewObjectMeta(node.ObjectMeta),
+		TypeMeta:           common.NewTypeMeta(common.ResourceKindNode),
+		Phase:              node.Status.Phase,
+		ExternalID:         node.Spec.ExternalID,
+		ProviderID:         node.Spec.ProviderID,
+		PodCIDR:            node.Spec.PodCIDR,
+		Unschedulable:      node.Spec.Unschedulable,
+		NodeInfo:           node.Status.NodeInfo,
+		Conditions:         node.Status.Conditions,
+		ContainerImages:    getContainerImages(node),
+		PodList:            pods,
+		EventList:          eventList,
+		AllocatedResources: allocatedResources,
 	}
 }
