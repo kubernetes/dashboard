@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {stateName} from 'nodelist/nodelist_state';
+
 /**
  * @final
  */
@@ -29,6 +31,13 @@ export default class PodInfoController {
     /** @export */
     this.i18n = i18n;
   }
+
+  /**
+   * Returns link to connected node details page.
+   * @return {string}
+   * @export
+   */
+  getNodeDetailsHref() { return `#/${stateName}/${this.pod.nodeName}`; }
 }
 
 /**
