@@ -29,6 +29,13 @@ export default class PodInfoController {
     /** @export */
     this.i18n = i18n;
   }
+
+  /**
+   * Returns link to connected node details page.
+   * @return {string}
+   * @export
+   */
+  getNodeDetailsHref() { return `#/node/${this.pod.nodeName}`; }
 }
 
 /**

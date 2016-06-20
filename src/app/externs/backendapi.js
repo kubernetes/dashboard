@@ -607,12 +607,28 @@ backendApi.NodeConditionList;
 
 /**
  * @typedef {{
+ *   cpuRequests: number,
+ *   cpuRequestsFraction: number,
+ *   cpuLimits: number,
+ *   cpuLimitsFraction: number,
+ *   cpuCapacity: number,
+ *   memoryRequests: number,
+ *   memoryRequestsFraction: number,
+ *   memoryLimits: number,
+ *   memoryLimitsFraction: number,
+ *   memoryCapacity: number,
+ *   allocatedPods: number,
+ *   podCapacity: number
+ * }}
+ */
+backendApi.NodeAllocatedResources;
+
+/**
+ * @typedef {{
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
  *   phase: string,
- *   cpuCapacity: number,
- *   memoryCapacity: number,
- *   podCapacity: number,
+ *   allocatedResources: !backendApi.NodeAllocatedResources,
  *   externalID: string,
  *   podCIDR: string,
  *   providerID: string,
