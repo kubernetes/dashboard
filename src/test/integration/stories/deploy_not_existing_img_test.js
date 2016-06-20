@@ -64,7 +64,7 @@ describe('Deploy not existing image story', () => {
     // when
     deployPage.deployButton.click().then(() => {
       // then
-      expect(browser.getCurrentUrl()).toContain('replicationcontroller');
+      expect(browser.getCurrentUrl()).toContain('workload');
       doneFn();
     });
 
