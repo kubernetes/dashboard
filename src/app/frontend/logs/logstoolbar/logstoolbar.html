@@ -16,9 +16,9 @@ limitations under the License.
 
 <div layout="row" hide show-gt-sm layout-margin layout-align="center center"
      class="kd-logs-toolbar">
-  <span class="kd-logs-toolbar-text">Pod: {{::ctrl.stateParams.objectName}}</span>
+  <span class="kd-logs-toolbar-text">{{::ctrl.i18n.MSG_LOGS_POD_LABEL}}</span>
 
-  <span class="kd-logs-toolbar-text">Container:</span>
+  <span class="kd-logs-toolbar-text">{{::ctrl.i18n.MSG_LOGS_CONTAINER_LABEL}}</span>
   <md-select class="kd-logs-toolbar-select" aria-label="Containers" ng-model="ctrl.container"
              md-on-close="ctrl.onContainerChange(ctrl.container)"
              required>
