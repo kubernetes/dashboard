@@ -70,7 +70,7 @@ md-toolbar {
 .kd-logs-toolbar-menu-button {
   color: $content-background;
 
-  &:after {
+  &::after {
     content: '\25BC';
     display: inline-block;
     position: relative;
