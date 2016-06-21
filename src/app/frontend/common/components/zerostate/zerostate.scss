@@ -12,25 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ZeroStateController} from 'common/components/zerostate/zerostate_component';
+@import '../../../variables';
 
-/**
- * @final
- */
-export class ServiceListController {
-  /**
-   * @param {!backendApi.ServiceList} serviceList
-   * @param {!ui.router.$state} $state
-   * @ngInject
-   */
-  constructor(serviceList, $state) {
-    /** @export {!backendApi.ServiceList} */
-    this.serviceList = serviceList;
+.kd-zerostate-message {
+  padding: $baseline-grid;
+  text-align: center;
+}
 
-    /** @private {!ui.router.$state} */
-    this.state_ = $state;
-
-    /** Initializes state 'showZeroState' custom data based on given resources array */
-    ZeroStateController.showZeroState(this.state_, this.serviceList.services);
+md-icon {
+  &.kd-zerostate-icon {
+    color: $primary;
+    font-size: $body-font-size-base;
+    margin-bottom: $baseline-grid;
   }
+}
+
+.kd-zerostate-title {
+  color: $muted;
+  font-size: $headline-font-size-base;
+}
+
+.kd-zerostate-text {
+  word-break: break-all;
 }

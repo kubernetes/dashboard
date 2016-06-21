@@ -12,25 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ZeroStateController} from 'common/components/zerostate/zerostate_component';
+import {zeroStateComponent} from './zerostate_component';
+import resourceCardModule from 'common/components/resourcecard/resourcecard_module';
 
 /**
- * @final
+ * Module containing common actionbar.
  */
-export class ServiceListController {
-  /**
-   * @param {!backendApi.ServiceList} serviceList
-   * @param {!ui.router.$state} $state
-   * @ngInject
-   */
-  constructor(serviceList, $state) {
-    /** @export {!backendApi.ServiceList} */
-    this.serviceList = serviceList;
-
-    /** @private {!ui.router.$state} */
-    this.state_ = $state;
-
-    /** Initializes state 'showZeroState' custom data based on given resources array */
-    ZeroStateController.showZeroState(this.state_, this.serviceList.services);
-  }
-}
+export default angular
+    .module(
+        'kubernetesDashboard.common.components.zeroState',
+        [
+          'ngMaterial',
+          'ui.router',
+          resourceCardModule.name,
+        ])
+    .component('kdZeroState', zeroStateComponent);

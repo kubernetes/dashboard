@@ -12,7 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName, namespaceParam, stateName, toolbarViewName} from './chrome_state';
+import {showZeroState} from 'common/components/zerostate/zerostate_component';
+
+import {actionbarViewName, namespaceParam, stateName, toolbarViewName, zeroStateViewName} from './chrome_state';
 
 /**
  * Namespace is an abstract state with no path, but with one parameter ?namespace= that
@@ -27,6 +29,9 @@ export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
     url: `?${namespaceParam}`,
     abstract: true,
+    data: {
+      [showZeroState]: false,
+    },
     views: {
       '': {
         template: '<div ui-view></div>',
@@ -36,6 +41,9 @@ export default function stateConfig($stateProvider) {
       },
       [actionbarViewName]: {
         template: `<div ui-view="${actionbarViewName}"></div>`,
+      },
+      [zeroStateViewName]: {
+        template: `<div ui-view="${zeroStateViewName}"></div>`,
       },
     },
   });

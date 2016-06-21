@@ -14,6 +14,7 @@
 
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {showZeroState} from 'common/components/zerostate/zerostate_component';
 
 import {ServiceListController} from './servicelist_controller';
 import {stateName, stateUrl} from './servicelist_state';
@@ -36,6 +37,7 @@ export default function stateConfig($stateProvider) {
       [breadcrumbsConfig]: {
         'label': i18n.MSG_BREADCRUMBS_SERVICES_LABEL,
       },
+      [showZeroState]: false,
     },
     views: {
       '': {

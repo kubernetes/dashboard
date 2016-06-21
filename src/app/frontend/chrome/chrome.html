@@ -30,13 +30,14 @@ limitations under the License.
 <kd-actionbar ng-if="$ctrl.isActionbarVisible()"></kd-actionbar>
 
 <md-content flex="auto" class="kd-app-content">
-  <div ng-switch="$ctrl.showLoadingSpinner" flex="auto" >
+  <div ng-switch="$ctrl.showLoadingSpinner" flex="auto">
     <div ng-switch-when="true" class="kd-center-fixed">
       <md-progress-circular md-mode="indeterminate" md-diameter="96">
       </md-progress-circular>
     </div>
     <div ng-switch-when="false" class="kd-app-content">
-      <div ui-view class="md-body-1"></div>
+      <div ui-view class="md-body-1" ng-if="!$ctrl.isZeroStateVisible()"></div>
+      <kd-zero-state ng-if="$ctrl.isZeroStateVisible()"></kd-zero-state>
     </div>
   </div>
 </md-content>

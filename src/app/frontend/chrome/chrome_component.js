@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {showZeroState} from 'common/components/zerostate/zerostate_component';
 import {stateName as workloadState} from 'workloads/workloads_state';
 
 import {actionbarViewName} from './chrome_state';
@@ -57,6 +58,15 @@ export class ChromeController {
   isActionbarVisible() {
     return !!this.state_.current && !!this.state_.current.views &&
         !!this.state_.current.views[actionbarViewName] && !this.showLoadingSpinner;
+  }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  isZeroStateVisible() {
+    return !!this.state_.current && !!this.state_.current.data &&
+        !!this.state_.current.data[showZeroState];
   }
 
   /**

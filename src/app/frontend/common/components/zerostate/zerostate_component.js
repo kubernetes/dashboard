@@ -12,25 +12,42 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ZeroStateController} from 'common/components/zerostate/zerostate_component';
+import {deployFileStateName} from 'deploy/deploy_state';
+
+export const showZeroState = 'showZeroState';
 
 /**
  * @final
  */
-export class ServiceListController {
+export class ZeroStateController {
   /**
-   * @param {!backendApi.ServiceList} serviceList
    * @param {!ui.router.$state} $state
    * @ngInject
    */
-  constructor(serviceList, $state) {
-    /** @export {!backendApi.ServiceList} */
-    this.serviceList = serviceList;
-
+  constructor($state) {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
+  }
 
-    /** Initializes state 'showZeroState' custom data based on given resources array */
-    ZeroStateController.showZeroState(this.state_, this.serviceList.services);
+  /**
+   * @export
+   */
+  deployFile() { this.state_.go(deployFileStateName); }
+
+  static showZeroState(state, resourcesArr) {
+    if (!!state.current && !!state.current.data && resourcesArr.length === 0) {
+      state.current.data[showZeroState] = true;
+    }
   }
 }
+
+/**
+ * Returns zero state component.
+ *
+ * @return {!angular.Directive}
+ */
+export const zeroStateComponent = {
+  templateUrl: 'common/components/zerostate/zerostate.html',
+  transclude: true,
+  controller: ZeroStateController,
+};

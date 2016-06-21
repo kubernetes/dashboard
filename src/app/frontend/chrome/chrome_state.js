@@ -27,6 +27,9 @@ export const toolbarViewName = 'toolbar';
  */
 export const actionbarViewName = 'actionbar';
 
+/** Name of the zero state view. Can be used in state config to define zero state for the view */
+export const zeroStateViewName = 'zerostate';
+
 /**
  * Parameter name of the namespace selection param. Mostly for internal use.
  */
