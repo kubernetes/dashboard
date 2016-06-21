@@ -9,10 +9,8 @@
     <md-option ng-value="::$ctrl.NAMESPACE_NOT_SELECTED" class="kd-namespace-select-all">
       {{::$ctrl.i18n.MSG_NAMESPACE_NOT_SELECTED}}
     </md-option>
-    <md-select-header class="kd-namespace-list-header">
-      {{::$ctrl.i18n.MSG_NAMESPACE_LIST_LABEL}}
-    </md-select-header>
-    <md-optgroup label="namespaces" class="kd-namespace-select-namespace-list">
+    <md-optgroup label="{{::$ctrl.i18n.MSG_NAMESPACE_LIST_LABEL}}"
+        class="kd-namespace-select-namespace-list">
       <md-option ng-value="namespace" ng-repeat="namespace in $ctrl.namespaces">
         {{::namespace}}
       </md-option>
