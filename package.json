@@ -20,7 +20,7 @@
     "browserify": "~13.0.1",
     "browserify-istanbul": "~2.0.0",
     "clang-format": "1.0.41",
-    "del": "~2.2.0",
+    "del": "~2.2.1",
     "eslint-plugin-angular": "~1.1.1",
     "file-exists": "1.0.0",
     "google-closure-compiler": "~20160517.1.0",
