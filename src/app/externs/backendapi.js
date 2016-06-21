@@ -110,9 +110,13 @@ backendApi.ReplicationControllerList;
 
 /**
  * @typedef {{
- *   replicationControllers: !backendApi.ReplicationControllerList,
- *   replicaSets: !backendApi.ReplicaSetList,
- *   pods: !backendApi.PodList
+ *   deploymentList: !backendApi.DeploymentList,
+ *   replicaSetList: !backendApi.ReplicaSetList,
+ *   jobList: !backendApi.JobList,
+ *   replicationControllerList: !backendApi.ReplicationControllerList,
+ *   podList: !backendApi.PodList,
+ *   daemonSetList: !backendApi.DaemonSetList,
+ *   petSetList: !backendApi.PetSetList
  * }}
  */
 backendApi.Workloads;

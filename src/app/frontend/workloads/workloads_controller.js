@@ -27,6 +27,21 @@ export class WorkloadsController {
     /** @export */
     this.i18n = i18n;
   }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  shouldShowZeroState() {
+    /** @type {number} */
+    let resourcesLength = this.workloads.deploymentList.deployments.length +
+        this.workloads.replicaSetList.replicaSets.length + this.workloads.jobList.jobs.length +
+        this.workloads.replicationControllerList.replicationControllers.length +
+        this.workloads.podList.pods.length + this.workloads.daemonSetList.daemonSets.length +
+        this.workloads.petSetList.petSets.length;
+
+    return resourcesLength === 0;
+  }
 }
 
 const i18n = {

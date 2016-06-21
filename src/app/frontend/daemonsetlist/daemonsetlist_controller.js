@@ -24,4 +24,10 @@ export class DaemonSetListController {
     /** @export {!backendApi.DaemonSetList} */
     this.daemonSetList = daemonSetList;
   }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  shouldShowZeroState() { return this.daemonSetList.daemonSets.length === 0; }
 }

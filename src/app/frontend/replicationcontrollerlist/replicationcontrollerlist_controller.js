@@ -26,4 +26,10 @@ export class ReplicationControllerListController {
     /** @export {!Array<!backendApi.ReplicationController>} */
     this.replicationControllers = replicationControllers.replicationControllers;
   }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  shouldShowZeroState() { return this.replicationControllers.length === 0; }
 }

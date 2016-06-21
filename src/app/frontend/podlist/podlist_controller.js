@@ -26,4 +26,10 @@ export class PodListController {
     /** @export {!backendApi.PodList} */
     this.podList = podList;
   }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  shouldShowZeroState() { return this.podList.pods.length === 0; }
 }
