@@ -43,15 +43,6 @@ md-select {
     }
   }
 
-  .kd-namespace-list-header {
-    color: $foreground-2;
-    display: block;
-    font-size: $body-font-size-base;
-    font-weight: $bold-font-weight;
-    padding: 2 * $baseline-grid;
-    text-transform: uppercase;
-  }
-
   .kd-namespace-select-all {
     height: $table-cell-height;
     min-height: $table-cell-height;
