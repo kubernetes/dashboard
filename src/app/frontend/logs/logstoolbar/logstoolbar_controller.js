@@ -42,10 +42,7 @@ export default class LogsToolbarController {
     /** @export {string} */
     this.container = $stateParams.container || this.containers[0];
 
-    /**
-     * @export {../logs_state.StateParams}
-     */
-
+    /** @export {../logs_state.StateParams} */
     this.stateParams = $stateParams;
 
     /** @export */
