@@ -12,14 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {GlobalStateParams} from 'common/resource/globalresourcedetail';
+import {stateName} from 'nodedetail/nodedetail_state';
+
 /**
  * @final
  */
 export default class PodInfoController {
   /**
    * Constructs pod info object.
+   * @param {!ui.router.$state} $state
+   * @ngInject
    */
-  constructor() {
+  constructor($state) {
     /**
      * Pod details. Initialized from the scope.
      * @export {!backendApi.PodDetail}
@@ -28,6 +33,18 @@ export default class PodInfoController {
 
     /** @export */
     this.i18n = i18n;
+
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
+  }
+
+  /**
+   * Returns link to connected node details page.
+   * @return {string}
+   * @export
+   */
+  getNodeDetailsHref() {
+    return this.state_.href(stateName, new GlobalStateParams(this.pod.nodeName));
   }
 }
 
