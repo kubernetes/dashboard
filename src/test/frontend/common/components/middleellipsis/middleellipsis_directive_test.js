@@ -19,12 +19,15 @@ describe('Middle ellipsis directive', () => {
   let scope;
   /** @type {function(!angular.Scope):!angular.JQLite} */
   let compileFn;
+  /** @type {!angular.$window} */
+  let window;
 
   beforeEach(() => {
     angular.mock.module(componentsModule.name);
 
-    angular.mock.inject(($rootScope, $compile) => {
+    angular.mock.inject(($rootScope, $compile, $window) => {
       scope = $rootScope.$new();
+      window = $window;
       compileFn = $compile(`<div><kd-middle-ellipsis display-string="{{displayString}}"
           max-length="{{maxLength}}"></kd-middle-ellipsis></div>`);
     });
@@ -39,6 +42,7 @@ describe('Middle ellipsis directive', () => {
 
     // when
     element[0].style.width = '500px';
+    window.dispatchEvent(new Event('resize'));
     scope.$digest();
 
     // then
@@ -46,6 +50,7 @@ describe('Middle ellipsis directive', () => {
 
     // when
     element[0].style.width = '1px';
+    window.dispatchEvent(new Event('resize'));
     scope.$digest();
 
     // then
@@ -53,6 +58,7 @@ describe('Middle ellipsis directive', () => {
 
     // when
     element[0].style.width = '50px';
+    window.dispatchEvent(new Event('resize'));
     scope.$digest();
 
     // then
