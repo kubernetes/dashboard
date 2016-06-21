@@ -14,9 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div layout="row" hide show-gt-sm layout-margin layout-align="center center"
+<div layout="row" layout-margin layout-align="center center"
      class="kd-logs-toolbar">
-  <span class="kd-logs-toolbar-text">{{::ctrl.i18n.MSG_LOGS_POD_LABEL}}</span>
+  <div class="kd-logs-toolbar-text" flex="none">
+    <span>{{::ctrl.i18n.MSG_LOGS_POD_LABEL}}</span>
+  </div>
+  <div class="kd-logs-toolbar-text" flex="shrink">
+    <kd-middle-ellipsis display-string="{{::ctrl.stateParams.objectName}}">
+    </kd-middle-ellipsis>
+  </div>
 
   <span class="kd-logs-toolbar-text">{{::ctrl.i18n.MSG_LOGS_CONTAINER_LABEL}}</span>
   <md-select class="kd-logs-toolbar-select" aria-label="Containers" ng-model="ctrl.container"
