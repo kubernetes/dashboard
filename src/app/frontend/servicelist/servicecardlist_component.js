@@ -105,6 +105,6 @@ const i18n = {
   /** @export {string} @desc Label 'External endpoints' which appears as a column label in the
      table of services (service list view). */
   MSG_SERVICE_LIST_EXTERNAL_ENDPOINTS_LABEL: goog.getMsg('External endpoints'),
-  /** @export {string} @desc tooltip for pending pod card icon */
+  /** @export {string} @desc tooltip for pending service card icon */
   MSG_SERVICE_IS_PENDING_TOOLTIP: goog.getMsg('This service is in a pending state.'),
 };
