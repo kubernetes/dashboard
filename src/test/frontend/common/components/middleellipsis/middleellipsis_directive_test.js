@@ -15,17 +15,21 @@
 import componentsModule from 'common/components/components_module';
 
 describe('Middle ellipsis directive', () => {
-  /** @type {!angular.Scope} */
+  /** @type {angular.Scope} */
   let scope;
   /** @type {function(!angular.Scope):!angular.JQLite} */
   let compileFn;
-  /** @type {!angular.$window} */
+  /** @type {angular.$window} */
   let window;
+  /** @type {Event} **/
+  let resizeEvent;
 
   beforeEach(() => {
     angular.mock.module(componentsModule.name);
 
     angular.mock.inject(($rootScope, $compile, $window) => {
+      resizeEvent = $window.document.createEvent('UIEvent');
+      resizeEvent.initEvent('resize', true, false);
       scope = $rootScope.$new();
       window = $window;
       compileFn = $compile(`<div><kd-middle-ellipsis display-string="{{displayString}}"
@@ -42,7 +46,7 @@ describe('Middle ellipsis directive', () => {
 
     // when
     element[0].style.width = '500px';
-    window.dispatchEvent(new Event('resize'));
+    window.dispatchEvent(resizeEvent);
     scope.$digest();
 
     // then
@@ -50,7 +54,7 @@ describe('Middle ellipsis directive', () => {
 
     // when
     element[0].style.width = '1px';
-    window.dispatchEvent(new Event('resize'));
+    window.dispatchEvent(resizeEvent);
     scope.$digest();
 
     // then
@@ -58,7 +62,7 @@ describe('Middle ellipsis directive', () => {
 
     // when
     element[0].style.width = '50px';
-    window.dispatchEvent(new Event('resize'));
+    window.dispatchEvent(resizeEvent);
     scope.$digest();
 
     // then
