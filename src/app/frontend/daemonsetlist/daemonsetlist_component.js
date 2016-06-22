@@ -27,7 +27,7 @@ export class DaemonSetCardListController {
   constructor($state, $interpolate) {
     /**
      * Initialized from the scope.
-     * @export {!backendApi.ReplicationController}
+     * @export {!backendApi.DaemonSet}
      */
     this.daemonSets;
 

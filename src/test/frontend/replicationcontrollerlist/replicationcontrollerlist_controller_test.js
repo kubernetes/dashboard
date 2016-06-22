@@ -16,8 +16,20 @@ import {ReplicationControllerListController} from 'replicationcontrollerlist/rep
 import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
 
 describe('Replication controller list controller', () => {
+  /** @type
+   * {!replicationcontrollerlist/replicationcontrollerlist_controller.ReplicationControllerListController}
+   */
+  let ctrl;
 
-  beforeEach(() => { angular.mock.module(replicationControllerListModule.name); });
+  beforeEach(() => {
+    angular.mock.module(replicationControllerListModule.name);
+
+    angular.mock.inject(($controller) => {
+      ctrl = $controller(
+          ReplicationControllerListController,
+          {replicationControllers: {replicationControllers: []}});
+    });
+  });
 
   it('should initialize replication controllers', angular.mock.inject(($controller) => {
     let ctrls = {};
@@ -28,4 +40,14 @@ describe('Replication controller list controller', () => {
 
     expect(ctrl.replicationControllers).toBe(ctrls);
   }));
+
+  it('should show zero state', () => { expect(ctrl.shouldShowZeroState()).toBeTruthy(); });
+
+  it('should hide zero state', () => {
+    // given
+    ctrl.replicationControllers = {replicationControllers: ['mock']};
+
+    // then
+    expect(ctrl.shouldShowZeroState()).toBeFalsy();
+  });
 });

@@ -16,8 +16,16 @@ import {WorkloadsController} from 'workloads/workloads_controller';
 import workloadListModule from 'workloads/workloads_module';
 
 describe('Workload list controller', () => {
+  /** @type {!workloads/workloads_controller.WorkloadsController} */
+  let ctrl;
 
-  beforeEach(() => { angular.mock.module(workloadListModule.name); });
+  beforeEach(() => {
+    angular.mock.module(workloadListModule.name);
+
+    angular.mock.inject(($controller) => {
+      ctrl = $controller(WorkloadsController, {workloads: {workloads: []}});
+    });
+  });
 
   it('should initialize workloads', angular.mock.inject(($controller) => {
     let workloads = {workloads: 'foo-bar'};
@@ -26,4 +34,35 @@ describe('Workload list controller', () => {
 
     expect(ctrl.workloads).toBe(workloads);
   }));
+
+  it('should show zero state', () => {
+    // given
+    ctrl.workloads = {
+      deploymentList: {deployments: []},
+      replicaSetList: {replicaSets: []},
+      jobList: {jobs: []},
+      replicationControllerList: {replicationControllers: []},
+      podList: {pods: []},
+      daemonSetList: {daemonSets: []},
+      petSetList: {petSets: []},
+    };
+
+    expect(ctrl.shouldShowZeroState()).toBeTruthy();
+  });
+
+  it('should hide zero state', () => {
+    // given
+    ctrl.workloads = {
+      deploymentList: {deployments: ['mock']},
+      replicaSetList: {replicaSets: []},
+      jobList: {jobs: []},
+      replicationControllerList: {replicationControllers: []},
+      podList: {pods: []},
+      daemonSetList: {daemonSets: []},
+      petSetList: {petSets: []},
+    };
+
+    // then
+    expect(ctrl.shouldShowZeroState()).toBeFalsy();
+  });
 });

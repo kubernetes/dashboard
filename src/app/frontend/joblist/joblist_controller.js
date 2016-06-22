@@ -26,4 +26,10 @@ export class JobListController {
     /** @export {!Array<!backendApi.Job>} */
     this.jobs = jobs.jobs;
   }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  shouldShowZeroState() { return this.jobs.length === 0; }
 }

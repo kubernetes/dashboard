@@ -12,24 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Controller for the pet set list view.
- *
- * @final
- */
-export class PetSetListController {
-  /**
-   * @param {!backendApi.PetSetList} petSets
-   * @ngInject
-   */
-  constructor(petSets) {
-    /** @export {!Array<!backendApi.PetSet>} */
-    this.petSets = petSets.petSets;
-  }
+import {zeroStateComponent} from './zerostate_component';
+import resourceCardModule from 'common/components/resourcecard/resourcecard_module';
 
-  /**
-   * @return {boolean}
-   * @export
-   */
-  shouldShowZeroState() { return this.petSets.length === 0; }
-}
+/**
+ * Module containing common actionbar.
+ */
+export default angular
+    .module(
+        'kubernetesDashboard.common.components.zeroState',
+        [
+          'ngMaterial',
+          'ui.router',
+          resourceCardModule.name,
+        ])
+    .component('kdZeroState', zeroStateComponent);

@@ -16,14 +16,32 @@ import {ServiceListController} from 'servicelist/servicelist_controller';
 import serviceListModule from 'servicelist/servicelist_module';
 
 describe('Service list controller', () => {
+  /** @type {!servicelist/servicelist_controller.ServiceListController} */
+  let ctrl;
 
-  beforeEach(() => { angular.mock.module(serviceListModule.name); });
+  beforeEach(() => {
+    angular.mock.module(serviceListModule.name);
+
+    angular.mock.inject(($controller) => {
+      ctrl = $controller(ServiceListController, {serviceList: {services: []}});
+    });
+  });
 
   it('should initialize controller', angular.mock.inject(($controller) => {
-    let data = {serviceList: {}};
+    let data = {services: {}};
     /** @type {!ServiceListController} */
     let ctrl = $controller(ServiceListController, {serviceList: data});
 
     expect(ctrl.serviceList).toBe(data);
   }));
+
+  it('should show zero state', () => { expect(ctrl.shouldShowZeroState()).toBeTruthy(); });
+
+  it('should hide zero state', () => {
+    // given
+    ctrl.serviceList = {services: ['mock']};
+
+    // then
+    expect(ctrl.shouldShowZeroState()).toBeFalsy();
+  });
 });

@@ -16,8 +16,16 @@ import {DeploymentListController} from 'deploymentlist/deploymentlist_controller
 import deploymentListModule from 'deploymentlist/deploymentlist_module';
 
 describe('Replica Set list controller', () => {
+  /** @type {!deploymentlist/deploymentlist_controller.DeploymentListController} */
+  let ctrl;
 
-  beforeEach(() => { angular.mock.module(deploymentListModule.name); });
+  beforeEach(() => {
+    angular.mock.module(deploymentListModule.name);
+
+    angular.mock.inject(($controller) => {
+      ctrl = $controller(DeploymentListController, {deployments: {deployments: []}});
+    });
+  });
 
   it('should initialize replication controllers', angular.mock.inject(($controller) => {
     let ctrls = {};
@@ -26,4 +34,14 @@ describe('Replica Set list controller', () => {
 
     expect(ctrl.deployments).toBe(ctrls);
   }));
+
+  it('should show zero state', () => { expect(ctrl.shouldShowZeroState()).toBeTruthy(); });
+
+  it('should hide zero state', () => {
+    // given
+    ctrl.deployments = {deployments: ['mock']};
+
+    // then
+    expect(ctrl.shouldShowZeroState()).toBeFalsy();
+  });
 });
