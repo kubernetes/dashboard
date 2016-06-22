@@ -51,8 +51,9 @@ limitations under the License.
     <kd-info-card-entry title="{{::$ctrl.i18n.MSG_SERVICE_DETAIL_INTERNAL_ENDPOINTS_LABEL}}" ng-if="::$ctrl.service.internalEndpoint">
       <kd-internal-endpoint endpoint="::$ctrl.service.internalEndpoint"></kd-internal-endpoint>
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_SERVICE_DETAIL_EXTERNAL_ENDPOINTS_LABEL}}" ng-if="::$ctrl.detail.externalEndpoints">
-      <kd-external-endpoint endpoint="::$ctrl.service.internalEndpoint"></kd-external-endpoint>
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_SERVICE_DETAIL_EXTERNAL_ENDPOINTS_LABEL}}"
+                        ng-if="::$ctrl.service.externalEndpoints">
+      <kd-external-endpoint endpoints="::$ctrl.service.externalEndpoints"></kd-external-endpoint>
     </kd-info-card-entry>
   </kd-info-card-section>
 </kd-info-card>

@@ -25,13 +25,16 @@ type ServicePort struct {
 
 	// Protocol name, e.g., TCP or UDP.
 	Protocol api.Protocol `json:"protocol"`
+
+	// The port on each node on which service is exposed.
+	NodePort int32 `json:"nodePort"`
 }
 
 // GetServicePorts returns human readable name for the given service ports list.
 func GetServicePorts(apiPorts []api.ServicePort) []ServicePort {
 	var ports []ServicePort
 	for _, port := range apiPorts {
-		ports = append(ports, ServicePort{port.Port, port.Protocol})
+		ports = append(ports, ServicePort{port.Port, port.Protocol, port.NodePort})
 	}
 	return ports
 }
