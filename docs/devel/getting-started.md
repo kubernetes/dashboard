@@ -19,6 +19,8 @@ Make sure the following software is installed and added to the `$PATH` variable:
 * java (7+)
 * gulp (3.9+)
 
+You can follow [detailed steps on how to install these requirements](requirements-installation.md).
+
 Clone the repository and install the dependencies:
 ```
 $ npm install
