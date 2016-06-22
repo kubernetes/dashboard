@@ -24,4 +24,10 @@ export class ServiceListController {
     /** @export {!backendApi.ServiceList} */
     this.serviceList = serviceList;
   }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  shouldShowZeroState() { return this.serviceList.services.length === 0; }
 }

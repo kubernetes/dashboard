@@ -26,4 +26,10 @@ export class ReplicaSetListController {
     /** @export {!Array<!backendApi.ReplicaSet>} */
     this.replicaSets = replicaSets.replicaSets;
   }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  shouldShowZeroState() { return this.replicaSets.length === 0; }
 }

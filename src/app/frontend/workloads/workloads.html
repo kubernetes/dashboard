@@ -14,87 +14,90 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-content-card ng-if="$ctrl.workloads.daemonSetList.daemonSets.length">
-  <kd-title>
-    <a ui-sref="daemonset">
-      {{::$ctrl.i18n.MSG_WORKLOADS_DEAMON_SETS_LABEL}}
-    </a>
-  </kd-title>
-  <kd-content>
-    <kd-daemon-set-card-list daemon-sets="$ctrl.workloads.daemonSetList" with-statuses="true">
-    </kd-daemon-set-card-list>
-  </kd-content>
-</kd-content-card>
+<div ng-if="!$ctrl.shouldShowZeroState()">
+  <kd-content-card ng-if="$ctrl.workloads.daemonSetList.daemonSets.length">
+    <kd-title>
+      <a ui-sref="daemonset">
+        {{::$ctrl.i18n.MSG_WORKLOADS_DEAMON_SETS_LABEL}}
+      </a>
+    </kd-title>
+    <kd-content>
+      <kd-daemon-set-card-list daemon-sets="$ctrl.workloads.daemonSetList" with-statuses="true">
+      </kd-daemon-set-card-list>
+    </kd-content>
+  </kd-content-card>
 
-<kd-content-card ng-if=$ctrl.workloads.deploymentList.deployments.length>
-  <kd-title>
-    <a ui-sref="deployment">
-      {{::$ctrl.i18n.MSG_WORKLOADS_DEPLOYMENTS_LABEL}}
-    </a>
-  </kd-title>
-  <kd-content>
-    <kd-deployment-card-list deployments="$ctrl.workloads.deploymentList.deployments">
-    </kd-deployment-card-list>
-  </kd-content>
-</kd-content-card>
+  <kd-content-card ng-if=$ctrl.workloads.deploymentList.deployments.length>
+    <kd-title>
+      <a ui-sref="deployment">
+        {{::$ctrl.i18n.MSG_WORKLOADS_DEPLOYMENTS_LABEL}}
+      </a>
+    </kd-title>
+    <kd-content>
+      <kd-deployment-card-list deployments="$ctrl.workloads.deploymentList.deployments">
+      </kd-deployment-card-list>
+    </kd-content>
+  </kd-content-card>
 
-<kd-content-card ng-if="$ctrl.workloads.petSetList.petSets.length">
-  <kd-title>
-    <a ui-sref="petset">
-      {{::$ctrl.i18n.MSG_WORKLOADS_PET_SETS_LABEL}}
-    </a>
-  </kd-title>
-  <kd-content>
-    <kd-pet-set-card-list pet-sets="$ctrl.workloads.petSetList.petSets">
-    </kd-pet-set-card-list>
-  </kd-content>
-</kd-content-card>
+  <kd-content-card ng-if="$ctrl.workloads.petSetList.petSets.length">
+    <kd-title>
+      <a ui-sref="petset">
+        {{::$ctrl.i18n.MSG_WORKLOADS_PET_SETS_LABEL}}
+      </a>
+    </kd-title>
+    <kd-content>
+      <kd-pet-set-card-list pet-sets="$ctrl.workloads.petSetList.petSets">
+      </kd-pet-set-card-list>
+    </kd-content>
+  </kd-content-card>
 
-<kd-content-card ng-if="$ctrl.workloads.replicaSetList.replicaSets.length">
-  <kd-title>
-    <a ui-sref="replicaset">
-      {{::$ctrl.i18n.MSG_WORKLOADS_REPLICA_SETS_LABEL}}
-    </a>
-  </kd-title>
-  <kd-content>
-    <kd-replica-set-card-list replica-sets="$ctrl.workloads.replicaSetList.replicaSets">
-    </kd-replica-set-card-list>
-  </kd-content>
-</kd-content-card>
+  <kd-content-card ng-if="$ctrl.workloads.replicaSetList.replicaSets.length">
+    <kd-title>
+      <a ui-sref="replicaset">
+        {{::$ctrl.i18n.MSG_WORKLOADS_REPLICA_SETS_LABEL}}
+      </a>
+    </kd-title>
+    <kd-content>
+      <kd-replica-set-card-list replica-sets="$ctrl.workloads.replicaSetList.replicaSets">
+      </kd-replica-set-card-list>
+    </kd-content>
+  </kd-content-card>
 
-<kd-content-card ng-if="$ctrl.workloads.jobList.jobs.length">
-  <kd-title>
-    <a ui-sref="job">
-      {{::$ctrl.i18n.MSG_WORKLOADS_JOBS_LABEL}}
-    </a>
-  </kd-title>
-  <kd-content>
-    <kd-job-card-list jobs="$ctrl.workloads.jobList.jobs">
-    </kd-job-card-list>
-  </kd-content>
-</kd-content-card>
+  <kd-content-card ng-if="$ctrl.workloads.jobList.jobs.length">
+    <kd-title>
+      <a ui-sref="job">
+        {{::$ctrl.i18n.MSG_WORKLOADS_JOBS_LABEL}}
+      </a>
+    </kd-title>
+    <kd-content>
+      <kd-job-card-list jobs="$ctrl.workloads.jobList.jobs">
+      </kd-job-card-list>
+    </kd-content>
+  </kd-content-card>
 
-<kd-content-card ng-if="$ctrl.workloads.replicationControllerList.replicationControllers.length">
-  <kd-title>
-    <a ui-sref="replicationcontroller">
-      {{::$ctrl.i18n.MSG_WORKLOADS_REPLICATION_CONTROLLERS_LABEL}}
-    </a>
-  </kd-title>
-  <kd-content>
-    <kd-replication-controller-card-list
-            replication-controllers="$ctrl.workloads.replicationControllerList.replicationControllers">
-    </kd-replication-controller-card-list>
-  </kd-content>
-</kd-content-card>
+  <kd-content-card ng-if="$ctrl.workloads.replicationControllerList.replicationControllers.length">
+    <kd-title>
+      <a ui-sref="replicationcontroller">
+        {{::$ctrl.i18n.MSG_WORKLOADS_REPLICATION_CONTROLLERS_LABEL}}
+      </a>
+    </kd-title>
+    <kd-content>
+      <kd-replication-controller-card-list
+              replication-controllers="$ctrl.workloads.replicationControllerList.replicationControllers">
+      </kd-replication-controller-card-list>
+    </kd-content>
+  </kd-content-card>
 
-<kd-content-card ng-if="$ctrl.workloads.podList.pods.length">
-  <kd-title>
-    <a ui-sref="pod">
-      {{::$ctrl.i18n.MSG_WORKLOADS_PODS_LABEL}}
-    </a>
-  </kd-title>
-  <kd-content>
-    <kd-pod-card-list pod-list="$ctrl.workloads.podList" with-statuses="true">
-    </kd-pod-card-list>
-  </kd-content>
-</kd-content-card>
+  <kd-content-card ng-if="$ctrl.workloads.podList.pods.length">
+    <kd-title>
+      <a ui-sref="pod">
+        {{::$ctrl.i18n.MSG_WORKLOADS_PODS_LABEL}}
+      </a>
+    </kd-title>
+    <kd-content>
+      <kd-pod-card-list pod-list="$ctrl.workloads.podList" with-statuses="true">
+      </kd-pod-card-list>
+    </kd-content>
+  </kd-content-card>
+</div>
+<kd-zero-state ng-if="$ctrl.shouldShowZeroState()"></kd-zero-state>

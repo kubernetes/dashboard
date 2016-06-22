@@ -20,6 +20,7 @@ import endpointModule from './endpoint/endpoint_module';
 import infoCardModule from './infocard/infocard_module';
 import resourceCardModule from './resourcecard/resourcecard_module';
 import actionbarModule from './actionbar/actionbar_module';
+import zeroStateModule from './zerostate/zerostate_module';
 import sparklineDirective from './sparkline/sparkline_directive';
 import warnThresholdDirective from './warnthreshold/warnthreshold_directive';
 
@@ -38,6 +39,7 @@ export default angular
           endpointModule.name,
           infoCardModule.name,
           resourceCardModule.name,
+          zeroStateModule.name,
         ])
     .directive('kdLabels', labelsDirective)
     .directive('kdMiddleEllipsis', middleEllipsisDirective)

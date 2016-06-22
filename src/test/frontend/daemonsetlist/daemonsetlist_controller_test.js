@@ -16,8 +16,16 @@ import {DaemonSetListController} from 'daemonsetlist/daemonsetlist_controller';
 import daemonSetListModule from 'daemonsetlist/daemonsetlist_module';
 
 describe('Daemon Set list controller', () => {
+  /** @type {!daemonsetlist/daemonsetlist_controller.DaemonSetListController} */
+  let ctrl;
 
-  beforeEach(() => { angular.mock.module(daemonSetListModule.name); });
+  beforeEach(() => {
+    angular.mock.module(daemonSetListModule.name);
+
+    angular.mock.inject(($controller) => {
+      ctrl = $controller(DaemonSetListController, {daemonSetList: {daemonSets: []}});
+    });
+  });
 
   it('should initialize daemon set', angular.mock.inject(($controller) => {
     let ds = {};
@@ -26,4 +34,14 @@ describe('Daemon Set list controller', () => {
 
     expect(ctrl.daemonSetList).toBe(ds);
   }));
+
+  it('should show zero state', () => { expect(ctrl.shouldShowZeroState()).toBeTruthy(); });
+
+  it('should hide zero state', () => {
+    // given
+    ctrl.daemonSetList = {daemonSets: ['ds-mock']};
+
+    // then
+    expect(ctrl.shouldShowZeroState()).toBeFalsy();
+  });
 });

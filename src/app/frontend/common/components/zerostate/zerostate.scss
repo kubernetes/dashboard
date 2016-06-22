@@ -11,25 +11,25 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+@import '../../../variables';
 
-/**
- * Controller for the pet set list view.
- *
- * @final
- */
-export class PetSetListController {
-  /**
-   * @param {!backendApi.PetSetList} petSets
-   * @ngInject
-   */
-  constructor(petSets) {
-    /** @export {!Array<!backendApi.PetSet>} */
-    this.petSets = petSets.petSets;
-  }
+.kd-zerostate-message {
+  padding: 2 * $baseline-grid;
+  text-align: center;
+}
 
-  /**
-   * @return {boolean}
-   * @export
-   */
-  shouldShowZeroState() { return this.petSets.length === 0; }
+.kd-zerostate-icon {
+  color: $primary;
+  font-size: $body-font-size-base;
+  margin-bottom: $baseline-grid;
+}
+
+.kd-zerostate-title {
+  color: $muted;
+  font-size: $headline-font-size-base;
+  margin-bottom: $baseline-grid / 2;
+}
+
+.kd-zerostate-text {
+  word-break: break-all;
 }

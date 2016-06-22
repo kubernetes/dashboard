@@ -26,4 +26,10 @@ export class DeploymentListController {
     /** @export {!Array<!backendApi.Deployment>} */
     this.deployments = deployments.deployments;
   }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  shouldShowZeroState() { return this.deployments.length === 0; }
 }
