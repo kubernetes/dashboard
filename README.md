@@ -7,11 +7,12 @@ Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters.
 manage applications running in the cluster and troubleshoot them, as well as manage the cluster
 itself.
 
+![Dashboard UI workloads page](docs/dashboard-ui.png)
+
 ## Usage
 
 It is likely that Dashboard is already installed on your cluster. To access it navigate in your
-browser to one of the following URLs: `https://<kubernetes-master>/ui` which redirects to
-`https://<kubernetes-master>/api/v1/proxy/namespaces/kube-system/services/kubernetes-dashboard`.
+browser to the following URL: `https://<kubernetes-master>/ui`.
 
 If you find that you’re not able to access the Dashboard you can install and open the latest
 stable release by running the following commands:
@@ -21,7 +22,6 @@ kubectl create -f https://rawgit.com/kubernetes/dashboard/master/src/deploy/kube
 And then navigate to `https://<kubernetes-master>/ui`
 
 If it asks password, use `$ kubectl config view` to find it.
-
 
 ## Documentation
 
