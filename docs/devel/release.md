@@ -20,6 +20,8 @@ the steps below.
    controller config file (`dashboard-controller.yaml`), and other configs, as described in
    the header of the config. If the release is major, this needs coordination with
    Kubernetes core team and possibly alignment with the schedule of the core.
+1. Also update addon config in the
+   [minikube](https://github.com/kubernetes/minikube/tree/master/deploy/addons) repo
 
 ## Versioning guidelines
 
