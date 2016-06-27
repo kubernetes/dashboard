@@ -12,7 +12,7 @@ logic and fetches raw data from the various Kubernetes APIs.
 ## Preparation
 
 Make sure the following software is installed and added to the `$PATH` variable:
-* Docker (1.3+)
+* Docker (1.10+)
 * go (1.5+)
 * nodejs (5.1.1+)
 * npm (3+)
@@ -30,7 +30,11 @@ $ npm install
 
 For development it is recommended to run a local Kubernetes cluster. For your convenience, a
 task is provided that checks out the latest stable version, and runs it inside a Docker container.
-Open a separate tab in your terminal and run the following command:
+First, a Docker setting is required to be adapted. Execute the following script, but only once:
+```
+$ sudo ./build/setup-docker.sh
+```
+Then, open a separate tab in your terminal and run the following command:
 
 ```
 $ gulp local-up-cluster
