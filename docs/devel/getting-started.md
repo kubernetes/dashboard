@@ -12,7 +12,7 @@ logic and fetches raw data from the various Kubernetes APIs.
 ## Preparation
 
 Make sure the following software is installed and added to the `$PATH` variable:
-* Docker (1.3+)
+* Docker (1.10+)
 * go (1.5+)
 * nodejs (5.1.1+)
 * npm (3+)
