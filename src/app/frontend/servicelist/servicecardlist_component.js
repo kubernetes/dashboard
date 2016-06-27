@@ -50,8 +50,7 @@ export class ServiceCardListController {
    */
   isPending(service) {
     return service.clusterIP === null ||
-        ((service.type === 'LoadBalancer' || service.type === 'NodePort') &&
-         service.externalEndpoints === null);
+        ((service.type === 'LoadBalancer') && service.externalEndpoints === null);
   }
 
   /**
