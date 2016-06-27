@@ -40,7 +40,7 @@ export class DeleteResourceController {
     this.resource_ = $resource;
 
     /** @export */
-    this.i18n = i18n(resourceKindName);
+    this.i18n = i18n(resourceKindName, objectMeta);
   }
 
   /**
@@ -62,9 +62,10 @@ export class DeleteResourceController {
 
 /**
  * @param {string} resourceKindName
+ * @param {!backendApi.ObjectMeta} objectMeta
  * @return {!Object}
  */
-function i18n(resourceKindName) {
+function i18n(resourceKindName, objectMeta) {
   return {
     /** @export @desc Title for a delete resource dialog */
     MSG_DELETE_RESOURCE_DIALOG_TITLE:
@@ -73,5 +74,15 @@ function i18n(resourceKindName) {
     MSG_DELETE_RESOURCE_DIALOG_CANCEL: goog.getMsg('Cancel'),
     /** @export @desc Label for delete button */
     MSG_DELETE_RESOURCE_DIALOG_DELETE: goog.getMsg('Delete'),
+    /** @export @desc Confirmation question, appears before any dashboard resource will be deleted. */
+    MSG_DELETE_RESOURCE_CONFIRM_QUESTION: goog.getMsg(
+        `Are you sure you want to delete {$resourceKindName}` +
+            ` <kd-middle-ellipsis display-string="{$objectName}"></kd-middle-ellipsis>` +
+            ` in namespace {$namespaceName}?`,
+        {
+          'resourceKindName': resourceKindName,
+          'objectName': objectMeta.name,
+          'namespaceName': objectMeta.namespace,
+        }),
   };
 }

@@ -265,11 +265,11 @@ limitations under the License.
   <!-- show/hide advanced options toggle -->
   <md-button class="md-primary kd-deploy-moreoptions-button" type="button"
              ng-click="ctrl.switchMoreOptions()" ng-hide="ctrl.isMoreOptionsEnabled()">
-    <md-icon>arrow_drop_down</md-icon>show advanced options
+    <md-icon>arrow_drop_down</md-icon>{{::ctrl.i18n.MSG_DEPLOY_SHOW_ADVANCED_ACTION}}
   </md-button>
   <md-button class="md-primary kd-deploy-moreoptions-button" type="button"
              ng-click="ctrl.switchMoreOptions()" ng-show="ctrl.isMoreOptionsEnabled()">
-    <md-icon>arrow_drop_up</md-icon>hide advanced options
+    <md-icon>arrow_drop_up</md-icon>{{::ctrl.i18n.MSG_DEPLOY_HIDE_ADVANCED_ACTION}}
   </md-button>
 
   <div></div>

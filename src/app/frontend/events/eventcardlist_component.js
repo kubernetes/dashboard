@@ -12,10 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Filter type and source values for events.
-const EVENT_ALL = 'All';
-const EVENT_TYPE_WARNING = 'Warning';
-
 /**
  * @final
  */
@@ -118,4 +114,12 @@ const i18n = {
   MSG_EVENTS_NO_EVENTS_USER_HELP: goog.getMsg(
       `There are no events to display. ` +
       `It's possible that all of them have expired.`),
+  /** @export {string} @desc Label 'All' for the event selection drop-down. */
+  MSG_EVENTS_ALL_LABEL: goog.getMsg('All'),
+  /** @export {string} @desc Label 'Warning' for the event selection drop-down. */
+  MSG_EVENTS_WARNING_LABEL: goog.getMsg('Warning'),
 };
+
+// Filter type and source values for events.
+const EVENT_ALL = i18n.MSG_EVENTS_ALL_LABEL;
+const EVENT_TYPE_WARNING = i18n.MSG_EVENTS_WARNING_LABEL;
