@@ -57,16 +57,16 @@ describe('Service list controller', () => {
          clusterIP: '10.67.252.103',
          type: 'LoadBalancer',
          externalEndpoints: null,
-       })).toBeTruthy();
+       })).toBe(true);
      });
 
-  it('should return true when service.type is NodePort AND service.externalEndpoints is null',
+  it('should return false when service.type is NodePort AND service.externalEndpoints is null',
      () => {
        expect(ctrl.isPending({
          clusterIP: '10.67.252.103',
          type: 'NodePort',
          externalEndpoints: null,
-       })).toBeTruthy();
+       })).toBe(false);
      });
 
   it('should return true when service.type is LoadBalancer AND service.externalEndpoints is set',
