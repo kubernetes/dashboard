@@ -17,7 +17,7 @@
 # Learn more at https://github.com/kubernetes/kubernetes/blob/master/docs/getting-started-guides/docker.md
 
 # Version of kubernetes to use.
-K8S_VERSION="v1.2.4" 
+K8S_VERSION="v1.3.0-beta.1"
 # Version heapster to use.
 HEAPSTER_VERSION="v1.0.2"
 # Port of the apiserver to serve on.
@@ -29,8 +29,8 @@ docker run \
     --volume=/:/rootfs:ro \
     --volume=/sys:/sys:ro \
     --volume=/dev:/dev \
-    --volume=/var/lib/docker/:/var/lib/docker:ro \
-    --volume=/var/lib/kubelet/:/var/lib/kubelet:rw \
+    --volume=/var/lib/docker/:/var/lib/docker:rw \
+    --volume=/var/lib/kubelet/:/var/lib/kubelet:rw,rslave \
     --volume=/var/run:/var/run:rw \
     --net=host \
     --pid=host \
