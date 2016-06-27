@@ -17,6 +17,7 @@ import labelsDirective from './labels/labels_directive';
 import middleEllipsisDirective from './middleellipsis/middleellipsis_directive';
 import contentCardModule from './contentcard/contentcard_module';
 import endpointModule from './endpoint/endpoint_module';
+import i18nDirective from './i18n/i18n_directive';
 import infoCardModule from './infocard/infocard_module';
 import resourceCardModule from './resourcecard/resourcecard_module';
 import actionbarModule from './actionbar/actionbar_module';
@@ -41,6 +42,7 @@ export default angular
           resourceCardModule.name,
           zeroStateModule.name,
         ])
+    .directive('kdI18n', i18nDirective)
     .directive('kdLabels', labelsDirective)
     .directive('kdMiddleEllipsis', middleEllipsisDirective)
     .directive('kdSparkline', sparklineDirective)
