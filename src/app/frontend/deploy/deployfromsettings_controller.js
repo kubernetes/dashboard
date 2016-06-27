@@ -598,4 +598,10 @@ const i18n = {
   /** @export {string} @desc The text is put on the 'Cancel' button at the end of the deploy
    * page. */
   MSG_DEPLOY_APP_CANCEL_ACTION: goog.getMsg('Cancel'),
+
+  /** @export {string} @desc Action "Show advanced options" for the toggle button on the deploy page. */
+  MSG_DEPLOY_SHOW_ADVANCED_ACTION: goog.getMsg('show advanced options'),
+
+  /** @export {string} @desc Action "Hide advanced options" for the toggle button on the deploy page. */
+  MSG_DEPLOY_HIDE_ADVANCED_ACTION: goog.getMsg('hide advanced options'),
 };

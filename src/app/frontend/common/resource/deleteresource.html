@@ -18,9 +18,7 @@ limitations under the License.
   <md-dialog-content layout-padding>
     <h4 class="md-title">{{::$ctrl.i18n.MSG_DELETE_RESOURCE_DIALOG_TITLE}}</h4>
     <div>
-      Are you sure you want to delete {{$ctrl.resourceKindName}}
-      <kd-middle-ellipsis display-string="{{$ctrl.objectMeta.name}}"></kd-middle-ellipsis>
-      in namespace {{$ctrl.objectMeta.namespace}}?
+      <kd-i18n message="{{::$ctrl.i18n.MSG_DELETE_RESOURCE_CONFIRM_QUESTION}}"></kd-i18n>
     </div>
     <md-dialog-actions>
       <md-button class="md-primary kd-cancel-btn" ng-click="$ctrl.cancel()">
