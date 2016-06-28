@@ -43,8 +43,8 @@ before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
   # Install docker 1.10+
-  - sudo apt-get update
-  - sudo apt-get -q -y install docker-engine
+#  - sudo apt-get update
+#  - sudo apt-get -y install docker-engine
   - sudo docker --version
 
 # Docker is required to set up a simple, single node Kubernetes cluster.
