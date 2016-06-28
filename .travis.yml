@@ -42,10 +42,10 @@ before_script:
   - export CHROME_BIN=chromium-browser
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-  # List available docker versions
-  - apt-cache madison docker-engine
-    # Install docker 1.10+
-  - apt-get -o Dpkg::Options::="--force-confnew" install -y docker-engine=1.10.1-0~trusty
+
+  # Install docker 1.10+. Answer all questions with yes.
+  # List available docker versions with "apt-cache madison docker-engine"
+  - sudo apt-get -o Dpkg::Options::="--force-confnew" install -y docker-engine=1.10.1-0~trusty
   - sudo docker --version
 
 # Docker is required to set up a simple, single node Kubernetes cluster.
