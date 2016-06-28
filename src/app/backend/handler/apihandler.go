@@ -94,6 +94,7 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 		client.AppsClient.RESTClient, client.BatchClient.RESTClient)
 	apiHandler := ApiHandler{client, heapsterClient, clientConfig, verber}
 	wsContainer := restful.NewContainer()
+	wsContainer.EnableContentEncoding(true)
 
 	apiV1Ws := new(restful.WebService)
 	apiV1Ws.Filter(wsLogger)
