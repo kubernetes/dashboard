@@ -45,7 +45,7 @@ before_script:
 
   # Install docker 1.10+. Answer all questions with yes.
   # List available docker versions with "apt-cache madison docker-engine"
-  - apt-get -o Dpkg::Options::="--force-confnew" install -y docker-engine=1.11.2-0~trusty
+  - sudo apt-get -o Dpkg::Options::="--force-confnew" install -y docker-engine=1.11.2-0~trusty
   - docker --version
 
 # Docker is required to set up a simple, single node Kubernetes cluster.
