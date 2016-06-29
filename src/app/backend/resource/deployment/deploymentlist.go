@@ -28,6 +28,8 @@ import (
 
 // ReplicationSetList contains a list of Deployments in the cluster.
 type DeploymentList struct {
+	ListMeta common.ListMeta `json:"listMeta"`
+
 	// Unordered list of Deployments.
 	Deployments []Deployment `json:"deployments"`
 }
@@ -96,6 +98,7 @@ func getDeploymentList(deployments []extensions.Deployment, pods []api.Pod,
 
 	deploymentList := &DeploymentList{
 		Deployments: make([]Deployment, 0),
+		ListMeta: common.ListMeta{TotalItems: len(deployments)},
 	}
 
 	for _, deployment := range deployments {

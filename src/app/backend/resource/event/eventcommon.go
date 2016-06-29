@@ -79,24 +79,21 @@ func GetPodsEvents(client client.Interface, namespace string, resourceSelector m
 		return nil, err
 	}
 
-	events := FilterEventsByPodsUID(eventList.Items, podList.Items)
+	events := filterEventsByPodsUID(eventList.Items, podList.Items)
 
 	return events, nil
 }
 
 // GetNodeEvents gets events associated to node with given name.
 func GetNodeEvents(client client.Interface, nodeName string) (common.EventList, error) {
-	eventList := common.EventList{
-		Namespace: api.NamespaceAll,
-		Events:    make([]common.Event, 0),
-	}
+	var eventList common.EventList
 
 	mc := client.Nodes()
 	node, _ := mc.Get(nodeName)
 	if ref, err := api.GetReference(node); err == nil {
 		ref.UID = types.UID(ref.Name)
 		events, _ := client.Events(api.NamespaceAll).Search(ref)
-		AppendEvents(events.Items, eventList)
+		eventList = ToEventList(events.Items, api.NamespaceAll)
 	} else {
 		log.Print(err)
 	}
@@ -104,8 +101,37 @@ func GetNodeEvents(client client.Interface, nodeName string) (common.EventList, 
 	return eventList, nil
 }
 
-// AppendEvents appends events from source slice to target events representation.
-func AppendEvents(source []api.Event, target common.EventList) common.EventList {
+// Based on event Reason fills event Type in order to allow correct filtering by Type.
+func FillEventsType(events []api.Event) []api.Event {
+	for i := range events {
+		if isFailedReason(events[i].Reason, FailedReasonPartials...) {
+			events[i].Type = api.EventTypeWarning
+		} else {
+			events[i].Type = api.EventTypeNormal
+		}
+	}
+
+	return events
+}
+
+// IsTypeFilled returns true if all given events type is filled, false otherwise.
+// This is needed as some older versions of kubernetes do not have Type property filled.
+func IsTypeFilled(events []api.Event) bool {
+	if len(events) == 0 {
+		return false
+	}
+
+	for _, event := range events {
+		if len(event.Type) == 0 {
+			return false
+		}
+	}
+
+	return true
+}
+
+// Appends events from source slice to target events representation.
+func appendEvents(source []api.Event, target common.EventList) common.EventList {
 	for _, event := range source {
 		target.Events = append(target.Events, common.Event{
 			ObjectMeta:      common.NewObjectMeta(event.ObjectMeta),
@@ -122,4 +148,13 @@ func AppendEvents(source []api.Event, target common.EventList) common.EventList 
 		})
 	}
 	return target
+}
+
+// ToEventList converts array of api events to common EventList structure
+func ToEventList(source []api.Event, namespace string) common.EventList {
+	return appendEvents(source, common.EventList{
+		Namespace: namespace,
+		Events:    make([]common.Event, 0),
+		ListMeta:  common.ListMeta{TotalItems: len(source)},
+	})
 }

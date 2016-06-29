@@ -52,10 +52,7 @@ func GetReplicationControllerEvents(client *client.Client, namespace, replicatio
 		apiEvents = resourceEvent.FillEventsType(apiEvents)
 	}
 
-	events := resourceEvent.AppendEvents(apiEvents, common.EventList{
-		Namespace: namespace,
-		Events:    make([]common.Event, 0),
-	})
+	events := resourceEvent.ToEventList(apiEvents, namespace)
 
 	log.Printf("Found %d events related to %s replication controller in %s namespace",
 		len(events.Events), replicationControllerName, namespace)

@@ -34,12 +34,11 @@ limitations under the License.
     <kd-resource-card-header-column size="small" grow="nogrow">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
-  <kd-pet-set-card dir-paginate="petSet in $ctrl.petSets | itemsPerPage: default"
+  <kd-pet-set-card dir-paginate="petSet in $ctrl.petSetList.petSets | itemsPerPage: default"
                    pet-set="petSet" pagination-id="petsets">
   </kd-pet-set-card>
   <kd-resource-card-list-footer>
-    <kd-resource-card-list-pagination pagination-id="petsets"
-                                      total-items="$ctrl.petSets.length">
+    <kd-resource-card-list-pagination pagination-id="petsets" list="$ctrl.petSetList">
     </kd-resource-card-list-pagination>
   </kd-resource-card-list-footer>
 </kd-resource-card-list>

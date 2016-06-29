@@ -29,8 +29,8 @@ export default class ReplicationControllerDetailController {
     /** @export {!backendApi.ReplicationControllerDetail} */
     this.replicationControllerDetail = replicationControllerDetail;
 
-    /** @export !Array<!backendApi.Event> */
-    this.events = replicationControllerEvents.events;
+    /** @export {!backendApi.EventList} */
+    this.eventList = replicationControllerEvents;
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;

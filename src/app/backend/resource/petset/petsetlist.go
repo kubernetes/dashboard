@@ -28,6 +28,8 @@ import (
 
 // PetSetList contains a list of Pet Sets in the cluster.
 type PetSetList struct {
+	ListMeta common.ListMeta `json:"listMeta"`
+
 	// Unordered list of Pet Sets.
 	PetSets []PetSet `json:"petSets"`
 }
@@ -95,6 +97,7 @@ func ToPetSetList(petSets []apps.PetSet, pods []api.Pod, events []api.Event) *Pe
 
 	petSetList := &PetSetList{
 		PetSets: make([]PetSet, 0),
+		ListMeta: common.ListMeta{TotalItems: len(petSets)},
 	}
 
 	for _, petSet := range petSets {

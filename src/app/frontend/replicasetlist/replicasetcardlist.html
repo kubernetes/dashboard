@@ -34,12 +34,11 @@ limitations under the License.
     <kd-resource-card-header-column size="small" grow="nogrow">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
-  <kd-replica-set-card dir-paginate="rc in $ctrl.replicaSets | itemsPerPage: default"
+  <kd-replica-set-card dir-paginate="rc in $ctrl.replicaSetList.replicaSets | itemsPerPage: default"
                        pagination-id="replicasets" replica-set="rc">
   </kd-replica-set-card>
   <kd-resource-card-list-footer>
-    <kd-resource-card-list-pagination pagination-id="replicasets"
-                                      total-items="$ctrl.replicaSets.length">
+    <kd-resource-card-list-pagination pagination-id="replicasets" list="$ctrl.replicaSetList">
     </kd-resource-card-list-pagination>
   </kd-resource-card-list-footer>
 </kd-resource-card-list>

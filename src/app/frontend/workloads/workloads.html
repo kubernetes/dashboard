@@ -22,7 +22,7 @@ limitations under the License.
       </a>
     </kd-title>
     <kd-content>
-      <kd-daemon-set-card-list daemon-sets="$ctrl.workloads.daemonSetList" with-statuses="true">
+      <kd-daemon-set-card-list daemon-set-list="$ctrl.workloads.daemonSetList" with-statuses="true">
       </kd-daemon-set-card-list>
     </kd-content>
   </kd-content-card>
@@ -34,7 +34,7 @@ limitations under the License.
       </a>
     </kd-title>
     <kd-content>
-      <kd-deployment-card-list deployments="$ctrl.workloads.deploymentList.deployments">
+      <kd-deployment-card-list deployment-list="$ctrl.workloads.deploymentList">
       </kd-deployment-card-list>
     </kd-content>
   </kd-content-card>
@@ -46,7 +46,7 @@ limitations under the License.
       </a>
     </kd-title>
     <kd-content>
-      <kd-pet-set-card-list pet-sets="$ctrl.workloads.petSetList.petSets">
+      <kd-pet-set-card-list pet-set-list="$ctrl.workloads.petSetList">
       </kd-pet-set-card-list>
     </kd-content>
   </kd-content-card>
@@ -58,7 +58,7 @@ limitations under the License.
       </a>
     </kd-title>
     <kd-content>
-      <kd-replica-set-card-list replica-sets="$ctrl.workloads.replicaSetList.replicaSets">
+      <kd-replica-set-card-list replica-set-list="$ctrl.workloads.replicaSetList">
       </kd-replica-set-card-list>
     </kd-content>
   </kd-content-card>
@@ -70,7 +70,7 @@ limitations under the License.
       </a>
     </kd-title>
     <kd-content>
-      <kd-job-card-list jobs="$ctrl.workloads.jobList.jobs">
+      <kd-job-card-list job-list="$ctrl.workloads.jobList">
       </kd-job-card-list>
     </kd-content>
   </kd-content-card>
@@ -83,7 +83,7 @@ limitations under the License.
     </kd-title>
     <kd-content>
       <kd-replication-controller-card-list
-              replication-controllers="$ctrl.workloads.replicationControllerList.replicationControllers">
+              replication-controller-list="$ctrl.workloads.replicationControllerList">
       </kd-replication-controller-card-list>
     </kd-content>
   </kd-content-card>
@@ -95,7 +95,8 @@ limitations under the License.
       </a>
     </kd-title>
     <kd-content>
-      <kd-pod-card-list pod-list="$ctrl.workloads.podList" with-statuses="true">
+      <kd-pod-card-list pod-list="$ctrl.workloads.podList" pod-list-resource="$ctrl.podListResource"
+                        with-statuses="true">
       </kd-pod-card-list>
     </kd-content>
   </kd-content-card>

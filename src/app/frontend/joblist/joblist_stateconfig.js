@@ -30,7 +30,7 @@ export default function stateConfig($stateProvider) {
     url: stateUrl,
     parent: chromeStateName,
     resolve: {
-      'jobs': resolveJobs,
+      'jobList': resolveJobList,
     },
     data: {
       [breadcrumbsConfig]: {
@@ -57,7 +57,7 @@ export default function stateConfig($stateProvider) {
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveJobs($resource, $stateParams) {
+export function resolveJobList($resource, $stateParams) {
   /** @type {!angular.Resource<!backendApi.JobList>} */
   let resource = $resource(`api/v1/job/${$stateParams.namespace || ''}`);
   return resource.get().$promise;

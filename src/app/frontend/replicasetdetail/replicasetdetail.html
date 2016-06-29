@@ -20,17 +20,16 @@ limitations under the License.
       <md-tab label="{{::ctrl.i18n.MSG_REPLICA_SET_DETAIL_OVERVIEW_LABEL}}">
         <kd-replica-set-info replica-set="::ctrl.replicaSetDetail"></kd-replica-set-info>
 
-        <kd-content-card>
+        <kd-content-card ng-if="::ctrl.replicaSetDetail.podList.pods.length">
           <kd-title>{{::ctrl.i18n.MSG_REPLICA_SET_DETAIL_PODS_TITLE}}</kd-title>
           <kd-content>
-            <kd-pod-card-list pod-list="::ctrl.replicaSetDetail.podList"
-                              logs-href-fn="::ctrl.getPodLogsHref(pod)" with-statuses="true">
+            <kd-pod-card-list pod-list="::ctrl.replicaSetDetail.podList" with-statuses="true">
             </kd-pod-card-list>
           </kd-content>
         </kd-content-card>
       </md-tab>
       <md-tab label="{{::ctrl.i18n.MSG_REPLICA_SET_DETAIL_EVENTS_LABEL}}">
-        <kd-event-card-list events="::ctrl.replicaSetDetail.eventList.events"></kd-event-card-list>
+        <kd-event-card-list event-list="::ctrl.replicaSetDetail.eventList"></kd-event-card-list>
       </md-tab>
     </md-tabs>
   </md-content>
