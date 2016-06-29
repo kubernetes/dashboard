@@ -22,8 +22,8 @@ describe('Node list controller', () => {
   it('should initialize node controller', angular.mock.inject(($controller) => {
     let ctrls = {};
     /** @type {!NodeListController} */
-    let ctrl = $controller(NodeListController, {nodes: {nodes: ctrls}});
+    let ctrl = $controller(NodeListController, {nodeList: {nodes: ctrls}});
 
-    expect(ctrl.nodes).toBe(ctrls);
+    expect(ctrl.nodeList.nodes).toBe(ctrls);
   }));
 });

@@ -67,7 +67,7 @@ func TestGetNodeDetail(t *testing.T) {
 				},
 				EventList: common.EventList{
 					Namespace: api.NamespaceAll,
-					Events:    []common.Event{},
+					Events:    nil,
 				},
 				AllocatedResources: NodeAllocatedResources{
 					CPURequests:            0,
@@ -95,7 +95,7 @@ func TestGetNodeDetail(t *testing.T) {
 		actual, _ := GetNodeDetail(fakeClient, fakeHeapsterClient, c.name)
 
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("GetEvents(client,heapsterClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
+			t.Errorf("GetNodeDetail(client,heapsterClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
 				c.namespace, c.name, actual, c.expected)
 		}
 	}

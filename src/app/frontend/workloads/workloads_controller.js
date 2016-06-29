@@ -18,11 +18,15 @@
 export class WorkloadsController {
   /**
    * @param {!backendApi.Workloads} workloads
+   * @param {!angular.$resource} kdPodListResource
    * @ngInject
    */
-  constructor(workloads) {
+  constructor(workloads, kdPodListResource) {
     /** @export {!backendApi.Workloads} */
     this.workloads = workloads;
+
+    /** @export {!angular.$resource} */
+    this.podListResource = kdPodListResource;
 
     /** @export */
     this.i18n = i18n;
@@ -34,11 +38,13 @@ export class WorkloadsController {
    */
   shouldShowZeroState() {
     /** @type {number} */
-    let resourcesLength = this.workloads.deploymentList.deployments.length +
-        this.workloads.replicaSetList.replicaSets.length + this.workloads.jobList.jobs.length +
-        this.workloads.replicationControllerList.replicationControllers.length +
-        this.workloads.podList.pods.length + this.workloads.daemonSetList.daemonSets.length +
-        this.workloads.petSetList.petSets.length;
+    let resourcesLength = this.workloads.deploymentList.listMeta.totalItems +
+        this.workloads.replicaSetList.listMeta.totalItems +
+        this.workloads.jobList.listMeta.totalItems +
+        this.workloads.replicationControllerList.listMeta.totalItems +
+        this.workloads.podList.listMeta.totalItems +
+        this.workloads.daemonSetList.listMeta.totalItems +
+        this.workloads.petSetList.listMeta.totalItems;
 
     return resourcesLength === 0;
   }
@@ -46,24 +52,24 @@ export class WorkloadsController {
 
 const i18n = {
   /** @export {string} @desc Label "Daemon sets", which appears above the daemon sets list on
-     the workloads page. */
+   the workloads page. */
   MSG_WORKLOADS_DEAMON_SETS_LABEL: goog.getMsg('Daemon sets'),
   /** @export {string} @desc Label "Deployments", which appears above the deployments list on
-     the workloads page.*/
+   the workloads page.*/
   MSG_WORKLOADS_DEPLOYMENTS_LABEL: goog.getMsg('Deployments'),
   /** @export {string} @desc Label "Pet Sets", which appears above the replica set list on the
-     workloads page.*/
+   workloads page.*/
   MSG_WORKLOADS_PET_SETS_LABEL: goog.getMsg('Pet Sets'),
   /** @export {string} @desc Label "Replica sets", which appears above the replica sets list on
-     the workloads page.*/
+   the workloads page.*/
   MSG_WORKLOADS_REPLICA_SETS_LABEL: goog.getMsg('Replica sets'),
   /** @export {string} @desc Label "Job", which appears above the replica sets list on the
-     workloads page.*/
+   workloads page.*/
   MSG_WORKLOADS_JOBS_LABEL: goog.getMsg('Jobs'),
   /** @export {string} @desc Label "Replication controllers", which appears above the
-     replication controllers list on the workloads page.*/
+   replication controllers list on the workloads page.*/
   MSG_WORKLOADS_REPLICATION_CONTROLLERS_LABEL: goog.getMsg('Replication controllers'),
   /** @export {string} @desc Label "Pods", which appears above the pods list on the workloads
-     page.*/
+   page.*/
   MSG_WORKLOADS_PODS_LABEL: goog.getMsg('Pods'),
 };

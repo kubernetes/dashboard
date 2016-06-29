@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import deploymentListModule from 'deploymentlist/deploymentlist_module';
-import {resolveDeployments} from 'deploymentlist/deploymentlist_stateconfig';
+import {resolveDeploymentList} from 'deploymentlist/deploymentlist_stateconfig';
 
 describe('StateConfig for deployment list', () => {
   beforeEach(() => { angular.mock.module(deploymentListModule.name); });
@@ -24,7 +24,7 @@ describe('StateConfig for deployment list', () => {
     let resource = jasmine.createSpy('$resource');
     resource.and.returnValue({get: function() { return {$promise: promise}; }});
 
-    let actual = resolveDeployments(resource, {namespace: 'foo'});
+    let actual = resolveDeploymentList(resource, {namespace: 'foo'});
 
     expect(resource).toHaveBeenCalledWith('api/v1/deployment/foo');
     expect(actual).toBe(promise);
@@ -36,7 +36,7 @@ describe('StateConfig for deployment list', () => {
     let resource = jasmine.createSpy('$resource');
     resource.and.returnValue({get: function() { return {$promise: promise}; }});
 
-    let actual = resolveDeployments(resource, {});
+    let actual = resolveDeploymentList(resource, {});
 
     expect(resource).toHaveBeenCalledWith('api/v1/deployment/');
     expect(actual).toBe(promise);

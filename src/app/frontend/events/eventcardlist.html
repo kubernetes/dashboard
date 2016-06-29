@@ -51,8 +51,9 @@ limitations under the License.
         </kd-resource-card-header-column>
       </kd-resource-card-header-columns>
 
-      <kd-resource-card dir-paginate="event in $ctrl.filteredEvents | itemsPerPage: default"
-          object-meta="event.objectMeta" type-meta="event.typeMeta" pagination-id="events">
+      <kd-resource-card
+              dir-paginate="event in $ctrl.filteredEventList.events | itemsPerPage: default"
+              object-meta="event.objectMeta" type-meta="event.typeMeta" pagination-id="events">
         <kd-resource-card-status>
           <i ng-if="$ctrl.isEventWarning(event)"
              class="material-icons kd-replicationcontrollerevents-warning-icon">warning</i>
@@ -81,7 +82,7 @@ limitations under the License.
         </kd-resource-card-columns>
       </kd-resource-card>
       <kd-resource-card-list-footer>
-        <kd-resource-card-list-pagination pagination-id="events" total-items="$ctrl.filteredEvents.length">
+        <kd-resource-card-list-pagination pagination-id="events" list="$ctrl.filteredEventList">
         </kd-resource-card-list-pagination>
       </kd-resource-card-list-footer>
     </kd-resource-card-list>
@@ -90,7 +91,9 @@ limitations under the License.
       <md-icon class="material-icons kd-replicationcontrollerevents-no-events-icon">
         info_outline
       </md-icon>
-      <div class="kd-replicationcontrollerevents-no-events-text">{{::$ctrl.i18n.MSG_EVENTS_NO_EVENTS_TITLE}}</div>
+      <div class="kd-replicationcontrollerevents-no-events-text">
+        {{::$ctrl.i18n.MSG_EVENTS_NO_EVENTS_TITLE}}
+      </div>
       <div class="kd-replicationcontrollerevents-no-events-info">
         {{::$ctrl.i18n.MSG_EVENTS_NO_EVENTS_USER_HELP}}
       </div>

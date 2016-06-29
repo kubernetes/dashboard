@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import jobListModule from 'joblist/joblist_module';
-import {resolveJobs} from 'joblist/joblist_stateconfig';
+import {resolveJobList} from 'joblist/joblist_stateconfig';
 
 describe('StateConfig for job list', () => {
   beforeEach(() => { angular.mock.module(jobListModule.name); });
@@ -24,7 +24,7 @@ describe('StateConfig for job list', () => {
     let resource = jasmine.createSpy('$resource');
     resource.and.returnValue({get: function() { return {$promise: promise}; }});
 
-    let actual = resolveJobs(resource, {namespace: 'foo'});
+    let actual = resolveJobList(resource, {namespace: 'foo'});
 
     expect(resource).toHaveBeenCalledWith('api/v1/job/foo');
     expect(actual).toBe(promise);
@@ -36,7 +36,7 @@ describe('StateConfig for job list', () => {
     let resource = jasmine.createSpy('$resource');
     resource.and.returnValue({get: function() { return {$promise: promise}; }});
 
-    let actual = resolveJobs(resource, {});
+    let actual = resolveJobList(resource, {});
 
     expect(resource).toHaveBeenCalledWith('api/v1/job/');
     expect(actual).toBe(promise);

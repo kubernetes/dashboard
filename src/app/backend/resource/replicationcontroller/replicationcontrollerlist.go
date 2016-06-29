@@ -26,6 +26,8 @@ import (
 
 // ReplicationControllerList contains a list of Replication Controllers in the cluster.
 type ReplicationControllerList struct {
+	ListMeta common.ListMeta `json:"listMeta"`
+
 	// Unordered list of Replication Controllers.
 	ReplicationControllers []ReplicationController `json:"replicationControllers"`
 }
@@ -88,6 +90,7 @@ func getReplicationControllerList(replicationControllers []api.ReplicationContro
 
 	replicationControllerList := &ReplicationControllerList{
 		ReplicationControllers: make([]ReplicationController, 0),
+		ListMeta: common.ListMeta{TotalItems: len(replicationControllers)},
 	}
 
 	for _, replicationController := range replicationControllers {

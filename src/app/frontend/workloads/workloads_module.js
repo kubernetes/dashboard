@@ -44,4 +44,14 @@ export default angular
           daemonSetListModule.name,
           petSetListModule.name,
         ])
-    .config(stateConfig);
+    .config(stateConfig)
+    .factory('kdWorkloadResource', workloadResource);
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function workloadResource($resource) {
+  return $resource('api/v1/workload/:namespace');
+}
