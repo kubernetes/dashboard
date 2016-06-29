@@ -16,11 +16,11 @@ limitations under the License.
 
 <kd-resource-card-list selectable="::$ctrl.selectable" with-statuses="true">
   <kd-resource-card-header-columns>
-    <kd-resource-card-header-column>Name</kd-resource-card-header-column>
-    <kd-resource-card-header-column>Labels</kd-resource-card-header-column>
-    <kd-resource-card-header-column>Cluster IP</kd-resource-card-header-column>
-    <kd-resource-card-header-column>Internal endpoints</kd-resource-card-header-column>
-    <kd-resource-card-header-column>External endpoints</kd-resource-card-header-column>
+    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_SERVICE_LIST_NAME_LABEL}}</kd-resource-card-header-column>
+    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_SERVICE_LIST_LABELS_LABEL}}</kd-resource-card-header-column>
+    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_SERVICE_LIST_CLUSTER_IP_LABEL}}</kd-resource-card-header-column>
+    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_SERVICE_LIST_INTERNAL_ENDPOINTS_LABEL}}</kd-resource-card-header-column>
+    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_SERVICE_LIST_EXTERNAL_ENDPOINTS_LABEL}}</kd-resource-card-header-column>
     <kd-resource-card-header-column size="small" grow="nogrow">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
