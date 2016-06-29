@@ -31,14 +31,14 @@ describe('Pet Set list controller', () => {
     /** @type {!PetSetListController} */
     let ctrl = $controller(PetSetListController, {petSets: {petSets: ctrls}});
 
-    expect(ctrl.petSets).toBe(ctrls);
+    expect(ctrl.petSetList).toBe(ctrls);
   }));
 
   it('should show zero state', () => { expect(ctrl.shouldShowZeroState()).toBeTruthy(); });
 
   it('should hide zero state', () => {
     // given
-    ctrl.petSets = {petSets: ['mock']};
+    ctrl.petSetList = {petSets: ['mock']};
 
     // then
     expect(ctrl.shouldShowZeroState()).toBeFalsy();

@@ -30,7 +30,7 @@ export default function stateConfig($stateProvider) {
     url: stateUrl,
     parent: chromeStateName,
     resolve: {
-      'petSets': resolvePetSets,
+      'petSetList': resolvePetSetList,
     },
     data: {
       [breadcrumbsConfig]: {
@@ -53,12 +53,13 @@ export default function stateConfig($stateProvider) {
 
 /**
  * @param {!angular.$resource} $resource
+ * @param {!./../chrome/chrome_state.StateParams} $stateParams
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolvePetSets($resource) {
+export function resolvePetSetList($resource, $stateParams) {
   /** @type {!angular.Resource<!backendApi.PetSetList>} */
-  let resource = $resource('api/v1/petset');
+  let resource = $resource(`api/v1/petset/${$stateParams.namespace || ''}`);
   return resource.get().$promise;
 }
 

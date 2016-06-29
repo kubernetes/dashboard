@@ -89,7 +89,7 @@ func GetServicePods(client k8sClient.Interface, heapsterClient client.HeapsterCl
 	}
 
 	apiPods := common.FilterNamespacedPodsBySelector(apiPodList.Items, namespace, serviceSelector)
-	podList := pod.CreatePodList(apiPods, heapsterClient)
+	podList := pod.CreatePodList(apiPods, common.NO_PAGINATION, heapsterClient)
 
 	return &podList, nil
 }

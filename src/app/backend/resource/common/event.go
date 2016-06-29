@@ -20,6 +20,8 @@ import (
 
 // Events response structure.
 type EventList struct {
+	ListMeta ListMeta `json:"listMeta"`
+
 	// Namespace.
 	Namespace string `json:"namespace"`
 

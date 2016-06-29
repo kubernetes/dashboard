@@ -22,12 +22,12 @@ export class EventCardListController {
   constructor() {
     /**
      * Initialized from the scope.
-     * @export {!Array<!backendApi.Event>}
+     * @export {!backendApi.EventList}
      */
-    this.events;
+    this.eventList;
 
-    /** @export {!Array<!backendApi.Event>} */
-    this.filteredEvents = this.events;
+    /** @export {!backendApi.EventList} */
+    this.filteredEventList = this.eventList;
 
     /** @const @export {!Array<string>} */
     this.eventTypeFilter = [EVENT_ALL, EVENT_TYPE_WARNING];
@@ -53,27 +53,33 @@ export class EventCardListController {
    * @returns {boolean}
    * @export
    */
-  hasEvents() { return this.filteredEvents !== undefined && this.filteredEvents.length > 0; }
+  hasEvents() {
+    return this.filteredEventList.events !== undefined && this.filteredEventList.events.length > 0;
+  }
 
   /**
    * Handles event filtering by type and source.
    * @export
    */
-  handleEventFiltering() { this.filteredEvents = this.filterByType(this.events, this.eventType); }
+  handleEventFiltering() {
+    this.filteredEventList = this.filterByType(this.eventList, this.eventType);
+  }
 
   /**
    * Filters events by their type.
-   * @param {!Array<!backendApi.Event>} events
+   * @param {!backendApi.EventList} eventList
    * @param {string} type
-   * @return {!Array<!backendApi.Event>}
+   * @return {!backendApi.EventList}
    * @export
    */
-  filterByType(events, type) {
+  filterByType(eventList, type) {
     if (type === EVENT_TYPE_WARNING) {
-      return events.filter((event) => { return event.type === EVENT_TYPE_WARNING; });
+      eventList.events =
+          eventList.events.filter((event) => { return event.type === EVENT_TYPE_WARNING; });
+      return eventList;
     } else {
       // In case of selected 'All' option.
-      return events;
+      return eventList;
     }
   }
 }
@@ -87,8 +93,8 @@ export const eventCardListComponent = {
   templateUrl: 'events/eventcardlist.html',
   controller: EventCardListController,
   bindings: {
-    /** {!Array<!backendApi.Event>} */
-    'events': '=',
+    /** {!backendApi.EventList} */
+    'eventList': '=',
   },
 };
 

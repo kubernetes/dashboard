@@ -35,4 +35,14 @@ export default angular
           filtersModule.name,
         ])
     .config(stateConfig)
-    .component('kdPodCardList', podCardListComponent);
+    .component('kdPodCardList', podCardListComponent)
+    .factory('kdPodListResource', podListResource);
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function podListResource($resource) {
+  return $resource('api/v1/pod/:namespace')
+}
