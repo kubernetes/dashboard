@@ -25,7 +25,7 @@ class DeploymentCardListController {
 export const deploymentCardListComponent = {
   transclude: true,
   bindings: {
-    'deployments': '<',
+    'deploymentList': '<',
   },
   templateUrl: 'deploymentlist/deploymentcardlist.html',
   controller: DeploymentCardListController,

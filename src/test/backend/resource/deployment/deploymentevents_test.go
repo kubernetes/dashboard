@@ -32,6 +32,7 @@ func TestGetDeploymentEvents(t *testing.T) {
 					}}},
 			[]string{"list"},
 			&common.EventList{
+				ListMeta: common.ListMeta{TotalItems: 1},
 				Namespace: "test-namespace",
 				Events: []common.Event{{
 					TypeMeta:   common.TypeMeta{Kind: common.ResourceKindEvent},

@@ -14,6 +14,7 @@
 
 import resourceCardModule from 'common/components/resourcecard/resourcecard_module';
 import paginationModule from 'common/pagination/pagination_module';
+import errorHandlingModule from 'common/errorhandling/errorhandling_module';
 
 describe('Resource card list pagination', () => {
   /** @type
@@ -32,6 +33,7 @@ describe('Resource card list pagination', () => {
   beforeEach(() => {
     angular.mock.module(paginationModule.name);
     angular.mock.module(resourceCardModule.name);
+    angular.mock.module(errorHandlingModule.name);
 
     angular.mock.inject(($componentController, _kdPaginationService_) => {
       resourceCardListFooterCtrl = {setListPagination: () => {}};
@@ -58,7 +60,7 @@ describe('Resource card list pagination', () => {
 
   it('should show pagination', () => {
     // given
-    ctrl.totalItems = 50;
+    ctrl.list = {listMeta: {totalItems: 50}};
 
     // when
     let result = ctrl.shouldShowPagination();
@@ -69,7 +71,7 @@ describe('Resource card list pagination', () => {
 
   it('should hide pagination', () => {
     // given
-    ctrl.totalItems = 10;
+    ctrl.list = {listMeta: {totalItems: 10}};
 
     // when
     let result = ctrl.shouldShowPagination();

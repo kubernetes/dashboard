@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import errorDialogService from './errordialog_service';
+import {ErrorDialog} from './errordialog_service';
 
 /**
  * Angular module containing navigation chrome for the application.
@@ -24,4 +24,4 @@ export default angular
         [
           'ngMaterial',
         ])
-    .service('errorDialog', errorDialogService);
+    .service('errorDialog', ErrorDialog);

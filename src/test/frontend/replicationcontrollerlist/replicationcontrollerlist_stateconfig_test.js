@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
-import {resolveReplicationControllers} from 'replicationcontrollerlist/replicationcontrollerlist_stateconfig';
+import {resolveReplicationControllerList} from 'replicationcontrollerlist/replicationcontrollerlist_stateconfig';
 
 describe('StateConfig for replication controller list', () => {
   beforeEach(() => { angular.mock.module(replicationControllerListModule.name); });
@@ -24,7 +24,7 @@ describe('StateConfig for replication controller list', () => {
     let resource = jasmine.createSpy('$resource');
     resource.and.returnValue({get: function() { return {$promise: promise}; }});
 
-    let actual = resolveReplicationControllers(resource, {namespace: 'foo'});
+    let actual = resolveReplicationControllerList(resource, {namespace: 'foo'});
 
     expect(resource).toHaveBeenCalledWith('api/v1/replicationcontroller/foo');
     expect(actual).toBe(promise);
@@ -36,7 +36,7 @@ describe('StateConfig for replication controller list', () => {
     let resource = jasmine.createSpy('$resource');
     resource.and.returnValue({get: function() { return {$promise: promise}; }});
 
-    let actual = resolveReplicationControllers(resource, {});
+    let actual = resolveReplicationControllerList(resource, {});
 
     expect(resource).toHaveBeenCalledWith('api/v1/replicationcontroller/');
     expect(actual).toBe(promise);

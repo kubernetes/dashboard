@@ -19,17 +19,17 @@
  */
 export class JobListController {
   /**
-   * @param {!backendApi.JobList} jobs
+   * @param {!backendApi.JobList} jobList
    * @ngInject
    */
-  constructor(jobs) {
-    /** @export {!Array<!backendApi.Job>} */
-    this.jobs = jobs.jobs;
+  constructor(jobList) {
+    /** @export {!backendApi.JobList} */
+    this.jobList = jobList;
   }
 
   /**
    * @return {boolean}
    * @export
    */
-  shouldShowZeroState() { return this.jobs.length === 0; }
+  shouldShowZeroState() { return this.jobList.jobs.length === 0; }
 }

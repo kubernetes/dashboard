@@ -505,7 +505,9 @@ func (apiHandler *ApiHandler) handleGetWorkloads(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := parseNamespacePathParameter(request)
-	result, err := workload.GetWorkloads(apiHandler.client, apiHandler.heapsterClient, namespace)
+	pagination := parsePaginationPathParameter(request)
+	result, err := workload.GetWorkloads(apiHandler.client, apiHandler.heapsterClient, namespace,
+		pagination)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -579,7 +581,8 @@ func (apiHandler *ApiHandler) handleGetPods(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := parseNamespacePathParameter(request)
-	result, err := pod.GetPodList(apiHandler.client, apiHandler.heapsterClient, namespace)
+	pagination := parsePaginationPathParameter(request)
+	result, err := pod.GetPodList(apiHandler.client, apiHandler.heapsterClient, namespace, pagination)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -918,4 +921,19 @@ func parseNamespacePathParameter(request *restful.Request) *common.NamespaceQuer
 		}
 	}
 	return common.NewNamespaceQuery(nonEmptyNamespaces)
+}
+
+func parsePaginationPathParameter(request *restful.Request) *common.PaginationQuery {
+	itemsPerPage, err := strconv.ParseInt(request.QueryParameter("itemsPerPage"), 10, 0)
+	if err != nil {
+		return common.NO_PAGINATION
+	}
+
+	page, err := strconv.ParseInt(request.QueryParameter("page"), 10, 0)
+	if err != nil {
+		return common.NO_PAGINATION
+	}
+
+	// Frontend pages start from 1 and backend starts from 0
+	return common.NewPaginationQuery(int(itemsPerPage), int(page-1))
 }

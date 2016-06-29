@@ -162,24 +162,31 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 	for _, c := range cases {
 		expected := &Workloads{
 			ReplicationControllerList: replicationcontroller.ReplicationControllerList{
+				ListMeta: common.ListMeta{TotalItems: len(c.rcs)},
 				ReplicationControllers: c.rcs,
 			},
 			ReplicaSetList: replicaset.ReplicaSetList{
+				ListMeta: common.ListMeta{TotalItems: len(c.rs)},
 				ReplicaSets: c.rs,
 			},
 			JobList: job.JobList{
+				ListMeta: common.ListMeta{TotalItems: len(c.jobs)},
 				Jobs: c.jobs,
 			},
 			DaemonSetList: daemonset.DaemonSetList{
+				ListMeta: common.ListMeta{TotalItems: len(c.daemonset)},
 				DaemonSets: c.daemonset,
 			},
 			DeploymentList: deployment.DeploymentList{
+				ListMeta: common.ListMeta{TotalItems: len(c.deployment)},
 				Deployments: c.deployment,
 			},
 			PodList: pod.PodList{
+				ListMeta: common.ListMeta{TotalItems: len(c.pod)},
 				Pods: c.pod,
 			},
 			PetSetList: petset.PetSetList{
+				ListMeta: common.ListMeta{TotalItems: len(c.petSet)},
 				PetSets: c.petSet,
 			},
 		}
@@ -304,12 +311,12 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		channels.EventList.List <- eventList
 		channels.EventList.Error <- nil
 
-		actual, err := GetWorkloadsFromChannels(channels, nil)
+		actual, err := GetWorkloadsFromChannels(channels, nil, common.NO_PAGINATION)
 		if !reflect.DeepEqual(actual, expected) {
 			t.Errorf("GetWorkloadsFromChannels() ==\n          %#v\nExpected: %#v", actual, expected)
 		}
 		if !reflect.DeepEqual(err, expectedErr) {
-			t.Errorf("error from GetWorkloadsFromChannels() == %#v, expected %#v", actual, expected)
+			t.Errorf("error from GetWorkloadsFromChannels() == %#v, expected %#v", err, expectedErr)
 		}
 	}
 }

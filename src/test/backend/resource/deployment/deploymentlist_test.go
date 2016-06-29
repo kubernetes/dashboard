@@ -39,7 +39,7 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 			extensions.DeploymentList{},
 			nil,
 			&api.PodList{},
-			&DeploymentList{[]Deployment{}},
+			&DeploymentList{common.ListMeta{}, []Deployment{}},
 			nil,
 		},
 		{
@@ -117,6 +117,7 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 				},
 			},
 			&DeploymentList{
+				common.ListMeta{TotalItems: 1},
 				[]Deployment{{
 					ObjectMeta: common.ObjectMeta{
 						Name:              "rs-name",

@@ -26,6 +26,8 @@ import (
 
 // NodeList contains a list of nodes in the cluster.
 type NodeList struct {
+	ListMeta common.ListMeta `json:"listMeta"`
+
 	// Unordered list of Nodes.
 	Nodes []Node `json:"nodes"`
 }
@@ -56,6 +58,7 @@ func GetNodeList(client client.Interface) (*NodeList, error) {
 func toNodeList(nodes []api.Node) *NodeList {
 	nodeList := &NodeList{
 		Nodes: make([]Node, 0),
+		ListMeta: common.ListMeta{TotalItems: len(nodes)},
 	}
 
 	for _, node := range nodes {

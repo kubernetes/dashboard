@@ -219,7 +219,7 @@ func TestAppendEvents(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := AppendEvents(c.source, c.target)
+		actual := appendEvents(c.source, c.target)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("AppendEvents(%#v, %#v) == \n%#v, expected \n%#v",
 				c.source, c.target, actual, c.expected)

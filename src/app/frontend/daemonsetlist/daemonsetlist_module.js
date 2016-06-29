@@ -16,7 +16,7 @@ import componentsModule from 'common/components/components_module';
 import chromeModule from 'chrome/chrome_module';
 import filtersModule from 'common/filters/filters_module';
 import stateConfig from './daemonsetlist_stateconfig';
-import {daemonSetCardListComponent} from './daemonsetlist_component';
+import {daemonSetCardListComponent} from './daemonsetcardlist_component';
 import daemonSetDetailModule from 'daemonsetdetail/daemonsetdetail_module';
 
 /**

@@ -19,17 +19,17 @@
  */
 export class ReplicaSetListController {
   /**
-   * @param {!backendApi.ReplicaSetList} replicaSets
+   * @param {!backendApi.ReplicaSetList} replicaSetList
    * @ngInject
    */
-  constructor(replicaSets) {
-    /** @export {!Array<!backendApi.ReplicaSet>} */
-    this.replicaSets = replicaSets.replicaSets;
+  constructor(replicaSetList) {
+    /** @export {!backendApi.ReplicaSetList} */
+    this.replicaSetList = replicaSetList;
   }
 
   /**
    * @return {boolean}
    * @export
    */
-  shouldShowZeroState() { return this.replicaSets.length === 0; }
+  shouldShowZeroState() { return this.replicaSetList.replicaSets.length === 0; }
 }

@@ -20,8 +20,8 @@ export class ReplicaSetCardListController {
    * @ngInject
    */
   constructor() {
-    /** @export {!Array<!backendApi.ReplicaSet>} Initialized from binding. */
-    this.replicaSets;
+    /** @export {!backendApi.ReplicaSetList} Initialized from binding. */
+    this.replicaSetList;
     /** @export */
     this.i18n = i18n;
   }
@@ -33,7 +33,7 @@ export class ReplicaSetCardListController {
 export const replicaSetCardListComponent = {
   transclude: true,
   bindings: {
-    'replicaSets': '<',
+    'replicaSetList': '<',
   },
   templateUrl: 'replicasetlist/replicasetcardlist.html',
   controller: ReplicaSetCardListController,

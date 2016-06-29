@@ -52,8 +52,8 @@ export class ResourceCardListFooterController {
    * @private
    */
   shouldShowPagination_() {
-    return this.listPagination_ &&
-        this.listPagination_.totalItems > this.paginationService_.getMinRowsLimit();
+    return !!this.listPagination_ &&
+        this.listPagination_.list.listMeta.totalItems > this.paginationService_.getMinRowsLimit();
   }
 
   /**

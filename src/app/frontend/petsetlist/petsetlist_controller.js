@@ -19,17 +19,17 @@
  */
 export class PetSetListController {
   /**
-   * @param {!backendApi.PetSetList} petSets
+   * @param {!backendApi.PetSetList} petSetList
    * @ngInject
    */
-  constructor(petSets) {
-    /** @export {!Array<!backendApi.PetSet>} */
-    this.petSets = petSets.petSets;
+  constructor(petSetList) {
+    /** @export {!backendApi.PetSetList} */
+    this.petSetList = petSetList;
   }
 
   /**
    * @return {boolean}
    * @export
    */
-  shouldShowZeroState() { return this.petSets.length === 0; }
+  shouldShowZeroState() { return this.petSetList.petSets.length === 0; }
 }
