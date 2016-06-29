@@ -38,13 +38,13 @@ describe('Workload list controller', () => {
   it('should show zero state', () => {
     // given
     ctrl.workloads = {
-      deploymentList: {deployments: []},
-      replicaSetList: {replicaSets: []},
-      jobList: {jobs: []},
-      replicationControllerList: {replicationControllers: []},
-      podList: {pods: []},
-      daemonSetList: {daemonSets: []},
-      petSetList: {petSets: []},
+      deploymentList: {listMeta: {totalItems: 0}, deployments: []},
+      replicaSetList: {listMeta: {totalItems: 0}, replicaSets: []},
+      jobList: {listMeta: {totalItems: 0}, jobs: []},
+      replicationControllerList: {listMeta: {totalItems: 0}, replicationControllers: []},
+      podList: {listMeta: {totalItems: 0}, pods: []},
+      daemonSetList: {listMeta: {totalItems: 0}, daemonSets: []},
+      petSetList: {listMeta: {totalItems: 0}, petSets: []},
     };
 
     expect(ctrl.shouldShowZeroState()).toBeTruthy();
@@ -53,13 +53,13 @@ describe('Workload list controller', () => {
   it('should hide zero state', () => {
     // given
     ctrl.workloads = {
-      deploymentList: {deployments: ['mock']},
-      replicaSetList: {replicaSets: []},
-      jobList: {jobs: []},
-      replicationControllerList: {replicationControllers: []},
-      podList: {pods: []},
-      daemonSetList: {daemonSets: []},
-      petSetList: {petSets: []},
+      deploymentList: {listMeta: {totalItems: 1}, deployments: []},
+      replicaSetList: {listMeta: {totalItems: 0}, replicaSets: []},
+      jobList: {listMeta: {totalItems: 0}, jobs: []},
+      replicationControllerList: {listMeta: {totalItems: 0}, replicationControllers: []},
+      podList: {listMeta: {totalItems: 0}, pods: []},
+      daemonSetList: {listMeta: {totalItems: 0}, daemonSets: []},
+      petSetList: {listMeta: {totalItems: 0}, petSets: []},
     };
 
     // then

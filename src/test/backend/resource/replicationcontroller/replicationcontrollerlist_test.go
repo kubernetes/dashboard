@@ -185,6 +185,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 			},
 			},
 			&ReplicationControllerList{
+				ListMeta: common.ListMeta{TotalItems: 2},
 				ReplicationControllers: []ReplicationController{
 					{
 						ObjectMeta: common.ObjectMeta{

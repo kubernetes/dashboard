@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import nodeListModule from 'nodelist/nodelist_module';
-import {resolveNodes} from 'nodelist/nodelist_stateconfig';
+import {resolveNodeList} from 'nodelist/nodelist_stateconfig';
 
 describe('StateConfig for node list', () => {
   beforeEach(() => { angular.mock.module(nodeListModule.name); });
@@ -24,7 +24,7 @@ describe('StateConfig for node list', () => {
     let resource = jasmine.createSpy('$resource');
     resource.and.returnValue({get: function() { return {$promise: promise}; }});
 
-    let actual = resolveNodes(resource);
+    let actual = resolveNodeList(resource);
 
     expect(resource).toHaveBeenCalledWith('api/v1/node');
     expect(actual).toBe(promise);

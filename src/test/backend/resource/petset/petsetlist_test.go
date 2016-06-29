@@ -39,7 +39,7 @@ func TestGetPetSetListFromChannels(t *testing.T) {
 			apps.PetSetList{},
 			nil,
 			&api.PodList{},
-			&PetSetList{[]PetSet{}},
+			&PetSetList{common.ListMeta{}, []PetSet{}},
 			nil,
 		},
 		{
@@ -117,6 +117,7 @@ func TestGetPetSetListFromChannels(t *testing.T) {
 				},
 			},
 			&PetSetList{
+				common.ListMeta{TotalItems: 1},
 				[]PetSet{{
 					ObjectMeta: common.ObjectMeta{
 						Name:              "rs-name",

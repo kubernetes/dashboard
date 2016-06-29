@@ -14,6 +14,7 @@
 
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {PaginationService} from 'common/pagination/pagination_service';
 import {stateName as workloadsState} from 'workloads/workloads_state';
 
 import {PodListController} from './podlist_controller';
@@ -52,15 +53,15 @@ export default function stateConfig($stateProvider) {
 }
 
 /**
- * @param {!angular.$resource} $resource
+ * @param {!angular.$resource} kdPodListResource
  * @param {!./../chrome/chrome_state.StateParams} $stateParams
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolvePodList($resource, $stateParams) {
-  /** @type {!angular.Resource<!backendApi.PodList>} */
-  let resource = $resource(`api/v1/pod/${$stateParams.namespace || ''}`);
-  return resource.get().$promise;
+export function resolvePodList(kdPodListResource, $stateParams) {
+  /** @type {!backendApi.PaginationQuery} */
+  let paginationQuery = PaginationService.getDefaultResourceQuery($stateParams.namespace);
+  return kdPodListResource.get(paginationQuery).$promise;
 }
 
 const i18n = {

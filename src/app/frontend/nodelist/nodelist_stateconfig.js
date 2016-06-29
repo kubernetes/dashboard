@@ -30,7 +30,7 @@ export default function stateConfig($stateProvider) {
     url: stateUrl,
     parent: chromeStateName,
     resolve: {
-      'nodes': resolveNodes,
+      'nodeList': resolveNodeList,
     },
     data: {
       [breadcrumbsConfig]: {
@@ -54,7 +54,7 @@ export default function stateConfig($stateProvider) {
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveNodes($resource) {
+export function resolveNodeList($resource) {
   /** @type {!angular.Resource<!backendApi.NodeList>} */
   let resource = $resource(`api/v1/node`);
   return resource.get().$promise;

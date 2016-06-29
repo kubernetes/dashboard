@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {PaginationService} from 'common/pagination/pagination_service';
+
 import workloadListModule from 'workloads/workloads_module';
 import {resolveWorkloads} from 'workloads/workloads_stateconfig';
 
@@ -21,24 +23,24 @@ describe('StateConfig for replication controller list', () => {
   it('should resolve workloads with no namespace', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
 
-    let resource = jasmine.createSpy('$resource');
-    resource.and.returnValue({get: function() { return {$promise: promise}; }});
+    let resource = jasmine.createSpyObj('$resource', ['get']);
+    resource.get.and.callFake(function() { return {$promise: promise}; });
 
     let actual = resolveWorkloads(resource, {});
 
-    expect(resource).toHaveBeenCalledWith('api/v1/workload/');
+    expect(resource.get).toHaveBeenCalledWith(PaginationService.getDefaultResourceQuery(''));
     expect(actual).toBe(promise);
   }));
 
   it('should resolve workloads', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
 
-    let resource = jasmine.createSpy('$resource');
-    resource.and.returnValue({get: function() { return {$promise: promise}; }});
+    let resource = jasmine.createSpyObj('$resource', ['get']);
+    resource.get.and.callFake(function() { return {$promise: promise}; });
 
     let actual = resolveWorkloads(resource, {namespace: 'foo'});
 
-    expect(resource).toHaveBeenCalledWith('api/v1/workload/foo');
+    expect(resource.get).toHaveBeenCalledWith(PaginationService.getDefaultResourceQuery('foo'));
     expect(actual).toBe(promise);
   }));
 });

@@ -28,6 +28,8 @@ import (
 
 // ReplicationSetList contains a list of Replica Sets in the cluster.
 type ReplicaSetList struct {
+	ListMeta common.ListMeta `json:"listMeta"`
+
 	// Unordered list of Replica Sets.
 	ReplicaSets []ReplicaSet `json:"replicaSets"`
 }
@@ -96,6 +98,7 @@ func ToReplicaSetList(replicaSets []extensions.ReplicaSet,
 
 	replicaSetList := &ReplicaSetList{
 		ReplicaSets: make([]ReplicaSet, 0),
+		ListMeta: common.ListMeta{TotalItems: len(replicaSets)},
 	}
 
 	for _, replicaSet := range replicaSets {

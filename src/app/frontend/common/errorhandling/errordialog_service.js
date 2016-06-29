@@ -17,7 +17,7 @@
  *
  * @final
  */
-export default class ErrorDialog {
+export class ErrorDialog {
   /**
    * @param {!md.$dialog} $mdDialog
    * @ngInject

@@ -24,23 +24,22 @@ limitations under the License.
         <kd-content-card ng-if="::ctrl.replicationControllerDetail.serviceList.services.length">
           <kd-title>{{::ctrl.i18n.MSG_RC_DETAIL_SERVICES_TITLE}}</kd-title>
           <kd-content>
-            <kd-service-card-list
-                    services="::ctrl.replicationControllerDetail.serviceList.services">
+            <kd-service-card-list service-list="::ctrl.replicationControllerDetail.serviceList">
             </kd-service-card-list>
           </kd-content>
         </kd-content-card>
 
-        <kd-content-card>
+        <kd-content-card ng-if="::ctrl.replicationControllerDetail.podList.pods.length">
           <kd-title>{{::ctrl.i18n.MSG_RC_DETAIL_PODS_TITLE}}</kd-title>
           <kd-content>
-            <kd-pod-card-list pod-list="::ctrl.replicationControllerDetail.pods"
-                              logs-href-fn="::ctrl.getPodLogsHref(pod)" with-statuses="true">
+            <kd-pod-card-list pod-list="ctrl.replicationControllerDetail.podList"
+                              with-statuses="true">
             </kd-pod-card-list>
           </kd-content>
         </kd-content-card>
       </md-tab>
       <md-tab label="{{::ctrl.i18n.MSG_RC_DETAIL_EVENTS_LABEL}}">
-        <kd-event-card-list events="::ctrl.events">
+        <kd-event-card-list event-list="::ctrl.eventList">
         </kd-event-card-list>
       </md-tab>
     </md-tabs>
