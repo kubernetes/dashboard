@@ -51,6 +51,8 @@ type Service struct {
 type ServiceList struct {
 	// Unordered list of services.
 	Services []Service `json:"services"`
+	// Meta data describing this list, i.e. total items of object on the list used for pagination
+	ListMeta common.ListMeta `json:"listMeta"`
 }
 
 // GetServiceList returns a list of all services in the cluster.
@@ -61,14 +63,10 @@ func GetServiceList(client client.Interface, nsQuery *common.NamespaceQuery) (*S
 		ServiceList: common.GetServiceListChannel(client, nsQuery, 1),
 	}
 
-	services := <-channels.ServiceList.List
-	if err := <-channels.ServiceList.Error; err != nil {
-		return nil, err
-	}
+	serviceList, err := GetServiceListFromChannels(channels)
 
-	serviceList := &ServiceList{Services: make([]Service, 0)}
-	for _, service := range services.Items {
-		serviceList.Services = append(serviceList.Services, ToService(&service))
+	if err != nil {
+		return nil, err
 	}
 
 	return serviceList, nil
@@ -81,7 +79,11 @@ func GetServiceListFromChannels(channels *common.ResourceChannels) (*ServiceList
 		return nil, err
 	}
 
-	serviceList := &ServiceList{Services: make([]Service, 0)}
+	serviceList := &ServiceList{
+		Services: make([]Service, 0),
+		ListMeta: common.ListMeta{TotalItems: len(services.Items)},
+	}
+
 	for _, service := range services.Items {
 		serviceList.Services = append(serviceList.Services, ToService(&service))
 	}

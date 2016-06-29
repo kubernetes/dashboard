@@ -15,6 +15,7 @@
 import chromeModule from 'chrome/chrome_module';
 import stateConfig from './podlist_stateconfig';
 import {podCardListComponent} from './podcardlist_component';
+import {PodListFactory} from './podlist_factory';
 import paginationModule from 'common/pagination/pagination_module';
 import filtersModule from 'common/filters/filters_module';
 
@@ -35,4 +36,5 @@ export default angular
           filtersModule.name,
         ])
     .config(stateConfig)
-    .component('kdPodCardList', podCardListComponent);
+    .component('kdPodCardList', podCardListComponent)
+    .factory('kdPodListFactory', PodListFactory.activate);

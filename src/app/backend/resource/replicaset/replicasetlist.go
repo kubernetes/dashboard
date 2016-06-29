@@ -30,6 +30,8 @@ import (
 type ReplicaSetList struct {
 	// Unordered list of Replica Sets.
 	ReplicaSets []ReplicaSet `json:"replicaSets"`
+	// Meta data describing this list, i.e. total items of object on the list used for pagination
+	ListMeta common.ListMeta `json:"listMeta"`
 }
 
 // ReplicaSet is a presentation layer view of Kubernetes Replica Set resource. This means
@@ -96,6 +98,7 @@ func ToReplicaSetList(replicaSets []extensions.ReplicaSet,
 
 	replicaSetList := &ReplicaSetList{
 		ReplicaSets: make([]ReplicaSet, 0),
+		ListMeta: common.ListMeta{TotalItems: len(replicaSets)},
 	}
 
 	for _, replicaSet := range replicaSets {

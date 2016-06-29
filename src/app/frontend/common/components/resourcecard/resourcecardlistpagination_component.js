@@ -18,22 +18,30 @@
 export class ResourceCardListPaginationController {
   /**
    * @ngInject
+   * @param {!../../pagination/pagination_service.PaginationService} kdPaginationService
+   * @param {!./../../../chrome/chrome_state.StateParams} $stateParams
    */
-  constructor(kdPaginationService) {
+  constructor(kdPaginationService, $stateParams) {
     /** @export {!./resourcecardlistfooter_component.ResourceCardListFooterController} -
      * Initialized from require just before $onInit is called. */
     this.resourceCardListFooterCtrl;
-    /** @export {number} - Total number of items that need pagination */
-    this.totalItems;
     /** @export {string} - Unique pagination id. Used together with id on <dir-paginate>
-     *  directive */
+        directive. Initialized from binding. */
     this.paginationId;
+    /** @export {*} Initialized from binding. TODO add type */
+    this.listFactory;
+    /** @export {*} Initialized from binding. TODO add type */
+    this.list;
     /** @private {!../../pagination/pagination_service.PaginationService} */
     this.paginationService_ = kdPaginationService;
+    /** @private {!./../../../chrome/chrome_state.StateParams} */
+    this.stateParams_ = $stateParams;
     /** @export {number} */
     this.rowsLimit;
     /** @export {!Array<number>} */
     this.rowsLimitOptions = this.paginationService_.getRowsLimitOptions();
+    /** @export {boolean} - Indicates whether pagination should be server sided of frontend only. */
+    this.serverSided = true;
     /** @export */
     this.i18n = i18n;
   }
@@ -44,6 +52,10 @@ export class ResourceCardListPaginationController {
   $onInit() {
     if (this.paginationId === undefined || this.paginationId.length === 0) {
       throw new Error('Pagination id has to be set.');
+    }
+
+    if (this.listFactory === undefined) {
+      this.serverSided = false;
     }
 
     if (!this.paginationService_.isRegistered(this.paginationId)) {
@@ -67,15 +79,36 @@ export class ResourceCardListPaginationController {
    * @return {boolean}
    * @export
    */
-  shouldShowPagination() { return this.totalItems > this.paginationService_.getMinRowsLimit(); }
+  shouldShowPagination() {
+    return this.list.listMeta.totalItems > this.paginationService_.getMinRowsLimit();
+  }
+
+  /**
+   * Fetches pods based on given page number.
+   *
+   * @param {number} newPageNumber
+   * @export
+   */
+  pageChanged(newPageNumber) {
+    /** @type {*} TODO set type */
+    this.list = this.listFactory.get({
+      namespace: this.stateParams_.namespace || '',
+      itemsPerPage: this.paginationService_.getRowsLimit(this.paginationId),
+      page: newPageNumber,
+    });
+  }
 }
 
 /**
  * Resource card list pagination component. Provides pagination component that displays
  * pagination on the given list of items.
  *
- * PaginationdId should always be set in order to differentiate between other pagination
- * components on the same page.
+ * Bindings:
+ *  - paginationId (required): Should always be set in order to differentiate between other
+ *    pagination components on the same page.
+ *  - list (required): List of resources that should be paginated.
+ *  - listFactory (optional): Factory used to get paginated list of object from the server.
+ *    If listFactory is not set, then only frontend pagination is provided.
  *
  * @type {!angular.Component}
  */
@@ -88,7 +121,8 @@ export const resourceCardListPaginationComponent = {
   },
   bindings: {
     'paginationId': '@',
-    'totalItems': '<',
+    'listFactory': '<',
+    'list': '=',
   },
 };
 

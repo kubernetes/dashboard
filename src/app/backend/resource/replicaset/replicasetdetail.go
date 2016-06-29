@@ -89,7 +89,7 @@ func getReplicaSetDetail(replicaSet *extensions.ReplicaSet, heapsterClient clien
 		TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicaSet),
 		ContainerImages: common.GetContainerImages(&replicaSet.Spec.Template.Spec),
 		PodInfo:         podInfo,
-		PodList:         pod.CreatePodList(matchingPods, heapsterClient),
+		PodList:         pod.CreatePodList(matchingPods, common.NO_PAGINATION, heapsterClient),
 		EventList:       *events,
 	}
 }

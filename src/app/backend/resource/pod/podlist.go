@@ -28,6 +28,8 @@ import (
 type PodList struct {
 	// Unordered list of Pods.
 	Pods []Pod `json:"pods"`
+	// Meta data describing this list, i.e. total items of object on the list used for pagination
+	ListMeta common.ListMeta `json:"listMeta"`
 }
 
 // Pod is a presentation layer view of Kubernetes Pod resource. This means
@@ -52,31 +54,32 @@ type Pod struct {
 
 // GetPodList returns a list of all Pods in the cluster.
 func GetPodList(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	nsQuery *common.NamespaceQuery) (*PodList, error) {
+	nsQuery *common.NamespaceQuery, pQuery *common.PaginationQuery) (*PodList, error) {
 	log.Printf("Getting list of all pods in the cluster")
 
 	channels := &common.ResourceChannels{
-		PodList: common.GetPodListChannel(client, nsQuery, 1),
+		PodList: common.GetPodListChannelWithOptions(client, nsQuery, api.ListOptions{}, 1),
 	}
 
-	return GetPodListFromChannels(channels, heapsterClient)
+	return GetPodListFromChannels(channels, pQuery, heapsterClient)
 }
 
 // GetPodList returns a list of all Pods in the cluster
 // reading required resource list once from the channels.
-func GetPodListFromChannels(channels *common.ResourceChannels, heapsterClient client.HeapsterClient) (
-	*PodList, error) {
+func GetPodListFromChannels(channels *common.ResourceChannels, pQuery *common.PaginationQuery,
+	heapsterClient client.HeapsterClient) (*PodList, error) {
 
 	pods := <-channels.PodList.List
 	if err := <-channels.PodList.Error; err != nil {
 		return nil, err
 	}
 
-	podList := CreatePodList(pods.Items, heapsterClient)
+	podList := CreatePodList(pods.Items, pQuery, heapsterClient)
 	return &podList, nil
 }
 
-func CreatePodList(pods []api.Pod, heapsterClient client.HeapsterClient) PodList {
+func CreatePodList(pods []api.Pod, pQuery *common.PaginationQuery,
+	heapsterClient client.HeapsterClient) PodList {
 	metrics, err := getPodMetrics(pods, heapsterClient)
 	if err != nil {
 		log.Printf("Skipping Heapster metrics because of error: %s\n", err)
@@ -84,7 +87,10 @@ func CreatePodList(pods []api.Pod, heapsterClient client.HeapsterClient) PodList
 
 	podList := PodList{
 		Pods: make([]Pod, 0),
+		ListMeta: common.ListMeta{TotalItems: len(pods)},
 	}
+
+	pods = paginate(pods, pQuery)
 
 	for _, pod := range pods {
 		podDetail := ToPod(&pod, metrics)

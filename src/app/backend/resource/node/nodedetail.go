@@ -123,7 +123,7 @@ func GetNodeDetail(client k8sClient.Interface, heapsterClient client.HeapsterCli
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(pods.Items, heapsterClient)
+	podList := pod.CreatePodList(pods.Items, common.NO_PAGINATION, heapsterClient)
 
 	events, err := event.GetNodeEvents(client, node.Name)
 	if err != nil {

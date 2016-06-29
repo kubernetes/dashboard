@@ -90,7 +90,7 @@ func getPetSetDetail(petSet *apps.PetSet, heapsterClient client.HeapsterClient,
 		TypeMeta:        common.NewTypeMeta(common.ResourceKindPetSet),
 		ContainerImages: common.GetContainerImages(&petSet.Spec.Template.Spec),
 		PodInfo:         podInfo,
-		PodList:         pod.CreatePodList(matchingPods, heapsterClient),
+		PodList:         pod.CreatePodList(matchingPods, common.NO_PAGINATION, heapsterClient),
 		EventList:       *events,
 	}
 }

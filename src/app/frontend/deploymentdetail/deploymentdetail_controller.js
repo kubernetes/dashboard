@@ -10,6 +10,12 @@ export class DeploymentDetailController {
   constructor(deploymentDetail) {
     /** @export {!backendApi.DeploymentDetail} */
     this.deploymentDetail = deploymentDetail;
+    /** @export {!backendApi.ReplicaSetList} */
+
+    this.newReplicaSetList = {
+      replicaSets: [this.deploymentDetail.newReplicaSet],
+      listMeta: {totalItems: 1},
+    };
 
     /** @export */
     this.i18n = i18n;

@@ -32,14 +32,14 @@ describe('Replica Set list controller', () => {
     /** @type {!ReplicaSetListController} */
     let ctrl = $controller(ReplicaSetListController, {replicaSets: {replicaSets: ctrls}});
 
-    expect(ctrl.replicaSets).toBe(ctrls);
+    expect(ctrl.replicaSetList).toBe(ctrls);
   }));
 
   it('should show zero state', () => { expect(ctrl.shouldShowZeroState()).toBeTruthy(); });
 
   it('should hide zero state', () => {
     // given
-    ctrl.replicaSets = {replicaSets: ['mock']};
+    ctrl.replicaSetList = {replicaSets: ['mock']};
 
     // then
     expect(ctrl.shouldShowZeroState()).toBeFalsy();

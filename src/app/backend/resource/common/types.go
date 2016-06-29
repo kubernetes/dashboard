@@ -63,6 +63,13 @@ type TypeMeta struct {
 	Kind ResourceKind `json:"kind,omitempty"`
 }
 
+// ListMeta describes list of objects, i.e. holds information about pagination options set for the
+// list.
+type ListMeta struct {
+	// Total number of items on the list. Used for pagination.
+	TotalItems int `json:"totalItems"`
+}
+
 // Returns internal endpoint name for the given service properties, e.g.,
 // NewObjectMeta creates a new instance of ObjectMeta struct based on K8s object meta.
 func NewObjectMeta(k8SObjectMeta api.ObjectMeta) ObjectMeta {

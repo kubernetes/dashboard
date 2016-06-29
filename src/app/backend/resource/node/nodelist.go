@@ -28,6 +28,8 @@ import (
 type NodeList struct {
 	// Unordered list of Nodes.
 	Nodes []Node `json:"nodes"`
+	// Meta data describing this list, i.e. total items of object on the list used for pagination
+	ListMeta common.ListMeta `json:"listMeta"`
 }
 
 // Node is a presentation layer view of Kubernetes nodes. This means it is node plus additional
@@ -56,6 +58,7 @@ func GetNodeList(client client.Interface) (*NodeList, error) {
 func toNodeList(nodes []api.Node) *NodeList {
 	nodeList := &NodeList{
 		Nodes: make([]Node, 0),
+		ListMeta: common.ListMeta{TotalItems: len(nodes)},
 	}
 
 	for _, node := range nodes {

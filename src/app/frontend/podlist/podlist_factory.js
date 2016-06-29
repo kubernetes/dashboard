@@ -13,23 +13,22 @@
 // limitations under the License.
 
 /**
- * Controller for the job list view.
- *
  * @final
  */
-export class JobListController {
+export class PodListFactory {
   /**
-   * @param {!backendApi.JobList} jobList
+   * @param {!angular.$resource} $resource
+   * @return {!angular.$resource<!backendApi.PodList>}
    * @ngInject
    */
-  constructor(jobList) {
-    /** @export {!backendApi.JobList} */
-    this.jobList = jobList;
-  }
+  constructor($resource) { return $resource(`api/v1/pod/:namespace`); }
 
   /**
-   * @return {boolean}
-   * @export
+   * @param {!angular.$resource} $resource
+   * @return {PodListFactory}
    */
-  shouldShowZeroState() { return this.jobList.jobs.length === 0; }
+  static activate($resource) {
+    PodListFactory.instance = new PodListFactory($resource);
+    return PodListFactory.instance;
+  }
 }

@@ -81,8 +81,8 @@ export const serviceCardListComponent = {
   templateUrl: 'servicelist/servicecardlist.html',
   controller: ServiceCardListController,
   bindings: {
-    /** {!Array<!backendApi.Service>} */
-    'services': '<',
+    /** {!backendApi.ServiceList} */
+    'serviceList': '<',
     /** {boolean} */
     'selectable': '<',
   },

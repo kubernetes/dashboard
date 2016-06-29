@@ -22,7 +22,15 @@
  * @externs
  */
 
+// TODO add list meta to list externs
 const backendApi = {};
+
+/**
+ * @typedef {{
+ *   totalItems: number,
+ * }}
+ */
+backendApi.ListMeta;
 
 /**
  * @typedef {{
@@ -79,7 +87,8 @@ backendApi.AppDeploymentFromFileSpec;
 /**
  * @typedef {{
  *   namespace: string,
- *   events: !Array<!backendApi.Event>
+ *   events: !Array<!backendApi.Event>,
+ *   listMeta: !backendApi.ListMeta
  * }}
  */
 backendApi.EventList;
@@ -103,7 +112,8 @@ backendApi.Event;
 
 /**
  * @typedef {{
- *   replicationControllers: !Array<!backendApi.ReplicationController>
+ *   replicationControllers: !Array<!backendApi.ReplicationController>,
+ *   listMeta: !backendApi.ListMeta
  * }}
  */
 backendApi.ReplicationControllerList;
@@ -194,7 +204,8 @@ backendApi.ReplicaSetDetail;
 
 /**
  * @typedef {{
- *   replicaSets: !Array<!backendApi.ReplicaSet>
+ *   replicaSets: !Array<!backendApi.ReplicaSet>,
+ *   listMeta: !backendApi.ListMeta
  * }}
  */
 backendApi.ReplicaSetList;
@@ -225,7 +236,8 @@ backendApi.JobDetail;
 
 /**
  * @typedef {{
- *   jobs: !Array<!backendApi.Job>
+ *   jobs: !Array<!backendApi.Job>,
+ *   listMeta: !backendApi.ListMeta
  * }}
  */
 backendApi.JobList;
@@ -254,7 +266,8 @@ backendApi.PetSetDetail;
 
 /**
  * @typedef {{
- *   petSets: !Array<!backendApi.PetSet>
+ *   petSets: !Array<!backendApi.PetSet>,
+ *   listMeta: !backendApi.ListMeta
  * }}
  */
 backendApi.PetSetList;
@@ -271,7 +284,8 @@ backendApi.Deployment;
 
 /**
  * @typedef {{
- *   deployments: !Array<!backendApi.Deployment>
+ *   deployments: !Array<!backendApi.Deployment>,
+ *   listMeta: !backendApi.ListMeta
  * }}
  */
 backendApi.DeploymentList;
@@ -313,7 +327,8 @@ backendApi.DeploymentDetail;
 
 /**
  * @typedef {{
- *   pods: !Array<!backendApi.Pod>
+ *   pods: !Array<!backendApi.Pod>,
+ *   listMeta: !backendApi.ListMeta
  * }}
  */
 backendApi.PodList;
@@ -342,7 +357,7 @@ backendApi.TypeMeta;
  *   labelSelector: !Object<string, string>,
  *   containerImages: !Array<string>,
  *   podInfo: !backendApi.PodInfo,
- *   pods: !backendApi.PodList,
+ *   podList: !backendApi.PodList,
  *   serviceList: !backendApi.ServiceList,
  *   hasMetrics: boolean
  * }}
@@ -418,10 +433,26 @@ backendApi.Service;
 
 /**
  * @typedef {{
- *  services: !Array<backendApi.Service>
+ *   services: !Array<backendApi.Service>,
+ *   listMeta: !backendApi.ListMeta
  * }}
  */
 backendApi.ServiceList;
+
+/**
+ * @typedef {{
+ *  objectMeta: !backendApi.ObjectMeta,
+ *  typeMeta: !backendApi.TypeMeta,
+ *  labelSelector: !Object<string, string>,
+ *  containerImages: !Array<string>,
+ *  podInfo: !backendApi.PodInfo,
+ *  podList: !backendApi.PodList,
+ *  serviceList: !backendApi.ServiceList,
+ *  hasMetrics: boolean,
+ *  eventList: !backendApi.EventList
+ * }}
+ */
+backendApi.DaemonSetDetail;
 
 /**
  * @typedef {{
@@ -436,7 +467,8 @@ backendApi.DaemonSet;
 
 /**
  * @typedef {{
- *  daemonSets: !Array<backendApi.DaemonSet>
+ *  daemonSets: !Array<backendApi.DaemonSet>,
+ *  listMeta: !backendApi.ListMeta
  * }}
  */
 backendApi.DaemonSetList;
@@ -648,7 +680,8 @@ backendApi.NodeDetail;
 
 /**
  * @typedef {{
- *   nodes: !Array<!backendApi.Node>
+ *   nodes: !Array<!backendApi.Node>,
+ *   listMeta: !backendApi.ListMeta
  * }}
  */
 backendApi.NodeList;
