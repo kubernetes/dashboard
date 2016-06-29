@@ -43,7 +43,7 @@ type ReplicationControllerDetail struct {
 	PodInfo common.PodInfo `json:"podInfo"`
 
 	// Detailed information about Pods belonging to this Replication Controller.
-	Pods pod.PodList `json:"pods"`
+	PodList pod.PodList `json:"podList"`
 
 	// Detailed information about service related to Replication Controller.
 	ServiceList resourceService.ServiceList `json:"serviceList"`
@@ -100,7 +100,8 @@ func GetReplicationControllerDetail(client k8sClient.Interface, heapsterClient c
 			container.Image)
 	}
 
-	replicationControllerDetail.Pods = pod.CreatePodList(pods.Items, heapsterClient)
+	replicationControllerDetail.PodList = pod.CreatePodList(pods.Items, common.NO_PAGINATION,
+		heapsterClient)
 
 	return replicationControllerDetail, nil
 }

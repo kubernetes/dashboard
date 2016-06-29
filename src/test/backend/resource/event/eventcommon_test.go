@@ -219,10 +219,48 @@ func TestAppendEvents(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := AppendEvents(c.source, c.target)
+		actual := appendEvents(c.source, c.target)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("AppendEvents(%#v, %#v) == \n%#v, expected \n%#v",
 				c.source, c.target, actual, c.expected)
+		}
+	}
+}
+
+func TestToEventList(t *testing.T) {
+	cases := []struct {
+		events    []api.Event
+		namespace string
+		expected  common.EventList
+	}{
+		{
+			[]api.Event{
+				{ObjectMeta: api.ObjectMeta{Name: "event-1"}},
+				{ObjectMeta: api.ObjectMeta{Name: "event-2"}},
+			},
+			"namespace-1",
+			common.EventList{
+				ListMeta: common.ListMeta{TotalItems: 2},
+				Namespace: "namespace-1",
+				Events: []common.Event{
+					{
+						ObjectMeta: common.ObjectMeta{Name: "event-1"},
+						TypeMeta:        common.TypeMeta{common.ResourceKindEvent},
+					},
+					{
+						ObjectMeta: common.ObjectMeta{Name: "event-2"},
+						TypeMeta:        common.TypeMeta{common.ResourceKindEvent},
+					},
+				},
+			},
+		},
+	}
+
+	for _, c := range cases {
+		actual := ToEventList(c.events, c.namespace)
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("ToEventList(%+v, %+v) == \n%+v, expected \n%+v",
+				c.events, c.namespace, actual, c.expected)
 		}
 	}
 }

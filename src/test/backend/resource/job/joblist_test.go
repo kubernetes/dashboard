@@ -39,7 +39,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 			batch.JobList{},
 			nil,
 			&api.PodList{},
-			&JobList{[]Job{}},
+			&JobList{common.ListMeta{}, []Job{}},
 			nil,
 		},
 		{
@@ -117,6 +117,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 				},
 			},
 			&JobList{
+				common.ListMeta{TotalItems: 1},
 				[]Job{{
 					ObjectMeta: common.ObjectMeta{
 						Name:              "rs-name",
@@ -178,10 +179,10 @@ func TestGetJobListFromChannels(t *testing.T) {
 
 		actual, err := GetJobListFromChannels(channels)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("GetJobListChannels() ==\n          %#v\nExpected: %#v", actual, c.expected)
+			t.Errorf("GetJobListFromChannels() ==\n          %#v\nExpected: %#v", actual, c.expected)
 		}
 		if !reflect.DeepEqual(err, c.expectedError) {
-			t.Errorf("GetJobListChannels() ==\n          %#v\nExpected: %#v", err, c.expectedError)
+			t.Errorf("GetJobListFromChannels() ==\n          %#v\nExpected: %#v", err, c.expectedError)
 		}
 	}
 }

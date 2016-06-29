@@ -27,25 +27,25 @@ describe('Replication controller list controller', () => {
     angular.mock.inject(($controller) => {
       ctrl = $controller(
           ReplicationControllerListController,
-          {replicationControllers: {replicationControllers: []}});
+          {replicationControllerList: {replicationControllers: []}});
     });
   });
 
-  it('should initialize replication controllers', angular.mock.inject(($controller) => {
+  it('should initialize replication controller list', angular.mock.inject(($controller) => {
     let ctrls = {};
     /** @type {!ReplicationControllerListController} */
     let ctrl = $controller(
         ReplicationControllerListController,
-        {replicationControllers: {replicationControllers: ctrls}});
+        {replicationControllerList: {replicationControllers: ctrls}});
 
-    expect(ctrl.replicationControllers).toBe(ctrls);
+    expect(ctrl.replicationControllerList.replicationControllers).toBe(ctrls);
   }));
 
   it('should show zero state', () => { expect(ctrl.shouldShowZeroState()).toBeTruthy(); });
 
   it('should hide zero state', () => {
     // given
-    ctrl.replicationControllers = {replicationControllers: ['mock']};
+    ctrl.replicationControllerList = {replicationControllers: ['mock']};
 
     // then
     expect(ctrl.shouldShowZeroState()).toBeFalsy();
