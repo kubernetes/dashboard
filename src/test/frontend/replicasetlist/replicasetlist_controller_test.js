@@ -23,23 +23,23 @@ describe('Replica Set list controller', () => {
     angular.mock.module(replicaSetListModule.name);
 
     angular.mock.inject(($controller) => {
-      ctrl = $controller(ReplicaSetListController, {replicaSets: {replicaSets: []}});
+      ctrl = $controller(ReplicaSetListController, {replicaSetList: {replicaSets: []}});
     });
   });
 
   it('should initialize replica set controller', angular.mock.inject(($controller) => {
     let ctrls = {};
     /** @type {!ReplicaSetListController} */
-    let ctrl = $controller(ReplicaSetListController, {replicaSets: {replicaSets: ctrls}});
+    let ctrl = $controller(ReplicaSetListController, {replicaSetList: {replicaSets: ctrls}});
 
-    expect(ctrl.replicaSets).toBe(ctrls);
+    expect(ctrl.replicaSetList.replicaSets).toBe(ctrls);
   }));
 
   it('should show zero state', () => { expect(ctrl.shouldShowZeroState()).toBeTruthy(); });
 
   it('should hide zero state', () => {
     // given
-    ctrl.replicaSets = {replicaSets: ['mock']};
+    ctrl.replicaSetList = {replicaSets: ['mock']};
 
     // then
     expect(ctrl.shouldShowZeroState()).toBeFalsy();

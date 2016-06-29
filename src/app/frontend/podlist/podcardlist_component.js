@@ -32,16 +32,29 @@ export class PodCardListController {
      */
     this.podList;
 
+    /** @export {!angular.$resource} Initialized from binding. */
+    this.podListResource;
+
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
     /** @private {!angular.$interpolate} */
     this.interpolate_ = $interpolate;
 
-    /**
-     * @export
-     */
+    /** @export */
     this.i18n = i18n;
+  }
+
+  /**
+   * @return {number|undefined}
+   * @export
+   */
+  getTotalItems() {
+    if (this.podList && this.podList.listMeta && this.podListResource) {
+      return this.podList.listMeta.totalItems;
+    }
+
+    return undefined;
   }
 
   /**
@@ -137,6 +150,9 @@ export class PodCardListController {
 /**
  * Definition object for the component that displays pods list card.
  *
+ * Pod list factory should expose endpoint that will return list of pods (all or related to some
+ * resource).
+ *
  * @type {!angular.Component}
  */
 export const podCardListComponent = {
@@ -145,6 +161,8 @@ export const podCardListComponent = {
   bindings: {
     /** {!backendApi.PodList} */
     'podList': '<',
+    /** {!angular.$resource} */
+    'podListResource': '<',
     /** {boolean} */
     'selectable': '<',
     /** {boolean} */
@@ -158,28 +176,28 @@ const i18n = {
   /** @export {string} @desc tooltip for pending pod card icon */
   MSG_POD_IS_PENDING_TOOLTIP: goog.getMsg('This pod is in a pending state.'),
   /** @export {string} @desc Label 'Name' which appears as a column label in the table of
-     pods (pod list view). */
+   pods (pod list view). */
   MSG_POD_LIST_NAME_LABEL: goog.getMsg('Name'),
   /** @export {string} @desc Label 'Status' which appears as a column label in the table of
-     pods (pod list view). */
+   pods (pod list view). */
   MSG_POD_LIST_STATUS_LABEL: goog.getMsg('Status'),
   /** @export {string} @desc Label 'Restarts' which appears as a column label in the
-     table of pods (pod list view). */
+   table of pods (pod list view). */
   MSG_POD_LIST_RESTARTS_LABEL: goog.getMsg('Restarts'),
   /** @export {string} @desc Label 'Age' which appears as a column label in the
-     table of pods (pod list view). */
+   table of pods (pod list view). */
   MSG_POD_LIST_AGE_LABEL: goog.getMsg('Age'),
   /** @export {string} @desc Label 'Cluster IP' which appears as a column label in the table of
-     pods (pod list view). */
+   pods (pod list view). */
   MSG_POD_LIST_CLUSTER_IP_LABEL: goog.getMsg('Cluster IP'),
   /** @export {string} @desc Label which appears as a column label in the table of pods */
   MSG_POD_LIST_CPU_USAGE_LABEL: goog.getMsg('CPU (cores)'),
   /** @export {string} @desc Label which appears as a column label in the table of pods */
   MSG_POD_LIST_MEMORY_USAGE_LABEL: goog.getMsg('Memory (bytes)'),
   /** @export {string} @desc Label 'Logs' for the pod's logs which appears as a column label in the
-     table of pods (pod list view). */
+   table of pods (pod list view). */
   MSG_POD_LIST_LOGS_LABEL: goog.getMsg('Logs'),
   /** @export {string} @desc Title 'Pod' which is used as a title for the delete/update
-     dialogs (that can be opened from the pod list view.) */
+   dialogs (that can be opened from the pod list view.) */
   MSG_POD_LIST_POD_TITLE: goog.getMsg('Pod'),
 };

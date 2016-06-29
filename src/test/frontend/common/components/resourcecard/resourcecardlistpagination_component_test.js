@@ -58,7 +58,7 @@ describe('Resource card list pagination', () => {
 
   it('should show pagination', () => {
     // given
-    ctrl.totalItems = 50;
+    ctrl.list = {listMeta: {totalItems: 50}};
 
     // when
     let result = ctrl.shouldShowPagination();
@@ -69,7 +69,7 @@ describe('Resource card list pagination', () => {
 
   it('should hide pagination', () => {
     // given
-    ctrl.totalItems = 10;
+    ctrl.list = {listMeta: {totalItems: 10}};
 
     // when
     let result = ctrl.shouldShowPagination();

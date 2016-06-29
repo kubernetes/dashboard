@@ -92,4 +92,14 @@ export class PaginationService {
    * @return {!Array<number>}
    */
   getRowsLimitOptions() { return this.rowsLimitOptions_; }
+
+  /**
+   * @param {number} itemsPerPage
+   * @param {number} pageNr
+   * @param {string|undefined} namespace
+   * @return {!backendApi.PaginationQuery}
+   */
+  static getResourceQuery(itemsPerPage, pageNr, namespace) {
+    return {'itemsPerPage': itemsPerPage, 'page': pageNr, 'namespace': namespace || ''};
+  }
 }

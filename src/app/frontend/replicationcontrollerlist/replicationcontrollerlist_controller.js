@@ -19,17 +19,19 @@
  */
 export class ReplicationControllerListController {
   /**
-   * @param {!backendApi.ReplicationControllerList} replicationControllers
+   * @param {!backendApi.ReplicationControllerList} replicationControllerList
    * @ngInject
    */
-  constructor(replicationControllers) {
-    /** @export {!Array<!backendApi.ReplicationController>} */
-    this.replicationControllers = replicationControllers.replicationControllers;
+  constructor(replicationControllerList) {
+    /** @export {!backendApi.ReplicationControllerList} */
+    this.replicationControllerList = replicationControllerList;
   }
 
   /**
    * @return {boolean}
    * @export
    */
-  shouldShowZeroState() { return this.replicationControllers.length === 0; }
+  shouldShowZeroState() {
+    return this.replicationControllerList.replicationControllers.length === 0;
+  }
 }

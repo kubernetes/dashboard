@@ -105,7 +105,7 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels,
 	}()
 
 	go func() {
-		podList, err := pod.GetPodListFromChannels(channels, heapsterClient)
+		podList, err := pod.GetPodListFromChannels(channels, common.NO_PAGINATION, heapsterClient)
 		errChan <- err
 		podChan <- podList
 	}()

@@ -23,22 +23,22 @@ describe('Job list controller', () => {
     angular.mock.module(jobListModule.name);
 
     angular.mock.inject(
-        ($controller) => { ctrl = $controller(JobListController, {jobs: {jobs: []}}); });
+        ($controller) => { ctrl = $controller(JobListController, {jobList: {jobs: []}}); });
   });
 
   it('should initialize job controller', angular.mock.inject(($controller) => {
     let ctrls = {};
     /** @type {!JobListController} */
-    let ctrl = $controller(JobListController, {jobs: {jobs: ctrls}});
+    let ctrl = $controller(JobListController, {jobList: {jobs: ctrls}});
 
-    expect(ctrl.jobs).toBe(ctrls);
+    expect(ctrl.jobList.jobs).toBe(ctrls);
   }));
 
   it('should show zero state', () => { expect(ctrl.shouldShowZeroState()).toBeTruthy(); });
 
   it('should hide zero state', () => {
     // given
-    ctrl.jobs = {jobs: ['mock']};
+    ctrl.jobList = {jobs: ['mock']};
 
     // then
     expect(ctrl.shouldShowZeroState()).toBeFalsy();

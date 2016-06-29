@@ -49,7 +49,7 @@ func GetPodsEventWarnings(events []api.Event, pods []api.Pod) []common.Event {
 	}
 
 	// Filter events by failed pods UID
-	events = FilterEventsByPodsUID(events, failedPods)
+	events = filterEventsByPodsUID(events, failedPods)
 	events = removeDuplicates(events)
 
 	for _, event := range events {
@@ -63,9 +63,9 @@ func GetPodsEventWarnings(events []api.Event, pods []api.Pod) []common.Event {
 	return result
 }
 
-// FilterEventsByPodsUID returns filtered list of event objects.
-// Events list is filtered to get only events targeting pods on the list.
-func FilterEventsByPodsUID(events []api.Event, pods []api.Pod) []api.Event {
+// Returns filtered list of event objects. Events list is filtered to get only events targeting
+// pods on the list.
+func filterEventsByPodsUID(events []api.Event, pods []api.Pod) []api.Event {
 	result := make([]api.Event, 0)
 	podEventMap := make(map[types.UID]bool, 0)
 
@@ -113,25 +113,9 @@ func filterEventsByType(events []api.Event, eventType string) []api.Event {
 	return result
 }
 
-// IsTypeFilled returns true if all given events type is filled, false otherwise.
-// This is needed as some older versions of kubernetes do not have Type property filled.
-func IsTypeFilled(events []api.Event) bool {
-	if len(events) == 0 {
-		return false
-	}
-
-	for _, event := range events {
-		if len(event.Type) == 0 {
-			return false
-		}
-	}
-
-	return true
-}
-
-// IsFailedReason returns true if reason string contains any partial string indicating that this may be a
+// Returns true if reason string contains any partial string indicating that this may be a
 // warning, false otherwise
-func IsFailedReason(reason string, partials ...string) bool {
+func isFailedReason(reason string, partials ...string) bool {
 	for _, partial := range partials {
 		if strings.Contains(strings.ToLower(reason), partial) {
 			return true
@@ -139,19 +123,6 @@ func IsFailedReason(reason string, partials ...string) bool {
 	}
 
 	return false
-}
-
-// Based on event Reason fills event Type in order to allow correct filtering by Type.
-func FillEventsType(events []api.Event) []api.Event {
-	for i := range events {
-		if IsFailedReason(events[i].Reason, FailedReasonPartials...) {
-			events[i].Type = api.EventTypeWarning
-		} else {
-			events[i].Type = api.EventTypeNormal
-		}
-	}
-
-	return events
 }
 
 // Removes duplicate strings from the slice

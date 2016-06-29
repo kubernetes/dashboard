@@ -64,7 +64,7 @@ describe('Resource card list footer', () => {
 
   it('should show pagination', () => {
     // given
-    let listPaginationCtrl = {totalItems: DEFAULT_ROWS_LIMIT + 1};
+    let listPaginationCtrl = {list: {listMeta: {totalItems: DEFAULT_ROWS_LIMIT + 1}}};
 
     // when
     ctrl.setListPagination(listPaginationCtrl);
@@ -76,7 +76,7 @@ describe('Resource card list footer', () => {
 
   it('should hide pagination', () => {
     // given
-    let listPaginationCtrl = {totalItems: DEFAULT_ROWS_LIMIT};
+    let listPaginationCtrl = {list: {listMeta: {totalItems: DEFAULT_ROWS_LIMIT}}};
 
     // when
     ctrl.setListPagination(listPaginationCtrl);
@@ -89,10 +89,10 @@ describe('Resource card list footer', () => {
   it('should show/hide footer when needed', () => {
     // given
     let cases = [
-      [true, {totalItems: 100}, true],
-      [true, {totalItems: 10}, true],
-      [false, {totalItems: 100}, true],
-      [false, {totalItems: 10}, false],
+      [true, {list: {listMeta: {totalItems: 100}}}, true],
+      [true, {list: {listMeta: {totalItems: 10}}}, true],
+      [false, {list: {listMeta: {totalItems: 100}}}, true],
+      [false, {list: {listMeta: {totalItems: 10}}}, false],
     ];
 
     cases.forEach((data) => {

@@ -52,15 +52,13 @@ export default function stateConfig($stateProvider) {
 }
 
 /**
- * @param {!angular.$resource} $resource
  * @param {!./../chrome/chrome_state.StateParams} $stateParams
+ * @param {!angular.$resource} kdPodListResource
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolvePodList($resource, $stateParams) {
-  /** @type {!angular.Resource<!backendApi.PodList>} */
-  let resource = $resource(`api/v1/pod/${$stateParams.namespace || ''}`);
-  return resource.get().$promise;
+export function resolvePodList($stateParams, kdPodListResource) {
+  return kdPodListResource.get({namespace: $stateParams.namespace || ''}).$promise;
 }
 
 const i18n = {

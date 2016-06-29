@@ -28,7 +28,7 @@ class RCCardListController {
 export const replicationControllerCardListComponent = {
   transclude: true,
   bindings: {
-    'replicationControllers': '<',
+    'replicationControllerList': '<',
   },
   templateUrl: 'replicationcontrollerlist/replicationcontrollercardlist.html',
   controller: RCCardListController,

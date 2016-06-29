@@ -34,7 +34,7 @@ export const petSetCardListComponent = {
   transclude: true,
   controller: PetSetCardListController,
   bindings: {
-    'petSets': '<',
+    'petSetList': '<',
   },
   templateUrl: 'petsetlist/petsetcardlist.html',
 };

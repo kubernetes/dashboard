@@ -22,23 +22,24 @@ describe('Pet Set list controller', () => {
   beforeEach(() => {
     angular.mock.module(petSetListModule.name);
 
-    angular.mock.inject(
-        ($controller) => { ctrl = $controller(PetSetListController, {petSets: {petSets: []}}); });
+    angular.mock.inject(($controller) => {
+      ctrl = $controller(PetSetListController, {petSetList: {petSets: []}});
+    });
   });
 
   it('should initialize pet set controller', angular.mock.inject(($controller) => {
     let ctrls = {};
     /** @type {!PetSetListController} */
-    let ctrl = $controller(PetSetListController, {petSets: {petSets: ctrls}});
+    let ctrl = $controller(PetSetListController, {petSetList: {petSets: ctrls}});
 
-    expect(ctrl.petSets).toBe(ctrls);
+    expect(ctrl.petSetList.petSets).toBe(ctrls);
   }));
 
   it('should show zero state', () => { expect(ctrl.shouldShowZeroState()).toBeTruthy(); });
 
   it('should hide zero state', () => {
     // given
-    ctrl.petSets = {petSets: ['mock']};
+    ctrl.petSetList = {petSets: ['mock']};
 
     // then
     expect(ctrl.shouldShowZeroState()).toBeFalsy();
