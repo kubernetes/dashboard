@@ -22,14 +22,14 @@ limitations under the License.
         <kd-content-card>
           <kd-title>{{::ctrl.i18n.MSG_DAEMON_SET_DETAIL_PODS_TITLE}}</kd-title>
           <kd-content>
-            <kd-pod-card-list pod-list="::ctrl.daemonSetDetail.pods"
+            <kd-pod-card-list pod-list="::ctrl.daemonSetDetail.podList"
                               logs-href-fn="::ctrl.getPodLogsHref(pod)">
             </kd-pod-card-list>
           </kd-content>
         </kd-content-card>
       </md-tab>
       <md-tab label="{{::ctrl.i18n.MSG_DAEMON_SET_DETAIL_EVENTS_LABEL}}">
-        <kd-event-card-list events="::ctrl.daemonSetDetail.eventList.events"></kd-event-card-list>
+        <kd-event-card-list event-list="::ctrl.daemonSetDetail.eventList"></kd-event-card-list>
       </md-tab>
     </md-tabs>
   </md-content>

@@ -20,8 +20,8 @@ export class NodeCardListController {
    * @ngInject
    */
   constructor() {
-    /** @export {!Array<!backendApi.Node>} Initialized from binding. */
-    this.nodes;
+    /** @export {!backendApi.NodeList} Initialized from binding. */
+    this.nodeList;
     /** @export */
     this.i18n = i18n;
   }
@@ -33,7 +33,7 @@ export class NodeCardListController {
 export const nodeCardListComponent = {
   transclude: true,
   bindings: {
-    'nodes': '<',
+    'nodeList': '<',
   },
   templateUrl: 'nodelist/nodecardlist.html',
   controller: NodeCardListController,

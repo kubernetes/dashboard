@@ -26,6 +26,8 @@ import (
 
 // JobList contains a list of Jobs in the cluster.
 type JobList struct {
+	ListMeta common.ListMeta `json:"listMeta"`
+
 	// Unordered list of Jobs.
 	Jobs []Job `json:"jobs"`
 }
@@ -92,6 +94,7 @@ func ToJobList(jobs []batch.Job, pods []api.Pod, events []api.Event) *JobList {
 
 	jobList := &JobList{
 		Jobs: make([]Job, 0),
+		ListMeta: common.ListMeta{TotalItems: len(jobs)},
 	}
 
 	for _, job := range jobs {

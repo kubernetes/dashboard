@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import replicaSetListModule from 'replicasetlist/replicasetlist_module';
-import {resolveReplicaSets} from 'replicasetlist/replicasetlist_stateconfig';
+import {resolveReplicaSetList} from 'replicasetlist/replicasetlist_stateconfig';
 
 describe('StateConfig for replica set list', () => {
   beforeEach(() => { angular.mock.module(replicaSetListModule.name); });
@@ -24,7 +24,7 @@ describe('StateConfig for replica set list', () => {
     let resource = jasmine.createSpy('$resource');
     resource.and.returnValue({get: function() { return {$promise: promise}; }});
 
-    let actual = resolveReplicaSets(resource, {namespace: 'foo'});
+    let actual = resolveReplicaSetList(resource, {namespace: 'foo'});
 
     expect(resource).toHaveBeenCalledWith('api/v1/replicaset/foo');
     expect(actual).toBe(promise);
@@ -36,7 +36,7 @@ describe('StateConfig for replica set list', () => {
     let resource = jasmine.createSpy('$resource');
     resource.and.returnValue({get: function() { return {$promise: promise}; }});
 
-    let actual = resolveReplicaSets(resource, {});
+    let actual = resolveReplicaSetList(resource, {});
 
     expect(resource).toHaveBeenCalledWith('api/v1/replicaset/');
     expect(actual).toBe(promise);

@@ -30,7 +30,7 @@ export default function stateConfig($stateProvider) {
     url: stateUrl,
     parent: chromeStateName,
     resolve: {
-      'deployments': resolveDeployments,
+      'deploymentList': resolveDeploymentList,
     },
     data: {
       [breadcrumbsConfig]: {
@@ -57,7 +57,7 @@ export default function stateConfig($stateProvider) {
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveDeployments($resource, $stateParams) {
+export function resolveDeploymentList($resource, $stateParams) {
   /** @type {!angular.Resource<!backendApi.DeploymentList>} */
   let resource = $resource(`api/v1/deployment/${$stateParams.namespace || ''}`);
   return resource.get().$promise;
