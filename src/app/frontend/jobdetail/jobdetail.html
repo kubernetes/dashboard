@@ -23,14 +23,13 @@ limitations under the License.
         <kd-content-card>
           <kd-title>Pods</kd-title>
           <kd-content>
-            <kd-pod-card-list pod-list="::ctrl.jobDetail.podList"
-                              logs-href-fn="::ctrl.getPodLogsHref(pod)" with-statuses="true">
+            <kd-pod-card-list pod-list="::ctrl.jobDetail.podList" with-statuses="true">
             </kd-pod-card-list>
           </kd-content>
         </kd-content-card>
       </md-tab>
       <md-tab label="Events">
-        <kd-event-card-list events="::ctrl.jobDetail.eventList.events"></kd-event-card-list>
+        <kd-event-card-list event-list="::ctrl.jobDetail.eventList"></kd-event-card-list>
       </md-tab>
     </md-tabs>
   </md-content>

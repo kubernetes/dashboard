@@ -30,7 +30,7 @@ export default function stateConfig($stateProvider) {
     url: stateUrl,
     parent: chromeStateName,
     resolve: {
-      'replicationControllers': resolveReplicationControllers,
+      'replicationControllerList': resolveReplicationControllerList,
     },
     data: {
       [breadcrumbsConfig]: {
@@ -57,7 +57,7 @@ export default function stateConfig($stateProvider) {
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveReplicationControllers($resource, $stateParams) {
+export function resolveReplicationControllerList($resource, $stateParams) {
   /** @type {!angular.Resource<!backendApi.ReplicationControllerList>} */
   let resource = $resource(`api/v1/replicationcontroller/${$stateParams.namespace || ''}`);
   return resource.get().$promise;

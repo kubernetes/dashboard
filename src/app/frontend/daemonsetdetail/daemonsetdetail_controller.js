@@ -17,11 +17,11 @@
  */
 export class DaemonSetDetailController {
   /**
-   * @param {!backendApi.DaemonSet} daemonSetDetail
+   * @param {!backendApi.DaemonSetDetail} daemonSetDetail
    * @ngInject
    */
   constructor(daemonSetDetail) {
-    /** @export {!backendApi.DaemonSet} */
+    /** @export {!backendApi.DaemonSetDetail} */
     this.daemonSetDetail = daemonSetDetail;
 
     /** @export */

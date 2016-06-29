@@ -25,6 +25,9 @@ type EventList struct {
 
 	// List of events from given namespace.
 	Events []Event `json:"events"`
+
+	// Meta data describing this list, i.e. total items of object on the list used for pagination
+	ListMeta ListMeta `json:"listMeta"`
 }
 
 // Event is a single event representation.

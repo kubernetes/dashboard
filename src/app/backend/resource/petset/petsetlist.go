@@ -30,6 +30,8 @@ import (
 type PetSetList struct {
 	// Unordered list of Pet Sets.
 	PetSets []PetSet `json:"petSets"`
+	// Meta data describing this list, i.e. total items of object on the list used for pagination
+	ListMeta common.ListMeta `json:"listMeta"`
 }
 
 // PetSet is a presentation layer view of Kubernetes Pet Set resource. This means
@@ -95,6 +97,7 @@ func ToPetSetList(petSets []apps.PetSet, pods []api.Pod, events []api.Event) *Pe
 
 	petSetList := &PetSetList{
 		PetSets: make([]PetSet, 0),
+		ListMeta: common.ListMeta{TotalItems: len(petSets)},
 	}
 
 	for _, petSet := range petSets {

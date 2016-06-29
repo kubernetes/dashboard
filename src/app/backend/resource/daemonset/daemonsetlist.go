@@ -28,6 +28,8 @@ import (
 type DaemonSetList struct {
 	// Unordered list of Daemon Sets
 	DaemonSets []DaemonSet `json:"daemonSets"`
+	// Meta data describing this list, i.e. total items of object on the list used for pagination
+	ListMeta common.ListMeta `json:"listMeta"`
 }
 
 // DaemonSet (aka. Daemon Set) plus zero or more Kubernetes services that
@@ -87,7 +89,10 @@ func GetDaemonSetListFromChannels(channels *common.ResourceChannels) (
 func getDaemonSetList(daemonSets []extensions.DaemonSet, pods []api.Pod,
 	events []api.Event) *DaemonSetList {
 
-	daemonSetList := &DaemonSetList{DaemonSets: make([]DaemonSet, 0)}
+	daemonSetList := &DaemonSetList{
+		DaemonSets: make([]DaemonSet, 0),
+		ListMeta: common.ListMeta{TotalItems: len(daemonSets)},
+	}
 
 	for _, daemonSet := range daemonSets {
 

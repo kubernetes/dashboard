@@ -28,6 +28,8 @@ import (
 type JobList struct {
 	// Unordered list of Jobs.
 	Jobs []Job `json:"jobs"`
+	// Meta data describing this list, i.e. total items of object on the list used for pagination
+	ListMeta common.ListMeta `json:"listMeta"`
 }
 
 // Job is a presentation layer view of Kubernetes Job resource. This means
@@ -92,6 +94,7 @@ func ToJobList(jobs []batch.Job, pods []api.Pod, events []api.Event) *JobList {
 
 	jobList := &JobList{
 		Jobs: make([]Job, 0),
+		ListMeta: common.ListMeta{TotalItems: len(jobs)},
 	}
 
 	for _, job := range jobs {

@@ -30,6 +30,8 @@ import (
 type DeploymentList struct {
 	// Unordered list of Deployments.
 	Deployments []Deployment `json:"deployments"`
+	// Meta data describing this list, i.e. total items of object on the list used for pagination
+	ListMeta common.ListMeta `json:"listMeta"`
 }
 
 // Deployment is a presentation layer view of Kubernetes Deployment resource. This means
@@ -96,6 +98,7 @@ func getDeploymentList(deployments []extensions.Deployment, pods []api.Pod,
 
 	deploymentList := &DeploymentList{
 		Deployments: make([]Deployment, 0),
+		ListMeta: common.ListMeta{TotalItems: len(deployments)},
 	}
 
 	for _, deployment := range deployments {

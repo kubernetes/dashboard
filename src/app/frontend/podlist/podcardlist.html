@@ -17,22 +17,31 @@ limitations under the License.
 <kd-resource-card-list selectable="::$ctrl.selectable" with-statuses="::$ctrl.withStatuses"
                        ng-if="::$ctrl.podList.pods">
   <kd-resource-card-header-columns>
-    <kd-resource-card-header-column size="medium" grow="4">{{::$ctrl.i18n.MSG_POD_LIST_NAME_LABEL}}</kd-resource-card-header-column>
-    <kd-resource-card-header-column grow="nogrow">{{::$ctrl.i18n.MSG_POD_LIST_STATUS_LABEL}}</kd-resource-card-header-column>
+    <kd-resource-card-header-column size="medium" grow="4">
+      {{::$ctrl.i18n.MSG_POD_LIST_NAME_LABEL}}
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column grow="nogrow">{{::$ctrl.i18n.MSG_POD_LIST_STATUS_LABEL}}
+    </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small" grow="nogrow">
       {{::$ctrl.i18n.MSG_POD_LIST_RESTARTS_LABEL}}
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column grow="nogrow">{{::$ctrl.i18n.MSG_POD_LIST_AGE_LABEL}}</kd-resource-card-header-column>
-    <kd-resource-card-header-column grow="nogrow">{{::$ctrl.i18n.MSG_POD_LIST_CLUSTER_IP_LABEL}}</kd-resource-card-header-column>
-    <kd-resource-card-header-column ng-if="::$ctrl.showMetrics()">{{::$ctrl.i18n.MSG_POD_LIST_CPU_USAGE_LABEL}}</kd-resource-card-header-column>
-    <kd-resource-card-header-column ng-if="::$ctrl.showMetrics()">{{::$ctrl.i18n.MSG_POD_LIST_MEMORY_USAGE_LABEL}}</kd-resource-card-header-column>
+    <kd-resource-card-header-column grow="nogrow">{{::$ctrl.i18n.MSG_POD_LIST_AGE_LABEL}}
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column grow="nogrow">{{::$ctrl.i18n.MSG_POD_LIST_CLUSTER_IP_LABEL}}
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column ng-if="::$ctrl.showMetrics()">
+      {{::$ctrl.i18n.MSG_POD_LIST_CPU_USAGE_LABEL}}
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column ng-if="::$ctrl.showMetrics()">
+      {{::$ctrl.i18n.MSG_POD_LIST_MEMORY_USAGE_LABEL}}
+    </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small" grow="nogrow">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
 
-  <kd-resource-card
-          dir-paginate="pod in $ctrl.podList.pods | itemsPerPage: default"
-          type-meta="pod.typeMeta" object-meta="pod.objectMeta" pagination-id="pods">
+  <kd-resource-card dir-paginate="pod in $ctrl.podList.pods | itemsPerPage: default"
+                    ng-attr-total-items="{{::$ctrl.getTotalItems()}}" type-meta="pod.typeMeta"
+                    pagination-id="pods" object-meta="pod.objectMeta">
     <kd-resource-card-status layout="row">
       <md-icon class="material-icons kd-error" ng-if="$ctrl.isStatusFailed(pod)">
         error
@@ -86,21 +95,24 @@ limitations under the License.
       </kd-resource-card-column>
       <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
         <md-button ng-if="::$ctrl.getPodLogsHref(pod)"
-            ng-href="{{::$ctrl.getPodLogsHref(pod)}}" target="_blank" class="md-icon-button">
+                   ng-href="{{::$ctrl.getPodLogsHref(pod)}}" target="_blank" class="md-icon-button">
           <md-icon md-font-library="material-icons">subject</md-icon>
           <md-tooltip>{{::$ctrl.i18n.MSG_POD_LIST_LOGS_LABEL}}</md-tooltip>
         </md-button>
         <kd-resource-card-menu>
-          <kd-resource-card-delete-menu-item resource-kind-name="{{::$ctrl.i18n.MSG_POD_LIST_POD_TITLE}}">
+          <kd-resource-card-delete-menu-item
+                  resource-kind-name="{{::$ctrl.i18n.MSG_POD_LIST_POD_TITLE}}">
           </kd-resource-card-delete-menu-item>
-          <kd-resource-card-edit-menu-item resource-kind-name="{{::$ctrl.i18n.MSG_POD_LIST_POD_TITLE}}">
+          <kd-resource-card-edit-menu-item
+                  resource-kind-name="{{::$ctrl.i18n.MSG_POD_LIST_POD_TITLE}}">
           </kd-resource-card-edit-menu-item>
         </kd-resource-card-menu>
       </kd-resource-card-column>
     </kd-resource-card-columns>
   </kd-resource-card>
   <kd-resource-card-list-footer>
-    <kd-resource-card-list-pagination pagination-id="pods" total-items="$ctrl.podList.pods.length">
+    <kd-resource-card-list-pagination pagination-id="pods" list="$ctrl.podList"
+                                      list-factory="$ctrl.podListFactory">
     </kd-resource-card-list-pagination>
   </kd-resource-card-list-footer>
 </kd-resource-card-list>

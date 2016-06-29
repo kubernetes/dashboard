@@ -16,6 +16,11 @@
 export const ROWS_LIMIT_OPTIONS = [10, 25, 50, 100];
 /** Defines max number of rows that will be displayed on the list before applying pagination. */
 export const DEFAULT_ROWS_LIMIT = 10;
+/** Default pagination settings structure */
+export const DEFAULT_PAGINATION_QUERY = {
+  itemsPerPage: DEFAULT_ROWS_LIMIT,
+  page: 1,
+};
 
 /**
  * @final

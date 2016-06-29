@@ -26,11 +26,11 @@ limitations under the License.
       {{::$ctrl.i18n.MSG_NODE_LIST_AGE_LABEL}}
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
-  <kd-node-card dir-paginate="rc in $ctrl.nodes | itemsPerPage: default" pagination-id="nodes"
-                node="rc">
+  <kd-node-card dir-paginate="rc in $ctrl.nodeList.nodes | itemsPerPage: default"
+                pagination-id="nodes" node="rc">
   </kd-node-card>
   <kd-resource-card-list-footer>
-    <kd-resource-card-list-pagination pagination-id="nodes" total-items="$ctrl.nodes.length">
+    <kd-resource-card-list-pagination pagination-id="nodes" list="$ctrl.nodeList">
     </kd-resource-card-list-pagination>
   </kd-resource-card-list-footer>
 </kd-resource-card-list>

@@ -28,6 +28,8 @@ import (
 type ReplicationControllerList struct {
 	// Unordered list of Replication Controllers.
 	ReplicationControllers []ReplicationController `json:"replicationControllers"`
+	// Meta data describing this list, i.e. total items of object on the list used for pagination
+	ListMeta common.ListMeta `json:"listMeta"`
 }
 
 // ReplicationController (aka. Replication Controller) plus zero or more Kubernetes services that
@@ -88,6 +90,7 @@ func getReplicationControllerList(replicationControllers []api.ReplicationContro
 
 	replicationControllerList := &ReplicationControllerList{
 		ReplicationControllers: make([]ReplicationController, 0),
+		ListMeta: common.ListMeta{TotalItems: len(replicationControllers)},
 	}
 
 	for _, replicationController := range replicationControllers {
