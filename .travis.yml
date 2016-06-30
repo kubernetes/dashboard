@@ -53,5 +53,4 @@ before_script:
 services:
   - docker
 
-script: ./node_modules/.bin/gulp check:local-cluster
-after_script: ./node_modules/.bin/gulp coverage-codecov-upload
+script: ./build/hyperkube.sh

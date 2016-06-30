@@ -35,7 +35,6 @@ docker run \
     --net=host \
     --pid=host \
     --privileged=true \
-    -d \
     gcr.io/google_containers/hyperkube-amd64:${K8S_VERSION} \
     /hyperkube kubelet \
         --allow-privileged=true \
@@ -45,7 +44,3 @@ docker run \
         --api-servers=http://localhost:${PORT} \
         --config=/etc/kubernetes/manifests \
         --v=2
-
-# Runs Heapster in standalone mode
-docker run --net=host -d gcr.io/google_containers/heapster:${HEAPSTER_VERSION} -port ${HEAPSTER_PORT} \
-    --source=kubernetes:http://127.0.0.1:${PORT}?inClusterConfig=false&auth=""
