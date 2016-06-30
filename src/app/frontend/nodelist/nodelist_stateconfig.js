@@ -34,7 +34,7 @@ export default function stateConfig($stateProvider) {
     },
     data: {
       [breadcrumbsConfig]: {
-        'label': 'Nodes',
+        'label': i18n.MSG_BREADCRUMBS_NODES_LABEL,
         'parent': workloadsState,
       },
     },
@@ -59,3 +59,8 @@ export function resolveNodes($resource) {
   let resource = $resource(`api/v1/node`);
   return resource.get().$promise;
 }
+
+const i18n = {
+  /** @type {string} @desc Label 'Nodes' that appears as a breadcrumbs on the action bar. */
+  MSG_BREADCRUMBS_NODES_LABEL: goog.getMsg('Nodes'),
+};
