@@ -47,6 +47,8 @@ before_script:
   # List available docker versions with "apt-cache madison docker-engine"
   - sudo apt-get -o Dpkg::Options::="--force-confnew" install -y docker-engine=1.11.2-0~trusty
   - docker --version
+  - cat /lib/systemd/system/docker.service
+
 
 # Docker is required to set up a simple, single node Kubernetes cluster.
 # Local Docker-based cluster is the simplest way to create kubernetes on the host machine.
