@@ -51,7 +51,7 @@ before_script:
   # Upgrade to docker 1.10+. Answer all questions with yes.
   # List available docker versions with "apt-cache madison docker-engine"
   - sudo apt-get -o Dpkg::Options::="--force-confnew" install -y docker-engine=1.11.2-0~trusty
-  - sudo service docker restart
+  - sudo findmnt -o Target,Propagation
   - docker --version
 
 
