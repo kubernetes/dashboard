@@ -34,7 +34,7 @@ node_js:
 install:
   - sudo apt-get -qqy update
   - sudo apt-get -qqy install docker-engine || true
-  - sudo sudo usermod -aG docker "$USER"
+
 
 addons:
   # Run tests that require a browser on SauceLabs CI provider. Learn more at: https://saucelabs.com
