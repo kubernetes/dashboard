@@ -60,6 +60,6 @@ before_script:
 # Docker is required to set up a simple, single node Kubernetes cluster.
 # Local Docker-based cluster is the simplest way to create kubernetes on the host machine.
 services:
-  - docker
+  #- docker
 
 script: ./build/hyperkube.sh
