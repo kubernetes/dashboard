@@ -191,11 +191,8 @@ const i18n = {
   /** @export {string} @desc This warning appears when a typed in port number exceeds the
      maximum allowed value (in the port mappings section on the deploy page).*/
   MSG_PORT_MAPPINGS_PORT_MAX_VALUE_WARNING: goog.getMsg('Port must be less than 65536'),
-  /** @export {string} @desc This warning appears when the user specifies an empty port number
-     and a target port number is already there (in the port mappings section on the deploy
-     page).*/
-  MSG_PORT_MAPPINGS_PORT_EMPTY_WARNING:
-      goog.getMsg(`Port can't be empty when target port is specified.`),
+  /** @export {string} @desc This warning appears when the user specifies an empty port. */
+  MSG_PORT_MAPPINGS_PORT_EMPTY_WARNING: goog.getMsg(`Port cannot be empty`),
   /** @export {string} @desc Label 'Target port', which serves as a placeholder for the target
      port input field in the port mappings section on the deploy page.*/
   MSG_PORT_MAPPINGS_TARGET_PORT_LABEL: goog.getMsg('Target port'),
@@ -209,11 +206,8 @@ const i18n = {
      maximum allowed value (in the port mappings section on the deploy page).*/
   MSG_PORT_MAPPINGS_TARGET_PORT_MAX_VALUE_WARNING:
       goog.getMsg('Target port must be less than 65536'),
-  /** @export {string} @desc This warning appears when the user specifies an empty target port
-     number and a port number is already there (in the port mappings section on the deploy
-     page).*/
-  MSG_PORT_MAPPINGS_TARGET_PORT_EMPTY_WARNING:
-      goog.getMsg(`Target port can't be empty when port is specified.`),
+  /** @export {string} @desc This warning appears when the user specifies an empty target port. */
+  MSG_PORT_MAPPINGS_TARGET_PORT_EMPTY_WARNING: goog.getMsg(`Target port cannot be empty`),
   /** @export {string} @desc Label 'Protocol' above the protocol selection box in the port
      mappings section, on the deploy page.*/
   MSG_PORT_MAPPINGS_PROTOCOL_LABEL: goog.getMsg('Protocol'),
