@@ -31,6 +31,11 @@ language: node_js
 node_js:
   - 5.1.1
 
+install:
+  - sudo apt-get -qqy update
+  - sudo apt-get -qqy install docker-engine || true
+  - sudo sudo usermod -aG docker "$USER"
+
 addons:
   # Run tests that require a browser on SauceLabs CI provider. Learn more at: https://saucelabs.com
   sauce_connect: true
@@ -45,9 +50,11 @@ before_script:
 
   # Install docker 1.10+. Answer all questions with yes.
   # List available docker versions with "apt-cache madison docker-engine"
-  - sudo apt-get -o Dpkg::Options::="--force-confnew" install -y docker-engine=1.11.2-0~trusty
+  #- sudo apt-get -o Dpkg::Options::="--force-confnew" install -y docker-engine=1.11.2-0~trusty
   - docker --version
-  - cat /lib/systemd/system/docker.service
+  #- cat /lib/systemd/system/docker.service
+  - uname -a
+
 
 
 # Docker is required to set up a simple, single node Kubernetes cluster.
