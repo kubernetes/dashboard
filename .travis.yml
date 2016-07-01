@@ -31,14 +31,14 @@ language: node_js
 node_js:
   - 5.1.1
 
-install:
-  - sudo apt-get -qqy update
-  - sudo apt-get -qqy install docker-engine || true
-
-
 addons:
   # Run tests that require a browser on SauceLabs CI provider. Learn more at: https://saucelabs.com
   sauce_connect: true
+
+# Docker is required to set up a simple, single node Kubernetes cluster.
+# Local Docker-based cluster is the simplest way to create kubernetes on the host machine.
+services:
+  - docker
 
 before_script:
   # Prepare environment for the Chrome browser. This is required for PRs from forks where
@@ -48,18 +48,13 @@ before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 
-  # Install docker 1.10+. Answer all questions with yes.
+  # Upgrade to docker 1.10+. Answer all questions with yes.
   # List available docker versions with "apt-cache madison docker-engine"
-  #- sudo apt-get -o Dpkg::Options::="--force-confnew" install -y docker-engine=1.11.2-0~trusty
+  - sudo apt-get -o Dpkg::Options::="--force-confnew" install -y docker-engine=1.11.2-0~trusty
   - docker --version
   #- cat /lib/systemd/system/docker.service
   - uname -a
 
 
-
-# Docker is required to set up a simple, single node Kubernetes cluster.
-# Local Docker-based cluster is the simplest way to create kubernetes on the host machine.
-services:
-  #- docker
 
 script: ./build/hyperkube.sh
