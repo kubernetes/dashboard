@@ -5,24 +5,24 @@ plans to work on (as of March 2016).
 
 P0 items are considered blockers for next (`1.x`) release. All else is tackled on best effort basis.
 
-|Area                         |Item                   |Relative priority                 |
-|-----------------------------|-----------------------|-------------------------|
-|View cluster resources       |Next iteration of UX that scales for all Kubernetes resources and various use cases|P0|
-|View cluster resources       |Handle Services - list and basic details view|P0|
-|View cluster resources       |Handle Replica Sets - list and basic details view|P0|
-|View cluster resources       |Handle Pods - list and basic details view|P0|
-|View cluster resources       |Handle Deployments - list and basic details view|P0|
-|View cluster resources       |Handle Daemon Sets - list and basic details view|P0|
-|View cluster resources       |Handle Jobs - list and basic details view|P0|
-|View cluster resources       |UI is aware of namespaces/tenants|P0|
-|View cluster resources       |Handle Nodes - list and basic details view|P1|
+|Area                         |Item                   |Relative priority        | Status |
+|-----------------------------|-----------------------|-------------------------|--------|
+|View cluster resources       |Next iteration of UX that scales for all Kubernetes resources and various use cases|P0||
+|View cluster resources       |~~Handle Services - list and basic details view~~|P0|done|
+|View cluster resources       |~~Handle Replica Sets - list and basic details view~~|P0|done|
+|View cluster resources       |~~Handle Pods - list and basic details view~~|P0|done|
+|View cluster resources       |~~Handle Deployments - list and basic details view~~|P0|done|
+|View cluster resources       |~~Handle Daemon Sets - list and basic details view~~|P0|done|
+|View cluster resources       |~~Handle Jobs - list and basic details view~~|P0|done|
+|View cluster resources       |~~UI is aware of namespaces/tenants~~|P0|done|
+|View cluster resources       |~~Handle Nodes - list and basic details view~~|P1|done|
 |View cluster resources       |Show events for resources|P1|
 |Monitoring/troubleshooting   |Sparklines/metrics/graphs for Nodes|P1|
 |Monitoring/troubleshooting   |Sparklines/metrics/graphs for Containers|P1|
 |Monitoring/troubleshooting   |Sparklines/metrics/graphs for Pods|P1|
-|Monitoring/troubleshooting   |Surface errors/warnings for all resources shown|P1|
-|Manage apps/resources        |YAML edit for resources displayed|P1|
-|Manage apps/resources        |Delete support for resources displayed|P1|
+|Monitoring/troubleshooting   |~~Surface errors/warnings for all resources shown~~|P1|done|
+|Manage apps/resources        |~~YAML edit for resources displayed~~|P1|done|
+|Manage apps/resources        |~~Delete support for resources displayed~~|P1|done|
 |Create apps                  |Deploy form: migrate to Deployment objects|P1|
 |Multi cluster (Ubernetes)    |Support multiple clusters in one UI|P1|
 |Security/IAM                 |Make the UI securely accessible from outside of a cluster|P1|
@@ -44,7 +44,7 @@ P0 items are considered blockers for next (`1.x`) release. All else is tackled o
 |Monitoring/troubleshooting   |Sparklines/metrics/graphs for Services|P2|
 |Monitoring/troubleshooting   |Logs viewer: show logs for O(days) time period|P2|
 |Monitoring/troubleshooting   |Logs viewer: handle large log files - O(GiB) in size|P2|
-|Monitoring/troubleshooting   |Events viewer: handle large logs streams - O(1k) events|P2|
+|Monitoring/troubleshooting   |Events viewer: handle large event streams - O(1k) events|P2|
 |Multi cluster (Ubernetes)    |Native support of Ubernetes control plane: Dashboard can talk to it|P2|
 |Security/IAM                 |IAM: support IAM as first class citzen (e.g., disable a button when cannot delete a resource)|P2|
 |View cluster resources       |<other resources> - list and basic details view|P3|
