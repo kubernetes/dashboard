@@ -25,9 +25,9 @@ PORT=8080
 # Port of the heapster to serve on.
 HEAPSTER_PORT=8082
 
-    mkdir -p /var/lib/kubelet
-    mount --bind /var/lib/kubelet /var/lib/kubelet
-    mount --make-shared /var/lib/kubelet
+  sudo  mkdir -p /var/lib/kubelet
+  sudo  mount --bind /var/lib/kubelet /var/lib/kubelet
+  sudo  mount --make-shared /var/lib/kubelet
 
 docker run \
     --volume=/:/rootfs:ro \
