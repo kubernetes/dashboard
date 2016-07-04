@@ -54,6 +54,5 @@ before_script:
   - sudo ./build/setup-docker.sh
   - docker --version
 
-
-
-script: ./build/hyperkube.sh
+script: ./node_modules/.bin/gulp check:local-cluster
+after_script: ./node_modules/.bin/gulp coverage-codecov-upload

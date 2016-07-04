@@ -17,17 +17,13 @@
 # Learn more at https://github.com/kubernetes/kubernetes/blob/master/docs/getting-started-guides/docker.md
 
 # Version of kubernetes to use.
-K8S_VERSION="v1.3.0-beta.1"
+K8S_VERSION="v1.3.0"
 # Version heapster to use.
 HEAPSTER_VERSION="v1.0.2"
 # Port of the apiserver to serve on.
 PORT=8080
 # Port of the heapster to serve on.
 HEAPSTER_PORT=8082
-
-  sudo  mkdir -p /var/lib/kubelet
-  sudo  mount --bind /var/lib/kubelet /var/lib/kubelet
-  sudo  mount --make-shared /var/lib/kubelet
 
 docker run \
     --volume=/:/rootfs:ro \
@@ -43,6 +39,7 @@ docker run \
     gcr.io/google_containers/hyperkube-amd64:${K8S_VERSION} \
     /hyperkube kubelet \
         --allow-privileged=true \
+        --containerized \
         --hostname-override="127.0.0.1" \
         --address="0.0.0.0" \
         --api-servers=http://localhost:${PORT} \
