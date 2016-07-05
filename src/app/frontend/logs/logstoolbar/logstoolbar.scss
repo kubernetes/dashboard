@@ -37,7 +37,7 @@ md-toolbar {
 }
 
 .kd-logs-toolbar-text {
-  font-size: $body-font-size-base;
+  font-size: $subhead-font-size-base;
 }
 
 .kd-logs-toolbar-select {
@@ -59,6 +59,13 @@ md-toolbar {
       -ms-transform: translateY(-1px);
     }
   }
+}
+
+.kd-slider {
+  display: inline-block;
+  margin-bottom: - $baseline-grid / 2;
+  max-width: 15 * $baseline-grid;
+  min-width: 15 * $baseline-grid;
 }
 
 .md-button {

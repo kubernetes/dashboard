@@ -22,19 +22,18 @@ export default class LogsToolbarController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!StateParams} $stateParams
-   * @param {!backendApi.Logs} podLogs
-   * @param {!../logs_service.LogColorInversionService} logsColorInversionService
+   * @param {!../logs_service.LogsService} logsService
    * @ngInject
    */
-  constructor($state, $stateParams, podLogs, podContainers, logsColorInversionService) {
+  constructor($state, $stateParams, podContainers, logsService) {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
     /**
      * Service to notify logs controller if any changes on toolbar.
-     * @private {!../logs_service.LogColorInversionService}
+     * @private {!../logs_service.LogsService}
      */
-    this.logsColorInversionService_ = logsColorInversionService;
+    this.logsService_ = logsService;
 
     /** @export {!Array<string>} */
     this.containers = podContainers.containers;
@@ -47,6 +46,9 @@ export default class LogsToolbarController {
 
     /** @export */
     this.i18n = i18n;
+
+    /** @export {number} */
+    this.fontSize = this.logsService_.getFontSize();
   }
 
   /**
@@ -55,7 +57,7 @@ export default class LogsToolbarController {
    * @export
    * @return {boolean}
    */
-  isTextColorInverted() { return this.logsColorInversionService_.getInverted(); }
+  isTextColorInverted() { return this.logsService_.getInverted(); }
 
   /**
    * Execute a code when a user changes the selected option of a container element.
@@ -68,6 +70,12 @@ export default class LogsToolbarController {
         logs,
         new StateParams(this.stateParams.objectNamespace, this.stateParams.objectName, container));
   }
+
+  /**
+   * Execute a code when a user changes the selected option for console font size.
+   * @export
+   */
+  onFontSizeChange() { this.logsService_.setFontSize(this.fontSize); }
 
   /**
    * Return proper style class for icon.
@@ -86,7 +94,7 @@ export default class LogsToolbarController {
    * Execute a code when a user changes the selected option for console color.
    * @export
    */
-  onTextColorChange() { this.logsColorInversionService_.invert(); }
+  onTextColorChange() { this.logsService_.invert(); }
 
   /**
    * Find Pod by name.
@@ -133,4 +141,6 @@ const i18n = {
   MSG_LOGS_POD_LABEL: goog.getMsg('Pod:'),
   /** @export {string} @desc Label 'Container' on the toolbar of the logs page. Ends with colon. */
   MSG_LOGS_CONTAINER_LABEL: goog.getMsg('Container:'),
+  /** @export {string} @desc Label 'Font size' on the toolbar of the logs page. Ends with colon. */
+  MSG_LOGS_FONT_SIZE_LABEL: goog.getMsg('Font size:'),
 };

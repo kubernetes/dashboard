@@ -13,16 +13,19 @@
 // limitations under the License.
 
 /**
- * Service class for logs colors management.
+ * Service class for logs management.
  * @final
  */
-export class LogColorInversionService {
+export class LogsService {
   /**
    * @ngInject
    */
   constructor() {
     /** @private {boolean} */
     this.inverted_ = false;
+
+    /** @private {number} */
+    this.fontSize_ = 14;
   }
 
   /**
@@ -33,4 +36,16 @@ export class LogColorInversionService {
 
   /** Inverts the flag. */
   invert() { this.inverted_ = !this.inverted_; }
+
+  /**
+   * Setter for font size.
+   * @param {number} fontSize
+   */
+  setFontSize(fontSize) { this.fontSize_ = fontSize; }
+
+  /**
+   * Getter for font size.
+   * @return {number}
+   */
+  getFontSize() { return this.fontSize_; }
 }

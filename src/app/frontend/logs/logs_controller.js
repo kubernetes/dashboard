@@ -20,15 +20,15 @@
 export class LogsController {
   /**
    * @param {!backendApi.Logs} podLogs
-   * @param {!./logs_service.LogColorInversionService} logsColorInversionService
+   * @param {!./logs_service.LogsService} logsService
    * @ngInject
    */
-  constructor(podLogs, logsColorInversionService) {
+  constructor(podLogs, logsService) {
     /** @export {!Array<string>} Log set. */
     this.logsSet = podLogs.logs;
 
-    /** @private {!./logs_service.LogColorInversionService} */
-    this.logsColorInversionService_ = logsColorInversionService;
+    /** @private {!./logs_service.LogsService} */
+    this.logsService_ = logsService;
   }
 
   /**
@@ -37,7 +37,14 @@ export class LogsController {
    * @export
    * @return {boolean}
    */
-  isTextColorInverted() { return this.logsColorInversionService_.getInverted(); }
+  isTextColorInverted() { return this.logsService_.getInverted(); }
+
+  /**
+   * Indicates log area font size.
+   * @export
+   * @return {Object}
+   */
+  getLogsStyle() { return {'font-size': `${this.logsService_.getFontSize()}px`}; }
 
   /**
    * Return proper style class for logs content.
