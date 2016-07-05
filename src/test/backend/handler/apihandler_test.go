@@ -23,30 +23,6 @@ import (
 	restful "github.com/emicklei/go-restful"
 )
 
-func TestFormatRequestLog(t *testing.T) {
-	cases := []struct {
-		request  *restful.Request
-		expected string
-	}{
-		{
-			&restful.Request{
-				Request: &http.Request{
-					RemoteAddr: "192.168.1.1:8080",
-					Proto:      "HTTP 1.1",
-					Method:     "GET",
-				},
-			},
-			fmt.Sprintf(RequestLogString, "HTTP 1.1", "GET", "", "192.168.1.1:8080"),
-		},
-	}
-	for _, c := range cases {
-		actual := FormatRequestLog(c.request)
-		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("FormatRequestLog(%#v) == %#v, expected %#v", c.request, actual, c.expected)
-		}
-	}
-}
-
 func TestFormatResponseLog(t *testing.T) {
 	cases := []struct {
 		response *restful.Response

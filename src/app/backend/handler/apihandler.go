@@ -42,11 +42,12 @@ import (
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
 	"k8s.io/kubernetes/pkg/runtime"
+	"time"
 )
 
 const (
 	// RequestLogString is a template for request log message.
-	RequestLogString = "Incoming %s %s %s request from %s"
+	RequestLogString = "[%s] Incoming %s %s %s request from %s"
 
 	// ResponseLogString is a template for response log message.
 	ResponseLogString = "Outcoming response to %s with %d status code"
@@ -76,8 +77,8 @@ func FormatRequestLog(req *restful.Request) string {
 		reqURI = req.Request.URL.RequestURI()
 	}
 
-	return fmt.Sprintf(RequestLogString, req.Request.Proto, req.Request.Method,
-		reqURI, req.Request.RemoteAddr)
+	return fmt.Sprintf(RequestLogString, time.Now().Format(time.RFC3339), req.Request.Proto,
+		req.Request.Method, reqURI, req.Request.RemoteAddr)
 }
 
 // FormatResponseLog formats response log string.
