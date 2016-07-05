@@ -47,7 +47,7 @@ limitations under the License.
         <div>{{$ctrl.allocatedResources.cpuRequestsFraction | number: 2}}</div>
       </kd-resource-card-column>
     <kd-resource-card-column>
-      <div>{{$ctrl.allocatedResources.cpuLimits}} /
+      <div>{{$ctrl.allocatedResources.cpuLimits | kdCores}} /
         {{$ctrl.allocatedResources.cpuCapacity | kdCores}}</div>
     </kd-resource-card-column>
     <kd-resource-card-column>
@@ -61,7 +61,7 @@ limitations under the License.
       <div>{{$ctrl.allocatedResources.memoryRequestsFraction | number: 2}}</div>
     </kd-resource-card-column>
       <kd-resource-card-column>
-        <div>{{$ctrl.allocatedResources.memoryLimits}} /
+        <div>{{$ctrl.allocatedResources.memoryLimits | kdMemory}} /
           {{$ctrl.allocatedResources.memoryCapacity | kdMemory}}</div>
       </kd-resource-card-column>
       <kd-resource-card-column>
