@@ -50,7 +50,7 @@ const (
 	RequestLogString = "[%s] Incoming %s %s %s request from %s"
 
 	// ResponseLogString is a template for response log message.
-	ResponseLogString = "Outcoming response to %s with %d status code"
+	ResponseLogString = "[%s] Outcoming response to %s with %d status code"
 )
 
 // ApiHandler is a representation of API handler. Structure contains client, Heapster client and
@@ -84,7 +84,8 @@ func FormatRequestLog(req *restful.Request) string {
 // FormatResponseLog formats response log string.
 // TODO(maciaszczykm): Display response content.
 func FormatResponseLog(resp *restful.Response, req *restful.Request) string {
-	return fmt.Sprintf(ResponseLogString, req.Request.RemoteAddr, resp.StatusCode())
+	return fmt.Sprintf(ResponseLogString, time.Now().Format(time.RFC3339),
+		req.Request.RemoteAddr, resp.StatusCode())
 }
 
 // CreateHttpApiHandler creates a new HTTP handler that handles all requests to the API of the backend.
