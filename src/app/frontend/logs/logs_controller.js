@@ -40,6 +40,13 @@ export class LogsController {
   isTextColorInverted() { return this.logsColorInversionService_.getInverted(); }
 
   /**
+   * Indicates log area font size.
+   * @export
+   * @return {string}
+   */
+  getFontSize() { return this.logsColorInversionService_.getFontSize(); }
+
+  /**
    * Return proper style class for logs content.
    * @export
    * @returns {string}

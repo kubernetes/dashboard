@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div layout="row" layout-margin layout-align="center center"
-     class="kd-logs-toolbar">
+<div layout="row" layout-margin layout-align="center center" class="kd-logs-toolbar">
+
   <div class="kd-logs-toolbar-text" flex="none">
     <span>{{::ctrl.i18n.MSG_LOGS_POD_LABEL}}</span>
   </div>
@@ -34,10 +34,19 @@ limitations under the License.
   </md-select>
 
   <span flex="auto"></span>
+
   <md-button ng-click="ctrl.onTextColorChange()">
-    <md-icon md-font-library="material-icons"
-             ng-class="ctrl.getStyleClass()">
+    <md-icon md-font-library="material-icons" ng-class="ctrl.getStyleClass()">
       format_color_text
     </md-icon>
   </md-button>
+
+  <span class="kd-logs-toolbar-text">{{::ctrl.i18n.MSG_LOGS_FONT_SIZE_LABEL}}</span>
+  <md-select class="kd-logs-toolbar-select" aria-label="Font size" ng-model="ctrl.fontSize"
+             md-on-close="ctrl.onFontSizeChange()" required>
+    <md-option ng-repeat="item in ctrl.fontSizes" ng-value="item">
+      <span class="kd-logs-toolbar-text">{{::item}}</span>
+    </md-option>
+  </md-select>
+
 </div>

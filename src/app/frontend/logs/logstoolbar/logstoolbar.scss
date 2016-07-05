@@ -37,11 +37,11 @@ md-toolbar {
 }
 
 .kd-logs-toolbar-text {
-  font-size: $body-font-size-base;
+  font-size: $subhead-font-size-base;
 }
 
 .kd-logs-toolbar-select {
-  margin-bottom: 2 * $baseline-grid;
+  margin-bottom: 1.5 * $baseline-grid;
   margin-left: auto;
 
   &:not([disabled]) {

@@ -22,11 +22,10 @@ export default class LogsToolbarController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!StateParams} $stateParams
-   * @param {!backendApi.Logs} podLogs
    * @param {!../logs_service.LogColorInversionService} logsColorInversionService
    * @ngInject
    */
-  constructor($state, $stateParams, podLogs, podContainers, logsColorInversionService) {
+  constructor($state, $stateParams, podContainers, logsColorInversionService) {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
@@ -47,6 +46,13 @@ export default class LogsToolbarController {
 
     /** @export */
     this.i18n = i18n;
+
+    /** @export {!Array<string>} */
+    this.fontSizes = ['14px', '18px', '24px'];
+
+    /** @export {string} */
+    this.fontSize = this.fontSizes[0];
+    this.logsColorInversionService_.setFontSize(this.fontSize);
   }
 
   /**
@@ -68,6 +74,12 @@ export default class LogsToolbarController {
         logs,
         new StateParams(this.stateParams.objectNamespace, this.stateParams.objectName, container));
   }
+
+  /**
+   * Execute a code when a user changes the selected option for console font size.
+   * @export
+   */
+  onFontSizeChange() { this.logsColorInversionService_.setFontSize(this.fontSize); }
 
   /**
    * Return proper style class for icon.
@@ -133,4 +145,6 @@ const i18n = {
   MSG_LOGS_POD_LABEL: goog.getMsg('Pod:'),
   /** @export {string} @desc Label 'Container' on the toolbar of the logs page. Ends with colon. */
   MSG_LOGS_CONTAINER_LABEL: goog.getMsg('Container:'),
+  /** @export {string} @desc Label 'Font size' on the toolbar of the logs page. Ends with colon. */
+  MSG_LOGS_FONT_SIZE_LABEL: goog.getMsg('Font size:'),
 };

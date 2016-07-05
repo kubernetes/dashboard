@@ -23,6 +23,9 @@ export class LogColorInversionService {
   constructor() {
     /** @private {boolean} */
     this.inverted_ = false;
+
+    /** @private {string} */
+    this.fontSize_ = '14px';
   }
 
   /**
@@ -33,4 +36,16 @@ export class LogColorInversionService {
 
   /** Inverts the flag. */
   invert() { this.inverted_ = !this.inverted_; }
+
+  /**
+   * Setter for font size.
+   * @param fontSize
+   */
+  setFontSize(fontSize) { this.fontSize_ = fontSize; }
+
+  /**
+   * Getter for font size.
+   * @return {string}
+   */
+  getFontSize() { return this.fontSize_; }
 }
