@@ -23,7 +23,7 @@ import semver from 'semver';
 import conf from './conf';
 
 // Add base directory to the gopath so that local imports work.
-const sourceGopath = `${conf.paths.backendTmp}`;
+const sourceGopath = `${conf.paths.backendTmp}:${conf.paths.backendVendor}`;
 // Add the project's required go tools to the PATH.
 const devPath = `${process.env.PATH}:${conf.paths.goTools}/bin`;
 
@@ -35,11 +35,12 @@ const env = lodash.merge(process.env, {GOPATH: sourceGopath, PATH: devPath});
 /**
  * Minimum required Go Version
  */
-const minGoVersion = '1.5.0';
+const minGoVersion = '1.6.1';
 
 /**
- * Spawns a Go process wrapped with the Godep command after making sure all GO prerequisites are
- * present. Backend source files must be packaged with 'package-backend-source' task before running
+ * Spawns a Go process after making sure all Go prerequisites are
+ * present. Backend source files must be packaged with 'package-backend'
+ * task before running
  * this command.
  *
  * @param {!Array<string>} args - Arguments of the go command.
@@ -58,7 +59,7 @@ export default function spawnGoProcess(args, doneFn, envOverride) {
  * @return {Q.Promise} A promise object.
  */
 function checkPrerequisites() {
-  return checkGo().then(checkGoVersion).then(checkGodep);
+  return checkGo().then(checkGoVersion).then(checkGovendor);
 }
 
 /**
@@ -118,19 +119,20 @@ function checkGoVersion() {
 }
 
 /**
- * Checks if godep is on the PATH prior to a go command execution, promises an error otherwise.
+ * Checks if govendor is on the PATH prior to a go command execution,
+ * promises an error otherwise.
  * @return {Q.Promise} A promise object.
  */
-function checkGodep() {
+function checkGovendor() {
   let deferred = q.defer();
   child.exec(
-      'which godep', {
+      'which govendor', {
         env: env,
       },
       function(error, stdout, stderror) {
         if (error || stderror || !stdout) {
           deferred.reject(new Error(
-              'Godep is not on the path. ' +
+              'Govendor is not on the path. ' +
               'Please run "npm install" in the base directory of the project.'));
           return;
         }
@@ -140,7 +142,7 @@ function checkGodep() {
 }
 
 /**
- * Spawns Go process wrapped with the Godep command.
+ * Spawns Go process.
  * Promises an error if the go command process fails.
  *
  * @param {!Array<string>} args - Arguments of the go command.
@@ -150,7 +152,7 @@ function checkGodep() {
 function spawnProcess(args, envOverride) {
   let deferred = q.defer();
   let envLocal = lodash.merge(env, envOverride);
-  let goTask = child.spawn('godep', ['go'].concat(args), {
+  let goTask = child.spawn('go', args, {
     env: envLocal,
     stdio: 'inherit',
   });

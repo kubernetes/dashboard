@@ -21,9 +21,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/kubernetes/dashboard/client"
+	"github.com/kubernetes/dashboard/src/app/backend/client"
 
-	heapster "k8s.io/heapster/api/v1/types"
+	heapster "k8s.io/heapster/metrics/api/v1/types"
 	"k8s.io/kubernetes/pkg/api"
 )
 

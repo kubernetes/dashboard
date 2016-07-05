@@ -17,10 +17,10 @@ package node
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/client"
-	"github.com/kubernetes/dashboard/resource/common"
-	"github.com/kubernetes/dashboard/resource/event"
-	"github.com/kubernetes/dashboard/resource/pod"
+	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/resource"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"

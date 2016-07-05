@@ -11,8 +11,8 @@ import (
 	deploymentutil "k8s.io/kubernetes/pkg/util/deployment"
 	"k8s.io/kubernetes/pkg/util/intstr"
 
-	"github.com/kubernetes/dashboard/resource/common"
-	"github.com/kubernetes/dashboard/resource/replicaset"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 )
 
 func TestGetDeploymentDetail(t *testing.T) {

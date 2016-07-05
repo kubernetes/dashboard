@@ -17,8 +17,8 @@ package replicationcontroller
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/resource/common"
-	resourceEvent "github.com/kubernetes/dashboard/resource/event"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	resourceEvent "github.com/kubernetes/dashboard/src/app/backend/resource/event"
 
 	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"

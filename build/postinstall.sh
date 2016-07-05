@@ -18,8 +18,8 @@
 
 ./node_modules/.bin/bower install --allow-root
 
-# Godep is required by the project. Install it in the .tools directory.
-GOPATH=`pwd`/.tools/go go get github.com/tools/godep
+# Govendor is required by the project. Install it in the .tools directory.
+GOPATH=`pwd`/.tools/go go get github.com/kardianos/govendor
 # XtbGeneator is required by the project. Clone it into .tools.
 if ! [ -a "./.tools/xtbgenerator/bin/XtbGenerator.jar" ]
 then

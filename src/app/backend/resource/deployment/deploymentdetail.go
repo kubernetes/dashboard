@@ -3,8 +3,8 @@ package deployment
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/resource/common"
-	"github.com/kubernetes/dashboard/resource/replicaset"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"

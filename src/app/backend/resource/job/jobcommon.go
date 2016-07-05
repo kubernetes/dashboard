@@ -15,7 +15,7 @@
 package job
 
 import (
-	"github.com/kubernetes/dashboard/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/batch"
 )
