@@ -13,24 +13,40 @@
 // limitations under the License.
 
 /**
- * Service class for logs colors management.
+ * Service class for logs management.
  * @final
  */
-export class LogColorInversionService {
+export class LogsService {
   /**
    * @ngInject
    */
   constructor() {
     /** @private {boolean} */
     this.inverted_ = false;
+
+    /** @private {boolean} */
+    this.compact_ = false;
   }
 
   /**
-   * Getter for invertion flag.
+   * Getter for inverted flag.
    * @return {boolean}
    */
   getInverted() { return this.inverted_; }
 
-  /** Inverts the flag. */
-  invert() { this.inverted_ = !this.inverted_; }
+  /**
+   * Switches the inverted flag.
+   */
+  setInverted() { this.inverted_ = !this.inverted_; }
+
+  /**
+   * Switches the compact flag.
+   */
+  setCompact() { this.compact_ = !this.compact_; }
+
+  /**
+   * Getter for compact flag.
+   * @return {boolean}
+   */
+  getCompact() { return this.compact_; }
 }

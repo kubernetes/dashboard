@@ -27,9 +27,15 @@ $logs-toolbar-color-white: #fff;
   color: $logs-toolbar-color-black;
 }
 
-// This override styles to get white-black icon on toolbar
 md-toolbar {
   md-icon {
+    // This override styles to get flipped size icon on toolbar
+
+    &.kd-logs-size-icon-compact {
+      transform: scale(-1, 1);
+    }
+
+    // This override styles to get white-black icon on toolbar
     &.kd-logs-color-icon-invert {
       color: $logs-toolbar-color-black;
     }
@@ -37,7 +43,7 @@ md-toolbar {
 }
 
 .kd-logs-toolbar-text {
-  font-size: $body-font-size-base;
+  font-size: $subhead-font-size-base;
 }
 
 .kd-logs-toolbar-select {
@@ -61,10 +67,15 @@ md-toolbar {
   }
 }
 
-.md-button {
-  &.kd-logs-toolbar-icon {
-    min-width: 4 * $baseline-grid;
-  }
+.kd-slider {
+  display: inline-block;
+  margin-bottom: - $baseline-grid / 2;
+  max-width: 15 * $baseline-grid;
+  min-width: 15 * $baseline-grid;
+}
+
+.kd-logs-toolbar-button {
+  min-width: unset;
 }
 
 .kd-logs-toolbar-menu-button {
