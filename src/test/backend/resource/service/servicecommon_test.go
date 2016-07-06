@@ -20,7 +20,7 @@ import (
 
 	"k8s.io/kubernetes/pkg/api"
 
-	"github.com/kubernetes/dashboard/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 )
 
 func TestToServiceDetail(t *testing.T) {

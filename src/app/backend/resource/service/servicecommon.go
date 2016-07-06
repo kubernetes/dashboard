@@ -17,7 +17,7 @@ package service
 import (
 	"k8s.io/kubernetes/pkg/api"
 
-	"github.com/kubernetes/dashboard/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 )
 
 // ToService returns api service object based on kubernetes service object

@@ -18,7 +18,7 @@ import (
 	"reflect"
 	"testing"
 
-	heapster "k8s.io/heapster/api/v1/types"
+	heapster "k8s.io/heapster/metrics/api/v1/types"
 )
 
 func TestCreateMetricPath(t *testing.T) {

@@ -23,7 +23,7 @@ import (
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
 	"k8s.io/kubernetes/pkg/labels"
 
-	"github.com/kubernetes/dashboard/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 )
 
 func TestGetReplicationPodInfo(t *testing.T) {

@@ -5,8 +5,8 @@ import (
 
 	"k8s.io/kubernetes/pkg/api"
 
-	"github.com/kubernetes/dashboard/resource/common"
-	"github.com/kubernetes/dashboard/resource/event"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 )
 
 // GetDeploymentEvents returns model events for a deployment with the given name in the given
