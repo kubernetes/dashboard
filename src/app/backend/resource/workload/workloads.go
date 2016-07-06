@@ -17,15 +17,15 @@ package workload
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/client"
-	"github.com/kubernetes/dashboard/resource/common"
-	"github.com/kubernetes/dashboard/resource/daemonset"
-	"github.com/kubernetes/dashboard/resource/deployment"
-	"github.com/kubernetes/dashboard/resource/job"
-	"github.com/kubernetes/dashboard/resource/petset"
-	"github.com/kubernetes/dashboard/resource/pod"
-	"github.com/kubernetes/dashboard/resource/replicaset"
-	"github.com/kubernetes/dashboard/resource/replicationcontroller"
+	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/petset"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 )
 

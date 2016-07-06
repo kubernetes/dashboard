@@ -40,5 +40,5 @@ WORKDIR /dashboard
 # Copy entire source tree.
 COPY ./ ./
 
-# Install all npm deps, bower deps and godep. This will take a while.
+# Install all npm deps, bower deps. This will take a while.
 RUN npm install --unsafe-perm

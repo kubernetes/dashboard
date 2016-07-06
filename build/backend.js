@@ -18,6 +18,7 @@
 import gulp from 'gulp';
 import lodash from 'lodash';
 import path from 'path';
+import fs from 'fs';
 
 import conf from './conf';
 import goCommand from './gocommand';
@@ -26,7 +27,7 @@ import goCommand from './gocommand';
  * Compiles backend application in development mode and places the binary in the serve
  * directory.
  */
-gulp.task('backend', ['package-backend-source'], function(doneFn) {
+gulp.task('backend', ['package-backend'], function(doneFn) {
   goCommand(
       [
         'build',
@@ -46,7 +47,7 @@ gulp.task('backend', ['package-backend-source'], function(doneFn) {
  * The production binary difference from development binary is only that it contains all
  * dependencies inside it and is targeted for a specific architecture.
  */
-gulp.task('backend:prod', ['package-backend-source', 'clean-dist'], function() {
+gulp.task('backend:prod', ['package-backend', 'clean-dist'], function() {
   let outputBinaryPath = path.join(conf.paths.dist, conf.backend.binaryName);
   return backendProd([[outputBinaryPath, conf.arch.default]]);
 });
@@ -58,23 +59,39 @@ gulp.task('backend:prod', ['package-backend-source', 'clean-dist'], function() {
  * The production binary difference from development binary is only that it contains all
  * dependencies inside it and is targeted specific architecture.
  */
-gulp.task('backend:prod:cross', ['package-backend-source', 'clean-dist'], function() {
+gulp.task('backend:prod:cross', ['package-backend', 'clean-dist'], function() {
   let outputBinaryPaths =
       conf.paths.distCross.map((dir) => path.join(dir, conf.backend.binaryName));
   return backendProd(lodash.zip(outputBinaryPaths, conf.arch.list));
 });
 
 /**
+ * Packages backend code to be ready for tests and compilation.
+ */
+gulp.task('package-backend', ['package-backend-source', 'link-vendor']);
+
+/**
  * Moves all backend source files (app and tests) to a temporary package directory where it can be
  * applied go commands.
- *
- * This is required to consolidate test and app files into single directories and to make packaging
- * work.
  */
 gulp.task('package-backend-source', function() {
   return gulp
       .src([path.join(conf.paths.backendSrc, '**/*'), path.join(conf.paths.backendTest, '**/*')])
       .pipe(gulp.dest(conf.paths.backendTmpSrc));
+});
+
+/**
+ * Links vendor folder to the packaged backend source.
+ */
+gulp.task('link-vendor', ['package-backend-source'], function(doneFn) {
+  fs.symlink(conf.paths.backendVendor, conf.paths.backendTmpSrcVendor, 'dir', (err) => {
+    if (err && err.code === 'EEXIST') {
+      // Skip errors if the link already exists.
+      doneFn();
+    } else {
+      doneFn(err);
+    }
+  });
 });
 
 /**

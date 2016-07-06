@@ -20,8 +20,8 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 
-	"github.com/kubernetes/dashboard/client"
-	"github.com/kubernetes/dashboard/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 )
 
 // PodDetail is a presentation layer view of Kubernetes PodDetail resource.

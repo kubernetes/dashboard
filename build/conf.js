@@ -76,13 +76,13 @@ export default {
     /**
      * Name of the main backend package that is used in go build command.
      */
-    mainPackageName: 'github.com/kubernetes/dashboard',
+    mainPackageName: 'github.com/kubernetes/dashboard/src/app/backend',
     /**
      * Names of all backend packages prefixed with 'test' command.
      */
     testCommandArgs: [
       'test',
-      'github.com/kubernetes/dashboard/...',
+      'github.com/kubernetes/dashboard/src/app/backend/...',
     ],
     /**
      * Port number of the backend server. Only used during development.
@@ -176,7 +176,11 @@ export default {
     backendSrc: path.join(basePath, 'src/app/backend'),
     backendTest: path.join(basePath, 'src/test/backend'),
     backendTmp: path.join(basePath, '.tmp/backend'),
-    backendTmpSrc: path.join(basePath, '.tmp/backend/src/github.com/kubernetes/dashboard'),
+    backendTmpSrc:
+        path.join(basePath, '.tmp/backend/src/github.com/kubernetes/dashboard/src/app/backend'),
+    backendTmpSrcVendor:
+        path.join(basePath, '.tmp/backend/src/github.com/kubernetes/dashboard/vendor'),
+    backendVendor: path.join(basePath, 'vendor'),
     bowerComponents: path.join(basePath, 'bower_components'),
     build: path.join(basePath, 'build'),
     coverage: path.join(basePath, 'coverage'),
