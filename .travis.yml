@@ -35,6 +35,11 @@ addons:
   # Run tests that require a browser on SauceLabs CI provider. Learn more at: https://saucelabs.com
   sauce_connect: true
 
+# Docker is required to set up a simple, single node Kubernetes cluster.
+# Local Docker-based cluster is the simplest way to create kubernetes on the host machine.
+services:
+  - docker
+
 before_script:
   # Prepare environment for the Chrome browser. This is required for PRs from forks where
   # tests do not run on Saucelabs.
@@ -43,10 +48,11 @@ before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 
-# Docker is required to set up a simple, single node Kubernetes cluster.
-# Local Docker-based cluster is the simplest way to create kubernetes on the host machine.
-services:
-  - docker
+  # Upgrade to docker 1.10+. Answer all questions with yes.
+  # List available docker versions with "apt-cache madison docker-engine"
+  - sudo apt-get -o Dpkg::Options::="--force-confnew" install -y docker-engine=1.11.2-0~trusty
+  - sudo ./build/setup-docker.sh
+  - docker --version
 
 script: ./node_modules/.bin/gulp check:local-cluster
 after_script: ./node_modules/.bin/gulp coverage-codecov-upload
