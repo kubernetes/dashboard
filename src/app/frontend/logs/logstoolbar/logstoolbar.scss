@@ -68,10 +68,8 @@ md-toolbar {
   min-width: 15 * $baseline-grid;
 }
 
-.md-button {
-  &.kd-logs-toolbar-icon {
-    min-width: 4 * $baseline-grid;
-  }
+.kd-logs-toolbar-button {
+  min-width: unset;
 }
 
 .kd-logs-toolbar-menu-button {

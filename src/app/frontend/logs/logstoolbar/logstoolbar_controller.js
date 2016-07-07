@@ -46,9 +46,6 @@ export default class LogsToolbarController {
 
     /** @export */
     this.i18n = i18n;
-
-    /** @export {number} */
-    this.fontSize = this.logsService_.getFontSize();
   }
 
   /**
@@ -75,7 +72,7 @@ export default class LogsToolbarController {
    * Execute a code when a user changes the selected option for console font size.
    * @export
    */
-  onFontSizeChange() { this.logsService_.setFontSize(this.fontSize); }
+  onFontSizeChange() { this.logsService_.setCompact(); }
 
   /**
    * Return proper style class for icon.
@@ -94,7 +91,7 @@ export default class LogsToolbarController {
    * Execute a code when a user changes the selected option for console color.
    * @export
    */
-  onTextColorChange() { this.logsService_.invert(); }
+  onTextColorChange() { this.logsService_.setInverted(); }
 
   /**
    * Find Pod by name.
@@ -141,6 +138,4 @@ const i18n = {
   MSG_LOGS_POD_LABEL: goog.getMsg('Pod:'),
   /** @export {string} @desc Label 'Container' on the toolbar of the logs page. Ends with colon. */
   MSG_LOGS_CONTAINER_LABEL: goog.getMsg('Container:'),
-  /** @export {string} @desc Label 'Font size' on the toolbar of the logs page. Ends with colon. */
-  MSG_LOGS_FONT_SIZE_LABEL: goog.getMsg('Font size:'),
 };

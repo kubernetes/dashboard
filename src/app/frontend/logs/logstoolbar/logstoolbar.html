@@ -35,19 +35,16 @@ limitations under the License.
 
   <span flex="auto"></span>
 
-  <md-button ng-click="ctrl.onTextColorChange()">
+  <md-button class="kd-logs-toolbar-button" ng-click="ctrl.onTextColorChange()">
     <md-icon md-font-library="material-icons" ng-class="ctrl.getStyleClass()">
       format_color_text
     </md-icon>
   </md-button>
 
-  <span class="kd-logs-toolbar-text">
-    {{::ctrl.i18n.MSG_LOGS_FONT_SIZE_LABEL}} {{ctrl.fontSize}} px
-  </span>
-  <md-slider-container >
-    <md-slider class="kd-slider" flex ng-model="ctrl.fontSize" ng-change="ctrl.onFontSizeChange()"
-               min="8" max="48" aria-label="{{::ctrl.i18n.MSG_LOGS_FONT_SIZE_LABEL}}">
-    </md-slider>
-  </md-slider-container>
+  <md-button class="kd-logs-toolbar-button" ng-click="ctrl.onFontSizeChange()">
+    <md-icon md-font-library="material-icons" ng-class="ctrl.getStyleClass()">
+      text_fields
+    </md-icon>
+  </md-button>
 
 </div>

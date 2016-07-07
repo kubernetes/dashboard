@@ -24,28 +24,29 @@ export class LogsService {
     /** @private {boolean} */
     this.inverted_ = false;
 
-    /** @private {number} */
-    this.fontSize_ = 14;
+    /** @private {boolean} */
+    this.compact_ = true;
   }
 
   /**
-   * Getter for invertion flag.
+   * Getter for inverted flag.
    * @return {boolean}
    */
   getInverted() { return this.inverted_; }
 
-  /** Inverts the flag. */
-  invert() { this.inverted_ = !this.inverted_; }
+  /**
+   * Switches the inverted flag.
+   */
+  setInverted() { this.inverted_ = !this.inverted_; }
 
   /**
-   * Setter for font size.
-   * @param {number} fontSize
+   * Switches the compact flag.
    */
-  setFontSize(fontSize) { this.fontSize_ = fontSize; }
+  setCompact() { this.compact_ = !this.compact_; }
 
   /**
-   * Getter for font size.
-   * @return {number}
+   * Getter for compact flag.
+   * @return {boolean}
    */
-  getFontSize() { return this.fontSize_; }
+  getCompact() { return this.compact_; }
 }

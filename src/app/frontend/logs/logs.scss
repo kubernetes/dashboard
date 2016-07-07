@@ -27,7 +27,14 @@ $logs-color-white: #fff;
   color: $logs-color-black;
 }
 
+.kd-logs-element-compact {
+  font-size: $body-font-size-base;
+  padding: 0 (2 * $baseline-grid);
+  word-wrap: break-word;
+}
+
 .kd-logs-element {
+  font-size: $headline-font-size-base;
   padding: 0 (2 * $baseline-grid);
   word-wrap: break-word;
 }

@@ -40,11 +40,26 @@ export class LogsController {
   isTextColorInverted() { return this.logsService_.getInverted(); }
 
   /**
+   * Indicates state of log area font size.
+   * If false: font size is compact. Otherwise its bigger.
+   * @export
+   * @return {boolean}
+   */
+  isTextSizeCompact() { return this.logsService_.getCompact(); }
+
+  /**
    * Indicates log area font size.
    * @export
    * @return {Object}
    */
-  getLogsStyle() { return {'font-size': `${this.logsService_.getFontSize()}px`}; }
+  getLogsClass() {
+    const logsTextSize = "kd-logs-element";
+    if (this.isTextSizeCompact()) {
+      return `${logsTextSize}-compact`;
+    } else {
+      return logsTextSize;
+    }
+  }
 
   /**
    * Return proper style class for logs content.
@@ -55,7 +70,8 @@ export class LogsController {
     const logsTextColor = 'kd-logs-text-color';
     if (this.isTextColorInverted()) {
       return `${logsTextColor}-invert`;
+    } else {
+      return logsTextColor;
     }
-    return `${logsTextColor}`;
   }
 }
