@@ -32,29 +32,13 @@ export class LogsController {
   }
 
   /**
-   * Indicates state of log area color.
-   * If false: black text is placed on white area. Otherwise colors are inverted.
-   * @export
-   * @return {boolean}
-   */
-  isTextColorInverted() { return this.logsService_.getInverted(); }
-
-  /**
-   * Indicates state of log area font size.
-   * If false: font size is compact. Otherwise its bigger.
-   * @export
-   * @return {boolean}
-   */
-  isTextSizeCompact() { return this.logsService_.getCompact(); }
-
-  /**
    * Indicates log area font size.
    * @export
    * @return {Object}
    */
   getLogsClass() {
     const logsTextSize = "kd-logs-element";
-    if (this.isTextSizeCompact()) {
+    if (this.logsService_.getCompact()) {
       return `${logsTextSize}-compact`;
     } else {
       return logsTextSize;
@@ -68,7 +52,7 @@ export class LogsController {
    */
   getStyleClass() {
     const logsTextColor = 'kd-logs-text-color';
-    if (this.isTextColorInverted()) {
+    if (this.logsService_.getInverted()) {
       return `${logsTextColor}-invert`;
     } else {
       return logsTextColor;

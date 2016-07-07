@@ -47,15 +47,7 @@ export default class LogsToolbarController {
     /** @export */
     this.i18n = i18n;
   }
-
-  /**
-   * Indicates state of log area color.
-   * If false: black text is placed on white area. Otherwise colors are inverted.
-   * @export
-   * @return {boolean}
-   */
-  isTextColorInverted() { return this.logsService_.getInverted(); }
-
+  
   /**
    * Execute a code when a user changes the selected option of a container element.
    * @param {string} container
@@ -69,23 +61,38 @@ export default class LogsToolbarController {
   }
 
   /**
+   * Return proper style class for text color icon.
+   * @export
+   * @returns {string}
+   */
+  getColorIconClass() {
+    const logsTextColor = 'kd-logs-color-icon';
+    if (this.logsService_.getInverted()) {
+      return `${logsTextColor}-invert`;
+    } else {
+      return logsTextColor;
+    }
+  }
+
+  /**
+   * Return proper style class for font size icon.
+   * @export
+   * @returns {string}
+   */
+  getSizeIconClass() {
+    const logsTextColor = 'kd-logs-size-icon';
+    if (this.logsService_.getCompact()) {
+      return `${logsTextColor}-compact`;
+    } else {
+      return logsTextColor;
+    }
+  }
+
+  /**
    * Execute a code when a user changes the selected option for console font size.
    * @export
    */
   onFontSizeChange() { this.logsService_.setCompact(); }
-
-  /**
-   * Return proper style class for icon.
-   * @export
-   * @returns {string}
-   */
-  getStyleClass() {
-    const logsTextColor = 'kd-logs-color-icon';
-    if (this.isTextColorInverted()) {
-      return `${logsTextColor}-invert`;
-    }
-    return `${logsTextColor}`;
-  }
 
   /**
    * Execute a code when a user changes the selected option for console color.
