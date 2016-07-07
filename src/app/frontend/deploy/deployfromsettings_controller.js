@@ -287,7 +287,7 @@ export default class DeployFromSettingsController {
             (response) => {
               if (response) {
                 this.imagePullSecret = response;
-                this.secrets = this.secrets.concat(this.imagePullSecret);
+                this.secrets = res.secrets.map(function(e) {return e.metadata.name});
               } else {
                 this.imagePullSecret = '';
               }
@@ -304,7 +304,7 @@ export default class DeployFromSettingsController {
     /** @type {!angular.Resource<!backendApi.SecretsList>} */
     let resource = this.resource_(`api/v1/secret/${namespace}`);
     resource.get(
-        (res) => { this.secrets = res.secrets; },
+        (res) => { this.secrets = res.secrets.map(function(e) {return e.metadata.name}); },
         (err) => { this.log_.log(`Error getting secrets: ${err}`); });
   }
 
