@@ -715,10 +715,12 @@
 			"revisionTime": "2016-02-01T17:48:07Z"
 		},
 		{
-			"checksumSHA1": "H9S5xwBvrCqJqte/RGxwl68MWJg=",
+			"checksumSHA1": "n/llKRPzxcWttjZtpAWA7VW9iJA=",
 			"path": "github.com/imdario/mergo",
-			"revision": "50d4dbd4eb0e84778abe37cefef140271d96fade",
-			"revisionTime": "2016-05-17T06:44:35Z"
+			"revision": "86cdca063f41835f7acf068df463f14eecd11e17",
+			"revisionTime": "2015-01-29T15:29:59Z",
+			"version": "=0.1.4",
+			"versionExact": "0.1.4"
 		},
 		{
 			"checksumSHA1": "40vJyUB4ezQSn/NSadsKEOrudMc=",
