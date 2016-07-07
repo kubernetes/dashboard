@@ -287,7 +287,7 @@ export default class DeployFromSettingsController {
             (response) => {
               if (response) {
                 this.imagePullSecret = response;
-                this.secrets = res.secrets.map(function(e) {return e.metadata.name});
+                this.secrets = this.secrets.concat(this.imagePullSecret);
               } else {
                 this.imagePullSecret = '';
               }
