@@ -15,7 +15,6 @@
 import stateConfig from './replicationcontrollerlist_stateconfig';
 import filtersModule from 'common/filters/filters_module';
 import componentsModule from 'common/components/components_module';
-import {podLogsMenuComponent} from './podlogsmenu_component';
 import {replicationControllerCardComponent} from './replicationcontrollercard_component';
 import {replicationControllerCardMenuComponent} from './replicationcontrollercardmenu_component';
 import {replicationControllerCardListComponent} from './replicationcontrollercardlist_component';
@@ -38,7 +37,6 @@ export default angular
           replicationControllerDetailModule.name,
         ])
     .config(stateConfig)
-    .component('kdPodLogsMenu', podLogsMenuComponent)
     .component('kdReplicationControllerCardList', replicationControllerCardListComponent)
     .component('kdReplicationControllerCard', replicationControllerCardComponent)
     .component('kdReplicationControllerCardMenu', replicationControllerCardMenuComponent);
