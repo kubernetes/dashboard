@@ -141,7 +141,7 @@ $ wget https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz
 ```
 $ go version
 ```
-Should return something like `go version go1.6.2 linux/amd64`
+Should return something like `go version go1.6.2 linux/amd64`. Note that if you already had Go installed, ensure that `GO15VENDOREXPERIMENT` is unset.
 
 ### Install Node and NPM
 For some reason doing this...
