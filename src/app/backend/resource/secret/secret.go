@@ -17,6 +17,7 @@ package secret
 import (
 	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
 )
@@ -62,17 +63,20 @@ func (spec *ImagePullSecretSpec) GetData() map[string][]byte {
 
 // Secret - a single secret returned to the frontend.
 type Secret struct {
-	Name string `json:"name"`
+	api.ObjectMeta       `json:"metadata,omitempty"`
+	unversioned.TypeMeta `json:",inline"`
+
+
 }
 
 // SecretsList - response structure for a queried secrets list.
 type SecretsList struct {
-	Secrets []string `json:"secrets"`
+	Secrets []Secret `json:"secrets"`
 }
 
 // GetSecrets - return all secrets in the given namespace.
 func GetSecrets(client *client.Client, namespace string) (*SecretsList,
-	error) {
+error) {
 	secretsList := &SecretsList{}
 	secrets, err := client.Secrets(namespace).List(api.ListOptions{
 		LabelSelector: labels.Everything(),
@@ -82,7 +86,7 @@ func GetSecrets(client *client.Client, namespace string) (*SecretsList,
 		return nil, err
 	}
 	for _, secret := range secrets.Items {
-		secretsList.Secrets = append(secretsList.Secrets, secret.ObjectMeta.Name)
+		secretsList.Secrets = append(secretsList.Secrets, Secret{secret.ObjectMeta, secret.TypeMeta})
 	}
 	return secretsList, err
 }
@@ -99,5 +103,5 @@ func CreateSecret(client *client.Client, spec SecretSpec) (*Secret, error) {
 		Data: spec.GetData(),
 	}
 	_, err := client.Secrets(namespace).Create(secret)
-	return &Secret{Name: secret.ObjectMeta.Name}, err
+	return &Secret{secret.ObjectMeta, secret.TypeMeta}, err
 }
