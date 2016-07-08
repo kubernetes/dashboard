@@ -33,10 +33,13 @@ type NodeList struct {
 }
 
 // Node is a presentation layer view of Kubernetes nodes. This means it is node plus additional
-// augumented data we can get from other sources.
+// augmented data we can get from other sources.
 type Node struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
 	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+
+	// Ready Status of the node
+	Ready      api.ConditionStatus `json:"ready"`
 }
 
 // GetNodeList returns a list of all Nodes in the cluster.
@@ -72,5 +75,16 @@ func toNode(node api.Node) Node {
 	return Node{
 		ObjectMeta: common.NewObjectMeta(node.ObjectMeta),
 		TypeMeta:   common.NewTypeMeta(common.ResourceKindNode),
+		Ready:      getNodeConditionStatus(node, api.NodeReady),
 	}
+}
+
+// Returns the status (True, False, Unknown) of a particular NodeConditionType
+func getNodeConditionStatus(node api.Node, conditionType api.NodeConditionType) api.ConditionStatus {
+	for _, condition := range node.Status.Conditions {
+		if (condition.Type == conditionType) {
+			return condition.Status
+		}
+	}
+	return api.ConditionUnknown
 }
