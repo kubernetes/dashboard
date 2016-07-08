@@ -65,8 +65,6 @@ func (spec *ImagePullSecretSpec) GetData() map[string][]byte {
 type Secret struct {
 	common.ObjectMeta `json:"objectMeta"`
 	common.TypeMeta   `json:"typeMeta"`
-
-
 }
 
 // SecretsList - response structure for a queried secrets list.
