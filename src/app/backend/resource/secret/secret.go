@@ -17,9 +17,9 @@ package secret
 import (
 	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
-	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
+	"github.com/kubernetes/dashboard/resource/common"
 )
 
 // SecretSpec - common interface for the specification of different secrets.
@@ -63,8 +63,8 @@ func (spec *ImagePullSecretSpec) GetData() map[string][]byte {
 
 // Secret - a single secret returned to the frontend.
 type Secret struct {
-	api.ObjectMeta       `json:"metadata,omitempty"`
-	unversioned.TypeMeta `json:",inline"`
+	common.ObjectMeta       `json:"metadata,omitempty"`
+	common.TypeMeta `json:"typeMeta"`
 
 
 }
