@@ -16,7 +16,7 @@ limitations under the License.
 
 <div layout="row" flex="auto" layout-fill>
   <md-content layout-padding flex="auto" layout-fill ng-class=ctrl.getStyleClass()>
-    <div ng-repeat="n in ctrl.logsSet track by $index" class="kd-logs-element">
+    <div ng-repeat="n in ctrl.logsSet track by $index" ng-class=ctrl.getLogsClass()>
       <pre>{{n}}</pre>
     </div>
   </md-content>

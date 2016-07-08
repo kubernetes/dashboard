@@ -20,24 +20,29 @@
 export class LogsController {
   /**
    * @param {!backendApi.Logs} podLogs
-   * @param {!./logs_service.LogColorInversionService} logsColorInversionService
+   * @param {!./logs_service.LogsService} logsService
    * @ngInject
    */
-  constructor(podLogs, logsColorInversionService) {
+  constructor(podLogs, logsService) {
     /** @export {!Array<string>} Log set. */
     this.logsSet = podLogs.logs;
 
-    /** @private {!./logs_service.LogColorInversionService} */
-    this.logsColorInversionService_ = logsColorInversionService;
+    /** @private {!./logs_service.LogsService} */
+    this.logsService_ = logsService;
   }
 
   /**
-   * Indicates state of log area color.
-   * If false: black text is placed on white area. Otherwise colors are inverted.
+   * Indicates log area font size.
    * @export
-   * @return {boolean}
+   * @return {string}
    */
-  isTextColorInverted() { return this.logsColorInversionService_.getInverted(); }
+  getLogsClass() {
+    const logsTextSize = 'kd-logs-element';
+    if (this.logsService_.getCompact()) {
+      return `${logsTextSize}-compact`;
+    }
+    return logsTextSize;
+  }
 
   /**
    * Return proper style class for logs content.
@@ -46,9 +51,9 @@ export class LogsController {
    */
   getStyleClass() {
     const logsTextColor = 'kd-logs-text-color';
-    if (this.isTextColorInverted()) {
+    if (this.logsService_.getInverted()) {
       return `${logsTextColor}-invert`;
     }
-    return `${logsTextColor}`;
+    return logsTextColor;
   }
 }

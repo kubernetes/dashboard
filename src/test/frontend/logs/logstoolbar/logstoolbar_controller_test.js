@@ -22,6 +22,9 @@ describe('Logs toolbar controller', () => {
   const iconColorClassName = 'kd-logs-color-icon';
 
   /** @type {string} */
+  const iconSizeClassName = 'kd-logs-size-icon';
+
+  /** @type {string} */
   const mockNamespace = 'namespace';
 
   /** @type {string} */
@@ -71,15 +74,6 @@ describe('Logs toolbar controller', () => {
 
   it('should instantiate the controller properly', () => { expect(ctrl).not.toBeUndefined(); });
 
-  it('should invert flag isTextColorInverted when onTextColorChange called', () => {
-    // before
-    expect(ctrl.isTextColorInverted()).toBeFalsy();
-    // when
-    ctrl.onTextColorChange();
-    // then
-    expect(ctrl.isTextColorInverted()).toBeTruthy();
-  });
-
   it('should find objects (pod and container) by name passed in state params',
      () => { expect(ctrl.container).toEqual('pod2'); });
 
@@ -95,7 +89,8 @@ describe('Logs toolbar controller', () => {
   });
 
   it('should return style class for icon', () => {
-    // expect
-    expect(ctrl.getStyleClass()).toEqual(`${iconColorClassName}`);
+    // then
+    expect(ctrl.getColorIconClass()).toEqual(`${iconColorClassName}`);
+    expect(ctrl.getSizeIconClass()).toEqual(`${iconSizeClassName}`);
   });
 });

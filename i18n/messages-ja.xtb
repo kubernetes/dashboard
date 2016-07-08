@@ -669,4 +669,5 @@
 	<translation id="9200661373319050426" key="MSG_POD_DETAILS_POD_LABEL" source="/home/mirchev/go_workspace/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Label 'Pod' which appears at the top of the delete dialog, opened from a pod details page.">ポッド</translation>
 	<translation id="4032745949688106366" key="MSG_PORT_MAPPINGS_PORT_EMPTY_WARNING" source="/Users/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="This warning appears when the user specifies an empty port.">Port cannot be empty</translation>
 	<translation id="1976944901672561616" key="MSG_PORT_MAPPINGS_TARGET_PORT_EMPTY_WARNING" source="/Users/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="This warning appears when the user specifies an empty target port.">Target port cannot be empty</translation>
+	<translation id="712304056244084010" key="MSG_LOGS_FONT_SIZE_LABEL" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="Label 'Font size' on the toolbar of the logs page. Ends with colon.">Font size:</translation>
 </translationbundle>

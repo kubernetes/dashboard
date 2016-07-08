@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import stateConfig from './logs_stateconfig';
-import {LogColorInversionService} from './logs_service';
+import {LogsService} from './logs_service';
 
 /**
  * Angular module for the logs view.
@@ -26,5 +26,5 @@ export default angular
           'ngResource',
           'ui.router',
         ])
-    .service('logsColorInversionService', LogColorInversionService)
+    .service('logsService', LogsService)
     .config(stateConfig);
