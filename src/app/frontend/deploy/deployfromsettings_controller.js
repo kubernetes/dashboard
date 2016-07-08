@@ -304,7 +304,7 @@ export default class DeployFromSettingsController {
     /** @type {!angular.Resource<!backendApi.SecretsList>} */
     let resource = this.resource_(`api/v1/secret/${namespace}`);
     resource.get(
-        (res) => { this.secrets = res.secrets; },
+        (res) => { this.secrets = res.secrets.map((e) => e.objectMeta.name); },
         (err) => { this.log_.log(`Error getting secrets: ${err}`); });
   }
 
