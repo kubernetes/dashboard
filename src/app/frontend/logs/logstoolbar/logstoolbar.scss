@@ -27,20 +27,17 @@ $logs-toolbar-color-white: #fff;
   color: $logs-toolbar-color-black;
 }
 
-// This override styles to get white-black icon on toolbar
 md-toolbar {
   md-icon {
-    &.kd-logs-color-icon-invert {
-      color: $logs-toolbar-color-black;
-    }
-  }
-}
+    // This override styles to get flipped size icon on toolbar
 
-// This override styles to get flipped size icon on toolbar
-md-toolbar {
-  md-icon {
     &.kd-logs-size-icon-compact {
       transform: scale(-1, 1);
+    }
+
+    // This override styles to get white-black icon on toolbar
+    &.kd-logs-color-icon-invert {
+      color: $logs-toolbar-color-black;
     }
   }
 }

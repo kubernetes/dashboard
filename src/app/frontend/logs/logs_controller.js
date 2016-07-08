@@ -34,15 +34,14 @@ export class LogsController {
   /**
    * Indicates log area font size.
    * @export
-   * @return {Object}
+   * @return {string}
    */
   getLogsClass() {
-    const logsTextSize = "kd-logs-element";
+    const logsTextSize = 'kd-logs-element';
     if (this.logsService_.getCompact()) {
       return `${logsTextSize}-compact`;
-    } else {
-      return logsTextSize;
     }
+    return logsTextSize;
   }
 
   /**
@@ -54,8 +53,7 @@ export class LogsController {
     const logsTextColor = 'kd-logs-text-color';
     if (this.logsService_.getInverted()) {
       return `${logsTextColor}-invert`;
-    } else {
-      return logsTextColor;
     }
+    return logsTextColor;
   }
 }

@@ -47,7 +47,7 @@ export default class LogsToolbarController {
     /** @export */
     this.i18n = i18n;
   }
-  
+
   /**
    * Execute a code when a user changes the selected option of a container element.
    * @param {string} container
