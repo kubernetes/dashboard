@@ -28,6 +28,9 @@ limitations under the License.
       <kd-labels labels="::$ctrl.node.objectMeta.labels"></kd-labels>
     </kd-resource-card-column>
     <kd-resource-card-column>
+      {{::$ctrl.node.ready}}
+    </kd-resource-card-column>
+    <kd-resource-card-column>
       {{::$ctrl.node.objectMeta.creationTimestamp | relativeTime}}
       <md-tooltip>
         {{::$ctrl.getCreatedAtTooltip($ctrl.node.objectMeta.creationTimestamp)}}
