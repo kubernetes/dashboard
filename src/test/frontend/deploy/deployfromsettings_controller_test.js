@@ -334,9 +334,9 @@ describe('DeployFromSettings controller', () => {
 
     it('get secrets should update the secrets list', () => {
       ctrl.resource_ = angularResource;
-      let response = { "secrets": [{"metadata": {"name": "secret1"}},
-          {"metadata": {"name": "secret2"}},
-          {"metadata": {"name": "secret3"}}]};
+      let response = { "secrets": [{"objectMeta": {"name": "secret1"}},
+          {"objectMeta": {"name": "secret2"}},
+          {"objectMeta": {"name": "secret3"}}]};
       httpBackend.expectGET('api/v1/secret/default').respond(200, response);
       // when
       ctrl.getSecrets('default');

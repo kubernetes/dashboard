@@ -19,7 +19,7 @@ import (
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
-	"github.com/kubernetes/dashboard/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 )
 
 // SecretSpec - common interface for the specification of different secrets.
@@ -63,8 +63,8 @@ func (spec *ImagePullSecretSpec) GetData() map[string][]byte {
 
 // Secret - a single secret returned to the frontend.
 type Secret struct {
-	common.ObjectMeta       `json:"metadata,omitempty"`
-	common.TypeMeta `json:"typeMeta"`
+	common.ObjectMeta `json:"objectMeta"`
+	common.TypeMeta   `json:"typeMeta"`
 
 
 }
@@ -86,7 +86,7 @@ error) {
 		return nil, err
 	}
 	for _, secret := range secrets.Items {
-		secretsList.Secrets = append(secretsList.Secrets, Secret{secret.ObjectMeta, secret.TypeMeta})
+		secretsList.Secrets = append(secretsList.Secrets, *NewSecret(&secret))
 	}
 	return secretsList, err
 }
@@ -103,5 +103,11 @@ func CreateSecret(client *client.Client, spec SecretSpec) (*Secret, error) {
 		Data: spec.GetData(),
 	}
 	_, err := client.Secrets(namespace).Create(secret)
-	return &Secret{secret.ObjectMeta, secret.TypeMeta}, err
+	return NewSecret(secret), err
+}
+
+// NewSecret - creates a new instance of Secret struct based on K8s Secret.
+func NewSecret(secret *api.Secret) (*Secret) {
+	return &Secret{common.NewObjectMeta(secret.ObjectMeta),
+		common.NewTypeMeta(common.ResourceKindSecret)}
 }
