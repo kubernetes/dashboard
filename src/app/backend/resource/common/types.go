@@ -106,6 +106,7 @@ const (
 	ResourceKindPetSet                = "petset"
 	ResourceKindNode                  = "node"
 	ResourceKindSecret                = "secret"
+	ResourceKindConfigMap             = "configmap"
 )
 
 // ClientType represents type of client that is used to perform generic operations on resources.
@@ -142,6 +143,7 @@ var kindToAPIMapping = map[string]struct {
 	ResourceKindJob:                   {"jobs", ClientTypeBatchClient},
 	ResourceKindNode:                  {"nodes", ClientTypeDefault},
 	ResourceKindSecret:                {"secrets", ClientTypeDefault},
+	ResourceKindConfigMap:             {"configmaps", ClientTypeDefault},
 }
 
 // IsSelectorMatching returns true when an object with the given

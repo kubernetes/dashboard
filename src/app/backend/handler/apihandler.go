@@ -34,6 +34,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/petset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/configmap"
 	. "github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
 	. "github.com/kubernetes/dashboard/src/app/backend/resource/secret"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
@@ -273,6 +274,19 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 			To(apiHandler.handleCreateImagePullSecret).
 			Reads(ImagePullSecretSpec{}).
 			Writes(Secret{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/configmap").
+		To(apiHandler.handleGetConfigMaps).
+		Writes(configmap.ConfigMapList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/configmap/{namespace}").
+		To(apiHandler.handleGetConfigMaps).
+		Writes(configmap.ConfigMapList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/configmap/{namespace}/{configmap}").
+		To(apiHandler.handleGetConfigMapDetail).
+		Writes(configmap.ConfigMapDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/service").
@@ -784,6 +798,28 @@ func (apiHandler *ApiHandler) handleGetSecrets(request *restful.Request, respons
 		return
 	}
 	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+
+func (apiHandler *ApiHandler) handleGetConfigMaps(request *restful.Request, response *restful.Response) {
+	namespace := parseNamespacePathParameter(request)
+	result, err := configmap.GetConfigMapList(apiHandler.client, namespace)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *ApiHandler) handleGetConfigMapDetail(request *restful.Request, response *restful.Response) {
+	namespace := request.PathParameter("namespace")
+	service := request.PathParameter("configmap")
+	result, err := configmap.GetConfigMapDetail(apiHandler.client, namespace, service)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
 // Handles log API call.
