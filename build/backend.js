@@ -15,6 +15,7 @@
 /**
  * @fileoverview Gulp tasks for compiling backend application.
  */
+import del from 'del';
 import gulp from 'gulp';
 import lodash from 'lodash';
 import path from 'path';
@@ -74,10 +75,17 @@ gulp.task('package-backend', ['package-backend-source', 'link-vendor']);
  * Moves all backend source files (app and tests) to a temporary package directory where it can be
  * applied go commands.
  */
-gulp.task('package-backend-source', function() {
+gulp.task('package-backend-source', ['clean-packaged-backend-source'], function() {
   return gulp
       .src([path.join(conf.paths.backendSrc, '**/*'), path.join(conf.paths.backendTest, '**/*')])
       .pipe(gulp.dest(conf.paths.backendTmpSrc));
+});
+
+/**
+ * Cleans packaged backend source to remove any leftovers from there.
+ */
+gulp.task('clean-packaged-backend-source', function() {
+    return del([conf.paths.backendTmpSrc]);
 });
 
 /**
