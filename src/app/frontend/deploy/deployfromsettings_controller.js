@@ -105,7 +105,7 @@ export default class DeployFromSettingsController {
      * List of available namespaces.
      * @export {!Array<string>}
      */
-    this.namespaces = namespaces.namespaces;
+    this.namespaces = namespaces.namespaces.map((n) => n.objectMeta.name);
 
     /**
      * List of available secrets.
