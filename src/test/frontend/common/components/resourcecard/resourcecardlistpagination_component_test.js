@@ -14,6 +14,7 @@
 
 import resourceCardModule from 'common/components/resourcecard/resourcecard_module';
 import paginationModule from 'common/pagination/pagination_module';
+import errorHandlingModule from 'common/errorhandling/errorhandling_module';
 
 describe('Resource card list pagination', () => {
   /** @type
@@ -28,21 +29,42 @@ describe('Resource card list pagination', () => {
   let paginationId = 'test-id';
   /** @type {!common/pagination/pagination_service.PaginationService} */
   let paginationService;
+  /** @type {!angular.Scope} */
+  let scope;
+  /** @type {!angular.$httpBackend} */
+  let httpBackend;
+  /** @type {string} */
+  let namespace = 'ns-1';
+  /** @type {!common/errorhandling/errordialog_service.ErrorDialog} */
+  let errDialog;
 
   beforeEach(() => {
     angular.mock.module(paginationModule.name);
     angular.mock.module(resourceCardModule.name);
+    angular.mock.module(errorHandlingModule.name);
 
-    angular.mock.inject(($componentController, _kdPaginationService_) => {
-      resourceCardListFooterCtrl = {setListPagination: () => {}};
-      paginationService = _kdPaginationService_;
-      paginationService.registerInstance(paginationId);
-      ctrl = $componentController('kdResourceCardListPagination', {}, {
-        paginationId: paginationId,
-        kdPaginationService: paginationService,
-        resourceCardListFooterCtrl: resourceCardListFooterCtrl,
-      });
-    });
+    angular.mock.inject(
+        ($componentController, _kdPaginationService_, $rootScope, $resource, $httpBackend,
+         errorDialog) => {
+          paginationService = _kdPaginationService_;
+          paginationService.registerInstance(paginationId);
+
+          errDialog = errorDialog;
+          httpBackend = $httpBackend;
+          resourceCardListFooterCtrl = {setListPagination: () => {}};
+          scope = $rootScope;
+          ctrl = $componentController(
+              'kdResourceCardListPagination', {
+                $stateParams: {namespace: namespace},
+                errorDialog: errDialog,
+              },
+              {
+                paginationId: paginationId,
+                kdPaginationService: paginationService,
+                resourceCardListFooterCtrl: resourceCardListFooterCtrl,
+                listResource: $resource('api/v1/pod/:namespace'),
+              });
+        });
   });
 
   it('should set pagination controller on resource card list footer ctrl', () => {
@@ -56,9 +78,20 @@ describe('Resource card list pagination', () => {
     expect(resourceCardListFooterCtrl.setListPagination).toHaveBeenCalledWith(ctrl);
   });
 
+  it('should register listener', () => {
+    // given
+    spyOn(ctrl, 'registerStateChangeListener');
+
+    // when
+    ctrl.$onInit();
+
+    // then
+    expect(ctrl.registerStateChangeListener).toHaveBeenCalled();
+  });
+
   it('should show pagination', () => {
     // given
-    ctrl.totalItems = 50;
+    ctrl.list = {listMeta: {totalItems: 50}};
 
     // when
     let result = ctrl.shouldShowPagination();
@@ -69,7 +102,7 @@ describe('Resource card list pagination', () => {
 
   it('should hide pagination', () => {
     // given
-    ctrl.totalItems = 10;
+    ctrl.list = {listMeta: {totalItems: 10}};
 
     // when
     let result = ctrl.shouldShowPagination();
@@ -88,5 +121,53 @@ describe('Resource card list pagination', () => {
 
     // then
     expect(paginationService.setRowsLimit).toHaveBeenCalledWith(100, paginationId);
+  });
+
+  it('should reset rows limit', () => {
+    // given
+    spyOn(paginationService, 'resetRowsLimit');
+
+    // when
+    ctrl.$onInit();
+    scope.$broadcast('$stateChangeStart');
+    scope.$apply();
+
+    // then
+    expect(paginationService.resetRowsLimit).toHaveBeenCalled();
+  });
+
+  it('should change page', () => {
+    // given
+    let response = {pods: ['pod-1']};
+    let limit = 10;
+    let page = 2;
+    let queryString = `itemsPerPage=${limit}&page=${page}`;
+    paginationService.setRowsLimit(limit, paginationId);
+    httpBackend.expectGET(`api/v1/pod/${namespace}?${queryString}`).respond(200, response);
+
+    // when
+    ctrl.pageChanged(page);
+    httpBackend.flush();
+
+    // then
+    expect(ctrl.list.pods).toEqual(response.pods);
+  });
+
+  it('should open error dialog on page change error', () => {
+    // given
+    spyOn(errDialog, 'open');
+    let response = 'error';
+    let limit = 10;
+    let page = 2;
+    let queryString = `itemsPerPage=${limit}&page=${page}`;
+    paginationService.setRowsLimit(limit, paginationId);
+    httpBackend.expectGET(`api/v1/pod/${namespace}?${queryString}`).respond(500, response);
+
+    // when
+    ctrl.pageChanged(page);
+    httpBackend.flush();
+
+    // then
+    expect(errDialog.open).toHaveBeenCalledWith('Pagination error', response);
   });
 });

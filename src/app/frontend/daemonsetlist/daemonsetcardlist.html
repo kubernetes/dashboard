@@ -16,17 +16,28 @@ limitations under the License.
 
 <kd-resource-card-list selectable="::$ctrl.selectable" with-statuses="::$ctrl.withStatuses">
   <kd-resource-card-header-columns>
-    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_NAME_LABEL}}</kd-resource-card-header-column>
-    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_LABELS_LABEL}}</kd-resource-card-header-column>
-    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_PODS_LABEL}}</kd-resource-card-header-column>
-    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_AGE_LABEL}}</kd-resource-card-header-column>
-    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_IMAGES_LABEL}}</kd-resource-card-header-column>
+    <kd-resource-card-header-column>
+      {{::$ctrl.i18n.MSG_DAEMON_SET_LIST_NAME_LABEL}}
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column>
+      {{::$ctrl.i18n.MSG_DAEMON_SET_LIST_LABELS_LABEL}}
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column>
+      {{::$ctrl.i18n.MSG_DAEMON_SET_LIST_PODS_LABEL}}
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column>
+      {{::$ctrl.i18n.MSG_DAEMON_SET_LIST_AGE_LABEL}}
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column>
+      {{::$ctrl.i18n.MSG_DAEMON_SET_LIST_IMAGES_LABEL}}
+    </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small" grow="nogrow">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
-  <kd-resource-card dir-paginate="daemonSet in $ctrl.daemonSets.daemonSets | itemsPerPage: default"
-                    pagination-id="daemonsets" object-meta="daemonSet.objectMeta"
-                    type-meta="daemonSet.typeMeta">
+  <kd-resource-card
+          dir-paginate="daemonSet in $ctrl.daemonSetList.daemonSets | itemsPerPage: default"
+          pagination-id="daemonsets" object-meta="daemonSet.objectMeta"
+          type-meta="daemonSet.typeMeta">
     <kd-resource-card-status layout="row">
       <md-icon class="material-icons kd-error" ng-if="::$ctrl.hasWarnings(daemonSet)">
         error
@@ -67,17 +78,18 @@ limitations under the License.
       </kd-resource-card-column>
       <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
         <kd-resource-card-menu>
-          <kd-resource-card-delete-menu-item resource-kind-name="{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_DAEMON_SET_TITLE}}">
+          <kd-resource-card-delete-menu-item
+                  resource-kind-name="{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_DAEMON_SET_TITLE}}">
           </kd-resource-card-delete-menu-item>
-          <kd-resource-card-edit-menu-item resource-kind-name="{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_DAEMON_SET_TITLE}}">
+          <kd-resource-card-edit-menu-item
+                  resource-kind-name="{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_DAEMON_SET_TITLE}}">
           </kd-resource-card-edit-menu-item>
         </kd-resource-card-menu>
       </kd-resource-card-column>
     </kd-resource-card-columns>
   </kd-resource-card>
   <kd-resource-card-list-footer>
-    <kd-resource-card-list-pagination pagination-id="daemonsets"
-                                      total-items="$ctrl.daemonSets.daemonSets.length">
+    <kd-resource-card-list-pagination pagination-id="daemonsets" list="$ctrl.daemonSetList">
     </kd-resource-card-list-pagination>
   </kd-resource-card-list-footer>
 </kd-resource-card-list>

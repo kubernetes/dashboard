@@ -48,7 +48,7 @@ type Workloads struct {
 
 // GetWorkloads returns a list of all workloads in the cluster.
 func GetWorkloads(client *k8sClient.Client, heapsterClient client.HeapsterClient,
-	nsQuery *common.NamespaceQuery) (*Workloads, error) {
+	nsQuery *common.NamespaceQuery, pQuery *common.PaginationQuery) (*Workloads, error) {
 
 	log.Printf("Getting lists of all workloads")
 	channels := &common.ResourceChannels{
@@ -63,13 +63,13 @@ func GetWorkloads(client *k8sClient.Client, heapsterClient client.HeapsterClient
 		EventList:                 common.GetEventListChannel(client, nsQuery, 6),
 	}
 
-	return GetWorkloadsFromChannels(channels, heapsterClient)
+	return GetWorkloadsFromChannels(channels, heapsterClient, pQuery)
 }
 
 // GetWorkloadsFromChannels returns a list of all workloads in the cluster, from the
 // channel sources.
 func GetWorkloadsFromChannels(channels *common.ResourceChannels,
-	heapsterClient client.HeapsterClient) (*Workloads, error) {
+	heapsterClient client.HeapsterClient, pQuery *common.PaginationQuery) (*Workloads, error) {
 
 	rsChan := make(chan *replicaset.ReplicaSetList)
 	jobChan := make(chan *job.JobList)
@@ -105,7 +105,7 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels,
 	}()
 
 	go func() {
-		podList, err := pod.GetPodListFromChannels(channels, heapsterClient)
+		podList, err := pod.GetPodListFromChannels(channels, pQuery, heapsterClient)
 		errChan <- err
 		podChan <- podList
 	}()

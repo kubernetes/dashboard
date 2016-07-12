@@ -132,7 +132,9 @@ func TestGetServicePods(t *testing.T) {
 				Namespace: "test-namespace-3",
 			}}}},
 			[]string{"list"},
-			&pod.PodList{Pods: []pod.Pod{{
+			&pod.PodList{
+				ListMeta: common.ListMeta{TotalItems: 1},
+				Pods: []pod.Pod{{
 				ObjectMeta: common.ObjectMeta{
 					Name:      "test-pod",
 					Labels:    firstSelector,

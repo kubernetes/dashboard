@@ -19,11 +19,11 @@
  */
 export class NodeListController {
   /**
-   * @param {!backendApi.NodeList} nodes
+   * @param {!backendApi.NodeList} nodeList
    * @ngInject
    */
-  constructor(nodes) {
-    /** @export {!Array<!backendApi.Node>} */
-    this.nodes = nodes.nodes;
+  constructor(nodeList) {
+    /** @export {!backendApi.NodeList} */
+    this.nodeList = nodeList;
   }
 }

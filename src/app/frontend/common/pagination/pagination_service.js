@@ -30,6 +30,13 @@ export class PaginationService {
   }
 
   /**
+   * Reset rows limit to default value.
+   */
+  resetRowsLimit() {
+    this.instances_.forEach((val, key) => { this.instances_.set(key, DEFAULT_ROWS_LIMIT); });
+  }
+
+  /**
    * Returns true if given pagination id is registered, false otherwise.
    *
    * @param {string} paginationId
@@ -92,4 +99,22 @@ export class PaginationService {
    * @return {!Array<number>}
    */
   getRowsLimitOptions() { return this.rowsLimitOptions_; }
+
+  /**
+   * @param {number} itemsPerPage
+   * @param {number} pageNr
+   * @param {string|undefined} namespace
+   * @return {!backendApi.PaginationQuery}
+   */
+  static getResourceQuery(itemsPerPage, pageNr, namespace) {
+    return {itemsPerPage: itemsPerPage, page: pageNr, namespace: namespace || ''};
+  }
+
+  /**
+   * @param {string|undefined} namespace
+   * @returns {!backendApi.PaginationQuery}
+   */
+  static getDefaultResourceQuery(namespace) {
+    return {itemsPerPage: DEFAULT_ROWS_LIMIT, page: 1, namespace: namespace || ''};
+  }
 }

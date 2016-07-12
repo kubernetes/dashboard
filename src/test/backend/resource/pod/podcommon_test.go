@@ -141,3 +141,91 @@ func TestToPod(t *testing.T) {
 		}
 	}
 }
+
+func TestPaginate(t *testing.T) {
+	cases := []struct {
+		pods     []api.Pod
+		pQuery   *common.PaginationQuery
+		expected []api.Pod
+	}{
+		{
+			[]api.Pod{
+				{ObjectMeta: api.ObjectMeta{Name: "pod-1"}},
+				{ObjectMeta: api.ObjectMeta{Name: "pod-2"}},
+				{ObjectMeta: api.ObjectMeta{Name: "pod-3"}},
+			},
+			&common.PaginationQuery{1, 0},
+			[]api.Pod{
+				{ObjectMeta: api.ObjectMeta{Name: "pod-1"}},
+			},
+		},
+		{
+			[]api.Pod{
+				{ObjectMeta: api.ObjectMeta{Name: "pod-1"}},
+				{ObjectMeta: api.ObjectMeta{Name: "pod-2"}},
+				{ObjectMeta: api.ObjectMeta{Name: "pod-3"}},
+			},
+			&common.PaginationQuery{1, 2},
+			[]api.Pod{
+				{ObjectMeta: api.ObjectMeta{Name: "pod-3"}},
+			},
+		},
+		{
+			[]api.Pod{
+				{ObjectMeta: api.ObjectMeta{Name: "pod-1"}},
+				{ObjectMeta: api.ObjectMeta{Name: "pod-2"}},
+				{ObjectMeta: api.ObjectMeta{Name: "pod-3"}},
+			},
+			&common.PaginationQuery{1, 3},
+			[]api.Pod{
+				{ObjectMeta: api.ObjectMeta{Name: "pod-1"}},
+				{ObjectMeta: api.ObjectMeta{Name: "pod-2"}},
+				{ObjectMeta: api.ObjectMeta{Name: "pod-3"}},
+			},
+		},
+		{
+			[]api.Pod{
+				{ObjectMeta: api.ObjectMeta{Name: "pod-1"}},
+				{ObjectMeta: api.ObjectMeta{Name: "pod-2"}},
+				{ObjectMeta: api.ObjectMeta{Name: "pod-3"}},
+			},
+			&common.PaginationQuery{2, 0},
+			[]api.Pod{
+				{ObjectMeta: api.ObjectMeta{Name: "pod-1"}},
+				{ObjectMeta: api.ObjectMeta{Name: "pod-2"}},
+			},
+		},
+		{
+			[]api.Pod{
+				{ObjectMeta: api.ObjectMeta{Name: "pod-1"}},
+				{ObjectMeta: api.ObjectMeta{Name: "pod-2"}},
+				{ObjectMeta: api.ObjectMeta{Name: "pod-3"}},
+			},
+			&common.PaginationQuery{2, 1},
+			[]api.Pod{
+				{ObjectMeta: api.ObjectMeta{Name: "pod-3"}},
+			},
+		},
+		{
+			[]api.Pod{
+				{ObjectMeta: api.ObjectMeta{Name: "pod-1"}},
+				{ObjectMeta: api.ObjectMeta{Name: "pod-2"}},
+				{ObjectMeta: api.ObjectMeta{Name: "pod-3"}},
+			},
+			&common.PaginationQuery{0, 0},
+			[]api.Pod{
+				{ObjectMeta: api.ObjectMeta{Name: "pod-1"}},
+				{ObjectMeta: api.ObjectMeta{Name: "pod-2"}},
+				{ObjectMeta: api.ObjectMeta{Name: "pod-3"}},
+			},
+		},
+	}
+
+	for _, c := range cases {
+		actual := paginate(c.pods, c.pQuery)
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("paginate(%#v, %#v) == \ngot %#v, \nexpected %#v", c.pods, c.pQuery, actual,
+				c.expected)
+		}
+	}
+}

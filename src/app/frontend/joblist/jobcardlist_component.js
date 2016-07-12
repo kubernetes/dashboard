@@ -18,7 +18,8 @@
 export const jobCardListComponent = {
   transclude: true,
   bindings: {
-    'jobs': '<',
+    /** {!backendApi.JobList} */
+    'jobList': '<',
   },
   templateUrl: 'joblist/jobcardlist.html',
 };

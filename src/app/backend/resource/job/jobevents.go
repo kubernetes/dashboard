@@ -51,10 +51,7 @@ func GetJobEvents(client client.Interface, namespace, jobName string) (
 		apiEvents = event.FillEventsType(apiEvents)
 	}
 
-	events := event.AppendEvents(apiEvents, common.EventList{
-		Namespace: namespace,
-		Events:    make([]common.Event, 0),
-	})
+	events := event.ToEventList(apiEvents, namespace)
 
 	log.Printf("Found %d events related to %s job in %s namespace",
 		len(events.Events), jobName, namespace)

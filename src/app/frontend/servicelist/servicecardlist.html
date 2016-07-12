@@ -16,22 +16,33 @@ limitations under the License.
 
 <kd-resource-card-list selectable="::$ctrl.selectable" with-statuses="true">
   <kd-resource-card-header-columns>
-    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_SERVICE_LIST_NAME_LABEL}}</kd-resource-card-header-column>
-    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_SERVICE_LIST_LABELS_LABEL}}</kd-resource-card-header-column>
-    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_SERVICE_LIST_CLUSTER_IP_LABEL}}</kd-resource-card-header-column>
-    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_SERVICE_LIST_INTERNAL_ENDPOINTS_LABEL}}</kd-resource-card-header-column>
-    <kd-resource-card-header-column>{{::$ctrl.i18n.MSG_SERVICE_LIST_EXTERNAL_ENDPOINTS_LABEL}}</kd-resource-card-header-column>
+    <kd-resource-card-header-column>
+      {{::$ctrl.i18n.MSG_SERVICE_LIST_NAME_LABEL}}
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column>
+      {{::$ctrl.i18n.MSG_SERVICE_LIST_LABELS_LABEL}}
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column>
+      {{::$ctrl.i18n.MSG_SERVICE_LIST_CLUSTER_IP_LABEL}}
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column>
+      {{::$ctrl.i18n.MSG_SERVICE_LIST_INTERNAL_ENDPOINTS_LABEL}}
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column>
+      {{::$ctrl.i18n.MSG_SERVICE_LIST_EXTERNAL_ENDPOINTS_LABEL}}
+    </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small" grow="nogrow">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
 
-  <kd-resource-card dir-paginate="service in $ctrl.services | itemsPerPage: default"
+  <kd-resource-card dir-paginate="service in $ctrl.serviceList.services | itemsPerPage: default"
                     pagination-id="services" object-meta="service.objectMeta"
                     type-meta="service.typeMeta">
     <kd-resource-card-status layout="row">
       <md-icon class="material-icons" ng-if="::$ctrl.isPending(service)">
         timelapse
-        <md-tooltip md-direction="right">{{::$ctrl.i18n.MSG_SERVICE_IS_PENDING_TOOLTIP}}</md-tooltip>
+        <md-tooltip md-direction="right">{{::$ctrl.i18n.MSG_SERVICE_IS_PENDING_TOOLTIP}}
+        </md-tooltip>
       </md-icon>
       <md-icon class="material-icons kd-success" ng-if="::$ctrl.isSuccess(service)">
         check_circle
@@ -73,8 +84,7 @@ limitations under the License.
     </kd-resource-card-columns>
   </kd-resource-card>
   <kd-resource-card-list-footer>
-    <kd-resource-card-list-pagination pagination-id="services"
-                                      total-items="$ctrl.services.length">
+    <kd-resource-card-list-pagination pagination-id="services" list="$ctrl.serviceList">
     </kd-resource-card-list-pagination>
   </kd-resource-card-list-footer>
 </kd-resource-card-list>

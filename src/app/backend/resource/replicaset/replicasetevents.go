@@ -51,10 +51,7 @@ func GetReplicaSetEvents(client client.Interface, namespace, replicaSetName stri
 		apiEvents = event.FillEventsType(apiEvents)
 	}
 
-	events := event.AppendEvents(apiEvents, common.EventList{
-		Namespace: namespace,
-		Events:    make([]common.Event, 0),
-	})
+	events := event.ToEventList(apiEvents, namespace)
 
 	log.Printf("Found %d events related to %s replica set in %s namespace",
 		len(events.Events), replicaSetName, namespace)
