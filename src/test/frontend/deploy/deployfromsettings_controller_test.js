@@ -67,14 +67,16 @@ describe('DeployFromSettings controller', () => {
   });
 
   it('should select initial namespace', angular.mock.inject(($controller) => {
-    ctrl = $controller(
-        DeployFromSettingController,
-        {namespaces: {namespaces: ['foo', 'bar']}, protocols: {protocols: []}, $stateParams: {}});
+    ctrl = $controller(DeployFromSettingController, {
+      namespaces: {namespaces: [{objectMeta: {name: 'foo'}}, {objectMeta: {name: 'bar'}}]},
+      protocols: {protocols: []},
+      $stateParams: {},
+    });
 
     expect(ctrl.namespace).toBe('foo');
 
     ctrl = $controller(DeployFromSettingController, {
-      namespaces: {namespaces: ['foo', 'bar']},
+      namespaces: {namespaces: [{objectMeta: {name: 'foo'}}, {objectMeta: {name: 'bar'}}]},
       protocols: {protocols: []},
       $stateParams: {namespace: 'bar'},
     });

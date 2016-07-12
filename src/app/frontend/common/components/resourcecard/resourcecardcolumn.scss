@@ -18,6 +18,7 @@ kd-resource-card-column {
   border-top: 1px solid $border;
   display: flex;
   flex-basis: auto;
+  min-height: $baseline-grid * 4;
   min-width: $baseline-grid * 10;
   padding-left: 2 * $baseline-grid;
   padding-top: $baseline-grid / 2;
