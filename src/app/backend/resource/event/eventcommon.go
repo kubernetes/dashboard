@@ -102,6 +102,15 @@ func GetNodeEvents(client client.Interface, nodeName string) (common.EventList, 
 	return eventList, nil
 }
 
+// GetNodeEvents gets events associated to node with given name.
+func GetNamespaceEvents(client client.Interface, namespace string) (common.EventList, error) {
+	events, _ := client.Events(namespace).List(api.ListOptions{
+		LabelSelector: labels.Everything(),
+		FieldSelector: fields.Everything(),
+	})
+	return CreateEventList(events.Items, common.NO_PAGINATION), nil
+}
+
 // Based on event Reason fills event Type in order to allow correct filtering by Type.
 func FillEventsType(events []api.Event) []api.Event {
 	for i := range events {

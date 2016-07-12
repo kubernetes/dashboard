@@ -267,6 +267,10 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 		apiV1Ws.GET("/namespace").
 			To(apiHandler.handleGetNamespaces).
 			Writes(NamespaceList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/namespace/{name}").
+			To(apiHandler.handleGetNamespaceDetail).
+			Writes(NamespaceDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/secret/{namespace}").
@@ -772,12 +776,25 @@ func (apiHandler *ApiHandler) handleCreateNamespace(request *restful.Request,
 func (apiHandler *ApiHandler) handleGetNamespaces(
 	request *restful.Request, response *restful.Response) {
 
-	result, err := GetNamespaceList(apiHandler.client)
+	pagination := parsePaginationPathParameter(request)
+	result, err := GetNamespaceList(apiHandler.client, pagination)
 	if err != nil {
 		handleInternalError(response, err)
 		return
 	}
 
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get namespace detail API call.
+func (apiHandler *ApiHandler) handleGetNamespaceDetail(request *restful.Request,
+	response *restful.Response) {
+	name := request.PathParameter("name")
+	result, err := GetNamespaceDetail(apiHandler.client, apiHandler.heapsterClient, name)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 

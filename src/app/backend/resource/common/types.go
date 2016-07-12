@@ -104,6 +104,7 @@ const (
 	ResourceKindDaemonSet             = "daemonset"
 	ResourceKindJob                   = "job"
 	ResourceKindPetSet                = "petset"
+	ResourceKindNamespace             = "namespace"
 	ResourceKindNode                  = "node"
 	ResourceKindSecret                = "secret"
 	ResourceKindConfigMap             = "configmap"
@@ -141,6 +142,7 @@ var kindToAPIMapping = map[string]struct {
 	ResourceKindDaemonSet:             {"daemonsets", ClientTypeExtensionClient},
 	ResourceKindPetSet:                {"petsets", ClientTypeAppsClient},
 	ResourceKindJob:                   {"jobs", ClientTypeBatchClient},
+	ResourceKindNamespace:             {"namespaces", ClientTypeDefault},
 	ResourceKindNode:                  {"nodes", ClientTypeDefault},
 	ResourceKindSecret:                {"secrets", ClientTypeDefault},
 	ResourceKindConfigMap:             {"configmaps", ClientTypeDefault},
