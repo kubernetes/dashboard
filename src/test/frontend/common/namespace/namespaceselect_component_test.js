@@ -59,7 +59,9 @@ describe('Namespace select component ', () => {
     expect(ctrl.selectedNamespace).toBe('non-existing-namespace2');
 
     ctrl.loadNamespacesIfNeeded();
-    httpBackend.whenGET('api/v1/namespace').respond({namespaces: ['a', 'b', 'c']});
+    httpBackend.whenGET('api/v1/namespace').respond({
+      namespaces: [{objectMeta: {name: 'a'}}, {objectMeta: {name: 'b'}}, {objectMeta: {name: 'c'}}],
+    });
     httpBackend.flush();
     expect(ctrl.namespaces).toEqual(['a', 'b', 'c']);
     expect(ctrl.selectedNamespace).toBe('__NAMESPACE_NOT_SELECTED__');
@@ -79,7 +81,9 @@ describe('Namespace select component ', () => {
     expect(ctrl.selectedNamespace).toBe('a');
 
     ctrl.loadNamespacesIfNeeded();
-    httpBackend.whenGET('api/v1/namespace').respond({namespaces: ['a', 'b', 'c']});
+    httpBackend.whenGET('api/v1/namespace').respond({
+      namespaces: [{objectMeta: {name: 'a'}}, {objectMeta: {name: 'b'}}, {objectMeta: {name: 'c'}}],
+    });
     httpBackend.flush();
     expect(ctrl.namespaces).toEqual(['a', 'b', 'c']);
     expect(ctrl.selectedNamespace).toBe('a');

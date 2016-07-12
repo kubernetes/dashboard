@@ -77,8 +77,6 @@ const i18n = {
   /** @export {string} @desc Label 'Label selector' for the node's labels list on the node
         details page.*/
   MSG_NODE_DETAIL_LABELS_LABEL: goog.getMsg('Labels'),
-  /** @export {string} @desc Subtitle 'Status' for the right section with pod status information
-        on the node details page.*/
   /** @export {string} @desc Subtitle 'System info' for the right section with general information
      about node system on the node details page.*/
   MSG_NODE_DETAIL_SYSTEM_SUBTITLE: goog.getMsg('System info'),
