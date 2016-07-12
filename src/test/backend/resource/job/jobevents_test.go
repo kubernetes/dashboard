@@ -48,6 +48,7 @@ func TestGetJobEvents(t *testing.T) {
 					}}},
 			[]string{"list", "get", "list", "list"},
 			&common.EventList{
+				ListMeta: common.ListMeta{TotalItems: 1},
 				Namespace: "test-namespace",
 				Events: []common.Event{{
 					TypeMeta:   common.TypeMeta{Kind: common.ResourceKindEvent},
@@ -79,7 +80,7 @@ func TestGetJobEvents(t *testing.T) {
 		}
 
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("GetEvents(client,heapsterClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
+			t.Errorf("TestGetJobEvents(client,heapsterClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
 				c.namespace, c.name, actual, c.expected)
 		}
 	}
@@ -131,7 +132,7 @@ func TestGetJobPodsEvents(t *testing.T) {
 		}
 
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("GetEvents(client,heapsterClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
+			t.Errorf("TestGetJobPodsEvents(client,heapsterClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
 				c.namespace, c.name, actual, c.expected)
 		}
 	}

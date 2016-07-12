@@ -20,11 +20,15 @@
 export class PodListController {
   /**
    * @param {!backendApi.PodList} podList
+   * @param {!angular.$resource} kdPodListResource
    * @ngInject
    */
-  constructor(podList) {
+  constructor(podList, kdPodListResource) {
     /** @export {!backendApi.PodList} */
     this.podList = podList;
+
+    /** @export {!angular.$resource} */
+    this.podListResource = kdPodListResource;
   }
 
   /**

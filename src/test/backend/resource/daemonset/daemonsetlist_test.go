@@ -201,6 +201,7 @@ func TestGetDaemonSetList(t *testing.T) {
 			},
 			},
 			&DaemonSetList{
+				ListMeta: common.ListMeta{TotalItems: 2},
 				DaemonSets: []DaemonSet{
 					{
 						ObjectMeta: common.ObjectMeta{

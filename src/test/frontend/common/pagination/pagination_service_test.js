@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import paginationModule from 'common/pagination/pagination_module';
-import {DEFAULT_ROWS_LIMIT, ROWS_LIMIT_OPTIONS} from 'common/pagination/pagination_service';
+import {DEFAULT_ROWS_LIMIT, ROWS_LIMIT_OPTIONS, PaginationService} from 'common/pagination/pagination_service';
 
 describe('Pagination service', () => {
   /** @type {!common/pagination/pagination_service.PaginationService} */
@@ -100,4 +100,56 @@ describe('Pagination service', () => {
 
   it('should return rows limit options',
      () => { expect(paginationService.getRowsLimitOptions()).toEqual(ROWS_LIMIT_OPTIONS); });
+
+  it('should reset rows limit', () => {
+    // given
+    paginationService.registerInstance('id-1');
+    paginationService.registerInstance('id-2');
+
+    paginationService.setRowsLimit(50, 'id-1');
+    paginationService.setRowsLimit(100, 'id-2');
+
+    // when
+    paginationService.resetRowsLimit();
+
+    // then
+    expect(paginationService.getRowsLimit('id-1')).toEqual(DEFAULT_ROWS_LIMIT);
+    expect(paginationService.getRowsLimit('id-2')).toEqual(DEFAULT_ROWS_LIMIT);
+  });
+
+  it('should return pagination query object', () => {
+    let cases = [
+      [10, 1, 'ns-1', {itemsPerPage: 10, page: 1, namespace: 'ns-1'}],
+      [10, 2, undefined, {itemsPerPage: 10, page: 2, namespace: ''}],
+    ];
+
+    cases.forEach((testData) => {
+      // given
+      let [itemsPerPage, page, ns, expected] = testData;
+
+      // when
+      let actual = PaginationService.getResourceQuery(itemsPerPage, page, ns);
+
+      // then
+      expect(actual).toEqual(expected);
+    });
+  });
+
+  it('should return default pagination query object', () => {
+    let cases = [
+      ['ns-1', {itemsPerPage: 10, page: 1, namespace: 'ns-1'}],
+      [undefined, {itemsPerPage: 10, page: 1, namespace: ''}],
+    ];
+
+    cases.forEach((testData) => {
+      // given
+      let [ns, expected] = testData;
+
+      // when
+      let actual = PaginationService.getDefaultResourceQuery(ns);
+
+      // then
+      expect(actual).toEqual(expected);
+    });
+  });
 });

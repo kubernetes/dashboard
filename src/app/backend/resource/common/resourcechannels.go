@@ -178,8 +178,8 @@ func GetPodListChannel(client client.PodsNamespacer,
 }
 
 // GetPodListChannelWithOptions is GetPodListChannel plus listing options.
-func GetPodListChannelWithOptions(client client.PodsNamespacer,
-	nsQuery *NamespaceQuery, options api.ListOptions, numReads int) PodListChannel {
+func GetPodListChannelWithOptions(client client.PodsNamespacer, nsQuery *NamespaceQuery,
+	options api.ListOptions, numReads int) PodListChannel {
 
 	channel := PodListChannel{
 		List:  make(chan *api.PodList, numReads),

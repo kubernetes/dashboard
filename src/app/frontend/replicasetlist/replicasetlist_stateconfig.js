@@ -30,7 +30,7 @@ export default function stateConfig($stateProvider) {
     url: stateUrl,
     parent: chromeStateName,
     resolve: {
-      'replicaSets': resolveReplicaSets,
+      'replicaSetList': resolveReplicaSetList,
     },
     data: {
       [breadcrumbsConfig]: {
@@ -57,7 +57,7 @@ export default function stateConfig($stateProvider) {
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveReplicaSets($resource, $stateParams) {
+export function resolveReplicaSetList($resource, $stateParams) {
   /** @type {!angular.Resource<!backendApi.ReplicaSetList>} */
   let resource = $resource(`api/v1/replicaset/${$stateParams.namespace || ''}`);
   return resource.get().$promise;

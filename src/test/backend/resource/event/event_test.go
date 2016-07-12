@@ -361,7 +361,7 @@ func TestIsFailedReason(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := IsFailedReason(c.reason, c.failedPartials...)
+		actual := isFailedReason(c.reason, c.failedPartials...)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("IsFailedReason(%#v, %#v) == \n%#v\nexpected \n%#v\n",
 				c.reason, c.failedPartials, actual, c.expected)
@@ -405,7 +405,7 @@ func TestFilterEventsByPodsUID(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := FilterEventsByPodsUID(c.events, c.pods)
+		actual := filterEventsByPodsUID(c.events, c.pods)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("FilterEventsByPodsUID(%#v, %#v) == \n%#v\nexpected \n%#v\n",
 				c.events, c.pods, actual, c.expected)

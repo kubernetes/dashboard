@@ -4,26 +4,26 @@
       <md-tab label="{{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_OVERVIEW_LABEL}}">
         <kd-deployment-info deployment="::ctrl.deploymentDetail"></kd-deployment-info>
 
-        <kd-content-card ng-if="ctrl.deploymentDetail.newReplicaSet.objectMeta.name">
+        <kd-content-card ng-if="::ctrl.deploymentDetail.newReplicaSet.objectMeta.name">
           <kd-title>{{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_NEW_REPLICAS_TITLE}}</kd-title>
           <kd-content>
             <kd-replica-set-card-list
-                    replica-sets="::[ctrl.deploymentDetail.newReplicaSet]">
+                    replica-set-list="::ctrl.newReplicaSetList">
             </kd-replica-set-card-list>
           </kd-content>
         </kd-content-card>
 
-        <kd-content-card ng-if="ctrl.deploymentDetail.oldReplicaSetList.replicaSets.length">
+        <kd-content-card ng-if="::ctrl.deploymentDetail.oldReplicaSetList.replicaSets.length">
           <kd-title>{{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_OLD_REPLICAS_TITLE}}</kd-title>
           <kd-content>
             <kd-replica-set-card-list
-                    replica-sets="::ctrl.deploymentDetail.oldReplicaSetList.replicaSets">
+                    replica-set-list="::ctrl.deploymentDetail.oldReplicaSetList">
             </kd-replica-set-card-list>
           </kd-content>
         </kd-content-card>
       </md-tab>
       <md-tab label="{{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_EVENTS_LABEL}}">
-        <kd-event-card-list events="::ctrl.deploymentDetail.eventList.events"></kd-event-card-list>
+        <kd-event-card-list event-list="::ctrl.deploymentDetail.eventList"></kd-event-card-list>
       </md-tab>
     </md-tabs>
   </md-content>

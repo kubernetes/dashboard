@@ -72,3 +72,14 @@ func GetContainerImages(podTemplate *api.PodSpec) []string {
 	}
 	return containerImages
 }
+
+func paginate(pods []api.Pod, pQuery *common.PaginationQuery) []api.Pod {
+	startIndex, endIndex := pQuery.GetPaginationSettings(len(pods))
+
+	// Return all items if provided settings do not meet requirements
+	if !pQuery.CanPaginate(len(pods), startIndex) {
+		return pods
+	}
+
+	return pods[startIndex:endIndex]
+}

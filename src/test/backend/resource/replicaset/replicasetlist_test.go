@@ -39,7 +39,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 			extensions.ReplicaSetList{},
 			nil,
 			&api.PodList{},
-			&ReplicaSetList{[]ReplicaSet{}},
+			&ReplicaSetList{common.ListMeta{}, []ReplicaSet{}},
 			nil,
 		},
 		{
@@ -117,6 +117,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 				},
 			},
 			&ReplicaSetList{
+				common.ListMeta{TotalItems: 1},
 				[]ReplicaSet{{
 					ObjectMeta: common.ObjectMeta{
 						Name:              "rs-name",

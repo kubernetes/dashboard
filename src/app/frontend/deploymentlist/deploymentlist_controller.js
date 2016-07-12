@@ -19,17 +19,17 @@
  */
 export class DeploymentListController {
   /**
-   * @param {!backendApi.DeploymentList} deployments
+   * @param {!backendApi.DeploymentList} deploymentList
    * @ngInject
    */
-  constructor(deployments) {
-    /** @export {!Array<!backendApi.Deployment>} */
-    this.deployments = deployments.deployments;
+  constructor(deploymentList) {
+    /** @export {!backendApi.DeploymentList} */
+    this.deploymentList = deploymentList;
   }
 
   /**
    * @return {boolean}
    * @export
    */
-  shouldShowZeroState() { return this.deployments.length === 0; }
+  shouldShowZeroState() { return this.deploymentList.deployments.length === 0; }
 }

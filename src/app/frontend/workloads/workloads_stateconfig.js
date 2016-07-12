@@ -14,6 +14,7 @@
 
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {PaginationService} from 'common/pagination/pagination_service';
 
 import {WorkloadsController} from './workloads_controller';
 import {stateName} from './workloads_state';
@@ -49,15 +50,15 @@ export default function stateConfig($stateProvider) {
 }
 
 /**
- * @param {!angular.$resource} $resource
+ * @param {!angular.$resource} kdWorkloadResource
  * @param {!./../chrome/chrome_state.StateParams} $stateParams
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveWorkloads($resource, $stateParams) {
-  /** @type {!angular.Resource<!backendApi.Workloads>} */
-  let resource = $resource(`api/v1/workload/${$stateParams.namespace || ''}`);
-  return resource.get().$promise;
+export function resolveWorkloads(kdWorkloadResource, $stateParams) {
+  /** @type {!backendApi.PaginationQuery} */
+  let paginationQuery = PaginationService.getDefaultResourceQuery($stateParams.namespace);
+  return kdWorkloadResource.get(paginationQuery).$promise;
 }
 
 const i18n = {

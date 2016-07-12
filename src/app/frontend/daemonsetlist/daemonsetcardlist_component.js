@@ -27,9 +27,9 @@ export class DaemonSetCardListController {
   constructor($state, $interpolate) {
     /**
      * Initialized from the scope.
-     * @export {!backendApi.DaemonSet}
+     * @export {!backendApi.DaemonSetList}
      */
-    this.daemonSets;
+    this.daemonSetList;
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
@@ -37,9 +37,7 @@ export class DaemonSetCardListController {
     /** @private {!angular.$interpolate} */
     this.interpolate_ = $interpolate;
 
-    /**
-     * @export
-     */
+    /** @export */
     this.i18n = i18n;
   }
 
@@ -98,8 +96,8 @@ export const daemonSetCardListComponent = {
   templateUrl: 'daemonsetlist/daemonsetcardlist.html',
   controller: DaemonSetCardListController,
   bindings: {
-    /** {!Array<!backendApi.Service>} */
-    'daemonSets': '<',
+    /** {!Array<!backendApi.DaemonSetList>} */
+    'daemonSetList': '<',
     /** {boolean} */
     'selectable': '<',
     /** {boolean} */

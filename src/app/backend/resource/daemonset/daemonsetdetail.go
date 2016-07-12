@@ -19,10 +19,11 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 	"k8s.io/kubernetes/pkg/api"
-	unversioned "k8s.io/kubernetes/pkg/api/unversioned"
+	"k8s.io/kubernetes/pkg/api/unversioned"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
@@ -43,13 +44,16 @@ type DaemonSetDetail struct {
 	PodInfo common.PodInfo `json:"podInfo"`
 
 	// Detailed information about Pods belonging to this Daemon Set.
-	Pods pod.PodList `json:"pods"`
+	PodList pod.PodList `json:"podList"`
 
 	// Detailed information about service related to Daemon Set.
 	ServiceList resourceService.ServiceList `json:"serviceList"`
 
 	// True when the data contains at least one pod with metrics information, false otherwise.
 	HasMetrics bool `json:"hasMetrics"`
+
+	// List of events related to this daemon set
+	EventList common.EventList `json:"eventList"`
 }
 
 // Returns detailed information about the given daemon set in the given namespace.
@@ -93,7 +97,10 @@ func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient client.Heapst
 			container.Image)
 	}
 
-	daemonSetDetail.Pods = pod.CreatePodList(pods.Items, heapsterClient)
+	daemonSetDetail.PodList = pod.CreatePodList(pods.Items, common.NO_PAGINATION, heapsterClient)
+
+	// TODO related issue #991
+	daemonSetDetail.EventList = event.ToEventList([]api.Event{}, namespace)
 
 	return daemonSetDetail, nil
 }

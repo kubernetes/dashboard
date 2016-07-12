@@ -42,6 +42,7 @@ func TestGetServiceList(t *testing.T) {
 				}},
 			expectedActions: []string{"list"},
 			expected: &ServiceList{
+				ListMeta: common.ListMeta{TotalItems: 1},
 				Services: []Service{
 					{
 						ObjectMeta: common.ObjectMeta{
