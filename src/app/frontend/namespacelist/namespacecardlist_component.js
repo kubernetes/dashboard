@@ -15,13 +15,13 @@
 /**
  * @final
  */
-export class NodeCardListController {
+export class NamespaceCardListController {
   /**
    * @ngInject
    */
   constructor() {
-    /** @export {!backendApi.NodeList} Initialized from binding. */
-    this.nodeList;
+    /** @export {!Array<!backendApi.Namespace>} Initialized from binding. */
+    this.namespaces;
     /** @export */
     this.i18n = i18n;
   }
@@ -30,23 +30,26 @@ export class NodeCardListController {
 /**
  * @return {!angular.Component}
  */
-export const nodeCardListComponent = {
+export const namespaceCardListComponent = {
   transclude: true,
   bindings: {
-    'nodeList': '<',
+    'namespaces': '<',
   },
-  templateUrl: 'nodelist/nodecardlist.html',
-  controller: NodeCardListController,
+  templateUrl: 'namespacelist/namespacecardlist.html',
+  controller: NamespaceCardListController,
 };
 
 const i18n = {
   /** @export {string} @desc Label 'Name' which appears as a column label in the table of
-      nodes (node list view). */
-  MSG_NODE_LIST_NAME_LABEL: goog.getMsg('Name'),
+      namespaces (namespace list view). */
+  MSG_NAMESPACE_LIST_NAME_LABEL: goog.getMsg('Name'),
   /** @export {string} @desc Label 'Labels' which appears as a column label in the table of
-      nodes (node list view). */
-  MSG_NODE_LIST_LABELS_LABEL: goog.getMsg('Labels'),
-  /** @export {string} @desc Label 'Age' which appears as a column label in the
-      table of nodes (node list view). */
-  MSG_NODE_LIST_AGE_LABEL: goog.getMsg('Age'),
+   namespaces (namespace list view). */
+  MSG_NAMESPACE_LIST_LABELS_LABEL: goog.getMsg('Labels'),
+  /** @export {string} @desc Label 'Age' which appears as a column label in the table of
+      namespaces (namespace list view). */
+  MSG_NAMESPACE_LIST_AGE_LABEL: goog.getMsg('Age'),
+  /** @export {string} @desc Label 'Status' which appears as a column label in the table of
+      namespaces (namespace list view). */
+  MSG_NAMESPACE_LIST_STATUS_LABEL: goog.getMsg('Status'),
 };

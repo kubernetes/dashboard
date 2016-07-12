@@ -80,15 +80,15 @@ func TestWithAdditionalFormat(t *testing.T) {
     }
    }
   }
- }`, &Config {
- 	SchemaFormatHandler: func(typeName string) string {
-		switch typeName {
-		case "swagger.mytime":
-			return "date-time"
-		}
-		return ""
- 	},
- })
+ }`, &Config{
+		SchemaFormatHandler: func(typeName string) string {
+			switch typeName {
+			case "swagger.mytime":
+				return "date-time"
+			}
+			return ""
+		},
+	})
 }
 
 // clear && go test -v -test.run TestCustomMarshaller_Issue96 ...swagger

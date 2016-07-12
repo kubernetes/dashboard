@@ -132,7 +132,7 @@ export class NamespaceSelectController {
       let resource = this.resource_('api/v1/namespace');
 
       return resource.get().$promise.then((/** !backendApi.NamespaceList */ namespaceList) => {
-        this.namespaces = namespaceList.namespaces;
+        this.namespaces = Array.from(namespaceList.namespaces, n => n.objectMeta.name);
         this.namespacesInitialized_ = true;
         if (this.namespaces.indexOf(this.selectedNamespace) === -1) {
           this.selectedNamespace = NAMESPACE_NOT_SELECTED;

@@ -734,7 +734,7 @@ func (c commandSorterByName) Less(i, j int) bool { return c[i].Name() < c[j].Nam
 // Commands returns a sorted slice of child commands.
 func (c *Command) Commands() []*Command {
 	// do not sort commands if it already sorted or sorting was disabled
-	if EnableCommandSorting && !c.commandsAreSorted{
+	if EnableCommandSorting && !c.commandsAreSorted {
 		sort.Sort(commandSorterByName(c.commands))
 		c.commandsAreSorted = true
 	}
