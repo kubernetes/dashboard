@@ -70,8 +70,8 @@ const i18n = {
   MSG_NAMESPACE_DETAIL_DETAILS_SUBTITLE: goog.getMsg('Details'),
   /** @export {string} @desc Label 'Age' for the namespace namespace on the namespace details page.*/
   MSG_NAMESPACE_DETAIL_AGE_LABEL: goog.getMsg('Age'),
-  /** @export {string} @desc Label 'Phase' for the namespace namespace on the namespace details page.*/
-  MSG_NAMESPACE_DETAIL_PHASE_LABEL: goog.getMsg('Phase'),
+  /** @export {string} @desc Label 'Status' for the namespace namespace on the namespace details page.*/
+  MSG_NAMESPACE_DETAIL_STATUS_LABEL: goog.getMsg('Status'),
   /** @export {string} @desc Label 'Name' for the namespace name on the namespace details page.*/
   MSG_NAMESPACE_DETAIL_NAME_LABEL: goog.getMsg('Name'),
   /** @export {string} @desc Label 'Label selector' for the namespace's labels list on the namespace

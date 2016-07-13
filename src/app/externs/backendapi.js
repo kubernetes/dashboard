@@ -498,13 +498,6 @@ backendApi.NamespaceSpec;
 
 /**
  * @typedef {{
- *   namespaces: !Array<string>
- * }}
- */
-backendApi.NamespaceList;
-
-/**
- * @typedef {{
  *   name: string,
  *   restartCount: number
  * }}
@@ -605,6 +598,31 @@ backendApi.SecretSpec;
  * }}
  */
 backendApi.SecretsList;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   phase: string
+ * }}
+ */
+backendApi.Namespace;
+
+/**
+ * @typedef {{
+ *   namespaces: !Array<!backendApi.Namespace>
+ * }}
+ */
+backendApi.NamespaceList;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   phase: string
+ * }}
+ */
+backendApi.NamespaceDetail;
 
 /**
  * @typedef {{
