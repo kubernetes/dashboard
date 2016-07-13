@@ -106,7 +106,7 @@ describe('Pet Set card', () => {
     expect(ctrl.isSuccess()).toBe(true);
   });
 
-  it('should format the "created at" tooltip correctly'), () => {
-    expect(ctrl.getCreatedAtTooltip('2016-06-06T09:13:12Z')).toEqual('Created at 6/6/16 09:13 AM');
-  };
+  it('should format the "created at" tooltip correctly', () => {
+    expect(ctrl.getCreatedAtTooltip('2016-06-06T09:13:12Z')).toMatch('Created at 6/6/16.*');
+  });
 });
