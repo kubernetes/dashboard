@@ -112,9 +112,30 @@ export class PaginationService {
 
   /**
    * @param {string|undefined} namespace
-   * @returns {!backendApi.PaginationQuery}
+   * @return {!backendApi.PaginationQuery}
    */
   static getDefaultResourceQuery(namespace) {
     return {itemsPerPage: DEFAULT_ROWS_LIMIT, page: 1, namespace: namespace || ''};
+  }
+
+  /**
+   *
+   * @param {number} itemsPerPage
+   * @param {number} pageNr
+   * @param {string|undefined} namespace
+   * @param {string} name
+   * @return {!backendApi.PaginationQuery} pQuery
+   */
+  static getResourceDetailQuery(itemsPerPage, pageNr, namespace, name) {
+    return {itemsPerPage: itemsPerPage, page: pageNr, namespace: namespace || '', name: name};
+  }
+
+  /**
+   * @param {string|undefined} namespace
+   * @param {string} name
+   * @return {!backendApi.PaginationQuery} pQuery
+   */
+  static getDefaultResourceDetailQuery(namespace, name) {
+    return {itemsPerPage: DEFAULT_ROWS_LIMIT, page: 1, namespace: namespace || '', name: name};
   }
 }

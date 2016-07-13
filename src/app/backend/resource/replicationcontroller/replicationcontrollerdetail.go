@@ -19,13 +19,11 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 
+	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"k8s.io/kubernetes/pkg/api"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
-	"k8s.io/kubernetes/pkg/fields"
-	"k8s.io/kubernetes/pkg/labels"
 )
 
 // ReplicationControllerDetail represents detailed information about a Replication Controller.
@@ -48,6 +46,9 @@ type ReplicationControllerDetail struct {
 	// Detailed information about service related to Replication Controller.
 	ServiceList resourceService.ServiceList `json:"serviceList"`
 
+	// List of events related to this Replication Controller.
+	EventList common.EventList `json:"eventList"`
+
 	// True when the data contains at least one pod with metrics information, false otherwise.
 	HasMetrics bool `json:"hasMetrics"`
 }
@@ -64,46 +65,39 @@ func GetReplicationControllerDetail(client k8sClient.Interface, heapsterClient c
 	namespace, name string) (*ReplicationControllerDetail, error) {
 	log.Printf("Getting details of %s replication controller in %s namespace", name, namespace)
 
-	replicationControllerWithPods, err := getRawReplicationControllerWithPods(client, namespace, name)
-	if err != nil {
-		return nil, err
-	}
-	replicationController := replicationControllerWithPods.ReplicationController
-	pods := replicationControllerWithPods.Pods
-
-	services, err := client.Services(namespace).List(api.ListOptions{
-		LabelSelector: labels.Everything(),
-		FieldSelector: fields.Everything(),
-	})
-
+	replicationController, err := client.ReplicationControllers(namespace).Get(name)
 	if err != nil {
 		return nil, err
 	}
 
-	replicationControllerDetail := &ReplicationControllerDetail{
-		ObjectMeta:    common.NewObjectMeta(replicationController.ObjectMeta),
-		TypeMeta:      common.NewTypeMeta(common.ResourceKindReplicationController),
-		LabelSelector: replicationController.Spec.Selector,
-		PodInfo:       getReplicationPodInfo(replicationController, pods.Items),
-		ServiceList:   resourceService.ServiceList{Services: make([]resourceService.Service, 0)},
+	podInfo, err := getReplicationControllerPodInfo(client, replicationController, namespace)
+	if err != nil {
+		return nil, err
 	}
 
-	matchingServices := getMatchingServices(services.Items, replicationController)
-
-	for _, service := range matchingServices {
-		replicationControllerDetail.ServiceList.Services = append(
-			replicationControllerDetail.ServiceList.Services, resourceService.ToService(&service))
+	// TODO support pagination
+	podList, err := GetReplicationControllerPods(client, heapsterClient, common.NO_PAGINATION,
+		name, namespace)
+	if err != nil {
+		return nil, err
 	}
 
-	for _, container := range replicationController.Spec.Template.Spec.Containers {
-		replicationControllerDetail.ContainerImages = append(replicationControllerDetail.ContainerImages,
-			container.Image)
+	// TODO support pagination
+	eventList, err := GetReplicationControllerEvents(client, common.NO_PAGINATION, namespace, name)
+	if err != nil {
+		return nil, err
 	}
 
-	replicationControllerDetail.PodList = pod.CreatePodList(pods.Items, common.NO_PAGINATION,
-		heapsterClient)
+	// TODO support pagination
+	serviceList, err := GetReplicationControllerServices(client, common.NO_PAGINATION, namespace,
+		name)
+	if err != nil {
+		return nil, err
+	}
 
-	return replicationControllerDetail, nil
+	replicationControllerDetail := ToReplicationControllerDetail(replicationController, *podInfo,
+		*podList, *eventList, *serviceList)
+	return &replicationControllerDetail, nil
 }
 
 // TODO(floreks): This should be transactional to make sure that RC will not be deleted without pods
@@ -120,7 +114,7 @@ func DeleteReplicationController(client k8sClient.Interface, namespace, name str
 		}
 	}
 
-	pods, err := getRawReplicationControllerPods(client, namespace, name)
+	pods, err := getRawReplicationControllerPods(client, name, namespace)
 	if err != nil {
 		return err
 	}
@@ -129,7 +123,7 @@ func DeleteReplicationController(client k8sClient.Interface, namespace, name str
 		return err
 	}
 
-	for _, pod := range pods.Items {
+	for _, pod := range pods {
 		if err := client.Pods(namespace).Delete(pod.Name, &api.DeleteOptions{}); err != nil {
 			return err
 		}

@@ -28,7 +28,8 @@ const backendApi = {};
  * @typedef {{
  *    itemsPerPage: number,
  *    page: number,
- *    namespace: string
+ *    namespace: string,
+ *    name: (string|undefined)
  * }}
  */
 backendApi.PaginationQuery;
@@ -367,6 +368,7 @@ backendApi.TypeMeta;
  *   podInfo: !backendApi.PodInfo,
  *   podList: !backendApi.PodList,
  *   serviceList: !backendApi.ServiceList,
+ *   eventList: !backendApi.EventList,
  *   hasMetrics: boolean
  * }}
  */

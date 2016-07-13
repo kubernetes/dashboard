@@ -98,7 +98,7 @@ func ToReplicaSetList(replicaSets []extensions.ReplicaSet,
 
 	replicaSetList := &ReplicaSetList{
 		ReplicaSets: make([]ReplicaSet, 0),
-		ListMeta: common.ListMeta{TotalItems: len(replicaSets)},
+		ListMeta:    common.ListMeta{TotalItems: len(replicaSets)},
 	}
 
 	for _, replicaSet := range replicaSets {

@@ -135,13 +135,13 @@ func TestGetServicePods(t *testing.T) {
 			&pod.PodList{
 				ListMeta: common.ListMeta{TotalItems: 1},
 				Pods: []pod.Pod{{
-				ObjectMeta: common.ObjectMeta{
-					Name:      "test-pod",
-					Labels:    firstSelector,
-					Namespace: "test-namespace-3",
-				},
-				TypeMeta: common.TypeMeta{Kind: common.ResourceKindPod},
-			}}},
+					ObjectMeta: common.ObjectMeta{
+						Name:      "test-pod",
+						Labels:    firstSelector,
+						Namespace: "test-namespace-3",
+					},
+					TypeMeta: common.TypeMeta{Kind: common.ResourceKindPod},
+				}}},
 		},
 	}
 

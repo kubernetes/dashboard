@@ -96,7 +96,7 @@ func GetPetSetListFromChannels(channels *common.ResourceChannels) (
 func ToPetSetList(petSets []apps.PetSet, pods []api.Pod, events []api.Event) *PetSetList {
 
 	petSetList := &PetSetList{
-		PetSets: make([]PetSet, 0),
+		PetSets:  make([]PetSet, 0),
 		ListMeta: common.ListMeta{TotalItems: len(petSets)},
 	}
 

@@ -157,9 +157,17 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 		apiV1Ws.DELETE("/replicationcontroller/{namespace}/{replicationController}").
 			To(apiHandler.handleDeleteReplicationController))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/replicationcontroller/pod/{namespace}/{replicationController}").
+		apiV1Ws.GET("/replicationcontroller/{namespace}/{replicationController}/pod").
 			To(apiHandler.handleGetReplicationControllerPods).
-			Writes(ReplicationControllerPods{}))
+			Writes(pod.PodList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/replicationcontroller/{namespace}/{replicationController}/event").
+			To(apiHandler.handleGetReplicationControllerEvents).
+			Writes(common.EventList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/replicationcontroller/{namespace}/{replicationController}/service").
+			To(apiHandler.handleGetReplicationControllerServices).
+			Writes(resourceService.ServiceList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/workload").
@@ -259,11 +267,6 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 		apiV1Ws.GET("/namespace").
 			To(apiHandler.handleGetNamespaces).
 			Writes(NamespaceList{}))
-
-	apiV1Ws.Route(
-		apiV1Ws.GET("/event/{namespace}/{replicationController}").
-			To(apiHandler.handleEvents).
-			Writes(common.EventList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/secret/{namespace}").
@@ -505,7 +508,8 @@ func (apiHandler *ApiHandler) handleGetReplicationControllerList(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := parseNamespacePathParameter(request)
-	result, err := GetReplicationControllerList(apiHandler.client, namespace)
+	pagination := parsePaginationPathParameter(request)
+	result, err := GetReplicationControllerList(apiHandler.client, namespace, pagination)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -732,11 +736,10 @@ func (apiHandler *ApiHandler) handleGetReplicationControllerPods(
 
 	namespace := request.PathParameter("namespace")
 	replicationController := request.PathParameter("replicationController")
-	limit, err := strconv.Atoi(request.QueryParameter("limit"))
-	if err != nil {
-		limit = 0
-	}
-	result, err := GetReplicationControllerPods(apiHandler.client, namespace, replicationController, limit)
+	pagination := parsePaginationPathParameter(request)
+
+	result, err := GetReplicationControllerPods(apiHandler.client, apiHandler.heapsterClient,
+		pagination, replicationController, namespace)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -848,11 +851,30 @@ func (apiHandler *ApiHandler) handleGetPodContainers(request *restful.Request, r
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
-// Handles event API call.
-func (apiHandler *ApiHandler) handleEvents(request *restful.Request, response *restful.Response) {
+// Handles get replication controller events API call.
+func (apiHandler *ApiHandler) handleGetReplicationControllerEvents(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
 	replicationController := request.PathParameter("replicationController")
-	result, err := GetReplicationControllerEvents(apiHandler.client, namespace, replicationController)
+	pagination := parsePaginationPathParameter(request)
+
+	result, err := GetReplicationControllerEvents(apiHandler.client, pagination, namespace,
+		replicationController)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get replication controller events API call.
+func (apiHandler *ApiHandler) handleGetReplicationControllerServices(request *restful.Request,
+	response *restful.Response) {
+	namespace := request.PathParameter("namespace")
+	replicationController := request.PathParameter("replicationController")
+	pagination := parsePaginationPathParameter(request)
+
+	result, err := GetReplicationControllerServices(apiHandler.client, pagination,
+		namespace, replicationController)
 	if err != nil {
 		handleInternalError(response, err)
 		return

@@ -91,7 +91,7 @@ func getDaemonSetList(daemonSets []extensions.DaemonSet, pods []api.Pod,
 
 	daemonSetList := &DaemonSetList{
 		DaemonSets: make([]DaemonSet, 0),
-		ListMeta: common.ListMeta{TotalItems: len(daemonSets)},
+		ListMeta:   common.ListMeta{TotalItems: len(daemonSets)},
 	}
 
 	for _, daemonSet := range daemonSets {
