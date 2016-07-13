@@ -49,10 +49,10 @@ func ExampleGauge() {
 func ExampleGaugeVec() {
 	opsQueued := prometheus.NewGaugeVec(
 		prometheus.GaugeOpts{
-			Namespace: "our_company",
-			Subsystem: "blob_storage",
-			Name:      "ops_queued",
-			Help:      "Number of blob storage operations waiting to be processed, partitioned by user and type.",
+			Namespace:   "our_company",
+			Subsystem:   "blob_storage",
+			Name:        "ops_queued",
+			Help:        "Number of blob storage operations waiting to be processed, partitioned by user and type.",
 		},
 		[]string{
 			// Which user has requested the operation?
@@ -122,8 +122,8 @@ func ExampleCounter() {
 func ExampleCounterVec() {
 	httpReqs := prometheus.NewCounterVec(
 		prometheus.CounterOpts{
-			Name: "http_requests_total",
-			Help: "How many HTTP requests processed, partitioned by status code and HTTP method.",
+			Name:        "http_requests_total",
+			Help:        "How many HTTP requests processed, partitioned by status code and HTTP method.",
 		},
 		[]string{"code", "method"},
 	)
