@@ -601,10 +601,18 @@ backendApi.SecretSpec;
 
 /**
  * @typedef {{
- *   secrets: !Array<string>
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta
  * }}
  */
-backendApi.SecretsList;
+backendApi.Secret;
+
+/**
+ * @typedef {{
+ *   secrets: !Array<!backendApi.Secret>
+ * }}
+ */
+backendApi.SecretList;
 
 /**
  * @typedef {{
