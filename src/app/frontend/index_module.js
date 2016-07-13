@@ -32,6 +32,7 @@ import routeConfig from './index_route';
 import serviceDetailModule from './servicedetail/servicedetail_module';
 import serviceListModule from './servicelist/servicelist_module';
 import workloadsModule from './workloads/workloads_module';
+import secretListModule from './secretlist/secretlist_module';
 import podDetailModule from './poddetail/poddetail_module';
 import petSetListModule from './petsetlist/petsetlist_module';
 
@@ -62,6 +63,7 @@ export default angular
           serviceListModule.name,
           podDetailModule.name,
           petSetListModule.name,
+          secretListModule.name,
         ])
     .config(indexConfig)
     .config(routeConfig);
