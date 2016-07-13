@@ -284,6 +284,31 @@ backendApi.PetSetList;
  * @typedef {{
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
+ * }}
+ */
+backendApi.ConfigMap;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   data: !Object<string, string>,
+ * }}
+ */
+backendApi.ConfigMapDetail;
+
+/**
+ * @typedef {{
+ *   items: !Array<!backendApi.ConfigMap>,
+ *   listMeta: !backendApi.ListMeta
+ * }}
+ */
+backendApi.ConfigMapList;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
  *   pods: !backendApi.PodInfo,
  *   containerImages: !Array<string>,
  * }}
