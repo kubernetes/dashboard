@@ -139,9 +139,10 @@ module.exports = function(config) {
       public: 'public',
     },
     configuration.customLaunchers = {
-      sl_chrome: {base: 'SauceLabs', browserName: 'chrome'},
       sl_firefox: {base: 'SauceLabs', browserName: 'firefox'},
       sl_ie: {base: 'SauceLabs', browserName: 'internet explorer'},
+      // Chrome must be last to compute coverage correctly.
+      sl_chrome: {base: 'SauceLabs', browserName: 'chrome'},
     };
     configuration.browsers = Object.keys(configuration.customLaunchers);
 
