@@ -98,7 +98,7 @@ func getDeploymentList(deployments []extensions.Deployment, pods []api.Pod,
 
 	deploymentList := &DeploymentList{
 		Deployments: make([]Deployment, 0),
-		ListMeta: common.ListMeta{TotalItems: len(deployments)},
+		ListMeta:    common.ListMeta{TotalItems: len(deployments)},
 	}
 
 	for _, deployment := range deployments {

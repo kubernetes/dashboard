@@ -162,32 +162,32 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 	for _, c := range cases {
 		expected := &Workloads{
 			ReplicationControllerList: replicationcontroller.ReplicationControllerList{
-				ListMeta: common.ListMeta{TotalItems: len(c.rcs)},
+				ListMeta:               common.ListMeta{TotalItems: len(c.rcs)},
 				ReplicationControllers: c.rcs,
 			},
 			ReplicaSetList: replicaset.ReplicaSetList{
-				ListMeta: common.ListMeta{TotalItems: len(c.rs)},
+				ListMeta:    common.ListMeta{TotalItems: len(c.rs)},
 				ReplicaSets: c.rs,
 			},
 			JobList: job.JobList{
 				ListMeta: common.ListMeta{TotalItems: len(c.jobs)},
-				Jobs: c.jobs,
+				Jobs:     c.jobs,
 			},
 			DaemonSetList: daemonset.DaemonSetList{
-				ListMeta: common.ListMeta{TotalItems: len(c.daemonset)},
+				ListMeta:   common.ListMeta{TotalItems: len(c.daemonset)},
 				DaemonSets: c.daemonset,
 			},
 			DeploymentList: deployment.DeploymentList{
-				ListMeta: common.ListMeta{TotalItems: len(c.deployment)},
+				ListMeta:    common.ListMeta{TotalItems: len(c.deployment)},
 				Deployments: c.deployment,
 			},
 			PodList: pod.PodList{
 				ListMeta: common.ListMeta{TotalItems: len(c.pod)},
-				Pods: c.pod,
+				Pods:     c.pod,
 			},
 			PetSetList: petset.PetSetList{
 				ListMeta: common.ListMeta{TotalItems: len(c.petSet)},
-				PetSets: c.petSet,
+				PetSets:  c.petSet,
 			},
 		}
 		var expectedErr error = nil

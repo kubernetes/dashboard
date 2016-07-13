@@ -12,12 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package replicationcontroller
+package common
 
 import (
-	"testing"
+	"k8s.io/kubernetes/pkg/api"
 )
 
-func TestGetReplicationControllerPods(t *testing.T) {
-	// TODO add test
+// TODO add doc
+func FilterNamespacedServicesBySelector(services []api.Service, namespace string,
+	resourceSelector map[string]string) []api.Service {
+
+	var matchingServices []api.Service
+	for _, service := range services {
+		if service.ObjectMeta.Namespace == namespace &&
+			IsSelectorMatching(resourceSelector, service.Labels) {
+			matchingServices = append(matchingServices, service)
+		}
+	}
+
+	return matchingServices
 }

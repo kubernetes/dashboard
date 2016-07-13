@@ -53,7 +53,7 @@ export default function stateConfig($stateProvider) {
 }
 
 /**
- * @param {!angular.$resource} kdPodListResource
+ * @param {!angular.Resource} kdPodListResource
  * @param {!./../chrome/chrome_state.StateParams} $stateParams
  * @return {!angular.$q.Promise}
  * @ngInject

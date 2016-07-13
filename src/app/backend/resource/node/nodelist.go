@@ -57,7 +57,7 @@ func GetNodeList(client client.Interface) (*NodeList, error) {
 
 func toNodeList(nodes []api.Node) *NodeList {
 	nodeList := &NodeList{
-		Nodes: make([]Node, 0),
+		Nodes:    make([]Node, 0),
 		ListMeta: common.ListMeta{TotalItems: len(nodes)},
 	}
 

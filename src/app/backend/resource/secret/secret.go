@@ -15,11 +15,11 @@
 package secret
 
 import (
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 )
 
 // SecretSpec - common interface for the specification of different secrets.
@@ -74,7 +74,7 @@ type SecretsList struct {
 
 // GetSecrets - return all secrets in the given namespace.
 func GetSecrets(client *client.Client, namespace string) (*SecretsList,
-error) {
+	error) {
 	secretsList := &SecretsList{}
 	secrets, err := client.Secrets(namespace).List(api.ListOptions{
 		LabelSelector: labels.Everything(),
@@ -105,7 +105,7 @@ func CreateSecret(client *client.Client, spec SecretSpec) (*Secret, error) {
 }
 
 // NewSecret - creates a new instance of Secret struct based on K8s Secret.
-func NewSecret(secret *api.Secret) (*Secret) {
+func NewSecret(secret *api.Secret) *Secret {
 	return &Secret{common.NewObjectMeta(secret.ObjectMeta),
 		common.NewTypeMeta(common.ResourceKindSecret)}
 }

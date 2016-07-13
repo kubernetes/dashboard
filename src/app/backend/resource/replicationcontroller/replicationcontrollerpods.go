@@ -15,115 +15,75 @@
 package replicationcontroller
 
 import (
-	"log"
-	"sort"
+	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 
 	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
+	"k8s.io/kubernetes/pkg/fields"
+	"k8s.io/kubernetes/pkg/labels"
 )
 
-// TotalRestartCountSorter sorts ReplicationControllerPodWithContainers by restarts number.
-type TotalRestartCountSorter []ReplicationControllerPodWithContainers
+// TODO add doc
+func GetReplicationControllerPods(client k8sClient.Interface, heapsterClient client.HeapsterClient,
+	pQuery *common.PaginationQuery, rcName, namespace string) (*pod.PodList, error) {
 
-func (a TotalRestartCountSorter) Len() int      { return len(a) }
-func (a TotalRestartCountSorter) Swap(i, j int) { a[i], a[j] = a[j], a[i] }
-func (a TotalRestartCountSorter) Less(i, j int) bool {
-	return a[i].TotalRestartCount > a[j].TotalRestartCount
-}
-
-// PodContainer is a representation of a Container that belongs to a Pod.
-type PodContainer struct {
-	// Name of a Container.
-	Name string `json:"name"`
-
-	// Number of restarts.
-	RestartCount int32 `json:"restartCount"`
-}
-
-// ReplicationControllerPods is a representation of pods list that belongs to a Replication
-// Controller.
-type ReplicationControllerPods struct {
-	// List of pods that belongs to a Replication Controller.
-	Pods []ReplicationControllerPodWithContainers `json:"pods"`
-}
-
-// ReplicationControllerPodWithContainers is a representation of a Pod that belongs to a Replication
-// Controller.
-type ReplicationControllerPodWithContainers struct {
-	// Name of the Pod.
-	Name string `json:"name"`
-
-	// Time the Pod has started. Empty if not started.
-	StartTime *unversioned.Time `json:"startTime"`
-
-	// Total number of restarts.
-	TotalRestartCount int32 `json:"totalRestartCount"`
-
-	// List of Containers that belongs to particular Pod.
-	PodContainers []PodContainer `json:"podContainers"`
-}
-
-// GetReplicationControllerPods returns list of pods with containers for the given replication
-// controller in the given namespace. Limit specify the number of records to return. There is no
-// limit when given value is zero.
-func GetReplicationControllerPods(client *client.Client, namespace, name string, limit int) (
-	*ReplicationControllerPods, error) {
-	log.Printf("Getting list of pods from %s replication controller in %s namespace with limit %d", name,
-		namespace, limit)
-
-	pods, err := getRawReplicationControllerPods(client, namespace, name)
+	pods, err := getRawReplicationControllerPods(client, rcName, namespace)
 	if err != nil {
 		return nil, err
 	}
 
-	return getReplicationControllerPods(pods.Items, limit), nil
+	// TODO support pagination
+
+	podList := pod.CreatePodList(pods, pQuery, heapsterClient)
+	return &podList, nil
 }
 
-// Creates and return structure containing pods with containers for given replication controller.
-// Data is sorted by total number of restarts for replication controller pod.
-// Result set can be limited
-func getReplicationControllerPods(pods []api.Pod, limit int) *ReplicationControllerPods {
-	replicationControllerPods := &ReplicationControllerPods{
-		Pods: make([]ReplicationControllerPodWithContainers, 0),
-	}
-	for _, pod := range pods {
-		var totalRestartCount int32 = 0
-		replicationControllerPodWithContainers := ReplicationControllerPodWithContainers{
-			Name:          pod.Name,
-			StartTime:     pod.Status.StartTime,
-			PodContainers: make([]PodContainer, 0),
-		}
+// TODO add doc
+func getRawReplicationControllerPods(client k8sClient.Interface, rcName, namespace string) (
+	[]api.Pod, error) {
 
-		podContainersByName := make(map[string]*PodContainer)
-
-		for _, container := range pod.Spec.Containers {
-			podContainer := PodContainer{Name: container.Name}
-			replicationControllerPodWithContainers.PodContainers =
-				append(replicationControllerPodWithContainers.PodContainers, podContainer)
-
-			podContainersByName[container.Name] = &(replicationControllerPodWithContainers.
-				PodContainers[len(replicationControllerPodWithContainers.PodContainers)-1])
-		}
-
-		for _, containerStatus := range pod.Status.ContainerStatuses {
-			podContainer, ok := podContainersByName[containerStatus.Name]
-			if ok {
-				podContainer.RestartCount = containerStatus.RestartCount
-				totalRestartCount += containerStatus.RestartCount
-			}
-		}
-		replicationControllerPodWithContainers.TotalRestartCount = totalRestartCount
-		replicationControllerPods.Pods = append(replicationControllerPods.Pods, replicationControllerPodWithContainers)
-	}
-	sort.Sort(TotalRestartCountSorter(replicationControllerPods.Pods))
-
-	if limit > 0 {
-		if limit > len(replicationControllerPods.Pods) {
-			limit = len(replicationControllerPods.Pods)
-		}
-		replicationControllerPods.Pods = replicationControllerPods.Pods[0:limit]
+	replicationController, err := client.ReplicationControllers(namespace).Get(rcName)
+	if err != nil {
+		return nil, err
 	}
 
-	return replicationControllerPods
+	labelSelector := labels.SelectorFromSet(replicationController.Spec.Selector)
+	channels := &common.ResourceChannels{
+		PodList: common.GetPodListChannelWithOptions(client, common.NewSameNamespaceQuery(namespace),
+			api.ListOptions{
+				LabelSelector: labelSelector,
+				FieldSelector: fields.Everything(),
+			}, 1),
+	}
+
+	podList := <-channels.PodList.List
+	if err := <-channels.PodList.Error; err != nil {
+		return nil, err
+	}
+
+	return podList.Items, nil
+}
+
+// TODO add doc
+func getReplicationControllerPodInfo(client k8sClient.Interface, rc *api.ReplicationController,
+	namespace string) (*common.PodInfo, error) {
+
+	labelSelector := labels.SelectorFromSet(rc.Spec.Selector)
+	channels := &common.ResourceChannels{
+		PodList: common.GetPodListChannelWithOptions(client, common.NewSameNamespaceQuery(namespace),
+			api.ListOptions{
+				LabelSelector: labelSelector,
+				FieldSelector: fields.Everything(),
+			}, 1),
+	}
+
+	pods := <-channels.PodList.List
+	if err := <-channels.PodList.Error; err != nil {
+		return nil, err
+	}
+
+	podInfo := common.GetPodInfo(rc.Status.Replicas, rc.Spec.Replicas, pods.Items)
+	return &podInfo, nil
 }

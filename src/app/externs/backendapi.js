@@ -28,7 +28,8 @@ const backendApi = {};
  * @typedef {{
  *    itemsPerPage: number,
  *    page: number,
- *    namespace: string
+ *    namespace: string,
+ *    name: (string|undefined)
  * }}
  */
 backendApi.PaginationQuery;
