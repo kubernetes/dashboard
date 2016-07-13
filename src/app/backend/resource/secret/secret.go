@@ -68,25 +68,24 @@ type Secret struct {
 }
 
 // SecretsList - response structure for a queried secrets list.
-type SecretsList struct {
+type SecretList struct {
+	common.ListMeta `json:"listMeta"`
+
+	// Unordered list of Secrets.
 	Secrets []Secret `json:"secrets"`
 }
 
+
 // GetSecrets - return all secrets in the given namespace.
-func GetSecrets(client *client.Client, namespace string) (*SecretsList,
-	error) {
-	secretsList := &SecretsList{}
-	secrets, err := client.Secrets(namespace).List(api.ListOptions{
+func GetSecrets(client *client.Client, namespace *common.NamespaceQuery) (*SecretList, error) {
+	secretList, err := client.Secrets(namespace.ToRequestParam()).List(api.ListOptions{
 		LabelSelector: labels.Everything(),
 		FieldSelector: fields.Everything(),
 	})
 	if err != nil {
 		return nil, err
 	}
-	for _, secret := range secrets.Items {
-		secretsList.Secrets = append(secretsList.Secrets, *NewSecret(&secret))
-	}
-	return secretsList, err
+	return NewSecretList(secretList, namespace), err
 }
 
 // CreateSecret - create a single secret using the cluster API client
@@ -108,4 +107,16 @@ func CreateSecret(client *client.Client, spec SecretSpec) (*Secret, error) {
 func NewSecret(secret *api.Secret) *Secret {
 	return &Secret{common.NewObjectMeta(secret.ObjectMeta),
 		common.NewTypeMeta(common.ResourceKindSecret)}
+}
+
+// NewSecret - creates a new instance of SecretList struct based on K8s SecretList.
+func NewSecretList(secretList *api.SecretList, namespace *common.NamespaceQuery) (*SecretList) {
+	newSecretList := SecretList{}
+	for _, secret := range secretList.Items {
+		if namespace.Matches(secret.ObjectMeta.Namespace) {
+			newSecretList.Secrets = append(newSecretList.Secrets, *NewSecret(&secret))
+		}
+	}
+	newSecretList.ListMeta = common.ListMeta{len(newSecretList.Secrets)}
+	return &newSecretList
 }
