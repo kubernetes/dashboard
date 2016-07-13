@@ -20,17 +20,13 @@
 export default class ReplicationControllerDetailController {
   /**
    * @param {!backendApi.ReplicationControllerDetail} replicationControllerDetail
-   * @param {!backendApi.EventList} replicationControllerEvents
    * @param {!ui.router.$state} $state
    * @param {!../common/resource/resourcedetail.StateParams} $stateParams
    * @ngInject
    */
-  constructor(replicationControllerDetail, replicationControllerEvents, $state, $stateParams) {
+  constructor(replicationControllerDetail, $state, $stateParams) {
     /** @export {!backendApi.ReplicationControllerDetail} */
     this.replicationControllerDetail = replicationControllerDetail;
-
-    /** @export {!backendApi.EventList} */
-    this.eventList = replicationControllerEvents;
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;

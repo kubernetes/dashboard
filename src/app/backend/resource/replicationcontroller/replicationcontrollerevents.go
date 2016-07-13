@@ -25,8 +25,8 @@ import (
 )
 
 // GetEvents returns events for particular namespace and replication controller or error if occurred.
-func GetReplicationControllerEvents(client *client.Client, namespace, replicationControllerName string) (
-	*common.EventList, error) {
+func GetReplicationControllerEvents(client client.Interface, pQuery *common.PaginationQuery,
+	namespace, replicationControllerName string) (*common.EventList, error) {
 
 	log.Printf("Getting events related to %s replication controller in %s namespace", replicationControllerName,
 		namespace)
@@ -39,7 +39,7 @@ func GetReplicationControllerEvents(client *client.Client, namespace, replicatio
 	}
 
 	// Get events for pods in replication controller.
-	podEvents, err := GetReplicationControllerPodsEvents(client, namespace,
+	podEvents, err := getReplicationControllerPodsEvents(client, namespace,
 		replicationControllerName)
 
 	if err != nil {
@@ -52,6 +52,8 @@ func GetReplicationControllerEvents(client *client.Client, namespace, replicatio
 		apiEvents = resourceEvent.FillEventsType(apiEvents)
 	}
 
+	// TODO support pagination
+
 	events := resourceEvent.ToEventList(apiEvents, namespace)
 
 	log.Printf("Found %d events related to %s replication controller in %s namespace",
@@ -60,7 +62,7 @@ func GetReplicationControllerEvents(client *client.Client, namespace, replicatio
 	return &events, nil
 }
 
-func GetReplicationControllerPodsEvents(client client.Interface, namespace,
+func getReplicationControllerPodsEvents(client client.Interface, namespace,
 	replicationControllerName string) ([]api.Event, error) {
 
 	replicationController, err := client.ReplicationControllers(namespace).Get(replicationControllerName)

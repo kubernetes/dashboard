@@ -81,7 +81,8 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels,
 	errChan := make(chan error, 7)
 
 	go func() {
-		rcList, err := replicationcontroller.GetReplicationControllerListFromChannels(channels)
+		rcList, err := replicationcontroller.GetReplicationControllerListFromChannels(channels,
+			pQuery)
 		errChan <- err
 		rcChan <- rcList
 	}()

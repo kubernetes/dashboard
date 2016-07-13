@@ -93,7 +93,7 @@ func GetJobListFromChannels(channels *common.ResourceChannels) (
 func ToJobList(jobs []batch.Job, pods []api.Pod, events []api.Event) *JobList {
 
 	jobList := &JobList{
-		Jobs: make([]Job, 0),
+		Jobs:     make([]Job, 0),
 		ListMeta: common.ListMeta{TotalItems: len(jobs)},
 	}
 

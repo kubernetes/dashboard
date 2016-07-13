@@ -15,10 +15,10 @@
 package handler
 
 import (
+	"compress/gzip"
 	"io"
 	"net/http"
 	"strings"
-	"compress/gzip"
 )
 
 type gzipResponseWriter struct {
