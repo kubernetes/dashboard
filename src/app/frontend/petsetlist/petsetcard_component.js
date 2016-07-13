@@ -89,7 +89,7 @@ export default class PetSetCardController {
 }
 
 /**
- * @return {!angular.Component}
+ * @type {!angular.Component}
  */
 export const petSetCardComponent = {
   bindings: {
