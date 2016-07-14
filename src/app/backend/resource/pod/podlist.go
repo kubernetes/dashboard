@@ -86,7 +86,7 @@ func CreatePodList(pods []api.Pod, pQuery *common.PaginationQuery,
 	}
 
 	podList := PodList{
-		Pods: make([]Pod, 0),
+		Pods:     make([]Pod, 0),
 		ListMeta: common.ListMeta{TotalItems: len(pods)},
 	}
 

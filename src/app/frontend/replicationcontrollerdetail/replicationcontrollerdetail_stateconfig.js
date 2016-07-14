@@ -14,6 +14,7 @@
 
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {PaginationService} from 'common/pagination/pagination_service';
 import {stateName as replicationControllers} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 
 import {ActionBarController} from './actionbar_controller';
@@ -34,9 +35,7 @@ export default function stateConfig($stateProvider) {
     parent: chromeStateName,
     resolve: {
       'replicationControllerSpecPodsResource': getReplicationControllerSpecPodsResource,
-      'replicationControllerDetailResource': getReplicationControllerDetailsResource,
       'replicationControllerDetail': resolveReplicationControllerDetails,
-      'replicationControllerEvents': resolveReplicationControllerEvents,
     },
     data: {
       [breadcrumbsConfig]: {
@@ -62,18 +61,6 @@ export default function stateConfig($stateProvider) {
 /**
  * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
- * @return {!angular.Resource<!backendApi.ReplicationControllerDetail>}
- * @ngInject
- */
-export function getReplicationControllerDetailsResource($stateParams, $resource) {
-  return $resource(
-      `api/v1/replicationcontroller/${$stateParams.objectNamespace}/` +
-      `${$stateParams.objectName}`);
-}
-
-/**
- * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
- * @param {!angular.$resource} $resource
  * @return {!angular.Resource<!backendApi.ReplicationControllerSpec>}
  * @ngInject
  */
@@ -84,25 +71,13 @@ export function getReplicationControllerSpecPodsResource($stateParams, $resource
 }
 
 /**
- * @param {!angular.Resource<!backendApi.ReplicationControllerDetail>}
- * replicationControllerDetailResource
- * @return {!angular.$q.Promise}
- * @ngInject
- */
-function resolveReplicationControllerDetails(replicationControllerDetailResource) {
-  return replicationControllerDetailResource.get().$promise;
-}
-
-/**
+ * @param {!angular.Resource} kdRCResource
  * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
- * @param {!angular.$resource} $resource
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-function resolveReplicationControllerEvents($stateParams, $resource) {
-  /** @type {!angular.Resource<!backendApi.Events>} */
-  let resource =
-      $resource(`api/v1/event/${$stateParams.objectNamespace}/${$stateParams.objectName}`);
-
-  return resource.get().$promise;
+function resolveReplicationControllerDetails(kdRCResource, $stateParams) {
+  let query = PaginationService.getDefaultResourceDetailQuery(
+      $stateParams.objectNamespace, $stateParams.objectName);
+  return kdRCResource.get(query).$promise;
 }
