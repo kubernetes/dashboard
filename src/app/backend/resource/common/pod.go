@@ -19,6 +19,8 @@ import (
 	"k8s.io/kubernetes/pkg/api/unversioned"
 )
 
+// FilterNamespacedPodsBySelector returns pods targeted by given resource label selector in given
+// namespace.
 func FilterNamespacedPodsBySelector(pods []api.Pod, namespace string,
 	resourceSelector map[string]string) []api.Pod {
 
@@ -33,7 +35,7 @@ func FilterNamespacedPodsBySelector(pods []api.Pod, namespace string,
 	return matchingPods
 }
 
-// Returns pods targeted by given selector.
+// FilterPodsBySelector returns pods targeted by given resource selector.
 func FilterPodsBySelector(pods []api.Pod, resourceSelector map[string]string) []api.Pod {
 
 	var matchingPods []api.Pod
@@ -45,6 +47,8 @@ func FilterPodsBySelector(pods []api.Pod, resourceSelector map[string]string) []
 	return matchingPods
 }
 
+// FilterNamespacedPodsByLabelSelector returns pods targeted by given resource label selector in
+// given namespace.
 func FilterNamespacedPodsByLabelSelector(pods []api.Pod, namespace string,
 	labelSelector *unversioned.LabelSelector) []api.Pod {
 
@@ -58,6 +62,7 @@ func FilterNamespacedPodsByLabelSelector(pods []api.Pod, namespace string,
 	return matchingPods
 }
 
+// FilterPodsByLabelSelector returns pods targeted by given resource label selector.
 func FilterPodsByLabelSelector(pods []api.Pod, labelSelector *unversioned.LabelSelector) []api.Pod {
 
 	var matchingPods []api.Pod

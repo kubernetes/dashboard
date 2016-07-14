@@ -16,6 +16,9 @@ package replicationcontroller
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
@@ -23,55 +26,6 @@ import (
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
 )
-
-// ReplicationControllerWithPods is a structure representing replication controller and its pods.
-type ReplicationControllerWithPods struct {
-	ReplicationController *api.ReplicationController
-	Pods                  *api.PodList
-}
-
-// Returns structure containing ReplicationController and Pods for the given replication controller.
-func getRawReplicationControllerWithPods(client client.Interface, namespace, name string) (
-	*ReplicationControllerWithPods, error) {
-	replicationController, err := client.ReplicationControllers(namespace).Get(name)
-	if err != nil {
-		return nil, err
-	}
-
-	labelSelector := labels.SelectorFromSet(replicationController.Spec.Selector)
-	pods, err := client.Pods(namespace).List(
-		api.ListOptions{
-			LabelSelector: labelSelector,
-			FieldSelector: fields.Everything(),
-		})
-
-	if err != nil {
-		return nil, err
-	}
-
-	replicationControllerAndPods := &ReplicationControllerWithPods{
-		ReplicationController: replicationController,
-		Pods: pods,
-	}
-	return replicationControllerAndPods, nil
-}
-
-// Retrieves Pod list that belongs to a Replication Controller.
-func getRawReplicationControllerPods(client client.Interface, namespace, name string) (*api.PodList, error) {
-	replicationControllerAndPods, err := getRawReplicationControllerWithPods(client, namespace, name)
-	if err != nil {
-		return nil, err
-	}
-	return replicationControllerAndPods.Pods, nil
-}
-
-// getReplicationPodInfo returns aggregate information about replication controller pods.
-func getReplicationPodInfo(replicationController *api.ReplicationController,
-	pods []api.Pod) common.PodInfo {
-
-	return common.GetPodInfo(replicationController.Status.Replicas,
-		replicationController.Spec.Replicas, pods)
-}
 
 // Transforms simple selector map to labels.Selector object that can be used when querying for
 // object.
@@ -115,4 +69,62 @@ func getServicesForDeletion(client client.Interface, labelSelector labels.Select
 	}
 
 	return services.Items, nil
+}
+
+// ToReplicationController converts replication controller api object to replication controller
+// model object.
+func ToReplicationController(replicationController *api.ReplicationController,
+	podInfo *common.PodInfo) ReplicationController {
+
+	return ReplicationController{
+		ObjectMeta:      common.NewObjectMeta(replicationController.ObjectMeta),
+		TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicationController),
+		Pods:            *podInfo,
+		ContainerImages: common.GetContainerImages(&replicationController.Spec.Template.Spec),
+	}
+}
+
+// ToReplicationControllerDetail converts replication controller api object to replication
+// controller detail model object.
+func ToReplicationControllerDetail(replicationController *api.ReplicationController,
+	podInfo common.PodInfo, podList pod.PodList, eventList common.EventList,
+	serviceList resourceService.ServiceList) ReplicationControllerDetail {
+
+	replicationControllerDetail := ReplicationControllerDetail{
+		ObjectMeta:      common.NewObjectMeta(replicationController.ObjectMeta),
+		TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicationController),
+		LabelSelector:   replicationController.Spec.Selector,
+		PodInfo:         podInfo,
+		PodList:         podList,
+		EventList:       eventList,
+		ServiceList:     serviceList,
+		ContainerImages: common.GetContainerImages(&replicationController.Spec.Template.Spec),
+	}
+
+	return replicationControllerDetail
+}
+
+// CreateReplicationControllerList creates paginated list of Replication Controller model
+// objects based on Kubernetes Replication Controller objects array and related resources arrays.
+func CreateReplicationControllerList(replicationControllers []api.ReplicationController,
+	pQuery *common.PaginationQuery, pods []api.Pod, events []api.Event) *ReplicationControllerList {
+
+	rcList := &ReplicationControllerList{
+		ReplicationControllers: make([]ReplicationController, 0),
+		ListMeta:               common.ListMeta{TotalItems: len(replicationControllers)},
+	}
+
+	// TODO support pagination
+
+	for _, rc := range replicationControllers {
+		matchingPods := common.FilterNamespacedPodsBySelector(pods, rc.ObjectMeta.Namespace,
+			rc.Spec.Selector)
+		podInfo := common.GetPodInfo(rc.Status.Replicas, rc.Spec.Replicas, matchingPods)
+		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
+
+		replicationController := ToReplicationController(&rc, &podInfo)
+		rcList.ReplicationControllers = append(rcList.ReplicationControllers, replicationController)
+	}
+
+	return rcList
 }

@@ -47,4 +47,34 @@ export default angular
         ])
     .config(stateConfig)
     .component('kdReplicationControllerInfo', replicationControllerInfoComponent)
-    .service('kdReplicationControllerService', ReplicationControllerService);
+    .service('kdReplicationControllerService', ReplicationControllerService)
+    .factory('kdRCResource', replicationControllerResource)
+    .factory('kdRCPodsResource', replicationControllerPodsResource)
+    .factory('kdRCEventsResource', replicationControllerEventsResource);
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function replicationControllerResource($resource) {
+  return $resource('api/v1/replicationcontroller/:namespace/:name');
+}
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function replicationControllerPodsResource($resource) {
+  return $resource('api/v1/replicationcontroller/:namespace/:name/pod');
+}
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function replicationControllerEventsResource($resource) {
+  return $resource('api/v1/replicationcontroller/:namespace/:name/event');
+}

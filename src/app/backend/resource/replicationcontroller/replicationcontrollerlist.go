@@ -18,9 +18,6 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-
-	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
@@ -46,7 +43,8 @@ type ReplicationController struct {
 }
 
 // GetReplicationControllerList returns a list of all Replication Controllers in the cluster.
-func GetReplicationControllerList(client *client.Client, nsQuery *common.NamespaceQuery) (*ReplicationControllerList, error) {
+func GetReplicationControllerList(client *client.Client, nsQuery *common.NamespaceQuery,
+	pQuery *common.PaginationQuery) (*ReplicationControllerList, error) {
 	log.Printf("Getting list of all replication controllers in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -55,80 +53,28 @@ func GetReplicationControllerList(client *client.Client, nsQuery *common.Namespa
 		EventList:                 common.GetEventListChannel(client, nsQuery, 1),
 	}
 
-	return GetReplicationControllerListFromChannels(channels)
+	return GetReplicationControllerListFromChannels(channels, pQuery)
 }
 
 // GetReplicationControllerListFromChannels returns a list of all Replication Controllers in the cluster
 // reading required resource list once from the channels.
-func GetReplicationControllerListFromChannels(channels *common.ResourceChannels) (
-	*ReplicationControllerList, error) {
+func GetReplicationControllerListFromChannels(channels *common.ResourceChannels,
+	pQuery *common.PaginationQuery) (*ReplicationControllerList, error) {
 
-	replicationControllers := <-channels.ReplicationControllerList.List
+	rcList := <-channels.ReplicationControllerList.List
 	if err := <-channels.ReplicationControllerList.Error; err != nil {
 		return nil, err
 	}
 
-	pods := <-channels.PodList.List
+	podList := <-channels.PodList.List
 	if err := <-channels.PodList.Error; err != nil {
 		return nil, err
 	}
 
-	events := <-channels.EventList.List
+	eventList := <-channels.EventList.List
 	if err := <-channels.EventList.Error; err != nil {
 		return nil, err
 	}
 
-	result := getReplicationControllerList(replicationControllers.Items, pods.Items, events.Items)
-
-	return result, nil
-}
-
-// Returns a list of all Replication Controller model objects in the cluster, based on all Kubernetes
-// Replication Controller and Service API objects.
-func getReplicationControllerList(replicationControllers []api.ReplicationController,
-	pods []api.Pod, events []api.Event) *ReplicationControllerList {
-
-	replicationControllerList := &ReplicationControllerList{
-		ReplicationControllers: make([]ReplicationController, 0),
-		ListMeta: common.ListMeta{TotalItems: len(replicationControllers)},
-	}
-
-	for _, replicationController := range replicationControllers {
-		matchingPods := make([]api.Pod, 0)
-		for _, pod := range pods {
-			if pod.ObjectMeta.Namespace == replicationController.ObjectMeta.Namespace &&
-				common.IsSelectorMatching(replicationController.Spec.Selector, pod.ObjectMeta.Labels) {
-				matchingPods = append(matchingPods, pod)
-			}
-		}
-		podInfo := getReplicationPodInfo(&replicationController, matchingPods)
-		podErrors := event.GetPodsEventWarnings(events, matchingPods)
-
-		podInfo.Warnings = podErrors
-
-		replicationControllerList.ReplicationControllers = append(replicationControllerList.ReplicationControllers,
-			ReplicationController{
-				ObjectMeta:      common.NewObjectMeta(replicationController.ObjectMeta),
-				TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicationController),
-				Pods:            podInfo,
-				ContainerImages: common.GetContainerImages(&replicationController.Spec.Template.Spec),
-			})
-	}
-
-	return replicationControllerList
-}
-
-// Returns all services that target the same Pods (or subset) as the given Replication Controller.
-func getMatchingServices(services []api.Service,
-	replicationController *api.ReplicationController) []api.Service {
-
-	var matchingServices []api.Service
-	for _, service := range services {
-		if service.ObjectMeta.Namespace == replicationController.ObjectMeta.Namespace &&
-			common.IsSelectorMatching(service.Spec.Selector, replicationController.Spec.Selector) {
-
-			matchingServices = append(matchingServices, service)
-		}
-	}
-	return matchingServices
+	return CreateReplicationControllerList(rcList.Items, pQuery, podList.Items, eventList.Items), nil
 }

@@ -240,16 +240,16 @@ func TestToEventList(t *testing.T) {
 			},
 			"namespace-1",
 			common.EventList{
-				ListMeta: common.ListMeta{TotalItems: 2},
+				ListMeta:  common.ListMeta{TotalItems: 2},
 				Namespace: "namespace-1",
 				Events: []common.Event{
 					{
 						ObjectMeta: common.ObjectMeta{Name: "event-1"},
-						TypeMeta:        common.TypeMeta{common.ResourceKindEvent},
+						TypeMeta:   common.TypeMeta{common.ResourceKindEvent},
 					},
 					{
 						ObjectMeta: common.ObjectMeta{Name: "event-2"},
-						TypeMeta:        common.TypeMeta{common.ResourceKindEvent},
+						TypeMeta:   common.TypeMeta{common.ResourceKindEvent},
 					},
 				},
 			},

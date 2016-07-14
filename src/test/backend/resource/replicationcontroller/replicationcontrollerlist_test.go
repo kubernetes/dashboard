@@ -22,38 +22,6 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 )
 
-func TestGetMatchingServices(t *testing.T) {
-	cases := []struct {
-		services              []api.Service
-		replicationController *api.ReplicationController
-		expected              []api.Service
-	}{
-		{nil, nil, nil},
-		{
-			[]api.Service{{Spec: api.ServiceSpec{Selector: map[string]string{"app": "my-name"}}}},
-			&api.ReplicationController{
-				Spec: api.ReplicationControllerSpec{Selector: map[string]string{"app": "my-name"}}},
-			[]api.Service{{Spec: api.ServiceSpec{Selector: map[string]string{"app": "my-name"}}}},
-		},
-		{
-			[]api.Service{
-				{Spec: api.ServiceSpec{Selector: map[string]string{"app": "my-name"}}},
-				{Spec: api.ServiceSpec{Selector: map[string]string{"app": "my-name", "ver": "2"}}},
-			},
-			&api.ReplicationController{
-				Spec: api.ReplicationControllerSpec{Selector: map[string]string{"app": "my-name"}}},
-			[]api.Service{{Spec: api.ServiceSpec{Selector: map[string]string{"app": "my-name"}}}},
-		},
-	}
-	for _, c := range cases {
-		actual := getMatchingServices(c.services, c.replicationController)
-		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("getMatchingServices(%+v, %+v) == %+v, expected %+v",
-				c.services, c.replicationController, actual, c.expected)
-		}
-	}
-}
-
 func TestGetReplicationControllerList(t *testing.T) {
 	events := []api.Event{}
 
@@ -217,7 +185,8 @@ func TestGetReplicationControllerList(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := getReplicationControllerList(c.replicationControllers, c.pods, events)
+		actual := CreateReplicationControllerList(c.replicationControllers, common.NO_PAGINATION,
+			c.pods, events)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getReplicationControllerList(%#v, %#v) == \n%#v\nexpected \n%#v\n",
 				c.replicationControllers, c.services, actual, c.expected)

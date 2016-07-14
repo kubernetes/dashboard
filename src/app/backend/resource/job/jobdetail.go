@@ -97,9 +97,9 @@ func getJobDetail(job *batch.Job, heapsterClient client.HeapsterClient,
 		ContainerImages: common.GetContainerImages(&job.Spec.Template.Spec),
 		PodInfo:         podInfo,
 		// TODO(floreks) Add pagination support
-		PodList:         pod.CreatePodList(matchingPods, common.NO_PAGINATION, heapsterClient),
-		EventList:       *events,
-		Parallelism:     job.Spec.Parallelism,
-		Completions:     job.Spec.Completions,
+		PodList:     pod.CreatePodList(matchingPods, common.NO_PAGINATION, heapsterClient),
+		EventList:   *events,
+		Parallelism: job.Spec.Parallelism,
+		Completions: job.Spec.Completions,
 	}
 }

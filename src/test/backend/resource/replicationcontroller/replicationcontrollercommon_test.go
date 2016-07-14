@@ -23,50 +23,7 @@ import (
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
 	"k8s.io/kubernetes/pkg/labels"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 )
-
-func TestGetReplicationPodInfo(t *testing.T) {
-	cases := []struct {
-		controller *api.ReplicationController
-		pods       []api.Pod
-		expected   common.PodInfo
-	}{
-		{
-			&api.ReplicationController{
-				Status: api.ReplicationControllerStatus{
-					Replicas: 5,
-				},
-				Spec: api.ReplicationControllerSpec{
-					Replicas: 4,
-				},
-			},
-			[]api.Pod{
-				{
-					Status: api.PodStatus{
-						Phase: api.PodRunning,
-					},
-				},
-			},
-			common.PodInfo{
-				Current:  5,
-				Desired:  4,
-				Running:  1,
-				Pending:  0,
-				Failed:   0,
-				Warnings: []common.Event{},
-			},
-		},
-	}
-
-	for _, c := range cases {
-		actual := getReplicationPodInfo(c.controller, c.pods)
-		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("getReplicaSetPodInfo(%#v, %#v) == \n%#v\nexpected \n%#v\n",
-				c.controller, c.pods, actual, c.expected)
-		}
-	}
-}
 
 func TestToLabelSelector(t *testing.T) {
 	selector, _ := unversioned.LabelSelectorAsSelector(
