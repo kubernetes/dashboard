@@ -19,7 +19,6 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 	"k8s.io/kubernetes/pkg/api"
@@ -77,12 +76,23 @@ func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient client.Heapst
 		return nil, err
 	}
 
+	daemonSetData, err := client.Extensions().DaemonSets(namespace).Get(name)
+	if err != nil {
+		return nil, err
+	}
+
+	events, err := GetDaemonSetEvents(client, daemonSetData.Namespace, daemonSetData.Name)
+	if err != nil {
+		return nil, err
+	}
+
 	daemonSetDetail := &DaemonSetDetail{
 		ObjectMeta:    common.NewObjectMeta(daemonSet.ObjectMeta),
 		TypeMeta:      common.NewTypeMeta(common.ResourceKindDaemonSet),
 		LabelSelector: daemonSet.Spec.Selector,
 		PodInfo:       getDaemonSetPodInfo(daemonSet, pods.Items),
 		ServiceList:   resourceService.ServiceList{Services: make([]resourceService.Service, 0)},
+		EventList:     *events,
 	}
 
 	matchingServices := getMatchingServicesforDS(services.Items, daemonSet)
@@ -98,9 +108,6 @@ func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient client.Heapst
 	}
 
 	daemonSetDetail.PodList = pod.CreatePodList(pods.Items, common.NO_PAGINATION, heapsterClient)
-
-	// TODO related issue #991
-	daemonSetDetail.EventList = event.ToEventList([]api.Event{}, namespace)
 
 	return daemonSetDetail, nil
 }
