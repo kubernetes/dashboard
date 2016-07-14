@@ -34,6 +34,8 @@ import serviceListModule from './servicelist/servicelist_module';
 import workloadsModule from './workloads/workloads_module';
 import podDetailModule from './poddetail/poddetail_module';
 import petSetListModule from './petsetlist/petsetlist_module';
+import configMapListModule from './configmaplist/configmaplist_module';
+import configMapDetailModule from './configmapdetail/configmapdetail_module';
 
 export default angular
     .module(
@@ -62,6 +64,8 @@ export default angular
           serviceListModule.name,
           podDetailModule.name,
           petSetListModule.name,
+          configMapListModule.name,
+          configMapDetailModule.name,
         ])
     .config(indexConfig)
     .config(routeConfig);
