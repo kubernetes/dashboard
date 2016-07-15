@@ -271,7 +271,11 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 	apiV1Ws.Route(
 		apiV1Ws.GET("/secret/{namespace}").
 			To(apiHandler.handleGetSecrets).
-			Writes(SecretsList{}))
+			Writes(SecretList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/secret").
+		To(apiHandler.handleGetSecrets).
+		Writes(SecretList{}))
 	apiV1Ws.Route(
 		apiV1Ws.POST("/secret").
 			To(apiHandler.handleCreateImagePullSecret).
@@ -794,7 +798,7 @@ func (apiHandler *ApiHandler) handleCreateImagePullSecret(request *restful.Reque
 
 // Handles get secrets list API call.
 func (apiHandler *ApiHandler) handleGetSecrets(request *restful.Request, response *restful.Response) {
-	namespace := request.PathParameter("namespace")
+	namespace := parseNamespacePathParameter(request)
 	result, err := GetSecrets(apiHandler.client, namespace)
 	if err != nil {
 		handleInternalError(response, err)
