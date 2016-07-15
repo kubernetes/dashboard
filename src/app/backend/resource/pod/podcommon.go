@@ -45,25 +45,6 @@ func ToPod(pod *api.Pod, metrics *MetricsByPod) Pod {
 	return podDetail
 }
 
-func ToPodDetail(pod *api.Pod, metrics *MetricsByPod) PodDetail {
-	podDetail := PodDetail{
-		ObjectMeta:      common.NewObjectMeta(pod.ObjectMeta),
-		TypeMeta:        common.NewTypeMeta(common.ResourceKindPod),
-		PodPhase:        pod.Status.Phase,
-		PodIP:           pod.Status.PodIP,
-		RestartCount:    getRestartCount(*pod),
-		ContainerImages: GetContainerImages(&pod.Spec),
-		NodeName:        pod.Spec.NodeName,
-	}
-
-	if metrics != nil && metrics.MetricsMap[pod.Namespace] != nil {
-		metric := metrics.MetricsMap[pod.Namespace][pod.Name]
-		podDetail.Metrics = &metric
-	}
-
-	return podDetail
-}
-
 // GetContainerImages returns container image strings from the given pod spec.
 func GetContainerImages(podTemplate *api.PodSpec) []string {
 	var containerImages []string

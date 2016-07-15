@@ -400,6 +400,39 @@ backendApi.ReplicationControllerDetail;
 
 /**
  * @typedef {{
+ *   name: string,
+ *   image: string,
+ *   env: !Array<!backendApi.EnvVar>
+ * }}
+ */
+backendApi.Container;
+
+/**
+ * @typedef {{
+ *   name: string,
+ *   value: string,
+ *   valueFrom: backendApi.EnvVarSource
+ * }}
+ */
+backendApi.EnvVar;
+
+/**
+ * @typedef {{
+ *   configMapKeyRef: backendApi.ConfigMapKeyRef
+ * }}
+ */
+backendApi.EnvVarSource;
+
+/**
+ * @typedef {{
+ *   Name: string,
+ *   key: string,
+ * }}
+ */
+backendApi.ConfigMapKeyRef;
+
+/**
+ * @typedef {{
  *   replicas: number
  * }}
  */
