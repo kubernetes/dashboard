@@ -54,11 +54,22 @@ func CreateServiceList(services []api.Service, pQuery *common.PaginationQuery) S
 		ListMeta: common.ListMeta{TotalItems: len(services)},
 	}
 
-	// TODO support pagination
+	services = paginate(services, pQuery)
 
 	for _, service := range services {
 		serviceList.Services = append(serviceList.Services, ToService(&service))
 	}
 
 	return serviceList
+}
+
+func paginate(services []api.Service, pQuery *common.PaginationQuery) []api.Service {
+	startIndex, endIndex := pQuery.GetPaginationSettings(len(services))
+
+	// Return all items if provided settings do not meet requirements
+	if !pQuery.CanPaginate(len(services), startIndex) {
+		return services
+	}
+
+	return services[startIndex:endIndex]
 }
