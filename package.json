@@ -68,7 +68,7 @@
     "npm-check-updates": "~2.7.0",
     "proxy-middleware": "~0.15.0",
     "q": "~1.4.1",
-    "semver": "~5.2.0",
+    "semver": "~5.3.0",
     "through2": "~2.0.1",
     "uglify-save-license": "~0.4.1",
     "vinyl-paths": "~2.1.0",
