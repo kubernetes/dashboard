@@ -14,8 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-content-card>
-  <div ng-if="$ctrl.isHeaderFilled()"><kd-title ng-transclude="header"></kd-title></div>
+<kd-content-card ng-if="::$ctrl.isHeaderFilled()">
+  <kd-title ng-transclude="header"></kd-title>
+  <kd-content>
+    <div layout="column">
+      <div class="kd-info-card-section" ng-transclude="section" layout="row" layout-padding>
+      </div>
+    </div>
+  </kd-content>
+</kd-content-card>
+
+<!-- Repeated block, but with no kd-title. This is to make optional header work. -->
+<kd-content-card ng-if="::!$ctrl.isHeaderFilled()">
   <kd-content>
     <div layout="column">
       <div class="kd-info-card-section" ng-transclude="section" layout="row" layout-padding>

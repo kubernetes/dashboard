@@ -15,9 +15,11 @@
 import componentsModule from 'common/components/components_module';
 import chromeModule from 'chrome/chrome_module';
 import eventsModule from 'events/events_module';
+import configMapModule from 'configmapdetail/configmapdetail_module';
 import filtersModule from 'common/filters/filters_module';
 import stateConfig from './poddetail_stateconfig';
 import {podInfoComponent} from './podinfo_component';
+import {containerInfoComponent} from './containerinfo_component';
 
 /**
  * Angular module for the Replica Set details view.
@@ -35,6 +37,8 @@ export default angular
           chromeModule.name,
           filtersModule.name,
           eventsModule.name,
+          configMapModule.name,
         ])
     .config(stateConfig)
-    .component('kdPodInfo', podInfoComponent);
+    .component('kdPodInfo', podInfoComponent)
+    .component('kdContainerInfo', containerInfoComponent);

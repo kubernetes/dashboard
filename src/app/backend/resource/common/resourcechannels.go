@@ -22,6 +22,8 @@ import (
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
+
+	kdClient "github.com/kubernetes/dashboard/src/app/backend/client"
 )
 
 // ResourceChannels struct holds channels to resource lists. Each list channel is paired with
@@ -40,34 +42,37 @@ type ResourceChannels struct {
 	ReplicationControllerList ReplicationControllerListChannel
 
 	// List and error channels to Replica Sets.
-	ReplicaSetList            ReplicaSetListChannel
+	ReplicaSetList ReplicaSetListChannel
 
 	// List and error channels to Deployments.
-	DeploymentList            DeploymentListChannel
+	DeploymentList DeploymentListChannel
 
 	// List and error channels to Daemon Sets.
-	DaemonSetList             DaemonSetListChannel
+	DaemonSetList DaemonSetListChannel
 
 	// List and error channels to Jobs.
-	JobList                   JobListChannel
+	JobList JobListChannel
 
 	// List and error channels to Services.
-	ServiceList               ServiceListChannel
+	ServiceList ServiceListChannel
 
 	// List and error channels to Pods.
-	PodList                   PodListChannel
+	PodList PodListChannel
 
 	// List and error channels to Events.
-	EventList                 EventListChannel
+	EventList EventListChannel
 
 	// List and error channels to Nodes.
-	NodeList                  NodeListChannel
+	NodeList NodeListChannel
 
 	// List and error channels to PetSets.
-	PetSetList                PetSetListChannel
+	PetSetList PetSetListChannel
 
 	// List and error channels to PetSets.
-	ConfigMapList             ConfigMapListChannel
+	ConfigMapList ConfigMapListChannel
+
+	// List and error channels to PodMetrics.
+	PodMetrics PodMetricsChannel
 }
 
 // ServiceListChannel is a list and error channels to Services.
@@ -79,7 +84,7 @@ type ServiceListChannel struct {
 // GetServiceListChannel returns a pair of channels to a Service list and errors that both
 // must be read numReads times.
 func GetServiceListChannel(client client.ServicesNamespacer,
-nsQuery *NamespaceQuery, numReads int) ServiceListChannel {
+	nsQuery *NamespaceQuery, numReads int) ServiceListChannel {
 
 	channel := ServiceListChannel{
 		List:  make(chan *api.ServiceList, numReads),
@@ -137,13 +142,13 @@ type EventListChannel struct {
 // GetEventListChannel returns a pair of channels to an Event list and errors that both must be read
 // numReads times.
 func GetEventListChannel(client client.EventNamespacer,
-nsQuery *NamespaceQuery, numReads int) EventListChannel {
+	nsQuery *NamespaceQuery, numReads int) EventListChannel {
 	return GetEventListChannelWithOptions(client, nsQuery, listEverything, numReads)
 }
 
 // GetEventListChannelWithOptions is GetEventListChannel plus list options.
 func GetEventListChannelWithOptions(client client.EventNamespacer,
-nsQuery *NamespaceQuery, options api.ListOptions, numReads int) EventListChannel {
+	nsQuery *NamespaceQuery, options api.ListOptions, numReads int) EventListChannel {
 	channel := EventListChannel{
 		List:  make(chan *api.EventList, numReads),
 		Error: make(chan error, numReads),
@@ -176,13 +181,13 @@ type PodListChannel struct {
 // GetPodListChannel returns a pair of channels to a Pod list and errors that both must be read
 // numReads times.
 func GetPodListChannel(client client.PodsNamespacer,
-nsQuery *NamespaceQuery, numReads int) PodListChannel {
+	nsQuery *NamespaceQuery, numReads int) PodListChannel {
 	return GetPodListChannelWithOptions(client, nsQuery, listEverything, numReads)
 }
 
 // GetPodListChannelWithOptions is GetPodListChannel plus listing options.
 func GetPodListChannelWithOptions(client client.PodsNamespacer, nsQuery *NamespaceQuery,
-options api.ListOptions, numReads int) PodListChannel {
+	options api.ListOptions, numReads int) PodListChannel {
 
 	channel := PodListChannel{
 		List:  make(chan *api.PodList, numReads),
@@ -217,7 +222,7 @@ type ReplicationControllerListChannel struct {
 // Replication Controller list and errors that both must be read
 // numReads times.
 func GetReplicationControllerListChannel(client client.ReplicationControllersNamespacer,
-nsQuery *NamespaceQuery, numReads int) ReplicationControllerListChannel {
+	nsQuery *NamespaceQuery, numReads int) ReplicationControllerListChannel {
 
 	channel := ReplicationControllerListChannel{
 		List:  make(chan *api.ReplicationControllerList, numReads),
@@ -251,7 +256,7 @@ type DeploymentListChannel struct {
 // GetDeploymentListChannel returns a pair of channels to a Deployment list and errors
 // that both must be read numReads times.
 func GetDeploymentListChannel(client client.DeploymentsNamespacer,
-nsQuery *NamespaceQuery, numReads int) DeploymentListChannel {
+	nsQuery *NamespaceQuery, numReads int) DeploymentListChannel {
 
 	channel := DeploymentListChannel{
 		List:  make(chan *extensions.DeploymentList, numReads),
@@ -285,14 +290,14 @@ type ReplicaSetListChannel struct {
 // GetReplicaSetListChannel returns a pair of channels to a ReplicaSet list and
 // errors that both must be read numReads times.
 func GetReplicaSetListChannel(client client.ReplicaSetsNamespacer,
-nsQuery *NamespaceQuery, numReads int) ReplicaSetListChannel {
+	nsQuery *NamespaceQuery, numReads int) ReplicaSetListChannel {
 	return GetReplicaSetListChannelWithOptions(client, nsQuery, listEverything, numReads)
 }
 
 // GetReplicaSetListChannelWithOptions returns a pair of channels to a ReplicaSet list filtered
 // by provided options and errors that both must be read numReads times.
 func GetReplicaSetListChannelWithOptions(client client.ReplicaSetsNamespacer,
-nsQuery *NamespaceQuery, options api.ListOptions, numReads int) ReplicaSetListChannel {
+	nsQuery *NamespaceQuery, options api.ListOptions, numReads int) ReplicaSetListChannel {
 	channel := ReplicaSetListChannel{
 		List:  make(chan *extensions.ReplicaSetList, numReads),
 		Error: make(chan error, numReads),
@@ -325,7 +330,7 @@ type DaemonSetListChannel struct {
 // GetDaemonSetListChannel returns a pair of channels to a DaemonSet list and errors that
 // both must be read numReads times.
 func GetDaemonSetListChannel(client client.DaemonSetsNamespacer,
-nsQuery *NamespaceQuery, numReads int) DaemonSetListChannel {
+	nsQuery *NamespaceQuery, numReads int) DaemonSetListChannel {
 	channel := DaemonSetListChannel{
 		List:  make(chan *extensions.DaemonSetList, numReads),
 		Error: make(chan error, numReads),
@@ -358,7 +363,7 @@ type JobListChannel struct {
 // GetJobListChannel returns a pair of channels to a Job list and errors that
 // both must be read numReads times.
 func GetJobListChannel(client client.JobsNamespacer,
-nsQuery *NamespaceQuery, numReads int) JobListChannel {
+	nsQuery *NamespaceQuery, numReads int) JobListChannel {
 	channel := JobListChannel{
 		List:  make(chan *batch.JobList, numReads),
 		Error: make(chan error, numReads),
@@ -391,7 +396,7 @@ type PetSetListChannel struct {
 // GetPetSetListChannel returns a pair of channels to a PetSet list and errors that
 // both must be read numReads times.
 func GetPetSetListChannel(client client.PetSetNamespacer,
-nsQuery *NamespaceQuery, numReads int) PetSetListChannel {
+	nsQuery *NamespaceQuery, numReads int) PetSetListChannel {
 	channel := PetSetListChannel{
 		List:  make(chan *apps.PetSetList, numReads),
 		Error: make(chan error, numReads),
@@ -448,7 +453,56 @@ func GetConfigMapListChannel(client client.ConfigMapsNamespacer, nsQuery *Namesp
 	return channel
 }
 
-var listEverything api.ListOptions = api.ListOptions{
+// PodMetricsChannel is a list and error channels to MetricsByPod.
+type PodMetricsChannel struct {
+	MetricsByPod chan *MetricsByPod
+	Error        chan error
+}
+
+// GetPodListMetricsChannel returns a pair of channels to MetricsByPod and errors that
+// both must be read numReads times.
+func GetPodListMetricsChannel(heapsterClient kdClient.HeapsterClient, pods []api.Pod, numReads int) PodMetricsChannel {
+	channel := PodMetricsChannel{
+		MetricsByPod: make(chan *MetricsByPod, numReads),
+		Error:        make(chan error, numReads),
+	}
+
+	go func() {
+		podNamesByNamespace := make(map[string][]string)
+		for _, pod := range pods {
+			podNamesByNamespace[pod.ObjectMeta.Namespace] =
+				append(podNamesByNamespace[pod.ObjectMeta.Namespace], pod.Name)
+		}
+
+		metrics, err := getPodListMetrics(podNamesByNamespace, heapsterClient)
+		for i := 0; i < numReads; i++ {
+			channel.MetricsByPod <- metrics
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// GetPodMetricsChannel returns a pair of channels to MetricsByPod and errors that
+// both must be read 1 time.
+func GetPodMetricsChannel(heapsterClient kdClient.HeapsterClient, name string, namespace string) PodMetricsChannel {
+	channel := PodMetricsChannel{
+		MetricsByPod: make(chan *MetricsByPod, 1),
+		Error:        make(chan error, 1),
+	}
+
+	go func() {
+		podNamesByNamespace := map[string][]string{namespace: []string{name}}
+		metrics, err := getPodListMetrics(podNamesByNamespace, heapsterClient)
+		channel.MetricsByPod <- metrics
+		channel.Error <- err
+	}()
+
+	return channel
+}
+
+var listEverything = api.ListOptions{
 	LabelSelector: labels.Everything(),
 	FieldSelector: fields.Everything(),
 }

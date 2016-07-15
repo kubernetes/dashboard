@@ -49,7 +49,7 @@ type Pod struct {
 	RestartCount int32 `json:"restartCount"`
 
 	// Pod metrics.
-	Metrics *PodMetrics `json:"metrics"`
+	Metrics *common.PodMetrics `json:"metrics"`
 }
 
 // GetPodList returns a list of all Pods in the cluster.
@@ -80,10 +80,15 @@ func GetPodListFromChannels(channels *common.ResourceChannels, pQuery *common.Pa
 
 func CreatePodList(pods []api.Pod, pQuery *common.PaginationQuery,
 	heapsterClient client.HeapsterClient) PodList {
-	metrics, err := getPodMetrics(pods, heapsterClient)
-	if err != nil {
+
+	channels := &common.ResourceChannels{
+		PodMetrics: common.GetPodListMetricsChannel(heapsterClient, pods, 1),
+	}
+
+	if err := <-channels.PodMetrics.Error; err != nil {
 		log.Printf("Skipping Heapster metrics because of error: %s\n", err)
 	}
+	metrics := <-channels.PodMetrics.MetricsByPod
 
 	podList := PodList{
 		Pods:     make([]Pod, 0),

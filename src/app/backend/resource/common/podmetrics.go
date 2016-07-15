@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package pod
+package common
 
 import (
 	"encoding/json"
@@ -24,7 +24,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 
 	heapster "k8s.io/heapster/metrics/api/v1/types"
-	"k8s.io/kubernetes/pkg/api"
 )
 
 const (
@@ -49,40 +48,28 @@ type MetricResult struct {
 // usage.
 type PodMetrics struct {
 	// Most recent measure of CPU usage on all cores in nanoseconds.
-	CpuUsage *uint64 `json:"cpuUsage"`
+	CPUUsage *uint64 `json:"cpuUsage"`
 	// Pod memory usage in bytes.
 	MemoryUsage *uint64 `json:"memoryUsage"`
-	// Timestamped samples of CpuUsage over some short period of history
-	CpuUsageHistory []MetricResult `json:"cpuUsageHistory"`
+	// Timestamped samples of CPUUsage over some short period of history
+	CPUUsageHistory []MetricResult `json:"cpuUsageHistory"`
 	// Timestamped samples of pod memory usage over some short period of history
 	MemoryUsageHistory []MetricResult `json:"memoryUsageHistory"`
 }
 
 // Return Pods metrics for the given list of pods. Returns error in case of errors when talking
 // with heapster.
-func getPodMetrics(pods []api.Pod,
+func getPodListMetrics(podNamesByNamespace map[string][]string,
 	heapsterClient client.HeapsterClient) (*MetricsByPod, error) {
 	log.Printf("Getting pod metrics")
 
-	podsByNamespace := make(map[string][]api.Pod)
-
-	for _, pod := range pods {
-		podsByNamespace[pod.ObjectMeta.Namespace] = append(podsByNamespace[pod.ObjectMeta.Namespace], pod)
-	}
-
 	result := &MetricsByPod{MetricsMap: make(map[string]map[string]PodMetrics)}
 
-	for namespace, pods := range podsByNamespace {
-		podNames := make([]string, 0)
-
-		for _, pod := range pods {
-			podNames = append(podNames, pod.Name)
-		}
-
-		metricCpuUsagePath := createMetricPath(namespace, podNames, cpuUsage)
+	for namespace, podNames := range podNamesByNamespace {
+		metricCPUUsagePath := createMetricPath(namespace, podNames, cpuUsage)
 		metricMemUsagePath := createMetricPath(namespace, podNames, memoryUsage)
 
-		resultCpuUsageRaw, err := getRawMetrics(heapsterClient, metricCpuUsagePath)
+		resultCPUUsageRaw, err := getRawMetrics(heapsterClient, metricCPUUsagePath)
 		if err != nil {
 			return nil, err
 		}
@@ -92,7 +79,7 @@ func getPodMetrics(pods []api.Pod,
 			return nil, err
 		}
 
-		cpuMetricResult, err := unmarshalMetrics(resultCpuUsageRaw)
+		cpuMetricResult, err := unmarshalMetrics(resultCPUUsageRaw)
 		if err != nil {
 			return nil, err
 		}
@@ -172,9 +159,9 @@ func fillPodMetrics(cpuMetrics []heapster.MetricResult, memMetrics []heapster.Me
 			}
 
 			podResources := PodMetrics{
-				CpuUsage:           cpuValue,
+				CPUUsage:           cpuValue,
 				MemoryUsage:        memValue,
-				CpuUsageHistory:    cpuHistory,
+				CPUUsageHistory:    cpuHistory,
 				MemoryUsageHistory: memHistory,
 			}
 			result[podName] = podResources

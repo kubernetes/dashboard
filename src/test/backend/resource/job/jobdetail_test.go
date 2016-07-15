@@ -25,12 +25,10 @@ import (
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/batch"
 	"k8s.io/kubernetes/pkg/client/restclient"
-	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
 )
 
 type FakeHeapsterClient struct {
-	client k8sClient.Interface
 }
 
 func (c FakeHeapsterClient) Get(path string) client.RequestInterface {
@@ -77,7 +75,7 @@ func TestGetJobDetail(t *testing.T) {
 	for _, c := range cases {
 		fakeClient := testclient.NewSimpleFake(c.job, podList, eventList, c.job,
 			podList, eventList)
-		fakeHeapsterClient := FakeHeapsterClient{client: testclient.NewSimpleFake()}
+		fakeHeapsterClient := FakeHeapsterClient{}
 
 		actual, _ := GetJobDetail(fakeClient, fakeHeapsterClient, c.namespace, c.name)
 
