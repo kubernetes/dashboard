@@ -19,6 +19,9 @@ limitations under the License.
     <md-tabs md-border-bottom md-dynamic-height>
       <md-tab label="{{::ctrl.i18n.MSG_POD_DETAIL_OVERVIEW_LABEL}}">
         <kd-pod-info pod="::ctrl.podDetail"></kd-pod-info>
+        <kd-container-info containers="::ctrl.podDetail.containers"
+            namespace="::ctrl.podDetail.objectMeta.namespace">
+        </kd-container-info>
       </md-tab>
     </md-tabs>
   </md-content>

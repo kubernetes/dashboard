@@ -22,6 +22,8 @@ import (
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
+
+	kdClient "github.com/kubernetes/dashboard/src/app/backend/client"
 )
 
 // ResourceChannels struct holds channels to resource lists. Each list channel is paired with
@@ -68,6 +70,9 @@ type ResourceChannels struct {
 
 	// List and error channels to PetSets.
 	ConfigMapList ConfigMapListChannel
+
+	// List and error channels to PodMetrics.
+	PodMetrics PodMetricsChannel
 }
 
 // ServiceListChannel is a list and error channels to Services.
@@ -448,7 +453,56 @@ func GetConfigMapListChannel(client client.ConfigMapsNamespacer, nsQuery *Namesp
 	return channel
 }
 
-var listEverything api.ListOptions = api.ListOptions{
+// PodMetricsChannel is a list and error channels to MetricsByPod.
+type PodMetricsChannel struct {
+	MetricsByPod chan *MetricsByPod
+	Error        chan error
+}
+
+// GetPodListMetricsChannel returns a pair of channels to MetricsByPod and errors that
+// both must be read numReads times.
+func GetPodListMetricsChannel(heapsterClient kdClient.HeapsterClient, pods []api.Pod, numReads int) PodMetricsChannel {
+	channel := PodMetricsChannel{
+		MetricsByPod: make(chan *MetricsByPod, numReads),
+		Error:        make(chan error, numReads),
+	}
+
+	go func() {
+		podNamesByNamespace := make(map[string][]string)
+		for _, pod := range pods {
+			podNamesByNamespace[pod.ObjectMeta.Namespace] =
+				append(podNamesByNamespace[pod.ObjectMeta.Namespace], pod.Name)
+		}
+
+		metrics, err := getPodListMetrics(podNamesByNamespace, heapsterClient)
+		for i := 0; i < numReads; i++ {
+			channel.MetricsByPod <- metrics
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// GetPodMetricsChannel returns a pair of channels to MetricsByPod and errors that
+// both must be read 1 time.
+func GetPodMetricsChannel(heapsterClient kdClient.HeapsterClient, name string, namespace string) PodMetricsChannel {
+	channel := PodMetricsChannel{
+		MetricsByPod: make(chan *MetricsByPod, 1),
+		Error:        make(chan error, 1),
+	}
+
+	go func() {
+		podNamesByNamespace := map[string][]string{namespace: []string{name}}
+		metrics, err := getPodListMetrics(podNamesByNamespace, heapsterClient)
+		channel.MetricsByPod <- metrics
+		channel.Error <- err
+	}()
+
+	return channel
+}
+
+var listEverything = api.ListOptions{
 	LabelSelector: labels.Everything(),
 	FieldSelector: fields.Everything(),
 }
