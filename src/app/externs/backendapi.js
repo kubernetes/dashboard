@@ -95,7 +95,6 @@ backendApi.AppDeploymentFromFileSpec;
 
 /**
  * @typedef {{
- *   namespace: string,
  *   events: !Array<!backendApi.Event>,
  *   listMeta: !backendApi.ListMeta
  * }}

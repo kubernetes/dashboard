@@ -34,7 +34,7 @@ export const namespaceParam = 'namespace';
 
 /**
  * All properties are @exported and in sync with URL param names.
- * @final
+ * @class
  */
 export class StateParams {
   /**

@@ -36,6 +36,7 @@ limitations under the License.
   </kd-resource-card-header-columns>
 
   <kd-resource-card dir-paginate="service in $ctrl.serviceList.services | itemsPerPage: default"
+                    total-items="$ctrl.serviceList.listMeta.totalItems"
                     pagination-id="services" object-meta="service.objectMeta"
                     type-meta="service.typeMeta">
     <kd-resource-card-status layout="row">
@@ -84,7 +85,8 @@ limitations under the License.
     </kd-resource-card-columns>
   </kd-resource-card>
   <kd-resource-card-list-footer>
-    <kd-resource-card-list-pagination pagination-id="services" list="$ctrl.serviceList">
+    <kd-resource-card-list-pagination pagination-id="services" list="$ctrl.serviceList"
+                                      list-resource="$ctrl.serviceListResource">
     </kd-resource-card-list-pagination>
   </kd-resource-card-list-footer>
 </kd-resource-card-list>

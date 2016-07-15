@@ -16,6 +16,8 @@
  * Parameters for this state.
  *
  * All properties are @exported and in sync with URL param names.
+ * @class
+ * @extends {../../chrome/chrome_state.StateParams}
  */
 export class GlobalStateParams {
   /**

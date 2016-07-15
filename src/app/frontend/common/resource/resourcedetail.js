@@ -18,6 +18,7 @@ import {GlobalStateParams as ResourceGlobalStateParams} from './globalresourcede
  * Parameters for this state.
  *
  * All properties are @exported and in sync with URL param names.
+ * @class
  */
 export class StateParams extends ResourceGlobalStateParams {
   /**

@@ -100,7 +100,7 @@ func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient client.Heapst
 	daemonSetDetail.PodList = pod.CreatePodList(pods.Items, common.NO_PAGINATION, heapsterClient)
 
 	// TODO related issue #991
-	daemonSetDetail.EventList = event.ToEventList([]api.Event{}, namespace)
+	daemonSetDetail.EventList = event.CreateEventList([]api.Event{}, common.NO_PAGINATION)
 
 	return daemonSetDetail, nil
 }
