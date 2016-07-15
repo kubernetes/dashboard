@@ -51,7 +51,8 @@ func GetPetSetEvents(client *client.Client, namespace, petSetName string) (
 		apiEvents = event.FillEventsType(apiEvents)
 	}
 
-	events := event.ToEventList(apiEvents, namespace)
+	// TODO support pagination
+	events := event.CreateEventList(apiEvents, common.NO_PAGINATION)
 
 	log.Printf("Found %d events related to %s pet set in %s namespace",
 		len(events.Events), petSetName, namespace)

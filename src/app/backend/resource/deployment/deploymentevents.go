@@ -25,8 +25,8 @@ import (
 
 // GetDeploymentEvents returns model events for a deployment with the given name in the given
 // namespace
-func GetDeploymentEvents(dpEvents []api.Event, namespace string,
-	deploymentName string) (*common.EventList, error) {
+func GetDeploymentEvents(dpEvents []api.Event, namespace string, deploymentName string) (
+	*common.EventList, error) {
 
 	log.Printf("Getting events related to %s deployment in %s namespace", deploymentName,
 		namespace)
@@ -35,7 +35,8 @@ func GetDeploymentEvents(dpEvents []api.Event, namespace string,
 		dpEvents = event.FillEventsType(dpEvents)
 	}
 
-	events := event.ToEventList(dpEvents, namespace)
+	// TODO support pagination
+	events := event.CreateEventList(dpEvents, common.NO_PAGINATION)
 
 	log.Printf("Found %d events related to %s deployment in %s namespace",
 		len(events.Events), deploymentName, namespace)

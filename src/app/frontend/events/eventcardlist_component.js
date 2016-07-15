@@ -27,7 +27,7 @@ export class EventCardListController {
     this.eventList;
 
     /** @export {!backendApi.EventList} */
-    this.filteredEventList = this.eventList;
+    this.filteredEventList = {events: [], listMeta: {totalItems: 0}};
 
     /** @const @export {!Array<string>} */
     this.eventTypeFilter = [EVENT_ALL, EVENT_TYPE_WARNING];
@@ -37,6 +37,14 @@ export class EventCardListController {
 
     /** @export */
     this.i18n = i18n;
+  }
+
+  /**
+   * @export
+   */
+  $onInit() {
+    this.filteredEventList.listMeta = this.eventList.listMeta;
+    this.filteredEventList.events = this.eventList.events;
   }
 
   /**
@@ -54,7 +62,7 @@ export class EventCardListController {
    * @export
    */
   hasEvents() {
-    return this.filteredEventList !== undefined && this.filteredEventList.events.length > 0;
+    return this.filteredEventList !== undefined && this.filteredEventList.listMeta.totalItems > 0;
   }
 
   /**
@@ -62,23 +70,22 @@ export class EventCardListController {
    * @export
    */
   handleEventFiltering() {
-    this.filteredEventList = this.filterByType(this.eventList, this.eventType);
+    this.filteredEventList.events = this.filterByType_(this.eventList.events, this.eventType);
   }
 
   /**
    * Filters events by their type.
-   * @param {!backendApi.EventList} eventList
+   * @param {!Array<!backendApi.Event>} events
    * @param {string} type
-   * @return {!backendApi.EventList}
-   * @export
+   * @return {!Array<!backendApi.Event>}
+   * @private
    */
-  filterByType(eventList, type) {
+  filterByType_(events, type) {
     if (type === EVENT_TYPE_WARNING) {
-      eventList.events = eventList.events.filter((event) => event.type === EVENT_TYPE_WARNING);
-      return eventList;
+      return events.filter((event) => event.type === EVENT_TYPE_WARNING);
     } else {
       // In case of selected 'All' option.
-      return eventList;
+      return events;
     }
   }
 }
@@ -93,7 +100,7 @@ export const eventCardListComponent = {
   controller: EventCardListController,
   bindings: {
     /** {!backendApi.EventList} */
-    'eventList': '=',
+    'eventList': '<',
   },
 };
 

@@ -50,7 +50,8 @@ export default angular
     .service('kdReplicationControllerService', ReplicationControllerService)
     .factory('kdRCResource', replicationControllerResource)
     .factory('kdRCPodsResource', replicationControllerPodsResource)
-    .factory('kdRCEventsResource', replicationControllerEventsResource);
+    .factory('kdRCEventsResource', replicationControllerEventsResource)
+    .factory('kdRCServicesResource', replicationControllerServicesResource);
 
 /**
  * @param {!angular.$resource} $resource
@@ -77,4 +78,13 @@ function replicationControllerPodsResource($resource) {
  */
 function replicationControllerEventsResource($resource) {
   return $resource('api/v1/replicationcontroller/:namespace/:name/event');
+}
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function replicationControllerServicesResource($resource) {
+  return $resource('api/v1/replicationcontroller/:namespace/:name/service');
 }

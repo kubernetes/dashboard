@@ -83,6 +83,8 @@ export const serviceCardListComponent = {
   bindings: {
     /** {!backendApi.ServiceList} */
     'serviceList': '<',
+    /** {angular.Resource} */
+    'serviceListResource': '<',
     /** {boolean} */
     'selectable': '<',
   },

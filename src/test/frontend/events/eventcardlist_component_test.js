@@ -46,10 +46,10 @@ describe('Event Card List controller', () => {
     };
 
     // when
-    let result = ctrl.filterByType(eventList, eventType);
+    let result = ctrl.filterByType_(eventList.events, eventType);
 
     // then
-    expect(result.events.length).toEqual(2);
+    expect(result.length).toEqual(2);
   });
 
   it('should filter all non-warning events if warning option is selected', () => {
@@ -73,15 +73,15 @@ describe('Event Card List controller', () => {
     };
 
     // when
-    let result = ctrl.filterByType(eventList, eventType);
+    let result = ctrl.filterByType_(eventList.events, eventType);
 
     // then
-    expect(result.events.length).toEqual(1);
+    expect(result.length).toEqual(1);
   });
 
   it('should return true when there are events to display', () => {
     // given
-    ctrl.filteredEventList = {events: ['Some event']};
+    ctrl.filteredEventList = {events: ['Some event'], listMeta: {totalItems: 1}};
 
     // when
     let result = ctrl.hasEvents();
@@ -92,7 +92,7 @@ describe('Event Card List controller', () => {
 
   it('should return false if there are no events to display', () => {
     // given
-    ctrl.filteredEventList = {events: []};
+    ctrl.filteredEventList = {events: [], listMeta: {totalItems: 0}};
 
     // when
     let result = ctrl.hasEvents();
@@ -131,26 +131,28 @@ describe('Event Card List controller', () => {
   it('should not filter any events and show all', () => {
     // given
     ctrl.eventType = 'All';
-    ctrl.eventList = [
-      {
-        type: 'Warning',
-        message: 'event-1',
-      },
-      {
-        type: 'Normal',
-        message: 'event-2',
-      },
-      {
-        type: 'Normal',
-        message: 'event-3',
-      },
-    ];
+    ctrl.eventList = {
+      events: [
+        {
+          type: 'Warning',
+          message: 'event-1',
+        },
+        {
+          type: 'Normal',
+          message: 'event-2',
+        },
+        {
+          type: 'Normal',
+          message: 'event-3',
+        },
+      ],
+    };
 
     // when
     ctrl.handleEventFiltering();
 
     // then
-    expect(ctrl.filteredEventList.length).toEqual(3);
+    expect(ctrl.filteredEventList.events.length).toEqual(3);
   });
 
   it('should return true when warning event', () => {
