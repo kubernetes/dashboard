@@ -32,7 +32,7 @@ export class PodCardListController {
      */
     this.podList;
 
-    /** @export {!angular.$resource} Initialized from binding. */
+    /** @export {!angular.Resource} Initialized from binding. */
     this.podListResource;
 
     /** @private {!ui.router.$state} */
@@ -149,7 +149,7 @@ export const podCardListComponent = {
   bindings: {
     /** {!backendApi.PodList} */
     'podList': '<',
-    /** {!angular.$resource} */
+    /** {!angular.Resource} */
     'podListResource': '<',
     /** {boolean} */
     'selectable': '<',

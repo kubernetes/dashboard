@@ -93,7 +93,8 @@ func GetNodeEvents(client client.Interface, nodeName string) (common.EventList, 
 	if ref, err := api.GetReference(node); err == nil {
 		ref.UID = types.UID(ref.Name)
 		events, _ := client.Events(api.NamespaceAll).Search(ref)
-		eventList = ToEventList(events.Items, api.NamespaceAll)
+		// TODO add pagination support
+		eventList = CreateEventList(events.Items, common.NO_PAGINATION)
 	} else {
 		log.Print(err)
 	}
@@ -130,31 +131,50 @@ func IsTypeFilled(events []api.Event) bool {
 	return true
 }
 
-// Appends events from source slice to target events representation.
-func appendEvents(source []api.Event, target common.EventList) common.EventList {
-	for _, event := range source {
-		target.Events = append(target.Events, common.Event{
-			ObjectMeta:      common.NewObjectMeta(event.ObjectMeta),
-			TypeMeta:        common.NewTypeMeta(common.ResourceKindEvent),
-			Message:         event.Message,
-			SourceComponent: event.Source.Component,
-			SourceHost:      event.Source.Host,
-			SubObject:       event.InvolvedObject.FieldPath,
-			Count:           event.Count,
-			FirstSeen:       event.FirstTimestamp,
-			LastSeen:        event.LastTimestamp,
-			Reason:          event.Reason,
-			Type:            event.Type,
-		})
+// ToEvent converts event api Event to Event model object.
+func ToEvent(event api.Event) common.Event {
+	result := common.Event{
+		ObjectMeta:      common.NewObjectMeta(event.ObjectMeta),
+		TypeMeta:        common.NewTypeMeta(common.ResourceKindEvent),
+		Message:         event.Message,
+		SourceComponent: event.Source.Component,
+		SourceHost:      event.Source.Host,
+		SubObject:       event.InvolvedObject.FieldPath,
+		Count:           event.Count,
+		FirstSeen:       event.FirstTimestamp,
+		LastSeen:        event.LastTimestamp,
+		Reason:          event.Reason,
+		Type:            event.Type,
 	}
-	return target
+
+	return result
 }
 
-// ToEventList converts array of api events to common EventList structure
-func ToEventList(source []api.Event, namespace string) common.EventList {
-	return appendEvents(source, common.EventList{
-		Namespace: namespace,
-		Events:    make([]common.Event, 0),
-		ListMeta:  common.ListMeta{TotalItems: len(source)},
-	})
+// CreateEventList converts array of api events to common EventList structure
+func CreateEventList(events []api.Event, pQuery *common.PaginationQuery) common.EventList {
+
+	eventList := common.EventList{
+		Events: make([]common.Event, 0),
+		ListMeta: common.ListMeta{TotalItems: len(events)},
+	}
+
+	events = paginate(events, pQuery)
+
+	for _, event := range events {
+		eventDetail := ToEvent(event)
+		eventList.Events = append(eventList.Events, eventDetail)
+	}
+
+	return eventList
+}
+
+func paginate(events []api.Event, pQuery *common.PaginationQuery) []api.Event {
+	startIndex, endIndex := pQuery.GetPaginationSettings(len(events))
+
+	// Return all items if provided settings do not meet requirements
+	if !pQuery.CanPaginate(len(events), startIndex) {
+		return events
+	}
+
+	return events[startIndex:endIndex]
 }

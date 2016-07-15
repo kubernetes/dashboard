@@ -66,7 +66,6 @@ func TestGetNodeDetail(t *testing.T) {
 					Pods: []pod.Pod{},
 				},
 				EventList: common.EventList{
-					Namespace: api.NamespaceAll,
 					Events:    nil,
 				},
 				AllocatedResources: NodeAllocatedResources{

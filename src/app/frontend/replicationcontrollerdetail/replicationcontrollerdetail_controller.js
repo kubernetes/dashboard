@@ -22,11 +22,20 @@ export default class ReplicationControllerDetailController {
    * @param {!backendApi.ReplicationControllerDetail} replicationControllerDetail
    * @param {!ui.router.$state} $state
    * @param {!../common/resource/resourcedetail.StateParams} $stateParams
+   * @param {!angular.Resource} kdRCPodsResource
+   * @param {!angular.Resource} kdRCServicesResource
    * @ngInject
    */
-  constructor(replicationControllerDetail, $state, $stateParams) {
+  constructor(
+      replicationControllerDetail, $state, $stateParams, kdRCPodsResource, kdRCServicesResource) {
     /** @export {!backendApi.ReplicationControllerDetail} */
     this.replicationControllerDetail = replicationControllerDetail;
+
+    /** @export {!angular.Resource} */
+    this.podListResource = kdRCPodsResource;
+
+    /** @export {!angular.Resource} */
+    this.serviceListResource = kdRCServicesResource;
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;

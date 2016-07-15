@@ -52,9 +52,7 @@ func GetReplicationControllerEvents(client client.Interface, pQuery *common.Pagi
 		apiEvents = resourceEvent.FillEventsType(apiEvents)
 	}
 
-	// TODO support pagination
-
-	events := resourceEvent.ToEventList(apiEvents, namespace)
+	events := resourceEvent.CreateEventList(apiEvents, pQuery)
 
 	log.Printf("Found %d events related to %s replication controller in %s namespace",
 		len(events.Events), replicationControllerName, namespace)

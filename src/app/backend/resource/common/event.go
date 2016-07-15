@@ -22,9 +22,6 @@ import (
 type EventList struct {
 	ListMeta ListMeta `json:"listMeta"`
 
-	// Namespace.
-	Namespace string `json:"namespace"`
-
 	// List of events from given namespace.
 	Events []Event `json:"events"`
 }

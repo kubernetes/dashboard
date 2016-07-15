@@ -21,7 +21,7 @@ export class ResourceCardListPaginationController {
   /**
    * @ngInject
    * @param {!../../pagination/pagination_service.PaginationService} kdPaginationService
-   * @param {!../../../chrome/chrome_state.StateParams} $stateParams
+   * @param {!../../resource/resourcedetail.StateParams} $stateParams
    * @param {!../../errorhandling/errordialog_service.ErrorDialog} errorDialog
    * @param {!angular.Scope} $scope
    */
@@ -38,7 +38,7 @@ export class ResourceCardListPaginationController {
     this.list;
     /** @private {!../../pagination/pagination_service.PaginationService} */
     this.paginationService_ = kdPaginationService;
-    /** @private {!./../../../chrome/chrome_state.StateParams} */
+    /** @private {!./../../resource/resourcedetail.StateParams} */
     this.stateParams_ = $stateParams;
     /** @export {number} */
     this.rowsLimit;
@@ -106,9 +106,10 @@ export class ResourceCardListPaginationController {
    * @export
    */
   pageChanged(newPageNumber) {
+    let namespace = this.stateParams_.namespace || this.stateParams_.objectNamespace;
     let query = PaginationService.getResourceQuery(
-        this.paginationService_.getRowsLimit(this.paginationId), newPageNumber,
-        this.stateParams_.namespace);
+        this.paginationService_.getRowsLimit(this.paginationId), newPageNumber, namespace,
+        this.stateParams_.objectName);
 
     this.listResource.get(
         query, (list) => { this.list = list; },

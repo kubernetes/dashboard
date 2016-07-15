@@ -109,8 +109,7 @@ limitations under the License.
 <kd-content-card>
   <kd-title>{{::$ctrl.i18n.MSG_NODE_DETAIL_PODS_LABEL}}</kd-title>
   <kd-content>
-    <kd-pod-card-list pod-list="::$ctrl.node.podList" with-statuses="true"
-                      logs-href-fn="::$ctrl.getPodLogsHref(pod)">
+    <kd-pod-card-list pod-list="$ctrl.node.podList" with-statuses="true">
     </kd-pod-card-list>
   </kd-content>
 </kd-content-card>
