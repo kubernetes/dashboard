@@ -119,8 +119,8 @@ describe('Pagination service', () => {
 
   it('should return pagination query object', () => {
     let cases = [
-      [10, 1, 'ns-1', {itemsPerPage: 10, page: 1, namespace: 'ns-1'}],
-      [10, 2, undefined, {itemsPerPage: 10, page: 2, namespace: ''}],
+      [10, 1, 'ns-1', {itemsPerPage: 10, page: 1, namespace: 'ns-1', name: undefined}],
+      [10, 2, undefined, {itemsPerPage: 10, page: 2, namespace: '', name: undefined}],
     ];
 
     cases.forEach((testData) => {
@@ -137,8 +137,8 @@ describe('Pagination service', () => {
 
   it('should return default pagination query object', () => {
     let cases = [
-      ['ns-1', {itemsPerPage: 10, page: 1, namespace: 'ns-1'}],
-      [undefined, {itemsPerPage: 10, page: 1, namespace: ''}],
+      ['ns-1', {itemsPerPage: 10, page: 1, namespace: 'ns-1', name: undefined}],
+      [undefined, {itemsPerPage: 10, page: 1, namespace: '', name: undefined}],
     ];
 
     cases.forEach((testData) => {

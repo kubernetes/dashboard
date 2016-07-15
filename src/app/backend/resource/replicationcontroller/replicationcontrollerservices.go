@@ -43,6 +43,6 @@ func GetReplicationControllerServices(client client.Interface, pQuery *common.Pa
 
 	matchingServices := common.FilterNamespacedServicesBySelector(services.Items, namespace,
 		replicationController.Spec.Selector)
-	serviceList := service.CreateServiceList(matchingServices, common.NO_PAGINATION)
+	serviceList := service.CreateServiceList(matchingServices, pQuery)
 	return &serviceList, nil
 }

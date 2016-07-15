@@ -12,16 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {StateParams} from 'chrome/chrome_state';
+
 /**
  * Parameters for this state.
  *
  * All properties are @exported and in sync with URL param names.
  */
-export class GlobalStateParams {
+export class GlobalStateParams extends StateParams {
   /**
    * @param {string} objectName
   */
   constructor(objectName) {
+    super(undefined);
+
     /** @export {string} Name of this object. */
     this.objectName = objectName;
   }

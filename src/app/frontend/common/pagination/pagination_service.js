@@ -104,38 +104,19 @@ export class PaginationService {
    * @param {number} itemsPerPage
    * @param {number} pageNr
    * @param {string|undefined} namespace
+   * @param {string|undefined} [name]
    * @return {!backendApi.PaginationQuery}
    */
-  static getResourceQuery(itemsPerPage, pageNr, namespace) {
-    return {itemsPerPage: itemsPerPage, page: pageNr, namespace: namespace || ''};
-  }
-
-  /**
-   * @param {string|undefined} namespace
-   * @return {!backendApi.PaginationQuery}
-   */
-  static getDefaultResourceQuery(namespace) {
-    return {itemsPerPage: DEFAULT_ROWS_LIMIT, page: 1, namespace: namespace || ''};
-  }
-
-  /**
-   *
-   * @param {number} itemsPerPage
-   * @param {number} pageNr
-   * @param {string|undefined} namespace
-   * @param {string} name
-   * @return {!backendApi.PaginationQuery} pQuery
-   */
-  static getResourceDetailQuery(itemsPerPage, pageNr, namespace, name) {
+  static getResourceQuery(itemsPerPage, pageNr, namespace, name) {
     return {itemsPerPage: itemsPerPage, page: pageNr, namespace: namespace || '', name: name};
   }
 
   /**
    * @param {string|undefined} namespace
-   * @param {string} name
-   * @return {!backendApi.PaginationQuery} pQuery
+   * @param {string|undefined} [name]
+   * @return {!backendApi.PaginationQuery}
    */
-  static getDefaultResourceDetailQuery(namespace, name) {
+  static getDefaultResourceQuery(namespace, name) {
     return {itemsPerPage: DEFAULT_ROWS_LIMIT, page: 1, namespace: namespace || '', name: name};
   }
 }
