@@ -77,7 +77,7 @@ export function getReplicationControllerSpecPodsResource($stateParams, $resource
  * @ngInject
  */
 function resolveReplicationControllerDetails(kdRCResource, $stateParams) {
-  let query = PaginationService.getDefaultResourceDetailQuery(
+  let query = PaginationService.getDefaultResourceQuery(
       $stateParams.objectNamespace, $stateParams.objectName);
   return kdRCResource.get(query).$promise;
 }
