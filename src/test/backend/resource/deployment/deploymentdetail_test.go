@@ -110,7 +110,6 @@ func TestGetDeploymentDetail(t *testing.T) {
 					Pods:       common.PodInfo{Warnings: []common.Event{}},
 				},
 				EventList: common.EventList{
-					Namespace: "test-namespace",
 					Events:    []common.Event{},
 				},
 			},

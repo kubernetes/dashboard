@@ -17,11 +17,7 @@ package event
 import (
 	"reflect"
 	"testing"
-	"time"
-
 	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
-
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
 )
@@ -139,94 +135,6 @@ func TestGetPodsEvents(t *testing.T) {
 	}
 }
 
-func TestAppendEvents(t *testing.T) {
-	location, err := time.LoadLocation("Europe/Berlin")
-
-	if err != nil {
-		t.Errorf("AppendEvents(...) cannot load location")
-	}
-
-	cases := []struct {
-		source   []api.Event
-		target   common.EventList
-		expected common.EventList
-	}{
-		{
-			nil, common.EventList{}, common.EventList{},
-		},
-		{
-			nil,
-			common.EventList{
-				Namespace: "test-namespace",
-			},
-			common.EventList{
-				Namespace: "test-namespace",
-			},
-		},
-		{
-			[]api.Event{
-				{
-					Message: "my-event-msg",
-					Source: api.EventSource{
-						Component: "my-event-src-component",
-						Host:      "my-event-src-host",
-					},
-					InvolvedObject: api.ObjectReference{
-						FieldPath: "my-event-subobject",
-					},
-					Count: 7,
-					FirstTimestamp: unversioned.Time{
-						Time: time.Date(2015, 1, 1, 0, 0, 0, 0, location),
-					},
-					LastTimestamp: unversioned.Time{
-						Time: time.Date(2015, 1, 1, 0, 0, 0, 0, location),
-					},
-					Reason: "my-event-reason",
-					Type:   api.EventTypeNormal,
-					ObjectMeta: api.ObjectMeta{
-						Name:      "my-event",
-						Namespace: "test-namespace",
-					},
-				},
-			},
-			common.EventList{
-				Namespace: "test-namespace",
-			},
-			common.EventList{
-				Namespace: "test-namespace",
-				Events: []common.Event{
-					{
-						ObjectMeta:      common.ObjectMeta{Name: "my-event", Namespace: "test-namespace"},
-						TypeMeta:        common.TypeMeta{common.ResourceKindEvent},
-						Message:         "my-event-msg",
-						SourceComponent: "my-event-src-component",
-						SourceHost:      "my-event-src-host",
-						SubObject:       "my-event-subobject",
-						Count:           7,
-						FirstSeen: unversioned.Time{
-							Time: time.Date(2015, 1, 1, 0, 0, 0, 0,
-								location),
-						},
-						LastSeen: unversioned.Time{
-							Time: time.Date(2015, 1, 1, 0, 0, 0, 0,
-								location),
-						},
-						Reason: "my-event-reason",
-						Type:   api.EventTypeNormal,
-					},
-				},
-			},
-		},
-	}
-	for _, c := range cases {
-		actual := appendEvents(c.source, c.target)
-		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("AppendEvents(%#v, %#v) == \n%#v, expected \n%#v",
-				c.source, c.target, actual, c.expected)
-		}
-	}
-}
-
 func TestToEventList(t *testing.T) {
 	cases := []struct {
 		events    []api.Event
@@ -241,7 +149,6 @@ func TestToEventList(t *testing.T) {
 			"namespace-1",
 			common.EventList{
 				ListMeta:  common.ListMeta{TotalItems: 2},
-				Namespace: "namespace-1",
 				Events: []common.Event{
 					{
 						ObjectMeta: common.ObjectMeta{Name: "event-1"},
@@ -257,7 +164,7 @@ func TestToEventList(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := ToEventList(c.events, c.namespace)
+		actual := CreateEventList(c.events, common.NO_PAGINATION)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("ToEventList(%+v, %+v) == \n%+v, expected \n%+v",
 				c.events, c.namespace, actual, c.expected)

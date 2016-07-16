@@ -23,19 +23,19 @@ import (
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
+	"log"
 )
 
 // GetReplicationControllerPods return list of pods targeting replication controller associated
 // to given name.
 func GetReplicationControllerPods(client k8sClient.Interface, heapsterClient client.HeapsterClient,
 	pQuery *common.PaginationQuery, rcName, namespace string) (*pod.PodList, error) {
+	log.Printf("Getting replication controller %s pods in namespace %s", rcName, namespace)
 
 	pods, err := getRawReplicationControllerPods(client, rcName, namespace)
 	if err != nil {
 		return nil, err
 	}
-
-	// TODO support pagination
 
 	podList := pod.CreatePodList(pods, pQuery, heapsterClient)
 	return &podList, nil
