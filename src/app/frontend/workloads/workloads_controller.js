@@ -18,16 +18,20 @@
 export class WorkloadsController {
   /**
    * @param {!backendApi.Workloads} workloads
-   * @param {!angular.$resource} kdPodListResource
+   * @param {!angular.Resource} kdPodListResource
+   * @param {!angular.Resource} kdReplicaSetListResource
    * @ngInject
    */
-  constructor(workloads, kdPodListResource) {
+  constructor(workloads, kdPodListResource, kdReplicaSetListResource) {
     /** @export {!backendApi.Workloads} */
     this.workloads = workloads;
 
-    /** @export {!angular.$resource} */
+    /** @export {!angular.Resource} */
     this.podListResource = kdPodListResource;
 
+    /** @export {!angular.Resource} */
+    this.replicaSetListResource = kdReplicaSetListResource;
+    
     /** @export */
     this.i18n = i18n;
   }

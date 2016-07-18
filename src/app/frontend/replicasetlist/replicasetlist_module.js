@@ -39,4 +39,14 @@ export default angular
         ])
     .config(stateConfig)
     .component('kdReplicaSetCardList', replicaSetCardListComponent)
-    .component('kdReplicaSetCard', replicaSetCardComponent);
+    .component('kdReplicaSetCard', replicaSetCardComponent)
+    .factory('kdReplicaSetListResource', replicaSetListResource);
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function replicaSetListResource($resource) {
+  return $resource('api/v1/replicaset/:namespace');
+}

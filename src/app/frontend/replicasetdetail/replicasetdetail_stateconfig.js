@@ -14,6 +14,7 @@
 
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {PaginationService} from 'common/pagination/pagination_service';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 import {stateName as replicaSetList, stateUrl} from 'replicasetlist/replicasetlist_state';
 
@@ -32,8 +33,7 @@ export default function stateConfig($stateProvider) {
     url: appendDetailParamsToUrl(stateUrl),
     parent: chromeStateName,
     resolve: {
-      'replicaSetDetailResource': getReplicaSetDetailResource,
-      'replicaSetDetail': getReplicaSetDetail,
+      'replicaSetDetail': resolveReplicaSetDetailResource,
     },
     data: {
       [breadcrumbsConfig]: {
@@ -57,20 +57,13 @@ export default function stateConfig($stateProvider) {
 }
 
 /**
+ * @param {!angular.Resource} kdReplicaSetDetailResource
  * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
- * @param {!angular.$resource} $resource
  * @return {!angular.Resource<!backendApi.ReplicaSetDetail>}
  * @ngInject
  */
-export function getReplicaSetDetailResource($resource, $stateParams) {
-  return $resource(`api/v1/replicaset/${$stateParams.objectNamespace}/${$stateParams.objectName}`);
-}
-
-/**
- * @param {!angular.Resource<!backendApi.ReplicaSetDetail>} replicaSetDetailResource
- * @return {!angular.$q.Promise}
- * @ngInject
- */
-export function getReplicaSetDetail(replicaSetDetailResource) {
-  return replicaSetDetailResource.get().$promise;
+export function resolveReplicaSetDetailResource(kdReplicaSetDetailResource, $stateParams) {
+  let query = PaginationService.getDefaultResourceQuery(
+      $stateParams.objectNamespace, $stateParams.objectName);
+  return kdReplicaSetDetailResource.get(query).$promise;
 }

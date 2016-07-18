@@ -25,6 +25,7 @@ import (
 	// TODO(maciaszczykm): Avoid using dot-imports.
 	. "github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/configmap"
 	. "github.com/kubernetes/dashboard/src/app/backend/resource/container"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
@@ -34,7 +35,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/petset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/configmap"
 	. "github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
 	. "github.com/kubernetes/dashboard/src/app/backend/resource/secret"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
@@ -190,6 +190,10 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 		apiV1Ws.GET("/replicaset/{namespace}/{replicaSet}").
 			To(apiHandler.handleGetReplicaSetDetail).
 			Writes(replicaset.ReplicaSetDetail{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/replicaset/{namespace}/{replicaSet}/pod").
+			To(apiHandler.handleGetReplicaSetPods).
+			Writes(pod.PodList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/pod").
@@ -274,8 +278,8 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 			Writes(SecretList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/secret").
-		To(apiHandler.handleGetSecrets).
-		Writes(SecretList{}))
+			To(apiHandler.handleGetSecrets).
+			Writes(SecretList{}))
 	apiV1Ws.Route(
 		apiV1Ws.POST("/secret").
 			To(apiHandler.handleCreateImagePullSecret).
@@ -284,16 +288,16 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/configmap").
-		To(apiHandler.handleGetConfigMaps).
-		Writes(configmap.ConfigMapList{}))
+			To(apiHandler.handleGetConfigMaps).
+			Writes(configmap.ConfigMapList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/configmap/{namespace}").
-		To(apiHandler.handleGetConfigMaps).
-		Writes(configmap.ConfigMapList{}))
+			To(apiHandler.handleGetConfigMaps).
+			Writes(configmap.ConfigMapList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/configmap/{namespace}/{configmap}").
-		To(apiHandler.handleGetConfigMapDetail).
-		Writes(configmap.ConfigMapDetail{}))
+			To(apiHandler.handleGetConfigMapDetail).
+			Writes(configmap.ConfigMapDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/service").
@@ -543,7 +547,8 @@ func (apiHandler *ApiHandler) handleGetReplicaSets(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := parseNamespacePathParameter(request)
-	result, err := replicaset.GetReplicaSetList(apiHandler.client, namespace)
+	pagination := parsePaginationPathParameter(request)
+	result, err := replicaset.GetReplicaSetList(apiHandler.client, namespace, pagination)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -552,13 +557,33 @@ func (apiHandler *ApiHandler) handleGetReplicaSets(
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
+// Handles get Replica Sets Detail API call.
 func (apiHandler *ApiHandler) handleGetReplicaSetDetail(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := request.PathParameter("namespace")
 	replicaSet := request.PathParameter("replicaSet")
+	pagination := parsePaginationPathParameter(request)
 	result, err := replicaset.GetReplicaSetDetail(apiHandler.client, apiHandler.heapsterClient,
-		namespace, replicaSet)
+		pagination, namespace, replicaSet)
+
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get Replica Sets pods API call.
+func (apiHandler *ApiHandler) handleGetReplicaSetPods(
+	request *restful.Request, response *restful.Response) {
+
+	namespace := request.PathParameter("namespace")
+	replicaSet := request.PathParameter("replicaSet")
+	pagination := parsePaginationPathParameter(request)
+	result, err := replicaset.GetReplicaSetPods(apiHandler.client, apiHandler.heapsterClient,
+		pagination, replicaSet, namespace)
 
 	if err != nil {
 		handleInternalError(response, err)
@@ -806,7 +831,6 @@ func (apiHandler *ApiHandler) handleGetSecrets(request *restful.Request, respons
 	}
 	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
-
 
 func (apiHandler *ApiHandler) handleGetConfigMaps(request *restful.Request, response *restful.Response) {
 	namespace := parseNamespacePathParameter(request)

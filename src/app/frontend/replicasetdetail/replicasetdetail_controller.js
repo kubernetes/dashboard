@@ -20,9 +20,12 @@ export class ReplicaSetDetailController {
    * @param {!backendApi.ReplicaSetDetail} replicaSetDetail
    * @ngInject
    */
-  constructor(replicaSetDetail) {
+  constructor(replicaSetDetail, kdReplicaSetPodsResource) {
     /** @export {!backendApi.ReplicaSetDetail} */
     this.replicaSetDetail = replicaSetDetail;
+
+    /** @export {!angular.Resource} */
+    this.replicaSetPodsResource = kdReplicaSetPodsResource;
 
     /** @export */
     this.i18n = i18n;

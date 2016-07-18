@@ -17,8 +17,6 @@ package replicaset
 import (
 	"log"
 
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/apis/extensions"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
@@ -48,8 +46,7 @@ type ReplicaSetDetail struct {
 
 // GetReplicaSetDetail gets replica set details.
 func GetReplicaSetDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	namespace, name string) (*ReplicaSetDetail, error) {
-
+	pQuery *common.PaginationQuery, namespace, name string) (*ReplicaSetDetail, error) {
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 
 	// TODO(floreks): Use channels.
@@ -58,39 +55,21 @@ func GetReplicaSetDetail(client k8sClient.Interface, heapsterClient client.Heaps
 		return nil, err
 	}
 
-	channels := &common.ResourceChannels{
-		PodList: common.GetPodListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
-	}
-
-	pods := <-channels.PodList.List
-	if err := <-channels.PodList.Error; err != nil {
-		return nil, err
-	}
-
-	events, err := GetReplicaSetEvents(client, replicaSetData.Namespace, replicaSetData.Name)
+	eventList, err := GetReplicaSetEvents(client, replicaSetData.Namespace, replicaSetData.Name)
 	if err != nil {
 		return nil, err
 	}
 
-	replicaSet := getReplicaSetDetail(replicaSetData, heapsterClient, events, pods.Items)
-	return &replicaSet, nil
-}
-
-func getReplicaSetDetail(replicaSet *extensions.ReplicaSet, heapsterClient client.HeapsterClient,
-	events *common.EventList, pods []api.Pod) ReplicaSetDetail {
-
-	matchingPods := common.FilterNamespacedPodsByLabelSelector(pods, replicaSet.ObjectMeta.Namespace,
-		replicaSet.Spec.Selector)
-
-	podInfo := getPodInfo(replicaSet, matchingPods)
-
-	return ReplicaSetDetail{
-		ObjectMeta:      common.NewObjectMeta(replicaSet.ObjectMeta),
-		TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicaSet),
-		ContainerImages: common.GetContainerImages(&replicaSet.Spec.Template.Spec),
-		PodInfo:         podInfo,
-		// TODO(floreks): add pagination support
-		PodList:   pod.CreatePodList(matchingPods, common.NO_PAGINATION, heapsterClient),
-		EventList: *events,
+	podList, err := GetReplicaSetPods(client, heapsterClient, pQuery, name, namespace)
+	if err != nil {
+		return nil, err
 	}
+
+	podInfo, err := getReplicaSetPodInfo(client, replicaSetData)
+	if err != nil {
+		return nil, err
+	}
+
+	replicaSet := ToReplicaSetDetail(replicaSetData, *eventList, *podList, *podInfo)
+	return &replicaSet, nil
 }
