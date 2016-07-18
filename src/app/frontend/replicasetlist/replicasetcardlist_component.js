@@ -34,6 +34,7 @@ export const replicaSetCardListComponent = {
   transclude: true,
   bindings: {
     'replicaSetList': '<',
+    'replicaSetListResource': '<',
   },
   templateUrl: 'replicasetlist/replicasetcardlist.html',
   controller: ReplicaSetCardListController,

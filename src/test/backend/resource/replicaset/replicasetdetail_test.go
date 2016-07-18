@@ -50,7 +50,7 @@ func TestGetReplicaSetDetail(t *testing.T) {
 	}{
 		{
 			"test-namespace", "test-name",
-			[]string{"get", "list", "list", "get", "list", "list"},
+			[]string{"get", "list", "get", "list", "list", "get", "list", "list"},
 			&extensions.ReplicaSet{
 				ObjectMeta: api.ObjectMeta{Name: "test-replicaset"},
 				Spec: extensions.ReplicaSetSpec{
@@ -73,7 +73,8 @@ func TestGetReplicaSetDetail(t *testing.T) {
 			podList, eventList)
 		fakeHeapsterClient := FakeHeapsterClient{client: testclient.NewSimpleFake()}
 
-		actual, _ := GetReplicaSetDetail(fakeClient, fakeHeapsterClient, c.namespace, c.name)
+		actual, _ := GetReplicaSetDetail(fakeClient, fakeHeapsterClient, common.NO_PAGINATION,
+			c.namespace, c.name)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {
