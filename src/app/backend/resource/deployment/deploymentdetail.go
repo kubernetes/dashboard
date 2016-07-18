@@ -154,7 +154,8 @@ func getDeploymentDetail(deployment *extensions.Deployment,
 	for i, replicaSet := range oldRs {
 		oldReplicaSets[i] = *replicaSet
 	}
-	oldReplicaSetList := replicaset.ToReplicaSetList(oldReplicaSets, pods, rawEvents)
+	oldReplicaSetList := replicaset.CreateReplicaSetList(oldReplicaSets, pods, rawEvents,
+		common.NO_PAGINATION)
 
 	var rollingUpdateStrategy *RollingUpdateStrategy
 	if deployment.Spec.Strategy.RollingUpdate != nil {

@@ -37,4 +37,24 @@ export default angular
           eventsModule.name,
         ])
     .config(stateConfig)
-    .component('kdReplicaSetInfo', replicaSetInfoComponent);
+    .component('kdReplicaSetInfo', replicaSetInfoComponent)
+    .factory('kdReplicaSetDetailResource', replicaSetDetailResource)
+    .factory('kdReplicaSetPodsResource', replicaSetPodsResource);
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function replicaSetDetailResource($resource) {
+  return $resource('api/v1/replicaset/:namespace/:name');
+}
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function replicaSetPodsResource($resource) {
+  return $resource('api/v1/replicaset/:namespace/:name/pod');
+}

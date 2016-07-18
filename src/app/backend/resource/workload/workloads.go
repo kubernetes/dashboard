@@ -88,7 +88,7 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels,
 	}()
 
 	go func() {
-		rsList, err := replicaset.GetReplicaSetListFromChannels(channels)
+		rsList, err := replicaset.GetReplicaSetListFromChannels(channels, pQuery)
 		errChan <- err
 		rsChan <- rsList
 	}()

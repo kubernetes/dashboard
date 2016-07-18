@@ -19,10 +19,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	"k8s.io/kubernetes/pkg/api"
 	k8serrors "k8s.io/kubernetes/pkg/api/errors"
-	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
@@ -49,7 +46,8 @@ type ReplicaSet struct {
 }
 
 // GetReplicaSetList returns a list of all Replica Sets in the cluster.
-func GetReplicaSetList(client client.Interface, nsQuery *common.NamespaceQuery) (*ReplicaSetList, error) {
+func GetReplicaSetList(client client.Interface, nsQuery *common.NamespaceQuery,
+	pQuery *common.PaginationQuery) (*ReplicaSetList, error) {
 	log.Printf("Getting list of all replica sets in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -58,13 +56,13 @@ func GetReplicaSetList(client client.Interface, nsQuery *common.NamespaceQuery) 
 		EventList:      common.GetEventListChannel(client, nsQuery, 1),
 	}
 
-	return GetReplicaSetListFromChannels(channels)
+	return GetReplicaSetListFromChannels(channels, pQuery)
 }
 
 // GetReplicaSetList returns a list of all Replica Sets in the cluster
 // reading required resource list once from the channels.
-func GetReplicaSetListFromChannels(channels *common.ResourceChannels) (
-	*ReplicaSetList, error) {
+func GetReplicaSetListFromChannels(channels *common.ResourceChannels,
+	pQuery *common.PaginationQuery) (*ReplicaSetList, error) {
 
 	replicaSets := <-channels.ReplicaSetList.List
 	if err := <-channels.ReplicaSetList.Error; err != nil {
@@ -90,34 +88,5 @@ func GetReplicaSetListFromChannels(channels *common.ResourceChannels) (
 		return nil, err
 	}
 
-	return ToReplicaSetList(replicaSets.Items, pods.Items, events.Items), nil
-}
-
-func ToReplicaSetList(replicaSets []extensions.ReplicaSet,
-	pods []api.Pod, events []api.Event) *ReplicaSetList {
-
-	replicaSetList := &ReplicaSetList{
-		ReplicaSets: make([]ReplicaSet, 0),
-		ListMeta:    common.ListMeta{TotalItems: len(replicaSets)},
-	}
-
-	for _, replicaSet := range replicaSets {
-		matchingPods := common.FilterNamespacedPodsBySelector(pods, replicaSet.ObjectMeta.Namespace,
-			replicaSet.Spec.Selector.MatchLabels)
-		podInfo := getPodInfo(&replicaSet, matchingPods)
-		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
-
-		replicaSetList.ReplicaSets = append(replicaSetList.ReplicaSets, ToReplicaSet(&replicaSet, &podInfo))
-	}
-
-	return replicaSetList
-}
-
-func ToReplicaSet(replicaSet *extensions.ReplicaSet, podInfo *common.PodInfo) ReplicaSet {
-	return ReplicaSet{
-		ObjectMeta:      common.NewObjectMeta(replicaSet.ObjectMeta),
-		TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicaSet),
-		ContainerImages: common.GetContainerImages(&replicaSet.Spec.Template.Spec),
-		Pods:            *podInfo,
-	}
+	return CreateReplicaSetList(replicaSets.Items, pods.Items, events.Items, pQuery), nil
 }
