@@ -64,7 +64,7 @@ describe('Relative time filter', () => {
 
   it('should return 0s string if given time is up to 1s before current time', () => {
     expect(relativeTimeFilter(new Date(currentTime.getTime() + 1000))).toEqual('0 seconds');
-    expect(relativeTimeFilter(new Date(currentTime.getTime() + 1001))).toEqual('-');
+    expect(relativeTimeFilter(new Date(currentTime.getTime() + 2000))).toEqual('-');
   });
 
   it('should return \'a second\' string if given time is a second before current time', () => {
