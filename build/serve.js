@@ -204,6 +204,6 @@ gulp.task('watch', ['index'], function() {
         }
       });
 
-  gulp.watch(path.join(conf.paths.frontendSrc, '**/*.js'), ['scripts']);
+  gulp.watch(path.join(conf.paths.frontendSrc, '**/*.js'), ['scripts-watch']);
   gulp.watch(path.join(conf.paths.backendSrc, '**/*.go'), ['spawn-backend']);
 });

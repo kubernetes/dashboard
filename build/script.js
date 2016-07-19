@@ -47,10 +47,34 @@ gulp.task('scripts', function() {
     },
     quiet: true,
   };
-
   return gulp.src(path.join(conf.paths.frontendSrc, 'index_module.js'))
       .pipe(webpackStream(webpackOptions))
       .pipe(gulp.dest(conf.paths.serve));
+});
+
+gulp.task('scripts-watch', function() {
+  let webpackOptions = {
+    devtool: 'inline-source-map',
+    module: {
+      // ES6 modules have to be preprocessed with Babel loader to work in browsers.
+      loaders: [{test: /\.js$/, exclude: /node_modules/, loaders: ['babel-loader']}],
+    },
+    output: {filename: 'app-dev.js'},
+    resolve: {
+      // Set the module resolve root, so that webpack knows how to process non-relative imports.
+      // Should be kept in sync with respective Closure Compiler option.
+      root: conf.paths.frontendSrc,
+    },
+    quiet: true,
+  };
+  let compiled = gulp.src(path.join(conf.paths.frontendSrc, 'index_module.js'))
+                     .pipe(webpackStream(webpackOptions));
+  // prevent gulp from crashing during watch task in case of JS syntax errors
+  compiled = compiled.on('error', function handleScriptSyntaxError(err) {
+    compiled.emit('end');
+    console.log(err.toString());
+  });
+  return compiled.pipe(gulp.dest(conf.paths.serve));
 });
 
 /**
