@@ -20,11 +20,15 @@
 export class ReplicaSetListController {
   /**
    * @param {!backendApi.ReplicaSetList} replicaSetList
+   * @param {!angular.Resource} kdReplicaSetListResource
    * @ngInject
    */
-  constructor(replicaSetList) {
+  constructor(replicaSetList, kdReplicaSetListResource) {
     /** @export {!backendApi.ReplicaSetList} */
     this.replicaSetList = replicaSetList;
+
+    /** @export {!angular.Resource} */
+    this.replicaSetListResource = kdReplicaSetListResource;
   }
 
   /**

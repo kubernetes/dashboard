@@ -14,6 +14,7 @@
 
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {PaginationService} from 'common/pagination/pagination_service';
 import {stateName as workloadsState} from 'workloads/workloads_state';
 
 import {ReplicaSetListController} from './replicasetlist_controller';
@@ -52,15 +53,15 @@ export default function stateConfig($stateProvider) {
 }
 
 /**
- * @param {!angular.$resource} $resource
+ * @param {!angular.Resource} kdReplicaSetListResource
  * @param {!./../chrome/chrome_state.StateParams} $stateParams
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveReplicaSetList($resource, $stateParams) {
-  /** @type {!angular.Resource<!backendApi.ReplicaSetList>} */
-  let resource = $resource(`api/v1/replicaset/${$stateParams.namespace || ''}`);
-  return resource.get().$promise;
+export function resolveReplicaSetList(kdReplicaSetListResource, $stateParams) {
+  /** @type {!backendApi.PaginationQuery} */
+  let query = PaginationService.getDefaultResourceQuery($stateParams.namespace);
+  return kdReplicaSetListResource.get(query).$promise;
 }
 
 const i18n = {
