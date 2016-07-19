@@ -45,10 +45,13 @@ export default function relativeTimeFilter(kdAppConfigService) {
 
     // Returns relative time value. Only biggest unit will be taken into consideration, so if time
     // difference is 2 days and 15 hours, only '2 days' string will be returned.
-    if (diffInMilliseconds < 0) {
+    if (diffInMilliseconds < -1000) {
+      // Display NOT_YET only when diff is lower than -1000ms. To show NOW message for
+      // times now() +- 1 second. This is because there may be a small desync in server time
+      // computation.
       return TimeConstants.NOT_YET;
     } else if (diffInSeconds < 1) {
-      return TimeConstants.NOW;
+      return formatOutputTimeString_(0, Units.SECOND);
     } else if (diffInMinutes < 1) {
       return formatOutputTimeString_(diffInSeconds, Units.SECOND);
     } else if (diffInHours < 1) {
@@ -89,7 +92,7 @@ function getCurrentTime(serverTime) {
  * @private
  */
 function formatOutputTimeString_(timeValue, timeUnit) {
-  if (timeValue > 1) {
+  if (timeValue > 1 || timeValue === 0) {
     return `${timeValue} ${timeUnit[1]}`;
   } else {
     return timeUnit[0];
@@ -121,10 +124,8 @@ const i18n = {
   MSG_TIME_UNIT_YEAR_LABEL: goog.getMsg('a year'),
   /** @export {string} @desc Time units label, many years (plural).*/
   MSG_TIME_UNIT_YEARS_LABEL: goog.getMsg('years'),
-  /** @export {string} @desc Label saying that a certain action has not happened yet.*/
-  MSG_TIME_NOT_YET_LABEL: goog.getMsg(`didn't happen yet`),
-  /** @export {string} @desc Label saying that a certain action happened just now. */
-  MSG_TIME_NOW_LABEL: goog.getMsg(`just now`),
+  /** @export {string} @desc Label for relative time that did not happened yet.*/
+  MSG_TIME_NOT_YET_LABEL: goog.getMsg(`-`),
 };
 
 /**
@@ -163,5 +164,4 @@ const UnitConversions = {
  */
 const TimeConstants = {
   NOT_YET: i18n.MSG_TIME_NOT_YET_LABEL,
-  NOW: i18n.MSG_TIME_NOW_LABEL,
 };

@@ -25,6 +25,9 @@ export class AppConfigService {
   constructor(appConfig) {
     /** @private {!appConfig_DO_NOT_USE_DIRECTLY} */
     this.appConfig_ = appConfig;
+
+    /** @private {number} */
+    this.initTime_ = (new Date()).getTime();
   }
 
   /**
@@ -35,7 +38,8 @@ export class AppConfigService {
    */
   getServerTime() {
     if (!isNaN(this.appConfig_.serverTime)) {
-      return new Date(this.appConfig_.serverTime);
+      let elapsed = (new Date()).getTime() - this.initTime_;
+      return new Date(this.appConfig_.serverTime + elapsed);
     } else {
       return null;
     }
