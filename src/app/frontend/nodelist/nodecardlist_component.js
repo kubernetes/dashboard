@@ -46,6 +46,9 @@ const i18n = {
   /** @export {string} @desc Label 'Labels' which appears as a column label in the table of
       nodes (node list view). */
   MSG_NODE_LIST_LABELS_LABEL: goog.getMsg('Labels'),
+  /** @export {string} @desc Label 'Ready' which appears as a column label in the table of
+   nodes (node list view). */
+  MSG_NODE_LIST_READY_LABEL: goog.getMsg('Ready'),
   /** @export {string} @desc Label 'Pods' which appears as a column label in the table of
       nodes (node list view). */
   MSG_NODE_LIST_PODS_LABEL: goog.getMsg('Pods'),
