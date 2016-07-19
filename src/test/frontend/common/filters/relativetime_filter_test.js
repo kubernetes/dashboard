@@ -51,15 +51,20 @@ describe('Relative time filter', () => {
        let relativeTime = relativeTimeFilter(givenTime);
 
        // then
-       expect(relativeTime).toEqual(`didn't happen yet`);
+       expect(relativeTime).toEqual(`-`);
      });
 
-  it('should return \'just now\' string if given time is the same as current time', () => {
+  it('should return 0s string if given time is the same as current time', () => {
     // when
     let relativeTime = relativeTimeFilter(givenTime);
 
     // then
-    expect(relativeTime).toEqual('just now');
+    expect(relativeTime).toEqual('0 seconds');
+  });
+
+  it('should return 0s string if given time is up to 1s before current time', () => {
+    expect(relativeTimeFilter(new Date(currentTime.getTime() + 1000))).toEqual('0 seconds');
+    expect(relativeTimeFilter(new Date(currentTime.getTime() + 1001))).toEqual('-');
   });
 
   it('should return \'a second\' string if given time is a second before current time', () => {
