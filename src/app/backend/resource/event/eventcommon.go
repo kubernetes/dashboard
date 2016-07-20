@@ -163,7 +163,7 @@ func ToEvent(event api.Event) common.Event {
 func CreateEventList(events []api.Event, pQuery *common.PaginationQuery) common.EventList {
 
 	eventList := common.EventList{
-		Events: make([]common.Event, 0),
+		Events:   make([]common.Event, 0),
 		ListMeta: common.ListMeta{TotalItems: len(events)},
 	}
 

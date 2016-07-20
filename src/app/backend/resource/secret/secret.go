@@ -75,7 +75,6 @@ type SecretList struct {
 	Secrets []Secret `json:"secrets"`
 }
 
-
 // GetSecrets - return all secrets in the given namespace.
 func GetSecrets(client *client.Client, namespace *common.NamespaceQuery) (*SecretList, error) {
 	secretList, err := client.Secrets(namespace.ToRequestParam()).List(api.ListOptions{
@@ -110,7 +109,7 @@ func NewSecret(secret *api.Secret) *Secret {
 }
 
 // NewSecret - creates a new instance of SecretList struct based on K8s SecretList.
-func NewSecretList(secretList *api.SecretList, namespace *common.NamespaceQuery) (*SecretList) {
+func NewSecretList(secretList *api.SecretList, namespace *common.NamespaceQuery) *SecretList {
 	newSecretList := SecretList{}
 	for _, secret := range secretList.Items {
 		if namespace.Matches(secret.ObjectMeta.Namespace) {

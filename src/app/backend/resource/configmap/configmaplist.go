@@ -67,15 +67,15 @@ func GetConfigMapListFromChannels(channels *common.ResourceChannels) (
 func getConfigMapList(configMaps []api.ConfigMap) *ConfigMapList {
 
 	result := &ConfigMapList{
-		Items: make([]ConfigMap, 0),
+		Items:    make([]ConfigMap, 0),
 		ListMeta: common.ListMeta{TotalItems: len(configMaps)},
 	}
 
 	for _, item := range configMaps {
 		result.Items = append(result.Items,
 			ConfigMap{
-				ObjectMeta:      common.NewObjectMeta(item.ObjectMeta),
-				TypeMeta:        common.NewTypeMeta(common.ResourceKindConfigMap),
+				ObjectMeta: common.NewObjectMeta(item.ObjectMeta),
+				TypeMeta:   common.NewTypeMeta(common.ResourceKindConfigMap),
 			})
 	}
 

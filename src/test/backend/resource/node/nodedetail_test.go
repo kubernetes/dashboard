@@ -66,7 +66,7 @@ func TestGetNodeDetail(t *testing.T) {
 					Pods: []pod.Pod{},
 				},
 				EventList: common.EventList{
-					Events:    nil,
+					Events: nil,
 				},
 				AllocatedResources: NodeAllocatedResources{
 					CPURequests:            0,

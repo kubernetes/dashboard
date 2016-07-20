@@ -115,11 +115,11 @@ func TestToReplicaSetDetail(t *testing.T) {
 			common.PodInfo{},
 			ReplicaSetDetail{
 				ObjectMeta: common.ObjectMeta{Name: "replica-set"},
-				TypeMeta: common.TypeMeta{Kind: common.ResourceKindReplicaSet},
-				EventList: common.EventList{Events: []common.Event{{Message: "event-msg"}}},
+				TypeMeta:   common.TypeMeta{Kind: common.ResourceKindReplicaSet},
+				EventList:  common.EventList{Events: []common.Event{{Message: "event-msg"}}},
 				PodList: pod.PodList{
 					Pods: []pod.Pod{{
-						ObjectMeta: common.ObjectMeta{Name:"pod-1"},
+						ObjectMeta: common.ObjectMeta{Name: "pod-1"},
 					}},
 				},
 			},
