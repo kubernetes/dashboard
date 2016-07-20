@@ -26,7 +26,7 @@ limitations under the License.
     <form name="ctrl.updateReplicasForm" ng-submit="ctrl.updateReplicas()" novalidate>
       <md-input-container class="md-block">
         <label>{{::ctrl.i18n.MSG_RC_DETAIL_NUMBER_OF_PODS_LABEL}}</label>
-        <input name="podCount" type="number" kd-validate="integer" min="1" ng-model="ctrl.replicas"
+        <input name="podCount" type="number" kd-validate="integer" min="0" ng-model="ctrl.replicas"
                required kd-warn-threshold="100" kd-warn-threshold-bind="showWarning">
         <ng-messages for="ctrl.updateReplicasForm.podCount.$error" role="alert">
           <ng-message when="required">{{::ctrl.i18n.MSG_RC_DETAIL_NUMBER_OF_PODS_REQUIRED_WARNING}}</ng-message>
