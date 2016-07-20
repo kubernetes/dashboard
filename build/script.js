@@ -26,32 +26,69 @@ import webpackStream from 'webpack-stream';
 import conf from './conf';
 
 /**
- * Compiles frontend JavaScript files into development bundle located in {conf.paths.serve}
+ * Returns function creating a stream that compiles frontend JavaScript files into development bundle located in
+ * {conf.paths.serve}
  * directory. This has to be done because currently browsers do not handle ES6 syntax and
  * modules correctly.
  *
  * Only dependencies of root application module are included in the bundle.
+ * @param {boolean} throwError - whether task should throw an error in case of JS syntax errors.
+ * @return {function()} - a function with a 'next' callback as parameter.
+ * When executed, it runs the gulp compilation stream and calls next() when done. Required by
+ * 'async'.
  */
-gulp.task('scripts', function() {
-  let webpackOptions = {
-    devtool: 'inline-source-map',
-    module: {
-      // ES6 modules have to be preprocessed with Babel loader to work in browsers.
-      loaders: [{test: /\.js$/, exclude: /node_modules/, loaders: ['babel-loader']}],
-    },
-    output: {filename: 'app-dev.js'},
-    resolve: {
-      // Set the module resolve root, so that webpack knows how to process non-relative imports.
-      // Should be kept in sync with respective Closure Compiler option.
-      root: conf.paths.frontendSrc,
-    },
-    quiet: true,
-  };
+function createScriptsStream(throwError) {
+  return function() {
+    let webpackOptions = {
+      devtool: 'inline-source-map',
+      module: {
+        // ES6 modules have to be preprocessed with Babel loader to work in browsers.
+        loaders: [{test: /\.js$/, exclude: /node_modules/, loaders: ['babel-loader']}],
+      },
+      output: {filename: 'app-dev.js'},
+      resolve: {
+        // Set the module resolve root, so that webpack knows how to process non-relative imports.
+        // Should be kept in sync with respective Closure Compiler option.
+        root: conf.paths.frontendSrc,
+      },
+      quiet: true,
+    };
+    let compiled = gulp.src(path.join(conf.paths.frontendSrc, 'index_module.js'))
+                       .pipe(webpackStream(webpackOptions));
 
-  return gulp.src(path.join(conf.paths.frontendSrc, 'index_module.js'))
-      .pipe(webpackStream(webpackOptions))
-      .pipe(gulp.dest(conf.paths.serve));
-});
+    if (!throwError) {
+      // prevent gulp from crashing during watch task in case of JS syntax errors
+      compiled = compiled.on('error', function handleScriptSyntaxError(err) {
+        compiled.emit('end');
+        console.log(err.toString());
+      });
+    }
+
+    return compiled.pipe(gulp.dest(conf.paths.serve));
+  };
+}
+/**
+ * Compiles frontend JavaScript files into development bundle located in
+ * {conf.paths.serve} directory. This has to be done because currently browsers do not handle ES6
+ * syntax and modules correctly.
+ *
+ * Only dependencies of root application module are included in the bundle.
+ *
+ * Throws an error in case of JS syntax errors.
+ */
+gulp.task('scripts', createScriptsStream(true));
+
+/**
+ * Compiles frontend JavaScript files into development bundle located in
+ * {conf.paths.serve} directory. This has to be done because currently browsers do not handle ES6
+ * syntax and modules correctly.
+ *
+ * Only dependencies of root application module are included in the bundle.
+ *
+ * Prints an error and fails silently in case of JS syntax errors.
+ * This is useful during development - watch task no longer breaks due to syntax errors.
+ */
+gulp.task('scripts-watch', createScriptsStream(false));
 
 /**
  * Creates a google-closure compilation stream in which the .js sources are localized
