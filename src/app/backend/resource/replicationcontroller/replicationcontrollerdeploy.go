@@ -211,7 +211,6 @@ func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 	}
 
 	if len(spec.PortMappings) > 0 {
-
 		service := &api.Service{
 			ObjectMeta: objectMeta,
 			Spec: api.ServiceSpec{
@@ -243,9 +242,9 @@ func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 
 		// TODO(bryk): Roll back created resources in case of error.
 		return err
-	} else {
-		return nil
 	}
+
+	return nil
 }
 
 // GetAvailableProtocols returns list of available protocols. Currently it is TCP and UDP.

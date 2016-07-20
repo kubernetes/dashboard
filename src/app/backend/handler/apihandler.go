@@ -20,30 +20,29 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 
 	restful "github.com/emicklei/go-restful"
-	// TODO(maciaszczykm): Avoid using dot-imports.
-	. "github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/configmap"
-	. "github.com/kubernetes/dashboard/src/app/backend/resource/container"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/container"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
-	. "github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/node"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/petset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
-	. "github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
-	. "github.com/kubernetes/dashboard/src/app/backend/resource/secret"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/secret"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/workload"
-	. "github.com/kubernetes/dashboard/src/app/backend/validation"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	"github.com/kubernetes/dashboard/src/app/backend/validation"
+	clientK8s "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
 	"k8s.io/kubernetes/pkg/runtime"
-	"time"
 )
 
 const (
@@ -54,11 +53,11 @@ const (
 	ResponseLogString = "[%s] Outcoming response to %s with %d status code"
 )
 
-// ApiHandler is a representation of API handler. Structure contains client, Heapster client and
+// APIHandler is a representation of API handler. Structure contains client, Heapster client and
 // client configuration.
-type ApiHandler struct {
-	client         *client.Client
-	heapsterClient HeapsterClient
+type APIHandler struct {
+	client         *clientK8s.Client
+	heapsterClient client.HeapsterClient
 	clientConfig   clientcmd.ClientConfig
 	verber         common.ResourceVerber
 }
@@ -89,13 +88,13 @@ func FormatResponseLog(resp *restful.Response, req *restful.Request) string {
 		req.Request.RemoteAddr, resp.StatusCode())
 }
 
-// CreateHttpApiHandler creates a new HTTP handler that handles all requests to the API of the backend.
-func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
+// CreateHTTPAPIHandler creates a new HTTP handler that handles all requests to the API of the backend.
+func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.HeapsterClient,
 	clientConfig clientcmd.ClientConfig) http.Handler {
 
 	verber := common.NewResourceVerber(client.RESTClient, client.ExtensionsClient.RESTClient,
 		client.AppsClient.RESTClient, client.BatchClient.RESTClient)
-	apiHandler := ApiHandler{client, heapsterClient, clientConfig, verber}
+	apiHandler := APIHandler{client, heapsterClient, clientConfig, verber}
 	wsContainer := restful.NewContainer()
 	wsContainer.EnableContentEncoding(true)
 
@@ -109,50 +108,50 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 	apiV1Ws.Route(
 		apiV1Ws.POST("/appdeployment").
 			To(apiHandler.handleDeploy).
-			Reads(AppDeploymentSpec{}).
-			Writes(AppDeploymentSpec{}))
+			Reads(replicationcontroller.AppDeploymentSpec{}).
+			Writes(replicationcontroller.AppDeploymentSpec{}))
 	apiV1Ws.Route(
 		apiV1Ws.POST("/appdeployment/validate/name").
 			To(apiHandler.handleNameValidity).
-			Reads(AppNameValiditySpec{}).
-			Writes(AppNameValidity{}))
+			Reads(validation.AppNameValiditySpec{}).
+			Writes(validation.AppNameValidity{}))
 	apiV1Ws.Route(
 		apiV1Ws.POST("/appdeployment/validate/imagereference").
 			To(apiHandler.handleImageReferenceValidity).
-			Reads(ImageReferenceValiditySpec{}).
-			Writes(ImageReferenceValidity{}))
+			Reads(validation.ImageReferenceValiditySpec{}).
+			Writes(validation.ImageReferenceValidity{}))
 	apiV1Ws.Route(
 		apiV1Ws.POST("/appdeployment/validate/protocol").
 			To(apiHandler.handleProtocolValidity).
-			Reads(ProtocolValiditySpec{}).
-			Writes(ProtocolValidity{}))
+			Reads(validation.ProtocolValiditySpec{}).
+			Writes(validation.ProtocolValidity{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/appdeployment/protocols").
 			To(apiHandler.handleGetAvailableProcotols).
-			Writes(Protocols{}))
+			Writes(replicationcontroller.Protocols{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.POST("/appdeploymentfromfile").
 			To(apiHandler.handleDeployFromFile).
-			Reads(AppDeploymentFromFileSpec{}).
-			Writes(AppDeploymentFromFileResponse{}))
+			Reads(replicationcontroller.AppDeploymentFromFileSpec{}).
+			Writes(replicationcontroller.AppDeploymentFromFileResponse{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/replicationcontroller").
 			To(apiHandler.handleGetReplicationControllerList).
-			Writes(ReplicationControllerList{}))
+			Writes(replicationcontroller.ReplicationControllerList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/replicationcontroller/{namespace}").
 			To(apiHandler.handleGetReplicationControllerList).
-			Writes(ReplicationControllerList{}))
+			Writes(replicationcontroller.ReplicationControllerList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/replicationcontroller/{namespace}/{replicationController}").
 			To(apiHandler.handleGetReplicationControllerDetail).
-			Writes(ReplicationControllerDetail{}))
+			Writes(replicationcontroller.ReplicationControllerDetail{}))
 	apiV1Ws.Route(
 		apiV1Ws.POST("/replicationcontroller/{namespace}/{replicationController}/update/pod").
 			To(apiHandler.handleUpdateReplicasCount).
-			Reads(ReplicationControllerSpec{}))
+			Reads(replicationcontroller.ReplicationControllerSpec{}))
 	apiV1Ws.Route(
 		apiV1Ws.DELETE("/replicationcontroller/{namespace}/{replicationController}").
 			To(apiHandler.handleDeleteReplicationController))
@@ -214,11 +213,11 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 	apiV1Ws.Route(
 		apiV1Ws.GET("/pod/{namespace}/{pod}/log").
 			To(apiHandler.handleLogs).
-			Writes(Logs{}))
+			Writes(container.Logs{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/pod/{namespace}/{pod}/log/{container}").
 			To(apiHandler.handleLogs).
-			Writes(Logs{}))
+			Writes(container.Logs{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/deployment").
@@ -265,30 +264,30 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 	apiV1Ws.Route(
 		apiV1Ws.POST("/namespace").
 			To(apiHandler.handleCreateNamespace).
-			Reads(NamespaceSpec{}).
-			Writes(NamespaceSpec{}))
+			Reads(namespace.NamespaceSpec{}).
+			Writes(namespace.NamespaceSpec{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/namespace").
 			To(apiHandler.handleGetNamespaces).
-			Writes(NamespaceList{}))
+			Writes(namespace.NamespaceList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/namespace/{name}").
 			To(apiHandler.handleGetNamespaceDetail).
-			Writes(NamespaceDetail{}))
+			Writes(namespace.NamespaceDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/secret/{namespace}").
 			To(apiHandler.handleGetSecrets).
-			Writes(SecretList{}))
+			Writes(secret.SecretList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/secret").
 			To(apiHandler.handleGetSecrets).
-			Writes(SecretList{}))
+			Writes(secret.SecretList{}))
 	apiV1Ws.Route(
 		apiV1Ws.POST("/secret").
 			To(apiHandler.handleCreateImagePullSecret).
-			Reads(ImagePullSecretSpec{}).
-			Writes(Secret{}))
+			Reads(secret.ImagePullSecretSpec{}).
+			Writes(secret.Secret{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/configmap").
@@ -351,7 +350,7 @@ func CreateHttpApiHandler(client *client.Client, heapsterClient HeapsterClient,
 }
 
 // Handles get pet set list API call.
-func (apiHandler *ApiHandler) handleGetPetSetList(request *restful.Request,
+func (apiHandler *APIHandler) handleGetPetSetList(request *restful.Request,
 	response *restful.Response) {
 	namespace := parseNamespacePathParameter(request)
 	result, err := petset.GetPetSetList(apiHandler.client, namespace)
@@ -364,7 +363,7 @@ func (apiHandler *ApiHandler) handleGetPetSetList(request *restful.Request,
 }
 
 // Handles get pet set detail API call.
-func (apiHandler *ApiHandler) handleGetPetSetDetail(request *restful.Request,
+func (apiHandler *APIHandler) handleGetPetSetDetail(request *restful.Request,
 	response *restful.Response) {
 	namespace := request.PathParameter("namespace")
 	service := request.PathParameter("petset")
@@ -378,7 +377,7 @@ func (apiHandler *ApiHandler) handleGetPetSetDetail(request *restful.Request,
 }
 
 // Handles get service list API call.
-func (apiHandler *ApiHandler) handleGetServiceList(request *restful.Request, response *restful.Response) {
+func (apiHandler *APIHandler) handleGetServiceList(request *restful.Request, response *restful.Response) {
 	namespace := parseNamespacePathParameter(request)
 	result, err := resourceService.GetServiceList(apiHandler.client, namespace)
 	if err != nil {
@@ -390,7 +389,7 @@ func (apiHandler *ApiHandler) handleGetServiceList(request *restful.Request, res
 }
 
 // Handles get service detail API call.
-func (apiHandler *ApiHandler) handleGetServiceDetail(request *restful.Request, response *restful.Response) {
+func (apiHandler *APIHandler) handleGetServiceDetail(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
 	service := request.PathParameter("service")
 	result, err := resourceService.GetServiceDetail(apiHandler.client, apiHandler.heapsterClient,
@@ -403,7 +402,7 @@ func (apiHandler *ApiHandler) handleGetServiceDetail(request *restful.Request, r
 }
 
 // Handles get node list API call.
-func (apiHandler *ApiHandler) handleGetNodeList(request *restful.Request, response *restful.Response) {
+func (apiHandler *APIHandler) handleGetNodeList(request *restful.Request, response *restful.Response) {
 	result, err := node.GetNodeList(apiHandler.client)
 	if err != nil {
 		handleInternalError(response, err)
@@ -414,7 +413,7 @@ func (apiHandler *ApiHandler) handleGetNodeList(request *restful.Request, respon
 }
 
 // Handles get node detail API call.
-func (apiHandler *ApiHandler) handleGetNodeDetail(request *restful.Request, response *restful.Response) {
+func (apiHandler *APIHandler) handleGetNodeDetail(request *restful.Request, response *restful.Response) {
 	name := request.PathParameter("name")
 	result, err := node.GetNodeDetail(apiHandler.client, apiHandler.heapsterClient, name)
 	if err != nil {
@@ -425,13 +424,13 @@ func (apiHandler *ApiHandler) handleGetNodeDetail(request *restful.Request, resp
 }
 
 // Handles deploy API call.
-func (apiHandler *ApiHandler) handleDeploy(request *restful.Request, response *restful.Response) {
-	appDeploymentSpec := new(AppDeploymentSpec)
+func (apiHandler *APIHandler) handleDeploy(request *restful.Request, response *restful.Response) {
+	appDeploymentSpec := new(replicationcontroller.AppDeploymentSpec)
 	if err := request.ReadEntity(appDeploymentSpec); err != nil {
 		handleInternalError(response, err)
 		return
 	}
-	if err := DeployApp(appDeploymentSpec, apiHandler.client); err != nil {
+	if err := replicationcontroller.DeployApp(appDeploymentSpec, apiHandler.client); err != nil {
 		handleInternalError(response, err)
 		return
 	}
@@ -440,15 +439,15 @@ func (apiHandler *ApiHandler) handleDeploy(request *restful.Request, response *r
 }
 
 // Handles deploy from file API call.
-func (apiHandler *ApiHandler) handleDeployFromFile(request *restful.Request, response *restful.Response) {
-	deploymentSpec := new(AppDeploymentFromFileSpec)
+func (apiHandler *APIHandler) handleDeployFromFile(request *restful.Request, response *restful.Response) {
+	deploymentSpec := new(replicationcontroller.AppDeploymentFromFileSpec)
 	if err := request.ReadEntity(deploymentSpec); err != nil {
 		handleInternalError(response, err)
 		return
 	}
 
-	isDeployed, err := DeployAppFromFile(
-		deploymentSpec, CreateObjectFromInfoFn, apiHandler.clientConfig)
+	isDeployed, err := replicationcontroller.DeployAppFromFile(
+		deploymentSpec, replicationcontroller.CreateObjectFromInfoFn, apiHandler.clientConfig)
 	if !isDeployed {
 		handleInternalError(response, err)
 		return
@@ -459,7 +458,7 @@ func (apiHandler *ApiHandler) handleDeployFromFile(request *restful.Request, res
 		errorMessage = err.Error()
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, AppDeploymentFromFileResponse{
+	response.WriteHeaderAndEntity(http.StatusCreated, replicationcontroller.AppDeploymentFromFileResponse{
 		Name:    deploymentSpec.Name,
 		Content: deploymentSpec.Content,
 		Error:   errorMessage,
@@ -467,14 +466,14 @@ func (apiHandler *ApiHandler) handleDeployFromFile(request *restful.Request, res
 }
 
 // Handles app name validation API call.
-func (apiHandler *ApiHandler) handleNameValidity(request *restful.Request, response *restful.Response) {
-	spec := new(AppNameValiditySpec)
+func (apiHandler *APIHandler) handleNameValidity(request *restful.Request, response *restful.Response) {
+	spec := new(validation.AppNameValiditySpec)
 	if err := request.ReadEntity(spec); err != nil {
 		handleInternalError(response, err)
 		return
 	}
 
-	validity, err := ValidateAppName(spec, apiHandler.client)
+	validity, err := validation.ValidateAppName(spec, apiHandler.client)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -484,14 +483,14 @@ func (apiHandler *ApiHandler) handleNameValidity(request *restful.Request, respo
 }
 
 // Handles image reference validation API call.
-func (ApiHandler *ApiHandler) handleImageReferenceValidity(request *restful.Request, response *restful.Response) {
-	spec := new(ImageReferenceValiditySpec)
+func (APIHandler *APIHandler) handleImageReferenceValidity(request *restful.Request, response *restful.Response) {
+	spec := new(validation.ImageReferenceValiditySpec)
 	if err := request.ReadEntity(spec); err != nil {
 		handleInternalError(response, err)
 		return
 	}
 
-	validity, err := ValidateImageReference(spec)
+	validity, err := validation.ValidateImageReference(spec)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -500,28 +499,28 @@ func (ApiHandler *ApiHandler) handleImageReferenceValidity(request *restful.Requ
 }
 
 // Handles protocol validation API call.
-func (apiHandler *ApiHandler) handleProtocolValidity(request *restful.Request, response *restful.Response) {
-	spec := new(ProtocolValiditySpec)
+func (apiHandler *APIHandler) handleProtocolValidity(request *restful.Request, response *restful.Response) {
+	spec := new(validation.ProtocolValiditySpec)
 	if err := request.ReadEntity(spec); err != nil {
 		handleInternalError(response, err)
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, ValidateProtocol(spec))
+	response.WriteHeaderAndEntity(http.StatusCreated, validation.ValidateProtocol(spec))
 }
 
 // Handles get available protocols API call.
-func (apiHandler *ApiHandler) handleGetAvailableProcotols(request *restful.Request, response *restful.Response) {
-	response.WriteHeaderAndEntity(http.StatusCreated, GetAvailableProtocols())
+func (apiHandler *APIHandler) handleGetAvailableProcotols(request *restful.Request, response *restful.Response) {
+	response.WriteHeaderAndEntity(http.StatusCreated, replicationcontroller.GetAvailableProtocols())
 }
 
 // Handles get Replication Controller list API call.
-func (apiHandler *ApiHandler) handleGetReplicationControllerList(
+func (apiHandler *APIHandler) handleGetReplicationControllerList(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := parseNamespacePathParameter(request)
 	pagination := parsePaginationPathParameter(request)
-	result, err := GetReplicationControllerList(apiHandler.client, namespace, pagination)
+	result, err := replicationcontroller.GetReplicationControllerList(apiHandler.client, namespace, pagination)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -531,7 +530,7 @@ func (apiHandler *ApiHandler) handleGetReplicationControllerList(
 }
 
 // Handles get Workloads list API call.
-func (apiHandler *ApiHandler) handleGetWorkloads(
+func (apiHandler *APIHandler) handleGetWorkloads(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := parseNamespacePathParameter(request)
@@ -547,7 +546,7 @@ func (apiHandler *ApiHandler) handleGetWorkloads(
 }
 
 // Handles get Replica Sets list API call.
-func (apiHandler *ApiHandler) handleGetReplicaSets(
+func (apiHandler *APIHandler) handleGetReplicaSets(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := parseNamespacePathParameter(request)
@@ -562,7 +561,7 @@ func (apiHandler *ApiHandler) handleGetReplicaSets(
 }
 
 // Handles get Replica Sets Detail API call.
-func (apiHandler *ApiHandler) handleGetReplicaSetDetail(
+func (apiHandler *APIHandler) handleGetReplicaSetDetail(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := request.PathParameter("namespace")
@@ -580,7 +579,7 @@ func (apiHandler *ApiHandler) handleGetReplicaSetDetail(
 }
 
 // Handles get Replica Sets pods API call.
-func (apiHandler *ApiHandler) handleGetReplicaSetPods(
+func (apiHandler *APIHandler) handleGetReplicaSetPods(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := request.PathParameter("namespace")
@@ -598,7 +597,7 @@ func (apiHandler *ApiHandler) handleGetReplicaSetPods(
 }
 
 // Handles get Deployment list API call.
-func (apiHandler *ApiHandler) handleGetDeployments(
+func (apiHandler *APIHandler) handleGetDeployments(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := parseNamespacePathParameter(request)
@@ -612,7 +611,7 @@ func (apiHandler *ApiHandler) handleGetDeployments(
 }
 
 // Handles get Deployment detail API call.
-func (apiHandler *ApiHandler) handleGetDeploymentDetail(
+func (apiHandler *APIHandler) handleGetDeploymentDetail(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := request.PathParameter("namespace")
@@ -628,7 +627,7 @@ func (apiHandler *ApiHandler) handleGetDeploymentDetail(
 }
 
 // Handles get Pod list API call.
-func (apiHandler *ApiHandler) handleGetPods(
+func (apiHandler *APIHandler) handleGetPods(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := parseNamespacePathParameter(request)
@@ -643,7 +642,7 @@ func (apiHandler *ApiHandler) handleGetPods(
 }
 
 // Handles get Pod detail API call.
-func (apiHandler *ApiHandler) handleGetPodDetail(request *restful.Request, response *restful.Response) {
+func (apiHandler *APIHandler) handleGetPodDetail(request *restful.Request, response *restful.Response) {
 
 	namespace := request.PathParameter("namespace")
 	podName := request.PathParameter("pod")
@@ -657,12 +656,13 @@ func (apiHandler *ApiHandler) handleGetPodDetail(request *restful.Request, respo
 }
 
 // Handles get Replication Controller detail API call.
-func (apiHandler *ApiHandler) handleGetReplicationControllerDetail(
+func (apiHandler *APIHandler) handleGetReplicationControllerDetail(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := request.PathParameter("namespace")
 	replicationController := request.PathParameter("replicationController")
-	result, err := GetReplicationControllerDetail(apiHandler.client, apiHandler.heapsterClient, namespace, replicationController)
+	result, err := replicationcontroller.GetReplicationControllerDetail(apiHandler.client,
+		apiHandler.heapsterClient, namespace, replicationController)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -672,19 +672,19 @@ func (apiHandler *ApiHandler) handleGetReplicationControllerDetail(
 }
 
 // Handles update of Replication Controller pods update API call.
-func (apiHandler *ApiHandler) handleUpdateReplicasCount(
+func (apiHandler *APIHandler) handleUpdateReplicasCount(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := request.PathParameter("namespace")
 	replicationControllerName := request.PathParameter("replicationController")
-	replicationControllerSpec := new(ReplicationControllerSpec)
+	replicationControllerSpec := new(replicationcontroller.ReplicationControllerSpec)
 
 	if err := request.ReadEntity(replicationControllerSpec); err != nil {
 		handleInternalError(response, err)
 		return
 	}
 
-	if err := UpdateReplicasCount(apiHandler.client, namespace, replicationControllerName,
+	if err := replicationcontroller.UpdateReplicasCount(apiHandler.client, namespace, replicationControllerName,
 		replicationControllerSpec); err != nil {
 		handleInternalError(response, err)
 		return
@@ -695,7 +695,7 @@ func (apiHandler *ApiHandler) handleUpdateReplicasCount(
 
 // Handles delete Replication Controller API call.
 // TODO(floreks): there has to be some kind of transaction here
-func (apiHandler *ApiHandler) handleDeleteReplicationController(
+func (apiHandler *APIHandler) handleDeleteReplicationController(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := request.PathParameter("namespace")
@@ -706,7 +706,7 @@ func (apiHandler *ApiHandler) handleDeleteReplicationController(
 		return
 	}
 
-	if err := DeleteReplicationController(apiHandler.client, namespace,
+	if err := replicationcontroller.DeleteReplicationController(apiHandler.client, namespace,
 		replicationController, deleteServices); err != nil {
 		handleInternalError(response, err)
 		return
@@ -715,7 +715,7 @@ func (apiHandler *ApiHandler) handleDeleteReplicationController(
 	response.WriteHeader(http.StatusOK)
 }
 
-func (apiHandler *ApiHandler) handleGetResource(
+func (apiHandler *APIHandler) handleGetResource(
 	request *restful.Request, response *restful.Response) {
 	kind := request.PathParameter("kind")
 	namespace := request.PathParameter("namespace")
@@ -730,7 +730,7 @@ func (apiHandler *ApiHandler) handleGetResource(
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
-func (apiHandler *ApiHandler) handlePutResource(
+func (apiHandler *APIHandler) handlePutResource(
 	request *restful.Request, response *restful.Response) {
 	kind := request.PathParameter("kind")
 	namespace := request.PathParameter("namespace")
@@ -749,7 +749,7 @@ func (apiHandler *ApiHandler) handlePutResource(
 	response.WriteHeader(http.StatusOK)
 }
 
-func (apiHandler *ApiHandler) handleDeleteResource(
+func (apiHandler *APIHandler) handleDeleteResource(
 	request *restful.Request, response *restful.Response) {
 	kind := request.PathParameter("kind")
 	namespace := request.PathParameter("namespace")
@@ -764,14 +764,14 @@ func (apiHandler *ApiHandler) handleDeleteResource(
 }
 
 // Handles get Replication Controller Pods API call.
-func (apiHandler *ApiHandler) handleGetReplicationControllerPods(
+func (apiHandler *APIHandler) handleGetReplicationControllerPods(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := request.PathParameter("namespace")
 	replicationController := request.PathParameter("replicationController")
 	pagination := parsePaginationPathParameter(request)
 
-	result, err := GetReplicationControllerPods(apiHandler.client, apiHandler.heapsterClient,
+	result, err := replicationcontroller.GetReplicationControllerPods(apiHandler.client, apiHandler.heapsterClient,
 		pagination, replicationController, namespace)
 	if err != nil {
 		handleInternalError(response, err)
@@ -782,14 +782,14 @@ func (apiHandler *ApiHandler) handleGetReplicationControllerPods(
 }
 
 // Handles namespace creation API call.
-func (apiHandler *ApiHandler) handleCreateNamespace(request *restful.Request,
+func (apiHandler *APIHandler) handleCreateNamespace(request *restful.Request,
 	response *restful.Response) {
-	namespaceSpec := new(NamespaceSpec)
+	namespaceSpec := new(namespace.NamespaceSpec)
 	if err := request.ReadEntity(namespaceSpec); err != nil {
 		handleInternalError(response, err)
 		return
 	}
-	if err := CreateNamespace(namespaceSpec, apiHandler.client); err != nil {
+	if err := namespace.CreateNamespace(namespaceSpec, apiHandler.client); err != nil {
 		handleInternalError(response, err)
 		return
 	}
@@ -798,11 +798,11 @@ func (apiHandler *ApiHandler) handleCreateNamespace(request *restful.Request,
 }
 
 // Handles get namespace list API call.
-func (apiHandler *ApiHandler) handleGetNamespaces(
+func (apiHandler *APIHandler) handleGetNamespaces(
 	request *restful.Request, response *restful.Response) {
 
 	pagination := parsePaginationPathParameter(request)
-	result, err := GetNamespaceList(apiHandler.client, pagination)
+	result, err := namespace.GetNamespaceList(apiHandler.client, pagination)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -812,10 +812,10 @@ func (apiHandler *ApiHandler) handleGetNamespaces(
 }
 
 // Handles get namespace detail API call.
-func (apiHandler *ApiHandler) handleGetNamespaceDetail(request *restful.Request,
+func (apiHandler *APIHandler) handleGetNamespaceDetail(request *restful.Request,
 	response *restful.Response) {
 	name := request.PathParameter("name")
-	result, err := GetNamespaceDetail(apiHandler.client, apiHandler.heapsterClient, name)
+	result, err := namespace.GetNamespaceDetail(apiHandler.client, apiHandler.heapsterClient, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -824,13 +824,13 @@ func (apiHandler *ApiHandler) handleGetNamespaceDetail(request *restful.Request,
 }
 
 // Handles image pull secret creation API call.
-func (apiHandler *ApiHandler) handleCreateImagePullSecret(request *restful.Request, response *restful.Response) {
-	secretSpec := new(ImagePullSecretSpec)
+func (apiHandler *APIHandler) handleCreateImagePullSecret(request *restful.Request, response *restful.Response) {
+	secretSpec := new(secret.ImagePullSecretSpec)
 	if err := request.ReadEntity(secretSpec); err != nil {
 		handleInternalError(response, err)
 		return
 	}
-	secret, err := CreateSecret(apiHandler.client, secretSpec)
+	secret, err := secret.CreateSecret(apiHandler.client, secretSpec)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -839,9 +839,9 @@ func (apiHandler *ApiHandler) handleCreateImagePullSecret(request *restful.Reque
 }
 
 // Handles get secrets list API call.
-func (apiHandler *ApiHandler) handleGetSecrets(request *restful.Request, response *restful.Response) {
+func (apiHandler *APIHandler) handleGetSecrets(request *restful.Request, response *restful.Response) {
 	namespace := parseNamespacePathParameter(request)
-	result, err := GetSecrets(apiHandler.client, namespace)
+	result, err := secret.GetSecrets(apiHandler.client, namespace)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -849,7 +849,7 @@ func (apiHandler *ApiHandler) handleGetSecrets(request *restful.Request, respons
 	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
-func (apiHandler *ApiHandler) handleGetConfigMaps(request *restful.Request, response *restful.Response) {
+func (apiHandler *APIHandler) handleGetConfigMaps(request *restful.Request, response *restful.Response) {
 	namespace := parseNamespacePathParameter(request)
 	result, err := configmap.GetConfigMapList(apiHandler.client, namespace)
 	if err != nil {
@@ -859,7 +859,7 @@ func (apiHandler *ApiHandler) handleGetConfigMaps(request *restful.Request, resp
 	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
-func (apiHandler *ApiHandler) handleGetConfigMapDetail(request *restful.Request, response *restful.Response) {
+func (apiHandler *APIHandler) handleGetConfigMapDetail(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
 	service := request.PathParameter("configmap")
 	result, err := configmap.GetConfigMapDetail(apiHandler.client, namespace, service)
@@ -871,12 +871,12 @@ func (apiHandler *ApiHandler) handleGetConfigMapDetail(request *restful.Request,
 }
 
 // Handles log API call.
-func (apiHandler *ApiHandler) handleLogs(request *restful.Request, response *restful.Response) {
+func (apiHandler *APIHandler) handleLogs(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
-	podId := request.PathParameter("pod")
-	container := request.PathParameter("container")
+	podID := request.PathParameter("pod")
+	containerID := request.PathParameter("container")
 
-	result, err := GetPodLogs(apiHandler.client, namespace, podId, container)
+	result, err := container.GetPodLogs(apiHandler.client, namespace, podID, containerID)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -884,11 +884,11 @@ func (apiHandler *ApiHandler) handleLogs(request *restful.Request, response *res
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
-func (apiHandler *ApiHandler) handleGetPodContainers(request *restful.Request, response *restful.Response) {
+func (apiHandler *APIHandler) handleGetPodContainers(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
-	podId := request.PathParameter("pod")
+	podID := request.PathParameter("pod")
 
-	result, err := GetPodContainers(apiHandler.client, namespace, podId)
+	result, err := container.GetPodContainers(apiHandler.client, namespace, podID)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -897,12 +897,12 @@ func (apiHandler *ApiHandler) handleGetPodContainers(request *restful.Request, r
 }
 
 // Handles get replication controller events API call.
-func (apiHandler *ApiHandler) handleGetReplicationControllerEvents(request *restful.Request, response *restful.Response) {
+func (apiHandler *APIHandler) handleGetReplicationControllerEvents(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
 	replicationController := request.PathParameter("replicationController")
 	pagination := parsePaginationPathParameter(request)
 
-	result, err := GetReplicationControllerEvents(apiHandler.client, pagination, namespace,
+	result, err := replicationcontroller.GetReplicationControllerEvents(apiHandler.client, pagination, namespace,
 		replicationController)
 	if err != nil {
 		handleInternalError(response, err)
@@ -912,13 +912,13 @@ func (apiHandler *ApiHandler) handleGetReplicationControllerEvents(request *rest
 }
 
 // Handles get replication controller services API call.
-func (apiHandler *ApiHandler) handleGetReplicationControllerServices(request *restful.Request,
+func (apiHandler *APIHandler) handleGetReplicationControllerServices(request *restful.Request,
 	response *restful.Response) {
 	namespace := request.PathParameter("namespace")
 	replicationController := request.PathParameter("replicationController")
 	pagination := parsePaginationPathParameter(request)
 
-	result, err := GetReplicationControllerServices(apiHandler.client, pagination,
+	result, err := replicationcontroller.GetReplicationControllerServices(apiHandler.client, pagination,
 		namespace, replicationController)
 	if err != nil {
 		handleInternalError(response, err)
@@ -935,7 +935,7 @@ func handleInternalError(response *restful.Response, err error) {
 }
 
 // Handles get Daemon Set list API call.
-func (apiHandler *ApiHandler) handleGetDaemonSetList(
+func (apiHandler *APIHandler) handleGetDaemonSetList(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := parseNamespacePathParameter(request)
@@ -949,7 +949,7 @@ func (apiHandler *ApiHandler) handleGetDaemonSetList(
 }
 
 // Handles get Daemon Set detail API call.
-func (apiHandler *ApiHandler) handleGetDaemonSetDetail(
+func (apiHandler *APIHandler) handleGetDaemonSetDetail(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := request.PathParameter("namespace")
@@ -964,7 +964,7 @@ func (apiHandler *ApiHandler) handleGetDaemonSetDetail(
 }
 
 // Handles delete Daemon Set API call.
-func (apiHandler *ApiHandler) handleDeleteDaemonSet(
+func (apiHandler *APIHandler) handleDeleteDaemonSet(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := request.PathParameter("namespace")
@@ -985,7 +985,7 @@ func (apiHandler *ApiHandler) handleDeleteDaemonSet(
 }
 
 // Handles get Jobs list API call.
-func (apiHandler *ApiHandler) handleGetJobs(request *restful.Request, response *restful.Response) {
+func (apiHandler *APIHandler) handleGetJobs(request *restful.Request, response *restful.Response) {
 	namespace := parseNamespacePathParameter(request)
 
 	result, err := job.GetJobList(apiHandler.client, namespace)
@@ -997,7 +997,7 @@ func (apiHandler *ApiHandler) handleGetJobs(request *restful.Request, response *
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
-func (apiHandler *ApiHandler) handleGetJobDetail(request *restful.Request, response *restful.Response) {
+func (apiHandler *APIHandler) handleGetJobDetail(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
 	jobParam := request.PathParameter("job")
 
@@ -1029,12 +1029,12 @@ func parseNamespacePathParameter(request *restful.Request) *common.NamespaceQuer
 func parsePaginationPathParameter(request *restful.Request) *common.PaginationQuery {
 	itemsPerPage, err := strconv.ParseInt(request.QueryParameter("itemsPerPage"), 10, 0)
 	if err != nil {
-		return common.NO_PAGINATION
+		return common.NoPagination
 	}
 
 	page, err := strconv.ParseInt(request.QueryParameter("page"), 10, 0)
 	if err != nil {
-		return common.NO_PAGINATION
+		return common.NoPagination
 	}
 
 	// Frontend pages start from 1 and backend starts from 0

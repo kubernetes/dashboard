@@ -18,8 +18,8 @@ import (
 	"reflect"
 	"testing"
 
-	"k8s.io/kubernetes/pkg/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"k8s.io/kubernetes/pkg/api"
 )
 
 func TestGetConfigMapList(t *testing.T) {
@@ -33,9 +33,9 @@ func TestGetConfigMapList(t *testing.T) {
 				{Data: map[string]string{"app": "my-name"}, ObjectMeta: api.ObjectMeta{Name: "foo"}},
 			},
 			&ConfigMapList{
-				ListMeta:common.ListMeta{TotalItems:1},
+				ListMeta: common.ListMeta{TotalItems: 1},
 				Items: []ConfigMap{{
-					TypeMeta: common.TypeMeta{Kind: "configmap"},
+					TypeMeta:   common.TypeMeta{Kind: "configmap"},
 					ObjectMeta: common.ObjectMeta{Name: "foo"},
 				}},
 			},

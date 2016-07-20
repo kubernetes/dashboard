@@ -28,6 +28,7 @@ func getRestartCount(pod api.Pod) int32 {
 	return restartCount
 }
 
+// ToPod transforms Kubernetes pod object into object returned by API.
 func ToPod(pod *api.Pod, metrics *MetricsByPod) Pod {
 	podDetail := Pod{
 		ObjectMeta:   common.NewObjectMeta(pod.ObjectMeta),
@@ -45,6 +46,7 @@ func ToPod(pod *api.Pod, metrics *MetricsByPod) Pod {
 	return podDetail
 }
 
+// ToPod transforms Kubernetes pod object into details object returned by API.
 func ToPodDetail(pod *api.Pod, metrics *MetricsByPod) PodDetail {
 	podDetail := PodDetail{
 		ObjectMeta:      common.NewObjectMeta(pod.ObjectMeta),

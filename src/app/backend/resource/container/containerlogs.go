@@ -45,10 +45,10 @@ type PodContainerList struct {
 }
 
 // GetPodContainers returns containers that a pod has.
-func GetPodContainers(client *client.Client, namespace, podId string) (*PodContainerList, error) {
-	log.Printf("Getting containers from %s pod in %s namespace", podId, namespace)
+func GetPodContainers(client *client.Client, namespace, podID string) (*PodContainerList, error) {
+	log.Printf("Getting containers from %s pod in %s namespace", podID, namespace)
 
-	pod, err := client.Pods(namespace).Get(podId)
+	pod, err := client.Pods(namespace).Get(podID)
 	if err != nil {
 		return nil, err
 	}
@@ -64,11 +64,11 @@ func GetPodContainers(client *client.Client, namespace, podId string) (*PodConta
 
 // GetPodLogs returns logs for particular pod and container or error when occurred. When container
 // is null, logs for the first one are returned.
-func GetPodLogs(client *client.Client, namespace, podId string, container string) (*Logs, error) {
-	log.Printf("Getting logs from %s container from %s pod in %s namespace", container, podId,
+func GetPodLogs(client *client.Client, namespace, podID string, container string) (*Logs, error) {
+	log.Printf("Getting logs from %s container from %s pod in %s namespace", container, podID,
 		namespace)
 
-	pod, err := client.Pods(namespace).Get(podId)
+	pod, err := client.Pods(namespace).Get(podID)
 	if err != nil {
 		return nil, err
 	}
@@ -84,12 +84,12 @@ func GetPodLogs(client *client.Client, namespace, podId string, container string
 		Timestamps: true,
 	}
 
-	rawLogs, err := getRawPodLogs(client, namespace, podId, logOptions)
+	rawLogs, err := getRawPodLogs(client, namespace, podID, logOptions)
 	if err != nil {
 		return nil, err
 	}
 
-	return ConstructLogs(podId, pod.CreationTimestamp, rawLogs, container), nil
+	return ConstructLogs(podID, pod.CreationTimestamp, rawLogs, container), nil
 }
 
 // Construct a request for getting the logs for a pod and retrieves the logs.
@@ -117,10 +117,10 @@ func getRawPodLogs(client *client.Client, namespace, podID string, logOptions *a
 	return string(result), nil
 }
 
-// Return Logs structure for given parameters.
-func ConstructLogs(podId string, sinceTime unversioned.Time, rawLogs string, container string) *Logs {
+// ConstructLogs constructs logs structure for given parameters.
+func ConstructLogs(podID string, sinceTime unversioned.Time, rawLogs string, container string) *Logs {
 	logs := &Logs{
-		PodId:     podId,
+		PodId:     podID,
 		SinceTime: sinceTime,
 		Logs:      strings.Split(rawLogs, "\n"),
 		Container: container,

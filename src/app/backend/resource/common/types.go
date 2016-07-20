@@ -53,8 +53,8 @@ type ObjectMeta struct {
 	CreationTimestamp unversioned.Time `json:"creationTimestamp,omitempty"`
 }
 
-// TypeMeta describes an individual object in an API response or request
-// with strings representing the type of the object.
+// TypeMeta describes an individual object in an API response or request with strings representing
+// the type of the object.
 type TypeMeta struct {
 	// Kind is a string value representing the REST resource this object represents.
 	// Servers may infer this from the endpoint the client submits requests to.
@@ -70,7 +70,7 @@ type ListMeta struct {
 	TotalItems int `json:"totalItems"`
 }
 
-// Returns internal endpoint name for the given service properties, e.g.,
+// NewObjectMeta returns internal endpoint name for the given service properties, e.g.,
 // NewObjectMeta creates a new instance of ObjectMeta struct based on K8s object meta.
 func NewObjectMeta(k8SObjectMeta api.ObjectMeta) ObjectMeta {
 	return ObjectMeta{
@@ -166,8 +166,8 @@ func IsSelectorMatching(labelSelector map[string]string,
 	return true
 }
 
-// Returns true when a resource with the given selector targets the same Resources(or subset)
-// that a tested object selector with the given selector.
+// IsLabelSelectorMatching returns true when a resource with the given selector targets the same
+// Resources(or subset) that a tested object selector with the given selector.
 func IsLabelSelectorMatching(selector map[string]string,
 	labelSelector *unversioned.LabelSelector) bool {
 

@@ -185,7 +185,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := CreateReplicationControllerList(c.replicationControllers, common.NO_PAGINATION,
+		actual := CreateReplicationControllerList(c.replicationControllers, common.NoPagination,
 			c.pods, events)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getReplicationControllerList(%#v, %#v) == \n%#v\nexpected \n%#v\n",

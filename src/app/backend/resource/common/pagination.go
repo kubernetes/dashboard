@@ -15,7 +15,7 @@
 package common
 
 // By default backend pagination will not be applied.
-var NO_PAGINATION = NewPaginationQuery(-1, -1)
+var NoPagination = NewPaginationQuery(-1, -1)
 
 // PaginationQuery structure represents pagination settings
 type PaginationQuery struct {

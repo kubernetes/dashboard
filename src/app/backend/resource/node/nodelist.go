@@ -39,7 +39,7 @@ type Node struct {
 	TypeMeta   common.TypeMeta   `json:"typeMeta"`
 
 	// Ready Status of the node
-	Ready      api.ConditionStatus `json:"ready"`
+	Ready api.ConditionStatus `json:"ready"`
 }
 
 // GetNodeList returns a list of all Nodes in the cluster.
@@ -82,7 +82,7 @@ func toNode(node api.Node) Node {
 // Returns the status (True, False, Unknown) of a particular NodeConditionType
 func getNodeConditionStatus(node api.Node, conditionType api.NodeConditionType) api.ConditionStatus {
 	for _, condition := range node.Status.Conditions {
-		if (condition.Type == conditionType) {
+		if condition.Type == conditionType {
 			return condition.Status
 		}
 	}

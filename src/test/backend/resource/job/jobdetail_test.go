@@ -40,8 +40,8 @@ func (c FakeHeapsterClient) Get(path string) client.RequestInterface {
 func TestGetJobDetail(t *testing.T) {
 	eventList := &api.EventList{}
 	podList := &api.PodList{}
-	var jobCompletions int32 = 0
-	var parallelism int32 = 0
+	var jobCompletions int32
+	var parallelism int32
 
 	cases := []struct {
 		namespace, name string

@@ -30,8 +30,7 @@ type SecretSpec interface {
 	GetData() map[string][]byte
 }
 
-// ImagePullSecretSpec - specification of an image pull secret
-// implements SecretSpec
+// ImagePullSecretSpec - specification of an image pull secret implements SecretSpec
 type ImagePullSecretSpec struct {
 	Name      string `json:"name"`
 	Namespace string `json:"namespace"`
@@ -44,8 +43,7 @@ func (spec *ImagePullSecretSpec) GetName() string {
 	return spec.Name
 }
 
-// GetType - return the type of the ImagePullSecret,
-// which is always api.SecretTypeDockercfg
+// GetType - return the type of the ImagePullSecret, which is always api.SecretTypeDockercfg
 func (spec *ImagePullSecretSpec) GetType() api.SecretType {
 	return api.SecretTypeDockercfg
 }
@@ -55,8 +53,7 @@ func (spec *ImagePullSecretSpec) GetNamespace() string {
 	return spec.Namespace
 }
 
-// GetData - return the data the secret carries, it is a single
-// key-value pair
+// GetData - return the data the secret carries, it is a single key-value pair
 func (spec *ImagePullSecretSpec) GetData() map[string][]byte {
 	return map[string][]byte{api.DockerConfigKey: spec.Data}
 }
@@ -74,7 +71,6 @@ type SecretList struct {
 	// Unordered list of Secrets.
 	Secrets []Secret `json:"secrets"`
 }
-
 
 // GetSecrets - return all secrets in the given namespace.
 func GetSecrets(client *client.Client, namespace *common.NamespaceQuery) (*SecretList, error) {
@@ -110,7 +106,7 @@ func NewSecret(secret *api.Secret) *Secret {
 }
 
 // NewSecret - creates a new instance of SecretList struct based on K8s SecretList.
-func NewSecretList(secretList *api.SecretList, namespace *common.NamespaceQuery) (*SecretList) {
+func NewSecretList(secretList *api.SecretList, namespace *common.NamespaceQuery) *SecretList {
 	newSecretList := SecretList{}
 	for _, secret := range secretList.Items {
 		if namespace.Matches(secret.ObjectMeta.Namespace) {
