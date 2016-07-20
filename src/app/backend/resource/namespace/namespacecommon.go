@@ -17,22 +17,15 @@ package namespace
 import (
 	"log"
 
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
-	"k8s.io/kubernetes/pkg/fields"
-	"k8s.io/kubernetes/pkg/labels"
 )
 
 // NamespaceSpec is a specification of namespace to create.
 type NamespaceSpec struct {
 	// Name of the namespace.
 	Name string `json:"name"`
-}
-
-// NamespaceList is a list of namespaces in the cluster.
-type NamespaceList struct {
-	// Unordered list of Namespaces.
-	Namespaces []string `json:"namespaces"`
 }
 
 // CreateNamespace creates namespace based on given specification.
@@ -46,28 +39,16 @@ func CreateNamespace(spec *NamespaceSpec, client *client.Client) error {
 	}
 
 	_, err := client.Namespaces().Create(namespace)
-
 	return err
 }
 
-// GetNamespaceList returns a list of all namespaces in the cluster.
-func GetNamespaceList(client *client.Client) (*NamespaceList, error) {
-	log.Printf("Getting namespace list")
+func paginate(namespaces []api.Namespace, pQuery *common.PaginationQuery) []api.Namespace {
+	startIndex, endIndex := pQuery.GetPaginationSettings(len(namespaces))
 
-	list, err := client.Namespaces().List(api.ListOptions{
-		LabelSelector: labels.Everything(),
-		FieldSelector: fields.Everything(),
-	})
-
-	if err != nil {
-		return nil, err
+	// Return all items if provided settings do not meet requirements
+	if !pQuery.CanPaginate(len(namespaces), startIndex) {
+		return namespaces
 	}
 
-	namespaceList := &NamespaceList{}
-
-	for _, element := range list.Items {
-		namespaceList.Namespaces = append(namespaceList.Namespaces, element.ObjectMeta.Name)
-	}
-
-	return namespaceList, nil
+	return namespaces[startIndex:endIndex]
 }
