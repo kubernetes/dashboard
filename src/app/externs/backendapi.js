@@ -663,7 +663,8 @@ backendApi.SecretList;
  * @typedef {{
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
- *   listMeta: !backendApi.ListMeta
+ *   listMeta: !backendApi.ListMeta,
+ *   ready: string
  * }}
  */
 backendApi.Node;
