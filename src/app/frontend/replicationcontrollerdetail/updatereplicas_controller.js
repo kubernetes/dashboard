@@ -146,7 +146,8 @@ function i18n(replicationController, currentPods, desiredPods) {
     MSG_RC_DETAIL_NUMBER_OF_PODS_REQUIRED_WARNING: goog.getMsg('Number of pods is required'),
     /** @export {string} @desc This warning appears when the specified pods count on
         the "update number of pods" dialog is not positive or non-integer.*/
-    MSG_RC_DETAIL_NUMBER_OF_PODS_INTEGER_WARNING: goog.getMsg('Must be a positive integer'),
+    MSG_RC_DETAIL_NUMBER_OF_PODS_INTEGER_WARNING:
+        goog.getMsg('Number of replicas must be equal or greater than zero'),
     /** @export {string} @desc This warning appears when the specified pods count (on the "update
         number of pods" dialog) is very high. */
     MSG_RC_DETAIL_NUMBER_OF_PODS_HIGH_WARNING: goog.getMsg(
