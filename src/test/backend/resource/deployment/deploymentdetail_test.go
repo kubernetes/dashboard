@@ -110,7 +110,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 					Pods:       common.PodInfo{Warnings: []common.Event{}},
 				},
 				EventList: common.EventList{
-					Events:    []common.Event{},
+					Events: []common.Event{},
 				},
 			},
 		},

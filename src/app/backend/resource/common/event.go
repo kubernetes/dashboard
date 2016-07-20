@@ -18,7 +18,7 @@ import (
 	"k8s.io/kubernetes/pkg/api/unversioned"
 )
 
-// Events response structure.
+// EventList is an events response structure.
 type EventList struct {
 	ListMeta ListMeta `json:"listMeta"`
 

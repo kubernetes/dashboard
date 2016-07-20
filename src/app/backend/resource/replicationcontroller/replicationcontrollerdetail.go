@@ -76,20 +76,20 @@ func GetReplicationControllerDetail(client k8sClient.Interface, heapsterClient c
 	}
 
 	// TODO support pagination
-	podList, err := GetReplicationControllerPods(client, heapsterClient, common.NO_PAGINATION,
+	podList, err := GetReplicationControllerPods(client, heapsterClient, common.NoPagination,
 		name, namespace)
 	if err != nil {
 		return nil, err
 	}
 
 	// TODO support pagination
-	eventList, err := GetReplicationControllerEvents(client, common.NO_PAGINATION, namespace, name)
+	eventList, err := GetReplicationControllerEvents(client, common.NoPagination, namespace, name)
 	if err != nil {
 		return nil, err
 	}
 
 	// TODO support pagination
-	serviceList, err := GetReplicationControllerServices(client, common.NO_PAGINATION, namespace,
+	serviceList, err := GetReplicationControllerServices(client, common.NoPagination, namespace,
 		name)
 	if err != nil {
 		return nil, err
@@ -100,9 +100,9 @@ func GetReplicationControllerDetail(client k8sClient.Interface, heapsterClient c
 	return &replicationControllerDetail, nil
 }
 
-// TODO(floreks): This should be transactional to make sure that RC will not be deleted without pods
 // DeleteReplicationController deletes replication controller with given name in given namespace and
 // related pods. Also deletes services related to replication controller if deleteServices is true.
+// TODO(floreks): This should be transactional to make sure that RC will not be deleted without pods
 func DeleteReplicationController(client k8sClient.Interface, namespace, name string,
 	deleteServices bool) error {
 

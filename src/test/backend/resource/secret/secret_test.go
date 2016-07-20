@@ -28,22 +28,22 @@ var k8SecretList = &api.SecretList{
 	Items: []api.Secret{
 		{
 			ObjectMeta: api.ObjectMeta{
-				Name: "user1",
-				Namespace: "foo",
+				Name:              "user1",
+				Namespace:         "foo",
 				CreationTimestamp: unversioned.Unix(111, 222),
 			},
 		},
 		{
 			ObjectMeta: api.ObjectMeta{
-				Name: "user2",
-				Namespace: "foo",
+				Name:              "user2",
+				Namespace:         "foo",
 				CreationTimestamp: unversioned.Unix(111, 222),
 			},
 		},
 		{
 			ObjectMeta: api.ObjectMeta{
-				Name: "system1",
-				Namespace: "kube-system",
+				Name:              "system1",
+				Namespace:         "kube-system",
 				CreationTimestamp: unversioned.Unix(111, 222),
 			},
 		},
@@ -52,9 +52,9 @@ var k8SecretList = &api.SecretList{
 
 func TestNewSecretListCreation(t *testing.T) {
 	cases := []struct {
-		k8sRs         *api.SecretList
-		expected      *SecretList
-		namespace     *common.NamespaceQuery
+		k8sRs     *api.SecretList
+		expected  *SecretList
+		namespace *common.NamespaceQuery
 	}{
 		{
 			k8SecretList,
@@ -62,16 +62,16 @@ func TestNewSecretListCreation(t *testing.T) {
 				Secrets: []Secret{
 					{
 						ObjectMeta: common.ObjectMeta{
-							Name: "user1",
-							Namespace: "foo",
+							Name:              "user1",
+							Namespace:         "foo",
 							CreationTimestamp: unversioned.Unix(111, 222),
 						},
 						TypeMeta: common.NewTypeMeta(common.ResourceKindSecret),
 					},
 					{
 						ObjectMeta: common.ObjectMeta{
-							Name: "user2",
-							Namespace: "foo",
+							Name:              "user2",
+							Namespace:         "foo",
 							CreationTimestamp: unversioned.Unix(111, 222),
 						},
 						TypeMeta: common.NewTypeMeta(common.ResourceKindSecret),

@@ -18,8 +18,8 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/api"
+	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
 // ConfigMapDetail API resource provides mechanisms to inject containers with configuration data while keeping
@@ -46,11 +46,10 @@ func GetConfigMapDetail(client *client.Client, namespace, name string) (*ConfigM
 	return getConfigMapDetail(rawConfigMap), nil
 }
 
-
 func getConfigMapDetail(rawConfigMap *api.ConfigMap) *ConfigMapDetail {
 	return &ConfigMapDetail{
-		ObjectMeta:      common.NewObjectMeta(rawConfigMap.ObjectMeta),
-		TypeMeta:        common.NewTypeMeta(common.ResourceKindConfigMap),
-		Data: 	         rawConfigMap.Data,
+		ObjectMeta: common.NewObjectMeta(rawConfigMap.ObjectMeta),
+		TypeMeta:   common.NewTypeMeta(common.ResourceKindConfigMap),
+		Data:       rawConfigMap.Data,
 	}
 }

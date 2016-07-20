@@ -16,8 +16,8 @@ func TestGetSupportedLocales(t *testing.T) {
 		{
 			Localization{
 				Translations: []Translation{
-					Translation{File: "en/index.html", Key: "en"},
-					Translation{File: "ja/index.html", Key: "ja"},
+					{File: "en/index.html", Key: "en"},
+					{File: "ja/index.html", Key: "ja"},
 				},
 			},
 			[]string{"en", "ja"},

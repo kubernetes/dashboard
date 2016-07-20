@@ -15,11 +15,11 @@
 package event
 
 import (
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
 	"reflect"
 	"testing"
-	"k8s.io/kubernetes/pkg/api"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
 )
 
 func TestGetEvents(t *testing.T) {
@@ -148,7 +148,7 @@ func TestToEventList(t *testing.T) {
 			},
 			"namespace-1",
 			common.EventList{
-				ListMeta:  common.ListMeta{TotalItems: 2},
+				ListMeta: common.ListMeta{TotalItems: 2},
 				Events: []common.Event{
 					{
 						ObjectMeta: common.ObjectMeta{Name: "event-1"},
@@ -164,7 +164,7 @@ func TestToEventList(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := CreateEventList(c.events, common.NO_PAGINATION)
+		actual := CreateEventList(c.events, common.NoPagination)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("ToEventList(%+v, %+v) == \n%+v, expected \n%+v",
 				c.events, c.namespace, actual, c.expected)

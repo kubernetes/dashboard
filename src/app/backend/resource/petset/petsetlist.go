@@ -34,9 +34,9 @@ type PetSetList struct {
 	PetSets []PetSet `json:"petSets"`
 }
 
-// PetSet is a presentation layer view of Kubernetes Pet Set resource. This means
-// it is Pet Set plus additional augumented data we can get from other sources
-// (like services that target the same pods).
+// PetSet is a presentation layer view of Kubernetes Pet Set resource. This means it is Pet Set
+// plus additional augumented data we can get from other sources (like services that target the
+// same pods).
 type PetSet struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
 	TypeMeta   common.TypeMeta   `json:"typeMeta"`
@@ -61,8 +61,8 @@ func GetPetSetList(client *client.Client, nsQuery *common.NamespaceQuery) (*PetS
 	return GetPetSetListFromChannels(channels)
 }
 
-// GetPetSetList returns a list of all Pet Sets in the cluster
-// reading required resource list once from the channels.
+// GetPetSetListFromChannels returns a list of all Pet Sets in the cluster reading required resource
+// list once from the channels.
 func GetPetSetListFromChannels(channels *common.ResourceChannels) (
 	*PetSetList, error) {
 
@@ -93,6 +93,7 @@ func GetPetSetListFromChannels(channels *common.ResourceChannels) (
 	return ToPetSetList(petSets.Items, pods.Items, events.Items), nil
 }
 
+// ToPetSetList transforms array of pet sets into PetSetList object returned by API.
 func ToPetSetList(petSets []apps.PetSet, pods []api.Pod, events []api.Event) *PetSetList {
 
 	petSetList := &PetSetList{
@@ -114,6 +115,7 @@ func ToPetSetList(petSets []apps.PetSet, pods []api.Pod, events []api.Event) *Pe
 	return petSetList
 }
 
+// ToPetSet transforms pet set into PetSet object returned by API.
 func ToPetSet(petSet *apps.PetSet, podInfo *common.PodInfo) PetSet {
 	return PetSet{
 		ObjectMeta:      common.NewObjectMeta(petSet.ObjectMeta),
