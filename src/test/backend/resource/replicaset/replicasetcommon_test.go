@@ -58,7 +58,7 @@ func TestCreateReplicaSetList(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := CreateReplicaSetList(c.replicaSets, c.pods, c.events, common.NO_PAGINATION)
+		actual := CreateReplicaSetList(c.replicaSets, c.pods, c.events, common.NoPagination)
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("CreateReplicaSetList(%#v, %#v, %#v, ...) == \ngot %#v, \nexpected %#v",

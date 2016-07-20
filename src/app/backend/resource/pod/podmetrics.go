@@ -38,8 +38,8 @@ type MetricsByPod struct {
 	MetricsMap map[string]map[string]PodMetrics `json:"metricsMap"`
 }
 
-// MetricResult is a some sample measurement of a non-negative, integer quantity
-// (for example, memory usage in bytes observed at some moment)
+// MetricResult is a some sample measurement of a non-negative, integer quantity (for example,
+// memory usage in bytes observed at some moment)
 type MetricResult struct {
 	Timestamp time.Time `json:"timestamp"`
 	Value     uint64    `json:"value"`

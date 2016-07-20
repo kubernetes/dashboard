@@ -94,7 +94,7 @@ func GetNodeEvents(client client.Interface, nodeName string) (common.EventList, 
 		ref.UID = types.UID(ref.Name)
 		events, _ := client.Events(api.NamespaceAll).Search(ref)
 		// TODO add pagination support
-		eventList = CreateEventList(events.Items, common.NO_PAGINATION)
+		eventList = CreateEventList(events.Items, common.NoPagination)
 	} else {
 		log.Print(err)
 	}
@@ -108,7 +108,7 @@ func GetNamespaceEvents(client client.Interface, namespace string) (common.Event
 		LabelSelector: labels.Everything(),
 		FieldSelector: fields.Everything(),
 	})
-	return CreateEventList(events.Items, common.NO_PAGINATION), nil
+	return CreateEventList(events.Items, common.NoPagination), nil
 }
 
 // Based on event Reason fills event Type in order to allow correct filtering by Type.

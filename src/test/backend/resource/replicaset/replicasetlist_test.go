@@ -177,7 +177,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 		channels.EventList.List <- &api.EventList{}
 		channels.EventList.Error <- nil
 
-		actual, err := GetReplicaSetListFromChannels(channels, common.NO_PAGINATION)
+		actual, err := GetReplicaSetListFromChannels(channels, common.NoPagination)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetReplicaSetListChannels() ==\n          %#v\nExpected: %#v", actual, c.expected)
 		}

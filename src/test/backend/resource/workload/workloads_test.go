@@ -34,7 +34,7 @@ import (
 )
 
 func TestGetWorkloadsFromChannels(t *testing.T) {
-	var jobCompletions int32 = 0
+	var jobCompletions int32
 	cases := []struct {
 		k8sRs         extensions.ReplicaSetList
 		k8sJobs       batch.JobList
@@ -190,7 +190,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				PetSets:  c.petSet,
 			},
 		}
-		var expectedErr error = nil
+		var expectedErr error
 
 		channels := &common.ResourceChannels{
 			ReplicaSetList: common.ReplicaSetListChannel{
@@ -311,7 +311,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		channels.EventList.List <- eventList
 		channels.EventList.Error <- nil
 
-		actual, err := GetWorkloadsFromChannels(channels, nil, common.NO_PAGINATION)
+		actual, err := GetWorkloadsFromChannels(channels, nil, common.NoPagination)
 		if !reflect.DeepEqual(actual, expected) {
 			t.Errorf("GetWorkloadsFromChannels() ==\n          %#v\nExpected: %#v", actual, expected)
 		}

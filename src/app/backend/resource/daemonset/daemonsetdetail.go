@@ -102,7 +102,7 @@ func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient client.Heapst
 			container.Image)
 	}
 
-	daemonSetDetail.PodList = pod.CreatePodList(pods.Items, common.NO_PAGINATION, heapsterClient)
+	daemonSetDetail.PodList = pod.CreatePodList(pods.Items, common.NoPagination, heapsterClient)
 
 	return daemonSetDetail, nil
 }

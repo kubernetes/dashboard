@@ -91,7 +91,7 @@ func getPetSetDetail(petSet *apps.PetSet, heapsterClient client.HeapsterClient,
 		ContainerImages: common.GetContainerImages(&petSet.Spec.Template.Spec),
 		PodInfo:         podInfo,
 		// TODO(floreks): add pagination support
-		PodList:   pod.CreatePodList(matchingPods, common.NO_PAGINATION, heapsterClient),
+		PodList:   pod.CreatePodList(matchingPods, common.NoPagination, heapsterClient),
 		EventList: *events,
 	}
 }

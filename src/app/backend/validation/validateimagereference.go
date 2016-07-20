@@ -19,13 +19,13 @@ import (
 	"log"
 )
 
-// Specification for image referecne validation request.
+// ImageReferenceValiditySpec is a specification of an image reference validation request.
 type ImageReferenceValiditySpec struct {
 	// Reference of the image
 	Reference string `json:"reference"`
 }
 
-// Describe validity of the image reference.
+// ImageReferenceValidity describes validity of the image reference.
 type ImageReferenceValidity struct {
 	// True when the image reference is valid.
 	Valid bool `json:"valid"`
@@ -33,7 +33,7 @@ type ImageReferenceValidity struct {
 	Reason string `json:"reason"`
 }
 
-// Validation image reference.
+// ValidateImageReference validates image reference.
 func ValidateImageReference(spec *ImageReferenceValiditySpec) (*ImageReferenceValidity, error) {
 	log.Printf("Validating %s as a image reference", spec.Reference)
 

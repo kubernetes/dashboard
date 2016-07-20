@@ -24,7 +24,8 @@ import (
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
-// GetEvents returns events for particular namespace and replication controller or error if occurred.
+// GetReplicationControllerEvents returns events for particular namespace and replication
+// controller or error if occurred.
 func GetReplicationControllerEvents(client client.Interface, pQuery *common.PaginationQuery,
 	namespace, replicationControllerName string) (*common.EventList, error) {
 

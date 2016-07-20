@@ -58,8 +58,8 @@ func GetDaemonSetList(client *client.Client, nsQuery *common.NamespaceQuery) (*D
 	return GetDaemonSetListFromChannels(channels)
 }
 
-// GetDaemonSetList returns a list of all Daemon Seet in the cluster
-// reading required resource list once from the channels.
+// GetDaemonSetListFromChannels returns a list of all Daemon Seet in the cluster reading required
+// resource list once from the channels.
 func GetDaemonSetListFromChannels(channels *common.ResourceChannels) (
 	*DaemonSetList, error) {
 

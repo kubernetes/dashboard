@@ -30,8 +30,7 @@ type SecretSpec interface {
 	GetData() map[string][]byte
 }
 
-// ImagePullSecretSpec - specification of an image pull secret
-// implements SecretSpec
+// ImagePullSecretSpec - specification of an image pull secret implements SecretSpec
 type ImagePullSecretSpec struct {
 	Name      string `json:"name"`
 	Namespace string `json:"namespace"`
@@ -44,8 +43,7 @@ func (spec *ImagePullSecretSpec) GetName() string {
 	return spec.Name
 }
 
-// GetType - return the type of the ImagePullSecret,
-// which is always api.SecretTypeDockercfg
+// GetType - return the type of the ImagePullSecret, which is always api.SecretTypeDockercfg
 func (spec *ImagePullSecretSpec) GetType() api.SecretType {
 	return api.SecretTypeDockercfg
 }
@@ -55,8 +53,7 @@ func (spec *ImagePullSecretSpec) GetNamespace() string {
 	return spec.Namespace
 }
 
-// GetData - return the data the secret carries, it is a single
-// key-value pair
+// GetData - return the data the secret carries, it is a single key-value pair
 func (spec *ImagePullSecretSpec) GetData() map[string][]byte {
 	return map[string][]byte{api.DockerConfigKey: spec.Data}
 }
