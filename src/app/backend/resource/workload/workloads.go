@@ -29,7 +29,7 @@ import (
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
-// Workloads stucture contains all resource lists grouped into the workloads category.
+// Workloads structure contains all resource lists grouped into the workloads category.
 type Workloads struct {
 	DeploymentList deployment.DeploymentList `json:"deploymentList"`
 

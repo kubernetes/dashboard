@@ -39,7 +39,7 @@ type NodeAllocatedResources struct {
 	CPULimits int64 `json:"cpuLimits"`
 
 	// CPULimitsFraction is a fraction of defined CPU limit, can be over 100%, i.e.
-	// overcommited.
+	// overcommitted.
 	CPULimitsFraction float64 `json:"cpuLimitsFraction"`
 
 	// CPUCapacity is specified node CPU capacity in milicores.
@@ -55,7 +55,7 @@ type NodeAllocatedResources struct {
 	MemoryLimits int64 `json:"memoryLimits"`
 
 	// MemoryLimitsFraction is a fraction of defined memory limit, can be over 100%, i.e.
-	// overcommited.
+	// overcommitted.
 	MemoryLimitsFraction float64 `json:"memoryLimitsFraction"`
 
 	// MemoryCapacity is specified node memory capacity in bytes.
