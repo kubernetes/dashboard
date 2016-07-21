@@ -15,6 +15,7 @@
 import stateConfig from './replicasetlist_stateconfig';
 import filtersModule from 'common/filters/filters_module';
 import componentsModule from 'common/components/components_module';
+import namespaceModule from 'common/namespace/namespace_module';
 import {replicaSetCardComponent} from './replicasetcard_component';
 import {replicaSetCardListComponent} from './replicasetcardlist_component';
 import replicaSetDetailModule from 'replicasetdetail/replicasetdetail_module';
@@ -34,6 +35,7 @@ export default angular
           'ui.router',
           filtersModule.name,
           componentsModule.name,
+          namespaceModule.name,
           replicaSetDetailModule.name,
           paginationModule.name,
         ])

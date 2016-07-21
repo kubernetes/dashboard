@@ -41,6 +41,12 @@ limitations under the License.
         </a>
       </div>
     </kd-resource-card-column>
+    <kd-resource-card-column ng-show="$ctrl.isMultipleNamespaces">
+      <div>
+        <kd-middle-ellipsis display-string="{{::$ctrl.job.objectMeta.namespace}}">
+        </kd-middle-ellipsis>
+      </div>
+    </kd-resource-card-column>
     <kd-resource-card-column>
       <kd-labels labels="::$ctrl.job.objectMeta.labels"></kd-labels>
     </kd-resource-card-column>

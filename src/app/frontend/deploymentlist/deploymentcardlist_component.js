@@ -16,7 +16,17 @@
  * @final
  */
 class DeploymentCardListController {
-  constructor() { this.i18n = i18n; }
+  /** @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService */
+  constructor(kdNamespaceService) {
+    /** @private {!./../common/namespace/namespace_service.NamespaceService} */
+    this.kdNamespaceService_ = kdNamespaceService;
+
+    /** @export {boolean} */
+    this.isMultipleNamespaces = this.kdNamespaceService_.getMultipleNamespacesSelected();
+
+    /** @export */
+    this.i18n = i18n;
+  }
 }
 
 /**
@@ -35,6 +45,9 @@ const i18n = {
   /** @export {string} @desc Label 'Name' which appears as a column label in the table of
       deployments (deployment list view). */
   MSG_DEPLOYMENT_LIST_NAME_LABEL: goog.getMsg('Name'),
+  /** @export {string} @desc Label 'Namespace' which appears as a column label in the
+      table of deployments (deployment list view). */
+  MSG_DEPLOYMENT_LIST_NAMESPACE_LABEL: goog.getMsg('Namespace'),
   /** @export {string} @desc Label 'Labels' which appears as a column label in the table of
       deployments (deployment list view). */
   MSG_DEPLOYMENT_LIST_LABELS_LABEL: goog.getMsg('Labels'),
