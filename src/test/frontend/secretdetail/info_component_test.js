@@ -12,17 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
+import module from 'secretdetail/module';
 
-.kd-info-card-section {
-  flex-wrap: wrap;
-  font-size: $subhead-font-size-base;
-  font-weight: $bold-font-weight;
+describe('Secret Info controller', () => {
+  /** @type {!SecretInfoController} */
+  let ctrl;
 
-  kd-info-card-section {
-    display: flex;
-    flex-grow: 1;
-    max-width: 100%;
-    padding-right: 2 * $baseline-grid;
-  }
-}
+  beforeEach(() => {
+    angular.mock.module(module.name);
+
+    angular.mock.inject(($componentController, $rootScope) => {
+      ctrl = $componentController('kdSecretInfo', {$scope: $rootScope}, {
+        secret: {
+          data: {foo: 'bar'},
+        },
+      });
+    });
+  });
+
+  it('should initialize the ctrl', () => { expect(ctrl.i18n).not.toBeUndefined(); });
+});

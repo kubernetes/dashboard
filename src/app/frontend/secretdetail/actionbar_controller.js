@@ -12,17 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
+/**
+ * @final
+ */
+export class ActionBarController {
+  /**
+   * @param {!backendApi.SecretDetail} secretDetail
+   * @ngInject
+   */
+  constructor(secretDetail) {
+    /** @export {!backendApi.SecretDetail} */
+    this.details = secretDetail;
 
-.kd-info-card-section {
-  flex-wrap: wrap;
-  font-size: $subhead-font-size-base;
-  font-weight: $bold-font-weight;
-
-  kd-info-card-section {
-    display: flex;
-    flex-grow: 1;
-    max-width: 100%;
-    padding-right: 2 * $baseline-grid;
+    /** @export */
+    this.i18n = i18n;
   }
 }
+
+const i18n = {
+  /** @export {string} @desc Label 'Secret' which appears at the top of the
+      delete dialog, opened from a secret details page. */
+  MSG_SECRET_DETAIL_SECRET_LABEL: goog.getMsg('Secret'),
+};

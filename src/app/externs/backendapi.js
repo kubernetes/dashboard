@@ -680,6 +680,15 @@ backendApi.NamespaceDetail;
 /**
  * @typedef {{
  *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   data: !Object<string, string>,
+ * }}
+ */
+backendApi.SecretDetail;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta
  * }}
  */

@@ -93,6 +93,12 @@ a {
   display: inline-block;
 }
 
+.kd-pre-block {
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
 // Disables animation on md-tab switch. Avoids some flickering and is simpler.
 [role='tabpanel'] {
   transition: none;

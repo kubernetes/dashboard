@@ -35,6 +35,7 @@ import serviceDetailModule from './servicedetail/servicedetail_module';
 import serviceListModule from './servicelist/servicelist_module';
 import workloadsModule from './workloads/workloads_module';
 import secretListModule from './secretlist/secretlist_module';
+import secretDetailModule from './secretdetail/module';
 import podDetailModule from './poddetail/poddetail_module';
 import petSetListModule from './petsetlist/petsetlist_module';
 import configMapListModule from './configmaplist/configmaplist_module';
@@ -72,6 +73,7 @@ export default angular
           configMapListModule.name,
           configMapDetailModule.name,
           secretListModule.name,
+          secretDetailModule.name,
         ])
     .config(indexConfig)
     .config(routeConfig);
