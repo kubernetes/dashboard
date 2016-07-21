@@ -12,17 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
+import {ActionBarController} from 'secretdetail/actionbar_controller';
+import module from 'secretdetail/module';
 
-.kd-info-card-section {
-  flex-wrap: wrap;
-  font-size: $subhead-font-size-base;
-  font-weight: $bold-font-weight;
+describe('Action Bar controller', () => {
+  /** @type {!ActionBarController} */
+  let ctrl;
+  let details = {};
 
-  kd-info-card-section {
-    display: flex;
-    flex-grow: 1;
-    max-width: 100%;
-    padding-right: 2 * $baseline-grid;
-  }
-}
+  beforeEach(() => {
+    angular.mock.module(module.name);
+
+    angular.mock.inject(
+        ($controller) => { ctrl = $controller(ActionBarController, {secretDetail: details}); });
+  });
+
+  it('should initialize details', () => { expect(ctrl.details).toBe(details); });
+});

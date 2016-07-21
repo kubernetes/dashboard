@@ -43,6 +43,7 @@ describe('Middle ellipsis directive', () => {
     scope.displayString = new Array(stringLength + 1).join('x');
     let element = compileFn(scope);
     document.body.appendChild(element[0]);
+    scope.$digest();
 
     // when
     element[0].style.width = '500px';

@@ -14,14 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div layout="column">
-  <kd-config-map-info config-map="::$ctrl.configMapDetail"></kd-config-map-info>
-  <kd-info-card>
-    <kd-info-card-section name="{{::$ctrl.i18n.MSG_CONFIG_MAP_INFO_DATA_SECTION}}">
-      <kd-info-card-entry ng-repeat="(key, value) in ::$ctrl.configMapDetail.data"
-          title="{{::key}}">
-        <pre class="kd-pre-block">{{::value}}</pre>
-      </kd-info-card-entry>
-    </kd-info-card-section>
-  </kd-info-card>
-</div>
+<kd-actionbar-detail-buttons
+                    resource-kind-name="{{::$ctrl.i18n.MSG_SECRET_DETAIL_SECRET_LABEL}}"
+                    type-meta="$ctrl.details.typeMeta"
+                    object-meta="$ctrl.details.objectMeta">
+</kd-actionbar-detail-buttons>
