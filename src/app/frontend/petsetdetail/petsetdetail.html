@@ -20,7 +20,7 @@ limitations under the License.
       <md-tab label="{{::ctrl.i18n.MSG_PET_SET_DETAIL_OVERVIEW_TAB}}">
         <kd-pet-set-info pet-set="::ctrl.petSetDetail"></kd-pet-set-info>
 
-        <kd-content-card>
+        <kd-content-card ng-if="::ctrl.petSetDetail.podList.pods.length">
           <kd-title>{{::ctrl.i18n.MSG_PET_SET_DETAIL_PODS_CARD_TITLE}}</kd-title>
           <kd-content>
             <kd-pod-card-list pod-list="::ctrl.petSetDetail.podList"
@@ -30,7 +30,7 @@ limitations under the License.
         </kd-content-card>
       </md-tab>
       <md-tab label="{{::ctrl.i18n.MSG_PET_SET_DETAIL_EVENTS_TAB}}">
-        <kd-event-card-list events="::ctrl.petSetDetail.eventList.events"></kd-event-card-list>
+        <kd-event-card-list event-list="::ctrl.petSetDetail.eventList"></kd-event-card-list>
       </md-tab>
     </md-tabs>
   </md-content>

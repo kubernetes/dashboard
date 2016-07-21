@@ -42,7 +42,7 @@ func TestGetConfigMapList(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := getConfigMapList(c.configMaps)
+		actual := getConfigMapList(c.configMaps, common.NoPagination)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getConfigMapList(%#v) == \n%#v\nexpected \n%#v\n",
 				c.configMaps, actual, c.expected)

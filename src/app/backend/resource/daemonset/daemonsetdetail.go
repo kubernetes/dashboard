@@ -24,8 +24,6 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
-	"k8s.io/kubernetes/pkg/fields"
-	"k8s.io/kubernetes/pkg/labels"
 )
 
 // DaemonSeDetail represents detailed information about a Daemon Set.
@@ -57,26 +55,30 @@ type DaemonSetDetail struct {
 
 // Returns detailed information about the given daemon set in the given namespace.
 func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	namespace, name string) (*DaemonSetDetail, error) {
+	pQuery *common.PaginationQuery, namespace, name string) (*DaemonSetDetail, error) {
 	log.Printf("Getting details of %s daemon set in %s namespace", name, namespace)
 
-	daemonSetWithPods, err := getRawDaemonSetWithPods(client, namespace, name)
-	if err != nil {
-		return nil, err
-	}
-	daemonSet := daemonSetWithPods.DaemonSet
-	pods := daemonSetWithPods.Pods
-
-	services, err := client.Services(namespace).List(api.ListOptions{
-		LabelSelector: labels.Everything(),
-		FieldSelector: fields.Everything(),
-	})
-
+	daemonSet, err := client.Extensions().DaemonSets(namespace).Get(name)
 	if err != nil {
 		return nil, err
 	}
 
-	events, err := GetDaemonSetEvents(client, daemonSet.Namespace, daemonSet.Name)
+	podList, err := GetDaemonSetPods(client, heapsterClient, pQuery, name, namespace)
+	if err != nil {
+		return nil, err
+	}
+
+	podInfo, err := getDaemonSetPodInfo(client, daemonSet)
+	if err != nil {
+		return nil, err
+	}
+
+	serviceList, err := GetDaemonSetServices(client, pQuery, namespace, name)
+	if err != nil {
+		return nil, err
+	}
+
+	eventList, err := GetDaemonSetEvents(client, daemonSet.Namespace, daemonSet.Name)
 	if err != nil {
 		return nil, err
 	}
@@ -85,24 +87,16 @@ func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient client.Heapst
 		ObjectMeta:    common.NewObjectMeta(daemonSet.ObjectMeta),
 		TypeMeta:      common.NewTypeMeta(common.ResourceKindDaemonSet),
 		LabelSelector: daemonSet.Spec.Selector,
-		PodInfo:       getDaemonSetPodInfo(daemonSet, pods.Items),
-		ServiceList:   resourceService.ServiceList{Services: make([]resourceService.Service, 0)},
-		EventList:     *events,
-	}
-
-	matchingServices := getMatchingServicesforDS(services.Items, daemonSet)
-
-	for _, service := range matchingServices {
-		daemonSetDetail.ServiceList.Services = append(daemonSetDetail.ServiceList.Services,
-			resourceService.ToService(&service))
+		PodInfo:       *podInfo,
+		PodList:       *podList,
+		ServiceList:   *serviceList,
+		EventList:     *eventList,
 	}
 
 	for _, container := range daemonSet.Spec.Template.Spec.Containers {
 		daemonSetDetail.ContainerImages = append(daemonSetDetail.ContainerImages,
 			container.Image)
 	}
-
-	daemonSetDetail.PodList = pod.CreatePodList(pods.Items, common.NoPagination, heapsterClient)
 
 	return daemonSetDetail, nil
 }
@@ -130,7 +124,7 @@ func DeleteDaemonSet(client k8sClient.Interface, namespace, name string,
 		return err
 	}
 
-	for _, pod := range pods.Items {
+	for _, pod := range pods {
 		if err := client.Pods(namespace).Delete(pod.Name, &api.DeleteOptions{}); err != nil {
 			return err
 		}

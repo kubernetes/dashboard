@@ -247,19 +247,31 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 	apiV1Ws.Route(
 		apiV1Ws.DELETE("/daemonset/{namespace}/{daemonSet}").
 			To(apiHandler.handleDeleteDaemonSet))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/daemonset/{namespace}/{daemonSet}/pod").
+			To(apiHandler.handleGetDaemonSetPods).
+			Writes(pod.PodList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/daemonset/{namespace}/{daemonSet}/service").
+			To(apiHandler.handleGetDaemonSetPods).
+			Writes(resourceService.ServiceList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/job").
-			To(apiHandler.handleGetJobs).
+			To(apiHandler.handleGetJobList).
 			Writes(job.JobList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/job/{namespace}").
-			To(apiHandler.handleGetJobs).
+			To(apiHandler.handleGetJobList).
 			Writes(job.JobList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/job/{namespace}/{job}").
 			To(apiHandler.handleGetJobDetail).
 			Writes(job.JobDetail{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/job/{namespace}/{job}/pod").
+			To(apiHandler.handleGetJobPods).
+			Writes(pod.PodList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.POST("/namespace").
@@ -277,11 +289,11 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/secret/{namespace}").
-			To(apiHandler.handleGetSecrets).
+			To(apiHandler.handleGetSecretList).
 			Writes(secret.SecretList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/secret").
-			To(apiHandler.handleGetSecrets).
+			To(apiHandler.handleGetSecretList).
 			Writes(secret.SecretList{}))
 	apiV1Ws.Route(
 		apiV1Ws.POST("/secret").
@@ -291,11 +303,11 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/configmap").
-			To(apiHandler.handleGetConfigMaps).
+			To(apiHandler.handleGetConfigMapList).
 			Writes(configmap.ConfigMapList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/configmap/{namespace}").
-			To(apiHandler.handleGetConfigMaps).
+			To(apiHandler.handleGetConfigMapList).
 			Writes(configmap.ConfigMapList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/configmap/{namespace}/{configmap}").
@@ -314,6 +326,10 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 		apiV1Ws.GET("/service/{namespace}/{service}").
 			To(apiHandler.handleGetServiceDetail).
 			Writes(resourceService.ServiceDetail{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/service/{namespace}/{service}/pod").
+			To(apiHandler.handleGetServicePods).
+			Writes(pod.PodList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/petset").
@@ -327,6 +343,10 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 		apiV1Ws.GET("/petset/{namespace}/{petset}").
 			To(apiHandler.handleGetPetSetDetail).
 			Writes(petset.PetSetDetail{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/petset/{namespace}/{petset}/pod").
+			To(apiHandler.handleGetPetSetPods).
+			Writes(pod.PodList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/node").
@@ -353,7 +373,8 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 func (apiHandler *APIHandler) handleGetPetSetList(request *restful.Request,
 	response *restful.Response) {
 	namespace := parseNamespacePathParameter(request)
-	result, err := petset.GetPetSetList(apiHandler.client, namespace)
+	pagination := parsePaginationPathParameter(request)
+	result, err := petset.GetPetSetList(apiHandler.client, namespace, pagination)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -366,9 +387,25 @@ func (apiHandler *APIHandler) handleGetPetSetList(request *restful.Request,
 func (apiHandler *APIHandler) handleGetPetSetDetail(request *restful.Request,
 	response *restful.Response) {
 	namespace := request.PathParameter("namespace")
-	service := request.PathParameter("petset")
+	name := request.PathParameter("petset")
+	pagination := parsePaginationPathParameter(request)
 	result, err := petset.GetPetSetDetail(apiHandler.client, apiHandler.heapsterClient,
-		namespace, service)
+		namespace, name, pagination)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get pet set pods API call.
+func (apiHandler *APIHandler) handleGetPetSetPods(request *restful.Request,
+	response *restful.Response) {
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("petset")
+	pagination := parsePaginationPathParameter(request)
+	result, err := petset.GetPetSetPods(apiHandler.client, apiHandler.heapsterClient,
+		pagination, name, namespace)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -379,7 +416,8 @@ func (apiHandler *APIHandler) handleGetPetSetDetail(request *restful.Request,
 // Handles get service list API call.
 func (apiHandler *APIHandler) handleGetServiceList(request *restful.Request, response *restful.Response) {
 	namespace := parseNamespacePathParameter(request)
-	result, err := resourceService.GetServiceList(apiHandler.client, namespace)
+	pagination := parsePaginationPathParameter(request)
+	result, err := resourceService.GetServiceList(apiHandler.client, namespace, pagination)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -392,8 +430,25 @@ func (apiHandler *APIHandler) handleGetServiceList(request *restful.Request, res
 func (apiHandler *APIHandler) handleGetServiceDetail(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
 	service := request.PathParameter("service")
+	pagination := parsePaginationPathParameter(request)
 	result, err := resourceService.GetServiceDetail(apiHandler.client, apiHandler.heapsterClient,
-		namespace, service)
+		namespace, service, pagination)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get service pods API call.
+func (apiHandler *APIHandler) handleGetServicePods(request *restful.Request,
+	response *restful.Response) {
+
+	namespace := request.PathParameter("namespace")
+	service := request.PathParameter("service")
+	pagination := parsePaginationPathParameter(request)
+	result, err := resourceService.GetServicePods(apiHandler.client, apiHandler.heapsterClient,
+		namespace, service, pagination)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -601,7 +656,8 @@ func (apiHandler *APIHandler) handleGetDeployments(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := parseNamespacePathParameter(request)
-	result, err := deployment.GetDeploymentList(apiHandler.client, namespace)
+	pagination := parsePaginationPathParameter(request)
+	result, err := deployment.GetDeploymentList(apiHandler.client, namespace, pagination)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -839,9 +895,10 @@ func (apiHandler *APIHandler) handleCreateImagePullSecret(request *restful.Reque
 }
 
 // Handles get secrets list API call.
-func (apiHandler *APIHandler) handleGetSecrets(request *restful.Request, response *restful.Response) {
+func (apiHandler *APIHandler) handleGetSecretList(request *restful.Request, response *restful.Response) {
 	namespace := parseNamespacePathParameter(request)
-	result, err := secret.GetSecrets(apiHandler.client, namespace)
+	pagination := parsePaginationPathParameter(request)
+	result, err := secret.GetSecretList(apiHandler.client, namespace, pagination)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -849,9 +906,10 @@ func (apiHandler *APIHandler) handleGetSecrets(request *restful.Request, respons
 	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
-func (apiHandler *APIHandler) handleGetConfigMaps(request *restful.Request, response *restful.Response) {
+func (apiHandler *APIHandler) handleGetConfigMapList(request *restful.Request, response *restful.Response) {
 	namespace := parseNamespacePathParameter(request)
-	result, err := configmap.GetConfigMapList(apiHandler.client, namespace)
+	pagination := parsePaginationPathParameter(request)
+	result, err := configmap.GetConfigMapList(apiHandler.client, namespace, pagination)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -939,7 +997,8 @@ func (apiHandler *APIHandler) handleGetDaemonSetList(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := parseNamespacePathParameter(request)
-	result, err := daemonset.GetDaemonSetList(apiHandler.client, namespace)
+	pagination := parsePaginationPathParameter(request)
+	result, err := daemonset.GetDaemonSetList(apiHandler.client, namespace, pagination)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -954,7 +1013,43 @@ func (apiHandler *APIHandler) handleGetDaemonSetDetail(
 
 	namespace := request.PathParameter("namespace")
 	daemonSet := request.PathParameter("daemonSet")
-	result, err := daemonset.GetDaemonSetDetail(apiHandler.client, apiHandler.heapsterClient, namespace, daemonSet)
+	pagination := parsePaginationPathParameter(request)
+	result, err := daemonset.GetDaemonSetDetail(apiHandler.client, apiHandler.heapsterClient,
+		pagination, namespace, daemonSet)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get Daemon Set pods API call.
+func (apiHandler *APIHandler) handleGetDaemonSetPods(
+	request *restful.Request, response *restful.Response) {
+
+	namespace := request.PathParameter("namespace")
+	daemonSet := request.PathParameter("daemonSet")
+	pagination := parsePaginationPathParameter(request)
+	result, err := daemonset.GetDaemonSetPods(apiHandler.client, apiHandler.heapsterClient,
+		pagination, daemonSet, namespace)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get Daemon Set services API call.
+func (apiHandler *APIHandler) handleGetDaemonSetServices(
+	request *restful.Request, response *restful.Response) {
+
+	namespace := request.PathParameter("namespace")
+	daemonSet := request.PathParameter("daemonSet")
+	pagination := parsePaginationPathParameter(request)
+	result, err := daemonset.GetDaemonSetServices(apiHandler.client, pagination, namespace,
+		daemonSet)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -985,10 +1080,12 @@ func (apiHandler *APIHandler) handleDeleteDaemonSet(
 }
 
 // Handles get Jobs list API call.
-func (apiHandler *APIHandler) handleGetJobs(request *restful.Request, response *restful.Response) {
+func (apiHandler *APIHandler) handleGetJobList(request *restful.Request,
+	response *restful.Response) {
 	namespace := parseNamespacePathParameter(request)
+	pagination := parsePaginationPathParameter(request)
 
-	result, err := job.GetJobList(apiHandler.client, namespace)
+	result, err := job.GetJobList(apiHandler.client, namespace, pagination)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1000,8 +1097,28 @@ func (apiHandler *APIHandler) handleGetJobs(request *restful.Request, response *
 func (apiHandler *APIHandler) handleGetJobDetail(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
 	jobParam := request.PathParameter("job")
+	pagination := parsePaginationPathParameter(request)
 
-	result, err := job.GetJobDetail(apiHandler.client, apiHandler.heapsterClient, namespace, jobParam)
+	result, err := job.GetJobDetail(apiHandler.client, apiHandler.heapsterClient, namespace,
+		jobParam, pagination)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get Job pods API call.
+func (apiHandler *APIHandler) handleGetJobPods(request *restful.Request,
+	response *restful.Response) {
+
+	namespace := request.PathParameter("namespace")
+	jobParam := request.PathParameter("job")
+	pagination := parsePaginationPathParameter(request)
+
+	result, err := job.GetJobPods(apiHandler.client, apiHandler.heapsterClient, pagination,
+		jobParam, namespace)
 	if err != nil {
 		handleInternalError(response, err)
 		return

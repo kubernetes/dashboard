@@ -49,7 +49,8 @@ type Deployment struct {
 }
 
 // GetDeploymentList returns a list of all Deployments in the cluster.
-func GetDeploymentList(client client.Interface, nsQuery *common.NamespaceQuery) (*DeploymentList, error) {
+func GetDeploymentList(client client.Interface, nsQuery *common.NamespaceQuery,
+	pQuery *common.PaginationQuery) (*DeploymentList, error) {
 	log.Printf("Getting list of all deployments in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -58,13 +59,13 @@ func GetDeploymentList(client client.Interface, nsQuery *common.NamespaceQuery) 
 		EventList:      common.GetEventListChannel(client, nsQuery, 1),
 	}
 
-	return GetDeploymentListFromChannels(channels)
+	return GetDeploymentListFromChannels(channels, pQuery)
 }
 
 // GetDeploymentList returns a list of all Deployments in the cluster
 // reading required resource list once from the channels.
-func GetDeploymentListFromChannels(channels *common.ResourceChannels) (
-	*DeploymentList, error) {
+func GetDeploymentListFromChannels(channels *common.ResourceChannels,
+	pQuery *common.PaginationQuery) (*DeploymentList, error) {
 
 	deployments := <-channels.DeploymentList.List
 	if err := <-channels.DeploymentList.Error; err != nil {
@@ -90,22 +91,27 @@ func GetDeploymentListFromChannels(channels *common.ResourceChannels) (
 		return nil, err
 	}
 
-	return getDeploymentList(deployments.Items, pods.Items, events.Items), nil
+	return CreateDeploymentList(deployments.Items, pods.Items, events.Items, pQuery), nil
 }
 
-func getDeploymentList(deployments []extensions.Deployment, pods []api.Pod,
-	events []api.Event) *DeploymentList {
+// CreateDeploymentList returns a list of all Deployment model objects in the cluster, based on all
+// Kubernetes Deployment API objects.
+func CreateDeploymentList(deployments []extensions.Deployment, pods []api.Pod,
+	events []api.Event, pQuery *common.PaginationQuery) *DeploymentList {
 
 	deploymentList := &DeploymentList{
 		Deployments: make([]Deployment, 0),
 		ListMeta:    common.ListMeta{TotalItems: len(deployments)},
 	}
 
+	deployments = paginate(deployments, pQuery)
+
 	for _, deployment := range deployments {
 
 		matchingPods := common.FilterNamespacedPodsBySelector(pods, deployment.ObjectMeta.Namespace,
 			deployment.Spec.Selector.MatchLabels)
-		podInfo := getPodInfo(&deployment, matchingPods)
+		podInfo := common.GetPodInfo(deployment.Status.Replicas, deployment.Spec.Replicas,
+			matchingPods)
 		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 
 		deploymentList.Deployments = append(deploymentList.Deployments,

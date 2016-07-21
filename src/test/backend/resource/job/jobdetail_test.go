@@ -49,7 +49,7 @@ func TestGetJobDetail(t *testing.T) {
 	}{
 		{
 			"test-namespace", "test-name",
-			[]string{"get", "list", "list", "get", "list", "list"},
+			[]string{"get", "get", "list", "list", "list", "get", "list", "list"},
 			&batch.Job{
 				ObjectMeta: api.ObjectMeta{Name: "test-job"},
 				Spec: batch.JobSpec{
@@ -77,7 +77,8 @@ func TestGetJobDetail(t *testing.T) {
 			podList, eventList)
 		fakeHeapsterClient := FakeHeapsterClient{}
 
-		actual, _ := GetJobDetail(fakeClient, fakeHeapsterClient, c.namespace, c.name)
+		actual, _ := GetJobDetail(fakeClient, fakeHeapsterClient, c.namespace, c.name,
+			common.NoPagination)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {
