@@ -41,6 +41,27 @@ export default class NodeCardController {
   }
 
   /**
+   * Returns true if node is in ready state, false otherwise.
+   * @return {boolean}
+   * @export
+   */
+  isInReadyState() { return this.node.ready === 'True'; }
+
+  /**
+   * Returns true if node is in non-ready state, false otherwise.
+   * @return {boolean}
+   * @export
+   */
+  isInNotReadyState() { return this.node.ready === 'False'; }
+
+  /**
+   * Returns true if node is in unknown state, false otherwise.
+   * @return {boolean}
+   * @export
+   */
+  isInUnknownState() { return this.node.ready === 'Unknown'; }
+
+  /**
    * @return {string}
    * @export
    */
