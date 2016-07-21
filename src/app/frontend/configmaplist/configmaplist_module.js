@@ -17,6 +17,7 @@ import filtersModule from 'common/filters/filters_module';
 import componentsModule from 'common/components/components_module';
 import chromeModule from 'chrome/chrome_module';
 import configMapDetailModule from 'configmapdetail/configmapdetail_module';
+import namespaceModule from 'common/namespace/namespace_module';
 import {configMapCardComponent} from './configmapcard_component';
 import {configMapCardListComponent} from './configmapcardlist_component';
 
@@ -34,6 +35,7 @@ export default angular
           componentsModule.name,
           configMapDetailModule.name,
           chromeModule.name,
+          namespaceModule.name,
         ])
     .config(stateConfig)
     .component('kdConfigMapCardList', configMapCardListComponent)

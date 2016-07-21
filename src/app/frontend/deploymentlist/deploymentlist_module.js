@@ -15,6 +15,7 @@
 import stateConfig from './deploymentlist_stateconfig';
 import filtersModule from 'common/filters/filters_module';
 import componentsModule from 'common/components/components_module';
+import namespaceModule from 'common/namespace/namespace_module';
 import chromeModule from 'chrome/chrome_module';
 import {deploymentCardComponent} from './deploymentcard_component';
 import {deploymentCardListComponent} from './deploymentcardlist_component';
@@ -34,6 +35,7 @@ export default angular
           'ui.router',
           filtersModule.name,
           componentsModule.name,
+          namespaceModule.name,
           chromeModule.name,
           deploymentDetailModule.name,
         ])
