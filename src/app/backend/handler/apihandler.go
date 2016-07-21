@@ -32,9 +32,9 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/node"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/petset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/secret"
@@ -289,13 +289,17 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 			Writes(namespace.NamespaceDetail{}))
 
 	apiV1Ws.Route(
+		apiV1Ws.GET("/secret").
+			To(apiHandler.handleGetSecretList).
+			Writes(secret.SecretList{}))
+	apiV1Ws.Route(
 		apiV1Ws.GET("/secret/{namespace}").
 			To(apiHandler.handleGetSecretList).
 			Writes(secret.SecretList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/secret").
-			To(apiHandler.handleGetSecretList).
-			Writes(secret.SecretList{}))
+		apiV1Ws.GET("/secret/{namespace}/{name}").
+			To(apiHandler.handleGetSecretDetail).
+			Writes(secret.SecretDetail{}))
 	apiV1Ws.Route(
 		apiV1Ws.POST("/secret").
 			To(apiHandler.handleCreateImagePullSecret).
@@ -922,6 +926,17 @@ func (apiHandler *APIHandler) handleCreateImagePullSecret(request *restful.Reque
 	response.WriteHeaderAndEntity(http.StatusCreated, secret)
 }
 
+func (apiHandler *APIHandler) handleGetSecretDetail(request *restful.Request, response *restful.Response) {
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("name")
+	result, err := secret.GetSecretDetail(apiHandler.client, namespace, name)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
 // Handles get secrets list API call.
 func (apiHandler *APIHandler) handleGetSecretList(request *restful.Request, response *restful.Response) {
 	namespace := parseNamespacePathParameter(request)
@@ -947,8 +962,8 @@ func (apiHandler *APIHandler) handleGetConfigMapList(request *restful.Request, r
 
 func (apiHandler *APIHandler) handleGetConfigMapDetail(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
-	service := request.PathParameter("configmap")
-	result, err := configmap.GetConfigMapDetail(apiHandler.client, namespace, service)
+	name := request.PathParameter("configmap")
+	result, err := configmap.GetConfigMapDetail(apiHandler.client, namespace, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return

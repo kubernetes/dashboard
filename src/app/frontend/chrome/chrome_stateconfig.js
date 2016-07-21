@@ -35,7 +35,7 @@ export default function stateConfig($stateProvider) {
         template: `<div ui-view="${toolbarViewName}"></div>`,
       },
       [actionbarViewName]: {
-        template: `<div ui-view="${actionbarViewName}"></div>`,
+        template: `<div ui-view="${actionbarViewName}" layout="row"></div>`,
       },
     },
   });
