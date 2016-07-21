@@ -21,7 +21,8 @@ export class ResourceCardListPaginationController {
   /**
    * @ngInject
    * @param {!../../pagination/pagination_service.PaginationService} kdPaginationService
-   * @param {!../../resource/resourcedetail.StateParams} $stateParams
+   * @param {!../../../chrome/chrome_state.StateParams|!../../resource/resourcedetail.StateParams}
+   * $stateParams
    * @param {!../../errorhandling/errordialog_service.ErrorDialog} errorDialog
    * @param {!angular.Scope} $scope
    */
@@ -38,7 +39,8 @@ export class ResourceCardListPaginationController {
     this.list;
     /** @private {!../../pagination/pagination_service.PaginationService} */
     this.paginationService_ = kdPaginationService;
-    /** @private {!./../../resource/resourcedetail.StateParams} */
+    /** @private
+     * {!../../../chrome/chrome_state.StateParams|!../../resource/resourcedetail.StateParams} */
     this.stateParams_ = $stateParams;
     /** @export {number} */
     this.rowsLimit;
