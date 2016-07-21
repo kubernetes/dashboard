@@ -65,7 +65,7 @@ export const podInfoComponent = {
 const i18n = {
   /** @export {string} @desc Subtitle 'Details' at the top of the resource details column at the
      pod detail view.*/
-  MSG_POD_DETAIL_DETAILS_SUBTITLE: goog.getMsg('Details'),
+  MSG_POD_DETAIL_DETAILS_SUBTITLE: goog.getMsg('Pod'),
   /** @export {string} @desc Label 'Name' for the pod name in details part (left) of the pod
      details view.*/
   MSG_POD_DETAIL_NAME_LABEL: goog.getMsg('Name'),
@@ -83,9 +83,6 @@ const i18n = {
   /** @export {string} @desc Label 'Status' for the pod status in details part (left) of the pod
      details view.*/
   MSG_POD_DETAIL_STATUS_LABEL: goog.getMsg('Status'),
-  /** @export {string} @desc Label 'Images' for the pod container images in details part (left) of
-     the pod details view.*/
-  MSG_POD_DETAIL_IMAGES_LABEL: goog.getMsg('Images'),
   /** @export {string} @desc Subtitle 'Network' at the top of the column about network
      connectivity (right) at the pod detail view.*/
   MSG_POD_DETAIL_NETWORK_SUBTITLE: goog.getMsg('Network'),
