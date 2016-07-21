@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package pod
+package common
 
 import (
 	"reflect"
@@ -102,8 +102,8 @@ func TestCreateResponse(t *testing.T) {
 			[]string{"a", "b"},
 			map[string]PodMetrics{
 				"a": {
-					CpuUsage: &cpuUsage1,
-					CpuUsageHistory: []MetricResult{
+					CPUUsage: &cpuUsage1,
+					CPUUsageHistory: []MetricResult{
 						{Value: cpuUsage1},
 					},
 					MemoryUsage: &memoryUsage,
@@ -111,8 +111,8 @@ func TestCreateResponse(t *testing.T) {
 						{Value: memoryUsage},
 					},
 				}, "b": {
-					CpuUsage: &cpuUsage2,
-					CpuUsageHistory: []MetricResult{
+					CPUUsage: &cpuUsage2,
+					CPUUsageHistory: []MetricResult{
 						{Value: cpuUsage2},
 					},
 					MemoryUsage: &memoryUsage,
