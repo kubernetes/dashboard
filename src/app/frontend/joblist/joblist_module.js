@@ -15,6 +15,7 @@
 import stateConfig from './joblist_stateconfig';
 import filtersModule from 'common/filters/filters_module';
 import componentsModule from 'common/components/components_module';
+import namespaceModule from 'common/namespace/namespace_module';
 import {jobCardComponent} from './jobcard_component';
 import {jobCardListComponent} from './jobcardlist_component';
 import jobDetailModule from 'jobdetail/jobdetail_module';
@@ -34,6 +35,7 @@ export default angular
           filtersModule.name,
           componentsModule.name,
           jobDetailModule.name,
+          namespaceModule.name,
         ])
     .config(stateConfig)
     .component('kdJobCardList', jobCardListComponent)

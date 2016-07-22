@@ -20,6 +20,9 @@ limitations under the License.
     <kd-resource-card-header-column size="medium" grow="4">
       {{::$ctrl.i18n.MSG_POD_LIST_NAME_LABEL}}
     </kd-resource-card-header-column>
+    <kd-resource-card-header-column grow="2" ng-if="$ctrl.isMultipleNamespaces">
+      {{::$ctrl.i18n.MSG_POD_LIST_NAMESPACE_LABEL}}
+    </kd-resource-card-header-column>
     <kd-resource-card-header-column grow="nogrow">{{::$ctrl.i18n.MSG_POD_LIST_STATUS_LABEL}}
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small" grow="nogrow">
@@ -62,6 +65,12 @@ limitations under the License.
             <kd-middle-ellipsis display-string="{{::pod.objectMeta.name}}">
             </kd-middle-ellipsis>
           </a>
+        </div>
+      </kd-resource-card-column>
+      <kd-resource-card-column ng-if="$ctrl.isMultipleNamespaces">
+        <div>
+          <kd-middle-ellipsis display-string="{{::pod.objectMeta.namespace}}">
+          </kd-middle-ellipsis>
         </div>
       </kd-resource-card-column>
       <kd-resource-card-column>{{::pod.podPhase}}</kd-resource-card-column>

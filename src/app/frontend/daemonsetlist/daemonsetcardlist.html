@@ -19,6 +19,9 @@ limitations under the License.
     <kd-resource-card-header-column>
       {{::$ctrl.i18n.MSG_DAEMON_SET_LIST_NAME_LABEL}}
     </kd-resource-card-header-column>
+    <kd-resource-card-header-column ng-if="$ctrl.isMultipleNamespaces">
+      {{::$ctrl.i18n.MSG_DAEMON_SET_LIST_NAMESPACE_LABEL}}
+    </kd-resource-card-header-column>
     <kd-resource-card-header-column>
       {{::$ctrl.i18n.MSG_DAEMON_SET_LIST_LABELS_LABEL}}
     </kd-resource-card-header-column>
@@ -56,6 +59,12 @@ limitations under the License.
         <a ng-href="{{::$ctrl.getDaemonSetDetailHref(daemonSet)}}">
           <kd-middle-ellipsis display-string="{{::daemonSet.objectMeta.name}}"></kd-middle-ellipsis>
         </a>
+      </kd-resource-card-column>
+      <kd-resource-card-column ng-if="$ctrl.isMultipleNamespaces">
+        <div>
+          <kd-middle-ellipsis display-string="{{::$ctrl.daemonSet.objectMeta.namespace}}">
+          </kd-middle-ellipsis>
+        </div>
       </kd-resource-card-column>
       <kd-resource-card-column>
         <kd-labels labels="::daemonSet.objectMeta.labels"></kd-labels>
