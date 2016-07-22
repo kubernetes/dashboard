@@ -20,7 +20,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
-	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/batch"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 )
@@ -55,7 +54,7 @@ type JobDetail struct {
 
 // GetJobDetail gets job details.
 func GetJobDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	namespace, name string) (*JobDetail, error) {
+	namespace, name string, pQuery *common.PaginationQuery) (*JobDetail, error) {
 
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 
@@ -65,41 +64,36 @@ func GetJobDetail(client k8sClient.Interface, heapsterClient client.HeapsterClie
 		return nil, err
 	}
 
-	channels := &common.ResourceChannels{
-		PodList: common.GetPodListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
-	}
-
-	pods := <-channels.PodList.List
-	if err := <-channels.PodList.Error; err != nil {
-		return nil, err
-	}
-
-	events, err := GetJobEvents(client, jobData.Namespace, jobData.Name)
+	podList, err := GetJobPods(client, heapsterClient, pQuery, name, namespace)
 	if err != nil {
 		return nil, err
 	}
 
-	job := getJobDetail(jobData, heapsterClient, events, pods.Items)
+	podInfo, err := getJobPodInfo(client, jobData)
+	if err != nil {
+		return nil, err
+	}
+
+	eventList, err := GetJobEvents(client, jobData.Namespace, jobData.Name)
+	if err != nil {
+		return nil, err
+	}
+
+	job := getJobDetail(jobData, heapsterClient, *eventList, *podList, *podInfo)
 	return &job, nil
 }
 
 func getJobDetail(job *batch.Job, heapsterClient client.HeapsterClient,
-	events *common.EventList, pods []api.Pod) JobDetail {
-
-	matchingPods := common.FilterNamespacedPodsBySelector(pods, job.ObjectMeta.Namespace,
-		job.Spec.Selector.MatchLabels)
-
-	podInfo := getPodInfo(job, matchingPods)
+	eventList common.EventList, podList pod.PodList, podInfo common.PodInfo) JobDetail {
 
 	return JobDetail{
 		ObjectMeta:      common.NewObjectMeta(job.ObjectMeta),
 		TypeMeta:        common.NewTypeMeta(common.ResourceKindJob),
 		ContainerImages: common.GetContainerImages(&job.Spec.Template.Spec),
 		PodInfo:         podInfo,
-		// TODO(floreks) Add pagination support
-		PodList:     pod.CreatePodList(matchingPods, common.NoPagination, heapsterClient),
-		EventList:   *events,
-		Parallelism: job.Spec.Parallelism,
-		Completions: job.Spec.Completions,
+		PodList:         podList,
+		EventList:       eventList,
+		Parallelism:     job.Spec.Parallelism,
+		Completions:     job.Spec.Completions,
 	}
 }

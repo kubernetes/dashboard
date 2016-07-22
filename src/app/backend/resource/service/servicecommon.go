@@ -48,8 +48,8 @@ func ToServiceDetail(service *api.Service) ServiceDetail {
 
 // CreateServiceList returns paginated service list based on given service array
 // and pagination query.
-func CreateServiceList(services []api.Service, pQuery *common.PaginationQuery) ServiceList {
-	serviceList := ServiceList{
+func CreateServiceList(services []api.Service, pQuery *common.PaginationQuery) *ServiceList {
+	serviceList := &ServiceList{
 		Services: make([]Service, 0),
 		ListMeta: common.ListMeta{TotalItems: len(services)},
 	}

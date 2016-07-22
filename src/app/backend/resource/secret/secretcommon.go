@@ -12,22 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package deployment
+package secret
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 
-	"k8s.io/kubernetes/pkg/apis/extensions"
+	"k8s.io/kubernetes/pkg/api"
 )
 
-func paginate(deployments []extensions.Deployment,
-	pQuery *common.PaginationQuery) []extensions.Deployment {
-	startIndex, endIndex := pQuery.GetPaginationSettings(len(deployments))
+func paginate(secrets []api.Secret, pQuery *common.PaginationQuery) []api.Secret {
+	startIndex, endIndex := pQuery.GetPaginationSettings(len(secrets))
 
 	// Return all items if provided settings do not meet requirements
-	if !pQuery.CanPaginate(len(deployments), startIndex) {
-		return deployments
+	if !pQuery.CanPaginate(len(secrets), startIndex) {
+		return secrets
 	}
 
-	return deployments[startIndex:endIndex]
+	return secrets[startIndex:endIndex]
 }

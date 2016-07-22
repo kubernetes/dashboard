@@ -177,7 +177,7 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 		channels.EventList.List <- &api.EventList{}
 		channels.EventList.Error <- nil
 
-		actual, err := GetDeploymentListFromChannels(channels)
+		actual, err := GetDeploymentListFromChannels(channels, common.NoPagination)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetDeploymentListFromChannels() ==\n          %#v\nExpected: %#v", actual, c.expected)
 		}

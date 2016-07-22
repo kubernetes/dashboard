@@ -16,11 +16,16 @@ package job
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/batch"
 )
 
-// getPodInfo returns aggregate information about job pods.
-func getPodInfo(resource *batch.Job, pods []api.Pod) common.PodInfo {
-	return common.GetPodInfo(resource.Status.Active, *resource.Spec.Completions, pods)
+func paginate(jobs []batch.Job, pQuery *common.PaginationQuery) []batch.Job {
+	startIndex, endIndex := pQuery.GetPaginationSettings(len(jobs))
+
+	// Return all items if provided settings do not meet requirements
+	if !pQuery.CanPaginate(len(jobs), startIndex) {
+		return jobs
+	}
+
+	return jobs[startIndex:endIndex]
 }

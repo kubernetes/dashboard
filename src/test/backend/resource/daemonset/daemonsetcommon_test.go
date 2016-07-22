@@ -15,51 +15,14 @@
 package daemonset
 
 import (
-	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
 	"k8s.io/kubernetes/pkg/labels"
 )
-
-func TestGetDaemonSetPodInfo(t *testing.T) {
-	cases := []struct {
-		daemonset *extensions.DaemonSet
-		pods      []api.Pod
-		expected  common.PodInfo
-	}{
-		{
-			&extensions.DaemonSet{
-				Status: extensions.DaemonSetStatus{},
-				Spec:   extensions.DaemonSetSpec{},
-			},
-			[]api.Pod{
-				{
-					Status: api.PodStatus{
-						Phase: api.PodRunning,
-					},
-				},
-			},
-			common.PodInfo{
-				Running: 1,
-				Pending: 0,
-				Failed:  0,
-			},
-		},
-	}
-
-	for _, c := range cases {
-		actual := getDaemonSetPodInfo(c.daemonset, c.pods)
-		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("getReplicaSetPodInfo(%#v, %#v) == \n%#v\nexpected \n%#v\n",
-				c.daemonset, c.pods, actual, c.expected)
-		}
-	}
-}
 
 func TestGetServicesForDeletionforDS(t *testing.T) {
 	cases := []struct {

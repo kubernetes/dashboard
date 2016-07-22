@@ -24,48 +24,6 @@ import (
 	"k8s.io/kubernetes/pkg/apis/extensions"
 )
 
-func TestGetMatchingServicesforDS(t *testing.T) {
-	cases := []struct {
-		services  []api.Service
-		DaemonSet *extensions.DaemonSet
-		expected  []api.Service
-	}{
-		{nil, nil, nil},
-		{
-			[]api.Service{{Spec: api.ServiceSpec{Selector: map[string]string{"app": "my-name"}}}},
-			&extensions.DaemonSet{
-				Spec: extensions.DaemonSetSpec{
-					Selector: &unversioned.LabelSelector{
-						MatchLabels: map[string]string{"app": "my-name"},
-					},
-				},
-			},
-			[]api.Service{{Spec: api.ServiceSpec{Selector: map[string]string{"app": "my-name"}}}},
-		},
-		{
-			[]api.Service{
-				{Spec: api.ServiceSpec{Selector: map[string]string{"app": "my-name"}}},
-				{Spec: api.ServiceSpec{Selector: map[string]string{"app": "my-name", "ver": "2"}}},
-			},
-			&extensions.DaemonSet{
-				Spec: extensions.DaemonSetSpec{
-					Selector: &unversioned.LabelSelector{
-						MatchLabels: map[string]string{"app": "my-name"},
-					},
-				},
-			},
-			[]api.Service{{Spec: api.ServiceSpec{Selector: map[string]string{"app": "my-name"}}}},
-		},
-	}
-	for _, c := range cases {
-		actual := getMatchingServicesforDS(c.services, c.DaemonSet)
-		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("getMatchingServices(%+v, %+v) == %+v, expected %+v",
-				c.services, c.DaemonSet, actual, c.expected)
-		}
-	}
-}
-
 func TestGetDaemonSetList(t *testing.T) {
 	events := []api.Event{}
 
@@ -211,10 +169,11 @@ func TestGetDaemonSetList(t *testing.T) {
 						TypeMeta:        common.TypeMeta{Kind: common.ResourceKindDaemonSet},
 						ContainerImages: []string{"my-container-image-1"},
 						Pods: common.PodInfo{
-							Failed:   2,
-							Pending:  1,
-							Running:  1,
-							Warnings: []common.Event{},
+							Failed:    2,
+							Pending:   1,
+							Running:   1,
+							Succeeded: 1,
+							Warnings:  []common.Event{},
 						},
 					}, {
 						ObjectMeta: common.ObjectMeta{
@@ -232,10 +191,10 @@ func TestGetDaemonSetList(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := getDaemonSetList(c.daemonSets, c.pods, events)
+		actual := CreateDaemonSetList(c.daemonSets, c.pods, events, common.NoPagination)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("getDaemonSetList(%#v, %#v) == \n%#v\nexpected \n%#v\n",
-				c.daemonSets, c.services, actual, c.expected)
+			t.Errorf("CreateDaemonSetList(%#v, %#v, %#v) == \n%#v\nexpected \n%#v\n",
+				c.daemonSets, c.services, events, actual, c.expected)
 		}
 	}
 }

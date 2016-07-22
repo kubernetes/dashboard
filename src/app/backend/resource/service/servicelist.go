@@ -56,37 +56,24 @@ type ServiceList struct {
 }
 
 // GetServiceList returns a list of all services in the cluster.
-func GetServiceList(client client.Interface, nsQuery *common.NamespaceQuery) (*ServiceList, error) {
+func GetServiceList(client client.Interface, nsQuery *common.NamespaceQuery,
+	pQuery *common.PaginationQuery) (*ServiceList, error) {
 	log.Printf("Getting list of all services in the cluster")
 
 	channels := &common.ResourceChannels{
 		ServiceList: common.GetServiceListChannel(client, nsQuery, 1),
 	}
 
-	serviceList, err := GetServiceListFromChannels(channels)
-
-	if err != nil {
-		return nil, err
-	}
-
-	return serviceList, nil
+	return GetServiceListFromChannels(channels, pQuery)
 }
 
 // GetServiceListFromChannels returns a list of all services in the cluster.
-func GetServiceListFromChannels(channels *common.ResourceChannels) (*ServiceList, error) {
+func GetServiceListFromChannels(channels *common.ResourceChannels,
+	pQuery *common.PaginationQuery) (*ServiceList, error) {
 	services := <-channels.ServiceList.List
 	if err := <-channels.ServiceList.Error; err != nil {
 		return nil, err
 	}
 
-	serviceList := &ServiceList{
-		Services: make([]Service, 0),
-		ListMeta: common.ListMeta{TotalItems: len(services.Items)},
-	}
-
-	for _, service := range services.Items {
-		serviceList.Services = append(serviceList.Services, ToService(&service))
-	}
-
-	return serviceList, nil
+	return CreateServiceList(services.Items, pQuery), nil
 }

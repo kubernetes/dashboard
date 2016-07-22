@@ -49,7 +49,8 @@ type PetSet struct {
 }
 
 // GetPetSetList returns a list of all Pet Sets in the cluster.
-func GetPetSetList(client *client.Client, nsQuery *common.NamespaceQuery) (*PetSetList, error) {
+func GetPetSetList(client *client.Client, nsQuery *common.NamespaceQuery,
+	pQuery *common.PaginationQuery) (*PetSetList, error) {
 	log.Printf("Getting list of all pet sets in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -58,12 +59,12 @@ func GetPetSetList(client *client.Client, nsQuery *common.NamespaceQuery) (*PetS
 		EventList:  common.GetEventListChannel(client, nsQuery, 1),
 	}
 
-	return GetPetSetListFromChannels(channels)
+	return GetPetSetListFromChannels(channels, pQuery)
 }
 
-// GetPetSetListFromChannels returns a list of all Pet Sets in the cluster reading required resource
-// list once from the channels.
-func GetPetSetListFromChannels(channels *common.ResourceChannels) (
+// GetPetSetListFromChannels returns a list of all Pet Sets in the cluster
+// reading required resource list once from the channels.
+func GetPetSetListFromChannels(channels *common.ResourceChannels, pQuery *common.PaginationQuery) (
 	*PetSetList, error) {
 
 	petSets := <-channels.PetSetList.List
@@ -90,16 +91,20 @@ func GetPetSetListFromChannels(channels *common.ResourceChannels) (
 		return nil, err
 	}
 
-	return ToPetSetList(petSets.Items, pods.Items, events.Items), nil
+	return CreatePetSetList(petSets.Items, pods.Items, events.Items, pQuery), nil
 }
 
-// ToPetSetList transforms array of pet sets into PetSetList object returned by API.
-func ToPetSetList(petSets []apps.PetSet, pods []api.Pod, events []api.Event) *PetSetList {
+// CreatePetSetList creates paginated list of Pet Set model
+// objects based on Kubernetes Pet Set objects array and related resources arrays.
+func CreatePetSetList(petSets []apps.PetSet, pods []api.Pod, events []api.Event,
+	pQuery *common.PaginationQuery) *PetSetList {
 
 	petSetList := &PetSetList{
 		PetSets:  make([]PetSet, 0),
 		ListMeta: common.ListMeta{TotalItems: len(petSets)},
 	}
+
+	petSets = paginate(petSets, pQuery)
 
 	for _, petSet := range petSets {
 		matchingPods := common.FilterNamespacedPodsBySelector(pods, petSet.ObjectMeta.Namespace,
