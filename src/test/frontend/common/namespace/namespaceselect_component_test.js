@@ -21,6 +21,8 @@ describe('Namespace select component ', () => {
   let scope;
   /** @type {!common/namespace/namespaceselect_component.NamespaceSelectController} */
   let ctrl;
+  /** @type {!common/namespace/namespace_service.NamespaceService} */
+  let service;
   /** @type {!angular.$httpBackend} */
   let httpBackend;
   /** @type {!ui.router.$state} */
@@ -39,12 +41,14 @@ describe('Namespace select component ', () => {
     angular.mock.module(fakeModule.name);
     angular.mock.module(chromeModule.name);
 
-    angular.mock.inject(($componentController, $rootScope, $httpBackend, $state) => {
-      scope = $rootScope;
-      ctrl = $componentController('kdNamespaceSelect', {$scope: $rootScope});
-      httpBackend = $httpBackend;
-      state = $state;
-    });
+    angular.mock.inject(
+        ($componentController, $rootScope, $httpBackend, $state, kdNamespaceService) => {
+          scope = $rootScope;
+          ctrl = $componentController('kdNamespaceSelect', {$scope: $rootScope});
+          service = kdNamespaceService;
+          httpBackend = $httpBackend;
+          state = $state;
+        });
   });
 
   it('should initialize from non-exisitng namespace and watch for state changes', () => {
@@ -105,5 +109,16 @@ describe('Namespace select component ', () => {
     expect(ctrl.formatNamespace()).toBe('All user namespaces');
     ctrl.selectedNamespace = 'foo';
     expect(ctrl.formatNamespace('foo')).toBe('foo');
+  });
+
+  it('should change this.isMultipleNamespaces depending on namespaces selected', () => {
+    ctrl.$onInit();
+
+    expect(service.getMultipleNamespacesSelected()).toBe(true);
+
+    scope.$broadcast('$stateChangeSuccess', {}, {namespace: 'a'});
+    scope.$digest();
+    expect(ctrl.selectedNamespace).toBe('a');
+    expect(service.getMultipleNamespacesSelected()).toBe(false);
   });
 });
