@@ -20,14 +20,28 @@ describe('Pod card list controller', () => {
    * @type {!podlist/podcardlist_component.PodCardListController}
    */
   let ctrl;
+  /**
+   * @type {!./../common/namespace/namespace_service.NamespaceService}
+   */
+  let data;
 
   beforeEach(() => {
     angular.mock.module(podsListModule.name);
     angular.mock.module(podDetailModule.name);
 
-    angular.mock.inject(($componentController, $rootScope) => {
-      ctrl = $componentController('kdPodCardList', {$scope: $rootScope}, {});
+    angular.mock.inject(($componentController, $rootScope, kdNamespaceService) => {
+      /** @type {!./../common/namespace/namespace_service.NamespaceService} */
+      data = kdNamespaceService;
+      /** @type {!podCardListController} */
+      ctrl = $componentController(
+          'kdPodCardList', {$scope: $rootScope, kdNamespaceService_: data}, {});
     });
+  });
+
+  it('should instantiate the controller properly', () => { expect(ctrl).not.toBeUndefined(); });
+
+  it('should return the value from Namespace service', () => {
+    expect(ctrl.areMultipleNamespacesSelected()).toBe(data.areMultipleNamespacesSelected());
   });
 
   it('should execute logs href callback function', () => {

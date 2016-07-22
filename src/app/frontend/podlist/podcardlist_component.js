@@ -24,8 +24,9 @@ export class PodCardListController {
    * @ngInject
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
+   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
    */
-  constructor($state, $interpolate) {
+  constructor($state, $interpolate, kdNamespaceService) {
     /**
      * List of pods. Initialized from the scope.
      * @export {!backendApi.PodList}
@@ -41,8 +42,19 @@ export class PodCardListController {
     /** @private {!angular.$interpolate} */
     this.interpolate_ = $interpolate;
 
+    /** @private {!./../common/namespace/namespace_service.NamespaceService} */
+    this.kdNamespaceService_ = kdNamespaceService;
+
     /** @export */
     this.i18n = i18n;
+  }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  areMultipleNamespacesSelected() {
+    return this.kdNamespaceService_.areMultipleNamespacesSelected();
   }
 
   /**
@@ -166,6 +178,9 @@ const i18n = {
   /** @export {string} @desc Label 'Name' which appears as a column label in the table of
    pods (pod list view). */
   MSG_POD_LIST_NAME_LABEL: goog.getMsg('Name'),
+  /** @export {string} @desc Label 'Namespace' which appears as a column label in the
+   table of pods (pod list view). */
+  MSG_POD_LIST_NAMESPACE_LABEL: goog.getMsg('Namespace'),
   /** @export {string} @desc Label 'Status' which appears as a column label in the table of
    pods (pod list view). */
   MSG_POD_LIST_STATUS_LABEL: goog.getMsg('Status'),
