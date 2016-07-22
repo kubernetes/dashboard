@@ -19,6 +19,9 @@ limitations under the License.
     <kd-resource-card-header-column>
       {{::$ctrl.i18n.MSG_DAEMON_SET_LIST_NAME_LABEL}}
     </kd-resource-card-header-column>
+    <kd-resource-card-header-column ng-if="$ctrl.isMultipleNamespaces">
+      {{::$ctrl.i18n.MSG_DAEMON_SET_LIST_NAMESPACE_LABEL}}
+    </kd-resource-card-header-column>
     <kd-resource-card-header-column>
       {{::$ctrl.i18n.MSG_DAEMON_SET_LIST_LABELS_LABEL}}
     </kd-resource-card-header-column>

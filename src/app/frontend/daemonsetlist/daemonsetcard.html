@@ -35,6 +35,12 @@ limitations under the License.
         </kd-middle-ellipsis>
       </a>
     </kd-resource-card-column>
+    <kd-resource-card-column ng-if="$ctrl.isMultipleNamespaces">
+      <div>
+        <kd-middle-ellipsis display-string="{{::$ctrl.daemonSet.objectMeta.namespace}}">
+        </kd-middle-ellipsis>
+      </div>
+    </kd-resource-card-column>
     <kd-resource-card-column>
       <kd-labels labels="::$ctrl.daemonSet.objectMeta.labels"></kd-labels>
     </kd-resource-card-column>

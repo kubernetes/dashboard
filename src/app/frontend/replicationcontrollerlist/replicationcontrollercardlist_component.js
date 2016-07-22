@@ -16,7 +16,17 @@
  * @final
  */
 class RCCardListController {
-  constructor() {
+  /**
+   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
+   * @ngInject
+   */
+  constructor(kdNamespaceService) {
+    /** @private {!./../common/namespace/namespace_service.NamespaceService} */
+    this.kdNamespaceService_ = kdNamespaceService;
+
+    /** @export {boolean} */
+    this.isMultipleNamespaces = this.kdNamespaceService_.areMultipleNamespacesSelected();
+
     /** @export */
     this.i18n = i18n;
   }
@@ -39,6 +49,9 @@ const i18n = {
   /** @export {string} @desc Label 'Name' which appears as a column label in the table of
       replication controllers (RC list view). */
   MSG_RC_LIST_NAME_LABEL: goog.getMsg('Name'),
+  /** @export {string} @desc Label 'Namespace' which appears as a column label in the
+      table of replication controllers (RC list view). */
+  MSG_RC_LIST_NAMESPACE_LABEL: goog.getMsg('Namespace'),
   /** @export {string} @desc Label 'Labels' which appears as a column label in the table of
       replication controllers (RC list view). */
   MSG_RC_LIST_LABELS_LABEL: goog.getMsg('Labels'),

@@ -24,9 +24,10 @@ export class DaemonSetCardController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
+   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
    * @ngInject
    */
-  constructor($state, $interpolate) {
+  constructor($state, $interpolate, kdNamespaceService) {
     /** @export {!backendApi.DaemonSet} - Initialized from binding. */
     this.daemonSet;
 
@@ -35,6 +36,12 @@ export class DaemonSetCardController {
 
     /** @private {!angular.$interpolate} */
     this.interpolate_ = $interpolate;
+
+    /** @private {!./../common/namespace/namespace_service.NamespaceService} */
+    this.kdNamespaceService_ = kdNamespaceService;
+
+    /** @export {boolean} */
+    this.isMultipleNamespaces = this.kdNamespaceService_.areMultipleNamespacesSelected();
 
     /** @export */
     this.i18n = i18n;
