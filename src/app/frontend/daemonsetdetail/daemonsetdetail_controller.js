@@ -36,6 +36,9 @@ const i18n = {
   /** @export {string} @desc Title 'Pods' for the pods information section on the daemon set detail
      page. */
   MSG_DAEMON_SET_DETAIL_PODS_TITLE: goog.getMsg('Pods'),
+  /** @export {string} @desc Title 'Services' for the services information section on the daemon set
+   *  detail page. */
+  MSG_DAEMON_SET_DETAIL_SERVICES_TITLE: goog.getMsg('Services'),
   /** @export {string} @desc Label 'Events' on the right navigation tab on the daemon set detail
      page. */
   MSG_DAEMON_SET_DETAIL_EVENTS_LABEL: goog.getMsg('Events'),

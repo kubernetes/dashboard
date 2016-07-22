@@ -17,12 +17,14 @@ package service
 import (
 	"log"
 
-	"k8s.io/kubernetes/pkg/api"
-	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
-
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+
+	"k8s.io/kubernetes/pkg/api"
+	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
+	"k8s.io/kubernetes/pkg/fields"
+	"k8s.io/kubernetes/pkg/labels"
 )
 
 // Service is a representation of a service.
@@ -54,7 +56,7 @@ type ServiceDetail struct {
 
 // GetServiceDetail gets service details.
 func GetServiceDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	namespace, name string) (*ServiceDetail, error) {
+	namespace, name string, pQuery *common.PaginationQuery) (*ServiceDetail, error) {
 
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 
@@ -64,7 +66,7 @@ func GetServiceDetail(client k8sClient.Interface, heapsterClient client.Heapster
 		return nil, err
 	}
 
-	podList, err := GetServicePods(client, heapsterClient, namespace, serviceData.Spec.Selector)
+	podList, err := GetServicePods(client, heapsterClient, namespace, name, pQuery)
 	if err != nil {
 		return nil, err
 	}
@@ -76,11 +78,23 @@ func GetServiceDetail(client k8sClient.Interface, heapsterClient client.Heapster
 }
 
 // GetServicePods gets list of pods targeted by given label selector in given namespace.
-func GetServicePods(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	namespace string, serviceSelector map[string]string) (*pod.PodList, error) {
+func GetServicePods(client k8sClient.Interface, heapsterClient client.HeapsterClient, namespace,
+	name string, pQuery *common.PaginationQuery) (*pod.PodList, error) {
 
+	service, err := client.Services(namespace).Get(name)
+	if err != nil {
+		return nil, err
+	}
+
+	labelSelector := labels.SelectorFromSet(service.Spec.Selector)
 	channels := &common.ResourceChannels{
-		PodList: common.GetPodListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
+		PodList: common.GetPodListChannelWithOptions(client,
+			common.NewSameNamespaceQuery(namespace),
+			api.ListOptions{
+				LabelSelector: labelSelector,
+				FieldSelector: fields.Everything(),
+			},
+			1),
 	}
 
 	apiPodList := <-channels.PodList.List
@@ -88,8 +102,6 @@ func GetServicePods(client k8sClient.Interface, heapsterClient client.HeapsterCl
 		return nil, err
 	}
 
-	apiPods := common.FilterNamespacedPodsBySelector(apiPodList.Items, namespace, serviceSelector)
-	podList := pod.CreatePodList(apiPods, common.NoPagination, heapsterClient)
-
+	podList := pod.CreatePodList(apiPodList.Items, pQuery, heapsterClient)
 	return &podList, nil
 }

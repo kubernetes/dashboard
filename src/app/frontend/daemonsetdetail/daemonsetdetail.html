@@ -20,10 +20,16 @@ limitations under the License.
       <md-tab label="{{::ctrl.i18n.MSG_DAEMON_SET_DETAIL_OVERVIEW_LABEL}}">
         <kd-daemon-set-info daemon-set="::ctrl.daemonSetDetail"></kd-daemon-set-info>
         <kd-content-card>
+          <kd-title>{{::ctrl.i18n.MSG_DAEMON_SET_DETAIL_SERVICES_TITLE}}</kd-title>
+          <kd-content>
+            <kd-service-card-list service-list="::ctrl.daemonSetDetail.serviceList">
+            </kd-service-card-list>
+          </kd-content>
+        </kd-content-card>
+        <kd-content-card>
           <kd-title>{{::ctrl.i18n.MSG_DAEMON_SET_DETAIL_PODS_TITLE}}</kd-title>
           <kd-content>
-            <kd-pod-card-list pod-list="::ctrl.daemonSetDetail.podList"
-                              logs-href-fn="::ctrl.getPodLogsHref(pod)">
+            <kd-pod-card-list pod-list="::ctrl.daemonSetDetail.podList">
             </kd-pod-card-list>
           </kd-content>
         </kd-content-card>

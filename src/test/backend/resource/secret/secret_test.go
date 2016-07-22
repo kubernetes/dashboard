@@ -40,13 +40,6 @@ var k8SecretList = &api.SecretList{
 				CreationTimestamp: unversioned.Unix(111, 222),
 			},
 		},
-		{
-			ObjectMeta: api.ObjectMeta{
-				Name:              "system1",
-				Namespace:         "kube-system",
-				CreationTimestamp: unversioned.Unix(111, 222),
-			},
-		},
 	},
 }
 
@@ -84,7 +77,7 @@ func TestNewSecretListCreation(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := NewSecretList(c.k8sRs, c.namespace)
+		actual := NewSecretList(c.k8sRs.Items, common.NoPagination)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("NewSecretList() ==\n          %#v\nExpected: %#v", actual, c.expected)
 		}

@@ -177,7 +177,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 		channels.EventList.List <- &api.EventList{}
 		channels.EventList.Error <- nil
 
-		actual, err := GetJobListFromChannels(channels)
+		actual, err := GetJobListFromChannels(channels, common.NoPagination)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetJobListFromChannels() ==\n          %#v\nExpected: %#v", actual, c.expected)
 		}

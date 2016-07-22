@@ -12,22 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package deployment
+package configmap
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-
-	"k8s.io/kubernetes/pkg/apis/extensions"
+	"k8s.io/kubernetes/pkg/api"
 )
 
-func paginate(deployments []extensions.Deployment,
-	pQuery *common.PaginationQuery) []extensions.Deployment {
-	startIndex, endIndex := pQuery.GetPaginationSettings(len(deployments))
+func paginate(configMaps []api.ConfigMap, pQuery *common.PaginationQuery) []api.ConfigMap {
+	startIndex, endIndex := pQuery.GetPaginationSettings(len(configMaps))
 
 	// Return all items if provided settings do not meet requirements
-	if !pQuery.CanPaginate(len(deployments), startIndex) {
-		return deployments
+	if !pQuery.CanPaginate(len(configMaps), startIndex) {
+		return configMaps
 	}
 
-	return deployments[startIndex:endIndex]
+	return configMaps[startIndex:endIndex]
 }

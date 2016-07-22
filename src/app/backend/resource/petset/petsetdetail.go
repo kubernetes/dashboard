@@ -17,7 +17,6 @@ package petset
 import (
 	"log"
 
-	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/apps"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 
@@ -48,7 +47,7 @@ type PetSetDetail struct {
 
 // GetPetSetDetail gets pet set details.
 func GetPetSetDetail(client *k8sClient.Client, heapsterClient client.HeapsterClient,
-	namespace, name string) (*PetSetDetail, error) {
+	namespace, name string, pQuery *common.PaginationQuery) (*PetSetDetail, error) {
 
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 
@@ -58,12 +57,13 @@ func GetPetSetDetail(client *k8sClient.Client, heapsterClient client.HeapsterCli
 		return nil, err
 	}
 
-	channels := &common.ResourceChannels{
-		PodList: common.GetPodListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
+	podList, err := GetPetSetPods(client, heapsterClient, pQuery, name, namespace)
+	if err != nil {
+		return nil, err
 	}
 
-	pods := <-channels.PodList.List
-	if err := <-channels.PodList.Error; err != nil {
+	podInfo, err := getPetSetPodInfo(client, petSetData)
+	if err != nil {
 		return nil, err
 	}
 
@@ -72,26 +72,19 @@ func GetPetSetDetail(client *k8sClient.Client, heapsterClient client.HeapsterCli
 		return nil, err
 	}
 
-	petSet := getPetSetDetail(petSetData, heapsterClient, events, pods.Items)
+	petSet := getPetSetDetail(petSetData, heapsterClient, *events, *podList, *podInfo)
 	return &petSet, nil
 }
 
 func getPetSetDetail(petSet *apps.PetSet, heapsterClient client.HeapsterClient,
-	events *common.EventList, pods []api.Pod) PetSetDetail {
-
-	matchingPods := common.FilterNamespacedPodsByLabelSelector(pods, petSet.ObjectMeta.Namespace,
-		petSet.Spec.Selector)
-
-	podInfo := common.GetPodInfo(int32(petSet.Status.Replicas), int32(petSet.Spec.Replicas),
-		matchingPods)
+	eventList common.EventList, podList pod.PodList, podInfo common.PodInfo) PetSetDetail {
 
 	return PetSetDetail{
 		ObjectMeta:      common.NewObjectMeta(petSet.ObjectMeta),
 		TypeMeta:        common.NewTypeMeta(common.ResourceKindPetSet),
 		ContainerImages: common.GetContainerImages(&petSet.Spec.Template.Spec),
 		PodInfo:         podInfo,
-		// TODO(floreks): add pagination support
-		PodList:   pod.CreatePodList(matchingPods, common.NoPagination, heapsterClient),
-		EventList: *events,
+		PodList:         podList,
+		EventList:       eventList,
 	}
 }

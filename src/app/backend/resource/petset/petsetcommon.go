@@ -12,22 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package deployment
+package petset
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 
-	"k8s.io/kubernetes/pkg/apis/extensions"
+	"k8s.io/kubernetes/pkg/apis/apps"
 )
 
-func paginate(deployments []extensions.Deployment,
-	pQuery *common.PaginationQuery) []extensions.Deployment {
-	startIndex, endIndex := pQuery.GetPaginationSettings(len(deployments))
+func paginate(petSets []apps.PetSet, pQuery *common.PaginationQuery) []apps.PetSet {
+	startIndex, endIndex := pQuery.GetPaginationSettings(len(petSets))
 
 	// Return all items if provided settings do not meet requirements
-	if !pQuery.CanPaginate(len(deployments), startIndex) {
-		return deployments
+	if !pQuery.CanPaginate(len(petSets), startIndex) {
+		return petSets
 	}
 
-	return deployments[startIndex:endIndex]
+	return petSets[startIndex:endIndex]
 }

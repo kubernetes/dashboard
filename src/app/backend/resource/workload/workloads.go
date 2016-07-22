@@ -94,13 +94,16 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels,
 	}()
 
 	go func() {
-		jobList, err := job.GetJobListFromChannels(channels)
+		// TODO(floreks) enable pagination with frontend support
+		jobList, err := job.GetJobListFromChannels(channels, common.NoPagination)
 		errChan <- err
 		jobChan <- jobList
 	}()
 
 	go func() {
-		deploymentList, err := deployment.GetDeploymentListFromChannels(channels)
+		// TODO(floreks) enable pagination with frontend support
+		deploymentList, err := deployment.GetDeploymentListFromChannels(channels,
+			common.NoPagination)
 		errChan <- err
 		deploymentChan <- deploymentList
 	}()
@@ -112,13 +115,15 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels,
 	}()
 
 	go func() {
-		dsList, err := daemonset.GetDaemonSetListFromChannels(channels)
+		// TODO(floreks) enable pagination with frontend support
+		dsList, err := daemonset.GetDaemonSetListFromChannels(channels, common.NoPagination)
 		errChan <- err
 		dsChan <- dsList
 	}()
 
 	go func() {
-		psList, err := petset.GetPetSetListFromChannels(channels)
+		// TODO(floreks) enable pagination with frontend support
+		psList, err := petset.GetPetSetListFromChannels(channels, common.NoPagination)
 		errChan <- err
 		psChan <- psList
 	}()

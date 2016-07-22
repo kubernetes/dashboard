@@ -46,7 +46,8 @@ type DaemonSet struct {
 }
 
 // GetDaemonSetList returns a list of all Daemon Set in the cluster.
-func GetDaemonSetList(client *client.Client, nsQuery *common.NamespaceQuery) (*DaemonSetList, error) {
+func GetDaemonSetList(client *client.Client, nsQuery *common.NamespaceQuery,
+	pQuery *common.PaginationQuery) (*DaemonSetList, error) {
 	log.Printf("Getting list of all daemon sets in the cluster")
 	channels := &common.ResourceChannels{
 		DaemonSetList: common.GetDaemonSetListChannel(client, nsQuery, 1),
@@ -55,13 +56,13 @@ func GetDaemonSetList(client *client.Client, nsQuery *common.NamespaceQuery) (*D
 		EventList:     common.GetEventListChannel(client, nsQuery, 1),
 	}
 
-	return GetDaemonSetListFromChannels(channels)
+	return GetDaemonSetListFromChannels(channels, pQuery)
 }
 
-// GetDaemonSetListFromChannels returns a list of all Daemon Seet in the cluster reading required
-// resource list once from the channels.
-func GetDaemonSetListFromChannels(channels *common.ResourceChannels) (
-	*DaemonSetList, error) {
+// GetDaemonSetListFromChannels returns a list of all Daemon Seet in the cluster
+// reading required resource list once from the channels.
+func GetDaemonSetListFromChannels(channels *common.ResourceChannels,
+	pQuery *common.PaginationQuery) (*DaemonSetList, error) {
 
 	daemonSets := <-channels.DaemonSetList.List
 	if err := <-channels.DaemonSetList.Error; err != nil {
@@ -78,35 +79,28 @@ func GetDaemonSetListFromChannels(channels *common.ResourceChannels) (
 		return nil, err
 	}
 
-	result := getDaemonSetList(daemonSets.Items, pods.Items, events.Items)
-
+	result := CreateDaemonSetList(daemonSets.Items, pods.Items, events.Items, pQuery)
 	return result, nil
 }
 
-// Returns a list of all Daemon Set model objects in the cluster, based on all Kubernetes
-// Daemon Set and Service API objects.
-// The function processes all Daemon Set API objects and finds matching Services for them.
-func getDaemonSetList(daemonSets []extensions.DaemonSet, pods []api.Pod,
-	events []api.Event) *DaemonSetList {
+// CreateDaemonSetList returns a list of all Daemon Set model objects in the cluster, based on all
+// Kubernetes Daemon Set API objects.
+func CreateDaemonSetList(daemonSets []extensions.DaemonSet, pods []api.Pod,
+	events []api.Event, pQuery *common.PaginationQuery) *DaemonSetList {
 
 	daemonSetList := &DaemonSetList{
 		DaemonSets: make([]DaemonSet, 0),
 		ListMeta:   common.ListMeta{TotalItems: len(daemonSets)},
 	}
 
+	daemonSets = paginate(daemonSets, pQuery)
+
 	for _, daemonSet := range daemonSets {
-
-		matchingPods := make([]api.Pod, 0)
-		for _, pod := range pods {
-			if pod.ObjectMeta.Namespace == daemonSet.ObjectMeta.Namespace &&
-				common.IsLabelSelectorMatching(pod.ObjectMeta.Labels, daemonSet.Spec.Selector) {
-				matchingPods = append(matchingPods, pod)
-			}
-		}
-		podInfo := getDaemonSetPodInfo(&daemonSet, matchingPods)
-		podErrors := event.GetPodsEventWarnings(events, matchingPods)
-
-		podInfo.Warnings = podErrors
+		matchingPods := common.FilterNamespacedPodsByLabelSelector(pods, daemonSet.Namespace,
+			daemonSet.Spec.Selector)
+		podInfo := common.GetPodInfo(daemonSet.Status.CurrentNumberScheduled,
+			daemonSet.Status.DesiredNumberScheduled, matchingPods)
+		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 
 		daemonSetList.DaemonSets = append(daemonSetList.DaemonSets,
 			DaemonSet{
@@ -118,19 +112,4 @@ func getDaemonSetList(daemonSets []extensions.DaemonSet, pods []api.Pod,
 	}
 
 	return daemonSetList
-}
-
-// Returns all services that target the same Pods (or subset) as the given Daemon Set.
-func getMatchingServicesforDS(services []api.Service,
-	daemonSet *extensions.DaemonSet) []api.Service {
-
-	var matchingServices []api.Service
-	for _, service := range services {
-		if service.ObjectMeta.Namespace == daemonSet.ObjectMeta.Namespace &&
-			common.IsLabelSelectorMatching(service.Spec.Selector, daemonSet.Spec.Selector) {
-
-			matchingServices = append(matchingServices, service)
-		}
-	}
-	return matchingServices
 }

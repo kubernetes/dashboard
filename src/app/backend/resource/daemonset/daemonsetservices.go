@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package replicationcontroller
+package daemonset
 
 import (
 	client "k8s.io/kubernetes/pkg/client/unversioned"
@@ -21,12 +21,12 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/service"
 )
 
-// GetReplicationControllerServices returns list of services that are related to replication
-// controller targeted by given name.
-func GetReplicationControllerServices(client client.Interface, pQuery *common.PaginationQuery,
-	namespace, rcName string) (*service.ServiceList, error) {
+// GetDaemonSetServices returns list of services that are related to daemon set targeted by given
+// name.
+func GetDaemonSetServices(client client.Interface, pQuery *common.PaginationQuery,
+	namespace, name string) (*service.ServiceList, error) {
 
-	replicationController, err := client.ReplicationControllers(namespace).Get(rcName)
+	daemonSet, err := client.Extensions().DaemonSets(namespace).Get(name)
 	if err != nil {
 		return nil, err
 	}
@@ -42,6 +42,6 @@ func GetReplicationControllerServices(client client.Interface, pQuery *common.Pa
 	}
 
 	matchingServices := common.FilterNamespacedServicesBySelector(services.Items, namespace,
-		replicationController.Spec.Selector)
+		daemonSet.Spec.Selector.MatchLabels)
 	return service.CreateServiceList(matchingServices, pQuery), nil
 }
