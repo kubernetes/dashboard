@@ -13,6 +13,23 @@
 // limitations under the License.
 
 /**
+ * @final
+ */
+class JobListController {
+  /** @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService */
+  constructor(kdNamespaceService) {
+    /** @private {!./../common/namespace/namespace_service.NamespaceService} */
+    this.kdNamespaceService_ = kdNamespaceService;
+
+    /** @export {boolean} */
+    this.isMultipleNamespaces = this.kdNamespaceService_.getMultipleNamespacesSelected();
+
+    /** @export */
+    this.i18n = i18n;
+  }
+}
+
+/**
  * @return {!angular.Component}
  */
 export const jobCardListComponent = {
@@ -22,4 +39,26 @@ export const jobCardListComponent = {
     'jobList': '<',
   },
   templateUrl: 'joblist/jobcardlist.html',
+  controller: JobListController,
+};
+
+const i18n = {
+  /** @export {string} @desc Label 'Name' which appears as a column label in the table of
+   jobs (Job list view). */
+  MSG_JOB_LIST_NAME_LABEL: goog.getMsg('Name'),
+  /** @export {string} @desc Label 'Namespace' which appears as a column label in the
+   table of replication controllers (Job list view). */
+  MSG_JOB_LIST_NAMESPACE_LABEL: goog.getMsg('Namespace'),
+  /** @export {string} @desc Label 'Labels' which appears as a column label in the table of
+   replication controllers (Job list view). */
+  MSG_JOB_LIST_LABELS_LABEL: goog.getMsg('Labels'),
+  /** @export {string} @desc Label 'Pods' which appears as a column label in the table of
+   replication controllers (Job list view). */
+  MSG_JOB_LIST_PODS_LABEL: goog.getMsg('Pods'),
+  /** @export {string} @desc Label 'Age' which appears as a column label in the
+   table of replication controllers (Job list view). */
+  MSG_JOB_LIST_AGE_LABEL: goog.getMsg('Age'),
+  /** @export {string} @desc Label 'Images' which appears as a column label in the
+   table of replication controllers (Job list view). */
+  MSG_JOB_LIST_IMAGES_LABEL: goog.getMsg('Images'),
 };

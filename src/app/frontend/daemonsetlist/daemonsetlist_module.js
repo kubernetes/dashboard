@@ -15,6 +15,7 @@
 import componentsModule from 'common/components/components_module';
 import chromeModule from 'chrome/chrome_module';
 import filtersModule from 'common/filters/filters_module';
+import namespaceModule from 'common/namespace/namespace_module';
 import stateConfig from './daemonsetlist_stateconfig';
 import {daemonSetCardListComponent} from './daemonsetcardlist_component';
 import daemonSetDetailModule from 'daemonsetdetail/daemonsetdetail_module';
@@ -32,6 +33,7 @@ export default angular
           'ngResource',
           'ui.router',
           filtersModule.name,
+          namespaceModule.name,
           componentsModule.name,
           chromeModule.name,
           daemonSetDetailModule.name,

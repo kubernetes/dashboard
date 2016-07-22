@@ -2,8 +2,9 @@ class SecretCardController {
   /**
    * @ngInject
    * @param {!angular.$interpolate} $interpolate
+   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
    */
-  constructor($interpolate) {
+  constructor($interpolate, kdNamespaceService) {
     /**
      * Secret initialised from scope
      * @export {!backendApi.Secret}
@@ -12,6 +13,12 @@ class SecretCardController {
 
     /** @private {!angular.$interpolate} */
     this.interpolate_ = $interpolate;
+
+    /** @private {!./../common/namespace/namespace_service.NamespaceService} */
+    this.kdNamespaceService_ = kdNamespaceService;
+
+    /** @export {boolean} */
+    this.isMultipleNamespaces = this.kdNamespaceService_.getMultipleNamespacesSelected();
   }
 
   /**

@@ -19,6 +19,9 @@ limitations under the License.
     <kd-resource-card-header-column>
       {{::$ctrl.i18n.MSG_SERVICE_LIST_NAME_LABEL}}
     </kd-resource-card-header-column>
+    <kd-resource-card-header-column ng-if="$ctrl.isMultipleNamespaces">
+      {{::$ctrl.i18n.MSG_SERVICE_LIST_NAMESPACE_LABEL}}
+    </kd-resource-card-header-column>
     <kd-resource-card-header-column>
       {{::$ctrl.i18n.MSG_SERVICE_LIST_LABELS_LABEL}}
     </kd-resource-card-header-column>
@@ -54,6 +57,12 @@ limitations under the License.
         <a ng-href="{{::$ctrl.getServiceDetailHref(service)}}">
           <kd-middle-ellipsis display-string="{{::service.objectMeta.name}}"></kd-middle-ellipsis>
         </a>
+      </kd-resource-card-column>
+      <kd-resource-card-column ng-if="$ctrl.isMultipleNamespaces">
+        <div>
+          <kd-middle-ellipsis display-string="{{::service.objectMeta.namespace}}">
+          </kd-middle-ellipsis>
+        </div>
       </kd-resource-card-column>
       <kd-resource-card-column>
         <kd-labels labels="::service.objectMeta.labels"></kd-labels>

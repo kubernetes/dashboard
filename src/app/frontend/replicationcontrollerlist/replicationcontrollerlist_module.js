@@ -15,6 +15,7 @@
 import stateConfig from './replicationcontrollerlist_stateconfig';
 import filtersModule from 'common/filters/filters_module';
 import componentsModule from 'common/components/components_module';
+import namespaceModule from 'common/namespace/namespace_module';
 import {replicationControllerCardComponent} from './replicationcontrollercard_component';
 import {replicationControllerCardMenuComponent} from './replicationcontrollercardmenu_component';
 import {replicationControllerCardListComponent} from './replicationcontrollercardlist_component';
@@ -35,6 +36,7 @@ export default angular
           filtersModule.name,
           componentsModule.name,
           replicationControllerDetailModule.name,
+          namespaceModule.name,
         ])
     .config(stateConfig)
     .component('kdReplicationControllerCardList', replicationControllerCardListComponent)
