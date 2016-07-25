@@ -39,4 +39,14 @@ export default angular
         ])
     .config(stateConfig)
     .component('kdDeploymentCardList', deploymentCardListComponent)
-    .component('kdDeploymentCard', deploymentCardComponent);
+    .component('kdDeploymentCard', deploymentCardComponent)
+    .factory('kdDeploymentListResource', deploymentListResource);
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function deploymentListResource($resource) {
+  return $resource('api/v1/deployment/:namespace');
+}

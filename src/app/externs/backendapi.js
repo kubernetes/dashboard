@@ -525,9 +525,8 @@ backendApi.DaemonSetDetail;
  * @typedef {{
  *  objectMeta: !backendApi.ObjectMeta,
  *  typeMeta: !backendApi.TypeMeta,
- *  labelSelector: !Object<string, string>,
+ *  pods: !backendApi.PodInfo,
  *  containerImages: !Array<string>,
- *  podInfo: !backendApi.PodInfo,
  * }}
  */
 backendApi.DaemonSet;

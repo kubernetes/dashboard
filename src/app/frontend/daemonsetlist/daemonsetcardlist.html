@@ -34,62 +34,19 @@ limitations under the License.
     <kd-resource-card-header-column size="small" grow="nogrow">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
-  <kd-resource-card
-          dir-paginate="daemonSet in $ctrl.daemonSetList.daemonSets | itemsPerPage: default"
-          pagination-id="daemonsets" object-meta="daemonSet.objectMeta"
-          type-meta="daemonSet.typeMeta">
-    <kd-resource-card-status layout="row">
-      <md-icon class="material-icons kd-error" ng-if="::$ctrl.hasWarnings(daemonSet)">
-        error
-        <md-tooltip md-direction="right">{{::$ctrl.i18n.MSG_PODS_ARE_FAILED_TOOLTIP}}</md-tooltip>
-      </md-icon>
-      <md-icon class="material-icons" ng-if="::$ctrl.isPending(daemonSet)">
-        timelapse
-        <md-tooltip md-direction="right">{{::$ctrl.i18n.MSG_PODS_ARE_PENDING_TOOLTIP}}</md-tooltip>
-      </md-icon>
-      <md-icon class="material-icons kd-success" ng-if="::$ctrl.isSuccess(daemonSet)">
-        check_circle
-      </md-icon>
-    </kd-resource-card-status>
-    <kd-resource-card-columns>
-      <kd-resource-card-column>
-        <a ng-href="{{::$ctrl.getDaemonSetDetailHref(daemonSet)}}">
-          <kd-middle-ellipsis display-string="{{::daemonSet.objectMeta.name}}"></kd-middle-ellipsis>
-        </a>
-      </kd-resource-card-column>
-      <kd-resource-card-column>
-        <kd-labels labels="::daemonSet.objectMeta.labels"></kd-labels>
-      </kd-resource-card-column>
-      <kd-resource-card-column>
-      <span class="kd-replicase-card-pods-stat">
-        {{::daemonSet.pods.running}} / {{::daemonSet.pods.desired}}
-      </span>
-      </kd-resource-card-column>
-      <kd-resource-card-column>
-        {{::daemonSet.objectMeta.creationTimestamp | relativeTime}}
-        <md-tooltip>
-          {{::$ctrl.getCreatedAtTooltip(daemonSet.objectMeta.creationTimestamp)}}
-        </md-tooltip>
-      </kd-resource-card-column>
-      <kd-resource-card-column>
-        <div ng-repeat="image in ::daemonSet.containerImages track by $index">
-          <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
-        </div>
-      </kd-resource-card-column>
-      <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
-        <kd-resource-card-menu>
-          <kd-resource-card-delete-menu-item
-                  resource-kind-name="{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_DAEMON_SET_TITLE}}">
-          </kd-resource-card-delete-menu-item>
-          <kd-resource-card-edit-menu-item
-                  resource-kind-name="{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_DAEMON_SET_TITLE}}">
-          </kd-resource-card-edit-menu-item>
-        </kd-resource-card-menu>
-      </kd-resource-card-column>
-    </kd-resource-card-columns>
-  </kd-resource-card>
+  <kd-daemon-set-card ng-if="::$ctrl.daemonSetListResource" pagination-id="daemonsets"
+                      dir-paginate="daemonSet in $ctrl.daemonSetList.daemonSets | itemsPerPage: default"
+                      total-items="::$ctrl.daemonSetList.listMeta.totalItems"
+                      daemon-set="daemonSet">
+  </kd-daemon-set-card>
+
+  <kd-daemon-set-card ng-if="::!$ctrl.daemonSetListResource" pagination-id="daemonsets"
+                      dir-paginate="daemonSet in $ctrl.daemonSetList.daemonSets | itemsPerPage: default"
+                      daemon-set="daemonSet">
+  </kd-daemon-set-card>
   <kd-resource-card-list-footer>
-    <kd-resource-card-list-pagination pagination-id="daemonsets" list="$ctrl.daemonSetList">
+    <kd-resource-card-list-pagination pagination-id="daemonsets" list="$ctrl.daemonSetList"
+                                      list-resource="$ctrl.daemonSetListResource">
     </kd-resource-card-list-pagination>
   </kd-resource-card-list-footer>
 </kd-resource-card-list>

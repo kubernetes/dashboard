@@ -15,7 +15,7 @@ import daemonSetListModule from 'daemonsetlist/daemonsetlist_module';
 
 describe('Daemon Set card', () => {
   /**
-   * @type {!daemonsetlist/daemonsetcard_component.DaemonSetCardListController}
+   * @type {!daemonsetlist/daemonsetcard_component.DaemonSetCardController}
    */
   let ctrl;
 
@@ -23,13 +23,13 @@ describe('Daemon Set card', () => {
     angular.mock.module(daemonSetListModule.name);
 
     angular.mock.inject(($componentController, $rootScope) => {
-      ctrl = $componentController('kdDaemonSetCardList', {$scope: $rootScope});
+      ctrl = $componentController('kdDaemonSetCard', {$scope: $rootScope});
     });
   });
 
   it('should construct details href', () => {
     // given
-    let daemonSet = {
+    ctrl.daemonSet = {
       objectMeta: {
         name: 'foo-name',
         namespace: 'foo-namespace',
@@ -37,10 +37,16 @@ describe('Daemon Set card', () => {
     };
 
     // then
-    expect(ctrl.getDaemonSetDetailHref(daemonSet)).toEqual('#/daemonset/foo-namespace/foo-name');
+    expect(ctrl.getDaemonSetDetailHref()).toEqual('#/daemonset/foo-namespace/foo-name');
   });
 
   it('should format the "created at" tooltip correctly', () => {
-    expect(ctrl.getCreatedAtTooltip('2016-06-06T09:13:12Z')).toMatch('Created at 6/[56]/16.*');
+    ctrl.daemonSet = {
+      objectMeta: {
+        creationTimestamp: '2016-06-06T09:13:12Z',
+      },
+    };
+
+    expect(ctrl.getCreatedAtTooltip()).toMatch('Created at 6/[56]/16.*');
   });
 });

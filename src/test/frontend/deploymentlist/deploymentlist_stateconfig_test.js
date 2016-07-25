@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {PaginationService} from 'common/pagination/pagination_service';
+
 import deploymentListModule from 'deploymentlist/deploymentlist_module';
 import {resolveDeploymentList} from 'deploymentlist/deploymentlist_stateconfig';
 
@@ -21,24 +23,24 @@ describe('StateConfig for deployment list', () => {
   it('should resolve deployments', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
 
-    let resource = jasmine.createSpy('$resource');
-    resource.and.returnValue({get: function() { return {$promise: promise}; }});
+    let resource = jasmine.createSpyObj('$resource', ['get']);
+    resource.get.and.callFake(function() { return {$promise: promise}; });
 
     let actual = resolveDeploymentList(resource, {namespace: 'foo'});
 
-    expect(resource).toHaveBeenCalledWith('api/v1/deployment/foo');
+    expect(resource.get).toHaveBeenCalledWith(PaginationService.getDefaultResourceQuery('foo'));
     expect(actual).toBe(promise);
   }));
 
   it('should resolve deployments with no namespace', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
 
-    let resource = jasmine.createSpy('$resource');
-    resource.and.returnValue({get: function() { return {$promise: promise}; }});
+    let resource = jasmine.createSpyObj('$resource', ['get']);
+    resource.get.and.callFake(function() { return {$promise: promise}; });
 
     let actual = resolveDeploymentList(resource, {});
 
-    expect(resource).toHaveBeenCalledWith('api/v1/deployment/');
+    expect(resource.get).toHaveBeenCalledWith(PaginationService.getDefaultResourceQuery(''));
     expect(actual).toBe(promise);
   }));
 });

@@ -43,7 +43,7 @@ type Node struct {
 }
 
 // GetNodeList returns a list of all Nodes in the cluster.
-func GetNodeList(client client.Interface) (*NodeList, error) {
+func GetNodeList(client client.Interface, pQuery *common.PaginationQuery) (*NodeList, error) {
 	log.Printf("Getting list of all nodes in the cluster")
 
 	nodes, err := client.Nodes().List(api.ListOptions{
@@ -55,14 +55,16 @@ func GetNodeList(client client.Interface) (*NodeList, error) {
 		return nil, err
 	}
 
-	return toNodeList(nodes.Items), nil
+	return toNodeList(nodes.Items, pQuery), nil
 }
 
-func toNodeList(nodes []api.Node) *NodeList {
+func toNodeList(nodes []api.Node, pQuery *common.PaginationQuery) *NodeList {
 	nodeList := &NodeList{
 		Nodes:    make([]Node, 0),
 		ListMeta: common.ListMeta{TotalItems: len(nodes)},
 	}
+
+	nodes = paginate(nodes, pQuery)
 
 	for _, node := range nodes {
 		nodeList.Nodes = append(nodeList.Nodes, toNode(node))

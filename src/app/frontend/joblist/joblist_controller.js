@@ -20,11 +20,15 @@
 export class JobListController {
   /**
    * @param {!backendApi.JobList} jobList
+   * @param {!angular.Resource} kdJobListResource
    * @ngInject
    */
-  constructor(jobList) {
+  constructor(jobList, kdJobListResource) {
     /** @export {!backendApi.JobList} */
     this.jobList = jobList;
+
+    /** @export {!angular.Resource} */
+    this.jobListResource = kdJobListResource;
   }
 
   /**

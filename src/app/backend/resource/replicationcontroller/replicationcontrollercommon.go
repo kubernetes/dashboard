@@ -114,7 +114,7 @@ func CreateReplicationControllerList(replicationControllers []api.ReplicationCon
 		ListMeta:               common.ListMeta{TotalItems: len(replicationControllers)},
 	}
 
-	// TODO support pagination
+	replicationControllers = paginate(replicationControllers, pQuery)
 
 	for _, rc := range replicationControllers {
 		matchingPods := common.FilterNamespacedPodsBySelector(pods, rc.ObjectMeta.Namespace,
@@ -127,4 +127,17 @@ func CreateReplicationControllerList(replicationControllers []api.ReplicationCon
 	}
 
 	return rcList
+}
+
+func paginate(replicationControllers []api.ReplicationController,
+	pQuery *common.PaginationQuery) []api.ReplicationController {
+
+	startIndex, endIndex := pQuery.GetPaginationSettings(len(replicationControllers))
+
+	// Return all items if provided settings do not meet requirements
+	if !pQuery.CanPaginate(len(replicationControllers), startIndex) {
+		return replicationControllers
+	}
+
+	return replicationControllers[startIndex:endIndex]
 }

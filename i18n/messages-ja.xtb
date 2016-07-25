@@ -712,4 +712,5 @@
 	<translation id="7249897739191369792" key="MSG_CONTAINER_DETAILS_NO_ENV_VARS" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Label when there is no container environment variables.">-</translation>
 	<translation id="3684607543489263600" key="MSG_ENV_FROM_CONFIG_MAP" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Label for environment variable that comes from a Config Map">value from ConfigMap <ph name="NAME" />/<ph name="KEY" /></translation>
 	<translation id="6987669710926523285" key="MSG_NODE_LIST_READY_LABEL" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Label 'Ready' which appears as a column label in the table of nodes (node list view).">Ready</translation>
+	<translation id="6106340570580081121" key="MSG_DAEMON_SET_DETAIL_SERVICES_TITLE" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Title 'Services' for the services information section on the daemon set detail page.">Services</translation>
 </translationbundle>

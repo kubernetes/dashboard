@@ -20,11 +20,15 @@
 export class DeploymentListController {
   /**
    * @param {!backendApi.DeploymentList} deploymentList
+   * @param {!angular.Resource} kdDeploymentListResource
    * @ngInject
    */
-  constructor(deploymentList) {
+  constructor(deploymentList, kdDeploymentListResource) {
     /** @export {!backendApi.DeploymentList} */
     this.deploymentList = deploymentList;
+
+    /** @export {!angular.Resource} */
+    this.deploymentListResource = kdDeploymentListResource;
   }
 
   /**

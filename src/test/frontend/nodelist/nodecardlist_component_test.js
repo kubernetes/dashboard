@@ -12,28 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Controller for the pet set list view.
- *
- * @final
- */
-export class PetSetListController {
-  /**
-   * @param {!backendApi.PetSetList} petSetList
-   * @param {!angular.Resource} kdPetSetListResource
-   * @ngInject
-   */
-  constructor(petSetList, kdPetSetListResource) {
-    /** @export {!backendApi.PetSetList} */
-    this.petSetList = petSetList;
+import nodeListModule from 'nodelist/nodelist_module';
 
-    /** @export {!angular.Resource} */
-    this.petSetListResource = kdPetSetListResource;
-  }
+describe('Node card list controller', () => {
 
-  /**
-   * @return {boolean}
-   * @export
-   */
-  shouldShowZeroState() { return this.petSetList.petSets.length === 0; }
-}
+  beforeEach(() => { angular.mock.module(nodeListModule.name); });
+
+  it('should initialize node card list controller', angular.mock.inject(($componentController) => {
+    // given
+    let ctrl = $componentController('kdNodeCardList', {});
+
+    // then
+    expect(ctrl).toBeDefined();
+  }));
+});
