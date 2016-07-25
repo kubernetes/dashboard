@@ -17,6 +17,7 @@ import chromeModule from 'chrome/chrome_module';
 import filtersModule from 'common/filters/filters_module';
 import stateConfig from './daemonsetlist_stateconfig';
 import {daemonSetCardListComponent} from './daemonsetcardlist_component';
+import {daemonSetCardComponent} from './daemonsetcard_component';
 import daemonSetDetailModule from 'daemonsetdetail/daemonsetdetail_module';
 
 /**
@@ -37,4 +38,15 @@ export default angular
           daemonSetDetailModule.name,
         ])
     .config(stateConfig)
-    .component('kdDaemonSetCardList', daemonSetCardListComponent);
+    .component('kdDaemonSetCardList', daemonSetCardListComponent)
+    .component('kdDaemonSetCard', daemonSetCardComponent)
+    .factory('kdDaemonSetListResource', daemonSetListResource);
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function daemonSetListResource($resource) {
+  return $resource('api/v1/daemonset/:namespace');
+}

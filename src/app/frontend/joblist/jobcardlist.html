@@ -34,11 +34,17 @@ limitations under the License.
     <kd-resource-card-header-column size="small" grow="nogrow">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
-  <kd-job-card dir-paginate="rc in $ctrl.jobList.jobs | itemsPerPage: default" job="rc"
-               pagination-id="jobs">
+  <kd-job-card ng-if="::$ctrl.jobListResource" pagination-id="jobs"
+               dir-paginate="job in $ctrl.jobList.jobs | itemsPerPage: default" job="job"
+               total-items="::$ctrl.jobList.listMeta.totalItems">
+  </kd-job-card>
+
+  <kd-job-card ng-if="::!$ctrl.jobListResource" pagination-id="jobs"
+               dir-paginate="job in $ctrl.jobList.jobs | itemsPerPage: default" job="job">
   </kd-job-card>
   <kd-resource-card-list-footer>
-    <kd-resource-card-list-pagination pagination-id="jobs" list="$ctrl.jobList">
+    <kd-resource-card-list-pagination pagination-id="jobs" list="$ctrl.jobList"
+                                      list-resource="::$ctrl.jobListResource">
     </kd-resource-card-list-pagination>
   </kd-resource-card-list-footer>
 </kd-resource-card-list>

@@ -29,14 +29,19 @@ limitations under the License.
       {{::$ctrl.i18n.MSG_NAMESPACE_LIST_AGE_LABEL}}
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
-  <kd-namespace-card dir-paginate="ns in $ctrl.namespaceList.namespaces | itemsPerPage: default"
+  <kd-namespace-card ng-if="::$ctrl.namespaceListResource"
+                     dir-paginate="ns in $ctrl.namespaceList.namespaces | itemsPerPage: default"
                      pagination-id="namespaces" namespace="ns"
                      total-items="::$ctrl.namespaceList.listMeta.totalItems">
   </kd-namespace-card>
+
+  <kd-namespace-card ng-if="::!$ctrl.namespaceListResource"
+                     dir-paginate="ns in $ctrl.namespaceList.namespaces | itemsPerPage: default"
+                     pagination-id="namespaces" namespace="ns">
+  </kd-namespace-card>
   <kd-resource-card-list-footer>
-    <kd-resource-card-list-pagination pagination-id="namespaces"
-                                      list-resource="$ctrl.namespaceListResource"
-                                      list="$ctrl.namespaceList">
+    <kd-resource-card-list-pagination pagination-id="namespaces" list="$ctrl.namespaceList"
+                                      list-resource="$ctrl.namespaceListResource">
     </kd-resource-card-list-pagination>
   </kd-resource-card-list-footer>
 </kd-resource-card-list>

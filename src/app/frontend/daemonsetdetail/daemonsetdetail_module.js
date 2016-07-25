@@ -37,4 +37,24 @@ export default angular
           eventsModule.name,
         ])
     .config(stateConfig)
-    .component('kdDaemonSetInfo', daemonSetInfoComponent);
+    .component('kdDaemonSetInfo', daemonSetInfoComponent)
+    .factory('kdDaemonSetPodsResource', daemonSetPodsResource)
+    .factory('kdDaemonSetServicesResource', daemonSetServicesResource);
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function daemonSetPodsResource($resource) {
+  return $resource('api/v1/daemonset/:namespace/:name/pod');
+}
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function daemonSetServicesResource($resource) {
+  return $resource('api/v1/daemonset/:namespace/:name/service');
+}

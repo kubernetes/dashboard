@@ -17,6 +17,7 @@ import chromeModule from 'chrome/chrome_module';
 import filtersModule from 'common/filters/filters_module';
 import stateConfig from './servicelist_stateconfig';
 import {serviceCardListComponent} from './servicecardlist_component';
+import {serviceCardComponent} from './servicecard_component';
 
 /**
  * Angular module for the Service list view.
@@ -35,4 +36,15 @@ export default angular
           chromeModule.name,
         ])
     .config(stateConfig)
-    .component('kdServiceCardList', serviceCardListComponent);
+    .component('kdServiceCardList', serviceCardListComponent)
+    .component('kdServiceCard', serviceCardComponent)
+    .factory('kdServiceListResource', serviceListResource);
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function serviceListResource($resource) {
+  return $resource('api/v1/service/:namespace');
+}

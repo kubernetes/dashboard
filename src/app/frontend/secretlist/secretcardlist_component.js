@@ -16,16 +16,8 @@
  * @final
  */
 export class SecretCardListController {
-  /**
-   * @ngInject
-   */
+  /** @ngInject */
   constructor() {
-    /**
-     * List of secrets. Initialized from the scope.
-     * @export {!backendApi.SecretList}
-     */
-    this.secretList;
-
     /** @export */
     this.i18n = i18n;
   }
@@ -42,6 +34,7 @@ export const secretCardListComponent = {
   bindings: {
     /** {!backendApi.SecretList} */
     'secretList': '<',
+    'secretListResource': '<',
   },
 };
 

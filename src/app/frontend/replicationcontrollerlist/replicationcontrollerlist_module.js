@@ -39,4 +39,14 @@ export default angular
     .config(stateConfig)
     .component('kdReplicationControllerCardList', replicationControllerCardListComponent)
     .component('kdReplicationControllerCard', replicationControllerCardComponent)
-    .component('kdReplicationControllerCardMenu', replicationControllerCardMenuComponent);
+    .component('kdReplicationControllerCardMenu', replicationControllerCardMenuComponent)
+    .factory('kdRCListResource', replicationControllerListResource);
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function replicationControllerListResource($resource) {
+  return $resource('api/v1/replicationcontroller/:namespace');
+}

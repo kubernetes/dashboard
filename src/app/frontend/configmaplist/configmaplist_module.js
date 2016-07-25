@@ -37,4 +37,14 @@ export default angular
         ])
     .config(stateConfig)
     .component('kdConfigMapCardList', configMapCardListComponent)
-    .component('kdConfigMapCard', configMapCardComponent);
+    .component('kdConfigMapCard', configMapCardComponent)
+    .factory('kdConfigMapListResource', configMapListResource);
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function configMapListResource($resource) {
+  return $resource('api/v1/configmap/:namespace');
+}

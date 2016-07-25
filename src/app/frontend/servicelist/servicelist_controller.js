@@ -18,11 +18,15 @@
 export class ServiceListController {
   /**
    * @param {!backendApi.ServiceList} serviceList
+   * @param {!angular.Resource} kdServiceListResource
    * @ngInject
    */
-  constructor(serviceList) {
+  constructor(serviceList, kdServiceListResource) {
     /** @export {!backendApi.ServiceList} */
     this.serviceList = serviceList;
+
+    /** @export {!angular.Resource} */
+    this.serviceListResource = kdServiceListResource;
   }
 
   /**

@@ -39,4 +39,14 @@ export default angular
         ])
     .config(stateConfig)
     .component('kdPetSetCardList', petSetCardListComponent)
-    .component('kdPetSetCard', petSetCardComponent);
+    .component('kdPetSetCard', petSetCardComponent)
+    .factory('kdPetSetListResource', petSetListResource);
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function petSetListResource($resource) {
+  return $resource('api/v1/petset/:namespace');
+}

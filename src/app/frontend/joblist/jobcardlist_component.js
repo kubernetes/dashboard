@@ -20,6 +20,7 @@ export const jobCardListComponent = {
   bindings: {
     /** {!backendApi.JobList} */
     'jobList': '<',
+    'jobListResource': '<',
   },
   templateUrl: 'joblist/jobcardlist.html',
 };
