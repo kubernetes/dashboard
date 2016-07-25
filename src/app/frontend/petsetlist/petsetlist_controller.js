@@ -20,11 +20,15 @@
 export class PetSetListController {
   /**
    * @param {!backendApi.PetSetList} petSetList
+   * @param {!angular.Resource} kdPetSetListResource
    * @ngInject
    */
-  constructor(petSetList) {
+  constructor(petSetList, kdPetSetListResource) {
     /** @export {!backendApi.PetSetList} */
     this.petSetList = petSetList;
+    
+    /** @export {!angular.Resource} */
+    this.petSetListResource = kdPetSetListResource;
   }
 
   /**

@@ -14,7 +14,7 @@
 
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
-import {stateName as workloadsState} from 'workloads/workloads_state';
+import {PaginationService} from 'common/pagination/pagination_service';
 
 import {ConfigMapListController} from './configmaplist_controller';
 import {stateName, stateUrl} from './configmaplist_state';
@@ -35,7 +35,6 @@ export default function stateConfig($stateProvider) {
     data: {
       [breadcrumbsConfig]: {
         'label': i18n.MSG_BREADCRUMBS_CONFIG_MAPS_LABEL,
-        'parent': workloadsState,
       },
     },
     views: {
@@ -52,15 +51,15 @@ export default function stateConfig($stateProvider) {
 }
 
 /**
- * @param {!angular.$resource} $resource
+ * @param {!angular.Resource} kdConfigMapListResource
  * @param {!./../chrome/chrome_state.StateParams} $stateParams
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveConfigMapList($resource, $stateParams) {
-  /** @type {!angular.Resource<!backendApi.ConfigMapList>} */
-  let resource = $resource(`api/v1/configmap/${$stateParams.namespace || ''}`);
-  return resource.get().$promise;
+export function resolveConfigMapList(kdConfigMapListResource, $stateParams) {
+  /** @type {!backendApi.PaginationQuery} */
+  let query = PaginationService.getDefaultResourceQuery($stateParams.namespace);
+  return kdConfigMapListResource.get(query).$promise;
 }
 
 const i18n = {

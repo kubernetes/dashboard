@@ -12,64 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'servicedetail/servicedetail_state';
-
 /**
  * @final
  */
 export class ServiceCardListController {
-  /**
-   * @param {!ui.router.$state} $state
-   * @ngInject
-   */
-  constructor($state) {
-    /** @type {!ui.router.$state} */
-    this.state_ = $state;
-
+  /** @ngInject */
+  constructor() {
     /** @export */
     this.i18n = i18n;
   }
-
-  /**
-   * @param {!backendApi.Service} service
-   * @return {string}
-   * @export
-   */
-  getServiceDetailHref(service) {
-    return this.state_.href(
-        stateName, new StateParams(service.objectMeta.namespace, service.objectMeta.name));
-  }
-
-  /**
-   * Returns true if Service has no assigned Cluster IP
-   * or if Service type is LoadBalancer or NodePort and doesn't have an external endpoint IP
-   * @param {!backendApi.Service} service
-   * @return {boolean}
-   * @export
-   */
-  isPending(service) {
-    return service.clusterIP === null ||
-        ((service.type === 'LoadBalancer') && service.externalEndpoints === null);
-  }
-
-  /**
-   * Returns true if Service has ClusterIP assigned and one of the following conditions is met:
-   *  - Service type is LoadBalancer or NodePort and has an external endpoint IP
-   *  - Service type is not LoadBalancer or NodePort
-   * @param {!backendApi.Service} service
-   * @return {boolean}
-   * @export
-   */
-  isSuccess(service) { return !this.isPending(service); }
-
-  /**
-   * Returns the service's clusterIP or a dash ('-') if it is not yet set
-   * @param {!backendApi.Service} service
-   * @return {string}
-   * @export
-   */
-  getServiceClusterIP(service) { return service.clusterIP ? service.clusterIP : '-'; }
 }
 
 /**
@@ -106,6 +57,4 @@ const i18n = {
   /** @export {string} @desc Label 'External endpoints' which appears as a column label in the
      table of services (service list view). */
   MSG_SERVICE_LIST_EXTERNAL_ENDPOINTS_LABEL: goog.getMsg('External endpoints'),
-  /** @export {string} @desc tooltip for pending service card icon */
-  MSG_SERVICE_IS_PENDING_TOOLTIP: goog.getMsg('This service is in a pending state.'),
 };

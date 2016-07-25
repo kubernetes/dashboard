@@ -35,6 +35,7 @@ export const petSetCardListComponent = {
   controller: PetSetCardListController,
   bindings: {
     'petSetList': '<',
+    'petSetListResource': '<',
   },
   templateUrl: 'petsetlist/petsetcardlist.html',
 };

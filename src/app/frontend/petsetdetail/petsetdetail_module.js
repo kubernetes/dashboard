@@ -37,4 +37,14 @@ export default angular
           chromeModule.name,
         ])
     .config(stateConfig)
-    .component('kdPetSetInfo', petSetInfoComponent);
+    .component('kdPetSetInfo', petSetInfoComponent)
+    .factory('kdPetSetPodsResource', petSetPodsResource);
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function petSetPodsResource($resource) {
+  return $resource('api/v1/petset/:namespace/:name/pod');
+}

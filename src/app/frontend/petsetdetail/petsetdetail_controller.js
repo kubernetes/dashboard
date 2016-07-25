@@ -18,12 +18,16 @@
 export class PetSetDetailController {
   /**
    * @param {!backendApi.PetSetDetail} petSetDetail
+   * @param {!angular.Resource} kdPetSetPodsResource
    * @ngInject
    */
-  constructor(petSetDetail) {
+  constructor(petSetDetail, kdPetSetPodsResource) {
     /** @export {!backendApi.PetSetDetail} */
     this.petSetDetail = petSetDetail;
 
+    /** @export {!angular.Resource} */
+    this.petSetPodsResource = kdPetSetPodsResource;
+    
     /** @export */
     this.i18n = i18n;
   }

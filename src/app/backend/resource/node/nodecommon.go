@@ -15,6 +15,8 @@
 package node
 
 import (
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+
 	"k8s.io/kubernetes/pkg/api"
 )
 
@@ -27,4 +29,15 @@ func getContainerImages(node api.Node) []string {
 		}
 	}
 	return containerImages
+}
+
+func paginate(nodes []api.Node, pQuery *common.PaginationQuery) []api.Node {
+	startIndex, endIndex := pQuery.GetPaginationSettings(len(nodes))
+
+	// Return all items if provided settings do not meet requirements
+	if !pQuery.CanPaginate(len(nodes), startIndex) {
+		return nodes
+	}
+
+	return nodes[startIndex:endIndex]
 }

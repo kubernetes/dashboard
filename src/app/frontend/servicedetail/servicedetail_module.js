@@ -33,4 +33,14 @@ export default angular
           componentsModule.name,
         ])
     .config(stateConfig)
-    .component('kdServiceInfo', serviceInfoComponent);
+    .component('kdServiceInfo', serviceInfoComponent)
+    .factory('kdServicePodsResource', servicePodsResource);
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function servicePodsResource($resource) {
+  return $resource('api/v1/service/:namespace/:name/pod');
+}

@@ -18,11 +18,15 @@
 export class DaemonSetListController {
   /**
    * @param {!backendApi.DaemonSetList} daemonSetList
+   * @param {!angular.Resource} kdDaemonSetListResource
    * @ngInject
    */
-  constructor(daemonSetList) {
+  constructor(daemonSetList, kdDaemonSetListResource) {
     /** @export {!backendApi.DaemonSetList} */
     this.daemonSetList = daemonSetList;
+    
+    /** @export {!angular.Resource} */
+    this.daemonSetListResource = kdDaemonSetListResource;
   }
 
   /**

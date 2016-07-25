@@ -39,4 +39,14 @@ export default angular
         ])
     .config(stateConfig)
     .component('kdSecretCardList', secretCardListComponent)
-    .component('kdSecretCard', secretCardComponent);
+    .component('kdSecretCard', secretCardComponent)
+    .factory('kdSecretListResource', secretListResource);
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function secretListResource($resource) {
+  return $resource('api/v1/secret/:namespace');
+}

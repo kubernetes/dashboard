@@ -16,7 +16,8 @@ limitations under the License.
 
 <kd-content-card ng-if="!$ctrl.shouldShowZeroState()">
   <kd-content>
-    <kd-pet-set-card-list pet-set-list="$ctrl.petSetList">
+    <kd-pet-set-card-list pet-set-list="$ctrl.petSetList"
+                          pet-set-list-resource="$ctrl.petSetListResource">
     </kd-pet-set-card-list>
   </kd-content>
 </kd-content-card>
