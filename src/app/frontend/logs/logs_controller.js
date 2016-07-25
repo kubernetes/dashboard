@@ -23,9 +23,11 @@ export class LogsController {
    * @param {!./logs_service.LogsService} logsService
    * @ngInject
    */
-  constructor(podLogs, logsService) {
+  constructor(podLogs, logsService, $sce) {
     /** @export {!Array<string>} Log set. */
-    this.logsSet = podLogs.logs;
+    this.logsSet = podLogs.logs.map(function(line) {
+      return $sce.trustAsHtml(ansi_up.ansi_to_html(line));
+    });
 
     /** @private {!./logs_service.LogsService} */
     this.logsService_ = logsService;
