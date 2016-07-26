@@ -52,7 +52,7 @@
     "gulp-watch": "~4.3.8",
     "html-minifier": "~3.0.1",
     "isparta": "~4.0.0",
-    "karma": "1.1.1",
+    "karma": "1.1.2",
     "karma-browserify": "~5.1.0",
     "karma-chrome-launcher": "~1.0.1",
     "karma-closure": "~0.1.1",
