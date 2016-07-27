@@ -16,7 +16,7 @@ $ sudo apt-get upgrade
 ```
 $ uname -r
 ```
-You should get `3.2.0-23-generic`, `3.13.0-88-generic`, or something similar depending on what the current version is.
+You should get `3.2.0-23-generic` or something similar depending on what the current version is.
 
 ```
 $ lsb_release -a
@@ -32,16 +32,14 @@ Codename:       precise
 
 
 ## Install Helpful Programs
-Install some programs that we'll need later on, and verify that they're there. Unless you have another text editor you prefer, vim may be useful for beginners; instructions below use vim.
+Install some programs that we'll need later on, and verify that they're there. 
 ```
 $ sudo apt-get install curl
-$ sudo apt-get install vim
 $ sudo apt-get install git
 $ curl --version
-$ vim --version
 $ git --version
 ```
-These instructions were last tested with curl 7.22.0, VIM 7.3, and git 1.7.9.5.
+These instructions were last tested with curl 7.22.0, and git 1.7.9.5.
 
 ## Get Vagrant on Linux
 
@@ -58,12 +56,20 @@ Based on instructions from: https://docs.docker.com/engine/installation/linux/ub
 
 ### Setup
 ```
-$ sudo apt-get update
 $ sudo apt-get install apt-transport-https ca-certificates
 $ sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 ```
 
+Create a docker.list file with one command:
+
 ```
+sudo bash -c 'echo "deb https://apt.dockerproject.org/repo ubuntu-precise main" > /etc/apt/sources.list.d/docker.list'
+```
+
+...OR you can create and edit the file with vim or your favorite editor.
+
+```
+$ sudo apt-get install vim
 $ sudo vim /etc/apt/sources.list.d/docker.list
 ```
 * <kbd>i</kbd> = insert
