@@ -23,10 +23,11 @@ export class LogsController {
    * @param {!./logs_service.LogsService} logsService
    * @ngInject
    */
-  constructor(podLogs, logsService, $sce) {
+  constructor(podLogs, logsService, $sanitize, $sce) {
     /** @export {!Array<string>} Log set. */
     this.logsSet = podLogs.logs.map(function(line) {
-      return $sce.trustAsHtml(ansi_up.ansi_to_html(line));
+      return $sce.trustAsHtml(ansi_up.ansi_to_html(
+          $sanitize(line).replace(/&#27;/g, "\x1b")));
     });
 
     /** @private {!./logs_service.LogsService} */
