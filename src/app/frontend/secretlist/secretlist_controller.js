@@ -18,11 +18,15 @@
 export class SecretListController {
   /**
    * @param {!backendApi.SecretList} secretList
+   * @param {!angular.Resource} kdSecretListResource
    * @ngInject
    */
-  constructor(secretList) {
+  constructor(secretList, kdSecretListResource) {
     /** @export {!backendApi.SecretList} */
     this.secretList = secretList;
+
+    /** @export {!angular.Resource} */
+    this.secretListResource = kdSecretListResource;
   }
 
   /**

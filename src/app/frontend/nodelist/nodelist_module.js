@@ -39,4 +39,14 @@ export default angular
         ])
     .config(stateConfig)
     .component('kdNodeCardList', nodeCardListComponent)
-    .component('kdNodeCard', nodeCardComponent);
+    .component('kdNodeCard', nodeCardComponent)
+    .factory('kdNodeListResource', nodeListResource);
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function nodeListResource($resource) {
+  return $resource('api/v1/node');
+}

@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {PaginationService} from 'common/pagination/pagination_service';
+
 import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
 import {resolveReplicationControllerList} from 'replicationcontrollerlist/replicationcontrollerlist_stateconfig';
 
@@ -21,24 +23,24 @@ describe('StateConfig for replication controller list', () => {
   it('should resolve replication controllers', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
 
-    let resource = jasmine.createSpy('$resource');
-    resource.and.returnValue({get: function() { return {$promise: promise}; }});
+    let resource = jasmine.createSpyObj('$resource', ['get']);
+    resource.get.and.callFake(function() { return {$promise: promise}; });
 
     let actual = resolveReplicationControllerList(resource, {namespace: 'foo'});
 
-    expect(resource).toHaveBeenCalledWith('api/v1/replicationcontroller/foo');
+    expect(resource.get).toHaveBeenCalledWith(PaginationService.getDefaultResourceQuery('foo'));
     expect(actual).toBe(promise);
   }));
 
   it('should resolve replication controllers with no namespace', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
 
-    let resource = jasmine.createSpy('$resource');
-    resource.and.returnValue({get: function() { return {$promise: promise}; }});
+    let resource = jasmine.createSpyObj('$resource', ['get']);
+    resource.get.and.callFake(function() { return {$promise: promise}; });
 
     let actual = resolveReplicationControllerList(resource, {});
 
-    expect(resource).toHaveBeenCalledWith('api/v1/replicationcontroller/');
+    expect(resource.get).toHaveBeenCalledWith(PaginationService.getDefaultResourceQuery(''));
     expect(actual).toBe(promise);
   }));
 });

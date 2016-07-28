@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {PaginationService} from 'common/pagination/pagination_service';
+
 import configMapListModule from 'configmaplist/configmaplist_module';
 import {resolveConfigMapList} from 'configmaplist/configmaplist_stateconfig';
 
@@ -21,24 +23,24 @@ describe('StateConfig for config map controller list', () => {
   it('should resolve config map list with namespace', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
 
-    let resource = jasmine.createSpy('$resource');
-    resource.and.returnValue({get: function() { return {$promise: promise}; }});
+    let resource = jasmine.createSpyObj('$resource', ['get']);
+    resource.get.and.callFake(function() { return {$promise: promise}; });
 
     let actual = resolveConfigMapList(resource, {});
 
-    expect(resource).toHaveBeenCalledWith('api/v1/configmap/');
+    expect(resource.get).toHaveBeenCalledWith(PaginationService.getDefaultResourceQuery(''));
     expect(actual).toBe(promise);
   }));
 
   it('should resolve config map list with no namespace', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
 
-    let resource = jasmine.createSpy('$resource');
-    resource.and.returnValue({get: function() { return {$promise: promise}; }});
+    let resource = jasmine.createSpyObj('$resource', ['get']);
+    resource.get.and.callFake(function() { return {$promise: promise}; });
 
     let actual = resolveConfigMapList(resource, {namespace: 'foo'});
 
-    expect(resource).toHaveBeenCalledWith('api/v1/configmap/foo');
+    expect(resource.get).toHaveBeenCalledWith(PaginationService.getDefaultResourceQuery('foo'));
     expect(actual).toBe(promise);
   }));
 });

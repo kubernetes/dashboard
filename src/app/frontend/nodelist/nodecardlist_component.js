@@ -16,12 +16,8 @@
  * @final
  */
 export class NodeCardListController {
-  /**
-   * @ngInject
-   */
+  /** @ngInject */
   constructor() {
-    /** @export {!backendApi.NodeList} Initialized from binding. */
-    this.nodeList;
     /** @export */
     this.i18n = i18n;
   }
@@ -34,6 +30,7 @@ export const nodeCardListComponent = {
   transclude: true,
   bindings: {
     'nodeList': '<',
+    'nodeListResource': '<',
   },
   templateUrl: 'nodelist/nodecardlist.html',
   controller: NodeCardListController,

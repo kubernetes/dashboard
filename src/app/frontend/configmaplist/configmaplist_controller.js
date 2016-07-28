@@ -20,11 +20,15 @@
 export class ConfigMapListController {
   /**
    * @param {!backendApi.ConfigMapList} configMapList
+   * @param {!angular.Resource} kdConfigMapListResource
    * @ngInject
    */
-  constructor(configMapList) {
+  constructor(configMapList, kdConfigMapListResource) {
     /** @export {!backendApi.ConfigMapList} */
     this.configMapList = configMapList;
+
+    /** @export {!angular.Resource} */
+    this.configMapListResource = kdConfigMapListResource;
   }
 
   /**

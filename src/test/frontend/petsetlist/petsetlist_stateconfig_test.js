@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {PaginationService} from 'common/pagination/pagination_service';
+
 import petSetListModule from 'petsetlist/petsetlist_module';
 import {resolvePetSetList} from 'petsetlist/petsetlist_stateconfig';
 
@@ -21,24 +23,24 @@ describe('StateConfig for pet set controller list', () => {
   it('should resolve pet set list with namespace', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
 
-    let resource = jasmine.createSpy('$resource');
-    resource.and.returnValue({get: function() { return {$promise: promise}; }});
+    let resource = jasmine.createSpyObj('$resource', ['get']);
+    resource.get.and.callFake(function() { return {$promise: promise}; });
 
-    let actual = resolvePetSetList(resource, {});
+    let actual = resolvePetSetList(resource, {namespace: 'foo'});
 
-    expect(resource).toHaveBeenCalledWith('api/v1/petset/');
+    expect(resource.get).toHaveBeenCalledWith(PaginationService.getDefaultResourceQuery('foo'));
     expect(actual).toBe(promise);
   }));
 
   it('should resolve pet set list with no namespace', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
 
-    let resource = jasmine.createSpy('$resource');
-    resource.and.returnValue({get: function() { return {$promise: promise}; }});
+    let resource = jasmine.createSpyObj('$resource', ['get']);
+    resource.get.and.callFake(function() { return {$promise: promise}; });
 
-    let actual = resolvePetSetList(resource, {namespace: 'foo'});
+    let actual = resolvePetSetList(resource, {});
 
-    expect(resource).toHaveBeenCalledWith('api/v1/petset/foo');
+    expect(resource.get).toHaveBeenCalledWith(PaginationService.getDefaultResourceQuery(''));
     expect(actual).toBe(promise);
   }));
 });

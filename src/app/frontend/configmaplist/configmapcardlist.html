@@ -28,11 +28,19 @@ limitations under the License.
     <kd-resource-card-header-column size="small" grow="nogrow">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
-  <kd-config-map-card dir-paginate="configMap in $ctrl.configMapList.items | itemsPerPage: default"
-                   config-map="configMap" pagination-id="configmaps">
+  <kd-config-map-card ng-if="::$ctrl.configMapListResource"
+                      dir-paginate="configMap in $ctrl.configMapList.items | itemsPerPage: default"
+                      config-map="configMap" pagination-id="configmaps"
+                      total-items="::$ctrl.configMapList.listMeta.totalItems">
+  </kd-config-map-card>
+
+  <kd-config-map-card ng-if="::!$ctrl.configMapListResource"
+                      dir-paginate="configMap in $ctrl.configMapList.items | itemsPerPage: default"
+                      config-map="configMap" pagination-id="configmaps">
   </kd-config-map-card>
   <kd-resource-card-list-footer>
-    <kd-resource-card-list-pagination pagination-id="configmaps" list="$ctrl.configMapList">
+    <kd-resource-card-list-pagination pagination-id="configmaps" list="$ctrl.configMapList"
+                                      list-resource="$ctrl.configMapListResource">
     </kd-resource-card-list-pagination>
   </kd-resource-card-list-footer>
 </kd-resource-card-list>
