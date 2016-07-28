@@ -27,7 +27,8 @@ $logs-color-white: #fff;
   color: $logs-color-black;
 }
 
-@mixin kd-logs-element-mixin {
+.kd-logs-element {
+  font-size: $body-font-size-base;
   padding: 0 (2 * $baseline-grid);
   word-wrap: break-word;
 
@@ -37,11 +38,7 @@ $logs-color-white: #fff;
 }
 
 .kd-logs-element-compact {
-  @include kd-logs-element-mixin;
-  font-size: $caption-font-size-base;
-}
+  @extend .kd-logs-element;
 
-.kd-logs-element {
-  @include kd-logs-element-mixin;
-  font-size: $body-font-size-base;
+  font-size: $caption-font-size-base;
 }
