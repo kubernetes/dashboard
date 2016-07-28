@@ -37,11 +37,11 @@ $logs-color-white: #fff;
 }
 
 .kd-logs-element-compact {
-  font-size: $caption-font-size-base;
   @include kd-logs-element-mixin;
+  font-size: $caption-font-size-base;
 }
 
 .kd-logs-element {
-  font-size: $body-font-size-base;
   @include kd-logs-element-mixin;
+  font-size: $body-font-size-base;
 }
