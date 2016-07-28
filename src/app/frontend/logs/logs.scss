@@ -35,7 +35,8 @@ $logs-color-white: #fff;
   font-size: $body-font-size-base;
 }
 
-.kd-logs-element, .kd-logs-element-compact {
+.kd-logs-element,
+.kd-logs-element-compact {
   padding: 0 (2 * $baseline-grid);
   word-wrap: break-word;
 
