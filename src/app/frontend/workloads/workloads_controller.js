@@ -20,9 +20,16 @@ export class WorkloadsController {
    * @param {!backendApi.Workloads} workloads
    * @param {!angular.Resource} kdPodListResource
    * @param {!angular.Resource} kdReplicaSetListResource
+   * @param {!angular.Resource} kdDaemonSetListResource
+   * @param {!angular.Resource} kdDeploymentListResource
+   * @param {!angular.Resource} kdPetSetListResource
+   * @param {!angular.Resource} kdJobListResource
+   * @param {!angular.Resource} kdRCListResource
    * @ngInject
    */
-  constructor(workloads, kdPodListResource, kdReplicaSetListResource) {
+  constructor(
+      workloads, kdPodListResource, kdReplicaSetListResource, kdDaemonSetListResource,
+      kdDeploymentListResource, kdPetSetListResource, kdJobListResource, kdRCListResource) {
     /** @export {!backendApi.Workloads} */
     this.workloads = workloads;
 
@@ -31,6 +38,21 @@ export class WorkloadsController {
 
     /** @export {!angular.Resource} */
     this.replicaSetListResource = kdReplicaSetListResource;
+
+    /** @export {!angular.Resource} */
+    this.daemonSetListResource = kdDaemonSetListResource;
+
+    /** @export {!angular.Resource} */
+    this.deploymentListResource = kdDeploymentListResource;
+
+    /** @export {!angular.Resource} */
+    this.petSetListResource = kdPetSetListResource;
+
+    /** @export {!angular.Resource} */
+    this.jobListResource = kdJobListResource;
+
+    /** @export {!angular.Resource} */
+    this.rcListResource = kdRCListResource;
 
     /** @export */
     this.i18n = i18n;

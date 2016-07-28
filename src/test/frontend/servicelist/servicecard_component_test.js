@@ -15,9 +15,9 @@
 import serviceListModule from 'servicelist/servicelist_module';
 import serviceDetailModule from 'servicedetail/servicedetail_module';
 
-describe('Service list controller', () => {
+describe('Service card controller', () => {
   /**
-   * @type {!servicelist/servicecardlist_component.ServiceCardListController}
+   * @type {!servicelist/servicecard_component.ServiceCardController}
    */
   let ctrl;
 
@@ -26,85 +26,125 @@ describe('Service list controller', () => {
     angular.mock.module(serviceDetailModule.name);
 
     angular.mock.inject(($componentController, $rootScope) => {
-      ctrl = $componentController('kdServiceCardList', {$scope: $rootScope}, {});
+      ctrl = $componentController('kdServiceCard', {$scope: $rootScope}, {});
     });
   });
 
   it('should return service details link', () => {
-    expect(ctrl.getServiceDetailHref({
+    // given
+    ctrl.service = {
       objectMeta: {
         name: 'foo-service',
         namespace: 'foo-namespace',
       },
-    })).toBe('#/service/foo-namespace/foo-service');
+    };
+
+    // then
+    expect(ctrl.getServiceDetailHref()).toBe('#/service/foo-namespace/foo-service');
   });
 
   it('should return true when service.clusterIP is null', () => {
-    expect(ctrl.isPending({
+    // given
+    ctrl.service = {
       clusterIP: null,
-    })).toBeTruthy();
+    };
+
+    // then
+    expect(ctrl.isPending()).toBeTruthy();
   });
 
   it('should return false when service.clusterIP is set', () => {
-    expect(ctrl.isPending({
+    // given
+    ctrl.service = {
       clusterIP: '10.67.252.103',
-    })).toBeFalsy();
+    };
+
+    // then
+    expect(ctrl.isPending()).toBeFalsy();
   });
 
   it('should return true when service.type is LoadBalancer AND service.externalEndpoints is null',
      () => {
-       expect(ctrl.isPending({
+       // given
+       ctrl.service = {
          clusterIP: '10.67.252.103',
          type: 'LoadBalancer',
          externalEndpoints: null,
-       })).toBe(true);
+       };
+
+       // then
+       expect(ctrl.isPending()).toBe(true);
      });
 
   it('should return false when service.type is NodePort AND service.externalEndpoints is null',
      () => {
-       expect(ctrl.isPending({
+       // given
+       ctrl.service = {
          clusterIP: '10.67.252.103',
          type: 'NodePort',
          externalEndpoints: null,
-       })).toBe(false);
+       };
+
+       // then
+       expect(ctrl.isPending()).toBe(false);
      });
 
   it('should return true when service.type is LoadBalancer AND service.externalEndpoints is set',
      () => {
-       expect(ctrl.isSuccess({
+       // given
+       ctrl.service = {
          clusterIP: '10.67.252.103',
          type: 'LoadBalancer',
          externalEndpoints: ['10.64.0.4:80', '10.64.1.5:80', '10.64.2.4:80'],
-       })).toBeTruthy();
+       };
+
+       // then
+       expect(ctrl.isSuccess()).toBeTruthy();
      });
 
   it('should return true when service.type is NodePort AND service.externalEndpoints is set',
      () => {
-       expect(ctrl.isSuccess({
+       // given
+       ctrl.service = {
          clusterIP: '10.67.252.103',
          type: 'NodePort',
          externalEndpoints: ['10.64.0.4:80', '10.64.1.5:80', '10.64.2.4:80'],
-       })).toBeTruthy();
+       };
+
+       // then
+       expect(ctrl.isSuccess()).toBeTruthy();
      });
 
   it('should return true when service.type is ClusterIP and service.externalEndpoints is null',
      () => {
-       expect(ctrl.isSuccess({
+       // given
+       ctrl.service = {
          clusterIP: '10.67.252.103',
          type: 'ClusterIP',
          externalEndpoints: null,
-       })).toBeTruthy();
+       };
+
+       // then
+       expect(ctrl.isSuccess()).toBeTruthy();
      });
 
   it('should return the service clusterIP when teh clusterIP is set', () => {
-    expect(ctrl.getServiceClusterIP({
+    // given
+    ctrl.service = {
       clusterIP: '10.67.252.103',
-    })).toBe('10.67.252.103');
+    };
+
+    // then
+    expect(ctrl.getServiceClusterIP()).toBe('10.67.252.103');
   });
 
   it('should return the service clusterIP when teh clusterIP is set', () => {
-    expect(ctrl.getServiceClusterIP({
+    // given
+    ctrl.service = {
       clusterIP: null,
-    })).toBe('-');
+    };
+
+    // then
+    expect(ctrl.getServiceClusterIP()).toBe('-');
   });
 });

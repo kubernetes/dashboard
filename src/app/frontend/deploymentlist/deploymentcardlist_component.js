@@ -16,6 +16,7 @@
  * @final
  */
 class DeploymentCardListController {
+  /** @ngInject */
   constructor() { this.i18n = i18n; }
 }
 
@@ -26,6 +27,7 @@ export const deploymentCardListComponent = {
   transclude: true,
   bindings: {
     'deploymentList': '<',
+    'deploymentListResource': '<',
   },
   templateUrl: 'deploymentlist/deploymentcardlist.html',
   controller: DeploymentCardListController,

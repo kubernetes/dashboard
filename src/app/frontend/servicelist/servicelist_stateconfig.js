@@ -14,6 +14,7 @@
 
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {PaginationService} from 'common/pagination/pagination_service';
 
 import {ServiceListController} from './servicelist_controller';
 import {stateName, stateUrl} from './servicelist_state';
@@ -29,7 +30,6 @@ export default function stateConfig($stateProvider) {
     url: stateUrl,
     parent: chromeStateName,
     resolve: {
-      'serviceListResource': getServiceListResource,
       'serviceList': resolveServiceList,
     },
     data: {
@@ -51,22 +51,15 @@ export default function stateConfig($stateProvider) {
 }
 
 /**
- * @param {!angular.$resource} $resource
+ * @param {!angular.Resource} kdServiceListResource
  * @param {!./../chrome/chrome_state.StateParams} $stateParams
- * @return {!angular.Resource<!backendApi.ServiceList>}
- * @ngInject
- */
-export function getServiceListResource($resource, $stateParams) {
-  return $resource(`api/v1/service/${$stateParams.namespace || ''}`);
-}
-
-/**
- * @param {!angular.Resource<!backendApi.ServiceList>} serviceListResource
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveServiceList(serviceListResource) {
-  return serviceListResource.get().$promise;
+export function resolveServiceList(kdServiceListResource, $stateParams) {
+  /** @type {!backendApi.PaginationQuery} */
+  let query = PaginationService.getDefaultResourceQuery($stateParams.namespace);
+  return kdServiceListResource.get(query).$promise;
 }
 
 const i18n = {

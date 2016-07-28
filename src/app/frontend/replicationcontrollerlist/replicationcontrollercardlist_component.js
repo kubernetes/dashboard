@@ -29,6 +29,7 @@ export const replicationControllerCardListComponent = {
   transclude: true,
   bindings: {
     'replicationControllerList': '<',
+    'replicationControllerListResource': '<',
   },
   templateUrl: 'replicationcontrollerlist/replicationcontrollercardlist.html',
   controller: RCCardListController,

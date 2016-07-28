@@ -22,7 +22,8 @@ limitations under the License.
       </a>
     </kd-title>
     <kd-content>
-      <kd-daemon-set-card-list daemon-set-list="$ctrl.workloads.daemonSetList" with-statuses="true">
+      <kd-daemon-set-card-list daemon-set-list="$ctrl.workloads.daemonSetList" with-statuses="true"
+                               daemon-set-list-resource="$ctrl.daemonSetListResource">
       </kd-daemon-set-card-list>
     </kd-content>
   </kd-content-card>
@@ -34,7 +35,8 @@ limitations under the License.
       </a>
     </kd-title>
     <kd-content>
-      <kd-deployment-card-list deployment-list="$ctrl.workloads.deploymentList">
+      <kd-deployment-card-list deployment-list="$ctrl.workloads.deploymentList"
+                               deployment-list-resource="$ctrl.deploymentListResource">
       </kd-deployment-card-list>
     </kd-content>
   </kd-content-card>
@@ -46,7 +48,8 @@ limitations under the License.
       </a>
     </kd-title>
     <kd-content>
-      <kd-pet-set-card-list pet-set-list="$ctrl.workloads.petSetList">
+      <kd-pet-set-card-list pet-set-list="$ctrl.workloads.petSetList"
+                            pet-set-list-resource="$ctrl.petSetListResource">
       </kd-pet-set-card-list>
     </kd-content>
   </kd-content-card>
@@ -71,7 +74,8 @@ limitations under the License.
       </a>
     </kd-title>
     <kd-content>
-      <kd-job-card-list job-list="$ctrl.workloads.jobList">
+      <kd-job-card-list job-list="$ctrl.workloads.jobList"
+                        job-list-resource="$ctrl.jobListResource">
       </kd-job-card-list>
     </kd-content>
   </kd-content-card>
@@ -84,7 +88,8 @@ limitations under the License.
     </kd-title>
     <kd-content>
       <kd-replication-controller-card-list
-              replication-controller-list="$ctrl.workloads.replicationControllerList">
+              replication-controller-list="$ctrl.workloads.replicationControllerList"
+              replication-controller-list-resource="$ctrl.rcListResource">
       </kd-replication-controller-card-list>
     </kd-content>
   </kd-content-card>

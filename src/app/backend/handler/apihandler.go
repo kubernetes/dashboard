@@ -458,7 +458,8 @@ func (apiHandler *APIHandler) handleGetServicePods(request *restful.Request,
 
 // Handles get node list API call.
 func (apiHandler *APIHandler) handleGetNodeList(request *restful.Request, response *restful.Response) {
-	result, err := node.GetNodeList(apiHandler.client)
+	pagination := parsePaginationPathParameter(request)
+	result, err := node.GetNodeList(apiHandler.client, pagination)
 	if err != nil {
 		handleInternalError(response, err)
 		return

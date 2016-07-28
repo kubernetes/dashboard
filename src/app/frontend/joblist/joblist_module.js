@@ -37,4 +37,14 @@ export default angular
         ])
     .config(stateConfig)
     .component('kdJobCardList', jobCardListComponent)
-    .component('kdJobCard', jobCardComponent);
+    .component('kdJobCard', jobCardComponent)
+    .factory('kdJobListResource', jobListResource);
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function jobListResource($resource) {
+  return $resource('api/v1/job/:namespace');
+}

@@ -20,10 +20,14 @@
 export class NodeListController {
   /**
    * @param {!backendApi.NodeList} nodeList
+   * @param {!angular.Resource} kdNodeListResource
    * @ngInject
    */
-  constructor(nodeList) {
+  constructor(nodeList, kdNodeListResource) {
     /** @export {!backendApi.NodeList} */
     this.nodeList = nodeList;
+
+    /** @export {!angular.Resource} */
+    this.nodeListResource = kdNodeListResource;
   }
 }

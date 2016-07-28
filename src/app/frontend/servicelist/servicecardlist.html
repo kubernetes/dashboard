@@ -35,58 +35,18 @@ limitations under the License.
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
 
-  <kd-resource-card dir-paginate="service in $ctrl.serviceList.services | itemsPerPage: default"
-                    total-items="$ctrl.serviceList.listMeta.totalItems"
-                    pagination-id="services" object-meta="service.objectMeta"
-                    type-meta="service.typeMeta">
-    <kd-resource-card-status layout="row">
-      <md-icon class="material-icons" ng-if="::$ctrl.isPending(service)">
-        timelapse
-        <md-tooltip md-direction="right">{{::$ctrl.i18n.MSG_SERVICE_IS_PENDING_TOOLTIP}}
-        </md-tooltip>
-      </md-icon>
-      <md-icon class="material-icons kd-success" ng-if="::$ctrl.isSuccess(service)">
-        check_circle
-      </md-icon>
-    </kd-resource-card-status>
-    <kd-resource-card-columns>
-      <kd-resource-card-column>
-        <a ng-href="{{::$ctrl.getServiceDetailHref(service)}}">
-          <kd-middle-ellipsis display-string="{{::service.objectMeta.name}}"></kd-middle-ellipsis>
-        </a>
-      </kd-resource-card-column>
-      <kd-resource-card-column>
-        <kd-labels labels="::service.objectMeta.labels"></kd-labels>
-      </kd-resource-card-column>
-      <kd-resource-card-column>
-        <div>{{::$ctrl.getServiceClusterIP(service)}}</div>
-      </kd-resource-card-column>
-      <kd-resource-card-column>
-        <div ng-if="::service.internalEndpoint">
-          <kd-internal-endpoint endpoint="::service.internalEndpoint"></kd-internal-endpoint>
-        </div>
-        <div ng-hide="service.internalEndpoint">-</div>
-      </kd-resource-card-column>
-      <kd-resource-card-column>
-        <div ng-if="::service.externalEndpoints"
-             ng-repeat="endpoint in ::service.externalEndpoints">
-          <kd-external-endpoint endpoint="endpoint"></kd-external-endpoint>
-        </div>
-        <div ng-hide="service.externalEndpoints">-</div>
-      </kd-resource-card-column>
-      <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
-        <kd-resource-card-menu>
-          <kd-resource-card-delete-menu-item resource-kind-name="Service">
-          </kd-resource-card-delete-menu-item>
-          <kd-resource-card-edit-menu-item resource-kind-name="Service">
-          </kd-resource-card-edit-menu-item>
-        </kd-resource-card-menu>
-      </kd-resource-card-column>
-    </kd-resource-card-columns>
-  </kd-resource-card>
+  <kd-service-card ng-if="::$ctrl.serviceListResource" service="service"
+                   dir-paginate="service in $ctrl.serviceList.services | itemsPerPage: default"
+                   total-items="::$ctrl.serviceList.listMeta.totalItems" pagination-id="services">
+  </kd-service-card>
+
+  <kd-service-card ng-if="::!$ctrl.serviceListResource" pagination-id="services"
+                   dir-paginate="service in $ctrl.serviceList.services | itemsPerPage: default"
+                   service="service">
+  </kd-service-card>
   <kd-resource-card-list-footer>
     <kd-resource-card-list-pagination pagination-id="services" list="$ctrl.serviceList"
-                                      list-resource="$ctrl.serviceListResource">
+                                      list-resource="::$ctrl.serviceListResource">
     </kd-resource-card-list-pagination>
   </kd-resource-card-list-footer>
 </kd-resource-card-list>

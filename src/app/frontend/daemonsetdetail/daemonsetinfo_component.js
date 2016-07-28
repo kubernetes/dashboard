@@ -22,7 +22,7 @@ export default class DaemonSetInfoController {
   constructor() {
     /**
      * Daemon set details. Initialized from the scope.
-     * @export {!backendApi.DaemonSet}
+     * @export {!backendApi.DaemonSetDetail}
      */
     this.daemonSet;
 
@@ -48,13 +48,13 @@ export const daemonSetInfoComponent = {
   controller: DaemonSetInfoController,
   templateUrl: 'daemonsetdetail/daemonsetinfo.html',
   bindings: {
-    /** {!backendApi.DaemonSet} */
+    /** {!backendApi.DaemonSetDetail} */
     'daemonSet': '=',
   },
 };
 
 /**
- * @param  {!backendApi.DaemonSet} daemonSet
+ * @param  {!backendApi.DaemonSetDetail} daemonSet
  * @return {!Object} a dictionary of translatable messages
  */
 function i18n(daemonSet) {

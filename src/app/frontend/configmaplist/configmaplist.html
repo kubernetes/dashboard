@@ -16,7 +16,8 @@ limitations under the License.
 
 <kd-content-card ng-if="!$ctrl.shouldShowZeroState()">
   <kd-content>
-    <kd-config-map-card-list config-map-list="$ctrl.configMapList">
+    <kd-config-map-card-list config-map-list="$ctrl.configMapList"
+                             config-map-list-resource="$ctrl.configMapListResource">
     </kd-config-map-card-list>
   </kd-content>
 </kd-content-card>

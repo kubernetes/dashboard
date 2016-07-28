@@ -14,6 +14,7 @@
 
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {PaginationService} from 'common/pagination/pagination_service';
 import {stateName as workloadsState} from 'workloads/workloads_state';
 
 import {DaemonSetListController} from './daemonsetlist_controller';
@@ -52,16 +53,15 @@ export default function stateConfig($stateProvider) {
 }
 
 /**
- * @param {!angular.$resource} $resource
+ * @param {!angular.Resource} kdDaemonSetListResource
  * @param {!./../chrome/chrome_state.StateParams} $stateParams
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveDaemonSetList($resource, $stateParams) {
-  /** @type {!angular.Resource<!backendApi.DaemonSetList>} */
-  let resource = $resource(`api/v1/daemonset/${$stateParams.namespace || ''}`);
-
-  return resource.get().$promise;
+export function resolveDaemonSetList(kdDaemonSetListResource, $stateParams) {
+  /** @type {!backendApi.PaginationQuery} */
+  let query = PaginationService.getDefaultResourceQuery($stateParams.namespace);
+  return kdDaemonSetListResource.get(query).$promise;
 }
 
 const i18n = {

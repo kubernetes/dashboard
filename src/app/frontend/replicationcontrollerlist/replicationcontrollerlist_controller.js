@@ -20,11 +20,15 @@
 export class ReplicationControllerListController {
   /**
    * @param {!backendApi.ReplicationControllerList} replicationControllerList
+   * @param {!angular.Resource} kdRCListResource
    * @ngInject
    */
-  constructor(replicationControllerList) {
+  constructor(replicationControllerList, kdRCListResource) {
     /** @export {!backendApi.ReplicationControllerList} */
     this.replicationControllerList = replicationControllerList;
+
+    /** @export {!angular.Resource} */
+    this.rcListResource = kdRCListResource;
   }
 
   /**

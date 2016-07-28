@@ -35,6 +35,7 @@ export const configMapCardListComponent = {
   controller: ConfigMapCardListController,
   bindings: {
     'configMapList': '<',
+    'configMapListResource': '<',
   },
   templateUrl: 'configmaplist/configmapcardlist.html',
 };
