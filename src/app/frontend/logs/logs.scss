@@ -27,20 +27,21 @@ $logs-color-white: #fff;
   color: $logs-color-black;
 }
 
-.kd-logs-element-compact {
-  font-size: $caption-font-size-base;
-}
-
-.kd-logs-element {
-  font-size: $body-font-size-base;
-}
-
-.kd-logs-element,
-.kd-logs-element-compact {
+@mixin kd-logs-element-mixin {
   padding: 0 (2 * $baseline-grid);
   word-wrap: break-word;
 
   pre {
     margin: 0;
   }
+}
+
+.kd-logs-element-compact {
+  font-size: $caption-font-size-base;
+  @include kd-logs-element-mixin;
+}
+
+.kd-logs-element {
+  font-size: $body-font-size-base;
+  @include kd-logs-element-mixin;
 }
