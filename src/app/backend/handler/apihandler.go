@@ -34,6 +34,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/node"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/petset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/secret"
@@ -366,6 +367,15 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 	apiV1Ws.Route(
 		apiV1Ws.PUT("/{kind}/namespace/{namespace}/name/{name}").
 			To(apiHandler.handlePutResource))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/persistentvolume").
+			To(apiHandler.handleGetPersistentVolumeList).
+			Writes(persistentvolume.PersistentVolumeList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/persistentvolume/{persistentvolume}").
+			To(apiHandler.handleGetPersistentVolumeDetail).
+			Writes(persistentvolume.PersistentVolumeDetail{}))
 	return wsContainer
 }
 
@@ -939,6 +949,26 @@ func (apiHandler *APIHandler) handleGetConfigMapDetail(request *restful.Request,
 	namespace := request.PathParameter("namespace")
 	service := request.PathParameter("configmap")
 	result, err := configmap.GetConfigMapDetail(apiHandler.client, namespace, service)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+func (apiHandler *APIHandler) handleGetPersistentVolumeList(request *restful.Request, response *restful.Response) {
+	pagination := parsePaginationPathParameter(request)
+	result, err := persistentvolume.GetPersistentVolumeList(apiHandler.client, pagination)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetPersistentVolumeDetail(request *restful.Request, response *restful.Response) {
+	name := request.PathParameter("persistentvolume")
+	result, err := persistentvolume.GetPersistentVolumeDetail(apiHandler.client, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
