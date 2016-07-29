@@ -73,6 +73,9 @@ type ResourceChannels struct {
 
 	// List and error channels to PodMetrics.
 	PodMetrics PodMetricsChannel
+
+	// List and error channels to PersistentVolumes
+	PersistentVolumeList PersistentVolumeListChannel
 }
 
 // ServiceListChannel is a list and error channels to Services.
@@ -497,6 +500,31 @@ func GetPodMetricsChannel(heapsterClient kdClient.HeapsterClient, name string, n
 		metrics, err := getPodListMetrics(podNamesByNamespace, heapsterClient)
 		channel.MetricsByPod <- metrics
 		channel.Error <- err
+	}()
+
+	return channel
+}
+
+// PersistentVolumeListChannel is a list and error channels to PersistentVolumes.
+type PersistentVolumeListChannel struct {
+	List  chan *api.PersistentVolumeList
+	Error chan error
+}
+
+// GetPersistentVolumeListChannel returns a pair of channels to a PersistentVolume list and errors that
+// both must be read numReads times.
+func GetPersistentVolumeListChannel(client client.PersistentVolumesInterface, numReads int) PersistentVolumeListChannel {
+	channel := PersistentVolumeListChannel{
+		List:  make(chan *api.PersistentVolumeList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.PersistentVolumes().List(listEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
 	}()
 
 	return channel
