@@ -24,12 +24,12 @@ export class LogsController {
    * @ngInject
    */
   constructor(podLogs, logsService, $sce) {
-    var self = this;
+    let self = this;
 
     /** @export {!Array<string>} Log set. */
     this.logsSet = podLogs.logs.map(function(line) {
-      var escapedLine = self.escapeHtml(line);
-      var formattedLine = ansi_up.ansi_to_html(escapedLine);
+      let escapedLine = self.escapeHtml(line);
+      let formattedLine = ansi_up.ansi_to_html(escapedLine);
 
       // We know that trustAsHtml is safe here because escapedLine is escaped
       // to not contain any HTML markup, and formattedLine is the result of
@@ -74,7 +74,7 @@ export class LogsController {
    * @returns {string}
    */
   escapeHtml(html) {
-    var div = document.createElement('div');
+    let div = document.createElement('div');
     div.appendChild(document.createTextNode(html));
     return div.innerHTML;
   }
