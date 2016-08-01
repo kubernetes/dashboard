@@ -11,10 +11,13 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import configMapListModule from 'configmaplist/configmaplist_module';
 
-describe('Config Map card list', () => {
-  /** @type {!configmaplist/configmapcard_component.ConfigMapCardListController} */
+import replicasetListModule from 'replicasetlist/replicasetlist_module';
+
+describe('Replica Set Card List controller', () => {
+  /**
+   * @type {!replicasetlist/replicasetcardlist_component.ReplicaSetCardListController}
+   */
   let ctrl;
   /**
    * @type {!./../common/namespace/namespace_service.NamespaceService}
@@ -22,14 +25,13 @@ describe('Config Map card list', () => {
   let data;
 
   beforeEach(() => {
-    angular.mock.module(configMapListModule.name);
+    angular.mock.module(replicasetListModule.name);
 
-    angular.mock.inject(($componentController, $rootScope, kdNamespaceService) => {
+    angular.mock.inject(($componentController, kdNamespaceService) => {
       /** @type {!./../common/namespace/namespace_service.NamespaceService} */
       data = kdNamespaceService;
-      /** @type {!ConfigMapCardListController} */
-      ctrl = $componentController(
-          'kdConfigMapCardList', {$scope: $rootScope, kdNamespaceService_: data}, {});
+      /** @type {!ReplicaSetCardListController} */
+      ctrl = $componentController('kdReplicaSetCardList', {kdNamespaceService_: data});
     });
   });
 
@@ -38,6 +40,4 @@ describe('Config Map card list', () => {
   it('should return the value from Namespace service', () => {
     expect(ctrl.areMultipleNamespacesSelected()).toBe(data.areMultipleNamespacesSelected());
   });
-
-  it('should init i18n', () => { expect(ctrl.i18n).not.toBeUndefined(); });
 });

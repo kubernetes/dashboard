@@ -15,6 +15,7 @@
 import componentsModule from 'common/components/components_module';
 import chromeModule from 'chrome/chrome_module';
 import filtersModule from 'common/filters/filters_module';
+import namespaceModule from 'common/namespace/namespace_module';
 import stateConfig from './servicelist_stateconfig';
 import {serviceCardListComponent} from './servicecardlist_component';
 import {serviceCardComponent} from './servicecard_component';
@@ -34,6 +35,7 @@ export default angular
           filtersModule.name,
           componentsModule.name,
           chromeModule.name,
+          namespaceModule.name,
         ])
     .config(stateConfig)
     .component('kdServiceCardList', serviceCardListComponent)

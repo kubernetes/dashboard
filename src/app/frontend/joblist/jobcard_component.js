@@ -23,9 +23,10 @@ import {stateName} from 'jobdetail/jobdetail_state';
 export default class JobCardController {
   /**
    * @param {!ui.router.$state} $state
+   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
    * @ngInject
    */
-  constructor($state) {
+  constructor($state, kdNamespaceService) {
     /**
      * Initialized from the scope.
      * @export {!backendApi.Job}
@@ -34,6 +35,17 @@ export default class JobCardController {
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
+
+    /** @private {!./../common/namespace/namespace_service.NamespaceService} */
+    this.kdNamespaceService_ = kdNamespaceService;
+  }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  areMultipleNamespacesSelected() {
+    return this.kdNamespaceService_.areMultipleNamespacesSelected();
   }
 
   /**

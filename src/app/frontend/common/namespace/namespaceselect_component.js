@@ -25,9 +25,10 @@ export class NamespaceSelectController {
    * @param {!angular.$resource} $resource
    * @param {!ui.router.$state} $state
    * @param {!angular.Scope} $scope
+   * @param {!./namespace_service.NamespaceService} kdNamespaceService
    * @ngInject
    */
-  constructor($resource, $state, $scope) {
+  constructor($resource, $state, $scope, kdNamespaceService) {
     /**
      * Initialized with all namespaces on first open.
      * @export {!Array<string>}
@@ -48,6 +49,11 @@ export class NamespaceSelectController {
      * @export {string}
      */
     this.selectedNamespace;
+
+    /**
+     * @private {!./namespace_service.NamespaceService}
+     */
+    this.namespaceService_ = kdNamespaceService;
 
     /** @private {!angular.$resource} */
     this.resource_ = $resource;
@@ -85,16 +91,20 @@ export class NamespaceSelectController {
         if (this.namespacesInitialized_) {
           if (this.namespaces.indexOf(newNamespace) >= 0) {
             this.selectedNamespace = newNamespace;
+            this.namespaceService_.setMultipleNamespacesSelected(false);
           } else {
             this.selectedNamespace = NAMESPACE_NOT_SELECTED;
+            this.namespaceService_.setMultipleNamespacesSelected(true);
           }
           this.changeNamespace();
         } else {
           this.namespaces = [newNamespace];
           this.selectedNamespace = newNamespace;
+          this.namespaceService_.setMultipleNamespacesSelected(false);
         }
       } else {
         this.selectedNamespace = NAMESPACE_NOT_SELECTED;
+        this.namespaceService_.setMultipleNamespacesSelected(true);
       }
     }
   }

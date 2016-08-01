@@ -17,6 +17,7 @@ import stateConfig from './secretlist_stateconfig';
 import paginationModule from 'common/pagination/pagination_module';
 import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
+import namespaceModule from 'common/namespace/namespace_module';
 import {secretCardListComponent} from './secretcardlist_component';
 import {secretCardComponent} from './secretcard_component';
 
@@ -36,6 +37,7 @@ export default angular
           componentsModule.name,
           paginationModule.name,
           filtersModule.name,
+          namespaceModule.name,
         ])
     .config(stateConfig)
     .component('kdSecretCardList', secretCardListComponent)
