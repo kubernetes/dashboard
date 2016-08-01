@@ -12,18 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NamespaceService} from './namespace_service';
-import {namespaceSelectComponent} from './namespaceselect_component';
-
 /**
- * Angular module global namespace selection components.
+ * Service class for registering namespace.
+ * @final
  */
-export default angular
-    .module(
-        'kubernetesDashboard.common.namespace',
-        [
-          'ngMaterial',
-          'ngResource',
-        ])
-    .component('kdNamespaceSelect', namespaceSelectComponent)
-    .service('kdNamespaceService', NamespaceService);
+export class NamespaceService {
+  /**
+   * @ngInject
+   */
+  constructor() {
+    /** @private {boolean} */
+    this.multipleNamespacesSelected_ = true;
+  }
+
+  /**
+     * Getter for multipleNamespacesSelected_ flag.
+     * @return {boolean}
+     */
+  areMultipleNamespacesSelected() { return this.multipleNamespacesSelected_; }
+
+  /**
+   * Switches the multipleNamespacesSelected flag.
+   * @param {boolean} multipleSelected
+   */
+  setMultipleNamespacesSelected(multipleSelected) {
+    this.multipleNamespacesSelected_ = multipleSelected;
+  }
+}

@@ -19,11 +19,23 @@
  */
 export class PetSetCardListController {
   /**
+   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
    * @ngInject
    */
-  constructor() {
+  constructor(kdNamespaceService) {
+    /** @private {!./../common/namespace/namespace_service.NamespaceService} */
+    this.kdNamespaceService_ = kdNamespaceService;
+
     /** @export */
     this.i18n = i18n;
+  }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  areMultipleNamespacesSelected() {
+    return this.kdNamespaceService_.areMultipleNamespacesSelected();
   }
 }
 
@@ -43,6 +55,8 @@ export const petSetCardListComponent = {
 const i18n = {
   /** @export {string} @desc Pet set list header: name. */
   MSG_PET_SET_LIST_HEADER_NAME: goog.getMsg('Name'),
+  /** @export {string} @desc Pet set list header: namespace. */
+  MSG_PET_SET_LIST_NAMESPACE_LABEL: goog.getMsg('Namespace'),
   /** @export {string} @desc Pet set list header: labels. */
   MSG_PET_SET_LIST_HEADER_LABELS: goog.getMsg('Labels'),
   /** @export {string} @desc Pet set list header: pods. */

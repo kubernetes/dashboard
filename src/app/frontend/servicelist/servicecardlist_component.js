@@ -16,10 +16,24 @@
  * @final
  */
 export class ServiceCardListController {
-  /** @ngInject */
-  constructor() {
+  /**
+   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
+   * @ngInject
+   */
+  constructor(kdNamespaceService) {
+    /** @private {!./../common/namespace/namespace_service.NamespaceService} */
+    this.kdNamespaceService_ = kdNamespaceService;
+
     /** @export */
     this.i18n = i18n;
+  }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  areMultipleNamespacesSelected() {
+    return this.kdNamespaceService_.areMultipleNamespacesSelected();
   }
 }
 
@@ -45,6 +59,9 @@ const i18n = {
   /** @export {string} @desc Label 'Name' which appears as a column label in the table of
      services (service list view). */
   MSG_SERVICE_LIST_NAME_LABEL: goog.getMsg('Name'),
+  /** @export {string} @desc Label 'Namespace' which appears as a column label in the
+     table of services (service list view). */
+  MSG_SERVICE_LIST_NAMESPACE_LABEL: goog.getMsg('Namespace'),
   /** @export {string} @desc Label 'Labels' which appears as a column label in the table of
      services (service list view). */
   MSG_SERVICE_LIST_LABELS_LABEL: goog.getMsg('Labels'),
