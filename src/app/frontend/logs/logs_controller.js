@@ -24,11 +24,9 @@ export class LogsController {
    * @ngInject
    */
   constructor(podLogs, logsService, $sce) {
-    let self = this;
-
     /** @export {!Array<string>} Log set. */
-    this.logsSet = podLogs.logs.map(function(line) {
-      let escapedLine = self.escapeHtml(line);
+    this.logsSet = podLogs.logs.map(line => {
+      let escapedLine = this.escapeHtml(line);
       let formattedLine = ansi_up.ansi_to_html(escapedLine);
 
       // We know that trustAsHtml is safe here because escapedLine is escaped
