@@ -22,6 +22,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 )
 
 // ReplicaSetDetail is a presentation layer view of Kubernetes Replica Set resource. This means
@@ -36,6 +37,9 @@ type ReplicaSetDetail struct {
 
 	// Detailed information about Pods belonging to this Replica Set.
 	PodList pod.PodList `json:"podList"`
+
+	// Detailed information about service related to Daemon Set.
+	ServiceList resourceService.ServiceList `json:"serviceList"`
 
 	// Container images of the Replica Set.
 	ContainerImages []string `json:"containerImages"`
@@ -70,6 +74,11 @@ func GetReplicaSetDetail(client k8sClient.Interface, heapsterClient client.Heaps
 		return nil, err
 	}
 
-	replicaSet := ToReplicaSetDetail(replicaSetData, *eventList, *podList, *podInfo)
+	serviceList, err := GetReplicaSetServices(client, pQuery, namespace, name)
+	if err != nil {
+		return nil, err
+	}
+
+	replicaSet := ToReplicaSetDetail(replicaSetData, *eventList, *podList, *podInfo, *serviceList)
 	return &replicaSet, nil
 }

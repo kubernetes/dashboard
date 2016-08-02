@@ -28,6 +28,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/service"
 )
 
 type FakeHeapsterClient struct {
@@ -41,6 +42,7 @@ func (c FakeHeapsterClient) Get(path string) client.RequestInterface {
 func TestGetReplicaSetDetail(t *testing.T) {
 	eventList := &api.EventList{}
 	podList := &api.PodList{}
+	serviceList := &api.ServiceList{}
 
 	cases := []struct {
 		namespace, name string
@@ -50,7 +52,7 @@ func TestGetReplicaSetDetail(t *testing.T) {
 	}{
 		{
 			"test-namespace", "test-name",
-			[]string{"get", "list", "get", "list", "list", "get", "list", "list"},
+			[]string{"get", "list", "get", "list", "list", "get", "list", "list", "get", "list"},
 			&extensions.ReplicaSet{
 				ObjectMeta: api.ObjectMeta{Name: "test-replicaset"},
 				Spec: extensions.ReplicaSetSpec{
@@ -59,18 +61,19 @@ func TestGetReplicaSetDetail(t *testing.T) {
 					}},
 			},
 			&ReplicaSetDetail{
-				ObjectMeta: common.ObjectMeta{Name: "test-replicaset"},
-				TypeMeta:   common.TypeMeta{Kind: common.ResourceKindReplicaSet},
-				PodInfo:    common.PodInfo{Warnings: []common.Event{}},
-				PodList:    pod.PodList{Pods: []pod.Pod{}},
-				EventList:  common.EventList{Events: []common.Event{}},
+				ObjectMeta: 	common.ObjectMeta{Name: "test-replicaset"},
+				TypeMeta:   	common.TypeMeta{Kind: common.ResourceKindReplicaSet},
+				PodInfo:    	common.PodInfo{Warnings: []common.Event{}},
+				PodList:    	pod.PodList{Pods: []pod.Pod{}},
+				ServiceList:    service.ServiceList{Services: []service.Service{}},
+				EventList:  	common.EventList{Events: []common.Event{}},
 			},
 		},
 	}
 
 	for _, c := range cases {
-		fakeClient := testclient.NewSimpleFake(c.replicaSet, podList, eventList, c.replicaSet,
-			podList, eventList)
+		fakeClient := testclient.NewSimpleFake(c.replicaSet, podList, serviceList, eventList, c.replicaSet,
+			podList, serviceList, eventList)
 		fakeHeapsterClient := FakeHeapsterClient{client: testclient.NewSimpleFake()}
 
 		actual, _ := GetReplicaSetDetail(fakeClient, fakeHeapsterClient, common.NoPagination,

@@ -20,6 +20,14 @@ limitations under the License.
       <md-tab label="{{::ctrl.i18n.MSG_REPLICA_SET_DETAIL_OVERVIEW_LABEL}}">
         <kd-replica-set-info replica-set="::ctrl.replicaSetDetail"></kd-replica-set-info>
 
+        <kd-content-card ng-if="::ctrl.replicaSetDetail.serviceList.services.length">
+          <kd-title>{{::ctrl.i18n.MSG_REPLICA_SET_DETAIL_SERVICES_TITLE}}</kd-title>
+          <kd-content>
+            <kd-service-card-list service-list="::ctrl.replicaSetDetail.serviceList"
+                                  service-list-resource="::ctrl.replicaSetServicesResource">
+            </kd-service-card-list>
+          </kd-content>
+        </kd-content-card>
         <kd-content-card ng-if="::ctrl.replicaSetDetail.podList.pods.length">
           <kd-title>{{::ctrl.i18n.MSG_REPLICA_SET_DETAIL_PODS_TITLE}}</kd-title>
           <kd-content>

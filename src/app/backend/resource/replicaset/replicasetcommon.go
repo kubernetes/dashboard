@@ -18,6 +18,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/service"
 
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/extensions"
@@ -60,7 +61,7 @@ func ToReplicaSet(replicaSet *extensions.ReplicaSet, podInfo *common.PodInfo) Re
 
 // ToReplicaSetDetail converts replica set api object to replica set detail model object.
 func ToReplicaSetDetail(replicaSet *extensions.ReplicaSet, eventList common.EventList,
-	podList pod.PodList, podInfo common.PodInfo) ReplicaSetDetail {
+	podList pod.PodList, podInfo common.PodInfo, serviceList service.ServiceList) ReplicaSetDetail {
 
 	return ReplicaSetDetail{
 		ObjectMeta:      common.NewObjectMeta(replicaSet.ObjectMeta),
@@ -69,6 +70,7 @@ func ToReplicaSetDetail(replicaSet *extensions.ReplicaSet, eventList common.Even
 		PodInfo:         podInfo,
 		// TODO(floreks): add pagination support
 		PodList:   podList,
+		ServiceList: 	 serviceList,
 		EventList: eventList,
 	}
 }
