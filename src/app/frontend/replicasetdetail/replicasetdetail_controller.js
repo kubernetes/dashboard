@@ -18,14 +18,19 @@
 export class ReplicaSetDetailController {
   /**
    * @param {!backendApi.ReplicaSetDetail} replicaSetDetail
+   * @param {!angular.Resource} kdReplicaSetPodsResource
+   * @param {!angular.Resource} kdReplicaSetServicesResource
    * @ngInject
    */
-  constructor(replicaSetDetail, kdReplicaSetPodsResource) {
+  constructor(replicaSetDetail, kdReplicaSetPodsResource, kdReplicaSetServicesResource) {
     /** @export {!backendApi.ReplicaSetDetail} */
     this.replicaSetDetail = replicaSetDetail;
 
     /** @export {!angular.Resource} */
     this.replicaSetPodsResource = kdReplicaSetPodsResource;
+
+    /** @export {!angular.Resource} */
+    this.replicaSetServicesResource = kdReplicaSetServicesResource;
 
     /** @export */
     this.i18n = i18n;
@@ -36,6 +41,9 @@ const i18n = {
   /** @export {string} @desc Title 'Pods', which appears at the top of the pods list on the
       replica set details view. */
   MSG_REPLICA_SET_DETAIL_PODS_TITLE: goog.getMsg('Pods'),
+  /** @export {string} @desc Title 'Services' for the services information section on the replica set
+   *  detail page. */
+  MSG_REPLICA_SET_DETAIL_SERVICES_TITLE: goog.getMsg('Services'),
   /** @export {string} @desc Label 'Overview' for the left navigation tab on the replica
       set details page. */
   MSG_REPLICA_SET_DETAIL_OVERVIEW_LABEL: goog.getMsg('Overview'),

@@ -732,4 +732,5 @@
 	<translation id="910153156225182799" key="MSG_CONFIG_MAP_LIST_NAMESPACE_LABEL" source="/home/denis/Projects/dashboard/.tmp/serve/app-dev.js" desc="Config map list header: namespace.">Namespace</translation>
 	<translation id="6106340570580081121" key="MSG_DAEMON_SET_DETAIL_SERVICES_TITLE" source="/home/denis/Projects/dashboard/.tmp/serve/app-dev.js" desc="Title 'Services' for the services information section on the daemon set detail page.">Services</translation>
 	<translation id="6106340570580081121" key="MSG_DAEMON_SET_DETAIL_SERVICES_TITLE" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Title 'Services' for the services information section on the daemon set detail page.">Services</translation>
+	<translation id="4440799155040620024" key="MSG_REPLICA_SET_DETAIL_SERVICES_TITLE" source="/home/denis/Projects/dashboard/.tmp/serve/app-dev.js" desc="Title 'Services' for the services information section on the replica set detail page.">Services</translation>
 </translationbundle>
