@@ -44,6 +44,7 @@ import (
 	clientK8s "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
 	"k8s.io/kubernetes/pkg/runtime"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/graph"
 )
 
 const (
@@ -376,6 +377,11 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 		apiV1Ws.GET("/persistentvolume/{persistentvolume}").
 			To(apiHandler.handleGetPersistentVolumeDetail).
 			Writes(persistentvolume.PersistentVolumeDetail{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/graph").
+		To(apiHandler.handleGetGraph))
+
 	return wsContainer
 }
 
@@ -1174,6 +1180,24 @@ func (apiHandler *APIHandler) handleGetJobPods(request *restful.Request,
 
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
+
+// Handles get graph API call
+func (apiHandler *APIHandler) handleGetGraph(request *restful.Request,
+response *restful.Response) {
+	if request.Request.Form == nil {
+		request.Request.ParseMultipartForm(32 << 20)
+	}
+	query := request.Request.Form
+
+	data, err := graph.ExecuteRawQuery(apiHandler.heapsterClient, apiHandler.client, query)
+
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, data)
+}
+
 
 // parseNamespacePathParameter parses namespace selector for list pages in path paramater.
 // The namespace selector is a comma separated list of namespaces that are trimmed.
