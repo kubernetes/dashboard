@@ -74,7 +74,7 @@ type SecretList struct {
 
 // GetSecretList - return all secrets in the given namespace.
 func GetSecretList(client *client.Client, namespace *common.NamespaceQuery,
-	pQuery *common.PaginationQuery) (*SecretList, error) {
+	dsQuery *common.DataSelectQuery) (*SecretList, error) {
 	secretList, err := client.Secrets(namespace.ToRequestParam()).List(api.ListOptions{
 		LabelSelector: labels.Everything(),
 		FieldSelector: fields.Everything(),
@@ -82,7 +82,7 @@ func GetSecretList(client *client.Client, namespace *common.NamespaceQuery,
 	if err != nil {
 		return nil, err
 	}
-	return NewSecretList(secretList.Items, pQuery), err
+	return NewSecretList(secretList.Items, dsQuery), err
 }
 
 // CreateSecret - create a single secret using the cluster API client
@@ -107,13 +107,13 @@ func NewSecret(secret *api.Secret) *Secret {
 }
 
 // NewSecret - creates a new instance of SecretList struct based on K8s Secrets array.
-func NewSecretList(secrets []api.Secret, pQuery *common.PaginationQuery) *SecretList {
+func NewSecretList(secrets SelectableSecretList, dsQuery *common.DataSelectQuery) *SecretList {
 	newSecretList := &SecretList{
 		ListMeta: common.ListMeta{TotalItems: len(secrets)},
 		Secrets:  make([]Secret, 0),
 	}
 
-	secrets = paginate(secrets, pQuery)
+	secrets = common.GenericDataSelect(secrets, dsQuery).(SelectableSecretList)
 
 	for _, secret := range secrets {
 		newSecretList.Secrets = append(newSecretList.Secrets, *NewSecret(&secret))
