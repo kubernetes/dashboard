@@ -25,7 +25,7 @@ export class LogsController {
    */
   constructor(podLogs, logsService, $sce) {
     /** @export {!Array<string>} Log set. */
-    this.logsSet = podLogs.logs.map(line => {
+    this.logsSet = podLogs.logs.map((line) => {
       let escapedLine = this.escapeHtml(line);
       let formattedLine = ansi_up.ansi_to_html(escapedLine);
 
