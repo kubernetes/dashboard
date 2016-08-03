@@ -543,4 +543,5 @@
 	<translation id="7091154364335994224" key="MSG_DAEMON_SET_LIST_NAMESPACE_LABEL" source="/home/denis/Projects/dashboard/.tmp/serve/app-dev.js" desc="Label 'Namespace' which appears as a column label in the table of daemon sets (daemon set list view).">Namespace</translation>
 	<translation id="4677646778972512564" key="MSG_RC_LIST_NAMESPACE_LABEL" source="/home/denis/Projects/dashboard/.tmp/serve/app-dev.js" desc="Label 'Namespace' which appears as a column label in the table of replication controllers (RC list view).">Namespace</translation>
 	<translation id="6106340570580081121" key="MSG_DAEMON_SET_DETAIL_SERVICES_TITLE" source="/home/denis/Projects/dashboard/.tmp/serve/app-dev.js" desc="Title 'Services' for the services information section on the daemon set detail page.">Services</translation>
+	<translation id="4440799155040620024" key="MSG_REPLICA_SET_DETAIL_SERVICES_TITLE" source="/home/denis/Projects/dashboard/.tmp/serve/app-dev.js" desc="Title 'Services' for the services information section on the replica set detail page.">Services</translation>
 </translationbundle>
