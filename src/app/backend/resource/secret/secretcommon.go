@@ -16,17 +16,30 @@ package secret
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-
 	"k8s.io/kubernetes/pkg/api"
 )
 
-func paginate(secrets []api.Secret, pQuery *common.PaginationQuery) []api.Secret {
-	startIndex, endIndex := pQuery.GetPaginationSettings(len(secrets))
+// The code below allows to perform complex data section on
+type SelectableSecretList []api.Secret
 
-	// Return all items if provided settings do not meet requirements
-	if !pQuery.CanPaginate(len(secrets), startIndex) {
-		return secrets
-	}
-
-	return secrets[startIndex:endIndex]
+var propertyGetters = map[string]func(SelectableSecretList, int)(common.ComparableValueInterface){
+	"name": func(self SelectableSecretList, i int)(common.ComparableValueInterface){return common.StdComparableString(self[i].ObjectMeta.Name)},
+	"creationTimestamp": func(self SelectableSecretList, i int)(common.ComparableValueInterface){return common.StdComparableTime(self[i].ObjectMeta.CreationTimestamp.Time)},
+	"namespace": func(self SelectableSecretList, i int)(common.ComparableValueInterface){return common.StdComparableString(self[i].ObjectMeta.Namespace)},
 }
+
+// its a bit pain to define these, just copy and paste...
+func (self SelectableSecretList) Len() int {return len(self)}
+func (self SelectableSecretList) Slice(start, end int) common.SelectableInterface {return self[start:end]}
+func (self SelectableSecretList) Swap(i int, j int) {self[i], self[j] = self[j], self[i]}
+
+func (self SelectableSecretList) GetPropertyAtIndex(name string, i int) common.ComparableValueInterface {
+	getter, isGetterPresent := propertyGetters[name]
+	if !isGetterPresent {
+		// if getter not present then just return a constant dummy value, sort will have no effect.
+		return common.StdComparableInt(0)
+	}
+	return getter(self, i)
+}
+// -------------------
+

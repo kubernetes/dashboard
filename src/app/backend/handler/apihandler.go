@@ -939,9 +939,9 @@ func (apiHandler *APIHandler) handleGetSecretDetail(request *restful.Request, re
 
 // Handles get secrets list API call.
 func (apiHandler *APIHandler) handleGetSecretList(request *restful.Request, response *restful.Response) {
+	dataSelect := parseDataSelectPathParameter(request)
 	namespace := parseNamespacePathParameter(request)
-	pagination := parsePaginationPathParameter(request)
-	result, err := secret.GetSecretList(apiHandler.client, namespace, pagination)
+	result, err := secret.GetSecretList(apiHandler.client, namespace, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1219,4 +1219,16 @@ func parsePaginationPathParameter(request *restful.Request) *common.PaginationQu
 
 	// Frontend pages start from 1 and backend starts from 0
 	return common.NewPaginationQuery(int(itemsPerPage), int(page-1))
+}
+
+
+func parseSortPathParameter(request *restful.Request) *common.SortQuery {
+	return common.NewSortQuery(strings.Split(request.QueryParameter("sortby"), ","))
+
+}
+
+func parseDataSelectPathParameter(request *restful.Request) *common.DataSelectQuery {
+	paginationQuery := parsePaginationPathParameter(request)
+	sortQuery := parseSortPathParameter(request)
+	return common.NewDataSelect(paginationQuery, sortQuery)
 }
