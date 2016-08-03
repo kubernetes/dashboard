@@ -22,7 +22,7 @@
     "clang-format": "1.0.42",
     "del": "~2.2.1",
     "eslint-plugin-angular": "~1.3.0",
-    "file-exists": "1.0.0",
+    "file-exists": "2.0.0",
     "google-closure-compiler": "~20160713.2.0",
     "gulp": "~3.9.1",
     "gulp-angular-templatecache": "~2.0.0",
