@@ -652,6 +652,23 @@ func (apiHandler *APIHandler) handleGetReplicaSetPods(
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
+// Handles get Replica Set services API call.
+func (apiHandler *APIHandler) handleGetReplicaSetServices(
+	request *restful.Request, response *restful.Response) {
+
+	namespace := request.PathParameter("namespace")
+	replicaSet := request.PathParameter("replicaSet")
+	pagination := parsePaginationPathParameter(request)
+	result, err := replicaset.GetReplicaSetServices(apiHandler.client, pagination, namespace,
+		replicaSet)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
 // Handles get Deployment list API call.
 func (apiHandler *APIHandler) handleGetDeployments(
 	request *restful.Request, response *restful.Response) {
