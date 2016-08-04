@@ -23,7 +23,7 @@ import (
 
 // GetReplicaSetServices returns list of services that are related to replica set targeted by given
 // name.
-func GetReplicaSetServices(client client.Interface, pQuery *common.PaginationQuery,
+func GetReplicaSetServices(client client.Interface, dsQuery *common.DataSelectQuery,
 	namespace, name string) (*service.ServiceList, error) {
 
 	replicaSet, err := client.Extensions().ReplicaSets(namespace).Get(name)
@@ -43,5 +43,5 @@ func GetReplicaSetServices(client client.Interface, pQuery *common.PaginationQue
 
 	matchingServices := common.FilterNamespacedServicesBySelector(services.Items, namespace,
 		replicaSet.Spec.Selector.MatchLabels)
-	return service.CreateServiceList(matchingServices, pQuery), nil
+	return service.CreateServiceList(matchingServices, dsQuery), nil
 }

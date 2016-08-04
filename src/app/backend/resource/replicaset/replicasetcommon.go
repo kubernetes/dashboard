@@ -27,14 +27,14 @@ import (
 // CreateReplicaSetList creates paginated list of Replica Set model
 // objects based on Kubernetes Replica Set objects array and related resources arrays.
 func CreateReplicaSetList(replicaSets []extensions.ReplicaSet, pods []api.Pod,
-	events []api.Event, pQuery *common.PaginationQuery) *ReplicaSetList {
+	events []api.Event, dsQuery *common.DataSelectQuery) *ReplicaSetList {
 
 	replicaSetList := &ReplicaSetList{
 		ReplicaSets: make([]ReplicaSet, 0),
 		ListMeta:    common.ListMeta{TotalItems: len(replicaSets)},
 	}
 
-	replicaSets = paginate(replicaSets, pQuery)
+	replicaSets = fromCells(common.GenericDataSelect(toCells(replicaSets), dsQuery))
 
 	for _, replicaSet := range replicaSets {
 		matchingPods := common.FilterNamespacedPodsBySelector(pods, replicaSet.ObjectMeta.Namespace,
@@ -75,15 +75,39 @@ func ToReplicaSetDetail(replicaSet *extensions.ReplicaSet, eventList common.Even
 	}
 }
 
-func paginate(replicaSets []extensions.ReplicaSet,
-	pQuery *common.PaginationQuery) []extensions.ReplicaSet {
+// The code below allows to perform complex data section on []extensions.ReplicaSet
 
-	startIndex, endIndex := pQuery.GetPaginationSettings(len(replicaSets))
+var propertyGetters = map[string]func(ReplicaSetCell)(common.ComparableValue){
+	"name": func(self ReplicaSetCell)(common.ComparableValue) {return common.StdComparableString(self.ObjectMeta.Name)},
+	"creationTimestamp": func(self ReplicaSetCell)(common.ComparableValue) {return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)},
+	"namespace": func(self ReplicaSetCell)(common.ComparableValue) {return common.StdComparableString(self.ObjectMeta.Namespace)},
+}
 
-	// Return all items if provided settings do not meet requirements
-	if !pQuery.CanPaginate(len(replicaSets), startIndex) {
-		return replicaSets
+
+type ReplicaSetCell extensions.ReplicaSet
+
+func (self ReplicaSetCell) GetProperty(name string) common.ComparableValue {
+	getter, isGetterPresent := propertyGetters[name]
+	if !isGetterPresent {
+		// if getter not present then just return a constant dummy value, sort will have no effect.
+		return common.StdComparableInt(0)
 	}
+	return getter(self)
+}
 
-	return replicaSets[startIndex:endIndex]
+
+func toCells(std []extensions.ReplicaSet) []common.GenericDataCell {
+	cells := make([]common.GenericDataCell, len(std))
+	for i := range std {
+		cells[i] = ReplicaSetCell(std[i])
+	}
+	return cells
+}
+
+func fromCells(cells []common.GenericDataCell) []extensions.ReplicaSet {
+	std := make([]extensions.ReplicaSet, len(cells))
+	for i := range std {
+		std[i] = extensions.ReplicaSet(cells[i].(ReplicaSetCell))
+	}
+	return std
 }

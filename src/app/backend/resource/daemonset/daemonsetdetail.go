@@ -55,7 +55,7 @@ type DaemonSetDetail struct {
 
 // Returns detailed information about the given daemon set in the given namespace.
 func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	pQuery *common.PaginationQuery, namespace, name string) (*DaemonSetDetail, error) {
+	dsQuery *common.DataSelectQuery, namespace, name string) (*DaemonSetDetail, error) {
 	log.Printf("Getting details of %s daemon set in %s namespace", name, namespace)
 
 	daemonSet, err := client.Extensions().DaemonSets(namespace).Get(name)
@@ -63,7 +63,7 @@ func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient client.Heapst
 		return nil, err
 	}
 
-	podList, err := GetDaemonSetPods(client, heapsterClient, pQuery, name, namespace)
+	podList, err := GetDaemonSetPods(client, heapsterClient, dsQuery, name, namespace)
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +73,7 @@ func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient client.Heapst
 		return nil, err
 	}
 
-	serviceList, err := GetDaemonSetServices(client, pQuery, namespace, name)
+	serviceList, err := GetDaemonSetServices(client, dsQuery, namespace, name)
 	if err != nil {
 		return nil, err
 	}

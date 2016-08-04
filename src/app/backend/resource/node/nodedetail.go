@@ -124,7 +124,7 @@ func GetNodeDetail(client k8sClient.Interface, heapsterClient client.HeapsterCli
 	}
 
 	// TODO(floreks) add pagination support
-	podList := pod.CreatePodList(pods.Items, common.NoPagination, heapsterClient)
+	podList := pod.CreatePodList(pods.Items, common.NoDataSelect, heapsterClient)
 
 	events, err := event.GetNodeEvents(client, node.Name)
 	if err != nil {

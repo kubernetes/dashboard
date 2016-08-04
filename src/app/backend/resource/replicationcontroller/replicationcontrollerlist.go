@@ -44,7 +44,7 @@ type ReplicationController struct {
 
 // GetReplicationControllerList returns a list of all Replication Controllers in the cluster.
 func GetReplicationControllerList(client *client.Client, nsQuery *common.NamespaceQuery,
-	pQuery *common.PaginationQuery) (*ReplicationControllerList, error) {
+	dsQuery *common.DataSelectQuery) (*ReplicationControllerList, error) {
 	log.Printf("Getting list of all replication controllers in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -53,13 +53,13 @@ func GetReplicationControllerList(client *client.Client, nsQuery *common.Namespa
 		EventList:                 common.GetEventListChannel(client, nsQuery, 1),
 	}
 
-	return GetReplicationControllerListFromChannels(channels, pQuery)
+	return GetReplicationControllerListFromChannels(channels, dsQuery)
 }
 
 // GetReplicationControllerListFromChannels returns a list of all Replication Controllers in the cluster
 // reading required resource list once from the channels.
 func GetReplicationControllerListFromChannels(channels *common.ResourceChannels,
-	pQuery *common.PaginationQuery) (*ReplicationControllerList, error) {
+	dsQuery *common.DataSelectQuery) (*ReplicationControllerList, error) {
 
 	rcList := <-channels.ReplicationControllerList.List
 	if err := <-channels.ReplicationControllerList.Error; err != nil {
@@ -76,5 +76,5 @@ func GetReplicationControllerListFromChannels(channels *common.ResourceChannels,
 		return nil, err
 	}
 
-	return CreateReplicationControllerList(rcList.Items, pQuery, podList.Items, eventList.Items), nil
+	return CreateReplicationControllerList(rcList.Items, dsQuery, podList.Items, eventList.Items), nil
 }

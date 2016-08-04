@@ -41,18 +41,18 @@ type ConfigMap struct {
 
 // GetConfigMapList returns a list of all ConfigMaps in the cluster.
 func GetConfigMapList(client *client.Client, nsQuery *common.NamespaceQuery,
-	pQuery *common.PaginationQuery) (*ConfigMapList, error) {
+	dsQuery *common.DataSelectQuery) (*ConfigMapList, error) {
 	log.Printf("Getting list config maps in the namespace %s", nsQuery.ToRequestParam())
 	channels := &common.ResourceChannels{
 		ConfigMapList: common.GetConfigMapListChannel(client, nsQuery, 1),
 	}
 
-	return GetConfigMapListFromChannels(channels, pQuery)
+	return GetConfigMapListFromChannels(channels, dsQuery)
 }
 
 // GetConfigMapListFromChannels returns a list of all Config Maps in the cluster
 // reading required resource list once from the channels.
-func GetConfigMapListFromChannels(channels *common.ResourceChannels, pQuery *common.PaginationQuery) (
+func GetConfigMapListFromChannels(channels *common.ResourceChannels, dsQuery *common.DataSelectQuery) (
 	*ConfigMapList, error) {
 
 	configMaps := <-channels.ConfigMapList.List
@@ -60,19 +60,19 @@ func GetConfigMapListFromChannels(channels *common.ResourceChannels, pQuery *com
 		return nil, err
 	}
 
-	result := getConfigMapList(configMaps.Items, pQuery)
+	result := getConfigMapList(configMaps.Items, dsQuery)
 
 	return result, nil
 }
 
-func getConfigMapList(configMaps []api.ConfigMap, pQuery *common.PaginationQuery) *ConfigMapList {
+func getConfigMapList(configMaps []api.ConfigMap, dsQuery *common.DataSelectQuery) *ConfigMapList {
 
 	result := &ConfigMapList{
 		Items:    make([]ConfigMap, 0),
 		ListMeta: common.ListMeta{TotalItems: len(configMaps)},
 	}
 
-	configMaps = paginate(configMaps, pQuery)
+	configMaps = fromCells(common.GenericDataSelect(toCells(configMaps), dsQuery))
 
 	for _, item := range configMaps {
 		result.Items = append(result.Items,

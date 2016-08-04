@@ -47,7 +47,7 @@ type ReplicaSet struct {
 
 // GetReplicaSetList returns a list of all Replica Sets in the cluster.
 func GetReplicaSetList(client client.Interface, nsQuery *common.NamespaceQuery,
-	pQuery *common.PaginationQuery) (*ReplicaSetList, error) {
+	dsQuery *common.DataSelectQuery) (*ReplicaSetList, error) {
 	log.Printf("Getting list of all replica sets in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -56,13 +56,13 @@ func GetReplicaSetList(client client.Interface, nsQuery *common.NamespaceQuery,
 		EventList:      common.GetEventListChannel(client, nsQuery, 1),
 	}
 
-	return GetReplicaSetListFromChannels(channels, pQuery)
+	return GetReplicaSetListFromChannels(channels, dsQuery)
 }
 
 // GetReplicaSetList returns a list of all Replica Sets in the cluster
 // reading required resource list once from the channels.
 func GetReplicaSetListFromChannels(channels *common.ResourceChannels,
-	pQuery *common.PaginationQuery) (*ReplicaSetList, error) {
+	dsQuery *common.DataSelectQuery) (*ReplicaSetList, error) {
 
 	replicaSets := <-channels.ReplicaSetList.List
 	if err := <-channels.ReplicaSetList.Error; err != nil {
@@ -88,5 +88,5 @@ func GetReplicaSetListFromChannels(channels *common.ResourceChannels,
 		return nil, err
 	}
 
-	return CreateReplicaSetList(replicaSets.Items, pods.Items, events.Items, pQuery), nil
+	return CreateReplicaSetList(replicaSets.Items, pods.Items, events.Items, dsQuery), nil
 }
