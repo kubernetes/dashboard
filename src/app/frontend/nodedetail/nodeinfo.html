@@ -106,7 +106,7 @@ limitations under the License.
     <kd-node-conditions conditions="::$ctrl.node.conditions"></kd-node-conditions>
   </kd-content>
 </kd-content-card>
-<kd-content-card>
+<kd-content-card ng-show="::$ctrl.node.podList.pods.length">
   <kd-title>{{::$ctrl.i18n.MSG_NODE_DETAIL_PODS_LABEL}}</kd-title>
   <kd-content>
     <kd-pod-card-list pod-list="$ctrl.node.podList" with-statuses="true">
