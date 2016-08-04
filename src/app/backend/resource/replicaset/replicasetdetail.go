@@ -50,7 +50,7 @@ type ReplicaSetDetail struct {
 
 // GetReplicaSetDetail gets replica set details.
 func GetReplicaSetDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	pQuery *common.PaginationQuery, namespace, name string) (*ReplicaSetDetail, error) {
+	dsQuery *common.DataSelectQuery, namespace, name string) (*ReplicaSetDetail, error) {
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 
 	// TODO(floreks): Use channels.
@@ -64,7 +64,7 @@ func GetReplicaSetDetail(client k8sClient.Interface, heapsterClient client.Heaps
 		return nil, err
 	}
 
-	podList, err := GetReplicaSetPods(client, heapsterClient, pQuery, name, namespace)
+	podList, err := GetReplicaSetPods(client, heapsterClient, dsQuery, name, namespace)
 	if err != nil {
 		return nil, err
 	}
@@ -74,7 +74,7 @@ func GetReplicaSetDetail(client k8sClient.Interface, heapsterClient client.Heaps
 		return nil, err
 	}
 
-	serviceList, err := GetReplicaSetServices(client, pQuery, namespace, name)
+	serviceList, err := GetReplicaSetServices(client, dsQuery, namespace, name)
 	if err != nil {
 		return nil, err
 	}

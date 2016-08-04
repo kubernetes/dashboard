@@ -19,13 +19,39 @@ import (
 	"k8s.io/kubernetes/pkg/apis/batch"
 )
 
-func paginate(jobs []batch.Job, pQuery *common.PaginationQuery) []batch.Job {
-	startIndex, endIndex := pQuery.GetPaginationSettings(len(jobs))
+// The code below allows to perform complex data section on []batch.Job
 
-	// Return all items if provided settings do not meet requirements
-	if !pQuery.CanPaginate(len(jobs), startIndex) {
-		return jobs
+var propertyGetters = map[string]func(JobCell)(common.ComparableValue){
+	"name": func(self JobCell)(common.ComparableValue) {return common.StdComparableString(self.ObjectMeta.Name)},
+	"creationTimestamp": func(self JobCell)(common.ComparableValue) {return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)},
+	"namespace": func(self JobCell)(common.ComparableValue) {return common.StdComparableString(self.ObjectMeta.Namespace)},
+}
+
+
+type JobCell batch.Job
+
+func (self JobCell) GetProperty(name string) common.ComparableValue {
+	getter, isGetterPresent := propertyGetters[name]
+	if !isGetterPresent {
+		// if getter not present then just return a constant dummy value, sort will have no effect.
+		return common.StdComparableInt(0)
 	}
+	return getter(self)
+}
 
-	return jobs[startIndex:endIndex]
+
+func toCells(std []batch.Job) []common.GenericDataCell {
+	cells := make([]common.GenericDataCell, len(std))
+	for i := range std {
+		cells[i] = JobCell(std[i])
+	}
+	return cells
+}
+
+func fromCells(cells []common.GenericDataCell) []batch.Job {
+	std := make([]batch.Job, len(cells))
+	for i := range std {
+		std[i] = batch.Job(cells[i].(JobCell))
+	}
+	return std
 }

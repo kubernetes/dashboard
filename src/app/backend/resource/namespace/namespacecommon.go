@@ -42,13 +42,39 @@ func CreateNamespace(spec *NamespaceSpec, client *client.Client) error {
 	return err
 }
 
-func paginate(namespaces []api.Namespace, pQuery *common.PaginationQuery) []api.Namespace {
-	startIndex, endIndex := pQuery.GetPaginationSettings(len(namespaces))
+// The code below allows to perform complex data section on []api.Namespace
 
-	// Return all items if provided settings do not meet requirements
-	if !pQuery.CanPaginate(len(namespaces), startIndex) {
-		return namespaces
+var propertyGetters = map[string]func(NamespaceCell)(common.ComparableValue){
+	"name": func(self NamespaceCell)(common.ComparableValue) {return common.StdComparableString(self.ObjectMeta.Name)},
+	"creationTimestamp": func(self NamespaceCell)(common.ComparableValue) {return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)},
+	"namespace": func(self NamespaceCell)(common.ComparableValue) {return common.StdComparableString(self.ObjectMeta.Namespace)},
+}
+
+
+type NamespaceCell api.Namespace
+
+func (self NamespaceCell) GetProperty(name string) common.ComparableValue {
+	getter, isGetterPresent := propertyGetters[name]
+	if !isGetterPresent {
+		// if getter not present then just return a constant dummy value, sort will have no effect.
+		return common.StdComparableInt(0)
 	}
+	return getter(self)
+}
 
-	return namespaces[startIndex:endIndex]
+
+func toCells(std []api.Namespace) []common.GenericDataCell {
+	cells := make([]common.GenericDataCell, len(std))
+	for i := range std {
+		cells[i] = NamespaceCell(std[i])
+	}
+	return cells
+}
+
+func fromCells(cells []common.GenericDataCell) []api.Namespace {
+	std := make([]api.Namespace, len(cells))
+	for i := range std {
+		std[i] = api.Namespace(cells[i].(NamespaceCell))
+	}
+	return std
 }

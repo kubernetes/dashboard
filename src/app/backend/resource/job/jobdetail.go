@@ -54,7 +54,7 @@ type JobDetail struct {
 
 // GetJobDetail gets job details.
 func GetJobDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	namespace, name string, pQuery *common.PaginationQuery) (*JobDetail, error) {
+	namespace, name string, dsQuery *common.DataSelectQuery) (*JobDetail, error) {
 
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 
@@ -64,7 +64,7 @@ func GetJobDetail(client k8sClient.Interface, heapsterClient client.HeapsterClie
 		return nil, err
 	}
 
-	podList, err := GetJobPods(client, heapsterClient, pQuery, name, namespace)
+	podList, err := GetJobPods(client, heapsterClient, dsQuery, name, namespace)
 	if err != nil {
 		return nil, err
 	}

@@ -52,7 +52,7 @@ func GetJobEvents(client client.Interface, namespace, jobName string) (
 	}
 
 	// TODO support pagination
-	events := event.CreateEventList(apiEvents, common.NoPagination)
+	events := event.CreateEventList(apiEvents, common.NoDataSelect)
 
 	log.Printf("Found %d events related to %s job in %s namespace",
 		len(events.Events), jobName, namespace)

@@ -60,7 +60,7 @@ func TestGetServiceList(t *testing.T) {
 	for _, c := range cases {
 		fakeClient := testclient.NewSimpleFake(c.serviceList)
 
-		actual, _ := GetServiceList(fakeClient, common.NewNamespaceQuery(nil), common.NoPagination)
+		actual, _ := GetServiceList(fakeClient, common.NewNamespaceQuery(nil), common.NoDataSelect)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {

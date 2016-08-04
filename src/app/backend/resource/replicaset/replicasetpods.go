@@ -30,7 +30,7 @@ import (
 
 // GetReplicaSetPods return list of pods targeting replica set.
 func GetReplicaSetPods(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	pQuery *common.PaginationQuery, petSetName, namespace string) (*pod.PodList, error) {
+	dsQuery *common.DataSelectQuery, petSetName, namespace string) (*pod.PodList, error) {
 	log.Printf("Getting replication controller %s pods in namespace %s", petSetName, namespace)
 
 	pods, err := getRawReplicaSetPods(client, petSetName, namespace)
@@ -38,7 +38,7 @@ func GetReplicaSetPods(client k8sClient.Interface, heapsterClient client.Heapste
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(pods, pQuery, heapsterClient)
+	podList := pod.CreatePodList(pods, dsQuery, heapsterClient)
 	return &podList, nil
 }
 

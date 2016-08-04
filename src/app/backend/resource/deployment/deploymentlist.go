@@ -50,7 +50,7 @@ type Deployment struct {
 
 // GetDeploymentList returns a list of all Deployments in the cluster.
 func GetDeploymentList(client client.Interface, nsQuery *common.NamespaceQuery,
-	pQuery *common.PaginationQuery) (*DeploymentList, error) {
+	dsQuery *common.DataSelectQuery) (*DeploymentList, error) {
 	log.Printf("Getting list of all deployments in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -59,13 +59,13 @@ func GetDeploymentList(client client.Interface, nsQuery *common.NamespaceQuery,
 		EventList:      common.GetEventListChannel(client, nsQuery, 1),
 	}
 
-	return GetDeploymentListFromChannels(channels, pQuery)
+	return GetDeploymentListFromChannels(channels, dsQuery)
 }
 
 // GetDeploymentList returns a list of all Deployments in the cluster
 // reading required resource list once from the channels.
 func GetDeploymentListFromChannels(channels *common.ResourceChannels,
-	pQuery *common.PaginationQuery) (*DeploymentList, error) {
+	dsQuery *common.DataSelectQuery) (*DeploymentList, error) {
 
 	deployments := <-channels.DeploymentList.List
 	if err := <-channels.DeploymentList.Error; err != nil {
@@ -91,20 +91,20 @@ func GetDeploymentListFromChannels(channels *common.ResourceChannels,
 		return nil, err
 	}
 
-	return CreateDeploymentList(deployments.Items, pods.Items, events.Items, pQuery), nil
+	return CreateDeploymentList(deployments.Items, pods.Items, events.Items, dsQuery), nil
 }
 
 // CreateDeploymentList returns a list of all Deployment model objects in the cluster, based on all
 // Kubernetes Deployment API objects.
 func CreateDeploymentList(deployments []extensions.Deployment, pods []api.Pod,
-	events []api.Event, pQuery *common.PaginationQuery) *DeploymentList {
+	events []api.Event, dsQuery *common.DataSelectQuery) *DeploymentList {
 
 	deploymentList := &DeploymentList{
 		Deployments: make([]Deployment, 0),
 		ListMeta:    common.ListMeta{TotalItems: len(deployments)},
 	}
 
-	deployments = paginate(deployments, pQuery)
+	deployments = fromCells(common.GenericDataSelect(toCells(deployments), dsQuery))
 
 	for _, deployment := range deployments {
 

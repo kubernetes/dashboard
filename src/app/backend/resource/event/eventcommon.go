@@ -94,7 +94,7 @@ func GetNodeEvents(client client.Interface, nodeName string) (common.EventList, 
 		ref.UID = types.UID(ref.Name)
 		events, _ := client.Events(api.NamespaceAll).Search(ref)
 		// TODO add pagination support
-		eventList = CreateEventList(events.Items, common.NoPagination)
+		eventList = CreateEventList(events.Items, common.NoDataSelect)
 	} else {
 		log.Print(err)
 	}
@@ -108,7 +108,7 @@ func GetNamespaceEvents(client client.Interface, namespace string) (common.Event
 		LabelSelector: labels.Everything(),
 		FieldSelector: fields.Everything(),
 	})
-	return CreateEventList(events.Items, common.NoPagination), nil
+	return CreateEventList(events.Items, common.NoDataSelect), nil
 }
 
 // Based on event Reason fills event Type in order to allow correct filtering by Type.
@@ -160,14 +160,14 @@ func ToEvent(event api.Event) common.Event {
 }
 
 // CreateEventList converts array of api events to common EventList structure
-func CreateEventList(events []api.Event, pQuery *common.PaginationQuery) common.EventList {
+func CreateEventList(events []api.Event, dsQuery *common.DataSelectQuery) common.EventList {
 
 	eventList := common.EventList{
 		Events:   make([]common.Event, 0),
 		ListMeta: common.ListMeta{TotalItems: len(events)},
 	}
 
-	events = paginate(events, pQuery)
+	events = fromCells(common.GenericDataSelect(toCells(events), dsQuery))
 
 	for _, event := range events {
 		eventDetail := ToEvent(event)
@@ -177,13 +177,40 @@ func CreateEventList(events []api.Event, pQuery *common.PaginationQuery) common.
 	return eventList
 }
 
-func paginate(events []api.Event, pQuery *common.PaginationQuery) []api.Event {
-	startIndex, endIndex := pQuery.GetPaginationSettings(len(events))
+// The code below allows to perform complex data section on []api.Event
 
-	// Return all items if provided settings do not meet requirements
-	if !pQuery.CanPaginate(len(events), startIndex) {
-		return events
-	}
-
-	return events[startIndex:endIndex]
+var propertyGetters = map[string]func(EventCell)(common.ComparableValue){
+	"name": func(self EventCell)(common.ComparableValue) {return common.StdComparableString(self.ObjectMeta.Name)},
+	"creationTimestamp": func(self EventCell)(common.ComparableValue) {return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)},
+	"namespace": func(self EventCell)(common.ComparableValue) {return common.StdComparableString(self.ObjectMeta.Namespace)},
 }
+
+
+type EventCell api.Event
+
+func (self EventCell) GetProperty(name string) common.ComparableValue {
+	getter, isGetterPresent := propertyGetters[name]
+	if !isGetterPresent {
+		// if getter not present then just return a constant dummy value, sort will have no effect.
+		return common.StdComparableInt(0)
+	}
+	return getter(self)
+}
+
+
+func toCells(std []api.Event) []common.GenericDataCell {
+	cells := make([]common.GenericDataCell, len(std))
+	for i := range std {
+		cells[i] = EventCell(std[i])
+	}
+	return cells
+}
+
+func fromCells(cells []common.GenericDataCell) []api.Event {
+	std := make([]api.Event, len(cells))
+	for i := range std {
+		std[i] = api.Event(cells[i].(EventCell))
+	}
+	return std
+}
+

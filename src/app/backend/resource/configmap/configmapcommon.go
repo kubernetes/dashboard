@@ -19,13 +19,39 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 )
 
-func paginate(configMaps []api.ConfigMap, pQuery *common.PaginationQuery) []api.ConfigMap {
-	startIndex, endIndex := pQuery.GetPaginationSettings(len(configMaps))
+// The code below allows to perform complex data section on []api.ConfigMap
 
-	// Return all items if provided settings do not meet requirements
-	if !pQuery.CanPaginate(len(configMaps), startIndex) {
-		return configMaps
+var propertyGetters = map[string]func(ConfigMapCell)(common.ComparableValue){
+	"name": func(self ConfigMapCell)(common.ComparableValue) {return common.StdComparableString(self.ObjectMeta.Name)},
+	"creationTimestamp": func(self ConfigMapCell)(common.ComparableValue) {return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)},
+	"namespace": func(self ConfigMapCell)(common.ComparableValue) {return common.StdComparableString(self.ObjectMeta.Namespace)},
+}
+
+
+type ConfigMapCell api.ConfigMap
+
+func (self ConfigMapCell) GetProperty(name string) common.ComparableValue {
+	getter, isGetterPresent := propertyGetters[name]
+	if !isGetterPresent {
+		// if getter not present then just return a constant dummy value, sort will have no effect.
+		return common.StdComparableInt(0)
 	}
+	return getter(self)
+}
 
-	return configMaps[startIndex:endIndex]
+
+func toCells(std []api.ConfigMap) []common.GenericDataCell {
+	cells := make([]common.GenericDataCell, len(std))
+	for i := range std {
+		cells[i] = ConfigMapCell(std[i])
+	}
+	return cells
+}
+
+func fromCells(cells []common.GenericDataCell) []api.ConfigMap {
+	std := make([]api.ConfigMap, len(cells))
+	for i := range std {
+		std[i] = api.ConfigMap(cells[i].(ConfigMapCell))
+	}
+	return std
 }

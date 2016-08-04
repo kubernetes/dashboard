@@ -55,14 +55,40 @@ func getServicesForDSDeletion(client client.Interface, labelSelector labels.Sele
 	return services.Items, nil
 }
 
-func paginate(daemonSets []extensions.DaemonSet,
-	pQuery *common.PaginationQuery) []extensions.DaemonSet {
-	startIndex, endIndex := pQuery.GetPaginationSettings(len(daemonSets))
+// The code below allows to perform complex data section on []extensions.DaemonSet
 
-	// Return all items if provided settings do not meet requirements
-	if !pQuery.CanPaginate(len(daemonSets), startIndex) {
-		return daemonSets
-	}
-
-	return daemonSets[startIndex:endIndex]
+var propertyGetters = map[string]func(DaemonSetCell)(common.ComparableValue){
+	"name": func(self DaemonSetCell)(common.ComparableValue) {return common.StdComparableString(self.ObjectMeta.Name)},
+	"creationTimestamp": func(self DaemonSetCell)(common.ComparableValue) {return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)},
+	"namespace": func(self DaemonSetCell)(common.ComparableValue) {return common.StdComparableString(self.ObjectMeta.Namespace)},
 }
+
+
+type DaemonSetCell extensions.DaemonSet
+
+func (self DaemonSetCell) GetProperty(name string) common.ComparableValue {
+	getter, isGetterPresent := propertyGetters[name]
+	if !isGetterPresent {
+		// if getter not present then just return a constant dummy value, sort will have no effect.
+		return common.StdComparableInt(0)
+	}
+	return getter(self)
+}
+
+
+func toCells(std []extensions.DaemonSet) []common.GenericDataCell {
+	cells := make([]common.GenericDataCell, len(std))
+	for i := range std {
+		cells[i] = DaemonSetCell(std[i])
+	}
+	return cells
+}
+
+func fromCells(cells []common.GenericDataCell) []extensions.DaemonSet {
+	std := make([]extensions.DaemonSet, len(cells))
+	for i := range std {
+		std[i] = extensions.DaemonSet(cells[i].(DaemonSetCell))
+	}
+	return std
+}
+

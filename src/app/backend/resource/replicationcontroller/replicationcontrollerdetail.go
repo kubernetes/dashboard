@@ -76,20 +76,20 @@ func GetReplicationControllerDetail(client k8sClient.Interface, heapsterClient c
 	}
 
 	// TODO support pagination
-	podList, err := GetReplicationControllerPods(client, heapsterClient, common.NoPagination,
+	podList, err := GetReplicationControllerPods(client, heapsterClient, common.NoDataSelect,
 		name, namespace)
 	if err != nil {
 		return nil, err
 	}
 
 	// TODO support pagination
-	eventList, err := GetReplicationControllerEvents(client, common.NoPagination, namespace, name)
+	eventList, err := GetReplicationControllerEvents(client, common.NoDataSelect, namespace, name)
 	if err != nil {
 		return nil, err
 	}
 
 	// TODO support pagination
-	serviceList, err := GetReplicationControllerServices(client, common.NoPagination, namespace,
+	serviceList, err := GetReplicationControllerServices(client, common.NoDataSelect, namespace,
 		name)
 	if err != nil {
 		return nil, err
