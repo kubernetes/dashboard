@@ -107,13 +107,13 @@ func NewSecret(secret *api.Secret) *Secret {
 }
 
 // NewSecret - creates a new instance of SecretList struct based on K8s Secrets array.
-func NewSecretList(secrets SelectableSecretList, dsQuery *common.DataSelectQuery) *SecretList {
+func NewSecretList(secrets []api.Secret, dsQuery *common.DataSelectQuery) *SecretList {
 	newSecretList := &SecretList{
 		ListMeta: common.ListMeta{TotalItems: len(secrets)},
 		Secrets:  make([]Secret, 0),
 	}
 
-	secrets = common.GenericDataSelect(secrets, dsQuery).(SelectableSecretList)
+	secrets = fromCells(common.GenericDataSelect(toCells(secrets), dsQuery))
 
 	for _, secret := range secrets {
 		newSecretList.Secrets = append(newSecretList.Secrets, *NewSecret(&secret))

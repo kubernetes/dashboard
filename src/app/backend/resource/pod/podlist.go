@@ -54,19 +54,19 @@ type Pod struct {
 
 // GetPodList returns a list of all Pods in the cluster.
 func GetPodList(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	nsQuery *common.NamespaceQuery, dsQuery *common.DataSelectQuery) (*PodList, error) {
+	nsQuery *common.NamespaceQuery, pQuery *common.PaginationQuery) (*PodList, error) {
 	log.Printf("Getting list of all pods in the cluster")
 
 	channels := &common.ResourceChannels{
 		PodList: common.GetPodListChannelWithOptions(client, nsQuery, api.ListOptions{}, 1),
 	}
 
-	return GetPodListFromChannels(channels, dsQuery, heapsterClient)
+	return GetPodListFromChannels(channels, pQuery, heapsterClient)
 }
 
 // GetPodList returns a list of all Pods in the cluster
 // reading required resource list once from the channels.
-func GetPodListFromChannels(channels *common.ResourceChannels, dsQuery *common.DataSelectQuery,
+func GetPodListFromChannels(channels *common.ResourceChannels, pQuery *common.PaginationQuery,
 	heapsterClient client.HeapsterClient) (*PodList, error) {
 
 	pods := <-channels.PodList.List
@@ -74,11 +74,11 @@ func GetPodListFromChannels(channels *common.ResourceChannels, dsQuery *common.D
 		return nil, err
 	}
 
-	podList := CreatePodList(pods.Items, dsQuery, heapsterClient)
+	podList := CreatePodList(pods.Items, pQuery, heapsterClient)
 	return &podList, nil
 }
 
-func CreatePodList(pods []api.Pod, dsQuery *common.DataSelectQuery,
+func CreatePodList(pods []api.Pod, pQuery *common.PaginationQuery,
 	heapsterClient client.HeapsterClient) PodList {
 
 	channels := &common.ResourceChannels{
@@ -95,7 +95,7 @@ func CreatePodList(pods []api.Pod, dsQuery *common.DataSelectQuery,
 		ListMeta: common.ListMeta{TotalItems: len(pods)},
 	}
 
-	pods = common.GenericDataSelect(pods, dsQuery)
+	pods = paginate(pods, pQuery)
 
 	for _, pod := range pods {
 		podDetail := ToPod(&pod, metrics)

@@ -55,25 +55,13 @@ func GetContainerImages(podTemplate *api.PodSpec) []string {
 	return containerImages
 }
 
-//
-type SelectablePodList []api.Pod
+func paginate(pods []api.Pod, pQuery *common.PaginationQuery) []api.Pod {
+	startIndex, endIndex := pQuery.GetPaginationSettings(len(pods))
 
-var propertyGetters = map[string]func(SelectablePodList, int)(common.ComparableValueInterface){
-	"name": func(self SelectablePodList, i int)(common.ComparableValueInterface){return common.StdComparableString(self[i].ObjectMeta.Name)},
-	"creationTimestamp": func(self SelectablePodList, i int)(common.ComparableValueInterface){return common.StdComparableTime(self[i].ObjectMeta.CreationTimestamp.Time)},
-	"namespace": func(self SelectablePodList, i int)(common.ComparableValueInterface){return common.StdComparableString(self[i].ObjectMeta.Namespace)},
-}
-
-// its a bit pain to define these, just copy and paste...
-func (self SelectablePodList) Len() int {return len(self)}
-func (self SelectablePodList) Slice(start, end int) common.SelectableInterface {return self[start:end]}
-
-func (self SelectablePodList) Swap(i int, j int) {self[i], self[j] = self[j], self[i]}
-func (self SelectablePodList) GetPropertyAtIndex(name string, i int) common.ComparableValueInterface {
-	getter, isGetterPresent := propertyGetters[name]
-	if !isGetterPresent {
-		// if getter not present then just return a constant dummy value, sort will have no effect.
-		return common.StdComparableInt(0)
+	// Return all items if provided settings do not meet requirements
+	if !pQuery.CanPaginate(len(pods), startIndex) {
+		return pods
 	}
-	return getter(self, i)
+
+	return pods[startIndex:endIndex]
 }
