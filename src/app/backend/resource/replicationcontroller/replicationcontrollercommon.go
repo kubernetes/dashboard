@@ -107,15 +107,15 @@ func ToReplicationControllerDetail(replicationController *api.ReplicationControl
 // CreateReplicationControllerList creates paginated list of Replication Controller model
 // objects based on Kubernetes Replication Controller objects array and related resources arrays.
 func CreateReplicationControllerList(replicationControllers []api.ReplicationController,
-	pQuery *common.PaginationQuery, pods []api.Pod, events []api.Event) *ReplicationControllerList {
+	dsQuery *common.DataSelectQuery, pods []api.Pod, events []api.Event) *ReplicationControllerList {
 
 	rcList := &ReplicationControllerList{
 		ReplicationControllers: make([]ReplicationController, 0),
 		ListMeta:               common.ListMeta{TotalItems: len(replicationControllers)},
 	}
 
-	replicationControllers = paginate(replicationControllers, pQuery)
-
+	replicationControllers = fromCells(common.GenericDataSelect(toCells(replicationControllers), dsQuery))
+ 
 	for _, rc := range replicationControllers {
 		matchingPods := common.FilterNamespacedPodsBySelector(pods, rc.ObjectMeta.Namespace,
 			rc.Spec.Selector)
@@ -129,15 +129,40 @@ func CreateReplicationControllerList(replicationControllers []api.ReplicationCon
 	return rcList
 }
 
-func paginate(replicationControllers []api.ReplicationController,
-	pQuery *common.PaginationQuery) []api.ReplicationController {
 
-	startIndex, endIndex := pQuery.GetPaginationSettings(len(replicationControllers))
+// The code below allows to perform complex data section on []api.ReplicationController
 
-	// Return all items if provided settings do not meet requirements
-	if !pQuery.CanPaginate(len(replicationControllers), startIndex) {
-		return replicationControllers
+var propertyGetters = map[string]func(ReplicationControllerCell)(common.ComparableValue){
+	"name": func(self ReplicationControllerCell)(common.ComparableValue) {return common.StdComparableString(self.ObjectMeta.Name)},
+	"creationTimestamp": func(self ReplicationControllerCell)(common.ComparableValue) {return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)},
+	"namespace": func(self ReplicationControllerCell)(common.ComparableValue) {return common.StdComparableString(self.ObjectMeta.Namespace)},
+}
+
+
+type ReplicationControllerCell api.ReplicationController
+
+func (self ReplicationControllerCell) GetProperty(name string) common.ComparableValue {
+	getter, isGetterPresent := propertyGetters[name]
+	if !isGetterPresent {
+		// if getter not present then just return a constant dummy value, sort will have no effect.
+		return common.StdComparableInt(0)
 	}
+	return getter(self)
+}
 
-	return replicationControllers[startIndex:endIndex]
+
+func toCells(std []api.ReplicationController) []common.GenericDataCell {
+	cells := make([]common.GenericDataCell, len(std))
+	for i := range std {
+		cells[i] = ReplicationControllerCell(std[i])
+	}
+	return cells
+}
+
+func fromCells(cells []common.GenericDataCell) []api.ReplicationController {
+	std := make([]api.ReplicationController, len(cells))
+	for i := range std {
+		std[i] = api.ReplicationController(cells[i].(ReplicationControllerCell))
+	}
+	return std
 }

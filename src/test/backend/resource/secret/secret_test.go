@@ -77,7 +77,7 @@ func TestNewSecretListCreation(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := NewSecretList(c.k8sRs.Items, common.NoPagination)
+		actual := NewSecretList(c.k8sRs.Items, common.NoDataSelect)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("NewSecretList() ==\n          %#v\nExpected: %#v", actual, c.expected)
 		}

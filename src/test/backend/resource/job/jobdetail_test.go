@@ -78,7 +78,7 @@ func TestGetJobDetail(t *testing.T) {
 		fakeHeapsterClient := FakeHeapsterClient{}
 
 		actual, _ := GetJobDetail(fakeClient, fakeHeapsterClient, c.namespace, c.name,
-			common.NoPagination)
+			common.NoDataSelect)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {

@@ -20,7 +20,7 @@ import (
 //	"log"
 )
 
-// The code below allows to perform complex data section on
+// The code below allows to perform complex data section on []api.Secret
 
 var propertyGetters = map[string]func(SecretCell)(common.ComparableValue){
 	"name": func(self SecretCell)(common.ComparableValue) {return common.StdComparableString(self.ObjectMeta.Name)},

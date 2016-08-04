@@ -31,13 +31,39 @@ func getContainerImages(node api.Node) []string {
 	return containerImages
 }
 
-func paginate(nodes []api.Node, pQuery *common.PaginationQuery) []api.Node {
-	startIndex, endIndex := pQuery.GetPaginationSettings(len(nodes))
+// The code below allows to perform complex data section on []api.Node
 
-	// Return all items if provided settings do not meet requirements
-	if !pQuery.CanPaginate(len(nodes), startIndex) {
-		return nodes
+var propertyGetters = map[string]func(NodeCell)(common.ComparableValue){
+	"name": func(self NodeCell)(common.ComparableValue) {return common.StdComparableString(self.ObjectMeta.Name)},
+	"creationTimestamp": func(self NodeCell)(common.ComparableValue) {return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)},
+	"namespace": func(self NodeCell)(common.ComparableValue) {return common.StdComparableString(self.ObjectMeta.Namespace)},
+}
+
+
+type NodeCell api.Node
+
+func (self NodeCell) GetProperty(name string) common.ComparableValue {
+	getter, isGetterPresent := propertyGetters[name]
+	if !isGetterPresent {
+		// if getter not present then just return a constant dummy value, sort will have no effect.
+		return common.StdComparableInt(0)
 	}
+	return getter(self)
+}
 
-	return nodes[startIndex:endIndex]
+
+func toCells(std []api.Node) []common.GenericDataCell {
+	cells := make([]common.GenericDataCell, len(std))
+	for i := range std {
+		cells[i] = NodeCell(std[i])
+	}
+	return cells
+}
+
+func fromCells(cells []common.GenericDataCell) []api.Node {
+	std := make([]api.Node, len(cells))
+	for i := range std {
+		std[i] = api.Node(cells[i].(NodeCell))
+	}
+	return std
 }

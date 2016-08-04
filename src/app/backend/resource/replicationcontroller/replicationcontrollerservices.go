@@ -23,7 +23,7 @@ import (
 
 // GetReplicationControllerServices returns list of services that are related to replication
 // controller targeted by given name.
-func GetReplicationControllerServices(client client.Interface, pQuery *common.PaginationQuery,
+func GetReplicationControllerServices(client client.Interface, dsQuery *common.DataSelectQuery,
 	namespace, rcName string) (*service.ServiceList, error) {
 
 	replicationController, err := client.ReplicationControllers(namespace).Get(rcName)
@@ -43,5 +43,5 @@ func GetReplicationControllerServices(client client.Interface, pQuery *common.Pa
 
 	matchingServices := common.FilterNamespacedServicesBySelector(services.Items, namespace,
 		replicationController.Spec.Selector)
-	return service.CreateServiceList(matchingServices, pQuery), nil
+	return service.CreateServiceList(matchingServices, dsQuery), nil
 }
