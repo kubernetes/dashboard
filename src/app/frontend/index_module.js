@@ -40,6 +40,8 @@ import podDetailModule from './poddetail/poddetail_module';
 import petSetListModule from './petsetlist/petsetlist_module';
 import configMapListModule from './configmaplist/configmaplist_module';
 import configMapDetailModule from './configmapdetail/configmapdetail_module';
+import persistentVolumeDetailModule from './persistentvolumedetail/persistentvolumedetail_module';
+import persistentVolumeListModule from './persistentvolumelist/persistentvolumelist_module';
 
 export default angular
     .module(
@@ -69,6 +71,8 @@ export default angular
           serviceDetailModule.name,
           serviceListModule.name,
           podDetailModule.name,
+          persistentVolumeDetailModule.name,
+          persistentVolumeListModule.name,
           petSetListModule.name,
           configMapListModule.name,
           configMapDetailModule.name,
