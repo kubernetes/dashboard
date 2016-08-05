@@ -383,6 +383,10 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 		apiV1Ws.GET("/persistentvolume/{persistentvolume}").
 			To(apiHandler.handleGetPersistentVolumeDetail).
 			Writes(persistentvolume.PersistentVolumeDetail{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/persistentvolume/namespace/{namespace}/name/{persistentvolume}").
+			To(apiHandler.handleGetPersistentVolumeDetail).
+			Writes(persistentvolume.PersistentVolumeDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/persistentvolumeclaim/").
