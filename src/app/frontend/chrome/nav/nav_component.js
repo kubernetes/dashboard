@@ -18,6 +18,7 @@ import {stateName as deploymentState} from 'deploymentlist/deploymentlist_state'
 import {stateName as jobState} from 'joblist/joblist_state';
 import {stateName as namespaceState} from 'namespacelist/namespacelist_state';
 import {stateName as nodeState} from 'nodelist/nodelist_state';
+import {stateName as persistentVolumeState} from 'persistentvolumelist/persistentvolumelist_state';
 import {stateName as petSetState} from 'petsetlist/petsetlist_state';
 import {stateName as podState} from 'podlist/podlist_state';
 import {stateName as replicaSetState} from 'replicasetlist/replicasetlist_state';
@@ -51,6 +52,7 @@ export class NavController {
       'replicaSet': replicaSetState,
       'replicationController': replicationControllerState,
       'daemonSet': daemonSetState,
+      'persistentVolume': persistentVolumeState,
       'petSet': petSetState,
       'job': jobState,
       'service': serviceState,
