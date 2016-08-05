@@ -44,6 +44,7 @@ import (
 	clientK8s "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
 	"k8s.io/kubernetes/pkg/runtime"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
 )
 
 const (
@@ -376,8 +377,27 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 		apiV1Ws.GET("/persistentvolume/{persistentvolume}").
 			To(apiHandler.handleGetPersistentVolumeDetail).
 			Writes(persistentvolume.PersistentVolumeDetail{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/persistentvolumeclaim/{namespace}").
+			To(apiHandler.handleGetPersistentVolumeClaimList).
+			Writes(persistentvolumeclaim.PersistentVolumeClaimList{}))
+
 	return wsContainer
 }
+
+func (apiHandler *APIHandler) handleGetPersistentVolumeClaimList(request *restful.Request, response *restful.Response) {
+
+	namespace := parseNamespacePathParameter(request)
+	pagination := parsePaginationPathParameter(request)
+	result, err := persistentvolumeclaim.GetPersistentVolumeClaimList(apiHandler.client, namespace, pagination)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
 
 // Handles get pet set list API call.
 func (apiHandler *APIHandler) handleGetPetSetList(request *restful.Request,

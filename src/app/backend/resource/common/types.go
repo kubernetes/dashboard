@@ -109,6 +109,7 @@ const (
 	ResourceKindSecret                = "secret"
 	ResourceKindConfigMap             = "configmap"
 	ResourceKindPersistentVolume      = "persistentvolume"
+	ResourceKindPersistenceVolumeClaim = "persistencevolumeclaim"
 )
 
 // ClientType represents type of client that is used to perform generic operations on resources.
