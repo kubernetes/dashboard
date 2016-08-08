@@ -27,14 +27,18 @@ $logs-color-white: #fff;
   color: $logs-color-black;
 }
 
-.kd-logs-element-compact {
-  font-size: $caption-font-size-base;
-  padding: 0 (2 * $baseline-grid);
-  word-wrap: break-word;
-}
-
 .kd-logs-element {
   font-size: $body-font-size-base;
   padding: 0 (2 * $baseline-grid);
   word-wrap: break-word;
+
+  pre {
+    margin: 0;
+  }
+}
+
+.kd-logs-element-compact {
+  @extend .kd-logs-element;
+
+  font-size: $caption-font-size-base;
 }
