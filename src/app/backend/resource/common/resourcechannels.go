@@ -77,6 +77,7 @@ type ResourceChannels struct {
 	// List and error channels to PersistentVolumes
 	PersistentVolumeList PersistentVolumeListChannel
 
+	// List and error channels to PersistentVolumeClaims
 	PersistentVolumeClaimList PersistentVolumeClaimListChannel
 }
 
@@ -483,6 +484,13 @@ func GetPersistentVolumeListChannel(client client.PersistentVolumesInterface, nu
 	return channel
 }
 
+
+type PersistentVolumeClaimListChannel struct {
+	List  chan *api.PersistentVolumeClaimList
+	Error chan error
+}
+
+
 func GetPersistentVolumeClaimListChannel(client client.PersistentVolumeClaimsNamespacer, nsQuery *NamespaceQuery, numReads int) PersistentVolumeClaimListChannel {
 	channel := PersistentVolumeClaimListChannel{
 		List:  make(chan *api.PersistentVolumeClaimList, numReads),
@@ -548,13 +556,6 @@ func GetPodMetricsChannel(heapsterClient kdClient.HeapsterClient, name string, n
 
 	return channel
 }
-
-
-type PersistentVolumeClaimListChannel struct {
-	List  chan *api.PersistentVolumeClaimList
-	Error chan error
-}
-
 
 
 var listEverything = api.ListOptions{
