@@ -9,8 +9,6 @@ import (
 	"k8s.io/kubernetes/pkg/labels"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
-	"fmt"
-
 )
 
 type PersistentVolumeClaimList struct {
@@ -27,18 +25,36 @@ type PersistentVolumeClaim struct {
 }
 
 func GetPersistentVolumeClaimList(client *client.Client, nsQuery *common.NamespaceQuery, pQuery *common.PaginationQuery) (*PersistentVolumeClaimList, error) {
-	log.Printf("Getting list persistent volume claims")
-	list, _ := client.PersistentVolumeClaims(nsQuery.ToRequestParam()).List(listEverything)
-	fmt.Println(list)
-
-	result := &PersistentVolumeClaimList{
-		ListMeta: common.ListMeta{
-			TotalItems: len(list.Items),
-		},
-		Items: make([]PersistentVolumeClaim,0),
+	log.Printf("Getting list persistent volumes claims")
+	channels := &common.ResourceChannels{
+		PersistentVolumeClaimList: common.GetPersistentVolumeClaimListChannel(client,nsQuery, 1),
 	}
 
-	for _, item := range list.Items {
+	return GetPersistentVolumeClaimListFromChannels(channels,nsQuery, pQuery)
+}
+
+func GetPersistentVolumeClaimListFromChannels(channels *common.ResourceChannels, nsQuery *common.NamespaceQuery, pQuery *common.PaginationQuery) (
+	*PersistentVolumeClaimList, error) {
+
+	persistentVolumeClaims := <-channels.PersistentVolumeClaimList.List
+	if err := <-channels.PersistentVolumeClaimList.Error; err != nil {
+		return nil, err
+	}
+
+	result, err := getPersistentVolumeClaimList(persistentVolumeClaims.Items, nsQuery, pQuery)
+
+	return result, err
+}
+
+
+func getPersistentVolumeClaimList(persistentVolumeClaims []api.PersistentVolumeClaim, nsQuery *common.NamespaceQuery, pQuery *common.PaginationQuery) (*PersistentVolumeClaimList, error) {
+	result := &PersistentVolumeClaimList{
+		Items:    make([]PersistentVolumeClaim,0),
+		ListMeta: common.ListMeta{ TotalItems: len(persistentVolumeClaims),},
+	}
+	persistentVolumeClaims = paginate(persistentVolumeClaims, pQuery)
+
+	for _, item := range persistentVolumeClaims {
 		result.Items = append(result.Items,
 			PersistentVolumeClaim{
 				ObjectMeta: common.NewObjectMeta(item.ObjectMeta),
