@@ -27,8 +27,8 @@ $logs-color-white: #fff;
   color: $logs-color-black;
 }
 
-.kd-logs-element {
-  font-size: $body-font-size-base;
+// Base rule to be extended by logs-element rules.
+%kd-logs-element-base {
   padding: 0 (2 * $baseline-grid);
   word-wrap: break-word;
 
@@ -37,8 +37,14 @@ $logs-color-white: #fff;
   }
 }
 
+.kd-logs-element {
+  @extend %kd-logs-element-base;
+
+  font-size: $body-font-size-base;
+}
+
 .kd-logs-element-compact {
-  @extend .kd-logs-element;
+  @extend %kd-logs-element-base;
 
   font-size: $caption-font-size-base;
 }
