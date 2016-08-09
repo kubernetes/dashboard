@@ -22,33 +22,36 @@ type DataSelectQuery struct {
 	SortQuery       *SortQuery
 	//	Filter     *FilterQuery
 }
-// sort query will be in format - a,name,d,age,...   which means sort ascending name, later descending age, ...
+// SortQuery holds options for sort functionality of data select.
 type SortQuery struct {
 	SortByList []SortBy
 
 }
 
-// Option for Sort. Property which should be sorted and whether should use ascending order.
+// SortBy holds the name of the property that should be sorted and whether order should be ascending or descending.
 type SortBy struct {
-	Property  string
+	Property  PropertyName
 	Ascending bool
 }
 
+// NoSort is as option for no sort.
 var NoSort = &SortQuery{
 	SortByList: []SortBy{},
 }
 
-var NoDataSelect = NewDataSelect(NoPagination, NoSort)
+// NoDataSelect is an option for no data select (same data will be returned).
+var NoDataSelect = NewDataSelectQuery(NoPagination, NoSort)
 
 
-func NewDataSelect(paginationQuery *PaginationQuery, sortQuery *SortQuery) (*DataSelectQuery) {
+// NewDataSelectQuery creates DataSelectQuery object from simpler data select queries.
+func NewDataSelectQuery(paginationQuery *PaginationQuery, sortQuery *SortQuery) (*DataSelectQuery) {
 	return &DataSelectQuery{
 		PaginationQuery: paginationQuery,
 		SortQuery:       sortQuery,
 	}
 }
 
-// Takes raw sort options list and returns SortQuery object. For example:
+// NewSortQuery takes raw sort options list and returns SortQuery object. For example:
 // ["a", "parameter1", "d", "parameter2"] - means that the data should be sorted by
 // parameter1 (ascending) and later - for results that return equal under parameter 1 sort - by parameter2 (descending)
 func NewSortQuery(sortByListRaw []string) (*SortQuery) {
@@ -73,7 +76,7 @@ func NewSortQuery(sortByListRaw []string) (*SortQuery) {
 		// parse property name
 		propertyName := sortByListRaw[i+1]
 		sortBy := SortBy{
-			Property: propertyName,
+			Property: PropertyName(propertyName),
 			Ascending: ascending,
 		}
 		// Add to the sort options.

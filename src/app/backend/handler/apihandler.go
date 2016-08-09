@@ -1231,5 +1231,5 @@ func parseSortPathParameter(request *restful.Request) *common.SortQuery {
 func parseDataSelectPathParameter(request *restful.Request) *common.DataSelectQuery {
 	paginationQuery := parsePaginationPathParameter(request)
 	sortQuery := parseSortPathParameter(request)
-	return common.NewDataSelect(paginationQuery, sortQuery)
+	return common.NewDataSelectQuery(paginationQuery, sortQuery)
 }

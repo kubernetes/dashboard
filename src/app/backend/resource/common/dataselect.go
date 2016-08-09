@@ -20,40 +20,51 @@ import (
 	"sort"
 )
 
-// Interface of the generic data cell.
+// GenericDataCell is the Interface of generic data cell.
 // GenericDataSelect takes a list of these interfaces and performs selection operation.
 // As long as the list is composed of GenericDataCells you can perform any data selection!
 type GenericDataCell interface {
 	// GetPropertyAtIndex returns the property of this data cell.
 	// Value returned has to have Compare method which is required by Sort functionality of DataSelect.
-	GetProperty(string) ComparableValue
+	GetProperty(PropertyName) ComparableValue
 }
 
 type ComparableValue interface {
+	// Compares self with other value. Returns 1 if other value is smaller, 0 if they are the same, -1 if other is larger.
 	Compare(ComparableValue) int
 }
 
-// Object containing all the required data to perform data selection.
+// SelectableData contains all the required data to perform data selection.
 // It implements sort.Interface so its sortable under sort.Sort
-// You can use its Select method to get selected GenericDataCell list
-type SelectableDataList struct {
+// You can use its Select method to get selected GenericDataCell list.
+type SelectableData struct {
+	// GenericDataList hold generic data cells that are being selected.
 	GenericDataList []GenericDataCell
+	// DataSelectQuery holds instructions for data select.
 	DataSelectQuery *DataSelectQuery
 }
 
-// here I am using a trick to be able to use built in sort function (sort.Sort) for sorting SelectableDataList
+// Here I am using a trick to be able to use built in sort function (sort.Sort) for sorting SelectableData
 // The aim is to implement sort.Interface - it is to define 3 methods:
-// Len, Swap and Less
+// Len, Swap and Less.
 
-// Implementation of sort.Interface
-func (self SelectableDataList) Len() int {return len(self.GenericDataList)}
+// Implementation of sort.Interface.
 
-func (self SelectableDataList) Swap(i, j int) {self.GenericDataList[i], self.GenericDataList[j] = self.GenericDataList[j], self.GenericDataList[i]}
+// Len returns the length of data inside SelectableData.
+func (self SelectableData) Len() int {return len(self.GenericDataList)}
 
-func (self SelectableDataList) Less(i, j int) bool {
+// Swap swaps 2 indices inside SelectableData.
+func (self SelectableData) Swap(i, j int) {self.GenericDataList[i], self.GenericDataList[j] = self.GenericDataList[j], self.GenericDataList[i]}
+
+// Less compares 2 indices inside SelectableData and returns true if first index is larger.
+func (self SelectableData) Less(i, j int) bool {
 	for _, sortBy := range (*self.DataSelectQuery.SortQuery).SortByList {
 		a := self.GenericDataList[i].GetProperty(sortBy.Property)
 		b := self.GenericDataList[j].GetProperty(sortBy.Property)
+		// ignore sort completely if property name not found
+		if a == nil || b == nil {
+			break
+		}
 		cmp := a.Compare(b)
 		if cmp == 0 { // values are the same. Just continue to next sortBy
 			continue
@@ -64,37 +75,37 @@ func (self SelectableDataList) Less(i, j int) bool {
 	return false
 }
 
-// Implementation of convenience Select method. Returns selected generic data cell list.
-func (self SelectableDataList) Select() []GenericDataCell {
-	// Simple pipeline:
-	// First sort,
-	sort.Sort(self)
-	// later paginate and return
-	return GenericPaginate(self.GenericDataList, self.DataSelectQuery.PaginationQuery)
+// Sort sorts the data inside as instructed by DataSelectQuery and returns itself to allow method chaining.
+func (self *SelectableData) Sort() (*SelectableData) {
+	sort.Sort(*self)
+	return self
 }
 
-// Selects slice of the data as required by PaginationQuery
-func GenericPaginate(dataList []GenericDataCell, pQuery *PaginationQuery) ([]GenericDataCell) {
+// Paginate paginetes the data inside as instructed by DataSelectQuery and returns itself to allow method chaining.
+func (self *SelectableData) Paginate() (*SelectableData) {
+	pQuery := self.DataSelectQuery.PaginationQuery
+	dataList := self.GenericDataList
 	startIndex, endIndex := pQuery.GetPaginationSettings(len(dataList))
 
 	// Return all items if provided settings do not meet requirements
-	if !pQuery.CanPaginate(len(dataList), startIndex) {
-		return dataList
+	if !pQuery.CanPaginate(len(self.GenericDataList), startIndex) {
+		return self
 	}
-	return dataList[startIndex:endIndex]
+	self.GenericDataList = dataList[startIndex:endIndex]
+	return self
 }
 
-// Takes list of GenericDataCells and DataSelectQuery and returns selected data
+// GenericDataSelect takes a list of GenericDataCells and DataSelectQuery and returns selected data as instructed by dsQuery.
 func GenericDataSelect(dataList []GenericDataCell, dsQuery *DataSelectQuery) ([]GenericDataCell){
-	selectableDataList := SelectableDataList{
+	SelectableData := SelectableData{
 		GenericDataList: dataList,
 		DataSelectQuery: dsQuery,
 	}
-	return selectableDataList.Select()
+	return SelectableData.Sort().Paginate().GenericDataList
 }
 
 
-// Int comparison functions. Similar to strings.Compare
+// Int comparison functions. Similar to strings.Compare.
 func intsCompare(a, b int) int {
 	if a > b {
 		return 1
@@ -133,7 +144,7 @@ func (self StdComparableString) Compare(otherV ComparableValue) int {
 	return strings.Compare(string(self), string(other))
 }
 
-// Takes RFC3339 Timestamp strings and compares them as TIMES. In case of time parsing error compares values as strings.
+// StdComparableRFC3339Timestamp takes RFC3339 Timestamp strings and compares them as TIMES. In case of time parsing error compares values as strings.
 type StdComparableRFC3339Timestamp string
 
 func (self StdComparableRFC3339Timestamp) Compare(otherV ComparableValue) int {
