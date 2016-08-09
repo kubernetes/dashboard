@@ -106,9 +106,13 @@ func CreateJobList(jobs []batch.Job, pods []api.Pod, events []api.Event,
 	jobs = paginate(jobs, pQuery)
 
 	for _, job := range jobs {
+		var completions int32
 		matchingPods := common.FilterNamespacedPodsBySelector(pods, job.ObjectMeta.Namespace,
 			job.Spec.Selector.MatchLabels)
-		podInfo := common.GetPodInfo(job.Status.Active, *job.Spec.Completions, matchingPods)
+		if job.Spec.Completions != nil {
+			completions = *job.Spec.Completions
+		}
+		podInfo := common.GetPodInfo(job.Status.Active, completions, matchingPods)
 		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 
 		jobList.Jobs = append(jobList.Jobs, ToJob(&job, &podInfo))
