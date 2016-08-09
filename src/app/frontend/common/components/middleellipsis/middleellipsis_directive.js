@@ -55,8 +55,6 @@ export default function middleEllipsisDirective(middleEllipsisFilter, $window) {
 
       let nonNullElement = ellipsisElem;
 
-      angular.element($window).ready(recalculateTextLength);
-
       angular.element($window).bind('resize', recalculateTextLength);
 
       function recalculateTextLength() {
@@ -64,6 +62,7 @@ export default function middleEllipsisDirective(middleEllipsisFilter, $window) {
             container.offsetWidth, nonNullElement, element, middleEllipsisFilter,
             ctrl.displayString);
       }
+      recalculateTextLength();
 
       scope.$on('$destroy', () => {
         angular.element($window).unbind('ready', recalculateTextLength);

@@ -16,9 +16,9 @@ import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_sta
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {PaginationService} from 'common/pagination/pagination_service';
 
-import {SecretListController} from './secretlist_controller';
-import {stateName} from './secretlist_state';
-import {stateUrl} from './secretlist_state';
+import {SecretListController} from './list_controller';
+import {stateName} from './list_state';
+import {stateUrl} from './list_state';
 
 /**
  * @param {!ui.router.$stateProvider} $stateProvider
@@ -40,7 +40,7 @@ export default function stateConfig($stateProvider) {
       '': {
         controller: SecretListController,
         controllerAs: '$ctrl',
-        templateUrl: 'secretlist/secretlist.html',
+        templateUrl: 'secretlist/list.html',
       },
       [actionbarViewName]: {
         templateUrl: 'secretlist/actionbar.html',

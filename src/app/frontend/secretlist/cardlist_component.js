@@ -43,7 +43,7 @@ export class SecretCardListController {
  * @type {!angular.Component}
  */
 export const secretCardListComponent = {
-  templateUrl: 'secretlist/secretcardlist.html',
+  templateUrl: 'secretlist/cardlist.html',
   controller: SecretCardListController,
   bindings: {
     /** {!backendApi.SecretList} */
