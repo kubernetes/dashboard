@@ -179,22 +179,20 @@ func CreateEventList(events []api.Event, dsQuery *common.DataSelectQuery) common
 
 // The code below allows to perform complex data section on []api.Event
 
-var propertyGetters = map[string]func(EventCell)(common.ComparableValue){
-	"name": func(self EventCell)(common.ComparableValue) {return common.StdComparableString(self.ObjectMeta.Name)},
-	"creationTimestamp": func(self EventCell)(common.ComparableValue) {return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)},
-	"namespace": func(self EventCell)(common.ComparableValue) {return common.StdComparableString(self.ObjectMeta.Namespace)},
-}
-
-
 type EventCell api.Event
 
-func (self EventCell) GetProperty(name string) common.ComparableValue {
-	getter, isGetterPresent := propertyGetters[name]
-	if !isGetterPresent {
-		// if getter not present then just return a constant dummy value, sort will have no effect.
-		return common.StdComparableInt(0)
+func (self EventCell) GetProperty(name common.PropertyName) common.ComparableValue {
+	switch name {
+	case common.NameProperty:
+		return common.StdComparableString(self.ObjectMeta.Name)
+	case common.CreationTimestampProperty:
+		return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+	case common.NamespaceProperty:
+		return common.StdComparableString(self.ObjectMeta.Namespace)
+	default:
+		// if name is not supported then just return a constant dummy value, sort will have no effect.
+		return nil
 	}
-	return getter(self)
 }
 
 

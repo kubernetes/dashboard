@@ -31,13 +31,18 @@ var propertyGetters = map[string]func(PetSetCell)(common.ComparableValue){
 
 type PetSetCell apps.PetSet
 
-func (self PetSetCell) GetProperty(name string) common.ComparableValue {
-	getter, isGetterPresent := propertyGetters[name]
-	if !isGetterPresent {
-		// if getter not present then just return a constant dummy value, sort will have no effect.
-		return common.StdComparableInt(0)
+func (self PetSetCell) GetProperty(name common.PropertyName) common.ComparableValue {
+	switch name {
+	case common.NameProperty:
+		return common.StdComparableString(self.ObjectMeta.Name)
+	case common.CreationTimestampProperty:
+		return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+	case common.NamespaceProperty:
+		return common.StdComparableString(self.ObjectMeta.Namespace)
+	default:
+		// if name is not supported then just return a constant dummy value, sort will have no effect.
+		return nil
 	}
-	return getter(self)
 }
 
 

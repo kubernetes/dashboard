@@ -44,22 +44,20 @@ func CreateNamespace(spec *NamespaceSpec, client *client.Client) error {
 
 // The code below allows to perform complex data section on []api.Namespace
 
-var propertyGetters = map[string]func(NamespaceCell)(common.ComparableValue){
-	"name": func(self NamespaceCell)(common.ComparableValue) {return common.StdComparableString(self.ObjectMeta.Name)},
-	"creationTimestamp": func(self NamespaceCell)(common.ComparableValue) {return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)},
-	"namespace": func(self NamespaceCell)(common.ComparableValue) {return common.StdComparableString(self.ObjectMeta.Namespace)},
-}
-
-
 type NamespaceCell api.Namespace
 
-func (self NamespaceCell) GetProperty(name string) common.ComparableValue {
-	getter, isGetterPresent := propertyGetters[name]
-	if !isGetterPresent {
-		// if getter not present then just return a constant dummy value, sort will have no effect.
-		return common.StdComparableInt(0)
+func (self NamespaceCell) GetProperty(name common.PropertyName) common.ComparableValue {
+	switch name {
+	case common.NameProperty:
+		return common.StdComparableString(self.ObjectMeta.Name)
+	case common.CreationTimestampProperty:
+		return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+	case common.NamespaceProperty:
+		return common.StdComparableString(self.ObjectMeta.Namespace)
+	default:
+		// if name is not supported then just return a constant dummy value, sort will have no effect.
+		return nil
 	}
-	return getter(self)
 }
 
 
