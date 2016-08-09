@@ -50,15 +50,15 @@ func (self NodeCell) GetProperty(name common.PropertyName) common.ComparableValu
 }
 
 
-func toCells(std []api.Node) []common.GenericDataCell {
-	cells := make([]common.GenericDataCell, len(std))
+func toCells(std []api.Node) []common.DataCell {
+	cells := make([]common.DataCell, len(std))
 	for i := range std {
 		cells[i] = NodeCell(std[i])
 	}
 	return cells
 }
 
-func fromCells(cells []common.GenericDataCell) []api.Node {
+func fromCells(cells []common.DataCell) []api.Node {
 	std := make([]api.Node, len(cells))
 	for i := range std {
 		std[i] = api.Node(cells[i].(NodeCell))

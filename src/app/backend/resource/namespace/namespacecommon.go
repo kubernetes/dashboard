@@ -61,15 +61,15 @@ func (self NamespaceCell) GetProperty(name common.PropertyName) common.Comparabl
 }
 
 
-func toCells(std []api.Namespace) []common.GenericDataCell {
-	cells := make([]common.GenericDataCell, len(std))
+func toCells(std []api.Namespace) []common.DataCell {
+	cells := make([]common.DataCell, len(std))
 	for i := range std {
 		cells[i] = NamespaceCell(std[i])
 	}
 	return cells
 }
 
-func fromCells(cells []common.GenericDataCell) []api.Namespace {
+func fromCells(cells []common.DataCell) []api.Namespace {
 	std := make([]api.Namespace, len(cells))
 	for i := range std {
 		std[i] = api.Namespace(cells[i].(NamespaceCell))

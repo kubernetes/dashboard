@@ -17,7 +17,6 @@ package secret
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"k8s.io/kubernetes/pkg/api"
-//	"log"
 )
 
 // The code below allows to perform complex data section on []api.Secret
@@ -39,15 +38,15 @@ func (self SecretCell) GetProperty(name common.PropertyName) common.ComparableVa
 }
 
 
-func toCells(std []api.Secret) []common.GenericDataCell {
-	cells := make([]common.GenericDataCell, len(std))
+func toCells(std []api.Secret) []common.DataCell {
+	cells := make([]common.DataCell, len(std))
 	for i := range std {
 		cells[i] = SecretCell(std[i])
 	}
 	return cells
 }
 
-func fromCells(cells []common.GenericDataCell) []api.Secret {
+func fromCells(cells []common.DataCell) []api.Secret {
 	std := make([]api.Secret, len(cells))
 	for i := range std {
 		std[i] = api.Secret(cells[i].(SecretCell))

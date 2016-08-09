@@ -149,15 +149,15 @@ func (self ReplicationControllerCell) GetProperty(name common.PropertyName) comm
 }
 
 
-func toCells(std []api.ReplicationController) []common.GenericDataCell {
-	cells := make([]common.GenericDataCell, len(std))
+func toCells(std []api.ReplicationController) []common.DataCell {
+	cells := make([]common.DataCell, len(std))
 	for i := range std {
 		cells[i] = ReplicationControllerCell(std[i])
 	}
 	return cells
 }
 
-func fromCells(cells []common.GenericDataCell) []api.ReplicationController {
+func fromCells(cells []common.DataCell) []api.ReplicationController {
 	std := make([]api.ReplicationController, len(cells))
 	for i := range std {
 		std[i] = api.ReplicationController(cells[i].(ReplicationControllerCell))

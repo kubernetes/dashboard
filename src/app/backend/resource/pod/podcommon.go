@@ -74,15 +74,15 @@ func (self PodCell) GetProperty(name common.PropertyName) common.ComparableValue
 }
 
 
-func toCells(std []api.Pod) []common.GenericDataCell {
-	cells := make([]common.GenericDataCell, len(std))
+func toCells(std []api.Pod) []common.DataCell {
+	cells := make([]common.DataCell, len(std))
 	for i := range std {
 		cells[i] = PodCell(std[i])
 	}
 	return cells
 }
 
-func fromCells(cells []common.GenericDataCell) []api.Pod {
+func fromCells(cells []common.DataCell) []api.Pod {
 	std := make([]api.Pod, len(cells))
 	for i := range std {
 		std[i] = api.Pod(cells[i].(PodCell))

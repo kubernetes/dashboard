@@ -39,15 +39,15 @@ func (self DeploymentCell) GetProperty(name common.PropertyName) common.Comparab
 }
 
 
-func toCells(std []extensions.Deployment) []common.GenericDataCell {
-	cells := make([]common.GenericDataCell, len(std))
+func toCells(std []extensions.Deployment) []common.DataCell {
+	cells := make([]common.DataCell, len(std))
 	for i := range std {
 		cells[i] = DeploymentCell(std[i])
 	}
 	return cells
 }
 
-func fromCells(cells []common.GenericDataCell) []extensions.Deployment {
+func fromCells(cells []common.DataCell) []extensions.Deployment {
 	std := make([]extensions.Deployment, len(cells))
 	for i := range std {
 		std[i] = extensions.Deployment(cells[i].(DeploymentCell))

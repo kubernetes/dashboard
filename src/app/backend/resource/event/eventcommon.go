@@ -196,15 +196,15 @@ func (self EventCell) GetProperty(name common.PropertyName) common.ComparableVal
 }
 
 
-func toCells(std []api.Event) []common.GenericDataCell {
-	cells := make([]common.GenericDataCell, len(std))
+func toCells(std []api.Event) []common.DataCell {
+	cells := make([]common.DataCell, len(std))
 	for i := range std {
 		cells[i] = EventCell(std[i])
 	}
 	return cells
 }
 
-func fromCells(cells []common.GenericDataCell) []api.Event {
+func fromCells(cells []common.DataCell) []api.Event {
 	std := make([]api.Event, len(cells))
 	for i := range std {
 		std[i] = api.Event(cells[i].(EventCell))

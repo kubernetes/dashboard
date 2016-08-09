@@ -94,15 +94,15 @@ func (self ReplicaSetCell) GetProperty(name common.PropertyName) common.Comparab
 }
 
 
-func toCells(std []extensions.ReplicaSet) []common.GenericDataCell {
-	cells := make([]common.GenericDataCell, len(std))
+func toCells(std []extensions.ReplicaSet) []common.DataCell {
+	cells := make([]common.DataCell, len(std))
 	for i := range std {
 		cells[i] = ReplicaSetCell(std[i])
 	}
 	return cells
 }
 
-func fromCells(cells []common.GenericDataCell) []extensions.ReplicaSet {
+func fromCells(cells []common.DataCell) []extensions.ReplicaSet {
 	std := make([]extensions.ReplicaSet, len(cells))
 	for i := range std {
 		std[i] = extensions.ReplicaSet(cells[i].(ReplicaSetCell))
