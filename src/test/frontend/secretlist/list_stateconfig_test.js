@@ -14,8 +14,8 @@
 
 import {PaginationService} from 'common/pagination/pagination_service';
 
-import secretListModule from 'secretlist/secretlist_module';
-import {resolveSecretList} from 'secretlist/secretlist_stateconfig';
+import secretListModule from 'secretlist/module';
+import {resolveSecretList} from 'secretlist/list_stateconfig';
 
 describe('StateConfig for secret list', () => {
   beforeEach(() => { angular.mock.module(secretListModule.name); });

@@ -12,18 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
-
-.kd-info-card-section {
-  flex-wrap: wrap;
-  font-size: $subhead-font-size-base;
-  font-weight: $bold-font-weight;
-
-  kd-info-card-section {
-    display: flex;
-    flex-grow: 1;
-    max-width: 100%;
-    overflow: hidden;
-    padding-right: 2 * $baseline-grid;
-  }
-}
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'secretdetail';
