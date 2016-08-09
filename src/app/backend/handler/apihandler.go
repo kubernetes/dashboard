@@ -44,7 +44,7 @@ import (
 	clientK8s "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
 	"k8s.io/kubernetes/pkg/runtime"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/graph"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 )
 
 const (
@@ -1204,7 +1204,7 @@ response *restful.Response) {
 	}
 	query := request.Request.Form
 
-	data, err := graph.ExecuteRawQuery(apiHandler.heapsterClient, apiHandler.client, query)
+	data, err := metric.ExecuteRawQuery(apiHandler.heapsterClient, apiHandler.client, query)
 
 	if err != nil {
 		handleInternalError(response, err)

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package graph
+package metric
 
 import (
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
