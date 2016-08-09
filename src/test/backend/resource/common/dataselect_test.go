@@ -31,12 +31,12 @@ type SortTestCase struct {
 	ExpectedOrder []int
 }
 
-type DataCell struct {
+type TestDataCell struct {
 	Name string
 	Id int
 }
 
-func (self DataCell) GetProperty(name PropertyName) ComparableValue {
+func (self TestDataCell) GetProperty(name PropertyName) ComparableValue {
 	switch name {
 	case NameProperty:
 		return StdComparableString(self.Name)
@@ -47,24 +47,24 @@ func (self DataCell) GetProperty(name PropertyName) ComparableValue {
 	}
 }
 
-func toCells(std []DataCell) []GenericDataCell {
-	cells := make([]GenericDataCell, len(std))
+func toCells(std []TestDataCell) []DataCell {
+	cells := make([]DataCell, len(std))
 	for i := range std {
-		cells[i] = DataCell(std[i])
+		cells[i] = TestDataCell(std[i])
 	}
 	return cells
 }
 
-func fromCells(cells []GenericDataCell) []DataCell {
-	std := make([]DataCell, len(cells))
+func fromCells(cells []DataCell) []TestDataCell {
+	std := make([]TestDataCell, len(cells))
 	for i := range std {
-		std[i] = cells[i].(DataCell)
+		std[i] = cells[i].(TestDataCell)
 	}
 	return std
 }
 
-func getDataCellList() ([]GenericDataCell) {
-	return toCells([]DataCell{
+func getDataCellList() ([]DataCell) {
+	return toCells([]TestDataCell{
 		{"ab", 1},
 		{"ab", 2},
 		{"ab", 3},
@@ -79,7 +79,7 @@ func getDataCellList() ([]GenericDataCell) {
 }
 
 
-func getOrder(dataList []DataCell) []int {
+func getOrder(dataList []TestDataCell) []int {
 	idOrder := []int{}
 	for _, e := range dataList {
 		idOrder = append(idOrder, e.Id)
@@ -145,7 +145,6 @@ func TestSort(t *testing.T) {
 	}
 
 }
-
 
 
 func TestPagination(t *testing.T) {

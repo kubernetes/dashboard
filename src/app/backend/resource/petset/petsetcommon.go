@@ -22,13 +22,6 @@ import (
 
 // The code below allows to perform complex data section on []apps.PetSet
 
-var propertyGetters = map[string]func(PetSetCell)(common.ComparableValue){
-	"name": func(self PetSetCell)(common.ComparableValue) {return common.StdComparableString(self.ObjectMeta.Name)},
-	"creationTimestamp": func(self PetSetCell)(common.ComparableValue) {return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)},
-	"namespace": func(self PetSetCell)(common.ComparableValue) {return common.StdComparableString(self.ObjectMeta.Namespace)},
-}
-
-
 type PetSetCell apps.PetSet
 
 func (self PetSetCell) GetProperty(name common.PropertyName) common.ComparableValue {
@@ -46,15 +39,15 @@ func (self PetSetCell) GetProperty(name common.PropertyName) common.ComparableVa
 }
 
 
-func toCells(std []apps.PetSet) []common.GenericDataCell {
-	cells := make([]common.GenericDataCell, len(std))
+func toCells(std []apps.PetSet) []common.DataCell {
+	cells := make([]common.DataCell, len(std))
 	for i := range std {
 		cells[i] = PetSetCell(std[i])
 	}
 	return cells
 }
 
-func fromCells(cells []common.GenericDataCell) []apps.PetSet {
+func fromCells(cells []common.DataCell) []apps.PetSet {
 	std := make([]apps.PetSet, len(cells))
 	for i := range std {
 		std[i] = apps.PetSet(cells[i].(PetSetCell))

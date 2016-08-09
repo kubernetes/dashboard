@@ -82,15 +82,15 @@ func (self ServiceCell) GetProperty(name common.PropertyName) common.ComparableV
 }
 
 
-func toCells(std []api.Service) []common.GenericDataCell {
-	cells := make([]common.GenericDataCell, len(std))
+func toCells(std []api.Service) []common.DataCell {
+	cells := make([]common.DataCell, len(std))
 	for i := range std {
 		cells[i] = ServiceCell(std[i])
 	}
 	return cells
 }
 
-func fromCells(cells []common.GenericDataCell) []api.Service {
+func fromCells(cells []common.DataCell) []api.Service {
 	std := make([]api.Service, len(cells))
 	for i := range std {
 		std[i] = api.Service(cells[i].(ServiceCell))

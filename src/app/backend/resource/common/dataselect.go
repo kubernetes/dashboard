@@ -15,15 +15,14 @@
 package common
 
 import (
-	"time"
-	"strings"
 	"sort"
 )
 
-// GenericDataCell is the Interface of generic data cell.
+// GenericDataCell describes the interface of the data cell that contains all the necessary methods needed to perform
+// complex data selection
 // GenericDataSelect takes a list of these interfaces and performs selection operation.
-// As long as the list is composed of GenericDataCells you can perform any data selection!
-type GenericDataCell interface {
+// Therefore as long as the list is composed of GenericDataCells you can perform any data selection!
+type DataCell interface {
 	// GetPropertyAtIndex returns the property of this data cell.
 	// Value returned has to have Compare method which is required by Sort functionality of DataSelect.
 	GetProperty(PropertyName) ComparableValue
@@ -39,16 +38,13 @@ type ComparableValue interface {
 // You can use its Select method to get selected GenericDataCell list.
 type SelectableData struct {
 	// GenericDataList hold generic data cells that are being selected.
-	GenericDataList []GenericDataCell
+	GenericDataList []DataCell
 	// DataSelectQuery holds instructions for data select.
 	DataSelectQuery *DataSelectQuery
 }
 
-// Here I am using a trick to be able to use built in sort function (sort.Sort) for sorting SelectableData
-// The aim is to implement sort.Interface - it is to define 3 methods:
-// Len, Swap and Less.
 
-// Implementation of sort.Interface.
+// Implementation of sort.Interface so that we can use built-in sort function (sort.Sort) for sorting SelectableData
 
 // Len returns the length of data inside SelectableData.
 func (self SelectableData) Len() int {return len(self.GenericDataList)}
@@ -58,7 +54,7 @@ func (self SelectableData) Swap(i, j int) {self.GenericDataList[i], self.Generic
 
 // Less compares 2 indices inside SelectableData and returns true if first index is larger.
 func (self SelectableData) Less(i, j int) bool {
-	for _, sortBy := range (*self.DataSelectQuery.SortQuery).SortByList {
+	for _, sortBy := range self.DataSelectQuery.SortQuery.SortByList {
 		a := self.GenericDataList[i].GetProperty(sortBy.Property)
 		b := self.GenericDataList[j].GetProperty(sortBy.Property)
 		// ignore sort completely if property name not found
@@ -96,74 +92,10 @@ func (self *SelectableData) Paginate() (*SelectableData) {
 }
 
 // GenericDataSelect takes a list of GenericDataCells and DataSelectQuery and returns selected data as instructed by dsQuery.
-func GenericDataSelect(dataList []GenericDataCell, dsQuery *DataSelectQuery) ([]GenericDataCell){
+func GenericDataSelect(dataList []DataCell, dsQuery *DataSelectQuery) ([]DataCell){
 	SelectableData := SelectableData{
 		GenericDataList: dataList,
 		DataSelectQuery: dsQuery,
 	}
 	return SelectableData.Sort().Paginate().GenericDataList
-}
-
-
-// Int comparison functions. Similar to strings.Compare.
-func intsCompare(a, b int) int {
-	if a > b {
-		return 1
-	} else if a == b {
-		return 0
-	}
-	return -1
-}
-
-func ints64Compare(a, b int64) int {
-	if a > b {
-		return 1
-	} else if a == b {
-		return 0
-	}
-	return -1
-}
-// ----------------------- Standard Comparable Types ------------------------
-// These types specify how given value should be compared
-// They all implement ComparableValueInterface
-// You can convert basic types to these types to supprt auto sorting etc.
-// If you cant find your type compare here you will have to implement it yourself :)
-
-type StdComparableInt int
-
-func (self StdComparableInt) Compare(otherV ComparableValue) int {
-	other := otherV.(StdComparableInt)
-	return intsCompare(int(self), int(other))
-}
-
-
-type StdComparableString string
-
-func (self StdComparableString) Compare(otherV ComparableValue) int {
-	other := otherV.(StdComparableString)
-	return strings.Compare(string(self), string(other))
-}
-
-// StdComparableRFC3339Timestamp takes RFC3339 Timestamp strings and compares them as TIMES. In case of time parsing error compares values as strings.
-type StdComparableRFC3339Timestamp string
-
-func (self StdComparableRFC3339Timestamp) Compare(otherV ComparableValue) int {
-	other := otherV.(StdComparableRFC3339Timestamp)
-	// try to compare as timestamp (earlier = smaller)
-	selfTime, err1 := time.Parse(time.RFC3339, string(self))
-        otherTime, err2 := time.Parse(time.RFC3339, string(other))
-
-	if err1!=nil || err2!=nil {
-		// in case of timestamp parsing failure just compare as strings
-		return strings.Compare(string(self), string(other))
-	} else {
-		return ints64Compare(selfTime.Unix(), otherTime.Unix())
-	}
-}
-
-type StdComparableTime time.Time
-
-func (self StdComparableTime) Compare(otherV ComparableValue) int {
-	other := otherV.(StdComparableTime)
-	return ints64Compare(time.Time(self).Unix(), time.Time(other).Unix())
 }

@@ -57,13 +57,6 @@ func getServicesForDSDeletion(client client.Interface, labelSelector labels.Sele
 
 // The code below allows to perform complex data section on []extensions.DaemonSet
 
-var propertyGetters = map[string]func(DaemonSetCell)(common.ComparableValue){
-	"name": func(self DaemonSetCell)(common.ComparableValue) {return common.StdComparableString(self.ObjectMeta.Name)},
-	"creationTimestamp": func(self DaemonSetCell)(common.ComparableValue) {return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)},
-	"namespace": func(self DaemonSetCell)(common.ComparableValue) {return common.StdComparableString(self.ObjectMeta.Namespace)},
-}
-
-
 type DaemonSetCell extensions.DaemonSet
 
 func (self DaemonSetCell) GetProperty(name common.PropertyName) common.ComparableValue {
@@ -81,15 +74,15 @@ func (self DaemonSetCell) GetProperty(name common.PropertyName) common.Comparabl
 }
 
 
-func toCells(std []extensions.DaemonSet) []common.GenericDataCell {
-	cells := make([]common.GenericDataCell, len(std))
+func toCells(std []extensions.DaemonSet) []common.DataCell {
+	cells := make([]common.DataCell, len(std))
 	for i := range std {
 		cells[i] = DaemonSetCell(std[i])
 	}
 	return cells
 }
 
-func fromCells(cells []common.GenericDataCell) []extensions.DaemonSet {
+func fromCells(cells []common.DataCell) []extensions.DaemonSet {
 	std := make([]extensions.DaemonSet, len(cells))
 	for i := range std {
 		std[i] = extensions.DaemonSet(cells[i].(DaemonSetCell))

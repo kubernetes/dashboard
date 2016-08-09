@@ -21,13 +21,6 @@ import (
 
 // The code below allows to perform complex data section on []api.ConfigMap
 
-var propertyGetters = map[string]func(ConfigMapCell)(common.ComparableValue){
-	"name": func(self ConfigMapCell)(common.ComparableValue) {return common.StdComparableString(self.ObjectMeta.Name)},
-	"creationTimestamp": func(self ConfigMapCell)(common.ComparableValue) {return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)},
-	"namespace": func(self ConfigMapCell)(common.ComparableValue) {return common.StdComparableString(self.ObjectMeta.Namespace)},
-}
-
-
 type ConfigMapCell api.ConfigMap
 
 func (self ConfigMapCell) GetProperty(name common.PropertyName) common.ComparableValue {
@@ -45,15 +38,15 @@ func (self ConfigMapCell) GetProperty(name common.PropertyName) common.Comparabl
 }
 
 
-func toCells(std []api.ConfigMap) []common.GenericDataCell {
-	cells := make([]common.GenericDataCell, len(std))
+func toCells(std []api.ConfigMap) []common.DataCell {
+	cells := make([]common.DataCell, len(std))
 	for i := range std {
 		cells[i] = ConfigMapCell(std[i])
 	}
 	return cells
 }
 
-func fromCells(cells []common.GenericDataCell) []api.ConfigMap {
+func fromCells(cells []common.DataCell) []api.ConfigMap {
 	std := make([]api.ConfigMap, len(cells))
 	for i := range std {
 		std[i] = api.ConfigMap(cells[i].(ConfigMapCell))

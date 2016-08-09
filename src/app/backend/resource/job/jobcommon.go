@@ -38,15 +38,15 @@ func (self JobCell) GetProperty(name common.PropertyName) common.ComparableValue
 }
 
 
-func toCells(std []batch.Job) []common.GenericDataCell {
-	cells := make([]common.GenericDataCell, len(std))
+func toCells(std []batch.Job) []common.DataCell {
+	cells := make([]common.DataCell, len(std))
 	for i := range std {
 		cells[i] = JobCell(std[i])
 	}
 	return cells
 }
 
-func fromCells(cells []common.GenericDataCell) []batch.Job {
+func fromCells(cells []common.DataCell) []batch.Job {
 	std := make([]batch.Job, len(cells))
 	for i := range std {
 		std[i] = batch.Job(cells[i].(JobCell))
