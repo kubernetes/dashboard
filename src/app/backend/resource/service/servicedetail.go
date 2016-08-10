@@ -56,7 +56,7 @@ type ServiceDetail struct {
 
 // GetServiceDetail gets service details.
 func GetServiceDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	namespace, name string, pQuery *common.PaginationQuery) (*ServiceDetail, error) {
+	namespace, name string, dsQuery *common.DataSelectQuery) (*ServiceDetail, error) {
 
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 
@@ -66,7 +66,7 @@ func GetServiceDetail(client k8sClient.Interface, heapsterClient client.Heapster
 		return nil, err
 	}
 
-	podList, err := GetServicePods(client, heapsterClient, namespace, name, pQuery)
+	podList, err := GetServicePods(client, heapsterClient, namespace, name, dsQuery)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +79,7 @@ func GetServiceDetail(client k8sClient.Interface, heapsterClient client.Heapster
 
 // GetServicePods gets list of pods targeted by given label selector in given namespace.
 func GetServicePods(client k8sClient.Interface, heapsterClient client.HeapsterClient, namespace,
-	name string, pQuery *common.PaginationQuery) (*pod.PodList, error) {
+	name string, dsQuery *common.DataSelectQuery) (*pod.PodList, error) {
 
 	service, err := client.Services(namespace).Get(name)
 	if err != nil {
@@ -102,6 +102,6 @@ func GetServicePods(client k8sClient.Interface, heapsterClient client.HeapsterCl
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(apiPodList.Items, pQuery, heapsterClient)
+	podList := pod.CreatePodList(apiPodList.Items, dsQuery, heapsterClient)
 	return &podList, nil
 }

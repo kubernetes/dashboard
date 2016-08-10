@@ -19,13 +19,37 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 )
 
-func paginate(persistentVolumes []api.PersistentVolume, pQuery *common.PaginationQuery) []api.PersistentVolume {
-	startIndex, endIndex := pQuery.GetPaginationSettings(len(persistentVolumes))
+// The code below allows to perform complex data section on []api.PersistentVolume
 
-	// Return all items if provided settings do not meet requirements
-	if !pQuery.CanPaginate(len(persistentVolumes), startIndex) {
-		return persistentVolumes
+type PersistentVolumeCell api.PersistentVolume
+
+func (self PersistentVolumeCell) GetProperty(name common.PropertyName) common.ComparableValue {
+	switch name {
+	case common.NameProperty:
+		return common.StdComparableString(self.ObjectMeta.Name)
+	case common.CreationTimestampProperty:
+		return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+	case common.NamespaceProperty:
+		return common.StdComparableString(self.ObjectMeta.Namespace)
+	default:
+		// if name is not supported then just return a constant dummy value, sort will have no effect.
+		return nil
 	}
+}
 
-	return persistentVolumes[startIndex:endIndex]
+
+func toCells(std []api.PersistentVolume) []common.DataCell {
+	cells := make([]common.DataCell, len(std))
+	for i := range std {
+		cells[i] = PersistentVolumeCell(std[i])
+	}
+	return cells
+}
+
+func fromCells(cells []common.DataCell) []api.PersistentVolume {
+	std := make([]api.PersistentVolume, len(cells))
+	for i := range std {
+		std[i] = api.PersistentVolume(cells[i].(PersistentVolumeCell))
+	}
+	return std
 }

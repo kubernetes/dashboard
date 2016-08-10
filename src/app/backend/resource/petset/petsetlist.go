@@ -50,7 +50,7 @@ type PetSet struct {
 
 // GetPetSetList returns a list of all Pet Sets in the cluster.
 func GetPetSetList(client *client.Client, nsQuery *common.NamespaceQuery,
-	pQuery *common.PaginationQuery) (*PetSetList, error) {
+	dsQuery *common.DataSelectQuery) (*PetSetList, error) {
 	log.Printf("Getting list of all pet sets in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -59,12 +59,12 @@ func GetPetSetList(client *client.Client, nsQuery *common.NamespaceQuery,
 		EventList:  common.GetEventListChannel(client, nsQuery, 1),
 	}
 
-	return GetPetSetListFromChannels(channels, pQuery)
+	return GetPetSetListFromChannels(channels, dsQuery)
 }
 
 // GetPetSetListFromChannels returns a list of all Pet Sets in the cluster
 // reading required resource list once from the channels.
-func GetPetSetListFromChannels(channels *common.ResourceChannels, pQuery *common.PaginationQuery) (
+func GetPetSetListFromChannels(channels *common.ResourceChannels, dsQuery *common.DataSelectQuery) (
 	*PetSetList, error) {
 
 	petSets := <-channels.PetSetList.List
@@ -91,20 +91,20 @@ func GetPetSetListFromChannels(channels *common.ResourceChannels, pQuery *common
 		return nil, err
 	}
 
-	return CreatePetSetList(petSets.Items, pods.Items, events.Items, pQuery), nil
+	return CreatePetSetList(petSets.Items, pods.Items, events.Items, dsQuery), nil
 }
 
 // CreatePetSetList creates paginated list of Pet Set model
 // objects based on Kubernetes Pet Set objects array and related resources arrays.
 func CreatePetSetList(petSets []apps.PetSet, pods []api.Pod, events []api.Event,
-	pQuery *common.PaginationQuery) *PetSetList {
+	dsQuery *common.DataSelectQuery) *PetSetList {
 
 	petSetList := &PetSetList{
 		PetSets:  make([]PetSet, 0),
 		ListMeta: common.ListMeta{TotalItems: len(petSets)},
 	}
 
-	petSets = paginate(petSets, pQuery)
+	petSets = fromCells(common.GenericDataSelect(toCells(petSets), dsQuery))
 
 	for _, petSet := range petSets {
 		matchingPods := common.FilterNamespacedPodsBySelector(pods, petSet.ObjectMeta.Namespace,

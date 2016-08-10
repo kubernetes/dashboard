@@ -27,14 +27,14 @@ import (
 // CreateReplicaSetList creates paginated list of Replica Set model
 // objects based on Kubernetes Replica Set objects array and related resources arrays.
 func CreateReplicaSetList(replicaSets []extensions.ReplicaSet, pods []api.Pod,
-	events []api.Event, pQuery *common.PaginationQuery) *ReplicaSetList {
+	events []api.Event, dsQuery *common.DataSelectQuery) *ReplicaSetList {
 
 	replicaSetList := &ReplicaSetList{
 		ReplicaSets: make([]ReplicaSet, 0),
 		ListMeta:    common.ListMeta{TotalItems: len(replicaSets)},
 	}
 
-	replicaSets = paginate(replicaSets, pQuery)
+	replicaSets = fromCells(common.GenericDataSelect(toCells(replicaSets), dsQuery))
 
 	for _, replicaSet := range replicaSets {
 		matchingPods := common.FilterNamespacedPodsBySelector(pods, replicaSet.ObjectMeta.Namespace,
@@ -75,15 +75,37 @@ func ToReplicaSetDetail(replicaSet *extensions.ReplicaSet, eventList common.Even
 	}
 }
 
-func paginate(replicaSets []extensions.ReplicaSet,
-	pQuery *common.PaginationQuery) []extensions.ReplicaSet {
+// The code below allows to perform complex data section on []extensions.ReplicaSet
 
-	startIndex, endIndex := pQuery.GetPaginationSettings(len(replicaSets))
+type ReplicaSetCell extensions.ReplicaSet
 
-	// Return all items if provided settings do not meet requirements
-	if !pQuery.CanPaginate(len(replicaSets), startIndex) {
-		return replicaSets
+func (self ReplicaSetCell) GetProperty(name common.PropertyName) common.ComparableValue {
+	switch name {
+	case common.NameProperty:
+		return common.StdComparableString(self.ObjectMeta.Name)
+	case common.CreationTimestampProperty:
+		return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+	case common.NamespaceProperty:
+		return common.StdComparableString(self.ObjectMeta.Namespace)
+	default:
+		// if name is not supported then just return a constant dummy value, sort will have no effect.
+		return nil
 	}
+}
 
-	return replicaSets[startIndex:endIndex]
+
+func toCells(std []extensions.ReplicaSet) []common.DataCell {
+	cells := make([]common.DataCell, len(std))
+	for i := range std {
+		cells[i] = ReplicaSetCell(std[i])
+	}
+	return cells
+}
+
+func fromCells(cells []common.DataCell) []extensions.ReplicaSet {
+	std := make([]extensions.ReplicaSet, len(cells))
+	for i := range std {
+		std[i] = extensions.ReplicaSet(cells[i].(ReplicaSetCell))
+	}
+	return std
 }

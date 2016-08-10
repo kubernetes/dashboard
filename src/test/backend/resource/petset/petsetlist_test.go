@@ -177,7 +177,7 @@ func TestGetPetSetListFromChannels(t *testing.T) {
 		channels.EventList.List <- &api.EventList{}
 		channels.EventList.Error <- nil
 
-		actual, err := GetPetSetListFromChannels(channels, common.NoPagination)
+		actual, err := GetPetSetListFromChannels(channels, common.NoDataSelect)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetPetSetListChannels() ==\n          %#v\nExpected: %#v", actual, c.expected)
 		}

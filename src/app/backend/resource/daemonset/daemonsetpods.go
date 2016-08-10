@@ -28,7 +28,7 @@ import (
 
 // GetDaemonSetPods return list of pods targeting daemon set.
 func GetDaemonSetPods(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	pQuery *common.PaginationQuery, daemonSetName, namespace string) (*pod.PodList, error) {
+	dsQuery *common.DataSelectQuery, daemonSetName, namespace string) (*pod.PodList, error) {
 	log.Printf("Getting replication controller %s pods in namespace %s", daemonSetName, namespace)
 
 	pods, err := getRawDaemonSetPods(client, daemonSetName, namespace)
@@ -36,7 +36,7 @@ func GetDaemonSetPods(client k8sClient.Interface, heapsterClient client.Heapster
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(pods, pQuery, heapsterClient)
+	podList := pod.CreatePodList(pods, dsQuery, heapsterClient)
 	return &podList, nil
 }
 

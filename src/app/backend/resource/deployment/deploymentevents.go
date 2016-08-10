@@ -36,7 +36,7 @@ func GetDeploymentEvents(dpEvents []api.Event, namespace string, deploymentName 
 	}
 
 	// TODO support pagination
-	events := event.CreateEventList(dpEvents, common.NoPagination)
+	events := event.CreateEventList(dpEvents, common.NoDataSelect)
 
 	log.Printf("Found %d events related to %s deployment in %s namespace",
 		len(events.Events), deploymentName, namespace)

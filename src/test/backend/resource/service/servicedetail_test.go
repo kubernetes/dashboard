@@ -79,7 +79,7 @@ func TestGetServiceDetail(t *testing.T) {
 		fakeHeapsterClient := FakeHeapsterClient{client: testclient.NewSimpleFake()}
 
 		actual, _ := GetServiceDetail(fakeClient, fakeHeapsterClient,
-			c.namespace, c.name, common.NoPagination)
+			c.namespace, c.name, common.NoDataSelect)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {

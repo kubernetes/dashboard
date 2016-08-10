@@ -20,13 +20,37 @@ import (
 	"k8s.io/kubernetes/pkg/apis/apps"
 )
 
-func paginate(petSets []apps.PetSet, pQuery *common.PaginationQuery) []apps.PetSet {
-	startIndex, endIndex := pQuery.GetPaginationSettings(len(petSets))
+// The code below allows to perform complex data section on []apps.PetSet
 
-	// Return all items if provided settings do not meet requirements
-	if !pQuery.CanPaginate(len(petSets), startIndex) {
-		return petSets
+type PetSetCell apps.PetSet
+
+func (self PetSetCell) GetProperty(name common.PropertyName) common.ComparableValue {
+	switch name {
+	case common.NameProperty:
+		return common.StdComparableString(self.ObjectMeta.Name)
+	case common.CreationTimestampProperty:
+		return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+	case common.NamespaceProperty:
+		return common.StdComparableString(self.ObjectMeta.Namespace)
+	default:
+		// if name is not supported then just return a constant dummy value, sort will have no effect.
+		return nil
 	}
+}
 
-	return petSets[startIndex:endIndex]
+
+func toCells(std []apps.PetSet) []common.DataCell {
+	cells := make([]common.DataCell, len(std))
+	for i := range std {
+		cells[i] = PetSetCell(std[i])
+	}
+	return cells
+}
+
+func fromCells(cells []common.DataCell) []apps.PetSet {
+	std := make([]apps.PetSet, len(cells))
+	for i := range std {
+		std[i] = apps.PetSet(cells[i].(PetSetCell))
+	}
+	return std
 }
