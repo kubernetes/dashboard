@@ -19,13 +19,38 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 )
 
-func paginate(persistentVolumeClaims []api.PersistentVolumeClaim, pQuery *common.PaginationQuery) []api.PersistentVolumeClaim {
-	startIndex, endIndex := pQuery.GetPaginationSettings(len(persistentVolumeClaims))
 
-	// Return all items if provided settings do not meet requirements
-	if !pQuery.CanPaginate(len(persistentVolumeClaims), startIndex) {
-		return persistentVolumeClaims
+// The code below allows to perform complex data section on []api.PersistentVolumeClaim
+
+type PersistentVolumeClaimCell api.PersistentVolumeClaim
+
+func (self PersistentVolumeClaimCell) GetProperty(name common.PropertyName) common.ComparableValue {
+	switch name {
+	case common.NameProperty:
+		return common.StdComparableString(self.ObjectMeta.Name)
+	case common.CreationTimestampProperty:
+		return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+	case common.NamespaceProperty:
+		return common.StdComparableString(self.ObjectMeta.Namespace)
+	default:
+		// if name is not supported then just return a constant dummy value, sort will have no effect.
+		return nil
 	}
+}
 
-	return persistentVolumeClaims[startIndex:endIndex]
+
+func toCells(std []api.PersistentVolumeClaim) []common.DataCell {
+	cells := make([]common.DataCell, len(std))
+	for i := range std {
+		cells[i] = PersistentVolumeClaimCell(std[i])
+	}
+	return cells
+}
+
+func fromCells(cells []common.DataCell) []api.PersistentVolumeClaim {
+	std := make([]api.PersistentVolumeClaim, len(cells))
+	for i := range std {
+		std[i] = api.PersistentVolumeClaim(cells[i].(PersistentVolumeClaimCell))
+	}
+	return std
 }

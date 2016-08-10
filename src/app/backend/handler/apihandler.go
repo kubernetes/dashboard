@@ -1005,8 +1005,8 @@ func (apiHandler *APIHandler) handleGetPersistentVolumeDetail(request *restful.R
 func (apiHandler *APIHandler) handleGetPersistentVolumeClaimList(request *restful.Request, response *restful.Response) {
 
 	namespace := parseNamespacePathParameter(request)
-	pagination := parsePaginationPathParameter(request)
-	result, err := persistentvolumeclaim.GetPersistentVolumeClaimList(apiHandler.client, namespace, pagination)
+	dataSelect := parseDataSelectPathParameter(request)
+	result, err := persistentvolumeclaim.GetPersistentVolumeClaimList(apiHandler.client, namespace, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return

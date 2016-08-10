@@ -40,40 +40,40 @@ type PersistentVolumeClaim struct {
 
 // GetPersistentVolumeClaimList returns a list of all Persistent Volume Claims in the cluster.
 func GetPersistentVolumeClaimList(client *client.Client, nsQuery *common.NamespaceQuery,
-	pQuery *common.PaginationQuery) (*PersistentVolumeClaimList, error) {
+	dsQuery *common.DataSelectQuery) (*PersistentVolumeClaimList, error) {
 
 	log.Printf("Getting list persistent volumes claims")
 	channels := &common.ResourceChannels{
 		PersistentVolumeClaimList: common.GetPersistentVolumeClaimListChannel(client, nsQuery, 1),
 	}
 
-	return GetPersistentVolumeClaimListFromChannels(channels, nsQuery, pQuery)
+	return GetPersistentVolumeClaimListFromChannels(channels, nsQuery, dsQuery)
 }
 
 // GetPersistentVolumeClaimListFromChannels returns a list of all Persistent Volume Claims in the cluster
 // reading required resource list once from the channels.
 func GetPersistentVolumeClaimListFromChannels(channels *common.ResourceChannels, nsQuery *common.NamespaceQuery,
-	pQuery *common.PaginationQuery) (*PersistentVolumeClaimList, error) {
+	dsQuery *common.DataSelectQuery) (*PersistentVolumeClaimList, error) {
 
 	persistentVolumeClaims := <-channels.PersistentVolumeClaimList.List
 	if err := <-channels.PersistentVolumeClaimList.Error; err != nil {
 		return nil, err
 	}
 
-	result := getPersistentVolumeClaimList(persistentVolumeClaims.Items, nsQuery, pQuery)
+	result := getPersistentVolumeClaimList(persistentVolumeClaims.Items, nsQuery, dsQuery)
 
 	return result, nil
 }
 
 func getPersistentVolumeClaimList(persistentVolumeClaims []api.PersistentVolumeClaim, nsQuery *common.NamespaceQuery,
-	pQuery *common.PaginationQuery) *PersistentVolumeClaimList {
+	dsQuery *common.DataSelectQuery) *PersistentVolumeClaimList {
 
 	result := &PersistentVolumeClaimList{
 		Items:    make([]PersistentVolumeClaim, 0),
 		ListMeta: common.ListMeta{TotalItems: len(persistentVolumeClaims)},
 	}
 
-	persistentVolumeClaims = paginate(persistentVolumeClaims, pQuery)
+	persistentVolumeClaims = fromCells(common.GenericDataSelect(toCells(persistentVolumeClaims), dsQuery))
 
 	for _, item := range persistentVolumeClaims {
 		result.Items = append(result.Items,
