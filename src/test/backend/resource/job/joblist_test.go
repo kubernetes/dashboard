@@ -95,7 +95,22 @@ func TestGetJobListFromChannels(t *testing.T) {
 					Status: batch.JobStatus{
 						Active: 7,
 					},
-				}},
+				},
+					{
+						ObjectMeta: api.ObjectMeta{
+							Name:              "rs-name",
+							Namespace:         "rs-namespace",
+							Labels:            map[string]string{"key": "value"},
+							CreationTimestamp: unversioned.Unix(111, 222),
+						},
+						Spec: batch.JobSpec{
+							Selector: &unversioned.LabelSelector{MatchLabels: map[string]string{"foo": "bar"}},
+						},
+						Status: batch.JobStatus{
+							Active: 7,
+						},
+					},
+				},
 			},
 			nil,
 			&api.PodList{
@@ -117,7 +132,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 				},
 			},
 			&JobList{
-				common.ListMeta{TotalItems: 1},
+				common.ListMeta{TotalItems: 2},
 				[]Job{{
 					ObjectMeta: common.ObjectMeta{
 						Name:              "rs-name",
@@ -129,6 +144,20 @@ func TestGetJobListFromChannels(t *testing.T) {
 					Pods: common.PodInfo{
 						Current:  7,
 						Desired:  21,
+						Failed:   1,
+						Warnings: []common.Event{},
+					},
+				}, {
+					ObjectMeta: common.ObjectMeta{
+						Name:              "rs-name",
+						Namespace:         "rs-namespace",
+						Labels:            map[string]string{"key": "value"},
+						CreationTimestamp: unversioned.Unix(111, 222),
+					},
+					TypeMeta: common.TypeMeta{Kind: common.ResourceKindJob},
+					Pods: common.PodInfo{
+						Current:  7,
+						Desired:  0,
 						Failed:   1,
 						Warnings: []common.Event{},
 					},
