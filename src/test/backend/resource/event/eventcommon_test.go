@@ -164,7 +164,7 @@ func TestToEventList(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := CreateEventList(c.events, common.NoPagination)
+		actual := CreateEventList(c.events, common.NoDataSelect)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("ToEventList(%+v, %+v) == \n%+v, expected \n%+v",
 				c.events, c.namespace, actual, c.expected)

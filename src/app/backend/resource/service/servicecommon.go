@@ -48,13 +48,13 @@ func ToServiceDetail(service *api.Service) ServiceDetail {
 
 // CreateServiceList returns paginated service list based on given service array
 // and pagination query.
-func CreateServiceList(services []api.Service, pQuery *common.PaginationQuery) *ServiceList {
+func CreateServiceList(services []api.Service, dsQuery *common.DataSelectQuery) *ServiceList {
 	serviceList := &ServiceList{
 		Services: make([]Service, 0),
 		ListMeta: common.ListMeta{TotalItems: len(services)},
 	}
 
-	services = paginate(services, pQuery)
+	services = fromCells(common.GenericDataSelect(toCells(services), dsQuery))
 
 	for _, service := range services {
 		serviceList.Services = append(serviceList.Services, ToService(&service))
@@ -63,13 +63,38 @@ func CreateServiceList(services []api.Service, pQuery *common.PaginationQuery) *
 	return serviceList
 }
 
-func paginate(services []api.Service, pQuery *common.PaginationQuery) []api.Service {
-	startIndex, endIndex := pQuery.GetPaginationSettings(len(services))
+// The code below allows to perform complex data section on []api.Service
 
-	// Return all items if provided settings do not meet requirements
-	if !pQuery.CanPaginate(len(services), startIndex) {
-		return services
+type ServiceCell api.Service
+
+func (self ServiceCell) GetProperty(name common.PropertyName) common.ComparableValue {
+	switch name {
+	case common.NameProperty:
+		return common.StdComparableString(self.ObjectMeta.Name)
+	case common.CreationTimestampProperty:
+		return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+	case common.NamespaceProperty:
+		return common.StdComparableString(self.ObjectMeta.Namespace)
+	default:
+		// if name is not supported then just return a constant dummy value, sort will have no effect.
+		return nil
 	}
-
-	return services[startIndex:endIndex]
 }
+
+
+func toCells(std []api.Service) []common.DataCell {
+	cells := make([]common.DataCell, len(std))
+	for i := range std {
+		cells[i] = ServiceCell(std[i])
+	}
+	return cells
+}
+
+func fromCells(cells []common.DataCell) []api.Service {
+	std := make([]api.Service, len(cells))
+	for i := range std {
+		std[i] = api.Service(cells[i].(ServiceCell))
+	}
+	return std
+}
+

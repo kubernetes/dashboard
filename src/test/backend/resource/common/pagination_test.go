@@ -37,23 +37,24 @@ func TestNewPaginationQuery(t *testing.T) {
 	}
 }
 
-func TestCanPaginate(t *testing.T) {
+func TestIsValidPagination(t *testing.T) {
 	cases := []struct {
 		pQuery                    *PaginationQuery
-		itemsCount, startingIndex int
 		expected                  bool
 	}{
-		{&PaginationQuery{0, 0}, 10, 0, false},
-		{&PaginationQuery{5, 0}, 0, 0, false},
-		{&PaginationQuery{10, 1}, 10, 10, false},
-		{&PaginationQuery{10, 0}, 10, 0, true},
+		{&PaginationQuery{0, 0}, true},
+		{&PaginationQuery{5, 0}, true},
+		{&PaginationQuery{10, 1}, true},
+		{&PaginationQuery{0, 2}, true},
+		{&PaginationQuery{10, -1}, false},
+		{&PaginationQuery{-1, 0}, false},
+		{&PaginationQuery{-1, -1}, false},
 	}
 
 	for _, c := range cases {
-		actual := c.pQuery.CanPaginate(c.itemsCount, c.startingIndex)
+		actual := c.pQuery.IsValidPagination()
 		if actual != c.expected {
-			t.Errorf("CanPaginate(%+v, %+v) == %+v, expected %+v",
-				c.itemsCount, c.startingIndex, actual, c.expected)
+			t.Errorf("CanPaginate() == %+v, expected %+v", actual, c.expected)
 		}
 	}
 }

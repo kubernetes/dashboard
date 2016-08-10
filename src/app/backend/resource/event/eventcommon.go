@@ -94,7 +94,7 @@ func GetNodeEvents(client client.Interface, nodeName string) (common.EventList, 
 		ref.UID = types.UID(ref.Name)
 		events, _ := client.Events(api.NamespaceAll).Search(ref)
 		// TODO add pagination support
-		eventList = CreateEventList(events.Items, common.NoPagination)
+		eventList = CreateEventList(events.Items, common.NoDataSelect)
 	} else {
 		log.Print(err)
 	}
@@ -108,7 +108,7 @@ func GetNamespaceEvents(client client.Interface, namespace string) (common.Event
 		LabelSelector: labels.Everything(),
 		FieldSelector: fields.Everything(),
 	})
-	return CreateEventList(events.Items, common.NoPagination), nil
+	return CreateEventList(events.Items, common.NoDataSelect), nil
 }
 
 // Based on event Reason fills event Type in order to allow correct filtering by Type.
@@ -160,14 +160,14 @@ func ToEvent(event api.Event) common.Event {
 }
 
 // CreateEventList converts array of api events to common EventList structure
-func CreateEventList(events []api.Event, pQuery *common.PaginationQuery) common.EventList {
+func CreateEventList(events []api.Event, dsQuery *common.DataSelectQuery) common.EventList {
 
 	eventList := common.EventList{
 		Events:   make([]common.Event, 0),
 		ListMeta: common.ListMeta{TotalItems: len(events)},
 	}
 
-	events = paginate(events, pQuery)
+	events = fromCells(common.GenericDataSelect(toCells(events), dsQuery))
 
 	for _, event := range events {
 		eventDetail := ToEvent(event)
@@ -177,13 +177,38 @@ func CreateEventList(events []api.Event, pQuery *common.PaginationQuery) common.
 	return eventList
 }
 
-func paginate(events []api.Event, pQuery *common.PaginationQuery) []api.Event {
-	startIndex, endIndex := pQuery.GetPaginationSettings(len(events))
+// The code below allows to perform complex data section on []api.Event
 
-	// Return all items if provided settings do not meet requirements
-	if !pQuery.CanPaginate(len(events), startIndex) {
-		return events
+type EventCell api.Event
+
+func (self EventCell) GetProperty(name common.PropertyName) common.ComparableValue {
+	switch name {
+	case common.NameProperty:
+		return common.StdComparableString(self.ObjectMeta.Name)
+	case common.CreationTimestampProperty:
+		return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+	case common.NamespaceProperty:
+		return common.StdComparableString(self.ObjectMeta.Namespace)
+	default:
+		// if name is not supported then just return a constant dummy value, sort will have no effect.
+		return nil
 	}
-
-	return events[startIndex:endIndex]
 }
+
+
+func toCells(std []api.Event) []common.DataCell {
+	cells := make([]common.DataCell, len(std))
+	for i := range std {
+		cells[i] = EventCell(std[i])
+	}
+	return cells
+}
+
+func fromCells(cells []common.DataCell) []api.Event {
+	std := make([]api.Event, len(cells))
+	for i := range std {
+		std[i] = api.Event(cells[i].(EventCell))
+	}
+	return std
+}
+

@@ -52,7 +52,7 @@ func GetReplicaSetEvents(client client.Interface, namespace, replicaSetName stri
 	}
 
 	// TODO support pagination
-	events := event.CreateEventList(apiEvents, common.NoPagination)
+	events := event.CreateEventList(apiEvents, common.NoDataSelect)
 
 	log.Printf("Found %d events related to %s replica set in %s namespace",
 		len(events.Events), replicaSetName, namespace)

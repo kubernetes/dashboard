@@ -20,14 +20,37 @@ import (
 	"k8s.io/kubernetes/pkg/apis/extensions"
 )
 
-func paginate(deployments []extensions.Deployment,
-	pQuery *common.PaginationQuery) []extensions.Deployment {
-	startIndex, endIndex := pQuery.GetPaginationSettings(len(deployments))
+// The code below allows to perform complex data section on []extensions.Deployment
 
-	// Return all items if provided settings do not meet requirements
-	if !pQuery.CanPaginate(len(deployments), startIndex) {
-		return deployments
+type DeploymentCell extensions.Deployment
+
+func (self DeploymentCell) GetProperty(name common.PropertyName) common.ComparableValue {
+	switch name {
+	case common.NameProperty:
+		return common.StdComparableString(self.ObjectMeta.Name)
+	case common.CreationTimestampProperty:
+		return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+	case common.NamespaceProperty:
+		return common.StdComparableString(self.ObjectMeta.Namespace)
+	default:
+		// if name is not supported then just return a constant dummy value, sort will have no effect.
+		return nil
 	}
+}
 
-	return deployments[startIndex:endIndex]
+
+func toCells(std []extensions.Deployment) []common.DataCell {
+	cells := make([]common.DataCell, len(std))
+	for i := range std {
+		cells[i] = DeploymentCell(std[i])
+	}
+	return cells
+}
+
+func fromCells(cells []common.DataCell) []extensions.Deployment {
+	std := make([]extensions.Deployment, len(cells))
+	for i := range std {
+		std[i] = extensions.Deployment(cells[i].(DeploymentCell))
+	}
+	return std
 }
