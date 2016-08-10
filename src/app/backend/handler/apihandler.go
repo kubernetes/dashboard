@@ -972,8 +972,8 @@ func (apiHandler *APIHandler) handleGetConfigMapDetail(request *restful.Request,
 }
 
 func (apiHandler *APIHandler) handleGetPersistentVolumeList(request *restful.Request, response *restful.Response) {
-	pagination := parsePaginationPathParameter(request)
-	result, err := persistentvolume.GetPersistentVolumeList(apiHandler.client, pagination)
+	dataSelect := parseDataSelectPathParameter(request)
+	result, err := persistentvolume.GetPersistentVolumeList(apiHandler.client, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return

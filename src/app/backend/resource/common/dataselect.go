@@ -84,9 +84,15 @@ func (self *SelectableData) Paginate() (*SelectableData) {
 	startIndex, endIndex := pQuery.GetPaginationSettings(len(dataList))
 
 	// Return all items if provided settings do not meet requirements
-	if !pQuery.CanPaginate(len(self.GenericDataList), startIndex) {
+	if !pQuery.IsValidPagination() {
 		return self
 	}
+	// Return no items if requested page does not exist
+	if !pQuery.IsPageAvailable(len(self.GenericDataList), startIndex) {
+		self.GenericDataList = []DataCell{}
+		return self
+	}
+
 	self.GenericDataList = dataList[startIndex:endIndex]
 	return self
 }

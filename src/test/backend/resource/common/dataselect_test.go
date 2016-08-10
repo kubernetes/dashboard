@@ -106,15 +106,21 @@ func TestSort(t *testing.T) {
 			[]int{10,9,8,7,6,5,4,3,2,1},
 		},
 		{
-			"sort by few properties where at least one property name is invalid - no sort",
-			NewSortQuery([]string{"a", "INVALID_PROPERTY", "d", "creationTimestamp"}),
-			[]int{1,2,3,4,5,6,7,8,9,10},
-		},
-		{
 			"sort by 2 properties - items should first be sorted by first property and later by second",
 			NewSortQuery([]string{"a", "name", "d", "creationTimestamp"}),
 			[]int{10,3,2,1,5,4,6,7,8,9},
 		},
+		{
+			"empty sort list - no sort",
+			NewSortQuery([]string{}),
+			[]int{1,2,3,4,5,6,7,8,9,10},
+		},
+		{
+			"nil - no sort",
+			NewSortQuery(nil),
+			[]int{1,2,3,4,5,6,7,8,9,10},
+		},
+		// Invalid arguments to the NewSortQuery
 		{
 			"sort by few properties where at least one property name is invalid - no sort",
 			NewSortQuery([]string{"a", "INVALID_PROPERTY", "d", "creationTimestamp"}),
@@ -127,17 +133,23 @@ func TestSort(t *testing.T) {
 		},
 		{
 			"sort by few properties where one order tag is missing property - no sort",
+			NewSortQuery([]string{""}),
+			[]int{1,2,3,4,5,6,7,8,9,10},
+		},
+		{
+			"sort by few properties where one order tag is missing property - no sort",
 			NewSortQuery([]string{"d", "name", "a", "creationTimestamp", "a"}),
 			[]int{1,2,3,4,5,6,7,8,9,10},
 		},
+
 	}
 	for _, testCase := range testCases {
 		selectableData := SelectableData{
 			getDataCellList(),
 			&DataSelectQuery{SortQuery: testCase.SortQuery},
 		}
-		paginatedData := fromCells(selectableData.Sort().GenericDataList)
-		order := getOrder(paginatedData)
+		sortedData := fromCells(selectableData.Sort().GenericDataList)
+		order := getOrder(sortedData)
 		if !reflect.DeepEqual(order, testCase.ExpectedOrder) {
 			t.Errorf(`Sort: %s. Received invalid items for %+v. Got %v, expected %v.`,
 				testCase.Info, testCase.SortQuery, order, testCase.ExpectedOrder)
@@ -155,14 +167,19 @@ func TestPagination(t *testing.T) {
 			[]int{1,2,3,4,5,6,7,8,9,10},
 		},
 		{
+			"empty pagination - no elements should be returned",
+			EmptyPagination,
+			[]int{},
+		},
+		{
 			"request one item from existing page - element should be returned",
 			NewPaginationQuery(1, 5),
 			[]int{6},
 		},
 		{
-			"request one item from non existing page - all existing elements should be returned",  // todo Do we really want this behaviour?
+			"request one item from non existing page - no elements should be returned",
 			NewPaginationQuery(1, 10),
-			[]int{1,2,3,4,5,6,7,8,9,10},
+			[]int{},
 		},
 		{
 			"request 2 items from existing page - 2 elements should be returned",
@@ -180,13 +197,18 @@ func TestPagination(t *testing.T) {
 			[]int{1,2,3,4,5,6,7,8,9,10},
 		},
 		{
-			"request 3 items from non existing page - all existing elements should be returned",  // todo Do we really want this behaviour?
+			"request 3 items from non existing page - no elements should be returned",
 			NewPaginationQuery(3, 4),
+			[]int{},
+		},
+		{
+			"Invalid pagination - all elements should be returned",
+			NewPaginationQuery(-1, 4),
 			[]int{1,2,3,4,5,6,7,8,9,10},
 		},
 		{
-			"Invalid paginatin - all existing elements should be returned",
-			NewPaginationQuery(-1, 4),
+			"Invalid pagination - all elements should be returned",
+			NewPaginationQuery(1, -4),
 			[]int{1,2,3,4,5,6,7,8,9,10},
 		},
 

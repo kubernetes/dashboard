@@ -42,7 +42,7 @@ func TestGetPersistentVolumeList(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := getPersistentVolumeList(c.persistentVolumes, common.NoPagination)
+		actual := getPersistentVolumeList(c.persistentVolumes, common.NoDataSelect)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getPersistentVolumeList(%#v) == \n%#v\nexpected \n%#v\n",
 				c.persistentVolumes, actual, c.expected)

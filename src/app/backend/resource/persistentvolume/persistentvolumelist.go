@@ -39,18 +39,18 @@ type PersistentVolume struct {
 }
 
 // GetPersistentVolumeList returns a list of all Persistent Volumes in the cluster.
-func GetPersistentVolumeList(client *client.Client, pQuery *common.PaginationQuery) (*PersistentVolumeList, error) {
+func GetPersistentVolumeList(client *client.Client, dsQuery *common.DataSelectQuery) (*PersistentVolumeList, error) {
 	log.Printf("Getting list persistent volumes")
 	channels := &common.ResourceChannels{
 		PersistentVolumeList: common.GetPersistentVolumeListChannel(client, 1),
 	}
 
-	return GetPersistentVolumeListFromChannels(channels, pQuery)
+	return GetPersistentVolumeListFromChannels(channels, dsQuery)
 }
 
 // GetPersistentVolumeListFromChannels returns a list of all Persistent Volumes in the cluster
 // reading required resource list once from the channels.
-func GetPersistentVolumeListFromChannels(channels *common.ResourceChannels, pQuery *common.PaginationQuery) (
+func GetPersistentVolumeListFromChannels(channels *common.ResourceChannels, dsQuery *common.DataSelectQuery) (
 	*PersistentVolumeList, error) {
 
 	persistentVolumes := <-channels.PersistentVolumeList.List
@@ -58,17 +58,18 @@ func GetPersistentVolumeListFromChannels(channels *common.ResourceChannels, pQue
 		return nil, err
 	}
 
-	result := getPersistentVolumeList(persistentVolumes.Items, pQuery)
+	result := getPersistentVolumeList(persistentVolumes.Items, dsQuery)
 
 	return result, nil
 }
 
-func getPersistentVolumeList(persistentVolumes []api.PersistentVolume, pQuery *common.PaginationQuery) *PersistentVolumeList {
+func getPersistentVolumeList(persistentVolumes []api.PersistentVolume, dsQuery *common.DataSelectQuery) *PersistentVolumeList {
 	result := &PersistentVolumeList{
 		Items:    make([]PersistentVolume, 0),
 		ListMeta: common.ListMeta{TotalItems: len(persistentVolumes)},
 	}
-	persistentVolumes = paginate(persistentVolumes, pQuery)
+
+	persistentVolumes = fromCells(common.GenericDataSelect(toCells(persistentVolumes), dsQuery))
 
 	for _, item := range persistentVolumes {
 		result.Items = append(result.Items,
