@@ -492,7 +492,9 @@ type PersistentVolumeClaimListChannel struct {
 
 // GetPersistentVolumeClaimListChannel returns a pair of channels to a PersistentVolumeClaim list and errors that
 // both must be read numReads times.
-func GetPersistentVolumeClaimListChannel(client client.PersistentVolumeClaimsNamespacer, nsQuery *NamespaceQuery, numReads int) PersistentVolumeClaimListChannel {
+func GetPersistentVolumeClaimListChannel(client client.PersistentVolumeClaimsNamespacer, nsQuery *NamespaceQuery,
+	numReads int) PersistentVolumeClaimListChannel {
+
 	channel := PersistentVolumeClaimListChannel{
 		List:  make(chan *api.PersistentVolumeClaimList, numReads),
 		Error: make(chan error, numReads),
