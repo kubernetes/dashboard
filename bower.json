@@ -10,6 +10,7 @@
     "angular-ui-router": "~0.3.1",
     "angular-resource": "~1.5.7",
     "angular-sanitize": "~1.5.7",
+    "ansi-up": "drudru/ansi_up#~v1.3.0",
     "material-design-icons": "~2.2.3",
     "roboto-fontface": "~0.5.0",
     "ng-jsoneditor": "angular-tools/ng-jsoneditor#~1.0.0",
