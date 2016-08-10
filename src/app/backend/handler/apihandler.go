@@ -33,6 +33,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/node"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/petset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
@@ -44,7 +45,6 @@ import (
 	clientK8s "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
 	"k8s.io/kubernetes/pkg/runtime"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
 )
 
 const (
@@ -386,7 +386,6 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 		apiV1Ws.GET("/persistentvolumeclaim/").
 			To(apiHandler.handleGetPersistentVolumeClaimList).
 			Writes(persistentvolumeclaim.PersistentVolumeClaimList{}))
-
 	apiV1Ws.Route(
 		apiV1Ws.GET("/persistentvolumeclaim/{namespace}").
 			To(apiHandler.handleGetPersistentVolumeClaimList).
@@ -394,7 +393,6 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 
 	return wsContainer
 }
-
 
 // Handles get pet set list API call.
 func (apiHandler *APIHandler) handleGetPetSetList(request *restful.Request,

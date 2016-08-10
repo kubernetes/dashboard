@@ -484,13 +484,14 @@ func GetPersistentVolumeListChannel(client client.PersistentVolumesInterface, nu
 	return channel
 }
 
-
+// PersistentVolumeClaimListChannel is a list and error channels to PersistentVolumeClaims.
 type PersistentVolumeClaimListChannel struct {
 	List  chan *api.PersistentVolumeClaimList
 	Error chan error
 }
 
-
+// GetPersistentVolumeClaimListChannel returns a pair of channels to a PersistentVolumeClaim list and errors that
+// both must be read numReads times.
 func GetPersistentVolumeClaimListChannel(client client.PersistentVolumeClaimsNamespacer, nsQuery *NamespaceQuery, numReads int) PersistentVolumeClaimListChannel {
 	channel := PersistentVolumeClaimListChannel{
 		List:  make(chan *api.PersistentVolumeClaimList, numReads),
@@ -556,7 +557,6 @@ func GetPodMetricsChannel(heapsterClient kdClient.HeapsterClient, name string, n
 
 	return channel
 }
-
 
 var listEverything = api.ListOptions{
 	LabelSelector: labels.Everything(),

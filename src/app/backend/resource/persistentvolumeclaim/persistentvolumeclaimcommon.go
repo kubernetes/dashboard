@@ -15,8 +15,8 @@
 package persistentvolumeclaim
 
 import (
-	"k8s.io/kubernetes/pkg/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"k8s.io/kubernetes/pkg/api"
 )
 
 func paginate(persistentVolumeClaims []api.PersistentVolumeClaim, pQuery *common.PaginationQuery) []api.PersistentVolumeClaim {

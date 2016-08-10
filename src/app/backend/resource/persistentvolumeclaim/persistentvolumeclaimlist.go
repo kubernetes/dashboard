@@ -14,15 +14,15 @@
 
 package persistentvolumeclaim
 
-
 import (
 	"log"
 
-	"k8s.io/kubernetes/pkg/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
+// PersistentVolumeClaimList contains a list of Persistent Volume Claims in the cluster.
 type PersistentVolumeClaimList struct {
 	ListMeta common.ListMeta `json:"listMeta"`
 
@@ -30,6 +30,7 @@ type PersistentVolumeClaimList struct {
 	Items []PersistentVolumeClaim `json:"items"`
 }
 
+// PersistentVolumeClaim provides the simplified presentation layer view of Kubernetes Persistent Volume Claim resource.
 type PersistentVolumeClaim struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
 	TypeMeta   common.TypeMeta   `json:"typeMeta"`
@@ -37,16 +38,18 @@ type PersistentVolumeClaim struct {
 	// No additional info in the list object.
 }
 
+// GetPersistentVolumeClaimList returns a list of all Persistent Volume Claims in the cluster.
 func GetPersistentVolumeClaimList(client *client.Client, nsQuery *common.NamespaceQuery, pQuery *common.PaginationQuery) (*PersistentVolumeClaimList, error) {
 	log.Printf("Getting list persistent volumes claims")
 	channels := &common.ResourceChannels{
-		PersistentVolumeClaimList: common.GetPersistentVolumeClaimListChannel(client,nsQuery, 1),
+		PersistentVolumeClaimList: common.GetPersistentVolumeClaimListChannel(client, nsQuery, 1),
 	}
 
-	return GetPersistentVolumeClaimListFromChannels(channels,nsQuery, pQuery)
+	return GetPersistentVolumeClaimListFromChannels(channels, nsQuery, pQuery)
 }
 
-
+// GetPersistentVolumeClaimListFromChannels returns a list of all Persistent Volume Claims in the cluster
+// reading required resource list once from the channels.
 func GetPersistentVolumeClaimListFromChannels(channels *common.ResourceChannels, nsQuery *common.NamespaceQuery, pQuery *common.PaginationQuery) (
 	*PersistentVolumeClaimList, error) {
 
@@ -60,12 +63,11 @@ func GetPersistentVolumeClaimListFromChannels(channels *common.ResourceChannels,
 	return result, nil
 }
 
-
 func getPersistentVolumeClaimList(persistentVolumeClaims []api.PersistentVolumeClaim, nsQuery *common.NamespaceQuery, pQuery *common.PaginationQuery) *PersistentVolumeClaimList {
 
 	result := &PersistentVolumeClaimList{
-		Items:    make([]PersistentVolumeClaim,0),
-		ListMeta: common.ListMeta{ TotalItems: len(persistentVolumeClaims),},
+		Items:    make([]PersistentVolumeClaim, 0),
+		ListMeta: common.ListMeta{TotalItems: len(persistentVolumeClaims)},
 	}
 
 	persistentVolumeClaims = paginate(persistentVolumeClaims, pQuery)
