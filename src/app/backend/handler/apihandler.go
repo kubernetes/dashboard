@@ -33,6 +33,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/node"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/petset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
@@ -380,6 +381,16 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 		apiV1Ws.GET("/persistentvolume/{persistentvolume}").
 			To(apiHandler.handleGetPersistentVolumeDetail).
 			Writes(persistentvolume.PersistentVolumeDetail{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/persistentvolumeclaim/").
+			To(apiHandler.handleGetPersistentVolumeClaimList).
+			Writes(persistentvolumeclaim.PersistentVolumeClaimList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/persistentvolumeclaim/{namespace}").
+			To(apiHandler.handleGetPersistentVolumeClaimList).
+			Writes(persistentvolumeclaim.PersistentVolumeClaimList{}))
+
 	return wsContainer
 }
 
@@ -989,6 +1000,18 @@ func (apiHandler *APIHandler) handleGetPersistentVolumeDetail(request *restful.R
 		return
 	}
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+func (apiHandler *APIHandler) handleGetPersistentVolumeClaimList(request *restful.Request, response *restful.Response) {
+
+	namespace := parseNamespacePathParameter(request)
+	dataSelect := parseDataSelectPathParameter(request)
+	result, err := persistentvolumeclaim.GetPersistentVolumeClaimList(apiHandler.client, namespace, dataSelect)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles log API call.

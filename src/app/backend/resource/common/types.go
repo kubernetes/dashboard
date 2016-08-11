@@ -95,20 +95,21 @@ type ResourceKind string
 
 // List of all resource kinds supported by the UI.
 const (
-	ResourceKindReplicaSet            = "replicaset"
-	ResourceKindService               = "service"
-	ResourceKindDeployment            = "deployment"
-	ResourceKindPod                   = "pod"
-	ResourceKindEvent                 = "event"
-	ResourceKindReplicationController = "replicationcontroller"
-	ResourceKindDaemonSet             = "daemonset"
-	ResourceKindJob                   = "job"
-	ResourceKindPetSet                = "petset"
-	ResourceKindNamespace             = "namespace"
-	ResourceKindNode                  = "node"
-	ResourceKindSecret                = "secret"
-	ResourceKindConfigMap             = "configmap"
-	ResourceKindPersistentVolume      = "persistentvolume"
+	ResourceKindReplicaSet             = "replicaset"
+	ResourceKindService                = "service"
+	ResourceKindDeployment             = "deployment"
+	ResourceKindPod                    = "pod"
+	ResourceKindEvent                  = "event"
+	ResourceKindReplicationController  = "replicationcontroller"
+	ResourceKindDaemonSet              = "daemonset"
+	ResourceKindJob                    = "job"
+	ResourceKindPetSet                 = "petset"
+	ResourceKindNamespace              = "namespace"
+	ResourceKindNode                   = "node"
+	ResourceKindSecret                 = "secret"
+	ResourceKindConfigMap              = "configmap"
+	ResourceKindPersistentVolume       = "persistentvolume"
+	ResourceKindPersistentVolumeClaim  = "persistentvolumeclaim"
 )
 
 // ClientType represents type of client that is used to perform generic operations on resources.

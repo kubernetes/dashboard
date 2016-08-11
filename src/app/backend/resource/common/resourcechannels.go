@@ -76,6 +76,9 @@ type ResourceChannels struct {
 
 	// List and error channels to PersistentVolumes
 	PersistentVolumeList PersistentVolumeListChannel
+
+	// List and error channels to PersistentVolumeClaims
+	PersistentVolumeClaimList PersistentVolumeClaimListChannel
 }
 
 // ServiceListChannel is a list and error channels to Services.
@@ -472,6 +475,33 @@ func GetPersistentVolumeListChannel(client client.PersistentVolumesInterface, nu
 
 	go func() {
 		list, err := client.PersistentVolumes().List(listEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// PersistentVolumeClaimListChannel is a list and error channels to PersistentVolumeClaims.
+type PersistentVolumeClaimListChannel struct {
+	List  chan *api.PersistentVolumeClaimList
+	Error chan error
+}
+
+// GetPersistentVolumeClaimListChannel returns a pair of channels to a PersistentVolumeClaim list and errors that
+// both must be read numReads times.
+func GetPersistentVolumeClaimListChannel(client client.PersistentVolumeClaimsNamespacer, nsQuery *NamespaceQuery,
+	numReads int) PersistentVolumeClaimListChannel {
+
+	channel := PersistentVolumeClaimListChannel{
+		List:  make(chan *api.PersistentVolumeClaimList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.PersistentVolumeClaims(nsQuery.ToRequestParam()).List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
