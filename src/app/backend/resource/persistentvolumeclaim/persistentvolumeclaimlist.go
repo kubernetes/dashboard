@@ -20,6 +20,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	"fmt"
 )
 
 // PersistentVolumeClaimList contains a list of Persistent Volume Claims in the cluster.
@@ -35,7 +36,11 @@ type PersistentVolumeClaim struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
 	TypeMeta   common.TypeMeta   `json:"typeMeta"`
 
-	// No additional info in the list object.
+	// e.g. Pending, Bound
+	Status string
+
+	// name of the voluem
+	Volume string
 }
 
 // GetPersistentVolumeClaimList returns a list of all Persistent Volume Claims in the cluster.
@@ -60,13 +65,12 @@ func GetPersistentVolumeClaimListFromChannels(channels *common.ResourceChannels,
 		return nil, err
 	}
 
-	result := getPersistentVolumeClaimList(persistentVolumeClaims.Items, nsQuery, dsQuery)
+	result := getPersistentVolumeClaimList(persistentVolumeClaims.Items, dsQuery)
 
 	return result, nil
 }
 
-func getPersistentVolumeClaimList(persistentVolumeClaims []api.PersistentVolumeClaim, nsQuery *common.NamespaceQuery,
-	dsQuery *common.DataSelectQuery) *PersistentVolumeClaimList {
+func getPersistentVolumeClaimList(persistentVolumeClaims []api.PersistentVolumeClaim, dsQuery *common.DataSelectQuery) *PersistentVolumeClaimList {
 
 	result := &PersistentVolumeClaimList{
 		Items:    make([]PersistentVolumeClaim, 0),
@@ -79,8 +83,11 @@ func getPersistentVolumeClaimList(persistentVolumeClaims []api.PersistentVolumeC
 		result.Items = append(result.Items,
 			PersistentVolumeClaim{
 				ObjectMeta: common.NewObjectMeta(item.ObjectMeta),
-				TypeMeta:   common.NewTypeMeta(common.ResourceKindPersistenceVolumeClaim),
+				TypeMeta:   common.NewTypeMeta(common.ResourceKindPersistentVolumeClaim),
+				Status: string(item.Status.Phase),
+				Volume: item.Spec.VolumeName,
 			})
+		fmt.Println(item.Status.Capacity)
 	}
 
 	return result
