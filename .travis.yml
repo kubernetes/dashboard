@@ -50,9 +50,6 @@ before_script:
   # Install go 1.6.1. It is not there by default.
   - eval "$(gimme 1.6.1)"
 
-  # Upgrade to docker 1.10+. Answer all questions with yes.
-  # List available docker versions with "apt-cache madison docker-engine"
-  - sudo apt-get -o Dpkg::Options::="--force-confnew" install -y docker-engine=1.11.2-0~trusty
   - sudo ./build/setup-docker.sh
   - docker --version
 
