@@ -19,6 +19,7 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"log"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common/metric"
 )
 
 
@@ -61,7 +62,7 @@ type SelectableData struct {
 	// DataSelectQuery holds instructions for data select.
 	DataSelectQuery *DataSelectQuery
 	CachedResources *CachedResources
-	CumulativeMetricsPromises  MetricPromises
+	CumulativeMetricsPromises  metric.MetricPromises
 }
 
 
@@ -98,6 +99,8 @@ func (self *SelectableData) Sort() (*SelectableData) {
 	return self
 }
 
+// GetCumulativeMetrics downloads and aggregates metrics for data cells currently present in self.GenericDataList as instructed
+// by MetricQuery and inserts resulting MetricPromises to self.CumulativeMetricsPromises.
 func (self *SelectableData) GetCumulativeMetrics(client client.HeapsterClient) (*SelectableData) {
 	metricNames := self.DataSelectQuery.MetricQuery.MetricNames
 	if metricNames == nil {
@@ -105,7 +108,7 @@ func (self *SelectableData) GetCumulativeMetrics(client client.HeapsterClient) (
 		return self
 	}
 	aggregations := self.DataSelectQuery.MetricQuery.Aggregations
-	heapsterSelectors := make(HeapsterSelectors, len(self.GenericDataList))
+	heapsterSelectors := make(metric.HeapsterSelectors, len(self.GenericDataList))
 	// get all heapster queries
 	for i, dataCell := range self.GenericDataList {
 		// make sure data cells support metrics
@@ -114,14 +117,13 @@ func (self *SelectableData) GetCumulativeMetrics(client client.HeapsterClient) (
 		heapsterSelector, err := metricDataCell.GetResourceSelector().GetHeapsterSelector(self.CachedResources.Pods)
 		if err != nil {
 			// Just log and give up.
-			log.Printf(`Failed to create heapster selector for resource "%s". Probably you forgot to add pods to the CachedResources.`, metricDataCell.GetResourceSelector().ResourceType)
+			log.Printf(`Failed to create heapster selector for resource "%s". Probably pods were not available in CachedResources.`, metricDataCell.GetResourceSelector().ResourceType)
 			return self
 		}
 		heapsterSelectors[i] = heapsterSelector
 	}
 	if aggregations == nil {
-		aggregations = []string{"sum"}
-		heapsterSelectors = heapsterSelectors.Compress()
+		aggregations = metric.OnlyDefaultAggregation
 	}
 	self.CumulativeMetricsPromises = heapsterSelectors.DownloadAndAggregate(client, metricNames, aggregations)
 	return self
@@ -158,7 +160,7 @@ func GenericDataSelect(dataList []DataCell, dsQuery *DataSelectQuery) ([]DataCel
 
 
 // GenericDataSelect takes a list of GenericDataCells and DataSelectQuery and returns selected data as instructed by dsQuery.
-func GenericDataSelectWithMetrics(dataList []DataCell, dsQuery *DataSelectQuery, cachedResources *CachedResources, heapsterClient client.HeapsterClient) ([]DataCell, MetricPromises){
+func GenericDataSelectWithMetrics(dataList []DataCell, dsQuery *DataSelectQuery, cachedResources *CachedResources, heapsterClient client.HeapsterClient) ([]DataCell, metric.MetricPromises){
 	SelectableData := SelectableData{
 		GenericDataList: dataList,
 		DataSelectQuery: dsQuery,

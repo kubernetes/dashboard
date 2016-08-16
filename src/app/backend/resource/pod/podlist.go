@@ -22,6 +22,7 @@ import (
 
 	"k8s.io/kubernetes/pkg/api"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common/metric"
 )
 
 // ReplicationSetList contains a list of Pods in the cluster.
@@ -30,7 +31,7 @@ type PodList struct {
 
 	// Unordered list of Pods.
 	Pods []Pod `json:"pods"`
-	CumulativeMetrics []common.Metric `json:"cumulativeMetrics"`
+	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics,omitempty"`
 }
 
 // Pod is a presentation layer view of Kubernetes Pod resource. This means
@@ -90,7 +91,7 @@ func CreatePodList(pods []api.Pod, dsQuery *common.DataSelectQuery,
 		log.Printf("Skipping Heapster metrics because of error: %s\n", err)
 	}
 	metrics := <-channels.PodMetrics.MetricsByPod
-        log.Println("---------------------------------------------------\n\n\n\n")
+
 	podList := PodList{
 		Pods:     make([]Pod, 0),
 		ListMeta: common.ListMeta{TotalItems: len(pods)},
