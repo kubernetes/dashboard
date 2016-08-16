@@ -45,6 +45,7 @@ import (
 	clientK8s "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
 	"k8s.io/kubernetes/pkg/runtime"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common/metric"
 )
 
 const (
@@ -390,10 +391,6 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 		apiV1Ws.GET("/persistentvolumeclaim/{namespace}").
 			To(apiHandler.handleGetPersistentVolumeClaimList).
 			Writes(persistentvolumeclaim.PersistentVolumeClaimList{}))
-
-	apiV1Ws.Route(
-		apiV1Ws.GET("/graph").
-		To(apiHandler.handleGetGraph))
 
 	return wsContainer
 }
@@ -1217,21 +1214,6 @@ func (apiHandler *APIHandler) handleGetJobPods(request *restful.Request,
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
-// Handles get graph API call
-func (apiHandler *APIHandler) handleGetGraph(request *restful.Request,
-response *restful.Response) {
-
-        hs, _ := common.HeapsterSelectorFromNativeResource(common.ResourceTypePod, "kube-system", []string{"fluentd-cloud-logging-gke-pdabkowski-test-default-pool-64a2a308-7cpf",
-	"kube-dns-v11-zvlrc"})
-	dat := hs.DownloadMetric(apiHandler.heapsterClient, "cpu/usage_rate")
-	err := <- dat.Error
-	if err != nil {
-		handleInternalError(response, err)
-		return
-	}
-	response.WriteHeaderAndEntity(http.StatusOK, <- dat.Metric)
-}
-
 
 // parseNamespacePathParameter parses namespace selector for list pages in path paramater.
 // The namespace selector is a comma separated list of namespaces that are trimmed.
@@ -1279,18 +1261,18 @@ func parseMetricPathParameter(request *restful.Request) *common.MetricQuery {
 		metricNames = nil
 	}
 	aggregationsParam := request.QueryParameter("aggregations")
-	var aggregations []string
+	var rawAggregations []string
 	if aggregationsParam != "" {
-		aggregations = strings.Split(aggregationsParam, ",")
+		rawAggregations = strings.Split(aggregationsParam, ",")
 	} else {
-		aggregations = nil
+		rawAggregations = nil
 	}
-	log.Println(metricNames)
-	log.Println(metricNames)
-	log.Println(metricNames)
-	log.Println(metricNames)
-	log.Println(metricNames)
-	return common.NewMetricQuery(metricNames, aggregations)
+	aggregationNames := metric.AggregationNames{}
+	for _, e := range rawAggregations {
+		aggregationNames = append(aggregationNames, metric.AggregationName(e))
+	}
+
+	return common.NewMetricQuery(metricNames, aggregationNames)
 
 }
 
@@ -1299,11 +1281,6 @@ func parseMetricPathParameter(request *restful.Request) *common.MetricQuery {
 func parseDataSelectPathParameter(request *restful.Request) *common.DataSelectQuery {
 	paginationQuery := parsePaginationPathParameter(request)
 	sortQuery := parseSortPathParameter(request)
-<<<<<<< HEAD
-	return common.NewDataSelectQuery(paginationQuery, sortQuery)
-}
-=======
 	metricQuery := parseMetricPathParameter(request)
 	return common.NewDataSelectQuery(paginationQuery, sortQuery, metricQuery)
 }
->>>>>>> 49a2da3... Improved metric download design and added auto download to pods.

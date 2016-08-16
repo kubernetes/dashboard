@@ -43,14 +43,11 @@ type InClusterHeapsterClient struct {
 
 // Get creates request to given path.
 func (c InClusterHeapsterClient) Get(path string) RequestInterface {
-
-	r := c.client.Get().Prefix("proxy").
+	return c.client.Get().Prefix("proxy").
 		Namespace("kube-system").
 		Resource("services").
 		Name("heapster").
 		Suffix("/api/v1" + path)
-	log.Println(r.URL().String())
-	return r
 }
 
 // RemoteHeapsterClient is an implementation of a remote Heapster client. Talks with Heapster

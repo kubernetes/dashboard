@@ -12,14 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package common
+package metric
 
 import (
-	"time"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"encoding/json"
+	"time"
 )
 
+// HeapsterAllInOneDownloadConfig hold config information specifying whether given native heapster resource type supports list download.
+var HeapsterAllInOneDownloadConfig = map[MetricResourceType]bool{
+	ResourceTypePod: true,
+	ResourceTypeNode: false,
+}
 
 // HeapsterJSONFormat represents format of JSON used by heapster when sending multiple data cells
 type HeapsterJSONAllInOneFormat struct {
@@ -70,11 +75,4 @@ func HeapsterUnmarshalType(client client.HeapsterClient, path string, v interfac
 		return err
 	}
 	return json.Unmarshal(rawData, v)
-}
-
-// Performs heapster GET request to the specifies path and returns the data it as a string list.
-func HeapsterUnmarshalStringList(client client.HeapsterClient, path string) ([]string, error) {
-	result := make([]string, 0)
-	err := HeapsterUnmarshalType(client, path, &result)
-	return result, err
 }

@@ -12,24 +12,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package common
+package metric
 
 import (
 	"sort"
 )
 
-// Aggregate modes which should be used for data aggregation. Eg. [sum, min, max].
-type Aggregate []string
+// Aggregation modes which should be used for data aggregation. Eg. [sum, min, max].
 
-var AggregatingFunctions = map[string]func([]int64) (int64){
-	"sum": SumAggregate,
-	"max": MaxAggregate,
-	"min": MinAggregate,
-	"default": SumAggregate,
+type AggregationName string
+
+const (
+	SumAggregation = "sum"
+	MaxAggregation = "max"
+	MinAggregation = "min"
+	DefaultAggregation = "sum"
+)
+
+type AggregationNames []AggregationName
+
+var OnlySumAggregation = AggregationNames{SumAggregation}
+var OnlyDefaultAggregation = AggregationNames{DefaultAggregation}
+
+var AggregatingFunctions = map[AggregationName]func([]int64) (int64){
+	SumAggregation: SumAggregate,
+	MaxAggregation: MaxAggregate,
+	MinAggregation: MinAggregate,
 }
 
-var DefaultAggregation = []string{"default"}
-var SumAggregation = []string{"sum"}
 
 // SortableInt64 implements sort.Interface for []int64. This allows to use built in sort with int64.
 type SortableInt64 []int64
@@ -40,12 +50,10 @@ func (a SortableInt64) Less(i, j int) bool {return a[i] < a[j]}
 
 // AggregateData aggregates all the data from dataList using AggregatingFunction with name aggregateName.
 // Standard data aggregation function.
-func AggregateData(metricList []Metric, metricName string, aggregateName string) (Metric) {
-
-
-	_, isAggregateAvailable := AggregatingFunctions[aggregateName]
+func AggregateData(metricList []Metric, metricName string, aggregationName AggregationName) (Metric) {
+	_, isAggregateAvailable := AggregatingFunctions[aggregationName]
 	if !isAggregateAvailable {
-		aggregateName = "default"
+		aggregationName = DefaultAggregation
 	}
 
 	aggrMap, newLabel := AggregatingMapFromDataList(metricList, metricName)
@@ -56,7 +64,7 @@ func AggregateData(metricList []Metric, metricName string, aggregateName string)
 	newDataPoints := []DataPoint{}
 	sort.Sort(Xs) // ensure X data points are sorted
 	for _, x := range Xs {
-		y := AggregatingFunctions[aggregateName](aggrMap[x])
+		y := AggregatingFunctions[aggregationName](aggrMap[x])
 		newDataPoints = append(newDataPoints, DataPoint{x, y})
 	}
 
@@ -65,7 +73,7 @@ func AggregateData(metricList []Metric, metricName string, aggregateName string)
 		DataPoints: newDataPoints,
 		MetricName: metricName,
 		Label: newLabel,
-		Aggregate: aggregateName,
+		Aggregate: aggregationName,
 	}
 
 }
@@ -80,7 +88,7 @@ func AggregatingMapFromDataList(metricList []Metric, metricName string) (map[int
 		if data.MetricName != metricName {
 			continue
 		}
-		newLabel = newLabel.AddDataLabel(data.Label)  // update label of resulting data
+		newLabel = newLabel.AddMetricLabel(data.Label)  // update label of resulting data
 		for _, dataPoint := range data.DataPoints {
 			_, isXPresent := aggrMap[dataPoint.X]
 			if !isXPresent {

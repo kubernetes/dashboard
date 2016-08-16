@@ -17,6 +17,7 @@ package pod
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"k8s.io/kubernetes/pkg/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common/metric"
 )
 
 // Gets restart count of given pod (total number of its containers restarts).
@@ -77,7 +78,7 @@ func (self PodCell) GetProperty(name common.PropertyName) common.ComparableValue
 func (self PodCell) GetResourceSelector() *common.ResourceSelector {
 	return &common.ResourceSelector{
 		Namespace:     self.ObjectMeta.Namespace,
-		ResourceType:  common.ResourceTypePod,
+		ResourceType:  metric.ResourceTypePod,
 		ResourceName:  self.ObjectMeta.Name,
 	}
 }
