@@ -74,6 +74,15 @@ func (self PodCell) GetProperty(name common.PropertyName) common.ComparableValue
 }
 
 
+func (self PodCell) GetResourceSelector() *common.ResourceSelector {
+	return &common.ResourceSelector{
+		Namespace:     self.ObjectMeta.Namespace,
+		ResourceType:  common.ResourceTypePod,
+		ResourceName:  self.ObjectMeta.Name,
+	}
+}
+
+
 func toCells(std []api.Pod) []common.DataCell {
 	cells := make([]common.DataCell, len(std))
 	for i := range std {

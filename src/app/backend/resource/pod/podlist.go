@@ -30,6 +30,7 @@ type PodList struct {
 
 	// Unordered list of Pods.
 	Pods []Pod `json:"pods"`
+	CumulativeMetrics []common.Metric `json:"cumulativeMetrics"`
 }
 
 // Pod is a presentation layer view of Kubernetes Pod resource. This means
@@ -89,18 +90,21 @@ func CreatePodList(pods []api.Pod, dsQuery *common.DataSelectQuery,
 		log.Printf("Skipping Heapster metrics because of error: %s\n", err)
 	}
 	metrics := <-channels.PodMetrics.MetricsByPod
-
+        log.Println("---------------------------------------------------\n\n\n\n")
 	podList := PodList{
 		Pods:     make([]Pod, 0),
 		ListMeta: common.ListMeta{TotalItems: len(pods)},
 	}
 
-	pods = fromCells(common.GenericDataSelect(toCells(pods), dsQuery))
+	podCells, cumulativeMetricsPromises := common.GenericDataSelectWithMetrics(toCells(pods), dsQuery, common.NoResourceCache, heapsterClient)
+        pods = fromCells(podCells)
 
 	for _, pod := range pods {
 		podDetail := ToPod(&pod, metrics)
 		podList.Pods = append(podList.Pods, podDetail)
 	}
 
+	cumulativeMetrics, _ := cumulativeMetricsPromises.GetMetrics()
+	podList.CumulativeMetrics = cumulativeMetrics
 	return podList
 }
