@@ -12,8 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-.kd-middleellipsis {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+/**
+ * @final
+ */
+export class HamburgerController {
+  /**
+   * @param {!./nav_service.NavService} kdNavService
+   * @ngInject
+   */
+  constructor(kdNavService) {
+    /** @private {!./nav_service.NavService} */
+    this.kdNavService_ = kdNavService;
+  }
+
+  /** @export */
+  toggle() { this.kdNavService_.toggle(); }
 }
+
+/** @type {!angular.Component} */
+export const hamburgerComponent = {
+  controller: HamburgerController,
+  templateUrl: 'chrome/nav/hamburger.html',
+};

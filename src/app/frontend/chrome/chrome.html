@@ -14,11 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-toolbar class="kd-toolbar">
+<md-toolbar>
   <div class="md-toolbar-tools kd-toolbar-tools">
-    <a ng-href="{{$ctrl.getLogoHref()}}" tabindex="-1">
-      <md-icon md-svg-icon="assets/images/kubernetes-logo.svg" class="kd-toolbar-logo"></md-icon>
-    </a>
+    <kd-nav-hamburger></kd-nav-hamburger>
     <h2>
       <span>kubernetes</span>
     </h2>
@@ -27,16 +25,20 @@ limitations under the License.
   </div>
 </md-toolbar>
 
-<kd-actionbar ng-if="$ctrl.isActionbarVisible()" flex="none"></kd-actionbar>
-
-<md-content flex="auto" class="kd-app-content">
-  <div ng-switch="$ctrl.showLoadingSpinner" flex="auto" >
-    <div ng-switch-when="true" class="kd-center-fixed">
-      <md-progress-circular md-mode="indeterminate" md-diameter="96">
-      </md-progress-circular>
-    </div>
-    <div ng-switch-when="false" class="kd-app-content">
-      <div ui-view class="md-body-1"></div>
-    </div>
+<div layout="row">
+  <kd-nav></kd-nav>
+  <div layout="column" flex="shrink" class="kd-chrome-content-container">
+    <kd-actionbar ng-if="$ctrl.isActionbarVisible()" flex="none"></kd-actionbar>
+    <md-content flex="auto" class="kd-app-content">
+      <div ng-switch="$ctrl.showLoadingSpinner" flex="auto" >
+        <div ng-switch-when="true" class="kd-center-fixed">
+          <md-progress-circular md-mode="indeterminate" md-diameter="96">
+          </md-progress-circular>
+        </div>
+        <div ng-switch-when="false" class="kd-app-content">
+          <div ui-view class="md-body-1"></div>
+        </div>
+      </div>
+    </md-content>
   </div>
-</md-content>
+</div>
