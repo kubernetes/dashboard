@@ -1,14 +1,14 @@
-package metric
+package common
 
 import (
 	"k8s.io/kubernetes/pkg/api"
 	"fmt"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 )
 
+type CachedPods []api.Pod
+
 type MetricResourceType string
-type CachedPods map[string][]api.Pod
 // List of all resource Types that support metric download
 const (
 	ResourceTypeReplicaSet            = "replicasets"
@@ -27,6 +27,14 @@ const (
 )
 
 
+var DerivedResources = map[MetricResourceType]MetricResourceType{
+	ResourceTypeReplicaSet:            ResourceTypePod,
+	ResourceTypeService:               ResourceTypePod,
+	ResourceTypeDeployment:            ResourceTypePod,
+	ResourceTypeReplicationController: ResourceTypePod,
+
+}
+
 
 
 // ResourceSelector is a structure used to quickly and uniquely identify given resource.
@@ -41,8 +49,15 @@ type ResourceSelector struct {
 
 
 
+func (self *ResourceSelector) toDataLabel() (Label) {
+	return Label{
+		self.ResourceType: []string{self.ResourceName},
+	}
+}
+
+
 func (self *ResourceSelector) GetHeapsterSelector(cachedPods CachedPods) (HeapsterSelector, error) {
-	summingResource, isDerivedResource := DerivedResources[string(self.ResourceType)]
+	summingResource, isDerivedResource := DerivedResources[self.ResourceType]
 	if !isDerivedResource {
 		return HeapsterSelectorFromNativeResource(self.ResourceType, self.Namespace, []string{self.ResourceName})
 	}
@@ -66,18 +81,24 @@ func (self *ResourceSelector) GetMyPodsFromCache(cachedPods CachedPods) ([]api.P
 	if cachedPods == nil {
 		return nil, fmt.Errorf("GetMyPodsFromCache: namespace of the pod not in cachedPods")
 	}
-	pods, arePodsPresent := cachedPods[self.Namespace]
-	if !arePodsPresent {
-		return nil, fmt.Errorf("GetMyPodsFromCache: namespace of the pod not in cachedPods")
-	}
 
 	// now decide whether to match by ResourceSelector or by ResourceLabelSelector
 	if self.LabelSelector != nil {
-		return common.FilterPodsByLabelSelector(pods, self.LabelSelector), nil
+		return FilterNamespacedPodsByLabelSelector(cachedPods, self.Namespace, self.LabelSelector), nil
 
 	} else if self.Selector != nil {
-		return common.FilterPodsBySelector(pods, self.Selector), nil
+		return FilterNamespacedPodsBySelector(cachedPods, self.Namespace, self.Selector), nil
 	} else {
 		return nil, fmt.Errorf(`GetMyPodsFromCache: did not find any resource selector for resource type: "%s"`, self.ResourceType)
 	}
+}
+
+
+// Converts list of pods to the list of pod names.
+func podListToNameList(podList []api.Pod) ([]string) {
+	result := []string{}
+	for _, pod := range podList {
+		result = append(result, pod.ObjectMeta.Name)
+	}
+	return result
 }
