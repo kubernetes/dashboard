@@ -43,5 +43,6 @@ const i18n = {
   /** @export {string} @desc Title for pods card zerostate in pet set details page. */
   MSG_PET_SET_DETAIL_PODS_ZEROSTATE_TITLE: goog.getMsg('There is nothing to display here'),
   /** @export {string} @desc Text for pods card zerostate in pet set details page. */
-  MSG_PET_SET_DETAIL_PODS_ZEROSTATE_TEXT: goog.getMsg('There are currently no Pods scheduled on this Pet Set'),
+  MSG_PET_SET_DETAIL_PODS_ZEROSTATE_TEXT:
+      goog.getMsg('There are currently no Pods scheduled on this Pet Set'),
 };
