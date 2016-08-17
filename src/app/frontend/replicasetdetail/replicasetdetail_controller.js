@@ -42,7 +42,7 @@ const i18n = {
       replica set details view. */
   MSG_REPLICA_SET_DETAIL_PODS_TITLE: goog.getMsg('Pods'),
   /** @export {string} @desc Title 'Services' for the services information section on the replica set
-   *  detail page. */
+      details page. */
   MSG_REPLICA_SET_DETAIL_SERVICES_TITLE: goog.getMsg('Services'),
   /** @export {string} @desc Label 'Overview' for the left navigation tab on the replica
       set details page. */
@@ -50,4 +50,8 @@ const i18n = {
   /** @export {string} @desc Label 'Events' for the right navigation tab on the replica
       set details page. */
   MSG_REPLICA_SET_DETAIL_EVENTS_LABEL: goog.getMsg('Events'),
+  /** @export {string} @desc Title for pods card zerostate in replica set details page. */
+  MSG_REPLICA_SET_DETAIL_PODS_ZEROSTATE_TITLE: goog.getMsg('There is nothing to display here'),
+  /** @export {string} @desc Text for pods card zerostate in replica set details page. */
+  MSG_REPLICA_SET_DETAIL_PODS_ZEROSTATE_TEXT: goog.getMsg('There are currently no Pods scheduled on this Replica Set'),
 };
