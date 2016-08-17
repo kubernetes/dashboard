@@ -34,7 +34,7 @@ limitations under the License.
     </kd-resource-card-column>
     <kd-resource-card-column ng-if="$ctrl.areMultipleNamespacesSelected()">
       <div>
-        <kd-middle-ellipsis display-string="{{::service.objectMeta.namespace}}">
+        <kd-middle-ellipsis display-string="{{::$ctrl.service.objectMeta.namespace}}">
         </kd-middle-ellipsis>
       </div>
     </kd-resource-card-column>
