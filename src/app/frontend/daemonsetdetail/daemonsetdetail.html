@@ -31,8 +31,13 @@ limitations under the License.
           <kd-title>{{::ctrl.i18n.MSG_DAEMON_SET_DETAIL_PODS_TITLE}}</kd-title>
           <kd-content>
             <kd-pod-card-list pod-list="::ctrl.daemonSetDetail.podList"
-                              pod-list-resource="::ctrl.daemonSetPodsResource">
+                              pod-list-resource="::ctrl.daemonSetPodsResource"
+                              with-statuses="true" ng-show="::ctrl.daemonSetDetail.podList.pods.length">
             </kd-pod-card-list>
+            <div class="kd-zerostate-message" layout-padding ng-hide="::ctrl.daemonSetDetail.podList.pods.length">
+              <div class="kd-zerostate-title">{{::ctrl.i18n.MSG_DAEMON_SET_DETAIL_PODS_ZEROSTATE_TITLE}}</div>
+              <div class="kd-zerostate-text">{{::ctrl.i18n.MSG_DAEMON_SET_DETAIL_PODS_ZEROSTATE_TEXT}}</div>
+            </div>
           </kd-content>
         </kd-content-card>
       </md-tab>
