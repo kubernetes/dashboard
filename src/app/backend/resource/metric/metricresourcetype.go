@@ -14,7 +14,6 @@ const (
 	ResourceTypeNode                  = "nodes"
 )
 
-
 var DerivedResources = map[MetricResourceType]MetricResourceType{
 	ResourceTypeReplicaSet:            ResourceTypePod,
 	ResourceTypeService:               ResourceTypePod,
@@ -22,5 +21,4 @@ var DerivedResources = map[MetricResourceType]MetricResourceType{
 	ResourceTypeReplicationController: ResourceTypePod,
 	ResourceTypeDaemonSet:             ResourceTypePod,
 	ResourceTypePetSet:                ResourceTypePod,
-
 }

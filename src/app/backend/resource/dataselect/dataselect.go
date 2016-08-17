@@ -12,17 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package common
+package dataselect
 
 import (
-	"sort"
-	"k8s.io/kubernetes/pkg/api"
+	"fmt"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
-	"log"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common/metric"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	"k8s.io/kubernetes/pkg/api"
+	"sort"
 )
 
-
+// CachedResources contains all resources that may be required by DataSelect functions.
+// Depending on the need you may have to provide DataSelect with resources it requires, for example
+// resource like deployment will need Pods in order to calculate its metrics.
 type CachedResources struct {
 	Pods []api.Pod
 	// ...
@@ -40,14 +42,17 @@ type DataCell interface {
 	GetProperty(PropertyName) ComparableValue
 }
 
+// MetricDataCell extends interface of DataCells and additionally supports metric download.
 type MetricDataCell interface {
 	// GetPropertyAtIndex returns the property of this data cell.
 	// Value returned has to have Compare method which is required by Sort functionality of DataSelect.
 	GetProperty(PropertyName) ComparableValue
-	GetResourceSelector() *ResourceSelector
+	// GetResourceSelector returns ResourceSelector for this resource. The ResourceSelector can be used to get,
+	// HeapsterSelector which in turn can be used to download metrics.
+	GetResourceSelector() *metric.ResourceSelector
 }
 
-
+// ComparableValue hold any value that can be compared to its own kind.
 type ComparableValue interface {
 	// Compares self with other value. Returns 1 if other value is smaller, 0 if they are the same, -1 if other is larger.
 	Compare(ComparableValue) int
@@ -56,26 +61,30 @@ type ComparableValue interface {
 // SelectableData contains all the required data to perform data selection.
 // It implements sort.Interface so its sortable under sort.Sort
 // You can use its Select method to get selected GenericDataCell list.
-type SelectableData struct {
+type DataSelector struct {
 	// GenericDataList hold generic data cells that are being selected.
 	GenericDataList []DataCell
 	// DataSelectQuery holds instructions for data select.
 	DataSelectQuery *DataSelectQuery
+	// CachedResources stores resources that may be needed during data selection process
 	CachedResources *CachedResources
-	CumulativeMetricsPromises  metric.MetricPromises
+	// CumulativeMetricsPromises is a list of promises holding aggregated metrics for resources in GenericDataList.
+	// The metrics will be calculated after calling GetCumulativeMetrics method.
+	CumulativeMetricsPromises metric.MetricPromises
 }
-
 
 // Implementation of sort.Interface so that we can use built-in sort function (sort.Sort) for sorting SelectableData
 
 // Len returns the length of data inside SelectableData.
-func (self SelectableData) Len() int {return len(self.GenericDataList)}
+func (self DataSelector) Len() int { return len(self.GenericDataList) }
 
 // Swap swaps 2 indices inside SelectableData.
-func (self SelectableData) Swap(i, j int) {self.GenericDataList[i], self.GenericDataList[j] = self.GenericDataList[j], self.GenericDataList[i]}
+func (self DataSelector) Swap(i, j int) {
+	self.GenericDataList[i], self.GenericDataList[j] = self.GenericDataList[j], self.GenericDataList[i]
+}
 
 // Less compares 2 indices inside SelectableData and returns true if first index is larger.
-func (self SelectableData) Less(i, j int) bool {
+func (self DataSelector) Less(i, j int) bool {
 	for _, sortBy := range self.DataSelectQuery.SortQuery.SortByList {
 		a := self.GenericDataList[i].GetProperty(sortBy.Property)
 		b := self.GenericDataList[j].GetProperty(sortBy.Property)
@@ -86,22 +95,22 @@ func (self SelectableData) Less(i, j int) bool {
 		cmp := a.Compare(b)
 		if cmp == 0 { // values are the same. Just continue to next sortBy
 			continue
-		} else {  // values different
-			return (cmp==-1 && sortBy.Ascending) || (cmp==1 && !sortBy.Ascending)
+		} else { // values different
+			return (cmp == -1 && sortBy.Ascending) || (cmp == 1 && !sortBy.Ascending)
 		}
 	}
 	return false
 }
 
 // Sort sorts the data inside as instructed by DataSelectQuery and returns itself to allow method chaining.
-func (self *SelectableData) Sort() (*SelectableData) {
+func (self *DataSelector) Sort() *DataSelector {
 	sort.Sort(*self)
 	return self
 }
 
 // GetCumulativeMetrics downloads and aggregates metrics for data cells currently present in self.GenericDataList as instructed
 // by MetricQuery and inserts resulting MetricPromises to self.CumulativeMetricsPromises.
-func (self *SelectableData) GetCumulativeMetrics(client client.HeapsterClient) (*SelectableData) {
+func (self *DataSelector) GetCumulativeMetrics(client client.HeapsterClient) *DataSelector {
 	metricNames := self.DataSelectQuery.MetricQuery.MetricNames
 	if metricNames == nil {
 		// Don't download any metrics
@@ -116,9 +125,8 @@ func (self *SelectableData) GetCumulativeMetrics(client client.HeapsterClient) (
 		// get its heapster selector
 		heapsterSelector, err := metricDataCell.GetResourceSelector().GetHeapsterSelector(self.CachedResources.Pods)
 		if err != nil {
-			// Just log and give up.
-			log.Printf(`Failed to create heapster selector for resource "%s". Probably pods were not available in CachedResources.`, metricDataCell.GetResourceSelector().ResourceType)
-			return self
+			// Programming error. Notify immediately.
+			panic(fmt.Sprintf(`Failed to create heapster selector for resource "%s". Probably pods were not available in CachedResources.`, metricDataCell.GetResourceSelector().ResourceType))
 		}
 		heapsterSelectors[i] = heapsterSelector
 	}
@@ -130,7 +138,7 @@ func (self *SelectableData) GetCumulativeMetrics(client client.HeapsterClient) (
 }
 
 // Paginate paginetes the data inside as instructed by DataSelectQuery and returns itself to allow method chaining.
-func (self *SelectableData) Paginate() (*SelectableData) {
+func (self *DataSelector) Paginate() *DataSelector {
 	pQuery := self.DataSelectQuery.PaginationQuery
 	dataList := self.GenericDataList
 	startIndex, endIndex := pQuery.GetPaginationSettings(len(dataList))
@@ -150,18 +158,17 @@ func (self *SelectableData) Paginate() (*SelectableData) {
 }
 
 // GenericDataSelect takes a list of GenericDataCells and DataSelectQuery and returns selected data as instructed by dsQuery.
-func GenericDataSelect(dataList []DataCell, dsQuery *DataSelectQuery) ([]DataCell){
-	SelectableData := SelectableData{
+func GenericDataSelect(dataList []DataCell, dsQuery *DataSelectQuery) []DataCell {
+	SelectableData := DataSelector{
 		GenericDataList: dataList,
 		DataSelectQuery: dsQuery,
 	}
 	return SelectableData.Sort().Paginate().GenericDataList
 }
 
-
 // GenericDataSelect takes a list of GenericDataCells and DataSelectQuery and returns selected data as instructed by dsQuery.
-func GenericDataSelectWithMetrics(dataList []DataCell, dsQuery *DataSelectQuery, cachedResources *CachedResources, heapsterClient client.HeapsterClient) ([]DataCell, metric.MetricPromises){
-	SelectableData := SelectableData{
+func GenericDataSelectWithMetrics(dataList []DataCell, dsQuery *DataSelectQuery, cachedResources *CachedResources, heapsterClient client.HeapsterClient) ([]DataCell, metric.MetricPromises) {
+	SelectableData := DataSelector{
 		GenericDataList: dataList,
 		DataSelectQuery: dsQuery,
 		CachedResources: cachedResources,

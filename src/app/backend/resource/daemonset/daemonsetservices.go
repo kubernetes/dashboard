@@ -19,11 +19,12 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/service"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // GetDaemonSetServices returns list of services that are related to daemon set targeted by given
 // name.
-func GetDaemonSetServices(client client.Interface, dsQuery *common.DataSelectQuery,
+func GetDaemonSetServices(client client.Interface, dsQuery *dataselect.DataSelectQuery,
 	namespace, name string) (*service.ServiceList, error) {
 
 	daemonSet, err := client.Extensions().DaemonSets(namespace).Get(name)

@@ -25,6 +25,7 @@ import (
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // Transforms simple selector map to labels.Selector object that can be used when querying for
@@ -107,14 +108,14 @@ func ToReplicationControllerDetail(replicationController *api.ReplicationControl
 // CreateReplicationControllerList creates paginated list of Replication Controller model
 // objects based on Kubernetes Replication Controller objects array and related resources arrays.
 func CreateReplicationControllerList(replicationControllers []api.ReplicationController,
-	dsQuery *common.DataSelectQuery, pods []api.Pod, events []api.Event) *ReplicationControllerList {
+	dsQuery *dataselect.DataSelectQuery, pods []api.Pod, events []api.Event) *ReplicationControllerList {
 
 	rcList := &ReplicationControllerList{
 		ReplicationControllers: make([]ReplicationController, 0),
 		ListMeta:               common.ListMeta{TotalItems: len(replicationControllers)},
 	}
 
-	replicationControllers = fromCells(common.GenericDataSelect(toCells(replicationControllers), dsQuery))
+	replicationControllers = fromCells(dataselect.GenericDataSelect(toCells(replicationControllers), dsQuery))
  
 	for _, rc := range replicationControllers {
 		matchingPods := common.FilterNamespacedPodsBySelector(pods, rc.ObjectMeta.Namespace,
@@ -134,14 +135,14 @@ func CreateReplicationControllerList(replicationControllers []api.ReplicationCon
 
 type ReplicationControllerCell api.ReplicationController
 
-func (self ReplicationControllerCell) GetProperty(name common.PropertyName) common.ComparableValue {
+func (self ReplicationControllerCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
-	case common.NameProperty:
-		return common.StdComparableString(self.ObjectMeta.Name)
-	case common.CreationTimestampProperty:
-		return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
-	case common.NamespaceProperty:
-		return common.StdComparableString(self.ObjectMeta.Namespace)
+	case dataselect.NameProperty:
+		return dataselect.StdComparableString(self.ObjectMeta.Name)
+	case dataselect.CreationTimestampProperty:
+		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+	case dataselect.NamespaceProperty:
+		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
 	default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil
@@ -149,15 +150,15 @@ func (self ReplicationControllerCell) GetProperty(name common.PropertyName) comm
 }
 
 
-func toCells(std []api.ReplicationController) []common.DataCell {
-	cells := make([]common.DataCell, len(std))
+func toCells(std []api.ReplicationController) []dataselect.DataCell {
+	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
 		cells[i] = ReplicationControllerCell(std[i])
 	}
 	return cells
 }
 
-func fromCells(cells []common.DataCell) []api.ReplicationController {
+func fromCells(cells []dataselect.DataCell) []api.ReplicationController {
 	std := make([]api.ReplicationController, len(cells))
 	for i := range std {
 		std[i] = api.ReplicationController(cells[i].(ReplicationControllerCell))

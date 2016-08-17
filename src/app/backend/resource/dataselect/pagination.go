@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package common
+package dataselect
 
 // By default backend pagination will not be applied.
 var NoPagination = NewPaginationQuery(-1, -1)
@@ -42,7 +42,6 @@ func (p *PaginationQuery) IsValidPagination() bool {
 func (p *PaginationQuery) IsPageAvailable(itemsCount, startingIndex int) bool {
 	return itemsCount > startingIndex && p.ItemsPerPage > 0
 }
-
 
 // GetPaginationSettings based on number of items and pagination query parameters returns start
 // and end index that can be used to return paginated list of items.

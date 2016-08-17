@@ -25,6 +25,7 @@ import (
 	"k8s.io/kubernetes/pkg/apis/extensions"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 func TestGetReplicaSetListFromChannels(t *testing.T) {
@@ -177,7 +178,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 		channels.EventList.List <- &api.EventList{}
 		channels.EventList.Error <- nil
 
-		actual, err := GetReplicaSetListFromChannels(channels, common.NoDataSelect)
+		actual, err := GetReplicaSetListFromChannels(channels, dataselect.NoDataSelect)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetReplicaSetListChannels() ==\n          %#v\nExpected: %#v", actual, c.expected)
 		}

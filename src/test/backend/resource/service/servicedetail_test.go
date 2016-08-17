@@ -25,6 +25,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 type FakeHeapsterClient struct {
@@ -79,7 +80,7 @@ func TestGetServiceDetail(t *testing.T) {
 		fakeHeapsterClient := FakeHeapsterClient{client: testclient.NewSimpleFake()}
 
 		actual, _ := GetServiceDetail(fakeClient, fakeHeapsterClient,
-			c.namespace, c.name, common.NoDataSelect)
+			c.namespace, c.name, dataselect.NoDataSelect)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {

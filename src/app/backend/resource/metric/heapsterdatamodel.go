@@ -15,57 +15,30 @@
 package metric
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"encoding/json"
-	"time"
+	"github.com/kubernetes/dashboard/src/app/backend/client"
+
+	heapster "k8s.io/heapster/metrics/api/v1/types"
 )
 
 // HeapsterAllInOneDownloadConfig hold config information specifying whether given native heapster resource type supports list download.
 var HeapsterAllInOneDownloadConfig = map[MetricResourceType]bool{
-	ResourceTypePod: true,
+	ResourceTypePod:  true,
 	ResourceTypeNode: false,
 }
 
-// HeapsterJSONFormat represents format of JSON used by heapster when sending multiple data cells
-type HeapsterJSONAllInOneFormat struct {
-	Items []HeapsterJSONFormat  `json:"items"`
-}
-
-// HeapsterJSONFormat represents format of JSON used by heapster when sending single data cell
-type HeapsterJSONFormat struct {
-	RawDataPoints []RawDataPoint `json:"metrics"`
-}
-
-// RawDataPoint as used in heapster representation
-type RawDataPoint struct {
-	Timestamp string `json:"timestamp"`
-	Value     int64 `json:"value"`
-}
-
-
 // DataPointsFromMetricJSONFormat converts all the data points from format used by heapster to our format.
-func DataPointsFromMetricJSONFormat(raw HeapsterJSONFormat) (DataPoints, error) {
+func DataPointsFromMetricJSONFormat(raw heapster.MetricResult) DataPoints {
 	dp := DataPoints{}
-	for _, raw := range raw.RawDataPoints {
-		parsed, err := dataPointFromRawDataPoint(raw)
-		if err != nil {
-			return nil, err
+	for _, raw := range raw.Metrics {
+		converted := DataPoint{
+			X: raw.Timestamp.Unix(),
+			Y: int64(raw.Value),
 		}
-		dp = append(dp, parsed)
-	}
-	return dp, nil
-}
 
-// DataPointFromRawDataPoint converts raw data point supplied by heapster to our internal format.
-func dataPointFromRawDataPoint(r RawDataPoint) (DataPoint, error) {
-	d := DataPoint{}
-	t, err := time.Parse(time.RFC3339, r.Timestamp)
-	if err != nil {
-		return d, err
+		dp = append(dp, converted)
 	}
-	d.X = t.Unix()
-	d.Y = r.Value
-	return d, nil
+	return dp
 }
 
 // Performs heapster GET request to the specifies path and transfers the data to the interface provided.

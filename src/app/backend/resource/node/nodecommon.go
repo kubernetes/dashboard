@@ -15,9 +15,8 @@
 package node
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-
 	"k8s.io/kubernetes/pkg/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 //getContainerImages returns container image strings from the given node.
@@ -35,14 +34,14 @@ func getContainerImages(node api.Node) []string {
 
 type NodeCell api.Node
 
-func (self NodeCell) GetProperty(name common.PropertyName) common.ComparableValue {
+func (self NodeCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
-	case common.NameProperty:
-		return common.StdComparableString(self.ObjectMeta.Name)
-	case common.CreationTimestampProperty:
-		return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
-	case common.NamespaceProperty:
-		return common.StdComparableString(self.ObjectMeta.Namespace)
+	case dataselect.NameProperty:
+		return dataselect.StdComparableString(self.ObjectMeta.Name)
+	case dataselect.CreationTimestampProperty:
+		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+	case dataselect.NamespaceProperty:
+		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
 	default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil
@@ -50,15 +49,15 @@ func (self NodeCell) GetProperty(name common.PropertyName) common.ComparableValu
 }
 
 
-func toCells(std []api.Node) []common.DataCell {
-	cells := make([]common.DataCell, len(std))
+func toCells(std []api.Node) []dataselect.DataCell {
+	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
 		cells[i] = NodeCell(std[i])
 	}
 	return cells
 }
 
-func fromCells(cells []common.DataCell) []api.Node {
+func fromCells(cells []dataselect.DataCell) []api.Node {
 	std := make([]api.Node, len(cells))
 	for i := range std {
 		std[i] = api.Node(cells[i].(NodeCell))

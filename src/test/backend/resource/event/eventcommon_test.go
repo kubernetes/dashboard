@@ -20,6 +20,7 @@ import (
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
 	"reflect"
 	"testing"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 func TestGetEvents(t *testing.T) {
@@ -164,7 +165,7 @@ func TestToEventList(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := CreateEventList(c.events, common.NoDataSelect)
+		actual := CreateEventList(c.events, dataselect.NoDataSelect)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("ToEventList(%+v, %+v) == \n%+v, expected \n%+v",
 				c.events, c.namespace, actual, c.expected)

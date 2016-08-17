@@ -23,6 +23,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // PetSetDetail is a presentation layer view of Kubernetes Pet Set resource. This means
@@ -47,7 +48,7 @@ type PetSetDetail struct {
 
 // GetPetSetDetail gets pet set details.
 func GetPetSetDetail(client *k8sClient.Client, heapsterClient client.HeapsterClient,
-	namespace, name string, dsQuery *common.DataSelectQuery) (*PetSetDetail, error) {
+	namespace, name string, dsQuery *dataselect.DataSelectQuery) (*PetSetDetail, error) {
 
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 

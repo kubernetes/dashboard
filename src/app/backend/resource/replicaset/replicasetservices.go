@@ -19,11 +19,12 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/service"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // GetReplicaSetServices returns list of services that are related to replica set targeted by given
 // name.
-func GetReplicaSetServices(client client.Interface, dsQuery *common.DataSelectQuery,
+func GetReplicaSetServices(client client.Interface, dsQuery *dataselect.DataSelectQuery,
 	namespace, name string) (*service.ServiceList, error) {
 
 	replicaSet, err := client.Extensions().ReplicaSets(namespace).Get(name)

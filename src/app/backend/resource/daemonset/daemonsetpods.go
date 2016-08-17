@@ -24,11 +24,12 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // GetDaemonSetPods return list of pods targeting daemon set.
 func GetDaemonSetPods(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	dsQuery *common.DataSelectQuery, daemonSetName, namespace string) (*pod.PodList, error) {
+	dsQuery *dataselect.DataSelectQuery, daemonSetName, namespace string) (*pod.PodList, error) {
 	log.Printf("Getting replication controller %s pods in namespace %s", daemonSetName, namespace)
 
 	pods, err := getRawDaemonSetPods(client, daemonSetName, namespace)

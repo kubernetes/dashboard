@@ -18,6 +18,7 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // ToService returns api service object based on kubernetes service object
@@ -48,13 +49,13 @@ func ToServiceDetail(service *api.Service) ServiceDetail {
 
 // CreateServiceList returns paginated service list based on given service array
 // and pagination query.
-func CreateServiceList(services []api.Service, dsQuery *common.DataSelectQuery) *ServiceList {
+func CreateServiceList(services []api.Service, dsQuery *dataselect.DataSelectQuery) *ServiceList {
 	serviceList := &ServiceList{
 		Services: make([]Service, 0),
 		ListMeta: common.ListMeta{TotalItems: len(services)},
 	}
 
-	services = fromCells(common.GenericDataSelect(toCells(services), dsQuery))
+	services = fromCells(dataselect.GenericDataSelect(toCells(services), dsQuery))
 
 	for _, service := range services {
 		serviceList.Services = append(serviceList.Services, ToService(&service))
@@ -67,14 +68,14 @@ func CreateServiceList(services []api.Service, dsQuery *common.DataSelectQuery) 
 
 type ServiceCell api.Service
 
-func (self ServiceCell) GetProperty(name common.PropertyName) common.ComparableValue {
+func (self ServiceCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
-	case common.NameProperty:
-		return common.StdComparableString(self.ObjectMeta.Name)
-	case common.CreationTimestampProperty:
-		return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
-	case common.NamespaceProperty:
-		return common.StdComparableString(self.ObjectMeta.Namespace)
+	case dataselect.NameProperty:
+		return dataselect.StdComparableString(self.ObjectMeta.Name)
+	case dataselect.CreationTimestampProperty:
+		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+	case dataselect.NamespaceProperty:
+		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
 	default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil
@@ -82,15 +83,15 @@ func (self ServiceCell) GetProperty(name common.PropertyName) common.ComparableV
 }
 
 
-func toCells(std []api.Service) []common.DataCell {
-	cells := make([]common.DataCell, len(std))
+func toCells(std []api.Service) []dataselect.DataCell {
+	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
 		cells[i] = ServiceCell(std[i])
 	}
 	return cells
 }
 
-func fromCells(cells []common.DataCell) []api.Service {
+func fromCells(cells []dataselect.DataCell) []api.Service {
 	std := make([]api.Service, len(cells))
 	for i := range std {
 		std[i] = api.Service(cells[i].(ServiceCell))

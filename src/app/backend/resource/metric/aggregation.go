@@ -23,9 +23,9 @@ import (
 type AggregationName string
 
 const (
-	SumAggregation = "sum"
-	MaxAggregation = "max"
-	MinAggregation = "min"
+	SumAggregation     = "sum"
+	MaxAggregation     = "max"
+	MinAggregation     = "min"
 	DefaultAggregation = "sum"
 )
 
@@ -34,23 +34,22 @@ type AggregationNames []AggregationName
 var OnlySumAggregation = AggregationNames{SumAggregation}
 var OnlyDefaultAggregation = AggregationNames{DefaultAggregation}
 
-var AggregatingFunctions = map[AggregationName]func([]int64) (int64){
+var AggregatingFunctions = map[AggregationName]func([]int64) int64{
 	SumAggregation: SumAggregate,
 	MaxAggregation: MaxAggregate,
 	MinAggregation: MinAggregate,
 }
 
-
 // SortableInt64 implements sort.Interface for []int64. This allows to use built in sort with int64.
 type SortableInt64 []int64
-func (a SortableInt64) Len() int {return len(a)}
-func (a SortableInt64) Swap(i, j int) {a[i], a[j] = a[j], a[i]}
-func (a SortableInt64) Less(i, j int) bool {return a[i] < a[j]}
 
+func (a SortableInt64) Len() int           { return len(a) }
+func (a SortableInt64) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a SortableInt64) Less(i, j int) bool { return a[i] < a[j] }
 
 // AggregateData aggregates all the data from dataList using AggregatingFunction with name aggregateName.
 // Standard data aggregation function.
-func AggregateData(metricList []Metric, metricName string, aggregationName AggregationName) (Metric) {
+func AggregateData(metricList []Metric, metricName string, aggregationName AggregationName) Metric {
 	_, isAggregateAvailable := AggregatingFunctions[aggregationName]
 	if !isAggregateAvailable {
 		aggregationName = DefaultAggregation
@@ -58,7 +57,7 @@ func AggregateData(metricList []Metric, metricName string, aggregationName Aggre
 
 	aggrMap, newLabel := AggregatingMapFromDataList(metricList, metricName)
 	Xs := SortableInt64{}
-	for k, _ := range aggrMap {
+	for k := range aggrMap {
 		Xs = append(Xs, k)
 	}
 	newDataPoints := []DataPoint{}
@@ -72,15 +71,15 @@ func AggregateData(metricList []Metric, metricName string, aggregationName Aggre
 	return Metric{
 		DataPoints: newDataPoints,
 		MetricName: metricName,
-		Label: newLabel,
-		Aggregate: aggregationName,
+		Label:      newLabel,
+		Aggregate:  aggregationName,
 	}
 
 }
 
 // AggregatingMapFromDataList for all Data entries of given metric generates a cumulative map X -> [List of all Ys at this X].
 // Afterwards this list of Ys can be easily aggregated.
-func AggregatingMapFromDataList(metricList []Metric, metricName string) (map[int64][]int64, Label){
+func AggregatingMapFromDataList(metricList []Metric, metricName string) (map[int64][]int64, Label) {
 	newLabel := Label{}
 
 	aggrMap := make(map[int64][]int64, 0)
@@ -88,7 +87,7 @@ func AggregatingMapFromDataList(metricList []Metric, metricName string) (map[int
 		if data.MetricName != metricName {
 			continue
 		}
-		newLabel = newLabel.AddMetricLabel(data.Label)  // update label of resulting data
+		newLabel = newLabel.AddMetricLabel(data.Label) // update label of resulting data
 		for _, dataPoint := range data.DataPoints {
 			_, isXPresent := aggrMap[dataPoint.X]
 			if !isXPresent {
@@ -100,7 +99,6 @@ func AggregatingMapFromDataList(metricList []Metric, metricName string) (map[int
 	}
 	return aggrMap, newLabel
 }
-
 
 // Implement aggregating functions:
 
