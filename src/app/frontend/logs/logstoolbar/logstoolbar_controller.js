@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StateParams, stateName as logs} from './../logs_state';
+import {stateName as logs, StateParams} from './../logs_state';
 
 /**
  * Controller for the logs view.
