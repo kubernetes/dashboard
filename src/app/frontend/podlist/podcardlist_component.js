@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {StateParams} from 'common/resource/resourcedetail';
-import {StateParams as LogsStateParams, stateName as logsStateName} from 'logs/logs_state';
+import {stateName as logsStateName, StateParams as LogsStateParams} from 'logs/logs_state';
 import {stateName} from 'poddetail/poddetail_state';
 
 /**
