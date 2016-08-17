@@ -15,7 +15,7 @@
 import {stateName as chromeStateName} from 'chrome/chrome_state';
 
 import {InternalErrorController} from './internalerror_controller';
-import {StateParams, stateName} from './internalerror_state';
+import {stateName, StateParams} from './internalerror_state';
 
 /**
  * Configures states for the internal error view.

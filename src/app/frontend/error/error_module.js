@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StateParams, stateName} from './internalerror_state';
+import {stateName, StateParams} from './internalerror_state';
 
 import stateConfig from './internalerror_stateconfig';
 import chromeModule from 'chrome/chrome_module';
