@@ -24,6 +24,7 @@ import (
 	k8serrors "k8s.io/kubernetes/pkg/api/errors"
 	"k8s.io/kubernetes/pkg/apis/apps"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // PetSetList contains a list of Pet Sets in the cluster.
@@ -50,7 +51,7 @@ type PetSet struct {
 
 // GetPetSetList returns a list of all Pet Sets in the cluster.
 func GetPetSetList(client *client.Client, nsQuery *common.NamespaceQuery,
-	dsQuery *common.DataSelectQuery) (*PetSetList, error) {
+	dsQuery *dataselect.DataSelectQuery) (*PetSetList, error) {
 	log.Printf("Getting list of all pet sets in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -64,7 +65,7 @@ func GetPetSetList(client *client.Client, nsQuery *common.NamespaceQuery,
 
 // GetPetSetListFromChannels returns a list of all Pet Sets in the cluster
 // reading required resource list once from the channels.
-func GetPetSetListFromChannels(channels *common.ResourceChannels, dsQuery *common.DataSelectQuery) (
+func GetPetSetListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (
 	*PetSetList, error) {
 
 	petSets := <-channels.PetSetList.List
@@ -97,14 +98,14 @@ func GetPetSetListFromChannels(channels *common.ResourceChannels, dsQuery *commo
 // CreatePetSetList creates paginated list of Pet Set model
 // objects based on Kubernetes Pet Set objects array and related resources arrays.
 func CreatePetSetList(petSets []apps.PetSet, pods []api.Pod, events []api.Event,
-	dsQuery *common.DataSelectQuery) *PetSetList {
+	dsQuery *dataselect.DataSelectQuery) *PetSetList {
 
 	petSetList := &PetSetList{
 		PetSets:  make([]PetSet, 0),
 		ListMeta: common.ListMeta{TotalItems: len(petSets)},
 	}
 
-	petSets = fromCells(common.GenericDataSelect(toCells(petSets), dsQuery))
+	petSets = fromCells(dataselect.GenericDataSelect(toCells(petSets), dsQuery))
 
 	for _, petSet := range petSets {
 		matchingPods := common.FilterNamespacedPodsBySelector(pods, petSet.ObjectMeta.Namespace,

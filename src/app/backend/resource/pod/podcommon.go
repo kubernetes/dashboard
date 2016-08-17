@@ -17,7 +17,8 @@ package pod
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"k8s.io/kubernetes/pkg/api"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common/metric"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // Gets restart count of given pod (total number of its containers restarts).
@@ -60,14 +61,14 @@ func GetContainerImages(podTemplate *api.PodSpec) []string {
 
 type PodCell api.Pod
 
-func (self PodCell) GetProperty(name common.PropertyName) common.ComparableValue {
+func (self PodCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
-	case common.NameProperty:
-		return common.StdComparableString(self.ObjectMeta.Name)
-	case common.CreationTimestampProperty:
-		return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
-	case common.NamespaceProperty:
-		return common.StdComparableString(self.ObjectMeta.Namespace)
+	case dataselect.NameProperty:
+		return dataselect.StdComparableString(self.ObjectMeta.Name)
+	case dataselect.CreationTimestampProperty:
+		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+	case dataselect.NamespaceProperty:
+		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
 	default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil
@@ -75,24 +76,24 @@ func (self PodCell) GetProperty(name common.PropertyName) common.ComparableValue
 }
 
 
-func (self PodCell) GetResourceSelector() *common.ResourceSelector {
-	return &common.ResourceSelector{
+func (self PodCell) GetResourceSelector() *metric.ResourceSelector {
+	return &metric.ResourceSelector{
 		Namespace:     self.ObjectMeta.Namespace,
-		ResourceType:  metric.ResourceTypePod,
+		ResourceType:  common.ResourceKindPod,
 		ResourceName:  self.ObjectMeta.Name,
 	}
 }
 
 
-func toCells(std []api.Pod) []common.DataCell {
-	cells := make([]common.DataCell, len(std))
+func toCells(std []api.Pod) []dataselect.DataCell {
+	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
 		cells[i] = PodCell(std[i])
 	}
 	return cells
 }
 
-func fromCells(cells []common.DataCell) []api.Pod {
+func fromCells(cells []dataselect.DataCell) []api.Pod {
 	std := make([]api.Pod, len(cells))
 	for i := range std {
 		std[i] = api.Pod(cells[i].(PodCell))

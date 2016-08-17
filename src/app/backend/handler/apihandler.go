@@ -45,7 +45,8 @@ import (
 	clientK8s "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
 	"k8s.io/kubernetes/pkg/runtime"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common/metric"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 const (
@@ -1231,28 +1232,28 @@ func parseNamespacePathParameter(request *restful.Request) *common.NamespaceQuer
 	return common.NewNamespaceQuery(nonEmptyNamespaces)
 }
 
-func parsePaginationPathParameter(request *restful.Request) *common.PaginationQuery {
+func parsePaginationPathParameter(request *restful.Request) *dataselect.PaginationQuery {
 	itemsPerPage, err := strconv.ParseInt(request.QueryParameter("itemsPerPage"), 10, 0)
 	if err != nil {
-		return common.NoPagination
+		return dataselect.NoPagination
 	}
 
 	page, err := strconv.ParseInt(request.QueryParameter("page"), 10, 0)
 	if err != nil {
-		return common.NoPagination
+		return dataselect.NoPagination
 	}
 
 	// Frontend pages start from 1 and backend starts from 0
-	return common.NewPaginationQuery(int(itemsPerPage), int(page-1))
+	return dataselect.NewPaginationQuery(int(itemsPerPage), int(page-1))
 }
 
 // Parses query parameters of the request and returns a SortQuery object
-func parseSortPathParameter(request *restful.Request) *common.SortQuery {
-	return common.NewSortQuery(strings.Split(request.QueryParameter("sortby"), ","))
+func parseSortPathParameter(request *restful.Request) *dataselect.SortQuery {
+	return dataselect.NewSortQuery(strings.Split(request.QueryParameter("sortby"), ","))
 }
 
 // Parses query parameters of the request and returns a MetricQuery object
-func parseMetricPathParameter(request *restful.Request) *common.MetricQuery {
+func parseMetricPathParameter(request *restful.Request) *dataselect.MetricQuery {
 	metricNamesParam := request.QueryParameter("metricNames")
 	var metricNames []string
 	if metricNamesParam != "" {
@@ -1272,15 +1273,15 @@ func parseMetricPathParameter(request *restful.Request) *common.MetricQuery {
 		aggregationNames = append(aggregationNames, metric.AggregationName(e))
 	}
 
-	return common.NewMetricQuery(metricNames, aggregationNames)
+	return dataselect.NewMetricQuery(metricNames, aggregationNames)
 
 }
 
 
 // Parses query parameters of the request and returns a DataSelectQuery object
-func parseDataSelectPathParameter(request *restful.Request) *common.DataSelectQuery {
+func parseDataSelectPathParameter(request *restful.Request) *dataselect.DataSelectQuery {
 	paginationQuery := parsePaginationPathParameter(request)
 	sortQuery := parseSortPathParameter(request)
 	metricQuery := parseMetricPathParameter(request)
-	return common.NewDataSelectQuery(paginationQuery, sortQuery, metricQuery)
+	return dataselect.NewDataSelectQuery(paginationQuery, sortQuery, metricQuery)
 }

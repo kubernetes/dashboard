@@ -24,12 +24,13 @@ import (
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
 	"log"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // GetReplicationControllerPods return list of pods targeting replication controller associated
 // to given name.
 func GetReplicationControllerPods(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	dsQuery *common.DataSelectQuery, rcName, namespace string) (*pod.PodList, error) {
+	dsQuery *dataselect.DataSelectQuery, rcName, namespace string) (*pod.PodList, error) {
 	log.Printf("Getting replication controller %s pods in namespace %s", rcName, namespace)
 
 	pods, err := getRawReplicationControllerPods(client, rcName, namespace)

@@ -26,6 +26,7 @@ import (
 	"k8s.io/kubernetes/pkg/apis/batch"
 	"k8s.io/kubernetes/pkg/client/restclient"
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 type FakeHeapsterClient struct {
@@ -78,7 +79,7 @@ func TestGetJobDetail(t *testing.T) {
 		fakeHeapsterClient := FakeHeapsterClient{}
 
 		actual, _ := GetJobDetail(fakeClient, fakeHeapsterClient, c.namespace, c.name,
-			common.NoDataSelect)
+			dataselect.NoDataSelect)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {

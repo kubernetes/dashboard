@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package common
+package dataselect
 
 import (
 	"reflect"
@@ -39,8 +39,8 @@ func TestNewPaginationQuery(t *testing.T) {
 
 func TestIsValidPagination(t *testing.T) {
 	cases := []struct {
-		pQuery                    *PaginationQuery
-		expected                  bool
+		pQuery   *PaginationQuery
+		expected bool
 	}{
 		{&PaginationQuery{0, 0}, true},
 		{&PaginationQuery{5, 0}, true},

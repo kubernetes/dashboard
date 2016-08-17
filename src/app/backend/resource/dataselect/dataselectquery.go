@@ -12,11 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package common
+package dataselect
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common/metric"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 )
+
 // Options for GenericDataSelect which takes []GenericDataCell and returns selected data.
 // Can be extended to include any kind of selection - for example filtering.
 // Currently included only Pagination and Sort options.
@@ -24,31 +25,34 @@ type DataSelectQuery struct {
 	PaginationQuery *PaginationQuery
 	SortQuery       *SortQuery
 	//	Filter     *FilterQuery
-	MetricQuery     *MetricQuery
+	MetricQuery *MetricQuery
 }
 
 var NoMetrics = NewMetricQuery(nil, nil)
 
+// MetricQuery holds parameters for metric extraction process.
+// It accepts list of metrics to be downloaded and a list of aggregations that should be performed for each metric.
+// Query has this format  metrics=metric1,metric2,...&aggregations=aggregation1,aggregation2,...
 type MetricQuery struct {
-	// Metrics to download
-	MetricNames   []string
-	// Aggregations if provided will slightly slow down execution in case of pods.
-	// If not provided, sum will be used, together with fastest possible heapster download method.
-	Aggregations  metric.AggregationNames
+	// Metrics to download, all available metric names can be found here:
+	// https://github.com/kubernetes/heapster/blob/master/docs/storage-schema.md
+	MetricNames []string
+	// Aggregations to be performed for each metric. Check available aggregations in aggregation.go.
+	// If empty, default aggregation will be used (sum).
+	Aggregations metric.AggregationNames
 }
 
 // NewMetricQuery returns a metric query from provided settings.
-func NewMetricQuery(metricNames []string, aggregations metric.AggregationNames) (*MetricQuery) {
+func NewMetricQuery(metricNames []string, aggregations metric.AggregationNames) *MetricQuery {
 	return &MetricQuery{
-		MetricNames:   metricNames,
-		Aggregations:  aggregations,
+		MetricNames:  metricNames,
+		Aggregations: aggregations,
 	}
 }
 
 // SortQuery holds options for sort functionality of data select.
 type SortQuery struct {
 	SortByList []SortBy
-
 }
 
 // SortBy holds the name of the property that should be sorted and whether order should be ascending or descending.
@@ -65,26 +69,25 @@ var NoSort = &SortQuery{
 // NoDataSelect is an option for no data select (same data will be returned).
 var NoDataSelect = NewDataSelectQuery(NoPagination, NoSort, NoMetrics)
 
-
 // NewDataSelectQuery creates DataSelectQuery object from simpler data select queries.
-func NewDataSelectQuery(paginationQuery *PaginationQuery, sortQuery *SortQuery, graphQuery *MetricQuery) (*DataSelectQuery) {
+func NewDataSelectQuery(paginationQuery *PaginationQuery, sortQuery *SortQuery, graphQuery *MetricQuery) *DataSelectQuery {
 	return &DataSelectQuery{
 		PaginationQuery: paginationQuery,
 		SortQuery:       sortQuery,
-		MetricQuery:      graphQuery,
+		MetricQuery:     graphQuery,
 	}
 }
 
 // NewSortQuery takes raw sort options list and returns SortQuery object. For example:
 // ["a", "parameter1", "d", "parameter2"] - means that the data should be sorted by
 // parameter1 (ascending) and later - for results that return equal under parameter 1 sort - by parameter2 (descending)
-func NewSortQuery(sortByListRaw []string) (*SortQuery) {
-	if sortByListRaw == nil || len(sortByListRaw)%2 == 1{
+func NewSortQuery(sortByListRaw []string) *SortQuery {
+	if sortByListRaw == nil || len(sortByListRaw)%2 == 1 {
 		// Empty sort list or invalid (odd) length
 		return NoSort
 	}
 	sortByList := []SortBy{}
-	for i:=0; i+1 < len(sortByListRaw); i+=2 {
+	for i := 0; i+1 < len(sortByListRaw); i += 2 {
 		// parse order option
 		var ascending bool
 		orderOption := sortByListRaw[i]
@@ -100,7 +103,7 @@ func NewSortQuery(sortByListRaw []string) (*SortQuery) {
 		// parse property name
 		propertyName := sortByListRaw[i+1]
 		sortBy := SortBy{
-			Property: PropertyName(propertyName),
+			Property:  PropertyName(propertyName),
 			Ascending: ascending,
 		}
 		// Add to the sort options.

@@ -19,6 +19,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // ReplicationControllerList contains a list of Replication Controllers in the cluster.
@@ -44,7 +45,7 @@ type ReplicationController struct {
 
 // GetReplicationControllerList returns a list of all Replication Controllers in the cluster.
 func GetReplicationControllerList(client *client.Client, nsQuery *common.NamespaceQuery,
-	dsQuery *common.DataSelectQuery) (*ReplicationControllerList, error) {
+	dsQuery *dataselect.DataSelectQuery) (*ReplicationControllerList, error) {
 	log.Printf("Getting list of all replication controllers in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -59,7 +60,7 @@ func GetReplicationControllerList(client *client.Client, nsQuery *common.Namespa
 // GetReplicationControllerListFromChannels returns a list of all Replication Controllers in the cluster
 // reading required resource list once from the channels.
 func GetReplicationControllerListFromChannels(channels *common.ResourceChannels,
-	dsQuery *common.DataSelectQuery) (*ReplicationControllerList, error) {
+	dsQuery *dataselect.DataSelectQuery) (*ReplicationControllerList, error) {
 
 	rcList := <-channels.ReplicationControllerList.List
 	if err := <-channels.ReplicationControllerList.Error; err != nil {

@@ -19,6 +19,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"k8s.io/kubernetes/pkg/apis/batch"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
@@ -54,7 +55,7 @@ type JobDetail struct {
 
 // GetJobDetail gets job details.
 func GetJobDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	namespace, name string, dsQuery *common.DataSelectQuery) (*JobDetail, error) {
+	namespace, name string, dsQuery *dataselect.DataSelectQuery) (*JobDetail, error) {
 
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 

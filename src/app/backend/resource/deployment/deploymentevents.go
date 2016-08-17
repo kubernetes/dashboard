@@ -21,6 +21,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // GetDeploymentEvents returns model events for a deployment with the given name in the given
@@ -36,7 +37,7 @@ func GetDeploymentEvents(dpEvents []api.Event, namespace string, deploymentName 
 	}
 
 	// TODO support pagination
-	events := event.CreateEventList(dpEvents, common.NoDataSelect)
+	events := event.CreateEventList(dpEvents, dataselect.NoDataSelect)
 
 	log.Printf("Found %d events related to %s deployment in %s namespace",
 		len(events.Events), deploymentName, namespace)

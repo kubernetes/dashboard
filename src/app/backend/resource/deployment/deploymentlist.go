@@ -24,6 +24,7 @@ import (
 	k8serrors "k8s.io/kubernetes/pkg/api/errors"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // ReplicationSetList contains a list of Deployments in the cluster.
@@ -50,7 +51,7 @@ type Deployment struct {
 
 // GetDeploymentList returns a list of all Deployments in the cluster.
 func GetDeploymentList(client client.Interface, nsQuery *common.NamespaceQuery,
-	dsQuery *common.DataSelectQuery) (*DeploymentList, error) {
+	dsQuery *dataselect.DataSelectQuery) (*DeploymentList, error) {
 	log.Printf("Getting list of all deployments in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -65,7 +66,7 @@ func GetDeploymentList(client client.Interface, nsQuery *common.NamespaceQuery,
 // GetDeploymentList returns a list of all Deployments in the cluster
 // reading required resource list once from the channels.
 func GetDeploymentListFromChannels(channels *common.ResourceChannels,
-	dsQuery *common.DataSelectQuery) (*DeploymentList, error) {
+	dsQuery *dataselect.DataSelectQuery) (*DeploymentList, error) {
 
 	deployments := <-channels.DeploymentList.List
 	if err := <-channels.DeploymentList.Error; err != nil {
@@ -97,14 +98,14 @@ func GetDeploymentListFromChannels(channels *common.ResourceChannels,
 // CreateDeploymentList returns a list of all Deployment model objects in the cluster, based on all
 // Kubernetes Deployment API objects.
 func CreateDeploymentList(deployments []extensions.Deployment, pods []api.Pod,
-	events []api.Event, dsQuery *common.DataSelectQuery) *DeploymentList {
+	events []api.Event, dsQuery *dataselect.DataSelectQuery) *DeploymentList {
 
 	deploymentList := &DeploymentList{
 		Deployments: make([]Deployment, 0),
 		ListMeta:    common.ListMeta{TotalItems: len(deployments)},
 	}
 
-	deployments = fromCells(common.GenericDataSelect(toCells(deployments), dsQuery))
+	deployments = fromCells(dataselect.GenericDataSelect(toCells(deployments), dsQuery))
 
 	for _, deployment := range deployments {
 

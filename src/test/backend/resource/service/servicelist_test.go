@@ -21,6 +21,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 func TestGetServiceList(t *testing.T) {
@@ -60,7 +61,7 @@ func TestGetServiceList(t *testing.T) {
 	for _, c := range cases {
 		fakeClient := testclient.NewSimpleFake(c.serviceList)
 
-		actual, _ := GetServiceList(fakeClient, common.NewNamespaceQuery(nil), common.NoDataSelect)
+		actual, _ := GetServiceList(fakeClient, common.NewNamespaceQuery(nil), dataselect.NoDataSelect)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {

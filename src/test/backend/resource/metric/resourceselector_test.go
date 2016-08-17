@@ -1,13 +1,12 @@
-package common
+package metric
 
-import ("k8s.io/kubernetes/pkg/api"
+import (
+	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common/metric"
-	"testing"
 	"reflect"
+	"testing"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 )
-
-
 
 func TestResourceSelector(t *testing.T) {
 	resource1 := map[string]string{
@@ -47,62 +46,62 @@ func TestResourceSelector(t *testing.T) {
 		},
 		{
 			ObjectMeta: api.ObjectMeta{
-				Name:      "5",
-				Labels:    resource1,
+				Name:   "5",
+				Labels: resource1,
 			},
 		},
 	}
 	testCases := []struct {
-		Info             string
-		ResourceSelector ResourceSelector
-		ExpectedPath     string
-		ExpectedTargetResource metric.MetricResourceType
-		ExpectedResources []string
+		Info                   string
+		ResourceSelector       ResourceSelector
+		ExpectedPath           string
+		ExpectedTargetResource common.ResourceKind
+		ExpectedResources      []string
 	}{
 		{
 			"ResourceSelector for native resource - pod",
 			ResourceSelector{
-				Namespace: "bar",
-				ResourceType: metric.ResourceTypePod,
+				Namespace:    "bar",
+				ResourceType: common.ResourceKindPod,
 				ResourceName: "foo",
 			},
 			`namespaces/bar/pod-list/`,
-			metric.ResourceTypePod,
+			common.ResourceKindPod,
 			[]string{"foo"},
 		},
 		{
 			"ResourceSelector for native resource - node",
 			ResourceSelector{
-				Namespace: "barn",
-				ResourceType: metric.ResourceTypeNode,
+				Namespace:    "barn",
+				ResourceType: common.ResourceKindNode,
 				ResourceName: "foon",
 			},
 			`nodes/`,
-			metric.ResourceTypeNode,
+			common.ResourceKindNode,
 			[]string{"foon"},
 		},
 		{
 			"ResourceSelector for derived resource with old style selector",
 			ResourceSelector{
-				Namespace: "a",
-				ResourceType: metric.ResourceTypeDeployment,
+				Namespace:    "a",
+				ResourceType: common.ResourceKindDeployment,
 				ResourceName: "baba",
-				Selector: resource1,
+				Selector:     resource1,
 			},
 			`namespaces/a/pod-list/`,
-			metric.ResourceTypePod,
+			common.ResourceKindPod,
 			[]string{"1", "3"},
 		},
 		{
 			"ResourceSelector for derived resource with new style selector",
 			ResourceSelector{
-				Namespace: "a",
-				ResourceType: metric.ResourceTypeDeployment,
-				ResourceName: "baba",
+				Namespace:     "a",
+				ResourceType:  common.ResourceKindDeployment,
+				ResourceName:  "baba",
 				LabelSelector: &unversioned.LabelSelector{MatchLabels: resource1},
 			},
 			`namespaces/a/pod-list/`,
-			metric.ResourceTypePod,
+			common.ResourceKindPod,
 			[]string{"1", "3"},
 		},
 	}

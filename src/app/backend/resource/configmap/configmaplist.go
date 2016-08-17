@@ -20,6 +20,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // ConfigMapList contains a list of Config Maps in the cluster.
@@ -41,7 +42,7 @@ type ConfigMap struct {
 
 // GetConfigMapList returns a list of all ConfigMaps in the cluster.
 func GetConfigMapList(client *client.Client, nsQuery *common.NamespaceQuery,
-	dsQuery *common.DataSelectQuery) (*ConfigMapList, error) {
+	dsQuery *dataselect.DataSelectQuery) (*ConfigMapList, error) {
 	log.Printf("Getting list config maps in the namespace %s", nsQuery.ToRequestParam())
 	channels := &common.ResourceChannels{
 		ConfigMapList: common.GetConfigMapListChannel(client, nsQuery, 1),
@@ -52,7 +53,7 @@ func GetConfigMapList(client *client.Client, nsQuery *common.NamespaceQuery,
 
 // GetConfigMapListFromChannels returns a list of all Config Maps in the cluster
 // reading required resource list once from the channels.
-func GetConfigMapListFromChannels(channels *common.ResourceChannels, dsQuery *common.DataSelectQuery) (
+func GetConfigMapListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (
 	*ConfigMapList, error) {
 
 	configMaps := <-channels.ConfigMapList.List
@@ -65,14 +66,14 @@ func GetConfigMapListFromChannels(channels *common.ResourceChannels, dsQuery *co
 	return result, nil
 }
 
-func getConfigMapList(configMaps []api.ConfigMap, dsQuery *common.DataSelectQuery) *ConfigMapList {
+func getConfigMapList(configMaps []api.ConfigMap, dsQuery *dataselect.DataSelectQuery) *ConfigMapList {
 
 	result := &ConfigMapList{
 		Items:    make([]ConfigMap, 0),
 		ListMeta: common.ListMeta{TotalItems: len(configMaps)},
 	}
 
-	configMaps = fromCells(common.GenericDataSelect(toCells(configMaps), dsQuery))
+	configMaps = fromCells(dataselect.GenericDataSelect(toCells(configMaps), dsQuery))
 
 	for _, item := range configMaps {
 		result.Items = append(result.Items,

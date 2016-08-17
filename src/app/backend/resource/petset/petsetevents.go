@@ -22,6 +22,7 @@ import (
 
 	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // GetPetSetEvents gets events associated to pet set.
@@ -52,7 +53,7 @@ func GetPetSetEvents(client *client.Client, namespace, petSetName string) (
 	}
 
 	// TODO support pagination
-	events := event.CreateEventList(apiEvents, common.NoDataSelect)
+	events := event.CreateEventList(apiEvents, dataselect.NoDataSelect)
 
 	log.Printf("Found %d events related to %s pet set in %s namespace",
 		len(events.Events), petSetName, namespace)

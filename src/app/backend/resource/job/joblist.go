@@ -24,6 +24,7 @@ import (
 	k8serrors "k8s.io/kubernetes/pkg/api/errors"
 	"k8s.io/kubernetes/pkg/apis/batch"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // JobList contains a list of Jobs in the cluster.
@@ -49,7 +50,7 @@ type Job struct {
 
 // GetJobList returns a list of all Jobs in the cluster.
 func GetJobList(client client.Interface, nsQuery *common.NamespaceQuery,
-	dsQuery *common.DataSelectQuery) (*JobList, error) {
+	dsQuery *dataselect.DataSelectQuery) (*JobList, error) {
 	log.Printf("Getting list of all jobs in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -63,7 +64,7 @@ func GetJobList(client client.Interface, nsQuery *common.NamespaceQuery,
 
 // GetJobList returns a list of all Jobs in the cluster
 // reading required resource list once from the channels.
-func GetJobListFromChannels(channels *common.ResourceChannels, dsQuery *common.DataSelectQuery) (
+func GetJobListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (
 	*JobList, error) {
 
 	jobs := <-channels.JobList.List
@@ -96,14 +97,14 @@ func GetJobListFromChannels(channels *common.ResourceChannels, dsQuery *common.D
 // CreateJobList returns a list of all Job model objects in the cluster, based on all
 // Kubernetes Job API objects.
 func CreateJobList(jobs []batch.Job, pods []api.Pod, events []api.Event,
-	dsQuery *common.DataSelectQuery) *JobList {
+	dsQuery *dataselect.DataSelectQuery) *JobList {
 
 	jobList := &JobList{
 		Jobs:     make([]Job, 0),
 		ListMeta: common.ListMeta{TotalItems: len(jobs)},
 	}
 
-	jobs = fromCells(common.GenericDataSelect(toCells(jobs), dsQuery))
+	jobs = fromCells(dataselect.GenericDataSelect(toCells(jobs), dsQuery))
 
 	for _, job := range jobs {
 		var completions int32

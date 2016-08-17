@@ -15,23 +15,23 @@
 package petset
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 
 	"k8s.io/kubernetes/pkg/apis/apps"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // The code below allows to perform complex data section on []apps.PetSet
 
 type PetSetCell apps.PetSet
 
-func (self PetSetCell) GetProperty(name common.PropertyName) common.ComparableValue {
+func (self PetSetCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
-	case common.NameProperty:
-		return common.StdComparableString(self.ObjectMeta.Name)
-	case common.CreationTimestampProperty:
-		return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
-	case common.NamespaceProperty:
-		return common.StdComparableString(self.ObjectMeta.Namespace)
+	case dataselect.NameProperty:
+		return dataselect.StdComparableString(self.ObjectMeta.Name)
+	case dataselect.CreationTimestampProperty:
+		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+	case dataselect.NamespaceProperty:
+		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
 	default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil
@@ -39,15 +39,15 @@ func (self PetSetCell) GetProperty(name common.PropertyName) common.ComparableVa
 }
 
 
-func toCells(std []apps.PetSet) []common.DataCell {
-	cells := make([]common.DataCell, len(std))
+func toCells(std []apps.PetSet) []dataselect.DataCell {
+	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
 		cells[i] = PetSetCell(std[i])
 	}
 	return cells
 }
 
-func fromCells(cells []common.DataCell) []apps.PetSet {
+func fromCells(cells []dataselect.DataCell) []apps.PetSet {
 	std := make([]apps.PetSet, len(cells))
 	for i := range std {
 		std[i] = apps.PetSet(cells[i].(PetSetCell))

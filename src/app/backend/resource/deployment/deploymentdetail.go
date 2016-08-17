@@ -24,6 +24,7 @@ import (
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	deploymentutil "k8s.io/kubernetes/pkg/util/deployment"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // RollingUpdateStrategy is behavior of a rolling update. See RollingUpdateDeployment K8s object.
@@ -155,7 +156,7 @@ func getDeploymentDetail(deployment *extensions.Deployment,
 		oldReplicaSets[i] = *replicaSet
 	}
 	oldReplicaSetList := replicaset.CreateReplicaSetList(oldReplicaSets, pods, rawEvents,
-		common.NoDataSelect)
+		dataselect.NoDataSelect)
 
 	var rollingUpdateStrategy *RollingUpdateStrategy
 	if deployment.Spec.Strategy.RollingUpdate != nil {

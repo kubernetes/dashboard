@@ -19,11 +19,12 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/service"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // GetReplicationControllerServices returns list of services that are related to replication
 // controller targeted by given name.
-func GetReplicationControllerServices(client client.Interface, dsQuery *common.DataSelectQuery,
+func GetReplicationControllerServices(client client.Interface, dsQuery *dataselect.DataSelectQuery,
 	namespace, rcName string) (*service.ServiceList, error) {
 
 	replicationController, err := client.ReplicationControllers(namespace).Get(rcName)

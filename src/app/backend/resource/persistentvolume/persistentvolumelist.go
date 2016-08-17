@@ -20,6 +20,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // PersistentVolumeList contains a list of Persistent Volumes in the cluster.
@@ -39,7 +40,7 @@ type PersistentVolume struct {
 }
 
 // GetPersistentVolumeList returns a list of all Persistent Volumes in the cluster.
-func GetPersistentVolumeList(client *client.Client, dsQuery *common.DataSelectQuery) (*PersistentVolumeList, error) {
+func GetPersistentVolumeList(client *client.Client, dsQuery *dataselect.DataSelectQuery) (*PersistentVolumeList, error) {
 	log.Printf("Getting list persistent volumes")
 	channels := &common.ResourceChannels{
 		PersistentVolumeList: common.GetPersistentVolumeListChannel(client, 1),
@@ -50,7 +51,7 @@ func GetPersistentVolumeList(client *client.Client, dsQuery *common.DataSelectQu
 
 // GetPersistentVolumeListFromChannels returns a list of all Persistent Volumes in the cluster
 // reading required resource list once from the channels.
-func GetPersistentVolumeListFromChannels(channels *common.ResourceChannels, dsQuery *common.DataSelectQuery) (
+func GetPersistentVolumeListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (
 	*PersistentVolumeList, error) {
 
 	persistentVolumes := <-channels.PersistentVolumeList.List
@@ -63,13 +64,13 @@ func GetPersistentVolumeListFromChannels(channels *common.ResourceChannels, dsQu
 	return result, nil
 }
 
-func getPersistentVolumeList(persistentVolumes []api.PersistentVolume, dsQuery *common.DataSelectQuery) *PersistentVolumeList {
+func getPersistentVolumeList(persistentVolumes []api.PersistentVolume, dsQuery *dataselect.DataSelectQuery) *PersistentVolumeList {
 	result := &PersistentVolumeList{
 		Items:    make([]PersistentVolume, 0),
 		ListMeta: common.ListMeta{TotalItems: len(persistentVolumes)},
 	}
 
-	persistentVolumes = fromCells(common.GenericDataSelect(toCells(persistentVolumes), dsQuery))
+	persistentVolumes = fromCells(dataselect.GenericDataSelect(toCells(persistentVolumes), dsQuery))
 
 	for _, item := range persistentVolumes {
 		result.Items = append(result.Items,

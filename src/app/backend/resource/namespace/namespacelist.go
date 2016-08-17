@@ -22,6 +22,7 @@ import (
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // NamespaceList contains a list of namespaces in the cluster.
@@ -43,7 +44,7 @@ type Namespace struct {
 }
 
 // GetNamespaceList returns a list of all namespaces in the cluster.
-func GetNamespaceList(client *client.Client, dsQuery *common.DataSelectQuery) (*NamespaceList,
+func GetNamespaceList(client *client.Client, dsQuery *dataselect.DataSelectQuery) (*NamespaceList,
 	error) {
 	log.Printf("Getting namespace list")
 
@@ -59,13 +60,13 @@ func GetNamespaceList(client *client.Client, dsQuery *common.DataSelectQuery) (*
 	return toNamespaceList(namespaces.Items, dsQuery), nil
 }
 
-func toNamespaceList(namespaces []api.Namespace, dsQuery *common.DataSelectQuery) *NamespaceList {
+func toNamespaceList(namespaces []api.Namespace, dsQuery *dataselect.DataSelectQuery) *NamespaceList {
 	namespaceList := &NamespaceList{
 		Namespaces: make([]Namespace, 0),
 		ListMeta:   common.ListMeta{TotalItems: len(namespaces)},
 	}
 
-	namespaces = fromCells(common.GenericDataSelect(toCells(namespaces), dsQuery))
+	namespaces = fromCells(dataselect.GenericDataSelect(toCells(namespaces), dsQuery))
 
 	for _, namespace := range namespaces {
 		namespaceList.Namespaces = append(namespaceList.Namespaces, toNamespace(namespace))

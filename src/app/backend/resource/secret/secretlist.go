@@ -20,6 +20,7 @@ import (
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // SecretSpec - common interface for the specification of different secrets.
@@ -74,7 +75,7 @@ type SecretList struct {
 
 // GetSecretList - return all secrets in the given namespace.
 func GetSecretList(client *client.Client, namespace *common.NamespaceQuery,
-	dsQuery *common.DataSelectQuery) (*SecretList, error) {
+	dsQuery *dataselect.DataSelectQuery) (*SecretList, error) {
 	secretList, err := client.Secrets(namespace.ToRequestParam()).List(api.ListOptions{
 		LabelSelector: labels.Everything(),
 		FieldSelector: fields.Everything(),
@@ -107,13 +108,13 @@ func NewSecret(secret *api.Secret) *Secret {
 }
 
 // NewSecret - creates a new instance of SecretList struct based on K8s Secrets array.
-func NewSecretList(secrets []api.Secret, dsQuery *common.DataSelectQuery) *SecretList {
+func NewSecretList(secrets []api.Secret, dsQuery *dataselect.DataSelectQuery) *SecretList {
 	newSecretList := &SecretList{
 		ListMeta: common.ListMeta{TotalItems: len(secrets)},
 		Secrets:  make([]Secret, 0),
 	}
 
-	secrets = fromCells(common.GenericDataSelect(toCells(secrets), dsQuery))
+	secrets = fromCells(dataselect.GenericDataSelect(toCells(secrets), dsQuery))
 
 	for _, secret := range secrets {
 		newSecretList.Secrets = append(newSecretList.Secrets, *NewSecret(&secret))

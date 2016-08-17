@@ -22,6 +22,7 @@ import (
 
 	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // GetDaemonSetEvents gets events associated to daemon set.
@@ -51,7 +52,7 @@ func GetDaemonSetEvents(client client.Interface, namespace, daemonSetName string
 		apiEvents = event.FillEventsType(apiEvents)
 	}
 
-	events := event.CreateEventList(apiEvents, common.NoDataSelect)
+	events := event.CreateEventList(apiEvents, dataselect.NoDataSelect)
 
 	log.Printf("Found %d events related to %s daemon set in %s namespace",
 		len(events.Events), daemonSetName, namespace)
