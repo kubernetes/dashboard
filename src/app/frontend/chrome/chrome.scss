@@ -58,6 +58,7 @@ a {
 
 .kd-toolbar-tools {
   margin: auto;
+  padding-left: 0;
 }
 
 .kd-app-content {
@@ -75,6 +76,10 @@ a {
   position: fixed;
   right: 0;
   top: 0;
+}
+
+.kd-chrome-content-container {
+  width: 100%;
 }
 
 .kd-text-icon {

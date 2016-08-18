@@ -12,8 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-.kd-middleellipsis {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+/**
+ * @final
+ */
+export class NavService {
+  /**
+   * @ngInject
+   */
+  constructor() {
+    /** @private {./nav_component.NavController} */
+    this.navComponent_ = null;
+  }
+
+  /**
+   * @param {!./nav_component.NavController} navComponent
+   */
+  registerNav(navComponent) { this.navComponent_ = navComponent; }
+
+  /**
+   */
+  toggle() {
+    if (this.navComponent_) {
+      this.navComponent_.toggle();
+    } else {
+      throw new Error('Navigation menu is not registered. This is likely a programming error.');
+    }
+  }
 }

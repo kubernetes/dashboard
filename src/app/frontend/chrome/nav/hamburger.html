@@ -14,13 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div ng-switch="$last" ng-repeat="breadcrumb in ::ctrl.breadcrumbs" class="md-title kd-breadcrumbs-ellipsised"
-    ng-class="{'kd-inline-breadcrumb': !$last}" flex="shrink">
-  <a ng-switch-when="false" href="{{::breadcrumb.stateLink}}">
-    {{::breadcrumb.label}}
-  </a>
-  <div ng-switch-when="true" class="kd-breadcrumbs-ellipsised">
-    <kd-middle-ellipsis display-string="{{::breadcrumb.label}}"></kd-middle-ellipsis>
-  </div>
-  <span ng-switch-when="false">></span>
-</div>
+<md-button ng-click="$ctrl.toggle()" class="md-icon-button">
+  <md-icon md-font-library="material-icons">menu</md-icon>
+</md-button>

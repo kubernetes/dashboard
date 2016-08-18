@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as workloadState} from 'workloads/workloads_state';
-
 import {actionbarViewName} from './chrome_state';
 
 /**
@@ -43,12 +41,6 @@ export class ChromeController {
 
   /** @export */
   $onInit() { this.registerStateChangeListeners(this.scope_); }
-
-  /**
-   * @return {string}
-   * @export
-   */
-  getLogoHref() { return this.state_.href(workloadState); }
 
   /**
    * @return {boolean}

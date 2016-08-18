@@ -22,14 +22,14 @@ limitations under the License.
     </kd-info-card-entry>
     <kd-info-card-entry title="{{::$ctrl.i18n.MSG_CONTAINER_DETAILS_ENV_VARS}}">
       <div ng-if="::container.env.length">
-        <div ng-repeat="env in ::container.env">
-          {{::env.name}}<span ng-if="env.valueFrom">
+        <div ng-repeat="env in ::container.env" layout="row">
+          <span>{{::env.name}}</span><span ng-if="env.valueFrom">
             <span ng-if="env.valueFrom.configMapKeyRef">
               (<a ng-href="{{::$ctrl.getEnvConfigMapHref(env.valueFrom.configMapKeyRef)}}"><!--
               -->{{::$ctrl.i18n.getConfigMapLabel(env.valueFrom.configMapKeyRef)}}</a>)
             </span>
-          </span>:
-          <kd-middle-ellipsis display-string="{{::env.value}}"><kd-middle-ellipsis>
+          </span><span>:&nbsp;</span>
+          <kd-middle-ellipsis display-string="{{::env.value}}" flex="shrink"><kd-middle-ellipsis>
         </div>
       </div>
       <div ng-if="::!container.env.length">

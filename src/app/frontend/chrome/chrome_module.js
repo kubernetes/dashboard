@@ -16,6 +16,7 @@ import stateConfig from './chrome_stateconfig';
 import {chromeComponent} from './chrome_component';
 import componentsModule from 'common/components/components_module';
 import namespaceModule from 'common/namespace/namespace_module';
+import navModule from './nav/module';
 
 /**
  * Angular module containing navigation chrome for the application.
@@ -28,6 +29,7 @@ export default angular
           'ui.router',
           componentsModule.name,
           namespaceModule.name,
+          navModule.name,
         ])
     .config(stateConfig)
     .component('kdChrome', chromeComponent);
