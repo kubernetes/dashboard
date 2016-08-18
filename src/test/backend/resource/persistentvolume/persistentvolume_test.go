@@ -20,6 +20,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"k8s.io/kubernetes/pkg/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 func TestGetPersistentVolumeList(t *testing.T) {
@@ -42,7 +43,7 @@ func TestGetPersistentVolumeList(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := getPersistentVolumeList(c.persistentVolumes, common.NoDataSelect)
+		actual := getPersistentVolumeList(c.persistentVolumes, dataselect.NoDataSelect)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getPersistentVolumeList(%#v) == \n%#v\nexpected \n%#v\n",
 				c.persistentVolumes, actual, c.expected)

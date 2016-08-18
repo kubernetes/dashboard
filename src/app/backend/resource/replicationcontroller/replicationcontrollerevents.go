@@ -22,11 +22,12 @@ import (
 
 	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // GetReplicationControllerEvents returns events for particular namespace and replication
 // controller or error if occurred.
-func GetReplicationControllerEvents(client client.Interface, dsQuery *common.DataSelectQuery,
+func GetReplicationControllerEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery,
 	namespace, replicationControllerName string) (*common.EventList, error) {
 
 	log.Printf("Getting events related to %s replication controller in %s namespace", replicationControllerName,

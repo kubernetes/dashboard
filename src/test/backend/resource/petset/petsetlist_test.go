@@ -25,6 +25,7 @@ import (
 	"k8s.io/kubernetes/pkg/apis/apps"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 func TestGetPetSetListFromChannels(t *testing.T) {
@@ -177,7 +178,7 @@ func TestGetPetSetListFromChannels(t *testing.T) {
 		channels.EventList.List <- &api.EventList{}
 		channels.EventList.Error <- nil
 
-		actual, err := GetPetSetListFromChannels(channels, common.NoDataSelect)
+		actual, err := GetPetSetListFromChannels(channels, dataselect.NoDataSelect)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetPetSetListChannels() ==\n          %#v\nExpected: %#v", actual, c.expected)
 		}

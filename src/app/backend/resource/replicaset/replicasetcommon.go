@@ -22,19 +22,20 @@ import (
 
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/extensions"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // CreateReplicaSetList creates paginated list of Replica Set model
 // objects based on Kubernetes Replica Set objects array and related resources arrays.
 func CreateReplicaSetList(replicaSets []extensions.ReplicaSet, pods []api.Pod,
-	events []api.Event, dsQuery *common.DataSelectQuery) *ReplicaSetList {
+	events []api.Event, dsQuery *dataselect.DataSelectQuery) *ReplicaSetList {
 
 	replicaSetList := &ReplicaSetList{
 		ReplicaSets: make([]ReplicaSet, 0),
 		ListMeta:    common.ListMeta{TotalItems: len(replicaSets)},
 	}
 
-	replicaSets = fromCells(common.GenericDataSelect(toCells(replicaSets), dsQuery))
+	replicaSets = fromCells(dataselect.GenericDataSelect(toCells(replicaSets), dsQuery))
 
 	for _, replicaSet := range replicaSets {
 		matchingPods := common.FilterNamespacedPodsBySelector(pods, replicaSet.ObjectMeta.Namespace,
@@ -79,14 +80,14 @@ func ToReplicaSetDetail(replicaSet *extensions.ReplicaSet, eventList common.Even
 
 type ReplicaSetCell extensions.ReplicaSet
 
-func (self ReplicaSetCell) GetProperty(name common.PropertyName) common.ComparableValue {
+func (self ReplicaSetCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
-	case common.NameProperty:
-		return common.StdComparableString(self.ObjectMeta.Name)
-	case common.CreationTimestampProperty:
-		return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
-	case common.NamespaceProperty:
-		return common.StdComparableString(self.ObjectMeta.Namespace)
+	case dataselect.NameProperty:
+		return dataselect.StdComparableString(self.ObjectMeta.Name)
+	case dataselect.CreationTimestampProperty:
+		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+	case dataselect.NamespaceProperty:
+		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
 	default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil
@@ -94,15 +95,15 @@ func (self ReplicaSetCell) GetProperty(name common.PropertyName) common.Comparab
 }
 
 
-func toCells(std []extensions.ReplicaSet) []common.DataCell {
-	cells := make([]common.DataCell, len(std))
+func toCells(std []extensions.ReplicaSet) []dataselect.DataCell {
+	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
 		cells[i] = ReplicaSetCell(std[i])
 	}
 	return cells
 }
 
-func fromCells(cells []common.DataCell) []extensions.ReplicaSet {
+func fromCells(cells []dataselect.DataCell) []extensions.ReplicaSet {
 	std := make([]extensions.ReplicaSet, len(cells))
 	for i := range std {
 		std[i] = extensions.ReplicaSet(cells[i].(ReplicaSetCell))

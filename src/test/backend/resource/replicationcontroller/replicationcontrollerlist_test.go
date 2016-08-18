@@ -20,6 +20,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"k8s.io/kubernetes/pkg/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 func TestGetReplicationControllerList(t *testing.T) {
@@ -185,7 +186,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := CreateReplicationControllerList(c.replicationControllers, common.NoDataSelect,
+		actual := CreateReplicationControllerList(c.replicationControllers, dataselect.NoDataSelect,
 			c.pods, events)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getReplicationControllerList(%#v, %#v) == \n%#v\nexpected \n%#v\n",

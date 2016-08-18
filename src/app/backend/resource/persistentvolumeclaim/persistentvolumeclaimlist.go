@@ -21,6 +21,7 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"fmt"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // PersistentVolumeClaimList contains a list of Persistent Volume Claims in the cluster.
@@ -45,7 +46,7 @@ type PersistentVolumeClaim struct {
 
 // GetPersistentVolumeClaimList returns a list of all Persistent Volume Claims in the cluster.
 func GetPersistentVolumeClaimList(client *client.Client, nsQuery *common.NamespaceQuery,
-	dsQuery *common.DataSelectQuery) (*PersistentVolumeClaimList, error) {
+	dsQuery *dataselect.DataSelectQuery) (*PersistentVolumeClaimList, error) {
 
 	log.Printf("Getting list persistent volumes claims")
 	channels := &common.ResourceChannels{
@@ -58,7 +59,7 @@ func GetPersistentVolumeClaimList(client *client.Client, nsQuery *common.Namespa
 // GetPersistentVolumeClaimListFromChannels returns a list of all Persistent Volume Claims in the cluster
 // reading required resource list once from the channels.
 func GetPersistentVolumeClaimListFromChannels(channels *common.ResourceChannels, nsQuery *common.NamespaceQuery,
-	dsQuery *common.DataSelectQuery) (*PersistentVolumeClaimList, error) {
+	dsQuery *dataselect.DataSelectQuery) (*PersistentVolumeClaimList, error) {
 
 	persistentVolumeClaims := <-channels.PersistentVolumeClaimList.List
 	if err := <-channels.PersistentVolumeClaimList.Error; err != nil {
@@ -70,14 +71,14 @@ func GetPersistentVolumeClaimListFromChannels(channels *common.ResourceChannels,
 	return result, nil
 }
 
-func getPersistentVolumeClaimList(persistentVolumeClaims []api.PersistentVolumeClaim, dsQuery *common.DataSelectQuery) *PersistentVolumeClaimList {
+func getPersistentVolumeClaimList(persistentVolumeClaims []api.PersistentVolumeClaim, dsQuery *dataselect.DataSelectQuery) *PersistentVolumeClaimList {
 
 	result := &PersistentVolumeClaimList{
 		Items:    make([]PersistentVolumeClaim, 0),
 		ListMeta: common.ListMeta{TotalItems: len(persistentVolumeClaims)},
 	}
 
-	persistentVolumeClaims = fromCells(common.GenericDataSelect(toCells(persistentVolumeClaims), dsQuery))
+	persistentVolumeClaims = fromCells(dataselect.GenericDataSelect(toCells(persistentVolumeClaims), dsQuery))
 
 	for _, item := range persistentVolumeClaims {
 		result.Items = append(result.Items,

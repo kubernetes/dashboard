@@ -22,6 +22,7 @@ import (
 
 	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // GetJobEvents gets events associated to job.
@@ -52,7 +53,7 @@ func GetJobEvents(client client.Interface, namespace, jobName string) (
 	}
 
 	// TODO support pagination
-	events := event.CreateEventList(apiEvents, common.NoDataSelect)
+	events := event.CreateEventList(apiEvents, dataselect.NoDataSelect)
 
 	log.Printf("Found %d events related to %s job in %s namespace",
 		len(events.Events), jobName, namespace)

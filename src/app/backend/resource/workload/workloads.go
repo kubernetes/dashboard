@@ -27,6 +27,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // Workloads structure contains all resource lists grouped into the workloads category.
@@ -48,7 +49,7 @@ type Workloads struct {
 
 // GetWorkloads returns a list of all workloads in the cluster.
 func GetWorkloads(client *k8sClient.Client, heapsterClient client.HeapsterClient,
-	nsQuery *common.NamespaceQuery, dsQuery *common.DataSelectQuery) (*Workloads, error) {
+	nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*Workloads, error) {
 
 	log.Printf("Getting lists of all workloads")
 	channels := &common.ResourceChannels{
@@ -69,7 +70,7 @@ func GetWorkloads(client *k8sClient.Client, heapsterClient client.HeapsterClient
 // GetWorkloadsFromChannels returns a list of all workloads in the cluster, from the
 // channel sources.
 func GetWorkloadsFromChannels(channels *common.ResourceChannels,
-	heapsterClient client.HeapsterClient, dsQuery *common.DataSelectQuery) (*Workloads, error) {
+	heapsterClient client.HeapsterClient, dsQuery *dataselect.DataSelectQuery) (*Workloads, error) {
 
 	rsChan := make(chan *replicaset.ReplicaSetList)
 	jobChan := make(chan *job.JobList)

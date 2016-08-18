@@ -25,6 +25,7 @@ import (
 	"k8s.io/kubernetes/pkg/api/resource"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // NodeAllocatedResources describes node allocated resources.
@@ -124,7 +125,7 @@ func GetNodeDetail(client k8sClient.Interface, heapsterClient client.HeapsterCli
 	}
 
 	// TODO(floreks) add pagination support
-	podList := pod.CreatePodList(pods.Items, common.NoDataSelect, heapsterClient)
+	podList := pod.CreatePodList(pods.Items, dataselect.NoDataSelect, heapsterClient)
 
 	events, err := event.GetNodeEvents(client, node.Name)
 	if err != nil {

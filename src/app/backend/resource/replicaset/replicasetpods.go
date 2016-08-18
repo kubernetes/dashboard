@@ -26,11 +26,12 @@ import (
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // GetReplicaSetPods return list of pods targeting replica set.
 func GetReplicaSetPods(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	dsQuery *common.DataSelectQuery, petSetName, namespace string) (*pod.PodList, error) {
+	dsQuery *dataselect.DataSelectQuery, petSetName, namespace string) (*pod.PodList, error) {
 	log.Printf("Getting replication controller %s pods in namespace %s", petSetName, namespace)
 
 	pods, err := getRawReplicaSetPods(client, petSetName, namespace)

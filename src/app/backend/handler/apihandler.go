@@ -45,6 +45,8 @@ import (
 	clientK8s "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
 	"k8s.io/kubernetes/pkg/runtime"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 const (
@@ -1213,6 +1215,7 @@ func (apiHandler *APIHandler) handleGetJobPods(request *restful.Request,
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
+
 // parseNamespacePathParameter parses namespace selector for list pages in path paramater.
 // The namespace selector is a comma separated list of namespaces that are trimmed.
 // No namespaces means "view all user namespaces", i.e., everything except kube-system.
@@ -1229,30 +1232,56 @@ func parseNamespacePathParameter(request *restful.Request) *common.NamespaceQuer
 	return common.NewNamespaceQuery(nonEmptyNamespaces)
 }
 
-func parsePaginationPathParameter(request *restful.Request) *common.PaginationQuery {
+func parsePaginationPathParameter(request *restful.Request) *dataselect.PaginationQuery {
 	itemsPerPage, err := strconv.ParseInt(request.QueryParameter("itemsPerPage"), 10, 0)
 	if err != nil {
-		return common.NoPagination
+		return dataselect.NoPagination
 	}
 
 	page, err := strconv.ParseInt(request.QueryParameter("page"), 10, 0)
 	if err != nil {
-		return common.NoPagination
+		return dataselect.NoPagination
 	}
 
 	// Frontend pages start from 1 and backend starts from 0
-	return common.NewPaginationQuery(int(itemsPerPage), int(page-1))
+	return dataselect.NewPaginationQuery(int(itemsPerPage), int(page-1))
 }
 
 // Parses query parameters of the request and returns a SortQuery object
-func parseSortPathParameter(request *restful.Request) *common.SortQuery {
-	return common.NewSortQuery(strings.Split(request.QueryParameter("sortby"), ","))
+func parseSortPathParameter(request *restful.Request) *dataselect.SortQuery {
+	return dataselect.NewSortQuery(strings.Split(request.QueryParameter("sortby"), ","))
+}
+
+// Parses query parameters of the request and returns a MetricQuery object
+func parseMetricPathParameter(request *restful.Request) *dataselect.MetricQuery {
+	metricNamesParam := request.QueryParameter("metricNames")
+	var metricNames []string
+	if metricNamesParam != "" {
+		metricNames = strings.Split(metricNamesParam, ",")
+	} else {
+		metricNames = nil
+	}
+	aggregationsParam := request.QueryParameter("aggregations")
+	var rawAggregations []string
+	if aggregationsParam != "" {
+		rawAggregations = strings.Split(aggregationsParam, ",")
+	} else {
+		rawAggregations = nil
+	}
+	aggregationNames := metric.AggregationNames{}
+	for _, e := range rawAggregations {
+		aggregationNames = append(aggregationNames, metric.AggregationName(e))
+	}
+
+	return dataselect.NewMetricQuery(metricNames, aggregationNames)
 
 }
 
+
 // Parses query parameters of the request and returns a DataSelectQuery object
-func parseDataSelectPathParameter(request *restful.Request) *common.DataSelectQuery {
+func parseDataSelectPathParameter(request *restful.Request) *dataselect.DataSelectQuery {
 	paginationQuery := parsePaginationPathParameter(request)
 	sortQuery := parseSortPathParameter(request)
-	return common.NewDataSelectQuery(paginationQuery, sortQuery)
+	metricQuery := parseMetricPathParameter(request)
+	return dataselect.NewDataSelectQuery(paginationQuery, sortQuery, metricQuery)
 }

@@ -24,6 +24,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"k8s.io/kubernetes/pkg/api"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // ReplicationControllerDetail represents detailed information about a Replication Controller.
@@ -76,20 +77,20 @@ func GetReplicationControllerDetail(client k8sClient.Interface, heapsterClient c
 	}
 
 	// TODO support pagination
-	podList, err := GetReplicationControllerPods(client, heapsterClient, common.NoDataSelect,
+	podList, err := GetReplicationControllerPods(client, heapsterClient, dataselect.NoDataSelect,
 		name, namespace)
 	if err != nil {
 		return nil, err
 	}
 
 	// TODO support pagination
-	eventList, err := GetReplicationControllerEvents(client, common.NoDataSelect, namespace, name)
+	eventList, err := GetReplicationControllerEvents(client, dataselect.NoDataSelect, namespace, name)
 	if err != nil {
 		return nil, err
 	}
 
 	// TODO support pagination
-	serviceList, err := GetReplicationControllerServices(client, common.NoDataSelect, namespace,
+	serviceList, err := GetReplicationControllerServices(client, dataselect.NoDataSelect, namespace,
 		name)
 	if err != nil {
 		return nil, err

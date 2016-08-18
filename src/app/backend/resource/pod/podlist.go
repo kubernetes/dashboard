@@ -20,6 +20,8 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"k8s.io/kubernetes/pkg/api"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 )
@@ -29,7 +31,8 @@ type PodList struct {
 	ListMeta common.ListMeta `json:"listMeta"`
 
 	// Unordered list of Pods.
-	Pods []Pod `json:"pods"`
+	Pods              []Pod           `json:"pods"`
+	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics,omitempty"`
 }
 
 // Pod is a presentation layer view of Kubernetes Pod resource. This means
@@ -54,7 +57,7 @@ type Pod struct {
 
 // GetPodList returns a list of all Pods in the cluster.
 func GetPodList(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	nsQuery *common.NamespaceQuery, dsQuery *common.DataSelectQuery) (*PodList, error) {
+	nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*PodList, error) {
 	log.Printf("Getting list of all pods in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -66,7 +69,7 @@ func GetPodList(client k8sClient.Interface, heapsterClient client.HeapsterClient
 
 // GetPodList returns a list of all Pods in the cluster
 // reading required resource list once from the channels.
-func GetPodListFromChannels(channels *common.ResourceChannels, dsQuery *common.DataSelectQuery,
+func GetPodListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery,
 	heapsterClient client.HeapsterClient) (*PodList, error) {
 
 	pods := <-channels.PodList.List
@@ -78,7 +81,7 @@ func GetPodListFromChannels(channels *common.ResourceChannels, dsQuery *common.D
 	return &podList, nil
 }
 
-func CreatePodList(pods []api.Pod, dsQuery *common.DataSelectQuery,
+func CreatePodList(pods []api.Pod, dsQuery *dataselect.DataSelectQuery,
 	heapsterClient client.HeapsterClient) PodList {
 
 	channels := &common.ResourceChannels{
@@ -95,12 +98,16 @@ func CreatePodList(pods []api.Pod, dsQuery *common.DataSelectQuery,
 		ListMeta: common.ListMeta{TotalItems: len(pods)},
 	}
 
-	pods = fromCells(common.GenericDataSelect(toCells(pods), dsQuery))
+	podCells, cumulativeMetricsPromises := dataselect.GenericDataSelectWithMetrics(toCells(pods), dsQuery,
+		dataselect.NoResourceCache, heapsterClient)
+	pods = fromCells(podCells)
 
 	for _, pod := range pods {
 		podDetail := ToPod(&pod, metrics)
 		podList.Pods = append(podList.Pods, podDetail)
 	}
 
+	cumulativeMetrics, _ := cumulativeMetricsPromises.GetMetrics()
+	podList.CumulativeMetrics = cumulativeMetrics
 	return podList
 }

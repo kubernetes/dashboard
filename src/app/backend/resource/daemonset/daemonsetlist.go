@@ -22,6 +22,7 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // DaemonSetList contains a list of Daemon Sets in the cluster.
@@ -47,7 +48,7 @@ type DaemonSet struct {
 
 // GetDaemonSetList returns a list of all Daemon Set in the cluster.
 func GetDaemonSetList(client *client.Client, nsQuery *common.NamespaceQuery,
-	dsQuery *common.DataSelectQuery) (*DaemonSetList, error) {
+	dsQuery *dataselect.DataSelectQuery) (*DaemonSetList, error) {
 	log.Printf("Getting list of all daemon sets in the cluster")
 	channels := &common.ResourceChannels{
 		DaemonSetList: common.GetDaemonSetListChannel(client, nsQuery, 1),
@@ -62,7 +63,7 @@ func GetDaemonSetList(client *client.Client, nsQuery *common.NamespaceQuery,
 // GetDaemonSetListFromChannels returns a list of all Daemon Seet in the cluster
 // reading required resource list once from the channels.
 func GetDaemonSetListFromChannels(channels *common.ResourceChannels,
-	dsQuery *common.DataSelectQuery) (*DaemonSetList, error) {
+	dsQuery *dataselect.DataSelectQuery) (*DaemonSetList, error) {
 
 	daemonSets := <-channels.DaemonSetList.List
 	if err := <-channels.DaemonSetList.Error; err != nil {
@@ -86,14 +87,14 @@ func GetDaemonSetListFromChannels(channels *common.ResourceChannels,
 // CreateDaemonSetList returns a list of all Daemon Set model objects in the cluster, based on all
 // Kubernetes Daemon Set API objects.
 func CreateDaemonSetList(daemonSets []extensions.DaemonSet, pods []api.Pod,
-	events []api.Event, dsQuery *common.DataSelectQuery) *DaemonSetList {
+	events []api.Event, dsQuery *dataselect.DataSelectQuery) *DaemonSetList {
 
 	daemonSetList := &DaemonSetList{
 		DaemonSets: make([]DaemonSet, 0),
 		ListMeta:   common.ListMeta{TotalItems: len(daemonSets)},
 	}
 
-	daemonSets = fromCells(common.GenericDataSelect(toCells(daemonSets), dsQuery))
+	daemonSets = fromCells(dataselect.GenericDataSelect(toCells(daemonSets), dsQuery))
 
 	for _, daemonSet := range daemonSets {
 		matchingPods := common.FilterNamespacedPodsByLabelSelector(pods, daemonSet.Namespace,

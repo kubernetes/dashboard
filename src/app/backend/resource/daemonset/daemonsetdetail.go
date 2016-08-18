@@ -24,6 +24,7 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // DaemonSeDetail represents detailed information about a Daemon Set.
@@ -55,7 +56,7 @@ type DaemonSetDetail struct {
 
 // Returns detailed information about the given daemon set in the given namespace.
 func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	dsQuery *common.DataSelectQuery, namespace, name string) (*DaemonSetDetail, error) {
+	dsQuery *dataselect.DataSelectQuery, namespace, name string) (*DaemonSetDetail, error) {
 	log.Printf("Getting details of %s daemon set in %s namespace", name, namespace)
 
 	daemonSet, err := client.Extensions().DaemonSets(namespace).Get(name)

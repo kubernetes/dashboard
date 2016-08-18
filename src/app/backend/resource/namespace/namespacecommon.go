@@ -17,9 +17,9 @@ package namespace
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // NamespaceSpec is a specification of namespace to create.
@@ -46,14 +46,14 @@ func CreateNamespace(spec *NamespaceSpec, client *client.Client) error {
 
 type NamespaceCell api.Namespace
 
-func (self NamespaceCell) GetProperty(name common.PropertyName) common.ComparableValue {
+func (self NamespaceCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
-	case common.NameProperty:
-		return common.StdComparableString(self.ObjectMeta.Name)
-	case common.CreationTimestampProperty:
-		return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
-	case common.NamespaceProperty:
-		return common.StdComparableString(self.ObjectMeta.Namespace)
+	case dataselect.NameProperty:
+		return dataselect.StdComparableString(self.ObjectMeta.Name)
+	case dataselect.CreationTimestampProperty:
+		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+	case dataselect.NamespaceProperty:
+		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
 	default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil
@@ -61,15 +61,15 @@ func (self NamespaceCell) GetProperty(name common.PropertyName) common.Comparabl
 }
 
 
-func toCells(std []api.Namespace) []common.DataCell {
-	cells := make([]common.DataCell, len(std))
+func toCells(std []api.Namespace) []dataselect.DataCell {
+	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
 		cells[i] = NamespaceCell(std[i])
 	}
 	return cells
 }
 
-func fromCells(cells []common.DataCell) []api.Namespace {
+func fromCells(cells []dataselect.DataCell) []api.Namespace {
 	std := make([]api.Namespace, len(cells))
 	for i := range std {
 		std[i] = api.Namespace(cells[i].(NamespaceCell))

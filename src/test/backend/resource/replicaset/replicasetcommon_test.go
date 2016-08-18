@@ -25,6 +25,7 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 func TestCreateReplicaSetList(t *testing.T) {
@@ -59,7 +60,7 @@ func TestCreateReplicaSetList(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := CreateReplicaSetList(c.replicaSets, c.pods, c.events, common.NoDataSelect)
+		actual := CreateReplicaSetList(c.replicaSets, c.pods, c.events, dataselect.NoDataSelect)
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("CreateReplicaSetList(%#v, %#v, %#v, ...) == \ngot %#v, \nexpected %#v",
