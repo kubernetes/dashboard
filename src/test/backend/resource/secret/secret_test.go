@@ -22,6 +22,7 @@ import (
 	"k8s.io/kubernetes/pkg/api/unversioned"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 var k8SecretList = &api.SecretList{
@@ -77,7 +78,7 @@ func TestNewSecretListCreation(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := NewSecretList(c.k8sRs.Items, common.NoDataSelect)
+		actual := NewSecretList(c.k8sRs.Items, dataselect.NoDataSelect)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("NewSecretList() ==\n          %#v\nExpected: %#v", actual, c.expected)
 		}

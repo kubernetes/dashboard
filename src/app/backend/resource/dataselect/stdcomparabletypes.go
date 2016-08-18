@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package common
+package dataselect
 
 import (
-	"time"
 	"strings"
+	"time"
 )
 
 // ----------------------- Standard Comparable Types ------------------------
@@ -31,7 +31,6 @@ func (self StdComparableInt) Compare(otherV ComparableValue) int {
 	other := otherV.(StdComparableInt)
 	return intsCompare(int(self), int(other))
 }
-
 
 type StdComparableString string
 
@@ -49,7 +48,7 @@ func (self StdComparableRFC3339Timestamp) Compare(otherV ComparableValue) int {
 	selfTime, err1 := time.Parse(time.RFC3339, string(self))
 	otherTime, err2 := time.Parse(time.RFC3339, string(other))
 
-	if err1!=nil || err2!=nil {
+	if err1 != nil || err2 != nil {
 		// in case of timestamp parsing failure just compare as strings
 		return strings.Compare(string(self), string(other))
 	} else {

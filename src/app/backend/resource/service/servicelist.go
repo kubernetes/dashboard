@@ -21,6 +21,7 @@ import (
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // Service is a representation of a service.
@@ -57,7 +58,7 @@ type ServiceList struct {
 
 // GetServiceList returns a list of all services in the cluster.
 func GetServiceList(client client.Interface, nsQuery *common.NamespaceQuery,
-	dsQuery *common.DataSelectQuery) (*ServiceList, error) {
+	dsQuery *dataselect.DataSelectQuery) (*ServiceList, error) {
 	log.Printf("Getting list of all services in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -69,7 +70,7 @@ func GetServiceList(client client.Interface, nsQuery *common.NamespaceQuery,
 
 // GetServiceListFromChannels returns a list of all services in the cluster.
 func GetServiceListFromChannels(channels *common.ResourceChannels,
-	dsQuery *common.DataSelectQuery) (*ServiceList, error) {
+	dsQuery *dataselect.DataSelectQuery) (*ServiceList, error) {
 	services := <-channels.ServiceList.List
 	if err := <-channels.ServiceList.Error; err != nil {
 		return nil, err

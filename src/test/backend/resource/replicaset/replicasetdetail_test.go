@@ -29,6 +29,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/service"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 type FakeHeapsterClient struct {
@@ -76,7 +77,7 @@ func TestGetReplicaSetDetail(t *testing.T) {
 			podList, serviceList, eventList)
 		fakeHeapsterClient := FakeHeapsterClient{client: testclient.NewSimpleFake()}
 
-		actual, _ := GetReplicaSetDetail(fakeClient, fakeHeapsterClient, common.NoDataSelect,
+		actual, _ := GetReplicaSetDetail(fakeClient, fakeHeapsterClient, dataselect.NoDataSelect,
 			c.namespace, c.name)
 
 		actions := fakeClient.Actions()

@@ -22,6 +22,7 @@ import (
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // NodeList contains a list of nodes in the cluster.
@@ -43,7 +44,7 @@ type Node struct {
 }
 
 // GetNodeList returns a list of all Nodes in the cluster.
-func GetNodeList(client client.Interface, dsQuery *common.DataSelectQuery) (*NodeList, error) {
+func GetNodeList(client client.Interface, dsQuery *dataselect.DataSelectQuery) (*NodeList, error) {
 	log.Printf("Getting list of all nodes in the cluster")
 
 	nodes, err := client.Nodes().List(api.ListOptions{
@@ -58,13 +59,13 @@ func GetNodeList(client client.Interface, dsQuery *common.DataSelectQuery) (*Nod
 	return toNodeList(nodes.Items, dsQuery), nil
 }
 
-func toNodeList(nodes []api.Node, dsQuery *common.DataSelectQuery) *NodeList {
+func toNodeList(nodes []api.Node, dsQuery *dataselect.DataSelectQuery) *NodeList {
 	nodeList := &NodeList{
 		Nodes:    make([]Node, 0),
 		ListMeta: common.ListMeta{TotalItems: len(nodes)},
 	}
 
-	nodes = fromCells(common.GenericDataSelect(toCells(nodes), dsQuery))
+	nodes = fromCells(dataselect.GenericDataSelect(toCells(nodes), dsQuery))
 
 	for _, node := range nodes {
 		nodeList.Nodes = append(nodeList.Nodes, toNode(node))

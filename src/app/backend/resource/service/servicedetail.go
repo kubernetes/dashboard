@@ -25,6 +25,7 @@ import (
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // Service is a representation of a service.
@@ -56,7 +57,7 @@ type ServiceDetail struct {
 
 // GetServiceDetail gets service details.
 func GetServiceDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	namespace, name string, dsQuery *common.DataSelectQuery) (*ServiceDetail, error) {
+	namespace, name string, dsQuery *dataselect.DataSelectQuery) (*ServiceDetail, error) {
 
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 
@@ -79,7 +80,7 @@ func GetServiceDetail(client k8sClient.Interface, heapsterClient client.Heapster
 
 // GetServicePods gets list of pods targeted by given label selector in given namespace.
 func GetServicePods(client k8sClient.Interface, heapsterClient client.HeapsterClient, namespace,
-	name string, dsQuery *common.DataSelectQuery) (*pod.PodList, error) {
+	name string, dsQuery *dataselect.DataSelectQuery) (*pod.PodList, error) {
 
 	service, err := client.Services(namespace).Get(name)
 	if err != nil {

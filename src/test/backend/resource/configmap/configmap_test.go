@@ -19,6 +19,7 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/kubernetes/pkg/api"
 )
 
@@ -42,7 +43,7 @@ func TestGetConfigMapList(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := getConfigMapList(c.configMaps, common.NoDataSelect)
+		actual := getConfigMapList(c.configMaps, dataselect.NoDataSelect)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getConfigMapList(%#v) == \n%#v\nexpected \n%#v\n",
 				c.configMaps, actual, c.expected)

@@ -15,12 +15,12 @@
 package daemonset
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // Based on given selector returns list of services that are candidates for deletion.
@@ -59,14 +59,14 @@ func getServicesForDSDeletion(client client.Interface, labelSelector labels.Sele
 
 type DaemonSetCell extensions.DaemonSet
 
-func (self DaemonSetCell) GetProperty(name common.PropertyName) common.ComparableValue {
+func (self DaemonSetCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
-	case common.NameProperty:
-		return common.StdComparableString(self.ObjectMeta.Name)
-	case common.CreationTimestampProperty:
-		return common.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
-	case common.NamespaceProperty:
-		return common.StdComparableString(self.ObjectMeta.Namespace)
+	case dataselect.NameProperty:
+		return dataselect.StdComparableString(self.ObjectMeta.Name)
+	case dataselect.CreationTimestampProperty:
+		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+	case dataselect.NamespaceProperty:
+		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
 	default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil
@@ -74,15 +74,15 @@ func (self DaemonSetCell) GetProperty(name common.PropertyName) common.Comparabl
 }
 
 
-func toCells(std []extensions.DaemonSet) []common.DataCell {
-	cells := make([]common.DataCell, len(std))
+func toCells(std []extensions.DaemonSet) []dataselect.DataCell {
+	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
 		cells[i] = DaemonSetCell(std[i])
 	}
 	return cells
 }
 
-func fromCells(cells []common.DataCell) []extensions.DaemonSet {
+func fromCells(cells []dataselect.DataCell) []extensions.DaemonSet {
 	std := make([]extensions.DaemonSet, len(cells))
 	for i := range std {
 		std[i] = extensions.DaemonSet(cells[i].(DaemonSetCell))

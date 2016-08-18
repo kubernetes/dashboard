@@ -21,6 +21,7 @@ import (
 
 	k8serrors "k8s.io/kubernetes/pkg/api/errors"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // ReplicationSetList contains a list of Replica Sets in the cluster.
@@ -47,7 +48,7 @@ type ReplicaSet struct {
 
 // GetReplicaSetList returns a list of all Replica Sets in the cluster.
 func GetReplicaSetList(client client.Interface, nsQuery *common.NamespaceQuery,
-	dsQuery *common.DataSelectQuery) (*ReplicaSetList, error) {
+	dsQuery *dataselect.DataSelectQuery) (*ReplicaSetList, error) {
 	log.Printf("Getting list of all replica sets in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -62,7 +63,7 @@ func GetReplicaSetList(client client.Interface, nsQuery *common.NamespaceQuery,
 // GetReplicaSetList returns a list of all Replica Sets in the cluster
 // reading required resource list once from the channels.
 func GetReplicaSetListFromChannels(channels *common.ResourceChannels,
-	dsQuery *common.DataSelectQuery) (*ReplicaSetList, error) {
+	dsQuery *dataselect.DataSelectQuery) (*ReplicaSetList, error) {
 
 	replicaSets := <-channels.ReplicaSetList.List
 	if err := <-channels.ReplicaSetList.Error; err != nil {
