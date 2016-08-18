@@ -36,27 +36,6 @@ export class ActionbarComponent {
     if (!closestContent || closestContent.length === 0) {
       throw new Error('Actionbar component requires sibling md-content element');
     }
-
-    this.computeScrollClass_(closestContent[0]);  // Initialize scroll state at first.
-
-    let computeScrollClassCallback =
-        (/** !Event */ e) => { this.computeScrollClass_(/** @type {!Element} */ (e.target)); };
-    closestContent.on('scroll', computeScrollClassCallback);
-    this.scope_.$on(
-        '$destroy', () => { closestContent.off('scroll', computeScrollClassCallback); });
-  }
-
-  /**
-   * Computes scroll class based on scroll position and applies it to current element.
-   * @param {!Element} mdContentElement
-   * @private
-   */
-  computeScrollClass_(mdContentElement) {
-    if (mdContentElement.scrollTop > 0) {
-      this.element_.removeClass('kd-actionbar-not-scrolled');
-    } else {
-      this.element_.addClass('kd-actionbar-not-scrolled');
-    }
   }
 }
 

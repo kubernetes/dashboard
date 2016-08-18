@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-toolbar>
+<md-toolbar class="kd-toolbar">
   <div class="md-toolbar-tools kd-toolbar-tools">
     <kd-nav-hamburger></kd-nav-hamburger>
     <h2>
@@ -25,10 +25,11 @@ limitations under the License.
   </div>
 </md-toolbar>
 
+<kd-actionbar flex="none"></kd-actionbar>
+
 <div layout="row">
   <kd-nav></kd-nav>
   <div layout="column" flex="shrink" class="kd-chrome-content-container">
-    <kd-actionbar ng-if="$ctrl.isActionbarVisible()" flex="none"></kd-actionbar>
     <md-content flex="auto" class="kd-app-content">
       <div ng-switch="$ctrl.showLoadingSpinner" flex="auto" >
         <div ng-switch-when="true" class="kd-center-fixed">
