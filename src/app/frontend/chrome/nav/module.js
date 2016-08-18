@@ -1,3 +1,4 @@
+
 // Copyright 2015 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,6 +16,7 @@
 import {hamburgerComponent} from './hamburger_component';
 import {navComponent} from './nav_component';
 import {NavService} from './nav_service';
+import {navItemComponent} from './navitem_component';
 
 /**
  * Angular module containing navigation for the application.
@@ -24,7 +26,9 @@ export default angular
         'kubernetesDashboard.chrome.nav',
         [
           'ngMaterial',
+          'ui.router',
         ])
     .service('kdNavService', NavService)
     .component('kdNavHamburger', hamburgerComponent)
+    .component('kdNavItem', navItemComponent)
     .component('kdNav', navComponent);

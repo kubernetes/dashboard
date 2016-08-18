@@ -104,7 +104,14 @@ a {
   word-wrap: break-word;
 }
 
-// Disables animation on md-tab switch. Avoids some flickering and is simpler.
-[role='tabpanel'] {
-  transition: none;
+// Style scrollbars on Webkit-based browsers (e.g., Chrome or Safari).
+* {
+  &::-webkit-scrollbar {
+    background: transparent;
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $delicate;
+  }
 }

@@ -15,7 +15,6 @@
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {PaginationService} from 'common/pagination/pagination_service';
-import {stateName as workloadsState} from 'workloads/workloads_state';
 
 import {PodListController} from './podlist_controller';
 import {stateName, stateUrl} from './podlist_state';
@@ -36,7 +35,6 @@ export default function stateConfig($stateProvider) {
     data: {
       [breadcrumbsConfig]: {
         'label': i18n.MSG_BREADCRUMBS_PODS_LABEL,
-        'parent': workloadsState,
       },
     },
     views: {

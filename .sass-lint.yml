@@ -54,7 +54,7 @@ rules:
   no-vendor-prefixes:
       - 2
       - additional-identifiers: []
-        excluded-identifiers: [ms]
+        excluded-identifiers: [ms, webkit]
   no-warn: 2
   property-units: 2
 
