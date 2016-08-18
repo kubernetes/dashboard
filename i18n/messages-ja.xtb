@@ -739,4 +739,6 @@
 	<translation id="2492306272014913632" key="MSG_SECRET_INFO_NAME_ENTRY" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Config map info details section name entry.">Name</translation>
 	<translation id="2646286682599680700" key="MSG_SECRET_INFO_NAMESPACE_ENTRY" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Config map info details section namespace entry.">Namespace</translation>
 	<translation id="849285697167851134" key="MSG_SECRET_INFO_LABELS_ENTRY" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Config map info details section labels entry.">Labels</translation>
+	<translation id="3762614397911712807" key="MSG_NODE_DETAIL_PODS_ZEROSTATE_TITLE" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Title for pods card zerostate in node details page.">There is nothing to display here</translation>
+	<translation id="4320636739666887610" key="MSG_NODE_DETAIL_PODS_ZEROSTATE_TEXT" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Text for pods card zerostate in node details page.">There are currently no Pods scheduled on this Node</translation>
 </translationbundle>

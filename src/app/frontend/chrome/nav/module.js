@@ -12,8 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-.kd-middleellipsis {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+import {hamburgerComponent} from './hamburger_component';
+import {navComponent} from './nav_component';
+import {NavService} from './nav_service';
+
+/**
+ * Angular module containing navigation for the application.
+ */
+export default angular
+    .module(
+        'kubernetesDashboard.chrome.nav',
+        [
+          'ngMaterial',
+        ])
+    .service('kdNavService', NavService)
+    .component('kdNavHamburger', hamburgerComponent)
+    .component('kdNav', navComponent);

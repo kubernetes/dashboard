@@ -42,7 +42,7 @@ describe('Labels directive', () => {
     scope.$digest();
 
     // then
-    let labels = element.find('span');
+    let labels = element.find('kd-middle-ellipsis');
     expect(labels.length).toEqual(3);
     angular.forEach(
         (key, value, index) => { expect(labels.eq(index).text()).toBe(`${key}=${value}`); });

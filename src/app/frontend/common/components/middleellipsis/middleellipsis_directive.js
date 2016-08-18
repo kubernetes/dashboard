@@ -13,18 +13,14 @@
 // limitations under the License.
 
 import MiddleEllipsisController from './middleellipsis_controller';
-import computeTextLength from './middleellipsis';
 
 /**
  * Returns directive definition for middle ellipsis.
  *
- * @param {!function(string, number): string} middleEllipsisFilter
- * @param {!angular.$window} $window
- *
  * @return {!angular.Directive}
  * @ngInject
  */
-export default function middleEllipsisDirective(middleEllipsisFilter, $window) {
+export default function middleEllipsisDirective() {
   return {
     controller: MiddleEllipsisController,
     controllerAs: 'ellipsisCtrl',
@@ -32,42 +28,6 @@ export default function middleEllipsisDirective(middleEllipsisFilter, $window) {
     scope: {},
     bindToController: {
       'displayString': '@',
-    },
-    /**
-     * @param {!angular.Scope} scope
-     * @param {!angular.JQLite} jQLiteElem
-     * @param {!angular.Attributes} attr
-     * @param {!MiddleEllipsisController} ctrl
-     */
-    link: function(scope, jQLiteElem, attr, ctrl) {
-      /** @type {!Element} */
-      let element = jQLiteElem[0];
-      let container = element.parentElement;
-      let ellipsisElem = element.querySelector('.kd-middleellipsis');
-
-      if (!container) {
-        throw new Error(`Required parent container not found`);
-      }
-
-      if (!ellipsisElem) {
-        throw new Error('Required element with class .kd-middleellipsis not found');
-      }
-
-      let nonNullElement = ellipsisElem;
-
-      angular.element($window).bind('resize', recalculateTextLength);
-
-      function recalculateTextLength() {
-        ctrl.maxLength = computeTextLength(
-            container.offsetWidth, nonNullElement, element, middleEllipsisFilter,
-            ctrl.displayString);
-      }
-      recalculateTextLength();
-
-      scope.$on('$destroy', () => {
-        angular.element($window).unbind('ready', recalculateTextLength);
-        angular.element($window).unbind('resize', recalculateTextLength);
-      });
     },
   };
 }

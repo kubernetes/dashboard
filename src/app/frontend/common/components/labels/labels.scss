@@ -22,6 +22,11 @@ $label-margin: 0 $baseline-grid ($baseline-grid / 2) 0;
   border-radius: $baseline-grid;
   display: inline-block;
   margin: $label-margin;
+  max-width: 100%;
+}
+
+.kd-ellipsis-label {
+  display: block;
   padding: ($baseline-grid / 4) $baseline-grid;
 }
 
