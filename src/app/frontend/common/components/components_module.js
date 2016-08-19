@@ -24,6 +24,7 @@ import actionbarModule from './actionbar/actionbar_module';
 import zeroStateModule from './zerostate/zerostate_module';
 import sparklineDirective from './sparkline/sparkline_directive';
 import warnThresholdDirective from './warnthreshold/warnthreshold_directive';
+import {graphComponent} from './graph/graph_module';
 
 /**
  * Module containing common components for the application.
@@ -46,4 +47,5 @@ export default angular
     .directive('kdLabels', labelsDirective)
     .directive('kdMiddleEllipsis', middleEllipsisDirective)
     .directive('kdSparkline', sparklineDirective)
-    .directive('kdWarnThreshold', warnThresholdDirective);
+    .directive('kdWarnThreshold', warnThresholdDirective)
+    .component('kdGraph', graphComponent);
