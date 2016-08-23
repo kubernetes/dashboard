@@ -14,34 +14,40 @@
 
 @import '../../variables';
 
-.kd-nav {
-  background-color: initial;
-  font-size: $body-font-size-base;
-  height: 100%;
-  overflow: hidden;
-  overflow-y: auto;
+kd-nav-item {
+  display: block;
+}
+
+.kd-nav-item-button {
+  border-radius: 0;
+  display: block;
+  font-weight: $regular-font-weight;
+  line-height: 5 * $baseline-grid;
+  margin: 0;
+  max-height: 5 * $baseline-grid;
+  padding: 0;
+  text-align: left;
+  text-transform: none;
   white-space: nowrap;
-  width: 30 * $baseline-grid;
+  width: 100%;
 
-  &.md-closed {
-    &.md-locked-open-add-active {
-      min-width: 30 * $baseline-grid;
-      width: 30 * $baseline-grid;
-    }
-  }
-
-  // Next two rules are to only show the scrollbar on hover, but always enable scrolling.
-  &:hover {
-    overflow-y: scroll;
-  }
-
-  &:not(:hover) {
-    &::-webkit-scrollbar-thumb {
-      background-color: transparent;
-    }
+  &:visited {
+    color: inherit;
   }
 }
 
-.kd-nav-group {
-  margin-right: $baseline-grid;
+.kd-nav-item {
+  >.kd-nav-item-button {
+    line-height: 4 * $baseline-grid;
+    max-height: 4 * $baseline-grid;
+    min-height: 4 * $baseline-grid;
+    padding-left: 3 * $baseline-grid;
+  }
+}
+
+.kd-nav-group-item {
+  >.kd-nav-item-button {
+    font-weight: $bold-font-weight;
+    padding-left: 2 * $baseline-grid;
+  }
 }

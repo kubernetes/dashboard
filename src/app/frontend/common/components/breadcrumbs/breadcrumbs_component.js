@@ -24,9 +24,10 @@ export default class BreadcrumbsController {
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
    * @param {!./../breadcrumbs/breadcrumbs_service.BreadcrumbsService} kdBreadcrumbsService
+   * @param {!angular.Scope} $scope
    * @ngInject
    */
-  constructor($state, $interpolate, kdBreadcrumbsService) {
+  constructor($state, $interpolate, kdBreadcrumbsService, $scope) {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
@@ -41,12 +42,19 @@ export default class BreadcrumbsController {
 
     /** @private {!./breadcrumbs_service.BreadcrumbsService} */
     this.kdBreadcrumbsService_ = kdBreadcrumbsService;
+
+    /** @private {!angular.Scope} */
+    this.scope_ = $scope;
   }
 
   /**
    * @export
    */
-  $onInit() { this.breadcrumbs = this.initBreadcrumbs_(); }
+  $onInit() {
+    this.breadcrumbs = this.initBreadcrumbs_();
+
+    this.scope_.$on('$stateChangeSuccess', () => { this.breadcrumbs = this.initBreadcrumbs_(); });
+  }
 
   /**
    * Initializes breadcrumbs array by traversing states parents until none is found.
