@@ -49,7 +49,7 @@ func (n *NamespaceQuery) ToRequestParam() string {
 // Matches returns true when the given namespace matches this query.
 func (n *NamespaceQuery) Matches(namespace string) bool {
 	if len(n.namespaces) == 0 {
-		return namespace != api.NamespaceSystem
+		return true
 	}
 
 	for _, queryNamespace := range n.namespaces {
