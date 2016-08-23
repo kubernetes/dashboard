@@ -12,36 +12,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../variables';
+/**
+ * @final
+ */
+export class NavItemController {
+  /**
+   * @param {!ui.router.$state} $state
+   * @ngInject
+   */
+  constructor($state) {
+    /** @export {string} */
+    this.state;
 
-.kd-nav {
-  background-color: initial;
-  font-size: $body-font-size-base;
-  height: 100%;
-  overflow: hidden;
-  overflow-y: auto;
-  white-space: nowrap;
-  width: 30 * $baseline-grid;
-
-  &.md-closed {
-    &.md-locked-open-add-active {
-      min-width: 30 * $baseline-grid;
-      width: 30 * $baseline-grid;
-    }
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
   }
 
-  // Next two rules are to only show the scrollbar on hover, but always enable scrolling.
-  &:hover {
-    overflow-y: scroll;
-  }
-
-  &:not(:hover) {
-    &::-webkit-scrollbar-thumb {
-      background-color: transparent;
-    }
-  }
+  /**
+   * @return {string}
+   * @export
+   */
+  getHref() { return this.state_.href(this.state); }
 }
 
-.kd-nav-group {
-  margin-right: $baseline-grid;
-}
+/**
+ * @type {!angular.Component}
+ */
+export const navItemComponent = {
+  controller: NavItemController,
+  bindings: {
+    'state': '@',
+  },
+  transclude: true,
+  templateUrl: 'chrome/nav/navitem.html',
+};

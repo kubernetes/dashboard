@@ -12,6 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {stateName as configMapState} from 'configmaplist/configmaplist_state';
+import {stateName as daemonSetState} from 'daemonsetlist/daemonsetlist_state';
+import {stateName as deploymentState} from 'deploymentlist/deploymentlist_state';
+import {stateName as jobState} from 'joblist/joblist_state';
+import {stateName as namespaceState} from 'namespacelist/namespacelist_state';
+import {stateName as nodeState} from 'nodelist/nodelist_state';
+import {stateName as petSetState} from 'petsetlist/petsetlist_state';
+import {stateName as podState} from 'podlist/podlist_state';
+import {stateName as replicaSetState} from 'replicasetlist/replicasetlist_state';
+import {stateName as replicationControllerState} from 'replicationcontrollerlist/replicationcontrollerlist_state';
+import {stateName as secretState} from 'secretlist/list_state';
+import {stateName as serviceState} from 'servicelist/servicelist_state';
+import {stateName as workloadState} from 'workloads/workloads_state';
+
 /**
  * @final
  */
@@ -26,6 +40,23 @@ export class NavController {
 
     /** @private {!./nav_service.NavService} */
     this.kdNavService_ = kdNavService;
+
+    /** @export {!Object<string, string>} */
+    this.states = {
+      'namespace': namespaceState,
+      'node': nodeState,
+      'workload': workloadState,
+      'pod': podState,
+      'deployment': deploymentState,
+      'replicaSet': replicaSetState,
+      'replicationController': replicationControllerState,
+      'daemonSet': daemonSetState,
+      'petSet': petSetState,
+      'job': jobState,
+      'service': serviceState,
+      'secret': secretState,
+      'configMap': configMapState,
+    };
   }
 
   /** @export */
