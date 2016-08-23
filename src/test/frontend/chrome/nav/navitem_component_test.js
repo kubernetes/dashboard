@@ -39,4 +39,12 @@ describe('Nav item component', () => {
 
     expect(ctrl.getHref()).toBe('#fakeStateUrl');
   });
+
+  it('should detect activity', angular.mock.inject(($state) => {
+    expect(ctrl.isActive()).toBe(false);
+
+    $state.current.name = 'fakeState';
+
+    expect(ctrl.isActive()).toBe(true);
+  }));
 });

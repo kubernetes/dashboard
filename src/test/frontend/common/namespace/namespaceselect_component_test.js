@@ -106,7 +106,7 @@ describe('Namespace select component ', () => {
 
   it('should format namespace', () => {
     ctrl.selectedNamespace = '__NAMESPACE_NOT_SELECTED__';
-    expect(ctrl.formatNamespace()).toBe('All user namespaces');
+    expect(ctrl.formatNamespace()).toBe('All namespaces');
     ctrl.selectedNamespace = 'foo';
     expect(ctrl.formatNamespace('foo')).toBe('foo');
   });
