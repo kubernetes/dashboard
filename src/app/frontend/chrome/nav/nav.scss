@@ -45,3 +45,10 @@
 .kd-nav-group {
   margin-right: $baseline-grid;
 }
+
+.kd-nav-group-divider {
+  border-top: 1px solid $border;
+  height: 1px;
+  margin-bottom: 2 * $baseline-grid;
+  margin-top: $baseline-grid;
+}
