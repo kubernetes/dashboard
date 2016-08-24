@@ -12,13 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {PaginationService} from 'common/pagination/pagination_service';
-
 import secretListModule from 'secretlist/module';
 import {resolveSecretList} from 'secretlist/list_stateconfig';
 
 describe('StateConfig for secret list', () => {
-  beforeEach(() => { angular.mock.module(secretListModule.name); });
+  /** @type {!common/pagination/pagination_service.PaginationService} */
+  let kdPaginationService;
+
+  beforeEach(() => {
+    angular.mock.module(secretListModule.name);
+    angular.mock.inject(
+        (_kdPaginationService_) => { kdPaginationService = _kdPaginationService_; });
+  });
 
   it('should resolve secrets with', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
@@ -26,9 +31,9 @@ describe('StateConfig for secret list', () => {
     let resource = jasmine.createSpyObj('$resource', ['get']);
     resource.get.and.callFake(function() { return {$promise: promise}; });
 
-    let actual = resolveSecretList(resource, {namespace: 'foo'});
+    let actual = resolveSecretList(resource, {namespace: 'foo'}, kdPaginationService);
 
-    expect(resource.get).toHaveBeenCalledWith(PaginationService.getDefaultResourceQuery('foo'));
+    expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery('foo'));
     expect(actual).toBe(promise);
   }));
 
@@ -38,9 +43,9 @@ describe('StateConfig for secret list', () => {
     let resource = jasmine.createSpyObj('$resource', ['get']);
     resource.get.and.callFake(function() { return {$promise: promise}; });
 
-    let actual = resolveSecretList(resource, {});
+    let actual = resolveSecretList(resource, {}, kdPaginationService);
 
-    expect(resource.get).toHaveBeenCalledWith(PaginationService.getDefaultResourceQuery(''));
+    expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery(''));
     expect(actual).toBe(promise);
   }));
 });

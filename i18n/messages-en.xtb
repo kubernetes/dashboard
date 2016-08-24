@@ -567,4 +567,6 @@
 	<translation id="9095381728458969006" key="MSG_PET_SET_DETAIL_PODS_ZEROSTATE_TITLE" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Title for pods card zerostate in pet set details page.">There is nothing to display here</translation>
 	<translation id="2585968200369310069" key="MSG_PET_SET_DETAIL_PODS_ZEROSTATE_TEXT" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Text for pods card zerostate in pet set details page.">There are currently no Pods scheduled on this Pet Set</translation>
 	<translation id="1546082571745741755" key="MSG_NAMESPACE_NOT_SELECTED" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Text for dropdown item that indicates that no namespace was selected">All namespaces</translation>
+	<translation id="1024358167652076581" key="MSG_ALL_NAMESPACES" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Text for dropdown item that indicates that no namespace was selected">All namespaces</translation>
+	<translation id="8827015449851505134" key="MSG_NAMESPACE" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Title for namespace select.">Namespace</translation>
 </translationbundle>

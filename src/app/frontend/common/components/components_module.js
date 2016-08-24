@@ -22,6 +22,8 @@ import infoCardModule from './infocard/infocard_module';
 import resourceCardModule from './resourcecard/resourcecard_module';
 import actionbarModule from './actionbar/actionbar_module';
 import zeroStateModule from './zerostate/zerostate_module';
+import paginationModule from './../pagination/pagination_module';
+import namespaceModule from './../namespace/namespace_module';
 import sparklineDirective from './sparkline/sparkline_directive';
 import warnThresholdDirective from './warnthreshold/warnthreshold_directive';
 
@@ -41,6 +43,8 @@ export default angular
           infoCardModule.name,
           resourceCardModule.name,
           zeroStateModule.name,
+          paginationModule.name,
+          namespaceModule.name,
         ])
     .directive('kdI18n', i18nDirective)
     .directive('kdLabels', labelsDirective)

@@ -14,7 +14,6 @@
 
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
-import {PaginationService} from 'common/pagination/pagination_service';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 import {stateName as replicaSetList, stateUrl} from 'replicasetlist/replicasetlist_state';
 
@@ -59,11 +58,13 @@ export default function stateConfig($stateProvider) {
 /**
  * @param {!angular.Resource} kdReplicaSetDetailResource
  * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
+ * @param {!./../common/pagination/pagination_service.PaginationService} kdPaginationService
  * @return {!angular.Resource<!backendApi.ReplicaSetDetail>}
  * @ngInject
  */
-export function resolveReplicaSetDetailResource(kdReplicaSetDetailResource, $stateParams) {
-  let query = PaginationService.getDefaultResourceQuery(
+export function resolveReplicaSetDetailResource(
+    kdReplicaSetDetailResource, $stateParams, kdPaginationService) {
+  let query = kdPaginationService.getDefaultResourceQuery(
       $stateParams.objectNamespace, $stateParams.objectName);
   return kdReplicaSetDetailResource.get(query).$promise;
 }

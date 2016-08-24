@@ -68,13 +68,13 @@ describe('Namespace select component ', () => {
     });
     httpBackend.flush();
     expect(ctrl.namespaces).toEqual(['a', 'b', 'c']);
-    expect(ctrl.selectedNamespace).toBe('__NAMESPACE_NOT_SELECTED__');
+    expect(ctrl.selectedNamespace).toBe('_all');
   });
 
   it('should initialize from exisitng namespace and watch for state changes', () => {
     expect(ctrl.selectedNamespace).toBe(undefined);
     ctrl.$onInit();
-    expect(ctrl.selectedNamespace).toBe('__NAMESPACE_NOT_SELECTED__');
+    expect(ctrl.selectedNamespace).toBe('_all');
 
     scope.$broadcast('$stateChangeSuccess', {}, {namespace: 'a'});
     scope.$digest();
@@ -98,14 +98,14 @@ describe('Namespace select component ', () => {
 
     state.go('fakeState', {namespace: 'foo-bar'});
     scope.$digest();
-    expect(ctrl.selectedNamespace).toBe('__NAMESPACE_NOT_SELECTED__');
+    expect(ctrl.selectedNamespace).toBe('_all');
 
     // Do not init twice. Nothing happens.
     ctrl.loadNamespacesIfNeeded();
   });
 
   it('should format namespace', () => {
-    ctrl.selectedNamespace = '__NAMESPACE_NOT_SELECTED__';
+    ctrl.selectedNamespace = '_all';
     expect(ctrl.formatNamespace()).toBe('All namespaces');
     ctrl.selectedNamespace = 'foo';
     expect(ctrl.formatNamespace('foo')).toBe('foo');

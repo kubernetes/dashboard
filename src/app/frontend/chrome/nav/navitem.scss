@@ -38,10 +38,6 @@ kd-nav-item {
   &.kd-nav-item-active {
     background-color: $background-1;
     color: $primary;
-
-    &:visited {
-      color: $primary;
-    }
   }
 }
 

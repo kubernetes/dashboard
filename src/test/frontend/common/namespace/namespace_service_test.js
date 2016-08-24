@@ -26,7 +26,7 @@ describe('Namespace service', () => {
   }));
 
   it(`should initialise multipleNamespacesSelected as true`,
-     () => { expect(namespaceService.areMultipleNamespacesSelected()).toBe(true); });
+     () => { expect(namespaceService.areMultipleNamespacesSelected()).toBe(false); });
 
   it(`should set multipleNamespacesSelected to true`, () => {
     namespaceService.setMultipleNamespacesSelected(true);

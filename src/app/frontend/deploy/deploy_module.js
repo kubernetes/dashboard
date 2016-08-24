@@ -26,6 +26,7 @@ import validProtocolDirective from './validprotocol_directive';
 import helpSectionModule from './helpsection/helpsection_module';
 import validatorsModule from 'common/validators/validators_module';
 import historyModule from 'common/history/history_module';
+import componentsModule from 'common/components/components_module';
 
 /**
  * Angular module for the deploy view.
@@ -43,6 +44,7 @@ export default angular
           errorHandlingModule.name,
           validatorsModule.name,
           historyModule.name,
+          componentsModule.name,
         ])
     .config(stateConfig)
     .run(initConfig)

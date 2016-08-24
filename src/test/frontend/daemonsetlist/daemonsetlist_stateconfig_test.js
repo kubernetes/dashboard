@@ -12,13 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {PaginationService} from 'common/pagination/pagination_service';
-
 import daemonSetListModule from 'daemonsetlist/daemonsetlist_module';
 import {resolveDaemonSetList} from 'daemonsetlist/daemonsetlist_stateconfig';
 
 describe('StateConfig for daemon set list', () => {
-  beforeEach(() => { angular.mock.module(daemonSetListModule.name); });
+  /** @type {!common/pagination/pagination_service.PaginationService} */
+  let kdPaginationService;
+
+  beforeEach(() => {
+    angular.mock.module(daemonSetListModule.name);
+    angular.mock.inject(
+        (_kdPaginationService_) => { kdPaginationService = _kdPaginationService_; });
+  });
 
   it('should resolve daemon sets', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
@@ -26,9 +31,9 @@ describe('StateConfig for daemon set list', () => {
     let resource = jasmine.createSpyObj('$resource', ['get']);
     resource.get.and.callFake(function() { return {$promise: promise}; });
 
-    let actual = resolveDaemonSetList(resource, {namespace: 'foo'});
+    let actual = resolveDaemonSetList(resource, {namespace: 'foo'}, kdPaginationService);
 
-    expect(resource.get).toHaveBeenCalledWith(PaginationService.getDefaultResourceQuery('foo'));
+    expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery('foo'));
     expect(actual).toBe(promise);
   }));
 
@@ -38,9 +43,9 @@ describe('StateConfig for daemon set list', () => {
     let resource = jasmine.createSpyObj('$resource', ['get']);
     resource.get.and.callFake(function() { return {$promise: promise}; });
 
-    let actual = resolveDaemonSetList(resource, {});
+    let actual = resolveDaemonSetList(resource, {}, kdPaginationService);
 
-    expect(resource.get).toHaveBeenCalledWith(PaginationService.getDefaultResourceQuery(''));
+    expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery(''));
     expect(actual).toBe(promise);
   }));
 });

@@ -22,7 +22,7 @@ export class NamespaceService {
    */
   constructor() {
     /** @private {boolean} */
-    this.multipleNamespacesSelected_ = true;
+    this.multipleNamespacesSelected_ = false;
   }
 
   /**

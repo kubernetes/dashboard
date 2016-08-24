@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import paginationModule from 'common/pagination/pagination_module';
-import {DEFAULT_ROWS_LIMIT, ROWS_LIMIT_OPTIONS, PaginationService} from 'common/pagination/pagination_service';
+import {DEFAULT_ROWS_LIMIT, ROWS_LIMIT_OPTIONS} from 'common/pagination/pagination_service';
 
 describe('Pagination service', () => {
   /** @type {!common/pagination/pagination_service.PaginationService} */
@@ -117,39 +117,47 @@ describe('Pagination service', () => {
     expect(paginationService.getRowsLimit('id-2')).toEqual(DEFAULT_ROWS_LIMIT);
   });
 
-  it('should return pagination query object', () => {
+  it('should return pagination query object', angular.mock.inject((kdNamespaceService) => {
     let cases = [
-      [10, 1, 'ns-1', {itemsPerPage: 10, page: 1, namespace: 'ns-1', name: undefined}],
-      [10, 2, undefined, {itemsPerPage: 10, page: 2, namespace: '', name: undefined}],
+      [10, 1, 'ns-1', false, {itemsPerPage: 10, page: 1, namespace: 'ns-1', name: undefined}],
+      [10, 1, 'ns-1', true, {itemsPerPage: 10, page: 1, namespace: '', name: undefined}],
+      [10, 2, undefined, false, {itemsPerPage: 10, page: 2, namespace: '', name: undefined}],
+      [10, 2, undefined, true, {itemsPerPage: 10, page: 2, namespace: '', name: undefined}],
     ];
+
+    let spy = spyOn(kdNamespaceService, 'areMultipleNamespacesSelected');
 
     cases.forEach((testData) => {
       // given
-      let [itemsPerPage, page, ns, expected] = testData;
+      let [itemsPerPage, page, ns, multiple, expected] = testData;
+      spy.and.returnValue(multiple);
 
       // when
-      let actual = PaginationService.getResourceQuery(itemsPerPage, page, ns);
+      let actual = paginationService.getResourceQuery(itemsPerPage, page, ns);
 
       // then
       expect(actual).toEqual(expected);
     });
-  });
+  }));
 
-  it('should return default pagination query object', () => {
+  it('should return default pagination query object', angular.mock.inject((kdNamespaceService) => {
     let cases = [
       ['ns-1', {itemsPerPage: 10, page: 1, namespace: 'ns-1', name: undefined}],
       [undefined, {itemsPerPage: 10, page: 1, namespace: '', name: undefined}],
     ];
 
+    let spy = spyOn(kdNamespaceService, 'areMultipleNamespacesSelected');
+
     cases.forEach((testData) => {
       // given
       let [ns, expected] = testData;
+      spy.and.returnValue(false);
 
       // when
-      let actual = PaginationService.getDefaultResourceQuery(ns);
+      let actual = paginationService.getDefaultResourceQuery(ns);
 
       // then
       expect(actual).toEqual(expected);
     });
-  });
+  }));
 });

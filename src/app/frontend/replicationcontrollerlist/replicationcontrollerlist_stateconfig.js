@@ -14,7 +14,6 @@
 
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
-import {PaginationService} from 'common/pagination/pagination_service';
 
 import {ReplicationControllerListController} from './replicationcontrollerlist_controller';
 import {stateName, stateUrl} from './replicationcontrollerlist_state';
@@ -53,12 +52,13 @@ export default function stateConfig($stateProvider) {
 /**
  * @param {!angular.Resource} kdRCListResource
  * @param {!./../chrome/chrome_state.StateParams} $stateParams
+ * @param {!./../common/pagination/pagination_service.PaginationService} kdPaginationService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveReplicationControllerList(kdRCListResource, $stateParams) {
-  /** @type {!backendApi.PaginationQuery} */
-  let query = PaginationService.getDefaultResourceQuery($stateParams.namespace);
+export function resolveReplicationControllerList(
+    kdRCListResource, $stateParams, kdPaginationService) {
+  let query = kdPaginationService.getDefaultResourceQuery($stateParams.namespace);
   return kdRCListResource.get(query).$promise;
 }
 

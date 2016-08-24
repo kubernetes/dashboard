@@ -12,13 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {PaginationService} from 'common/pagination/pagination_service';
-
 import jobListModule from 'joblist/joblist_module';
 import {resolveJobList} from 'joblist/joblist_stateconfig';
 
 describe('StateConfig for job list', () => {
-  beforeEach(() => { angular.mock.module(jobListModule.name); });
+  /** @type {!common/pagination/pagination_service.PaginationService} */
+  let kdPaginationService;
+
+  beforeEach(() => {
+    angular.mock.module(jobListModule.name);
+    angular.mock.inject(
+        (_kdPaginationService_) => { kdPaginationService = _kdPaginationService_; });
+  });
 
   it('should resolve jobs', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
@@ -26,9 +31,9 @@ describe('StateConfig for job list', () => {
     let resource = jasmine.createSpyObj('$resource', ['get']);
     resource.get.and.callFake(function() { return {$promise: promise}; });
 
-    let actual = resolveJobList(resource, {namespace: 'foo'});
+    let actual = resolveJobList(resource, {namespace: 'foo'}, kdPaginationService);
 
-    expect(resource.get).toHaveBeenCalledWith(PaginationService.getDefaultResourceQuery('foo'));
+    expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery('foo'));
     expect(actual).toBe(promise);
   }));
 
@@ -38,9 +43,9 @@ describe('StateConfig for job list', () => {
     let resource = jasmine.createSpyObj('$resource', ['get']);
     resource.get.and.callFake(function() { return {$promise: promise}; });
 
-    let actual = resolveJobList(resource, {});
+    let actual = resolveJobList(resource, {}, kdPaginationService);
 
-    expect(resource.get).toHaveBeenCalledWith(PaginationService.getDefaultResourceQuery(''));
+    expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery(''));
     expect(actual).toBe(promise);
   }));
 });

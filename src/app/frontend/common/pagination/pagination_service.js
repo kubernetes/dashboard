@@ -21,12 +21,17 @@ export const DEFAULT_ROWS_LIMIT = 10;
  * @final
  */
 export class PaginationService {
-  /** @ngInject */
-  constructor() {
+  /**
+  * @param {!./../namespace/namespace_service.NamespaceService} kdNamespaceService
+  * @ngInject
+  */
+  constructor(kdNamespaceService) {
     /** @private {!Array<number>} */
     this.rowsLimitOptions_ = ROWS_LIMIT_OPTIONS;
     /** @private {!Map<string, number>} */
     this.instances_ = new Map();
+    /** @private {!./../namespace/namespace_service.NamespaceService} */
+    this.kdNamespaceService_ = kdNamespaceService;
   }
 
   /**
@@ -107,7 +112,10 @@ export class PaginationService {
    * @param {string|undefined} [name]
    * @return {!backendApi.PaginationQuery}
    */
-  static getResourceQuery(itemsPerPage, pageNr, namespace, name) {
+  getResourceQuery(itemsPerPage, pageNr, namespace, name) {
+    if (this.kdNamespaceService_.areMultipleNamespacesSelected()) {
+      namespace = '';
+    }
     return {itemsPerPage: itemsPerPage, page: pageNr, namespace: namespace || '', name: name};
   }
 
@@ -116,7 +124,7 @@ export class PaginationService {
    * @param {string|undefined} [name]
    * @return {!backendApi.PaginationQuery}
    */
-  static getDefaultResourceQuery(namespace, name) {
-    return {itemsPerPage: DEFAULT_ROWS_LIMIT, page: 1, namespace: namespace || '', name: name};
+  getDefaultResourceQuery(namespace, name) {
+    return this.getResourceQuery(DEFAULT_ROWS_LIMIT, 1, namespace, name);
   }
 }

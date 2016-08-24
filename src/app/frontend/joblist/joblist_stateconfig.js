@@ -14,7 +14,6 @@
 
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
-import {PaginationService} from 'common/pagination/pagination_service';
 
 import {JobListController} from './joblist_controller';
 import {stateName, stateUrl} from './joblist_state';
@@ -53,12 +52,12 @@ export default function stateConfig($stateProvider) {
 /**
  * @param {!angular.Resource} kdJobListResource
  * @param {!./../chrome/chrome_state.StateParams} $stateParams
+ * @param {!./../common/pagination/pagination_service.PaginationService} kdPaginationService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveJobList(kdJobListResource, $stateParams) {
-  /** @type {!backendApi.PaginationQuery} */
-  let query = PaginationService.getDefaultResourceQuery($stateParams.namespace);
+export function resolveJobList(kdJobListResource, $stateParams, kdPaginationService) {
+  let query = kdPaginationService.getDefaultResourceQuery($stateParams.namespace);
   return kdJobListResource.get(query).$promise;
 }
 
