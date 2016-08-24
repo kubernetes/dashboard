@@ -16,15 +16,15 @@ limitations under the License.
 
 <md-toolbar class="kd-toolbar">
   <div class="md-toolbar-tools kd-toolbar-tools">
-    <kd-nav-hamburger></kd-nav-hamburger>
-    <h2>
+    <kd-nav-hamburger flex="none"></kd-nav-hamburger>
+    <h2 class="kd-logo-menu" flex="none">
       <span>kubernetes</span>
     </h2>
+    <kd-breadcrumbs class="kd-actionbar-breadcrumbs" limit="2" flex="auto" layout="row"></kd-breadcrumbs>
     <div flex="auto" ui-view="toolbar"></div>
+    <div ui-view="actionbar"></div>
   </div>
 </md-toolbar>
-
-<kd-actionbar flex="none"></kd-actionbar>
 
 <div layout="row">
   <kd-nav></kd-nav>

@@ -26,9 +26,7 @@ export default class JobInfoController {
      */
     this.job;
 
-    /**
-     * @export
-     */
+    /** @export */
     this.i18n = i18n;
   }
 }

@@ -39,21 +39,28 @@ func TestFilterNamespacedServicesBySelector(t *testing.T) {
 				{
 					ObjectMeta: api.ObjectMeta{
 						Name:      "first-service-ok",
-						Labels:    firstLabelSelectorMap,
 						Namespace: "test-ns-1",
 					},
-				},
-				{
-					ObjectMeta: api.ObjectMeta{
-						Name:      "second-service-ok",
-						Labels:    firstLabelSelectorMap,
-						Namespace: "test-ns-2",
+					Spec: api.ServiceSpec{
+						Selector: firstLabelSelectorMap,
 					},
 				},
 				{
 					ObjectMeta: api.ObjectMeta{
-						Name:   "third-service-wrong",
-						Labels: secondLabelSelectorMap,
+						Name:      "second-service-wrong",
+						Namespace: "test-ns-2",
+					},
+					Spec: api.ServiceSpec{
+						Selector: firstLabelSelectorMap,
+					},
+				},
+				{
+					ObjectMeta: api.ObjectMeta{
+						Name:      "third-service-wrong",
+						Namespace: "test-ns-1",
+					},
+					Spec: api.ServiceSpec{
+						Selector: secondLabelSelectorMap,
 					},
 				},
 			},
@@ -61,8 +68,10 @@ func TestFilterNamespacedServicesBySelector(t *testing.T) {
 				{
 					ObjectMeta: api.ObjectMeta{
 						Name:      "first-service-ok",
-						Labels:    firstLabelSelectorMap,
 						Namespace: "test-ns-1",
+					},
+					Spec: api.ServiceSpec{
+						Selector: firstLabelSelectorMap,
 					},
 				},
 			},
@@ -72,7 +81,7 @@ func TestFilterNamespacedServicesBySelector(t *testing.T) {
 	for _, c := range cases {
 		actual := FilterNamespacedServicesBySelector(c.services, c.namespace, c.selector)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("FilterNamespacedServicesBySelector(%+v, %+v) == %+v, expected %+v",
+			t.Errorf("FilterNamespacedServicesBySelector(%+v, %+v) == \n%+v, expected \n%+v",
 				c.services, c.selector, actual, c.expected)
 		}
 	}

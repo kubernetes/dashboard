@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import module from 'chrome/nav/module';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 
 describe('Nav item component', () => {
   /** @type {!chrome/nav/navitem_component.NavItemController} */
@@ -24,6 +25,19 @@ describe('Nav item component', () => {
       $stateProvider.state('fakeState', {
         url: 'fakeStateUrl',
         template: '<ui-view>Foo</ui-view>',
+      });
+      $stateProvider.state('fakeNonActive', {
+        url: 'fakeStateUrl',
+        template: '<ui-view>Foo</ui-view>',
+      });
+      $stateProvider.state('fakeStateWithParent', {
+        url: 'fakeStateUrl',
+        template: '<ui-view>Foo</ui-view>',
+        data: {
+          [breadcrumbsConfig]: {
+            parent: 'fakeState',
+          },
+        },
       });
     });
     angular.mock.module(module.name);
@@ -40,11 +54,18 @@ describe('Nav item component', () => {
     expect(ctrl.getHref()).toBe('#fakeStateUrl');
   });
 
-  it('should detect activity', angular.mock.inject(($state) => {
+  it('should detect activity', angular.mock.inject(($state, $rootScope) => {
     expect(ctrl.isActive()).toBe(false);
 
     $state.current.name = 'fakeState';
 
+    expect(ctrl.isActive()).toBe(true);
+
+    $state.current.name = 'fakeNonActive';
+    expect(ctrl.isActive()).toBe(false);
+
+    $state.go('fakeStateWithParent');
+    $rootScope.$digest();
     expect(ctrl.isActive()).toBe(true);
   }));
 });

@@ -14,16 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div layout="column">
-  <md-content>
-    <md-tabs md-border-bottom md-dynamic-height>
-      <md-tab label="{{::ctrl.i18n.MSG_NAMESPACE_DETAIL_OVERVIEW_LABEL}}">
-        <kd-namespace-info namespace="::ctrl.namespaceDetail"></kd-namespace-info>
-      </md-tab>
-      <md-tab label="{{::ctrl.i18n.MSG_NAMESPACE_DETAIL_EVENTS_LABEL}}">
-        <kd-event-card-list
-                event-list="::ctrl.namespaceDetail.eventList"></kd-event-card-list>
-      </md-tab>
-    </md-tabs>
-  </md-content>
-</div>
+<kd-namespace-info namespace="::ctrl.namespaceDetail"></kd-namespace-info>
+<kd-event-card-list event-list="::ctrl.namespaceDetail.eventList"></kd-event-card-list>

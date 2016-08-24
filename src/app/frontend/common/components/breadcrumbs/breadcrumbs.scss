@@ -19,6 +19,10 @@
   float: left;
   font-weight: $regular-font-weight;
   max-width: 100%;
+
+  >.kd-faded-breadcrumb {
+    color: $hue-2;
+  }
 }
 
 .kd-inline-breadcrumb {

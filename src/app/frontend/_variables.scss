@@ -49,6 +49,7 @@ $foreground-1: rgba(0, 0, 0, .87);
 $foreground-2: rgba(0, 0, 0, .54);
 $foreground-3: rgba(0, 0, 0, .26);
 $foreground-4: rgba(0, 0, 0, .12);
+$hue-2: rgba(255, 255, 255, .54);
 
 $background-1: rgba(158, 158, 158, .2);
 
@@ -61,6 +62,7 @@ $layout-breakpoint-sm: 960px;
 $layout-breakpoint-xs: 600px;
 $whiteframe-shadow-1dp: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px rgba(0, 0, 0, .12);
 $baseline-grid: 8px;
+$nav-width: 30 * $baseline-grid;
 $logo-width: 8 * $baseline-grid;
 $logo-height: 8 * $baseline-grid;
 $table-cell-height: 6 * $baseline-grid;
