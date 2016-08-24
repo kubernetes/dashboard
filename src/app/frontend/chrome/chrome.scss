@@ -36,16 +36,10 @@ body,
 a {
   color: $primary;
   text-decoration: inherit;
-
-  &:visited {
-    color: $primary;
-  }
 }
 
-.md-toolbar-tools {
-  a {
-    color: $primary;
-  }
+.kd-logo-menu {
+  width: $nav-width - 5.5 * $baseline-grid;
 }
 
 .kd-success {

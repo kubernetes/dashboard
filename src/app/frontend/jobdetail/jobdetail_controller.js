@@ -27,5 +27,13 @@ export class JobDetailController {
 
     /** @export {!angular.Resource} */
     this.jobPodsResource = kdJobPodsResource;
+
+    /** @export */
+    this.i18n = i18n;
   }
 }
+
+const i18n = {
+  /** @export {string} @desc Title for a pods section. */
+  MSG_JOB_DETAIL_PODS: goog.getMsg('Pods'),
+};

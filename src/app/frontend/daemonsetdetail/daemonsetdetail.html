@@ -14,36 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div layout="column">
-  <md-content>
-    <md-tabs md-border-bottom md-dynamic-height>
-      <md-tab label="{{::ctrl.i18n.MSG_DAEMON_SET_DETAIL_OVERVIEW_LABEL}}">
-        <kd-daemon-set-info daemon-set="::ctrl.daemonSetDetail"></kd-daemon-set-info>
-        <kd-content-card ng-if="::ctrl.daemonSetDetail.serviceList.services.length">
-          <kd-title>{{::ctrl.i18n.MSG_DAEMON_SET_DETAIL_SERVICES_TITLE}}</kd-title>
-          <kd-content>
-            <kd-service-card-list service-list="::ctrl.daemonSetDetail.serviceList"
-                                  service-list-resource="::ctrl.daemonSetServicesResource">
-            </kd-service-card-list>
-          </kd-content>
-        </kd-content-card>
-        <kd-content-card>
-          <kd-title>{{::ctrl.i18n.MSG_DAEMON_SET_DETAIL_PODS_TITLE}}</kd-title>
-          <kd-content>
-            <kd-pod-card-list pod-list="::ctrl.daemonSetDetail.podList"
-                              pod-list-resource="::ctrl.daemonSetPodsResource"
-                              with-statuses="true" ng-show="::ctrl.daemonSetDetail.podList.pods.length">
-            </kd-pod-card-list>
-            <div class="kd-zerostate-message" layout-padding ng-hide="::ctrl.daemonSetDetail.podList.pods.length">
-              <div class="kd-zerostate-title">{{::ctrl.i18n.MSG_DAEMON_SET_DETAIL_PODS_ZEROSTATE_TITLE}}</div>
-              <div class="kd-zerostate-text">{{::ctrl.i18n.MSG_DAEMON_SET_DETAIL_PODS_ZEROSTATE_TEXT}}</div>
-            </div>
-          </kd-content>
-        </kd-content-card>
-      </md-tab>
-      <md-tab label="{{::ctrl.i18n.MSG_DAEMON_SET_DETAIL_EVENTS_LABEL}}">
-        <kd-event-card-list event-list="::ctrl.daemonSetDetail.eventList"></kd-event-card-list>
-      </md-tab>
-    </md-tabs>
-  </md-content>
-</div>
+<kd-daemon-set-info daemon-set="::ctrl.daemonSetDetail"></kd-daemon-set-info>
+<kd-content-card ng-if="::ctrl.daemonSetDetail.serviceList.services.length">
+  <kd-title>{{::ctrl.i18n.MSG_DAEMON_SET_DETAIL_SERVICES_TITLE}}</kd-title>
+  <kd-content>
+    <kd-service-card-list service-list="::ctrl.daemonSetDetail.serviceList"
+                          service-list-resource="::ctrl.daemonSetServicesResource">
+    </kd-service-card-list>
+  </kd-content>
+</kd-content-card>
+<kd-content-card>
+  <kd-title>{{::ctrl.i18n.MSG_DAEMON_SET_DETAIL_PODS_TITLE}}</kd-title>
+  <kd-content>
+    <kd-pod-card-list pod-list="::ctrl.daemonSetDetail.podList"
+                      pod-list-resource="::ctrl.daemonSetPodsResource"
+                      with-statuses="true" ng-show="::ctrl.daemonSetDetail.podList.pods.length">
+    </kd-pod-card-list>
+    <div class="kd-zerostate-message" layout-padding ng-hide="::ctrl.daemonSetDetail.podList.pods.length">
+      <div class="kd-zerostate-title">{{::ctrl.i18n.MSG_DAEMON_SET_DETAIL_PODS_ZEROSTATE_TITLE}}</div>
+      <div class="kd-zerostate-text">{{::ctrl.i18n.MSG_DAEMON_SET_DETAIL_PODS_ZEROSTATE_TEXT}}</div>
+    </div>
+  </kd-content>
+</kd-content-card>
+<kd-event-card-list event-list="::ctrl.daemonSetDetail.eventList"></kd-event-card-list>
