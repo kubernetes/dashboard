@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {namespaceParam} from 'chrome/chrome_state';
+
 import {NamespaceService} from './namespace_service';
 import {namespaceSelectComponent} from './namespaceselect_component';
 
@@ -24,6 +26,32 @@ export default angular
         [
           'ngMaterial',
           'ngResource',
+          'ui.router',
         ])
     .component('kdNamespaceSelect', namespaceSelectComponent)
-    .service('kdNamespaceService', NamespaceService);
+    .service('kdNamespaceService', NamespaceService)
+    .run(ensureNamespaceParamPresent);
+
+/**
+ * Ensures that namespaceParam is present in the URL.
+ * @param {!angular.Scope} $rootScope
+ * @param {!angular.$location} $location
+ * @ngInject
+ */
+function ensureNamespaceParamPresent($rootScope, $location) {
+  /**
+   * Helper function which replaces namespace URL search param when the given namespace is
+   * undefined.
+   * @param {string|undefined} namespace
+   */
+  function replaceUrlIfNeeded(namespace) {
+    if (namespace === undefined) {
+      $location.search(namespaceParam, 'default');
+      $location.replace();
+    }
+  }
+
+  $rootScope.$watch(() => $location.search()[namespaceParam], replaceUrlIfNeeded);
+  $rootScope.$on(
+      '$locationChangeSuccess', () => { replaceUrlIfNeeded($location.search()[namespaceParam]); });
+}

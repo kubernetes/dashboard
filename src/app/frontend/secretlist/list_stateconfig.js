@@ -14,7 +14,6 @@
 
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
-import {PaginationService} from 'common/pagination/pagination_service';
 
 import {SecretListController} from './list_controller';
 import {stateName} from './list_state';
@@ -52,12 +51,12 @@ export default function stateConfig($stateProvider) {
 /**
  * @param {!angular.Resource} kdSecretListResource
  * @param {!./../chrome/chrome_state.StateParams} $stateParams
+ * @param {!./../common/pagination/pagination_service.PaginationService} kdPaginationService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveSecretList(kdSecretListResource, $stateParams) {
-  /** @type {!backendApi.PaginationQuery} */
-  let query = PaginationService.getDefaultResourceQuery($stateParams.namespace);
+export function resolveSecretList(kdSecretListResource, $stateParams, kdPaginationService) {
+  let query = kdPaginationService.getDefaultResourceQuery($stateParams.namespace);
   return kdSecretListResource.get(query).$promise;
 }
 

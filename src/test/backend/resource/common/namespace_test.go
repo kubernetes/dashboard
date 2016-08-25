@@ -53,8 +53,8 @@ func TestMatches(t *testing.T) {
 	if !nsQ.Matches("foo") {
 		t.Errorf("Expected foo to match")
 	}
-	if nsQ.Matches("kube-system") {
-		t.Errorf("Expected kube-system not to match")
+	if !nsQ.Matches("kube-system") {
+		t.Errorf("Expected kube-system to match")
 	}
 
 	nsQ = NewNamespaceQuery([]string{"foo", "bar"})
