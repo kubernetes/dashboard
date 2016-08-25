@@ -123,6 +123,12 @@ function createCompileTask(translation) {
         path.join(
             conf.paths.nodeModules,
             'google-closure-compiler/contrib/externs/angular-1.4-resource.js'),
+        path.join(
+            conf.paths.bowerComponents,
+            'cljsjs-packages-externs/d3/resources/cljsjs/d3/common/d3.ext.js'),
+        path.join(
+            conf.paths.bowerComponents,
+            'cljsjs-packages-externs/nvd3/resources/cljsjs/nvd3/common/nvd3.ext.js'),
         path.join(conf.paths.externs, '**/*.js'),
       ],
       generate_exports: null,
