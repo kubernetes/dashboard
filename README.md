@@ -30,8 +30,7 @@ configured with access to the cluster, but lack password credentials for use in 
 kubectl proxy
 ```
 
-This will make the dashboard available:
-* http://localhost:8001/ui
+This will make the dashboard available at [http://localhost:8001/ui](http://localhost:8001/ui)
 
 This will only be available from the machine where the command is executed, but you can see
 `kubectl proxy --help` for more options.
