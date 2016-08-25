@@ -117,20 +117,16 @@ describe('Pagination service', () => {
     expect(paginationService.getRowsLimit('id-2')).toEqual(DEFAULT_ROWS_LIMIT);
   });
 
-  it('should return pagination query object', angular.mock.inject((kdNamespaceService) => {
+  it('should return pagination query object', () => {
     let cases = [
-      [10, 1, 'ns-1', false, {itemsPerPage: 10, page: 1, namespace: 'ns-1', name: undefined}],
-      [10, 1, 'ns-1', true, {itemsPerPage: 10, page: 1, namespace: '', name: undefined}],
-      [10, 2, undefined, false, {itemsPerPage: 10, page: 2, namespace: '', name: undefined}],
-      [10, 2, undefined, true, {itemsPerPage: 10, page: 2, namespace: '', name: undefined}],
+      [10, 1, 'ns-1', {itemsPerPage: 10, page: 1, namespace: 'ns-1', name: undefined}],
+      [10, 1, '_all', {itemsPerPage: 10, page: 1, namespace: '', name: undefined}],
+      [10, 2, undefined, {itemsPerPage: 10, page: 2, namespace: '', name: undefined}],
     ];
-
-    let spy = spyOn(kdNamespaceService, 'areMultipleNamespacesSelected');
 
     cases.forEach((testData) => {
       // given
-      let [itemsPerPage, page, ns, multiple, expected] = testData;
-      spy.and.returnValue(multiple);
+      let [itemsPerPage, page, ns, expected] = testData;
 
       // when
       let actual = paginationService.getResourceQuery(itemsPerPage, page, ns);
@@ -138,20 +134,17 @@ describe('Pagination service', () => {
       // then
       expect(actual).toEqual(expected);
     });
-  }));
+  });
 
-  it('should return default pagination query object', angular.mock.inject((kdNamespaceService) => {
+  it('should return default pagination query object', () => {
     let cases = [
       ['ns-1', {itemsPerPage: 10, page: 1, namespace: 'ns-1', name: undefined}],
       [undefined, {itemsPerPage: 10, page: 1, namespace: '', name: undefined}],
     ];
 
-    let spy = spyOn(kdNamespaceService, 'areMultipleNamespacesSelected');
-
     cases.forEach((testData) => {
       // given
       let [ns, expected] = testData;
-      spy.and.returnValue(false);
 
       // when
       let actual = paginationService.getDefaultResourceQuery(ns);
@@ -159,5 +152,5 @@ describe('Pagination service', () => {
       // then
       expect(actual).toEqual(expected);
     });
-  }));
+  });
 });

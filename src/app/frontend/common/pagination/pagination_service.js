@@ -113,7 +113,7 @@ export class PaginationService {
    * @return {!backendApi.PaginationQuery}
    */
   getResourceQuery(itemsPerPage, pageNr, namespace, name) {
-    if (this.kdNamespaceService_.areMultipleNamespacesSelected()) {
+    if (this.kdNamespaceService_.isMultiNamespace(namespace)) {
       namespace = '';
     }
     return {itemsPerPage: itemsPerPage, page: pageNr, namespace: namespace || '', name: name};

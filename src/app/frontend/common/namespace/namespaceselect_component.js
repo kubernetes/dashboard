@@ -15,7 +15,7 @@
 import {namespaceParam} from 'chrome/chrome_state';
 
 /** Internal key for empty selection. To differentiate empty string from nulls. */
-const ALL_NAMESPACES = '_all';
+export const ALL_NAMESPACES = '_all';
 
 /**
  * @final
@@ -91,20 +91,16 @@ export class NamespaceSelectController {
         if (this.namespacesInitialized_) {
           if (this.namespaces.indexOf(newNamespace) >= 0) {
             this.selectedNamespace = newNamespace;
-            this.namespaceService_.setMultipleNamespacesSelected(false);
           } else {
             this.selectedNamespace = ALL_NAMESPACES;
-            this.namespaceService_.setMultipleNamespacesSelected(true);
           }
           this.changeNamespace();
         } else {
           this.namespaces = [newNamespace];
           this.selectedNamespace = newNamespace;
-          this.namespaceService_.setMultipleNamespacesSelected(false);
         }
       } else {
         this.selectedNamespace = ALL_NAMESPACES;
-        this.namespaceService_.setMultipleNamespacesSelected(true);
       }
     }
   }

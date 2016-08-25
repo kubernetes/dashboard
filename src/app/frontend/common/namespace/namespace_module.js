@@ -26,6 +26,7 @@ export default angular
         [
           'ngMaterial',
           'ngResource',
+          'ui.router',
         ])
     .component('kdNamespaceSelect', namespaceSelectComponent)
     .service('kdNamespaceService', NamespaceService)
