@@ -12,19 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {PaginationService} from 'common/pagination/pagination_service';
-
 /**
  * @final
  */
 export class ResourceCardListPaginationController {
   /**
-   * @ngInject
    * @param {!../../pagination/pagination_service.PaginationService} kdPaginationService
    * @param {!../../../chrome/chrome_state.StateParams|!../../resource/resourcedetail.StateParams}
-   * $stateParams
+   *     $stateParams
    * @param {!../../errorhandling/errordialog_service.ErrorDialog} errorDialog
    * @param {!angular.Scope} $scope
+   * @ngInject
    */
   constructor(kdPaginationService, $stateParams, errorDialog, $scope) {
     /** @export {!./resourcecardlistfooter_component.ResourceCardListFooterController} -
@@ -109,7 +107,7 @@ export class ResourceCardListPaginationController {
    */
   pageChanged(newPageNumber) {
     let namespace = this.stateParams_.namespace || this.stateParams_.objectNamespace;
-    let query = PaginationService.getResourceQuery(
+    let query = this.paginationService_.getResourceQuery(
         this.paginationService_.getRowsLimit(this.paginationId), newPageNumber, namespace,
         this.stateParams_.objectName);
 

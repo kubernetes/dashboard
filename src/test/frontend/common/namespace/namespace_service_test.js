@@ -17,24 +17,26 @@ import namespaceModule from 'common/namespace/namespace_module';
 describe('Namespace service', () => {
   /** @type {!common/namespace/namespace_service.NamespaceService} */
   let namespaceService;
+  /** @type {!chrome/chrome_state.StateParams} */
+  let stateParams;
 
   beforeEach(() => angular.mock.module(namespaceModule.name));
 
-  beforeEach(angular.mock.inject((kdNamespaceService) => {
+  beforeEach(angular.mock.inject((kdNamespaceService, $stateParams) => {
     namespaceService = kdNamespaceService;
-
+    stateParams = $stateParams;
   }));
 
-  it(`should initialise multipleNamespacesSelected as true`,
-     () => { expect(namespaceService.areMultipleNamespacesSelected()).toBe(true); });
+  it(`should default true`,
+     () => { expect(namespaceService.areMultipleNamespacesSelected()).toBe(false); });
 
-  it(`should set multipleNamespacesSelected to true`, () => {
-    namespaceService.setMultipleNamespacesSelected(true);
+  it(`should use many namespaces param`, () => {
+    stateParams.namespace = '_all';
     expect(namespaceService.areMultipleNamespacesSelected()).toBe(true);
   });
 
-  it(`should set multipleNamespacesSelected to false`, () => {
-    namespaceService.setMultipleNamespacesSelected(false);
+  it(`should use namespace param`, () => {
+    stateParams.namespace = 'foo';
     expect(namespaceService.areMultipleNamespacesSelected()).toBe(false);
   });
 });

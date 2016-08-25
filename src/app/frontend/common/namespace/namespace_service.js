@@ -12,30 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {ALL_NAMESPACES} from 'common/namespace/namespaceselect_component';
+
 /**
  * Service class for registering namespace.
  * @final
  */
 export class NamespaceService {
   /**
+   * @param {!./../../chrome/chrome_state.StateParams} $stateParams
    * @ngInject
    */
-  constructor() {
-    /** @private {boolean} */
-    this.multipleNamespacesSelected_ = true;
+  constructor($stateParams) {
+    /** @private {!./../../chrome/chrome_state.StateParams} */
+    this.stateParams_ = $stateParams;
   }
 
   /**
-     * Getter for multipleNamespacesSelected_ flag.
-     * @return {boolean}
-     */
-  areMultipleNamespacesSelected() { return this.multipleNamespacesSelected_; }
-
-  /**
-   * Switches the multipleNamespacesSelected flag.
-   * @param {boolean} multipleSelected
+   * @return {boolean}
    */
-  setMultipleNamespacesSelected(multipleSelected) {
-    this.multipleNamespacesSelected_ = multipleSelected;
-  }
+  areMultipleNamespacesSelected() { return this.stateParams_.namespace === ALL_NAMESPACES; }
+
+  /**
+   * Returns true when the given namespace string is in fact selector for all namespaces.
+   * @param {string|undefined} namespace
+   * @return {boolean}
+   */
+  isMultiNamespace(namespace) { return namespace === ALL_NAMESPACES; }
 }

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import paginationModule from 'common/pagination/pagination_module';
-import {DEFAULT_ROWS_LIMIT, ROWS_LIMIT_OPTIONS, PaginationService} from 'common/pagination/pagination_service';
+import {DEFAULT_ROWS_LIMIT, ROWS_LIMIT_OPTIONS} from 'common/pagination/pagination_service';
 
 describe('Pagination service', () => {
   /** @type {!common/pagination/pagination_service.PaginationService} */
@@ -120,6 +120,7 @@ describe('Pagination service', () => {
   it('should return pagination query object', () => {
     let cases = [
       [10, 1, 'ns-1', {itemsPerPage: 10, page: 1, namespace: 'ns-1', name: undefined}],
+      [10, 1, '_all', {itemsPerPage: 10, page: 1, namespace: '', name: undefined}],
       [10, 2, undefined, {itemsPerPage: 10, page: 2, namespace: '', name: undefined}],
     ];
 
@@ -128,7 +129,7 @@ describe('Pagination service', () => {
       let [itemsPerPage, page, ns, expected] = testData;
 
       // when
-      let actual = PaginationService.getResourceQuery(itemsPerPage, page, ns);
+      let actual = paginationService.getResourceQuery(itemsPerPage, page, ns);
 
       // then
       expect(actual).toEqual(expected);
@@ -146,7 +147,7 @@ describe('Pagination service', () => {
       let [ns, expected] = testData;
 
       // when
-      let actual = PaginationService.getDefaultResourceQuery(ns);
+      let actual = paginationService.getDefaultResourceQuery(ns);
 
       // then
       expect(actual).toEqual(expected);

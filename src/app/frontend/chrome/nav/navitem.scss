@@ -34,6 +34,11 @@ kd-nav-item {
   &:visited {
     color: inherit;
   }
+
+  &.kd-nav-item-active {
+    background-color: $background-1;
+    color: $primary;
+  }
 }
 
 .kd-nav-item {

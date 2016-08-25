@@ -33,6 +33,12 @@ export class NavItemController {
    * @export
    */
   getHref() { return this.state_.href(this.state); }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  isActive() { return this.state_.current.name === this.state; }
 }
 
 /**

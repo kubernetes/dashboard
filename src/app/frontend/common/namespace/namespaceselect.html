@@ -1,4 +1,5 @@
-<md-input-container>
+<div class="kd-namespace-select-title">{{::$ctrl.i18n.MSG_NAMESPACE}}</div>
+<md-input-container class="kd-namespace-select-input-container">
   <md-select ng-model="$ctrl.selectedNamespace"
       md-on-open="$ctrl.loadNamespacesIfNeeded()"
       md-on-close="$ctrl.changeNamespace()"
@@ -6,8 +7,8 @@
       aria-label="{{::$ctrl.i18n.MSG_NAMESPACE_SELECT_ARIA_LABEL}}"
       md-container-class="kd-namespace-select-container"
       md-selected-text="$ctrl.formatNamespace()">
-    <md-option ng-value="::$ctrl.NAMESPACE_NOT_SELECTED" class="kd-namespace-select-all">
-      {{::$ctrl.i18n.MSG_NAMESPACE_NOT_SELECTED}}
+    <md-option ng-value="::$ctrl.ALL_NAMESPACES" class="kd-namespace-select-all">
+      {{::$ctrl.i18n.MSG_ALL_NAMESPACES}}
     </md-option>
     <md-optgroup label="{{::$ctrl.i18n.MSG_NAMESPACE_LIST_LABEL}}"
         class="kd-namespace-select-namespace-list">

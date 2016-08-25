@@ -15,7 +15,7 @@
 import {namespaceParam} from 'chrome/chrome_state';
 
 /** Internal key for empty selection. To differentiate empty string from nulls. */
-const NAMESPACE_NOT_SELECTED = '__NAMESPACE_NOT_SELECTED__';
+export const ALL_NAMESPACES = '_all';
 
 /**
  * @final
@@ -36,7 +36,7 @@ export class NamespaceSelectController {
     this.namespaces = [];
 
     /** @export {string} */
-    this.NAMESPACE_NOT_SELECTED = NAMESPACE_NOT_SELECTED;
+    this.ALL_NAMESPACES = ALL_NAMESPACES;
 
     /**
      * Whether the list of namespaces has been initialized from the backend.
@@ -87,24 +87,20 @@ export class NamespaceSelectController {
     if (toParams) {
       /** @type {?string} */
       let newNamespace = toParams[namespaceParam];
-      if (newNamespace) {
+      if (newNamespace && newNamespace !== ALL_NAMESPACES) {
         if (this.namespacesInitialized_) {
           if (this.namespaces.indexOf(newNamespace) >= 0) {
             this.selectedNamespace = newNamespace;
-            this.namespaceService_.setMultipleNamespacesSelected(false);
           } else {
-            this.selectedNamespace = NAMESPACE_NOT_SELECTED;
-            this.namespaceService_.setMultipleNamespacesSelected(true);
+            this.selectedNamespace = ALL_NAMESPACES;
           }
           this.changeNamespace();
         } else {
           this.namespaces = [newNamespace];
           this.selectedNamespace = newNamespace;
-          this.namespaceService_.setMultipleNamespacesSelected(false);
         }
       } else {
-        this.selectedNamespace = NAMESPACE_NOT_SELECTED;
-        this.namespaceService_.setMultipleNamespacesSelected(true);
+        this.selectedNamespace = ALL_NAMESPACES;
       }
     }
   }
@@ -115,8 +111,8 @@ export class NamespaceSelectController {
    */
   formatNamespace() {
     let namespace = this.selectedNamespace;
-    if (namespace === NAMESPACE_NOT_SELECTED) {
-      return this.i18n.MSG_NAMESPACE_NOT_SELECTED;
+    if (namespace === ALL_NAMESPACES) {
+      return this.i18n.MSG_ALL_NAMESPACES;
     } else {
       return namespace;
     }
@@ -125,13 +121,7 @@ export class NamespaceSelectController {
   /**
    * @export
    */
-  changeNamespace() {
-    let namespaceToGo = '';
-    if (this.selectedNamespace !== NAMESPACE_NOT_SELECTED) {
-      namespaceToGo = this.selectedNamespace;
-    }
-    this.state_.go('.', {[namespaceParam]: namespaceToGo});
-  }
+  changeNamespace() { this.state_.go('.', {[namespaceParam]: this.selectedNamespace}); }
 
   /**
    * @export
@@ -145,7 +135,7 @@ export class NamespaceSelectController {
         this.namespaces = namespaceList.namespaces.map((n) => n.objectMeta.name);
         this.namespacesInitialized_ = true;
         if (this.namespaces.indexOf(this.selectedNamespace) === -1) {
-          this.selectedNamespace = NAMESPACE_NOT_SELECTED;
+          this.selectedNamespace = ALL_NAMESPACES;
           this.changeNamespace();
         }
       });
@@ -154,7 +144,7 @@ export class NamespaceSelectController {
 }
 
 /**
- * @return {!angular.Directive}
+ * @type {!angular.Component}
  */
 export const namespaceSelectComponent = {
   controller: NamespaceSelectController,
@@ -162,8 +152,11 @@ export const namespaceSelectComponent = {
 };
 
 const i18n = {
+  /** @export {string} @desc Title for namespace select. */
+  MSG_NAMESPACE: goog.getMsg('Namespace'),
+
   /** @export {string} @desc Text for dropdown item that indicates that no namespace was selected */
-  MSG_NAMESPACE_NOT_SELECTED: goog.getMsg('All user namespaces'),
+  MSG_ALL_NAMESPACES: goog.getMsg('All namespaces'),
 
   /** @export {string} @desc Label atop a list of namespaces */
   MSG_NAMESPACE_LIST_LABEL: goog.getMsg('namespaces'),

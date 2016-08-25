@@ -12,13 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {PaginationService} from 'common/pagination/pagination_service';
-
 import nodeListModule from 'nodelist/nodelist_module';
 import {resolveNodeList} from 'nodelist/nodelist_stateconfig';
 
 describe('StateConfig for node list', () => {
-  beforeEach(() => { angular.mock.module(nodeListModule.name); });
+  /** @type {!common/pagination/pagination_service.PaginationService} */
+  let kdPaginationService;
+
+  beforeEach(() => {
+    angular.mock.module(nodeListModule.name);
+    angular.mock.inject(
+        (_kdPaginationService_) => { kdPaginationService = _kdPaginationService_; });
+  });
 
   it('should resolve nodes', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
@@ -26,9 +31,9 @@ describe('StateConfig for node list', () => {
     let resource = jasmine.createSpyObj('$resource', ['get']);
     resource.get.and.callFake(function() { return {$promise: promise}; });
 
-    let actual = resolveNodeList(resource);
+    let actual = resolveNodeList(resource, kdPaginationService);
 
-    expect(resource.get).toHaveBeenCalledWith(PaginationService.getDefaultResourceQuery(''));
+    expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery(''));
     expect(actual).toBe(promise);
   }));
 

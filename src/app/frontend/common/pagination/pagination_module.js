@@ -13,9 +13,10 @@
 // limitations under the License.
 
 import {PaginationService} from './pagination_service';
+import namespaceModule from './../namespace/namespace_module';
 
 /**
  * Module containing validators for the application.
  */
-export default angular.module('kubernetesDashboard.common.pagination', [])
+export default angular.module('kubernetesDashboard.common.pagination', [namespaceModule.name])
     .service('kdPaginationService', PaginationService);

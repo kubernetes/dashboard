@@ -39,11 +39,12 @@ export default class DeployFromSettingsController {
    * @param {!md.$dialog} $mdDialog
    * @param {!./../chrome/chrome_state.StateParams} $stateParams
    * @param {!./../common/history/history_service.HistoryService} kdHistoryService
+   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
    * @ngInject
    */
   constructor(
-      namespaces, protocols, $log, $state, $resource, $q, $mdDialog, $stateParams,
-      kdHistoryService) {
+      namespaces, protocols, $log, $state, $resource, $q, $mdDialog, $stateParams, kdHistoryService,
+      kdNamespaceService) {
     /**
      * Initialized from the template.
      * @export {!angular.FormController}
@@ -143,7 +144,9 @@ export default class DeployFromSettingsController {
      * Currently chosen namespace.
      * @export {string}
      */
-    this.namespace = $stateParams.namespace || this.namespaces[0];
+    this.namespace = !kdNamespaceService.areMultipleNamespacesSelected() ?
+        $stateParams.namespace || this.namespaces[0] :
+        this.namespaces[0];
 
     /**
      * @export {?number}

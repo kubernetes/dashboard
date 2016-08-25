@@ -14,9 +14,24 @@
 
 @import '../../variables';
 
+kd-namespace-select {
+  display: block;
+  padding-left: 2 * $baseline-grid;
+
+  .kd-namespace-select-title {
+    color: $foreground-2;
+    font-size: $caption-font-size-base;
+  }
+}
+
+.kd-namespace-select-input-container {
+  margin: $baseline-grid 0;
+}
+
 md-select {
   &.kd-namespace-select {
-    font-size: $subhead-font-size-base;
+    font-size: $body-font-size-base;
+    padding-left: $baseline-grid;
 
     .md-select-value {
       .md-select-icon {

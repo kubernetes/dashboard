@@ -12,13 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {PaginationService} from 'common/pagination/pagination_service';
-
 import podListModule from 'podlist/podlist_module';
 import {resolvePodList} from 'podlist/podlist_stateconfig';
 
 describe('StateConfig for pod list', () => {
-  beforeEach(() => { angular.mock.module(podListModule.name); });
+  /** @type {!common/pagination/pagination_service.PaginationService} */
+  let kdPaginationService;
+
+  beforeEach(() => {
+    angular.mock.module(podListModule.name);
+    angular.mock.inject(
+        (_kdPaginationService_) => { kdPaginationService = _kdPaginationService_; });
+  });
 
   it('should resolve pods with namespace', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
@@ -26,9 +31,9 @@ describe('StateConfig for pod list', () => {
     let resource = jasmine.createSpyObj('$resource', ['get']);
     resource.get.and.callFake(function() { return {$promise: promise}; });
 
-    let actual = resolvePodList(resource, {namespace: 'foo'});
+    let actual = resolvePodList(resource, {namespace: 'foo'}, kdPaginationService);
 
-    expect(resource.get).toHaveBeenCalledWith(PaginationService.getDefaultResourceQuery('foo'));
+    expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery('foo'));
     expect(actual).toBe(promise);
   }));
 
@@ -38,9 +43,9 @@ describe('StateConfig for pod list', () => {
     let resource = jasmine.createSpyObj('$resource', ['get']);
     resource.get.and.callFake(function() { return {$promise: promise}; });
 
-    let actual = resolvePodList(resource, {});
+    let actual = resolvePodList(resource, {}, kdPaginationService);
 
-    expect(resource.get).toHaveBeenCalledWith(PaginationService.getDefaultResourceQuery(''));
+    expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery(''));
     expect(actual).toBe(promise);
   }));
 });
