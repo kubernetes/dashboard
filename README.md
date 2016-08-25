@@ -10,7 +10,6 @@ itself.
 ![Dashboard UI workloads page](docs/dashboard-ui.png)
 
 ## Usage
-
 It is likely that Dashboard is already installed on your cluster. To access it navigate in your
 browser to the following URL: `https://<kubernetes-master>/ui`.
 
@@ -22,6 +21,20 @@ kubectl create -f https://rawgit.com/kubernetes/dashboard/master/src/deploy/kube
 And then navigate to `https://<kubernetes-master>/ui`
 
 If it asks password, use `$ kubectl config view` to find it.
+
+## Alternative Usage
+Alternatively, you may access the UI via the Service Proxy. This is useful if you have a `kubectl`
+configured with access to the cluster, but lack password credentials for use in browser:
+
+```bash
+kubectl proxy
+```
+
+This will make the dashboard available:
+* http://localhost/api/v1/proxy/namespaces/kube-system/services/kubernetes-dashboard
+
+This will only be available from the machine where the command is executed, but you can see
+`kubectl proxy --help` for more options.
 
 ## Documentation
 
