@@ -21,12 +21,12 @@
   overflow: hidden;
   overflow-y: auto;
   white-space: nowrap;
-  width: 30 * $baseline-grid;
+  width: $nav-width;
 
   &.md-closed {
     &.md-locked-open-add-active {
-      min-width: 30 * $baseline-grid;
-      width: 30 * $baseline-grid;
+      min-width: $nav-width;
+      width: $nav-width;
     }
   }
 

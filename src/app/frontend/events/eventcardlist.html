@@ -15,8 +15,9 @@ limitations under the License.
 -->
 
 <kd-content-card>
+  <kd-title>{{::$ctrl.i18n.MSG_EVENTS_CARD}}</kd-title>
   <kd-content>
-    <div class="kd-replicationcontrollerevents-options" layout="row">
+    <div class="kd-replicationcontrollerevents-options" layout="row" ng-if="::$ctrl.hasEvents()">
       <md-input-container>
         <label>{{::$ctrl.i18n.MSG_EVENTS_TYPE_LABEL}}</label>
         <md-select aria-label="Event Type" ng-model="$ctrl.eventType"
@@ -87,16 +88,9 @@ limitations under the License.
       </kd-resource-card-list-footer>
     </kd-resource-card-list>
 
-    <div class="kd-replicationcontrollerevents-no-events" ng-if="!$ctrl.hasEvents()">
-      <md-icon class="material-icons kd-replicationcontrollerevents-no-events-icon">
-        info_outline
-      </md-icon>
-      <div class="kd-replicationcontrollerevents-no-events-text">
-        {{::$ctrl.i18n.MSG_EVENTS_NO_EVENTS_TITLE}}
-      </div>
-      <div class="kd-replicationcontrollerevents-no-events-info">
-        {{::$ctrl.i18n.MSG_EVENTS_NO_EVENTS_USER_HELP}}
-      </div>
+    <div class="kd-zerostate-message" layout-padding ng-hide="$ctrl.hasEvents()">
+      <div class="kd-zerostate-title">{{::$ctrl.i18n.MSG_EVENTS_NO_EVENTS_TITLE}}</div>
+      <div class="kd-zerostate-text">{{::$ctrl.i18n.MSG_EVENTS_NO_EVENTS_USER_HELP}}</div>
     </div>
   </kd-content>
 </kd-content-card>

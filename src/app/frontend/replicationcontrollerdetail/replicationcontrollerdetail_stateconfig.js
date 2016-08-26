@@ -45,7 +45,7 @@ export default function stateConfig($stateProvider) {
     views: {
       '': {
         controller: ReplicationControllerDetailController,
-        controllerAs: 'ctrl',
+        controllerAs: '$ctrl',
         templateUrl: 'replicationcontrollerdetail/replicationcontrollerdetail.html',
       },
       [actionbarViewName]: {

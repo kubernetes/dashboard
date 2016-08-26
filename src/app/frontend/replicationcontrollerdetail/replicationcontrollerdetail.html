@@ -14,46 +14,37 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div layout="column">
-  <md-content>
-    <md-tabs md-border-bottom md-dynamic-height>
-      <md-tab label="{{::ctrl.i18n.MSG_RC_DETAIL_OVERVIEW_LABEL}}">
-        <kd-replication-controller-info replication-controller="::ctrl.replicationControllerDetail">
-        </kd-replication-controller-info>
+<kd-replication-controller-info replication-controller="::$ctrl.replicationControllerDetail">
+</kd-replication-controller-info>
 
-        <kd-content-card>
-          <kd-title>{{::ctrl.i18n.MSG_RC_DETAIL_SERVICES_TITLE}}</kd-title>
-          <kd-content>
-            <kd-service-card-list ng-show="::ctrl.replicationControllerDetail.serviceList.services.length"
-                                  service-list="::ctrl.replicationControllerDetail.serviceList"
-                                  service-list-resource="::ctrl.serviceListResource">
-            </kd-service-card-list>
-            <div class="kd-zerostate-message" layout-padding ng-hide="::ctrl.replicationControllerDetail.serviceList.services.length">
-              <div class="kd-zerostate-title">{{::$ctrl.i18n.MSG_RC_DETAIL_SERVICES_ZEROSTATE_TITLE}}</div>
-              <div class="kd-zerostate-text">{{::$ctrl.i18n.MSG_RC_DETAIL_SERVICES_ZEROSTATE_TEXT}}</div>
-            </div>
-          </kd-content>
-        </kd-content-card>
+<kd-content-card>
+  <kd-title>{{::$ctrl.i18n.MSG_RC_DETAIL_SERVICES_TITLE}}</kd-title>
+  <kd-content>
+    <kd-service-card-list ng-show="::$ctrl.replicationControllerDetail.serviceList.services.length"
+                          service-list="::$ctrl.replicationControllerDetail.serviceList"
+                          service-list-resource="::$ctrl.serviceListResource">
+    </kd-service-card-list>
+    <div class="kd-zerostate-message" layout-padding ng-hide="::$ctrl.replicationControllerDetail.serviceList.services.length">
+      <div class="kd-zerostate-title">{{::$ctrl.i18n.MSG_RC_DETAIL_SERVICES_ZEROSTATE_TITLE}}</div>
+      <div class="kd-zerostate-text">{{::$ctrl.i18n.MSG_RC_DETAIL_SERVICES_ZEROSTATE_TEXT}}</div>
+    </div>
+  </kd-content>
+</kd-content-card>
 
-        <kd-content-card>
-          <kd-title>{{::ctrl.i18n.MSG_RC_DETAIL_PODS_TITLE}}</kd-title>
-          <kd-content>
-            <kd-pod-card-list ng-show="::ctrl.replicationControllerDetail.podList.pods.length"
-                              pod-list="::ctrl.replicationControllerDetail.podList"
-                              pod-list-resource="::ctrl.podListResource"
-                              with-statuses="true">
-            </kd-pod-card-list>
-            <div class="kd-zerostate-message" layout-padding ng-hide="::ctrl.replicationControllerDetail.podList.pods.length">
-              <div class="kd-zerostate-title">{{::$ctrl.i18n.MSG_RC_DETAIL_PODS_ZEROSTATE_TITLE}}</div>
-              <div class="kd-zerostate-text">{{::$ctrl.i18n.MSG_RC_DETAIL_PODS_ZEROSTATE_TEXT}}</div>
-            </div>
-          </kd-content>
-        </kd-content-card>
-      </md-tab>
-      <md-tab label="{{::ctrl.i18n.MSG_RC_DETAIL_EVENTS_LABEL}}">
-        <kd-event-card-list event-list="::ctrl.replicationControllerDetail.eventList">
-        </kd-event-card-list>
-      </md-tab>
-    </md-tabs>
-  </md-content>
-</div>
+<kd-content-card>
+  <kd-title>{{::$ctrl.i18n.MSG_RC_DETAIL_PODS_TITLE}}</kd-title>
+  <kd-content>
+    <kd-pod-card-list ng-show="::$ctrl.replicationControllerDetail.podList.pods.length"
+                      pod-list="::$ctrl.replicationControllerDetail.podList"
+                      pod-list-resource="::$ctrl.podListResource"
+                      with-statuses="true">
+    </kd-pod-card-list>
+    <div class="kd-zerostate-message" layout-padding ng-hide="::$ctrl.replicationControllerDetail.podList.pods.length">
+      <div class="kd-zerostate-title">{{::$ctrl.i18n.MSG_RC_DETAIL_PODS_ZEROSTATE_TITLE}}</div>
+      <div class="kd-zerostate-text">{{::$ctrl.i18n.MSG_RC_DETAIL_PODS_ZEROSTATE_TEXT}}</div>
+    </div>
+  </kd-content>
+</kd-content-card>
+
+<kd-event-card-list event-list="::$ctrl.replicationControllerDetail.eventList">
+</kd-event-card-list>

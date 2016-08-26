@@ -14,24 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div layout="column">
-  <md-content>
-    <md-tabs md-border-bottom md-dynamic-height>
-      <md-tab label="Overview">
-        <kd-job-info job="::ctrl.jobDetail"></kd-job-info>
+<kd-job-info job="::ctrl.jobDetail"></kd-job-info>
 
-        <kd-content-card>
-          <kd-title>Pods</kd-title>
-          <kd-content>
-            <kd-pod-card-list pod-list="::ctrl.jobDetail.podList" with-statuses="true"
-                              pod-list-resource="::ctrl.jobPodsResource">
-            </kd-pod-card-list>
-          </kd-content>
-        </kd-content-card>
-      </md-tab>
-      <md-tab label="Events">
-        <kd-event-card-list event-list="::ctrl.jobDetail.eventList"></kd-event-card-list>
-      </md-tab>
-    </md-tabs>
-  </md-content>
-</div>
+<kd-content-card>
+  <kd-title>{{::$ctrl.i18n.MSG_JOB_DETAIL_PODS}}</kd-title>
+  <kd-content>
+    <kd-pod-card-list pod-list="::ctrl.jobDetail.podList" with-statuses="true"
+                      pod-list-resource="::ctrl.jobPodsResource">
+    </kd-pod-card-list>
+  </kd-content>
+</kd-content-card>
+
+<kd-event-card-list event-list="::ctrl.jobDetail.eventList"></kd-event-card-list>

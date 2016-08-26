@@ -14,15 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div layout="column">
-  <md-content>
-    <md-tabs md-border-bottom md-dynamic-height>
-      <md-tab label="{{::ctrl.i18n.MSG_NODE_DETAIL_OVERVIEW_LABEL}}">
-        <kd-node-info node="::ctrl.nodeDetail"></kd-node-info>
-      </md-tab>
-      <md-tab label="{{::ctrl.i18n.MSG_NODE_DETAIL_EVENTS_LABEL}}">
-        <kd-event-card-list event-list="::ctrl.nodeDetail.eventList"></kd-event-card-list>
-      </md-tab>
-    </md-tabs>
-  </md-content>
-</div>
+<kd-node-info node="::ctrl.nodeDetail"></kd-node-info>
+<kd-event-card-list event-list="::ctrl.nodeDetail.eventList"></kd-event-card-list>
