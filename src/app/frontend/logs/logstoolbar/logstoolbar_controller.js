@@ -51,11 +51,10 @@ export default class LogsToolbarController {
   /**
    * Execute a code when a user changes the selected option of a container element.
    * @param {string} container
-   * @return {string}
    * @export
    */
   onContainerChange(container) {
-    return this.state_.go(
+    this.state_.go(
         logs,
         new StateParams(this.stateParams.objectNamespace, this.stateParams.objectName, container));
   }
