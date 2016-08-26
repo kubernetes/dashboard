@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+
 /**
  * @final
  */
@@ -38,7 +40,20 @@ export class NavItemController {
    * @return {boolean}
    * @export
    */
-  isActive() { return this.state_.current.name === this.state; }
+  isActive() {
+    let state = this.state_.current;
+    while (state) {
+      if (state.name === this.state) {
+        return true;
+      }
+      if (state && state.data && state.data[breadcrumbsConfig]) {
+        state = this.state_.get(state.data[breadcrumbsConfig]['parent']);
+      } else {
+        state = null;
+      }
+    }
+    return false;
+  }
 }
 
 /**

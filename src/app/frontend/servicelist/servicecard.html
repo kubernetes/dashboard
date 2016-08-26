@@ -51,9 +51,8 @@ limitations under the License.
       <div ng-hide="::$ctrl.service.internalEndpoint">-</div>
     </kd-resource-card-column>
     <kd-resource-card-column>
-      <div ng-if="::$ctrl.service.externalEndpoints"
-           ng-repeat="endpoint in ::$ctrl.service.externalEndpoints">
-        <kd-external-endpoint endpoint="endpoint"></kd-external-endpoint>
+      <div ng-if="::$ctrl.service.externalEndpoints">
+        <kd-external-endpoint endpoints="::$ctrl.service.externalEndpoints"></kd-external-endpoint>
       </div>
       <div ng-hide="::$ctrl.service.externalEndpoints">-</div>
     </kd-resource-card-column>

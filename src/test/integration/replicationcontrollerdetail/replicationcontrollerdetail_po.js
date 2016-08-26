@@ -14,14 +14,6 @@
 
 export default class ReplicationControllerDetailPageObject {
   constructor() {
-    this.mdTabItemsQuery = by.tagName('md-tab-item');
-
-    this.eventsTab = element.all(this.mdTabItemsQuery).get(1);
-    this.podsTab = element.all(this.mdTabItemsQuery).get(0);
-
-    this.mdTabsItemQuery = by.css('md-tabs');
-    this.mdTabsItem = element(this.mdTabsItemQuery);
-
     this.eventsTypeFilterQuery = by.model('$ctrl.eventType');
     this.eventsTypeFilter = element(this.eventsTypeFilterQuery);
 

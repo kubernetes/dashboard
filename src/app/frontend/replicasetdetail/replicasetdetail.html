@@ -14,37 +14,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div layout="column">
-  <md-content>
-    <md-tabs md-border-bottom md-dynamic-height>
-      <md-tab label="{{::ctrl.i18n.MSG_REPLICA_SET_DETAIL_OVERVIEW_LABEL}}">
-        <kd-replica-set-info replica-set="::ctrl.replicaSetDetail"></kd-replica-set-info>
+<kd-replica-set-info replica-set="::ctrl.replicaSetDetail"></kd-replica-set-info>
 
-        <kd-content-card ng-if="::ctrl.replicaSetDetail.serviceList.services.length">
-          <kd-title>{{::ctrl.i18n.MSG_REPLICA_SET_DETAIL_SERVICES_TITLE}}</kd-title>
-          <kd-content>
-            <kd-service-card-list service-list="::ctrl.replicaSetDetail.serviceList"
-                                  service-list-resource="::ctrl.replicaSetServicesResource">
-            </kd-service-card-list>
-          </kd-content>
-        </kd-content-card>
-        <kd-content-card>
-          <kd-title>{{::ctrl.i18n.MSG_REPLICA_SET_DETAIL_PODS_TITLE}}</kd-title>
-          <kd-content>
-            <kd-pod-card-list ng-show="::ctrl.replicaSetDetail.podList.pods.length"
-                              pod-list="::ctrl.replicaSetDetail.podList" with-statuses="true"
-                              pod-list-resource="::ctrl.replicaSetPodsResource">
-            </kd-pod-card-list>
-            <div class="kd-zerostate-message" layout-padding ng-hide="::ctrl.replicaSetDetail.podList.pods.length">
-              <div class="kd-zerostate-title">{{::$ctrl.i18n.MSG_REPLICA_SET_DETAIL_PODS_ZEROSTATE_TITLE}}</div>
-              <div class="kd-zerostate-text">{{::$ctrl.i18n.MSG_REPLICA_SET_DETAIL_PODS_ZEROSTATE_TEXT}}</div>
-            </div>
-          </kd-content>
-        </kd-content-card>
-      </md-tab>
-      <md-tab label="{{::ctrl.i18n.MSG_REPLICA_SET_DETAIL_EVENTS_LABEL}}">
-        <kd-event-card-list event-list="::ctrl.replicaSetDetail.eventList"></kd-event-card-list>
-      </md-tab>
-    </md-tabs>
-  </md-content>
-</div>
+<kd-content-card ng-if="::ctrl.replicaSetDetail.serviceList.services.length">
+  <kd-title>{{::ctrl.i18n.MSG_REPLICA_SET_DETAIL_SERVICES_TITLE}}</kd-title>
+  <kd-content>
+    <kd-service-card-list service-list="::ctrl.replicaSetDetail.serviceList"
+                          service-list-resource="::ctrl.replicaSetServicesResource">
+    </kd-service-card-list>
+  </kd-content>
+</kd-content-card>
+<kd-content-card>
+  <kd-title>{{::ctrl.i18n.MSG_REPLICA_SET_DETAIL_PODS_TITLE}}</kd-title>
+  <kd-content>
+    <kd-pod-card-list ng-show="::ctrl.replicaSetDetail.podList.pods.length"
+                      pod-list="::ctrl.replicaSetDetail.podList" with-statuses="true"
+                      pod-list-resource="::ctrl.replicaSetPodsResource">
+    </kd-pod-card-list>
+    <div class="kd-zerostate-message" layout-padding ng-hide="::ctrl.replicaSetDetail.podList.pods.length">
+      <div class="kd-zerostate-title">{{::$ctrl.i18n.MSG_REPLICA_SET_DETAIL_PODS_ZEROSTATE_TITLE}}</div>
+      <div class="kd-zerostate-text">{{::$ctrl.i18n.MSG_REPLICA_SET_DETAIL_PODS_ZEROSTATE_TEXT}}</div>
+    </div>
+  </kd-content>
+</kd-content-card>
+
+<kd-event-card-list event-list="::ctrl.replicaSetDetail.eventList"></kd-event-card-list>

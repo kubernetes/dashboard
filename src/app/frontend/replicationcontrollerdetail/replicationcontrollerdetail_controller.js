@@ -74,21 +74,16 @@ const i18n = {
   /** @export {string} @desc Title 'Service', which appears at the top of the services list on the
       replication controller detail view. */
   MSG_RC_DETAIL_SERVICES_TITLE: goog.getMsg('Services'),
-  /** @export {string} @desc Label 'Overview' for the left navigation tab on the replication
-      controller details page. */
-  MSG_RC_DETAIL_OVERVIEW_LABEL: goog.getMsg('Overview'),
-  /** @export {string} @desc Label 'Events' for the right navigation tab on the replication
-      controller details page. */
-  MSG_RC_DETAIL_EVENTS_LABEL: goog.getMsg('Events'),
   /** @export {string} @desc Title for services card zerostate in replication controller details page. */
   MSG_RC_DETAIL_SERVICES_ZEROSTATE_TITLE: goog.getMsg('There is nothing to display here'),
   /** @export {string} @desc Text for services card zerostate in replication controller details page. */
-  MSG_RC_DETAIL_SERVICES_ZEROSTATE_TEXT:
-      goog.getMsg('There are currently no Services scheduled on this Replication Controller'),
+  MSG_RC_DETAIL_SERVICES_ZEROSTATE_TEXT: goog.getMsg(
+      'There are currently no Services with the same label selector ' +
+      'as this Replication Controller'),
   /** @export {string} @desc Title for pods card zerostate in replication controller details page. */
   MSG_RC_DETAIL_PODS_ZEROSTATE_TITLE: goog.getMsg('There is nothing to display here'),
   /** @export {string} @desc Text for pods card zerostate in replication controller details page. */
   MSG_RC_DETAIL_PODS_ZEROSTATE_TEXT:
-      goog.getMsg('There are currently no Pods scheduled on this Replication Controller'),
+      goog.getMsg('There are currently no Pods selected by this Replication Controller'),
 
 };

@@ -1,41 +1,32 @@
-<div layout="column">
-  <md-content>
-    <md-tabs md-border-bottom md-dynamic-height>
-      <md-tab label="{{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_OVERVIEW_LABEL}}">
-        <kd-deployment-info deployment="::ctrl.deploymentDetail"></kd-deployment-info>
+<kd-deployment-info deployment="::ctrl.deploymentDetail"></kd-deployment-info>
 
-        <kd-content-card>
-          <kd-title>{{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_NEW_REPLICAS_TITLE}}</kd-title>
-          <kd-content>
-            <kd-replica-set-card-list ng-show="::ctrl.deploymentDetail.newReplicaSet.objectMeta.name"
-                    replica-set-list="::ctrl.newReplicaSetList">
-            </kd-replica-set-card-list>
-            <div class="kd-zerostate-message" layout-padding
-                 ng-hide="::ctrl.deploymentDetail.newReplicaSet.objectMeta.name">
-              <div class="kd-zerostate-title">{{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_NEW_REPLICAS_ZEROSTATE_TITLE}}</div>
-              <div class="kd-zerostate-text">{{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_NEW_REPLICAS_ZEROSTATE_TEXT}}</div>
-            </div>
-          </kd-content>
-        </kd-content-card>
+<kd-content-card>
+  <kd-title>{{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_NEW_REPLICAS_TITLE}}</kd-title>
+  <kd-content>
+    <kd-replica-set-card-list ng-show="::ctrl.deploymentDetail.newReplicaSet.objectMeta.name"
+            replica-set-list="::ctrl.newReplicaSetList">
+    </kd-replica-set-card-list>
+    <div class="kd-zerostate-message" layout-padding
+         ng-hide="::ctrl.deploymentDetail.newReplicaSet.objectMeta.name">
+      <div class="kd-zerostate-title">{{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_NEW_REPLICAS_ZEROSTATE_TITLE}}</div>
+      <div class="kd-zerostate-text">{{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_NEW_REPLICAS_ZEROSTATE_TEXT}}</div>
+    </div>
+  </kd-content>
+</kd-content-card>
 
-        <kd-content-card>
-          <kd-title>{{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_OLD_REPLICAS_TITLE}}</kd-title>
-          <kd-content>
-            <kd-replica-set-card-list
-                    ng-show="::ctrl.deploymentDetail.oldReplicaSetList.replicaSets.length"
-                    replica-set-list="::ctrl.deploymentDetail.oldReplicaSetList">
-            </kd-replica-set-card-list>
-            <div class="kd-zerostate-message" layout-padding
-                 ng-hide="::ctrl.deploymentDetail.oldReplicaSetList.replicaSets.length">
-              <div class="kd-zerostate-title">{{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_OLD_REPLICAS_ZEROSTATE_TITLE}}</div>
-              <div class="kd-zerostate-text">{{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_OLD_REPLICAS_ZEROSTATE_TEXT}}</div>
-            </div>
-          </kd-content>
-        </kd-content-card>
-      </md-tab>
-      <md-tab label="{{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_EVENTS_LABEL}}">
-        <kd-event-card-list event-list="::ctrl.deploymentDetail.eventList"></kd-event-card-list>
-      </md-tab>
-    </md-tabs>
-  </md-content>
-</div>
+<kd-content-card>
+  <kd-title>{{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_OLD_REPLICAS_TITLE}}</kd-title>
+  <kd-content>
+    <kd-replica-set-card-list
+            ng-show="::ctrl.deploymentDetail.oldReplicaSetList.replicaSets.length"
+            replica-set-list="::ctrl.deploymentDetail.oldReplicaSetList">
+    </kd-replica-set-card-list>
+    <div class="kd-zerostate-message" layout-padding
+         ng-hide="::ctrl.deploymentDetail.oldReplicaSetList.replicaSets.length">
+      <div class="kd-zerostate-title">{{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_OLD_REPLICAS_ZEROSTATE_TITLE}}</div>
+      <div class="kd-zerostate-text">{{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_OLD_REPLICAS_ZEROSTATE_TEXT}}</div>
+    </div>
+  </kd-content>
+</kd-content-card>
+
+<kd-event-card-list event-list="::ctrl.deploymentDetail.eventList"></kd-event-card-list>

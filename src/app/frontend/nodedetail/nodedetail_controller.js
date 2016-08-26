@@ -23,16 +23,5 @@ export class NodeDetailController {
   constructor(nodeDetail) {
     /** @export {!backendApi.NodeDetail} */
     this.nodeDetail = nodeDetail;
-
-    /** @export */
-    this.i18n = i18n;
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Label 'Overview' for the left navigation tab on the node details
-      page. */
-  MSG_NODE_DETAIL_OVERVIEW_LABEL: goog.getMsg('Overview'),
-  /** @export {string} @desc Label 'Events' for the pods tab on the node details page. */
-  MSG_NODE_DETAIL_EVENTS_LABEL: goog.getMsg('Events'),
-};

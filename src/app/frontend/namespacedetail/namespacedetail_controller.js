@@ -23,17 +23,5 @@ export class NamespaceDetailController {
   constructor(namespaceDetail) {
     /** @export {!backendApi.NamespaceDetail} */
     this.namespaceDetail = namespaceDetail;
-
-    /** @export */
-    this.i18n = i18n;
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Label 'Overview' for the left navigation tab on the namespace details
-      page. */
-  MSG_NAMESPACE_DETAIL_OVERVIEW_LABEL: goog.getMsg('Overview'),
-  /** @export {string} @desc Label 'Events' for the left navigation tab on the namespace details
-   page. */
-  MSG_NAMESPACE_DETAIL_EVENTS_LABEL: goog.getMsg('Events'),
-};
