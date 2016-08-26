@@ -17,33 +17,31 @@
 # Learn more at https://github.com/kubernetes/kubernetes/blob/master/docs/getting-started-guides/docker.md
 
 # Version of kubernetes to use.
-K8S_VERSION="v1.3.0"
+K8S_VERSION="v1.4.0-alpha.3"
 # Version heapster to use.
-HEAPSTER_VERSION="v1.0.2"
-# Port of the apiserver to serve on.
-PORT=8080
+HEAPSTER_VERSION="v1.1.0"
 # Port of the heapster to serve on.
 HEAPSTER_PORT=8082
 
 docker run \
-    --volume=/sys:/sys:ro \
-    --volume=/dev:/dev \
-    --volume=/var/lib/docker/:/var/lib/docker:ro \
-    --volume=/var/lib/kubelet/:/var/lib/kubelet:rw,shared \
-    --volume=/var/run:/var/run:rw \
     --net=host \
     --pid=host \
     --privileged=true \
     -d \
     gcr.io/google_containers/hyperkube-amd64:${K8S_VERSION} \
-    /hyperkube kubelet \
+    /nsenter \
+      --target=1 \
+      --mount \
+      --wd=. \
+      -- ./hyperkube kubelet \
         --allow-privileged=true \
         --hostname-override="127.0.0.1" \
         --address="0.0.0.0" \
-        --api-servers=http://localhost:${PORT} \
-        --config=/etc/kubernetes/manifests \
+        --api-servers=http://localhost:8080 \
+        --config=etc/kubernetes/manifests \
         --v=2
+
 
 # Runs Heapster in standalone mode
 docker run --net=host -d gcr.io/google_containers/heapster:${HEAPSTER_VERSION} -port ${HEAPSTER_PORT} \
-    --source=kubernetes:http://127.0.0.1:${PORT}?inClusterConfig=false&auth=""
+    --source=kubernetes:http://127.0.0.1:8080?inClusterConfig=false&auth=""
