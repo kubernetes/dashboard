@@ -30,11 +30,7 @@ $ npm install
 
 For development it is recommended to run a local Kubernetes cluster. For your convenience, a
 task is provided that checks out the latest stable version, and runs it inside a Docker container.
-First, a Docker setting is required to be adapted. Execute the following script, but only once:
-```
-$ sudo ./build/setup-docker.sh
-```
-Then, open a separate tab in your terminal and run the following command:
+Run the following command:
 
 ```
 $ gulp local-up-cluster
