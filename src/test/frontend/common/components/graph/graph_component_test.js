@@ -12,7 +12,63 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {formatCpuUsage, formatMemoryUsage, getDataPointsByMetricName} from 'common/components/graph/graph_component';
+import {formatCpuUsage, formatMemoryUsage, getDataPointsByMetricName, GraphController} from 'common/components/graph/graph_component';
+
+
+describe('Pod card list controller', () => {
+  /**
+   * @type {!common/components/graph/graph_component.GraphController}
+   */
+  let ctrl;
+  /**
+   * @type {!Array<!backendApi.Metric>}
+   */
+  let metrics = [
+    {
+      'dataPoints': [
+        {'x': 1472134320, 'y': 32},
+      ],
+      'metricName': 'cpu/usage_rate',
+      'aggregation': 'sum',
+    },
+    {
+      'dataPoints': [
+        {'x': 1472134320, 'y': 761946112},
+      ],
+      'metricName': 'memory/usage',
+      'aggregation': 'sum',
+    },
+  ];
+
+  beforeEach(() => {
+    angular.mock.module(podsListModule.name);
+    angular.mock.module(podDetailModule.name);
+
+    angular.mock.inject(($componentController, $rootScope, kdNamespaceService) => {
+      /** @type {!./../common/namespace/namespace_service.NamespaceService} */
+      data = kdNamespaceService;
+      /** @type {!podCardListController} */
+      ctrl = $componentController(
+          'kdPodCardList', {$scope: $rootScope, kdNamespaceService_: data}, {});
+    });
+  });
+
+  it('should instantiate the controller properly', () => { expect(ctrl).not.toBeUndefined(); });
+
+  it('should return the value from Namespace service', () => {
+    expect(ctrl.areMultipleNamespacesSelected()).toBe(data.areMultipleNamespacesSelected());
+  });
+
+  it('should execute logs href callback function', () => {
+    expect(ctrl.getPodDetailHref({
+      objectMeta: {
+        name: 'foo-pod',
+        namespace: 'foo-namespace',
+      },
+    })).toBe('#/pod/foo-namespace/foo-pod');
+  });
+})
+
 
 describe('Memory usage value formatter', () => {
   it('should format memory', () => {
@@ -55,7 +111,7 @@ describe('CPU usage value formatter', () => {
   });
 });
 
-describe('CPU usage value formatter', () => {
+describe('Conversion of list of metrics to map of metric names to data points.', () => {
   let metrics = [
     {
       'dataPoints': [

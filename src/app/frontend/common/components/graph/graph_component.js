@@ -12,58 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import coresFilter from 'common/filters/cores_filter';
-import memoryFilter from 'common/filters/memory_filter';
-
-/**
- * Formats the number to contain ideally 3 significant figures, but at most 3 decimal places.
- * @param {number} d
- * @return {string}
- */
-function precisionFilter(d) {
-  if (d >= 1000) {
-    return d3.format(',')(d.toPrecision(3));
-  }
-  if (d < 0.01) {
-    return d.toPrecision(1);
-  } else if (d < 0.1) {
-    return d.toPrecision(2);
-  }
-  return d.toPrecision(3);
-}
-
-/**
- * Returns formatted memory usage value.
- * @param {number} d
- * @return {string}
- */
-export function formatMemoryUsage(d) {
-  return d === null ? 'N/A' : memoryFilter(precisionFilter)(d);
-}
-
-/**
- * Returns formatted CPU usage value.
- * @param {number} d
- * @return {string}
- */
-export function formatCpuUsage(d) {
-  return d === null ? 'N/A' : coresFilter(precisionFilter)(d);
-}
-
-/**
- * Converts list of metrics to a map containing dataPoints by metricName.
- * @param {!Array<!backendApi.Metric>} metrics
- * @return {!Object<string, !Array<!backendApi.DataPoint>>}
- */
-export function getDataPointsByMetricName(metrics) {
-  // extract data points by metric name
-  let dataPoints = {};
-  for (let i = 0; i < metrics.length; i++) {
-    let metric = metrics[i];
-    dataPoints[metric.metricName] = metric.dataPoints;
-  }
-  return dataPoints;
-}
+import {axisSettings, metricDisplaySettings, TimeAxisType} from './graph_settings';
 
 class GraphController {
   /**
@@ -86,67 +35,110 @@ class GraphController {
   }
 
   $onInit() {
-    let dataPointsByMetricName = getDataPointsByMetricName(this.metrics);
     // draw graph if data is available
-    if (Object.keys(dataPointsByMetricName).length !== 0) {
-      this.generateGraph(dataPointsByMetricName);
+    if (this.metrics !== null && this.metrics.length !== 0) {
+      this.generateGraph();
     }
   }
 
-  generateGraph(parsedGraphData) {
+  /**
+   * Generates graph given map of data points by metric name.
+   * @private
+   */
+  generateGraph() {
     let chart;
-    let data;
 
     nv.addGraph(() => {
+      // basic chart options - multiChart with interactive tooltip
       chart = nv.models.multiChart().margin({top: 30, right: 90, bottom: 60, left: 75}).options({
         duration: 300,
         tooltips: true,
-
         useInteractiveGuideline: true,
       });
 
-      // chart sub-models (ie. xAxis, yAxis, etc) when accessed directly, return themselves, not the
-      // parent chart, so need to chain separately
-      chart.xAxis.axisLabel(i18n.MSG_GRAPH_TIME_AXIS_LABEL)
-          .tickFormat((d) => d3.time.format('%H:%M')(new Date(d)))
+      let data = [];
+      let yAxis1Type;
+      let yAxis2Type;
+      let y1max = 1;
+      let y2max = 1;
+      // iterate over metrics and add them to graph display
+      for (let metric of this.metrics) {
+        // don't display metric if the number of its data points is smaller than 2
+        if (metric.dataPoints.length < 2) {
+          continue;
+        }
+        // check whether it's possible to display this metric
+        if (metric.metricName in metricDisplaySettings) {
+          let metricSettings = metricDisplaySettings[metric.metricName];
+          if (metricSettings.yAxis === 1) {
+            if (typeof yAxis1Type === 'undefined') {
+              yAxis1Type = metricSettings.yAxisType;
+            } else if (yAxis1Type !== metricSettings.yAxisType) {
+              throw new Error(
+                  'Can\'t display requested data - metrics have inconsistent types of y1 axis!');
+            }
+            y1max = Math.max(y1max, Math.max(...metric.dataPoints.map((e) => e.y)));
+          } else {  // yAxis is 2
+            if (typeof yAxis2Type === 'undefined') {
+              yAxis2Type = metricSettings.yAxisType;
+            } else if (yAxis2Type !== metricSettings.yAxisType) {
+              throw new Error(
+                  'Can\'t display requested data - metrics have inconsistent types of y2 axis!');
+            }
+            y2max = Math.max(y2max, Math.max(...metric.dataPoints.map((e) => e.y)));
+          }
+          data.push({
+            area: metricSettings.area,
+            values: metric.dataPoints,
+            key: metricSettings.key,
+            color: metricSettings.color,
+            fillOpacity: metricSettings.fillOpacity,
+            strokeWidth: metricSettings.strokeWidth,
+            type: metricSettings.type,
+            yAxis: metricSettings.yAxis,
+          });
+        }
+      }
+
+      // customise X axis (hardcoded time).
+      let xAxisSettings = axisSettings[TimeAxisType];
+      chart.xAxis.axisLabel(xAxisSettings.label)
+          .tickFormat(xAxisSettings.formatter)
           .staggerLabels(true);
-      chart.yAxis1.axisLabel(i18n.MSG_GRAPH_CPU_USAGE_AXIS_LABEL).tickFormat(formatCpuUsage);
 
-      chart.yAxis2.axisLabel(i18n.MSG_GRAPH_MEMORY_USAGE_LEGEND_LABEL)
-          .tickFormat(formatMemoryUsage);
+      // customise Y axes
+      if (typeof yAxis1Type !== 'undefined') {
+        let yAxis1Settings = axisSettings[yAxis1Type];
+        chart.yAxis1.axisLabel(yAxis1Settings.label).tickFormat(yAxis1Settings.formatter);
+        chart.yDomain1([0, y1max]);
+      }
+      if (typeof yAxis2Type !== 'undefined') {
+        let yAxis2Settings = axisSettings[yAxis2Type];
+        chart.yAxis2.axisLabel(yAxis2Settings.label).tickFormat(yAxis2Settings.formatter);
+        chart.yDomain2([0, y2max]);
+      }
 
-      chart.interactiveLayer.tooltip.valueFormatter(function(d, i) {
-        return i === 0 ? chart.yAxis1.tickFormat()(d) : chart.yAxis2.tickFormat()(d);
+      // hack to fix tooltip to use appropriate formatters instead of raw numbers.
+      chart.interactiveLayer.tooltip.valueFormatter(function(d, axis_id) {
+        for (let e of data) {
+          if (!e.disabled) {
+            if (!axis_id) {
+              return e.yAxis === 1 ? chart.yAxis1.tickFormat()(d) : chart.yAxis2.tickFormat()(d);
+            }
+            axis_id--;
+          }
+        }
+        // in case it was not possible to determine true axis return raw number (this does not
+        // happen)
+        return d;
       });
 
-      // bind data to the graph.
-      data = [
-        {
-          area: true,
-          values: parsedGraphData['cpu/usage_rate'],
-          key: i18n.MSG_GRAPH_CPU_USAGE_LEGEND_LABEL,
-          color: '#00c752',  // $chart-1
-          fillOpacity: 0.2,
-          strokeWidth: 3,
-          type: 'line',
-          yAxis: 1,
-        },
-        {
-          area: true,
-          values: parsedGraphData['memory/usage'],
-          key: i18n.MSG_GRAPH_MEMORY_USAGE_LEGEND_LABEL,
-          color: '#326de6',  // $chart-2
-          fillOpacity: 0.2,
-          strokeWidth: 3,
-          type: 'line',
-          yAxis: 2,
-        },
-      ];
-
+      // generate graph
       let graphArea = d3.select(this.element_[0]);
       let svg = graphArea.append('svg');
-
       svg.attr('height', '300px').datum(data).call(chart);
+
+      // add grey line to the bottom to separate from the rest of the page.
       svg.style({
         'background-color': 'white',
         'border-bottom-style': 'solid',
@@ -158,9 +150,11 @@ class GraphController {
       nv.utils.windowResize(chart.update);
       this.scope_.$watch(
           () => graphArea.node().getBoundingClientRect().width,  // variable to watch
-          () => setTimeout(
-              chart.update, 500),  // listener, call after 500ms after animation is complete.
-          true                     // deep watch
+          () => setTimeout(chart.update, 500),  // TODO - this should be changed to just
+                                                // chart.update after we implement different method
+                                                // of left hand side nav animation (instant DOM
+                                                // change).
+          false                                 // not a deep watch
           );
 
       return chart;
@@ -179,17 +173,4 @@ export const graphComponent = {
   },
   controller: GraphController,
   templateUrl: 'common/components/graph/graph.html',
-};
-
-const i18n = {
-  /** @export {string} @desc Name of the CPU usage metric as displayed in the legend. */
-  MSG_GRAPH_CPU_USAGE_LEGEND_LABEL: goog.getMsg('CPU Usage'),
-  /** @export {string} @desc Name of the memory usage metric as displayed in the legend. */
-  MSG_GRAPH_MEMORY_USAGE_LEGEND_LABEL: goog.getMsg('Memory Usage'),
-  /** @export {string} @desc Name of Y axis showing CPU usage. */
-  MSG_GRAPH_CPU_USAGE_AXIS_LABEL: goog.getMsg('CPU Usage (cores)'),
-  /** @export {string} @desc Name of Y axis showing memory usage. */
-  MSG_GRAPH_MEMORY_USAGE_AXIS_LABEL: goog.getMsg('Memory Usage (bytes)'),
-  /** @export {string} @desc Name of time axis. */
-  MSG_GRAPH_TIME_AXIS_LABEL: goog.getMsg('Time'),
 };
