@@ -45,7 +45,6 @@ docker run \
         --config=etc/kubernetes/manifests \
         --v=2
 
-
 # Runs Heapster in standalone mode
 docker run --net=host -d gcr.io/google_containers/heapster:${HEAPSTER_VERSION} -port ${HEAPSTER_PORT} \
     --source=kubernetes:http://127.0.0.1:8080?inClusterConfig=false&auth=""
