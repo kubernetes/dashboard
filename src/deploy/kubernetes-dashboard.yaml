@@ -21,7 +21,7 @@ apiVersion: extensions/v1beta1
 metadata:
   labels:
     app: kubernetes-dashboard
-    version: v1.1.1
+    version: v1.4.0-beta1
   name: kubernetes-dashboard
   namespace: kube-system
 spec:
@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
       - name: kubernetes-dashboard
-        image: gcr.io/google_containers/kubernetes-dashboard-amd64:v1.1.1
+        image: gcr.io/google_containers/kubernetes-dashboard-amd64:v1.4.0-beta1
         imagePullPolicy: Always
         ports:
         - containerPort: 9090
