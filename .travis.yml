@@ -50,7 +50,6 @@ before_script:
   # Install go 1.6.1. It is not there by default.
   - eval "$(gimme 1.6.1)"
 
-  - sudo ./build/setup-docker.sh
   - docker --version
 
 script: ./node_modules/.bin/gulp check:local-cluster
