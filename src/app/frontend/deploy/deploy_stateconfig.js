@@ -17,6 +17,7 @@ import DeployFromSettingsController from './deployfromsettings_controller';
 import DeployFromFileController from './deployfromfile_controller';
 import {baseStateName, deployAppStateName, deployFileStateName} from './deploy_state';
 import {stateName as chromeStateName} from 'chrome/chrome_state';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 
 /**
  * Configures states for the deploy view.
@@ -43,6 +44,11 @@ export default function stateConfig($stateProvider) {
       'protocolsResource': getProtocolsResource,
       'protocols': getDefaultProtocols,
     },
+    data: {
+      [breadcrumbsConfig]: {
+        'label': i18n.MSG_BREADCRUMBS_DEPLOY_APP_LABEL,
+      },
+    },
     templateUrl: 'deploy/deployfromsettings.html',
   });
   $stateProvider.state(deployFileStateName, {
@@ -50,6 +56,11 @@ export default function stateConfig($stateProvider) {
     controllerAs: 'ctrl',
     url: '/file',
     parent: baseStateName,
+    data: {
+      [breadcrumbsConfig]: {
+        'label': i18n.MSG_BREADCRUMBS_DEPLOY_FILE_LABEL,
+      },
+    },
     templateUrl: 'deploy/deployfromfile.html',
   });
 }
@@ -83,3 +94,12 @@ function getProtocolsResource($resource) {
 function getDefaultProtocols(protocolsResource) {
   return protocolsResource.get().$promise;
 }
+
+const i18n = {
+  /** @type {string} @desc Breadcrum label for the deploy containerized
+      app form view. */
+  MSG_BREADCRUMBS_DEPLOY_APP_LABEL: goog.getMsg('Create'),
+
+  /** @type {string} @desc Breadcrum label for the YAML upload form */
+  MSG_BREADCRUMBS_DEPLOY_FILE_LABEL: goog.getMsg('Upload'),
+};
