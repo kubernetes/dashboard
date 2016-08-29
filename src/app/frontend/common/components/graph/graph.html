@@ -13,13 +13,5 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<kd-graph metrics="$ctrl.podList.cumulativeMetrics"></kd-graph>
 
-<kd-content-card ng-if="!$ctrl.shouldShowZeroState()">
-  <kd-content>
-    <kd-pod-card-list pod-list="$ctrl.podList" pod-list-resource="$ctrl.podListResource"
-                      with-statuses="true">
-    </kd-pod-card-list>
-  </kd-content>
-</kd-content-card>
-<kd-zero-state ng-if="$ctrl.shouldShowZeroState()"></kd-zero-state>
+<div></div>

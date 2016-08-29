@@ -90,14 +90,14 @@ limitations under the License.
       </kd-resource-card-column>
       <kd-resource-card-column ng-if="::$ctrl.showMetrics()">
         <div ng-if="::$ctrl.hasCpuUsage(pod)">
-          <kd-sparkline timeseries="::pod.metrics.cpuUsageHistory"></kd-sparkline>
+          <kd-sparkline timeseries="::pod.metrics.cpuUsageHistory" class="kd-sparkline-cpu-series"></kd-sparkline>
           {{::(pod.metrics.cpuUsage | kdCores)}}
         </div>
         <div ng-if="::!$ctrl.hasCpuUsage(pod)">-</div>
       </kd-resource-card-column>
       <kd-resource-card-column ng-if="::$ctrl.showMetrics()">
         <div ng-if="::$ctrl.hasMemoryUsage(pod)">
-          <kd-sparkline timeseries="::pod.metrics.memoryUsageHistory"></kd-sparkline>
+          <kd-sparkline timeseries="::pod.metrics.memoryUsageHistory" class="kd-sparkline-memory-series"></kd-sparkline>
           {{::(pod.metrics.memoryUsage | kdMemory)}}
         </div>
         <div ng-if="::!$ctrl.hasMemoryUsage(pod)">-</div>
@@ -162,14 +162,14 @@ limitations under the License.
       </kd-resource-card-column>
       <kd-resource-card-column ng-if="::$ctrl.showMetrics()">
         <div ng-if="::$ctrl.hasCpuUsage(pod)">
-          <kd-sparkline timeseries="::pod.metrics.cpuUsageHistory"></kd-sparkline>
+          <kd-sparkline timeseries="::pod.metrics.cpuUsageHistory" class="kd-sparkline-cpu-series"></kd-sparkline>
           {{::(pod.metrics.cpuUsage | kdCores)}}
         </div>
         <div ng-if="::!$ctrl.hasCpuUsage(pod)">-</div>
       </kd-resource-card-column>
       <kd-resource-card-column ng-if="::$ctrl.showMetrics()">
         <div ng-if="::$ctrl.hasMemoryUsage(pod)">
-          <kd-sparkline timeseries="::pod.metrics.memoryUsageHistory"></kd-sparkline>
+          <kd-sparkline timeseries="::pod.metrics.memoryUsageHistory" class="kd-sparkline-memory-series"></kd-sparkline>
           {{::(pod.metrics.memoryUsage | kdMemory)}}
         </div>
         <div ng-if="::!$ctrl.hasMemoryUsage(pod)">-</div>

@@ -361,10 +361,28 @@ backendApi.DeploymentDetail;
 /**
  * @typedef {{
  *   pods: !Array<!backendApi.Pod>,
- *   listMeta: !backendApi.ListMeta
+ *   listMeta: !backendApi.ListMeta,
+ *   cumulativeMetrics: (!Array<!backendApi.Metric>|null),
  * }}
  */
 backendApi.PodList;
+
+/**
+ * @typedef {{
+ *   dataPoints: !Array<!backendApi.DataPoint>,
+ *   metricName: string,
+ *   aggregation: string,
+ * }}
+ */
+backendApi.Metric;
+
+/**
+ * @typedef {{
+ *   x: number,
+ *   y: number,
+ * }}
+ */
+backendApi.DataPoint;
 
 /**
  * @typedef {{
