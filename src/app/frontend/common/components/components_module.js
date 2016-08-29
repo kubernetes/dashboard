@@ -26,6 +26,7 @@ import paginationModule from './../pagination/pagination_module';
 import namespaceModule from './../namespace/namespace_module';
 import sparklineDirective from './sparkline/sparkline_directive';
 import warnThresholdDirective from './warnthreshold/warnthreshold_directive';
+import stateModule from 'common/state/module';
 
 /**
  * Module containing common components for the application.
@@ -45,6 +46,7 @@ export default angular
           zeroStateModule.name,
           paginationModule.name,
           namespaceModule.name,
+          stateModule.name,
         ])
     .directive('kdI18n', i18nDirective)
     .directive('kdLabels', labelsDirective)

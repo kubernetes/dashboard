@@ -17,6 +17,7 @@ import {hamburgerComponent} from './hamburger_component';
 import {navComponent} from './nav_component';
 import {NavService} from './nav_service';
 import {navItemComponent} from './navitem_component';
+import stateModule from 'common/state/module';
 
 /**
  * Angular module containing navigation for the application.
@@ -27,6 +28,7 @@ export default angular
         [
           'ngMaterial',
           'ui.router',
+          stateModule.name,
         ])
     .service('kdNavService', NavService)
     .component('kdNavHamburger', hamburgerComponent)
