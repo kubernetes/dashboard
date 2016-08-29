@@ -48,7 +48,8 @@ export class DeleteResourceController {
    */
   remove() {
     let resource = this.resource_(
-        `api/v1/${this.typeMeta_.kind}/namespace/${this.objectMeta.namespace}/name/${this.objectMeta.name}`);
+        `api/v1/${this.typeMeta_.kind}/namespace/` +
+        `${this.objectMeta.namespace}/name/${this.objectMeta.name}`);
     resource.remove(this.mdDialog_.hide, this.mdDialog_.cancel);
   }
 

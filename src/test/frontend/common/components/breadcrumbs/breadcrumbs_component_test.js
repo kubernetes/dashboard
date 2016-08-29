@@ -55,7 +55,7 @@ describe('Breadcrumbs controller ', () => {
   function addStateParents(state, parentsNr, stateNamePrefix) {
     let parentState = state;
     for (let i = 0; i < parentsNr; i++) {
-      let parent = getStateMock(`${stateNamePrefix}-${i+1}`);
+      let parent = getStateMock(`${stateNamePrefix}-${i + 1}`);
       state.data[breadcrumbsConfig].parent = parent;
       state = parent;
     }
@@ -117,7 +117,7 @@ describe('Breadcrumbs controller ', () => {
     //
     expect(breadcrumbs.length).toEqual(breadcrumbsLimit);
     for (let i = 0; i < breadcrumbs.length - 1; i++) {
-      expect(breadcrumbs[i].label).toEqual(`parentState-${breadcrumbsLimit-(i+1)}`);
+      expect(breadcrumbs[i].label).toEqual(`parentState-${breadcrumbsLimit - (i + 1)}`);
     }
 
     expect(breadcrumbs[breadcrumbsLimit - 1].label).toEqual('testState');
