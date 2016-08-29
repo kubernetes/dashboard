@@ -25,9 +25,10 @@ export default class BreadcrumbsController {
    * @param {!angular.$interpolate} $interpolate
    * @param {!./../breadcrumbs/breadcrumbs_service.BreadcrumbsService} kdBreadcrumbsService
    * @param {!angular.Scope} $scope
+   * @param {!./../../state/futurestate_service.FutureStateService} kdFutureStateService
    * @ngInject
    */
-  constructor($state, $interpolate, kdBreadcrumbsService, $scope) {
+  constructor($state, $interpolate, kdBreadcrumbsService, $scope, kdFutureStateService) {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
@@ -45,32 +46,34 @@ export default class BreadcrumbsController {
 
     /** @private {!angular.Scope} */
     this.scope_ = $scope;
+
+    /** @private {!./../../state/futurestate_service.FutureStateService} */
+    this.kdFutureStateService_ = kdFutureStateService;
   }
 
   /**
    * @export
    */
   $onInit() {
-    this.breadcrumbs = this.initBreadcrumbs_();
+    this.initBreadcrumbs_();
 
-    this.scope_.$on('$stateChangeSuccess', () => { this.breadcrumbs = this.initBreadcrumbs_(); });
+    this.scope_.$watch(() => this.kdFutureStateService_.state, () => { this.initBreadcrumbs_(); });
   }
 
   /**
    * Initializes breadcrumbs array by traversing states parents until none is found.
    *
-   * @return {!Array<!Breadcrumb>}
    * @private
    */
   initBreadcrumbs_() {
-    /** @type {!ui.router.$state} */
-    let state = this.state_['$current'];
+    let state = this.kdFutureStateService_.state;
+    let params = this.kdFutureStateService_.params;
     /** @type {!Array<!Breadcrumb>} */
     let breadcrumbs = [];
 
     while (state && state['name'] && this.canAddBreadcrumb_(breadcrumbs)) {
       /** @type {!Breadcrumb} */
-      let breadcrumb = this.getBreadcrumb_(state);
+      let breadcrumb = this.getBreadcrumb_(state, params);
 
       if (breadcrumb.label) {
         breadcrumbs.push(breadcrumb);
@@ -79,7 +82,7 @@ export default class BreadcrumbsController {
       state = this.kdBreadcrumbsService_.getParentState(state);
     }
 
-    return breadcrumbs.reverse();
+    this.breadcrumbs = breadcrumbs.reverse();
   }
 
   /**
@@ -98,13 +101,14 @@ export default class BreadcrumbsController {
    * Creates breadcrumb object based on state object.
    *
    * @param {!ui.router.$state} state
+   * @param {*} params state params object to be passed for interpolation
    * @return {!Breadcrumb}
    * @private
    */
-  getBreadcrumb_(state) {
+  getBreadcrumb_(state, params) {
     let breadcrumb = new Breadcrumb();
 
-    breadcrumb.label = this.getDisplayName_(state);
+    breadcrumb.label = this.getDisplayName_(state, params);
     breadcrumb.stateLink = this.state_.href(state['name']);
 
     return breadcrumb;
@@ -118,25 +122,19 @@ export default class BreadcrumbsController {
    * If label string is empty then state name is returned.
    *
    * @param {!ui.router.$state} state
+   * @param {*} params state params object to be passed for interpolation
    * @return {string}
    * @private
    */
-  getDisplayName_(state) {
+  getDisplayName_(state, params) {
     let conf = this.kdBreadcrumbsService_.getBreadcrumbConfig(state);
-    let areLocalsDefined = !!state['locals'];
-    let interpolationContext = state;
 
     // When conf is undefined and label is undefined or empty then fallback to state name
     if (!conf || !conf.label) {
       return state['name'];
     }
 
-    if (areLocalsDefined) {
-      // Set context to default view scope
-      interpolationContext = state['locals'][`@${state.parent.name}`];
-    }
-
-    return this.interpolate_(conf.label)(interpolationContext).toString();
+    return this.interpolate_(conf.label)({'$stateParams': params}).toString();
   }
 }
 

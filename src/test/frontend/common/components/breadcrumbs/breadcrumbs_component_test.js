@@ -24,6 +24,8 @@ describe('Breadcrumbs controller ', () => {
   let ctrl;
   /** @type {number} */
   let breadcrumbsLimit = 3;
+  /** @type {!common/state/futurestate_service.FutureStateService}*/
+  let kdFutureStateService;
 
   /**
    * Create simple mock object for state.
@@ -67,9 +69,11 @@ describe('Breadcrumbs controller ', () => {
     angular.mock.module(componentsModule.name);
 
     angular.mock.inject(
-        ($componentController, $state, $interpolate, _kdBreadcrumbsService_, $rootScope) => {
+        ($componentController, $state, $interpolate, _kdBreadcrumbsService_, $rootScope,
+         _kdFutureStateService_) => {
           state = $state;
           interpolate = $interpolate;
+          kdFutureStateService = _kdFutureStateService_;
           ctrl = $componentController(
               'kdBreadcrumbs', {
                 $state: state,
@@ -96,10 +100,11 @@ describe('Breadcrumbs controller ', () => {
 
   it('should initialize breadcrumbs', () => {
     // given
-    state['$current'] = getStateMock('testState');
+    kdFutureStateService.state = getStateMock('testState');
 
     // when
-    let breadcrumbs = ctrl.initBreadcrumbs_();
+    ctrl.initBreadcrumbs_();
+    let breadcrumbs = ctrl.breadcrumbs;
 
     // then
     expect(breadcrumbs.length).toEqual(1);
@@ -108,13 +113,15 @@ describe('Breadcrumbs controller ', () => {
 
   it('should not exceed the breadcrumbs limit on initialize breadcrumbs', () => {
     // given
-    let workingState = state['$current'] = getStateMock('testState');
+    let workingState = getStateMock('testState');
+    kdFutureStateService.state = workingState;
     addStateParents(workingState, 3, 'parentState');
 
     // when
-    let breadcrumbs = ctrl.initBreadcrumbs_();
+    ctrl.initBreadcrumbs_();
+    let breadcrumbs = ctrl.breadcrumbs;
 
-    //
+    // then
     expect(breadcrumbs.length).toEqual(breadcrumbsLimit);
     for (let i = 0; i < breadcrumbs.length - 1; i++) {
       expect(breadcrumbs[i].label).toEqual(`parentState-${breadcrumbsLimit - (i + 1)}`);
@@ -162,18 +169,12 @@ describe('Breadcrumbs controller ', () => {
 
   it('should show interpolated string as display name', () => {
     // given
-    let stateContextVarName = 'stateLabel';
     let stateName = 'Test state';
-    state.locals = {
-      '@chrome': {
-        [stateContextVarName]: stateName,
-      },
-    };
-    state.data = {kdBreadcrumbs: {label: `{{${stateContextVarName}}}`}};
+    state.data = {kdBreadcrumbs: {label: `{{$stateParams.foo}}`}};
     state.parent = {name: 'chrome'};
 
     // when
-    let result = ctrl.getDisplayName_(state);
+    let result = ctrl.getDisplayName_(state, {'foo': stateName});
 
     // then
     expect(result).toEqual(stateName);

@@ -20,14 +20,18 @@ import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_servi
 export class NavItemController {
   /**
    * @param {!ui.router.$state} $state
+   * @param {!./../../common/state/futurestate_service.FutureStateService} kdFutureStateService
    * @ngInject
    */
-  constructor($state) {
+  constructor($state, kdFutureStateService) {
     /** @export {string} */
     this.state;
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
+
+    /** @private {!./../../common/state/futurestate_service.FutureStateService} */
+    this.kdFutureStateService_ = kdFutureStateService;
   }
 
   /**
@@ -41,7 +45,7 @@ export class NavItemController {
    * @export
    */
   isActive() {
-    let state = this.state_.current;
+    let state = this.kdFutureStateService_.state;
     while (state) {
       if (state.name === this.state) {
         return true;
