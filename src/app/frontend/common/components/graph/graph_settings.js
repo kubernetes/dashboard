@@ -19,7 +19,7 @@ const i18n = {
   MSG_GRAPH_CPU_USAGE_LEGEND_LABEL: goog.getMsg('CPU Usage'),
   /** @export {string} @desc Name of the memory usage metric as displayed in the legend. */
   MSG_GRAPH_MEMORY_USAGE_LEGEND_LABEL: goog.getMsg('Memory Usage'),
-  /** @export {string} @desc Name of the CPU usage metric as displayed in the legend. */
+  /** @export {string} @desc Name of the CPU limit metric as displayed in the legend. */
   MSG_GRAPH_CPU_LIMIT_LEGEND_LABEL: goog.getMsg('CPU Limit'),
   /** @export {string} @desc Name of Y axis showing CPU usage. */
   MSG_GRAPH_CPU_AXIS_LABEL: goog.getMsg('CPU (cores)'),
@@ -83,7 +83,7 @@ export const axisSettings = {
   },
   MemoryAxisType: {
     formatter: formatMemoryUsage,
-    label: i18n.MSG_GRAPH_CPU_AXIS_LABEL,
+    label: i18n.MSG_GRAPH_MEMORY_AXIS_LABEL,
   },
   TimeAxisType: {
     formatter: formatTime,

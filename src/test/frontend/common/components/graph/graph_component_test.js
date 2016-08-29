@@ -12,130 +12,122 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {formatCpuUsage, formatMemoryUsage, getDataPointsByMetricName, GraphController} from 'common/components/graph/graph_component';
+import componentsModule from 'common/components/components_module';
 
+/**
+ * @type {!Array<!backendApi.Metric>}
+ */
+let stdMetrics = [
+  {
+    'dataPoints': [
+      {'x': 1472219880, 'y': 50},
+      {'x': 1472219940, 'y': 40},
+      {'x': 1472220000, 'y': 48},
+    ],
+    'metricName': 'cpu/usage_rate',
+    'aggregation': 'sum',
+  },
+  {
+    'dataPoints': [
+      {'x': 1472219880, 'y': 976666624},
+      {'x': 1472219940, 'y': 976728064},
+    ],
+    'metricName': 'memory/usage',
+    'aggregation': 'sum',
+  },
+];
 
-describe('Pod card list controller', () => {
+/**
+ * @type {!Array<!backendApi.Metric>}
+ */
+let metricsWithTooFewDataPoints = [
+  {
+    'dataPoints': [
+      {'x': 1472219880, 'y': 50},
+    ],
+    'metricName': 'cpu/usage_rate',
+    'aggregation': 'sum',
+  },
+  {
+    'dataPoints': [
+      {'x': 1472219880, 'y': 976666624},
+      {'x': 1472219940, 'y': 976728064},
+    ],
+    'metricName': 'memory/usage',
+    'aggregation': 'sum',
+  },
+];
+
+describe('Graph component controller', () => {
   /**
    * @type {!common/components/graph/graph_component.GraphController}
    */
   let ctrl;
-  /**
-   * @type {!Array<!backendApi.Metric>}
-   */
-  let metrics = [
-    {
-      'dataPoints': [
-        {'x': 1472134320, 'y': 32},
-      ],
-      'metricName': 'cpu/usage_rate',
-      'aggregation': 'sum',
-    },
-    {
-      'dataPoints': [
-        {'x': 1472134320, 'y': 761946112},
-      ],
-      'metricName': 'memory/usage',
-      'aggregation': 'sum',
-    },
-  ];
+
+  /** @type {!angular.JQLite} */
+  let element;
 
   beforeEach(() => {
-    angular.mock.module(podsListModule.name);
-    angular.mock.module(podDetailModule.name);
+    angular.mock.module(componentsModule.name);
 
-    angular.mock.inject(($componentController, $rootScope, kdNamespaceService) => {
-      /** @type {!./../common/namespace/namespace_service.NamespaceService} */
-      data = kdNamespaceService;
-      /** @type {!podCardListController} */
-      ctrl = $componentController(
-          'kdPodCardList', {$scope: $rootScope, kdNamespaceService_: data}, {});
+    angular.mock.inject(($componentController) => {
+      element = angular.element(document.createElement('div'));
+      element.appendTo(document.body);
+      ctrl = $componentController('kdGraph', {$element: element}, {metrics: stdMetrics});
     });
   });
 
   it('should instantiate the controller properly', () => { expect(ctrl).not.toBeUndefined(); });
-
-  it('should return the value from Namespace service', () => {
-    expect(ctrl.areMultipleNamespacesSelected()).toBe(data.areMultipleNamespacesSelected());
+  it('should render svg graph inside parent element', () => {
+    ctrl.$onInit();
+    nv.render.queue.pop().generate();
+    expect(element.children(':first').is('svg')).toBeTruthy();
   });
-
-  it('should execute logs href callback function', () => {
-    expect(ctrl.getPodDetailHref({
-      objectMeta: {
-        name: 'foo-pod',
-        namespace: 'foo-namespace',
-      },
-    })).toBe('#/pod/foo-namespace/foo-pod');
+  it('should not render graph if metrics are null', () => {
+    ctrl.metrics = null;
+    ctrl.$onInit();
+    if (nv.render.queue.length > 0) {
+      nv.render.queue.pop().generate();
+    }
+    expect(element.children(':first').is('svg')).toBeFalsy();
   });
-})
-
-
-describe('Memory usage value formatter', () => {
-  it('should format memory', () => {
-    expect(formatMemoryUsage(null)).toEqual('N/A');
-    expect(formatMemoryUsage(0)).toEqual('0');
-    expect(formatMemoryUsage(1)).toEqual('1.00');
-    expect(formatMemoryUsage(2)).toEqual('2.00');
-    expect(formatMemoryUsage(1000)).toEqual('1,000');
-    expect(formatMemoryUsage(1024)).toEqual('1,020');
-    expect(formatMemoryUsage(1025)).toEqual('1.00 Ki');
-    expect(formatMemoryUsage(7896)).toEqual('7.71 Ki');
-    expect(formatMemoryUsage(109809)).toEqual('107 Ki');
-    expect(formatMemoryUsage(768689899)).toEqual('733 Mi');
-    expect(formatMemoryUsage(768689899789)).toEqual('716 Gi');
-    expect(formatMemoryUsage(76868989978978)).toEqual('69.9 Ti');
-    expect(formatMemoryUsage(7686898997897878)).toEqual('6.83 Pi');
-    expect(formatMemoryUsage(768689899789787867898766)).toEqual('683,000,000 Pi');
+  it('should not render graph if metrics were empty', () => {
+    ctrl.metrics = [];
+    ctrl.$onInit();
+    if (nv.render.queue.length > 0) {
+      nv.render.queue.pop().generate();
+    }
+    expect(element.children(':first').is('svg')).toBeFalsy();
   });
-});
+  it('should render a graph with correct number of data points', () => {
+    ctrl.$onInit();
+    nv.render.queue.pop().generate();
+    expect(element.find('.lines1Wrap path.nv-line').attr('d').split(',').length).toEqual(4);
+    expect(element.find('.lines2Wrap path.nv-line').attr('d').split(',').length).toEqual(3);
 
-describe('CPU usage value formatter', () => {
-  it('should format memory', () => {
-    expect(formatMemoryUsage(null)).toEqual('N/A');
-    expect(formatCpuUsage(0)).toEqual('0');
-    expect(formatCpuUsage(1)).toEqual('0.001');
-    expect(formatCpuUsage(2)).toEqual('0.002');
-    expect(formatCpuUsage(11)).toEqual('0.011');
-    expect(formatCpuUsage(100)).toEqual('0.100');
-    expect(formatCpuUsage(140)).toEqual('0.140');
-    expect(formatCpuUsage(1000)).toEqual('1.00');
-    expect(formatCpuUsage(1024)).toEqual('1.02');
-    expect(formatCpuUsage(1025)).toEqual('1.02');
-    expect(formatCpuUsage(7896)).toEqual('7.90');
-    expect(formatCpuUsage(109809)).toEqual('110');
-    expect(formatCpuUsage(768689899)).toEqual('769 k');
-    expect(formatCpuUsage(768689899789)).toEqual('769 M');
-    expect(formatCpuUsage(76868989978978)).toEqual('76.9 G');
-    expect(formatCpuUsage(7686898997897878)).toEqual('7.69 T');
-    expect(formatCpuUsage(76868989978978876876876468543578)).toEqual('76,900,000,000,000,000 T');
   });
-});
+  it('should only render metrics with at least 2 data points', () => {
+    ctrl.metrics = metricsWithTooFewDataPoints;
+    ctrl.$onInit();
+    nv.render.queue.pop().generate();
+    expect(element.find('.lines1Wrap path.nv-line').attr('d')).toBeUndefined();
+    expect(element.find('.lines2Wrap path.nv-line').attr('d').split(',').length).toEqual(3);
 
-describe('Conversion of list of metrics to map of metric names to data points.', () => {
-  let metrics = [
-    {
-      'dataPoints': [
-        {'x': 1472134320, 'y': 32},
-      ],
-      'metricName': 'cpu/usage_rate',
-      'aggregation': 'sum',
-    },
-    {
-      'dataPoints': [
-        {'x': 1472134320, 'y': 761946112},
-      ],
-      'metricName': 'memory/usage',
-      'aggregation': 'sum',
-    },
-  ];
-  it('should format memory', () => {
-    expect(getDataPointsByMetricName({})).toEqual({});
-    expect(getDataPointsByMetricName(metrics.slice(0, 1))).toEqual({
-      'cpu/usage_rate': [{x: 1472134320, y: 32}],
-    });
-    expect(getDataPointsByMetricName(metrics)).toEqual({
-      'cpu/usage_rate': [{x: 1472134320, y: 32}],
-      'memory/usage': [{x: 1472134320, y: 761946112}],
-    });
+  });
+  it('- Y axes should be from 0 to max', () => {
+    ctrl.$onInit();
+    nv.render.queue.pop().generate();
+    // y1
+    expect(element.find('.nv-y1 .nv-axisMin-y > text').text()).toEqual('0');
+    expect(element.find('.nv-y1 .nv-axisMax-y > text').text()).toEqual('0.050');
+    // y2
+    expect(element.find('.nv-y2 .nv-axisMin-y > text').text()).toEqual('0');
+    expect(element.find('.nv-y2 .nv-axisMax-y > text').text()).toEqual('931 Mi');
+  });
+  it('- X axis should have correct tick format', () => {
+    ctrl.$onInit();
+    nv.render.queue.pop().generate();
+    expect(element.find('.nv-x .nv-axisMin-x > text').text()).toMatch(/\d?\d:58/);
+    expect(element.find('.nv-x .nv-axisMax-x > text').text()).toMatch(/\d?\d:00/);
   });
 });

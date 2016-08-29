@@ -14,7 +14,7 @@
 
 import {axisSettings, metricDisplaySettings, TimeAxisType} from './graph_settings';
 
-class GraphController {
+export class GraphController {
   /**
    * @ngInject
    * @param {!angular.Scope} $scope
@@ -55,7 +55,6 @@ class GraphController {
         tooltips: true,
         useInteractiveGuideline: true,
       });
-
       let data = [];
       let yAxis1Type;
       let yAxis2Type;
