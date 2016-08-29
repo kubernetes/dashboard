@@ -21,6 +21,13 @@
 
 .kd-content-card {
   padding: $baseline-grid;
+
+  kd-content {
+    &.kd-content-padded {
+      display: block;
+      padding: 2 * $baseline-grid;
+    }
+  }
 }
 
 .kd-content-card-content-title {
