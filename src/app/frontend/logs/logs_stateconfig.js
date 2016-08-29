@@ -19,6 +19,7 @@ import {toolbarViewName} from '../chrome/chrome_state';
 
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 import {stateName as chromeStateName} from 'chrome/chrome_state';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 
 /**
  * Configures states for the logs view.
@@ -46,6 +47,11 @@ export default function stateConfig($stateProvider) {
     resolve: {
       'podContainers': resolvePodContainers,
       'podLogs': resolvePodLogs,
+    },
+    data: {
+      [breadcrumbsConfig]: {
+        'label': i18n.MSG_BREADCRUMBS_LOGS_LABEL,
+      },
     },
     views: views,
   });
@@ -83,3 +89,8 @@ function resolvePodContainers($stateParams, $resource) {
 
   return resource.get().$promise;
 }
+
+const i18n = {
+  /** @type {string} @desc Breadcrum label for the logs view. */
+  MSG_BREADCRUMBS_LOGS_LABEL: goog.getMsg('Logs'),
+};
