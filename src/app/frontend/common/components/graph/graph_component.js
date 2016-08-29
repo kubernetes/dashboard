@@ -14,7 +14,7 @@
 
 import {axisSettings, metricDisplaySettings, TimeAxisType} from './graph_settings';
 
-class GraphController {
+export class GraphController {
   /**
    * @ngInject
    * @param {!angular.Scope} $scope
@@ -42,7 +42,7 @@ class GraphController {
   }
 
   /**
-   * Generates graph given map of data points by metric name.
+   * Generates graph using this.metrics provided.
    * @private
    */
   generateGraph() {
@@ -55,7 +55,6 @@ class GraphController {
         tooltips: true,
         useInteractiveGuideline: true,
       });
-
       let data = [];
       let yAxis1Type;
       let yAxis2Type;
@@ -88,14 +87,14 @@ class GraphController {
             y2max = Math.max(y2max, Math.max(...metric.dataPoints.map((e) => e.y)));
           }
           data.push({
-            area: metricSettings.area,
-            values: metric.dataPoints,
-            key: metricSettings.key,
-            color: metricSettings.color,
-            fillOpacity: metricSettings.fillOpacity,
-            strokeWidth: metricSettings.strokeWidth,
-            type: metricSettings.type,
-            yAxis: metricSettings.yAxis,
+            'area': metricSettings.area,
+            'values': metric.dataPoints,
+            'key': metricSettings.key,
+            'color': metricSettings.color,
+            'fillOpacity': metricSettings.fillOpacity,
+            'strokeWidth': metricSettings.strokeWidth,
+            'type': metricSettings.type,
+            'yAxis': metricSettings.yAxis,
           });
         }
       }
@@ -119,17 +118,19 @@ class GraphController {
       }
 
       // hack to fix tooltip to use appropriate formatters instead of raw numbers.
-      chart.interactiveLayer.tooltip.valueFormatter(function(d, axis_id) {
-        for (let e of data) {
-          if (!e.disabled) {
-            if (!axis_id) {
-              return e.yAxis === 1 ? chart.yAxis1.tickFormat()(d) : chart.yAxis2.tickFormat()(d);
-            }
-            axis_id--;
-          }
+      // d is the value to be formatted, tooltip_row_index is a index of a row in tooltip that is
+      // being formatted.
+      chart.interactiveLayer.tooltip.valueFormatter(function(d, tooltip_row_index) {
+        let notDisabledMetrics = data.filter((e) => !e.disabled);
+        if (tooltip_row_index < notDisabledMetrics.length) {
+          return notDisabledMetrics[tooltip_row_index].yAxis === 1 ? chart.yAxis1.tickFormat()(d) :
+                                                                     chart.yAxis2.tickFormat()(d);
         }
-        // in case it was not possible to determine true axis return raw number (this does not
-        // happen)
+        // sometimes disabled property on data is updated slightly before tooltip is notified so we
+        // may have wrong tooltip_row_index
+        // in this case return raw value. Note - the period of time when unformatted value is
+        // displayed is very brief -
+        // too short to notice.
         return d;
       });
 

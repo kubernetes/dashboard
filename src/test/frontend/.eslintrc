@@ -6,5 +6,6 @@
   // Define missing global Angular testing environment variables.
   "globals": {
     "angular": true,
+    "nv": true,
   },
 }

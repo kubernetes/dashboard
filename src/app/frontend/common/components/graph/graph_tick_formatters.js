@@ -41,7 +41,7 @@ function precisionFilter(d) {
  * @return {string}
  */
 export function formatMemoryUsage(d) {
-  return d === null ? 'N/A' : memoryFilter(precisionFilter)(d);
+  return d === null ? i18n.MSG_GRAPH_DATA_POINT_NOT_AVAILABLE : memoryFilter(precisionFilter)(d);
 }
 
 /**
@@ -50,7 +50,7 @@ export function formatMemoryUsage(d) {
  * @return {string}
  */
 export function formatCpuUsage(d) {
-  return d === null ? 'N/A' : coresFilter(precisionFilter)(d);
+  return d === null ? i18n.MSG_GRAPH_DATA_POINT_NOT_AVAILABLE : coresFilter(precisionFilter)(d);
 }
 
 /**
@@ -61,3 +61,8 @@ export function formatCpuUsage(d) {
 export function formatTime(d) {
   return d3.time.format('%H:%M')(new Date(1000 * d));
 }
+
+const i18n = {
+  /** @export {string} @desc String to display when data point is not available. */
+  MSG_GRAPH_DATA_POINT_NOT_AVAILABLE: goog.getMsg('N/A'),
+};

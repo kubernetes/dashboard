@@ -19,7 +19,7 @@ const i18n = {
   MSG_GRAPH_CPU_USAGE_LEGEND_LABEL: goog.getMsg('CPU Usage'),
   /** @export {string} @desc Name of the memory usage metric as displayed in the legend. */
   MSG_GRAPH_MEMORY_USAGE_LEGEND_LABEL: goog.getMsg('Memory Usage'),
-  /** @export {string} @desc Name of the CPU usage metric as displayed in the legend. */
+  /** @export {string} @desc Name of the CPU limit metric as displayed in the legend. */
   MSG_GRAPH_CPU_LIMIT_LEGEND_LABEL: goog.getMsg('CPU Limit'),
   /** @export {string} @desc Name of Y axis showing CPU usage. */
   MSG_GRAPH_CPU_AXIS_LABEL: goog.getMsg('CPU (cores)'),
@@ -36,7 +36,7 @@ export const TimeAxisType = 'TimeAxisType';
 /**
  * Settings used by GraphController to display different metrics.
  *
- * @type {!Object<string, !Object<string, ?>>}
+ * @type {!Object<string, !Object<string, !metricDisplaySettings.metricSetting>>}
  */
 export const metricDisplaySettings = {
   'cpu/usage_rate': {
@@ -72,21 +72,47 @@ export const metricDisplaySettings = {
 };
 
 /**
+ * Settings object that should be provided for every metric supported by graph frontend.
+ *
+ * @typedef {{
+ *   yAxisType: !backendApi.ObjectMeta,
+ *   area: boolean,
+ *   key: string,
+ *   color: string,
+ *   fillOpacity: number,
+ *   strokeWidth: number,
+ *   type: string,
+ *   yAxis: number,
+ * }}
+ */
+metricDisplaySettings.metricSetting;
+
+/**
  * Settings used by GraphController to display different axes.
  *
- * @type {!Object<string, !Object<string, ?>>}
+ * @type {!Object<string, !Object<string, !axisSettings.axisSetting>>}
  */
 export const axisSettings = {
-  CPUAxisType: {
+  'CPUAxisType': {
     formatter: formatCpuUsage,
     label: i18n.MSG_GRAPH_CPU_AXIS_LABEL,
   },
-  MemoryAxisType: {
+  'MemoryAxisType': {
     formatter: formatMemoryUsage,
-    label: i18n.MSG_GRAPH_CPU_AXIS_LABEL,
+    label: i18n.MSG_GRAPH_MEMORY_AXIS_LABEL,
   },
-  TimeAxisType: {
+  'TimeAxisType': {
     formatter: formatTime,
     label: i18n.MSG_GRAPH_TIME_AXIS_LABEL,
   },
 };
+
+/**
+ * Settings object that should be provided for every axis type supported by graph frontend.
+ *
+ * @typedef {{
+ *   formatter: function(number):string,
+ *   label: string,
+ * }}
+ */
+axisSettings.axisSetting;

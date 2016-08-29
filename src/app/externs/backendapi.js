@@ -362,7 +362,7 @@ backendApi.DeploymentDetail;
  * @typedef {{
  *   pods: !Array<!backendApi.Pod>,
  *   listMeta: !backendApi.ListMeta,
- *   cumulativeMetrics: !Array<!backendApi.Metric>,
+ *   cumulativeMetrics: (!Array<!backendApi.Metric>|null),
  * }}
  */
 backendApi.PodList;
