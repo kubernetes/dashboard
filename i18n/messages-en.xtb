@@ -584,4 +584,5 @@
 	<translation id="339987725992094148" key="MSG_GRAPH_CPU_AXIS_LABEL" source="/usr/local/google/home/pdabkowski/WebstormProjects/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Name of Y axis showing CPU usage.">CPU (cores)</translation>
 	<translation id="2029236165141474072" key="MSG_GRAPH_MEMORY_AXIS_LABEL" source="/usr/local/google/home/pdabkowski/WebstormProjects/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Name of Y axis showing memory usage.">Memory (bytes)</translation>
 	<translation id="4576303150557908117" key="MSG_GRAPH_CPU_LIMIT_LEGEND_LABEL" source="/usr/local/google/home/pdabkowski/WebstormProjects/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Name of the CPU usage metric as displayed in the legend.">CPU Limit</translation>
+	<translation id="1378300715036317101" key="MSG_GRAPH_DATA_POINT_NOT_AVAILABLE" source="/usr/local/google/home/pdabkowski/WebstormProjects/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="String to display when data point is not available.">N/A</translation>
 </translationbundle>
