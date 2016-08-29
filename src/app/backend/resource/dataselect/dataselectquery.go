@@ -30,6 +30,10 @@ type DataSelectQuery struct {
 
 var NoMetrics = NewMetricQuery(nil, nil)
 
+// StandardMetrics query results in a standard metrics being returned.
+// standard metrics are: cpu usage, memory usage and aggregation = sum.
+var StandardMetrics = NewMetricQuery([]string{"cpu/usage_rate", "memory/usage"}, metric.OnlySumAggregation)
+
 // MetricQuery holds parameters for metric extraction process.
 // It accepts list of metrics to be downloaded and a list of aggregations that should be performed for each metric.
 // Query has this format  metrics=metric1,metric2,...&aggregations=aggregation1,aggregation2,...

@@ -3,6 +3,7 @@
   "version": "1.4.0-beta1",
   "dependencies": {
     "angular": "~1.5.7",
+
     "angular-animate": "~1.5.7",
     "angular-aria": "~1.5.7",
     "angular-material": "~1.0.9",
@@ -11,6 +12,8 @@
     "angular-resource": "~1.5.7",
     "angular-sanitize": "~1.5.7",
     "ansi-up": "drudru/ansi_up#~v1.3.0",
+    "d3": "^3.4.4",
+    "nvd3": "1.8.4",
     "material-design-icons": "~2.2.3",
     "roboto-fontface": "0.5.0",
     "ng-jsoneditor": "angular-tools/ng-jsoneditor#~1.0.0",
@@ -31,6 +34,7 @@
     }
   },
   "devDependencies": {
+    "cljsjs-packages-externs": "https://github.com/cljsjs/packages.git#0c44b38658ad789a45d342bff4f13706276f293a",
     "angular-mocks": "~1.5.7",
     "google-closure-library": "*"
   }
