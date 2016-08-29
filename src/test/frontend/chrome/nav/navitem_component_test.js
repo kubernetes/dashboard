@@ -18,6 +18,8 @@ import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_servi
 describe('Nav item component', () => {
   /** @type {!chrome/nav/navitem_component.NavItemController} */
   let ctrl;
+  /** @type {!common/state/futurestate_service.FutureStateService}*/
+  let kdFutureStateService;
 
   beforeEach(() => {
     let fakeModule = angular.module('fakeModule', ['ui.router']);
@@ -42,8 +44,9 @@ describe('Nav item component', () => {
     });
     angular.mock.module(module.name);
     angular.mock.module(fakeModule.name);
-    angular.mock.inject(($componentController, $rootScope) => {
+    angular.mock.inject(($componentController, $rootScope, _kdFutureStateService_) => {
       ctrl = $componentController('kdNavItem', {$scope: $rootScope}, {state: 'fakeState'});
+      kdFutureStateService = _kdFutureStateService_;
     });
   });
 
@@ -57,11 +60,11 @@ describe('Nav item component', () => {
   it('should detect activity', angular.mock.inject(($state, $rootScope) => {
     expect(ctrl.isActive()).toBe(false);
 
-    $state.current.name = 'fakeState';
+    kdFutureStateService.state = {name: 'fakeState'};
 
     expect(ctrl.isActive()).toBe(true);
 
-    $state.current.name = 'fakeNonActive';
+    kdFutureStateService.state = {name: 'fakeNonActive'};
     expect(ctrl.isActive()).toBe(false);
 
     $state.go('fakeStateWithParent');
