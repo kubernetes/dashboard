@@ -32,7 +32,7 @@ type PodList struct {
 
 	// Unordered list of Pods.
 	Pods              []Pod           `json:"pods"`
-	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics,omitempty"`
+	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
 }
 
 // Pod is a presentation layer view of Kubernetes Pod resource. This means

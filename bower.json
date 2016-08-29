@@ -34,7 +34,7 @@
     }
   },
   "devDependencies": {
-    "cljsjs-packages-externs": "https://github.com/cljsjs/packages.git",
+    "cljsjs-packages-externs": "https://github.com/cljsjs/packages.git#0c44b38658ad789a45d342bff4f13706276f293a",
     "angular-mocks": "~1.5.7",
     "google-closure-library": "*"
   }

@@ -26,7 +26,7 @@ import paginationModule from './../pagination/pagination_module';
 import namespaceModule from './../namespace/namespace_module';
 import sparklineDirective from './sparkline/sparkline_directive';
 import warnThresholdDirective from './warnthreshold/warnthreshold_directive';
-import {graphComponent} from './graph/graph_module';
+import {graphComponent} from './graph/graph_component';
 
 /**
  * Module containing common components for the application.
