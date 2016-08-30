@@ -98,6 +98,10 @@ export class GraphController {
           });
         }
       }
+      // don't display empty graph, hide it completely,
+      if (data.length === 0) {
+        return;
+      }
 
       // customise X axis (hardcoded time).
       let xAxisSettings = axisSettings[TimeAxisType];

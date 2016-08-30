@@ -24,7 +24,10 @@ import (
 	k8serrors "k8s.io/kubernetes/pkg/api/errors"
 	"k8s.io/kubernetes/pkg/apis/batch"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
+
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 )
 
 // JobList contains a list of Jobs in the cluster.
@@ -33,6 +36,7 @@ type JobList struct {
 
 	// Unordered list of Jobs.
 	Jobs []Job `json:"jobs"`
+	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
 }
 
 // Job is a presentation layer view of Kubernetes Job resource. This means
@@ -50,7 +54,7 @@ type Job struct {
 
 // GetJobList returns a list of all Jobs in the cluster.
 func GetJobList(client client.Interface, nsQuery *common.NamespaceQuery,
-	dsQuery *dataselect.DataSelectQuery) (*JobList, error) {
+	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*JobList, error) {
 	log.Printf("Getting list of all jobs in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -59,12 +63,12 @@ func GetJobList(client client.Interface, nsQuery *common.NamespaceQuery,
 		EventList: common.GetEventListChannel(client, nsQuery, 1),
 	}
 
-	return GetJobListFromChannels(channels, dsQuery)
+	return GetJobListFromChannels(channels, dsQuery, heapsterClient)
 }
 
 // GetJobList returns a list of all Jobs in the cluster
 // reading required resource list once from the channels.
-func GetJobListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (
+func GetJobListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (
 	*JobList, error) {
 
 	jobs := <-channels.JobList.List
@@ -91,20 +95,24 @@ func GetJobListFromChannels(channels *common.ResourceChannels, dsQuery *datasele
 		return nil, err
 	}
 
-	return CreateJobList(jobs.Items, pods.Items, events.Items, dsQuery), nil
+	return CreateJobList(jobs.Items, pods.Items, events.Items, dsQuery, heapsterClient), nil
 }
 
 // CreateJobList returns a list of all Job model objects in the cluster, based on all
 // Kubernetes Job API objects.
 func CreateJobList(jobs []batch.Job, pods []api.Pod, events []api.Event,
-	dsQuery *dataselect.DataSelectQuery) *JobList {
+	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) *JobList {
 
 	jobList := &JobList{
 		Jobs:     make([]Job, 0),
 		ListMeta: common.ListMeta{TotalItems: len(jobs)},
 	}
 
-	jobs = fromCells(dataselect.GenericDataSelect(toCells(jobs), dsQuery))
+	cachedResources := &dataselect.CachedResources{
+		Pods: pods,
+	}
+	replicationControllerCells, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells(jobs), dsQuery, cachedResources, heapsterClient)
+	jobs = fromCells(replicationControllerCells)
 
 	for _, job := range jobs {
 		var completions int32
@@ -118,7 +126,8 @@ func CreateJobList(jobs []batch.Job, pods []api.Pod, events []api.Event,
 
 		jobList.Jobs = append(jobList.Jobs, ToJob(&job, &podInfo))
 	}
-
+	cumulativeMetrics, _ := metricPromises.GetMetrics()
+	jobList.CumulativeMetrics = cumulativeMetrics
 	return jobList
 }
 

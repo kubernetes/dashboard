@@ -17,6 +17,8 @@ package deployment
 import (
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 )
 
 // The code below allows to perform complex data section on []extensions.Deployment
@@ -37,6 +39,14 @@ func (self DeploymentCell) GetProperty(name dataselect.PropertyName) dataselect.
 	}
 }
 
+func (self DeploymentCell) GetResourceSelector() *metric.ResourceSelector {
+	return &metric.ResourceSelector{
+		Namespace:          self.ObjectMeta.Namespace,
+		ResourceType:       common.ResourceKindDeployment,
+		ResourceName:       self.ObjectMeta.Name,
+		Selector:           self.Spec.Selector.MatchLabels,
+	}
+}
 
 func toCells(std []extensions.Deployment) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))

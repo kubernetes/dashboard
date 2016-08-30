@@ -21,6 +21,8 @@ import (
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 )
 
 // Based on given selector returns list of services that are candidates for deletion.
@@ -73,6 +75,14 @@ func (self DaemonSetCell) GetProperty(name dataselect.PropertyName) dataselect.C
 	}
 }
 
+func (self DaemonSetCell) GetResourceSelector() *metric.ResourceSelector {
+	return &metric.ResourceSelector{
+		Namespace:          self.ObjectMeta.Namespace,
+		ResourceType:       common.ResourceKindDaemonSet,
+		ResourceName:       self.ObjectMeta.Name,
+		LabelSelector:      self.Spec.Selector,
+	}
+}
 
 func toCells(std []extensions.DaemonSet) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))

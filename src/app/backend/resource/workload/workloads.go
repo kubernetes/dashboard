@@ -95,13 +95,13 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels,
 	}()
 
 	go func() {
-		jobList, err := job.GetJobListFromChannels(channels, dsQuery)
+		jobList, err := job.GetJobListFromChannels(channels, dsQuery, nil)
 		errChan <- err
 		jobChan <- jobList
 	}()
 
 	go func() {
-		deploymentList, err := deployment.GetDeploymentListFromChannels(channels, dsQuery)
+		deploymentList, err := deployment.GetDeploymentListFromChannels(channels, dsQuery, nil)
 		errChan <- err
 		deploymentChan <- deploymentList
 	}()
@@ -113,13 +113,13 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels,
 	}()
 
 	go func() {
-		dsList, err := daemonset.GetDaemonSetListFromChannels(channels, dsQuery)
+		dsList, err := daemonset.GetDaemonSetListFromChannels(channels, dsQuery, nil)
 		errChan <- err
 		dsChan <- dsList
 	}()
 
 	go func() {
-		psList, err := petset.GetPetSetListFromChannels(channels, dsQuery)
+		psList, err := petset.GetPetSetListFromChannels(channels, dsQuery, nil)
 		errChan <- err
 		psChan <- psList
 	}()

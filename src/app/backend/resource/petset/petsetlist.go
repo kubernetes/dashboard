@@ -24,7 +24,10 @@ import (
 	k8serrors "k8s.io/kubernetes/pkg/api/errors"
 	"k8s.io/kubernetes/pkg/apis/apps"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
+
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 )
 
 // PetSetList contains a list of Pet Sets in the cluster.
@@ -33,6 +36,7 @@ type PetSetList struct {
 
 	// Unordered list of Pet Sets.
 	PetSets []PetSet `json:"petSets"`
+	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
 }
 
 // PetSet is a presentation layer view of Kubernetes Pet Set resource. This means it is Pet Set
@@ -51,7 +55,7 @@ type PetSet struct {
 
 // GetPetSetList returns a list of all Pet Sets in the cluster.
 func GetPetSetList(client *client.Client, nsQuery *common.NamespaceQuery,
-	dsQuery *dataselect.DataSelectQuery) (*PetSetList, error) {
+	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*PetSetList, error) {
 	log.Printf("Getting list of all pet sets in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -60,12 +64,12 @@ func GetPetSetList(client *client.Client, nsQuery *common.NamespaceQuery,
 		EventList:  common.GetEventListChannel(client, nsQuery, 1),
 	}
 
-	return GetPetSetListFromChannels(channels, dsQuery)
+	return GetPetSetListFromChannels(channels, dsQuery, heapsterClient)
 }
 
 // GetPetSetListFromChannels returns a list of all Pet Sets in the cluster
 // reading required resource list once from the channels.
-func GetPetSetListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (
+func GetPetSetListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (
 	*PetSetList, error) {
 
 	petSets := <-channels.PetSetList.List
@@ -92,20 +96,24 @@ func GetPetSetListFromChannels(channels *common.ResourceChannels, dsQuery *datas
 		return nil, err
 	}
 
-	return CreatePetSetList(petSets.Items, pods.Items, events.Items, dsQuery), nil
+	return CreatePetSetList(petSets.Items, pods.Items, events.Items, dsQuery, heapsterClient), nil
 }
 
 // CreatePetSetList creates paginated list of Pet Set model
 // objects based on Kubernetes Pet Set objects array and related resources arrays.
 func CreatePetSetList(petSets []apps.PetSet, pods []api.Pod, events []api.Event,
-	dsQuery *dataselect.DataSelectQuery) *PetSetList {
+	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) *PetSetList {
 
 	petSetList := &PetSetList{
 		PetSets:  make([]PetSet, 0),
 		ListMeta: common.ListMeta{TotalItems: len(petSets)},
 	}
 
-	petSets = fromCells(dataselect.GenericDataSelect(toCells(petSets), dsQuery))
+	cachedResources := &dataselect.CachedResources{
+		Pods: pods,
+	}
+	replicationControllerCells, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells(petSets), dsQuery, cachedResources, heapsterClient)
+	petSets = fromCells(replicationControllerCells)
 
 	for _, petSet := range petSets {
 		matchingPods := common.FilterNamespacedPodsBySelector(pods, petSet.ObjectMeta.Namespace,
@@ -117,7 +125,8 @@ func CreatePetSetList(petSets []apps.PetSet, pods []api.Pod, events []api.Event,
 
 		petSetList.PetSets = append(petSetList.PetSets, ToPetSet(&petSet, &podInfo))
 	}
-
+	cumulativeMetrics, _ := metricPromises.GetMetrics()
+	petSetList.CumulativeMetrics = cumulativeMetrics
 	return petSetList
 }
 

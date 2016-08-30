@@ -12,12 +12,12 @@ import (
 // For example, deployment is not available in heapster so it has to be converted to its pods before downloading any data.
 // Hence deployments map to pods.
 var DerivedResources = map[common.ResourceKind]common.ResourceKind{
-	common.ResourceKindReplicaSet:            common.ResourceKindPod,
-	common.ResourceKindService:               common.ResourceKindPod,
 	common.ResourceKindDeployment:            common.ResourceKindPod,
+	common.ResourceKindReplicaSet:            common.ResourceKindPod,
 	common.ResourceKindReplicationController: common.ResourceKindPod,
 	common.ResourceKindDaemonSet:             common.ResourceKindPod,
 	common.ResourceKindPetSet:                common.ResourceKindPod,
+	common.ResourceKindJob:                   common.ResourceKindPod,
 }
 
 // ResourceSelector is a structure used to quickly and uniquely identify given resource.
