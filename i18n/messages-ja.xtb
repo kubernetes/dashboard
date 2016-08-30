@@ -777,4 +777,6 @@
 	<translation id="2029236165141474072" key="MSG_GRAPH_MEMORY_AXIS_LABEL" source="/usr/local/google/home/pdabkowski/WebstormProjects/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Name of Y axis showing memory usage.">Memory (bytes)</translation>
 	<translation id="4576303150557908117" key="MSG_GRAPH_CPU_LIMIT_LEGEND_LABEL" source="/usr/local/google/home/pdabkowski/WebstormProjects/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Name of the CPU usage metric as displayed in the legend.">CPU Limit</translation>
 	<translation id="1378300715036317101" key="MSG_GRAPH_DATA_POINT_NOT_AVAILABLE" source="/usr/local/google/home/pdabkowski/WebstormProjects/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="String to display when data point is not available.">N/A</translation>
+	<translation id="3682516833237634630" key="MSG_LOGS_ZEROSTATE_TITLE" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Title for logs card zerostate in logs page.">There is nothing to display here</translation>
+	<translation id="7594890250973129963" key="MSG_LOGS_ZEROSTATE_TEXT" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Text for logs card zerostate in logs page.">The selected container has not logged any messages yet.</translation>
 </translationbundle>
