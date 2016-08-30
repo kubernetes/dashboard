@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {graphComponent} from './graph_component';
+import {graphCardComponent} from './graphcard_component';
 
 /**
  * Module containing common graph components.
@@ -24,4 +25,5 @@ export default angular
           'ngMaterial',
           'ui.router',
         ])
-    .component('kdGraph', graphComponent);
+    .component('kdGraph', graphComponent)
+    .component('kdGraphCard', graphCardComponent);

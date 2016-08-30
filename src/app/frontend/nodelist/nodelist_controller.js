@@ -29,5 +29,13 @@ export class NodeListController {
 
     /** @export {!angular.Resource} */
     this.nodeListResource = kdNodeListResource;
+
+    /** @export */
+    this.i18n = i18n;
   }
 }
+
+const i18n = {
+  /** @export {string} @desc Title for graph card displaying cumulative metrics of nodes. */
+  MSG_NODE_LIST_GRAPH_CARD_TITLE: goog.getMsg('Cumulative resource usage history'),
+};

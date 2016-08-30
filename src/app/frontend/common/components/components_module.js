@@ -22,7 +22,7 @@ import infoCardModule from './infocard/infocard_module';
 import resourceCardModule from './resourcecard/resourcecard_module';
 import actionbarModule from './actionbar/actionbar_module';
 import zeroStateModule from './zerostate/zerostate_module';
-import graphModule from './graph/module';
+import graphModule from './graph/graph_module';
 import paginationModule from './../pagination/pagination_module';
 import namespaceModule from './../namespace/namespace_module';
 import sparklineDirective from './sparkline/sparkline_directive';

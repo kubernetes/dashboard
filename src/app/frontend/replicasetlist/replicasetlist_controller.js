@@ -29,6 +29,9 @@ export class ReplicaSetListController {
 
     /** @export {!angular.Resource} */
     this.replicaSetListResource = kdReplicaSetListResource;
+
+    /** @export */
+    this.i18n = i18n;
   }
 
   /**
@@ -37,3 +40,8 @@ export class ReplicaSetListController {
    */
   shouldShowZeroState() { return this.replicaSetList.replicaSets.length === 0; }
 }
+
+const i18n = {
+  /** @export {string} @desc Title for graph card displaying cumulative metrics of replica sets. */
+  MSG_REPLICA_SET_LIST_GRAPH_CARD_TITLE: goog.getMsg('Cumulative resource usage history'),
+};

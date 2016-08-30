@@ -29,6 +29,9 @@ export class JobListController {
 
     /** @export {!angular.Resource} */
     this.jobListResource = kdJobListResource;
+
+    /** @export */
+    this.i18n = i18n;
   }
 
   /**
@@ -37,3 +40,8 @@ export class JobListController {
    */
   shouldShowZeroState() { return this.jobList.jobs.length === 0; }
 }
+
+const i18n = {
+  /** @export {string} @desc Title for graph card displaying cumulative metrics of jobs. */
+  MSG_JOB_LIST_GRAPH_CARD_TITLE: goog.getMsg('Cumulative resource usage history'),
+};
