@@ -17,6 +17,7 @@ package common
 import (
 	"fmt"
 
+	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/client/restclient"
 	"k8s.io/kubernetes/pkg/runtime"
 )
@@ -66,10 +67,17 @@ func (verber *ResourceVerber) Delete(kind string, namespace string, name string)
 
 	client := verber.getRESTClientByType(resourceSpec.ClientType)
 
+	// Do cascade delete by default, as this is what users typically expect.
+	defaultOrphanDependents := false
+	defaultDeleteOptions := &api.DeleteOptions{
+		OrphanDependents: &defaultOrphanDependents,
+	}
+
 	return client.Delete().
 		Namespace(namespace).
 		Resource(resourceSpec.Resource).
 		Name(name).
+		Body(defaultDeleteOptions).
 		Do().
 		Error()
 }
