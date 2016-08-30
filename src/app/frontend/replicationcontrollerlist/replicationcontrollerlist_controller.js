@@ -29,6 +29,9 @@ export class ReplicationControllerListController {
 
     /** @export {!angular.Resource} */
     this.rcListResource = kdRCListResource;
+
+    /** @export */
+    this.i18n = i18n;
   }
 
   /**
@@ -39,3 +42,9 @@ export class ReplicationControllerListController {
     return this.replicationControllerList.replicationControllers.length === 0;
   }
 }
+
+const i18n = {
+  /** @export {string} @desc Title for graph card displaying cumulative metrics of replication
+   *  controllers. */
+  MSG_RC_LIST_GRAPH_CARD_TITLE: goog.getMsg('Cumulative resource usage'),
+};

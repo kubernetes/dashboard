@@ -29,6 +29,9 @@ export class PetSetListController {
 
     /** @export {!angular.Resource} */
     this.petSetListResource = kdPetSetListResource;
+
+    /** @export */
+    this.i18n = i18n;
   }
 
   /**
@@ -37,3 +40,8 @@ export class PetSetListController {
    */
   shouldShowZeroState() { return this.petSetList.petSets.length === 0; }
 }
+
+const i18n = {
+  /** @export {string} @desc Title for graph card displaying cumulative metrics of pet sets. */
+  MSG_PET_SET_LIST_GRAPH_CARD_TITLE: goog.getMsg('Cumulative resource usage'),
+};

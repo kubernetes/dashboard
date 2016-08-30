@@ -29,6 +29,9 @@ export class PodListController {
 
     /** @export {!angular.$resource} */
     this.podListResource = kdPodListResource;
+
+    /** @export */
+    this.i18n = i18n;
   }
 
   /**
@@ -37,3 +40,8 @@ export class PodListController {
    */
   shouldShowZeroState() { return this.podList.pods.length === 0; }
 }
+
+const i18n = {
+  /** @export {string} @desc Title for graph card displaying cumulative metrics of pods. */
+  MSG_POD_LIST_GRAPH_CARD_TITLE: goog.getMsg('Cumulative resource usage'),
+};

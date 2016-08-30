@@ -29,6 +29,9 @@ export class DeploymentListController {
 
     /** @export {!angular.Resource} */
     this.deploymentListResource = kdDeploymentListResource;
+
+    /** @export */
+    this.i18n = i18n;
   }
 
   /**
@@ -37,3 +40,8 @@ export class DeploymentListController {
    */
   shouldShowZeroState() { return this.deploymentList.deployments.length === 0; }
 }
+
+const i18n = {
+  /** @export {string} @desc Title for graph card displaying cumulative metrics of deployments. */
+  MSG_DEPLOYMENT_LIST_GRAPH_CARD_TITLE: goog.getMsg('Cumulative resource usage'),
+};
