@@ -40,7 +40,9 @@ func TestGetPetSetListFromChannels(t *testing.T) {
 			apps.PetSetList{},
 			nil,
 			&api.PodList{},
-			&PetSetList{common.ListMeta{}, []PetSet{}},
+			&PetSetList{
+				ListMeta: common.ListMeta{},
+				PetSets: []PetSet{}},
 			nil,
 		},
 		{
@@ -118,8 +120,8 @@ func TestGetPetSetListFromChannels(t *testing.T) {
 				},
 			},
 			&PetSetList{
-				common.ListMeta{TotalItems: 1},
-				[]PetSet{{
+				ListMeta: common.ListMeta{TotalItems: 1},
+				PetSets: []PetSet{{
 					ObjectMeta: common.ObjectMeta{
 						Name:              "rs-name",
 						Namespace:         "rs-namespace",
@@ -178,7 +180,7 @@ func TestGetPetSetListFromChannels(t *testing.T) {
 		channels.EventList.List <- &api.EventList{}
 		channels.EventList.Error <- nil
 
-		actual, err := GetPetSetListFromChannels(channels, dataselect.NoDataSelect)
+		actual, err := GetPetSetListFromChannels(channels, dataselect.NoDataSelect, nil)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetPetSetListChannels() ==\n          %#v\nExpected: %#v", actual, c.expected)
 		}

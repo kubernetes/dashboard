@@ -192,7 +192,7 @@ func TestGetDaemonSetList(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := CreateDaemonSetList(c.daemonSets, c.pods, events, dataselect.NoDataSelect)
+		actual := CreateDaemonSetList(c.daemonSets, c.pods, events, dataselect.NoDataSelect, nil)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("CreateDaemonSetList(%#v, %#v, %#v) == \n%#v\nexpected \n%#v\n",
 				c.daemonSets, c.services, events, actual, c.expected)

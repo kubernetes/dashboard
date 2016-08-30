@@ -20,9 +20,12 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
+
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 )
 
 // NodeList contains a list of nodes in the cluster.
@@ -31,6 +34,7 @@ type NodeList struct {
 
 	// Unordered list of Nodes.
 	Nodes []Node `json:"nodes"`
+	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
 }
 
 // Node is a presentation layer view of Kubernetes nodes. This means it is node plus additional
@@ -44,7 +48,7 @@ type Node struct {
 }
 
 // GetNodeList returns a list of all Nodes in the cluster.
-func GetNodeList(client client.Interface, dsQuery *dataselect.DataSelectQuery) (*NodeList, error) {
+func GetNodeList(client client.Interface, dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*NodeList, error) {
 	log.Printf("Getting list of all nodes in the cluster")
 
 	nodes, err := client.Nodes().List(api.ListOptions{
@@ -56,21 +60,25 @@ func GetNodeList(client client.Interface, dsQuery *dataselect.DataSelectQuery) (
 		return nil, err
 	}
 
-	return toNodeList(nodes.Items, dsQuery), nil
+	return toNodeList(nodes.Items, dsQuery, heapsterClient), nil
 }
 
-func toNodeList(nodes []api.Node, dsQuery *dataselect.DataSelectQuery) *NodeList {
+func toNodeList(nodes []api.Node, dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) *NodeList {
 	nodeList := &NodeList{
 		Nodes:    make([]Node, 0),
 		ListMeta: common.ListMeta{TotalItems: len(nodes)},
 	}
 
-	nodes = fromCells(dataselect.GenericDataSelect(toCells(nodes), dsQuery))
+	replicationControllerCells, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells(nodes), dsQuery, dataselect.NoResourceCache, heapsterClient)
+	nodes = fromCells(replicationControllerCells)
 
 	for _, node := range nodes {
 		nodeList.Nodes = append(nodeList.Nodes, toNode(node))
 	}
 
+	// this may be slow because heapster does not support all in one download for nodes.
+	cumulativeMetrics, _ := metricPromises.GetMetrics()
+	nodeList.CumulativeMetrics = cumulativeMetrics
 	return nodeList
 }
 
