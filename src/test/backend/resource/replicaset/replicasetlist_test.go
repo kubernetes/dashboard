@@ -40,7 +40,9 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 			extensions.ReplicaSetList{},
 			nil,
 			&api.PodList{},
-			&ReplicaSetList{common.ListMeta{}, []ReplicaSet{}},
+			&ReplicaSetList{
+				ListMeta: common.ListMeta{},
+				ReplicaSets: []ReplicaSet{}},
 			nil,
 		},
 		{
@@ -118,8 +120,8 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 				},
 			},
 			&ReplicaSetList{
-				common.ListMeta{TotalItems: 1},
-				[]ReplicaSet{{
+				ListMeta: common.ListMeta{TotalItems: 1},
+				ReplicaSets: []ReplicaSet{{
 					ObjectMeta: common.ObjectMeta{
 						Name:              "rs-name",
 						Namespace:         "rs-namespace",
@@ -178,7 +180,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 		channels.EventList.List <- &api.EventList{}
 		channels.EventList.Error <- nil
 
-		actual, err := GetReplicaSetListFromChannels(channels, dataselect.NoDataSelect)
+		actual, err := GetReplicaSetListFromChannels(channels, dataselect.NoDataSelect, nil)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetReplicaSetListChannels() ==\n          %#v\nExpected: %#v", actual, c.expected)
 		}

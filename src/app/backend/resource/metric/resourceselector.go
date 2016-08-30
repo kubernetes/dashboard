@@ -60,7 +60,7 @@ func (self *ResourceSelector) GetHeapsterSelector(cachedPods []api.Pod) (Heapste
 func (self *ResourceSelector) getMyPodsFromCache(cachedPods []api.Pod) ([]api.Pod, error) {
 	// make sure we have the full list of pods. you have to make sure the cache has pod list for all namespaces!
 	if cachedPods == nil {
-		return nil, fmt.Errorf("GetMyPodsFromCache: namespace of the pod not in cachedPods")
+		return nil, fmt.Errorf(`GetMyPodsFromCache: pods were not available in cache. Required for resource type: "%s"`, self.ResourceType)
 	}
 
 	// now decide whether to match by ResourceSelector or by ResourceLabelSelector

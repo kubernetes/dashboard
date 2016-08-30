@@ -603,7 +603,8 @@ func (apiHandler *APIHandler) handleGetReplicationControllerList(
 
 	namespace := parseNamespacePathParameter(request)
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := replicationcontroller.GetReplicationControllerList(apiHandler.client, namespace, dataSelect)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
+	result, err := replicationcontroller.GetReplicationControllerList(apiHandler.client, namespace, dataSelect, &apiHandler.heapsterClient)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -634,7 +635,8 @@ func (apiHandler *APIHandler) handleGetReplicaSets(
 
 	namespace := parseNamespacePathParameter(request)
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := replicaset.GetReplicaSetList(apiHandler.client, namespace, dataSelect)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
+	result, err := replicaset.GetReplicaSetList(apiHandler.client, namespace, dataSelect, &apiHandler.heapsterClient)
 	if err != nil {
 		handleInternalError(response, err)
 		return

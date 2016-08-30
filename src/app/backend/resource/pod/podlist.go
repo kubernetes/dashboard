@@ -99,7 +99,7 @@ func CreatePodList(pods []api.Pod, dsQuery *dataselect.DataSelectQuery,
 	}
 
 	podCells, cumulativeMetricsPromises := dataselect.GenericDataSelectWithMetrics(toCells(pods), dsQuery,
-		dataselect.NoResourceCache, heapsterClient)
+		dataselect.NoResourceCache, &heapsterClient)
 	pods = fromCells(podCells)
 
 	for _, pod := range pods {
