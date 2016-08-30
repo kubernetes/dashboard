@@ -60,7 +60,7 @@ func TestCreateReplicaSetList(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := CreateReplicaSetList(c.replicaSets, c.pods, c.events, dataselect.NoDataSelect)
+		actual := CreateReplicaSetList(c.replicaSets, c.pods, c.events, dataselect.NoDataSelect, nil)
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("CreateReplicaSetList(%#v, %#v, %#v, ...) == \ngot %#v, \nexpected %#v",
