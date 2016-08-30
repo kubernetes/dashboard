@@ -40,7 +40,10 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 			extensions.DeploymentList{},
 			nil,
 			&api.PodList{},
-			&DeploymentList{common.ListMeta{}, []Deployment{}},
+			&DeploymentList{
+				ListMeta: common.ListMeta{},
+				Deployments: []Deployment{},
+			},
 			nil,
 		},
 		{
@@ -118,8 +121,8 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 				},
 			},
 			&DeploymentList{
-				common.ListMeta{TotalItems: 1},
-				[]Deployment{{
+				ListMeta: common.ListMeta{TotalItems: 1},
+				Deployments: []Deployment{{
 					ObjectMeta: common.ObjectMeta{
 						Name:              "rs-name",
 						Namespace:         "rs-namespace",
@@ -178,7 +181,7 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 		channels.EventList.List <- &api.EventList{}
 		channels.EventList.Error <- nil
 
-		actual, err := GetDeploymentListFromChannels(channels, dataselect.NoDataSelect)
+		actual, err := GetDeploymentListFromChannels(channels, dataselect.NoDataSelect, nil)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetDeploymentListFromChannels() ==\n          %#v\nExpected: %#v", actual, c.expected)
 		}

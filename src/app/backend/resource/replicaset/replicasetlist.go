@@ -92,6 +92,5 @@ func GetReplicaSetListFromChannels(channels *common.ResourceChannels,
 	if err := <-channels.EventList.Error; err != nil {
 		return nil, err
 	}
-
 	return CreateReplicaSetList(replicaSets.Items, pods.Items, events.Items, dsQuery, heapsterClient), nil
 }

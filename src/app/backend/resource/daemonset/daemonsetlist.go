@@ -22,7 +22,10 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
+
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 )
 
 // DaemonSetList contains a list of Daemon Sets in the cluster.
@@ -31,6 +34,7 @@ type DaemonSetList struct {
 
 	// Unordered list of Daemon Sets
 	DaemonSets []DaemonSet `json:"daemonSets"`
+	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
 }
 
 // DaemonSet (aka. Daemon Set) plus zero or more Kubernetes services that
@@ -48,7 +52,7 @@ type DaemonSet struct {
 
 // GetDaemonSetList returns a list of all Daemon Set in the cluster.
 func GetDaemonSetList(client *client.Client, nsQuery *common.NamespaceQuery,
-	dsQuery *dataselect.DataSelectQuery) (*DaemonSetList, error) {
+	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*DaemonSetList, error) {
 	log.Printf("Getting list of all daemon sets in the cluster")
 	channels := &common.ResourceChannels{
 		DaemonSetList: common.GetDaemonSetListChannel(client, nsQuery, 1),
@@ -57,13 +61,13 @@ func GetDaemonSetList(client *client.Client, nsQuery *common.NamespaceQuery,
 		EventList:     common.GetEventListChannel(client, nsQuery, 1),
 	}
 
-	return GetDaemonSetListFromChannels(channels, dsQuery)
+	return GetDaemonSetListFromChannels(channels, dsQuery, heapsterClient)
 }
 
 // GetDaemonSetListFromChannels returns a list of all Daemon Seet in the cluster
 // reading required resource list once from the channels.
 func GetDaemonSetListFromChannels(channels *common.ResourceChannels,
-	dsQuery *dataselect.DataSelectQuery) (*DaemonSetList, error) {
+	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*DaemonSetList, error) {
 
 	daemonSets := <-channels.DaemonSetList.List
 	if err := <-channels.DaemonSetList.Error; err != nil {
@@ -80,21 +84,25 @@ func GetDaemonSetListFromChannels(channels *common.ResourceChannels,
 		return nil, err
 	}
 
-	result := CreateDaemonSetList(daemonSets.Items, pods.Items, events.Items, dsQuery)
+	result := CreateDaemonSetList(daemonSets.Items, pods.Items, events.Items, dsQuery, heapsterClient)
 	return result, nil
 }
 
 // CreateDaemonSetList returns a list of all Daemon Set model objects in the cluster, based on all
 // Kubernetes Daemon Set API objects.
 func CreateDaemonSetList(daemonSets []extensions.DaemonSet, pods []api.Pod,
-	events []api.Event, dsQuery *dataselect.DataSelectQuery) *DaemonSetList {
+	events []api.Event, dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) *DaemonSetList {
 
 	daemonSetList := &DaemonSetList{
 		DaemonSets: make([]DaemonSet, 0),
 		ListMeta:   common.ListMeta{TotalItems: len(daemonSets)},
 	}
 
-	daemonSets = fromCells(dataselect.GenericDataSelect(toCells(daemonSets), dsQuery))
+	cachedResources := &dataselect.CachedResources{
+		Pods: pods,
+	}
+	replicationControllerCells, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells(daemonSets), dsQuery, cachedResources, heapsterClient)
+	daemonSets = fromCells(replicationControllerCells)
 
 	for _, daemonSet := range daemonSets {
 		matchingPods := common.FilterNamespacedPodsByLabelSelector(pods, daemonSet.Namespace,
@@ -111,6 +119,7 @@ func CreateDaemonSetList(daemonSets []extensions.DaemonSet, pods []api.Pod,
 				ContainerImages: common.GetContainerImages(&daemonSet.Spec.Template.Spec),
 			})
 	}
-
+	cumulativeMetrics, _ := metricPromises.GetMetrics()
+	daemonSetList.CumulativeMetrics = cumulativeMetrics
 	return daemonSetList
 }

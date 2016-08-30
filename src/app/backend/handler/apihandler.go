@@ -401,7 +401,8 @@ func (apiHandler *APIHandler) handleGetPetSetList(request *restful.Request,
 	response *restful.Response) {
 	namespace := parseNamespacePathParameter(request)
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := petset.GetPetSetList(apiHandler.client, namespace, dataSelect)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
+	result, err := petset.GetPetSetList(apiHandler.client, namespace, dataSelect, &apiHandler.heapsterClient)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -486,7 +487,9 @@ func (apiHandler *APIHandler) handleGetServicePods(request *restful.Request,
 // Handles get node list API call.
 func (apiHandler *APIHandler) handleGetNodeList(request *restful.Request, response *restful.Response) {
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := node.GetNodeList(apiHandler.client, dataSelect)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
+
+	result, err := node.GetNodeList(apiHandler.client, dataSelect, &apiHandler.heapsterClient)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -704,7 +707,8 @@ func (apiHandler *APIHandler) handleGetDeployments(
 
 	namespace := parseNamespacePathParameter(request)
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := deployment.GetDeploymentList(apiHandler.client, namespace, dataSelect)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
+	result, err := deployment.GetDeploymentList(apiHandler.client, namespace, dataSelect, &apiHandler.heapsterClient)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1089,7 +1093,8 @@ func (apiHandler *APIHandler) handleGetDaemonSetList(
 
 	namespace := parseNamespacePathParameter(request)
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := daemonset.GetDaemonSetList(apiHandler.client, namespace, dataSelect)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
+	result, err := daemonset.GetDaemonSetList(apiHandler.client, namespace, dataSelect, &apiHandler.heapsterClient)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1175,8 +1180,9 @@ func (apiHandler *APIHandler) handleGetJobList(request *restful.Request,
 	response *restful.Response) {
 	namespace := parseNamespacePathParameter(request)
 	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
 
-	result, err := job.GetJobList(apiHandler.client, namespace, dataSelect)
+	result, err := job.GetJobList(apiHandler.client, namespace, dataSelect, &apiHandler.heapsterClient)
 	if err != nil {
 		handleInternalError(response, err)
 		return

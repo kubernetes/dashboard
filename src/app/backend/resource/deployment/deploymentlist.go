@@ -24,7 +24,10 @@ import (
 	k8serrors "k8s.io/kubernetes/pkg/api/errors"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
+
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 )
 
 // ReplicationSetList contains a list of Deployments in the cluster.
@@ -33,6 +36,7 @@ type DeploymentList struct {
 
 	// Unordered list of Deployments.
 	Deployments []Deployment `json:"deployments"`
+	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
 }
 
 // Deployment is a presentation layer view of Kubernetes Deployment resource. This means
@@ -51,7 +55,7 @@ type Deployment struct {
 
 // GetDeploymentList returns a list of all Deployments in the cluster.
 func GetDeploymentList(client client.Interface, nsQuery *common.NamespaceQuery,
-	dsQuery *dataselect.DataSelectQuery) (*DeploymentList, error) {
+	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*DeploymentList, error) {
 	log.Printf("Getting list of all deployments in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -60,13 +64,13 @@ func GetDeploymentList(client client.Interface, nsQuery *common.NamespaceQuery,
 		EventList:      common.GetEventListChannel(client, nsQuery, 1),
 	}
 
-	return GetDeploymentListFromChannels(channels, dsQuery)
+	return GetDeploymentListFromChannels(channels, dsQuery, heapsterClient)
 }
 
 // GetDeploymentList returns a list of all Deployments in the cluster
 // reading required resource list once from the channels.
 func GetDeploymentListFromChannels(channels *common.ResourceChannels,
-	dsQuery *dataselect.DataSelectQuery) (*DeploymentList, error) {
+	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*DeploymentList, error) {
 
 	deployments := <-channels.DeploymentList.List
 	if err := <-channels.DeploymentList.Error; err != nil {
@@ -92,20 +96,24 @@ func GetDeploymentListFromChannels(channels *common.ResourceChannels,
 		return nil, err
 	}
 
-	return CreateDeploymentList(deployments.Items, pods.Items, events.Items, dsQuery), nil
+	return CreateDeploymentList(deployments.Items, pods.Items, events.Items, dsQuery, heapsterClient), nil
 }
 
 // CreateDeploymentList returns a list of all Deployment model objects in the cluster, based on all
 // Kubernetes Deployment API objects.
 func CreateDeploymentList(deployments []extensions.Deployment, pods []api.Pod,
-	events []api.Event, dsQuery *dataselect.DataSelectQuery) *DeploymentList {
+	events []api.Event, dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) *DeploymentList {
 
 	deploymentList := &DeploymentList{
 		Deployments: make([]Deployment, 0),
 		ListMeta:    common.ListMeta{TotalItems: len(deployments)},
 	}
 
-	deployments = fromCells(dataselect.GenericDataSelect(toCells(deployments), dsQuery))
+	cachedResources := &dataselect.CachedResources{
+		Pods: pods,
+	}
+	replicationControllerCells, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells(deployments), dsQuery, cachedResources, heapsterClient)
+	deployments = fromCells(replicationControllerCells)
 
 	for _, deployment := range deployments {
 
@@ -123,6 +131,7 @@ func CreateDeploymentList(deployments []extensions.Deployment, pods []api.Pod,
 				Pods:            podInfo,
 			})
 	}
-
+	cumulativeMetrics, _ := metricPromises.GetMetrics()
+	deploymentList.CumulativeMetrics = cumulativeMetrics
 	return deploymentList
 }
