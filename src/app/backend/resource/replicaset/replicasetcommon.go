@@ -23,19 +23,27 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+
+	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
+
 )
 
 // CreateReplicaSetList creates paginated list of Replica Set model
 // objects based on Kubernetes Replica Set objects array and related resources arrays.
 func CreateReplicaSetList(replicaSets []extensions.ReplicaSet, pods []api.Pod,
-	events []api.Event, dsQuery *dataselect.DataSelectQuery) *ReplicaSetList {
+	events []api.Event, dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) *ReplicaSetList {
 
 	replicaSetList := &ReplicaSetList{
 		ReplicaSets: make([]ReplicaSet, 0),
 		ListMeta:    common.ListMeta{TotalItems: len(replicaSets)},
 	}
 
-	replicaSets = fromCells(dataselect.GenericDataSelect(toCells(replicaSets), dsQuery))
+	cachedResources := &dataselect.CachedResources{
+		Pods: pods,
+	}
+	replicationControllerCells, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells(replicaSets), dsQuery, cachedResources, heapsterClient)
+	replicaSets = fromCells(replicationControllerCells)
 
 	for _, replicaSet := range replicaSets {
 		matchingPods := common.FilterNamespacedPodsBySelector(pods, replicaSet.ObjectMeta.Namespace,
@@ -46,7 +54,8 @@ func CreateReplicaSetList(replicaSets []extensions.ReplicaSet, pods []api.Pod,
 
 		replicaSetList.ReplicaSets = append(replicaSetList.ReplicaSets, ToReplicaSet(&replicaSet, &podInfo))
 	}
-
+	cumulativeMetrics, _ := metricPromises.GetMetrics()
+	replicaSetList.CumulativeMetrics = cumulativeMetrics
 	return replicaSetList
 }
 
@@ -94,6 +103,14 @@ func (self ReplicaSetCell) GetProperty(name dataselect.PropertyName) dataselect.
 	}
 }
 
+func (self ReplicaSetCell) GetResourceSelector() *metric.ResourceSelector {
+	return &metric.ResourceSelector{
+		Namespace:     self.ObjectMeta.Namespace,
+		ResourceType:  common.ResourceKindReplicaSet,
+		ResourceName:  self.ObjectMeta.Name,
+		LabelSelector: self.Spec.Selector,
+	}
+}
 
 func toCells(std []extensions.ReplicaSet) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))

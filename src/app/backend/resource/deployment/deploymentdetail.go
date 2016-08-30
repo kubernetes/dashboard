@@ -156,7 +156,7 @@ func getDeploymentDetail(deployment *extensions.Deployment,
 		oldReplicaSets[i] = *replicaSet
 	}
 	oldReplicaSetList := replicaset.CreateReplicaSetList(oldReplicaSets, pods, rawEvents,
-		dataselect.NoDataSelect)
+		dataselect.NoDataSelect, nil)
 
 	var rollingUpdateStrategy *RollingUpdateStrategy
 	if deployment.Spec.Strategy.RollingUpdate != nil {

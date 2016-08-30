@@ -19,7 +19,9 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 )
 
 // ReplicationControllerList contains a list of Replication Controllers in the cluster.
@@ -28,6 +30,7 @@ type ReplicationControllerList struct {
 
 	// Unordered list of Replication Controllers.
 	ReplicationControllers []ReplicationController `json:"replicationControllers"`
+	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
 }
 
 // ReplicationController (aka. Replication Controller) plus zero or more Kubernetes services that
@@ -45,7 +48,7 @@ type ReplicationController struct {
 
 // GetReplicationControllerList returns a list of all Replication Controllers in the cluster.
 func GetReplicationControllerList(client *client.Client, nsQuery *common.NamespaceQuery,
-	dsQuery *dataselect.DataSelectQuery) (*ReplicationControllerList, error) {
+	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*ReplicationControllerList, error) {
 	log.Printf("Getting list of all replication controllers in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -54,13 +57,13 @@ func GetReplicationControllerList(client *client.Client, nsQuery *common.Namespa
 		EventList:                 common.GetEventListChannel(client, nsQuery, 1),
 	}
 
-	return GetReplicationControllerListFromChannels(channels, dsQuery)
+	return GetReplicationControllerListFromChannels(channels, dsQuery, heapsterClient)
 }
 
 // GetReplicationControllerListFromChannels returns a list of all Replication Controllers in the cluster
 // reading required resource list once from the channels.
 func GetReplicationControllerListFromChannels(channels *common.ResourceChannels,
-	dsQuery *dataselect.DataSelectQuery) (*ReplicationControllerList, error) {
+	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*ReplicationControllerList, error) {
 
 	rcList := <-channels.ReplicationControllerList.List
 	if err := <-channels.ReplicationControllerList.Error; err != nil {
@@ -77,5 +80,5 @@ func GetReplicationControllerListFromChannels(channels *common.ResourceChannels,
 		return nil, err
 	}
 
-	return CreateReplicationControllerList(rcList.Items, dsQuery, podList.Items, eventList.Items), nil
+	return CreateReplicationControllerList(rcList.Items, dsQuery, podList.Items, eventList.Items, heapsterClient), nil
 }

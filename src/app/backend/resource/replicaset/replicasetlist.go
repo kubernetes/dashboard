@@ -21,7 +21,9 @@ import (
 
 	k8serrors "k8s.io/kubernetes/pkg/api/errors"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 )
 
 // ReplicationSetList contains a list of Replica Sets in the cluster.
@@ -30,6 +32,8 @@ type ReplicaSetList struct {
 
 	// Unordered list of Replica Sets.
 	ReplicaSets []ReplicaSet `json:"replicaSets"`
+	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
+
 }
 
 // ReplicaSet is a presentation layer view of Kubernetes Replica Set resource. This means
@@ -48,7 +52,7 @@ type ReplicaSet struct {
 
 // GetReplicaSetList returns a list of all Replica Sets in the cluster.
 func GetReplicaSetList(client client.Interface, nsQuery *common.NamespaceQuery,
-	dsQuery *dataselect.DataSelectQuery) (*ReplicaSetList, error) {
+	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*ReplicaSetList, error) {
 	log.Printf("Getting list of all replica sets in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -57,13 +61,13 @@ func GetReplicaSetList(client client.Interface, nsQuery *common.NamespaceQuery,
 		EventList:      common.GetEventListChannel(client, nsQuery, 1),
 	}
 
-	return GetReplicaSetListFromChannels(channels, dsQuery)
+	return GetReplicaSetListFromChannels(channels, dsQuery, heapsterClient)
 }
 
 // GetReplicaSetList returns a list of all Replica Sets in the cluster
 // reading required resource list once from the channels.
 func GetReplicaSetListFromChannels(channels *common.ResourceChannels,
-	dsQuery *dataselect.DataSelectQuery) (*ReplicaSetList, error) {
+	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*ReplicaSetList, error) {
 
 	replicaSets := <-channels.ReplicaSetList.List
 	if err := <-channels.ReplicaSetList.Error; err != nil {
@@ -89,5 +93,5 @@ func GetReplicaSetListFromChannels(channels *common.ResourceChannels,
 		return nil, err
 	}
 
-	return CreateReplicaSetList(replicaSets.Items, pods.Items, events.Items, dsQuery), nil
+	return CreateReplicaSetList(replicaSets.Items, pods.Items, events.Items, dsQuery, heapsterClient), nil
 }

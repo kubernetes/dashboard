@@ -23,9 +23,11 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 )
 
 // Transforms simple selector map to labels.Selector object that can be used when querying for
@@ -108,15 +110,19 @@ func ToReplicationControllerDetail(replicationController *api.ReplicationControl
 // CreateReplicationControllerList creates paginated list of Replication Controller model
 // objects based on Kubernetes Replication Controller objects array and related resources arrays.
 func CreateReplicationControllerList(replicationControllers []api.ReplicationController,
-	dsQuery *dataselect.DataSelectQuery, pods []api.Pod, events []api.Event) *ReplicationControllerList {
+	dsQuery *dataselect.DataSelectQuery, pods []api.Pod, events []api.Event, heapsterClient *heapster.HeapsterClient) *ReplicationControllerList {
 
 	rcList := &ReplicationControllerList{
 		ReplicationControllers: make([]ReplicationController, 0),
 		ListMeta:               common.ListMeta{TotalItems: len(replicationControllers)},
 	}
+	cachedResources := &dataselect.CachedResources{
+		Pods: pods,
+	}
+	replicationControllerCells, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells(replicationControllers), dsQuery, cachedResources, heapsterClient)
+	replicationControllers = fromCells(replicationControllerCells)
 
-	replicationControllers = fromCells(dataselect.GenericDataSelect(toCells(replicationControllers), dsQuery))
- 
+
 	for _, rc := range replicationControllers {
 		matchingPods := common.FilterNamespacedPodsBySelector(pods, rc.ObjectMeta.Namespace,
 			rc.Spec.Selector)
@@ -126,7 +132,8 @@ func CreateReplicationControllerList(replicationControllers []api.ReplicationCon
 		replicationController := ToReplicationController(&rc, &podInfo)
 		rcList.ReplicationControllers = append(rcList.ReplicationControllers, replicationController)
 	}
-
+	cumulativeMetrics, _ := metricPromises.GetMetrics()
+	rcList.CumulativeMetrics = cumulativeMetrics
 	return rcList
 }
 
@@ -148,7 +155,14 @@ func (self ReplicationControllerCell) GetProperty(name dataselect.PropertyName) 
 		return nil
 	}
 }
-
+func (self ReplicationControllerCell) GetResourceSelector() *metric.ResourceSelector {
+	return &metric.ResourceSelector{
+		Namespace:     self.ObjectMeta.Namespace,
+		ResourceType:  common.ResourceKindReplicationController,
+		ResourceName:  self.ObjectMeta.Name,
+		Selector:      self.ObjectMeta.Labels,
+	}
+}
 
 func toCells(std []api.ReplicationController) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))

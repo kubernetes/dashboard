@@ -83,13 +83,13 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels,
 
 	go func() {
 		rcList, err := replicationcontroller.GetReplicationControllerListFromChannels(channels,
-			dsQuery)
+			dsQuery, nil)
 		errChan <- err
 		rcChan <- rcList
 	}()
 
 	go func() {
-		rsList, err := replicaset.GetReplicaSetListFromChannels(channels, dsQuery)
+		rsList, err := replicaset.GetReplicaSetListFromChannels(channels, dsQuery, nil)
 		errChan <- err
 		rsChan <- rsList
 	}()

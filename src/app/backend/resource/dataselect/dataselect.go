@@ -111,7 +111,7 @@ func (self *DataSelector) Sort() *DataSelector {
 
 // GetCumulativeMetrics downloads and aggregates metrics for data cells currently present in self.GenericDataList as instructed
 // by MetricQuery and inserts resulting MetricPromises to self.CumulativeMetricsPromises.
-func (self *DataSelector) GetCumulativeMetrics(client client.HeapsterClient) *DataSelector {
+func (self *DataSelector) GetCumulativeMetrics(heapsterClient *client.HeapsterClient) *DataSelector {
 	metricNames := self.DataSelectQuery.MetricQuery.MetricNames
 	if metricNames == nil {
 		// Don't download any metrics
@@ -123,18 +123,21 @@ func (self *DataSelector) GetCumulativeMetrics(client client.HeapsterClient) *Da
 	for i, dataCell := range self.GenericDataList {
 		// make sure data cells support metrics
 		metricDataCell := dataCell.(MetricDataCell)
+
 		// get its heapster selector
 		heapsterSelector, err := metricDataCell.GetResourceSelector().GetHeapsterSelector(self.CachedResources.Pods)
 		if err != nil {
 			// Programming error. Notify immediately.
-			panic(fmt.Sprintf(`Failed to create heapster selector for resource "%s". Probably pods were not available in CachedResources.`, metricDataCell.GetResourceSelector().ResourceType))
+			panic(fmt.Sprintf(`Failed to create heapster selector for resource "%s". Error: %s`, metricDataCell.GetResourceSelector().ResourceType, err))
 		}
 		heapsterSelectors[i] = heapsterSelector
 	}
 	if aggregations == nil {
 		aggregations = metric.OnlyDefaultAggregation
 	}
-	self.CumulativeMetricsPromises = heapsterSelectors.DownloadAndAggregate(client, metricNames, aggregations)
+	// this will panic in case somebody tries to download metrics without providing heapster client. Another option
+	// would be to skip download in case of nil pointer.
+	self.CumulativeMetricsPromises = heapsterSelectors.DownloadAndAggregate(*heapsterClient, metricNames, aggregations)
 	return self
 }
 
@@ -168,7 +171,7 @@ func GenericDataSelect(dataList []DataCell, dsQuery *DataSelectQuery) []DataCell
 }
 
 // GenericDataSelect takes a list of GenericDataCells and DataSelectQuery and returns selected data as instructed by dsQuery.
-func GenericDataSelectWithMetrics(dataList []DataCell, dsQuery *DataSelectQuery, cachedResources *CachedResources, heapsterClient client.HeapsterClient) ([]DataCell, metric.MetricPromises) {
+func GenericDataSelectWithMetrics(dataList []DataCell, dsQuery *DataSelectQuery, cachedResources *CachedResources, heapsterClient *client.HeapsterClient) ([]DataCell, metric.MetricPromises) {
 	SelectableData := DataSelector{
 		GenericDataList: dataList,
 		DataSelectQuery: dsQuery,
