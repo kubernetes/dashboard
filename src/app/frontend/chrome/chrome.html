@@ -20,7 +20,8 @@ limitations under the License.
     <h2 class="kd-logo-menu" flex="none">
       <span>kubernetes</span>
     </h2>
-    <kd-breadcrumbs class="kd-actionbar-breadcrumbs" limit="2" flex="auto" layout="row"></kd-breadcrumbs>
+    <kd-breadcrumbs class="kd-actionbar-breadcrumbs" limit="2"
+        flex="auto" layout="row"></kd-breadcrumbs>
     <div flex="auto" ui-view="toolbar"></div>
     <div ui-view="actionbar"></div>
   </div>
@@ -30,7 +31,7 @@ limitations under the License.
   <kd-nav></kd-nav>
   <div layout="column" flex="shrink" class="kd-chrome-content-container">
     <md-content flex="auto" class="kd-app-content">
-      <div ng-switch="$ctrl.showLoadingSpinner" flex="auto" >
+      <div ng-switch="$ctrl.showLoadingSpinner" flex="auto">
         <div ng-switch-when="true" class="kd-center-fixed">
           <md-progress-circular md-mode="indeterminate" md-diameter="96">
           </md-progress-circular>

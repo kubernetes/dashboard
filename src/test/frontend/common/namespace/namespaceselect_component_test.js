@@ -25,6 +25,8 @@ describe('Namespace select component ', () => {
   let httpBackend;
   /** @type {!ui.router.$state} */
   let state;
+  /** @type {!common/state/futurestate_service.FutureStateService}*/
+  let kdFutureStateService;
 
   beforeEach(() => {
     let fakeModule = angular.module('fakeModule', ['ui.router']);
@@ -39,18 +41,20 @@ describe('Namespace select component ', () => {
     angular.mock.module(fakeModule.name);
     angular.mock.module(chromeModule.name);
 
-    angular.mock.inject(($componentController, $rootScope, $httpBackend, $state) => {
-      scope = $rootScope;
-      ctrl = $componentController('kdNamespaceSelect', {$scope: $rootScope});
-      httpBackend = $httpBackend;
-      state = $state;
-    });
+    angular.mock.inject(
+        ($componentController, $rootScope, $httpBackend, $state, _kdFutureStateService_) => {
+          scope = $rootScope;
+          ctrl = $componentController('kdNamespaceSelect', {$scope: $rootScope});
+          httpBackend = $httpBackend;
+          state = $state;
+          kdFutureStateService = _kdFutureStateService_;
+        });
   });
 
   it('should initialize from non-exisitng namespace and watch for state changes', () => {
     ctrl.$onInit();
 
-    scope.$broadcast('$stateChangeSuccess', {}, {namespace: 'non-existing-namespace'});
+    kdFutureStateService.params = {namespace: 'non-existing-namespace'};
     scope.$digest();
     expect(ctrl.selectedNamespace).toBe('non-existing-namespace');
 
@@ -64,15 +68,15 @@ describe('Namespace select component ', () => {
     });
     httpBackend.flush();
     expect(ctrl.namespaces).toEqual(['a', 'b', 'c']);
-    expect(ctrl.selectedNamespace).toBe('_all');
+    expect(ctrl.selectedNamespace).toBe('default');
   });
 
   it('should initialize from exisitng namespace and watch for state changes', () => {
     expect(ctrl.selectedNamespace).toBe(undefined);
     ctrl.$onInit();
-    expect(ctrl.selectedNamespace).toBe('_all');
+    expect(ctrl.selectedNamespace).toBe('default');
 
-    scope.$broadcast('$stateChangeSuccess', {}, {namespace: 'a'});
+    kdFutureStateService.params = {namespace: 'a'};
     scope.$digest();
     expect(ctrl.selectedNamespace).toBe('a');
 
@@ -94,7 +98,7 @@ describe('Namespace select component ', () => {
 
     state.go('fakeState', {namespace: 'foo-bar'});
     scope.$digest();
-    expect(ctrl.selectedNamespace).toBe('_all');
+    expect(ctrl.selectedNamespace).toBe('default');
 
     // Do not init twice. Nothing happens.
     ctrl.loadNamespacesIfNeeded();

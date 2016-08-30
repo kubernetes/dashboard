@@ -17,6 +17,8 @@ import {namespaceParam} from 'chrome/chrome_state';
 /** Internal key for empty selection. To differentiate empty string from nulls. */
 export const ALL_NAMESPACES = '_all';
 
+export const DEFAULT_NAMESPACE = 'default';
+
 /**
  * @final
  */
@@ -26,9 +28,10 @@ export class NamespaceSelectController {
    * @param {!ui.router.$state} $state
    * @param {!angular.Scope} $scope
    * @param {!./namespace_service.NamespaceService} kdNamespaceService
+   * @param {!./../state/futurestate_service.FutureStateService} kdFutureStateService
    * @ngInject
    */
-  constructor($resource, $state, $scope, kdNamespaceService) {
+  constructor($resource, $state, $scope, kdNamespaceService, kdFutureStateService) {
     /**
      * Initialized with all namespaces on first open.
      * @export {!Array<string>}
@@ -64,6 +67,9 @@ export class NamespaceSelectController {
     /** @private {!angular.Scope} */
     this.scope_ = $scope;
 
+    /** @private {!./../state/futurestate_service.FutureStateService}} */
+    this.kdFutureStateService_ = kdFutureStateService;
+
     /** @export */
     this.i18n = i18n;
   }
@@ -72,9 +78,9 @@ export class NamespaceSelectController {
    * @export
    */
   $onInit() {
-    this.onNamespaceChanged_(this.state_.params);
+    this.onNamespaceChanged_(this.kdFutureStateService_.params);
 
-    this.scope_.$on('$stateChangeSuccess', (event, toState, /** Object */ toParams) => {
+    this.scope_.$watch(() => this.kdFutureStateService_.params, (toParams) => {
       this.onNamespaceChanged_(toParams);
     });
   }
@@ -87,21 +93,22 @@ export class NamespaceSelectController {
     if (toParams) {
       /** @type {?string} */
       let newNamespace = toParams[namespaceParam];
-      if (newNamespace && newNamespace !== ALL_NAMESPACES) {
+      if (newNamespace) {
         if (this.namespacesInitialized_) {
           if (this.namespaces.indexOf(newNamespace) >= 0) {
             this.selectedNamespace = newNamespace;
           } else {
-            this.selectedNamespace = ALL_NAMESPACES;
+            this.selectedNamespace = DEFAULT_NAMESPACE;
           }
-          this.changeNamespace();
         } else {
           this.namespaces = [newNamespace];
           this.selectedNamespace = newNamespace;
         }
       } else {
-        this.selectedNamespace = ALL_NAMESPACES;
+        this.selectedNamespace = DEFAULT_NAMESPACE;
       }
+    } else {
+      this.selectedNamespace = DEFAULT_NAMESPACE;
     }
   }
 

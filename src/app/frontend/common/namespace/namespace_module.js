@@ -15,7 +15,7 @@
 import {namespaceParam} from 'chrome/chrome_state';
 
 import {NamespaceService} from './namespace_service';
-import {namespaceSelectComponent} from './namespaceselect_component';
+import {DEFAULT_NAMESPACE, namespaceSelectComponent} from './namespaceselect_component';
 
 /**
  * Angular module global namespace selection components.
@@ -46,7 +46,7 @@ function ensureNamespaceParamPresent($rootScope, $location) {
    */
   function replaceUrlIfNeeded(namespace) {
     if (namespace === undefined) {
-      $location.search(namespaceParam, 'default');
+      $location.search(namespaceParam, DEFAULT_NAMESPACE);
       $location.replace();
     }
   }
