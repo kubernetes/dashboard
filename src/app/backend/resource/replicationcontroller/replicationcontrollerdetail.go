@@ -62,7 +62,7 @@ type ReplicationControllerSpec struct {
 // GetReplicationControllerDetail returns detailed information about the given replication
 // controller in the given namespace.
 func GetReplicationControllerDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	namespace, name string) (*ReplicationControllerDetail, error) {
+        dsQuery *dataselect.DataSelectQuery, namespace, name string) (*ReplicationControllerDetail, error) {
 	log.Printf("Getting details of %s replication controller in %s namespace", name, namespace)
 
 	replicationController, err := client.ReplicationControllers(namespace).Get(name)
@@ -75,8 +75,7 @@ func GetReplicationControllerDetail(client k8sClient.Interface, heapsterClient c
 		return nil, err
 	}
 
-	// TODO support pagination
-	podList, err := GetReplicationControllerPods(client, heapsterClient, dataselect.NoDataSelect,
+	podList, err := GetReplicationControllerPods(client, heapsterClient, dsQuery,
 		name, namespace)
 	if err != nil {
 		return nil, err

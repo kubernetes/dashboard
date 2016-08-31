@@ -61,7 +61,8 @@ export class GraphController {
       let y1max = 1;
       let y2max = 1;
       // iterate over metrics and add them to graph display
-      for (let metric of this.metrics) {
+      for (let i = 0; i < this.metrics.length; i++) {
+        let metric = this.metrics[i];
         // don't display metric if the number of its data points is smaller than 2
         if (metric.dataPoints.length < 2) {
           continue;

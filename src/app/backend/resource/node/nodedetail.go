@@ -26,6 +26,7 @@ import (
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 )
 
 // NodeAllocatedResources describes node allocated resources.
@@ -107,11 +108,15 @@ type NodeDetail struct {
 
 	// Events is list of events associated to the node.
 	EventList common.EventList `json:"eventList"`
+
+	// Metrics collected for this resource
+	Metrics []metric.Metric `json:"metrics"`
+
 }
 
 // GetNodeDetail gets node details.
-func GetNodeDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient, name string) (
-	*NodeDetail, error) {
+func GetNodeDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
+        dsQuery *dataselect.DataSelectQuery, name string) (*NodeDetail, error) {
 	log.Printf("Getting details of %s node", name)
 
 	node, err := client.Nodes().Get(name)
@@ -119,13 +124,18 @@ func GetNodeDetail(client k8sClient.Interface, heapsterClient client.HeapsterCli
 		return nil, err
 	}
 
+	// Download standard metrics. Currently metrics are hard coded, but it is possible to replace
+	// dataselect.StdMetricsDataSelect with data select provided in the request.
+	dataSelectForMetricsDownload := dataselect.NewDataSelectQuery(dataselect.NoPagination, dataselect.NoSort, dsQuery.MetricQuery)
+	_, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells([]api.Node{*node}),
+		dataSelectForMetricsDownload, dataselect.NoResourceCache, &heapsterClient)
+
 	pods, err := getNodePods(client, *node)
 	if err != nil {
 		return nil, err
 	}
 
-	// TODO(floreks) add pagination support
-	podList := pod.CreatePodList(pods.Items, dataselect.NoDataSelect, heapsterClient)
+	podList := pod.CreatePodList(pods.Items, dsQuery, heapsterClient)
 
 	events, err := event.GetNodeEvents(client, node.Name)
 	if err != nil {
@@ -137,7 +147,8 @@ func GetNodeDetail(client k8sClient.Interface, heapsterClient client.HeapsterCli
 		return nil, err
 	}
 
-	nodeDetails := toNodeDetail(*node, podList, events, allocatedResources)
+	metrics, _ := metricPromises.GetMetrics()
+	nodeDetails := toNodeDetail(*node, podList, events, allocatedResources, metrics)
 	return &nodeDetails, nil
 }
 
@@ -213,7 +224,7 @@ func getNodePods(client k8sClient.Interface, node api.Node) (*api.PodList, error
 }
 
 func toNodeDetail(node api.Node, pods pod.PodList, eventList common.EventList,
-	allocatedResources NodeAllocatedResources) NodeDetail {
+	allocatedResources NodeAllocatedResources, metrics []metric.Metric) NodeDetail {
 
 	return NodeDetail{
 		ObjectMeta:         common.NewObjectMeta(node.ObjectMeta),
@@ -229,5 +240,6 @@ func toNodeDetail(node api.Node, pods pod.PodList, eventList common.EventList,
 		PodList:            pods,
 		EventList:          eventList,
 		AllocatedResources: allocatedResources,
+		Metrics:            metrics,
 	}
 }
