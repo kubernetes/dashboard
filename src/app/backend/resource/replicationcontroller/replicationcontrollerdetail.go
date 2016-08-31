@@ -21,10 +21,9 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
-	"k8s.io/kubernetes/pkg/api"
-	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
 // ReplicationControllerDetail represents detailed information about a Replication Controller.
@@ -99,73 +98,6 @@ func GetReplicationControllerDetail(client k8sClient.Interface, heapsterClient c
 	replicationControllerDetail := ToReplicationControllerDetail(replicationController, *podInfo,
 		*podList, *eventList, *serviceList)
 	return &replicationControllerDetail, nil
-}
-
-// DeleteReplicationController deletes replication controller with given name in given namespace and
-// related pods. Also deletes services related to replication controller if deleteServices is true.
-// TODO(floreks): This should be transactional to make sure that RC will not be deleted without pods
-func DeleteReplicationController(client k8sClient.Interface, namespace, name string,
-	deleteServices bool) error {
-
-	log.Printf("Deleting %s replication controller from %s namespace", name, namespace)
-
-	if deleteServices {
-		if err := DeleteReplicationControllerServices(client, namespace, name); err != nil {
-			return err
-		}
-	}
-
-	pods, err := getRawReplicationControllerPods(client, name, namespace)
-	if err != nil {
-		return err
-	}
-
-	if err := client.ReplicationControllers(namespace).Delete(name); err != nil {
-		return err
-	}
-
-	for _, pod := range pods {
-		if err := client.Pods(namespace).Delete(pod.Name, &api.DeleteOptions{}); err != nil {
-			return err
-		}
-	}
-
-	log.Printf("Successfully deleted %s replication controller from %s namespace", name, namespace)
-
-	return nil
-}
-
-// DeleteReplicationControllerServices deletes services related to replication controller with given
-// name in given namespace.
-func DeleteReplicationControllerServices(client k8sClient.Interface, namespace, name string) error {
-	log.Printf("Deleting services related to %s replication controller from %s namespace", name,
-		namespace)
-
-	replicationController, err := client.ReplicationControllers(namespace).Get(name)
-	if err != nil {
-		return err
-	}
-
-	labelSelector, err := toLabelSelector(replicationController.Spec.Selector)
-	if err != nil {
-		return err
-	}
-
-	services, err := getServicesForDeletion(client, labelSelector, namespace)
-	if err != nil {
-		return err
-	}
-
-	for _, service := range services {
-		if err := client.Services(namespace).Delete(service.Name); err != nil {
-			return err
-		}
-	}
-
-	log.Printf("Successfully deleted services related to %s replication controller from %s namespace",
-		name, namespace)
-
-	return nil
 }
 
 // UpdateReplicasCount updates number of replicas in Replication Controller based on Replication

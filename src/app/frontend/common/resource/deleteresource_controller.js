@@ -77,9 +77,8 @@ function i18n(resourceKindName, objectMeta) {
     MSG_DELETE_RESOURCE_DIALOG_DELETE: goog.getMsg('Delete'),
     /** @export @desc Confirmation question, appears before any dashboard resource will be deleted. */
     MSG_DELETE_RESOURCE_CONFIRM_QUESTION: goog.getMsg(
-        `Are you sure you want to delete {$resourceKindName}` +
-            ` <kd-middle-ellipsis display-string="{$objectName}"></kd-middle-ellipsis>` +
-            ` in namespace {$namespaceName}?`,
+        `Are you sure you want to delete {$resourceKindName} ` +
+            `<i>{$objectName}</i> in namespace <i>{$namespaceName}</i>?`,
         {
           'resourceKindName': resourceKindName,
           'objectName': objectMeta.name,
