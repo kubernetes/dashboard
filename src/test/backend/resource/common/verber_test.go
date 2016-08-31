@@ -6,6 +6,7 @@ import (
 	"reflect"
 	"testing"
 
+	"k8s.io/kubernetes/pkg/api/testapi"
 	"k8s.io/kubernetes/pkg/client/restclient"
 )
 
@@ -21,9 +22,12 @@ type FakeRESTClient struct {
 }
 
 func (c *FakeRESTClient) Delete() *restclient.Request {
+	codec := testapi.Default.Codec()
 	return restclient.NewRequest(clientFunc(func(req *http.Request) (*http.Response, error) {
 		return c.response, c.err
-	}), "DELETE", nil, "/api/v1", restclient.ContentConfig{}, restclient.Serializers{}, nil, nil)
+	}), "DELETE", nil, "/api/v1", restclient.ContentConfig{}, restclient.Serializers{
+		Encoder: codec,
+	}, nil, nil)
 }
 
 func (c *FakeRESTClient) Put() *restclient.Request {

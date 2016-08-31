@@ -28,8 +28,10 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/configmap"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/container"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/node"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
@@ -45,8 +47,6 @@ import (
 	clientK8s "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
 	"k8s.io/kubernetes/pkg/runtime"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 const (
@@ -156,9 +156,6 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 		apiV1Ws.POST("/replicationcontroller/{namespace}/{replicationController}/update/pod").
 			To(apiHandler.handleUpdateReplicasCount).
 			Reads(replicationcontroller.ReplicationControllerSpec{}))
-	apiV1Ws.Route(
-		apiV1Ws.DELETE("/replicationcontroller/{namespace}/{replicationController}").
-			To(apiHandler.handleDeleteReplicationController))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/replicationcontroller/{namespace}/{replicationController}/pod").
 			To(apiHandler.handleGetReplicationControllerPods).
@@ -801,28 +798,6 @@ func (apiHandler *APIHandler) handleUpdateReplicasCount(
 	response.WriteHeader(http.StatusAccepted)
 }
 
-// Handles delete Replication Controller API call.
-// TODO(floreks): there has to be some kind of transaction here
-func (apiHandler *APIHandler) handleDeleteReplicationController(
-	request *restful.Request, response *restful.Response) {
-
-	namespace := request.PathParameter("namespace")
-	replicationController := request.PathParameter("replicationController")
-	deleteServices, err := strconv.ParseBool(request.QueryParameter("deleteServices"))
-	if err != nil {
-		handleInternalError(response, err)
-		return
-	}
-
-	if err := replicationcontroller.DeleteReplicationController(apiHandler.client, namespace,
-		replicationController, deleteServices); err != nil {
-		handleInternalError(response, err)
-		return
-	}
-
-	response.WriteHeader(http.StatusOK)
-}
-
 func (apiHandler *APIHandler) handleGetResource(
 	request *restful.Request, response *restful.Response) {
 	kind := request.PathParameter("kind")
@@ -1224,7 +1199,6 @@ func (apiHandler *APIHandler) handleGetJobPods(request *restful.Request,
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
-
 // parseNamespacePathParameter parses namespace selector for list pages in path paramater.
 // The namespace selector is a comma separated list of namespaces that are trimmed.
 // No namespaces means "view all user namespaces", i.e., everything except kube-system.
@@ -1285,7 +1259,6 @@ func parseMetricPathParameter(request *restful.Request) *dataselect.MetricQuery 
 	return dataselect.NewMetricQuery(metricNames, aggregationNames)
 
 }
-
 
 // Parses query parameters of the request and returns a DataSelectQuery object
 func parseDataSelectPathParameter(request *restful.Request) *dataselect.DataSelectQuery {
