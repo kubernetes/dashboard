@@ -889,7 +889,30 @@ backendApi.SecretList;
  * @typedef {{
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
+ * }}
+ */
+backendApi.IngressDetail;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta
+ * }}
+ */
+backendApi.Ingress;
+
+/**
+ * @typedef {{
  *   listMeta: !backendApi.ListMeta,
+ *   items: !Array<!backendApi.Ingress>
+ * }}
+ */
+backendApi.IngressList;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
  *   ready: string
  * }}
  */

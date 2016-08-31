@@ -78,6 +78,7 @@ func NewObjectMeta(k8SObjectMeta api.ObjectMeta) ObjectMeta {
 		Namespace:         k8SObjectMeta.Namespace,
 		Labels:            k8SObjectMeta.Labels,
 		CreationTimestamp: k8SObjectMeta.CreationTimestamp,
+		Annotations:       k8SObjectMeta.Annotations,
 	}
 }
 
@@ -97,6 +98,7 @@ type ResourceKind string
 const (
 	ResourceKindReplicaSet            = "replicaset"
 	ResourceKindService               = "service"
+	ResourceKindIngress               = "ingress"
 	ResourceKindDeployment            = "deployment"
 	ResourceKindPod                   = "pod"
 	ResourceKindEvent                 = "event"
@@ -136,6 +138,7 @@ var kindToAPIMapping = map[string]struct {
 	ClientType ClientType
 }{
 	ResourceKindService:               {"services", ClientTypeDefault},
+	ResourceKindIngress:               {"ingresses", ClientTypeExtensionClient},
 	ResourceKindPod:                   {"pods", ClientTypeDefault},
 	ResourceKindEvent:                 {"events", ClientTypeDefault},
 	ResourceKindReplicationController: {"replicationcontrollers", ClientTypeDefault},
