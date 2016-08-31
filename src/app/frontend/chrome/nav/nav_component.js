@@ -15,6 +15,7 @@
 import {stateName as configMapState} from 'configmaplist/configmaplist_state';
 import {stateName as daemonSetState} from 'daemonsetlist/daemonsetlist_state';
 import {stateName as deploymentState} from 'deploymentlist/deploymentlist_state';
+import {stateName as ingressState} from 'ingresslist/list_state';
 import {stateName as jobState} from 'joblist/joblist_state';
 import {stateName as namespaceState} from 'namespacelist/namespacelist_state';
 import {stateName as nodeState} from 'nodelist/nodelist_state';
@@ -56,6 +57,7 @@ export class NavController {
       'service': serviceState,
       'secret': secretState,
       'configMap': configMapState,
+      'ingress': ingressState,
     };
   }
 

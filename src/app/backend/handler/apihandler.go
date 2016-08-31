@@ -28,8 +28,11 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/configmap"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/container"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/ingress"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/node"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
@@ -45,8 +48,6 @@ import (
 	clientK8s "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
 	"k8s.io/kubernetes/pkg/runtime"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 const (
@@ -340,6 +341,19 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 			Writes(pod.PodList{}))
 
 	apiV1Ws.Route(
+		apiV1Ws.GET("/ingress").
+			To(apiHandler.handleGetIngressList).
+			Writes(ingress.IngressList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/ingress/{namespace}").
+			To(apiHandler.handleGetIngressList).
+			Writes(ingress.IngressList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/ingress/{namespace}/{name}").
+			To(apiHandler.handleGetIngressDetail).
+			Writes(ingress.IngressDetail{}))
+
+	apiV1Ws.Route(
 		apiV1Ws.GET("/petset").
 			To(apiHandler.handleGetPetSetList).
 			Writes(petset.PetSetList{}))
@@ -465,6 +479,28 @@ func (apiHandler *APIHandler) handleGetServiceDetail(request *restful.Request, r
 		return
 	}
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+func (apiHandler *APIHandler) handleGetIngressDetail(request *restful.Request, response *restful.Response) {
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("name")
+	result, err := ingress.GetIngressDetail(apiHandler.client, namespace, name)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+func (apiHandler *APIHandler) handleGetIngressList(request *restful.Request, response *restful.Response) {
+	dataSelect := parseDataSelectPathParameter(request)
+	namespace := parseNamespacePathParameter(request)
+	result, err := ingress.GetIngressList(apiHandler.client, namespace, dataSelect)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get service pods API call.
@@ -1218,7 +1254,6 @@ func (apiHandler *APIHandler) handleGetJobPods(request *restful.Request,
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
-
 // parseNamespacePathParameter parses namespace selector for list pages in path paramater.
 // The namespace selector is a comma separated list of namespaces that are trimmed.
 // No namespaces means "view all user namespaces", i.e., everything except kube-system.
@@ -1279,7 +1314,6 @@ func parseMetricPathParameter(request *restful.Request) *dataselect.MetricQuery 
 	return dataselect.NewMetricQuery(metricNames, aggregationNames)
 
 }
-
 
 // Parses query parameters of the request and returns a DataSelectQuery object
 func parseDataSelectPathParameter(request *restful.Request) *dataselect.DataSelectQuery {
