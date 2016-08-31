@@ -21,15 +21,25 @@ export class LogsController {
   /**
    * @param {!backendApi.Logs} podLogs
    * @param {!./logs_service.LogsService} logsService
-   * @param $sce
+   * @param {!angular.$sce} $sce
+   * @param {!angular.$document} $document
    * @ngInject
    */
-  constructor(podLogs, logsService, $sce) {
+  constructor(podLogs, logsService, $sce, $document) {
+    /** @private {!angular.$sce} */
+    this.sce_ = $sce;
+
+    /** @private {!HTMLDocument} */
+    this.document_ = $document[0];
+
     /** @export {!Array<string>} Log set. */
-    this.logsSet = podLogs.logs.map((line) => this.formatLine(line, $sce));
+    this.logsSet = this.sanitizeLogs_(podLogs.logs);
 
     /** @private {!./logs_service.LogsService} */
     this.logsService_ = logsService;
+
+    /** @export */
+    this.i18n = i18n;
   }
 
   /**
@@ -59,27 +69,49 @@ export class LogsController {
   }
 
   /**
-   * Formats the given log line as raw HTML to display to the user.
-   * @returns {string}
+   * Removes empty lines and formats logs as HTML.
+   *
+   * @param {!Array<string>} logs
+   * @return {!Array<string>}
+   * @private
    */
-  formatLine(line, $sce) {
-    let escapedLine = this.escapeHtml(line);
+  sanitizeLogs_(logs) {
+    return logs.filter((line) => line !== '').map((line) => this.formatLine_(line));
+  }
+
+  /**
+   * Formats the given log line as raw HTML to display to the user.
+   * @param {string} line
+   * @return {*}
+   * @private
+   */
+  formatLine_(line) {
+    let escapedLine = this.escapeHtml_(line);
     let formattedLine = ansi_up.ansi_to_html(escapedLine);
 
     // We know that trustAsHtml is safe here because escapedLine is escaped to
     // not contain any HTML markup, and formattedLine is the result of passing
     // ecapedLine to ansi_to_html, which is known to only add span tags.
-    return $sce.trustAsHtml(formattedLine);
+    return this.sce_.trustAsHtml(formattedLine);
   }
 
   /**
    * Escapes an HTML string (e.g. converts "<foo>bar&baz</foo>" to
    * "&lt;foo&gt;bar&amp;baz&lt;/foo&gt;") by bouncing it through a text node.
-   * @returns {string}
+   * @param {string} html
+   * @return {string}
+   * @private
    */
-  escapeHtml(html) {
-    let div = document.createElement('div');
-    div.appendChild(document.createTextNode(html));
+  escapeHtml_(html) {
+    let div = this.document_.createElement('div');
+    div.appendChild(this.document_.createTextNode(html));
     return div.innerHTML;
   }
 }
+
+const i18n = {
+  /** @export {string} @desc Title for logs card zerostate in logs page. */
+  MSG_LOGS_ZEROSTATE_TITLE: goog.getMsg('There is nothing to display here'),
+  /** @export {string} @desc Text for logs card zerostate in logs page. */
+  MSG_LOGS_ZEROSTATE_TEXT: goog.getMsg('The selected container has not logged any messages yet.'),
+};
