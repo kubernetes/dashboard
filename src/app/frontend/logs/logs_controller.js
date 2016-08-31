@@ -113,6 +113,5 @@ const i18n = {
   /** @export {string} @desc Title for logs card zerostate in logs page. */
   MSG_LOGS_ZEROSTATE_TITLE: goog.getMsg('There is nothing to display here'),
   /** @export {string} @desc Text for logs card zerostate in logs page. */
-  MSG_LOGS_ZEROSTATE_TEXT:
-      goog.getMsg('The selected container has not logged any messages yet.'),
+  MSG_LOGS_ZEROSTATE_TEXT: goog.getMsg('The selected container has not logged any messages yet.'),
 };
