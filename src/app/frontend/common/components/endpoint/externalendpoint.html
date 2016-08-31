@@ -41,5 +41,14 @@ limitations under the License.
         </a>
       </div>
     </div>
+    <div ng-if="::!endpoint.ports.length">
+      <a href="http://{{::endpoint.host}}" target="_blank"
+         layout layout-align="start center">
+        <kd-middle-ellipsis display-string="{{::endpoint.host}}">
+        </kd-middle-ellipsis>
+        &nbsp;
+        <md-icon class="kd-endpoint-icon">open_in_new</md-icon>
+      </a>
+    </div>
   </div>
 </div>

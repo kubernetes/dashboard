@@ -20,7 +20,7 @@ limitations under the License.
       {{::$ctrl.i18n.MSG_CONFIG_MAP_LIST_HEADER_NAME}}
     </kd-resource-card-header-column>
     <kd-resource-card-header-column grow="2" ng-if="$ctrl.areMultipleNamespacesSelected()">
-      {{::$ctrl.i18n.MSG_CONFIGMAP_LIST_NAMESPACE_LABEL}}
+      {{::$ctrl.i18n.MSG_CONFIG_MAP_LIST_NAMESPACE_LABEL}}
     </kd-resource-card-header-column>
     <kd-resource-card-header-column grow="2">
       {{::$ctrl.i18n.MSG_CONFIG_MAP_LIST_HEADER_LABELS}}
@@ -31,15 +31,9 @@ limitations under the License.
     <kd-resource-card-header-column size="small" grow="nogrow">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
-  <kd-config-map-card ng-if="::$ctrl.configMapListResource"
-                      dir-paginate="configMap in $ctrl.configMapList.items | itemsPerPage: default"
+  <kd-config-map-card dir-paginate="configMap in $ctrl.configMapList.items | itemsPerPage: default"
                       config-map="configMap" pagination-id="configmaps"
                       total-items="::$ctrl.configMapList.listMeta.totalItems">
-  </kd-config-map-card>
-
-  <kd-config-map-card ng-if="::!$ctrl.configMapListResource"
-                      dir-paginate="configMap in $ctrl.configMapList.items | itemsPerPage: default"
-                      config-map="configMap" pagination-id="configmaps">
   </kd-config-map-card>
   <kd-resource-card-list-footer>
     <kd-resource-card-list-pagination pagination-id="configmaps" list="$ctrl.configMapList"
