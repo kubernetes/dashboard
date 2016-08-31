@@ -16,9 +16,15 @@ limitations under the License.
 
 <kd-content-card>
   <kd-content>
-    <md-content layout-padding flex="auto" layout-fill ng-class=ctrl.getStyleClass()>
-    <div ng-repeat="n in ctrl.logsSet track by $index" ng-class=ctrl.getLogsClass()>
-      <pre ng-bind-html="n"></pre>
+    <md-content layout-padding flex="auto" layout-fill ng-class=ctrl.getStyleClass()
+                ng-show="::ctrl.logsSet.length">
+      <div ng-repeat="n in ctrl.logsSet track by $index" ng-class=ctrl.getLogsClass()>
+        <pre ng-bind-html="n"></pre>
+      </div>
+    </md-content>
+    <div class="kd-zerostate-message" layout-padding ng-hide="::ctrl.logsSet.length">
+      <div class="kd-zerostate-title">{{::ctrl.i18n.MSG_LOGS_ZEROSTATE_TITLE}}</div>
+      <div class="kd-zerostate-text">{{::ctrl.i18n.MSG_LOGS_ZEROSTATE_TEXT}}</div>
     </div>
   </kd-content>
 </kd-content-card>
