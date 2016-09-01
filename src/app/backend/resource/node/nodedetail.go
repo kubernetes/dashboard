@@ -116,7 +116,7 @@ type NodeDetail struct {
 
 // GetNodeDetail gets node details.
 func GetNodeDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-        dsQuery *dataselect.DataSelectQuery, name string) (*NodeDetail, error) {
+        dsQuery *dataselect.DataSelectQuery, name string, metricQuery *dataselect.MetricQuery) (*NodeDetail, error) {
 	log.Printf("Getting details of %s node", name)
 
 	node, err := client.Nodes().Get(name)
@@ -126,9 +126,9 @@ func GetNodeDetail(client k8sClient.Interface, heapsterClient client.HeapsterCli
 
 	// Download standard metrics. Currently metrics are hard coded, but it is possible to replace
 	// dataselect.StdMetricsDataSelect with data select provided in the request.
-	dataSelectForMetricsDownload := dataselect.NewDataSelectQuery(dataselect.NoPagination, dataselect.NoSort, dsQuery.MetricQuery)
 	_, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells([]api.Node{*node}),
-		dataSelectForMetricsDownload, dataselect.NoResourceCache, &heapsterClient)
+		dataselect.NewDataSelectQuery(dataselect.NoPagination, dataselect.NoSort, metricQuery),
+		dataselect.NoResourceCache, &heapsterClient)
 
 	pods, err := getNodePods(client, *node)
 	if err != nil {

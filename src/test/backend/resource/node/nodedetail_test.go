@@ -94,7 +94,7 @@ func TestGetNodeDetail(t *testing.T) {
 			podList, eventList)
 		fakeHeapsterClient := FakeHeapsterClient{client: testclient.NewSimpleFake()}
 
-		actual, _ := GetNodeDetail(fakeClient, fakeHeapsterClient, dataselect.NoDataSelect, c.name)
+		actual, _ := GetNodeDetail(fakeClient, fakeHeapsterClient, dataselect.NoDataSelect, c.name, dataselect.NoMetrics)
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetNodeDetail(client,heapsterClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",

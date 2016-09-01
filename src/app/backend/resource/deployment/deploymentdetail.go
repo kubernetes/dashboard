@@ -23,8 +23,11 @@ import (
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
+	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
+
 	deploymentutil "k8s.io/kubernetes/pkg/util/deployment"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 )
 
 // RollingUpdateStrategy is behavior of a rolling update. See RollingUpdateDeployment K8s object.
@@ -52,6 +55,9 @@ type StatusInfo struct {
 type DeploymentDetail struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
 	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+
+	// Detailed information about Pods belonging to this Deployment.
+	PodList pod.PodList `json:"podList"`
 
 	// Label selector of the service.
 	Selector map[string]string `json:"selector"`
@@ -83,8 +89,8 @@ type DeploymentDetail struct {
 }
 
 // GetDeploymentDetail returns model object of deployment and error, if any.
-func GetDeploymentDetail(client client.Interface, namespace string,
-	name string) (*DeploymentDetail, error) {
+func GetDeploymentDetail(client client.Interface,  heapsterClient heapster.HeapsterClient, namespace string,
+	name string, dsQuery *dataselect.DataSelectQuery) (*DeploymentDetail, error) {
 
 	log.Printf("Getting details of %s deployment in %s namespace", name, namespace)
 
@@ -112,17 +118,18 @@ func GetDeploymentDetail(client client.Interface, namespace string,
 		return nil, err
 	}
 
-	podList := <-channels.PodList.List
+	pods := <-channels.PodList.List
 	if err := <-channels.PodList.Error; err != nil {
 		return nil, err
 	}
+        podList := getDeploymentPods(deployment, pods.Items, heapsterClient, dsQuery)
 
 	eventList := <-channels.EventList.List
 	if err := <-channels.EventList.Error; err != nil {
 		return nil, err
 	}
 
-	oldReplicaSets, _, err := deploymentutil.FindOldReplicaSets(deployment, rsList.Items, podList)
+	oldReplicaSets, _, err := deploymentutil.FindOldReplicaSets(deployment, rsList.Items, pods)
 	if err != nil {
 		return nil, err
 	}
@@ -137,13 +144,14 @@ func GetDeploymentDetail(client client.Interface, namespace string,
 		return nil, err
 	}
 
+
 	return getDeploymentDetail(deployment, oldReplicaSets, newReplicaSet,
-		podList.Items, events, eventList.Items), nil
+		pods.Items, events, eventList.Items, *podList), nil
 }
 
 func getDeploymentDetail(deployment *extensions.Deployment,
 	oldRs []*extensions.ReplicaSet, newRs *extensions.ReplicaSet,
-	pods []api.Pod, events *common.EventList, rawEvents []api.Event) *DeploymentDetail {
+	pods []api.Pod, events *common.EventList, rawEvents []api.Event, podList pod.PodList) *DeploymentDetail {
 	var newReplicaSet replicaset.ReplicaSet
 
 	if newRs != nil {
@@ -169,6 +177,7 @@ func getDeploymentDetail(deployment *extensions.Deployment,
 	return &DeploymentDetail{
 		ObjectMeta:            common.NewObjectMeta(deployment.ObjectMeta),
 		TypeMeta:              common.NewTypeMeta(common.ResourceKindDeployment),
+		PodList:               podList,
 		Selector:              deployment.Spec.Selector.MatchLabels,
 		StatusInfo:            GetStatusInfo(&deployment.Status),
 		Strategy:              deployment.Spec.Strategy.Type,

@@ -25,6 +25,7 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/client/restclient"
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 type FakeHeapsterClient struct {
@@ -65,7 +66,7 @@ func TestToPodDetail(t *testing.T) {
 
 	for _, c := range cases {
 		fakeClient := testclient.NewSimpleFake(c.pod)
-		actual, err := GetPodDetail(fakeClient, FakeHeapsterClient{}, "test-namespace", "test-pod")
+		actual, err := GetPodDetail(fakeClient, FakeHeapsterClient{}, "test-namespace", "test-pod", dataselect.NoMetrics)
 
 		if err != nil {
 			t.Errorf("GetPodDetail(%#v) == \ngot err %#v", c.pod, err)

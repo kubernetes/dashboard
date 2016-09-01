@@ -23,5 +23,13 @@ export class NodeDetailController {
   constructor(nodeDetail) {
     /** @export {!backendApi.NodeDetail} */
     this.nodeDetail = nodeDetail;
+
+    /** @export */
+    this.i18n = i18n;
   }
 }
+
+const i18n = {
+  /** @export {string} @desc Title for graph card displaying metrics of one node. */
+  MSG_NODE_DETAIL_GRAPH_CARD_TITLE: goog.getMsg('Resource usage history'),
+};

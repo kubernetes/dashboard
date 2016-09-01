@@ -85,4 +85,11 @@ describe('Graph card component controller', () => {
 
     expect(expected).toBeFalsy();
   });
+  it('should hide graph card when metrics were not provided', () => {
+    ctrl.metrics = null;
+
+    let expected = ctrl.shouldShowGraph();
+
+    expect(expected).toBeFalsy();
+  });
 });

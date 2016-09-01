@@ -36,4 +36,6 @@ export class JobDetailController {
 const i18n = {
   /** @export {string} @desc Title for a pods section. */
   MSG_JOB_DETAIL_PODS: goog.getMsg('Pods'),
+  /** @export {string} @desc Title for graph card displaying metrics of one job. */
+  MSG_JOB_DETAIL_GRAPH_CARD_TITLE: goog.getMsg('Resource usage history'),
 };
