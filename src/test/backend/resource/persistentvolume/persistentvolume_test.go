@@ -31,13 +31,30 @@ func TestGetPersistentVolumeList(t *testing.T) {
 		{nil, &PersistentVolumeList{Items: []PersistentVolume{}}},
 		{
 			[]api.PersistentVolume{
-				{ObjectMeta: api.ObjectMeta{Name: "foo"}},
+				{
+					ObjectMeta: api.ObjectMeta{Name: "foo"},
+					Spec: api.PersistentVolumeSpec{
+						PersistentVolumeReclaimPolicy: api.PersistentVolumeReclaimRecycle,
+						AccessModes:                   []api.PersistentVolumeAccessMode{api.ReadWriteOnce},
+						ClaimRef:                      &api.ObjectReference{Name: "myclaim-name"},
+						Capacity:                      nil,
+					},
+					Status: api.PersistentVolumeStatus{
+						Phase:  api.VolumePending,
+						Reason: "my-reason",
+					},
+				},
 			},
 			&PersistentVolumeList{
 				ListMeta: common.ListMeta{TotalItems: 1},
 				Items: []PersistentVolume{{
-					TypeMeta:   common.TypeMeta{Kind: "persistentvolume"},
-					ObjectMeta: common.ObjectMeta{Name: "foo"},
+					TypeMeta:    common.TypeMeta{Kind: "persistentvolume"},
+					ObjectMeta:  common.ObjectMeta{Name: "foo"},
+					Capacity:    nil,
+					AccessModes: []api.PersistentVolumeAccessMode{api.ReadWriteOnce},
+					Status:      api.VolumePending,
+					Claim:       "myclaim-name",
+					Reason:      "my-reason",
 				}},
 			},
 		},
