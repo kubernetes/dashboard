@@ -152,6 +152,7 @@ var kindToAPIMapping = map[string]struct {
 	ResourceKindSecret:                {"secrets", ClientTypeDefault},
 	ResourceKindConfigMap:             {"configmaps", ClientTypeDefault},
 	ResourceKindPersistentVolume:      {"persistentvolumes", ClientTypeDefault},
+	ResourceKindPersistentVolumeClaim: {"persistentvolumeclaims", ClientTypeDefault},
 }
 
 // IsSelectorMatching returns true when an object with the given
