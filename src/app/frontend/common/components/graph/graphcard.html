@@ -14,14 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-graph-card title="$ctrl.i18n.MSG_JOB_LIST_GRAPH_CARD_TITLE"
-               metrics="$ctrl.jobList.cumulativeMetrics">
-</kd-graph-card>
-
-<kd-content-card ng-if="!$ctrl.shouldShowZeroState()">
+<kd-content-card ng-if="$ctrl.shouldShowGraph()">
+  <kd-title>{{$ctrl.title}}</kd-title>
   <kd-content>
-    <kd-job-card-list job-list="$ctrl.jobList" job-list-resource="$ctrl.jobListResource">
-    </kd-job-card-list>
+    <kd-graph metrics="$ctrl.metrics"></kd-graph>
   </kd-content>
 </kd-content-card>
-<kd-zero-state ng-if="$ctrl.shouldShowZeroState()"></kd-zero-state>

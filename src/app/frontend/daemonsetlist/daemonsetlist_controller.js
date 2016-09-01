@@ -27,6 +27,9 @@ export class DaemonSetListController {
 
     /** @export {!angular.Resource} */
     this.daemonSetListResource = kdDaemonSetListResource;
+
+    /** @export */
+    this.i18n = i18n;
   }
 
   /**
@@ -35,3 +38,8 @@ export class DaemonSetListController {
    */
   shouldShowZeroState() { return this.daemonSetList.daemonSets.length === 0; }
 }
+
+const i18n = {
+  /** @export {string} @desc Title for graph card displaying cumulative metrics of daemon sets. */
+  MSG_DAEMON_SET_LIST_GRAPH_CARD_TITLE: goog.getMsg('Cumulative resource usage history'),
+};
