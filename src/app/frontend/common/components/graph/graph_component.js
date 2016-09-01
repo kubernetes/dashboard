@@ -146,9 +146,6 @@ export class GraphController {
       // add grey line to the bottom to separate from the rest of the page.
       svg.style({
         'background-color': 'white',
-        'border-bottom-style': 'solid',
-        'border-bottom-width': '1px',
-        'border-bottom-color': 'rgba(0, 0, 0, 0.117647)',
       });
 
       // update the graph in case of graph area resize
