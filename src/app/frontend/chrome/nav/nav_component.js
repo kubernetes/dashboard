@@ -19,6 +19,7 @@ import {stateName as ingressState} from 'ingresslist/list_state';
 import {stateName as jobState} from 'joblist/joblist_state';
 import {stateName as namespaceState} from 'namespacelist/namespacelist_state';
 import {stateName as nodeState} from 'nodelist/nodelist_state';
+import {stateName as persistentVolumeClaimState} from 'persistentvolumeclaimlist/persistentvolumeclaimlist_state';
 import {stateName as persistentVolumeState} from 'persistentvolumelist/persistentvolumelist_state';
 import {stateName as petSetState} from 'petsetlist/petsetlist_state';
 import {stateName as podState} from 'podlist/podlist_state';
@@ -57,6 +58,7 @@ export class NavController {
       'petSet': petSetState,
       'job': jobState,
       'service': serviceState,
+      'persistentVolumeClaim': persistentVolumeClaimState,
       'secret': secretState,
       'configMap': configMapState,
       'ingress': ingressState,
