@@ -66,7 +66,9 @@ func TestToPodDetail(t *testing.T) {
 
 	for _, c := range cases {
 		fakeClient := testclient.NewSimpleFake(c.pod)
-		actual, err := GetPodDetail(fakeClient, FakeHeapsterClient{}, "test-namespace", "test-pod", dataselect.NoMetrics)
+
+		dataselect.DefaultDataSelectWithMetrics.MetricQuery = dataselect.NoMetrics
+		actual, err := GetPodDetail(fakeClient, FakeHeapsterClient{}, "test-namespace", "test-pod")
 
 		if err != nil {
 			t.Errorf("GetPodDetail(%#v) == \ngot err %#v", c.pod, err)

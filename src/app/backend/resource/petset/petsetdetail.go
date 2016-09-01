@@ -48,7 +48,7 @@ type PetSetDetail struct {
 
 // GetPetSetDetail gets pet set details.
 func GetPetSetDetail(client *k8sClient.Client, heapsterClient client.HeapsterClient,
-	namespace, name string, dsQuery *dataselect.DataSelectQuery) (*PetSetDetail, error) {
+	namespace, name string) (*PetSetDetail, error) {
 
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 
@@ -58,7 +58,7 @@ func GetPetSetDetail(client *k8sClient.Client, heapsterClient client.HeapsterCli
 		return nil, err
 	}
 
-	podList, err := GetPetSetPods(client, heapsterClient, dsQuery, name, namespace)
+	podList, err := GetPetSetPods(client, heapsterClient, dataselect.DefaultDataSelectWithMetrics, name, namespace)
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +68,7 @@ func GetPetSetDetail(client *k8sClient.Client, heapsterClient client.HeapsterCli
 		return nil, err
 	}
 
-	events, err := GetPetSetEvents(client, petSetData.Namespace, petSetData.Name)
+	events, err := GetPetSetEvents(client, dataselect.DefaultDataSelect, petSetData.Namespace, petSetData.Name)
 	if err != nil {
 		return nil, err
 	}
