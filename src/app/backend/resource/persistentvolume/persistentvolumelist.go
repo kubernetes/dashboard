@@ -36,6 +36,11 @@ type PersistentVolume struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
 	TypeMeta   common.TypeMeta   `json:"typeMeta"`
 
+	Capacity    api.ResourceList                 `json:"capacity"`
+	AccessModes []api.PersistentVolumeAccessMode `json:"accessModes"`
+	Status      api.PersistentVolumePhase        `json:"status"`
+	Claim       string                           `json:"claim"`
+	Reason      string                           `json:"reason"`
 	// No additional info in the list object.
 }
 
@@ -73,10 +78,21 @@ func getPersistentVolumeList(persistentVolumes []api.PersistentVolume, dsQuery *
 	persistentVolumes = fromCells(dataselect.GenericDataSelect(toCells(persistentVolumes), dsQuery))
 
 	for _, item := range persistentVolumes {
+
+		var claim string
+		if item.Spec.ClaimRef != nil {
+			claim = item.Spec.ClaimRef.Name
+		}
+
 		result.Items = append(result.Items,
 			PersistentVolume{
-				ObjectMeta: common.NewObjectMeta(item.ObjectMeta),
-				TypeMeta:   common.NewTypeMeta(common.ResourceKindPersistentVolume),
+				ObjectMeta:  common.NewObjectMeta(item.ObjectMeta),
+				TypeMeta:    common.NewTypeMeta(common.ResourceKindPersistentVolume),
+				Capacity:    item.Spec.Capacity,
+				AccessModes: item.Spec.AccessModes,
+				Status:      item.Status.Phase,
+				Claim:       claim,
+				Reason:      item.Status.Reason,
 			})
 	}
 

@@ -1,0 +1,60 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-resource-card-list selectable="false" with-statuses="false">
+    <kd-resource-card-header-columns>
+        <kd-resource-card-header-column grow="2">
+            {{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_LIST_HEADER_NAME}}
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column grow="2">
+            {{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_LIST_HEADER_LABELS}}
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column grow="2">
+            {{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_LIST_HEADER_CAPACITY}}
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column grow="2">
+            {{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_LIST_HEADER_ACCESS_MODES}}
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column grow="2">
+            {{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_LIST_HEADER_STATUS}}
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column grow="2">
+            {{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_LIST_HEADER_CLAIM}}
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column grow="2">
+            {{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_LIST_HEADER_REASON}}
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column grow="nogrow" size="small">
+            {{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_LIST_HEADER_AGE}}
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column size="small" grow="nogrow">
+        </kd-resource-card-header-column>
+    </kd-resource-card-header-columns>
+    <kd-persistent-volume-card ng-if="::$ctrl.persistentVolumeListResource"
+                               dir-paginate="persistentVolume in $ctrl.persistentVolumeList.items | itemsPerPage: default"
+                               persistent-volume="persistentVolume" pagination-id="persistentvolumes"
+                               total-items="::$ctrl.persistentVolumeList.listMeta.totalItems">
+    </kd-persistent-volume-card>
+    <kd-persistent-volume-card ng-if="::!$ctrl.persistentVolumeListResource"
+                               dir-paginate="persistentVolume in $ctrl.persistentVolumeList.items | itemsPerPage: default"
+                               persistent-volume="persistentVolume" pagination-id="persistentvolumes">
+    </kd-persistent-volume-card>
+    <kd-resource-card-list-footer>
+        <kd-resource-card-list-pagination pagination-id="persistentvolumes" list="$ctrl.persistentVolumeList"
+                                          list-resource="$ctrl.persistentVolumeListResource">
+        </kd-resource-card-list-pagination>
+    </kd-resource-card-list-footer>
+</kd-resource-card-list>

@@ -309,6 +309,173 @@ backendApi.ConfigMapList;
  * @typedef {{
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
+ *   capacity: Object<string, string>,
+ *   accessModes: Array<string>,
+ *   status: !string,
+ *   claim: string,
+ *   reason: string,
+ * }}
+ */
+backendApi.PersistentVolume;
+
+/**
+ * @typedef {{
+ *   items: !Array<!backendApi.PersistentVolume>,
+ *   listMeta: !backendApi.ListMeta
+ * }}
+ */
+backendApi.PersistentVolumeList;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   status: !string,
+ *   claim: string,
+ *   reclaimPolicy: string,
+ *   accessModes: Array<string>,
+ *   capacity: Object<string, string>,
+ *   message: string,
+ *   persistentVolumeSource: backendApi.PersistentVolumeSource,
+ * }}
+ */
+backendApi.PersistentVolumeDetail;
+
+/**
+ * @typedef {{
+ *   gcePersistentDisk: backendApi.GCEPersistentDiskVolumeSource,
+ *   awsElasticBlockStore: backendApi.AWSElasticBlockStorageVolumeSource,
+ *   hostPath: backendApi.HostPathVolumeSource,
+ *   glusterfs: backendApi.GlusterfsVolumeSource,
+ *   nfs: backendApi.NFSVolumeSource,
+ *   rbd: backendApi.RBDVolumeSource,
+ *   iscsi: backendApi.ISCSIVolumeSource,
+ *   cinder: backendApi.CinderVolumeSource,
+ *   fc: backendApi.FCVolumeSource,
+ *   flocker: backendApi.FlockerVolumeSource,
+ * }}
+ */
+backendApi.PersistentVolumeSource;
+
+/**
+ * @typedef {{
+ *   pdName: !string,
+ *   fsType: string,
+ *   partition: number,
+ *   readOnly: boolean,
+ * }}
+ */
+backendApi.GCEPersistentDiskVolumeSource;
+
+/**
+ * @typedef {{
+ *   volumeID: !string,
+ *   fsType: string,
+ *   partition: number,
+ *   readOnly: boolean,
+ * }}
+ */
+backendApi.AWSElasticBlockStorageVolumeSource;
+
+/**
+ * @typedef {{
+ *   path: !string,
+ * }}
+ */
+backendApi.HostPathVolumeSource;
+
+/**
+ * @typedef {{
+ *   endpoints: !string,
+ *   path: !string,
+ *   readOnly: boolean,
+ * }}
+ */
+backendApi.GlusterfsVolumeSource;
+
+/**
+ * @typedef {{
+ *   server: !string,
+ *   path: !string,
+ *   readOnly: boolean,
+ * }}
+ */
+backendApi.NFSVolumeSource;
+
+/**
+ * @typedef {{
+ *   monitors: !Array<string>,
+ *   image: !string,
+ *   fsType: string,
+ *   pool: string,
+ *   user: string,
+ *   keyring: string,
+ *   secretRef: backendApi.LocalObjectReference,
+ *   readOnly: boolean,
+ * }}
+ */
+backendApi.RBDVolumeSource;
+
+/**
+ * @typedef {{
+ *   name: string,
+ * }}
+ */
+backendApi.LocalObjectReference;
+
+/**
+ * @typedef {{
+ *   targetPortal: string,
+ *   iqn: string,
+ *   lun: number,
+ *   fsType: string,
+ *   readOnly: boolean,
+ * }}
+ */
+backendApi.ISCSIVolumeSource;
+
+/**
+ * @typedef {{
+ *   volumeID: !string,
+ *   fsType: string,
+ *   readOnly: boolean,
+ * }}
+ */
+backendApi.CinderVolumeSource;
+
+/**
+ * @typedef {{
+ *   monitors: !Array<string>,
+ *   path: string,
+ *   user: string,
+ *   secretFile: string,
+ *   secretRef: backendApi.LocalObjectReference,
+ *   readonly: boolean,
+ * }}
+ */
+backendApi.CephFSVolumeSource;
+
+/**
+ * @typedef {{
+ *   targetWWNs: !Array<string>,
+ *   lun: !number,
+ *   fsType: string,
+ *   readOnly: boolean,
+ * }}
+ */
+backendApi.FCVolumeSource;
+
+/**
+ * @typedef {{
+ *   datasetName: !string,
+ * }}
+ */
+backendApi.FlockerVolumeSource;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
  *   pods: !backendApi.PodInfo,
  *   containerImages: !Array<string>,
  * }}
