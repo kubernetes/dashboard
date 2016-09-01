@@ -55,4 +55,6 @@ const i18n = {
   /** @export {string} @desc Text for pods card zerostate in replica set details page. */
   MSG_REPLICA_SET_DETAIL_PODS_ZEROSTATE_TEXT:
       goog.getMsg('There are currently no Pods scheduled on this Replica Set'),
+  /** @export {string} @desc Title for graph card displaying metrics of one replica set. */
+  MSG_REPLICA_SET_DETAIL_GRAPH_CARD_TITLE: goog.getMsg('Resource usage history'),
 };

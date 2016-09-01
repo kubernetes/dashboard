@@ -20,6 +20,9 @@ var NoPagination = NewPaginationQuery(-1, -1)
 // No items will be returned
 var EmptyPagination = NewPaginationQuery(0, 0)
 
+// Returns 10 items from page 1
+var DefaultPagination = NewPaginationQuery(10, 0)
+
 // PaginationQuery structure represents pagination settings
 type PaginationQuery struct {
 	// How many items per page should be returned

@@ -540,9 +540,10 @@ func (apiHandler *APIHandler) handleGetNodeList(request *restful.Request, respon
 func (apiHandler *APIHandler) handleGetNodeDetail(request *restful.Request, response *restful.Response) {
 	name := request.PathParameter("name")
 	dataSelect := parseDataSelectPathParameter(request)
-	dataSelect.MetricQuery = dataselect.StandardMetrics
+	// don't download any metrics for pod, nodes have their own, separate metrics
+	dataSelect.MetricQuery = dataselect.NoMetrics
 
-	result, err := node.GetNodeDetail(apiHandler.client, apiHandler.heapsterClient, dataSelect, name)
+	result, err := node.GetNodeDetail(apiHandler.client, apiHandler.heapsterClient, dataSelect, name, dataselect.StandardMetrics)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -662,9 +663,7 @@ func (apiHandler *APIHandler) handleGetWorkloads(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := parseNamespacePathParameter(request)
-	dataSelect := parseDataSelectPathParameter(request)
-	result, err := workload.GetWorkloads(apiHandler.client, apiHandler.heapsterClient, namespace,
-		dataSelect)
+	result, err := workload.GetWorkloads(apiHandler.client, apiHandler.heapsterClient, namespace, dataselect.StandardMetrics)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -765,8 +764,12 @@ func (apiHandler *APIHandler) handleGetDeploymentDetail(
 
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("deployment")
-	result, err := deployment.GetDeploymentDetail(apiHandler.client, namespace,
-		name)
+
+	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
+
+	result, err := deployment.GetDeploymentDetail(apiHandler.client, apiHandler.heapsterClient, namespace,
+		name, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -796,7 +799,7 @@ func (apiHandler *APIHandler) handleGetPodDetail(request *restful.Request, respo
 
 	namespace := request.PathParameter("namespace")
 	podName := request.PathParameter("pod")
-	result, err := pod.GetPodDetail(apiHandler.client, apiHandler.heapsterClient, namespace, podName)
+	result, err := pod.GetPodDetail(apiHandler.client, apiHandler.heapsterClient, namespace, podName, dataselect.StandardMetrics)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1305,7 +1308,6 @@ func parseMetricPathParameter(request *restful.Request) *dataselect.MetricQuery 
 	for _, e := range rawAggregations {
 		aggregationNames = append(aggregationNames, metric.AggregationName(e))
 	}
-
 	return dataselect.NewMetricQuery(metricNames, aggregationNames)
 
 }

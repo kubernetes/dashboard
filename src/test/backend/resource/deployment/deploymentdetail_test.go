@@ -14,6 +14,8 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 )
 
 func TestGetDeploymentDetail(t *testing.T) {
@@ -91,6 +93,9 @@ func TestGetDeploymentDetail(t *testing.T) {
 					Labels: map[string]string{"track": "beta"},
 				},
 				TypeMeta: common.TypeMeta{Kind: common.ResourceKindDeployment},
+				PodList:  pod.PodList{
+					Pods: []pod.Pod{},
+				},
 				Selector: map[string]string{"foo": "bar"},
 				StatusInfo: StatusInfo{
 					Replicas:    4,
@@ -124,7 +129,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 
 		fakeClient := testclient.NewSimpleFake(c.deployment, replicaSetList, podList, eventList)
 
-		actual, _ := GetDeploymentDetail(fakeClient, c.namespace, c.name)
+		actual, _ := GetDeploymentDetail(fakeClient, nil, c.namespace, c.name, dataselect.NoDataSelect)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {

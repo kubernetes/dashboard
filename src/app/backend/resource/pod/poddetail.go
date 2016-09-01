@@ -87,7 +87,7 @@ type EnvVar struct {
 // GetPodDetail returns the details (PodDetail) of a named Pod from a particular
 // namespace.
 func GetPodDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	namespace, name string) (*PodDetail, error) {
+	namespace, name string, metricQuery *dataselect.MetricQuery) (*PodDetail, error) {
 
 	log.Printf("Getting details of %s pod in %s namespace", name, namespace)
 
@@ -102,10 +102,9 @@ func GetPodDetail(client k8sClient.Interface, heapsterClient client.HeapsterClie
 		return nil, err
 	}
 
-	// Download standard metrics. Currently metrics are hard coded, but it is possible to replace
-	// dataselect.StdMetricsDataSelect with data select provided in the request.
+	// Download metrics
 	_, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells([]api.Pod{*pod}),
-		dataselect.StdMetricsDataSelect, dataselect.NoResourceCache, &heapsterClient)
+		dataselect.NewDataSelectQuery(dataselect.NoPagination, dataselect.NoSort, metricQuery), dataselect.NoResourceCache, &heapsterClient)
 	metrics, _ := metricPromises.GetMetrics()
 
 	if err = <-channels.ConfigMapList.Error; err != nil {

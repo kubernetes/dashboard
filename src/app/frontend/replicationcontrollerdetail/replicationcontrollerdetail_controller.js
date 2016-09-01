@@ -85,5 +85,7 @@ const i18n = {
   /** @export {string} @desc Text for pods card zerostate in replication controller details page. */
   MSG_RC_DETAIL_PODS_ZEROSTATE_TEXT:
       goog.getMsg('There are currently no Pods selected by this Replication Controller'),
+  /** @export {string} @desc Title for graph card displaying metrics of one replication controller. */
+  MSG_REPLICATION_CONTROLLER_DETAIL_GRAPH_CARD_TITLE: goog.getMsg('Resource usage history'),
 
 };

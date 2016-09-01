@@ -41,4 +41,6 @@ const i18n = {
   /** @export {string} @desc Text for pods card zerostate in pet set details page. */
   MSG_PET_SET_DETAIL_PODS_ZEROSTATE_TEXT:
       goog.getMsg('There are currently no Pods selected by this Pet Set'),
+  /** @export {string} @desc Title for graph card displaying metrics of one pet set. */
+  MSG_PET_SET_DETAIL_GRAPH_CARD_TITLE: goog.getMsg('Resource usage history'),
 };

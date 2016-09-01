@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-graph metrics="::$ctrl.replicationControllerDetail.podList.cumulativeMetrics"></kd-graph>
+<kd-graph-card title="::$ctrl.i18n.MSG_REPLICATION_CONTROLLER_DETAIL_GRAPH_CARD_TITLE"
+               metrics="::$ctrl.replicationControllerDetail.podList.cumulativeMetrics">
+</kd-graph-card>
 
 <kd-replication-controller-info replication-controller="::$ctrl.replicationControllerDetail">
 </kd-replication-controller-info>
