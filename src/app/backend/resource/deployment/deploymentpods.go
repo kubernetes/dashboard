@@ -15,20 +15,47 @@
 package deployment
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+	client "k8s.io/kubernetes/pkg/client/unversioned"
+	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
+
+
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"k8s.io/kubernetes/pkg/apis/extensions"
 	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api/unversioned"
 )
 
 // getJobPods returns list of pods targeting deployment.
-func getDeploymentPods(deployment *extensions.Deployment, pods []api.Pod, heapsterClient client.HeapsterClient, dsQuery *dataselect.DataSelectQuery) *pod.PodList {
-	pods = common.FilterNamespacedPodsBySelector(pods, deployment.ObjectMeta.Namespace,
+func GetDeploymentPods(client client.Interface, heapsterClient heapster.HeapsterClient,
+        dsQuery *dataselect.DataSelectQuery, namespace string, deploymentName string) (*pod.PodList, error) {
+
+	deployment, err := client.Extensions().Deployments(namespace).Get(deploymentName)
+	if err != nil {
+		return nil, err
+	}
+
+	selector, err := unversioned.LabelSelectorAsSelector(deployment.Spec.Selector)
+	if err != nil {
+		return nil, err
+	}
+
+	options := api.ListOptions{LabelSelector: selector}
+	channels := &common.ResourceChannels{
+		PodList: common.GetPodListChannelWithOptions(client,
+			common.NewSameNamespaceQuery(namespace), options, 1),
+	}
+
+
+	rawPods := <-channels.PodList.List
+	if err := <-channels.PodList.Error; err != nil {
+		return nil, err
+	}
+
+	pods := common.FilterNamespacedPodsBySelector(rawPods.Items, deployment.ObjectMeta.Namespace,
 		deployment.Spec.Selector.MatchLabels)
 
 	podList := pod.CreatePodList(pods, dsQuery, heapsterClient)
-	return &podList
+	return &podList, nil
 }

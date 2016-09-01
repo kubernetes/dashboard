@@ -26,7 +26,7 @@ import (
 )
 
 // GetPetSetEvents gets events associated to pet set.
-func GetPetSetEvents(client *client.Client, namespace, petSetName string) (
+func GetPetSetEvents(client *client.Client, dsQuery *dataselect.DataSelectQuery, namespace, petSetName string) (
 	*common.EventList, error) {
 
 	log.Printf("Getting events related to %s pet set in %s namespace", petSetName,
@@ -52,8 +52,7 @@ func GetPetSetEvents(client *client.Client, namespace, petSetName string) (
 		apiEvents = event.FillEventsType(apiEvents)
 	}
 
-	// TODO support pagination
-	events := event.CreateEventList(apiEvents, dataselect.NoDataSelect)
+	events := event.CreateEventList(apiEvents, dsQuery)
 
 	log.Printf("Found %d events related to %s pet set in %s namespace",
 		len(events.Events), petSetName, namespace)

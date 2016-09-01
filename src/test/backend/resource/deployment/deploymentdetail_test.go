@@ -85,7 +85,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 	}{
 		{
 			"test-namespace", "test-name",
-			[]string{"get", "list", "list", "list"},
+			[]string{"get", "list", "list", "get", "list", "get", "list", "get", "list", "list", "list"},
 			deployment,
 			&DeploymentDetail{
 				ObjectMeta: common.ObjectMeta{
@@ -129,7 +129,8 @@ func TestGetDeploymentDetail(t *testing.T) {
 
 		fakeClient := testclient.NewSimpleFake(c.deployment, replicaSetList, podList, eventList)
 
-		actual, _ := GetDeploymentDetail(fakeClient, nil, c.namespace, c.name, dataselect.NoDataSelect)
+		dataselect.DefaultDataSelectWithMetrics.MetricQuery = dataselect.NoMetrics
+		actual, _ := GetDeploymentDetail(fakeClient, nil, c.namespace, c.name)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {

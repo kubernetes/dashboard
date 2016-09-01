@@ -82,8 +82,8 @@ func TestGetJobDetail(t *testing.T) {
 			podList, eventList)
 		fakeHeapsterClient := FakeHeapsterClient{}
 
-		actual, _ := GetJobDetail(fakeClient, fakeHeapsterClient, c.namespace, c.name,
-			dataselect.NoDataSelect)
+		dataselect.DefaultDataSelectWithMetrics.MetricQuery = dataselect.NoMetrics
+		actual, _ := GetJobDetail(fakeClient, fakeHeapsterClient, c.namespace, c.name)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {

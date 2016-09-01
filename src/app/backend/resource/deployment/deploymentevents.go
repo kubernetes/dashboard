@@ -15,32 +15,46 @@
 package deployment
 
 import (
-	"log"
-
 	"k8s.io/kubernetes/pkg/api"
+	client "k8s.io/kubernetes/pkg/client/unversioned"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"k8s.io/kubernetes/pkg/api/unversioned"
 )
 
 // GetDeploymentEvents returns model events for a deployment with the given name in the given
 // namespace
-func GetDeploymentEvents(dpEvents []api.Event, namespace string, deploymentName string) (
+func GetDeploymentEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace string, deploymentName string) (
 	*common.EventList, error) {
 
-	log.Printf("Getting events related to %s deployment in %s namespace", deploymentName,
-		namespace)
+	deployment, err := client.Extensions().Deployments(namespace).Get(deploymentName)
+	if err != nil {
+		return nil, err
+	}
 
+	selector, err := unversioned.LabelSelectorAsSelector(deployment.Spec.Selector)
+	if err != nil {
+		return nil, err
+	}
+
+	options := api.ListOptions{LabelSelector: selector}
+	channels := &common.ResourceChannels{
+		EventList: common.GetEventListChannelWithOptions(client,
+			common.NewSameNamespaceQuery(namespace), options, 1),
+	}
+
+	eventRaw := <-channels.EventList.List
+	if err := <-channels.EventList.Error; err != nil {
+		return nil, err
+	}
+	dpEvents := eventRaw.Items
 	if !event.IsTypeFilled(dpEvents) {
 		dpEvents = event.FillEventsType(dpEvents)
 	}
 
-	// TODO support pagination
-	events := event.CreateEventList(dpEvents, dataselect.NoDataSelect)
+	eventList := event.CreateEventList(dpEvents, dsQuery)
 
-	log.Printf("Found %d events related to %s deployment in %s namespace",
-		len(events.Events), deploymentName, namespace)
-
-	return &events, nil
+	return &eventList, nil
 }

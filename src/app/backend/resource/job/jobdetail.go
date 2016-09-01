@@ -53,7 +53,7 @@ type JobDetail struct {
 
 // GetJobDetail gets job details.
 func GetJobDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	namespace, name string, dsQuery *dataselect.DataSelectQuery) (*JobDetail, error) {
+	namespace, name string) (*JobDetail, error) {
 
 	// TODO(floreks): Use channels.
 	jobData, err := client.Extensions().Jobs(namespace).Get(name)
@@ -61,7 +61,7 @@ func GetJobDetail(client k8sClient.Interface, heapsterClient client.HeapsterClie
 		return nil, err
 	}
 
-	podList, err := GetJobPods(client, heapsterClient, dsQuery, name, namespace)
+	podList, err := GetJobPods(client, heapsterClient, dataselect.DefaultDataSelectWithMetrics, name, namespace)
 	if err != nil {
 		return nil, err
 	}
@@ -71,7 +71,7 @@ func GetJobDetail(client k8sClient.Interface, heapsterClient client.HeapsterClie
 		return nil, err
 	}
 
-	eventList, err := GetJobEvents(client, jobData.Namespace, jobData.Name)
+	eventList, err := GetJobEvents(client, dataselect.DefaultDataSelect, jobData.Namespace, jobData.Name)
 	if err != nil {
 		return nil, err
 	}
