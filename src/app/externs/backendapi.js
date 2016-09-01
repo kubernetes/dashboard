@@ -1000,5 +1000,35 @@ backendApi.NodeDetail;
  */
 backendApi.NodeList;
 
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   status: string,
+ *   volume: string,
+ *   capacity: string,
+ *   accessModes: !Array<string>
+ * }}
+ */
+backendApi.PersistentVolumeClaimDetail;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   Status: !string,
+ *   Volume: !string
+ * }}
+ */
+backendApi.PersistentVolumeClaim;
+
+/**
+ * @typedef {{
+ *   listMeta: !backendApi.ListMeta,
+ *   items: !Array<!backendApi.PersistentVolumeClaim>
+ * }}
+ */
+backendApi.PersistentVolumeClaimList;
+
 /** @typedef {{serverTime: number}} */
 const appConfig_DO_NOT_USE_DIRECTLY = {};
