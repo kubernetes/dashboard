@@ -30,9 +30,6 @@ type MetricPromises []MetricPromise
 // In case of no metrics were downloaded it does not initialise []Metric and returns nil.
 func (self MetricPromises) GetMetrics() ([]Metric, error) {
 	result := make([]Metric, 0)
-	if len(self) == 0 {
-		return result, nil
-	}
 
 	for _, metricPromise := range self {
 		metric, err := metricPromise.GetMetric()
