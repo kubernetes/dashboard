@@ -73,6 +73,14 @@ const i18n = {
   MSG_CONTAINER_DETAILS_ENV_VARS: goog.getMsg('Environment variables'),
   /** @export {string} @desc Label when there is no container environment variables. */
   MSG_CONTAINER_DETAILS_NO_ENV_VARS: goog.getMsg('-'),
+  /** @export {string} @desc Label for container commands. */
+  MSG_CONTAINER_DETAILS_COMMANDS: goog.getMsg('Commands'),
+  /** @export {string} @desc Label when there is no container commands. */
+  MSG_CONTAINER_DETAILS_NO_COMMANDS: goog.getMsg('-'),
+  /** @export {string} @desc Label for container args. */
+  MSG_CONTAINER_DETAILS_ARGS: goog.getMsg('Args'),
+  /** @export {string} @desc Label when there is no container arguments. */
+  MSG_CONTAINER_DETAILS_NO_ARGS: goog.getMsg('-'),
   /**
    * @param {!backendApi.ConfigMapKeyRef} configMapKeyRef
    * @return {string}
