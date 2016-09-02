@@ -40,9 +40,11 @@ export default angular
 function errorConfig($rootScope, $state) {
   let deregistrationHandler = $rootScope.$on(
       '$stateChangeError', (event, toState, toParams, fromState, fromParams, error) => {
-        // Prevent default behavior of coming back to previous state.
-        event.preventDefault();
-        $state.go(stateName, new StateParams(error));
+        if (toState.name !== stateName) {
+          // Prevent default behavior of coming back to previous state.
+          // event.preventDefault();
+          $state.go(stateName, new StateParams(error));
+        }
       });
 
   $rootScope.$on('$destroy', deregistrationHandler);
