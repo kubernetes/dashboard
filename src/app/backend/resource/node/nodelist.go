@@ -77,8 +77,12 @@ func toNodeList(nodes []api.Node, dsQuery *dataselect.DataSelectQuery, heapsterC
 	}
 
 	// this may be slow because heapster does not support all in one download for nodes.
-	cumulativeMetrics, _ := metricPromises.GetMetrics()
+	cumulativeMetrics, err := metricPromises.GetMetrics()
 	nodeList.CumulativeMetrics = cumulativeMetrics
+	if err != nil {
+		nodeList.CumulativeMetrics = make([]metric.Metric, 0)
+	}
+
 	return nodeList
 }
 

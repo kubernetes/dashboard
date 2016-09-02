@@ -20,13 +20,14 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/batch"
 	"k8s.io/kubernetes/pkg/client/restclient"
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 type FakeHeapsterClient struct {
@@ -62,10 +63,13 @@ func TestGetJobDetail(t *testing.T) {
 				},
 			},
 			&JobDetail{
-				ObjectMeta:  common.ObjectMeta{Name: "test-job"},
-				TypeMeta:    common.TypeMeta{Kind: common.ResourceKindJob},
-				PodInfo:     common.PodInfo{Warnings: []common.Event{}},
-				PodList:     pod.PodList{Pods: []pod.Pod{}},
+				ObjectMeta: common.ObjectMeta{Name: "test-job"},
+				TypeMeta:   common.TypeMeta{Kind: common.ResourceKindJob},
+				PodInfo:    common.PodInfo{Warnings: []common.Event{}},
+				PodList: pod.PodList{
+					Pods:              []pod.Pod{},
+					CumulativeMetrics: make([]metric.Metric, 0),
+				},
 				EventList:   common.EventList{Events: []common.Event{}},
 				Parallelism: &jobCompletions,
 				Completions: &parallelism,

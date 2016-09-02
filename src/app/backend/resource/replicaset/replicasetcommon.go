@@ -54,8 +54,13 @@ func CreateReplicaSetList(replicaSets []extensions.ReplicaSet, pods []api.Pod,
 
 		replicaSetList.ReplicaSets = append(replicaSetList.ReplicaSets, ToReplicaSet(&replicaSet, &podInfo))
 	}
-	cumulativeMetrics, _ := metricPromises.GetMetrics()
+
+	cumulativeMetrics, err := metricPromises.GetMetrics()
 	replicaSetList.CumulativeMetrics = cumulativeMetrics
+	if err != nil {
+		replicaSetList.CumulativeMetrics = make([]metric.Metric, 0)
+	}
+
 	return replicaSetList
 }
 

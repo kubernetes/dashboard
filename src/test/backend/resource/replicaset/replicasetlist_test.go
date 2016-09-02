@@ -26,6 +26,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 )
 
 func TestGetReplicaSetListFromChannels(t *testing.T) {
@@ -41,8 +42,9 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 			nil,
 			&api.PodList{},
 			&ReplicaSetList{
-				ListMeta: common.ListMeta{},
-				ReplicaSets: []ReplicaSet{}},
+				ListMeta:          common.ListMeta{},
+				CumulativeMetrics: make([]metric.Metric, 0),
+				ReplicaSets:       []ReplicaSet{}},
 			nil,
 		},
 		{
@@ -120,7 +122,8 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 				},
 			},
 			&ReplicaSetList{
-				ListMeta: common.ListMeta{TotalItems: 1},
+				ListMeta:          common.ListMeta{TotalItems: 1},
+				CumulativeMetrics: make([]metric.Metric, 0),
 				ReplicaSets: []ReplicaSet{{
 					ObjectMeta: common.ObjectMeta{
 						Name:              "rs-name",

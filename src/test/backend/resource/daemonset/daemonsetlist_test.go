@@ -19,10 +19,11 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 func TestGetDaemonSetList(t *testing.T) {
@@ -35,8 +36,10 @@ func TestGetDaemonSetList(t *testing.T) {
 		nodes      []api.Node
 		expected   *DaemonSetList
 	}{
-		{nil, nil, nil, nil, &DaemonSetList{DaemonSets: []DaemonSet{}}},
-		{
+		{nil, nil, nil, nil, &DaemonSetList{
+			DaemonSets:        []DaemonSet{},
+			CumulativeMetrics: make([]metric.Metric, 0)},
+		}, {
 			[]extensions.DaemonSet{
 				{
 					ObjectMeta: api.ObjectMeta{
@@ -160,7 +163,8 @@ func TestGetDaemonSetList(t *testing.T) {
 			},
 			},
 			&DaemonSetList{
-				ListMeta: common.ListMeta{TotalItems: 2},
+				ListMeta:          common.ListMeta{TotalItems: 2},
+				CumulativeMetrics: make([]metric.Metric, 0),
 				DaemonSets: []DaemonSet{
 					{
 						ObjectMeta: common.ObjectMeta{

@@ -20,8 +20,10 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/petset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
@@ -31,7 +33,6 @@ import (
 	"k8s.io/kubernetes/pkg/apis/apps"
 	"k8s.io/kubernetes/pkg/apis/batch"
 	"k8s.io/kubernetes/pkg/apis/extensions"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 func TestGetWorkloadsFromChannels(t *testing.T) {
@@ -164,31 +165,38 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		expected := &Workloads{
 			ReplicationControllerList: replicationcontroller.ReplicationControllerList{
 				ListMeta:               common.ListMeta{TotalItems: len(c.rcs)},
+				CumulativeMetrics:      make([]metric.Metric, 0),
 				ReplicationControllers: c.rcs,
 			},
 			ReplicaSetList: replicaset.ReplicaSetList{
-				ListMeta:    common.ListMeta{TotalItems: len(c.rs)},
-				ReplicaSets: c.rs,
+				ListMeta:          common.ListMeta{TotalItems: len(c.rs)},
+				CumulativeMetrics: make([]metric.Metric, 0),
+				ReplicaSets:       c.rs,
 			},
 			JobList: job.JobList{
-				ListMeta: common.ListMeta{TotalItems: len(c.jobs)},
-				Jobs:     c.jobs,
+				ListMeta:          common.ListMeta{TotalItems: len(c.jobs)},
+				CumulativeMetrics: make([]metric.Metric, 0),
+				Jobs:              c.jobs,
 			},
 			DaemonSetList: daemonset.DaemonSetList{
-				ListMeta:   common.ListMeta{TotalItems: len(c.daemonset)},
-				DaemonSets: c.daemonset,
+				ListMeta:          common.ListMeta{TotalItems: len(c.daemonset)},
+				CumulativeMetrics: make([]metric.Metric, 0),
+				DaemonSets:        c.daemonset,
 			},
 			DeploymentList: deployment.DeploymentList{
-				ListMeta:    common.ListMeta{TotalItems: len(c.deployment)},
-				Deployments: c.deployment,
+				ListMeta:          common.ListMeta{TotalItems: len(c.deployment)},
+				CumulativeMetrics: make([]metric.Metric, 0),
+				Deployments:       c.deployment,
 			},
 			PodList: pod.PodList{
-				ListMeta: common.ListMeta{TotalItems: len(c.pod)},
-				Pods:     c.pod,
+				ListMeta:          common.ListMeta{TotalItems: len(c.pod)},
+				CumulativeMetrics: make([]metric.Metric, 0),
+				Pods:              c.pod,
 			},
 			PetSetList: petset.PetSetList{
-				ListMeta: common.ListMeta{TotalItems: len(c.petSet)},
-				PetSets:  c.petSet,
+				ListMeta:          common.ListMeta{TotalItems: len(c.petSet)},
+				CumulativeMetrics: make([]metric.Metric, 0),
+				PetSets:           c.petSet,
 			},
 		}
 		var expectedErr error

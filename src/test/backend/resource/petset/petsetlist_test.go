@@ -26,6 +26,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 )
 
 func TestGetPetSetListFromChannels(t *testing.T) {
@@ -41,8 +42,9 @@ func TestGetPetSetListFromChannels(t *testing.T) {
 			nil,
 			&api.PodList{},
 			&PetSetList{
-				ListMeta: common.ListMeta{},
-				PetSets: []PetSet{}},
+				ListMeta:          common.ListMeta{},
+				CumulativeMetrics: make([]metric.Metric, 0),
+				PetSets:           []PetSet{}},
 			nil,
 		},
 		{
@@ -120,7 +122,8 @@ func TestGetPetSetListFromChannels(t *testing.T) {
 				},
 			},
 			&PetSetList{
-				ListMeta: common.ListMeta{TotalItems: 1},
+				ListMeta:          common.ListMeta{TotalItems: 1},
+				CumulativeMetrics: make([]metric.Metric, 0),
 				PetSets: []PetSet{{
 					ObjectMeta: common.ObjectMeta{
 						Name:              "rs-name",
