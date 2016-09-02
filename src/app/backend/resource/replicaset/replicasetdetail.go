@@ -60,7 +60,7 @@ func GetReplicaSetDetail(client k8sClient.Interface, heapsterClient client.Heaps
 		return nil, err
 	}
 
-	eventList, err := GetReplicaSetEvents(client, replicaSetData.Namespace, replicaSetData.Name)
+	eventList, err := GetReplicaSetEvents(client, dataselect.DefaultDataSelect, replicaSetData.Namespace, replicaSetData.Name)
 	if err != nil {
 		return nil, err
 	}

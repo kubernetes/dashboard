@@ -61,7 +61,7 @@ func GetJobDetail(client k8sClient.Interface, heapsterClient client.HeapsterClie
 		return nil, err
 	}
 
-	podList, err := GetJobPods(client, heapsterClient, dataselect.DefaultDataSelectWithMetrics, name, namespace)
+	podList, err := GetJobPods(client, heapsterClient, dataselect.DefaultDataSelectWithMetrics, namespace, name)
 	if err != nil {
 		return nil, err
 	}

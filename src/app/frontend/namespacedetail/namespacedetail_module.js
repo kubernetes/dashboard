@@ -39,4 +39,15 @@ export default angular
           eventsModule.name,
         ])
     .config(stateConfig)
-    .component('kdNamespaceInfo', namespaceInfoComponent);
+    .component('kdNamespaceInfo', namespaceInfoComponent)
+    .factory('kdNamespaceEventsResource', namespaceEventsResource)
+
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function namespaceEventsResource($resource) {
+  return $resource('api/v1/namespace/:name/event');
+}
