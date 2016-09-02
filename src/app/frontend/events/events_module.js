@@ -16,6 +16,8 @@ import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
 
 import {eventCardListComponent} from './eventcardlist_component';
+import paginationModule from 'common/pagination/pagination_module';
+
 
 
 /**
@@ -30,5 +32,7 @@ export default angular
           'ngMaterial',
           componentsModule.name,
           filtersModule.name,
+          paginationModule.name,
+
         ])
     .component('kdEventCardList', eventCardListComponent);

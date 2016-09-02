@@ -22,6 +22,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"k8s.io/kubernetes/pkg/api"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // NamespaceDetail is a presentation layer view of Kubernetes Namespace resource. This means it is Namespace plus
@@ -47,7 +48,7 @@ func GetNamespaceDetail(client k8sClient.Interface, heapsterClient client.Heapst
 		return nil, err
 	}
 
-	events, err := event.GetNamespaceEvents(client, namespace.Name)
+	events, err := event.GetNamespaceEvents(client, dataselect.DefaultDataSelect, namespace.Name)
 	if err != nil {
 		return nil, err
 	}

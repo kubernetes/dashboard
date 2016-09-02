@@ -44,3 +44,22 @@ export default angular
     .component('kdNodeAllocatedResources', nodeAllocatedResourcesComponent)
     .component('kdNodeConditions', nodeConditionsComponent)
     .component('kdNodeInfo', nodeInfoComponent);
+
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function replicationControllerEventsResource($resource) {
+  return $resource('api/v1/replicationcontroller/:namespace/:name/event');
+}
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function replicationControllerEventsResource($resource) {
+  return $resource('api/v1/replicationcontroller/:namespace/:name/event');
+}

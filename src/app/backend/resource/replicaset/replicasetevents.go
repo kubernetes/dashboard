@@ -26,7 +26,7 @@ import (
 )
 
 // GetReplicaSetEvents gets events associated to replica set.
-func GetReplicaSetEvents(client client.Interface, namespace, replicaSetName string) (
+func GetReplicaSetEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace, replicaSetName string) (
 	*common.EventList, error) {
 
 	log.Printf("Getting events related to %s replica set in %s namespace", replicaSetName,
@@ -52,8 +52,7 @@ func GetReplicaSetEvents(client client.Interface, namespace, replicaSetName stri
 		apiEvents = event.FillEventsType(apiEvents)
 	}
 
-	// TODO support pagination
-	events := event.CreateEventList(apiEvents, dataselect.NoDataSelect)
+	events := event.CreateEventList(apiEvents, dsQuery)
 
 	log.Printf("Found %d events related to %s replica set in %s namespace",
 		len(events.Events), replicaSetName, namespace)
