@@ -30,6 +30,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/ingress"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
@@ -337,6 +338,19 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 			Writes(pod.PodList{}))
 
 	apiV1Ws.Route(
+		apiV1Ws.GET("/ingress").
+			To(apiHandler.handleGetIngressList).
+			Writes(ingress.IngressList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/ingress/{namespace}").
+			To(apiHandler.handleGetIngressList).
+			Writes(ingress.IngressList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/ingress/{namespace}/{name}").
+			To(apiHandler.handleGetIngressDetail).
+			Writes(ingress.IngressDetail{}))
+
+	apiV1Ws.Route(
 		apiV1Ws.GET("/petset").
 			To(apiHandler.handleGetPetSetList).
 			Writes(petset.PetSetList{}))
@@ -467,6 +481,28 @@ func (apiHandler *APIHandler) handleGetServiceDetail(request *restful.Request, r
 		return
 	}
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+func (apiHandler *APIHandler) handleGetIngressDetail(request *restful.Request, response *restful.Response) {
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("name")
+	result, err := ingress.GetIngressDetail(apiHandler.client, namespace, name)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+func (apiHandler *APIHandler) handleGetIngressList(request *restful.Request, response *restful.Response) {
+	dataSelect := parseDataSelectPathParameter(request)
+	namespace := parseNamespacePathParameter(request)
+	result, err := ingress.GetIngressList(apiHandler.client, namespace, dataSelect)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get service pods API call.
