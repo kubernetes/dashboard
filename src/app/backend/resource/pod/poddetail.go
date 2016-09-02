@@ -60,6 +60,12 @@ type Container struct {
 
 	// List of environment variables.
 	Env []EnvVar `json:"env"`
+
+	// Commands of the container
+	Commands []string `json:"commands"`
+
+	// Command arguments
+	Args []string `json:"args"`
 }
 
 // EnvVar represents an environment variable of a container.
@@ -127,6 +133,8 @@ func ToPodDetail(pod *api.Pod, metrics *common.MetricsByPod, configMaps *api.Con
 			Name:  container.Name,
 			Image: container.Image,
 			Env:   vars,
+			Commands: container.Command,
+			Args: container.Args,
 		})
 	}
 	podDetail := PodDetail{

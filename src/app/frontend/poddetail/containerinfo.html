@@ -36,5 +36,25 @@ limitations under the License.
         {{::$ctrl.i18n.MSG_CONTAINER_DETAILS_NO_ENV_VARS}}
       </div>
     </kd-info-card-entry>
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_CONTAINER_DETAILS_COMMANDS}}">
+      <div ng-if="::container.commands.length">
+        <div ng-repeat="(key, value) in ::container.commands" layout="row">
+          <kd-middle-ellipsis display-string="{{::value}}" flex="shrink"><kd-middle-ellipsis>
+        </div>
+      </div>
+      <div ng-if="::!container.commands.length">
+        {{::$ctrl.i18n.MSG_CONTAINER_DETAILS_NO_COMMANDS}}
+      </div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_CONTAINER_DETAILS_ARGS}}">
+      <div ng-if="::container.args.length">
+        <div ng-repeat="(key, value) in ::container.args" layout="row">
+          <kd-middle-ellipsis display-string="{{::value}}" flex="shrink"><kd-middle-ellipsis>
+        </div>
+      </div>
+      <div ng-if="::!container.args.length">
+        {{::$ctrl.i18n.MSG_CONTAINER_DETAILS_NO_ARGS}}
+      </div>
+    </kd-info-card-entry>
   </kd-info-card-section>
 </kd-info-card>

@@ -666,4 +666,8 @@
 	<translation id="6981942795420750041" key="MSG_PERSISTENT_VOLUME_LIST_HEADER_AGE" source="/home/urcan/wlm/dashboard/.tmp/serve/app-dev.js" desc="Persistent volume list header: age.">Age</translation>
 	<translation id="7869718532150162176" key="MSG_PERSISTENT_VOLUME_LIST_CREATED_AT_TOOLTIP" source="/home/urcan/wlm/dashboard/.tmp/serve/app-dev.js" desc="Tooltip 'Created at [some date]' showing the exact creation time of persistent volume.">Created at <ph name="CREATION_DATE" /></translation>
 	<translation id="1281408704476700057" key="MSG_PERSISTENT_VOLUME_LIST_PERSISTENT_VOLUME_LABEL" source="/home/urcan/wlm/dashboard/.tmp/serve/app-dev.js" desc="Label 'Persistent Volume' which will appear in the persistent volume delete dialog opened from a persistentvolume card on the list page.">Persistent Volume</translation>
+	<translation id="2848492051051488731" key="MSG_CONTAINER_DETAILS_COMMANDS" source="/home/urcan/wlm/dashboard/.tmp/serve/app-dev.js" desc="Label for container commands.">Commands</translation>
+	<translation id="3519937684574926798" key="MSG_CONTAINER_DETAILS_NO_COMMANDS" source="/home/urcan/wlm/dashboard/.tmp/serve/app-dev.js" desc="Label when there is no container commands.">-</translation>
+	<translation id="4028583304388361707" key="MSG_CONTAINER_DETAILS_ARGS" source="/home/urcan/wlm/dashboard/.tmp/serve/app-dev.js" desc="Label for container args.">Args</translation>
+	<translation id="3375312067672399373" key="MSG_CONTAINER_DETAILS_NO_ARGS" source="/home/urcan/wlm/dashboard/.tmp/serve/app-dev.js" desc="Label when there is no container arguments.">-</translation>
 </translationbundle>
