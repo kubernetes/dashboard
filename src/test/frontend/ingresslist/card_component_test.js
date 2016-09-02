@@ -12,19 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import secretListModule from 'secretlist/module';
+import ingressListModule from 'ingresslist/module';
 
-describe('Secret card', () => {
+describe('Ingress card', () => {
   /**
-   * @type {!secretlist/secretcard_component.SecretCardController}
+   * @type {!ingresslist/ingresscard_component.IngressCardController}
    */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(secretListModule.name);
+    angular.mock.module(ingressListModule.name);
 
     angular.mock.inject(($componentController, $rootScope) => {
-      ctrl = $componentController('kdSecretCard', {$scope: $rootScope}, {});
+      ctrl = $componentController('kdIngressCard', {$scope: $rootScope}, {
+        ingress: {
+          objectMeta: {
+            namespace: 'foo',
+            name: 'bar',
+          },
+        },
+      });
     });
   });
 
@@ -34,7 +41,10 @@ describe('Secret card', () => {
     expect(ctrl.areMultipleNamespacesSelected()).toBe(true);
   });
 
-  it('should format the "secret start date" tooltip correctly', () => {
+  it('should format the "ingress start date" tooltip correctly', () => {
     expect(ctrl.getStartedAtTooltip('2016-06-06T09:13:12Z')).toBe('Created at 6/6/16 09:13 UTC');
   });
+
+  it('should return details href',
+     () => { expect(ctrl.getIngressDetailHref()).toBe('#/ingress/foo/bar'); });
 });

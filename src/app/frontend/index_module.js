@@ -36,6 +36,8 @@ import serviceListModule from './servicelist/servicelist_module';
 import workloadsModule from './workloads/workloads_module';
 import secretListModule from './secretlist/module';
 import secretDetailModule from './secretdetail/module';
+import ingressListModule from './ingresslist/module';
+import ingressDetailModule from './ingressdetail/module';
 import podDetailModule from './poddetail/poddetail_module';
 import petSetListModule from './petsetlist/petsetlist_module';
 import configMapListModule from './configmaplist/configmaplist_module';
@@ -78,6 +80,8 @@ export default angular
           configMapDetailModule.name,
           secretListModule.name,
           secretDetailModule.name,
+          ingressListModule.name,
+          ingressDetailModule.name,
         ])
     .config(indexConfig)
     .config(routeConfig);

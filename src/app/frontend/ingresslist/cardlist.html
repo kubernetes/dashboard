@@ -14,23 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card-list ng-if="::$ctrl.secretList.secrets">
+<kd-resource-card-list ng-if="::$ctrl.ingressList.items">
     <kd-resource-card-header-columns>
-        <kd-resource-card-header-column size="medium" grow="4">{{::$ctrl.i18n.MSG_SECRET_LIST_NAME_LABEL}}
+        <kd-resource-card-header-column size="medium" grow="4">{{::$ctrl.i18n.MSG_INGRESS_LIST_NAME_LABEL}}
         </kd-resource-card-header-column>
         <kd-resource-card-header-column grow="2" ng-if="$ctrl.areMultipleNamespacesSelected()">
-            {{::$ctrl.i18n.MSG_SECRET_LIST_NAMESPACE_LABEL}}
+            {{::$ctrl.i18n.MSG_INGRESS_LIST_NAMESPACE_LABEL}}
         </kd-resource-card-header-column>
-        <kd-resource-card-header-column grow="nogrow">{{::$ctrl.i18n.MSG_SECRET_LIST_AGE_LABEL}}
+        <kd-resource-card-header-column grow="2">
+            {{::$ctrl.i18n.MSG_INGRESS_LIST_ENDPOINTS_LABEL}}
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column grow="nogrow">{{::$ctrl.i18n.MSG_INGRESS_LIST_AGE_LABEL}}
         </kd-resource-card-header-column>
     </kd-resource-card-header-columns>
-    <kd-secret-card pagination-id="secrets" secret="secret"
-                    dir-paginate="secret in $ctrl.secretList.secrets | itemsPerPage: default"
-                    total-items="::$ctrl.secretList.listMeta.totalItems">
-    </kd-secret-card>
+    <kd-ingress-card pagination-id="ingresses" ingress="ingress"
+                    dir-paginate="ingress in $ctrl.ingressList.items | itemsPerPage: default"
+                    total-items="::$ctrl.ingressList.listMeta.totalItems">
+    </kd-ingress-card>
     <kd-resource-card-list-footer>
-        <kd-resource-card-list-pagination pagination-id="secrets" list="$ctrl.secretList"
-                                          list-resource="$ctrl.secretListResource">
+        <kd-resource-card-list-pagination pagination-id="ingresses" list="$ctrl.ingressList"
+                                          list-resource="$ctrl.ingressListResource">
         </kd-resource-card-list-pagination>
     </kd-resource-card-list-footer>
 </kd-resource-card-list>

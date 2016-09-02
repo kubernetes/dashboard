@@ -13,9 +13,9 @@
 // limitations under the License.
 
 import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'secretdetail/detail_state';
+import {stateName} from 'ingressdetail/detail_state';
 
-class SecretCardController {
+class IngressCardController {
   /**
    * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
    * @param {!angular.$interpolate} $interpolate
@@ -23,8 +23,8 @@ class SecretCardController {
    * @ngInject
    */
   constructor($interpolate, $state, kdNamespaceService) {
-    /** @export {!backendApi.Secret} Secret initialised from a bindig. */
-    this.secret;
+    /** @export {!backendApi.Ingress} Ingress initialised from a bindig. */
+    this.ingress;
 
     /** @private {!angular.$interpolate} */
     this.interpolate_ = $interpolate;
@@ -38,25 +38,26 @@ class SecretCardController {
 
   /**
    * @export
-   * @param  {string} startDate - start date of the secret
+   * @param  {string} startDate - start date of the ingress
    * @return {string} localized tooltip with the formated start date
    */
   getStartedAtTooltip(startDate) {
     let filter = this.interpolate_(`{{date | date:'d/M/yy HH:mm':'UTC'}}`);
     /** @type {string} @desc Tooltip 'Started at [some date]' showing the exact start time of
-     * the secret.*/
-    let MSG_SECRET_LIST_STARTED_AT_TOOLTIP =
+     * the ingress.*/
+    let MSG_INGRESS_LIST_STARTED_AT_TOOLTIP =
         goog.getMsg('Created at {$startDate} UTC', {'startDate': filter({'date': startDate})});
-    return MSG_SECRET_LIST_STARTED_AT_TOOLTIP;
+    return MSG_INGRESS_LIST_STARTED_AT_TOOLTIP;
   }
 
   /**
    * @return {string}
    * @export
    */
-  getSecretDetailHref() {
+  getIngressDetailHref() {
     return this.state_.href(
-        stateName, new StateParams(this.secret.objectMeta.namespace, this.secret.objectMeta.name));
+        stateName,
+        new StateParams(this.ingress.objectMeta.namespace, this.ingress.objectMeta.name));
   }
 
   /**
@@ -71,10 +72,10 @@ class SecretCardController {
 /**
  * @type {!angular.Component}
  */
-export const secretCardComponent = {
+export const ingressCardComponent = {
   bindings: {
-    'secret': '=',
+    'ingress': '=',
   },
-  controller: SecretCardController,
-  templateUrl: 'secretlist/card.html',
+  controller: IngressCardController,
+  templateUrl: 'ingresslist/card.html',
 };
