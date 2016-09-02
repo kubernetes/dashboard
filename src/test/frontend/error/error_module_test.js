@@ -23,10 +23,23 @@ describe('Error module', () => {
     expect($state.current.name).toBe('');
 
     // when
-    $rootScope.$broadcast('$stateChangeError', null, null, null, null, error);
+    $rootScope.$broadcast('$stateChangeError', {}, null, null, null, error);
     $rootScope.$apply();
 
     // then
     expect($state.current.name).toBe('internalerror');
+  }));
+
+  it('should not fall into redirect loop', angular.mock.inject(($rootScope, $state) => {
+    // given
+    let error = {error: 'bar'};
+    expect($state.current.name).toBe('');
+
+    // when
+    $rootScope.$broadcast('$stateChangeError', {name: 'internalerror'}, null, null, null, error);
+    $rootScope.$apply();
+
+    // then
+    expect($state.current.name).toBe('');
   }));
 });
