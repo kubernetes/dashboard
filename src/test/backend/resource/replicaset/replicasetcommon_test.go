@@ -22,10 +22,11 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/service"
 
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 func TestCreateReplicaSetList(t *testing.T) {
@@ -47,7 +48,8 @@ func TestCreateReplicaSetList(t *testing.T) {
 			[]api.Pod{},
 			[]api.Event{},
 			&ReplicaSetList{
-				ListMeta: common.ListMeta{TotalItems: 1},
+				ListMeta:          common.ListMeta{TotalItems: 1},
+				CumulativeMetrics: make([]metric.Metric, 0),
 				ReplicaSets: []ReplicaSet{
 					{
 						ObjectMeta: common.ObjectMeta{Name: "replica-set", Namespace: "ns-1"},

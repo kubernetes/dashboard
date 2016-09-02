@@ -12,6 +12,7 @@ import (
 	"k8s.io/kubernetes/pkg/util/intstr"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 )
 
@@ -103,7 +104,10 @@ func TestGetDeploymentDetail(t *testing.T) {
 					MaxSurge:       1,
 					MaxUnavailable: 1,
 				},
-				OldReplicaSetList: replicaset.ReplicaSetList{ReplicaSets: []replicaset.ReplicaSet{}},
+				OldReplicaSetList: replicaset.ReplicaSetList{
+					ReplicaSets:       []replicaset.ReplicaSet{},
+					CumulativeMetrics: make([]metric.Metric, 0),
+				},
 				NewReplicaSet: replicaset.ReplicaSet{
 					ObjectMeta: common.NewObjectMeta(newReplicaSet.ObjectMeta),
 					TypeMeta:   common.NewTypeMeta(common.ResourceKindReplicaSet),

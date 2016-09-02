@@ -132,8 +132,13 @@ func CreateReplicationControllerList(replicationControllers []api.ReplicationCon
 		replicationController := ToReplicationController(&rc, &podInfo)
 		rcList.ReplicationControllers = append(rcList.ReplicationControllers, replicationController)
 	}
-	cumulativeMetrics, _ := metricPromises.GetMetrics()
+
+	cumulativeMetrics, err := metricPromises.GetMetrics()
 	rcList.CumulativeMetrics = cumulativeMetrics
+	if err != nil {
+		rcList.CumulativeMetrics = make([]metric.Metric, 0)
+	}
+
 	return rcList
 }
 

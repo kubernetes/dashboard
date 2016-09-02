@@ -15,12 +15,13 @@
 package metric
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/client"
-	heapster "k8s.io/heapster/metrics/api/v1/types"
-
 	"fmt"
 	"strings"
+
+	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+
+	heapster "k8s.io/heapster/metrics/api/v1/types"
 )
 
 type MetricPromises []MetricPromise
@@ -28,10 +29,11 @@ type MetricPromises []MetricPromise
 // GetMetrics returns all metrics from MetricPromises.
 // In case of no metrics were downloaded it does not initialise []Metric and returns nil.
 func (self MetricPromises) GetMetrics() ([]Metric, error) {
+	result := make([]Metric, 0)
 	if len(self) == 0 {
-		return nil, nil
+		return result, nil
 	}
-	result := []Metric{}
+
 	for _, metricPromise := range self {
 		metric, err := metricPromise.GetMetric()
 		if err != nil {
@@ -39,6 +41,7 @@ func (self MetricPromises) GetMetrics() ([]Metric, error) {
 		}
 		result = append(result, *metric)
 	}
+
 	return result, nil
 }
 

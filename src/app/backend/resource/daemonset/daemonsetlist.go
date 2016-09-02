@@ -119,7 +119,12 @@ func CreateDaemonSetList(daemonSets []extensions.DaemonSet, pods []api.Pod,
 				ContainerImages: common.GetContainerImages(&daemonSet.Spec.Template.Spec),
 			})
 	}
-	cumulativeMetrics, _ := metricPromises.GetMetrics()
+
+	cumulativeMetrics, err := metricPromises.GetMetrics()
 	daemonSetList.CumulativeMetrics = cumulativeMetrics
+	if err != nil {
+		daemonSetList.CumulativeMetrics = make([]metric.Metric, 0)
+	}
+
 	return daemonSetList
 }

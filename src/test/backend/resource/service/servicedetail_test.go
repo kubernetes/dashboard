@@ -24,8 +24,9 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 )
 
 type FakeHeapsterClient struct {
@@ -55,7 +56,10 @@ func TestGetServiceDetail(t *testing.T) {
 			expectedActions: []string{"get", "get", "list"},
 			expected: &ServiceDetail{
 				TypeMeta: common.TypeMeta{Kind: common.ResourceKindService},
-				PodList:  pod.PodList{Pods: []pod.Pod{}},
+				PodList: pod.PodList{
+					Pods:              []pod.Pod{},
+					CumulativeMetrics: make([]metric.Metric, 0),
+				},
 			},
 		}, {
 			service: &api.Service{ObjectMeta: api.ObjectMeta{
@@ -70,7 +74,10 @@ func TestGetServiceDetail(t *testing.T) {
 				},
 				TypeMeta:         common.TypeMeta{Kind: common.ResourceKindService},
 				InternalEndpoint: common.Endpoint{Host: "test-service.test-namespace"},
-				PodList:          pod.PodList{Pods: []pod.Pod{}},
+				PodList: pod.PodList{
+					Pods:              []pod.Pod{},
+					CumulativeMetrics: make([]metric.Metric, 0),
+				},
 			},
 		},
 	}

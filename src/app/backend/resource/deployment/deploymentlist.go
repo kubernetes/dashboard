@@ -131,7 +131,12 @@ func CreateDeploymentList(deployments []extensions.Deployment, pods []api.Pod,
 				Pods:            podInfo,
 			})
 	}
-	cumulativeMetrics, _ := metricPromises.GetMetrics()
+
+	cumulativeMetrics, err := metricPromises.GetMetrics()
 	deploymentList.CumulativeMetrics = cumulativeMetrics
+	if err != nil {
+		deploymentList.CumulativeMetrics = make([]metric.Metric, 0)
+	}
+
 	return deploymentList
 }

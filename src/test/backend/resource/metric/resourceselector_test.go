@@ -1,11 +1,11 @@
 package metric
 
 import (
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"reflect"
 	"testing"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 )
 
 func TestResourceSelector(t *testing.T) {

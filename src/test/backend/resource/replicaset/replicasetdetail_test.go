@@ -27,9 +27,10 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/service"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 type FakeHeapsterClient struct {
@@ -62,10 +63,13 @@ func TestGetReplicaSetDetail(t *testing.T) {
 					}},
 			},
 			&ReplicaSetDetail{
-				ObjectMeta:  common.ObjectMeta{Name: "test-replicaset"},
-				TypeMeta:    common.TypeMeta{Kind: common.ResourceKindReplicaSet},
-				PodInfo:     common.PodInfo{Warnings: []common.Event{}},
-				PodList:     pod.PodList{Pods: []pod.Pod{}},
+				ObjectMeta: common.ObjectMeta{Name: "test-replicaset"},
+				TypeMeta:   common.TypeMeta{Kind: common.ResourceKindReplicaSet},
+				PodInfo:    common.PodInfo{Warnings: []common.Event{}},
+				PodList: pod.PodList{
+					Pods:              []pod.Pod{},
+					CumulativeMetrics: make([]metric.Metric, 0),
+				},
 				ServiceList: service.ServiceList{Services: []service.Service{}},
 				EventList:   common.EventList{Events: []common.Event{}},
 			},
