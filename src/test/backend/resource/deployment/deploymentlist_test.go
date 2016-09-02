@@ -15,7 +15,6 @@
 package deployment
 
 import (
-	"errors"
 	"reflect"
 	"testing"
 
@@ -24,8 +23,10 @@ import (
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 
+	"errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 )
 
 func TestGetDeploymentListFromChannels(t *testing.T) {
@@ -41,8 +42,9 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 			nil,
 			&api.PodList{},
 			&DeploymentList{
-				ListMeta: common.ListMeta{},
-				Deployments: []Deployment{},
+				ListMeta:          common.ListMeta{},
+				Deployments:       []Deployment{},
+				CumulativeMetrics: make([]metric.Metric, 0),
 			},
 			nil,
 		},
@@ -121,7 +123,8 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 				},
 			},
 			&DeploymentList{
-				ListMeta: common.ListMeta{TotalItems: 1},
+				ListMeta:          common.ListMeta{TotalItems: 1},
+				CumulativeMetrics: make([]metric.Metric, 0),
 				Deployments: []Deployment{{
 					ObjectMeta: common.ObjectMeta{
 						Name:              "rs-name",

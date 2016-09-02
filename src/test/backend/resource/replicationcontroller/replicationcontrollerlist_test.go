@@ -19,8 +19,9 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"k8s.io/kubernetes/pkg/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	"k8s.io/kubernetes/pkg/api"
 )
 
 func TestGetReplicationControllerList(t *testing.T) {
@@ -33,7 +34,12 @@ func TestGetReplicationControllerList(t *testing.T) {
 		nodes                  []api.Node
 		expected               *ReplicationControllerList
 	}{
-		{nil, nil, nil, nil, &ReplicationControllerList{ReplicationControllers: []ReplicationController{}}},
+		{nil, nil, nil, nil,
+			&ReplicationControllerList{
+				ReplicationControllers: []ReplicationController{},
+				CumulativeMetrics:      make([]metric.Metric, 0),
+			},
+		},
 		{
 			[]api.ReplicationController{
 				{
@@ -154,7 +160,8 @@ func TestGetReplicationControllerList(t *testing.T) {
 			},
 			},
 			&ReplicationControllerList{
-				ListMeta: common.ListMeta{TotalItems: 2},
+				ListMeta:          common.ListMeta{TotalItems: 2},
+				CumulativeMetrics: make([]metric.Metric, 0),
 				ReplicationControllers: []ReplicationController{
 					{
 						ObjectMeta: common.ObjectMeta{

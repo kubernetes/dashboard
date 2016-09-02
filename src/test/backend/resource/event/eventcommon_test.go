@@ -16,11 +16,11 @@ package event
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
 	"reflect"
 	"testing"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 func TestGetEvents(t *testing.T) {

@@ -19,8 +19,8 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"k8s.io/kubernetes/pkg/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"k8s.io/kubernetes/pkg/api"
 )
 
 func TestGetPersistentVolumeList(t *testing.T) {

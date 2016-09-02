@@ -20,11 +20,12 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"k8s.io/kubernetes/pkg/api"
 	k8serrors "k8s.io/kubernetes/pkg/api/errors"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/batch"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 func TestGetJobListFromChannels(t *testing.T) {
@@ -41,8 +42,9 @@ func TestGetJobListFromChannels(t *testing.T) {
 			nil,
 			&api.PodList{},
 			&JobList{
-				ListMeta: common.ListMeta{},
-				Jobs: []Job{}},
+				ListMeta:          common.ListMeta{},
+				CumulativeMetrics: make([]metric.Metric, 0),
+				Jobs:              []Job{}},
 			nil,
 		},
 		{
@@ -135,7 +137,8 @@ func TestGetJobListFromChannels(t *testing.T) {
 				},
 			},
 			&JobList{
-				ListMeta: common.ListMeta{TotalItems: 2},
+				ListMeta:          common.ListMeta{TotalItems: 2},
+				CumulativeMetrics: make([]metric.Metric, 0),
 				Jobs: []Job{{
 					ObjectMeta: common.ObjectMeta{
 						Name:              "rs-name",

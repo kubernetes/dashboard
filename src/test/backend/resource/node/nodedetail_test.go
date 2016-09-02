@@ -20,6 +20,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/client/restclient"
@@ -63,7 +64,8 @@ func TestGetNodeDetail(t *testing.T) {
 				ProviderID:    "ID-1",
 				Unschedulable: true,
 				PodList: pod.PodList{
-					Pods: []pod.Pod{},
+					Pods:              []pod.Pod{},
+					CumulativeMetrics: make([]metric.Metric, 0),
 				},
 				EventList: common.EventList{
 					Events: nil,

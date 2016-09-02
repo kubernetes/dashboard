@@ -125,8 +125,13 @@ func CreatePetSetList(petSets []apps.PetSet, pods []api.Pod, events []api.Event,
 
 		petSetList.PetSets = append(petSetList.PetSets, ToPetSet(&petSet, &podInfo))
 	}
-	cumulativeMetrics, _ := metricPromises.GetMetrics()
+
+	cumulativeMetrics, err := metricPromises.GetMetrics()
 	petSetList.CumulativeMetrics = cumulativeMetrics
+	if err != nil {
+		petSetList.CumulativeMetrics = make([]metric.Metric, 0)
+	}
+
 	return petSetList
 }
 

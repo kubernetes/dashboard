@@ -107,7 +107,11 @@ func CreatePodList(pods []api.Pod, dsQuery *dataselect.DataSelectQuery,
 		podList.Pods = append(podList.Pods, podDetail)
 	}
 
-	cumulativeMetrics, _ := cumulativeMetricsPromises.GetMetrics()
+	cumulativeMetrics, err := cumulativeMetricsPromises.GetMetrics()
 	podList.CumulativeMetrics = cumulativeMetrics
+	if err != nil {
+		podList.CumulativeMetrics = make([]metric.Metric, 0)
+	}
+
 	return podList
 }

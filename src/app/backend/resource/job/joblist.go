@@ -20,11 +20,11 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 
+	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
 	"k8s.io/kubernetes/pkg/api"
 	k8serrors "k8s.io/kubernetes/pkg/api/errors"
 	"k8s.io/kubernetes/pkg/apis/batch"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
-	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
@@ -35,7 +35,7 @@ type JobList struct {
 	ListMeta common.ListMeta `json:"listMeta"`
 
 	// Unordered list of Jobs.
-	Jobs []Job `json:"jobs"`
+	Jobs              []Job           `json:"jobs"`
 	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
 }
 
@@ -126,8 +126,13 @@ func CreateJobList(jobs []batch.Job, pods []api.Pod, events []api.Event,
 
 		jobList.Jobs = append(jobList.Jobs, ToJob(&job, &podInfo))
 	}
-	cumulativeMetrics, _ := metricPromises.GetMetrics()
+
+	cumulativeMetrics, err := metricPromises.GetMetrics()
 	jobList.CumulativeMetrics = cumulativeMetrics
+	if err != nil {
+		jobList.CumulativeMetrics = make([]metric.Metric, 0)
+	}
+
 	return jobList
 }
 
