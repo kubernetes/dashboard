@@ -587,7 +587,9 @@ backendApi.ReplicationControllerDetail;
  * @typedef {{
  *   name: string,
  *   image: string,
- *   env: !Array<!backendApi.EnvVar>
+ *   env: !Array<!backendApi.EnvVar>,
+ *   commands: Array<string>,
+ *   args: Array<string>
  * }}
  */
 backendApi.Container;
@@ -646,7 +648,7 @@ backendApi.Pod;
  * @typedef {{
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
- *   containerImages: !Array<string>,
+ *   containers: !Array<!backendApi.Container>,
  *   podPhase: string,
  *   podIP: string,
  *   nodeName: string,
