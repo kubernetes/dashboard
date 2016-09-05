@@ -20,9 +20,15 @@ export class NodeDetailController {
    * @param {!backendApi.NodeDetail} nodeDetail
    * @ngInject
    */
-  constructor(nodeDetail) {
+  constructor(nodeDetail, kdNodePodsResource, kdNodeEventsResource) {
     /** @export {!backendApi.NodeDetail} */
     this.nodeDetail = nodeDetail;
+
+    /** @export {!angular.Resource} */
+    this.podListResource = kdNodePodsResource;
+
+    /** @export {!angular.Resource} */
+    this.eventListResource = kdNodeEventsResource;
 
     /** @export */
     this.i18n = i18n;
@@ -32,4 +38,11 @@ export class NodeDetailController {
 const i18n = {
   /** @export {string} @desc Title for graph card displaying metrics of one node. */
   MSG_NODE_DETAIL_GRAPH_CARD_TITLE: goog.getMsg('Resource usage history'),
+  /** @export {string} @desc Label 'Pods' for the pods section on the node details page. */
+  MSG_NODE_DETAIL_PODS_LABEL: goog.getMsg('Pods'),
+  /** @export {string} @desc Title for pods card zerostate in node details page. */
+  MSG_NODE_DETAIL_PODS_ZEROSTATE_TITLE: goog.getMsg('There is nothing to display here'),
+  /** @export {string} @desc Text for pods card zerostate in node details page. */
+  MSG_NODE_DETAIL_PODS_ZEROSTATE_TEXT:
+      goog.getMsg('There are currently no Pods scheduled on this Node'),
 };

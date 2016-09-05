@@ -40,8 +40,7 @@ export default angular
         ])
     .config(stateConfig)
     .component('kdNamespaceInfo', namespaceInfoComponent)
-    .factory('kdNamespaceEventsResource', namespaceEventsResource)
-
+    .factory('kdNamespaceEventsResource', namespaceEventsResource);
 
 /**
  * @param {!angular.$resource} $resource
