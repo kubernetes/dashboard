@@ -24,6 +24,9 @@ export class ReplicaSetCardListController {
     /** @export {!backendApi.ReplicaSetList} Initialized from binding. */
     this.replicaSetList;
 
+    /** @export {!angular.Resource} Initialized from binding. */
+    this.replicaSetListResource;
+
     /** @private {!./../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
 

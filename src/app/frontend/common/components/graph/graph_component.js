@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {axisSettings, metricDisplaySettings, TimeAxisType} from './graph_settings';
+import {getNewMax, getTickValues} from './tick_values';
 
 export class GraphController {
   /**
@@ -113,13 +114,17 @@ export class GraphController {
       // customise Y axes
       if (typeof yAxis1Type !== 'undefined') {
         let yAxis1Settings = axisSettings[yAxis1Type];
-        chart.yAxis1.axisLabel(yAxis1Settings.label).tickFormat(yAxis1Settings.formatter);
-        chart.yDomain1([0, y1max]);
+        chart.yAxis1.axisLabel(yAxis1Settings.label)
+            .tickFormat(yAxis1Settings.formatter)
+            .tickValues(getTickValues(y1max));
+        chart.yDomain1([0, getNewMax(y1max)]);
       }
       if (typeof yAxis2Type !== 'undefined') {
         let yAxis2Settings = axisSettings[yAxis2Type];
-        chart.yAxis2.axisLabel(yAxis2Settings.label).tickFormat(yAxis2Settings.formatter);
-        chart.yDomain2([0, y2max]);
+        chart.yAxis2.axisLabel(yAxis2Settings.label)
+            .tickFormat(yAxis2Settings.formatter)
+            .tickValues(getTickValues(y2max));
+        chart.yDomain2([0, getNewMax(y2max)]);
       }
 
       // hack to fix tooltip to use appropriate formatters instead of raw numbers.

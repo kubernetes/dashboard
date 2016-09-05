@@ -41,7 +41,8 @@ export default angular
     .config(stateConfig)
     .component('kdDaemonSetInfo', daemonSetInfoComponent)
     .factory('kdDaemonSetPodsResource', daemonSetPodsResource)
-    .factory('kdDaemonSetServicesResource', daemonSetServicesResource);
+    .factory('kdDaemonSetServicesResource', daemonSetServicesResource)
+    .factory('kdDaemonSetEventsResource', daemonSetEventsResource);
 
 /**
  * @param {!angular.$resource} $resource
@@ -59,4 +60,13 @@ function daemonSetPodsResource($resource) {
  */
 function daemonSetServicesResource($resource) {
   return $resource('api/v1/daemonset/:namespace/:name/service');
+}
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function daemonSetEventsResource($resource) {
+  return $resource('api/v1/daemonset/:namespace/:name/event');
 }

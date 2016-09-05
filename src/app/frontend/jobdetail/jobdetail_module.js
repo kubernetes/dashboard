@@ -40,7 +40,17 @@ export default angular
         ])
     .config(stateConfig)
     .component('kdJobInfo', jobInfoComponent)
-    .factory('kdJobPodsResource', jobPodsResource);
+    .factory('kdJobPodsResource', jobPodsResource)
+    .factory('kdJobEventsResource', jobEventsResource);
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function jobEventsResource($resource) {
+  return $resource('api/v1/job/:namespace/:name/event');
+}
 
 /**
  * @param {!angular.$resource} $resource

@@ -127,11 +127,4 @@ const i18n = {
   /** @export {string} @desc Label 'Conditions' for the conditions section on the node details
      page. */
   MSG_NODE_DETAIL_CONDITIONS_LABEL: goog.getMsg('Conditions'),
-  /** @export {string} @desc Label 'Pods' for the pods section on the node details page. */
-  MSG_NODE_DETAIL_PODS_LABEL: goog.getMsg('Pods'),
-  /** @export {string} @desc Title for pods card zerostate in node details page. */
-  MSG_NODE_DETAIL_PODS_ZEROSTATE_TITLE: goog.getMsg('There is nothing to display here'),
-  /** @export {string} @desc Text for pods card zerostate in node details page. */
-  MSG_NODE_DETAIL_PODS_ZEROSTATE_TEXT:
-      goog.getMsg('There are currently no Pods scheduled on this Node'),
 };
