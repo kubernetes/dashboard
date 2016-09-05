@@ -12,22 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import stateModule from 'common/state/module';
+
 import filtersModule from '../filters/filters_module';
-import labelsDirective from './labels/labels_directive';
-import middleEllipsisDirective from './middleellipsis/middleellipsis_directive';
+
+import namespaceModule from './../namespace/namespace_module';
+import paginationModule from './../pagination/pagination_module';
+import actionbarModule from './actionbar/actionbar_module';
 import contentCardModule from './contentcard/contentcard_module';
 import endpointModule from './endpoint/endpoint_module';
+import graphModule from './graph/graph_module';
 import i18nDirective from './i18n/i18n_directive';
 import infoCardModule from './infocard/infocard_module';
+import labelsDirective from './labels/labels_directive';
+import middleEllipsisDirective from './middleellipsis/middleellipsis_directive';
 import resourceCardModule from './resourcecard/resourcecard_module';
-import actionbarModule from './actionbar/actionbar_module';
-import zeroStateModule from './zerostate/zerostate_module';
-import graphModule from './graph/graph_module';
-import paginationModule from './../pagination/pagination_module';
-import namespaceModule from './../namespace/namespace_module';
 import sparklineDirective from './sparkline/sparkline_directive';
 import warnThresholdDirective from './warnthreshold/warnthreshold_directive';
-import stateModule from 'common/state/module';
+import zeroStateModule from './zerostate/zerostate_module';
+
 
 /**
  * Module containing common components for the application.

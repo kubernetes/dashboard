@@ -14,10 +14,12 @@
 
 import chromeModule from 'chrome/chrome_module';
 import componentsModule from 'common/components/components_module';
-import eventsModule from 'events/events_module';
 import filtersModule from 'common/filters/filters_module';
+import eventsModule from 'events/events_module';
+
 import stateConfig from './petsetdetail_stateconfig';
 import {petSetInfoComponent} from './petsetinfo_component';
+
 
 /**
  * Angular module for the Pet Set details view.

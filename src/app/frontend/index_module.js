@@ -17,33 +17,33 @@
  * to bootstrap the application.
  */
 import chromeModule from './chrome/chrome_module';
+import configMapDetailModule from './configmapdetail/configmapdetail_module';
+import configMapListModule from './configmaplist/configmaplist_module';
 import deployModule from './deploy/deploy_module';
 import deploymentListModule from './deploymentlist/deploymentlist_module';
 import errorModule from './error/error_module';
 import indexConfig from './index_config';
-import jobListModule from './joblist/joblist_module';
+import routeConfig from './index_route';
+import ingressDetailModule from './ingressdetail/module';
+import ingressListModule from './ingresslist/module';
 import jobDetailModule from './jobdetail/jobdetail_module';
+import jobListModule from './joblist/joblist_module';
 import logsModule from './logs/logs_module';
 import namespaceDetailModule from './namespacedetail/namespacedetail_module';
 import namespaceListModule from './namespacelist/namespacelist_module';
 import nodeListModule from './nodelist/nodelist_module';
+import persistentVolumeDetailModule from './persistentvolumedetail/persistentvolumedetail_module';
+import persistentVolumeListModule from './persistentvolumelist/persistentvolumelist_module';
+import petSetListModule from './petsetlist/petsetlist_module';
+import podDetailModule from './poddetail/poddetail_module';
 import replicaSetListModule from './replicasetlist/replicasetlist_module';
 import replicationControllerDetailModule from './replicationcontrollerdetail/replicationcontrollerdetail_module';
 import replicationControllerListModule from './replicationcontrollerlist/replicationcontrollerlist_module';
-import routeConfig from './index_route';
+import secretDetailModule from './secretdetail/module';
+import secretListModule from './secretlist/module';
 import serviceDetailModule from './servicedetail/servicedetail_module';
 import serviceListModule from './servicelist/servicelist_module';
 import workloadsModule from './workloads/workloads_module';
-import secretListModule from './secretlist/module';
-import secretDetailModule from './secretdetail/module';
-import ingressListModule from './ingresslist/module';
-import ingressDetailModule from './ingressdetail/module';
-import podDetailModule from './poddetail/poddetail_module';
-import petSetListModule from './petsetlist/petsetlist_module';
-import configMapListModule from './configmaplist/configmaplist_module';
-import configMapDetailModule from './configmapdetail/configmapdetail_module';
-import persistentVolumeDetailModule from './persistentvolumedetail/persistentvolumedetail_module';
-import persistentVolumeListModule from './persistentvolumelist/persistentvolumelist_module';
 
 export default angular
     .module(

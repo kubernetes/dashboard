@@ -17,14 +17,15 @@
  */
 import gulp from 'gulp';
 import gulpAutoprefixer from 'gulp-autoprefixer';
-import gulpMinifyCss from 'gulp-minify-css';
-import gulpSourcemaps from 'gulp-sourcemaps';
-import gulpSass from 'gulp-sass';
-import path from 'path';
 import gulpConcat from 'gulp-concat';
+import gulpMinifyCss from 'gulp-minify-css';
+import gulpSass from 'gulp-sass';
+import gulpSourcemaps from 'gulp-sourcemaps';
+import path from 'path';
 
-import {browserSyncInstance} from './serve';
 import conf from './conf';
+import {browserSyncInstance} from './serve';
+
 
 /**
  * Compiles stylesheets and places them into the serve folder. Each stylesheet file is compiled

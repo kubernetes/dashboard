@@ -12,12 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import DeployController from './deploy_controller';
-import DeployFromSettingsController from './deployfromsettings_controller';
-import DeployFromFileController from './deployfromfile_controller';
-import {baseStateName, deployAppStateName, deployFileStateName} from './deploy_state';
 import {stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+
+import DeployController from './deploy_controller';
+import {baseStateName, deployAppStateName, deployFileStateName} from './deploy_state';
+import DeployFromFileController from './deployfromfile_controller';
+import DeployFromSettingsController from './deployfromsettings_controller';
+
 
 /**
  * Configures states for the deploy view.

@@ -12,14 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './configmaplist_stateconfig';
-import filtersModule from 'common/filters/filters_module';
-import componentsModule from 'common/components/components_module';
 import chromeModule from 'chrome/chrome_module';
-import configMapDetailModule from 'configmapdetail/configmapdetail_module';
+import componentsModule from 'common/components/components_module';
+import filtersModule from 'common/filters/filters_module';
 import namespaceModule from 'common/namespace/namespace_module';
+import configMapDetailModule from 'configmapdetail/configmapdetail_module';
+
 import {configMapCardComponent} from './configmapcard_component';
 import {configMapCardListComponent} from './configmapcardlist_component';
+import stateConfig from './configmaplist_stateconfig';
+
 
 /**
  * Angular module for the Config Map list view.

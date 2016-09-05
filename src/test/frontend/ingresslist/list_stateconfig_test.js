@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ingressListModule from 'ingresslist/module';
 import {resolveIngressList} from 'ingresslist/list_stateconfig';
+import ingressListModule from 'ingresslist/module';
 
 describe('StateConfig for ingress list', () => {
   /** @type {!common/pagination/pagination_service.PaginationService} */

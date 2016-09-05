@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import resourceCardModule from 'common/components/resourcecard/resourcecard_module';
-import paginationModule from 'common/pagination/pagination_module';
 import errorHandlingModule from 'common/errorhandling/errorhandling_module';
+import paginationModule from 'common/pagination/pagination_module';
 
 describe('Resource card list pagination', () => {
   /** @type

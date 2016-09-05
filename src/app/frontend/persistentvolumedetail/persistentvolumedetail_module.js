@@ -14,11 +14,13 @@
 
 import chromeModule from 'chrome/chrome_module';
 import componentsModule from 'common/components/components_module';
-import eventsModule from 'events/events_module';
 import filtersModule from 'common/filters/filters_module';
+import eventsModule from 'events/events_module';
+
 import stateConfig from './persistentvolumedetail_stateconfig';
 import {persistentVolumeInfoComponent} from './persistentvolumeinfo_component';
 import {persistentVolumeSourceInfoComponent} from './persistentvolumesourceinfo_component';
+
 
 /**
  * Angular module for the Persistent Volume details view.

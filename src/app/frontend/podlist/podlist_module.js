@@ -13,11 +13,13 @@
 // limitations under the License.
 
 import chromeModule from 'chrome/chrome_module';
-import stateConfig from './podlist_stateconfig';
-import {podCardListComponent} from './podcardlist_component';
-import paginationModule from 'common/pagination/pagination_module';
 import filtersModule from 'common/filters/filters_module';
 import namespaceModule from 'common/namespace/namespace_module';
+import paginationModule from 'common/pagination/pagination_module';
+
+import {podCardListComponent} from './podcardlist_component';
+import stateConfig from './podlist_stateconfig';
+
 
 /**
  * Angular module for the Pods list view.

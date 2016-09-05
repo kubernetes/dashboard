@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import serviceListModule from 'servicelist/servicelist_module';
 import serviceDetailModule from 'servicedetail/servicedetail_module';
+import serviceListModule from 'servicelist/servicelist_module';
 
 describe('Service card controller', () => {
   /**

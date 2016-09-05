@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import module from 'common/namespace/namespace_module';
 import {namespaceParam} from 'chrome/chrome_state';
+import module from 'common/namespace/namespace_module';
 
 describe('Namespace module ', () => {
   beforeEach(() => { angular.mock.module(module.name); });

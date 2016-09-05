@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import resourceModule from 'common/resource/resource_module';
 import {DeleteResourceController} from 'common/resource/deleteresource_controller';
+import resourceModule from 'common/resource/resource_module';
 
 describe('Delete resource controller', () => {
   /** @type !{!common/resource/deleteresource_controller.DeleteResourceController} */

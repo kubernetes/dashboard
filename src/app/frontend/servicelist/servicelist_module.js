@@ -12,13 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import componentsModule from 'common/components/components_module';
 import chromeModule from 'chrome/chrome_module';
+import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
 import namespaceModule from 'common/namespace/namespace_module';
-import stateConfig from './servicelist_stateconfig';
-import {serviceCardListComponent} from './servicecardlist_component';
+
 import {serviceCardComponent} from './servicecard_component';
+import {serviceCardListComponent} from './servicecardlist_component';
+import stateConfig from './servicelist_stateconfig';
+
 
 /**
  * Angular module for the Service list view.
