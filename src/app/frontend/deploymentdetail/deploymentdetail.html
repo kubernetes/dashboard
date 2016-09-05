@@ -39,7 +39,8 @@ limitations under the License.
   <kd-content>
     <kd-replica-set-card-list
             ng-show="::ctrl.deploymentDetail.oldReplicaSetList.replicaSets.length"
-            replica-set-list="::ctrl.deploymentDetail.oldReplicaSetList">
+            replica-set-list="::ctrl.deploymentDetail.oldReplicaSetList"
+            replica-set-list-resource="::ctrl.oldReplicaSetListResource">
     </kd-replica-set-card-list>
     <div class="kd-zerostate-message" layout-padding
          ng-hide="::ctrl.deploymentDetail.oldReplicaSetList.replicaSets.length">
@@ -49,4 +50,4 @@ limitations under the License.
   </kd-content>
 </kd-content-card>
 
-<kd-event-card-list event-list="::ctrl.deploymentDetail.eventList"></kd-event-card-list>
+<kd-event-card-list event-list="::ctrl.deploymentDetail.eventList" event-list-resource="::ctrl.eventListResource"></kd-event-card-list>

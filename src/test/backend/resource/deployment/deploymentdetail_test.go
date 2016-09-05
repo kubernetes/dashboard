@@ -95,6 +95,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 				TypeMeta: common.TypeMeta{Kind: common.ResourceKindDeployment},
 				PodList:  pod.PodList{
 					Pods: []pod.Pod{},
+					CumulativeMetrics: make([]metric.Metric, 0),
 				},
 				Selector: map[string]string{"foo": "bar"},
 				StatusInfo: StatusInfo{

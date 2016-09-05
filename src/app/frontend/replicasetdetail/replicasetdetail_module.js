@@ -42,7 +42,8 @@ export default angular
     .component('kdReplicaSetInfo', replicaSetInfoComponent)
     .factory('kdReplicaSetDetailResource', replicaSetDetailResource)
     .factory('kdReplicaSetPodsResource', replicaSetPodsResource)
-    .factory('kdReplicaSetServicesResource', replicaSetServicesResource);
+    .factory('kdReplicaSetServicesResource', replicaSetServicesResource)
+    .factory('kdReplicaSetEventsResource', replicaSetEventsResource);
 
 /**
  * @param {!angular.$resource} $resource
@@ -69,4 +70,13 @@ function replicaSetPodsResource($resource) {
  */
 function replicaSetServicesResource($resource) {
   return $resource('api/v1/replicaset/:namespace/:name/service');
+}
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function replicaSetEventsResource($resource) {
+  return $resource('api/v1/replicaset/:namespace/:name/event');
 }

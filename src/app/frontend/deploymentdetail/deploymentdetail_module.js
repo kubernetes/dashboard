@@ -35,4 +35,24 @@ export default angular
           filtersModule.name,
         ])
     .config(stateConfig)
-    .component('kdDeploymentInfo', deploymentInfoComponent);
+    .component('kdDeploymentInfo', deploymentInfoComponent)
+    .factory('kdDeploymentEventsResource', deploymentEventsResource)
+    .factory('kdDeploymentOldReplicaSetsResource', deploymentOldReplicaSetsResource);
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function deploymentEventsResource($resource) {
+  return $resource('api/v1/deployment/:namespace/:name/event');
+}
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function deploymentOldReplicaSetsResource($resource) {
+  return $resource('api/v1/deployment/:namespace/:name/oldreplicaset');
+}

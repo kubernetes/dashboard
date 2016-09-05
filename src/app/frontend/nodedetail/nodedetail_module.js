@@ -43,16 +43,17 @@ export default angular
     .config(stateConfig)
     .component('kdNodeAllocatedResources', nodeAllocatedResourcesComponent)
     .component('kdNodeConditions', nodeConditionsComponent)
-    .component('kdNodeInfo', nodeInfoComponent);
-
+    .component('kdNodeInfo', nodeInfoComponent)
+    .factory('kdNodeEventsResource', nodeEventsResource)
+    .factory('kdNodePodsResource', nodePodsResource);
 
 /**
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource}
  * @ngInject
  */
-function replicationControllerEventsResource($resource) {
-  return $resource('api/v1/replicationcontroller/:namespace/:name/event');
+function nodeEventsResource($resource) {
+  return $resource('api/v1/node/:name/event');
 }
 
 /**
@@ -60,6 +61,6 @@ function replicationControllerEventsResource($resource) {
  * @return {!angular.Resource}
  * @ngInject
  */
-function replicationControllerEventsResource($resource) {
-  return $resource('api/v1/replicationcontroller/:namespace/:name/event');
+function nodePodsResource($resource) {
+  return $resource('api/v1/node/:name/pod');
 }

@@ -20,9 +20,12 @@ export class ReplicaSetDetailController {
    * @param {!backendApi.ReplicaSetDetail} replicaSetDetail
    * @param {!angular.Resource} kdReplicaSetPodsResource
    * @param {!angular.Resource} kdReplicaSetServicesResource
+   * @param {!angular.Resource} kdReplicaSetEventsResource
    * @ngInject
    */
-  constructor(replicaSetDetail, kdReplicaSetPodsResource, kdReplicaSetServicesResource) {
+  constructor(
+      replicaSetDetail, kdReplicaSetPodsResource, kdReplicaSetServicesResource,
+      kdReplicaSetEventsResource) {
     /** @export {!backendApi.ReplicaSetDetail} */
     this.replicaSetDetail = replicaSetDetail;
 
@@ -31,6 +34,9 @@ export class ReplicaSetDetailController {
 
     /** @export {!angular.Resource} */
     this.replicaSetServicesResource = kdReplicaSetServicesResource;
+
+    /** @export {!angular.Resource} */
+    this.eventListResource = kdReplicaSetEventsResource;
 
     /** @export */
     this.i18n = i18n;
