@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {deployAppStateName, deployFileStateName} from './deploy_state';
+import {deployAppStateName, deployFileStateName, deployChartStateName} from './deploy_state';
 
 /**
  * Controller for the deploy view.
@@ -33,6 +33,9 @@ export default class DeployController {
 
     /** @export {string} */
     this.fileOption = deployFileStateName;
+
+    /** @export {string} */
+    this.chartOption = deployChartStateName;
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
@@ -58,6 +61,10 @@ const i18n = {
   /** @export {string} @desc Text for a selection option, which the user must click to upload a
      YAML/JSON file to deploy from on the deploy page. */
   MSG_DEPLOY_FILE_UPLOAD_ACTION: goog.getMsg('Upload a YAML or JSON file'),
+
+  /** @export {string} @desc Text for a selection option, which the user must click to select a
+     chart to deploy from on the deploy page. */
+  MSG_DEPLOY_HELM_CHART_ACTION: goog.getMsg('Deploy a Helm chart'),
 
   /** @export {string} @desc User help with a link redirecting to the "Dashboard tour" on the
      deploy page. */

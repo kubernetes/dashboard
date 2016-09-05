@@ -71,10 +71,15 @@ func main() {
 		log.Printf("Could not create heapster client: %s. Continuing.", err)
 	}
 
+	helmClient, err := client.CreateHelmTillerClient()
+	if err != nil {
+		log.Printf("Could not create helm tiller client: %s. Continuing.", err)
+	}
+
 	// Run a HTTP server that serves static public files from './public' and handles API calls.
 	// TODO(bryk): Disable directory listing.
 	http.Handle("/", handler.MakeGzipHandler(handler.CreateLocaleHandler()))
-	http.Handle("/api/", handler.CreateHTTPAPIHandler(apiserverClient, heapsterRESTClient, config))
+	http.Handle("/api/", handler.CreateHTTPAPIHandler(apiserverClient, heapsterRESTClient, config, helmClient))
 	// TODO(maciaszczykm): Move to /appConfig.json as it was discussed in #640.
 	http.Handle("/api/appConfig.json", handler.AppHandler(handler.ConfigHandler))
 	log.Print(http.ListenAndServe(fmt.Sprintf(":%d", *argPort), nil))

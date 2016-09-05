@@ -1,0 +1,121 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<form name="ctrl.form" ng-submit="ctrl.deploy()" novalidate>
+
+      <!-- TODO: add support for uploading a packaged chart (.tgz) file -->
+      <!-- <kd-upload file="ctrl.file" form="ctrl.form"></kd-upload> -->
+
+      <kd-help-section>
+      <md-input-container class="md-block">
+        <label>{{::ctrl.i18n.MSG_CHART_REPOSITORY_LABEL}}</label>
+        <md-select ng-model="ctrl.namespace" >
+          <md-option ng-repeat="repo in ctrl.repos" ng-value="repo" ng-click="ctrl.selectRepo(repo)">
+            {{repo}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+      <kd-user-help>
+        {{::ctrl.i18n.MSG_DEPLOY_CHART_REPO_USER_HELP}}
+      </kd-user-help>
+    </kd-help-section>
+    <kd-help-section>
+
+      <md-grid-list md-cols="3" md-row-height="250px" md-gutter="2em">
+
+          <md-grid-tile ng-repeat="chart in ctrl.charts" ng-value="chart">
+            <md-card class="kd-chart-card {{chart.selected}}" ng-click="ctrl.selectChart(chart.fullName)">
+              <md-card-content>
+                <img class="kd-chart-card-icon-image" ng-src="{{chart.icon}}"/>
+                <h2 class="kd-chart-card-text-name">{{chart.name}}</h2>
+                <p class="kd-chart-card-text-description kd-chart-color-secondary">{{chart.description}}</p>
+              </md-card-content>
+            </md-card>
+          </md-grid-tile>
+
+        </md-grid-list>
+
+      </kd-user-help>
+      <kd-user-help>
+        {{::ctrl.i18n.MSG_DEPLOY_CHART_USER_HELP}}
+      </kd-user-help>
+    </kd-help-section>
+
+      <kd-help-section>
+    <md-input-container class="md-block" md-is-error="ctrl.isNameError()">
+      <label>{{::ctrl.i18n.MSG_DEPLOY_CHART_RELEASE_NAME_LABEL}}</label>
+      <div>
+        <input ng-model="ctrl.name" name="name" namespace="ctrl.namespace" required
+               ng-pattern="ctrl.namePattern"
+               ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }"
+               kd-unique-name md-maxlength="{{ctrl.nameMaxLength}}">
+        <md-progress-linear class="kd-deploy-form-progress" md-mode="indeterminate"
+          ng-class="{'kd-deploy-form-progress-show': ctrl.form.name.$pending}">
+        </md-progress-linear>
+        <ng-messages for="ctrl.form.name.$error" role="alert" multiple>
+          <ng-message when="required">{{::ctrl.i18n.MSG_DEPLOY_SETTINGS_APP_NAME_REQUIRED_WARNING}}</ng-message>
+          <ng-message when="uniqueName">
+            {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_APP_NAME_ALREADY_EXISTS_WARNING}}
+            <i>{{ctrl.namespace}}</i>.
+          </ng-message>
+          <ng-message when="pattern">
+            {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_APP_NAME_PATTERN_WARNING}}
+          </ng-message>
+          <ng-message when="md-maxlength">
+            {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_APP_NAME_MAX_LENGTH_WARNING}}
+          </ng-message>
+        </ng-messages>
+      </div>
+    </md-input-container>
+
+    <kd-user-help>
+      {{::ctrl.i18n.MSG_DEPLOY_CHART_RELEASE_NAME_USER_HELP}}
+    </kd-user-help>
+  </kd-help-section>
+
+  <!-- TODO: add support for cutom values file...
+  <kd-help-section>
+    <div layout="row" layout-align="space-between start">
+      <div flex="auto" >
+        <md-input-container class="md-block kd-upload-file-container" md-is-error="ctrl.isFileNameError()">
+          <label>{{::ctrl.i18n.MSG_DEPLOY_CHART_VALUES_YAML_FILE_LABEL}}</label>
+          <input ng-model="ctrl.file.name" ng-focus="ctrl.browseFile()" ng-readonly="true" name="fileName"/>
+        </md-input-container>
+      </div>
+      <md-button type="button" class="md-raised kd-upload-button" ng-click="ctrl.browseFile()">
+        <label class="kd-upload-label">
+          <md-icon>
+            <i class="material-icons">more_horiz</i>
+          </md-icon>
+        </label>
+      </md-button>
+      <input type="file" class="kd-upload-file-picker" kd-file-reader ng-model="ctrl.file">
+    </div>
+    <kd-user-help>
+      {{::ctrl.i18n.MSG_DEPLOY_CHART_CUSTOM_VALUES_USER_HELP}}
+    </kd-user-help>
+  </kd-help-section>
+  -->
+
+  <div></div>
+  <md-button class="md-raised md-primary kd-deploy-submit-button" type="submit"
+             ng-disabled="ctrl.isDeployDisabled()">
+    {{::ctrl.i18n.MSG_DEPLOY_CHART_ACTION}}
+  </md-button>
+  <md-button class="md-raised kd-deploy-cancel-button" ng-click="ctrl.cancel()">
+    {{::ctrl.i18n.MSG_DEPLOY_CHART_ACTION_CANCEL}}
+  </md-button>
+</form>

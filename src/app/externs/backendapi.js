@@ -87,6 +87,14 @@ backendApi.AppDeploymentSpec;
 
 /**
  * @typedef {{
+ *   chartName: string,
+ *   releaseName: string
+ * }}
+ */
+backendApi.AppDeploymentFromChartSpec;
+
+/**
+ * @typedef {{
  *   name: string,
  *   content: string,
  *   validate: boolean,
