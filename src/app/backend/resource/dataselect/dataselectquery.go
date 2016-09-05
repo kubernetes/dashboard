@@ -73,6 +73,10 @@ var NoSort = &SortQuery{
 // NoDataSelect is an option for no data select (same data will be returned).
 var NoDataSelect = NewDataSelectQuery(NoPagination, NoSort, NoMetrics)
 
+// Does not perform any data select, just downloads required metrics.
+var StdMetricsDataSelect = NewDataSelectQuery(NoPagination, NoSort, StandardMetrics)
+
+
 // NewDataSelectQuery creates DataSelectQuery object from simpler data select queries.
 func NewDataSelectQuery(paginationQuery *PaginationQuery, sortQuery *SortQuery, graphQuery *MetricQuery) *DataSelectQuery {
 	return &DataSelectQuery{

@@ -26,6 +26,7 @@ import (
 	"k8s.io/kubernetes/pkg/client/restclient"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 type FakeHeapsterClient struct {
@@ -93,7 +94,7 @@ func TestGetNodeDetail(t *testing.T) {
 			podList, eventList)
 		fakeHeapsterClient := FakeHeapsterClient{client: testclient.NewSimpleFake()}
 
-		actual, _ := GetNodeDetail(fakeClient, fakeHeapsterClient, c.name)
+		actual, _ := GetNodeDetail(fakeClient, fakeHeapsterClient, dataselect.NoDataSelect, c.name)
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetNodeDetail(client,heapsterClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",

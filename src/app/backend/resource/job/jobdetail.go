@@ -15,8 +15,6 @@
 package job
 
 import (
-	"log"
-
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -57,8 +55,6 @@ type JobDetail struct {
 func GetJobDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
 	namespace, name string, dsQuery *dataselect.DataSelectQuery) (*JobDetail, error) {
 
-	log.Printf("Getting details of %s service in %s namespace", name, namespace)
-
 	// TODO(floreks): Use channels.
 	jobData, err := client.Extensions().Jobs(namespace).Get(name)
 	if err != nil {
@@ -86,7 +82,6 @@ func GetJobDetail(client k8sClient.Interface, heapsterClient client.HeapsterClie
 
 func getJobDetail(job *batch.Job, heapsterClient client.HeapsterClient,
 	eventList common.EventList, podList pod.PodList, podInfo common.PodInfo) JobDetail {
-
 	return JobDetail{
 		ObjectMeta:      common.NewObjectMeta(job.ObjectMeta),
 		TypeMeta:        common.NewTypeMeta(common.ResourceKindJob),
