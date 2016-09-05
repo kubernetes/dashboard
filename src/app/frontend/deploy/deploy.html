@@ -25,6 +25,9 @@ limitations under the License.
         <md-radio-button value="{{::ctrl.fileOption}}" class="md-primary">
           [[Upload a YAML or JSON file|Text for a selection option, which the user must click to upload a YAML/JSON file to deploy from on the deploy page.]]
         </md-radio-button>
+          <md-radio-button value="{{::ctrl.chartOption}}" class="md-primary">
+          [[Deploy a Helm chart|Text for a selection option, which the user must click to select a chart to deploy from on the deploy page.]]
+        </md-radio-button>
       </md-radio-group>
       <kd-user-help>
         [[To learn more, <a href="http://kubernetes.io/docs/user-guide/ui/" target="_blank" tabindex="-1"> take the Dashboard Tour <i class="material-icons">open_in_new</i></a>|User help with a link redirecting to the "Dashboard tour" on the deploy page.]]

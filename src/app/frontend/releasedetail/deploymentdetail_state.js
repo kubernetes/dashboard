@@ -13,10 +13,7 @@
 // limitations under the License.
 
 /** Name of the state. Can be used in, e.g., $state.go method. */
-export const baseStateName = 'deploy';
+export const stateName = 'deploymentdetail';
 
-export const deployAppStateName = 'deployApp';
-
-export const deployFileStateName = 'deployFile';
-
-export const deployChartStateName = 'deployChart';
+/** Absolute URL of the state. */
+export const stateUrl = '/deployment';

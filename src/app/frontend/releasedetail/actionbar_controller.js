@@ -12,11 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
-export const baseStateName = 'deploy';
+/**
+ * @final
+ */
+export class ActionBarController {
+  /**
+   * @param {!backendApi.DeploymentDetail} deploymentDetail
+   * @ngInject
+   */
+  constructor(deploymentDetail) {
+    /** @export {!backendApi.DeploymentDetail} */
+    this.details = deploymentDetail;
 
-export const deployAppStateName = 'deployApp';
+    /** @export */
+    this.i18n = i18n;
+  }
+}
 
-export const deployFileStateName = 'deployFile';
-
-export const deployChartStateName = 'deployChart';
+const i18n = {
+  /** @export {string} @desc Label 'Deployment' which will appear in the deployment
+      delete dialog opened from the deployment details page.*/
+  MSG_DEPLOYMENT_DETAILS_DEPLOYMENT_LABEL: goog.getMsg('Deployment'),
+};

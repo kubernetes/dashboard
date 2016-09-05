@@ -12,37 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {deployAppStateName, deployFileStateName, deployChartStateName} from './deploy_state';
-
 /**
- * Controller for the deploy view.
+ * Controller for the replica set list view.
  *
  * @final
  */
-export default class DeployController {
+export class DeploymentListController {
   /**
-   * @param {!ui.router.$state} $state
+   * @param {!backendApi.DeploymentList} deploymentList
+   * @param {!angular.Resource} kdDeploymentListResource
    * @ngInject
    */
-  constructor($state) {
-    /** @export {string} */
-    this.selection = $state.current.name;
+  constructor(deploymentList, kdDeploymentListResource) {
+    /** @export {!backendApi.DeploymentList} */
+    this.deploymentList = deploymentList;
 
-    /** @export {string} */
-    this.appOption = deployAppStateName;
-
-    /** @export {string} */
-    this.fileOption = deployFileStateName;
-
-    /** @export {string} */
-    this.chartOption = deployChartStateName;
-
-    /** @private {!ui.router.$state} */
-    this.state_ = $state;
+    /** @export {!angular.Resource} */
+    this.deploymentListResource = kdDeploymentListResource;
   }
 
-  /** @export */
-  changeSelection() {
-    this.state_.go(this.selection);
-  }
+  /**
+   * @return {boolean}
+   * @export
+   */
+  shouldShowZeroState() { return this.deploymentList.deployments.length === 0; }
 }
