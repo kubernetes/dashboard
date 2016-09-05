@@ -39,7 +39,7 @@
     // Disallow this keywords outside of classes or class-like objects.
     "no-invalid-this": 2,
     // Allow at most one newline between code blocks.
-    "no-multiple-empty-lines": [2, {"max": 1}],
+    "no-multiple-empty-lines": [2, {"max": 2, "maxEOF": 1}],
     // Disallow the use of ternary operators when a simpler alternative exists.
     "no-unneeded-ternary": 2,
     // Disallow trailing spaces. This is to unify code because editors may have different

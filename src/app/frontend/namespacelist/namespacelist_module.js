@@ -12,13 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './namespacelist_stateconfig';
-import filtersModule from 'common/filters/filters_module';
 import componentsModule from 'common/components/components_module';
+import filtersModule from 'common/filters/filters_module';
+import paginationModule from 'common/pagination/pagination_module';
+import namespaceDetailModule from 'namespacedetail/namespacedetail_module';
+
 import {namespaceCardComponent} from './namespacecard_component';
 import {namespaceCardListComponent} from './namespacecardlist_component';
-import namespaceDetailModule from 'namespacedetail/namespacedetail_module';
-import paginationModule from 'common/pagination/pagination_module';
+import stateConfig from './namespacelist_stateconfig';
+
 
 /**
  * Angular module for the Namespace list view.

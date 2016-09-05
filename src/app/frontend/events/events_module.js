@@ -12,9 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import filtersModule from 'common/filters/filters_module';
 import componentsModule from 'common/components/components_module';
+import filtersModule from 'common/filters/filters_module';
+
 import {eventCardListComponent} from './eventcardlist_component';
+
 
 /**
  * Angular module for the Replica Set details view.

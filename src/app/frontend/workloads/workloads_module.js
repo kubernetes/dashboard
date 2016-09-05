@@ -12,16 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import componentsModule from 'common/components/components_module';
 import chromeModule from 'chrome/chrome_module';
-import deploymentListModule from 'deploymentlist/deploymentlist_module';
-import daemonSetListModule from 'daemonsetlist/daemonsetlist_module';
-import jobListModule from 'joblist/joblist_module';
+import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
+import daemonSetListModule from 'daemonsetlist/daemonsetlist_module';
+import deploymentListModule from 'deploymentlist/deploymentlist_module';
+import jobListModule from 'joblist/joblist_module';
 import petSetListModule from 'petsetlist/petsetlist_module';
-import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
 import replicaSetListModule from 'replicasetlist/replicasetlist_module';
+import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
+
 import stateConfig from './workloads_stateconfig';
+
 
 /**
  * Module with a view that displays resources categorized as workloads, e.g., Replica Sets or

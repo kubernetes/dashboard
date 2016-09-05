@@ -12,21 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './deploy_stateconfig';
-import initConfig from './deploy_initconfig';
+import componentsModule from 'common/components/components_module';
+import historyModule from 'common/history/history_module';
+import validatorsModule from 'common/validators/validators_module';
+
 import errorHandlingModule from '../common/errorhandling/errorhandling_module';
+
+import initConfig from './deploy_initconfig';
+import stateConfig from './deploy_stateconfig';
 import deployLabelDirective from './deploylabel_directive';
-import fileReaderDirective from './filereader_directive';
-import portMappingsDirective from './portmappings_directive';
 import environmentVariablesDirective from './environmentvariables_directive';
-import uploadDirective from './upload_directive';
+import fileReaderDirective from './filereader_directive';
+import helpSectionModule from './helpsection/helpsection_module';
+import portMappingsDirective from './portmappings_directive';
 import uniqueNameDirective from './uniquename_directive';
+import uploadDirective from './upload_directive';
 import validImageReferenceDirective from './validimagereference_directive';
 import validProtocolDirective from './validprotocol_directive';
-import helpSectionModule from './helpsection/helpsection_module';
-import validatorsModule from 'common/validators/validators_module';
-import historyModule from 'common/history/history_module';
-import componentsModule from 'common/components/components_module';
+
 
 /**
  * Angular module for the deploy view.

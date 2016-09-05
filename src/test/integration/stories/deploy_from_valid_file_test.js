@@ -16,8 +16,9 @@ import path from 'path';
 import remote from 'selenium-webdriver/remote';
 
 import DeployFromFilePageObject from '../deploy/deployfromfile_po';
-import ReplicationControllersPageObject from '../replicationcontrollerslist/replicationcontrollers_po';
 import DeleteReplicationControllerDialogObject from '../replicationcontrollerdetail/deletereplicationcontroller_po';
+import ReplicationControllersPageObject from '../replicationcontrollerslist/replicationcontrollers_po';
+
 
 // Test assumes, that there are no replication controllers in the cluster at the beginning.
 describe('Deploy from valid file user story test', () => {

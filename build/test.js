@@ -15,15 +15,16 @@
 /**
  * @fileoverview Gulp tasks for unit and integration tests.
  */
-import codecov from 'gulp-codecov.io';
 import gulp from 'gulp';
+import codecov from 'gulp-codecov.io';
 import gulpProtractor from 'gulp-protractor';
 import karma from 'karma';
 import path from 'path';
 
-import {browserSyncInstance} from './serve';
 import conf from './conf';
 import goCommand from './gocommand';
+import {browserSyncInstance} from './serve';
+
 
 /**
  * @param {boolean} singleRun

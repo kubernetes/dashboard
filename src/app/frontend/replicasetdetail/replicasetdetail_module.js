@@ -12,12 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import componentsModule from 'common/components/components_module';
 import chromeModule from 'chrome/chrome_module';
-import eventsModule from 'events/events_module';
+import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
+import eventsModule from 'events/events_module';
+
 import stateConfig from './replicasetdetail_stateconfig';
 import {replicaSetInfoComponent} from './replicasetinfo_component';
+
 
 /**
  * Angular module for the Replica Set details view.

@@ -19,11 +19,12 @@ import browserSync from 'browser-sync';
 import browserSyncSpa from 'browser-sync-spa';
 import child from 'child_process';
 import gulp from 'gulp';
-import url from 'url';
 import path from 'path';
 import proxyMiddleware from 'proxy-middleware';
+import url from 'url';
 
 import conf from './conf';
+
 
 /**
  * Browser sync instance that serves the application.

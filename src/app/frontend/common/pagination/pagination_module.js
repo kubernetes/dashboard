@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {PaginationService} from './pagination_service';
 import namespaceModule from './../namespace/namespace_module';
+import {PaginationService} from './pagination_service';
+
 
 /**
  * Module containing validators for the application.

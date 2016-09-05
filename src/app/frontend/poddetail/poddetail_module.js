@@ -12,14 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import componentsModule from 'common/components/components_module';
 import chromeModule from 'chrome/chrome_module';
-import eventsModule from 'events/events_module';
-import configMapModule from 'configmapdetail/configmapdetail_module';
+import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
+import configMapModule from 'configmapdetail/configmapdetail_module';
+import eventsModule from 'events/events_module';
+
+import {containerInfoComponent} from './containerinfo_component';
 import stateConfig from './poddetail_stateconfig';
 import {podInfoComponent} from './podinfo_component';
-import {containerInfoComponent} from './containerinfo_component';
+
 
 /**
  * Angular module for the Replica Set details view.

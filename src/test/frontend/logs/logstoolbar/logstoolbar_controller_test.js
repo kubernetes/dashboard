@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import LogsToolbarController from 'logs/logstoolbar/logstoolbar_controller';
 import LogsModule from 'logs/logs_module';
 import {StateParams} from 'logs/logs_state';
+import LogsToolbarController from 'logs/logstoolbar/logstoolbar_controller';
 
 describe('Logs toolbar controller', () => {
 

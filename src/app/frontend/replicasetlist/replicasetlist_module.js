@@ -12,14 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './replicasetlist_stateconfig';
-import filtersModule from 'common/filters/filters_module';
 import componentsModule from 'common/components/components_module';
+import filtersModule from 'common/filters/filters_module';
 import namespaceModule from 'common/namespace/namespace_module';
+import paginationModule from 'common/pagination/pagination_module';
+import replicaSetDetailModule from 'replicasetdetail/replicasetdetail_module';
+
 import {replicaSetCardComponent} from './replicasetcard_component';
 import {replicaSetCardListComponent} from './replicasetcardlist_component';
-import replicaSetDetailModule from 'replicasetdetail/replicasetdetail_module';
-import paginationModule from 'common/pagination/pagination_module';
+import stateConfig from './replicasetlist_stateconfig';
+
 
 /**
  * Angular module for the Replica Set list view.

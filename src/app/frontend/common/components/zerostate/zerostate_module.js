@@ -12,8 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {zeroStateComponent} from './zerostate_component';
 import resourceCardModule from 'common/components/resourcecard/resourcecard_module';
+
+import {zeroStateComponent} from './zerostate_component';
+
 
 /**
  * Module containing common actionbar.

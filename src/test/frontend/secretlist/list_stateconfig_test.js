@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import secretListModule from 'secretlist/module';
 import {resolveSecretList} from 'secretlist/list_stateconfig';
+import secretListModule from 'secretlist/module';
 
 describe('StateConfig for secret list', () => {
   /** @type {!common/pagination/pagination_service.PaginationService} */

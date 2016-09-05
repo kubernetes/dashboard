@@ -12,12 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {stateName as workloads} from 'workloads/workloads_state';
+
+import DockerImageReference from '../common/docker/dockerimagereference';
+
 import showNamespaceDialog from './createnamespace_dialog';
 import showCreateSecretDialog from './createsecret_dialog';
 import DeployLabel from './deploylabel';
 import {uniqueNameValidationKey} from './uniquename_directive';
-import DockerImageReference from '../common/docker/dockerimagereference';
-import {stateName as workloads} from 'workloads/workloads_state';
+
 
 // Label keys for predefined labels
 const APP_LABEL_KEY = 'app';

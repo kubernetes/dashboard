@@ -12,14 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import componentsModule from 'common/components/components_module';
 import chromeModule from 'chrome/chrome_module';
-import eventsModule from 'events/events_module';
+import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
-import stateConfig from './nodedetail_stateconfig';
-import {nodeInfoComponent} from './nodeinfo_component';
+import eventsModule from 'events/events_module';
+
 import {nodeAllocatedResourcesComponent} from './nodeallocatedresources_component';
 import {nodeConditionsComponent} from './nodeconditions_component';
+import stateConfig from './nodedetail_stateconfig';
+import {nodeInfoComponent} from './nodeinfo_component';
+
 
 /**
  * Angular module for the Node details view.

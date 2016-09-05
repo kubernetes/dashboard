@@ -12,14 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './petsetlist_stateconfig';
-import filtersModule from 'common/filters/filters_module';
-import componentsModule from 'common/components/components_module';
-import namespaceModule from 'common/namespace/namespace_module';
 import chromeModule from 'chrome/chrome_module';
+import componentsModule from 'common/components/components_module';
+import filtersModule from 'common/filters/filters_module';
+import namespaceModule from 'common/namespace/namespace_module';
 import petSetDetailModule from 'petsetdetail/petsetdetail_module';
+
 import {petSetCardComponent} from './petsetcard_component';
 import {petSetCardListComponent} from './petsetcardlist_component';
+import stateConfig from './petsetlist_stateconfig';
+
 
 /**
  * Angular module for the Pet Set list view.

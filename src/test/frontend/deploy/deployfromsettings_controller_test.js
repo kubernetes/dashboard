@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import DeployFromSettingController from 'deploy/deployfromsettings_controller';
 import deployModule from 'deploy/deploy_module';
+import DeployFromSettingController from 'deploy/deployfromsettings_controller';
 import DeployLabel from 'deploy/deploylabel';
 import {uniqueNameValidationKey} from 'deploy/uniquename_directive';
 
