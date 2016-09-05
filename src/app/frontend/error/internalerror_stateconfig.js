@@ -13,9 +13,11 @@
 // limitations under the License.
 
 import {stateName as chromeStateName} from 'chrome/chrome_state';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 
 import {InternalErrorController} from './internalerror_controller';
 import {stateName, StateParams} from './internalerror_state';
+
 
 /**
  * Configures states for the internal error view.
@@ -30,5 +32,16 @@ export default function stateConfig($stateProvider) {
     controllerAs: 'ctrl',
     params: new StateParams(/** @type {!angular.$http.Response} */ ({})),
     templateUrl: 'error/internalerror.html',
+    data: {
+      [breadcrumbsConfig]: {
+        'label': i18n.MSG_BREADCRUMBS_INTERNALERROR_LABEL,
+      },
+    },
   });
 }
+
+
+const i18n = {
+  /** @type {string} @desc Label for internal error page for breadcrumbs on the action bar. */
+  MSG_BREADCRUMBS_INTERNALERROR_LABEL: goog.getMsg('Internal error'),
+};

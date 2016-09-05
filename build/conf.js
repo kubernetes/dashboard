@@ -208,6 +208,7 @@ export default {
     prodTmp: path.join(basePath, '.tmp/prod'),
     protractorConf: path.join(basePath, 'build/protractor.conf.js'),
     robotoFonts: path.join(basePath, 'bower_components/roboto-fontface/fonts'),
+    robotoFontsBase: path.join(basePath, 'bower_components/roboto-fontface'),
     serve: path.join(basePath, '.tmp/serve'),
     src: path.join(basePath, 'src'),
     tmp: path.join(basePath, '.tmp'),
