@@ -17,19 +17,6 @@ limitations under the License.
 <kd-content-card>
   <kd-title>{{::$ctrl.i18n.MSG_EVENTS_CARD}}</kd-title>
   <kd-content>
-    <div class="kd-replicationcontrollerevents-options" layout="row" ng-if="::$ctrl.hasEvents()">
-      <md-input-container>
-        <label>{{::$ctrl.i18n.MSG_EVENTS_TYPE_LABEL}}</label>
-        <md-select aria-label="Event Type" ng-model="$ctrl.eventType"
-                   ng-change="$ctrl.handleEventFiltering()"
-                   required>
-          <md-option ng-repeat="type in $ctrl.eventTypeFilter" ng-value="type">
-            {{type}}
-          </md-option>
-        </md-select>
-      </md-input-container>
-    </div>
-
     <kd-resource-card-list selectable="false" with-statuses="true" ng-if="$ctrl.hasEvents()">
       <kd-resource-card-header-columns>
         <kd-resource-card-header-column size="medium" grow="4">
@@ -53,7 +40,7 @@ limitations under the License.
       </kd-resource-card-header-columns>
 
       <kd-resource-card
-              dir-paginate="event in $ctrl.filteredEventList.events | itemsPerPage: default"
+              dir-paginate="event in $ctrl.eventList.events | itemsPerPage: default" total-items="::$ctrl.eventList.listMeta.totalItems"
               object-meta="event.objectMeta" type-meta="event.typeMeta" pagination-id="events">
         <kd-resource-card-status>
           <i ng-if="$ctrl.isEventWarning(event)"
@@ -83,8 +70,10 @@ limitations under the License.
         </kd-resource-card-columns>
       </kd-resource-card>
       <kd-resource-card-list-footer>
-        <kd-resource-card-list-pagination pagination-id="events" list="$ctrl.filteredEventList">
+        <kd-resource-card-list-pagination pagination-id="events" list="$ctrl.eventList"
+                                          list-resource="$ctrl.eventListResource">
         </kd-resource-card-list-pagination>
+
       </kd-resource-card-list-footer>
     </kd-resource-card-list>
 

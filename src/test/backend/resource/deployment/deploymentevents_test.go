@@ -9,6 +9,8 @@ import (
 	"k8s.io/kubernetes/pkg/apis/extensions"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
 )
 
 func TestGetDeploymentEvents(t *testing.T) {
@@ -43,7 +45,11 @@ func TestGetDeploymentEvents(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual, _ := GetDeploymentEvents(c.eventList.Items, c.namespace, c.name)
+
+		fakeClient := testclient.NewSimpleFake(c.eventList, c.deployment,
+			&api.EventList{})
+
+		actual, _ := GetDeploymentEvents(fakeClient, dataselect.NoDataSelect, c.namespace, c.name)
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetDeploymentEvents(client,%#v, %#v) == \ngot: %#v, \nexpected %#v",

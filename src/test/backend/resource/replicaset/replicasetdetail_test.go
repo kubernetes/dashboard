@@ -81,8 +81,8 @@ func TestGetReplicaSetDetail(t *testing.T) {
 			podList, serviceList, eventList)
 		fakeHeapsterClient := FakeHeapsterClient{client: testclient.NewSimpleFake()}
 
-		actual, _ := GetReplicaSetDetail(fakeClient, fakeHeapsterClient, dataselect.NoDataSelect,
-			c.namespace, c.name)
+		dataselect.DefaultDataSelectWithMetrics.MetricQuery = dataselect.NoMetrics
+		actual, _ := GetReplicaSetDetail(fakeClient, fakeHeapsterClient, c.namespace, c.name)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {

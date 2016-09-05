@@ -24,6 +24,9 @@ export class ServiceCardListController {
     /** @private {!./../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
 
+    /** @export {!angular.Resource} Initialized from binding. */
+    this.serviceListResource;
+
     /** @export */
     this.i18n = i18n;
   }

@@ -19,14 +19,18 @@ export class PetSetDetailController {
   /**
    * @param {!backendApi.PetSetDetail} petSetDetail
    * @param {!angular.Resource} kdPetSetPodsResource
+   * @param {!angular.Resource} kdPetSetEventsResource
    * @ngInject
    */
-  constructor(petSetDetail, kdPetSetPodsResource) {
+  constructor(petSetDetail, kdPetSetPodsResource, kdPetSetEventsResource) {
     /** @export {!backendApi.PetSetDetail} */
     this.petSetDetail = petSetDetail;
 
     /** @export {!angular.Resource} */
     this.petSetPodsResource = kdPetSetPodsResource;
+
+    /** @export {!angular.Resource} */
+    this.petSetEventsResource = kdPetSetEventsResource;
 
     /** @export */
     this.i18n = i18n;
@@ -41,4 +45,6 @@ const i18n = {
   /** @export {string} @desc Text for pods card zerostate in pet set details page. */
   MSG_PET_SET_DETAIL_PODS_ZEROSTATE_TEXT:
       goog.getMsg('There are currently no Pods selected by this Pet Set'),
+  /** @export {string} @desc Title for graph card displaying metrics of one pet set. */
+  MSG_PET_SET_DETAIL_GRAPH_CARD_TITLE: goog.getMsg('Resource usage history'),
 };

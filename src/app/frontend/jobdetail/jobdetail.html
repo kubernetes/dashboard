@@ -14,6 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
+<kd-graph-card title="::ctrl.i18n.MSG_JOB_DETAIL_GRAPH_CARD_TITLE"
+               metrics="::ctrl.jobDetail.podList.cumulativeMetrics">
+</kd-graph-card>
+
 <kd-job-info job="::ctrl.jobDetail"></kd-job-info>
 
 <kd-content-card>
@@ -22,7 +26,11 @@ limitations under the License.
     <kd-pod-card-list pod-list="::ctrl.jobDetail.podList" with-statuses="true"
                       pod-list-resource="::ctrl.jobPodsResource">
     </kd-pod-card-list>
+    <div class="kd-zerostate-message" layout-padding ng-hide="::ctrl.jobDetail.podList.pods.length">
+      <div class="kd-zerostate-title">{{::ctrl.i18n.MSG_NODE_DETAIL_PODS_ZEROSTATE_TITLE}}</div>
+      <div class="kd-zerostate-text">{{::ctrl.i18n.MSG_NODE_DETAIL_PODS_ZEROSTATE_TEXT}}</div>
+    </div>
   </kd-content>
 </kd-content-card>
 
-<kd-event-card-list event-list="::ctrl.jobDetail.eventList"></kd-event-card-list>
+<kd-event-card-list event-list="::ctrl.jobDetail.eventList" event-list-resource="::ctrl.eventListResource"></kd-event-card-list>

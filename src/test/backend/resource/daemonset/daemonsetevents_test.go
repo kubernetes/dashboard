@@ -24,6 +24,7 @@ import (
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 func TestGetDaemonSetEvents(t *testing.T) {
@@ -63,7 +64,7 @@ func TestGetDaemonSetEvents(t *testing.T) {
 		fakeClient := testclient.NewSimpleFake(c.eventList, c.daemonSet, c.podList,
 			&api.EventList{})
 
-		actual, _ := GetDaemonSetEvents(fakeClient, c.namespace, c.name)
+		actual, _ := GetDaemonSetEvents(fakeClient, dataselect.NoDataSelect, c.namespace, c.name)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {

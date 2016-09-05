@@ -14,6 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
+<kd-graph-card title="::ctrl.i18n.MSG_DAEMON_SET_DETAIL_GRAPH_CARD_TITLE"
+               metrics="::ctrl.daemonSetDetail.podList.cumulativeMetrics">
+</kd-graph-card>
+
 <kd-daemon-set-info daemon-set="::ctrl.daemonSetDetail"></kd-daemon-set-info>
 <kd-content-card ng-if="::ctrl.daemonSetDetail.serviceList.services.length">
   <kd-title>{{::ctrl.i18n.MSG_DAEMON_SET_DETAIL_SERVICES_TITLE}}</kd-title>
@@ -36,4 +40,4 @@ limitations under the License.
     </div>
   </kd-content>
 </kd-content-card>
-<kd-event-card-list event-list="::ctrl.daemonSetDetail.eventList"></kd-event-card-list>
+<kd-event-card-list event-list="::ctrl.daemonSetDetail.eventList" event-list-resource="::ctrl.daemonSetEventsResource"></kd-event-card-list>
