@@ -28,6 +28,17 @@
   box-shadow: $whiteframe-shadow-1dp;
 }
 
+.kd-spinner {
+  align-content: center;
+  align-items: center;
+  flex: 1;
+  justify-content: center;
+
+  >md-progress-circular {
+    margin: 0 auto;
+  }
+}
+
 body,
 .kd-app-content {
   background-color: $body;
