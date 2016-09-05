@@ -13,18 +13,20 @@
 // limitations under the License.
 
 import resourceModule from 'common/resource/resource_module';
+
 import {resourceCardComponent} from './resourcecard_component';
+import {resourceCardColumnComponent} from './resourcecardcolumn_component';
+import {resourceCardColumnsComponent} from './resourcecardcolumns_component';
+import {resourceCardDeleteMenuItemComponent} from './resourcecarddeletemenuitem_component';
+import {resourceCardEditMenuItemComponent} from './resourcecardeditmenuitem_component';
+import {resourceCardFooterComponent} from './resourcecardfooter_component';
+import {resourceCardHeaderColumnComponent} from './resourcecardheadercolumn_component';
+import {resourceCardHeaderColumnsComponent} from './resourcecardheadercolumns_component';
 import {resourceCardListComponent} from './resourcecardlist_component';
 import {resourceCardListFooterComponent} from './resourcecardlistfooter_component';
 import {resourceCardListPaginationComponent} from './resourcecardlistpagination_component';
 import {resourceCardMenuComponent} from './resourcecardmenu_component';
-import {resourceCardDeleteMenuItemComponent} from './resourcecarddeletemenuitem_component';
-import {resourceCardEditMenuItemComponent} from './resourcecardeditmenuitem_component';
-import {resourceCardColumnComponent} from './resourcecardcolumn_component';
-import {resourceCardColumnsComponent} from './resourcecardcolumns_component';
-import {resourceCardHeaderColumnComponent} from './resourcecardheadercolumn_component';
-import {resourceCardHeaderColumnsComponent} from './resourcecardheadercolumns_component';
-import {resourceCardFooterComponent} from './resourcecardfooter_component';
+
 
 /**
  * Module containing common components for resource cards. A resource card should be used

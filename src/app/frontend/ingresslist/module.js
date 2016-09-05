@@ -13,14 +13,16 @@
 // limitations under the License.
 
 import chromeModule from 'chrome/chrome_module';
-import stateConfig from './list_stateconfig';
-import paginationModule from 'common/pagination/pagination_module';
 import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
 import namespaceModule from 'common/namespace/namespace_module';
-import {ingressCardListComponent} from './cardlist_component';
-import {ingressCardComponent} from './card_component';
+import paginationModule from 'common/pagination/pagination_module';
+
 import detailModule from './../ingressdetail/module';
+import {ingressCardComponent} from './card_component';
+import {ingressCardListComponent} from './cardlist_component';
+import stateConfig from './list_stateconfig';
+
 
 /**
  * Angular module for the ingresses list view.

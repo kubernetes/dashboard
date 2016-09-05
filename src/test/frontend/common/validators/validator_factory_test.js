@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import validatorsModule from 'common/validators/validators_module';
 import {IntegerValidator} from 'common/validators/integervalidator';
+import validatorsModule from 'common/validators/validators_module';
 import {LabelKeyNameLengthValidator} from 'deploy/validators/labelkeynamelengthvalidator';
 import {LabelKeyNamePatternValidator} from 'deploy/validators/labelkeynamepatternvalidator';
 

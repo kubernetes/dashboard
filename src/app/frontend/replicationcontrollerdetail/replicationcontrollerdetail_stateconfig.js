@@ -14,13 +14,13 @@
 
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 import {stateName as replicationControllers} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 
 import {ActionBarController} from './actionbar_controller';
+import ReplicationControllerDetailController from './replicationcontrollerdetail_controller';
 import {stateName} from './replicationcontrollerdetail_state';
 
-import ReplicationControllerDetailController from './replicationcontrollerdetail_controller';
-import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 
 /**
  * Configures states for the service view.

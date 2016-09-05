@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import DeleteReplicationControllerDialogObject from '../replicationcontrollerdetail/deletereplicationcontroller_po';
 import DeployPageObject from '../deploy/deploy_po';
+import DeleteReplicationControllerDialogObject from '../replicationcontrollerdetail/deletereplicationcontroller_po';
 import ReplicationControllersPageObject from '../replicationcontrollerslist/replicationcontrollers_po';
+
 
 // Test assumes, that there are no replication controllers in the cluster at the beginning.
 // TODO(#494): Reenable this test when fixed.

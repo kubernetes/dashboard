@@ -12,11 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import appConfigModule from '../appconfig/appconfig_module';
+
 import coresFilter from './cores_filter';
 import itemsPerPageFilter from './itemsperpage_filter';
 import memoryFilter from './memory_filter';
 import relativeTimeFilter from './relativetime_filter';
-import appConfigModule from '../appconfig/appconfig_module';
+
 
 /**
  * Module containing common filters for the application.

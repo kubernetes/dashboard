@@ -12,13 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './joblist_stateconfig';
-import filtersModule from 'common/filters/filters_module';
 import componentsModule from 'common/components/components_module';
+import filtersModule from 'common/filters/filters_module';
 import namespaceModule from 'common/namespace/namespace_module';
+import jobDetailModule from 'jobdetail/jobdetail_module';
+
 import {jobCardComponent} from './jobcard_component';
 import {jobCardListComponent} from './jobcardlist_component';
-import jobDetailModule from 'jobdetail/jobdetail_module';
+import stateConfig from './joblist_stateconfig';
+
 
 /**
  * Angular module for the Job list view.

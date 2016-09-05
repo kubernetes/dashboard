@@ -12,10 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './deploymentdetail_stateconfig';
-import filtersModule from 'common/filters/filters_module';
 import componentsModule from 'common/components/components_module';
+import filtersModule from 'common/filters/filters_module';
+
+import stateConfig from './deploymentdetail_stateconfig';
 import {deploymentInfoComponent} from './deploymentinfo_component';
+
 
 /**
  * Angular module for the Deployment details view.

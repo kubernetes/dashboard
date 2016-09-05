@@ -12,13 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './persistentvolumelist_stateconfig';
-import filtersModule from 'common/filters/filters_module';
-import componentsModule from 'common/components/components_module';
 import chromeModule from 'chrome/chrome_module';
+import componentsModule from 'common/components/components_module';
+import filtersModule from 'common/filters/filters_module';
 import persistentVolumeDetailModule from 'persistentvolumedetail/persistentvolumedetail_module';
-import {persistentVolumeCardListComponent} from './persistentvolumecardlist_component';
+
 import {persistentVolumeCardComponent} from './persistentvolumecard_component';
+import {persistentVolumeCardListComponent} from './persistentvolumecardlist_component';
+import stateConfig from './persistentvolumelist_stateconfig';
+
 
 /**
  * Angular module for the Persistent Volume list view.

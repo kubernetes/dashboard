@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import module from 'common/namespace/namespace_module';
 import chromeModule from 'chrome/chrome_module';
 import {StateParams} from 'chrome/chrome_state';
+import module from 'common/namespace/namespace_module';
 
 describe('Namespace select component ', () => {
   /** @type {!angular.Scope} */

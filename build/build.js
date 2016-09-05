@@ -17,18 +17,19 @@
  */
 import del from 'del';
 import gulp from 'gulp';
-import gulpMinifyCss from 'gulp-minify-css';
 import gulpHtmlmin from 'gulp-htmlmin';
-import gulpUglify from 'gulp-uglify';
 import gulpIf from 'gulp-if';
-import gulpUseref from 'gulp-useref';
+import gulpMinifyCss from 'gulp-minify-css';
 import GulpRevAll from 'gulp-rev-all';
+import gulpUglify from 'gulp-uglify';
+import gulpUseref from 'gulp-useref';
 import mergeStream from 'merge-stream';
 import path from 'path';
 import uglifySaveLicense from 'uglify-save-license';
 
 import conf from './conf';
 import {multiDest} from './multidest';
+
 
 /**
  * Builds production package for current architecture and places it in the dist directory.

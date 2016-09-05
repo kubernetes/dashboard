@@ -12,14 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './deploymentlist_stateconfig';
-import filtersModule from 'common/filters/filters_module';
-import componentsModule from 'common/components/components_module';
-import namespaceModule from 'common/namespace/namespace_module';
 import chromeModule from 'chrome/chrome_module';
+import componentsModule from 'common/components/components_module';
+import filtersModule from 'common/filters/filters_module';
+import namespaceModule from 'common/namespace/namespace_module';
+import deploymentDetailModule from 'deploymentdetail/deploymentdetail_module';
+
 import {deploymentCardComponent} from './deploymentcard_component';
 import {deploymentCardListComponent} from './deploymentcardlist_component';
-import deploymentDetailModule from 'deploymentdetail/deploymentdetail_module';
+import stateConfig from './deploymentlist_stateconfig';
+
 
 /**
  * Angular module for the Replication Controller list view.

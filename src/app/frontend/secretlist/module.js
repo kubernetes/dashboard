@@ -13,13 +13,15 @@
 // limitations under the License.
 
 import chromeModule from 'chrome/chrome_module';
-import stateConfig from './list_stateconfig';
-import paginationModule from 'common/pagination/pagination_module';
 import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
 import namespaceModule from 'common/namespace/namespace_module';
-import {secretCardListComponent} from './cardlist_component';
+import paginationModule from 'common/pagination/pagination_module';
+
 import {secretCardComponent} from './card_component';
+import {secretCardListComponent} from './cardlist_component';
+import stateConfig from './list_stateconfig';
+
 
 /**
  * Angular module for the Secrets list view.

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import podsListModule from 'podlist/podlist_module';
 import podDetailModule from 'poddetail/poddetail_module';
+import podsListModule from 'podlist/podlist_module';
 
 describe('Pod card list controller', () => {
   /**

@@ -14,8 +14,9 @@
 
 import DeployPageObject from '../deploy/deploy_po';
 import DeleteReplicationControllerDialogObject from '../replicationcontrollerdetail/deletereplicationcontroller_po';
-import ReplicationControllersPageObject from '../replicationcontrollerslist/replicationcontrollers_po';
 import ReplicationControllerDetailPageObject from '../replicationcontrollerdetail/replicationcontrollerdetail_po';
+import ReplicationControllersPageObject from '../replicationcontrollerslist/replicationcontrollers_po';
+
 
 /**
  * This integration test will check complete user story in given order:

@@ -13,11 +13,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import stateModule from 'common/state/module';
+
 import {hamburgerComponent} from './hamburger_component';
 import {navComponent} from './nav_component';
 import {NavService} from './nav_service';
 import {navItemComponent} from './navitem_component';
-import stateModule from 'common/state/module';
+
 
 /**
  * Angular module containing navigation for the application.

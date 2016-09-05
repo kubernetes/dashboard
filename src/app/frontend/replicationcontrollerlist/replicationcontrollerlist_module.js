@@ -12,14 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './replicationcontrollerlist_stateconfig';
-import filtersModule from 'common/filters/filters_module';
 import componentsModule from 'common/components/components_module';
+import filtersModule from 'common/filters/filters_module';
 import namespaceModule from 'common/namespace/namespace_module';
-import {replicationControllerCardComponent} from './replicationcontrollercard_component';
-import {replicationControllerCardMenuComponent} from './replicationcontrollercardmenu_component';
-import {replicationControllerCardListComponent} from './replicationcontrollercardlist_component';
 import replicationControllerDetailModule from 'replicationcontrollerdetail/replicationcontrollerdetail_module';
+
+import {replicationControllerCardComponent} from './replicationcontrollercard_component';
+import {replicationControllerCardListComponent} from './replicationcontrollercardlist_component';
+import {replicationControllerCardMenuComponent} from './replicationcontrollercardmenu_component';
+import stateConfig from './replicationcontrollerlist_stateconfig';
+
 
 /**
  * Angular module for the Replication Controller list view.

@@ -12,14 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {stateName as chromeStateName} from 'chrome/chrome_state';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
+
+import {toolbarViewName} from '../chrome/chrome_state';
+
 import {LogsController} from './logs_controller';
 import {stateName} from './logs_state';
 import LogsToolbarController from './logstoolbar/logstoolbar_controller';
-import {toolbarViewName} from '../chrome/chrome_state';
 
-import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
-import {stateName as chromeStateName} from 'chrome/chrome_state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 
 /**
  * Configures states for the logs view.
