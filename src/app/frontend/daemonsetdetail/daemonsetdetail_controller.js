@@ -20,9 +20,12 @@ export class DaemonSetDetailController {
    * @param {!backendApi.DaemonSetDetail} daemonSetDetail
    * @param {!angular.Resource} kdDaemonSetPodsResource
    * @param {!angular.Resource} kdDaemonSetServicesResource
+   * @param {!angular.Resource} kdDaemonSetEventsResource
    * @ngInject
    */
-  constructor(daemonSetDetail, kdDaemonSetPodsResource, kdDaemonSetServicesResource) {
+  constructor(
+      daemonSetDetail, kdDaemonSetPodsResource, kdDaemonSetServicesResource,
+      kdDaemonSetEventsResource) {
     /** @export {!backendApi.DaemonSetDetail} */
     this.daemonSetDetail = daemonSetDetail;
 
@@ -31,6 +34,9 @@ export class DaemonSetDetailController {
 
     /** @export {!angular.Resource} */
     this.daemonSetServicesResource = kdDaemonSetServicesResource;
+
+    /** @export {!angular.Resource} */
+    this.daemonSetEventsResource = kdDaemonSetEventsResource;
 
     /** @export */
     this.i18n = i18n;

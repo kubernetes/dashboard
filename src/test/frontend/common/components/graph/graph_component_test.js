@@ -58,6 +58,10 @@ let metricsWithTooFewDataPoints = [
   },
 ];
 
+function isIE11() {
+  return /MSIE/.test(window.navigator.userAgent);
+}
+
 describe('Graph component controller', () => {
   /**
    * @type {!common/components/graph/graph_component.GraphController}
@@ -100,6 +104,10 @@ describe('Graph component controller', () => {
     expect(element.children(':first').is('svg')).toBeFalsy();
   });
   it('should render a graph with correct number of data points', () => {
+    if (isIE11()) {
+      // skip the test if IE 11
+      return;
+    }
     ctrl.$onInit();
     nv.render.queue.pop().generate();
     expect(element.find('.lines1Wrap path.nv-line').attr('d').split(',').length).toEqual(4);
@@ -107,6 +115,10 @@ describe('Graph component controller', () => {
 
   });
   it('should only render metrics with at least 2 data points', () => {
+    if (isIE11()) {
+      // skip the test if IE 11
+      return;
+    }
     ctrl.metrics = metricsWithTooFewDataPoints;
     ctrl.$onInit();
     nv.render.queue.pop().generate();

@@ -19,14 +19,18 @@ export class JobDetailController {
   /**
    * @param {!backendApi.JobDetail} jobDetail
    * @param {!angular.Resource} kdJobPodsResource
+   * @param {!angular.Resource} kdJobEventsResource
    * @ngInject
    */
-  constructor(jobDetail, kdJobPodsResource) {
+  constructor(jobDetail, kdJobPodsResource, kdJobEventsResource) {
     /** @export {!backendApi.JobDetail} */
     this.jobDetail = jobDetail;
 
     /** @export {!angular.Resource} */
     this.jobPodsResource = kdJobPodsResource;
+
+    /** @export {!angular.Resource} */
+    this.eventListResource = kdJobEventsResource;
 
     /** @export */
     this.i18n = i18n;

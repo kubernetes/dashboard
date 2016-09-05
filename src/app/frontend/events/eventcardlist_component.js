@@ -47,9 +47,7 @@ export class EventCardListController {
    * @returns {boolean}
    * @export
    */
-  hasEvents() {
-    return this.eventList !== undefined && this.eventList.events.length > 0;
-  }
+  hasEvents() { return this.eventList !== undefined && this.eventList.events.length > 0; }
 }
 
 /**
@@ -95,6 +93,4 @@ const i18n = {
   MSG_EVENTS_WARNING_LABEL: goog.getMsg('Warning'),
 };
 
-// Filter type and source values for events.
-const EVENT_ALL = i18n.MSG_EVENTS_ALL_LABEL;
 const EVENT_TYPE_WARNING = i18n.MSG_EVENTS_WARNING_LABEL;
