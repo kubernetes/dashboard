@@ -95,7 +95,7 @@ export class NamespaceSelectController {
       let newNamespace = toParams[namespaceParam];
       if (newNamespace) {
         if (this.namespacesInitialized_) {
-          if (this.namespaces.indexOf(newNamespace) >= 0) {
+          if (this.namespaces.indexOf(newNamespace) >= 0 || newNamespace === ALL_NAMESPACES) {
             this.selectedNamespace = newNamespace;
           } else {
             this.selectedNamespace = DEFAULT_NAMESPACE;
@@ -141,8 +141,9 @@ export class NamespaceSelectController {
       return resource.get().$promise.then((/** !backendApi.NamespaceList */ namespaceList) => {
         this.namespaces = namespaceList.namespaces.map((n) => n.objectMeta.name);
         this.namespacesInitialized_ = true;
-        if (this.namespaces.indexOf(this.selectedNamespace) === -1) {
-          this.selectedNamespace = ALL_NAMESPACES;
+        if (this.namespaces.indexOf(this.selectedNamespace) === -1 &&
+            this.selectedNamespace !== ALL_NAMESPACES) {
+          this.selectedNamespace = DEFAULT_NAMESPACE;
           this.changeNamespace();
         }
       });
