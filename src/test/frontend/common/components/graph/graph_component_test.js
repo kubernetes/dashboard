@@ -59,7 +59,7 @@ let metricsWithTooFewDataPoints = [
 ];
 
 function isIE11() {
-  return /MSIE/.test(window.navigator.userAgent);
+  return /Trident/.test(window.navigator.userAgent);
 }
 
 describe('Graph component controller', () => {
