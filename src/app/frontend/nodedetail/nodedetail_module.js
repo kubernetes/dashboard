@@ -43,4 +43,24 @@ export default angular
     .config(stateConfig)
     .component('kdNodeAllocatedResources', nodeAllocatedResourcesComponent)
     .component('kdNodeConditions', nodeConditionsComponent)
-    .component('kdNodeInfo', nodeInfoComponent);
+    .component('kdNodeInfo', nodeInfoComponent)
+    .factory('kdNodeEventsResource', nodeEventsResource)
+    .factory('kdNodePodsResource', nodePodsResource);
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function nodeEventsResource($resource) {
+  return $resource('api/v1/node/:name/event');
+}
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function nodePodsResource($resource) {
+  return $resource('api/v1/node/:name/pod');
+}

@@ -320,7 +320,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		channels.EventList.List <- eventList
 		channels.EventList.Error <- nil
 
-		actual, err := GetWorkloadsFromChannels(channels, nil, dataselect.NoDataSelect)
+		actual, err := GetWorkloadsFromChannels(channels, nil, dataselect.NoMetrics)
 		if !reflect.DeepEqual(actual, expected) {
 			t.Errorf("GetWorkloadsFromChannels() ==\n          %#v\nExpected: %#v", actual, expected)
 		}

@@ -7,9 +7,16 @@ export class DeploymentDetailController {
    * @param {!backendApi.DeploymentDetail} deploymentDetail
    * @ngInject
    */
-  constructor(deploymentDetail) {
+  constructor(deploymentDetail, kdDeploymentEventsResource, kdDeploymentOldReplicaSetsResource) {
     /** @export {!backendApi.DeploymentDetail} */
     this.deploymentDetail = deploymentDetail;
+
+    /** @export {!angular.Resource} */
+    this.eventListResource = kdDeploymentEventsResource;
+
+    /** @export {!angular.Resource} */
+    this.oldReplicaSetListResource = kdDeploymentOldReplicaSetsResource;
+
     /** @export {!backendApi.ReplicaSetList} */
     this.newReplicaSetList = {
       replicaSets: [this.deploymentDetail.newReplicaSet],
@@ -44,4 +51,6 @@ const i18n = {
   /** @export {string} @desc Text for old replica sets card zero-state in deployment details page. */
   MSG_DEPLOYMENT_DETAIL_OLD_REPLICAS_ZEROSTATE_TEXT:
       goog.getMsg('There are currently no old Replication Controllers on this Deployment'),
+  /** @export {string} @desc Title for graph card displaying metrics of one deployment. */
+  MSG_DEPLOYMENT_DETAIL_GRAPH_CARD_TITLE: goog.getMsg('Resource usage history'),
 };

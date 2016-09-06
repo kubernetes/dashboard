@@ -20,9 +20,12 @@ export class DaemonSetDetailController {
    * @param {!backendApi.DaemonSetDetail} daemonSetDetail
    * @param {!angular.Resource} kdDaemonSetPodsResource
    * @param {!angular.Resource} kdDaemonSetServicesResource
+   * @param {!angular.Resource} kdDaemonSetEventsResource
    * @ngInject
    */
-  constructor(daemonSetDetail, kdDaemonSetPodsResource, kdDaemonSetServicesResource) {
+  constructor(
+      daemonSetDetail, kdDaemonSetPodsResource, kdDaemonSetServicesResource,
+      kdDaemonSetEventsResource) {
     /** @export {!backendApi.DaemonSetDetail} */
     this.daemonSetDetail = daemonSetDetail;
 
@@ -31,6 +34,9 @@ export class DaemonSetDetailController {
 
     /** @export {!angular.Resource} */
     this.daemonSetServicesResource = kdDaemonSetServicesResource;
+
+    /** @export {!angular.Resource} */
+    this.daemonSetEventsResource = kdDaemonSetEventsResource;
 
     /** @export */
     this.i18n = i18n;
@@ -55,4 +61,6 @@ const i18n = {
   /** @export {string} @desc Text for pods card zerostate in daemon set details page. */
   MSG_DAEMON_SET_DETAIL_PODS_ZEROSTATE_TEXT:
       goog.getMsg('There are currently no Pods scheduled on this Daemon Set'),
+  /** @export {string} @desc Title for graph card displaying metrics of one daemon set. */
+  MSG_DAEMON_SET_DETAIL_GRAPH_CARD_TITLE: goog.getMsg('Resource usage history'),
 };

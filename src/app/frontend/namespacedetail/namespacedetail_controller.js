@@ -18,10 +18,14 @@
 export class NamespaceDetailController {
   /**
    * @param {!backendApi.NamespaceDetail} namespaceDetail
+   * @param {!angular.Resource} kdNamespaceEventsResource
    * @ngInject
    */
-  constructor(namespaceDetail) {
+  constructor(namespaceDetail, kdNamespaceEventsResource) {
     /** @export {!backendApi.NamespaceDetail} */
     this.namespaceDetail = namespaceDetail;
+
+    /** @export {!angular.Resource} */
+    this.eventListResource = kdNamespaceEventsResource;
   }
 }

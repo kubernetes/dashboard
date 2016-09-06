@@ -14,6 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
+<kd-graph-card graph-title="::ctrl.i18n.MSG_REPLICA_SET_DETAIL_GRAPH_CARD_TITLE"
+               metrics="::ctrl.replicaSetDetail.podList.cumulativeMetrics">
+</kd-graph-card>
+
 <kd-replica-set-info replica-set="::ctrl.replicaSetDetail"></kd-replica-set-info>
 
 <kd-content-card ng-if="::ctrl.replicaSetDetail.serviceList.services.length">
@@ -32,10 +36,10 @@ limitations under the License.
                       pod-list-resource="::ctrl.replicaSetPodsResource">
     </kd-pod-card-list>
     <div class="kd-zerostate-message" layout-padding ng-hide="::ctrl.replicaSetDetail.podList.pods.length">
-      <div class="kd-zerostate-title">{{::$ctrl.i18n.MSG_REPLICA_SET_DETAIL_PODS_ZEROSTATE_TITLE}}</div>
-      <div class="kd-zerostate-text">{{::$ctrl.i18n.MSG_REPLICA_SET_DETAIL_PODS_ZEROSTATE_TEXT}}</div>
+      <div class="kd-zerostate-title">{{::ctrl.i18n.MSG_REPLICA_SET_DETAIL_PODS_ZEROSTATE_TITLE}}</div>
+      <div class="kd-zerostate-text">{{::ctrl.i18n.MSG_REPLICA_SET_DETAIL_PODS_ZEROSTATE_TEXT}}</div>
     </div>
   </kd-content>
 </kd-content-card>
 
-<kd-event-card-list event-list="::ctrl.replicaSetDetail.eventList"></kd-event-card-list>
+<kd-event-card-list event-list="::ctrl.replicaSetDetail.eventList" event-list-resource="::ctrl.eventListResource"></kd-event-card-list>

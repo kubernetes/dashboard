@@ -44,7 +44,6 @@ describe('CPU usage value formatter', () => {
     expect(formatCpuUsage(140)).toEqual('0.140');
     expect(formatCpuUsage(1000)).toEqual('1.00');
     expect(formatCpuUsage(1024)).toEqual('1.02');
-    expect(formatCpuUsage(1025)).toEqual('1.02');
     expect(formatCpuUsage(7896)).toEqual('7.90');
     expect(formatCpuUsage(109809)).toEqual('110');
     expect(formatCpuUsage(768689899)).toEqual('769 k');

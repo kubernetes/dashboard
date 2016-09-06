@@ -15,19 +15,21 @@
 package deployment
 
 import (
-	"k8s.io/kubernetes/pkg/api"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
-
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+	client "k8s.io/kubernetes/pkg/client/unversioned"
+	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
+
+
+
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 )
 
-// GetDeploymentEvents returns model events for a deployment with the given name in the given
-// namespace
-func GetDeploymentEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace string, deploymentName string) (
-	*common.EventList, error) {
+// getJobPods returns list of pods targeting deployment.
+func GetDeploymentPods(client client.Interface, heapsterClient heapster.HeapsterClient,
+        dsQuery *dataselect.DataSelectQuery, namespace string, deploymentName string) (*pod.PodList, error) {
 
 	deployment, err := client.Extensions().Deployments(namespace).Get(deploymentName)
 	if err != nil {
@@ -41,20 +43,19 @@ func GetDeploymentEvents(client client.Interface, dsQuery *dataselect.DataSelect
 
 	options := api.ListOptions{LabelSelector: selector}
 	channels := &common.ResourceChannels{
-		EventList: common.GetEventListChannelWithOptions(client,
+		PodList: common.GetPodListChannelWithOptions(client,
 			common.NewSameNamespaceQuery(namespace), options, 1),
 	}
 
-	eventRaw := <-channels.EventList.List
-	if err := <-channels.EventList.Error; err != nil {
+
+	rawPods := <-channels.PodList.List
+	if err := <-channels.PodList.Error; err != nil {
 		return nil, err
 	}
-	dpEvents := eventRaw.Items
-	if !event.IsTypeFilled(dpEvents) {
-		dpEvents = event.FillEventsType(dpEvents)
-	}
 
-	eventList := event.CreateEventList(dpEvents, dsQuery)
+	pods := common.FilterNamespacedPodsBySelector(rawPods.Items, deployment.ObjectMeta.Namespace,
+		deployment.Spec.Selector.MatchLabels)
 
-	return &eventList, nil
+	podList := pod.CreatePodList(pods, dsQuery, heapsterClient)
+	return &podList, nil
 }

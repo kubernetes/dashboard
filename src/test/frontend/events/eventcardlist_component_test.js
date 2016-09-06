@@ -29,59 +29,9 @@ describe('Event Card List controller', () => {
     });
   });
 
-  it('should not filter any events if all option is selected', () => {
-    // given
-    let eventType = 'All';
-    let eventList = {
-      events: [
-        {
-          type: 'Warning',
-          message: 'event-1',
-        },
-        {
-          type: 'Normal',
-          message: 'event-2',
-        },
-      ],
-    };
-
-    // when
-    let result = ctrl.filterByType_(eventList.events, eventType);
-
-    // then
-    expect(result.length).toEqual(2);
-  });
-
-  it('should filter all non-warning events if warning option is selected', () => {
-    // given
-    let eventType = 'Warning';
-    let eventList = {
-      events: [
-        {
-          type: 'Warning',
-          message: 'event-1',
-        },
-        {
-          type: 'Normal',
-          message: 'event-2',
-        },
-        {
-          type: 'Normal',
-          message: 'event-3',
-        },
-      ],
-    };
-
-    // when
-    let result = ctrl.filterByType_(eventList.events, eventType);
-
-    // then
-    expect(result.length).toEqual(1);
-  });
-
   it('should return true when there are events to display', () => {
     // given
-    ctrl.filteredEventList = {events: ['Some event'], listMeta: {totalItems: 1}};
+    ctrl.eventList = {events: ['Some event'], listMeta: {totalItems: 1}};
 
     // when
     let result = ctrl.hasEvents();
@@ -92,67 +42,13 @@ describe('Event Card List controller', () => {
 
   it('should return false if there are no events to display', () => {
     // given
-    ctrl.filteredEventList = {events: [], listMeta: {totalItems: 0}};
+    ctrl.eventList = {events: [], listMeta: {totalItems: 0}};
 
     // when
     let result = ctrl.hasEvents();
 
     // then
     expect(result).toBeFalsy();
-  });
-
-  it('should filter events and show only warnings', () => {
-    // given
-    ctrl.eventType = 'Warning';
-    ctrl.eventList = {
-      events: [
-        {
-          type: 'Warning',
-          message: 'event-1',
-        },
-        {
-          type: 'Normal',
-          message: 'event-2',
-        },
-        {
-          type: 'Normal',
-          message: 'event-3',
-        },
-      ],
-    };
-
-    // when
-    ctrl.handleEventFiltering();
-
-    // then
-    expect(ctrl.filteredEventList.events.length).toEqual(1);
-  });
-
-  it('should not filter any events and show all', () => {
-    // given
-    ctrl.eventType = 'All';
-    ctrl.eventList = {
-      events: [
-        {
-          type: 'Warning',
-          message: 'event-1',
-        },
-        {
-          type: 'Normal',
-          message: 'event-2',
-        },
-        {
-          type: 'Normal',
-          message: 'event-3',
-        },
-      ],
-    };
-
-    // when
-    ctrl.handleEventFiltering();
-
-    // then
-    expect(ctrl.filteredEventList.events.length).toEqual(3);
   });
 
   it('should return true when warning event', () => {

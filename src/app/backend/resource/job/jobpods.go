@@ -31,7 +31,7 @@ import (
 
 // GetJobPods return list of pods targeting job.
 func GetJobPods(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	dsQuery *dataselect.DataSelectQuery, jobName, namespace string) (*pod.PodList, error) {
+	dsQuery *dataselect.DataSelectQuery, namespace string, jobName string) (*pod.PodList, error) {
 	log.Printf("Getting replication controller %s pods in namespace %s", jobName, namespace)
 
 	pods, err := getRawJobPods(client, jobName, namespace)

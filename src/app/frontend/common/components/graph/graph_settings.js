@@ -29,6 +29,23 @@ const i18n = {
   MSG_GRAPH_TIME_AXIS_LABEL: goog.getMsg('Time'),
 };
 
+/**
+ * Settings specifying total number of ticks of Y axis
+ *
+ * @type {number}
+ */
+export const TICK_NUM = 5.5;
+
+/**
+ * Settings specifying the range of position of the maximum value on Y axis (units = number of
+ * ticks).
+ * For example setting [4,5] means that maximum value of the graph should be somewhere between tick
+ * 4 and tick 5.
+ *
+ * @type {!Array<number>}
+ */
+export const MAX_BETWEEN_TICKS = [4.6, 5.4];
+
 export const CPUAxisType = 'CPUAxisType';
 export const MemoryAxisType = 'MemoryAxisType';
 export const TimeAxisType = 'TimeAxisType';

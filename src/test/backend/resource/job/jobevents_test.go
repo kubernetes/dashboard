@@ -23,6 +23,7 @@ import (
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/batch"
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 func TestGetJobEvents(t *testing.T) {
@@ -62,7 +63,7 @@ func TestGetJobEvents(t *testing.T) {
 		fakeClient := testclient.NewSimpleFake(c.eventList, c.job, c.podList,
 			&api.EventList{})
 
-		actual, _ := GetJobEvents(fakeClient, c.namespace, c.name)
+		actual, _ := GetJobEvents(fakeClient, dataselect.NoDataSelect, c.namespace, c.name)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {

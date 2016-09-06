@@ -26,7 +26,7 @@ import (
 )
 
 // GetJobEvents gets events associated to job.
-func GetJobEvents(client client.Interface, namespace, jobName string) (
+func GetJobEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace, jobName string) (
 	*common.EventList, error) {
 
 	log.Printf("Getting events related to %s job in %s namespace", jobName,
@@ -52,8 +52,7 @@ func GetJobEvents(client client.Interface, namespace, jobName string) (
 		apiEvents = event.FillEventsType(apiEvents)
 	}
 
-	// TODO support pagination
-	events := event.CreateEventList(apiEvents, dataselect.NoDataSelect)
+	events := event.CreateEventList(apiEvents, dsQuery)
 
 	log.Printf("Found %d events related to %s job in %s namespace",
 		len(events.Events), jobName, namespace)
