@@ -17,10 +17,12 @@ import {MAX_BETWEEN_TICKS, TICK_NUM} from './graph_settings';
 /**
  * @type {!Array<number>}
  */
-const DIV_PRIORITY = [1000, 500, 250, 200, 100, 50, 25, 20, 10, 5, 1];
+const DIV_PRIORITY = [1500, 1000, 500, 250, 200, 100, 50, 25, 20, 10, 5, 1];
 
 /**
- * Returns a nice looking number between a and b.
+ * Returns a nice looking number between a and b. Nice number means - has fewest number of non zero significant digits,
+ * and preferably last significant digit equal to 0, 5 or 2, in this priority order. Designed to work as long as b is no more than
+ * 2 times larger than a and checks up to 3 significant digits.
  * @param {number} a
  * @param {number} b
  * @return {number}

@@ -24,8 +24,7 @@ import ReplicationControllersPageObject from '../replicationcontrollerslist/repl
  *  - [Deploy Page] - provide data for not existing image and click deploy
  *  - [Replication Controller List Page] - wait for card status error to appear and go to
  *                                         details page
- *  - [Replication Controller Details Page] - See events table, filter by warnings and check
- *                                            results
+ *  - [Replication Controller Details Page] - See events table
  *  - [Replication Controller Details Page] - See pods table and click on Logs link near the
  *                                            existing pod
  *  - [Logs Page] - Check if pod logs show that pod is in pending state.
@@ -105,11 +104,7 @@ describe('Deploy not existing image story', () => {
     // then
     expect(browser.getCurrentUrl()).toContain(`replicationcontroller/default/${appName}`);
 
-    // Filter events by warnings
-    replicationControllerDetailPage.eventsTypeFilter.click().then(
-        () => { replicationControllerDetailPage.eventsTypeWarning.click(); });
-
-    // then
+    // Checks whether events table is displayed.
     expect(replicationControllerDetailPage.eventsTable.isDisplayed()).toBeTruthy();
 
     // Click pod log link
