@@ -100,8 +100,27 @@ describe('Namespace select component ', () => {
     scope.$digest();
     expect(ctrl.selectedNamespace).toBe('default');
 
+    state.go('fakeState', {namespace: '_all'});
+    scope.$digest();
+    expect(ctrl.selectedNamespace).toBe('_all');
+
     // Do not init twice. Nothing happens.
     ctrl.loadNamespacesIfNeeded();
+  });
+
+  it('should initialize from all namespaces', () => {
+    ctrl.$onInit();
+    state.go('fakeState', new StateParams('_all'));
+    scope.$digest();
+    expect(ctrl.selectedNamespace).toBe('_all');
+
+    ctrl.loadNamespacesIfNeeded();
+    httpBackend.whenGET('api/v1/namespace').respond({
+      namespaces: [{objectMeta: {name: 'a'}}],
+    });
+    httpBackend.flush();
+    expect(ctrl.namespaces).toEqual(['a']);
+    expect(ctrl.selectedNamespace).toBe('_all');
   });
 
   it('should format namespace', () => {
