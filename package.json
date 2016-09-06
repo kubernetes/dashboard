@@ -47,7 +47,7 @@
     "gulp-size": "~2.1.0",
     "gulp-sourcemaps": "~1.6.0",
     "gulp-uglify": "~2.0.0",
-    "gulp-useref": "~3.1.0",
+    "gulp-useref": "~3.1.2",
     "gulp-util": "~3.0.7",
     "gulp-watch": "~4.3.8",
     "html-minifier": "~3.0.2",
