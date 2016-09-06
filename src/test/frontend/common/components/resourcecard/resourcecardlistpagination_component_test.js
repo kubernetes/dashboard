@@ -170,4 +170,17 @@ describe('Resource card list pagination', () => {
     // then
     expect(errDialog.open).toHaveBeenCalledWith('Pagination error', response);
   });
+
+  it('should use object namespace first', () => {
+    let limit = 10;
+    let page = 2;
+    let queryString = `itemsPerPage=${limit}&page=${page}`;
+    paginationService.setRowsLimit(limit, paginationId);
+    ctrl.stateParams_.objectNamespace = 'foo-ns';
+    httpBackend.expectGET(`api/v1/pod/foo-ns?${queryString}`).respond(200, {});
+
+    // when
+    ctrl.pageChanged(page);
+    httpBackend.flush();
+  });
 });
