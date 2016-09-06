@@ -20,6 +20,9 @@ export class GraphCardController {
   constructor() {
     /** @export {!Array<!backendApi.Metric>} - Initialized from binding */
     this.metrics;
+
+    /** @export {string} - Initialized from binding */
+    this.graphTitle;
   }
 
   /**
@@ -43,7 +46,7 @@ export const graphCardComponent = {
   controller: GraphCardController,
   bindings: {
     'metrics': '<',
-    'title': '<',
+    'graphTitle': '<',
   },
   templateUrl: 'common/components/graph/graphcard.html',
 };
