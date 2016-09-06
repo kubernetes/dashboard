@@ -432,6 +432,7 @@ func (apiHandler *APIHandler) handleGetPetSetDetail(request *restful.Request,
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("petset")
 	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := petset.GetPetSetDetail(apiHandler.client, apiHandler.heapsterClient,
 		namespace, name, dataSelect)
 	if err != nil {
@@ -538,7 +539,10 @@ func (apiHandler *APIHandler) handleGetNodeList(request *restful.Request, respon
 // Handles get node detail API call.
 func (apiHandler *APIHandler) handleGetNodeDetail(request *restful.Request, response *restful.Response) {
 	name := request.PathParameter("name")
-	result, err := node.GetNodeDetail(apiHandler.client, apiHandler.heapsterClient, name)
+	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
+
+	result, err := node.GetNodeDetail(apiHandler.client, apiHandler.heapsterClient, dataSelect, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -692,6 +696,7 @@ func (apiHandler *APIHandler) handleGetReplicaSetDetail(
 	namespace := request.PathParameter("namespace")
 	replicaSet := request.PathParameter("replicaSet")
 	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := replicaset.GetReplicaSetDetail(apiHandler.client, apiHandler.heapsterClient,
 		dataSelect, namespace, replicaSet)
 
@@ -806,8 +811,10 @@ func (apiHandler *APIHandler) handleGetReplicationControllerDetail(
 
 	namespace := request.PathParameter("namespace")
 	replicationController := request.PathParameter("replicationController")
+	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := replicationcontroller.GetReplicationControllerDetail(apiHandler.client,
-		apiHandler.heapsterClient, namespace, replicationController)
+		apiHandler.heapsterClient, dataSelect, namespace, replicationController)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1125,6 +1132,8 @@ func (apiHandler *APIHandler) handleGetDaemonSetDetail(
 	namespace := request.PathParameter("namespace")
 	daemonSet := request.PathParameter("daemonSet")
 	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
+
 	result, err := daemonset.GetDaemonSetDetail(apiHandler.client, apiHandler.heapsterClient,
 		dataSelect, namespace, daemonSet)
 	if err != nil {
@@ -1210,6 +1219,7 @@ func (apiHandler *APIHandler) handleGetJobDetail(request *restful.Request, respo
 	namespace := request.PathParameter("namespace")
 	jobParam := request.PathParameter("job")
 	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
 
 	result, err := job.GetJobDetail(apiHandler.client, apiHandler.heapsterClient, namespace,
 		jobParam, dataSelect)

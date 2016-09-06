@@ -22,6 +22,8 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // PodDetail is a presentation layer view of Kubernetes PodDetail resource.
@@ -46,8 +48,8 @@ type PodDetail struct {
 	// List of container of this pod.
 	Containers []Container `json:"containers"`
 
-	// Pod metrics.
-	Metrics *common.PodMetrics `json:"metrics"`
+	// Metrics collected for this resource
+	Metrics []metric.Metric `json:"metrics"`
 }
 
 // Container represents a docker/rkt/etc. container that lives in a pod.
@@ -95,25 +97,27 @@ func GetPodDetail(client k8sClient.Interface, heapsterClient client.HeapsterClie
 	}
 
 	pod, err := client.Pods(namespace).Get(name)
+
 	if err != nil {
 		return nil, err
 	}
 
-	if err = <-channels.PodMetrics.Error; err != nil {
-		log.Printf("Skipping Heapster metrics because of error: %s\n", err)
-	}
-	metrics := <-channels.PodMetrics.MetricsByPod
+	// Download standard metrics. Currently metrics are hard coded, but it is possible to replace
+	// dataselect.StdMetricsDataSelect with data select provided in the request.
+	_, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells([]api.Pod{*pod}),
+		dataselect.StdMetricsDataSelect, dataselect.NoResourceCache, &heapsterClient)
+	metrics, _ := metricPromises.GetMetrics()
 
 	if err = <-channels.ConfigMapList.Error; err != nil {
 		return nil, err
 	}
 	configMapList := <-channels.ConfigMapList.List
 
-	podDetail := ToPodDetail(pod, metrics, configMapList)
+	podDetail := toPodDetail(pod, metrics, configMapList)
 	return &podDetail, nil
 }
 
-func ToPodDetail(pod *api.Pod, metrics *common.MetricsByPod, configMaps *api.ConfigMapList) PodDetail {
+func toPodDetail(pod *api.Pod, metrics []metric.Metric, configMaps *api.ConfigMapList) PodDetail {
 
 	containers := make([]Container, 0)
 	for _, container := range pod.Spec.Containers {
@@ -145,12 +149,9 @@ func ToPodDetail(pod *api.Pod, metrics *common.MetricsByPod, configMaps *api.Con
 		RestartCount: getRestartCount(*pod),
 		NodeName:     pod.Spec.NodeName,
 		Containers:   containers,
+		Metrics:      metrics,
 	}
 
-	if metrics != nil && metrics.MetricsMap[pod.Namespace] != nil {
-		metric := metrics.MetricsMap[pod.Namespace][pod.Name]
-		podDetail.Metrics = &metric
-	}
 	return podDetail
 }
 
