@@ -33,4 +33,6 @@ const i18n = {
   /** @export {string} @desc Label 'Overview', which appears on the first navigation tab on the pod
      details page. */
   MSG_POD_DETAIL_OVERVIEW_LABEL: goog.getMsg('Overview'),
+  /** @export {string} @desc Title for graph card displaying metrics of one pod. */
+  MSG_POD_DETAIL_GRAPH_CARD_TITLE: goog.getMsg('Resource usage history'),
 };

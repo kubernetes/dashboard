@@ -40,7 +40,8 @@ export default angular
         ])
     .config(stateConfig)
     .component('kdPetSetInfo', petSetInfoComponent)
-    .factory('kdPetSetPodsResource', petSetPodsResource);
+    .factory('kdPetSetPodsResource', petSetPodsResource)
+    .factory('kdPetSetEventsResource', petSetEventsResource);
 
 /**
  * @param {!angular.$resource} $resource
@@ -49,4 +50,13 @@ export default angular
  */
 function petSetPodsResource($resource) {
   return $resource('api/v1/petset/:namespace/:name/pod');
+}
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function petSetEventsResource($resource) {
+  return $resource('api/v1/petset/:namespace/:name/event');
 }

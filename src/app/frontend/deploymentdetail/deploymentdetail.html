@@ -1,3 +1,23 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-graph-card graph-title="::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_GRAPH_CARD_TITLE"
+               metrics="::ctrl.deploymentDetail.podList.cumulativeMetrics">
+</kd-graph-card>
+
 <kd-deployment-info deployment="::ctrl.deploymentDetail"></kd-deployment-info>
 
 <kd-content-card>
@@ -19,7 +39,8 @@
   <kd-content>
     <kd-replica-set-card-list
             ng-show="::ctrl.deploymentDetail.oldReplicaSetList.replicaSets.length"
-            replica-set-list="::ctrl.deploymentDetail.oldReplicaSetList">
+            replica-set-list="::ctrl.deploymentDetail.oldReplicaSetList"
+            replica-set-list-resource="::ctrl.oldReplicaSetListResource">
     </kd-replica-set-card-list>
     <div class="kd-zerostate-message" layout-padding
          ng-hide="::ctrl.deploymentDetail.oldReplicaSetList.replicaSets.length">
@@ -29,4 +50,4 @@
   </kd-content>
 </kd-content-card>
 
-<kd-event-card-list event-list="::ctrl.deploymentDetail.eventList"></kd-event-card-list>
+<kd-event-card-list event-list="::ctrl.deploymentDetail.eventList" event-list-resource="::ctrl.eventListResource"></kd-event-card-list>

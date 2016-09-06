@@ -26,25 +26,11 @@ export class EventCardListController {
      */
     this.eventList;
 
-    /** @export {!backendApi.EventList} */
-    this.filteredEventList = {events: [], listMeta: {totalItems: 0}};
-
-    /** @const @export {!Array<string>} */
-    this.eventTypeFilter = [EVENT_ALL, EVENT_TYPE_WARNING];
-
-    /** @export {string} */
-    this.eventType = EVENT_ALL;
+    /** @export {!angular.Resource} Initialized from binding. */
+    this.eventListResource;
 
     /** @export */
     this.i18n = i18n;
-  }
-
-  /**
-   * @export
-   */
-  $onInit() {
-    this.filteredEventList.listMeta = this.eventList.listMeta;
-    this.filteredEventList.events = this.eventList.events;
   }
 
   /**
@@ -61,33 +47,7 @@ export class EventCardListController {
    * @returns {boolean}
    * @export
    */
-  hasEvents() {
-    return this.filteredEventList !== undefined && this.filteredEventList.events.length > 0;
-  }
-
-  /**
-   * Handles event filtering by type and source.
-   * @export
-   */
-  handleEventFiltering() {
-    this.filteredEventList.events = this.filterByType_(this.eventList.events, this.eventType);
-  }
-
-  /**
-   * Filters events by their type.
-   * @param {!Array<!backendApi.Event>} events
-   * @param {string} type
-   * @return {!Array<!backendApi.Event>}
-   * @private
-   */
-  filterByType_(events, type) {
-    if (type === EVENT_TYPE_WARNING) {
-      return events.filter((event) => event.type === EVENT_TYPE_WARNING);
-    } else {
-      // In case of selected 'All' option.
-      return events;
-    }
-  }
+  hasEvents() { return this.eventList !== undefined && this.eventList.events.length > 0; }
 }
 
 /**
@@ -101,6 +61,8 @@ export const eventCardListComponent = {
   bindings: {
     /** {!backendApi.EventList} */
     'eventList': '<',
+    /** {!angular.Resource} */
+    'eventListResource': '<',
   },
 };
 
@@ -131,6 +93,4 @@ const i18n = {
   MSG_EVENTS_WARNING_LABEL: goog.getMsg('Warning'),
 };
 
-// Filter type and source values for events.
-const EVENT_ALL = i18n.MSG_EVENTS_ALL_LABEL;
 const EVENT_TYPE_WARNING = i18n.MSG_EVENTS_WARNING_LABEL;

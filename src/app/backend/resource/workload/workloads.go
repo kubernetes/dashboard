@@ -49,7 +49,7 @@ type Workloads struct {
 
 // GetWorkloads returns a list of all workloads in the cluster.
 func GetWorkloads(client *k8sClient.Client, heapsterClient client.HeapsterClient,
-	nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*Workloads, error) {
+	nsQuery *common.NamespaceQuery, metricQuery *dataselect.MetricQuery) (*Workloads, error) {
 
 	log.Printf("Getting lists of all workloads")
 	channels := &common.ResourceChannels{
@@ -64,13 +64,13 @@ func GetWorkloads(client *k8sClient.Client, heapsterClient client.HeapsterClient
 		EventList:                 common.GetEventListChannel(client, nsQuery, 6),
 	}
 
-	return GetWorkloadsFromChannels(channels, heapsterClient, dsQuery)
+	return GetWorkloadsFromChannels(channels, heapsterClient, metricQuery)
 }
 
 // GetWorkloadsFromChannels returns a list of all workloads in the cluster, from the
 // channel sources.
 func GetWorkloadsFromChannels(channels *common.ResourceChannels,
-	heapsterClient client.HeapsterClient, dsQuery *dataselect.DataSelectQuery) (*Workloads, error) {
+	heapsterClient client.HeapsterClient, metricQuery *dataselect.MetricQuery) (*Workloads, error) {
 
 	rsChan := make(chan *replicaset.ReplicaSetList)
 	jobChan := make(chan *job.JobList)
@@ -83,43 +83,45 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels,
 
 	go func() {
 		rcList, err := replicationcontroller.GetReplicationControllerListFromChannels(channels,
-			dsQuery, nil)
+			dataselect.DefaultDataSelect, nil)
 		errChan <- err
 		rcChan <- rcList
 	}()
 
 	go func() {
-		rsList, err := replicaset.GetReplicaSetListFromChannels(channels, dsQuery, nil)
+		rsList, err := replicaset.GetReplicaSetListFromChannels(channels, dataselect.DefaultDataSelect, nil)
 		errChan <- err
 		rsChan <- rsList
 	}()
 
 	go func() {
-		jobList, err := job.GetJobListFromChannels(channels, dsQuery, nil)
+		jobList, err := job.GetJobListFromChannels(channels, dataselect.DefaultDataSelect, nil)
 		errChan <- err
 		jobChan <- jobList
 	}()
 
 	go func() {
-		deploymentList, err := deployment.GetDeploymentListFromChannels(channels, dsQuery, nil)
+		deploymentList, err := deployment.GetDeploymentListFromChannels(channels, dataselect.DefaultDataSelect, nil)
 		errChan <- err
 		deploymentChan <- deploymentList
 	}()
 
 	go func() {
-		podList, err := pod.GetPodListFromChannels(channels, dsQuery, heapsterClient)
+		podList, err := pod.GetPodListFromChannels(channels,
+			dataselect.NewDataSelectQuery(dataselect.DefaultPagination, dataselect.NoSort, metricQuery),
+			heapsterClient)
 		errChan <- err
 		podChan <- podList
 	}()
 
 	go func() {
-		dsList, err := daemonset.GetDaemonSetListFromChannels(channels, dsQuery, nil)
+		dsList, err := daemonset.GetDaemonSetListFromChannels(channels, dataselect.DefaultDataSelect, nil)
 		errChan <- err
 		dsChan <- dsList
 	}()
 
 	go func() {
-		psList, err := petset.GetPetSetListFromChannels(channels, dsQuery, nil)
+		psList, err := petset.GetPetSetListFromChannels(channels, dataselect.DefaultDataSelect, nil)
 		errChan <- err
 		psChan <- psList
 	}()

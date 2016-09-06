@@ -58,6 +58,10 @@ let metricsWithTooFewDataPoints = [
   },
 ];
 
+function isIE11() {
+  return /MSIE/.test(window.navigator.userAgent);
+}
+
 describe('Graph component controller', () => {
   /**
    * @type {!common/components/graph/graph_component.GraphController}
@@ -100,6 +104,10 @@ describe('Graph component controller', () => {
     expect(element.children(':first').is('svg')).toBeFalsy();
   });
   it('should render a graph with correct number of data points', () => {
+    if (isIE11()) {
+      // skip the test if IE 11
+      return;
+    }
     ctrl.$onInit();
     nv.render.queue.pop().generate();
     expect(element.find('.lines1Wrap path.nv-line').attr('d').split(',').length).toEqual(4);
@@ -107,6 +115,10 @@ describe('Graph component controller', () => {
 
   });
   it('should only render metrics with at least 2 data points', () => {
+    if (isIE11()) {
+      // skip the test if IE 11
+      return;
+    }
     ctrl.metrics = metricsWithTooFewDataPoints;
     ctrl.$onInit();
     nv.render.queue.pop().generate();
@@ -119,10 +131,10 @@ describe('Graph component controller', () => {
     nv.render.queue.pop().generate();
     // y1
     expect(element.find('.nv-y1 .nv-axisMin-y > text').text()).toEqual('0');
-    expect(element.find('.nv-y1 .nv-axisMax-y > text').text()).toEqual('0.050');
+    expect(element.find('.nv-y1 .nv-axisMax-y > text').text()).toEqual('0.055');
     // y2
     expect(element.find('.nv-y2 .nv-axisMin-y > text').text()).toEqual('0');
-    expect(element.find('.nv-y2 .nv-axisMax-y > text').text()).toEqual('931 Mi');
+    expect(element.find('.nv-y2 .nv-axisMax-y > text').text()).toEqual('1.02 Gi');
   });
   it('- X axis should have correct tick format', () => {
     ctrl.$onInit();

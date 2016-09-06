@@ -24,10 +24,12 @@ export default class ReplicationControllerDetailController {
    * @param {!../common/resource/resourcedetail.StateParams} $stateParams
    * @param {!angular.Resource} kdRCPodsResource
    * @param {!angular.Resource} kdRCServicesResource
+   * @param {!angular.Resource} kdRCEventsResource
    * @ngInject
    */
   constructor(
-      replicationControllerDetail, $state, $stateParams, kdRCPodsResource, kdRCServicesResource) {
+      replicationControllerDetail, $state, $stateParams, kdRCPodsResource, kdRCServicesResource,
+      kdRCEventsResource) {
     /** @export {!backendApi.ReplicationControllerDetail} */
     this.replicationControllerDetail = replicationControllerDetail;
 
@@ -36,6 +38,9 @@ export default class ReplicationControllerDetailController {
 
     /** @export {!angular.Resource} */
     this.serviceListResource = kdRCServicesResource;
+
+    /** @export {!angular.Resource} */
+    this.eventListResource = kdRCEventsResource;
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
@@ -85,5 +90,7 @@ const i18n = {
   /** @export {string} @desc Text for pods card zerostate in replication controller details page. */
   MSG_RC_DETAIL_PODS_ZEROSTATE_TEXT:
       goog.getMsg('There are currently no Pods selected by this Replication Controller'),
+  /** @export {string} @desc Title for graph card displaying metrics of one replication controller. */
+  MSG_REPLICATION_CONTROLLER_DETAIL_GRAPH_CARD_TITLE: goog.getMsg('Resource usage history'),
 
 };

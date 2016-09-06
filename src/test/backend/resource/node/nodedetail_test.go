@@ -26,6 +26,7 @@ import (
 	"k8s.io/kubernetes/pkg/client/restclient"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 type FakeHeapsterClient struct {
@@ -84,6 +85,7 @@ func TestGetNodeDetail(t *testing.T) {
 					AllocatedPods:          0,
 					PodCapacity:            0,
 				},
+				Metrics: make([]metric.Metric, 0),
 			},
 		},
 	}
@@ -93,6 +95,7 @@ func TestGetNodeDetail(t *testing.T) {
 			podList, eventList)
 		fakeHeapsterClient := FakeHeapsterClient{client: testclient.NewSimpleFake()}
 
+		dataselect.StdMetricsDataSelect.MetricQuery = dataselect.NoMetrics
 		actual, _ := GetNodeDetail(fakeClient, fakeHeapsterClient, c.name)
 
 		if !reflect.DeepEqual(actual, c.expected) {

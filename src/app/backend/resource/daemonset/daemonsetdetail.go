@@ -56,7 +56,7 @@ type DaemonSetDetail struct {
 
 // Returns detailed information about the given daemon set in the given namespace.
 func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	dsQuery *dataselect.DataSelectQuery, namespace, name string) (*DaemonSetDetail, error) {
+        namespace, name string) (*DaemonSetDetail, error) {
 	log.Printf("Getting details of %s daemon set in %s namespace", name, namespace)
 
 	daemonSet, err := client.Extensions().DaemonSets(namespace).Get(name)
@@ -64,7 +64,7 @@ func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient client.Heapst
 		return nil, err
 	}
 
-	podList, err := GetDaemonSetPods(client, heapsterClient, dsQuery, name, namespace)
+	podList, err := GetDaemonSetPods(client, heapsterClient, dataselect.DefaultDataSelectWithMetrics, name, namespace)
 	if err != nil {
 		return nil, err
 	}
@@ -74,12 +74,12 @@ func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient client.Heapst
 		return nil, err
 	}
 
-	serviceList, err := GetDaemonSetServices(client, dsQuery, namespace, name)
+	serviceList, err := GetDaemonSetServices(client, dataselect.DefaultDataSelect, namespace, name)
 	if err != nil {
 		return nil, err
 	}
 
-	eventList, err := GetDaemonSetEvents(client, daemonSet.Namespace, daemonSet.Name)
+	eventList, err := GetDaemonSetEvents(client, dataselect.DefaultDataSelect, daemonSet.Namespace, daemonSet.Name)
 	if err != nil {
 		return nil, err
 	}

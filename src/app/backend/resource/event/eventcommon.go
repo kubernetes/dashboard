@@ -86,7 +86,7 @@ func GetPodsEvents(client client.Interface, namespace string, resourceSelector m
 }
 
 // GetNodeEvents gets events associated to node with given name.
-func GetNodeEvents(client client.Interface, nodeName string) (common.EventList, error) {
+func GetNodeEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, nodeName string) (*common.EventList, error) {
 	var eventList common.EventList
 
 	mc := client.Nodes()
@@ -94,22 +94,21 @@ func GetNodeEvents(client client.Interface, nodeName string) (common.EventList, 
 	if ref, err := api.GetReference(node); err == nil {
 		ref.UID = types.UID(ref.Name)
 		events, _ := client.Events(api.NamespaceAll).Search(ref)
-		// TODO add pagination support
-		eventList = CreateEventList(events.Items, dataselect.NoDataSelect)
+		eventList = CreateEventList(events.Items, dsQuery)
 	} else {
 		log.Print(err)
 	}
 
-	return eventList, nil
+	return &eventList, nil
 }
 
 // GetNodeEvents gets events associated to node with given name.
-func GetNamespaceEvents(client client.Interface, namespace string) (common.EventList, error) {
+func GetNamespaceEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace string) (common.EventList, error) {
 	events, _ := client.Events(namespace).List(api.ListOptions{
 		LabelSelector: labels.Everything(),
 		FieldSelector: fields.Everything(),
 	})
-	return CreateEventList(events.Items, dataselect.NoDataSelect), nil
+	return CreateEventList(events.Items, dsQuery), nil
 }
 
 // Based on event Reason fills event Type in order to allow correct filtering by Type.
