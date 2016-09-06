@@ -61,6 +61,12 @@ const i18n = {
   /** @export {string} @desc Text for pods card zerostate in daemon set details page. */
   MSG_DAEMON_SET_DETAIL_PODS_ZEROSTATE_TEXT:
       goog.getMsg('There are currently no Pods scheduled on this Daemon Set'),
+  /** @export {string} @desc Title for services card zerostate in daemon set details page. */
+  MSG_DAEMON_SET_DETAIL_SERVICES_ZEROSTATE_TITLE: goog.getMsg('There is nothing to display here'),
+  /** @export {string} @desc Text for services card zerostate in daemon set details page. */
+  MSG_DAEMON_SET_DETAIL_SERVICES_ZEROSTATE_TEXT: goog.getMsg(
+      'There are currently no Services with the same label selector ' +
+      'as this Daemon Set'),
   /** @export {string} @desc Title for graph card displaying metrics of one daemon set. */
   MSG_DAEMON_SET_DETAIL_GRAPH_CARD_TITLE: goog.getMsg('Resource usage history'),
 };
