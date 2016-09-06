@@ -154,15 +154,36 @@ export class GraphController {
         'background-color': 'white',
       });
 
+      let isUpdatingFunctionRunning = false;
+      let updateUntil = 0;
+
+      let startChartUpdatePeriod = function(updatePeriod, timeBetweenUpdates) {
+        if (isUpdatingFunctionRunning) {
+          // Don't start another updater oif updating funciton is already running
+          // just the prolong running time of currently running function to required value.
+          updateUntil = new Date().valueOf() + updatePeriod;
+          return;
+        }
+        isUpdatingFunctionRunning = true;
+        updateUntil = new Date().valueOf() + updatePeriod;
+        // update chart and call itself again if still in update period.
+        let updater = function() {
+          chart.update();
+          if (new Date() < updateUntil) {
+            setTimeout(updater, timeBetweenUpdates);
+          } else {
+            isUpdatingFunctionRunning = false;
+          }
+        };
+        setTimeout(updater, timeBetweenUpdates);
+      };
+
       // update the graph in case of graph area resize
       nv.utils.windowResize(chart.update);
       this.scope_.$watch(
           () => graphArea.node().getBoundingClientRect().width,  // variable to watch
-          () => setTimeout(chart.update, 500),  // TODO - this should be changed to just
-                                                // chart.update after we implement different method
-                                                // of left hand side nav animation (instant DOM
-                                                // change).
-          false                                 // not a deep watch
+          () => startChartUpdatePeriod(1600, 200),
+          false  // not a deep watch
           );
 
       return chart;
