@@ -14,6 +14,7 @@
 
 import {StateParams} from 'common/resource/resourcedetail';
 import {stateName as configMapState} from 'configmapdetail/configmapdetail_state';
+import {stateName as logsStateName, StateParams as LogsStateParams} from 'logs/logs_state';
 
 /**
  * @final
@@ -24,6 +25,11 @@ export default class ContainerInfoController {
    * @ngInject
    */
   constructor($state) {
+    /**
+     * Initialized from a binding
+     * @export {string}
+     */
+    this.podName;
     /**
      * Initialized from a binding.
      * @export {!Array<!backendApi.Container>}
@@ -48,6 +54,16 @@ export default class ContainerInfoController {
   getEnvConfigMapHref(configMapKeyRef) {
     return this.state_.href(configMapState, new StateParams(this.namespace, configMapKeyRef.Name));
   }
+
+  /**
+   * @param {!backendApi.Container} container
+   * @return {string}
+   * @export
+   */
+  getLogsHref(container) {
+    return this.state_.href(
+        logsStateName, new LogsStateParams(this.namespace, this.podName, container.name));
+  }
 }
 
 /**
@@ -61,6 +77,8 @@ export const containerInfoComponent = {
     'containers': '<',
     /** {string} */
     'namespace': '<',
+    /** {string} */
+    'podName': '<',
   },
 };
 
@@ -81,6 +99,8 @@ const i18n = {
   MSG_CONTAINER_DETAILS_ARGS: goog.getMsg('Args'),
   /** @export {string} @desc Label when there is no container arguments. */
   MSG_CONTAINER_DETAILS_NO_ARGS: goog.getMsg('-'),
+  /** @export {string} @desc Label for the container logs */
+  MSG_CONTAINER_DETAILS_LOGS: goog.getMsg('View logs'),
   /**
    * @param {!backendApi.ConfigMapKeyRef} configMapKeyRef
    * @return {string}

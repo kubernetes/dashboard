@@ -38,6 +38,12 @@ limitations under the License.
     <kd-info-card-entry title="{{::$ctrl.i18n.MSG_POD_DETAIL_STATUS_LABEL}}">
       {{::$ctrl.pod.podPhase}}
     </kd-info-card-entry>
+    <kd-info-card-entry>
+      <a ng-href="{{::$ctrl.getLogsHref()}}" class="kd-middle-ellipsised-link">
+        <kd-middle-ellipsis display-string="{{::$ctrl.i18n.MSG_POD_DETAIL_LOGS_LABEL}}">
+        </kd-middle-ellipsis>
+      </a>
+    </kd-info-card-entry>
   </kd-info-card-section>
 
   <kd-info-card-section name="{{::$ctrl.i18n.MSG_POD_DETAIL_NETWORK_SUBTITLE}}">
