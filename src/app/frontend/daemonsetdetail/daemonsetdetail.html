@@ -22,9 +22,14 @@ limitations under the License.
 <kd-content-card ng-if="::ctrl.daemonSetDetail.serviceList.services.length">
   <kd-title>{{::ctrl.i18n.MSG_DAEMON_SET_DETAIL_SERVICES_TITLE}}</kd-title>
   <kd-content>
-    <kd-service-card-list service-list="::ctrl.daemonSetDetail.serviceList"
+    <kd-service-card-list ng-show="::ctrl.daemonSetDetail.serviceList.services.length"
+                          service-list="::ctrl.daemonSetDetail.serviceList"
                           service-list-resource="::ctrl.daemonSetServicesResource">
     </kd-service-card-list>
+    <div class="kd-zerostate-message" layout-padding ng-hide="::ctrl.daemonSetDetail.serviceList.services.length">
+      <div class="kd-zerostate-title">{{::ctrl.i18n.MSG_DAEMON_SET_DETAIL_SERVICES_ZEROSTATE_TITLE}}</div>
+      <div class="kd-zerostate-text">{{::ctrl.i18n.MSG_DAEMON_SET_DETAIL_SERVICES_ZEROSTATE_TEXT}}</div>
+    </div>
   </kd-content>
 </kd-content-card>
 <kd-content-card>
