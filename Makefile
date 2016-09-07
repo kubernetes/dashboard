@@ -11,11 +11,12 @@ canary_tag   := gcr.io/google_containers/kubernetes-dashboard-amd64:canary
 build_image := "kubernetes-dashboard-build-image"
 gulp_cmd    := node_modules/.bin/gulp
 dir         := $(shell pwd)
-dk          := sudo docker
+dk          := docker
 dk_run      := $(dk) run \
 				-it \
 				--rm \
 				--net=host \
+				-v $(HOME)/.kube:/root/.kube \
 				-v /var/run/docker.sock:/var/run/docker.sock \
 				-v $(dir)/src:/dashboard/src \
 				-v $(dir)/vendor/:/dashboard/vendor/ \

@@ -16,6 +16,7 @@ import {stateName as adminState} from 'admin/state';
 import {stateName as configState} from 'config/state';
 import {stateName as configMapState} from 'configmaplist/configmaplist_state';
 import {stateName as daemonSetState} from 'daemonsetlist/daemonsetlist_state';
+import {stateName as releaseState} from 'releaselist/releaselist_state';
 import {stateName as deploymentState} from 'deploymentlist/deploymentlist_state';
 import {stateName as ingressState} from 'ingresslist/list_state';
 import {stateName as jobState} from 'joblist/joblist_state';
@@ -55,6 +56,7 @@ export class NavController {
       'workload': workloadState,
       'admin': adminState,
       'pod': podState,
+      'release': releaseState,
       'deployment': deploymentState,
       'replicaSet': replicaSetState,
       'replicationController': replicationControllerState,
@@ -107,6 +109,8 @@ const i18n = {
   MSG_NAV_MENU_PERSISTENT_VOLUMES: goog.getMsg('Persistent Volumes'),
   /** @export @desc Workloads menu item in the nav. */
   MSG_NAV_MENU_WORKLOADS: goog.getMsg('Workloads'),
+  /** @export @desc Releases menu item in the nav. */
+  MSG_NAV_MENU_RELEASES: goog.getMsg('Releases'),
   /** @export @desc Deployments menu item in the nav. */
   MSG_NAV_MENU_DEPLOYMENTS: goog.getMsg('Deployments'),
   /** @export @desc Replica Sets menu item in the nav. */

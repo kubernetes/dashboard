@@ -12,25 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * @final
- */
-export class ActionBarController {
-  /**
-   * @param {!backendApi.ReleaseDetail} releaseDetail
-   * @ngInject
-   */
-  constructor(releaseDetail) {
-    /** @export {!backendApi.ReleaseDetail} */
-    this.details = releaseDetail;
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'release';
 
-    /** @export */
-    this.i18n = i18n;
-  }
-}
-
-const i18n = {
-  /** @export {string} @desc Label 'Release' which will appear in the release
-      delete dialog opened from the release details page.*/
-  MSG_RELEASE_DETAILS_RELEASE_LABEL: goog.getMsg('Release'),
-};
+/** Absolute URL of the state. */
+export const stateUrl = '/release';

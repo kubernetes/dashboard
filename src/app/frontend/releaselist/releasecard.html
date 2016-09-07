@@ -14,18 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card type-meta="$ctrl.deployment.typeMeta" object-meta="$ctrl.deployment.objectMeta">
+<kd-resource-card type-meta="$ctrl.release.typeMeta" object-meta="$ctrl.release.objectMeta">
   <kd-resource-card-status layout="row">
     <md-icon class="material-icons kd-error" ng-if="::$ctrl.hasWarnings()">
       error
       <md-tooltip md-direction="right">
-        {{::$ctrl.i18n.MSG_DEPLOYMENT_LIST_PODS_ERRORS_TOOLTIP}}
+        {{::$ctrl.i18n.MSG_RELEASE_LIST_PODS_ERRORS_TOOLTIP}}
       </md-tooltip>
     </md-icon>
     <md-icon class="material-icons" ng-if="::$ctrl.isPending()">
       timelapse
       <md-tooltip md-direction="right">
-        {{::$ctrl.i18n.MSG_DEPLOYMENT_LIST_PODS_PENDING_TOOLTIP}}
+        {{::$ctrl.i18n.MSG_RELEASE_LIST_PODS_PENDING_TOOLTIP}}
       </md-tooltip>
     </md-icon>
     <md-icon class="material-icons kd-success" ng-if="::$ctrl.isSuccess()">
@@ -35,49 +35,47 @@ limitations under the License.
   <kd-resource-card-columns>
     <kd-resource-card-column>
       <div>
-        <a ng-href="{{::$ctrl.getDeploymentDetailHref()}}" style="display: block;">
-          <kd-middle-ellipsis display-string="{{$ctrl.deployment.objectMeta.name}}">
+        <a ng-href="{{::$ctrl.getReleaseDetailHref()}}" style="display: block;">
+          <kd-middle-ellipsis display-string="{{$ctrl.release.name}}">
           </kd-middle-ellipsis>
         </a>
       </div>
     </kd-resource-card-column>
     <kd-resource-card-column ng-if="$ctrl.areMultipleNamespacesSelected()">
       <div>
-        <kd-middle-ellipsis display-string="{{::$ctrl.deployment.objectMeta.namespace}}">
+        <kd-middle-ellipsis display-string="{{::$ctrl.release.namespace}}">
         </kd-middle-ellipsis>
       </div>
     </kd-resource-card-column>
     <kd-resource-card-column>
-      <kd-labels labels="::$ctrl.deployment.objectMeta.labels"></kd-labels>
+      <div>
+          <kd-middle-ellipsis display-string="{{::$ctrl.release.chart.metadata.name}}:{{::$ctrl.release.chart.metadata.version}}">
+        </kd-middle-ellipsis>
+      </div>
     </kd-resource-card-column>
     <kd-resource-card-column>
-      <span class="kd-replicase-card-pods-stat">
-        {{::$ctrl.deployment.pods.running}} /
-        {{::$ctrl.deployment.pods.desired}}
-      </span>
+      <div>
+          <kd-middle-ellipsis display-string="{{::$ctrl.getReleaseStatus()}}">
+        </kd-middle-ellipsis>
+      </div>
     </kd-resource-card-column>
     <kd-resource-card-column>
-      {{::$ctrl.deployment.objectMeta.creationTimestamp | relativeTime}}
-      <md-tooltip>
-        {{::$ctrl.getCreatedAtTooltip($ctrl.deployment.objectMeta.creationTimestamp)}}
-      </md-tooltip>
-    </kd-resource-card-column>
-    <kd-resource-card-column>
-      <div ng-repeat="image in ::$ctrl.deployment.containerImages track by $index">
-        <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
+      <div>
+          <kd-middle-ellipsis display-string="{{::$ctrl.getReleaseRelativeTime() | relativeTime}}">
+        </kd-middle-ellipsis>
       </div>
     </kd-resource-card-column>
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
       <kd-resource-card-menu>
-        <kd-resource-card-delete-menu-item resource-kind-name="{{::$ctrl.i18n.MSG_DEPLOYMENT_LIST_DEPLOYMENT_LABEL}}">
+        <kd-resource-card-delete-menu-item resource-kind-name="{{::$ctrl.i18n.MSG_RELEASE_LIST_RELEASE_LABEL}}">
         </kd-resource-card-delete-menu-item>
-        <kd-resource-card-edit-menu-item resource-kind-name="{{::$ctrl.i18n.MSG_DEPLOYMENT_LIST_DEPLOYMENT_LABEL}}">
+        <kd-resource-card-edit-menu-item resource-kind-name="{{::$ctrl.i18n.MSG_RELEASE_LIST_RELEASE_LABEL}}">
         </kd-resource-card-edit-menu-item>
       </kd-resource-card-menu>
     </kd-resource-card-column>
   </kd-resource-card-columns>
   <kd-resource-card-footer ng-if="::$ctrl.hasWarnings()">
-      <div ng-repeat="warning in ::$ctrl.deployment.pods.warnings">
+      <div ng-repeat="warning in ::$ctrl.release.pods.warnings">
         <span class="kd-error">{{::warning.message}}</span>
       </div>
   </kd-resource-card-footer>

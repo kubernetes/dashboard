@@ -13,14 +13,14 @@
 // limitations under the License.
 
 import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'deploymentdetail/deploymentdetail_state';
+import {stateName} from 'releasedetail/releasedetail_state';
 
 /**
  * Controller for the replica set card.
  *
  * @final
  */
-export default class DeploymentCardController {
+export default class ReleaseCardController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
@@ -30,9 +30,9 @@ export default class DeploymentCardController {
   constructor($state, $interpolate, kdNamespaceService) {
     /**
      * Initialized from the scope.
-     * @export {!backendApi.Deployment}
+     * @export {!backendApi.Release}
      */
-    this.deployment;
+    this.release;
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
@@ -59,10 +59,26 @@ export default class DeploymentCardController {
    * @return {string}
    * @export
    */
-  getDeploymentDetailHref() {
+  getReleaseDetailHref() {
     return this.state_.href(
         stateName,
-        new StateParams(this.deployment.objectMeta.namespace, this.deployment.objectMeta.name));
+        new StateParams(this.release.namespace, this.release.name));
+  }
+
+  /**
+   * @return {string}
+   * @export
+   */
+  getReleaseStatus() {
+    return statusCodes[this.release.info.status.code];
+  }
+
+  /**
+   * @return {string}
+   * @export
+   */
+  getReleaseRelativeTime() {
+    return (new Date()).getTime() - this.release.info.last_deployed.seconds;
   }
 
   /**
@@ -70,7 +86,8 @@ export default class DeploymentCardController {
    * @return {boolean}
    * @export
    */
-  hasWarnings() { return this.deployment.pods.warnings.length > 0; }
+  hasWarnings() { return false; }
+  // TODO: Releases
 
   /**
    * Returns true if replica set pods have no warnings and there is at least one pod
@@ -78,46 +95,52 @@ export default class DeploymentCardController {
    * @return {boolean}
    * @export
    */
-  isPending() { return !this.hasWarnings() && this.deployment.pods.pending > 0; }
+  isPending() { return false; }
+  // TODO: Releases
 
   /**
    * @return {boolean}
    * @export
    */
-  isSuccess() { return !this.isPending() && !this.hasWarnings(); }
+  isSuccess() { return true; }
+  // TODO: Releases
 
   /**
    * @export
-   * @param  {string} creationDate - creation date of the deployment
+   * @param  {string} creationDate - creation date of the release
    * @return {string} localized tooltip with the formatted creation date
    */
   getCreatedAtTooltip(creationDate) {
     let filter = this.interpolate_(`{{date | date:'short'}}`);
     /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
-     * a deployment. */
-    let MSG_DEPLOYMENT_LIST_CREATED_AT_TOOLTIP =
+     * a release. */
+    let MSG_RELEASE_LIST_CREATED_AT_TOOLTIP =
         goog.getMsg('Created at {$creationDate}', {'creationDate': filter({'date': creationDate})});
-    return MSG_DEPLOYMENT_LIST_CREATED_AT_TOOLTIP;
+    return MSG_RELEASE_LIST_CREATED_AT_TOOLTIP;
   }
 }
 
 /**
  * @return {!angular.Component}
  */
-export const deploymentCardComponent = {
+export const releaseCardComponent = {
   bindings: {
-    'deployment': '=',
+    'release': '=',
   },
-  controller: DeploymentCardController,
-  templateUrl: 'deploymentlist/deploymentcard.html',
+  controller: ReleaseCardController,
+  templateUrl: 'releaselist/releasecard.html',
+};
+
+const statusCodes = {
+    1: "DEPLOYED"
 };
 
 const i18n = {
-  /** @export {string} @desc Tooltip saying that some pods in a deployment have errors. */
-  MSG_DEPLOYMENT_LIST_PODS_ERRORS_TOOLTIP: goog.getMsg('One or more pods have errors'),
-  /** @export {string} @desc Tooltip saying that some pods in a deployment are pending. */
-  MSG_DEPLOYMENT_LIST_PODS_PENDING_TOOLTIP: goog.getMsg('One or more pods are in pending state'),
-  /** @export {string} @desc Label 'Deployment' which will appear in the deployment
-      delete dialog opened from a deployment card on the list page.*/
-  MSG_DEPLOYMENT_LIST_DEPLOYMENT_LABEL: goog.getMsg('Deployment'),
+  /** @export {string} @desc Tooltip saying that some pods in a release have errors. */
+  MSG_RELEASE_LIST_PODS_ERRORS_TOOLTIP: goog.getMsg('One or more pods have errors'),
+  /** @export {string} @desc Tooltip saying that some pods in a release are pending. */
+  MSG_RELEASE_LIST_PODS_PENDING_TOOLTIP: goog.getMsg('One or more pods are in pending state'),
+  /** @export {string} @desc Label 'Release' which will appear in the release
+      delete dialog opened from a release card on the list page.*/
+  MSG_RELEASE_LIST_RELEASE_LABEL: goog.getMsg('Release'),
 };

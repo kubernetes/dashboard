@@ -15,7 +15,7 @@
 /**
  * @final
  */
-class DeploymentCardListController {
+class ReleaseCardListController {
   /**
    * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
    * @ngInject
@@ -40,33 +40,30 @@ class DeploymentCardListController {
 /**
  * @return {!angular.Component}
  */
-export const deploymentCardListComponent = {
+export const releaseCardListComponent = {
   transclude: true,
   bindings: {
-    'deploymentList': '<',
-    'deploymentListResource': '<',
+    'releaseList': '<',
+    'releaseListResource': '<',
   },
-  templateUrl: 'deploymentlist/deploymentcardlist.html',
-  controller: DeploymentCardListController,
+  templateUrl: 'releaselist/releasecardlist.html',
+  controller: ReleaseCardListController,
 };
 
 const i18n = {
   /** @export {string} @desc Label 'Name' which appears as a column label in the table of
-      deployments (deployment list view). */
-  MSG_DEPLOYMENT_LIST_NAME_LABEL: goog.getMsg('Name'),
+      releases (release list view). */
+  MSG_RELEASE_LIST_NAME_LABEL: goog.getMsg('Name'),
   /** @export {string} @desc Label 'Namespace' which appears as a column label in the
-      table of deployments (deployment list view). */
-  MSG_DEPLOYMENT_LIST_NAMESPACE_LABEL: goog.getMsg('Namespace'),
-  /** @export {string} @desc Label 'Labels' which appears as a column label in the table of
-      deployments (deployment list view). */
-  MSG_DEPLOYMENT_LIST_LABELS_LABEL: goog.getMsg('Labels'),
-  /** @export {string} @desc Label 'Pods' which appears as a column label in the table of
-      deployments (deployment list view). */
-  MSG_DEPLOYMENT_LIST_PODS_LABEL: goog.getMsg('Pods'),
+      table of releases (release list view). */
+  MSG_RELEASE_LIST_NAMESPACE_LABEL: goog.getMsg('Namespace'),
+  /** @export {string} @desc Label 'Chart' which appears as a column label in the
+      table of releases (release list view). */
+  MSG_RELEASE_LIST_CHART_LABEL: goog.getMsg('Chart'),
+  /** @export {string} @desc Label 'Status' which appears as a column label in the
+      table of releases (release list view). */
+  MSG_RELEASE_LIST_STATUS_LABEL: goog.getMsg('Status'),
   /** @export {string} @desc Label 'Age' which appears as a column label in the
-      table of deployments (deployment list view). */
-  MSG_DEPLOYMENT_LIST_AGE_LABEL: goog.getMsg('Age'),
-  /** @export {string} @desc Label 'Images' which appears as a column label in the
-      table of deployments (deployment list view). */
-  MSG_DEPLOYMENT_LIST_IMAGES_LABEL: goog.getMsg('Images'),
+      table of releases (release list view). */
+  MSG_RELEASE_LIST_AGE_LABEL: goog.getMsg('Age'),
 };

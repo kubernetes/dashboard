@@ -14,11 +14,12 @@
 
 import chromeModule from 'chrome/chrome_module';
 import componentsModule from 'common/components/components_module';
-import filtersModule from 'common/filters/filters_module';
 import daemonSetListModule from 'daemonsetlist/daemonsetlist_module';
 import deploymentListModule from 'deploymentlist/deploymentlist_module';
+import filtersModule from 'common/filters/filters_module';
 import jobListModule from 'joblist/joblist_module';
 import petSetListModule from 'petsetlist/petsetlist_module';
+import releaseListModule from 'releaselist/releaselist_module';
 import replicaSetListModule from 'replicasetlist/replicasetlist_module';
 import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
 
@@ -42,6 +43,7 @@ export default angular
           jobListModule.name,
           replicationControllerListModule.name,
           replicaSetListModule.name,
+          releaseListModule.name,
           deploymentListModule.name,
           daemonSetListModule.name,
           petSetListModule.name,

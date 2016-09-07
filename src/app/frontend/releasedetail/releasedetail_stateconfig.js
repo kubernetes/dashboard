@@ -15,14 +15,14 @@
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
-import {stateName as deploymentList} from 'deploymentlist/deploymentlist_state';
+import {stateName as releaseList} from 'releaselist/releaselist_state';
 
 import {ActionBarController} from './actionbar_controller';
-import {DeploymentDetailController} from './deploymentdetail_controller';
-import {stateName, stateUrl} from './deploymentdetail_state';
+import {ReleaseDetailController} from './releasedetail_controller';
+import {stateName, stateUrl} from './releasedetail_state';
 
 /**
- * Configures states for the deployment detail view.
+ * Configures states for the release detail view.
  *
  * @param {!ui.router.$stateProvider} $stateProvider
  * @ngInject
@@ -32,25 +32,25 @@ export default function stateConfig($stateProvider) {
     url: appendDetailParamsToUrl(stateUrl),
     parent: chromeStateName,
     resolve: {
-      'deploymentDetailResource': getDeploymentDetailResource,
-      'deploymentDetail': getDeploymentDetail,
+      'releaseDetailResource': getReleaseDetailResource,
+      'releaseDetail': getReleaseDetail,
     },
     data: {
       [breadcrumbsConfig]: {
         'label': '{{$stateParams.objectName}}',
-        'parent': deploymentList,
+        'parent': releaseList,
       },
     },
     views: {
       '': {
-        controller: DeploymentDetailController,
+        controller: ReleaseDetailController,
         controllerAs: 'ctrl',
-        templateUrl: 'deploymentdetail/deploymentdetail.html',
+        templateUrl: 'releasedetail/releasedetail.html',
       },
       [actionbarViewName]: {
         controller: ActionBarController,
         controllerAs: '$ctrl',
-        templateUrl: 'deploymentdetail/actionbar.html',
+        templateUrl: 'releasedetail/actionbar.html',
       },
     },
   });
@@ -59,18 +59,18 @@ export default function stateConfig($stateProvider) {
 /**
  * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
- * @return {!angular.Resource<!backendApi.DeploymentDetail>}
+ * @return {!angular.Resource<!backendApi.ReleaseDetail>}
  * @ngInject
  */
-export function getDeploymentDetailResource($resource, $stateParams) {
-  return $resource(`api/v1/deployment/${$stateParams.objectNamespace}/${$stateParams.objectName}`);
+export function getReleaseDetailResource($resource, $stateParams) {
+  return $resource(`api/v1/release/${$stateParams.objectNamespace}/${$stateParams.objectName}`);
 }
 
 /**
- * @param {!angular.Resource<!backendApi.DeploymentDetail>} deploymentDetailResource
+ * @param {!angular.Resource<!backendApi.ReleaseDetail>} releaseDetailResource
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function getDeploymentDetail(deploymentDetailResource) {
-  return deploymentDetailResource.get().$promise;
+export function getReleaseDetail(releaseDetailResource) {
+  return releaseDetailResource.get().$promise;
 }

@@ -15,8 +15,8 @@
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 
-import {DeploymentListController} from './deploymentlist_controller';
-import {stateName, stateUrl} from './deploymentlist_state';
+import {ReleaseListController} from './releaselist_controller';
+import {stateName, stateUrl} from './releaselist_state';
 
 /**
  * Configures states for the service view.
@@ -29,39 +29,39 @@ export default function stateConfig($stateProvider) {
     url: stateUrl,
     parent: chromeStateName,
     resolve: {
-      'deploymentList': resolveDeploymentList,
+      'releaseList': resolveReleaseList,
     },
     data: {
       [breadcrumbsConfig]: {
-        'label': i18n.MSG_BREADCRUMBS_DEPLOYMENTS_LABEL,
+        'label': i18n.MSG_BREADCRUMBS_RELEASES_LABEL,
       },
     },
     views: {
       '': {
-        controller: DeploymentListController,
+        controller: ReleaseListController,
         controllerAs: '$ctrl',
-        templateUrl: 'deploymentlist/deploymentlist.html',
+        templateUrl: 'releaselist/releaselist.html',
       },
       [actionbarViewName]: {
-        templateUrl: 'deploymentlist/actionbar.html',
+        templateUrl: 'releaselist/actionbar.html',
       },
     },
   });
 }
 
 /**
- * @param {!angular.Resource} kdDeploymentListResource
+ * @param {!angular.Resource} kdReleaseListResource
  * @param {!./../chrome/chrome_state.StateParams} $stateParams
  * @param {!./../common/pagination/pagination_service.PaginationService} kdPaginationService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveDeploymentList(kdDeploymentListResource, $stateParams, kdPaginationService) {
+export function resolveReleaseList(kdReleaseListResource, $stateParams, kdPaginationService) {
   let query = kdPaginationService.getDefaultResourceQuery($stateParams.namespace);
-  return kdDeploymentListResource.get(query).$promise;
+  return kdReleaseListResource.get(query).$promise;
 }
 
 const i18n = {
-  /** @type {string} @desc Label 'Deployments' that appears as a breadcrumbs on the action bar. */
-  MSG_BREADCRUMBS_DEPLOYMENTS_LABEL: goog.getMsg('Deployments'),
+  /** @type {string} @desc Label 'Releases' that appears as a breadcrumbs on the action bar. */
+  MSG_BREADCRUMBS_RELEASES_LABEL: goog.getMsg('Releases'),
 };

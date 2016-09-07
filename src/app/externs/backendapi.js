@@ -137,6 +137,7 @@ backendApi.ReplicationControllerList;
 
 /**
  * @typedef {{
+ *   releaseList: !backendApi.ReleaseList,
  *   deploymentList: !backendApi.DeploymentList,
  *   replicaSetList: !backendApi.ReplicaSetList,
  *   jobList: !backendApi.JobList,
@@ -558,6 +559,32 @@ backendApi.DeploymentInfo;
  * }}
  */
 backendApi.DeploymentDetail;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   name: !string,
+ *   namespace: !string,
+ * }}
+ */
+backendApi.Release;
+
+/**
+ * @typedef {{
+ *   items: !Array<!backendApi.Release>,
+ *   listMeta: !backendApi.ListMeta,
+ * }}
+ */
+backendApi.ReleaseList;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ * }}
+ */
+backendApi.ReleaseDetail;
 
 /**
  * @typedef {{
