@@ -32,6 +32,7 @@
     "gulp-closure-compiler": "~0.4.0",
     "gulp-codecov.io": "~1.0.1",
     "gulp-concat": "~2.6.0",
+    "gulp-css-url-adjuster": "^0.2.3",
     "gulp-eslint": "~3.0.1",
     "gulp-flatten": "~0.3.0",
     "gulp-htmlmin": "~2.0.0",

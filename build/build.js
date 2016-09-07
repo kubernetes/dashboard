@@ -17,6 +17,7 @@
  */
 import del from 'del';
 import gulp from 'gulp';
+import gulpUrlAdjuster from 'gulp-css-url-adjuster';
 import gulpHtmlmin from 'gulp-htmlmin';
 import gulpIf from 'gulp-if';
 import gulpMinifyCss from 'gulp-minify-css';
@@ -199,7 +200,13 @@ function createFrontendCopies(outputDirs) {
 
   return gulp.src(path.join(conf.paths.prodTmp, '*.html'))
       .pipe(gulpUseref({searchPath: searchPath}))
-      .pipe(gulpIf('**/vendor.css', gulpMinifyCss()))
+      .pipe(gulpIf(
+          '**/vendor.css',
+          gulpMinifyCss({rebase: true, relativeTo: conf.paths.tmp, target: conf.paths.tmp})))
+      .pipe(gulpIf('**/vendor.css', gulpUrlAdjuster({
+                     // Replace invalid prefix that is added to resolved URLs.
+                     replace: ['prod/static/', ''],
+                   })))
       .pipe(gulpIf('**/vendor.js', gulpUglify({
                      preserveComments: uglifySaveLicense,
                      // Disable compression of unused vars. This speeds up minification a lot (like
@@ -276,7 +283,7 @@ function assets(outputDirs) {
  * @return {stream}
  */
 function icons(outputDirs) {
-  let localizedOutputDirs = createLocalizedOutputs(outputDirs, 'static');
+  let localizedOutputDirs = createLocalizedOutputs(outputDirs, 'static/');
   return gulp
       .src(
           path.join(conf.paths.materialIcons, '/**/*.+(woff2|woff|eot|ttf)'),
@@ -290,9 +297,8 @@ function icons(outputDirs) {
  * @return {stream}
  */
 function fonts(outputDirs) {
-  let localizedOutputDirs = createLocalizedOutputs(outputDirs, 'fonts');
-  return gulp
-      .src(path.join(conf.paths.robotoFonts, '/**/*.+(woff2)'), {base: conf.paths.robotoFonts})
+  let localizedOutputDirs = createLocalizedOutputs(outputDirs, 'static/');
+  return gulp.src(path.join(conf.paths.robotoFonts, '/**/*.*'), {base: conf.paths.robotoFontsBase})
       .pipe(multiDest(localizedOutputDirs));
 }
 
