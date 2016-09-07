@@ -56,5 +56,11 @@ limitations under the License.
         {{::$ctrl.i18n.MSG_CONTAINER_DETAILS_NO_ARGS}}
       </div>
     </kd-info-card-entry>
+    <kd-info-card-entry ng-if="::$ctrl.podName">
+          <a ng-href="{{::$ctrl.getLogsHref(container)}}" class="kd-middle-ellipsised-link">
+            <kd-middle-ellipsis display-string="{{::$ctrl.i18n.MSG_CONTAINER_DETAILS_LOGS}}">
+            </kd-middle-ellipsis>
+          </a>
+    </kd-info-card-entry>
   </kd-info-card-section>
 </kd-info-card>

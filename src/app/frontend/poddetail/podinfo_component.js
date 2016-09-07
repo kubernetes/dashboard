@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {GlobalStateParams} from 'common/resource/globalresourcedetail';
+import {stateName as logsStateName, StateParams as LogsStateParams} from 'logs/logs_state';
 import {stateName} from 'nodedetail/nodedetail_state';
 
 /**
@@ -45,6 +46,16 @@ export default class PodInfoController {
    */
   getNodeDetailsHref() {
     return this.state_.href(stateName, new GlobalStateParams(this.pod.nodeName));
+  }
+
+  /**
+   * @return {string}
+   * @export
+   */
+  getLogsHref() {
+    return this.state_.href(
+        logsStateName,
+        new LogsStateParams(this.pod.objectMeta.namespace, this.pod.objectMeta.name));
   }
 }
 
@@ -83,6 +94,9 @@ const i18n = {
   /** @export {string} @desc Label 'Status' for the pod status in details part (left) of the pod
      details view.*/
   MSG_POD_DETAIL_STATUS_LABEL: goog.getMsg('Status'),
+  /** @export {string} @desc Label for the pod logs in details part (left) of the pod
+   details view.*/
+  MSG_POD_DETAIL_LOGS_LABEL: goog.getMsg('View logs'),
   /** @export {string} @desc Subtitle 'Network' at the top of the column about network
      connectivity (right) at the pod detail view.*/
   MSG_POD_DETAIL_NETWORK_SUBTITLE: goog.getMsg('Network'),

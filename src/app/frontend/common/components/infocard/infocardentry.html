@@ -15,7 +15,9 @@ limitations under the License.
 -->
 
 <div layout="row" class="kd-info-card-entry">
-  <div flex="nogrow">{{$ctrl.title}}:</div>
+  <div ng-if="$ctrl.title" flex="nogrow">{{$ctrl.title}}:</div>
   <!-- TODO avoid using specified flex number -->
-  <div flex="auto" class="kd-info-card-entry-content" ng-transclude></div>
+  <div ng-if="$ctrl.title" flex="auto" class="kd-info-card-entry-content" ng-transclude></div>
+  <!--Use the content as title if the title is not given-->
+  <div ng-if="!$ctrl.title" flex="nogrow" ng-transclude></div>
 </div>
