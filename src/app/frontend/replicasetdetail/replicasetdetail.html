@@ -23,9 +23,14 @@ limitations under the License.
 <kd-content-card ng-if="::ctrl.replicaSetDetail.serviceList.services.length">
   <kd-title>{{::ctrl.i18n.MSG_REPLICA_SET_DETAIL_SERVICES_TITLE}}</kd-title>
   <kd-content>
-    <kd-service-card-list service-list="::ctrl.replicaSetDetail.serviceList"
+    <kd-service-card-list ng-show="::ctrl.replicaSetDetail.serviceList.services.length"
+                          service-list="::ctrl.replicaSetDetail.serviceList"
                           service-list-resource="::ctrl.replicaSetServicesResource">
     </kd-service-card-list>
+    <div class="kd-zerostate-message" layout-padding ng-hide="::ctrl.replicaSetDetail.serviceList.services.length">
+      <div class="kd-zerostate-title">{{::ctrl.i18n.MSG_REPLICA_SET_DETAIL_SERVICES_ZEROSTATE_TITLE}}</div>
+      <div class="kd-zerostate-text">{{::ctrl.i18n.MSG_REPLICA_SET_DETAIL_SERVICES_ZEROSTATE_TEXT}}</div>
+    </div>
   </kd-content>
 </kd-content-card>
 <kd-content-card>
