@@ -12,8 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'deployment';
+/**
+ * Controller for the replica set list view.
+ *
+ * @final
+ */
+export class ReleaseListController {
+  /**
+   * @param {!backendApi.ReleaseList} releaseList
+   * @param {!angular.Resource} kdReleaseListResource
+   * @ngInject
+   */
+  constructor(releaseList, kdReleaseListResource) {
+    /** @export {!backendApi.ReleaseList} */
+    this.releaseList = releaseList;
 
-/** Absolute URL of the state. */
-export const stateUrl = '/deployment';
+    /** @export {!angular.Resource} */
+    this.releaseListResource = kdReleaseListResource;
+  }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  shouldShowZeroState() { return this.releaseList.items.length === 0; }
+}

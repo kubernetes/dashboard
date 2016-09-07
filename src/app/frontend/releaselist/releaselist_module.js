@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './deploymentlist_stateconfig';
+import stateConfig from './releaselist_stateconfig';
 import filtersModule from 'common/filters/filters_module';
 import componentsModule from 'common/components/components_module';
 import namespaceModule from 'common/namespace/namespace_module';
 import chromeModule from 'chrome/chrome_module';
-import {deploymentCardComponent} from './deploymentcard_component';
-import {deploymentCardListComponent} from './deploymentcardlist_component';
-import deploymentDetailModule from 'deploymentdetail/deploymentdetail_module';
+import {releaseCardComponent} from './releasecard_component';
+import {releaseCardListComponent} from './releasecardlist_component';
+import releaseDetailModule from 'releasedetail/releasedetail_module';
 
 /**
  * Angular module for the Replication Controller list view.
@@ -28,7 +28,7 @@ import deploymentDetailModule from 'deploymentdetail/deploymentdetail_module';
  */
 export default angular
     .module(
-        'kubernetesDashboard.deploymentList',
+        'kubernetesDashboard.releaseList',
         [
           'ngMaterial',
           'ngResource',
@@ -37,18 +37,18 @@ export default angular
           componentsModule.name,
           namespaceModule.name,
           chromeModule.name,
-          deploymentDetailModule.name,
+          releaseDetailModule.name,
         ])
     .config(stateConfig)
-    .component('kdDeploymentCardList', deploymentCardListComponent)
-    .component('kdDeploymentCard', deploymentCardComponent)
-    .factory('kdDeploymentListResource', deploymentListResource);
+    .component('kdReleaseCardList', releaseCardListComponent)
+    .component('kdReleaseCard', releaseCardComponent)
+    .factory('kdReleaseListResource', releaseListResource);
 
 /**
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource}
  * @ngInject
  */
-function deploymentListResource($resource) {
-  return $resource('api/v1/deployment/:namespace');
+function releaseListResource($resource) {
+  return $resource('api/v1/release/:namespace');
 }

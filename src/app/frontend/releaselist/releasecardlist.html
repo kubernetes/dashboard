@@ -17,39 +17,36 @@ limitations under the License.
 <kd-resource-card-list selectable="false" with-statuses="true">
   <kd-resource-card-header-columns>
     <kd-resource-card-header-column grow="2">
-      {{::$ctrl.i18n.MSG_DEPLOYMENT_LIST_NAME_LABEL}}
+      {{::$ctrl.i18n.MSG_RELEASE_LIST_NAME_LABEL}}
     </kd-resource-card-header-column>
     <kd-resource-card-header-column grow="2" ng-if="$ctrl.areMultipleNamespacesSelected()">
-      {{::$ctrl.i18n.MSG_DEPLOYMENT_LIST_NAMESPACE_LABEL}}
+      {{::$ctrl.i18n.MSG_RELEASE_LIST_NAMESPACE_LABEL}}
     </kd-resource-card-header-column>
     <kd-resource-card-header-column grow="2">
-      {{::$ctrl.i18n.MSG_DEPLOYMENT_LIST_LABELS_LABEL}}
+      {{::$ctrl.i18n.MSG_RELEASE_LIST_CHART_LABEL}}
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column grow="nogrow" size="small">
-      {{::$ctrl.i18n.MSG_DEPLOYMENT_LIST_PODS_LABEL}}
+    <kd-resource-card-header-column grow="2">
+      {{::$ctrl.i18n.MSG_RELEASE_LIST_STATUS_LABEL}}
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column grow="nogrow" size="small">
-      {{::$ctrl.i18n.MSG_DEPLOYMENT_LIST_AGE_LABEL}}
-    </kd-resource-card-header-column>
-    <kd-resource-card-header-column>
-      {{::$ctrl.i18n.MSG_DEPLOYMENT_LIST_IMAGES_LABEL}}
+    <kd-resource-card-header-column grow="2">
+      {{::$ctrl.i18n.MSG_RELEASE_LIST_AGE_LABEL}}
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small" grow="nogrow">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
-  <kd-deployment-card ng-if="::$ctrl.deploymentListResource" deployment="deployment"
-                      dir-paginate="deployment in $ctrl.deploymentList.deployments | itemsPerPage: default"
-                      pagination-id="deployments"
-                      total-items="$ctrl.deploymentList.listMeta.totalItems">
-  </kd-deployment-card>
+  <kd-release-card ng-if="::$ctrl.releaseListResource" release="release"
+                      dir-paginate="release in $ctrl.releaseList.releases | itemsPerPage: default"
+                      pagination-id="releases"
+                      total-items="$ctrl.releaseList.listMeta.totalItems">
+  </kd-release-card>
 
-  <kd-deployment-card ng-if="::!$ctrl.deploymentListResource" deployment="deployment"
-                      dir-paginate="deployment in $ctrl.deploymentList.deployments | itemsPerPage: default"
-                      pagination-id="deployments">
-  </kd-deployment-card>
+  <kd-release-card ng-if="::!$ctrl.releaseListResource" release="release"
+                      dir-paginate="release in $ctrl.releaseList.releases | itemsPerPage: default"
+                      pagination-id="releases">
+  </kd-release-card>
   <kd-resource-card-list-footer>
-    <kd-resource-card-list-pagination pagination-id="deployments" list="$ctrl.deploymentList"
-                                      list-resource="::$ctrl.deploymentListResource">
+    <kd-resource-card-list-pagination pagination-id="releases" list="$ctrl.releaseList"
+                                      list-resource="::$ctrl.releaseListResource">
     </kd-resource-card-list-pagination>
   </kd-resource-card-list-footer>
 </kd-resource-card-list>

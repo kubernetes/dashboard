@@ -23,6 +23,7 @@ import configMapDetailModule from './configmapdetail/configmapdetail_module';
 import configMapListModule from './configmaplist/configmaplist_module';
 import deployModule from './deploy/deploy_module';
 import deploymentListModule from './deploymentlist/deploymentlist_module';
+import releaseListModule from './releaselist/releaselist_module';
 import errorModule from './error/error_module';
 import indexConfig from './index_config';
 import routeConfig from './index_route';
@@ -76,6 +77,7 @@ export default angular
           namespaceListModule.name,
           nodeListModule.name,
           deploymentListModule.name,
+          releaseListModule.name,
           workloadsModule.name,
           adminModule.name,
           serviceDetailModule.name,

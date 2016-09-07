@@ -26,6 +26,19 @@ limitations under the License.
 </div>
 
 <div ng-if="!$ctrl.shouldShowZeroState()">
+  <kd-content-card ng-if=$ctrl.workloads.releaseList.releases.length>
+    <kd-title>
+      <a ui-sref="release">
+        {{::$ctrl.i18n.MSG_WORKLOADS_RELEASES_LABEL}}
+      </a>
+    </kd-title>
+    <kd-content>
+      <kd-release-card-list release-list="$ctrl.workloads.releaseList"
+                               release-list-resource="$ctrl.releaseListResource">
+      </kd-release-card-list>
+    </kd-content>
+  </kd-content-card>
+
   <kd-content-card ng-if="$ctrl.workloads.daemonSetList.daemonSets.length">
     <kd-title>
       <a ui-sref="daemonset">

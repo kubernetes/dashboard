@@ -12,19 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './deploymentdetail_stateconfig';
+import stateConfig from './releasedetail_stateconfig';
 import filtersModule from 'common/filters/filters_module';
 import componentsModule from 'common/components/components_module';
-import {deploymentInfoComponent} from './deploymentinfo_component';
+import {releaseInfoComponent} from './releaseinfo_component';
 
 /**
- * Angular module for the Deployment details view.
+ * Angular module for the Release details view.
  *
- * The view shows detailed view of a Deployment.
+ * The view shows detailed view of a Release.
  */
 export default angular
     .module(
-        'kubernetesDashboard.deploymentdetail',
+        'kubernetesDashboard.releasedetail',
         [
           'ngMaterial',
           'ngResource',
@@ -33,4 +33,4 @@ export default angular
           filtersModule.name,
         ])
     .config(stateConfig)
-    .component('kdDeploymentInfo', deploymentInfoComponent);
+    .component('kdReleaseInfo', releaseInfoComponent);

@@ -1,0 +1,32 @@
+<kd-release-info release="::ctrl.releaseDetail"></kd-release-info>
+
+<kd-content-card>
+  <kd-title>{{::ctrl.i18n.MSG_RELEASE_DETAIL_NEW_REPLICAS_TITLE}}</kd-title>
+  <kd-content>
+    <kd-replica-set-card-list ng-show="::ctrl.releaseDetail.newReplicaSet.objectMeta.name"
+            replica-set-list="::ctrl.newReplicaSetList">
+    </kd-replica-set-card-list>
+    <div class="kd-zerostate-message" layout-padding
+         ng-hide="::ctrl.releaseDetail.newReplicaSet.objectMeta.name">
+      <div class="kd-zerostate-title">{{::ctrl.i18n.MSG_RELEASE_DETAIL_NEW_REPLICAS_ZEROSTATE_TITLE}}</div>
+      <div class="kd-zerostate-text">{{::ctrl.i18n.MSG_RELEASE_DETAIL_NEW_REPLICAS_ZEROSTATE_TEXT}}</div>
+    </div>
+  </kd-content>
+</kd-content-card>
+
+<kd-content-card>
+  <kd-title>{{::ctrl.i18n.MSG_RELEASE_DETAIL_OLD_REPLICAS_TITLE}}</kd-title>
+  <kd-content>
+    <kd-replica-set-card-list
+            ng-show="::ctrl.releaseDetail.oldReplicaSetList.replicaSets.length"
+            replica-set-list="::ctrl.releaseDetail.oldReplicaSetList">
+    </kd-replica-set-card-list>
+    <div class="kd-zerostate-message" layout-padding
+         ng-hide="::ctrl.releaseDetail.oldReplicaSetList.replicaSets.length">
+      <div class="kd-zerostate-title">{{::ctrl.i18n.MSG_RELEASE_DETAIL_OLD_REPLICAS_ZEROSTATE_TITLE}}</div>
+      <div class="kd-zerostate-text">{{::ctrl.i18n.MSG_RELEASE_DETAIL_OLD_REPLICAS_ZEROSTATE_TEXT}}</div>
+    </div>
+  </kd-content>
+</kd-content-card>
+
+<kd-event-card-list event-list="::ctrl.releaseDetail.eventList"></kd-event-card-list>

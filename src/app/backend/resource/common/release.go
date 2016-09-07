@@ -12,8 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'deploymentdetail';
+package common
 
-/** Absolute URL of the state. */
-export const stateUrl = '/deployment';
+import (
+	"k8s.io/helm/pkg/proto/hapi/release"
+)
+
+type ReleaseList struct {
+	// Items is the list of deployments.
+	Items []*release.Release `json:"items"`
+}
