@@ -207,6 +207,10 @@ function createFrontendCopies(outputDirs) {
                      // Replace invalid prefix that is added to resolved URLs.
                      replace: ['prod/static/', ''],
                    })))
+      .pipe(gulpIf('**/vendor.css', gulpUrlAdjuster({
+                     // Replace invalid prefix that is added to resolved URLs.
+                     replace: ['prod/', ''],
+                   })))
       .pipe(gulpIf('**/vendor.js', gulpUglify({
                      preserveComments: uglifySaveLicense,
                      // Disable compression of unused vars. This speeds up minification a lot (like
@@ -298,8 +302,17 @@ function icons(outputDirs) {
  */
 function fonts(outputDirs) {
   let localizedOutputDirs = createLocalizedOutputs(outputDirs, 'static/');
-  return gulp.src(path.join(conf.paths.robotoFonts, '/**/*.*'), {base: conf.paths.robotoFontsBase})
-      .pipe(multiDest(localizedOutputDirs));
+
+  let roboto =
+      gulp.src(path.join(conf.paths.robotoFonts, '/**/*.*'), {base: conf.paths.robotoFontsBase})
+          .pipe(multiDest(localizedOutputDirs));
+
+  let robotoMono = gulp.src(
+                           path.join(conf.paths.robotoMonoFonts, '/**/*.*'),
+                           {base: conf.paths.robotoMonoFontsBase})
+                       .pipe(multiDest(localizedOutputDirs));
+
+  return mergeStream.apply(null, [roboto, robotoMono]);
 }
 
 /**

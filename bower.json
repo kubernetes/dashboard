@@ -5,7 +5,7 @@
     "angular": "~1.5.7",
     "angular-animate": "~1.5.7",
     "angular-aria": "~1.5.7",
-    "angular-material": "~1.0.9",
+    "angular-material": "~1.1.0",
     "angular-messages": "~1.5.7",
     "angular-ui-router": "~0.3.1",
     "angular-resource": "~1.5.7",
@@ -16,7 +16,8 @@
     "material-design-icons": "~2.2.3",
     "roboto-fontface": "0.5.0",
     "ng-jsoneditor": "angular-tools/ng-jsoneditor#~1.0.0",
-    "angularUtils-pagination": "angular-utils-pagination#~0.11.1"
+    "angularUtils-pagination": "angular-utils-pagination#~0.11.1",
+    "easyfont-roboto-mono": "easyfont/roboto-mono#fa7971ea56f68bfdb2771f9cb560c99aca0164c1"
   },
   "overrides": {
     "material-design-icons": {
@@ -24,6 +25,9 @@
     },
     "roboto-fontface": {
       "main": "css/roboto/roboto-fontface.css"
+    },
+    "easyfont-roboto-mono": {
+      "main": "css/roboto-mono.css"
     },
     "google-closure-library": {
       "main": [

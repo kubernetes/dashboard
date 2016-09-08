@@ -33,6 +33,7 @@
   align-items: center;
   flex: 1;
   justify-content: center;
+  padding-top: 2.5 * $baseline-grid;
 
   >md-progress-circular {
     margin: 0 auto;
@@ -50,7 +51,7 @@ a {
 }
 
 .kd-logo-menu {
-  width: $nav-width - 5.5 * $baseline-grid;
+  width: $nav-width - 6 * $baseline-grid;
 }
 
 .kd-success {
@@ -63,16 +64,12 @@ a {
 
 .kd-toolbar-tools {
   margin: auto;
-  padding-left: 0;
+  padding-left: $baseline-grid;
 }
 
 .kd-app-content {
   background-color: $body;
   position: relative;
-}
-
-.kd-chrome-content-container {
-  width: 100%;
 }
 
 .kd-text-icon {
@@ -101,7 +98,8 @@ a {
 * {
   &::-webkit-scrollbar {
     background: transparent;
-    width: 8px;
+    height: $baseline-grid;
+    width: $baseline-grid;
   }
 
   &::-webkit-scrollbar-thumb {

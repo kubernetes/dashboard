@@ -19,13 +19,14 @@ kd-nav-item {
 }
 
 .kd-nav-item-button {
-  border-radius: 0;
+  border-radius: 2px;
   display: block;
   font-weight: $regular-font-weight;
   line-height: 5 * $baseline-grid;
   margin: 0;
   max-height: 5 * $baseline-grid;
   padding: 0;
+  padding-left: 1.5 * $baseline-grid;
   text-align: left;
   text-transform: none;
   white-space: nowrap;
@@ -42,17 +43,19 @@ kd-nav-item {
 }
 
 .kd-nav-item {
+  margin-left: 3 * $baseline-grid;
+
   >.kd-nav-item-button {
     line-height: 4 * $baseline-grid;
     max-height: 4 * $baseline-grid;
     min-height: 4 * $baseline-grid;
-    padding-left: 3 * $baseline-grid;
   }
 }
 
 .kd-nav-group-item {
+  margin-left: 1.5 * $baseline-grid;
+
   >.kd-nav-item-button {
     font-weight: $bold-font-weight;
-    padding-left: 2 * $baseline-grid;
   }
 }

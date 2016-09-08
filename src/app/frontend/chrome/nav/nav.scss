@@ -30,11 +30,7 @@
     }
   }
 
-  // Next two rules are to only show the scrollbar on hover, but always enable scrolling.
-  &:hover {
-    overflow-y: scroll;
-  }
-
+  // Next rule is to only show the scrollbar on hover, but always enable scrolling.
   &:not(:hover) {
     &::-webkit-scrollbar-thumb {
       background-color: transparent;
@@ -49,5 +45,6 @@
 .kd-nav-group-divider {
   border-top: 1px solid $border;
   margin-bottom: 2 * $baseline-grid;
+  margin-right: 1 * $baseline-grid;
   margin-top: $baseline-grid;
 }

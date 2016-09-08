@@ -33,8 +33,9 @@ describe('Chrome controller', () => {
     });
   });
 
-  it('should show and hide spinner on change events', () => {
+  it('should show and hide spinner on change events', angular.mock.inject(($timeout) => {
     // initial state assert
+    expect(ctrl.loading).toBe(true);
     expect(ctrl.showLoadingSpinner).toBe(true);
 
     // when
@@ -42,6 +43,7 @@ describe('Chrome controller', () => {
     scope.$apply();
 
     // then
+    expect(ctrl.loading).toBe(false);
     expect(ctrl.showLoadingSpinner).toBe(false);
 
     // when
@@ -49,6 +51,9 @@ describe('Chrome controller', () => {
     scope.$apply();
 
     // then
+    expect(ctrl.loading).toBe(true);
+    expect(ctrl.showLoadingSpinner).toBe(false);
+    $timeout.flush();
     expect(ctrl.showLoadingSpinner).toBe(true);
 
     // when
@@ -56,8 +61,9 @@ describe('Chrome controller', () => {
     scope.$apply();
 
     // then
+    expect(ctrl.loading).toBe(false);
     expect(ctrl.showLoadingSpinner).toBe(false);
-  });
+  }));
 
   it('should show and hide toolbar based on view state', () => {
     // Initially no action bar;

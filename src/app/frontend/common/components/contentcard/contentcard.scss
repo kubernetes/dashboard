@@ -19,9 +19,12 @@
   box-shadow: $whiteframe-shadow-1dp;
 }
 
-.kd-content-card {
-  padding: $baseline-grid;
+kd-content-card {
+  display: block;
+  margin: 2.5 * $baseline-grid;
+}
 
+.kd-content-card {
   kd-content {
     &.kd-content-padded {
       display: block;
