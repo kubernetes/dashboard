@@ -30,7 +30,7 @@ export default function stateConfig($stateProvider) {
     controller: InternalErrorController,
     parent: chromeStateName,
     controllerAs: 'ctrl',
-    params: new StateParams(/** @type {!angular.$http.Response} */ ({})),
+    params: new StateParams(/** @type {!angular.$http.Response} */ ({}), ''),
     templateUrl: 'error/internalerror.html',
     data: {
       [breadcrumbsConfig]: {
