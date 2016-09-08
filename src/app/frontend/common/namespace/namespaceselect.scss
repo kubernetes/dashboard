@@ -16,7 +16,7 @@
 
 kd-namespace-select {
   display: block;
-  padding-left: 2 * $baseline-grid;
+  padding-left: 3 * $baseline-grid;
 
   .kd-namespace-select-title {
     color: $foreground-2;
@@ -25,6 +25,7 @@ kd-namespace-select {
 }
 
 .kd-namespace-select-input-container {
+  font-family: $font-family-monospace;
   margin: $baseline-grid 0;
 }
 

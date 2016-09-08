@@ -16,38 +16,41 @@ limitations under the License.
 
 <md-sidenav md-is-locked-open="$ctrl.isVisible" class="kd-nav">
   <div class="kd-nav-group">
-    <kd-nav-item class="kd-nav-group-item">Admin</kd-nav-item>
-    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.namespace}}">Namespaces</kd-nav-item>
-    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.node}}">Nodes</kd-nav-item>
-    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.persistentVolume}}">Persistent Volumes</kd-nav-item>
+    <kd-nav-item class="kd-nav-group-item">{{::$ctrl.i18n.MSG_NAV_MENU_ADMIN}}</kd-nav-item>
+    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.namespace}}">{{::$ctrl.i18n.MSG_NAV_MENU_NAMESPACES}}</kd-nav-item>
+    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.node}}">{{::$ctrl.i18n.MSG_NAV_MENU_NODES}}</kd-nav-item>
+    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.persistentVolume}}">{{::$ctrl.i18n.MSG_NAV_MENU_PERSISTENT_VOLUMES}}</kd-nav-item>
   </div>
   <div class="kd-nav-group-divider"></div>
   <kd-namespace-select></kd-namespace-select>
+  <!--
+  TODO(bryk): Uncomment when this is implemented.
   <div class="kd-nav-group">
     <kd-nav-item class="kd-nav-group-item" state="{{::$ctrl.states.overview}}">Overview</kd-nav-item>
   </div>
+  -->
   <div class="kd-nav-group">
-    <kd-nav-item class="kd-nav-group-item" state="{{::$ctrl.states.workload}}">Workloads</kd-nav-item>
-    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.deployment}}">Deployments</kd-nav-item>
-    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.replicaSet}}">Replica Sets</kd-nav-item>
-    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.replicationController}}">Replication Controllers</kd-nav-item>
-    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.daemonSet}}">Daemon Sets</kd-nav-item>
-    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.petSet}}">Pet Sets</kd-nav-item>
-    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.job}}">Jobs</kd-nav-item>
-    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.pod}}">Pods</kd-nav-item>
+    <kd-nav-item class="kd-nav-group-item" state="{{::$ctrl.states.workload}}">{{::$ctrl.i18n.MSG_NAV_MENU_WORKLOADS}}</kd-nav-item>
+    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.deployment}}">{{::$ctrl.i18n.MSG_NAV_MENU_DEPLOYMENTS}}</kd-nav-item>
+    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.replicaSet}}">{{::$ctrl.i18n.MSG_NAV_MENU_REPLICA_SETS}}</kd-nav-item>
+    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.replicationController}}">{{::$ctrl.i18n.MSG_NAV_MENU_REPLICATION_CONTROLLERS}}</kd-nav-item>
+    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.daemonSet}}">{{::$ctrl.i18n.MSG_NAV_MENU_DAEMON_SETS}}</kd-nav-item>
+    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.petSet}}">{{::$ctrl.i18n.MSG_NAV_MENU_PET_SETS}}</kd-nav-item>
+    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.job}}">{{::$ctrl.i18n.MSG_NAV_MENU_JOBS}}</kd-nav-item>
+    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.pod}}">{{::$ctrl.i18n.MSG_NAV_MENU_PODS}}</kd-nav-item>
   </div>
   <div class="kd-nav-group">
-    <kd-nav-item class="kd-nav-group-item" state="{{::$ctrl.states.serviceDiscovery}}">Services and discovery</kd-nav-item>
-    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.service}}">Services</kd-nav-item>
-    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.ingress}}">Ingress</kd-nav-item>
+    <kd-nav-item class="kd-nav-group-item" state="{{::$ctrl.states.serviceDiscovery}}">{{::$ctrl.i18n.MSG_NAV_MENU_SERVICES_DISCOVERY}}</kd-nav-item>
+    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.service}}">{{::$ctrl.i18n.MSG_NAV_MENU_SERVICES}}</kd-nav-item>
+    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.ingress}}">{{::$ctrl.i18n.MSG_NAV_MENU_INGRESS}}</kd-nav-item>
   </div>
   <div class="kd-nav-group">
-    <kd-nav-item class="kd-nav-group-item" state="{{::$ctrl.states.strage}}">Storage</kd-nav-item>
-    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.persistentVolumeClaim}}">Persistent Volume Claims</kd-nav-item>
+    <kd-nav-item class="kd-nav-group-item" state="{{::$ctrl.states.strage}}">{{::$ctrl.i18n.MSG_NAV_MENU_STORAGE}}</kd-nav-item>
+    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.persistentVolumeClaim}}">{{::$ctrl.i18n.MSG_NAV_MENU_PVCS}}</kd-nav-item>
   </div>
   <div class="kd-nav-group">
-    <kd-nav-item class="kd-nav-group-item" state="{{::$ctrl.states.config}}">Config</kd-nav-item>
-    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.secret}}">Secrets</kd-nav-item>
-    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.configMap}}">Config Maps</kd-nav-item>
+    <kd-nav-item class="kd-nav-group-item" state="{{::$ctrl.states.config}}">{{::$ctrl.i18n.MSG_NAV_MENU_CONFIG}}</kd-nav-item>
+    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.secret}}">{{::$ctrl.i18n.MSG_NAV_MENU_SECRETS}}</kd-nav-item>
+    <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.configMap}}">{{::$ctrl.i18n.MSG_NAV_MENU_CONFIG_MAPS}}</kd-nav-item>
   </div>
 </md-sidenav>
