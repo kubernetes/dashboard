@@ -42,7 +42,7 @@ function errorConfig($rootScope, $state) {
   let deregistrationHandler = $rootScope.$on(
       '$stateChangeError', (event, toState, toParams, fromState, fromParams, error) => {
         if (toState.name !== stateName) {
-          $state.go(stateName, new StateParams(error));
+          $state.go(stateName, new StateParams(error, toParams.namespace));
         }
       });
 

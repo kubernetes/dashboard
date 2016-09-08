@@ -17,18 +17,21 @@ import errorModule from 'error/error_module';
 describe('Error module', () => {
   beforeEach(angular.mock.module(errorModule.name));
 
-  it('should register route error handlers', angular.mock.inject(($rootScope, $state) => {
-    // given
-    let error = {error: 'bar'};
-    expect($state.current.name).toBe('');
+  it('should register route error handlers',
+     angular.mock.inject(($rootScope, $state, $stateParams) => {
+       // given
+       let error = {error: 'bar'};
+       expect($state.current.name).toBe('');
 
-    // when
-    $rootScope.$broadcast('$stateChangeError', {}, null, null, null, error);
-    $rootScope.$apply();
+       // when
+       $rootScope.$broadcast('$stateChangeError', {}, {namespace: 'foo'}, null, null, error);
+       $rootScope.$apply();
 
-    // then
-    expect($state.current.name).toBe('internalerror');
-  }));
+       // then
+       expect($state.current.name).toBe('internalerror');
+       expect($stateParams.namespace).toBe('foo');
+       expect($stateParams.error).toEqual(error);
+     }));
 
   it('should not fall into redirect loop', angular.mock.inject(($rootScope, $state) => {
     // given
@@ -36,7 +39,8 @@ describe('Error module', () => {
     expect($state.current.name).toBe('');
 
     // when
-    $rootScope.$broadcast('$stateChangeError', {name: 'internalerror'}, null, null, null, error);
+    $rootScope.$broadcast(
+        '$stateChangeError', {name: 'internalerror'}, {namespace: 'foo'}, null, null, error);
     $rootScope.$apply();
 
     // then
