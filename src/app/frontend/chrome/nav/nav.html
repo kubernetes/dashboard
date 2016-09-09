@@ -16,7 +16,7 @@ limitations under the License.
 
 <md-sidenav md-is-locked-open="$ctrl.isVisible" class="kd-nav">
   <div class="kd-nav-group">
-    <kd-nav-item class="kd-nav-group-item">{{::$ctrl.i18n.MSG_NAV_MENU_ADMIN}}</kd-nav-item>
+    <kd-nav-item class="kd-nav-group-item" state="{{::$ctrl.states.admin}}">{{::$ctrl.i18n.MSG_NAV_MENU_ADMIN}}</kd-nav-item>
     <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.namespace}}">{{::$ctrl.i18n.MSG_NAV_MENU_NAMESPACES}}</kd-nav-item>
     <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.node}}">{{::$ctrl.i18n.MSG_NAV_MENU_NODES}}</kd-nav-item>
     <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.persistentVolume}}">{{::$ctrl.i18n.MSG_NAV_MENU_PERSISTENT_VOLUMES}}</kd-nav-item>

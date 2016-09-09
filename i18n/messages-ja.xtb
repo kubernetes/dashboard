@@ -935,4 +935,8 @@
 	<translation id="955494958249556505" key="MSG_NAV_MENU_SECRETS" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Secrets item in the nav.">Secrets</translation>
 	<translation id="2938856339190291831" key="MSG_NAV_MENU_CONFIG_MAPS" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Config Maps item in the nav.">Config Maps</translation>
 	<translation id="2106585463764269967" key="MSG_PERSISTENT_VOLUME_CLAIM_INFO_ACCESS_MODES_ENTRY" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Persistent volume claim info details section access modes entry.">Access modes</translation>
+	<translation id="4466763630197200161" key="MSG_BREADCRUMBS_ADMIN_LABEL" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Label 'Admin' that appears as a breadcrumbs on the action bar.">Admin</translation>
+	<translation id="1459282068813879241" key="MSG_ADMIN_NAMESPACES_LABEL" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Label that appears above the list of resources.">Namespaces</translation>
+	<translation id="133343695009872751" key="MSG_ADMIN_NODES_LABEL" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Label that appears above the list of resources.">Nodes</translation>
+	<translation id="6870889542203892242" key="MSG_ADMIN_PERSISTENT_VOLUMES_LABEL" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Label that appears above the list of resources.">Persistent Volumes</translation>
 </translationbundle>

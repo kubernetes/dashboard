@@ -18,11 +18,11 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // NamespaceList contains a list of namespaces in the cluster.
@@ -41,6 +41,19 @@ type Namespace struct {
 
 	// Phase is the current lifecycle phase of the namespace.
 	Phase api.NamespacePhase `json:"phase"`
+}
+
+// GetNamespaceListFromChannels returns a list of all namespaces in the cluster.
+func GetNamespaceListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (*NamespaceList,
+	error) {
+	log.Printf("Getting namespace list")
+
+	namespaces := <-channels.NamespaceList.List
+	if err := <-channels.NamespaceList.Error; err != nil {
+		return nil, err
+	}
+
+	return toNamespaceList(namespaces.Items, dsQuery), nil
 }
 
 // GetNamespaceList returns a list of all namespaces in the cluster.
