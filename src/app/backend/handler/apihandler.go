@@ -444,6 +444,10 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 		apiV1Ws.GET("/persistentvolumeclaim/{namespace}").
 			To(apiHandler.handleGetPersistentVolumeClaimList).
 			Writes(persistentvolumeclaim.PersistentVolumeClaimList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/persistentvolumeclaim/{namespace}/{name}").
+		To(apiHandler.handleGetPersistentVolumeClaimDetail).
+		Writes(persistentvolumeclaim.PersistentVolumeClaimDetail{}))
 
 	return wsContainer
 }
@@ -1176,6 +1180,17 @@ func (apiHandler *APIHandler) handleGetPersistentVolumeClaimList(request *restfu
 		return
 	}
 	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetPersistentVolumeClaimDetail(request *restful.Request, response *restful.Response) {
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("name")
+	result, err := persistentvolumeclaim.GetPersistentVolumeClaimDetail(apiHandler.client, namespace, name)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
 // Handles log API call.

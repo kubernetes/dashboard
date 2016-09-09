@@ -17,11 +17,11 @@ package persistentvolumeclaim
 import (
 	"log"
 
+	"fmt"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
-	"fmt"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // PersistentVolumeClaimList contains a list of Persistent Volume Claims in the cluster.
@@ -40,7 +40,7 @@ type PersistentVolumeClaim struct {
 	// e.g. Pending, Bound
 	Status string
 
-	// name of the voluem
+	// name of the volume
 	Volume string
 }
 
@@ -85,8 +85,8 @@ func getPersistentVolumeClaimList(persistentVolumeClaims []api.PersistentVolumeC
 			PersistentVolumeClaim{
 				ObjectMeta: common.NewObjectMeta(item.ObjectMeta),
 				TypeMeta:   common.NewTypeMeta(common.ResourceKindPersistentVolumeClaim),
-				Status: string(item.Status.Phase),
-				Volume: item.Spec.VolumeName,
+				Status:     string(item.Status.Phase),
+				Volume:     item.Spec.VolumeName,
 			})
 		fmt.Println(item.Status.Capacity)
 	}
