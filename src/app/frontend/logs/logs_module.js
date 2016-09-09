@@ -14,6 +14,7 @@
 
 import {LogsService} from './logs_service';
 import stateConfig from './logs_stateconfig';
+import {logsToolbarComponent} from './logstoolbar/logstoolbar_controller';
 
 
 /**
@@ -28,4 +29,5 @@ export default angular
           'ui.router',
         ])
     .service('logsService', LogsService)
-    .config(stateConfig);
+    .config(stateConfig)
+    .component('kdLogsToolbar', logsToolbarComponent);

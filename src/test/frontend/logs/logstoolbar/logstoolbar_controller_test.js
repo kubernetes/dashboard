@@ -14,12 +14,11 @@
 
 import LogsModule from 'logs/logs_module';
 import {StateParams} from 'logs/logs_state';
-import LogsToolbarController from 'logs/logstoolbar/logstoolbar_controller';
 
 describe('Logs toolbar controller', () => {
 
   /** @type {string} */
-  const iconColorClassName = 'kd-logs-color-icon';
+  const iconColorClassName = 'kd-logs-color-icon-invert';
 
   /** @type {string} */
   const iconSizeClassName = 'kd-logs-size-icon';
@@ -60,15 +59,11 @@ describe('Logs toolbar controller', () => {
   beforeEach(() => {
     angular.mock.module(LogsModule.name);
 
-    angular.mock.inject(($controller, $state) => {
+    angular.mock.inject(($componentController, $state) => {
       state = $state;
-      ctrl = $controller(
-          LogsToolbarController, {
-            $stateParams: stateParams,
-            podLogs: logs,
-            podContainers: podContainers,
-          },
-          $state);
+      ctrl = $componentController(
+          'kdLogsToolbar', {$stateParams: stateParams, $state: $state},
+          {containers: podContainers.containers, podLogs: logs});
     });
   });
 

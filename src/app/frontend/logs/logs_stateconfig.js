@@ -16,12 +16,8 @@ import {stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 
-import {toolbarViewName} from '../chrome/chrome_state';
-
 import {LogsController} from './logs_controller';
 import {stateName} from './logs_state';
-import LogsToolbarController from './logstoolbar/logstoolbar_controller';
-
 
 /**
  * Configures states for the logs view.
@@ -34,11 +30,6 @@ export default function stateConfig($stateProvider) {
     '': {
       templateUrl: 'logs/logs.html',
       controller: LogsController,
-      controllerAs: 'ctrl',
-    },
-    [toolbarViewName]: {
-      templateUrl: 'logs/logstoolbar/logstoolbar.html',
-      controller: LogsToolbarController,
       controllerAs: 'ctrl',
     },
   };

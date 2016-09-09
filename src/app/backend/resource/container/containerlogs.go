@@ -16,28 +16,12 @@ package container
 
 import (
 	"io/ioutil"
-	"log"
-	"strings"
+
+	"github.com/kubernetes/dashboard/src/app/backend/resource/logs"
 
 	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
-
-// Logs is a representation of logs response structure.
-type Logs struct {
-	// Pod name.
-	PodId string `json:"podId"`
-
-	// Specific time when logs started.
-	SinceTime unversioned.Time `json:"sinceTime"`
-
-	// Logs string lines.
-	Logs []string `json:"logs"`
-
-	// The name of the container the logs are for.
-	Container string `json:"container"`
-}
 
 // PodContainerList is a list of containers of a pod.
 type PodContainerList struct {
@@ -46,8 +30,6 @@ type PodContainerList struct {
 
 // GetPodContainers returns containers that a pod has.
 func GetPodContainers(client *client.Client, namespace, podID string) (*PodContainerList, error) {
-	log.Printf("Getting containers from %s pod in %s namespace", podID, namespace)
-
 	pod, err := client.Pods(namespace).Get(podID)
 	if err != nil {
 		return nil, err
@@ -62,12 +44,9 @@ func GetPodContainers(client *client.Client, namespace, podID string) (*PodConta
 	return containers, nil
 }
 
-// GetPodLogs returns logs for particular pod and container or error when occurred. When container
+// GetPodLogs returns logs for particular pod and container. When container
 // is null, logs for the first one are returned.
-func GetPodLogs(client *client.Client, namespace, podID string, container string) (*Logs, error) {
-	log.Printf("Getting logs from %s container from %s pod in %s namespace", container, podID,
-		namespace)
-
+func GetPodLogs(client *client.Client, namespace, podID string, container string, logSelector *logs.LogViewSelector) (*logs.Logs, error) {
 	pod, err := client.Pods(namespace).Get(podID)
 	if err != nil {
 		return nil, err
@@ -89,7 +68,7 @@ func GetPodLogs(client *client.Client, namespace, podID string, container string
 		return nil, err
 	}
 
-	return ConstructLogs(podID, pod.CreationTimestamp, rawLogs, container), nil
+	return ConstructLogs(podID, rawLogs, container, logSelector), nil
 }
 
 // Construct a request for getting the logs for a pod and retrieves the logs.
@@ -118,12 +97,15 @@ func getRawPodLogs(client *client.Client, namespace, podID string, logOptions *a
 }
 
 // ConstructLogs constructs logs structure for given parameters.
-func ConstructLogs(podID string, sinceTime unversioned.Time, rawLogs string, container string) *Logs {
-	logs := &Logs{
+func ConstructLogs(podID string, rawLogs string, container string, logSelector *logs.LogViewSelector) *logs.Logs {
+	logLines, firstLogLineReference, lastLogLineReference, logViewInfo := logs.ToLogLines(rawLogs).SelectLogs(logSelector)
+	logs := &logs.Logs{
 		PodId:     podID,
-		SinceTime: sinceTime,
-		Logs:      strings.Split(rawLogs, "\n"),
+		LogLines: logLines,
 		Container: container,
+		FirstLogLineReference: firstLogLineReference,
+		LastLogLineReference: lastLogLineReference,
+		LogViewInfo: logViewInfo,
 	}
 	return logs
 }

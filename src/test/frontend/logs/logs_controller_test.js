@@ -18,10 +18,13 @@ import LogsModule from 'logs/logs_module';
 describe('Logs controller', () => {
 
   /** @type {string} */
-  const logsTextColorClassName = 'kd-logs-text-color';
+  const logsTextColorClassName = 'kd-logs-text-color-invert';
 
   /** @type {!LogsController} */
   let ctrl;
+
+  /** @type {!backendApi.PodContainers} */
+  const podContainers = {containers: ['con1']};
 
   let podLogs = {
     logs: [],
@@ -30,8 +33,9 @@ describe('Logs controller', () => {
   beforeEach(() => {
     angular.mock.module(LogsModule.name);
 
-    angular.mock.inject(
-        ($controller) => { ctrl = $controller(LogsController, {podLogs: podLogs}); });
+    angular.mock.inject(($controller) => {
+      ctrl = $controller(LogsController, {podLogs: podLogs, podContainers: podContainers});
+    });
   });
 
   it('should instantiate the controller properly', () => { expect(ctrl).not.toBeUndefined(); });
