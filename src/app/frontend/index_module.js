@@ -32,6 +32,8 @@ import logsModule from './logs/logs_module';
 import namespaceDetailModule from './namespacedetail/namespacedetail_module';
 import namespaceListModule from './namespacelist/namespacelist_module';
 import nodeListModule from './nodelist/nodelist_module';
+import persistentVolumeClaimDetailModule from './persistentvolumeclaimdetail/persistentvolumeclaimdetail_module';
+import persistentVolumeClaimListModule from './persistentvolumeclaimlist/persistentvolumeclaimlist_module';
 import persistentVolumeDetailModule from './persistentvolumedetail/persistentvolumedetail_module';
 import persistentVolumeListModule from './persistentvolumelist/persistentvolumelist_module';
 import petSetListModule from './petsetlist/petsetlist_module';
@@ -44,6 +46,7 @@ import secretListModule from './secretlist/module';
 import serviceDetailModule from './servicedetail/servicedetail_module';
 import serviceListModule from './servicelist/servicelist_module';
 import workloadsModule from './workloads/workloads_module';
+
 
 export default angular
     .module(
@@ -76,6 +79,8 @@ export default angular
           persistentVolumeDetailModule.name,
           persistentVolumeListModule.name,
           petSetListModule.name,
+          persistentVolumeClaimDetailModule.name,
+          persistentVolumeClaimListModule.name,
           configMapListModule.name,
           configMapDetailModule.name,
           secretListModule.name,
