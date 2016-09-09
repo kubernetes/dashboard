@@ -49,6 +49,7 @@ import (
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
 	"k8s.io/kubernetes/pkg/runtime"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/logs"
 )
 
 const (
@@ -220,11 +221,11 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 	apiV1Ws.Route(
 		apiV1Ws.GET("/pod/{namespace}/{pod}/log").
 			To(apiHandler.handleLogs).
-			Writes(container.Logs{}))
+			Writes(logs.Logs{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/pod/{namespace}/{pod}/log/{container}").
 			To(apiHandler.handleLogs).
-			Writes(container.Logs{}))
+			Writes(logs.Logs{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/deployment").
@@ -1184,7 +1185,35 @@ func (apiHandler *APIHandler) handleLogs(request *restful.Request, response *res
 	podID := request.PathParameter("pod")
 	containerID := request.PathParameter("container")
 
-	result, err := container.GetPodLogs(apiHandler.client, namespace, podID, containerID)
+	refTimestamp := request.QueryParameter("referenceTimestamp")
+	if refTimestamp == "" {
+		refTimestamp = logs.NewestTimestamp
+	}
+
+	refLineNum, err := strconv.Atoi(request.QueryParameter("referenceLineNum"))
+	if err != nil {
+		refLineNum = 0
+	}
+
+	relativeFrom, err1 := strconv.Atoi(request.QueryParameter("relativeFrom"))
+	relativeTo, err2 := strconv.Atoi(request.QueryParameter("relativeTo"))
+
+	var logSelector *logs.LogViewSelector
+	if err1 != nil || err2 != nil {
+		logSelector = logs.DefaultLogViewSelector
+	} else {
+
+		logSelector = &logs.LogViewSelector{
+			ReferenceLogLineId: logs.LogLineId{
+				LogTimestamp: logs.LogTimestamp(refTimestamp),
+				LineNum: refLineNum,
+			},
+			RelativeFrom: relativeFrom,
+			RelativeTo: relativeTo,
+		}
+	}
+
+	result, err := container.GetPodLogs(apiHandler.client, namespace, podID, containerID, logSelector)
 	if err != nil {
 		handleInternalError(response, err)
 		return
