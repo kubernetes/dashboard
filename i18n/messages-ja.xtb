@@ -934,4 +934,5 @@
 	<translation id="4472437241685954478" key="MSG_NAV_MENU_CONFIG" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Config item in the nav.">Config</translation>
 	<translation id="955494958249556505" key="MSG_NAV_MENU_SECRETS" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Secrets item in the nav.">Secrets</translation>
 	<translation id="2938856339190291831" key="MSG_NAV_MENU_CONFIG_MAPS" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Config Maps item in the nav.">Config Maps</translation>
+	<translation id="2106585463764269967" key="MSG_PERSISTENT_VOLUME_CLAIM_INFO_ACCESS_MODES_ENTRY" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Persistent volume claim info details section access modes entry.">Access modes</translation>
 </translationbundle>

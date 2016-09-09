@@ -29,14 +29,14 @@ limitations under the License.
     </kd-info-card-entry>
     <kd-info-card-entry title="{{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_CLAIM_INFO_VOLUME_ENTRY}}">
       <div ng-show="::$ctrl.persistentVolumeClaim.volume">{{::$ctrl.persistentVolumeClaim.volume}}</div>
-      <div ng-hide="!::$ctrl.persistentVolumeClaim.volume">-</div>
+      <div ng-hide="::$ctrl.persistentVolumeClaim.volume">-</div>
     </kd-info-card-entry>
     <kd-info-card-entry title="{{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_CLAIM_INFO_LABELS_ENTRY}}">
       <kd-labels labels="::$ctrl.persistentVolumeClaim.objectMeta.labels"></kd-labels>
     </kd-info-card-entry>
     <kd-info-card-entry title="{{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_CLAIM_INFO_CAPACITY_ENTRY}}">
       <div ng-show="::$ctrl.persistentVolumeClaim.capacity">{{::$ctrl.persistentVolumeClaim.capacity}}</div>
-      <div ng-hide="!::$ctrl.persistentVolumeClaim.capacity">-</div>
+      <div ng-hide="::$ctrl.persistentVolumeClaim.capacity">-</div>
     </kd-info-card-entry>
     <kd-info-card-entry title="{{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_CLAIM_INFO_ACCESS_MODES_ENTRY}}">
       <div ng-repeat="mode in $ctrl.persistentVolumeClaim.accessModes">
