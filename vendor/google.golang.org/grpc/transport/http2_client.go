@@ -35,6 +35,7 @@ package transport
 
 import (
 	"bytes"
+	"errors"
 	"io"
 	"math"
 	"net"
@@ -88,7 +89,7 @@ type http2Client struct {
 	// The scheme used: https if TLS is on, http otherwise.
 	scheme string
 
-	creds []credentials.PerRPCCredentials
+	authCreds []credentials.Credentials
 
 	mu            sync.Mutex     // guard the following variables
 	state         transportState // the state of underlying connection
@@ -117,12 +118,19 @@ func newHTTP2Client(addr string, opts *ConnectOptions) (_ ClientTransport, err e
 		return nil, ConnectionErrorf("transport: %v", connErr)
 	}
 	var authInfo credentials.AuthInfo
-	if opts.TransportCredentials != nil {
-		scheme = "https"
-		if timeout > 0 {
-			timeout -= time.Since(startT)
+	for _, c := range opts.AuthOptions {
+		if ccreds, ok := c.(credentials.TransportAuthenticator); ok {
+			scheme = "https"
+			// TODO(zhaoq): Now the first TransportAuthenticator is used if there are
+			// multiple ones provided. Revisit this if it is not appropriate. Probably
+			// place the ClientTransport construction into a separate function to make
+			// things clear.
+			if timeout > 0 {
+				timeout -= time.Since(startT)
+			}
+			conn, authInfo, connErr = ccreds.ClientHandshake(addr, conn, timeout)
+			break
 		}
-		conn, authInfo, connErr = opts.TransportCredentials.ClientHandshake(addr, conn, timeout)
 	}
 	if connErr != nil {
 		return nil, ConnectionErrorf("transport: %v", connErr)
@@ -132,6 +140,29 @@ func newHTTP2Client(addr string, opts *ConnectOptions) (_ ClientTransport, err e
 			conn.Close()
 		}
 	}()
+	// Send connection preface to server.
+	n, err := conn.Write(clientPreface)
+	if err != nil {
+		return nil, ConnectionErrorf("transport: %v", err)
+	}
+	if n != len(clientPreface) {
+		return nil, ConnectionErrorf("transport: preface mismatch, wrote %d bytes; want %d", n, len(clientPreface))
+	}
+	framer := newFramer(conn)
+	if initialWindowSize != defaultWindowSize {
+		err = framer.writeSettings(true, http2.Setting{http2.SettingInitialWindowSize, uint32(initialWindowSize)})
+	} else {
+		err = framer.writeSettings(true)
+	}
+	if err != nil {
+		return nil, ConnectionErrorf("transport: %v", err)
+	}
+	// Adjust the connection flow control window if needed.
+	if delta := uint32(initialConnWindowSize - defaultWindowSize); delta > 0 {
+		if err := framer.writeWindowUpdate(true, 0, delta); err != nil {
+			return nil, ConnectionErrorf("transport: %v", err)
+		}
+	}
 	ua := primaryUA
 	if opts.UserAgent != "" {
 		ua = opts.UserAgent + " " + ua
@@ -147,7 +178,7 @@ func newHTTP2Client(addr string, opts *ConnectOptions) (_ ClientTransport, err e
 		writableChan:    make(chan int, 1),
 		shutdownChan:    make(chan struct{}),
 		errorChan:       make(chan struct{}),
-		framer:          newFramer(conn),
+		framer:          framer,
 		hBuf:            &buf,
 		hEnc:            hpack.NewEncoder(&buf),
 		controlBuf:      newRecvBuffer(),
@@ -156,45 +187,17 @@ func newHTTP2Client(addr string, opts *ConnectOptions) (_ ClientTransport, err e
 		scheme:          scheme,
 		state:           reachable,
 		activeStreams:   make(map[uint32]*Stream),
-		creds:           opts.PerRPCCredentials,
+		authCreds:       opts.AuthOptions,
 		maxStreams:      math.MaxInt32,
 		streamSendQuota: defaultWindowSize,
 	}
-	// Start the reader goroutine for incoming message. Each transport has
-	// a dedicated goroutine which reads HTTP2 frame from network. Then it
-	// dispatches the frame to the corresponding stream entity.
-	go t.reader()
-	// Send connection preface to server.
-	n, err := t.conn.Write(clientPreface)
-	if err != nil {
-		t.Close()
-		return nil, ConnectionErrorf("transport: %v", err)
-	}
-	if n != len(clientPreface) {
-		t.Close()
-		return nil, ConnectionErrorf("transport: preface mismatch, wrote %d bytes; want %d", n, len(clientPreface))
-	}
-	if initialWindowSize != defaultWindowSize {
-		err = t.framer.writeSettings(true, http2.Setting{
-			ID:  http2.SettingInitialWindowSize,
-			Val: uint32(initialWindowSize),
-		})
-	} else {
-		err = t.framer.writeSettings(true)
-	}
-	if err != nil {
-		t.Close()
-		return nil, ConnectionErrorf("transport: %v", err)
-	}
-	// Adjust the connection flow control window if needed.
-	if delta := uint32(initialConnWindowSize - defaultWindowSize); delta > 0 {
-		if err := t.framer.writeWindowUpdate(true, 0, delta); err != nil {
-			t.Close()
-			return nil, ConnectionErrorf("transport: %v", err)
-		}
-	}
 	go t.controller()
 	t.writableChan <- 0
+	// Start the reader goroutine for incoming message. The threading model
+	// on receiving is that each transport has a dedicated goroutine which
+	// reads HTTP2 frame from network. Then it dispatches the frame to the
+	// corresponding stream entity.
+	go t.reader()
 	return t, nil
 }
 
@@ -244,7 +247,7 @@ func (t *http2Client) NewStream(ctx context.Context, callHdr *CallHdr) (_ *Strea
 	}
 	ctx = peer.NewContext(ctx, pr)
 	authData := make(map[string]string)
-	for _, c := range t.creds {
+	for _, c := range t.authCreds {
 		// Construct URI required to get auth request metadata.
 		var port string
 		if pos := strings.LastIndex(t.target, ":"); pos != -1 {
@@ -267,10 +270,6 @@ func (t *http2Client) NewStream(ctx context.Context, callHdr *CallHdr) (_ *Strea
 		}
 	}
 	t.mu.Lock()
-	if t.activeStreams == nil {
-		t.mu.Unlock()
-		return nil, ErrConnClosing
-	}
 	if t.state != reachable {
 		t.mu.Unlock()
 		return nil, ErrConnClosing
@@ -288,10 +287,7 @@ func (t *http2Client) NewStream(ctx context.Context, callHdr *CallHdr) (_ *Strea
 		}
 	}
 	if _, err := wait(ctx, t.shutdownChan, t.writableChan); err != nil {
-		// Return the quota back now because there is no stream returned to the caller.
-		if _, ok := err.(StreamError); ok && checkStreamsQuota {
-			t.streamsQuota.add(1)
-		}
+		// t.streamsQuota will be updated when t.CloseStream is invoked.
 		return nil, err
 	}
 	t.mu.Lock()
@@ -343,10 +339,6 @@ func (t *http2Client) NewStream(ctx context.Context, callHdr *CallHdr) (_ *Strea
 	if md, ok := metadata.FromContext(ctx); ok {
 		hasMD = true
 		for k, v := range md {
-			// HTTP doesn't allow you to set pseudoheaders after non pseudoheaders were set.
-			if isReservedHeader(k) {
-				continue
-			}
 			for _, entry := range v {
 				t.hEnc.WriteField(hpack.HeaderField{Name: k, Value: entry})
 			}
@@ -396,18 +388,8 @@ func (t *http2Client) NewStream(ctx context.Context, callHdr *CallHdr) (_ *Strea
 func (t *http2Client) CloseStream(s *Stream, err error) {
 	var updateStreams bool
 	t.mu.Lock()
-	if t.activeStreams == nil {
-		t.mu.Unlock()
-		return
-	}
 	if t.streamsQuota != nil {
 		updateStreams = true
-	}
-	if t.state == draining && len(t.activeStreams) == 1 {
-		// The transport is draining and s is the last live stream on t.
-		t.mu.Unlock()
-		t.Close()
-		return
 	}
 	delete(t.activeStreams, s.id)
 	t.mu.Unlock()
@@ -445,12 +427,9 @@ func (t *http2Client) CloseStream(s *Stream, err error) {
 // accessed any more.
 func (t *http2Client) Close() (err error) {
 	t.mu.Lock()
-	if t.state == reachable {
-		close(t.errorChan)
-	}
 	if t.state == closing {
 		t.mu.Unlock()
-		return
+		return errors.New("transport: Close() was already called")
 	}
 	t.state = closing
 	t.mu.Unlock()
@@ -471,25 +450,6 @@ func (t *http2Client) Close() (err error) {
 		s.write(recvMsg{err: ErrConnClosing})
 	}
 	return
-}
-
-func (t *http2Client) GracefulClose() error {
-	t.mu.Lock()
-	if t.state == closing {
-		t.mu.Unlock()
-		return nil
-	}
-	if t.state == draining {
-		t.mu.Unlock()
-		return nil
-	}
-	t.state = draining
-	active := len(t.activeStreams)
-	t.mu.Unlock()
-	if active == 0 {
-		return t.Close()
-	}
-	return nil
 }
 
 // Write formats the data into HTTP2 data frame(s) and sends it out. The caller
@@ -614,11 +574,6 @@ func (t *http2Client) getStream(f http2.Frame) (*Stream, bool) {
 // Window updates will deliver to the controller for sending when
 // the cumulative quota exceeds the corresponding threshold.
 func (t *http2Client) updateWindow(s *Stream, n uint32) {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	if s.state == streamDone {
-		return
-	}
 	if w := t.fc.onRead(n); w > 0 {
 		t.controlBuf.put(&windowUpdate{0, w})
 	}

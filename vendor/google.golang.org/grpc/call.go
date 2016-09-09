@@ -132,16 +132,19 @@ func Invoke(ctx context.Context, method string, args, reply interface{}, cc *Cli
 		Last:  true,
 		Delay: false,
 	}
+	var (
+		lastErr error // record the error that happened
+	)
 	for {
 		var (
 			err    error
 			t      transport.ClientTransport
 			stream *transport.Stream
-			// Record the put handler from Balancer.Get(...). It is called once the
-			// RPC has completed or failed.
-			put func()
 		)
-		// TODO(zhaoq): Need a formal spec of fail-fast.
+		// TODO(zhaoq): Need a formal spec of retry strategy for non-failfast rpcs.
+		if lastErr != nil && c.failFast {
+			return toRPCErr(lastErr)
+		}
 		callHdr := &transport.CallHdr{
 			Host:   cc.authority,
 			Method: method,
@@ -149,66 +152,39 @@ func Invoke(ctx context.Context, method string, args, reply interface{}, cc *Cli
 		if cc.dopts.cp != nil {
 			callHdr.SendCompress = cc.dopts.cp.Type()
 		}
-		gopts := BalancerGetOptions{
-			BlockingWait: !c.failFast,
-		}
-		t, put, err = cc.getTransport(ctx, gopts)
+		t, err = cc.dopts.picker.Pick(ctx)
 		if err != nil {
-			// TODO(zhaoq): Probably revisit the error handling.
-			if err == ErrClientConnClosing {
-				return Errorf(codes.FailedPrecondition, "%v", err)
+			if lastErr != nil {
+				// This was a retry; return the error from the last attempt.
+				return toRPCErr(lastErr)
 			}
-			if _, ok := err.(transport.StreamError); ok {
-				return toRPCErr(err)
-			}
-			if _, ok := err.(transport.ConnectionError); ok {
-				if c.failFast {
-					return toRPCErr(err)
-				}
-			}
-			// All the remaining cases are treated as retryable.
-			continue
+			return toRPCErr(err)
 		}
 		if c.traceInfo.tr != nil {
 			c.traceInfo.tr.LazyLog(&payload{sent: true, msg: args}, true)
 		}
 		stream, err = sendRequest(ctx, cc.dopts.codec, cc.dopts.cp, callHdr, t, args, topts)
 		if err != nil {
-			if put != nil {
-				put()
-				put = nil
-			}
 			if _, ok := err.(transport.ConnectionError); ok {
-				if c.failFast {
-					return toRPCErr(err)
-				}
+				lastErr = err
 				continue
+			}
+			if lastErr != nil {
+				return toRPCErr(lastErr)
 			}
 			return toRPCErr(err)
 		}
 		// Receive the response
-		err = recvResponse(cc.dopts, t, &c, stream, reply)
-		if err != nil {
-			if put != nil {
-				put()
-				put = nil
-			}
-			if _, ok := err.(transport.ConnectionError); ok {
-				if c.failFast {
-					return toRPCErr(err)
-				}
-				continue
-			}
-			t.CloseStream(stream, err)
-			return toRPCErr(err)
+		lastErr = recvResponse(cc.dopts, t, &c, stream, reply)
+		if _, ok := lastErr.(transport.ConnectionError); ok {
+			continue
 		}
 		if c.traceInfo.tr != nil {
 			c.traceInfo.tr.LazyLog(&payload{sent: false, msg: reply}, true)
 		}
-		t.CloseStream(stream, nil)
-		if put != nil {
-			put()
-			put = nil
+		t.CloseStream(stream, lastErr)
+		if lastErr != nil {
+			return toRPCErr(lastErr)
 		}
 		return Errorf(stream.StatusCode(), "%s", stream.StatusDesc())
 	}
