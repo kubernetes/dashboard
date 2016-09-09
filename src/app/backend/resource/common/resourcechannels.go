@@ -65,6 +65,9 @@ type ResourceChannels struct {
 	// List and error channels to Nodes.
 	NodeList NodeListChannel
 
+	// List and error channels to Namespaces.
+	NamespaceList NamespaceListChannel
+
 	// List and error channels to PetSets.
 	PetSetList PetSetListChannel
 
@@ -130,6 +133,31 @@ func GetNodeListChannel(client client.NodesInterface, numReads int) NodeListChan
 
 	go func() {
 		list, err := client.Nodes().List(listEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// NamespaceListChannel is a list and error channels to Namespaces.
+type NamespaceListChannel struct {
+	List  chan *api.NamespaceList
+	Error chan error
+}
+
+// GetNamespaceListChannel returns a pair of channels to a Namespace list and errors that both must be read
+// numReads times.
+func GetNamespaceListChannel(client client.NamespacesInterface, numReads int) NamespaceListChannel {
+	channel := NamespaceListChannel{
+		List:  make(chan *api.NamespaceList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.Namespaces().List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err

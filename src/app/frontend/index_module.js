@@ -16,6 +16,7 @@
  * @fileoverview Entry point module to the application. Loads and configures other modules needed
  * to bootstrap the application.
  */
+import adminModule from './admin/module';
 import chromeModule from './chrome/chrome_module';
 import configMapDetailModule from './configmapdetail/configmapdetail_module';
 import configMapListModule from './configmaplist/configmaplist_module';
@@ -73,6 +74,7 @@ export default angular
           nodeListModule.name,
           deploymentListModule.name,
           workloadsModule.name,
+          adminModule.name,
           serviceDetailModule.name,
           serviceListModule.name,
           podDetailModule.name,
