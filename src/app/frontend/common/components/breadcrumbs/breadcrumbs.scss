@@ -17,7 +17,8 @@
 .kd-breadcrumbs-ellipsised {
   display: inline-block;
   float: left;
-  font-weight: $regular-font-weight;
+  font-family: $font-family-medium-monospace;
+  font-size: $subhead-font-size-base-lg;
   max-width: 100%;
 
   >.kd-faded-breadcrumb {
