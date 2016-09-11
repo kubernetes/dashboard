@@ -35,7 +35,15 @@ md-select {
     padding-left: $baseline-grid;
 
     .md-select-value {
+      padding-right: 0;
+
+      span {
+        font-family: $font-family-medium-monospace;
+      }
+
       .md-select-icon {
+        margin: 0 0 0 (3 * $baseline-grid);
+        opacity: .54;
         width: auto;
       }
     }
@@ -43,6 +51,16 @@ md-select {
     &:focus {
       .md-select-value {
         color: inherit;
+      }
+    }
+  }
+
+  &:not([disabled]) {
+    &:focus {
+      &.kd-namespace-select {
+        .md-select-value {
+          border-bottom-color: $foreground-4;
+        }
       }
     }
   }
