@@ -14,10 +14,15 @@
 
 @import '../../../variables';
 
+.kd-breadcrumbs-spacing {
+  padding-left: $baseline-grid;
+}
+
 .kd-breadcrumbs-ellipsised {
   display: inline-block;
   float: left;
-  font-weight: $regular-font-weight;
+  font-family: $font-family-medium-monospace;
+  font-size: $subhead-font-size-base-lg;
   max-width: 100%;
 
   >.kd-faded-breadcrumb {
@@ -28,5 +33,4 @@
 .kd-inline-breadcrumb {
   flex-basis: auto;
   flex-grow: 0;
-  padding-right: $baseline-grid / 2;
 }
