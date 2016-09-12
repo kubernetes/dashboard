@@ -778,12 +778,31 @@ backendApi.ReplicationControllerPods;
 /**
  * @typedef {{
  *   podId: string,
- *   sinceTime: string,
  *   logs: !Array<string>,
- *   container: string
+ *   container: string,
+ *   firstLogLineReference: !backendApi.LogLineReference,
+ *   lastLogLineReference: !backendApi.LogLineReference,
+ *   logViewInfo: !backendApi.LogViewInfo
  * }}
  */
 backendApi.Logs;
+
+/**
+ * @typedef {{
+ *   logTimestamp: string,
+ *   lineNum: number,
+ * }}
+ */
+backendApi.LogLineReference;
+
+/**
+ * @typedef {{
+ *   referenceLogLineId: !backendApi.LogLineReference,
+ *   relativeFrom: number,
+ *   relativeTo: number
+ * }}
+ */
+backendApi.LogViewInfo;
 
 /**
  * @typedef {{

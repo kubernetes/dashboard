@@ -22,7 +22,7 @@ export class LogsService {
    */
   constructor() {
     /** @private {boolean} */
-    this.inverted_ = false;
+    this.inverted_ = true;
 
     /** @private {boolean} */
     this.compact_ = false;
