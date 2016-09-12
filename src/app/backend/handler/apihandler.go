@@ -24,12 +24,14 @@ import (
 
 	restful "github.com/emicklei/go-restful"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/admin"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/configmap"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/container"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/ingress"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
@@ -48,7 +50,6 @@ import (
 	clientK8s "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
 	"k8s.io/kubernetes/pkg/runtime"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 )
 
 const (
@@ -181,6 +182,11 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 			Writes(workload.Workloads{}))
 
 	apiV1Ws.Route(
+		apiV1Ws.GET("/admin").
+			To(apiHandler.handleGetAdmin).
+			Writes(admin.Admin{}))
+
+	apiV1Ws.Route(
 		apiV1Ws.GET("/replicaset").
 			To(apiHandler.handleGetReplicaSets).
 			Writes(replicaset.ReplicaSetList{}))
@@ -198,8 +204,8 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 			Writes(pod.PodList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/replicaset/{namespace}/{replicaSet}/event").
-		To(apiHandler.handleGetReplicaSetEvents).
-		Writes(common.EventList{}))
+			To(apiHandler.handleGetReplicaSetEvents).
+			Writes(common.EventList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/pod").
@@ -240,12 +246,12 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 			Writes(deployment.DeploymentDetail{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/deployment/{namespace}/{deployment}/event").
-		To(apiHandler.handleGetDeploymentEvents).
-		Writes(common.EventList{}))
+			To(apiHandler.handleGetDeploymentEvents).
+			Writes(common.EventList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/deployment/{namespace}/{deployment}/oldreplicaset").
-		To(apiHandler.handleGetDeploymentOldReplicaSets).
-		Writes(replicaset.ReplicaSetList{}))
+			To(apiHandler.handleGetDeploymentOldReplicaSets).
+			Writes(replicaset.ReplicaSetList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/daemonset").
@@ -272,8 +278,8 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 			Writes(resourceService.ServiceList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/daemonset/{namespace}/{daemonSet}/event").
-		To(apiHandler.handleGetDaemonSetEvents).
-		Writes(common.EventList{}))
+			To(apiHandler.handleGetDaemonSetEvents).
+			Writes(common.EventList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/job").
@@ -293,8 +299,8 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 			Writes(pod.PodList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/job/{namespace}/{job}/event").
-		To(apiHandler.handleGetJobEvents).
-		Writes(common.EventList{}))
+			To(apiHandler.handleGetJobEvents).
+			Writes(common.EventList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.POST("/namespace").
@@ -311,8 +317,8 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 			Writes(namespace.NamespaceDetail{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/namespace/{name}/event").
-		To(apiHandler.handleGetNamespaceEvents).
-		Writes(common.EventList{}))
+			To(apiHandler.handleGetNamespaceEvents).
+			Writes(common.EventList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/secret").
@@ -393,8 +399,8 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 			Writes(pod.PodList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/petset/{namespace}/{petset}/event").
-		To(apiHandler.handleGetPetSetEvents).
-		Writes(common.EventList{}))
+			To(apiHandler.handleGetPetSetEvents).
+			Writes(common.EventList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/node").
@@ -406,12 +412,12 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 			Writes(node.NodeDetail{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/node/{name}/event").
-		To(apiHandler.handleGetNodeEvents).
-		Writes(common.EventList{}))
+			To(apiHandler.handleGetNodeEvents).
+			Writes(common.EventList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/node/{name}/pod").
-		To(apiHandler.handleGetNodePods).
-		Writes(pod.PodList{}))
+			To(apiHandler.handleGetNodePods).
+			Writes(pod.PodList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.DELETE("/{kind}/namespace/{namespace}/name/{name}").
@@ -446,8 +452,8 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 			Writes(persistentvolumeclaim.PersistentVolumeClaimList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/persistentvolumeclaim/{namespace}/{name}").
-		To(apiHandler.handleGetPersistentVolumeClaimDetail).
-		Writes(persistentvolumeclaim.PersistentVolumeClaimDetail{}))
+			To(apiHandler.handleGetPersistentVolumeClaimDetail).
+			Writes(persistentvolumeclaim.PersistentVolumeClaimDetail{}))
 
 	return wsContainer
 }
@@ -511,8 +517,6 @@ func (apiHandler *APIHandler) handleGetPetSetEvents(request *restful.Request, re
 	}
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
-
-
 
 // Handles get service list API call.
 func (apiHandler *APIHandler) handleGetServiceList(request *restful.Request, response *restful.Response) {
@@ -593,6 +597,16 @@ func (apiHandler *APIHandler) handleGetNodeList(request *restful.Request, respon
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
+func (apiHandler *APIHandler) handleGetAdmin(request *restful.Request, response *restful.Response) {
+	result, err := admin.GetAdmin(apiHandler.client)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
 // Handles get node detail API call.
 func (apiHandler *APIHandler) handleGetNodeDetail(request *restful.Request, response *restful.Response) {
 	name := request.PathParameter("name")
@@ -604,7 +618,6 @@ func (apiHandler *APIHandler) handleGetNodeDetail(request *restful.Request, resp
 	}
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
-
 
 // Handles get node events API call.
 func (apiHandler *APIHandler) handleGetNodeEvents(request *restful.Request, response *restful.Response) {
@@ -898,7 +911,6 @@ func (apiHandler *APIHandler) handleGetDeploymentOldReplicaSets(request *restful
 	}
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
-
 
 // Handles get Pod list API call.
 func (apiHandler *APIHandler) handleGetPods(

@@ -108,7 +108,7 @@ export class PaginationService {
   /**
    * @param {number} itemsPerPage
    * @param {number} pageNr
-   * @param {string|undefined} namespace
+   * @param {string|undefined} [namespace]
    * @param {string|undefined} [name]
    * @return {!backendApi.PaginationQuery}
    */
@@ -120,7 +120,7 @@ export class PaginationService {
   }
 
   /**
-   * @param {string|undefined} namespace
+   * @param {string|undefined} [namespace]
    * @param {string|undefined} [name]
    * @return {!backendApi.PaginationQuery}
    */

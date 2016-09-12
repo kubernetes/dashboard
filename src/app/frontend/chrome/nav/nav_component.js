@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {stateName as adminState} from 'admin/state';
 import {stateName as configMapState} from 'configmaplist/configmaplist_state';
 import {stateName as daemonSetState} from 'daemonsetlist/daemonsetlist_state';
 import {stateName as deploymentState} from 'deploymentlist/deploymentlist_state';
@@ -28,6 +29,7 @@ import {stateName as replicationControllerState} from 'replicationcontrollerlist
 import {stateName as secretState} from 'secretlist/list_state';
 import {stateName as serviceState} from 'servicelist/servicelist_state';
 import {stateName as workloadState} from 'workloads/workloads_state';
+
 
 /**
  * @final
@@ -49,6 +51,7 @@ export class NavController {
       'namespace': namespaceState,
       'node': nodeState,
       'workload': workloadState,
+      'admin': adminState,
       'pod': podState,
       'deployment': deploymentState,
       'replicaSet': replicaSetState,
