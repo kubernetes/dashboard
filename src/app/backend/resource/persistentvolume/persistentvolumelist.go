@@ -27,7 +27,7 @@ import (
 type PersistentVolumeList struct {
 	ListMeta common.ListMeta `json:"listMeta"`
 
-	// Unordered list of Config Maps
+	// Unordered list of Persistent Volumes
 	Items []PersistentVolume `json:"items"`
 }
 
