@@ -69,4 +69,8 @@ const i18n = {
       'as this Daemon Set'),
   /** @export {string} @desc Title for graph card displaying metrics of one daemon set. */
   MSG_DAEMON_SET_DETAIL_GRAPH_CARD_TITLE: goog.getMsg('Resource usage history'),
+  /** @export {string} @desc Title for graph card displaying CPU metric of one daemon set. */
+  MSG_DAEMON_SET_DETAIL_CPU_GRAPH_CARD_TITLE: goog.getMsg('CPU usage history'),
+  /** @export {string} @desc Title for graph card displaying memory metric of one daemon set. */
+  MSG_DAEMON_SET_DETAIL_MEMORY_GRAPH_CARD_TITLE: goog.getMsg('Memory usage history'),
 };

@@ -33,6 +33,8 @@ const i18n = {
   /** @export {string} @desc Label 'Overview', which appears on the first navigation tab on the pod
      details page. */
   MSG_POD_DETAIL_OVERVIEW_LABEL: goog.getMsg('Overview'),
-  /** @export {string} @desc Title for graph card displaying metrics of one pod. */
-  MSG_POD_DETAIL_GRAPH_CARD_TITLE: goog.getMsg('Resource usage history'),
+  /** @export {string} @desc Title for graph card displaying CPU metric of one pod. */
+  MSG_POD_DETAIL_CPU_GRAPH_CARD_TITLE: goog.getMsg('CPU usage history'),
+  /** @export {string} @desc Title for graph card displaying memory metric of one pod. */
+  MSG_POD_DETAIL_MEMORY_GRAPH_CARD_TITLE: goog.getMsg('Memory usage history'),
 };
