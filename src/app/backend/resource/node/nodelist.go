@@ -17,15 +17,15 @@ package node
 import (
 	"log"
 
+	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
-	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
 
-	"k8s.io/kubernetes/pkg/fields"
-	"k8s.io/kubernetes/pkg/labels"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	"k8s.io/kubernetes/pkg/fields"
+	"k8s.io/kubernetes/pkg/labels"
 )
 
 // NodeList contains a list of nodes in the cluster.
@@ -33,7 +33,7 @@ type NodeList struct {
 	ListMeta common.ListMeta `json:"listMeta"`
 
 	// Unordered list of Nodes.
-	Nodes []Node `json:"nodes"`
+	Nodes             []Node          `json:"nodes"`
 	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
 }
 
@@ -45,6 +45,19 @@ type Node struct {
 
 	// Ready Status of the node
 	Ready api.ConditionStatus `json:"ready"`
+}
+
+// GetNodeListFromChannels returns a list of all namespaces in the cluster.
+func GetNodeListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery,
+	heapsterClient *heapster.HeapsterClient) (*NodeList, error) {
+	log.Printf("Getting node list")
+
+	namespaces := <-channels.NodeList.List
+	if err := <-channels.NodeList.Error; err != nil {
+		return nil, err
+	}
+
+	return toNodeList(namespaces.Items, dsQuery, heapsterClient), nil
 }
 
 // GetNodeList returns a list of all Nodes in the cluster.

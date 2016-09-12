@@ -141,6 +141,15 @@ backendApi.Workloads;
 
 /**
  * @typedef {{
+ *   nodeList: !backendApi.NodeList,
+ *   namespaceList: !backendApi.NamespaceList,
+ *   persistentVolumeList: !backendApi.PersistentVolumeList,
+ * }}
+ */
+backendApi.Admin;
+
+/**
+ * @typedef {{
  *   timestamp: string,
  *   value: number
  * }}
@@ -848,6 +857,7 @@ backendApi.Namespace;
 
 /**
  * @typedef {{
+ *   listMeta: !backendApi.ListMeta,
  *   namespaces: !Array<!backendApi.Namespace>
  * }}
  */
