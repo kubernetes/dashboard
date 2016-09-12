@@ -14,24 +14,67 @@
 
 import {LogsController} from 'logs/logs_controller';
 import LogsModule from 'logs/logs_module';
+import {StateParams} from 'logs/logs_state';
 
 describe('Logs controller', () => {
 
   /** @type {string} */
-  const logsTextColorClassName = 'kd-logs-text-color';
+  const logsTextColorClassName = 'kd-logs-text-color-invert';
 
   /** @type {!LogsController} */
   let ctrl;
 
+  /** @type {!angular.$httpBackend} */
+  let httpBackend;
+
+  /** @type {string} */
+  const mockNamespace = 'namespace11';
+
+  /** @type {string} */
+  const mockPodId = 'pod2';
+
+  /** @type {string} */
+  const mockContainer = 'con22';
+
+  /** @type {!StateParams} */
+  const stateParams = new StateParams(mockNamespace, mockPodId, mockContainer);
+
+  /** @type {!backendApi.PodContainers} */
+  const podContainers = {containers: [mockContainer]};
+
   let podLogs = {
-    logs: [],
+    logs: ['1 a', '2 b', '3 c'],
+    firstLogLineReference: {'logTimestamp': '1', 'lineNum': -1},
+    lastLogLineReference: {logTimestamp: '3', lineNum: -1},
+    logViewInfo: {
+      referenceLogLineId: {'logTimestamp': 'X', 'lineNum': 11},
+      'relativeFrom': 22,
+      'relativeTo': 25,
+    },
+  };
+
+  let otherLogs = {
+    logs: ['7 x', '8 y'],
+    firstLogLineReference: {'logTimestamp': '7', 'lineNum': -1},
+    lastLogLineReference: {logTimestamp: '8', lineNum: -1},
+    logViewInfo: {
+      referenceLogLineId: {'logTimestamp': 'Y', 'lineNum': 12},
+      'relativeFrom': 33,
+      'relativeTo': 35,
+    },
   };
 
   beforeEach(() => {
     angular.mock.module(LogsModule.name);
 
-    angular.mock.inject(
-        ($controller) => { ctrl = $controller(LogsController, {podLogs: podLogs}); });
+    angular.mock.inject(($controller, $httpBackend) => {
+      ctrl = $controller(LogsController, {
+        podLogs: angular.copy(podLogs),
+        podContainers: podContainers,
+        $stateParams: stateParams,
+      });
+      httpBackend = $httpBackend;
+    });
   });
 
   it('should instantiate the controller properly', () => { expect(ctrl).not.toBeUndefined(); });
@@ -39,5 +82,69 @@ describe('Logs controller', () => {
   it('should return style class for logs content', () => {
     // expect
     expect(ctrl.getStyleClass()).toEqual(`${logsTextColorClassName}`);
+  });
+
+  it('should display zero state log line if server returned no logs', () => {
+    ctrl.podLogs.logs = [];
+    ctrl.$onInit();
+    expect(ctrl.logsSet.length).toEqual(1);
+  });
+
+  it('should display logs', () => {
+    ctrl.$onInit();
+    expect(ctrl.logsSet.length).toEqual(3);
+  });
+
+  it('should load newer logs on loadNewer call', () => {
+    ctrl.$onInit();
+    ctrl.loadNewer();
+    expect(ctrl.logsSet.length).toEqual(3);
+    httpBackend
+        .expectGET(
+            /api\/v1\/pod\/namespace11\/pod2\/log\/con22\?referenceLineNum=11&referenceTimestamp=X&relativeFrom=25&relativeTo=\d+/)
+        .respond(200, otherLogs);
+    httpBackend.flush();
+    expect(ctrl.logsSet.length).toEqual(2);
+    expect(ctrl.currentLogView).toEqual(otherLogs.logViewInfo);
+  });
+
+  it('should load older logs on loadOlder call', () => {
+    ctrl.$onInit();
+    ctrl.loadOlder();
+    expect(ctrl.logsSet.length).toEqual(3);
+    httpBackend
+        .expectGET(
+            /api\/v1\/pod\/namespace11\/pod2\/log\/con22\?referenceLineNum=11&referenceTimestamp=X&relativeFrom=-?\d+&relativeTo=22/)
+        .respond(200, otherLogs);
+    httpBackend.flush();
+    expect(ctrl.logsSet.length).toEqual(2);
+    expect(ctrl.currentLogView).toEqual(otherLogs.logViewInfo);
+  });
+
+  it('should load newest logs on loadNewest call', () => {
+    ctrl.$onInit();
+    ctrl.loadNewest();
+    expect(ctrl.logsSet.length).toEqual(3);
+    httpBackend
+        .expectGET(
+            /api\/v1\/pod\/namespace11\/pod2\/log\/con22\?referenceLineNum=11&referenceTimestamp=X&relativeFrom=\d+&relativeTo=\d+/)
+        .respond(200, otherLogs);
+    httpBackend.flush();
+    expect(ctrl.logsSet.length).toEqual(2);
+    expect(ctrl.currentLogView).toEqual(otherLogs.logViewInfo);
+
+  });
+
+  it('should load oldest logs on loadOldest call', () => {
+    ctrl.$onInit();
+    ctrl.loadOldest();
+    expect(ctrl.logsSet.length).toEqual(3);
+    httpBackend
+        .expectGET(
+            /api\/v1\/pod\/namespace11\/pod2\/log\/con22\?referenceLineNum=11&referenceTimestamp=X&relativeFrom=-\d+&relativeTo=-\d+/)
+        .respond(200, otherLogs);
+    httpBackend.flush();
+    expect(ctrl.logsSet.length).toEqual(2);
+    expect(ctrl.currentLogView).toEqual(otherLogs.logViewInfo);
   });
 });

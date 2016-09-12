@@ -25,24 +25,24 @@ export default class LogsToolbarController {
    * @param {!../logs_service.LogsService} logsService
    * @ngInject
    */
-  constructor($state, $stateParams, podContainers, logsService) {
+  constructor($state, $stateParams, logsService) {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
+    /** @export {../logs_state.StateParams} */
+    this.stateParams = $stateParams;
+
     /**
-     * Service to notify logs controller if any changes on toolbar.
+     * Initialised from scope.
      * @private {!../logs_service.LogsService}
      */
-    this.logsService_ = logsService;
+    this.logsService = logsService;
 
-    /** @export {!Array<string>} */
-    this.containers = podContainers.containers;
+    /** @export {!Array<string>} Initialised from scope. */
+    this.containers;
 
     /** @export {string} */
     this.container = $stateParams.container || this.containers[0];
-
-    /** @export {../logs_state.StateParams} */
-    this.stateParams = $stateParams;
 
     /** @export */
     this.i18n = i18n;
@@ -66,7 +66,7 @@ export default class LogsToolbarController {
    */
   getColorIconClass() {
     const logsTextColor = 'kd-logs-color-icon';
-    if (this.logsService_.getInverted()) {
+    if (this.logsService.getInverted()) {
       return `${logsTextColor}-invert`;
     } else {
       return logsTextColor;
@@ -80,7 +80,7 @@ export default class LogsToolbarController {
    */
   getSizeIconClass() {
     const logsTextColor = 'kd-logs-size-icon';
-    if (this.logsService_.getCompact()) {
+    if (this.logsService.getCompact()) {
       return `${logsTextColor}-compact`;
     } else {
       return logsTextColor;
@@ -91,13 +91,13 @@ export default class LogsToolbarController {
    * Execute a code when a user changes the selected option for console font size.
    * @export
    */
-  onFontSizeChange() { this.logsService_.setCompact(); }
+  onFontSizeChange() { this.logsService.setCompact(); }
 
   /**
    * Execute a code when a user changes the selected option for console color.
    * @export
    */
-  onTextColorChange() { this.logsService_.setInverted(); }
+  onTextColorChange() { this.logsService.setInverted(); }
 
   /**
    * Find Pod by name.
@@ -138,6 +138,21 @@ export default class LogsToolbarController {
     return container;
   }
 }
+
+/**
+ * Definition object for the component that displays replication controller events card.
+ *
+ * @type {!angular.Component}
+ */
+export const logsToolbarComponent = {
+  templateUrl: 'logs/logstoolbar/logstoolbar.html',
+  controller: LogsToolbarController,
+  controllerAs: 'ctrl',
+  bindings: {
+    'containers': '<',
+    'logsService': '<',
+  },
+};
 
 const i18n = {
   /** @export {string} @desc Label 'Pod' on the toolbar of the logs page. Ends with colon. */

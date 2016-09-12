@@ -14,17 +14,40 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
+<kd-logs-toolbar containers="ctrl.podContainers.containers"></kd-logs-toolbar>
+<div>
+  <span ng-show="ctrl.logsSet.length > 1"> Showing logs from {{ctrl.podLogs.firstLogLineReference.logTimestamp | date : "medium" }} to {{ctrl.podLogs.lastLogLineReference.logTimestamp | date : "medium" }}</span>
+  <div class="kd-list-pagination-buttons">
+    <md-button class="md-icon-button md-button md-ink-ripple"
+               ng-click="ctrl.loadOldest()">
+      <md-icon>first_page</md-icon>
+    </md-button>
+
+    <md-button class="md-icon-button md-button md-ink-ripple"
+               ng-click="ctrl.loadOlder()">
+      <md-icon>chevron_left</md-icon>
+    </md-button>
+
+    <md-button class="md-icon-button md-button md-ink-ripple"
+               ng-click="ctrl.loadNewer()">
+      <md-icon>chevron_right</md-icon>
+    </md-button>
+
+    <md-button class="md-icon-button md-button md-ink-ripple"
+               ng-click="ctrl.loadNewest()">
+      <md-icon>last_page</md-icon>
+    </md-button>
+  </div>
+</div>
+
 <kd-content-card>
+
+
   <kd-content>
-    <md-content layout-padding flex="auto" layout-fill ng-class=ctrl.getStyleClass()
-                ng-show="::ctrl.logsSet.length">
-      <div ng-repeat="n in ctrl.logsSet track by $index" ng-class=ctrl.getLogsClass()>
-        <pre ng-bind-html="n"></pre>
+    <md-virtual-repeat-container class="log-view" ng-class="ctrl.getStyleClass()">
+      <div md-virtual-repeat="item in ctrl.logsSet" ng-class="ctrl.getLogsClass()">
+        {{item}}
       </div>
-    </md-content>
-    <div class="kd-zerostate-message" layout-padding ng-hide="::ctrl.logsSet.length">
-      <div class="kd-zerostate-title">{{::ctrl.i18n.MSG_LOGS_ZEROSTATE_TITLE}}</div>
-      <div class="kd-zerostate-text">{{::ctrl.i18n.MSG_LOGS_ZEROSTATE_TEXT}}</div>
-    </div>
+    </md-virtual-repeat-container>
   </kd-content>
 </kd-content-card>
