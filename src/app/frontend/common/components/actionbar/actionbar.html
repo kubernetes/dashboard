@@ -14,10 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-toolbar class="kd-toolbar kd-actionbar">
-  <div class="md-toolbar-tools" layout="row">
-    <kd-breadcrumbs class="kd-actionbar-breadcrumbs" limit="2" flex="auto" layout="row"></kd-breadcrumbs>
-    <span flex="auto"></span>
-    <div ui-view="actionbar"></div>
+<div layout="row" layout-align="center center">
+  <div ui-view="actionbar" class="kd-actionbar-view-part"></div>
+  <div ng-if="$ctrl.hasCustomActions()" class="kd-actionbar-divider"></div>
+  <div>
+    <md-button ng-click="$ctrl.create()">
+      <md-icon>add</md-icon>
+      <md-tooltip md-direction="bottom">
+        {{::$ctrl.i18n.MSG_ACTION_BAR_CREATE_ACTION_TOOLTIP}}
+      </md-tooltip>
+      {{::$ctrl.i18n.MSG_ACTION_BAR_CREATE_ACTION}}
+    </md-button>
   </div>
-</md-toolbar>
+</div>

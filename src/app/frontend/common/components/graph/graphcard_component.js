@@ -32,8 +32,7 @@ export class GraphCardController {
    * @return {boolean}
    */
   shouldShowGraph() {
-    return this.metrics !== null &&
-        this.metrics.filter((metric) => metric.dataPoints.length > 1).length > 0;
+    return this.metrics && this.metrics.filter((metric) => metric.dataPoints.length > 1).length > 0;
   }
 }
 

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
+import {stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 
 import {NodeListController} from './nodelist_controller';
@@ -42,7 +42,6 @@ export default function stateConfig($stateProvider) {
         controllerAs: '$ctrl',
         templateUrl: 'nodelist/nodelist.html',
       },
-      [actionbarViewName]: {},
     },
   });
 }
