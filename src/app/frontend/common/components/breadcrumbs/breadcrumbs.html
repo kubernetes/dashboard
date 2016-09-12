@@ -14,13 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div ng-switch="$last" ng-repeat="breadcrumb in ctrl.breadcrumbs" class="md-title kd-breadcrumbs-ellipsised"
-    ng-class="{'kd-inline-breadcrumb': !$last}" flex="shrink">
+<div ng-switch="$last" ng-repeat="breadcrumb in ctrl.breadcrumbs" flex="shrink"
+     class="md-title kd-breadcrumbs-ellipsised kd-breadcrumbs-spacing"
+     ng-class="{'kd-inline-breadcrumb': !$last}">
   <a ng-switch-when="false" href="{{::breadcrumb.stateLink}}" class="kd-faded-breadcrumb">
     {{::breadcrumb.label}}
   </a>
   <div ng-switch-when="true" class="kd-breadcrumbs-ellipsised">
     <kd-middle-ellipsis display-string="{{::breadcrumb.label}}"></kd-middle-ellipsis>
   </div>
-  <span ng-switch-when="false" class="kd-faded-breadcrumb">></span>
+  <md-icon ng-switch-when="false" class="kd-faded-breadcrumb">
+    keyboard_arrow_right
+  </md-icon>
 </div>
