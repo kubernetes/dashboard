@@ -21,12 +21,16 @@
 .kd-breadcrumbs-ellipsised {
   display: inline-block;
   float: left;
-  font-family: $font-family-medium-monospace;
+  font-family: $font-family-medium;
   font-size: $subhead-font-size-base-lg;
   max-width: 100%;
 
-  >.kd-faded-breadcrumb {
+  > .kd-faded-breadcrumb {
     color: $hue-2;
+  }
+
+  .kd-middleellipsis {
+    line-height: 3 * $baseline-grid;
   }
 }
 
