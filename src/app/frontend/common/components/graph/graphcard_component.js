@@ -31,9 +31,7 @@ export class GraphCardController {
     this.selectedMetrics;
   }
 
-  $onInit() {
-    this.selectedMetrics = this.getSelectedMetrics();
-  }
+  $onInit() { this.selectedMetrics = this.getSelectedMetrics(); }
 
   /**
    * Filters metrics by selectedMetricNames. If selectedMetricNames is undefined returns all metrics.
@@ -59,6 +57,7 @@ export class GraphCardController {
   shouldShowGraph() {
     return this.metrics !== null &&
         this.selectedMetrics.filter((metric) => metric.dataPoints.length > 1).length > 0;
+  }
 }
 
 /**

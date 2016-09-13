@@ -114,27 +114,28 @@ describe('Graph component controller', () => {
     expect(element.find('.lines2Wrap path.nv-line').attr('d').split(',').length).toEqual(3);
 
   });
-  it('should only render metrics with at least 2 data points and use only left axis if free.', () => {
-    if (isIE11()) {
-      // skip the test if IE 11
-      return;
-    }
-    ctrl.metrics = metricsWithTooFewDataPoints;
-    ctrl.$onInit();
-    nv.render.queue.pop().generate();
-    expect(element.find('.lines1Wrap path.nv-line').attr('d').split(',').length).toEqual(3);
-    expect(element.find('.lines2Wrap path.nv-line').attr('d')).toBeUndefined();
+  it('should only render metrics with at least 2 data points and use only left axis if free.',
+     () => {
+       if (isIE11()) {
+         // skip the test if IE 11
+         return;
+       }
+       ctrl.metrics = metricsWithTooFewDataPoints;
+       ctrl.$onInit();
+       nv.render.queue.pop().generate();
+       expect(element.find('.lines1Wrap path.nv-line').attr('d').split(',').length).toEqual(3);
+       expect(element.find('.lines2Wrap path.nv-line').attr('d')).toBeUndefined();
 
-  });
+     });
   it('- Y axes should be from 0 to max', () => {
     ctrl.$onInit();
     nv.render.queue.pop().generate();
     // y1
     expect(element.find('.nv-y1 .nv-axisMin-y > text').text()).toEqual('0');
-    expect(element.find('.nv-y1 .nv-axisMax-y > text').text()).toEqual('0.055');
+    expect(element.find('.nv-y1 .nv-axisMax-y > text').text()).toEqual('0.056');
     // y2
     expect(element.find('.nv-y2 .nv-axisMin-y > text').text()).toEqual('0');
-    expect(element.find('.nv-y2 .nv-axisMax-y > text').text()).toEqual('1.02 Gi');
+    expect(element.find('.nv-y2 .nv-axisMax-y > text').text()).toEqual('1.05 Gi');
   });
   it('- X axis should have correct tick format', () => {
     ctrl.$onInit();
