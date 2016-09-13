@@ -150,6 +150,14 @@ backendApi.Admin;
 
 /**
  * @typedef {{
+ *   serviceList: !backendApi.ServiceList,
+ *   ingressList: !backendApi.IngressList,
+ * }}
+ */
+backendApi.ServicesAndDiscovery;
+
+/**
+ * @typedef {{
  *   timestamp: string,
  *   value: number
  * }}
