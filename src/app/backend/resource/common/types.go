@@ -112,6 +112,7 @@ const (
 	ResourceKindConfigMap             = "configmap"
 	ResourceKindPersistentVolume      = "persistentvolume"
 	ResourceKindPersistentVolumeClaim = "persistentvolumeclaim"
+	ResourceKindResourceQuota         = "resourcequota"
 )
 
 // ClientType represents type of client that is used to perform generic operations on resources.
@@ -153,6 +154,7 @@ var kindToAPIMapping = map[string]struct {
 	ResourceKindConfigMap:             {"configmaps", ClientTypeDefault},
 	ResourceKindPersistentVolume:      {"persistentvolumes", ClientTypeDefault},
 	ResourceKindPersistentVolumeClaim: {"persistentvolumeclaims", ClientTypeDefault},
+	ResourceKindResourceQuota:         {"resourcequota", ClientTypeDefault},
 }
 
 // IsSelectorMatching returns true when an object with the given

@@ -43,6 +43,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/resourcequota"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/secret"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/workload"
@@ -455,6 +456,20 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 		apiV1Ws.GET("/persistentvolumeclaim/{namespace}/{name}").
 			To(apiHandler.handleGetPersistentVolumeClaimDetail).
 			Writes(persistentvolumeclaim.PersistentVolumeClaimDetail{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/resourcequota/").
+			To(apiHandler.handleGetResourceQuotaList).
+			Writes(resourcequota.ResourceQuotaList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/resourcequota/{namespace}").
+			To(apiHandler.handleGetResourceQuotaList).
+			Writes(resourcequota.ResourceQuotaList{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/resourcequota/{namespace}/{resourcequota}").
+			To(apiHandler.handleGetResourceQuotaDetail).
+			Writes(resourcequota.ResourceQuotaDetail{}))
 
 	return wsContainer
 }
@@ -1206,6 +1221,28 @@ func (apiHandler *APIHandler) handleGetPersistentVolumeClaimDetail(request *rest
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
+func (apiHandler *APIHandler) handleGetResourceQuotaList(request *restful.Request, response *restful.Response) {
+
+	namespace := parseNamespacePathParameter(request)
+	dataSelect := parseDataSelectPathParameter(request)
+	result, err := resourcequota.GetResourceQuotaList(apiHandler.client, namespace, dataSelect)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetResourceQuotaDetail(request *restful.Request, response *restful.Response) {
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("resourcequota")
+	result, err := resourcequota.GetResourceQuotaDetail(apiHandler.client, namespace, name)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
 // Handles log API call.
 func (apiHandler *APIHandler) handleLogs(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
