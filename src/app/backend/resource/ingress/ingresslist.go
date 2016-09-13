@@ -54,6 +54,17 @@ func GetIngressList(client client.Interface, namespace *common.NamespaceQuery,
 	return NewIngressList(ingressList.Items, dsQuery), err
 }
 
+// GetIngressListFromChannels - return all ingresses in the given namespace.
+func GetIngressListFromChannels(channels *common.ResourceChannels,
+	dsQuery *dataselect.DataSelectQuery) (*IngressList, error) {
+	ingress := <-channels.IngressList.List
+	if err := <-channels.IngressList.Error; err != nil {
+		return nil, err
+	}
+
+	return NewIngressList(ingress.Items, dsQuery), nil
+}
+
 // NewIngress - creates a new instance of Ingress struct based on K8s Ingress.
 func NewIngress(ingress *extensions.Ingress) *Ingress {
 	modelIngress := &Ingress{

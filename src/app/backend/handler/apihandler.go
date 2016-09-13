@@ -34,6 +34,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/ingress"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/logs"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/node"
@@ -45,12 +46,12 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/secret"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/servicesanddiscovery"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/workload"
 	"github.com/kubernetes/dashboard/src/app/backend/validation"
 	clientK8s "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
 	"k8s.io/kubernetes/pkg/runtime"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/logs"
 )
 
 const (
@@ -186,6 +187,15 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 		apiV1Ws.GET("/admin").
 			To(apiHandler.handleGetAdmin).
 			Writes(admin.Admin{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/servicesanddiscovery").
+			To(apiHandler.handleGetServicesAndDiscovery).
+			Writes(servicesanddiscovery.ServicesAndDiscovery{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/servicesanddiscovery/{namespace}").
+			To(apiHandler.handleGetServicesAndDiscovery).
+			Writes(servicesanddiscovery.ServicesAndDiscovery{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/replicaset").
@@ -767,6 +777,19 @@ func (apiHandler *APIHandler) handleGetWorkloads(
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
+func (apiHandler *APIHandler) handleGetServicesAndDiscovery(
+	request *restful.Request, response *restful.Response) {
+
+	namespace := parseNamespacePathParameter(request)
+	result, err := servicesanddiscovery.GetServicesAndDiscovery(apiHandler.client, namespace)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
 // Handles get Replica Sets list API call.
 func (apiHandler *APIHandler) handleGetReplicaSets(
 	request *restful.Request, response *restful.Response) {
@@ -1233,10 +1256,10 @@ func (apiHandler *APIHandler) handleLogs(request *restful.Request, response *res
 		logSelector = &logs.LogViewSelector{
 			ReferenceLogLineId: logs.LogLineId{
 				LogTimestamp: logs.LogTimestamp(refTimestamp),
-				LineNum: refLineNum,
+				LineNum:      refLineNum,
 			},
 			RelativeFrom: relativeFrom,
-			RelativeTo: relativeTo,
+			RelativeTo:   relativeTo,
 		}
 	}
 

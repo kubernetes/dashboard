@@ -46,6 +46,7 @@ import secretDetailModule from './secretdetail/module';
 import secretListModule from './secretlist/module';
 import serviceDetailModule from './servicedetail/servicedetail_module';
 import serviceListModule from './servicelist/servicelist_module';
+import servicesanddiscoveryModule from './servicesanddiscovery/module';
 import workloadsModule from './workloads/workloads_module';
 
 
@@ -89,6 +90,7 @@ export default angular
           secretDetailModule.name,
           ingressListModule.name,
           ingressDetailModule.name,
+          servicesanddiscoveryModule.name,
         ])
     .config(indexConfig)
     .config(routeConfig);

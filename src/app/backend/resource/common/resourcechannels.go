@@ -56,6 +56,9 @@ type ResourceChannels struct {
 	// List and error channels to Services.
 	ServiceList ServiceListChannel
 
+	// List and error channels to Ingresses.
+	IngressList IngressListChannel
+
 	// List and error channels to Pods.
 	PodList PodListChannel
 
@@ -102,6 +105,39 @@ func GetServiceListChannel(client client.ServicesNamespacer,
 	go func() {
 		list, err := client.Services(nsQuery.ToRequestParam()).List(listEverything)
 		var filteredItems []api.Service
+		for _, item := range list.Items {
+			if nsQuery.Matches(item.ObjectMeta.Namespace) {
+				filteredItems = append(filteredItems, item)
+			}
+		}
+		list.Items = filteredItems
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// IngressListChannel is a list and error channels to Ingresss.
+type IngressListChannel struct {
+	List  chan *extensions.IngressList
+	Error chan error
+}
+
+// GetIngressListChannel returns a pair of channels to a Ingress list and errors that both
+// must be read numReads times.
+func GetIngressListChannel(client client.IngressNamespacer,
+	nsQuery *NamespaceQuery, numReads int) IngressListChannel {
+
+	channel := IngressListChannel{
+		List:  make(chan *extensions.IngressList, numReads),
+		Error: make(chan error, numReads),
+	}
+	go func() {
+		list, err := client.Ingress(nsQuery.ToRequestParam()).List(listEverything)
+		var filteredItems []extensions.Ingress
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
 				filteredItems = append(filteredItems, item)

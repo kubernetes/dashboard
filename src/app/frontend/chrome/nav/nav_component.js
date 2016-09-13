@@ -28,8 +28,8 @@ import {stateName as replicaSetState} from 'replicasetlist/replicasetlist_state'
 import {stateName as replicationControllerState} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 import {stateName as secretState} from 'secretlist/list_state';
 import {stateName as serviceState} from 'servicelist/servicelist_state';
+import {stateName as servicesanddiscoveryState} from 'servicesanddiscovery/state';
 import {stateName as workloadState} from 'workloads/workloads_state';
-
 
 /**
  * @final
@@ -65,6 +65,7 @@ export class NavController {
       'secret': secretState,
       'configMap': configMapState,
       'ingress': ingressState,
+      'serviceDiscovery': servicesanddiscoveryState,
     };
 
     /** @export */
