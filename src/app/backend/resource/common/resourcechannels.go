@@ -74,8 +74,11 @@ type ResourceChannels struct {
 	// List and error channels to PetSets.
 	PetSetList PetSetListChannel
 
-	// List and error channels to PetSets.
+	// List and error channels to ConfigMaps.
 	ConfigMapList ConfigMapListChannel
+
+	// List and error channels to Secrets.
+	SecretList SecretListChannel
 
 	// List and error channels to PodMetrics.
 	PodMetrics PodMetricsChannel
@@ -511,6 +514,39 @@ func GetConfigMapListChannel(client client.ConfigMapsNamespacer, nsQuery *Namesp
 	go func() {
 		list, err := client.ConfigMaps(nsQuery.ToRequestParam()).List(listEverything)
 		var filteredItems []api.ConfigMap
+		for _, item := range list.Items {
+			if nsQuery.Matches(item.ObjectMeta.Namespace) {
+				filteredItems = append(filteredItems, item)
+			}
+		}
+		list.Items = filteredItems
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// SecretListChannel is a list and error channels to Secrets.
+type SecretListChannel struct {
+	List  chan *api.SecretList
+	Error chan error
+}
+
+// GetSecretListChannel returns a pair of channels to a Secret list and errors that
+// both must be read numReads times.
+func GetSecretListChannel(client client.SecretsNamespacer, nsQuery *NamespaceQuery, numReads int) SecretListChannel {
+
+	channel := SecretListChannel{
+		List:  make(chan *api.SecretList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.Secrets(nsQuery.ToRequestParam()).List(listEverything)
+		var filteredItems []api.Secret
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
 				filteredItems = append(filteredItems, item)

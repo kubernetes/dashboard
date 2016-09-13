@@ -16,11 +16,11 @@ package secret
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // SecretSpec - common interface for the specification of different secrets.
@@ -84,6 +84,21 @@ func GetSecretList(client *client.Client, namespace *common.NamespaceQuery,
 		return nil, err
 	}
 	return NewSecretList(secretList.Items, dsQuery), err
+}
+
+// GetSecretListFromChannels returns a list of all Config Maps in the cluster
+// reading required resource list once from the channels.
+func GetSecretListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (
+	*SecretList, error) {
+
+	list := <-channels.SecretList.List
+	if err := <-channels.SecretList.Error; err != nil {
+		return nil, err
+	}
+
+	result := NewSecretList(list.Items, dsQuery)
+
+	return result, nil
 }
 
 // CreateSecret - create a single secret using the cluster API client

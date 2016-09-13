@@ -18,6 +18,7 @@
  */
 import adminModule from './admin/module';
 import chromeModule from './chrome/chrome_module';
+import configModule from './config/module';
 import configMapDetailModule from './configmapdetail/configmapdetail_module';
 import configMapListModule from './configmaplist/configmaplist_module';
 import deployModule from './deploy/deploy_module';
@@ -91,6 +92,7 @@ export default angular
           ingressListModule.name,
           ingressDetailModule.name,
           servicesanddiscoveryModule.name,
+          configModule.name,
         ])
     .config(indexConfig)
     .config(routeConfig);

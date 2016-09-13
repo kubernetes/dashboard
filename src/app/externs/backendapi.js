@@ -158,6 +158,14 @@ backendApi.ServicesAndDiscovery;
 
 /**
  * @typedef {{
+ *   configMapList: !backendApi.ConfigMapList,
+ *   secretList: !backendApi.SecretList,
+ * }}
+ */
+backendApi.Config;
+
+/**
+ * @typedef {{
  *   timestamp: string,
  *   value: number
  * }}
@@ -919,7 +927,8 @@ backendApi.Secret;
 
 /**
  * @typedef {{
- *   secrets: !Array<!backendApi.Secret>
+ *   secrets: !Array<!backendApi.Secret>,
+ *   listMeta: !backendApi.ListMeta
  * }}
  */
 backendApi.SecretList;

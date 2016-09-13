@@ -26,6 +26,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/admin"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/config"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/configmap"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/container"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
@@ -197,6 +198,15 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 		apiV1Ws.GET("/servicesanddiscovery/{namespace}").
 			To(apiHandler.handleGetServicesAndDiscovery).
 			Writes(servicesanddiscovery.ServicesAndDiscovery{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/config").
+			To(apiHandler.handleGetConfig).
+			Writes(config.Config{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/config/{namespace}").
+			To(apiHandler.handleGetConfig).
+			Writes(config.Config{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/replicaset").
@@ -805,6 +815,19 @@ func (apiHandler *APIHandler) handleGetServicesAndDiscovery(
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
+func (apiHandler *APIHandler) handleGetConfig(
+	request *restful.Request, response *restful.Response) {
+
+	namespace := parseNamespacePathParameter(request)
+	result, err := config.GetConfig(apiHandler.client, namespace)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
 // Handles get Replica Sets list API call.
 func (apiHandler *APIHandler) handleGetReplicaSets(
 	request *restful.Request, response *restful.Response) {
@@ -1266,6 +1289,7 @@ func (apiHandler *APIHandler) handleGetResourceQuotaDetail(request *restful.Requ
 	}
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
+
 // Handles log API call.
 func (apiHandler *APIHandler) handleLogs(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
