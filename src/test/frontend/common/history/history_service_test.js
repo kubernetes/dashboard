@@ -35,14 +35,14 @@ describe('History service', () => {
     spyOn(state, 'go');
 
     service.back('myDefault');
-    expect(state.go.calls.mostRecent().args).toEqual(['myDefault']);
+    expect(state.go.calls.mostRecent().args).toEqual(['myDefault', null]);
 
-    scope.$broadcast('$stateChangeSuccess', {}, {}, {});
+    scope.$broadcast('$stateChangeSuccess', {}, {}, {}, {foo: 'bar'});
     service.back('myDefault');
-    expect(state.go.calls.mostRecent().args).toEqual(['myDefault']);
+    expect(state.go.calls.mostRecent().args).toEqual(['myDefault', {foo: 'bar'}]);
 
-    scope.$broadcast('$stateChangeSuccess', {}, {}, {name: 'someName'});
+    scope.$broadcast('$stateChangeSuccess', {}, {}, {name: 'someName'}, {foo: 'bar2'});
     service.back('myDefault');
-    expect(state.go.calls.mostRecent().args).toEqual(['someName']);
+    expect(state.go.calls.mostRecent().args).toEqual(['someName', {foo: 'bar2'}]);
   });
 });

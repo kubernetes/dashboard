@@ -30,16 +30,20 @@ export class HistoryService {
     this.scope_ = $rootScope;
     /** @private {string} */
     this.previousStateName_ = '';
+    /** @private {Object} */
+    this.previousStateParams_ = null;
   }
 
   /** Initializes the service. Must be called before use. */
   init() {
     this.scope_.$on(
-        '$stateChangeSuccess', (event, toState, toParams, /** !ui.router.State */ fromState) => {
+        '$stateChangeSuccess',
+        (event, toState, toParams, /** !ui.router.State */ fromState, fromParams) => {
           let prevName = fromState.name || '';
           // Skip deploy states from history. They are not relevant now. This may change later.
           if (prevName.indexOf(deployState) === -1) {
             this.previousStateName_ = prevName;
+            this.previousStateParams_ = fromParams;
           }
         });
   }
@@ -48,5 +52,7 @@ export class HistoryService {
    * Goes back to previous state or to the provided default if none set.
    * @param {string} defaultState
    */
-  back(defaultState) { this.state_.go(this.previousStateName_ || defaultState); }
+  back(defaultState) {
+    this.state_.go(this.previousStateName_ || defaultState, this.previousStateParams_);
+  }
 }

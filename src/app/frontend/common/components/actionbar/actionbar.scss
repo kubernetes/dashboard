@@ -47,3 +47,10 @@
     }
   }
 }
+
+.kd-actionbar-divider {
+  border-left: 2px solid $hue-3;
+  height: 40px;
+  margin-left: 1.5 * $baseline-grid;
+  margin-right: $baseline-grid;
+}

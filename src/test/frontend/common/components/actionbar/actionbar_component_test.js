@@ -17,8 +17,8 @@ import actionbarCardModule from 'common/components/actionbar/actionbar_module';
 describe('Action bar', () => {
   beforeEach(() => angular.mock.module(actionbarCardModule.name));
 
-  it('should throw an error on no content', angular.mock.inject(($rootScope, $compile) => {
+  it('should not throw an error on no content', angular.mock.inject(($rootScope, $compile) => {
     $compile('<kd-actionbar></kd-actionbar>')($rootScope);
-    expect(() => { $rootScope.$digest(); }).toThrow();
+    expect(() => { $rootScope.$digest(); }).not.toThrow();
   }));
 });

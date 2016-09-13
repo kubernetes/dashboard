@@ -12,40 +12,52 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {actionbarViewName} from 'chrome/chrome_state';
+import {deployAppStateName} from 'deploy/deploy_state';
+
 /**
  * @final
  */
 export class ActionbarComponent {
   /**
-   * @param {!angular.JQLite} $element
-   * @param {!angular.Scope} $scope
+   * @param {!ui.router.$state} $state
    * @ngInject
    */
-  constructor($element, $scope) {
-    /** @private {!angular.JQLite}} */
-    this.element_ = $element;
-    /** @private {!angular.Scope} */
-    this.scope_ = $scope;
+  constructor($state) {
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
+
+    /** @export */
+    this.i18n = i18n;
+  }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  hasCustomActions() {
+    return !!this.state_.current.views && !!this.state_.current.views[actionbarViewName];
   }
 
   /**
    * @export
    */
-  $onInit() {
-    let closestContent = this.element_.parent().find('md-content');
-    if (!closestContent || closestContent.length === 0) {
-      throw new Error('Actionbar component requires sibling md-content element');
-    }
-  }
+  create() { this.state_.go(deployAppStateName); }
 }
 
 /**
- * Returns actionbar component.
- *
- * @return {!angular.Directive}
+ * @type {!angular.Component}
  */
 export const actionbarComponent = {
   templateUrl: 'common/components/actionbar/actionbar.html',
   transclude: true,
   controller: ActionbarComponent,
+};
+
+const i18n = {
+  /** @export {string} @desc Label for global action bar create button. */
+  MSG_ACTION_BAR_CREATE_ACTION: goog.getMsg('Create'),
+  /** @export {string} @desc Label for global action bar create button tooltip. */
+  MSG_ACTION_BAR_CREATE_ACTION_TOOLTIP:
+      goog.getMsg('Create an application or any Kubernetes resource'),
 };
