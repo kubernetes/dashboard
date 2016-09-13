@@ -82,6 +82,9 @@ type ResourceChannels struct {
 
 	// List and error channels to PersistentVolumeClaims
 	PersistentVolumeClaimList PersistentVolumeClaimListChannel
+
+	// List and error channels to ResourceQuotas
+	ResourceQuotaList ResourceQuotaListChannel
 }
 
 // ServiceListChannel is a list and error channels to Services.
@@ -530,6 +533,33 @@ func GetPersistentVolumeClaimListChannel(client client.PersistentVolumeClaimsNam
 
 	go func() {
 		list, err := client.PersistentVolumeClaims(nsQuery.ToRequestParam()).List(listEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// ResourceQuotaListChannel is a list and error channels to ResourceQuotas.
+type ResourceQuotaListChannel struct {
+	List  chan *api.ResourceQuotaList
+	Error chan error
+}
+
+// GetResourceQuotaListChannel returns a pair of channels to a ResourceQuota list and errors that
+// both must be read numReads times.
+func GetResourceQuotaListChannel(client client.ResourceQuotasNamespacer, nsQuery *NamespaceQuery,
+	numReads int) ResourceQuotaListChannel {
+
+	channel := ResourceQuotaListChannel{
+		List:  make(chan *api.ResourceQuotaList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.ResourceQuotas(nsQuery.ToRequestParam()).List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
