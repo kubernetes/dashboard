@@ -72,6 +72,7 @@ describe('Graph card component controller', () => {
   it('should instantiate the controller properly', () => { expect(ctrl).not.toBeUndefined(); });
   it('should show graph card when there are metrics with at least 2 data points', () => {
     ctrl.metrics = stdMetrics;
+    ctrl.$onInit();
 
     let expected = ctrl.shouldShowGraph();
 
@@ -80,6 +81,7 @@ describe('Graph card component controller', () => {
 
   it('should hide graph card when there are no metrics with at least 2 data points', () => {
     ctrl.metrics = metricsWithTooFewDataPoints;
+    ctrl.$onInit();
 
     let expected = ctrl.shouldShowGraph();
 
@@ -87,6 +89,37 @@ describe('Graph card component controller', () => {
   });
   it('should hide graph card when metrics were not provided', () => {
     ctrl.metrics = null;
+    ctrl.$onInit();
+
+    let expected = ctrl.shouldShowGraph();
+
+    expect(expected).toBeFalsy();
+  });
+
+  it('should be able to select metrics by metric name - single metric', () => {
+    ctrl.metrics = stdMetrics;
+    ctrl.selectedMetricNames = 'memory/usage';
+    ctrl.$onInit();
+
+    let expected = ctrl.selectedMetrics.length;
+
+    expect(expected).toEqual(1);
+  });
+  
+  it('should be able to select metrics by metric name - multiple metrics', () => {
+    ctrl.metrics = stdMetrics;
+    ctrl.selectedMetricNames = 'memory/usage,cpu/usage_rate';
+    ctrl.$onInit();
+
+    let expected = ctrl.selectedMetrics.length;
+
+    expect(expected).toEqual(2);
+  });
+
+  it('should hide graph card when no metric names matched', () => {
+    ctrl.metrics = stdMetrics;
+    ctrl.selectedMetricNames = 'badname1,badname2'
+    ctrl.$onInit();
 
     let expected = ctrl.shouldShowGraph();
 

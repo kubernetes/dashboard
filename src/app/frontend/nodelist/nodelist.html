@@ -14,9 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-graph-card graph-title="$ctrl.i18n.MSG_NODE_LIST_GRAPH_CARD_TITLE"
-               metrics="$ctrl.nodeList.cumulativeMetrics">
-</kd-graph-card>
+<div layout="row">
+  <kd-graph-card graph-title="$ctrl.i18n.MSG_NODE_LIST_CPU_GRAPH_CARD_TITLE"
+                 metrics="$ctrl.nodeList.cumulativeMetrics" selected-metric-names="'cpu/usage_rate'" flex="auto">
+  </kd-graph-card>
+  <kd-graph-card graph-title="$ctrl.i18n.MSG_NODE_LIST_MEMORY_GRAPH_CARD_TITLE"
+                 metrics="$ctrl.nodeList.cumulativeMetrics" selected-metric-names="'memory/usage'" flex="auto">
+  </kd-graph-card>
+</div>
 
 <kd-content-card>
   <kd-content>

@@ -103,13 +103,20 @@ export class GraphController {
       // don't display empty graph, hide it completely,
       if (data.length === 0) {
         return;
+      } else if (typeof yAxis1Type === 'undefined') {
+        // If axis 2 is used, but not axis 1, move all graphs from axis 2 to axis 1. Looks much
+        // better.
+        yAxis1Type = yAxis2Type;
+        y1max = y2max;
+        data.forEach((d) => d.yAxis = 1);
+        yAxis2Type = undefined;
       }
 
       // customise X axis (hardcoded time).
       let xAxisSettings = axisSettings[TimeAxisType];
       chart.xAxis.axisLabel(xAxisSettings.label)
           .tickFormat(xAxisSettings.formatter)
-          .staggerLabels(true);
+          .staggerLabels(false);
 
       // customise Y axes
       if (typeof yAxis1Type !== 'undefined') {

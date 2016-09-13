@@ -38,8 +38,10 @@ export class NodeDetailController {
 }
 
 const i18n = {
-  /** @export {string} @desc Title for graph card displaying metrics of one node. */
-  MSG_NODE_DETAIL_GRAPH_CARD_TITLE: goog.getMsg('Resource usage history'),
+  /** @export {string} @desc Title for graph card displaying CPU metric of one node. */
+  MSG_NODE_DETAIL_CPU_GRAPH_CARD_TITLE: goog.getMsg('CPU usage history'),
+  /** @export {string} @desc Title for graph card displaying memory metric of one node. */
+  MSG_NODE_DETAIL_MEMORY_GRAPH_CARD_TITLE: goog.getMsg('Memory usage history'),
   /** @export {string} @desc Label 'Pods' for the pods section on the node details page. */
   MSG_NODE_DETAIL_PODS_LABEL: goog.getMsg('Pods'),
   /** @export {string} @desc Title for pods card zerostate in node details page. */
