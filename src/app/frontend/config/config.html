@@ -15,28 +15,28 @@ limitations under the License.
 -->
 
 <div ng-if="!$ctrl.shouldShowZeroState()">
-  <kd-content-card ng-if="$ctrl.servicesAndDiscovery.serviceList.services.length">
+  <kd-content-card ng-if="$ctrl.config.secretList.secrets.length">
     <kd-title>
-      <a ui-sref="service">
-        {{::$ctrl.i18n.MSG_SERVICES_AND_DISCOVERY_SERVICES_LABEL}}
+      <a ui-sref="secret">
+        {{::$ctrl.i18n.MSG_CONFIG_SECRETS_LABEL}}
       </a>
     </kd-title>
     <kd-content>
-      <kd-service-card-list service-list="$ctrl.servicesAndDiscovery.serviceList" with-statuses="true"
-                               service-list-resource="$ctrl.kdServiceListResource">
-      </kd-service-card-list>
+      <kd-secret-card-list secret-list="$ctrl.config.secretList" with-statuses="true"
+                               secret-list-resource="$ctrl.kdSecretListResource">
+      </kd-secret-card-list>
     </kd-content>
   </kd-content-card>
-  <kd-content-card ng-if="$ctrl.servicesAndDiscovery.ingressList.items.length">
+  <kd-content-card ng-if="$ctrl.config.configMapList.items.length">
     <kd-title>
-      <a ui-sref="ingress">
-        {{::$ctrl.i18n.MSG_SERVICES_AND_DISCOVERY_INGRESS_LABEL}}
+      <a ui-sref="configmap">
+        {{::$ctrl.i18n.MSG_CONFIG_CONFIG_MAPS_LABEL}}
       </a>
     </kd-title>
     <kd-content>
-      <kd-ingress-card-list ingress-list="$ctrl.servicesAndDiscovery.ingressList" with-statuses="true"
-                               ingress-list-resource="$ctrl.kdIngressListResource">
-      </kd-ingress-card-list>
+      <kd-config-map-card-list config-map-list="$ctrl.config.configMapList" with-statuses="true"
+                               config-map-list-resource="$ctrl.kdConfigMapListResource">
+      </kd-config-map-card-list>
     </kd-content>
   </kd-content-card>
 </div>
