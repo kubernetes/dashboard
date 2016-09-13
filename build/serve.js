@@ -89,6 +89,7 @@ function browserSyncInit(baseDir, includeBowerComponents) {
     },
     port: conf.frontend.serverPort,
     startPath: '/',
+    notify: false,
   };
 
   if (includeBowerComponents) {

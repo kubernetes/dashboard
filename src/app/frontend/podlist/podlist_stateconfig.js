@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
+import {stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 
 import {PodListController} from './podlist_controller';
@@ -41,9 +41,6 @@ export default function stateConfig($stateProvider) {
         controller: PodListController,
         controllerAs: '$ctrl',
         templateUrl: 'podlist/podlist.html',
-      },
-      [actionbarViewName]: {
-        templateUrl: 'podlist/actionbar.html',
       },
     },
   });
