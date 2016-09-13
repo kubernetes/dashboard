@@ -23,6 +23,31 @@ export class GraphCardController {
 
     /** @export {string} - Initialized from binding */
     this.graphTitle;
+
+    /** @export {string|undefined} - Comma separated list of metric names. Initialized from binding */
+    this.selectedMetricNames;
+
+    /** @export {!Array<!backendApi.Metric>}  */
+    this.selectedMetrics;
+  }
+
+  $onInit() {
+    this.selectedMetrics = this.getSelectedMetrics();
+  }
+
+  /**
+   * Filters metrics by selectedMetricNames. If selectedMetricNames is undefined returns all metrics.
+   *
+   * @private
+   * @return {!Array<!backendApi.Metric>}
+   */
+  getSelectedMetrics() {
+    if (typeof this.selectedMetricNames === 'undefined') {
+      return this.metrics;
+    }
+    let selectedMetricNameList = this.selectedMetricNames.split(',');
+    return this.metrics &&
+        this.metrics.filter((metric) => selectedMetricNameList.indexOf(metric.metricName) !== -1);
   }
 
   /**
@@ -32,8 +57,8 @@ export class GraphCardController {
    * @return {boolean}
    */
   shouldShowGraph() {
-    return this.metrics && this.metrics.filter((metric) => metric.dataPoints.length > 1).length > 0;
-  }
+    return this.metrics !== null &&
+        this.selectedMetrics.filter((metric) => metric.dataPoints.length > 1).length > 0;
 }
 
 /**
@@ -46,6 +71,7 @@ export const graphCardComponent = {
   bindings: {
     'metrics': '<',
     'graphTitle': '<',
+    'selectedMetricNames': '<',
   },
   templateUrl: 'common/components/graph/graphcard.html',
 };

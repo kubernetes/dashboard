@@ -90,7 +90,9 @@ const i18n = {
   /** @export {string} @desc Text for pods card zerostate in replication controller details page. */
   MSG_RC_DETAIL_PODS_ZEROSTATE_TEXT:
       goog.getMsg('There are currently no Pods selected by this Replication Controller'),
-  /** @export {string} @desc Title for graph card displaying metrics of one replication controller. */
-  MSG_REPLICATION_CONTROLLER_DETAIL_GRAPH_CARD_TITLE: goog.getMsg('Resource usage history'),
+  /** @export {string} @desc Title for graph card displaying CPU metric of one replication controller. */
+  MSG_REPLICATION_CONTROLLER_DETAIL_CPU_GRAPH_CARD_TITLE: goog.getMsg('CPU usage history'),
+  /** @export {string} @desc Title for graph card displaying memory metric of one replication controller. */
+  MSG_REPLICATION_CONTROLLER_DETAIL_MEMORY_GRAPH_CARD_TITLE: goog.getMsg('Memory usage history'),
 
 };
