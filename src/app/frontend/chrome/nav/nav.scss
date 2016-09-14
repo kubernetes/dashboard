@@ -15,11 +15,9 @@
 @import '../../variables';
 
 .kd-nav {
-  background-color: initial;
+  background-color: transparent;
   font-size: $body-font-size-base;
   height: 100%;
-  overflow: hidden;
-  overflow-y: auto;
   padding-top: $baseline-grid;
   white-space: nowrap;
   width: $nav-width;
@@ -30,6 +28,19 @@
       width: $nav-width;
     }
   }
+
+  // Next rule is to only show the scrollbar on hover, but always enable scrolling.
+  &:not(:hover) {
+    &::-webkit-scrollbar-thumb {
+      background-color: transparent;
+    }
+  }
+}
+
+kd-nav,
+.kd-nav {
+  overflow: hidden;
+  overflow-y: auto;
 
   // Next rule is to only show the scrollbar on hover, but always enable scrolling.
   &:not(:hover) {
