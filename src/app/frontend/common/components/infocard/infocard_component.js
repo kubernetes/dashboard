@@ -17,11 +17,11 @@
  */
 export class InfoCardController {
   /**
-   * @param {Object} $transclude TODO(floreks) fix this when externs are fixed
+   * @param {!angular.$transclude} $transclude
    * @ngInject
    */
   constructor($transclude) {
-    /** @private {Object} */
+    /** @private {!angular.$transclude} */
     this.transclude_ = $transclude;
   }
 
