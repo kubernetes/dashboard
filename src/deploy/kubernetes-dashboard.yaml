@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
       - name: kubernetes-dashboard
-        image: gcr.io/google_containers/kubernetes-dashboard-amd64:v1.4.0-beta2
+        image: gcr.io/google_containers/kubernetes-dashboard-amd64:v1.4.0
         imagePullPolicy: Always
         ports:
         - containerPort: 9090
