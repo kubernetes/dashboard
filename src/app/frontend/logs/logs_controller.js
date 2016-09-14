@@ -12,7 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {stateName as logs, StateParams} from './logs_state';
 
+// Assumption to point valid top index in md-top-index directive.
+const logsAtOnce = 40;
 const logsPerView = 100;
 const maxLogSize = 2e9;
 /**
@@ -23,15 +26,17 @@ const maxLogSize = 2e9;
 export class LogsController {
   /**
    * @param {!backendApi.Logs} podLogs
-   * @param {!angular.Resource<!backendApi.PodContainerList>} podContainers
+   * @param {!backendApi.PodContainerList} podContainers
    * @param {!./logs_service.LogsService} logsService
    * @param {!angular.$sce} $sce
    * @param {!angular.$document} $document
    * @param {!./logs_state.StateParams} $stateParams
    * @param {!angular.$resource} $resource
+   * @param {!ui.router.$state} $state
    * @ngInject
    */
-  constructor(podLogs, podContainers, logsService, $sce, $document, $resource, $stateParams) {
+  constructor(
+      podLogs, podContainers, logsService, $sce, $document, $resource, $stateParams, $state) {
     /** @private {!angular.$sce} */
     this.sce_ = $sce;
 
@@ -47,9 +52,6 @@ export class LogsController {
     /** @export {!./logs_service.LogsService} */
     this.logsService = logsService;
 
-    /** @export {!angular.Resource<!backendApi.PodContainerList>} */
-    this.podContainers = podContainers;
-
     /** @export */
     this.i18n = i18n;
 
@@ -61,9 +63,26 @@ export class LogsController {
 
     /** @private {!backendApi.LogViewInfo}*/
     this.currentLogView;
+
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
+
+    /** @export {!Array<string>} */
+    this.containers = podContainers.containers;
+
+    /** @export {string} */
+    this.container = this.podLogs.container;
+
+    /** @export {number} */
+    this.topIndex = 0;
   }
 
-  $onInit() { this.loadLogs(this.podLogs); }
+  $onInit() {
+    this.loadLogs(this.podLogs);
+
+    let logsLength = this.podLogs.logs.length;
+    this.topIndex = logsLength > logsAtOnce ? logsLength - logsAtOnce : 0;
+  }
 
   /**
    * Updates all state parameters and sets the current log view to podLogs. If logs are not
@@ -163,6 +182,32 @@ export class LogsController {
   }
 
   /**
+    * Return proper style class for text color icon.
+    * @export
+    * @returns {string}
+    */
+  getColorIconClass() {
+    const logsTextColor = 'kd-logs-color-icon';
+    if (this.logsService.getInverted()) {
+      return `${logsTextColor}-invert`;
+    }
+    return logsTextColor;
+  }
+
+  /**
+    * Return proper style class for font size icon.
+    * @export
+    * @returns {string}
+    */
+  getSizeIconClass() {
+    const logsTextColor = 'kd-logs-size-icon';
+    if (this.logsService.getCompact()) {
+      return `${logsTextColor}-compact`;
+    }
+    return logsTextColor;
+  }
+
+  /**
    * Formats logs as HTML.
    *
    * @param {!Array<string>} logs
@@ -199,9 +244,77 @@ export class LogsController {
     div.appendChild(this.document_.createTextNode(html));
     return div.innerHTML;
   }
+
+  /**
+   * Execute a code when a user changes the selected option of a container element.
+   * @param {string} container
+   * @export
+   */
+  onContainerChange(container) {
+    this.state_.go(
+        logs, new StateParams(
+                  this.stateParams_.objectNamespace, this.stateParams_.objectName, container));
+  }
+
+  /**
+   * Execute a code when a user changes the selected option for console font size.
+   * @export
+   */
+  onFontSizeChange() { this.logsService.setCompact(); }
+
+  /**
+   * Execute a code when a user changes the selected option for console color.
+   * @export
+   */
+  onTextColorChange() { this.logsService.setInverted(); }
+
+  /**
+   * Find Pod by name.
+   * Return object or undefined if can not find a object.
+   * @param {!Array<!backendApi.ReplicationControllerPodWithContainers>} array
+   * @param {!string} name
+   * @return {!backendApi.ReplicationControllerPodWithContainers|undefined}
+   * @private
+   */
+  findPodByName_(array, name) {
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].name === name) {
+        return array[i];
+      }
+    }
+    return undefined;
+  }
+
+  /**
+   * Find Container by name.
+   * Return object or undefined if can not find a object.
+   * @param {!Array<!backendApi.PodContainer>} array
+   * @param {string} name
+   * @return {!backendApi.PodContainer}
+   * @private
+   */
+  initializeContainer_(array, name) {
+    let container = undefined;
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].name === name) {
+        container = array[i];
+        break;
+      }
+    }
+    if (!container) {
+      container = array[0];
+    }
+    return container;
+  }
 }
 
 const i18n = {
+  /** @export {string} @desc Title prefix for logs card. */
+  MSG_LOGS_TITLE_FROM: goog.getMsg('Logs from'),
+  /** @export {string} @desc Title part for logs card. */
+  MSG_LOGS_TITLE_IN: goog.getMsg('in'),
+  /** @export {string} @desc Footer part for logs card. */
+  MSG_LOGS_TITLE_TO: goog.getMsg('to'),
   /** @export {string} @desc Title for logs card zerostate in logs page. */
   MSG_LOGS_ZEROSTATE_TITLE: goog.getMsg('There is nothing to display here'),
   /** @export {string} @desc Text for logs card zerostate in logs page. */

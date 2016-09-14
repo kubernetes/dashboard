@@ -21,6 +21,9 @@ describe('Logs controller', () => {
   /** @type {string} */
   const logsTextColorClassName = 'kd-logs-text-color-invert';
 
+  /** @type {string} */
+  const logsTextSizeClassName = 'kd-logs-element';
+
   /** @type {!LogsController} */
   let ctrl;
 
@@ -79,9 +82,10 @@ describe('Logs controller', () => {
 
   it('should instantiate the controller properly', () => { expect(ctrl).not.toBeUndefined(); });
 
-  it('should return style class for logs content', () => {
+  it('should return style classes for logs content', () => {
     // expect
     expect(ctrl.getStyleClass()).toEqual(`${logsTextColorClassName}`);
+    expect(ctrl.getLogsClass()).toEqual(`${logsTextSizeClassName}`);
   });
 
   it('should display zero state log line if server returned no logs', () => {
