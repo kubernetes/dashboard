@@ -15,6 +15,12 @@ limitations under the License.
 -->
 
 <kd-namespace-info namespace="::ctrl.namespaceDetail"></kd-namespace-info>
+<div ng-if="ctrl.namespaceDetail.resourceQuotaList.items">
+    <div ng-repeat="resourceQuota in ::ctrl.namespaceDetail.resourceQuotaList.items">
+        <kd-resource-quota-detail resource-quota-detail="::resourceQuota"></kd-resource-quota-detail>
+    </div>
+</div>
+
 <kd-event-card-list event-list="::ctrl.namespaceDetail.eventList"
                     event-list-resource="::ctrl.eventListResource">
 </kd-event-card-list>
