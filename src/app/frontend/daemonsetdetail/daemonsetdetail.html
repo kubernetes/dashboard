@@ -14,9 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-graph-card graph-title="::ctrl.i18n.MSG_DAEMON_SET_DETAIL_GRAPH_CARD_TITLE"
-               metrics="::ctrl.daemonSetDetail.podList.cumulativeMetrics">
-</kd-graph-card>
+<div layout="row">
+  <kd-graph-card graph-title="::ctrl.i18n.MSG_DAEMON_SET_DETAIL_CPU_GRAPH_CARD_TITLE"
+                 metrics="::ctrl.daemonSetDetail.podList.cumulativeMetrics" selected-metric-names="'cpu/usage_rate'" flex="auto" class="kd-left-graph">
+  </kd-graph-card>
+  <kd-graph-card graph-title="::ctrl.i18n.MSG_DAEMON_SET_DETAIL_MEMORY_GRAPH_CARD_TITLE"
+                 metrics="::ctrl.daemonSetDetail.podList.cumulativeMetrics" selected-metric-names="'memory/usage'" flex="auto" class="kd-right-graph">
+  </kd-graph-card>
+</div>
 
 <kd-daemon-set-info daemon-set="::ctrl.daemonSetDetail"></kd-daemon-set-info>
 <kd-content-card ng-if="::ctrl.daemonSetDetail.serviceList.services.length">

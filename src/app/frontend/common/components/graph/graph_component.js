@@ -51,7 +51,7 @@ export class GraphController {
 
     nv.addGraph(() => {
       // basic chart options - multiChart with interactive tooltip
-      chart = nv.models.multiChart().margin({top: 30, right: 90, bottom: 60, left: 75}).options({
+      chart = nv.models.multiChart().margin({top: 30, right: 30, bottom: 55, left: 75}).options({
         duration: 300,
         tooltips: true,
         useInteractiveGuideline: true,
@@ -103,13 +103,25 @@ export class GraphController {
       // don't display empty graph, hide it completely,
       if (data.length === 0) {
         return;
+      } else if (typeof yAxis1Type === 'undefined') {
+        // If axis 2 is used, but not axis 1, move all graphs from axis 2 to axis 1. Looks much
+        // better.
+        yAxis1Type = yAxis2Type;
+        y1max = y2max;
+        data.forEach((d) => d.yAxis = 1);
+        yAxis2Type = undefined;
+      }
+
+      // Hide legend when displaying only one 1 line.
+      if (data.length === 1) {
+        chart.showLegend(false);
       }
 
       // customise X axis (hardcoded time).
       let xAxisSettings = axisSettings[TimeAxisType];
       chart.xAxis.axisLabel(xAxisSettings.label)
           .tickFormat(xAxisSettings.formatter)
-          .staggerLabels(true);
+          .staggerLabels(false);
 
       // customise Y axes
       if (typeof yAxis1Type !== 'undefined') {
@@ -147,22 +159,49 @@ export class GraphController {
       // generate graph
       let graphArea = d3.select(this.element_[0]);
       let svg = graphArea.append('svg');
-      svg.attr('height', '300px').datum(data).call(chart);
+      svg.attr('height', '200px').datum(data).call(chart);
 
       // add grey line to the bottom to separate from the rest of the page.
       svg.style({
         'background-color': 'white',
       });
 
+      let isUpdatingFunctionRunning = false;
+      let updateUntil = 0;
+
+      /**
+       * Calls chart.update for a period of updatePeriod ms. Delay between calls =
+       * timeBetweenUpdates ms.
+       * @param {number} updatePeriod
+       * @param {number} timeBetweenUpdates
+       */
+      let startChartUpdatePeriod = function(updatePeriod, timeBetweenUpdates) {
+        if (isUpdatingFunctionRunning) {
+          // Don't start another updater oif updating funciton is already running
+          // just the prolong running time of currently running function to required value.
+          updateUntil = new Date().valueOf() + updatePeriod;
+          return;
+        }
+        isUpdatingFunctionRunning = true;
+        updateUntil = new Date().valueOf() + updatePeriod;
+        // update chart and call itself again if still in update period.
+        let updater = function() {
+          chart.update();
+          if (new Date() < updateUntil) {
+            setTimeout(updater, timeBetweenUpdates);
+          } else {
+            isUpdatingFunctionRunning = false;
+          }
+        };
+        setTimeout(updater, timeBetweenUpdates);
+      };
+
       // update the graph in case of graph area resize
       nv.utils.windowResize(chart.update);
       this.scope_.$watch(
           () => graphArea.node().getBoundingClientRect().width,  // variable to watch
-          () => setTimeout(chart.update, 500),  // TODO - this should be changed to just
-                                                // chart.update after we implement different method
-                                                // of left hand side nav animation (instant DOM
-                                                // change).
-          false                                 // not a deep watch
+          () => startChartUpdatePeriod(1600, 200),
+          false  // not a deep watch
           );
 
       return chart;

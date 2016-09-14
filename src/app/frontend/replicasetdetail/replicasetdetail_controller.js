@@ -67,6 +67,8 @@ const i18n = {
   MSG_REPLICA_SET_DETAIL_SERVICES_ZEROSTATE_TEXT: goog.getMsg(
       'There are currently no Services with the same label selector ' +
       'as this Replica Set'),
-  /** @export {string} @desc Title for graph card displaying metrics of one replica set. */
-  MSG_REPLICA_SET_DETAIL_GRAPH_CARD_TITLE: goog.getMsg('Resource usage history'),
+  /** @export {string} @desc Title for graph card displaying CPU metric of one replica set. */
+  MSG_REPLICA_SET_DETAIL_CPU_GRAPH_CARD_TITLE: goog.getMsg('CPU usage history'),
+  /** @export {string} @desc Title for graph card displaying memory metric of one replica set. */
+  MSG_REPLICA_SET_DETAIL_MEMORY_GRAPH_CARD_TITLE: goog.getMsg('Memory usage history'),
 };
