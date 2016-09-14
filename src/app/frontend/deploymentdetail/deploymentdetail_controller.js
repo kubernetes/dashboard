@@ -51,6 +51,8 @@ const i18n = {
   /** @export {string} @desc Text for old replica sets card zero-state in deployment details page. */
   MSG_DEPLOYMENT_DETAIL_OLD_REPLICAS_ZEROSTATE_TEXT:
       goog.getMsg('There are currently no old Replication Controllers on this Deployment'),
-  /** @export {string} @desc Title for graph card displaying metrics of one deployment. */
-  MSG_DEPLOYMENT_DETAIL_GRAPH_CARD_TITLE: goog.getMsg('Resource usage history'),
+  /** @export {string} @desc Title for graph card displaying CPU metric of one deployment. */
+  MSG_DEPLOYMENT_DETAIL_CPU_GRAPH_CARD_TITLE: goog.getMsg('CPU usage history'),
+  /** @export {string} @desc Title for graph card displaying memory metric of one deployment. */
+  MSG_DEPLOYMENT_DETAIL_MEMORY_GRAPH_CARD_TITLE: goog.getMsg('Memory usage history'),
 };

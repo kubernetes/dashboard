@@ -42,6 +42,8 @@ export class PetSetListController {
 }
 
 const i18n = {
-  /** @export {string} @desc Title for graph card displaying cumulative metrics of pet sets. */
-  MSG_PET_SET_LIST_GRAPH_CARD_TITLE: goog.getMsg('Cumulative resource usage history'),
+  /** @export {string} @desc Title for graph card displaying CPU metric of pet sets. */
+  MSG_PET_SET_LIST_CPU_GRAPH_CARD_TITLE: goog.getMsg('CPU usage history'),
+  /** @export {string} @desc Title for graph card displaying memory metric of pet sets. */
+  MSG_PET_SET_LIST_MEMORY_GRAPH_CARD_TITLE: goog.getMsg('Memory usage history'),
 };

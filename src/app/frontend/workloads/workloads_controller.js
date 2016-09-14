@@ -98,6 +98,8 @@ const i18n = {
   /** @export {string} @desc Label "Pods", which appears above the pods list on the workloads
    page.*/
   MSG_WORKLOADS_PODS_LABEL: goog.getMsg('Pods'),
-  /** @export {string} @desc Title for graph card displaying cumulative resource usage of all resources. */
-  MSG_WORKLOADS_GRAPH_CARD_TITLE: goog.getMsg('Cumulative resource usage history'),
+  /** @export {string} @desc Title for graph card displaying CPU metric of one all resources. */
+  MSG_WORKLOADS_CPU_GRAPH_CARD_TITLE: goog.getMsg('CPU usage history'),
+  /** @export {string} @desc Title for graph card displaying memory metric of one all resources. */
+  MSG_WORKLOADS_MEMORY_GRAPH_CARD_TITLE: goog.getMsg('Memory usage history'),
 };

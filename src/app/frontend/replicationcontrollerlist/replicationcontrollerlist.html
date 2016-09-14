@@ -14,9 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-graph-card graph-title="$ctrl.i18n.MSG_RC_LIST_GRAPH_CARD_TITLE"
-               metrics="$ctrl.replicationControllerList.cumulativeMetrics">
-</kd-graph-card>
+<div layout="row">
+  <kd-graph-card graph-title="$ctrl.i18n.MSG_REPLICATION_CONTROLLER_LIST_CPU_GRAPH_CARD_TITLE"
+                 metrics="$ctrl.replicationControllerList.cumulativeMetrics" selected-metric-names="'cpu/usage_rate'" flex="auto" class="kd-left-graph">
+  </kd-graph-card>
+  <kd-graph-card graph-title="$ctrl.i18n.MSG_REPLICATION_CONTROLLER_LIST_MEMORY_GRAPH_CARD_TITLE"
+                 metrics="$ctrl.replicationControllerList.cumulativeMetrics" selected-metric-names="'memory/usage'" flex="auto" class="kd-right-graph">
+  </kd-graph-card>
+</div>
 
 <kd-content-card ng-if="!$ctrl.shouldShowZeroState()">
   <kd-content>

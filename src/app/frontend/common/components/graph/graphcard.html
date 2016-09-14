@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-content-card ng-if="$ctrl.shouldShowGraph()">
+<kd-content-card ng-if="$ctrl.shouldShowGraph()" class="kd-graph-card">
   <kd-title>{{$ctrl.graphTitle}}</kd-title>
   <kd-content>
-    <kd-graph metrics="$ctrl.metrics"></kd-graph>
+    <kd-graph metrics="::$ctrl.selectedMetrics"></kd-graph>
   </kd-content>
 </kd-content-card>

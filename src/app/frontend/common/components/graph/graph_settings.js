@@ -34,7 +34,7 @@ const i18n = {
  *
  * @type {number}
  */
-export const TICK_NUM = 5.5;
+export const TICK_NUM = 4.5;
 
 /**
  * Settings specifying the range of position of the maximum value on Y axis (units = number of
@@ -44,7 +44,7 @@ export const TICK_NUM = 5.5;
  *
  * @type {!Array<number>}
  */
-export const MAX_BETWEEN_TICKS = [4.6, 5.4];
+export const MAX_BETWEEN_TICKS = [3.8, 4.1];
 
 export const CPUAxisType = 'CPUAxisType';
 export const MemoryAxisType = 'MemoryAxisType';
