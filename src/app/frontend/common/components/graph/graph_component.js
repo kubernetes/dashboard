@@ -51,7 +51,7 @@ export class GraphController {
 
     nv.addGraph(() => {
       // basic chart options - multiChart with interactive tooltip
-      chart = nv.models.multiChart().margin({top: 30, right: 90, bottom: 60, left: 75}).options({
+      chart = nv.models.multiChart().margin({top: 30, right: 30, bottom: 55, left: 75}).options({
         duration: 300,
         tooltips: true,
         useInteractiveGuideline: true,
@@ -112,6 +112,11 @@ export class GraphController {
         yAxis2Type = undefined;
       }
 
+      // Hide legend when displaying only one 1 line.
+      if (data.length === 1) {
+        chart.showLegend(false);
+      }
+
       // customise X axis (hardcoded time).
       let xAxisSettings = axisSettings[TimeAxisType];
       chart.xAxis.axisLabel(xAxisSettings.label)
@@ -154,7 +159,7 @@ export class GraphController {
       // generate graph
       let graphArea = d3.select(this.element_[0]);
       let svg = graphArea.append('svg');
-      svg.attr('height', '300px').datum(data).call(chart);
+      svg.attr('height', '200px').datum(data).call(chart);
 
       // add grey line to the bottom to separate from the rest of the page.
       svg.style({
@@ -164,6 +169,12 @@ export class GraphController {
       let isUpdatingFunctionRunning = false;
       let updateUntil = 0;
 
+      /**
+       * Calls chart.update for a period of updatePeriod ms. Delay between calls =
+       * timeBetweenUpdates ms.
+       * @param {number} updatePeriod
+       * @param {number} timeBetweenUpdates
+       */
       let startChartUpdatePeriod = function(updatePeriod, timeBetweenUpdates) {
         if (isUpdatingFunctionRunning) {
           // Don't start another updater oif updating funciton is already running

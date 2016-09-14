@@ -105,7 +105,7 @@ describe('Graph card component controller', () => {
 
     expect(expected).toEqual(1);
   });
-  
+
   it('should be able to select metrics by metric name - multiple metrics', () => {
     ctrl.metrics = stdMetrics;
     ctrl.selectedMetricNames = 'memory/usage,cpu/usage_rate';
@@ -118,7 +118,7 @@ describe('Graph card component controller', () => {
 
   it('should hide graph card when no metric names matched', () => {
     ctrl.metrics = stdMetrics;
-    ctrl.selectedMetricNames = 'badname1,badname2'
+    ctrl.selectedMetricNames = 'badname1,badname2';
     ctrl.$onInit();
 
     let expected = ctrl.shouldShowGraph();
