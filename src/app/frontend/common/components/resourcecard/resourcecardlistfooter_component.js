@@ -18,7 +18,7 @@
 export class ResourceCardListFooterController {
   /**
    * @param {!../../pagination/pagination_service.PaginationService} kdPaginationService
-   * @param {!angular.$transclude} $transclude TODO(floreks) fix this when externs are fixed
+   * @param {!angular.$transclude} $transclude
    * @ngInject
    */
   constructor(kdPaginationService, $transclude) {
@@ -27,7 +27,7 @@ export class ResourceCardListFooterController {
     this.listPagination_;
     /** @private {!../../pagination/pagination_service.PaginationService} */
     this.paginationService_ = kdPaginationService;
-    /** @private {Object} */
+    /** @private {!angular.$transclude} */
     this.transclude_ = $transclude;
   }
 
