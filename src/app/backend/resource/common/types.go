@@ -185,9 +185,9 @@ func IsLabelSelectorMatching(selector map[string]string,
 		return false
 	}
 	for label, value := range selector {
-		if rsValue, ok := labelSelector.MatchLabels[label]; !ok || rsValue != value {
-			return false
+		if rsValue, ok := labelSelector.MatchLabels[label]; ok && rsValue == value {
+			return true
 		}
 	}
-	return true
+	return false
 }
