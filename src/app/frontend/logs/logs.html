@@ -14,35 +14,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-logs-toolbar containers="ctrl.podContainers.containers"></kd-logs-toolbar>
-<div>
-  <span ng-show="ctrl.logsSet.length > 1"> Showing logs from {{ctrl.podLogs.firstLogLineReference.logTimestamp | date : "medium" }} to {{ctrl.podLogs.lastLogLineReference.logTimestamp | date : "medium" }}</span>
-  <div class="kd-list-pagination-buttons">
-    <md-button class="md-icon-button md-button md-ink-ripple"
-               ng-click="ctrl.loadOldest()">
-      <md-icon>first_page</md-icon>
-    </md-button>
-
-    <md-button class="md-icon-button md-button md-ink-ripple"
-               ng-click="ctrl.loadOlder()">
-      <md-icon>chevron_left</md-icon>
-    </md-button>
-
-    <md-button class="md-icon-button md-button md-ink-ripple"
-               ng-click="ctrl.loadNewer()">
-      <md-icon>chevron_right</md-icon>
-    </md-button>
-
-    <md-button class="md-icon-button md-button md-ink-ripple"
-               ng-click="ctrl.loadNewest()">
-      <md-icon>last_page</md-icon>
-    </md-button>
-  </div>
-</div>
-
 <kd-content-card>
-
-
+  <kd-title class="kd-logs-title">
+    {{ctrl.i18n.MSG_LOGS_TITLE_FROM}}
+    <md-select class="kd-logs-toolbar-select" ng-model="ctrl.container"
+               md-on-close="ctrl.onContainerChange(ctrl.container)" required>
+      <md-option ng-repeat="item in ctrl.containers" ng-value="item">
+        <span class="kd-logs-toolbar-text">{{::item}}</span>
+      </md-option>
+    </md-select>
+    {{ctrl.i18n.MSG_LOGS_TITLE_IN}} {{ctrl.podLogs.podId}}
+    <div class="kd-logs-style-buttons">
+      <md-button class="kd-logs-toolbar-button" ng-click="ctrl.onTextColorChange()">
+        <md-icon md-font-library="material-icons" ng-class="ctrl.getColorIconClass()">
+          format_color_text
+        </md-icon>
+      </md-button>
+      <md-button class="kd-logs-toolbar-button" ng-click="ctrl.onFontSizeChange()">
+        <md-icon md-font-library="material-icons" ng-class="ctrl.getSizeIconClass()">
+          text_fields
+        </md-icon>
+      </md-button>
+    </div>
+  </kd-title>
   <kd-content>
     <md-virtual-repeat-container class="log-view" ng-class="ctrl.getStyleClass()">
       <div md-virtual-repeat="item in ctrl.logsSet" ng-class="ctrl.getLogsClass()">
@@ -50,4 +44,33 @@ limitations under the License.
       </div>
     </md-virtual-repeat-container>
   </kd-content>
+  <kd-footer ng-show="ctrl.logsSet.length > 1">
+    <div layout="row">
+      <span class="kd-logs-info">
+        {{ctrl.i18n.MSG_LOGS_TITLE_FROM}}
+        {{ctrl.podLogs.firstLogLineReference.logTimestamp | date : "short"}}
+        {{ctrl.i18n.MSG_LOGS_TITLE_TO}}
+        {{ctrl.podLogs.lastLogLineReference.logTimestamp | date : "short" }}
+      </span>
+      <span flex></span>
+      <div class="kd-list-pagination-buttons">
+        <md-button class="md-icon-button md-button md-ink-ripple"
+                   ng-click="ctrl.loadOldest()">
+          <md-icon>first_page</md-icon>
+        </md-button>
+        <md-button class="md-icon-button md-button md-ink-ripple"
+                   ng-click="ctrl.loadOlder()">
+          <md-icon>chevron_left</md-icon>
+        </md-button>
+        <md-button class="md-icon-button md-button md-ink-ripple"
+                   ng-click="ctrl.loadNewer()">
+          <md-icon>chevron_right</md-icon>
+        </md-button>
+        <md-button class="md-icon-button md-button md-ink-ripple"
+                   ng-click="ctrl.loadNewest()">
+          <md-icon>last_page</md-icon>
+        </md-button>
+      </div>
+    </div>
+  </kd-footer>
 </kd-content-card>
