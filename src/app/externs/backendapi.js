@@ -776,6 +776,13 @@ backendApi.PodContainer;
 
 /**
  * @typedef {{
+ *   containers: !Array<string>
+ * }}
+ */
+backendApi.PodContainerList;
+
+/**
+ * @typedef {{
  *   name: string,
  *   startTime: ?string,
  *   totalRestartCount: number,

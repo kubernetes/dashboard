@@ -49,7 +49,57 @@ $logs-color-white: #fff;
   font-size: $caption-font-size-base;
 }
 
-.log-view {
-  height: 800px;
+.kd-log-view {
+  font-family: $font-family-medium-monospace;
+  height: 700px;
   width: 100%;
+}
+
+.kd-logs-toolbar-select {
+  display: inline-flex;
+  margin: 0;
+
+  .md-select-value {
+    font-size: $title-font-size-base;
+    min-width: 20 * $baseline-grid;
+  }
+
+  &:not([disabled]) {
+    &:focus {
+      .md-select-value {
+        color: $foreground-1;
+      }
+    }
+  }
+}
+
+.kd-logs-toolbar-button {
+  min-width: unset;
+}
+
+.kd-logs-color-icon {
+  background-color: $logs-color-black;
+  color: $logs-color-white;
+}
+
+.kd-logs-color-icon-invert {
+  background-color: $logs-color-white;
+  color: $logs-color-black;
+}
+
+.kd-logs-size-icon {
+  color: $logs-color-black;
+}
+
+.kd-logs-size-icon-compact {
+  color: $logs-color-black;
+  transform: scale(-1, 1);
+}
+
+.kd-logs-info {
+  padding: 1.5 * $baseline-grid;
+}
+
+.kd-logs-style-buttons {
+  float: right;
 }

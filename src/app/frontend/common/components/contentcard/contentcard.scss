@@ -21,10 +21,13 @@
 
 kd-content-card {
   display: block;
+  height: 100%;
   margin: 2.5 * $baseline-grid;
 }
 
 .kd-content-card {
+  height: 100%;
+
   kd-content {
     &.kd-content-padded {
       display: block;
@@ -47,4 +50,10 @@ kd-content-card {
       color: $foreground-1;
     }
   }
+}
+
+.kd-content-card-content-footer {
+  border-top: 1px solid $border;
+  box-sizing: border-box;
+  margin: 0;
 }
