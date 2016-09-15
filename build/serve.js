@@ -108,8 +108,8 @@ function serveDevelopmentMode() {
   browserSyncInit(
       [
         conf.paths.serve,
-        conf.paths.frontendSrc,  // For angular templates to work.
-        conf.paths.app,          // For assets to work.
+        // conf.paths.frontendSrc,  // For angular templates to work.
+        conf.paths.app,  // For assets to work.
       ],
       true);
 }
@@ -189,7 +189,7 @@ gulp.task('kill-backend', function(doneFn) {
 /**
  * Watches for changes in source files and runs Gulp tasks to rebuild them.
  */
-gulp.task('watch', ['index'], function() {
+gulp.task('watch', ['index', 'angular-templates'], function() {
   gulp.watch([path.join(conf.paths.frontendSrc, 'index.html'), 'bower.json'], ['index']);
 
   gulp.watch(
@@ -207,5 +207,6 @@ gulp.task('watch', ['index'], function() {
       });
 
   gulp.watch(path.join(conf.paths.frontendSrc, '**/*.js'), ['scripts-watch']);
+  gulp.watch(path.join(conf.paths.frontendSrc, '**/*.html'), ['angular-templates']);
   gulp.watch(path.join(conf.paths.backendSrc, '**/*.go'), ['spawn-backend']);
 });

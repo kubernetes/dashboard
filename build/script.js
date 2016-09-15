@@ -17,13 +17,15 @@
  */
 import async from 'async';
 import gulp from 'gulp';
-import gulpAngularTemplatecache from 'gulp-angular-templatecache';
 import gulpClosureCompiler from 'gulp-closure-compiler';
 import gulpHtmlmin from 'gulp-htmlmin';
+import gulpModify from 'gulp-modify';
+import gulpRename from 'gulp-rename';
 import path from 'path';
 import webpackStream from 'webpack-stream';
 
 import conf from './conf';
+import {processI18nMessages} from './i18n';
 
 /**
  * Returns function creating a stream that compiles frontend JavaScript files into development bundle located in
@@ -195,7 +197,28 @@ gulp.task('scripts:prod', ['angular-templates', 'extract-translations'], functio
 });
 
 /**
- * Compiles Angular HTML template files into one JS file that serves them through $templateCache.
+ * Compiles frontend JavaScript files into production bundle located in {conf.paths.prodTmp}
+ * directory. A separated bundle is created for each i18n locale.
+ */
+gulp.task('scripts:prod', ['angular-templates', 'extract-translations'], function(doneFn) {
+  // add a compilation step to stream for each translation file
+  let streams = conf.translations.map((translation) => { return createCompileTask(translation); });
+
+  // add a default compilation task (no localization)
+  streams = streams.concat(createCompileTask());
+
+  // TODO (taimir) : do not run the tasks sequentially once
+  // gulp-closure-compiler can be run in parallel
+  async.series(streams, doneFn);
+});
+
+/**
+ * Compiles each Angular HTML template file (path/foo.html) into three processed forms:
+ *   * serve/path/foo.html - minified html with i18n messages stripped out into english form
+ *   * partials/path/foo.html.js - JS module file with template added to $templateCache, ready to be
+ *         compiled by closure compiler
+ *   * messages_for_extraction/path/foo.html.js - file with only MSG_FOO i18n message
+ *         definitions - used to extract messages
  */
 gulp.task('angular-templates', function() {
   return gulp.src(path.join(conf.paths.frontendSrc, '**/!(index).html'))
@@ -204,8 +227,18 @@ gulp.task('angular-templates', function() {
         collapseWhitespace: true,
         conservativeCollapse: true,
       }))
-      .pipe(gulpAngularTemplatecache('angular-templates.js', {
-        module: conf.frontend.rootModuleName,
+      .pipe(gulpModify({fileModifier: processI18nMessages}))
+      .pipe(gulpModify({
+        fileModifier: function(file) { return file.pureHtmlContent; },
       }))
-      .pipe(gulp.dest(conf.paths.partials));
+      .pipe(gulp.dest(conf.paths.serve))
+      .pipe(gulpModify({
+        fileModifier: function(file) { return file.moduleContent; },
+      }))
+      .pipe(gulpRename(function(path) { path.extname = '.html.js'; }))
+      .pipe(gulp.dest(conf.paths.partials))
+      .pipe(gulpModify({
+        fileModifier: function(file) { return file.messages; },
+      }))
+      .pipe(gulp.dest(conf.paths.messagesForExtraction));
 });
