@@ -34,7 +34,7 @@ function extractForLanguage(langKey) {
   let deferred = q.defer();
 
   let translationBundle = path.join(conf.paths.base, `i18n/messages-${langKey}.xtb`);
-  let codeSource = path.join(conf.paths.serve, '*.js');
+  let codeSource = path.join(conf.paths.serve, '*/**.js');
   let command = `java -jar ${conf.paths.xtbgenerator} --lang ${langKey}` +
       ` --xtb_output_file ${translationBundle} --js ${codeSource}`;
   if (fileExists(translationBundle)) {
@@ -45,7 +45,6 @@ function extractForLanguage(langKey) {
     if (err) {
       gulpUtil.log(stdout);
       gulpUtil.log(stderr);
-      deferred.reject();
       deferred.reject(new Error(err));
     }
     return deferred.resolve();
@@ -57,7 +56,7 @@ function extractForLanguage(langKey) {
 /**
  * Extracts all translation messages into XTB bundles.
  */
-gulp.task('extract-translations', ['scripts'], function() {
+gulp.task('extract-translations', ['scripts', 'angular-templates'], function() {
   let promises = conf.translations.map((translation) => extractForLanguage(translation.key));
   return q.all(promises);
 });

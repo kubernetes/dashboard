@@ -22,6 +22,10 @@ import gulpClosureCompiler from 'gulp-closure-compiler';
 import gulpHtmlmin from 'gulp-htmlmin';
 import path from 'path';
 import webpackStream from 'webpack-stream';
+import gulpPrint from 'gulp-print';
+import gulpModify from 'gulp-modify';
+import gulpRename from 'gulp-rename';
+import jsesc from 'jsesc';
 
 import conf from './conf';
 
@@ -195,6 +199,39 @@ gulp.task('scripts:prod', ['angular-templates', 'extract-translations'], functio
 });
 
 /**
+ * Compiles frontend JavaScript files into production bundle located in {conf.paths.prodTmp}
+ * directory. A separated bundle is created for each i18n locale.
+ */
+gulp.task('scripts:prod', ['angular-templates', 'extract-translations'], function(doneFn) {
+  // add a compilation step to stream for each translation file
+  let streams = conf.translations.map((translation) => { return createCompileTask(translation); });
+
+  // add a default compilation task (no localization)
+  streams = streams.concat(createCompileTask());
+
+  // TODO (taimir) : do not run the tasks sequentially once
+  // gulp-closure-compiler can be run in parallel
+  async.series(streams, doneFn);
+});
+
+// /**
+//  * Compiles Angular HTML template files into one JS file that serves them through $templateCache.
+//  */
+// gulp.task('angular-templates', function() {
+//   return gulp.src(path.join(conf.paths.frontendSrc, '**/!(index).html'))
+//       .pipe(gulpHtmlmin({
+//         removeComments: true,
+//         collapseWhitespace: true,
+//         conservativeCollapse: true,
+//       }))
+//       .pipe(gulpAngularTemplatecache('angular-templates.js', {
+//         module: conf.frontend.rootModuleName,
+//       }))
+//       .pipe(gulp.dest(conf.paths.partials));
+// });
+
+
+/**
  * Compiles Angular HTML template files into one JS file that serves them through $templateCache.
  */
 gulp.task('angular-templates', function() {
@@ -204,8 +241,63 @@ gulp.task('angular-templates', function() {
         collapseWhitespace: true,
         conservativeCollapse: true,
       }))
-      .pipe(gulpAngularTemplatecache('angular-templates.js', {
-        module: conf.frontend.rootModuleName,
+      .pipe(gulpPrint())
+      .pipe(gulpModify({
+        fileModifier: function (file, content) {
+          let pureHtmlContent = content;
+          content = jsesc(content);
+          let re = /\[\[([^|]*?)(?:\|(.*?))?\]\]/mg
+          let matches = content.match(re);
+          let vars = [];
+          if (matches) {
+            console.log(matches);
+            vars = matches.map((m) => {
+              let re = /\[\[([^|]*?)(?:\|(.*?))?\]\]/mg
+
+              let exec = re.exec(m);
+              return {text: jsesc(exec[1]), desc: jsesc(exec[2]), original: m};
+            });
+          }
+          let filePath = path.relative(file.base, file.path);
+          let msgPrefix = filePath.toUpperCase().split('/').join('_').replace('.HTML', '');
+          console.log(msgPrefix);
+
+          let varStrings = vars.map((v, index) => {
+            let varName = `MSG_${msgPrefix}_${index}`;
+            content = content.replace(v.original, `' + ${varName} + '`)
+            pureHtmlContent = pureHtmlContent.replace(v.original, v.text);
+            return `/** @desc ${v.desc} */\n` +
+                `var ${varName} = goog.getMsg('${v.text}');\n`;
+          });
+          file.messages = varStrings.join('\n');
+          file.pureHtmlContent = pureHtmlContent;
+
+          return ``+
+             `import module from 'index_module';\n\n` +
+             varStrings.join('\n') +
+             `\n` +
+             `module.run(['$templateCache', ($templateCache) => {\n` +
+             `    $templateCache.put('${filePath}', '${content}');\n` +
+             `}]);\n`;
+        }
       }))
-      .pipe(gulp.dest(conf.paths.partials));
+      .pipe(gulpRename(function(path) {
+        path.extname = '.html.js';
+      }))
+      .pipe(gulp.dest(conf.paths.partials))
+      .pipe(gulpModify({
+        fileModifier: function (file, content) {
+          return file.messages;
+        },
+      }))
+      .pipe(gulp.dest(conf.paths.serve))
+      .pipe(gulpModify({
+        fileModifier: function (file, content) {
+          return file.pureHtmlContent;
+        },
+      }))
+      .pipe(gulpRename(function(path) {
+        path.extname = '';
+      }))
+      .pipe(gulp.dest(conf.paths.serve));
 });
