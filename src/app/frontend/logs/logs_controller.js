@@ -70,9 +70,17 @@ export class LogsController {
 
     /** @export {string} */
     this.container = this.podLogs.container;
+
+    /** @export {number} */
+    this.topIndex = 0;
   }
 
-  $onInit() { this.loadLogs(this.podLogs); }
+  $onInit() {
+    this.loadLogs(this.podLogs);
+
+    // TODO(maciaszczykm): If length > 40, then decrease it by 40 to point top index (not bottom).
+    this.topIndex = this.podLogs.logs.length;
+  }
 
   /**
    * Updates all state parameters and sets the current log view to podLogs. If logs are not

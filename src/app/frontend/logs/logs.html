@@ -39,7 +39,7 @@ limitations under the License.
   </kd-title>
   <kd-content>
     <md-virtual-repeat-container class="log-view" ng-class="ctrl.getStyleClass()"
-                                 md-top-index="ctrl.logsSet.length">
+                                 md-top-index="ctrl.topIndex">
       <div md-virtual-repeat="item in ctrl.logsSet" ng-class="ctrl.getLogsClass()">
         <span ng-bind-html="item">&nbsp;</span>
       </div>
