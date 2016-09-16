@@ -16,10 +16,11 @@ package metric
 
 import (
 	"encoding/json"
+
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 
-	heapster "k8s.io/heapster/metrics/api/v1/types"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	heapster "k8s.io/heapster/metrics/api/v1/types"
 )
 
 // HeapsterAllInOneDownloadConfig holds config information specifying whether given native heapster resource type supports list download.
@@ -37,12 +38,17 @@ func DataPointsFromMetricJSONFormat(raw heapster.MetricResult) DataPoints {
 			Y: int64(raw.Value),
 		}
 
+		if converted.Y < 0 {
+			converted.Y = 0
+		}
+
 		dp = append(dp, converted)
 	}
 	return dp
 }
 
-// Performs heapster GET request to the specifies path and transfers the data to the interface provided.
+// HeapsterUnmarshalType performs heapster GET request to the specifies path and transfers
+// the data to the interface provided.
 func HeapsterUnmarshalType(client client.HeapsterClient, path string, v interface{}) error {
 	rawData, err := client.Get("/model/" + path).DoRaw()
 	if err != nil {
