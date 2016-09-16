@@ -3,9 +3,6 @@ package metric
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/kubernetes/dashboard/src/app/backend/client"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	heapster "k8s.io/heapster/metrics/api/v1/types"
 	"log"
 	"reflect"
 	"regexp"
@@ -13,6 +10,10 @@ import (
 	"sync/atomic"
 	"testing"
 	"time"
+
+	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	heapster "k8s.io/heapster/metrics/api/v1/types"
 )
 
 type GlobalCounter int32
@@ -100,22 +101,22 @@ func (self FakeRequest) DoRaw() ([]byte, error) {
 	}
 }
 
-const TIME_TEMPLATE = "2016-08-12T11:0%d:00Z"
-const TIME_TEMPLATE_VALUE = int64(1470999600)
+const TimeTemplate = "2016-08-12T11:0%d:00Z"
+const TimeTemplateValue = int64(1470999600)
 
 func NewRawDPs(dps []int64, startTime int) []heapster.MetricPoint {
 	newRdps := []heapster.MetricPoint{}
 	for i := 0; i < len(dps) && startTime+i < 10; i++ {
-		parsedTime, _ := time.Parse(time.RFC3339, fmt.Sprintf(TIME_TEMPLATE, i+startTime))
+		parsedTime, _ := time.Parse(time.RFC3339, fmt.Sprintf(TimeTemplate, i+startTime))
 		newRdps = append(newRdps, heapster.MetricPoint{Timestamp: parsedTime, Value: uint64(dps[i])})
 	}
 	return newRdps
 }
 
-func NewDps(dps []int64, startTime int) DataPoints {
+func newDps(dps []int64, startTime int) DataPoints {
 	newDps := DataPoints{}
 	for i := 0; i < len(dps) && startTime+i < 10; i++ {
-		newDps = append(newDps, DataPoint{TIME_TEMPLATE_VALUE + int64(60*(i+startTime)), dps[i]})
+		newDps = append(newDps, DataPoint{TimeTemplateValue + int64(60*(i+startTime)), dps[i]})
 	}
 	return newDps
 }
@@ -124,7 +125,7 @@ var fakePodData = PodData{
 	"P1/a": NewRawDPs([]int64{0, 5, 10}, 0),
 	"P2/a": NewRawDPs([]int64{15, 20, 25}, 0),
 	"P3/a": NewRawDPs([]int64{30, 35, 40}, 0),
-	"P4/a": NewRawDPs([]int64{45, 50, 55}, 0),
+	"P4/a": NewRawDPs([]int64{45, 50, -100000}, 0),
 	"P1/b": NewRawDPs([]int64{1000, 1100}, 0),
 	"P2/b": NewRawDPs([]int64{1200, 1300}, 1),
 	"P3/b": NewRawDPs([]int64{1400, 1500}, 2),
@@ -161,55 +162,55 @@ func TestHeapsterSelector(t *testing.T) {
 		{
 			"get data for single pod",
 			fakeHeapsterSelector(common.ResourceKindPod, "a", []string{"P1"}),
-			NewDps([]int64{0, 5, 10}, 0),
+			newDps([]int64{0, 5, 10}, 0),
 			1,
 		},
 		{
 			"get data for 3 pods",
 			fakeHeapsterSelector(common.ResourceKindPod, "a", []string{"P1", "P2", "P3"}),
-			NewDps([]int64{45, 60, 75}, 0),
+			newDps([]int64{45, 60, 75}, 0),
 			1,
 		},
 		{
 			"get data for 4 pods where 1 pod does not exist - ignore non existing pod",
 			fakeHeapsterSelector(common.ResourceKindPod, "a", []string{"P1", "P2", "P3", "NON_EXISTING"}),
-			NewDps([]int64{45, 60, 75}, 0),
+			newDps([]int64{45, 60, 75}, 0),
 			1,
 		},
 		{
 			"get data for 4 pods where pods have different X timestams available",
 			fakeHeapsterSelector(common.ResourceKindPod, "b", []string{"P1", "P2", "P3", "P4"}),
-			NewDps([]int64{1000, 2300, 2700, 1500}, 0),
+			newDps([]int64{1000, 2300, 2700, 1500}, 0),
 			1,
 		},
 		{
 			"ask for non existing namespace - return no data points",
 			fakeHeapsterSelector(common.ResourceKindPod, "NON_EXISTING_NAMESPACE", []string{"P1"}),
-			NewDps([]int64{}, 0),
+			newDps([]int64{}, 0),
 			1,
 		},
 		{
 			"get data for 0 pods - return no data points",
 			fakeHeapsterSelector(common.ResourceKindPod, "b", []string{}),
-			NewDps([]int64{}, 0),
+			newDps([]int64{}, 0),
 			0,
 		},
 		{
 			"get data for 0 nodes - return no data points",
 			fakeHeapsterSelector(common.ResourceKindNode, "NO_NAMESPACE", []string{}),
-			NewDps([]int64{}, 0),
+			newDps([]int64{}, 0),
 			0,
 		},
 		{
 			"ask for 1 node",
 			fakeHeapsterSelector(common.ResourceKindNode, "NO_NAMESPACE", []string{"N1"}),
-			NewDps([]int64{0, 5, 10}, 0),
+			newDps([]int64{0, 5, 10}, 0),
 			1,
 		},
 		{
 			"ask for 3 nodes",
 			fakeHeapsterSelector(common.ResourceKindNode, "NO_NAMESPACE", []string{"N1", "N2", "N3"}),
-			NewDps([]int64{45, 60, 75}, 0),
+			newDps([]int64{45, 60, 75}, 0),
 			3, // change this to 1 when nodes support all in 1 download.
 		},
 	}
@@ -234,7 +235,7 @@ func TestHeapsterSelector(t *testing.T) {
 	}
 }
 
-var selectorPoll = HeapsterSelectors{
+var selectorPool = HeapsterSelectors{
 	fakeHeapsterSelector(common.ResourceKindPod, "a", []string{"P1"}),
 	fakeHeapsterSelector(common.ResourceKindPod, "a", []string{"P2", "P3", "P4"}),
 	fakeHeapsterSelector(common.ResourceKindPod, "a", []string{"P3", "P4"}),
@@ -262,9 +263,9 @@ func TestHeapsterSelectors(t *testing.T) {
 			MinMaxSumAggregations,
 			[]string{"Dummy/Metric"},
 			[]DataPoints{
-				NewDps([]int64{90, 105, 120}, 0),
-				NewDps([]int64{90, 105, 120}, 0),
-				NewDps([]int64{90, 105, 120}, 0),
+				newDps([]int64{90, 105, 65}, 0),
+				newDps([]int64{90, 105, 65}, 0),
+				newDps([]int64{90, 105, 65}, 0),
 			},
 			1,
 		},
@@ -274,9 +275,9 @@ func TestHeapsterSelectors(t *testing.T) {
 			MinMaxSumAggregations,
 			[]string{"Dummy/Metric"},
 			[]DataPoints{
-				NewDps([]int64{0, 5, 10}, 0),
-				NewDps([]int64{90, 105, 120}, 0),
-				NewDps([]int64{90, 110, 130}, 0),
+				newDps([]int64{0, 5, 10}, 0),
+				newDps([]int64{90, 105, 65}, 0),
+				newDps([]int64{90, 110, 75}, 0),
 			},
 			1,
 		},
@@ -286,12 +287,12 @@ func TestHeapsterSelectors(t *testing.T) {
 			MinMaxSumAggregations,
 			[]string{"Dummy/Metric1", "DummyMetric2"},
 			[]DataPoints{
-				NewDps([]int64{0, 5, 10}, 0),
-				NewDps([]int64{90, 105, 120}, 0),
-				NewDps([]int64{165, 195, 225}, 0),
-				NewDps([]int64{0, 5, 10}, 0),
-				NewDps([]int64{90, 105, 120}, 0),
-				NewDps([]int64{165, 195, 225}, 0),
+				newDps([]int64{0, 5, 10}, 0),
+				newDps([]int64{90, 105, 65}, 0),
+				newDps([]int64{165, 195, 115}, 0),
+				newDps([]int64{0, 5, 10}, 0),
+				newDps([]int64{90, 105, 65}, 0),
+				newDps([]int64{165, 195, 115}, 0),
 			},
 			2,
 		},
@@ -301,9 +302,9 @@ func TestHeapsterSelectors(t *testing.T) {
 			MinMaxSumAggregations,
 			[]string{"Dummy/Metric"},
 			[]DataPoints{
-				NewDps([]int64{0, 5, 10, 1500}, 0),
-				NewDps([]int64{1000, 2300, 2700, 1500}, 0),
-				NewDps([]int64{1165, 3695, 5625, 3000}, 0),
+				newDps([]int64{0, 5, 10, 1500}, 0),
+				newDps([]int64{1000, 2300, 2700, 1500}, 0),
+				newDps([]int64{1165, 3695, 5515, 3000}, 0),
 			},
 			2,
 		},
@@ -313,9 +314,9 @@ func TestHeapsterSelectors(t *testing.T) {
 			MinMaxSumAggregations,
 			[]string{"Dummy/Metric"},
 			[]DataPoints{
-				NewDps([]int64{0, 5, 10, 1500}, 0),
-				NewDps([]int64{1000, 2300, 2700, 1500}, 0),
-				NewDps([]int64{1285, 3840, 5795, 3000}, 0),
+				newDps([]int64{0, 5, 10, 1500}, 0),
+				newDps([]int64{1000, 2300, 2700, 1500}, 0),
+				newDps([]int64{1285, 3840, 5685, 3000}, 0),
 			},
 			6, // if we had node-list option in heapster API we would make only 3 requests
 			// unfortunately there is no such option and we have to make one request per node
@@ -327,7 +328,7 @@ func TestHeapsterSelectors(t *testing.T) {
 	for _, testCase := range testCases {
 		selectors := HeapsterSelectors{}
 		for _, selectorId := range testCase.SelectorIds {
-			selectors = append(selectors, selectorPoll[selectorId])
+			selectors = append(selectors, selectorPool[selectorId])
 		}
 
 		metrics, err := selectors.DownloadAndAggregate(fakeHeapsterClient, testCase.MetricNames, testCase.AggregationNames).GetMetrics()
