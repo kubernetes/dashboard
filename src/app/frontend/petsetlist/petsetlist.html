@@ -15,11 +15,13 @@ limitations under the License.
 -->
 
 <div layout="row">
-  <kd-graph-card graph-title="$ctrl.i18n.MSG_PET_SET_LIST_CPU_GRAPH_CARD_TITLE"
-                 metrics="$ctrl.petSetList.cumulativeMetrics" selected-metric-names="'cpu/usage_rate'" flex="auto" class="kd-left-graph">
+  <kd-graph-card graph-title="::$ctrl.i18n.MSG_PET_SET_LIST_CPU_GRAPH_CARD_TITLE"
+                 metrics="::$ctrl.petSetList.cumulativeMetrics"
+                 selected-metric-names="'cpu/usage_rate'">
   </kd-graph-card>
-  <kd-graph-card graph-title="$ctrl.i18n.MSG_PET_SET_LIST_MEMORY_GRAPH_CARD_TITLE"
-                 metrics="$ctrl.petSetList.cumulativeMetrics" selected-metric-names="'memory/usage'" flex="auto" class="kd-right-graph">
+  <kd-graph-card graph-title="::$ctrl.i18n.MSG_PET_SET_LIST_MEMORY_GRAPH_CARD_TITLE"
+                 metrics="::$ctrl.petSetList.cumulativeMetrics"
+                 selected-metric-names="'memory/usage'">
   </kd-graph-card>
 </div>
 

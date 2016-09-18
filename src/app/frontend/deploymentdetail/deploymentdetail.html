@@ -16,10 +16,12 @@ limitations under the License.
 
 <div layout="row">
   <kd-graph-card graph-title="::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_CPU_GRAPH_CARD_TITLE"
-                 metrics="::ctrl.deploymentDetail.podList.cumulativeMetrics" selected-metric-names="'cpu/usage_rate'" flex="auto" class="kd-left-graph">
+                 metrics="::ctrl.deploymentDetail.podList.cumulativeMetrics"
+                 selected-metric-names="'cpu/usage_rate'">
   </kd-graph-card>
   <kd-graph-card graph-title="::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_MEMORY_GRAPH_CARD_TITLE"
-                 metrics="::ctrl.deploymentDetail.podList.cumulativeMetrics" selected-metric-names="'memory/usage'" flex="auto" class="kd-right-graph">
+                 metrics="::ctrl.deploymentDetail.podList.cumulativeMetrics"
+                 selected-metric-names="'memory/usage'">
   </kd-graph-card>
 </div>
 
@@ -29,12 +31,16 @@ limitations under the License.
   <kd-title>{{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_NEW_REPLICAS_TITLE}}</kd-title>
   <kd-content>
     <kd-replica-set-card-list ng-show="::ctrl.deploymentDetail.newReplicaSet.objectMeta.name"
-            replica-set-list="::ctrl.newReplicaSetList">
+                              replica-set-list="::ctrl.newReplicaSetList">
     </kd-replica-set-card-list>
     <div class="kd-zerostate-message" layout-padding
          ng-hide="::ctrl.deploymentDetail.newReplicaSet.objectMeta.name">
-      <div class="kd-zerostate-title">{{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_NEW_REPLICAS_ZEROSTATE_TITLE}}</div>
-      <div class="kd-zerostate-text">{{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_NEW_REPLICAS_ZEROSTATE_TEXT}}</div>
+      <div class="kd-zerostate-title">
+        {{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_NEW_REPLICAS_ZEROSTATE_TITLE}}
+      </div>
+      <div class="kd-zerostate-text">
+        {{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_NEW_REPLICAS_ZEROSTATE_TEXT}}
+      </div>
     </div>
   </kd-content>
 </kd-content-card>
@@ -49,10 +55,15 @@ limitations under the License.
     </kd-replica-set-card-list>
     <div class="kd-zerostate-message" layout-padding
          ng-hide="::ctrl.deploymentDetail.oldReplicaSetList.replicaSets.length">
-      <div class="kd-zerostate-title">{{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_OLD_REPLICAS_ZEROSTATE_TITLE}}</div>
-      <div class="kd-zerostate-text">{{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_OLD_REPLICAS_ZEROSTATE_TEXT}}</div>
+      <div class="kd-zerostate-title">
+        {{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_OLD_REPLICAS_ZEROSTATE_TITLE}}
+      </div>
+      <div class="kd-zerostate-text">
+        {{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_OLD_REPLICAS_ZEROSTATE_TEXT}}
+      </div>
     </div>
   </kd-content>
 </kd-content-card>
 
-<kd-event-card-list event-list="::ctrl.deploymentDetail.eventList" event-list-resource="::ctrl.eventListResource"></kd-event-card-list>
+<kd-event-card-list event-list="::ctrl.deploymentDetail.eventList"
+                    event-list-resource="::ctrl.eventListResource"></kd-event-card-list>

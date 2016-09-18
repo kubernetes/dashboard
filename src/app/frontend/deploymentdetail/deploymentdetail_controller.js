@@ -5,6 +5,8 @@
 export class DeploymentDetailController {
   /**
    * @param {!backendApi.DeploymentDetail} deploymentDetail
+   * @param {!angular.Resource} kdDeploymentEventsResource
+   * @param {!angular.Resource} kdDeploymentOldReplicaSetsResource
    * @ngInject
    */
   constructor(deploymentDetail, kdDeploymentEventsResource, kdDeploymentOldReplicaSetsResource) {
