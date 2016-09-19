@@ -16,4 +16,14 @@
 
 kd-graph-card {
   flex: 1;
+
+  &>kd-content-card {
+    margin-bottom: 0;
+  }
+
+  &:last-child {
+    &>kd-content-card {
+      margin-left: 0;
+    }
+  }
 }
