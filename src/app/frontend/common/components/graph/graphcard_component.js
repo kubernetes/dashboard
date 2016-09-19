@@ -49,14 +49,15 @@ export class GraphCardController {
   }
 
   /**
-   * Hide graph if at least 1 given metric do not have 2 or more data points.
+   * Hide graphs until all given metrics do not have 2 or more data points.
    *
    * @export
    * @return {boolean}
    */
   shouldShowGraph() {
-    return this.metrics !== null &&
-        this.selectedMetrics.filter((metric) => metric.dataPoints.length > 1).length > 0;
+    return this.metrics !== null && this.metrics.length > 0 &&
+        this.metrics.filter((metric) => metric.dataPoints.length > 1).length ===
+        this.metrics.length;
   }
 }
 

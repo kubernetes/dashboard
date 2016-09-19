@@ -44,6 +44,7 @@ let metricsWithTooFewDataPoints = [
   {
     'dataPoints': [
       {'x': 1472219880, 'y': 50},
+      {'x': 1472219940, 'y': 40},
     ],
     'metricName': 'cpu/usage_rate',
     'aggregation': 'sum',
@@ -87,6 +88,7 @@ describe('Graph card component controller', () => {
 
     expect(expected).toBeFalsy();
   });
+
   it('should hide graph card when metrics were not provided', () => {
     ctrl.metrics = null;
     ctrl.$onInit();
@@ -114,15 +116,5 @@ describe('Graph card component controller', () => {
     let expected = ctrl.selectedMetrics.length;
 
     expect(expected).toEqual(2);
-  });
-
-  it('should hide graph card when no metric names matched', () => {
-    ctrl.metrics = stdMetrics;
-    ctrl.selectedMetricNames = 'badname1,badname2';
-    ctrl.$onInit();
-
-    let expected = ctrl.shouldShowGraph();
-
-    expect(expected).toBeFalsy();
   });
 });
