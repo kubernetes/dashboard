@@ -50,9 +50,39 @@ $logs-color-white: #fff;
 }
 
 .kd-log-view {
+  flex: 1;
   font-family: $font-family-medium-monospace;
-  height: 700px;
   width: 100%;
+}
+
+// The style below is to make the logs view card full width & height.
+kd-content-card {
+  &.kd-log-content-card {
+    box-sizing: border-box;
+    height: 100%;
+    margin: 0;
+    padding: 2.5 * $baseline-grid;
+
+    .kd-content-card {
+      height: 100%;
+
+      .kd-content-card-transclude-content {
+        display: flex;
+        flex: 1;
+
+        kd-content {
+          display: flex;
+          flex: 1;
+        }
+      }
+    }
+
+    .kd-content-card-content {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+  }
 }
 
 .kd-logs-toolbar-select {
