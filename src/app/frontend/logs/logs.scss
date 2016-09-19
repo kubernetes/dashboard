@@ -52,6 +52,7 @@ $logs-color-white: #fff;
 .kd-log-view {
   font-family: $font-family-medium-monospace;
   height: 700px;
+  white-space: pre-wrap;
   width: 100%;
 }
 
