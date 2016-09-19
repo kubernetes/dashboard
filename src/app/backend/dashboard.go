@@ -36,6 +36,7 @@ var (
 		"to connect to in the format of protocol://address:port, e.g., "+
 		"http://localhost:8082. If not specified, the assumption is that the binary runs inside a"+
 		"Kubernetes cluster and service proxy will be used.")
+	argKubeConfigFile = pflag.String("kubeconfig", "", "Path to kubeconfig file with authorization and master location information.")
 )
 
 func main() {
@@ -46,9 +47,15 @@ func main() {
 	pflag.Parse()
 	flag.CommandLine.Parse(make([]string, 0)) // Init for glog calls in kubernetes packages
 
-	log.Printf("Starting HTTP server on port %d", *argPort)
+	log.Printf("Using HTTP port: %d", *argPort)
+	if *argApiserverHost != "" {
+		log.Printf("Using apiserver-host location: %s", *argApiserverHost)
+	}
+	if *argKubeConfigFile != "" {
+		log.Printf("Using kubeconfig file: %s", *argKubeConfigFile)
+	}
 
-	apiserverClient, config, err := client.CreateApiserverClient(*argApiserverHost)
+	apiserverClient, config, err := client.CreateApiserverClient(*argApiserverHost, *argKubeConfigFile)
 	if err != nil {
 		handleFatalInitError(err)
 	}

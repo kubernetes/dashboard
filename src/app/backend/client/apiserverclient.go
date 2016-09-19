@@ -32,22 +32,17 @@ const (
 	defaultBurst = 1e6
 )
 
-// CreateApiserverClient creates new Kubernetes Apiserver client. When apiserverHost param is empty
-// string the function assumes that it is running inside a Kubernetes cluster and attempts to
+// CreateApiserverClient creates new Kubernetes Apiserver client. When kubeconfig or apiserverHost param is empty
+// the function assumes that it is running inside a Kubernetes cluster and attempts to
 // discover the Apiserver. Otherwise, it connects to the Apiserver specified.
 //
-// apiserverHost param is in the format of protocol://address:port/pathPrefix, e.g.,
-// http://localhost:8001.
-func CreateApiserverClient(apiserverHost string) (*client.Client, clientcmd.ClientConfig, error) {
-
-	overrides := &clientcmd.ConfigOverrides{}
-
-	if apiserverHost != "" {
-		overrides.ClusterInfo = clientcmdapi.Cluster{Server: apiserverHost}
-	}
+// apiserverHost param is in the format of protocol://address:port/pathPrefix, e.g.http://localhost:8001.
+// kubeConfig location of kubeconfig file
+func CreateApiserverClient(apiserverHost string, kubeConfig string) (*client.Client, clientcmd.ClientConfig, error) {
 
 	clientConfig := clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
-		clientcmd.NewDefaultClientConfigLoadingRules(), overrides)
+		&clientcmd.ClientConfigLoadingRules{ExplicitPath: kubeConfig},
+		&clientcmd.ConfigOverrides{ClusterInfo: clientcmdapi.Cluster{Server: apiserverHost}})
 
 	cfg, err := clientConfig.ClientConfig()
 	cfg.QPS = defaultQPS
