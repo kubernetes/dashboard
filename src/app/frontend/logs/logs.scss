@@ -52,8 +52,11 @@ $logs-color-white: #fff;
 .kd-log-view {
   flex: 1;
   font-family: $font-family-medium-monospace;
-  white-space: pre-wrap;
   width: 100%;
+}
+
+.kd-log-line {
+  white-space: pre-wrap;
 }
 
 // The style below is to make the logs view card full width & height.

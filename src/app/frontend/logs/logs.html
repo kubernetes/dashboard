@@ -41,13 +41,13 @@ limitations under the License.
     <md-virtual-repeat-container class="kd-log-view" ng-class="ctrl.getStyleClass()"
                                  md-top-index="ctrl.topIndex">
       <div md-virtual-repeat="item in ctrl.logsSet" ng-class="ctrl.getLogsClass()">
-        <span ng-bind-html="item">&nbsp;</span>
+        <span ng-bind-html="item" class="kd-log-line">&nbsp;</span>
       </div>
     </md-virtual-repeat-container>
   </kd-content>
-  <kd-footer ng-show="ctrl.logsSet.length > 1">
+  <kd-footer>
     <div layout="row">
-      <span class="kd-logs-info">
+      <span class="kd-logs-info" ng-show="ctrl.logsSet.length > 1">
         {{ctrl.i18n.MSG_LOGS_TITLE_FROM}}
         {{ctrl.podLogs.firstLogLineReference.logTimestamp | date : "short"}}
         {{ctrl.i18n.MSG_LOGS_TITLE_TO}}
