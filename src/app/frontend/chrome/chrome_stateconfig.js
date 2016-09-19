@@ -29,7 +29,7 @@ export default function stateConfig($stateProvider) {
     abstract: true,
     views: {
       '': {
-        template: '<div ui-view></div>',
+        template: '<div ui-view class="kd-content-div"></div>',
       },
       [toolbarViewName]: {
         template: `<div ui-view="${toolbarViewName}"></div>`,
