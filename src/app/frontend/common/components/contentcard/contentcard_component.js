@@ -38,6 +38,7 @@ export class ContentCardController {
  *  <kd-content-card>
  *    <kd-title>My Title</kd-title>
  *    <kd-content>My Content</kd-content>
+ *    <kd-footer>My Footer</kd-footer>
  *  </kd-content-card>
  *
  * @type {!angular.Component}
@@ -48,5 +49,6 @@ export const contentCardComponent = {
   transclude: /** @type {undefined} TODO(bryk): Remove this when externs are fixed */ ({
     'title': '?kdTitle',
     'content': '?kdContent',
+    'footer': '?kdFooter',
   }),
 };
