@@ -15,6 +15,26 @@
 import {axisSettings, metricDisplaySettings, TimeAxisType} from './graph_settings';
 import {getNewMax, getTickValues} from './tick_values';
 
+function getEventsBetweenTimes(events, startTime, endTime) {
+  return events.filter(() => {
+    let lastSeen = new Date(events.lastSeen);
+    return startTime <= lastSeen && lastSeen < endTime })
+}
+
+function getDataPointsWithEvents(dataPoints, events) {
+  let dpWithEvents = [];
+  for (let i = 0; i < dataPoints.length; i++) {
+    let dp = dataPoints[i];
+    let eventsUntilTime = i+1 === dataPoints.length ? new Date().valueOf() : dataPoints[i + 1].y;
+    dpWithEvents.push({
+      'x': dp.x,
+      'y': dp.y,
+      'events': getEventsBetweenTimes(events, dp.y, eventsUntilTime),
+    });
+  }
+  return dpWithEvents;
+}
+
 export class GraphController {
   /**
    * @ngInject
@@ -90,7 +110,7 @@ export class GraphController {
           }
           data.push({
             'area': metricSettings.area,
-            'values': metric.dataPoints,
+            'values': getDataPointsWithEvents(metric.dataPoints, []),
             'key': metricSettings.key,
             'color': metricSettings.color,
             'fillOpacity': metricSettings.fillOpacity,
@@ -161,10 +181,23 @@ export class GraphController {
       let svg = graphArea.append('svg');
       svg.attr('height', '200px').datum(data).call(chart);
 
-      // add grey line to the bottom to separate from the rest of the page.
+      // change background color to white
       svg.style({
         'background-color': 'white',
       });
+
+      let oldChartUpdate = chart.update;
+
+      let newChartUpdate = function () {
+        oldChartUpdate();
+        let shouldShow = false;
+        if (new Date() % 10000 > 5000) {
+          shouldShow = true;
+        }
+        console.log(chart.lines1.scatter.xScale()(new Date().valueOf()/1000-15*60));
+        console.log(svg.select('.nv-point-0').classed('hover', true));
+      };
+
 
       let isUpdatingFunctionRunning = false;
       let updateUntil = 0;
@@ -186,6 +219,9 @@ export class GraphController {
         updateUntil = new Date().valueOf() + updatePeriod;
         // update chart and call itself again if still in update period.
         let updater = function() {
+          setTimeout(() => {
+            newChartUpdate()
+          })
           chart.update();
           if (new Date() < updateUntil) {
             setTimeout(updater, timeBetweenUpdates);
@@ -197,7 +233,7 @@ export class GraphController {
       };
 
       // update the graph in case of graph area resize
-      nv.utils.windowResize(chart.update);
+      nv.utils.windowResize(newChartUpdate);
       this.scope_.$watch(
           () => graphArea.node().getBoundingClientRect().width,  // variable to watch
           () => startChartUpdatePeriod(1600, 200),
