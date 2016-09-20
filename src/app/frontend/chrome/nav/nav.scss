@@ -23,9 +23,10 @@
   width: $nav-width;
 
   &.md-closed {
+    // Remove "!important" when https://github.com/angular/material/issues/9425 is fixed
     &.md-locked-open-add-active {
-      min-width: $nav-width;
-      width: $nav-width;
+      min-width: $nav-width !important;
+      width: $nav-width !important;
     }
   }
 

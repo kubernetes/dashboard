@@ -28,10 +28,10 @@ limitations under the License.
   </div>
 </md-toolbar>
 
-<md-content layout="row" class="kd-app-content">
+<md-content layout="row" class="kd-app-entire-content" flex="auto">
   <kd-nav flex="none"></kd-nav>
-  <md-content flex="auto" class="kd-app-content"  style="overflow-y: auto;">
-    <div ng-switch="$ctrl.loading" flex="auto" class="kd-content-div">
+  <md-content flex="auto" class="kd-main-content-box">
+    <div ng-switch="$ctrl.loading" class="kd-content-div kd-main-content-div">
       <div ng-switch-when="true" class="kd-spinner">
         <md-progress-circular ng-if="$ctrl.showLoadingSpinner" md-mode="indeterminate"
             md-diameter="48">
