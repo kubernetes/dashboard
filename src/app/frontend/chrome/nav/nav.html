@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-sidenav md-is-locked-open="$ctrl.isVisible" class="kd-nav">
+<md-sidenav md-is-locked-open="$ctrl.isVisible" class="kd-nav" layout="column">
   <div class="kd-nav-group">
     <kd-nav-item class="kd-nav-group-item" state="{{::$ctrl.states.admin}}">{{::$ctrl.i18n.MSG_NAV_MENU_ADMIN}}</kd-nav-item>
     <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.namespace}}">{{::$ctrl.i18n.MSG_NAV_MENU_NAMESPACES}}</kd-nav-item>
