@@ -14,25 +14,27 @@
 
 import {axisSettings, metricDisplaySettings, TimeAxisType} from './graph_settings';
 import {getNewMax, getTickValues} from './tick_values';
+import {getCustormTooltipGenerator} from "./tooltip_generator";
+
+let eventMarkerHeight = 20;
+let eventMarkerWidth = 3;
 
 function getEventsBetweenTimes(events, startTime, endTime) {
-  return events.filter(() => {
-    let lastSeen = new Date(events.lastSeen);
+  if (!events) {
+    return [];
+  }
+  return events.filter((event) => {
+    let lastSeen = new Date(event.lastSeen);
     return startTime <= lastSeen && lastSeen < endTime })
 }
 
-function getDataPointsWithEvents(dataPoints, events) {
-  let dpWithEvents = [];
+function getEventsByDataPointIndex(dataPoints, events) {
+  let eventsByDataPointIndex = {};
   for (let i = 0; i < dataPoints.length; i++) {
-    let dp = dataPoints[i];
-    let eventsUntilTime = i+1 === dataPoints.length ? new Date().valueOf() : dataPoints[i + 1].y;
-    dpWithEvents.push({
-      'x': dp.x,
-      'y': dp.y,
-      'events': getEventsBetweenTimes(events, dp.y, eventsUntilTime),
-    });
+    let eventsUntilTime = i+1 === dataPoints.length ? new Date() : 1000*dataPoints[i + 1].x;
+    eventsByDataPointIndex[i] = getEventsBetweenTimes(events, 1000*dataPoints[i].x, eventsUntilTime);
   }
-  return dpWithEvents;
+  return eventsByDataPointIndex;
 }
 
 export class GraphController {
@@ -53,6 +55,13 @@ export class GraphController {
      * @export {!Array<!backendApi.Metric>}
      */
     this.metrics;
+
+    /**
+     * List of events. Initialized from the scope.
+     * @export {!Array<!backendApi.Event>}
+     */
+    this.events;
+    console.log(this.events);
   }
 
   $onInit() {
@@ -77,6 +86,7 @@ export class GraphController {
         useInteractiveGuideline: true,
       });
       let data = [];
+      let eventsByDataPointIndex = {};
       let yAxis1Type;
       let yAxis2Type;
       let y1max = 1;
@@ -84,7 +94,7 @@ export class GraphController {
       // iterate over metrics and add them to graph display
       for (let i = 0; i < this.metrics.length; i++) {
         let metric = this.metrics[i];
-        // don't display metric if the number of its data points is smaller than 2
+        // don't display metric if the number of its number of data points is smaller than 2
         if (metric.dataPoints.length < 2) {
           continue;
         }
@@ -110,7 +120,7 @@ export class GraphController {
           }
           data.push({
             'area': metricSettings.area,
-            'values': getDataPointsWithEvents(metric.dataPoints, []),
+            'values': metric.dataPoints,
             'key': metricSettings.key,
             'color': metricSettings.color,
             'fillOpacity': metricSettings.fillOpacity,
@@ -120,11 +130,16 @@ export class GraphController {
           });
         }
       }
+
       // don't display empty graph, hide it completely,
       if (data.length === 0) {
         return;
-      } else if (typeof yAxis1Type === 'undefined') {
-        // If axis 2 is used, but not axis 1, move all graphs from axis 2 to axis 1. Looks much
+      } else {
+        eventsByDataPointIndex = getEventsByDataPointIndex(data[0].values, this.events);
+      }
+
+      if (typeof yAxis1Type === 'undefined') {
+        // If Y axis 2 is used, but not axis 1, move all graphs from axis 2 to axis 1 (left one). Looks much
         // better.
         yAxis1Type = yAxis2Type;
         y1max = y2max;
@@ -176,6 +191,9 @@ export class GraphController {
         return d;
       });
 
+      // display custom tooltip
+      chart.interactiveLayer.tooltip.contentGenerator(getCustormTooltipGenerator(chart, eventsByDataPointIndex));
+
       // generate graph
       let graphArea = d3.select(this.element_[0]);
       let svg = graphArea.append('svg');
@@ -186,6 +204,36 @@ export class GraphController {
         'background-color': 'white',
       });
 
+      let eventsMarked = false;
+
+      let markAllEvents = function () {
+        for (let pointIndex in eventsByDataPointIndex) {
+          if (eventsByDataPointIndex[pointIndex].length == 0) {
+            continue
+          }
+          let point = svg.select(`.nv-point-${pointIndex}`);
+          let marker;
+          if (!eventsMarked) {
+            marker = svg.select('.nv-scatter .nv-group').append('rect')
+                .attr('x', -eventMarkerWidth / 2)
+                .attr('y', -eventMarkerHeight / 2)
+                .attr('width', eventMarkerWidth)
+                .attr('height', eventMarkerHeight)
+                .attr('class', `event-marker-${pointIndex}`)
+                .attr('transform', point.attr('transform'))
+                .attr('fill', 'red')
+                .attr('stroke', 'red')
+                .attr('fill-opacity', 1)
+                .attr('stroke-opacity', 1).on('click', () => console.log('wooow'));
+            eventsMarked = false;
+          } else {
+            marker = svg.select(`event-marker-${pointIndex}`);
+          }
+        }
+      }
+
+      //chart.lines1.dispatch.on('renderEnd', markAllEvents);
+
       let oldChartUpdate = chart.update;
 
       let newChartUpdate = function () {
@@ -194,8 +242,9 @@ export class GraphController {
         if (new Date() % 10000 > 5000) {
           shouldShow = true;
         }
-        console.log(chart.lines1.scatter.xScale()(new Date().valueOf()/1000-15*60));
-        console.log(svg.select('.nv-point-0').classed('hover', true));
+       // console.log(chart.lines1.scatter.xScale()(new Date().valueOf()/1000-15*60));
+        markAllEvents();
+
       };
 
 
@@ -253,6 +302,7 @@ export class GraphController {
 export const graphComponent = {
   bindings: {
     'metrics': '<',
+    'events': '<',
   },
   controller: GraphController,
   templateUrl: 'common/components/graph/graph.html',
