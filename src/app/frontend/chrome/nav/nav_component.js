@@ -19,6 +19,7 @@ import {stateName as daemonSetState} from 'daemonsetlist/daemonsetlist_state';
 import {stateName as deploymentState} from 'deploymentlist/deploymentlist_state';
 import {stateName as ingressState} from 'ingresslist/list_state';
 import {stateName as jobState} from 'joblist/joblist_state';
+import {stateName as limitRangeState} from 'limitrangelist/limitrangelist_state';
 import {stateName as namespaceState} from 'namespacelist/namespacelist_state';
 import {stateName as nodeState} from 'nodelist/nodelist_state';
 import {stateName as persistentVolumeClaimState} from 'persistentvolumeclaimlist/persistentvolumeclaimlist_state';
@@ -31,7 +32,6 @@ import {stateName as secretState} from 'secretlist/list_state';
 import {stateName as serviceState} from 'servicelist/servicelist_state';
 import {stateName as servicesanddiscoveryState} from 'servicesanddiscovery/state';
 import {stateName as workloadState} from 'workloads/workloads_state';
-
 
 /**
  * @final
@@ -69,6 +69,7 @@ export class NavController {
       'ingress': ingressState,
       'serviceDiscovery': servicesanddiscoveryState,
       'config': configState,
+      'limitRange': limitRangeState,
     };
 
     /** @export */
@@ -133,4 +134,6 @@ const i18n = {
   MSG_NAV_MENU_SECRETS: goog.getMsg('Secrets'),
   /** @export @desc Config Maps item in the nav. */
   MSG_NAV_MENU_CONFIG_MAPS: goog.getMsg('Config Maps'),
+  /** @export @desc Limit Ranges item in the nav. */
+  MSG_NAV_MENU_LIMIT_RANGES: goog.getMsg('Limit Ranges'),
 };

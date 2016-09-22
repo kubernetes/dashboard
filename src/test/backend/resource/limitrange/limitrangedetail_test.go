@@ -52,22 +52,24 @@ func TestGetLimitResourceDetail(t *testing.T) {
 			&LimitRangeDetail{
 				ObjectMeta: common.ObjectMeta{Name: "foo"},
 				TypeMeta:   common.TypeMeta{Kind: "limitrange"},
-				LimitRanges: limitRanges{
-					api.LimitTypePod: rangeMap{
-						api.ResourceMemory: &limitRange{
-							Min:                  testMemory,
-							Max:                  testMemory,
-							Default:              testMemory,
-							DefaultRequest:       testMemory,
-							MaxLimitRequestRatio: testMemory,
-						},
-						api.ResourceCPU: &limitRange{
-							Min:                  testCpu,
-							Max:                  testCpu,
-							Default:              testCpu,
-							DefaultRequest:       testCpu,
-							MaxLimitRequestRatio: testCpu,
-						},
+				LimitRanges: []LimitRangeItem{
+					LimitRangeItem{
+						ResourceType:         string(api.LimitTypePod),
+						ResourceName:         string(api.ResourceCPU),
+						Max:                  testCpu,
+						Min:                  testCpu,
+						Default:              testCpu,
+						DefaultRequest:       testCpu,
+						MaxLimitRequestRatio: testCpu,
+					},
+					LimitRangeItem{
+						ResourceType:         string(api.LimitTypePod),
+						ResourceName:         string(api.ResourceMemory),
+						Max:                  testMemory,
+						Min:                  testMemory,
+						Default:              testMemory,
+						DefaultRequest:       testMemory,
+						MaxLimitRequestRatio: testMemory,
 					},
 				},
 			},

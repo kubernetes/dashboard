@@ -1,0 +1,50 @@
+<kd-resource-card-list selectable="false" with-statuses="false">
+    <kd-resource-card-header-columns>
+        <kd-resource-card-header-column size="small" grow="2">
+            {{::$ctrl.i18n.MSG_RESOURCE_LIMIT_TYPE_ENTRY}}
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column size="small" grow="1">
+            {{::$ctrl.i18n.MSG_RESOURCE_LIMIT_RESOURCE_ENTRY}}
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column size="small" grow="1">
+            {{::$ctrl.i18n.MSG_RESOURCE_LIMIT_MIN_ENTRY}}
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column size="small" grow="1">
+            {{::$ctrl.i18n.MSG_RESOURCE_LIMIT_MAX_ENTRY}}
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column size="small" grow="1">
+            {{::$ctrl.i18n.MSG_RESOURCE_LIMIT_DEFAULT_REQUEST_ENTRY}}
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column size="small" grow="1">
+            {{::$ctrl.i18n.MSG_RESOURCE_LIMIT_DEFAULT_LIMIT_ENTRY}}
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column size="small" grow="1">
+            {{::$ctrl.i18n.MSG_RESOURCE_LIMIT_MAX_LIMIT_REQUEST_RATIO_ENTRY}}
+        </kd-resource-card-header-column>
+    </kd-resource-card-header-columns>
+    <kd-resource-card ng-repeat="(key, limitRange) in ::$ctrl.resourceLimits" omit-meta="true">
+        <kd-resource-card-columns>
+            <kd-resource-card-column>
+                <div>{{::limitRange.resourceType}}</div>
+            </kd-resource-card-column>
+            <kd-resource-card-column>
+                <div>{{::limitRange.resourceName}}</div>
+            </kd-resource-card-column>
+            <kd-resource-card-column>
+                <div>{{::limitRange.min}}</div>
+            </kd-resource-card-column>
+            <kd-resource-card-column>
+                <div>{{::limitRange.max}}</div>
+            </kd-resource-card-column>
+            <kd-resource-card-column>
+                <div>{{::limitRange.defaultRequest}}</div>
+            </kd-resource-card-column>
+            <kd-resource-card-column>
+                <div>{{::limitRange.default}}</div>
+            </kd-resource-card-column>
+            <kd-resource-card-column>
+                <div>{{::limitRange.maxLimitRequestRatio}}</div>
+            </kd-resource-card-column>
+        </kd-resource-card-columns>
+    </kd-resource-card>
+</kd-resource-card-list>
