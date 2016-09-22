@@ -13,37 +13,32 @@
 // limitations under the License.
 
 import chromeModule from 'chrome/chrome_module';
-import limitRangeListModule from 'limitrangelist/limitrangelist_module';
-import namespaceListModule from 'namespacelist/namespacelist_module';
-import nodeListModule from 'nodelist/nodelist_module';
-import persistentVolumeListModule from 'persistentvolumelist/persistentvolumelist_module';
+import componentsModule from 'common/components/components_module';
+import filtersModule from 'common/filters/filters_module';
+import eventsModule from 'events/events_module';
 
-import stateConfig from './stateconfig';
+import stateConfig from './limitrangedetail_stateconfig';
+import {limitRangeInfoComponent} from './limitrangeinfo_component';
+import {resourceLimitsComponent} from './resourcelimits_component';
+
 
 /**
- * Module for the admin view.
+ * Angular module for the Limit Range details view.
+ *
+ * The view shows detailed view of a Limit Range.
  */
 export default angular
     .module(
-        'kubernetesDashboard.admin',
+        'kubernetesDashboard.limitRangeDetail',
         [
           'ngMaterial',
           'ngResource',
           'ui.router',
+          componentsModule.name,
+          filtersModule.name,
+          eventsModule.name,
           chromeModule.name,
-          limitRangeListModule.name,
-          nodeListModule.name,
-          namespaceListModule.name,
-          persistentVolumeListModule.name,
         ])
     .config(stateConfig)
-    .factory('kdAdminResource', resource);
-
-/**
- * @param {!angular.$resource} $resource
- * @return {!angular.Resource}
- * @ngInject
- */
-function resource($resource) {
-  return $resource('api/v1/admin');
-}
+    .component('kdLimitRangeInfo', limitRangeInfoComponent)
+    .component('kdResourceLimits', resourceLimitsComponent);

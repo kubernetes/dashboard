@@ -15,6 +15,18 @@ limitations under the License.
 -->
 
 <div ng-if="!$ctrl.shouldShowZeroState()">
+  <kd-content-card ng-if="$ctrl.admin.limitRangeList.items.length">
+    <kd-title>
+      <a ui-sref="limitrange">
+        {{::$ctrl.i18n.MSG_ADMIN_LIMIT_RANGES_LABEL}}
+      </a>
+    </kd-title>
+    <kd-content>
+      <kd-limit-range-card-list limit-range-list="$ctrl.admin.limitRangeList" with-statuses="true"
+                              limit-range-list-resource="$ctrl.kdLimitRangeListResource">
+      </kd-limit-range-card-list>
+    </kd-content>
+  </kd-content-card>
   <kd-content-card ng-if="$ctrl.admin.namespaceList.namespaces.length">
     <kd-title>
       <a ui-sref="namespace">

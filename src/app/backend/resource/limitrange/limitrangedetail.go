@@ -24,29 +24,34 @@ import (
 
 // LimitRangeDetail provides the presentation layer view of Kubernetes Limit Ranges resource.
 type LimitRangeDetail struct {
-	ObjectMeta common.ObjectMeta `json:objectMeta`
-	TypeMeta   common.TypeMeta   `json:typeMeta`
+	ObjectMeta common.ObjectMeta `json:"objectMeta"`
+	TypeMeta   common.TypeMeta   `json:"typeMeta"`
 
-	LimitRanges limitRanges `json:"limitsRanges,omitempty"`
+	LimitRanges []LimitRangeItem `json:"limitRanges,omitempty"`
 }
 
 // limitRanges provides set of limit ranges by limit types and resource names
-type limitRanges map[api.LimitType]rangeMap
+type limitRangesMap map[api.LimitType]rangeMap
 
 // rangeMap provides limit ranges by resource name
-type rangeMap map[api.ResourceName]*limitRange
+type rangeMap map[api.ResourceName]*LimitRangeItem
 
-func (rMap rangeMap) getRange(resource api.ResourceName) *limitRange {
+func (rMap rangeMap) getRange(resource api.ResourceName) *LimitRangeItem {
 	r, ok := rMap[resource]
 	if !ok {
-		return &limitRange{}
+		rMap[resource] = &LimitRangeItem{}
+		return rMap[resource]
 	} else {
 		return r
 	}
 }
 
-// limitRange provides resource limit range values
-type limitRange struct {
+// LimitRange provides resource limit range values
+type LimitRangeItem struct {
+	// ResourceName usage constraints on this kind by resource name
+	ResourceName string `json:"resourceName,omitempty"`
+	// ResourceType of resource that this limit applies to
+	ResourceType string `json:"resourceType,omitempty"`
 	// Min usage constraints on this kind by resource name
 	Min string `json:"min,omitempty"`
 	// Max usage constraints on this kind by resource name
@@ -73,24 +78,27 @@ func GetLimitRangeDetail(client *client.Client, namespace, name string) (*LimitR
 }
 
 func getLimitRangeDetail(rawLimitRange *api.LimitRange) *LimitRangeDetail {
+
 	return &LimitRangeDetail{
 		ObjectMeta:  common.NewObjectMeta(rawLimitRange.ObjectMeta),
 		TypeMeta:    common.NewTypeMeta(common.ResourceKindLimitRange),
-		LimitRanges: toLimitRanges(rawLimitRange.Spec.Limits),
+		LimitRanges: ToLimitRanges(rawLimitRange),
 	}
 }
 
-// toLimitRanges converts array of api.LimitRangeItem to LimitRanges
-func toLimitRanges(rawLimitRanges []api.LimitRangeItem) limitRanges {
+// toLimitRanges converts raw limit ranges to limit ranges map
+func toLimitRangesMap(rawLimitRange *api.LimitRange) limitRangesMap {
 
-	limitRanges := make(limitRanges, len(rawLimitRanges))
+	rawLimitRanges := rawLimitRange.Spec.Limits
+
+	limitRanges := make(limitRangesMap, len(rawLimitRanges))
 
 	for _, rawLimitRange := range rawLimitRanges {
 
 		rangeMap := make(rangeMap)
 
 		for resource, min := range rawLimitRange.Min {
-			rangeMap[resource] = &limitRange{Min: min.String()}
+			rangeMap.getRange(resource).Min = min.String()
 		}
 
 		for resource, max := range rawLimitRange.Max {
@@ -113,4 +121,17 @@ func toLimitRanges(rawLimitRanges []api.LimitRangeItem) limitRanges {
 	}
 
 	return limitRanges
+}
+
+func ToLimitRanges(rawLimitRange *api.LimitRange) []LimitRangeItem {
+	limitRangeMap := toLimitRangesMap(rawLimitRange)
+	limitRangeList := make([]LimitRangeItem, 0)
+	for limitType, rangeMap := range limitRangeMap {
+		for resourceName, limit := range rangeMap {
+			limit.ResourceName = resourceName.String()
+			limit.ResourceType = string(limitType)
+			limitRangeList = append(limitRangeList, *limit)
+		}
+	}
+	return limitRangeList
 }
