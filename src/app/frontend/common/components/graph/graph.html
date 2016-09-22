@@ -15,3 +15,28 @@ limitations under the License.
 -->
 
 <!-- Graph <svg> is inserted in here -->
+
+<kd-content-card ng-show="$ctrl.selectedEvents.length">
+  <kd-content>
+    <kd-resource-card-list selectable="false">
+      <kd-resource-card-header-columns>
+        <kd-resource-card-header-column size="medium" grow="4">
+          Event Message
+        </kd-resource-card-header-column>
+      </kd-resource-card-header-columns>
+      <kd-resource-card
+          dir-paginate="event in $ctrl.selectedEvents | itemsPerPage: default"
+          total-items="$ctrl.selectedEvents.length"
+          object-meta="event.objectMeta" type-meta="event.typeMeta" pagination-id="events">
+        <kd-resource-card-columns>
+          <kd-resource-card-column>
+            <div class="kd-replicationcontrollerevents-message">
+              {{event.message}}
+            </div>
+          </kd-resource-card-column>
+        </kd-resource-card-columns>
+      </kd-resource-card>
+    </kd-resource-card-list>
+  </kd-content>
+  {{$ctrl.selectedEvents}}
+</kd-content-card>

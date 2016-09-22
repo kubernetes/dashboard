@@ -62,6 +62,12 @@ export class GraphController {
      */
     this.events;
     console.log(this.events);
+
+    /**
+     * List of events that were selected by the user by clicking on some data point on the graph.
+     * @export {!Array<!backendApi.Event>}
+     */
+    this.selectedEvents= [];
   }
 
   $onInit() {
@@ -196,7 +202,8 @@ export class GraphController {
 
       // generate graph
       let graphArea = d3.select(this.element_[0]);
-      let svg = graphArea.append('svg');
+      let svg = graphArea.insert('svg', ":first-child");
+
       svg.attr('height', '200px').datum(data).call(chart);
 
       // change background color to white
@@ -204,47 +211,53 @@ export class GraphController {
         'background-color': 'white',
       });
 
-      let eventsMarked = false;
+      let markAllEvents = () => {
+        // I spent ages to figure out this function... Hard to believe.
+        // Hints for future developers:
+        // 1. Learn d3!
+        // 2. In order to add extra features to the graph just add extra routines newChartUpdate function defined below.
+        // 3. Use selection.transition() for smooth graph update
+        // 4. Don't remove/add elements on update unless you have to. Instead create elements and modify their opacity/position. Doing so prevents
+        //    graph from flickering.
+        // 5. Read nvd3 source code - especially following models: line, scatter, tooltip, axes and of course multiChart.
+        // 6. To convert values to coords on graph use chart.lines1.scatter.xScale()(xValueToConvert). Same for x and axis 2. See example below.
+        // 7. Use nv-series to choose colors and styles specific for certain data series.
 
-      let markAllEvents = function () {
-        for (let pointIndex in eventsByDataPointIndex) {
-          if (eventsByDataPointIndex[pointIndex].length == 0) {
-            continue
-          }
-          let point = svg.select(`.nv-point-${pointIndex}`);
-          let marker;
-          if (!eventsMarked) {
-            marker = svg.select('.nv-scatter .nv-group').append('rect')
-                .attr('x', -eventMarkerWidth / 2)
-                .attr('y', -eventMarkerHeight / 2)
-                .attr('width', eventMarkerWidth)
-                .attr('height', eventMarkerHeight)
-                .attr('class', `event-marker-${pointIndex}`)
-                .attr('transform', point.attr('transform'))
-                .attr('fill', 'red')
-                .attr('stroke', 'red')
-                .attr('fill-opacity', 1)
-                .attr('stroke-opacity', 1).on('click', () => console.log('wooow'));
-            eventsMarked = false;
-          } else {
-            marker = svg.select(`event-marker-${pointIndex}`);
-          }
+        // This function basically adds event markers to all data points and updates their position.
+        // Only data points that have events should have markers so the opacity of data points without events is set to 0.
+        //
+        let markerGroup = svg.select('.nv-scatter').selectAll('g.event-marker-group').data([0]).enter().append('g').attr('class', 'event-marker-group');
+        for (let seriesId in data) {
+           let isDisabled = !!data[seriesId].disabled;
+           let xConv = (data[seriesId].yAxis==1?chart.lines1:chart.lines2).scatter.xScale();
+           let yConv = (data[seriesId].yAxis==1?chart.lines1:chart.lines2).scatter.yScale();
+           let markerSeriesGroup = markerGroup.selectAll(`g.marker-series-${seriesId}`).data([0]).enter().append('g').attr('class', `marker-series-${seriesId}`);
+          // it does not have to be a red rectangle, you can use any other shape
+           markerSeriesGroup.selectAll('rect').data(data[seriesId].values).enter().append('rect')
+               .attr('x', -eventMarkerWidth / 2)
+               .attr('y', -eventMarkerHeight / 2)
+               .attr('width', eventMarkerWidth)
+               .attr('height', eventMarkerHeight)
+               .attr('class', (d, i) => `event-marker-${i}`)
+               .attr('stroke-width', 0)
+               .attr('fill', 'red')
+               .attr('transform',  (d) => `translate(${xConv(d.x)}, ${yConv(d.y)})`)
+               .on('click', (d,i) => {
+                 this.selectedEvents = eventsByDataPointIndex[i];
+                 this.scope_.$digest();
+               });
+           svg.select(`g.marker-series-${seriesId}`).selectAll('rect').transition()
+               .attr('transform',  (d) => `translate(${xConv(d.x)}, ${yConv(d.y)})`)
+               .attr('fill-opacity', (d, i) => isDisabled || eventsByDataPointIndex[i].length===0 ? 0: 1);
         }
       }
-
-      //chart.lines1.dispatch.on('renderEnd', markAllEvents);
 
       let oldChartUpdate = chart.update;
 
       let newChartUpdate = function () {
         oldChartUpdate();
-        let shouldShow = false;
-        if (new Date() % 10000 > 5000) {
-          shouldShow = true;
-        }
-       // console.log(chart.lines1.scatter.xScale()(new Date().valueOf()/1000-15*60));
+        // here add all extra graph drawing functions
         markAllEvents();
-
       };
 
 
