@@ -32,7 +32,6 @@ import {stateName as servicesanddiscoveryState} from 'servicesanddiscovery/state
 import {stateName as statefulSetState} from 'statefulsetlist/statefulsetlist_state';
 import {stateName as workloadState} from 'workloads/workloads_state';
 
-
 /**
  * @final
  */

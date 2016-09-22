@@ -16,41 +16,23 @@ import chromeModule from 'chrome/chrome_module';
 import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
 import eventsModule from 'events/events_module';
-import resourceLimitsModule from 'resourcelimit/resourcelimit_module';
-import resourceQuotasModule from 'resourcequotadetail/resourcequotadetail_module';
-
-import stateConfig from './namespacedetail_stateconfig';
-import {namespaceInfoComponent} from './namespaceinfo_component';
-
+import {resourceLimitsComponent} from './resourcelimits_component';
 
 /**
- * Angular module for the Namespace details view.
+ * Angular module for the Limit Range details view.
  *
- * The view shows detailed view of a Namespace.
+ * The view shows detailed view of a Limit Range.
  */
 export default angular
     .module(
-        'kubernetesDashboard.namespaceDetail',
+        'kubernetesDashboard.limitRangeDetail',
         [
           'ngMaterial',
           'ngResource',
           'ui.router',
           componentsModule.name,
-          chromeModule.name,
           filtersModule.name,
           eventsModule.name,
-          resourceQuotasModule.name,
-          resourceLimitsModule.name,
+          chromeModule.name,
         ])
-    .config(stateConfig)
-    .component('kdNamespaceInfo', namespaceInfoComponent)
-    .factory('kdNamespaceEventsResource', namespaceEventsResource);
-
-/**
- * @param {!angular.$resource} $resource
- * @return {!angular.Resource}
- * @ngInject
- */
-function namespaceEventsResource($resource) {
-  return $resource('api/v1/namespace/:name/event');
-}
+    .component('kdResourceLimits', resourceLimitsComponent);

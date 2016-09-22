@@ -22,6 +22,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/resourcequota"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/limitrange"
 	"k8s.io/kubernetes/pkg/api"
 	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 	"k8s.io/kubernetes/pkg/fields"
@@ -42,6 +43,9 @@ type NamespaceDetail struct {
 
 	// ResourceQuotaList is list of resource quotas associated to the namespace
 	ResourceQuotaList *resourcequota.ResourceQuotaDetailList `json:"resourceQuotaList"`
+
+	// ResourceLimits is list of limit ranges associated to the namespace
+	ResourceLimits []limitrange.LimitRangeItem `json:"resourceLimits"`
 }
 
 // GetNamespaceDetail gets namespace details.
@@ -64,12 +68,17 @@ func GetNamespaceDetail(client k8sClient.Interface, heapsterClient client.Heapst
 		return nil, err
 	}
 
-	namespaceDetails := toNamespaceDetail(*namespace, events, resourceQuotaList)
+	resourceLimits, err := getLimitRanges(client, *namespace)
+	if err != nil {
+		return nil, err
+	}
+
+	namespaceDetails := toNamespaceDetail(*namespace, events, resourceQuotaList ,resourceLimits)
 
 	return &namespaceDetails, nil
 }
 
-func toNamespaceDetail(namespace api.Namespace, events common.EventList, resourceQuotaList *resourcequota.ResourceQuotaDetailList) NamespaceDetail {
+func toNamespaceDetail(namespace api.Namespace, events common.EventList, resourceQuotaList *resourcequota.ResourceQuotaDetailList, resourceLimits []limitrange.LimitRangeItem) NamespaceDetail {
 
 	return NamespaceDetail{
 		ObjectMeta:        common.NewObjectMeta(namespace.ObjectMeta),
@@ -77,7 +86,13 @@ func toNamespaceDetail(namespace api.Namespace, events common.EventList, resourc
 		Phase:             namespace.Status.Phase,
 		EventList:         events,
 		ResourceQuotaList: resourceQuotaList,
+		ResourceLimits:    resourceLimits,
 	}
+}
+
+var listEverything = api.ListOptions{
+	LabelSelector: labels.Everything(),
+	FieldSelector: fields.Everything(),
 }
 
 func getResourceQuotas(client k8sClient.Interface, namespace api.Namespace) (*resourcequota.ResourceQuotaDetailList, error) {
@@ -96,7 +111,19 @@ func getResourceQuotas(client k8sClient.Interface, namespace api.Namespace) (*re
 	return result, err
 }
 
-var listEverything = api.ListOptions{
-	LabelSelector: labels.Everything(),
-	FieldSelector: fields.Everything(),
+
+func getLimitRanges(client k8sClient.Interface, namespace api.Namespace) ([]limitrange.LimitRangeItem, error) {
+	list, err := client.Core().LimitRanges(namespace.Name).List(listEverything)
+
+	if err != nil {
+		return nil, err
+	}
+
+	resourceLimits := make([]limitrange.LimitRangeItem, 0)
+	for _, item := range list.Items {
+		list := limitrange.ToLimitRanges(&item)
+		resourceLimits = append(resourceLimits, list...)
+	}
+
+	return resourceLimits, nil
 }
