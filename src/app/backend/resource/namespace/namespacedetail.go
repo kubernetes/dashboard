@@ -21,8 +21,11 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/limitrange"
 	"k8s.io/kubernetes/pkg/api"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
+	"k8s.io/kubernetes/pkg/fields"
+	"k8s.io/kubernetes/pkg/labels"
 )
 
 // NamespaceDetail is a presentation layer view of Kubernetes Namespace resource. This means it is Namespace plus
@@ -36,6 +39,9 @@ type NamespaceDetail struct {
 
 	// Events is list of events associated to the namespace.
 	EventList common.EventList `json:"eventList"`
+
+	// ResourceLimits is list of limit ranges associated to the namespace
+	ResourceLimits []limitrange.LimitRangeItem `json:"limitRanges"`
 }
 
 // GetNamespaceDetail gets namespace details.
@@ -53,16 +59,44 @@ func GetNamespaceDetail(client k8sClient.Interface, heapsterClient client.Heapst
 		return nil, err
 	}
 
-	namespaceDetails := toNamespaceDetail(*namespace, events)
+	resourceLimits, err := getLimitRanges(client, *namespace)
+	if err != nil {
+		return nil, err
+	}
+
+	namespaceDetails := toNamespaceDetail(*namespace, events, resourceLimits)
+
 	return &namespaceDetails, nil
 }
 
-func toNamespaceDetail(namespace api.Namespace, events common.EventList) NamespaceDetail {
+func toNamespaceDetail(namespace api.Namespace, events common.EventList, resourceLimits []limitrange.LimitRangeItem) NamespaceDetail {
 
 	return NamespaceDetail{
-		ObjectMeta: common.NewObjectMeta(namespace.ObjectMeta),
-		TypeMeta:   common.NewTypeMeta(common.ResourceKindNamespace),
-		Phase:      namespace.Status.Phase,
-		EventList:  events,
+		ObjectMeta:     common.NewObjectMeta(namespace.ObjectMeta),
+		TypeMeta:       common.NewTypeMeta(common.ResourceKindNamespace),
+		Phase:          namespace.Status.Phase,
+		EventList:      events,
+		ResourceLimits: resourceLimits,
 	}
+}
+
+func getLimitRanges(client k8sClient.LimitRangesNamespacer, namespace api.Namespace) ([]limitrange.LimitRangeItem, error) {
+	list, err := client.LimitRanges(namespace.Name).List(listEverything)
+
+	if err != nil {
+		return nil, err
+	}
+
+	resourceLimits := make([]limitrange.LimitRangeItem, 0)
+	for _, item := range list.Items {
+		list := limitrange.ToLimitRanges(&item)
+		resourceLimits = append(resourceLimits, list...)
+	}
+
+	return resourceLimits, nil
+}
+
+var listEverything = api.ListOptions{
+	LabelSelector: labels.Everything(),
+	FieldSelector: fields.Everything(),
 }
