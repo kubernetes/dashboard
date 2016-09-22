@@ -20,6 +20,7 @@ limitations under the License.
          class="kd-content-card-content-title md-title"
          ng-transclude="title"></h1>
     <div ng-transclude="content" class="kd-content-card-transclude-content"></div>
-    <div class="kd-content-card-content-footer" ng-transclude="footer"></div>
+    <div class="kd-content-card-content-footer" ng-if="$ctrl.isFooterSlotFilled()"
+         ng-transclude="footer"></div>
   </div>
 </div>
