@@ -65,6 +65,9 @@ type ResourceChannels struct {
 	// List and error channels to Events.
 	EventList EventListChannel
 
+	// List and error channels to LimitRanges.
+	LimitRangeList LimitRangeListChannel
+
 	// List and error channels to Nodes.
 	NodeList NodeListChannel
 
@@ -150,6 +153,33 @@ func GetIngressListChannel(client client.IngressNamespacer,
 			}
 		}
 		list.Items = filteredItems
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// LimitRangeListChannel is a list and error channels to LimitRanges.
+type LimitRangeListChannel struct {
+	List  chan *api.LimitRangeList
+	Error chan error
+}
+
+// GetLimitRangeListChannel returns a pair of channels to a LimitRange list and errors that
+// both must be read numReads times.
+func GetLimitRangeListChannel(client client.LimitRangesNamespacer, nsQuery *NamespaceQuery,
+	numReads int) LimitRangeListChannel {
+
+	channel := LimitRangeListChannel{
+		List:  make(chan *api.LimitRangeList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.LimitRanges(nsQuery.ToRequestParam()).List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err

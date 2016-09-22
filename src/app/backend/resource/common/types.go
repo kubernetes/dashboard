@@ -105,6 +105,7 @@ const (
 	ResourceKindReplicationController = "replicationcontroller"
 	ResourceKindDaemonSet             = "daemonset"
 	ResourceKindJob                   = "job"
+	ResourceKindLimitRange            = "limitrange"
 	ResourceKindPetSet                = "petset"
 	ResourceKindNamespace             = "namespace"
 	ResourceKindNode                  = "node"
@@ -147,6 +148,7 @@ var kindToAPIMapping = map[string]struct {
 	ResourceKindReplicaSet:            {"replicasets", ClientTypeExtensionClient},
 	ResourceKindDaemonSet:             {"daemonsets", ClientTypeExtensionClient},
 	ResourceKindPetSet:                {"petsets", ClientTypeAppsClient},
+	ResourceKindLimitRange:            {"limitrange", ClientTypeDefault},
 	ResourceKindJob:                   {"jobs", ClientTypeBatchClient},
 	ResourceKindNamespace:             {"namespaces", ClientTypeDefault},
 	ResourceKindNode:                  {"nodes", ClientTypeDefault},

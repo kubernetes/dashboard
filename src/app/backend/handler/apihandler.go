@@ -35,6 +35,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/ingress"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/limitrange"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/logs"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
@@ -490,6 +491,20 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 		apiV1Ws.GET("/resourcequota/{namespace}/{resourcequota}").
 			To(apiHandler.handleGetResourceQuotaDetail).
 			Writes(resourcequota.ResourceQuotaDetail{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/limitrange/").
+			To(apiHandler.handleGetLimitRangeList).
+			Writes(limitrange.LimitRangeList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/limitrange/{namespace}").
+			To(apiHandler.handleGetLimitRangeList).
+			Writes(limitrange.LimitRangeList{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/limitrange/{namespace}/{limitrange}").
+			To(apiHandler.handleGetLimitRangeDetail).
+			Writes(limitrange.LimitRangeList{}))
 
 	return wsContainer
 }
@@ -1283,6 +1298,28 @@ func (apiHandler *APIHandler) handleGetResourceQuotaDetail(request *restful.Requ
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("resourcequota")
 	result, err := resourcequota.GetResourceQuotaDetail(apiHandler.client, namespace, name)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+func (apiHandler *APIHandler) handleGetLimitRangeList(request *restful.Request, response *restful.Response) {
+	namespace := parseNamespacePathParameter(request)
+	dataSelect := parseDataSelectPathParameter(request)
+	result, err := limitrange.GetLimitRangeList(apiHandler.client, namespace, dataSelect)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetLimitRangeDetail(request *restful.Request, response *restful.Response) {
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("limitrange")
+	result, err := limitrange.GetLimitRangeDetail(apiHandler.client, namespace, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
