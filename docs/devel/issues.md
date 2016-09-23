@@ -38,10 +38,11 @@ Issue area determines part of application or process connected to it. It can be 
 
 Issue kind determines if issue is a bug, enhancement, feature, refactoring of existing code or if it covers changes in Kubernetes API. In contrast to area it is not connected to application itself. Following kinds could be applied to most of the applications.
 
-- `kind/bug` - bugs, that need to be fixed.
-- `kind/enhancement` - issues created in order to make the application better.
-- `kind/feature` - issues created in order to add new features to the application.
-- `kind/question` - discussion issues and user questions.
+- `kind/bug` - bugs, that need to be fixed. Assigned when something is not working as it was expected.
+- `kind/duplicate` - duplicates of existing issues, that are usually closed and linked with original ones.
+- `kind/enhancement` - enhacements of existing functionalities, that will make the application better.
+- `kind/feature` - new features, that could be added to the application.
+- `kind/question` - general discussions and user questions.
 - `kind/refactoring` - issues created in order to enhance code quality without changing application functionality.
 
 ### CLA labels
@@ -53,5 +54,4 @@ Kubernetes Dashboard uses following two labels to mark pull requests. Every cont
 
 ### Other labels
 
-- `duplicate` -  duplicated issues, that are usually closed and linked with original issue.
 - `greenkeeper` - pull requests created by [greenkeeper.io bot](https://github.com/greenkeeperio-bot). This label is assigned automatically.
