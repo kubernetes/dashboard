@@ -15,10 +15,10 @@
 package job
 
 import (
-	"k8s.io/kubernetes/pkg/apis/batch"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"k8s.io/kubernetes/pkg/apis/batch"
 )
 
 // The code below allows to perform complex data section on []batch.Job
@@ -41,10 +41,10 @@ func (self JobCell) GetProperty(name dataselect.PropertyName) dataselect.Compara
 
 func (self JobCell) GetResourceSelector() *metric.ResourceSelector {
 	return &metric.ResourceSelector{
-		Namespace:     self.ObjectMeta.Namespace,
-		ResourceType:  common.ResourceKindJob,
-		ResourceName:  self.ObjectMeta.Name,
-		Selector:      self.Spec.Selector.MatchLabels,
+		Namespace:    self.ObjectMeta.Namespace,
+		ResourceType: common.ResourceKindJob,
+		ResourceName: self.ObjectMeta.Name,
+		Selector:     self.Spec.Selector.MatchLabels,
 	}
 }
 

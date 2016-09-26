@@ -24,12 +24,12 @@ import (
 func TestGetLogs(t *testing.T) {
 
 	cases := []struct {
-		info      string
-		podId     string
-		rawLogs   string
-		container string
+		info        string
+		podId       string
+		rawLogs     string
+		container   string
 		logSelector *logs.LogViewSelector
-		expected  *logs.Logs
+		expected    *logs.Logs
 	}{
 		{
 			"return no logs if no logs are available",
@@ -55,19 +55,19 @@ func TestGetLogs(t *testing.T) {
 				Container: "test",
 				FirstLogLineReference: logs.LogLineId{
 					LogTimestamp: "1",
-					LineNum: -1,
+					LineNum:      -1,
 				},
 				LastLogLineReference: logs.LogLineId{
 					LogTimestamp: "5",
-					LineNum: 1,
+					LineNum:      1,
 				},
 				LogViewInfo: logs.LogViewInfo{
 					ReferenceLogLineId: logs.LogLineId{
-						LogTimestamp:"3",
-						LineNum: -1,
+						LogTimestamp: "3",
+						LineNum:      -1,
 					},
 					RelativeFrom: -2,
-					RelativeTo: 3},
+					RelativeTo:   3},
 			},
 		},
 		{
@@ -77,28 +77,28 @@ func TestGetLogs(t *testing.T) {
 			"test",
 			&logs.LogViewSelector{
 				ReferenceLogLineId: logs.OldestLogLineId,
-				RelativeFrom: 1,
-				RelativeTo:   3,
+				RelativeFrom:       1,
+				RelativeTo:         3,
 			},
 			&logs.Logs{
 				PodId:     "pod-1",
-				LogLines:  logs.LogLines{ "2 log2", "3 log3"},
+				LogLines:  logs.LogLines{"2 log2", "3 log3"},
 				Container: "test",
 				FirstLogLineReference: logs.LogLineId{
 					LogTimestamp: "2",
-					LineNum: -1,
+					LineNum:      -1,
 				},
 				LastLogLineReference: logs.LogLineId{
 					LogTimestamp: "3",
-					LineNum: -1,
+					LineNum:      -1,
 				},
 				LogViewInfo: logs.LogViewInfo{
 					ReferenceLogLineId: logs.LogLineId{
-						LogTimestamp:"3",
-						LineNum: -1,
+						LogTimestamp: "3",
+						LineNum:      -1,
 					},
 					RelativeFrom: -1,
-					RelativeTo: 1},
+					RelativeTo:   1},
 			},
 		},
 		{
@@ -108,28 +108,28 @@ func TestGetLogs(t *testing.T) {
 			"test",
 			&logs.LogViewSelector{
 				ReferenceLogLineId: logs.NewestLogLineId,
-				RelativeFrom: -3,
-				RelativeTo:   -1,
+				RelativeFrom:       -3,
+				RelativeTo:         -1,
 			},
 			&logs.Logs{
 				PodId:     "pod-1",
-				LogLines:  logs.LogLines{ "2 log2", "3 log3"},
+				LogLines:  logs.LogLines{"2 log2", "3 log3"},
 				Container: "test",
 				FirstLogLineReference: logs.LogLineId{
 					LogTimestamp: "2",
-					LineNum: -1,
+					LineNum:      -1,
 				},
 				LastLogLineReference: logs.LogLineId{
 					LogTimestamp: "3",
-					LineNum: -1,
+					LineNum:      -1,
 				},
 				LogViewInfo: logs.LogViewInfo{
 					ReferenceLogLineId: logs.LogLineId{
-						LogTimestamp:"3",
-						LineNum: -1,
+						LogTimestamp: "3",
+						LineNum:      -1,
 					},
 					RelativeFrom: -1,
-					RelativeTo: 1},
+					RelativeTo:   1},
 			},
 		},
 		{
@@ -147,23 +147,23 @@ func TestGetLogs(t *testing.T) {
 			},
 			&logs.Logs{
 				PodId:     "pod-1",
-				LogLines:  logs.LogLines{ "2 log2", "3 log3"},
+				LogLines:  logs.LogLines{"2 log2", "3 log3"},
 				Container: "test",
 				FirstLogLineReference: logs.LogLineId{
 					LogTimestamp: "2",
-					LineNum: -1,
+					LineNum:      -1,
 				},
 				LastLogLineReference: logs.LogLineId{
 					LogTimestamp: "3",
-					LineNum: -1,
+					LineNum:      -1,
 				},
 				LogViewInfo: logs.LogViewInfo{
 					ReferenceLogLineId: logs.LogLineId{
-						LogTimestamp:"3",
-						LineNum: -1,
+						LogTimestamp: "3",
+						LineNum:      -1,
 					},
 					RelativeFrom: -1,
-					RelativeTo: 1},
+					RelativeTo:   1},
 			},
 		},
 		{
@@ -181,23 +181,23 @@ func TestGetLogs(t *testing.T) {
 			},
 			&logs.Logs{
 				PodId:     "pod-1",
-				LogLines:  logs.LogLines{ "4 log4", "5 log5"},
+				LogLines:  logs.LogLines{"4 log4", "5 log5"},
 				Container: "test",
 				FirstLogLineReference: logs.LogLineId{
 					LogTimestamp: "4",
-					LineNum: -1,
+					LineNum:      -1,
 				},
 				LastLogLineReference: logs.LogLineId{
 					LogTimestamp: "5",
-					LineNum: 1,
+					LineNum:      1,
 				},
 				LogViewInfo: logs.LogViewInfo{
 					ReferenceLogLineId: logs.LogLineId{
-						LogTimestamp:"3",
-						LineNum: -1,
+						LogTimestamp: "3",
+						LineNum:      -1,
 					},
 					RelativeFrom: 1,
-					RelativeTo: 3},
+					RelativeTo:   3},
 			},
 		},
 		{
@@ -215,23 +215,23 @@ func TestGetLogs(t *testing.T) {
 			},
 			&logs.Logs{
 				PodId:     "pod-1",
-				LogLines:  logs.LogLines{ "1 log1", "2 log2"},
+				LogLines:  logs.LogLines{"1 log1", "2 log2"},
 				Container: "test",
 				FirstLogLineReference: logs.LogLineId{
 					LogTimestamp: "1",
-					LineNum: -1,
+					LineNum:      -1,
 				},
 				LastLogLineReference: logs.LogLineId{
 					LogTimestamp: "2",
-					LineNum: -1,
+					LineNum:      -1,
 				},
 				LogViewInfo: logs.LogViewInfo{
 					ReferenceLogLineId: logs.LogLineId{
-						LogTimestamp:"3",
-						LineNum: -1,
+						LogTimestamp: "3",
+						LineNum:      -1,
 					},
 					RelativeFrom: -2,
-					RelativeTo: 0},
+					RelativeTo:   0},
 			},
 		},
 		{
@@ -245,31 +245,29 @@ func TestGetLogs(t *testing.T) {
 					LineNum:      2, // this means element with actual index 1.
 				},
 				RelativeFrom: 0,
-				RelativeTo:   2,  // request indices 1, 2
+				RelativeTo:   2, // request indices 1, 2
 			},
 			&logs.Logs{
 				PodId:     "pod-1",
-				LogLines:  logs.LogLines{ "1 log2", "1 log3"},
+				LogLines:  logs.LogLines{"1 log2", "1 log3"},
 				Container: "test",
 				FirstLogLineReference: logs.LogLineId{
 					LogTimestamp: "1",
-					LineNum: 2,
+					LineNum:      2,
 				},
 				LastLogLineReference: logs.LogLineId{
 					LogTimestamp: "1",
-					LineNum: 3,
+					LineNum:      3,
 				},
 				LogViewInfo: logs.LogViewInfo{
 					ReferenceLogLineId: logs.LogLineId{
-						LogTimestamp:"1",
-						LineNum: 3,
+						LogTimestamp: "1",
+						LineNum:      3,
 					},
 					RelativeFrom: -1,
-					RelativeTo: 1},
+					RelativeTo:   1},
 			},
 		},
-
-
 	}
 	for _, c := range cases {
 		actual := ConstructLogs(c.podId, c.rawLogs, c.container, c.logSelector)

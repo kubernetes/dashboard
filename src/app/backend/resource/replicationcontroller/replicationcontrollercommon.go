@@ -20,14 +20,14 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 
+	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
-	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 )
 
 // Transforms simple selector map to labels.Selector object that can be used when querying for
@@ -122,7 +122,6 @@ func CreateReplicationControllerList(replicationControllers []api.ReplicationCon
 	replicationControllerCells, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells(replicationControllers), dsQuery, cachedResources, heapsterClient)
 	replicationControllers = fromCells(replicationControllerCells)
 
-
 	for _, rc := range replicationControllers {
 		matchingPods := common.FilterNamespacedPodsBySelector(pods, rc.ObjectMeta.Namespace,
 			rc.Spec.Selector)
@@ -141,7 +140,6 @@ func CreateReplicationControllerList(replicationControllers []api.ReplicationCon
 
 	return rcList
 }
-
 
 // The code below allows to perform complex data section on []api.ReplicationController
 
@@ -162,10 +160,10 @@ func (self ReplicationControllerCell) GetProperty(name dataselect.PropertyName) 
 }
 func (self ReplicationControllerCell) GetResourceSelector() *metric.ResourceSelector {
 	return &metric.ResourceSelector{
-		Namespace:     self.ObjectMeta.Namespace,
-		ResourceType:  common.ResourceKindReplicationController,
-		ResourceName:  self.ObjectMeta.Name,
-		Selector:      self.ObjectMeta.Labels,
+		Namespace:    self.ObjectMeta.Namespace,
+		ResourceType: common.ResourceKindReplicationController,
+		ResourceName: self.ObjectMeta.Name,
+		Selector:     self.ObjectMeta.Labels,
 	}
 }
 

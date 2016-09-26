@@ -15,8 +15,8 @@
 package persistentvolume
 
 import (
-	"k8s.io/kubernetes/pkg/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"k8s.io/kubernetes/pkg/api"
 )
 
 // The code below allows to perform complex data section on []api.PersistentVolume
@@ -36,7 +36,6 @@ func (self PersistentVolumeCell) GetProperty(name dataselect.PropertyName) datas
 		return nil
 	}
 }
-
 
 func toCells(std []api.PersistentVolume) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))
