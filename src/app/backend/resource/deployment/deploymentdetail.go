@@ -17,17 +17,17 @@ package deployment
 import (
 	"log"
 
+	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
-	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
 
-	deploymentutil "k8s.io/kubernetes/pkg/util/deployment"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"k8s.io/kubernetes/pkg/api/unversioned"
+	deploymentutil "k8s.io/kubernetes/pkg/util/deployment"
 )
 
 // RollingUpdateStrategy is behavior of a rolling update. See RollingUpdateDeployment K8s object.
@@ -89,7 +89,7 @@ type DeploymentDetail struct {
 }
 
 // GetDeploymentDetail returns model object of deployment and error, if any.
-func GetDeploymentDetail(client client.Interface,  heapsterClient heapster.HeapsterClient, namespace string,
+func GetDeploymentDetail(client client.Interface, heapsterClient heapster.HeapsterClient, namespace string,
 	deploymentName string) (*DeploymentDetail, error) {
 
 	log.Printf("Getting details of %s deployment in %s namespace", deploymentName, namespace)
@@ -132,7 +132,7 @@ func GetDeploymentDetail(client client.Interface,  heapsterClient heapster.Heaps
 		return nil, err
 	}
 
-        // Old Replica Sets
+	// Old Replica Sets
 	oldReplicaSetList, err := GetDeploymentOldReplicaSets(client, dataselect.DefaultDataSelect, namespace, deploymentName)
 	if err != nil {
 		return nil, err
@@ -174,7 +174,6 @@ func GetDeploymentDetail(client client.Interface,  heapsterClient heapster.Heaps
 	}, nil
 
 }
-
 
 func GetStatusInfo(deploymentStatus *extensions.DeploymentStatus) StatusInfo {
 	return StatusInfo{

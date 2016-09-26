@@ -15,10 +15,10 @@
 package node
 
 import (
-	"k8s.io/kubernetes/pkg/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"k8s.io/kubernetes/pkg/api"
 )
 
 //getContainerImages returns container image strings from the given node.
@@ -52,9 +52,9 @@ func (self NodeCell) GetProperty(name dataselect.PropertyName) dataselect.Compar
 
 func (self NodeCell) GetResourceSelector() *metric.ResourceSelector {
 	return &metric.ResourceSelector{
-		Namespace:     self.ObjectMeta.Namespace,
-		ResourceType:  common.ResourceKindNode,
-		ResourceName:  self.ObjectMeta.Name,
+		Namespace:    self.ObjectMeta.Namespace,
+		ResourceType: common.ResourceKindNode,
+		ResourceName: self.ObjectMeta.Name,
 	}
 }
 

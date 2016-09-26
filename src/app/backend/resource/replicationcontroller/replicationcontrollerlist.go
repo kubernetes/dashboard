@@ -17,11 +17,11 @@ package replicationcontroller
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
 	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
 // ReplicationControllerList contains a list of Replication Controllers in the cluster.
@@ -30,7 +30,7 @@ type ReplicationControllerList struct {
 
 	// Unordered list of Replication Controllers.
 	ReplicationControllers []ReplicationController `json:"replicationControllers"`
-	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
+	CumulativeMetrics      []metric.Metric         `json:"cumulativeMetrics"`
 }
 
 // ReplicationController (aka. Replication Controller) plus zero or more Kubernetes services that

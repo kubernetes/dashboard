@@ -17,9 +17,9 @@ package namespace
 import (
 	"log"
 
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // NamespaceSpec is a specification of namespace to create.
@@ -59,7 +59,6 @@ func (self NamespaceCell) GetProperty(name dataselect.PropertyName) dataselect.C
 		return nil
 	}
 }
-
 
 func toCells(std []api.Namespace) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))

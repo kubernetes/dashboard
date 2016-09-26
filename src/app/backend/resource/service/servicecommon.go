@@ -82,7 +82,6 @@ func (self ServiceCell) GetProperty(name dataselect.PropertyName) dataselect.Com
 	}
 }
 
-
 func toCells(std []api.Service) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
@@ -98,4 +97,3 @@ func fromCells(cells []dataselect.DataCell) []api.Service {
 	}
 	return std
 }
-

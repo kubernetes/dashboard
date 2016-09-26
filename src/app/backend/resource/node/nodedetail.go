@@ -19,14 +19,14 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/resource"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 )
 
 // NodeAllocatedResources describes node allocated resources.
@@ -111,7 +111,6 @@ type NodeDetail struct {
 
 	// Metrics collected for this resource
 	Metrics []metric.Metric `json:"metrics"`
-
 }
 
 // GetNodeDetail gets node details.
@@ -208,7 +207,6 @@ func getNodeAllocatedResources(node api.Node, podList *api.PodList) (NodeAllocat
 	}, nil
 }
 
-
 func GetNodePods(client k8sClient.Interface, heapsterClient client.HeapsterClient, dsQuery *dataselect.DataSelectQuery, name string) (*pod.PodList, error) {
 	node, err := client.Nodes().Get(name)
 	if err != nil {
@@ -223,7 +221,6 @@ func GetNodePods(client k8sClient.Interface, heapsterClient client.HeapsterClien
 	podList := pod.CreatePodList(pods.Items, dsQuery, heapsterClient)
 	return &podList, nil
 }
-
 
 func getNodePods(client k8sClient.Interface, node api.Node) (*api.PodList, error) {
 	fieldSelector, err := fields.ParseSelector("spec.nodeName=" + node.Name +

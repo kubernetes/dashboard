@@ -20,6 +20,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/petset"
@@ -27,7 +28,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // Workloads structure contains all resource lists grouped into the workloads category.

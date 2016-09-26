@@ -100,12 +100,12 @@ func getRawPodLogs(client *client.Client, namespace, podID string, logOptions *a
 func ConstructLogs(podID string, rawLogs string, container string, logSelector *logs.LogViewSelector) *logs.Logs {
 	logLines, firstLogLineReference, lastLogLineReference, logViewInfo := logs.ToLogLines(rawLogs).SelectLogs(logSelector)
 	logs := &logs.Logs{
-		PodId:     podID,
-		LogLines: logLines,
-		Container: container,
+		PodId:                 podID,
+		LogLines:              logLines,
+		Container:             container,
 		FirstLogLineReference: firstLogLineReference,
-		LastLogLineReference: lastLogLineReference,
-		LogViewInfo: logViewInfo,
+		LastLogLineReference:  lastLogLineReference,
+		LogViewInfo:           logViewInfo,
 	}
 	return logs
 }

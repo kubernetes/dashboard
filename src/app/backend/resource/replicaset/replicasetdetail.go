@@ -21,9 +21,9 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // ReplicaSetDetail is a presentation layer view of Kubernetes Replica Set resource. This means
@@ -51,7 +51,7 @@ type ReplicaSetDetail struct {
 
 // GetReplicaSetDetail gets replica set details.
 func GetReplicaSetDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-        namespace, name string) (*ReplicaSetDetail, error) {
+	namespace, name string) (*ReplicaSetDetail, error) {
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 
 	// TODO(floreks): Use channels.

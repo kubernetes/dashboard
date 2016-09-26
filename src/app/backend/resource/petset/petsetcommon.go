@@ -15,11 +15,10 @@
 package petset
 
 import (
-
-	"k8s.io/kubernetes/pkg/apis/apps"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"k8s.io/kubernetes/pkg/apis/apps"
 )
 
 // The code below allows to perform complex data section on []apps.PetSet
@@ -42,10 +41,10 @@ func (self PetSetCell) GetProperty(name dataselect.PropertyName) dataselect.Comp
 
 func (self PetSetCell) GetResourceSelector() *metric.ResourceSelector {
 	return &metric.ResourceSelector{
-		Namespace:          self.ObjectMeta.Namespace,
-		ResourceType:       common.ResourceKindPetSet,
-		ResourceName:       self.ObjectMeta.Name,
-		Selector:           self.Spec.Selector.MatchLabels,
+		Namespace:    self.ObjectMeta.Namespace,
+		ResourceType: common.ResourceKindPetSet,
+		ResourceName: self.ObjectMeta.Name,
+		Selector:     self.Spec.Selector.MatchLabels,
 	}
 }
 

@@ -20,11 +20,11 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 
+	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
 	"k8s.io/kubernetes/pkg/api"
 	k8serrors "k8s.io/kubernetes/pkg/api/errors"
 	"k8s.io/kubernetes/pkg/apis/apps"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
-	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
@@ -35,7 +35,7 @@ type PetSetList struct {
 	ListMeta common.ListMeta `json:"listMeta"`
 
 	// Unordered list of Pet Sets.
-	PetSets []PetSet `json:"petSets"`
+	PetSets           []PetSet        `json:"petSets"`
 	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
 }
 
