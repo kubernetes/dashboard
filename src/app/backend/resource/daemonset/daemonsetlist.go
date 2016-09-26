@@ -17,12 +17,12 @@ package daemonset
 import (
 	"log"
 
+	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
-	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
@@ -33,7 +33,7 @@ type DaemonSetList struct {
 	ListMeta common.ListMeta `json:"listMeta"`
 
 	// Unordered list of Daemon Sets
-	DaemonSets []DaemonSet `json:"daemonSets"`
+	DaemonSets        []DaemonSet     `json:"daemonSets"`
 	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
 }
 

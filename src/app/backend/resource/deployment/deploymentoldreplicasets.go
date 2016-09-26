@@ -4,8 +4,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 
-
-
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
@@ -18,7 +16,7 @@ import (
 // GetDeploymentEvents returns model events for a deployment with the given name in the given
 // namespace
 func GetDeploymentOldReplicaSets(client client.Interface, dsQuery *dataselect.DataSelectQuery,
-        namespace string, deploymentName string) (*replicaset.ReplicaSetList, error) {
+	namespace string, deploymentName string) (*replicaset.ReplicaSetList, error) {
 
 	deployment, err := client.Extensions().Deployments(namespace).Get(deploymentName)
 	if err != nil {

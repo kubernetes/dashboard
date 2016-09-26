@@ -33,12 +33,11 @@ type Logs struct {
 	FirstLogLineReference LogLineId `json:"firstLogLineReference"`
 
 	// Reference of the last log line in LogLines
-	LastLogLineReference LogLineId  `json:"lastLogLineReference"`
+	LastLogLineReference LogLineId `json:"lastLogLineReference"`
 
 	// Structure holding information about current log view
-	LogViewInfo                     `json:"logViewInfo"`
+	LogViewInfo `json:"logViewInfo"`
 }
-
 
 // Number that is returned if requested line could not be found
 var LINE_INDEX_NOT_FOUND = -1
@@ -53,15 +52,15 @@ var MaxLogLines int = 2000000000
 // Default log view selector that is used in case of invalid request
 // Downloads newest DefaultDisplayNumLogLines lines.
 var DefaultLogViewSelector = &LogViewSelector{
-	RelativeFrom: 1-DefaultDisplayNumLogLines,
-	RelativeTo: 1,
+	RelativeFrom:       1 - DefaultDisplayNumLogLines,
+	RelativeTo:         1,
 	ReferenceLogLineId: NewestLogLineId,
 }
 
 // Returns all logs.
 var AllLogViewSelector = &LogViewSelector{
-	RelativeFrom: -MaxLogLines,
-	RelativeTo: MaxLogLines,
+	RelativeFrom:       -MaxLogLines,
+	RelativeTo:         MaxLogLines,
 	ReferenceLogLineId: NewestLogLineId,
 }
 
@@ -82,9 +81,9 @@ type LogViewSelector struct {
 // LogViewInfo provides information on the current log view.
 // Fields have the same meaning as in LogViewSelector.
 type LogViewInfo struct {
-	ReferenceLogLineId LogLineId   `json:"referenceLogLineId"`
-	RelativeFrom int `json:"relativeFrom"`
-	RelativeTo int   `json:"relativeTo"`
+	ReferenceLogLineId LogLineId `json:"referenceLogLineId"`
+	RelativeFrom       int       `json:"relativeFrom"`
+	RelativeTo         int       `json:"relativeTo"`
 }
 
 // LogTimestamp is a timestamp that appears on the beginning of each log line.
@@ -103,7 +102,7 @@ type LogLineId struct {
 	// For example if this LogTimestamp appears 3 times in the logs and the line is 1nd line with this timestamp,
 	// then line num will be 1 or -3 (1st from beginning or 3rd from the end).
 	// If timestamp is unique then it will be simply 1 or -1 (first from the beginning or first from the end, both mean the same).
-	LineNum int         `json:"lineNum"`
+	LineNum int `json:"lineNum"`
 }
 
 // NewestLogLineId is the reference Id of the newest line.
@@ -167,18 +166,18 @@ func (self LogLines) GetLineIndex(logLineId *LogLineId) int {
 }
 
 // getLogLineTimestamp returns timestamp of the line with provided lineIndex.
-func (self LogLines) getLogLineTimestamp(lineIndex int) LogTimestamp{
-	return LogTimestamp(self[lineIndex][0: strings.Index(self[lineIndex], " ")])
+func (self LogLines) getLogLineTimestamp(lineIndex int) LogTimestamp {
+	return LogTimestamp(self[lineIndex][0:strings.Index(self[lineIndex], " ")])
 }
 
 // GetLogLineId returns ID of the line with provided lineIndex.
-func (self LogLines) GetLogLineId(lineIndex int) *LogLineId{
+func (self LogLines) GetLogLineId(lineIndex int) *LogLineId {
 	logTimestamp := self.getLogLineTimestamp(lineIndex)
 	// determine whether to use negative or positive indexing
 	// check whether last line has the same index as requested line. If so, we can only use positive referencing
 	// as more lines may appear at the end.
 	// negative referencing is preferred as higher indices disappear later.
-	var step int;
+	var step int
 	if self.isLineMatchingLogTimestamp(len(self)-1, logTimestamp) {
 		// use positive referencing
 		step = 1
@@ -186,14 +185,14 @@ func (self LogLines) GetLogLineId(lineIndex int) *LogLineId{
 		step = -1
 	}
 	offset := step
-	for ; 0 <= lineIndex - offset && lineIndex - offset < len(self); offset += step {
-		if !self.isLineMatchingLogTimestamp(lineIndex - offset, logTimestamp) {
+	for ; 0 <= lineIndex-offset && lineIndex-offset < len(self); offset += step {
+		if !self.isLineMatchingLogTimestamp(lineIndex-offset, logTimestamp) {
 			break
 		}
 	}
 	return &LogLineId{
 		LogTimestamp: logTimestamp,
-		LineNum: offset,
+		LineNum:      offset,
 	}
 }
 
@@ -221,12 +220,11 @@ func (self LogLines) SelectLogs(logSelector *LogViewSelector) (LogLines, LogLine
 	// set the middle of log array as a reference point, this part of array should not be affected by log deletion/addition.
 	logViewInfo := LogViewInfo{
 		ReferenceLogLineId: *self.GetLogLineId(len(self) / 2),
-		RelativeFrom: fromIndex - len(self) / 2,
-		RelativeTo: toIndex - len(self) / 2,
+		RelativeFrom:       fromIndex - len(self)/2,
+		RelativeTo:         toIndex - len(self)/2,
 	}
 	return self[fromIndex:toIndex], *self.GetLogLineId(fromIndex), *self.GetLogLineId(toIndex - 1), logViewInfo
 }
-
 
 // ToLogLines converts rawLogs (string) to LogLines. This might be slow as we have to split ALL logs by \n.
 // The solution could be to split only required part of logs. To find reference line - do smart binary search on raw string -
@@ -234,7 +232,7 @@ func (self LogLines) SelectLogs(logSelector *LogViewSelector) (LogLines, LogLine
 // repeat until found required timestamp. Later easily find and split N subsequent/preceding lines.
 func ToLogLines(rawLogs string) LogLines {
 	logLines := LogLines{}
-	for _ ,line := range strings.Split(rawLogs, "\n") {
+	for _, line := range strings.Split(rawLogs, "\n") {
 		if line != "" {
 			logLines = append(logLines, line)
 		}

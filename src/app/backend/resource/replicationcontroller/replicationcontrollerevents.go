@@ -20,9 +20,9 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	resourceEvent "github.com/kubernetes/dashboard/src/app/backend/resource/event"
 
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // GetReplicationControllerEvents returns events for particular namespace and replication

@@ -15,12 +15,10 @@
 package deployment
 
 import (
+	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
-	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
-
-
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/kubernetes/pkg/api"
@@ -29,7 +27,7 @@ import (
 
 // getJobPods returns list of pods targeting deployment.
 func GetDeploymentPods(client client.Interface, heapsterClient heapster.HeapsterClient,
-        dsQuery *dataselect.DataSelectQuery, namespace string, deploymentName string) (*pod.PodList, error) {
+	dsQuery *dataselect.DataSelectQuery, namespace string, deploymentName string) (*pod.PodList, error) {
 
 	deployment, err := client.Extensions().Deployments(namespace).Get(deploymentName)
 	if err != nil {
@@ -46,7 +44,6 @@ func GetDeploymentPods(client client.Interface, heapsterClient heapster.Heapster
 		PodList: common.GetPodListChannelWithOptions(client,
 			common.NewSameNamespaceQuery(namespace), options, 1),
 	}
-
 
 	rawPods := <-channels.PodList.List
 	if err := <-channels.PodList.Error; err != nil {

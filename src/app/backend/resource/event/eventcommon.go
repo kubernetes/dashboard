@@ -195,7 +195,6 @@ func (self EventCell) GetProperty(name dataselect.PropertyName) dataselect.Compa
 	}
 }
 
-
 func toCells(std []api.Event) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
@@ -211,4 +210,3 @@ func fromCells(cells []dataselect.DataCell) []api.Event {
 	}
 	return std
 }
-

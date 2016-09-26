@@ -22,8 +22,8 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 )
 
 // PodDetail is a presentation layer view of Kubernetes PodDetail resource.
@@ -133,11 +133,11 @@ func toPodDetail(pod *api.Pod, metrics []metric.Metric, configMaps *api.ConfigMa
 			vars = append(vars, variable)
 		}
 		containers = append(containers, Container{
-			Name:  container.Name,
-			Image: container.Image,
-			Env:   vars,
+			Name:     container.Name,
+			Image:    container.Image,
+			Env:      vars,
 			Commands: container.Command,
-			Args: container.Args,
+			Args:     container.Args,
 		})
 	}
 	podDetail := PodDetail{

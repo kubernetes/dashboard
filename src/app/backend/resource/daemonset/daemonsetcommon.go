@@ -15,14 +15,14 @@
 package daemonset
 
 import (
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 )
 
 // Based on given selector returns list of services that are candidates for deletion.
@@ -77,10 +77,10 @@ func (self DaemonSetCell) GetProperty(name dataselect.PropertyName) dataselect.C
 
 func (self DaemonSetCell) GetResourceSelector() *metric.ResourceSelector {
 	return &metric.ResourceSelector{
-		Namespace:          self.ObjectMeta.Namespace,
-		ResourceType:       common.ResourceKindDaemonSet,
-		ResourceName:       self.ObjectMeta.Name,
-		LabelSelector:      self.Spec.Selector,
+		Namespace:     self.ObjectMeta.Namespace,
+		ResourceType:  common.ResourceKindDaemonSet,
+		ResourceName:  self.ObjectMeta.Name,
+		LabelSelector: self.Spec.Selector,
 	}
 }
 
@@ -99,4 +99,3 @@ func fromCells(cells []dataselect.DataCell) []extensions.DaemonSet {
 	}
 	return std
 }
-

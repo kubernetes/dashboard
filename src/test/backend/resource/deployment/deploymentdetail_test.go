@@ -12,10 +12,10 @@ import (
 	"k8s.io/kubernetes/pkg/util/intstr"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 )
 
 func TestGetDeploymentDetail(t *testing.T) {
@@ -93,8 +93,8 @@ func TestGetDeploymentDetail(t *testing.T) {
 					Labels: map[string]string{"track": "beta"},
 				},
 				TypeMeta: common.TypeMeta{Kind: common.ResourceKindDeployment},
-				PodList:  pod.PodList{
-					Pods: []pod.Pod{},
+				PodList: pod.PodList{
+					Pods:              []pod.Pod{},
 					CumulativeMetrics: make([]metric.Metric, 0),
 				},
 				Selector: map[string]string{"foo": "bar"},

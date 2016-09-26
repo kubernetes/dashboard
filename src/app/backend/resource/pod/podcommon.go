@@ -16,9 +16,9 @@ package pod
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"k8s.io/kubernetes/pkg/api"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	"k8s.io/kubernetes/pkg/api"
 )
 
 // Gets restart count of given pod (total number of its containers restarts).
@@ -75,15 +75,13 @@ func (self PodCell) GetProperty(name dataselect.PropertyName) dataselect.Compara
 	}
 }
 
-
 func (self PodCell) GetResourceSelector() *metric.ResourceSelector {
 	return &metric.ResourceSelector{
-		Namespace:     self.ObjectMeta.Namespace,
-		ResourceType:  common.ResourceKindPod,
-		ResourceName:  self.ObjectMeta.Name,
+		Namespace:    self.ObjectMeta.Namespace,
+		ResourceType: common.ResourceKindPod,
+		ResourceName: self.ObjectMeta.Name,
 	}
 }
-
 
 func toCells(std []api.Pod) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))
