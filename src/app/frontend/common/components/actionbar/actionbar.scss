@@ -29,6 +29,8 @@
 }
 
 .kd-actionbar-breadcrumbs {
+  align-items: center;
+  line-height: 5 * $baseline-grid;
   max-width: 100%;
   overflow: hidden;
   white-space: nowrap;
@@ -48,9 +50,13 @@
   }
 }
 
+.kd-actionbar-icon-button {
+  margin-right: .25 * $baseline-grid;
+}
+
 .kd-actionbar-divider {
-  border-left: 2px solid $hue-3;
-  height: 40px;
+  border-left: 1px solid $hue-3;
+  height: 4 * $baseline-grid;
   margin-left: 1.5 * $baseline-grid;
   margin-right: $baseline-grid;
 }

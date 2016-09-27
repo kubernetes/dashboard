@@ -35,10 +35,11 @@ md-select {
     padding-left: $baseline-grid;
 
     .md-select-value {
+      padding-bottom: .5 * $baseline-grid;
       padding-right: 0;
 
       span {
-        font-family: $font-family-medium-monospace;
+        font-family: $font-family-medium;
       }
 
       .md-select-icon {
