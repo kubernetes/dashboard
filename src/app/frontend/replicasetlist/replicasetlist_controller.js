@@ -38,7 +38,9 @@ export class ReplicaSetListController {
    * @return {boolean}
    * @export
    */
-  shouldShowZeroState() { return this.replicaSetList.replicaSets.length === 0; }
+  shouldShowZeroState() {
+    return this.replicaSetList.replicaSets.length === 0;
+  }
 }
 
 const i18n = {

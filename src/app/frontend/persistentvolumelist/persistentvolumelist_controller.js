@@ -35,5 +35,7 @@ export class PersistentVolumeListController {
    * @return {boolean}
    * @export
    */
-  shouldShowZeroState() { return this.persistentVolumeList.items.length === 0; }
+  shouldShowZeroState() {
+    return this.persistentVolumeList.items.length === 0;
+  }
 }

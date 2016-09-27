@@ -23,8 +23,9 @@ describe('Config list controller', () => {
   beforeEach(() => {
     angular.mock.module(module.name);
 
-    angular.mock.inject(
-        ($controller) => { ctrl = $controller(ConfigController, {config: {config: []}}); });
+    angular.mock.inject(($controller) => {
+      ctrl = $controller(ConfigController, {config: {config: []}});
+    });
   });
 
   it('should initialize config', angular.mock.inject(($controller) => {

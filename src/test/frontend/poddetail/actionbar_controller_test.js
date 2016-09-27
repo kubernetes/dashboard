@@ -23,9 +23,12 @@ describe('Action Bar controller', () => {
   beforeEach(() => {
     angular.mock.module(module.name);
 
-    angular.mock.inject(
-        ($controller) => { ctrl = $controller(ActionBarController, {podDetail: details}); });
+    angular.mock.inject(($controller) => {
+      ctrl = $controller(ActionBarController, {podDetail: details});
+    });
   });
 
-  it('should initialize details', () => { expect(ctrl.details).toBe(details); });
+  it('should initialize details', () => {
+    expect(ctrl.details).toBe(details);
+  });
 });

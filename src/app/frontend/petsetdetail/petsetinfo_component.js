@@ -34,7 +34,9 @@ export default class PetSetInfoController {
    * @return {boolean}
    * @export
    */
-  areDesiredPodsRunning() { return this.petSet.podInfo.running === this.petSet.podInfo.desired; }
+  areDesiredPodsRunning() {
+    return this.petSet.podInfo.running === this.petSet.podInfo.desired;
+  }
 }
 
 /**

@@ -39,7 +39,9 @@ export class EventCardListController {
    * @return {boolean}
    * @export
    */
-  isEventWarning(event) { return event.type === EVENT_TYPE_WARNING; }
+  isEventWarning(event) {
+    return event.type === EVENT_TYPE_WARNING;
+  }
 
   /**
    * Returns true if there are events to display.
@@ -47,7 +49,9 @@ export class EventCardListController {
    * @returns {boolean}
    * @export
    */
-  hasEvents() { return this.eventList !== undefined && this.eventList.events.length > 0; }
+  hasEvents() {
+    return this.eventList !== undefined && this.eventList.events.length > 0;
+  }
 }
 
 /**

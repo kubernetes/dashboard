@@ -43,7 +43,9 @@ xdescribe('Deploy and delete replication controller user story test', () => {
    * Generates random 13 characters long string.
    * @return {string}
    */
-  function generateRandomString() { return Math.random().toString(36).substring(2, 15); }
+  function generateRandomString() {
+    return Math.random().toString(36).substring(2, 15);
+  }
 
   beforeAll(() => {
     deployPage = new DeployPageObject();

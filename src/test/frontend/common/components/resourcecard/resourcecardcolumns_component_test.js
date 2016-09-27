@@ -30,11 +30,15 @@ describe('Resource card columns', () => {
   });
 
   it('should not allow for adding columns berofe initialization', () => {
-    expect(() => { ctrl.addAndSizeColumn({}); })
+    expect(() => {
+      ctrl.addAndSizeColumn({});
+    })
         .toThrow(
             new Error('Resource card columns component must be initialized before addingcolumns'));
 
     ctrl.$onInit();
-    expect(() => { ctrl.addAndSizeColumn({}); }).not.toThrow();
+    expect(() => {
+      ctrl.addAndSizeColumn({});
+    }).not.toThrow();
   });
 });

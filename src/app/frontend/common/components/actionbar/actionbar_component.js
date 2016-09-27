@@ -42,7 +42,9 @@ export class ActionbarComponent {
   /**
    * @export
    */
-  create() { this.state_.go(deployAppStateName); }
+  create() {
+    this.state_.go(deployAppStateName);
+  }
 }
 
 /**

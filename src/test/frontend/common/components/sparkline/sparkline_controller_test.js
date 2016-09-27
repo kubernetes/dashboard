@@ -24,7 +24,9 @@ describe('Sparkline controller', () => {
   beforeEach(() => {
     angular.mock.module(componentsModule.name);
 
-    angular.mock.inject(($controller) => { ctrl = $controller(SparklineController); });
+    angular.mock.inject(($controller) => {
+      ctrl = $controller(SparklineController);
+    });
   });
 
   it('should produce no points with an empty series', () => {

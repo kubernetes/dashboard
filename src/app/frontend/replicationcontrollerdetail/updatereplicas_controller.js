@@ -94,7 +94,9 @@ export default class UpdateReplicasDialogController {
    *  Cancels the update replication controller dialog.
    *  @export
    */
-  cancel() { this.mdDialog_.cancel(); }
+  cancel() {
+    this.mdDialog_.cancel();
+  }
 
   /**
    * @param {!backendApi.ReplicationControllerSpec} updatedSpec

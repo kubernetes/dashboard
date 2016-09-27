@@ -17,7 +17,9 @@ import nodeListModule from 'nodelist/nodelist_module';
 
 describe('Node list controller', () => {
 
-  beforeEach(() => { angular.mock.module(nodeListModule.name); });
+  beforeEach(() => {
+    angular.mock.module(nodeListModule.name);
+  });
 
   it('should initialize node controller', angular.mock.inject(($controller) => {
     let ctrls = {};

@@ -17,7 +17,9 @@ import daemonSetDetailModule from 'daemonsetdetail/daemonsetdetail_module';
 
 describe('DaemonSet Detail controller', () => {
 
-  beforeEach(() => { angular.mock.module(daemonSetDetailModule.name); });
+  beforeEach(() => {
+    angular.mock.module(daemonSetDetailModule.name);
+  });
 
   it('should initialize daemon set detail', angular.mock.inject(($controller) => {
     let data = {};

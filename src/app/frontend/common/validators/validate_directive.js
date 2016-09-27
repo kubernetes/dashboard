@@ -56,7 +56,9 @@ export default function validateDirective(kdValidatorFactory) {
         let validatorName =
             `kdValid${validateValidatorName[0].toUpperCase()}${validateValidatorName.substr(1)}`;
 
-        ctrl.$validators[validatorName] = (value) => { return validator.isValid(value); };
+        ctrl.$validators[validatorName] = (value) => {
+          return validator.isValid(value);
+        };
       });
     },
   };

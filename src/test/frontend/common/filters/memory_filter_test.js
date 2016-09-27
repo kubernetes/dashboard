@@ -20,7 +20,9 @@ describe('Memory filter', () => {
 
   beforeEach(() => {
     angular.mock.module(filtersModule.name);
-    angular.mock.inject((_kdMemoryFilter_) => { memoryFilter = _kdMemoryFilter_; });
+    angular.mock.inject((_kdMemoryFilter_) => {
+      memoryFilter = _kdMemoryFilter_;
+    });
   });
 
   it('should format memory', () => {

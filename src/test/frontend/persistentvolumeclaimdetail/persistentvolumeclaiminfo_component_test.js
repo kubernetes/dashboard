@@ -30,5 +30,7 @@ describe('Persistent Volume ClaimInfo controller', () => {
     });
   });
 
-  it('should initialize the ctrl', () => { expect(ctrl.i18n).not.toBeUndefined(); });
+  it('should initialize the ctrl', () => {
+    expect(ctrl.i18n).not.toBeUndefined();
+  });
 });

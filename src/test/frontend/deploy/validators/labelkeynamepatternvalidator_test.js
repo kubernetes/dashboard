@@ -26,8 +26,9 @@ describe('Label Key Name Pattern validator', () => {
   let labelKeyNamePatternValidator;
 
   beforeEach(() => {
-    angular.mock.inject(
-        () => { labelKeyNamePatternValidator = new LabelKeyNamePatternValidator(); });
+    angular.mock.inject(() => {
+      labelKeyNamePatternValidator = new LabelKeyNamePatternValidator();
+    });
   });
 
   it('should set validity to false when key name does not conform to RegExp', () => {

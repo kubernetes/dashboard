@@ -20,7 +20,9 @@ describe('Nav service', () => {
 
   beforeEach(() => angular.mock.module(module.name));
 
-  beforeEach(angular.mock.inject((kdNavService) => { navService = kdNavService; }));
+  beforeEach(angular.mock.inject((kdNavService) => {
+    navService = kdNavService;
+  }));
 
   it('should deny toggle when not initialized', () => {
     expect(() => {

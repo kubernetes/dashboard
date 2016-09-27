@@ -29,13 +29,17 @@ export class ContentCardController {
    * Returns true if transclusion slot 'title' has been filled.
    * @export
    */
-  isTitleSlotFilled() { return this.transclude_.isSlotFilled('title'); }
+  isTitleSlotFilled() {
+    return this.transclude_.isSlotFilled('title');
+  }
 
   /**
-   * Returns true if transclusion slot 'title' has been filled.
+   * Returns true if transclusion slot 'footer' has been filled.
    * @export
    */
-  isFooterSlotFilled() { return this.transclude_.isSlotFilled('footer'); }
+  isFooterSlotFilled() {
+    return this.transclude_.isSlotFilled('footer');
+  }
 }
 
 /**

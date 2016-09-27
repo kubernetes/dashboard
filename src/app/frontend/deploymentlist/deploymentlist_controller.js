@@ -38,7 +38,9 @@ export class DeploymentListController {
    * @return {boolean}
    * @export
    */
-  shouldShowZeroState() { return this.deploymentList.deployments.length === 0; }
+  shouldShowZeroState() {
+    return this.deploymentList.deployments.length === 0;
+  }
 }
 
 const i18n = {

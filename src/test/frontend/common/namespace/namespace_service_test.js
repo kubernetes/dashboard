@@ -27,8 +27,9 @@ describe('Namespace service', () => {
     stateParams = $stateParams;
   }));
 
-  it(`should default true`,
-     () => { expect(namespaceService.areMultipleNamespacesSelected()).toBe(false); });
+  it(`should default true`, () => {
+    expect(namespaceService.areMultipleNamespacesSelected()).toBe(false);
+  });
 
   it(`should use many namespaces param`, () => {
     stateParams.namespace = '_all';

@@ -47,7 +47,9 @@ export class ResourceCardHeaderColumnController {
   /**
    * @export
    */
-  $onInit() { this.resourceCardHeaderColumnsCtrl.addAndSizeHeaderColumn(this, this.element_); }
+  $onInit() {
+    this.resourceCardHeaderColumnsCtrl.addAndSizeHeaderColumn(this, this.element_);
+  }
 }
 
 /**

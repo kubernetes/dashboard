@@ -38,7 +38,9 @@ export class PaginationService {
    * Reset rows limit to default value.
    */
   resetRowsLimit() {
-    this.instances_.forEach((val, key) => { this.instances_.set(key, DEFAULT_ROWS_LIMIT); });
+    this.instances_.forEach((val, key) => {
+      this.instances_.set(key, DEFAULT_ROWS_LIMIT);
+    });
   }
 
   /**
@@ -47,14 +49,18 @@ export class PaginationService {
    * @param {string} paginationId
    * @return {boolean}
    */
-  isRegistered(paginationId) { return this.instances_.has(paginationId); }
+  isRegistered(paginationId) {
+    return this.instances_.has(paginationId);
+  }
 
   /**
    * Registers pagination instance for given pagination id.
    *
    * @param {string} paginationId
    */
-  registerInstance(paginationId) { this.instances_.set(paginationId, DEFAULT_ROWS_LIMIT); }
+  registerInstance(paginationId) {
+    this.instances_.set(paginationId, DEFAULT_ROWS_LIMIT);
+  }
 
   /**
    * Returns number of rows that should be displayed on the list based on given pagination id.
@@ -96,14 +102,18 @@ export class PaginationService {
    *
    * @return {number}
    */
-  getMinRowsLimit() { return Math.min.apply(Math, this.rowsLimitOptions_); }
+  getMinRowsLimit() {
+    return Math.min.apply(Math, this.rowsLimitOptions_);
+  }
 
   /**
    * Returns numbers of rows that can be shown on resource list.
    *
    * @return {!Array<number>}
    */
-  getRowsLimitOptions() { return this.rowsLimitOptions_; }
+  getRowsLimitOptions() {
+    return this.rowsLimitOptions_;
+  }
 
   /**
    * @param {number} itemsPerPage

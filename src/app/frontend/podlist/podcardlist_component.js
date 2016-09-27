@@ -114,7 +114,9 @@ export class PodCardListController {
    * @return {boolean}
    * @export
    */
-  isStatusSuccessful(pod) { return pod.podPhase === 'Running' || pod.podPhase === 'Succeeded'; }
+  isStatusSuccessful(pod) {
+    return pod.podPhase === 'Running' || pod.podPhase === 'Succeeded';
+  }
 
   /**
    * Checks if pod status is pending.
@@ -122,7 +124,9 @@ export class PodCardListController {
    * @return {boolean}
    * @export
    */
-  isStatusPending(pod) { return pod.podPhase === 'Pending'; }
+  isStatusPending(pod) {
+    return pod.podPhase === 'Pending';
+  }
 
   /**
    * Checks if pod status is failed.
@@ -130,7 +134,9 @@ export class PodCardListController {
    * @return {boolean}
    * @export
    */
-  isStatusFailed(pod) { return pod.podPhase === 'Failed'; }
+  isStatusFailed(pod) {
+    return pod.podPhase === 'Failed';
+  }
 
   /**
    * @export

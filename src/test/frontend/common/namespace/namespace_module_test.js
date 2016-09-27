@@ -16,7 +16,9 @@ import {namespaceParam} from 'chrome/chrome_state';
 import module from 'common/namespace/namespace_module';
 
 describe('Namespace module ', () => {
-  beforeEach(() => { angular.mock.module(module.name); });
+  beforeEach(() => {
+    angular.mock.module(module.name);
+  });
 
   it('should watch for changes', angular.mock.inject(($location, $rootScope) => {
     $location.search(namespaceParam, undefined);

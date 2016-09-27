@@ -29,5 +29,7 @@ describe('Pod Info controller', () => {
     });
   });
 
-  it('should instantiate the controller properly', () => { expect(ctrl).not.toBeUndefined(); });
+  it('should instantiate the controller properly', () => {
+    expect(ctrl).not.toBeUndefined();
+  });
 });

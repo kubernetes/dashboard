@@ -100,13 +100,17 @@ export class LogsController {
    * Loads maxLogSize oldest lines of logs.
    * @export
    */
-  loadOldest() { this.loadView(-maxLogSize - logsPerView, -maxLogSize); }
+  loadOldest() {
+    this.loadView(-maxLogSize - logsPerView, -maxLogSize);
+  }
 
   /**
    * Loads maxLogSize newest lines of logs.
    * @export
    */
-  loadNewest() { this.loadView(maxLogSize, maxLogSize + logsPerView); }
+  loadNewest() {
+    this.loadView(maxLogSize, maxLogSize + logsPerView);
+  }
 
   /**
    * Shifts view by maxLogSize lines to the past.
@@ -148,7 +152,9 @@ export class LogsController {
               'relativeFrom': relativeFrom,
               'relativeTo': relativeTo,
             },
-            (logs) => { this.loadLogs(logs); });
+            (logs) => {
+              this.loadLogs(logs);
+            });
   }
 
   /**
@@ -210,7 +216,9 @@ export class LogsController {
    * @return {!Array<string>}
    * @private
    */
-  sanitizeLogs_(logs) { return logs.map((line) => this.formatLine_(line)); }
+  sanitizeLogs_(logs) {
+    return logs.map((line) => this.formatLine_(line));
+  }
 
   /**
    * Formats the given log line as raw HTML to display to the user.
@@ -256,13 +264,17 @@ export class LogsController {
    * Execute a code when a user changes the selected option for console font size.
    * @export
    */
-  onFontSizeChange() { this.logsService.setCompact(); }
+  onFontSizeChange() {
+    this.logsService.setCompact();
+  }
 
   /**
    * Execute a code when a user changes the selected option for console color.
    * @export
    */
-  onTextColorChange() { this.logsService.setInverted(); }
+  onTextColorChange() {
+    this.logsService.setInverted();
+  }
 
   /**
    * Find Pod by name.

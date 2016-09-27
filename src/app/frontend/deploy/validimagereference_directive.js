@@ -36,8 +36,9 @@ export default function validImageReferenceDirective($resource, $q) {
       /** @type {!angular.NgModelController} */
       let ngModelController = ctrl;
 
-      ngModelController.$asyncValidators[validImageReferenceValidationKey] =
-          (reference) => { return validate(reference, scope, $resource, $q); };
+      ngModelController.$asyncValidators[validImageReferenceValidationKey] = (reference) => {
+        return validate(reference, scope, $resource, $q);
+      };
     },
   };
 }

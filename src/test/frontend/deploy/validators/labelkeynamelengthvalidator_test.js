@@ -19,7 +19,9 @@ describe('Label key name length validator', () => {
   let labelKeyNameLengthValidator;
 
   beforeEach(() => {
-    angular.mock.inject(() => { labelKeyNameLengthValidator = new LabelKeyNameLengthValidator(); });
+    angular.mock.inject(() => {
+      labelKeyNameLengthValidator = new LabelKeyNameLengthValidator();
+    });
   });
 
   it('should set validity to false when key name exceeds 63 characters ', () => {
@@ -33,8 +35,9 @@ describe('Label key name length validator', () => {
     ];
 
     // then
-    failKeyNames.forEach(
-        (failKeyName) => { expect(labelKeyNameLengthValidator.isValid(failKeyName)).toBeFalsy(); });
+    failKeyNames.forEach((failKeyName) => {
+      expect(labelKeyNameLengthValidator.isValid(failKeyName)).toBeFalsy();
+    });
   });
 
   it('should set validity to true when key name does not exceed 63 characters ', () => {

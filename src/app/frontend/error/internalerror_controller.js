@@ -32,7 +32,9 @@ export class InternalErrorController {
    * @export
    * @return {boolean}
    */
-  showStatus() { return angular.isNumber(this.error.status) && this.error.status > 0; }
+  showStatus() {
+    return angular.isNumber(this.error.status) && this.error.status > 0;
+  }
 }
 
 const i18n = {

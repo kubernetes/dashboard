@@ -35,7 +35,9 @@ export class ResourceCardHeaderColumnsController {
   /**
    * @export
    */
-  $onInit() { this.resourceCardListCtrl.setHeaderColumns(this); }
+  $onInit() {
+    this.resourceCardListCtrl.setHeaderColumns(this);
+  }
 
   /**
    * @param {!./resourcecardheadercolumn_component.ResourceCardHeaderColumnController} columnCtrl

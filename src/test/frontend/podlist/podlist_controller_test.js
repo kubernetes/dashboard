@@ -22,8 +22,9 @@ describe('Pod list controller', () => {
   beforeEach(() => {
     angular.mock.module(podListModule.name);
 
-    angular.mock.inject(
-        ($controller) => { ctrl = $controller(PodListController, {podList: {pods: []}}); });
+    angular.mock.inject(($controller) => {
+      ctrl = $controller(PodListController, {podList: {pods: []}});
+    });
   });
 
   it('should initialize pod list', angular.mock.inject(($controller) => {
@@ -34,7 +35,9 @@ describe('Pod list controller', () => {
     expect(ctrl.podList).toBe(data);
   }));
 
-  it('should show zero state', () => { expect(ctrl.shouldShowZeroState()).toBeTruthy(); });
+  it('should show zero state', () => {
+    expect(ctrl.shouldShowZeroState()).toBeTruthy();
+  });
 
   it('should hide zero state', () => {
     // given

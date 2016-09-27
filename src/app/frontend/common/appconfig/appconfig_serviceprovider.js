@@ -23,5 +23,7 @@ export default class AppConfigServiceProvider {
    * @ngInject
    * @export
    */
-  $get(appConfig) { return new AppConfigService(appConfig || {}); }
+  $get(appConfig) {
+    return new AppConfigService(appConfig || {});
+  }
 }

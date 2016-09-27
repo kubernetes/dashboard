@@ -44,7 +44,9 @@ export default class LabelsController {
    * @return {boolean}
    * @export
    */
-  isVisible(index) { return this.isShowingAllLabels_ || index < alwaysVisibleLabelsNumber; }
+  isVisible(index) {
+    return this.isShowingAllLabels_ || index < alwaysVisibleLabelsNumber;
+  }
 
   /**
    * Returns true if more labels than alwaysVisibleLabelsNumber is available.
@@ -52,7 +54,9 @@ export default class LabelsController {
    * @return {boolean}
    * @export
    */
-  isMoreAvailable() { return Object.keys(this.labels).length > alwaysVisibleLabelsNumber; }
+  isMoreAvailable() {
+    return Object.keys(this.labels).length > alwaysVisibleLabelsNumber;
+  }
 
   /**
    * Returns true if all labels are showed.
@@ -60,7 +64,9 @@ export default class LabelsController {
    * @return {boolean}
    * @export
    */
-  isShowingAll() { return this.isShowingAllLabels_; }
+  isShowingAll() {
+    return this.isShowingAllLabels_;
+  }
 
   /**
    * Switches labels view between two states, which are showing only alwaysVisibleLabelsNumber of
@@ -68,7 +74,9 @@ export default class LabelsController {
    *
    * @export
    */
-  switchLabelsView() { this.isShowingAllLabels_ = !this.isShowingAllLabels_; }
+  switchLabelsView() {
+    this.isShowingAllLabels_ = !this.isShowingAllLabels_;
+  }
 }
 
 const i18n = {

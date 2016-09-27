@@ -16,7 +16,9 @@ import nodeListModule from 'nodelist/nodelist_module';
 
 describe('Node card list controller', () => {
 
-  beforeEach(() => { angular.mock.module(nodeListModule.name); });
+  beforeEach(() => {
+    angular.mock.module(nodeListModule.name);
+  });
 
   it('should initialize node card list controller', angular.mock.inject(($componentController) => {
     // given

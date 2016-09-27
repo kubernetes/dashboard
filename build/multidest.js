@@ -28,8 +28,12 @@ export function multiDest(outputDirs, opt_doneFn) {
   let outputs = outputDirs.map((dir) => gulp.dest(dir));
   let outputStream = through.obj();
 
-  outputStream.on('data', (data) => outputs.forEach((dest) => { dest.write(data); }));
-  outputStream.on('end', () => outputs.forEach((dest) => { dest.end(); }));
+  outputStream.on('data', (data) => outputs.forEach((dest) => {
+    dest.write(data);
+  }));
+  outputStream.on('end', () => outputs.forEach((dest) => {
+    dest.end();
+  }));
 
   // build a closure to track all streams
   let stillRunning = outputs.length;

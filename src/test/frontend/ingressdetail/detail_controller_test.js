@@ -17,7 +17,9 @@ import module from 'ingressdetail/module';
 
 describe('Ingress Detail controller', () => {
 
-  beforeEach(() => { angular.mock.module(module.name); });
+  beforeEach(() => {
+    angular.mock.module(module.name);
+  });
 
   it('should initialize ingress controller', angular.mock.inject(($controller) => {
     let data = {};

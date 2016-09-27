@@ -33,7 +33,9 @@ describe('Namespace Info controller', () => {
     });
   });
 
-  it('should instantiate the controller properly', () => { expect(ctrl).not.toBeUndefined(); });
+  it('should instantiate the controller properly', () => {
+    expect(ctrl).not.toBeUndefined();
+  });
 
   it('should format the "created at" tooltip correctly', () => {
     expect(ctrl.getCreatedAtTooltip('2016-06-06T09:13:12Z')).toMatch('Created at 6/[56]/16.*');

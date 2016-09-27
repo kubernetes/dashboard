@@ -51,5 +51,7 @@ export default class DeployFromFilePageObject {
    * Sets filepath on the filePicker input field
    * @param {string} filePath
    */
-  setFile(filePath) { this.filePicker_.sendKeys(filePath); }
+  setFile(filePath) {
+    this.filePicker_.sendKeys(filePath);
+  }
 }

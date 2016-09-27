@@ -70,7 +70,9 @@ describe('Graph card component controller', () => {
     });
   });
 
-  it('should instantiate the controller properly', () => { expect(ctrl).not.toBeUndefined(); });
+  it('should instantiate the controller properly', () => {
+    expect(ctrl).not.toBeUndefined();
+  });
   it('should show graph card when there are metrics with at least 2 data points', () => {
     ctrl.metrics = stdMetrics;
     ctrl.$onInit();

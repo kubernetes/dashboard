@@ -33,5 +33,7 @@ export class SecretListController {
    * @return {boolean}
    * @export
    */
-  shouldShowZeroState() { return !(this.secretList.secrets && this.secretList.secrets.length); }
+  shouldShowZeroState() {
+    return !(this.secretList.secrets && this.secretList.secrets.length);
+  }
 }

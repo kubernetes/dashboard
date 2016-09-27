@@ -45,6 +45,7 @@ describe('Ingress card', () => {
     expect(ctrl.getStartedAtTooltip('2016-06-06T09:13:12Z')).toBe('Created at 6/6/16 09:13 UTC');
   });
 
-  it('should return details href',
-     () => { expect(ctrl.getIngressDetailHref()).toBe('#/ingress/foo/bar'); });
+  it('should return details href', () => {
+    expect(ctrl.getIngressDetailHref()).toBe('#/ingress/foo/bar');
+  });
 });

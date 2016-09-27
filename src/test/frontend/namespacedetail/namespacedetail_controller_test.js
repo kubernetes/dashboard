@@ -17,7 +17,9 @@ import namespaceDetailModule from 'namespacedetail/namespacedetail_module';
 
 describe('Namespace Detail controller', () => {
 
-  beforeEach(() => { angular.mock.module(namespaceDetailModule.name); });
+  beforeEach(() => {
+    angular.mock.module(namespaceDetailModule.name);
+  });
 
   it('should initialize namespace controller', angular.mock.inject(($controller) => {
     let data = {};

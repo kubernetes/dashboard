@@ -69,7 +69,9 @@ export default class PetSetCardController {
    * @return {boolean}
    * @export
    */
-  hasWarnings() { return this.petSet.pods.warnings.length > 0; }
+  hasWarnings() {
+    return this.petSet.pods.warnings.length > 0;
+  }
 
   /**
    * Returns true if pet set pods have no warnings and there is at least one pod
@@ -77,13 +79,17 @@ export default class PetSetCardController {
    * @return {boolean}
    * @export
    */
-  isPending() { return !this.hasWarnings() && this.petSet.pods.pending > 0; }
+  isPending() {
+    return !this.hasWarnings() && this.petSet.pods.pending > 0;
+  }
 
   /**
    * @return {boolean}
    * @export
    */
-  isSuccess() { return !this.isPending() && !this.hasWarnings(); }
+  isSuccess() {
+    return !this.isPending() && !this.hasWarnings();
+  }
 
   /**
    * @export

@@ -86,7 +86,9 @@ gulp.task('coverage-codecov-upload', function() {
 /**
  * Runs once all unit tests of the frontend application.
  */
-gulp.task('frontend-test', function(doneFn) { runFrontendUnitTests(true, doneFn); });
+gulp.task('frontend-test', function(doneFn) {
+  runFrontendUnitTests(true, doneFn);
+});
 
 /**
  * Runs once all unit tests of the backend application.
@@ -105,7 +107,9 @@ gulp.task('test:watch', ['frontend-test:watch', 'backend-test:watch']);
  * Runs frontend backend application tests. Watches for changes in the source files to rerun
  * the tests.
  */
-gulp.task('frontend-test:watch', function(doneFn) { runFrontendUnitTests(false, doneFn); });
+gulp.task('frontend-test:watch', function(doneFn) {
+  runFrontendUnitTests(false, doneFn);
+});
 
 /**
  * Runs backend application tests. Watches for changes in the source files to rerun

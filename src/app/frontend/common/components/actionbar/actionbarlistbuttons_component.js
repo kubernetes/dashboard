@@ -33,12 +33,16 @@ export class ActionBarController {
   /**
    * @export
    */
-  deployApp() { this.state_.go(deployAppStateName); }
+  deployApp() {
+    this.state_.go(deployAppStateName);
+  }
 
   /**
    * @export
    */
-  deployFile() { this.state_.go(deployFileStateName); }
+  deployFile() {
+    this.state_.go(deployFileStateName);
+  }
 }
 
 /**

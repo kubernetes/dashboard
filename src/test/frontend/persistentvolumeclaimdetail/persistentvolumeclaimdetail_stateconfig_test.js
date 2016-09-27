@@ -16,7 +16,9 @@ import persistentVolumeClaimDetailModule from 'persistentvolumeclaimdetail/persi
 import {getPersistentVolumeClaimDetail, getPersistentVolumeClaimDetailResource} from 'persistentvolumeclaimdetail/persistentvolumeclaimdetail_stateconfig';
 
 describe('StateConfig for persistent volume claim detail', () => {
-  beforeEach(() => { angular.mock.module(persistentVolumeClaimDetailModule.name); });
+  beforeEach(() => {
+    angular.mock.module(persistentVolumeClaimDetailModule.name);
+  });
 
   it('should resolve persistent volume claim', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;

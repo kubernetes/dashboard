@@ -17,7 +17,9 @@ import module from 'secretdetail/module';
 
 describe('Secret Detail controller', () => {
 
-  beforeEach(() => { angular.mock.module(module.name); });
+  beforeEach(() => {
+    angular.mock.module(module.name);
+  });
 
   it('should initialize secret controller', angular.mock.inject(($controller) => {
     let data = {};

@@ -31,12 +31,16 @@ export class NamespaceService {
   /**
    * @return {boolean}
    */
-  areMultipleNamespacesSelected() { return this.stateParams_.namespace === ALL_NAMESPACES; }
+  areMultipleNamespacesSelected() {
+    return this.stateParams_.namespace === ALL_NAMESPACES;
+  }
 
   /**
    * Returns true when the given namespace string is in fact selector for all namespaces.
    * @param {string|undefined} namespace
    * @return {boolean}
    */
-  isMultiNamespace(namespace) { return namespace === ALL_NAMESPACES; }
+  isMultiNamespace(namespace) {
+    return namespace === ALL_NAMESPACES;
+  }
 }

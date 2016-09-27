@@ -86,7 +86,9 @@ export class ResourceCardListPaginationController {
    * Updates number of rows to display on associated resource list.
    * @export
    */
-  onRowsLimitUpdate() { this.paginationService_.setRowsLimit(this.rowsLimit, this.paginationId); }
+  onRowsLimitUpdate() {
+    this.paginationService_.setRowsLimit(this.rowsLimit, this.paginationId);
+  }
 
   /**
    * Returns true if number of items on the list is bigger
@@ -112,7 +114,10 @@ export class ResourceCardListPaginationController {
         this.stateParams_.objectName);
 
     this.listResource.get(
-        query, (list) => { this.list = list; },
+        query,
+        (list) => {
+          this.list = list;
+        },
         (err) => {
           this.errorDialog_.open(this.i18n.MSG_RESOURCE_CARD_LIST_PAGINATION_ERROR, err.data);
         });
