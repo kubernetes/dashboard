@@ -88,7 +88,8 @@ backendApi.AppDeploymentSpec;
 /**
  * @typedef {{
  *   name: string,
- *   content: string
+ *   content: string,
+ *   validate: boolean,
  * }}
  */
 backendApi.AppDeploymentFromFileSpec;

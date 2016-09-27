@@ -90,6 +90,9 @@ type AppDeploymentFromFileSpec struct {
 
 	// File content
 	Content string `json:"content"`
+
+	// Whether validate content before creation or not
+	Validate bool `json:"validate"`
 }
 
 // AppDeploymentFromFileResponse is a specification for deployment from file
@@ -289,10 +292,8 @@ func CreateObjectFromInfoFn(info *kubectlResource.Info) (bool, error) {
 // DeployAppFromFile deploys an app based on the given yaml or json file.
 func DeployAppFromFile(spec *AppDeploymentFromFileSpec,
 	createObjectFromInfoFn createObjectFromInfo, clientConfig clientcmd.ClientConfig) (bool, error) {
-	const (
-		validate      = true
-		emptyCacheDir = ""
-	)
+	const emptyCacheDir = ""
+	validate := spec.Validate
 
 	factory := cmdutil.NewFactory(clientConfig)
 	schema, err := factory.Validator(validate, emptyCacheDir)

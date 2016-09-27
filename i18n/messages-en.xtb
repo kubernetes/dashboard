@@ -796,4 +796,9 @@
 	<translation id="545013982201122635" key="MSG_LOGS_TITLE_IN" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="Title part for logs card.">in</translation>
 	<translation id="9015703491006359663" key="MSG_LOGS_TITLE_TO" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="Footer part for logs card.">to</translation>
 	<translation id="7569032475255121462" key="MSG_NAV_MENU_INGRESS" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Ingress item in the nav.">Ingresses</translation>
+	<translation id="8002584284110338066" key="MSG_DEPLOY_ANYWAY_DIALOG_TITLE" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Title for the dialog shown on deploy validation error.">Validation error occurred</translation>
+	<translation id="7984990840791623021" key="MSG_DEPLOY_ANYWAY_DIALOG_CONTENT" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Content for the dialog shown on deploy validation error.">Would you like to deploy anyway?</translation>
+	<translation id="4208506908994292909" key="MSG_DEPLOY_ANYWAY_DIALOG_OK" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Confirmation text for the dialog shown on deploy validation error.">Yes</translation>
+	<translation id="8097230988371724477" key="MSG_DEPLOY_ANYWAY_DIALOG_CANCEL" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Cancellation text for the dialog shown on deploy validation error.">No</translation>
+	<translation id="6885083433056530489" key="MSG_DEPLOY_DIALOG_ERROR" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Text shown on failed deploy in error dialog.">Deploying file has failed</translation>
 </translationbundle>
