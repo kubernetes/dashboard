@@ -122,7 +122,7 @@ const i18n = {
   /** @export @desc Services menu item in the nav. */
   MSG_NAV_MENU_SERVICES: goog.getMsg('Services'),
   /** @export @desc Ingress item in the nav. */
-  MSG_NAV_MENU_INGRESS: goog.getMsg('Ingress'),
+  MSG_NAV_MENU_INGRESS: goog.getMsg('Ingresses'),
   /** @export @desc Storage item in the nav. */
   MSG_NAV_MENU_STORAGE: goog.getMsg('Storage'),
   /** @export @desc Persistent Volume Claims item in the nav. */

@@ -15,7 +15,8 @@
 @import '../../../variables';
 
 .kd-breadcrumbs-spacing {
-  padding-left: $baseline-grid;
+  padding-left: .5 * $baseline-grid;
+  padding-top: .5 * $baseline-grid;
 }
 
 .kd-breadcrumbs-ellipsised {
@@ -30,7 +31,7 @@
   }
 
   .kd-middleellipsis {
-    line-height: 3 * $baseline-grid;
+    line-height: 5 * $baseline-grid;
   }
 }
 

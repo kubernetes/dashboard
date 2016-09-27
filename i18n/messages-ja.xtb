@@ -997,4 +997,5 @@
 	<translation id="173829199104422763" key="MSG_LOGS_TITLE_FROM" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="Title prefix for logs card.">Logs from</translation>
 	<translation id="545013982201122635" key="MSG_LOGS_TITLE_IN" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="Title part for logs card.">in</translation>
 	<translation id="9015703491006359663" key="MSG_LOGS_TITLE_TO" source="/home/maciaszczykm/workspace/dashboard/.tmp/serve/app-dev.js" desc="Footer part for logs card.">to</translation>
+	<translation id="7569032475255121462" key="MSG_NAV_MENU_INGRESS" source="/home/floreks/Projects/dashboard/.tmp/serve/app-dev.js" desc="Ingress item in the nav.">Ingresses</translation>
 </translationbundle>
