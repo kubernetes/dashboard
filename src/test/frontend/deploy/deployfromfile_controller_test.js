@@ -26,16 +26,27 @@ describe('DeployFromFile controller', () => {
   let form;
   /** @type {!angular.$httpBackend} */
   let httpBackend;
+  /** @type {!md.$dialog} */
+  let mdDialog;
+  /** @type {!angular.$q} **/
+  let q;
+  /** @type {!angular.$scope} **/
+  let scope;
+
   beforeEach(() => {
     angular.mock.module(deployModule.name);
 
-    angular.mock.inject(($controller, $httpBackend, $resource) => {
+    angular.mock.inject(($controller, $httpBackend, $resource, $mdDialog, $q, $rootScope) => {
       mockResource = jasmine.createSpy('$resource');
       resource = $resource;
+      mdDialog = $mdDialog;
+      q = $q;
+      scope = $rootScope.$new();
       form = {
         $valid: true,
       };
-      ctrl = $controller(DeployFromFileController, {$resource: mockResource}, {form: form});
+      ctrl = $controller(
+          DeployFromFileController, {$resource: mockResource, $mdDialog: mdDialog}, {form: form});
       httpBackend = $httpBackend;
     });
   });
@@ -118,5 +129,66 @@ describe('DeployFromFile controller', () => {
     spyOn(ctrl.kdHistoryService_, 'back');
     ctrl.cancel();
     expect(ctrl.kdHistoryService_.back).toHaveBeenCalled();
+  });
+
+  it('should open deploy anyway dialog when validation error occurs', () => {
+    spyOn(ctrl, 'handleDeployAnywayDialog_');
+    mockResource.and.callFake(resource);
+    httpBackend.expectPOST('api/v1/appdeploymentfromfile')
+        .respond(500, `error: use --validate=false`);
+
+    // when
+    ctrl.deploy();
+    httpBackend.flush();
+
+    // then
+    expect(ctrl.handleDeployAnywayDialog_).toHaveBeenCalled();
+  });
+
+  it('should redeploy on deploy anyway', () => {
+    let deferred = q.defer();
+    spyOn(mdDialog, 'show').and.returnValue(deferred.promise);
+    spyOn(mdDialog, 'confirm').and.callThrough();
+    spyOn(ctrl, 'deploy').and.callThrough();
+    mockResource.and.callFake(resource);
+    httpBackend.expectPOST('api/v1/appdeploymentfromfile')
+        .respond(500, `error: use --validate=false`);
+
+    // first deploy
+    ctrl.deploy();
+    httpBackend.flush();
+
+    // dialog shown and redeploy accepted
+    expect(mdDialog.show).toHaveBeenCalled();
+    expect(mdDialog.confirm).toHaveBeenCalled();
+
+    // redeploying
+    deferred.resolve();
+    httpBackend.expectPOST('api/v1/appdeploymentfromfile').respond(200, 'ok');
+    scope.$digest();
+
+    expect(ctrl.deploy).toHaveBeenCalledTimes(2);
+  });
+
+  it('should do nothing on cancel deploy anyway', () => {
+    let deferred = q.defer();
+    spyOn(mdDialog, 'show').and.returnValue(deferred.promise);
+    spyOn(mdDialog, 'confirm').and.callThrough();
+    spyOn(ctrl, 'deploy').and.callThrough();
+    mockResource.and.callFake(resource);
+    httpBackend.expectPOST('api/v1/appdeploymentfromfile')
+        .respond(500, `error: use --validate=false`);
+
+    // first deploy
+    ctrl.deploy();
+    httpBackend.flush();
+
+    // dialog shown and redeploy cancelled
+    expect(mdDialog.show).toHaveBeenCalled();
+    expect(mdDialog.confirm).toHaveBeenCalled();
+    deferred.reject();
+    scope.$digest();
+
+    expect(ctrl.deploy).toHaveBeenCalledTimes(1);
   });
 });
