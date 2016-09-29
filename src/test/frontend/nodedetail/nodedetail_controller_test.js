@@ -17,7 +17,9 @@ import nodeDetailModule from 'nodedetail/nodedetail_module';
 
 describe('Node Detail controller', () => {
 
-  beforeEach(() => { angular.mock.module(nodeDetailModule.name); });
+  beforeEach(() => {
+    angular.mock.module(nodeDetailModule.name);
+  });
 
   it('should initialize node controller', angular.mock.inject(($controller) => {
     let data = {};

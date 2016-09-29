@@ -26,7 +26,11 @@ describe('Namespace stateconfig ', () => {
     angular.mock.module(module.name);
     angular.mock.module(fakeModule.name);
 
-    let initInjector = () => { angular.mock.inject(($state) => { $state.go('fakeState'); }); };
+    let initInjector = () => {
+      angular.mock.inject(($state) => {
+        $state.go('fakeState');
+      });
+    };
 
     expect(initInjector).toThrow();
   });

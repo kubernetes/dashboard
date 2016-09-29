@@ -71,7 +71,9 @@ export default class ReplicationControllerCardController {
    * @return {boolean}
    * @export
    */
-  hasWarnings() { return this.replicationController.pods.warnings.length > 0; }
+  hasWarnings() {
+    return this.replicationController.pods.warnings.length > 0;
+  }
 
   /**
    * Returns true if the replication controller's pods have no warnings and there is at least one
@@ -80,13 +82,17 @@ export default class ReplicationControllerCardController {
    * @return {boolean}
    * @export
    */
-  isPending() { return !this.hasWarnings() && this.replicationController.pods.pending > 0; }
+  isPending() {
+    return !this.hasWarnings() && this.replicationController.pods.pending > 0;
+  }
 
   /**
    * @return {boolean}
    * @export
    */
-  isSuccess() { return !this.isPending() && !this.hasWarnings(); }
+  isSuccess() {
+    return !this.isPending() && !this.hasWarnings();
+  }
 
   /**
    * @export

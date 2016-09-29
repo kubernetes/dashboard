@@ -90,7 +90,9 @@ describe('Deploy not existing image story', () => {
 
     // then
     expect(cardErrorIcon.isDisplayed()).toBeTruthy();
-    cardErrors.then((errors) => { expect(errors.length).not.toBe(0); });
+    cardErrors.then((errors) => {
+      expect(errors.length).not.toBe(0);
+    });
 
     // it should go to details page
 

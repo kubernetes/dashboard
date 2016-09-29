@@ -35,7 +35,9 @@ describe('Daemon Set list controller', () => {
     expect(ctrl.daemonSetList).toBe(ds);
   }));
 
-  it('should show zero state', () => { expect(ctrl.shouldShowZeroState()).toBeTruthy(); });
+  it('should show zero state', () => {
+    expect(ctrl.shouldShowZeroState()).toBeTruthy();
+  });
 
   it('should hide zero state', () => {
     // given

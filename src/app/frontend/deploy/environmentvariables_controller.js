@@ -43,7 +43,9 @@ export class EnvironmentVariablesController {
    * @return {!backendApi.EnvironmentVariable}
    * @private
    */
-  newVariable_() { return {name: '', value: ''}; }
+  newVariable_() {
+    return {name: '', value: ''};
+  }
 
   /**
    * @export
@@ -60,20 +62,26 @@ export class EnvironmentVariablesController {
    * @return {boolean}
    * @export
    */
-  isRemovable(index) { return index !== (this.variables.length - 1); }
+  isRemovable(index) {
+    return index !== (this.variables.length - 1);
+  }
 
   /**
    * @param {number} index
    * @export
    */
-  remove(index) { this.variables.splice(index, 1); }
+  remove(index) {
+    this.variables.splice(index, 1);
+  }
 
   /**
    * @param {!backendApi.EnvironmentVariable} variable
    * @return {boolean}
    * @private
    */
-  isVariableFilled_(variable) { return !!variable.name; }
+  isVariableFilled_(variable) {
+    return !!variable.name;
+  }
 }
 
 const i18n = {

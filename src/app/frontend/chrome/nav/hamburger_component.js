@@ -26,7 +26,9 @@ export class HamburgerController {
   }
 
   /** @export */
-  toggle() { this.kdNavService_.toggle(); }
+  toggle() {
+    this.kdNavService_.toggle();
+  }
 }
 
 /** @type {!angular.Component} */

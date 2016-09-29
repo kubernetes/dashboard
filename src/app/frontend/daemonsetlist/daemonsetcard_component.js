@@ -67,7 +67,9 @@ export class DaemonSetCardController {
    * @return {boolean}
    * @export
    */
-  hasWarnings() { return this.daemonSet.pods.failed > 0; }
+  hasWarnings() {
+    return this.daemonSet.pods.failed > 0;
+  }
 
   /**
    * Returns true if the object's pods have no warnings and there is at least one pod
@@ -75,13 +77,17 @@ export class DaemonSetCardController {
    * @return {boolean}
    * @export
    */
-  isPending() { return !this.hasWarnings() && this.daemonSet.pods.pending > 0; }
+  isPending() {
+    return !this.hasWarnings() && this.daemonSet.pods.pending > 0;
+  }
 
   /**
    * @return {boolean}
    * @export
    */
-  isSuccess() { return !this.isPending() && !this.hasWarnings(); }
+  isSuccess() {
+    return !this.isPending() && !this.hasWarnings();
+  }
 
   /**
    * @export

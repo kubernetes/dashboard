@@ -17,7 +17,9 @@ import configMapDetailModule from 'configmapdetail/configmapdetail_module';
 
 describe('Config Map Detail controller', () => {
 
-  beforeEach(() => { angular.mock.module(configMapDetailModule.name); });
+  beforeEach(() => {
+    angular.mock.module(configMapDetailModule.name);
+  });
 
   it('should initialize config map controller', angular.mock.inject(($controller) => {
     let data = {};

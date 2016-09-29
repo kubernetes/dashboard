@@ -38,7 +38,9 @@ export class JobListController {
    * @return {boolean}
    * @export
    */
-  shouldShowZeroState() { return this.jobList.jobs.length === 0; }
+  shouldShowZeroState() {
+    return this.jobList.jobs.length === 0;
+  }
 }
 
 const i18n = {

@@ -90,12 +90,16 @@ gulp.task('push-to-gcr:release', ['docker-image:release:cross'], function(doneFn
 /**
  * Processes the Docker file and places it in the dist folder for building.
  */
-gulp.task('docker-file', ['clean-dist'], function() { dockerFile(conf.paths.dist); });
+gulp.task('docker-file', ['clean-dist'], function() {
+  dockerFile(conf.paths.dist);
+});
 
 /**
  * Processes the Docker file and places it in the dist folder for all architectures.
  */
-gulp.task('docker-file:cross', ['clean-dist'], function() { dockerFile(conf.paths.distCross); });
+gulp.task('docker-file:cross', ['clean-dist'], function() {
+  dockerFile(conf.paths.distCross);
+});
 
 /**
  * @param {!Array<!Array<string>>} imageNamesAndDirs (image name, directory) pairs

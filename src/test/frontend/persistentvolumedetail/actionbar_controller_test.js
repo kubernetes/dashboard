@@ -28,5 +28,7 @@ describe('Action Bar controller', () => {
     });
   });
 
-  it('should initialize details', () => { expect(ctrl.details).toBe(details); });
+  it('should initialize details', () => {
+    expect(ctrl.details).toBe(details);
+  });
 });

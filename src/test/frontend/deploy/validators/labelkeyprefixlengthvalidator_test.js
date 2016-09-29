@@ -22,8 +22,9 @@ describe('Label key prefix length validator', () => {
   let labelKeyPrefixLengthValidator;
 
   beforeEach(() => {
-    angular.mock.inject(
-        () => { labelKeyPrefixLengthValidator = new LabelKeyPrefixLengthValidator(); });
+    angular.mock.inject(() => {
+      labelKeyPrefixLengthValidator = new LabelKeyPrefixLengthValidator();
+    });
   });
 
   it('should set validity to false when key prefix (before slash) exceeds 253 characters ', () => {

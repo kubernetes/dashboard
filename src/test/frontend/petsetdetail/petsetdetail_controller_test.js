@@ -17,7 +17,9 @@ import petSetDetailModule from 'petsetdetail/petsetdetail_module';
 
 describe('Pet Set Detail controller', () => {
 
-  beforeEach(() => { angular.mock.module(petSetDetailModule.name); });
+  beforeEach(() => {
+    angular.mock.module(petSetDetailModule.name);
+  });
 
   it('should initialize pet set controller', angular.mock.inject(($controller) => {
     let data = {};

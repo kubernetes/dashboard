@@ -76,12 +76,16 @@ export class NavController {
   }
 
   /** @export */
-  $onInit() { this.kdNavService_.registerNav(this); }
+  $onInit() {
+    this.kdNavService_.registerNav(this);
+  }
 
   /**
    * Toggles visibility of the navigation component.
    */
-  toggle() { this.isVisible = !this.isVisible; }
+  toggle() {
+    this.isVisible = !this.isVisible;
+  }
 }
 
 /**

@@ -91,7 +91,9 @@ export default class CreateSecretController {
    * Cancels the create secret form.
    * @export
    */
-  cancel() { this.mdDialog_.cancel(); }
+  cancel() {
+    this.mdDialog_.cancel();
+  }
 
   /**
    * Creates new secret based on the state of the controller.

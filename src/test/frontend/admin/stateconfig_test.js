@@ -21,15 +21,18 @@ describe('StateConfig for admin list', () => {
 
   beforeEach(() => {
     angular.mock.module(module.name);
-    angular.mock.inject(
-        (_kdPaginationService_) => { kdPaginationService = _kdPaginationService_; });
+    angular.mock.inject((_kdPaginationService_) => {
+      kdPaginationService = _kdPaginationService_;
+    });
   });
 
   it('should resolve admin', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
 
     let resource = jasmine.createSpyObj('$resource', ['get']);
-    resource.get.and.callFake(function() { return {$promise: promise}; });
+    resource.get.and.callFake(function() {
+      return {$promise: promise};
+    });
 
     let actual = resolveResource(resource, kdPaginationService);
 

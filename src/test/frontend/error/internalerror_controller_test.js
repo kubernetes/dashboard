@@ -31,7 +31,9 @@ describe('Internal error controller', () => {
     });
   });
 
-  it('should hide status when no error', () => { expect(ctrl.showStatus()).toBe(false); });
+  it('should hide status when no error', () => {
+    expect(ctrl.showStatus()).toBe(false);
+  });
 
   it('should hide status when there is unknown error', () => {
     // given

@@ -63,13 +63,17 @@ export class ResourceCardController {
    * @return {boolean}
    * @export
    */
-  isSelectable() { return !!this.resourceCardListCtrl.selectable; }
+  isSelectable() {
+    return !!this.resourceCardListCtrl.selectable;
+  }
 
   /**
    * @return {boolean}
    * @export
    */
-  hasStatus() { return !!this.resourceCardListCtrl.withStatuses; }
+  hasStatus() {
+    return !!this.resourceCardListCtrl.withStatuses;
+  }
 }
 
 /**

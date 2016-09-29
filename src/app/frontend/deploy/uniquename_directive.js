@@ -36,9 +36,12 @@ export default function uniqueNameDirective($resource, $q) {
       /** @type {!angular.NgModelController} */
       let ngModelController = ctrl;
 
-      scope.$watch(namespaceParam, () => { ctrl.$validate(); });
-      ngModelController.$asyncValidators[uniqueNameValidationKey] =
-          (name) => { return validate(name, scope[namespaceParam], $resource, $q); };
+      scope.$watch(namespaceParam, () => {
+        ctrl.$validate();
+      });
+      ngModelController.$asyncValidators[uniqueNameValidationKey] = (name) => {
+        return validate(name, scope[namespaceParam], $resource, $q);
+      };
     },
   };
 }

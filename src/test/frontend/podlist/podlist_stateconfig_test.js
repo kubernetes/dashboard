@@ -21,15 +21,18 @@ describe('StateConfig for pod list', () => {
 
   beforeEach(() => {
     angular.mock.module(podListModule.name);
-    angular.mock.inject(
-        (_kdPaginationService_) => { kdPaginationService = _kdPaginationService_; });
+    angular.mock.inject((_kdPaginationService_) => {
+      kdPaginationService = _kdPaginationService_;
+    });
   });
 
   it('should resolve pods with namespace', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
 
     let resource = jasmine.createSpyObj('$resource', ['get']);
-    resource.get.and.callFake(function() { return {$promise: promise}; });
+    resource.get.and.callFake(function() {
+      return {$promise: promise};
+    });
 
     let actual = resolvePodList(resource, {namespace: 'foo'}, kdPaginationService);
 
@@ -41,7 +44,9 @@ describe('StateConfig for pod list', () => {
     let promise = $q.defer().promise;
 
     let resource = jasmine.createSpyObj('$resource', ['get']);
-    resource.get.and.callFake(function() { return {$promise: promise}; });
+    resource.get.and.callFake(function() {
+      return {$promise: promise};
+    });
 
     let actual = resolvePodList(resource, {}, kdPaginationService);
 

@@ -24,7 +24,9 @@ describe('Label Value Pattern Validator', () => {
   let labelValuePatternValidator;
 
   beforeEach(() => {
-    angular.mock.inject(() => { labelValuePatternValidator = new LabelValuePatternValidator(); });
+    angular.mock.inject(() => {
+      labelValuePatternValidator = new LabelValuePatternValidator();
+    });
   });
 
   it('should set validity to false when value does not conform to RegExp', () => {

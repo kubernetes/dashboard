@@ -128,7 +128,9 @@ export class NamespaceSelectController {
   /**
    * @export
    */
-  changeNamespace() { this.state_.go('.', {[namespaceParam]: this.selectedNamespace}); }
+  changeNamespace() {
+    this.state_.go('.', {[namespaceParam]: this.selectedNamespace});
+  }
 
   /**
    * @export

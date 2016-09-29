@@ -35,5 +35,7 @@ export default class MiddleEllipsisController {
    * @return {boolean}
    * @export
    */
-  shouldTruncate() { return this.displayString.length > this.maxLength; }
+  shouldTruncate() {
+    return this.displayString.length > this.maxLength;
+  }
 }

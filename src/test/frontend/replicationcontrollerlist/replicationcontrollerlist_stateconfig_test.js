@@ -21,15 +21,18 @@ describe('StateConfig for replication controller list', () => {
 
   beforeEach(() => {
     angular.mock.module(replicationControllerListModule.name);
-    angular.mock.inject(
-        (_kdPaginationService_) => { kdPaginationService = _kdPaginationService_; });
+    angular.mock.inject((_kdPaginationService_) => {
+      kdPaginationService = _kdPaginationService_;
+    });
   });
 
   it('should resolve replication controllers', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
 
     let resource = jasmine.createSpyObj('$resource', ['get']);
-    resource.get.and.callFake(function() { return {$promise: promise}; });
+    resource.get.and.callFake(function() {
+      return {$promise: promise};
+    });
 
     let actual =
         resolveReplicationControllerList(resource, {namespace: 'foo'}, kdPaginationService);
@@ -42,7 +45,9 @@ describe('StateConfig for replication controller list', () => {
     let promise = $q.defer().promise;
 
     let resource = jasmine.createSpyObj('$resource', ['get']);
-    resource.get.and.callFake(function() { return {$promise: promise}; });
+    resource.get.and.callFake(function() {
+      return {$promise: promise};
+    });
 
     let actual = resolveReplicationControllerList(resource, {}, kdPaginationService);
 

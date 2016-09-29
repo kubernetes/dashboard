@@ -15,7 +15,9 @@
 import module from 'config/module';
 
 describe('Config module ', () => {
-  beforeEach(() => { angular.mock.module(module.name); });
+  beforeEach(() => {
+    angular.mock.module(module.name);
+  });
 
   it('should provide kdConfigResource', angular.mock.inject((kdConfigResource, $httpBackend) => {
     kdConfigResource.get();

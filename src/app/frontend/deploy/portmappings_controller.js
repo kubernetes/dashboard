@@ -118,13 +118,17 @@ export default class PortMappingsController {
    * @return {boolean}
    * @export
    */
-  isRemovable(index) { return index !== (this.portMappings.length - 1); }
+  isRemovable(index) {
+    return index !== (this.portMappings.length - 1);
+  }
 
   /**
    * @param {number} index
    * @export
    */
-  remove(index) { this.portMappings.splice(index, 1); }
+  remove(index) {
+    this.portMappings.splice(index, 1);
+  }
 
   /**
    * Returns true when the given port mapping is filled by the user, i.e., is not empty.
@@ -132,7 +136,9 @@ export default class PortMappingsController {
    * @return {boolean}
    * @private
    */
-  isPortMappingFilled_(portMapping) { return !!portMapping.port && !!portMapping.targetPort; }
+  isPortMappingFilled_(portMapping) {
+    return !!portMapping.port && !!portMapping.targetPort;
+  }
 
   /**
    * Returns true when the given port mapping is filled or empty (both ports), false otherwise.
@@ -140,7 +146,9 @@ export default class PortMappingsController {
    * @return {boolean}
    * @private
    */
-  isPortMappingFilledOrEmpty_(portMapping) { return !portMapping.port === !portMapping.targetPort; }
+  isPortMappingFilledOrEmpty_(portMapping) {
+    return !portMapping.port === !portMapping.targetPort;
+  }
 
   /**
    * Change the service type. Port mappings are adjusted and external flag.
@@ -163,7 +171,9 @@ export default class PortMappingsController {
    * @param {number} index
    * @export
    */
-  isFirst(index) { return (index === 0); }
+  isFirst(index) {
+    return (index === 0);
+  }
 }
 
 const i18n = {

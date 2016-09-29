@@ -45,14 +45,18 @@ export default class NamespaceCardController {
    * @return {boolean}
    * @export
    */
-  isActive() { return this.namespace.phase === 'Active'; }
+  isActive() {
+    return this.namespace.phase === 'Active';
+  }
 
   /**
    * Returns true if namespace is in terminating phase.
    * @return {boolean}
    * @export
    */
-  isTerminating() { return this.namespace.phase === 'Terminating'; }
+  isTerminating() {
+    return this.namespace.phase === 'Terminating';
+  }
 
   /**
    * @return {string}

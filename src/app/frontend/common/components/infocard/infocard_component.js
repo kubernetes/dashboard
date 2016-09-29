@@ -29,7 +29,9 @@ export class InfoCardController {
    * @return {boolean}
    * @export
    */
-  isHeaderFilled() { return this.transclude_['isSlotFilled']('header'); }
+  isHeaderFilled() {
+    return this.transclude_['isSlotFilled']('header');
+  }
 }
 
 /**

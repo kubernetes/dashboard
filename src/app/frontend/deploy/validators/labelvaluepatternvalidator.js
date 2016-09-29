@@ -34,5 +34,7 @@ export class LabelValuePatternValidator extends Validator {
    *
    * @override
    */
-  isValid(value) { return this.labelValuePattern.test(value); }
+  isValid(value) {
+    return this.labelValuePattern.test(value);
+  }
 }

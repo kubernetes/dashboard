@@ -37,7 +37,9 @@ export class SecretDetailController {
    * @return {string}
    * @export
    */
-  formatDataValue(valueB64) { return this.window_.atob(valueB64); }
+  formatDataValue(valueB64) {
+    return this.window_.atob(valueB64);
+  }
 }
 
 const i18n = {

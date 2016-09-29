@@ -35,7 +35,9 @@ describe('Pet Set list controller', () => {
     expect(ctrl.petSetList.petSets).toBe(ctrls);
   }));
 
-  it('should show zero state', () => { expect(ctrl.shouldShowZeroState()).toBeTruthy(); });
+  it('should show zero state', () => {
+    expect(ctrl.shouldShowZeroState()).toBeTruthy();
+  });
 
   it('should hide zero state', () => {
     // given

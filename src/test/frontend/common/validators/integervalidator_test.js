@@ -18,7 +18,11 @@ describe('Integer type', () => {
   /** @type {!IntegerValidator} */
   let integerValidator;
 
-  beforeEach(() => { angular.mock.inject(() => { integerValidator = new IntegerValidator(); }); });
+  beforeEach(() => {
+    angular.mock.inject(() => {
+      integerValidator = new IntegerValidator();
+    });
+  });
 
   it('should return true when valid integer', () => {
     // given
