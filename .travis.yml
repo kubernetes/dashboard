@@ -20,12 +20,14 @@
 # According to the documentation: http://docs.travis-ci.com/user/docker/
 # sudo is required to enable docker in Travis CI.
 sudo: true
+
 # Cache downloaded Node.JS modules & Bower frontend dependencies for faster builds.
 cache:
   directories:
     - node_modules
     - bower_components
     - .tools
+    - "$HOME/google-cloud-sdk/"
 # Use Node.js as primary language because Gulp is the build system used in the project.
 language: node_js
 node_js:
@@ -52,5 +54,33 @@ before_script:
 
   - docker --version
 
+<<<<<<< 78c8c27dc78d03415365dbd71250f2a7814e637b
 script: ./node_modules/.bin/gulp check:local-cluster --heapsterServerHost 'http://localhost:8082'
+=======
+script: ./node_modules/.bin/gulp check:local-cluster
+
+after_success:
+  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+        if [ "$TRAVIS_BRANCH" == "master" ]; then
+          docker login -u $DOCKER_USER -p $DOCKER_PASS;
+          ./node_modules/.bin/gulp push-to-docker:canary:cross;
+        elif [ -n "$TRAVIS_TAG" ]; then
+          openssl aes-256-cbc -K $encrypted_45d1b36fa803_key -iv $encrypted_45d1b36fa803_iv -in credentials.tar.gz.enc -out credentials.tar.gz -d;
+
+          if [ ! -d ${HOME}/google-cloud-sdk ]; then
+              curl https://sdk.cloud.google.com | bash;
+          fi;
+
+          gcloud auth activate-service-account --key-file client-secret.json;
+          gcloud config set project google_containers;
+
+          ./node_modules/.bin/gulp push-to-gcr:release:cross;
+        else
+          echo "Image push is not enabled for branch $TRAVIS_BRANCH";
+        fi;
+    else
+        echo "Image push is not available for Pull Requests.";
+    fi;
+
+>>>>>>> Adjust travis to push canary image on successful build
 after_script: ./node_modules/.bin/gulp coverage-codecov-upload

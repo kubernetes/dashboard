@@ -44,6 +44,14 @@ const arch = {
 };
 
 /**
+ * TODO
+ */
+const repo = {
+  gcr: 'gcr.io/google_containers',
+  docker: 'floreks',
+};
+
+/**
  * Package version information.
  */
 const version = {
@@ -60,12 +68,17 @@ const version = {
 /**
  * Base name for the docker image.
  */
-const imageNameBase = 'gcr.io/google_containers/kubernetes-dashboard';
+const imageNameBase = 'kubernetes-dashboard';
 
 /**
  * Exported configuration object with common constants used in build pipeline.
  */
 export default {
+  /**
+   * TODO
+   */
+  repo: repo,
+
   /**
    * Backend application constants.
    */
@@ -116,24 +129,31 @@ export default {
     version: version,
 
     /**
+     * Image name base for current architecture.
+     */
+    imageNameBase: `${imageNameBase}-${arch.default}`,
+
+    /**
      * Image name for the canary release for current architecture.
      */
-    canaryImageName: `${imageNameBase}-${arch.default}:${version.canary}`,
+    canaryImageName: `${repo.docker}/${imageNameBase}-${arch.default}:${version.canary}`,
 
     /**
      * Image name for the versioned release for current architecture.
      */
-    releaseImageName: `${imageNameBase}-${arch.default}:${version.release}`,
+    releaseImageName: `${repo.gcr}/${imageNameBase}-${arch.default}:${version.release}`,
 
     /**
      * Image name for the canary release for all supported architecture.
      */
-    canaryImageNames: arch.list.map((arch) => `${imageNameBase}-${arch}:${version.canary}`),
+    canaryImageNames:
+        arch.list.map((arch) => `${repo.docker}/${imageNameBase}-${arch}:${version.canary}`),
 
     /**
      * Image name for the versioned release for all supported architecture.
      */
-    releaseImageNames: arch.list.map((arch) => `${imageNameBase}-${arch}:${version.release}`),
+    releaseImageNames:
+        arch.list.map((arch) => `${repo.gcr}/${imageNameBase}-${arch}:${version.release}`),
   },
 
   /**
