@@ -20,6 +20,7 @@
 # According to the documentation: http://docs.travis-ci.com/user/docker/
 # sudo is required to enable docker in Travis CI.
 sudo: true
+
 # Cache downloaded Node.JS modules & Bower frontend dependencies for faster builds.
 cache:
   directories:
@@ -52,5 +53,21 @@ before_script:
 
   - docker --version
 
-script: ./node_modules/.bin/gulp check:local-cluster
+#script: ./node_modules/.bin/gulp check:local-cluster
+
+after_success:
+  # Make sure that build was not triggered by Pull Request.
+  - if [ "$TRAVIS_PULL_REQUEST" === "false" ]; then
+      if [ "$TRAVIS_BRANCH" = "master" ]; then
+        docker login -u $DOCKER_USER -p $DOCKER_PASS
+        ./node_modules/.bin/gulp ci:push-to-docker:canary:cross
+      elif [ -n "$TRAVIS_TAG" ]; then
+        ./node_modules/.bin/gulp ci:push-to-gcr:release:cross
+      else
+        echo "Image push is not enabled for branch $TRAVIS_BRANCH"
+      fi;
+    else
+      echo "Image push is not available for Pull Requests."
+    fi;
+
 after_script: ./node_modules/.bin/gulp coverage-codecov-upload
