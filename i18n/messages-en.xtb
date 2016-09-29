@@ -1152,7 +1152,8 @@
   <translation id="4826002371920064937" key="MSG_RESOURCE_DETAIL_INFO_CARD_NAME_LABEL" desc="Label 'Name' for a resource.">Name</translation>
   <translation id="6116578277969213046" key="MSG_RESOURCE_DETAIL_INFO_CARD_START_TIME_LABEL" desc="Label 'Creation time' for a resource.">Creation time</translation>
   <translation id="1320482404001625698" key="MSG_SECRETDETAIL_ACTIONBAR_0" desc="Label \'Secret\' which appears at the top of the delete dialog, opened from a secret details page.">Secret</translation>
-  <translation id="7988357395949564443" key="MSG_SECRETDETAIL_DETAIL_0" desc="Config map info details section name.">Data</translation>
+  <translation id="1561742373508692276" key="MSG_SECRETDETAIL_DETAIL_0" desc="Secrets info details section data.">Data </translation>
+  <translation id="1940368443923988450" key="MSG_SECRETDETAIL_DETAIL_1" desc="Secrets info details section bytes.">bytes </translation>
   <translation id="4201489447726655383" key="MSG_SECRETDETAIL_INFO_0" desc="Config map info details section name.">Details</translation>
   <translation id="2838644310432685833" key="MSG_SECRETLIST_CARDLIST_0" desc="Label \'Name\' which appears as a column label in the table of secrets (secret list view).">Name</translation>
   <translation id="3059701171980133521" key="MSG_SECRETLIST_CARDLIST_1" desc="Label \'Namespace\' which appears as a column label in the table of secrets (secret list view).">Namespace</translation>
