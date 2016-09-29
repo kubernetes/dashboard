@@ -21,7 +21,9 @@ export default class DeploymentInfoController {
    * @return {boolean}
    * @export
    */
-  rollingUpdateStrategy() { return this.deployment.strategy === 'RollingUpdate'; }
+  rollingUpdateStrategy() {
+    return this.deployment.strategy === 'RollingUpdate';
+  }
 }
 
 /**

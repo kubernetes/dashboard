@@ -193,13 +193,17 @@ export default class DeployFromSettingsController {
    * @return {boolean}
    * @export
    */
-  isDeployDisabled() { return this.isDeployInProgress_; }
+  isDeployDisabled() {
+    return this.isDeployInProgress_;
+  }
 
   /**
    * Cancels the deployment form.
    * @export
    */
-  cancel() { this.kdHistoryService_.back(workloads); }
+  cancel() {
+    this.kdHistoryService_.back(workloads);
+  }
 
   /**
    * Deploys the application based on the state of the controller.
@@ -245,7 +249,9 @@ export default class DeployFromSettingsController {
             defer.reject(err);  // Progress ends
             this.log_.error('Error deploying application:', err);
           });
-      defer.promise.finally(() => { this.isDeployInProgress_ = false; });
+      defer.promise.finally(() => {
+        this.isDeployInProgress_ = false;
+      });
     }
   }
 
@@ -272,7 +278,9 @@ export default class DeployFromSettingsController {
                 this.namespace = this.namespaces[0];
               }
             },
-            () => { this.namespace = this.namespaces[0]; });
+            () => {
+              this.namespace = this.namespaces[0];
+            });
   }
 
   /**
@@ -298,7 +306,9 @@ export default class DeployFromSettingsController {
                 this.imagePullSecret = '';
               }
             },
-            () => { this.imagePullSecret = ''; });
+            () => {
+              this.imagePullSecret = '';
+            });
   }
 
   /**
@@ -310,15 +320,21 @@ export default class DeployFromSettingsController {
     /** @type {!angular.Resource<!backendApi.SecretsList>} */
     let resource = this.resource_(`api/v1/secret/${namespace}`);
     resource.get(
-        (res) => { this.secrets = res.secrets.map((e) => e.objectMeta.name); },
-        (err) => { this.log_.log(`Error getting secrets: ${err}`); });
+        (res) => {
+          this.secrets = res.secrets.map((e) => e.objectMeta.name);
+        },
+        (err) => {
+          this.log_.log(`Error getting secrets: ${err}`);
+        });
   }
 
   /**
    * Resets the currently selected image pull secret.
    * @export
    */
-  resetImagePullSecret() { this.imagePullSecret = ''; }
+  resetImagePullSecret() {
+    this.imagePullSecret = '';
+  }
 
   /**
    * Returns true when name input should show error. This overrides default behavior to show name
@@ -343,11 +359,14 @@ export default class DeployFromSettingsController {
   toBackendApiLabels_(labels) {
     // Omit labels with empty key/value
     /** @type {!Array<!DeployLabel>} */
-    let apiLabels =
-        labels.filter((label) => { return label.key.length !== 0 && label.value().length !== 0; });
+    let apiLabels = labels.filter((label) => {
+      return label.key.length !== 0 && label.value().length !== 0;
+    });
 
     // Transform to array of backend api labels
-    return apiLabels.map((label) => { return label.toBackendApi(); });
+    return apiLabels.map((label) => {
+      return label.toBackendApi();
+    });
   }
 
   /**
@@ -356,7 +375,9 @@ export default class DeployFromSettingsController {
    * @return {boolean}
    * @private
    */
-  isPortMappingFilled_(portMapping) { return !!portMapping.port && !!portMapping.targetPort; }
+  isPortMappingFilled_(portMapping) {
+    return !!portMapping.port && !!portMapping.targetPort;
+  }
 
   /**
    * Returns true when the given environment variable is filled by the user, i.e., is not empty.
@@ -364,7 +385,9 @@ export default class DeployFromSettingsController {
    * @return {boolean}
    * @private
    */
-  isVariableFilled_(variable) { return !!variable.name; }
+  isVariableFilled_(variable) {
+    return !!variable.name;
+  }
 
   /**
    * Callbacks used in DeployLabel model to make it aware of controller state changes.
@@ -375,27 +398,35 @@ export default class DeployFromSettingsController {
    * @return {string}
    * @private
    */
-  getContainerImageVersion_() { return new DockerImageReference(this.containerImage).tag(); }
+  getContainerImageVersion_() {
+    return new DockerImageReference(this.containerImage).tag();
+  }
 
   /**
    * Returns application name.
    * @return {string}
    * @private
    */
-  getName_() { return this.name; }
+  getName_() {
+    return this.name;
+  }
 
   /**
    * Returns true if more options have been enabled and should be shown, false otherwise.
    * @return {boolean}
    * @export
    */
-  isMoreOptionsEnabled() { return this.showMoreOptions_; }
+  isMoreOptionsEnabled() {
+    return this.showMoreOptions_;
+  }
 
   /**
    * Shows or hides more options.
    * @export
    */
-  switchMoreOptions() { this.showMoreOptions_ = !this.showMoreOptions_; }
+  switchMoreOptions() {
+    this.showMoreOptions_ = !this.showMoreOptions_;
+  }
 }
 
 const i18n = {

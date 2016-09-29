@@ -16,7 +16,9 @@ import {getIngressDetail, getIngressDetailResource} from 'ingressdetail/detail_s
 import module from 'ingressdetail/module';
 
 describe('StateConfig for ingress detail', () => {
-  beforeEach(() => { angular.mock.module(module.name); });
+  beforeEach(() => {
+    angular.mock.module(module.name);
+  });
 
   it('should resolve ingresss', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;

@@ -15,7 +15,9 @@
 import module from 'admin/module';
 
 describe('Admin module ', () => {
-  beforeEach(() => { angular.mock.module(module.name); });
+  beforeEach(() => {
+    angular.mock.module(module.name);
+  });
 
   it('should provide kdAdminResource', angular.mock.inject((kdAdminResource, $httpBackend) => {
     kdAdminResource.get();

@@ -21,15 +21,18 @@ describe('StateConfig for job list', () => {
 
   beforeEach(() => {
     angular.mock.module(jobListModule.name);
-    angular.mock.inject(
-        (_kdPaginationService_) => { kdPaginationService = _kdPaginationService_; });
+    angular.mock.inject((_kdPaginationService_) => {
+      kdPaginationService = _kdPaginationService_;
+    });
   });
 
   it('should resolve jobs', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
 
     let resource = jasmine.createSpyObj('$resource', ['get']);
-    resource.get.and.callFake(function() { return {$promise: promise}; });
+    resource.get.and.callFake(function() {
+      return {$promise: promise};
+    });
 
     let actual = resolveJobList(resource, {namespace: 'foo'}, kdPaginationService);
 
@@ -41,7 +44,9 @@ describe('StateConfig for job list', () => {
     let promise = $q.defer().promise;
 
     let resource = jasmine.createSpyObj('$resource', ['get']);
-    resource.get.and.callFake(function() { return {$promise: promise}; });
+    resource.get.and.callFake(function() {
+      return {$promise: promise};
+    });
 
     let actual = resolveJobList(resource, {}, kdPaginationService);
 

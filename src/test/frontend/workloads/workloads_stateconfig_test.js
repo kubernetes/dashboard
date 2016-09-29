@@ -21,15 +21,18 @@ describe('StateConfig for workload list', () => {
 
   beforeEach(() => {
     angular.mock.module(workloadListModule.name);
-    angular.mock.inject(
-        (_kdPaginationService_) => { kdPaginationService = _kdPaginationService_; });
+    angular.mock.inject((_kdPaginationService_) => {
+      kdPaginationService = _kdPaginationService_;
+    });
   });
 
   it('should resolve workloads with no namespace', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
 
     let resource = jasmine.createSpyObj('$resource', ['get']);
-    resource.get.and.callFake(function() { return {$promise: promise}; });
+    resource.get.and.callFake(function() {
+      return {$promise: promise};
+    });
 
     let actual = resolveWorkloads(resource, {}, kdPaginationService);
 
@@ -41,7 +44,9 @@ describe('StateConfig for workload list', () => {
     let promise = $q.defer().promise;
 
     let resource = jasmine.createSpyObj('$resource', ['get']);
-    resource.get.and.callFake(function() { return {$promise: promise}; });
+    resource.get.and.callFake(function() {
+      return {$promise: promise};
+    });
 
     let actual = resolveWorkloads(resource, {namespace: 'foo'}, kdPaginationService);
 

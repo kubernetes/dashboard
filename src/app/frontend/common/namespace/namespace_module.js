@@ -52,6 +52,7 @@ function ensureNamespaceParamPresent($rootScope, $location) {
   }
 
   $rootScope.$watch(() => $location.search()[namespaceParam], replaceUrlIfNeeded);
-  $rootScope.$on(
-      '$locationChangeSuccess', () => { replaceUrlIfNeeded($location.search()[namespaceParam]); });
+  $rootScope.$on('$locationChangeSuccess', () => {
+    replaceUrlIfNeeded($location.search()[namespaceParam]);
+  });
 }

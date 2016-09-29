@@ -70,7 +70,9 @@ export default class DeploymentCardController {
    * @return {boolean}
    * @export
    */
-  hasWarnings() { return this.deployment.pods.warnings.length > 0; }
+  hasWarnings() {
+    return this.deployment.pods.warnings.length > 0;
+  }
 
   /**
    * Returns true if replica set pods have no warnings and there is at least one pod
@@ -78,13 +80,17 @@ export default class DeploymentCardController {
    * @return {boolean}
    * @export
    */
-  isPending() { return !this.hasWarnings() && this.deployment.pods.pending > 0; }
+  isPending() {
+    return !this.hasWarnings() && this.deployment.pods.pending > 0;
+  }
 
   /**
    * @return {boolean}
    * @export
    */
-  isSuccess() { return !this.isPending() && !this.hasWarnings(); }
+  isSuccess() {
+    return !this.isPending() && !this.hasWarnings();
+  }
 
   /**
    * @export

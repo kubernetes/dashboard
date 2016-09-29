@@ -15,7 +15,9 @@
 import module from 'servicesanddiscovery/module';
 
 describe('ServicesAndDiscovery module ', () => {
-  beforeEach(() => { angular.mock.module(module.name); });
+  beforeEach(() => {
+    angular.mock.module(module.name);
+  });
 
   it('should provide kdServicesAndDiscoveryResource',
      angular.mock.inject((kdServicesAndDiscoveryResource, $httpBackend) => {

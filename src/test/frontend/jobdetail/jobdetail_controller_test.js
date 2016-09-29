@@ -17,7 +17,9 @@ import jobDetailModule from 'jobdetail/jobdetail_module';
 
 describe('Job Detail controller', () => {
 
-  beforeEach(() => { angular.mock.module(jobDetailModule.name); });
+  beforeEach(() => {
+    angular.mock.module(jobDetailModule.name);
+  });
 
   it('should initialize job controller', angular.mock.inject(($controller) => {
     let data = {};

@@ -81,7 +81,9 @@ describe('Graph component controller', () => {
     });
   });
 
-  it('should instantiate the controller properly', () => { expect(ctrl).not.toBeUndefined(); });
+  it('should instantiate the controller properly', () => {
+    expect(ctrl).not.toBeUndefined();
+  });
   it('should render svg graph inside parent element', () => {
     ctrl.$onInit();
     nv.render.queue.pop().generate();

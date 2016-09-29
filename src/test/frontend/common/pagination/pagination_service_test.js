@@ -42,7 +42,9 @@ describe('Pagination service', () => {
     let wrongPaginationId = 'wrong-id';
 
     // then
-    expect(() => { paginationService.getRowsLimit(wrongPaginationId); })
+    expect(() => {
+      paginationService.getRowsLimit(wrongPaginationId);
+    })
         .toThrow(new Error(
             `Pagination limit for given pagination id ${wrongPaginationId} does not exist`));
   });
@@ -90,16 +92,20 @@ describe('Pagination service', () => {
       paginationService.setRowsLimit(wrongRowsLimit, paginationId);
     }).toThrow(new Error(`Limit has to be in range ${ROWS_LIMIT_OPTIONS}`));
 
-    expect(() => { paginationService.setRowsLimit(rowsLimit, notExistingId); })
+    expect(() => {
+      paginationService.setRowsLimit(rowsLimit, notExistingId);
+    })
         .toThrow(
             new Error(`Pagination limit for given pagination id ${notExistingId} does not exist`));
   });
 
-  it('should return min rows limit',
-     () => { expect(paginationService.getMinRowsLimit()).toEqual(ROWS_LIMIT_OPTIONS[0]); });
+  it('should return min rows limit', () => {
+    expect(paginationService.getMinRowsLimit()).toEqual(ROWS_LIMIT_OPTIONS[0]);
+  });
 
-  it('should return rows limit options',
-     () => { expect(paginationService.getRowsLimitOptions()).toEqual(ROWS_LIMIT_OPTIONS); });
+  it('should return rows limit options', () => {
+    expect(paginationService.getRowsLimitOptions()).toEqual(ROWS_LIMIT_OPTIONS);
+  });
 
   it('should reset rows limit', () => {
     // given

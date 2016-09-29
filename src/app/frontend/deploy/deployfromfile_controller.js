@@ -112,7 +112,9 @@ export default class DeployFromFileController {
               this.errorDialog_.open(this.i18n.MSG_DEPLOY_DIALOG_ERROR, err.data);
             }
           });
-      defer.promise.finally(() => { this.isDeployInProgress_ = false; });
+      defer.promise.finally(() => {
+        this.isDeployInProgress_ = false;
+      });
     }
   }
 
@@ -144,13 +146,17 @@ export default class DeployFromFileController {
    * @return {boolean}
    * @export
    */
-  isDeployDisabled() { return this.isDeployInProgress_; }
+  isDeployDisabled() {
+    return this.isDeployInProgress_;
+  }
 
   /**
    * Cancels the deployment form.
    * @export
    */
-  cancel() { this.kdHistoryService_.back(workloads); }
+  cancel() {
+    this.kdHistoryService_.back(workloads);
+  }
 }
 
 const i18n = {

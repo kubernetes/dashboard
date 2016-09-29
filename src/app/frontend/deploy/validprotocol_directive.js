@@ -83,7 +83,9 @@ function validate(ngModelController, externalChanged, protocol, isExternal, reso
           deferred.reject();
         }
       },
-      () => { deferred.reject(); });
+      () => {
+        deferred.reject();
+      });
 
   return deferred.promise;
 }

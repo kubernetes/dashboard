@@ -23,7 +23,9 @@ describe('Labels controller', () => {
 
   beforeEach(() => {
     angular.mock.module(componentsModule.name);
-    angular.mock.inject(($controller) => { ctrl = $controller(LabelsController); });
+    angular.mock.inject(($controller) => {
+      ctrl = $controller(LabelsController);
+    });
   });
 
   it('should display correct number of labels', () => {

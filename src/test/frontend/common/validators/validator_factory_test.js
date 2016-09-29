@@ -24,7 +24,9 @@ describe('Validator factory', () => {
   beforeEach(() => {
     angular.mock.module(validatorsModule.name);
 
-    angular.mock.inject((kdValidatorFactory) => { validatorFactory = kdValidatorFactory; });
+    angular.mock.inject((kdValidatorFactory) => {
+      validatorFactory = kdValidatorFactory;
+    });
   });
 
   it('should return integer type', () => {

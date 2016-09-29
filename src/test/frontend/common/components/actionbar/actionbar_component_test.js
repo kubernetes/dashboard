@@ -19,6 +19,8 @@ describe('Action bar', () => {
 
   it('should not throw an error on no content', angular.mock.inject(($rootScope, $compile) => {
     $compile('<kd-actionbar></kd-actionbar>')($rootScope);
-    expect(() => { $rootScope.$digest(); }).not.toThrow();
+    expect(() => {
+      $rootScope.$digest();
+    }).not.toThrow();
   }));
 });

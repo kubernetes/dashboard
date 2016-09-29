@@ -4,7 +4,9 @@ import deploymentDetailModule from 'deploymentdetail/deploymentdetail_module';
 
 describe('Deployment Detail controller', () => {
 
-  beforeEach(() => { angular.mock.module(deploymentDetailModule.name); });
+  beforeEach(() => {
+    angular.mock.module(deploymentDetailModule.name);
+  });
 
   it('should initialize deployment detail', angular.mock.inject(($controller) => {
     let data = {};

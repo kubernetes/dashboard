@@ -21,15 +21,18 @@ describe('StateConfig for deployment list', () => {
 
   beforeEach(() => {
     angular.mock.module(deploymentListModule.name);
-    angular.mock.inject(
-        (_kdPaginationService_) => { kdPaginationService = _kdPaginationService_; });
+    angular.mock.inject((_kdPaginationService_) => {
+      kdPaginationService = _kdPaginationService_;
+    });
   });
 
   it('should resolve deployments', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
 
     let resource = jasmine.createSpyObj('$resource', ['get']);
-    resource.get.and.callFake(function() { return {$promise: promise}; });
+    resource.get.and.callFake(function() {
+      return {$promise: promise};
+    });
 
     let actual = resolveDeploymentList(resource, {namespace: 'foo'}, kdPaginationService);
 
@@ -41,7 +44,9 @@ describe('StateConfig for deployment list', () => {
     let promise = $q.defer().promise;
 
     let resource = jasmine.createSpyObj('$resource', ['get']);
-    resource.get.and.callFake(function() { return {$promise: promise}; });
+    resource.get.and.callFake(function() {
+      return {$promise: promise};
+    });
 
     let actual = resolveDeploymentList(resource, {}, kdPaginationService);
 

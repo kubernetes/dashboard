@@ -37,8 +37,9 @@ describe('PortMappingsController controller', () => {
     });
   });
 
-  it('should be initialized without port mapping line',
-     () => { expect(ctrl.portMappings.length).toBe(0); });
+  it('should be initialized without port mapping line', () => {
+    expect(ctrl.portMappings.length).toBe(0);
+  });
 
   it('should add or remove port mappings, depending on service type', () => {
 

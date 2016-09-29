@@ -23,7 +23,9 @@ describe('Job card', () => {
   beforeEach(() => {
     angular.mock.module(jobListModule.name);
 
-    angular.mock.inject(($componentController) => { ctrl = $componentController('kdJobCard'); });
+    angular.mock.inject(($componentController) => {
+      ctrl = $componentController('kdJobCard');
+    });
   });
 
   it('should construct details href', () => {

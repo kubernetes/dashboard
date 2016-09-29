@@ -86,7 +86,9 @@ export default class DeployLabelController {
    * Adds row to labels list.
    * @private
    */
-  addNewLabel_() { this.labels.push(new DeployLabel()); }
+  addNewLabel_() {
+    this.labels.push(new DeployLabel());
+  }
 
   /**
    * Validates label within label form.
@@ -132,7 +134,9 @@ export default class DeployLabelController {
    * @return {boolean}
    * @private
    */
-  isFilled_(label) { return label.key.length !== 0 && label.value().length !== 0; }
+  isFilled_(label) {
+    return label.key.length !== 0 && label.value().length !== 0;
+  }
 
   /**
    * @export

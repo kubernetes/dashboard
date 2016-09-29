@@ -38,7 +38,9 @@ export class PetSetListController {
    * @return {boolean}
    * @export
    */
-  shouldShowZeroState() { return this.petSetList.petSets.length === 0; }
+  shouldShowZeroState() {
+    return this.petSetList.petSets.length === 0;
+  }
 }
 
 const i18n = {

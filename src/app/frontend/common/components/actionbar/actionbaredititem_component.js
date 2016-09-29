@@ -50,7 +50,9 @@ export class ActionbarEditItemController {
   edit() {
     this.kdResourceVerberService_
         .showEditDialog(this.resourceKindName, this.typeMeta, this.objectMeta)
-        .then(() => { this.state_.reload(); });
+        .then(() => {
+          this.state_.reload();
+        });
   }
 
   /**

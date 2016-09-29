@@ -37,7 +37,9 @@ export class ResourceCardColumnsController {
   /**
    * @export
    */
-  $onInit() { this.initialized_ = true; }
+  $onInit() {
+    this.initialized_ = true;
+  }
 
   /**
    * @param {!angular.JQLite} columnElement

@@ -32,21 +32,29 @@ export class LogsService {
    * Getter for inverted flag.
    * @return {boolean}
    */
-  getInverted() { return this.inverted_; }
+  getInverted() {
+    return this.inverted_;
+  }
 
   /**
    * Switches the inverted flag.
    */
-  setInverted() { this.inverted_ = !this.inverted_; }
+  setInverted() {
+    this.inverted_ = !this.inverted_;
+  }
 
   /**
    * Switches the compact flag.
    */
-  setCompact() { this.compact_ = !this.compact_; }
+  setCompact() {
+    this.compact_ = !this.compact_;
+  }
 
   /**
    * Getter for compact flag.
    * @return {boolean}
    */
-  getCompact() { return this.compact_; }
+  getCompact() {
+    return this.compact_;
+  }
 }

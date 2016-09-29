@@ -27,8 +27,9 @@ describe('Label Key Prefix Pattern validator', () => {
   let labelKeyPrefixPatternValidator;
 
   beforeEach(() => {
-    angular.mock.inject(
-        () => { labelKeyPrefixPatternValidator = new LabelKeyPrefixPatternValidator(); });
+    angular.mock.inject(() => {
+      labelKeyPrefixPatternValidator = new LabelKeyPrefixPatternValidator();
+    });
   });
 
   it('should set validity to false when key prefix does not conform to RegExp', () => {

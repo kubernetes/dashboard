@@ -22,11 +22,14 @@ describe('EnvironmentVariablesController', () => {
   beforeEach(() => {
     angular.mock.module(deployModule.name);
 
-    angular.mock.inject(($controller) => { ctrl = $controller(EnvironmentVariablesController); });
+    angular.mock.inject(($controller) => {
+      ctrl = $controller(EnvironmentVariablesController);
+    });
   });
 
-  it('should initialize first value',
-     () => { expect(ctrl.variables).toEqual([{name: '', value: ''}]); });
+  it('should initialize first value', () => {
+    expect(ctrl.variables).toEqual([{name: '', value: ''}]);
+  });
 
   it('should add new variables when needed', () => {
     expect(ctrl.variables.length).toBe(1);

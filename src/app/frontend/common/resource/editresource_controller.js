@@ -62,8 +62,9 @@ export class EditResourceController {
     let promise = this.http_.get(
         `api/v1/${this.typeMeta_.kind}/namespace/` +
         `${this.objectMeta.namespace}/name/${this.objectMeta.name}`);
-    promise.then(
-        (/** !angular.$http.Response<Object>*/ response) => { this.data = response.data; });
+    promise.then((/** !angular.$http.Response<Object>*/ response) => {
+      this.data = response.data;
+    });
   }
 
   /**
@@ -83,7 +84,9 @@ export class EditResourceController {
    *
    * @export
    */
-  cancel() { this.mdDialog_.cancel(); }
+  cancel() {
+    this.mdDialog_.cancel();
+  }
 }
 
 /**

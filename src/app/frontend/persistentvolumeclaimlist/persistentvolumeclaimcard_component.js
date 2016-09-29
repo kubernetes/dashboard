@@ -70,21 +70,27 @@ export default class PersistentVolumeClaimCardController {
    * @return {boolean}
      @export
    */
-  isBound() { return this.persistentVolumeClaim.Status === 'Bound'; }
+  isBound() {
+    return this.persistentVolumeClaim.Status === 'Bound';
+  }
 
   /**
    * Returns true if persistent volume claim is in pending state, false otherwise.
    * @return {boolean}
    * @export
    */
-  isPending() { return this.persistentVolumeClaim.Status === 'Pending'; }
+  isPending() {
+    return this.persistentVolumeClaim.Status === 'Pending';
+  }
 
   /**
    * Returns true if persistent volume claim is in lost state, false otherwise.
    * @return {boolean}
    * @export
    */
-  isLost() { return this.persistentVolumeClaim.Status === 'Lost'; }
+  isLost() {
+    return this.persistentVolumeClaim.Status === 'Lost';
+  }
 
   /**
    * @export

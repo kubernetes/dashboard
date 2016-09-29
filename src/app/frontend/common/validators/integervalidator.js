@@ -19,7 +19,9 @@ import {Validator} from './validator';
  * @extends {Validator}
  */
 export class IntegerValidator extends Validator {
-  constructor() { super(); }
+  constructor() {
+    super();
+  }
 
   /**
    * Returns true if given value is a correct integer value, false otherwise.
@@ -28,5 +30,7 @@ export class IntegerValidator extends Validator {
    *
    * @override
    */
-  isValid(value) { return (Number(value) === value && value % 1 === 0) || !value; }
+  isValid(value) {
+    return (Number(value) === value && value % 1 === 0) || !value;
+  }
 }

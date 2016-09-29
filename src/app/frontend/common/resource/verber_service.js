@@ -46,7 +46,9 @@ export class VerberService {
     let deferred = this.q_.defer();
 
     showDeleteDialog(this.mdDialog_, resourceKindName, typeMeta, objectMeta)
-        .then(() => { deferred.resolve(); })
+        .then(() => {
+          deferred.resolve();
+        })
         .catch((err) => {
           this.deleteErrorCallback(err);
           deferred.reject(err);
@@ -67,7 +69,9 @@ export class VerberService {
     let deferred = this.q_.defer();
 
     showEditDialog(this.mdDialog_, resourceKindName, typeMeta, objectMeta)
-        .then(() => { deferred.resolve(); })
+        .then(() => {
+          deferred.resolve();
+        })
         .catch((err) => {
           this.editErrorCallback(err);
           deferred.reject(err);

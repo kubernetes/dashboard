@@ -20,7 +20,9 @@ describe('Cores filter', () => {
 
   beforeEach(() => {
     angular.mock.module(filtersModule.name);
-    angular.mock.inject((_kdCoresFilter_) => { filter = _kdCoresFilter_; });
+    angular.mock.inject((_kdCoresFilter_) => {
+      filter = _kdCoresFilter_;
+    });
   });
 
   it('should format CPU', () => {

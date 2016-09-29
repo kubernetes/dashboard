@@ -57,7 +57,9 @@ export default class BreadcrumbsController {
   $onInit() {
     this.initBreadcrumbs_();
 
-    this.scope_.$watch(() => this.kdFutureStateService_.state, () => { this.initBreadcrumbs_(); });
+    this.scope_.$watch(() => this.kdFutureStateService_.state, () => {
+      this.initBreadcrumbs_();
+    });
   }
 
   /**

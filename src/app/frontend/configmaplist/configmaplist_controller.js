@@ -35,5 +35,7 @@ export class ConfigMapListController {
    * @return {boolean}
    * @export
    */
-  shouldShowZeroState() { return this.configMapList.items.length === 0; }
+  shouldShowZeroState() {
+    return this.configMapList.items.length === 0;
+  }
 }

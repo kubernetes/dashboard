@@ -35,7 +35,9 @@ describe('Daemon Set Card List controller', () => {
     });
   });
 
-  it('should instantiate the controller properly', () => { expect(ctrl).not.toBeUndefined(); });
+  it('should instantiate the controller properly', () => {
+    expect(ctrl).not.toBeUndefined();
+  });
 
   it('should return the value from Namespace service', () => {
     expect(ctrl.areMultipleNamespacesSelected()).toBe(data.areMultipleNamespacesSelected());

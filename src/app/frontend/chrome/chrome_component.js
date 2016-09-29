@@ -50,7 +50,9 @@ export class ChromeController {
   }
 
   /** @export */
-  $onInit() { this.registerStateChangeListeners(this.scope_); }
+  $onInit() {
+    this.registerStateChangeListeners(this.scope_);
+  }
 
   /**
    * @return {boolean}
@@ -70,7 +72,9 @@ export class ChromeController {
       this.showLoadingSpinner = false;
       // Show loading spinner after X ms, only for long-loading pages. This is to avoid flicker
       // for pages that load instantaneously.
-      this.timeout_(() => { this.showLoadingSpinner = true; }, 250);
+      this.timeout_(() => {
+        this.showLoadingSpinner = true;
+      }, 250);
     });
 
     scope.$on('$stateChangeError', this.hideSpinner_.bind(this));

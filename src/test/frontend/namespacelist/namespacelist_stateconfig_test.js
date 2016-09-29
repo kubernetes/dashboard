@@ -16,13 +16,19 @@ import namespaceListModule from 'namespacelist/namespacelist_module';
 import {resolveNamespaceList} from 'namespacelist/namespacelist_stateconfig';
 
 describe('StateConfig for namespace list', () => {
-  beforeEach(() => { angular.mock.module(namespaceListModule.name); });
+  beforeEach(() => {
+    angular.mock.module(namespaceListModule.name);
+  });
 
   it('should resolve namespaces', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
 
     let resource = jasmine.createSpy('$resource');
-    resource.and.returnValue({get: function() { return {$promise: promise}; }});
+    resource.and.returnValue({
+      get: function() {
+        return {$promise: promise};
+      },
+    });
 
     let actual = resolveNamespaceList(resource);
 

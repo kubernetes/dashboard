@@ -35,7 +35,9 @@ describe('Ingress list controller', () => {
     expect(ctrl.ingressList).toBe(data);
   }));
 
-  it('should show zero state', () => { expect(ctrl.shouldShowZeroState()).toBeTruthy(); });
+  it('should show zero state', () => {
+    expect(ctrl.shouldShowZeroState()).toBeTruthy();
+  });
 
   it('should hide zero state', () => {
     // given

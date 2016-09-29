@@ -35,7 +35,9 @@ export class ResourceCardColumnController {
   /**
    * @export
    */
-  $onInit() { this.resourceCardColumnsCtrl.addAndSizeColumn(this.element_); }
+  $onInit() {
+    this.resourceCardColumnsCtrl.addAndSizeColumn(this.element_);
+  }
 }
 
 /**

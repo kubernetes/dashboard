@@ -27,7 +27,11 @@ describe('Persistent Volume card list', () => {
     });
   });
 
-  it('should instantiate the controller properly', () => { expect(ctrl).not.toBeUndefined(); });
+  it('should instantiate the controller properly', () => {
+    expect(ctrl).not.toBeUndefined();
+  });
 
-  it('should init i18n', () => { expect(ctrl.i18n).not.toBeUndefined(); });
+  it('should init i18n', () => {
+    expect(ctrl.i18n).not.toBeUndefined();
+  });
 });

@@ -74,14 +74,18 @@ export class ServiceCardController {
    * @return {boolean}
    * @export
    */
-  isSuccess() { return !this.isPending(); }
+  isSuccess() {
+    return !this.isPending();
+  }
 
   /**
    * Returns the service's clusterIP or a dash ('-') if it is not yet set
    * @return {string}
    * @export
    */
-  getServiceClusterIP() { return this.service.clusterIP ? this.service.clusterIP : '-'; }
+  getServiceClusterIP() {
+    return this.service.clusterIP ? this.service.clusterIP : '-';
+  }
 }
 
 /**

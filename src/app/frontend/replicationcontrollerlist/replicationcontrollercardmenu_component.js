@@ -52,7 +52,9 @@ export default class ReplicationControllerCardMenuController {
    * @param {!MouseEvent} $event
    * @export
    */
-  openMenu($mdOpenMenu, $event) { $mdOpenMenu($event); }
+  openMenu($mdOpenMenu, $event) {
+    $mdOpenMenu($event);
+  }
 
   /**
    * @export

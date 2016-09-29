@@ -33,5 +33,7 @@ export class IngressListController {
    * @return {boolean}
    * @export
    */
-  shouldShowZeroState() { return !(this.ingressList.items && this.ingressList.items.length); }
+  shouldShowZeroState() {
+    return !(this.ingressList.items && this.ingressList.items.length);
+  }
 }

@@ -42,7 +42,9 @@ export default class DeployController {
   }
 
   /** @export */
-  changeSelection() { this.state_.go(this.selection); }
+  changeSelection() {
+    this.state_.go(this.selection);
+  }
 }
 
 const i18n = {

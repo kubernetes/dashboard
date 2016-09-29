@@ -27,7 +27,9 @@ export class NavService {
   /**
    * @param {!./nav_component.NavController} navComponent
    */
-  registerNav(navComponent) { this.navComponent_ = navComponent; }
+  registerNav(navComponent) {
+    this.navComponent_ = navComponent;
+  }
 
   /**
    */

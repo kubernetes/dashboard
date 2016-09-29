@@ -36,7 +36,9 @@ export class DaemonSetListController {
    * @return {boolean}
    * @export
    */
-  shouldShowZeroState() { return this.daemonSetList.daemonSets.length === 0; }
+  shouldShowZeroState() {
+    return this.daemonSetList.daemonSets.length === 0;
+  }
 }
 
 const i18n = {

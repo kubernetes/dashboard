@@ -78,13 +78,17 @@ export default class NamespaceDialogController {
    * @return {boolean}
    * @export
    */
-  isDisabled() { return this.namespaces.indexOf(this.namespace) >= 0; }
+  isDisabled() {
+    return this.namespaces.indexOf(this.namespace) >= 0;
+  }
 
   /**
    * Cancels the new namespace form.
    * @export
    */
-  cancel() { this.mdDialog_.cancel(); }
+  cancel() {
+    this.mdDialog_.cancel();
+  }
 
   /**
    * Creates new namespace based on the state of the controller.

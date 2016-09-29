@@ -22,8 +22,9 @@ describe('Admin list controller', () => {
   beforeEach(() => {
     angular.mock.module(module.name);
 
-    angular.mock.inject(
-        ($controller) => { ctrl = $controller(AdminController, {admin: {admin: []}}); });
+    angular.mock.inject(($controller) => {
+      ctrl = $controller(AdminController, {admin: {admin: []}});
+    });
   });
 
   it('should initialize admin', angular.mock.inject(($controller) => {

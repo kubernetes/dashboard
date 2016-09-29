@@ -17,7 +17,9 @@ import namespaceListModule from 'namespacelist/namespacelist_module';
 
 describe('Namespace list controller', () => {
 
-  beforeEach(() => { angular.mock.module(namespaceListModule.name); });
+  beforeEach(() => {
+    angular.mock.module(namespaceListModule.name);
+  });
 
   it('should initialize namespace controller', angular.mock.inject(($controller) => {
     let ctrls = {};

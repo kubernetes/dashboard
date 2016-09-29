@@ -38,7 +38,9 @@ export class PodListController {
    * @return {boolean}
    * @export
    */
-  shouldShowZeroState() { return this.podList.pods.length === 0; }
+  shouldShowZeroState() {
+    return this.podList.pods.length === 0;
+  }
 }
 
 const i18n = {

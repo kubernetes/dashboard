@@ -37,7 +37,9 @@ describe('Relative time filter', () => {
   beforeEach(() => {
     jasmine.clock().mockDate(currentTime);
     angular.mock.module(filtersModule.name);
-    angular.mock.inject((_relativeTimeFilter_) => { relativeTimeFilter = _relativeTimeFilter_; });
+    angular.mock.inject((_relativeTimeFilter_) => {
+      relativeTimeFilter = _relativeTimeFilter_;
+    });
 
     givenTime = new Date(currentTime);
   });

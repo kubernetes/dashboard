@@ -62,7 +62,9 @@ export default class JobCardController {
    * @return {boolean}
    * @export
    */
-  hasWarnings() { return this.job.pods.warnings.length > 0; }
+  hasWarnings() {
+    return this.job.pods.warnings.length > 0;
+  }
 
   /**
    * Returns true if job pods have no warnings and there is at least one pod
@@ -70,13 +72,17 @@ export default class JobCardController {
    * @return {boolean}
    * @export
    */
-  isPending() { return !this.hasWarnings() && this.job.pods.pending > 0; }
+  isPending() {
+    return !this.hasWarnings() && this.job.pods.pending > 0;
+  }
 
   /**
    * @return {boolean}
    * @export
    */
-  isSuccess() { return !this.isPending() && !this.hasWarnings(); }
+  isSuccess() {
+    return !this.isPending() && !this.hasWarnings();
+  }
 }
 
 /**

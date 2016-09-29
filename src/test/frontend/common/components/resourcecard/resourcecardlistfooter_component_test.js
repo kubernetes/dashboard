@@ -32,7 +32,11 @@ describe('Resource card list footer', () => {
       ctrl = $componentController(
           'kdResourceCardListFooter', {
             kdPaginationService: _kdPaginationService_,
-            $transclude: {isSlotFilled: () => { return isSlotFilledResult; }},
+            $transclude: {
+              isSlotFilled: () => {
+                return isSlotFilledResult;
+              },
+            },
           },
           {});
     });

@@ -184,7 +184,9 @@ function createCompileTask(translation) {
  */
 gulp.task('scripts:prod', ['angular-templates', 'extract-translations'], function(doneFn) {
   // add a compilation step to stream for each translation file
-  let streams = conf.translations.map((translation) => { return createCompileTask(translation); });
+  let streams = conf.translations.map((translation) => {
+    return createCompileTask(translation);
+  });
 
   // add a default compilation task (no localization)
   streams = streams.concat(createCompileTask());

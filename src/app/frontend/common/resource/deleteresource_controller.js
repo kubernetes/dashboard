@@ -58,7 +58,9 @@ export class DeleteResourceController {
    *
    * @export
    */
-  cancel() { this.mdDialog_.cancel(); }
+  cancel() {
+    this.mdDialog_.cancel();
+  }
 }
 
 /**

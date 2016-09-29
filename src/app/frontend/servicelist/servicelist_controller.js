@@ -33,5 +33,7 @@ export class ServiceListController {
    * @return {boolean}
    * @export
    */
-  shouldShowZeroState() { return this.serviceList.services.length === 0; }
+  shouldShowZeroState() {
+    return this.serviceList.services.length === 0;
+  }
 }

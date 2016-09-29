@@ -85,7 +85,9 @@ function checkDependencies(packageManager) {
        })
         .then(function(toUpgrade) {
           let dependenciesStr = Object.keys(toUpgrade)
-                                    .map((key) => { return `${key}: ${toUpgrade[key]}\n`; })
+                                    .map((key) => {
+                                      return `${key}: ${toUpgrade[key]}\n`;
+                                    })
                                     .join('');
 
           if (dependenciesStr.length !== 0) {

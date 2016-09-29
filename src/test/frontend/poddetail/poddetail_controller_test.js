@@ -17,7 +17,9 @@ import podDetailModule from 'poddetail/poddetail_module';
 
 describe('Pod detail controller', () => {
 
-  beforeEach(() => { angular.mock.module(podDetailModule.name); });
+  beforeEach(() => {
+    angular.mock.module(podDetailModule.name);
+  });
 
   it('should initialize controller', angular.mock.inject(($controller) => {
     let data = {podDetail: {}};

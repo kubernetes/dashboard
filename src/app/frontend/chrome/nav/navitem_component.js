@@ -38,7 +38,9 @@ export class NavItemController {
    * @return {string}
    * @export
    */
-  getHref() { return this.state_.href(this.state); }
+  getHref() {
+    return this.state_.href(this.state);
+  }
 
   /**
    * @return {boolean}

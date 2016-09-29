@@ -55,7 +55,9 @@ export class ResourceCardListController {
    * @param {!angular.JQLite} columnElement
    * @param {number} index
    */
-  sizeBodyColumn(columnElement, index) { this.headerColumns_.sizeBodyColumn(columnElement, index); }
+  sizeBodyColumn(columnElement, index) {
+    this.headerColumns_.sizeBodyColumn(columnElement, index);
+  }
 }
 
 /**
