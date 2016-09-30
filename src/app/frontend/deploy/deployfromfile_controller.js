@@ -125,7 +125,9 @@ export default class DeployFromFileController {
    * @return {boolean}
    * @private
    */
-  hasValidationError_(err) { return err.indexOf('validate=false') > -1; }
+  hasValidationError_(err) {
+    return err.indexOf('validate=false') > -1;
+  }
 
   /**
    * Handles deploy anyway dialog.
@@ -138,7 +140,9 @@ export default class DeployFromFileController {
         this.mdDialog_, this.i18n.MSG_DEPLOY_ANYWAY_DIALOG_TITLE,
         this.i18n.MSG_DEPLOY_ANYWAY_DIALOG_CONTENT, err, this.i18n.MSG_DEPLOY_ANYWAY_DIALOG_OK,
         this.i18n.MSG_DEPLOY_ANYWAY_DIALOG_CANCEL)
-        .then(() => { this.deploy(false); });
+        .then(() => {
+          this.deploy(false);
+        });
   }
 
   /**
