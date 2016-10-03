@@ -566,9 +566,33 @@ backendApi.DeploymentDetail;
  *   typeMeta: !backendApi.TypeMeta,
  *   name: !string,
  *   namespace: !string,
+ *   info: !backendApi.ReleaseInfo,
  * }}
  */
 backendApi.Release;
+
+/**
+ * @typedef {{
+ *   last_deployed: !backendApi.ReleaseLastDeployedInfo,
+ *   status: !backendApi.ReleaseStatusInfo,
+ * }}
+ */
+backendApi.ReleaseInfo;
+
+/**
+ * @typedef {{
+ *   seconds: !number,
+ * }}
+ */
+backendApi.ReleaseLastDeployedInfo;
+
+/**
+ * @typedef {{
+ *   code: !string,
+ * }}
+ */
+backendApi.ReleaseStatusInfo;
+
 
 /**
  * @typedef {{
