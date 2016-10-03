@@ -82,7 +82,7 @@ export default class DeployFromChartController {
      * List of available repository.
      * @export {!Array<string>}
      */
-    this.repos = ["None", "kubernetes-charts", "ammeon-charts"];
+    this.repos = ["None", "kubernetes-charts", "ammeon-charts", "aia-charts"];
 
     /**
      * List of available charts.
@@ -212,6 +212,34 @@ export default class DeployFromChartController {
                 "name": "PostgresSQL",
                 "fullName": "aia-repo/aia-timezone-converter4-1.0.1.tgz",
                 "description": "An postgresql sample database app",
+                "selected": "",
+               },
+              ];
+    }
+    if (repoName == "aia-charts") {
+      this.charts = [
+               {"icon": "https://sematext.com/img/integrations-icons/zookeeper.png",
+                "name": "aia-platform-zookeeper",
+                "fullName": "aia-repo/aia-timezone-converter4-1.0.1.tgz",
+                "description": "AIA platform - zookeeper distributed configuraiton service.",
+                "selected": "",
+               },
+               {"icon": "http://kafka.apache.org/images/kafka_logo.png",
+                "name": "aia-platform-kafka",
+                "fullName": "aia-repo/aia-timezone-converter4-1.0.1.tgz",
+                "description": "AIA platform - Kafka, Schema Registry, REST and Manager.",
+                "selected": "",
+               },
+               {"icon": "http://remoters.net/wp-content/uploads/2016/05/timezone-logo-1.png",
+                "name": "aia-event-generator",
+                "fullName": "aia-repo/aia-timezone-converter4-1.0.1.tgz",
+                "description": "AIA - example time event generator.",
+                "selected": "",
+               },
+               {"icon": "https://lh5.ggpht.com/Dq-k1bhBmb13rmBtX_rmifu9xl60UDRYYHDA8JRXhVkd1Ga4vjOrq1xRBR6buYjyunXU=w300",
+                "name": "aia-timezone-converter",
+                "fullName": "aia-repo/aia-timezone-converter4-1.0.1.tgz",
+                "description": "AIA - example timezone converter app.",
                 "selected": "",
                },
               ];

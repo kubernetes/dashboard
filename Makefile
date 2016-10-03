@@ -3,7 +3,7 @@
 # docker container image tags
 docker_group := ammeon
 docker_image := kubernetes-helm-dashboard-amd64
-docker_ver   := 0.0.6
+docker_ver   := 0.0.8
 docker_tag   := $(docker_group)/$(docker_image):$(docker_ver)
 canary_tag   := gcr.io/google_containers/kubernetes-dashboard-amd64:canary
 
