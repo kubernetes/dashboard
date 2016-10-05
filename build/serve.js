@@ -108,7 +108,6 @@ function serveDevelopmentMode() {
   browserSyncInit(
       [
         conf.paths.serve,
-        // conf.paths.frontendSrc,  // For angular templates to work.
         conf.paths.app,  // For assets to work.
       ],
       true);
