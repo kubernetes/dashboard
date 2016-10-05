@@ -63,15 +63,6 @@ function i18n(rcDetail) {
     /** @export {string} @desc Subtitle 'Details' for the left section with general information
         about a replication controller on the replication controller details page.*/
     MSG_RC_DETAIL_DETAILS_SUBTITLE: goog.getMsg('Details'),
-    /** @export {string} @desc Label 'Namespace' for the replication controller namespace on the
-        replication controller details page.*/
-    MSG_RC_DETAIL_NAMESPACE_LABEL: goog.getMsg('Namespace'),
-    /** @export {string} @desc Label 'Name' for the replication controller name on the replication
-        controller details page.*/
-    MSG_RC_DETAIL_NAME_LABEL: goog.getMsg('Name'),
-    /** @export {string} @desc Label 'Label selector' for the replication controller's labels list
-        on the replication controller details page.*/
-    MSG_RC_DETAIL_LABELS_LABEL: goog.getMsg('Labels'),
     /** @export {string} @desc Label 'Label selector' for the replication controller's selector on
         the replication controller details page.*/
     MSG_RC_DETAIL_LABEL_SELECTOR_LABEL: goog.getMsg('Label selector'),

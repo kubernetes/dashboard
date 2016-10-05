@@ -52,16 +52,10 @@ export const persistentVolumeClaimInfoComponent = {
 const i18n = {
   /** @export {string} @desc Persistent volume claim info details section name. */
   MSG_PERSISTENT_VOLUME_CLAIM_INFO_DETAILS_SECTION: goog.getMsg('Details'),
-  /** @export {string} @desc Persistent volume claim info details section name entry. */
-  MSG_PERSISTENT_VOLUME_CLAIM_INFO_NAME_ENTRY: goog.getMsg('Name'),
-  /** @export {string} @desc Persistent volume claim info details section namespace entry. */
-  MSG_PERSISTENT_VOLUME_CLAIM_INFO_NAMESPACE_ENTRY: goog.getMsg('Namespace'),
   /** @export {string} @desc Persistent volume claim info details section status entry. */
   MSG_PERSISTENT_VOLUME_CLAIM_INFO_STATUS_ENTRY: goog.getMsg('Status'),
   /** @export {string} @desc Persistent volume claim info details section volume entry. */
   MSG_PERSISTENT_VOLUME_CLAIM_INFO_VOLUME_ENTRY: goog.getMsg('Volume'),
-  /** @export {string} @desc Persistent volume claim info details section labels entry. */
-  MSG_PERSISTENT_VOLUME_CLAIM_INFO_LABELS_ENTRY: goog.getMsg('Labels'),
   /** @export {string} @desc Persistent volume claim info details section capacity entry. */
   MSG_PERSISTENT_VOLUME_CLAIM_INFO_CAPACITY_ENTRY: goog.getMsg('Capacity'),
   /** @export {string} @desc Persistent volume claim info details section access modes entry. */

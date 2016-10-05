@@ -16,25 +16,8 @@ limitations under the License.
 
 <kd-info-card>
   <kd-info-card-section name="{{::$ctrl.i18n.MSG_POD_DETAIL_DETAILS_SUBTITLE}}">
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_POD_DETAIL_NAME_LABEL}}">
-      <kd-middle-ellipsis
-              display-string="{{::$ctrl.pod.objectMeta.name}}">
-      </kd-middle-ellipsis>
-    </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_POD_DETAIL_NAMESPACE_LABEL}}">
-      {{::$ctrl.pod.objectMeta.namespace}}
-    </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_POD_DETAIL_START_TIME_LABEL}}">
-      {{::$ctrl.pod.objectMeta.creationTimestamp | date:'d/M/yy HH:mm':'UTC'}}
-    </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_POD_DETAIL_LABELS_LABEL}}">
-      <div ng-if="::$ctrl.pod.objectMeta.labels">
-        <kd-labels labels="::$ctrl.pod.objectMeta.labels"></kd-labels>
-      </div>
-      <div ng-hide="::$ctrl.pod.objectMeta.labels">
-        none
-      </div>
-    </kd-info-card-entry>
+    <kd-object-meta-info-card object-meta="::$ctrl.pod.objectMeta">
+    </kd-object-meta-info-card>
     <kd-info-card-entry title="{{::$ctrl.i18n.MSG_POD_DETAIL_STATUS_LABEL}}">
       {{::$ctrl.pod.podPhase}}
     </kd-info-card-entry>

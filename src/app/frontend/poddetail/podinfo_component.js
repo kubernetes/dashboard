@@ -77,20 +77,6 @@ const i18n = {
   /** @export {string} @desc Subtitle 'Details' at the top of the resource details column at the
      pod detail view.*/
   MSG_POD_DETAIL_DETAILS_SUBTITLE: goog.getMsg('Pod'),
-  /** @export {string} @desc Label 'Name' for the pod name in details part (left) of the pod
-     details view.*/
-  MSG_POD_DETAIL_NAME_LABEL: goog.getMsg('Name'),
-  /** @export {string} @desc Label 'Namespace' for the pod namespace in details part (left) of the
-     pod
-     details view.*/
-  MSG_POD_DETAIL_NAMESPACE_LABEL: goog.getMsg('Namespace'),
-  /** @export {string} @desc Label 'Start time' for the pod start time in details part (left) of the
-     pod
-     details view.*/
-  MSG_POD_DETAIL_START_TIME_LABEL: goog.getMsg('Start time'),
-  /** @export {string} @desc Label 'Labels' for the pod labels in details part (left) of the pod
-     details view.*/
-  MSG_POD_DETAIL_LABELS_LABEL: goog.getMsg('Labels'),
   /** @export {string} @desc Label 'Status' for the pod status in details part (left) of the pod
      details view.*/
   MSG_POD_DETAIL_STATUS_LABEL: goog.getMsg('Status'),
