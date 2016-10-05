@@ -70,6 +70,9 @@ func TestGetReplicaSetDetail(t *testing.T) {
 					Pods:              []pod.Pod{},
 					CumulativeMetrics: make([]metric.Metric, 0),
 				},
+				Selector: &unversioned.LabelSelector{
+					MatchLabels: map[string]string{},
+				},
 				ServiceList: service.ServiceList{Services: []service.Service{}},
 				EventList:   common.EventList{Events: []common.Event{}},
 			},

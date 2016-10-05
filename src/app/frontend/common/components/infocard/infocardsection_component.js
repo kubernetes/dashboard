@@ -19,9 +19,7 @@
  */
 export const infoCardSectionComponent = {
   templateUrl: 'common/components/infocard/infocardsection.html',
-  transclude: /** @type {undefined} TODO(bryk): Remove this when externs are fixed */ ({
-    'entry': 'kdInfoCardEntry',
-  }),
+  transclude: true,
   bindings: {
     /** {string|undefined} */
     'name': '@',

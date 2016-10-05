@@ -42,10 +42,4 @@ export const secretInfoComponent = {
 const i18n = {
   /** @export {string} @desc Config map info details section name. */
   MSG_SECRET_INFO_DETAILS_SECTION: goog.getMsg('Details'),
-  /** @export {string} @desc Config map info details section name entry. */
-  MSG_SECRET_INFO_NAME_ENTRY: goog.getMsg('Name'),
-  /** @export {string} @desc Config map info details section namespace entry. */
-  MSG_SECRET_INFO_NAMESPACE_ENTRY: goog.getMsg('Namespace'),
-  /** @export {string} @desc Config map info details section labels entry. */
-  MSG_SECRET_INFO_LABELS_ENTRY: goog.getMsg('Labels'),
 };
