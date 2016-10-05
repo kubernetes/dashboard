@@ -205,6 +205,7 @@ export default {
     materialIcons: path.join(basePath, 'bower_components/material-design-icons/iconfont'),
     nodeModules: path.join(basePath, 'node_modules'),
     partials: path.join(basePath, '.tmp/partials'),
+    messagesForExtraction: path.join(basePath, '.tmp/messages_for_extraction'),
     prodTmp: path.join(basePath, '.tmp/prod'),
     protractorConf: path.join(basePath, 'build/protractor.conf.js'),
     robotoFonts: path.join(basePath, 'bower_components/roboto-fontface/fonts'),
