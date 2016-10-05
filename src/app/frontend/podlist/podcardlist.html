@@ -73,7 +73,7 @@ limitations under the License.
           </kd-middle-ellipsis>
         </div>
       </kd-resource-card-column>
-      <kd-resource-card-column>{{::pod.podPhase}}</kd-resource-card-column>
+      <kd-resource-card-column>{{::pod.displayStatus}}</kd-resource-card-column>
       <kd-resource-card-column>{{::pod.restartCount}}</kd-resource-card-column>
       <kd-resource-card-column>
         <div ng-if="::pod.objectMeta.creationTimestamp">

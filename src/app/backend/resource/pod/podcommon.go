@@ -15,6 +15,8 @@
 package pod
 
 import (
+	"fmt"
+
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
@@ -30,14 +32,77 @@ func getRestartCount(pod api.Pod) int32 {
 	return restartCount
 }
 
+// getDisplayPods gets the status of the pod for display in a compact view like a list view. Logic is copied from kubectl ResourcePrinter implementation.
+func getDisplayStatus(pod api.Pod) string {
+	restarts := 0
+	reason := string(pod.Status.Phase)
+	if pod.Status.Reason != "" {
+		reason = pod.Status.Reason
+	}
+
+	initializing := false
+	for i := range pod.Status.InitContainerStatuses {
+		container := pod.Status.InitContainerStatuses[i]
+		restarts += int(container.RestartCount)
+		switch {
+		case container.State.Terminated != nil && container.State.Terminated.ExitCode == 0:
+			continue
+		case container.State.Terminated != nil:
+			// initialization is failed
+			if len(container.State.Terminated.Reason) == 0 {
+				if container.State.Terminated.Signal != 0 {
+					reason = fmt.Sprintf("Init:Signal:%d", container.State.Terminated.Signal)
+				} else {
+					reason = fmt.Sprintf("Init:ExitCode:%d", container.State.Terminated.ExitCode)
+				}
+			} else {
+				reason = "Init:" + container.State.Terminated.Reason
+			}
+			initializing = true
+		case container.State.Waiting != nil && len(container.State.Waiting.Reason) > 0 && container.State.Waiting.Reason != "PodInitializing":
+			reason = "Init:" + container.State.Waiting.Reason
+			initializing = true
+		default:
+			reason = fmt.Sprintf("Init:%d/%d", i, len(pod.Spec.InitContainers))
+			initializing = true
+		}
+		break
+	}
+	if !initializing {
+		restarts = 0
+		for i := len(pod.Status.ContainerStatuses) - 1; i >= 0; i-- {
+			container := pod.Status.ContainerStatuses[i]
+
+			restarts += int(container.RestartCount)
+			if container.State.Waiting != nil && container.State.Waiting.Reason != "" {
+				reason = container.State.Waiting.Reason
+			} else if container.State.Terminated != nil && container.State.Terminated.Reason != "" {
+				reason = container.State.Terminated.Reason
+			} else if container.State.Terminated != nil && container.State.Terminated.Reason == "" {
+				if container.State.Terminated.Signal != 0 {
+					reason = fmt.Sprintf("Signal:%d", container.State.Terminated.Signal)
+				} else {
+					reason = fmt.Sprintf("ExitCode:%d", container.State.Terminated.ExitCode)
+				}
+			}
+		}
+	}
+	if pod.DeletionTimestamp != nil {
+		reason = "Terminating"
+	}
+
+	return reason
+}
+
 // ToPod transforms Kubernetes pod object into object returned by API.
 func ToPod(pod *api.Pod, metrics *common.MetricsByPod) Pod {
 	podDetail := Pod{
-		ObjectMeta:   common.NewObjectMeta(pod.ObjectMeta),
-		TypeMeta:     common.NewTypeMeta(common.ResourceKindPod),
-		PodPhase:     pod.Status.Phase,
-		PodIP:        pod.Status.PodIP,
-		RestartCount: getRestartCount(*pod),
+		ObjectMeta:    common.NewObjectMeta(pod.ObjectMeta),
+		TypeMeta:      common.NewTypeMeta(common.ResourceKindPod),
+		PodPhase:      pod.Status.Phase,
+		PodIP:         pod.Status.PodIP,
+		RestartCount:  getRestartCount(*pod),
+		DisplayStatus: getDisplayStatus(*pod),
 	}
 
 	if metrics != nil && metrics.MetricsMap[pod.Namespace] != nil {

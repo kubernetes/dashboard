@@ -53,6 +53,9 @@ type Pod struct {
 
 	// Pod metrics.
 	Metrics *common.PodMetrics `json:"metrics"`
+
+	// Compact status for display.
+	DisplayStatus string `json:"displayStatus"`
 }
 
 // GetPodList returns a list of all Pods in the cluster.
