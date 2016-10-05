@@ -16,14 +16,8 @@ limitations under the License.
 
 <kd-info-card>
     <kd-info-card-section name="{{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_INFO_DETAILS_SECTION}}">
-        <kd-info-card-entry title="{{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_INFO_NAME_ENTRY}}">
-            <kd-middle-ellipsis
-                    display-string="{{::$ctrl.persistentVolume.objectMeta.name}}">
-            </kd-middle-ellipsis>
-        </kd-info-card-entry>
-        <kd-info-card-entry title="{{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_INFO_LABELS_ENTRY}}">
-            <kd-labels labels="::$ctrl.persistentVolume.objectMeta.labels"></kd-labels>
-        </kd-info-card-entry>
+        <kd-object-meta-info-card object-meta="::$ctrl.petSet.objectMeta">
+        </kd-object-meta-info-card>
         <kd-info-card-entry title="{{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_INFO_STATUS_ENTRY}}">
             <kd-middle-ellipsis
                     display-string="{{::$ctrl.persistentVolume.status}}">

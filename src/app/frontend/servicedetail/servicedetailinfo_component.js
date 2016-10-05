@@ -18,6 +18,9 @@
  */
 class ServiceInfoController {
   constructor() {
+    /** @export {!backendApi.ServiceDetail} Initialized from a binding. */
+    this.service;
+
     /** @export */
     this.i18n = i18n;
   }
@@ -43,18 +46,9 @@ const i18n = {
   /** @export {string} @desc Subtitle 'Details' at the top of the resource details column at the
      service detail view. */
   MSG_SERVICE_DETAIL_DETAILS_SUBTITLE: goog.getMsg('Details'),
-  /** @export {string} @desc Label 'Name' for the service name in details part (left) of the service
-     details view. */
-  MSG_SERVICE_DETAIL_NAME_LABEL: goog.getMsg('Name'),
-  /** @export {string} @desc Label 'Namespace' for the service namespace in the details part (left)
-     of the service details view. */
-  MSG_SERVICE_DETAIL_NAMESPACE_LABEL: goog.getMsg('Namespace'),
   /** @export {string} @desc Label 'Label selector' for the service's label selector in the details
      part (left) of the service details view. */
   MSG_SERVICE_DETAIL_LABEL_SELECTOR_LABEL: goog.getMsg('Label selector'),
-  /** @export {string} @desc Label 'Labels' for the service labels in the details part (left) of the
-     service details view. */
-  MSG_SERVICE_DETAIL_LABELS_LABEL: goog.getMsg('Labels'),
   /** @export {string} @desc Label 'Type' for the service type in the details part (left) of the
      service details view. */
   MSG_SERVICE_DETAIL_TYPE_LABEL: goog.getMsg('Type'),

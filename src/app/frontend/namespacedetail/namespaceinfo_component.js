@@ -17,36 +17,17 @@
  */
 export default class NamespaceInfoController {
   /**
-   * Constructs namespace info object.
-   * @param {!angular.$interpolate} $interpolate
    * @ngInject
    */
-  constructor($interpolate) {
+  constructor() {
     /**
      * Namespace details. Initialized from the scope.
      * @export {!backendApi.NamespaceDetail}
      */
     this.namespace;
 
-    /** @private */
-    this.interpolate_ = $interpolate;
-
     /** @export */
     this.i18n = i18n;
-  }
-
-  /**
-   * @export
-   * @param  {string} creationDate - creation date of the namespace
-   * @return {string} localized tooltip with the formated creation date
-   */
-  getCreatedAtTooltip(creationDate) {
-    let filter = this.interpolate_(`{{date | date:'short'}}`);
-    /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
-     * namespace. */
-    let MSG_NAMESPACE_DETAIL_CREATED_AT_TOOLTIP =
-        goog.getMsg('Created at {$creationDate}', {'creationDate': filter({'date': creationDate})});
-    return MSG_NAMESPACE_DETAIL_CREATED_AT_TOOLTIP;
   }
 }
 
@@ -68,13 +49,6 @@ const i18n = {
   /** @export {string} @desc Subtitle 'Details' for the left section with general information
         about a namespace on the namespace details page.*/
   MSG_NAMESPACE_DETAIL_DETAILS_SUBTITLE: goog.getMsg('Details'),
-  /** @export {string} @desc Label 'Age' for the namespace namespace on the namespace details page.*/
-  MSG_NAMESPACE_DETAIL_AGE_LABEL: goog.getMsg('Age'),
   /** @export {string} @desc Label 'Status' for the namespace namespace on the namespace details page.*/
   MSG_NAMESPACE_DETAIL_STATUS_LABEL: goog.getMsg('Status'),
-  /** @export {string} @desc Label 'Name' for the namespace name on the namespace details page.*/
-  MSG_NAMESPACE_DETAIL_NAME_LABEL: goog.getMsg('Name'),
-  /** @export {string} @desc Label 'Label selector' for the namespace's labels list on the namespace
-        details page.*/
-  MSG_NAMESPACE_DETAIL_LABELS_LABEL: goog.getMsg('Labels'),
 };

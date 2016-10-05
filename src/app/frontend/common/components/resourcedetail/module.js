@@ -12,25 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import namespaceDetailModule from 'namespacedetail/namespacedetail_module';
+import {infoCardComponent} from './infocard_component';
 
-describe('Namespace Info controller', () => {
-  /** @type {!NamespaceInfoController} */
-  let ctrl;
-
-  beforeEach(() => {
-    angular.mock.module(namespaceDetailModule.name);
-
-    angular.mock.inject(($componentController, $rootScope) => {
-      ctrl = $componentController('kdNamespaceInfo', {$scope: $rootScope}, {
-        namespace: {
-          phase: 'Active',
-        },
-      });
-    });
-  });
-
-  it('should instantiate the controller properly', () => {
-    expect(ctrl).not.toBeUndefined();
-  });
-});
+/**
+ * Module containing common components resource detail pages.
+ */
+export default angular
+    .module(
+        'kubernetesDashboard.common.components.resourcedetail',
+        [
+          'ngMaterial',
+        ])
+    .component('kdObjectMetaInfoCard', infoCardComponent);

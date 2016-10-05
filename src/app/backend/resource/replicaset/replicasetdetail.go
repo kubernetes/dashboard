@@ -17,6 +17,7 @@ package replicaset
 import (
 	"log"
 
+	"k8s.io/kubernetes/pkg/api/unversioned"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
@@ -47,6 +48,9 @@ type ReplicaSetDetail struct {
 
 	// List of events related to this Replica Set.
 	EventList common.EventList `json:"eventList"`
+
+	// Selector of this replica set.
+	Selector *unversioned.LabelSelector `json:"selector"`
 }
 
 // GetReplicaSetDetail gets replica set details.
