@@ -23,8 +23,16 @@ export class ZeroStateController {
    * @ngInject
    */
   constructor($state) {
-    /** @export */
-    this.i18n = i18n($state);
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
+  }
+
+  /**
+   * @return {string}
+   * @export
+   */
+  getStateHref() {
+    return this.state_.href(deployAppStateName);
   }
 }
 
@@ -36,24 +44,3 @@ export const zeroStateComponent = {
   transclude: true,
   controller: ZeroStateController,
 };
-
-/**
- * @param {!ui.router.$state} $state
- */
-let i18n = ($state) => ({
-  /** @export {string} @desc Title text which appears on zero state view. */
-  MSG_ZERO_STATE_TITLE: goog.getMsg('There is nothing to display here'),
-  /** @export {string} @desc Text which appears on zero state view under the title. It provides
-   *  to deploy view or offers user to take the Dashboard Tour. */
-  MSG_ZERO_STATE_TEXT: goog.getMsg(
-      'You can {$createNewLink}deploy a containerized app{$createNewCloseLink},' +
-          ' select other namespace or {$openLink}take the Dashboard Tour {$linkIcon}{$closeLink}' +
-          ' to learn more',
-      {
-        'createNewLink': `<a href="${$state.href(deployAppStateName)}">`,
-        'createNewCloseLink': `</a>`,
-        'openLink': `<a href="http://kubernetes.io/docs/user-guide/ui/" target="_blank">`,
-        'linkIcon': `<i class="material-icons kd-zerostate-icon">open_in_new</i>`,
-        'closeLink': `</a>`,
-      }),
-});

@@ -44,9 +44,6 @@ export class PodCardListController {
 
     /** @private {!./../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
-
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -174,39 +171,4 @@ export const podCardListComponent = {
     /** {boolean} */
     'withStatuses': '<',
   },
-};
-
-const i18n = {
-  /** @export {string} @desc tooltip for failed pod card icon */
-  MSG_POD_IS_FAILED_TOOLTIP: goog.getMsg('This pod has errors.'),
-  /** @export {string} @desc tooltip for pending pod card icon */
-  MSG_POD_IS_PENDING_TOOLTIP: goog.getMsg('This pod is in a pending state.'),
-  /** @export {string} @desc Label 'Name' which appears as a column label in the table of
-   pods (pod list view). */
-  MSG_POD_LIST_NAME_LABEL: goog.getMsg('Name'),
-  /** @export {string} @desc Label 'Namespace' which appears as a column label in the
-   table of pods (pod list view). */
-  MSG_POD_LIST_NAMESPACE_LABEL: goog.getMsg('Namespace'),
-  /** @export {string} @desc Label 'Status' which appears as a column label in the table of
-   pods (pod list view). */
-  MSG_POD_LIST_STATUS_LABEL: goog.getMsg('Status'),
-  /** @export {string} @desc Label 'Restarts' which appears as a column label in the
-   table of pods (pod list view). */
-  MSG_POD_LIST_RESTARTS_LABEL: goog.getMsg('Restarts'),
-  /** @export {string} @desc Label 'Age' which appears as a column label in the
-   table of pods (pod list view). */
-  MSG_POD_LIST_AGE_LABEL: goog.getMsg('Age'),
-  /** @export {string} @desc Label 'Cluster IP' which appears as a column label in the table of
-   pods (pod list view). */
-  MSG_POD_LIST_CLUSTER_IP_LABEL: goog.getMsg('Cluster IP'),
-  /** @export {string} @desc Label which appears as a column label in the table of pods */
-  MSG_POD_LIST_CPU_USAGE_LABEL: goog.getMsg('CPU (cores)'),
-  /** @export {string} @desc Label which appears as a column label in the table of pods */
-  MSG_POD_LIST_MEMORY_USAGE_LABEL: goog.getMsg('Memory (bytes)'),
-  /** @export {string} @desc Label 'Logs' for the pod's logs which appears as a column label in the
-   table of pods (pod list view). */
-  MSG_POD_LIST_LOGS_LABEL: goog.getMsg('Logs'),
-  /** @export {string} @desc Title 'Pod' which is used as a title for the delete/update
-   dialogs (that can be opened from the pod list view.) */
-  MSG_POD_LIST_POD_TITLE: goog.getMsg('Pod'),
 };

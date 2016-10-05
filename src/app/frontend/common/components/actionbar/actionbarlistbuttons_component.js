@@ -25,9 +25,6 @@ export class ActionBarController {
   constructor($state) {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
-
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -53,12 +50,4 @@ export class ActionBarController {
 export const actionbarListButtonsComponent = {
   templateUrl: 'common/components/actionbar/actionbarlistbuttons.html',
   controller: ActionBarController,
-};
-
-const i18n = {
-  /** @export {string} @desc Label for deploy app button. */
-  MSG_LIST_ACTION_BAR_DEPLOY_LABEL: goog.getMsg('Deploy app'),
-
-  /** @export {string} @desc Label for upload YAML button. */
-  MSG_LIST_ACTION_BAR_UPLOAD_YAML_LABEL: goog.getMsg('Upload YAML'),
 };
