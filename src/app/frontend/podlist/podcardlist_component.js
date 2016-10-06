@@ -115,28 +115,40 @@ export class PodCardListController {
    * @export
    */
   getDisplayStatus(pod) {
-    let displayStatus = pod.podStatus.podPhase
+    let msgState = "running";
+    let reason = undefined;
     for (var i=pod.podStatus.containerStates.length - 1; i>=0; i--) {
       let state = pod.podStatus.containerStates[i];
 
       if (state.waiting) {
-        displayStatus =
-            goog.getMsg('Waiting: {$reason}', {'reason': state.waiting.reason});
+        msgState = "waiting";
+        reason = state.waiting.reason;
       }
       if (state.terminated) {
-        let reason = state.terminated.reason;
+        msgState = "terminated";
+        reason = state.terminated.reason;
         if (!reason) {
           if (state.terminated.signal) {
             reason = 'Signal:' + state.terminated.signal;
           } else {
             reason = 'ExitCode:' + state.terminated.exitCode;
           }
-        } 
-        displayStatus =
-          goog.getMsg('Terminated: {$reason}', {'reason': reason});
+        }
       }
     }
-    return displayStatus; 
+    
+    /** @type {string} @desc Status message showing a waiting status with [reason].*/
+    let MSG_POD_LIST_POD_WAITING_STATUS = goog.getMsg('Waiting: {$reason}', {'reason': reason});
+    /** @type {string} @desc Status message showing a terminated status with [reason].*/
+    let MSG_POD_LIST_POD_TERMINATED_STATUS = goog.getMsg('Terminated: {$reason}', {'reason': reason});
+
+    if (msgState == "waiting") {
+      return MSG_POD_LIST_POD_WAITING_STATUS;
+    }
+    if (msgState == "terminated") {
+      return MSG_POD_LIST_POD_TERMINATED_STATUS;
+    }
+    return pod.podStatus.podPhase
   }
 
   /**
