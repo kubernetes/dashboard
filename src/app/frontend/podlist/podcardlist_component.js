@@ -109,13 +109,44 @@ export class PodCardListController {
   }
 
   /**
+   * Returns a displayable status message for the pod.
+   * @param {!backendApi.Pod} pod
+   * @return {string}
+   * @export
+   */
+  getDisplayStatus(pod) {
+    let displayStatus = pod.podStatus.podPhase
+    for (var i=pod.podStatus.containerStates.length - 1; i>=0; i--) {
+      let state = pod.podStatus.containerStates[i];
+
+      if (state.waiting) {
+        displayStatus =
+            goog.getMsg('Waiting: {$reason}', {'reason': state.waiting.reason});
+      }
+      if (state.terminated) {
+        let reason = state.terminated.reason;
+        if (!reason) {
+          if (state.terminated.signal) {
+            reason = 'Signal:' + state.terminated.signal;
+          } else {
+            reason = 'ExitCode:' + state.terminated.exitCode;
+          }
+        } 
+        displayStatus =
+          goog.getMsg('Terminated: {$reason}', {'reason': reason});
+      }
+    }
+    return displayStatus; 
+  }
+
+  /**
    * Checks if pod status is successful, i.e. running or succeeded.
    * @param pod
    * @return {boolean}
    * @export
    */
   isStatusSuccessful(pod) {
-    return pod.podPhase === 'Running' || pod.podPhase === 'Succeeded';
+    return pod.podStatus.podPhase === 'Running' || pod.podStatus.podPhase === 'Succeeded';
   }
 
   /**
@@ -125,7 +156,7 @@ export class PodCardListController {
    * @export
    */
   isStatusPending(pod) {
-    return pod.podPhase === 'Pending';
+    return pod.podStatus.podPhase === 'Pending';
   }
 
   /**
@@ -135,7 +166,7 @@ export class PodCardListController {
    * @export
    */
   isStatusFailed(pod) {
-    return pod.podPhase === 'Failed';
+    return pod.podStatus.podPhase === 'Failed';
   }
 
   /**
