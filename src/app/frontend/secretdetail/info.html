@@ -16,16 +16,7 @@ limitations under the License.
 
 <kd-info-card>
   <kd-info-card-section name="{{::$ctrl.i18n.MSG_SECRET_INFO_DETAILS_SECTION}}">
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_SECRET_INFO_NAME_ENTRY}}">
-      <kd-middle-ellipsis
-              display-string="{{::$ctrl.secret.objectMeta.name}}">
-      </kd-middle-ellipsis>
-    </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_SECRET_INFO_NAMESPACE_ENTRY}}">
-      {{::$ctrl.secret.objectMeta.namespace}}
-    </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_SECRET_INFO_LABELS_ENTRY}}">
-      <kd-labels labels="::$ctrl.secret.objectMeta.labels"></kd-labels>
-    </kd-info-card-entry>
+    <kd-object-meta-info-card object-meta="::$ctrl.secret.objectMeta">
+    </kd-object-meta-info-card>
   </kd-info-card-section>
 </kd-info-card>

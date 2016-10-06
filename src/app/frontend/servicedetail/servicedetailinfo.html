@@ -17,25 +17,13 @@ limitations under the License.
 <kd-info-card>
   <kd-info-card-header>{{::$ctrl.i18n.MSG_SERVICE_DETAIL_RESOURCE_DETAILS_TITLE}}</kd-info-card-header>
   <kd-info-card-section name="{{::$ctrl.i18n.MSG_SERVICE_DETAIL_DETAILS_SUBTITLE}}">
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_SERVICE_DETAIL_NAME_LABEL}}">
-      <kd-middle-ellipsis display-string="{{::$ctrl.service.objectMeta.name}}"></kd-middle-ellipsis>
-    </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_SERVICE_DETAIL_NAMESPACE_LABEL}}">
-      {{::$ctrl.service.objectMeta.namespace}}
-    </kd-info-card-entry>
+    <kd-object-meta-info-card object-meta="::$ctrl.service.objectMeta">
+    </kd-object-meta-info-card>
     <kd-info-card-entry title="{{::$ctrl.i18n.MSG_SERVICE_DETAIL_LABEL_SELECTOR_LABEL}}">
       <div ng-if="::$ctrl.service.selector">
         <kd-labels labels="::$ctrl.service.selector"></kd-labels>
       </div>
       <div ng-hide="::$ctrl.service.selector">
-        none
-      </div>
-    </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_SERVICE_DETAIL_LABELS_LABEL}}">
-      <div ng-if="::$ctrl.service.objectMeta.labels">
-        <kd-labels labels="::$ctrl.service.objectMeta.labels"></kd-labels>
-      </div>
-      <div ng-hide="::$ctrl.service.objectMeta.labels">
         none
       </div>
     </kd-info-card-entry>

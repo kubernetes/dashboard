@@ -61,12 +61,6 @@ function i18n(petSet) {
   return {
     /** @export {string} @desc Pet set info details section name. */
     MSG_PET_SET_INFO_DETAILS_SECTION: goog.getMsg('Details'),
-    /** @export {string} @desc Pet set info details section name entry. */
-    MSG_PET_SET_INFO_NAME_ENTRY: goog.getMsg('Name'),
-    /** @export {string} @desc Pet set info details section namespace entry. */
-    MSG_PET_SET_INFO_NAMESPACE_ENTRY: goog.getMsg('Namespace'),
-    /** @export {string} @desc Pet set info details section labels entry. */
-    MSG_PET_SET_INFO_LABELS_ENTRY: goog.getMsg('Labels'),
     /** @export {string} @desc Pet set info details section images entry. */
     MSG_PET_SET_INFO_IMAGES_ENTRY: goog.getMsg('Images'),
     /** @export {string} @desc Pet set info status section name. */

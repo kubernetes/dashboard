@@ -49,10 +49,6 @@ export const persistentVolumeInfoComponent = {
 const i18n = {
   /** @export {string} @desc Persistent volume info details section name. */
   MSG_PERSISTENT_VOLUME_INFO_DETAILS_SECTION: goog.getMsg('Details'),
-  /** @export {string} @desc Persistent volume info details section name entry. */
-  MSG_PERSISTENT_VOLUME_INFO_NAME_ENTRY: goog.getMsg('Name'),
-  /** @export {string} @desc Persistent volume info details section labels entry. */
-  MSG_PERSISTENT_VOLUME_INFO_LABELS_ENTRY: goog.getMsg('Labels'),
   /** @export {string} @desc Persistent volume info details section status entry. */
   MSG_PERSISTENT_VOLUME_INFO_STATUS_ENTRY: goog.getMsg('Status'),
   /** @export {string} @desc Persistent volume info details section claim entry. */

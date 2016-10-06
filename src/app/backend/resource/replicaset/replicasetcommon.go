@@ -81,11 +81,11 @@ func ToReplicaSetDetail(replicaSet *extensions.ReplicaSet, eventList common.Even
 		ObjectMeta:      common.NewObjectMeta(replicaSet.ObjectMeta),
 		TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicaSet),
 		ContainerImages: common.GetContainerImages(&replicaSet.Spec.Template.Spec),
+		Selector:        replicaSet.Spec.Selector,
 		PodInfo:         podInfo,
-		// TODO(floreks): add pagination support
-		PodList:     podList,
-		ServiceList: serviceList,
-		EventList:   eventList,
+		PodList:         podList,
+		ServiceList:     serviceList,
+		EventList:       eventList,
 	}
 }
 
