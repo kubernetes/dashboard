@@ -71,11 +71,11 @@ gulp.task('extract-translations', ['scripts', 'angular-templates'], function() {
 //   both [[ message | desription ]] and [[ message ]] work.
 // * Second is non-capturing and optional. It has a capturing group inside. This is to
 //   extract description that is optional.
-const I18N_REGEX = /\[\[([^|]*?)(?:\|(.*?))?\]\]/mg;
+const I18N_REGEX = /\[\[([^|]*?)(?:\|(.*?))?\]\]/g;
 
 export function processI18nMessages(file, minifiedHtml) {
-  let pureHtmlContent = minifiedHtml;
   let content = jsesc(minifiedHtml);
+  let pureHtmlContent = `${content}`;
   let filePath = path.relative(file.base, file.path);
   let messageVarPrefix = filePath.toUpperCase().split('/').join('_').replace('.HTML', '');
 
@@ -123,7 +123,9 @@ export function processI18nMessages(file, minifiedHtml) {
   });
 
   file.messages = messageVariables.join('\n');
-  file.pureHtmlContent = pureHtmlContent;
+  // Eval pure HTML content, because it has been jsescaped previously. This is safe to eval since
+  // it was escaped by jsecs previously.
+  file.pureHtmlContent = eval(`'${pureHtmlContent}'`);
   file.moduleContent = `` +
       `import module from 'index_module';\n\n${file.messages}\n` +
       `module.run(['$templateCache', ($templateCache) => {\n` +
