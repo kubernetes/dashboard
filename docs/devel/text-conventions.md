@@ -7,54 +7,55 @@ Kubernetes Dashboard is a web-based user interface for Kubernetes clusters. It c
 
 ![Dashboard dialog](../dashboard-ui.png)
 
-As you noticed there is a lot of different kinds of text messages in each view:
+As you noticed there are a lot of different kinds of text messages in each view:
 
-- titles
-- headers
-- labels
-- values
-- tooltips
-- action button
-- menu and navigation entries
-- all kinds of messages including warnings, errors and help information
+- Titles,
+- Headers,
+- Labels,
+- Values,
+- Tooltips,
+- Action button,
+- Menu and navigation entries,
+- All kinds of messages including warnings, errors and help information.
 
-For each one of them developer has to take following decisions:
+For each one of them a developer has to make the following decisions:
 
 - Grammar - Using a verb in infinitive or gerund form?
 - Punctuation - Using a period or not?
 - Capitalization - Using capitalized words? Capitalize Kubernetes specific names?
 
-In addition all text messages within Dashboard should be capitalized and it should be taken into consideration. For more details check our [localization guidelines](localization.md).
+In addition, with few exceptions, all text messages within the Dashboard should be localized. For more details check our [localization guidelines](localization.md).
 
 ## General terms
 
 ### Grammar
 
-Gerund form should be used everywhere. Exceptions are all kinds of messages including warnings, errors and help information.
+The gerund form should be used everywhere. Exceptions are all kinds of messages including warnings,
+errors and help information.
 
 ### Punctuation
 
-Depending on the type of a text resource, periods should be used at the end of sentences or not. Periods should be used within:
+Certain types of text resources should have punctuation. Periods should be used for
 
-- all kinds of messages including warnings, errors and help information
+- All kinds of messages including warnings, errors and help information.
 
-Periods should be avoided within:
+Periods should be avoided for:
 
-- headers
-- titles
-- labels
-- values
-- tooltips
-- menu and navigation entries
+- Headers,
+- Titles,
+- Labels,
+- Values,
+- Tooltips,
+- Menu and navigation entries.
 
 ### Capitalization
 
-All kinds of the messages should have their first word capitalized. Exceptions are:
+In general, all kinds of messages should have their first word capitalized. Exceptions are:
 
-- names which appear in the middle of a message
-- values and table contents
+- Names which appear in the middle of a message,
+- Values and table contents.
 
-Moreover, Kubernetes specific names should be capitalized everywhere. It includes:
+Moreover, Kubernetes-specific names should be capitalized everywhere. This includes:
 
-- application names - Kubernetes, Kubernetes Dashboard etc.
-- resource names - Pod, Service, Endpoint, Node etc.
+- Application names - Kubernetes, Kubernetes Dashboard etc.
+- Resource names - Pod, Service, Endpoint, Node etc.
