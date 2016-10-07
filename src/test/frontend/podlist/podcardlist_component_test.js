@@ -54,135 +54,86 @@ describe('Pod card list controller', () => {
       },
     })).toBe('#/pod/foo-namespace/foo-pod');
   });
-  
+
   it('should show display status correctly (running container)', () => {
     // Output is expected to be equal to the podPhase.
     expect(ctrl.getDisplayStatus({
-      podStatus: {
-        podPhase: "Test Phase",
-        containerStates: [
-          {
-            running: {}
-          }
-        ]
-      } 
-    })).toBe("Test Phase");
+      podStatus: {podPhase: 'Test Phase', containerStates: [{running: {}}]},
+    })).toBe('Test Phase');
   });
 
   it('should show display status correctly (waiting container)', () => {
     expect(ctrl.getDisplayStatus({
       podStatus: {
-        podPhase: "Test Phase",
-        containerStates: [
-          {
-            waiting: {
-              reason: "Test Reason",
-            }
-          }
-        ]
-      } 
-    })).toBe("Waiting: Test Reason");
+        podPhase: 'Test Phase',
+        containerStates: [{
+          waiting: {
+            reason: 'Test Reason',
+          },
+        }],
+      },
+    })).toBe('Waiting: Test Reason');
   });
 
   it('should show display status correctly (terminated container)', () => {
     expect(ctrl.getDisplayStatus({
       podStatus: {
-        podPhase: "Test Phase",
-        containerStates: [
-          {
-            terminated: {
-              reason: "Test Reason",
-            }
-          }
-        ]
-      } 
-    })).toBe("Terminated: Test Reason");
+        podPhase: 'Test Phase',
+        containerStates: [{
+          terminated: {
+            reason: 'Test Reason',
+          },
+        }],
+      },
+    })).toBe('Terminated: Test Reason');
   });
 
   it('should show display status correctly (multi container)', () => {
     expect(ctrl.getDisplayStatus({
       podStatus: {
-        podPhase: "Test Phase",
+        podPhase: 'Test Phase',
         containerStates: [
-          {
-            running: {}
-          },
+          {running: {}},
           {
             terminated: {
-              reason: "Test Terminated Reason",
-            }
+              reason: 'Test Terminated Reason',
+            },
           },
-          {
-            waiting: {
-              reason: "Test Waiting Reason" 
-            }
-          }
-        ]
-      } 
-    })).toBe("Terminated: Test Terminated Reason");
+          {waiting: {reason: 'Test Waiting Reason'}},
+        ],
+      },
+    })).toBe('Terminated: Test Terminated Reason');
   });
 
   it('should check pod status correctly (succeeded is successful)', () => {
-    expect(ctrl.isStatusSuccessful({
-      name: 'test-pod',
-      podStatus: {
-        podPhase: 'Succeeded'
-      }
-    })).toBeTruthy();
+    expect(ctrl.isStatusSuccessful({name: 'test-pod', podStatus: {podPhase: 'Succeeded'}}))
+        .toBeTruthy();
   });
 
   it('should check pod status correctly (running is successful)', () => {
-    expect(ctrl.isStatusSuccessful({
-      name: 'test-pod',
-      podStatus: {
-        podPhase: 'Running'
-      }
-    })).toBeTruthy();
+    expect(ctrl.isStatusSuccessful({name: 'test-pod', podStatus: {podPhase: 'Running'}}))
+        .toBeTruthy();
   });
 
   it('should check pod status correctly (failed isn\'t successful)', () => {
-    expect(ctrl.isStatusSuccessful({
-      name: 'test-pod',
-      podStatus: {
-        podPhase: 'Failed'
-      }
-    })).toBeFalsy();
+    expect(ctrl.isStatusSuccessful({name: 'test-pod', podStatus: {podPhase: 'Failed'}}))
+        .toBeFalsy();
   });
 
   it('should check pod status correctly (pending is pending)', () => {
-    expect(ctrl.isStatusPending({
-      name: 'test-pod',
-      podStatus: {
-        podPhase: 'Pending'
-      }
-    })).toBeTruthy();
+    expect(ctrl.isStatusPending({name: 'test-pod', podStatus: {podPhase: 'Pending'}})).toBeTruthy();
   });
 
   it('should check pod status correctly (failed isn\'t pending)', () => {
-    expect(ctrl.isStatusPending({
-      name: 'test-pod',
-      podStatus: {
-        podPhase: 'Failed'
-      }
-    })).toBeFalsy();
+    expect(ctrl.isStatusPending({name: 'test-pod', podStatus: {podPhase: 'Failed'}})).toBeFalsy();
   });
 
   it('should check pod status correctly (failed is failed)', () => {
-    expect(ctrl.isStatusFailed({
-      name: 'test-pod',
-      podStatus: {
-        podPhase: 'Failed'
-      }
-    })).toBeTruthy();
+    expect(ctrl.isStatusFailed({name: 'test-pod', podStatus: {podPhase: 'Failed'}})).toBeTruthy();
   });
 
   it('should check pod status correctly (running isn\'t failed)', () => {
-    expect(ctrl.isStatusFailed({
-      name: 'test-pod',
-      podStatus: {
-        podPhase: 'Running'
-      }
-    })).toBeFalsy();
+    expect(ctrl.isStatusFailed({name: 'test-pod', podStatus: {podPhase: 'Running'}})).toBeFalsy();
   });
 
   it('should format the "pod start date" tooltip correctly', () => {
