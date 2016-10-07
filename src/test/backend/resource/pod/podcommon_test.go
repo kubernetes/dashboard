@@ -23,6 +23,56 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 )
 
+// TestToPodContainerStates tests that ToPod returns the correct container states
+func TestToPodContainerStates(t *testing.T) {
+	pod := &api.Pod{
+		Status: api.PodStatus{
+			Phase: api.PodRunning,
+			ContainerStatuses: []api.ContainerStatus{
+				api.ContainerStatus{
+					State: api.ContainerState{
+						Terminated: &api.ContainerStateTerminated{
+							Reason: "Terminated Test Reason",
+						},
+					},
+				},
+				api.ContainerStatus{
+					State: api.ContainerState{
+						Waiting: &api.ContainerStateWaiting{
+							Reason: "Waiting Test Reason",
+						},
+					},
+				},
+			},
+		},
+	}
+
+	expected := Pod{
+		TypeMeta: common.TypeMeta{Kind: common.ResourceKindPod},
+		PodStatus: PodStatus{
+			PodPhase: api.PodRunning,
+			ContainerStates: []api.ContainerState{
+				api.ContainerState{
+					Terminated: &api.ContainerStateTerminated{
+						Reason: "Terminated Test Reason",
+					},
+				},
+				api.ContainerState{
+					Waiting: &api.ContainerStateWaiting{
+						Reason: "Waiting Test Reason",
+					},
+				},
+			},
+		},
+	}
+
+	actual := ToPod(pod, &common.MetricsByPod{})
+
+	if !reflect.DeepEqual(actual, expected) {
+		t.Errorf("ToPod(%#v) == \ngot %#v, \nexpected %#v", pod, actual, expected)
+	}
+}
+
 func TestGetPodDetail(t *testing.T) {
 	cases := []struct {
 		pod      *api.Pod

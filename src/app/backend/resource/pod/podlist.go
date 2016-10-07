@@ -35,6 +35,13 @@ type PodList struct {
 	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
 }
 
+type PodStatus struct {
+	// Status of the Pod. See Kubernetes API for reference.
+	PodPhase api.PodPhase `json:"podPhase"`
+
+	ContainerStates []api.ContainerState `json:"containerStates"`
+}
+
 // Pod is a presentation layer view of Kubernetes Pod resource. This means
 // it is Pod plus additional augumented data we can get from other sources
 // (like services that target it).
@@ -42,8 +49,8 @@ type Pod struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
 	TypeMeta   common.TypeMeta   `json:"typeMeta"`
 
-	// Status of the Pod. See Kubernetes API for reference.
-	PodPhase api.PodPhase `json:"podPhase"`
+	// More info on pod status
+	PodStatus PodStatus `json:"podStatus"`
 
 	// IP address of the Pod.
 	PodIP string `json:"podIP"`

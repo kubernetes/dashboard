@@ -665,4 +665,6 @@
 	<translation id="494424795601874379" key="MSG_WORKLOADS_PODS_LABEL" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Label &quot;Pods&quot;, which appears above the pods list on the workloads page.">Pods</translation>
 	<translation id="1611578389032486450" key="MSG_WORKLOADS_CPU_GRAPH_CARD_TITLE" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Title for graph card displaying CPU metric of one all resources.">CPU usage history</translation>
 	<translation id="2764620581378008580" key="MSG_WORKLOADS_MEMORY_GRAPH_CARD_TITLE" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Title for graph card displaying memory metric of one all resources.">Memory usage history</translation>
+	<translation id="3724043031520273690" key="MSG_POD_LIST_POD_WAITING_STATUS" source="/Users/ianlewis/src/dashboard/.tmp/serve/app-dev.js" desc="Status message showing a waiting status with [reason].">Waiting: <ph name="REASON" /></translation>
+	<translation id="1014088790164786434" key="MSG_POD_LIST_POD_TERMINATED_STATUS" source="/Users/ianlewis/src/dashboard/.tmp/serve/app-dev.js" desc="Status message showing a terminated status with [reason].">Terminated: <ph name="REASON" /></translation>
 </translationbundle>
