@@ -54,6 +54,73 @@ describe('Pod card list controller', () => {
       },
     })).toBe('#/pod/foo-namespace/foo-pod');
   });
+  
+  it('should show display status correctly (running container)', () => {
+    // Output is expected to be equal to the podPhase.
+    expect(ctrl.getDisplayStatus({
+      podStatus: {
+        podPhase: "Test Phase",
+        containerStates: [
+          {
+            running: {}
+          }
+        ]
+      } 
+    })).toBe("Test Phase");
+  });
+
+  it('should show display status correctly (waiting container)', () => {
+    expect(ctrl.getDisplayStatus({
+      podStatus: {
+        podPhase: "Test Phase",
+        containerStates: [
+          {
+            waiting: {
+              reason: "Test Reason",
+            }
+          }
+        ]
+      } 
+    })).toBe("Waiting: Test Reason");
+  });
+
+  it('should show display status correctly (terminated container)', () => {
+    expect(ctrl.getDisplayStatus({
+      podStatus: {
+        podPhase: "Test Phase",
+        containerStates: [
+          {
+            terminated: {
+              reason: "Test Reason",
+            }
+          }
+        ]
+      } 
+    })).toBe("Terminated: Test Reason");
+  });
+
+  it('should show display status correctly (multi container)', () => {
+    expect(ctrl.getDisplayStatus({
+      podStatus: {
+        podPhase: "Test Phase",
+        containerStates: [
+          {
+            running: {}
+          },
+          {
+            terminated: {
+              reason: "Test Terminated Reason",
+            }
+          },
+          {
+            waiting: {
+              reason: "Test Waiting Reason" 
+            }
+          }
+        ]
+      } 
+    })).toBe("Terminated: Test Terminated Reason");
+  });
 
   it('should check pod status correctly (succeeded is successful)', () => {
     expect(ctrl.isStatusSuccessful({
