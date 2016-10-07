@@ -58,49 +58,63 @@ describe('Pod card list controller', () => {
   it('should check pod status correctly (succeeded is successful)', () => {
     expect(ctrl.isStatusSuccessful({
       name: 'test-pod',
-      podPhase: 'Succeeded',
+      podStatus: {
+        podPhase: 'Succeeded'
+      }
     })).toBeTruthy();
   });
 
   it('should check pod status correctly (running is successful)', () => {
     expect(ctrl.isStatusSuccessful({
       name: 'test-pod',
-      podPhase: 'Running',
+      podStatus: {
+        podPhase: 'Running'
+      }
     })).toBeTruthy();
   });
 
   it('should check pod status correctly (failed isn\'t successful)', () => {
     expect(ctrl.isStatusSuccessful({
       name: 'test-pod',
-      podPhase: 'Failed',
+      podStatus: {
+        podPhase: 'Failed'
+      }
     })).toBeFalsy();
   });
 
   it('should check pod status correctly (pending is pending)', () => {
     expect(ctrl.isStatusPending({
       name: 'test-pod',
-      podPhase: 'Pending',
+      podStatus: {
+        podPhase: 'Pending'
+      }
     })).toBeTruthy();
   });
 
   it('should check pod status correctly (failed isn\'t pending)', () => {
     expect(ctrl.isStatusPending({
       name: 'test-pod',
-      podPhase: 'Failed',
+      podStatus: {
+        podPhase: 'Failed'
+      }
     })).toBeFalsy();
   });
 
   it('should check pod status correctly (failed is failed)', () => {
     expect(ctrl.isStatusFailed({
       name: 'test-pod',
-      podPhase: 'Failed',
+      podStatus: {
+        podPhase: 'Failed'
+      }
     })).toBeTruthy();
   });
 
   it('should check pod status correctly (running isn\'t failed)', () => {
     expect(ctrl.isStatusFailed({
       name: 'test-pod',
-      podPhase: 'Running',
+      podStatus: {
+        podPhase: 'Running'
+      }
     })).toBeFalsy();
   });
 
