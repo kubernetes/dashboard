@@ -1009,4 +1009,6 @@
 	<translation id="5229153540672717672" key="MSG_RESOURCE_DETAIL_INFO_CARD_LABELS_LABEL" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Label 'Labels' for a resource.">Labels</translation>
 	<translation id="5837164744700950654" key="MSG_RESOURCE_DETAIL_INFO_CARD_ANNOTATIONS_LABEL" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Label 'annotations' for a resource.">Annotations</translation>
 	<translation id="7410674269510116677" key="MSG_REPLICA_SET_DETAIL_SELECOTR_LABEL" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Label 'selector' for replica sets">Selector</translation>
+	<translation id="3724043031520273690" key="MSG_POD_LIST_POD_WAITING_STATUS" source="/Users/ianlewis/src/dashboard/.tmp/serve/app-dev.js" desc="Status message showing a waiting status with [reason].">待機: <ph name="REASON" /></translation>
+	<translation id="1014088790164786434" key="MSG_POD_LIST_POD_TERMINATED_STATUS" source="/Users/ianlewis/src/dashboard/.tmp/serve/app-dev.js" desc="Status message showing a terminated status with [reason].">終了: <ph name="REASON" /></translation>
 </translationbundle>
