@@ -23,7 +23,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 )
 
-// TestToPodStatusWaiting tests that ToPod returns the correct container states
+// TestToPodContainerStates tests that ToPod returns the correct container states
 func TestToPodContainerStates(t *testing.T) {
 	pod := &api.Pod{
 		Status: api.PodStatus{
