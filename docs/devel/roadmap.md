@@ -17,7 +17,7 @@ P0 items are considered blockers for next (`1.x`) release. All else is tackled o
 |View cluster resources       |~~UI is aware of namespaces/tenants~~|P0|done|
 |View cluster resources       |~~Handle Nodes - list and basic details view~~|P1|done|
 |View cluster resources       |Show events for resources|P1|
-|Monitoring/troubleshooting   |Sparklines/metrics/graphs for Nodes|P1|
+|Monitoring/troubleshooting   |Sparklines/metrics/graphs for Nodes|P1|done|
 |Monitoring/troubleshooting   |Sparklines/metrics/graphs for Containers|P1|
 |Monitoring/troubleshooting   |Sparklines/metrics/graphs for Pods|P1|
 |Monitoring/troubleshooting   |~~Surface errors/warnings for all resources shown~~|P1|done|
