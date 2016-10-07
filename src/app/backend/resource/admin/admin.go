@@ -19,6 +19,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/limitrange"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/node"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
@@ -27,6 +28,8 @@ import (
 
 // Admin structure contains all resource lists grouped into the admin category.
 type Admin struct {
+	LimitRangeList limitrange.LimitRangeList `json:"limitRangeList"`
+
 	NamespaceList namespace.NamespaceList `json:"namespaceList"`
 
 	NodeList node.NodeList `json:"nodeList"`
@@ -39,6 +42,7 @@ func GetAdmin(client *k8sClient.Client) (*Admin, error) {
 
 	log.Printf("Getting admin category")
 	channels := &common.ResourceChannels{
+		LimitRangeList:       common.GetLimitRangeListChannel(client, common.NewNamespaceQuery([]string{}), 1),
 		NamespaceList:        common.GetNamespaceListChannel(client, 1),
 		NodeList:             common.GetNodeListChannel(client, 1),
 		PersistentVolumeList: common.GetPersistentVolumeListChannel(client, 1),
@@ -51,11 +55,18 @@ func GetAdmin(client *k8sClient.Client) (*Admin, error) {
 // channel sources.
 func GetAdminFromChannels(channels *common.ResourceChannels) (*Admin, error) {
 
+	lrChan := make(chan *limitrange.LimitRangeList)
 	nsChan := make(chan *namespace.NamespaceList)
 	nodeChan := make(chan *node.NodeList)
 	pvChan := make(chan *persistentvolume.PersistentVolumeList)
 	numErrs := 3
 	errChan := make(chan error, numErrs)
+
+	go func() {
+		items, err := limitrange.GetLimitRangeListFromChannels(channels, dataselect.DefaultDataSelect)
+		errChan <- err
+		lrChan <- items
+	}()
 
 	go func() {
 		items, err := namespace.GetNamespaceListFromChannels(channels,
@@ -85,6 +96,7 @@ func GetAdminFromChannels(channels *common.ResourceChannels) (*Admin, error) {
 	}
 
 	admin := &Admin{
+		LimitRangeList:       *(<-lrChan),
 		NamespaceList:        *(<-nsChan),
 		NodeList:             *(<-nodeChan),
 		PersistentVolumeList: *(<-pvChan),

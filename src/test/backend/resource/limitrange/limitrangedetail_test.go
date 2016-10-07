@@ -11,9 +11,7 @@ import (
 
 func TestGetLimitResourceDetail(t *testing.T) {
 	testMemory := "6G"
-	testCpu := "500m"
 	testMemoryQuantity, _ := resource.ParseQuantity(testMemory)
-	testCpuQuantity, _ := resource.ParseQuantity(testCpu)
 	cases := []struct {
 		limitRanges *api.LimitRange
 		expected    *LimitRangeDetail
@@ -27,23 +25,18 @@ func TestGetLimitResourceDetail(t *testing.T) {
 							Type: api.LimitTypePod,
 							Max: map[api.ResourceName]resource.Quantity{
 								api.ResourceMemory: testMemoryQuantity,
-								api.ResourceCPU:    testCpuQuantity,
 							},
 							Min: map[api.ResourceName]resource.Quantity{
 								api.ResourceMemory: testMemoryQuantity,
-								api.ResourceCPU:    testCpuQuantity,
 							},
 							Default: map[api.ResourceName]resource.Quantity{
 								api.ResourceMemory: testMemoryQuantity,
-								api.ResourceCPU:    testCpuQuantity,
 							},
 							DefaultRequest: map[api.ResourceName]resource.Quantity{
 								api.ResourceMemory: testMemoryQuantity,
-								api.ResourceCPU:    testCpuQuantity,
 							},
 							MaxLimitRequestRatio: map[api.ResourceName]resource.Quantity{
 								api.ResourceMemory: testMemoryQuantity,
-								api.ResourceCPU:    testCpuQuantity,
 							},
 						},
 					},
@@ -52,22 +45,15 @@ func TestGetLimitResourceDetail(t *testing.T) {
 			&LimitRangeDetail{
 				ObjectMeta: common.ObjectMeta{Name: "foo"},
 				TypeMeta:   common.TypeMeta{Kind: "limitrange"},
-				LimitRanges: limitRanges{
-					api.LimitTypePod: rangeMap{
-						api.ResourceMemory: &limitRange{
-							Min:                  testMemory,
-							Max:                  testMemory,
-							Default:              testMemory,
-							DefaultRequest:       testMemory,
-							MaxLimitRequestRatio: testMemory,
-						},
-						api.ResourceCPU: &limitRange{
-							Min:                  testCpu,
-							Max:                  testCpu,
-							Default:              testCpu,
-							DefaultRequest:       testCpu,
-							MaxLimitRequestRatio: testCpu,
-						},
+				LimitRanges: []LimitRangeItem{
+					LimitRangeItem{
+						ResourceType:         string(api.LimitTypePod),
+						ResourceName:         string(api.ResourceMemory),
+						Max:                  testMemory,
+						Min:                  testMemory,
+						Default:              testMemory,
+						DefaultRequest:       testMemory,
+						MaxLimitRequestRatio: testMemory,
 					},
 				},
 			},

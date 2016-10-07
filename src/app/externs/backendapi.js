@@ -1084,5 +1084,43 @@ backendApi.PersistentVolumeClaim;
  */
 backendApi.PersistentVolumeClaimList;
 
+/**
+ * @typedef {{
+ *   resourceType: string,
+ *   resourceName: string,
+ *   min: string,
+ *   max: string,
+ *   default: string,
+ *   defaultRequest: string,
+ *   maxLimitRequestRatio: string
+ * }}
+ */
+backendApi.LimitRange;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   limitRanges: Array<!backendApi.LimitRange>
+ * }}
+ */
+backendApi.LimitRangeDetail;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ * }}
+ */
+backendApi.LimitRangeListItem;
+
+/**
+ * @typedef {{
+ *   listMeta: !backendApi.ListMeta,
+ *   items: !Array<!backendApi.LimitRangeListItem>
+ * }}
+ */
+backendApi.LimitRangeList;
+
 /** @typedef {{serverTime: number}} */
 const appConfig_DO_NOT_USE_DIRECTLY = {};

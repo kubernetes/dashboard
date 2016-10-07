@@ -30,6 +30,7 @@ import ingressDetailModule from './ingressdetail/module';
 import ingressListModule from './ingresslist/module';
 import jobDetailModule from './jobdetail/jobdetail_module';
 import jobListModule from './joblist/joblist_module';
+import limitRangeListModule from './limitrangelist/limitrangelist_module';
 import logsModule from './logs/logs_module';
 import namespaceDetailModule from './namespacedetail/namespacedetail_module';
 import namespaceListModule from './namespacelist/namespacelist_module';
@@ -93,6 +94,7 @@ export default angular
           ingressDetailModule.name,
           servicesanddiscoveryModule.name,
           configModule.name,
+          limitRangeListModule.name,
         ])
     .config(indexConfig)
     .config(routeConfig);

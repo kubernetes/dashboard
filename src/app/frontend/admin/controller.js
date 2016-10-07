@@ -18,14 +18,19 @@
 export class AdminController {
   /**
    * @param {!backendApi.Admin} admin
+   * @param {!angular.Resource} kdLimitRangeListResource
    * @param {!angular.Resource} kdNamespaceListResource
    * @param {!angular.Resource} kdNodeListResource
    * @param {!angular.Resource} kdPersistentVolumeListResource
    * @ngInject
    */
-  constructor(admin, kdNamespaceListResource, kdNodeListResource, kdPersistentVolumeListResource) {
+  constructor(
+      admin, kdLimitRangeListResource, kdNamespaceListResource, kdNodeListResource,
+      kdPersistentVolumeListResource) {
     /** @export {!backendApi.Admin} */
     this.admin = admin;
+    /** @export {!angular.Resource} */
+    this.kdLimitRangeListResource = kdLimitRangeListResource;
     /** @export {!angular.Resource} */
     this.kdNamespaceListResource = kdNamespaceListResource;
     /** @export {!angular.Resource} */
@@ -51,6 +56,8 @@ export class AdminController {
 }
 
 const i18n = {
+  /** @export {string} @desc Label that appears above the list of resources. */
+  MSG_ADMIN_LIMIT_RANGES_LABEL: goog.getMsg('Limit Ranges'),
   /** @export {string} @desc Label that appears above the list of resources. */
   MSG_ADMIN_NAMESPACES_LABEL: goog.getMsg('Namespaces'),
   /** @export {string} @desc Label that appears above the list of resources. */

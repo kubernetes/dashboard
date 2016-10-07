@@ -44,12 +44,12 @@ func GetLimitRangeList(client *client.Client, nsQuery *common.NamespaceQuery,
 	channels := &common.ResourceChannels{
 		LimitRangeList: common.GetLimitRangeListChannel(client, nsQuery, 1),
 	}
-	return GetLimitRangeListFromChannels(channels, nsQuery, dsQuery)
+	return GetLimitRangeListFromChannels(channels, dsQuery)
 }
 
 // GetLimitRangeListFromChannels returns a list of all Limit Ranges in the cluster
 // reading required resource list once from the channels.
-func GetLimitRangeListFromChannels(channels *common.ResourceChannels, nsQuery *common.NamespaceQuery,
+func GetLimitRangeListFromChannels(channels *common.ResourceChannels,
 	dsQuery *dataselect.DataSelectQuery) (*LimitRangeList, error) {
 
 	limitRanges := <-channels.LimitRangeList.List
