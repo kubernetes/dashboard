@@ -81,3 +81,5 @@ In the HTML code, use one-time bindings like `{{::ctrl.i18n.MSG_EXAMPLE_TEXT}}` 
 * Only `_USER_HELP` and `_TOOLTIP` messages have standard punctuation and end with `.`
 * All of the messages have only their first word capitalized. Exceptions are names which appear in the middle of a message.
 * The human translators are supposed to keep the original capitalization and punctuation if applicable to the specific language.
+
+For more details check our [text conventions](text-conventions.md).

@@ -27,6 +27,7 @@ import infoCardModule from './infocard/infocard_module';
 import labelsDirective from './labels/labels_directive';
 import middleEllipsisDirective from './middleellipsis/middleellipsis_directive';
 import resourceCardModule from './resourcecard/resourcecard_module';
+import resourceDetailModule from './resourcedetail/module';
 import sparklineDirective from './sparkline/sparkline_directive';
 import warnThresholdDirective from './warnthreshold/warnthreshold_directive';
 import zeroStateModule from './zerostate/zerostate_module';
@@ -46,6 +47,7 @@ export default angular
           contentCardModule.name,
           endpointModule.name,
           infoCardModule.name,
+          resourceDetailModule.name,
           resourceCardModule.name,
           zeroStateModule.name,
           paginationModule.name,

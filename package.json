@@ -1,7 +1,7 @@
 {
   "//": "Specification of this file can be found at: https://docs.npmjs.com/files/package.json",
   "name": "kubernetes-dashboard",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/kubernetes/dashboard.git"
@@ -25,7 +25,6 @@
     "file-exists": "2.0.0",
     "google-closure-compiler": "~20160911.0.0",
     "gulp": "~3.9.1",
-    "gulp-angular-templatecache": "~2.0.0",
     "gulp-autoprefixer": "~3.1.0",
     "gulp-browserify": "~0.5.1",
     "gulp-clang-format": "1.0.23",
@@ -39,6 +38,7 @@
     "gulp-if": "~2.0.1",
     "gulp-inject": "~4.1.0",
     "gulp-minify-css": "~1.2.4",
+    "gulp-modify": "~0.1.1",
     "gulp-protractor": "~2.6.0",
     "gulp-rename": "~1.2.2",
     "gulp-replace": "~0.5.4",
@@ -53,6 +53,7 @@
     "gulp-watch": "~4.3.8",
     "html-minifier": "~3.1.0",
     "isparta": "~4.0.0",
+    "jsesc": "~2.2.0",
     "karma": "1.3.0",
     "karma-browserify": "~5.1.0",
     "karma-chrome-launcher": "~2.0.0",
@@ -69,6 +70,7 @@
     "npm-check-updates": "~2.8.0",
     "proxy-middleware": "~0.15.0",
     "q": "~1.4.1",
+    "regexp-clone": "~0.0.1",
     "semver": "~5.3.0",
     "through2": "~2.0.1",
     "uglify-save-license": "~0.4.1",

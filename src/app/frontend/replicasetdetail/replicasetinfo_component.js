@@ -62,18 +62,11 @@ function i18n(replicaSet) {
     /** @export {string} @desc Subtitle 'Details' for the left section with general information
         about a replica set on the replica set details page.*/
     MSG_REPLICA_SET_DETAIL_DETAILS_SUBTITLE: goog.getMsg('Details'),
-    /** @export {string} @desc Label 'Namespace' for the replica set namespace on the
-        replica set details page.*/
-    MSG_REPLICA_SET_DETAIL_NAMESPACE_LABEL: goog.getMsg('Namespace'),
-    /** @export {string} @desc Label 'Name' for the replica set name on the replication
-        controller details page.*/
-    MSG_REPLICA_SET_DETAIL_NAME_LABEL: goog.getMsg('Name'),
-    /** @export {string} @desc Label 'Label selector' for the replica set's labels list
-        on the replica set details page.*/
-    MSG_REPLICA_SET_DETAIL_LABELS_LABEL: goog.getMsg('Labels'),
     /** @export {string} @desc Label 'Images' for the list of images used in a replica
         set, on its details page. */
     MSG_REPLICA_SET_DETAIL_IMAGES_LABEL: goog.getMsg('Images'),
+    /** @export {string} @desc Label 'selector' for replica sets */
+    MSG_REPLICA_SET_DETAIL_SELECOTR_LABEL: goog.getMsg('Selector'),
     /** @export {string} @desc Subtitle 'Status' for the right section with pod status information
         on the replica set details page.*/
     MSG_REPLICA_SET_DETAIL_STATUS_SUBTITLE: goog.getMsg('Status'),

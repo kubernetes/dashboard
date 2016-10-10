@@ -660,9 +660,41 @@ backendApi.DeleteReplicationControllerSpec;
 
 /**
  * @typedef {{
+ *   reason: string
+ * }}
+ */
+backendApi.ContainerStateWaiting;
+
+/**
+ * @typedef {{
+ *   reason: string,
+ *   signal: number,
+ *   exitCode: number
+ * }}
+ */
+backendApi.ContainerStateTerminated;
+
+/**
+ * @typedef {{
+ *   waiting: !backendApi.ContainerStateWaiting,
+ *   terminated: !backendApi.ContainerStateTerminated
+ * }}
+ */
+backendApi.ContainerState;
+
+/**
+ * @typedef {{
+ *   podPhase: string,
+ *   containerStates: !Array<!backendApi.ContainerState>
+ * }}
+ */
+backendApi.PodStatus;
+
+/**
+ * @typedef {{
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
- *   podPhase: string,
+ *   podStatus: !backendApi.PodStatus,
  *   podIP: string,
  *   restartCount: number,
  *   metrics: backendApi.PodMetrics
