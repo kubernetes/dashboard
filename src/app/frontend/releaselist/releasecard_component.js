@@ -74,11 +74,11 @@ export default class ReleaseCardController {
   }
 
   /**
-   * @return {string}
+   * @return {number}
    * @export
    */
   getReleaseRelativeTime() {
-    return String((new Date()).getTime() - this.release.info.last_deployed.seconds);
+    return (new Date()).getTime() - this.release.info.last_deployed.seconds;
   }
 
   /**

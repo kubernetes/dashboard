@@ -566,6 +566,7 @@ backendApi.DeploymentDetail;
  *   typeMeta: !backendApi.TypeMeta,
  *   name: !string,
  *   namespace: !string,
+ *   chart: !backendApi.ReleaseChart,
  *   info: !backendApi.ReleaseInfo,
  * }}
  */
@@ -573,7 +574,23 @@ backendApi.Release;
 
 /**
  * @typedef {{
- *   last_deployed: !backendApi.ReleaseLastDeployedInfo,
+ *   metadata: !backendApi.ReleaseChartMetadata,
+ * }}
+ */
+backendApi.ReleaseChart;
+
+/**
+ * @typedef {{
+ *   name: !string,
+ *   version: !string,
+ * }}
+ */
+backendApi.ReleaseChartMetadata;
+
+/**
+ * @typedef {{
+ *   last_deployed: !backendApi.ReleaseTimeStamp,
+ *   first_deployed: !backendApi.ReleaseTimeStamp,
  *   status: !backendApi.ReleaseStatusInfo,
  * }}
  */
@@ -584,7 +601,7 @@ backendApi.ReleaseInfo;
  *   seconds: !number,
  * }}
  */
-backendApi.ReleaseLastDeployedInfo;
+backendApi.ReleaseTimeStamp;
 
 /**
  * @typedef {{
@@ -606,6 +623,7 @@ backendApi.ReleaseList;
  * @typedef {{
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
+ *   name: !string,
  * }}
  */
 backendApi.ReleaseDetail;

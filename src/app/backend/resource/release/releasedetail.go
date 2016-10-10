@@ -17,29 +17,20 @@ package release
 import (
 	"log"
 
+	"k8s.io/helm/pkg/helm"
 	"k8s.io/helm/pkg/proto/hapi/release"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
-// ReleaseDetail is a presentation layer view of Kubernetes Release resource.
-type ReleaseDetail struct {
-	Name   string `json:"name"`
-	Status string `json:"status"`
-}
-
 // GetReleaseDetail returns model object of release and error, if any.
-func GetReleaseDetail(client client.Interface, namespace string,
-	name string) (*ReleaseDetail, error) {
+func GetReleaseDetail(tiller *helm.Client, namespace string,
+	name string) (*release.Release, error) {
 
 	log.Printf("Getting details of %s release in %s namespace", name, namespace)
-	release := &release.Release{}
 
-	return getReleaseDetail(release), nil
-}
-
-func getReleaseDetail(release *release.Release) *ReleaseDetail {
-	return &ReleaseDetail{
-		Name:   "happy-panda", // TODO: Releases
-		Status: "DEPLOYED",    // TODO: Releases
+	resp, err := tiller.ReleaseContent(name)
+	if err != nil {
+		return nil, err
 	}
+
+	return resp.Release, nil
 }
