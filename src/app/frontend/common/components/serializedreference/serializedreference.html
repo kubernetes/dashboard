@@ -14,4 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<a ng-href="{{referencectrl.href}}">{{referencectrl.kind}} {{referencectrl.name}}</a>
+<a ng-if="referencectrl.valid" ng-href="{{referencectrl.href}}">{{referencectrl.kind}} {{referencectrl.name}}</a>
+<span ng-if="!referencectrl.valid">{{referencectrl.reference}}</span>

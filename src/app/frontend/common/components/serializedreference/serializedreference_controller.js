@@ -43,8 +43,11 @@ export default class SerializedReferenceController {
     /** @export {string} */
     this.reference;
 
-    /** {!ui.router.$state} */
+    /** @private {!ui.router.$state} */
     this.state_ = $state;
+
+    /** @export {boolean} */
+    this.valid = false;
 
     /** @export {string|undefined} */
     this.href;
@@ -58,14 +61,20 @@ export default class SerializedReferenceController {
     $scope.$watch(() => this.reference, () => this.recalculateDerivedProperties());
   }
 
+  /**
+   * Updates the derived properties of the reference bound to this control.
+   * If the reference is invalid will set the valid flag to false.
+   */
   recalculateDerivedProperties() {
     let parsedValue;
     try {
       parsedValue = JSON.parse(this.reference);
     } catch (e) {
+      this.valid = false;
       return;
     }
     if (!parsedValue.kind || parsedValue.kind !== 'SerializedReference') {
+      this.valid = false;
       return;
     }
     let reference = parsedValue.reference;
@@ -74,5 +83,6 @@ export default class SerializedReferenceController {
         new StateParams(reference.namespace, reference.name));
     this.kind = reference.kind;
     this.name = reference.name;
+    this.valid = true;
   }
 }
