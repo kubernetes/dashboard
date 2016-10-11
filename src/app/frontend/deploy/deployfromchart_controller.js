@@ -82,7 +82,13 @@ export default class DeployFromChartController {
      * List of available repository.
      * @export {!Array<string>}
      */
-    this.repos = ["None", "kubernetes-charts", "ammeon-charts", "aia-charts"];
+    this.repos = [];
+
+    /** Init the list of available repos **/
+    this.getRepos();
+
+    /** @export */
+    this.selectedRepo = "";
 
     /**
      * List of available charts.
@@ -101,8 +107,9 @@ export default class DeployFromChartController {
     if (this.form.$valid) {
       /** @type {!backendApi.AppDeploymentFromChartSpec} */
       let deploymentSpec = {
-        chartName: this.selectedChart,
+        chartURL: this.selectedChart,
         releaseName: this.name,
+        namespace: "default",
       };
       let defer = this.q_.defer();
 
@@ -146,11 +153,11 @@ export default class DeployFromChartController {
    * @export
    */
   getRepos() {
-    /** @type {!angular.Resource<!backendApi.RepoList>} */
+    /** @type {!angular.Resource<!backendApi.RepositoryList>} */
     let resource = this.resource_(`api/v1/repository`);
     resource.get(
-        (res) => { this.repos = res.repos.map((e) => e.objectMeta.name); },
-        (err) => { this.log_.log(`Error getting secrets: ${err}`); });
+        (res) => { this.repos = ["None"].concat(res.repoNames); },
+        (err) => { this.log_.log(`Error getting repos: ${err}`); });
   }
 
   /**
@@ -162,8 +169,13 @@ export default class DeployFromChartController {
     /** @type {!angular.Resource<!backendApi.ChartList>} */
     let resource = this.resource_(`api/v1/repository/${repo}`);
     resource.get(
-        (res) => { this.charts = res.charts.map((e) => e.objectMeta.name); },
-        (err) => { this.log_.log(`Error getting secrets: ${err}`); });
+        (res) => { this.charts = res.charts.sort(
+                      function(a, b) {
+                        var nameA = a.name.toUpperCase();
+                        var nameB = b.name.toUpperCase();
+                        return (nameA < nameB) ? -1 : (nameA > nameB) ? 1 : 0;
+                    }); },
+        (err) => { this.log_.log(`Error getting charts: ${err}`); });
   }
 
   /**
@@ -171,83 +183,13 @@ export default class DeployFromChartController {
    * @export
    */
   selectRepo(repoName) {
-    
-    if (repoName == "ammeon-charts") {
-      this.charts = [{"icon": "https://deis.com/assets/images/svg/helm-logo.svg",
-                  "name": "Example App 1",
-                  "version": "Example App 1",
-                  "fullName": "aia-repo/aia-timezone-converter1-1.0.1.tgz",
-                  "description": "Example App with sample app",
-                  "selected": "",
-                 },
-                 {"icon": "https://wiki.postgresql.org/images/3/30/PostgreSQL_logo.3colors.120x120.png",
-                  "name": "PostgresSQL",
-                  "fullName": "aia-repo/aia-timezone-converter2-1.0.1.tgz",
-                  "description": "An postgresql sample database app",
-                 },
-                 {"icon": "http://design.jboss.org/wildfly/logo/final/wildfly_logo_stacked_600px.png",
-                  "name": "Wildfly App 1",
-                  // "fullName": repoName + "/" + "aia-timezone-converter" + "-" + "1.0.1" + ".tgz",
-                  "fullName": "aia-repo" + "/" + "aia-timezone-converter" + "-" + "1.0.1" + ".tgz",
-                  "description": "Example App with Activemq",
-                  "selected": "",
-                 },
-                 {"icon": "https://deis.com/assets/images/svg/helm-logo.svg",
-                  "name": "Wildfly App 2",
-                  "fullName": "aia-repo/aia-timezone-converter3-1.0.1.tgz",
-                  "description": "Example App with Activemq",
-                  "selected": "",
-                 },
-                 {"icon": "https://deis.com/assets/images/svg/helm-logo.svg",
-                  "name": "Wildfly App 3",
-                  "fullName": "aia-repo/aia-timezone-converter4-1.0.1.tgz",
-                  "description": "Example App with Activemq",
-                  "selected": "",
-                 },
-                ];
-    }
-    if (repoName == "kubernetes-charts") {
-      this.charts = [
-               {"icon": "https://wiki.postgresql.org/images/3/30/PostgreSQL_logo.3colors.120x120.png",
-                "name": "PostgresSQL",
-                "fullName": "aia-repo/aia-timezone-converter4-1.0.1.tgz",
-                "description": "An postgresql sample database app",
-                "selected": "",
-               },
-              ];
-    }
-    if (repoName == "aia-charts") {
-      this.charts = [
-               {"icon": "https://sematext.com/img/integrations-icons/zookeeper.png",
-                "name": "aia-platform-zookeeper",
-                "fullName": "aia-repo/aia-timezone-converter4-1.0.1.tgz",
-                "description": "AIA platform - zookeeper distributed configuraiton service.",
-                "selected": "",
-               },
-               {"icon": "http://kafka.apache.org/images/kafka_logo.png",
-                "name": "aia-platform-kafka",
-                "fullName": "aia-repo/aia-timezone-converter4-1.0.1.tgz",
-                "description": "AIA platform - Kafka, Schema Registry, REST and Manager.",
-                "selected": "",
-               },
-               {"icon": "http://remoters.net/wp-content/uploads/2016/05/timezone-logo-1.png",
-                "name": "aia-event-generator",
-                "fullName": "aia-repo/aia-timezone-converter4-1.0.1.tgz",
-                "description": "AIA - example time event generator.",
-                "selected": "",
-               },
-               {"icon": "https://lh5.ggpht.com/Dq-k1bhBmb13rmBtX_rmifu9xl60UDRYYHDA8JRXhVkd1Ga4vjOrq1xRBR6buYjyunXU=w300",
-                "name": "aia-timezone-converter",
-                "fullName": "aia-repo/aia-timezone-converter4-1.0.1.tgz",
-                "description": "AIA - example timezone converter app.",
-                "selected": "",
-               },
-              ];
-    }
     if (repoName == "None") {
       this.charts = [];
+    } else {
+      this.getCharts(repoName)
     }
     this.selectedChart = null;
+    this.selectedRepo = repoName;
   }
 
   /**
@@ -257,7 +199,7 @@ export default class DeployFromChartController {
   selectChart(chartName) {
     for (var i = 0; i < this.charts.length; i++) { 
       this.charts[i]["selected"] = "";
-      if (this.charts[i]["fullName"] == chartName) {
+      if (this.charts[i]["fullURL"] == chartName) {
         this.charts[i]["selected"] = this.selectedClass;  
       }
     }
@@ -274,9 +216,15 @@ const i18n = {
      */
   MSG_DEPLOY_CHART_REPO_USER_HELP: goog.getMsg(`Select a Chart Repository.`),
 
-  /** @export {string} @desc User help for chart selection on the deploy from chart page.
-     */
+  /** @export {string} @desc User help for chart selection on the deploy from chart page. */
   MSG_DEPLOY_CHART_USER_HELP: goog.getMsg(`Select a Chart to deploy.`),
+
+  /** @export {string} @desc Label "Chart URL" label, for the chart to deploy. */
+  MSG_CHART_URL_LABEL: goog.getMsg('Chart URL'),
+
+  /** @export {string} @desc User helm for chart URL to deploy
+      */
+  MSG_DEPLOY_CHART_URL_USER_HELP: goog.getMsg(`Specify the URL of the chart to deploy.`),
 
   /** @export {string} @desc Label "Release Name" label, for the release name on the deploy
    *  from chart page. */

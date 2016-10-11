@@ -87,7 +87,7 @@ backendApi.AppDeploymentSpec;
 
 /**
  * @typedef {{
- *   chartName: string,
+ *   chartURL: string,
  *   releaseName: string
  * }}
  */
@@ -627,6 +627,31 @@ backendApi.ReleaseList;
  * }}
  */
 backendApi.ReleaseDetail;
+
+/**
+ * @typedef {{
+ *   repoNames: !Array<string>,
+ * }}
+ */
+backendApi.RepositoryList;
+
+/**
+ * @typedef {{
+ *   charts: !Array<!backendApi.Chart>,
+ * }}
+ */
+backendApi.ChartList;
+
+/**
+ * @typedef {{
+ *   name: string,
+ *   version: string,
+ *   fullURL: string,
+ *   description: string,
+ *   icon: string,
+ * }}
+ */
+backendApi.Chart;
 
 /**
  * @typedef {{

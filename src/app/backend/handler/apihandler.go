@@ -861,7 +861,7 @@ func (apiHandler *APIHandler) handleGetWorkloads(
 
 	namespace := parseNamespacePathParameter(request)
 	result, err := workload.GetWorkloads(apiHandler.client, apiHandler.heapsterClient,
-		apiHandler.helmClient, namespace, dataSelect.StandardMetrics)
+		apiHandler.helmClient, namespace, dataselect.StandardMetrics)
 	if err != nil {
 		handleInternalError(response, err)
 		return
