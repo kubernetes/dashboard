@@ -54,7 +54,7 @@ type Workloads struct {
 // GetWorkloads returns a list of all workloads in the cluster.
 func GetWorkloads(client *k8sClient.Client, heapsterClient client.HeapsterClient,
 	tiller *helm.Client, nsQuery *common.NamespaceQuery,
-	dsQuery *dataselect.MetricQuery) (*Workloads, error) {
+	metricQuery *dataselect.MetricQuery) (*Workloads, error) {
 
 	log.Printf("Getting lists of all workloads")
 	channels := &common.ResourceChannels{

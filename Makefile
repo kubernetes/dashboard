@@ -3,7 +3,7 @@
 # docker container image tags
 docker_group := ammeon
 docker_image := kubernetes-helm-dashboard-amd64
-docker_ver   := 0.0.8
+docker_ver   := 0.0.11
 docker_tag   := $(docker_group)/$(docker_image):$(docker_ver)
 canary_tag   := gcr.io/google_containers/kubernetes-dashboard-amd64:canary
 
@@ -16,7 +16,6 @@ dk_run      := $(dk) run \
 				-it \
 				--rm \
 				--net=host \
-				-v $(HOME)/.kube:/root/.kube \
 				-v /var/run/docker.sock:/var/run/docker.sock \
 				-v $(dir)/src:/dashboard/src \
 				-v $(dir)/vendor/:/dashboard/vendor/ \
@@ -52,6 +51,6 @@ push-image:
 
 # Serve dashboard locally
 serve:
-	ps aux | grep "kubectl proxy" | grep -v "grep" | cut -d " " -f3 | xargs -r kill -9
+	ps a | grep "kubectl proxy" | grep -v "grep" | cut -d " " -f1 | xargs -r kill -9
 	kubectl proxy --port=8080 &
 	$(dk_run) $(gulp_cmd) serve

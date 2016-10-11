@@ -1,12 +1,11 @@
 package chart
 
 import (
-	"errors"
 	"fmt"
-	"io/ioutil"
 	"os"
+	"path/filepath"
 
-	"gopkg.in/yaml.v2"
+	"k8s.io/helm/cmd/helm/helmpath"
 	"k8s.io/helm/pkg/repo"
 )
 
@@ -28,35 +27,74 @@ type RepositoryListSpec struct {
 // RepositoryListSpec is a specification for a repository.
 type RepositoryChartListSpec struct {
 	// List of charts.
-	Charts []ChartSpec `json:"chartNames"`
+	Charts []ChartSpec `json:"charts"`
 }
 
 // Chartspec representation view of a chart.
 type ChartSpec struct {
 	Name        string `json:"name"`
 	Version     string `json:"version"`
-	FullName    string `json:"fullName"`
+	FullURL     string `json:"fullURL"`
 	Description string `json:"description"`
+	Icon        string `json:"icon"`
 }
 
 // AddRepository adds a repository.
 func AddRepository(spec *RepositorySpec) error {
-	return addRepo("aia-repo", "http://172.19.29.166:8879/charts")
+	helmHome := helmpath.Home(homePath())
+	return addRepository(spec.RepoName, spec.RepoUrl, helmHome)
 }
 
 // GetRepositoryList get a list of repository.
 func GetRepositoryList() (*RepositoryListSpec, error) {
+	helmHome := helmpath.Home(homePath())
+	ensureHome(helmHome)
 	repoList := &RepositoryListSpec{
 		RepoNames: make([]string, 0),
 	}
-	repoList.RepoNames = append(repoList.RepoNames, "k8s-charts")
+	f, err := repo.LoadRepositoriesFile(helmHome.RepositoryFile())
+	if err != nil {
+		return repoList, err
+	}
+	for _, r := range f.Repositories {
+		repoList.RepoNames = append(repoList.RepoNames, r.Name)
+	}
 	return repoList, nil
 }
 
 // GetRepositoryCharts get charts in a repository.
 func GetRepositoryCharts(repoName string) (*RepositoryChartListSpec, error) {
-	chartList := &RepositoryChartListSpec{}
-	// chartList.ChartNames = append(chartList.ChartNames, "chart1")
+	helmHome := helmpath.Home(homePath())
+	chartList := &RepositoryChartListSpec{
+		Charts: make([]ChartSpec, 0),
+	}
+	i, err := repo.LoadIndexFile(helmHome.CacheIndex(repoName))
+	if err != nil {
+		return chartList, err
+	}
+	for _, e := range i.Entries {
+		for _, c := range e {
+			if c == nil {
+				continue
+			}
+			icon := c.Icon
+			if icon == "" {
+				icon = "https://deis.com/assets/images/svg/helm-logo.svg"
+			}
+			desc := c.Description
+			if len(desc) > 45 {
+				desc = desc[0:41] + "..."
+			}
+			chart := &ChartSpec{
+				Name:        c.Name,
+				Version:     c.Version,
+				FullURL:     c.URLs[0],
+				Description: desc,
+				Icon:        icon,
+			}
+			chartList.Charts = append(chartList.Charts, *chart)
+		}
+	}
 	return chartList, nil
 }
 
@@ -68,44 +106,41 @@ func index(dir, url string) error {
 	return chartRepo.Index()
 }
 
-func addRepo(name, url string) error {
-	if err := repo.DownloadIndexFile(name, url, cacheIndexFile(name)); err != nil {
-		return errors.New("Looks like " + url + " is not a valid chart repository or cannot be reached: " + err.Error())
+func addRepository(name, url string, home helmpath.Home) error {
+	cif := home.CacheIndex(name)
+	if err := repo.DownloadIndexFile(name, url, cif); err != nil {
+		return fmt.Errorf("Looks like %q is not a valid chart repository or cannot be reached: %s", url, err.Error())
 	}
 
-	return insertRepoLine(name, url)
+	return insertRepoLine(name, url, home)
 }
 
-func removeRepoLine(name string) error {
-	r, err := repo.LoadRepositoriesFile(repositoriesFile())
+func removeRepoLine(name string, home helmpath.Home) error {
+	repoFile := home.RepositoryFile()
+	r, err := repo.LoadRepositoriesFile(repoFile)
 	if err != nil {
 		return err
 	}
 
-	_, ok := r.Repositories[name]
-	if ok {
-		delete(r.Repositories, name)
-		b, err := yaml.Marshal(&r.Repositories)
-		if err != nil {
-			return err
-		}
-		if err := ioutil.WriteFile(repositoriesFile(), b, 0666); err != nil {
-			return err
-		}
-		if err := removeRepoCache(name); err != nil {
-			return err
-		}
-
-	} else {
-		return fmt.Errorf("The repository, %s, does not exist in your repositories list", name)
+	if !r.Remove(name) {
+		return fmt.Errorf("no repo named %q found", name)
 	}
+	if err := r.WriteFile(repoFile, 0644); err != nil {
+		return err
+	}
+
+	if err := removeRepoCache(name, home); err != nil {
+		return err
+	}
+
+	fmt.Printf("%q has been removed from your repositories", name)
 
 	return nil
 }
 
-func removeRepoCache(name string) error {
-	if _, err := os.Stat(cacheIndexFile(name)); err == nil {
-		err = os.Remove(cacheIndexFile(name))
+func removeRepoCache(name string, home helmpath.Home) error {
+	if _, err := os.Stat(home.CacheIndex(name)); err == nil {
+		err = os.Remove(home.CacheIndex(name))
 		if err != nil {
 			return err
 		}
@@ -113,22 +148,20 @@ func removeRepoCache(name string) error {
 	return nil
 }
 
-func insertRepoLine(name, url string) error {
-	f, err := repo.LoadRepositoriesFile(repositoriesFile())
+func insertRepoLine(name, url string, home helmpath.Home) error {
+	cif := home.CacheIndex(name)
+	f, err := repo.LoadRepositoriesFile(home.RepositoryFile())
 	if err != nil {
 		return err
 	}
-	_, ok := f.Repositories[name]
-	if ok {
+
+	if f.Has(name) {
 		return fmt.Errorf("The repository name you provided (%s) already exists. Please specify a different name.", name)
 	}
-
-	if f.Repositories == nil {
-		f.Repositories = make(map[string]string)
-	}
-
-	f.Repositories[name] = url
-
-	b, _ := yaml.Marshal(&f.Repositories)
-	return ioutil.WriteFile(repositoriesFile(), b, 0666)
+	f.Add(&repo.Entry{
+		Name:  name,
+		URL:   url,
+		Cache: filepath.Base(cif),
+	})
+	return f.WriteFile(home.RepositoryFile(), 0644)
 }

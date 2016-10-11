@@ -16,9 +16,6 @@ limitations under the License.
 
 <form name="ctrl.form" ng-submit="ctrl.deploy()" novalidate>
 
-      <!-- TODO: add support for uploading a packaged chart (.tgz) file -->
-      <!-- <kd-upload file="ctrl.file" form="ctrl.form"></kd-upload> -->
-
       <kd-help-section>
       <md-input-container class="md-block">
         <label>{{::ctrl.i18n.MSG_CHART_REPOSITORY_LABEL}}</label>
@@ -32,15 +29,32 @@ limitations under the License.
         {{::ctrl.i18n.MSG_DEPLOY_CHART_REPO_USER_HELP}}
       </kd-user-help>
     </kd-help-section>
-    <kd-help-section>
 
+    <kd-help-section ng-show="ctrl.selectedRepo == 'None'">
+    <md-input-container class="md-block" md-is-error="ctrl.isNameError()">
+      <label>{{::ctrl.i18n.MSG_CHART_URL_LABEL}}</label>
+      <div>
+        <input ng-model="ctrl.selectedChart" name="selectedChart" namespace="ctrl.namespace" required
+               ng-pattern="ctrl.namePattern"
+               ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }"
+               kd-unique-name md-maxlength="{{ctrl.nameMaxLength}}">
+      </div>
+    </md-input-container>
+
+    <kd-user-help>
+      {{::ctrl.i18n.MSG_DEPLOY_CHART_URL_USER_HELP}}
+    </kd-user-help>
+  </kd-help-section>
+
+    <kd-help-section ng-show="ctrl.selectedRepo != 'None'">
       <md-grid-list md-cols="3" md-row-height="250px" md-gutter="2em">
 
           <md-grid-tile ng-repeat="chart in ctrl.charts" ng-value="chart">
-            <md-card class="kd-chart-card {{chart.selected}}" ng-click="ctrl.selectChart(chart.fullName)">
+            <md-card class="kd-chart-card {{chart.selected}}" ng-click="ctrl.selectChart(chart.fullURL)">
               <md-card-content>
                 <img class="kd-chart-card-icon-image" ng-src="{{chart.icon}}"/>
                 <h2 class="kd-chart-card-text-name">{{chart.name}}</h2>
+                <div class="kd-chart-color-secondary">{{chart.version}}</div>
                 <p class="kd-chart-card-text-description kd-chart-color-secondary">{{chart.description}}</p>
               </md-card-content>
             </md-card>
