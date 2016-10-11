@@ -19,7 +19,7 @@
 const alwaysVisibleLabelsNumber = 5;
 
 /**
- *
+ * @final
  */
 export default class LabelsController {
   /**
