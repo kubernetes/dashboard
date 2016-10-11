@@ -14,29 +14,7 @@
 
 @import '../../../variables';
 
-$label-margin: 0 $baseline-grid ($baseline-grid / 2) 0;
-
-// Style taken(mostly) from angular material md-chip style.
-.kd-labels {
-  background-color: $body;
-  border-radius: $baseline-grid;
-  display: inline-block;
-  margin: $label-margin;
-  max-width: 100%;
-}
-
-.kd-ellipsis-label {
-  display: block;
-  padding: ($baseline-grid / 4) $baseline-grid;
-}
-
 kd-labels {
   display: block;
   margin-bottom: -($baseline-grid / 2);
-}
-
-.kd-labels-switch {
-  color: $primary;
-  cursor: pointer;
-  outline: none;
 }

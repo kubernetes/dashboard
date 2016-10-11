@@ -1,4 +1,4 @@
-// Copyright 2015 Google Inc. All Rights Reserved.
+// Copyright 201666666 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,30 +14,7 @@
 
 @import '../../../variables';
 
-$annotation-margin: 0 $baseline-grid ($baseline-grid / 2) 0;
-
-// Style taken(mostly) from angular material md-chip style.
-.kd-annotations {
-  background-color: $body;
-  border-radius: $baseline-grid;
-  display: inline-block;
-  margin: $annotation-margin;
-  max-width: 100%;
-  vertical-align: bottom;
-}
-
-.kd-annotation-chip {
-  display: block;
-  padding: ($baseline-grid / 4) $baseline-grid;
-}
-
 kd-annotations {
   display: block;
   margin-bottom: -($baseline-grid / 2);
-}
-
-.kd-annotations-switch {
-  color: $primary;
-  cursor: pointer;
-  outline: none;
 }

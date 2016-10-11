@@ -16,16 +16,16 @@ limitations under the License.
 
 <div ng-if="::annotationsCtrl.labels">
   <div ng-repeat="(key, value) in ::annotationsCtrl.labels"
-       ng-if="annotationsCtrl.isVisible($index)" class="kd-annotations">
+       ng-if="annotationsCtrl.isVisible($index)" class="kd-chips">
     <div ng-switch on="key">
-      <div ng-switch-when="kubernetes.io/created-by" class="kd-annotation-chip">
+      <div ng-switch-when="kubernetes.io/created-by" class="kd-chip">
         Created by: <kd-serialized-reference reference="value">
       </div>
-      <kd-middle-ellipsis ng-switch-default display-string="{{::key}}: {{::value}}" class="kd-annotation-chip">
+      <kd-middle-ellipsis ng-switch-default display-string="{{::key}}: {{::value}}" class="kd-chip">
       </kd-middle-ellipsis>
     </div>
   </div>
-  <div class="kd-annotations kd-annotations-switch" ng-show="annotationsCtrl.isMoreAvailable()"
+  <div class="kd-chips kd-chips-switch" ng-show="annotationsCtrl.isMoreAvailable()"
        ng-click="annotationsCtrl.switchLabelsView()">
     {{annotationsCtrl.isShowingAll() ?
       annotationsCtrl.i18n.MSG_LABELS_SHOW_LESS_TOOLTIP : annotationsCtrl.i18n.MSG_LABELS_SHOW_ALL_TOOLTIP}}
