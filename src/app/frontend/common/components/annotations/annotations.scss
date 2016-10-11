@@ -23,9 +23,10 @@ $annotation-margin: 0 $baseline-grid ($baseline-grid / 2) 0;
   display: inline-block;
   margin: $annotation-margin;
   max-width: 100%;
+  vertical-align: bottom;
 }
 
-.kd-ellipsis-annotation {
+.kd-annotation-chip {
   display: block;
   padding: ($baseline-grid / 4) $baseline-grid;
 }

@@ -18,10 +18,10 @@ limitations under the License.
   <div ng-repeat="(key, value) in ::annotationsCtrl.labels"
        ng-if="annotationsCtrl.isVisible($index)" class="kd-annotations">
     <div ng-switch on="key">
-      <div ng-switch-when="kubernetes.io/created-by">
+      <div ng-switch-when="kubernetes.io/created-by" class="kd-annotation-chip">
         Created by: <kd-serialized-reference reference="value">
       </div>
-      <kd-middle-ellipsis ng-switch-default display-string="{{::key}}: {{::value}}" class="kd-ellipsis-annotation">
+      <kd-middle-ellipsis ng-switch-default display-string="{{::key}}: {{::value}}" class="kd-annotation-chip">
       </kd-middle-ellipsis>
     </div>
   </div>

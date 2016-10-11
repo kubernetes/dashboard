@@ -15,7 +15,7 @@
 import LabelsController from '../labels/labels_controller';
 
 /**
- * Returns directive definition for label.
+ * Returns directive definition for annotations.
  *
  * @return {!angular.Directive}
  */
