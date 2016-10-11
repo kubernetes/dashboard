@@ -22,6 +22,8 @@ And then navigate to `https://<kubernetes-master>/ui`
 
 If it asks for a password, use `$ kubectl config view` to find it.
 
+Note that for the metrics and graphs to be available you need to have [Heapster](https://github.com/kubernetes/heapster/) running in your cluster.
+
 ## Alternative Usage
 Alternatively, you may access the UI via the Service Proxy. This is useful if you have a `kubectl`
 configured with access to the cluster, but lack password credentials for use in a browser:
