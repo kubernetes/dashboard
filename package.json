@@ -46,7 +46,7 @@
     "gulp-sass": "~2.3.2",
     "gulp-sass-lint": "~1.2.0",
     "gulp-size": "~2.1.0",
-    "gulp-sourcemaps": "~1.6.0",
+    "gulp-sourcemaps": "~1.7.3",
     "gulp-uglify": "~2.0.0",
     "gulp-useref": "~3.1.0",
     "gulp-util": "~3.0.7",
