@@ -136,7 +136,7 @@ export const releaseCardComponent = {
 };
 
 const statusCodes = {
-  1: 'DEPLOYED'
+  1: 'DEPLOYED',
 };
 
 const i18n = {

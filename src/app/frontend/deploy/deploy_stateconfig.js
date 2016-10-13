@@ -16,10 +16,10 @@ import {stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 
 import DeployController from './deploy_controller';
-import {baseStateName, deployAppStateName, deployFileStateName, deployChartStateName} from './deploy_state';
+import {baseStateName, deployAppStateName, deployChartStateName, deployFileStateName} from './deploy_state';
+import DeployFromChartController from './deployfromchart_controller';
 import DeployFromFileController from './deployfromfile_controller';
 import DeployFromSettingsController from './deployfromsettings_controller';
-import DeployFromChartController from './deployfromchart_controller';
 
 
 /**

@@ -13,7 +13,7 @@ export default class ReleaseInfoController {
     this.release;
 
     /** @export */
-    this.i18n = i18n(this.release);
+    this.i18n = i18n();
   }
 
   /**
@@ -63,7 +63,7 @@ const statusCodes = {
  * @param  {!backendApi.ReleaseDetail} release
  * @return {!Object} a dictionary of translatable messages
  */
-function i18n(release) {
+function i18n() {
   return {
     /** @export {string} @desc Subtitle 'Details' for the left section with general information
         about a release on the release details page.*/
