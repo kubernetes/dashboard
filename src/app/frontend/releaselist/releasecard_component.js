@@ -60,9 +60,7 @@ export default class ReleaseCardController {
    * @export
    */
   getReleaseDetailHref() {
-    return this.state_.href(
-        stateName,
-        new StateParams(this.release.namespace, this.release.name));
+    return this.state_.href(stateName, new StateParams(this.release.namespace, this.release.name));
   }
 
   /**
@@ -86,7 +84,9 @@ export default class ReleaseCardController {
    * @return {boolean}
    * @export
    */
-  hasWarnings() { return false; }
+  hasWarnings() {
+    return false;
+  }
   // TODO: Releases
 
   /**
@@ -95,14 +95,18 @@ export default class ReleaseCardController {
    * @return {boolean}
    * @export
    */
-  isPending() { return false; }
+  isPending() {
+    return false;
+  }
   // TODO: Releases
 
   /**
    * @return {boolean}
    * @export
    */
-  isSuccess() { return true; }
+  isSuccess() {
+    return true;
+  }
   // TODO: Releases
 
   /**
@@ -132,7 +136,7 @@ export const releaseCardComponent = {
 };
 
 const statusCodes = {
-    1: "DEPLOYED"
+  1: 'DEPLOYED'
 };
 
 const i18n = {

@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './releasedetail_stateconfig';
-import filtersModule from 'common/filters/filters_module';
 import componentsModule from 'common/components/components_module';
+import filtersModule from 'common/filters/filters_module';
+
+import stateConfig from './releasedetail_stateconfig';
 import {releaseInfoComponent} from './releaseinfo_component';
 
 /**
