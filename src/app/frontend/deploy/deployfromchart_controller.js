@@ -68,15 +68,15 @@ export default class DeployFromChartController {
     this.i18n = i18n;
 
     /** @export */
-    this.selectedClass = "kd-chart-card-selected";
+    this.selectedClass = 'kd-chart-card-selected';
 
     /** @export */
-    this.selectedChart = "";
+    this.selectedChart = '';
 
     /**
      * @export {string}
      */
-    this.name = "";
+    this.name = '';
 
     /**
      * List of available repository.
@@ -88,14 +88,13 @@ export default class DeployFromChartController {
     this.getRepos();
 
     /** @export */
-    this.selectedRepo = "";
+    this.selectedRepo = '';
 
     /**
      * List of available charts.
      * @export {!Array<string>}
      */
     this.charts = [];
-
   }
 
   /**
@@ -109,7 +108,7 @@ export default class DeployFromChartController {
       let deploymentSpec = {
         chartURL: this.selectedChart,
         releaseName: this.name,
-        namespace: "default",
+        namespace: 'default',
       };
       let defer = this.q_.defer();
 
@@ -131,7 +130,9 @@ export default class DeployFromChartController {
             this.log_.error('Error deploying chart:', err);
             this.errorDialog_.open('Deploying chart has failed', err.data);
           });
-      defer.promise.finally(() => { this.isDeployInProgress_ = false; });
+      defer.promise.finally(() => {
+        this.isDeployInProgress_ = false;
+      });
     }
   }
 
@@ -140,13 +141,17 @@ export default class DeployFromChartController {
    * @return {boolean}
    * @export
    */
-  isDeployDisabled() { return this.isDeployInProgress_; }
+  isDeployDisabled() {
+    return this.isDeployInProgress_;
+  }
 
   /**
    * Cancels the deployment form.
    * @export
    */
-  cancel() { this.kdHistoryService_.back(workloads); }
+  cancel() {
+    this.kdHistoryService_.back(workloads);
+  }
 
   /**
    * Queries all avialable repos.
@@ -156,8 +161,12 @@ export default class DeployFromChartController {
     /** @type {!angular.Resource<!backendApi.RepositoryList>} */
     let resource = this.resource_(`api/v1/repository`);
     resource.get(
-        (res) => { this.repos = ["None"].concat(res.repoNames); },
-        (err) => { this.log_.log(`Error getting repos: ${err}`); });
+        (res) => {
+          this.repos = ['None'].concat(res.repoNames);
+        },
+        (err) => {
+          this.log_.log(`Error getting repos: ${err}`);
+        });
   }
 
   /**
@@ -169,13 +178,16 @@ export default class DeployFromChartController {
     /** @type {!angular.Resource<!backendApi.ChartList>} */
     let resource = this.resource_(`api/v1/repository/${repo}`);
     resource.get(
-        (res) => { this.charts = res.charts.sort(
-                      function(a, b) {
-                        var nameA = a.name.toUpperCase();
-                        var nameB = b.name.toUpperCase();
-                        return (nameA < nameB) ? -1 : (nameA > nameB) ? 1 : 0;
-                    }); },
-        (err) => { this.log_.log(`Error getting charts: ${err}`); });
+        (res) => {
+          this.charts = res.charts.sort(function(a, b) {
+            let nameA = a.name.toUpperCase();
+            let nameB = b.name.toUpperCase();
+            return (nameA < nameB) ? -1 : (nameA > nameB) ? 1 : 0;
+          });
+        },
+        (err) => {
+          this.log_.log(`Error getting charts: ${err}`);
+        });
   }
 
   /**
@@ -183,10 +195,10 @@ export default class DeployFromChartController {
    * @export
    */
   selectRepo(repoName) {
-    if (repoName == "None") {
+    if (repoName === 'None') {
       this.charts = [];
     } else {
-      this.getCharts(repoName)
+      this.getCharts(repoName);
     }
     this.selectedChart = null;
     this.selectedRepo = repoName;
@@ -197,10 +209,10 @@ export default class DeployFromChartController {
    * @export
    */
   selectChart(chartName) {
-    for (var i = 0; i < this.charts.length; i++) { 
-      this.charts[i]["selected"] = "";
-      if (this.charts[i]["fullURL"] == chartName) {
-        this.charts[i]["selected"] = this.selectedClass;  
+    for (let i = 0; i < this.charts.length; i++) {
+      this.charts[i]['selected'] = '';
+      if (this.charts[i]['fullURL'] === chartName) {
+        this.charts[i]['selected'] = this.selectedClass;
       }
     }
     this.selectedChart = chartName;
@@ -229,7 +241,7 @@ const i18n = {
   /** @export {string} @desc Label "Release Name" label, for the release name on the deploy
    *  from chart page. */
   MSG_DEPLOY_CHART_RELEASE_NAME_LABEL: goog.getMsg('Release Name'),
-  
+
   /** @export {string} @desc User help for chart release name on the deploy from chart page.
      */
   MSG_DEPLOY_CHART_RELEASE_NAME_USER_HELP: goog.getMsg(`Optionally, specify a release name.`),
@@ -240,7 +252,8 @@ const i18n = {
 
   /** @export {string} @desc User help for chart custom values on the deploy from chart page.
      */
-  MSG_DEPLOY_CHART_CUSTOM_VALUES_USER_HELP: goog.getMsg(`Optionally, specify a custom values file.`),
+  MSG_DEPLOY_CHART_CUSTOM_VALUES_USER_HELP:
+      goog.getMsg(`Optionally, specify a custom values file.`),
 
   /** @export {string} @desc The text is put on the button at the end of the chart deploy
    * page. */

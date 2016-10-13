@@ -12,35 +12,42 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+$chart-color-white: #fff;
+$chart-border-color: #e7e7e7;
+$selected-chart-color: #3b78e7;
+
+$box-shadow-color: rgba(0, 0, 0, .12);
+$chart-desc-color: rgba(0, 0, 0, .54);
+
 .kd-chart-card {
-  width: 250px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
-  border: 1.1px solid #e7e7e7;
   -webkit-border-radius: 2px;
+  background: $chart-color-white;;
+  border: 1.1px solid $chart-border-color;
   border-radius: 2px;
-  background: #fff;
+  box-shadow: 0 1px 3px $box-shadow-color;
   height: 245px;
+  width: 250px;
 }
 
 .kd-chart-card-selected {
-  border: 2.1px solid #3b78e7;
+  border: 2.1px solid $selected-chart-color;
 }
 
 .kd-chart-card-icon-image {
-  height: 60px;
-  width: 60px;
-  margin: 8px;
   display: block;
+  height: 60px;
+  margin: 8px;
+  width: 60px;
 }
 
 .kd-chart-card-text-name {
-  font-weight: 500;
-  overflow-x: auto;
-  overflow-y: hidden;
   font-size: 15px;
-  max-height: 36px;
+  font-weight: 500;
   line-height: 18px;
   margin: 0;
+  max-height: 36px;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .kd-chart-card-description {
@@ -49,5 +56,5 @@
 }
 
 .kd-chart-color-secondary {
-  color: rgba(0,0,0,.54)!important;
+  color: $chart-desc-color !important;
 }

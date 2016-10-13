@@ -51,7 +51,6 @@ import serviceListModule from './servicelist/servicelist_module';
 import servicesanddiscoveryModule from './servicesanddiscovery/module';
 import workloadsModule from './workloads/workloads_module';
 
-
 export default angular
     .module(
         'kubernetesDashboard',

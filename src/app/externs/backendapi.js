@@ -610,7 +610,6 @@ backendApi.ReleaseTimeStamp;
  */
 backendApi.ReleaseStatusInfo;
 
-
 /**
  * @typedef {{
  *   items: !Array<!backendApi.Release>,
