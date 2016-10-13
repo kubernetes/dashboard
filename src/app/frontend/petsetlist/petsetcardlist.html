@@ -16,22 +16,22 @@ limitations under the License.
 
 <kd-resource-card-list selectable="false" with-statuses="true">
   <kd-resource-card-header-columns>
-    <kd-resource-card-header-column grow="2">
+    <kd-resource-card-header-column size="small" grow="2">
       {{::$ctrl.i18n.MSG_PET_SET_LIST_HEADER_NAME}}
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column grow="2" ng-if="$ctrl.areMultipleNamespacesSelected()">
+    <kd-resource-card-header-column size="small" grow="2" ng-if="$ctrl.areMultipleNamespacesSelected()">
       {{::$ctrl.i18n.MSG_PET_SET_LIST_NAMESPACE_LABEL}}
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column grow="2">
+    <kd-resource-card-header-column size="small" grow="2">
       {{::$ctrl.i18n.MSG_PET_SET_LIST_HEADER_LABELS}}
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column grow="nogrow" size="small">
+    <kd-resource-card-header-column size="small" grow="1">
       {{::$ctrl.i18n.MSG_PET_SET_LIST_HEADER_PODS}}
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column grow="nogrow" size="small">
+    <kd-resource-card-header-column size="small" grow="1">
       {{::$ctrl.i18n.MSG_PET_SET_LIST_HEADER_AGE}}
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small" grow="2">
       {{::$ctrl.i18n.MSG_PET_SET_LIST_HEADER_IMAGES}}
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small" grow="nogrow">
