@@ -12,6 +12,7 @@ logic and fetches raw data from the various Kubernetes APIs.
 ## Preparation
 
 Make sure the following software is installed and added to the `$PATH` variable:
+
 * Docker (1.10+)
 * go (1.6.1+)
 * nodejs (5.1.1+)
@@ -22,7 +23,8 @@ Make sure the following software is installed and added to the `$PATH` variable:
 You can follow [detailed steps on how to install these requirements](requirements-installation.md).
 
 Clone the repository and install the dependencies:
-```
+
+```shell
 $ npm install
 ```
 
@@ -32,7 +34,7 @@ For development it is recommended to run a local Kubernetes cluster. For your co
 task is provided that checks out the latest stable version, and runs it inside a Docker container.
 Run the following command:
 
-```
+```shell
 $ gulp local-up-cluster
 ```
 
@@ -41,25 +43,29 @@ All processes run locally, in Docker container. The local cluster should behave 
 cluster, however, plugins like heapster are not installed. To shut it down, type the following
 command that kills all running Docker containers:
 
-```
+```shell
 $ docker kill $(docker ps -aq)
 ```
 
 From time to time you might want to use to a real Kubernetes cluster (e.g. GCE, Vagrant) instead
 of the local one. The most convenient way is to create a proxy. Run the following command instead
 of the gulp task from above:
-```
+
+```shell
 $ kubectl proxy --port=8080
 ```
+
 kubectl will handle authentication with Kubernetes and create an API proxy with the address
 `localhost:8080`. Therefore, no changes in the configuration are required.
 
 ## Serving Dashboard for Development
 
 It is easy to compile and run Dashboard. Open a new tab in your terminal and type:
-```
+
+```shell
 $ gulp serve
 ```
+
 Open a browser and access the UI under `localhost:9090`. A lot of things happened underneath.
 Let's scratch on the surface a bit.
 
@@ -89,9 +95,11 @@ BrowserSync (9090)  ---> Dashboard backend (9091)  ---> Kubernetes API server (8
 ## Building Dashboard for Production
 
 The Dashboard project can be built for production by using the following task:
- ```
- $ gulp build
- ```
+
+```shell
+$ gulp build
+```
+
 The code is compiled, compressed and debug support removed. The artifacts can be found
 in the `dist` folder.
 
@@ -100,6 +108,7 @@ In order to serve Dashboard from the `dist` folder, use the following task:
 ```
 $ gulp serve:prod
 ```
+
 Open a browser and access the UI under `localhost:9090.` The following processes should
 be running (respective ports are given in parentheses):
 
@@ -109,23 +118,28 @@ Dashboard backend (9090)  ---> Kubernetes API server (8080)
 
 
 In order to package everything into a ready-to-run Docker image, use the following task:
-```
+
+```shell
 $ gulp docker-image:canary
 ```
+
 You might notice that the Docker image is very small and requires only a few MB. Only
 Dashboard assets are added to a scratch image. This is possible, because the `dashboard`
 binary has no external dependencies. Awesome!
 
 ## Run the Tests
+
 Unit tests should be executed after every source code change. The following task makes this
 a breeze by automatically executing the unit tests after every save action.
 
-```
+```shell
 $ gulp test:watch
 ```
+
 The full test suite includes static code analysis, unit tests and integration tests.
 It can be executed with:
-```
+
+```shell
 $ gulp check
 ```
 
