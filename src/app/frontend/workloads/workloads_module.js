@@ -14,9 +14,9 @@
 
 import chromeModule from 'chrome/chrome_module';
 import componentsModule from 'common/components/components_module';
+import filtersModule from 'common/filters/filters_module';
 import daemonSetListModule from 'daemonsetlist/daemonsetlist_module';
 import deploymentListModule from 'deploymentlist/deploymentlist_module';
-import filtersModule from 'common/filters/filters_module';
 import jobListModule from 'joblist/joblist_module';
 import petSetListModule from 'petsetlist/petsetlist_module';
 import releaseListModule from 'releaselist/releaselist_module';

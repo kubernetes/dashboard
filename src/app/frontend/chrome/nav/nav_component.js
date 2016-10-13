@@ -16,7 +16,6 @@ import {stateName as adminState} from 'admin/state';
 import {stateName as configState} from 'config/state';
 import {stateName as configMapState} from 'configmaplist/configmaplist_state';
 import {stateName as daemonSetState} from 'daemonsetlist/daemonsetlist_state';
-import {stateName as releaseState} from 'releaselist/releaselist_state';
 import {stateName as deploymentState} from 'deploymentlist/deploymentlist_state';
 import {stateName as ingressState} from 'ingresslist/list_state';
 import {stateName as jobState} from 'joblist/joblist_state';
@@ -26,6 +25,7 @@ import {stateName as persistentVolumeClaimState} from 'persistentvolumeclaimlist
 import {stateName as persistentVolumeState} from 'persistentvolumelist/persistentvolumelist_state';
 import {stateName as petSetState} from 'petsetlist/petsetlist_state';
 import {stateName as podState} from 'podlist/podlist_state';
+import {stateName as releaseState} from 'releaselist/releaselist_state';
 import {stateName as replicaSetState} from 'replicasetlist/replicasetlist_state';
 import {stateName as replicationControllerState} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 import {stateName as secretState} from 'secretlist/list_state';

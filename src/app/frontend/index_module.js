@@ -23,7 +23,6 @@ import configMapDetailModule from './configmapdetail/configmapdetail_module';
 import configMapListModule from './configmaplist/configmaplist_module';
 import deployModule from './deploy/deploy_module';
 import deploymentListModule from './deploymentlist/deploymentlist_module';
-import releaseListModule from './releaselist/releaselist_module';
 import errorModule from './error/error_module';
 import indexConfig from './index_config';
 import routeConfig from './index_route';
@@ -41,6 +40,7 @@ import persistentVolumeDetailModule from './persistentvolumedetail/persistentvol
 import persistentVolumeListModule from './persistentvolumelist/persistentvolumelist_module';
 import petSetListModule from './petsetlist/petsetlist_module';
 import podDetailModule from './poddetail/poddetail_module';
+import releaseListModule from './releaselist/releaselist_module';
 import replicaSetListModule from './replicasetlist/replicasetlist_module';
 import replicationControllerDetailModule from './replicationcontrollerdetail/replicationcontrollerdetail_module';
 import replicationControllerListModule from './replicationcontrollerlist/replicationcontrollerlist_module';

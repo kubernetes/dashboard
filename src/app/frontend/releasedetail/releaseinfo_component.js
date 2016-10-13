@@ -56,7 +56,7 @@ export const releaseInfoComponent = {
 };
 
 const statusCodes = {
-  1: "DEPLOYED",
+  1: 'DEPLOYED',
 };
 
 /**

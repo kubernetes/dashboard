@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './releaselist_stateconfig';
-import filtersModule from 'common/filters/filters_module';
-import componentsModule from 'common/components/components_module';
-import namespaceModule from 'common/namespace/namespace_module';
 import chromeModule from 'chrome/chrome_module';
+import componentsModule from 'common/components/components_module';
+import filtersModule from 'common/filters/filters_module';
+import namespaceModule from 'common/namespace/namespace_module';
+import releaseDetailModule from 'releasedetail/releasedetail_module';
 import {releaseCardComponent} from './releasecard_component';
 import {releaseCardListComponent} from './releasecardlist_component';
-import releaseDetailModule from 'releasedetail/releasedetail_module';
+import stateConfig from './releaselist_stateconfig';
 
 /**
  * Angular module for the Replication Controller list view.

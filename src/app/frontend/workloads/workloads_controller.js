@@ -29,8 +29,8 @@ export class WorkloadsController {
    */
   constructor(
       workloads, kdPodListResource, kdReplicaSetListResource, kdDaemonSetListResource,
-      kdReleaseListResource, kdDeploymentListResource, kdPetSetListResource,
-      kdJobListResource, kdRCListResource) {
+      kdReleaseListResource, kdDeploymentListResource, kdPetSetListResource, kdJobListResource,
+      kdRCListResource) {
     /** @export {!backendApi.Workloads} */
     this.workloads = workloads;
 
