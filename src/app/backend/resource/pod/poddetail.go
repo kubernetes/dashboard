@@ -15,17 +15,23 @@
 package pod
 
 import (
+	"encoding/json"
 	"log"
 
 	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/apis/batch"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 )
 
+const (
+	CreatedByAnnotation = "kubernetes.io/created-by"
+)
 // PodDetail is a presentation layer view of Kubernetes PodDetail resource.
 // This means it is PodDetail plus additional augumented data we can get
 // from other sources (like services that target it).
@@ -45,12 +51,43 @@ type PodDetail struct {
 	// Count of containers restarts.
 	RestartCount int32 `json:"restartCount"`
 
+	// Reference to the Creator
+	Creator Creator `json:"creator"`
+
 	// List of container of this pod.
 	Containers []Container `json:"containers"`
 
 	// Metrics collected for this resource
 	Metrics []metric.Metric `json:"metrics"`
 }
+
+//Creator info, with go flavored void*
+type Creator struct {
+	Kind string `json:"kind"`
+
+	Payload interface{} `json:"payload"`
+}
+// Job is a presentation layer view of Kubernetes Job resource. This means
+// it is Job plus additional augumented data we can get from other sources
+type Job struct {
+	ObjectMeta common.ObjectMeta `json:"objectMeta"`
+	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+
+	// Aggregate information about pods belonging to this Job.
+	Pods common.PodInfo `json:"pods"`
+
+	// Container images of the Job.
+	ContainerImages []string `json:"containerImages"`
+}
+// JobList contains a list of Jobs in the cluster.
+type JobList struct {
+	ListMeta common.ListMeta `json:"listMeta"`
+
+	// Unordered list of Jobs.
+	Jobs              []Job           `json:"jobs"`
+	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
+}
+//
 
 // Container represents a docker/rkt/etc. container that lives in a pod.
 type Container struct {
@@ -102,6 +139,16 @@ func GetPodDetail(client k8sClient.Interface, heapsterClient client.HeapsterClie
 		return nil, err
 	}
 
+	creator := Creator{}
+	creatorAnnotation, found := pod.ObjectMeta.Annotations[CreatedByAnnotation]
+	if found {
+		creatorRef, err := getPodCreator(client, creatorAnnotation, common.NewSameNamespaceQuery(namespace))
+		if (err != nil) {
+			return nil, err
+		}
+		creator = *creatorRef
+	}
+
 	// Download metrics
 	_, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells([]api.Pod{*pod}),
 		dataselect.StdMetricsDataSelect, dataselect.NoResourceCache, &heapsterClient)
@@ -112,11 +159,83 @@ func GetPodDetail(client k8sClient.Interface, heapsterClient client.HeapsterClie
 	}
 	configMapList := <-channels.ConfigMapList.List
 
-	podDetail := toPodDetail(pod, metrics, configMapList)
+	podDetail := toPodDetail(pod, metrics, configMapList, creator)
 	return &podDetail, nil
 }
 
-func toPodDetail(pod *api.Pod, metrics []metric.Metric, configMaps *api.ConfigMapList) PodDetail {
+func getPodCreator(client k8sClient.Interface, creatorAnnotation string, nsQuery *common.NamespaceQuery) (*Creator, error) {
+	var serializedReference api.SerializedReference
+	err := json.Unmarshal([]byte(creatorAnnotation), &serializedReference);
+	if err != nil {
+		return nil, err
+	}
+
+	channels := &common.ResourceChannels{
+		PodList:   common.GetPodListChannel(client, nsQuery, 1),
+		EventList: common.GetEventListChannel(client, nsQuery, 1),
+	}
+	pods := <-channels.PodList.List
+	if err := <-channels.PodList.Error; err != nil {
+		return nil, err
+	}
+
+	events := <-channels.EventList.List
+	if err := <-channels.EventList.Error; err != nil {
+		return nil, err
+	}
+	reference := serializedReference.Reference
+	var name string
+	kind := reference.Kind
+	switch kind {
+	case "Job":
+		job, err := client.Extensions().Jobs(reference.Namespace).Get(reference.Name)
+		var completions int32
+		matchingPods := common.FilterNamespacedPodsBySelector(pods.Items, job.ObjectMeta.Namespace,
+			job.Spec.Selector.MatchLabels)
+		if job.Spec.Completions != nil {
+			completions = *job.Spec.Completions
+		}
+		podInfo := common.GetPodInfo(job.Status.Active, completions, matchingPods)
+		podInfo.Warnings = event.GetPodsEventWarnings(events.Items, matchingPods)
+		if err != nil {
+			return nil, err
+		}
+		jobList := &JobList{
+			Jobs:     make([]Job, 0),
+			ListMeta: common.ListMeta{TotalItems: 1},
+		}
+		jobList.Jobs = append(jobList.Jobs, ToJob(job, &podInfo))
+		return &Creator{
+			Kind: "Job",
+			Payload: jobList,
+		}, nil
+	case "ReplicaSet":
+		name = "Replica Set thingy"
+	case "ReplicationController":
+		name = "Replication Controller thingy"
+	case "DaemonSet":
+		name = "Daemon Set thingy"
+	case "PetSet":
+		name = "Pet Set thingy"
+	default:
+		name = "unknown"
+	}
+	return &Creator{
+		Kind: kind,
+		Payload: name,
+	}, nil
+}
+
+func ToJob(job *batch.Job, podInfo *common.PodInfo) Job {
+	return Job{
+		ObjectMeta:      common.NewObjectMeta(job.ObjectMeta),
+		TypeMeta:        common.NewTypeMeta(common.ResourceKindJob),
+		ContainerImages: common.GetContainerImages(&job.Spec.Template.Spec),
+		Pods:            *podInfo,
+	}
+}
+
+func toPodDetail(pod *api.Pod, metrics []metric.Metric, configMaps *api.ConfigMapList, creator Creator) PodDetail {
 
 	containers := make([]Container, 0)
 	for _, container := range pod.Spec.Containers {
@@ -147,6 +266,7 @@ func toPodDetail(pod *api.Pod, metrics []metric.Metric, configMaps *api.ConfigMa
 		PodIP:        pod.Status.PodIP,
 		RestartCount: getRestartCount(*pod),
 		NodeName:     pod.Spec.NodeName,
+		Creator:      creator,
 		Containers:   containers,
 		Metrics:      metrics,
 	}
