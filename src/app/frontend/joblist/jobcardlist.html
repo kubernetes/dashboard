@@ -16,22 +16,22 @@ limitations under the License.
 
 <kd-resource-card-list selectable="false" with-statuses="true">
   <kd-resource-card-header-columns>
-    <kd-resource-card-header-column grow="2">
+    <kd-resource-card-header-column size="small" grow="2">
       {{::$ctrl.i18n.MSG_JOB_LIST_NAME_LABEL}}
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column grow="2" ng-if="$ctrl.areMultipleNamespacesSelected()">
+    <kd-resource-card-header-column size="small" grow="2" ng-if="$ctrl.areMultipleNamespacesSelected()">
       {{::$ctrl.i18n.MSG_JOB_LIST_NAMESPACE_LABEL}}
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column grow="2">
+    <kd-resource-card-header-column size="small" grow="2">
       {{::$ctrl.i18n.MSG_JOB_LIST_LABELS_LABEL}}
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column grow="nogrow" size="small">
+    <kd-resource-card-header-column size="small" grow="1">
       {{::$ctrl.i18n.MSG_JOB_LIST_PODS_LABEL}}
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column grow="nogrow" size="small">
+    <kd-resource-card-header-column size="small" grow="1">
       {{::$ctrl.i18n.MSG_JOB_LIST_AGE_LABEL}}
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small" grow="2">
       {{::$ctrl.i18n.MSG_JOB_LIST_IMAGES_LABEL}}
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small" grow="nogrow">

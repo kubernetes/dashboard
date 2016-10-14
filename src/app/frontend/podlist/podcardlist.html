@@ -17,20 +17,20 @@ limitations under the License.
 <kd-resource-card-list selectable="::$ctrl.selectable" with-statuses="::$ctrl.withStatuses"
                        ng-if="::$ctrl.podList.pods">
   <kd-resource-card-header-columns>
-    <kd-resource-card-header-column size="medium" grow="4">
+    <kd-resource-card-header-column size="small" grow="2">
       {{::$ctrl.i18n.MSG_POD_LIST_NAME_LABEL}}
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column grow="2" ng-if="$ctrl.areMultipleNamespacesSelected()">
+    <kd-resource-card-header-column size="small" grow="2" ng-if="$ctrl.areMultipleNamespacesSelected()">
       {{::$ctrl.i18n.MSG_POD_LIST_NAMESPACE_LABEL}}
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column grow="nogrow">{{::$ctrl.i18n.MSG_POD_LIST_STATUS_LABEL}}
+    <kd-resource-card-header-column size="small" grow="1">{{::$ctrl.i18n.MSG_POD_LIST_STATUS_LABEL}}
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="nogrow">
+    <kd-resource-card-header-column size="small" grow="1">
       {{::$ctrl.i18n.MSG_POD_LIST_RESTARTS_LABEL}}
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column grow="nogrow">{{::$ctrl.i18n.MSG_POD_LIST_AGE_LABEL}}
+    <kd-resource-card-header-column size="small" grow="1">{{::$ctrl.i18n.MSG_POD_LIST_AGE_LABEL}}
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column grow="nogrow">{{::$ctrl.i18n.MSG_POD_LIST_CLUSTER_IP_LABEL}}
+    <kd-resource-card-header-column size="small" grow="1">{{::$ctrl.i18n.MSG_POD_LIST_CLUSTER_IP_LABEL}}
     </kd-resource-card-header-column>
     <kd-resource-card-header-column ng-if="::$ctrl.showMetrics()">
       {{::$ctrl.i18n.MSG_POD_LIST_CPU_USAGE_LABEL}}

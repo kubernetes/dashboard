@@ -16,16 +16,16 @@ limitations under the License.
 
 <kd-resource-card-list selectable="false" with-statuses="false">
   <kd-resource-card-header-columns>
-    <kd-resource-card-header-column grow="2">
+    <kd-resource-card-header-column size="small" grow="2">
       {{::$ctrl.i18n.MSG_CONFIG_MAP_LIST_HEADER_NAME}}
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column grow="2" ng-if="$ctrl.areMultipleNamespacesSelected()">
+    <kd-resource-card-header-column size="small" grow="2" ng-if="$ctrl.areMultipleNamespacesSelected()">
       {{::$ctrl.i18n.MSG_CONFIG_MAP_LIST_NAMESPACE_LABEL}}
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column grow="2">
+    <kd-resource-card-header-column size="small" grow="2">
       {{::$ctrl.i18n.MSG_CONFIG_MAP_LIST_HEADER_LABELS}}
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column grow="nogrow" size="small">
+    <kd-resource-card-header-column size="small" grow="nogrow">
       {{::$ctrl.i18n.MSG_CONFIG_MAP_LIST_HEADER_AGE}}
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small" grow="nogrow">
