@@ -31,7 +31,6 @@ export default class CreatorInfoController {
 
     /** @export */
     this.i18n = i18n;
-    console.log(this.creator);
   }
 }
 

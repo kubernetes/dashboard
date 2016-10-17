@@ -61,11 +61,14 @@ type PodDetail struct {
 	Metrics []metric.Metric `json:"metrics"`
 }
 
-//Creator info, with go flavored void*
+// Creator is a view of the creator of a given pod, in List for for ease of use
+// in the frontend logic.
+//
+// Has 'oneof' semantics on the non-Kind fields decided by which Kind is there
 type Creator struct {
 	Kind string `json:"kind"`
 
-	Payload interface{} `json:"payload"`
+	JobList *joblist.JobList `json:"joblist,omitempty"`
 }
 
 // Container represents a docker/rkt/etc. container that lives in a pod.
@@ -118,7 +121,9 @@ func GetPodDetail(client k8sClient.Interface, heapsterClient client.HeapsterClie
 		return nil, err
 	}
 
-	creator := Creator{}
+	creator := Creator{
+		Kind: "unknown",
+	}
 	creatorAnnotation, found := pod.ObjectMeta.Annotations[CreatedByAnnotation]
 	if found {
 		creatorRef, err := getPodCreator(client, creatorAnnotation, common.NewSameNamespaceQuery(namespace), heapsterClient)
@@ -163,7 +168,6 @@ func getPodCreator(client k8sClient.Interface, creatorAnnotation string, nsQuery
 		return nil, err
 	}
 	reference := serializedReference.Reference
-	var name string
 	kind := reference.Kind
 	switch kind {
 	case "Job":
@@ -175,22 +179,16 @@ func getPodCreator(client k8sClient.Interface, creatorAnnotation string, nsQuery
 		jobList := joblist.CreateJobList(jobs, pods.Items, events.Items, dataselect.StdMetricsDataSelect, &heapsterClient)
 		return &Creator{
 			Kind: "Job",
-			Payload: jobList,
+			JobList: jobList,
 		}, nil
 	case "ReplicaSet":
-		name = "Replica Set thingy"
 	case "ReplicationController":
-		name = "Replication Controller thingy"
 	case "DaemonSet":
-		name = "Daemon Set thingy"
 	case "PetSet":
-		name = "Pet Set thingy"
 	default:
-		name = "unknown"
 	}
 	return &Creator{
 		Kind: kind,
-		Payload: name,
 	}, nil
 }
 

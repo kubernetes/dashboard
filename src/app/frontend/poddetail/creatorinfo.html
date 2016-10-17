@@ -19,7 +19,7 @@ limitations under the License.
   <kd-content>
     <div ng-switch="$ctrl.creator.kind">
       <div ng-switch-when="Job">
-        <kd-job-card-list job-list="$ctrl.creator.payload"></kd-job-card-list>
+        <kd-job-card-list job-list="$ctrl.creator.joblist"></kd-job-card-list>
       </div>
       <span ng-switch-default>{{$ctrl.creator.payload}}</span>
     </div>
