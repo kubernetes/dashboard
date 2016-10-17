@@ -22,7 +22,7 @@ export default class CreatorInfoController {
   constructor() {
     /**
      * Initialized from a binding.
-     * @export {!object}
+     * @export
      */
     this.creator;
 
