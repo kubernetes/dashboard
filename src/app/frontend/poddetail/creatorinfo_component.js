@@ -20,10 +20,7 @@ export default class CreatorInfoController {
    * @ngInject
    */
   constructor() {
-    /**
-     * Initialized from a binding.
-     * @export
-     */
+    /** @export {!Object} Initialized from a binding. */
     this.creator;
 
     /** @export */
@@ -41,12 +38,13 @@ export const creatorInfoComponent = {
   controller: CreatorInfoController,
   templateUrl: 'poddetail/creatorinfo.html',
   bindings: {
-    /** {!object} */
     'creator': '<',
   },
 };
 
 const i18n = {
-  /** @export {string} @desc Subtitle at the top of the container details. */
+  /** @export {string} @desc Subtitle at the top of the creator info box on
+   * poddetail page
+   */
   MSG_CREATOR_DETAILS_SUBTITLE: goog.getMsg('Creator'),
 };
