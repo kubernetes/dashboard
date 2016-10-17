@@ -638,7 +638,7 @@ backendApi.ReleaseStatusInfo;
 
 /**
  * @typedef {{
- *   items: !Array<!backendApi.Release>,
+ *   releases: !Array<!backendApi.Release>,
  *   listMeta: !backendApi.ListMeta,
  * }}
  */

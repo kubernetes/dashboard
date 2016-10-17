@@ -36,6 +36,6 @@ export class ReleaseListController {
    * @export
    */
   shouldShowZeroState() {
-    return this.releaseList.items.length === 0;
+    return this.releaseList.releases.length === 0;
   }
 }
