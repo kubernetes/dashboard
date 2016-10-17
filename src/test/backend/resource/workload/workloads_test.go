@@ -22,7 +22,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/job/joblist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/petset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
@@ -47,7 +47,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		k8sPetSet     apps.PetSetList
 		rcs           []replicationcontroller.ReplicationController
 		rs            []replicaset.ReplicaSet
-		jobs          []job.Job
+		jobs          []joblist.Job
 		daemonset     []daemonset.DaemonSet
 		deployment    []deployment.Deployment
 		pod           []pod.Pod
@@ -63,7 +63,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 			apps.PetSetList{},
 			[]replicationcontroller.ReplicationController{},
 			[]replicaset.ReplicaSet{},
-			[]job.Job{},
+			[]joblist.Job{},
 			[]daemonset.DaemonSet{},
 			[]deployment.Deployment{},
 			[]pod.Pod{},
@@ -129,7 +129,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 					Warnings: []common.Event{},
 				},
 			}},
-			[]job.Job{{
+			[]joblist.Job{{
 				ObjectMeta: common.ObjectMeta{
 					Name: "job-name",
 				},
@@ -173,7 +173,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				CumulativeMetrics: make([]metric.Metric, 0),
 				ReplicaSets:       c.rs,
 			},
-			JobList: job.JobList{
+			JobList: joblist.JobList{
 				ListMeta:          common.ListMeta{TotalItems: len(c.jobs)},
 				CumulativeMetrics: make([]metric.Metric, 0),
 				Jobs:              c.jobs,
