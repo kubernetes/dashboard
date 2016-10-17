@@ -34,7 +34,8 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/ingress"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/job/jobdetail"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/job/joblist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/limitrange"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/logs"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
@@ -307,15 +308,15 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 	apiV1Ws.Route(
 		apiV1Ws.GET("/job").
 			To(apiHandler.handleGetJobList).
-			Writes(job.JobList{}))
+			Writes(joblist.JobList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/job/{namespace}").
 			To(apiHandler.handleGetJobList).
-			Writes(job.JobList{}))
+			Writes(joblist.JobList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/job/{namespace}/{job}").
 			To(apiHandler.handleGetJobDetail).
-			Writes(job.JobDetail{}))
+			Writes(jobdetail.JobDetail{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/job/{namespace}/{job}/pod").
 			To(apiHandler.handleGetJobPods).
@@ -1529,7 +1530,7 @@ func (apiHandler *APIHandler) handleGetJobList(request *restful.Request,
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.StandardMetrics
 
-	result, err := job.GetJobList(apiHandler.client, namespace, dataSelect, &apiHandler.heapsterClient)
+	result, err := joblist.GetJobList(apiHandler.client, namespace, dataSelect, &apiHandler.heapsterClient)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1544,7 +1545,7 @@ func (apiHandler *APIHandler) handleGetJobDetail(request *restful.Request, respo
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.StandardMetrics
 
-	result, err := job.GetJobDetail(apiHandler.client, apiHandler.heapsterClient, namespace, jobParam)
+	result, err := jobdetail.GetJobDetail(apiHandler.client, apiHandler.heapsterClient, namespace, jobParam)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1561,7 +1562,7 @@ func (apiHandler *APIHandler) handleGetJobPods(request *restful.Request,
 	jobParam := request.PathParameter("job")
 	dataSelect := parseDataSelectPathParameter(request)
 
-	result, err := job.GetJobPods(apiHandler.client, apiHandler.heapsterClient, dataSelect,
+	result, err := jobdetail.GetJobPods(apiHandler.client, apiHandler.heapsterClient, dataSelect,
 		namespace, jobParam)
 	if err != nil {
 		handleInternalError(response, err)
@@ -1577,7 +1578,7 @@ func (apiHandler *APIHandler) handleGetJobEvents(request *restful.Request, respo
 	name := request.PathParameter("job")
 	dataSelect := parseDataSelectPathParameter(request)
 
-	result, err := job.GetJobEvents(apiHandler.client, dataSelect, namespace,
+	result, err := jobdetail.GetJobEvents(apiHandler.client, dataSelect, namespace,
 		name)
 	if err != nil {
 		handleInternalError(response, err)

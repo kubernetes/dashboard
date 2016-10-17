@@ -12,13 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package job
+package joblist
 
 import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
 
 	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
 	"k8s.io/kubernetes/pkg/api"
@@ -111,8 +112,9 @@ func CreateJobList(jobs []batch.Job, pods []api.Pod, events []api.Event,
 	cachedResources := &dataselect.CachedResources{
 		Pods: pods,
 	}
-	replicationControllerCells, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells(jobs), dsQuery, cachedResources, heapsterClient)
-	jobs = fromCells(replicationControllerCells)
+	replicationControllerCells, metricPromises := dataselect.GenericDataSelectWithMetrics(
+		job.ToCells(jobs), dsQuery, cachedResources, heapsterClient)
+	jobs = job.FromCells(replicationControllerCells)
 
 	for _, job := range jobs {
 		var completions int32

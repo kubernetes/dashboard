@@ -22,7 +22,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/job/joblist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/petset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
@@ -36,7 +36,7 @@ type Workloads struct {
 
 	ReplicaSetList replicaset.ReplicaSetList `json:"replicaSetList"`
 
-	JobList job.JobList `json:"jobList"`
+	JobList joblist.JobList `json:"jobList"`
 
 	ReplicationControllerList replicationcontroller.ReplicationControllerList `json:"replicationControllerList"`
 
@@ -73,7 +73,7 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels,
 	heapsterClient client.HeapsterClient, metricQuery *dataselect.MetricQuery) (*Workloads, error) {
 
 	rsChan := make(chan *replicaset.ReplicaSetList)
-	jobChan := make(chan *job.JobList)
+	jobChan := make(chan *joblist.JobList)
 	deploymentChan := make(chan *deployment.DeploymentList)
 	rcChan := make(chan *replicationcontroller.ReplicationControllerList)
 	podChan := make(chan *pod.PodList)
@@ -95,7 +95,7 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels,
 	}()
 
 	go func() {
-		jobList, err := job.GetJobListFromChannels(channels, dataselect.DefaultDataSelect, nil)
+		jobList, err := joblist.GetJobListFromChannels(channels, dataselect.DefaultDataSelect, nil)
 		errChan <- err
 		jobChan <- jobList
 	}()
