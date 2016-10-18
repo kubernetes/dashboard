@@ -629,10 +629,29 @@ backendApi.ReleaseDetail;
 
 /**
  * @typedef {{
- *   repoNames: !Array<string>,
+ *   repositories: !Array<!backendApi.Repository>,
+ *   totalItems: number,
  * }}
  */
 backendApi.RepositoryList;
+
+/**
+ * @typedef {{
+ *   name: !string,
+ *   url: !string,
+ *   phase: !string,
+ * }}
+ */
+backendApi.Repository;
+
+/**
+ * @typedef {{
+ *   name: !string,
+ *   url: !string,
+ *   phase: !string,
+ * }}
+ */
+backendApi.RepositoryDetail;
 
 /**
  * @typedef {{

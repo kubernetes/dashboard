@@ -13,11 +13,9 @@ import (
 )
 
 var (
-	repositoryDir          string = "repository"
-	repositoriesFilePath   string = "repositories.yaml"
-	cachePath              string = "cache"
-	localRepoPath          string = "local"
-	localRepoIndexFilePath string = "index.yaml"
+	repositoryDir        string = "repository"
+	repositoriesFilePath string = "repositories.yaml"
+	cachePath            string = "cache"
 )
 
 func homePath() string {
@@ -27,8 +25,6 @@ func homePath() string {
 var (
 	stableRepository    = "kubernetes-charts"
 	stableRepositoryURL = "http://storage.googleapis.com/kubernetes-charts"
-	customRepository    = "ammeon-charts"
-	customRepositoryURL = "http://172.19.29.166:8879/charts"
 )
 
 // ensureHome checks to see if $HELM_HOME exists
@@ -62,11 +58,6 @@ func ensureHome(home helmpath.Home) error {
 		cif := home.CacheIndex(stableRepository)
 		if err := repo.DownloadIndexFile(stableRepository, stableRepositoryURL, cif); err != nil {
 			fmt.Printf("WARNING: Failed to download %s: %s (run 'helm repo update')\n", stableRepository, err)
-		}
-
-		// TODO: Remove this and add custom chart repos, from an add repo dialog
-		if err := addRepository(customRepository, customRepositoryURL, home); err != nil {
-			return err
 		}
 
 	} else if fi.IsDir() {

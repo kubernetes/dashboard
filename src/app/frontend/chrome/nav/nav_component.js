@@ -28,6 +28,7 @@ import {stateName as podState} from 'podlist/podlist_state';
 import {stateName as releaseState} from 'releaselist/releaselist_state';
 import {stateName as replicaSetState} from 'replicasetlist/replicasetlist_state';
 import {stateName as replicationControllerState} from 'replicationcontrollerlist/replicationcontrollerlist_state';
+import {stateName as repositoryState} from 'repositorylist/repositorylist_state';
 import {stateName as secretState} from 'secretlist/list_state';
 import {stateName as serviceState} from 'servicelist/servicelist_state';
 import {stateName as servicesanddiscoveryState} from 'servicesanddiscovery/state';
@@ -53,6 +54,7 @@ export class NavController {
     this.states = {
       'namespace': namespaceState,
       'node': nodeState,
+      'repository': repositoryState,
       'workload': workloadState,
       'admin': adminState,
       'pod': podState,
@@ -107,6 +109,8 @@ const i18n = {
   MSG_NAV_MENU_NODES: goog.getMsg('Nodes'),
   /** @export @desc Persistent Volumes menu item in the nav. */
   MSG_NAV_MENU_PERSISTENT_VOLUMES: goog.getMsg('Persistent Volumes'),
+  /** @export @desc Repositories menu item in the nav. */
+  MSG_NAV_MENU_REPOSITORIES: goog.getMsg('Repositories'),
   /** @export @desc Workloads menu item in the nav. */
   MSG_NAV_MENU_WORKLOADS: goog.getMsg('Workloads'),
   /** @export @desc Releases menu item in the nav. */

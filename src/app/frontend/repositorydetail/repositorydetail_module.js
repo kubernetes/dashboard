@@ -13,37 +13,30 @@
 // limitations under the License.
 
 import chromeModule from 'chrome/chrome_module';
-import namespaceListModule from 'namespacelist/namespacelist_module';
-import nodeListModule from 'nodelist/nodelist_module';
-import persistentVolumeListModule from 'persistentvolumelist/persistentvolumelist_module';
-import repositoryListModule from 'repositorylist/repositorylist_module';
+import componentsModule from 'common/components/components_module';
+import filtersModule from 'common/filters/filters_module';
+import eventsModule from 'events/events_module';
 
-import stateConfig from './stateconfig';
+import stateConfig from './repositorydetail_stateconfig';
+import {repositoryInfoComponent} from './repositoryinfo_component';
+
 
 /**
- * Module for the admin view.
+ * Angular module for the Repository details view.
+ *
+ * The view shows detailed view of a Repository.
  */
 export default angular
     .module(
-        'kubernetesDashboard.admin',
+        'kubernetesDashboard.repositoryDetail',
         [
           'ngMaterial',
           'ngResource',
           'ui.router',
+          componentsModule.name,
           chromeModule.name,
-          nodeListModule.name,
-          namespaceListModule.name,
-          persistentVolumeListModule.name,
-          repositoryListModule.name,
+          filtersModule.name,
+          eventsModule.name,
         ])
     .config(stateConfig)
-    .factory('kdAdminResource', resource);
-
-/**
- * @param {!angular.$resource} $resource
- * @return {!angular.Resource}
- * @ngInject
- */
-function resource($resource) {
-  return $resource('api/v1/admin');
-}
+    .component('kdRepository', repositoryInfoComponent);

@@ -162,7 +162,7 @@ export default class DeployFromChartController {
     let resource = this.resource_(`api/v1/repository`);
     resource.get(
         (res) => {
-          this.repos = ['None'].concat(res.repoNames);
+          this.repos = ['None'].concat(res.repositories.map((e) => e.name));
         },
         (err) => {
           this.log_.log(`Error getting repos: ${err}`);

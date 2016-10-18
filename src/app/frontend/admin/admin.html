@@ -52,5 +52,18 @@ limitations under the License.
       </kd-persistent-volume-card-list>
     </kd-content>
   </kd-content-card>
+  <kd-content-card ng-if="$ctrl.admin.repositoryList.items.length">
+    <kd-title>
+      <a ui-sref="repository">
+        {{::$ctrl.i18n.MSG_ADMIN_REPOSITORY_LABEL}}
+      </a>
+    </kd-title>
+    <kd-content>
+      <kd-repository-card-list persistent-volume-list="$ctrl.admin.repositoryList"
+          with-statuses="true"
+          repository-list-resource="$ctrl.kdRepositoryListResource">
+      </kd-repository-card-list>
+    </kd-content>
+  </kd-content-card>
 </div>
 <kd-zero-state ng-if="$ctrl.shouldShowZeroState()"></kd-zero-state>
