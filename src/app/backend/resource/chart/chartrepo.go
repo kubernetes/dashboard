@@ -2,6 +2,7 @@ package chart
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 
@@ -11,17 +12,20 @@ import (
 
 // RepositorySpec is a specification for a repository.
 type RepositorySpec struct {
-	// Name of the chart.
-	RepoName string `json:"repoName"`
-
-	// Name of the release.
-	RepoUrl string `json:"repoUrl"`
+	// Name of the repository.
+	RepoName string `json:"name"`
+	// URL of the repository.
+	RepoURL string `json:"url"`
+	// Phase of the repository.
+	Phase string `json:"phase"`
 }
 
 // RepositoryListSpec is a specification for a repository.
 type RepositoryListSpec struct {
 	// List of repository names.
-	RepoNames []string `json:"repoNames"`
+	Repositories []RepositorySpec `json:"repositories"`
+	// Number of repositories.
+	TotalItems int `json:"totalItems"`
 }
 
 // RepositoryListSpec is a specification for a repository.
@@ -42,7 +46,35 @@ type ChartSpec struct {
 // AddRepository adds a repository.
 func AddRepository(spec *RepositorySpec) error {
 	helmHome := helmpath.Home(homePath())
-	return addRepository(spec.RepoName, spec.RepoUrl, helmHome)
+	log.Printf("Adding repo named: %q with url: %q", spec.RepoName, spec.RepoURL)
+	return addRepository(spec.RepoName, spec.RepoURL, helmHome)
+}
+
+// DeleteRepository removes a repository.
+func DeleteRepository(repoName string) error {
+	helmHome := helmpath.Home(homePath())
+	return removeRepoLine(repoName, helmHome)
+}
+
+// GetRepository gets a specfied repository.
+func GetRepository(repoName string) (*RepositorySpec, error) {
+	helmHome := helmpath.Home(homePath())
+	ensureHome(helmHome)
+	repoSpec := &RepositorySpec{
+		RepoName: repoName,
+		RepoURL:  "",
+		Phase:    "Available",
+	}
+	f, err := repo.LoadRepositoriesFile(helmHome.RepositoryFile())
+	if err != nil {
+		return repoSpec, err
+	}
+	for _, r := range f.Repositories {
+		if r.Name == repoName {
+			repoSpec.RepoURL = r.URL
+		}
+	}
+	return repoSpec, nil
 }
 
 // GetRepositoryList get a list of repository.
@@ -50,14 +82,20 @@ func GetRepositoryList() (*RepositoryListSpec, error) {
 	helmHome := helmpath.Home(homePath())
 	ensureHome(helmHome)
 	repoList := &RepositoryListSpec{
-		RepoNames: make([]string, 0),
+		Repositories: make([]RepositorySpec, 0),
 	}
 	f, err := repo.LoadRepositoriesFile(helmHome.RepositoryFile())
 	if err != nil {
 		return repoList, err
 	}
 	for _, r := range f.Repositories {
-		repoList.RepoNames = append(repoList.RepoNames, r.Name)
+		repoSpec := &RepositorySpec{
+			RepoName: r.Name,
+			RepoURL:  r.URL,
+			Phase:    "Available",
+		}
+		repoList.Repositories = append(repoList.Repositories, *repoSpec)
+		repoList.TotalItems = repoList.TotalItems + 1
 	}
 	return repoList, nil
 }

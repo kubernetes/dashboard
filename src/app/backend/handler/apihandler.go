@@ -373,11 +373,18 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 	apiV1Ws.Route(
 		apiV1Ws.GET("/repository").
 			To(apiHandler.handleGetRepository).
-			Writes(chart.RepositoryListSpec{}))
+			Writes(chart.RepositorySpec{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/repository/{name}").
 			To(apiHandler.handleGetRepositoryCharts).
 			Writes(chart.RepositoryChartListSpec{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/repositorydetail/{name}").
+			To(apiHandler.handleGetRepositoryDetail).
+			Writes(chart.RepositorySpec{}))
+	apiV1Ws.Route(
+		apiV1Ws.DELETE("/repository/namespace/{namespace}/name/{name}").
+			To(apiHandler.handleDeleteRepository))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/secret").
@@ -1276,6 +1283,19 @@ func (apiHandler *APIHandler) handleGetRepository(
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
+// Handles get repository detail API call.
+func (apiHandler *APIHandler) handleGetRepositoryDetail(
+	request *restful.Request, response *restful.Response) {
+	repoName := request.PathParameter("name")
+	result, err := chart.GetRepository(repoName)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
 // Handles get charts for a repository API call.
 func (apiHandler *APIHandler) handleGetRepositoryCharts(request *restful.Request,
 	response *restful.Response) {
@@ -1286,6 +1306,19 @@ func (apiHandler *APIHandler) handleGetRepositoryCharts(request *restful.Request
 		return
 	}
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles deleting repository API call.
+func (apiHandler *APIHandler) handleDeleteRepository(request *restful.Request,
+	response *restful.Response) {
+	name := request.PathParameter("name")
+
+	if err := chart.DeleteRepository(name); err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeader(http.StatusCreated)
 }
 
 // Handles image pull secret creation API call.
