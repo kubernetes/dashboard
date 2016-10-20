@@ -51,7 +51,7 @@ describe('SerializedReference controller', () => {
     });
 
     // when
-    ctrl.recalculateDerivedProperties();
+    scope.$digest()
 
     // then
     expect(ctrl.valid).toBe(true);
@@ -65,7 +65,7 @@ describe('SerializedReference controller', () => {
     ctrl.reference = '{invalid-json';
 
     // when
-    ctrl.recalculateDerivedProperties();
+    scope.$digest()
 
     // then
     expect(ctrl.valid).toBe(false);
@@ -77,7 +77,7 @@ describe('SerializedReference controller', () => {
     ctrl.reference = JSON.stringify({kind: 'NotSerializedReference', data: {}});
 
     // when
-    ctrl.recalculateDerivedProperties();
+    scope.$digest()
 
     // then
     expect(ctrl.valid).toBe(false);
