@@ -29,9 +29,11 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 )
 
+// TODO: use a centralized place to store this constant
 const (
 	CreatedByAnnotation = "kubernetes.io/created-by"
 )
+
 // PodDetail is a presentation layer view of Kubernetes PodDetail resource.
 // This means it is PodDetail plus additional augumented data we can get
 // from other sources (like services that target it).
@@ -51,8 +53,8 @@ type PodDetail struct {
 	// Count of containers restarts.
 	RestartCount int32 `json:"restartCount"`
 
-	// Reference to the Creator
-	Creator Creator `json:"creator"`
+	// Reference to the Controller 
+	Controller Controller `json:"controller"`
 
 	// List of container of this pod.
 	Containers []Container `json:"containers"`
@@ -65,7 +67,7 @@ type PodDetail struct {
 // in the frontend logic.
 //
 // Has 'oneof' semantics on the non-Kind fields decided by which Kind is there
-type Creator struct {
+type Controller struct {
 	Kind string `json:"kind"`
 
 	JobList *joblist.JobList `json:"joblist,omitempty"`
@@ -121,7 +123,7 @@ func GetPodDetail(client k8sClient.Interface, heapsterClient client.HeapsterClie
 		return nil, err
 	}
 
-	creator := Creator{
+	controller := Controller{
 		Kind: "unknown",
 	}
 	creatorAnnotation, found := pod.ObjectMeta.Annotations[CreatedByAnnotation]
@@ -130,7 +132,7 @@ func GetPodDetail(client k8sClient.Interface, heapsterClient client.HeapsterClie
 		if (err != nil) {
 			return nil, err
 		}
-		creator = *creatorRef
+		controller = *creatorRef
 	}
 
 	// Download metrics
@@ -143,11 +145,11 @@ func GetPodDetail(client k8sClient.Interface, heapsterClient client.HeapsterClie
 	}
 	configMapList := <-channels.ConfigMapList.List
 
-	podDetail := toPodDetail(pod, metrics, configMapList, creator)
+	podDetail := toPodDetail(pod, metrics, configMapList, controller)
 	return &podDetail, nil
 }
 
-func getPodCreator(client k8sClient.Interface, creatorAnnotation string, nsQuery *common.NamespaceQuery, heapsterClient client.HeapsterClient) (*Creator, error) {
+func getPodCreator(client k8sClient.Interface, creatorAnnotation string, nsQuery *common.NamespaceQuery, heapsterClient client.HeapsterClient) (*Controller, error) {
 	var serializedReference api.SerializedReference
 	err := json.Unmarshal([]byte(creatorAnnotation), &serializedReference);
 	if err != nil {
@@ -177,7 +179,7 @@ func getPodCreator(client k8sClient.Interface, creatorAnnotation string, nsQuery
 		}
 		jobs := []batch.Job{*job}
 		jobList := joblist.CreateJobList(jobs, pods.Items, events.Items, dataselect.StdMetricsDataSelect, &heapsterClient)
-		return &Creator{
+		return &Controller{
 			Kind: "Job",
 			JobList: jobList,
 		}, nil
@@ -187,12 +189,12 @@ func getPodCreator(client k8sClient.Interface, creatorAnnotation string, nsQuery
 	case "PetSet":
 	default:
 	}
-	return &Creator{
+	return &Controller{
 		Kind: kind,
 	}, nil
 }
 
-func toPodDetail(pod *api.Pod, metrics []metric.Metric, configMaps *api.ConfigMapList, creator Creator) PodDetail {
+func toPodDetail(pod *api.Pod, metrics []metric.Metric, configMaps *api.ConfigMapList, controller Controller) PodDetail {
 
 	containers := make([]Container, 0)
 	for _, container := range pod.Spec.Containers {
@@ -223,7 +225,7 @@ func toPodDetail(pod *api.Pod, metrics []metric.Metric, configMaps *api.ConfigMa
 		PodIP:        pod.Status.PodIP,
 		RestartCount: getRestartCount(*pod),
 		NodeName:     pod.Spec.NodeName,
-		Creator:      creator,
+		Controller:   controller,
 		Containers:   containers,
 		Metrics:      metrics,
 	}
