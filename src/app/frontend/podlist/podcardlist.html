@@ -18,43 +18,47 @@ limitations under the License.
                        ng-if="::$ctrl.podList.pods">
   <kd-resource-card-header-columns>
     <kd-resource-card-header-column size="small" grow="2">
-      {{::$ctrl.i18n.MSG_POD_LIST_NAME_LABEL}}
+      [[Name|Title of a column]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small" grow="2" ng-if="$ctrl.areMultipleNamespacesSelected()">
-      {{::$ctrl.i18n.MSG_POD_LIST_NAMESPACE_LABEL}}
+      [[Namespace|Title of a column]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="1">{{::$ctrl.i18n.MSG_POD_LIST_STATUS_LABEL}}
+    <kd-resource-card-header-column size="small" grow="1">[[Status|Title of a pod status column]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small" grow="1">
-      {{::$ctrl.i18n.MSG_POD_LIST_RESTARTS_LABEL}}
+      [[Restarts|Title of a restarts column for a pod]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="1">{{::$ctrl.i18n.MSG_POD_LIST_AGE_LABEL}}
+    <kd-resource-card-header-column size="small" grow="1">[[Age|Title of a column for the age of a pod]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="1">{{::$ctrl.i18n.MSG_POD_LIST_CLUSTER_IP_LABEL}}
-    </kd-resource-card-header-column>
-    <kd-resource-card-header-column ng-if="::$ctrl.showMetrics()">
-      {{::$ctrl.i18n.MSG_POD_LIST_CPU_USAGE_LABEL}}
+    <kd-resource-card-header-column size="small" grow="1">[[Cluster IP|Title of a column]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column ng-if="::$ctrl.showMetrics()">
-      {{::$ctrl.i18n.MSG_POD_LIST_MEMORY_USAGE_LABEL}}
+      [[CPU (cores)|Title of a column]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column ng-if="::$ctrl.showMetrics()">
+      [[Memory (bytes)|Title of a column]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small" grow="nogrow">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
 
-  <kd-resource-card total-items="::$ctrl.podList.listMeta.totalItems"
-                    pagination-id="pods" object-meta="pod.objectMeta" type-meta="pod.typeMeta"
+  <kd-resource-card total-items="$ctrl.podList.listMeta.totalItems"
+                    pagination-id="pods" object-meta="::pod.objectMeta" type-meta="::pod.typeMeta"
                     dir-paginate="pod in $ctrl.podList.pods | itemsPerPage: default">
     <kd-resource-card-status layout="row">
-      <md-icon class="material-icons kd-error" ng-if="$ctrl.isStatusFailed(pod)">
+      <md-icon class="material-icons kd-error" ng-if="::$ctrl.isStatusFailed(pod)">
         error
-        <md-tooltip md-direction="right">{{::$ctrl.i18n.MSG_POD_IS_FAILED_TOOLTIP}}</md-tooltip>
+        <md-tooltip md-direction="right">
+          [[This pod has errors.|Tooltip for failed pod card icon]]
+        </md-tooltip>
       </md-icon>
-      <md-icon class="material-icons" ng-if="$ctrl.isStatusPending(pod)">
+      <md-icon class="material-icons" ng-if="::$ctrl.isStatusPending(pod)">
         timelapse
-        <md-tooltip md-direction="right">{{::$ctrl.i18n.MSG_POD_IS_PENDING_TOOLTIP}}</md-tooltip>
+        <md-tooltip md-direction="right">
+          [[This pod is in a pending state.|Tooltip for pending pod card icon]]
+        </md-tooltip>
       </md-icon>
-      <md-icon class="material-icons kd-success" ng-if="$ctrl.isStatusSuccessful(pod)">
+      <md-icon class="material-icons kd-success" ng-if="::$ctrl.isStatusSuccessful(pod)">
         check_circle
       </md-icon>
     </kd-resource-card-status>
@@ -106,14 +110,14 @@ limitations under the License.
         <md-button ng-if="::$ctrl.getPodLogsHref(pod)"
                    ng-href="{{::$ctrl.getPodLogsHref(pod)}}" target="_blank" class="md-icon-button">
           <md-icon md-font-library="material-icons">subject</md-icon>
-          <md-tooltip>{{::$ctrl.i18n.MSG_POD_LIST_LOGS_LABEL}}</md-tooltip>
+          <md-tooltip>[[Logs|Label for logs tooltip]]</md-tooltip>
         </md-button>
         <kd-resource-card-menu>
           <kd-resource-card-delete-menu-item
-                  resource-kind-name="{{::$ctrl.i18n.MSG_POD_LIST_POD_TITLE}}">
+                  resource-kind-name="[[Pod|Name of the pod resource]]">
           </kd-resource-card-delete-menu-item>
           <kd-resource-card-edit-menu-item
-                  resource-kind-name="{{::$ctrl.i18n.MSG_POD_LIST_POD_TITLE}}">
+                  resource-kind-name="[[Pod|Name of the pod resource]]">
           </kd-resource-card-edit-menu-item>
         </kd-resource-card-menu>
       </kd-resource-card-column>

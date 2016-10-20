@@ -43,9 +43,6 @@ export class ActionbarDeleteItemController {
 
     /** @private {!ui.router.$state}} */
     this.state_ = $state;
-
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -91,10 +88,4 @@ export const actionbarDeleteItemComponent = {
   },
   bindToController: true,
   controller: ActionbarDeleteItemController,
-};
-
-const i18n = {
-  /** @export {string} @desc Action 'Delete', which is a button on the actionbar and is there
-  for every resource type. */
-  MSG_ACTION_BAR_DELETE_ACTION: goog.getMsg('Delete'),
 };

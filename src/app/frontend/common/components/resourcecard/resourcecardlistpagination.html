@@ -16,7 +16,7 @@ limitations under the License.
 
 <div ng-if="::$ctrl.shouldShowPagination()" flex="auto" layout="row" class="kd-list-pagination">
   <div class="kd-rows-selector-label">
-    {{$ctrl.i18n.MSG_RESOURCE_CARD_LIST_PAGINATION_ROW_SELECTOR_LABEL}}:
+    [[Rows per page:|Label for pagination rows selector visible on resource lists.]]
   </div>
   <md-select ng-model="$ctrl.rowsLimit" class="kd-list-pagination-row-selector"
              md-selected-text="$ctrl.rowsLimit" ng-change="$ctrl.onRowsLimitUpdate()"

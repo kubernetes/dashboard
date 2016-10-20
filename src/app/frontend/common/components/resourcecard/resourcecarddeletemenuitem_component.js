@@ -37,9 +37,6 @@ export class ResourceCardDeleteMenuItemController {
 
     /** @private {!ui.router.$state}} */
     this.state_ = $state;
-
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -69,10 +66,4 @@ export const resourceCardDeleteMenuItemComponent = {
     'resourceCardCtrl': '^kdResourceCard',
   },
   controller: ResourceCardDeleteMenuItemController,
-};
-
-const i18n = {
-  /** @export {string} @desc Action "Delete" (verb), which appears as a menu item on the cards for
-     kubernetes resources. */
-  MSG_RESOURCE_CARD_DELETE_ACTION: goog.getMsg('Delete'),
 };
