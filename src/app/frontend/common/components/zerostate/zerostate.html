@@ -17,9 +17,15 @@ limitations under the License.
 <kd-content-card>
   <kd-content>
     <div class="kd-zerostate-message" layout-padding>
-      <div class="kd-zerostate-title">{{::$ctrl.i18n.MSG_ZERO_STATE_TITLE}}</div>
+      <div class="kd-zerostate-title">[[There is nothing to display here|Title text which
+        appears on zero state view.]]</div>
       <div class="kd-zerostate-text">
-        <span ng-bind-html="::$ctrl.i18n.MSG_ZERO_STATE_TEXT"></span>
+        <span>
+          [[You can <a href="{{::$ctrl.getStateHref()}}">deploy a containerized app</a>,
+          select other namespace or
+          <a href="http://kubernetes.io/docs/user-guide/ui/" target="_blank">take the Dashboard Tour
+          <i class="material-icons kd-zerostate-icon">open_in_new</i></a>
+          to learn more| Description for a zero state page.]]</span>
       </div>
     </div>
   </kd-content>

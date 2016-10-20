@@ -39,9 +39,6 @@ export class ActionbarEditItemController {
 
     /** @private {!ui.router.$state}} */
     this.state_ = $state;
-
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -85,9 +82,4 @@ export const actionbarEditItemComponent = {
   },
   bindToController: true,
   controller: ActionbarEditItemController,
-};
-
-const i18n = {
-  /** @export {string} @desc Action 'Edit' for the edit button on the global action bar. */
-  MSG_ACTION_BAR_EDIT_ACTION: goog.getMsg('Edit'),
 };

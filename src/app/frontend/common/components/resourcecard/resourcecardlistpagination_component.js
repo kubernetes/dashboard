@@ -152,8 +152,6 @@ export const resourceCardListPaginationComponent = {
 };
 
 const i18n = {
-  /** @export {string} @desc Label for pagination rows selector visible on resource lists. */
-  MSG_RESOURCE_CARD_LIST_PAGINATION_ROW_SELECTOR_LABEL: goog.getMsg('Rows per page'),
   /** @export {string} @desc Message shown to the user when there is a pagination error. */
   MSG_RESOURCE_CARD_LIST_PAGINATION_ERROR: goog.getMsg('Pagination error'),
 };
