@@ -16,12 +16,12 @@
  * @fileoverview Common configuration constants used in other build/test files.
  */
 import path from 'path';
+import gulpUtil from 'gulp-util';
 
 /**
  * Load the i18n and l10n configuration. Used when dashboard is built in production.
  */
 let localization = require('../i18n/locale_conf.json');
-let util = import('gulp-util');
 
 /**
  * Base path for all other paths.
@@ -97,7 +97,7 @@ export default {
      * Address for the Heapster API server. If blank, the dashboard
      * will attempt to connect to Heapster via a service proxy.
      */
-    heapsterServerHost: util.env.heapsterServerHost !== undefined ? util.env.heapsterServerHost :
+    heapsterServerHost: gulpUtil.env.heapsterServerHost !== undefined ? gulpUtil.env.heapsterServerHost :
                                                                     '',
   },
 
