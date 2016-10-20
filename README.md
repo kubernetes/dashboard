@@ -45,6 +45,7 @@ This will only be available from the machine where the command is executed, but 
 
 * The [developer guide](docs/devel/README.md) is for anyone wanting to contribute to Dashboard
 
+* The [troubleshooting guide](docs/user-guide/troubleshooting.md) is a collection of typical setup problems
 
 ## License
 

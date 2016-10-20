@@ -37,9 +37,6 @@ export class ResourceCardEditMenuItemController {
 
     /** @private {!ui.router.$state}} */
     this.state_ = $state;
-
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -69,9 +66,4 @@ export const resourceCardEditMenuItemComponent = {
     'resourceCardCtrl': '^kdResourceCard',
   },
   controller: ResourceCardEditMenuItemController,
-};
-
-const i18n = {
-  /** @export @desc Label for YAML edit menu item. */
-  MSG_YAML_EDIT_MENU_LABEL: goog.getMsg('View/edit YAML'),
 };
