@@ -36,10 +36,11 @@ export class GraphController {
   }
 
   $onInit() {
-    // draw graph if data is available
-    if (this.metrics !== null && this.metrics.length !== 0) {
-      this.generateGraph();
-    }
+    this.generateGraph();
+  }
+
+  $onChanges() {
+    this.generateGraph();
   }
 
   /**
@@ -47,6 +48,11 @@ export class GraphController {
    * @private
    */
   generateGraph() {
+    // draw graph if data is available
+    if (this.metrics === null || this.metrics.length === 0) {
+      return;
+    }
+
     let chart;
 
     nv.addGraph(() => {
@@ -156,10 +162,36 @@ export class GraphController {
         return d;
       });
 
-      // generate graph
+      // add graph area.
       let graphArea = d3.select(this.element_[0]);
-      let svg = graphArea.append('svg');
+      let svg = graphArea.select('svg');
+      if (svg.empty()) {
+        svg = graphArea.append('svg');
+      }
+
+      // force to recreate all points to avoid wrong updated points.
+      // remember hover point after recreation.
+      let hoverPoint = svg.select('g').selectAll('.nv-point.hover');
+      let searchStr;
+      if (hoverPoint[0] && hoverPoint[0].length) {
+        let hoverPointClassStr = hoverPoint.attr('class');
+        let classArray = hoverPointClassStr.split(' ');
+        let hoverIndex = classArray.indexOf('hover');
+        classArray.splice(hoverIndex, 1);
+        searchStr = `.${classArray.join('.')}`;
+      }
+
+      // remove all points.
+      let paths = svg.select('g').selectAll('.nv-point');
+      paths.remove();
+
+      // generate graph.
       svg.attr('height', '200px').datum(data).call(chart);
+
+      // add back hover class if it was already there before.
+      if (searchStr) {
+        svg.select('g').selectAll(searchStr).classed('hover', true);
+      }
 
       // add grey line to the bottom to separate from the rest of the page.
       svg.style({
@@ -208,6 +240,7 @@ export class GraphController {
     });
   }
 }
+
 
 /**
  * Definition object for the component that displays graph with CPU and Memory usage metrics.
