@@ -30,12 +30,25 @@ func getRestartCount(pod api.Pod) int32 {
 	return restartCount
 }
 
+// getPodStatus returns a PodStatus object containing a summary of the pod's status.
+func getPodStatus(pod api.Pod) PodStatus {
+	var states []api.ContainerState
+	for _, containerStatus := range pod.Status.ContainerStatuses {
+		states = append(states, containerStatus.State)
+	}
+
+	return PodStatus{
+		PodPhase:        pod.Status.Phase,
+		ContainerStates: states,
+	}
+}
+
 // ToPod transforms Kubernetes pod object into object returned by API.
 func ToPod(pod *api.Pod, metrics *common.MetricsByPod) Pod {
 	podDetail := Pod{
 		ObjectMeta:   common.NewObjectMeta(pod.ObjectMeta),
 		TypeMeta:     common.NewTypeMeta(common.ResourceKindPod),
-		PodPhase:     pod.Status.Phase,
+		PodStatus:    getPodStatus(*pod),
 		PodIP:        pod.Status.PodIP,
 		RestartCount: getRestartCount(*pod),
 	}
