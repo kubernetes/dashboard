@@ -21,6 +21,7 @@ import path from 'path';
  * Load the i18n and l10n configuration. Used when dashboard is built in production.
  */
 let localization = require('../i18n/locale_conf.json');
+let util = require('gulp-util');
 
 /**
  * Base path for all other paths.
@@ -96,7 +97,8 @@ export default {
      * Address for the Heapster API server. If blank, the dashboard
      * will attempt to connect to Heapster via a service proxy.
      */
-    heapsterServerHost: 'http://localhost:8082',
+    heapsterServerHost: util.env.heapsterServerHost !== undefined ? util.env.heapsterServerHost :
+                                                                    '',
   },
 
   /**
