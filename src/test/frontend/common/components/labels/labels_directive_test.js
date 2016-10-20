@@ -44,8 +44,10 @@ describe('Labels directive', () => {
     // then
     let labels = element.find('kd-middle-ellipsis');
     expect(labels.length).toEqual(3);
-    angular.forEach(scope.labels, (key, value, index) => {
-      expect(labels.eq(index).text()).toBe(`${key}=${value}`);
+    let index = 0;
+    angular.forEach(scope.labels, (value, key) => {
+      expect(labels.eq(index).text().trim()).toBe(`${key}: ${value}`);
+      index++;
     });
   });
 });

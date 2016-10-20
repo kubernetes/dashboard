@@ -44,8 +44,10 @@ describe('annotations directive', () => {
     // then
     let labels = element.find('kd-middle-ellipsis');
     expect(labels.length).toEqual(3);
-    angular.forEach(scope.annotations, (value, key, index) => {
-      expect(labels.eq(index).text()).toBe(`${key}=${value}`);
+    let index = 0;
+    angular.forEach(scope.annotations, (value, key) => {
+      expect(labels.eq(index).text().trim()).toBe(`${key}: ${value}`);
+      index++;
     });
   });
 
@@ -64,8 +66,13 @@ describe('annotations directive', () => {
     // then
     let labels = element.find('kd-middle-ellipsis');
     expect(labels.length).toEqual(2);
-    angular.forEach(scope.annotations, (value, key, index) => {
-      expect(labels.eq(index).text()).toBe(`${key}=${value}`);
+
+    let index = 0;
+    angular.forEach(scope.annotations, (value, key) => {
+      if (key !== 'kubernetes.io/created-by') {
+        expect(labels.eq(index).text().trim()).toBe(`${key}: ${value}`);
+        index++;
+      }
     });
     let annotations = element.find('kd-serialized-reference');
     expect(annotations.length).toEqual(1);
