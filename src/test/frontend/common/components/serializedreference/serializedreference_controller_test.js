@@ -71,6 +71,7 @@ describe('SerializedReference controller', () => {
     expect(ctrl.valid).toBe(false);
     expect(ctrl.state_.href).not.toHaveBeenCalled();
   });
+
   it('should set the state to invalid on a non SerializedReference object', () => {
     // given
     ctrl.reference = JSON.stringify({kind: 'NotSerializedReference', data: {}});

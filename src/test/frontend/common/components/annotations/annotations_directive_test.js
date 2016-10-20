@@ -44,10 +44,11 @@ describe('annotations directive', () => {
     // then
     let labels = element.find('kd-middle-ellipsis');
     expect(labels.length).toEqual(3);
-    angular.forEach((key, value, index) => {
+    angular.forEach(scope.annotations, (value, key, index) => {
       expect(labels.eq(index).text()).toBe(`${key}=${value}`);
     });
   });
+
   it('should render 1 annotation of created-by kind as serialized reference', () => {
     // given
     scope.annotations = {
@@ -63,7 +64,7 @@ describe('annotations directive', () => {
     // then
     let labels = element.find('kd-middle-ellipsis');
     expect(labels.length).toEqual(2);
-    angular.forEach((key, value, index) => {
+    angular.forEach(scope.annotations, (value, key, index) => {
       expect(labels.eq(index).text()).toBe(`${key}=${value}`);
     });
     let annotations = element.find('kd-serialized-reference');
