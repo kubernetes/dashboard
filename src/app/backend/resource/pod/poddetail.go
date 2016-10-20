@@ -170,29 +170,43 @@ func getPodCreator(client k8sClient.Interface, creatorAnnotation string, nsQuery
 		return nil, err
 	}
 	reference := serializedReference.Reference
+	return toPodController(client, reference, pods.Items, events.Items, heapsterClient)
+}
+
+func toPodController(client k8sClient.Interface, reference api.ObjectReference, pods []api.Pod, events []api.Event, heapsterClient client.HeapsterClient) (*Controller, error) {
 	kind := reference.Kind
 	switch kind {
 	case "Job":
-		job, err := client.Extensions().Jobs(reference.Namespace).Get(reference.Name)
-		if err != nil {
-			return nil, err
-		}
-		jobs := []batch.Job{*job}
-		jobList := joblist.CreateJobList(jobs, pods.Items, events.Items, dataselect.StdMetricsDataSelect, &heapsterClient)
-		return &Controller{
-			Kind: "Job",
-			JobList: jobList,
-		}, nil
+		return toJobPodController(client, reference, pods, events, heapsterClient)
 	case "ReplicaSet":
+		//return toReplicaSetPodController(client, reference, pods, events, heapsterClient)
 	case "ReplicationController":
+		//return toReplicationControllerPodController(client, reference, pods, events, heapsterClient)
 	case "DaemonSet":
+		//return toDaemonSetPodController(client, reference, pods, events, heapsterClient)
 	case "PetSet":
+		//return toPetSetPodController(client, reference, pods, events, heapsterClient)
 	default:
 	}
+	// Will be moved into the default case once all cases are implemented
 	return &Controller{
 		Kind: kind,
 	}, nil
 }
+
+func toJobPodController(client k8sClient.Interface, reference api.ObjectReference, pods []api.Pod, events []api.Event, heapsterClient client.HeapsterClient) (*Controller, error) {
+	job, err := client.Extensions().Jobs(reference.Namespace).Get(reference.Name)
+	if err != nil {
+		return nil, err
+	}
+	jobs := []batch.Job{*job}
+	jobList := joblist.CreateJobList(jobs, pods, events, dataselect.StdMetricsDataSelect, &heapsterClient)
+	return &Controller{
+		Kind: "Job",
+		JobList: jobList,
+	}, nil
+}
+
 
 func toPodDetail(pod *api.Pod, metrics []metric.Metric, configMaps *api.ConfigMapList, controller Controller) PodDetail {
 
