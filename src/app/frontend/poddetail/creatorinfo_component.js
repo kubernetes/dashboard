@@ -25,9 +25,6 @@ export default class CreatorInfoController {
 
     /** @export */
     this.listResource = 'api/v1/fake';
-
-    /** @export */
-    this.i18n = i18n;
   }
 }
 
@@ -40,11 +37,4 @@ export const creatorInfoComponent = {
   bindings: {
     'creator': '<',
   },
-};
-
-const i18n = {
-  /** @export {string} @desc Subtitle at the top of the creator info box on
-   * poddetail page
-   */
-  MSG_CREATOR_DETAILS_SUBTITLE: goog.getMsg('Creator'),
 };
