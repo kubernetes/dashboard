@@ -23,13 +23,13 @@ import annotationsDirective from './annotations/annotations_directive';
 import contentCardModule from './contentcard/contentcard_module';
 import endpointModule from './endpoint/endpoint_module';
 import graphModule from './graph/graph_module';
+import serializedReferenceModule from './serializedreference/serializedreference_module';
 import i18nDirective from './i18n/i18n_directive';
 import infoCardModule from './infocard/infocard_module';
 import labelsDirective from './labels/labels_directive';
 import middleEllipsisDirective from './middleellipsis/middleellipsis_directive';
 import resourceCardModule from './resourcecard/resourcecard_module';
 import resourceDetailModule from './resourcedetail/module';
-import serializedReferenceDirective from './serializedreference/serializedreference_directive';
 import sparklineDirective from './sparkline/sparkline_directive';
 import warnThresholdDirective from './warnthreshold/warnthreshold_directive';
 import zeroStateModule from './zerostate/zerostate_module';
@@ -56,11 +56,11 @@ export default angular
           namespaceModule.name,
           stateModule.name,
           graphModule.name,
+          serializedReferenceModule.name,
         ])
     .directive('kdAnnotations', annotationsDirective)
     .directive('kdI18n', i18nDirective)
     .directive('kdLabels', labelsDirective)
     .directive('kdMiddleEllipsis', middleEllipsisDirective)
-    .directive('kdSerializedReference', serializedReferenceDirective)
     .directive('kdSparkline', sparklineDirective)
     .directive('kdWarnThreshold', warnThresholdDirective);

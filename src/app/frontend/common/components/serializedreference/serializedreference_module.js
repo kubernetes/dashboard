@@ -1,4 +1,4 @@
-// Copyright 2016 Google Inc. All Rights Reserved.
+// Copyright 2015 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,21 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import SerializedReferenceController from './serializedreference_controller';
+import {serializedReferenceComponent} from './serializedreference_component';
 
 /**
- * Returns directive definition for serialized references.
- *
- * @return {!angular.Directive}
+ * Module containing common graph components.
  */
-export default function serializedReferenceDirective() {
-  return {
-    controller: SerializedReferenceController,
-    controllerAs: 'referencectrl',
-    templateUrl: 'common/components/serializedreference/serializedreference.html',
-    scope: {},
-    bindToController: {
-      'reference': '=',
-    },
-  };
-}
+export default angular
+    .module(
+        'kubernetesDashboard.common.components.serializedReference',
+        [
+          'ngMaterial',
+          'ui.router',
+        ])
+    .component('kdSerializedReference', serializedReferenceComponent)
