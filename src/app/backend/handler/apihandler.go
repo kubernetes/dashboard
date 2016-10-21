@@ -120,8 +120,8 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 	apiV1Ws.Route(
 		apiV1Ws.POST("/appdeployment").
 			To(apiHandler.handleDeploy).
-			Reads(replicationcontroller.AppDeploymentSpec{}).
-			Writes(replicationcontroller.AppDeploymentSpec{}))
+			Reads(deployment.AppDeploymentSpec{}).
+			Writes(deployment.AppDeploymentSpec{}))
 	apiV1Ws.Route(
 		apiV1Ws.POST("/appdeployment/validate/name").
 			To(apiHandler.handleNameValidity).
@@ -140,13 +140,13 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 	apiV1Ws.Route(
 		apiV1Ws.GET("/appdeployment/protocols").
 			To(apiHandler.handleGetAvailableProcotols).
-			Writes(replicationcontroller.Protocols{}))
+			Writes(deployment.Protocols{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.POST("/appdeploymentfromfile").
 			To(apiHandler.handleDeployFromFile).
-			Reads(replicationcontroller.AppDeploymentFromFileSpec{}).
-			Writes(replicationcontroller.AppDeploymentFromFileResponse{}))
+			Reads(deployment.AppDeploymentFromFileSpec{}).
+			Writes(deployment.AppDeploymentFromFileResponse{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/replicationcontroller").
@@ -698,12 +698,12 @@ func (apiHandler *APIHandler) handleGetNodePods(request *restful.Request, respon
 
 // Handles deploy API call.
 func (apiHandler *APIHandler) handleDeploy(request *restful.Request, response *restful.Response) {
-	appDeploymentSpec := new(replicationcontroller.AppDeploymentSpec)
+	appDeploymentSpec := new(deployment.AppDeploymentSpec)
 	if err := request.ReadEntity(appDeploymentSpec); err != nil {
 		handleInternalError(response, err)
 		return
 	}
-	if err := replicationcontroller.DeployApp(appDeploymentSpec, apiHandler.client); err != nil {
+	if err := deployment.DeployApp(appDeploymentSpec, apiHandler.client); err != nil {
 		handleInternalError(response, err)
 		return
 	}
@@ -713,14 +713,14 @@ func (apiHandler *APIHandler) handleDeploy(request *restful.Request, response *r
 
 // Handles deploy from file API call.
 func (apiHandler *APIHandler) handleDeployFromFile(request *restful.Request, response *restful.Response) {
-	deploymentSpec := new(replicationcontroller.AppDeploymentFromFileSpec)
+	deploymentSpec := new(deployment.AppDeploymentFromFileSpec)
 	if err := request.ReadEntity(deploymentSpec); err != nil {
 		handleInternalError(response, err)
 		return
 	}
 
-	isDeployed, err := replicationcontroller.DeployAppFromFile(
-		deploymentSpec, replicationcontroller.CreateObjectFromInfoFn, apiHandler.clientConfig)
+	isDeployed, err := deployment.DeployAppFromFile(
+		deploymentSpec, deployment.CreateObjectFromInfoFn, apiHandler.clientConfig)
 	if !isDeployed {
 		handleInternalError(response, err)
 		return
@@ -731,7 +731,7 @@ func (apiHandler *APIHandler) handleDeployFromFile(request *restful.Request, res
 		errorMessage = err.Error()
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, replicationcontroller.AppDeploymentFromFileResponse{
+	response.WriteHeaderAndEntity(http.StatusCreated, deployment.AppDeploymentFromFileResponse{
 		Name:    deploymentSpec.Name,
 		Content: deploymentSpec.Content,
 		Error:   errorMessage,
@@ -784,7 +784,7 @@ func (apiHandler *APIHandler) handleProtocolValidity(request *restful.Request, r
 
 // Handles get available protocols API call.
 func (apiHandler *APIHandler) handleGetAvailableProcotols(request *restful.Request, response *restful.Response) {
-	response.WriteHeaderAndEntity(http.StatusCreated, replicationcontroller.GetAvailableProtocols())
+	response.WriteHeaderAndEntity(http.StatusCreated, deployment.GetAvailableProtocols())
 }
 
 // Handles get Replication Controller list API call.

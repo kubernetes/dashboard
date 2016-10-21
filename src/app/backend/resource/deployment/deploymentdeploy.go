@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package replicationcontroller
+package deployment
 
 import (
 	"fmt"
@@ -21,6 +21,7 @@ import (
 
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/resource"
+	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
 	cmdutil "k8s.io/kubernetes/pkg/kubectl/cmd/util"
@@ -144,7 +145,7 @@ type Protocols struct {
 }
 
 // DeployApp deploys an app based on the given configuration. The app is deployed using the given
-// client. App deployment consists of a replication controller and an optional service. Both of them
+// client. App deployment consists of a deployment and an optional service. Both of them
 // share common labels.
 func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 	log.Printf("Deploying %s application into %s namespace", spec.Name, spec.Namespace)
@@ -192,21 +193,19 @@ func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 		podSpec.ImagePullSecrets = []api.LocalObjectReference{{Name: *spec.ImagePullSecret}}
 	}
 
-	podTemplate := &api.PodTemplateSpec{
+	podTemplate := api.PodTemplateSpec{
 		ObjectMeta: objectMeta,
 		Spec:       podSpec,
 	}
 
-	replicationController := &api.ReplicationController{
+	deployment := &extensions.Deployment{
 		ObjectMeta: objectMeta,
-		Spec: api.ReplicationControllerSpec{
+		Spec: extensions.DeploymentSpec{
 			Replicas: spec.Replicas,
-			Selector: labels,
 			Template: podTemplate,
 		},
 	}
-
-	_, err := client.ReplicationControllers(spec.Namespace).Create(replicationController)
+	_, err := client.Extensions().Deployments(spec.Namespace).Create(deployment)
 
 	if err != nil {
 		// TODO(bryk): Roll back created resources in case of error.

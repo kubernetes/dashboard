@@ -457,7 +457,7 @@ const i18n = {
 
   /** @export {string} @desc User help for the `App name` input on the deploy from settings page. */
   MSG_DEPLOY_SETTINGS_APP_NAME_USER_HELP: goog.getMsg(
-      `An 'app' label with this value will be added to the Replication Controller and Service that get deployed.`),
+      `An 'app' label with this value will be added to the Deployment and Service that get deployed.`),
 
   /** @export {string} @desc The text is used as a 'Learn more' link text on the deploy from
      settings page. */
@@ -505,7 +505,7 @@ const i18n = {
   /** @export {string} @desc User help for the "number of pods" input on the deploy from settings
      page. */
   MSG_DEPLOY_SETTINGS_NUMBER_OF_PODS_USER_HELP: goog.getMsg(
-      `A Replication Controller will be created to maintain the desired number of pods across your cluster.`),
+      `A Deployment will be created to maintain the desired number of pods across your cluster.`),
 
   /** @export {string} @desc User help for the "port mappings" input on the deploy from settings
      page. */
