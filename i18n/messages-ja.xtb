@@ -1009,4 +1009,5 @@
 	<translation id="5229153540672717672" key="MSG_RESOURCE_DETAIL_INFO_CARD_LABELS_LABEL" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Label 'Labels' for a resource.">Labels</translation>
 	<translation id="5837164744700950654" key="MSG_RESOURCE_DETAIL_INFO_CARD_ANNOTATIONS_LABEL" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Label 'annotations' for a resource.">Annotations</translation>
 	<translation id="7410674269510116677" key="MSG_REPLICA_SET_DETAIL_SELECOTR_LABEL" source="/usr/local/google/home/bryk/src/github.com/kubernetes/dashboard/.tmp/serve/app-dev.js" desc="Label 'selector' for replica sets">Selector</translation>
+	<translation id="1745702155571319443" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_0" source="/usr/local/google/home/rfranken/k8s/dashboard/.tmp/messages_for_extraction/common/components/annotations/annotations.html.js" desc="Friendly name of the kubernetest.io/created-by annotation">Created by:</translation>
 </translationbundle>
