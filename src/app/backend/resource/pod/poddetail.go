@@ -68,8 +68,10 @@ type PodDetail struct {
 //
 // Has 'oneof' semantics on the non-Kind fields decided by which Kind is there
 type Controller struct {
+	// Kind of the Controller, will also define wich of the other members will be non nil
 	Kind string `json:"kind"`
 
+	// Singleton list of the Job that controls this Pod, only set if Kind = "Job"
 	JobList *joblist.JobList `json:"joblist,omitempty"`
 }
 
