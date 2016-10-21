@@ -1,3 +1,11 @@
+<!--
+-----------------NOTICE------------------------
+This file is referenced in code as
+https://github.com/kubernetes/dashboard/blob/master/docs/user-guide/troubleshooting.md
+Do not move it without providing redirects.
+-----------------------------------------------
+-->
+
 # Troubleshooting
 
 ## Authentication to the Kubernetes API Server
