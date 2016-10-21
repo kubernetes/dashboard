@@ -1,14 +1,14 @@
 {
   "//": "Specification of this file can be found at: https://docs.npmjs.com/files/package.json",
   "name": "kubernetes-dashboard",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/kubernetes/dashboard.git"
   },
   "license": "Apache-2.0",
   "devDependencies": {
-    "async": "~2.0.0",
+    "async": "~2.1.2",
     "babel": "~6.5.2",
     "babel-core": "~6.17.0",
     "babel-loader": "~6.2.4",
@@ -46,7 +46,7 @@
     "gulp-sass": "~2.3.2",
     "gulp-sass-lint": "~1.2.0",
     "gulp-size": "~2.1.0",
-    "gulp-sourcemaps": "~1.6.0",
+    "gulp-sourcemaps": "~2.1.1",
     "gulp-uglify": "~2.0.0",
     "gulp-useref": "~3.1.0",
     "gulp-util": "~3.0.7",

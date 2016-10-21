@@ -15,6 +15,7 @@
 /**
  * @fileoverview Common configuration constants used in other build/test files.
  */
+import gulpUtil from 'gulp-util';
 import path from 'path';
 
 /**
@@ -49,7 +50,7 @@ const version = {
   /**
    * Current release version of the project.
    */
-  release: 'v1.4.0',
+  release: 'v1.4.1',
   /**
    * Version name of the canary release of the project.
    */
@@ -96,7 +97,8 @@ export default {
      * Address for the Heapster API server. If blank, the dashboard
      * will attempt to connect to Heapster via a service proxy.
      */
-    heapsterServerHost: 'http://localhost:8082',
+    heapsterServerHost:
+        gulpUtil.env.heapsterServerHost !== undefined ? gulpUtil.env.heapsterServerHost : '',
   },
 
   /**

@@ -44,9 +44,6 @@ export class PodCardListController {
 
     /** @private {!./../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
-
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -109,13 +106,57 @@ export class PodCardListController {
   }
 
   /**
+   * Returns a displayable status message for the pod.
+   * @param {!backendApi.Pod} pod
+   * @return {string}
+   * @export
+   */
+  getDisplayStatus(pod) {
+    let msgState = 'running';
+    let reason = undefined;
+    for (let i = pod.podStatus.containerStates.length - 1; i >= 0; i--) {
+      let state = pod.podStatus.containerStates[i];
+
+      if (state.waiting) {
+        msgState = 'waiting';
+        reason = state.waiting.reason;
+      }
+      if (state.terminated) {
+        msgState = 'terminated';
+        reason = state.terminated.reason;
+        if (!reason) {
+          if (state.terminated.signal) {
+            reason = 'Signal:${state.terminated.signal}';
+          } else {
+            reason = 'ExitCode:${state.terminated.exitCode}';
+          }
+        }
+      }
+    }
+
+    /** @type {string} @desc Status message showing a waiting status with [reason].*/
+    let MSG_POD_LIST_POD_WAITING_STATUS = goog.getMsg('Waiting: {$reason}', {'reason': reason});
+    /** @type {string} @desc Status message showing a terminated status with [reason].*/
+    let MSG_POD_LIST_POD_TERMINATED_STATUS =
+        goog.getMsg('Terminated: {$reason}', {'reason': reason});
+
+    if (msgState === 'waiting') {
+      return MSG_POD_LIST_POD_WAITING_STATUS;
+    }
+    if (msgState === 'terminated') {
+      return MSG_POD_LIST_POD_TERMINATED_STATUS;
+    }
+    return pod.podStatus.podPhase;
+  }
+
+  /**
    * Checks if pod status is successful, i.e. running or succeeded.
    * @param pod
    * @return {boolean}
    * @export
    */
   isStatusSuccessful(pod) {
-    return pod.podPhase === 'Running' || pod.podPhase === 'Succeeded';
+    return pod.podStatus.podPhase === 'Running' || pod.podStatus.podPhase === 'Succeeded';
   }
 
   /**
@@ -125,7 +166,7 @@ export class PodCardListController {
    * @export
    */
   isStatusPending(pod) {
-    return pod.podPhase === 'Pending';
+    return pod.podStatus.podPhase === 'Pending';
   }
 
   /**
@@ -135,7 +176,7 @@ export class PodCardListController {
    * @export
    */
   isStatusFailed(pod) {
-    return pod.podPhase === 'Failed';
+    return pod.podStatus.podPhase === 'Failed';
   }
 
   /**
@@ -174,39 +215,4 @@ export const podCardListComponent = {
     /** {boolean} */
     'withStatuses': '<',
   },
-};
-
-const i18n = {
-  /** @export {string} @desc tooltip for failed pod card icon */
-  MSG_POD_IS_FAILED_TOOLTIP: goog.getMsg('This pod has errors.'),
-  /** @export {string} @desc tooltip for pending pod card icon */
-  MSG_POD_IS_PENDING_TOOLTIP: goog.getMsg('This pod is in a pending state.'),
-  /** @export {string} @desc Label 'Name' which appears as a column label in the table of
-   pods (pod list view). */
-  MSG_POD_LIST_NAME_LABEL: goog.getMsg('Name'),
-  /** @export {string} @desc Label 'Namespace' which appears as a column label in the
-   table of pods (pod list view). */
-  MSG_POD_LIST_NAMESPACE_LABEL: goog.getMsg('Namespace'),
-  /** @export {string} @desc Label 'Status' which appears as a column label in the table of
-   pods (pod list view). */
-  MSG_POD_LIST_STATUS_LABEL: goog.getMsg('Status'),
-  /** @export {string} @desc Label 'Restarts' which appears as a column label in the
-   table of pods (pod list view). */
-  MSG_POD_LIST_RESTARTS_LABEL: goog.getMsg('Restarts'),
-  /** @export {string} @desc Label 'Age' which appears as a column label in the
-   table of pods (pod list view). */
-  MSG_POD_LIST_AGE_LABEL: goog.getMsg('Age'),
-  /** @export {string} @desc Label 'Cluster IP' which appears as a column label in the table of
-   pods (pod list view). */
-  MSG_POD_LIST_CLUSTER_IP_LABEL: goog.getMsg('Cluster IP'),
-  /** @export {string} @desc Label which appears as a column label in the table of pods */
-  MSG_POD_LIST_CPU_USAGE_LABEL: goog.getMsg('CPU (cores)'),
-  /** @export {string} @desc Label which appears as a column label in the table of pods */
-  MSG_POD_LIST_MEMORY_USAGE_LABEL: goog.getMsg('Memory (bytes)'),
-  /** @export {string} @desc Label 'Logs' for the pod's logs which appears as a column label in the
-   table of pods (pod list view). */
-  MSG_POD_LIST_LOGS_LABEL: goog.getMsg('Logs'),
-  /** @export {string} @desc Title 'Pod' which is used as a title for the delete/update
-   dialogs (that can be opened from the pod list view.) */
-  MSG_POD_LIST_POD_TITLE: goog.getMsg('Pod'),
 };

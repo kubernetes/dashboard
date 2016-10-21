@@ -10,21 +10,23 @@ itself.
 ![Dashboard UI workloads page](docs/dashboard-ui.png)
 
 ## Usage
-It is likely that Dashboard is already installed on your cluster. To access it navigate in your
+It is likely that the Dashboard is already installed on your cluster. To access it navigate in your
 browser to the following URL: `https://<kubernetes-master>/ui`.
 
-If you find that you’re not able to access the Dashboard you can install and open the latest
+If you find that you’re not able to access the Dashboard, you can install and open the latest
 stable release by running the following commands:
 ```bash
 kubectl create -f https://rawgit.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml
 ```
 And then navigate to `https://<kubernetes-master>/ui`
 
-If it asks password, use `$ kubectl config view` to find it.
+If it asks for a password, use `$ kubectl config view` to find it.
+
+Note that for the metrics and graphs to be available you need to have [Heapster](https://github.com/kubernetes/heapster/) running in your cluster.
 
 ## Alternative Usage
 Alternatively, you may access the UI via the Service Proxy. This is useful if you have a `kubectl`
-configured with access to the cluster, but lack password credentials for use in browser:
+configured with access to the cluster, but lack password credentials for use in a browser:
 
 ```bash
 kubectl proxy
@@ -43,6 +45,7 @@ This will only be available from the machine where the command is executed, but 
 
 * The [developer guide](docs/devel/README.md) is for anyone wanting to contribute to Dashboard
 
+* The [troubleshooting guide](docs/user-guide/troubleshooting.md) is a collection of typical setup problems
 
 ## License
 

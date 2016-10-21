@@ -26,9 +26,6 @@ export class ActionbarComponent {
   constructor($state) {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
-
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -54,12 +51,4 @@ export const actionbarComponent = {
   templateUrl: 'common/components/actionbar/actionbar.html',
   transclude: true,
   controller: ActionbarComponent,
-};
-
-const i18n = {
-  /** @export {string} @desc Label for global action bar create button. */
-  MSG_ACTION_BAR_CREATE_ACTION: goog.getMsg('Create'),
-  /** @export {string} @desc Label for global action bar create button tooltip. */
-  MSG_ACTION_BAR_CREATE_ACTION_TOOLTIP:
-      goog.getMsg('Create an application or any Kubernetes resource'),
 };
