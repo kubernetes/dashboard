@@ -52,5 +52,5 @@ before_script:
 
   - docker --version
 
-script: ./node_modules/.bin/gulp check:local-cluster
+script: ./node_modules/.bin/gulp check:local-cluster --heapsterServerHost 'http://localhost:8082'
 after_script: ./node_modules/.bin/gulp coverage-codecov-upload
