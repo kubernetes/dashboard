@@ -22,9 +22,6 @@ export default class CreatorInfoController {
   constructor() {
     /** @export {!Object} Initialized from a binding. */
     this.creator;
-
-    /** @export */
-    this.listResource = 'api/v1/fake';
   }
 }
 
