@@ -24,4 +24,4 @@ export default angular
           'ngMaterial',
           'ui.router',
         ])
-    .component('kdSerializedReference', serializedReferenceComponent)
+    .component('kdSerializedReference', serializedReferenceComponent);
