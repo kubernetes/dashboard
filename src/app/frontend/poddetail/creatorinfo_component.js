@@ -20,7 +20,7 @@ export default class CreatorInfoController {
    * @ngInject
    */
   constructor() {
-    /** @export {!Object} Initialized from a binding. */
+    /** @export {!backendApi.Controller} Initialized from a binding. */
     this.creator;
   }
 }

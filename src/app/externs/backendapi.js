@@ -1116,5 +1116,17 @@ backendApi.PersistentVolumeClaim;
  */
 backendApi.PersistentVolumeClaimList;
 
+/**
+ * @typedef {{
+ *   kind: !string,
+ *   joblist: backendApi.JobList,
+ *   replicasetlist: backendApi.ReplicaSetList,
+ *   replicationcontrollerlist: backendApi.ReplicationControllerList,
+ *   daemonsetlist: backendApi.DaemonSetList,
+ *   petsetlist: backendApi.PetSetList
+ * }}
+ */
+backendApi.Controller;
+
 /** @typedef {{serverTime: number}} */
 const appConfig_DO_NOT_USE_DIRECTLY = {};
