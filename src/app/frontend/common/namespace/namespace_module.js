@@ -36,17 +36,16 @@ export default angular
  * Ensures that namespaceParam is present in the URL.
  * @param {!angular.Scope} $rootScope
  * @param {!angular.$location} $location
- * @param {!angular.$sanitize} $sanitize
  * @ngInject
  */
-function ensureNamespaceParamPresent($rootScope, $location, $sanitize) {
+function ensureNamespaceParamPresent($rootScope, $location) {
   /**
    * Helper function which replaces namespace URL search param when the given namespace is
    * undefined.
    * @param {string|undefined} namespace
    */
   function replaceUrlIfNeeded(namespace) {
-    if (namespace === undefined || namespace !== $sanitize(namespace)) {
+    if (namespace === undefined) {
       $location.search(namespaceParam, DEFAULT_NAMESPACE);
       $location.replace();
     }

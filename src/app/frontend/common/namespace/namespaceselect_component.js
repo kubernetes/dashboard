@@ -27,11 +27,12 @@ export class NamespaceSelectController {
    * @param {!angular.$resource} $resource
    * @param {!ui.router.$state} $state
    * @param {!angular.Scope} $scope
+   * @param {!angular.$sanitize} $sanitize
    * @param {!./namespace_service.NamespaceService} kdNamespaceService
    * @param {!./../state/futurestate_service.FutureStateService} kdFutureStateService
    * @ngInject
    */
-  constructor($resource, $state, $scope, kdNamespaceService, kdFutureStateService) {
+  constructor($resource, $state, $scope, $sanitize, kdNamespaceService, kdFutureStateService) {
     /**
      * Initialized with all namespaces on first open.
      * @export {!Array<string>}
@@ -66,6 +67,9 @@ export class NamespaceSelectController {
 
     /** @private {!angular.Scope} */
     this.scope_ = $scope;
+
+    /** @private {!angular.$sanitize} */
+    this.sanitize_ = $sanitize;
 
     /** @private {!./../state/futurestate_service.FutureStateService}} */
     this.kdFutureStateService_ = kdFutureStateService;
@@ -121,7 +125,9 @@ export class NamespaceSelectController {
     if (namespace === ALL_NAMESPACES) {
       return this.i18n.MSG_ALL_NAMESPACES;
     } else {
-      return namespace;
+      // Might even be to forgiving, kubectl create namespace requires to
+      // satisfy m/[a-z0-9]([-a-z0-9]*[a-z0-9])?/
+      return this.sanitize_(namespace);
     }
   }
 
