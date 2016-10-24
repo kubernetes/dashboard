@@ -23,6 +23,7 @@ import jsesc from 'jsesc';
 import path from 'path';
 import q from 'q';
 import regexpClone from 'regexp-clone';
+import xslt from 'gulp-xslt';
 
 import conf from './conf';
 
@@ -50,11 +51,14 @@ function extractForLanguage(langKey) {
       gulpUtil.log(stderr);
       deferred.reject(new Error(err));
     }
-    return deferred.resolve();
+    deferred.resolve();
   });
 
   return deferred.promise;
 }
+
+gulp.task('generate-xtbs', ['extract-translations', 'sort-translations']);
+
 
 /**
  * Extracts all translation messages into XTB bundles.
@@ -62,6 +66,12 @@ function extractForLanguage(langKey) {
 gulp.task('extract-translations', ['scripts', 'angular-templates'], function() {
   let promises = conf.translations.map((translation) => extractForLanguage(translation.key));
   return q.all(promises);
+});
+
+gulp.task('sort-translations', ['extract-translations'], function() {
+  return gulp.src('i18n/messages-*.xtb')
+          .pipe(xslt('build/sortxtb.xslt'))
+          .pipe(gulp.dest('i18n'));
 });
 
 
