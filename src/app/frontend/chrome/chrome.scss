@@ -124,6 +124,29 @@ a {
   word-wrap: break-word;
 }
 
+$chip-margin: 0 $baseline-grid ($baseline-grid / 2) 0;
+
+// Style taken(mostly) from angular material md-chip style.
+.kd-chips {
+  background-color: $body;
+  border-radius: $baseline-grid;
+  display: inline-block;
+  margin: $chip-margin;
+  max-width: 100%;
+  vertical-align: bottom;
+}
+
+.kd-chip {
+  display: block;
+  padding: ($baseline-grid / 4) $baseline-grid;
+}
+
+.kd-chips-switch {
+  color: $primary;
+  cursor: pointer;
+  outline: none;
+}
+
 // Style scrollbars on Webkit-based browsers (e.g., Chrome or Safari).
 * {
   &::-webkit-scrollbar {

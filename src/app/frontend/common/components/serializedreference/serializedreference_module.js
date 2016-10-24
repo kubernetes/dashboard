@@ -12,9 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
+import {serializedReferenceComponent} from './serializedreference_component';
 
-kd-labels {
-  display: block;
-  margin-bottom: -($baseline-grid / 2);
-}
+/**
+ * Module containing common graph components.
+ */
+export default angular
+    .module(
+        'kubernetesDashboard.common.components.serializedReference',
+        [
+          'ngMaterial',
+          'ui.router',
+        ])
+    .component('kdSerializedReference', serializedReferenceComponent);

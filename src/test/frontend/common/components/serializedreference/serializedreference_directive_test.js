@@ -14,7 +14,7 @@
 
 import componentsModule from 'common/components/components_module';
 
-describe('Labels directive', () => {
+describe('SerializedReference directive', () => {
   /** @type {!angular.Scope} */
   let scope;
   /** @type {function(!angular.Scope):!angular.JQLite} */
@@ -25,29 +25,37 @@ describe('Labels directive', () => {
 
     angular.mock.inject(($rootScope, $compile) => {
       scope = $rootScope.$new();
-      compileFn = $compile('<kd-labels labels="labels"></kd-labels>');
+      compileFn =
+          $compile('<kd-serialized-reference reference="reference"></kd-serialized-reference>');
     });
   });
 
-  it('should render 3 labels', () => {
+  it('should render a link if a valid reference is given', () => {
     // given
-    scope.labels = {
-      app: 'app',
-      version: 'version',
-      testLabel: 'test',
-    };
+    scope.reference = JSON.stringify({
+      kind: 'SerializedReference',
+      reference: {kind: 'Job', name: 'testJob', namespace: 'testing'},
+    });
 
     // when
     let element = compileFn(scope);
     scope.$digest();
 
     // then
-    let labels = element.find('kd-middle-ellipsis');
-    expect(labels.length).toEqual(3);
-    let index = 0;
-    angular.forEach(scope.labels, (value, key) => {
-      expect(labels.eq(index).text().trim()).toBe(`${key}: ${value}`);
-      index++;
-    });
+    let link = element.find('a');
+    expect(link.length).toEqual(1);
+  });
+
+  it('should not render a link if an invalid reference is given', () => {
+    // given
+    scope.reference = '{invalid json';
+
+    // when
+    let element = compileFn(scope);
+    scope.$digest();
+
+    // then
+    let link = element.find('a');
+    expect(link.length).toEqual(0);
   });
 });
