@@ -184,25 +184,7 @@ function createCompileTask(translation) {
  * Compiles frontend JavaScript files into production bundle located in {conf.paths.prodTmp}
  * directory. A separated bundle is created for each i18n locale.
  */
-gulp.task('scripts:prod', ['angular-templates', 'extract-translations'], function(doneFn) {
-  // add a compilation step to stream for each translation file
-  let streams = conf.translations.map((translation) => {
-    return createCompileTask(translation);
-  });
-
-  // add a default compilation task (no localization)
-  streams = streams.concat(createCompileTask());
-
-  // TODO (taimir) : do not run the tasks sequentially once
-  // gulp-closure-compiler can be run in parallel
-  async.series(streams, doneFn);
-});
-
-/**
- * Compiles frontend JavaScript files into production bundle located in {conf.paths.prodTmp}
- * directory. A separated bundle is created for each i18n locale.
- */
-gulp.task('scripts:prod', ['angular-templates', 'extract-translations'], function(doneFn) {
+gulp.task('scripts:prod', ['angular-templates', 'generate-xtbs'], function(doneFn) {
   // add a compilation step to stream for each translation file
   let streams = conf.translations.map((translation) => {
     return createCompileTask(translation);
