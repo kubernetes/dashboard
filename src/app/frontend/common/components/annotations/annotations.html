@@ -1,0 +1,35 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<div ng-if="::annotationsCtrl.labels">
+  <div ng-repeat="(key, value) in ::annotationsCtrl.labels"
+       ng-if="annotationsCtrl.isVisible($index)" class="kd-chips">
+    <div ng-switch on="key">
+      <div ng-switch-when="kubernetes.io/created-by" class="kd-chip">
+        [[Created by:|Friendly name of the kubernetes.io/created-by annotation]] <kd-serialized-reference reference="value">
+      </div>
+      <kd-middle-ellipsis ng-switch-default display-string="{{::key}}: {{::value}}" class="kd-chip">
+      </kd-middle-ellipsis>
+    </div>
+  </div>
+  <div class="kd-chips kd-chips-switch" ng-show="annotationsCtrl.isMoreAvailable()"
+       ng-click="annotationsCtrl.switchLabelsView()">
+    {{annotationsCtrl.isShowingAll() ?
+      "[[show less annotations|Text on the button to show less annotations]]" :
+      "[[show all annotations|Text on the button to show all the annotations]]"}}
+  </div>
+</div>
+<div ng-hide="::annotationsCtrl.labels">-</div>

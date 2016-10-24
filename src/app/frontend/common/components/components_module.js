@@ -19,6 +19,7 @@ import filtersModule from '../filters/filters_module';
 import namespaceModule from './../namespace/namespace_module';
 import paginationModule from './../pagination/pagination_module';
 import actionbarModule from './actionbar/actionbar_module';
+import annotationsDirective from './annotations/annotations_directive';
 import contentCardModule from './contentcard/contentcard_module';
 import endpointModule from './endpoint/endpoint_module';
 import graphModule from './graph/graph_module';
@@ -28,6 +29,7 @@ import labelsDirective from './labels/labels_directive';
 import middleEllipsisDirective from './middleellipsis/middleellipsis_directive';
 import resourceCardModule from './resourcecard/resourcecard_module';
 import resourceDetailModule from './resourcedetail/module';
+import serializedReferenceModule from './serializedreference/serializedreference_module';
 import sparklineDirective from './sparkline/sparkline_directive';
 import warnThresholdDirective from './warnthreshold/warnthreshold_directive';
 import zeroStateModule from './zerostate/zerostate_module';
@@ -54,7 +56,9 @@ export default angular
           namespaceModule.name,
           stateModule.name,
           graphModule.name,
+          serializedReferenceModule.name,
         ])
+    .directive('kdAnnotations', annotationsDirective)
     .directive('kdI18n', i18nDirective)
     .directive('kdLabels', labelsDirective)
     .directive('kdMiddleEllipsis', middleEllipsisDirective)
