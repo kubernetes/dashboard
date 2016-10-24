@@ -30,7 +30,7 @@
   min-height: 7 * $baseline-grid;
 }
 
-.kd-content-div {
+.kd-content-div-filled {
   height: 100%;
 }
 
@@ -70,6 +70,12 @@ body,
   height: 100%;
   max-height: 100%;
   position: relative;
+
+  >.md-body-1 {
+    &:not(.kd-content-div-filled) {
+      padding-bottom: 4 * $baseline-grid;
+    }
+  }
 }
 
 a {

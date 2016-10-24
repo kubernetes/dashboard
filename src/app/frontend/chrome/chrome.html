@@ -31,14 +31,15 @@ limitations under the License.
 <md-content layout="row" class="kd-app-entire-content" flex="auto">
   <kd-nav flex="none"></kd-nav>
   <md-content flex="auto" class="kd-main-content-box">
-    <div ng-switch="$ctrl.loading" class="kd-content-div kd-main-content-div">
+    <div ng-switch="$ctrl.loading" class="kd-content-div-filled kd-main-content-div">
       <div ng-switch-when="true" class="kd-spinner">
         <md-progress-circular ng-if="$ctrl.showLoadingSpinner" md-mode="indeterminate"
             md-diameter="48">
         </md-progress-circular>
       </div>
       <div ng-switch-when="false" class="kd-app-content">
-        <div ui-view class="md-body-1 kd-content-div"></div>
+        <div ui-view class="md-body-1"
+            ng-class="{'kd-content-div-filled': $ctrl.isFillContentView()}"></div>
       </div>
     </div>
   </md-content>

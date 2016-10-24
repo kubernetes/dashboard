@@ -33,6 +33,13 @@ export const actionbarViewName = 'actionbar';
 export const namespaceParam = 'namespace';
 
 /**
+ * To be used in data section in params. Set to true for views that should fill app content.
+ *
+ * Defaults to false.
+ */
+export const fillContentConfig = 'fillContent';
+
+/**
  * All properties are @exported and in sync with URL param names.
  */
 export class StateParams {
