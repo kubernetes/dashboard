@@ -19,7 +19,7 @@ limitations under the License.
        ng-if="annotationsCtrl.isVisible($index)" class="kd-chips">
     <div ng-switch on="key">
       <div ng-switch-when="kubernetes.io/created-by" class="kd-chip">
-        [[Created by:|Friendly name of the kubernetest.io/created-by annotation]] <kd-serialized-reference reference="value">
+        [[Created by:|Friendly name of the kubernetes.io/created-by annotation]] <kd-serialized-reference reference="value">
       </div>
       <kd-middle-ellipsis ng-switch-default display-string="{{::key}}: {{::value}}" class="kd-chip">
       </kd-middle-ellipsis>
