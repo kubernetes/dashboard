@@ -1,0 +1,26 @@
+<kd-resource-card-list selectable="false" with-statuses="false">
+    <kd-resource-card-header-columns>
+        <kd-resource-card-header-column size="small" grow="2">
+            [[Resource Name|Resource quota details status section resource name.]]
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column size="small" grow="1">
+            [[Hard|Resource quota details status section hard.]]
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column size="small" grow="1">
+            [[Used|Resource quota details status section used.]]
+        </kd-resource-card-header-column>
+    </kd-resource-card-header-columns>
+    <kd-resource-card ng-repeat="(key, value) in ::$ctrl.statusList" omit-meta="true">
+        <kd-resource-card-columns>
+            <kd-resource-card-column>
+                <div>{{::key}}</div>
+            </kd-resource-card-column>
+            <kd-resource-card-column>
+                <div>{{::value.hard}}</div>
+            </kd-resource-card-column>
+            <kd-resource-card-column>
+                <div>{{::value.used}}</div>
+            </kd-resource-card-column>
+        </kd-resource-card-columns>
+    </kd-resource-card>
+</kd-resource-card-list>
