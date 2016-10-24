@@ -21,8 +21,11 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/resourcequota"
 	"k8s.io/kubernetes/pkg/api"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
+	"k8s.io/kubernetes/pkg/fields"
+	"k8s.io/kubernetes/pkg/labels"
 )
 
 // NamespaceDetail is a presentation layer view of Kubernetes Namespace resource. This means it is Namespace plus
@@ -36,6 +39,9 @@ type NamespaceDetail struct {
 
 	// Events is list of events associated to the namespace.
 	EventList common.EventList `json:"eventList"`
+
+	// ResourceQuotaList is list of resource quotas associated to the namespace
+	ResourceQuotaList *resourcequota.ResourceQuotaDetailList `json:"resourceQuotaList"`
 }
 
 // GetNamespaceDetail gets namespace details.
@@ -53,16 +59,44 @@ func GetNamespaceDetail(client k8sClient.Interface, heapsterClient client.Heapst
 		return nil, err
 	}
 
-	namespaceDetails := toNamespaceDetail(*namespace, events)
+	resourceQuotaList, err := getResourceQuotas(client, *namespace)
+	if err != nil {
+		return nil, err
+	}
+
+	namespaceDetails := toNamespaceDetail(*namespace, events, resourceQuotaList)
+
 	return &namespaceDetails, nil
 }
 
-func toNamespaceDetail(namespace api.Namespace, events common.EventList) NamespaceDetail {
+func toNamespaceDetail(namespace api.Namespace, events common.EventList, resourceQuotaList *resourcequota.ResourceQuotaDetailList) NamespaceDetail {
 
 	return NamespaceDetail{
-		ObjectMeta: common.NewObjectMeta(namespace.ObjectMeta),
-		TypeMeta:   common.NewTypeMeta(common.ResourceKindNamespace),
-		Phase:      namespace.Status.Phase,
-		EventList:  events,
+		ObjectMeta:        common.NewObjectMeta(namespace.ObjectMeta),
+		TypeMeta:          common.NewTypeMeta(common.ResourceKindNamespace),
+		Phase:             namespace.Status.Phase,
+		EventList:         events,
+		ResourceQuotaList: resourceQuotaList,
 	}
+}
+
+func getResourceQuotas(client k8sClient.ResourceQuotasNamespacer, namespace api.Namespace) (*resourcequota.ResourceQuotaDetailList, error) {
+	list, err := client.ResourceQuotas(namespace.Name).List(listEverything)
+
+	result := &resourcequota.ResourceQuotaDetailList{
+		Items:    make([]resourcequota.ResourceQuotaDetail, 0),
+		ListMeta: common.ListMeta{TotalItems: len(list.Items)},
+	}
+
+	for _, item := range list.Items {
+		detail := resourcequota.ToResourceQuotaDetail(&item)
+		result.Items = append(result.Items, *detail)
+	}
+
+	return result, err
+}
+
+var listEverything = api.ListOptions{
+	LabelSelector: labels.Everything(),
+	FieldSelector: fields.Everything(),
 }

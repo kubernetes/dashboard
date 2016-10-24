@@ -15,13 +15,26 @@
 /**
  * @final
  */
-export class PersistentVolumeDetailController {
+export default class ResourceQuotaDetailController {
   /**
-   * @param {!backendApi.PersistentVolumeDetail} persistentVolumeDetail
-   * @ngInject
+   * Constructs pettion controller info object.
    */
-  constructor(persistentVolumeDetail) {
-    /** @export {!backendApi.PersistentVolumeDetail} */
-    this.persistentVolumeDetail = persistentVolumeDetail;
+  constructor() {
+    /** @export {!backendApi.ResourceQuotaDetail} */
+    this.resourceQuotaDetail;
   }
 }
+
+/**
+ * Definition object for the component that displays resource quota detail status.
+ *
+ * @return {!angular.Directive}
+ */
+export const resourceQuotaDetailComponent = {
+  controller: ResourceQuotaDetailController,
+  templateUrl: 'resourcequotadetail/resourcequotadetail.html',
+  bindings: {
+    /** {!backendApi.ResourceQuotaDetail} */
+    'resourceQuotaDetail': '=',
+  },
+};

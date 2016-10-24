@@ -12,16 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * @final
- */
-export class PersistentVolumeDetailController {
-  /**
-   * @param {!backendApi.PersistentVolumeDetail} persistentVolumeDetail
-   * @ngInject
-   */
-  constructor(persistentVolumeDetail) {
-    /** @export {!backendApi.PersistentVolumeDetail} */
-    this.persistentVolumeDetail = persistentVolumeDetail;
-  }
-}
+import resourceQuotaDetailModule from 'resourcequotadetail/resourcequotadetail_module';
+
+describe('Resource Quota Detail controller', () => {
+  /** @type {!ResourceQuotaDetailController} */
+  let ctrl;
+
+  beforeEach(() => {
+    angular.mock.module(resourceQuotaDetailModule.name);
+
+    angular.mock.inject(($componentController, $rootScope) => {
+      ctrl = $componentController('kdResourceQuotaDetail', {$scope: $rootScope}, {
+        resourceQuotaDetail: {},
+      });
+    });
+  });
+
+  it('should initialize the ctrl', () => {
+    expect(ctrl.resourceQuotaDetail).toBeDefined();
+  });
+});

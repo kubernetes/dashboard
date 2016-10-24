@@ -43,6 +43,7 @@ import podDetailModule from './poddetail/poddetail_module';
 import replicaSetListModule from './replicasetlist/replicasetlist_module';
 import replicationControllerDetailModule from './replicationcontrollerdetail/replicationcontrollerdetail_module';
 import replicationControllerListModule from './replicationcontrollerlist/replicationcontrollerlist_module';
+import resourceQuotaDetailModule from './resourcequotadetail/resourcequotadetail_module';
 import secretDetailModule from './secretdetail/module';
 import secretListModule from './secretlist/module';
 import serviceDetailModule from './servicedetail/servicedetail_module';
@@ -85,6 +86,7 @@ export default angular
           petSetListModule.name,
           persistentVolumeClaimDetailModule.name,
           persistentVolumeClaimListModule.name,
+          resourceQuotaDetailModule.name,
           configMapListModule.name,
           configMapDetailModule.name,
           secretListModule.name,
