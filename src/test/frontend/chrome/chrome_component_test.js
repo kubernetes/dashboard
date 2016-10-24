@@ -14,6 +14,7 @@
 
 import chromeModule from 'chrome/chrome_module';
 import {actionbarViewName} from 'chrome/chrome_state';
+import {fillContentConfig} from 'chrome/chrome_state';
 
 describe('Chrome controller', () => {
   /** @type {ChromeController} */
@@ -92,5 +93,20 @@ describe('Chrome controller', () => {
     // Transitioning to another view.
     ctrl.showLoadingSpinner = true;
     expect(ctrl.isActionbarVisible()).toBe(false);
+  });
+
+  it('should fill app content', () => {
+    state.current = {data: {}};
+    expect(ctrl.isFillContentView()).toBe(false);
+    state.current.data[fillContentConfig] = 'true';
+    expect(ctrl.isFillContentView()).toBe(false);
+    state.current.data[fillContentConfig] = 1;
+    expect(ctrl.isFillContentView()).toBe(false);
+    state.current.data[fillContentConfig] = {};
+    expect(ctrl.isFillContentView()).toBe(false);
+    state.current.data[fillContentConfig] = false;
+    expect(ctrl.isFillContentView()).toBe(false);
+    state.current.data[fillContentConfig] = true;
+    expect(ctrl.isFillContentView()).toBe(true);
   });
 });
