@@ -19,11 +19,11 @@ import childProcess from 'child_process';
 import fileExists from 'file-exists';
 import gulp from 'gulp';
 import gulpUtil from 'gulp-util';
+import xslt from 'gulp-xslt';
 import jsesc from 'jsesc';
 import path from 'path';
 import q from 'q';
 import regexpClone from 'regexp-clone';
-import xslt from 'gulp-xslt';
 
 import conf from './conf';
 
@@ -69,9 +69,7 @@ gulp.task('extract-translations', ['scripts', 'angular-templates'], function() {
 });
 
 gulp.task('sort-translations', ['extract-translations'], function() {
-  return gulp.src('i18n/messages-*.xtb')
-          .pipe(xslt('build/sortxtb.xslt'))
-          .pipe(gulp.dest('i18n'));
+  return gulp.src('i18n/messages-*.xtb').pipe(xslt('build/sortxtb.xslt')).pipe(gulp.dest('i18n'));
 });
 
 
