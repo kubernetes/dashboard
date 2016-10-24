@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {fillContentConfig} from 'chrome/chrome_state';
+
 import {actionbarViewName} from './chrome_state';
 
 /**
@@ -61,6 +63,14 @@ export class ChromeController {
   isActionbarVisible() {
     return !!this.state_.current && !!this.state_.current.views &&
         !!this.state_.current.views[actionbarViewName] && !this.showLoadingSpinner;
+  }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  isFillContentView() {
+    return this.state_.current.data[fillContentConfig] === true;
   }
 
   /**
