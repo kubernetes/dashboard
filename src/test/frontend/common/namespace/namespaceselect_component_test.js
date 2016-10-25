@@ -129,4 +129,12 @@ describe('Namespace select component ', () => {
     ctrl.selectedNamespace = 'foo';
     expect(ctrl.formatNamespace('foo')).toBe('foo');
   });
+
+  it('should remove xss risks from nonexisting namespaces', () => {
+    ctrl.$onInit();
+    let unsafe = '<img src="x" onerror="alert(document.domain)">';
+    state.go('fakeState', {namespace: unsafe});
+    scope.$digest();
+    expect(ctrl.selectedNamespace).toBe('default')
+  });
 });
