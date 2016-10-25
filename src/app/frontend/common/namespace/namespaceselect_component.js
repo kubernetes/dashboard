@@ -19,6 +19,8 @@ export const ALL_NAMESPACES = '_all';
 
 export const DEFAULT_NAMESPACE = 'default';
 
+export const NAMESPACE_REGEX = /^([a-z0-9]([-a-z0-9]*[a-z0-9])?|_all)$/;
+
 /**
  * @final
  */
@@ -101,8 +103,12 @@ export class NamespaceSelectController {
             this.selectedNamespace = DEFAULT_NAMESPACE;
           }
         } else {
-          this.namespaces = [newNamespace];
-          this.selectedNamespace = newNamespace;
+          if (NAMESPACE_REGEX.test(newNamespace)) {
+            this.namespaces = [newNamespace];
+            this.selectedNamespace = newNamespace;
+          } else {
+            this.selectedNamespace = DEFAULT_NAMESPACE;
+          }
         }
       } else {
         this.selectedNamespace = DEFAULT_NAMESPACE;
