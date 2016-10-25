@@ -100,7 +100,9 @@ export function processI18nMessages(file, minifiedHtml) {
         let exec = regexpClone(I18N_REGEX).exec(match);
         // Default to no description when it is not provided.
         let desc = (exec[2] || '(no description provided)').trim();
-        return {text: exec[1], desc: desc, original: match};
+        // replace {{$variableName}} with {{ $variableName}} to avoid {$ getting recognised as
+        // google.getMsg format
+        return {text: exec[1].replace('{$', '{ $'), desc: desc, original: match};
       });
     }
     return [];
