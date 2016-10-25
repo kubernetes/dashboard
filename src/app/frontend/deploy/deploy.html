@@ -15,19 +15,19 @@ limitations under the License.
 -->
 
 <kd-content-card>
-  <kd-title>{{::ctrl.i18n.MSG_DEPLOY_PAGE_TITLE}}</kd-title>
+  <kd-title>[[Deploy a Containerized App|Title text which appears on top of the deploy page.]]</kd-title>
   <kd-content class="kd-content-padded">
     <kd-help-section>
       <md-radio-group ng-model="ctrl.selection" ng-change="ctrl.changeSelection()">
         <md-radio-button value="{{::ctrl.appOption}}" class="md-primary">
-          {{::ctrl.i18n.MSG_DEPLOY_SPECIFY_APP_DETAILS_ACTION}}
+          [[Specify app details below|Text for a selection option, which the user must click to manually enter the app details on the deploy page.]]
         </md-radio-button>
         <md-radio-button value="{{::ctrl.fileOption}}" class="md-primary">
-          {{::ctrl.i18n.MSG_DEPLOY_FILE_UPLOAD_ACTION}}
+          [[Upload a YAML or JSON file|Text for a selection option, which the user must click to upload a YAML/JSON file to deploy from on the deploy page.]]
         </md-radio-button>
       </md-radio-group>
       <kd-user-help>
-        <span ng-bind-html="::ctrl.i18n.MSG_DEPLOY_DASHBOARD_TOUR_USER_HELP"></span>
+        [[To learn more, <a href="http://kubernetes.io/docs/user-guide/ui/" target="_blank" tabindex="-1"> take the Dashboard Tour <i class="material-icons">open_in_new</i></a>|User help with a link redirecting to the "Dashboard tour" on the deploy page.]]
       </kd-user-help>
     </kd-help-section>
     <div ui-view></div>

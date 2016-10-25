@@ -23,14 +23,5 @@ export class ActionBarController {
   constructor(deploymentDetail) {
     /** @export {!backendApi.DeploymentDetail} */
     this.details = deploymentDetail;
-
-    /** @export */
-    this.i18n = i18n;
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Label 'Deployment' which will appear in the deployment
-      delete dialog opened from the deployment details page.*/
-  MSG_DEPLOYMENT_DETAILS_DEPLOYMENT_LABEL: goog.getMsg('Deployment'),
-};

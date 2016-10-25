@@ -1,16 +1,16 @@
-<div class="kd-namespace-select-title">{{::$ctrl.i18n.MSG_NAMESPACE}}</div>
+<div class="kd-namespace-select-title">[[Namespace|Title for namespace select.]]</div>
 <md-input-container class="kd-namespace-select-input-container">
   <md-select ng-model="$ctrl.selectedNamespace"
       md-on-open="$ctrl.loadNamespacesIfNeeded()"
       md-on-close="$ctrl.changeNamespace()"
       class="kd-namespace-select"
-      aria-label="{{::$ctrl.i18n.MSG_NAMESPACE_SELECT_ARIA_LABEL}}"
+      aria-label="[[Selector for namespaces|Text describing what namespace selector is]]"
       md-container-class="kd-namespace-select-container"
       md-selected-text="$ctrl.formatNamespace()">
     <md-option ng-value="::$ctrl.ALL_NAMESPACES" class="kd-namespace-select-all">
-      {{::$ctrl.i18n.MSG_ALL_NAMESPACES}}
+      [[All namespaces|Text for dropdown item that indicates that no namespace was selected.]]
     </md-option>
-    <md-optgroup label="{{::$ctrl.i18n.MSG_NAMESPACE_LIST_LABEL}}"
+    <md-optgroup label="[[Namespaces|Label atop a list of namespaces]]"
         class="kd-namespace-select-namespace-list">
       <md-option ng-value="namespace" ng-repeat="namespace in $ctrl.namespaces">
         {{::namespace}}

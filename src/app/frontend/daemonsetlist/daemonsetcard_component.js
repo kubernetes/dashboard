@@ -39,9 +39,6 @@ export class DaemonSetCardController {
 
     /** @private {!./../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
-
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -113,14 +110,4 @@ export const daemonSetCardComponent = {
   },
   controller: DaemonSetCardController,
   templateUrl: 'daemonsetlist/daemonsetcard.html',
-};
-
-const i18n = {
-  /** @export {string} @desc tooltip for failed pod card icon */
-  MSG_PODS_ARE_FAILED_TOOLTIP: goog.getMsg('One or more pods have errors.'),
-  /** @export {string} @desc tooltip for pending pod card icon */
-  MSG_PODS_ARE_PENDING_TOOLTIP: goog.getMsg('One or more pods are in pending state.'),
-  /** @export {string} @desc Title 'Daemon set' which is used as a title for the delete/update
-   dialogs (that can be opened on the daemon set list view.) */
-  MSG_DAEMON_SET_LIST_DAEMON_SET_TITLE: goog.getMsg('Daemon Set'),
 };

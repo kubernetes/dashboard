@@ -49,9 +49,6 @@ export class EditResourceController {
     /** @private {!angular.$http} */
     this.http_ = $http;
 
-    /** @export */
-    this.i18n = i18n(resourceKindName);
-
     this.init_();
   }
 
@@ -87,20 +84,4 @@ export class EditResourceController {
   cancel() {
     this.mdDialog_.cancel();
   }
-}
-
-/**
- * @param {string} resourceKindName
- * @return {!Object}
- */
-function i18n(resourceKindName) {
-  return {
-    /** @export @desc Title for a delete resource dialog */
-    MSG_EDIT_RESOURCE_DIALOG_TITLE:
-        goog.getMsg('Edit a {$resourceKindName}', {'resourceKindName': resourceKindName}),
-    /** @export @desc Label for cancel button */
-    MSG_EDIT_RESOURCE_DIALOG_CANCEL: goog.getMsg('Cancel'),
-    /** @export @desc Label for update button */
-    MSG_EDIT_RESOURCE_DIALOG_UPDATE: goog.getMsg('Update'),
-  };
 }

@@ -14,19 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-dialog aria-label="{{::$ctrl.i18n.MSG_EDIT_RESOURCE_DIALOG_TITLE}}" layout="column">
+<md-dialog aria-label="[[Edit a {{::$ctrl.resourceKindName}}|Title for a delete resource dialog.]]" layout="column">
   <md-dialog-content layout-padding class="kd-json-edit-dialog-content">
-    <h4 class="md-title">{{::$ctrl.i18n.MSG_EDIT_RESOURCE_DIALOG_TITLE}}</h4>
+    <h4 class="md-title">[[Edit a {{::$ctrl.resourceKindName}}|Title for a delete resource dialog.]]</h4>
     <div ng-if="$ctrl.data" ng-jsoneditor ng-model="$ctrl.data"
          options="{ mode: 'tree', name: $ctrl.resourceKindName, history: false, expanded: true}"
          class="kd-json-edit-editor">
     </div>
     <md-dialog-actions>
       <md-button class="md-primary kd-cancel-btn" ng-click="$ctrl.cancel()">
-        {{::$ctrl.i18n.MSG_EDIT_RESOURCE_DIALOG_CANCEL}}
+        [[Cancel|Label for cancel button.]]
       </md-button>
       <md-button class="md-primary kd-delete-btn" ng-click="$ctrl.update()">
-        {{::$ctrl.i18n.MSG_EDIT_RESOURCE_DIALOG_UPDATE}}
+        [[Update|Label for update button.]]
       </md-button>
     </md-dialog-actions>
   </md-dialog-content>

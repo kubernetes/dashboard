@@ -36,9 +36,6 @@ export default class DeployController {
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
-
-    /** @export */
-    this.i18n = i18n;
   }
 
   /** @export */
@@ -46,26 +43,3 @@ export default class DeployController {
     this.state_.go(this.selection);
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Title text which appears on top of the deploy page. */
-  MSG_DEPLOY_PAGE_TITLE: goog.getMsg('Deploy a Containerized App'),
-
-  /** @export {string} @desc Text for a selection option, which the user must click to manually
-     enter the app details on the deploy page. */
-  MSG_DEPLOY_SPECIFY_APP_DETAILS_ACTION: goog.getMsg('Specify app details below'),
-
-  /** @export {string} @desc Text for a selection option, which the user must click to upload a
-     YAML/JSON file to deploy from on the deploy page. */
-  MSG_DEPLOY_FILE_UPLOAD_ACTION: goog.getMsg('Upload a YAML or JSON file'),
-
-  /** @export {string} @desc User help with a link redirecting to the "Dashboard tour" on the
-     deploy page. */
-  MSG_DEPLOY_DASHBOARD_TOUR_USER_HELP:
-      goog.getMsg(`To learn more, {$openLink} take the Dashboard Tour {$linkIcon} {$closeLink}`, {
-        'openLink':
-            `<a href="http://kubernetes.io/docs/user-guide/ui/" target="_blank" tabindex="-1">`,
-        'closeLink': `</a>`,
-        'linkIcon': `<i class="material-icons">open_in_new</i>`,
-      }),
-};
