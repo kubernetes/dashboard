@@ -39,8 +39,8 @@ type ResourceQuotaDetail struct {
 
 // ResourceQuotaDetailList
 type ResourceQuotaDetailList struct {
-	ListMeta common.ListMeta `json:"listMeta"`
-	Items []ResourceQuotaDetail `json:"items"`
+	ListMeta common.ListMeta       `json:"listMeta"`
+	Items    []ResourceQuotaDetail `json:"items"`
 }
 
 func ToResourceQuotaDetail(rawResourceQuota *api.ResourceQuota) *ResourceQuotaDetail {
