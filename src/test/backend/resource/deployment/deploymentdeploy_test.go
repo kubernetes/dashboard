@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package replicationcontroller
+package deployment
 
 import (
 	"reflect"
@@ -21,6 +21,7 @@ import (
 
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/resource"
+	"k8s.io/kubernetes/pkg/apis/extensions"
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
 	kubectlResource "k8s.io/kubernetes/pkg/kubectl/resource"
 )
@@ -32,14 +33,14 @@ func TestDeployApp(t *testing.T) {
 		Name:            "foo-name",
 		RunAsPrivileged: true,
 	}
-	expectedRc := &api.ReplicationController{
+	expectedRc := &extensions.Deployment{
 		ObjectMeta: api.ObjectMeta{
 			Name:        "foo-name",
 			Labels:      map[string]string{},
 			Annotations: map[string]string{},
 		},
-		Spec: api.ReplicationControllerSpec{
-			Template: &api.PodTemplateSpec{
+		Spec: extensions.DeploymentSpec{
+			Template: api.PodTemplateSpec{
 				ObjectMeta: api.ObjectMeta{
 					Name:        "foo-name",
 					Labels:      map[string]string{},
@@ -57,7 +58,6 @@ func TestDeployApp(t *testing.T) {
 					}},
 				},
 			},
-			Selector: map[string]string{},
 		},
 	}
 
@@ -74,7 +74,7 @@ func TestDeployApp(t *testing.T) {
 		t.Errorf("Expected namespace to be %#v but go %#v", namespace, createAction.Namespace)
 	}
 
-	rc := createAction.GetObject().(*api.ReplicationController)
+	rc := createAction.GetObject().(*extensions.Deployment)
 	if !reflect.DeepEqual(rc, expectedRc) {
 		t.Errorf("Expected replication controller \n%#v\n to be created but got \n%#v\n",
 			expectedRc, rc)
@@ -96,7 +96,7 @@ func TestDeployAppContainerCommands(t *testing.T) {
 
 	createAction := testClient.Actions()[0].(testclient.CreateActionImpl)
 
-	rc := createAction.GetObject().(*api.ReplicationController)
+	rc := createAction.GetObject().(*extensions.Deployment)
 	container := rc.Spec.Template.Spec.Containers[0]
 	if container.Command[0] != command {
 		t.Errorf("Expected command to be %#v but got %#v",
@@ -121,7 +121,7 @@ func TestDeployShouldPopulateEnvVars(t *testing.T) {
 
 	createAction := testClient.Actions()[0].(testclient.CreateActionImpl)
 
-	rc := createAction.GetObject().(*api.ReplicationController)
+	rc := createAction.GetObject().(*extensions.Deployment)
 	container := rc.Spec.Template.Spec.Containers[0]
 	if !reflect.DeepEqual(container.Env, []api.EnvVar{{Name: "foo", Value: "bar"}}) {
 		t.Errorf("Expected environment variables to be %#v but got %#v",
@@ -163,7 +163,7 @@ func TestDeployWithResourceRequirements(t *testing.T) {
 
 	createAction := testClient.Actions()[0].(testclient.CreateActionImpl)
 
-	rc := createAction.GetObject().(*api.ReplicationController)
+	rc := createAction.GetObject().(*extensions.Deployment)
 	container := rc.Spec.Template.Spec.Containers[0]
 	if !reflect.DeepEqual(container.Resources, expectedResources) {
 		t.Errorf("Expected resource requirements to be %#v but got %#v",
