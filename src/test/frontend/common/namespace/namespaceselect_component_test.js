@@ -135,6 +135,6 @@ describe('Namespace select component ', () => {
     let unsafe = '<img src="x" onerror="alert(document.domain)">';
     state.go('fakeState', {namespace: unsafe});
     scope.$digest();
-    expect(ctrl.selectedNamespace).toBe('default')
+    expect(ctrl.selectedNamespace).toBe('default');
   });
 });

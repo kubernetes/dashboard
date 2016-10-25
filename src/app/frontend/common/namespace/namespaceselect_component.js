@@ -106,8 +106,7 @@ export class NamespaceSelectController {
           if (NAMESPACE_REGEX.test(newNamespace)) {
             this.namespaces = [newNamespace];
             this.selectedNamespace = newNamespace;
-          }
-          else {
+          } else {
             this.selectedNamespace = DEFAULT_NAMESPACE;
           }
         }
