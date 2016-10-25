@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {stateName as chromeStateName} from 'chrome/chrome_state';
+import {fillContentConfig} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 
@@ -45,6 +46,7 @@ export default function stateConfig($stateProvider) {
       [breadcrumbsConfig]: {
         'label': i18n.MSG_BREADCRUMBS_LOGS_LABEL,
       },
+      [fillContentConfig]: true,
     },
     views: views,
   });

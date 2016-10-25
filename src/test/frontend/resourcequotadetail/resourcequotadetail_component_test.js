@@ -12,9 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
+import resourceQuotaDetailModule from 'resourcequotadetail/resourcequotadetail_module';
 
-kd-labels {
-  display: block;
-  margin-bottom: -($baseline-grid / 2);
-}
+describe('Resource Quota Detail controller', () => {
+  /** @type {!ResourceQuotaDetailController} */
+  let ctrl;
+
+  beforeEach(() => {
+    angular.mock.module(resourceQuotaDetailModule.name);
+
+    angular.mock.inject(($componentController, $rootScope) => {
+      ctrl = $componentController('kdResourceQuotaDetail', {$scope: $rootScope}, {
+        resourceQuotaDetail: {},
+      });
+    });
+  });
+
+  it('should initialize the ctrl', () => {
+    expect(ctrl.resourceQuotaDetail).toBeDefined();
+  });
+});

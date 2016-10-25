@@ -30,7 +30,7 @@
   min-height: 7 * $baseline-grid;
 }
 
-.kd-content-div {
+.kd-content-div-filled {
   height: 100%;
 }
 
@@ -70,6 +70,12 @@ body,
   height: 100%;
   max-height: 100%;
   position: relative;
+
+  >.md-body-1 {
+    &:not(.kd-content-div-filled) {
+      padding-bottom: 4 * $baseline-grid;
+    }
+  }
 }
 
 a {
@@ -116,6 +122,29 @@ a {
   margin: 0;
   white-space: pre-wrap;
   word-wrap: break-word;
+}
+
+$chip-margin: 0 $baseline-grid ($baseline-grid / 2) 0;
+
+// Style taken(mostly) from angular material md-chip style.
+.kd-chips {
+  background-color: $body;
+  border-radius: $baseline-grid;
+  display: inline-block;
+  margin: $chip-margin;
+  max-width: 100%;
+  vertical-align: bottom;
+}
+
+.kd-chip {
+  display: block;
+  padding: ($baseline-grid / 4) $baseline-grid;
+}
+
+.kd-chips-switch {
+  color: $primary;
+  cursor: pointer;
+  outline: none;
 }
 
 // Style scrollbars on Webkit-based browsers (e.g., Chrome or Safari).

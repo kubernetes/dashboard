@@ -12,9 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
+import LabelsController from '../labels/labels_controller';
 
-kd-labels {
-  display: block;
-  margin-bottom: -($baseline-grid / 2);
+/**
+ * Returns directive definition for annotations.
+ *
+ * @return {!angular.Directive}
+ */
+export default function annotationsDirective() {
+  return {
+    controller: LabelsController,
+    controllerAs: 'annotationsCtrl',
+    templateUrl: 'common/components/annotations/annotations.html',
+    scope: {},
+    bindToController: {
+      'labels': '=',
+    },
+  };
 }

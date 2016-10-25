@@ -14,7 +14,7 @@
 
 import componentsModule from 'common/components/components_module';
 
-describe('Labels directive', () => {
+describe('annotations directive', () => {
   /** @type {!angular.Scope} */
   let scope;
   /** @type {function(!angular.Scope):!angular.JQLite} */
@@ -25,13 +25,13 @@ describe('Labels directive', () => {
 
     angular.mock.inject(($rootScope, $compile) => {
       scope = $rootScope.$new();
-      compileFn = $compile('<kd-labels labels="labels"></kd-labels>');
+      compileFn = $compile('<kd-annotations labels="annotations"></kd-annotations>');
     });
   });
 
-  it('should render 3 labels', () => {
+  it('should render 3 annotations of unknown kind as labels', () => {
     // given
-    scope.labels = {
+    scope.annotations = {
       app: 'app',
       version: 'version',
       testLabel: 'test',
@@ -45,9 +45,38 @@ describe('Labels directive', () => {
     let labels = element.find('kd-middle-ellipsis');
     expect(labels.length).toEqual(3);
     let index = 0;
-    angular.forEach(scope.labels, (value, key) => {
+    angular.forEach(scope.annotations, (value, key) => {
       expect(labels.eq(index).text().trim()).toBe(`${key}: ${value}`);
       index++;
     });
+  });
+
+  it('should render 1 annotation of created-by kind as serialized reference', () => {
+    // given
+    scope.annotations = {
+      app: 'app',
+      'kubernetes.io/created-by': '{bogus: "json"}',
+      testLabel: 'test',
+    };
+
+    // when
+    let element = compileFn(scope);
+    scope.$digest();
+
+    // then
+    let labels = element.find('kd-middle-ellipsis');
+    expect(labels.length).toEqual(2);
+
+    let index = 0;
+    angular.forEach(scope.annotations, (value, key) => {
+      if (key !== 'kubernetes.io/created-by') {
+        expect(labels.eq(index).text().trim()).toBe(`${key}: ${value}`);
+        index++;
+      }
+    });
+    let annotations = element.find('kd-serialized-reference');
+    expect(annotations.length).toEqual(1);
+    expect(annotations.eq(0).text().trim()).toBe('{bogus: "json"}');
+
   });
 });

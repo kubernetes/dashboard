@@ -385,6 +385,32 @@ backendApi.PersistentVolumeSource;
 
 /**
  * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   scopes: Array<string>,
+ *   statusList: Object<string, !backendApi.ResourceQuotaStatus>,
+ * }}
+ */
+backendApi.ResourceQuotaDetail;
+
+/**
+ * @typedef {{
+ *   used: string,
+ *   hard: string,
+ * }}
+ */
+backendApi.ResourceQuotaStatus;
+
+/**
+ * @typedef {{
+ *   items: !Array<!backendApi.ResourceQuotaDetail>,
+ *   listMeta: !backendApi.ListMeta
+ * }}
+ */
+backendApi.ResourceQuotaDetailList;
+
+/**
+ * @typedef {{
  *   pdName: !string,
  *   fsType: string,
  *   partition: number,
@@ -943,7 +969,8 @@ backendApi.NamespaceList;
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
  *   phase: string,
- *   eventList: !backendApi.EventList
+ *   eventList: !backendApi.EventList,
+ *   resourceQuotaList: !backendApi.ResourceQuotaDetailList,
  * }}
  */
 backendApi.NamespaceDetail;
