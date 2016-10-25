@@ -143,6 +143,24 @@ It can be executed with:
 $ gulp check
 ```
 
+## Committing changes to your fork
+   
+Before committing any changes, please link/copy the pre-commit hook into your .git directory. This will keep you from accidentally committing non formatted code.
+   
+The hook requires gofmt to be in your PATH.
+   
+```shell
+cd <dashboard_home>/.git/hooks/
+ln -s ../../hooks/pre-commit .
+```
+   
+Then you can commit your changes and push them to your fork:
+   
+```shell
+git commit
+git push -f origin my-feature
+```
+
 ## Building Dashboard Inside a Container
 
 It's possible to run `gulp` and all the dependencies inside a development container. To do this,
