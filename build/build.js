@@ -180,6 +180,13 @@ gulp.task('clean', ['clean-dist'], function() {
 });
 
 /**
+ * Cleans all message for extraction files.
+ */
+gulp.task('clean-messages-for-extraction', [], function() {
+  return del([conf.paths.messagesForExtraction]);
+});
+
+/**
  * Cleans all build artifacts in the dist/ folder.
  */
 gulp.task('clean-dist', function() {
