@@ -29,7 +29,8 @@ export class WorkloadsController {
    */
   constructor(
       workloads, kdPodListResource, kdReplicaSetListResource, kdDaemonSetListResource,
-      kdDeploymentListResource, kdPetSetListResource, kdJobListResource, kdRCListResource) {
+      kdReleaseListResource, kdDeploymentListResource, kdPetSetListResource, kdJobListResource,
+      kdRCListResource) {
     /** @export {!backendApi.Workloads} */
     this.workloads = workloads;
 
@@ -41,6 +42,9 @@ export class WorkloadsController {
 
     /** @export {!angular.Resource} */
     this.daemonSetListResource = kdDaemonSetListResource;
+
+    /** @export {!angular.Resource} */
+    this.releaseListResource = kdReleaseListResource;
 
     /** @export {!angular.Resource} */
     this.deploymentListResource = kdDeploymentListResource;
@@ -65,6 +69,7 @@ export class WorkloadsController {
   shouldShowZeroState() {
     /** @type {number} */
     let resourcesLength = this.workloads.deploymentList.listMeta.totalItems +
+        this.workloads.releaseList.listMeta.totalItems +
         this.workloads.replicaSetList.listMeta.totalItems +
         this.workloads.jobList.listMeta.totalItems +
         this.workloads.replicationControllerList.listMeta.totalItems +
@@ -77,6 +82,9 @@ export class WorkloadsController {
 }
 
 const i18n = {
+  /** @export {string} @desc Label "Releases", which appears above the releases list on
+   the workloads page. */
+  MSG_WORKLOADS_RELEASES_LABEL: goog.getMsg('Releases'),
   /** @export {string} @desc Label "Daemon sets", which appears above the daemon sets list on
    the workloads page. */
   MSG_WORKLOADS_DEAMON_SETS_LABEL: goog.getMsg('Daemon sets'),

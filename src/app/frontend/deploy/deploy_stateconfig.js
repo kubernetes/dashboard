@@ -16,7 +16,8 @@ import {stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 
 import DeployController from './deploy_controller';
-import {baseStateName, deployAppStateName, deployFileStateName} from './deploy_state';
+import {baseStateName, deployAppStateName, deployChartStateName, deployFileStateName} from './deploy_state';
+import DeployFromChartController from './deployfromchart_controller';
 import DeployFromFileController from './deployfromfile_controller';
 import DeployFromSettingsController from './deployfromsettings_controller';
 
@@ -65,6 +66,18 @@ export default function stateConfig($stateProvider) {
     },
     templateUrl: 'deploy/deployfromfile.html',
   });
+  $stateProvider.state(deployChartStateName, {
+    controller: DeployFromChartController,
+    controllerAs: 'ctrl',
+    url: '/chart',
+    parent: baseStateName,
+    data: {
+      [breadcrumbsConfig]: {
+        'label': i18n.MSG_BREADCRUMBS_DEPLOY_CHART_LABEL,
+      },
+    },
+    templateUrl: 'deploy/deployfromchart.html',
+  });
 }
 
 /**
@@ -104,4 +117,7 @@ const i18n = {
 
   /** @type {string} @desc Breadcrum label for the YAML upload form */
   MSG_BREADCRUMBS_DEPLOY_FILE_LABEL: goog.getMsg('Upload'),
+
+  /** @type {string} @desc Breadcrum label for the Chart deploy form */
+  MSG_BREADCRUMBS_DEPLOY_CHART_LABEL: goog.getMsg('Deploy chart'),
 };

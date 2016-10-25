@@ -74,8 +74,7 @@ func (testCodec) String() string {
 }
 
 type testStreamHandler struct {
-	port string
-	t    transport.ServerTransport
+	t transport.ServerTransport
 }
 
 func (h *testStreamHandler) handleStream(t *testing.T, s *transport.Stream) {
@@ -107,11 +106,6 @@ func (h *testStreamHandler) handleStream(t *testing.T, s *transport.Stream) {
 			h.t.WriteStatus(s, codes.Internal, "")
 			return
 		}
-		if v == "port" {
-			h.t.WriteStatus(s, codes.Internal, h.port)
-			return
-		}
-
 		if v != expectedRequest {
 			h.t.WriteStatus(s, codes.Internal, strings.Repeat("A", sizeLargeErr))
 			return
@@ -166,7 +160,7 @@ func (s *server) start(t *testing.T, port int, maxStreams uint32) {
 		}
 		st, err := transport.NewServerTransport("http2", conn, maxStreams, nil)
 		if err != nil {
-			continue
+			return
 		}
 		s.mu.Lock()
 		if s.conns == nil {
@@ -176,10 +170,7 @@ func (s *server) start(t *testing.T, port int, maxStreams uint32) {
 		}
 		s.conns[st] = true
 		s.mu.Unlock()
-		h := &testStreamHandler{
-			port: s.port,
-			t:    st,
-		}
+		h := &testStreamHandler{st}
 		go st.HandleStreams(func(s *transport.Stream) {
 			go h.handleStream(t, s)
 		})

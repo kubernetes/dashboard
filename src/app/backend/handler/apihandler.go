@@ -25,6 +25,7 @@ import (
 	restful "github.com/emicklei/go-restful"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/admin"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/chart"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/config"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/configmap"
@@ -44,6 +45,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/petset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/release"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/secret"
@@ -51,6 +53,8 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/servicesanddiscovery"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/workload"
 	"github.com/kubernetes/dashboard/src/app/backend/validation"
+	"k8s.io/helm/pkg/helm"
+	helmrelease "k8s.io/helm/pkg/proto/hapi/release"
 	clientK8s "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
 	"k8s.io/kubernetes/pkg/runtime"
@@ -71,6 +75,7 @@ type APIHandler struct {
 	heapsterClient client.HeapsterClient
 	clientConfig   clientcmd.ClientConfig
 	verber         common.ResourceVerber
+	helmClient     *helm.Client
 }
 
 // Web-service filter function used for request and response logging.
@@ -101,11 +106,11 @@ func FormatResponseLog(resp *restful.Response, req *restful.Request) string {
 
 // CreateHTTPAPIHandler creates a new HTTP handler that handles all requests to the API of the backend.
 func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.HeapsterClient,
-	clientConfig clientcmd.ClientConfig) http.Handler {
+	clientConfig clientcmd.ClientConfig, helmClient *helm.Client) http.Handler {
 
 	verber := common.NewResourceVerber(client.RESTClient, client.ExtensionsClient.RESTClient,
 		client.AppsClient.RESTClient, client.BatchClient.RESTClient)
-	apiHandler := APIHandler{client, heapsterClient, clientConfig, verber}
+	apiHandler := APIHandler{client, heapsterClient, clientConfig, verber, helmClient}
 	wsContainer := restful.NewContainer()
 	wsContainer.EnableContentEncoding(true)
 
@@ -146,6 +151,11 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 			To(apiHandler.handleDeployFromFile).
 			Reads(replicationcontroller.AppDeploymentFromFileSpec{}).
 			Writes(replicationcontroller.AppDeploymentFromFileResponse{}))
+	apiV1Ws.Route(
+		apiV1Ws.POST("/appdeploymentfromchart").
+			To(apiHandler.handleDeployFromChart).
+			Reads(chart.AppDeploymentFromChartSpec{}).
+			Writes(chart.AppDeploymentFromChartResponse{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/replicationcontroller").
@@ -255,6 +265,19 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 			Writes(logs.Logs{}))
 
 	apiV1Ws.Route(
+		apiV1Ws.GET("/release").
+			To(apiHandler.handleGetReleases).
+			Writes(release.ReleaseList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/release/{namespace}").
+			To(apiHandler.handleGetReleases).
+			Writes(release.ReleaseList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/release/{namespace}/{release}").
+			To(apiHandler.handleGetReleaseDetail).
+			Writes(helmrelease.Release{}))
+
+	apiV1Ws.Route(
 		apiV1Ws.GET("/deployment").
 			To(apiHandler.handleGetDeployments).
 			Writes(deployment.DeploymentList{}))
@@ -341,6 +364,27 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 		apiV1Ws.GET("/namespace/{name}/event").
 			To(apiHandler.handleGetNamespaceEvents).
 			Writes(common.EventList{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.POST("/repository").
+			To(apiHandler.handleAddRepository).
+			Reads(chart.RepositorySpec{}).
+			Writes(chart.RepositorySpec{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/repository").
+			To(apiHandler.handleGetRepository).
+			Writes(chart.RepositorySpec{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/repository/{name}").
+			To(apiHandler.handleGetRepositoryCharts).
+			Writes(chart.RepositoryChartListSpec{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/repositorydetail/{name}").
+			To(apiHandler.handleGetRepositoryDetail).
+			Writes(chart.RepositorySpec{}))
+	apiV1Ws.Route(
+		apiV1Ws.DELETE("/repository/namespace/{namespace}/name/{name}").
+			To(apiHandler.handleDeleteRepository))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/secret").
@@ -696,6 +740,21 @@ func (apiHandler *APIHandler) handleDeploy(request *restful.Request, response *r
 	response.WriteHeaderAndEntity(http.StatusCreated, appDeploymentSpec)
 }
 
+// Handles deploy from chart API call.
+func (apiHandler *APIHandler) handleDeployFromChart(request *restful.Request, response *restful.Response) {
+	deploymentSpec := new(chart.AppDeploymentFromChartSpec)
+	if err := request.ReadEntity(deploymentSpec); err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	if err := chart.DeployChart(deploymentSpec, apiHandler.helmClient); err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, deploymentSpec)
+}
+
 // Handles deploy from file API call.
 func (apiHandler *APIHandler) handleDeployFromFile(request *restful.Request, response *restful.Response) {
 	deploymentSpec := new(replicationcontroller.AppDeploymentFromFileSpec)
@@ -793,7 +852,8 @@ func (apiHandler *APIHandler) handleGetWorkloads(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := parseNamespacePathParameter(request)
-	result, err := workload.GetWorkloads(apiHandler.client, apiHandler.heapsterClient, namespace, dataselect.StandardMetrics)
+	result, err := workload.GetWorkloads(apiHandler.client, apiHandler.heapsterClient,
+		apiHandler.helmClient, namespace, dataselect.StandardMetrics)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -934,8 +994,38 @@ func (apiHandler *APIHandler) handleGetDeploymentDetail(
 
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("deployment")
-
 	result, err := deployment.GetDeploymentDetail(apiHandler.client, apiHandler.heapsterClient, namespace, name)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+// Handles get Deployment list API call.
+func (apiHandler *APIHandler) handleGetReleases(
+	request *restful.Request, response *restful.Response) {
+
+	namespace := parseNamespacePathParameter(request)
+	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
+	result, err := release.GetReleaseList(apiHandler.helmClient, namespace, dataSelect, &apiHandler.heapsterClient)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get Release detail API call.
+func (apiHandler *APIHandler) handleGetReleaseDetail(
+	request *restful.Request, response *restful.Response) {
+
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("release")
+	result, err := release.GetReleaseDetail(apiHandler.helmClient, namespace, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1162,6 +1252,73 @@ func (apiHandler *APIHandler) handleGetNamespaceEvents(request *restful.Request,
 		return
 	}
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles adding repository API call.
+func (apiHandler *APIHandler) handleAddRepository(request *restful.Request,
+	response *restful.Response) {
+	repositorySpec := new(chart.RepositorySpec)
+	if err := request.ReadEntity(repositorySpec); err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	if err := chart.AddRepository(repositorySpec); err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, repositorySpec)
+}
+
+// Handles get repository list API call.
+func (apiHandler *APIHandler) handleGetRepository(
+	request *restful.Request, response *restful.Response) {
+
+	result, err := chart.GetRepositoryList()
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get repository detail API call.
+func (apiHandler *APIHandler) handleGetRepositoryDetail(
+	request *restful.Request, response *restful.Response) {
+	repoName := request.PathParameter("name")
+	result, err := chart.GetRepository(repoName)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles get charts for a repository API call.
+func (apiHandler *APIHandler) handleGetRepositoryCharts(request *restful.Request,
+	response *restful.Response) {
+	repoName := request.PathParameter("name")
+	result, err := chart.GetRepositoryCharts(repoName)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+// Handles deleting repository API call.
+func (apiHandler *APIHandler) handleDeleteRepository(request *restful.Request,
+	response *restful.Response) {
+	name := request.PathParameter("name")
+
+	if err := chart.DeleteRepository(name); err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeader(http.StatusCreated)
 }
 
 // Handles image pull secret creation API call.

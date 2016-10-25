@@ -87,6 +87,14 @@ backendApi.AppDeploymentSpec;
 
 /**
  * @typedef {{
+ *   chartURL: string,
+ *   releaseName: string
+ * }}
+ */
+backendApi.AppDeploymentFromChartSpec;
+
+/**
+ * @typedef {{
  *   name: string,
  *   content: string,
  *   validate: boolean,
@@ -129,6 +137,7 @@ backendApi.ReplicationControllerList;
 
 /**
  * @typedef {{
+ *   releaseList: !backendApi.ReleaseList,
  *   deploymentList: !backendApi.DeploymentList,
  *   replicaSetList: !backendApi.ReplicaSetList,
  *   jobList: !backendApi.JobList,
@@ -576,6 +585,117 @@ backendApi.DeploymentInfo;
  * }}
  */
 backendApi.DeploymentDetail;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   name: !string,
+ *   namespace: !string,
+ *   chart: !backendApi.ReleaseChart,
+ *   info: !backendApi.ReleaseInfo,
+ * }}
+ */
+backendApi.Release;
+
+/**
+ * @typedef {{
+ *   metadata: !backendApi.ReleaseChartMetadata,
+ * }}
+ */
+backendApi.ReleaseChart;
+
+/**
+ * @typedef {{
+ *   name: !string,
+ *   version: !string,
+ * }}
+ */
+backendApi.ReleaseChartMetadata;
+
+/**
+ * @typedef {{
+ *   last_deployed: !backendApi.ReleaseTimeStamp,
+ *   first_deployed: !backendApi.ReleaseTimeStamp,
+ *   status: !backendApi.ReleaseStatusInfo,
+ * }}
+ */
+backendApi.ReleaseInfo;
+
+/**
+ * @typedef {{
+ *   seconds: !number,
+ * }}
+ */
+backendApi.ReleaseTimeStamp;
+
+/**
+ * @typedef {{
+ *   code: !string,
+ * }}
+ */
+backendApi.ReleaseStatusInfo;
+
+/**
+ * @typedef {{
+ *   releases: !Array<!backendApi.Release>,
+ *   listMeta: !backendApi.ListMeta,
+ * }}
+ */
+backendApi.ReleaseList;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   name: !string,
+ * }}
+ */
+backendApi.ReleaseDetail;
+
+/**
+ * @typedef {{
+ *   repositories: !Array<!backendApi.Repository>,
+ *   totalItems: number,
+ * }}
+ */
+backendApi.RepositoryList;
+
+/**
+ * @typedef {{
+ *   name: !string,
+ *   url: !string,
+ *   phase: !string,
+ * }}
+ */
+backendApi.Repository;
+
+/**
+ * @typedef {{
+ *   name: !string,
+ *   url: !string,
+ *   phase: !string,
+ * }}
+ */
+backendApi.RepositoryDetail;
+
+/**
+ * @typedef {{
+ *   charts: !Array<!backendApi.Chart>,
+ * }}
+ */
+backendApi.ChartList;
+
+/**
+ * @typedef {{
+ *   name: string,
+ *   version: string,
+ *   fullURL: string,
+ *   description: string,
+ *   icon: string,
+ * }}
+ */
+backendApi.Chart;
 
 /**
  * @typedef {{

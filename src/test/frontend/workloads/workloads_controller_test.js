@@ -39,6 +39,7 @@ describe('Workload list controller', () => {
     // given
     ctrl.workloads = {
       deploymentList: {listMeta: {totalItems: 0}, deployments: []},
+      releaseList: {listMeta: {totalItems: 0}, releases: []},
       replicaSetList: {listMeta: {totalItems: 0}, replicaSets: []},
       jobList: {listMeta: {totalItems: 0}, jobs: []},
       replicationControllerList: {listMeta: {totalItems: 0}, replicationControllers: []},
@@ -54,6 +55,7 @@ describe('Workload list controller', () => {
     // given
     ctrl.workloads = {
       deploymentList: {listMeta: {totalItems: 1}, deployments: []},
+      releaseList: {listMeta: {totalItems: 0}, releases: []},
       replicaSetList: {listMeta: {totalItems: 0}, replicaSets: []},
       jobList: {listMeta: {totalItems: 0}, jobs: []},
       replicationControllerList: {listMeta: {totalItems: 0}, replicationControllers: []},

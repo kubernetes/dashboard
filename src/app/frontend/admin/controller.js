@@ -21,9 +21,12 @@ export class AdminController {
    * @param {!angular.Resource} kdNamespaceListResource
    * @param {!angular.Resource} kdNodeListResource
    * @param {!angular.Resource} kdPersistentVolumeListResource
+   * @param {!angular.Resource} kdRepositoryListResource
    * @ngInject
    */
-  constructor(admin, kdNamespaceListResource, kdNodeListResource, kdPersistentVolumeListResource) {
+  constructor(
+      admin, kdNamespaceListResource, kdNodeListResource, kdPersistentVolumeListResource,
+      kdRepositoryListResource) {
     /** @export {!backendApi.Admin} */
     this.admin = admin;
     /** @export {!angular.Resource} */
@@ -32,6 +35,8 @@ export class AdminController {
     this.kdNodeListResource = kdNodeListResource;
     /** @export {!angular.Resource} */
     this.kdPersistentVolumeListResource = kdPersistentVolumeListResource;
+    /** @export {!angular.Resource} */
+    this.kdRepositoryListResource = kdRepositoryListResource;
     /** @export */
     this.i18n = i18n;
   }
@@ -39,12 +44,13 @@ export class AdminController {
   /**
    * @return {boolean}
    * @export
+   * @suppress {missingProperties}
    */
   shouldShowZeroState() {
     /** @type {number} */
     let resourcesLength = this.admin.nodeList.listMeta.totalItems +
         this.admin.namespaceList.listMeta.totalItems +
-        this.admin.persistentVolumeList.listMeta.totalItems;
+        this.admin.persistentVolumeList.listMeta.totalItems + this.admin.repositoryList.totalItems;
 
     return resourcesLength === 0;
   }
@@ -57,4 +63,6 @@ const i18n = {
   MSG_ADMIN_NODES_LABEL: goog.getMsg('Nodes'),
   /** @export {string} @desc Label that appears above the list of resources. */
   MSG_ADMIN_PERSISTENT_VOLUMES_LABEL: goog.getMsg('Persistent Volumes'),
+  /** @export {string} @desc Label that appears above the list of repositories. */
+  MSG_ADMIN_REPOSITORY_LABEL: goog.getMsg('Repositories'),
 };

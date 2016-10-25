@@ -40,6 +40,7 @@ import persistentVolumeDetailModule from './persistentvolumedetail/persistentvol
 import persistentVolumeListModule from './persistentvolumelist/persistentvolumelist_module';
 import petSetListModule from './petsetlist/petsetlist_module';
 import podDetailModule from './poddetail/poddetail_module';
+import releaseListModule from './releaselist/releaselist_module';
 import replicaSetListModule from './replicasetlist/replicasetlist_module';
 import replicationControllerDetailModule from './replicationcontrollerdetail/replicationcontrollerdetail_module';
 import replicationControllerListModule from './replicationcontrollerlist/replicationcontrollerlist_module';
@@ -50,7 +51,6 @@ import serviceDetailModule from './servicedetail/servicedetail_module';
 import serviceListModule from './servicelist/servicelist_module';
 import servicesanddiscoveryModule from './servicesanddiscovery/module';
 import workloadsModule from './workloads/workloads_module';
-
 
 export default angular
     .module(
@@ -76,6 +76,7 @@ export default angular
           namespaceListModule.name,
           nodeListModule.name,
           deploymentListModule.name,
+          releaseListModule.name,
           workloadsModule.name,
           adminModule.name,
           serviceDetailModule.name,

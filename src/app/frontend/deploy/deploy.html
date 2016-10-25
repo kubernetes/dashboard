@@ -25,6 +25,9 @@ limitations under the License.
         <md-radio-button value="{{::ctrl.fileOption}}" class="md-primary">
           {{::ctrl.i18n.MSG_DEPLOY_FILE_UPLOAD_ACTION}}
         </md-radio-button>
+          <md-radio-button value="{{::ctrl.chartOption}}" class="md-primary">
+          {{::ctrl.i18n.MSG_DEPLOY_HELM_CHART_ACTION}}
+        </md-radio-button>
       </md-radio-group>
       <kd-user-help>
         <span ng-bind-html="::ctrl.i18n.MSG_DEPLOY_DASHBOARD_TOUR_USER_HELP"></span>
