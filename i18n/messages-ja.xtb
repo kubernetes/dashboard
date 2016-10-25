@@ -66,6 +66,7 @@
   <translation id="1745702155571319443" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_0" desc="Friendly name of the kubernetest.io/created-by annotation">Created by:</translation>
   <translation id="820028802315082613" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_1" desc="Text on the button to show less annotations">show less annotations</translation>
   <translation id="6884163988875905686" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_2" desc="Text on the button to show all the annotations">show all annotations</translation>
+  <translation id="6935188165410090417" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_LASTAPPLIEDCONFIGURATION_0" desc="Label for the kubectl.kubernetes.io/last-applied-configuration annotation">last applied configuration</translation>
   <translation id="2631421290135072028" key="MSG_COMMON_COMPONENTS_LABELS_LABELS_0" desc="Tooltip on the &quot;show less&quot; button for the labels of any kubernetes resource. Usually appears on the resource details pages.">show less labels</translation>
   <translation id="8950559770902715649" key="MSG_COMMON_COMPONENTS_LABELS_LABELS_1" desc="Tooltip on the &quot;show all&quot; button for the labels of any kubernetes resource. Usually appears on the resource details pages.">show all labels</translation>
   <translation id="8077948432236649947" key="MSG_COMMON_COMPONENTS_RESOURCECARD_RESOURCECARDDELETEMENUITEM_0" desc="Action &quot;Delete&quot; (verb), which appears as a menu item on the cards for kubernetes resources.">Delete</translation>
@@ -107,6 +108,8 @@
   <translation id="4743112919356949434" key="MSG_CONFIG_CONFIG_0" desc="Label that appears above the list of resources.">Secrets</translation>
   <translation id="7486548633611417214" key="MSG_CONFIG_CONFIG_1" desc="Label that appears above the list of resources.">Config Maps</translation>
   <translation id="3342283564584066330" key="MSG_CONFIG_CONFIG_MAPS_LABEL" desc="Label that appears above the list of resources.">コンフィグマップ</translation>
+  <translation id="8072030721088093841" key="MSG_CONFIG_DIALOG_CLOSE_ACTION" desc="Action &quot;Close&quot; on a dialog.">Close</translation>
+  <translation id="6503474189903659041" key="MSG_CONFIG_DIALOG_TITLE" desc="Label for the kubectl.kubernetes.io/last-applied-configuration annotation.">Last applied configuration</translation>
   <translation id="8099933273342853319" key="MSG_CONFIG_MAP_DETAIL_CONFIG_MAP_LABEL" desc="Label 'Config Map' which appears at the top of the delete dialog, opened from a config map details page.">コンフィグマップ</translation>
   <translation id="8701051638018097742" key="MSG_CONFIG_MAP_INFO_DATA_SECTION" desc="Config map info details section name.">データ</translation>
   <translation id="2091041876152209152" key="MSG_CONFIG_MAP_INFO_DETAILS_SECTION" desc="Config map info details section name.">詳細</translation>
@@ -289,6 +292,7 @@
   <translation id="4067701887380339834" key="MSG_DEPLOY_CREATENAMESPACE_2" desc="Label \'Namespace name\', which appears as a placeholder in an empty input field in the create namespace dialog.">Namespace name</translation>
   <translation id="157334911834120920" key="MSG_DEPLOY_CREATENAMESPACE_3" desc="The text appears when the namespace name does not match the expected pattern.">Name must be alphanumeric and may contain dashes.</translation>
   <translation id="1551048552555348002" key="MSG_DEPLOY_CREATENAMESPACE_4" desc="The text appears when the namespace name exceeds the maximal length.">Name must be up to {{::$ctrl.maxLength}} characters long.</translation>
+  <translation id="2146467965028734948" key="MSG_DEPLOY_CREATENAMESPACE_4" desc="The text appears when the namespace name exceeds the maximal length.">Name must be up to {{::$ctrl.namespaceMaxLength}} characters long.</translation>
   <translation id="8977053526123330609" key="MSG_DEPLOY_CREATENAMESPACE_5" desc="Warning which tells the user that the namespace name is required.">Name is required.</translation>
   <translation id="4442366218281676294" key="MSG_DEPLOY_CREATENAMESPACE_6" desc="User help text for the input of the \'Namespace\' data.">A namespace with the specified name will be added to the cluster.</translation>
   <translation id="691873247008682453" key="MSG_DEPLOY_CREATENAMESPACE_7" desc="The text is used as a \'Learn more\' link text in the namespace creation dialog">Learn more</translation>

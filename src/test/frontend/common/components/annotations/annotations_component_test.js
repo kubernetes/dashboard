@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import componentsModule from 'common/components/components_module';
+import module from 'common/components/components_module';
 
-describe('annotations directive', () => {
+describe('annotations component', () => {
   /** @type {!angular.Scope} */
   let scope;
   /** @type {function(!angular.Scope):!angular.JQLite} */
   let compileFn;
 
   beforeEach(() => {
-    angular.mock.module(componentsModule.name);
+    angular.mock.module(module.name);
 
     angular.mock.inject(($rootScope, $compile) => {
       scope = $rootScope.$new();
@@ -40,7 +40,6 @@ describe('annotations directive', () => {
     // when
     let element = compileFn(scope);
     scope.$digest();
-
     // then
     let labels = element.find('kd-middle-ellipsis');
     expect(labels.length).toEqual(3);
@@ -77,6 +76,22 @@ describe('annotations directive', () => {
     let annotations = element.find('kd-serialized-reference');
     expect(annotations.length).toEqual(1);
     expect(annotations.eq(0).text().trim()).toBe('{bogus: "json"}');
+  });
 
+  it('should render last applied config in a special way', () => {
+    // given
+    scope.annotations = {
+      app: 'app',
+      'kubectl.kubernetes.io/last-applied-configuration': '{bogus: "json"}',
+      testLabel: 'test',
+    };
+
+    // when
+    let element = compileFn(scope);
+    scope.$digest();
+
+    // then
+    let labels = element.find('kd-last-applied-configuration');
+    expect(labels.length).toEqual(1);
   });
 });

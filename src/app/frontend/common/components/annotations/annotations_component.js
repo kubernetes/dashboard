@@ -15,18 +15,14 @@
 import LabelsController from '../labels/labels_controller';
 
 /**
- * Returns directive definition for annotations.
- *
- * @return {!angular.Directive}
+ * @return {!angular.Component}
  */
-export default function annotationsDirective() {
-  return {
-    controller: LabelsController,
-    controllerAs: 'annotationsCtrl',
-    templateUrl: 'common/components/annotations/annotations.html',
-    scope: {},
-    bindToController: {
-      'labels': '=',
-    },
-  };
-}
+export const annotationsComponent = {
+  controller: LabelsController,
+  controllerAs: 'annotationsCtrl',
+  templateUrl: 'common/components/annotations/annotations.html',
+  scope: {},
+  bindings: {
+    'labels': '=',
+  },
+};
