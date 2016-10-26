@@ -42,9 +42,6 @@ export default class ConfigMapCardController {
 
     /** @private {!./../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
-
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -89,10 +86,4 @@ export const configMapCardComponent = {
   },
   controller: ConfigMapCardController,
   templateUrl: 'configmaplist/configmapcard.html',
-};
-
-const i18n = {
-  /** @export {string} @desc Label 'Config Map' which will appear in the config map
-      delete dialog opened from a config map card on the list page. */
-  MSG_CONFIG_MAP_LIST_CONFIG_MAP_LABEL: goog.getMsg('Config Map'),
 };

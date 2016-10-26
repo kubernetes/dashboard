@@ -17,7 +17,7 @@ limitations under the License.
 <form name="ctrl.form" ng-submit="ctrl.deploy()" novalidate>
   <kd-help-section>
     <md-input-container class="md-block" md-is-error="ctrl.isNameError()">
-      <label>{{::ctrl.i18n.MSG_DEPLOY_SETTINGS_APP_NAME_LABEL}}</label>
+      <label>[[App name|Label 'App name', which appears as a placeholder in an empty input field on the deploy from settings page.]]</label>
       <div>
         <input ng-model="ctrl.name" name="name" namespace="ctrl.namespace" required
                ng-pattern="ctrl.namePattern"
@@ -27,13 +27,13 @@ limitations under the License.
           ng-class="{'kd-deploy-form-progress-show': ctrl.form.name.$pending}">
         </md-progress-linear>
         <ng-messages for="ctrl.form.name.$error" role="alert" multiple>
-          <ng-message when="required">{{::ctrl.i18n.MSG_DEPLOY_SETTINGS_APP_NAME_REQUIRED_WARNING}}</ng-message>
+          <ng-message when="required">[[Application name is required.|Appears to tell the user that app name input on the deploy from settings page is required.]]</ng-message>
           <ng-message when="uniqueName">
-            {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_APP_NAME_ALREADY_EXISTS_WARNING}}
+            [[Replication controller or service with this name already exists within namespace.|Appears as warning when the user has typed in an app name that already exists. The text is followed by a specific namespace name.]]
             <i>{{ctrl.namespace}}</i>.
           </ng-message>
           <ng-message when="pattern">
-            {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_APP_NAME_PATTERN_WARNING}}
+            [[Application name must start with a lowercase letter and contain only lowercase letters, numbers, and '-' between words.|Appears when the app name input on the deploy from settings page does not match the expected pattern.]]
           </ng-message>
           <ng-message when="md-maxlength">
             {{::ctrl.i18n.MSG_DEPLOY_SETTINGS_APP_NAME_MAX_LENGTH_WARNING}}

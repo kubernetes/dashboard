@@ -15,11 +15,11 @@ limitations under the License.
 -->
 
 <div layout="row">
-  <kd-graph-card graph-title="::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_CPU_GRAPH_CARD_TITLE"
+  <kd-graph-card graph-title="[[CPU usage history|Title for graph card displaying CPU metric of one deployment.]]"
                  metrics="::ctrl.deploymentDetail.podList.cumulativeMetrics"
                  selected-metric-names="'cpu/usage_rate'">
   </kd-graph-card>
-  <kd-graph-card graph-title="::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_MEMORY_GRAPH_CARD_TITLE"
+  <kd-graph-card graph-title="[[Memory usage history|Title for graph card displaying memory metric of one deployment.]]"
                  metrics="::ctrl.deploymentDetail.podList.cumulativeMetrics"
                  selected-metric-names="'memory/usage'">
   </kd-graph-card>
@@ -28,7 +28,7 @@ limitations under the License.
 <kd-deployment-info deployment="::ctrl.deploymentDetail"></kd-deployment-info>
 
 <kd-content-card>
-  <kd-title>{{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_NEW_REPLICAS_TITLE}}</kd-title>
+  <kd-title>[[New Replica Set|Title 'New Replica Set' for the newly created replica set view, on the deployment details page.]]</kd-title>
   <kd-content>
     <kd-replica-set-card-list ng-show="::ctrl.deploymentDetail.newReplicaSet.objectMeta.name"
                               replica-set-list="::ctrl.newReplicaSetList">
@@ -36,17 +36,17 @@ limitations under the License.
     <div class="kd-zerostate-message" layout-padding
          ng-hide="::ctrl.deploymentDetail.newReplicaSet.objectMeta.name">
       <div class="kd-zerostate-title">
-        {{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_NEW_REPLICAS_ZEROSTATE_TITLE}}
+        [[There is nothing to display here|Title for new replica sets cards zero-state in deployment details page.]]
       </div>
       <div class="kd-zerostate-text">
-        {{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_NEW_REPLICAS_ZEROSTATE_TEXT}}
+        [[There are currently no new Replication Controllers on this Deployment.|Title for new replica set card zero-state in deployment details page.]]
       </div>
     </div>
   </kd-content>
 </kd-content-card>
 
 <kd-content-card>
-  <kd-title>{{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_OLD_REPLICAS_TITLE}}</kd-title>
+  <kd-title>[[Old Replica Sets|Title 'Old Replica Sets' for the old replica sets view, on the deployment details page.]]</kd-title>
   <kd-content>
     <kd-replica-set-card-list
             ng-show="::ctrl.deploymentDetail.oldReplicaSetList.replicaSets.length"
@@ -56,10 +56,10 @@ limitations under the License.
     <div class="kd-zerostate-message" layout-padding
          ng-hide="::ctrl.deploymentDetail.oldReplicaSetList.replicaSets.length">
       <div class="kd-zerostate-title">
-        {{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_OLD_REPLICAS_ZEROSTATE_TITLE}}
+        [[There is nothing to display here|Title for old replica sets cards zero-state in deployment details page.]]
       </div>
       <div class="kd-zerostate-text">
-        {{::ctrl.i18n.MSG_DEPLOYMENT_DETAIL_OLD_REPLICAS_ZEROSTATE_TEXT}}
+        [[There are currently no old Replication Controllers on this Deployment.|Text for old replica sets card zero-state in deployment details page.]]
       </div>
     </div>
   </kd-content>

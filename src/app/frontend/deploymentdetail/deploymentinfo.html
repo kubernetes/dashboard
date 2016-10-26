@@ -1,45 +1,45 @@
 <kd-info-card>
-  <kd-info-card-section name="{{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_DETAILS_SUBTITLE}}">
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_NAME_LABEL}}">
+  <kd-info-card-section name="[[Details|Subtitle 'Details' for the left section with general information about a deployment on the deployment details page.]]">
+    <kd-info-card-entry title="[[Name|Label 'Name' for the deployment name on the deployment details page.]]">
       <kd-middle-ellipsis
               display-string="{{::$ctrl.deployment.objectMeta.name}}">
       </kd-middle-ellipsis>
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_NAMESPACE_LABEL}}">
+    <kd-info-card-entry title="[[Namespace|Label 'Namespace' for the deployment namespace on the deployment details page.]]">
       {{::$ctrl.deployment.objectMeta.namespace}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_LABELS_LABEL}}">
+    <kd-info-card-entry title="[[Labels|Label 'Label selector' for the deployment's labels list on the deployment details page.]]">
       <kd-labels labels="::$ctrl.deployment.objectMeta.labels"></kd-labels>
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_LABEL_SELECTOR_LABEL}}">
+    <kd-info-card-entry title="[[Label selector|Label 'Status' for the deployment's status information on the deployment details page.]]">
       <kd-labels labels="::$ctrl.deployment.selector"></kd-labels>
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_STRATEGY_LABEL}}">
+    <kd-info-card-entry title="[[Strategy|Label 'Min Ready Seconds' for the deployment on the deployment details page.]]">
       {{::$ctrl.deployment.strategy}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_MIN_READY_LABEL}}">
+    <kd-info-card-entry title="[[Min ready seconds|Label 'Min Ready Seconds' for the deployment on the deployment details page.]]">
       {{::$ctrl.deployment.minReadySeconds}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_REVISION_HISTORY_LABEL}}">
+    <kd-info-card-entry title="[[Revision history limit|Label for the deployment property on the deployment details page.]]">
       <span ng-if="::$ctrl.deployment.revisionHistoryLimit">
         {{::$ctrl.deployment.revisionHistoryLimit}}
       </span>
       <span ng-if="::!$ctrl.deployment.revisionHistoryLimit">
-        {{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_REVISION_HISTORY_NOT_SET_LABEL}}
+        [[Not set|Label for the when revision history limit is not set.]]
       </span>
     </kd-info-card-entry>
 
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_ROLLING_STRATEGY_LABEL}}"
+    <kd-info-card-entry title="[[Rolling update strategy|Label 'Rolling Update Strategy' for the deployment's rolling update strategy on the deployment details page.]]"
                         ng-if="$ctrl.rollingUpdateStrategy()">
-      {{::$ctrl.i18n.getMaxSurgeLabel()}},
-      {{::$ctrl.i18n.getMaxUnavailableLabel()}}
+      [[Max surge: {$ctrl.deployment.rollingUpdateStrategy.maxSurge}|The message says that that many replicas can be created above the desired number of replicas in a deployment (deployment details page).]],
+      [[Max unavailable: {{$ctrl.deployment.rollingUpdateStrategy.maxUnavailable}}|The message says how many replicas are allowed to be unavailable during an update in the deployment (deployment details page).]],
     </kd-info-card-entry>
 
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_STATUS_LABEL}}">
-      {{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_REPLICAS_UPDATED_LABEL}},
-      {{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_REPLICAS_TOTAL_LABEL}},
-      {{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_REPLICAS_AVAILABLE_LABEL}},
-      {{::$ctrl.i18n.MSG_DEPLOYMENT_DETAIL_REPLICAS_UNAVAILABLE_LABEL}}
+    <kd-info-card-entry title="[[Status|Label 'Status' for the deployment's status information on the deployment details page.]]">
+      [[{{$ctrl.deployment.statusInfo.updated}} updated|The message describes how many replicas were updated in the deployment (deployment details page).]],
+      [[{{$ctrl.deployment.statusInfo.replicas}} total|The message describes how many replicas (in total) are in the deployment (deployment details page).]],
+      [[{{$ctrl.deployment.statusInfo.available}} available|The message describes how many replicas are available in the deployment (deployment details page).]],
+      [[{{$ctrl.deployment.statusInfo.unavailable}} unavailable|The message says that that many replicas are unavailable in the deployment (deployment details page).]]
     </kd-info-card-entry>
   </kd-info-card-section>
 </kd-info-card>

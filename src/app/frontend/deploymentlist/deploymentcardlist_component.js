@@ -23,9 +23,6 @@ class DeploymentCardListController {
   constructor(kdNamespaceService) {
     /** @private {!./../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
-
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -48,25 +45,4 @@ export const deploymentCardListComponent = {
   },
   templateUrl: 'deploymentlist/deploymentcardlist.html',
   controller: DeploymentCardListController,
-};
-
-const i18n = {
-  /** @export {string} @desc Label 'Name' which appears as a column label in the table of
-      deployments (deployment list view). */
-  MSG_DEPLOYMENT_LIST_NAME_LABEL: goog.getMsg('Name'),
-  /** @export {string} @desc Label 'Namespace' which appears as a column label in the
-      table of deployments (deployment list view). */
-  MSG_DEPLOYMENT_LIST_NAMESPACE_LABEL: goog.getMsg('Namespace'),
-  /** @export {string} @desc Label 'Labels' which appears as a column label in the table of
-      deployments (deployment list view). */
-  MSG_DEPLOYMENT_LIST_LABELS_LABEL: goog.getMsg('Labels'),
-  /** @export {string} @desc Label 'Pods' which appears as a column label in the table of
-      deployments (deployment list view). */
-  MSG_DEPLOYMENT_LIST_PODS_LABEL: goog.getMsg('Pods'),
-  /** @export {string} @desc Label 'Age' which appears as a column label in the
-      table of deployments (deployment list view). */
-  MSG_DEPLOYMENT_LIST_AGE_LABEL: goog.getMsg('Age'),
-  /** @export {string} @desc Label 'Images' which appears as a column label in the
-      table of deployments (deployment list view). */
-  MSG_DEPLOYMENT_LIST_IMAGES_LABEL: goog.getMsg('Images'),
 };

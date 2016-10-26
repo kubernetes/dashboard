@@ -18,11 +18,11 @@ limitations under the License.
   <div layout="row" layout-align="space-between start">
     <div flex="auto" >
       <md-input-container class="md-block kd-upload-file-container" md-is-error="ctrl.isFileNameError()">
-        <label>{{::ctrl.i18n.MSG_DEPLOY_UPLOAD_FILE_YAML_OR_JSON_LABEL}}</label>
+        <label>[[YAML or JSON file|A 'YAML or JSON file' label, serving as placeholder for an empty file input field on the deploy page.]]</label>
         <!--TODO: Browse file on focus doesn't work in Firefox. It is to be investigated.-->
         <input ng-model="ctrl.file.name" ng-focus="ctrl.browseFile()" ng-readonly="true" name="fileName" required/>
           <ng-messages for="ctrl.form.fileName.$error" role="alert" multiple>
-            <ng-message when="required">{{::ctrl.i18n.MSG_DEPLOY_UPLOAD_FILE_REQUIRED_WARNING}}</ng-message>
+            <ng-message when="required">[[File is required.|Appears to tell the user that he/she must upload a YAML or a JSON file on the deploy page.]]</ng-message>
             </ng-message>
           </ng-messages>
       </md-input-container>
@@ -37,9 +37,9 @@ limitations under the License.
     <input type="file" class="kd-upload-file-picker" kd-file-reader ng-model="ctrl.file">
   </div>
   <kd-user-help>
-    {{::ctrl.i18n.MSG_DEPLOY_UPLOAD_FILE_USER_HELP}}
+    [[Select a YAML or JSON file, specifying the resources to deploy.|User help for the YAML/JSON file upload form on the deploy page.]]
     <a href="http://kubernetes.io/docs/user-guide/deploying-applications/" target="_blank">
-      {{::ctrl.i18n.MSG_DEPLOY_UPLOAD_FILE_LEARN_MORE_ACTION}} <i class="material-icons">open_in_new</i>
+      [[Learn more|The text is used as a 'Learn more' link text besides the file upload on the deploy page.]] <i class="material-icons">open_in_new</i>
     </a>
   </kd-user-help>
 </kd-help-section>
