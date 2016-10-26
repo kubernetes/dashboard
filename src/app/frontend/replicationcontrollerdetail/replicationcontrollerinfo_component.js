@@ -78,23 +78,23 @@ function i18n(rcDetail) {
     /** @export {string} @desc Label 'Pods status' for the status of the pods in a replication
        controller, on the replication controller details page.*/
     MSG_RC_DETAIL_PODS_STATUS_LABEL: goog.getMsg('Pods status'),
-    /** @export {string} @desc The message says that that many pods were created
+    /** @export {string} @desc The message says how many pods were created
         (replication controller details page). */
     MSG_RC_DETAIL_PODS_CREATED_LABEL:
         goog.getMsg('{$podsCount} created', {'podsCount': rcDetail.podInfo.current}),
-    /** @export {string} @desc The message says that that many pods are running
+    /** @export {string} @desc The message says how many pods are running
         (replication controller details page). */
     MSG_RC_DETAIL_PODS_RUNNING_LABEL:
         goog.getMsg('{$podsCount} running', {'podsCount': rcDetail.podInfo.running}),
-    /** @export {string} @desc The message says that that many pods are pending
+    /** @export {string} @desc The message says how many pods are pending
         (replication controller details page). */
     MSG_RC_DETAIL_PODS_PENDING_LABEL:
         goog.getMsg('{$podsCount} pending', {'podsCount': rcDetail.podInfo.pending}),
-    /** @export {string} @desc The message says that that many pods have failed
+    /** @export {string} @desc The message says how many pods have failed
         (replication controller details page). */
     MSG_RC_DETAIL_PODS_FAILED_LABEL:
         goog.getMsg('{$podsCount} failed', {'podsCount': rcDetail.podInfo.failed}),
-    /** @export {string} @desc The message says that that many pods are desired to run
+    /** @export {string} @desc The message says how many pods are desired to run
         (replication controller details page). */
     MSG_RC_DETAIL_PODS_DESIRED_LABEL:
         goog.getMsg('{$podsCount} desired', {'podsCount': rcDetail.podInfo.desired}),
