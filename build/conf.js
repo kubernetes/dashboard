@@ -44,11 +44,12 @@ const arch = {
 };
 
 /**
- * TODO
+ * Configuration for container registry to push images to.
  */
-const repo = {
-  gcr: 'gcr.io/google_containers',
-  docker: 'floreks',
+const containerRegistry = {
+  release: 'gcr.io/google_containers',
+  /** Default to a environment variable */
+  head: process.env.DOCKER_HUB_PREFIX || 'kubernetes',
 };
 
 /**
@@ -60,9 +61,9 @@ const version = {
    */
   release: 'v1.4.1',
   /**
-   * Version name of the canary release of the project.
+   * Version name of the head release of the project.
    */
-  canary: 'canary',
+  head: 'head',
 };
 
 /**
@@ -75,9 +76,9 @@ const imageNameBase = 'kubernetes-dashboard';
  */
 export default {
   /**
-   * TODO
+   * Configuration for container registry to push images to.
    */
-  repo: repo,
+  containerRegistry: containerRegistry,
 
   /**
    * Backend application constants.
@@ -134,26 +135,27 @@ export default {
     imageNameBase: `${imageNameBase}-${arch.default}`,
 
     /**
-     * Image name for the canary release for current architecture.
+     * Image name for the head release for current architecture.
      */
-    canaryImageName: `${repo.docker}/${imageNameBase}-${arch.default}:${version.canary}`,
+    headImageName: `${containerRegistry.head}/${imageNameBase}-${arch.default}:${version.head}`,
 
     /**
      * Image name for the versioned release for current architecture.
      */
-    releaseImageName: `${repo.gcr}/${imageNameBase}-${arch.default}:${version.release}`,
+    releaseImageName:
+        `${containerRegistry.release}/${imageNameBase}-${arch.default}:${version.release}`,
 
     /**
-     * Image name for the canary release for all supported architecture.
+     * Image name for the head release for all supported architecture.
      */
-    canaryImageNames:
-        arch.list.map((arch) => `${repo.docker}/${imageNameBase}-${arch}:${version.canary}`),
+    headImageNames: arch.list.map(
+        (arch) => `${containerRegistry.head}/${imageNameBase}-${arch}:${version.head}`),
 
     /**
      * Image name for the versioned release for all supported architecture.
      */
-    releaseImageNames:
-        arch.list.map((arch) => `${repo.gcr}/${imageNameBase}-${arch}:${version.release}`),
+    releaseImageNames: arch.list.map(
+        (arch) => `${containerRegistry.release}/${imageNameBase}-${arch}:${version.release}`),
   },
 
   /**
