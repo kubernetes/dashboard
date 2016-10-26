@@ -21,7 +21,19 @@ limitations under the License.
       <div ng-switch-when="Job">
         <kd-job-card-list job-list="$ctrl.creator.joblist"></kd-job-card-list>
       </div>
-      <span ng-switch-default>{{$ctrl.creator.payload}}</span>
+      <div ng-switch-when="DaemonSet">
+        <kd-daemon-set-card-list daemon-set-list="$ctrl.creator.daemonsetlist"></kd-daemon-set-card-list>
+      </div>
+      <div ng-switch-when="ReplicationController">
+        <kd-replication-controller-card-list replication-controller-list="$ctrl.creator.replicationcontrollerlist"></kd-replication-controller-card-list>
+      </div>
+      <div ng-switch-when="ReplicaSet">
+        <kd-replica-set-card-list replica-set-list="$ctrl.creator.replicasetlist"></kd-replica-set-card-list>
+      </div>
+      <div ng-switch-when="PetSet">
+        <kd-pet-set-card-list pet-set-list="$ctrl.creator.petsetlist"></kd-pet-set-card-list>
+      </div>
+      <span ng-switch-default>{{$ctrl.creator.kind}}</span>
     </div>
   </kd-content>
 </kd-info-card>
