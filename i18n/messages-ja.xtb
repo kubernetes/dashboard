@@ -257,10 +257,10 @@
   <translation id="2017479733537577446" key="MSG_DEPLOYMENT_DETAIL_OLD_REPLICAS_ZEROSTATE_TEXT" desc="Text for old replica sets card zero-state in deployment details page.">このデプロイメントに古いレプリケーションコントローラーはありません</translation>
   <translation id="6343406325044382774" key="MSG_DEPLOYMENT_DETAIL_OLD_REPLICAS_ZEROSTATE_TITLE" desc="Title for old replica sets cards zero-state in deployment details page.">表示するものがありません</translation>
   <translation id="6154327633740759398" key="MSG_DEPLOYMENT_DETAIL_OVERVIEW_LABEL" desc="Label 'Overview' for the left navigation tab on the deployment details page.">概要</translation>
-  <translation id="8997973061307791157" key="MSG_DEPLOYMENT_DETAIL_REPLICAS_AVAILABLE_LABEL" desc="The message says how that many replicas are available in the deployment (deployment details page)."><ph name="REPLICAS"/> 利用可能</translation>
-  <translation id="5396076640805089682" key="MSG_DEPLOYMENT_DETAIL_REPLICAS_TOTAL_LABEL" desc="The message says how that many replicas (in total) are in the deployment (deployment details page)."><ph name="REPLICAS"/> 合計</translation>
-  <translation id="1409526330139546496" key="MSG_DEPLOYMENT_DETAIL_REPLICAS_UNAVAILABLE_LABEL" desc="The message says how that many replicas are unavailable in the deployment (deployment details page)."><ph name="REPLICAS"/> 利用不可</translation>
-  <translation id="5884236579481428725" key="MSG_DEPLOYMENT_DETAIL_REPLICAS_UPDATED_LABEL" desc="The message says how that many replicas were updated in the deployment (deployment details page)."><ph name="REPLICAS"/> アップデート済</translation>
+  <translation id="8997973061307791157" key="MSG_DEPLOYMENT_DETAIL_REPLICAS_AVAILABLE_LABEL" desc="The message says how many replicas are available in the deployment (deployment details page)."><ph name="REPLICAS"/> 利用可能</translation>
+  <translation id="5396076640805089682" key="MSG_DEPLOYMENT_DETAIL_REPLICAS_TOTAL_LABEL" desc="The message says how many replicas (in total) are in the deployment (deployment details page)."><ph name="REPLICAS"/> 合計</translation>
+  <translation id="1409526330139546496" key="MSG_DEPLOYMENT_DETAIL_REPLICAS_UNAVAILABLE_LABEL" desc="The message says how many replicas are unavailable in the deployment (deployment details page)."><ph name="REPLICAS"/> 利用不可</translation>
+  <translation id="5884236579481428725" key="MSG_DEPLOYMENT_DETAIL_REPLICAS_UPDATED_LABEL" desc="The message says how many replicas were updated in the deployment (deployment details page)."><ph name="REPLICAS"/> アップデート済</translation>
   <translation id="7635451132574422294" key="MSG_DEPLOYMENT_DETAIL_REVISION_HISTORY_LABEL" desc="Label for the deployment property on the deployment details page.">改版履歴の上限</translation>
   <translation id="1510317375939332648" key="MSG_DEPLOYMENT_DETAIL_REVISION_HISTORY_NOT_SET_LABEL" desc="Label for the when revision history limit is not set.">未設定</translation>
   <translation id="7938484755085065281" key="MSG_DEPLOYMENT_DETAIL_ROLLING_STRATEGY_LABEL" desc="Label 'Rolling Update Strategy' for the deployment's rolling update strategy on the deployment details page.">ローリングアップデートストラテジー</translation>
@@ -623,11 +623,11 @@
   <translation id="5672935636544074577" key="MSG_PET_SET_DETAIL_MEMORY_GRAPH_CARD_TITLE" desc="Title for graph card displaying memory metric of one pet set.">メモリー使用量の履歴</translation>
   <translation id="8113372847654373796" key="MSG_PET_SET_DETAIL_PET_SET_LABEL" desc="Label 'Pet Set' which appears at the top of the delete dialog, opened from a pet set details page.">ペットセット</translation>
   <translation id="6998996832659188031" key="MSG_PET_SET_DETAIL_PODS_CARD_TITLE" desc="Related pods card title on the pet set detail page.">ポッド</translation>
-  <translation id="8114606676293161910" key="MSG_PET_SET_DETAIL_PODS_CREATED_LABEL" desc="The message says how that many pods were created (pet set details page)."><ph name="PODS_COUNT"/> 作成済</translation>
-  <translation id="831441529070502458" key="MSG_PET_SET_DETAIL_PODS_DESIRED_LABEL" desc="The message says how that many pods are desired to run (pet set details page)."><ph name="PODS_COUNT"/> の要求</translation>
-  <translation id="8962981859888393087" key="MSG_PET_SET_DETAIL_PODS_FAILED_LABEL" desc="The message says how that many pods have failed (pet set details page)."><ph name="PODS_COUNT"/> の失敗</translation>
-  <translation id="4369463340820022612" key="MSG_PET_SET_DETAIL_PODS_PENDING_LABEL" desc="The message says how that many pods are pending (pet set details page)."><ph name="PODS_COUNT"/> 待機中</translation>
-  <translation id="7296799758742031996" key="MSG_PET_SET_DETAIL_PODS_RUNNING_LABEL" desc="The message says how that many pods are running (pet set details page)."><ph name="PODS_COUNT"/> 起動中</translation>
+  <translation id="8114606676293161910" key="MSG_PET_SET_DETAIL_PODS_CREATED_LABEL" desc="The message says how many pods were created (pet set details page)."><ph name="PODS_COUNT"/> 作成済</translation>
+  <translation id="831441529070502458" key="MSG_PET_SET_DETAIL_PODS_DESIRED_LABEL" desc="The message says how many pods are desired to run (pet set details page)."><ph name="PODS_COUNT"/> の要求</translation>
+  <translation id="8962981859888393087" key="MSG_PET_SET_DETAIL_PODS_FAILED_LABEL" desc="The message says how many pods have failed (pet set details page)."><ph name="PODS_COUNT"/> の失敗</translation>
+  <translation id="4369463340820022612" key="MSG_PET_SET_DETAIL_PODS_PENDING_LABEL" desc="The message says how many pods are pending (pet set details page)."><ph name="PODS_COUNT"/> 待機中</translation>
+  <translation id="7296799758742031996" key="MSG_PET_SET_DETAIL_PODS_RUNNING_LABEL" desc="The message says how many pods are running (pet set details page)."><ph name="PODS_COUNT"/> 起動中</translation>
   <translation id="6335211681012316099" key="MSG_PET_SET_DETAIL_PODS_ZEROSTATE_TEXT" desc="Text for pods card zerostate in pet set details page.">このペットセットに選択されたポッドはありません</translation>
   <translation id="9095381728458969006" key="MSG_PET_SET_DETAIL_PODS_ZEROSTATE_TITLE" desc="Title for pods card zerostate in pet set details page.">表示するものがありません</translation>
   <translation id="1061534452415111025" key="MSG_PET_SET_INFO_DETAILS_SECTION" desc="Pet set info details section name.">詳細</translation>
@@ -759,12 +759,12 @@
   <translation id="394136829343605455" key="MSG_RC_DETAIL_NUMBER_OF_PODS_INTEGER_WARNING" desc="This warning appears when the specified pods count on the &quot;update number of pods&quot; dialog is not positive or non-integer.">複製数は0以上を設定してください</translation>
   <translation id="2244373849869351832" key="MSG_RC_DETAIL_NUMBER_OF_PODS_LABEL" desc="Label 'Number of pods', which appears as a placeholder for the pods count input on the &quot;update pods count&quot; dialog (for a replication controller).">ポッド数</translation>
   <translation id="2021089442297896875" key="MSG_RC_DETAIL_NUMBER_OF_PODS_REQUIRED_WARNING" desc="This warning appears when the user does not specify a pods count on the &quot;update number of pods&quot; dialog (for a replication controller).">必須項目です</translation>
-  <translation id="4099897566685224196" key="MSG_RC_DETAIL_PODS_CREATED_LABEL" desc="The message says how that many pods were created (replication controller details page)."><ph name="PODS_COUNT"/> 作成済</translation>
-  <translation id="3147497997693039812" key="MSG_RC_DETAIL_PODS_DESIRED_LABEL" desc="The message says how that many pods are desired to run (replication controller details page)."><ph name="PODS_COUNT"/> の要求</translation>
-  <translation id="7172190985346183509" key="MSG_RC_DETAIL_PODS_FAILED_LABEL" desc="The message says how that many pods have failed (replication controller details page)."><ph name="PODS_COUNT"/> の失敗</translation>
+  <translation id="4099897566685224196" key="MSG_RC_DETAIL_PODS_CREATED_LABEL" desc="The message says how many pods were created (replication controller details page)."><ph name="PODS_COUNT"/> 作成済</translation>
+  <translation id="3147497997693039812" key="MSG_RC_DETAIL_PODS_DESIRED_LABEL" desc="The message says how many pods are desired to run (replication controller details page)."><ph name="PODS_COUNT"/> の要求</translation>
+  <translation id="7172190985346183509" key="MSG_RC_DETAIL_PODS_FAILED_LABEL" desc="The message says how many pods have failed (replication controller details page)."><ph name="PODS_COUNT"/> の失敗</translation>
   <translation id="8107580983200519386" key="MSG_RC_DETAIL_PODS_LABEL" desc="Label 'Pods' for the pods in a replication controller on its details page.">ポッド</translation>
-  <translation id="6107745197793205489" key="MSG_RC_DETAIL_PODS_PENDING_LABEL" desc="The message says how that many pods are pending (replication controller details page)."><ph name="PODS_COUNT"/> 待機中</translation>
-  <translation id="5308765422355681699" key="MSG_RC_DETAIL_PODS_RUNNING_LABEL" desc="The message says how that many pods are running (replication controller details page)."><ph name="PODS_COUNT"/> 実行中</translation>
+  <translation id="6107745197793205489" key="MSG_RC_DETAIL_PODS_PENDING_LABEL" desc="The message says how many pods are pending (replication controller details page)."><ph name="PODS_COUNT"/> 待機中</translation>
+  <translation id="5308765422355681699" key="MSG_RC_DETAIL_PODS_RUNNING_LABEL" desc="The message says how many pods are running (replication controller details page)."><ph name="PODS_COUNT"/> 実行中</translation>
   <translation id="1630959136778855731" key="MSG_RC_DETAIL_PODS_STATUS_LABEL" desc="Label 'Pods status' for the status of the pods in a replication controller, on the replication controller details page.">ポッドの状態</translation>
   <translation id="192095167357215001" key="MSG_RC_DETAIL_PODS_TITLE" desc="Title 'Pods', which appears at the top of the pods list on the replication controller detail view.">ポッド</translation>
   <translation id="4924028459458420869" key="MSG_RC_DETAIL_PODS_ZEROSTATE_TEXT" desc="Text for pods card zerostate in replication controller details page.">このレプリケーションコントローラーに選択されたポッドはありません</translation>
@@ -801,12 +801,12 @@
   <translation id="8919418206139670891" key="MSG_REPLICA_SET_DETAIL_IMAGES_LABEL" desc="Label 'Images' for the list of images used in a replica set, on its details page.">イメージ</translation>
   <translation id="1706687406256719823" key="MSG_REPLICA_SET_DETAIL_MEMORY_GRAPH_CARD_TITLE" desc="Title for graph card displaying memory metric of one replica set.">メモリー使用量の履歴</translation>
   <translation id="4479562582180028876" key="MSG_REPLICA_SET_DETAIL_OVERVIEW_LABEL" desc="Label 'Overview' for the left navigation tab on the replica set details page.">概要</translation>
-  <translation id="1193713714329626256" key="MSG_REPLICA_SET_DETAIL_PODS_CREATED_LABEL" desc="The message says how that many pods were created (replica set details page)."><ph name="PODS_COUNT"/> 作成済</translation>
-  <translation id="2341408397568673692" key="MSG_REPLICA_SET_DETAIL_PODS_DESIRED_LABEL" desc="The message says how that many pods are desired to run (replica set details page)."><ph name="PODS_COUNT"/> の要求</translation>
-  <translation id="100607008425520225" key="MSG_REPLICA_SET_DETAIL_PODS_FAILED_LABEL" desc="The message says how that many pods have failed (replica set details page)."><ph name="PODS_COUNT"/> の失敗</translation>
+  <translation id="1193713714329626256" key="MSG_REPLICA_SET_DETAIL_PODS_CREATED_LABEL" desc="The message says how many pods were created (replica set details page)."><ph name="PODS_COUNT"/> 作成済</translation>
+  <translation id="2341408397568673692" key="MSG_REPLICA_SET_DETAIL_PODS_DESIRED_LABEL" desc="The message says how many pods are desired to run (replica set details page)."><ph name="PODS_COUNT"/> の要求</translation>
+  <translation id="100607008425520225" key="MSG_REPLICA_SET_DETAIL_PODS_FAILED_LABEL" desc="The message says how many pods have failed (replica set details page)."><ph name="PODS_COUNT"/> の失敗</translation>
   <translation id="3229888510497501973" key="MSG_REPLICA_SET_DETAIL_PODS_LABEL" desc="Label 'Pods' for the pods in a replica set on its details page.">ポッド</translation>
-  <translation id="8939537005108222252" key="MSG_REPLICA_SET_DETAIL_PODS_PENDING_LABEL" desc="The message says how that many pods are pending (replica set details page)."><ph name="PODS_COUNT"/> 待機中</translation>
-  <translation id="8663039587736881994" key="MSG_REPLICA_SET_DETAIL_PODS_RUNNING_LABEL" desc="The message says how that many pods are running (replica set details page)."><ph name="PODS_COUNT"/> 実行中</translation>
+  <translation id="8939537005108222252" key="MSG_REPLICA_SET_DETAIL_PODS_PENDING_LABEL" desc="The message says how many pods are pending (replica set details page)."><ph name="PODS_COUNT"/> 待機中</translation>
+  <translation id="8663039587736881994" key="MSG_REPLICA_SET_DETAIL_PODS_RUNNING_LABEL" desc="The message says how many pods are running (replica set details page)."><ph name="PODS_COUNT"/> 実行中</translation>
   <translation id="5031788738993845665" key="MSG_REPLICA_SET_DETAIL_PODS_STATUS_LABEL" desc="Label 'Pods status' for the status of the pods in a replica set, on the replica set details page.">ポッドの状態</translation>
   <translation id="3672827725815353804" key="MSG_REPLICA_SET_DETAIL_PODS_TITLE" desc="Title 'Pods', which appears at the top of the pods list on the replica set details view.">ポッド</translation>
   <translation id="2110359509136089420" key="MSG_REPLICA_SET_DETAIL_PODS_ZEROSTATE_TEXT" desc="Text for pods card zerostate in replica set details page.">このレプリカセットにスケジュールされたポッドはありません</translation>
