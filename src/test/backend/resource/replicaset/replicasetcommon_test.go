@@ -19,57 +19,11 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/service"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 )
 
-func TestCreateReplicaSetList(t *testing.T) {
-	cases := []struct {
-		replicaSets []extensions.ReplicaSet
-		pods        []api.Pod
-		events      []api.Event
-		expected    *ReplicaSetList
-	}{
-		{
-			[]extensions.ReplicaSet{
-				{
-					ObjectMeta: api.ObjectMeta{Name: "replica-set", Namespace: "ns-1"},
-					Spec: extensions.ReplicaSetSpec{Selector: &unversioned.LabelSelector{
-						MatchLabels: map[string]string{"key": "value"},
-					}},
-				},
-			},
-			[]api.Pod{},
-			[]api.Event{},
-			&ReplicaSetList{
-				ListMeta:          common.ListMeta{TotalItems: 1},
-				CumulativeMetrics: make([]metric.Metric, 0),
-				ReplicaSets: []ReplicaSet{
-					{
-						ObjectMeta: common.ObjectMeta{Name: "replica-set", Namespace: "ns-1"},
-						TypeMeta:   common.TypeMeta{Kind: common.ResourceKindReplicaSet},
-						Pods:       common.PodInfo{Warnings: []common.Event{}},
-					},
-				},
-			},
-		},
-	}
-
-	for _, c := range cases {
-		actual := CreateReplicaSetList(c.replicaSets, c.pods, c.events, dataselect.NoDataSelect, nil)
-
-		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("CreateReplicaSetList(%#v, %#v, %#v, ...) == \ngot %#v, \nexpected %#v",
-				c.replicaSets, c.pods, c.events, actual, c.expected)
-		}
-	}
-}
 
 func TestToReplicaSet(t *testing.T) {
 	cases := []struct {
@@ -98,52 +52,3 @@ func TestToReplicaSet(t *testing.T) {
 	}
 }
 
-func TestToReplicaSetDetail(t *testing.T) {
-	cases := []struct {
-		replicaSet  *extensions.ReplicaSet
-		eventList   common.EventList
-		podList     pod.PodList
-		podInfo     common.PodInfo
-		serviceList service.ServiceList
-		expected    ReplicaSetDetail
-	}{
-		{
-			&extensions.ReplicaSet{},
-			common.EventList{},
-			pod.PodList{},
-			common.PodInfo{},
-			service.ServiceList{},
-			ReplicaSetDetail{TypeMeta: common.TypeMeta{Kind: common.ResourceKindReplicaSet}},
-		}, {
-			&extensions.ReplicaSet{ObjectMeta: api.ObjectMeta{Name: "replica-set"}},
-			common.EventList{Events: []common.Event{{Message: "event-msg"}}},
-			pod.PodList{Pods: []pod.Pod{{ObjectMeta: common.ObjectMeta{Name: "pod-1"}}}},
-			common.PodInfo{},
-			service.ServiceList{Services: []service.Service{{ObjectMeta: common.ObjectMeta{Name: "service-1"}}}},
-			ReplicaSetDetail{
-				ObjectMeta: common.ObjectMeta{Name: "replica-set"},
-				TypeMeta:   common.TypeMeta{Kind: common.ResourceKindReplicaSet},
-				EventList:  common.EventList{Events: []common.Event{{Message: "event-msg"}}},
-				PodList: pod.PodList{
-					Pods: []pod.Pod{{
-						ObjectMeta: common.ObjectMeta{Name: "pod-1"},
-					}},
-				},
-				ServiceList: service.ServiceList{
-					Services: []service.Service{{
-						ObjectMeta: common.ObjectMeta{Name: "service-1"},
-					}},
-				},
-			},
-		},
-	}
-
-	for _, c := range cases {
-		actual := ToReplicaSetDetail(c.replicaSet, c.eventList, c.podList, c.podInfo, c.serviceList)
-
-		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("ToReplicaSetDetail(%#v, %#v, %#v, %#v) == \ngot %#v, \nexpected %#v",
-				c.replicaSet, c.eventList, c.podList, c.podInfo, c.serviceList, actual, c.expected)
-		}
-	}
-}

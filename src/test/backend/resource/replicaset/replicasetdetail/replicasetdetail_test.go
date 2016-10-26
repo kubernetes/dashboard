@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package replicaset
+package replicasetdetail
 
 import (
 	"reflect"
@@ -104,6 +104,56 @@ func TestGetReplicaSetDetail(t *testing.T) {
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetEvents(client,heapsterClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
 				c.namespace, c.name, actual, c.expected)
+		}
+	}
+}
+
+func TestToReplicaSetDetail(t *testing.T) {
+	cases := []struct {
+		replicaSet  *extensions.ReplicaSet
+		eventList   common.EventList
+		podList     pod.PodList
+		podInfo     common.PodInfo
+		serviceList service.ServiceList
+		expected    ReplicaSetDetail
+	}{
+		{
+			&extensions.ReplicaSet{},
+			common.EventList{},
+			pod.PodList{},
+			common.PodInfo{},
+			service.ServiceList{},
+			ReplicaSetDetail{TypeMeta: common.TypeMeta{Kind: common.ResourceKindReplicaSet}},
+		}, {
+			&extensions.ReplicaSet{ObjectMeta: api.ObjectMeta{Name: "replica-set"}},
+			common.EventList{Events: []common.Event{{Message: "event-msg"}}},
+			pod.PodList{Pods: []pod.Pod{{ObjectMeta: common.ObjectMeta{Name: "pod-1"}}}},
+			common.PodInfo{},
+			service.ServiceList{Services: []service.Service{{ObjectMeta: common.ObjectMeta{Name: "service-1"}}}},
+			ReplicaSetDetail{
+				ObjectMeta: common.ObjectMeta{Name: "replica-set"},
+				TypeMeta:   common.TypeMeta{Kind: common.ResourceKindReplicaSet},
+				EventList:  common.EventList{Events: []common.Event{{Message: "event-msg"}}},
+				PodList: pod.PodList{
+					Pods: []pod.Pod{{
+						ObjectMeta: common.ObjectMeta{Name: "pod-1"},
+					}},
+				},
+				ServiceList: service.ServiceList{
+					Services: []service.Service{{
+						ObjectMeta: common.ObjectMeta{Name: "service-1"},
+					}},
+				},
+			},
+		},
+	}
+
+	for _, c := range cases {
+		actual := ToReplicaSetDetail(c.replicaSet, c.eventList, c.podList, c.podInfo, c.serviceList)
+
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("ToReplicaSetDetail(%#v, %#v, %#v, %#v) == \ngot %#v, \nexpected %#v",
+				c.replicaSet, c.eventList, c.podList, c.podInfo, c.serviceList, actual, c.expected)
 		}
 	}
 }

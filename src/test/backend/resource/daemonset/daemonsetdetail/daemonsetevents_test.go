@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package replicaset
+package daemonsetdetail
 
 import (
 	"reflect"
@@ -27,12 +27,12 @@ import (
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
 )
 
-func TestGetReplicaSetEvents(t *testing.T) {
+func TestGetDaemonSetEvents(t *testing.T) {
 	cases := []struct {
 		namespace, name string
 		eventList       *api.EventList
 		podList         *api.PodList
-		replicaSet      *extensions.ReplicaSet
+		daemonSet       *extensions.DaemonSet
 		expectedActions []string
 		expected        *common.EventList
 	}{
@@ -42,9 +42,9 @@ func TestGetReplicaSetEvents(t *testing.T) {
 				{Message: "test-message", ObjectMeta: api.ObjectMeta{Namespace: "test-namespace"}},
 			}},
 			&api.PodList{Items: []api.Pod{{ObjectMeta: api.ObjectMeta{Name: "test-pod"}}}},
-			&extensions.ReplicaSet{
-				ObjectMeta: api.ObjectMeta{Name: "test-replicaset"},
-				Spec: extensions.ReplicaSetSpec{
+			&extensions.DaemonSet{
+				ObjectMeta: api.ObjectMeta{Name: "test-daemonset"},
+				Spec: extensions.DaemonSetSpec{
 					Selector: &unversioned.LabelSelector{
 						MatchLabels: map[string]string{},
 					}}},
@@ -61,10 +61,10 @@ func TestGetReplicaSetEvents(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		fakeClient := testclient.NewSimpleFake(c.eventList, c.replicaSet, c.podList,
+		fakeClient := testclient.NewSimpleFake(c.eventList, c.daemonSet, c.podList,
 			&api.EventList{})
 
-		actual, _ := GetReplicaSetEvents(fakeClient, dataselect.NoDataSelect, c.namespace, c.name)
+		actual, _ := GetDaemonSetEvents(fakeClient, dataselect.NoDataSelect, c.namespace, c.name)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {
@@ -81,18 +81,18 @@ func TestGetReplicaSetEvents(t *testing.T) {
 		}
 
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("GetEvents(client,heapsterClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
+			t.Errorf("GetDaemonSetEvents(client,%#v, %#v) == \ngot: %#v, \nexpected %#v",
 				c.namespace, c.name, actual, c.expected)
 		}
 	}
 }
 
-func TestGetReplicaSetPodsEvents(t *testing.T) {
+func TestGetDaemonSetPodsEvents(t *testing.T) {
 	cases := []struct {
 		namespace, name string
 		eventList       *api.EventList
 		podList         *api.PodList
-		replicaSet      *extensions.ReplicaSet
+		daemonSet       *extensions.DaemonSet
 		expectedActions []string
 		expected        []api.Event
 	}{
@@ -102,9 +102,9 @@ func TestGetReplicaSetPodsEvents(t *testing.T) {
 				{Message: "test-message", ObjectMeta: api.ObjectMeta{Namespace: "test-namespace"}},
 			}},
 			&api.PodList{Items: []api.Pod{{ObjectMeta: api.ObjectMeta{Name: "test-pod", Namespace: "test-namespace"}}}},
-			&extensions.ReplicaSet{
-				ObjectMeta: api.ObjectMeta{Name: "test-replicaset", Namespace: "test-namespace"},
-				Spec: extensions.ReplicaSetSpec{
+			&extensions.DaemonSet{
+				ObjectMeta: api.ObjectMeta{Name: "test-daemonset", Namespace: "test-namespace"},
+				Spec: extensions.DaemonSetSpec{
 					Selector: &unversioned.LabelSelector{
 						MatchLabels: map[string]string{},
 					}}},
@@ -114,9 +114,9 @@ func TestGetReplicaSetPodsEvents(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		fakeClient := testclient.NewSimpleFake(c.replicaSet, c.podList, c.eventList)
+		fakeClient := testclient.NewSimpleFake(c.daemonSet, c.podList, c.eventList)
 
-		actual, _ := GetReplicaSetPodsEvents(fakeClient, c.namespace, c.name)
+		actual, _ := GetDaemonSetPodsEvents(fakeClient, c.namespace, c.name)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {
@@ -133,7 +133,7 @@ func TestGetReplicaSetPodsEvents(t *testing.T) {
 		}
 
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("GetEvents(client,heapsterClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
+			t.Errorf("GetDaemonSetPodsEvents(client,%#v, %#v) == \ngot: %#v, \nexpected %#v",
 				c.namespace, c.name, actual, c.expected)
 		}
 	}

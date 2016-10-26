@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package replicationcontroller
+package replicationcontrollerlist
 
 import (
 	"reflect"
@@ -21,6 +21,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
 	"k8s.io/kubernetes/pkg/api"
 )
 
@@ -36,7 +37,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 	}{
 		{nil, nil, nil, nil,
 			&ReplicationControllerList{
-				ReplicationControllers: []ReplicationController{},
+				ReplicationControllers: []replicationcontroller.ReplicationController{},
 				CumulativeMetrics:      make([]metric.Metric, 0),
 			},
 		},
@@ -162,7 +163,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 			&ReplicationControllerList{
 				ListMeta:          common.ListMeta{TotalItems: 2},
 				CumulativeMetrics: make([]metric.Metric, 0),
-				ReplicationControllers: []ReplicationController{
+				ReplicationControllers: []replicationcontroller.ReplicationController{
 					{
 						ObjectMeta: common.ObjectMeta{
 							Name:      "my-app-1",

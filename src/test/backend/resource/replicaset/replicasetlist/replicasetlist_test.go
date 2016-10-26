@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package replicaset
+package replicasetlist
 
 import (
 	"errors"
@@ -27,6 +27,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 )
 
 func TestGetReplicaSetListFromChannels(t *testing.T) {
@@ -44,7 +45,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 			&ReplicaSetList{
 				ListMeta:          common.ListMeta{},
 				CumulativeMetrics: make([]metric.Metric, 0),
-				ReplicaSets:       []ReplicaSet{}},
+				ReplicaSets:       []replicaset.ReplicaSet{}},
 			nil,
 		},
 		{
@@ -80,7 +81,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 			&k8serrors.StatusError{ErrStatus: unversioned.Status{Reason: "NotFound"}},
 			&api.PodList{},
 			&ReplicaSetList{
-				ReplicaSets: make([]ReplicaSet, 0),
+				ReplicaSets: make([]replicaset.ReplicaSet, 0),
 			},
 			nil,
 		},
@@ -124,7 +125,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 			&ReplicaSetList{
 				ListMeta:          common.ListMeta{TotalItems: 1},
 				CumulativeMetrics: make([]metric.Metric, 0),
-				ReplicaSets: []ReplicaSet{{
+				ReplicaSets: []replicaset.ReplicaSet{{
 					ObjectMeta: common.ObjectMeta{
 						Name:              "rs-name",
 						Namespace:         "rs-namespace",
@@ -189,6 +190,48 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 		}
 		if !reflect.DeepEqual(err, c.expectedError) {
 			t.Errorf("GetReplicaSetListChannels() ==\n          %#v\nExpected: %#v", err, c.expectedError)
+		}
+	}
+}
+
+func TestCreateReplicaSetList(t *testing.T) {
+	cases := []struct {
+		replicaSets []extensions.ReplicaSet
+		pods        []api.Pod
+		events      []api.Event
+		expected    *ReplicaSetList
+	}{
+		{
+			[]extensions.ReplicaSet{
+				{
+					ObjectMeta: api.ObjectMeta{Name: "replica-set", Namespace: "ns-1"},
+					Spec: extensions.ReplicaSetSpec{Selector: &unversioned.LabelSelector{
+						MatchLabels: map[string]string{"key": "value"},
+					}},
+				},
+			},
+			[]api.Pod{},
+			[]api.Event{},
+			&ReplicaSetList{
+				ListMeta:          common.ListMeta{TotalItems: 1},
+				CumulativeMetrics: make([]metric.Metric, 0),
+				ReplicaSets: []replicaset.ReplicaSet{
+					{
+						ObjectMeta: common.ObjectMeta{Name: "replica-set", Namespace: "ns-1"},
+						TypeMeta:   common.TypeMeta{Kind: common.ResourceKindReplicaSet},
+						Pods:       common.PodInfo{Warnings: []common.Event{}},
+					},
+				},
+			},
+		},
+	}
+
+	for _, c := range cases {
+		actual := CreateReplicaSetList(c.replicaSets, c.pods, c.events, dataselect.NoDataSelect, nil)
+
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("CreateReplicaSetList(%#v, %#v, %#v, ...) == \ngot %#v, \nexpected %#v",
+				c.replicaSets, c.pods, c.events, actual, c.expected)
 		}
 	}
 }
