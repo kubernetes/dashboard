@@ -18,11 +18,11 @@ limitations under the License.
   <kd-resource-card-status layout="row">
     <md-icon class="material-icons kd-error" ng-if="::$ctrl.hasWarnings()">
       error
-      <md-tooltip md-direction="right">{{::$ctrl.i18n.MSG_PODS_ARE_FAILED_TOOLTIP}}</md-tooltip>
+      <md-tooltip md-direction="right">[[One or more pods have errors.|Tooltip for failed pod card icon.]]</md-tooltip>
     </md-icon>
     <md-icon class="material-icons" ng-if="::$ctrl.isPending()">
       timelapse
-      <md-tooltip md-direction="right">{{::$ctrl.i18n.MSG_PODS_ARE_PENDING_TOOLTIP}}</md-tooltip>
+      <md-tooltip md-direction="right">[[One or more pods are in pending state.|Tooltip for pending pod card icon.]]</md-tooltip>
     </md-icon>
     <md-icon class="material-icons kd-success" ng-if="::$ctrl.isSuccess()">
       check_circle
@@ -63,10 +63,12 @@ limitations under the License.
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
       <kd-resource-card-menu>
         <kd-resource-card-delete-menu-item
-                resource-kind-name="{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_DAEMON_SET_TITLE}}">
+                resource-kind-name="[[Daemon Set|Title 'Daemon Set' which is used as a title for the delete/update
+   dialogs (that can be opened on the daemon set list view).]]">
         </kd-resource-card-delete-menu-item>
         <kd-resource-card-edit-menu-item
-                resource-kind-name="{{::$ctrl.i18n.MSG_DAEMON_SET_LIST_DAEMON_SET_TITLE}}">
+                resource-kind-name="[[Daemon Set|Title 'Daemon Set' which is used as a title for the delete/update
+   dialogs (that can be opened on the daemon set list view).]]">
         </kd-resource-card-edit-menu-item>
       </kd-resource-card-menu>
     </kd-resource-card-column>

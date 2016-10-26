@@ -25,9 +25,6 @@ export class ConfigMapCardListController {
   constructor(kdNamespaceService) {
     /** @private {!./../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
-
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -50,15 +47,4 @@ export const configMapCardListComponent = {
     'configMapListResource': '<',
   },
   templateUrl: 'configmaplist/configmapcardlist.html',
-};
-
-const i18n = {
-  /** @export {string} @desc Config map list header: name. */
-  MSG_CONFIG_MAP_LIST_HEADER_NAME: goog.getMsg('Name'),
-  /** @export {string} @desc Config map list header: namespace. */
-  MSG_CONFIG_MAP_LIST_NAMESPACE_LABEL: goog.getMsg('Namespace'),
-  /** @export {string} @desc Config map list header: labels. */
-  MSG_CONFIG_MAP_LIST_HEADER_LABELS: goog.getMsg('Labels'),
-  /** @export {string} @desc Config map list header: age. */
-  MSG_CONFIG_MAP_LIST_HEADER_AGE: goog.getMsg('Age'),
 };

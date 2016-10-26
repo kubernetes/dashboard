@@ -34,8 +34,6 @@ describe('Deployment Info controller', () => {
 
       // then
       expect(ctrl.rollingUpdateStrategy()).toBeTruthy();
-      expect(ctrl.i18n.getMaxUnavailableLabel()).toBe('Max unavailable: 0');
-      expect(ctrl.i18n.getMaxSurgeLabel()).toBe('Max surge: 0');
     });
 
     it('returns true when strategy is rolling update', () => {

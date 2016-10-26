@@ -23,14 +23,5 @@ export class ActionBarController {
   constructor(configMapDetail) {
     /** @export {!backendApi.ConfigMapDetail} */
     this.details = configMapDetail;
-
-    /** @export */
-    this.i18n = i18n;
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Label 'Config Map' which appears at the top of the
-      delete dialog, opened from a config map details page. */
-  MSG_CONFIG_MAP_DETAIL_CONFIG_MAP_LABEL: goog.getMsg('Config Map'),
-};

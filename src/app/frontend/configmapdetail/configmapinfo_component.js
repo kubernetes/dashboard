@@ -25,9 +25,6 @@ export default class ConfigMapInfoController {
      * @export {!backendApi.ConfigMapDetail}
      */
     this.configMap;
-
-    /** @export */
-    this.i18n = i18n;
   }
 }
 
@@ -43,15 +40,4 @@ export const configMapInfoComponent = {
     /** {!backendApi.ConfigMapDetail} */
     'configMap': '=',
   },
-};
-
-const i18n = {
-  /** @export {string} @desc Config map info details section name. */
-  MSG_CONFIG_MAP_INFO_DETAILS_SECTION: goog.getMsg('Details'),
-  /** @export {string} @desc Config map info details section name entry. */
-  MSG_CONFIG_MAP_INFO_NAME_ENTRY: goog.getMsg('Name'),
-  /** @export {string} @desc Config map info details section namespace entry. */
-  MSG_CONFIG_MAP_INFO_NAMESPACE_ENTRY: goog.getMsg('Namespace'),
-  /** @export {string} @desc Config map info details section labels entry. */
-  MSG_CONFIG_MAP_INFO_LABELS_ENTRY: goog.getMsg('Labels'),
 };

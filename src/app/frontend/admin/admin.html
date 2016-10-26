@@ -18,7 +18,7 @@ limitations under the License.
   <kd-content-card ng-if="$ctrl.admin.namespaceList.namespaces.length">
     <kd-title>
       <a ui-sref="namespace">
-        {{::$ctrl.i18n.MSG_ADMIN_NAMESPACES_LABEL}}
+        [[Namespaces|Label that appears above the list of resources.]]
       </a>
     </kd-title>
     <kd-content>
@@ -30,7 +30,7 @@ limitations under the License.
   <kd-content-card ng-if="$ctrl.admin.nodeList.nodes.length">
     <kd-title>
       <a ui-sref="node">
-        {{::$ctrl.i18n.MSG_ADMIN_NODES_LABEL}}
+        [[Nodes|Label that appears above the list of resources.]]
       </a>
     </kd-title>
     <kd-content>
@@ -42,7 +42,7 @@ limitations under the License.
   <kd-content-card ng-if="$ctrl.admin.persistentVolumeList.items.length">
     <kd-title>
       <a ui-sref="persistentvolume">
-        {{::$ctrl.i18n.MSG_ADMIN_PERSISTENT_VOLUMES_LABEL}}
+        [[Persistent Volumes|Label that appears above the list of resources.]]
       </a>
     </kd-title>
     <kd-content>

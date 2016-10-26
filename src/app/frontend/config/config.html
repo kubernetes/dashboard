@@ -18,7 +18,7 @@ limitations under the License.
   <kd-content-card ng-if="$ctrl.config.secretList.secrets.length">
     <kd-title>
       <a ui-sref="secret">
-        {{::$ctrl.i18n.MSG_CONFIG_SECRETS_LABEL}}
+        [[Secrets|Label that appears above the list of resources.]]
       </a>
     </kd-title>
     <kd-content>
@@ -30,7 +30,7 @@ limitations under the License.
   <kd-content-card ng-if="$ctrl.config.configMapList.items.length">
     <kd-title>
       <a ui-sref="configmap">
-        {{::$ctrl.i18n.MSG_CONFIG_CONFIG_MAPS_LABEL}}
+        [[Config Maps|Label that appears above the list of resources.]]
       </a>
     </kd-title>
     <kd-content>

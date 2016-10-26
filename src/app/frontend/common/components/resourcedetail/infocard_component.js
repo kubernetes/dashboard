@@ -23,9 +23,6 @@ export class InfoCardController {
   constructor() {
     /** @export {!backendApi.ObjectMeta} */
     this.objectMeta;
-
-    /** @export */
-    this.i18n = i18n;
   }
 }
 
@@ -38,17 +35,4 @@ export const infoCardComponent = {
     'objectMeta': '<',
   },
   controller: InfoCardController,
-};
-
-const i18n = {
-  /** @export {string} @desc Label 'Name' for a resource. */
-  MSG_RESOURCE_DETAIL_INFO_CARD_NAME_LABEL: goog.getMsg('Name'),
-  /** @export {string} @desc Label 'Namespace' for a resource. */
-  MSG_RESOURCE_DETAIL_INFO_CARD_NAMESPACE_LABEL: goog.getMsg('Namespace'),
-  /** @export {string} @desc Label 'Creation time' for a resource. */
-  MSG_RESOURCE_DETAIL_INFO_CARD_START_TIME_LABEL: goog.getMsg('Creation time'),
-  /** @export {string} @desc Label 'Labels' for a resource.*/
-  MSG_RESOURCE_DETAIL_INFO_CARD_LABELS_LABEL: goog.getMsg('Labels'),
-  /** @export {string} @desc Label 'annotations' for a resource.*/
-  MSG_RESOURCE_DETAIL_INFO_CARD_ANNOTATIONS_LABEL: goog.getMsg('Annotations'),
 };

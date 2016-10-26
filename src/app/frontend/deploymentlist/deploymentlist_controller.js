@@ -29,9 +29,6 @@ export class DeploymentListController {
 
     /** @export {!angular.Resource} */
     this.deploymentListResource = kdDeploymentListResource;
-
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -42,10 +39,3 @@ export class DeploymentListController {
     return this.deploymentList.deployments.length === 0;
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Title for graph card displaying CPU metric of deployments. */
-  MSG_DEPLOYMENT_LIST_CPU_GRAPH_CARD_TITLE: goog.getMsg('CPU usage history'),
-  /** @export {string} @desc Title for graph card displaying memory metric of deployments. */
-  MSG_DEPLOYMENT_LIST_MEMORY_GRAPH_CARD_TITLE: goog.getMsg('Memory usage history'),
-};

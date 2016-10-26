@@ -430,23 +430,6 @@ export default class DeployFromSettingsController {
 }
 
 const i18n = {
-  /** @export {string} @desc Label 'App name', which appears as a placeholder in an empty input
-     field on the deploy from settings page. */
-  MSG_DEPLOY_SETTINGS_APP_NAME_LABEL: goog.getMsg(`App name`),
-
-  /** @export {string} @desc Appears to tell the user that app name input on the deploy from
-     settings page is required.*/
-  MSG_DEPLOY_SETTINGS_APP_NAME_REQUIRED_WARNING: goog.getMsg(`Application name is required.`),
-
-  /** @export {string} @desc Appears as warning when the user has typed in an app name that already
-     exists. The text is followed by a specific namespace name. */
-  MSG_DEPLOY_SETTINGS_APP_NAME_ALREADY_EXISTS_WARNING: goog.getMsg(
-      `Replication controller or service with this name already exists within namespace`),
-
-  /** @export {string} @desc Appears when the app name input on the deploy from settings page does
-     not match the expected pattern. */
-  MSG_DEPLOY_SETTINGS_APP_NAME_PATTERN_WARNING: goog.getMsg(
-      `Application name must start with a lowercase letter and contain only lowercase letters, numbers, and '-' between words.`),
 
   /** @export {string} @desc Appears when the typed in app name on the deploy from settings page
      exceeds the maximal allowed length. */

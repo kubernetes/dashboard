@@ -14,27 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-info-card-entry title="{{::$ctrl.i18n.MSG_RESOURCE_DETAIL_INFO_CARD_NAME_LABEL}}">
+<kd-info-card-entry title="[[Name|Label 'Name' for a resource.]]">
   <kd-middle-ellipsis
           display-string="{{::$ctrl.objectMeta.name}}">
   </kd-middle-ellipsis>
 </kd-info-card-entry>
 
 <kd-info-card-entry ng-if="::$ctrl.objectMeta.namespace"
-    title="{{::$ctrl.i18n.MSG_RESOURCE_DETAIL_INFO_CARD_NAMESPACE_LABEL}}">
+    title="[[Namespace|Label 'Namespace' for a resource.]]">
   {{::$ctrl.objectMeta.namespace}}
 </kd-info-card-entry>
 
 <kd-info-card-entry ng-if="::$ctrl.objectMeta.labels"
-    title="{{::$ctrl.i18n.MSG_RESOURCE_DETAIL_INFO_CARD_LABELS_LABEL}}">
+    title="[[Labels|Label 'Labels' for a resource.]]">
   <kd-labels labels="::$ctrl.objectMeta.labels"></kd-labels>
 </kd-info-card-entry>
 
 <kd-info-card-entry ng-if="::$ctrl.objectMeta.annotations"
-    title="{{::$ctrl.i18n.MSG_RESOURCE_DETAIL_INFO_CARD_ANNOTATIONS_LABEL}}">
+    title="[[Annotations|Label 'Annotations' for a resource.]]">
   <kd-annotations labels="::$ctrl.objectMeta.annotations"></kd-annotations>
 </kd-info-card-entry>
 
-<kd-info-card-entry title="{{::$ctrl.i18n.MSG_RESOURCE_DETAIL_INFO_CARD_START_TIME_LABEL}}">
+<kd-info-card-entry title="[[Creation time|Label 'Creation time' for a resource.]]">
   {{::$ctrl.objectMeta.creationTimestamp | date:'medium':'UTC'}}
 </kd-info-card-entry>
