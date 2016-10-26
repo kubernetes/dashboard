@@ -12,16 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package replicaset
+package replicasetlist
 
 import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 
 	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
+	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/apis/extensions"
 	k8serrors "k8s.io/kubernetes/pkg/api/errors"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
@@ -31,23 +35,10 @@ type ReplicaSetList struct {
 	ListMeta common.ListMeta `json:"listMeta"`
 
 	// Unordered list of Replica Sets.
-	ReplicaSets       []ReplicaSet    `json:"replicaSets"`
+	ReplicaSets       []replicaset.ReplicaSet    `json:"replicaSets"`
 	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
 }
 
-// ReplicaSet is a presentation layer view of Kubernetes Replica Set resource. This means
-// it is Replica Set plus additional augumented data we can get from other sources
-// (like services that target the same pods).
-type ReplicaSet struct {
-	ObjectMeta common.ObjectMeta `json:"objectMeta"`
-	TypeMeta   common.TypeMeta   `json:"typeMeta"`
-
-	// Aggregate information about pods belonging to this Replica Set.
-	Pods common.PodInfo `json:"pods"`
-
-	// Container images of the Replica Set.
-	ContainerImages []string `json:"containerImages"`
-}
 
 // GetReplicaSetList returns a list of all Replica Sets in the cluster.
 func GetReplicaSetList(client client.Interface, nsQuery *common.NamespaceQuery,
@@ -75,7 +66,7 @@ func GetReplicaSetListFromChannels(channels *common.ResourceChannels,
 			// NotFound - this means that the server does not support Replica Set objects, which
 			// is fine.
 			emptyList := &ReplicaSetList{
-				ReplicaSets: make([]ReplicaSet, 0),
+				ReplicaSets: make([]replicaset.ReplicaSet, 0),
 			}
 			return emptyList, nil
 		}
@@ -92,4 +83,39 @@ func GetReplicaSetListFromChannels(channels *common.ResourceChannels,
 		return nil, err
 	}
 	return CreateReplicaSetList(replicaSets.Items, pods.Items, events.Items, dsQuery, heapsterClient), nil
+}
+
+// CreateReplicaSetList creates paginated list of Replica Set model
+// objects based on Kubernetes Replica Set objects array and related resources arrays.
+func CreateReplicaSetList(replicaSets []extensions.ReplicaSet, pods []api.Pod,
+	events []api.Event, dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) *ReplicaSetList {
+
+	replicaSetList := &ReplicaSetList{
+		ReplicaSets: make([]replicaset.ReplicaSet, 0),
+		ListMeta:    common.ListMeta{TotalItems: len(replicaSets)},
+	}
+
+	cachedResources := &dataselect.CachedResources{
+		Pods: pods,
+	}
+	replicationControllerCells, metricPromises := dataselect.GenericDataSelectWithMetrics(replicaset.ToCells(replicaSets), dsQuery, cachedResources, heapsterClient)
+	replicaSets = replicaset.FromCells(replicationControllerCells)
+
+	for _, replicaSet := range replicaSets {
+		matchingPods := common.FilterNamespacedPodsBySelector(pods, replicaSet.ObjectMeta.Namespace,
+			replicaSet.Spec.Selector.MatchLabels)
+		podInfo := common.GetPodInfo(replicaSet.Status.Replicas,
+			replicaSet.Spec.Replicas, matchingPods)
+		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
+
+		replicaSetList.ReplicaSets = append(replicaSetList.ReplicaSets, replicaset.ToReplicaSet(&replicaSet, &podInfo))
+	}
+
+	cumulativeMetrics, err := metricPromises.GetMetrics()
+	replicaSetList.CumulativeMetrics = cumulativeMetrics
+	if err != nil {
+		replicaSetList.CumulativeMetrics = make([]metric.Metric, 0)
+	}
+
+	return replicaSetList
 }

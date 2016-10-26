@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package petset
+package petsetlist
 
 import (
 	"log"
@@ -28,6 +28,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/petset"
 )
 
 // PetSetList contains a list of Pet Sets in the cluster.
@@ -112,8 +113,8 @@ func CreatePetSetList(petSets []apps.PetSet, pods []api.Pod, events []api.Event,
 	cachedResources := &dataselect.CachedResources{
 		Pods: pods,
 	}
-	replicationControllerCells, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells(petSets), dsQuery, cachedResources, heapsterClient)
-	petSets = fromCells(replicationControllerCells)
+	replicationControllerCells, metricPromises := dataselect.GenericDataSelectWithMetrics(petset.ToCells(petSets), dsQuery, cachedResources, heapsterClient)
+	petSets = petset.FromCells(replicationControllerCells)
 
 	for _, petSet := range petSets {
 		matchingPods := common.FilterNamespacedPodsBySelector(pods, petSet.ObjectMeta.Namespace,

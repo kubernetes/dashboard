@@ -10,13 +10,13 @@ import (
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	deploymentutil "k8s.io/kubernetes/pkg/util/deployment"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/replicasetlist"
 )
 
 // GetDeploymentEvents returns model events for a deployment with the given name in the given
 // namespace
 func GetDeploymentOldReplicaSets(client client.Interface, dsQuery *dataselect.DataSelectQuery,
-	namespace string, deploymentName string) (*replicaset.ReplicaSetList, error) {
+	namespace string, deploymentName string) (*replicasetlist.ReplicaSetList, error) {
 
 	deployment, err := client.Extensions().Deployments(namespace).Get(deploymentName)
 	if err != nil {
@@ -60,7 +60,7 @@ func GetDeploymentOldReplicaSets(client client.Interface, dsQuery *dataselect.Da
 	for i, replicaSet := range oldRs {
 		oldReplicaSets[i] = *replicaSet
 	}
-	oldReplicaSetList := replicaset.CreateReplicaSetList(oldReplicaSets, rawPods.Items, rawEvents.Items,
+	oldReplicaSetList := replicasetlist.CreateReplicaSetList(oldReplicaSets, rawPods.Items, rawEvents.Items,
 		dsQuery, nil)
 	return oldReplicaSetList, nil
 }

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package daemonset
+package daemonsetlist
 
 import (
 	"log"
@@ -25,6 +25,7 @@ import (
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 )
 
@@ -101,8 +102,8 @@ func CreateDaemonSetList(daemonSets []extensions.DaemonSet, pods []api.Pod,
 	cachedResources := &dataselect.CachedResources{
 		Pods: pods,
 	}
-	replicationControllerCells, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells(daemonSets), dsQuery, cachedResources, heapsterClient)
-	daemonSets = fromCells(replicationControllerCells)
+	replicationControllerCells, metricPromises := dataselect.GenericDataSelectWithMetrics(daemonset.ToCells(daemonSets), dsQuery, cachedResources, heapsterClient)
+	daemonSets = daemonset.FromCells(replicationControllerCells)
 
 	for _, daemonSet := range daemonSets {
 		matchingPods := common.FilterNamespacedPodsByLabelSelector(pods, daemonSet.Namespace,

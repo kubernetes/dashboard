@@ -20,6 +20,7 @@ import (
 	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/replicasetlist"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
@@ -76,7 +77,7 @@ type DeploymentDetail struct {
 	RollingUpdateStrategy *RollingUpdateStrategy `json:"rollingUpdateStrategy,omitempty"`
 
 	// RepliaSetList containing old replica sets from the deployment
-	OldReplicaSetList replicaset.ReplicaSetList `json:"oldReplicaSetList"`
+	OldReplicaSetList replicasetlist.ReplicaSetList `json:"oldReplicaSetList"`
 
 	// New replica set used by this deployment
 	NewReplicaSet replicaset.ReplicaSet `json:"newReplicaSet"`

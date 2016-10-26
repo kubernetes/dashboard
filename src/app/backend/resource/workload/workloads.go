@@ -19,14 +19,14 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset/daemonsetlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job/joblist"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/petset"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/petset/petsetlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/replicasetlist"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller/replicationcontrollerlist"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
@@ -34,17 +34,17 @@ import (
 type Workloads struct {
 	DeploymentList deployment.DeploymentList `json:"deploymentList"`
 
-	ReplicaSetList replicaset.ReplicaSetList `json:"replicaSetList"`
+	ReplicaSetList replicasetlist.ReplicaSetList `json:"replicaSetList"`
 
 	JobList joblist.JobList `json:"jobList"`
 
-	ReplicationControllerList replicationcontroller.ReplicationControllerList `json:"replicationControllerList"`
+	ReplicationControllerList replicationcontrollerlist.ReplicationControllerList `json:"replicationControllerList"`
 
 	PodList pod.PodList `json:"podList"`
 
-	DaemonSetList daemonset.DaemonSetList `json:"daemonSetList"`
+	DaemonSetList daemonsetlist.DaemonSetList `json:"daemonSetList"`
 
-	PetSetList petset.PetSetList `json:"petSetList"`
+	PetSetList petsetlist.PetSetList `json:"petSetList"`
 }
 
 // GetWorkloads returns a list of all workloads in the cluster.
@@ -72,24 +72,24 @@ func GetWorkloads(client *k8sClient.Client, heapsterClient client.HeapsterClient
 func GetWorkloadsFromChannels(channels *common.ResourceChannels,
 	heapsterClient client.HeapsterClient, metricQuery *dataselect.MetricQuery) (*Workloads, error) {
 
-	rsChan := make(chan *replicaset.ReplicaSetList)
+	rsChan := make(chan *replicasetlist.ReplicaSetList)
 	jobChan := make(chan *joblist.JobList)
 	deploymentChan := make(chan *deployment.DeploymentList)
-	rcChan := make(chan *replicationcontroller.ReplicationControllerList)
+	rcChan := make(chan *replicationcontrollerlist.ReplicationControllerList)
 	podChan := make(chan *pod.PodList)
-	dsChan := make(chan *daemonset.DaemonSetList)
-	psChan := make(chan *petset.PetSetList)
+	dsChan := make(chan *daemonsetlist.DaemonSetList)
+	psChan := make(chan *petsetlist.PetSetList)
 	errChan := make(chan error, 7)
 
 	go func() {
-		rcList, err := replicationcontroller.GetReplicationControllerListFromChannels(channels,
+		rcList, err := replicationcontrollerlist.GetReplicationControllerListFromChannels(channels,
 			dataselect.DefaultDataSelect, nil)
 		errChan <- err
 		rcChan <- rcList
 	}()
 
 	go func() {
-		rsList, err := replicaset.GetReplicaSetListFromChannels(channels, dataselect.DefaultDataSelect, nil)
+		rsList, err := replicasetlist.GetReplicaSetListFromChannels(channels, dataselect.DefaultDataSelect, nil)
 		errChan <- err
 		rsChan <- rsList
 	}()
@@ -115,13 +115,13 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels,
 	}()
 
 	go func() {
-		dsList, err := daemonset.GetDaemonSetListFromChannels(channels, dataselect.DefaultDataSelect, nil)
+		dsList, err := daemonsetlist.GetDaemonSetListFromChannels(channels, dataselect.DefaultDataSelect, nil)
 		errChan <- err
 		dsChan <- dsList
 	}()
 
 	go func() {
-		psList, err := petset.GetPetSetListFromChannels(channels, dataselect.DefaultDataSelect, nil)
+		psList, err := petsetlist.GetPetSetListFromChannels(channels, dataselect.DefaultDataSelect, nil)
 		errChan <- err
 		psChan <- psList
 	}()

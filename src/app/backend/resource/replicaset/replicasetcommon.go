@@ -16,51 +16,25 @@ package replicaset
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/service"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
-	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 
-	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
 )
 
-// CreateReplicaSetList creates paginated list of Replica Set model
-// objects based on Kubernetes Replica Set objects array and related resources arrays.
-func CreateReplicaSetList(replicaSets []extensions.ReplicaSet, pods []api.Pod,
-	events []api.Event, dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) *ReplicaSetList {
+// ReplicaSet is a presentation layer view of Kubernetes Replica Set resource. This means
+// it is Replica Set plus additional augumented data we can get from other sources
+// (like services that target the same pods).
+type ReplicaSet struct {
+	ObjectMeta common.ObjectMeta `json:"objectMeta"`
+	TypeMeta   common.TypeMeta   `json:"typeMeta"`
 
-	replicaSetList := &ReplicaSetList{
-		ReplicaSets: make([]ReplicaSet, 0),
-		ListMeta:    common.ListMeta{TotalItems: len(replicaSets)},
-	}
+	// Aggregate information about pods belonging to this Replica Set.
+	Pods common.PodInfo `json:"pods"`
 
-	cachedResources := &dataselect.CachedResources{
-		Pods: pods,
-	}
-	replicationControllerCells, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells(replicaSets), dsQuery, cachedResources, heapsterClient)
-	replicaSets = fromCells(replicationControllerCells)
-
-	for _, replicaSet := range replicaSets {
-		matchingPods := common.FilterNamespacedPodsBySelector(pods, replicaSet.ObjectMeta.Namespace,
-			replicaSet.Spec.Selector.MatchLabels)
-		podInfo := common.GetPodInfo(replicaSet.Status.Replicas,
-			replicaSet.Spec.Replicas, matchingPods)
-		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
-
-		replicaSetList.ReplicaSets = append(replicaSetList.ReplicaSets, ToReplicaSet(&replicaSet, &podInfo))
-	}
-
-	cumulativeMetrics, err := metricPromises.GetMetrics()
-	replicaSetList.CumulativeMetrics = cumulativeMetrics
-	if err != nil {
-		replicaSetList.CumulativeMetrics = make([]metric.Metric, 0)
-	}
-
-	return replicaSetList
+	// Container images of the Replica Set.
+	ContainerImages []string `json:"containerImages"`
 }
 
 // ToReplicaSet converts replica set api object to replica set model object.
@@ -70,22 +44,6 @@ func ToReplicaSet(replicaSet *extensions.ReplicaSet, podInfo *common.PodInfo) Re
 		TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicaSet),
 		ContainerImages: common.GetContainerImages(&replicaSet.Spec.Template.Spec),
 		Pods:            *podInfo,
-	}
-}
-
-// ToReplicaSetDetail converts replica set api object to replica set detail model object.
-func ToReplicaSetDetail(replicaSet *extensions.ReplicaSet, eventList common.EventList,
-	podList pod.PodList, podInfo common.PodInfo, serviceList service.ServiceList) ReplicaSetDetail {
-
-	return ReplicaSetDetail{
-		ObjectMeta:      common.NewObjectMeta(replicaSet.ObjectMeta),
-		TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicaSet),
-		ContainerImages: common.GetContainerImages(&replicaSet.Spec.Template.Spec),
-		Selector:        replicaSet.Spec.Selector,
-		PodInfo:         podInfo,
-		PodList:         podList,
-		ServiceList:     serviceList,
-		EventList:       eventList,
 	}
 }
 
@@ -116,7 +74,7 @@ func (self ReplicaSetCell) GetResourceSelector() *metric.ResourceSelector {
 	}
 }
 
-func toCells(std []extensions.ReplicaSet) []dataselect.DataCell {
+func ToCells(std []extensions.ReplicaSet) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
 		cells[i] = ReplicaSetCell(std[i])
@@ -124,7 +82,7 @@ func toCells(std []extensions.ReplicaSet) []dataselect.DataCell {
 	return cells
 }
 
-func fromCells(cells []dataselect.DataCell) []extensions.ReplicaSet {
+func FromCells(cells []dataselect.DataCell) []extensions.ReplicaSet {
 	std := make([]extensions.ReplicaSet, len(cells))
 	for i := range std {
 		std[i] = extensions.ReplicaSet(cells[i].(ReplicaSetCell))

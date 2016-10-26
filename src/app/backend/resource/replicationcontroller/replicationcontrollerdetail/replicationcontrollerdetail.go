@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package replicationcontroller
+package replicationcontrollerdetail
 
 import (
 	"log"
@@ -23,6 +23,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+	"k8s.io/kubernetes/pkg/api"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
@@ -120,4 +121,24 @@ func UpdateReplicasCount(client k8sClient.Interface, namespace, name string,
 		replicationControllerSpec.Replicas, name, namespace)
 
 	return nil
+}
+
+// ToReplicationControllerDetail converts replication controller api object to replication
+// controller detail model object.
+func ToReplicationControllerDetail(replicationController *api.ReplicationController,
+	podInfo common.PodInfo, podList pod.PodList, eventList common.EventList,
+	serviceList resourceService.ServiceList) ReplicationControllerDetail {
+
+	replicationControllerDetail := ReplicationControllerDetail{
+		ObjectMeta:      common.NewObjectMeta(replicationController.ObjectMeta),
+		TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicationController),
+		LabelSelector:   replicationController.Spec.Selector,
+		PodInfo:         podInfo,
+		PodList:         podList,
+		EventList:       eventList,
+		ServiceList:     serviceList,
+		ContainerImages: common.GetContainerImages(&replicationController.Spec.Template.Spec),
+	}
+
+	return replicationControllerDetail
 }

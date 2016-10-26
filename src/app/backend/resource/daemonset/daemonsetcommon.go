@@ -28,7 +28,7 @@ import (
 // Based on given selector returns list of services that are candidates for deletion.
 // Services are matched by daemon sets' label selector. They are deleted if given
 // label selector is targeting only 1 daemon set.
-func getServicesForDSDeletion(client client.Interface, labelSelector labels.Selector,
+func GetServicesForDSDeletion(client client.Interface, labelSelector labels.Selector,
 	namespace string) ([]api.Service, error) {
 
 	daemonSet, err := client.Extensions().DaemonSets(namespace).List(api.ListOptions{
@@ -84,7 +84,7 @@ func (self DaemonSetCell) GetResourceSelector() *metric.ResourceSelector {
 	}
 }
 
-func toCells(std []extensions.DaemonSet) []dataselect.DataCell {
+func ToCells(std []extensions.DaemonSet) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
 		cells[i] = DaemonSetCell(std[i])
@@ -92,7 +92,7 @@ func toCells(std []extensions.DaemonSet) []dataselect.DataCell {
 	return cells
 }
 
-func fromCells(cells []dataselect.DataCell) []extensions.DaemonSet {
+func FromCells(cells []dataselect.DataCell) []extensions.DaemonSet {
 	std := make([]extensions.DaemonSet, len(cells))
 	for i := range std {
 		std[i] = extensions.DaemonSet(cells[i].(DaemonSetCell))

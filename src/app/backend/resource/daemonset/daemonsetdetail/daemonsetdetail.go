@@ -12,13 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package daemonset
+package daemonsetdetail
 
 import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
@@ -151,7 +152,7 @@ func DeleteDaemonSetServices(client k8sClient.Interface, namespace, name string)
 		return err
 	}
 
-	services, err := getServicesForDSDeletion(client, labelSelector, namespace)
+	services, err := daemonset.GetServicesForDSDeletion(client, labelSelector, namespace)
 	if err != nil {
 		return err
 	}

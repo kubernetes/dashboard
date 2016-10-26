@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package daemonset
+package daemonsetdetail
 
 import (
 	client "k8s.io/kubernetes/pkg/client/unversioned"

@@ -48,7 +48,7 @@ func (self PetSetCell) GetResourceSelector() *metric.ResourceSelector {
 	}
 }
 
-func toCells(std []apps.PetSet) []dataselect.DataCell {
+func ToCells(std []apps.PetSet) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
 		cells[i] = PetSetCell(std[i])
@@ -56,7 +56,7 @@ func toCells(std []apps.PetSet) []dataselect.DataCell {
 	return cells
 }
 
-func fromCells(cells []dataselect.DataCell) []apps.PetSet {
+func FromCells(cells []dataselect.DataCell) []apps.PetSet {
 	std := make([]apps.PetSet, len(cells))
 	for i := range std {
 		std[i] = apps.PetSet(cells[i].(PetSetCell))

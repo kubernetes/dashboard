@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package replicationcontroller
+package replicationcontrollerlist
 
 import (
 	"log"
@@ -20,7 +20,10 @@ import (
 	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
+	"k8s.io/kubernetes/pkg/api"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
@@ -29,22 +32,10 @@ type ReplicationControllerList struct {
 	ListMeta common.ListMeta `json:"listMeta"`
 
 	// Unordered list of Replication Controllers.
-	ReplicationControllers []ReplicationController `json:"replicationControllers"`
+	ReplicationControllers []replicationcontroller.ReplicationController `json:"replicationControllers"`
 	CumulativeMetrics      []metric.Metric         `json:"cumulativeMetrics"`
 }
 
-// ReplicationController (aka. Replication Controller) plus zero or more Kubernetes services that
-// target the Replication Controller.
-type ReplicationController struct {
-	ObjectMeta common.ObjectMeta `json:"objectMeta"`
-	TypeMeta   common.TypeMeta   `json:"typeMeta"`
-
-	// Aggregate information about pods belonging to this Replication Controller.
-	Pods common.PodInfo `json:"pods"`
-
-	// Container images of the Replication Controller.
-	ContainerImages []string `json:"containerImages"`
-}
 
 // GetReplicationControllerList returns a list of all Replication Controllers in the cluster.
 func GetReplicationControllerList(client *client.Client, nsQuery *common.NamespaceQuery,
@@ -81,4 +72,38 @@ func GetReplicationControllerListFromChannels(channels *common.ResourceChannels,
 	}
 
 	return CreateReplicationControllerList(rcList.Items, dsQuery, podList.Items, eventList.Items, heapsterClient), nil
+}
+
+// CreateReplicationControllerList creates paginated list of Replication Controller model
+// objects based on Kubernetes Replication Controller objects array and related resources arrays.
+func CreateReplicationControllerList(replicationControllers []api.ReplicationController,
+	dsQuery *dataselect.DataSelectQuery, pods []api.Pod, events []api.Event, heapsterClient *heapster.HeapsterClient) *ReplicationControllerList {
+
+	rcList := &ReplicationControllerList{
+		ReplicationControllers: make([]replicationcontroller.ReplicationController, 0),
+		ListMeta:               common.ListMeta{TotalItems: len(replicationControllers)},
+	}
+	cachedResources := &dataselect.CachedResources{
+		Pods: pods,
+	}
+	replicationControllerCells, metricPromises := dataselect.GenericDataSelectWithMetrics(replicationcontroller.ToCells(replicationControllers), dsQuery, cachedResources, heapsterClient)
+	replicationControllers = replicationcontroller.FromCells(replicationControllerCells)
+
+	for _, rc := range replicationControllers {
+		matchingPods := common.FilterNamespacedPodsBySelector(pods, rc.ObjectMeta.Namespace,
+			rc.Spec.Selector)
+		podInfo := common.GetPodInfo(rc.Status.Replicas, rc.Spec.Replicas, matchingPods)
+		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
+
+		replicationController := replicationcontroller.ToReplicationController(&rc, &podInfo)
+		rcList.ReplicationControllers = append(rcList.ReplicationControllers, replicationController)
+	}
+
+	cumulativeMetrics, err := metricPromises.GetMetrics()
+	rcList.CumulativeMetrics = cumulativeMetrics
+	if err != nil {
+		rcList.CumulativeMetrics = make([]metric.Metric, 0)
+	}
+
+	return rcList
 }

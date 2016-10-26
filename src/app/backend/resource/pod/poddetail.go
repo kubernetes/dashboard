@@ -26,10 +26,10 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job/joblist"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/replicset/replicasetlist"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller/replicationcontrollerlist"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset/daemonsetlist"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/petset/petsetlist"
+//	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/replicasetlist"
+//	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller/replicationcontrollerlist"
+//	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset/daemonsetlist"
+//	"github.com/kubernetes/dashboard/src/app/backend/resource/petset/petsetlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 )
 

@@ -12,29 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package replicaset
+package replicationcontrollerdetail
 
 import (
-	"log"
-
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/apis/extensions"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
+	"log"
 )
 
-// GetReplicaSetPods return list of pods targeting replica set.
-func GetReplicaSetPods(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	dsQuery *dataselect.DataSelectQuery, petSetName, namespace string) (*pod.PodList, error) {
-	log.Printf("Getting replication controller %s pods in namespace %s", petSetName, namespace)
+// GetReplicationControllerPods return list of pods targeting replication controller associated
+// to given name.
+func GetReplicationControllerPods(client k8sClient.Interface, heapsterClient client.HeapsterClient,
+	dsQuery *dataselect.DataSelectQuery, rcName, namespace string) (*pod.PodList, error) {
+	log.Printf("Getting replication controller %s pods in namespace %s", rcName, namespace)
 
-	pods, err := getRawReplicaSetPods(client, petSetName, namespace)
+	pods, err := getRawReplicationControllerPods(client, rcName, namespace)
 	if err != nil {
 		return nil, err
 	}
@@ -43,16 +42,16 @@ func GetReplicaSetPods(client k8sClient.Interface, heapsterClient client.Heapste
 	return &podList, nil
 }
 
-// Returns array of api pods targeting replica set with given name.
-func getRawReplicaSetPods(client k8sClient.Interface, petSetName, namespace string) (
+// Returns array of api pods targeting replication controller associated to given name.
+func getRawReplicationControllerPods(client k8sClient.Interface, rcName, namespace string) (
 	[]api.Pod, error) {
 
-	replicaSet, err := client.Extensions().ReplicaSets(namespace).Get(petSetName)
+	replicationController, err := client.ReplicationControllers(namespace).Get(rcName)
 	if err != nil {
 		return nil, err
 	}
 
-	labelSelector := labels.SelectorFromSet(replicaSet.Spec.Selector.MatchLabels)
+	labelSelector := labels.SelectorFromSet(replicationController.Spec.Selector)
 	channels := &common.ResourceChannels{
 		PodList: common.GetPodListChannelWithOptions(client, common.NewSameNamespaceQuery(namespace),
 			api.ListOptions{
@@ -69,14 +68,14 @@ func getRawReplicaSetPods(client k8sClient.Interface, petSetName, namespace stri
 	return podList.Items, nil
 }
 
-// Returns simple info about pods(running, desired, failing, etc.) related to given replica set.
-func getReplicaSetPodInfo(client k8sClient.Interface, replicaSet *extensions.ReplicaSet) (
-	*common.PodInfo, error) {
+// Returns simple info about pods(running, desired, failing, etc.) related to given replication
+// controller.
+func getReplicationControllerPodInfo(client k8sClient.Interface, rc *api.ReplicationController,
+	namespace string) (*common.PodInfo, error) {
 
-	labelSelector := labels.SelectorFromSet(replicaSet.Spec.Selector.MatchLabels)
+	labelSelector := labels.SelectorFromSet(rc.Spec.Selector)
 	channels := &common.ResourceChannels{
-		PodList: common.GetPodListChannelWithOptions(client, common.NewSameNamespaceQuery(
-			replicaSet.Namespace),
+		PodList: common.GetPodListChannelWithOptions(client, common.NewSameNamespaceQuery(namespace),
 			api.ListOptions{
 				LabelSelector: labelSelector,
 				FieldSelector: fields.Everything(),
@@ -88,6 +87,6 @@ func getReplicaSetPodInfo(client k8sClient.Interface, replicaSet *extensions.Rep
 		return nil, err
 	}
 
-	podInfo := common.GetPodInfo(replicaSet.Status.Replicas, replicaSet.Spec.Replicas, pods.Items)
+	podInfo := common.GetPodInfo(rc.Status.Replicas, rc.Spec.Replicas, pods.Items)
 	return &podInfo, nil
 }

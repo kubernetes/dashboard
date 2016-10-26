@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package replicaset
+package replicasetdetail
 
 import (
 	"log"
 
 	"k8s.io/kubernetes/pkg/api/unversioned"
+	"k8s.io/kubernetes/pkg/apis/extensions"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
@@ -86,4 +87,20 @@ func GetReplicaSetDetail(client k8sClient.Interface, heapsterClient client.Heaps
 
 	replicaSet := ToReplicaSetDetail(replicaSetData, *eventList, *podList, *podInfo, *serviceList)
 	return &replicaSet, nil
+}
+
+// ToReplicaSetDetail converts replica set api object to replica set detail model object.
+func ToReplicaSetDetail(replicaSet *extensions.ReplicaSet, eventList common.EventList,
+	podList pod.PodList, podInfo common.PodInfo, serviceList resourceService.ServiceList) ReplicaSetDetail {
+
+	return ReplicaSetDetail{
+		ObjectMeta:      common.NewObjectMeta(replicaSet.ObjectMeta),
+		TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicaSet),
+		ContainerImages: common.GetContainerImages(&replicaSet.Spec.Template.Spec),
+		Selector:        replicaSet.Spec.Selector,
+		PodInfo:         podInfo,
+		PodList:         podList,
+		ServiceList:     serviceList,
+		EventList:       eventList,
+	}
 }
