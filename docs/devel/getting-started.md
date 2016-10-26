@@ -105,7 +105,7 @@ in the `dist` folder.
 
 In order to serve Dashboard from the `dist` folder, use the following task:
 
-```
+```shell
 $ gulp serve:prod
 ```
 
@@ -141,6 +141,13 @@ It can be executed with:
 
 ```shell
 $ gulp check
+```
+
+By the way, the test can run alone, such as integration and javascript-format test (it can help you focus primary problem).
+
+```shell
+$ gulp integration-test:prod
+$ gulp check-javascript-format
 ```
 
 ## Committing changes to your fork
