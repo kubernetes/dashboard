@@ -91,6 +91,7 @@ export default class JobCardController {
 export const jobCardComponent = {
   bindings: {
     'job': '=',
+    'showResourceKind': '<',
   },
   controller: JobCardController,
   templateUrl: 'joblist/jobcard.html',

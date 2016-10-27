@@ -54,6 +54,7 @@ export const daemonSetCardListComponent = {
     'selectable': '<',
     /** {boolean} */
     'withStatuses': '<',
+    'showResourceKind': '<',
   },
 };
 

@@ -19,6 +19,9 @@ limitations under the License.
     <kd-resource-card-header-column size="small" grow="2">
       {{::$ctrl.i18n.MSG_RC_LIST_NAME_LABEL}}
     </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small" grow="2" ng-if="$ctrl.showResourceKind">
+      [[Kind|Column header 'Kind' of a Replication Controller list]]
+    </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small" grow="2" ng-if="$ctrl.areMultipleNamespacesSelected()">
       {{::$ctrl.i18n.MSG_RC_LIST_NAMESPACE_LABEL}}
     </kd-resource-card-header-column>
@@ -40,11 +43,13 @@ limitations under the License.
   <kd-replication-controller-card ng-if="::$ctrl.replicationControllerListResource"
                                   replication-controller="rc" pagination-id="replicationcontrollers"
                                   dir-paginate="rc in $ctrl.replicationControllerList.replicationControllers | itemsPerPage: default"
+                                  show-resource-kind="::$ctrl.showResourceKind"
                                   total-items="$ctrl.replicationControllerList.listMeta.totalItems">
   </kd-replication-controller-card>
 
   <kd-replication-controller-card ng-if="::!$ctrl.replicationControllerListResource"
                                   replication-controller="rc" pagination-id="replicationcontrollers"
+                                  show-resource-kind="::$ctrl.showResourceKind"
                                   dir-paginate="rc in $ctrl.replicationControllerList.replicationControllers | itemsPerPage: default">
   </kd-replication-controller-card>
   <kd-resource-card-list-footer>

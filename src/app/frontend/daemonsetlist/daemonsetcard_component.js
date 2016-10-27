@@ -110,6 +110,7 @@ export class DaemonSetCardController {
 export const daemonSetCardComponent = {
   bindings: {
     'daemonSet': '=',
+    'showResourceKind': '<',
   },
   controller: DaemonSetCardController,
   templateUrl: 'daemonsetlist/daemonsetcard.html',

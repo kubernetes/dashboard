@@ -19,6 +19,9 @@ limitations under the License.
     <kd-resource-card-header-column size="small" grow="2">
       {{::$ctrl.i18n.MSG_DAEMON_SET_LIST_NAME_LABEL}}
     </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small" grow="1" ng-if="::$ctrl.showResourceKind">
+      [[Kind|Column header 'Kind' on Daemon Set lists]]
+    </kd-resource-card-header-column>
     <kd-resource-card-header-column ng-if="$ctrl.areMultipleNamespacesSelected()" size="small" grow="2">
       {{::$ctrl.i18n.MSG_DAEMON_SET_LIST_NAMESPACE_LABEL}}
     </kd-resource-card-header-column>
@@ -40,12 +43,12 @@ limitations under the License.
   <kd-daemon-set-card ng-if="::$ctrl.daemonSetListResource" pagination-id="daemonsets"
                       dir-paginate="daemonSet in $ctrl.daemonSetList.daemonSets | itemsPerPage: default"
                       total-items="::$ctrl.daemonSetList.listMeta.totalItems"
-                      daemon-set="daemonSet">
+                      daemon-set="daemonSet" show-resource-kind="::$ctrl.showResourceKind">
   </kd-daemon-set-card>
 
   <kd-daemon-set-card ng-if="::!$ctrl.daemonSetListResource" pagination-id="daemonsets"
                       dir-paginate="daemonSet in $ctrl.daemonSetList.daemonSets | itemsPerPage: default"
-                      daemon-set="daemonSet">
+                      daemon-set="daemonSet" show-resource-kind="::$ctrl.showResourceKind">
   </kd-daemon-set-card>
   <kd-resource-card-list-footer>
     <kd-resource-card-list-pagination pagination-id="daemonsets" list="$ctrl.daemonSetList"

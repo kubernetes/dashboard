@@ -41,6 +41,11 @@ limitations under the License.
         </a>
       </div>
     </kd-resource-card-column>
+    <kd-resource-card-column ng-if="::$ctrl.showResourceKind">
+      <div>
+        [[Replica Set|Column 'Replica Set' that shows if the resource kind should be shown in a Replica Set List]]
+      </div>
+    </kd-resource-card-column>
     <kd-resource-card-column ng-if="$ctrl.areMultipleNamespacesSelected()">
       <div>
         <kd-middle-ellipsis display-string="{{::$ctrl.replicaSet.objectMeta.namespace}}">

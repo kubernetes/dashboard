@@ -48,6 +48,7 @@ export const petSetCardListComponent = {
   bindings: {
     'petSetList': '<',
     'petSetListResource': '<',
+    'showResourceKind': '<',
   },
   templateUrl: 'petsetlist/petsetcardlist.html',
 };
