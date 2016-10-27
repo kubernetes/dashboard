@@ -26,10 +26,12 @@ import (
 	"time"
 
 	"fmt"
+
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/errors"
 	"k8s.io/kubernetes/pkg/api/testapi"
 	"k8s.io/kubernetes/pkg/api/unversioned"
+	"k8s.io/kubernetes/pkg/apimachinery/registered"
 	"k8s.io/kubernetes/pkg/runtime"
 	"k8s.io/kubernetes/pkg/util/diff"
 	utiltesting "k8s.io/kubernetes/pkg/util/testing"
@@ -184,7 +186,7 @@ func validate(testParam TestParam, t *testing.T, body []byte, fakeHandler *utilt
 			t.Errorf("Unexpected mis-match. Expected %#v.  Saw %#v", testParam.expStatus, statusOut)
 		}
 	}
-	fakeHandler.ValidateRequest(t, "/"+testapi.Default.GroupVersion().String()+"/test", "GET", nil)
+	fakeHandler.ValidateRequest(t, "/"+registered.GroupOrDie(api.GroupName).GroupVersion.String()+"/test", "GET", nil)
 
 }
 
@@ -271,7 +273,7 @@ func restClient(testServer *httptest.Server) (*RESTClient, error) {
 	c, err := RESTClientFor(&Config{
 		Host: testServer.URL,
 		ContentConfig: ContentConfig{
-			GroupVersion:         testapi.Default.GroupVersion(),
+			GroupVersion:         &registered.GroupOrDie(api.GroupName).GroupVersion,
 			NegotiatedSerializer: testapi.Default.NegotiatedSerializer(),
 		},
 		Username: "user",

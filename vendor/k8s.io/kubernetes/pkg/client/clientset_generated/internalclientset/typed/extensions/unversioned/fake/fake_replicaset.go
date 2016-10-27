@@ -95,7 +95,7 @@ func (c *FakeReplicaSets) List(opts api.ListOptions) (result *extensions.Replica
 		return nil, err
 	}
 
-	label := opts.LabelSelector
+	label, _, _ := core.ExtractFromListOptions(opts)
 	if label == nil {
 		label = labels.Everything()
 	}
@@ -116,9 +116,9 @@ func (c *FakeReplicaSets) Watch(opts api.ListOptions) (watch.Interface, error) {
 }
 
 // Patch applies the patch and returns the patched replicaSet.
-func (c *FakeReplicaSets) Patch(name string, pt api.PatchType, data []byte) (result *extensions.ReplicaSet, err error) {
+func (c *FakeReplicaSets) Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *extensions.ReplicaSet, err error) {
 	obj, err := c.Fake.
-		Invokes(core.NewPatchAction(replicasetsResource, c.ns, name, data), &extensions.ReplicaSet{})
+		Invokes(core.NewPatchSubresourceAction(replicasetsResource, c.ns, name, data, subresources...), &extensions.ReplicaSet{})
 
 	if obj == nil {
 		return nil, err

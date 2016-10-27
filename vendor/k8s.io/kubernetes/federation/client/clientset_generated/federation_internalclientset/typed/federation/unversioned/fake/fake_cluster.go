@@ -88,7 +88,7 @@ func (c *FakeClusters) List(opts api.ListOptions) (result *federation.ClusterLis
 		return nil, err
 	}
 
-	label := opts.LabelSelector
+	label, _, _ := core.ExtractFromListOptions(opts)
 	if label == nil {
 		label = labels.Everything()
 	}
@@ -108,9 +108,9 @@ func (c *FakeClusters) Watch(opts api.ListOptions) (watch.Interface, error) {
 }
 
 // Patch applies the patch and returns the patched cluster.
-func (c *FakeClusters) Patch(name string, pt api.PatchType, data []byte) (result *federation.Cluster, err error) {
+func (c *FakeClusters) Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *federation.Cluster, err error) {
 	obj, err := c.Fake.
-		Invokes(core.NewRootPatchAction(clustersResource, name, data), &federation.Cluster{})
+		Invokes(core.NewRootPatchSubresourceAction(clustersResource, name, data, subresources...), &federation.Cluster{})
 	if obj == nil {
 		return nil, err
 	}

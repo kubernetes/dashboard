@@ -18,6 +18,7 @@ package unversioned
 
 import (
 	api "k8s.io/kubernetes/pkg/api"
+	restclient "k8s.io/kubernetes/pkg/client/restclient"
 	watch "k8s.io/kubernetes/pkg/watch"
 )
 
@@ -36,20 +37,20 @@ type EndpointsInterface interface {
 	Get(name string) (*api.Endpoints, error)
 	List(opts api.ListOptions) (*api.EndpointsList, error)
 	Watch(opts api.ListOptions) (watch.Interface, error)
-	Patch(name string, pt api.PatchType, data []byte) (result *api.Endpoints, err error)
+	Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *api.Endpoints, err error)
 	EndpointsExpansion
 }
 
 // endpoints implements EndpointsInterface
 type endpoints struct {
-	client *CoreClient
+	client restclient.Interface
 	ns     string
 }
 
 // newEndpoints returns a Endpoints
 func newEndpoints(c *CoreClient, namespace string) *endpoints {
 	return &endpoints{
-		client: c,
+		client: c.RESTClient(),
 		ns:     namespace,
 	}
 }
@@ -136,11 +137,12 @@ func (c *endpoints) Watch(opts api.ListOptions) (watch.Interface, error) {
 }
 
 // Patch applies the patch and returns the patched endpoints.
-func (c *endpoints) Patch(name string, pt api.PatchType, data []byte) (result *api.Endpoints, err error) {
+func (c *endpoints) Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *api.Endpoints, err error) {
 	result = &api.Endpoints{}
 	err = c.client.Patch(pt).
 		Namespace(c.ns).
 		Resource("endpoints").
+		SubResource(subresources...).
 		Name(name).
 		Body(data).
 		Do().

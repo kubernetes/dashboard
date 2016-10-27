@@ -84,7 +84,7 @@ func (c *FakeEndpoints) List(opts api.ListOptions) (result *api.EndpointsList, e
 		return nil, err
 	}
 
-	label := opts.LabelSelector
+	label, _, _ := core.ExtractFromListOptions(opts)
 	if label == nil {
 		label = labels.Everything()
 	}
@@ -105,9 +105,9 @@ func (c *FakeEndpoints) Watch(opts api.ListOptions) (watch.Interface, error) {
 }
 
 // Patch applies the patch and returns the patched endpoints.
-func (c *FakeEndpoints) Patch(name string, pt api.PatchType, data []byte) (result *api.Endpoints, err error) {
+func (c *FakeEndpoints) Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *api.Endpoints, err error) {
 	obj, err := c.Fake.
-		Invokes(core.NewPatchAction(endpointsResource, c.ns, name, data), &api.Endpoints{})
+		Invokes(core.NewPatchSubresourceAction(endpointsResource, c.ns, name, data, subresources...), &api.Endpoints{})
 
 	if obj == nil {
 		return nil, err

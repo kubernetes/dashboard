@@ -19,6 +19,7 @@ package unversioned
 import (
 	api "k8s.io/kubernetes/pkg/api"
 	batch "k8s.io/kubernetes/pkg/apis/batch"
+	restclient "k8s.io/kubernetes/pkg/client/restclient"
 	watch "k8s.io/kubernetes/pkg/watch"
 )
 
@@ -38,20 +39,20 @@ type JobInterface interface {
 	Get(name string) (*batch.Job, error)
 	List(opts api.ListOptions) (*batch.JobList, error)
 	Watch(opts api.ListOptions) (watch.Interface, error)
-	Patch(name string, pt api.PatchType, data []byte) (result *batch.Job, err error)
+	Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *batch.Job, err error)
 	JobExpansion
 }
 
 // jobs implements JobInterface
 type jobs struct {
-	client *BatchClient
+	client restclient.Interface
 	ns     string
 }
 
 // newJobs returns a Jobs
 func newJobs(c *BatchClient, namespace string) *jobs {
 	return &jobs{
-		client: c,
+		client: c.RESTClient(),
 		ns:     namespace,
 	}
 }
@@ -151,11 +152,12 @@ func (c *jobs) Watch(opts api.ListOptions) (watch.Interface, error) {
 }
 
 // Patch applies the patch and returns the patched job.
-func (c *jobs) Patch(name string, pt api.PatchType, data []byte) (result *batch.Job, err error) {
+func (c *jobs) Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *batch.Job, err error) {
 	result = &batch.Job{}
 	err = c.client.Patch(pt).
 		Namespace(c.ns).
 		Resource("jobs").
+		SubResource(subresources...).
 		Name(name).
 		Body(data).
 		Do().

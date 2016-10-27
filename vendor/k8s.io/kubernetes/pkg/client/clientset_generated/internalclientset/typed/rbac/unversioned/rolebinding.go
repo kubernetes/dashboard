@@ -19,6 +19,7 @@ package unversioned
 import (
 	api "k8s.io/kubernetes/pkg/api"
 	rbac "k8s.io/kubernetes/pkg/apis/rbac"
+	restclient "k8s.io/kubernetes/pkg/client/restclient"
 	watch "k8s.io/kubernetes/pkg/watch"
 )
 
@@ -37,20 +38,20 @@ type RoleBindingInterface interface {
 	Get(name string) (*rbac.RoleBinding, error)
 	List(opts api.ListOptions) (*rbac.RoleBindingList, error)
 	Watch(opts api.ListOptions) (watch.Interface, error)
-	Patch(name string, pt api.PatchType, data []byte) (result *rbac.RoleBinding, err error)
+	Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *rbac.RoleBinding, err error)
 	RoleBindingExpansion
 }
 
 // roleBindings implements RoleBindingInterface
 type roleBindings struct {
-	client *RbacClient
+	client restclient.Interface
 	ns     string
 }
 
 // newRoleBindings returns a RoleBindings
 func newRoleBindings(c *RbacClient, namespace string) *roleBindings {
 	return &roleBindings{
-		client: c,
+		client: c.RESTClient(),
 		ns:     namespace,
 	}
 }
@@ -137,11 +138,12 @@ func (c *roleBindings) Watch(opts api.ListOptions) (watch.Interface, error) {
 }
 
 // Patch applies the patch and returns the patched roleBinding.
-func (c *roleBindings) Patch(name string, pt api.PatchType, data []byte) (result *rbac.RoleBinding, err error) {
+func (c *roleBindings) Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *rbac.RoleBinding, err error) {
 	result = &rbac.RoleBinding{}
 	err = c.client.Patch(pt).
 		Namespace(c.ns).
 		Resource("rolebindings").
+		SubResource(subresources...).
 		Name(name).
 		Body(data).
 		Do().

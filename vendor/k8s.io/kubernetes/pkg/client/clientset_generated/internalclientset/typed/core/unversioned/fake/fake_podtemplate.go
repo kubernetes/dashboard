@@ -84,7 +84,7 @@ func (c *FakePodTemplates) List(opts api.ListOptions) (result *api.PodTemplateLi
 		return nil, err
 	}
 
-	label := opts.LabelSelector
+	label, _, _ := core.ExtractFromListOptions(opts)
 	if label == nil {
 		label = labels.Everything()
 	}
@@ -105,9 +105,9 @@ func (c *FakePodTemplates) Watch(opts api.ListOptions) (watch.Interface, error) 
 }
 
 // Patch applies the patch and returns the patched podTemplate.
-func (c *FakePodTemplates) Patch(name string, pt api.PatchType, data []byte) (result *api.PodTemplate, err error) {
+func (c *FakePodTemplates) Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *api.PodTemplate, err error) {
 	obj, err := c.Fake.
-		Invokes(core.NewPatchAction(podtemplatesResource, c.ns, name, data), &api.PodTemplate{})
+		Invokes(core.NewPatchSubresourceAction(podtemplatesResource, c.ns, name, data, subresources...), &api.PodTemplate{})
 
 	if obj == nil {
 		return nil, err
