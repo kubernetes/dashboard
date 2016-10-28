@@ -23,13 +23,33 @@ import (
 )
 
 type CoreInterface interface {
-	GetRESTClient() *restclient.RESTClient
+	RESTClient() restclient.Interface
+	ConfigMapsGetter
+	EventsGetter
+	NamespacesGetter
+	SecretsGetter
 	ServicesGetter
 }
 
 // CoreClient is used to interact with features provided by the Core group.
 type CoreClient struct {
-	*restclient.RESTClient
+	restClient restclient.Interface
+}
+
+func (c *CoreClient) ConfigMaps(namespace string) ConfigMapInterface {
+	return newConfigMaps(c, namespace)
+}
+
+func (c *CoreClient) Events(namespace string) EventInterface {
+	return newEvents(c, namespace)
+}
+
+func (c *CoreClient) Namespaces() NamespaceInterface {
+	return newNamespaces(c)
+}
+
+func (c *CoreClient) Secrets(namespace string) SecretInterface {
+	return newSecrets(c, namespace)
 }
 
 func (c *CoreClient) Services(namespace string) ServiceInterface {
@@ -60,7 +80,7 @@ func NewForConfigOrDie(c *restclient.Config) *CoreClient {
 }
 
 // New creates a new CoreClient for the given RESTClient.
-func New(c *restclient.RESTClient) *CoreClient {
+func New(c restclient.Interface) *CoreClient {
 	return &CoreClient{c}
 }
 
@@ -74,12 +94,10 @@ func setConfigDefaults(config *restclient.Config) error {
 	if config.UserAgent == "" {
 		config.UserAgent = restclient.DefaultKubernetesUserAgent()
 	}
-	// TODO: Unconditionally set the config.Version, until we fix the config.
-	//if config.Version == "" {
-	copyGroupVersion := g.GroupVersion
-	config.GroupVersion = &copyGroupVersion
-	//}
-
+	if config.GroupVersion == nil || config.GroupVersion.Group != g.GroupVersion.Group {
+		copyGroupVersion := g.GroupVersion
+		config.GroupVersion = &copyGroupVersion
+	}
 	config.NegotiatedSerializer = api.Codecs
 
 	if config.QPS == 0 {
@@ -91,11 +109,11 @@ func setConfigDefaults(config *restclient.Config) error {
 	return nil
 }
 
-// GetRESTClient returns a RESTClient that is used to communicate
+// RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
-func (c *CoreClient) GetRESTClient() *restclient.RESTClient {
+func (c *CoreClient) RESTClient() restclient.Interface {
 	if c == nil {
 		return nil
 	}
-	return c.RESTClient
+	return c.restClient
 }

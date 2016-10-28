@@ -19,6 +19,7 @@ package unversioned
 import (
 	federation "k8s.io/kubernetes/federation/apis/federation"
 	api "k8s.io/kubernetes/pkg/api"
+	restclient "k8s.io/kubernetes/pkg/client/restclient"
 	watch "k8s.io/kubernetes/pkg/watch"
 )
 
@@ -38,19 +39,19 @@ type ClusterInterface interface {
 	Get(name string) (*federation.Cluster, error)
 	List(opts api.ListOptions) (*federation.ClusterList, error)
 	Watch(opts api.ListOptions) (watch.Interface, error)
-	Patch(name string, pt api.PatchType, data []byte) (result *federation.Cluster, err error)
+	Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *federation.Cluster, err error)
 	ClusterExpansion
 }
 
 // clusters implements ClusterInterface
 type clusters struct {
-	client *FederationClient
+	client restclient.Interface
 }
 
 // newClusters returns a Clusters
 func newClusters(c *FederationClient) *clusters {
 	return &clusters{
-		client: c,
+		client: c.RESTClient(),
 	}
 }
 
@@ -141,10 +142,11 @@ func (c *clusters) Watch(opts api.ListOptions) (watch.Interface, error) {
 }
 
 // Patch applies the patch and returns the patched cluster.
-func (c *clusters) Patch(name string, pt api.PatchType, data []byte) (result *federation.Cluster, err error) {
+func (c *clusters) Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *federation.Cluster, err error) {
 	result = &federation.Cluster{}
 	err = c.client.Patch(pt).
 		Resource("clusters").
+		SubResource(subresources...).
 		Name(name).
 		Body(data).
 		Do().

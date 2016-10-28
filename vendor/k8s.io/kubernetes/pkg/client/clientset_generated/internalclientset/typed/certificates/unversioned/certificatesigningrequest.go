@@ -19,6 +19,7 @@ package unversioned
 import (
 	api "k8s.io/kubernetes/pkg/api"
 	certificates "k8s.io/kubernetes/pkg/apis/certificates"
+	restclient "k8s.io/kubernetes/pkg/client/restclient"
 	watch "k8s.io/kubernetes/pkg/watch"
 )
 
@@ -38,19 +39,19 @@ type CertificateSigningRequestInterface interface {
 	Get(name string) (*certificates.CertificateSigningRequest, error)
 	List(opts api.ListOptions) (*certificates.CertificateSigningRequestList, error)
 	Watch(opts api.ListOptions) (watch.Interface, error)
-	Patch(name string, pt api.PatchType, data []byte) (result *certificates.CertificateSigningRequest, err error)
+	Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *certificates.CertificateSigningRequest, err error)
 	CertificateSigningRequestExpansion
 }
 
 // certificateSigningRequests implements CertificateSigningRequestInterface
 type certificateSigningRequests struct {
-	client *CertificatesClient
+	client restclient.Interface
 }
 
 // newCertificateSigningRequests returns a CertificateSigningRequests
 func newCertificateSigningRequests(c *CertificatesClient) *certificateSigningRequests {
 	return &certificateSigningRequests{
-		client: c,
+		client: c.RESTClient(),
 	}
 }
 
@@ -141,10 +142,11 @@ func (c *certificateSigningRequests) Watch(opts api.ListOptions) (watch.Interfac
 }
 
 // Patch applies the patch and returns the patched certificateSigningRequest.
-func (c *certificateSigningRequests) Patch(name string, pt api.PatchType, data []byte) (result *certificates.CertificateSigningRequest, err error) {
+func (c *certificateSigningRequests) Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *certificates.CertificateSigningRequest, err error) {
 	result = &certificates.CertificateSigningRequest{}
 	err = c.client.Patch(pt).
 		Resource("certificatesigningrequests").
+		SubResource(subresources...).
 		Name(name).
 		Body(data).
 		Do().

@@ -42,9 +42,6 @@ export default class DeploymentCardController {
 
     /** @private {!./../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
-
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -116,14 +113,4 @@ export const deploymentCardComponent = {
   },
   controller: DeploymentCardController,
   templateUrl: 'deploymentlist/deploymentcard.html',
-};
-
-const i18n = {
-  /** @export {string} @desc Tooltip saying that some pods in a deployment have errors. */
-  MSG_DEPLOYMENT_LIST_PODS_ERRORS_TOOLTIP: goog.getMsg('One or more pods have errors'),
-  /** @export {string} @desc Tooltip saying that some pods in a deployment are pending. */
-  MSG_DEPLOYMENT_LIST_PODS_PENDING_TOOLTIP: goog.getMsg('One or more pods are in pending state'),
-  /** @export {string} @desc Label 'Deployment' which will appear in the deployment
-      delete dialog opened from a deployment card on the list page.*/
-  MSG_DEPLOYMENT_LIST_DEPLOYMENT_LABEL: goog.getMsg('Deployment'),
 };

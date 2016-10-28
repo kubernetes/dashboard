@@ -15,44 +15,44 @@ limitations under the License.
 -->
 
 <kd-info-card>
-  <kd-info-card-section name="{{::$ctrl.i18n.MSG_DAEMON_SET_INFO_DETAILS_SUBTITLE}}">
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DAEMON_SET_INFO_NAME_LABEL}}">
+  <kd-info-card-section name="[[Details|Subtitle 'Details' for the left section with general information about a daemon set on the daemonset details page.]]">
+    <kd-info-card-entry title="[[Name|Label 'Name' for the daemon set name on the details page.]]">
       <kd-middle-ellipsis
               display-string="{{::$ctrl.daemonSet.objectMeta.name}}">
       </kd-middle-ellipsis>
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DAEMON_SET_INFO_NAMESPACE_LABEL}}">
+    <kd-info-card-entry title="[[Namespace|Label 'Namespace' for the daemon set namespace on the details page]]">
       {{::$ctrl.daemonSet.objectMeta.namespace}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DAEMON_SET_INFO_LABELS_LABEL}}">
+    <kd-info-card-entry title="[[Labels|Label 'Labels' for the daemon set's labels list on the daemon set details page.]]">
       <kd-labels labels="::$ctrl.daemonSet.objectMeta.labels"></kd-labels>
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DAEMON_SET_INFO_IMAGES_LABEL}}">
+    <kd-info-card-entry title="[[Images|Label 'Images' for the list of images used in a daemon set, on its details page.]]">
       <div ng-repeat="image in $ctrl.daemonSet.containerImages">
         <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
       </div>
     </kd-info-card-entry>
   </kd-info-card-section>
 
-  <kd-info-card-section name="{{::$ctrl.i18n.MSG_DAEMON_SET_INFO_STATUS_SUBTITLE}}">
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DAEMON_SET_INFO_PODS_LABEL}}">
+  <kd-info-card-section name="[[Status|Subtitle 'Status' for the right section with pod status information on the daemon set details page.]]">
+    <kd-info-card-entry title="[[Pods|Label 'Pods' for the pods in a daemon set on its details page.]]">
       <div ng-if="!$ctrl.areDesiredPodsRunning()">
-        {{::$ctrl.i18n.MSG_DAEMON_SET_INFO_PODS_CREATED_LABEL}},
-        {{::$ctrl.i18n.MSG_DAEMON_SET_INFO_PODS_DESIRED_LABEL}}
+        [[{{::$ctrl.daemonSet.podInfo.current}} created|The message describes how many pods were created (daemon set details page).]],
+        [[{{::$ctrl.daemonSet.podInfo.desired}} desired|The message describes how many pods are desired to run (daemon set details page).]]
       </div>
       <div ng-if="$ctrl.areDesiredPodsRunning()">
-        {{::$ctrl.i18n.MSG_DAEMON_SET_INFO_PODS_RUNNING_LABEL}}
+        [[{{::$ctrl.daemonSet.podInfo.running}} running|The message describes how many pods are running (daemon set details page).]]
       </div>
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_DAEMON_SET_INFO_PODS_STATUS_LABEL}}" ng-if="!$ctrl.areDesiredPodsRunning()">
+    <kd-info-card-entry title="[[Pods status|Label 'Pods status' for the status of the pods in a daemon set, on the daemon set details page.]]" ng-if="!$ctrl.areDesiredPodsRunning()">
       <div ng-if="!$ctrl.areDesiredPodsRunning()">
         <div ng-if="::$ctrl.daemonSet.podInfo.pending" class="kd-comma-separated-item">
-          {{::$ctrl.i18n.MSG_DAEMON_SET_INFO_PODS_PENDING_LABEL}}
+          [[{{::$ctrl.daemonSet.podInfo.pending}} pending|The message says that that many pods are pending (daemon set details page).]]
         </div>
         <div ng-if="::$ctrl.daemonSet.podInfo.failed" class="kd-comma-separated-item">
-          {{::$ctrl.i18n.MSG_DAEMON_SET_INFO_PODS_FAILED_LABEL}}></div>
+          [[{{::$ctrl.daemonSet.podInfo.failed}} failed|The message says that that many pods have failed (daemon set details page).]]</div>
         <div ng-if="::$ctrl.daemonSet.podInfo.running" class="kd-comma-separated-item">
-          {{::$ctrl.i18n.MSG_DAEMON_SET_INFO_PODS_RUNNING_LABEL}}
+          [[{{::$ctrl.daemonSet.podInfo.running}} running|The message describes how many pods are running (daemon set details page).]]
         </div>
       </div>
     </kd-info-card-entry>

@@ -95,7 +95,7 @@ func (c *FakeDeployments) List(opts api.ListOptions) (result *extensions.Deploym
 		return nil, err
 	}
 
-	label := opts.LabelSelector
+	label, _, _ := core.ExtractFromListOptions(opts)
 	if label == nil {
 		label = labels.Everything()
 	}
@@ -116,9 +116,9 @@ func (c *FakeDeployments) Watch(opts api.ListOptions) (watch.Interface, error) {
 }
 
 // Patch applies the patch and returns the patched deployment.
-func (c *FakeDeployments) Patch(name string, pt api.PatchType, data []byte) (result *extensions.Deployment, err error) {
+func (c *FakeDeployments) Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *extensions.Deployment, err error) {
 	obj, err := c.Fake.
-		Invokes(core.NewPatchAction(deploymentsResource, c.ns, name, data), &extensions.Deployment{})
+		Invokes(core.NewPatchSubresourceAction(deploymentsResource, c.ns, name, data, subresources...), &extensions.Deployment{})
 
 	if obj == nil {
 		return nil, err

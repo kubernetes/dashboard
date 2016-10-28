@@ -164,14 +164,6 @@ export default class DeployFromFileController {
 }
 
 const i18n = {
-  /** @export {string} @desc The text is put on the button at the end of the YAML upload
-   * page. */
-  MSG_UPLOAD_FILE_ACTION: goog.getMsg('Upload'),
-
-  /** @export {string} @desc The text is put on the 'Cancel' button at the end of the YAML upload
-   * page. */
-  MSG_UPLOAD_FILE_ACTION_CANCEL: goog.getMsg('Cancel'),
-
   /** @export {string} @desc Title for the dialog shown on deploy validation error. */
   MSG_DEPLOY_ANYWAY_DIALOG_TITLE: goog.getMsg('Validation error occurred'),
 

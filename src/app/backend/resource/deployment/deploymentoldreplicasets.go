@@ -8,7 +8,7 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
-	deploymentutil "k8s.io/kubernetes/pkg/util/deployment"
+	deploymentutil "k8s.io/kubernetes/pkg/controller/deployment/util"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/replicasetlist"
 )
@@ -51,7 +51,11 @@ func GetDeploymentOldReplicaSets(client client.Interface, dsQuery *dataselect.Da
 		return nil, err
 	}
 
-	oldRs, _, err := deploymentutil.FindOldReplicaSets(deployment, rawRs.Items, rawPods)
+	rawRepSets := make([]*extensions.ReplicaSet, 0)
+	for i := range rawRs.Items {
+		rawRepSets = append(rawRepSets, &rawRs.Items[i])
+	}
+	oldRs, _, err := deploymentutil.FindOldReplicaSets(deployment, rawRepSets, rawPods)
 	if err != nil {
 		return nil, err
 	}

@@ -13,9 +13,9 @@
 // limitations under the License.
 
 import DeployPageObject from '../deploy/deploy_po';
+import DeploymentPageObject from '../deploymentlist/deployment_po';
 import DeleteReplicationControllerDialogObject from '../replicationcontrollerdetail/deletereplicationcontroller_po';
 import ReplicationControllerDetailPageObject from '../replicationcontrollerdetail/replicationcontrollerdetail_po';
-import ReplicationControllersPageObject from '../replicationcontrollerslist/replicationcontrollers_po';
 
 
 /**
@@ -35,7 +35,7 @@ describe('Deploy not existing image story', () => {
   /** @type {!DeployPageObject} */
   let deployPage;
 
-  /** @type {!ReplicationControllersPageObject} */
+  /** @type {!DeploymentPageObject} */
   let replicationControllersPage;
 
   /** @type {!DeleteReplicationControllerDialogObject} */
@@ -49,7 +49,7 @@ describe('Deploy not existing image story', () => {
 
   beforeAll(() => {
     deployPage = new DeployPageObject();
-    replicationControllersPage = new ReplicationControllersPageObject();
+    replicationControllersPage = new DeploymentPageObject();
     deleteDialog = new DeleteReplicationControllerDialogObject();
     replicationControllerDetailPage = new ReplicationControllerDetailPageObject();
   });
@@ -104,22 +104,11 @@ describe('Deploy not existing image story', () => {
     cardDetailsPageLink.click();
 
     // then
-    expect(browser.getCurrentUrl()).toContain(`replicationcontroller/default/${appName}`);
+    expect(browser.getCurrentUrl()).toContain(`deployment/default/${appName}`);
 
     // Checks whether events table is displayed.
     expect(replicationControllerDetailPage.eventsTable.isDisplayed()).toBeTruthy();
 
-    // Click pod log link
-    replicationControllerDetailPage.podLogsLink.click().then(() => {
-      // then
-      // Logs page is opened in new window so we have to switch browser focus to that window.
-      browser.getAllWindowHandles().then((handles) => {
-        let logsWindowHandle = handles[1];
-        browser.switchTo().window(logsWindowHandle).then(() => {
-          expect(browser.getCurrentUrl()).toContain(`log/default/${appName}`);
-        });
-      });
-    });
   });
 
   // Clean up and delete created resources
@@ -127,7 +116,7 @@ describe('Deploy not existing image story', () => {
     let cardMenuButton = replicationControllersPage.getElementByAppName(
         replicationControllersPage.cardMenuButtonQuery, appName);
 
-    browser.get('#/replicationcontroller');
+    browser.get('#/deployment');
 
     cardMenuButton.click();
     replicationControllersPage.deleteAppButton.click().then(() => {

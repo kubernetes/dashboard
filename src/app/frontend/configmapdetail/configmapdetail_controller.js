@@ -23,13 +23,5 @@ export class ConfigMapDetailController {
   constructor(configMapDetail) {
     /** @export {!backendApi.ConfigMapDetail} */
     this.configMapDetail = configMapDetail;
-
-    /** @export */
-    this.i18n = i18n;
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Config map info details section name. */
-  MSG_CONFIG_MAP_INFO_DATA_SECTION: goog.getMsg('Data'),
-};

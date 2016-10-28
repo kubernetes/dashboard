@@ -32,11 +32,6 @@ export class EnvironmentVariablesController {
      * @export {!RegExp}
      */
     this.namePattern = new RegExp('^[A-Za-z_][A-Za-z0-9_]*$');
-
-    /**
-     * @export
-     */
-    this.i18n = i18n;
   }
 
   /**
@@ -83,21 +78,3 @@ export class EnvironmentVariablesController {
     return !!variable.name;
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Title of the Environment Variables section on the deploy page. */
-  MSG_DEPLOY_ENV_VARS_TITLE: goog.getMsg(`Environment variables`),
-
-  /** @export {string} @desc Label "Name" which appears as a placeholder for the input of a
-     environment variable name on the deploy page. */
-  MSG_DEPLOY_ENV_VARS_NAME_LABEL: goog.getMsg(`Name`),
-
-  /** @export {string} @desc Label "Value" which appears as a placeholder for the input of a
-     environment variable value on the deploy page. */
-  MSG_DEPLOY_ENV_VARS_VALUE_LABEL: goog.getMsg(`Value`),
-
-  /** @export {string} @desc Appears when the name of an environment variable on the deploy page
-     does not match the expected pattern. */
-  MSG_DEPLOY_ENV_VARS_NAME_PATTERN_WARNING:
-      goog.getMsg(`Variable name must be a valid C identifier.`),
-};

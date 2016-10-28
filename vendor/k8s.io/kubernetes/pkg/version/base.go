@@ -29,7 +29,7 @@ package version
 // works for GitHub tar downloads.
 //
 // When releasing a new Kubernetes version, this file is updated by
-// build/mark_new_version.sh to reflect the new version, and then a
+// build-tools/mark_new_version.sh to reflect the new version, and then a
 // git annotated tag (using format vX.Y where X == Major version and Y
 // == Minor version) is created to point to the commit that updates
 // pkg/version/base.go
@@ -42,7 +42,7 @@ var (
 	gitMajor string = "" // major version, always numeric
 	gitMinor string = "" // minor version, numeric possibly followed by "+"
 
-	// semantic version, dervied by build scripts (see
+	// semantic version, derived by build scripts (see
 	// https://github.com/kubernetes/kubernetes/blob/master/docs/design/versioning.md
 	// for a detailed discussion of this field)
 	//

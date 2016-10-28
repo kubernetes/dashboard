@@ -62,11 +62,16 @@ gulp.task('generate-xtbs', ['extract-translations', 'sort-translations']);
 
 /**
  * Extracts all translation messages into XTB bundles.
+ *
+ * Cleans up the data from the previous run to prevent crosspolination between
+ * branches
  */
-gulp.task('extract-translations', ['scripts', 'angular-templates'], function() {
-  let promises = conf.translations.map((translation) => extractForLanguage(translation.key));
-  return q.all(promises);
-});
+gulp.task(
+    'extract-translations', ['scripts', 'angular-templates', 'clean-messages-for-extraction'],
+    function() {
+      let promises = conf.translations.map((translation) => extractForLanguage(translation.key));
+      return q.all(promises);
+    });
 
 gulp.task('sort-translations', ['extract-translations'], function() {
   return gulp.src('i18n/messages-*.xtb').pipe(xslt('build/sortxtb.xslt')).pipe(gulp.dest('i18n'));
@@ -100,7 +105,9 @@ export function processI18nMessages(file, minifiedHtml) {
         let exec = regexpClone(I18N_REGEX).exec(match);
         // Default to no description when it is not provided.
         let desc = (exec[2] || '(no description provided)').trim();
-        return {text: exec[1], desc: desc, original: match};
+        // replace {{$variableName}} with {{ $variableName}} to avoid {$ getting recognised as
+        // google.getMsg format
+        return {text: exec[1].replace('{$', '{ $'), desc: desc, original: match};
       });
     }
     return [];

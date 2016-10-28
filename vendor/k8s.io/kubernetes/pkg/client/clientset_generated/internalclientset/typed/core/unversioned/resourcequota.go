@@ -18,6 +18,7 @@ package unversioned
 
 import (
 	api "k8s.io/kubernetes/pkg/api"
+	restclient "k8s.io/kubernetes/pkg/client/restclient"
 	watch "k8s.io/kubernetes/pkg/watch"
 )
 
@@ -37,20 +38,20 @@ type ResourceQuotaInterface interface {
 	Get(name string) (*api.ResourceQuota, error)
 	List(opts api.ListOptions) (*api.ResourceQuotaList, error)
 	Watch(opts api.ListOptions) (watch.Interface, error)
-	Patch(name string, pt api.PatchType, data []byte) (result *api.ResourceQuota, err error)
+	Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *api.ResourceQuota, err error)
 	ResourceQuotaExpansion
 }
 
 // resourceQuotas implements ResourceQuotaInterface
 type resourceQuotas struct {
-	client *CoreClient
+	client restclient.Interface
 	ns     string
 }
 
 // newResourceQuotas returns a ResourceQuotas
 func newResourceQuotas(c *CoreClient, namespace string) *resourceQuotas {
 	return &resourceQuotas{
-		client: c,
+		client: c.RESTClient(),
 		ns:     namespace,
 	}
 }
@@ -150,11 +151,12 @@ func (c *resourceQuotas) Watch(opts api.ListOptions) (watch.Interface, error) {
 }
 
 // Patch applies the patch and returns the patched resourceQuota.
-func (c *resourceQuotas) Patch(name string, pt api.PatchType, data []byte) (result *api.ResourceQuota, err error) {
+func (c *resourceQuotas) Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *api.ResourceQuota, err error) {
 	result = &api.ResourceQuota{}
 	err = c.client.Patch(pt).
 		Namespace(c.ns).
 		Resource("resourcequotas").
+		SubResource(subresources...).
 		Name(name).
 		Body(data).
 		Do().

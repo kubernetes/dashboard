@@ -40,8 +40,4 @@ describe('Config Map card list', () => {
   it('should return the value from Namespace service', () => {
     expect(ctrl.areMultipleNamespacesSelected()).toBe(data.areMultipleNamespacesSelected());
   });
-
-  it('should init i18n', () => {
-    expect(ctrl.i18n).not.toBeUndefined();
-  });
 });

@@ -19,6 +19,8 @@ export const ALL_NAMESPACES = '_all';
 
 export const DEFAULT_NAMESPACE = 'default';
 
+export const NAMESPACE_REGEX = /^([a-z0-9]([-a-z0-9]*[a-z0-9])?|_all)$/;
+
 /**
  * @final
  */
@@ -101,8 +103,12 @@ export class NamespaceSelectController {
             this.selectedNamespace = DEFAULT_NAMESPACE;
           }
         } else {
-          this.namespaces = [newNamespace];
-          this.selectedNamespace = newNamespace;
+          if (NAMESPACE_REGEX.test(newNamespace)) {
+            this.namespaces = [newNamespace];
+            this.selectedNamespace = newNamespace;
+          } else {
+            this.selectedNamespace = DEFAULT_NAMESPACE;
+          }
         }
       } else {
         this.selectedNamespace = DEFAULT_NAMESPACE;
@@ -162,15 +168,8 @@ export const namespaceSelectComponent = {
 };
 
 const i18n = {
-  /** @export {string} @desc Title for namespace select. */
-  MSG_NAMESPACE: goog.getMsg('Namespace'),
-
   /** @export {string} @desc Text for dropdown item that indicates that no namespace was selected */
   MSG_ALL_NAMESPACES: goog.getMsg('All namespaces'),
-
-  /** @export {string} @desc Label atop a list of namespaces */
-  MSG_NAMESPACE_LIST_LABEL: goog.getMsg('namespaces'),
-
   /** @export {string} @desc Text describing what namespace selector is */
   MSG_NAMESPACE_SELECT_ARIA_LABEL: goog.getMsg('Selector for namespaces'),
 };

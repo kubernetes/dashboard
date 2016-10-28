@@ -32,8 +32,6 @@ export class AdminController {
     this.kdNodeListResource = kdNodeListResource;
     /** @export {!angular.Resource} */
     this.kdPersistentVolumeListResource = kdPersistentVolumeListResource;
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -49,12 +47,3 @@ export class AdminController {
     return resourcesLength === 0;
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Label that appears above the list of resources. */
-  MSG_ADMIN_NAMESPACES_LABEL: goog.getMsg('Namespaces'),
-  /** @export {string} @desc Label that appears above the list of resources. */
-  MSG_ADMIN_NODES_LABEL: goog.getMsg('Nodes'),
-  /** @export {string} @desc Label that appears above the list of resources. */
-  MSG_ADMIN_PERSISTENT_VOLUMES_LABEL: goog.getMsg('Persistent Volumes'),
-};

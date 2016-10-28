@@ -29,8 +29,6 @@ export class ConfigController {
     this.kdConfigMapListResource = kdConfigMapListResource;
     /** @export {!angular.Resource} */
     this.kdSecretListResource = kdSecretListResource;
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -45,10 +43,3 @@ export class ConfigController {
     return resourcesLength === 0;
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Label that appears above the list of resources. */
-  MSG_CONFIG_CONFIG_MAPS_LABEL: goog.getMsg('Config Maps'),
-  /** @export {string} @desc Label that appears above the list of resources. */
-  MSG_CONFIG_SECRETS_LABEL: goog.getMsg('Secrets'),
-};
