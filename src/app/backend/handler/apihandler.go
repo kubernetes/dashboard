@@ -49,7 +49,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/replicasetdetail"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/replicasetlist"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller/replicationcontrollerdetail"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller/replicationcontrollerlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/secret"
