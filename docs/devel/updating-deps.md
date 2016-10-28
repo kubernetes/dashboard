@@ -1,12 +1,11 @@
-# Introduction
+# Introduction to updating godeps
 
-After having struggled getting the vendor packages upgraded I decided to give a
-short description on how I managed to upgrade the vendor packages. There is no
-guarantee that this is the easiest/best way to do this, but it a way
+A short description on how I managed to upgrade the vendor packages. There is no
+guarantee that this is the easiest/best way to do this, but it is a way
 
 # Step by step guide
 
-- Have the dashboard source checked out in `${GOROOT}/src/github.com/kubernetes/dashboard`
+- Have the dashboard source checked out in `${GOPATH}/src/github.com/kubernetes/dashboard`
 - Install [govendor](https://github.com/kardianos/govendor)
 - Create a branch
 - Run `govendor update +vendor` to update all current packages
