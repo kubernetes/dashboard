@@ -95,7 +95,7 @@ func (c *FakeIngresses) List(opts api.ListOptions) (result *extensions.IngressLi
 		return nil, err
 	}
 
-	label := opts.LabelSelector
+	label, _, _ := core.ExtractFromListOptions(opts)
 	if label == nil {
 		label = labels.Everything()
 	}
@@ -116,9 +116,9 @@ func (c *FakeIngresses) Watch(opts api.ListOptions) (watch.Interface, error) {
 }
 
 // Patch applies the patch and returns the patched ingress.
-func (c *FakeIngresses) Patch(name string, pt api.PatchType, data []byte) (result *extensions.Ingress, err error) {
+func (c *FakeIngresses) Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *extensions.Ingress, err error) {
 	obj, err := c.Fake.
-		Invokes(core.NewPatchAction(ingressesResource, c.ns, name, data), &extensions.Ingress{})
+		Invokes(core.NewPatchSubresourceAction(ingressesResource, c.ns, name, data, subresources...), &extensions.Ingress{})
 
 	if obj == nil {
 		return nil, err

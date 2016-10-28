@@ -27,7 +27,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"k8s.io/kubernetes/pkg/api/unversioned"
-	deploymentutil "k8s.io/kubernetes/pkg/util/deployment"
+	deploymentutil "k8s.io/kubernetes/pkg/controller/deployment/util"
 )
 
 // RollingUpdateStrategy is behavior of a rolling update. See RollingUpdateDeployment K8s object.
@@ -139,7 +139,11 @@ func GetDeploymentDetail(client client.Interface, heapsterClient heapster.Heapst
 	}
 
 	// New Replica Set
-	newRs, err := deploymentutil.FindNewReplicaSet(deployment, rawRs.Items)
+	rawRepSets := make([]*extensions.ReplicaSet, 0)
+	for i := range rawRs.Items {
+		rawRepSets = append(rawRepSets, &rawRs.Items[i])
+	}
+	newRs, err := deploymentutil.FindNewReplicaSet(deployment, rawRepSets)
 	if err != nil {
 		return nil, err
 	}

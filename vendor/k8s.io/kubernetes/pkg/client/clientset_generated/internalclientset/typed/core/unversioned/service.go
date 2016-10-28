@@ -18,6 +18,7 @@ package unversioned
 
 import (
 	api "k8s.io/kubernetes/pkg/api"
+	restclient "k8s.io/kubernetes/pkg/client/restclient"
 	watch "k8s.io/kubernetes/pkg/watch"
 )
 
@@ -37,20 +38,20 @@ type ServiceInterface interface {
 	Get(name string) (*api.Service, error)
 	List(opts api.ListOptions) (*api.ServiceList, error)
 	Watch(opts api.ListOptions) (watch.Interface, error)
-	Patch(name string, pt api.PatchType, data []byte) (result *api.Service, err error)
+	Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *api.Service, err error)
 	ServiceExpansion
 }
 
 // services implements ServiceInterface
 type services struct {
-	client *CoreClient
+	client restclient.Interface
 	ns     string
 }
 
 // newServices returns a Services
 func newServices(c *CoreClient, namespace string) *services {
 	return &services{
-		client: c,
+		client: c.RESTClient(),
 		ns:     namespace,
 	}
 }
@@ -150,11 +151,12 @@ func (c *services) Watch(opts api.ListOptions) (watch.Interface, error) {
 }
 
 // Patch applies the patch and returns the patched service.
-func (c *services) Patch(name string, pt api.PatchType, data []byte) (result *api.Service, err error) {
+func (c *services) Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *api.Service, err error) {
 	result = &api.Service{}
 	err = c.client.Patch(pt).
 		Namespace(c.ns).
 		Resource("services").
+		SubResource(subresources...).
 		Name(name).
 		Body(data).
 		Do().

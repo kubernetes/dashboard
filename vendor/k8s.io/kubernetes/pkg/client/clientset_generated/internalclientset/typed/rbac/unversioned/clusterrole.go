@@ -19,6 +19,7 @@ package unversioned
 import (
 	api "k8s.io/kubernetes/pkg/api"
 	rbac "k8s.io/kubernetes/pkg/apis/rbac"
+	restclient "k8s.io/kubernetes/pkg/client/restclient"
 	watch "k8s.io/kubernetes/pkg/watch"
 )
 
@@ -37,19 +38,19 @@ type ClusterRoleInterface interface {
 	Get(name string) (*rbac.ClusterRole, error)
 	List(opts api.ListOptions) (*rbac.ClusterRoleList, error)
 	Watch(opts api.ListOptions) (watch.Interface, error)
-	Patch(name string, pt api.PatchType, data []byte) (result *rbac.ClusterRole, err error)
+	Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *rbac.ClusterRole, err error)
 	ClusterRoleExpansion
 }
 
 // clusterRoles implements ClusterRoleInterface
 type clusterRoles struct {
-	client *RbacClient
+	client restclient.Interface
 }
 
 // newClusterRoles returns a ClusterRoles
 func newClusterRoles(c *RbacClient) *clusterRoles {
 	return &clusterRoles{
-		client: c,
+		client: c.RESTClient(),
 	}
 }
 
@@ -128,10 +129,11 @@ func (c *clusterRoles) Watch(opts api.ListOptions) (watch.Interface, error) {
 }
 
 // Patch applies the patch and returns the patched clusterRole.
-func (c *clusterRoles) Patch(name string, pt api.PatchType, data []byte) (result *rbac.ClusterRole, err error) {
+func (c *clusterRoles) Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *rbac.ClusterRole, err error) {
 	result = &rbac.ClusterRole{}
 	err = c.client.Patch(pt).
 		Resource("clusterroles").
+		SubResource(subresources...).
 		Name(name).
 		Body(data).
 		Do().
