@@ -173,7 +173,8 @@ func GenericDataSelect(dataList []DataCell, dsQuery *DataSelectQuery) []DataCell
 }
 
 // GenericDataSelect takes a list of GenericDataCells and DataSelectQuery and returns selected data as instructed by dsQuery.
-func GenericDataSelectWithMetrics(dataList []DataCell, dsQuery *DataSelectQuery, cachedResources *CachedResources, heapsterClient *client.HeapsterClient) ([]DataCell, metric.MetricPromises) {
+func GenericDataSelectWithMetrics(dataList []DataCell, dsQuery *DataSelectQuery,
+	cachedResources *CachedResources, heapsterClient *client.HeapsterClient) ([]DataCell, metric.MetricPromises) {
 	SelectableData := DataSelector{
 		GenericDataList: dataList,
 		DataSelectQuery: dsQuery,
