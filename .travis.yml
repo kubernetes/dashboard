@@ -20,6 +20,7 @@
 # According to the documentation: http://docs.travis-ci.com/user/docker/
 # sudo is required to enable docker in Travis CI.
 sudo: true
+
 # Cache downloaded Node.JS modules & Bower frontend dependencies for faster builds.
 cache:
   directories:
@@ -52,5 +53,6 @@ before_script:
 
   - docker --version
 
-script: ./node_modules/.bin/gulp check:local-cluster --heapsterServerHost 'http://localhost:8082'
+script: ./node_modules/.bin/gulp ci --heapsterServerHost 'http://localhost:8082'
+
 after_script: ./node_modules/.bin/gulp coverage-codecov-upload
