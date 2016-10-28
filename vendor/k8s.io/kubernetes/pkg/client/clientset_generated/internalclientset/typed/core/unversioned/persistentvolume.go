@@ -18,6 +18,7 @@ package unversioned
 
 import (
 	api "k8s.io/kubernetes/pkg/api"
+	restclient "k8s.io/kubernetes/pkg/client/restclient"
 	watch "k8s.io/kubernetes/pkg/watch"
 )
 
@@ -37,19 +38,19 @@ type PersistentVolumeInterface interface {
 	Get(name string) (*api.PersistentVolume, error)
 	List(opts api.ListOptions) (*api.PersistentVolumeList, error)
 	Watch(opts api.ListOptions) (watch.Interface, error)
-	Patch(name string, pt api.PatchType, data []byte) (result *api.PersistentVolume, err error)
+	Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *api.PersistentVolume, err error)
 	PersistentVolumeExpansion
 }
 
 // persistentVolumes implements PersistentVolumeInterface
 type persistentVolumes struct {
-	client *CoreClient
+	client restclient.Interface
 }
 
 // newPersistentVolumes returns a PersistentVolumes
 func newPersistentVolumes(c *CoreClient) *persistentVolumes {
 	return &persistentVolumes{
-		client: c,
+		client: c.RESTClient(),
 	}
 }
 
@@ -140,10 +141,11 @@ func (c *persistentVolumes) Watch(opts api.ListOptions) (watch.Interface, error)
 }
 
 // Patch applies the patch and returns the patched persistentVolume.
-func (c *persistentVolumes) Patch(name string, pt api.PatchType, data []byte) (result *api.PersistentVolume, err error) {
+func (c *persistentVolumes) Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *api.PersistentVolume, err error) {
 	result = &api.PersistentVolume{}
 	err = c.client.Patch(pt).
 		Resource("persistentvolumes").
+		SubResource(subresources...).
 		Name(name).
 		Body(data).
 		Do().

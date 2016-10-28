@@ -213,6 +213,8 @@ type Meta struct {
 	// KeyNameMapping is an optional function which may map the listed key (field name)
 	// into a source and destination value.
 	KeyNameMapping FieldMappingFunc
+	// Context is an optional field that callers may use to pass info to conversion functions.
+	Context interface{}
 }
 
 // scope contains information about an ongoing conversion.
@@ -429,10 +431,10 @@ func (c *Converter) SetStructFieldCopy(srcFieldType interface{}, srcFieldName st
 }
 
 // RegisterDefaultingFunc registers a value-defaulting func with the Converter.
-// defaultingFunc must take one parameters: a pointer to the input type.
+// defaultingFunc must take one parameter: a pointer to the input type.
 //
 // Example:
-// c.RegisteDefaultingFunc(
+// c.RegisterDefaultingFunc(
 //         func(in *v1.Pod) {
 //                 // defaulting logic...
 //          })

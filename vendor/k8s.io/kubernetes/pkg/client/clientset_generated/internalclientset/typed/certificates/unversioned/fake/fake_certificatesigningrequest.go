@@ -30,7 +30,7 @@ type FakeCertificateSigningRequests struct {
 	Fake *FakeCertificates
 }
 
-var certificatesigningrequestsResource = unversioned.GroupVersionResource{Group: "certificates", Version: "", Resource: "certificatesigningrequests"}
+var certificatesigningrequestsResource = unversioned.GroupVersionResource{Group: "certificates.k8s.io", Version: "", Resource: "certificatesigningrequests"}
 
 func (c *FakeCertificateSigningRequests) Create(certificateSigningRequest *certificates.CertificateSigningRequest) (result *certificates.CertificateSigningRequest, err error) {
 	obj, err := c.Fake.
@@ -88,7 +88,7 @@ func (c *FakeCertificateSigningRequests) List(opts api.ListOptions) (result *cer
 		return nil, err
 	}
 
-	label := opts.LabelSelector
+	label, _, _ := core.ExtractFromListOptions(opts)
 	if label == nil {
 		label = labels.Everything()
 	}
@@ -108,9 +108,9 @@ func (c *FakeCertificateSigningRequests) Watch(opts api.ListOptions) (watch.Inte
 }
 
 // Patch applies the patch and returns the patched certificateSigningRequest.
-func (c *FakeCertificateSigningRequests) Patch(name string, pt api.PatchType, data []byte) (result *certificates.CertificateSigningRequest, err error) {
+func (c *FakeCertificateSigningRequests) Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *certificates.CertificateSigningRequest, err error) {
 	obj, err := c.Fake.
-		Invokes(core.NewRootPatchAction(certificatesigningrequestsResource, name, data), &certificates.CertificateSigningRequest{})
+		Invokes(core.NewRootPatchSubresourceAction(certificatesigningrequestsResource, name, data, subresources...), &certificates.CertificateSigningRequest{})
 	if obj == nil {
 		return nil, err
 	}

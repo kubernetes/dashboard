@@ -300,7 +300,7 @@ func DeployAppFromFile(spec *AppDeploymentFromFileSpec,
 		return false, err
 	}
 
-	mapper, typer := factory.Object(false)
+	mapper, typer := factory.Object()
 	reader := strings.NewReader(spec.Content)
 
 	r := kubectlResource.NewBuilder(mapper, typer, kubectlResource.ClientMapperFunc(factory.ClientForMapping), factory.Decoder(true)).

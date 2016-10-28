@@ -94,7 +94,7 @@ func (c *FakeResourceQuotas) List(opts api.ListOptions) (result *api.ResourceQuo
 		return nil, err
 	}
 
-	label := opts.LabelSelector
+	label, _, _ := core.ExtractFromListOptions(opts)
 	if label == nil {
 		label = labels.Everything()
 	}
@@ -115,9 +115,9 @@ func (c *FakeResourceQuotas) Watch(opts api.ListOptions) (watch.Interface, error
 }
 
 // Patch applies the patch and returns the patched resourceQuota.
-func (c *FakeResourceQuotas) Patch(name string, pt api.PatchType, data []byte) (result *api.ResourceQuota, err error) {
+func (c *FakeResourceQuotas) Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *api.ResourceQuota, err error) {
 	obj, err := c.Fake.
-		Invokes(core.NewPatchAction(resourcequotasResource, c.ns, name, data), &api.ResourceQuota{})
+		Invokes(core.NewPatchSubresourceAction(resourcequotasResource, c.ns, name, data, subresources...), &api.ResourceQuota{})
 
 	if obj == nil {
 		return nil, err

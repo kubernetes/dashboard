@@ -18,6 +18,7 @@ package unversioned
 
 import (
 	api "k8s.io/kubernetes/pkg/api"
+	restclient "k8s.io/kubernetes/pkg/client/restclient"
 	watch "k8s.io/kubernetes/pkg/watch"
 )
 
@@ -36,20 +37,20 @@ type PodTemplateInterface interface {
 	Get(name string) (*api.PodTemplate, error)
 	List(opts api.ListOptions) (*api.PodTemplateList, error)
 	Watch(opts api.ListOptions) (watch.Interface, error)
-	Patch(name string, pt api.PatchType, data []byte) (result *api.PodTemplate, err error)
+	Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *api.PodTemplate, err error)
 	PodTemplateExpansion
 }
 
 // podTemplates implements PodTemplateInterface
 type podTemplates struct {
-	client *CoreClient
+	client restclient.Interface
 	ns     string
 }
 
 // newPodTemplates returns a PodTemplates
 func newPodTemplates(c *CoreClient, namespace string) *podTemplates {
 	return &podTemplates{
-		client: c,
+		client: c.RESTClient(),
 		ns:     namespace,
 	}
 }
@@ -136,11 +137,12 @@ func (c *podTemplates) Watch(opts api.ListOptions) (watch.Interface, error) {
 }
 
 // Patch applies the patch and returns the patched podTemplate.
-func (c *podTemplates) Patch(name string, pt api.PatchType, data []byte) (result *api.PodTemplate, err error) {
+func (c *podTemplates) Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *api.PodTemplate, err error) {
 	result = &api.PodTemplate{}
 	err = c.client.Patch(pt).
 		Namespace(c.ns).
 		Resource("podtemplates").
+		SubResource(subresources...).
 		Name(name).
 		Body(data).
 		Do().

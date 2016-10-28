@@ -19,6 +19,7 @@ package unversioned
 import (
 	api "k8s.io/kubernetes/pkg/api"
 	batch "k8s.io/kubernetes/pkg/apis/batch"
+	restclient "k8s.io/kubernetes/pkg/client/restclient"
 	watch "k8s.io/kubernetes/pkg/watch"
 )
 
@@ -38,20 +39,20 @@ type ScheduledJobInterface interface {
 	Get(name string) (*batch.ScheduledJob, error)
 	List(opts api.ListOptions) (*batch.ScheduledJobList, error)
 	Watch(opts api.ListOptions) (watch.Interface, error)
-	Patch(name string, pt api.PatchType, data []byte) (result *batch.ScheduledJob, err error)
+	Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *batch.ScheduledJob, err error)
 	ScheduledJobExpansion
 }
 
 // scheduledJobs implements ScheduledJobInterface
 type scheduledJobs struct {
-	client *BatchClient
+	client restclient.Interface
 	ns     string
 }
 
 // newScheduledJobs returns a ScheduledJobs
 func newScheduledJobs(c *BatchClient, namespace string) *scheduledJobs {
 	return &scheduledJobs{
-		client: c,
+		client: c.RESTClient(),
 		ns:     namespace,
 	}
 }
@@ -151,11 +152,12 @@ func (c *scheduledJobs) Watch(opts api.ListOptions) (watch.Interface, error) {
 }
 
 // Patch applies the patch and returns the patched scheduledJob.
-func (c *scheduledJobs) Patch(name string, pt api.PatchType, data []byte) (result *batch.ScheduledJob, err error) {
+func (c *scheduledJobs) Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *batch.ScheduledJob, err error) {
 	result = &batch.ScheduledJob{}
 	err = c.client.Patch(pt).
 		Namespace(c.ns).
 		Resource("scheduledjobs").
+		SubResource(subresources...).
 		Name(name).
 		Body(data).
 		Do().

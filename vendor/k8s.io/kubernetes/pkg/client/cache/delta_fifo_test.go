@@ -17,6 +17,7 @@ limitations under the License.
 package cache
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 	"time"
@@ -84,6 +85,50 @@ func TestDeltaFIFO_basic(t *testing.T) {
 	}
 }
 
+func TestDeltaFIFO_requeueOnPop(t *testing.T) {
+	f := NewDeltaFIFO(testFifoObjectKeyFunc, nil, nil)
+
+	f.Add(mkFifoObj("foo", 10))
+	_, err := f.Pop(func(obj interface{}) error {
+		if obj.(Deltas)[0].Object.(testFifoObject).name != "foo" {
+			t.Fatalf("unexpected object: %#v", obj)
+		}
+		return ErrRequeue{Err: nil}
+	})
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if _, ok, err := f.GetByKey("foo"); !ok || err != nil {
+		t.Fatalf("object should have been requeued: %t %v", ok, err)
+	}
+
+	_, err = f.Pop(func(obj interface{}) error {
+		if obj.(Deltas)[0].Object.(testFifoObject).name != "foo" {
+			t.Fatalf("unexpected object: %#v", obj)
+		}
+		return ErrRequeue{Err: fmt.Errorf("test error")}
+	})
+	if err == nil || err.Error() != "test error" {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if _, ok, err := f.GetByKey("foo"); !ok || err != nil {
+		t.Fatalf("object should have been requeued: %t %v", ok, err)
+	}
+
+	_, err = f.Pop(func(obj interface{}) error {
+		if obj.(Deltas)[0].Object.(testFifoObject).name != "foo" {
+			t.Fatalf("unexpected object: %#v", obj)
+		}
+		return nil
+	})
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if _, ok, err := f.GetByKey("foo"); ok || err != nil {
+		t.Fatalf("object should have been removed: %t %v", ok, err)
+	}
+}
+
 func TestDeltaFIFO_compressorWorks(t *testing.T) {
 	oldestTypes := []DeltaType{}
 	f := NewDeltaFIFO(
@@ -99,6 +144,9 @@ func TestDeltaFIFO_compressorWorks(t *testing.T) {
 		}),
 		nil,
 	)
+	if f.HasSynced() {
+		t.Errorf("Expected HasSynced to be false before completion of initial population")
+	}
 	f.Add(mkFifoObj("foo", 10))
 	f.Update(mkFifoObj("foo", 12))
 	f.Replace([]interface{}{mkFifoObj("foo", 20)}, "0")
@@ -111,7 +159,9 @@ func TestDeltaFIFO_compressorWorks(t *testing.T) {
 	if e, a := (Deltas{{Added, mkFifoObj("foo", 25)}}), Pop(f).(Deltas); !reflect.DeepEqual(e, a) {
 		t.Fatalf("Expected %#v, got %#v", e, a)
 	}
-
+	if !f.HasSynced() {
+		t.Errorf("Expected HasSynced to be true after completion of initial population")
+	}
 }
 
 func TestDeltaFIFO_addUpdate(t *testing.T) {
@@ -288,6 +338,60 @@ func TestDeltaFIFO_ReplaceMakesDeletions(t *testing.T) {
 		if e, a := expected, cur; !reflect.DeepEqual(e, a) {
 			t.Errorf("Expected %#v, got %#v", e, a)
 		}
+	}
+}
+
+func TestDeltaFIFO_UpdateResyncRace(t *testing.T) {
+	f := NewDeltaFIFO(
+		testFifoObjectKeyFunc,
+		nil,
+		keyLookupFunc(func() []testFifoObject {
+			return []testFifoObject{mkFifoObj("foo", 5)}
+		}),
+	)
+	f.Update(mkFifoObj("foo", 6))
+	f.Resync()
+
+	expectedList := []Deltas{
+		{{Updated, mkFifoObj("foo", 6)}},
+	}
+
+	for _, expected := range expectedList {
+		cur := Pop(f).(Deltas)
+		if e, a := expected, cur; !reflect.DeepEqual(e, a) {
+			t.Errorf("Expected %#v, got %#v", e, a)
+		}
+	}
+}
+
+func TestDeltaFIFO_HasSyncedCorrectOnDeletion(t *testing.T) {
+	f := NewDeltaFIFO(
+		testFifoObjectKeyFunc,
+		nil,
+		keyLookupFunc(func() []testFifoObject {
+			return []testFifoObject{mkFifoObj("foo", 5), mkFifoObj("bar", 6), mkFifoObj("baz", 7)}
+		}),
+	)
+	f.Replace([]interface{}{mkFifoObj("foo", 5)}, "0")
+
+	expectedList := []Deltas{
+		{{Sync, mkFifoObj("foo", 5)}},
+		// Since "bar" didn't have a delete event and wasn't in the Replace list
+		// it should get a tombstone key with the right Obj.
+		{{Deleted, DeletedFinalStateUnknown{Key: "bar", Obj: mkFifoObj("bar", 6)}}},
+	}
+
+	for _, expected := range expectedList {
+		if f.HasSynced() {
+			t.Errorf("Expected HasSynced to be false")
+		}
+		cur := Pop(f).(Deltas)
+		if e, a := expected, cur; !reflect.DeepEqual(e, a) {
+			t.Errorf("Expected %#v, got %#v", e, a)
+		}
+	}
+	if f.HasSynced() {
+		t.Errorf("Expected HasSynced to be true")
 	}
 }
 

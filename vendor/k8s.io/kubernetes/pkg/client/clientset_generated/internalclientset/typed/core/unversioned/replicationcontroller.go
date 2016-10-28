@@ -18,6 +18,7 @@ package unversioned
 
 import (
 	api "k8s.io/kubernetes/pkg/api"
+	restclient "k8s.io/kubernetes/pkg/client/restclient"
 	watch "k8s.io/kubernetes/pkg/watch"
 )
 
@@ -37,20 +38,20 @@ type ReplicationControllerInterface interface {
 	Get(name string) (*api.ReplicationController, error)
 	List(opts api.ListOptions) (*api.ReplicationControllerList, error)
 	Watch(opts api.ListOptions) (watch.Interface, error)
-	Patch(name string, pt api.PatchType, data []byte) (result *api.ReplicationController, err error)
+	Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *api.ReplicationController, err error)
 	ReplicationControllerExpansion
 }
 
 // replicationControllers implements ReplicationControllerInterface
 type replicationControllers struct {
-	client *CoreClient
+	client restclient.Interface
 	ns     string
 }
 
 // newReplicationControllers returns a ReplicationControllers
 func newReplicationControllers(c *CoreClient, namespace string) *replicationControllers {
 	return &replicationControllers{
-		client: c,
+		client: c.RESTClient(),
 		ns:     namespace,
 	}
 }
@@ -150,11 +151,12 @@ func (c *replicationControllers) Watch(opts api.ListOptions) (watch.Interface, e
 }
 
 // Patch applies the patch and returns the patched replicationController.
-func (c *replicationControllers) Patch(name string, pt api.PatchType, data []byte) (result *api.ReplicationController, err error) {
+func (c *replicationControllers) Patch(name string, pt api.PatchType, data []byte, subresources ...string) (result *api.ReplicationController, err error) {
 	result = &api.ReplicationController{}
 	err = c.client.Patch(pt).
 		Namespace(c.ns).
 		Resource("replicationcontrollers").
+		SubResource(subresources...).
 		Name(name).
 		Body(data).
 		Do().
