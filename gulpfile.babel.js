@@ -20,6 +20,7 @@
  */
 import './build/check';
 import './build/cluster';
+import './build/ci';
 import './build/backend';
 import './build/build';
 import './build/dependencies';

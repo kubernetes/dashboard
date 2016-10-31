@@ -114,21 +114,26 @@ export class PodCardListController {
   getDisplayStatus(pod) {
     let msgState = 'running';
     let reason = undefined;
-    for (let i = pod.podStatus.containerStates.length - 1; i >= 0; i--) {
-      let state = pod.podStatus.containerStates[i];
+    if (pod.podStatus.containerStates) {
+      // Container states array may be null when no containers have
+      // started yet.
 
-      if (state.waiting) {
-        msgState = 'waiting';
-        reason = state.waiting.reason;
-      }
-      if (state.terminated) {
-        msgState = 'terminated';
-        reason = state.terminated.reason;
-        if (!reason) {
-          if (state.terminated.signal) {
-            reason = 'Signal:${state.terminated.signal}';
-          } else {
-            reason = 'ExitCode:${state.terminated.exitCode}';
+      for (let i = pod.podStatus.containerStates.length - 1; i >= 0; i--) {
+        let state = pod.podStatus.containerStates[i];
+
+        if (state.waiting) {
+          msgState = 'waiting';
+          reason = state.waiting.reason;
+        }
+        if (state.terminated) {
+          msgState = 'terminated';
+          reason = state.terminated.reason;
+          if (!reason) {
+            if (state.terminated.signal) {
+              reason = 'Signal:${state.terminated.signal}';
+            } else {
+              reason = 'ExitCode:${state.terminated.exitCode}';
+            }
           }
         }
       }

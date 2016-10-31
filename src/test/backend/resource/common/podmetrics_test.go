@@ -61,7 +61,9 @@ func TestUnmarshalMetrics(t *testing.T) {
 func TestCreateResponse(t *testing.T) {
 	var cpuUsage1 uint64 = 1
 	var cpuUsage2 uint64 = 2
+	var cpuUsage3 uint64 = 3
 	var memoryUsage uint64 = 6131712
+	var memoryUsage2 uint64 = 6131713
 	cases := []struct {
 		cpuMetrics []heapster.MetricResult
 		memMetrics []heapster.MetricResult
@@ -89,11 +91,13 @@ func TestCreateResponse(t *testing.T) {
 			}},
 			{Metrics: []heapster.MetricPoint{
 				{Value: cpuUsage2},
+				{Value: cpuUsage3},
 			}},
 		},
 			[]heapster.MetricResult{
 				{Metrics: []heapster.MetricPoint{
 					{Value: memoryUsage},
+					{Value: memoryUsage2},
 				}},
 				{Metrics: []heapster.MetricPoint{
 					{Value: memoryUsage},
@@ -106,14 +110,16 @@ func TestCreateResponse(t *testing.T) {
 					CPUUsageHistory: []MetricResult{
 						{Value: cpuUsage1},
 					},
-					MemoryUsage: &memoryUsage,
+					MemoryUsage: &memoryUsage2,
 					MemoryUsageHistory: []MetricResult{
 						{Value: memoryUsage},
+						{Value: memoryUsage2},
 					},
 				}, "b": {
-					CPUUsage: &cpuUsage2,
+					CPUUsage: &cpuUsage3,
 					CPUUsageHistory: []MetricResult{
 						{Value: cpuUsage2},
+						{Value: cpuUsage3},
 					},
 					MemoryUsage: &memoryUsage,
 					MemoryUsageHistory: []MetricResult{

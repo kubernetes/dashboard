@@ -27,8 +27,8 @@ import (
 )
 
 const (
-	cpuUsage    = "cpu-usage"
-	memoryUsage = "memory-usage"
+	CpuUsage    = "cpu/usage_rate"
+	MemoryUsage = "memory/usage"
 )
 
 // MetricsByPod is a metrics map by pod name.
@@ -66,8 +66,8 @@ func getPodListMetrics(podNamesByNamespace map[string][]string,
 	result := &MetricsByPod{MetricsMap: make(map[string]map[string]PodMetrics)}
 
 	for namespace, podNames := range podNamesByNamespace {
-		metricCPUUsagePath := createMetricPath(namespace, podNames, cpuUsage)
-		metricMemUsagePath := createMetricPath(namespace, podNames, memoryUsage)
+		metricCPUUsagePath := createMetricPath(namespace, podNames, CpuUsage)
+		metricMemUsagePath := createMetricPath(namespace, podNames, MemoryUsage)
 
 		resultCPUUsageRaw, err := getRawMetrics(heapsterClient, metricCPUUsagePath)
 		if err != nil {
@@ -138,11 +138,11 @@ func fillPodMetrics(cpuMetrics []heapster.MetricResult, memMetrics []heapster.Me
 			cpuMetricsList := cpuMetrics[iterator].Metrics
 
 			if len(memMetricsList) > 0 {
-				memValue = &memMetricsList[0].Value
+				memValue = &memMetricsList[len(memMetricsList) - 1].Value
 			}
 
 			if len(cpuMetricsList) > 0 {
-				cpuValue = &cpuMetricsList[0].Value
+				cpuValue = &cpuMetricsList[len(cpuMetricsList) - 1].Value
 			}
 
 			cpuHistory := make([]MetricResult, len(cpuMetricsList))

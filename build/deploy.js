@@ -24,6 +24,89 @@ import conf from './conf';
 import {multiDest} from './multidest';
 
 /**
+ * Creates head Docker image for the application for current architecture.
+ * The image is tagged with the image name configuration constant.
+ */
+gulp.task('docker-image:head', ['build', 'docker-file'], function() {
+  return buildDockerImage([[conf.deploy.headImageName, conf.paths.dist]]);
+});
+
+/**
+ * Creates head Docker image for the application for all architectures.
+ * The image is tagged with the image name configuration constant.
+ */
+gulp.task('docker-image:head:cross', ['build:cross', 'docker-file:cross'], function() {
+  return buildDockerImage(lodash.zip(conf.deploy.headImageNames, conf.paths.distCross));
+});
+
+/**
+ * Creates release Docker image for the application for all architectures.
+ * The image is tagged with the image name configuration constant.
+ */
+gulp.task('docker-image:release:cross', ['build:cross', 'docker-file:cross'], function() {
+  return buildDockerImage(lodash.zip(conf.deploy.releaseImageNames, conf.paths.distCross));
+});
+
+/**
+ * Pushes cross compiled head images to Docker Hub.
+ */
+gulp.task('push-to-docker:head:cross', ['docker-image:head:cross'], function() {
+  // If travis commit is available push all images and their copies tagged with commit SHA.
+  if (process.env.TRAVIS_COMMIT) {
+    let allImages = conf.deploy.headImageNames.concat([]);
+
+    let spawnPromises = conf.deploy.headImageNames.map((imageName) => {
+      // Regex to extract base image and its tag.
+      let extractBaseRegex = /(.*):(\w+)/i;
+      let newImageName = `${imageName.match(extractBaseRegex)[1]}:${process.env.TRAVIS_COMMIT}`;
+      allImages.push(newImageName);
+      return new Promise((resolve, reject) => {
+        spawnDockerProcess(
+            [
+              'tag',
+              imageName,
+              newImageName,
+            ],
+            (err) => {
+              if (err) {
+                reject(err);
+              } else {
+                resolve();
+              }
+            });
+      });
+    });
+
+    return Promise.all(spawnPromises).then(() => {
+      return pushToDocker(allImages);
+    });
+  } else {
+    return pushToDocker(conf.deploy.headImageNames);
+  }
+});
+
+/**
+ * Pushes cross-compiled release images to GCR.
+ */
+gulp.task('push-to-gcr:release:cross', ['docker-image:release:cross'], function() {
+  return pushToGcr(conf.deploy.releaseImageNames);
+});
+
+/**
+ * Processes the Docker file and places it in the dist folder for building.
+ */
+gulp.task('docker-file', ['clean-dist'], function() {
+  return dockerFile(conf.paths.dist);
+});
+
+/**
+ * Processes the Docker file and places it in the dist folder for all architectures.
+ */
+gulp.task('docker-file:cross', ['clean-dist'], function() {
+  return dockerFile(conf.paths.distCross);
+});
+
+/**
  * @param {!Array<string>} args
  * @param {function(?Error=)} doneFn
  */
@@ -40,66 +123,6 @@ function spawnDockerProcess(args, doneFn) {
     }
   });
 }
-
-/**
- * Creates canary Docker image for the application for current architecture.
- * The image is tagged with the image name configuration constant.
- */
-gulp.task('docker-image:canary', ['build', 'docker-file'], function(doneFn) {
-  buildDockerImage([[conf.deploy.canaryImageName, conf.paths.dist]], doneFn);
-});
-
-/**
- * Creates release Docker image for the application for current architecture.
- * The image is tagged with the image name configuration constant.
- */
-gulp.task('docker-image:release', ['build', 'docker-file'], function(doneFn) {
-  buildDockerImage([[conf.deploy.releaseImageName, conf.paths.dist]], doneFn);
-});
-
-/**
- * Creates canary Docker image for the application for all architectures.
- * The image is tagged with the image name configuration constant.
- */
-gulp.task('docker-image:canary:cross', ['build:cross', 'docker-file:cross'], function(doneFn) {
-  buildDockerImage(lodash.zip(conf.deploy.canaryImageNames, conf.paths.distCross), doneFn);
-});
-
-/**
- * Creates release Docker image for the application for all architectures.
- * The image is tagged with the image name configuration constant.
- */
-gulp.task('docker-image:release:cross', ['build:cross', 'docker-file:cross'], function(doneFn) {
-  buildDockerImage(lodash.zip(conf.deploy.releaseImageNames, conf.paths.distCross), doneFn);
-});
-
-/**
- * Pushes cross-compiled canary images to GCR.
- */
-gulp.task('push-to-gcr:canary', ['docker-image:canary:cross'], function(doneFn) {
-  pushToGcr(conf.deploy.versionCanary, doneFn);
-});
-
-/**
- * Pushes cross-compiled release images to GCR.
- */
-gulp.task('push-to-gcr:release', ['docker-image:release:cross'], function(doneFn) {
-  pushToGcr(conf.deploy.versionRelease, doneFn);
-});
-
-/**
- * Processes the Docker file and places it in the dist folder for building.
- */
-gulp.task('docker-file', ['clean-dist'], function() {
-  dockerFile(conf.paths.dist);
-});
-
-/**
- * Processes the Docker file and places it in the dist folder for all architectures.
- */
-gulp.task('docker-file:cross', ['clean-dist'], function() {
-  dockerFile(conf.paths.distCross);
-});
 
 /**
  * @param {!Array<!Array<string>>} imageNamesAndDirs (image name, directory) pairs
@@ -132,27 +155,80 @@ function buildDockerImage(imageNamesAndDirs) {
 }
 
 /**
- * @param {string} version
+ * @param {!Array<string>} imageNames
+ * @return {!Promise}
+ */
+function pushToDocker(imageNames) {
+  let spawnPromises = imageNames.map((imageName) => {
+    return new Promise((resolve, reject) => {
+      spawnDockerProcess(
+          [
+            'push',
+            imageName,
+          ],
+          (err) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve();
+            }
+          });
+    });
+  });
+
+  return Promise.all(spawnPromises);
+}
+
+/**
+ * @param {!Array<string>} args
  * @param {function(?Error=)} doneFn
  */
-function pushToGcr(version, doneFn) {
-  let imageUri = `${conf.deploy.imageName}:${version}`;
+function spawnGCloudProcess(args, doneFn) {
+  let gcloudTask = child.spawn('gcloud', args, {stdio: 'inherit'});
 
-  let childTask = child.spawn('gcloud', ['docker', 'push', imageUri], {stdio: 'inherit'});
-
-  childTask.on('exit', function(code) {
+  // Call Gulp callback on task exit. This has to be done to make Gulp dependency management
+  // work.
+  gcloudTask.on('exit', function(code) {
     if (code === 0) {
       doneFn();
     } else {
-      doneFn(new Error(`gcloud command error, code: ${code}`));
+      doneFn(new Error(`GCloud command error, code: ${code}`));
     }
   });
 }
 
 /**
+ * @param {!Array<string>} imageNames
+ * @return {!Promise}
+ */
+function pushToGcr(imageNames) {
+  let spawnPromises = imageNames.forEach((imageName) => {
+    return new Promise((resolve, reject) => {
+      spawnGCloudProcess(
+          [
+            'docker',
+            'push',
+            imageName,
+          ],
+          (err) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve();
+            }
+          });
+    });
+  });
+
+  return Promise.all(spawnPromises);
+}
+
+/**
  * @param {string|!Array<string>} outputDirs
+ * @param {function(?Error=)} doneFn
  * @return {stream}
  */
-function dockerFile(outputDirs) {
-  return gulp.src(path.join(conf.paths.deploySrc, 'Dockerfile')).pipe(multiDest(outputDirs));
+function dockerFile(outputDirs, doneFn) {
+  return gulp.src(path.join(conf.paths.deploySrc, 'Dockerfile'))
+      .pipe(multiDest(outputDirs, doneFn));
 }
