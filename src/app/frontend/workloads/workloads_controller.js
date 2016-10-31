@@ -79,7 +79,7 @@ export class WorkloadsController {
 const i18n = {
   /** @export {string} @desc Label "Daemon sets", which appears above the daemon sets list on
    the workloads page. */
-  MSG_WORKLOADS_DEAMON_SETS_LABEL: goog.getMsg('Daemon sets'),
+  MSG_WORKLOADS_DAEMON_SETS_LABEL: goog.getMsg('Daemon sets'),
   /** @export {string} @desc Label "Deployments", which appears above the deployments list on
    the workloads page.*/
   MSG_WORKLOADS_DEPLOYMENTS_LABEL: goog.getMsg('Deployments'),

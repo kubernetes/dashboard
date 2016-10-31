@@ -69,23 +69,23 @@ function i18n(petSet) {
     MSG_PET_SET_INFO_PODS_ENTRY: goog.getMsg('Pods'),
     /** @export {string} @desc Pet set info status section pods status entry. */
     MSG_PET_SET_INFO_PODS_STATUS_ENTRY: goog.getMsg('Pods status'),
-    /** @export {string} @desc The message says that that many pods were created
+    /** @export {string} @desc The message says how many pods were created
         (pet set details page). */
     MSG_PET_SET_DETAIL_PODS_CREATED_LABEL:
         goog.getMsg('{$podsCount} created', {'podsCount': petSet.podInfo.current}),
-    /** @export {string} @desc The message says that that many pods are running
+    /** @export {string} @desc The message says how many pods are running
         (pet set details page). */
     MSG_PET_SET_DETAIL_PODS_RUNNING_LABEL:
         goog.getMsg('{$podsCount} running', {'podsCount': petSet.podInfo.running}),
-    /** @export {string} @desc The message says that that many pods are pending
+    /** @export {string} @desc The message says how many pods are pending
         (pet set details page). */
     MSG_PET_SET_DETAIL_PODS_PENDING_LABEL:
         goog.getMsg('{$podsCount} pending', {'podsCount': petSet.podInfo.pending}),
-    /** @export {string} @desc The message says that that many pods have failed
+    /** @export {string} @desc The message says how many pods have failed
         (pet set details page). */
     MSG_PET_SET_DETAIL_PODS_FAILED_LABEL:
         goog.getMsg('{$podsCount} failed', {'podsCount': petSet.podInfo.failed}),
-    /** @export {string} @desc The message says that that many pods are desired to run
+    /** @export {string} @desc The message says how many pods are desired to run
         (pet set details page). */
     MSG_PET_SET_DETAIL_PODS_DESIRED_LABEL:
         goog.getMsg('{$podsCount} desired', {'podsCount': petSet.podInfo.desired}),
