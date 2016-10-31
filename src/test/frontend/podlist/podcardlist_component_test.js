@@ -62,6 +62,13 @@ describe('Pod card list controller', () => {
     })).toBe('Test Phase');
   });
 
+  it('should handle pods with no container statuses', () => {
+    // Output is expected to be equal to the podPhase.
+    expect(ctrl.getDisplayStatus({
+      podStatus: {podPhase: 'Test Phase'},
+    })).toBe('Test Phase');
+  });
+
   it('should show display status correctly (waiting container)', () => {
     expect(ctrl.getDisplayStatus({
       podStatus: {
