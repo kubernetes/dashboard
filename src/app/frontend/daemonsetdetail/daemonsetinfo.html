@@ -47,10 +47,10 @@ limitations under the License.
     <kd-info-card-entry title="[[Pods status|Label 'Pods status' for the status of the pods in a daemon set, on the daemon set details page.]]" ng-if="!$ctrl.areDesiredPodsRunning()">
       <div ng-if="!$ctrl.areDesiredPodsRunning()">
         <div ng-if="::$ctrl.daemonSet.podInfo.pending" class="kd-comma-separated-item">
-          [[{{::$ctrl.daemonSet.podInfo.pending}} pending|The message says that that many pods are pending (daemon set details page).]]
+          [[{{::$ctrl.daemonSet.podInfo.pending}} pending|The message says how many pods are pending (daemon set details page).]]
         </div>
         <div ng-if="::$ctrl.daemonSet.podInfo.failed" class="kd-comma-separated-item">
-          [[{{::$ctrl.daemonSet.podInfo.failed}} failed|The message says that that many pods have failed (daemon set details page).]]</div>
+          [[{{::$ctrl.daemonSet.podInfo.failed}} failed|The message says how many pods have failed (daemon set details page).]]</div>
         <div ng-if="::$ctrl.daemonSet.podInfo.running" class="kd-comma-separated-item">
           [[{{::$ctrl.daemonSet.podInfo.running}} running|The message describes how many pods are running (daemon set details page).]]
         </div>
