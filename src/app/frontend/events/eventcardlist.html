@@ -15,27 +15,27 @@ limitations under the License.
 -->
 
 <kd-content-card>
-  <kd-title>{{::$ctrl.i18n.MSG_EVENTS_CARD}}</kd-title>
+  <kd-title>[[Events|Label for the events card.]]</kd-title>
   <kd-content>
     <kd-resource-card-list selectable="false" with-statuses="true" ng-if="$ctrl.hasEvents()">
       <kd-resource-card-header-columns>
         <kd-resource-card-header-column size="medium" grow="4">
-          {{::$ctrl.i18n.MSG_EVENTS_MESSAGE_LABEL}}
+          [[Message|Label 'Message' for the event message column of the events table (events list page).]]
         </kd-resource-card-header-column>
         <kd-resource-card-header-column>
-          {{::$ctrl.i18n.MSG_EVENTS_SOURCE_LABEL}}
+          [[Source|Label 'Source' for the event source column of the events table (events list page).]]
         </kd-resource-card-header-column>
         <kd-resource-card-header-column>
-          {{::$ctrl.i18n.MSG_EVENTS_SUB_OBJECT_LABEL}}
+          [[Sub-object|Label 'Sub-object' for the respective column of the events table (events list page).]]
         </kd-resource-card-header-column>
         <kd-resource-card-header-column size="small" grow="nogrow">
-          {{::$ctrl.i18n.MSG_EVENTS_COUNT_LABEL}}
+          [[Count|Label 'Count' for event count column of the events table (events list page).]]
         </kd-resource-card-header-column>
         <kd-resource-card-header-column>
-          {{::$ctrl.i18n.MSG_EVENTS_FIRST_SEEN_LABEL}}
+          [[First seen|Label 'First seen' for the respective column of the events table (events list page).]]
         </kd-resource-card-header-column>
         <kd-resource-card-header-column>
-          {{::$ctrl.i18n.MSG_EVENTS_LAST_SEEN_LABEL}}
+          [[Last seen|Label 'Last seen' for the respective column of the events table (events list page).]]
         </kd-resource-card-header-column>
       </kd-resource-card-header-columns>
 
@@ -78,8 +78,8 @@ limitations under the License.
     </kd-resource-card-list>
 
     <div class="kd-zerostate-message" layout-padding ng-hide="$ctrl.hasEvents()">
-      <div class="kd-zerostate-title">{{::$ctrl.i18n.MSG_EVENTS_NO_EVENTS_TITLE}}</div>
-      <div class="kd-zerostate-text">{{::$ctrl.i18n.MSG_EVENTS_NO_EVENTS_USER_HELP}}</div>
+      <div class="kd-zerostate-title">[[There is nothing to display here|Title of section when there are no events.]]</div>
+      <div class="kd-zerostate-text">[[It is possible that all events have expired.|User help on the events page when no events are to be displayed.]]</div>
     </div>
   </kd-content>
 </kd-content-card>

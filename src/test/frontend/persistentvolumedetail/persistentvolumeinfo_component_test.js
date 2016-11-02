@@ -31,6 +31,6 @@ describe('Persistent Volume Info controller', () => {
   });
 
   it('should initialize the ctrl', () => {
-    expect(ctrl.i18n).not.toBeUndefined();
+    expect(ctrl.persistentVolume).not.toBeUndefined();
   });
 });

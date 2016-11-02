@@ -31,22 +31,5 @@ export class PetSetDetailController {
 
     /** @export {!angular.Resource} */
     this.petSetEventsResource = kdPetSetEventsResource;
-
-    /** @export */
-    this.i18n = i18n;
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Related pods card title on the pet set detail page. */
-  MSG_PET_SET_DETAIL_PODS_CARD_TITLE: goog.getMsg('Pods'),
-  /** @export {string} @desc Title for pods card zerostate in pet set details page. */
-  MSG_PET_SET_DETAIL_PODS_ZEROSTATE_TITLE: goog.getMsg('There is nothing to display here'),
-  /** @export {string} @desc Text for pods card zerostate in pet set details page. */
-  MSG_PET_SET_DETAIL_PODS_ZEROSTATE_TEXT:
-      goog.getMsg('There are currently no Pods selected by this Pet Set'),
-  /** @export {string} @desc Title for graph card displaying CPU metric of one pet set. */
-  MSG_PET_SET_DETAIL_CPU_GRAPH_CARD_TITLE: goog.getMsg('CPU usage history'),
-  /** @export {string} @desc Title for graph card displaying memory metric of one pet set. */
-  MSG_PET_SET_DETAIL_MEMORY_GRAPH_CARD_TITLE: goog.getMsg('Memory usage history'),
-};

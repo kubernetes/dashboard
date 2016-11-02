@@ -23,14 +23,5 @@ export class ActionBarController {
   constructor(jobDetail) {
     /** @export {!backendApi.JobDetail} */
     this.details = jobDetail;
-
-    /** @export */
-    this.i18n = i18n;
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Label 'Job' which appears at the top of the
-   dialog, opened from a job details page. */
-  MSG_JOB_DETAIL_JOB_LABEL: goog.getMsg('Job'),
-};

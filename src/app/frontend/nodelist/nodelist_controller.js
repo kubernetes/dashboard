@@ -29,15 +29,5 @@ export class NodeListController {
 
     /** @export {!angular.Resource} */
     this.nodeListResource = kdNodeListResource;
-
-    /** @export */
-    this.i18n = i18n;
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Title for graph card displaying CPU metric of nodes. */
-  MSG_NODE_LIST_CPU_GRAPH_CARD_TITLE: goog.getMsg('CPU usage history'),
-  /** @export {string} @desc Title for graph card displaying memory metric of nodes. */
-  MSG_NODE_LIST_MEMORY_GRAPH_CARD_TITLE: goog.getMsg('Memory usage history'),
-};

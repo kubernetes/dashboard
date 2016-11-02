@@ -17,22 +17,22 @@ limitations under the License.
 <kd-resource-card-list selectable="false" with-statuses="false">
   <kd-resource-card-header-columns>
     <kd-resource-card-header-column size="small" grow="2">
-      {{::$ctrl.i18n.MSG_NODE_DETAIL_CONDITION_TYPE_HEADER}}
+      [[Type|Label 'Type' for the condition table header on the node details page.]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small" grow="1">
-      {{::$ctrl.i18n.MSG_NODE_DETAIL_CONDITION_STATUS_HEADER}}
+      [[Status|Label 'Status' for the condition table header on the node details page.]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small" grow="1">
-      {{::$ctrl.i18n.MSG_NODE_DETAIL_CONDITION_LAST_HEARTBEAT_TIME_HEADER}}
+      [[Last heartbeat time|Label 'Last heartbeat time' for the condition table header on the node details page.]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small" grow="1">
-      {{::$ctrl.i18n.MSG_NODE_DETAIL_CONDITION_LAST_TRANSITION_TIME_HEADER}}
+      [[Last transition time|Label 'Last transition time' for the condition table header on the node details page.]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="medium" grow="2">
-      {{::$ctrl.i18n.MSG_NODE_DETAIL_CONDITION_REASON_HEADER}}
+      [[Reason|Label 'Reason' for the condition table header on the node details page.]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="medium" grow="4">
-      {{::$ctrl.i18n.MSG_NODE_DETAIL_CONDITION_MESSAGE_HEADER}}
+      [[Message|Label 'Message' for the condition table header on the node details page.]]
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
   <kd-resource-card ng-repeat="condition in $ctrl.conditions" omit-meta="true">

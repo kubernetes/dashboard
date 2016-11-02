@@ -13,17 +13,6 @@
 // limitations under the License.
 
 /**
- * @final
- */
-export class NodeCardListController {
-  /** @ngInject */
-  constructor() {
-    /** @export */
-    this.i18n = i18n;
-  }
-}
-
-/**
  * @return {!angular.Component}
  */
 export const nodeCardListComponent = {
@@ -33,23 +22,4 @@ export const nodeCardListComponent = {
     'nodeListResource': '<',
   },
   templateUrl: 'nodelist/nodecardlist.html',
-  controller: NodeCardListController,
-};
-
-const i18n = {
-  /** @export {string} @desc Label 'Name' which appears as a column label in the table of
-      nodes (node list view). */
-  MSG_NODE_LIST_NAME_LABEL: goog.getMsg('Name'),
-  /** @export {string} @desc Label 'Labels' which appears as a column label in the table of
-      nodes (node list view). */
-  MSG_NODE_LIST_LABELS_LABEL: goog.getMsg('Labels'),
-  /** @export {string} @desc Label 'Ready' which appears as a column label in the table of
-   nodes (node list view). */
-  MSG_NODE_LIST_READY_LABEL: goog.getMsg('Ready'),
-  /** @export {string} @desc Label 'Pods' which appears as a column label in the table of
-      nodes (node list view). */
-  MSG_NODE_LIST_PODS_LABEL: goog.getMsg('Pods'),
-  /** @export {string} @desc Label 'Age' which appears as a column label in the
-      table of nodes (node list view). */
-  MSG_NODE_LIST_AGE_LABEL: goog.getMsg('Age'),
 };

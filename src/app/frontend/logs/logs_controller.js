@@ -317,14 +317,6 @@ export class LogsController {
 }
 
 const i18n = {
-  /** @export {string} @desc Title prefix for logs card. */
-  MSG_LOGS_TITLE_FROM: goog.getMsg('Logs from'),
-  /** @export {string} @desc Title part for logs card. */
-  MSG_LOGS_TITLE_IN: goog.getMsg('in'),
-  /** @export {string} @desc Footer part for logs card. */
-  MSG_LOGS_TITLE_TO: goog.getMsg('to'),
-  /** @export {string} @desc Title for logs card zerostate in logs page. */
-  MSG_LOGS_ZEROSTATE_TITLE: goog.getMsg('There is nothing to display here'),
   /** @export {string} @desc Text for logs card zerostate in logs page. */
   MSG_LOGS_ZEROSTATE_TEXT: goog.getMsg('The selected container has not logged any messages yet.'),
 };

@@ -31,22 +31,5 @@ export class NodeDetailController {
 
     /** @export {!angular.Resource} */
     this.eventListResource = kdNodeEventsResource;
-
-    /** @export */
-    this.i18n = i18n;
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Title for graph card displaying CPU metric of one node. */
-  MSG_NODE_DETAIL_CPU_GRAPH_CARD_TITLE: goog.getMsg('CPU usage history'),
-  /** @export {string} @desc Title for graph card displaying memory metric of one node. */
-  MSG_NODE_DETAIL_MEMORY_GRAPH_CARD_TITLE: goog.getMsg('Memory usage history'),
-  /** @export {string} @desc Label 'Pods' for the pods section on the node details page. */
-  MSG_NODE_DETAIL_PODS_LABEL: goog.getMsg('Pods'),
-  /** @export {string} @desc Title for pods card zerostate in node details page. */
-  MSG_NODE_DETAIL_PODS_ZEROSTATE_TITLE: goog.getMsg('There is nothing to display here'),
-  /** @export {string} @desc Text for pods card zerostate in node details page. */
-  MSG_NODE_DETAIL_PODS_ZEROSTATE_TEXT:
-      goog.getMsg('There are currently no Pods scheduled on this Node'),
-};
