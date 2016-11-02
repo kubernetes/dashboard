@@ -25,9 +25,6 @@ export default class NamespaceInfoController {
      * @export {!backendApi.NamespaceDetail}
      */
     this.namespace;
-
-    /** @export */
-    this.i18n = i18n;
   }
 }
 
@@ -43,12 +40,4 @@ export const namespaceInfoComponent = {
     /** {!backendApi.NamespaceDetail} */
     'namespace': '=',
   },
-};
-
-const i18n = {
-  /** @export {string} @desc Subtitle 'Details' for the left section with general information
-        about a namespace on the namespace details page.*/
-  MSG_NAMESPACE_DETAIL_DETAILS_SUBTITLE: goog.getMsg('Details'),
-  /** @export {string} @desc Label 'Status' for the namespace namespace on the namespace details page.*/
-  MSG_NAMESPACE_DETAIL_STATUS_LABEL: goog.getMsg('Status'),
 };

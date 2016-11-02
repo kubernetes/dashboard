@@ -15,40 +15,40 @@ limitations under the License.
 -->
 
 <kd-info-card>
-    <kd-info-card-section name="{{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_INFO_DETAILS_SECTION}}">
+    <kd-info-card-section name="[[Details|Persistent volume info details section name.]]">
         <kd-object-meta-info-card object-meta="::$ctrl.petSet.objectMeta">
         </kd-object-meta-info-card>
-        <kd-info-card-entry title="{{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_INFO_STATUS_ENTRY}}">
+        <kd-info-card-entry title="[[Status|Persistent volume info details section status entry.]]">
             <kd-middle-ellipsis
                     display-string="{{::$ctrl.persistentVolume.status}}">
             </kd-middle-ellipsis>
             <div ng-hide="::$ctrl.persistentVolume.status">-</div>
         </kd-info-card-entry>
-        <kd-info-card-entry title="{{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_INFO_CLAIM_ENTRY}}">
+        <kd-info-card-entry title="[[Claim|Persistent volume info details section claim entry.]]">
             <kd-middle-ellipsis
                     display-string="{{::$ctrl.persistentVolume.claim}}">
             </kd-middle-ellipsis>
             <div ng-hide="::$ctrl.persistentVolume.claim">-</div>
         </kd-info-card-entry>
-        <kd-info-card-entry title="{{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_INFO_RECLAIM_POLICY_ENTRY}}">
+        <kd-info-card-entry title="[[Reclaim policy|Persistent volume info details section reclaim policy entry.]]">
             <kd-middle-ellipsis
                     display-string="{{::$ctrl.persistentVolume.reclaimPolicy}}">
             </kd-middle-ellipsis>
             <div ng-hide="::$ctrl.persistentVolume.reclaimPolicy">-</div>
         </kd-info-card-entry>
-        <kd-info-card-entry title="{{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_INFO_ACCESS_MODES_ENTRY}}">
+        <kd-info-card-entry title="[[Access modes|Persistent volume info details section access modes entry.]]">
             <kd-middle-ellipsis ng-repeat="(key, value) in ::$ctrl.persistentVolume.accessModes"
                     display-string="{{::value}}">
             </kd-middle-ellipsis>
             <div ng-hide="::$ctrl.persistentVolume.accessModes">-</div>
         </kd-info-card-entry>
-        <kd-info-card-entry title="{{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_INFO_CAPACITY_ENTRY}}">
+        <kd-info-card-entry title="[[Capacity|Persistent volume info details section capacity entry.]]">
             <kd-middle-ellipsis ng-repeat="(key, value) in ::$ctrl.persistentVolume.capacity"
                                 display-string="{{::value}}">
             </kd-middle-ellipsis>
             <div ng-hide="::$ctrl.persistentVolume.capacity">-</div>
         </kd-info-card-entry>
-        <kd-info-card-entry title="{{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_INFO_MESSAGE_ENTRY}}">
+        <kd-info-card-entry title="[[Message|Persistent volume info details section message entry.]]">
             <kd-middle-ellipsis
                     display-string="{{::$ctrl.persistentVolume.message}}">
             </kd-middle-ellipsis>

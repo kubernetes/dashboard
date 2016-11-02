@@ -26,9 +26,6 @@ export default class NodeConditionsController {
      * @export {!backendApi.NodeConditionList}
      */
     this.conditions;
-
-    /** @export */
-    this.i18n = i18n;
   }
 }
 
@@ -44,25 +41,4 @@ export const nodeConditionsComponent = {
     /** {!backendApi.NodeConditionList} */
     'conditions': '=',
   },
-};
-
-const i18n = {
-  /** @export {string} @desc Label 'Type' for the condition table header on the node details
-      page. */
-  MSG_NODE_DETAIL_CONDITION_TYPE_HEADER: goog.getMsg('Type'),
-  /** @export {string} @desc Label 'Status' for the condition table header on the node details
-      page. */
-  MSG_NODE_DETAIL_CONDITION_STATUS_HEADER: goog.getMsg('Status'),
-  /** @export {string} @desc Label 'Last heartbeat time' for the condition table header on the node
-      details page. */
-  MSG_NODE_DETAIL_CONDITION_LAST_HEARTBEAT_TIME_HEADER: goog.getMsg('Last heartbeat time'),
-  /** @export {string} @desc Label 'Last transition time' for the condition table header on the node
-      details page. */
-  MSG_NODE_DETAIL_CONDITION_LAST_TRANSITION_TIME_HEADER: goog.getMsg('Last transition time'),
-  /** @export {string} @desc Label 'Reason' for the condition table header on the node details
-      page. */
-  MSG_NODE_DETAIL_CONDITION_REASON_HEADER: goog.getMsg('Reason'),
-  /** @export {string} @desc Label 'Message' for the condition table header on the node details
-      page. */
-  MSG_NODE_DETAIL_CONDITION_MESSAGE_HEADER: goog.getMsg('Message'),
 };

@@ -15,44 +15,44 @@ limitations under the License.
 -->
 
 <kd-info-card>
-  <kd-info-card-header>{{::$ctrl.i18n.MSG_JOB_RESOURCE_DETAILS}}</kd-info-card-header>
-  <kd-info-card-section name="{{::$ctrl.i18n.MSG_JOB_DETAILS}}">
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_JOB_NAME}}">
+  <kd-info-card-header>[[Resource details|Resource details header. Appears on top of the page.]]</kd-info-card-header>
+  <kd-info-card-section name="[[Details|Details section header. Appears below main header.]]">
+    <kd-info-card-entry title="[[Name|Job name. Appears in details section.]]">
       <kd-middle-ellipsis
               display-string="{{::$ctrl.job.objectMeta.name}}">
       </kd-middle-ellipsis>
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_JOB_NAMESPACE}}">
+    <kd-info-card-entry title="[[Namespace|Job namespace. Appears in details section.]]">
       {{::$ctrl.job.objectMeta.namespace}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_JOB_LABELS}}">
+    <kd-info-card-entry title="[[Labels|Job labels. Appears in details section.]]">
       <kd-labels labels="::$ctrl.job.objectMeta.labels"></kd-labels>
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_JOB_IMAGES}}">
+    <kd-info-card-entry title="[[Images|Job images. Appears in details section.]]">
       <div ng-repeat="image in $ctrl.job.containerImages">
         <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
       </div>
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_JOB_COMPLETIONS}}">
+    <kd-info-card-entry title="[[Completions|Job completions. Appears in details section.]]">
       {{::$ctrl.job.completions}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_JOB_PARALLEISM}}">
+    <kd-info-card-entry title="[[Parallelism|Job parallelism. Appears in details section.]]">
       {{::$ctrl.job.paralleism}}
     </kd-info-card-entry>
   </kd-info-card-section>
-  <kd-info-card-section name="{{::$ctrl.i18n.MSG_JOB_STATUS}}">
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_JOB_PODS}}">
+  <kd-info-card-section name="[[Status|Job status. Appears in details section.]]">
+    <kd-info-card-entry title="[[Pods|Pod status section header. Appears below main header.]]">
       <div>
         <div class="kd-comma-separated-item">
-          {{::$ctrl.job.podInfo.running}} {{::$ctrl.i18n.MSG_JOB_PODS_ACTIVE}}<!-- Collapse
+          {{::$ctrl.job.podInfo.running}} [[active|Status of active pods. Appears next to number of active pods.]]<!-- Collapse
           whitespace
       --></div>
         <div class="kd-comma-separated-item">
-          {{::$ctrl.job.podInfo.succeeded}} {{::$ctrl.i18n.MSG_JOB_PODS_SUCCEEDED}}<!-- Collapse
+          {{::$ctrl.job.podInfo.succeeded}} [[succeeded|Status of succeeded pods. Appears next to number of succeeded pods.]]<!-- Collapse
           whitespace
       --></div>
         <div class="kd-comma-separated-item">
-          {{::$ctrl.job.podInfo.failed}} {{::$ctrl.i18n.MSG_JOB_PODS_FAILED}}
+          {{::$ctrl.job.podInfo.failed}} [[failed|Status of failed pods. Appears next to number of failed pods.]]
         </div>
       </div>
     </kd-info-card-entry>

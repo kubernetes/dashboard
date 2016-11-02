@@ -29,6 +29,5 @@ describe('Namespace card list', () => {
 
   it('should instantiate the controller properly', () => {
     expect(ctrl).not.toBeUndefined();
-    expect(ctrl.i18n).not.toBeUndefined();
   });
 });

@@ -23,13 +23,5 @@ export class IngressDetailController {
   constructor(ingressDetail) {
     /** @export {!backendApi.IngressDetail} */
     this.ingressDetail = ingressDetail;
-
-    /** @export */
-    this.i18n = i18n;
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Config map info details section name. */
-  MSG_INGRESS_INFO_DATA_SECTION: goog.getMsg('Data'),
-};

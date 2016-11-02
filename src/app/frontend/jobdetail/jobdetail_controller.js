@@ -31,17 +31,5 @@ export class JobDetailController {
 
     /** @export {!angular.Resource} */
     this.eventListResource = kdJobEventsResource;
-
-    /** @export */
-    this.i18n = i18n;
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Title for a pods section. */
-  MSG_JOB_DETAIL_PODS: goog.getMsg('Pods'),
-  /** @export {string} @desc Title for graph card displaying CPU metric of one job. */
-  MSG_JOB_DETAIL_CPU_GRAPH_CARD_TITLE: goog.getMsg('CPU usage history'),
-  /** @export {string} @desc Title for graph card displaying memory metric of one job. */
-  MSG_JOB_DETAIL_MEMORY_GRAPH_CARD_TITLE: goog.getMsg('Memory usage history'),
-};

@@ -41,9 +41,6 @@ export default class PersistentVolumeClaimCardController {
 
     /** @private {!./../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
-
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -116,12 +113,4 @@ export const persistentVolumeClaimCardComponent = {
   },
   controller: PersistentVolumeClaimCardController,
   templateUrl: 'persistentvolumeclaimlist/persistentvolumeclaimcard.html',
-};
-
-
-const i18n = {
-  /** @export {string} @desc Tooltip text which appears on error icon hover. */
-  MSG_PERSISTENT_VOLUME_CLAIM_CARD_TOOLTIP_LOST: goog.getMsg('This claim is in lost state'),
-  /** @export {string} @desc Tooltip text which appears on pending icon hover. */
-  MSG_PERSISTENT_VOLUME_CLAIM_CARD_TOOLTIP_PENDING: goog.getMsg('This claim is in pending state'),
 };

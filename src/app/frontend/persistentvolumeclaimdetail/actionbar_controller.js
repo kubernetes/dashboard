@@ -23,15 +23,5 @@ export class ActionBarController {
   constructor(persistentVolumeClaimDetail) {
     /** @export {!backendApi.PersistentVolumeClaimDetail} */
     this.details = persistentVolumeClaimDetail;
-
-    /** @export */
-    this.i18n = i18n;
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Label 'Persistent Volume Claim' which appears at the top of the
-      delete dialog, opened from a persistent volume claim details page. */
-  MSG_PERSISTENT_VOLUME_CLAIM_DETAIL_PERSISTENT_VOLUME_CLAIM_LABEL:
-      goog.getMsg('Persistent Volume Claim'),
-};

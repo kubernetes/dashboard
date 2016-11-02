@@ -23,14 +23,5 @@ export class ActionBarController {
   constructor(ingressDetail) {
     /** @export {!backendApi.IngressDetail} */
     this.details = ingressDetail;
-
-    /** @export */
-    this.i18n = i18n;
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Label 'Ingress' which appears at the top of the
-      delete dialog, opened from a ingress details page. */
-  MSG_INGRESS_DETAIL_INGRESS_LABEL: goog.getMsg('Ingress'),
-};

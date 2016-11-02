@@ -15,19 +15,19 @@ limitations under the License.
 -->
 
 <kd-info-card>
-  <kd-info-card-section name="{{::$ctrl.i18n.MSG_INGRESS_INFO_DETAILS_SECTION}}">
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_INGRESS_INFO_NAME_ENTRY}}">
+  <kd-info-card-section name="[[Details|Resource info details section name.]]">
+    <kd-info-card-entry title="[[Name|Resource info details section name entry.]]">
       <kd-middle-ellipsis
               display-string="{{::$ctrl.ingress.objectMeta.name}}">
       </kd-middle-ellipsis>
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_INGRESS_INFO_NAMESPACE_ENTRY}}">
+    <kd-info-card-entry title="[[Namespace|Resource info details section namespace entry.]]">
       {{::$ctrl.ingress.objectMeta.namespace}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_INGRESS_INFO_LABELS_ENTRY}}">
+    <kd-info-card-entry title="[[Labels|Resource info details section labels entry.]]">
       <kd-labels labels="::$ctrl.ingress.objectMeta.labels"></kd-labels>
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_INGRESS_INFO_ANNOTATIONS_ENTRY}}">
+    <kd-info-card-entry title="[[Annotations|Resource info details section annotations entry.]]">
       <kd-labels labels="::$ctrl.ingress.objectMeta.annotations"></kd-labels>
     </kd-info-card-entry>
   </kd-info-card-section>
