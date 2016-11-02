@@ -15,10 +15,10 @@ limitations under the License.
 -->
 
 <kd-info-card>
-  <kd-info-card-section name="{{::$ctrl.i18n.MSG_NAMESPACE_DETAIL_DETAILS_SUBTITLE}}">
+  <kd-info-card-section name="[[Details|Subtitle 'Details' for the left section with general information about a namespace on the namespace details page.]]">
     <kd-object-meta-info-card object-meta="::$ctrl.namespace.objectMeta">
     </kd-object-meta-info-card>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_NAMESPACE_DETAIL_STATUS_LABEL}}"
+    <kd-info-card-entry title="[[Status|Label 'Status' for the namespace namespace on the namespace details page.]]"
                         ng-if="::$ctrl.namespace.phase">
       {{$ctrl.namespace.phase}}
     </kd-info-card-entry>

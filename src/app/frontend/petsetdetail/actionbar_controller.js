@@ -23,14 +23,5 @@ export class ActionBarController {
   constructor(petSetDetail) {
     /** @export {!backendApi.PetSetDetail} */
     this.details = petSetDetail;
-
-    /** @export */
-    this.i18n = i18n;
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Label 'Pet Set' which appears at the top of the
-      delete dialog, opened from a pet set details page. */
-  MSG_PET_SET_DETAIL_PET_SET_LABEL: goog.getMsg('Pet Set'),
-};

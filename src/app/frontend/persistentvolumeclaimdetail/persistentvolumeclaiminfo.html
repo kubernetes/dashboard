@@ -15,21 +15,21 @@ limitations under the License.
 -->
 
 <kd-info-card>
-  <kd-info-card-section name="{{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_CLAIM_INFO_DETAILS_SECTION}}">
+  <kd-info-card-section name="[[Details|Persistent volume claim info details section name.]]">
     <kd-object-meta-info-card object-meta="::$ctrl.persistentVolumeClaim.objectMeta">
     </kd-object-meta-info-card>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_CLAIM_INFO_STATUS_ENTRY}}">
+    <kd-info-card-entry title="[[Status|Persistent volume claim info details section status entry.]]">
       {{::$ctrl.persistentVolumeClaim.status}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_CLAIM_INFO_VOLUME_ENTRY}}">
+    <kd-info-card-entry title="[[Volume|Persistent volume claim info details section volume entry.]]">
       <div ng-show="::$ctrl.persistentVolumeClaim.volume">{{::$ctrl.persistentVolumeClaim.volume}}</div>
       <div ng-hide="::$ctrl.persistentVolumeClaim.volume">-</div>
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_CLAIM_INFO_CAPACITY_ENTRY}}">
+    <kd-info-card-entry title="[[Capacity|Persistent volume claim info details section capacity entry.]]">
       <div ng-show="::$ctrl.persistentVolumeClaim.capacity">{{::$ctrl.persistentVolumeClaim.capacity}}</div>
       <div ng-hide="::$ctrl.persistentVolumeClaim.capacity">-</div>
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_CLAIM_INFO_ACCESS_MODES_ENTRY}}">
+    <kd-info-card-entry title="[[Access modes|Persistent volume claim info details section access modes entry.]]">
       <div ng-repeat="mode in $ctrl.persistentVolumeClaim.accessModes">
         <kd-middle-ellipsis display-string="{{::mode}}"></kd-middle-ellipsis>
       </div>

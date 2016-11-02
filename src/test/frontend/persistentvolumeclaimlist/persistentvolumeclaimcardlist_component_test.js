@@ -44,6 +44,6 @@ describe('Persistent Volume Claim card list', () => {
   });
 
   it('should init i18n', () => {
-    expect(ctrl.i18n).not.toBeUndefined();
+    expect(ctrl.areMultipleNamespacesSelected()).not.toBeUndefined();
   });
 });

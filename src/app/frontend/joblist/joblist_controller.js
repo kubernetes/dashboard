@@ -29,9 +29,6 @@ export class JobListController {
 
     /** @export {!angular.Resource} */
     this.jobListResource = kdJobListResource;
-
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -42,10 +39,3 @@ export class JobListController {
     return this.jobList.jobs.length === 0;
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Title for graph card displaying CPU metric of jobs. */
-  MSG_JOB_LIST_CPU_GRAPH_CARD_TITLE: goog.getMsg('CPU usage history'),
-  /** @export {string} @desc Title for graph card displaying memory metric of jobs. */
-  MSG_JOB_LIST_MEMORY_GRAPH_CARD_TITLE: goog.getMsg('Memory usage history'),
-};

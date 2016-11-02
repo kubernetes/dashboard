@@ -23,14 +23,5 @@ export class ActionBarController {
   constructor(persistentVolumeDetail) {
     /** @export {!backendApi.PersistentVolumeDetail} */
     this.details = persistentVolumeDetail;
-
-    /** @export */
-    this.i18n = i18n;
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Label 'Persistent Volume' which appears at the top of the
-   delete dialog, opened from a config map details page. */
-  MSG_PERSISTENT_VOLUME_DETAIL_PERSISTENT_VOLUME_LABEL: goog.getMsg('Persistent Volume'),
-};

@@ -38,9 +38,6 @@ export default class PersistentVolumeCardController {
 
     /** @private */
     this.interpolate_ = $interpolate;
-
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -75,10 +72,4 @@ export const persistentVolumeCardComponent = {
   },
   controller: PersistentVolumeCardController,
   templateUrl: 'persistentvolumelist/persistentvolumecard.html',
-};
-
-const i18n = {
-  /** @export {string} @desc Label 'Persistent Volume' which will appear in the persistent volume
-   delete dialog opened from a persistentvolume card on the list page. */
-  MSG_PERSISTENT_VOLUME_LIST_PERSISTENT_VOLUME_LABEL: goog.getMsg('Persistent Volume'),
 };

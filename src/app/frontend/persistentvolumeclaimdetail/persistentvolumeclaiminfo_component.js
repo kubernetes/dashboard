@@ -25,9 +25,6 @@ export default class PersistentVolumeClaimInfoController {
      * @export {!backendApi.PersistentVolumeClaimDetail}
      */
     this.persistentVolumeClaim;
-
-    /** @export */
-    this.i18n = i18n;
   }
 }
 
@@ -43,21 +40,4 @@ export const persistentVolumeClaimInfoComponent = {
     /** {!backendApi.PersistentVolumeClaimDetail} */
     'persistentVolumeClaim': '=',
   },
-};
-
-/**
- * @param  {!backendApi.PersistentVolumeClaimDetail} persistentVolumeClaim
- * @return {!Object} a dictionary of translatable messages
- */
-const i18n = {
-  /** @export {string} @desc Persistent volume claim info details section name. */
-  MSG_PERSISTENT_VOLUME_CLAIM_INFO_DETAILS_SECTION: goog.getMsg('Details'),
-  /** @export {string} @desc Persistent volume claim info details section status entry. */
-  MSG_PERSISTENT_VOLUME_CLAIM_INFO_STATUS_ENTRY: goog.getMsg('Status'),
-  /** @export {string} @desc Persistent volume claim info details section volume entry. */
-  MSG_PERSISTENT_VOLUME_CLAIM_INFO_VOLUME_ENTRY: goog.getMsg('Volume'),
-  /** @export {string} @desc Persistent volume claim info details section capacity entry. */
-  MSG_PERSISTENT_VOLUME_CLAIM_INFO_CAPACITY_ENTRY: goog.getMsg('Capacity'),
-  /** @export {string} @desc Persistent volume claim info details section access modes entry. */
-  MSG_PERSISTENT_VOLUME_CLAIM_INFO_ACCESS_MODES_ENTRY: goog.getMsg('Access modes'),
 };
