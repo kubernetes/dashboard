@@ -160,10 +160,12 @@
   <translation id="7630750932397388580" key="MSG_DAEMONSETLIST_DAEMONSETCARDLIST_3" desc="Label \'Pods\' which appears as a column label in the table of daemon sets (daemon set list view).">Pods</translation>
   <translation id="7966568418657492650" key="MSG_DAEMONSETLIST_DAEMONSETCARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of daemon sets (daemon set list view).">Age</translation>
   <translation id="2666594772516599645" key="MSG_DAEMONSETLIST_DAEMONSETCARDLIST_5" desc="Label \'Images\' which appears as a column label in the table of daemon sets (daemon set list view).">Images</translation>
+  <translation id="428664526732589051" key="MSG_DAEMONSETLIST_DAEMONSETCARDLIST_6" desc="Column header \'Kind\' on Daemon Set lists">Kind</translation>
   <translation id="3784907760890901476" key="MSG_DAEMONSETLIST_DAEMONSETCARD_0" desc="Tooltip for failed pod card icon.">One or more pods have errors.</translation>
   <translation id="3275892213334559219" key="MSG_DAEMONSETLIST_DAEMONSETCARD_1" desc="Tooltip for pending pod card icon.">One or more pods are in pending state.</translation>
   <translation id="8955659027323921646" key="MSG_DAEMONSETLIST_DAEMONSETCARD_2" desc="Title \'Daemon Set\' which is used as a title for the delete/update\n   dialogs (that can be opened on the daemon set list view).">Daemon Set</translation>
   <translation id="855745345882113659" key="MSG_DAEMONSETLIST_DAEMONSETCARD_3" desc="Title \'Daemon Set\' which is used as a title for the delete/update\n   dialogs (that can be opened on the daemon set list view).">Daemon Set</translation>
+  <translation id="117699576076811818" key="MSG_DAEMONSETLIST_DAEMONSETCARD_4" desc="Column \'Daemon Set\' in a Daemon Set List">Daemon Set</translation>
   <translation id="1662479445924870715" key="MSG_DAEMONSETLIST_DAEMONSETLIST_0" desc="Title for graph card displaying CPU metric of daemon sets.">CPU usage history</translation>
   <translation id="250379390957605876" key="MSG_DAEMONSETLIST_DAEMONSETLIST_1" desc="Title for graph card displaying memory metric of daemon sets.">Memory usage history</translation>
   <translation id="1583067811422592203" key="MSG_DAEMON_SET_DETAIL_CPU_GRAPH_CARD_TITLE" desc="Title for graph card displaying CPU metric of one daemon set.">CPU使用量の履歴</translation>
@@ -515,6 +517,8 @@
   <translation id="5238028131468264837" key="MSG_JOBLIST_JOBCARDLIST_3" desc="Label \'Pods\' which appears as a column label in the table of replication controllers (Job list view).">Pods</translation>
   <translation id="1361066115617957263" key="MSG_JOBLIST_JOBCARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of replication controllers (Job list view).">Age</translation>
   <translation id="5803777237184315753" key="MSG_JOBLIST_JOBCARDLIST_5" desc="Label \'Images\' which appears as a column label in the table of replication controllers (Job list view).">Images</translation>
+  <translation id="7105256695141232385" key="MSG_JOBLIST_JOBCARDLIST_6" desc="Column header \'Kind\' on a job list table">Kind</translation>
+  <translation id="7832178859215843217" key="MSG_JOBLIST_JOBCARD_0" desc="Column \'Job\' that shows if the resource kind should be shown in a Job List">Job</translation>
   <translation id="5939498689646501991" key="MSG_JOBLIST_JOBLIST_0" desc="Title for graph card displaying CPU metric of jobs.">CPU usage history</translation>
   <translation id="6897665357216493463" key="MSG_JOBLIST_JOBLIST_1" desc="Title for graph card displaying memory metric of jobs.">Memory usage history</translation>
   <translation id="8441658278143071101" key="MSG_JOB_COMPLETIONS" desc="Job completions. Appears in details section.">完了</translation>
@@ -813,6 +817,8 @@
   <translation id="8271672813595797043" key="MSG_PETSETDETAIL_PETSETINFO_7" desc="The message says that that many pods are running (pet set details page).">{{ $ctrl.petSet.podInfo.running}} running</translation>
   <translation id="7475343051122864599" key="MSG_PETSETDETAIL_PETSETINFO_8" desc="Pet set info status section pods status entry.">Pods status</translation>
   <translation id="5847167541694942228" key="MSG_PETSETDETAIL_PETSETINFO_9" desc="The message says that that many pods are pending (pet set details page).">{{ $ctrl.petSet.podInfo.pending}} pending</translation>
+  <translation id="7332879554461510589" key="MSG_PETSETLIST_PETSETCARDLIST_0" desc="Column header \'Kind\' of a Pet Set List">Kind</translation>
+  <translation id="6549351294057874712" key="MSG_PETSETLIST_PETSETCARD_0" desc="Column \'Pet Set\' of a Pet Set List">Pet Set</translation>
   <translation id="1157514904008403171" key="MSG_PET_SET_CARD_TOOLTIP_ERROR" desc="Tooltip text which appears on error icon hover.">１つ以上のポッドがエラーです</translation>
   <translation id="5677265435825016706" key="MSG_PET_SET_CARD_TOOLTIP_PENDING" desc="Tooltip text which appears on pending icon hover.">１つ以上のポッドが待機状態です</translation>
   <translation id="447959586035419698" key="MSG_PET_SET_DETAIL_CPU_GRAPH_CARD_TITLE" desc="Title for graph card displaying CPU metric of one pet set.">CPU使用量の履歴</translation>
@@ -987,6 +993,10 @@
   <translation id="1025887657102167775" key="MSG_RC_LIST_PODS_PENDING_TOOLTIP" desc="Tooltip saying that some pods in a replication controller are pending.">１つ以上のポッドが待機状態です</translation>
   <translation id="2801805500821925068" key="MSG_RC_LIST_REPLICATION_CONTROLLER_LABEL" desc="Label 'Replication Controller' which will appear in the replication Controller delete dialogm opened from a replication controller card on the list page.">レプリケーションコントローラー</translation>
   <translation id="4937002308799617006" key="MSG_RC_LIST_VIEW_DETAILS_ACTION" desc="Action 'View details' on the drop down menu for a single replication controller (replication controller list page).">詳細を見る</translation>
+  <translation id="7536079710352055453" key="MSG_REPLICASETLIST_REPLICASETCARDLIST_0" desc="Column header \'Kind\' for a Replica Set list">Kind</translation>
+  <translation id="6987237969287534739" key="MSG_REPLICASETLIST_REPLICASETCARD_0" desc="Column \'Replica Set\' that shows if the resource kind should be shown in a Replica Set List">Replica Set</translation>
+  <translation id="8311244073794781530" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARDLIST_0" desc="Column header \'Kind\' of a Replication Controller list">Kind</translation>
+  <translation id="4093080295331521956" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARD_0" desc="Column \'Replication Controller\' in a Replication Controller list">Replication Controller</translation>
   <translation id="4923712455615046812" key="MSG_REPLICATION_CONTROLLER_DETAIL_CPU_GRAPH_CARD_TITLE" desc="Title for graph card displaying CPU metric of one replication controller.">CPU使用量の履歴</translation>
   <translation id="8858733177407158178" key="MSG_REPLICATION_CONTROLLER_DETAIL_MEMORY_GRAPH_CARD_TITLE" desc="Title for graph card displaying memory metric of one replication controller.">メモリー使用量の履歴</translation>
   <translation id="2537944124195669933" key="MSG_REPLICATION_CONTROLLER_LIST_CPU_GRAPH_CARD_TITLE" desc="Title for graph card displaying CPU metric of replication controllers.">CPU使用量の履歴</translation>

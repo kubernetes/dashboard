@@ -59,6 +59,7 @@ func TestToPodDetail(t *testing.T) {
 					Name:      "test-pod",
 					Namespace: "test-namespace",
 				},
+				Controller: Controller{Kind: "unknown"},
 				Containers: []Container{},
 			},
 		},

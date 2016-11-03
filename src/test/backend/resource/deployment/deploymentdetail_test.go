@@ -16,6 +16,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/replicasetlist"
 )
 
 func TestGetDeploymentDetail(t *testing.T) {
@@ -110,7 +111,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 					MaxSurge:       1,
 					MaxUnavailable: 1,
 				},
-				OldReplicaSetList: replicaset.ReplicaSetList{
+				OldReplicaSetList: replicasetlist.ReplicaSetList{
 					ReplicaSets:       []replicaset.ReplicaSet{},
 					CumulativeMetrics: make([]metric.Metric, 0),
 				},

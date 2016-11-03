@@ -112,6 +112,7 @@ export default class PetSetCardController {
 export const petSetCardComponent = {
   bindings: {
     'petSet': '=',
+    'showResourceKind': '<',
   },
   controller: PetSetCardController,
   templateUrl: 'petsetlist/petsetcard.html',

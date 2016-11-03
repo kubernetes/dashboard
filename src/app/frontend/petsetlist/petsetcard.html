@@ -39,6 +39,9 @@ limitations under the License.
         </a>
       </div>
     </kd-resource-card-column>
+    <kd-resource-card-column ng-if="::$ctrl.showResourceKind">
+      <div>[[Pet Set|Column 'Pet Set' of a Pet Set List]]</div>
+    </kd-resource-card-column>
     <kd-resource-card-column ng-if="$ctrl.areMultipleNamespacesSelected()">
       <div>
         <kd-middle-ellipsis display-string="{{::$ctrl.petSet.objectMeta.namespace}}">

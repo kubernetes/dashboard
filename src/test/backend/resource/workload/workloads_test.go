@@ -19,15 +19,17 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset/daemonsetlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/job/joblist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/petset"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/petset/petsetlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/replicasetlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller/replicationcontrollerlist"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/apps"
@@ -47,11 +49,11 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		k8sPetSet     apps.PetSetList
 		rcs           []replicationcontroller.ReplicationController
 		rs            []replicaset.ReplicaSet
-		jobs          []job.Job
-		daemonset     []daemonset.DaemonSet
+		jobs          []joblist.Job
+		daemonset     []daemonsetlist.DaemonSet
 		deployment    []deployment.Deployment
 		pod           []pod.Pod
-		petSet        []petset.PetSet
+		petSet        []petsetlist.PetSet
 	}{
 		{
 			extensions.ReplicaSetList{},
@@ -63,11 +65,11 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 			apps.PetSetList{},
 			[]replicationcontroller.ReplicationController{},
 			[]replicaset.ReplicaSet{},
-			[]job.Job{},
-			[]daemonset.DaemonSet{},
+			[]joblist.Job{},
+			[]daemonsetlist.DaemonSet{},
 			[]deployment.Deployment{},
 			[]pod.Pod{},
-			[]petset.PetSet{},
+			[]petsetlist.PetSet{},
 		},
 		{
 			extensions.ReplicaSetList{
@@ -129,7 +131,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 					Warnings: []common.Event{},
 				},
 			}},
-			[]job.Job{{
+			[]joblist.Job{{
 				ObjectMeta: common.ObjectMeta{
 					Name: "job-name",
 				},
@@ -138,7 +140,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 					Warnings: []common.Event{},
 				},
 			}},
-			[]daemonset.DaemonSet{{
+			[]daemonsetlist.DaemonSet{{
 				ObjectMeta: common.ObjectMeta{
 					Name: "ds-name",
 				},
@@ -157,28 +159,28 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				},
 			}},
 			[]pod.Pod{},
-			[]petset.PetSet{},
+			[]petsetlist.PetSet{},
 		},
 	}
 
 	for _, c := range cases {
 		expected := &Workloads{
-			ReplicationControllerList: replicationcontroller.ReplicationControllerList{
+			ReplicationControllerList: replicationcontrollerlist.ReplicationControllerList{
 				ListMeta:               common.ListMeta{TotalItems: len(c.rcs)},
 				CumulativeMetrics:      make([]metric.Metric, 0),
 				ReplicationControllers: c.rcs,
 			},
-			ReplicaSetList: replicaset.ReplicaSetList{
+			ReplicaSetList: replicasetlist.ReplicaSetList{
 				ListMeta:          common.ListMeta{TotalItems: len(c.rs)},
 				CumulativeMetrics: make([]metric.Metric, 0),
 				ReplicaSets:       c.rs,
 			},
-			JobList: job.JobList{
+			JobList: joblist.JobList{
 				ListMeta:          common.ListMeta{TotalItems: len(c.jobs)},
 				CumulativeMetrics: make([]metric.Metric, 0),
 				Jobs:              c.jobs,
 			},
-			DaemonSetList: daemonset.DaemonSetList{
+			DaemonSetList: daemonsetlist.DaemonSetList{
 				ListMeta:          common.ListMeta{TotalItems: len(c.daemonset)},
 				CumulativeMetrics: make([]metric.Metric, 0),
 				DaemonSets:        c.daemonset,
@@ -193,7 +195,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				CumulativeMetrics: make([]metric.Metric, 0),
 				Pods:              c.pod,
 			},
-			PetSetList: petset.PetSetList{
+			PetSetList: petsetlist.PetSetList{
 				ListMeta:          common.ListMeta{TotalItems: len(c.petSet)},
 				CumulativeMetrics: make([]metric.Metric, 0),
 				PetSets:           c.petSet,

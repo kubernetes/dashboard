@@ -19,6 +19,9 @@ limitations under the License.
     <kd-resource-card-header-column size="small" grow="2">
       {{::$ctrl.i18n.MSG_PET_SET_LIST_HEADER_NAME}}
     </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small" grow="1" ng-if="::$ctrl.showResourceKind">
+      [[Kind|Column header 'Kind' of a Pet Set List]]
+    </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small" grow="2" ng-if="$ctrl.areMultipleNamespacesSelected()">
       {{::$ctrl.i18n.MSG_PET_SET_LIST_NAMESPACE_LABEL}}
     </kd-resource-card-header-column>
@@ -39,11 +42,13 @@ limitations under the License.
   </kd-resource-card-header-columns>
   <kd-pet-set-card ng-if="::$ctrl.petSetListResource" pagination-id="petsets" pet-set="petSet"
                    dir-paginate="petSet in $ctrl.petSetList.petSets | itemsPerPage: default"
+                   show-resource-kind="::$ctrl.showResourceKind"
                    total-items="::$ctrl.petSetList.listMeta.totalItems">
   </kd-pet-set-card>
 
   <kd-pet-set-card ng-if="::!$ctrl.petSetListResource" pagination-id="petsets" pet-set="petSet"
-                   dir-paginate="petSet in $ctrl.petSetList.petSets | itemsPerPage: default">
+                   dir-paginate="petSet in $ctrl.petSetList.petSets | itemsPerPage: default"
+                   show-resource-kind="::$ctrl.showResourceKind">
   </kd-pet-set-card>
   <kd-resource-card-list-footer>
     <kd-resource-card-list-pagination pagination-id="petsets" list="$ctrl.petSetList"

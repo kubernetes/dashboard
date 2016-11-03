@@ -16,11 +16,7 @@ package replicationcontroller
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
-	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 
-	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"k8s.io/kubernetes/pkg/api"
@@ -29,6 +25,19 @@ import (
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
 )
+
+// ReplicationController (aka. Replication Controller) plus zero or more Kubernetes services that
+// target the Replication Controller.
+type ReplicationController struct {
+	ObjectMeta common.ObjectMeta `json:"objectMeta"`
+	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+
+	// Aggregate information about pods belonging to this Replication Controller.
+	Pods common.PodInfo `json:"pods"`
+
+	// Container images of the Replication Controller.
+	ContainerImages []string `json:"containerImages"`
+}
 
 // Transforms simple selector map to labels.Selector object that can be used when querying for
 // object.
@@ -87,60 +96,6 @@ func ToReplicationController(replicationController *api.ReplicationController,
 	}
 }
 
-// ToReplicationControllerDetail converts replication controller api object to replication
-// controller detail model object.
-func ToReplicationControllerDetail(replicationController *api.ReplicationController,
-	podInfo common.PodInfo, podList pod.PodList, eventList common.EventList,
-	serviceList resourceService.ServiceList) ReplicationControllerDetail {
-
-	replicationControllerDetail := ReplicationControllerDetail{
-		ObjectMeta:      common.NewObjectMeta(replicationController.ObjectMeta),
-		TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicationController),
-		LabelSelector:   replicationController.Spec.Selector,
-		PodInfo:         podInfo,
-		PodList:         podList,
-		EventList:       eventList,
-		ServiceList:     serviceList,
-		ContainerImages: common.GetContainerImages(&replicationController.Spec.Template.Spec),
-	}
-
-	return replicationControllerDetail
-}
-
-// CreateReplicationControllerList creates paginated list of Replication Controller model
-// objects based on Kubernetes Replication Controller objects array and related resources arrays.
-func CreateReplicationControllerList(replicationControllers []api.ReplicationController,
-	dsQuery *dataselect.DataSelectQuery, pods []api.Pod, events []api.Event, heapsterClient *heapster.HeapsterClient) *ReplicationControllerList {
-
-	rcList := &ReplicationControllerList{
-		ReplicationControllers: make([]ReplicationController, 0),
-		ListMeta:               common.ListMeta{TotalItems: len(replicationControllers)},
-	}
-	cachedResources := &dataselect.CachedResources{
-		Pods: pods,
-	}
-	replicationControllerCells, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells(replicationControllers), dsQuery, cachedResources, heapsterClient)
-	replicationControllers = fromCells(replicationControllerCells)
-
-	for _, rc := range replicationControllers {
-		matchingPods := common.FilterNamespacedPodsBySelector(pods, rc.ObjectMeta.Namespace,
-			rc.Spec.Selector)
-		podInfo := common.GetPodInfo(rc.Status.Replicas, rc.Spec.Replicas, matchingPods)
-		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
-
-		replicationController := ToReplicationController(&rc, &podInfo)
-		rcList.ReplicationControllers = append(rcList.ReplicationControllers, replicationController)
-	}
-
-	cumulativeMetrics, err := metricPromises.GetMetrics()
-	rcList.CumulativeMetrics = cumulativeMetrics
-	if err != nil {
-		rcList.CumulativeMetrics = make([]metric.Metric, 0)
-	}
-
-	return rcList
-}
-
 // The code below allows to perform complex data section on []api.ReplicationController
 
 type ReplicationControllerCell api.ReplicationController
@@ -167,7 +122,7 @@ func (self ReplicationControllerCell) GetResourceSelector() *metric.ResourceSele
 	}
 }
 
-func toCells(std []api.ReplicationController) []dataselect.DataCell {
+func ToCells(std []api.ReplicationController) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
 		cells[i] = ReplicationControllerCell(std[i])
@@ -175,7 +130,7 @@ func toCells(std []api.ReplicationController) []dataselect.DataCell {
 	return cells
 }
 
-func fromCells(cells []dataselect.DataCell) []api.ReplicationController {
+func FromCells(cells []dataselect.DataCell) []api.ReplicationController {
 	std := make([]api.ReplicationController, len(cells))
 	for i := range std {
 		std[i] = api.ReplicationController(cells[i].(ReplicationControllerCell))

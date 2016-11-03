@@ -43,6 +43,7 @@ export const jobCardListComponent = {
     /** {!backendApi.JobList} */
     'jobList': '<',
     'jobListResource': '<',
+    'showResourceKind': '<',
   },
   templateUrl: 'joblist/jobcardlist.html',
   controller: JobListController,

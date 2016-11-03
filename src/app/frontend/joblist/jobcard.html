@@ -41,6 +41,9 @@ limitations under the License.
         </a>
       </div>
     </kd-resource-card-column>
+    <kd-resource-card-column ng-if="::$ctrl.showResourceKind">
+      <div>[[Job|Column 'Job' that shows if the resource kind should be shown in a Job List]]</div>
+    </kd-resource-card-column>
     <kd-resource-card-column ng-if="$ctrl.areMultipleNamespacesSelected()">
       <div>
         <kd-middle-ellipsis display-string="{{::$ctrl.job.objectMeta.namespace}}">

@@ -90,7 +90,7 @@ func TestGetServicesForDeletionforDS(t *testing.T) {
 	for _, c := range cases {
 		fakeClient := testclient.NewSimpleFake(c.DaemonSetList, c.expected)
 
-		getServicesForDSDeletion(fakeClient, c.labelSelector, "mock")
+		GetServicesForDSDeletion(fakeClient, c.labelSelector, "mock")
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {

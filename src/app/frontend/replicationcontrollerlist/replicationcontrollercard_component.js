@@ -115,6 +115,7 @@ export default class ReplicationControllerCardController {
 export const replicationControllerCardComponent = {
   bindings: {
     'replicationController': '=',
+    'showResourceKind': '<',
   },
   controller: ReplicationControllerCardController,
   templateUrl: 'replicationcontrollerlist/replicationcontrollercard.html',

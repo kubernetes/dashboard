@@ -38,6 +38,11 @@ limitations under the License.
         </div>
       </a>
     </kd-resource-card-column>
+    <kd-resource-card-column ng-if="::$ctrl.showResourceKind">
+      <div>
+        [[Replication Controller|Column 'Replication Controller' in a Replication Controller list]]
+      </div>
+    </kd-resource-card-column>
     <kd-resource-card-column ng-if="$ctrl.areMultipleNamespacesSelected()">
       <div>
         <kd-middle-ellipsis display-string="{{::$ctrl.replicationController.objectMeta.namespace}}">
