@@ -45,6 +45,7 @@ export const replicationControllerCardListComponent = {
   bindings: {
     'replicationControllerList': '<',
     'replicationControllerListResource': '<',
+    'showResourceKind': '<',
   },
   templateUrl: 'replicationcontrollerlist/replicationcontrollercardlist.html',
   controller: RCCardListController,

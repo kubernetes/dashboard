@@ -113,6 +113,7 @@ export default class ReplicaSetCardController {
 export const replicaSetCardComponent = {
   bindings: {
     'replicaSet': '=',
+    'showResourceKind': '<',
   },
   controller: ReplicaSetCardController,
   templateUrl: 'replicasetlist/replicasetcard.html',

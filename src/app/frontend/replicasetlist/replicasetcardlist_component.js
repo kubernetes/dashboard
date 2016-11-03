@@ -51,6 +51,7 @@ export const replicaSetCardListComponent = {
   bindings: {
     'replicaSetList': '<',
     'replicaSetListResource': '<',
+    'showResourceKind': '<',
   },
   templateUrl: 'replicasetlist/replicasetcardlist.html',
   controller: ReplicaSetCardListController,
