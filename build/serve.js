@@ -20,7 +20,8 @@ import browserSyncSpa from 'browser-sync-spa';
 import child from 'child_process';
 import gulp from 'gulp';
 import path from 'path';
-import proxyMiddleware from 'proxy-middleware';
+// import proxyMiddleware from 'proxy-middleware';
+import proxyMiddleware from 'http-proxy-middleware';
 import url from 'url';
 
 import conf from './conf';
@@ -75,9 +76,18 @@ function browserSyncInit(baseDir, includeBowerComponents) {
   }));
 
   let apiRoute = '/api';
-  let proxyMiddlewareOptions =
-      url.parse(`http://localhost:${conf.backend.devServerPort}${apiRoute}`);
-  proxyMiddlewareOptions.route = apiRoute;
+  // let proxyMiddlewareOptions =
+  //     url.parse(`http://localhost:${conf.backend.devServerPort}${apiRoute}`);
+  // proxyMiddlewareOptions.route = apiRoute;
+
+  let proxyMiddlewareOptions = {
+    // target host 
+    target: `http://localhost:${conf.backend.devServerPort}`,
+    // needed for virtual hosted sites
+    // changeOrigin: true,
+    // proxy websockets
+    ws: true
+  };
 
   let config = {
     browser: [],       // Needed so that the browser does not auto-launch.
@@ -85,7 +95,7 @@ function browserSyncInit(baseDir, includeBowerComponents) {
     // TODO(bryk): Add proxy to the backend here.
     server: {
       baseDir: baseDir,
-      middleware: proxyMiddleware(proxyMiddlewareOptions),
+      middleware: proxyMiddleware(apiRoute, proxyMiddlewareOptions),
     },
     port: conf.frontend.serverPort,
     startPath: '/',

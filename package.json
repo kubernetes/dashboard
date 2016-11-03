@@ -70,7 +70,7 @@
     "lodash": "~4.17.0",
     "merge-stream": "~1.0.0",
     "npm-check-updates": "~2.8.0",
-    "proxy-middleware": "~0.15.0",
+    "http-proxy-middleware": "~0.17.2",
     "q": "~1.4.1",
     "regexp-clone": "~0.0.1",
     "semver": "~5.3.0",
