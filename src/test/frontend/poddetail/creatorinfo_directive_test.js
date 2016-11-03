@@ -25,20 +25,19 @@ describe('CreatorInfo directive', () => {
 
     angular.mock.inject(($rootScope, $compile) => {
       scope = $rootScope.$new();
-      compileFn =
-          $compile('<kd-creator-info creator="creator"></kd-creator-info>');
+      compileFn = $compile('<kd-creator-info creator="creator"></kd-creator-info>');
     });
   });
 
   it('Should just display the kind of unknown creator kinds', () => {
-    //given
-    scope.creator = { kind: "Unknown" };
+    // given
+    scope.creator = {kind: 'Unknown'};
 
-    //when
+    // when
     let element = compileFn(scope);
     scope.$digest();
 
-    //then
+    // then
     let span = element.find('span');
     expect(span.text().trim()).toEqual('Unknown');
   });
@@ -51,10 +50,10 @@ describe('CreatorInfo directive', () => {
     ['PetSet', 'pet-set'],
   ]);
 
-  for (let [kind, directive] of kind2directive){
+  for (let [kind, directive] of kind2directive) {
     it(`should render a ${kind} as a kd-${directive}-card-list`, () => {
       // given
-      scope.creator = { kind: kind };
+      scope.creator = {kind: kind};
 
       // when
       let element = compileFn(scope);
