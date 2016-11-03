@@ -18,6 +18,7 @@
 import childProcess from 'child_process';
 import fileExists from 'file-exists';
 import gulp from 'gulp';
+import cheerio from 'gulp-cheerio';
 import gulpUtil from 'gulp-util';
 import xslt from 'gulp-xslt';
 import jsesc from 'jsesc';
@@ -59,6 +60,33 @@ function extractForLanguage(langKey) {
 
 gulp.task('generate-xtbs', ['extract-translations', 'sort-translations']);
 
+let prevMsgs = {};
+
+gulp.task('buildExistingI18nCache', function() {
+  return gulp.src('i18n/messages-en.xtb').pipe(cheerio((doc) => {
+    doc('translation').each((i, translation) => {
+      let key = translation.attribs.key;
+      let index = key.lastIndexOf('_');
+      if (index !== -1) {
+        let lastpart = key.substring(index + 1);
+        if (/^[0-9]+$/.test(lastpart)) {
+          let indexSuffix = Number(lastpart);
+          let filePrefix = key.substring(0, index);
+          if (!prevMsgs[filePrefix]) {
+            prevMsgs[filePrefix] = [];
+          }
+          prevMsgs[filePrefix].push({
+            index: indexSuffix,
+            key: key,
+            text: doc(translation).text(),
+            desc: translation.attribs.desc,
+            used: false,
+          });
+        }
+      }
+    });
+  }));
+});
 
 /**
  * Extracts all translation messages into XTB bundles.
@@ -91,6 +119,7 @@ export function processI18nMessages(file, minifiedHtml) {
   let pureHtmlContent = `${content}`;
   let filePath = path.relative(file.base, file.path);
   let messageVarPrefix = filePath.toUpperCase().split('/').join('_').replace('.HTML', '');
+  let used = new Set();
 
   /**
    * Finds all i18n messages inside a template and returns its text, description and original
@@ -107,7 +136,19 @@ export function processI18nMessages(file, minifiedHtml) {
         let desc = (exec[2] || '(no description provided)').trim();
         // replace {{$variableName}} with {{ $variableName}} to avoid {$ getting recognised as
         // google.getMsg format
-        return {text: exec[1].replace('{$', '{ $'), desc: desc, original: match};
+        let text = exec[1].replace('{$', '{ $');
+        let varName = undefined;
+        if (prevMsgs[`MSG_${messageVarPrefix}`]) {
+          for (let msg of prevMsgs[`MSG_${messageVarPrefix}`]) {
+            if (msg.text === text && msg.desc === desc && !msg.used) {
+              varName = msg.key;
+              msg.used = true;
+              used.add(msg.index);
+              break;
+            }
+          }
+        }
+        return {text: text, desc: desc, original: match, varName: varName};
       });
     }
     return [];
@@ -119,22 +160,26 @@ export function processI18nMessages(file, minifiedHtml) {
    * @param {number} index
    * @return {string}
    */
-  function createMessageVarName(index) {
-    return `MSG_${messageVarPrefix}_${index}`;
+  function createMessageVarName() {
+    for (let i = 0;; i++) {
+      if (!used.has(i)) {
+        used.add(i);
+        return `MSG_${messageVarPrefix}_${i}`;
+      }
+    }
   }
 
-  i18nMessages.forEach((message, index) => {
-    let messageVarName = createMessageVarName(index);
+  i18nMessages.forEach((message) => {
+    message.varName = message.varName || createMessageVarName();
     // Replace i18n messages with english messages for testing and MSG_ vars invocations
     // for compiler passses.
-    content = content.replace(message.original, `' + ${messageVarName} + '`);
+    content = content.replace(message.original, `' + ${message.varName} + '`);
     pureHtmlContent = pureHtmlContent.replace(message.original, message.text);
   });
 
-  let messageVariables = i18nMessages.map((message, index) => {
-    let messageVarName = createMessageVarName(index);
+  let messageVariables = i18nMessages.map((message) => {
     return `/** @desc ${message.desc} */\n` +
-        `var ${messageVarName} = goog.getMsg('${message.text}');\n`;
+        `var ${message.varName} = goog.getMsg('${message.text}');\n`;
   });
 
   file.messages = messageVariables.join('\n');

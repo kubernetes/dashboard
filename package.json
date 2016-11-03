@@ -27,6 +27,7 @@
     "gulp": "~3.9.1",
     "gulp-autoprefixer": "~3.1.0",
     "gulp-browserify": "~0.5.1",
+    "gulp-cheerio": "~0.6.2",
     "gulp-clang-format": "1.0.23",
     "gulp-closure-compiler": "~0.4.0",
     "gulp-codecov.io": "~1.0.1",
