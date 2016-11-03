@@ -206,7 +206,7 @@ gulp.task('scripts:prod', ['angular-templates', 'generate-xtbs'], function(doneF
  *   * messages_for_extraction/path/foo.html.js - file with only MSG_FOO i18n message
  *         definitions - used to extract messages
  */
-gulp.task('angular-templates', function() {
+gulp.task('angular-templates', ['buildExistingI18nCache'], function() {
   return gulp.src(path.join(conf.paths.frontendSrc, '**/!(index).html'))
       .pipe(gulpHtmlmin({
         removeComments: true,
