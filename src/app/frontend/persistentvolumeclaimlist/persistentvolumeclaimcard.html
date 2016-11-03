@@ -18,11 +18,11 @@ limitations under the License.
   <kd-resource-card-status layout="row">
     <md-icon class="material-icons kd-error" ng-if="::$ctrl.isLost()">
       error
-      <md-tooltip md-direction="right">{{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_CLAIM_CARD_TOOLTIP_LOST}}</md-tooltip>
+      <md-tooltip md-direction="right">[[This claim is in lost state|Tooltip text which appears on error icon hover.]]</md-tooltip>
     </md-icon>
     <md-icon class="material-icons kd-" ng-if="::$ctrl.isPending()">
       timelapse
-      <md-tooltip md-direction="right">{{::$ctrl.i18n.MSG_PERSISTENT_VOLUME_CLAIM_CARD_TOOLTIP_PENDING}}</md-tooltip>
+      <md-tooltip md-direction="right">[[This claim is in pending state|Tooltip text which appears on pending icon hover.]]</md-tooltip>
     </md-icon>
     <md-icon class="material-icons kd-success" ng-if="::$ctrl.isBound()">
       check_circle

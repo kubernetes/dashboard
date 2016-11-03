@@ -13,19 +13,6 @@
 // limitations under the License.
 
 /**
- * @final
- */
-export class NamespaceCardListController {
-  /**
-   * @ngInject
-   */
-  constructor() {
-    /** @export */
-    this.i18n = i18n;
-  }
-}
-
-/**
  * @return {!angular.Component}
  */
 export const namespaceCardListComponent = {
@@ -35,20 +22,4 @@ export const namespaceCardListComponent = {
     'namespaceListResource': '<',
   },
   templateUrl: 'namespacelist/namespacecardlist.html',
-  controller: NamespaceCardListController,
-};
-
-const i18n = {
-  /** @export {string} @desc Label 'Name' which appears as a column label in the table of
-      namespaces (namespace list view). */
-  MSG_NAMESPACE_LIST_NAME_LABEL: goog.getMsg('Name'),
-  /** @export {string} @desc Label 'Labels' which appears as a column label in the table of
-   namespaces (namespace list view). */
-  MSG_NAMESPACE_LIST_LABELS_LABEL: goog.getMsg('Labels'),
-  /** @export {string} @desc Label 'Age' which appears as a column label in the table of
-      namespaces (namespace list view). */
-  MSG_NAMESPACE_LIST_AGE_LABEL: goog.getMsg('Age'),
-  /** @export {string} @desc Label 'Status' which appears as a column label in the table of
-      namespaces (namespace list view). */
-  MSG_NAMESPACE_LIST_STATUS_LABEL: goog.getMsg('Status'),
 };

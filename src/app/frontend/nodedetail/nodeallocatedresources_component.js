@@ -26,9 +26,6 @@ export class NodeAllocatedResourcesController {
      * @export {!backendApi.NodeAllocatedResources}
      */
     this.allocatedResources;
-
-    /** @export */
-    this.i18n = i18n;
   }
 }
 
@@ -44,22 +41,4 @@ export const nodeAllocatedResourcesComponent = {
     /** {!backendApi.NodeAllocatedResources} */
     'allocatedResources': '=',
   },
-};
-
-const i18n = {
-  /** @export {string} @desc Label 'CPU requests (cores)' for the allocated resources table header
-     on the node details page. */
-  MSG_NODE_DETAIL_ALLOCATED_RESOURCES_CPU_REQUESTS: goog.getMsg('CPU requests (cores)'),
-  /** @export {string} @desc Label 'CPU limits (cores)' for the allocated resources table header
-     on the node details page. */
-  MSG_NODE_DETAIL_ALLOCATED_RESOURCES_CPU_LIMITS: goog.getMsg('CPU limits (cores)'),
-  /** @export {string} @desc Label 'Memory requests (bytes)' for the allocated resources table
-     header on the node details page. */
-  MSG_NODE_DETAIL_ALLOCATED_RESOURCES_MEMORY_REQUESTS: goog.getMsg('Memory requests (bytes)'),
-  /** @export {string} @desc Label 'Memory limits (bytes)' for the allocated resources table header
-      on the node details page. */
-  MSG_NODE_DETAIL_ALLOCATED_RESOURCES_MEMORY_LIMITS: goog.getMsg('Memory limits (bytes)'),
-  /** @export {string} @desc Label 'Pods' for the allocated resources table header on the node
-      details page. */
-  MSG_NODE_DETAIL_ALLOCATED_RESOURCES_PODS: goog.getMsg('Pods'),
 };

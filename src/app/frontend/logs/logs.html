@@ -16,14 +16,14 @@ limitations under the License.
 
 <kd-content-card class="kd-log-content-card">
   <kd-title class="kd-logs-title">
-    {{ctrl.i18n.MSG_LOGS_TITLE_FROM}}
+    [[Logs from|Title prefix for logs card.]]
     <md-select class="kd-logs-toolbar-select" ng-model="ctrl.container"
                md-on-close="ctrl.onContainerChange(ctrl.container)" required>
       <md-option ng-repeat="item in ctrl.containers" ng-value="item">
         <span class="kd-logs-toolbar-text">{{::item}}</span>
       </md-option>
     </md-select>
-    {{ctrl.i18n.MSG_LOGS_TITLE_IN}} {{ctrl.podLogs.podId}}
+    [[in|Title part for logs card.]] {{ctrl.podLogs.podId}}
     <div class="kd-logs-style-buttons">
       <md-button class="kd-logs-toolbar-button" ng-click="ctrl.onTextColorChange()">
         <md-icon md-font-library="material-icons" ng-class="ctrl.getColorIconClass()">
@@ -48,9 +48,9 @@ limitations under the License.
   <kd-footer>
     <div layout="row">
       <span class="kd-logs-info" ng-show="ctrl.logsSet.length > 1">
-        {{ctrl.i18n.MSG_LOGS_TITLE_FROM}}
+        [[Logs from|Title prefix for logs card.]]
         {{ctrl.podLogs.firstLogLineReference.logTimestamp | date : "short"}}
-        {{ctrl.i18n.MSG_LOGS_TITLE_TO}}
+        [[to|Footer part for logs card.]]
         {{ctrl.podLogs.lastLogLineReference.logTimestamp | date : "short" }}
       </span>
       <span flex></span>
