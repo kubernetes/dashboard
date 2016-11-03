@@ -50,7 +50,7 @@ describe('CreatorInfo directive', () => {
     ['PetSet', 'pet-set'],
   ]);
 
-  for (let [kind, directive] of kind2directive) {
+  kind2directive.forEach((directive, kind) => {
     it(`should render a ${kind} as a kd-${directive}-card-list`, () => {
       // given
       scope.creator = {kind: kind};
@@ -63,5 +63,5 @@ describe('CreatorInfo directive', () => {
       let elem = element.find(`kd-${directive}-card-list`);
       expect(elem.length).toEqual(1);
     });
-  }
+  });
 });
