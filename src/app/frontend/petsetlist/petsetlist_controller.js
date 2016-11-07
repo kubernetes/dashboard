@@ -29,9 +29,6 @@ export class PetSetListController {
 
     /** @export {!angular.Resource} */
     this.petSetListResource = kdPetSetListResource;
-
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -42,10 +39,3 @@ export class PetSetListController {
     return this.petSetList.petSets.length === 0;
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Title for graph card displaying CPU metric of pet sets. */
-  MSG_PET_SET_LIST_CPU_GRAPH_CARD_TITLE: goog.getMsg('CPU usage history'),
-  /** @export {string} @desc Title for graph card displaying memory metric of pet sets. */
-  MSG_PET_SET_LIST_MEMORY_GRAPH_CARD_TITLE: goog.getMsg('Memory usage history'),
-};

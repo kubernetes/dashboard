@@ -37,38 +37,5 @@ export class ReplicaSetDetailController {
 
     /** @export {!angular.Resource} */
     this.eventListResource = kdReplicaSetEventsResource;
-
-    /** @export */
-    this.i18n = i18n;
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Title 'Pods', which appears at the top of the pods list on the
-      replica set details view. */
-  MSG_REPLICA_SET_DETAIL_PODS_TITLE: goog.getMsg('Pods'),
-  /** @export {string} @desc Title 'Services' for the services information section on the replica set
-      details page. */
-  MSG_REPLICA_SET_DETAIL_SERVICES_TITLE: goog.getMsg('Services'),
-  /** @export {string} @desc Label 'Overview' for the left navigation tab on the replica
-      set details page. */
-  MSG_REPLICA_SET_DETAIL_OVERVIEW_LABEL: goog.getMsg('Overview'),
-  /** @export {string} @desc Label 'Events' for the right navigation tab on the replica
-      set details page. */
-  MSG_REPLICA_SET_DETAIL_EVENTS_LABEL: goog.getMsg('Events'),
-  /** @export {string} @desc Title for pods card zerostate in replica set details page. */
-  MSG_REPLICA_SET_DETAIL_PODS_ZEROSTATE_TITLE: goog.getMsg('There is nothing to display here'),
-  /** @export {string} @desc Text for pods card zerostate in replica set details page. */
-  MSG_REPLICA_SET_DETAIL_PODS_ZEROSTATE_TEXT:
-      goog.getMsg('There are currently no Pods scheduled on this Replica Set'),
-  /** @export {string} @desc Title for services card zerostate in replica set details page. */
-  MSG_REPLICA_SET_DETAIL_SERVICES_ZEROSTATE_TITLE: goog.getMsg('There is nothing to display here'),
-  /** @export {string} @desc Text for services card zerostate in replica set details page. */
-  MSG_REPLICA_SET_DETAIL_SERVICES_ZEROSTATE_TEXT: goog.getMsg(
-      'There are currently no Services with the same label selector ' +
-      'as this Replica Set'),
-  /** @export {string} @desc Title for graph card displaying CPU metric of one replica set. */
-  MSG_REPLICA_SET_DETAIL_CPU_GRAPH_CARD_TITLE: goog.getMsg('CPU usage history'),
-  /** @export {string} @desc Title for graph card displaying memory metric of one replica set. */
-  MSG_REPLICA_SET_DETAIL_MEMORY_GRAPH_CARD_TITLE: goog.getMsg('Memory usage history'),
-};

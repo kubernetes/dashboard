@@ -29,9 +29,6 @@ export class ReplicaSetListController {
 
     /** @export {!angular.Resource} */
     this.replicaSetListResource = kdReplicaSetListResource;
-
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -42,10 +39,3 @@ export class ReplicaSetListController {
     return this.replicaSetList.replicaSets.length === 0;
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Title for graph card displaying CPU metric of replica sets. */
-  MSG_REPLICA_SET_LIST_CPU_GRAPH_CARD_TITLE: goog.getMsg('CPU usage history'),
-  /** @export {string} @desc Title for graph card displaying memory metric of replica sets. */
-  MSG_REPLICA_SET_LIST_MEMORY_GRAPH_CARD_TITLE: goog.getMsg('Memory usage history'),
-};

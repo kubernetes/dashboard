@@ -33,9 +33,6 @@ export class ServiceCardController {
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
-
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -100,9 +97,4 @@ export const serviceCardComponent = {
     /** {!backendApi.Service} */
     'service': '<',
   },
-};
-
-const i18n = {
-  /** @export {string} @desc tooltip for pending service card icon */
-  MSG_SERVICE_IS_PENDING_TOOLTIP: goog.getMsg('This service is in a pending state.'),
 };

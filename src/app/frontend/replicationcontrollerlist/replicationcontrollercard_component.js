@@ -42,9 +42,6 @@ export default class ReplicationControllerCardController {
 
     /** @private {!./../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
-
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -119,11 +116,4 @@ export const replicationControllerCardComponent = {
   },
   controller: ReplicationControllerCardController,
   templateUrl: 'replicationcontrollerlist/replicationcontrollercard.html',
-};
-
-const i18n = {
-  /** @export {string} @desc Tooltip saying that some pods in a replication controller have errors. */
-  MSG_RC_LIST_PODS_ERRORS_TOOLTIP: goog.getMsg('One or more pods have errors'),
-  /** @export {string} @desc Tooltip saying that some pods in a replication controller are pending. */
-  MSG_RC_LIST_PODS_PENDING_TOOLTIP: goog.getMsg('One or more pods are in pending state'),
 };

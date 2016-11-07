@@ -17,7 +17,7 @@ limitations under the License.
 <kd-service-info service="ctrl.serviceDetail"></kd-service-info>
 
 <kd-content-card ng-if="ctrl.serviceDetail.podList.pods.length">
-  <kd-title>{{::ctrl.i18n.MSG_SERVICE_DETAIL_PODS_TITLE}}</kd-title>
+  <kd-title>[[Pods|Title 'Pods', which appears at the top of the pods list on the service detail view.]]</kd-title>
   <kd-content>
     <kd-pod-card-list pod-list="ctrl.serviceDetail.podList" with-statuses="true"
                       pod-list-resource="ctrl.servicePodsResource">

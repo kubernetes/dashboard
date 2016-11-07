@@ -15,11 +15,11 @@ limitations under the License.
 -->
 
 <kd-info-card>
-  <kd-info-card-header>{{::$ctrl.i18n.MSG_SERVICE_DETAIL_RESOURCE_DETAILS_TITLE}}</kd-info-card-header>
-  <kd-info-card-section name="{{::$ctrl.i18n.MSG_SERVICE_DETAIL_DETAILS_SUBTITLE}}">
+  <kd-info-card-header>[[Resource Details|Title 'Resource details' at the top service details view.]]</kd-info-card-header>
+  <kd-info-card-section name="[[Details|Subtitle 'Details' at the top of the resource details column at the service detail view.]]">
     <kd-object-meta-info-card object-meta="::$ctrl.service.objectMeta">
     </kd-object-meta-info-card>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_SERVICE_DETAIL_LABEL_SELECTOR_LABEL}}">
+    <kd-info-card-entry title="[[Label selector|Label 'Label selector' for the service's label selector in the details part (left) of the service details view.]]">
       <div ng-if="::$ctrl.service.selector">
         <kd-labels labels="::$ctrl.service.selector"></kd-labels>
       </div>
@@ -27,19 +27,19 @@ limitations under the License.
         none
       </div>
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_SERVICE_DETAIL_TYPE_LABEL}}">
+    <kd-info-card-entry title="[[Type|Label 'Type' for the service type in the details part (left) of the service details view.]]">
       {{::$ctrl.service.type}}
     </kd-info-card-entry>
   </kd-info-card-section>
 
-  <kd-info-card-section name="{{::$ctrl.i18n.MSG_SERVICE_DETAIL_CONNECTION_SUBTITLE}}">
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_SERVICE_DETAIL_CLUSTER_IP_LABEL}}">
+  <kd-info-card-section name="[[Connection|Subtitle 'Connection' at the top of the column about network connectivity (right) at the service detail view.]]">
+    <kd-info-card-entry title="[[Cluster IP|Label 'Cluster IP' for the service IP in the cluster, appears in the connectivity part (right) of the service details view.]]">
       {{::$ctrl.service.clusterIP}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_SERVICE_DETAIL_INTERNAL_ENDPOINTS_LABEL}}" ng-if="::$ctrl.service.internalEndpoint">
+    <kd-info-card-entry title="[[Internal endpoints|Label 'Internal endpoints' for the internal endpoints of the service, appears in the connectivity part (right) of the service details view.]]" ng-if="::$ctrl.service.internalEndpoint">
       <kd-internal-endpoint endpoint="::$ctrl.service.internalEndpoint"></kd-internal-endpoint>
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_SERVICE_DETAIL_EXTERNAL_ENDPOINTS_LABEL}}"
+    <kd-info-card-entry title="[[External endpoints|Label 'External endpoints' for the external endpoints of the service, appears in the connectivity part (right) of the service details view.]]"
                         ng-if="::$ctrl.service.externalEndpoints">
       <kd-external-endpoint endpoints="::$ctrl.service.externalEndpoints"></kd-external-endpoint>
     </kd-info-card-entry>
