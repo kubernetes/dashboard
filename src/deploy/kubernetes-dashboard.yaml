@@ -32,6 +32,17 @@ spec:
     metadata:
       labels:
         app: kubernetes-dashboard
+      # Comment the following annotaion if Dashboard must not be deployed on master
+      annotations:
+        scheduler.alpha.kubernetes.io/tolerations: |
+          [
+            {
+              "key": "dedicated",
+              "operator": "Equal",
+              "value": "master",
+              "effect": "NoSchedule"
+            }
+          ]
     spec:
       containers:
       - name: kubernetes-dashboard
