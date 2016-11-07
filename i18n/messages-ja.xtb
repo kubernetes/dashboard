@@ -216,7 +216,7 @@
   <translation id="1236367697817417311" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTDETAIL_7" desc="Text for old replica sets card zero-state in deployment details page.">There are currently no old Replication Controllers on this Deployment.</translation>
   <translation id="1248730598517029630" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTINFO_0" desc="Subtitle \'Details\' for the left section with general information about a deployment on the deployment details page.">Details</translation>
   <translation id="5084808157238989425" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTINFO_1" desc="Label \'Name\' for the deployment name on the deployment details page.">Name</translation>
-  <translation id="8390252915134704037" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTINFO_10" desc="The message says how many replicas can be created above the desired number of replicas in a deployment (deployment details page).">Max surge: { $ctrl.deployment.rollingUpdateStrategy.maxSurge}</translation>
+  <translation id="7360695589141375940" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTINFO_10" desc="The message says how many replicas can be created above the desired number of replicas in a deployment (deployment details page).">Max surge: {{ $ctrl.deployment.rollingUpdateStrategy.maxSurge}}</translation>
   <translation id="6581455891986389533" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTINFO_11" desc="The message says how many replicas are allowed to be unavailable during an update in the deployment (deployment details page).">Max unavailable: {{ $ctrl.deployment.rollingUpdateStrategy.maxUnavailable}}</translation>
   <translation id="5008807455060838896" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTINFO_12" desc="Label \'Status\' for the deployment\'s status information on the deployment details page.">Status</translation>
   <translation id="5185970495719556906" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTINFO_13" desc="The message describes how many replicas were updated in the deployment (deployment details page).">{{ $ctrl.deployment.statusInfo.updated}} updated</translation>
@@ -1098,6 +1098,7 @@
   <translation id="5168444369924204121" key="MSG_UPLOAD_FILE_ACTION" desc="The text is put on the button at the end of the YAML upload page.">アップロード</translation>
   <translation id="480860823064912408" key="MSG_UPLOAD_FILE_ACTION_CANCEL" desc="The text is put on the 'Cancel' button at the end of the YAML upload page.">キャンセル</translation>
   <translation id="1611578389032486450" key="MSG_WORKLOADS_CPU_GRAPH_CARD_TITLE" desc="Title for graph card displaying CPU metric of one all resources.">CPU使用量の履歴</translation>
+  <translation id="2381738981103286393" key="MSG_WORKLOADS_DAEMON_SETS_LABEL" desc="Label &quot;Daemon sets&quot;, which appears above the daemon sets list on the workloads page.">Daemon sets</translation>
   <translation id="3543875874833788829" key="MSG_WORKLOADS_DAEMON_SETS_LABEL" desc="Label &quot;Daemon sets&quot;, which appears above the daemon sets list on the workloads page.">デーモンセット</translation>
   <translation id="5605659611398511623" key="MSG_WORKLOADS_DEPLOYMENTS_LABEL" desc="Label &quot;Deployments&quot;, which appears above the deployments list on the workloads page.">デプロイメント</translation>
   <translation id="2654637773125741729" key="MSG_WORKLOADS_JOBS_LABEL" desc="Label &quot;Job&quot;, which appears above the replica sets list on the workloads page.">ジョブ</translation>
