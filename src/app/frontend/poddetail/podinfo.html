@@ -15,25 +15,25 @@ limitations under the License.
 -->
 
 <kd-info-card>
-  <kd-info-card-section name="{{::$ctrl.i18n.MSG_POD_DETAIL_DETAILS_SUBTITLE}}">
+  <kd-info-card-section name="[[Pod|Subtitle 'Details' at the top of the resource details column at the pod detail view.]]">
     <kd-object-meta-info-card object-meta="::$ctrl.pod.objectMeta">
     </kd-object-meta-info-card>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_POD_DETAIL_STATUS_LABEL}}">
+    <kd-info-card-entry title="[[Status|Label 'Status' for the pod status in details part (left) of the pod details view.]]">
       {{::$ctrl.pod.podPhase}}
     </kd-info-card-entry>
     <kd-info-card-entry>
       <a ng-href="{{::$ctrl.getLogsHref()}}" class="kd-middle-ellipsised-link">
-        <kd-middle-ellipsis display-string="{{::$ctrl.i18n.MSG_POD_DETAIL_LOGS_LABEL}}">
+        <kd-middle-ellipsis display-string="[[View logs|Label for the pod logs in details part (left) of the pod details view.]]">
         </kd-middle-ellipsis>
       </a>
     </kd-info-card-entry>
   </kd-info-card-section>
 
-  <kd-info-card-section name="{{::$ctrl.i18n.MSG_POD_DETAIL_NETWORK_SUBTITLE}}">
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_POD_DETAIL_NODE_LABEL}}">
+  <kd-info-card-section name="[[Network|Subtitle 'Network' at the top of the column about network connectivity (right) at the pod detail view.]]">
+    <kd-info-card-entry title="[[Node|Label 'Node' for the node a pods is running on, appears in the connectivity part (right) of the pod details view.]]">
       <a href="{{$ctrl.getNodeDetailsHref()}}">{{::$ctrl.pod.nodeName}}</a>
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_POD_DETAIL_IP_LABEL}}">
+    <kd-info-card-entry title="[[IP|Label 'IP' for the pod internal IP, appears in the connectivity part (right) of the pod details view.]]">
       {{::$ctrl.pod.podIP}}
     </kd-info-card-entry>
   </kd-info-card-section>

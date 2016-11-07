@@ -27,14 +27,5 @@ export class ServiceDetailController {
 
     /** {!angular.Resource} */
     this.servicePodsResource = kdServicePodsResource;
-
-    /** @export */
-    this.i18n = i18n;
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Title 'Pods', which appears at the top of the pods list on the
-     service detail view. */
-  MSG_SERVICE_DETAIL_PODS_TITLE: goog.getMsg('Pods'),
-};

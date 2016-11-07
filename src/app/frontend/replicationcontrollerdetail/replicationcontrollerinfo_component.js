@@ -25,9 +25,6 @@ export default class ReplicationControllerInfoController {
      * @export {!backendApi.ReplicationControllerDetail}
      */
     this.replicationController;
-
-    /** @export */
-    this.i18n = i18n(this.replicationController);
   }
 
   /**
@@ -53,50 +50,3 @@ export const replicationControllerInfoComponent = {
     'replicationController': '<',
   },
 };
-
-/**
- * @param  {!backendApi.ReplicationControllerDetail} rcDetail
- * @return {!Object} a dictionary of translatable messages
- */
-function i18n(rcDetail) {
-  return {
-    /** @export {string} @desc Subtitle 'Details' for the left section with general information
-        about a replication controller on the replication controller details page.*/
-    MSG_RC_DETAIL_DETAILS_SUBTITLE: goog.getMsg('Details'),
-    /** @export {string} @desc Label 'Label selector' for the replication controller's selector on
-        the replication controller details page.*/
-    MSG_RC_DETAIL_LABEL_SELECTOR_LABEL: goog.getMsg('Label selector'),
-    /** @export {string} @desc Label 'Images' for the list of images used in a replication
-        controller, on its details page. */
-    MSG_RC_DETAIL_IMAGES_LABEL: goog.getMsg('Images'),
-    /** @export {string} @desc Subtitle 'Status' for the right section with pod status information
-        on the replication controller details page.*/
-    MSG_RC_DETAIL_STATUS_SUBTITLE: goog.getMsg('Status'),
-    /** @export {string} @desc Label 'Pods' for the pods in a replication controller on its details
-        page.*/
-    MSG_RC_DETAIL_PODS_LABEL: goog.getMsg('Pods'),
-    /** @export {string} @desc Label 'Pods status' for the status of the pods in a replication
-       controller, on the replication controller details page.*/
-    MSG_RC_DETAIL_PODS_STATUS_LABEL: goog.getMsg('Pods status'),
-    /** @export {string} @desc The message says how many pods were created
-        (replication controller details page). */
-    MSG_RC_DETAIL_PODS_CREATED_LABEL:
-        goog.getMsg('{$podsCount} created', {'podsCount': rcDetail.podInfo.current}),
-    /** @export {string} @desc The message says how many pods are running
-        (replication controller details page). */
-    MSG_RC_DETAIL_PODS_RUNNING_LABEL:
-        goog.getMsg('{$podsCount} running', {'podsCount': rcDetail.podInfo.running}),
-    /** @export {string} @desc The message says how many pods are pending
-        (replication controller details page). */
-    MSG_RC_DETAIL_PODS_PENDING_LABEL:
-        goog.getMsg('{$podsCount} pending', {'podsCount': rcDetail.podInfo.pending}),
-    /** @export {string} @desc The message says how many pods have failed
-        (replication controller details page). */
-    MSG_RC_DETAIL_PODS_FAILED_LABEL:
-        goog.getMsg('{$podsCount} failed', {'podsCount': rcDetail.podInfo.failed}),
-    /** @export {string} @desc The message says how many pods are desired to run
-        (replication controller details page). */
-    MSG_RC_DETAIL_PODS_DESIRED_LABEL:
-        goog.getMsg('{$podsCount} desired', {'podsCount': rcDetail.podInfo.desired}),
-  };
-}

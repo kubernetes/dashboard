@@ -19,9 +19,6 @@ export default class SecretInfoController {
   constructor() {
     /** @export {!backendApi.SecretDetail} Initialized from the scope. */
     this.secret;
-
-    /** @export */
-    this.i18n = i18n;
   }
 }
 
@@ -37,9 +34,4 @@ export const secretInfoComponent = {
     /** {!backendApi.SecretDetail} */
     'secret': '=',
   },
-};
-
-const i18n = {
-  /** @export {string} @desc Config map info details section name. */
-  MSG_SECRET_INFO_DETAILS_SECTION: goog.getMsg('Details'),
 };

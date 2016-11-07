@@ -18,7 +18,7 @@ limitations under the License.
   <kd-resource-card-status layout="row">
     <md-icon class="material-icons" ng-if="::$ctrl.isPending()">
       timelapse
-      <md-tooltip md-direction="right">{{::$ctrl.i18n.MSG_SERVICE_IS_PENDING_TOOLTIP}}
+      <md-tooltip md-direction="right">[[This service is in a pending state|tooltip for pending service card icon]]
       </md-tooltip>
     </md-icon>
     <md-icon class="material-icons kd-success" ng-if="::$ctrl.isSuccess()">

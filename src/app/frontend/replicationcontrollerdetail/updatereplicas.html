@@ -16,29 +16,29 @@ limitations under the License.
 
 <md-dialog aria-label="Create a new namespace" layout="column">
   <md-dialog-content layout-padding>
-    <h4 class="md-title">{{::ctrl.i18n.MSG_RC_DETAIL_UPDATE_PODS_COUNT_TITLE}}</h4>
+    <h4 class="md-title">[[Set desired number of pods|Title for the pod count update dialog (for a replication controller).]]</h4>
     <div>
-      {{::ctrl.i18n.MSG_RC_DETAIL_UPDATE_PODS_COUNT_USER_HELP}}<br/>
+      [[Replication controller {{::$ctrl.replicationController}} will be updated to reflect the desired count.|User help for the pod count update dialog (on the replication controllers detail page).]]<br/>
       <span class="kd-updatereplicas-pod-status">
-        {{::ctrl.i18n.MSG_RC_DETAIL_UPDATE_PODS_COUNT_STATUS_SUBTITLE}}
+        [[Current status: {{::$ctrl.createdPods}} created, {{::$ctrl.desiredPods}} desired|Status text for a replication controller, showing the number of created and desired pods.]]
       </span>
     </div>
     <form name="ctrl.updateReplicasForm" ng-submit="ctrl.updateReplicas()" novalidate>
       <md-input-container class="md-block">
-        <label>{{::ctrl.i18n.MSG_RC_DETAIL_NUMBER_OF_PODS_LABEL}}</label>
+        <label>[[Number of pods|Label 'Number of pods', which appears as a placeholder for the pods count input on the "update pods count" dialog (for a replication controller).]]</label>
         <input name="podCount" type="number" kd-validate="integer" min="0" ng-model="ctrl.replicas"
                required kd-warn-threshold="100" kd-warn-threshold-bind="showWarning">
         <ng-messages for="ctrl.updateReplicasForm.podCount.$error" role="alert">
-          <ng-message when="required">{{::ctrl.i18n.MSG_RC_DETAIL_NUMBER_OF_PODS_REQUIRED_WARNING}}</ng-message>
-          <ng-message when="number,kdValidInteger">{{::ctrl.i18n.MSG_RC_DETAIL_NUMBER_OF_PODS_INTEGER_WARNING}}</ng-message>
+          <ng-message when="required">[[Number of pods is required.|This warning appears when the user does not specify a pods count on the "update number of pods" dialog (for a replication controller).]]</ng-message>
+          <ng-message when="number,kdValidInteger">[[Number of replicas must be equal to or greater than zero.|This warning appears when the specified pods count on the "update number of pods" dialog is not positive or non-integer.]]</ng-message>
         </ng-messages>
         <span class="kd-warn-threshold" ng-show="showWarning">
-          {{::ctrl.i18n.MSG_RC_DETAIL_NUMBER_OF_PODS_HIGH_WARNING}}
+          [[Setting high number of pods may cause performance issues of the cluster and Dashboard UI.|This warning appears when the specified pods count (on the "update number of pods" dialog) is very high.]]
         </span>
       </md-input-container>
       <md-dialog-actions layout="row">
-        <md-button class="md-primary" ng-click="ctrl.cancel()">{{::ctrl.i18n.MSG_RC_DETAIL_UPDATE_PODS_COUNT_CANCEL_ACTION}}</md-button>
-        <md-button class="md-primary" type="submit">{{::ctrl.i18n.MSG_RC_DETAIL_UPDATE_PODS_COUNT_OK_ACTION}}</md-button>
+        <md-button class="md-primary" ng-click="ctrl.cancel()">[[Cancel|Action 'Cancel' for the cancel button on the "update number of pods" dialog.]]</md-button>
+        <md-button class="md-primary" type="submit">[[OK|Action 'OK' for the confirmation button on the "update number of pods dialog".]]</md-button>
       </md-dialog-actions>
     </form>
   </md-dialog-content>

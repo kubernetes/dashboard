@@ -25,9 +25,6 @@ export class SecretDetailController {
     /** @export {!backendApi.SecretDetail} */
     this.secretDetail = secretDetail;
 
-    /** @export */
-    this.i18n = i18n;
-
     /** @private {!angular.$window} */
     this.window_ = $window;
   }
@@ -41,8 +38,3 @@ export class SecretDetailController {
     return this.window_.atob(valueB64);
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Config map info details section name. */
-  MSG_SECRET_INFO_DATA_SECTION: goog.getMsg('Data'),
-};

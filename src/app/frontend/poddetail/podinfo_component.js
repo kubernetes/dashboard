@@ -32,9 +32,6 @@ export default class PodInfoController {
      */
     this.pod;
 
-    /** @export */
-    this.i18n = i18n;
-
     /** @private {!ui.router.$state} */
     this.state_ = $state;
   }
@@ -71,25 +68,4 @@ export const podInfoComponent = {
     /** {!backendApi.PodDetail} */
     'pod': '<',
   },
-};
-
-const i18n = {
-  /** @export {string} @desc Subtitle 'Details' at the top of the resource details column at the
-     pod detail view.*/
-  MSG_POD_DETAIL_DETAILS_SUBTITLE: goog.getMsg('Pod'),
-  /** @export {string} @desc Label 'Status' for the pod status in details part (left) of the pod
-     details view.*/
-  MSG_POD_DETAIL_STATUS_LABEL: goog.getMsg('Status'),
-  /** @export {string} @desc Label for the pod logs in details part (left) of the pod
-   details view.*/
-  MSG_POD_DETAIL_LOGS_LABEL: goog.getMsg('View logs'),
-  /** @export {string} @desc Subtitle 'Network' at the top of the column about network
-     connectivity (right) at the pod detail view.*/
-  MSG_POD_DETAIL_NETWORK_SUBTITLE: goog.getMsg('Network'),
-  /** @export {string} @desc Label 'Node' for the node a pods is running on, appears in the
-     connectivity part (right) of the pod details view.*/
-  MSG_POD_DETAIL_NODE_LABEL: goog.getMsg('Node'),
-  /** @export {string} @desc Label 'IP' for the pod internal IP, appears in the
-     connectivity part (right) of the pod details view.*/
-  MSG_POD_DETAIL_IP_LABEL: goog.getMsg('IP'),
 };

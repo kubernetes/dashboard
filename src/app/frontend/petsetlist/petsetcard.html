@@ -18,12 +18,12 @@ limitations under the License.
   <kd-resource-card-status layout="row">
     <md-icon class="material-icons kd-error" ng-if="::$ctrl.hasWarnings()">
       error
-      <md-tooltip md-direction="right">{{::$ctrl.i18n.MSG_PET_SET_CARD_TOOLTIP_ERROR}}</md-tooltip>
+      <md-tooltip md-direction="right">[[One or more pods have errors|Tooltip text which appears on error icon hover.]]</md-tooltip>
     </md-icon>
     <md-icon class="material-icons" ng-if="::$ctrl.isPending()">
       timelapse
       <md-tooltip md-direction="right">
-        {{::$ctrl.i18n.MSG_PET_SET_CARD_TOOLTIP_PENDING}}
+        [[One or more pods are in pending state|Tooltip text which appears on pending icon hover.]]
       </md-tooltip>
     </md-icon>
     <md-icon class="material-icons kd-success" ng-if="::$ctrl.isSuccess()">
@@ -71,10 +71,10 @@ limitations under the License.
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
       <kd-resource-card-menu>
         <kd-resource-card-delete-menu-item
-              resource-kind-name="{{::$ctrl.i18n.MSG_PET_SET_LIST_PET_SET_LABEL}}">
+              resource-kind-name="[[Pet Set|Label 'Pet Set' which will appear in the pet set delete dialog opened from a pet set card on the list page.]]">
         </kd-resource-card-delete-menu-item>
         <kd-resource-card-edit-menu-item
-              resource-kind-name="{{::$ctrl.i18n.MSG_PET_SET_LIST_PET_SET_LABEL}}">
+              resource-kind-name="[[Pet Set|Label 'Pet Set' which will appear in the pet set delete dialog opened from a pet set card on the list page.]]">
         </kd-resource-card-edit-menu-item>
       </kd-resource-card-menu>
     </kd-resource-card-column>

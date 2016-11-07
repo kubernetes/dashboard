@@ -42,9 +42,6 @@ export default class PetSetCardController {
 
     /** @private {!./../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
-
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -116,14 +113,4 @@ export const petSetCardComponent = {
   },
   controller: PetSetCardController,
   templateUrl: 'petsetlist/petsetcard.html',
-};
-
-const i18n = {
-  /** @export {string} @desc Tooltip text which appears on error icon hover. */
-  MSG_PET_SET_CARD_TOOLTIP_ERROR: goog.getMsg('One or more pods have errors'),
-  /** @export {string} @desc Tooltip text which appears on pending icon hover. */
-  MSG_PET_SET_CARD_TOOLTIP_PENDING: goog.getMsg('One or more pods are in pending state'),
-  /** @export {string} @desc Label 'Pet Set' which will appear in the pet set
-      delete dialog opened from a pet set card on the list page. */
-  MSG_PET_SET_LIST_PET_SET_LABEL: goog.getMsg('Pet Set'),
 };

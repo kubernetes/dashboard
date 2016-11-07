@@ -29,8 +29,6 @@ export class ServicesAndDiscoveryController {
     this.kdServiceListResource = kdServiceListResource;
     /** @export {!angular.Resource} */
     this.kdIngressListResource = kdIngressListResource;
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -45,10 +43,3 @@ export class ServicesAndDiscoveryController {
     return resourcesLength === 0;
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Label that appears above the list of resources. */
-  MSG_SERVICES_AND_DISCOVERY_INGRESS_LABEL: goog.getMsg('Ingress'),
-  /** @export {string} @desc Label that appears above the list of resources. */
-  MSG_SERVICES_AND_DISCOVERY_SERVICES_LABEL: goog.getMsg('Services'),
-};
