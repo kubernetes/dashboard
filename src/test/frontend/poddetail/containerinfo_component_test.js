@@ -35,9 +35,4 @@ describe('Container info component', () => {
     let cmkr = {Name: 'foo', key: 'bar'};
     expect(ctrl.getEnvConfigMapHref(cmkr)).toBe('#/configmap/foo-namespace/foo');
   });
-
-  it('should compute config map label', () => {
-    let cmkr = {Name: 'foo', key: 'bar'};
-    expect(ctrl.i18n.getConfigMapLabel(cmkr)).toBe('value from ConfigMap foo/bar');
-  });
 });

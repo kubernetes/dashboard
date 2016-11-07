@@ -23,14 +23,5 @@ export class ActionBarController {
   constructor(podDetail) {
     /** @export {!backendApi.PodDetail} */
     this.details = podDetail;
-
-    /** @export */
-    this.i18n = i18n;
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Label 'Pod' which appears at the top of the
-      delete dialog, opened from a pod details page. */
-  MSG_POD_DETAILS_POD_LABEL: goog.getMsg('Pod'),
-};

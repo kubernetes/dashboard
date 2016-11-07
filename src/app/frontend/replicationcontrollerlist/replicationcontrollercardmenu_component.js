@@ -42,9 +42,6 @@ export default class ReplicationControllerCardMenuController {
      * {!./../replicationcontrollerdetail/replicationcontroller_service.ReplicationControllerService}
      */
     this.kdReplicationControllerService_ = kdReplicationControllerService;
-
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -85,16 +82,4 @@ export const replicationControllerCardMenuComponent = {
   },
   controller: ReplicationControllerCardMenuController,
   templateUrl: 'replicationcontrollerlist/replicationcontrollercardmenu.html',
-};
-
-const i18n = {
-  /** @export {string} @desc Action 'View details' on the drop down menu for a
-      single replication controller (replication controller list page).*/
-  MSG_RC_LIST_VIEW_DETAILS_ACTION: goog.getMsg('View details'),
-  /** @export {string} @desc Action 'Edit Pod Count' on the drop down menu for a
-      single replication controller (replication controller list page).*/
-  MSG_RC_LIST_EDIT_POD_COUNT_ACTION: goog.getMsg('Scale'),
-  /** @export {string} @desc Label 'Replication Controller' which will appear in the replication Controller
-      delete dialogm opened from a replication controller card on the list page. */
-  MSG_RC_LIST_REPLICATION_CONTROLLER_LABEL: goog.getMsg('Replication Controller'),
 };

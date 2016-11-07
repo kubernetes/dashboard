@@ -19,12 +19,12 @@ limitations under the License.
     <md-icon class="material-icons md-warn"
              ng-if="::$ctrl.hasWarnings()">
       error
-      <md-tooltip>{{::$ctrl.i18n.MSG_REPLICA_SET_LIST_PODS_ERRORS_TOOLTIP}}</md-tooltip>
+      <md-tooltip>[[One or more pods have errors|Tooltip saying that some pods in a replica set have errors.]]</md-tooltip>
     </md-icon>
     <md-icon class="material-icons"
              ng-if="::$ctrl.isPending()">
       timelapse
-      <md-tooltip>{{::$ctrl.i18n.MSG_REPLICA_SET_LIST_PODS_PENDING_TOOLTIP}}</md-tooltip>
+      <md-tooltip>[[One or more pods are in pending state|Tooltip saying that some pods in a replica set are pending.]]</md-tooltip>
     </md-icon>
 
     <md-icon class="material-icons" style="color: green";
@@ -74,9 +74,9 @@ limitations under the License.
     </kd-resource-card-column>
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
       <kd-resource-card-menu>
-        <kd-resource-card-delete-menu-item resource-kind-name="{{::$ctrl.i18n.MSG_REPLICA_SET_LIST_REPLICA_SET_LABEL}}">
+        <kd-resource-card-delete-menu-item resource-kind-name="[[Replica Set|Label 'Replica Set' which appears at the top of the delete dialog, opened from a replica set list page.]]">
         </kd-resource-card-delete-menu-item>
-        <kd-resource-card-edit-menu-item resource-kind-name="{{::$ctrl.i18n.MSG_REPLICA_SET_LIST_REPLICA_SET_LABEL}}">
+        <kd-resource-card-edit-menu-item resource-kind-name="[[Replica Set|Label 'Replica Set' which appears at the top of the delete dialog, opened from a replica set list page.]]">
         </kd-resource-card-edit-menu-item>
       </kd-resource-card-menu>
     </kd-resource-card-column>
