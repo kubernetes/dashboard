@@ -26,6 +26,7 @@ import (
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler/horizontalpodautoscalerlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	deploymentutil "k8s.io/kubernetes/pkg/controller/deployment/util"
@@ -87,6 +88,9 @@ type DeploymentDetail struct {
 
 	// List of events related to this Deployment
 	EventList common.EventList `json:"eventList"`
+
+	// List of Horizontal Pod AutoScalers targeting this Deployment
+	HorizontalPodAutoscalers horizontalpodautoscalerlist.HorizontalPodAutoscalerList `json:"horizontalPodAutoscalers"`
 }
 
 // GetDeploymentDetail returns model object of deployment and error, if any.
@@ -132,6 +136,11 @@ func GetDeploymentDetail(client client.Interface, heapsterClient heapster.Heapst
 	if err != nil {
 		return nil, err
 	}
+	// Horizontal Pod Autoscalers
+	hpas, err := horizontalpodautoscalerlist.GetHorizontalPodAutoscalerListForResource(client, namespace, "Deployment", deploymentName)
+	if err != nil {
+		return nil, err
+	}
 
 	// Old Replica Sets
 	oldReplicaSetList, err := GetDeploymentOldReplicaSets(client, dataselect.DefaultDataSelect, namespace, deploymentName)
@@ -164,18 +173,19 @@ func GetDeploymentDetail(client client.Interface, heapsterClient heapster.Heapst
 	}
 
 	return &DeploymentDetail{
-		ObjectMeta:            common.NewObjectMeta(deployment.ObjectMeta),
-		TypeMeta:              common.NewTypeMeta(common.ResourceKindDeployment),
-		PodList:               *podList,
-		Selector:              deployment.Spec.Selector.MatchLabels,
-		StatusInfo:            GetStatusInfo(&deployment.Status),
-		Strategy:              deployment.Spec.Strategy.Type,
-		MinReadySeconds:       deployment.Spec.MinReadySeconds,
-		RollingUpdateStrategy: rollingUpdateStrategy,
-		OldReplicaSetList:     *oldReplicaSetList,
-		NewReplicaSet:         newReplicaSet,
-		RevisionHistoryLimit:  deployment.Spec.RevisionHistoryLimit,
-		EventList:             *eventList,
+		ObjectMeta:               common.NewObjectMeta(deployment.ObjectMeta),
+		TypeMeta:                 common.NewTypeMeta(common.ResourceKindDeployment),
+		PodList:                  *podList,
+		Selector:                 deployment.Spec.Selector.MatchLabels,
+		StatusInfo:               GetStatusInfo(&deployment.Status),
+		Strategy:                 deployment.Spec.Strategy.Type,
+		MinReadySeconds:          deployment.Spec.MinReadySeconds,
+		RollingUpdateStrategy:    rollingUpdateStrategy,
+		OldReplicaSetList:        *oldReplicaSetList,
+		NewReplicaSet:            newReplicaSet,
+		RevisionHistoryLimit:     deployment.Spec.RevisionHistoryLimit,
+		EventList:                *eventList,
+		HorizontalPodAutoscalers: *hpas,
 	}, nil
 
 }

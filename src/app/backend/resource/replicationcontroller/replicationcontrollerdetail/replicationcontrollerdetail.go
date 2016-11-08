@@ -54,6 +54,7 @@ type ReplicationControllerDetail struct {
 	// True when the data contains at least one pod with metrics information, false otherwise.
 	HasMetrics bool `json:"hasMetrics"`
 
+	// List of Horizontal Pod AutoScalers targeting this Replication Controller.
 	HorizontalPodAutoscalers horizontalpodautoscalerlist.HorizontalPodAutoscalerList `json:"horizontalPodAutoscalers"`
 }
 
