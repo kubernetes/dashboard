@@ -23,7 +23,7 @@ FROM golang
 # Install java and nodejs. go is already installed
 # A small tweak, apt-get update is already run by the nodejs setup script,
 # so there's no need to run it again
-RUN curl -sL https://deb.nodesource.com/setup_5.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
   && apt-get install -y --no-install-recommends \
 	openjdk-7-jre \
 	nodejs \
