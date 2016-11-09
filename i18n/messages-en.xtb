@@ -76,6 +76,7 @@
   <translation id="311978980344633152" key="MSG_COMMON_COMPONENTS_RESOURCEDETAIL_INFOCARD_4" desc="Label \'Creation time\' for a resource.">Creation time</translation>
   <translation id="6941584785589389821" key="MSG_COMMON_COMPONENTS_ZEROSTATE_ZEROSTATE_0" desc="Title text which appears on zero state view.">There is nothing to display here</translation>
   <translation id="7288113746456375239" key="MSG_COMMON_COMPONENTS_ZEROSTATE_ZEROSTATE_1" desc="Description for a zero state page.">You can &lt;a href="{{::$ctrl.getStateHref()}}"&gt;deploy a containerized app&lt;/a&gt;, select other namespace or &lt;a href="http://kubernetes.io/docs/user-guide/ui/" target="_blank"&gt;take the Dashboard Tour &lt;i class="material-icons kd-zerostate-icon"&gt;open_in_new&lt;/i&gt;&lt;/a&gt; to learn more</translation>
+  <translation id="8000678649572976545" key="MSG_COMMON_COMPONENTS_ZEROSTATE_ZEROSTATE_1" desc="Description for a zero state page.">You can &lt;a href="{{::$ctrl.getStateHref()}}"&gt;deploy a containerized app&lt;/a&gt;, select other namespace or &lt;a href="http://kubernetes.io/docs/user-guide/ui/" target="_blank"&gt;take the Dashboard Tour &lt;i class="material-icons kd-zerostate-icon"&gt;open_in_new&lt;/i&gt;&lt;/a&gt; to learn more.</translation>
   <translation id="4492076728105331074" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_0" desc="Title for namespace select.">Namespace</translation>
   <translation id="5174603006239796789" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_1" desc="Text describing what namespace selector is">Selector for namespaces</translation>
   <translation id="7324783266461564175" key="MSG_COMMON_NAMESPACE_NAMESPACESELECT_2" desc="Text for dropdown item that indicates that no namespace was selected.">All namespaces</translation>
@@ -813,16 +814,25 @@
   <translation id="5847167541694942228" key="MSG_PETSETDETAIL_PETSETINFO_9" desc="The message says that that many pods are pending (pet set details page).">{{ $ctrl.petSet.podInfo.pending}} pending</translation>
   <translation id="7332879554461510589" key="MSG_PETSETLIST_PETSETCARDLIST_0" desc="Column header \'Kind\' of a Pet Set List">Kind</translation>
   <translation id="2816069801101820166" key="MSG_PETSETLIST_PETSETCARDLIST_1" desc="Pet set list header: name.">Name</translation>
+  <translation id="3262303717958393654" key="MSG_PETSETLIST_PETSETCARDLIST_1" desc="Pet set list header: name.">Name</translation>
   <translation id="1168980056661617563" key="MSG_PETSETLIST_PETSETCARDLIST_2" desc="Pet set list header: namespace.">Namespace</translation>
+  <translation id="1306883235524667936" key="MSG_PETSETLIST_PETSETCARDLIST_2" desc="Pet set list header: namespace.">Namespace</translation>
   <translation id="5034416623205458096" key="MSG_PETSETLIST_PETSETCARDLIST_3" desc="Pet set list header: labels.">Labels</translation>
+  <translation id="5482285984494406464" key="MSG_PETSETLIST_PETSETCARDLIST_3" desc="Pet set list header: labels.">Labels</translation>
+  <translation id="1118055003650906236" key="MSG_PETSETLIST_PETSETCARDLIST_4" desc="Pet set list header: pods.">Pods</translation>
   <translation id="2936268413720682938" key="MSG_PETSETLIST_PETSETCARDLIST_4" desc="Pet set list header: pods.">Pods</translation>
   <translation id="4831843599364641898" key="MSG_PETSETLIST_PETSETCARDLIST_5" desc="Pet set list header: age.">Age</translation>
+  <translation id="4998609832992511229" key="MSG_PETSETLIST_PETSETCARDLIST_5" desc="Pet set list header: age.">Age</translation>
   <translation id="3567080078484649811" key="MSG_PETSETLIST_PETSETCARDLIST_6" desc="Pet set list header: images.">Images</translation>
+  <translation id="4351145224132303361" key="MSG_PETSETLIST_PETSETCARDLIST_6" desc="Pet set list header: images.">Images</translation>
   <translation id="6549351294057874712" key="MSG_PETSETLIST_PETSETCARD_0" desc="Column \'Pet Set\' of a Pet Set List">Pet Set</translation>
   <translation id="4346616050973264684" key="MSG_PETSETLIST_PETSETCARD_1" desc="Tooltip text which appears on error icon hover.">One or more pods have errors</translation>
+  <translation id="4658764592328061070" key="MSG_PETSETLIST_PETSETCARD_1" desc="Tooltip text which appears on error icon hover.">One or more pods have errors</translation>
+  <translation id="1993114379728332007" key="MSG_PETSETLIST_PETSETCARD_2" desc="Tooltip text which appears on pending icon hover.">One or more pods are in pending state</translation>
   <translation id="8487178839495510638" key="MSG_PETSETLIST_PETSETCARD_2" desc="Tooltip text which appears on pending icon hover.">One or more pods are in pending state</translation>
   <translation id="367435375645492467" key="MSG_PETSETLIST_PETSETCARD_3" desc="Label \'Pet Set\' which will appear in the pet set delete dialog opened from a pet set card on the list page.">Pet Set</translation>
   <translation id="3227417092390767991" key="MSG_PETSETLIST_PETSETCARD_4" desc="Label \'Pet Set\' which will appear in the pet set delete dialog opened from a pet set card on the list page.">Pet Set</translation>
+  <translation id="5034503627643896802" key="MSG_PETSETLIST_PETSETCARD_4" desc="Label \'Pet Set\' which will appear in the pet set delete dialog opened from a pet set card on the list page.">Pet Set</translation>
   <translation id="8004003419862112122" key="MSG_PETSETLIST_PETSETLIST_0" desc="Title for graph card displaying CPU metric of pet sets.">CPU usage history</translation>
   <translation id="3749699426483208751" key="MSG_PETSETLIST_PETSETLIST_1" desc="Title for graph card displaying memory metric of pet sets.">Memory usage history</translation>
   <translation id="1157514904008403171" key="MSG_PET_SET_CARD_TOOLTIP_ERROR" desc="Tooltip text which appears on error icon hover.">One or more pods have errors</translation>
@@ -863,6 +873,7 @@
   <translation id="2547900428309997273" key="MSG_PODDETAIL_CONTAINERINFO_6" desc="Label when there is no container commands.">-</translation>
   <translation id="6628792456376296558" key="MSG_PODDETAIL_CONTAINERINFO_7" desc="Label for container args.">Args</translation>
   <translation id="6203718664600482216" key="MSG_PODDETAIL_CONTAINERINFO_8" desc="Label when there is no container arguments.">-</translation>
+  <translation id="2796629198059640113" key="MSG_PODDETAIL_CONTAINERINFO_9" desc="Label for the container logs.">View logs</translation>
   <translation id="139541414631793455" key="MSG_PODDETAIL_CREATORINFO_0" desc="Heading for Creator card on poddetail page">Creator</translation>
   <translation id="1121341707527002694" key="MSG_PODDETAIL_PODDETAIL_0" desc="Title for graph card displaying CPU metric of one pod.">CPU usage history</translation>
   <translation id="3901466272227021770" key="MSG_PODDETAIL_PODDETAIL_1" desc="Title for graph card displaying memory metric of one pod.">Memory usage history</translation>
@@ -1034,10 +1045,12 @@
   <translation id="1002090752968720778" key="MSG_REPLICASETLIST_REPLICASETCARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of replica sets (replica set list view).">Age</translation>
   <translation id="3459763659705372888" key="MSG_REPLICASETLIST_REPLICASETCARDLIST_5" desc="Label \'Images\' which appears as a column label in the table of replica sets (replica set list view).">Images</translation>
   <translation id="7536079710352055453" key="MSG_REPLICASETLIST_REPLICASETCARDLIST_6" desc="Column header \'Kind\' for a Replica Set list">Kind</translation>
+  <translation id="8608118192933876707" key="MSG_REPLICASETLIST_REPLICASETCARDLIST_6" desc="Column header \'Kind\' for a Replica Set list">Kind</translation>
   <translation id="3788680313877493424" key="MSG_REPLICASETLIST_REPLICASETCARD_0" desc="Tooltip saying that some pods in a replica set have errors.">One or more pods have errors</translation>
   <translation id="9099923011381618453" key="MSG_REPLICASETLIST_REPLICASETCARD_1" desc="Tooltip saying that some pods in a replica set are pending.">One or more pods are in pending state</translation>
   <translation id="7991739295193236885" key="MSG_REPLICASETLIST_REPLICASETCARD_2" desc="Label \'Replica Set\' which appears at the top of the delete dialog, opened from a replica set list page.">Replica Set</translation>
   <translation id="2099605549394286336" key="MSG_REPLICASETLIST_REPLICASETCARD_3" desc="Label \'Replica Set\' which appears at the top of the delete dialog, opened from a replica set list page.">Replica Set</translation>
+  <translation id="6619234045663975567" key="MSG_REPLICASETLIST_REPLICASETCARD_4" desc="Column \'Replica Set\' that shows if the resource kind should be shown in a Replica Set List">Replica Set</translation>
   <translation id="6987237969287534739" key="MSG_REPLICASETLIST_REPLICASETCARD_4" desc="Column \'Replica Set\' that shows if the resource kind should be shown in a Replica Set List">Replica Set</translation>
   <translation id="419429117651797632" key="MSG_REPLICASETLIST_REPLICASETLIST_0" desc="Title for graph card displaying CPU metric of replica sets.">CPU usage history</translation>
   <translation id="4602542864257969760" key="MSG_REPLICASETLIST_REPLICASETLIST_1" desc="Title for graph card displaying memory metric of replica sets.">Memory usage history</translation>
@@ -1079,6 +1092,7 @@
   <translation id="4148242113438609691" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARDLIST_3" desc="Label \'Pods\' which appears as a column label in the table of replication controllers (RC list view).">Pods</translation>
   <translation id="5966530720263760726" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of replication controllers (RC list view).">Age</translation>
   <translation id="5975261668499178241" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARDLIST_5" desc="Label \'Images\' which appears as a column label in the table of replication controllers (RC list view).">Images</translation>
+  <translation id="8098054442192227307" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARDLIST_6" desc="Column header \'Kind\' of a Replication Controller list">Kind</translation>
   <translation id="8311244073794781530" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARDLIST_6" desc="Column header \'Kind\' of a Replication Controller list">Kind</translation>
   <translation id="8084928264379926918" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARDMENU_0" desc="Action \'View details\' on the drop down menu for a single replication controller (replication controller list page).">View details</translation>
   <translation id="6650510423801823605" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARDMENU_1" desc="Action \'Edit Pod Count\' on the drop down menu for a single replication controller (replication controller list page).">Scale</translation>
@@ -1086,6 +1100,7 @@
   <translation id="2730518820167859237" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARDMENU_3" desc="Label \'Replication Controller\' which will appear in the replication Controller delete dialogm opened from a replication controller card on the list page.">Replication Controller</translation>
   <translation id="7284938913191969508" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARD_0" desc="Tooltip saying that some pods in a replication controller have errors.">One or more pods have errors</translation>
   <translation id="6808946859530903795" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARD_1" desc="Tooltip saying that some pods in a replication controller are pending.">One or more pods are in pending state</translation>
+  <translation id="1219983969126455904" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARD_2" desc="Column \'Replication Controller\' in a Replication Controller list">Replication Controller</translation>
   <translation id="4093080295331521956" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARD_2" desc="Column \'Replication Controller\' in a Replication Controller list">Replication Controller</translation>
   <translation id="1154441142209175805" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERLIST_0" desc="Title for graph card displaying CPU metric of replication controllers.">CPU usage history</translation>
   <translation id="369442621071447468" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERLIST_1" desc="Title for graph card displaying memory metric of replication controllers.">Memory usage history</translation>
