@@ -17,11 +17,11 @@ import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
 import daemonSetListModule from 'daemonsetlist/daemonsetlist_module';
 import deploymentListModule from 'deploymentlist/deploymentlist_module';
+import horizontalPodAutoscalerListModule from 'horizontalpodautoscalerlist/horizontalpodautoscalerlist_module';
 import jobListModule from 'joblist/joblist_module';
 import petSetListModule from 'petsetlist/petsetlist_module';
 import replicaSetListModule from 'replicasetlist/replicasetlist_module';
 import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
-import horizontalPodAutoscalerListModule from 'horizontalpodautoscalerlist/horizontalpodautoscalerlist_module';
 
 import stateConfig from './workloads_stateconfig';
 

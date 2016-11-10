@@ -35,7 +35,6 @@ export default class HorizontalPodAutoscalerInfoController {
    * @ngInject;
    */
   constructor($state, $interpolate) {
-
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
@@ -55,9 +54,10 @@ export default class HorizontalPodAutoscalerInfoController {
    */
   getScaleTargetHref() {
     return this.state_.href(
-      referenceKindToDetailStateName[this.horizontalPodAutoscaler.scaleTargetRef.kind],
-      new StateParams(this.horizontalPodAutoscaler.objectMeta.namespace, this.horizontalPodAutoscaler.scaleTargetRef.name));
-
+        referenceKindToDetailStateName[this.horizontalPodAutoscaler.scaleTargetRef.kind],
+        new StateParams(
+            this.horizontalPodAutoscaler.objectMeta.namespace,
+            this.horizontalPodAutoscaler.scaleTargetRef.name));
   }
   /**
    * @export

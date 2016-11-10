@@ -53,12 +53,14 @@ export default function stateConfig($stateProvider) {
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveHorizontalPodAutoscalerList(kdHorizontalPodAutoscalerListResource, $stateParams, kdPaginationService) {
+export function resolveHorizontalPodAutoscalerList(
+    kdHorizontalPodAutoscalerListResource, $stateParams, kdPaginationService) {
   let query = kdPaginationService.getDefaultResourceQuery($stateParams.namespace);
   return kdHorizontalPodAutoscalerListResource.get(query).$promise;
 }
 
 const i18n = {
-  /** @type {string} @desc Label 'Horizontal Pod Autoscalers' that appears as a breadcrumbs on the action bar. */
+  /** @type {string} @desc Label 'Horizontal Pod Autoscalers' that appears as a breadcrumbs on the
+     action bar. */
   MSG_BREADCRUMBS_HORIZONTAL_POD_AUTOSCALERS_LABEL: goog.getMsg('Horizontal Pod Autoscalers'),
 };

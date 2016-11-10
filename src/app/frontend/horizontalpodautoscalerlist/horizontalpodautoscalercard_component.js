@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'horizontalpodautoscalerdetail/horizontalpodautoscalerdetail_state';
 import {stateName as deploymentStateName} from 'deploymentdetail/deploymentdetail_state';
+import {stateName} from 'horizontalpodautoscalerdetail/horizontalpodautoscalerdetail_state';
 import {stateName as replicaSetStateName} from 'replicasetdetail/replicasetdetail_state';
 import {stateName as replicationControllerStateName} from 'replicationcontrollerdetail/replicationcontrollerdetail_state';
 
@@ -64,8 +64,9 @@ export class HorizontalPodAutoscalerCardController {
    */
   getHorizontalPodAutoscalerDetailHref() {
     return this.state_.href(
-        stateName,
-        new StateParams(this.horizontalPodAutoscaler.objectMeta.namespace, this.horizontalPodAutoscaler.objectMeta.name));
+        stateName, new StateParams(
+                       this.horizontalPodAutoscaler.objectMeta.namespace,
+                       this.horizontalPodAutoscaler.objectMeta.name));
   }
 
   /**
@@ -74,9 +75,10 @@ export class HorizontalPodAutoscalerCardController {
    */
   getScaleTargetHref() {
     return this.state_.href(
-      referenceKindToDetailStateName[this.horizontalPodAutoscaler.scaleTargetRef.kind],
-      new StateParams(this.horizontalPodAutoscaler.objectMeta.namespace, this.horizontalPodAutoscaler.scaleTargetRef.name));
-
+        referenceKindToDetailStateName[this.horizontalPodAutoscaler.scaleTargetRef.kind],
+        new StateParams(
+            this.horizontalPodAutoscaler.objectMeta.namespace,
+            this.horizontalPodAutoscaler.scaleTargetRef.name));
   }
 
   /**
@@ -87,9 +89,11 @@ export class HorizontalPodAutoscalerCardController {
     let filter = this.interpolate_(`{{date | date:'short'}}`);
     /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
      * the horizontal pod autoscaler.*/
-    let MSG_HORIZONTAL_POD_AUTOSCALER_LIST_CREATED_AT_TOOLTIP = goog.getMsg(
-        'Created at {$creationDate}',
-        {'creationDate': filter({'date': this.horizontalPodAutoscaler.objectMeta.creationTimestamp})});
+    let MSG_HORIZONTAL_POD_AUTOSCALER_LIST_CREATED_AT_TOOLTIP =
+        goog.getMsg('Created at {$creationDate}', {
+          'creationDate':
+              filter({'date': this.horizontalPodAutoscaler.objectMeta.creationTimestamp})
+        });
     return MSG_HORIZONTAL_POD_AUTOSCALER_LIST_CREATED_AT_TOOLTIP;
   }
 }
@@ -98,10 +102,7 @@ export class HorizontalPodAutoscalerCardController {
  * @type {!angular.Component}
  */
 export const horizontalPodAutoscalerCardComponent = {
-  bindings: {
-    'horizontalPodAutoscaler': '=',
-    'showScaleTarget': '<'
-  },
+  bindings: {'horizontalPodAutoscaler': '=', 'showScaleTarget': '<'},
   controller: HorizontalPodAutoscalerCardController,
   templateUrl: 'horizontalpodautoscalerlist/horizontalpodautoscalercard.html',
 };
