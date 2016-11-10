@@ -34,6 +34,6 @@ export class HorizontalPodAutoscalerListController {
    * @export
    */
   shouldShowZeroState() {
-    return this.horizontalPodAutoscalerList.horizontalPodAutoscalers.length === 0;
+    return this.horizontalPodAutoscalerList.horizontalpodautoscalers.length === 0;
   }
 }
