@@ -1147,7 +1147,7 @@ backendApi.PersistentVolumeClaimList;
  * @typedef {{
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
- *   scaleTarget: !backendApi.ScaleTarget,
+ *   scaleTargetRef: !backendApi.ScaleTargetRef,
  *   minReplicas: !number,
  *   maxReplicas: !number,
  *   targetCPUUtilization: number
@@ -1161,13 +1161,13 @@ backendApi.HorizontalPodAutoscalerDetail;
  *   name: !string,
  * }}
  */
-backendApi.ScaleTarget;
+backendApi.ScaleTargetRef;
 
 /**
  * @typedef {{
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
- *   scaleTarget: !backendApi.ScaleTarget,
+ *   scaleTargetRef: !backendApi.ScaleTargetRef,
  *   minReplicas: !number,
  *   maxReplicas: !number,
  *   targetCPUUtilization: number

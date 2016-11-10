@@ -49,12 +49,12 @@ limitations under the License.
   <kd-horizontal-pod-autoscaler-card ng-if="::$ctrl.horizontalPodAutoscalerListResource" pagination-id="horizontalpodautoscalers"
                       dir-paginate="horizontalPodAutoscaler in $ctrl.horizontalPodAutoscalerList.horizontalpodautoscalers | itemsPerPage: default"
                       total-items="::$ctrl.horizontalPodAutoscalerList.listMeta.totalItems"
-                      horizontal-pod-autoscaler="horizontalPodAutoscaler" show-resource-kind="::$ctrl.showScaleTarget">
+                      horizontal-pod-autoscaler="horizontalPodAutoscaler" show-scale-target="::$ctrl.showScaleTarget">
   </kd-horizontal-pod-autoscaler-card>
 
   <kd-horizontal-pod-autoscaler-card ng-if="::!$ctrl.horizontalPodAutoscalerListResource" pagination-id="horizontalpodautoscalers"
                       dir-paginate="horizontalPodAutoscaler in $ctrl.horizontalPodAutoscalerList.horizontalpodautoscalers | itemsPerPage: default"
-                      horizontal-pod-autoscaler="horizontalPodAutoscaler" show-resource-kind="::$ctrl.showScaleTarget">
+                      horizontal-pod-autoscaler="horizontalPodAutoscaler" show-scale-target="::$ctrl.showScaleTarget">
   </kd-horizontal-pod-autoscaler-card>
   <kd-resource-card-list-footer>
     <kd-resource-card-list-pagination pagination-id="horizontalpodautoscalers" list="$ctrl.horizontalPodAutoscalerList"

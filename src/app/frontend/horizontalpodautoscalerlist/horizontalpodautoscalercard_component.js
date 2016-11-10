@@ -72,10 +72,10 @@ export class HorizontalPodAutoscalerCardController {
    * @return {string}
    * @export
    */
-  getScaleTargetRef() {
+  getScaleTargetHref() {
     return this.state_.href(
-      referenceKindToDetailStateName[this.horizontalPodAutoscaler.scaleTarget.kind],
-      new StateParams(this.horizontalPodAutoscaler.objectMeta.namespace, this.horizontalPodAutoscaler.scaleTarget.name));
+      referenceKindToDetailStateName[this.horizontalPodAutoscaler.scaleTargetRef.kind],
+      new StateParams(this.horizontalPodAutoscaler.objectMeta.namespace, this.horizontalPodAutoscaler.scaleTargetRef.name));
 
   }
 
