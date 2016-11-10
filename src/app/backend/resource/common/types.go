@@ -114,7 +114,7 @@ const (
 	ResourceKindPersistentVolume        = "persistentvolume"
 	ResourceKindPersistentVolumeClaim   = "persistentvolumeclaim"
 	ResourceKindResourceQuota           = "resourcequota"
-	ResourceKindHorizontalPodAutoScaler = "horizontalpodautoscaler"
+	ResourceKindHorizontalPodAutoscaler = "horizontalpodautoscaler"
 )
 
 // ClientType represents type of client that is used to perform generic operations on resources.

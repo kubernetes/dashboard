@@ -92,7 +92,7 @@ func CreateHorizontalPodAutoscalerList(hpas []autoscaling.HorizontalPodAutoscale
 func ToHorizontalPodAutoScaler(hpa *autoscaling.HorizontalPodAutoscaler) HorizontalPodAutoscaler {
 	return HorizontalPodAutoscaler{
 		ObjectMeta: common.NewObjectMeta(hpa.ObjectMeta),
-		TypeMeta:   common.NewTypeMeta(common.ResourceKindHorizontalPodAutoScaler),
+		TypeMeta:   common.NewTypeMeta(common.ResourceKindHorizontalPodAutoscaler),
 
 		ScaleTargetRef: ScaleTargetRef{
 			Kind: hpa.Spec.ScaleTargetRef.Kind,
