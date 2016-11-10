@@ -55,7 +55,7 @@ type ReplicationControllerDetail struct {
 	HasMetrics bool `json:"hasMetrics"`
 
 	// List of Horizontal Pod AutoScalers targeting this Replication Controller.
-	HorizontalPodAutoscalers horizontalpodautoscalerlist.HorizontalPodAutoscalerList `json:"horizontalPodAutoscalers"`
+	HorizontalPodAutoscalerList horizontalpodautoscalerlist.HorizontalPodAutoscalerList `json:"horizontalPodAutoscalerList"`
 }
 
 // ReplicationControllerSpec contains information needed to update replication controller.
@@ -140,15 +140,15 @@ func ToReplicationControllerDetail(replicationController *api.ReplicationControl
 	serviceList resourceService.ServiceList, hpas horizontalpodautoscalerlist.HorizontalPodAutoscalerList) ReplicationControllerDetail {
 
 	replicationControllerDetail := ReplicationControllerDetail{
-		ObjectMeta:               common.NewObjectMeta(replicationController.ObjectMeta),
-		TypeMeta:                 common.NewTypeMeta(common.ResourceKindReplicationController),
-		LabelSelector:            replicationController.Spec.Selector,
-		PodInfo:                  podInfo,
-		PodList:                  podList,
-		EventList:                eventList,
-		ServiceList:              serviceList,
-		HorizontalPodAutoscalers: hpas,
-		ContainerImages:          common.GetContainerImages(&replicationController.Spec.Template.Spec),
+		ObjectMeta:                  common.NewObjectMeta(replicationController.ObjectMeta),
+		TypeMeta:                    common.NewTypeMeta(common.ResourceKindReplicationController),
+		LabelSelector:               replicationController.Spec.Selector,
+		PodInfo:                     podInfo,
+		PodList:                     podList,
+		EventList:                   eventList,
+		ServiceList:                 serviceList,
+		HorizontalPodAutoscalerList: hpas,
+		ContainerImages:             common.GetContainerImages(&replicationController.Spec.Template.Spec),
 	}
 
 	return replicationControllerDetail

@@ -24,7 +24,7 @@ type HorizontalPodAutoscalerList struct {
 	ListMeta common.ListMeta `json:"listMeta"`
 
 	// Unordered list of Horizontal Pod Autoscalers.
-	HorizontalPodAutoscalers []HorizontalPodAutoscaler `json:"horizontalpodautoscaler"`
+	HorizontalPodAutoscalers []HorizontalPodAutoscaler `json:"horizontalpodautoscalers"`
 }
 
 // HorizontalPodAutoscaler (aka. Horizontal Pod Autoscaler)
@@ -35,7 +35,7 @@ type HorizontalPodAutoscaler struct {
 	ScaleTargetRef ScaleTargetRef `json:"scaleTargetRef"`
 
 	MinReplicas *int32 `json:"minReplicas"`
-	MaxReplicas int32 `json:"MaxReplicas"`
+	MaxReplicas int32 `json:"maxReplicas"`
 
 	TargetCPUUtilizationPercentage *int32 `json:"targetCPUUtilizationPercentage"`
 }

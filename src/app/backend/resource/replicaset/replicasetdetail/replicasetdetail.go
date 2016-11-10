@@ -55,7 +55,7 @@ type ReplicaSetDetail struct {
 	Selector *unversioned.LabelSelector `json:"selector"`
 
 	// List of Horizontal Pod Autoscalers targeting this Replica Set.
-	HorizontalPodAutoscalers horizontalpodautoscalerlist.HorizontalPodAutoscalerList `json:"horizontalPodAutoscalers"`
+	HorizontalPodAutoscalerList horizontalpodautoscalerlist.HorizontalPodAutoscalerList `json:"horizontalPodAutoscalerList"`
 }
 
 // GetReplicaSetDetail gets replica set details.
@@ -103,14 +103,14 @@ func ToReplicaSetDetail(replicaSet *extensions.ReplicaSet, eventList common.Even
 	podList pod.PodList, podInfo common.PodInfo, serviceList resourceService.ServiceList, hpas horizontalpodautoscalerlist.HorizontalPodAutoscalerList) ReplicaSetDetail {
 
 	return ReplicaSetDetail{
-		ObjectMeta:               common.NewObjectMeta(replicaSet.ObjectMeta),
-		TypeMeta:                 common.NewTypeMeta(common.ResourceKindReplicaSet),
-		ContainerImages:          common.GetContainerImages(&replicaSet.Spec.Template.Spec),
-		Selector:                 replicaSet.Spec.Selector,
-		PodInfo:                  podInfo,
-		PodList:                  podList,
-		ServiceList:              serviceList,
-		EventList:                eventList,
-		HorizontalPodAutoscalers: hpas,
+		ObjectMeta:                  common.NewObjectMeta(replicaSet.ObjectMeta),
+		TypeMeta:                    common.NewTypeMeta(common.ResourceKindReplicaSet),
+		ContainerImages:             common.GetContainerImages(&replicaSet.Spec.Template.Spec),
+		Selector:                    replicaSet.Spec.Selector,
+		PodInfo:                     podInfo,
+		PodList:                     podList,
+		ServiceList:                 serviceList,
+		EventList:                   eventList,
+		HorizontalPodAutoscalerList: hpas,
 	}
 }

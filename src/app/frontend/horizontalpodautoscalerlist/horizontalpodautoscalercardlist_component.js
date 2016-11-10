@@ -47,10 +47,6 @@ export const horizontalPodAutoscalerCardListComponent = {
     'horizontalPodAutoscalerList': '<',
     /** {!angular.Resource} */
     'horizontalPodAutoscalerListResource': '<',
-    /** {boolean} */
-    'selectable': '<',
-    /** {boolean} */
-    'withStatuses': '<',
-    'showResourceKind': '<',
+    'showScaleTarget': '<'
   },
 };

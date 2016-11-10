@@ -30,7 +30,7 @@ limitations under the License.
     </kd-resource-card-column>
     <kd-resource-card-column ng-if="$ctrl.showScaleTarget">
       <a ng-href="{{::$ctrl.getScaleTargetHref()">
-        {{::$ctrl.horizontalPodAutoscaler.scaleTargetRef.kind}} {{::$ctrl.horizontalPodAutoscaler.scaleTargetRef.name}}
+        {{::$ctrl.horizontalPodAutoscaler.scaleTargetRef.kind}}: {{::$ctrl.horizontalPodAutoscaler.scaleTargetRef.name}}
       </a>
     </kd-resource-card-column>
     <kd-resource-card-column>
@@ -41,6 +41,11 @@ limitations under the License.
     <kd-resource-card-column>
       <span>
       {{::$ctrl.horizontalPodAutoscaler.maxReplicas}}
+      </span>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <span>
+      {{::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage}}%
       </span>
     </kd-resource-card-column>
     <kd-resource-card-column>

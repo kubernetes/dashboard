@@ -90,7 +90,7 @@ type DeploymentDetail struct {
 	EventList common.EventList `json:"eventList"`
 
 	// List of Horizontal Pod AutoScalers targeting this Deployment
-	HorizontalPodAutoscalers horizontalpodautoscalerlist.HorizontalPodAutoscalerList `json:"horizontalPodAutoscalers"`
+	HorizontalPodAutoscalerList horizontalpodautoscalerlist.HorizontalPodAutoscalerList `json:"horizontalPodAutoscalerList"`
 }
 
 // GetDeploymentDetail returns model object of deployment and error, if any.
@@ -173,19 +173,19 @@ func GetDeploymentDetail(client client.Interface, heapsterClient heapster.Heapst
 	}
 
 	return &DeploymentDetail{
-		ObjectMeta:               common.NewObjectMeta(deployment.ObjectMeta),
-		TypeMeta:                 common.NewTypeMeta(common.ResourceKindDeployment),
-		PodList:                  *podList,
-		Selector:                 deployment.Spec.Selector.MatchLabels,
-		StatusInfo:               GetStatusInfo(&deployment.Status),
-		Strategy:                 deployment.Spec.Strategy.Type,
-		MinReadySeconds:          deployment.Spec.MinReadySeconds,
-		RollingUpdateStrategy:    rollingUpdateStrategy,
-		OldReplicaSetList:        *oldReplicaSetList,
-		NewReplicaSet:            newReplicaSet,
-		RevisionHistoryLimit:     deployment.Spec.RevisionHistoryLimit,
-		EventList:                *eventList,
-		HorizontalPodAutoscalers: *hpas,
+		ObjectMeta:                  common.NewObjectMeta(deployment.ObjectMeta),
+		TypeMeta:                    common.NewTypeMeta(common.ResourceKindDeployment),
+		PodList:                     *podList,
+		Selector:                    deployment.Spec.Selector.MatchLabels,
+		StatusInfo:                  GetStatusInfo(&deployment.Status),
+		Strategy:                    deployment.Spec.Strategy.Type,
+		MinReadySeconds:             deployment.Spec.MinReadySeconds,
+		RollingUpdateStrategy:       rollingUpdateStrategy,
+		OldReplicaSetList:           *oldReplicaSetList,
+		NewReplicaSet:               newReplicaSet,
+		RevisionHistoryLimit:        deployment.Spec.RevisionHistoryLimit,
+		EventList:                   *eventList,
+		HorizontalPodAutoscalerList: *hpas,
 	}, nil
 
 }

@@ -14,6 +14,15 @@
 
 import {StateParams} from 'common/resource/resourcedetail';
 import {stateName} from 'horizontalpodautoscalerdetail/horizontalpodautoscalerdetail_state';
+import {stateName as deploymentStateName} from 'deploymentdetail/deploymentdetail_state';
+import {stateName as replicaSetStateName} from 'replicasetdetail/replicasetdetail_state';
+import {stateName as replicationControllerStateName} from 'replicationcontrollerdetail/replicationcontrollerdetail_state';
+
+const referenceKindToDetailStateName = {
+  Deployment: deploymentStateName,
+  ReplicaSet: replicaSetStateName,
+  ReplicationController: replicationControllerStateName,
+};
 
 /**
  * Controller for horizontal pod autoscaler card.
@@ -60,6 +69,17 @@ export class HorizontalPodAutoscalerCardController {
   }
 
   /**
+   * @return {string}
+   * @export
+   */
+  getScaleTargetRef() {
+    return this.state_.href(
+      referenceKindToDetailStateName[reference.kind],
+      new StateParams(reference.namespace, reference.name));
+
+  }
+
+  /**
    * @export
    * @return {string} localized tooltip with the formatted creation date
    */
@@ -80,6 +100,7 @@ export class HorizontalPodAutoscalerCardController {
 export const horizontalPodAutoscalerCardComponent = {
   bindings: {
     'horizontalPodAutoscaler': '=',
+    'showScaleTarget': '<'
   },
   controller: HorizontalPodAutoscalerCardController,
   templateUrl: 'horizontalpodautoscalerlist/horizontalpodautoscalercard.html',

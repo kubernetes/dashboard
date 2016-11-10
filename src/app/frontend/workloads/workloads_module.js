@@ -21,6 +21,7 @@ import jobListModule from 'joblist/joblist_module';
 import petSetListModule from 'petsetlist/petsetlist_module';
 import replicaSetListModule from 'replicasetlist/replicasetlist_module';
 import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
+import horizontalPodAutoscalerListModule from 'horizontalpodautoscalerlist/horizontalpodautoscalerlist_module';
 
 import stateConfig from './workloads_stateconfig';
 
@@ -45,6 +46,7 @@ export default angular
           deploymentListModule.name,
           daemonSetListModule.name,
           petSetListModule.name,
+          horizontalPodAutoscalerListModule.name,
         ])
     .config(stateConfig)
     .factory('kdWorkloadResource', workloadResource);
