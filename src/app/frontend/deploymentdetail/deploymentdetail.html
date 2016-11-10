@@ -65,5 +65,14 @@ limitations under the License.
   </kd-content>
 </kd-content-card>
 
+<kd-content-card ng-if="::$ctrl.deploymentDetail.horizontalPodAutoscalerList.horizontalpodautoscalers.length">
+  <kd-title>[[Horizontal Pod Autoscalers|Title for the 'Horizontal Pod Autoscalers' card on the Replication Controller detail page]]
+  </kd-title>
+  <kd-content>
+    <kd-horizontal-pod-autoscaler-card-list horizontal-pod-autoscaler-list="::$ctrl.deploymentDetail.horizontalPodAutoscalerList">
+    </kd-horizontal-pod-autoscaler-card-list>
+  </kd-content>
+</kd-content-card>
+
 <kd-event-card-list event-list="::ctrl.deploymentDetail.eventList"
                     event-list-resource="::ctrl.eventListResource"></kd-event-card-list>
