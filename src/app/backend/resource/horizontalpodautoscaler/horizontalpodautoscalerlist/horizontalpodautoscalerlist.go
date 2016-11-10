@@ -16,6 +16,7 @@ package horizontalpodautoscalerlist
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"k8s.io/kubernetes/pkg/apis/autoscaling"
 	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
 )
@@ -32,17 +33,13 @@ type HorizontalPodAutoscaler struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
 	TypeMeta   common.TypeMeta   `json:"typeMeta"`
 
-	ScaleTargetRef ScaleTargetRef `json:"scaleTargetRef"`
+	ScaleTargetRef horizontalpodautoscaler.ScaleTargetRef `json:"scaleTargetRef"`
 
 	MinReplicas *int32 `json:"minReplicas"`
 	MaxReplicas int32 `json:"maxReplicas"`
 
+	CurrentCPUUtilizationPercentage *int32 `json:"currentCPUUtilizationPercentage"`
 	TargetCPUUtilizationPercentage *int32 `json:"targetCPUUtilizationPercentage"`
-}
-
-type ScaleTargetRef struct {
-	Kind string `json:"kind"`
-	Name string `json:"name"`
 }
 
 func GetHorizontalPodAutoscalerList(client k8sClient.Interface, nsQuery *common.NamespaceQuery) (*HorizontalPodAutoscalerList, error) {
@@ -94,13 +91,14 @@ func ToHorizontalPodAutoScaler(hpa *autoscaling.HorizontalPodAutoscaler) Horizon
 		ObjectMeta: common.NewObjectMeta(hpa.ObjectMeta),
 		TypeMeta:   common.NewTypeMeta(common.ResourceKindHorizontalPodAutoscaler),
 
-		ScaleTargetRef: ScaleTargetRef{
+		ScaleTargetRef: horizontalpodautoscaler.ScaleTargetRef{
 			Kind: hpa.Spec.ScaleTargetRef.Kind,
 			Name: hpa.Spec.ScaleTargetRef.Name,
 		},
 
 		MinReplicas: hpa.Spec.MinReplicas,
 		MaxReplicas: hpa.Spec.MaxReplicas,
+		CurrentCPUUtilizationPercentage: hpa.Status.CurrentCPUUtilizationPercentage,
 		TargetCPUUtilizationPercentage: hpa.Spec.TargetCPUUtilizationPercentage,
 	}
 

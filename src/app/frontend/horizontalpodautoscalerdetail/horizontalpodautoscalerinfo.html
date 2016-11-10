@@ -15,24 +15,42 @@ limitations under the License.
 -->
 
 <kd-info-card>
-  <kd-info-card-section name="[[Details|Persistent volume claim info details section name.]]">
+  <kd-info-card-section name="[[Details|Horizontal pod autoscaler info details section name.]]">
     <kd-object-meta-info-card object-meta="::$ctrl.horizontalPodAutoscaler.objectMeta">
     </kd-object-meta-info-card>
-    <kd-info-card-entry title="[[Status|Persistent volume claim info details section status entry.]]">
-      {{::$ctrl.horizontalPodAutoscaler.status}}
+    <kd-info-card-entry title="[[Target|Horizontal pod autoscaler info details section target entry.]]">
+      <a ng-href="{{::$ctrl.getScaleTargetHref()}}">
+        {{::$ctrl.horizontalPodAutoscaler.scaleTargetRef.kind}}: {{::$ctrl.horizontalPodAutoscaler.scaleTargetRef.name}}
+      </a>
     </kd-info-card-entry>
-    <kd-info-card-entry title="[[Volume|Persistent volume claim info details section volume entry.]]">
-      <div ng-show="::$ctrl.horizontalPodAutoscaler.volume">{{::$ctrl.horizontalPodAutoscaler.volume}}</div>
-      <div ng-hide="::$ctrl.horizontalPodAutoscaler.volume">-</div>
+    <kd-info-card-entry title="[[Min Replicas|Horizontal pod autoscaler info details section minReplicas entry.]]">
+      <div ng-show="::$ctrl.horizontalPodAutoscaler.minReplicas">{{::$ctrl.horizontalPodAutoscaler.minReplicas}}</div>
+      <div ng-hide="::$ctrl.horizontalPodAutoscaler.minReplicas">-</div>
     </kd-info-card-entry>
-    <kd-info-card-entry title="[[Capacity|Persistent volume claim info details section capacity entry.]]">
-      <div ng-show="::$ctrl.horizontalPodAutoscaler.capacity">{{::$ctrl.horizontalPodAutoscaler.capacity}}</div>
-      <div ng-hide="::$ctrl.horizontalPodAutoscaler.capacity">-</div>
+    <kd-info-card-entry title="[[Max Replicas|Horizontal pod autoscaler info details section maxReplicas entry.]]">
+      <div ng-show="::$ctrl.horizontalPodAutoscaler.maxReplicas">{{::$ctrl.horizontalPodAutoscaler.maxReplicas}}</div>
+      <div ng-hide="::$ctrl.horizontalPodAutoscaler.maxReplicas">-</div>
     </kd-info-card-entry>
-    <kd-info-card-entry title="[[Access modes|Persistent volume claim info details section access modes entry.]]">
-      <div ng-repeat="mode in $ctrl.horizontalPodAutoscaler.accessModes">
-        <kd-middle-ellipsis display-string="{{::mode}}"></kd-middle-ellipsis>
-      </div>
+    <kd-info-card-entry title="[[Target CPU Utilization|Horizontal pod autoscaler info details section targetCPUUtilizationPercentage entry.]]">
+      <div ng-show="::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage">{{::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage}}%</div>
+      <div ng-hide="::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage">-</div>
+    </kd-info-card-entry>
+  </kd-info-card-section>
+  <kd-info-card-section name="[[Status|Horizontal pod autoscaler info status section]]">
+    <kd-info-card-entry title="[[Current Replicas|Horizontal pod autoscaler info status section currentReplicas entry.]]">
+      <div>{{::$ctrl.horizontalPodAutoscaler.currentReplicas}}</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Desired Replicas|Horizontal pod autoscaler info status section desiredReplicas entry.]]">
+      <div>{{::$ctrl.horizontalPodAutoscaler.desiredReplicas}}</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Current CPU Utilization|Horizontal pod autoscaler info status section currentCPUUtilizationPercentage entry.]]">
+      <div>{{::$ctrl.horizontalPodAutoscaler.currentCPUUtilizationPercentage}}%</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Last Scaled|Horizontal pod autoscaler info status section lastScaleTime entry.]]">
+      {{::$ctrl.horizontalPodAutoscaler.lastScaleTime | relativeTime}}
+      <md-tooltip>
+        {{::$ctrl.getLastScaledTooltip()}}
+      </md-tooltip>
     </kd-info-card-entry>
   </kd-info-card-section>
 </kd-info-card>

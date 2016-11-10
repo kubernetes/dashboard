@@ -1150,7 +1150,11 @@ backendApi.PersistentVolumeClaimList;
  *   scaleTargetRef: !backendApi.ScaleTargetRef,
  *   minReplicas: !number,
  *   maxReplicas: !number,
- *   targetCPUUtilization: number
+ *   currentCPUUtilization: !number,
+ *   targetCPUUtilization: number,
+ *   currentReplicas: !number,
+ *   desiredReplicas: !number,
+ *   lastScaleTime: !string
  * }}
  */
 backendApi.HorizontalPodAutoscalerDetail;
@@ -1170,6 +1174,7 @@ backendApi.ScaleTargetRef;
  *   scaleTargetRef: !backendApi.ScaleTargetRef,
  *   minReplicas: !number,
  *   maxReplicas: !number,
+ *   currentCPUUtilization: !number,
  *   targetCPUUtilization: number
  * }}
  */

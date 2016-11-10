@@ -18,6 +18,8 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
+	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/autoscaling"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
@@ -26,6 +28,19 @@ import (
 type HorizontalPodAutoscalerDetail struct {
 	ObjectMeta  common.ObjectMeta                `json:"objectMeta"`
 	TypeMeta    common.TypeMeta                  `json:"typeMeta"`
+
+	ScaleTargetRef horizontalpodautoscaler.ScaleTargetRef `json:"scaleTargetRef"`
+
+	MinReplicas *int32 `json:"minReplicas"`
+	MaxReplicas int32 `json:"maxReplicas"`
+
+	CurrentCPUUtilizationPercentage *int32 `json:"currentCPUUtilizationPercentage"`
+	TargetCPUUtilizationPercentage *int32 `json:"targetCPUUtilizationPercentage"`
+
+	CurrentReplicas int32 `json:"currentReplicas"`
+	DesiredReplicas int32 `json:"desiredReplicas"`
+
+	LastScaleTime *unversioned.Time `json:"lastScaleTime"`
 }
 
 // GetHorizontalPodAutoscalerDetail returns detailed information about a horizontal pod autoscaler
@@ -46,5 +61,20 @@ func getHorizontalPodAutoscalerDetail(horizontalPodAutoscaler *autoscaling.Horiz
 	return &HorizontalPodAutoscalerDetail{
 		ObjectMeta:  common.NewObjectMeta(horizontalPodAutoscaler.ObjectMeta),
 		TypeMeta:    common.NewTypeMeta(common.ResourceKindHorizontalPodAutoscaler),
+
+		ScaleTargetRef: horizontalpodautoscaler.ScaleTargetRef{
+			Kind: horizontalPodAutoscaler.Spec.ScaleTargetRef.Kind,
+			Name: horizontalPodAutoscaler.Spec.ScaleTargetRef.Name,
+		},
+
+		MinReplicas: horizontalPodAutoscaler.Spec.MinReplicas,
+		MaxReplicas: horizontalPodAutoscaler.Spec.MaxReplicas,
+		CurrentCPUUtilizationPercentage: horizontalPodAutoscaler.Status.CurrentCPUUtilizationPercentage,
+		TargetCPUUtilizationPercentage: horizontalPodAutoscaler.Spec.TargetCPUUtilizationPercentage,
+
+		CurrentReplicas: horizontalPodAutoscaler.Status.CurrentReplicas,
+		DesiredReplicas: horizontalPodAutoscaler.Status.DesiredReplicas,
+
+		LastScaleTime: horizontalPodAutoscaler.Status.LastScaleTime,
 	}
 }

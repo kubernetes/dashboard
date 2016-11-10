@@ -34,6 +34,19 @@ limitations under the License.
       </a>
     </kd-resource-card-column>
     <kd-resource-card-column>
+      <span ng-show="::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage">
+      {{::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage}}%
+      </span>
+      <span ng-hide="::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage">
+        -
+      </span>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <span>
+      {{::$ctrl.horizontalPodAutoscaler.currentCPUUtilizationPercentage}}%
+      </span>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
       <span>
         {{::$ctrl.horizontalPodAutoscaler.minReplicas}}
       </span>
@@ -41,11 +54,6 @@ limitations under the License.
     <kd-resource-card-column>
       <span>
       {{::$ctrl.horizontalPodAutoscaler.maxReplicas}}
-      </span>
-    </kd-resource-card-column>
-    <kd-resource-card-column>
-      <span>
-      {{::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage}}%
       </span>
     </kd-resource-card-column>
     <kd-resource-card-column>
