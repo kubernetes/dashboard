@@ -18,7 +18,7 @@ import (
 	"log"
 
 	k8serrors "k8s.io/kubernetes/pkg/api/errors"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 )
 
 // AppNameValiditySpec is a specification for application name validation request.
@@ -44,7 +44,7 @@ func ValidateAppName(spec *AppNameValiditySpec, client client.Interface) (*AppNa
 	isValidRc := false
 	isValidService := false
 
-	_, err := client.ReplicationControllers(spec.Namespace).Get(spec.Name)
+	_, err := client.Core().ReplicationControllers(spec.Namespace).Get(spec.Name)
 	if err != nil {
 		if isNotFoundError(err) {
 			isValidRc = true
@@ -53,7 +53,7 @@ func ValidateAppName(spec *AppNameValiditySpec, client client.Interface) (*AppNa
 		}
 	}
 
-	_, err = client.Services(spec.Namespace).Get(spec.Name)
+	_, err = client.Core().Services(spec.Namespace).Get(spec.Name)
 	if err != nil {
 		if isNotFoundError(err) {
 			isValidService = true

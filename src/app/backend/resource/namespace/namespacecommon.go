@@ -19,7 +19,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/kubernetes/pkg/api"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 )
 
 // NamespaceSpec is a specification of namespace to create.
@@ -29,7 +29,7 @@ type NamespaceSpec struct {
 }
 
 // CreateNamespace creates namespace based on given specification.
-func CreateNamespace(spec *NamespaceSpec, client *client.Client) error {
+func CreateNamespace(spec *NamespaceSpec, client *client.Clientset) error {
 	log.Printf("Creating namespace %s", spec.Name)
 
 	namespace := &api.Namespace{

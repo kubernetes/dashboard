@@ -20,7 +20,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/kubernetes/pkg/api"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 )
 
 // LimitRangeList contains a list of Limit Ranges in a cluster.
@@ -38,9 +38,9 @@ type LimitRange struct {
 }
 
 // GetLimitRangeList returns a list of all Limit Ranges in the cluster.
-func GetLimitRangeList(client *client.Client, nsQuery *common.NamespaceQuery,
+func GetLimitRangeList(client *client.Clientset, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*LimitRangeList, error) {
-	log.Printf("Getting list limit ranges")
+	log.Print("Getting list limit ranges")
 	channels := &common.ResourceChannels{
 		LimitRangeList: common.GetLimitRangeListChannel(client, nsQuery, 1),
 	}

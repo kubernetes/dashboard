@@ -25,7 +25,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/resource"
-	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
+	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 	"k8s.io/kubernetes/pkg/fields"
 )
 
@@ -117,7 +117,7 @@ type NodeDetail struct {
 func GetNodeDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient, name string) (*NodeDetail, error) {
 	log.Printf("Getting details of %s node", name)
 
-	node, err := client.Nodes().Get(name)
+	node, err := client.Core().Nodes().Get(name)
 	if err != nil {
 		return nil, err
 	}
@@ -208,7 +208,7 @@ func getNodeAllocatedResources(node api.Node, podList *api.PodList) (NodeAllocat
 }
 
 func GetNodePods(client k8sClient.Interface, heapsterClient client.HeapsterClient, dsQuery *dataselect.DataSelectQuery, name string) (*pod.PodList, error) {
-	node, err := client.Nodes().Get(name)
+	node, err := client.Core().Nodes().Get(name)
 	if err != nil {
 		return nil, err
 	}
@@ -231,7 +231,7 @@ func getNodePods(client k8sClient.Interface, node api.Node) (*api.PodList, error
 		return nil, err
 	}
 
-	return client.Pods(api.NamespaceAll).List(api.ListOptions{
+	return client.Core().Pods(api.NamespaceAll).List(api.ListOptions{
 		FieldSelector: fieldSelector,
 	})
 }

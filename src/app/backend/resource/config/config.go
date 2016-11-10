@@ -21,7 +21,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/configmap"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/secret"
-	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
+	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 )
 
 // Config structure contains all resource lists grouped into the config category.
@@ -32,10 +32,10 @@ type Config struct {
 }
 
 // GetConfig returns a list of all config resources in the cluster.
-func GetConfig(client *k8sClient.Client, nsQuery *common.NamespaceQuery) (
+func GetConfig(client *k8sClient.Clientset, nsQuery *common.NamespaceQuery) (
 	*Config, error) {
 
-	log.Printf("Getting config category")
+	log.Print("Getting config category")
 	channels := &common.ResourceChannels{
 		ConfigMapList: common.GetConfigMapListChannel(client, nsQuery, 1),
 		SecretList:    common.GetSecretListChannel(client, nsQuery, 1),

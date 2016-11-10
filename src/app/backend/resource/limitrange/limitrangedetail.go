@@ -19,13 +19,13 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"k8s.io/kubernetes/pkg/api"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 )
 
 // LimitRangeDetail provides the presentation layer view of Kubernetes Limit Ranges resource.
 type LimitRangeDetail struct {
-	ObjectMeta common.ObjectMeta `json:objectMeta`
-	TypeMeta   common.TypeMeta   `json:typeMeta`
+	ObjectMeta common.ObjectMeta `json:"objectMeta"`
+	TypeMeta   common.TypeMeta   `json:"typeMeta"`
 
 	LimitRanges limitRanges `json:"limitsRanges,omitempty"`
 }
@@ -60,7 +60,7 @@ type limitRange struct {
 }
 
 // GetLimitRangeDetail returns returns detailed information about a limit range
-func GetLimitRangeDetail(client *client.Client, namespace, name string) (*LimitRangeDetail, error) {
+func GetLimitRangeDetail(client *client.Clientset, namespace, name string) (*LimitRangeDetail, error) {
 	log.Printf("Getting details of %s limit range in %s namespace", name, namespace)
 
 	rawLimitRange, err := client.LimitRanges(namespace).Get(name)

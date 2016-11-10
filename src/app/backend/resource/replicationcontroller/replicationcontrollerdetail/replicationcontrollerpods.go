@@ -21,7 +21,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/kubernetes/pkg/api"
-	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
+	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
 	"log"
@@ -46,7 +46,7 @@ func GetReplicationControllerPods(client k8sClient.Interface, heapsterClient cli
 func getRawReplicationControllerPods(client k8sClient.Interface, rcName, namespace string) (
 	[]api.Pod, error) {
 
-	replicationController, err := client.ReplicationControllers(namespace).Get(rcName)
+	replicationController, err := client.Core().ReplicationControllers(namespace).Get(rcName)
 	if err != nil {
 		return nil, err
 	}

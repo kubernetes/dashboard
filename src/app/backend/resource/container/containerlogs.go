@@ -20,7 +20,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/logs"
 
 	"k8s.io/kubernetes/pkg/api"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 )
 
 // PodContainerList is a list of containers of a pod.
@@ -29,7 +29,7 @@ type PodContainerList struct {
 }
 
 // GetPodContainers returns containers that a pod has.
-func GetPodContainers(client *client.Client, namespace, podID string) (*PodContainerList, error) {
+func GetPodContainers(client *client.Clientset, namespace, podID string) (*PodContainerList, error) {
 	pod, err := client.Pods(namespace).Get(podID)
 	if err != nil {
 		return nil, err
@@ -46,7 +46,8 @@ func GetPodContainers(client *client.Client, namespace, podID string) (*PodConta
 
 // GetPodLogs returns logs for particular pod and container. When container
 // is null, logs for the first one are returned.
-func GetPodLogs(client *client.Client, namespace, podID string, container string, logSelector *logs.LogViewSelector) (*logs.Logs, error) {
+func GetPodLogs(client *client.Clientset, namespace, podID string, container string,
+	logSelector *logs.LogViewSelector) (*logs.Logs, error) {
 	pod, err := client.Pods(namespace).Get(podID)
 	if err != nil {
 		return nil, err
@@ -72,9 +73,9 @@ func GetPodLogs(client *client.Client, namespace, podID string, container string
 }
 
 // Construct a request for getting the logs for a pod and retrieves the logs.
-func getRawPodLogs(client *client.Client, namespace, podID string, logOptions *api.PodLogOptions) (
+func getRawPodLogs(client *client.Clientset, namespace, podID string, logOptions *api.PodLogOptions) (
 	string, error) {
-	req := client.RESTClient.Get().
+	req := client.Core().RESTClient().Get().
 		Namespace(namespace).
 		Name(podID).
 		Resource("pods").

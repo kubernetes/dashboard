@@ -16,7 +16,7 @@ var DerivedResources = map[common.ResourceKind]common.ResourceKind{
 	common.ResourceKindReplicaSet:            common.ResourceKindPod,
 	common.ResourceKindReplicationController: common.ResourceKindPod,
 	common.ResourceKindDaemonSet:             common.ResourceKindPod,
-	common.ResourceKindPetSet:                common.ResourceKindPod,
+	common.ResourceKindStatefulSet:           common.ResourceKindPod,
 	common.ResourceKindJob:                   common.ResourceKindPod,
 }
 

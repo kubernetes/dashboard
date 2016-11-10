@@ -23,13 +23,13 @@ import {stateName as namespaceState} from 'namespacelist/namespacelist_state';
 import {stateName as nodeState} from 'nodelist/nodelist_state';
 import {stateName as persistentVolumeClaimState} from 'persistentvolumeclaimlist/persistentvolumeclaimlist_state';
 import {stateName as persistentVolumeState} from 'persistentvolumelist/persistentvolumelist_state';
-import {stateName as petSetState} from 'petsetlist/petsetlist_state';
 import {stateName as podState} from 'podlist/podlist_state';
 import {stateName as replicaSetState} from 'replicasetlist/replicasetlist_state';
 import {stateName as replicationControllerState} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 import {stateName as secretState} from 'secretlist/list_state';
 import {stateName as serviceState} from 'servicelist/servicelist_state';
 import {stateName as servicesanddiscoveryState} from 'servicesanddiscovery/state';
+import {stateName as statefulSetState} from 'statefulsetlist/statefulsetlist_state';
 import {stateName as workloadState} from 'workloads/workloads_state';
 
 
@@ -60,7 +60,7 @@ export class NavController {
       'replicationController': replicationControllerState,
       'daemonSet': daemonSetState,
       'persistentVolume': persistentVolumeState,
-      'petSet': petSetState,
+      'statefulSet': statefulSetState,
       'job': jobState,
       'service': serviceState,
       'persistentVolumeClaim': persistentVolumeClaimState,
