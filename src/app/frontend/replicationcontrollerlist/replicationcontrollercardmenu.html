@@ -17,16 +17,16 @@ limitations under the License.
 <kd-resource-card-menu>
   <md-menu-item>
     <md-button ng-click="$ctrl.viewDetails()">
-      {{::$ctrl.i18n.MSG_RC_LIST_VIEW_DETAILS_ACTION}}
+      [[View details|Action 'View details' on the drop down menu for a single replication controller (replication controller list page).]]
     </md-button>
   </md-menu-item>
   <md-menu-item>
     <md-button ng-click="$ctrl.showUpdateReplicasDialog()">
-      {{::$ctrl.i18n.MSG_RC_LIST_EDIT_POD_COUNT_ACTION}}
+      [[Scale|Action 'Edit Pod Count' on the drop down menu for a single replication controller (replication controller list page).]]
     </md-button>
   </md-menu-item>
-  <kd-resource-card-edit-menu-item resource-kind-name="{{::$ctrl.i18n.MSG_RC_LIST_REPLICATION_CONTROLLER_LABEL}}">
+  <kd-resource-card-edit-menu-item resource-kind-name="[[Replication Controller|Label 'Replication Controller' which will appear in the replication Controller delete dialogm opened from a replication controller card on the list page.]]">
   </kd-resource-card-edit-menu-item>
-  <kd-resource-card-delete-menu-item resource-kind-name="{{::$ctrl.i18n.MSG_RC_LIST_REPLICATION_CONTROLLER_LABEL}}">
+  <kd-resource-card-delete-menu-item resource-kind-name="[[Replication Controller|Label 'Replication Controller' which will appear in the replication Controller delete dialogm opened from a replication controller card on the list page.]]">
   </kd-resource-card-delete-menu-item>
 </md-menu>

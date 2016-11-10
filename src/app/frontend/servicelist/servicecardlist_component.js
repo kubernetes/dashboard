@@ -26,9 +26,6 @@ export class ServiceCardListController {
 
     /** @export {!angular.Resource} Initialized from binding. */
     this.serviceListResource;
-
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -56,25 +53,4 @@ export const serviceCardListComponent = {
     /** {boolean} */
     'selectable': '<',
   },
-};
-
-const i18n = {
-  /** @export {string} @desc Label 'Name' which appears as a column label in the table of
-     services (service list view). */
-  MSG_SERVICE_LIST_NAME_LABEL: goog.getMsg('Name'),
-  /** @export {string} @desc Label 'Namespace' which appears as a column label in the
-     table of services (service list view). */
-  MSG_SERVICE_LIST_NAMESPACE_LABEL: goog.getMsg('Namespace'),
-  /** @export {string} @desc Label 'Labels' which appears as a column label in the table of
-     services (service list view). */
-  MSG_SERVICE_LIST_LABELS_LABEL: goog.getMsg('Labels'),
-  /** @export {string} @desc Label 'Cluster IP' which appears as a column label in the table of
-     services (service list view). */
-  MSG_SERVICE_LIST_CLUSTER_IP_LABEL: goog.getMsg('Cluster IP'),
-  /** @export {string} @desc Label 'Internal endpoints' which appears as a column label in the
-     table of services (service list view). */
-  MSG_SERVICE_LIST_INTERNAL_ENDPOINTS_LABEL: goog.getMsg('Internal endpoints'),
-  /** @export {string} @desc Label 'External endpoints' which appears as a column label in the
-     table of services (service list view). */
-  MSG_SERVICE_LIST_EXTERNAL_ENDPOINTS_LABEL: goog.getMsg('External endpoints'),
 };

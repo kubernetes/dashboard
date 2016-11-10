@@ -28,9 +28,6 @@ export class ActionBarController {
 
     /** @export {!backendApi.ReplicationControllerDetail} */
     this.details = replicationControllerDetail;
-
-    /** @export */
-    this.i18n = i18n;
   }
   /**
    * Handles update of replicas count in replication controller dialog.
@@ -42,15 +39,3 @@ export class ActionBarController {
         this.details.podInfo.current, this.details.podInfo.desired);
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Tooltip for the 'scale' button on the action bar of a replication
-      controller details view.*/
-  MSG_RC_DETAIL_ACTION_BAR_EDIT_PODS_TOOLTIP: goog.getMsg('Edit number of pods'),
-  /** @export {string} @desc Tooltip for the 'scale' button on the action bar of a replication
-      controller details view.*/
-  MSG_RC_DETAIL_ACTION_BAR_EDIT_PODS_LABEL: goog.getMsg('Scale'),
-  /** @export {string} @desc Label 'Replication Controller' which appears at the top of the
-   edit dialog, opened from a replication controller details page. */
-  MSG_RC_DETAIL_REPLICATION_CONTROLLER_LABEL: goog.getMsg('Replication Controller'),
-};

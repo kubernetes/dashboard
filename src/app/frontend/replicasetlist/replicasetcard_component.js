@@ -42,9 +42,6 @@ export default class ReplicaSetCardController {
 
     /** @private {!./../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
-
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -117,14 +114,4 @@ export const replicaSetCardComponent = {
   },
   controller: ReplicaSetCardController,
   templateUrl: 'replicasetlist/replicasetcard.html',
-};
-
-const i18n = {
-  /** @export {string} @desc Tooltip saying that some pods in a replica set have errors. */
-  MSG_REPLICA_SET_LIST_PODS_ERRORS_TOOLTIP: goog.getMsg('One or more pods have errors'),
-  /** @export {string} @desc Tooltip saying that some pods in a replica set are pending. */
-  MSG_REPLICA_SET_LIST_PODS_PENDING_TOOLTIP: goog.getMsg('One or more pods are in pending state'),
-  /** @export {string} @desc Label 'Replica Set' which appears at the top of the
-      delete dialog, opened from a replica set list page. */
-  MSG_REPLICA_SET_LIST_REPLICA_SET_LABEL: goog.getMsg('Replica Set'),
 };

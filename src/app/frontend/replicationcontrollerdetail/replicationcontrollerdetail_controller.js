@@ -47,9 +47,6 @@ export default class ReplicationControllerDetailController {
 
     /** @private {!../common/resource/resourcedetail.StateParams} */
     this.stateParams_ = $stateParams;
-
-    /** @export */
-    this.i18n = i18n;
   }
 
   /**
@@ -71,28 +68,3 @@ export default class ReplicationControllerDetailController {
         pod.metrics.memoryUsageHistory.length > 0;
   }
 }
-
-const i18n = {
-  /** @export {string} @desc Title 'Pods', which appears at the top of the pods list on the
-      replication controller detail view. */
-  MSG_RC_DETAIL_PODS_TITLE: goog.getMsg('Pods'),
-  /** @export {string} @desc Title 'Service', which appears at the top of the services list on the
-      replication controller detail view. */
-  MSG_RC_DETAIL_SERVICES_TITLE: goog.getMsg('Services'),
-  /** @export {string} @desc Title for services card zerostate in replication controller details page. */
-  MSG_RC_DETAIL_SERVICES_ZEROSTATE_TITLE: goog.getMsg('There is nothing to display here'),
-  /** @export {string} @desc Text for services card zerostate in replication controller details page. */
-  MSG_RC_DETAIL_SERVICES_ZEROSTATE_TEXT: goog.getMsg(
-      'There are currently no Services with the same label selector ' +
-      'as this Replication Controller'),
-  /** @export {string} @desc Title for pods card zerostate in replication controller details page. */
-  MSG_RC_DETAIL_PODS_ZEROSTATE_TITLE: goog.getMsg('There is nothing to display here'),
-  /** @export {string} @desc Text for pods card zerostate in replication controller details page. */
-  MSG_RC_DETAIL_PODS_ZEROSTATE_TEXT:
-      goog.getMsg('There are currently no Pods selected by this Replication Controller'),
-  /** @export {string} @desc Title for graph card displaying CPU metric of one replication controller. */
-  MSG_REPLICATION_CONTROLLER_DETAIL_CPU_GRAPH_CARD_TITLE: goog.getMsg('CPU usage history'),
-  /** @export {string} @desc Title for graph card displaying memory metric of one replication controller. */
-  MSG_REPLICATION_CONTROLLER_DETAIL_MEMORY_GRAPH_CARD_TITLE: goog.getMsg('Memory usage history'),
-
-};

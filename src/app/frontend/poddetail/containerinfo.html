@@ -15,50 +15,51 @@ limitations under the License.
 -->
 
 <kd-info-card>
-  <kd-info-card-header>{{::$ctrl.i18n.MSG_CONTAINER_DETAILS_SUBTITLE}}</kd-info-card-header>
+  <kd-info-card-header>[[Containers|Subtitle at the top of the container details.]]</kd-info-card-header>
   <kd-info-card-section ng-repeat="container in ::$ctrl.containers" name="{{::container.name}}">
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_CONTAINER_DETAILS_IMAGE}}">
+    <kd-info-card-entry title="[[Image|Label for container image.]]">
       {{::container.image}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_CONTAINER_DETAILS_ENV_VARS}}">
+    <kd-info-card-entry title="[[Environment variables|Label for container environment variables.]]">
       <div ng-if="::container.env.length">
         <div ng-repeat="env in ::container.env" layout="row">
           <span>{{::env.name}}</span><span ng-if="env.valueFrom">
             <span ng-if="env.valueFrom.configMapKeyRef">
-              (<a ng-href="{{::$ctrl.getEnvConfigMapHref(env.valueFrom.configMapKeyRef)}}"><!--
-              -->{{::$ctrl.i18n.getConfigMapLabel(env.valueFrom.configMapKeyRef)}}</a>)
+              (<a ng-href="{{::$ctrl.getEnvConfigMapHref(env.valueFrom.configMapKeyRef)}}">
+                [[value from ConfigMap {{env.valueFrom.configMapKeyRef.Name}}/{{env.valueFrom.configMapKeyRef.key}}|Label for environment variable that comes from a Config Map]]
+              </a>)
             </span>
           </span><span>:&nbsp;</span>
           <kd-middle-ellipsis display-string="{{::env.value}}" flex="shrink"><kd-middle-ellipsis>
         </div>
       </div>
       <div ng-if="::!container.env.length">
-        {{::$ctrl.i18n.MSG_CONTAINER_DETAILS_NO_ENV_VARS}}
+        [[-|Label when there is no container environment variables.]]
       </div>
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_CONTAINER_DETAILS_COMMANDS}}">
+    <kd-info-card-entry title="[[Commands|Label for container commands.]]">
       <div ng-if="::container.commands.length">
         <div ng-repeat="(key, value) in ::container.commands" layout="row">
           <kd-middle-ellipsis display-string="{{::value}}" flex="shrink"><kd-middle-ellipsis>
         </div>
       </div>
       <div ng-if="::!container.commands.length">
-        {{::$ctrl.i18n.MSG_CONTAINER_DETAILS_NO_COMMANDS}}
+        [[-|Label when there is no container commands.]]
       </div>
     </kd-info-card-entry>
-    <kd-info-card-entry title="{{::$ctrl.i18n.MSG_CONTAINER_DETAILS_ARGS}}">
+    <kd-info-card-entry title="[[Args|Label for container args.]]">
       <div ng-if="::container.args.length">
         <div ng-repeat="(key, value) in ::container.args" layout="row">
           <kd-middle-ellipsis display-string="{{::value}}" flex="shrink"><kd-middle-ellipsis>
         </div>
       </div>
       <div ng-if="::!container.args.length">
-        {{::$ctrl.i18n.MSG_CONTAINER_DETAILS_NO_ARGS}}
+        [[-|Label when there is no container arguments.]]
       </div>
     </kd-info-card-entry>
     <kd-info-card-entry ng-if="::$ctrl.podName">
           <a ng-href="{{::$ctrl.getLogsHref(container)}}" class="kd-middle-ellipsised-link">
-            <kd-middle-ellipsis display-string="{{::$ctrl.i18n.MSG_CONTAINER_DETAILS_LOGS}}">
+            <kd-middle-ellipsis display-string="[[View logs|Label for the container logs.]]">
             </kd-middle-ellipsis>
           </a>
     </kd-info-card-entry>

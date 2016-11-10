@@ -17,7 +17,7 @@ limitations under the License.
 <div layout="column">
   <kd-secret-info secret="::$ctrl.secretDetail"></kd-secret-info>
   <kd-info-card>
-    <kd-info-card-section name="{{::$ctrl.i18n.MSG_SECRET_INFO_DATA_SECTION}}">
+    <kd-info-card-section name="[[Data|Config map info details section name.]]">
       <kd-info-card-entry ng-repeat="(key, value) in ::$ctrl.secretDetail.data"
           title="{{::key}}">
         <!-- TODO(#1059): Don't show plain text value. -->
