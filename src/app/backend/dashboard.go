@@ -30,11 +30,11 @@ var (
 	argPort          = pflag.Int("port", 9090, "The port to listen to for incoming HTTP requests")
 	argApiserverHost = pflag.String("apiserver-host", "", "The address of the Kubernetes Apiserver "+
 		"to connect to in the format of protocol://address:port, e.g., "+
-		"http://localhost:8080. If not specified, the assumption is that the binary runs inside a"+
+		"http://localhost:8080. If not specified, the assumption is that the binary runs inside a "+
 		"Kubernetes cluster and local discovery is attempted.")
 	argHeapsterHost = pflag.String("heapster-host", "", "The address of the Heapster Apiserver "+
 		"to connect to in the format of protocol://address:port, e.g., "+
-		"http://localhost:8082. If not specified, the assumption is that the binary runs inside a"+
+		"http://localhost:8082. If not specified, the assumption is that the binary runs inside a "+
 		"Kubernetes cluster and service proxy will be used.")
 	argKubeConfigFile = pflag.String("kubeconfig", "", "Path to kubeconfig file with authorization and master location information.")
 )
