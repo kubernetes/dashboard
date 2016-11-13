@@ -21,6 +21,12 @@ export class GraphCardController {
     /** @export {!Array<!backendApi.Metric>} - Initialized from binding */
     this.metrics;
 
+    /**
+     * List of events. Initialized from the scope.
+     * @export {!Array<!backendApi.Event>}
+     */
+    this.events;
+
     /** @export {string} - Initialized from binding */
     this.graphTitle;
 
@@ -72,6 +78,7 @@ export const graphCardComponent = {
   controller: GraphCardController,
   bindings: {
     'metrics': '<',
+    'events': '<',
     'graphTitle': '<',
     'selectedMetricNames': '<',
   },

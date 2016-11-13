@@ -14,6 +14,28 @@
 
 import {axisSettings, metricDisplaySettings, TimeAxisType} from './graph_settings';
 import {getNewMax, getTickValues} from './tick_values';
+import {getCustormTooltipGenerator} from "./tooltip_generator";
+
+let eventMarkerHeight = 20;
+let eventMarkerWidth = 3;
+
+function getEventsBetweenTimes(events, startTime, endTime) {
+  if (!events) {
+    return [];
+  }
+  return events.filter((event) => {
+    let lastSeen = new Date(event.lastSeen);
+    return startTime <= lastSeen && lastSeen < endTime })
+}
+
+function getEventsByDataPointIndex(dataPoints, events) {
+  let eventsByDataPointIndex = {};
+  for (let i = 0; i < dataPoints.length; i++) {
+    let eventsUntilTime = i+1 === dataPoints.length ? new Date() : 1000*dataPoints[i + 1].x;
+    eventsByDataPointIndex[i] = getEventsBetweenTimes(events, 1000*dataPoints[i].x, eventsUntilTime);
+  }
+  return eventsByDataPointIndex;
+}
 
 export class GraphController {
   /**
@@ -33,6 +55,19 @@ export class GraphController {
      * @export {!Array<!backendApi.Metric>}
      */
     this.metrics;
+
+    /**
+     * List of events. Initialized from the scope.
+     * @export {!Array<!backendApi.Event>}
+     */
+    this.events;
+    console.log(this.events);
+
+    /**
+     * List of events that were selected by the user by clicking on some data point on the graph.
+     * @export {!Array<!backendApi.Event>}
+     */
+    this.selectedEvents= [];
   }
 
   $onInit() {
@@ -57,6 +92,7 @@ export class GraphController {
         useInteractiveGuideline: true,
       });
       let data = [];
+      let eventsByDataPointIndex = {};
       let yAxis1Type;
       let yAxis2Type;
       let y1max = 1;
@@ -64,7 +100,7 @@ export class GraphController {
       // iterate over metrics and add them to graph display
       for (let i = 0; i < this.metrics.length; i++) {
         let metric = this.metrics[i];
-        // don't display metric if the number of its data points is smaller than 2
+        // don't display metric if the number of its number of data points is smaller than 2
         if (metric.dataPoints.length < 2) {
           continue;
         }
@@ -100,11 +136,16 @@ export class GraphController {
           });
         }
       }
+
       // don't display empty graph, hide it completely,
       if (data.length === 0) {
         return;
-      } else if (typeof yAxis1Type === 'undefined') {
-        // If axis 2 is used, but not axis 1, move all graphs from axis 2 to axis 1. Looks much
+      } else {
+        eventsByDataPointIndex = getEventsByDataPointIndex(data[0].values, this.events);
+      }
+
+      if (typeof yAxis1Type === 'undefined') {
+        // If Y axis 2 is used, but not axis 1, move all graphs from axis 2 to axis 1 (left one). Looks much
         // better.
         yAxis1Type = yAxis2Type;
         y1max = y2max;
@@ -156,15 +197,69 @@ export class GraphController {
         return d;
       });
 
+      // display custom tooltip
+      chart.interactiveLayer.tooltip.contentGenerator(getCustormTooltipGenerator(chart, eventsByDataPointIndex));
+
       // generate graph
       let graphArea = d3.select(this.element_[0]);
-      let svg = graphArea.append('svg');
+      let svg = graphArea.insert('svg', ":first-child");
+
       svg.attr('height', '200px').datum(data).call(chart);
 
-      // add grey line to the bottom to separate from the rest of the page.
+      // change background color to white
       svg.style({
         'background-color': 'white',
       });
+
+      let markAllEvents = () => {
+        // I spent ages to figure out this function... Hard to believe.
+        // Hints for future developers:
+        // 1. Learn d3!
+        // 2. In order to add extra features to the graph just add extra routines newChartUpdate function defined below.
+        // 3. Use selection.transition() for smooth graph update
+        // 4. Don't remove/add elements on update unless you have to. Instead create elements and modify their opacity/position. Doing so prevents
+        //    graph from flickering.
+        // 5. Read nvd3 source code - especially following models: line, scatter, tooltip, axes and of course multiChart.
+        // 6. To convert values to coords on graph use chart.lines1.scatter.xScale()(xValueToConvert). Same for x and axis 2. See example below.
+        // 7. Use nv-series to choose colors and styles specific for certain data series.
+
+        // This function basically adds event markers to all data points and updates their position.
+        // Only data points that have events should have markers so the opacity of data points without events is set to 0.
+        //
+        let markerGroup = svg.select('.nv-scatter').selectAll('g.event-marker-group').data([0]).enter().append('g').attr('class', 'event-marker-group');
+        for (let seriesId in data) {
+           let isDisabled = !!data[seriesId].disabled;
+           let xConv = (data[seriesId].yAxis==1?chart.lines1:chart.lines2).scatter.xScale();
+           let yConv = (data[seriesId].yAxis==1?chart.lines1:chart.lines2).scatter.yScale();
+           let markerSeriesGroup = markerGroup.selectAll(`g.marker-series-${seriesId}`).data([0]).enter().append('g').attr('class', `marker-series-${seriesId}`);
+          // it does not have to be a red rectangle, you can use any other shape
+           markerSeriesGroup.selectAll('rect').data(data[seriesId].values).enter().append('rect')
+               .attr('x', -eventMarkerWidth / 2)
+               .attr('y', -eventMarkerHeight / 2)
+               .attr('width', eventMarkerWidth)
+               .attr('height', eventMarkerHeight)
+               .attr('class', (d, i) => `event-marker-${i}`)
+               .attr('stroke-width', 0)
+               .attr('fill', 'red')
+               .attr('transform',  (d) => `translate(${xConv(d.x)}, ${yConv(d.y)})`)
+               .on('click', (d,i) => {
+                 this.selectedEvents = eventsByDataPointIndex[i];
+                 this.scope_.$digest();
+               });
+           svg.select(`g.marker-series-${seriesId}`).selectAll('rect').transition()
+               .attr('transform',  (d) => `translate(${xConv(d.x)}, ${yConv(d.y)})`)
+               .attr('fill-opacity', (d, i) => isDisabled || eventsByDataPointIndex[i].length===0 ? 0: 1);
+        }
+      }
+
+      let oldChartUpdate = chart.update;
+
+      let newChartUpdate = function () {
+        oldChartUpdate();
+        // here add all extra graph drawing functions
+        markAllEvents();
+      };
+
 
       let isUpdatingFunctionRunning = false;
       let updateUntil = 0;
@@ -186,6 +281,9 @@ export class GraphController {
         updateUntil = new Date().valueOf() + updatePeriod;
         // update chart and call itself again if still in update period.
         let updater = function() {
+          setTimeout(() => {
+            newChartUpdate()
+          })
           chart.update();
           if (new Date() < updateUntil) {
             setTimeout(updater, timeBetweenUpdates);
@@ -197,7 +295,7 @@ export class GraphController {
       };
 
       // update the graph in case of graph area resize
-      nv.utils.windowResize(chart.update);
+      nv.utils.windowResize(newChartUpdate);
       this.scope_.$watch(
           () => graphArea.node().getBoundingClientRect().width,  // variable to watch
           () => startChartUpdatePeriod(1600, 200),
@@ -217,6 +315,7 @@ export class GraphController {
 export const graphComponent = {
   bindings: {
     'metrics': '<',
+    'events': '<',
   },
   controller: GraphController,
   templateUrl: 'common/components/graph/graph.html',
