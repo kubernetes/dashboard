@@ -22,8 +22,8 @@ export default class ConditionsController {
    */
   constructor() {
     /**
-     * An array of {backendApi.ConditionList} objects.
-     * @export
+     * An array of {backendApi.Condition} objects.
+     * @export {!Array<!backendApi.Condition>} Initialized from the scope.
      */
     this.conditions;
   }

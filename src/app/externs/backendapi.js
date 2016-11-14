@@ -718,6 +718,25 @@ backendApi.PodStatus;
 
 /**
  * @typedef {{
+ *   type: string,
+ *   status: string,
+ *   lastHeartbeatTime: ?string,
+ *   lastTransitionTime: ?string,
+ *   reason: string,
+ *   message: string
+ * }}
+ */
+backendApi.Condition;
+
+/**
+ * @typedef {{
+ *   nodes: !Array<!backendApi.Condition>
+ * }}
+ */
+backendApi.ConditionList;
+
+/**
+ * @typedef {{
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
  *   podStatus: !backendApi.PodStatus,
@@ -1049,25 +1068,6 @@ backendApi.Node;
  * }}
  */
 backendApi.NodeInfo;
-
-/**
- * @typedef {{
- *   type: string,
- *   status: string,
- *   lastHeartbeatTime: ?string,
- *   lastTransitionTime: ?string,
- *   reason: string,
- *   message: string
- * }}
- */
-backendApi.Condition;
-
-/**
- * @typedef {{
- *   nodes: !Array<!backendApi.Condition>
- * }}
- */
-backendApi.ConditionList;
 
 /**
  * @typedef {{
