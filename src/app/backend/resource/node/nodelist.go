@@ -43,8 +43,11 @@ type Node struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
 	TypeMeta   common.TypeMeta   `json:"typeMeta"`
 
-	// Ready Status of the node
+	// Ready represents status of the node
 	Ready api.ConditionStatus `json:"ready"`
+
+	// Conditions of the node.
+	Conditions []api.NodeCondition `json:"conditions"`
 }
 
 // GetNodeListFromChannels returns a list of all namespaces in the cluster.
@@ -104,6 +107,7 @@ func toNode(node api.Node) Node {
 		ObjectMeta: common.NewObjectMeta(node.ObjectMeta),
 		TypeMeta:   common.NewTypeMeta(common.ResourceKindNode),
 		Ready:      getNodeConditionStatus(node, api.NodeReady),
+		Conditions: node.Status.Conditions,
 	}
 }
 

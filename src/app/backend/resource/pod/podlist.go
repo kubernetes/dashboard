@@ -60,6 +60,9 @@ type Pod struct {
 
 	// Pod metrics.
 	Metrics *common.PodMetrics `json:"metrics"`
+
+	// Pod conditions.
+	Conditions []api.PodCondition `json:"conditions"`
 }
 
 // GetPodList returns a list of all Pods in the cluster.
