@@ -72,7 +72,7 @@ export const graphCardComponent = {
   controller: GraphCardController,
   bindings: {
     'metrics': '<',
-    'graphTitle': '<',
+    'graphTitle': '@',
     'selectedMetricNames': '<',
   },
   templateUrl: 'common/components/graph/graphcard.html',
