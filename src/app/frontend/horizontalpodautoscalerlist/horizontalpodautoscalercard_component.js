@@ -92,7 +92,7 @@ export class HorizontalPodAutoscalerCardController {
     let MSG_HORIZONTAL_POD_AUTOSCALER_LIST_CREATED_AT_TOOLTIP =
         goog.getMsg('Created at {$creationDate}', {
           'creationDate':
-              filter({'date': this.horizontalPodAutoscaler.objectMeta.creationTimestamp})
+              filter({'date': this.horizontalPodAutoscaler.objectMeta.creationTimestamp}),
         });
     return MSG_HORIZONTAL_POD_AUTOSCALER_LIST_CREATED_AT_TOOLTIP;
   }

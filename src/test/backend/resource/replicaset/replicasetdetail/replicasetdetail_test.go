@@ -28,6 +28,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler/horizontalpodautoscalerlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/service"
@@ -54,7 +55,7 @@ func TestGetReplicaSetDetail(t *testing.T) {
 	}{
 		{
 			"test-namespace", "test-name",
-			[]string{"get", "list", "get", "list", "list", "get", "list", "list", "get", "list"},
+			[]string{"get", "list", "get", "list", "list", "get", "list", "list", "get", "list", "list"},
 			&extensions.ReplicaSet{
 				ObjectMeta: api.ObjectMeta{Name: "test-replicaset"},
 				Spec: extensions.ReplicaSetSpec{
@@ -75,6 +76,7 @@ func TestGetReplicaSetDetail(t *testing.T) {
 				},
 				ServiceList: service.ServiceList{Services: []service.Service{}},
 				EventList:   common.EventList{Events: []common.Event{}},
+				HorizontalPodAutoscalerList: horizontalpodautoscalerlist.HorizontalPodAutoscalerList{HorizontalPodAutoscalers: []horizontalpodautoscalerlist.HorizontalPodAutoscaler{}},
 			},
 		},
 	}
@@ -115,6 +117,7 @@ func TestToReplicaSetDetail(t *testing.T) {
 		podList     pod.PodList
 		podInfo     common.PodInfo
 		serviceList service.ServiceList
+		hpaList     horizontalpodautoscalerlist.HorizontalPodAutoscalerList
 		expected    ReplicaSetDetail
 	}{
 		{
@@ -123,6 +126,7 @@ func TestToReplicaSetDetail(t *testing.T) {
 			pod.PodList{},
 			common.PodInfo{},
 			service.ServiceList{},
+			horizontalpodautoscalerlist.HorizontalPodAutoscalerList{},
 			ReplicaSetDetail{TypeMeta: common.TypeMeta{Kind: common.ResourceKindReplicaSet}},
 		}, {
 			&extensions.ReplicaSet{ObjectMeta: api.ObjectMeta{Name: "replica-set"}},
@@ -130,6 +134,11 @@ func TestToReplicaSetDetail(t *testing.T) {
 			pod.PodList{Pods: []pod.Pod{{ObjectMeta: common.ObjectMeta{Name: "pod-1"}}}},
 			common.PodInfo{},
 			service.ServiceList{Services: []service.Service{{ObjectMeta: common.ObjectMeta{Name: "service-1"}}}},
+			horizontalpodautoscalerlist.HorizontalPodAutoscalerList{
+				HorizontalPodAutoscalers: []horizontalpodautoscalerlist.HorizontalPodAutoscaler{{
+					ObjectMeta: common.ObjectMeta{Name: "hpa-1"},
+				}},
+			},
 			ReplicaSetDetail{
 				ObjectMeta: common.ObjectMeta{Name: "replica-set"},
 				TypeMeta:   common.TypeMeta{Kind: common.ResourceKindReplicaSet},
@@ -144,12 +153,17 @@ func TestToReplicaSetDetail(t *testing.T) {
 						ObjectMeta: common.ObjectMeta{Name: "service-1"},
 					}},
 				},
+				HorizontalPodAutoscalerList: horizontalpodautoscalerlist.HorizontalPodAutoscalerList{
+					HorizontalPodAutoscalers: []horizontalpodautoscalerlist.HorizontalPodAutoscaler{{
+						ObjectMeta: common.ObjectMeta{Name: "hpa-1"},
+					}},
+				},
 			},
 		},
 	}
 
 	for _, c := range cases {
-		actual := ToReplicaSetDetail(c.replicaSet, c.eventList, c.podList, c.podInfo, c.serviceList)
+		actual := ToReplicaSetDetail(c.replicaSet, c.eventList, c.podList, c.podInfo, c.serviceList, c.hpaList)
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("ToReplicaSetDetail(%#v, %#v, %#v, %#v) == \ngot %#v, \nexpected %#v",

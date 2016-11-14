@@ -7,12 +7,14 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
+	"k8s.io/kubernetes/pkg/apis/autoscaling"
 	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
 	deploymentutil "k8s.io/kubernetes/pkg/controller/deployment/util"
 	"k8s.io/kubernetes/pkg/util/intstr"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler/horizontalpodautoscalerlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
@@ -77,6 +79,9 @@ func TestGetDeploymentDetail(t *testing.T) {
 			},
 		},
 	}
+	hpaList := &autoscaling.HorizontalPodAutoscalerList{
+		Items: []autoscaling.HorizontalPodAutoscaler{},
+	}
 
 	cases := []struct {
 		namespace, name string
@@ -86,7 +91,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 	}{
 		{
 			"test-namespace", "test-name",
-			[]string{"get", "list", "list", "get", "list", "get", "list", "get", "list", "list", "list"},
+			[]string{"get", "list", "list", "get", "list", "get", "list", "list", "get", "list", "list", "list"},
 			deployment,
 			&DeploymentDetail{
 				ObjectMeta: common.ObjectMeta{
@@ -123,13 +128,16 @@ func TestGetDeploymentDetail(t *testing.T) {
 				EventList: common.EventList{
 					Events: []common.Event{},
 				},
+				HorizontalPodAutoscalerList: horizontalpodautoscalerlist.HorizontalPodAutoscalerList{
+					HorizontalPodAutoscalers: []horizontalpodautoscalerlist.HorizontalPodAutoscaler{ },
+				},
 			},
 		},
 	}
 
 	for _, c := range cases {
 
-		fakeClient := testclient.NewSimpleFake(c.deployment, replicaSetList, podList, eventList)
+		fakeClient := testclient.NewSimpleFake(c.deployment, replicaSetList, podList, eventList, hpaList)
 
 		dataselect.DefaultDataSelectWithMetrics.MetricQuery = dataselect.NoMetrics
 		actual, _ := GetDeploymentDetail(fakeClient, nil, c.namespace, c.name)
@@ -143,8 +151,8 @@ func TestGetDeploymentDetail(t *testing.T) {
 
 		for i, verb := range c.expectedActions {
 			if actions[i].GetVerb() != verb {
-				t.Errorf("Unexpected action: %+v, expected %s",
-					actions[i], verb)
+				t.Errorf("Unexpected '%i' action: %+v, expected %s",
+					i, actions[i], verb)
 			}
 		}
 
