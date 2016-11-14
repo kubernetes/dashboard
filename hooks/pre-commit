@@ -48,7 +48,7 @@ if ${gofmt_available}; then
   echo "${reset}"
   echo -ne "Checking go files formatting... "
   unformatted=$(gofmt -l src/app/backend)
-  if [ ! -z ${unformatted} ]; then
+  if [ ! -z "$unformatted" ]; then
     echo "${red}ERROR!"
     echo "There is an issue with file formatting."
     echo "To format go files run:"

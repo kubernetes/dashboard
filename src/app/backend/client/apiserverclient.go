@@ -45,12 +45,12 @@ func CreateApiserverClient(apiserverHost string, kubeConfig string) (*client.Cli
 		&clientcmd.ConfigOverrides{ClusterInfo: clientcmdapi.Cluster{Server: apiserverHost}})
 
 	cfg, err := clientConfig.ClientConfig()
-	cfg.QPS = defaultQPS
-	cfg.Burst = defaultBurst
-
 	if err != nil {
 		return nil, nil, err
 	}
+
+	cfg.QPS = defaultQPS
+	cfg.Burst = defaultBurst
 
 	log.Printf("Creating API server client for %s", cfg.Host)
 

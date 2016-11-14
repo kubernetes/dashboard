@@ -25,8 +25,8 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/apis/extensions"
 	k8serrors "k8s.io/kubernetes/pkg/api/errors"
+	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/unversioned"
 )
 
@@ -35,10 +35,9 @@ type ReplicaSetList struct {
 	ListMeta common.ListMeta `json:"listMeta"`
 
 	// Unordered list of Replica Sets.
-	ReplicaSets       []replicaset.ReplicaSet    `json:"replicaSets"`
-	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
+	ReplicaSets       []replicaset.ReplicaSet `json:"replicaSets"`
+	CumulativeMetrics []metric.Metric         `json:"cumulativeMetrics"`
 }
-
 
 // GetReplicaSetList returns a list of all Replica Sets in the cluster.
 func GetReplicaSetList(client client.Interface, nsQuery *common.NamespaceQuery,

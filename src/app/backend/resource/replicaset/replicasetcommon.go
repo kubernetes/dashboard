@@ -20,7 +20,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"k8s.io/kubernetes/pkg/apis/extensions"
-
 )
 
 // ReplicaSet is a presentation layer view of Kubernetes Replica Set resource. This means
