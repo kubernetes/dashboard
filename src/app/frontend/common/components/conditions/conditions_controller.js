@@ -36,9 +36,9 @@ export default class ConditionsController {
    * @export
    */
   getConditionStyle(condition) {
-    if (condition.status === "False") {
-      return "kd-condition-muted";
+    if (condition.status === 'False') {
+      return 'kd-condition-muted';
     }
-    return "";
+    return '';
   }
 }
