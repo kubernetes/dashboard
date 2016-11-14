@@ -23,7 +23,7 @@ export default class NodeConditionsController {
   constructor() {
     /**
      * Node conditions. Initialized from the scope.
-     * @export {!backendApi.NodeConditionList}
+     * @export {!backendApi.ConditionList}
      */
     this.conditions;
   }
@@ -38,7 +38,7 @@ export const nodeConditionsComponent = {
   controller: NodeConditionsController,
   templateUrl: 'nodedetail/nodeconditions.html',
   bindings: {
-    /** {!backendApi.NodeConditionList} */
+    /** {!backendApi.ConditionList} */
     'conditions': '=',
   },
 };

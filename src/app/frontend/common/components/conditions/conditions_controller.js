@@ -22,7 +22,7 @@ export default class ConditionsController {
    */
   constructor() {
     /**
-     * An array of {backendAPI.conditions} objects.
+     * An array of {backendApi.ConditionList} objects.
      * @export
      */
     this.conditions;
@@ -31,7 +31,7 @@ export default class ConditionsController {
   /**
    * Returns condition style name. Used to differ condition with true (default color) and false
    * status (muted color).
-   * @param {backendAPI.condition} condition
+   * @param {backendApi.Condition} condition
    * @return {string}
    * @export
    */
