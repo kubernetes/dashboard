@@ -30,6 +30,7 @@ import middleEllipsisDirective from './middleellipsis/middleellipsis_directive';
 import resourceCardModule from './resourcecard/resourcecard_module';
 import resourceDetailModule from './resourcedetail/module';
 import serializedReferenceModule from './serializedreference/serializedreference_module';
+import conditionsDirective from './conditions/conditions_directive';
 import sparklineDirective from './sparkline/sparkline_directive';
 import warnThresholdDirective from './warnthreshold/warnthreshold_directive';
 import zeroStateModule from './zerostate/zerostate_module';
@@ -62,4 +63,5 @@ export default angular
     .directive('kdLabels', labelsDirective)
     .directive('kdMiddleEllipsis', middleEllipsisDirective)
     .directive('kdSparkline', sparklineDirective)
+    .directive('kdConditions', conditionsDirective)
     .directive('kdWarnThreshold', warnThresholdDirective);
