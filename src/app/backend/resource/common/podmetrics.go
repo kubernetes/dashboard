@@ -138,11 +138,11 @@ func fillPodMetrics(cpuMetrics []heapster.MetricResult, memMetrics []heapster.Me
 			cpuMetricsList := cpuMetrics[iterator].Metrics
 
 			if len(memMetricsList) > 0 {
-				memValue = &memMetricsList[len(memMetricsList) - 1].Value
+				memValue = &memMetricsList[len(memMetricsList)-1].Value
 			}
 
 			if len(cpuMetricsList) > 0 {
-				cpuValue = &cpuMetricsList[len(cpuMetricsList) - 1].Value
+				cpuValue = &cpuMetricsList[len(cpuMetricsList)-1].Value
 			}
 
 			cpuHistory := make([]MetricResult, len(cpuMetricsList))
