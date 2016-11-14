@@ -8,16 +8,53 @@ Do not move it without providing redirects.
 
 # Troubleshooting
 
+
 ## Authentication to the Kubernetes API Server
+
 If your Kubernetes cluster is not configured correctly, it may fail to contact
-the API server. One way this manifests is when users attempt to connect to the
-UI in their web browser and see a message like this:
-
-    Get https://1.2.3.4/api/v1/replicationcontrollers: x509: failed to load system roots and no roots provided
-
-This means that Dashboard failed to authenticate to the API server. Before
+the API server. Before
 explaining the solution, it is useful to review how the dashboard discovers
 and authenticates with the API server.
+A number of components are involved in the authentication process and the first step is to narrow
+down the source of the problem, namely whether it is a problem with user authentication or with service authentication.
+In the diagram below you can see the full authentication flow, starting with the browser
+on the lower left hand side.
+```
+
+ Workstation                                        Kubernetes
++------------------+                               +----------------------------------------------------+
+|                  |                               |                                                    |
+|                  |                               |                                                    |
+|  +------------+  |                               |  +------------+   apiserver        +------------+  |
+|  |            |  |      user authentication      |  |            |   proxy            |            |  |
+|  |            +------------------------------------>+            +------------------->+            |  |
+|  |            |  |                               |  |            |                    |            |  |
+|  +--------+---+  |                               |  |            |                    |            |  |
+|  kubectl  ^      |                               |  |            |                    |            |  |
+|  proxy    |      |                          +------>+            |   service          |            |  |
+|           |      |                          |    |  |            |   authentication   |            |  |
+|           |      |                          |    |  |            +<-------------------+            |  |
+|  +--------+---+  |                          |    |  |            |                    |            |  |
+|  |            |  |                          |    |  +------------+                    +------------+  |
+|  |            +-----------------------------+    |    apiserver                         dashboard     |
+|  |            |  |      user authentication      |                                                    |
+|  +------------+  |      with username &          |                                                    |
+|  browser         |      password only            |                                                    |
+|                  |                               |                                                    |
+|                  |                               |                                                    |
++------------------+                               +----------------------------------------------------+
+
+```
+__User authentication__
+
+Browsers can only authenticate with username and password. If your apiserver is set up correctly,
+ then you can access it directly with `https://<master>/ui`. Otherwise, you can start a local proxy
+ with `kubectl proxy` and access Dashboard with the URL `http://localhost:8001`.
+
+__Service authentication__
+
+If you have successfully passed authentication, then apiserver proxy will forward the request to dashboard backend. However, the dashboard backend will need information from apiserver and will have to authenticate with apiserver again.
+
 
 Dashboard can connect with the API server in two different ways:
 
