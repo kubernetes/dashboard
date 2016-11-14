@@ -25,6 +25,11 @@ kd-resource-card-header-column {
   &:first-child {
     padding-left: $baseline-grid;
   }
+
+  .material-icons {
+    font-size: $subhead-font-size-base-lg;
+    padding-top: $baseline-grid / 2;
+  }
 }
 
 .kd-resource-card-header-column-container {
