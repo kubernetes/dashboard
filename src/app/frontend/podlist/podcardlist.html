@@ -20,7 +20,8 @@ limitations under the License.
     <kd-resource-card-header-column size="small" grow="2">
       [[Name|Title of a column]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="2" ng-if="$ctrl.areMultipleNamespacesSelected()">
+    <kd-resource-card-header-column size="small" grow="2"
+                                    ng-if="$ctrl.areMultipleNamespacesSelected()">
       [[Namespace|Title of a column]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small" grow="1">[[Status|Title of a pod status column]]
@@ -28,9 +29,16 @@ limitations under the License.
     <kd-resource-card-header-column size="small" grow="1">
       [[Restarts|Title of a restarts column for a pod]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="1">[[Age|Title of a column for the age of a pod]]
+    <kd-resource-card-header-column size="small" grow="1">[[Age|Title of a column for the age of a
+      pod]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="1">[[Cluster IP|Title of a column]]
+    <kd-resource-card-header-column size="small" grow="2">
+      <div>
+        [[Conditions|Title of a column]]
+        <md-icon md-font-library="material-icons">info</md-icon>
+        <md-tooltip>[[Conditions, that have "False" status are displayed with muted color to differ
+          them from these with "True" status|Tooltip for conditions column header.]]</md-tooltip>
+      </div>
     </kd-resource-card-header-column>
     <kd-resource-card-header-column ng-if="::$ctrl.showMetrics()">
       [[CPU (cores)|Title of a column]]
@@ -89,8 +97,7 @@ limitations under the License.
         <div ng-if="::!pod.objectMeta.creationTimestamp">-</div>
       </kd-resource-card-column>
       <kd-resource-card-column>
-        <div ng-if="::pod.podIP">{{::pod.podIP}}</div>
-        <div ng-if="::!pod.podIP">-</div>
+        <kd-conditions conditions="::pod.conditions"></kd-conditions>
       </kd-resource-card-column>
       <kd-resource-card-column ng-if="::$ctrl.showMetrics()">
         <div ng-if="::$ctrl.hasCpuUsage(pod)">
