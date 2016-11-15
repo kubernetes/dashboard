@@ -124,10 +124,11 @@ type ClientType string
 
 // List of client types supported by the UI.
 const (
-	ClientTypeDefault         = "restclient"
-	ClientTypeExtensionClient = "extensionclient"
-	ClientTypeAppsClient      = "appsclient"
-	ClientTypeBatchClient     = "batchclient"
+	ClientTypeDefault           = "restclient"
+	ClientTypeExtensionClient   = "extensionclient"
+	ClientTypeAppsClient        = "appsclient"
+	ClientTypeBatchClient       = "batchclient"
+	ClientTypeAutoscalingClient = "autoscalingclient"
 )
 
 // Mapping from resource kind to K8s apiserver API path. This is mostly pluralization, because
@@ -140,24 +141,25 @@ var kindToAPIMapping = map[string]struct {
 	// sets apps client.
 	ClientType ClientType
 }{
-	ResourceKindService:               {"services", ClientTypeDefault},
-	ResourceKindIngress:               {"ingresses", ClientTypeExtensionClient},
-	ResourceKindPod:                   {"pods", ClientTypeDefault},
-	ResourceKindEvent:                 {"events", ClientTypeDefault},
-	ResourceKindReplicationController: {"replicationcontrollers", ClientTypeDefault},
-	ResourceKindDeployment:            {"deployments", ClientTypeExtensionClient},
-	ResourceKindReplicaSet:            {"replicasets", ClientTypeExtensionClient},
-	ResourceKindDaemonSet:             {"daemonsets", ClientTypeExtensionClient},
-	ResourceKindPetSet:                {"petsets", ClientTypeAppsClient},
-	ResourceKindLimitRange:            {"limitrange", ClientTypeDefault},
-	ResourceKindJob:                   {"jobs", ClientTypeBatchClient},
-	ResourceKindNamespace:             {"namespaces", ClientTypeDefault},
-	ResourceKindNode:                  {"nodes", ClientTypeDefault},
-	ResourceKindSecret:                {"secrets", ClientTypeDefault},
-	ResourceKindConfigMap:             {"configmaps", ClientTypeDefault},
-	ResourceKindPersistentVolume:      {"persistentvolumes", ClientTypeDefault},
-	ResourceKindPersistentVolumeClaim: {"persistentvolumeclaims", ClientTypeDefault},
-	ResourceKindResourceQuota:         {"resourcequota", ClientTypeDefault},
+	ResourceKindService:                 {"services", ClientTypeDefault},
+	ResourceKindIngress:                 {"ingresses", ClientTypeExtensionClient},
+	ResourceKindPod:                     {"pods", ClientTypeDefault},
+	ResourceKindEvent:                   {"events", ClientTypeDefault},
+	ResourceKindReplicationController:   {"replicationcontrollers", ClientTypeDefault},
+	ResourceKindDeployment:              {"deployments", ClientTypeExtensionClient},
+	ResourceKindReplicaSet:              {"replicasets", ClientTypeExtensionClient},
+	ResourceKindDaemonSet:               {"daemonsets", ClientTypeExtensionClient},
+	ResourceKindPetSet:                  {"petsets", ClientTypeAppsClient},
+	ResourceKindLimitRange:              {"limitrange", ClientTypeDefault},
+	ResourceKindJob:                     {"jobs", ClientTypeBatchClient},
+	ResourceKindNamespace:               {"namespaces", ClientTypeDefault},
+	ResourceKindNode:                    {"nodes", ClientTypeDefault},
+	ResourceKindSecret:                  {"secrets", ClientTypeDefault},
+	ResourceKindConfigMap:               {"configmaps", ClientTypeDefault},
+	ResourceKindPersistentVolume:        {"persistentvolumes", ClientTypeDefault},
+	ResourceKindPersistentVolumeClaim:   {"persistentvolumeclaims", ClientTypeDefault},
+	ResourceKindResourceQuota:           {"resourcequota", ClientTypeDefault},
+	ResourceKindHorizontalPodAutoscaler: {"horizontalpodautoscalers", ClientTypeAutoscalingClient},
 }
 
 // IsSelectorMatching returns true when an object with the given

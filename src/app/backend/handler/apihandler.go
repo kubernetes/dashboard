@@ -111,7 +111,7 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 	clientConfig clientcmd.ClientConfig) http.Handler {
 
 	verber := common.NewResourceVerber(client.RESTClient, client.ExtensionsClient.RESTClient,
-		client.AppsClient.RESTClient, client.BatchClient.RESTClient)
+		client.AppsClient.RESTClient, client.BatchClient.RESTClient, client.AutoscalingClient.RESTClient)
 	apiHandler := APIHandler{client, heapsterClient, clientConfig, verber}
 	wsContainer := restful.NewContainer()
 	wsContainer.EnableContentEncoding(true)
