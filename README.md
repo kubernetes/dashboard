@@ -20,14 +20,19 @@ If it is missing, you can install the latest stable release by running the follo
 ```bash
 kubectl create -f https://rawgit.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml
 ```
-Note that for the metrics and graphs to be available you need to have [Heapster](https://github.com/kubernetes/heapster/) running in your cluster.
+
+You can also install unstable HEAD builds with the newest features that the team works on by
+following the [development guide](docs/devel/head-releases.md).
+
+Note that for the metrics and graphs to be available you need to
+have [Heapster](https://github.com/kubernetes/heapster/) running in your cluster.
 
 ## Usage
 You may access the UI via the apiserver proxy. Open a browser and navigate to `https://<kubernetes-master>/ui`.
 
-Please note, this works only if the apiserver is setup to allow authentication with username and password. Currently, the setup tool `kubeadm` is not doing so. If username and password is unknown to you then use `kubectl config view` to find it.
-
-
+Please note, this works only if the apiserver is setup to allow authentication
+with username and password. Currently, the setup tool `kubeadm` is not doing so.
+If username and password is unknown to you then use `kubectl config view` to find it.
 
 ## Alternative Usage
 Alternatively, you may access the UI via the kubectl proxy. This is useful if you have a `kubectl`
