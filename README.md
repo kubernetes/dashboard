@@ -21,7 +21,7 @@ If it is missing, you can install the latest stable release by running the follo
 kubectl create -f https://rawgit.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml
 ```
 
-You can also install unstable HEAD release with newest features that the team works on by
+You can also install unstable HEAD builds with the newest features that the team works on by
 following the [development guide](docs/devel/head-releases.md).
 
 Note that for the metrics and graphs to be available you need to
