@@ -50,7 +50,7 @@ func GetHorizontalPodAutoscalerList(client k8sClient.Interface, nsQuery *common.
 		return nil, err
 	}
 
-	return CreateHorizontalPodAutoscalerList(hpaList.Items), nil
+	return createHorizontalPodAutoscalerList(hpaList.Items), nil
 }
 
 func GetHorizontalPodAutoscalerListForResource(client k8sClient.Interface, namespace, kind, name string) (*HorizontalPodAutoscalerList, error) {
@@ -70,23 +70,23 @@ func GetHorizontalPodAutoscalerListForResource(client k8sClient.Interface, names
 		}
 	}
 
-	return CreateHorizontalPodAutoscalerList(filteredHpaList), nil
+	return createHorizontalPodAutoscalerList(filteredHpaList), nil
 }
 
-func CreateHorizontalPodAutoscalerList(hpas []autoscaling.HorizontalPodAutoscaler) *HorizontalPodAutoscalerList {
+func createHorizontalPodAutoscalerList(hpas []autoscaling.HorizontalPodAutoscaler) *HorizontalPodAutoscalerList {
 	hpaList := &HorizontalPodAutoscalerList{
 		HorizontalPodAutoscalers: make([]HorizontalPodAutoscaler, 0),
 		ListMeta:                 common.ListMeta{TotalItems: len(hpas)},
 	}
 
 	for _, hpa := range hpas {
-		horizontalPodAutoscaler := ToHorizontalPodAutoScaler(&hpa)
+		horizontalPodAutoscaler := toHorizontalPodAutoScaler(&hpa)
 		hpaList.HorizontalPodAutoscalers = append(hpaList.HorizontalPodAutoscalers, horizontalPodAutoscaler)
 	}
 	return hpaList
 }
 
-func ToHorizontalPodAutoScaler(hpa *autoscaling.HorizontalPodAutoscaler) HorizontalPodAutoscaler {
+func toHorizontalPodAutoScaler(hpa *autoscaling.HorizontalPodAutoscaler) HorizontalPodAutoscaler {
 	return HorizontalPodAutoscaler{
 		ObjectMeta: common.NewObjectMeta(hpa.ObjectMeta),
 		TypeMeta:   common.NewTypeMeta(common.ResourceKindHorizontalPodAutoscaler),

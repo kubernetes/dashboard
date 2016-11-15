@@ -44,7 +44,7 @@ type HorizontalPodAutoscalerDetail struct {
 }
 
 // GetHorizontalPodAutoscalerDetail returns detailed information about a horizontal pod autoscaler
-func GetHorizontalPodAutoscalerDetail(client *client.Client, namespace string, name string) (*HorizontalPodAutoscalerDetail, error) {
+func GetHorizontalPodAutoscalerDetail(client client.Interface, namespace string, name string) (*HorizontalPodAutoscalerDetail, error) {
 	log.Printf("Getting details of %s horizontal pod autoscaler", name)
 
 	rawHorizontalPodAutoscaler, err := client.Autoscaling().HorizontalPodAutoscalers(namespace).Get(name)
