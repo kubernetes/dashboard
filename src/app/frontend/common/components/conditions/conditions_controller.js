@@ -15,30 +15,30 @@
 /**
  * @final
  */
-export default class NodeConditionsController {
+export default class ConditionsController {
   /**
-   * Constructs node conditions object.
+   * Constructs conditions controller.
    * @ngInject
    */
   constructor() {
     /**
-     * Node conditions. Initialized from the scope.
-     * @export {!backendApi.ConditionList}
+     * An array of {backendApi.Condition} objects.
+     * @export {!Array<!backendApi.Condition>} Initialized from the scope.
      */
     this.conditions;
   }
-}
 
-/**
- * Definition object for the component that displays node conditions.
- *
- * @return {!angular.Directive}
- */
-export const nodeConditionsComponent = {
-  controller: NodeConditionsController,
-  templateUrl: 'nodedetail/nodeconditions.html',
-  bindings: {
-    /** {!backendApi.ConditionList} */
-    'conditions': '=',
-  },
-};
+  /**
+   * Returns condition style name. Used to differ condition with true (default color) and false
+   * status (muted color).
+   * @param {backendApi.Condition} condition
+   * @return {string}
+   * @export
+   */
+  getConditionStyle(condition) {
+    if (condition.status === 'False') {
+      return 'kd-condition-muted';
+    }
+    return '';
+  }
+}

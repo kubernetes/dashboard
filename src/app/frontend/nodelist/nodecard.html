@@ -47,5 +47,8 @@ limitations under the License.
         {{::$ctrl.getCreatedAtTooltip($ctrl.node.objectMeta.creationTimestamp)}}
       </md-tooltip>
     </kd-resource-card-column>
+    <kd-resource-card-column>
+      <kd-conditions conditions="::$ctrl.node.conditions"></kd-conditions>
+    </kd-resource-card-column>
   </kd-resource-card-columns>
 </kd-resource-card>

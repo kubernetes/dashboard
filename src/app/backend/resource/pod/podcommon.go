@@ -51,6 +51,7 @@ func ToPod(pod *api.Pod, metrics *common.MetricsByPod) Pod {
 		PodStatus:    getPodStatus(*pod),
 		PodIP:        pod.Status.PodIP,
 		RestartCount: getRestartCount(*pod),
+		Conditions:   pod.Status.Conditions,
 	}
 
 	if metrics != nil && metrics.MetricsMap[pod.Namespace] != nil {

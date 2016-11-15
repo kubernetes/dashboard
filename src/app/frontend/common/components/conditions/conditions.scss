@@ -14,26 +14,6 @@
 
 @import '../../../variables';
 
-kd-resource-card-header-column {
-  display: flex;
-  flex-basis: auto;
-  flex-grow: 1;
-  min-width: $baseline-grid * 10;
-  overflow: hidden;
-  padding-left: 2 * $baseline-grid;
-
-  &:first-child {
-    padding-left: $baseline-grid;
-  }
-
-  .material-icons {
-    font-size: $subhead-font-size-base-lg;
-    padding-top: $baseline-grid / 2;
-  }
-}
-
-.kd-resource-card-header-column-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.kd-condition-muted {
+  color: $muted;
 }

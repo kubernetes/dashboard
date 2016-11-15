@@ -22,7 +22,7 @@ export default class SparklineController {
    */
   constructor() {
     /**
-     * An array of {backendAPI.MetricResult} objects. The timestamp
+     * An array of {backendApi.MetricResult} objects. The timestamp
      * values of each object must be unique, and value must be greater
      * than or equal to zero.
      * @export {!Array<!backendApi.MetricResult>} Initialized from the scope.

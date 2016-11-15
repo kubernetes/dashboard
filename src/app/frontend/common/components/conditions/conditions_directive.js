@@ -12,33 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * @final
- */
-export default class NodeConditionsController {
-  /**
-   * Constructs node conditions object.
-   * @ngInject
-   */
-  constructor() {
-    /**
-     * Node conditions. Initialized from the scope.
-     * @export {!backendApi.ConditionList}
-     */
-    this.conditions;
-  }
-}
+import ConditionsController from './conditions_controller';
 
 /**
- * Definition object for the component that displays node conditions.
- *
+ * Returns directive definition for conditions.
  * @return {!angular.Directive}
  */
-export const nodeConditionsComponent = {
-  controller: NodeConditionsController,
-  templateUrl: 'nodedetail/nodeconditions.html',
-  bindings: {
-    /** {!backendApi.ConditionList} */
-    'conditions': '=',
-  },
-};
+export default function conditionsDirective() {
+  return {
+    controller: ConditionsController,
+    controllerAs: 'ctrl',
+    templateUrl: 'common/components/conditions/conditions.html',
+    scope: {},
+    bindToController: {'conditions': '<'},
+  };
+}

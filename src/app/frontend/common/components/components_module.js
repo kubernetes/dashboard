@@ -20,6 +20,7 @@ import namespaceModule from './../namespace/namespace_module';
 import paginationModule from './../pagination/pagination_module';
 import actionbarModule from './actionbar/actionbar_module';
 import annotationsModule from './annotations/module';
+import conditionsDirective from './conditions/conditions_directive';
 import contentCardModule from './contentcard/contentcard_module';
 import endpointModule from './endpoint/endpoint_module';
 import graphModule from './graph/graph_module';
@@ -62,4 +63,5 @@ export default angular
     .directive('kdLabels', labelsDirective)
     .directive('kdMiddleEllipsis', middleEllipsisDirective)
     .directive('kdSparkline', sparklineDirective)
+    .directive('kdConditions', conditionsDirective)
     .directive('kdWarnThreshold', warnThresholdDirective);
