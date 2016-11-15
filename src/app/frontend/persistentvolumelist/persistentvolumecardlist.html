@@ -43,14 +43,9 @@ limitations under the License.
         <kd-resource-card-header-column size="small" grow="nogrow">
         </kd-resource-card-header-column>
     </kd-resource-card-header-columns>
-    <kd-persistent-volume-card ng-if="::$ctrl.persistentVolumeListResource"
-                               dir-paginate="persistentVolume in $ctrl.persistentVolumeList.items | itemsPerPage: default"
+    <kd-persistent-volume-card dir-paginate="persistentVolume in $ctrl.persistentVolumeList.items | itemsPerPage: default"
                                persistent-volume="persistentVolume" pagination-id="persistentvolumes"
                                total-items="::$ctrl.persistentVolumeList.listMeta.totalItems">
-    </kd-persistent-volume-card>
-    <kd-persistent-volume-card ng-if="::!$ctrl.persistentVolumeListResource"
-                               dir-paginate="persistentVolume in $ctrl.persistentVolumeList.items | itemsPerPage: default"
-                               persistent-volume="persistentVolume" pagination-id="persistentvolumes">
     </kd-persistent-volume-card>
     <kd-resource-card-list-footer>
         <kd-resource-card-list-pagination pagination-id="persistentvolumes" list="$ctrl.persistentVolumeList"

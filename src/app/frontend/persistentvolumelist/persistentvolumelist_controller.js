@@ -28,7 +28,7 @@ export class PersistentVolumeListController {
     this.persistentVolumeList = persistentVolumeList;
 
     /** @export {!angular.Resource} */
-    this.persistentVolumeResource = kdPersistentVolumeListResource;
+    this.persistentVolumeListResource = kdPersistentVolumeListResource;
   }
 
   /**
