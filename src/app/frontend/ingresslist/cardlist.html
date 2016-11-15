@@ -15,25 +15,27 @@ limitations under the License.
 -->
 
 <kd-resource-card-list ng-if="::$ctrl.ingressList.items">
-    <kd-resource-card-header-columns>
-        <kd-resource-card-header-column size="small" grow="2">[[Name|Label 'Name' which appears as a column label in the table of ingresses (ingress list view).]]
-        </kd-resource-card-header-column>
-        <kd-resource-card-header-column size="small" grow="1" ng-if="$ctrl.areMultipleNamespacesSelected()">
-            [[Namespace|Label 'Namespace' which appears as a column label in the table of ingresses (ingress list view).]]
-        </kd-resource-card-header-column>
-        <kd-resource-card-header-column size="small" grow="1">
-            [[Endpoints|Label 'endpoints' which appears as a column label in the table of ingresses (ingress list view).]]
-        </kd-resource-card-header-column>
-        <kd-resource-card-header-column size="small" grow="1">[[Age|Label 'Age' which appears as a column label in the table of ingresses (ingress list view).]]
-        </kd-resource-card-header-column>
-    </kd-resource-card-header-columns>
-    <kd-ingress-card pagination-id="ingresses" ingress="ingress"
-                    dir-paginate="ingress in $ctrl.ingressList.items | itemsPerPage: default"
-                    total-items="::$ctrl.ingressList.listMeta.totalItems">
-    </kd-ingress-card>
-    <kd-resource-card-list-footer>
-        <kd-resource-card-list-pagination pagination-id="ingresses" list="$ctrl.ingressList"
-                                          list-resource="$ctrl.ingressListResource">
-        </kd-resource-card-list-pagination>
-    </kd-resource-card-list-footer>
+  <kd-resource-card-list-header>
+    [[Ingresses|Label which appears above the list of such objects.]]
+  </kd-resource-card-list-header>
+  <kd-resource-card-list-pagination pagination-id="ingresses" list="$ctrl.ingressList"
+                                    list-resource="$ctrl.ingressListResource">
+  </kd-resource-card-list-pagination>
+
+  <kd-resource-card-header-columns>
+      <kd-resource-card-header-column size="small" grow="2">[[Name|Label 'Name' which appears as a column label in the table of ingresses (ingress list view).]]
+      </kd-resource-card-header-column>
+      <kd-resource-card-header-column size="small" grow="1" ng-if="$ctrl.areMultipleNamespacesSelected()">
+          [[Namespace|Label 'Namespace' which appears as a column label in the table of ingresses (ingress list view).]]
+      </kd-resource-card-header-column>
+      <kd-resource-card-header-column size="small" grow="1">
+          [[Endpoints|Label 'endpoints' which appears as a column label in the table of ingresses (ingress list view).]]
+      </kd-resource-card-header-column>
+      <kd-resource-card-header-column size="small" grow="1">[[Age|Label 'Age' which appears as a column label in the table of ingresses (ingress list view).]]
+      </kd-resource-card-header-column>
+  </kd-resource-card-header-columns>
+  <kd-ingress-card pagination-id="ingresses" ingress="ingress"
+                  dir-paginate="ingress in $ctrl.ingressList.items | itemsPerPage: default"
+                  total-items="::$ctrl.ingressList.listMeta.totalItems">
+  </kd-ingress-card>
 </kd-resource-card-list>

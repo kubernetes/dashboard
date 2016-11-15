@@ -39,7 +39,7 @@ describe('CreatorInfo directive', () => {
 
     // then
     let span = element.find('span');
-    expect(span.text().trim()).toEqual('Unknown');
+    expect(span.text().trim()).toContain('Unknown');
   });
 
   const kind2directive = new Map([

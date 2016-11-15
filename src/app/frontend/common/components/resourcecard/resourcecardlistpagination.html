@@ -15,17 +15,6 @@ limitations under the License.
 -->
 
 <div ng-if="::$ctrl.shouldShowPagination()" flex="auto" layout="row" class="kd-list-pagination">
-  <div class="kd-rows-selector-label">
-    [[Rows per page:|Label for pagination rows selector visible on resource lists.]]
-  </div>
-  <md-select ng-model="$ctrl.rowsLimit" class="kd-list-pagination-row-selector"
-             md-selected-text="$ctrl.rowsLimit" ng-change="$ctrl.onRowsLimitUpdate()"
-             aria-label="Rows per page">
-    <md-option ng-repeat="rows in ::$ctrl.rowsLimitOptions" ng-value="{{rows}}">
-      {{rows}}
-    </md-option>
-  </md-select>
-
   <dir-pagination-controls ng-if="::!$ctrl.serverSided" pagination-id="::$ctrl.paginationId"
                            class="kd-list-pagination-controls" boundary-links="true"
                            template-url="common/pagination/pagination.html">

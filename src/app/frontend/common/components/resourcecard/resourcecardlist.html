@@ -14,7 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div class="kd-resource-card-list"
-    ng-class="{'kd-resource-card-list-selectable': $ctrl.selectable, 'kd-resource-card-list-with-statuses': $ctrl.withStatuses}"
-    ng-transclude>
+<div class="kd-resource-card-list-wrapper">
+  <div class="kd-resource-card-list-header-wrapper">
+    <div ng-transclude="header" class="kd-resource-card-list-header md-title"></div>
+    <div ng-transclude="pagination" class="kd-resource-card-list-pagination"></div>
+  </div>
+  <div class="kd-resource-card-list"
+      ng-class="{'kd-resource-card-list-selectable': $ctrl.selectable, 'kd-resource-card-list-with-statuses': $ctrl.withStatuses}"
+      ng-transclude>
+  </div>
+  <div class="kd-resource-card-list-pending-overlay" ng-if="$ctrl.pending">
+    <md-progress-circular md-mode="indeterminate" md-diameter="48">
+    </md-progress-circular>
+  </div>
 </div>

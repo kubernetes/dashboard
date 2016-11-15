@@ -15,6 +15,13 @@ limitations under the License.
 -->
 
 <kd-resource-card-list selectable="false" with-statuses="false">
+  <kd-resource-card-list-header ng-transclude="header">
+    [[Config Maps|Label which appears above the list of such objects.]]
+  </kd-resource-card-list-header>
+  <kd-resource-card-list-pagination pagination-id="configmaps" list="$ctrl.configMapList"
+                                    list-resource="$ctrl.configMapListResource">
+  </kd-resource-card-list-pagination>
+
   <kd-resource-card-header-columns>
     <kd-resource-card-header-column size="small" grow="2">
       [[Name|Config map list header: name.]]
@@ -35,9 +42,4 @@ limitations under the License.
                       config-map="configMap" pagination-id="configmaps"
                       total-items="::$ctrl.configMapList.listMeta.totalItems">
   </kd-config-map-card>
-  <kd-resource-card-list-footer>
-    <kd-resource-card-list-pagination pagination-id="configmaps" list="$ctrl.configMapList"
-                                      list-resource="$ctrl.configMapListResource">
-    </kd-resource-card-list-pagination>
-  </kd-resource-card-list-footer>
 </kd-resource-card-list>

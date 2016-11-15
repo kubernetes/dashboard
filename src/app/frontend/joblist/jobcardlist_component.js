@@ -38,7 +38,10 @@ class JobListController {
  * @return {!angular.Component}
  */
 export const jobCardListComponent = {
-  transclude: true,
+  transclude: {
+    // Optional header that is transcluded instead of the default one.
+    'header': '?kdHeader',
+  },
   bindings: {
     /** {!backendApi.JobList} */
     'jobList': '<',

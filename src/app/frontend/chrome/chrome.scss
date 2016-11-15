@@ -109,13 +109,13 @@ a {
 }
 
 .kd-comma-separated-item {
+  display: inline-block;
+
   &:not(:last-child) {
     &::after {
       content: ',';
     }
   }
-
-  display: inline-block;
 }
 
 .kd-pre-block {
