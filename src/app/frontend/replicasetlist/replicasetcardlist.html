@@ -15,6 +15,13 @@ limitations under the License.
 -->
 
 <kd-resource-card-list selectable="false" with-statuses="true">
+  <kd-resource-card-list-header ng-transclude="header">
+    [[Replica Sets|Label which appears above the list of such objects.]]
+  </kd-resource-card-list-header>
+  <kd-resource-card-list-pagination pagination-id="replicasets" list="$ctrl.replicaSetList"
+                                    list-resource="$ctrl.replicaSetListResource">
+  </kd-resource-card-list-pagination>
+
   <kd-resource-card-header-columns>
     <kd-resource-card-header-column size="small" grow="2">
       [[Name|Label 'Name' which appears as a column label in the table of replica sets (replica set list view).]]
@@ -49,9 +56,4 @@ limitations under the License.
                        dir-paginate="rs in $ctrl.replicaSetList.replicaSets | itemsPerPage: default"
                        pagination-id="replicasets" replica-set="rs" show-resource-kind="::$ctrl.showResourceKind">
   </kd-replica-set-card>
-  <kd-resource-card-list-footer>
-    <kd-resource-card-list-pagination pagination-id="replicasets" list="$ctrl.replicaSetList"
-                                      list-resource="$ctrl.replicaSetListResource">
-    </kd-resource-card-list-pagination>
-  </kd-resource-card-list-footer>
 </kd-resource-card-list>

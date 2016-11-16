@@ -21,6 +21,12 @@ export class ResourceCardListController {
    */
   constructor() {
     /**
+     * Whether this list is in a pending async state (e.g., loading new page);
+     * @export {boolean}
+     */
+    this.pending = false;
+
+    /**
      * Whether to make list items selectable.
      * Initialized from a bingind.
      * @export {boolean|undefined}
@@ -58,6 +64,13 @@ export class ResourceCardListController {
   sizeBodyColumn(columnElement, index) {
     this.headerColumns_.sizeBodyColumn(columnElement, index);
   }
+
+  /**
+   * @param {boolean} pending the pending state to set.
+   */
+  setPending(pending) {
+    this.pending = pending;
+  }
 }
 
 /**
@@ -67,6 +80,9 @@ export class ResourceCardListController {
  *
  * Sample usage:
  *   <kd-resource-card-list selectable="true" with-statuses="true">
+ *     <kd-resource-card-list-header>
+ *       [[Pods|Object label]]
+ *     </kd-resource-card-list-header>
  *     <kd-resource-card-header-columns>
  *       <kd-resource-card-header-column size="medium" grow="2">
  *         Name
@@ -100,7 +116,10 @@ export class ResourceCardListController {
  */
 export const resourceCardListComponent = {
   templateUrl: 'common/components/resourcecard/resourcecardlist.html',
-  transclude: true,
+  transclude: {
+    'pagination': '?kdResourceCardListPagination',
+    'header': '?kdResourceCardListHeader',
+  },
   controller: ResourceCardListController,
   bindings: {
     /** {boolean|undefined} whether to make list items selectable */

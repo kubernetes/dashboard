@@ -38,7 +38,10 @@ class RCCardListController {
  * @return {!angular.Component}
  */
 export const replicationControllerCardListComponent = {
-  transclude: true,
+  transclude: {
+    // Optional header that is transcluded instead of the default one.
+    'header': '?kdHeader',
+  },
   bindings: {
     'replicationControllerList': '<',
     'replicationControllerListResource': '<',

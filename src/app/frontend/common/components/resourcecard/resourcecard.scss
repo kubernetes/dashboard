@@ -45,6 +45,10 @@ $cell-base-size: 6 * $baseline-grid;
   }
 }
 
+kd-resource-card {
+  flex-grow: 0;
+}
+
 .kd-resource-card {
   box-sizing: border-box;
   min-height: $cell-base-size - $baseline-grid;

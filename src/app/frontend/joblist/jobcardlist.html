@@ -15,6 +15,13 @@ limitations under the License.
 -->
 
 <kd-resource-card-list selectable="false" with-statuses="true">
+  <kd-resource-card-list-header ng-transclude="header">
+    [[Jobs|Label which appears above the list of such objects.]]
+  </kd-resource-card-list-header>
+  <kd-resource-card-list-pagination pagination-id="jobs" list="$ctrl.jobList"
+                                    list-resource="::$ctrl.jobListResource">
+  </kd-resource-card-list-pagination>
+
   <kd-resource-card-header-columns>
     <kd-resource-card-header-column size="small" grow="2">
       [[Name|Label 'Name' which appears as a column label in the table of jobs (Job list view).]]
@@ -50,9 +57,4 @@ limitations under the License.
                dir-paginate="job in $ctrl.jobList.jobs | itemsPerPage: default" job="job"
                show-resource-kind="::$ctrl.showResourceKind">
   </kd-job-card>
-  <kd-resource-card-list-footer>
-    <kd-resource-card-list-pagination pagination-id="jobs" list="$ctrl.jobList"
-                                      list-resource="::$ctrl.jobListResource">
-    </kd-resource-card-list-pagination>
-  </kd-resource-card-list-footer>
 </kd-resource-card-list>

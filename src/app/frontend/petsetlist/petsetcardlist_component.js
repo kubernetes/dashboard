@@ -40,7 +40,10 @@ export class PetSetCardListController {
  * @return {!angular.Component}
  */
 export const petSetCardListComponent = {
-  transclude: true,
+  transclude: {
+    // Optional header that is transcluded instead of the default one.
+    'header': '?kdHeader',
+  },
   controller: PetSetCardListController,
   bindings: {
     'petSetList': '<',

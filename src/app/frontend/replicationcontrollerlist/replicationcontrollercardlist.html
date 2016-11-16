@@ -15,6 +15,14 @@ limitations under the License.
 -->
 
 <kd-resource-card-list selectable="false" with-statuses="true">
+  <kd-resource-card-list-header ng-transclude="header">
+    [[Replication Controllers|Label which appears above the list of such objects.]]
+  </kd-resource-card-list-header>
+  <kd-resource-card-list-pagination pagination-id="replicationcontrollers"
+                                    list="$ctrl.replicationControllerList"
+                                    list-resource="$ctrl.replicationControllerListResource">
+  </kd-resource-card-list-pagination>
+
   <kd-resource-card-header-columns>
     <kd-resource-card-header-column size="small" grow="2">
       [[Name|Label 'Name' which appears as a column label in the table of replication controllers (RC list view).]]
@@ -52,10 +60,4 @@ limitations under the License.
                                   show-resource-kind="::$ctrl.showResourceKind"
                                   dir-paginate="rc in $ctrl.replicationControllerList.replicationControllers | itemsPerPage: default">
   </kd-replication-controller-card>
-  <kd-resource-card-list-footer>
-    <kd-resource-card-list-pagination pagination-id="replicationcontrollers"
-                                      list="$ctrl.replicationControllerList"
-                                      list-resource="$ctrl.replicationControllerListResource">
-    </kd-resource-card-list-pagination>
-  </kd-resource-card-list-footer>
 </kd-resource-card-list>
