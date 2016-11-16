@@ -15,7 +15,8 @@ import horizontalPodAutoscalerListModule from 'horizontalpodautoscalerlist/horiz
 
 describe('Horizontal Pod Autoscaler card list', () => {
   /** @type
-   * {!horizontalpodautoscalerlist/horizontalpodautoscalercard_component.HorizontalPodAutoscalerCardListController} */
+   * {!horizontalpodautoscalerlist/horizontalpodautoscalercard_component.HorizontalPodAutoscalerCardListController}
+   */
   let ctrl;
 
   beforeEach(() => {

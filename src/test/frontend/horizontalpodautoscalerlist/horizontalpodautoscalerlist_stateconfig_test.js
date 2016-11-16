@@ -34,7 +34,8 @@ describe('StateConfig for horizontal pod autoscaler controller list', () => {
       return {$promise: promise};
     });
 
-    let actual = resolveHorizontalPodAutoscalerList(resource, {namespace: "test"}, kdPaginationService);
+    let actual =
+        resolveHorizontalPodAutoscalerList(resource, {namespace: 'test'}, kdPaginationService);
 
     expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery('test'));
     expect(actual).toBe(promise);

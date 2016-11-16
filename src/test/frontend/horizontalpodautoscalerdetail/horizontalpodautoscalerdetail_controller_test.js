@@ -21,11 +21,13 @@ describe('Horizontal Pod Autoscaler Detail controller', () => {
     angular.mock.module(horizontalPodAutoscalerDetailModule.name);
   });
 
-  it('should initialize horizontal pod autoscaler controller', angular.mock.inject(($controller) => {
-    let data = {};
-    /** @type {!HorizontalPodAutoscalerDetailController} */
-    let ctrl = $controller(HorizontalPodAutoscalerDetailController, {horizontalPodAutoscalerDetail: data});
+  it('should initialize horizontal pod autoscaler controller',
+     angular.mock.inject(($controller) => {
+       let data = {};
+       /** @type {!HorizontalPodAutoscalerDetailController} */
+       let ctrl = $controller(
+           HorizontalPodAutoscalerDetailController, {horizontalPodAutoscalerDetail: data});
 
-    expect(ctrl.horizontalPodAutoscalerDetail).toBe(data);
-  }));
+       expect(ctrl.horizontalPodAutoscalerDetail).toBe(data);
+     }));
 });

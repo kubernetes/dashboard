@@ -16,7 +16,8 @@ import {HorizontalPodAutoscalerListController} from 'horizontalpodautoscalerlist
 import horizontalPodAutoscalerListModule from 'horizontalpodautoscalerlist/horizontalpodautoscalerlist_module';
 
 describe('Horizontal Pod Autoscaler list controller', () => {
-  /** @type {!horizontalpodautoscalerlist/horizontalpodautoscalerlist_controller.HorizontalPodAutoscalerListController}
+  /** @type
+   * {!horizontalpodautoscalerlist/horizontalpodautoscalerlist_controller.HorizontalPodAutoscalerListController}
    */
   let ctrl;
 
@@ -24,17 +25,22 @@ describe('Horizontal Pod Autoscaler list controller', () => {
     angular.mock.module(horizontalPodAutoscalerListModule.name);
 
     angular.mock.inject(($controller) => {
-      ctrl = $controller(HorizontalPodAutoscalerListController, {horizontalPodAutoscalerList: {horizontalpodautoscalers: []}});
+      ctrl = $controller(
+          HorizontalPodAutoscalerListController,
+          {horizontalPodAutoscalerList: {horizontalpodautoscalers: []}});
     });
   });
 
-  it('should initialize horizontal pod autoscaler controller', angular.mock.inject(($controller) => {
-    let ctrls = {};
-    /** @type {!HorizontalPodAutoscalerListController} */
-    let ctrl = $controller(HorizontalPodAutoscalerListController, {horizontalPodAutoscalerList: {horizontalpodautoscalers: ctrls}});
+  it('should initialize horizontal pod autoscaler controller',
+     angular.mock.inject(($controller) => {
+       let ctrls = {};
+       /** @type {!HorizontalPodAutoscalerListController} */
+       let ctrl = $controller(
+           HorizontalPodAutoscalerListController,
+           {horizontalPodAutoscalerList: {horizontalpodautoscalers: ctrls}});
 
-    expect(ctrl.horizontalPodAutoscalerList.horizontalpodautoscalers).toBe(ctrls);
-  }));
+       expect(ctrl.horizontalPodAutoscalerList.horizontalpodautoscalers).toBe(ctrls);
+     }));
 
   it('should show zero state', () => {
     expect(ctrl.shouldShowZeroState()).toBe(true);

@@ -17,19 +17,19 @@ import horizontalPodAutoscalerDetailModule from 'horizontalpodautoscalerdetail/h
 describe('Horizontal Pod Autoscaler Info controller', () => {
   /** @type {!HorizontalPodAutoscalerInfoController} */
   let ctrl;
-  let scope;
 
   beforeEach(() => {
     angular.mock.module(horizontalPodAutoscalerDetailModule.name);
 
     angular.mock.inject(($componentController, $rootScope, $state, $interpolate) => {
-      scope = $rootScope;
-      ctrl = $componentController('kdHorizontalPodAutoscalerInfo', {$scope: $rootScope, $state: $state, $interpolate: $interpolate}, {
-        horizontalPodAutoscaler: {
-          objectMeta: { name: 'test', namespace: 'test-namespace' },
-          scaleTargetRef: { kind: 'Deployment', name: 'test-deployment' },
-        },
-      });
+      ctrl = $componentController(
+          'kdHorizontalPodAutoscalerInfo',
+          {$scope: $rootScope, $state: $state, $interpolate: $interpolate}, {
+            horizontalPodAutoscaler: {
+              objectMeta: {name: 'test', namespace: 'test-namespace'},
+              scaleTargetRef: {kind: 'Deployment', name: 'test-deployment'},
+            },
+          });
       spyOn(ctrl.state_, 'href');
     });
   });
