@@ -28,10 +28,10 @@ limitations under the License.
 <kd-deployment-info deployment="::ctrl.deploymentDetail"></kd-deployment-info>
 
 <kd-content-card>
-  <kd-title>[[New Replica Set|Title 'New Replica Set' for the newly created replica set view, on the deployment details page.]]</kd-title>
   <kd-content>
     <kd-replica-set-card-list ng-show="::ctrl.deploymentDetail.newReplicaSet.objectMeta.name"
-                              replica-set-list="::ctrl.newReplicaSetList">
+                              replica-set-list="::ctrl.newRpeplicaSetList">
+      <kd-header>[[New Replica Set|Title 'New Replica Set' for the newly created replica set view, on the deployment details page.]]</kd-header>
     </kd-replica-set-card-list>
     <div class="kd-zerostate-message" layout-padding
          ng-hide="::ctrl.deploymentDetail.newReplicaSet.objectMeta.name">
@@ -46,12 +46,12 @@ limitations under the License.
 </kd-content-card>
 
 <kd-content-card>
-  <kd-title>[[Old Replica Sets|Title 'Old Replica Sets' for the old replica sets view, on the deployment details page.]]</kd-title>
   <kd-content>
     <kd-replica-set-card-list
             ng-show="::ctrl.deploymentDetail.oldReplicaSetList.replicaSets.length"
             replica-set-list="::ctrl.deploymentDetail.oldReplicaSetList"
             replica-set-list-resource="::ctrl.oldReplicaSetListResource">
+      <kd-header>[[Old Replica Sets|Title 'Old Replica Sets' for the old replica sets view, on the deployment details page.]]</kd-header>
     </kd-replica-set-card-list>
     <div class="kd-zerostate-message" layout-padding
          ng-hide="::ctrl.deploymentDetail.oldReplicaSetList.replicaSets.length">

@@ -15,6 +15,13 @@ limitations under the License.
 -->
 
 <kd-resource-card-list selectable="false" with-statuses="false">
+    <kd-resource-card-list-header>
+      [[Persistent Volumes|Label which appears above the list of such objects.]]
+    </kd-resource-card-list-header>
+    <kd-resource-card-list-pagination pagination-id="persistentvolumes" list="$ctrl.persistentVolumeList"
+                                      list-resource="$ctrl.persistentVolumeListResource">
+    </kd-resource-card-list-pagination>
+
     <kd-resource-card-header-columns>
         <kd-resource-card-header-column size="small" grow="2">
             [[Name|Persistent volume list header: name.]]
@@ -47,9 +54,4 @@ limitations under the License.
                                persistent-volume="persistentVolume" pagination-id="persistentvolumes"
                                total-items="::$ctrl.persistentVolumeList.listMeta.totalItems">
     </kd-persistent-volume-card>
-    <kd-resource-card-list-footer>
-        <kd-resource-card-list-pagination pagination-id="persistentvolumes" list="$ctrl.persistentVolumeList"
-                                          list-resource="$ctrl.persistentVolumeListResource">
-        </kd-resource-card-list-pagination>
-    </kd-resource-card-list-footer>
 </kd-resource-card-list>

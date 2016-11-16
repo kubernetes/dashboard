@@ -15,25 +15,35 @@ limitations under the License.
 -->
 
 <kd-content-card>
-  <kd-title>[[Creator|Heading for Creator card on poddetail page]]</kd-title>
   <kd-content>
     <div ng-switch="$ctrl.creator.kind">
       <div ng-switch-when="Job">
-        <kd-job-card-list job-list="$ctrl.creator.joblist" show-resource-kind="true"></kd-job-card-list>
+        <kd-job-card-list job-list="$ctrl.creator.joblist" show-resource-kind="true">
+          <kd-header>[[Created by|Heading for Creator card on poddetail page]]</kd-header>
+        </kd-job-card-list>
       </div>
       <div ng-switch-when="DaemonSet">
-        <kd-daemon-set-card-list daemon-set-list="$ctrl.creator.daemonsetlist" show-resource-kind="true"></kd-daemon-set-card-list>
+        <kd-daemon-set-card-list daemon-set-list="$ctrl.creator.daemonsetlist" show-resource-kind="true">
+          <kd-header>[[Created by|Heading for Creator card on poddetail page]]</kd-header>
+        </kd-daemon-set-card-list>
       </div>
       <div ng-switch-when="ReplicationController">
-        <kd-replication-controller-card-list replication-controller-list="$ctrl.creator.replicationcontrollerlist" show-resource-kind="true"></kd-replication-controller-card-list>
+        <kd-replication-controller-card-list
+            replication-controller-list="$ctrl.creator.replicationcontrollerlist" show-resource-kind="true">
+          <kd-header>[[Created by|Heading for Creator card on poddetail page]]</kd-header>
+        </kd-replication-controller-card-list>
       </div>
       <div ng-switch-when="ReplicaSet">
-        <kd-replica-set-card-list replica-set-list="$ctrl.creator.replicasetlist" show-resource-kind="true"></kd-replica-set-card-list>
+        <kd-replica-set-card-list replica-set-list="$ctrl.creator.replicasetlist" show-resource-kind="true">
+          <kd-header>[[Created by|Heading for Creator card on poddetail page]]</kd-header>
+        </kd-replica-set-card-list>
       </div>
       <div ng-switch-when="PetSet">
-        <kd-pet-set-card-list pet-set-list="$ctrl.creator.petsetlist" show-resource-kind="true"></kd-pet-set-card-list>
+        <kd-pet-set-card-list pet-set-list="$ctrl.creator.petsetlist" show-resource-kind="true">
+          <kd-header>[[Created by|Heading for Creator card on poddetail page]]</kd-header>
+        </kd-pet-set-card-list>
       </div>
-      <span ng-switch-default>{{$ctrl.creator.kind}}</span>
+      <span ng-switch-default>[[Unknown creator||Label for unknown creator of a pod]]</span>
     </div>
   </kd-content>
 </kd-info-card>

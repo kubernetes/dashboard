@@ -25,9 +25,9 @@ export class ResourceCardListPaginationController {
    * @ngInject
    */
   constructor(kdPaginationService, $stateParams, errorDialog, $scope) {
-    /** @export {!./resourcecardlistfooter_component.ResourceCardListFooterController} -
+    /** @export {!./resourcecardlist_component.ResourceCardListController} -
      * Initialized from require just before $onInit is called. */
-    this.resourceCardListFooterCtrl;
+    this.resourceCardListCtrl;
     /** @export {string} - Unique pagination id. Used together with id on <dir-paginate>
      directive. Initialized from binding. */
     this.paginationId;
@@ -70,7 +70,6 @@ export class ResourceCardListPaginationController {
       this.paginationService_.registerInstance(this.paginationId);
     }
 
-    this.resourceCardListFooterCtrl.setListPagination(this);
     this.rowsLimit = this.paginationService_.getRowsLimit(this.paginationId);
     this.registerStateChangeListener(this.scope_);
   }
@@ -113,13 +112,17 @@ export class ResourceCardListPaginationController {
         this.paginationService_.getRowsLimit(this.paginationId), newPageNumber, namespace,
         this.stateParams_.objectName);
 
+    this.resourceCardListCtrl.setPending(true);
+
     this.listResource.get(
         query,
         (list) => {
           this.list = list;
+          this.resourceCardListCtrl.setPending(false);
         },
         (err) => {
           this.errorDialog_.open(this.i18n.MSG_RESOURCE_CARD_LIST_PAGINATION_ERROR, err.data);
+          this.resourceCardListCtrl.setPending(false);
         });
   }
 }
@@ -142,7 +145,7 @@ export const resourceCardListPaginationComponent = {
   controller: ResourceCardListPaginationController,
   transclude: true,
   require: {
-    'resourceCardListFooterCtrl': '^kdResourceCardListFooter',
+    'resourceCardListCtrl': '^kdResourceCardList',
   },
   bindings: {
     'paginationId': '@',

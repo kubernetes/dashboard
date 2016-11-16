@@ -22,9 +22,9 @@ describe('Resource card list pagination', () => {
    */
   let ctrl;
   /** @type
-   *  {!common/components/resourcecard/resourcecardlistfooter_component.ResourceCardListFooterController}
+   *  {!common/components/resourcecard/resourcecardlist_component.ResourceCardListController}
    */
-  let resourceCardListFooterCtrl;
+  let resourceCardListCtrl;
   /** @type {string} */
   let paginationId = 'test-id';
   /** @type {!common/pagination/pagination_service.PaginationService} */
@@ -51,7 +51,7 @@ describe('Resource card list pagination', () => {
 
           errDialog = errorDialog;
           httpBackend = $httpBackend;
-          resourceCardListFooterCtrl = {setListPagination: () => {}};
+          resourceCardListCtrl = $componentController('kdResourceCardList');
           scope = $rootScope;
           ctrl = $componentController(
               'kdResourceCardListPagination', {
@@ -61,21 +61,10 @@ describe('Resource card list pagination', () => {
               {
                 paginationId: paginationId,
                 kdPaginationService: paginationService,
-                resourceCardListFooterCtrl: resourceCardListFooterCtrl,
+                resourceCardListCtrl: resourceCardListCtrl,
                 listResource: $resource('api/v1/pod/:namespace'),
               });
         });
-  });
-
-  it('should set pagination controller on resource card list footer ctrl', () => {
-    // given
-    spyOn(resourceCardListFooterCtrl, 'setListPagination');
-
-    // when
-    ctrl.$onInit();
-
-    // then
-    expect(resourceCardListFooterCtrl.setListPagination).toHaveBeenCalledWith(ctrl);
   });
 
   it('should register listener', () => {

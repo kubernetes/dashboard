@@ -28,7 +28,6 @@ limitations under the License.
 <kd-replica-set-info replica-set="::ctrl.replicaSetDetail"></kd-replica-set-info>
 
 <kd-content-card ng-if="::ctrl.replicaSetDetail.serviceList.services.length">
-  <kd-title>[[Services|Title 'Services' for the services information section on the replica set details page.]]</kd-title>
   <kd-content>
     <kd-service-card-list ng-show="::ctrl.replicaSetDetail.serviceList.services.length"
                           service-list="::ctrl.replicaSetDetail.serviceList"
@@ -41,7 +40,6 @@ limitations under the License.
   </kd-content>
 </kd-content-card>
 <kd-content-card>
-  <kd-title>[[Pods|Title 'Pods', which appears at the top of the pods list on the replica set details view.]]</kd-title>
   <kd-content>
     <kd-pod-card-list ng-show="::ctrl.replicaSetDetail.podList.pods.length"
                       pod-list="::ctrl.replicaSetDetail.podList" with-statuses="true"
