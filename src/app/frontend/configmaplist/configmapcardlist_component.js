@@ -40,7 +40,10 @@ export class ConfigMapCardListController {
  * @return {!angular.Component}
  */
 export const configMapCardListComponent = {
-  transclude: true,
+  transclude: {
+    // Optional header that is transcluded instead of the default one.
+    'header': '?kdHeader',
+  },
   controller: ConfigMapCardListController,
   bindings: {
     'configMapList': '<',
