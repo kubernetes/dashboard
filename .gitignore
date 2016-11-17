@@ -13,5 +13,6 @@ dist/
 ## IDE specific files
 # IntelliJ
 .idea/
+*.iml
 # Vi temporary files
 *.swp
