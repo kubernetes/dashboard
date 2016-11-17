@@ -21,7 +21,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
 )
@@ -57,7 +57,7 @@ func toLabelSelector(selector map[string]string) (labels.Selector, error) {
 func getServicesForDeletion(client client.Interface, labelSelector labels.Selector,
 	namespace string) ([]api.Service, error) {
 
-	replicationControllers, err := client.ReplicationControllers(namespace).List(api.ListOptions{
+	replicationControllers, err := client.Core().ReplicationControllers(namespace).List(api.ListOptions{
 		LabelSelector: labelSelector,
 		FieldSelector: fields.Everything(),
 	})
@@ -72,7 +72,7 @@ func getServicesForDeletion(client client.Interface, labelSelector labels.Select
 		return []api.Service{}, nil
 	}
 
-	services, err := client.Services(namespace).List(api.ListOptions{
+	services, err := client.Core().Services(namespace).List(api.ListOptions{
 		LabelSelector: labelSelector,
 		FieldSelector: fields.Everything(),
 	})

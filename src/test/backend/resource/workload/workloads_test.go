@@ -24,7 +24,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job/joblist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/petset/petsetlist"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/statefulsetlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/replicasetlist"
@@ -46,14 +46,14 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		k8sDeployment extensions.DeploymentList
 		k8sRc         api.ReplicationControllerList
 		k8sPod        api.PodList
-		k8sPetSet     apps.PetSetList
+		k8sStatefulSet     apps.StatefulSetList
 		rcs           []replicationcontroller.ReplicationController
 		rs            []replicaset.ReplicaSet
 		jobs          []joblist.Job
 		daemonset     []daemonsetlist.DaemonSet
 		deployment    []deployment.Deployment
 		pod           []pod.Pod
-		petSet        []petsetlist.PetSet
+		statefulSet        []statefulsetlist.StatefulSet
 	}{
 		{
 			extensions.ReplicaSetList{},
@@ -62,14 +62,14 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 			extensions.DeploymentList{},
 			api.ReplicationControllerList{},
 			api.PodList{},
-			apps.PetSetList{},
+			apps.StatefulSetList{},
 			[]replicationcontroller.ReplicationController{},
 			[]replicaset.ReplicaSet{},
 			[]joblist.Job{},
 			[]daemonsetlist.DaemonSet{},
 			[]deployment.Deployment{},
 			[]pod.Pod{},
-			[]petsetlist.PetSet{},
+			[]statefulsetlist.StatefulSet{},
 		},
 		{
 			extensions.ReplicaSetList{
@@ -112,7 +112,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				}},
 			},
 			api.PodList{},
-			apps.PetSetList{},
+			apps.StatefulSetList{},
 			[]replicationcontroller.ReplicationController{{
 				ObjectMeta: common.ObjectMeta{
 					Name: "rc-name",
@@ -159,7 +159,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				},
 			}},
 			[]pod.Pod{},
-			[]petsetlist.PetSet{},
+			[]statefulsetlist.StatefulSet{},
 		},
 	}
 
@@ -195,10 +195,10 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				CumulativeMetrics: make([]metric.Metric, 0),
 				Pods:              c.pod,
 			},
-			PetSetList: petsetlist.PetSetList{
-				ListMeta:          common.ListMeta{TotalItems: len(c.petSet)},
+			StatefulSetList: statefulsetlist.StatefulSetList{
+				ListMeta:          common.ListMeta{TotalItems: len(c.statefulSet)},
 				CumulativeMetrics: make([]metric.Metric, 0),
-				PetSets:           c.petSet,
+				StatefulSets:           c.statefulSet,
 			},
 		}
 		var expectedErr error
@@ -224,8 +224,8 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				List:  make(chan *extensions.DeploymentList, 1),
 				Error: make(chan error, 1),
 			},
-			PetSetList: common.PetSetListChannel{
-				List:  make(chan *apps.PetSetList, 1),
+			StatefulSetList: common.StatefulSetListChannel{
+				List:  make(chan *apps.StatefulSetList, 1),
 				Error: make(chan error, 1),
 			},
 			NodeList: common.NodeListChannel{
@@ -261,8 +261,8 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		channels.ReplicationControllerList.List <- &c.k8sRc
 		channels.ReplicationControllerList.Error <- nil
 
-		channels.PetSetList.List <- &c.k8sPetSet
-		channels.PetSetList.Error <- nil
+		channels.StatefulSetList.List <- &c.k8sStatefulSet
+		channels.StatefulSetList.Error <- nil
 
 		nodeList := &api.NodeList{}
 		channels.NodeList.List <- nodeList

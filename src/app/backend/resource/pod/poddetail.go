@@ -22,7 +22,7 @@ import (
 	"k8s.io/kubernetes/pkg/apis/apps"
 	"k8s.io/kubernetes/pkg/apis/batch"
 	"k8s.io/kubernetes/pkg/apis/extensions"
-	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
+	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
@@ -30,9 +30,9 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job/joblist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/petset/petsetlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/replicasetlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller/replicationcontrollerlist"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/statefulsetlist"
 )
 
 // PodDetail is a presentation layer view of Kubernetes PodDetail resource.
@@ -78,7 +78,7 @@ type Controller struct {
 	ReplicaSetList            *replicasetlist.ReplicaSetList                       `json:"replicasetlist,omitempty"`
 	ReplicationControllerList *replicationcontrollerlist.ReplicationControllerList `json:"replicationcontrollerlist,omitempty"`
 	DaemonSetList             *daemonsetlist.DaemonSetList                         `json:"daemonsetlist,omitempty"`
-	PetSetList                *petsetlist.PetSetList                               `json:"petsetlist,omitempty"`
+	StatefulSetList           *statefulsetlist.StatefulSetList                     `json:"statefulsetlist,omitempty"`
 }
 
 // Container represents a docker/rkt/etc. container that lives in a pod.
@@ -125,7 +125,7 @@ func GetPodDetail(client k8sClient.Interface, heapsterClient client.HeapsterClie
 		PodMetrics:    common.GetPodMetricsChannel(heapsterClient, name, namespace),
 	}
 
-	pod, err := client.Pods(namespace).Get(name)
+	pod, err := client.Core().Pods(namespace).Get(name)
 
 	if err != nil {
 		return nil, err
@@ -192,8 +192,8 @@ func toPodController(client k8sClient.Interface, reference api.ObjectReference, 
 		return toReplicationControllerPodController(client, reference, pods, events, heapsterClient)
 	case "DaemonSet":
 		return toDaemonSetPodController(client, reference, pods, events, heapsterClient)
-	case "PetSet":
-		return toPetSetPodController(client, reference, pods, events, heapsterClient)
+	case "StatefulSet":
+		return toStatefulSetPodController(client, reference, pods, events, heapsterClient)
 	default:
 	}
 	// Will be moved into the default case once all cases are implemented
@@ -203,7 +203,7 @@ func toPodController(client k8sClient.Interface, reference api.ObjectReference, 
 }
 
 func toJobPodController(client k8sClient.Interface, reference api.ObjectReference, pods []api.Pod, events []api.Event, heapsterClient client.HeapsterClient) (*Controller, error) {
-	job, err := client.Extensions().Jobs(reference.Namespace).Get(reference.Name)
+	job, err := client.Batch().Jobs(reference.Namespace).Get(reference.Name)
 	if err != nil {
 		return nil, err
 	}
@@ -229,7 +229,7 @@ func toReplicaSetPodController(client k8sClient.Interface, reference api.ObjectR
 }
 
 func toReplicationControllerPodController(client k8sClient.Interface, reference api.ObjectReference, pods []api.Pod, events []api.Event, heapsterClient client.HeapsterClient) (*Controller, error) {
-	rc, err := client.ReplicationControllers(reference.Namespace).Get(reference.Name)
+	rc, err := client.Core().ReplicationControllers(reference.Namespace).Get(reference.Name)
 	if err != nil {
 		return nil, err
 	}
@@ -255,17 +255,17 @@ func toDaemonSetPodController(client k8sClient.Interface, reference api.ObjectRe
 	}, nil
 }
 
-func toPetSetPodController(client k8sClient.Interface, reference api.ObjectReference, pods []api.Pod, events []api.Event, heapsterClient client.HeapsterClient) (*Controller, error) {
-	petset, err := client.Apps().PetSets(reference.Namespace).Get(reference.Name)
+func toStatefulSetPodController(client k8sClient.Interface, reference api.ObjectReference, pods []api.Pod, events []api.Event, heapsterClient client.HeapsterClient) (*Controller, error) {
+	statefulset, err := client.Apps().StatefulSets(reference.Namespace).Get(reference.Name)
 	if err != nil {
 		return nil, err
 	}
-	petsets := []apps.PetSet{*petset}
+	statefulsets := []apps.StatefulSet{*statefulset}
 
-	petSetList := petsetlist.CreatePetSetList(petsets, pods, events, dataselect.StdMetricsDataSelect, &heapsterClient)
+	statefulSetList := statefulsetlist.CreateStatefulSetList(statefulsets, pods, events, dataselect.StdMetricsDataSelect, &heapsterClient)
 	return &Controller{
-		Kind:       "PetSet",
-		PetSetList: petSetList,
+		Kind:            "StatefulSet",
+		StatefulSetList: statefulSetList,
 	}, nil
 }
 

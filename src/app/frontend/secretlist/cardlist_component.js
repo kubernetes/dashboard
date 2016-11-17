@@ -40,6 +40,10 @@ export class SecretCardListController {
  * @type {!angular.Component}
  */
 export const secretCardListComponent = {
+  transclude: {
+    // Optional header that is transcluded instead of the default one.
+    'header': '?kdHeader',
+  },
   templateUrl: 'secretlist/cardlist.html',
   controller: SecretCardListController,
   bindings: {

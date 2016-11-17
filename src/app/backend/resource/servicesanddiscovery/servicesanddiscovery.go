@@ -21,7 +21,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/ingress"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/service"
-	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
+	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 )
 
 // ServicesAndDiscovery structure contains all resource lists grouped into the servicesAndDiscovery category.
@@ -32,10 +32,10 @@ type ServicesAndDiscovery struct {
 }
 
 // GetServicesAndDiscovery returns a list of all servicesAndDiscovery resources in the cluster.
-func GetServicesAndDiscovery(client *k8sClient.Client, nsQuery *common.NamespaceQuery) (
+func GetServicesAndDiscovery(client *k8sClient.Clientset, nsQuery *common.NamespaceQuery) (
 	*ServicesAndDiscovery, error) {
 
-	log.Printf("Getting servicesAndDiscovery category")
+	log.Print("Getting servicesAndDiscovery category")
 	channels := &common.ResourceChannels{
 		ServiceList: common.GetServiceListChannel(client, nsQuery, 1),
 		IngressList: common.GetIngressListChannel(client, nsQuery, 1),

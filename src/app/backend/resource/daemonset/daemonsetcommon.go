@@ -20,7 +20,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/extensions"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
 )
@@ -46,7 +46,7 @@ func GetServicesForDSDeletion(client client.Interface, labelSelector labels.Sele
 		return []api.Service{}, nil
 	}
 
-	services, err := client.Services(namespace).List(api.ListOptions{
+	services, err := client.Core().Services(namespace).List(api.ListOptions{
 		LabelSelector: labelSelector,
 		FieldSelector: fields.Everything(),
 	})

@@ -23,7 +23,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/replicasetlist"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/extensions"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler/horizontalpodautoscalerlist"
@@ -111,7 +111,7 @@ func GetDeploymentDetail(client client.Interface, heapsterClient heapster.Heapst
 	options := api.ListOptions{LabelSelector: selector}
 
 	channels := &common.ResourceChannels{
-		ReplicaSetList: common.GetReplicaSetListChannelWithOptions(client.Extensions(),
+		ReplicaSetList: common.GetReplicaSetListChannelWithOptions(client,
 			common.NewSameNamespaceQuery(namespace), options, 1),
 		PodList: common.GetPodListChannelWithOptions(client,
 			common.NewSameNamespaceQuery(namespace), options, 1),

@@ -61,7 +61,7 @@ func TestDeleteShouldPropagateErrorsAndChoseClient(t *testing.T) {
 		t.Fatalf("Expected error on verber delete but got %#v", err)
 	}
 
-	err = verber.Delete("petset", "bar", "baz")
+	err = verber.Delete("statefulset", "bar", "baz")
 
 	if !reflect.DeepEqual(err, errors.New("err from apps")) {
 		t.Fatalf("Expected error on verber delete but got %#v", err)
@@ -87,7 +87,7 @@ func TestGetShouldPropagateErrorsAndChoseClient(t *testing.T) {
 		t.Fatalf("Expected error on verber delete but got %#v", err)
 	}
 
-	_, err = verber.Get("petset", "bar", "baz")
+	_, err = verber.Get("statefulset", "bar", "baz")
 
 	if !reflect.DeepEqual(err, errors.New("err from apps")) {
 		t.Fatalf("Expected error on verber delete but got %#v", err)

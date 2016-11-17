@@ -17,7 +17,7 @@
  */
 export default class ResourceQuotaDetailStatusController {
   /**
-   * Constructs pettion controller info object.
+   * Constructs statefultion controller info object.
    */
   constructor() {
     /**

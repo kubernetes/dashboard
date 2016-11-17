@@ -96,30 +96,30 @@ type ResourceKind string
 
 // List of all resource kinds supported by the UI.
 const (
-	ResourceKindReplicaSet              = "replicaset"
-	ResourceKindService                 = "service"
-	ResourceKindIngress                 = "ingress"
-	ResourceKindDeployment              = "deployment"
-	ResourceKindPod                     = "pod"
-	ResourceKindEvent                   = "event"
-	ResourceKindReplicationController   = "replicationcontroller"
+	ResourceKindConfigMap               = "configmap"
 	ResourceKindDaemonSet               = "daemonset"
+	ResourceKindDeployment              = "deployment"
+	ResourceKindEvent                   = "event"
+	ResourceKindHorizontalPodAutoscaler = "horizontalpodautoscaler"
+	ResourceKindIngress                 = "ingress"
 	ResourceKindJob                     = "job"
 	ResourceKindLimitRange              = "limitrange"
-	ResourceKindPetSet                  = "petset"
 	ResourceKindNamespace               = "namespace"
 	ResourceKindNode                    = "node"
-	ResourceKindSecret                  = "secret"
-	ResourceKindConfigMap               = "configmap"
-	ResourceKindPersistentVolume        = "persistentvolume"
 	ResourceKindPersistentVolumeClaim   = "persistentvolumeclaim"
+	ResourceKindPersistentVolume        = "persistentvolume"
+	ResourceKindPod                     = "pod"
+	ResourceKindReplicaSet              = "replicaset"
+	ResourceKindReplicationController   = "replicationcontroller"
 	ResourceKindResourceQuota           = "resourcequota"
-	ResourceKindHorizontalPodAutoscaler = "horizontalpodautoscaler"
+	ResourceKindSecret                  = "secret"
+	ResourceKindService                 = "service"
+	ResourceKindStatefulSet             = "statefulset"
 )
 
 // ClientType represents type of client that is used to perform generic operations on resources.
 // Different resources belong to different client, i.e. Deployments belongs to extension client
-// and PetSets to apps client.
+// and StatefulSets to apps client.
 type ClientType string
 
 // List of client types supported by the UI.
@@ -141,25 +141,25 @@ var kindToAPIMapping = map[string]struct {
 	// sets apps client.
 	ClientType ClientType
 }{
-	ResourceKindService:                 {"services", ClientTypeDefault},
-	ResourceKindIngress:                 {"ingresses", ClientTypeExtensionClient},
-	ResourceKindPod:                     {"pods", ClientTypeDefault},
-	ResourceKindEvent:                   {"events", ClientTypeDefault},
-	ResourceKindReplicationController:   {"replicationcontrollers", ClientTypeDefault},
-	ResourceKindDeployment:              {"deployments", ClientTypeExtensionClient},
-	ResourceKindReplicaSet:              {"replicasets", ClientTypeExtensionClient},
+	ResourceKindConfigMap:               {"configmaps", ClientTypeDefault},
 	ResourceKindDaemonSet:               {"daemonsets", ClientTypeExtensionClient},
-	ResourceKindPetSet:                  {"petsets", ClientTypeAppsClient},
-	ResourceKindLimitRange:              {"limitrange", ClientTypeDefault},
+	ResourceKindDeployment:              {"deployments", ClientTypeExtensionClient},
+	ResourceKindEvent:                   {"events", ClientTypeDefault},
+	ResourceKindHorizontalPodAutoscaler: {"horizontalpodautoscalers", ClientTypeAutoscalingClient},
+	ResourceKindIngress:                 {"ingresses", ClientTypeExtensionClient},
 	ResourceKindJob:                     {"jobs", ClientTypeBatchClient},
+	ResourceKindLimitRange:              {"limitrange", ClientTypeDefault},
 	ResourceKindNamespace:               {"namespaces", ClientTypeDefault},
 	ResourceKindNode:                    {"nodes", ClientTypeDefault},
-	ResourceKindSecret:                  {"secrets", ClientTypeDefault},
-	ResourceKindConfigMap:               {"configmaps", ClientTypeDefault},
-	ResourceKindPersistentVolume:        {"persistentvolumes", ClientTypeDefault},
 	ResourceKindPersistentVolumeClaim:   {"persistentvolumeclaims", ClientTypeDefault},
+	ResourceKindPersistentVolume:        {"persistentvolumes", ClientTypeDefault},
+	ResourceKindPod:                     {"pods", ClientTypeDefault},
+	ResourceKindReplicaSet:              {"replicasets", ClientTypeExtensionClient},
+	ResourceKindReplicationController:   {"replicationcontrollers", ClientTypeDefault},
 	ResourceKindResourceQuota:           {"resourcequota", ClientTypeDefault},
-	ResourceKindHorizontalPodAutoscaler: {"horizontalpodautoscalers", ClientTypeAutoscalingClient},
+	ResourceKindSecret:                  {"secrets", ClientTypeDefault},
+	ResourceKindService:                 {"services", ClientTypeDefault},
+	ResourceKindStatefulSet:             {"statefulsets", ClientTypeAppsClient},
 }
 
 // IsSelectorMatching returns true when an object with the given

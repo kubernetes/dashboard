@@ -135,7 +135,7 @@ backendApi.ReplicationControllerList;
  *   replicationControllerList: !backendApi.ReplicationControllerList,
  *   podList: !backendApi.PodList,
  *   daemonSetList: !backendApi.DaemonSetList,
- *   petSetList: !backendApi.PetSetList
+ *   statefulSetList: !backendApi.StatefulSetList
  * }}
  */
 backendApi.Workloads;
@@ -284,7 +284,7 @@ backendApi.JobList;
  *   containerImages: !Array<string>,
  * }}
  */
-backendApi.PetSet;
+backendApi.StatefulSet;
 
 /**
  * @typedef {{
@@ -296,15 +296,15 @@ backendApi.PetSet;
  *   eventList: !backendApi.EventList
  * }}
  */
-backendApi.PetSetDetail;
+backendApi.StatefulSetDetail;
 
 /**
  * @typedef {{
- *   petSets: !Array<!backendApi.PetSet>,
+ *   statefulSets: !Array<!backendApi.StatefulSet>,
  *   listMeta: !backendApi.ListMeta
  * }}
  */
-backendApi.PetSetList;
+backendApi.StatefulSetList;
 
 /**
  * @typedef {{
@@ -1195,7 +1195,7 @@ backendApi.HorizontalPodAutoscalerList;
  *   replicasetlist: backendApi.ReplicaSetList,
  *   replicationcontrollerlist: backendApi.ReplicationControllerList,
  *   daemonsetlist: backendApi.DaemonSetList,
- *   petsetlist: backendApi.PetSetList
+ *   statefulsetlist: backendApi.StatefulSetList
  * }}
  */
 backendApi.Controller;

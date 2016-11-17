@@ -38,7 +38,6 @@ import persistentVolumeClaimDetailModule from './persistentvolumeclaimdetail/per
 import persistentVolumeClaimListModule from './persistentvolumeclaimlist/persistentvolumeclaimlist_module';
 import persistentVolumeDetailModule from './persistentvolumedetail/persistentvolumedetail_module';
 import persistentVolumeListModule from './persistentvolumelist/persistentvolumelist_module';
-import petSetListModule from './petsetlist/petsetlist_module';
 import podDetailModule from './poddetail/poddetail_module';
 import replicaSetListModule from './replicasetlist/replicasetlist_module';
 import replicationControllerDetailModule from './replicationcontrollerdetail/replicationcontrollerdetail_module';
@@ -49,6 +48,7 @@ import secretListModule from './secretlist/module';
 import serviceDetailModule from './servicedetail/servicedetail_module';
 import serviceListModule from './servicelist/servicelist_module';
 import servicesanddiscoveryModule from './servicesanddiscovery/module';
+import statefulSetListModule from './statefulsetlist/statefulsetlist_module';
 import workloadsModule from './workloads/workloads_module';
 
 
@@ -83,7 +83,7 @@ export default angular
           podDetailModule.name,
           persistentVolumeDetailModule.name,
           persistentVolumeListModule.name,
-          petSetListModule.name,
+          statefulSetListModule.name,
           persistentVolumeClaimDetailModule.name,
           persistentVolumeClaimListModule.name,
           resourceQuotaDetailModule.name,

@@ -16,7 +16,10 @@
  * @return {!angular.Component}
  */
 export const namespaceCardListComponent = {
-  transclude: true,
+  transclude: {
+    // Optional header that is transcluded instead of the default one.
+    'header': '?kdHeader',
+  },
   bindings: {
     'namespaceList': '<',
     'namespaceListResource': '<',

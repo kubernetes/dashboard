@@ -33,6 +33,7 @@
   <translation id="391192137756114804" key="MSG_BREADCRUMBS_SECRETS_LABEL" desc="Label 'Secrets' that appears as a breadcrumbs on the action bar.">Secrets</translation>
   <translation id="5207082267245498149" key="MSG_BREADCRUMBS_SERVICES_AND_DISCOVERY_LABEL" desc="Label 'Services and discovery' that appears as a breadcrumbs on the action bar.">Services and discovery</translation>
   <translation id="2218294864744563724" key="MSG_BREADCRUMBS_SERVICES_LABEL" desc="Label 'Services' that appears as a breadcrumbs on the action bar.">Services</translation>
+  <translation id="7318741060898365517" key="MSG_BREADCRUMBS_STATEFUL_SETS_LABEL" desc="Label 'Stateful Sets' that appears as a breadcrumbs on the action bar.">Stateful Sets</translation>
   <translation id="1656728804447365846" key="MSG_BREADCRUMBS_WORKLOADS_LABEL" desc="Label 'Workloads' that appears as a breadcrumbs on the action bar.">Workloads</translation>
   <translation id="9218333053624016665" key="MSG_CHROME_NAV_NAV_0" desc="Admin menu item in the nav.">Admin</translation>
   <translation id="6343362656986122693" key="MSG_CHROME_NAV_NAV_1" desc="Namespaces menu item in the nav.">Namespaces</translation>
@@ -54,6 +55,7 @@
   <translation id="723915224801093587" key="MSG_CHROME_NAV_NAV_7" desc="Replication Controllers menu item in the nav.">Replication Controllers</translation>
   <translation id="7243740857154177059" key="MSG_CHROME_NAV_NAV_8" desc="Daemon Sets menu item in the nav.">Daemon Sets</translation>
   <translation id="958008386879226733" key="MSG_CHROME_NAV_NAV_9" desc="Pet Sets menu item in the nav.">Pet Sets</translation>
+  <translation id="2342408690900978106" key="MSG_CHROME_NAV_NAV_9" desc="Stateful Sets menu item in the nav.">Stateful Sets</translation>
   <translation id="6660248664655766122" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARDELETEITEM_0" desc="Action \'Delete\', which is a button on the actionbar and is there for every resource type.">Delete</translation>
   <translation id="8227118065394270046" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBAREDITITEM_0" desc="Action \'Edit\' for the edit button on the global action bar.">Edit</translation>
   <translation id="6890205203402149061" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARLISTBUTTONS_0" desc="Label for deploy app button.">Deploy app</translation>
@@ -1237,6 +1239,39 @@
   <translation id="4510746585636758800" key="MSG_SERVICE_LIST_LABELS_LABEL" desc="Label 'Labels' which appears as a column label in the table of services (service list view).">Labels</translation>
   <translation id="6859808734310490214" key="MSG_SERVICE_LIST_NAMESPACE_LABEL" desc="Label 'Namespace' which appears as a column label in the table of services (service list view).">Namespace</translation>
   <translation id="4581297925702163661" key="MSG_SERVICE_LIST_NAME_LABEL" desc="Label 'Name' which appears as a column label in the table of services (service list view).">Name</translation>
+  <translation id="6466948840454457439" key="MSG_STATEFULSETDETAIL_ACTIONBAR_0" desc="Label \'Stateful Set\' which appears at the top of the delete dialog, opened from a stateful set details page.">Stateful Set</translation>
+  <translation id="4919296013189797225" key="MSG_STATEFULSETDETAIL_STATEFULSETDETAIL_0" desc="Title for graph card displaying CPU metric of one stateful set.">CPU usage history</translation>
+  <translation id="4712702766539777346" key="MSG_STATEFULSETDETAIL_STATEFULSETDETAIL_1" desc="Title for graph card displaying memory metric of one stateful set.">Memory usage history</translation>
+  <translation id="3449887784023623937" key="MSG_STATEFULSETDETAIL_STATEFULSETDETAIL_2" desc="Related pods card title on the stateful set detail page.">Pods</translation>
+  <translation id="6177589608167537722" key="MSG_STATEFULSETDETAIL_STATEFULSETDETAIL_3" desc="Title for pods card zerostate in stateful set details page.">There is nothing to display here</translation>
+  <translation id="6905189355558297492" key="MSG_STATEFULSETDETAIL_STATEFULSETDETAIL_4" desc="Text for pods card zerostate in stateful set details page.">There are currently no Pods selected by this Stateful Set.</translation>
+  <translation id="5159068943236535151" key="MSG_STATEFULSETDETAIL_STATEFULSETINFO_0" desc="Stateful set info details section name.">Details</translation>
+  <translation id="6072563950037365561" key="MSG_STATEFULSETDETAIL_STATEFULSETINFO_1" desc="Stateful set info details section labels entry.">Labels</translation>
+  <translation id="3768403093712231242" key="MSG_STATEFULSETDETAIL_STATEFULSETINFO_10" desc="The message says that that many pods have failed (stateful set details page).">{{ $ctrl.statefulSet.podInfo.failed}} failed</translation>
+  <translation id="7403639126041403167" key="MSG_STATEFULSETDETAIL_STATEFULSETINFO_11" desc="The message says that that many pods are running (stateful set details page).">{{ $ctrl.statefulSet.podInfo.running}} running</translation>
+  <translation id="4914399275150934885" key="MSG_STATEFULSETDETAIL_STATEFULSETINFO_2" desc="Stateful set info details section images entry.">Images</translation>
+  <translation id="7949963885016781367" key="MSG_STATEFULSETDETAIL_STATEFULSETINFO_3" desc="Stateful set info status section name.">Status</translation>
+  <translation id="4410282404464816771" key="MSG_STATEFULSETDETAIL_STATEFULSETINFO_4" desc="Stateful set info status section pods entry.">Pods</translation>
+  <translation id="7836997624326579154" key="MSG_STATEFULSETDETAIL_STATEFULSETINFO_5" desc="The message says that that many pods were created (stateful set details page).">{{ $ctrl.statefulSet.podInfo.current}} created</translation>
+  <translation id="8722433510276864891" key="MSG_STATEFULSETDETAIL_STATEFULSETINFO_6" desc="The message says that that many pods are desired to run (stateful set details page).">{{ $ctrl.statefulSet.podInfo.desired}} desired</translation>
+  <translation id="6872699682199937943" key="MSG_STATEFULSETDETAIL_STATEFULSETINFO_7" desc="The message says that that many pods are running (stateful set details page).">{{ $ctrl.statefulSet.podInfo.running}} running</translation>
+  <translation id="5246197426661985912" key="MSG_STATEFULSETDETAIL_STATEFULSETINFO_8" desc="Stateful set info status section pods status entry.">Pods status</translation>
+  <translation id="5558960002895908493" key="MSG_STATEFULSETDETAIL_STATEFULSETINFO_9" desc="The message says that that many pods are pending (stateful set details page).">{{ $ctrl.statefulSet.podInfo.pending}} pending</translation>
+  <translation id="4228252106861510904" key="MSG_STATEFULSETLIST_STATEFULSETCARDLIST_0" desc="Stateful set list header: name.">Name</translation>
+  <translation id="4614240293770632361" key="MSG_STATEFULSETLIST_STATEFULSETCARDLIST_1" desc="Column header \'Kind\' of a Stateful Set List">Kind</translation>
+  <translation id="1071759065839174790" key="MSG_STATEFULSETLIST_STATEFULSETCARDLIST_2" desc="Stateful set list header: namespace.">Namespace</translation>
+  <translation id="8994875086161650273" key="MSG_STATEFULSETLIST_STATEFULSETCARDLIST_3" desc="Stateful set list header: labels.">Labels</translation>
+  <translation id="2158512587930821487" key="MSG_STATEFULSETLIST_STATEFULSETCARDLIST_4" desc="Stateful set list header: pods.">Pods</translation>
+  <translation id="5748922682860101627" key="MSG_STATEFULSETLIST_STATEFULSETCARDLIST_5" desc="Stateful set list header: age.">Age</translation>
+  <translation id="1855495081719443157" key="MSG_STATEFULSETLIST_STATEFULSETCARDLIST_6" desc="Stateful set list header: images.">Images</translation>
+  <translation id="8445209011919601205" key="MSG_STATEFULSETLIST_STATEFULSETCARD_0" desc="Tooltip text which appears on error icon hover.">One or more pods have errors</translation>
+  <translation id="2295021428175974915" key="MSG_STATEFULSETLIST_STATEFULSETCARD_1" desc="Tooltip text which appears on pending icon hover.">One or more pods are in pending state</translation>
+  <translation id="6349661589037853705" key="MSG_STATEFULSETLIST_STATEFULSETCARD_2" desc="Column \'Stateful Set\' of a Stateful Set List">Stateful Set</translation>
+  <translation id="2540707678008837572" key="MSG_STATEFULSETLIST_STATEFULSETCARD_3" desc="Label \'Stateful Set\' which will appear in the stateful set delete dialog opened from a stateful set card on the list page.">Stateful Set</translation>
+  <translation id="1666773532643611718" key="MSG_STATEFULSETLIST_STATEFULSETCARD_4" desc="Label \'Stateful Set\' which will appear in the stateful set delete dialog opened from a stateful set card on the list page.">Stateful Set</translation>
+  <translation id="1854921249389083021" key="MSG_STATEFULSETLIST_STATEFULSETLIST_0" desc="Title for graph card displaying CPU metric of stateful sets.">CPU usage history</translation>
+  <translation id="6059491219906014069" key="MSG_STATEFULSETLIST_STATEFULSETLIST_1" desc="Title for graph card displaying memory metric of stateful sets.">Memory usage history</translation>
+  <translation id="6868140200572137421" key="MSG_STATEFUL_SET_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of stateful set.">Created at <ph name="CREATION_DATE"/></translation>
   <translation id="6463616657349920914" key="MSG_TIME_NOT_YET_LABEL" desc="Label for relative time that did not happened yet.">-</translation>
   <translation id="3921240742330478356" key="MSG_TIME_UNIT_DAYS_LABEL" desc="Time units label, many days (plural).">days</translation>
   <translation id="3980015737897416585" key="MSG_TIME_UNIT_DAY_LABEL" desc="Time units label, a single day.">a day</translation>
@@ -1265,6 +1300,7 @@
   <translation id="5439112040738823046" key="MSG_WORKLOADS_WORKLOADS_1" desc="Title for graph card displaying memory metric of one all resources.">Title for graph card displaying CPU metric of one all resources.</translation>
   <translation id="1673466418940035630" key="MSG_WORKLOADS_WORKLOADS_2" desc="Label &quot;Daemon sets&quot;, which appears above the daemon sets list on the workloads page.">Daemon sets</translation>
   <translation id="7669482402387678993" key="MSG_WORKLOADS_WORKLOADS_3" desc="Label &quot;Deployments&quot;, which appears above the deployments list on the workloads page.">Deployments</translation>
+  <translation id="750764628652943156" key="MSG_WORKLOADS_WORKLOADS_4" desc="Label &quot;Stateful Sets&quot;, which appears above the replica set list on the workloads page.">Stateful Sets</translation>
   <translation id="8589736361485967591" key="MSG_WORKLOADS_WORKLOADS_4" desc="Label &quot;Pet Sets&quot;, which appears above the replica set list on the workloads page.">Pet Sets</translation>
   <translation id="7421694383240872974" key="MSG_WORKLOADS_WORKLOADS_5" desc="Label &quot;Replica sets&quot;, which appears above the replica sets list on the workloads page.">Replica sets</translation>
   <translation id="7924402398332886080" key="MSG_WORKLOADS_WORKLOADS_6" desc="Label &quot;Job&quot;, which appears above the replica sets list on the workloads page.">Jobs</translation>

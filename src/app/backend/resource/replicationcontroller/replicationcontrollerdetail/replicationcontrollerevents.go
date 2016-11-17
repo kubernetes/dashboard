@@ -22,7 +22,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/kubernetes/pkg/api"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 )
 
 // GetReplicationControllerEvents returns events for particular namespace and replication
@@ -65,7 +65,7 @@ func GetReplicationControllerEvents(client client.Interface, dsQuery *dataselect
 func getReplicationControllerPodsEvents(client client.Interface, namespace,
 	replicationControllerName string) ([]api.Event, error) {
 
-	replicationController, err := client.ReplicationControllers(namespace).Get(replicationControllerName)
+	replicationController, err := client.Core().ReplicationControllers(namespace).Get(replicationControllerName)
 
 	if err != nil {
 		return nil, err

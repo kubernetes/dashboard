@@ -23,7 +23,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/kubernetes/pkg/api"
-	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
+	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
 )
@@ -62,7 +62,7 @@ func GetServiceDetail(client k8sClient.Interface, heapsterClient client.Heapster
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 
 	// TODO(maciaszczykm): Use channels.
-	serviceData, err := client.Services(namespace).Get(name)
+	serviceData, err := client.Core().Services(namespace).Get(name)
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +82,7 @@ func GetServiceDetail(client k8sClient.Interface, heapsterClient client.Heapster
 func GetServicePods(client k8sClient.Interface, heapsterClient client.HeapsterClient, namespace,
 	name string, dsQuery *dataselect.DataSelectQuery) (*pod.PodList, error) {
 
-	service, err := client.Services(namespace).Get(name)
+	service, err := client.Core().Services(namespace).Get(name)
 	if err != nil {
 		return nil, err
 	}

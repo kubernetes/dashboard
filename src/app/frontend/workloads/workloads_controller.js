@@ -22,14 +22,14 @@ export class WorkloadsController {
    * @param {!angular.Resource} kdReplicaSetListResource
    * @param {!angular.Resource} kdDaemonSetListResource
    * @param {!angular.Resource} kdDeploymentListResource
-   * @param {!angular.Resource} kdPetSetListResource
+   * @param {!angular.Resource} kdStatefulSetListResource
    * @param {!angular.Resource} kdJobListResource
    * @param {!angular.Resource} kdRCListResource
    * @ngInject
    */
   constructor(
       workloads, kdPodListResource, kdReplicaSetListResource, kdDaemonSetListResource,
-      kdDeploymentListResource, kdPetSetListResource, kdJobListResource, kdRCListResource) {
+      kdDeploymentListResource, kdStatefulSetListResource, kdJobListResource, kdRCListResource) {
     /** @export {!backendApi.Workloads} */
     this.workloads = workloads;
 
@@ -46,7 +46,7 @@ export class WorkloadsController {
     this.deploymentListResource = kdDeploymentListResource;
 
     /** @export {!angular.Resource} */
-    this.petSetListResource = kdPetSetListResource;
+    this.statefulSetListResource = kdStatefulSetListResource;
 
     /** @export {!angular.Resource} */
     this.jobListResource = kdJobListResource;
@@ -67,7 +67,7 @@ export class WorkloadsController {
         this.workloads.replicationControllerList.listMeta.totalItems +
         this.workloads.podList.listMeta.totalItems +
         this.workloads.daemonSetList.listMeta.totalItems +
-        this.workloads.petSetList.listMeta.totalItems;
+        this.workloads.statefulSetList.listMeta.totalItems;
 
     return resourcesLength === 0;
   }

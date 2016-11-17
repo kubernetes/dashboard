@@ -20,14 +20,14 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/kubernetes/pkg/api"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
 	"k8s.io/kubernetes/pkg/types"
 )
 
 // GetEvents gets events associated to resource with given name.
-func GetEvents(client client.EventNamespacer, namespace, resourceName string) ([]api.Event, error) {
+func GetEvents(client client.Interface, namespace, resourceName string) ([]api.Event, error) {
 
 	fieldSelector, err := fields.ParseSelector("involvedObject.name=" + resourceName)
 
@@ -89,11 +89,11 @@ func GetPodsEvents(client client.Interface, namespace string, resourceSelector m
 func GetNodeEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, nodeName string) (*common.EventList, error) {
 	var eventList common.EventList
 
-	mc := client.Nodes()
+	mc := client.Core().Nodes()
 	node, _ := mc.Get(nodeName)
 	if ref, err := api.GetReference(node); err == nil {
 		ref.UID = types.UID(ref.Name)
-		events, _ := client.Events(api.NamespaceAll).Search(ref)
+		events, _ := client.Core().Events(api.NamespaceAll).Search(ref)
 		eventList = CreateEventList(events.Items, dsQuery)
 	} else {
 		log.Print(err)
@@ -104,7 +104,7 @@ func GetNodeEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery,
 
 // GetNodeEvents gets events associated to node with given name.
 func GetNamespaceEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace string) (common.EventList, error) {
-	events, _ := client.Events(namespace).List(api.ListOptions{
+	events, _ := client.Core().Events(namespace).List(api.ListOptions{
 		LabelSelector: labels.Everything(),
 		FieldSelector: fields.Everything(),
 	})

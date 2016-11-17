@@ -19,7 +19,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"k8s.io/kubernetes/pkg/api"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 )
 
 // SecretDetail API resource provides mechanisms to inject containers with configuration data while keeping
@@ -39,7 +39,7 @@ type SecretDetail struct {
 }
 
 // GetSecretDetail returns returns detailed information about a secret
-func GetSecretDetail(client *client.Client, namespace, name string) (*SecretDetail, error) {
+func GetSecretDetail(client *client.Clientset, namespace, name string) (*SecretDetail, error) {
 	log.Printf("Getting details of %s secret in %s namespace", name, namespace)
 
 	rawSecret, err := client.Secrets(namespace).Get(name)
