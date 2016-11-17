@@ -1,5 +1,7 @@
 # Roadmap
 
+![Roadmap](images/roadmap.png "Dashboard Roadmap")
+
 The following table contains a priority-ordered list of work items and features the team
 plans to work on (as of March 2016).
 
