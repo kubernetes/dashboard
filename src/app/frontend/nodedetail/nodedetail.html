@@ -15,10 +15,10 @@ limitations under the License.
 -->
 
 <div layout="row">
-  <kd-graph-card graph-title="[[CPU usage history|Title for graph card displaying CPU metric of one node.]]"
+  <kd-graph-card graph-title="[[CPU usage|Title for graph card displaying CPU metric of one node.]]"
                  metrics="::ctrl.nodeDetail.metrics" selected-metric-names="'cpu/usage_rate'">
   </kd-graph-card>
-  <kd-graph-card graph-title="[[Memory usage history|Title for graph card displaying memory metric of one node.]]"
+  <kd-graph-card graph-title="[[Memory usage|Title for graph card displaying memory metric of one node.]]"
                  metrics="::ctrl.nodeDetail.metrics" selected-metric-names="'memory/usage'">
   </kd-graph-card>
 </div>
@@ -26,7 +26,6 @@ limitations under the License.
 <kd-node-info node="::ctrl.nodeDetail"></kd-node-info>
 
 <kd-content-card>
-  <kd-title>[[Pods|Label 'Pods' for the pods section on the node details page.]]</kd-title>
   <kd-content>
     <kd-pod-card-list pod-list="::ctrl.nodeDetail.podList" with-statuses="true"
                       ng-show="::ctrl.nodeDetail.podList.pods.length" pod-list-resource="::ctrl.podListResource">

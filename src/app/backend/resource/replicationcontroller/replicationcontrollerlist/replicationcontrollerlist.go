@@ -33,9 +33,8 @@ type ReplicationControllerList struct {
 
 	// Unordered list of Replication Controllers.
 	ReplicationControllers []replicationcontroller.ReplicationController `json:"replicationControllers"`
-	CumulativeMetrics      []metric.Metric         `json:"cumulativeMetrics"`
+	CumulativeMetrics      []metric.Metric                               `json:"cumulativeMetrics"`
 }
-
 
 // GetReplicationControllerList returns a list of all Replication Controllers in the cluster.
 func GetReplicationControllerList(client *client.Client, nsQuery *common.NamespaceQuery,

@@ -26,15 +26,14 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset/daemonsetlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job/joblist"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/petset/petsetlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/replicasetlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller/replicationcontrollerlist"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset/daemonsetlist"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/petset/petsetlist"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 )
-
 
 // PodDetail is a presentation layer view of Kubernetes PodDetail resource.
 // This means it is PodDetail plus additional augumented data we can get
@@ -76,10 +75,10 @@ type Controller struct {
 	// Singleton list of the Job that controls this Pod, only set if Kind = "Job"
 	JobList *joblist.JobList `json:"joblist,omitempty"`
 
-	ReplicaSetList *replicasetlist.ReplicaSetList `json:"replicasetlist,omitempty"`
+	ReplicaSetList            *replicasetlist.ReplicaSetList                       `json:"replicasetlist,omitempty"`
 	ReplicationControllerList *replicationcontrollerlist.ReplicationControllerList `json:"replicationcontrollerlist,omitempty"`
-	DaemonSetList *daemonsetlist.DaemonSetList `json:"daemonsetlist,omitempty"`
-	PetSetList *petsetlist.PetSetList `json:"petsetlist,omitempty"`
+	DaemonSetList             *daemonsetlist.DaemonSetList                         `json:"daemonsetlist,omitempty"`
+	PetSetList                *petsetlist.PetSetList                               `json:"petsetlist,omitempty"`
 }
 
 // Container represents a docker/rkt/etc. container that lives in a pod.
@@ -138,7 +137,7 @@ func GetPodDetail(client k8sClient.Interface, heapsterClient client.HeapsterClie
 	creatorAnnotation, found := pod.ObjectMeta.Annotations[api.CreatedByAnnotation]
 	if found {
 		creatorRef, err := getPodCreator(client, creatorAnnotation, common.NewSameNamespaceQuery(namespace), heapsterClient)
-		if (err != nil) {
+		if err != nil {
 			return nil, err
 		}
 		controller = *creatorRef
@@ -160,7 +159,7 @@ func GetPodDetail(client k8sClient.Interface, heapsterClient client.HeapsterClie
 
 func getPodCreator(client k8sClient.Interface, creatorAnnotation string, nsQuery *common.NamespaceQuery, heapsterClient client.HeapsterClient) (*Controller, error) {
 	var serializedReference api.SerializedReference
-	err := json.Unmarshal([]byte(creatorAnnotation), &serializedReference);
+	err := json.Unmarshal([]byte(creatorAnnotation), &serializedReference)
 	if err != nil {
 		return nil, err
 	}
@@ -211,7 +210,7 @@ func toJobPodController(client k8sClient.Interface, reference api.ObjectReferenc
 	jobs := []batch.Job{*job}
 	jobList := joblist.CreateJobList(jobs, pods, events, dataselect.StdMetricsDataSelect, &heapsterClient)
 	return &Controller{
-		Kind: "Job",
+		Kind:    "Job",
 		JobList: jobList,
 	}, nil
 }
@@ -224,7 +223,7 @@ func toReplicaSetPodController(client k8sClient.Interface, reference api.ObjectR
 	replicaSets := []extensions.ReplicaSet{*rs}
 	replicaSetList := replicasetlist.CreateReplicaSetList(replicaSets, pods, events, dataselect.StdMetricsDataSelect, &heapsterClient)
 	return &Controller{
-		Kind: "ReplicaSet",
+		Kind:           "ReplicaSet",
 		ReplicaSetList: replicaSetList,
 	}, nil
 }
@@ -251,7 +250,7 @@ func toDaemonSetPodController(client k8sClient.Interface, reference api.ObjectRe
 
 	daemonSetList := daemonsetlist.CreateDaemonSetList(daemonsets, pods, events, dataselect.StdMetricsDataSelect, &heapsterClient)
 	return &Controller{
-		Kind: "DaemonSet",
+		Kind:          "DaemonSet",
 		DaemonSetList: daemonSetList,
 	}, nil
 }
@@ -265,7 +264,7 @@ func toPetSetPodController(client k8sClient.Interface, reference api.ObjectRefer
 
 	petSetList := petsetlist.CreatePetSetList(petsets, pods, events, dataselect.StdMetricsDataSelect, &heapsterClient)
 	return &Controller{
-		Kind: "PetSet",
+		Kind:       "PetSet",
 		PetSetList: petSetList,
 	}, nil
 }

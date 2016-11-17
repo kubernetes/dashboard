@@ -40,6 +40,10 @@ export class DaemonSetCardListController {
  * @type {!angular.Component}
  */
 export const daemonSetCardListComponent = {
+  transclude: {
+    // Optional header that is transcluded instead of the default one.
+    'header': '?kdHeader',
+  },
   templateUrl: 'daemonsetlist/daemonsetcardlist.html',
   controller: DaemonSetCardListController,
   bindings: {

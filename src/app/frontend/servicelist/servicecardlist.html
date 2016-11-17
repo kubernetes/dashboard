@@ -15,6 +15,13 @@ limitations under the License.
 -->
 
 <kd-resource-card-list selectable="::$ctrl.selectable" with-statuses="true">
+  <kd-resource-card-list-header>
+    [[Services|Label which appears above the list of such objects.]]
+  </kd-resource-card-list-header>
+  <kd-resource-card-list-pagination pagination-id="services" list="$ctrl.serviceList"
+                                    list-resource="::$ctrl.serviceListResource">
+  </kd-resource-card-list-pagination>
+
   <kd-resource-card-header-columns>
     <kd-resource-card-header-column size="small" grow="2">
       [[Name|Label 'Name' which appears as a column label in the table of services (service list view).]]
@@ -47,9 +54,4 @@ limitations under the License.
                    dir-paginate="service in $ctrl.serviceList.services | itemsPerPage: default"
                    service="service">
   </kd-service-card>
-  <kd-resource-card-list-footer>
-    <kd-resource-card-list-pagination pagination-id="services" list="$ctrl.serviceList"
-                                      list-resource="::$ctrl.serviceListResource">
-    </kd-resource-card-list-pagination>
-  </kd-resource-card-list-footer>
 </kd-resource-card-list>

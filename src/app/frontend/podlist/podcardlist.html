@@ -16,6 +16,13 @@ limitations under the License.
 
 <kd-resource-card-list selectable="::$ctrl.selectable" with-statuses="::$ctrl.withStatuses"
                        ng-if="::$ctrl.podList.pods">
+  <kd-resource-card-list-header>
+    [[Pods|Label which appears above the list of such objects.]]
+  </kd-resource-card-list-header>
+  <kd-resource-card-list-pagination pagination-id="pods" list="$ctrl.podList"
+                                    list-resource="$ctrl.podListResource">
+  </kd-resource-card-list-pagination>
+
   <kd-resource-card-header-columns>
     <kd-resource-card-header-column size="small" grow="2">
       [[Name|Title of a column]]
@@ -123,10 +130,4 @@ limitations under the License.
       </kd-resource-card-column>
     </kd-resource-card-columns>
   </kd-resource-card>
-
-  <kd-resource-card-list-footer>
-    <kd-resource-card-list-pagination pagination-id="pods" list="$ctrl.podList"
-                                      list-resource="$ctrl.podListResource">
-    </kd-resource-card-list-pagination>
-  </kd-resource-card-list-footer>
 </kd-resource-card-list>
