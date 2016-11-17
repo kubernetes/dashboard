@@ -17,8 +17,8 @@ package client
 import (
 	"log"
 
-	restclient "k8s.io/kubernetes/pkg/client/restclient"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	"k8s.io/kubernetes/pkg/client/restclient"
 )
 
 // HeapsterClient  is a client used to make requests to a Heapster instance.
@@ -38,7 +38,7 @@ type RequestInterface interface {
 // InClusterHeapsterClient is an in-cluster implementation of a Heapster client. Talks with Heapster
 // through service proxy.
 type InClusterHeapsterClient struct {
-	client *client.Client
+	client restclient.Interface
 }
 
 // Get creates request to given path.
@@ -53,7 +53,7 @@ func (c InClusterHeapsterClient) Get(path string) RequestInterface {
 // RemoteHeapsterClient is an implementation of a remote Heapster client. Talks with Heapster
 // through raw RESTClient.
 type RemoteHeapsterClient struct {
-	client *restclient.RESTClient
+	client restclient.Interface
 }
 
 // Get creates request to given path.
@@ -65,19 +65,19 @@ func (c RemoteHeapsterClient) Get(path string) RequestInterface {
 // string the function assumes that it is running inside a Kubernetes cluster and connects via
 // service proxy. heapsterHost param is in the format of protocol://address:port,
 // e.g., http://localhost:8002.
-func CreateHeapsterRESTClient(heapsterHost string, apiclient *client.Client) (
+func CreateHeapsterRESTClient(heapsterHost string, apiclient *client.Clientset) (
 	HeapsterClient, error) {
 
 	if heapsterHost == "" {
-		log.Printf("Creating in-cluster Heapster client")
-		return InClusterHeapsterClient{client: apiclient}, nil
+		log.Print("Creating in-cluster Heapster client")
+		return InClusterHeapsterClient{client: apiclient.Core().RESTClient()}, nil
 	}
 
 	cfg := &restclient.Config{Host: heapsterHost, QPS: defaultQPS, Burst: defaultBurst}
-	restClient, err := client.New(cfg)
+	restClient, err := client.NewForConfig(cfg)
 	if err != nil {
 		return nil, err
 	}
 	log.Printf("Creating remote Heapster client for %s", heapsterHost)
-	return RemoteHeapsterClient{client: restClient.RESTClient}, nil
+	return RemoteHeapsterClient{client: restClient.Core().RESTClient()}, nil
 }

@@ -19,7 +19,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/extensions"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
 )
@@ -44,7 +44,7 @@ type IngressList struct {
 // GetIngressList - return all ingresses in the given namespace.
 func GetIngressList(client client.Interface, namespace *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*IngressList, error) {
-	ingressList, err := client.Extensions().Ingress(namespace.ToRequestParam()).List(api.ListOptions{
+	ingressList, err := client.Extensions().Ingresses(namespace.ToRequestParam()).List(api.ListOptions{
 		LabelSelector: labels.Everything(),
 		FieldSelector: fields.Everything(),
 	})

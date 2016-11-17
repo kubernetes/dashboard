@@ -23,7 +23,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/resourcequota"
 	"k8s.io/kubernetes/pkg/api"
-	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
+	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
 )
@@ -49,7 +49,7 @@ func GetNamespaceDetail(client k8sClient.Interface, heapsterClient client.Heapst
 	*NamespaceDetail, error) {
 	log.Printf("Getting details of %s namespace", name)
 
-	namespace, err := client.Namespaces().Get(name)
+	namespace, err := client.Core().Namespaces().Get(name)
 	if err != nil {
 		return nil, err
 	}
@@ -80,8 +80,8 @@ func toNamespaceDetail(namespace api.Namespace, events common.EventList, resourc
 	}
 }
 
-func getResourceQuotas(client k8sClient.ResourceQuotasNamespacer, namespace api.Namespace) (*resourcequota.ResourceQuotaDetailList, error) {
-	list, err := client.ResourceQuotas(namespace.Name).List(listEverything)
+func getResourceQuotas(client k8sClient.Interface, namespace api.Namespace) (*resourcequota.ResourceQuotaDetailList, error) {
+	list, err := client.Core().ResourceQuotas(namespace.Name).List(listEverything)
 
 	result := &resourcequota.ResourceQuotaDetailList{
 		Items:    make([]resourcequota.ResourceQuotaDetail, 0),

@@ -24,7 +24,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/batch"
-	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
+	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
 )

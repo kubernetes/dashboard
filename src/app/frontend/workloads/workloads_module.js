@@ -18,9 +18,9 @@ import filtersModule from 'common/filters/filters_module';
 import daemonSetListModule from 'daemonsetlist/daemonsetlist_module';
 import deploymentListModule from 'deploymentlist/deploymentlist_module';
 import jobListModule from 'joblist/joblist_module';
-import petSetListModule from 'petsetlist/petsetlist_module';
 import replicaSetListModule from 'replicasetlist/replicasetlist_module';
 import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
+import statefulSetListModule from 'statefulsetlist/statefulsetlist_module';
 
 import stateConfig from './workloads_stateconfig';
 
@@ -44,7 +44,7 @@ export default angular
           replicaSetListModule.name,
           deploymentListModule.name,
           daemonSetListModule.name,
-          petSetListModule.name,
+          statefulSetListModule.name,
         ])
     .config(stateConfig)
     .factory('kdWorkloadResource', workloadResource);

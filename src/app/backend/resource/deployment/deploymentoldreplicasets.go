@@ -2,7 +2,7 @@ package deployment
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/kubernetes/pkg/api"
@@ -30,7 +30,7 @@ func GetDeploymentOldReplicaSets(client client.Interface, dsQuery *dataselect.Da
 	options := api.ListOptions{LabelSelector: selector}
 
 	channels := &common.ResourceChannels{
-		ReplicaSetList: common.GetReplicaSetListChannelWithOptions(client.Extensions(),
+		ReplicaSetList: common.GetReplicaSetListChannelWithOptions(client,
 			common.NewSameNamespaceQuery(namespace), options, 1),
 		PodList: common.GetPodListChannelWithOptions(client,
 			common.NewSameNamespaceQuery(namespace), options, 1),

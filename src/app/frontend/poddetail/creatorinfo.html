@@ -38,12 +38,12 @@ limitations under the License.
           <kd-header>[[Created by|Heading for Creator card on poddetail page]]</kd-header>
         </kd-replica-set-card-list>
       </div>
-      <div ng-switch-when="PetSet">
-        <kd-pet-set-card-list pet-set-list="$ctrl.creator.petsetlist" show-resource-kind="true">
+      <div ng-switch-when="StatefulSet">
+        <kd-stateful-set-card-list stateful-set-list="$ctrl.creator.statefulsetlist" show-resource-kind="true">
           <kd-header>[[Created by|Heading for Creator card on poddetail page]]</kd-header>
-        </kd-pet-set-card-list>
+        </kd-stateful-set-card-list>
       </div>
       <span ng-switch-default>[[Unknown creator||Label for unknown creator of a pod]]</span>
     </div>
   </kd-content>
-</kd-info-card>
+</kd-content-card>

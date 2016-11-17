@@ -20,7 +20,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/kubernetes/pkg/api"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 )
 
 // PersistentVolumeList contains a list of Persistent Volumes in the cluster.
@@ -45,8 +45,8 @@ type PersistentVolume struct {
 }
 
 // GetPersistentVolumeList returns a list of all Persistent Volumes in the cluster.
-func GetPersistentVolumeList(client *client.Client, dsQuery *dataselect.DataSelectQuery) (*PersistentVolumeList, error) {
-	log.Printf("Getting list persistent volumes")
+func GetPersistentVolumeList(client *client.Clientset, dsQuery *dataselect.DataSelectQuery) (*PersistentVolumeList, error) {
+	log.Print("Getting list persistent volumes")
 	channels := &common.ResourceChannels{
 		PersistentVolumeList: common.GetPersistentVolumeListChannel(client, 1),
 	}

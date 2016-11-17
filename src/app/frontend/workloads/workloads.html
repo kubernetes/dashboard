@@ -59,14 +59,14 @@ limitations under the License.
     </kd-content>
   </kd-content-card>
 
-  <kd-content-card ng-if="$ctrl.workloads.petSetList.petSets.length">
+  <kd-content-card ng-if="$ctrl.workloads.statefulSetList.statefulSets.length">
     <kd-content>
-      <kd-pet-set-card-list pet-set-list="$ctrl.workloads.petSetList"
-                            pet-set-list-resource="$ctrl.petSetListResource">
-      </kd-pet-set-card-list>
+      <kd-stateful-set-card-list stateful-set-list="$ctrl.workloads.statefulSetList"
+                                 stateful-set-list-resource="$ctrl.statefulSetListResource">
+      </kd-stateful-set-card-list>
     </kd-content>
   </kd-content-card>
-  
+
   <kd-content-card ng-if="$ctrl.workloads.jobList.jobs.length">
     <kd-content>
       <kd-job-card-list job-list="$ctrl.workloads.jobList"

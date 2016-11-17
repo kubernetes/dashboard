@@ -17,7 +17,7 @@
 # Learn more at https://github.com/kubernetes/kubernetes/blob/master/docs/getting-started-guides/docker.md
 
 # Version of kubernetes to use.
-K8S_VERSION="v1.4.0-alpha.3"
+K8S_VERSION="v1.5.0-beta.0"
 # Version heapster to use.
 HEAPSTER_VERSION="v1.1.0"
 # Port of the heapster to serve on.

@@ -17,7 +17,7 @@
  */
 export default class PersistentVolumeInfoController {
   /**
-   * Constructs pettion controller info object.
+   * Constructs statefultion controller info object.
    * @ngInject
    */
   constructor() {

@@ -27,7 +27,7 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 	k8serrors "k8s.io/kubernetes/pkg/api/errors"
 	"k8s.io/kubernetes/pkg/apis/extensions"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 )
 
 // ReplicationSetList contains a list of Replica Sets in the cluster.
@@ -42,10 +42,10 @@ type ReplicaSetList struct {
 // GetReplicaSetList returns a list of all Replica Sets in the cluster.
 func GetReplicaSetList(client client.Interface, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*ReplicaSetList, error) {
-	log.Printf("Getting list of all replica sets in the cluster")
+	log.Print("Getting list of all replica sets in the cluster")
 
 	channels := &common.ResourceChannels{
-		ReplicaSetList: common.GetReplicaSetListChannel(client.Extensions(), nsQuery, 1),
+		ReplicaSetList: common.GetReplicaSetListChannel(client, nsQuery, 1),
 		PodList:        common.GetPodListChannel(client, nsQuery, 1),
 		EventList:      common.GetEventListChannel(client, nsQuery, 1),
 	}

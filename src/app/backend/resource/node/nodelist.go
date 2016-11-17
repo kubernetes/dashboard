@@ -20,7 +20,7 @@ import (
 	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"k8s.io/kubernetes/pkg/api"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
@@ -50,7 +50,7 @@ type Node struct {
 // GetNodeListFromChannels returns a list of all namespaces in the cluster.
 func GetNodeListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery,
 	heapsterClient *heapster.HeapsterClient) (*NodeList, error) {
-	log.Printf("Getting node list")
+	log.Print("Getting node list")
 
 	namespaces := <-channels.NodeList.List
 	if err := <-channels.NodeList.Error; err != nil {
@@ -62,9 +62,9 @@ func GetNodeListFromChannels(channels *common.ResourceChannels, dsQuery *datasel
 
 // GetNodeList returns a list of all Nodes in the cluster.
 func GetNodeList(client client.Interface, dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*NodeList, error) {
-	log.Printf("Getting list of all nodes in the cluster")
+	log.Print("Getting list of all nodes in the cluster")
 
-	nodes, err := client.Nodes().List(api.ListOptions{
+	nodes, err := client.Core().Nodes().List(api.ListOptions{
 		LabelSelector: labels.Everything(),
 		FieldSelector: fields.Everything(),
 	})

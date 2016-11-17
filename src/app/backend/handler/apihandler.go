@@ -44,8 +44,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/node"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/petset/petsetdetail"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/petset/petsetlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/replicasetdetail"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/replicasetlist"
@@ -54,9 +52,11 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/secret"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/servicesanddiscovery"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/statefulsetdetail"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/statefulsetlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/workload"
 	"github.com/kubernetes/dashboard/src/app/backend/validation"
-	clientK8s "k8s.io/kubernetes/pkg/client/unversioned"
+	clientK8s "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
 	"k8s.io/kubernetes/pkg/runtime"
 )
@@ -72,7 +72,7 @@ const (
 // APIHandler is a representation of API handler. Structure contains client, Heapster client and
 // client configuration.
 type APIHandler struct {
-	client         *clientK8s.Client
+	client         *clientK8s.Clientset
 	heapsterClient client.HeapsterClient
 	clientConfig   clientcmd.ClientConfig
 	verber         common.ResourceVerber
@@ -105,11 +105,12 @@ func FormatResponseLog(resp *restful.Response, req *restful.Request) string {
 }
 
 // CreateHTTPAPIHandler creates a new HTTP handler that handles all requests to the API of the backend.
-func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.HeapsterClient,
+func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.HeapsterClient,
 	clientConfig clientcmd.ClientConfig) http.Handler {
 
-	verber := common.NewResourceVerber(client.RESTClient, client.ExtensionsClient.RESTClient,
-		client.AppsClient.RESTClient, client.BatchClient.RESTClient)
+	verber := common.NewResourceVerber(client.Core().RESTClient(),
+		client.ExtensionsClient.RESTClient(), client.AppsClient.RESTClient(),
+		client.BatchClient.RESTClient())
 	apiHandler := APIHandler{client, heapsterClient, clientConfig, verber}
 	wsContainer := restful.NewContainer()
 	wsContainer.EnableContentEncoding(true)
@@ -409,24 +410,24 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 			Writes(ingress.IngressDetail{}))
 
 	apiV1Ws.Route(
-		apiV1Ws.GET("/petset").
-			To(apiHandler.handleGetPetSetList).
-			Writes(petsetlist.PetSetList{}))
+		apiV1Ws.GET("/statefulset").
+			To(apiHandler.handleGetStatefulSetList).
+			Writes(statefulsetlist.StatefulSetList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/petset/{namespace}").
-			To(apiHandler.handleGetPetSetList).
-			Writes(petsetlist.PetSetList{}))
+		apiV1Ws.GET("/statefulset/{namespace}").
+			To(apiHandler.handleGetStatefulSetList).
+			Writes(statefulsetlist.StatefulSetList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/petset/{namespace}/{petset}").
-			To(apiHandler.handleGetPetSetDetail).
-			Writes(petsetdetail.PetSetDetail{}))
+		apiV1Ws.GET("/statefulset/{namespace}/{statefulset}").
+			To(apiHandler.handleGetStatefulSetDetail).
+			Writes(statefulsetdetail.StatefulSetDetail{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/petset/{namespace}/{petset}/pod").
-			To(apiHandler.handleGetPetSetPods).
+		apiV1Ws.GET("/statefulset/{namespace}/{statefulset}/pod").
+			To(apiHandler.handleGetStatefulSetPods).
 			Writes(pod.PodList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/petset/{namespace}/{petset}/event").
-			To(apiHandler.handleGetPetSetEvents).
+		apiV1Ws.GET("/statefulset/{namespace}/{statefulset}/event").
+			To(apiHandler.handleGetStatefulSetEvents).
 			Writes(common.EventList{}))
 
 	apiV1Ws.Route(
@@ -500,12 +501,12 @@ func CreateHTTPAPIHandler(client *clientK8s.Client, heapsterClient client.Heapst
 }
 
 // Handles get pet set list API call.
-func (apiHandler *APIHandler) handleGetPetSetList(request *restful.Request,
+func (apiHandler *APIHandler) handleGetStatefulSetList(request *restful.Request,
 	response *restful.Response) {
 	namespace := parseNamespacePathParameter(request)
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.StandardMetrics
-	result, err := petsetlist.GetPetSetList(apiHandler.client, namespace, dataSelect, &apiHandler.heapsterClient)
+	result, err := statefulsetlist.GetStatefulSetList(apiHandler.client, namespace, dataSelect, &apiHandler.heapsterClient)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -515,12 +516,12 @@ func (apiHandler *APIHandler) handleGetPetSetList(request *restful.Request,
 }
 
 // Handles get pet set detail API call.
-func (apiHandler *APIHandler) handleGetPetSetDetail(request *restful.Request,
+func (apiHandler *APIHandler) handleGetStatefulSetDetail(request *restful.Request,
 	response *restful.Response) {
 	namespace := request.PathParameter("namespace")
-	name := request.PathParameter("petset")
+	name := request.PathParameter("statefulset")
 
-	result, err := petsetdetail.GetPetSetDetail(apiHandler.client, apiHandler.heapsterClient,
+	result, err := statefulsetdetail.GetStatefulSetDetail(apiHandler.client, apiHandler.heapsterClient,
 		namespace, name)
 	if err != nil {
 		handleInternalError(response, err)
@@ -530,12 +531,12 @@ func (apiHandler *APIHandler) handleGetPetSetDetail(request *restful.Request,
 }
 
 // Handles get pet set pods API call.
-func (apiHandler *APIHandler) handleGetPetSetPods(request *restful.Request,
+func (apiHandler *APIHandler) handleGetStatefulSetPods(request *restful.Request,
 	response *restful.Response) {
 	namespace := request.PathParameter("namespace")
-	name := request.PathParameter("petset")
+	name := request.PathParameter("statefulset")
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := petsetdetail.GetPetSetPods(apiHandler.client, apiHandler.heapsterClient,
+	result, err := statefulsetdetail.GetStatefulSetPods(apiHandler.client, apiHandler.heapsterClient,
 		dataSelect, name, namespace)
 	if err != nil {
 		handleInternalError(response, err)
@@ -545,12 +546,12 @@ func (apiHandler *APIHandler) handleGetPetSetPods(request *restful.Request,
 }
 
 // Handles get pet set events API call.
-func (apiHandler *APIHandler) handleGetPetSetEvents(request *restful.Request, response *restful.Response) {
+func (apiHandler *APIHandler) handleGetStatefulSetEvents(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
-	name := request.PathParameter("petset")
+	name := request.PathParameter("statefulset")
 	dataSelect := parseDataSelectPathParameter(request)
 
-	result, err := petsetdetail.GetPetSetEvents(apiHandler.client, dataSelect, namespace,
+	result, err := statefulsetdetail.GetStatefulSetEvents(apiHandler.client, dataSelect, namespace,
 		name)
 	if err != nil {
 		handleInternalError(response, err)

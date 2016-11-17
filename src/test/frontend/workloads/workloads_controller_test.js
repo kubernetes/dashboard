@@ -44,7 +44,7 @@ describe('Workload list controller', () => {
       replicationControllerList: {listMeta: {totalItems: 0}, replicationControllers: []},
       podList: {listMeta: {totalItems: 0}, pods: []},
       daemonSetList: {listMeta: {totalItems: 0}, daemonSets: []},
-      petSetList: {listMeta: {totalItems: 0}, petSets: []},
+      statefulSetList: {listMeta: {totalItems: 0}, statefulSets: []},
     };
 
     expect(ctrl.shouldShowZeroState()).toBeTruthy();
@@ -59,7 +59,7 @@ describe('Workload list controller', () => {
       replicationControllerList: {listMeta: {totalItems: 0}, replicationControllers: []},
       podList: {listMeta: {totalItems: 0}, pods: []},
       daemonSetList: {listMeta: {totalItems: 0}, daemonSets: []},
-      petSetList: {listMeta: {totalItems: 0}, petSets: []},
+      statefulSetList: {listMeta: {totalItems: 0}, statefulSets: []},
     };
 
     // then
