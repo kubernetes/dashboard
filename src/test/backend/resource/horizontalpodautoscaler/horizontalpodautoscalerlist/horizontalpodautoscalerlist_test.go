@@ -22,13 +22,13 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/autoscaling"
-	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
+	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
 )
 
 var (
 	apiHpaList = []autoscaling.HorizontalPodAutoscaler{
 		{
-			ObjectMeta: api.ObjectMeta{Name: "test-hpa1"},
+			ObjectMeta: api.ObjectMeta{Name: "test-hpa1", Namespace: "test-ns"},
 			Spec: autoscaling.HorizontalPodAutoscalerSpec{
 				ScaleTargetRef: autoscaling.CrossVersionObjectReference{
 					Kind: "test-kind1",
@@ -41,7 +41,7 @@ var (
 				DesiredReplicas: 2,
 			},
 		},{
-			ObjectMeta: api.ObjectMeta{Name: "test-hpa2"},
+			ObjectMeta: api.ObjectMeta{Name: "test-hpa2", Namespace: "test-ns"},
 			Spec: autoscaling.HorizontalPodAutoscalerSpec{
 				ScaleTargetRef: autoscaling.CrossVersionObjectReference{
 					Kind: "test-kind2",
@@ -54,7 +54,7 @@ var (
 				DesiredReplicas: 2,
 			},
 		},{
-			ObjectMeta: api.ObjectMeta{Name: "test-hpa2"},
+			ObjectMeta: api.ObjectMeta{Name: "test-hpa3", Namespace: "test-ns"},
 			Spec: autoscaling.HorizontalPodAutoscalerSpec{
 				ScaleTargetRef: autoscaling.CrossVersionObjectReference{
 					Kind: "test-kind2",
@@ -67,7 +67,7 @@ var (
 				DesiredReplicas: 2,
 			},
 		},{
-			ObjectMeta: api.ObjectMeta{Name: "test-hpa3"},
+			ObjectMeta: api.ObjectMeta{Name: "test-hpa4", Namespace: "test-ns"},
 			Spec: autoscaling.HorizontalPodAutoscalerSpec{
 				ScaleTargetRef: autoscaling.CrossVersionObjectReference{
 					Kind: "test-kind2",
@@ -83,7 +83,7 @@ var (
 	}
 	ourHpaList = []HorizontalPodAutoscaler{
 		{
-			ObjectMeta:     common.ObjectMeta{Name: "test-hpa1"},
+			ObjectMeta:     common.ObjectMeta{Name: "test-hpa1", Namespace: "test-ns"},
 			TypeMeta:       common.TypeMeta{Kind: common.ResourceKindHorizontalPodAutoscaler},
 			ScaleTargetRef: horizontalpodautoscaler.ScaleTargetRef{
 				Kind: "test-kind1",
@@ -91,7 +91,7 @@ var (
 			},
 			MaxReplicas: 3,
 		},{
-			ObjectMeta:     common.ObjectMeta{Name: "test-hpa2"},
+			ObjectMeta:     common.ObjectMeta{Name: "test-hpa2", Namespace: "test-ns"},
 			TypeMeta:       common.TypeMeta{Kind: common.ResourceKindHorizontalPodAutoscaler},
 			ScaleTargetRef: horizontalpodautoscaler.ScaleTargetRef{
 				Kind: "test-kind2",
@@ -99,7 +99,7 @@ var (
 			},
 			MaxReplicas: 3,
 		},{
-			ObjectMeta:     common.ObjectMeta{Name: "test-hpa2"},
+			ObjectMeta:     common.ObjectMeta{Name: "test-hpa3", Namespace: "test-ns"},
 			TypeMeta:       common.TypeMeta{Kind: common.ResourceKindHorizontalPodAutoscaler},
 			ScaleTargetRef: horizontalpodautoscaler.ScaleTargetRef{
 				Kind: "test-kind2",
@@ -107,7 +107,7 @@ var (
 			},
 			MaxReplicas: 3,
 		},{
-			ObjectMeta:     common.ObjectMeta{Name: "test-hpa3"},
+			ObjectMeta:     common.ObjectMeta{Name: "test-hpa4", Namespace: "test-ns"},
 			TypeMeta:       common.TypeMeta{Kind: common.ResourceKindHorizontalPodAutoscaler},
 			ScaleTargetRef: horizontalpodautoscaler.ScaleTargetRef{
 				Kind: "test-kind2",
@@ -139,7 +139,7 @@ func TestGetHorizontalPodAutoscalerList(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		fakeClient := testclient.NewSimpleFake(c.hpaList)
+		fakeClient := fake.NewSimpleClientset(c.hpaList)
 
 		actual, _ := GetHorizontalPodAutoscalerList(fakeClient, &common.NamespaceQuery{})
 
@@ -216,7 +216,7 @@ func TestGetHorizontalPodAutoscalerListForResource(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		fakeClient := testclient.NewSimpleFake(c.hpaList)
+		fakeClient := fake.NewSimpleClientset(c.hpaList)
 
 		actual, _ := GetHorizontalPodAutoscalerListForResource(fakeClient, "", c.kind, c.name)
 

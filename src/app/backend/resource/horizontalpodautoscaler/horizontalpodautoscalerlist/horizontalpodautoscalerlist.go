@@ -18,7 +18,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"k8s.io/kubernetes/pkg/apis/autoscaling"
-	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
+	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 )
 
 type HorizontalPodAutoscalerList struct {
@@ -44,7 +44,7 @@ type HorizontalPodAutoscaler struct {
 
 func GetHorizontalPodAutoscalerList(client k8sClient.Interface, nsQuery *common.NamespaceQuery) (*HorizontalPodAutoscalerList, error) {
 
-	channel := common.GetHorizontalPodAutoscalerListChannel(client.Autoscaling(), nsQuery, 1)
+	channel := common.GetHorizontalPodAutoscalerListChannel(client, nsQuery, 1)
 	hpaList := <-channel.List
 	if err := <-channel.Error; err != nil {
 		return nil, err
@@ -57,7 +57,7 @@ func GetHorizontalPodAutoscalerListForResource(client k8sClient.Interface, names
 
 	nsQuery := common.NewSameNamespaceQuery(namespace)
 
-	channel := common.GetHorizontalPodAutoscalerListChannel(client.Autoscaling(), nsQuery, 1)
+	channel := common.GetHorizontalPodAutoscalerListChannel(client, nsQuery, 1)
 	hpaList := <-channel.List
 	if err := <-channel.Error; err != nil {
 		return nil, err

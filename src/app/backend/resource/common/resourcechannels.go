@@ -732,14 +732,14 @@ type HorizontalPodAutoscalerListChannel struct {
 
 // GetPodListMetricsChannel returns a pair of channels to MetricsByPod and errors that
 // both must be read numReads times.
-func GetHorizontalPodAutoscalerListChannel(client client.HorizontalPodAutoscalersNamespacer, nsQuery *NamespaceQuery, numReads int) HorizontalPodAutoscalerListChannel {
+func GetHorizontalPodAutoscalerListChannel(client client.Interface, nsQuery *NamespaceQuery, numReads int) HorizontalPodAutoscalerListChannel {
 	channel := HorizontalPodAutoscalerListChannel{
 		List:  make(chan *autoscaling.HorizontalPodAutoscalerList, numReads),
 		Error: make(chan error, numReads),
 	}
 
 	go func() {
-		list, err := client.HorizontalPodAutoscalers(nsQuery.ToRequestParam()).List(listEverything)
+		list, err := client.Autoscaling().HorizontalPodAutoscalers(nsQuery.ToRequestParam()).List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err

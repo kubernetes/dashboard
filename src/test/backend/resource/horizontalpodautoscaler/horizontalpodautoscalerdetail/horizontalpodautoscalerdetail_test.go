@@ -22,7 +22,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/autoscaling"
-	"k8s.io/kubernetes/pkg/client/unversioned/testclient"
+	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
 )
 
 // func GetHorizontalPodAutoscalerDetail(client *client.Client, namespace string, name string) (*HorizontalPodAutoscalerDetail, error) 
@@ -35,10 +35,10 @@ func TestGetHorizontalPodAutoscalerDetail(t *testing.T) {
 		expected        *HorizontalPodAutoscalerDetail
 	}{
 		{
-			"test-namespace", "test-name",
+			"test-ns", "test-name",
 			[]string{"get"},
 			&autoscaling.HorizontalPodAutoscaler{
-				ObjectMeta: api.ObjectMeta{Name: "test-name"},
+				ObjectMeta: api.ObjectMeta{Name: "test-name", Namespace: "test-ns"},
 				Spec: autoscaling.HorizontalPodAutoscalerSpec{
 					ScaleTargetRef: autoscaling.CrossVersionObjectReference{
 						Kind: "test-kind",
@@ -52,7 +52,7 @@ func TestGetHorizontalPodAutoscalerDetail(t *testing.T) {
 				},
 			},
 			&HorizontalPodAutoscalerDetail{
-				ObjectMeta:     common.ObjectMeta{Name: "test-name"},
+				ObjectMeta:     common.ObjectMeta{Name: "test-name", Namespace: "test-ns"},
 				TypeMeta:       common.TypeMeta{Kind: common.ResourceKindHorizontalPodAutoscaler},
 				ScaleTargetRef: horizontalpodautoscaler.ScaleTargetRef{
 					Kind: "test-kind",
@@ -66,9 +66,10 @@ func TestGetHorizontalPodAutoscalerDetail(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		fakeClient := testclient.NewSimpleFake(c.hpa)
+		fakeClient := fake.NewSimpleClientset(c.hpa)
 
 		actual, _ := GetHorizontalPodAutoscalerDetail(fakeClient, c.namespace, c.name)
+
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {
