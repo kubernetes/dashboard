@@ -19,7 +19,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"k8s.io/kubernetes/pkg/apis/extensions"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 )
 
 // IngressDetail API resource provides mechanisms to inject containers with configuration data while keeping
@@ -40,7 +40,7 @@ type IngressDetail struct {
 func GetIngressDetail(client client.Interface, namespace, name string) (*IngressDetail, error) {
 	log.Printf("Getting details of %s ingress in %s namespace", name, namespace)
 
-	rawIngress, err := client.Extensions().Ingress(namespace).Get(name)
+	rawIngress, err := client.Extensions().Ingresses(namespace).Get(name)
 
 	if err != nil {
 		return nil, err

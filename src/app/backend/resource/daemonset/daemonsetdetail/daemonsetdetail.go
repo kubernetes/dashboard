@@ -25,7 +25,7 @@ import (
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
-	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
+	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 )
 
 // DaemonSeDetail represents detailed information about a Daemon Set.
@@ -122,12 +122,12 @@ func DeleteDaemonSet(client k8sClient.Interface, namespace, name string,
 		return err
 	}
 
-	if err := client.Extensions().DaemonSets(namespace).Delete(name); err != nil {
+	if err := client.Extensions().DaemonSets(namespace).Delete(name, &api.DeleteOptions{}); err != nil {
 		return err
 	}
 
 	for _, pod := range pods {
-		if err := client.Pods(namespace).Delete(pod.Name, &api.DeleteOptions{}); err != nil {
+		if err := client.Core().Pods(namespace).Delete(pod.Name, &api.DeleteOptions{}); err != nil {
 			return err
 		}
 	}
@@ -158,7 +158,7 @@ func DeleteDaemonSetServices(client k8sClient.Interface, namespace, name string)
 	}
 
 	for _, service := range services {
-		if err := client.Services(namespace).Delete(service.Name); err != nil {
+		if err := client.Core().Services(namespace).Delete(service.Name, &api.DeleteOptions{}); err != nil {
 			return err
 		}
 	}

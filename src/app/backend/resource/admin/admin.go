@@ -22,7 +22,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/node"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
-	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
+	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 )
 
 // Admin structure contains all resource lists grouped into the admin category.
@@ -35,9 +35,9 @@ type Admin struct {
 }
 
 // GetAdmin returns a list of all admin resources in the cluster.
-func GetAdmin(client *k8sClient.Client) (*Admin, error) {
+func GetAdmin(client *k8sClient.Clientset) (*Admin, error) {
 
-	log.Printf("Getting admin category")
+	log.Print("Getting admin category")
 	channels := &common.ResourceChannels{
 		NamespaceList:        common.GetNamespaceListChannel(client, 1),
 		NodeList:             common.GetNodeListChannel(client, 1),

@@ -47,7 +47,7 @@ describe('CreatorInfo directive', () => {
     ['DaemonSet', 'daemon-set'],
     ['ReplicationController', 'replication-controller'],
     ['ReplicaSet', 'replica-set'],
-    ['PetSet', 'pet-set'],
+    ['StatefulSet', 'stateful-set'],
   ]);
 
   kind2directive.forEach((directive, kind) => {

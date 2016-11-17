@@ -24,7 +24,7 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 	k8serrors "k8s.io/kubernetes/pkg/api/errors"
 	"k8s.io/kubernetes/pkg/apis/extensions"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
@@ -56,10 +56,10 @@ type Deployment struct {
 // GetDeploymentList returns a list of all Deployments in the cluster.
 func GetDeploymentList(client client.Interface, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*DeploymentList, error) {
-	log.Printf("Getting list of all deployments in the cluster")
+	log.Print("Getting list of all deployments in the cluster")
 
 	channels := &common.ResourceChannels{
-		DeploymentList: common.GetDeploymentListChannel(client.Extensions(), nsQuery, 1),
+		DeploymentList: common.GetDeploymentListChannel(client, nsQuery, 1),
 		PodList:        common.GetPodListChannel(client, nsQuery, 1),
 		EventList:      common.GetEventListChannel(client, nsQuery, 1),
 	}

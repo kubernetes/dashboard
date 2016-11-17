@@ -15,9 +15,9 @@
 import {stateName as daemonSetStateName} from '../../../daemonsetdetail/daemonsetdetail_state';
 import {stateName as deploymentStateName} from '../../../deploymentdetail/deploymentdetail_state.js';
 import {stateName as jobStateName} from '../../../jobdetail/jobdetail_state';
-import {stateName as petSetStateName} from '../../../petsetdetail/petsetdetail_state';
 import {stateName as replicaSetStateName} from '../../../replicasetdetail/replicasetdetail_state';
 import {stateName as replicationControllerStateName} from '../../../replicationcontrollerdetail/replicationcontrollerdetail_state';
+import {stateName as statefulSetStateName} from '../../../statefulsetdetail/statefulsetdetail_state';
 import {StateParams} from '../../resource/resourcedetail.js';
 
 const referenceKindToDetailStateName = {
@@ -25,7 +25,7 @@ const referenceKindToDetailStateName = {
   ReplicaSet: replicaSetStateName,
   ReplicationController: replicationControllerStateName,
   DaemonSet: daemonSetStateName,
-  PetSet: petSetStateName,
+  StatefulSet: statefulSetStateName,
   Job: jobStateName,
 };
 

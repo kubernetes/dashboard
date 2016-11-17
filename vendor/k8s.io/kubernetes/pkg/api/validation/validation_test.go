@@ -2611,6 +2611,7 @@ func TestValidateVolumeMounts(t *testing.T) {
 		{Name: "abc-123", MountPath: "/bab", SubPath: "baz"},
 		{Name: "abc-123", MountPath: "/bac", SubPath: ".baz"},
 		{Name: "abc-123", MountPath: "/bad", SubPath: "..baz"},
+		{Name: "abc", MountPath: "c:/foo/bar"},
 	}
 	if errs := validateVolumeMounts(successCase, volumes, field.NewPath("field")); len(errs) != 0 {
 		t.Errorf("expected success: %v", errs)
@@ -2620,7 +2621,6 @@ func TestValidateVolumeMounts(t *testing.T) {
 		"empty name":          {{Name: "", MountPath: "/foo"}},
 		"name not found":      {{Name: "", MountPath: "/foo"}},
 		"empty mountpath":     {{Name: "abc", MountPath: ""}},
-		"colon mountpath":     {{Name: "abc", MountPath: "foo:bar"}},
 		"mountpath collision": {{Name: "foo", MountPath: "/path/a"}, {Name: "bar", MountPath: "/path/a"}},
 		"absolute subpath":    {{Name: "abc", MountPath: "/bar", SubPath: "/baz"}},
 		"subpath in ..":       {{Name: "abc", MountPath: "/bar", SubPath: "../baz"}},
@@ -3665,6 +3665,52 @@ func TestValidatePod(t *testing.T) {
 			},
 			Spec: validPodSpec,
 		},
+		{ // valid opaque integer resources for init container
+			ObjectMeta: api.ObjectMeta{Name: "valid-opaque-int", Namespace: "ns"},
+			Spec: api.PodSpec{
+				InitContainers: []api.Container{
+					{
+						Name:            "valid-opaque-int",
+						Image:           "image",
+						ImagePullPolicy: "IfNotPresent",
+						Resources: api.ResourceRequirements{
+							Requests: api.ResourceList{
+								api.OpaqueIntResourceName("A"): resource.MustParse("10"),
+							},
+							Limits: api.ResourceList{
+								api.OpaqueIntResourceName("A"): resource.MustParse("20"),
+							},
+						},
+					},
+				},
+				Containers:    []api.Container{{Name: "ctr", Image: "image", ImagePullPolicy: "IfNotPresent"}},
+				RestartPolicy: api.RestartPolicyAlways,
+				DNSPolicy:     api.DNSClusterFirst,
+			},
+		},
+		{ // valid opaque integer resources for regular container
+			ObjectMeta: api.ObjectMeta{Name: "valid-opaque-int", Namespace: "ns"},
+			Spec: api.PodSpec{
+				InitContainers: []api.Container{{Name: "ctr", Image: "image", ImagePullPolicy: "IfNotPresent"}},
+				Containers: []api.Container{
+					{
+						Name:            "valid-opaque-int",
+						Image:           "image",
+						ImagePullPolicy: "IfNotPresent",
+						Resources: api.ResourceRequirements{
+							Requests: api.ResourceList{
+								api.OpaqueIntResourceName("A"): resource.MustParse("10"),
+							},
+							Limits: api.ResourceList{
+								api.OpaqueIntResourceName("A"): resource.MustParse("20"),
+							},
+						},
+					},
+				},
+				RestartPolicy: api.RestartPolicyAlways,
+				DNSPolicy:     api.DNSClusterFirst,
+			},
+		},
 	}
 	for _, pod := range successCases {
 		if errs := ValidatePod(&pod); len(errs) != 0 {
@@ -4154,6 +4200,112 @@ func TestValidatePod(t *testing.T) {
 				},
 			},
 			Spec: validPodSpec,
+		},
+		"invalid opaque integer resource requirement: request must be <= limit": {
+			ObjectMeta: api.ObjectMeta{Name: "123", Namespace: "ns"},
+			Spec: api.PodSpec{
+				Containers: []api.Container{
+					{
+						Name:            "invalid",
+						Image:           "image",
+						ImagePullPolicy: "IfNotPresent",
+						Resources: api.ResourceRequirements{
+							Requests: api.ResourceList{
+								api.OpaqueIntResourceName("A"): resource.MustParse("2"),
+							},
+							Limits: api.ResourceList{
+								api.OpaqueIntResourceName("A"): resource.MustParse("1"),
+							},
+						},
+					},
+				},
+				RestartPolicy: api.RestartPolicyAlways,
+				DNSPolicy:     api.DNSClusterFirst,
+			},
+		},
+		"invalid fractional opaque integer resource in container request": {
+			ObjectMeta: api.ObjectMeta{Name: "123", Namespace: "ns"},
+			Spec: api.PodSpec{
+				Containers: []api.Container{
+					{
+						Name:            "invalid",
+						Image:           "image",
+						ImagePullPolicy: "IfNotPresent",
+						Resources: api.ResourceRequirements{
+							Requests: api.ResourceList{
+								api.OpaqueIntResourceName("A"): resource.MustParse("500m"),
+							},
+						},
+					},
+				},
+				RestartPolicy: api.RestartPolicyAlways,
+				DNSPolicy:     api.DNSClusterFirst,
+			},
+		},
+		"invalid fractional opaque integer resource in init container request": {
+			ObjectMeta: api.ObjectMeta{Name: "123", Namespace: "ns"},
+			Spec: api.PodSpec{
+				InitContainers: []api.Container{
+					{
+						Name:            "invalid",
+						Image:           "image",
+						ImagePullPolicy: "IfNotPresent",
+						Resources: api.ResourceRequirements{
+							Requests: api.ResourceList{
+								api.OpaqueIntResourceName("A"): resource.MustParse("500m"),
+							},
+						},
+					},
+				},
+				Containers:    []api.Container{{Name: "ctr", Image: "image", ImagePullPolicy: "IfNotPresent"}},
+				RestartPolicy: api.RestartPolicyAlways,
+				DNSPolicy:     api.DNSClusterFirst,
+			},
+		},
+		"invalid fractional opaque integer resource in container limit": {
+			ObjectMeta: api.ObjectMeta{Name: "123", Namespace: "ns"},
+			Spec: api.PodSpec{
+				Containers: []api.Container{
+					{
+						Name:            "invalid",
+						Image:           "image",
+						ImagePullPolicy: "IfNotPresent",
+						Resources: api.ResourceRequirements{
+							Requests: api.ResourceList{
+								api.OpaqueIntResourceName("A"): resource.MustParse("5"),
+							},
+							Limits: api.ResourceList{
+								api.OpaqueIntResourceName("A"): resource.MustParse("2.5"),
+							},
+						},
+					},
+				},
+				RestartPolicy: api.RestartPolicyAlways,
+				DNSPolicy:     api.DNSClusterFirst,
+			},
+		},
+		"invalid fractional opaque integer resource in init container limit": {
+			ObjectMeta: api.ObjectMeta{Name: "123", Namespace: "ns"},
+			Spec: api.PodSpec{
+				InitContainers: []api.Container{
+					{
+						Name:            "invalid",
+						Image:           "image",
+						ImagePullPolicy: "IfNotPresent",
+						Resources: api.ResourceRequirements{
+							Requests: api.ResourceList{
+								api.OpaqueIntResourceName("A"): resource.MustParse("5"),
+							},
+							Limits: api.ResourceList{
+								api.OpaqueIntResourceName("A"): resource.MustParse("2.5"),
+							},
+						},
+					},
+				},
+				Containers:    []api.Container{{Name: "ctr", Image: "image", ImagePullPolicy: "IfNotPresent"}},
+				RestartPolicy: api.RestartPolicyAlways,
+				DNSPolicy:     api.DNSClusterFirst,
+			},
 		},
 	}
 	for k, v := range errorCases {
@@ -6347,6 +6499,60 @@ func TestValidateNodeUpdate(t *testing.T) {
 				},
 			},
 		}, false},
+		{api.Node{
+			ObjectMeta: api.ObjectMeta{
+				Name: "valid-opaque-int-resources",
+			},
+		}, api.Node{
+			ObjectMeta: api.ObjectMeta{
+				Name: "valid-opaque-int-resources",
+			},
+			Status: api.NodeStatus{
+				Capacity: api.ResourceList{
+					api.ResourceName(api.ResourceCPU):    resource.MustParse("10"),
+					api.ResourceName(api.ResourceMemory): resource.MustParse("10G"),
+					api.OpaqueIntResourceName("A"):       resource.MustParse("5"),
+					api.OpaqueIntResourceName("B"):       resource.MustParse("10"),
+				},
+			},
+		}, true},
+		{api.Node{
+			ObjectMeta: api.ObjectMeta{
+				Name: "invalid-fractional-opaque-int-capacity",
+			},
+		}, api.Node{
+			ObjectMeta: api.ObjectMeta{
+				Name: "invalid-fractional-opaque-int-capacity",
+			},
+			Status: api.NodeStatus{
+				Capacity: api.ResourceList{
+					api.ResourceName(api.ResourceCPU):    resource.MustParse("10"),
+					api.ResourceName(api.ResourceMemory): resource.MustParse("10G"),
+					api.OpaqueIntResourceName("A"):       resource.MustParse("500m"),
+				},
+			},
+		}, false},
+		{api.Node{
+			ObjectMeta: api.ObjectMeta{
+				Name: "invalid-fractional-opaque-int-allocatable",
+			},
+		}, api.Node{
+			ObjectMeta: api.ObjectMeta{
+				Name: "invalid-fractional-opaque-int-allocatable",
+			},
+			Status: api.NodeStatus{
+				Capacity: api.ResourceList{
+					api.ResourceName(api.ResourceCPU):    resource.MustParse("10"),
+					api.ResourceName(api.ResourceMemory): resource.MustParse("10G"),
+					api.OpaqueIntResourceName("A"):       resource.MustParse("5"),
+				},
+				Allocatable: api.ResourceList{
+					api.ResourceName(api.ResourceCPU):    resource.MustParse("10"),
+					api.ResourceName(api.ResourceMemory): resource.MustParse("10G"),
+					api.OpaqueIntResourceName("A"):       resource.MustParse("4.5"),
+				},
+			},
+		}, false},
 	}
 	for i, test := range tests {
 		test.oldNode.ObjectMeta.ResourceVersion = "1"
@@ -6864,6 +7070,28 @@ func TestValidateLimitRange(t *testing.T) {
 			},
 		},
 		{
+			name: "pvc-min-only",
+			spec: api.LimitRangeSpec{
+				Limits: []api.LimitRangeItem{
+					{
+						Type: api.LimitTypePersistentVolumeClaim,
+						Min:  getStorageResourceList("5Gi"),
+					},
+				},
+			},
+		},
+		{
+			name: "pvc-max-only",
+			spec: api.LimitRangeSpec{
+				Limits: []api.LimitRangeItem{
+					{
+						Type: api.LimitTypePersistentVolumeClaim,
+						Max:  getStorageResourceList("10Gi"),
+					},
+				},
+			},
+		},
+		{
 			name: "all-fields-valid-big-numbers",
 			spec: api.LimitRangeSpec{
 				Limits: []api.LimitRangeItem{
@@ -7070,27 +7298,15 @@ func TestValidateLimitRange(t *testing.T) {
 			}},
 			"must be a standard limit type or fully qualified",
 		},
-		"invalid missing required min field": {
+		"min and max values missing, one required": {
 			api.LimitRange{ObjectMeta: api.ObjectMeta{Name: "abc", Namespace: "foo"}, Spec: api.LimitRangeSpec{
 				Limits: []api.LimitRangeItem{
 					{
 						Type: api.LimitTypePersistentVolumeClaim,
-						Max:  getStorageResourceList("10000T"),
 					},
 				},
 			}},
-			"minimum storage value is required",
-		},
-		"invalid missing required max field": {
-			api.LimitRange{ObjectMeta: api.ObjectMeta{Name: "abc", Namespace: "foo"}, Spec: api.LimitRangeSpec{
-				Limits: []api.LimitRangeItem{
-					{
-						Type: api.LimitTypePersistentVolumeClaim,
-						Min:  getStorageResourceList("10000T"),
-					},
-				},
-			}},
-			"maximum storage value is required",
+			"either minimum or maximum storage value is required, but neither was provided",
 		},
 		"invalid min greater than max": {
 			api.LimitRange{ObjectMeta: api.ObjectMeta{Name: "abc", Namespace: "foo"}, Spec: api.LimitRangeSpec{

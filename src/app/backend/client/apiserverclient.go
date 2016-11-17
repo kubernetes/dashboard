@@ -17,7 +17,7 @@ package client
 import (
 	"log"
 
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
 	clientcmdapi "k8s.io/kubernetes/pkg/client/unversioned/clientcmd/api"
 )
@@ -38,7 +38,7 @@ const (
 //
 // apiserverHost param is in the format of protocol://address:port/pathPrefix, e.g.http://localhost:8001.
 // kubeConfig location of kubeconfig file
-func CreateApiserverClient(apiserverHost string, kubeConfig string) (*client.Client, clientcmd.ClientConfig, error) {
+func CreateApiserverClient(apiserverHost string, kubeConfig string) (*client.Clientset, clientcmd.ClientConfig, error) {
 
 	clientConfig := clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
 		&clientcmd.ClientConfigLoadingRules{ExplicitPath: kubeConfig},
@@ -54,7 +54,7 @@ func CreateApiserverClient(apiserverHost string, kubeConfig string) (*client.Cli
 
 	log.Printf("Creating API server client for %s", cfg.Host)
 
-	client, err := client.New(cfg)
+	client, err := client.NewForConfig(cfg)
 
 	if err != nil {
 		return nil, nil, err

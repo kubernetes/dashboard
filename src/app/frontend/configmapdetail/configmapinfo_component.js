@@ -17,7 +17,7 @@
  */
 export default class ConfigMapInfoController {
   /**
-   * Constructs pettion controller info object.
+   * Constructs statefultion controller info object.
    */
   constructor() {
     /**

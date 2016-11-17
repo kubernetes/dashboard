@@ -18,7 +18,7 @@ import (
 	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/kubernetes/pkg/api"

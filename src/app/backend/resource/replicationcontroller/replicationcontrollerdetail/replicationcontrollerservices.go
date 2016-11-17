@@ -15,7 +15,7 @@
 package replicationcontrollerdetail
 
 import (
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -27,7 +27,7 @@ import (
 func GetReplicationControllerServices(client client.Interface, dsQuery *dataselect.DataSelectQuery,
 	namespace, rcName string) (*service.ServiceList, error) {
 
-	replicationController, err := client.ReplicationControllers(namespace).Get(rcName)
+	replicationController, err := client.Core().ReplicationControllers(namespace).Get(rcName)
 	if err != nil {
 		return nil, err
 	}

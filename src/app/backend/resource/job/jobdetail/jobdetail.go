@@ -20,7 +20,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"k8s.io/kubernetes/pkg/apis/batch"
-	k8sClient "k8s.io/kubernetes/pkg/client/unversioned"
+	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 )
 
 // JobDetail is a presentation layer view of Kubernetes Job resource. This means
@@ -56,7 +56,7 @@ func GetJobDetail(client k8sClient.Interface, heapsterClient client.HeapsterClie
 	namespace, name string) (*JobDetail, error) {
 
 	// TODO(floreks): Use channels.
-	jobData, err := client.Extensions().Jobs(namespace).Get(name)
+	jobData, err := client.Batch().Jobs(namespace).Get(name)
 	if err != nil {
 		return nil, err
 	}

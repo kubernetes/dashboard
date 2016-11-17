@@ -20,7 +20,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"k8s.io/kubernetes/pkg/api"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
 )
@@ -57,7 +57,7 @@ func GetNamespaceListFromChannels(channels *common.ResourceChannels, dsQuery *da
 }
 
 // GetNamespaceList returns a list of all namespaces in the cluster.
-func GetNamespaceList(client *client.Client, dsQuery *dataselect.DataSelectQuery) (*NamespaceList,
+func GetNamespaceList(client *client.Clientset, dsQuery *dataselect.DataSelectQuery) (*NamespaceList,
 	error) {
 	log.Printf("Getting namespace list")
 

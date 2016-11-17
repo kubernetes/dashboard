@@ -22,7 +22,7 @@ import (
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
-	extensionsclient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/typed/extensions/unversioned"
+	extensionsclient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/typed/extensions/internalversion"
 	"k8s.io/kubernetes/pkg/controller/deployment/util"
 )
 
@@ -59,6 +59,10 @@ func (s *DeploymentStatusViewer) Status(namespace, name string, revision int64) 
 		}
 	}
 	if deployment.Generation <= deployment.Status.ObservedGeneration {
+		cond := util.GetDeploymentCondition(deployment.Status, extensions.DeploymentProgressing)
+		if cond != nil && cond.Reason == util.TimedOutReason {
+			return "", false, fmt.Errorf("deployment %q exceeded its progress deadline", name)
+		}
 		if deployment.Status.UpdatedReplicas < deployment.Spec.Replicas {
 			return fmt.Sprintf("Waiting for rollout to finish: %d out of %d new replicas have been updated...\n", deployment.Status.UpdatedReplicas, deployment.Spec.Replicas), false, nil
 		}

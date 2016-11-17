@@ -106,7 +106,7 @@ const (
 	ResourceKindDaemonSet             = "daemonset"
 	ResourceKindJob                   = "job"
 	ResourceKindLimitRange            = "limitrange"
-	ResourceKindPetSet                = "petset"
+	ResourceKindStatefulSet           = "statefulset"
 	ResourceKindNamespace             = "namespace"
 	ResourceKindNode                  = "node"
 	ResourceKindSecret                = "secret"
@@ -118,7 +118,7 @@ const (
 
 // ClientType represents type of client that is used to perform generic operations on resources.
 // Different resources belong to different client, i.e. Deployments belongs to extension client
-// and PetSets to apps client.
+// and StatefulSets to apps client.
 type ClientType string
 
 // List of client types supported by the UI.
@@ -147,7 +147,7 @@ var kindToAPIMapping = map[string]struct {
 	ResourceKindDeployment:            {"deployments", ClientTypeExtensionClient},
 	ResourceKindReplicaSet:            {"replicasets", ClientTypeExtensionClient},
 	ResourceKindDaemonSet:             {"daemonsets", ClientTypeExtensionClient},
-	ResourceKindPetSet:                {"petsets", ClientTypeAppsClient},
+	ResourceKindStatefulSet:           {"statefulsets", ClientTypeAppsClient},
 	ResourceKindLimitRange:            {"limitrange", ClientTypeDefault},
 	ResourceKindJob:                   {"jobs", ClientTypeBatchClient},
 	ResourceKindNamespace:             {"namespaces", ClientTypeDefault},

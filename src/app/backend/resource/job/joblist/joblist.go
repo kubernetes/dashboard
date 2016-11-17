@@ -25,7 +25,7 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 	k8serrors "k8s.io/kubernetes/pkg/api/errors"
 	"k8s.io/kubernetes/pkg/apis/batch"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
@@ -56,10 +56,10 @@ type Job struct {
 // GetJobList returns a list of all Jobs in the cluster.
 func GetJobList(client client.Interface, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*JobList, error) {
-	log.Printf("Getting list of all jobs in the cluster")
+	log.Print("Getting list of all jobs in the cluster")
 
 	channels := &common.ResourceChannels{
-		JobList:   common.GetJobListChannel(client.Extensions(), nsQuery, 1),
+		JobList:   common.GetJobListChannel(client, nsQuery, 1),
 		PodList:   common.GetPodListChannel(client, nsQuery, 1),
 		EventList: common.GetEventListChannel(client, nsQuery, 1),
 	}
