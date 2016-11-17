@@ -36,15 +36,15 @@ type HorizontalPodAutoscaler struct {
 	ScaleTargetRef horizontalpodautoscaler.ScaleTargetRef `json:"scaleTargetRef"`
 
 	MinReplicas *int32 `json:"minReplicas"`
-	MaxReplicas int32 `json:"maxReplicas"`
+	MaxReplicas int32  `json:"maxReplicas"`
 
 	CurrentCPUUtilizationPercentage *int32 `json:"currentCPUUtilizationPercentage"`
-	TargetCPUUtilizationPercentage *int32 `json:"targetCPUUtilizationPercentage"`
+	TargetCPUUtilizationPercentage  *int32 `json:"targetCPUUtilizationPercentage"`
 }
 
 func GetHorizontalPodAutoscalerList(client k8sClient.Interface, nsQuery *common.NamespaceQuery) (*HorizontalPodAutoscalerList, error) {
 
-   channel := common.GetHorizontalPodAutoscalerListChannel(client.Autoscaling(), nsQuery, 1)
+	channel := common.GetHorizontalPodAutoscalerListChannel(client.Autoscaling(), nsQuery, 1)
 	hpaList := <-channel.List
 	if err := <-channel.Error; err != nil {
 		return nil, err
@@ -57,7 +57,7 @@ func GetHorizontalPodAutoscalerListForResource(client k8sClient.Interface, names
 
 	nsQuery := common.NewSameNamespaceQuery(namespace)
 
-   channel := common.GetHorizontalPodAutoscalerListChannel(client.Autoscaling(), nsQuery, 1)
+	channel := common.GetHorizontalPodAutoscalerListChannel(client.Autoscaling(), nsQuery, 1)
 	hpaList := <-channel.List
 	if err := <-channel.Error; err != nil {
 		return nil, err
@@ -96,10 +96,10 @@ func toHorizontalPodAutoScaler(hpa *autoscaling.HorizontalPodAutoscaler) Horizon
 			Name: hpa.Spec.ScaleTargetRef.Name,
 		},
 
-		MinReplicas: hpa.Spec.MinReplicas,
-		MaxReplicas: hpa.Spec.MaxReplicas,
+		MinReplicas:                     hpa.Spec.MinReplicas,
+		MaxReplicas:                     hpa.Spec.MaxReplicas,
 		CurrentCPUUtilizationPercentage: hpa.Status.CurrentCPUUtilizationPercentage,
-		TargetCPUUtilizationPercentage: hpa.Spec.TargetCPUUtilizationPercentage,
+		TargetCPUUtilizationPercentage:  hpa.Spec.TargetCPUUtilizationPercentage,
 	}
 
 }

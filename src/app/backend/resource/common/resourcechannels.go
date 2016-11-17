@@ -724,7 +724,6 @@ func GetPodMetricsChannel(heapsterClient kdClient.HeapsterClient, name string, n
 	return channel
 }
 
-
 // PodMetricsChannel is a list and error channels to MetricsByPod.
 type HorizontalPodAutoscalerListChannel struct {
 	List  chan *autoscaling.HorizontalPodAutoscalerList
@@ -733,7 +732,7 @@ type HorizontalPodAutoscalerListChannel struct {
 
 // GetPodListMetricsChannel returns a pair of channels to MetricsByPod and errors that
 // both must be read numReads times.
-func GetHorizontalPodAutoscalerListChannel(client client.HorizontalPodAutoscalersNamespacer, nsQuery *NamespaceQuery, numReads int) HorizontalPodAutoscalerListChannel{
+func GetHorizontalPodAutoscalerListChannel(client client.HorizontalPodAutoscalersNamespacer, nsQuery *NamespaceQuery, numReads int) HorizontalPodAutoscalerListChannel {
 	channel := HorizontalPodAutoscalerListChannel{
 		List:  make(chan *autoscaling.HorizontalPodAutoscalerList, numReads),
 		Error: make(chan error, numReads),

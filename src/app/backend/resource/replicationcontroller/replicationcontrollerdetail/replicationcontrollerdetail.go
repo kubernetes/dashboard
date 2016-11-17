@@ -132,7 +132,6 @@ func UpdateReplicasCount(client k8sClient.Interface, namespace, name string,
 	return nil
 }
 
-
 // ToReplicationControllerDetail converts replication controller api object to replication
 // controller detail model object.
 func ToReplicationControllerDetail(replicationController *api.ReplicationController,

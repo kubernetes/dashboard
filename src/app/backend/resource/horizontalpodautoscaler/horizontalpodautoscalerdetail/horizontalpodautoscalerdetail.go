@@ -26,16 +26,16 @@ import (
 
 // HorizontalPodAutoscalerDetail provides the presentation layer view of Kubernetes Horizontal Pod Autoscaler resource.
 type HorizontalPodAutoscalerDetail struct {
-	ObjectMeta  common.ObjectMeta                `json:"objectMeta"`
-	TypeMeta    common.TypeMeta                  `json:"typeMeta"`
+	ObjectMeta common.ObjectMeta `json:"objectMeta"`
+	TypeMeta   common.TypeMeta   `json:"typeMeta"`
 
 	ScaleTargetRef horizontalpodautoscaler.ScaleTargetRef `json:"scaleTargetRef"`
 
 	MinReplicas *int32 `json:"minReplicas"`
-	MaxReplicas int32 `json:"maxReplicas"`
+	MaxReplicas int32  `json:"maxReplicas"`
 
 	CurrentCPUUtilizationPercentage *int32 `json:"currentCPUUtilizationPercentage"`
-	TargetCPUUtilizationPercentage *int32 `json:"targetCPUUtilizationPercentage"`
+	TargetCPUUtilizationPercentage  *int32 `json:"targetCPUUtilizationPercentage"`
 
 	CurrentReplicas int32 `json:"currentReplicas"`
 	DesiredReplicas int32 `json:"desiredReplicas"`
@@ -59,18 +59,18 @@ func GetHorizontalPodAutoscalerDetail(client client.Interface, namespace string,
 func getHorizontalPodAutoscalerDetail(horizontalPodAutoscaler *autoscaling.HorizontalPodAutoscaler) *HorizontalPodAutoscalerDetail {
 
 	return &HorizontalPodAutoscalerDetail{
-		ObjectMeta:  common.NewObjectMeta(horizontalPodAutoscaler.ObjectMeta),
-		TypeMeta:    common.NewTypeMeta(common.ResourceKindHorizontalPodAutoscaler),
+		ObjectMeta: common.NewObjectMeta(horizontalPodAutoscaler.ObjectMeta),
+		TypeMeta:   common.NewTypeMeta(common.ResourceKindHorizontalPodAutoscaler),
 
 		ScaleTargetRef: horizontalpodautoscaler.ScaleTargetRef{
 			Kind: horizontalPodAutoscaler.Spec.ScaleTargetRef.Kind,
 			Name: horizontalPodAutoscaler.Spec.ScaleTargetRef.Name,
 		},
 
-		MinReplicas: horizontalPodAutoscaler.Spec.MinReplicas,
-		MaxReplicas: horizontalPodAutoscaler.Spec.MaxReplicas,
+		MinReplicas:                     horizontalPodAutoscaler.Spec.MinReplicas,
+		MaxReplicas:                     horizontalPodAutoscaler.Spec.MaxReplicas,
 		CurrentCPUUtilizationPercentage: horizontalPodAutoscaler.Status.CurrentCPUUtilizationPercentage,
-		TargetCPUUtilizationPercentage: horizontalPodAutoscaler.Spec.TargetCPUUtilizationPercentage,
+		TargetCPUUtilizationPercentage:  horizontalPodAutoscaler.Spec.TargetCPUUtilizationPercentage,
 
 		CurrentReplicas: horizontalPodAutoscaler.Status.CurrentReplicas,
 		DesiredReplicas: horizontalPodAutoscaler.Status.DesiredReplicas,

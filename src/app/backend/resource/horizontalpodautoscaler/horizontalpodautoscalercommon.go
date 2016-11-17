@@ -14,8 +14,7 @@
 
 package horizontalpodautoscaler
 
-import (
-)
+import ()
 
 type ScaleTargetRef struct {
 	Kind string `json:"kind"`
