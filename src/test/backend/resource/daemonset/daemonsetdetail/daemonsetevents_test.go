@@ -15,123 +15,137 @@
 package daemonsetdetail
 
 import (
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+
+	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/apis/extensions"
+	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
+
+	"reflect"
 	"testing"
 )
 
 func TestGetDaemonSetEvents(t *testing.T) {
-	// TODO: fix test
-	t.Skip("NewSimpleFake no longer supported. Test update needed.")
+	ds := createDaemonSet("ds-1", "test-namespace", map[string]string{"app": "test"})
+	cases := []struct {
+		namespace, name string
+		eventList       *api.EventList
+		podList         *api.PodList
+		daemonSet       *extensions.DaemonSet
+		expectedActions []string
+		expected        *common.EventList
+	}{
+		{
+			"test-namespace", "ds-1",
+			&api.EventList{Items: []api.Event{
+				{Message: "test-message", ObjectMeta: api.ObjectMeta{
+					Name:      "ev-1",
+					Namespace: "test-namespace",
+				}},
+			}},
+			&api.PodList{Items: []api.Pod{
+				{ObjectMeta: api.ObjectMeta{
+					Name: "pod-1", Namespace: "test-namespace",
+					Labels: map[string]string{"app": "test-pod"},
+				}},
+			}},
+			&ds,
+			[]string{"list", "get", "list", "list"},
+			&common.EventList{
+				ListMeta: common.ListMeta{TotalItems: 1},
+				Events: []common.Event{{
+					TypeMeta:   common.TypeMeta{Kind: common.ResourceKindEvent},
+					ObjectMeta: common.ObjectMeta{Name: "ev-1", Namespace: "test-namespace"},
+					Message:    "test-message",
+					Type:       api.EventTypeNormal,
+				}}},
+		},
+	}
 
-	//cases := []struct {
-	//	namespace, name string
-	//	eventList       *api.EventList
-	//	podList         *api.PodList
-	//	daemonSet       *extensions.DaemonSet
-	//	expectedActions []string
-	//	expected        *common.EventList
-	//}{
-	//	{
-	//		"test-namespace", "test-name",
-	//		&api.EventList{Items: []api.Event{
-	//			{Message: "test-message", ObjectMeta: api.ObjectMeta{Namespace: "test-namespace"}},
-	//		}},
-	//		&api.PodList{Items: []api.Pod{{ObjectMeta: api.ObjectMeta{Name: "test-pod"}}}},
-	//		&extensions.DaemonSet{
-	//			ObjectMeta: api.ObjectMeta{Name: "test-daemonset"},
-	//			Spec: extensions.DaemonSetSpec{
-	//				Selector: &unversioned.LabelSelector{
-	//					MatchLabels: map[string]string{},
-	//				}}},
-	//		[]string{"list", "get", "list", "list"},
-	//		&common.EventList{
-	//			ListMeta: common.ListMeta{TotalItems: 1},
-	//			Events: []common.Event{{
-	//				TypeMeta:   common.TypeMeta{Kind: common.ResourceKindEvent},
-	//				ObjectMeta: common.ObjectMeta{Namespace: "test-namespace"},
-	//				Message:    "test-message",
-	//				Type:       api.EventTypeNormal,
-	//			}}},
-	//	},
-	//}
-	//
-	//for _, c := range cases {
-	//	fakeClient := testclient.NewSimpleFake(c.eventList, c.daemonSet, c.podList,
-	//		&api.EventList{})
-	//
-	//	actual, _ := GetDaemonSetEvents(fakeClient, dataselect.NoDataSelect, c.namespace, c.name)
-	//
-	//	actions := fakeClient.Actions()
-	//	if len(actions) != len(c.expectedActions) {
-	//		t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
-	//			len(c.expectedActions), len(actions))
-	//		continue
-	//	}
-	//
-	//	for i, verb := range c.expectedActions {
-	//		if actions[i].GetVerb() != verb {
-	//			t.Errorf("Unexpected action: %+v, expected %s",
-	//				actions[i], verb)
-	//		}
-	//	}
-	//
-	//	if !reflect.DeepEqual(actual, c.expected) {
-	//		t.Errorf("GetDaemonSetEvents(client,%#v, %#v) == \ngot: %#v, \nexpected %#v",
-	//			c.namespace, c.name, actual, c.expected)
-	//	}
-	//}
+	for _, c := range cases {
+		fakeClient := fake.NewSimpleClientset(c.eventList, c.daemonSet, c.podList)
+
+		actual, _ := GetDaemonSetEvents(fakeClient, dataselect.NoDataSelect, c.namespace, c.name)
+
+		actions := fakeClient.Actions()
+		if len(actions) != len(c.expectedActions) {
+			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
+				len(c.expectedActions), len(actions))
+			continue
+		}
+
+		for i, verb := range c.expectedActions {
+			if actions[i].GetVerb() != verb {
+				t.Errorf("Unexpected action: %+v, expected %s",
+					actions[i], verb)
+			}
+		}
+
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("GetDaemonSetEvents(client,%#v, %#v) == \ngot: %#v, \nexpected %#v",
+				c.namespace, c.name, actual, c.expected)
+		}
+	}
 }
 
 func TestGetDaemonSetPodsEvents(t *testing.T) {
-	// TODO: fix test
-	t.Skip("NewSimpleFake no longer supported. Test update needed.")
+	ds := createDaemonSet("ds-1", "test-namespace", map[string]string{"app": "test"})
+	cases := []struct {
+		namespace, name string
+		eventList       *api.EventList
+		podList         *api.PodList
+		daemonSet       *extensions.DaemonSet
+		expectedActions []string
+		expected        []api.Event
+	}{
+		{
+			"test-namespace", "ds-1",
+			&api.EventList{Items: []api.Event{
+				{Message: "test-message", ObjectMeta: api.ObjectMeta{
+					Name:      "ev-1",
+					Namespace: "test-namespace",
+				}},
+			}},
+			&api.PodList{Items: []api.Pod{
+				{ObjectMeta: api.ObjectMeta{
+					Name: "pod-1", Namespace: "test-namespace",
+					Labels: map[string]string{"app": "test"},
+				}},
+			}},
+			&ds,
+			[]string{"get", "list", "list"},
+			[]api.Event{
+				{Message: "test-message", ObjectMeta: api.ObjectMeta{
+					Name:      "ev-1",
+					Namespace: "test-namespace",
+				}},
+			},
+		},
+	}
 
-	//cases := []struct {
-	//	namespace, name string
-	//	eventList       *api.EventList
-	//	podList         *api.PodList
-	//	daemonSet       *extensions.DaemonSet
-	//	expectedActions []string
-	//	expected        []api.Event
-	//}{
-	//	{
-	//		"test-namespace", "test-name",
-	//		&api.EventList{Items: []api.Event{
-	//			{Message: "test-message", ObjectMeta: api.ObjectMeta{Namespace: "test-namespace"}},
-	//		}},
-	//		&api.PodList{Items: []api.Pod{{ObjectMeta: api.ObjectMeta{Name: "test-pod", Namespace: "test-namespace"}}}},
-	//		&extensions.DaemonSet{
-	//			ObjectMeta: api.ObjectMeta{Name: "test-daemonset", Namespace: "test-namespace"},
-	//			Spec: extensions.DaemonSetSpec{
-	//				Selector: &unversioned.LabelSelector{
-	//					MatchLabels: map[string]string{},
-	//				}}},
-	//		[]string{"get", "list", "list"},
-	//		[]api.Event{{Message: "test-message", ObjectMeta: api.ObjectMeta{Namespace: "test-namespace"}}},
-	//	},
-	//}
-	//
-	//for _, c := range cases {
-	//	fakeClient := testclient.NewSimpleFake(c.daemonSet, c.podList, c.eventList)
-	//
-	//	actual, _ := GetDaemonSetPodsEvents(fakeClient, c.namespace, c.name)
-	//
-	//	actions := fakeClient.Actions()
-	//	if len(actions) != len(c.expectedActions) {
-	//		t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
-	//			len(c.expectedActions), len(actions))
-	//		continue
-	//	}
-	//
-	//	for i, verb := range c.expectedActions {
-	//		if actions[i].GetVerb() != verb {
-	//			t.Errorf("Unexpected action: %+v, expected %s",
-	//				actions[i], verb)
-	//		}
-	//	}
-	//
-	//	if !reflect.DeepEqual(actual, c.expected) {
-	//		t.Errorf("GetDaemonSetPodsEvents(client,%#v, %#v) == \ngot: %#v, \nexpected %#v",
-	//			c.namespace, c.name, actual, c.expected)
-	//	}
-	//}
+	for _, c := range cases {
+		fakeClient := fake.NewSimpleClientset(c.daemonSet, c.podList, c.eventList)
+
+		actual, _ := GetDaemonSetPodsEvents(fakeClient, c.namespace, c.name)
+
+		actions := fakeClient.Actions()
+		if len(actions) != len(c.expectedActions) {
+			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
+				len(c.expectedActions), len(actions))
+			continue
+		}
+
+		for i, verb := range c.expectedActions {
+			if actions[i].GetVerb() != verb {
+				t.Errorf("Unexpected action: %+v, expected %s",
+					actions[i], verb)
+			}
+		}
+
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("GetDaemonSetPodsEvents(client,%#v, %#v) == \ngot: %#v, \nexpected %#v",
+				c.namespace, c.name, actual, c.expected)
+		}
+	}
 }
