@@ -16,11 +16,6 @@ limitations under the License.
 
 <div ng-if="!$ctrl.shouldShowZeroState()">
   <kd-content-card ng-if="$ctrl.admin.namespaceList.namespaces.length">
-    <kd-title>
-      <a ui-sref="namespace">
-        [[Namespaces|Label that appears above the list of resources.]]
-      </a>
-    </kd-title>
     <kd-content>
       <kd-namespace-card-list namespace-list="$ctrl.admin.namespaceList" with-statuses="true"
                                namespace-list-resource="$ctrl.kdNamespaceListResource">
@@ -28,11 +23,6 @@ limitations under the License.
     </kd-content>
   </kd-content-card>
   <kd-content-card ng-if="$ctrl.admin.nodeList.nodes.length">
-    <kd-title>
-      <a ui-sref="node">
-        [[Nodes|Label that appears above the list of resources.]]
-      </a>
-    </kd-title>
     <kd-content>
       <kd-node-card-list node-list="$ctrl.admin.nodeList" with-statuses="true"
                                node-list-resource="$ctrl.kdNodeListResource">
@@ -40,11 +30,6 @@ limitations under the License.
     </kd-content>
   </kd-content-card>
   <kd-content-card ng-if="$ctrl.admin.persistentVolumeList.items.length">
-    <kd-title>
-      <a ui-sref="persistentvolume">
-        [[Persistent Volumes|Label that appears above the list of resources.]]
-      </a>
-    </kd-title>
     <kd-content>
       <kd-persistent-volume-card-list persistent-volume-list="$ctrl.admin.persistentVolumeList"
           with-statuses="true"

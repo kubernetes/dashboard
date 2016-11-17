@@ -43,6 +43,10 @@ export class ServiceCardListController {
  * @type {!angular.Component}
  */
 export const serviceCardListComponent = {
+  transclude: {
+    // Optional header that is transcluded instead of the default one.
+    'header': '?kdHeader',
+  },
   templateUrl: 'servicelist/servicecardlist.html',
   controller: ServiceCardListController,
   bindings: {

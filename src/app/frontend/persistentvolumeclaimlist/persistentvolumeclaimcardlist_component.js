@@ -37,7 +37,10 @@ export class PersistentVolumeClaimCardListController {
  * @return {!angular.Component}
  */
 export const persistentVolumeClaimCardListComponent = {
-  transclude: true,
+  transclude: {
+    // Optional header that is transcluded instead of the default one.
+    'header': '?kdHeader',
+  },
   bindings: {
     'persistentVolumeClaimList': '<',
     'persistentVolumeClaimListResource': '<',
