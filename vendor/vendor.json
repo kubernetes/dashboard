@@ -893,6 +893,24 @@
 			"path": "github.com/howeyc/gopass",
 			"revision": "f5387c492211eb133053880d23dfae62aa14123d",
 			"revisionTime": "2016-10-03T13:09:00Z"
+        },
+        {
+			"checksumSHA1": "Thg9sicXr23/02y0VqmmJoEZIzI=",
+			"path": "github.com/gorilla/context",
+			"revision": "08b5f424b9271eedf6f9f0ce86cb9396ed337a42",
+			"revisionTime": "2016-08-17T18:46:32Z"
+		},
+		{
+			"checksumSHA1": "YmVklGa5tGoWUk2WzVsMkm7/i+U=",
+			"path": "github.com/gorilla/mux",
+			"revision": "757bef944d0f21880861c2dd9c871ca543023cba",
+			"revisionTime": "2016-09-20T23:08:13Z"
+		},
+		{
+			"checksumSHA1": "wzRuhWAeDJWNwfXtxhEAjd5Pg08=",
+			"path": "github.com/gorilla/websocket",
+			"revision": "9fbf129ff2a3cf2467f7d0021de2eb4d3aecc109",
+			"revisionTime": "2016-11-02T20:04:59Z"
 		},
 		{
 			"checksumSHA1": "n/llKRPzxcWttjZtpAWA7VW9iJA=",
