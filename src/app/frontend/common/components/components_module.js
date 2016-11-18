@@ -31,6 +31,7 @@ import resourceCardModule from './resourcecard/resourcecard_module';
 import resourceDetailModule from './resourcedetail/module';
 import serializedReferenceModule from './serializedreference/serializedreference_module';
 import sparklineDirective from './sparkline/sparkline_directive';
+import toggleHiddenTextModule from './togglehiddentext/togglehiddentext_module';
 import warnThresholdDirective from './warnthreshold/warnthreshold_directive';
 import zeroStateModule from './zerostate/zerostate_module';
 
@@ -57,6 +58,7 @@ export default angular
           graphModule.name,
           serializedReferenceModule.name,
           annotationsModule.name,
+          toggleHiddenTextModule.name,
         ])
     .directive('kdI18n', i18nDirective)
     .directive('kdLabels', labelsDirective)
