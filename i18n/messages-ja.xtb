@@ -70,6 +70,19 @@
   <translation id="1417978160910275828" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_1" desc="Text on the button to show fewer annotations">show fewer annotations</translation>
   <translation id="6884163988875905686" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_2" desc="Text on the button to show all the annotations">show all annotations</translation>
   <translation id="6935188165410090417" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_LASTAPPLIEDCONFIGURATION_0" desc="Label for the kubectl.kubernetes.io/last-applied-configuration annotation">last applied configuration</translation>
+  <translation id="6456481460873145449" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_0" desc="Label \'Conditions\' for the conditions section.">Conditions</translation>
+  <translation id="8993677465322195935" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_1" desc="Label \'Type\' for the condition table header.">Type</translation>
+  <translation id="286975103376271553" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_10" desc="Label when there is no data.">-</translation>
+  <translation id="3386572067498503433" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_11" desc="Label when there is no data.">-</translation>
+  <translation id="6464751813964841186" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_12" desc="Label when there is no data.">-</translation>
+  <translation id="3102698318305254308" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_2" desc="Label \'Status\' for the condition table header.">Status</translation>
+  <translation id="3198492785716828854" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_3" desc="Label \'Last heartbeat time\' for the condition table header.">Last heartbeat time</translation>
+  <translation id="3828327508280797097" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_4" desc="Label \'Last transition time\' for the condition table header.">Last transition time</translation>
+  <translation id="5617747719771691362" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_5" desc="Label \'Reason\' for the condition table header.">Reason</translation>
+  <translation id="3635038721825489232" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_6" desc="Label \'Message\' for the condition table header.">Message</translation>
+  <translation id="4637603666933267922" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_7" desc="Label when there is no data.">-</translation>
+  <translation id="8716449963013807367" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_8" desc="Label when there is no data.">-</translation>
+  <translation id="3496419655731709621" key="MSG_COMMON_COMPONENTS_CONDITIONS_CONDITIONSLIST_9" desc="Label when there is no data.">-</translation>
   <translation id="2631421290135072028" key="MSG_COMMON_COMPONENTS_LABELS_LABELS_0" desc="Tooltip on the &quot;show less&quot; button for the labels of any kubernetes resource. Usually appears on the resource details pages.">show less labels</translation>
   <translation id="3570731037158883626" key="MSG_COMMON_COMPONENTS_LABELS_LABELS_0" desc="Tooltip on the &quot;show less&quot; button for the labels of any kubernetes resource. Usually appears on the resource details pages.">show fewer labels</translation>
   <translation id="8950559770902715649" key="MSG_COMMON_COMPONENTS_LABELS_LABELS_1" desc="Tooltip on the &quot;show all&quot; button for the labels of any kubernetes resource. Usually appears on the resource details pages.">show all labels</translation>
@@ -634,6 +647,7 @@
   <translation id="2098640878944079437" key="MSG_NODEDETAIL_NODEALLOCATEDRESOURCES_2" desc="Label \'Memory requests (bytes)\' for the allocated resources table header on the node details page.">Memory requests (bytes)</translation>
   <translation id="3673841583478758858" key="MSG_NODEDETAIL_NODEALLOCATEDRESOURCES_3" desc="Label \'Memory limits (bytes)\' for the allocated resources table header on the node details page.">Memory limits (bytes)</translation>
   <translation id="5151958604373828629" key="MSG_NODEDETAIL_NODEALLOCATEDRESOURCES_4" desc="Label \'Pods\' for the allocated resources table header on the node details page.">Pods</translation>
+  <translation id="330471964041910704" key="MSG_NODEDETAIL_NODEALLOCATEDRESOURCES_5" desc="Label \'Allocated resources\' for the allocated resources section.">Allocated resources</translation>
   <translation id="5267711044387124403" key="MSG_NODEDETAIL_NODECONDITIONS_0" desc="Label \'Type\' for the condition table header on the node details page.">Type</translation>
   <translation id="5870959377244624248" key="MSG_NODEDETAIL_NODECONDITIONS_1" desc="Label \'Status\' for the condition table header on the node details page.">Status</translation>
   <translation id="7420515051262677922" key="MSG_NODEDETAIL_NODECONDITIONS_2" desc="Label \'Last heartbeat time\' for the condition table header on the node details page.">Last heartbeat time</translation>
@@ -1293,6 +1307,8 @@
   <translation id="4581297925702163661" key="MSG_SERVICE_LIST_NAME_LABEL" desc="Label 'Name' which appears as a column label in the table of services (service list view).">名前</translation>
   <translation id="6466948840454457439" key="MSG_STATEFULSETDETAIL_ACTIONBAR_0" desc="Label \'Stateful Set\' which appears at the top of the delete dialog, opened from a stateful set details page.">Stateful Set</translation>
   <translation id="4919296013189797225" key="MSG_STATEFULSETDETAIL_STATEFULSETDETAIL_0" desc="Title for graph card displaying CPU metric of one stateful set.">CPU usage history</translation>
+  <translation id="8560431905058366716" key="MSG_STATEFULSETDETAIL_STATEFULSETDETAIL_0" desc="Title for graph card displaying CPU metric of one stateful set.">CPU usage</translation>
+  <translation id="4602699404115016650" key="MSG_STATEFULSETDETAIL_STATEFULSETDETAIL_1" desc="Title for graph card displaying memory metric of one stateful set.">Memory usage</translation>
   <translation id="4712702766539777346" key="MSG_STATEFULSETDETAIL_STATEFULSETDETAIL_1" desc="Title for graph card displaying memory metric of one stateful set.">Memory usage history</translation>
   <translation id="3449887784023623937" key="MSG_STATEFULSETDETAIL_STATEFULSETDETAIL_2" desc="Related pods card title on the stateful set detail page.">Pods</translation>
   <translation id="6177589608167537722" key="MSG_STATEFULSETDETAIL_STATEFULSETDETAIL_3" desc="Title for pods card zerostate in stateful set details page.">There is nothing to display here</translation>
@@ -1316,12 +1332,15 @@
   <translation id="2158512587930821487" key="MSG_STATEFULSETLIST_STATEFULSETCARDLIST_4" desc="Stateful set list header: pods.">Pods</translation>
   <translation id="5748922682860101627" key="MSG_STATEFULSETLIST_STATEFULSETCARDLIST_5" desc="Stateful set list header: age.">Age</translation>
   <translation id="1855495081719443157" key="MSG_STATEFULSETLIST_STATEFULSETCARDLIST_6" desc="Stateful set list header: images.">Images</translation>
+  <translation id="8473745388282175430" key="MSG_STATEFULSETLIST_STATEFULSETCARDLIST_7" desc="Label which appears above the list of such objects.">Stateful Sets</translation>
   <translation id="8445209011919601205" key="MSG_STATEFULSETLIST_STATEFULSETCARD_0" desc="Tooltip text which appears on error icon hover.">One or more pods have errors</translation>
   <translation id="2295021428175974915" key="MSG_STATEFULSETLIST_STATEFULSETCARD_1" desc="Tooltip text which appears on pending icon hover.">One or more pods are in pending state</translation>
   <translation id="6349661589037853705" key="MSG_STATEFULSETLIST_STATEFULSETCARD_2" desc="Column \'Stateful Set\' of a Stateful Set List">Stateful Set</translation>
   <translation id="2540707678008837572" key="MSG_STATEFULSETLIST_STATEFULSETCARD_3" desc="Label \'Stateful Set\' which will appear in the stateful set delete dialog opened from a stateful set card on the list page.">Stateful Set</translation>
   <translation id="1666773532643611718" key="MSG_STATEFULSETLIST_STATEFULSETCARD_4" desc="Label \'Stateful Set\' which will appear in the stateful set delete dialog opened from a stateful set card on the list page.">Stateful Set</translation>
   <translation id="1854921249389083021" key="MSG_STATEFULSETLIST_STATEFULSETLIST_0" desc="Title for graph card displaying CPU metric of stateful sets.">CPU usage history</translation>
+  <translation id="5496057141257652512" key="MSG_STATEFULSETLIST_STATEFULSETLIST_0" desc="Title for graph card displaying CPU metric of stateful sets.">CPU usage</translation>
+  <translation id="5949487857481253373" key="MSG_STATEFULSETLIST_STATEFULSETLIST_1" desc="Title for graph card displaying memory metric of stateful sets.">Memory usage</translation>
   <translation id="6059491219906014069" key="MSG_STATEFULSETLIST_STATEFULSETLIST_1" desc="Title for graph card displaying memory metric of stateful sets.">Memory usage history</translation>
   <translation id="6868140200572137421" key="MSG_STATEFUL_SET_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of stateful set.">Created at <ph name="CREATION_DATE"/></translation>
   <translation id="6463616657349920914" key="MSG_TIME_NOT_YET_LABEL" desc="Label for relative time that did not happened yet.">-</translation>
