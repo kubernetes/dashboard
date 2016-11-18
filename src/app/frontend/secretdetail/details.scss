@@ -12,19 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Represents a toggle to hide and show text.
- *
- * @type {!angular.Component}
- */
-export const toggleHiddenTextComponent = {
-  templateUrl: 'common/components/togglehiddentext/togglehiddentext.html',
-  bindings: {
-    /** {string} */
-    'placeholder': '@?',
-    /** {string} */
-    'text': '@',
-    /** {boolean} */
-    'active': '<',
-  },
-};
+@import '../variables';
+
+.kd-secret-detail-row {
+  &.kd-info-card-entry {
+    padding: 0;
+  }
+
+  .kd-info-card-entry-content {
+    padding-top: 1.125 * $baseline-grid;
+  }
+}
