@@ -25,6 +25,7 @@ import (
 )
 
 // HorizontalPodAutoscalerDetail provides the presentation layer view of Kubernetes Horizontal Pod Autoscaler resource.
+// close mapping of the autoscaling.HorizontalPodAutoscaler type with part of the *Spec and *Detail childs
 type HorizontalPodAutoscalerDetail struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
 	TypeMeta   common.TypeMeta   `json:"typeMeta"`
