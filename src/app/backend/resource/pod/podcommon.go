@@ -116,12 +116,12 @@ func getPodConditions(pod api.Pod) []common.Condition {
 	var conditions []common.Condition
 	for _, condition := range pod.Status.Conditions {
 		conditions = append(conditions, common.Condition{
-			Type: string(condition.Type),
-			Status: condition.Status,
-			LastProbeTime: condition.LastProbeTime,
+			Type:               string(condition.Type),
+			Status:             condition.Status,
+			LastProbeTime:      condition.LastProbeTime,
 			LastTransitionTime: condition.LastTransitionTime,
-			Reason: condition.Reason,
-			Message: condition.Message,
+			Reason:             condition.Reason,
+			Message:            condition.Message,
 		})
 	}
 	return conditions

@@ -22,9 +22,9 @@ import (
 // Condition represents a single condition of a pod or node.
 type Condition struct {
 	// Type of a condition.
-	Type   string `json:"type"`
+	Type string `json:"type"`
 	// Status of a condition.
-	Status api.ConditionStatus   `json:"status"`
+	Status api.ConditionStatus `json:"status"`
 	// Last probe time of a condition.
 	LastProbeTime unversioned.Time `json:"lastProbeTime"`
 	// Last transition time of a condition.
