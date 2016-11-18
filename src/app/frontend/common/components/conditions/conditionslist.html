@@ -38,22 +38,30 @@ limitations under the License.
   <kd-resource-card ng-repeat="condition in $ctrl.conditions" omit-meta="true">
     <kd-resource-card-columns>
       <kd-resource-card-column>
-        <div>{{condition.type}}</div>
+        <div ng-if="::condition.type">{{condition.type}}</div>
+        <div ng-if="::!condition.type">[[-|Label when there is no data.]]</div>
       </kd-resource-card-column>
       <kd-resource-card-column>
-        <div>{{condition.status}}</div>
+        <div ng-if="::condition.status">{{condition.status}}</div>
+        <div ng-if="::!condition.status">[[-|Label when there is no data.]]</div>
       </kd-resource-card-column>
     <kd-resource-card-column>
-      <div>{{condition.lastHeartbeatTime | relativeTime}}</div>
+      <div ng-if="::condition.lastProbeTime">{{condition.lastProbeTime | relativeTime}}</div>
+      <div ng-if="::!condition.lastProbeTime">[[-|Label when there is no data.]]</div>
     </kd-resource-card-column>
     <kd-resource-card-column>
-      <div>{{condition.lastTransitionTime | relativeTime}}</div>
+      <div ng-if="::condition.lastTransitionTime">
+        {{condition.lastTransitionTime | relativeTime}}
+      </div>
+      <div ng-if="::!condition.lastTransitionTime">[[-|Label when there is no data.]]</div>
     </kd-resource-card-column>
     <kd-resource-card-column>
-      <div>{{condition.reason}}</div>
+      <div ng-if="::condition.reason">{{condition.reason}}</div>
+      <div ng-if="::!condition.reason">[[-|Label when there is no data.]]</div>
     </kd-resource-card-column>
     <kd-resource-card-column>
-      <div>{{condition.message}}</div>
+      <div ng-if="::condition.message">{{condition.message}}</div>
+      <div ng-if="::!condition.message">[[-|Label when there is no data.]]</div>
     </kd-resource-card-column>
     </kd-resource-card-columns>
   </kd-resource-card>

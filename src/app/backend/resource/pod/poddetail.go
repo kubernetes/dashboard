@@ -63,8 +63,8 @@ type PodDetail struct {
 	// Metrics collected for this resource
 	Metrics []metric.Metric `json:"metrics"`
 
-	//Conditions of this pod.
-	Conditions []api.PodCondition `json:"conditions"`
+	// Conditions of this pod.
+	Conditions []common.Condition `json:"conditions"`
 }
 
 // Creator is a view of the creator of a given pod, in List for for ease of use
@@ -306,7 +306,7 @@ func toPodDetail(pod *api.Pod, metrics []metric.Metric, configMaps *api.ConfigMa
 		Controller:   controller,
 		Containers:   containers,
 		Metrics:      metrics,
-		Conditions:   pod.Status.Conditions,
+		Conditions:   getPodConditions(*pod),
 	}
 
 	return podDetail

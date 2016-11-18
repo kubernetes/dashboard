@@ -712,7 +712,7 @@ backendApi.ContainerState;
  * @typedef {{
  *   type: string,
  *   status: string,
- *   lastHeartbeatTime: ?string,
+ *   lastProbeTime: ?string,
  *   lastTransitionTime: ?string,
  *   reason: string,
  *   message: string
