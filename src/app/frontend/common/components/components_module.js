@@ -17,6 +17,7 @@ import stateModule from 'common/state/module';
 import filtersModule from '../filters/filters_module';
 
 import namespaceModule from './../namespace/namespace_module';
+import conditionsModule from './conditions/conditions_module';
 import paginationModule from './../pagination/pagination_module';
 import actionbarModule from './actionbar/actionbar_module';
 import annotationsModule from './annotations/module';
@@ -56,6 +57,7 @@ export default angular
           namespaceModule.name,
           stateModule.name,
           graphModule.name,
+          conditionsModule.name,
           serializedReferenceModule.name,
           annotationsModule.name,
           toggleHiddenTextModule.name,

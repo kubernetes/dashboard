@@ -12,33 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * @final
- */
-export default class NodeConditionsController {
-  /**
-   * Constructs node conditions object.
-   * @ngInject
-   */
-  constructor() {
-    /**
-     * Node conditions. Initialized from the scope.
-     * @export {!backendApi.NodeConditionList}
-     */
-    this.conditions;
-  }
-}
+import {conditionListComponent} from './conditionslist_component';
 
 /**
- * Definition object for the component that displays node conditions.
- *
- * @return {!angular.Directive}
+ * Module containing common graph components.
  */
-export const nodeConditionsComponent = {
-  controller: NodeConditionsController,
-  templateUrl: 'nodedetail/nodeconditions.html',
-  bindings: {
-    /** {!backendApi.NodeConditionList} */
-    'conditions': '=',
-  },
-};
+export default angular
+    .module(
+        'kubernetesDashboard.common.components.conditions',
+        [
+          'ngMaterial',
+          'ui.router',
+        ])
+    .component('kdConditionList', conditionListComponent);

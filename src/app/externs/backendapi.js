@@ -1060,14 +1060,14 @@ backendApi.NodeInfo;
  *   message: string
  * }}
  */
-backendApi.NodeCondition;
+backendApi.Condition;
 
 /**
  * @typedef {{
- *   nodes: !Array<!backendApi.NodeCondition>
+ *   nodes: !Array<!backendApi.Condition>
  * }}
  */
-backendApi.NodeConditionList;
+backendApi.ConditionList;
 
 /**
  * @typedef {{
@@ -1098,7 +1098,7 @@ backendApi.NodeAllocatedResources;
  *   providerID: string,
  *   unschedulable: boolean,
  *   nodeInfo: !backendApi.NodeInfo,
- *   conditions: !backendApi.NodeConditionList,
+ *   conditions: !backendApi.ConditionList,
  *   containerImages: !Array<string>,
  *   podList: !backendApi.PodList,
  *   eventList: !backendApi.EventList
