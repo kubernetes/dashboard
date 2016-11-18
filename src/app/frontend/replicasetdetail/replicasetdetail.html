@@ -26,29 +26,26 @@ limitations under the License.
 </div>
 
 <kd-replica-set-info replica-set="::ctrl.replicaSetDetail"></kd-replica-set-info>
-
-<kd-content-card ng-if="::ctrl.replicaSetDetail.serviceList.services.length">
+<kd-content-card>
   <kd-content>
-    <kd-service-card-list ng-show="::ctrl.replicaSetDetail.serviceList.services.length"
-                          service-list="::ctrl.replicaSetDetail.serviceList"
-                          service-list-resource="::ctrl.replicaSetServicesResource">
-    </kd-service-card-list>
-    <div class="kd-zerostate-message" layout-padding ng-hide="::ctrl.replicaSetDetail.serviceList.services.length">
-      <div class="kd-zerostate-title">[[There is nothing to display here|Title for services card zerostate in replica set details page.]]</div>
-      <div class="kd-zerostate-text">[[There are currently no Services with the same label selector as this Replica Set.|Text for services card zerostate in replica set details page.]]</div>
-    </div>
+    <kd-pod-card-list pod-list="::ctrl.replicaSetDetail.podList" with-statuses="true"
+                      pod-list-resource="::ctrl.replicaSetPodsResource">
+      <kd-zerostate>
+        <div class="kd-zerostate-title">[[There is nothing to display here|Title for pods card zerostate in replica set details page.]]</div>
+        <div class="kd-zerostate-text">[[There are currently no Pods managed by this Replica Set|Text for pods card zerostate in replica set details page.]]</div>
+      </kd-zerostate>
+    </kd-pod-card-list>
   </kd-content>
 </kd-content-card>
 <kd-content-card>
   <kd-content>
-    <kd-pod-card-list ng-show="::ctrl.replicaSetDetail.podList.pods.length"
-                      pod-list="::ctrl.replicaSetDetail.podList" with-statuses="true"
-                      pod-list-resource="::ctrl.replicaSetPodsResource">
-    </kd-pod-card-list>
-    <div class="kd-zerostate-message" layout-padding ng-hide="::ctrl.replicaSetDetail.podList.pods.length">
-      <div class="kd-zerostate-title">[[There is nothing to display here|Title for pods card zerostate in replica set details page.]]</div>
-      <div class="kd-zerostate-text">[[There are currently no Pods scheduled on this Replica Set.|Text for pods card zerostate in replica set details page.]]</div>
-    </div>
+    <kd-service-card-list service-list="::ctrl.replicaSetDetail.serviceList"
+                          service-list-resource="::ctrl.replicaSetServicesResource">
+      <kd-zerostate>
+        <div class="kd-zerostate-title">[[There is nothing to display here|Title for services card zerostate in replica set details page.]]</div>
+        <div class="kd-zerostate-text">[[There are currently no Services with the same label selector as this Replica Set.|Text for services card zerostate in replica set details page.]]</div>
+      </kd-zerostate>
+    </kd-service-card-list>
   </kd-content>
 </kd-content-card>
 

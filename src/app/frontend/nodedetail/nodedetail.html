@@ -29,11 +29,11 @@ limitations under the License.
   <kd-content>
     <kd-pod-card-list pod-list="::ctrl.nodeDetail.podList" with-statuses="true"
                       ng-show="::ctrl.nodeDetail.podList.pods.length" pod-list-resource="::ctrl.podListResource">
+      <kd-zerostate>
+        <div class="kd-zerostate-title">[[There is nothing to display here|Title for pods card zerostate in node details page.]]</div>
+        <div class="kd-zerostate-text">[[There are currently no Pods scheduled on this Node.|Text for pods card zerostate in node details page.]]</div>
+      </kd-zerostate>
     </kd-pod-card-list>
-    <div class="kd-zerostate-message" layout-padding ng-hide="::ctrl.nodeDetail.podList.pods.length">
-      <div class="kd-zerostate-title">[[There is nothing to display here|Title for pods card zerostate in node details page.]]</div>
-      <div class="kd-zerostate-text">[[There are currently no Pods scheduled on this Node.|Text for pods card zerostate in node details page.]]</div>
-    </div>
   </kd-content>
 </kd-content-card>
 
