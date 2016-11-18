@@ -59,13 +59,12 @@ func isHiddenType(secretType api.SecretType) bool {
 	return secretType == api.SecretTypeBasicAuth || secretType == api.SecretTypeOpaque
 }
 
-
 func getSecretDetail(rawSecret *api.Secret) *SecretDetail {
 	return &SecretDetail{
-		ObjectMeta: common.NewObjectMeta(rawSecret.ObjectMeta),
-		TypeMeta:   common.NewTypeMeta(common.ResourceKindSecret),
-		Data:       rawSecret.Data,
+		ObjectMeta:   common.NewObjectMeta(rawSecret.ObjectMeta),
+		TypeMeta:     common.NewTypeMeta(common.ResourceKindSecret),
+		Data:         rawSecret.Data,
 		IsHiddenType: isHiddenType(rawSecret.Type),
-		Type:       rawSecret.Type,
+		Type:         rawSecret.Type,
 	}
 }

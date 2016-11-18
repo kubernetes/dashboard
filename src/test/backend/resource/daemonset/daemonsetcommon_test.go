@@ -36,11 +36,12 @@ func createDaemonSet(name, namespace string, labelSelector map[string]string) ex
 func createService(name, namespace string, labelSelector map[string]string) api.Service {
 	return api.Service{
 		ObjectMeta: api.ObjectMeta{Name: name, Namespace: namespace, Labels: labelSelector},
-		Spec: api.ServiceSpec{Selector: labelSelector},
+		Spec:       api.ServiceSpec{Selector: labelSelector},
 	}
 }
 
 const testNamespace = "test-namespace"
+
 var testLabel = map[string]string{"app": "test"}
 
 func TestGetServicesForDeletionforDS(t *testing.T) {

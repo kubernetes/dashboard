@@ -24,7 +24,6 @@ import (
 	"k8s.io/kubernetes/pkg/apis/extensions"
 )
 
-
 func TestToReplicaSet(t *testing.T) {
 	cases := []struct {
 		replicaSet *extensions.ReplicaSet
@@ -51,4 +50,3 @@ func TestToReplicaSet(t *testing.T) {
 		}
 	}
 }
-

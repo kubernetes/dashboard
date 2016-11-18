@@ -82,15 +82,13 @@ limitations under the License.
   </kd-info-card-section>
 </kd-info-card>
 <kd-content-card>
-  <kd-title>[[Allocated resources|Label 'Allocated resources' for the allocated resources section on the node details page.]]</kd-title>
   <kd-content>
     <kd-node-allocated-resources allocated-resources="::$ctrl.node.allocatedResources">
     </kd-node-allocated-resources>
   </kd-content>
 </kd-content-card>
 <kd-content-card ng-if="::$ctrl.node.conditions.length">
-  <kd-title>[[Conditions|Label 'Conditions' for the conditions section on the node details page.]]</kd-title>
   <kd-content>
-    <kd-node-conditions conditions="::$ctrl.node.conditions"></kd-node-conditions>
+    <kd-condition-list conditions="::$ctrl.node.conditions"></kd-condition-list>
   </kd-content>
 </kd-content-card>
