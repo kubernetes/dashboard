@@ -51,6 +51,8 @@ import servicesanddiscoveryModule from './servicesanddiscovery/module';
 import statefulSetListModule from './statefulsetlist/statefulsetlist_module';
 import workloadsModule from './workloads/workloads_module';
 
+// Prototype!!!
+import podExecModule from './podexec/podexec_module';
 
 export default angular
     .module(
@@ -95,6 +97,9 @@ export default angular
           ingressDetailModule.name,
           servicesanddiscoveryModule.name,
           configModule.name,
+
+          // Prototype!!
+          podExecModule.name,
         ])
     .config(indexConfig)
     .config(routeConfig);

@@ -77,7 +77,6 @@ func main() {
 	http.Handle("/api/", handler.CreateHTTPAPIHandler(apiserverClient, heapsterRESTClient, config))
 	// TODO(maciaszczykm): Move to /appConfig.json as it was discussed in #640.
 	http.Handle("/api/appConfig.json", handler.AppHandler(handler.ConfigHandler))
-	http.Handle("/ws/", handler.CreateWebSocketHandler(apiserverClient, config))
 	log.Print(http.ListenAndServe(fmt.Sprintf(":%d", *argPort), nil))
 }
 
