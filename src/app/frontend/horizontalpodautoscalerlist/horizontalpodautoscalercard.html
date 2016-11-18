@@ -35,7 +35,7 @@ limitations under the License.
     </kd-resource-card-column>
     <kd-resource-card-column>
       <span ng-show="::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage">
-      {{::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage}}%
+      [[{{::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage}}%|Show the target CPU utilization percentage of a the pods of the targetted resource of a HPA]]
       </span>
       <span ng-hide="::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage">
         -
@@ -43,7 +43,7 @@ limitations under the License.
     </kd-resource-card-column>
     <kd-resource-card-column>
       <span>
-      {{::$ctrl.horizontalPodAutoscaler.currentCPUUtilizationPercentage}}%
+      [[{{::$ctrl.horizontalPodAutoscaler.currentCPUUtilizationPercentage}}%|Show the current CPU utilization percentage of a the pods of the targetted resource of a HPA]]
       </span>
     </kd-resource-card-column>
     <kd-resource-card-column>

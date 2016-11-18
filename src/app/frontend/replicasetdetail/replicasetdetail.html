@@ -50,17 +50,14 @@ limitations under the License.
 </kd-content-card>
 
 <kd-content-card>
-  <kd-title>[[Horizontal Pod Autoscalers|Title for the 'Horizontal Pod Autoscalers' card on the Replication Controller detail page]]
-  </kd-title>
   <kd-content>
     <kd-horizontal-pod-autoscaler-card-list
-           horizontal-pod-autoscaler-list="::ctrl.replicaSetDetail.horizontalPodAutoscalerList"
-           ng-show="::ctrl.replicaSetDetail.horizontalPodAutoscalerList.horizontalpodautoscalers.length">
+             horizontal-pod-autoscaler-list="::ctrl.replicaSetDetail.horizontalPodAutoscalerList">
+        <kd-zerostate>
+          <div class="kd-zerostate-title">[[There is nothing to display here|Title for horizontal pod autoscalers card zerostate in replica set details page.]]</div>
+          <div class="kd-zerostate-text">[[There are currently no Horizontal Pod Autoscalers targeting this Replica Set.|Text for horizontal pod autoscalers card zerostate in replica set details page.]]</div>
+        </kd-zerostate>
     </kd-horizontal-pod-autoscaler-card-list>
-    <div class="kd-zerostate-message" layout-padding ng-hide="::ctrl.replicaSetDetail.horizontalPodAutoscalerList.horizontalpodautoscalers.length">
-      <div class="kd-zerostate-title">[[There is nothing to display here|Title for horizontal pod autoscalers card zerostate in replica set details page.]]</div>
-      <div class="kd-zerostate-text">[[There are currently no Horizontal Pod Autoscalers targeting this Replica Set.|Text for horizontal pod autoscalers card zerostate in replica set details page.]]</div>
-    </div>
   </kd-content>
 </kd-content-card>
 

@@ -40,6 +40,12 @@ export class HorizontalPodAutoscalerCardListController {
  * @type {!angular.Component}
  */
 export const horizontalPodAutoscalerCardListComponent = {
+  transclude: {
+    // Optional header that is transcluded instead of the default one.
+    'header': '?kdHeader',
+    // Optional zerostate content that is shown when there are zero items.
+    'zerostate': '?kdZerostate',
+  },
   templateUrl: 'horizontalpodautoscalerlist/horizontalpodautoscalercardlist.html',
   controller: HorizontalPodAutoscalerCardListController,
   bindings: {

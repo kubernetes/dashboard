@@ -15,7 +15,16 @@ limitations under the License.
 -->
 
 <kd-resource-card-list>
-  <kd-resource-card-header-columns>
+  <kd-resource-card-list-header ng-transclude="header">
+    [[Horizontal Pod Autoscalers|Label which appears above the list of such objects.]]
+  </kd-resource-card-list-header>
+  <kd-resource-card-list-pagination pagination-id="jobs" list="$ctrl.horizontalPodAutoscalerList"
+                                    list-resource="::$ctrl.horizontalPodAutoscalerListResource">
+  </kd-resource-card-list-pagination>
+  <div ng-show="!$ctrl.horizontalPodAutoscalerList.listMeta.totalItems"
+      class="kd-zerostate-message" ng-transclude="zerostate"></div>
+
+  <kd-resource-card-header-columns ng-show="$ctrl.horizontalPodAutoscalerList.listMeta.totalItems">
     <kd-resource-card-header-column size="small" grow="2">
       [[Name|Label 'Name' which appears as a column label in the
       table of horizontal pod autoscalers (horizontal pod autoscaler list view).]]
@@ -60,9 +69,4 @@ limitations under the License.
                       dir-paginate="horizontalPodAutoscaler in $ctrl.horizontalPodAutoscalerList.horizontalpodautoscalers | itemsPerPage: default"
                       horizontal-pod-autoscaler="horizontalPodAutoscaler" show-scale-target="::$ctrl.showScaleTarget">
   </kd-horizontal-pod-autoscaler-card>
-  <kd-resource-card-list-footer>
-    <kd-resource-card-list-pagination pagination-id="horizontalpodautoscalers" list="$ctrl.horizontalPodAutoscalerList"
-                                      list-resource="$ctrl.horizontalPodAutoscalerListResource">
-    </kd-resource-card-list-pagination>
-  </kd-resource-card-list-footer>
 </kd-resource-card-list>

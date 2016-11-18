@@ -32,7 +32,7 @@ limitations under the License.
       <div ng-hide="::$ctrl.horizontalPodAutoscaler.maxReplicas">-</div>
     </kd-info-card-entry>
     <kd-info-card-entry title="[[Target CPU Utilization|Horizontal pod autoscaler info details section targetCPUUtilizationPercentage entry.]]">
-      <div ng-show="::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage">{{::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage}}%</div>
+      <div ng-show="::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage">[[{{::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage}}%|Show the target CPU utilization percentage of a the pods of the targetted resource of a HPA]]</div>
       <div ng-hide="::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage">-</div>
     </kd-info-card-entry>
   </kd-info-card-section>
@@ -44,7 +44,7 @@ limitations under the License.
       <div>{{::$ctrl.horizontalPodAutoscaler.desiredReplicas}}</div>
     </kd-info-card-entry>
     <kd-info-card-entry title="[[Current CPU Utilization|Horizontal pod autoscaler info status section currentCPUUtilizationPercentage entry.]]">
-      <div>{{::$ctrl.horizontalPodAutoscaler.currentCPUUtilizationPercentage}}%</div>
+      <div>[[{{::$ctrl.horizontalPodAutoscaler.currentCPUUtilizationPercentage}}%|Show the current CPU utilization percentage of a the pods of the targetted resource of a HPA]]</div>
     </kd-info-card-entry>
     <kd-info-card-entry title="[[Last Scaled|Horizontal pod autoscaler info status section lastScaleTime entry.]]">
       {{::$ctrl.horizontalPodAutoscaler.lastScaleTime | relativeTime}}
