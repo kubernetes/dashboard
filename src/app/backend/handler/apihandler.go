@@ -60,6 +60,10 @@ import (
 	clientK8s "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
 	"k8s.io/kubernetes/pkg/runtime"
+
+	"io"
+	"k8s.io/kubernetes/pkg/client/unversioned/remotecommand"
+	remotecommandserver "k8s.io/kubernetes/pkg/kubelet/server/remotecommand"
 )
 
 const (
@@ -252,6 +256,12 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 		apiV1Ws.GET("/pod/{namespace}/{pod}/container").
 			To(apiHandler.handleGetPodContainers).
 			Writes(pod.PodDetail{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/pod/{namespace}/{pod}/exec").
+			To(apiHandler.handleExecIntoPod))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/pod/{namespace}/{pod}/exec/{container}").
+			To(apiHandler.handleExecIntoPod))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/pod/{namespace}/{pod}/log").
 			To(apiHandler.handleLogs).
@@ -994,6 +1004,53 @@ func (apiHandler *APIHandler) handleGetPods(
 	}
 
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+func (apiHandler *APIHandler) handleExecIntoPod(request *restful.Request, response *restful.Response) {
+	conn, err := upgrader.Upgrade(response.ResponseWriter, request.Request, nil)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	// For example about how kubexec works see: https://github.com/kubernetes/kubernetes/blob/master/pkg/kubectl/cmd/exec.go
+	req := apiHandler.client.Post().
+		Resource("pods").
+		Name(pod.Name).
+		Namespace("default").
+		SubResource("exec").
+		Param("container", containerName)
+
+	config := &restclient.Config{}
+	exec, err := remotecommand.NewExecutor(config, "POST", req.URL())
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	err = exec.Stream(remotecommand.StreamOptions{
+		SupportedProtocols: remotecommandserver.SupportedStreamingProtocols,
+		Stdin:              struct{
+								Read:
+							},
+		Stdout:             stdout,
+		Stderr:             stderr,
+		Tty:                true, // Always use tty
+		TerminalSizeQueue:  nil,  // ??
+	})
+
+	// Echo handler for now
+	// for {
+	// 	messageType, p, err := conn.ReadMessage()
+	// 	if err != nil {
+	// 		log.Println(err)
+	// 		return
+	// 	}
+	// 	if err = conn.WriteMessage(messageType, p); err != nil {
+	// 		log.Println(err)
+	// 		return
+	// 	}
+	// }
 }
 
 // Handles get Pod detail API call.
