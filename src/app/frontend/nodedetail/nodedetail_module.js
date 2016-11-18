@@ -18,7 +18,6 @@ import filtersModule from 'common/filters/filters_module';
 import eventsModule from 'events/events_module';
 
 import {nodeAllocatedResourcesComponent} from './nodeallocatedresources_component';
-import {nodeConditionsComponent} from './nodeconditions_component';
 import stateConfig from './nodedetail_stateconfig';
 import {nodeInfoComponent} from './nodeinfo_component';
 
@@ -42,7 +41,6 @@ export default angular
         ])
     .config(stateConfig)
     .component('kdNodeAllocatedResources', nodeAllocatedResourcesComponent)
-    .component('kdNodeConditions', nodeConditionsComponent)
     .component('kdNodeInfo', nodeInfoComponent)
     .factory('kdNodeEventsResource', nodeEventsResource)
     .factory('kdNodePodsResource', nodePodsResource);

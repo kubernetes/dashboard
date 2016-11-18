@@ -36,6 +36,9 @@ type SecretDetail struct {
 
 	// Used to facilitate programmatic handling of secret data.
 	Type api.SecretType `json:"type"`
+
+	// Determines if the secret is hidden type in case of opaque and basicAuth types.
+	IsHiddenType bool `json:"isHiddenType"`
 }
 
 // GetSecretDetail returns returns detailed information about a secret
@@ -51,11 +54,17 @@ func GetSecretDetail(client *client.Clientset, namespace, name string) (*SecretD
 	return getSecretDetail(rawSecret), nil
 }
 
+// For opaque and basicAuth secret types the credentials like username, password and etc. should be hidden.
+func isHiddenType(secretType api.SecretType) bool {
+	return secretType == api.SecretTypeBasicAuth || secretType == api.SecretTypeOpaque
+}
+
 func getSecretDetail(rawSecret *api.Secret) *SecretDetail {
 	return &SecretDetail{
-		ObjectMeta: common.NewObjectMeta(rawSecret.ObjectMeta),
-		TypeMeta:   common.NewTypeMeta(common.ResourceKindSecret),
-		Data:       rawSecret.Data,
-		Type:       rawSecret.Type,
+		ObjectMeta:   common.NewObjectMeta(rawSecret.ObjectMeta),
+		TypeMeta:     common.NewTypeMeta(common.ResourceKindSecret),
+		Data:         rawSecret.Data,
+		IsHiddenType: isHiddenType(rawSecret.Type),
+		Type:         rawSecret.Type,
 	}
 }

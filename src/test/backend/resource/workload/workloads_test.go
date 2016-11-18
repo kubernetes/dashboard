@@ -24,12 +24,12 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job/joblist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/statefulsetlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/replicasetlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller/replicationcontrollerlist"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/statefulsetlist"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/apps"
@@ -40,20 +40,20 @@ import (
 func TestGetWorkloadsFromChannels(t *testing.T) {
 	var jobCompletions int32
 	cases := []struct {
-		k8sRs         extensions.ReplicaSetList
-		k8sJobs       batch.JobList
-		k8sDaemonSet  extensions.DaemonSetList
-		k8sDeployment extensions.DeploymentList
-		k8sRc         api.ReplicationControllerList
-		k8sPod        api.PodList
-		k8sStatefulSet     apps.StatefulSetList
-		rcs           []replicationcontroller.ReplicationController
-		rs            []replicaset.ReplicaSet
-		jobs          []joblist.Job
-		daemonset     []daemonsetlist.DaemonSet
-		deployment    []deployment.Deployment
-		pod           []pod.Pod
-		statefulSet        []statefulsetlist.StatefulSet
+		k8sRs          extensions.ReplicaSetList
+		k8sJobs        batch.JobList
+		k8sDaemonSet   extensions.DaemonSetList
+		k8sDeployment  extensions.DeploymentList
+		k8sRc          api.ReplicationControllerList
+		k8sPod         api.PodList
+		k8sStatefulSet apps.StatefulSetList
+		rcs            []replicationcontroller.ReplicationController
+		rs             []replicaset.ReplicaSet
+		jobs           []joblist.Job
+		daemonset      []daemonsetlist.DaemonSet
+		deployment     []deployment.Deployment
+		pod            []pod.Pod
+		statefulSet    []statefulsetlist.StatefulSet
 	}{
 		{
 			extensions.ReplicaSetList{},
@@ -198,7 +198,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 			StatefulSetList: statefulsetlist.StatefulSetList{
 				ListMeta:          common.ListMeta{TotalItems: len(c.statefulSet)},
 				CumulativeMetrics: make([]metric.Metric, 0),
-				StatefulSets:           c.statefulSet,
+				StatefulSets:      c.statefulSet,
 			},
 		}
 		var expectedErr error

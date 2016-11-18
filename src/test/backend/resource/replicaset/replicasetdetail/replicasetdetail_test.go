@@ -18,15 +18,19 @@ import (
 	"reflect"
 	"testing"
 
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/apis/extensions"
-	"k8s.io/kubernetes/pkg/client/restclient"
-	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler/horizontalpodautoscalerlist"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/service"
+	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api/unversioned"
+	"k8s.io/kubernetes/pkg/apis/extensions"
+	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
+	"k8s.io/kubernetes/pkg/client/restclient"
 )
 
 type FakeHeapsterClient struct {
@@ -38,73 +42,68 @@ func (c FakeHeapsterClient) Get(path string) client.RequestInterface {
 }
 
 func TestGetReplicaSetDetail(t *testing.T) {
-	// TODO: fix test
-	t.Skip("NewSimpleFake no longer supported. Test update needed.")
+	cases := []struct {
+		namespace, name string
+		expectedActions []string
+		replicaSet      *extensions.ReplicaSet
+		expected        *ReplicaSetDetail
+	}{
+		{
+			"ns-1", "rs-1",
+			[]string{"get", "list", "get", "list", "list", "get", "list", "list", "get", "list"},
+			&extensions.ReplicaSet{
+				ObjectMeta: api.ObjectMeta{Name: "rs-1", Namespace: "ns-1",
+					Labels: map[string]string{"app": "test"}},
+				Spec: extensions.ReplicaSetSpec{
+					Selector: &unversioned.LabelSelector{
+						MatchLabels: map[string]string{"app": "test"},
+					},
+				},
+			},
+			&ReplicaSetDetail{
+				ObjectMeta: common.ObjectMeta{Name: "rs-1", Namespace: "ns-1",
+					Labels: map[string]string{"app": "test"}},
+				TypeMeta: common.TypeMeta{Kind: common.ResourceKindReplicaSet},
+				PodInfo:  common.PodInfo{Warnings: []common.Event{}},
+				PodList: pod.PodList{
+					Pods:              []pod.Pod{},
+					CumulativeMetrics: make([]metric.Metric, 0),
+				},
+				Selector: &unversioned.LabelSelector{
+					MatchLabels: map[string]string{"app": "test"},
+				},
+				ServiceList: service.ServiceList{Services: []service.Service{}},
+				EventList:   common.EventList{Events: []common.Event{}},
+			},
+		},
+	}
 
-	//eventList := &api.EventList{}
-	//podList := &api.PodList{}
-	//serviceList := &api.ServiceList{}
-	//
-	//cases := []struct {
-	//	namespace, name string
-	//	expectedActions []string
-	//	replicaSet      *extensions.ReplicaSet
-	//	expected        *ReplicaSetDetail
-	//}{
-	//	{
-	//		"test-namespace", "test-name",
-	//		[]string{"get", "list", "get", "list", "list", "get", "list", "list", "get", "list"},
-	//		&extensions.ReplicaSet{
-	//			ObjectMeta: api.ObjectMeta{Name: "test-replicaset"},
-	//			Spec: extensions.ReplicaSetSpec{
-	//				Selector: &unversioned.LabelSelector{
-	//					MatchLabels: map[string]string{},
-	//				}},
-	//		},
-	//		&ReplicaSetDetail{
-	//			ObjectMeta: common.ObjectMeta{Name: "test-replicaset"},
-	//			TypeMeta:   common.TypeMeta{Kind: common.ResourceKindReplicaSet},
-	//			PodInfo:    common.PodInfo{Warnings: []common.Event{}},
-	//			PodList: pod.PodList{
-	//				Pods:              []pod.Pod{},
-	//				CumulativeMetrics: make([]metric.Metric, 0),
-	//			},
-	//			Selector: &unversioned.LabelSelector{
-	//				MatchLabels: map[string]string{},
-	//			},
-	//			ServiceList: service.ServiceList{Services: []service.Service{}},
-	//			EventList:   common.EventList{Events: []common.Event{}},
-	//		},
-	//	},
-	//}
-	//
-	//for _, c := range cases {
-	//	fakeClient := testclient.NewSimpleFake(c.replicaSet, podList, serviceList, eventList, c.replicaSet,
-	//		podList, serviceList, eventList)
-	//	fakeHeapsterClient := FakeHeapsterClient{client: testclient.NewSimpleFake()}
-	//
-	//	dataselect.DefaultDataSelectWithMetrics.MetricQuery = dataselect.NoMetrics
-	//	actual, _ := GetReplicaSetDetail(fakeClient, fakeHeapsterClient, c.namespace, c.name)
-	//
-	//	actions := fakeClient.Actions()
-	//	if len(actions) != len(c.expectedActions) {
-	//		t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
-	//			len(c.expectedActions), len(actions))
-	//		continue
-	//	}
-	//
-	//	for i, verb := range c.expectedActions {
-	//		if actions[i].GetVerb() != verb {
-	//			t.Errorf("Unexpected action: %+v, expected %s",
-	//				actions[i], verb)
-	//		}
-	//	}
-	//
-	//	if !reflect.DeepEqual(actual, c.expected) {
-	//		t.Errorf("GetEvents(client,heapsterClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
-	//			c.namespace, c.name, actual, c.expected)
-	//	}
-	//}
+	for _, c := range cases {
+		fakeClient := fake.NewSimpleClientset(c.replicaSet)
+		fakeHeapsterClient := FakeHeapsterClient{client: fake.NewSimpleClientset()}
+
+		dataselect.DefaultDataSelectWithMetrics.MetricQuery = dataselect.NoMetrics
+		actual, _ := GetReplicaSetDetail(fakeClient, fakeHeapsterClient, c.namespace, c.name)
+
+		actions := fakeClient.Actions()
+		if len(actions) != len(c.expectedActions) {
+			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
+				len(c.expectedActions), len(actions))
+			continue
+		}
+
+		for i, verb := range c.expectedActions {
+			if actions[i].GetVerb() != verb {
+				t.Errorf("Unexpected action: %+v, expected %s",
+					actions[i], verb)
+			}
+		}
+
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("GetEvents(client,heapsterClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
+				c.namespace, c.name, actual, c.expected)
+		}
+	}
 }
 
 func TestToReplicaSetDetail(t *testing.T) {
@@ -163,7 +162,7 @@ func TestToReplicaSetDetail(t *testing.T) {
 		actual := ToReplicaSetDetail(c.replicaSet, c.eventList, c.podList, c.podInfo, c.serviceList, c.hpaList)
 
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("ToReplicaSetDetail(%#v, %#v, %#v, %#v) == \ngot %#v, \nexpected %#v",
+			t.Errorf("ToReplicaSetDetail(%#v, %#v, %#v, %#v, %#v) == \ngot %#v, \nexpected %#v",
 				c.replicaSet, c.eventList, c.podList, c.podInfo, c.serviceList, actual, c.expected)
 		}
 	}

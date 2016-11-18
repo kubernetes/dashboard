@@ -15,50 +15,67 @@
 package validation
 
 import (
+	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
+	"k8s.io/kubernetes/pkg/runtime"
+
 	"testing"
 )
 
 func TestValidateName(t *testing.T) {
-	// TODO: fix test
-	t.Skip("NewSimpleFake no longer supported. Test update needed.")
+	spec := &AppNameValiditySpec{
+		Namespace: "foo-namespace",
+		Name:      "foo-name",
+	}
+	cases := []struct {
+		spec     *AppNameValiditySpec
+		objects  []runtime.Object
+		expected bool
+	}{
+		{
+			spec,
+			nil,
+			true,
+		},
+		{
+			spec,
+			[]runtime.Object{&api.ReplicationController{
+				ObjectMeta: api.ObjectMeta{
+					Name: "rc-1", Namespace: "ns-1",
+				},
+			}},
+			true,
+		},
+		{
+			spec,
+			[]runtime.Object{&api.Service{
+				ObjectMeta: api.ObjectMeta{
+					Name: "rc-1", Namespace: "ns-1",
+				},
+			}},
+			true,
+		},
+		{
+			spec,
+			[]runtime.Object{&api.ReplicationController{
+				ObjectMeta: api.ObjectMeta{
+					Name: "rc-1", Namespace: "ns-1",
+				},
+			}, &api.Service{
+				ObjectMeta: api.ObjectMeta{
+					Name: "rc-1", Namespace: "ns-1",
+				},
+			}},
+			true,
+		},
+	}
 
-	//spec := &AppNameValiditySpec{
-	//	Namespace: "foo-namespace",
-	//	Name:      "foo-name",
-	//}
-	//cases := []struct {
-	//	spec     *AppNameValiditySpec
-	//	objects  []runtime.Object
-	//	expected bool
-	//}{
-	//	{
-	//		spec,
-	//		nil,
-	//		true,
-	//	},
-	//	{
-	//		spec,
-	//		[]runtime.Object{&api.ReplicationController{}},
-	//		false,
-	//	},
-	//	{
-	//		spec,
-	//		[]runtime.Object{&api.Service{}},
-	//		false,
-	//	},
-	//	{
-	//		spec,
-	//		[]runtime.Object{&api.ReplicationController{}, &api.Service{}},
-	//		false,
-	//	},
-	//}
-	//
-	//for _, c := range cases {
-	//	testClient := testclient.NewSimpleFake(c.objects...)
-	//	validity, _ := ValidateAppName(c.spec, testClient)
-	//	if validity.Valid != c.expected {
-	//		t.Errorf("Expected %#v validity to be %#v for objects %#v, but was %#v\n",
-	//			c.spec, c.expected, c.objects, validity)
-	//	}
-	//}
+	for _, c := range cases {
+		testClient := fake.NewSimpleClientset(c.objects...)
+		validity, _ := ValidateAppName(c.spec, testClient)
+		if validity.Valid != c.expected {
+			t.Errorf("Expected %#v validity to be %#v for objects %#v, but was %#v\n",
+				c.spec, c.expected, c.objects, validity)
+		}
+	}
 }

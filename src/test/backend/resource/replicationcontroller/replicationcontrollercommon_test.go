@@ -18,7 +18,9 @@ import (
 	"reflect"
 	"testing"
 
+	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
+	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
 	"k8s.io/kubernetes/pkg/labels"
 )
 
@@ -50,73 +52,96 @@ func TestToLabelSelector(t *testing.T) {
 }
 
 func TestGetServicesForDeletion(t *testing.T) {
-	// TODO: fix test
-	t.Skip("NewSimpleFake no longer supported. Test update needed.")
+	labelSelector := map[string]string{"app": "test"}
 
-	//cases := []struct {
-	//	labelSelector             labels.Selector
-	//	replicationControllerList *api.ReplicationControllerList
-	//	expected                  *api.ServiceList
-	//	expectedActions           []string
-	//}{
-	//	{
-	//		labels.SelectorFromSet(map[string]string{"app": "test"}),
-	//		&api.ReplicationControllerList{
-	//			Items: []api.ReplicationController{
-	//				{Spec: api.ReplicationControllerSpec{Selector: map[string]string{"app": "test"}}},
-	//			},
-	//		},
-	//		&api.ServiceList{
-	//			Items: []api.Service{
-	//				{Spec: api.ServiceSpec{Selector: map[string]string{"app": "test"}}},
-	//			},
-	//		},
-	//		[]string{"list", "list"},
-	//	},
-	//	{
-	//		labels.SelectorFromSet(map[string]string{"app": "test"}),
-	//		&api.ReplicationControllerList{
-	//			Items: []api.ReplicationController{
-	//				{Spec: api.ReplicationControllerSpec{Selector: map[string]string{"app": "test"}}},
-	//				{Spec: api.ReplicationControllerSpec{Selector: map[string]string{"app": "test"}}},
-	//			},
-	//		},
-	//		&api.ServiceList{
-	//			Items: []api.Service{
-	//				{Spec: api.ServiceSpec{Selector: map[string]string{"app": "test"}}},
-	//			},
-	//		},
-	//		[]string{"list"},
-	//	},
-	//	{
-	//		labels.SelectorFromSet(map[string]string{"app": "test"}),
-	//		&api.ReplicationControllerList{},
-	//		&api.ServiceList{
-	//			Items: []api.Service{
-	//				{Spec: api.ServiceSpec{Selector: map[string]string{"app": "test"}}},
-	//			},
-	//		},
-	//		[]string{"list"},
-	//	},
-	//}
-	//
-	//for _, c := range cases {
-	//	fakeClient := testclient.NewSimpleFake(c.replicationControllerList, c.expected)
-	//
-	//	getServicesForDeletion(fakeClient, c.labelSelector, "mock")
-	//
-	//	actions := fakeClient.Actions()
-	//	if len(actions) != len(c.expectedActions) {
-	//		t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
-	//			len(c.expectedActions), len(actions))
-	//		continue
-	//	}
-	//
-	//	for i, verb := range c.expectedActions {
-	//		if actions[i].GetVerb() != verb {
-	//			t.Errorf("Unexpected action: %+v, expected %s",
-	//				actions[i], verb)
-	//		}
-	//	}
-	//}
+	cases := []struct {
+		labelSelector             labels.Selector
+		replicationControllerList *api.ReplicationControllerList
+		expected                  *api.ServiceList
+		expectedActions           []string
+	}{
+		{
+			labels.SelectorFromSet(labelSelector),
+			&api.ReplicationControllerList{
+				Items: []api.ReplicationController{
+					{
+						ObjectMeta: api.ObjectMeta{Name: "rc-1", Namespace: "ns-1",
+							Labels: labelSelector},
+						Spec: api.ReplicationControllerSpec{Selector: labelSelector},
+					},
+				},
+			},
+			&api.ServiceList{
+				Items: []api.Service{
+					{
+						ObjectMeta: api.ObjectMeta{Name: "svc-1", Namespace: "ns-1",
+							Labels: labelSelector},
+						Spec: api.ServiceSpec{Selector: labelSelector},
+					},
+				},
+			},
+			[]string{"list", "list"},
+		},
+		{
+			labels.SelectorFromSet(labelSelector),
+			&api.ReplicationControllerList{
+				Items: []api.ReplicationController{
+					{
+						ObjectMeta: api.ObjectMeta{Name: "rc-1", Namespace: "ns-1",
+							Labels: labelSelector},
+						Spec: api.ReplicationControllerSpec{Selector: labelSelector},
+					},
+					{
+						ObjectMeta: api.ObjectMeta{Name: "rc-2", Namespace: "ns-1",
+							Labels: labelSelector},
+						Spec: api.ReplicationControllerSpec{Selector: labelSelector},
+					},
+				},
+			},
+			&api.ServiceList{
+				Items: []api.Service{
+					{
+						ObjectMeta: api.ObjectMeta{Name: "svc-1", Namespace: "ns-1",
+							Labels: labelSelector},
+						Spec: api.ServiceSpec{Selector: labelSelector},
+					},
+				},
+			},
+			[]string{"list"},
+		},
+		{
+			labels.SelectorFromSet(labelSelector),
+			&api.ReplicationControllerList{},
+			&api.ServiceList{
+				Items: []api.Service{
+					{
+						ObjectMeta: api.ObjectMeta{Name: "svc-1", Namespace: "ns-1",
+							Labels: labelSelector},
+						Spec: api.ServiceSpec{Selector: labelSelector},
+					},
+				},
+			},
+			[]string{"list"},
+		},
+	}
+
+	for _, c := range cases {
+		fakeClient := fake.NewSimpleClientset(c.replicationControllerList, c.expected)
+
+		getServicesForDeletion(fakeClient, c.labelSelector, "ns-1")
+
+		actions := fakeClient.Actions()
+		if len(actions) != len(c.expectedActions) {
+			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
+				len(c.expectedActions), len(actions))
+			continue
+		}
+
+		for i, verb := range c.expectedActions {
+			if actions[i].GetVerb() != verb {
+				t.Errorf("Unexpected action: %+v, expected %s",
+					actions[i], verb)
+			}
+		}
+	}
 }

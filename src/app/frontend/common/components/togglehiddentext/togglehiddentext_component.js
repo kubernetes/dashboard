@@ -15,30 +15,31 @@
 /**
  * @final
  */
-export default class NodeConditionsController {
+export class ToggleHiddenTextController {
   /**
-   * Constructs node conditions object.
    * @ngInject
    */
   constructor() {
-    /**
-     * Node conditions. Initialized from the scope.
-     * @export {!backendApi.NodeConditionList}
-     */
-    this.conditions;
+    /** @export {string} Initialized from the scope. */
+    this.text;
+
+    /** @export {string} Initialized from the scope. */
+    this.placeholder;
   }
 }
 
 /**
- * Definition object for the component that displays node conditions.
+ * Represents a toggle to hide and show text.
  *
- * @return {!angular.Directive}
+ * @type {!angular.Component}
  */
-export const nodeConditionsComponent = {
-  controller: NodeConditionsController,
-  templateUrl: 'nodedetail/nodeconditions.html',
+export const toggleHiddenTextComponent = {
+  templateUrl: 'common/components/togglehiddentext/togglehiddentext.html',
+  controller: ToggleHiddenTextController,
   bindings: {
-    /** {!backendApi.NodeConditionList} */
-    'conditions': '=',
+    /** {!string} */
+    'placeholder': '@?',
+    /** {!string} */
+    'text': '@',
   },
 };

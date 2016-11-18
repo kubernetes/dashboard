@@ -44,7 +44,7 @@ func TestGetStatefulSetListFromChannels(t *testing.T) {
 			&StatefulSetList{
 				ListMeta:          common.ListMeta{},
 				CumulativeMetrics: make([]metric.Metric, 0),
-				StatefulSets:           []StatefulSet{}},
+				StatefulSets:      []StatefulSet{}},
 			nil,
 		},
 		{

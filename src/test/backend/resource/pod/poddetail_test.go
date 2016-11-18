@@ -17,14 +17,19 @@ package pod
 import (
 	"fmt"
 	"net/http"
+	"reflect"
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+
+	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
 	"k8s.io/kubernetes/pkg/client/restclient"
 )
 
-type FakeHeapsterClient struct {
-}
+type FakeHeapsterClient struct{}
 
 type clientFunc func(req *http.Request) (*http.Response, error)
 
@@ -39,42 +44,41 @@ func (c FakeHeapsterClient) Get(path string) client.RequestInterface {
 }
 
 func TestToPodDetail(t *testing.T) {
-	// TODO: fix test
-	t.Skip("NewSimpleFake no longer supported. Test update needed.")
+	cases := []struct {
+		pod      *api.PodList
+		expected *PodDetail
+	}{
+		{
+			pod: &api.PodList{Items: []api.Pod{{
+				ObjectMeta: api.ObjectMeta{
+					Name: "test-pod", Namespace: "test-namespace",
+					Labels: map[string]string{"app": "test"},
+				}}}},
+			expected: &PodDetail{
+				TypeMeta: common.TypeMeta{Kind: common.ResourceKindPod},
+				ObjectMeta: common.ObjectMeta{
+					Name:      "test-pod",
+					Namespace: "test-namespace",
+					Labels:    map[string]string{"app": "test"},
+				},
+				Controller: Controller{Kind: "unknown"},
+				Containers: []Container{},
+			},
+		},
+	}
 
-	//cases := []struct {
-	//	pod      *api.PodList
-	//	expected *PodDetail
-	//}{
-	//	{
-	//		pod: &api.PodList{Items: []api.Pod{{
-	//			ObjectMeta: api.ObjectMeta{
-	//				Name: "test-pod", Namespace: "test-namespace",
-	//			}}}},
-	//		expected: &PodDetail{
-	//			TypeMeta: common.TypeMeta{Kind: common.ResourceKindPod},
-	//			ObjectMeta: common.ObjectMeta{
-	//				Name:      "test-pod",
-	//				Namespace: "test-namespace",
-	//			},
-	//			Controller: Controller{Kind: "unknown"},
-	//			Containers: []Container{},
-	//		},
-	//	},
-	//}
-	//
-	//for _, c := range cases {
-	//	fakeClient := testclient.NewSimpleFake(c.pod)
-	//
-	//	dataselect.DefaultDataSelectWithMetrics.MetricQuery = dataselect.NoMetrics
-	//	actual, err := GetPodDetail(fakeClient, FakeHeapsterClient{}, "test-namespace", "test-pod")
-	//
-	//	if err != nil {
-	//		t.Errorf("GetPodDetail(%#v) == \ngot err %#v", c.pod, err)
-	//	}
-	//	if !reflect.DeepEqual(actual, c.expected) {
-	//		t.Errorf("GetPodDetail(%#v) == \ngot %#v, \nexpected %#v", c.pod, actual,
-	//			c.expected)
-	//	}
-	//}
+	for _, c := range cases {
+		fakeClient := fake.NewSimpleClientset(c.pod)
+
+		dataselect.DefaultDataSelectWithMetrics.MetricQuery = dataselect.NoMetrics
+		actual, err := GetPodDetail(fakeClient, FakeHeapsterClient{}, "test-namespace", "test-pod")
+
+		if err != nil {
+			t.Errorf("GetPodDetail(%#v) == \ngot err %#v", c.pod, err)
+		}
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("GetPodDetail(%#v) == \ngot %#v, \nexpected %#v", c.pod, actual,
+				c.expected)
+		}
+	}
 }
