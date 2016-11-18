@@ -20,119 +20,115 @@ import (
 	"testing"
 
 	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/apis/extensions"
+	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
+	"k8s.io/kubernetes/pkg/client/testing/core"
 	kubectlResource "k8s.io/kubernetes/pkg/kubectl/resource"
+
+	"k8s.io/kubernetes/pkg/api/resource"
 )
 
 func TestDeployApp(t *testing.T) {
-	// TODO: fix test
-	t.Skip("NewSimpleFake no longer supported. Test update needed.")
+	namespace := "foo-namespace"
+	spec := &AppDeploymentSpec{
+		Namespace:       namespace,
+		Name:            "foo-name",
+		RunAsPrivileged: true,
+	}
 
-	//namespace := "foo-namespace"
-	//spec := &AppDeploymentSpec{
-	//	Namespace:       namespace,
-	//	Name:            "foo-name",
-	//	RunAsPrivileged: true,
-	//}
-	//expectedRc := &extensions.Deployment{
-	//	ObjectMeta: api.ObjectMeta{
-	//		Name:        "foo-name",
-	//		Labels:      map[string]string{},
-	//		Annotations: map[string]string{},
-	//	},
-	//	Spec: extensions.DeploymentSpec{
-	//		Template: api.PodTemplateSpec{
-	//			ObjectMeta: api.ObjectMeta{
-	//				Name:        "foo-name",
-	//				Labels:      map[string]string{},
-	//				Annotations: map[string]string{},
-	//			},
-	//			Spec: api.PodSpec{
-	//				Containers: []api.Container{{
-	//					Name: "foo-name",
-	//					SecurityContext: &api.SecurityContext{
-	//						Privileged: &spec.RunAsPrivileged,
-	//					},
-	//					Resources: api.ResourceRequirements{
-	//						Requests: make(map[api.ResourceName]resource.Quantity),
-	//					},
-	//				}},
-	//			},
-	//		},
-	//	},
-	//}
-	//
-	//testClient := testclient.NewSimpleFake()
-	//
-	//DeployApp(spec, testClient)
-	//
-	//createAction := testClient.Actions()[0].(testclient.CreateActionImpl)
-	//if len(testClient.Actions()) != 1 {
-	//	t.Errorf("Expected one create action but got %#v", len(testClient.Actions()))
-	//}
-	//
-	//if createAction.Namespace != namespace {
-	//	t.Errorf("Expected namespace to be %#v but go %#v", namespace, createAction.Namespace)
-	//}
-	//
-	//rc := createAction.GetObject().(*extensions.Deployment)
-	//if !reflect.DeepEqual(rc, expectedRc) {
-	//	t.Errorf("Expected replication controller \n%#v\n to be created but got \n%#v\n",
-	//		expectedRc, rc)
-	//}
+	expected := &extensions.Deployment{
+		ObjectMeta: api.ObjectMeta{
+			Name:        "foo-name",
+			Labels:      map[string]string{},
+			Annotations: map[string]string{},
+		},
+		Spec: extensions.DeploymentSpec{
+			Template: api.PodTemplateSpec{
+				ObjectMeta: api.ObjectMeta{
+					Name:        "foo-name",
+					Labels:      map[string]string{},
+					Annotations: map[string]string{},
+				},
+				Spec: api.PodSpec{
+					Containers: []api.Container{{
+						Name: "foo-name",
+						SecurityContext: &api.SecurityContext{
+							Privileged: &spec.RunAsPrivileged,
+						},
+						Resources: api.ResourceRequirements{
+							Requests: make(map[api.ResourceName]resource.Quantity),
+						},
+					}},
+				},
+			},
+		},
+	}
+
+	testClient := fake.NewSimpleClientset()
+
+	DeployApp(spec, testClient)
+
+	createAction := testClient.Actions()[0].(core.CreateActionImpl)
+	if len(testClient.Actions()) != 1 {
+		t.Errorf("Expected one create action but got %#v", len(testClient.Actions()))
+	}
+
+	if createAction.GetNamespace() != namespace {
+		t.Errorf("Expected namespace to be %#v but go %#v", namespace, createAction.GetNamespace())
+	}
+
+	deployment := createAction.GetObject().(*extensions.Deployment)
+	if !reflect.DeepEqual(deployment, expected) {
+		t.Errorf("Expected replication controller \n%#v\n to be created but got \n%#v\n",
+			expected, deployment)
+	}
 }
 
 func TestDeployAppContainerCommands(t *testing.T) {
-	// TODO: fix test
-	t.Skip("NewSimpleFake no longer supported. Test update needed.")
+	command := "foo-command"
+	commandArgs := "foo-command-args"
+	spec := &AppDeploymentSpec{
+		Namespace:            "foo-namespace",
+		Name:                 "foo-name",
+		ContainerCommand:     &command,
+		ContainerCommandArgs: &commandArgs,
+	}
+	testClient := fake.NewSimpleClientset()
 
-	//command := "foo-command"
-	//commandArgs := "foo-command-args"
-	//spec := &AppDeploymentSpec{
-	//	Namespace:            "foo-namespace",
-	//	Name:                 "foo-name",
-	//	ContainerCommand:     &command,
-	//	ContainerCommandArgs: &commandArgs,
-	//}
-	//testClient := testclient.NewSimpleFake()
-	//
-	//DeployApp(spec, testClient)
-	//
-	//createAction := testClient.Actions()[0].(testclient.CreateActionImpl)
-	//
-	//rc := createAction.GetObject().(*extensions.Deployment)
-	//container := rc.Spec.Template.Spec.Containers[0]
-	//if container.Command[0] != command {
-	//	t.Errorf("Expected command to be %#v but got %#v",
-	//		command, container.Command)
-	//}
-	//
-	//if container.Args[0] != commandArgs {
-	//	t.Errorf("Expected command args to be %#v but got %#v",
-	//		commandArgs, container.Args)
-	//}
+	DeployApp(spec, testClient)
+	createAction := testClient.Actions()[0].(core.CreateActionImpl)
+
+	rc := createAction.GetObject().(*extensions.Deployment)
+	container := rc.Spec.Template.Spec.Containers[0]
+	if container.Command[0] != command {
+		t.Errorf("Expected command to be %#v but got %#v",
+			command, container.Command)
+	}
+
+	if container.Args[0] != commandArgs {
+		t.Errorf("Expected command args to be %#v but got %#v",
+			commandArgs, container.Args)
+	}
 }
 
 func TestDeployShouldPopulateEnvVars(t *testing.T) {
-	// TODO: fix test
-	t.Skip("NewSimpleFake no longer supported. Test update needed.")
+	spec := &AppDeploymentSpec{
+		Namespace: "foo-namespace",
+		Name:      "foo-name",
+		Variables: []EnvironmentVariable{{"foo", "bar"}},
+	}
+	testClient := fake.NewSimpleClientset()
 
-	//spec := &AppDeploymentSpec{
-	//	Namespace: "foo-namespace",
-	//	Name:      "foo-name",
-	//	Variables: []EnvironmentVariable{{"foo", "bar"}},
-	//}
-	//testClient := testclient.NewSimpleFake()
-	//
-	//DeployApp(spec, testClient)
-	//
-	//createAction := testClient.Actions()[0].(testclient.CreateActionImpl)
-	//
-	//rc := createAction.GetObject().(*extensions.Deployment)
-	//container := rc.Spec.Template.Spec.Containers[0]
-	//if !reflect.DeepEqual(container.Env, []api.EnvVar{{Name: "foo", Value: "bar"}}) {
-	//	t.Errorf("Expected environment variables to be %#v but got %#v",
-	//		[]api.EnvVar{{Name: "foo", Value: "bar"}}, container.Env)
-	//}
+	DeployApp(spec, testClient)
+
+	createAction := testClient.Actions()[0].(core.CreateActionImpl)
+
+	rc := createAction.GetObject().(*extensions.Deployment)
+	container := rc.Spec.Template.Spec.Containers[0]
+	if !reflect.DeepEqual(container.Env, []api.EnvVar{{Name: "foo", Value: "bar"}}) {
+		t.Errorf("Expected environment variables to be %#v but got %#v",
+			[]api.EnvVar{{Name: "foo", Value: "bar"}}, container.Env)
+	}
 }
 
 func TestDeployShouldGeneratePortNames(t *testing.T) {
@@ -149,35 +145,32 @@ func TestDeployShouldGeneratePortNames(t *testing.T) {
 }
 
 func TestDeployWithResourceRequirements(t *testing.T) {
-	// TODO: fix test
-	t.Skip("NewSimpleFake no longer supported. Test update needed.")
+	cpuRequirement := resource.Quantity{}
+	memoryRequirement := resource.Quantity{}
+	spec := &AppDeploymentSpec{
+		Namespace:         "foo-namespace",
+		Name:              "foo-name",
+		CpuRequirement:    &cpuRequirement,
+		MemoryRequirement: &memoryRequirement,
+	}
+	expectedResources := api.ResourceRequirements{
+		Requests: map[api.ResourceName]resource.Quantity{
+			api.ResourceMemory: memoryRequirement,
+			api.ResourceCPU:    cpuRequirement,
+		},
+	}
+	testClient := fake.NewSimpleClientset()
 
-	//cpuRequirement := resource.Quantity{}
-	//memoryRequirement := resource.Quantity{}
-	//spec := &AppDeploymentSpec{
-	//	Namespace:         "foo-namespace",
-	//	Name:              "foo-name",
-	//	CpuRequirement:    &cpuRequirement,
-	//	MemoryRequirement: &memoryRequirement,
-	//}
-	//expectedResources := api.ResourceRequirements{
-	//	Requests: map[api.ResourceName]resource.Quantity{
-	//		api.ResourceMemory: memoryRequirement,
-	//		api.ResourceCPU:    cpuRequirement,
-	//	},
-	//}
-	//testClient := testclient.NewSimpleFake()
-	//
-	//DeployApp(spec, testClient)
-	//
-	//createAction := testClient.Actions()[0].(testclient.CreateActionImpl)
-	//
-	//rc := createAction.GetObject().(*extensions.Deployment)
-	//container := rc.Spec.Template.Spec.Containers[0]
-	//if !reflect.DeepEqual(container.Resources, expectedResources) {
-	//	t.Errorf("Expected resource requirements to be %#v but got %#v",
-	//		expectedResources, container.Resources)
-	//}
+	DeployApp(spec, testClient)
+
+	createAction := testClient.Actions()[0].(core.CreateActionImpl)
+
+	rc := createAction.GetObject().(*extensions.Deployment)
+	container := rc.Spec.Template.Spec.Containers[0]
+	if !reflect.DeepEqual(container.Resources, expectedResources) {
+		t.Errorf("Expected resource requirements to be %#v but got %#v",
+			expectedResources, container.Resources)
+	}
 }
 
 func TestGetAvailableProtocols(t *testing.T) {
