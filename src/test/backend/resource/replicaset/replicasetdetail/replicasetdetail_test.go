@@ -50,7 +50,7 @@ func TestGetReplicaSetDetail(t *testing.T) {
 	}{
 		{
 			"ns-1", "rs-1",
-			[]string{"get", "list", "get", "list", "list", "get", "list", "list", "get", "list"},
+			[]string{"get", "list", "get", "list", "list", "get", "list", "list", "get", "list", "list"},
 			&extensions.ReplicaSet{
 				ObjectMeta: api.ObjectMeta{Name: "rs-1", Namespace: "ns-1",
 					Labels: map[string]string{"app": "test"}},
@@ -74,6 +74,7 @@ func TestGetReplicaSetDetail(t *testing.T) {
 				},
 				ServiceList: service.ServiceList{Services: []service.Service{}},
 				EventList:   common.EventList{Events: []common.Event{}},
+				HorizontalPodAutoscalerList: horizontalpodautoscalerlist.HorizontalPodAutoscalerList{HorizontalPodAutoscalers: []horizontalpodautoscalerlist.HorizontalPodAutoscaler{}},
 			},
 		},
 	}
