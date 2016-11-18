@@ -86,9 +86,9 @@ func TestGetDeploymentDetail(t *testing.T) {
 			deployment,
 			&DeploymentDetail{
 				ObjectMeta: common.ObjectMeta{
-					Name:   "dp-1",
+					Name:      "dp-1",
 					Namespace: "ns-1",
-					Labels: map[string]string{"foo": "bar"},
+					Labels:    map[string]string{"foo": "bar"},
 				},
 				TypeMeta: common.TypeMeta{Kind: common.ResourceKindDeployment},
 				PodList: pod.PodList{

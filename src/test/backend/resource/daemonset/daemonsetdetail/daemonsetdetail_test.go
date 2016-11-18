@@ -40,6 +40,7 @@ func createService(name, namespace string, labelSelector map[string]string) api.
 }
 
 const testNamespace = "test-namespace"
+
 var testLabel = map[string]string{"app": "test"}
 
 func TestDeleteDaemonSetServices(t *testing.T) {

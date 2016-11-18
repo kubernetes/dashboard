@@ -98,7 +98,7 @@ type NodeDetail struct {
 	NodeInfo api.NodeSystemInfo `json:"nodeInfo"`
 
 	// Conditions is an array of current node conditions.
-	Conditions []api.NodeCondition `json:"conditions"`
+	Conditions []common.Condition `json:"conditions"`
 
 	// Container images of the node.
 	ContainerImages []string `json:"containerImages"`
@@ -248,7 +248,7 @@ func toNodeDetail(node api.Node, pods *pod.PodList, eventList *common.EventList,
 		PodCIDR:            node.Spec.PodCIDR,
 		Unschedulable:      node.Spec.Unschedulable,
 		NodeInfo:           node.Status.NodeInfo,
-		Conditions:         node.Status.Conditions,
+		Conditions:         getNodeConditions(node),
 		ContainerImages:    getContainerImages(node),
 		PodList:            *pods,
 		EventList:          *eventList,

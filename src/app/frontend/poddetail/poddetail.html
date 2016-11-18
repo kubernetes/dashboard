@@ -30,4 +30,10 @@ limitations under the License.
     namespace="::ctrl.podDetail.objectMeta.namespace" pod-name="::ctrl.podDetail.objectMeta.name">
 </kd-container-info>
 
+<kd-content-card ng-if="::ctrl.podDetail.conditions.length">
+  <kd-content>
+    <kd-condition-list conditions="::ctrl.podDetail.conditions"></kd-condition-list>
+  </kd-content>
+</kd-content-card>
+
 <kd-creator-info creator="::ctrl.podDetail.controller"></kd-creator-info>
