@@ -15,14 +15,17 @@ limitations under the License.
 -->
 
 <div layout="column">
-  <kd-secret-info secret="::$ctrl.secretDetail"></kd-secret-info>
-  <kd-info-card>
-    <kd-info-card-section name="[[Data|Config map info details section name.]]">
-      <kd-info-card-entry ng-repeat="(key, value) in ::$ctrl.secretDetail.data"
-          title="{{::key}}">
-        <!-- TODO(#1059): Don't show plain text value. -->
-        <pre class="kd-pre-block">{{::$ctrl.formatDataValue(value)}}</pre>
-      </kd-info-card-entry>
-    </kd-info-card-section>
-  </kd-info-card>
+    <kd-secret-info secret="::$ctrl.secretDetail"></kd-secret-info>
+    <kd-info-card>
+        <kd-info-card-section name="[[Data | Secrets info details section data.]]">
+            <kd-info-card-entry ng-repeat="(key, value) in ::$ctrl.secretDetail.data"
+                                title="{{::key}}">
+                <pre ng-if="::!$ctrl.secretDetail.isHiddenType" class="kd-pre-block">{{::$ctrl.formatDataValue(value)}}</pre>
+                <kd-toggle-hidden-text  ng-if="::$ctrl.secretDetail.isHiddenType"
+                                        placeholder="{{::value.length}} [[bytes | Secrets info details section bytes.]]"
+                                        text="{{ ::value }}">
+                </kd-toggle-hidden-text>
+            </kd-info-card-entry>
+        </kd-info-card-section>
+    </kd-info-card>
 </div>
