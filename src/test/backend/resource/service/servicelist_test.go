@@ -15,67 +15,69 @@
 package service
 
 import (
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+
+	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
+
+	"reflect"
 	"testing"
 )
 
 func TestGetServiceList(t *testing.T) {
-	// TODO: fix test
-	t.Skip("NewSimpleFake no longer supported. Test update needed.")
+	cases := []struct {
+		serviceList     *api.ServiceList
+		expectedActions []string
+		expected        *ServiceList
+	}{
+		{
+			serviceList: &api.ServiceList{
+				Items: []api.Service{
+					{ObjectMeta: api.ObjectMeta{
+						Name: "svc-1", Namespace: "ns-1",
+						Labels: map[string]string{},
+					}},
+				}},
+			expectedActions: []string{"list"},
+			expected: &ServiceList{
+				ListMeta: common.ListMeta{TotalItems: 1},
+				Services: []Service{
+					{
+						ObjectMeta: common.ObjectMeta{
+							Name:      "svc-1",
+							Namespace: "ns-1",
+							Labels:    map[string]string{},
+						},
+						TypeMeta:         common.TypeMeta{Kind: common.ResourceKindService},
+						InternalEndpoint: common.Endpoint{Host: "svc-1.ns-1"},
+					},
+				},
+			},
+		},
+	}
 
-	//cases := []struct {
-	//	serviceList     *api.ServiceList
-	//	expectedActions []string
-	//	expected        *ServiceList
-	//}{
-	//	{
-	//		serviceList:     &api.ServiceList{},
-	//		expectedActions: []string{"list"},
-	//		expected:        &ServiceList{Services: make([]Service, 0)},
-	//	}, {
-	//		serviceList: &api.ServiceList{
-	//			Items: []api.Service{
-	//				{ObjectMeta: api.ObjectMeta{
-	//					Name: "test-service", Namespace: "test-namespace",
-	//				}},
-	//			}},
-	//		expectedActions: []string{"list"},
-	//		expected: &ServiceList{
-	//			ListMeta: common.ListMeta{TotalItems: 1},
-	//			Services: []Service{
-	//				{
-	//					ObjectMeta: common.ObjectMeta{
-	//						Name:      "test-service",
-	//						Namespace: "test-namespace",
-	//					},
-	//					TypeMeta:         common.TypeMeta{Kind: common.ResourceKindService},
-	//					InternalEndpoint: common.Endpoint{Host: "test-service.test-namespace"},
-	//				},
-	//			},
-	//		},
-	//	},
-	//}
-	//
-	//for _, c := range cases {
-	//	fakeClient := testclient.NewSimpleFake(c.serviceList)
-	//
-	//	actual, _ := GetServiceList(fakeClient, common.NewNamespaceQuery(nil), dataselect.NoDataSelect)
-	//
-	//	actions := fakeClient.Actions()
-	//	if len(actions) != len(c.expectedActions) {
-	//		t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
-	//			len(c.expectedActions), len(actions))
-	//		continue
-	//	}
-	//
-	//	for i, verb := range c.expectedActions {
-	//		if actions[i].GetVerb() != verb {
-	//			t.Errorf("Unexpected action: %+v, expected %s",
-	//				actions[i], verb)
-	//		}
-	//	}
-	//
-	//	if !reflect.DeepEqual(actual, c.expected) {
-	//		t.Errorf("GetServiceList(client) == got\n%#v, expected\n %#v", actual, c.expected)
-	//	}
-	//}
+	for _, c := range cases {
+		fakeClient := fake.NewSimpleClientset(c.serviceList)
+
+		actual, _ := GetServiceList(fakeClient, common.NewNamespaceQuery(nil), dataselect.NoDataSelect)
+
+		actions := fakeClient.Actions()
+		if len(actions) != len(c.expectedActions) {
+			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
+				len(c.expectedActions), len(actions))
+			continue
+		}
+
+		for i, verb := range c.expectedActions {
+			if actions[i].GetVerb() != verb {
+				t.Errorf("Unexpected action: %+v, expected %s",
+					actions[i], verb)
+			}
+		}
+
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("GetServiceList(client) == got\n%#v, expected\n %#v", actual, c.expected)
+		}
+	}
 }
