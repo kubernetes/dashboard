@@ -32,4 +32,33 @@ export class InternalErrorController {
   showStatus() {
     return angular.isNumber(this.error.status) && this.error.status > 0;
   }
+
+  /**
+   * Returns URL of GitHub page used to report bugs with partly filled issue template
+   * (check .github/ISSUE_TEMPLATE.md file)
+   *
+   * @export
+   * @return {string} URL of GitHub page used to report bugs.
+   */
+  getLinkToBugReport() {
+    let link = 'https://github.com/kubernetes/dashboard/issues/new';
+
+    if (this.error) {
+      let title = `Dashboard reported ${this.error.statusText} (${this.error.status})`;
+      let body = `#### Issue details\n\n##### Environment\n<!-- Describe how do you run ` +
+          `Kubernetes and Dashboard.\n      Versions of Node.js, Go etc. are needed only from ` +
+          `developers.To get them use console:\n      $ node --version\n      $ go version\n-->\n` +
+          `\n\`\`\`\nDashboard version:\nKubernetes version:\nOperating system:\nNode.js version:` +
+          `\nGo version:\n\`\`\`\n##### Steps to reproduce\n<!-- Describe all steps needed to ` +
+          `reproduce the issue. It is a good place to use numbered list. -->\n\n##### Observed ` +
+          `result\nDashboard reported ${this.error.statusText} (${this.error.status}):\n\`\`\`\n` +
+          `${this.error.data}\n\`\`\`\n\n##### Expected result\n<!-- Describe expected result ` +
+          `as precisely as possible. -->\n\n##### Comments\n<!-- If you have any comments or more` +
+          ` details, put them here. -->`;
+
+      link += `?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+    }
+
+    return link;
+  }
 }

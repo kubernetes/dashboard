@@ -303,6 +303,12 @@
   <translation id="1706523109425956587" key="MSG_DEPLOY_UPLOAD_3" desc="The text is used as a \'Learn more\' link text besides the file upload on the deploy page.">Learn more</translation>
   <translation id="4162582061346784285" key="MSG_ERROR_HANDLING_DIALOG_CLOSE_ACTION" desc="Action &quot;Close&quot; which appears at the bottom of any displayed error dialog.">Close</translation>
   <translation id="6510078647741040827" key="MSG_ERROR_INTERNALERROR_0" desc="This message appears in an error dialog when the returned error code is not recognized.">Unknown Server Error.</translation>
+  <translation id="4145537915999486390" key="MSG_ERROR_INTERNALERROR_1" desc="This is a label for button displayed on error page used to report bugs on GitHub.">Report a bug</translation>
+  <translation id="7320935166128929457" key="MSG_ERROR_UKNOWN_WARNING" desc="This message appears in an error dialog when the returned error code is not recognized.">Unknown Server Error</translation>
+  <translation id="7527074982331141078" key="MSG_EVENTS_ALL_LABEL" desc="Label 'All' for the event selection drop-down.">All</translation>
+  <translation id="9183905402242013542" key="MSG_EVENTS_CARD" desc="Label for the events card.">Events</translation>
+  <translation id="6413199566846581831" key="MSG_EVENTS_COUNT_LABEL" desc="Label 'Count' for event count column of the events table (events list page).">Count</translation>
+  <translation id="4179338997362096957" key="MSG_EVENTS_EVENTCARDLIST_0" desc="Label for the events card.">Events</translation>
   <translation id="4179338997362096957" key="MSG_EVENTS_EVENTCARDLIST_0" desc="Label which appears above the list of such objects.">Events</translation>
   <translation id="7618020634310257225" key="MSG_EVENTS_EVENTCARDLIST_1" desc="Label \'Message\' for the event message column of the events table (events list page).">Message</translation>
   <translation id="7495297439436040330" key="MSG_EVENTS_EVENTCARDLIST_2" desc="Label \'Source\' for the event source column of the events table (events list page).">Source</translation>

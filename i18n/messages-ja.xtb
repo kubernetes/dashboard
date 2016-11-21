@@ -485,6 +485,7 @@
   <translation id="3684607543489263600" key="MSG_ENV_FROM_CONFIG_MAP" desc="Label for environment variable that comes from a Config Map">コンフィグマップからの値 <ph name="NAME"/>/<ph name="KEY"/></translation>
   <translation id="4162582061346784285" key="MSG_ERROR_HANDLING_DIALOG_CLOSE_ACTION" desc="Action &quot;Close&quot; which appears at the bottom of any displayed error dialog.">閉じる</translation>
   <translation id="6510078647741040827" key="MSG_ERROR_INTERNALERROR_0" desc="This message appears in an error dialog when the returned error code is not recognized.">Unknown Server Error.</translation>
+  <translation id="4145537915999486390" key="MSG_ERROR_INTERNALERROR_1" desc="This is a label for button displayed on error page used to report bugs on GitHub.">Report a bug</translation>
   <translation id="7320935166128929457" key="MSG_ERROR_UKNOWN_WARNING" desc="This message appears in an error dialog when the returned error code is not recognized.">不明なサーバーエラーです</translation>
   <translation id="7527074982331141078" key="MSG_EVENTS_ALL_LABEL" desc="Label 'All' for the event selection drop-down.">すべて</translation>
   <translation id="9183905402242013542" key="MSG_EVENTS_CARD" desc="Label for the events card.">イベント</translation>

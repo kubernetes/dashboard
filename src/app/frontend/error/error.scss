@@ -18,3 +18,17 @@
   color: $foreground-2;
   font-size: $display-4-font-size-base;
 }
+
+.kd-error-report-button {
+  margin: $baseline-grid 0;
+}
+
+.kd-error-center-fixed {
+  align-content: center;
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+}
