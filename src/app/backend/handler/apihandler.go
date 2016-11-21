@@ -62,9 +62,9 @@ import (
 	"k8s.io/kubernetes/pkg/runtime"
 
 	"github.com/gorilla/websocket"
-	"io"
-	"k8s.io/kubernetes/pkg/client/unversioned/remotecommand"
-	remotecommandserver "k8s.io/kubernetes/pkg/kubelet/server/remotecommand"
+	// "io"
+	// "k8s.io/kubernetes/pkg/client/unversioned/remotecommand"
+	// remotecommandserver "k8s.io/kubernetes/pkg/kubelet/server/remotecommand"
 )
 
 const (
