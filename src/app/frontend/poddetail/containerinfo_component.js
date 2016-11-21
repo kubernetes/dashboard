@@ -15,6 +15,7 @@
 import {StateParams} from 'common/resource/resourcedetail';
 import {stateName as configMapState} from 'configmapdetail/configmapdetail_state';
 import {stateName as logsStateName, StateParams as LogsStateParams} from 'logs/logs_state';
+import {stateName as execStateName, StateParams as ExecStateParams} from 'podexec/podexec_state';
 
 /**
  * @final
@@ -60,6 +61,16 @@ export default class ContainerInfoController {
   getLogsHref(container) {
     return this.state_.href(
         logsStateName, new LogsStateParams(this.namespace, this.podName, container.name));
+  }
+
+  /**
+   * @param {!backendApi.Container} container
+   * @return {string}
+   * @export
+   */
+  getExecHref(container) {
+    return this.state_.href(
+        execStateName, new ExecStateParams(this.namespace, this.podName, container.name));
   }
 }
 
