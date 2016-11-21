@@ -62,6 +62,10 @@ limitations under the License.
             <kd-middle-ellipsis display-string="[[View logs|Label for the container logs.]]">
             </kd-middle-ellipsis>
           </a>
+          <a ng-href="{{::$ctrl.getExecHref(container)}}" class="kd-middle-ellipsised-link">
+            <kd-middle-ellipsis display-string="[[Exec|Label for exec into container.]]">
+            </kd-middle-ellipsis>
+          </a>
     </kd-info-card-entry>
   </kd-info-card-section>
 </kd-info-card>
