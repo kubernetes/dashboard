@@ -1,20 +1,7 @@
-<div layout="row" flex="auto" class="kd-toggle-hidden-text-row">
-    <input readonly flex="nogrow" ng-if="isActive" type="text"
-           class="kd-toggle-hidden-text-input" value="{{::$ctrl.text}}">
-    <span ng-if="!isActive">
-        <input ng-if="::$ctrl.placeholder.length" readonly flex="nogrow"
-               type="text" class="kd-toggle-hidden-text-input"
-               value="{{::$ctrl.placeholder}}">
-        <input ng-if="::!$ctrl.placeholder.length" type="password" readonly
-               flex="nogrow" class="kd-toggle-hidden-text-input"
-               value="{{::$ctrl.text}}">
-    </span>
-    <div>
-        <md-icon ng-show="!isActive" ng-click="isActive = !isActive"
-                 md-font-set="material-icons"
-                 class="kd-toggle-eye-icon kd-toggle-eye-icon-off "> remove_red_eye </md-icon>
-        <md-icon ng-show="isActive" ng-click="isActive = !isActive"
-                 md-font-set="material-icons"
-                 class="kd-toggle-eye-icon kd-toggle-eye-icon-on"> remove_red_eye </md-icon>
-    </div>
-</div>
+<pre ng-if="$ctrl.active" class="kd-pre-block">{{::$ctrl.text}}</pre>
+<span ng-if="!$ctrl.active">
+  <span ng-if="::$ctrl.placeholder.length">{{::$ctrl.placeholder}}</span>
+  <input ng-if="::!$ctrl.placeholder.length" type="password" readonly
+         flex="nogrow" class="kd-toggle-hidden-text-input"
+         value="{{::$ctrl.text}}">
+</span>

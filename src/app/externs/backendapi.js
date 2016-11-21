@@ -1000,7 +1000,6 @@ backendApi.NamespaceDetail;
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
  *   data: !Object<string, string>,
- *   isHiddenType: boolean,
  * }}
  */
 backendApi.SecretDetail;
