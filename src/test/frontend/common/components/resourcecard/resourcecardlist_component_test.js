@@ -32,6 +32,7 @@ describe('Resource card list', () => {
   it('should fill the card layout', () => {
     let compileFn = compile(`
       <kd-resource-card-list selectable="selectable" with-statuses="withStatuses">
+        <kd-resource-card-list-header>Foo</kd-resource-card-list-header>
         <kd-resource-card-header-columns>
           <kd-resource-card-header-column size="small" grow="nogrow">
             NAME_COLUMN
@@ -91,6 +92,7 @@ describe('Resource card list', () => {
     expect(elem.html()).not.toContain('STATUS');
     expect(elem.html()).toContain('FOOTER');
     expect(elem.html()).not.toContain('md-checkbox');
+    expect(elem.html()).toContain('kd-resource-card-list-header');
 
     scope.withStatuses = true;
     scope.$digest();

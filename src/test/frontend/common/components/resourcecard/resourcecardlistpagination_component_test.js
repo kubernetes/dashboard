@@ -51,7 +51,7 @@ describe('Resource card list pagination', () => {
 
           errDialog = errorDialog;
           httpBackend = $httpBackend;
-          resourceCardListCtrl = $componentController('kdResourceCardList');
+          resourceCardListCtrl = $componentController('kdResourceCardList', {$transclude: {}});
           scope = $rootScope;
           ctrl = $componentController(
               'kdResourceCardListPagination', {
