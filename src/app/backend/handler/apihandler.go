@@ -34,6 +34,8 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler/horizontalpodautoscalerdetail"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler/horizontalpodautoscalerlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/ingress"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job/jobdetail"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job/joblist"
@@ -110,7 +112,7 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 
 	verber := common.NewResourceVerber(client.Core().RESTClient(),
 		client.ExtensionsClient.RESTClient(), client.AppsClient.RESTClient(),
-		client.BatchClient.RESTClient())
+		client.BatchClient.RESTClient(), client.AutoscalingClient.RESTClient())
 	apiHandler := APIHandler{client, heapsterClient, clientConfig, verber}
 	wsContainer := restful.NewContainer()
 	wsContainer.EnableContentEncoding(true)
@@ -308,6 +310,19 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 		apiV1Ws.GET("/daemonset/{namespace}/{daemonSet}/event").
 			To(apiHandler.handleGetDaemonSetEvents).
 			Writes(common.EventList{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/horizontalpodautoscaler").
+			To(apiHandler.handleGetHorizontalPodAutoscalerList).
+			Writes(horizontalpodautoscalerlist.HorizontalPodAutoscalerList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/horizontalpodautoscaler/{namespace}").
+			To(apiHandler.handleGetHorizontalPodAutoscalerList).
+			Writes(horizontalpodautoscalerlist.HorizontalPodAutoscalerList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/horizontalpodautoscaler/{namespace}/{horizontalpodautoscaler}").
+			To(apiHandler.handleGetHorizontalPodAutoscalerDetail).
+			Writes(horizontalpodautoscalerdetail.HorizontalPodAutoscalerDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/job").
@@ -1488,6 +1503,33 @@ func (apiHandler *APIHandler) handleDeleteDaemonSet(
 	}
 
 	response.WriteHeader(http.StatusOK)
+}
+
+// Handles get HorizontalPodAutoscalers list API call.
+func (apiHandler *APIHandler) handleGetHorizontalPodAutoscalerList(request *restful.Request,
+	response *restful.Response) {
+	namespace := parseNamespacePathParameter(request)
+
+	result, err := horizontalpodautoscalerlist.GetHorizontalPodAutoscalerList(apiHandler.client, namespace)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
+}
+
+func (apiHandler *APIHandler) handleGetHorizontalPodAutoscalerDetail(request *restful.Request, response *restful.Response) {
+	namespace := request.PathParameter("namespace")
+	horizontalpodautoscalerParam := request.PathParameter("horizontalpodautoscaler")
+
+	result, err := horizontalpodautoscalerdetail.GetHorizontalPodAutoscalerDetail(apiHandler.client, namespace, horizontalpodautoscalerParam)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
 // Handles get Jobs list API call.

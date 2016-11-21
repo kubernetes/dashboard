@@ -1147,6 +1147,51 @@ backendApi.PersistentVolumeClaimList;
 
 /**
  * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   scaleTargetRef: !backendApi.ScaleTargetRef,
+ *   minReplicas: number,
+ *   maxReplicas: number,
+ *   currentCPUUtilization: number,
+ *   targetCPUUtilization: ?number,
+ *   currentReplicas: number,
+ *   desiredReplicas: number,
+ *   lastScaleTime: string
+ * }}
+ */
+backendApi.HorizontalPodAutoscalerDetail;
+
+/**
+ * @typedef {{
+ *   kind: string,
+ *   name: string,
+ * }}
+ */
+backendApi.ScaleTargetRef;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   scaleTargetRef: !backendApi.ScaleTargetRef,
+ *   minReplicas: number,
+ *   maxReplicas: number,
+ *   currentCPUUtilization: number,
+ *   targetCPUUtilization: ?number
+ * }}
+ */
+backendApi.HorizontalPodAutoscaler;
+
+/**
+ * @typedef {{
+ *   listMeta: !backendApi.ListMeta,
+ *   horizontalpodautoscalers: !Array<!backendApi.HorizontalPodAutoscaler>
+ * }}
+ */
+backendApi.HorizontalPodAutoscalerList;
+
+/**
+ * @typedef {{
  *   kind: !string,
  *   joblist: backendApi.JobList,
  *   replicasetlist: backendApi.ReplicaSetList,
