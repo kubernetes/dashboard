@@ -25,10 +25,11 @@ import (
 // ResourceVerber is a struct responsible for doing common verb operations on resources, like
 // DELETE, PUT, UPDATE.
 type ResourceVerber struct {
-	client           RESTClient
-	extensionsClient RESTClient
-	appsClient       RESTClient
-	batchClient      RESTClient
+	client            RESTClient
+	extensionsClient  RESTClient
+	appsClient        RESTClient
+	batchClient       RESTClient
+	autoscalingClient RESTClient
 }
 
 func (verber *ResourceVerber) getRESTClientByType(clientType ClientType) RESTClient {
@@ -39,6 +40,8 @@ func (verber *ResourceVerber) getRESTClientByType(clientType ClientType) RESTCli
 		return verber.appsClient
 	case ClientTypeBatchClient:
 		return verber.batchClient
+	case ClientTypeAutoscalingClient:
+		return verber.autoscalingClient
 	default:
 		return verber.client
 	}
@@ -54,8 +57,8 @@ type RESTClient interface {
 // NewResourceVerber creates a new resource verber that uses the given client for performing
 // operations.
 func NewResourceVerber(client, extensionsClient, appsClient,
-	batchClient RESTClient) ResourceVerber {
-	return ResourceVerber{client, extensionsClient, appsClient, batchClient}
+	batchClient, autoscalingClient RESTClient) ResourceVerber {
+	return ResourceVerber{client, extensionsClient, appsClient, batchClient, autoscalingClient}
 }
 
 // Delete deletes the resource of the given kind in the given namespace with the given name.

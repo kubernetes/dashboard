@@ -12,40 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
-
-$eye-icon-size: $body-font-size-base * 1.8;
-$eye-icon-color-on: rgba(0, 0, 0, .84);
-$eye-icon-color-off:  rgba(0, 0, 0, .54);
-$eye-icon-background-color-on: rgba(224, 224, 224, 1);
-
 .kd-toggle-hidden-text-input {
   border: 0 none;
-  font-size: $body-font-size-base;
-}
-
-.kd-toggle-hidden-text-row {
-  display: inline-flex;
-}
-
-.kd-toggle-eye-icon {
-  border-radius: 54%;
-  cursor: pointer;
-  font-size: $body-font-size-base;
-  height: $eye-icon-size;
-  line-height: $eye-icon-size;
-  margin-top: -4px;
-  outline: none;
-  position: fixed;
-  text-align: center;
-  width: $eye-icon-size;
-}
-
-.kd-toggle-eye-icon-on {
-  background-color: $eye-icon-background-color-on;
-  color: $eye-icon-color-on;
-}
-
-.kd-toggle-eye-icon-off {
-  color: $eye-icon-color-off;
 }

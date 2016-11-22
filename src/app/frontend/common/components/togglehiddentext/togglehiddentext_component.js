@@ -13,33 +13,18 @@
 // limitations under the License.
 
 /**
- * @final
- */
-export class ToggleHiddenTextController {
-  /**
-   * @ngInject
-   */
-  constructor() {
-    /** @export {string} Initialized from the scope. */
-    this.text;
-
-    /** @export {string} Initialized from the scope. */
-    this.placeholder;
-  }
-}
-
-/**
  * Represents a toggle to hide and show text.
  *
  * @type {!angular.Component}
  */
 export const toggleHiddenTextComponent = {
   templateUrl: 'common/components/togglehiddentext/togglehiddentext.html',
-  controller: ToggleHiddenTextController,
   bindings: {
-    /** {!string} */
+    /** {string} */
     'placeholder': '@?',
-    /** {!string} */
+    /** {string} */
     'text': '@',
+    /** {boolean} */
+    'active': '<',
   },
 };

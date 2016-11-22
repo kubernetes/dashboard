@@ -21,6 +21,11 @@ limitations under the License.
     </div>
 </div>
 
+<kd-content-card ng-if="ctrl.namespaceDetail.resourceLimits.length">
+    <kd-content>
+        <kd-resource-limits resource-limits="ctrl.namespaceDetail.resourceLimits"></kd-resource-limits>
+    </kd-content>
+</kd-content-card>
 <kd-event-card-list event-list="::ctrl.namespaceDetail.eventList"
                     event-list-resource="::ctrl.eventListResource">
 </kd-event-card-list>

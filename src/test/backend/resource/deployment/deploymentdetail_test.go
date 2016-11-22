@@ -3,6 +3,7 @@ package deployment
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler/horizontalpodautoscalerlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/replicasetlist"
@@ -82,7 +83,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 	}{
 		{
 			"ns-1", "dp-1",
-			[]string{"get", "list", "list", "get", "list", "get", "list", "get", "list", "list", "list"},
+			[]string{"get", "list", "list", "get", "list", "get", "list", "list", "get", "list", "list", "list"},
 			deployment,
 			&DeploymentDetail{
 				ObjectMeta: common.ObjectMeta{
@@ -120,6 +121,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 				EventList: common.EventList{
 					Events: []common.Event{},
 				},
+				HorizontalPodAutoscalerList: horizontalpodautoscalerlist.HorizontalPodAutoscalerList{HorizontalPodAutoscalers: []horizontalpodautoscalerlist.HorizontalPodAutoscaler{}},
 			},
 		},
 	}

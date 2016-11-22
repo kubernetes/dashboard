@@ -24,6 +24,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler/horizontalpodautoscalerlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 )
@@ -52,6 +53,9 @@ type ReplicaSetDetail struct {
 
 	// Selector of this replica set.
 	Selector *unversioned.LabelSelector `json:"selector"`
+
+	// List of Horizontal Pod Autoscalers targeting this Replica Set.
+	HorizontalPodAutoscalerList horizontalpodautoscalerlist.HorizontalPodAutoscalerList `json:"horizontalPodAutoscalerList"`
 }
 
 // GetReplicaSetDetail gets replica set details.
@@ -85,22 +89,28 @@ func GetReplicaSetDetail(client k8sClient.Interface, heapsterClient client.Heaps
 		return nil, err
 	}
 
-	replicaSet := ToReplicaSetDetail(replicaSetData, *eventList, *podList, *podInfo, *serviceList)
+	hpas, err := horizontalpodautoscalerlist.GetHorizontalPodAutoscalerListForResource(client, namespace, "ReplicaSet", name)
+	if err != nil {
+		return nil, err
+	}
+
+	replicaSet := ToReplicaSetDetail(replicaSetData, *eventList, *podList, *podInfo, *serviceList, *hpas)
 	return &replicaSet, nil
 }
 
 // ToReplicaSetDetail converts replica set api object to replica set detail model object.
 func ToReplicaSetDetail(replicaSet *extensions.ReplicaSet, eventList common.EventList,
-	podList pod.PodList, podInfo common.PodInfo, serviceList resourceService.ServiceList) ReplicaSetDetail {
+	podList pod.PodList, podInfo common.PodInfo, serviceList resourceService.ServiceList, hpas horizontalpodautoscalerlist.HorizontalPodAutoscalerList) ReplicaSetDetail {
 
 	return ReplicaSetDetail{
-		ObjectMeta:      common.NewObjectMeta(replicaSet.ObjectMeta),
-		TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicaSet),
-		ContainerImages: common.GetContainerImages(&replicaSet.Spec.Template.Spec),
-		Selector:        replicaSet.Spec.Selector,
-		PodInfo:         podInfo,
-		PodList:         podList,
-		ServiceList:     serviceList,
-		EventList:       eventList,
+		ObjectMeta:                  common.NewObjectMeta(replicaSet.ObjectMeta),
+		TypeMeta:                    common.NewTypeMeta(common.ResourceKindReplicaSet),
+		ContainerImages:             common.GetContainerImages(&replicaSet.Spec.Template.Spec),
+		Selector:                    replicaSet.Spec.Selector,
+		PodInfo:                     podInfo,
+		PodList:                     podList,
+		ServiceList:                 serviceList,
+		EventList:                   eventList,
+		HorizontalPodAutoscalerList: hpas,
 	}
 }
