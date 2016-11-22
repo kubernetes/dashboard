@@ -1,0 +1,56 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-info-card>
+  <kd-info-card-section name="[[Details|Horizontal pod autoscaler info details section name.]]">
+    <kd-object-meta-info-card object-meta="::$ctrl.horizontalPodAutoscaler.objectMeta">
+    </kd-object-meta-info-card>
+    <kd-info-card-entry title="[[Target|Horizontal pod autoscaler info details section target entry.]]">
+      <a ng-href="{{::$ctrl.getScaleTargetHref()}}">
+        {{::$ctrl.horizontalPodAutoscaler.scaleTargetRef.kind}}: {{::$ctrl.horizontalPodAutoscaler.scaleTargetRef.name}}
+      </a>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Min Replicas|Horizontal pod autoscaler info details section minReplicas entry.]]">
+      <div ng-show="::$ctrl.horizontalPodAutoscaler.minReplicas">{{::$ctrl.horizontalPodAutoscaler.minReplicas}}</div>
+      <div ng-hide="::$ctrl.horizontalPodAutoscaler.minReplicas">-</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Max Replicas|Horizontal pod autoscaler info details section maxReplicas entry.]]">
+      <div ng-show="::$ctrl.horizontalPodAutoscaler.maxReplicas">{{::$ctrl.horizontalPodAutoscaler.maxReplicas}}</div>
+      <div ng-hide="::$ctrl.horizontalPodAutoscaler.maxReplicas">-</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Target CPU Utilization|Horizontal pod autoscaler info details section targetCPUUtilizationPercentage entry.]]">
+      <div ng-show="::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage">[[{{::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage}}%|Show the target CPU utilization percentage of a the pods of the targetted resource of a HPA]]</div>
+      <div ng-hide="::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage">-</div>
+    </kd-info-card-entry>
+  </kd-info-card-section>
+  <kd-info-card-section name="[[Status|Horizontal pod autoscaler info status section]]">
+    <kd-info-card-entry title="[[Current Replicas|Horizontal pod autoscaler info status section currentReplicas entry.]]">
+      <div>{{::$ctrl.horizontalPodAutoscaler.currentReplicas}}</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Desired Replicas|Horizontal pod autoscaler info status section desiredReplicas entry.]]">
+      <div>{{::$ctrl.horizontalPodAutoscaler.desiredReplicas}}</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Current CPU Utilization|Horizontal pod autoscaler info status section currentCPUUtilizationPercentage entry.]]">
+      <div>[[{{::$ctrl.horizontalPodAutoscaler.currentCPUUtilizationPercentage}}%|Show the current CPU utilization percentage of a the pods of the targetted resource of a HPA]]</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Last Scaled|Horizontal pod autoscaler info status section lastScaleTime entry.]]">
+      {{::$ctrl.horizontalPodAutoscaler.lastScaleTime | relativeTime}}
+      <md-tooltip>
+        {{::$ctrl.getLastScaledTooltip()}}
+      </md-tooltip>
+    </kd-info-card-entry>
+  </kd-info-card-section>
+</kd-info-card>

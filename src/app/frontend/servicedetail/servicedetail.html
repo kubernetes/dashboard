@@ -16,10 +16,14 @@ limitations under the License.
 
 <kd-service-info service="ctrl.serviceDetail"></kd-service-info>
 
-<kd-content-card ng-if="ctrl.serviceDetail.podList.pods.length">
+<kd-content-card>
   <kd-content>
     <kd-pod-card-list pod-list="ctrl.serviceDetail.podList" with-statuses="true"
                       pod-list-resource="ctrl.servicePodsResource">
+      <kd-zerostate>
+        <div class="kd-zerostate-title">[[There is nothing to display here|Title for pods card zerostate in stateful set details page.]]</div>
+        <div class="kd-zerostate-text">[[There are currently no Pods selected by this Service.|Text for pods card zerostate in stateful set details page.]]</div>
+      </kd-zerostate>
     </kd-pod-card-list>
   </kd-content>
 </kd-content-card>

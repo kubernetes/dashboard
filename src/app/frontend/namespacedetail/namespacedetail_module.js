@@ -16,6 +16,7 @@ import chromeModule from 'chrome/chrome_module';
 import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
 import eventsModule from 'events/events_module';
+import resourceLimitsModule from 'resourcelimit/resourcelimit_module';
 import resourceQuotasModule from 'resourcequotadetail/resourcequotadetail_module';
 
 import stateConfig from './namespacedetail_stateconfig';
@@ -39,6 +40,7 @@ export default angular
           filtersModule.name,
           eventsModule.name,
           resourceQuotasModule.name,
+          resourceLimitsModule.name,
         ])
     .config(stateConfig)
     .component('kdNamespaceInfo', namespaceInfoComponent)

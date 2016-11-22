@@ -21,8 +21,10 @@ limitations under the License.
   <kd-resource-card-list-pagination pagination-id="services" list="$ctrl.serviceList"
                                     list-resource="::$ctrl.serviceListResource">
   </kd-resource-card-list-pagination>
+  <div ng-show="!$ctrl.serviceList.listMeta.totalItems"
+      class="kd-zerostate-message" ng-transclude="zerostate"></div>
 
-  <kd-resource-card-header-columns>
+  <kd-resource-card-header-columns ng-show="$ctrl.serviceList.listMeta.totalItems">
     <kd-resource-card-header-column size="small" grow="2">
       [[Name|Label 'Name' which appears as a column label in the table of services (service list view).]]
     </kd-resource-card-header-column>

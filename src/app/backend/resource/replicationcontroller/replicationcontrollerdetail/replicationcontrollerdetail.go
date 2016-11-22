@@ -22,6 +22,7 @@ import (
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler/horizontalpodautoscalerlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"k8s.io/kubernetes/pkg/api"
 	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
@@ -52,6 +53,9 @@ type ReplicationControllerDetail struct {
 
 	// True when the data contains at least one pod with metrics information, false otherwise.
 	HasMetrics bool `json:"hasMetrics"`
+
+	// List of Horizontal Pod AutoScalers targeting this Replication Controller.
+	HorizontalPodAutoscalerList horizontalpodautoscalerlist.HorizontalPodAutoscalerList `json:"horizontalPodAutoscalerList"`
 }
 
 // ReplicationControllerSpec contains information needed to update replication controller.
@@ -93,8 +97,13 @@ func GetReplicationControllerDetail(client k8sClient.Interface, heapsterClient c
 		return nil, err
 	}
 
+	hpas, err := horizontalpodautoscalerlist.GetHorizontalPodAutoscalerListForResource(client, namespace, "ReplicationController", name)
+	if err != nil {
+		return nil, err
+	}
+
 	replicationControllerDetail := ToReplicationControllerDetail(replicationController, *podInfo,
-		*podList, *eventList, *serviceList)
+		*podList, *eventList, *serviceList, *hpas)
 	return &replicationControllerDetail, nil
 }
 
@@ -127,17 +136,18 @@ func UpdateReplicasCount(client k8sClient.Interface, namespace, name string,
 // controller detail model object.
 func ToReplicationControllerDetail(replicationController *api.ReplicationController,
 	podInfo common.PodInfo, podList pod.PodList, eventList common.EventList,
-	serviceList resourceService.ServiceList) ReplicationControllerDetail {
+	serviceList resourceService.ServiceList, hpas horizontalpodautoscalerlist.HorizontalPodAutoscalerList) ReplicationControllerDetail {
 
 	replicationControllerDetail := ReplicationControllerDetail{
-		ObjectMeta:      common.NewObjectMeta(replicationController.ObjectMeta),
-		TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicationController),
-		LabelSelector:   replicationController.Spec.Selector,
-		PodInfo:         podInfo,
-		PodList:         podList,
-		EventList:       eventList,
-		ServiceList:     serviceList,
-		ContainerImages: common.GetContainerImages(&replicationController.Spec.Template.Spec),
+		ObjectMeta:                  common.NewObjectMeta(replicationController.ObjectMeta),
+		TypeMeta:                    common.NewTypeMeta(common.ResourceKindReplicationController),
+		LabelSelector:               replicationController.Spec.Selector,
+		PodInfo:                     podInfo,
+		PodList:                     podList,
+		EventList:                   eventList,
+		ServiceList:                 serviceList,
+		HorizontalPodAutoscalerList: hpas,
+		ContainerImages:             common.GetContainerImages(&replicationController.Spec.Template.Spec),
 	}
 
 	return replicationControllerDetail

@@ -17,6 +17,7 @@ package common
 import (
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/apps"
+	"k8s.io/kubernetes/pkg/apis/autoscaling"
 	"k8s.io/kubernetes/pkg/apis/batch"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
@@ -94,6 +95,9 @@ type ResourceChannels struct {
 
 	// List and error channels to ResourceQuotas
 	ResourceQuotaList ResourceQuotaListChannel
+
+	// List and error channels to HorizontalPodAutoscalers
+	HorizontalPodAutoscalerList HorizontalPodAutoscalerListChannel
 }
 
 // ServiceListChannel is a list and error channels to Services.
@@ -715,6 +719,31 @@ func GetPodMetricsChannel(heapsterClient kdClient.HeapsterClient, name string, n
 		metrics, err := getPodListMetrics(podNamesByNamespace, heapsterClient)
 		channel.MetricsByPod <- metrics
 		channel.Error <- err
+	}()
+
+	return channel
+}
+
+// PodMetricsChannel is a list and error channels to MetricsByPod.
+type HorizontalPodAutoscalerListChannel struct {
+	List  chan *autoscaling.HorizontalPodAutoscalerList
+	Error chan error
+}
+
+// GetPodListMetricsChannel returns a pair of channels to MetricsByPod and errors that
+// both must be read numReads times.
+func GetHorizontalPodAutoscalerListChannel(client client.Interface, nsQuery *NamespaceQuery, numReads int) HorizontalPodAutoscalerListChannel {
+	channel := HorizontalPodAutoscalerListChannel{
+		List:  make(chan *autoscaling.HorizontalPodAutoscalerList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.Autoscaling().HorizontalPodAutoscalers(nsQuery.ToRequestParam()).List(listEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
 	}()
 
 	return channel
