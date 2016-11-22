@@ -64,6 +64,13 @@ export class PodExecController {
       console.log(self.term);
       self.term.attach(socket);
     };
+
+    socket.onclose = function(event) {
+      console.log(event);
+    }
+    socket.onerror = function(event) {
+      console.log(event);
+    }
   }
 }
 
