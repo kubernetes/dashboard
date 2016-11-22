@@ -10,6 +10,10 @@ coverage/
 dist/
 .tools/
 
+## OS files
+# Mac OS
+.DS_Store
+
 ## IDE specific files
 # IntelliJ
 .idea/
