@@ -15,34 +15,65 @@ Permissions are managed using the following Kubernetes Resources:
 * RoleBinding
 * ClusterRoleBinding
 
-None of these are reflected in the current version of Dashboard UI.
+None of these are reflected in the current version of Dashboard UI. There should a simplified, 
+more user-friendly way to manage a cluster's access control by abstracting these raw concepts.
 
-## Problem statement
 
-* The UI should be a simplified, more user-friendly way to manage a cluster's 
-access control by abstracting the raw concepts of Roles, RolesBindings, 
-ClusterRoles, and ClusterRoleBindings
+## Abstraction / Simplification
+
+The only difference between Roles and ClusterRoles is that Roles apply to a specific namespace 
+and ClusterRoles apply to all namespaces. The same is true for RoleBindings and ClusterRoleBindings. 
+The UI should help users to understand these concepts and user flows should be designed to enforce
+the correct usage. 
+
+NOTE: The design proposed in this document will combine certain concepts:
+* ClusterRoles will be referred to as Roles for the namespace "*"
+* ClusterRoleBindings will be referred to as RoleBindings for the namespace "*"
+
+## Use Cases
+
+* Shortly introduce the concept of roles and bindings to the user
+* Create a Role
+* Bind subjects to a Role
+* Edit a role's rules
+* Unbind a subject from a role
 
 # Design
 
+
+
+## Overview
+
+The overview can be reached by clicking the "Access Control" item in the admin section of the
+left-hand menu. It shows existing Roles/Bindings, some important details for every item and allows
+the user to create a new Role or Binding right away.
+
+![Overview](mockups/21-11-2016-access-control/overview.png)
+
+## Creating a role
+
 TBD
 
-## Navigation
+## Bind subjects to a role
 
 TBD
 
-## View templates
+## Edit a role
+
+TBD
+
+## Edit a binding
 
 TBD
 
 ## Future work
 
 TBD
-## Concrete pages
 
-TBD
+# Open Questions
+* How many Roles/Bindings can usually be found in a cluster (avg,min,max)?
 
-## Credits
+# Credits
 [Source code](mockups/21-11-2016-access-control/dashboard-rbac-ui.bmpr)
 of the mockups.
 
