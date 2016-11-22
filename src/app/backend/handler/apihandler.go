@@ -62,9 +62,10 @@ import (
 	"k8s.io/kubernetes/pkg/runtime"
 
 	"github.com/gorilla/websocket"
-	// "io"
-	// "k8s.io/kubernetes/pkg/client/unversioned/remotecommand"
-	// remotecommandserver "k8s.io/kubernetes/pkg/kubelet/server/remotecommand"
+	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/client/restclient"
+	"k8s.io/kubernetes/pkg/client/unversioned/remotecommand"
+	remotecommandserver "k8s.io/kubernetes/pkg/kubelet/server/remotecommand"
 )
 
 const (
@@ -1009,51 +1010,95 @@ func (apiHandler *APIHandler) handleGetPods(
 
 var upgrader = websocket.Upgrader{}
 
+// WebSocketIO implements the Reader and Writer interfaces to support reading and writing to a websocket from a remote command.
+type WebSocketIO struct {
+	conn *websocket.Conn
+}
+
+func (t WebSocketIO) Read(p []byte) (int, error) {
+	log.Println(p)
+	return 0, nil
+}
+
+func (t WebSocketIO) Write(p []byte) (int, error) {
+	log.Println(p)
+	return 0, nil
+}
+
 func (apiHandler *APIHandler) handleExecIntoPod(request *restful.Request, response *restful.Response) {
 	conn, err := upgrader.Upgrade(response.ResponseWriter, request.Request, nil)
 	if err != nil {
-		log.Println(err)
+		// TODO: Error handling
+		log.Printf("Unable to upgrade connection: %v", err)
 		return
 	}
 
+	namespace := request.PathParameter("namespace")
+	podName := request.PathParameter("pod")
+	containerName := request.PathParameter("container")
+
+	// TODO: Command needs to be shell escaped into a string array
+	// command := request.QueryParameter("command")
+	command := []string{"bash"}
+
+	wsIO := WebSocketIO{conn}
+
 	// For example about how kubexec works see: https://github.com/kubernetes/kubernetes/blob/master/pkg/kubectl/cmd/exec.go
-	// req := apiHandler.client.Post().
-	// 	Resource("pods").
-	// 	Name(pod.Name).
-	// 	Namespace("default").
-	// 	SubResource("exec").
-	// 	Param("container", containerName)
 
-	// config := &restclient.Config{}
-	// exec, err := remotecommand.NewExecutor(config, "POST", req.URL())
-	// if err != nil {
-	// 	log.Println(err)
-	// 	return
-	// }
+	// Create a request object so we can get the URL to the exec endpoint.
+	req := apiHandler.client.Core().RESTClient().Post().
+		Resource("pods").
+		Name(podName).
+		Namespace(namespace).
+		SubResource("exec").
+		Param("container", containerName)
 
-	// err = exec.Stream(remotecommand.StreamOptions{
-	// 	SupportedProtocols: remotecommandserver.SupportedStreamingProtocols,
-	// 	Stdin:              struct{
-	// 							Read:
-	// 						},
-	// 	Stdout:             stdout,
-	// 	Stderr:             stderr,
-	// 	Tty:                true, // Always use tty
-	// 	TerminalSizeQueue:  nil,  // ??
-	// })
+	// ??
+	req.VersionedParams(&api.PodExecOptions{
+		Container: containerName,
+		Command:   command,
+		Stdin:     true, // Always enable all streams
+		Stdout:    true,
+		Stderr:    true,
+		TTY:       true, // Always enable TTY
+	}, api.ParameterCodec)
+
+	// Create a remote command executor
+	// TODO: Authentication. (How?)
+	config := &restclient.Config{
+		Host: "localhost:8080",
+	}
+	exec, err := remotecommand.NewExecutor(config, "POST", req.URL())
+	if err != nil {
+		log.Printf("Unable to create executor: %v", err)
+		return
+	}
+
+	err = exec.Stream(remotecommand.StreamOptions{
+		SupportedProtocols: remotecommandserver.SupportedStreamingProtocols,
+		Stdin:              wsIO,
+		Stdout:             wsIO,
+		Stderr:             wsIO,
+		Tty:                true, // Always use tty
+		TerminalSizeQueue:  nil,  // ??
+	})
+	if err != nil {
+		log.Printf("Unable to create stream: %v", err)
+		return
+	}
 
 	// Echo handler for now
-	for {
-		messageType, p, err := conn.ReadMessage()
-		if err != nil {
-			log.Println(err)
-			return
-		}
-		if err = conn.WriteMessage(messageType, p); err != nil {
-			log.Println(err)
-			return
-		}
-	}
+	// for {
+	// 	messageType, p, err := conn.ReadMessage()
+	// 	if err != nil {
+	// 		log.Println(err)
+	// 		return
+	// 	}
+	// 	if err = conn.WriteMessage(messageType, p); err != nil {
+	// 		log.Println(err)
+	// 		return
+	// 	}
+	// }
 }
 
 // Handles get Pod detail API call.
