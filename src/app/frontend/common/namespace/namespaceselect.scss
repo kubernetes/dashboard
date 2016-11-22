@@ -60,7 +60,8 @@ md-select {
     &:focus {
       &.kd-namespace-select {
         .md-select-value {
-          border-bottom-color: $foreground-4;
+          border-bottom: 1px solid $foreground-4;
+          padding-bottom: .5 * $baseline-grid;
         }
       }
     }

@@ -21,8 +21,8 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/resourcequota"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/limitrange"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/resourcequota"
 	"k8s.io/kubernetes/pkg/api"
 	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 	"k8s.io/kubernetes/pkg/fields"
@@ -73,7 +73,7 @@ func GetNamespaceDetail(client k8sClient.Interface, heapsterClient client.Heapst
 		return nil, err
 	}
 
-	namespaceDetails := toNamespaceDetail(*namespace, events, resourceQuotaList ,resourceLimits)
+	namespaceDetails := toNamespaceDetail(*namespace, events, resourceQuotaList, resourceLimits)
 
 	return &namespaceDetails, nil
 }
@@ -110,7 +110,6 @@ func getResourceQuotas(client k8sClient.Interface, namespace api.Namespace) (*re
 
 	return result, err
 }
-
 
 func getLimitRanges(client k8sClient.Interface, namespace api.Namespace) ([]limitrange.LimitRangeItem, error) {
 	list, err := client.Core().LimitRanges(namespace.Name).List(listEverything)
