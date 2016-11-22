@@ -39,7 +39,7 @@ func GetJobPods(client k8sClient.Interface, heapsterClient client.HeapsterClient
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(pods, dsQuery, heapsterClient)
+	podList := pod.CreatePodList(pods, []api.Event{}, dsQuery, heapsterClient)
 	return &podList, nil
 }
 

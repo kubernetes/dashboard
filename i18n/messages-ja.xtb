@@ -1085,6 +1085,11 @@
   <translation id="3396535268909732737" key="MSG_PODLIST_PODCARDLIST_8" desc="Title of a column">Memory (bytes)</translation>
   <translation id="7236041095972031158" key="MSG_PODLIST_PODCARDLIST_9" desc="Tooltip for failed pod card icon">This pod has errors.</translation>
   <translation id="8022917849813090234" key="MSG_PODLIST_PODCARDLIST_9" desc="Tooltip for pending pod card icon">This pod is in a pending state.</translation>
+  <translation id="1979198258258777444" key="MSG_PODLIST_PODCARD_0" desc="Tooltip for failed pod card icon">This pod has errors.</translation>
+  <translation id="6198079975160516049" key="MSG_PODLIST_PODCARD_1" desc="Tooltip for pending pod card icon">This pod is in a pending state.</translation>
+  <translation id="9163686479589740365" key="MSG_PODLIST_PODCARD_2" desc="Label for logs tooltip">Logs</translation>
+  <translation id="1311816473397506166" key="MSG_PODLIST_PODCARD_3" desc="Name of the pod resource">Pod</translation>
+  <translation id="7649589521591327794" key="MSG_PODLIST_PODCARD_4" desc="Name of the pod resource">Pod</translation>
   <translation id="983813473653204599" key="MSG_PODLIST_PODLIST_0" desc="Title for graph card displaying CPU metric of pods.">CPU usage history</translation>
   <translation id="4624949365521774090" key="MSG_PODLIST_PODLIST_0" desc="Title for graph card displaying CPU metric of pods.">CPU usage</translation>
   <translation id="1774454191311054495" key="MSG_PODLIST_PODLIST_1" desc="Title for graph card displaying memory metric of pods.">Memory usage</translation>

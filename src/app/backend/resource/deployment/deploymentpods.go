@@ -53,6 +53,6 @@ func GetDeploymentPods(client client.Interface, heapsterClient heapster.Heapster
 	pods := common.FilterNamespacedPodsBySelector(rawPods.Items, deployment.ObjectMeta.Namespace,
 		deployment.Spec.Selector.MatchLabels)
 
-	podList := pod.CreatePodList(pods, dsQuery, heapsterClient)
+	podList := pod.CreatePodList(pods, []api.Event{}, dsQuery, heapsterClient)
 	return &podList, nil
 }
