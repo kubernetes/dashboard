@@ -52,23 +52,36 @@ the user to create a new Role or Binding right away.
 
 ## Creating a role
 
-TBD
+Clicking the "+" under the existing Roles will open a dialog. After entering the name and
+picking a namespace ("*" will create a ClusterRole), clicking "Create" will create the Role
+and redirect the user to the Role's detail page.
+
+![Overview](mockups/21-11-2016-access-control/create-role.png)
 
 ## Bind subjects to a role
 
-TBD
+Clicking the "+" under the existing Bindings will open a dialog. After the selecting the
+target role and the namespace ("*" will create a ClusterRoleBinding), clicking "Create"
+will create the Binding and redirect the user to the Binding's detail page.
+
+![Overview](mockups/21-11-2016-access-control/create-binding.png)
 
 ## Edit a role
 
-TBD
+The only property of a Role that cannot be changed is its namespace, because it determines
+if the Role is a ClusterRole or not. Apart from that, the user may add and remove resources
+to a Role and change the selection of verbs that bound subjects will be allowed to use.
+
+![Overview](mockups/21-11-2016-access-control/edit-role.png)
 
 ## Edit a binding
 
-TBD
+A Binding contains one or multiple subjects, which are displayed in a list under a box
+that contains some general information about the selected Binding. The "+" button lets
+the user add a subject, the hamburger buttons on the right allow for secondary actions like
+deleting or editing a subject.
 
-## Future work
-
-TBD
+![Overview](mockups/21-11-2016-access-control/edit-role-binding.png)
 
 # Open Questions
 * How many Roles/Bindings can usually be found in a cluster (avg,min,max)?
