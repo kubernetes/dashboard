@@ -601,6 +601,7 @@
   <translation id="7594890250973129963" key="MSG_LOGS_ZEROSTATE_TEXT" desc="Text for logs card zerostate in logs page.">The selected container has not logged any messages yet.</translation>
   <translation id="3682516833237634630" key="MSG_LOGS_ZEROSTATE_TITLE" desc="Title for logs card zerostate in logs page.">There is nothing to display here</translation>
   <translation id="8827015449851505134" key="MSG_NAMESPACE" desc="Title for namespace select.">Namespace</translation>
+  <translation id="2379720016287670155" key="MSG_NAMESPACEDETAIL_NAMESPACEDETAIL_0" desc="Title of resource limits card in the namespace details page.">Resource limits</translation>
   <translation id="6246076431108385744" key="MSG_NAMESPACEDETAIL_NAMESPACEINFO_0" desc="Subtitle \'Details\' for the left section with general information about a namespace on the namespace details page.">Details</translation>
   <translation id="3311845944254518412" key="MSG_NAMESPACEDETAIL_NAMESPACEINFO_1" desc="Label \'Status\' for the namespace namespace on the namespace details page.">Status</translation>
   <translation id="6943048245345791211" key="MSG_NAMESPACELIST_NAMESPACECARDLIST_0" desc="Label \'Name\' which appears as a column label in the table of namespaces (namespace list view).">Name</translation>

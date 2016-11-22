@@ -990,6 +990,7 @@ backendApi.NamespaceList;
  *   typeMeta: !backendApi.TypeMeta,
  *   phase: string,
  *   eventList: !backendApi.EventList,
+ *   resourceLimits: Array<!backendApi.LimitRange>,
  *   resourceQuotaList: !backendApi.ResourceQuotaDetailList,
  * }}
  */
@@ -1143,6 +1144,19 @@ backendApi.PersistentVolumeClaim;
  * }}
  */
 backendApi.PersistentVolumeClaimList;
+
+/**
+ * @typedef {{
+ *   resourceType: string,
+ *   resourceName: string,
+ *   min: string,
+ *   max: string,
+ *   default: string,
+ *   defaultRequest: string,
+ *   maxLimitRequestRatio: string
+ * }}
+ */
+backendApi.LimitRange;
 
 /**
  * @typedef {{
