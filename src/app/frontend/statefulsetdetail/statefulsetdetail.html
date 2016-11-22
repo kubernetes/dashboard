@@ -29,15 +29,14 @@ limitations under the License.
 
 <kd-content-card>
   <kd-content>
-    <kd-pod-card-list ng-show="::ctrl.statefulSetDetail.podList.pods.length"
-                      pod-list="::ctrl.statefulSetDetail.podList"
+    <kd-pod-card-list pod-list="::ctrl.statefulSetDetail.podList"
                       pod-list-resource="::ctrl.statefulSetPodsResource"
                       with-statuses="true">
+      <kd-zerostate>
+        <div class="kd-zerostate-title">[[There is nothing to display here|Title for pods card zerostate in stateful set details page.]]</div>
+        <div class="kd-zerostate-text">[[There are currently no Pods managed by this Stateful Set.|Text for pods card zerostate in stateful set details page.]]</div>
+      </kd-zerostate>
     </kd-pod-card-list>
-    <div class="kd-zerostate-message" layout-padding ng-hide="::ctrl.statefulSetDetail.podList.pods.length">
-      <div class="kd-zerostate-title">[[There is nothing to display here|Title for pods card zerostate in stateful set details page.]]</div>
-      <div class="kd-zerostate-text">[[There are currently no Pods selected by this Stateful Set.|Text for pods card zerostate in stateful set details page.]]</div>
-    </div>
   </kd-content>
 </kd-content-card>
 

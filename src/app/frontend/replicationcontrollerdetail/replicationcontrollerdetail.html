@@ -30,31 +30,40 @@ limitations under the License.
 
 <kd-content-card>
   <kd-content>
-    <kd-service-card-list ng-show="::$ctrl.replicationControllerDetail.serviceList.services.length"
-                          service-list="::$ctrl.replicationControllerDetail.serviceList"
+    <kd-service-card-list service-list="::$ctrl.replicationControllerDetail.serviceList"
                           service-list-resource="::$ctrl.serviceListResource">
+      <kd-zerostate>
+        <div class="kd-zerostate-title">[[There is nothing to display here|Title for services card zerostate in replication controller details page.]]</div>
+        <div class="kd-zerostate-text">[[There are currently no Services with the same label selector as this Replication Controller.|Text for services card zerostate in replication controller details page.]]</div>
+      </kd-zerostate>
     </kd-service-card-list>
-    <div class="kd-zerostate-message" layout-padding ng-hide="::$ctrl.replicationControllerDetail.serviceList.services.length">
-      <div class="kd-zerostate-title">[[There is nothing to display here|Title for services card zerostate in replication controller details page.]]</div>
-      <div class="kd-zerostate-text">[[There are currently no Services with the same label selector as this Replication Controller.|Text for services card zerostate in replication controller details page.]]</div>
-    </div>
   </kd-content>
 </kd-content-card>
 
 <kd-content-card>
   <kd-content>
-    <kd-pod-card-list ng-show="::$ctrl.replicationControllerDetail.podList.pods.length"
-                      pod-list="::$ctrl.replicationControllerDetail.podList"
+    <kd-pod-card-list pod-list="::$ctrl.replicationControllerDetail.podList"
                       pod-list-resource="::$ctrl.podListResource"
                       with-statuses="true">
+      <kd-zerostate>
+        <div class="kd-zerostate-title">[[There is nothing to display here|Title for pods card zerostate in replication controller details page.]]</div>
+        <div class="kd-zerostate-text">[[There are currently no Pods managed by this Replication Controller.|Text for pods card zerostate in replication controller details page.]]</div>
+      </kd-zerostate>
     </kd-pod-card-list>
-    <div class="kd-zerostate-message" layout-padding ng-hide="::$ctrl.replicationControllerDetail.podList.pods.length">
-      <div class="kd-zerostate-title">[[There is nothing to display here|Title for pods card zerostate in replication controller details page.]]</div>
-      <div class="kd-zerostate-text">[[There are currently no Pods selected by this Replication Controller.|Text for pods card zerostate in replication controller details page.]]</div>
-    </div>
   </kd-content>
 </kd-content-card>
 
+<kd-content-card>
+  <kd-content>
+    <kd-horizontal-pod-autoscaler-card-list
+             horizontal-pod-autoscaler-list="::$ctrl.replicationControllerDetail.horizontalPodAutoscalerList">
+      <kd-zerostate>
+        <div class="kd-zerostate-title">[[There is nothing to display here|Title for horizontal pod autoscalers card zerostate in replica set details page.]]</div>
+        <div class="kd-zerostate-text">[[There are currently no Horizontal Pod Autoscalers targeting this Replica Set.|Text for horizontal pod autoscalers card zerostate in replica set details page.]]</div>
+      </kd-zerostate>
+    </kd-horizontal-pod-autoscaler-card-list>
+  </kd-content>
+</kd-content-card>
 
 <kd-event-card-list event-list="::$ctrl.replicationControllerDetail.eventList"
                     event-list-resource="::$ctrl.eventListResource">

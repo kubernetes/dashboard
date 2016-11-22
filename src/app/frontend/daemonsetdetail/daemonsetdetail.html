@@ -26,30 +26,28 @@ limitations under the License.
 </div>
 
 <kd-daemon-set-info daemon-set="::ctrl.daemonSetDetail"></kd-daemon-set-info>
-<kd-content-card ng-if="::ctrl.daemonSetDetail.serviceList.services.length">
-  <kd-title>[[Services|Title 'Services' for the Services information section on the Daemon Set detail page.]]</kd-title>
+<kd-content-card>
   <kd-content>
     <kd-service-card-list ng-show="::ctrl.daemonSetDetail.serviceList.services.length"
                           service-list="::ctrl.daemonSetDetail.serviceList"
                           service-list-resource="::ctrl.daemonSetServicesResource">
+      <kd-zerostate>
+        <div class="kd-zerostate-title">[[There is nothing to display here|Title for services card zerostate in daemon set details page.]]</div>
+        <div class="kd-zerostate-text">[[There are currently no Services with the same label selector as this Daemon Set.|Text for services card zerostate in daemon set details page.]]</div>
+      </kd-zerostate>
     </kd-service-card-list>
-    <div class="kd-zerostate-message" layout-padding ng-hide="::ctrl.daemonSetDetail.serviceList.services.length">
-      <div class="kd-zerostate-title">[[There is nothing to display here|Title for services card zerostate in daemon set details page.]]</div>
-      <div class="kd-zerostate-text">[[There are currently no Services with the same label selector as this Daemon Set.|Text for services card zerostate in daemon set details page.]]</div>
-    </div>
   </kd-content>
 </kd-content-card>
 <kd-content-card>
-  <kd-title>[[Pods|Title 'Pods' for the pods information section on the daemon set detail page.]]</kd-title>
   <kd-content>
     <kd-pod-card-list pod-list="::ctrl.daemonSetDetail.podList"
                       pod-list-resource="::ctrl.daemonSetPodsResource"
                       with-statuses="true" ng-show="::ctrl.daemonSetDetail.podList.pods.length">
+      <kd-zerostate>
+        <div class="kd-zerostate-title">[[There is nothing to display here|Title for pods card zerostate in daemon set details page.]]</div>
+        <div class="kd-zerostate-text">[[There are currently no Pods scheduled on this Daemon Set.|Text for pods card zerostate in daemon set details page.]]</div>
+      </kd-zerostate>
     </kd-pod-card-list>
-    <div class="kd-zerostate-message" layout-padding ng-hide="::ctrl.daemonSetDetail.podList.pods.length">
-      <div class="kd-zerostate-title">[[There is nothing to display here|Title for pods card zerostate in daemon set details page.]]</div>
-      <div class="kd-zerostate-text">[[There are currently no Pods scheduled on this Daemon Set.|Text for pods card zerostate in daemon set details page.]]</div>
-    </div>
   </kd-content>
 </kd-content-card>
 <kd-event-card-list event-list="::ctrl.daemonSetDetail.eventList" event-list-resource="::ctrl.daemonSetEventsResource"></kd-event-card-list>

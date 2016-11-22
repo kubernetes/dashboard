@@ -22,8 +22,10 @@ limitations under the License.
   <kd-resource-card-list-pagination pagination-id="pods" list="$ctrl.podList"
                                     list-resource="$ctrl.podListResource">
   </kd-resource-card-list-pagination>
+  <div ng-show="!$ctrl.podList.listMeta.totalItems"
+      class="kd-zerostate-message" ng-transclude="zerostate"></div>
 
-  <kd-resource-card-header-columns>
+  <kd-resource-card-header-columns ng-show="$ctrl.podList.listMeta.totalItems">
     <kd-resource-card-header-column size="small" grow="2">
       [[Name|Title of a column]]
     </kd-resource-card-header-column>

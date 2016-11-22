@@ -15,30 +15,13 @@
 /**
  * @final
  */
-export default class NodeConditionsController {
+export class HorizontalPodAutoscalerDetailController {
   /**
-   * Constructs node conditions object.
+   * @param {!backendApi.HorizontalPodAutoscalerDetail} horizontalPodAutoscalerDetail
    * @ngInject
    */
-  constructor() {
-    /**
-     * Node conditions. Initialized from the scope.
-     * @export {!backendApi.NodeConditionList}
-     */
-    this.conditions;
+  constructor(horizontalPodAutoscalerDetail) {
+    /** @export {!backendApi.HorizontalPodAutoscalerDetail} */
+    this.horizontalPodAutoscalerDetail = horizontalPodAutoscalerDetail;
   }
 }
-
-/**
- * Definition object for the component that displays node conditions.
- *
- * @return {!angular.Directive}
- */
-export const nodeConditionsComponent = {
-  controller: NodeConditionsController,
-  templateUrl: 'nodedetail/nodeconditions.html',
-  bindings: {
-    /** {!backendApi.NodeConditionList} */
-    'conditions': '=',
-  },
-};

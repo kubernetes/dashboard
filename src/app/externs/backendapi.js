@@ -710,6 +710,25 @@ backendApi.ContainerState;
 
 /**
  * @typedef {{
+ *   type: string,
+ *   status: string,
+ *   lastProbeTime: ?string,
+ *   lastTransitionTime: ?string,
+ *   reason: string,
+ *   message: string
+ * }}
+ */
+backendApi.Condition;
+
+/**
+ * @typedef {{
+ *   nodes: !Array<!backendApi.Condition>
+ * }}
+ */
+backendApi.ConditionList;
+
+/**
+ * @typedef {{
  *   podPhase: string,
  *   containerStates: !Array<!backendApi.ContainerState>
  * }}
@@ -737,7 +756,8 @@ backendApi.Pod;
  *   podIP: string,
  *   nodeName: string,
  *   restartCount: number,
- *   metrics: backendApi.PodMetrics
+ *   metrics: backendApi.PodMetrics,
+ *   conditions: !backendApi.ConditionList
  * }}
  */
 backendApi.PodDetail;
@@ -1051,25 +1071,6 @@ backendApi.NodeInfo;
 
 /**
  * @typedef {{
- *   type: string,
- *   status: string,
- *   lastHeartbeatTime: ?string,
- *   lastTransitionTime: ?string,
- *   reason: string,
- *   message: string
- * }}
- */
-backendApi.NodeCondition;
-
-/**
- * @typedef {{
- *   nodes: !Array<!backendApi.NodeCondition>
- * }}
- */
-backendApi.NodeConditionList;
-
-/**
- * @typedef {{
  *   cpuRequests: number,
  *   cpuRequestsFraction: number,
  *   cpuLimits: number,
@@ -1097,7 +1098,7 @@ backendApi.NodeAllocatedResources;
  *   providerID: string,
  *   unschedulable: boolean,
  *   nodeInfo: !backendApi.NodeInfo,
- *   conditions: !backendApi.NodeConditionList,
+ *   conditions: !backendApi.ConditionList,
  *   containerImages: !Array<string>,
  *   podList: !backendApi.PodList,
  *   eventList: !backendApi.EventList
@@ -1142,6 +1143,51 @@ backendApi.PersistentVolumeClaim;
  * }}
  */
 backendApi.PersistentVolumeClaimList;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   scaleTargetRef: !backendApi.ScaleTargetRef,
+ *   minReplicas: number,
+ *   maxReplicas: number,
+ *   currentCPUUtilization: number,
+ *   targetCPUUtilization: ?number,
+ *   currentReplicas: number,
+ *   desiredReplicas: number,
+ *   lastScaleTime: string
+ * }}
+ */
+backendApi.HorizontalPodAutoscalerDetail;
+
+/**
+ * @typedef {{
+ *   kind: string,
+ *   name: string,
+ * }}
+ */
+backendApi.ScaleTargetRef;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   scaleTargetRef: !backendApi.ScaleTargetRef,
+ *   minReplicas: number,
+ *   maxReplicas: number,
+ *   currentCPUUtilization: number,
+ *   targetCPUUtilization: ?number
+ * }}
+ */
+backendApi.HorizontalPodAutoscaler;
+
+/**
+ * @typedef {{
+ *   listMeta: !backendApi.ListMeta,
+ *   horizontalpodautoscalers: !Array<!backendApi.HorizontalPodAutoscaler>
+ * }}
+ */
+backendApi.HorizontalPodAutoscalerList;
 
 /**
  * @typedef {{

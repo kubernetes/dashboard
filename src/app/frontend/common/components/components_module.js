@@ -20,6 +20,7 @@ import namespaceModule from './../namespace/namespace_module';
 import paginationModule from './../pagination/pagination_module';
 import actionbarModule from './actionbar/actionbar_module';
 import annotationsModule from './annotations/module';
+import conditionsModule from './conditions/conditions_module';
 import contentCardModule from './contentcard/contentcard_module';
 import endpointModule from './endpoint/endpoint_module';
 import graphModule from './graph/graph_module';
@@ -31,6 +32,7 @@ import resourceCardModule from './resourcecard/resourcecard_module';
 import resourceDetailModule from './resourcedetail/module';
 import serializedReferenceModule from './serializedreference/serializedreference_module';
 import sparklineDirective from './sparkline/sparkline_directive';
+import toggleHiddenTextModule from './togglehiddentext/togglehiddentext_module';
 import warnThresholdDirective from './warnthreshold/warnthreshold_directive';
 import zeroStateModule from './zerostate/zerostate_module';
 
@@ -55,8 +57,10 @@ export default angular
           namespaceModule.name,
           stateModule.name,
           graphModule.name,
+          conditionsModule.name,
           serializedReferenceModule.name,
           annotationsModule.name,
+          toggleHiddenTextModule.name,
         ])
     .directive('kdI18n', i18nDirective)
     .directive('kdLabels', labelsDirective)

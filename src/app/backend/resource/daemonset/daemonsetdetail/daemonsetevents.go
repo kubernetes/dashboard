@@ -26,8 +26,8 @@ import (
 )
 
 // GetDaemonSetEvents gets events associated to daemon set.
-func GetDaemonSetEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace, daemonSetName string) (
-	*common.EventList, error) {
+func GetDaemonSetEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace,
+	daemonSetName string) (*common.EventList, error) {
 
 	log.Printf("Getting events related to %s daemon set in %s namespace", daemonSetName,
 		namespace)

@@ -15,123 +15,136 @@
 package replicasetdetail
 
 import (
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+
+	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api/unversioned"
+	"k8s.io/kubernetes/pkg/apis/extensions"
+	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
+
+	"reflect"
 	"testing"
 )
 
 func TestGetReplicaSetEvents(t *testing.T) {
-	// TODO: fix test
-	t.Skip("NewSimpleFake no longer supported. Test update needed.")
+	labelSelector := map[string]string{"app": "test"}
 
-	//cases := []struct {
-	//	namespace, name string
-	//	eventList       *api.EventList
-	//	podList         *api.PodList
-	//	replicaSet      *extensions.ReplicaSet
-	//	expectedActions []string
-	//	expected        *common.EventList
-	//}{
-	//	{
-	//		"test-namespace", "test-name",
-	//		&api.EventList{Items: []api.Event{
-	//			{Message: "test-message", ObjectMeta: api.ObjectMeta{Namespace: "test-namespace"}},
-	//		}},
-	//		&api.PodList{Items: []api.Pod{{ObjectMeta: api.ObjectMeta{Name: "test-pod"}}}},
-	//		&extensions.ReplicaSet{
-	//			ObjectMeta: api.ObjectMeta{Name: "test-replicaset"},
-	//			Spec: extensions.ReplicaSetSpec{
-	//				Selector: &unversioned.LabelSelector{
-	//					MatchLabels: map[string]string{},
-	//				}}},
-	//		[]string{"list", "get", "list", "list"},
-	//		&common.EventList{
-	//			ListMeta: common.ListMeta{TotalItems: 1},
-	//			Events: []common.Event{{
-	//				TypeMeta:   common.TypeMeta{Kind: common.ResourceKindEvent},
-	//				ObjectMeta: common.ObjectMeta{Namespace: "test-namespace"},
-	//				Message:    "test-message",
-	//				Type:       api.EventTypeNormal,
-	//			}}},
-	//	},
-	//}
-	//
-	//for _, c := range cases {
-	//	fakeClient := testclient.NewSimpleFake(c.eventList, c.replicaSet, c.podList,
-	//		&api.EventList{})
-	//
-	//	actual, _ := GetReplicaSetEvents(fakeClient, dataselect.NoDataSelect, c.namespace, c.name)
-	//
-	//	actions := fakeClient.Actions()
-	//	if len(actions) != len(c.expectedActions) {
-	//		t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
-	//			len(c.expectedActions), len(actions))
-	//		continue
-	//	}
-	//
-	//	for i, verb := range c.expectedActions {
-	//		if actions[i].GetVerb() != verb {
-	//			t.Errorf("Unexpected action: %+v, expected %s",
-	//				actions[i], verb)
-	//		}
-	//	}
-	//
-	//	if !reflect.DeepEqual(actual, c.expected) {
-	//		t.Errorf("GetEvents(client,heapsterClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
-	//			c.namespace, c.name, actual, c.expected)
-	//	}
-	//}
+	cases := []struct {
+		namespace, name string
+		eventList       *api.EventList
+		podList         *api.PodList
+		replicaSet      *extensions.ReplicaSet
+		expectedActions []string
+		expected        *common.EventList
+	}{
+		{
+			"ns-1", "rs-1",
+			&api.EventList{Items: []api.Event{
+				{Message: "test-message", ObjectMeta: api.ObjectMeta{
+					Name: "ev-1", Namespace: "ns-1", Labels: labelSelector}},
+			}},
+			&api.PodList{Items: []api.Pod{{ObjectMeta: api.ObjectMeta{
+				Name: "pod-1", Namespace: "ns-1"}}}},
+			&extensions.ReplicaSet{
+				ObjectMeta: api.ObjectMeta{
+					Name: "rs-1", Namespace: "ns-1", Labels: labelSelector},
+				Spec: extensions.ReplicaSetSpec{
+					Selector: &unversioned.LabelSelector{
+						MatchLabels: labelSelector,
+					}}},
+			[]string{"list", "get", "list", "list"},
+			&common.EventList{
+				ListMeta: common.ListMeta{TotalItems: 1},
+				Events: []common.Event{{
+					TypeMeta: common.TypeMeta{Kind: common.ResourceKindEvent},
+					ObjectMeta: common.ObjectMeta{
+						Name: "ev-1", Namespace: "ns-1", Labels: labelSelector},
+					Message: "test-message",
+					Type:    api.EventTypeNormal,
+				}}},
+		},
+	}
+
+	for _, c := range cases {
+		fakeClient := fake.NewSimpleClientset(c.eventList, c.replicaSet, c.podList)
+
+		actual, _ := GetReplicaSetEvents(fakeClient, dataselect.NoDataSelect, c.namespace, c.name)
+
+		actions := fakeClient.Actions()
+		if len(actions) != len(c.expectedActions) {
+			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
+				len(c.expectedActions), len(actions))
+			continue
+		}
+
+		for i, verb := range c.expectedActions {
+			if actions[i].GetVerb() != verb {
+				t.Errorf("Unexpected action: %+v, expected %s",
+					actions[i], verb)
+			}
+		}
+
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("GetEvents(client,heapsterClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
+				c.namespace, c.name, actual, c.expected)
+		}
+	}
 }
 
 func TestGetReplicaSetPodsEvents(t *testing.T) {
-	// TODO: fix test
-	t.Skip("NewSimpleFake no longer supported. Test update needed.")
+	labelSelector := map[string]string{"app": "test"}
 
-	//cases := []struct {
-	//	namespace, name string
-	//	eventList       *api.EventList
-	//	podList         *api.PodList
-	//	replicaSet      *extensions.ReplicaSet
-	//	expectedActions []string
-	//	expected        []api.Event
-	//}{
-	//	{
-	//		"test-namespace", "test-name",
-	//		&api.EventList{Items: []api.Event{
-	//			{Message: "test-message", ObjectMeta: api.ObjectMeta{Namespace: "test-namespace"}},
-	//		}},
-	//		&api.PodList{Items: []api.Pod{{ObjectMeta: api.ObjectMeta{Name: "test-pod", Namespace: "test-namespace"}}}},
-	//		&extensions.ReplicaSet{
-	//			ObjectMeta: api.ObjectMeta{Name: "test-replicaset", Namespace: "test-namespace"},
-	//			Spec: extensions.ReplicaSetSpec{
-	//				Selector: &unversioned.LabelSelector{
-	//					MatchLabels: map[string]string{},
-	//				}}},
-	//		[]string{"get", "list", "list"},
-	//		[]api.Event{{Message: "test-message", ObjectMeta: api.ObjectMeta{Namespace: "test-namespace"}}},
-	//	},
-	//}
-	//
-	//for _, c := range cases {
-	//	fakeClient := testclient.NewSimpleFake(c.replicaSet, c.podList, c.eventList)
-	//
-	//	actual, _ := GetReplicaSetPodsEvents(fakeClient, c.namespace, c.name)
-	//
-	//	actions := fakeClient.Actions()
-	//	if len(actions) != len(c.expectedActions) {
-	//		t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
-	//			len(c.expectedActions), len(actions))
-	//		continue
-	//	}
-	//
-	//	for i, verb := range c.expectedActions {
-	//		if actions[i].GetVerb() != verb {
-	//			t.Errorf("Unexpected action: %+v, expected %s",
-	//				actions[i], verb)
-	//		}
-	//	}
-	//
-	//	if !reflect.DeepEqual(actual, c.expected) {
-	//		t.Errorf("GetEvents(client,heapsterClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
-	//			c.namespace, c.name, actual, c.expected)
-	//	}
-	//}
+	cases := []struct {
+		namespace, name string
+		eventList       *api.EventList
+		podList         *api.PodList
+		replicaSet      *extensions.ReplicaSet
+		expectedActions []string
+		expected        []api.Event
+	}{
+		{
+			"ns-1", "rs-1",
+			&api.EventList{Items: []api.Event{
+				{Message: "test-message", ObjectMeta: api.ObjectMeta{
+					Name: "ev-1", Namespace: "ns-1", Labels: labelSelector}},
+			}},
+			&api.PodList{Items: []api.Pod{{ObjectMeta: api.ObjectMeta{
+				Name: "pod-1", Namespace: "ns-1", Labels: labelSelector}}}},
+			&extensions.ReplicaSet{
+				ObjectMeta: api.ObjectMeta{Name: "rs-1", Namespace: "ns-1", Labels: labelSelector},
+				Spec: extensions.ReplicaSetSpec{
+					Selector: &unversioned.LabelSelector{
+						MatchLabels: labelSelector,
+					}}},
+			[]string{"get", "list", "list"},
+			[]api.Event{{Message: "test-message", ObjectMeta: api.ObjectMeta{
+				Name: "ev-1", Namespace: "ns-1", Labels: labelSelector}}},
+		},
+	}
+
+	for _, c := range cases {
+		fakeClient := fake.NewSimpleClientset(c.replicaSet, c.podList, c.eventList)
+
+		actual, _ := GetReplicaSetPodsEvents(fakeClient, c.namespace, c.name)
+
+		actions := fakeClient.Actions()
+		if len(actions) != len(c.expectedActions) {
+			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
+				len(c.expectedActions), len(actions))
+			continue
+		}
+
+		for i, verb := range c.expectedActions {
+			if actions[i].GetVerb() != verb {
+				t.Errorf("Unexpected action: %+v, expected %s",
+					actions[i], verb)
+			}
+		}
+
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("GetEvents(client,heapsterClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
+				c.namespace, c.name, actual, c.expected)
+		}
+	}
 }

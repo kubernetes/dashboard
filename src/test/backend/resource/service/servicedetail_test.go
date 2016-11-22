@@ -18,7 +18,14 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+	"k8s.io/kubernetes/pkg/api"
 	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
+	"reflect"
 )
 
 type FakeHeapsterClient struct {
@@ -36,71 +43,58 @@ func (c FakeHeapsterClient) Get(path string) client.RequestInterface {
 }
 
 func TestGetServiceDetail(t *testing.T) {
-	// TODO: fix test
-	t.Skip("NewSimpleFake no longer supported. Test update needed.")
+	cases := []struct {
+		service         *api.Service
+		namespace, name string
+		expectedActions []string
+		expected        *ServiceDetail
+	}{
+		{
+			service: &api.Service{ObjectMeta: api.ObjectMeta{
+				Name: "svc-1", Namespace: "ns-1", Labels: map[string]string{},
+			}},
+			namespace: "ns-1", name: "svc-1",
+			expectedActions: []string{"get", "get", "list"},
+			expected: &ServiceDetail{
+				ObjectMeta: common.ObjectMeta{
+					Name:      "svc-1",
+					Namespace: "ns-1",
+					Labels:    map[string]string{},
+				},
+				TypeMeta:         common.TypeMeta{Kind: common.ResourceKindService},
+				InternalEndpoint: common.Endpoint{Host: "svc-1.ns-1"},
+				PodList: pod.PodList{
+					Pods:              []pod.Pod{},
+					CumulativeMetrics: make([]metric.Metric, 0),
+				},
+			},
+		},
+	}
 
-	//cases := []struct {
-	//	service         *api.Service
-	//	namespace, name string
-	//	expectedActions []string
-	//	expected        *ServiceDetail
-	//}{
-	//	{
-	//		service:   &api.Service{},
-	//		namespace: "test-namespace-1", name: "test-name",
-	//		expectedActions: []string{"get", "get", "list"},
-	//		expected: &ServiceDetail{
-	//			TypeMeta: common.TypeMeta{Kind: common.ResourceKindService},
-	//			PodList: pod.PodList{
-	//				Pods:              []pod.Pod{},
-	//				CumulativeMetrics: make([]metric.Metric, 0),
-	//			},
-	//		},
-	//	}, {
-	//		service: &api.Service{ObjectMeta: api.ObjectMeta{
-	//			Name: "test-service", Namespace: "test-namespace",
-	//		}},
-	//		namespace: "test-namespace-2", name: "test-name",
-	//		expectedActions: []string{"get", "get", "list"},
-	//		expected: &ServiceDetail{
-	//			ObjectMeta: common.ObjectMeta{
-	//				Name:      "test-service",
-	//				Namespace: "test-namespace",
-	//			},
-	//			TypeMeta:         common.TypeMeta{Kind: common.ResourceKindService},
-	//			InternalEndpoint: common.Endpoint{Host: "test-service.test-namespace"},
-	//			PodList: pod.PodList{
-	//				Pods:              []pod.Pod{},
-	//				CumulativeMetrics: make([]metric.Metric, 0),
-	//			},
-	//		},
-	//	},
-	//}
-	//
-	//for _, c := range cases {
-	//	fakeClient := testclient.NewSimpleFake(c.service)
-	//	fakeHeapsterClient := FakeHeapsterClient{client: testclient.NewSimpleFake()}
-	//
-	//	actual, _ := GetServiceDetail(fakeClient, fakeHeapsterClient,
-	//		c.namespace, c.name, dataselect.NoDataSelect)
-	//
-	//	actions := fakeClient.Actions()
-	//	if len(actions) != len(c.expectedActions) {
-	//		t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
-	//			len(c.expectedActions), len(actions))
-	//		continue
-	//	}
-	//
-	//	for i, verb := range c.expectedActions {
-	//		if actions[i].GetVerb() != verb {
-	//			t.Errorf("Unexpected action: %+v, expected %s",
-	//				actions[i], verb)
-	//		}
-	//	}
-	//
-	//	if !reflect.DeepEqual(actual, c.expected) {
-	//		t.Errorf("GetServiceDetail(client, %#v, %#v) == \ngot %#v, \nexpected %#v", c.namespace,
-	//			c.name, actual, c.expected)
-	//	}
-	//}
+	for _, c := range cases {
+		fakeClient := fake.NewSimpleClientset(c.service)
+		fakeHeapsterClient := FakeHeapsterClient{client: fake.NewSimpleClientset()}
+
+		actual, _ := GetServiceDetail(fakeClient, fakeHeapsterClient,
+			c.namespace, c.name, dataselect.NoDataSelect)
+
+		actions := fakeClient.Actions()
+		if len(actions) != len(c.expectedActions) {
+			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
+				len(c.expectedActions), len(actions))
+			continue
+		}
+
+		for i, verb := range c.expectedActions {
+			if actions[i].GetVerb() != verb {
+				t.Errorf("Unexpected action: %+v, expected %s",
+					actions[i], verb)
+			}
+		}
+
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("GetServiceDetail(client, %#v, %#v) == \ngot %#v, \nexpected %#v", c.namespace,
+				c.name, actual, c.expected)
+		}
+	}
 }

@@ -1,0 +1,7 @@
+<pre ng-if="$ctrl.active" class="kd-pre-block">{{::$ctrl.text}}</pre>
+<span ng-if="!$ctrl.active">
+  <span ng-if="::$ctrl.placeholder.length">{{::$ctrl.placeholder}}</span>
+  <input ng-if="::!$ctrl.placeholder.length" type="password" readonly
+         flex="nogrow" class="kd-toggle-hidden-text-input"
+         value="{{::$ctrl.text}}">
+</span>
