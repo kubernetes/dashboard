@@ -67,7 +67,6 @@ describe('Nav service', () => {
   it('should detect activity', () => {
     navService.registerState('fakeState');
     navService.registerState('fakeNonActive');
-    navService.registerState('fakeStateWithParent');
 
     expect(navService.isActive('fakeState')).toBe(false);
     expect(navService.isActive('fakeNonActive')).toBe(false);
@@ -85,10 +84,16 @@ describe('Nav service', () => {
     expect(navService.isActive('fakeNonActive')).toBe(true);
     expect(navService.isActive('fakeStateWithParent')).toBe(false);
 
-    kdFutureStateService.state = {name: 'fakeStateWithParent'};
-
-    expect(navService.isActive('fakeState')).toBe(false);
+    kdFutureStateService.state = {
+      name: 'fakeStateWithParent',
+      data: {
+        [breadcrumbsConfig]: {
+          parent: 'fakeState',
+        },
+      },
+    };
+    expect(navService.isActive('fakeState')).toBe(true);
     expect(navService.isActive('fakeNonActive')).toBe(false);
-    expect(navService.isActive('fakeStateWithParent')).toBe(true);
+    expect(navService.isActive('fakeStateWithParent')).toBe(false);
   });
 });

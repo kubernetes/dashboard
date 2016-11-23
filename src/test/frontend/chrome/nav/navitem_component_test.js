@@ -36,6 +36,14 @@ describe('Nav item component', () => {
     });
   });
 
+  it('should register itself in nav service', () => {
+    expect(kdNavService.states_).toEqual([]);
+
+    ctrl.$onInit();
+
+    expect(kdNavService.states_).toEqual(['fakeState']);
+  });
+
   it('should render href', () => {
     // initial state assert
     expect(ctrl.state).toBe('fakeState');

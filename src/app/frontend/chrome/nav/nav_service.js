@@ -65,7 +65,7 @@ export class NavService {
         return this.states_[lastIndex] === stateName;
       }
 
-      if (state && state.data && state.data[breadcrumbsConfig]) {
+      if (state.data && state.data[breadcrumbsConfig]) {
         state = this.state_.get(state.data[breadcrumbsConfig]['parent']);
       } else {
         state = null;
