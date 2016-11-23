@@ -46,6 +46,7 @@
   <translation id="2093749467777012107" key="MSG_CHROME_NAV_NAV_12" desc="Services and discovery menu item in the nav.">Services and discovery</translation>
   <translation id="7231060462716768345" key="MSG_CHROME_NAV_NAV_13" desc="Services menu item in the nav.">Services</translation>
   <translation id="4709315173311947609" key="MSG_CHROME_NAV_NAV_14" desc="Ingress item in the nav.">Ingress</translation>
+  <translation id="7847222014427123367" key="MSG_CHROME_NAV_NAV_14" desc="Ingresses item in the nav.">Ingresses</translation>
   <translation id="3039957839920471408" key="MSG_CHROME_NAV_NAV_15" desc="Storage item in the nav.">Storage</translation>
   <translation id="8015161624640032228" key="MSG_CHROME_NAV_NAV_16" desc="Persistent Volume Claims item in the nav.">Persistent Volume Claims</translation>
   <translation id="6873247849362907014" key="MSG_CHROME_NAV_NAV_17" desc="Config item in the nav.">Config</translation>
