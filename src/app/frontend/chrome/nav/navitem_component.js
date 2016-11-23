@@ -18,7 +18,7 @@
 export class NavItemController {
   /**
    * @param {!ui.router.$state} $state
-   * @param {!./nav_service.NavService} kdNavServices
+   * @param {!./nav_service.NavService} kdNavService
    * @ngInject
    */
   constructor($state, kdNavService) {
