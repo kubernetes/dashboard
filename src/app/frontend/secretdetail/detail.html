@@ -15,17 +15,34 @@ limitations under the License.
 -->
 
 <div layout="column">
-    <kd-secret-info secret="::$ctrl.secretDetail"></kd-secret-info>
-    <kd-info-card>
-        <kd-info-card-section name="[[Data | Secrets info details section data.]]">
-            <kd-info-card-entry ng-repeat="(key, value) in ::$ctrl.secretDetail.data"
-                                title="{{::key}}">
-                <pre ng-if="::!$ctrl.secretDetail.isHiddenType" class="kd-pre-block">{{::$ctrl.formatDataValue(value)}}</pre>
-                <kd-toggle-hidden-text  ng-if="::$ctrl.secretDetail.isHiddenType"
-                                        placeholder="{{::value.length}} [[bytes | Secrets info details section bytes.]]"
-                                        text="{{ ::value }}">
-                </kd-toggle-hidden-text>
-            </kd-info-card-entry>
-        </kd-info-card-section>
-    </kd-info-card>
+  <kd-secret-info secret="::$ctrl.secretDetail"></kd-secret-info>
+  <kd-info-card>
+    <kd-info-card-header>[[Data|Secrets info details section data.]]</kd-info-card-header>
+    <kd-info-card-section>
+      <div layout="row" class="kd-info-card-entry kd-secret-detail-row" ng-repeat="(key, value) in ::$ctrl.secretDetail.data">
+        <div flex="nogrow" style="position: relative">
+          <md-button ng-click="isActive = !isActive" class="md-icon-button">
+            <!-- SVG drawing to simulate crossed-eye icon.
+                 This should be removed if possible. -->
+            <svg ng-if="isActive" width="40px" height="40px" viewBox="0 0 40 40"
+                      style="left: 0; top:0; position:absolute; bottom:0, right: 0;">
+              <line x1="10" y1="10" x2="30" y2="30"
+                style="stroke-width: 2; stroke: rgba(0,0,0,0.54);"/>
+            </svg>
+            <md-icon md-font-library="material-icons">remove_red_eye</md-icon>
+            <md-tooltip ng-if="!isActive">[[Show secret content|Tooltip label for showing secret content]]</md-tooltip>
+            <md-tooltip ng-if="isActive">[[Hide secret content|Tooltip label for hiding secret content]]</md-tooltip>
+          </md-button>
+
+          {{::key}}:
+        </div>
+        <div class="kd-info-card-entry-content">
+          <kd-toggle-hidden-text  active="isActive"
+                                  placeholder="[[{{::value.length}} bytes | Secrets info details section bytes.]]"
+                                  text="{{ ::value }}">
+          </kd-toggle-hidden-text>
+        </div>
+      </div>
+    </kd-info-card-section>
+  </kd-info-card>
 </div>

@@ -13,18 +13,31 @@
 // limitations under the License.
 
 /**
- * Represents a toggle to hide and show text.
- *
- * @type {!angular.Component}
+ * @final
  */
-export const toggleHiddenTextComponent = {
-  templateUrl: 'common/components/togglehiddentext/togglehiddentext.html',
+export default class ResourceLimitsController {
+  /**
+   * Constructs pettion controller info object.
+   */
+  constructor() {
+    /**
+     * Resource Limits. Initialized from the scope.
+     * @export {Array<!backendApi.LimitRange>}
+     */
+    this.resourceLimits;
+  }
+}
+
+/**
+ * Definition object for the component that displays resource limits.
+ *
+ * @return {!angular.Directive}
+ */
+export const resourceLimitsComponent = {
+  controller: ResourceLimitsController,
+  templateUrl: 'resourcelimit/resourcelimits.html',
   bindings: {
-    /** {string} */
-    'placeholder': '@?',
-    /** {string} */
-    'text': '@',
-    /** {boolean} */
-    'active': '<',
+    /** {Array<!backendApi.LimitRange>} */
+    'resourceLimits': '=',
   },
 };
