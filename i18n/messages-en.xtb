@@ -34,6 +34,7 @@
   <translation id="2093749467777012107" key="MSG_CHROME_NAV_NAV_12" desc="Services and discovery menu item in the nav.">Services and discovery</translation>
   <translation id="7231060462716768345" key="MSG_CHROME_NAV_NAV_13" desc="Services menu item in the nav.">Services</translation>
   <translation id="4709315173311947609" key="MSG_CHROME_NAV_NAV_14" desc="Ingress item in the nav.">Ingress</translation>
+  <translation id="7847222014427123367" key="MSG_CHROME_NAV_NAV_14" desc="Ingresses item in the nav.">Ingresses</translation>
   <translation id="3039957839920471408" key="MSG_CHROME_NAV_NAV_15" desc="Storage item in the nav.">Storage</translation>
   <translation id="8015161624640032228" key="MSG_CHROME_NAV_NAV_16" desc="Persistent Volume Claims item in the nav.">Persistent Volume Claims</translation>
   <translation id="6873247849362907014" key="MSG_CHROME_NAV_NAV_17" desc="Config item in the nav.">Config</translation>
@@ -684,6 +685,7 @@
   <translation id="3641265385665997534" key="MSG_RESOURCE_CARD_LIST_PAGINATION_ERROR" desc="Message shown to the user when there is a pagination error.">Pagination error</translation>
   <translation id="1320482404001625698" key="MSG_SECRETDETAIL_ACTIONBAR_0" desc="Label \'Secret\' which appears at the top of the delete dialog, opened from a secret details page.">Secret</translation>
   <translation id="1561742373508692276" key="MSG_SECRETDETAIL_DETAIL_0" desc="Secrets info details section data.">Data </translation>
+  <translation id="7988357395949564443" key="MSG_SECRETDETAIL_DETAIL_0" desc="Secrets info details section data.">Data</translation>
   <translation id="1940368443923988450" key="MSG_SECRETDETAIL_DETAIL_1" desc="Secrets info details section bytes.">bytes </translation>
   <translation id="7488314601782256695" key="MSG_SECRETDETAIL_DETAIL_1" desc="Tooltip label for showing secret content">Show secret content</translation>
   <translation id="1451479307509203762" key="MSG_SECRETDETAIL_DETAIL_2" desc="Tooltip label for hiding secret content">Hide secret content</translation>
