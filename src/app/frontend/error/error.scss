@@ -14,12 +14,20 @@
 
 @import '../variables';
 
-.kd-error-view-icon {
+.kd-error-view-header {
   color: $foreground-2;
-  font-size: $display-4-font-size-base;
 }
 
-.kd-error-report-button {
+.kd-error-view-icon {
+  color: $foreground-2;
+  font-size: $headline-font-size-base;
+  line-height: 4 * $baseline-grid;
+  vertical-align: top;
+  display: inline-flex;
+  margin-right: $baseline-grid;
+}
+
+.kd-error-feedback-button {
   margin: $baseline-grid 0;
 }
 
@@ -31,4 +39,13 @@
   justify-content: center;
   position: absolute;
   width: 100%;
+}
+
+.kd-error-block {
+  background-color: $content-background;
+  border: 1px solid $border;
+  border-radius: $baseline-grid / 4;
+  box-shadow: $whiteframe-shadow-1dp;
+  display: block;
+  padding: (1.5 * $baseline-grid) (3.5 * $baseline-grid);
 }

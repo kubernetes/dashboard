@@ -40,7 +40,7 @@ export class InternalErrorController {
    * @export
    * @return {string} URL of GitHub page used to report bugs.
    */
-  getLinkToBugReport() {
+  getLinkToFeedbackPage() {
     let link = 'https://github.com/kubernetes/dashboard/issues/new';
 
     if (this.error) {

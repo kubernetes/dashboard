@@ -16,9 +16,9 @@ limitations under the License.
 
 <div class="kd-error-center-fixed">
   <div layout="column"  layout-align="center center">
-    <i flex="auto" class="material-icons kd-error-view-icon">error_outline</i>
-    <div flex="auto" >
-      <h2 class="md-headline">
+    <div flex="auto" class="kd-error-block">
+      <h2 class="md-headline kd-error-view-header">
+        <i  class="material-icons kd-error-view-icon">error_outline</i>
         <span ng-if="::ctrl.error.statusText">{{ctrl.error.statusText}}</span>
         <span ng-if="::!ctrl.error.statusText">
           [[Unknown Server Error.|This message appears in an error dialog when the returned error
@@ -28,10 +28,10 @@ limitations under the License.
       </h2>
       <pre ng-if="::ctrl.error.data">{{ctrl.error.data}}</pre>
       <div layout="row" layout-align="end center">
-        <a ng-href="{{ctrl.getLinkToBugReport()}}">
-          <md-button  class="md-raised md-primary kd-error-report-button">
-            [[Report a bug|This is a label for button displayed on error page used to report bugs
-            on GitHub.]]
+        <a ng-href="{{ctrl.getLinkToFeedbackPage()}}">
+          <md-button  class="kd-error-feedback-button">
+            [[Send feedback|This is a label for button displayed on error page used to send feedback
+            to GitHub new issue.]]
           </md-button>
         </a>
       </div>
