@@ -35,7 +35,7 @@ export class InternalErrorController {
 
   /**
    * Returns URL of GitHub page used to report bugs with partly filled issue template
-   * (check .github/ISSUE_TEMPLATE.md file)
+   * (check .github/ISSUE_TEMPLATE.md file). IMPORTANT: Remember to keep these templates in sync.
    *
    * @export
    * @return {string} URL of GitHub page used to report bugs.
