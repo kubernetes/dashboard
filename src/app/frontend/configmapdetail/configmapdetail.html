@@ -17,7 +17,8 @@ limitations under the License.
 <div layout="column">
   <kd-config-map-info config-map="::$ctrl.configMapDetail"></kd-config-map-info>
   <kd-info-card>
-    <kd-info-card-section name="[[Data|Config map info details section name.]]">
+    <kd-info-card-header>[[Data|Header in a detail view of config map deta]]</kd-info-card-header>
+    <kd-info-card-section>
       <kd-info-card-entry ng-repeat="(key, value) in ::$ctrl.configMapDetail.data"
           title="{{::key}}">
         <pre class="kd-pre-block">{{::value}}</pre>
