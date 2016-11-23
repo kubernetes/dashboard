@@ -12,26 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
-
 /**
  * @final
  */
 export class NavItemController {
   /**
    * @param {!ui.router.$state} $state
-   * @param {!./../../common/state/futurestate_service.FutureStateService} kdFutureStateService
+   * @param {!./nav_service.NavService} kdNavServices
    * @ngInject
    */
-  constructor($state, kdFutureStateService) {
+  constructor($state, kdNavService) {
     /** @export {string} */
     this.state;
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
-    /** @private {!./../../common/state/futurestate_service.FutureStateService} */
-    this.kdFutureStateService_ = kdFutureStateService;
+    /** @private {!./nav_service.NavService} */
+    this.kdNavService_ = kdNavService;
+  }
+
+  /** @export */
+  $onInit() {
+    this.kdNavService_.registerState(this.state);
   }
 
   /**
@@ -47,18 +50,7 @@ export class NavItemController {
    * @export
    */
   isActive() {
-    let state = this.kdFutureStateService_.state;
-    while (state) {
-      if (state.name === this.state) {
-        return true;
-      }
-      if (state && state.data && state.data[breadcrumbsConfig]) {
-        state = this.state_.get(state.data[breadcrumbsConfig]['parent']);
-      } else {
-        state = null;
-      }
-    }
-    return false;
+    return this.kdNavService_.isActive(this.state);
   }
 }
 
