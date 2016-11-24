@@ -23,7 +23,7 @@ limitations under the License.
       <kd-labels labels="::$ctrl.replicationController.labelSelector"></kd-labels>
     </kd-info-card-entry>
     <kd-info-card-entry title="[[Images|Label 'Images' for the list of images used in a replication controller, on its details page.]]">
-      <div ng-repeat="image in $ctrl.replicationController.containerImages">
+      <div ng-repeat="image in $ctrl.replicationController.containerImages track by $index">
         <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
       </div>
     </kd-info-card-entry>
