@@ -95,7 +95,7 @@ export default class PersistentVolumeClaimCardController {
    * @return {string} localized tooltip with the formatted creation date
    */
   getCreatedAtTooltip(creationDate) {
-    let filter = this.interpolate_(`{{date | date:'short'}}`);
+    let filter = this.interpolate_(`{{date | date:'yyyy-MM-ddTHH:mm':'UTC'}}`);
     /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
      * persistent volume claim. */
     let MSG_PERSISTENT_VOLUME_CLAIM_LIST_CREATED_AT_TOOLTIP =

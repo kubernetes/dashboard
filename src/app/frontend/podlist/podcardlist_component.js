@@ -190,7 +190,7 @@ export class PodCardListController {
    * @return {string} localized tooltip with the formated start date
    */
   getStartedAtTooltip(startDate) {
-    let filter = this.interpolate_(`{{date | date:'d/M/yy HH:mm':'UTC'}}`);
+    let filter = this.interpolate_(`{{date | date:'yyyy-MM-ddTHH:mm':'UTC'}}`);
     /** @type {string} @desc Tooltip 'Started at [some date]' showing the exact start time of
      * the pod.*/
     let MSG_POD_LIST_STARTED_AT_TOOLTIP =

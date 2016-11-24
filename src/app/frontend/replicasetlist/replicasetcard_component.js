@@ -95,7 +95,7 @@ export default class ReplicaSetCardController {
    * @return {string} localized tooltip with the formated creation date
    */
   getCreatedAtTooltip(creationDate) {
-    let filter = this.interpolate_(`{{date | date:'short'}}`);
+    let filter = this.interpolate_(`{{date | date:'yyyy-MM-ddTHH:mm':'UTC'}}`);
     /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
      * replica set. */
     let MSG_REPLICA_SET_LIST_CREATED_AT_TOOLTIP =
