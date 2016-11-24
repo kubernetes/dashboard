@@ -52,9 +52,6 @@ type Pod struct {
 	// More info on pod status
 	PodStatus PodStatus `json:"podStatus"`
 
-	// IP address of the Pod.
-	PodIP string `json:"podIP"`
-
 	// Count of containers restarts.
 	RestartCount int32 `json:"restartCount"`
 

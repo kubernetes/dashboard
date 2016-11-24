@@ -29,22 +29,22 @@ limitations under the License.
     <kd-resource-card-header-column size="small" grow="2">
       [[Name|Title of a column]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="2" ng-if="$ctrl.areMultipleNamespacesSelected()">
+    <kd-resource-card-header-column size="small" grow="1" ng-if="$ctrl.areMultipleNamespacesSelected()">
       [[Namespace|Title of a column]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="1">[[Status|Title of a pod status column]]
-    </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small" grow="1">
+      [[Status|Title of a pod status column]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small" grow="nogrow">
       [[Restarts|Title of a restarts column for a pod]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="1">[[Age|Title of a column for the age of a pod]]
+    <kd-resource-card-header-column size="small" grow="nogrow">
+      [[Age|Title of a column for the age of a pod]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="1">[[Cluster IP|Title of a column]]
-    </kd-resource-card-header-column>
-    <kd-resource-card-header-column ng-if="::$ctrl.showMetrics()">
+    <kd-resource-card-header-column size="small" grow="1" ng-if="::$ctrl.showMetrics()">
       [[CPU (cores)|Title of a column]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column ng-if="::$ctrl.showMetrics()">
+    <kd-resource-card-header-column size="small" grow="1" ng-if="::$ctrl.showMetrics()">
       [[Memory (bytes)|Title of a column]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small" grow="nogrow">
@@ -86,7 +86,12 @@ limitations under the License.
           </kd-middle-ellipsis>
         </div>
       </kd-resource-card-column>
-      <kd-resource-card-column>{{::$ctrl.getDisplayStatus(pod)}}</kd-resource-card-column>
+      <kd-resource-card-column>
+        <div>
+          <kd-middle-ellipsis display-string="{{::$ctrl.getDisplayStatus(pod)}}">
+          </kd-middle-ellipsis>
+        </div>
+      </kd-resource-card-column>
       <kd-resource-card-column>{{::pod.restartCount}}</kd-resource-card-column>
       <kd-resource-card-column>
         <div ng-if="::pod.objectMeta.creationTimestamp">
@@ -96,10 +101,6 @@ limitations under the License.
           </md-tooltip>
         </div>
         <div ng-if="::!pod.objectMeta.creationTimestamp">-</div>
-      </kd-resource-card-column>
-      <kd-resource-card-column>
-        <div ng-if="::pod.podIP">{{::pod.podIP}}</div>
-        <div ng-if="::!pod.podIP">-</div>
       </kd-resource-card-column>
       <kd-resource-card-column ng-if="::$ctrl.showMetrics()">
         <div ng-if="::$ctrl.hasCpuUsage(pod)">

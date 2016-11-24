@@ -49,7 +49,6 @@ func ToPod(pod *api.Pod, metrics *common.MetricsByPod) Pod {
 		ObjectMeta:   common.NewObjectMeta(pod.ObjectMeta),
 		TypeMeta:     common.NewTypeMeta(common.ResourceKindPod),
 		PodStatus:    getPodStatus(*pod),
-		PodIP:        pod.Status.PodIP,
 		RestartCount: getRestartCount(*pod),
 	}
 
