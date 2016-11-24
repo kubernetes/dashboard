@@ -218,7 +218,7 @@ func GetNodePods(client k8sClient.Interface, heapsterClient client.HeapsterClien
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(pods.Items, dsQuery, heapsterClient)
+	podList := pod.CreatePodList(pods.Items, []api.Event{}, dsQuery, heapsterClient)
 	return &podList, nil
 }
 

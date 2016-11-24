@@ -241,8 +241,8 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				Error: make(chan error, 7),
 			},
 			EventList: common.EventListChannel{
-				List:  make(chan *api.EventList, 6),
-				Error: make(chan error, 6),
+				List:  make(chan *api.EventList, 7),
+				Error: make(chan error, 7),
 			},
 		}
 
@@ -309,6 +309,8 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		channels.PodList.Error <- nil
 
 		eventList := &api.EventList{}
+		channels.EventList.List <- eventList
+		channels.EventList.Error <- nil
 		channels.EventList.List <- eventList
 		channels.EventList.Error <- nil
 		channels.EventList.List <- eventList
