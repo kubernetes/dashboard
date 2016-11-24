@@ -20,11 +20,11 @@
 
 .kd-error-view-icon {
   color: $foreground-2;
+  display: inline-flex;
   font-size: $headline-font-size-base;
   line-height: 4 * $baseline-grid;
-  vertical-align: top;
-  display: inline-flex;
   margin-right: $baseline-grid;
+  vertical-align: top;
 }
 
 .kd-error-feedback-button {
