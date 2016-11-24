@@ -18,15 +18,10 @@ limitations under the License.
   <div layout="column"  layout-align="center center">
     <div flex="auto" class="kd-error-block">
       <h2 class="md-headline kd-error-view-header">
-        <i  class="material-icons kd-error-view-icon">error_outline</i>
-        <span ng-if="::ctrl.error.statusText">{{ctrl.error.statusText}}</span>
-        <span ng-if="::!ctrl.error.statusText">
-          [[Unknown Server Error.|This message appears in an error dialog when the returned error
-          code is not recognized.]]
-        </span>
-        <span ng-if="::ctrl.showStatus()">({{ctrl.error.status}})</span>
+        <i class="material-icons kd-error-view-icon">error_outline</i>
+        <span>{{ctrl.getErrorStatus()}}</span>
       </h2>
-      <pre ng-if="::ctrl.error.data">{{ctrl.error.data}}</pre>
+      <pre>{{ctrl.getErrorData()}}</pre>
       <div layout="row" layout-align="end center">
         <a ng-href="{{ctrl.getLinkToFeedbackPage()}}">
           <md-button  class="kd-error-feedback-button">
