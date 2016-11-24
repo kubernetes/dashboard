@@ -31,23 +31,54 @@ describe('Internal error controller', () => {
     });
   });
 
-  it('should hide status when no error', () => {
-    expect(ctrl.showStatus()).toBe(false);
+  it('should return default error status when unknown error', () => {
+    expect(ctrl.getErrorStatus()).toBe(ctrl.i18n.MSG_UNKNOWN_SERVER_ERROR);
   });
 
-  it('should hide status when there is unknown error', () => {
+  it('should return valid error status when error occurs', () => {
     // given
-    stateParams.error.status = -1;
+    stateParams.error.status = 500;
 
     // then
-    expect(ctrl.showStatus()).toBe(false);
+    expect(ctrl.getErrorStatus())
+        .toBe(`${ctrl.i18n.MSG_UNKNOWN_SERVER_ERROR} (${stateParams.error.status})`);
   });
 
-  it('should show status when there known error', () => {
+  it('should return valid error status when error occurs', () => {
     // given
-    stateParams.error.status = 404;
+    stateParams.error.status = 500;
+    stateParams.error.statusText = 'Random error';
 
     // then
-    expect(ctrl.showStatus()).toBe(true);
+    expect(ctrl.getErrorStatus())
+        .toBe(`${stateParams.error.statusText} (${stateParams.error.status})`);
+  });
+
+  it('should return valid error status when error occurs', () => {
+    // given
+    stateParams.error.statusText = 'Random error';
+
+    // then
+    expect(ctrl.getErrorStatus()).toBe(`${stateParams.error.statusText}`);
+  });
+
+  it('should return default error data when unknown error', () => {
+    expect(ctrl.getErrorData()).toBe(ctrl.i18n.MSG_NO_ERROR_DATA);
+  });
+
+  it('should return default error data when empty error', () => {
+    // given
+    stateParams.error.data = '';
+
+    // then
+    expect(ctrl.getErrorData()).toBe(ctrl.i18n.MSG_NO_ERROR_DATA);
+  });
+
+  it('should return valid error data when error occurs', () => {
+    // given
+    stateParams.error.data = 'something is broken';
+
+    // then
+    expect(ctrl.getErrorData()).toBe(stateParams.error.data);
   });
 });
