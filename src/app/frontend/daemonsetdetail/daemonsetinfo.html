@@ -29,7 +29,7 @@ limitations under the License.
       <kd-labels labels="::$ctrl.daemonSet.objectMeta.labels"></kd-labels>
     </kd-info-card-entry>
     <kd-info-card-entry title="[[Images|Label 'Images' for the list of images used in a daemon set, on its details page.]]">
-      <div ng-repeat="image in $ctrl.daemonSet.containerImages">
+      <div ng-repeat="image in $ctrl.daemonSet.containerImages track by $index">
         <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
       </div>
     </kd-info-card-entry>

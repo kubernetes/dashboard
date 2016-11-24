@@ -19,19 +19,17 @@
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
-  labels:
-    app: kubernetes-dashboard
-  name: kubernetes-dashboard
-  namespace: kube-system
+  name: dashboard-same-img
+  namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kubernetes-dashboard
+      app: dashboard-same-img
   template:
     metadata:
       labels:
-        app: kubernetes-dashboard
+        app: dashboard-same-img
       # Comment the following annotaion if Dashboard must not be deployed on master
       annotations:
         scheduler.alpha.kubernetes.io/tolerations: |
@@ -46,7 +44,7 @@ spec:
     spec:
       containers:
       - name: kubernetes-dashboard
-        image: gcr.io/google_containers/kubernetes-dashboard-amd64:v1.5.0-beta1
+        image: busybox
         imagePullPolicy: Always
         ports:
         - containerPort: 9090
@@ -62,14 +60,20 @@ spec:
             port: 9090
           initialDelaySeconds: 30
           timeoutSeconds: 30
+      - name: kubernetes-dashboard-2
+        image: busybox
+        imagePullPolicy: Always
+      - name: kubernetes-dashboard-3
+        image: busybox
+        imagePullPolicy: Always
 ---
 kind: Service
 apiVersion: v1
 metadata:
   labels:
-    app: kubernetes-dashboard
-  name: kubernetes-dashboard
-  namespace: kube-system
+    app: dashboard-same-img
+  name: dashboard-same-img
+  namespace: default
 spec:
   type: NodePort
   ports:

@@ -23,7 +23,7 @@ limitations under the License.
       <kd-labels labels="::$ctrl.replicaSet.selector.matchLabels"></kd-labels>
     </kd-info-card-entry>
     <kd-info-card-entry title="[[Images|Label 'Images' for the list of images used in a replica set, on its details page.]]">
-      <div ng-repeat="image in $ctrl.replicaSet.containerImages">
+      <div ng-repeat="image in $ctrl.replicaSet.containerImages track by $index">
         <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
       </div>
     </kd-info-card-entry>
