@@ -35,6 +35,7 @@ describe('Secret card', () => {
   });
 
   it('should format the "secret start date" tooltip correctly', () => {
-    expect(ctrl.getStartedAtTooltip('2016-06-06T09:13:12Z')).toBe('Created at 2016-06-06T09:13 UTC');
+    expect(ctrl.getStartedAtTooltip('2016-06-06T09:13:12Z'))
+        .toBe('Created at 2016-06-06T09:13 UTC');
   });
 });

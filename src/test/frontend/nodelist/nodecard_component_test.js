@@ -86,6 +86,7 @@ describe('Node card', () => {
   });
 
   it('should format the "created at" tooltip correctly', () => {
-    expect(ctrl.getCreatedAtTooltip('2016-06-06T09:13:12Z')).toMatch('Created at 2016-06-06T09:13.*');
+    expect(ctrl.getCreatedAtTooltip('2016-06-06T09:13:12Z'))
+        .toMatch('Created at 2016-06-06T09:13.*');
   });
 });

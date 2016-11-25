@@ -42,7 +42,8 @@ describe('Ingress card', () => {
   });
 
   it('should format the "ingress start date" tooltip correctly', () => {
-    expect(ctrl.getStartedAtTooltip('2016-06-06T09:13:12Z')).toBe('Created at 2016-06-06T09:13 UTC');
+    expect(ctrl.getStartedAtTooltip('2016-06-06T09:13:12Z'))
+        .toBe('Created at 2016-06-06T09:13 UTC');
   });
 
   it('should return details href', () => {
