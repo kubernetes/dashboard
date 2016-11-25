@@ -67,7 +67,7 @@ limitations under the License.
       <div ng-if="::$ctrl.hasCpuUsage(pod)">
         <kd-sparkline timeseries="::$ctrl.pod.metrics.cpuUsageHistory"
                       class="kd-sparkline-cpu-series"></kd-sparkline>
-        {{::(pod.metrics.cpuUsage | kdCores)}}
+        {{::($ctrl.pod.metrics.cpuUsage | kdCores)}}
       </div>
       <div ng-if="::!$ctrl.hasCpuUsage(pod)">-</div>
     </kd-resource-card-column>
