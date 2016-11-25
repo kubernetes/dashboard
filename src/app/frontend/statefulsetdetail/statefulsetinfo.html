@@ -23,7 +23,7 @@ limitations under the License.
       <kd-labels labels="::$ctrl.statefulSet.objectMeta.labels"></kd-labels>
     </kd-info-card-entry>
     <kd-info-card-entry title="[[Images|Stateful set info details section images entry.]]">
-      <div ng-repeat="image in $ctrl.statefulSet.containerImages">
+      <div ng-repeat="image in $ctrl.statefulSet.containerImages track by $index">
         <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
       </div>
     </kd-info-card-entry>

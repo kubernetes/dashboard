@@ -103,6 +103,6 @@ func GetServicePods(client k8sClient.Interface, heapsterClient client.HeapsterCl
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(apiPodList.Items, dsQuery, heapsterClient)
+	podList := pod.CreatePodList(apiPodList.Items, []api.Event{}, dsQuery, heapsterClient)
 	return &podList, nil
 }

@@ -63,12 +63,18 @@ body,
 .kd-app-entire-content {
   background-color: $body;
   max-height: 100%;
+  // Move entire app content below toolbar to avoid elements overlap with
+  // shadow (there was propblem with it on IE).
+  z-index: 0;
 }
 
 .kd-app-content {
   background-color: $body;
   height: 100%;
   max-height: 100%;
+  // Set overflow property to disable margin-collapse, which in turn
+  // prevents scrollbar from being always visible.
+  overflow-x: hidden;
   position: relative;
 
   >.md-body-1 {

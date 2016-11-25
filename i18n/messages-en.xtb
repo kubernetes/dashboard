@@ -303,7 +303,14 @@
   <translation id="7942197803383171833" key="MSG_DEPLOY_UPLOAD_2" desc="User help for the YAML/JSON file upload form on the deploy page.">Select a YAML or JSON file, specifying the resources to deploy.</translation>
   <translation id="1706523109425956587" key="MSG_DEPLOY_UPLOAD_3" desc="The text is used as a \'Learn more\' link text besides the file upload on the deploy page.">Learn more</translation>
   <translation id="4162582061346784285" key="MSG_ERROR_HANDLING_DIALOG_CLOSE_ACTION" desc="Action &quot;Close&quot; which appears at the bottom of any displayed error dialog.">Close</translation>
+  <translation id="6020266409089609793" key="MSG_ERROR_INTERNALERROR_0" desc="This is a label for button displayed on error page used to send feedback to GitHub new issue.">Send feedback</translation>
   <translation id="6510078647741040827" key="MSG_ERROR_INTERNALERROR_0" desc="This message appears in an error dialog when the returned error code is not recognized.">Unknown Server Error.</translation>
+  <translation id="4145537915999486390" key="MSG_ERROR_INTERNALERROR_1" desc="This is a label for button displayed on error page used to report bugs on GitHub.">Report a bug</translation>
+  <translation id="7320935166128929457" key="MSG_ERROR_UKNOWN_WARNING" desc="This message appears in an error dialog when the returned error code is not recognized.">Unknown Server Error</translation>
+  <translation id="7527074982331141078" key="MSG_EVENTS_ALL_LABEL" desc="Label 'All' for the event selection drop-down.">All</translation>
+  <translation id="9183905402242013542" key="MSG_EVENTS_CARD" desc="Label for the events card.">Events</translation>
+  <translation id="6413199566846581831" key="MSG_EVENTS_COUNT_LABEL" desc="Label 'Count' for event count column of the events table (events list page).">Count</translation>
+  <translation id="4179338997362096957" key="MSG_EVENTS_EVENTCARDLIST_0" desc="Label for the events card.">Events</translation>
   <translation id="4179338997362096957" key="MSG_EVENTS_EVENTCARDLIST_0" desc="Label which appears above the list of such objects.">Events</translation>
   <translation id="7618020634310257225" key="MSG_EVENTS_EVENTCARDLIST_1" desc="Label \'Message\' for the event message column of the events table (events list page).">Message</translation>
   <translation id="7495297439436040330" key="MSG_EVENTS_EVENTCARDLIST_2" desc="Label \'Source\' for the event source column of the events table (events list page).">Source</translation>
@@ -455,6 +462,7 @@
   <translation id="1139931975436155591" key="MSG_NODELIST_NODELIST_0" desc="Title for graph card displaying CPU metric of nodes.">CPU usage</translation>
   <translation id="4611353673808918004" key="MSG_NODELIST_NODELIST_1" desc="Title for graph card displaying memory metric of nodes.">Memory usage</translation>
   <translation id="3161651495562825748" key="MSG_NODE_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of node.">Created at <ph name="CREATION_DATE"/></translation>
+  <translation id="2230058550547139309" key="MSG_NO_ERROR_DATA" desc="String to display when error object has no data.">No error data available</translation>
   <translation id="6997507737763635005" key="MSG_PERSISTENTVOLUMECLAIMDETAIL_ACTIONBAR_0" desc="Label \'Persistent Volume Claim\' which appears at the top of the delete dialog, opened from a persistent volume claim details page.">Persistent Volume Claim</translation>
   <translation id="1297935396913654466" key="MSG_PERSISTENTVOLUMECLAIMDETAIL_PERSISTENTVOLUMECLAIMINFO_0" desc="Header in a detail view">Details</translation>
   <translation id="4504917958472688873" key="MSG_PERSISTENTVOLUMECLAIMDETAIL_PERSISTENTVOLUMECLAIMINFO_1" desc="Persistent volume claim info details section status entry.">Status</translation>
@@ -574,6 +582,11 @@
   <translation id="6443550122641250762" key="MSG_PODLIST_PODCARDLIST_7" desc="Title of a column">CPU (cores)</translation>
   <translation id="3396535268909732737" key="MSG_PODLIST_PODCARDLIST_8" desc="Title of a column">Memory (bytes)</translation>
   <translation id="7236041095972031158" key="MSG_PODLIST_PODCARDLIST_9" desc="Tooltip for failed pod card icon">This pod has errors.</translation>
+  <translation id="1979198258258777444" key="MSG_PODLIST_PODCARD_0" desc="Tooltip for failed pod card icon">This pod has errors.</translation>
+  <translation id="6198079975160516049" key="MSG_PODLIST_PODCARD_1" desc="Tooltip for pending pod card icon">This pod is in a pending state.</translation>
+  <translation id="9163686479589740365" key="MSG_PODLIST_PODCARD_2" desc="Label for logs tooltip">Logs</translation>
+  <translation id="1311816473397506166" key="MSG_PODLIST_PODCARD_3" desc="Name of the pod resource">Pod</translation>
+  <translation id="7649589521591327794" key="MSG_PODLIST_PODCARD_4" desc="Name of the pod resource">Pod</translation>
   <translation id="4624949365521774090" key="MSG_PODLIST_PODLIST_0" desc="Title for graph card displaying CPU metric of pods.">CPU usage</translation>
   <translation id="1774454191311054495" key="MSG_PODLIST_PODLIST_1" desc="Title for graph card displaying memory metric of pods.">Memory usage</translation>
   <translation id="1014088790164786434" key="MSG_POD_LIST_POD_TERMINATED_STATUS" desc="Status message showing a terminated status with [reason].">Terminated: <ph name="REASON"/></translation>
@@ -595,10 +608,13 @@
   <translation id="8565706677236438077" key="MSG_REPLICASETDETAIL_REPLICASETINFO_0" desc="Header in a detail view">Details</translation>
   <translation id="894856145436951468" key="MSG_REPLICASETDETAIL_REPLICASETINFO_1" desc="Label \'selector\' for replica sets.">Selector</translation>
   <translation id="8624660585907028627" key="MSG_REPLICASETDETAIL_REPLICASETINFO_10" desc="The message says how many pods are running (replica set details page).">{{::$ctrl.replicaSet.podInfo.running}} running</translation>
+  <translation id="7128946363542037659" key="MSG_REPLICASETDETAIL_REPLICASETINFO_11" desc="How many pods are running (replica set details page).">{{::$ctrl.replicaSet.podInfo.running}} running</translation>
   <translation id="49658715446023601" key="MSG_REPLICASETDETAIL_REPLICASETINFO_2" desc="Label \'Images\' for the list of images used in a replica set, on its details page.">Images</translation>
   <translation id="4727954073189068542" key="MSG_REPLICASETDETAIL_REPLICASETINFO_3" desc="Subtitle \'Status\' for the right section with pod status information\n        on the replica set details page.">Status</translation>
   <translation id="6482247821119993893" key="MSG_REPLICASETDETAIL_REPLICASETINFO_4" desc="Label \'Pods\' for the pods in a replica set on its details page.">Pods</translation>
   <translation id="809902657016982280" key="MSG_REPLICASETDETAIL_REPLICASETINFO_5" desc="The message says how many pods were created (replica set details page).">{{::$replicaSet.podInfo.current}} created</translation>
+  <translation id="6606278136257013770" key="MSG_REPLICASETDETAIL_REPLICASETINFO_5" desc="The message says how many pods were created (replica set details page).">{{::$ctrl.replicaSet.podInfo.current}} created</translation>
+  <translation id="6665629823278215735" key="MSG_REPLICASETDETAIL_REPLICASETINFO_6" desc="The message says how many pods are desired to run (replica set details page).">{{::$ctrl.replicaSet.podInfo.desired}} desired</translation>
   <translation id="7548241978446696621" key="MSG_REPLICASETDETAIL_REPLICASETINFO_6" desc="The message says how many pods are desired to run (replica set details page).">{{::$replicaSet.podInfo.desired}} desired</translation>
   <translation id="8547168002233289211" key="MSG_REPLICASETDETAIL_REPLICASETINFO_7" desc="Label \'Pods status\' for the status of the pods in a replica set, on the replica set details page.">Pods status</translation>
   <translation id="8104685147737422972" key="MSG_REPLICASETDETAIL_REPLICASETINFO_8" desc="The message says how many pods are pending (replica set details page).">{{::$ctrl.replicaSet.podInfo.pending}} pending</translation>
@@ -631,16 +647,22 @@
   <translation id="6855396672598642073" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERDETAIL_7" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">There are currently no Horizontal Pod Autoscalers targeting this Replica Set.</translation>
   <translation id="7402939720404007932" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_0" desc="Header in a detail view">Details</translation>
   <translation id="6783609462069220194" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_1" desc="Label \'Label selector\' for the replication controller\'s selector on the replication controller details page.">Label selector</translation>
+  <translation id="2200677324979259623" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_10" desc="The message says how many pods have failed (replication controller details page).">{{::$ctrl.replicationController.podInfo.failed}} failed</translation>
   <translation id="3761863497321140949" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_10" desc="The message says how many pods have failed (replication controller details page).">{{::$ctrl.replicationControllerpods.podInfo.failed}} failed</translation>
   <translation id="685391262612042942" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_11" desc="The message says how many pods are running (replication controller details page).">{{::$ctrl.replicationControllerpods.podInfo.running}} running</translation>
+  <translation id="1174718180390767181" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_11" desc="The message says how many pods are running (replication controller details page).">{{::$ctrl.replicationController.podInfo.running}} running</translation>
   <translation id="3760095315629361828" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_2" desc="Label \'Images\' for the list of images used in a replication controller, on its details page.">Images</translation>
   <translation id="6630932251751110260" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_3" desc="Subtitle \'Status\' for the right section with pod status information on the replication controller details page.">Status</translation>
   <translation id="3776290183365464913" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_4" desc="Label \'Pods\' for the pods in a replication controller on its details page.">Pods</translation>
+  <translation id="1487522648872865029" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_5" desc="The message says how many pods were created (replication controller details page).">{{::$ctrl.replicationController.podInfo.currentCount}} created</translation>
   <translation id="1873229320753133625" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_5" desc="The message says how many pods were created (replication controller details page).">{{::$ctrl.replicationControllerpods.podInfo.currentCount}} created</translation>
+  <translation id="1495807469943798704" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_6" desc="The message says how many pods are desired to run (replication controller details page).">{{::$ctrl.replicationController.podInfo.desired}} desired</translation>
   <translation id="2540821765282986739" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_6" desc="The message says how many pods are desired to run (replication controller details page).">{{::$ctrl.replicationControllerpods.podInfo.desired}} desired</translation>
   <translation id="1879148990165298394" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_7" desc="The message says how many pods are running (replication controller details page).">{{::$ctrl.replicationControllerpods.podInfo.running}} running</translation>
+  <translation id="2368475907944022633" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_7" desc="The message says how many pods are running (replication controller details page).">{{::$ctrl.replicationController.podInfo.running}} running</translation>
   <translation id="7106104127622334142" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_8" desc="Label \'Pods status\' for the status of the pods in a replication controller, on the replication controller details page.">Pods status</translation>
   <translation id="5717602471292785005" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_9" desc="The message says how many pods are pending (replication controller details page).">{{::$ctrl.replicationControllerpods.podInfo.pending}} pending</translation>
+  <translation id="6128908853633901897" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_9" desc="The message says how many pods are pending (replication controller details page).">{{::$ctrl.replicationController.podInfo.pending}} pending</translation>
   <translation id="492720185165061432" key="MSG_REPLICATIONCONTROLLERDETAIL_UPDATEREPLICAS_0" desc="Title for the pod count update dialog (for a replication controller).">Set desired number of pods</translation>
   <translation id="3157265907543577974" key="MSG_REPLICATIONCONTROLLERDETAIL_UPDATEREPLICAS_1" desc="User help for the pod count update dialog (on the replication controllers detail page).">Replication controller {{::$ctrl.replicationController}} will be updated to reflect the desired count.</translation>
   <translation id="7714894693497678367" key="MSG_REPLICATIONCONTROLLERDETAIL_UPDATEREPLICAS_2" desc="Status text for a replication controller, showing the number of created and desired pods.">Current status: {{::$ctrl.createdPods}} created, {{::$ctrl.desiredPods}} desired</translation>
@@ -759,6 +781,7 @@
   <translation id="3967360362065546967" key="MSG_TIME_UNIT_SECOND_LABEL" desc="Time units label, a single second.">a second</translation>
   <translation id="270964281826728358" key="MSG_TIME_UNIT_YEARS_LABEL" desc="Time units label, many years (plural).">years</translation>
   <translation id="58035047264145239" key="MSG_TIME_UNIT_YEAR_LABEL" desc="Time units label, a single year.">a year</translation>
+  <translation id="4037658160328783864" key="MSG_UNKNOWN_SERVER_ERROR" desc="String to display when error object has invalid structure.">Unknown Server Error</translation>
   <translation id="4302564966959880468" key="MSG_WORKLOADS_WORKLOADS_0" desc="Title for graph card displaying CPU metric of one all resources.">CPU usage</translation>
   <translation id="1036433586363793837" key="MSG_WORKLOADS_WORKLOADS_1" desc="Title for graph card displaying memory metric of one all resources.">Memory usage</translation>
 </translationbundle>

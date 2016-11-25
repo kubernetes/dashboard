@@ -742,7 +742,8 @@ backendApi.PodStatus;
  *   podStatus: !backendApi.PodStatus,
  *   podIP: string,
  *   restartCount: number,
- *   metrics: backendApi.PodMetrics
+ *   metrics: backendApi.PodMetrics,
+ *   warnings: !Array<!backendApi.Event>
  * }}
  */
 backendApi.Pod;
