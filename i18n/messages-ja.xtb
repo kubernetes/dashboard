@@ -485,7 +485,9 @@
   <translation id="8463528551217463399" key="MSG_EDIT_RESOURCE_DIALOG_UPDATE" desc="Label for update button">アップデート</translation>
   <translation id="3684607543489263600" key="MSG_ENV_FROM_CONFIG_MAP" desc="Label for environment variable that comes from a Config Map">コンフィグマップからの値 <ph name="NAME"/>/<ph name="KEY"/></translation>
   <translation id="4162582061346784285" key="MSG_ERROR_HANDLING_DIALOG_CLOSE_ACTION" desc="Action &quot;Close&quot; which appears at the bottom of any displayed error dialog.">閉じる</translation>
+  <translation id="6020266409089609793" key="MSG_ERROR_INTERNALERROR_0" desc="This is a label for button displayed on error page used to send feedback to GitHub new issue.">Send feedback</translation>
   <translation id="6510078647741040827" key="MSG_ERROR_INTERNALERROR_0" desc="This message appears in an error dialog when the returned error code is not recognized.">Unknown Server Error.</translation>
+  <translation id="4145537915999486390" key="MSG_ERROR_INTERNALERROR_1" desc="This is a label for button displayed on error page used to report bugs on GitHub.">Report a bug</translation>
   <translation id="7320935166128929457" key="MSG_ERROR_UKNOWN_WARNING" desc="This message appears in an error dialog when the returned error code is not recognized.">不明なサーバーエラーです</translation>
   <translation id="7527074982331141078" key="MSG_EVENTS_ALL_LABEL" desc="Label 'All' for the event selection drop-down.">すべて</translation>
   <translation id="9183905402242013542" key="MSG_EVENTS_CARD" desc="Label for the events card.">イベント</translation>
@@ -829,6 +831,7 @@
   <translation id="1886003934797453383" key="MSG_NODE_LIST_NAME_LABEL" desc="Label 'Name' which appears as a column label in the table of nodes (node list view).">名前</translation>
   <translation id="6440277990482217612" key="MSG_NODE_LIST_PODS_LABEL" desc="Label 'Pods' which appears as a column label in the table of nodes (node list view).">ポッド</translation>
   <translation id="6987669710926523285" key="MSG_NODE_LIST_READY_LABEL" desc="Label 'Ready' which appears as a column label in the table of nodes (node list view).">準備完了</translation>
+  <translation id="2230058550547139309" key="MSG_NO_ERROR_DATA" desc="String to display when error object has no data.">No error data available</translation>
   <translation id="6997507737763635005" key="MSG_PERSISTENTVOLUMECLAIMDETAIL_ACTIONBAR_0" desc="Label \'Persistent Volume Claim\' which appears at the top of the delete dialog, opened from a persistent volume claim details page.">Persistent Volume Claim</translation>
   <translation id="1297935396913654466" key="MSG_PERSISTENTVOLUMECLAIMDETAIL_PERSISTENTVOLUMECLAIMINFO_0" desc="Persistent volume claim info details section name.">Details</translation>
   <translation id="4504917958472688873" key="MSG_PERSISTENTVOLUMECLAIMDETAIL_PERSISTENTVOLUMECLAIMINFO_1" desc="Persistent volume claim info details section status entry.">Status</translation>
@@ -1562,6 +1565,7 @@
   <translation id="3967360362065546967" key="MSG_TIME_UNIT_SECOND_LABEL" desc="Time units label, a single second.">1 秒</translation>
   <translation id="270964281826728358" key="MSG_TIME_UNIT_YEARS_LABEL" desc="Time units label, many years (plural).">年</translation>
   <translation id="58035047264145239" key="MSG_TIME_UNIT_YEAR_LABEL" desc="Time units label, a single year.">1 年</translation>
+  <translation id="4037658160328783864" key="MSG_UNKNOWN_SERVER_ERROR" desc="String to display when error object has invalid structure.">Unknown Server Error</translation>
   <translation id="5168444369924204121" key="MSG_UPLOAD_FILE_ACTION" desc="The text is put on the button at the end of the YAML upload page.">アップロード</translation>
   <translation id="480860823064912408" key="MSG_UPLOAD_FILE_ACTION_CANCEL" desc="The text is put on the 'Cancel' button at the end of the YAML upload page.">キャンセル</translation>
   <translation id="1611578389032486450" key="MSG_WORKLOADS_CPU_GRAPH_CARD_TITLE" desc="Title for graph card displaying CPU metric of one all resources.">CPU使用量の履歴</translation>
