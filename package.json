@@ -68,7 +68,7 @@
     "karma-sauce-launcher": "~1.1.0",
     "karma-sourcemap-loader": "~0.3.7",
     "lodash": "~4.17.0",
-    "merge-stream": "~1.0.0",
+    "merge-stream": "~1.0.1",
     "npm-check-updates": "~2.8.0",
     "proxy-middleware": "~0.15.0",
     "q": "~1.4.1",
