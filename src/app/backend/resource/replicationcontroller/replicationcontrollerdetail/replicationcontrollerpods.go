@@ -38,7 +38,7 @@ func GetReplicationControllerPods(client k8sClient.Interface, heapsterClient cli
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(pods, dsQuery, heapsterClient)
+	podList := pod.CreatePodList(pods, []api.Event{}, dsQuery, heapsterClient)
 	return &podList, nil
 }
 

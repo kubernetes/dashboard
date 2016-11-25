@@ -17,6 +17,7 @@ import filtersModule from 'common/filters/filters_module';
 import namespaceModule from 'common/namespace/namespace_module';
 import paginationModule from 'common/pagination/pagination_module';
 
+import {podCardComponent} from './podcard_component';
 import {podCardListComponent} from './podcardlist_component';
 import stateConfig from './podlist_stateconfig';
 
@@ -40,6 +41,7 @@ export default angular
         ])
     .config(stateConfig)
     .component('kdPodCardList', podCardListComponent)
+    .component('kdPodCard', podCardComponent)
     .factory('kdPodListResource', podListResource);
 
 /**

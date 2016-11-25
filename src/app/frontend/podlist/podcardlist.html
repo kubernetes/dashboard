@@ -25,7 +25,7 @@ limitations under the License.
   <div ng-show="!$ctrl.podList.listMeta.totalItems"
       class="kd-zerostate-message" ng-transclude="zerostate"></div>
 
-  <kd-resource-card-header-columns ng-show="$ctrl.podList.listMeta.totalItems">
+  <kd-resource-card-header-columns ng-show="::$ctrl.podList.listMeta.totalItems">
     <kd-resource-card-header-column size="small" grow="2">
       [[Name|Title of a column]]
     </kd-resource-card-header-column>
@@ -50,87 +50,13 @@ limitations under the License.
     <kd-resource-card-header-column size="small" grow="nogrow">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
-
-  <kd-resource-card total-items="$ctrl.podList.listMeta.totalItems"
-                    pagination-id="pods" object-meta="::pod.objectMeta" type-meta="::pod.typeMeta"
-                    dir-paginate="pod in $ctrl.podList.pods | itemsPerPage: default">
-    <kd-resource-card-status layout="row">
-      <md-icon class="material-icons kd-error" ng-if="::$ctrl.isStatusFailed(pod)">
-        error
-        <md-tooltip md-direction="right">
-          [[This pod has errors.|Tooltip for failed pod card icon]]
-        </md-tooltip>
-      </md-icon>
-      <md-icon class="material-icons" ng-if="::$ctrl.isStatusPending(pod)">
-        timelapse
-        <md-tooltip md-direction="right">
-          [[This pod is in a pending state.|Tooltip for pending pod card icon]]
-        </md-tooltip>
-      </md-icon>
-      <md-icon class="material-icons kd-success" ng-if="::$ctrl.isStatusSuccessful(pod)">
-        check_circle
-      </md-icon>
-    </kd-resource-card-status>
-    <kd-resource-card-columns>
-      <kd-resource-card-column>
-        <div>
-          <a ng-href="{{::$ctrl.getPodDetailHref(pod)}}" class="kd-middle-ellipsised-link">
-            <kd-middle-ellipsis display-string="{{::pod.objectMeta.name}}">
-            </kd-middle-ellipsis>
-          </a>
-        </div>
-      </kd-resource-card-column>
-      <kd-resource-card-column ng-if="$ctrl.areMultipleNamespacesSelected()">
-        <div>
-          <kd-middle-ellipsis display-string="{{::pod.objectMeta.namespace}}">
-          </kd-middle-ellipsis>
-        </div>
-      </kd-resource-card-column>
-      <kd-resource-card-column>
-        <div>
-          <kd-middle-ellipsis display-string="{{::$ctrl.getDisplayStatus(pod)}}">
-          </kd-middle-ellipsis>
-        </div>
-      </kd-resource-card-column>
-      <kd-resource-card-column>{{::pod.restartCount}}</kd-resource-card-column>
-      <kd-resource-card-column>
-        <div ng-if="::pod.objectMeta.creationTimestamp">
-          {{::pod.objectMeta.creationTimestamp | relativeTime}}
-          <md-tooltip>
-            {{::$ctrl.getStartedAtTooltip(pod.objectMeta.creationTimestamp)}}
-          </md-tooltip>
-        </div>
-        <div ng-if="::!pod.objectMeta.creationTimestamp">-</div>
-      </kd-resource-card-column>
-      <kd-resource-card-column ng-if="::$ctrl.showMetrics()">
-        <div ng-if="::$ctrl.hasCpuUsage(pod)">
-          <kd-sparkline timeseries="::pod.metrics.cpuUsageHistory" class="kd-sparkline-cpu-series"></kd-sparkline>
-          {{::(pod.metrics.cpuUsage | kdCores)}}
-        </div>
-        <div ng-if="::!$ctrl.hasCpuUsage(pod)">-</div>
-      </kd-resource-card-column>
-      <kd-resource-card-column ng-if="::$ctrl.showMetrics()">
-        <div ng-if="::$ctrl.hasMemoryUsage(pod)">
-          <kd-sparkline timeseries="::pod.metrics.memoryUsageHistory" class="kd-sparkline-memory-series"></kd-sparkline>
-          {{::(pod.metrics.memoryUsage | kdMemory)}}
-        </div>
-        <div ng-if="::!$ctrl.hasMemoryUsage(pod)">-</div>
-      </kd-resource-card-column>
-      <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
-        <md-button ng-if="::$ctrl.getPodLogsHref(pod)"
-                   ng-href="{{::$ctrl.getPodLogsHref(pod)}}" target="_blank" class="md-icon-button">
-          <md-icon md-font-library="material-icons">subject</md-icon>
-          <md-tooltip>[[Logs|Label for logs tooltip]]</md-tooltip>
-        </md-button>
-        <kd-resource-card-menu>
-          <kd-resource-card-delete-menu-item
-                  resource-kind-name="[[Pod|Name of the pod resource]]">
-          </kd-resource-card-delete-menu-item>
-          <kd-resource-card-edit-menu-item
-                  resource-kind-name="[[Pod|Name of the pod resource]]">
-          </kd-resource-card-edit-menu-item>
-        </kd-resource-card-menu>
-      </kd-resource-card-column>
-    </kd-resource-card-columns>
-  </kd-resource-card>
+  <kd-pod-card ng-if="::$ctrl.podListResource"
+               dir-paginate="pod in $ctrl.podList.pods | itemsPerPage: default"
+               pagination-id="pods" pod="pod" show-metrics="::$ctrl.showMetrics()"
+               total-items="::$ctrl.podList.listMeta.totalItems">
+  </kd-pod-card>
+  <kd-pod-card ng-if="::!$ctrl.podListResource" show-metrics="::$ctrl.showMetrics()"
+               dir-paginate="pod in $ctrl.podList.pods | itemsPerPage: default"
+               pagination-id="pods" pod="pod">
+  </kd-pod-card>
 </kd-resource-card-list>

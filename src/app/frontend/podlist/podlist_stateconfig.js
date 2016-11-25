@@ -14,6 +14,7 @@
 
 import {stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {stateName as workloadsStateName} from 'workloads/workloads_state';
 
 import {PodListController} from './podlist_controller';
 import {stateName, stateUrl} from './podlist_state';
@@ -34,6 +35,7 @@ export default function stateConfig($stateProvider) {
     data: {
       [breadcrumbsConfig]: {
         'label': i18n.MSG_BREADCRUMBS_PODS_LABEL,
+        'parent': workloadsStateName,
       },
     },
     views: {

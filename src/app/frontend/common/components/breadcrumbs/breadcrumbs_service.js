@@ -51,7 +51,6 @@ export class BreadcrumbsService {
   getParentState(state) {
     let conf = this.getBreadcrumbConfig(state);
     let result = null;
-
     if (conf && conf.parent) {
       if (typeof conf.parent === 'string') {
         result = this.state_.get(conf.parent);

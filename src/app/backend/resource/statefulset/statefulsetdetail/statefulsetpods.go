@@ -37,7 +37,7 @@ func GetStatefulSetPods(client *k8sClient.Clientset, heapsterClient client.Heaps
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(pods, dsQuery, heapsterClient)
+	podList := pod.CreatePodList(pods, []api.Event{}, dsQuery, heapsterClient)
 	return &podList, nil
 }
 
