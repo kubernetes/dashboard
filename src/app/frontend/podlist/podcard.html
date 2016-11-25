@@ -47,7 +47,12 @@ limitations under the License.
         </kd-middle-ellipsis>
       </div>
     </kd-resource-card-column>
-    <kd-resource-card-column>{{::$ctrl.getDisplayStatus()}}</kd-resource-card-column>
+    <kd-resource-card-column>
+      <div>
+        <kd-middle-ellipsis display-string="{{::$ctrl.getDisplayStatus()}}">
+        </kd-middle-ellipsis>
+      </div>
+    </kd-resource-card-column>
     <kd-resource-card-column>{{::$ctrl.pod.restartCount}}</kd-resource-card-column>
     <kd-resource-card-column>
       <div ng-if="::$ctrl.pod.objectMeta.creationTimestamp">
