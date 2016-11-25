@@ -38,8 +38,8 @@ limitations under the License.
         </div>
         <div class="kd-info-card-entry-content">
           <kd-toggle-hidden-text  active="isActive"
-                                  placeholder="[[{{::value.length}} bytes | Secrets info details section bytes.]]"
-                                  text="{{ ::value }}">
+                                  placeholder="[[{{::$ctrl.formatDataValue(value).length}} bytes | Secrets info details section bytes.]]"
+                                  text="{{::$ctrl.formatDataValue(value)}}">
           </kd-toggle-hidden-text>
         </div>
       </div>
