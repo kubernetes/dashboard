@@ -15,7 +15,7 @@
 /**
  * Returns filter function to display date in the default format
  *
- * @param {function(string, string, string):string}} $delegate
+ * @param {function(string, string, string):string} $delegate
  * @return {function(string,string,string): string}
  * @ngInject
  */
