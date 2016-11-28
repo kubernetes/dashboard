@@ -81,7 +81,7 @@ export default class NodeCardController {
    * @return {string} localized tooltip with the formated creation date
    */
   getCreatedAtTooltip(creationDate) {
-    let filter = this.interpolate_(`{{date | date:'short'}}`);
+    let filter = this.interpolate_(`{{date | date:'yyyy-MM-ddTHH:mm':'UTC'}}`);
     /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
      * node. */
     let MSG_NODE_LIST_CREATED_AT_TOOLTIP =
