@@ -711,6 +711,7 @@
   <translation id="1940368443923988450" key="MSG_SECRETDETAIL_DETAIL_1" desc="Secrets info details section bytes.">bytes </translation>
   <translation id="7488314601782256695" key="MSG_SECRETDETAIL_DETAIL_1" desc="Tooltip label for showing secret content">Show secret content</translation>
   <translation id="1451479307509203762" key="MSG_SECRETDETAIL_DETAIL_2" desc="Tooltip label for hiding secret content">Hide secret content</translation>
+  <translation id="4708429676068316448" key="MSG_SECRETDETAIL_DETAIL_3" desc="Secrets info details section bytes.">{{::$ctrl.formatDataValue(value).length}} bytes </translation>
   <translation id="9171260393962890085" key="MSG_SECRETDETAIL_DETAIL_3" desc="Secrets info details section bytes.">{{::value.length}} bytes </translation>
   <translation id="4201489447726655383" key="MSG_SECRETDETAIL_INFO_0" desc="Header in a detail view">Details</translation>
   <translation id="3332721336645492797" key="MSG_SECRETLIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Secrets</translation>
