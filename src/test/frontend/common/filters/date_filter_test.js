@@ -34,6 +34,6 @@ describe('Items per page filter', () => {
         .toEqual('2016-06-06T07:13:12');
   });
   it('should format date with an explicit timezone', () => {
-    expect(dateFilter('2016-06-06T19:13:12Z', null, 'CEST')).toEqual('2016-06-06T21:13');
+    expect(dateFilter('2016-06-06T19:13:12Z', null, '+0200')).toEqual('2016-06-06T21:13');
   });
 });
