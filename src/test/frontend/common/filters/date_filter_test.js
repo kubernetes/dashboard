@@ -16,7 +16,7 @@ import filtersModule from 'common/filters/filters_module';
 
 describe('Items per page filter', () => {
   /** @type {function(string, string, string): string} */
-  let dateFilter
+  let dateFilter;
 
   beforeEach(() => {
     angular.mock.module(filtersModule.name);
