@@ -58,7 +58,7 @@ limitations under the License.
       <div ng-if="::$ctrl.pod.objectMeta.creationTimestamp">
         {{::$ctrl.pod.objectMeta.creationTimestamp | relativeTime}}
         <md-tooltip>
-          {{::$ctrl.getStartedAtTooltip(pod.objectMeta.creationTimestamp)}}
+          {{::$ctrl.getStartedAtTooltip($ctrl.pod.objectMeta.creationTimestamp)}}
         </md-tooltip>
       </div>
       <div ng-if="::!$ctrl.pod.objectMeta.creationTimestamp">-</div>

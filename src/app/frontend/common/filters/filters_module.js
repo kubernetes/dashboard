@@ -15,6 +15,7 @@
 import appConfigModule from '../appconfig/appconfig_module';
 
 import coresFilter from './cores_filter';
+import dateFilter from './date_filter.js';
 import itemsPerPageFilter from './itemsperpage_filter';
 import memoryFilter from './memory_filter';
 import relativeTimeFilter from './relativetime_filter';
@@ -34,4 +35,5 @@ export default angular
     .filter('kdMemory', memoryFilter)
     .filter('kdCores', coresFilter)
     .filter('relativeTime', relativeTimeFilter)
+    .decorator('dateFilter', dateFilter)
     .decorator('itemsPerPageFilter', itemsPerPageFilter);
