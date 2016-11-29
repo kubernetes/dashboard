@@ -73,6 +73,7 @@ export const graphCardComponent = {
   bindings: {
     'metrics': '<',
     'graphTitle': '@',
+    'graphInfo': '@',
     'selectedMetricNames': '<',
   },
   templateUrl: 'common/components/graph/graphcard.html',

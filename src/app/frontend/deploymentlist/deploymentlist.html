@@ -20,6 +20,7 @@ limitations under the License.
                  selected-metric-names="'cpu/usage_rate'">
   </kd-graph-card>
   <kd-graph-card graph-title="[[Memory usage|Title for graph card displaying memory metric of deployments.]]"
+                 graph-info="[[The memory usage includes the caches in the pods managed by these deployments.|Help message detailing what is included in the memory usage]]"
                  metrics="::$ctrl.deploymentList.cumulativeMetrics"
                  selected-metric-names="'memory/usage'">
   </kd-graph-card>
