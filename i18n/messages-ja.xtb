@@ -170,6 +170,7 @@
   <translation id="8526499730546237626" key="MSG_DAEMONSETDETAIL_DAEMONSETDETAIL_4" desc="Text for services card zerostate in daemon set details page.">このデーモンセットと同じラベルセレクターのサービスはありません</translation>
   <translation id="2396321868914918281" key="MSG_DAEMONSETDETAIL_DAEMONSETDETAIL_5" desc="Title \'Pods\' for the pods information section on the daemon set detail page.">ポッド</translation>
   <translation id="3333055591419687069" key="MSG_DAEMONSETDETAIL_DAEMONSETDETAIL_5" desc="Text for pods card zerostate in daemon set details page.">このデーモンセットにスケジュールされたポッドはありません</translation>
+  <translation id="5383475676046290814" key="MSG_DAEMONSETDETAIL_DAEMONSETDETAIL_6" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by this daemon set.</translation>
   <translation id="7547090309819223582" key="MSG_DAEMONSETDETAIL_DAEMONSETDETAIL_6" desc="Title for pods card zerostate in daemon set details page.">表示するものがありません</translation>
   <translation id="1303371954289165740" key="MSG_DAEMONSETDETAIL_DAEMONSETDETAIL_7" desc="Text for pods card zerostate in daemon set details page.">このデーモンセットにスケジュールされたポッドはありません</translation>
   <translation id="3423045806024821964" key="MSG_DAEMONSETDETAIL_DAEMONSETINFO_0" desc="Subtitle \'Details\' for the left section with general information about a daemon set on the daemonset details page.">詳細</translation>
@@ -211,6 +212,7 @@
   <translation id="5303615337793440206" key="MSG_DAEMONSETLIST_DAEMONSETLIST_0" desc="Title for graph card displaying CPU metric of daemon sets.">CPU使用量</translation>
   <translation id="140376028532845180" key="MSG_DAEMONSETLIST_DAEMONSETLIST_1" desc="Title for graph card displaying memory metric of daemon sets.">メモリー使用量</translation>
   <translation id="250379390957605876" key="MSG_DAEMONSETLIST_DAEMONSETLIST_1" desc="Title for graph card displaying memory metric of daemon sets.">メモリー使用量の履歴</translation>
+  <translation id="7975175396227169314" key="MSG_DAEMONSETLIST_DAEMONSETLIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by these daemon sets.</translation>
   <translation id="1583067811422592203" key="MSG_DAEMON_SET_DETAIL_CPU_GRAPH_CARD_TITLE" desc="Title for graph card displaying CPU metric of one daemon set.">CPU使用量の履歴</translation>
   <translation id="3665284318614920515" key="MSG_DAEMON_SET_DETAIL_EVENTS_LABEL" desc="Label 'Events' on the right navigation tab on the daemon set detail page.">イベント</translation>
   <translation id="2047372990629849468" key="MSG_DAEMON_SET_DETAIL_MEMORY_GRAPH_CARD_TITLE" desc="Title for graph card displaying memory metric of one daemon set.">メモリー使用量の履歴</translation>
@@ -263,6 +265,7 @@
   <translation id="3343452155972940723" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTDETAIL_7" desc="Text for old replica sets card zero-state in deployment details page.">このデプロイメントに古いレプリカセットはありません</translation>
   <translation id="1657292729919768689" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTDETAIL_8" desc="Title for horizontal pod autoscalers card zerostate in replica set details page.">表示するものがありません</translation>
   <translation id="9212711023437704820" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTDETAIL_8" desc="Title for the \'Horizontal Pod Autoscalers\' card on the Replication Controller detail page">水平ポッドオートスケーラー</translation>
+  <translation id="3105021760531941947" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTDETAIL_9" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by this deployment.</translation>
   <translation id="5696547740236086049" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTDETAIL_9" desc="Title for horizontal pod autoscalers card zerostate in replica set details page.">表示するものがありません</translation>
   <translation id="1248730598517029630" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTINFO_0" desc="Subtitle \'Details\' for the left section with general information about a deployment on the deployment details page.">詳細</translation>
   <translation id="5084808157238989425" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTINFO_1" desc="Label \'Name\' for the deployment name on the deployment details page.">名前</translation>
@@ -303,6 +306,7 @@
   <translation id="9178907990038072653" key="MSG_DEPLOYMENTLIST_DEPLOYMENTLIST_0" desc="Title for graph card displaying CPU metric of deployments.">CPU使用量の履歴</translation>
   <translation id="6520027878530985690" key="MSG_DEPLOYMENTLIST_DEPLOYMENTLIST_1" desc="Title for graph card displaying memory metric of deployments.">メモリー使用量</translation>
   <translation id="6630031240955746386" key="MSG_DEPLOYMENTLIST_DEPLOYMENTLIST_1" desc="Title for graph card displaying memory metric of deployments.">メモリー使用量の履歴</translation>
+  <translation id="5720117868467044726" key="MSG_DEPLOYMENTLIST_DEPLOYMENTLIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by these deployments.</translation>
   <translation id="8215425307244096059" key="MSG_DEPLOYMENT_DETAILS_DEPLOYMENT_LABEL" desc="Label 'Deployment' which will appear in the deployment delete dialog opened from the deployment details page.">デプロイメント</translation>
   <translation id="5732965494271532521" key="MSG_DEPLOYMENT_DETAIL_CPU_GRAPH_CARD_TITLE" desc="Title for graph card displaying CPU metric of one deployment.">CPU使用量の履歴</translation>
   <translation id="7624038583322136825" key="MSG_DEPLOYMENT_DETAIL_DETAILS_SUBTITLE" desc="Subtitle 'Details' for the left section with general information about a deployment on the deployment details page.">詳細</translation>
@@ -600,6 +604,7 @@
   <translation id="9212734554184831527" key="MSG_JOBDETAIL_JOBDETAIL_2" desc="Title for a pods section.">ポッド</translation>
   <translation id="7711574620482239562" key="MSG_JOBDETAIL_JOBDETAIL_3" desc="Text for pods card zerostate in job details page.">このジョブに管理されているポッドはありません。</translation>
   <translation id="8636156694564998781" key="MSG_JOBDETAIL_JOBDETAIL_3" desc="Title for pods card zerostate in job details page.">表示するものがありません</translation>
+  <translation id="7136239150284139255" key="MSG_JOBDETAIL_JOBDETAIL_4" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by this job.</translation>
   <translation id="8258822259098218312" key="MSG_JOBDETAIL_JOBDETAIL_4" desc="Text for pods card zerostate in job details page.">このジョブに選択されたポッドはありません。</translation>
   <translation id="1415616418512574107" key="MSG_JOBDETAIL_JOBINFO_0" desc="Resource details header. Appears on top of the page.">リソース詳細</translation>
   <translation id="8480509937783146429" key="MSG_JOBDETAIL_JOBINFO_0" desc="Header in a detail view">詳細</translation>
@@ -636,6 +641,7 @@
   <translation id="5939498689646501991" key="MSG_JOBLIST_JOBLIST_0" desc="Title for graph card displaying CPU metric of jobs.">CPU使用量の履歴</translation>
   <translation id="6787661994791732767" key="MSG_JOBLIST_JOBLIST_1" desc="Title for graph card displaying memory metric of jobs.">メモリー使用量</translation>
   <translation id="6897665357216493463" key="MSG_JOBLIST_JOBLIST_1" desc="Title for graph card displaying memory metric of jobs.">メモリー使用量の履歴</translation>
+  <translation id="8660427171549456209" key="MSG_JOBLIST_JOBLIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by these jobs.</translation>
   <translation id="8441658278143071101" key="MSG_JOB_COMPLETIONS" desc="Job completions. Appears in details section.">完了</translation>
   <translation id="9069442902328610253" key="MSG_JOB_DETAILS" desc="Details section header. Appears below main header.">詳細</translation>
   <translation id="2004091910788332111" key="MSG_JOB_DETAIL_CPU_GRAPH_CARD_TITLE" desc="Title for graph card displaying CPU metric of one job.">CPU使用量の履歴</translation>
@@ -755,6 +761,7 @@
   <translation id="531047836377416117" key="MSG_NODEDETAIL_NODEDETAIL_3" desc="Text for pods card zerostate in node details page.">このノードにスケジュールされたポッドはありません。</translation>
   <translation id="1742343655240984361" key="MSG_NODEDETAIL_NODEDETAIL_3" desc="Title for pods card zerostate in node details page.">表示するものがありません</translation>
   <translation id="638865099137228709" key="MSG_NODEDETAIL_NODEDETAIL_4" desc="Text for pods card zerostate in node details page.">このノードにスケジュールされたポッドはありません</translation>
+  <translation id="7140524624837436563" key="MSG_NODEDETAIL_NODEDETAIL_4" desc="Help message detailing what is included in the memory usage">The memory usage includes caches.</translation>
   <translation id="1966636847201373148" key="MSG_NODEDETAIL_NODEINFO_0" desc="Subtitle \'Details\' for the left section with general information about a node on the node details page.">詳細</translation>
   <translation id="2302970997184862335" key="MSG_NODEDETAIL_NODEINFO_1" desc="Label \'Phase\' for the node namespace on the node details page.">段階</translation>
   <translation id="6072834872781542238" key="MSG_NODEDETAIL_NODEINFO_10" desc="Label \'Kernel Version\' for the node kernel version displayed on its details page.">カーネルバージョン</translation>
@@ -788,6 +795,7 @@
   <translation id="6722168120422361908" key="MSG_NODELIST_NODELIST_0" desc="Title for graph card displaying CPU metric of nodes.">CPU使用量の履歴</translation>
   <translation id="4611353673808918004" key="MSG_NODELIST_NODELIST_1" desc="Title for graph card displaying memory metric of nodes.">メモリー使用量</translation>
   <translation id="4721357036233678700" key="MSG_NODELIST_NODELIST_1" desc="Title for graph card displaying memory metric of nodes.">メモリー使用量の履歴</translation>
+  <translation id="1508766902785018036" key="MSG_NODELIST_NODELIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes caches.</translation>
   <translation id="2557541314727796573" key="MSG_NODE_DETAIL_ALLOCATED_RESOURCES_CPU_LIMITS" desc="Label 'CPU limits (cores)' for the allocated resources table header on the node details page.">CPU 上限（コア数）</translation>
   <translation id="3321130452593338857" key="MSG_NODE_DETAIL_ALLOCATED_RESOURCES_CPU_REQUESTS" desc="Label 'CPU requests (cores)' for the allocated resources table header on the node details page.">CPU 要件（コア数）</translation>
   <translation id="6270650074051326892" key="MSG_NODE_DETAIL_ALLOCATED_RESOURCES_LABEL" desc="Label 'Allocated resources' for the allocated resources section on the node details page.">割り当てリソース</translation>
@@ -1054,6 +1062,7 @@
   <translation id="4762477599395572185" key="MSG_PODDETAIL_PODDETAIL_0" desc="Title for graph card displaying CPU metric of one pod.">CPU使用量</translation>
   <translation id="3791462909802261074" key="MSG_PODDETAIL_PODDETAIL_1" desc="Title for graph card displaying memory metric of one pod.">メモリー使用量</translation>
   <translation id="3901466272227021770" key="MSG_PODDETAIL_PODDETAIL_1" desc="Title for graph card displaying memory metric of one pod.">メモリー使用量の履歴</translation>
+  <translation id="4886615901703785404" key="MSG_PODDETAIL_PODDETAIL_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in this pod.</translation>
   <translation id="4132223572609249238" key="MSG_PODDETAIL_PODINFO_0" desc="Subtitle \'Details\' at the top of the resource details column at the pod detail view.">ポッド</translation>
   <translation id="5986775267389891527" key="MSG_PODDETAIL_PODINFO_0" desc="Header in a detail view">詳細</translation>
   <translation id="4915755492526213647" key="MSG_PODDETAIL_PODINFO_1" desc="Label \'Status\' for the pod status in details part (left) of the pod details view.">状態</translation>
@@ -1097,6 +1106,7 @@
   <translation id="4624949365521774090" key="MSG_PODLIST_PODLIST_0" desc="Title for graph card displaying CPU metric of pods.">CPU使用量</translation>
   <translation id="1774454191311054495" key="MSG_PODLIST_PODLIST_1" desc="Title for graph card displaying memory metric of pods.">メモリー使用量</translation>
   <translation id="1884457553735815191" key="MSG_PODLIST_PODLIST_1" desc="Title for graph card displaying memory metric of pods.">メモリー使用量の履歴</translation>
+  <translation id="7210994576558913771" key="MSG_PODLIST_PODLIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in these pods.</translation>
   <translation id="7612562063769289643" key="MSG_PODS_ARE_FAILED_TOOLTIP" desc="tooltip for failed pod card icon">１つ以上のポッドがエラーです。</translation>
   <translation id="7471636163011126552" key="MSG_PODS_ARE_PENDING_TOOLTIP" desc="tooltip for pending pod card icon">１つ以上のポッドが待機状態です。</translation>
   <translation id="9200661373319050426" key="MSG_POD_DETAILS_POD_LABEL" desc="Label 'Pod' which appears at the top of the delete dialog, opened from a pod details page.">ポッド</translation>
@@ -1248,6 +1258,7 @@
   <translation id="2144161925439913963" key="MSG_REPLICASETDETAIL_REPLICASETDETAIL_7" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">このレプリカセットをターゲットとしている水平ポッドオートスケーラーはありません。</translation>
   <translation id="3270689918882396276" key="MSG_REPLICASETDETAIL_REPLICASETDETAIL_7" desc="Title for horizontal pod autoscalers card zerostate in replica set details page.">表示するものがありません</translation>
   <translation id="6909043149992897634" key="MSG_REPLICASETDETAIL_REPLICASETDETAIL_8" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">このレプリカセットをターゲットとしている水平ポッドオートスケーラーはありません。</translation>
+  <translation id="7427216245196652831" key="MSG_REPLICASETDETAIL_REPLICASETDETAIL_8" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by this replica set.</translation>
   <translation id="8565706677236438077" key="MSG_REPLICASETDETAIL_REPLICASETINFO_0" desc="Subtitle \'Details\' for the left section with general information about a replica set on the replica set details page.">詳細</translation>
   <translation id="894856145436951468" key="MSG_REPLICASETDETAIL_REPLICASETINFO_1" desc="Label \'selector\' for replica sets.">セレクター</translation>
   <translation id="8624660585907028627" key="MSG_REPLICASETDETAIL_REPLICASETINFO_10" desc="The message says how many pods are running (replica set details page).">{{::$ctrl.replicaSet.podInfo.running}} 起動中</translation>
@@ -1289,6 +1300,7 @@
   <translation id="4060565009520367123" key="MSG_REPLICASETLIST_REPLICASETLIST_0" desc="Title for graph card displaying CPU metric of replica sets.">CPU使用量</translation>
   <translation id="4492539501833209064" key="MSG_REPLICASETLIST_REPLICASETLIST_1" desc="Title for graph card displaying memory metric of replica sets.">メモリー使用量</translation>
   <translation id="4602542864257969760" key="MSG_REPLICASETLIST_REPLICASETLIST_1" desc="Title for graph card displaying memory metric of replica sets.">メモリー使用量の履歴</translation>
+  <translation id="5987073561559829067" key="MSG_REPLICASETLIST_REPLICASETLIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by these replica sets.</translation>
   <translation id="6194638567193104531" key="MSG_REPLICATIONCONTROLLERDETAIL_ACTIONBAR_0" desc="Tooltip for the \'scale\' button on the action bar of a replication controller details view.">ポッド数の編集</translation>
   <translation id="1117778161103271395" key="MSG_REPLICATIONCONTROLLERDETAIL_ACTIONBAR_1" desc="Tooltip for the \'scale\' button on the action bar of a replication controller details view.">スケール</translation>
   <translation id="1073944984422921935" key="MSG_REPLICATIONCONTROLLERDETAIL_ACTIONBAR_2" desc="Label \'Replication Controller\' which appears at the top of the edit dialog, opened from a replication controller details page.">レプリケーションコントローラ</translation>
@@ -1310,6 +1322,7 @@
   <translation id="6855396672598642073" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERDETAIL_7" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">このレプリカセットをターゲットとしている水平ポッドオートスケーラーはありません。</translation>
   <translation id="7981924666041124386" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERDETAIL_7" desc="Title for horizontal pod autoscalers card zerostate in replica set details page.">表示するものがありません</translation>
   <translation id="9116064445233254885" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERDETAIL_7" desc="Text for pods card zerostate in replication controller details page.">このレプリケーションコントローラに選択されたポッドはありません。</translation>
+  <translation id="2586383148460097486" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERDETAIL_8" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by this replication controller.</translation>
   <translation id="7933432491974657973" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERDETAIL_8" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">このレプリカセットをターゲットとしている水平ポッドオートスケーラーはありません。</translation>
   <translation id="7402939720404007932" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_0" desc="Subtitle \'Details\' for the left section with general information about a replication controller on the replication controller details page.">詳細</translation>
   <translation id="6783609462069220194" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_1" desc="Label \'Label selector\' for the replication controller\'s selector on the replication controller details page.">ラベルセレクター</translation>
@@ -1367,6 +1380,7 @@
   <translation id="4795577034077745296" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERLIST_0" desc="Title for graph card displaying CPU metric of replication controllers.">CPU使用量</translation>
   <translation id="259439258646686772" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERLIST_1" desc="Title for graph card displaying memory metric of replication controllers.">メモリー使用量</translation>
   <translation id="369442621071447468" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERLIST_1" desc="Title for graph card displaying memory metric of replication controllers.">メモリー使用量の履歴</translation>
+  <translation id="3837527568365892343" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERLIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by these replication controllers.</translation>
   <translation id="4923712455615046812" key="MSG_REPLICATION_CONTROLLER_DETAIL_CPU_GRAPH_CARD_TITLE" desc="Title for graph card displaying CPU metric of one replication controller.">CPU使用量の履歴</translation>
   <translation id="8858733177407158178" key="MSG_REPLICATION_CONTROLLER_DETAIL_MEMORY_GRAPH_CARD_TITLE" desc="Title for graph card displaying memory metric of one replication controller.">メモリー使用量の履歴</translation>
   <translation id="2537944124195669933" key="MSG_REPLICATION_CONTROLLER_LIST_CPU_GRAPH_CARD_TITLE" desc="Title for graph card displaying CPU metric of replication controllers.">CPU使用量の履歴</translation>
@@ -1523,6 +1537,7 @@
   <translation id="7496864335072312877" key="MSG_STATEFULSETDETAIL_STATEFULSETDETAIL_2" desc="Text for pods card zerostate in stateful set details page.">There are currently no Pods managed by this Stateful Set.</translation>
   <translation id="4011847440243562469" key="MSG_STATEFULSETDETAIL_STATEFULSETDETAIL_3" desc="Text for pods card zerostate in stateful set details page.">There are currently no Pods managed by this Stateful Set.</translation>
   <translation id="6177589608167537722" key="MSG_STATEFULSETDETAIL_STATEFULSETDETAIL_3" desc="Title for pods card zerostate in stateful set details page.">表示するものがありません</translation>
+  <translation id="2997186500849595344" key="MSG_STATEFULSETDETAIL_STATEFULSETDETAIL_4" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by this stateful set.</translation>
   <translation id="6905189355558297492" key="MSG_STATEFULSETDETAIL_STATEFULSETDETAIL_4" desc="Text for pods card zerostate in stateful set details page.">このステートフルセットに選択されたポッドはありません。</translation>
   <translation id="5159068943236535151" key="MSG_STATEFULSETDETAIL_STATEFULSETINFO_0" desc="Stateful set info details section name.">詳細</translation>
   <translation id="6072563950037365561" key="MSG_STATEFULSETDETAIL_STATEFULSETINFO_1" desc="Stateful set info details section labels entry.">ラベル</translation>
@@ -1561,6 +1576,7 @@
   <translation id="5496057141257652512" key="MSG_STATEFULSETLIST_STATEFULSETLIST_0" desc="Title for graph card displaying CPU metric of stateful sets.">CPU使用量</translation>
   <translation id="5949487857481253373" key="MSG_STATEFULSETLIST_STATEFULSETLIST_1" desc="Title for graph card displaying memory metric of stateful sets.">メモリー使用量</translation>
   <translation id="6059491219906014069" key="MSG_STATEFULSETLIST_STATEFULSETLIST_1" desc="Title for graph card displaying memory metric of stateful sets.">メモリー使用量の履歴</translation>
+  <translation id="4453952610053429376" key="MSG_STATEFULSETLIST_STATEFULSETLIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by these stateful sets.</translation>
   <translation id="6868140200572137421" key="MSG_STATEFUL_SET_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of stateful set."><ph name="CREATION_DATE"/> に作成</translation>
   <translation id="6463616657349920914" key="MSG_TIME_NOT_YET_LABEL" desc="Label for relative time that did not happened yet.">-</translation>
   <translation id="3921240742330478356" key="MSG_TIME_UNIT_DAYS_LABEL" desc="Time units label, many days (plural).">日</translation>
@@ -1592,6 +1608,7 @@
   <translation id="1036433586363793837" key="MSG_WORKLOADS_WORKLOADS_1" desc="Title for graph card displaying memory metric of one all resources.">メモリー使用量</translation>
   <translation id="5439112040738823046" key="MSG_WORKLOADS_WORKLOADS_1" desc="Title for graph card displaying memory metric of one all resources.">すべてのリソースのCPUメトリックを表示するグラフカードタイトル</translation>
   <translation id="1673466418940035630" key="MSG_WORKLOADS_WORKLOADS_2" desc="Label &quot;Daemon sets&quot;, which appears above the daemon sets list on the workloads page.">デーモンセット</translation>
+  <translation id="5680064618107855853" key="MSG_WORKLOADS_WORKLOADS_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by these resources. (Does not count pods double because it is mentioned both in the pod list and its controller is mentioned in e.g. a replica set.)</translation>
   <translation id="7669482402387678993" key="MSG_WORKLOADS_WORKLOADS_3" desc="Label &quot;Deployments&quot;, which appears above the deployments list on the workloads page.">デプロイメント</translation>
   <translation id="750764628652943156" key="MSG_WORKLOADS_WORKLOADS_4" desc="Label &quot;Stateful Sets&quot;, which appears above the replica set list on the workloads page.">ステートフルセット</translation>
   <translation id="8589736361485967591" key="MSG_WORKLOADS_WORKLOADS_4" desc="Label &quot;Pet Sets&quot;, which appears above the replica set list on the workloads page.">ペットセット</translation>
