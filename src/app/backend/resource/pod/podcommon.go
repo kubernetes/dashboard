@@ -39,6 +39,7 @@ func getPodStatus(pod api.Pod) PodStatus {
 
 	return PodStatus{
 		PodPhase:        pod.Status.Phase,
+		PodConditions:   pod.Status.Conditions,
 		ContainerStates: states,
 	}
 }

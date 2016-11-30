@@ -38,8 +38,8 @@ type PodList struct {
 
 type PodStatus struct {
 	// Status of the Pod. See Kubernetes API for reference.
-	PodPhase api.PodPhase `json:"podPhase"`
-
+	PodPhase        api.PodPhase         `json:"podPhase"`
+	PodConditions   []api.PodCondition   `json:"conditions"`
 	ContainerStates []api.ContainerState `json:"containerStates"`
 }
 

@@ -82,7 +82,24 @@ export class PodCardController {
    * @export
    */
   isFailed() {
-    return this.pod.podStatus.podPhase === 'Failed' || this.hasWarnings();
+    if (this.pod.podStatus.podPhase === 'Failed' || this.hasWarnings()) {
+      return true;
+    }
+
+    // Check the pod's readiness state.
+    let ready = false;
+    let initialized = false;
+    for (let i = this.pod.podStatus.conditions.length - 1; i >= 0; i--) {
+      let state = this.pod.podStatus.conditions[i];
+      if (state.type == "Initialized") {
+        initialized = state.status === "True";
+      }
+      if (state.type == "Ready") {
+        ready = state.status === "True";
+      }
+    }
+
+    return initialized && !ready;
   }
 
   /**
