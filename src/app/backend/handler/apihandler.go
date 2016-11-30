@@ -60,6 +60,7 @@ import (
 	clientK8s "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
 	"k8s.io/kubernetes/pkg/runtime"
+	utilnet "k8s.io/kubernetes/pkg/util/net"
 )
 
 const (
@@ -77,6 +78,29 @@ type APIHandler struct {
 	heapsterClient client.HeapsterClient
 	clientConfig   clientcmd.ClientConfig
 	verber         common.ResourceVerber
+}
+
+func wsMetrics(req *restful.Request, resp *restful.Response, chain *restful.FilterChain) {
+	startTime := time.Now()
+	verb := req.Request.Method
+	resource := mapUrlToResource(req.SelectedRoutePath())
+	client := utilnet.GetHTTPClient(req.Request)
+	chain.ProcessFilter(req, resp)
+	code := resp.StatusCode()
+	contentType := resp.Header().Get("Content-Type")
+	if resource != nil {
+		Monitor(verb, *resource, client, contentType, code, startTime)
+	}
+}
+
+// Extract the resource from the path
+// Third part of URL (/api/v1/<resource>) and ignore potential subresources
+func mapUrlToResource(url string) *string {
+	parts := strings.Split(url, "/")
+	if len(parts) < 3 {
+		return nil
+	}
+	return &parts[3]
 }
 
 // Web-service filter function used for request and response logging.
@@ -118,6 +142,9 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 
 	apiV1Ws := new(restful.WebService)
 	apiV1Ws.Filter(wsLogger)
+
+	RegisterMetrics()
+	apiV1Ws.Filter(wsMetrics)
 	apiV1Ws.Path("/api/v1").
 		Consumes(restful.MIME_JSON).
 		Produces(restful.MIME_JSON)

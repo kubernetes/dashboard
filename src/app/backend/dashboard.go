@@ -24,6 +24,8 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/handler"
 	"github.com/spf13/pflag"
+	"github.com/prometheus/client_golang/prometheus"
+
 )
 
 var (
@@ -77,6 +79,7 @@ func main() {
 	http.Handle("/api/", handler.CreateHTTPAPIHandler(apiserverClient, heapsterRESTClient, config))
 	// TODO(maciaszczykm): Move to /appConfig.json as it was discussed in #640.
 	http.Handle("/api/appConfig.json", handler.AppHandler(handler.ConfigHandler))
+	http.Handle("/metrics",prometheus.Handler())
 	log.Print(http.ListenAndServe(fmt.Sprintf(":%d", *argPort), nil))
 }
 
