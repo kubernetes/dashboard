@@ -50,7 +50,6 @@ export class PodExecController {
    * @export
    */
   loadTerminal() {
-
     // TODO: Is there a better way to get the element to attach the terminal to?
     this.term.open(this.document_.getElementById('kd-podexec-terminal'));
 
