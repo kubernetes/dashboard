@@ -50,6 +50,7 @@ export class PodExecController {
    * @export
    */
   loadTerminal() {
+
     // TODO: Is there a better way to get the element to attach the terminal to?
     this.term.open(this.document_.getElementById('kd-podexec-terminal'));
 
@@ -57,18 +58,26 @@ export class PodExecController {
     let podId = this.stateParams_.objectName;
     let container = this.stateParams_.container || '';
 
-    let socket = new WebSocket(`ws://${location.host}/api/v1/pod/${namespace}/${podId}/exec/${container}`.replace(/\/+$/, ""));
+    let url = `ws://${location.host}/api/v1/pod/${namespace}/${podId}/exec/${container}`.replace(/\/+$/, "");
+    // TODO: Get a command from the user. Needs UX work.
+    url += "?command=bash";
+    let socket = new WebSocket(url);
 
+    // TODO: Proper error handling.
     let self = this;
     socket.onopen = function(event) {
+      console.log("socket opened");
       console.log(self.term);
       self.term.attach(socket);
     };
 
     socket.onclose = function(event) {
+      console.log("socket closed");
       console.log(event);
     }
     socket.onerror = function(event) {
+		  // TODO: Proper error handling
+      console.log("socket error");
       console.log(event);
     }
   }

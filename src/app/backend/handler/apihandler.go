@@ -63,9 +63,9 @@ import (
 
 	"github.com/gorilla/websocket"
 	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/client/restclient"
 	"k8s.io/kubernetes/pkg/client/unversioned/remotecommand"
 	remotecommandserver "k8s.io/kubernetes/pkg/kubelet/server/remotecommand"
+	"k8s.io/kubernetes/pkg/util/term"
 )
 
 const (
@@ -1010,50 +1010,68 @@ func (apiHandler *APIHandler) handleGetPods(
 
 var upgrader = websocket.Upgrader{}
 
-// WebSocketIO implements the Reader and Writer interfaces to support reading and writing to a websocket from a remote command.
+// WebSocketIO implements the Reader and Writer interfaces to support reading
+// and writing to a websocket from a remote command.
 type WebSocketIO struct {
 	conn *websocket.Conn
 }
 
+// Read reads messages from the client browser websocket and copies the given
+// messages to the given read buffer to be sent to the stdin of the command
+// running in the container.
 func (t WebSocketIO) Read(p []byte) (int, error) {
-	log.Println(p)
-	return 0, nil
+	messageType, m, err := t.conn.ReadMessage()
+	if err != nil || messageType != websocket.TextMessage {
+		return 0, err
+	}
+
+	// TODO: Handle case where len(m) > len(p)? This seems not to happen in practice.
+	for i := range m {
+		p[i] = m[i]
+	}
+	return len(m), nil
 }
 
+// Write is called by the remotecommand Executor stream and writes the given
+// data to the client websocket.
 func (t WebSocketIO) Write(p []byte) (int, error) {
-	log.Println(p)
-	return 0, nil
+	// TODO: Should binary messages be used? xterm.js seems to send text based messages.
+	if err := t.conn.WriteMessage(websocket.TextMessage, p); err != nil {
+		return 0, err
+	}
+	return len(p), nil
 }
 
+// handleExecIntoPod uses the Kubernetes execution API to execute a command
+// inside a container and manage the websocket connection with the client browser.
+// This functionality is analygous to the `exec` command in kubectl.
+// For an example about how `kubectl exec` works see:
+// https://github.com/kubernetes/kubernetes/blob/master/pkg/kubectl/cmd/exec.go
 func (apiHandler *APIHandler) handleExecIntoPod(request *restful.Request, response *restful.Response) {
 	conn, err := upgrader.Upgrade(response.ResponseWriter, request.Request, nil)
 	if err != nil {
-		// TODO: Error handling
+		// TODO: Proper error messages
 		log.Printf("Unable to upgrade connection: %v", err)
 		return
 	}
+	defer conn.Close()
 
 	namespace := request.PathParameter("namespace")
 	podName := request.PathParameter("pod")
 	containerName := request.PathParameter("container")
 
 	// TODO: Command needs to be shell escaped into a string array
-	// command := request.QueryParameter("command")
-	command := []string{"bash"}
+	command := []string{request.QueryParameter("command")}
 
 	wsIO := WebSocketIO{conn}
-
-	// For example about how kubexec works see: https://github.com/kubernetes/kubernetes/blob/master/pkg/kubectl/cmd/exec.go
 
 	// Create a request object so we can get the URL to the exec endpoint.
 	req := apiHandler.client.Core().RESTClient().Post().
 		Resource("pods").
 		Name(podName).
 		Namespace(namespace).
-		SubResource("exec").
-		Param("container", containerName)
+		SubResource("exec")
 
-	// ??
 	req.VersionedParams(&api.PodExecOptions{
 		Container: containerName,
 		Command:   command,
@@ -1063,42 +1081,32 @@ func (apiHandler *APIHandler) handleExecIntoPod(request *restful.Request, respon
 		TTY:       true, // Always enable TTY
 	}, api.ParameterCodec)
 
-	// Create a remote command executor
-	// TODO: Authentication. (How?)
-	config := &restclient.Config{
-		Host: "localhost:8080",
+	config, err := apiHandler.clientConfig.ClientConfig()
+	if err != nil {
+		log.Printf("Unable to create client config: %v", err)
+		return
 	}
+
 	exec, err := remotecommand.NewExecutor(config, "POST", req.URL())
 	if err != nil {
 		log.Printf("Unable to create executor: %v", err)
 		return
 	}
 
+	// TODO: How do we stop this stream when the client connection is lost?
+	var sizeQueue term.TerminalSizeQueue
 	err = exec.Stream(remotecommand.StreamOptions{
 		SupportedProtocols: remotecommandserver.SupportedStreamingProtocols,
 		Stdin:              wsIO,
 		Stdout:             wsIO,
 		Stderr:             wsIO,
-		Tty:                true, // Always use tty
-		TerminalSizeQueue:  nil,  // ??
+		Tty:                true,      // Always use tty
+		TerminalSizeQueue:  sizeQueue, // TODO: How to manage the terminal size?
 	})
 	if err != nil {
 		log.Printf("Unable to create stream: %v", err)
 		return
 	}
-
-	// Echo handler for now
-	// for {
-	// 	messageType, p, err := conn.ReadMessage()
-	// 	if err != nil {
-	// 		log.Println(err)
-	// 		return
-	// 	}
-	// 	if err = conn.WriteMessage(messageType, p); err != nil {
-	// 		log.Println(err)
-	// 		return
-	// 	}
-	// }
 }
 
 // Handles get Pod detail API call.
