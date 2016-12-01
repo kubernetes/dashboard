@@ -554,6 +554,7 @@
   <translation id="2274539880532747000" key="MSG_PODDETAIL_ACTIONBAR_0" desc="Label \'Pod\' which appears at the top of the delete dialog, opened from a pod details page.">Pod</translation>
   <translation id="1530652887767114965" key="MSG_PODDETAIL_CONTAINERINFO_0" desc="Subtitle at the top of the container details.">Containers</translation>
   <translation id="344796737697479186" key="MSG_PODDETAIL_CONTAINERINFO_1" desc="Label for container image.">Image</translation>
+  <translation id="7989076397374499177" key="MSG_PODDETAIL_CONTAINERINFO_10" desc="Label for exec into container.">Exec</translation>
   <translation id="3743838518643025356" key="MSG_PODDETAIL_CONTAINERINFO_2" desc="Label for container environment variables.">Environment variables</translation>
   <translation id="7465138239796555454" key="MSG_PODDETAIL_CONTAINERINFO_3" desc="Label for environment variable that comes from a Config Map">value from ConfigMap {{env.valueFrom.configMapKeyRef.Name}}/{{env.valueFrom.configMapKeyRef.key}}</translation>
   <translation id="5819780368982068100" key="MSG_PODDETAIL_CONTAINERINFO_4" desc="Label when there is no container environment variables.">-</translation>
