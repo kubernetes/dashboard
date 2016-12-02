@@ -65,7 +65,8 @@ export class PodCardController {
    * @export
    */
   isPending() {
-    return !this.hasWarnings() && this.pod.podStatus.podPhase === 'Pending';
+    // podPhase should be Pending if init containers are running but we are being extra thorough.
+    return (this.pod.podStatus.podPhase === 'Pending' || !this.isInitialized()) && !this.isFailed();
   }
 
   /**
@@ -82,24 +83,59 @@ export class PodCardController {
    * @export
    */
   isFailed() {
-    if (this.pod.podStatus.podPhase === 'Failed' || this.hasWarnings()) {
+    if (this.pod.podStatus.podPhase === 'Failed') {
       return true;
     }
 
-    // Check the pod's readiness state.
-    let ready = false;
-    let initialized = false;
-    for (let i = this.pod.podStatus.conditions.length - 1; i >= 0; i--) {
-      let state = this.pod.podStatus.conditions[i];
-      if (state.type == "Initialized") {
-        initialized = state.status === "True";
-      }
-      if (state.type == "Ready") {
-        ready = state.status === "True";
-      }
+    if (this.pod.podStatus.podPhase === 'Succeeded') {
+        return false;
     }
 
-    return initialized && !ready;
+    // This will return true if the pod has events that indicate warnings while in a Pending state.
+    if (this.hasWarnings() && this.pod.podStatus.podPhase !== 'Running') {
+        return true;
+    }
+
+    return this.isInitialized() && !this.isReady();
+  }
+
+  /**
+   * Checks if pod status is ready. i.e. it's running and passess readiness checks.
+   * @return {boolean}
+   * @export
+   */
+  isReady() {
+    let ready = false;
+    // Need to check for existance of conditions because they will be absent on Pending pods.
+    if (this.pod.podStatus.conditions) {
+      for (let i = this.pod.podStatus.conditions.length - 1; i >= 0; i--) {
+        let state = this.pod.podStatus.conditions[i];
+        if (state.type == "Ready") {
+          ready = state.status === "True";
+        }
+      }
+    }
+    return ready;
+  }
+
+  /**
+   * Checks if pod status is initalized. i.e. pod init containers have run. 
+   * @return {boolean}
+   * @export
+   */
+  isInitialized() {
+    // Check the pod's readiness state.
+    let initialized = false;
+    // Need to check for existance of conditions because they will be absent on Pending pods.
+    if (this.pod.podStatus.conditions) {
+      for (let i = this.pod.podStatus.conditions.length - 1; i >= 0; i--) {
+        let state = this.pod.podStatus.conditions[i];
+        if (state.type == "Initialized") {
+          initialized = state.status === "True";
+        }
+      }
+    }
+    return initialized;
   }
 
   /**
@@ -127,8 +163,15 @@ export class PodCardController {
    * @export
    */
   getDisplayStatus() {
+    // See kubectl resource_printer.go for logic in kubectl.
+    // https://github.com/kubernetes/kubernetes/blob/master/pkg/kubectl/resource_printer.go
+
     let msgState = 'running';
     let reason = undefined;
+
+    // NOTE: Init container statuses are currently not taken into account.
+    // However, init containers with errors will still show as failed because
+    // of warnings.
     if (this.pod.podStatus.containerStates) {
       // Container states array may be null when no containers have
       // started yet.
