@@ -66,7 +66,7 @@ export class PodCardController {
    */
   isPending() {
     // podPhase should be Pending if init containers are running but we are being extra thorough.
-    return (this.pod.podStatus.podPhase === 'Pending' || !this.isInitialized()) && !this.isFailed();
+    return this.pod.podStatus.status === "pending"
   }
 
   /**
@@ -74,7 +74,7 @@ export class PodCardController {
    * @export
    */
   isSuccess() {
-    return !this.isPending() && !this.isFailed();
+    return this.pod.podStatus.status === "success"
   }
 
   /**
@@ -83,59 +83,7 @@ export class PodCardController {
    * @export
    */
   isFailed() {
-    if (this.pod.podStatus.podPhase === 'Failed') {
-      return true;
-    }
-
-    if (this.pod.podStatus.podPhase === 'Succeeded') {
-        return false;
-    }
-
-    // This will return true if the pod has events that indicate warnings while in a Pending state.
-    if (this.hasWarnings() && this.pod.podStatus.podPhase !== 'Running') {
-        return true;
-    }
-
-    return this.isInitialized() && !this.isReady();
-  }
-
-  /**
-   * Checks if pod status is ready. i.e. it's running and passess readiness checks.
-   * @return {boolean}
-   * @export
-   */
-  isReady() {
-    let ready = false;
-    // Need to check for existance of conditions because they will be absent on Pending pods.
-    if (this.pod.podStatus.conditions) {
-      for (let i = this.pod.podStatus.conditions.length - 1; i >= 0; i--) {
-        let state = this.pod.podStatus.conditions[i];
-        if (state.type == "Ready") {
-          ready = state.status === "True";
-        }
-      }
-    }
-    return ready;
-  }
-
-  /**
-   * Checks if pod status is initalized. i.e. pod init containers have run. 
-   * @return {boolean}
-   * @export
-   */
-  isInitialized() {
-    // Check the pod's readiness state.
-    let initialized = false;
-    // Need to check for existance of conditions because they will be absent on Pending pods.
-    if (this.pod.podStatus.conditions) {
-      for (let i = this.pod.podStatus.conditions.length - 1; i >= 0; i--) {
-        let state = this.pod.podStatus.conditions[i];
-        if (state.type == "Initialized") {
-          initialized = state.status === "True";
-        }
-      }
-    }
-    return initialized;
+    return this.pod.podStatus.status === "failed"
   }
 
   /**

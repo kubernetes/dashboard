@@ -31,25 +31,56 @@ func getRestartCount(pod api.Pod) int32 {
 }
 
 // getPodStatus returns a PodStatus object containing a summary of the pod's status.
-func getPodStatus(pod api.Pod) PodStatus {
+// func getPodStatus(pod api.Pod) PodStatus {
+func getPodStatus(pod api.Pod, warnings []common.Event) PodStatus {
 	var states []api.ContainerState
 	for _, containerStatus := range pod.Status.ContainerStatuses {
 		states = append(states, containerStatus.State)
 	}
 
 	return PodStatus{
+		Status:          getPodStatusStatus(pod, warnings),
 		PodPhase:        pod.Status.Phase,
 		PodConditions:   pod.Status.Conditions,
 		ContainerStates: states,
 	}
 }
 
+// getPodStatus returns one of three pod statuses (pending, success, failed)
+func getPodStatusStatus(pod api.Pod, warnings []common.Event) string {
+	if pod.Status.Phase == api.PodFailed {
+		return "failed"
+	}
+
+	ready := false
+	initialized := false
+	for _, c := range pod.Status.Conditions {
+		if c.Type == api.PodReady {
+			ready = c.Status == "True"
+		}
+		if c.Type == api.PodInitialized {
+			initialized = c.Status == "True"
+		}
+	}
+
+	if (pod.Status.Phase == api.PodPending || !initialized) && len(warnings) > 0 {
+		return "failed"
+	}
+
+	if initialized && ready {
+		return "success"
+	}
+
+	// Unknown?
+	return "pending"
+}
+
 // ToPod transforms Kubernetes pod object into object returned by API.
-func ToPod(pod *api.Pod, metrics *common.MetricsByPod) Pod {
+func ToPod(pod *api.Pod, metrics *common.MetricsByPod, warnings []common.Event) Pod {
 	podDetail := Pod{
 		ObjectMeta:   common.NewObjectMeta(pod.ObjectMeta),
 		TypeMeta:     common.NewTypeMeta(common.ResourceKindPod),
-		PodStatus:    getPodStatus(*pod),
+		PodStatus:    getPodStatus(*pod, warnings),
 		RestartCount: getRestartCount(*pod),
 	}
 
