@@ -20,7 +20,6 @@
 # According to the documentation: http://docs.travis-ci.com/user/docker/
 # sudo is required to enable docker in Travis CI.
 sudo: true
-group: edge
 
 # Cache downloaded Node.JS modules & Bower frontend dependencies for faster builds.
 cache:
