@@ -195,7 +195,6 @@ func GenericDataSelect(dataList []DataCell, dsQuery *DataSelectQuery) []DataCell
 		GenericDataList: dataList,
 		DataSelectQuery: dsQuery,
 	}
-	fmt.Printf("%v\n", SelectableData)
 	return SelectableData.Sort().Paginate().GenericDataList
 }
 
