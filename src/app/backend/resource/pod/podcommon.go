@@ -56,10 +56,10 @@ func getPodStatusStatus(pod api.Pod, warnings []common.Event) string {
 	initialized := false
 	for _, c := range pod.Status.Conditions {
 		if c.Type == api.PodReady {
-			ready = c.Status == "True"
+			ready = c.Status == api.ConditionTrue
 		}
 		if c.Type == api.PodInitialized {
-			initialized = c.Status == "True"
+			initialized = c.Status == api.ConditionTrue
 		}
 	}
 
