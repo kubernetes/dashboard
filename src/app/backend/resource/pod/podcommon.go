@@ -31,7 +31,6 @@ func getRestartCount(pod api.Pod) int32 {
 }
 
 // getPodStatus returns a PodStatus object containing a summary of the pod's status.
-// func getPodStatus(pod api.Pod) PodStatus {
 func getPodStatus(pod api.Pod, warnings []common.Event) PodStatus {
 	var states []api.ContainerState
 	for _, containerStatus := range pod.Status.ContainerStatuses {
