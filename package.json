@@ -55,7 +55,7 @@
     "gulp-xslt": "~2.0.0",
     "html-minifier": "~3.2.2",
     "isparta": "~4.0.0",
-    "jsesc": "~2.2.0",
+    "jsesc": "~2.3.0",
     "karma": "1.3.0",
     "karma-browserify": "~5.1.0",
     "karma-chrome-launcher": "~2.0.0",
