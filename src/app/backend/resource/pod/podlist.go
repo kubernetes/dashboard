@@ -108,15 +108,15 @@ func CreatePodList(pods []api.Pod, events []api.Event, dsQuery *dataselect.DataS
 	metrics := <-channels.PodMetrics.MetricsByPod
 
 	podList := PodList{
-		Pods:     make([]Pod, 0),
-		ListMeta: common.ListMeta{TotalItems: len(pods)},
+		Pods: make([]Pod, 0),
 	}
 
 	cache := &dataselect.CachedResources{Pods: pods}
 
-	podCells, cumulativeMetricsPromises := dataselect.GenericDataSelectWithMetrics(toCells(pods), dsQuery,
+	podCells, cumulativeMetricsPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(toCells(pods), dsQuery,
 		cache, &heapsterClient)
 	pods = fromCells(podCells)
+	podList.ListMeta = common.ListMeta{TotalItems: filteredTotal}
 
 	for _, pod := range pods {
 		warnings := event.GetPodsEventWarnings(events, []api.Pod{pod})

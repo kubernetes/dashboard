@@ -1617,6 +1617,10 @@ func parsePaginationPathParameter(request *restful.Request) *dataselect.Paginati
 	return dataselect.NewPaginationQuery(int(itemsPerPage), int(page-1))
 }
 
+func parseFilterPathParameter(request *restful.Request) *dataselect.FilterQuery {
+	return dataselect.NewFilterQuery(strings.Split(request.QueryParameter("filterby"), ","))
+}
+
 // Parses query parameters of the request and returns a SortQuery object
 func parseSortPathParameter(request *restful.Request) *dataselect.SortQuery {
 	return dataselect.NewSortQuery(strings.Split(request.QueryParameter("sortby"), ","))
@@ -1650,6 +1654,7 @@ func parseMetricPathParameter(request *restful.Request) *dataselect.MetricQuery 
 func parseDataSelectPathParameter(request *restful.Request) *dataselect.DataSelectQuery {
 	paginationQuery := parsePaginationPathParameter(request)
 	sortQuery := parseSortPathParameter(request)
+	filterQuery := parseFilterPathParameter(request)
 	metricQuery := parseMetricPathParameter(request)
-	return dataselect.NewDataSelectQuery(paginationQuery, sortQuery, metricQuery)
+	return dataselect.NewDataSelectQuery(paginationQuery, sortQuery, filterQuery, metricQuery)
 }
