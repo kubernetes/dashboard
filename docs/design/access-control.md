@@ -66,6 +66,12 @@ will create the Binding and redirect the user to the Binding's detail page.
 
 ![Overview](mockups/21-11-2016-access-control/create-binding.png)
 
+## View a role
+
+By clicking on a list item in the overview, the user will be presented with a detail view.
+
+![Overview](mockups/21-11-2016-access-control/view-role.png)
+
 ## Edit a role
 
 The only property of a Role that cannot be changed is its namespace, because it determines
