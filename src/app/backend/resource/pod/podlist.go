@@ -21,6 +21,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"k8s.io/kubernetes/pkg/api"
 	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
@@ -52,23 +53,24 @@ type Pod struct {
 	// More info on pod status
 	PodStatus PodStatus `json:"podStatus"`
 
-	// IP address of the Pod.
-	PodIP string `json:"podIP"`
-
 	// Count of containers restarts.
 	RestartCount int32 `json:"restartCount"`
 
 	// Pod metrics.
 	Metrics *common.PodMetrics `json:"metrics"`
+
+	// Pod warning events
+	Warnings []common.Event `json:"warnings"`
 }
 
 // GetPodList returns a list of all Pods in the cluster.
 func GetPodList(client k8sClient.Interface, heapsterClient client.HeapsterClient,
 	nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*PodList, error) {
-	log.Printf("Getting list of all pods in the cluster")
+	log.Print("Getting list of all pods in the cluster")
 
 	channels := &common.ResourceChannels{
-		PodList: common.GetPodListChannelWithOptions(client, nsQuery, api.ListOptions{}, 1),
+		PodList:   common.GetPodListChannelWithOptions(client, nsQuery, api.ListOptions{}, 1),
+		EventList: common.GetEventListChannel(client, nsQuery, 1),
 	}
 
 	return GetPodListFromChannels(channels, dsQuery, heapsterClient)
@@ -84,11 +86,16 @@ func GetPodListFromChannels(channels *common.ResourceChannels, dsQuery *datasele
 		return nil, err
 	}
 
-	podList := CreatePodList(pods.Items, dsQuery, heapsterClient)
+	eventList := <-channels.EventList.List
+	if err := <-channels.EventList.Error; err != nil {
+		return nil, err
+	}
+
+	podList := CreatePodList(pods.Items, eventList.Items, dsQuery, heapsterClient)
 	return &podList, nil
 }
 
-func CreatePodList(pods []api.Pod, dsQuery *dataselect.DataSelectQuery,
+func CreatePodList(pods []api.Pod, events []api.Event, dsQuery *dataselect.DataSelectQuery,
 	heapsterClient client.HeapsterClient) PodList {
 
 	channels := &common.ResourceChannels{
@@ -101,18 +108,21 @@ func CreatePodList(pods []api.Pod, dsQuery *dataselect.DataSelectQuery,
 	metrics := <-channels.PodMetrics.MetricsByPod
 
 	podList := PodList{
-		Pods:     make([]Pod, 0),
-		ListMeta: common.ListMeta{TotalItems: len(pods)},
+		Pods: make([]Pod, 0),
 	}
 
 	cache := &dataselect.CachedResources{Pods: pods}
 
-	podCells, cumulativeMetricsPromises := dataselect.GenericDataSelectWithMetrics(toCells(pods), dsQuery,
+	podCells, cumulativeMetricsPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(toCells(pods), dsQuery,
 		cache, &heapsterClient)
 	pods = fromCells(podCells)
+	podList.ListMeta = common.ListMeta{TotalItems: filteredTotal}
 
 	for _, pod := range pods {
+		warnings := event.GetPodsEventWarnings(events, []api.Pod{pod})
+
 		podDetail := ToPod(&pod, metrics)
+		podDetail.Warnings = warnings
 		podList.Pods = append(podList.Pods, podDetail)
 
 	}

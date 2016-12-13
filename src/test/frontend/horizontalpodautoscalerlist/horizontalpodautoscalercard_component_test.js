@@ -39,6 +39,6 @@ describe('Horizontal Pod Autoscaler card', () => {
   });
 
   it('should format the "created at" tooltip correctly', () => {
-    expect(ctrl.getCreatedAtTooltip()).toMatch('Created at 6/6/16.*');
+    expect(ctrl.getCreatedAtTooltip()).toMatch('Created at 2016-06-06T09:13.*');
   });
 });

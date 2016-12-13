@@ -25,8 +25,8 @@ import (
 type DataSelectQuery struct {
 	PaginationQuery *PaginationQuery
 	SortQuery       *SortQuery
-	//	Filter     *FilterQuery
-	MetricQuery *MetricQuery
+	FilterQuery     *FilterQuery
+	MetricQuery     *MetricQuery
 }
 
 var NoMetrics = NewMetricQuery(nil, nil)
@@ -72,23 +72,37 @@ var NoSort = &SortQuery{
 	SortByList: []SortBy{},
 }
 
+type FilterQuery struct {
+	FilterByList []FilterBy
+}
+
+type FilterBy struct {
+	Property PropertyName
+	Value    ComparableValue
+}
+
+var NoFilter = &FilterQuery{
+	FilterByList: []FilterBy{},
+}
+
 // NoDataSelect is an option for no data select (same data will be returned).
-var NoDataSelect = NewDataSelectQuery(NoPagination, NoSort, NoMetrics)
+var NoDataSelect = NewDataSelectQuery(NoPagination, NoSort, NoFilter, NoMetrics)
 
 // StdMetricsDataSelect does not perform any data select, just downloads standard metrics.
-var StdMetricsDataSelect = NewDataSelectQuery(NoPagination, NoSort, StandardMetrics)
+var StdMetricsDataSelect = NewDataSelectQuery(NoPagination, NoSort, NoFilter, StandardMetrics)
 
 // DefaultDataSelect downloads first 10 items from page 1 with no sort and no metrics.
-var DefaultDataSelect = NewDataSelectQuery(DefaultPagination, NoSort, NoMetrics)
+var DefaultDataSelect = NewDataSelectQuery(DefaultPagination, NoSort, NoFilter, NoMetrics)
 
 // DefaultDataSelectWithMetrics downloads first 10 items from page 1 with no sort. Also downloads and includes standard metrics.
-var DefaultDataSelectWithMetrics = NewDataSelectQuery(DefaultPagination, NoSort, StandardMetrics)
+var DefaultDataSelectWithMetrics = NewDataSelectQuery(DefaultPagination, NoSort, NoFilter, StandardMetrics)
 
 // NewDataSelectQuery creates DataSelectQuery object from simpler data select queries.
-func NewDataSelectQuery(paginationQuery *PaginationQuery, sortQuery *SortQuery, graphQuery *MetricQuery) *DataSelectQuery {
+func NewDataSelectQuery(paginationQuery *PaginationQuery, sortQuery *SortQuery, filterQuery *FilterQuery, graphQuery *MetricQuery) *DataSelectQuery {
 	return &DataSelectQuery{
 		PaginationQuery: paginationQuery,
 		SortQuery:       sortQuery,
+		FilterQuery:     filterQuery,
 		MetricQuery:     graphQuery,
 	}
 }
@@ -126,5 +140,28 @@ func NewSortQuery(sortByListRaw []string) *SortQuery {
 	}
 	return &SortQuery{
 		SortByList: sortByList,
+	}
+}
+
+// NewFilterQuery takes raw filter options list and returns FilterQuery object. For example:
+// ["parameter1", "value1", "parameter2", "value2"] - means that the data should be filtered by
+// parameter1 equals value1 and parameter2 equals value2
+func NewFilterQuery(filterByListRaw []string) *FilterQuery {
+	if filterByListRaw == nil || len(filterByListRaw)%2 == 1 {
+		return NoFilter
+	}
+	filterByList := []FilterBy{}
+	for i := 0; i+1 < len(filterByListRaw); i += 2 {
+		propertyName := filterByListRaw[i]
+		propertyValue := filterByListRaw[i+1]
+		filterBy := FilterBy{
+			Property: PropertyName(propertyName),
+			Value:    StdComparableString(propertyValue),
+		}
+		// Add to the filter options.
+		filterByList = append(filterByList, filterBy)
+	}
+	return &FilterQuery{
+		FilterByList: filterByList,
 	}
 }

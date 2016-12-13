@@ -15,7 +15,12 @@ limitations under the License.
 -->
 
 <kd-content-card ng-if="$ctrl.shouldShowGraph()">
-  <kd-title>{{$ctrl.graphTitle}}</kd-title>
+  <kd-title>{{$ctrl.graphTitle}}
+    <span ng-if="::$ctrl.graphInfo">
+      <md-icon md-font-library="material-icons">info</md-icon>
+      <md-tooltip>{{::$ctrl.graphInfo}}</md-tooltip>
+    </span>
+  </kd-title>
   <kd-content>
     <kd-graph metrics="::$ctrl.selectedMetrics"></kd-graph>
   </kd-content>

@@ -72,7 +72,7 @@ export default class NamespaceCardController {
    * @return {string} localized tooltip with the formated creation date
    */
   getCreatedAtTooltip(creationDate) {
-    let filter = this.interpolate_(`{{date | date:'short'}}`);
+    let filter = this.interpolate_(`{{date | date}}`);
     /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
      * namespace. */
     let MSG_NAMESPACE_LIST_CREATED_AT_TOOLTIP =

@@ -17,7 +17,8 @@ describe('Deploy view', () => {
     browser.get('#/deploy');
   });
 
-  it('should do something', () => {
-                                // TODO(bryk): Write the test.
-                            });
+  it('should do something',
+     () => {
+         // TODO(bryk): Write the test.
+     });
 });

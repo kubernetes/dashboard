@@ -1,0 +1,198 @@
+// Copyright 2015 Google Inc. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+import {StateParams} from 'common/resource/resourcedetail';
+import {stateName as logsStateName, StateParams as LogsStateParams} from 'logs/logs_state';
+import {stateName} from 'poddetail/poddetail_state';
+
+/**
+ * @final
+ */
+export class PodCardController {
+  /**
+   * @ngInject,
+   * @param {!ui.router.$state} $state
+   * @param {!angular.$interpolate} $interpolate
+   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
+   */
+  constructor($state, $interpolate, kdNamespaceService) {
+    /** @private {!./../common/namespace/namespace_service.NamespaceService} */
+    this.kdNamespaceService_ = kdNamespaceService;
+
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
+
+    /** @private {!angular.$interpolate} */
+    this.interpolate_ = $interpolate;
+
+    /**
+     * Initialized from the scope.
+     * @export {!backendApi.Pod}
+     */
+    this.pod;
+  }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  areMultipleNamespacesSelected() {
+    return this.kdNamespaceService_.areMultipleNamespacesSelected();
+  }
+
+  /**
+   * Returns true if this pod has warnings, false otherwise
+   * @return {boolean}
+   */
+  hasWarnings() {
+    return this.pod.warnings.length > 0;
+  }
+
+  /**
+   * Returns true if this pod has no warnings and is in pending state, false otherwise
+   * @return {boolean}
+   * @export
+   */
+  isPending() {
+    return !this.hasWarnings() && this.pod.podStatus.podPhase === 'Pending';
+  }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  isSuccess() {
+    return !this.isPending() && !this.isFailed();
+  }
+
+  /**
+   * Checks if pod status is failed.
+   * @return {boolean}
+   * @export
+   */
+  isFailed() {
+    return this.pod.podStatus.podPhase === 'Failed' || this.hasWarnings();
+  }
+
+  /**
+   * @return {string}
+   * @export
+   */
+  getPodLogsHref() {
+    return this.state_.href(
+        logsStateName,
+        new LogsStateParams(this.pod.objectMeta.namespace, this.pod.objectMeta.name));
+  }
+
+  /**
+   * @return {string}
+   * @export
+   */
+  getPodDetailHref() {
+    return this.state_.href(
+        stateName, new StateParams(this.pod.objectMeta.namespace, this.pod.objectMeta.name));
+  }
+
+  /**
+   * Returns a displayable status message for the pod.
+   * @return {string}
+   * @export
+   */
+  getDisplayStatus() {
+    let msgState = 'running';
+    let reason = undefined;
+    if (this.pod.podStatus.containerStates) {
+      // Container states array may be null when no containers have
+      // started yet.
+
+      for (let i = this.pod.podStatus.containerStates.length - 1; i >= 0; i--) {
+        let state = this.pod.podStatus.containerStates[i];
+
+        if (state.waiting) {
+          msgState = 'waiting';
+          reason = state.waiting.reason;
+        }
+        if (state.terminated) {
+          msgState = 'terminated';
+          reason = state.terminated.reason;
+          if (!reason) {
+            if (state.terminated.signal) {
+              reason = 'Signal:${state.terminated.signal}';
+            } else {
+              reason = 'ExitCode:${state.terminated.exitCode}';
+            }
+          }
+        }
+      }
+    }
+
+    /** @type {string} @desc Status message showing a waiting status with [reason].*/
+    let MSG_POD_LIST_POD_WAITING_STATUS = goog.getMsg('Waiting: {$reason}', {'reason': reason});
+    /** @type {string} @desc Status message showing a terminated status with [reason].*/
+    let MSG_POD_LIST_POD_TERMINATED_STATUS =
+        goog.getMsg('Terminated: {$reason}', {'reason': reason});
+
+    if (msgState === 'waiting') {
+      return MSG_POD_LIST_POD_WAITING_STATUS;
+    }
+    if (msgState === 'terminated') {
+      return MSG_POD_LIST_POD_TERMINATED_STATUS;
+    }
+    return this.pod.podStatus.podPhase;
+  }
+
+  /**
+   * @export
+   * @param  {string} startDate - start date of the pod
+   * @return {string} localized tooltip with the formated start date
+   */
+  getStartedAtTooltip(startDate) {
+    let filter = this.interpolate_(`{{date | date}}`);
+    /** @type {string} @desc Tooltip 'Started at [some date]' showing the exact start time of
+     * the pod.*/
+    let MSG_POD_LIST_STARTED_AT_TOOLTIP =
+        goog.getMsg('Started at {$startDate} UTC', {'startDate': filter({'date': startDate})});
+    return MSG_POD_LIST_STARTED_AT_TOOLTIP;
+  }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  hasMemoryUsage() {
+    return !!this.pod && !!this.pod.metrics && !!this.pod.metrics.memoryUsageHistory &&
+        this.pod.metrics.memoryUsageHistory.length > 0;
+  }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  hasCpuUsage() {
+    return !!this.pod && !!this.pod.metrics && !!this.pod.metrics.cpuUsageHistory &&
+        this.pod.metrics.cpuUsageHistory.length > 0;
+  }
+}
+
+/**
+ * @return {!angular.Component}
+ */
+export const podCardComponent = {
+  bindings: {
+    'pod': '=',
+    'showMetrics': '<',
+  },
+  controller: PodCardController,
+  templateUrl: 'podlist/podcard.html',
+};

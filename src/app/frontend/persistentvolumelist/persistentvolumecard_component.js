@@ -54,7 +54,7 @@ export default class PersistentVolumeCardController {
    * @return {string} localized tooltip with the formated creation date
    */
   getCreatedAtTooltip(creationDate) {
-    let filter = this.interpolate_(`{{date | date:'short'}}`);
+    let filter = this.interpolate_(`{{date | date}}`);
     /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
      * persistent volume. */
     let MSG_PERSISTENT_VOLUME_LIST_CREATED_AT_TOOLTIP =

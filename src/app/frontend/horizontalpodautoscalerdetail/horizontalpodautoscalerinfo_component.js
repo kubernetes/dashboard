@@ -64,7 +64,7 @@ export default class HorizontalPodAutoscalerInfoController {
    * @return {string} localized tooltip with the formatted creation date
    */
   getLatScaledTooltip() {
-    let filter = this.interpolate_(`{{date | date:'short'}}`);
+    let filter = this.interpolate_(`{{date | date}}`);
     /** @type {string} @desc Tooltip 'Last scaled at [some date]' showing the exact time of
      * the last time the horizontal pod autoscaler was scaled.*/
     let MSG_HORIZONTAL_POD_AUTOSCALER_DETAIL_LAST_SCALED_TOOLTIP = goog.getMsg(

@@ -15,7 +15,8 @@ limitations under the License.
 -->
 
 <kd-info-card>
-  <kd-info-card-section name="[[Details|Subtitle 'Details' for the left section with general information about a daemon set on the daemonset details page.]]">
+  <kd-info-card-header>[[Details|Header in a detail view]]</kd-info-card-header>
+  <kd-info-card-section>
     <kd-info-card-entry title="[[Name|Label 'Name' for the daemon set name on the details page.]]">
       <kd-middle-ellipsis
               display-string="{{::$ctrl.daemonSet.objectMeta.name}}">
@@ -28,7 +29,7 @@ limitations under the License.
       <kd-labels labels="::$ctrl.daemonSet.objectMeta.labels"></kd-labels>
     </kd-info-card-entry>
     <kd-info-card-entry title="[[Images|Label 'Images' for the list of images used in a daemon set, on its details page.]]">
-      <div ng-repeat="image in $ctrl.daemonSet.containerImages">
+      <div ng-repeat="image in $ctrl.daemonSet.containerImages track by $index">
         <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
       </div>
     </kd-info-card-entry>

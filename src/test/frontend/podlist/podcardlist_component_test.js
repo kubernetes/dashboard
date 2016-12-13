@@ -32,7 +32,7 @@ describe('Pod card list controller', () => {
     angular.mock.inject(($componentController, $rootScope, kdNamespaceService) => {
       /** @type {!./../common/namespace/namespace_service.NamespaceService} */
       data = kdNamespaceService;
-      /** @type {!podCardListController} */
+      /** @type {!PodCardListController} */
       ctrl = $componentController(
           'kdPodCardList', {$scope: $rootScope, kdNamespaceService_: data}, {});
     });
@@ -44,107 +44,6 @@ describe('Pod card list controller', () => {
 
   it('should return the value from Namespace service', () => {
     expect(ctrl.areMultipleNamespacesSelected()).toBe(data.areMultipleNamespacesSelected());
-  });
-
-  it('should execute logs href callback function', () => {
-    expect(ctrl.getPodDetailHref({
-      objectMeta: {
-        name: 'foo-pod',
-        namespace: 'foo-namespace',
-      },
-    })).toBe('#/pod/foo-namespace/foo-pod');
-  });
-
-  it('should show display status correctly (running container)', () => {
-    // Output is expected to be equal to the podPhase.
-    expect(ctrl.getDisplayStatus({
-      podStatus: {podPhase: 'Test Phase', containerStates: [{running: {}}]},
-    })).toBe('Test Phase');
-  });
-
-  it('should handle pods with no container statuses', () => {
-    // Output is expected to be equal to the podPhase.
-    expect(ctrl.getDisplayStatus({
-      podStatus: {podPhase: 'Test Phase'},
-    })).toBe('Test Phase');
-  });
-
-  it('should show display status correctly (waiting container)', () => {
-    expect(ctrl.getDisplayStatus({
-      podStatus: {
-        podPhase: 'Test Phase',
-        containerStates: [{
-          waiting: {
-            reason: 'Test Reason',
-          },
-        }],
-      },
-    })).toBe('Waiting: Test Reason');
-  });
-
-  it('should show display status correctly (terminated container)', () => {
-    expect(ctrl.getDisplayStatus({
-      podStatus: {
-        podPhase: 'Test Phase',
-        containerStates: [{
-          terminated: {
-            reason: 'Test Reason',
-          },
-        }],
-      },
-    })).toBe('Terminated: Test Reason');
-  });
-
-  it('should show display status correctly (multi container)', () => {
-    expect(ctrl.getDisplayStatus({
-      podStatus: {
-        podPhase: 'Test Phase',
-        containerStates: [
-          {running: {}},
-          {
-            terminated: {
-              reason: 'Test Terminated Reason',
-            },
-          },
-          {waiting: {reason: 'Test Waiting Reason'}},
-        ],
-      },
-    })).toBe('Terminated: Test Terminated Reason');
-  });
-
-  it('should check pod status correctly (succeeded is successful)', () => {
-    expect(ctrl.isStatusSuccessful({name: 'test-pod', podStatus: {podPhase: 'Succeeded'}}))
-        .toBeTruthy();
-  });
-
-  it('should check pod status correctly (running is successful)', () => {
-    expect(ctrl.isStatusSuccessful({name: 'test-pod', podStatus: {podPhase: 'Running'}}))
-        .toBeTruthy();
-  });
-
-  it('should check pod status correctly (failed isn\'t successful)', () => {
-    expect(ctrl.isStatusSuccessful({name: 'test-pod', podStatus: {podPhase: 'Failed'}}))
-        .toBeFalsy();
-  });
-
-  it('should check pod status correctly (pending is pending)', () => {
-    expect(ctrl.isStatusPending({name: 'test-pod', podStatus: {podPhase: 'Pending'}})).toBeTruthy();
-  });
-
-  it('should check pod status correctly (failed isn\'t pending)', () => {
-    expect(ctrl.isStatusPending({name: 'test-pod', podStatus: {podPhase: 'Failed'}})).toBeFalsy();
-  });
-
-  it('should check pod status correctly (failed is failed)', () => {
-    expect(ctrl.isStatusFailed({name: 'test-pod', podStatus: {podPhase: 'Failed'}})).toBeTruthy();
-  });
-
-  it('should check pod status correctly (running isn\'t failed)', () => {
-    expect(ctrl.isStatusFailed({name: 'test-pod', podStatus: {podPhase: 'Running'}})).toBeFalsy();
-  });
-
-  it('should format the "pod start date" tooltip correctly', () => {
-    expect(ctrl.getStartedAtTooltip('2016-06-06T09:13:12Z')).toBe('Started at 6/6/16 09:13 UTC');
   });
 
   it('should show and hide metrics', () => {
@@ -159,25 +58,5 @@ describe('Pod card list controller', () => {
 
     ctrl.podList.pods = [{metrics: {}}];
     expect(ctrl.showMetrics()).toBe(true);
-  });
-
-  it('should show and hide cpu metrics', () => {
-    expect(ctrl.hasCpuUsage({})).toBe(false);
-
-    expect(ctrl.hasCpuUsage({metrics: {}})).toBe(false);
-
-    expect(ctrl.hasCpuUsage({metrics: {cpuUsageHistory: []}})).toBe(false);
-
-    expect(ctrl.hasCpuUsage({metrics: {cpuUsageHistory: [1]}})).toBe(true);
-  });
-
-  it('should show and hide memory metrics', () => {
-    expect(ctrl.hasMemoryUsage({})).toBe(false);
-
-    expect(ctrl.hasMemoryUsage({metrics: {}})).toBe(false);
-
-    expect(ctrl.hasMemoryUsage({metrics: {memoryUsageHistory: []}})).toBe(false);
-
-    expect(ctrl.hasMemoryUsage({metrics: {memoryUsageHistory: [1]}})).toBe(true);
   });
 });

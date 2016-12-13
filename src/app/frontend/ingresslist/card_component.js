@@ -42,7 +42,7 @@ class IngressCardController {
    * @return {string} localized tooltip with the formated start date
    */
   getStartedAtTooltip(startDate) {
-    let filter = this.interpolate_(`{{date | date:'d/M/yy HH:mm':'UTC'}}`);
+    let filter = this.interpolate_(`{{date | date}}`);
     /** @type {string} @desc Tooltip 'Started at [some date]' showing the exact start time of
      * the ingress.*/
     let MSG_INGRESS_LIST_STARTED_AT_TOOLTIP =
