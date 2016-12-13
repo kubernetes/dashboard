@@ -27,8 +27,8 @@ The UI should help users to understand these concepts and user flows should be d
 the correct usage. 
 
 NOTE: The design proposed in this document will combine certain concepts:
-* ClusterRoles will be referred to as Roles for the namespace "*"
-* ClusterRoleBindings will be referred to as RoleBindings for the namespace "*"
+* ClusterRoles will be referred to as Roles for the namespace "all namespaces"
+* ClusterRoleBindings will be referred to as RoleBindings for the namespace "all namespaces"
 
 ## Use Cases
 
@@ -53,7 +53,7 @@ the user to create a new Role or Binding right away.
 ## Creating a role
 
 Clicking the "+" under the existing Roles will open a dialog. After entering the name and
-picking a namespace ("*" will create a ClusterRole), clicking "Create" will create the Role
+picking a namespace ("all namespaces" will create a ClusterRole), clicking "Create" will create the Role
 and redirect the user to the Role's detail page.
 
 ![Overview](mockups/21-11-2016-access-control/create-role.png)
@@ -61,7 +61,7 @@ and redirect the user to the Role's detail page.
 ## Bind subjects to a role
 
 Clicking the "+" under the existing Bindings will open a dialog. After the selecting the
-target role and the namespace ("*" will create a ClusterRoleBinding), clicking "Create"
+target role and the namespace ("all namespaces" will create a ClusterRoleBinding), clicking "Create"
 will create the Binding and redirect the user to the Binding's detail page.
 
 ![Overview](mockups/21-11-2016-access-control/create-binding.png)
