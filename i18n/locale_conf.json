@@ -1,6 +1,7 @@
 {
   "translations": [
     {"file": "messages-en.xtb", "key": "en"},
-    {"file": "messages-ja.xtb", "key": "ja"}
+    {"file": "messages-ja.xtb", "key": "ja"},
+	{"file": "messages-zh.xtb", "key": "zh"}
   ]
 }
