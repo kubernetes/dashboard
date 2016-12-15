@@ -62,12 +62,14 @@ func getPodStatusStatus(pod api.Pod, warnings []common.Event) string {
 		}
 	}
 
-	if (pod.Status.Phase == api.PodPending || !initialized) && len(warnings) > 0 {
-		return "failed"
-	}
-
 	if initialized && ready {
 		return "success"
+	}
+
+	// If the pod would otherwise be pending but has warning then label it as
+	// failed and show and error to the user.
+	if len(warnings) > 0 {
+		return "failed"
 	}
 
 	// Unknown?
