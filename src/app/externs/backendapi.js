@@ -730,6 +730,7 @@ backendApi.ConditionList;
 /**
  * @typedef {{
  *   podPhase: string,
+ *   status: string,
  *   containerStates: !Array<!backendApi.ContainerState>
  * }}
  */
