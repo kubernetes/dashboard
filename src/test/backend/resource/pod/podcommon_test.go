@@ -41,12 +41,6 @@ func TestToPodPodStatusFailed(t *testing.T) {
 		PodStatus: PodStatus{
 			Status:   "failed",
 			PodPhase: api.PodFailed,
-			PodConditions: []api.PodCondition{
-				api.PodCondition{
-					Type:   api.PodInitialized,
-					Status: api.ConditionTrue,
-				},
-			},
 		},
 	}
 
@@ -79,16 +73,6 @@ func TestToPodPodStatusSuccess(t *testing.T) {
 		PodStatus: PodStatus{
 			Status:   "success",
 			PodPhase: api.PodRunning,
-			PodConditions: []api.PodCondition{
-				api.PodCondition{
-					Type:   api.PodInitialized,
-					Status: api.ConditionTrue,
-				},
-				api.PodCondition{
-					Type:   api.PodReady,
-					Status: api.ConditionTrue,
-				},
-			},
 		},
 	}
 
@@ -117,12 +101,6 @@ func TestToPodPodStatusPending(t *testing.T) {
 		PodStatus: PodStatus{
 			Status:   "pending",
 			PodPhase: api.PodPending,
-			PodConditions: []api.PodCondition{
-				api.PodCondition{
-					Type:   api.PodInitialized,
-					Status: api.ConditionFalse,
-				},
-			},
 		},
 	}
 
