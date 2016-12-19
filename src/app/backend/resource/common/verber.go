@@ -87,7 +87,7 @@ func (verber *ResourceVerber) Delete(kind string, namespace string, name string)
 
 // Put puts new resource version of the given kind in the given namespace with the given name.
 func (verber *ResourceVerber) Put(kind string, namespace string, name string,
-	object runtime.Object) error {
+	object *runtime.Unknown) error {
 
 	resourceSpec, ok := kindToAPIMapping[kind]
 	if !ok {
@@ -100,7 +100,8 @@ func (verber *ResourceVerber) Put(kind string, namespace string, name string,
 		Namespace(namespace).
 		Resource(resourceSpec.Resource).
 		Name(name).
-		Body(object).
+		SetHeader("Content-Type", "application/json").
+		Body([]byte(object.Raw)).
 		Do().
 		Error()
 }
@@ -119,6 +120,7 @@ func (verber *ResourceVerber) Get(kind string, namespace string, name string) (r
 		Namespace(namespace).
 		Resource(resourceSpec.Resource).
 		Name(name).
+		SetHeader("Accept", "application/json").
 		Do().
 		Into(result)
 
