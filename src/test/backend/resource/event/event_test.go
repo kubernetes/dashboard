@@ -236,7 +236,7 @@ func TestRemoveDuplicates(t *testing.T) {
 	}
 }
 
-func TestIsRunningOrSucceeded(t *testing.T) {
+func TestIsReadyOrSucceeded(t *testing.T) {
 	cases := []struct {
 		pod      api.Pod
 		expected bool
@@ -245,6 +245,12 @@ func TestIsRunningOrSucceeded(t *testing.T) {
 			api.Pod{
 				Status: api.PodStatus{
 					Phase: api.PodRunning,
+					Conditions: []api.PodCondition{
+						api.PodCondition{
+							Type:   api.PodReady,
+							Status: api.ConditionTrue,
+						},
+					},
 				},
 			},
 			true,
@@ -273,12 +279,26 @@ func TestIsRunningOrSucceeded(t *testing.T) {
 			},
 			false,
 		},
+		{
+			api.Pod{
+				Status: api.PodStatus{
+					Phase: api.PodRunning,
+					Conditions: []api.PodCondition{
+						api.PodCondition{
+							Type:   api.PodReady,
+							Status: api.ConditionFalse,
+						},
+					},
+				},
+			},
+			false,
+		},
 	}
 
 	for _, c := range cases {
-		actual := isRunningOrSucceeded(c.pod)
+		actual := isReadyOrSucceeded(c.pod)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("isRunningOrSucceded(%#v) == \n%#v\nexpected \n%#v\n",
+			t.Errorf("isReadyOrSucceded(%#v) == \n%#v\nexpected \n%#v\n",
 				c.pod, actual, c.expected)
 		}
 	}
