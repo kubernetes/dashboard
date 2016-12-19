@@ -23,6 +23,94 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 )
 
+func TestToPodPodStatusFailed(t *testing.T) {
+	pod := &api.Pod{
+		Status: api.PodStatus{
+			Phase: api.PodFailed,
+			Conditions: []api.PodCondition{
+				api.PodCondition{
+					Type:   api.PodInitialized,
+					Status: api.ConditionTrue,
+				},
+			},
+		},
+	}
+
+	expected := Pod{
+		TypeMeta: common.TypeMeta{Kind: common.ResourceKindPod},
+		PodStatus: PodStatus{
+			Status:   "failed",
+			PodPhase: api.PodFailed,
+		},
+	}
+
+	actual := ToPod(pod, &common.MetricsByPod{}, []common.Event{})
+
+	if !reflect.DeepEqual(actual, expected) {
+		t.Errorf("ToPod(%#v) == \ngot %#v, \nexpected %#v", pod, actual, expected)
+	}
+}
+
+func TestToPodPodStatusSuccess(t *testing.T) {
+	pod := &api.Pod{
+		Status: api.PodStatus{
+			Phase: api.PodRunning,
+			Conditions: []api.PodCondition{
+				api.PodCondition{
+					Type:   api.PodInitialized,
+					Status: api.ConditionTrue,
+				},
+				api.PodCondition{
+					Type:   api.PodReady,
+					Status: api.ConditionTrue,
+				},
+			},
+		},
+	}
+
+	expected := Pod{
+		TypeMeta: common.TypeMeta{Kind: common.ResourceKindPod},
+		PodStatus: PodStatus{
+			Status:   "success",
+			PodPhase: api.PodRunning,
+		},
+	}
+
+	actual := ToPod(pod, &common.MetricsByPod{}, []common.Event{})
+
+	if !reflect.DeepEqual(actual, expected) {
+		t.Errorf("ToPod(%#v) == \ngot %#v, \nexpected %#v", pod, actual, expected)
+	}
+}
+
+func TestToPodPodStatusPending(t *testing.T) {
+	pod := &api.Pod{
+		Status: api.PodStatus{
+			Phase: api.PodPending,
+			Conditions: []api.PodCondition{
+				api.PodCondition{
+					Type:   api.PodInitialized,
+					Status: api.ConditionFalse,
+				},
+			},
+		},
+	}
+
+	expected := Pod{
+		TypeMeta: common.TypeMeta{Kind: common.ResourceKindPod},
+		PodStatus: PodStatus{
+			Status:   "pending",
+			PodPhase: api.PodPending,
+		},
+	}
+
+	actual := ToPod(pod, &common.MetricsByPod{}, []common.Event{})
+
+	if !reflect.DeepEqual(actual, expected) {
+		t.Errorf("ToPod(%#v) == \ngot %#v, \nexpected %#v", pod, actual, expected)
+	}
+}
+
 // TestToPodContainerStates tests that ToPod returns the correct container states
 func TestToPodContainerStates(t *testing.T) {
 	pod := &api.Pod{
@@ -51,6 +139,7 @@ func TestToPodContainerStates(t *testing.T) {
 		TypeMeta: common.TypeMeta{Kind: common.ResourceKindPod},
 		PodStatus: PodStatus{
 			PodPhase: api.PodRunning,
+			Status:   "pending",
 			ContainerStates: []api.ContainerState{
 				api.ContainerState{
 					Terminated: &api.ContainerStateTerminated{
@@ -66,7 +155,7 @@ func TestToPodContainerStates(t *testing.T) {
 		},
 	}
 
-	actual := ToPod(pod, &common.MetricsByPod{})
+	actual := ToPod(pod, &common.MetricsByPod{}, []common.Event{})
 
 	if !reflect.DeepEqual(actual, expected) {
 		t.Errorf("ToPod(%#v) == \ngot %#v, \nexpected %#v", pod, actual, expected)
@@ -80,8 +169,12 @@ func TestGetPodDetail(t *testing.T) {
 		expected Pod
 	}{
 		{
-			pod: &api.Pod{}, metrics: &common.MetricsByPod{}, expected: Pod{
+			pod: &api.Pod{}, metrics: &common.MetricsByPod{},
+			expected: Pod{
 				TypeMeta: common.TypeMeta{Kind: common.ResourceKindPod},
+				PodStatus: PodStatus{
+					Status: "pending",
+				},
 			},
 		}, {
 			pod: &api.Pod{
@@ -95,12 +188,15 @@ func TestGetPodDetail(t *testing.T) {
 					Name:      "test-pod",
 					Namespace: "test-namespace",
 				},
+				PodStatus: PodStatus{
+					Status: "pending",
+				},
 			},
 		},
 	}
 
 	for _, c := range cases {
-		actual := ToPod(c.pod, c.metrics)
+		actual := ToPod(c.pod, c.metrics, []common.Event{})
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("ToPod(%#v) == \ngot %#v, \nexpected %#v", c.pod, actual,

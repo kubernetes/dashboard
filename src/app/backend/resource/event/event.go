@@ -18,6 +18,7 @@ import (
 	"strings"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"log"
 
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/types"
@@ -41,9 +42,9 @@ func GetPodsEventWarnings(events []api.Event, pods []api.Pod) []common.Event {
 	events = getWarningEvents(events)
 	failedPods := make([]api.Pod, 0)
 
-	// Filter out only 'failed' pods
+	// Filter out ready and successful pods
 	for _, pod := range pods {
-		if !isRunningOrSucceeded(pod) {
+		if !isReadyOrSucceeded(pod) {
 			failedPods = append(failedPods, pod)
 		}
 	}
@@ -79,6 +80,9 @@ func filterEventsByPodsUID(events []api.Event, pods []api.Pod) []api.Event {
 
 	for _, event := range events {
 		if _, exists := podEventMap[event.InvolvedObject.UID]; exists {
+			if event.InvolvedObject.UID == "1651423a-b85d-11e6-b62d-42010af00082" {
+				log.Printf("crashloopbackoff: %v", event)
+			}
 			result = append(result, event)
 		}
 	}
@@ -140,10 +144,20 @@ func removeDuplicates(slice []api.Event) []api.Event {
 	return result
 }
 
-// Returns true if given pod is in state running or succeeded, false otherwise
-func isRunningOrSucceeded(pod api.Pod) bool {
-	switch pod.Status.Phase {
-	case api.PodRunning, api.PodSucceeded:
+// Returns true if given pod is in state ready or succeeded, false otherwise
+func isReadyOrSucceeded(pod api.Pod) bool {
+	if pod.Status.Phase == api.PodSucceeded {
+		return true
+	}
+	if pod.Status.Phase == api.PodRunning {
+		for _, c := range pod.Status.Conditions {
+			if c.Type == api.PodReady {
+				if c.Status == api.ConditionFalse {
+					return false
+				}
+			}
+		}
+
 		return true
 	}
 
