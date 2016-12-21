@@ -21,6 +21,7 @@ import chromeModule from './chrome/chrome_module';
 import configModule from './config/module';
 import configMapDetailModule from './configmapdetail/configmapdetail_module';
 import configMapListModule from './configmaplist/configmaplist_module';
+import csrfTokenModule from './common/csrftoken/csrftoken_module';
 import deployModule from './deploy/deploy_module';
 import deploymentListModule from './deploymentlist/deploymentlist_module';
 import errorModule from './error/error_module';
@@ -95,6 +96,7 @@ export default angular
           ingressDetailModule.name,
           servicesanddiscoveryModule.name,
           configModule.name,
+          csrfTokenModule.name,
         ])
     .config(indexConfig)
     .config(routeConfig);

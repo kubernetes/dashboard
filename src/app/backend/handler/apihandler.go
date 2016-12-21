@@ -15,6 +15,7 @@
 package handler
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -57,6 +58,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/statefulsetlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/workload"
 	"github.com/kubernetes/dashboard/src/app/backend/validation"
+	"golang.org/x/net/xsrftoken"
 	clientK8s "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
 	"k8s.io/kubernetes/pkg/runtime"
@@ -80,6 +82,10 @@ type APIHandler struct {
 	verber         common.ResourceVerber
 }
 
+type CsrfToken struct {
+	Token string `json:"token"`
+}
+
 func wsMetrics(req *restful.Request, resp *restful.Response, chain *restful.FilterChain) {
 	startTime := time.Now()
 	verb := req.Request.Method
@@ -90,6 +96,42 @@ func wsMetrics(req *restful.Request, resp *restful.Response, chain *restful.Filt
 	contentType := resp.Header().Get("Content-Type")
 	if resource != nil {
 		Monitor(verb, *resource, client, contentType, code, startTime)
+	}
+}
+
+// Post requests should set correct X-CSRF-TOKEN header, all other requests
+// should either not edit anything or be already safe to CSRF attacks (PUT
+// and DELETE)
+//
+// Validation handlers are also idempotent functions, and not actual data
+// modification opperations
+func shouldDoCsrfValidation(req *restful.Request) bool {
+	if req.Request.Method != "POST" {
+		return false
+	}
+	if strings.HasPrefix(req.SelectedRoutePath(), "/api/v1/appdeployment/validate/") {
+		return false
+	}
+	return true
+}
+
+func xsrfValidation(client *clientK8s.Clientset) func(*restful.Request, *restful.Response, *restful.FilterChain) {
+
+	return func(req *restful.Request, resp *restful.Response, chain *restful.FilterChain) {
+		resource := mapUrlToResource(req.SelectedRoutePath())
+		if resource == nil || (shouldDoCsrfValidation(req) &&
+			!xsrftoken.Valid(req.HeaderParameter("X-CSRF-TOKEN"),
+				"testkey",
+				"none",
+				*resource)) {
+
+			err := errors.New("CSRF validation failed")
+			log.Print(err)
+			resp.AddHeader("Content-Type", "text/plain")
+			resp.WriteErrorString(http.StatusUnauthorized, err.Error()+"\n")
+		} else {
+			chain.ProcessFilter(req, resp)
+		}
 	}
 }
 
@@ -145,10 +187,16 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 
 	RegisterMetrics()
 	apiV1Ws.Filter(wsMetrics)
+	apiV1Ws.Filter(xsrfValidation(client))
 	apiV1Ws.Path("/api/v1").
 		Consumes(restful.MIME_JSON).
 		Produces(restful.MIME_JSON)
 	wsContainer.Add(apiV1Ws)
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("csrftoken/{action}").
+			To(apiHandler.handleGetCsrfToken).
+			Writes(CsrfToken{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.POST("/appdeployment").
@@ -525,6 +573,14 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 			Writes(persistentvolumeclaim.PersistentVolumeClaimDetail{}))
 
 	return wsContainer
+}
+
+func (apiHandler *APIHandler) handleGetCsrfToken(request *restful.Request,
+	response *restful.Response) {
+	action := request.PathParameter("action")
+	token := xsrftoken.Generate("testkey", "none", action)
+
+	response.WriteHeaderAndEntity(http.StatusOK, CsrfToken{Token: token})
 }
 
 // Handles get pet set list API call.
