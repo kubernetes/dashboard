@@ -72,10 +72,15 @@ func main() {
 		log.Printf("Could not create heapster client: %s. Continuing.", err)
 	}
 
+	apiHandler, err := handler.CreateHTTPAPIHandler(apiserverClient, heapsterRESTClient, config)
+	if err != nil {
+		handleFatalInitError(err)
+	}
+
 	// Run a HTTP server that serves static public files from './public' and handles API calls.
 	// TODO(bryk): Disable directory listing.
 	http.Handle("/", handler.MakeGzipHandler(handler.CreateLocaleHandler()))
-	http.Handle("/api/", handler.CreateHTTPAPIHandler(apiserverClient, heapsterRESTClient, config))
+	http.Handle("/api/", apiHandler)
 	// TODO(maciaszczykm): Move to /appConfig.json as it was discussed in #640.
 	http.Handle("/api/appConfig.json", handler.AppHandler(handler.ConfigHandler))
 	http.Handle("/metrics", prometheus.Handler())

@@ -176,7 +176,7 @@ func FormatResponseLog(resp *restful.Response, req *restful.Request) string {
 
 // CreateHTTPAPIHandler creates a new HTTP handler that handles all requests to the API of the backend.
 func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.HeapsterClient,
-	clientConfig clientcmd.ClientConfig) http.Handler {
+	clientConfig clientcmd.ClientConfig) (http.Handler, error) {
 
 	verber := common.NewResourceVerber(client.Core().RESTClient(),
 		client.ExtensionsClient.RESTClient(), client.AppsClient.RESTClient(),
@@ -194,7 +194,7 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 		bytes := make([]byte, 256)
 		_, err := rand.Read(bytes)
 		if err != nil {
-			panic(err)
+			return nil, err
 		}
 		csrfKey = string(bytes)
 	}
@@ -593,7 +593,7 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 			To(apiHandler.handleGetPersistentVolumeClaimDetail).
 			Writes(persistentvolumeclaim.PersistentVolumeClaimDetail{}))
 
-	return wsContainer
+	return wsContainer, nil
 }
 
 func (apiHandler *APIHandler) handleGetCsrfToken(request *restful.Request,
