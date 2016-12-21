@@ -64,9 +64,19 @@ export default function stateConfig($stateProvider) {
  * @ngInject
  */
 export function getReplicationControllerSpecPodsResource($stateParams, $resource) {
+  return getReplicationControllerSpecPodsResourceWithActions($stateParams, $resource);
+}
+
+/**
+ * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
+ * @param {!angular.$resource} $resource
+ * @param {!Object.<Object>=} actions
+ * @return {!angular.Resource<!backendApi.ReplicationControllerSpec>}
+ */
+export function getReplicationControllerSpecPodsResourceWithActions($stateParams, $resource, actions = {}) {
   return $resource(
       `api/v1/replicationcontroller/${$stateParams.objectNamespace}/` +
-      `${$stateParams.objectName}/update/pod`);
+      `${$stateParams.objectName}/update/pod`, {}, actions);
 }
 
 /**
