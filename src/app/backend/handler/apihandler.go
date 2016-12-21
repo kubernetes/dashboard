@@ -15,6 +15,7 @@
 package handler
 
 import (
+	"crypto/rand"
 	"errors"
 	"fmt"
 	"log"
@@ -60,6 +61,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/validation"
 	"golang.org/x/net/xsrftoken"
 	clientK8s "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	"k8s.io/kubernetes/pkg/client/restclient"
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
 	"k8s.io/kubernetes/pkg/runtime"
 	utilnet "k8s.io/kubernetes/pkg/util/net"
@@ -80,6 +82,7 @@ type APIHandler struct {
 	heapsterClient client.HeapsterClient
 	clientConfig   clientcmd.ClientConfig
 	verber         common.ResourceVerber
+	csrfKey        string
 }
 
 type CsrfToken struct {
@@ -115,13 +118,13 @@ func shouldDoCsrfValidation(req *restful.Request) bool {
 	return true
 }
 
-func xsrfValidation(client *clientK8s.Clientset) func(*restful.Request, *restful.Response, *restful.FilterChain) {
+func xsrfValidation(csrfKey string) func(*restful.Request, *restful.Response, *restful.FilterChain) {
 
 	return func(req *restful.Request, resp *restful.Response, chain *restful.FilterChain) {
 		resource := mapUrlToResource(req.SelectedRoutePath())
 		if resource == nil || (shouldDoCsrfValidation(req) &&
 			!xsrftoken.Valid(req.HeaderParameter("X-CSRF-TOKEN"),
-				"testkey",
+				csrfKey,
 				"none",
 				*resource)) {
 
@@ -178,7 +181,25 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 	verber := common.NewResourceVerber(client.Core().RESTClient(),
 		client.ExtensionsClient.RESTClient(), client.AppsClient.RESTClient(),
 		client.BatchClient.RESTClient(), client.AutoscalingClient.RESTClient())
-	apiHandler := APIHandler{client, heapsterClient, clientConfig, verber}
+
+	var csrfKey string
+	inClusterConfig, err := restclient.InClusterConfig()
+	if err == nil {
+		// We run in a cluster, so we should use a signing key that is the same for potential replications
+		log.Printf("Using service account token for csrf signing")
+		csrfKey = inClusterConfig.BearerToken
+	} else {
+		// Most likely running for a dev, so no replica issues, just generate a random key
+		log.Printf("Using random key for csrf signing")
+		bytes := make([]byte, 256)
+		_, err := rand.Read(bytes)
+		if err != nil {
+			panic(err)
+		}
+		csrfKey = string(bytes)
+	}
+
+	apiHandler := APIHandler{client, heapsterClient, clientConfig, verber, csrfKey}
 	wsContainer := restful.NewContainer()
 	wsContainer.EnableContentEncoding(true)
 
@@ -187,7 +208,7 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 
 	RegisterMetrics()
 	apiV1Ws.Filter(wsMetrics)
-	apiV1Ws.Filter(xsrfValidation(client))
+	apiV1Ws.Filter(xsrfValidation(csrfKey))
 	apiV1Ws.Path("/api/v1").
 		Consumes(restful.MIME_JSON).
 		Produces(restful.MIME_JSON)
@@ -578,7 +599,7 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 func (apiHandler *APIHandler) handleGetCsrfToken(request *restful.Request,
 	response *restful.Response) {
 	action := request.PathParameter("action")
-	token := xsrftoken.Generate("testkey", "none", action)
+	token := xsrftoken.Generate(apiHandler.csrfKey, "none", action)
 
 	response.WriteHeaderAndEntity(http.StatusOK, CsrfToken{Token: token})
 }
