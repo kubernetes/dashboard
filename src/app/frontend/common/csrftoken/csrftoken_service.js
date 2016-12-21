@@ -31,10 +31,11 @@ export class CsrfTokenService {
    * @returns {!angular.$q.Promise}
    */
   getTokenForAction(action) {
-    return this.http_.get(`api/v1/csrftoken/${action}`).then(
-        /** !angular.$http.Response<backendApi.CsrfToken>*/ obj => {
-      console.log("http get returned", obj.data);
-      return obj.data.token;
-    });
+    return this.http_.get(`api/v1/csrftoken/${action}`)
+        .then(
+            /** !angular.$http.Response<backendApi.CsrfToken>*/ obj => {
+              console.log('http get returned', obj.data);
+              return obj.data.token;
+            });
   }
 }

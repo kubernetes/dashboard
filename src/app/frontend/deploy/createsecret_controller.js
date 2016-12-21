@@ -83,7 +83,7 @@ export default class CreateSecretController {
         new RegExp('^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$');
 
     /** @private {!angular.$q.Promise} */
-    this.tokenPromise = kdCsrfTokenService.getTokenForAction("secret");
+    this.tokenPromise = kdCsrfTokenService.getTokenForAction('secret');
   }
 
   /**
@@ -107,15 +107,11 @@ export default class CreateSecretController {
       namespace: this.namespace,
       data: this.data,
     };
-    this.tokenPromise
-        .then((token) => {
+    this.tokenPromise.then(
+        (token) => {
           /** @type {!angular.Resource<!backendApi.SecretSpec>} */
-          let resource = this.resource_(`api/v1/secret/`, {}, {
-            save: {
-              method: 'POST',
-              headers: { 'X-CSRF-TOKEN': token }
-            }
-          });
+          let resource = this.resource_(
+              `api/v1/secret/`, {}, {save: {method: 'POST', headers: {'X-CSRF-TOKEN': token}}});
 
           resource.save(
               secretSpec,

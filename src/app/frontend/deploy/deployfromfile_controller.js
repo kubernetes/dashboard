@@ -72,7 +72,7 @@ export default class DeployFromFileController {
     this.mdDialog_ = $mdDialog;
 
     /** @private {!angular.$q.Promise} */
-    this.tokenPromise = kdCsrfTokenService.getTokenForAction("appdeploymentfromfile");
+    this.tokenPromise = kdCsrfTokenService.getTokenForAction('appdeploymentfromfile');
 
     /** @export */
     this.i18n = i18n;
@@ -94,15 +94,12 @@ export default class DeployFromFileController {
 
       let defer = this.q_.defer();
 
-      this.tokenPromise
-          .then((token) => {
+      this.tokenPromise.then(
+          (token) => {
             /** @type {!angular.Resource<!backendApi.AppDeploymentFromFileSpec>} */
-            let resource = this.resource_('api/v1/appdeploymentfromfile', {}, {
-              save: {
-                method: 'POST',
-                headers: { 'X-CSRF-TOKEN': token }
-              }
-            });
+            let resource = this.resource_(
+                'api/v1/appdeploymentfromfile', {},
+                {save: {method: 'POST', headers: {'X-CSRF-TOKEN': token}}});
             this.isDeployInProgress_ = true;
             resource.save(
                 deploymentSpec,

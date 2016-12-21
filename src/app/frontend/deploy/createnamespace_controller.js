@@ -69,7 +69,7 @@ export default class NamespaceDialogController {
     this.namespaceForm;
 
     /** @private {!angular.$q.Promise} */
-    this.tokenPromise = kdCsrfTokenService.getTokenForAction("namespace");
+    this.tokenPromise = kdCsrfTokenService.getTokenForAction('namespace');
   }
 
   /**
@@ -99,15 +99,11 @@ export default class NamespaceDialogController {
     /** @type {!backendApi.NamespaceSpec} */
     let namespaceSpec = {name: this.namespace};
 
-    this.tokenPromise
-        .then((token) => {
+    this.tokenPromise.then(
+        (token) => {
           /** @type {!angular.Resource<!backendApi.NamespaceSpec>} */
-          let resource = this.resource_('api/v1/namespace', {}, {
-            save: {
-              method: 'POST',
-              headers: { 'X-CSRF-TOKEN': token }
-            }
-          });
+          let resource = this.resource_(
+              'api/v1/namespace', {}, {save: {method: 'POST', headers: {'X-CSRF-TOKEN': token}}});
 
           resource.save(
               namespaceSpec,

@@ -184,7 +184,7 @@ export default class DeployFromSettingsController {
     this.isDeployInProgress_ = false;
 
     /** @private {!angular.$q.Promise} */
-    this.tokenPromise = kdCsrfTokenService.getTokenForAction("appdeployment");
+    this.tokenPromise = kdCsrfTokenService.getTokenForAction('appdeployment');
 
     /**
      * @export
@@ -239,15 +239,12 @@ export default class DeployFromSettingsController {
 
       let defer = this.q_.defer();
 
-      this.tokenPromise
-          .then((token) => {
+      this.tokenPromise.then(
+          (token) => {
             /** @type {!angular.Resource<!backendApi.AppDeploymentSpec>} */
-            let resource = this.resource_('api/v1/appdeployment', {}, {
-              save: {
-                method: 'POST',
-                headers: { 'X-CSRF-TOKEN': token }
-              }
-            });
+            let resource = this.resource_(
+                'api/v1/appdeployment', {},
+                {save: {method: 'POST', headers: {'X-CSRF-TOKEN': token}}});
             this.isDeployInProgress_ = true;
             resource.save(
                 appDeploymentSpec,

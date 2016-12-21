@@ -34,8 +34,8 @@ export default class UpdateReplicasDialogController {
    * @ngInject
    */
   constructor(
-      $mdDialog, $log, $state, $resource, kdCsrfTokenService, namespace, replicationController, currentPods,
-      desiredPods) {
+      $mdDialog, $log, $state, $resource, kdCsrfTokenService, namespace, replicationController,
+      currentPods, desiredPods) {
     /** @export {number} */
     this.replicas;
 
@@ -67,7 +67,7 @@ export default class UpdateReplicasDialogController {
     this.updateReplicasForm;
 
     /** @private {!angular.$q.Promise} */
-    this.tokenPromise = kdCsrfTokenService.getTokenForAction("replicationcontroller");
+    this.tokenPromise = kdCsrfTokenService.getTokenForAction('replicationcontroller');
   }
 
   /**
@@ -77,24 +77,19 @@ export default class UpdateReplicasDialogController {
    */
   updateReplicas() {
     if (this.updateReplicasForm.$valid) {
-      this.tokenPromise
-          .then((token) => {
-            let resource = getReplicationControllerSpecPodsResourceWithActions(
-                new StateParams(this.namespace_, this.replicationController), this.resource_, {
-                  save: {
-                    method: 'POST',
-                    headers: { 'X-CSRF-TOKEN': token }
-                  }
-                });
+      this.tokenPromise.then((token) => {
+        let resource = getReplicationControllerSpecPodsResourceWithActions(
+            new StateParams(this.namespace_, this.replicationController), this.resource_,
+            {save: {method: 'POST', headers: {'X-CSRF-TOKEN': token}}});
 
-            /** @type {!backendApi.ReplicationControllerSpec} */
-            let replicationControllerSpec = {
-              replicas: this.replicas,
-            };
-            resource.save(
-                replicationControllerSpec, this.onUpdateReplicasSuccess_.bind(this),
-                this.onUpdateReplicasError_.bind(this));
-          }, this.onUpdateReplicasError_.bind(this));
+        /** @type {!backendApi.ReplicationControllerSpec} */
+        let replicationControllerSpec = {
+          replicas: this.replicas,
+        };
+        resource.save(
+            replicationControllerSpec, this.onUpdateReplicasSuccess_.bind(this),
+            this.onUpdateReplicasError_.bind(this));
+      }, this.onUpdateReplicasError_.bind(this));
     }
   }
 
