@@ -30,9 +30,10 @@ export default class DeployFromFileController {
    * @param {!Object} errorDialog
    * @param {!./../common/history/history_service.HistoryService} kdHistoryService
    * @param {!md.$dialog} $mdDialog
+   * @param {!./../common/csrftoken/csrftoken_service.CsrfTokenService} kdCsrfTokenService
    * @ngInject
    */
-  constructor($log, $resource, $q, errorDialog, kdHistoryService, $mdDialog) {
+  constructor($log, $resource, $q, errorDialog, kdHistoryService, $mdDialog, kdCsrfTokenService) {
     /**
      * Initialized the template.
      * @export {!angular.FormController}
@@ -70,6 +71,9 @@ export default class DeployFromFileController {
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
 
+    /** @private {!angular.$q.Promise} */
+    this.tokenPromise = kdCsrfTokenService.getTokenForAction("appdeploymentfromfile");
+
     /** @export */
     this.i18n = i18n;
   }
@@ -90,28 +94,41 @@ export default class DeployFromFileController {
 
       let defer = this.q_.defer();
 
-      /** @type {!angular.Resource<!backendApi.AppDeploymentFromFileSpec>} */
-      let resource = this.resource_('api/v1/appdeploymentfromfile');
-      this.isDeployInProgress_ = true;
-      resource.save(
-          deploymentSpec,
-          (response) => {
-            defer.resolve(response);  // Progress ends
-            this.log_.info('Deployment is completed: ', response);
-            if (response.error.length > 0) {
-              this.errorDialog_.open('Deployment has been partly completed', response.error);
-            }
-            this.kdHistoryService_.back(workloads);
+      this.tokenPromise
+          .then((token) => {
+            /** @type {!angular.Resource<!backendApi.AppDeploymentFromFileSpec>} */
+            let resource = this.resource_('api/v1/appdeploymentfromfile', {}, {
+              save: {
+                method: 'POST',
+                headers: { 'X-CSRF-TOKEN': token }
+              }
+            });
+            this.isDeployInProgress_ = true;
+            resource.save(
+                deploymentSpec,
+                (response) => {
+                  defer.resolve(response);  // Progress ends
+                  this.log_.info('Deployment is completed: ', response);
+                  if (response.error.length > 0) {
+                    this.errorDialog_.open('Deployment has been partly completed', response.error);
+                  }
+                  this.kdHistoryService_.back(workloads);
+                },
+                (err) => {
+                  defer.reject(err);  // Progress ends
+                  if (this.hasValidationError_(err.data)) {
+                    this.handleDeployAnywayDialog_(err.data);
+                  } else {
+                    this.log_.error('Error deploying application:', err);
+                    this.errorDialog_.open(this.i18n.MSG_DEPLOY_DIALOG_ERROR, err.data);
+                  }
+                });
           },
           (err) => {
-            defer.reject(err);  // Progress ends
-            if (this.hasValidationError_(err.data)) {
-              this.handleDeployAnywayDialog_(err.data);
-            } else {
-              this.log_.error('Error deploying application:', err);
-              this.errorDialog_.open(this.i18n.MSG_DEPLOY_DIALOG_ERROR, err.data);
-            }
+            defer.reject(err);
+            this.log_.error('Error deploying application:', err);
           });
+
       defer.promise.finally(() => {
         this.isDeployInProgress_ = false;
       });
