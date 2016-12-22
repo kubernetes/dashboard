@@ -20,6 +20,7 @@ import eventsModule from 'events/events_module';
 import logsModule from 'logs/logs_module';
 import podListModule from 'podlist/podlist_module';
 import serviceListModule from 'servicelist/servicelist_module';
+import csrfTokenModule from 'common/csrftoken/csrftoken_module';
 
 import {ReplicationControllerService} from './replicationcontroller_service';
 import stateConfig from './replicationcontrollerdetail_stateconfig';
@@ -46,6 +47,7 @@ export default angular
           serviceListModule.name,
           eventsModule.name,
           resourceModule.name,
+          csrfTokenModule.name,
         ])
     .config(stateConfig)
     .component('kdReplicationControllerInfo', replicationControllerInfoComponent)

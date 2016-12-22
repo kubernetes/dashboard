@@ -1222,7 +1222,7 @@ backendApi.Controller;
  *   token: string
  * }}
  */
-backendApi.CsrfToken
+backendApi.CsrfToken;
 
 /** @typedef {{serverTime: number}} */
 const appConfig_DO_NOT_USE_DIRECTLY = {};

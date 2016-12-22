@@ -36,7 +36,7 @@ describe('DeployFromFile controller', () => {
   beforeEach(() => {
     angular.mock.module(deployModule.name);
 
-    angular.mock.inject(($controller, $httpBackend, $resource, $mdDialog, $q, $rootScope) => {
+    angular.mock.inject(($controller, $httpBackend, $resource, $mdDialog, _kdCsrfTokenService_, $q, $rootScope) => {
       mockResource = jasmine.createSpy('$resource');
       resource = $resource;
       mdDialog = $mdDialog;
@@ -46,8 +46,9 @@ describe('DeployFromFile controller', () => {
         $valid: true,
       };
       ctrl = $controller(
-          DeployFromFileController, {$resource: mockResource, $mdDialog: mdDialog}, {form: form});
+          DeployFromFileController, {$resource: mockResource, $mdDialog: mdDialog, kdCsrfTokenService: _kdCsrfTokenService_}, {form: form});
       httpBackend = $httpBackend;
+      httpBackend.expectGET('api/v1/csrftoken/appdeploymentfromfile').respond(200, '{"token": "x"}');
     });
   });
 
@@ -58,7 +59,7 @@ describe('DeployFromFile controller', () => {
     };
     ctrl.file.name = 'test.yaml';
     ctrl.file.content = 'test_content';
-    mockResource.and.returnValue(resourceObject);
+    mockResource.and.callFake(() => resourceObject);
     resourceObject.save.and.callFake((spec) => {
       // then
       expect(spec.name).toBe('test.yaml');
@@ -66,6 +67,7 @@ describe('DeployFromFile controller', () => {
     });
     // when
     ctrl.deploy();
+    httpBackend.flush(1);
 
     // then
     expect(resourceObject.save).toHaveBeenCalled();
@@ -83,6 +85,7 @@ describe('DeployFromFile controller', () => {
     mockResource.and.callFake(resource);
     expect(ctrl.isDeployDisabled()).toBe(false);
     ctrl.deploy();
+    httpBackend.flush(1);
     expect(ctrl.isDeployDisabled()).toBe(true);
     httpBackend.flush();
     expect(ctrl.isDeployDisabled()).toBe(false);
