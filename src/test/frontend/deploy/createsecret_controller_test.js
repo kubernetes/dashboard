@@ -92,7 +92,7 @@ describe('Create-Secret dialog', () => {
     // when trying to submit
     ctrl.createSecret();
 
-    httpBackend.flush(1); // flush the get for the token.
+    httpBackend.flush(1);  // flush the get for the token.
     // then form data was not sent to backend (thus flush will throw error)
     expect(httpBackend.flush).toThrow();
   });

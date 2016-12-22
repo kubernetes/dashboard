@@ -36,20 +36,27 @@ describe('DeployFromFile controller', () => {
   beforeEach(() => {
     angular.mock.module(deployModule.name);
 
-    angular.mock.inject(($controller, $httpBackend, $resource, $mdDialog, _kdCsrfTokenService_, $q, $rootScope) => {
-      mockResource = jasmine.createSpy('$resource');
-      resource = $resource;
-      mdDialog = $mdDialog;
-      q = $q;
-      scope = $rootScope.$new();
-      form = {
-        $valid: true,
-      };
-      ctrl = $controller(
-          DeployFromFileController, {$resource: mockResource, $mdDialog: mdDialog, kdCsrfTokenService: _kdCsrfTokenService_}, {form: form});
-      httpBackend = $httpBackend;
-      httpBackend.expectGET('api/v1/csrftoken/appdeploymentfromfile').respond(200, '{"token": "x"}');
-    });
+    angular.mock.inject(
+        ($controller, $httpBackend, $resource, $mdDialog, _kdCsrfTokenService_, $q, $rootScope) => {
+          mockResource = jasmine.createSpy('$resource');
+          resource = $resource;
+          mdDialog = $mdDialog;
+          q = $q;
+          scope = $rootScope.$new();
+          form = {
+            $valid: true,
+          };
+          ctrl = $controller(
+              DeployFromFileController, {
+                $resource: mockResource,
+                $mdDialog: mdDialog,
+                kdCsrfTokenService: _kdCsrfTokenService_,
+              },
+              {form: form});
+          httpBackend = $httpBackend;
+          httpBackend.expectGET('api/v1/csrftoken/appdeploymentfromfile')
+              .respond(200, '{"token": "x"}');
+        });
   });
 
   it('should deploy with file name and content', () => {

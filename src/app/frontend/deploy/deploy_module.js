@@ -13,9 +13,9 @@
 // limitations under the License.
 
 import componentsModule from 'common/components/components_module';
+import csrfTokenModule from 'common/csrftoken/csrftoken_module';
 import historyModule from 'common/history/history_module';
 import validatorsModule from 'common/validators/validators_module';
-import csrfTokenModule from 'common/csrftoken/csrftoken_module';
 
 import errorHandlingModule from '../common/errorhandling/errorhandling_module';
 

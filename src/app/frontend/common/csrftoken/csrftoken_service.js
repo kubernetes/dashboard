@@ -33,8 +33,6 @@ export class CsrfTokenService {
   getTokenForAction(action) {
     return this.http_.get(`api/v1/csrftoken/${action}`)
         .then(
-            /** !angular.$http.Response<backendApi.CsrfToken>*/ obj => {
-              return obj.data.token;
-            });
+            /** !angular.$http.Response<backendApi.CsrfToken>*/ (obj) => obj.data.token);
   }
 }
