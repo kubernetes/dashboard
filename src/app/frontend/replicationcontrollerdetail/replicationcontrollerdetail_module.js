@@ -14,6 +14,7 @@
 
 import chromeModule from 'chrome/chrome_module';
 import componentsModule from 'common/components/components_module';
+import csrfTokenModule from 'common/csrftoken/csrftoken_module';
 import filtersModule from 'common/filters/filters_module';
 import resourceModule from 'common/resource/resource_module';
 import eventsModule from 'events/events_module';
@@ -46,6 +47,7 @@ export default angular
           serviceListModule.name,
           eventsModule.name,
           resourceModule.name,
+          csrfTokenModule.name,
         ])
     .config(stateConfig)
     .component('kdReplicationControllerInfo', replicationControllerInfoComponent)
