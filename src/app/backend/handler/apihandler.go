@@ -105,13 +105,12 @@ func wsMetrics(req *restful.Request, resp *restful.Response, chain *restful.Filt
 // Post requests should set correct X-CSRF-TOKEN header, all other requests
 // should either not edit anything or be already safe to CSRF attacks (PUT
 // and DELETE)
-//
-// Validation handlers are also idempotent functions, and not actual data
-// modification opperations
 func shouldDoCsrfValidation(req *restful.Request) bool {
 	if req.Request.Method != "POST" {
 		return false
 	}
+	// Validation handlers are idempotent functions, and not actual data
+	// modification opperations
 	if strings.HasPrefix(req.SelectedRoutePath(), "/api/v1/appdeployment/validate/") {
 		return false
 	}
