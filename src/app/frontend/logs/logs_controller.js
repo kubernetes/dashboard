@@ -278,7 +278,7 @@ export class LogsController {
 
   /**
    * Find Pod by name.
-   * Return object or undefined if can not find a object.
+   * Return object or undefined if can not find an object.
    * @param {!Array<!backendApi.ReplicationControllerPodWithContainers>} array
    * @param {!string} name
    * @return {!backendApi.ReplicationControllerPodWithContainers|undefined}
@@ -295,7 +295,7 @@ export class LogsController {
 
   /**
    * Find Container by name.
-   * Return object or undefined if can not find a object.
+   * Return object or undefined if can not find an object.
    * @param {!Array<!backendApi.PodContainer>} array
    * @param {string} name
    * @return {!backendApi.PodContainer}

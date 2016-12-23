@@ -35,7 +35,7 @@ type ImageReferenceValidity struct {
 
 // ValidateImageReference validates image reference.
 func ValidateImageReference(spec *ImageReferenceValiditySpec) (*ImageReferenceValidity, error) {
-	log.Printf("Validating %s as a image reference", spec.Reference)
+	log.Printf("Validating %s as an image reference", spec.Reference)
 
 	s := spec.Reference
 	_, err := distreference.ParseNamed(s)
