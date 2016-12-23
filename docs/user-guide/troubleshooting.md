@@ -204,7 +204,7 @@ spec:
           mountPath: "/etc/kubernetes/"
           readOnly: true
         args:
-          - --kubeconfig=/etc/kuberentes/kubeconfig.yaml
+          - --kubeconfig=/etc/kubernetes/kubeconfig.yaml
         livenessProbe:
           httpGet:
             path: /
