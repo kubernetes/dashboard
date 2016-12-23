@@ -41,7 +41,7 @@ type StatefulSetList struct {
 }
 
 // StatefulSet is a presentation layer view of Kubernetes Pet Set resource. This means it is Pet Set
-// plus additional augumented data we can get from other sources (like services that target the
+// plus additional augmented data we can get from other sources (like services that target the
 // same pods).
 type StatefulSet struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`

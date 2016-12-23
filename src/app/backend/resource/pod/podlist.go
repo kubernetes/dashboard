@@ -44,7 +44,7 @@ type PodStatus struct {
 }
 
 // Pod is a presentation layer view of Kubernetes Pod resource. This means
-// it is Pod plus additional augumented data we can get from other sources
+// it is Pod plus additional augmented data we can get from other sources
 // (like services that target it).
 type Pod struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`

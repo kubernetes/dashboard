@@ -123,7 +123,7 @@ describe('Create-Secret dialog', () => {
     ctrl.secretForm.$valid = true;
     /** @type {string} */
     let errorMessage = 'Something bad happened';
-    // return an erranous response
+    // return an erroneous response
     httpBackend.expectPOST('api/v1/secret').respond(500, errorMessage);
     // when
     ctrl.createSecret();

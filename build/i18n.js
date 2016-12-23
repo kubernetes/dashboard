@@ -91,7 +91,7 @@ gulp.task('buildExistingI18nCache', function() {
 /**
  * Extracts all translation messages into XTB bundles.
  *
- * Cleans up the data from the previous run to prevent crosspolination between
+ * Cleans up the data from the previous run to prevent cross-pollination between
  * branches
  */
 gulp.task(

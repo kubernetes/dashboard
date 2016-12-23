@@ -36,7 +36,7 @@ import (
 )
 
 // PodDetail is a presentation layer view of Kubernetes PodDetail resource.
-// This means it is PodDetail plus additional augumented data we can get
+// This means it is PodDetail plus additional augmented data we can get
 // from other sources (like services that target it).
 type PodDetail struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
