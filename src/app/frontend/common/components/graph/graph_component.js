@@ -140,7 +140,7 @@ export class GraphController {
       }
 
       // hack to fix tooltip to use appropriate formatters instead of raw numbers.
-      // d is the value to be formatted, tooltip_row_index is a index of a row in tooltip that is
+      // d is the value to be formatted, tooltip_row_index is an index of a row in tooltip that is
       // being formatted.
       chart.interactiveLayer.tooltip.valueFormatter(function(d, tooltip_row_index) {
         let notDisabledMetrics = data.filter((e) => !e.disabled);

@@ -22,7 +22,7 @@ import (
 	"time"
 )
 
-// AppHandler is a application handler.
+// AppHandler is an application handler.
 type AppHandler func(http.ResponseWriter, *http.Request) (int, error)
 
 // AppConfig is a global configuration of application.
