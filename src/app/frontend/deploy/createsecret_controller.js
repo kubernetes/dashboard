@@ -76,7 +76,7 @@ export default class CreateSecretController {
         new RegExp('^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$');
 
     /**
-     * Pattern validating if the secret's data is Base64 encoded.
+     * Pattern validating if the secret data is Base64 encoded.
      * @export {!RegExp}
      */
     this.dataPattern =

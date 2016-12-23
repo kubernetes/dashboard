@@ -110,7 +110,7 @@ func shouldDoCsrfValidation(req *restful.Request) bool {
 		return false
 	}
 	// Validation handlers are idempotent functions, and not actual data
-	// modification opperations
+	// modification operations
 	if strings.HasPrefix(req.SelectedRoutePath(), "/api/v1/appdeployment/validate/") {
 		return false
 	}
@@ -1662,7 +1662,7 @@ func (apiHandler *APIHandler) handleGetJobEvents(request *restful.Request, respo
 	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
-// parseNamespacePathParameter parses namespace selector for list pages in path paramater.
+// parseNamespacePathParameter parses namespace selector for list pages in path parameter.
 // The namespace selector is a comma separated list of namespaces that are trimmed.
 // No namespaces means "view all user namespaces", i.e., everything except kube-system.
 func parseNamespacePathParameter(request *restful.Request) *common.NamespaceQuery {
