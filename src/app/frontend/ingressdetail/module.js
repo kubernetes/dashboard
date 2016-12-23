@@ -24,7 +24,7 @@ import {ingressInfoComponent} from './info_component';
 /**
  * Angular module for the Ingress details view.
  *
- * The view shows detailed view of a Ingress.
+ * The view shows detailed view of an Ingress.
  */
 export default angular
     .module(
