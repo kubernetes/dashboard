@@ -32,7 +32,7 @@ spec:
     metadata:
       labels:
         app: kubernetes-dashboard
-      # Comment the following annotaion if Dashboard must not be deployed on master
+      # Comment the following annotation if Dashboard must not be deployed on master
       annotations:
         scheduler.alpha.kubernetes.io/tolerations: |
           [

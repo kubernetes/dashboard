@@ -41,7 +41,7 @@ type JobList struct {
 }
 
 // Job is a presentation layer view of Kubernetes Job resource. This means
-// it is Job plus additional augumented data we can get from other sources
+// it is Job plus additional augmented data we can get from other sources
 type Job struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
 	TypeMeta   common.TypeMeta   `json:"typeMeta"`

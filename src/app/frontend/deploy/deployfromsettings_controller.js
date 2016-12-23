@@ -471,7 +471,7 @@ const i18n = {
      This text must end with a colon. */
   MSG_DEPLOY_SETTINGS_CONTAINER_IMAGE_INVALID_WARNING: goog.getMsg(`Container image is invalid:`),
 
-  /** @export {string} @desc User helpfor the container image input on the deploy from settings
+  /** @export {string} @desc User help for the container image input on the deploy from settings
      page.*/
   MSG_DEPLOY_SETTINGS_CONTAINER_IMAGE_USER_HELP: goog.getMsg(
       `Enter the URL of a public image on any registry, or a private image hosted on Docker Hub or Google Container Registry.`),

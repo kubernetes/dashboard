@@ -169,7 +169,7 @@ func (self *DataSelector) GetCumulativeMetrics(heapsterClient *client.HeapsterCl
 	return self
 }
 
-// Paginate paginetes the data inside as instructed by DataSelectQuery and returns itself to allow method chaining.
+// Paginates the data inside as instructed by DataSelectQuery and returns itself to allow method chaining.
 func (self *DataSelector) Paginate() *DataSelector {
 	pQuery := self.DataSelectQuery.PaginationQuery
 	dataList := self.GenericDataList

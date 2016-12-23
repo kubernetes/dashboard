@@ -34,7 +34,7 @@ type NamespaceList struct {
 }
 
 // Namespace is a presentation layer view of Kubernetes namespaces. This means it is namespace plus
-// additional augumented data we can get from other sources.
+// additional augmented data we can get from other sources.
 type Namespace struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
 	TypeMeta   common.TypeMeta   `json:"typeMeta"`

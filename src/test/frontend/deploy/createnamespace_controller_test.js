@@ -107,7 +107,7 @@ describe('Create-Namespace dialog', () => {
     ctrl.namespaceForm.$valid = true;
     /** @type {string} */
     let errorMessage = 'Something bad happened';
-    // return an erranous response
+    // return an erroneous response
     httpBackend.expectPOST('api/v1/namespace').respond(500, errorMessage);
     // when
     ctrl.createNamespace();
