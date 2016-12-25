@@ -218,10 +218,10 @@
   <translation id="154697142424633773" key="MSG_DEPLOY_CREATESECRET_13" desc="The text is put on the \'Create\' button in the image pull secret creation dialog.">新建</translation>
   <translation id="510104349248988878" key="MSG_DEPLOY_CREATESECRET_14" desc="The text is put on the \'Cancel\' button in the image pull secret creation dialog.">取消</translation>
   <translation id="482504774825622329" key="MSG_DEPLOY_CREATESECRET_2" desc="Label \'Secret name\', which appears as a placeholder in an empty input field in the image pull secret creation dialog.">保密项字典名称</translation>
-  <translation id="5625985820935145476" key="MSG_DEPLOY_CREATESECRET_3" desc="The text appears when the image pull secret name does not match the expected pattern.">名称必须符合DNS的命名方法。</translation>
+  <translation id="5625985820935145476" key="MSG_DEPLOY_CREATESECRET_3" desc="The text appears when the image pull secret name does not match the expected pattern.">Name must follow the DNS domain name syntax (e.g. new.image-pull.secret).</translation>
   <translation id="8432321067200178542" key="MSG_DEPLOY_CREATESECRET_4" desc="The text appears when the image pull secret name exceeds the maximal length.">称谓至少需要{{::$ctrl.secretNameMaxLength}}个字符。</translation>
   <translation id="2645557912444390195" key="MSG_DEPLOY_CREATESECRET_5" desc="Warning which tells the user that the image pull secret name is required.">称谓不可忽略</translation>
-  <translation id="820271801241880969" key="MSG_DEPLOY_CREATESECRET_6" desc="User help text for the create image pull secret dialog. Directly after this text a specific namespace is specified.">保密项字典将加入集群的名字空间里。</translation>
+  <translation id="820271801241880969" key="MSG_DEPLOY_CREATESECRET_6" desc="User help text for the create image pull secret dialog. Directly after this text a specific namespace is specified.">A secret with the specified name will be added to the cluster in the namespace.</translation>
   <translation id="6202008128107748286" key="MSG_DEPLOY_CREATESECRET_7" desc="The text is used as a \'Learn more\' link text in the image pull secret creation dialog.">了解更多</translation>
   <translation id="8430658980524128790" key="MSG_DEPLOY_CREATESECRET_8" desc="Label \'Image pull secret data\', which appears as a placeholder in an empty input field in the image pull secret creation dialog.">镜像获取保密项字典数据</translation>
   <translation id="7102498341704518355" key="MSG_DEPLOY_CREATESECRET_9" desc="Warning which tells the user that the image pull secret data is required.">数据不能忽略</translation>
@@ -366,7 +366,7 @@
   <translation id="413516354763358070" key="MSG_IMAGE_PULL_SECRET_CREATE_ACTION" desc="The text is put on the 'Create' button in the image pull secret creation dialog.">新建</translation>
   <translation id="3382981767955244666" key="MSG_IMAGE_PULL_SECRET_CREATE_DIALOG_SUBTITLE" desc="Create image pull secret dialog subtitle. Appears right below the title.">新的保密项字典将加入集群</translation>
   <translation id="6489624424433759035" key="MSG_IMAGE_PULL_SECRET_CREATE_DIALOG_TITLE" desc="Create image pull secret dialog title. The message appears at the top of the dialog box.">创建拉取镜像的保密项字典</translation>
-  <translation id="8342519402917559446" key="MSG_IMAGE_PULL_SECRET_CREATE_DIALOG_USER_HELP" desc="User help text for the create image pull secret dialog. Directly after this text a specific namespace is specified.">保密项字典将加入集群的名字空间里。</translation>
+  <translation id="8342519402917559446" key="MSG_IMAGE_PULL_SECRET_CREATE_DIALOG_USER_HELP" desc="User help text for the create image pull secret dialog. Directly after this text a specific namespace is specified.">A secret with the specified name will be added to the cluster in the namespace</translation>
   <translation id="6217421730854783216" key="MSG_IMAGE_PULL_SECRET_DATA_BASE64_WARNING" desc="The text appears when the image pull secret data is not Base64 encoded.">保密项字典数据必须使用Base64编码。</translation>
   <translation id="2983148182170296230" key="MSG_IMAGE_PULL_SECRET_DATA_LABEL" desc="Label 'Image pull secret data', which appears as a placeholder in an empty input field in the image pull secret creation dialog.">镜像获取保密项字典数据</translation>
   <translation id="3432622161353334586" key="MSG_IMAGE_PULL_SECRET_DATA_REQUIRED_WARNING" desc="Warning which tells the user that the image pull secret data is required.">Data is required</translation>
@@ -374,7 +374,7 @@
   <translation id="7394607899033025775" key="MSG_IMAGE_PULL_SECRET_LEARN_MORE_ACTION" desc="The text is used as a 'Learn more' link text in the image pull secret creation dialog">了解更多</translation>
   <translation id="696865387402025901" key="MSG_IMAGE_PULL_SECRET_NAME_LABEL" desc="Label 'Secret name', which appears as a placeholder in an empty input field in the image pull secret creation dialog.">保密项字典名称</translation>
   <translation id="4127420758208322272" key="MSG_IMAGE_PULL_SECRET_NAME_LENGTH_WARNING" desc="The text appears when the image pull secret name exceeds the maximal length.">Name must be up to <ph name="MAX_LENGTH"/> characters long.</translation>
-  <translation id="7256994603560688149" key="MSG_IMAGE_PULL_SECRET_NAME_PATTERN_WARNING" desc="The text appears when the image pull secret name does not match the expected pattern.">名称必须符合DNS的命名方法。</translation>
+  <translation id="7256994603560688149" key="MSG_IMAGE_PULL_SECRET_NAME_PATTERN_WARNING" desc="The text appears when the image pull secret name does not match the expected pattern.">Name must follow the DNS domain name syntax (e.g. new.image-pull.secret)</translation>
   <translation id="7263428501718162087" key="MSG_IMAGE_PULL_SECRET_NAME_REQUIRED_WARNING" desc="Warning which tells the user that the image pull secret name is required.">称谓不可忽略</translation>
   <translation id="9187405739901697345" key="MSG_INGRESSDETAIL_ACTIONBAR_0" desc="Label \'Ingress\' which appears at the top of the delete dialog, opened from a ingress details page.">入口地址(Ingress)</translation>
   <translation id="2640165037560914246" key="MSG_INGRESSDETAIL_INFO_0" desc="Header in a detail view">详情(Details)</translation>
@@ -419,11 +419,11 @@
   <translation id="357262544660295674" key="MSG_JOBLIST_JOBLIST_0" desc="Title for graph card displaying CPU metric of jobs.">CPU使用</translation>
   <translation id="6787661994791732767" key="MSG_JOBLIST_JOBLIST_1" desc="Title for graph card displaying memory metric of jobs.">内存使用</translation>
   <translation id="8660427171549456209" key="MSG_JOBLIST_JOBLIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by these jobs.</translation>
-  <translation id="4722922095699681308" key="MSG_LOGS_LOGS_0" desc="Title prefix for logs card.">日志来自</translation>
-  <translation id="6855662924451585032" key="MSG_LOGS_LOGS_1" desc="Title part for logs card.">在</translation>
-  <translation id="6208229815004454576" key="MSG_LOGS_LOGS_2" desc="Title prefix for logs card.">日志来自</translation>
-  <translation id="1223986507449568472" key="MSG_LOGS_LOGS_3" desc="Footer part for logs card.">到</translation>
-  <translation id="7594890250973129963" key="MSG_LOGS_ZEROSTATE_TEXT" desc="Text for logs card zerostate in logs page.">所选容器没有日志信息</translation>
+  <translation id="4722922095699681308" key="MSG_LOGS_LOGS_0" desc="Title prefix for logs card.">Logs from（日志来自）</translation>
+  <translation id="6855662924451585032" key="MSG_LOGS_LOGS_1" desc="Title part for logs card.">in（在）</translation>
+  <translation id="6208229815004454576" key="MSG_LOGS_LOGS_2" desc="Title prefix for logs card.">Logs from（日志来自）</translation>
+  <translation id="1223986507449568472" key="MSG_LOGS_LOGS_3" desc="Footer part for logs card.">to</translation>
+  <translation id="7594890250973129963" key="MSG_LOGS_ZEROSTATE_TEXT" desc="Text for logs card zerostate in logs page.">The selected container has not logged any messages yet.</translation>
   <translation id="6246076431108385744" key="MSG_NAMESPACEDETAIL_NAMESPACEINFO_0" desc="Header in a detail view">详情(Details)</translation>
   <translation id="3311845944254518412" key="MSG_NAMESPACEDETAIL_NAMESPACEINFO_1" desc="Label \'Status\' for the namespace namespace on the namespace details page.">状态(Status)</translation>
   <translation id="3157977938541808621" key="MSG_NAMESPACELIST_NAMESPACECARDLIST_0" desc="Label which appears above the list of such objects.">名字空间(Namespaces)</translation>
@@ -470,7 +470,7 @@
   <translation id="4611353673808918004" key="MSG_NODELIST_NODELIST_1" desc="Title for graph card displaying memory metric of nodes.">内存使用</translation>
   <translation id="1508766902785018036" key="MSG_NODELIST_NODELIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes caches.</translation>
   <translation id="3161651495562825748" key="MSG_NODE_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of node.">创建于<ph name="CREATION_DATE"/></translation>
-  <translation id="2230058550547139309" key="MSG_NO_ERROR_DATA" desc="String to display when error object has no data.">无错误</translation>
+  <translation id="2230058550547139309" key="MSG_NO_ERROR_DATA" desc="String to display when error object has no data.">No error data available</translation>
   <translation id="6997507737763635005" key="MSG_PERSISTENTVOLUMECLAIMDETAIL_ACTIONBAR_0" desc="Label \'Persistent Volume Claim\' which appears at the top of the delete dialog, opened from a persistent volume claim details page.">Persistent Volume Claim</translation>
   <translation id="1297935396913654466" key="MSG_PERSISTENTVOLUMECLAIMDETAIL_PERSISTENTVOLUMECLAIMINFO_0" desc="Header in a detail view">详情(Details)</translation>
   <translation id="4504917958472688873" key="MSG_PERSISTENTVOLUMECLAIMDETAIL_PERSISTENTVOLUMECLAIMINFO_1" desc="Persistent volume claim info details section status entry.">状态(Status)</translation>
