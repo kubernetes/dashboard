@@ -23,8 +23,7 @@ export class EditResourceController {
    * @param {!angular.$resource} $resource
    * @param {!angular.$http} $http
    * @param {string} resourceKindName
-   * @param {!backendApi.TypeMeta} typeMeta
-   * @param {!backendApi.ObjectMeta} objectMeta
+   * @param {string} resourceUrl
    * @ngInject
    */
   constructor($mdDialog, $resource, $http, resourceKindName, resourceUrl) {
