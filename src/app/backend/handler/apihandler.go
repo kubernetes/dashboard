@@ -557,13 +557,23 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 			Writes(pod.PodList{}))
 
 	apiV1Ws.Route(
-		apiV1Ws.DELETE("/{kind}/namespace/{namespace}/name/{name}").
+		apiV1Ws.DELETE("/_raw/{kind}/namespace/{namespace}/name/{name}").
 			To(apiHandler.handleDeleteResource))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/{kind}/namespace/{namespace}/name/{name}").
+		apiV1Ws.GET("/_raw/{kind}/namespace/{namespace}/name/{name}").
 			To(apiHandler.handleGetResource))
 	apiV1Ws.Route(
-		apiV1Ws.PUT("/{kind}/namespace/{namespace}/name/{name}").
+		apiV1Ws.PUT("/_raw/{kind}/namespace/{namespace}/name/{name}").
+			To(apiHandler.handlePutResource))
+
+	apiV1Ws.Route(
+		apiV1Ws.DELETE("/_raw/{kind}/name/{name}").
+			To(apiHandler.handleDeleteResource))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/_raw/{kind}/name/{name}").
+			To(apiHandler.handleGetResource))
+	apiV1Ws.Route(
+		apiV1Ws.PUT("/_raw/{kind}/name/{name}").
 			To(apiHandler.handlePutResource))
 
 	apiV1Ws.Route(
@@ -1155,22 +1165,22 @@ func (apiHandler *APIHandler) handleUpdateReplicasCount(
 func (apiHandler *APIHandler) handleGetResource(
 	request *restful.Request, response *restful.Response) {
 	kind := request.PathParameter("kind")
-	namespace := request.PathParameter("namespace")
+	namespace, ok := request.PathParameters()["namespace"]
 	name := request.PathParameter("name")
 
-	result, err := apiHandler.verber.Get(kind, namespace, name)
+	result, err := apiHandler.verber.Get(kind, ok, namespace, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handlePutResource(
 	request *restful.Request, response *restful.Response) {
 	kind := request.PathParameter("kind")
-	namespace := request.PathParameter("namespace")
+	namespace, ok := request.PathParameters()["namespace"]
 	name := request.PathParameter("name")
 	putSpec := &runtime.Unknown{}
 	if err := request.ReadEntity(putSpec); err != nil {
@@ -1178,7 +1188,7 @@ func (apiHandler *APIHandler) handlePutResource(
 		return
 	}
 
-	if err := apiHandler.verber.Put(kind, namespace, name, putSpec); err != nil {
+	if err := apiHandler.verber.Put(kind, ok, namespace, name, putSpec); err != nil {
 		handleInternalError(response, err)
 		return
 	}
@@ -1189,10 +1199,10 @@ func (apiHandler *APIHandler) handlePutResource(
 func (apiHandler *APIHandler) handleDeleteResource(
 	request *restful.Request, response *restful.Response) {
 	kind := request.PathParameter("kind")
-	namespace := request.PathParameter("namespace")
+	namespace, ok := request.PathParameters()["namespace"]
 	name := request.PathParameter("name")
 
-	if err := apiHandler.verber.Delete(kind, namespace, name); err != nil {
+	if err := apiHandler.verber.Delete(kind, ok, namespace, name); err != nil {
 		handleInternalError(response, err)
 		return
 	}
