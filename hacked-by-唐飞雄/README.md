@@ -4,9 +4,6 @@
 
 OS info
 
-	[tangfx@localhost dashboard]$ uname -a
-	Linux localhost 4.8.13-100.fc23.x86_64 #1 SMP Fri Dec 9 14:51:40 UTC 2016 x86_64 x86_64 x86_64 GNU/Linux
-
 	[tangfx@localhost dashboard]$ cat /etc/os-release
 	NAME=Fedora
 	VERSION="23 (Twenty Three)"
@@ -22,6 +19,9 @@ OS info
 	REDHAT_SUPPORT_PRODUCT="Fedora"
 	REDHAT_SUPPORT_PRODUCT_VERSION=23
 	PRIVACY_POLICY_URL=https://fedoraproject.org/wiki/Legal:PrivacyPolicy
+
+	[tangfx@localhost dashboard]$ uname -a
+	Linux localhost 4.8.13-100.fc23.x86_64 #1 SMP Fri Dec 9 14:51:40 UTC 2016 x86_64 x86_64 x86_64 GNU/Linux
 
 Repo info
 
@@ -73,6 +73,47 @@ Generate `messages-zh.xtb` and modify `local-config.json`
 	tangf@DESKTOP-H68OQDV /cygdrive/g/work/src/k8s.io/dashboard
 	$ ./chinese-lization.sh
 
+Prepare offline icon fonts
+
+    [tangfx@localhost dashboard]$ mkdir -p bower_components/material-design-icons/iconfont && cd bower_components/material-design-icons/iconfont
+	
+	[tangfx@localhost iconfont]$ curl https://raw.githubusercontent.com/google/material-design-icons/master/iconfont/material-icons.css -O
+	  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+									 Dload  Upload   Total   Spent    Left  Speed
+	100   970  100   970    0     0    156      0  0:00:06  0:00:06 --:--:--   263
+	[tangfx@localhost iconfont]$ curl https://raw.githubusercontent.com/google/material-design-icons/master/iconfont/codepoints -O
+	  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+									 Dload  Upload   Total   Spent    Left  Speed
+	100 16289  100 16289    0     0   2563      0  0:00:06  0:00:06 --:--:--  3374
+	[tangfx@localhost iconfont]$ curl https://raw.githubusercontent.com/google/material-design-icons/master/iconfont/README.md -O
+	  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+									 Dload  Upload   Total   Spent    Left  Speed
+	100   316  100   316    0     0     50      0  0:00:06  0:00:06 --:--:--    66
+	[tangfx@localhost iconfont]$ curl https://raw.githubusercontent.com/google/material-design-icons/master/iconfont/MaterialIcons-Regular.woff2 -O
+	  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+									 Dload  Upload   Total   Spent    Left  Speed
+	100 44300  100 44300    0     0   6774      0  0:00:06  0:00:06 --:--:-- 11030
+	[tangfx@localhost iconfont]$ curl https://raw.githubusercontent.com/google/material-design-icons/master/iconfont/MaterialIcons-Regular.woff -O
+	  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+									 Dload  Upload   Total   Spent    Left  Speed
+	100 57620  100 57620    0     0   8807      0  0:00:06  0:00:06 --:--:-- 14351
+	[tangfx@localhost iconfont]$ curl https://raw.githubusercontent.com/google/material-design-icons/master/iconfont/MaterialIcons-Regular.ttf -O
+	  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+									 Dload  Upload   Total   Spent    Left  Speed
+	100  125k  100  125k    0     0  19089      0  0:00:06  0:00:06 --:--:-- 30533
+	[tangfx@localhost iconfont]$ curl https://raw.githubusercontent.com/google/material-design-icons/master/iconfont/MaterialIcons-Regular.svg -O
+	  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+									 Dload  Upload   Total   Spent    Left  Speed
+	100  275k  100  275k    0     0  41652      0  0:00:06  0:00:06 --:--:-- 86985
+	[tangfx@localhost iconfont]$ curl https://raw.githubusercontent.com/google/material-design-icons/master/iconfont/MaterialIcons-Regular.ijmap -O
+	  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+									 Dload  Upload   Total   Spent    Left  Speed
+	100 28416  100 28416    0     0   4413      0  0:00:06  0:00:06 --:--:--  7269
+	[tangfx@localhost iconfont]$ curl https://raw.githubusercontent.com/google/material-design-icons/master/iconfont/MaterialIcons-Regular.eot -O
+	  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+									 Dload  Upload   Total   Spent    Left  Speed
+	100  139k  100  139k    0     0  21723      0  0:00:06  0:00:06 --:--:-- 35215
+	
 Generate _dist_
 
 	[tangfx@localhost dashboard]$ locale
@@ -309,6 +350,8 @@ Docker image
 	[tangfx@localhost dashboard]$ docker images tangfeixiong/kubernetes-dashboard-amd64
     REPOSITORY                                TAG                 IMAGE ID            CREATED             SIZE
     tangfeixiong/kubernetes-dashboard-amd64   head                a684fcee0855        2 minutes ago       120.2 MB
+
+Deploy
 
 	[tangfx@localhost dashboard]$ vi src/deploy/kubernetes-dashboard-head.yaml
 	###

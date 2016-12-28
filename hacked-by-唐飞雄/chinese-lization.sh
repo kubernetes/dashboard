@@ -54,7 +54,7 @@ trap "save_and_clean_temp" EXIT
 # MSG_ALL_NAMESPACES, MSG_BREADCRUMBS_*_LABEL, MSG_CHROME_NAV_NAV_*
 sed -i 's/> *Admin *</>管理(Admin)</g; s/> *Namespaces *</>名字空间(Namespaces)</g; s/> *Nodes *</>工作节点(Nodes)</g; s/> *Persistent Volumes *</>持久性存储卷(Persistent Volumes)</g' $MSG_TEMP
 sed -i 's/> *Namespace *</>名字空间(Namespace)</g; s/> *All \+namespaces *</>包括所有名字空间(All namespaces)</g' $MSG_TEMP
-sed -i 's/> *Workloads *</>负荷(Workloads)</g; s/> *Deployments *</>部署(Deployments)</g; s/> *Replica \+Sets *</>复制集(Replica Sets)</g; s/> *Replication \+Controllers *</>复制控制(Replication Controllers)</g' $MSG_TEMP
+sed -i 's/> *Workloads *</>载荷(Workloads)</g; s/> *Deployments *</>部署(Deployments)</g; s/> *Replica \+Sets *</>复制集(Replica Sets)</g; s/> *Replication \+Controllers *</>复制控制(Replication Controllers)</g' $MSG_TEMP
 sed -i 's/> *Daemon \+Sets *</>守护式Pod集(Daemon Sets)</g; s/> *Stateful \+Sets *</>有状态POD集(Stateful Sets)</g; s/> *Jobs *</>批量任务(Jobs)</g; s/>Pods</>容器组(Pods)</g' $MSG_TEMP
 sed -i 's/> *Services \+and \+discovery *</>服务和发现(Services and discovery)</g; s/> *Services *</>服务(Services)</g; s/> *Ingresses *</>入口地址(Ingresses)</g' $MSG_TEMP
 sed -i 's/> *Storage *</>存储(Storage)</g; s/> *Persistent \+Volume \+Claims *</>持久性存储卷索取(Persistent Volume Claims)</g' $MSG_TEMP
@@ -88,7 +88,7 @@ sed -i 's/> *show \+fewer \+labels *</>显示简要标签</g;s/> *show \+all \+l
 sed -i 's/> *View\/Edit *YAML *</>编辑查看YAML</g;s/> *View\/edit *YAML *</>编辑查看YAML</g;s/> *Actions *</>动作(Actions)</g' $MSG_TEMP
 
 # MSG_COMMON_COMPONENTS_RESOURCEDETAIL
-sed -i 's/> *Name *</>名称(Name)</g;s/> *Namespace *</>名字空间(Namespace)</g;s/> *Labels *</>标签(Lalbels)</g;s/> *Annotations *</>注记(Annotations)</g;s/> *Creation \+time *</>创建时间</g' $MSG_TEMP
+sed -i 's/> *Name *</>名称(Name)</g;s/> *Namespace *</>名字空间(Namespace)</g;s/> *Labels *</>标签(Labels)</g;s/> *Annotations *</>注记(Annotations)</g;s/> *Creation \+time *</>创建时间</g' $MSG_TEMP
 
 # MSG_COMMON_COMPONENTS_ZEROSTATE
 sed -i 's/> *There \+is \+nothing \+to \+display \+here *</>无内容显示</g' $MSG_TEMP
@@ -196,9 +196,9 @@ sed -i 's/> *No error data available.*</>无错误</g' $MSG_TEMP
 # MSG_RESOURCELIMIT
 
 # MSG_SECRETDETAIL
-sed -i 's/> *Name *</>Name（名称）</g;s/> *Labels *</>Lalbels（标签）</g;s/> *Ready *</>Ready（就绪）</g;s/> *Age *</>Age（存活）</g' $MSG_TEMP
+sed -i 's/> *Name *</>名称(Name)</g;s/> *Labels *</>标签(Labels)</g;s/> *Ready *</>就绪(Ready)</g;s/> *Age *</>生存(Age)</g' $MSG_TEMP
 
-sed -i 's/> *Name *</>Name（名称）</g;s/> *Labels *</>Lalbels（标签）</g;s/> *Pods *</>Pods（容器组）</g;s/> *Age *</>Age（存活）</g' $MSG_TEMP
+sed -i 's/> *Name *</>Name（名称）</g;s/> *Labels *</>Labels（标签）</g;s/> *Pods *</>Pods（容器组）</g;s/> *Age *</>生存(Age)</g' $MSG_TEMP
 
 sed -i 's/> *Name *</>Name（名称）</g;s/> *Status *</>Status（状态）</g;s/> *Restarts *</>Restarts（重启次数）</g;s/> *Cluster \+IP *</>Cluster IP（集群虚IP）</g;s/> *CPU(cores) *</>CPU(cores)（CPU核数）</g;s/> *Memory(bytes) *</>Memory(bytes)（内存字节数）</g' $MSG_TEMP
 
