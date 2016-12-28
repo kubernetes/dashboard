@@ -147,7 +147,6 @@ func (verber *ResourceVerber) Get(kind string, namespaceSet bool, namespace stri
 		}
 	}
 
-
 	client := verber.getRESTClientByType(resourceSpec.ClientType)
 
 	result := &runtime.Unknown{}

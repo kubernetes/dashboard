@@ -63,8 +63,7 @@ export class EditResourceController {
    * @export
    */
   update() {
-    return this.http_
-        .put(this.resourceUrl, this.data)
+    return this.http_.put(this.resourceUrl, this.data)
         .then(this.mdDialog_.hide, this.mdDialog_.cancel);
   }
 

@@ -45,7 +45,8 @@ export class VerberService {
   showDeleteDialog(resourceKindName, typeMeta, objectMeta) {
     let deferred = this.q_.defer();
 
-    showDeleteDialog(this.mdDialog_, resourceKindName, getRawResourceUrl(typeMeta, objectMeta), objectMeta)
+    showDeleteDialog(
+        this.mdDialog_, resourceKindName, getRawResourceUrl(typeMeta, objectMeta), objectMeta)
         .then(() => {
           deferred.resolve();
         })
