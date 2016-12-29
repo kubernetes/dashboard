@@ -140,26 +140,28 @@ var kindToAPIMapping = map[string]struct {
 	// Client type used by given resource, i.e. deployments are using extension client and pet
 	// sets apps client.
 	ClientType ClientType
+	// Is this object global scoped (not below a namespace)
+	Namespaced bool
 }{
-	ResourceKindConfigMap:               {"configmaps", ClientTypeDefault},
-	ResourceKindDaemonSet:               {"daemonsets", ClientTypeExtensionClient},
-	ResourceKindDeployment:              {"deployments", ClientTypeExtensionClient},
-	ResourceKindEvent:                   {"events", ClientTypeDefault},
-	ResourceKindHorizontalPodAutoscaler: {"horizontalpodautoscalers", ClientTypeAutoscalingClient},
-	ResourceKindIngress:                 {"ingresses", ClientTypeExtensionClient},
-	ResourceKindJob:                     {"jobs", ClientTypeBatchClient},
-	ResourceKindLimitRange:              {"limitrange", ClientTypeDefault},
-	ResourceKindNamespace:               {"namespaces", ClientTypeDefault},
-	ResourceKindNode:                    {"nodes", ClientTypeDefault},
-	ResourceKindPersistentVolumeClaim:   {"persistentvolumeclaims", ClientTypeDefault},
-	ResourceKindPersistentVolume:        {"persistentvolumes", ClientTypeDefault},
-	ResourceKindPod:                     {"pods", ClientTypeDefault},
-	ResourceKindReplicaSet:              {"replicasets", ClientTypeExtensionClient},
-	ResourceKindReplicationController:   {"replicationcontrollers", ClientTypeDefault},
-	ResourceKindResourceQuota:           {"resourcequota", ClientTypeDefault},
-	ResourceKindSecret:                  {"secrets", ClientTypeDefault},
-	ResourceKindService:                 {"services", ClientTypeDefault},
-	ResourceKindStatefulSet:             {"statefulsets", ClientTypeAppsClient},
+	ResourceKindConfigMap:               {"configmaps", ClientTypeDefault, true},
+	ResourceKindDaemonSet:               {"daemonsets", ClientTypeExtensionClient, true},
+	ResourceKindDeployment:              {"deployments", ClientTypeExtensionClient, true},
+	ResourceKindEvent:                   {"events", ClientTypeDefault, true},
+	ResourceKindHorizontalPodAutoscaler: {"horizontalpodautoscalers", ClientTypeAutoscalingClient, true},
+	ResourceKindIngress:                 {"ingresses", ClientTypeExtensionClient, true},
+	ResourceKindJob:                     {"jobs", ClientTypeBatchClient, true},
+	ResourceKindLimitRange:              {"limitrange", ClientTypeDefault, true},
+	ResourceKindNamespace:               {"namespaces", ClientTypeDefault, false},
+	ResourceKindNode:                    {"nodes", ClientTypeDefault, false},
+	ResourceKindPersistentVolumeClaim:   {"persistentvolumeclaims", ClientTypeDefault, true},
+	ResourceKindPersistentVolume:        {"persistentvolumes", ClientTypeDefault, false},
+	ResourceKindPod:                     {"pods", ClientTypeDefault, true},
+	ResourceKindReplicaSet:              {"replicasets", ClientTypeExtensionClient, true},
+	ResourceKindReplicationController:   {"replicationcontrollers", ClientTypeDefault, true},
+	ResourceKindResourceQuota:           {"resourcequota", ClientTypeDefault, true},
+	ResourceKindSecret:                  {"secrets", ClientTypeDefault, true},
+	ResourceKindService:                 {"services", ClientTypeDefault, true},
+	ResourceKindStatefulSet:             {"statefulsets", ClientTypeAppsClient, true},
 }
 
 // IsSelectorMatching returns true when an object with the given

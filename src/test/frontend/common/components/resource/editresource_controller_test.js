@@ -22,14 +22,14 @@ describe('Edit resource controller', () => {
   let mdDialog;
   /** @type {!angular.$httpBackend} */
   let httpBackend;
+  let testResourceUrl = 'api/v1/testurl';
 
   beforeEach(() => angular.mock.module(resourceModule.name));
 
   beforeEach(angular.mock.inject(($controller, $mdDialog, $httpBackend) => {
     ctrl = $controller(EditResourceController, {
       resourceKindName: 'My Resource',
-      objectMeta: {name: 'Foo', namespace: 'Bar'},
-      typeMeta: {kind: 'qux'},
+      resourceUrl: testResourceUrl,
     });
     mdDialog = $mdDialog;
     httpBackend = $httpBackend;
@@ -39,8 +39,8 @@ describe('Edit resource controller', () => {
     spyOn(mdDialog, 'hide');
     ctrl.update();
     let data = {'foo': 'bar'};
-    httpBackend.expectGET('api/v1/qux/namespace/Bar/name/Foo').respond(200, data);
-    httpBackend.expectPUT('api/v1/qux/namespace/Bar/name/Foo').respond(200, {ok: 'ok'});
+    httpBackend.expectGET(testResourceUrl).respond(200, data);
+    httpBackend.expectPUT(testResourceUrl).respond(200, {ok: 'ok'});
     httpBackend.flush();
     expect(mdDialog.hide).toHaveBeenCalled();
   });
@@ -49,8 +49,8 @@ describe('Edit resource controller', () => {
     spyOn(mdDialog, 'cancel');
     ctrl.update();
     let data = {'foo': 'bar'};
-    httpBackend.expectGET('api/v1/qux/namespace/Bar/name/Foo').respond(200, data);
-    httpBackend.expectPUT('api/v1/qux/namespace/Bar/name/Foo').respond(500, {err: 'err'});
+    httpBackend.expectGET(testResourceUrl).respond(200, data);
+    httpBackend.expectPUT(testResourceUrl).respond(500, {err: 'err'});
     httpBackend.flush();
     expect(mdDialog.cancel).toHaveBeenCalled();
   });
