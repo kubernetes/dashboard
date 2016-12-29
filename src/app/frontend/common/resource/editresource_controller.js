@@ -23,22 +23,18 @@ export class EditResourceController {
    * @param {!angular.$resource} $resource
    * @param {!angular.$http} $http
    * @param {string} resourceKindName
-   * @param {!backendApi.TypeMeta} typeMeta
-   * @param {!backendApi.ObjectMeta} objectMeta
+   * @param {string} resourceUrl
    * @ngInject
    */
-  constructor($mdDialog, $resource, $http, resourceKindName, typeMeta, objectMeta) {
+  constructor($mdDialog, $resource, $http, resourceKindName, resourceUrl) {
     /** @export {string} */
     this.resourceKindName = resourceKindName;
 
     /** @export {Object} JSON representation of the edited resource. */
     this.data = null;
 
-    /** @private {!backendApi.TypeMeta} */
-    this.typeMeta_ = typeMeta;
-
-    /** @export {!backendApi.ObjectMeta} */
-    this.objectMeta = objectMeta;
+    /** @private {string} */
+    this.resourceUrl = resourceUrl;
 
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
@@ -56,9 +52,7 @@ export class EditResourceController {
    * @private
    */
   init_() {
-    let promise = this.http_.get(
-        `api/v1/${this.typeMeta_.kind}/namespace/` +
-        `${this.objectMeta.namespace}/name/${this.objectMeta.name}`);
+    let promise = this.http_.get(this.resourceUrl);
     promise.then((/** !angular.$http.Response<Object>*/ response) => {
       this.data = response.data;
     });
@@ -68,11 +62,7 @@ export class EditResourceController {
    * @export
    */
   update() {
-    return this.http_
-        .put(
-            `api/v1/${this.typeMeta_.kind}/namespace` +
-                `/${this.objectMeta.namespace}/name/${this.objectMeta.name}`,
-            this.data)
+    return this.http_.put(this.resourceUrl, this.data)
         .then(this.mdDialog_.hide, this.mdDialog_.cancel);
   }
 
