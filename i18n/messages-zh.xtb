@@ -317,8 +317,8 @@
   <translation id="4179338997362096957" key="MSG_EVENTS_EVENTCARDLIST_0" desc="Label for the events card.">事件</translation>
   <translation id="4179338997362096957" key="MSG_EVENTS_EVENTCARDLIST_0" desc="Label which appears above the list of such objects.">事件</translation>
   <translation id="7618020634310257225" key="MSG_EVENTS_EVENTCARDLIST_1" desc="Label \'Message\' for the event message column of the events table (events list page).">消息(Message)</translation>
-  <translation id="7495297439436040330" key="MSG_EVENTS_EVENTCARDLIST_2" desc="Label \'Source\' for the event source column of the events table (events list page).">Source</translation>
-  <translation id="2711667379693797919" key="MSG_EVENTS_EVENTCARDLIST_3" desc="Label \'Sub-object\' for the respective column of the events table (events list page).">Sub-object</translation>
+  <translation id="7495297439436040330" key="MSG_EVENTS_EVENTCARDLIST_2" desc="Label \'Source\' for the event source column of the events table (events list page).">来源</translation>
+  <translation id="2711667379693797919" key="MSG_EVENTS_EVENTCARDLIST_3" desc="Label \'Sub-object\' for the respective column of the events table (events list page).">子对象</translation>
   <translation id="2916394551891554218" key="MSG_EVENTS_EVENTCARDLIST_4" desc="Label \'Count\' for event count column of the events table (events list page).">数量</translation>
   <translation id="8248624391902115626" key="MSG_EVENTS_EVENTCARDLIST_5" desc="Label \'First seen\' for the respective column of the events table (events list page).">First seen</translation>
   <translation id="2544603000807264761" key="MSG_EVENTS_EVENTCARDLIST_6" desc="Label \'Last seen\' for the respective column of the events table (events list page).">Last seen</translation>

@@ -2,7 +2,7 @@
 
 ## Fedora 23
 
-OS info
+Virtual Box vm
 
 	[tangfx@localhost dashboard]$ cat /etc/os-release
 	NAME=Fedora
@@ -351,7 +351,9 @@ Docker image
     REPOSITORY                                TAG                 IMAGE ID            CREATED             SIZE
     tangfeixiong/kubernetes-dashboard-amd64   head                a684fcee0855        2 minutes ago       120.2 MB
 
-Deploy
+### Deploy
+
+Using default building other than individual **DOCKER_HUB_PREFIX**
 
 	[tangfx@localhost dashboard]$ vi src/deploy/kubernetes-dashboard-head.yaml
 	###
@@ -361,10 +363,6 @@ Deploy
 	[tangfx@localhost dashboard]$ kubectl create -f src/deploy/kubernetes-dashboard-head.yaml
     replicationcontroller "kubernetes-dashboard-head" configured
     service "dashboard-head" configured
-
-	[tangfx@localhost dashboard]$ kubectl --namespace=kube-system get pods -l app=kubernetes-dashboard-head -o wide
-    NAME                              READY     STATUS    RESTARTS   AGE       IP            NODE
-    kubernetes-dashboard-head-38xus   1/1       Running   0          1d        10.120.76.3   10.64.33.90
 
 	[tangfx@localhost dashboard]$ kubectl --namespace=kube-system get service/dashboard-head -o jsonpath={.spec..nodePort}
     30410

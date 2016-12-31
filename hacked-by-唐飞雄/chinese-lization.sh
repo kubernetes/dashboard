@@ -148,6 +148,7 @@ sed -i 's/> *Data must be Base64 encoded.*</>保密项字典数据必须使用Ba
 sed -i 's/> *Name must follow the DNS domain name syntax (e.g. new.image-pull.secret).*</>名称必须符合DNS的命名方法。</;s/> *A secret with the specified name will be added to the cluster in the namespace.*</>保密项字典将加入集群的名字空间里。</' $MSG_TEMP
 
 # MSG_ERROR
+sed -i 's/>Source</>来源</g;s/>Sub-object</>子对象</g' $MSG_TEMP
 
 # MSG_EVENTS
 
