@@ -109,6 +109,7 @@
   <translation id="4882763297660106258" key="MSG_COMMON_RESOURCE_DELETERESOURCE_2" desc="Confirmation question, appears before any dashboard resource will be deleted.">本当にネームスペース &lt;i&gt;{{::$ctrl.objectMeta.namespace}}&lt;/i&gt; 内の {{::$ctrl.resourceKindName}} &lt;i&gt;{{::$ctrl.objectMeta.name}}&lt;/i&gt; を削除しますか？</translation>
   <translation id="4128050333493885311" key="MSG_COMMON_RESOURCE_DELETERESOURCE_3" desc="Label for cancel button.">キャンセル</translation>
   <translation id="896694419951320432" key="MSG_COMMON_RESOURCE_DELETERESOURCE_4" desc="Label for delete button.">削除</translation>
+  <translation id="4968436708987569734" key="MSG_COMMON_RESOURCE_DELETERESOURCE_5" desc="Confirmation question, appears before any dashboard resource will be deleted. (unnamespaced resources)">Are you sure you want to delete {{::$ctrl.resourceKindName}} &lt;i&gt;{{::$ctrl.objectMeta.name}}&lt;/i&gt;?</translation>
   <translation id="5788637878898196013" key="MSG_COMMON_RESOURCE_EDITRESOURCE_0" desc="Title for a delete resource dialog.">{{::$ctrl.resourceKindName}} を編集</translation>
   <translation id="6030718757273830989" key="MSG_COMMON_RESOURCE_EDITRESOURCE_1" desc="Title for a delete resource dialog.">{{::$ctrl.resourceKindName}} を編集</translation>
   <translation id="7280957759518658382" key="MSG_COMMON_RESOURCE_EDITRESOURCE_2" desc="Label for cancel button.">キャンセル</translation>
@@ -401,10 +402,10 @@
   <translation id="5261984673543175121" key="MSG_DEPLOY_ENVIRONMENTVARIABLES_1" desc="Label &quot;Name&quot; which appears as a placeholder for the input of an environment variable name on the deploy page.">名前</translation>
   <translation id="3054625987181220918" key="MSG_DEPLOY_ENVIRONMENTVARIABLES_2" desc="Label &quot;Value&quot; which appears as a placeholder for the input of an environment variable value on the deploy page.">有効な C 識別子を入力してください。</translation>
   <translation id="2897646961112877857" key="MSG_DEPLOY_ENVIRONMENTVARIABLES_3" desc="Label &quot;Value&quot; which appears as a placeholder for the input of an environment variable value on the deploy page.">値</translation>
-  <translation id="6867325046626733190" key="MSG_DEPLOY_ENV_VARS_NAME_LABEL" desc="Label &quot;Name&quot; which appears as a placeholder for the input of a environment variable name on the deploy page.">名前</translation>
+  <translation id="6867325046626733190" key="MSG_DEPLOY_ENV_VARS_NAME_LABEL" desc="Label &quot;Name&quot; which appears as a placeholder for the input of an environment variable name on the deploy page.">名前</translation>
   <translation id="4723073728245526722" key="MSG_DEPLOY_ENV_VARS_NAME_PATTERN_WARNING" desc="Appears when the name of an environment variable on the deploy page does not match the expected pattern.">有効な C 識別子を入力してください。</translation>
   <translation id="7456160778295272283" key="MSG_DEPLOY_ENV_VARS_TITLE" desc="Title of the Environment Variables section on the deploy page.">環境変数</translation>
-  <translation id="2359882648739163069" key="MSG_DEPLOY_ENV_VARS_VALUE_LABEL" desc="Label &quot;Value&quot; which appears as a placeholder for the input of a environment variable value on the deploy page.">値</translation>
+  <translation id="2359882648739163069" key="MSG_DEPLOY_ENV_VARS_VALUE_LABEL" desc="Label &quot;Value&quot; which appears as a placeholder for the input of an environment variable value on the deploy page.">値</translation>
   <translation id="6920937028819232874" key="MSG_DEPLOY_FILE_UPLOAD_ACTION" desc="Text for a selection option, which the user must click to upload a YAML/JSON file to deploy from on the deploy page.">YAML もしくは JSON ファイルをアップロード</translation>
   <translation id="4620680625293043510" key="MSG_DEPLOY_HIDE_ADVANCED_ACTION" desc="Action &quot;Hide advanced options&quot; for the toggle button on the deploy page.">詳細オプションを隠す</translation>
   <translation id="704934282074920058" key="MSG_DEPLOY_LABEL_KEY_NAME_MAX_LENGTH_WARNING" desc="This warning appears when the key name of a specified kubernetes label (on the deploy page) is too long.">ラベルのキー名は最大 63 文字です</translation>
@@ -565,7 +566,7 @@
   <translation id="4127420758208322272" key="MSG_IMAGE_PULL_SECRET_NAME_LENGTH_WARNING" desc="The text appears when the image pull secret name exceeds the maximal length.">最大 <ph name="MAX_LENGTH"/> 文字です</translation>
   <translation id="7256994603560688149" key="MSG_IMAGE_PULL_SECRET_NAME_PATTERN_WARNING" desc="The text appears when the image pull secret name does not match the expected pattern.">DNSドメイン名の構文に従ってください (例: new.image-pull.secret)</translation>
   <translation id="7263428501718162087" key="MSG_IMAGE_PULL_SECRET_NAME_REQUIRED_WARNING" desc="Warning which tells the user that the image pull secret name is required.">必須項目です</translation>
-  <translation id="9187405739901697345" key="MSG_INGRESSDETAIL_ACTIONBAR_0" desc="Label \'Ingress\' which appears at the top of the delete dialog, opened from a ingress details page.">イングレス</translation>
+  <translation id="9187405739901697345" key="MSG_INGRESSDETAIL_ACTIONBAR_0" desc="Label \'Ingress\' which appears at the top of the delete dialog, opened from an ingress details page.">イングレス</translation>
   <translation id="2640165037560914246" key="MSG_INGRESSDETAIL_INFO_0" desc="Resource info details section name.">詳細</translation>
   <translation id="9151423718836175081" key="MSG_INGRESSDETAIL_INFO_1" desc="Resource info details section name entry.">名前</translation>
   <translation id="5711019371830079014" key="MSG_INGRESSDETAIL_INFO_2" desc="Resource info details section namespace entry.">ネームスペース</translation>
@@ -581,7 +582,7 @@
   <translation id="6970100075274497061" key="MSG_INGRESSLIST_CARDLIST_3" desc="Label \'endpoints\' which appears as a column label in the table of ingresses (ingress list view).">エンドポイント</translation>
   <translation id="8202258406797150740" key="MSG_INGRESSLIST_CARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of ingresses (ingress list view).">起動時間</translation>
   <translation id="8673276203606728394" key="MSG_INGRESSLIST_CARDLIST_4" desc="Label which appears above the list of such objects.">イングレス</translation>
-  <translation id="6865663126039383228" key="MSG_INGRESS_DETAIL_INGRESS_LABEL" desc="Label 'Ingress' which appears at the top of the delete dialog, opened from a ingress details page.">イングレス</translation>
+  <translation id="6865663126039383228" key="MSG_INGRESS_DETAIL_INGRESS_LABEL" desc="Label 'Ingress' which appears at the top of the delete dialog, opened from an ingress details page.">イングレス</translation>
   <translation id="1877969373102862021" key="MSG_INGRESS_INFO_ANNOTATIONS_ENTRY" desc="Resource info details section annotations entry.">注釈</translation>
   <translation id="5171036664970723677" key="MSG_INGRESS_INFO_DATA_SECTION" desc="Config map info details section name.">データ</translation>
   <translation id="2421292183321369399" key="MSG_INGRESS_INFO_DETAILS_SECTION" desc="Config map info details section name.">詳細</translation>

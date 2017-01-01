@@ -22,6 +22,7 @@ describe('Delete resource controller', () => {
   let mdDialog;
   /** @type {!angular.$httpBackend} */
   let httpBackend;
+  let testResourceUrl = 'foo';
 
   beforeEach(() => angular.mock.module(resourceModule.name));
 
@@ -29,7 +30,7 @@ describe('Delete resource controller', () => {
     ctrl = $controller(DeleteResourceController, {
       resourceKindName: 'My Resource',
       objectMeta: {name: 'Foo', namespace: 'Bar'},
-      typeMeta: {kind: 'qux'},
+      resourceUrl: testResourceUrl,
     });
     mdDialog = $mdDialog;
     httpBackend = $httpBackend;
@@ -38,7 +39,7 @@ describe('Delete resource controller', () => {
   it('should delete resource', () => {
     spyOn(mdDialog, 'hide');
     ctrl.remove();
-    httpBackend.expectDELETE('api/v1/qux/namespace/Bar/name/Foo').respond(200, {ok: 'ok'});
+    httpBackend.expectDELETE(testResourceUrl).respond(200, {ok: 'ok'});
     httpBackend.flush();
     expect(mdDialog.hide).toHaveBeenCalled();
   });
@@ -46,7 +47,7 @@ describe('Delete resource controller', () => {
   it('should propagate errors on delete', () => {
     spyOn(mdDialog, 'cancel');
     ctrl.remove();
-    httpBackend.expectDELETE('api/v1/qux/namespace/Bar/name/Foo').respond(500, {err: 'err'});
+    httpBackend.expectDELETE(testResourceUrl).respond(500, {err: 'err'});
     httpBackend.flush();
     expect(mdDialog.cancel).toHaveBeenCalled();
   });

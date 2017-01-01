@@ -38,13 +38,13 @@ type PodList struct {
 
 type PodStatus struct {
 	// Status of the Pod. See Kubernetes API for reference.
-	PodPhase api.PodPhase `json:"podPhase"`
-
+	Status          string               `json:"status"`
+	PodPhase        api.PodPhase         `json:"podPhase"`
 	ContainerStates []api.ContainerState `json:"containerStates"`
 }
 
 // Pod is a presentation layer view of Kubernetes Pod resource. This means
-// it is Pod plus additional augumented data we can get from other sources
+// it is Pod plus additional augmented data we can get from other sources
 // (like services that target it).
 type Pod struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
@@ -121,7 +121,7 @@ func CreatePodList(pods []api.Pod, events []api.Event, dsQuery *dataselect.DataS
 	for _, pod := range pods {
 		warnings := event.GetPodsEventWarnings(events, []api.Pod{pod})
 
-		podDetail := ToPod(&pod, metrics)
+		podDetail := ToPod(&pod, metrics, warnings)
 		podDetail.Warnings = warnings
 		podList.Pods = append(podList.Pods, podDetail)
 

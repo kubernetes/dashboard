@@ -48,7 +48,7 @@ const arch = {
  */
 const containerRegistry = {
   release: 'gcr.io/google_containers',
-  /** Default to a environment variable */
+  /** Default to an environment variable */
   head: process.env.DOCKER_HUB_PREFIX || 'kubernetes',
 };
 

@@ -92,6 +92,7 @@
   <translation id="4882763297660106258" key="MSG_COMMON_RESOURCE_DELETERESOURCE_2" desc="Confirmation question, appears before any dashboard resource will be deleted.">Are you sure you want to delete {{::$ctrl.resourceKindName}} &lt;i&gt;{{::$ctrl.objectMeta.name}}&lt;/i&gt; in namespace &lt;i&gt;{{::$ctrl.objectMeta.namespace}}&lt;/i&gt;?</translation>
   <translation id="4128050333493885311" key="MSG_COMMON_RESOURCE_DELETERESOURCE_3" desc="Label for cancel button.">Cancel</translation>
   <translation id="896694419951320432" key="MSG_COMMON_RESOURCE_DELETERESOURCE_4" desc="Label for delete button.">Delete</translation>
+  <translation id="4968436708987569734" key="MSG_COMMON_RESOURCE_DELETERESOURCE_5" desc="Confirmation question, appears before any dashboard resource will be deleted. (unnamespaced resources)">Are you sure you want to delete {{::$ctrl.resourceKindName}} &lt;i&gt;{{::$ctrl.objectMeta.name}}&lt;/i&gt;?</translation>
   <translation id="5788637878898196013" key="MSG_COMMON_RESOURCE_EDITRESOURCE_0" desc="Title for a delete resource dialog.">Edit a {{::$ctrl.resourceKindName}}</translation>
   <translation id="6030718757273830989" key="MSG_COMMON_RESOURCE_EDITRESOURCE_1" desc="Title for a delete resource dialog.">Edit a {{::$ctrl.resourceKindName}}</translation>
   <translation id="7280957759518658382" key="MSG_COMMON_RESOURCE_EDITRESOURCE_2" desc="Label for cancel button.">Cancel</translation>
@@ -376,7 +377,7 @@
   <translation id="4127420758208322272" key="MSG_IMAGE_PULL_SECRET_NAME_LENGTH_WARNING" desc="The text appears when the image pull secret name exceeds the maximal length.">Name must be up to <ph name="MAX_LENGTH"/> characters long.</translation>
   <translation id="7256994603560688149" key="MSG_IMAGE_PULL_SECRET_NAME_PATTERN_WARNING" desc="The text appears when the image pull secret name does not match the expected pattern.">Name must follow the DNS domain name syntax (e.g. new.image-pull.secret)</translation>
   <translation id="7263428501718162087" key="MSG_IMAGE_PULL_SECRET_NAME_REQUIRED_WARNING" desc="Warning which tells the user that the image pull secret name is required.">Name is required.</translation>
-  <translation id="9187405739901697345" key="MSG_INGRESSDETAIL_ACTIONBAR_0" desc="Label \'Ingress\' which appears at the top of the delete dialog, opened from a ingress details page.">Ingress</translation>
+  <translation id="9187405739901697345" key="MSG_INGRESSDETAIL_ACTIONBAR_0" desc="Label \'Ingress\' which appears at the top of the delete dialog, opened from an ingress details page.">Ingress</translation>
   <translation id="2640165037560914246" key="MSG_INGRESSDETAIL_INFO_0" desc="Header in a detail view">Details</translation>
   <translation id="9151423718836175081" key="MSG_INGRESSDETAIL_INFO_1" desc="Resource info details section name entry.">Name</translation>
   <translation id="5711019371830079014" key="MSG_INGRESSDETAIL_INFO_2" desc="Resource info details section namespace entry.">Namespace</translation>

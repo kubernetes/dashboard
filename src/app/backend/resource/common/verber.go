@@ -62,10 +62,18 @@ func NewResourceVerber(client, extensionsClient, appsClient,
 }
 
 // Delete deletes the resource of the given kind in the given namespace with the given name.
-func (verber *ResourceVerber) Delete(kind string, namespace string, name string) error {
+func (verber *ResourceVerber) Delete(kind string, namespaceSet bool, namespace string, name string) error {
 	resourceSpec, ok := kindToAPIMapping[kind]
 	if !ok {
 		return fmt.Errorf("Unknown resource kind: %s", kind)
+	}
+
+	if namespaceSet != resourceSpec.Namespaced {
+		if namespaceSet {
+			return fmt.Errorf("Set namespace for not-namespaced resource kind: %s", kind)
+		} else {
+			return fmt.Errorf("Set no namespace for namespaced resource kind: %s", kind)
+		}
 	}
 
 	client := verber.getRESTClientByType(resourceSpec.ClientType)
@@ -76,49 +84,82 @@ func (verber *ResourceVerber) Delete(kind string, namespace string, name string)
 		OrphanDependents: &defaultOrphanDependents,
 	}
 
-	return client.Delete().
-		Namespace(namespace).
+	req := client.Delete().
 		Resource(resourceSpec.Resource).
 		Name(name).
-		Body(defaultDeleteOptions).
+		Body(defaultDeleteOptions)
+
+	if resourceSpec.Namespaced {
+		req.Namespace(namespace)
+	}
+
+	return req.
 		Do().
 		Error()
 }
 
 // Put puts new resource version of the given kind in the given namespace with the given name.
-func (verber *ResourceVerber) Put(kind string, namespace string, name string,
-	object runtime.Object) error {
+func (verber *ResourceVerber) Put(kind string, namespaceSet bool, namespace string, name string,
+	object *runtime.Unknown) error {
 
 	resourceSpec, ok := kindToAPIMapping[kind]
 	if !ok {
 		return fmt.Errorf("Unknown resource kind: %s", kind)
 	}
 
+	if namespaceSet != resourceSpec.Namespaced {
+		if namespaceSet {
+			return fmt.Errorf("Set namespace for not-namespaced resource kind: %s", kind)
+		} else {
+			return fmt.Errorf("Set no namespace for namespaced resource kind: %s", kind)
+		}
+	}
+
 	client := verber.getRESTClientByType(resourceSpec.ClientType)
 
-	return client.Put().
-		Namespace(namespace).
+	req := client.Put().
 		Resource(resourceSpec.Resource).
 		Name(name).
-		Body(object).
+		SetHeader("Content-Type", "application/json").
+		Body([]byte(object.Raw))
+
+	if resourceSpec.Namespaced {
+		req.Namespace(namespace)
+	}
+
+	return req.
 		Do().
 		Error()
 }
 
 // Get gets the resource of the given kind in the given namespace with the given name.
-func (verber *ResourceVerber) Get(kind string, namespace string, name string) (runtime.Object, error) {
+func (verber *ResourceVerber) Get(kind string, namespaceSet bool, namespace string, name string) (runtime.Object, error) {
 	resourceSpec, ok := kindToAPIMapping[kind]
 	if !ok {
 		return nil, fmt.Errorf("Unknown resource kind: %s", kind)
 	}
 
+	if namespaceSet != resourceSpec.Namespaced {
+		if namespaceSet {
+			return nil, fmt.Errorf("Set namespace for not-namespaced resource kind: %s", kind)
+		} else {
+			return nil, fmt.Errorf("Set no namespace for namespaced resource kind: %s", kind)
+		}
+	}
+
 	client := verber.getRESTClientByType(resourceSpec.ClientType)
 
 	result := &runtime.Unknown{}
-	err := client.Get().
-		Namespace(namespace).
+	req := client.Get().
 		Resource(resourceSpec.Resource).
 		Name(name).
+		SetHeader("Accept", "application/json")
+
+	if resourceSpec.Namespaced {
+		req.Namespace(namespace)
+	}
+
+	err := req.
 		Do().
 		Into(result)
 

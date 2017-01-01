@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import componentsModule from 'common/components/components_module';
+import csrfTokenModule from 'common/csrftoken/csrftoken_module';
 import historyModule from 'common/history/history_module';
 import validatorsModule from 'common/validators/validators_module';
 
@@ -48,6 +49,7 @@ export default angular
           validatorsModule.name,
           historyModule.name,
           componentsModule.name,
+          csrfTokenModule.name,
         ])
     .config(stateConfig)
     .run(initConfig)

@@ -40,7 +40,7 @@ type DeploymentList struct {
 }
 
 // Deployment is a presentation layer view of Kubernetes Deployment resource. This means
-// it is Deployment plus additional augumented data we can get from other sources
+// it is Deployment plus additional augmented data we can get from other sources
 // (like services that target the same pods).
 type Deployment struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`

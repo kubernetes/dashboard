@@ -18,6 +18,7 @@
  */
 import adminModule from './admin/module';
 import chromeModule from './chrome/chrome_module';
+import csrfTokenModule from './common/csrftoken/csrftoken_module';
 import configModule from './config/module';
 import configMapDetailModule from './configmapdetail/configmapdetail_module';
 import configMapListModule from './configmaplist/configmaplist_module';
@@ -95,6 +96,7 @@ export default angular
           ingressDetailModule.name,
           servicesanddiscoveryModule.name,
           configModule.name,
+          csrfTokenModule.name,
         ])
     .config(indexConfig)
     .config(routeConfig);

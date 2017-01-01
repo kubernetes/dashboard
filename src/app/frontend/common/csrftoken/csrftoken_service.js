@@ -12,23 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {EditResourceController} from './editresource_controller';
-
 /**
- * @param {!md.$dialog} mdDialog
- * @param {string} resourceKindName
- * @param {string} resourceUrl
- * @return {!angular.$q.Promise}
+ * @final
  */
-export default function showEditDialog(mdDialog, resourceKindName, resourceUrl) {
-  return mdDialog.show({
-    controller: EditResourceController,
-    controllerAs: '$ctrl',
-    clickOutsideToClose: true,
-    templateUrl: 'common/resource/editresource.html',
-    locals: {
-      'resourceUrl': resourceUrl,
-      'resourceKindName': resourceKindName,
-    },
-  });
+export class CsrfTokenService {
+  /**
+   * @param {!angular.$http} $http
+   * @ngInject
+   */
+  constructor($http) {
+    /** @private {!angular.$http} */
+    this.http_ = $http;
+  }
+
+  /**
+   * Get a CSRF token for an action you want to perform
+   * @param {string} action to get token for
+   * @returns {!angular.$q.Promise}
+   */
+  getTokenForAction(action) {
+    return this.http_.get(`api/v1/csrftoken/${action}`)
+        .then(
+            /** !angular.$http.Response<backendApi.CsrfToken>*/ (obj) => obj.data.token);
+  }
 }

@@ -730,6 +730,7 @@ backendApi.ConditionList;
 /**
  * @typedef {{
  *   podPhase: string,
+ *   status: string,
  *   containerStates: !Array<!backendApi.ContainerState>
  * }}
  */
@@ -1215,6 +1216,13 @@ backendApi.HorizontalPodAutoscalerList;
  * }}
  */
 backendApi.Controller;
+
+/**
+ * @typedef {{
+ *   token: string
+ * }}
+ */
+backendApi.CsrfToken;
 
 /** @typedef {{serverTime: number}} */
 const appConfig_DO_NOT_USE_DIRECTLY = {};

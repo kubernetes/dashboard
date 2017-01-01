@@ -40,13 +40,13 @@ describe('Verber service', () => {
     let deferred = q.defer();
     spyOn(mdDialog, 'show').and.returnValue(deferred.promise);
 
-    let promise = verber.showDeleteDialog('Foo resource', {foo: 'bar'}, {baz: 'qux'});
+    let promise = verber.showDeleteDialog('Foo resource', {kind: 'bar'}, {name: 'qux'});
 
     expect(mdDialog.show).toHaveBeenCalledWith(jasmine.objectContaining({
       locals: {
         'resourceKindName': 'Foo resource',
-        'typeMeta': {foo: 'bar'},
-        'objectMeta': {baz: 'qux'},
+        'resourceUrl': 'api/v1/_raw/bar/name/qux',
+        'objectMeta': {name: 'qux'},
       },
     }));
 
@@ -60,7 +60,7 @@ describe('Verber service', () => {
     spyOn(mdDialog, 'show').and.returnValue(deferred.promise);
     spyOn(state, 'reload');
     spyOn(mdDialog, 'alert').and.callThrough();
-    let promise = verber.showDeleteDialog();
+    let promise = verber.showDeleteDialog('', {}, {});
 
     deferred.reject({data: 'foo-data', statusText: 'foo-text'});
     scope.$digest();
@@ -76,13 +76,13 @@ describe('Verber service', () => {
     let deferred = q.defer();
     spyOn(mdDialog, 'show').and.returnValue(deferred.promise);
 
-    let promise = verber.showEditDialog('Foo resource', {foo: 'bar'}, {baz: 'qux'});
+    let promise =
+        verber.showEditDialog('Foo resource', {kind: 'bar'}, {name: 'qux', namespace: 'foo'});
 
     expect(mdDialog.show).toHaveBeenCalledWith(jasmine.objectContaining({
       locals: {
         'resourceKindName': 'Foo resource',
-        'typeMeta': {foo: 'bar'},
-        'objectMeta': {baz: 'qux'},
+        'resourceUrl': 'api/v1/_raw/bar/namespace/foo/name/qux',
       },
     }));
     deferred.resolve();
@@ -95,7 +95,7 @@ describe('Verber service', () => {
     spyOn(mdDialog, 'show').and.returnValue(deferred.promise);
     spyOn(state, 'reload');
     spyOn(mdDialog, 'alert').and.callThrough();
-    let promise = verber.showEditDialog();
+    let promise = verber.showEditDialog('Foo resource', {kind: 'bar'}, {});
 
     deferred.reject({data: 'foo-data', statusText: 'foo-text'});
     scope.$digest();

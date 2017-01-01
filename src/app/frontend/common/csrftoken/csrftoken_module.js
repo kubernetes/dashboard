@@ -12,23 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {EditResourceController} from './editresource_controller';
+import {CsrfTokenService} from './csrftoken_service';
 
 /**
- * @param {!md.$dialog} mdDialog
- * @param {string} resourceKindName
- * @param {string} resourceUrl
- * @return {!angular.$q.Promise}
+ * Module congaining a csrfToken service.
  */
-export default function showEditDialog(mdDialog, resourceKindName, resourceUrl) {
-  return mdDialog.show({
-    controller: EditResourceController,
-    controllerAs: '$ctrl',
-    clickOutsideToClose: true,
-    templateUrl: 'common/resource/editresource.html',
-    locals: {
-      'resourceUrl': resourceUrl,
-      'resourceKindName': resourceKindName,
-    },
-  });
-}
+export default angular
+    .module(
+        'kubernetesDashboard.common.csrftoken',
+        [
+          'ui.router',
+        ])
+    .service('kdCsrfTokenService', CsrfTokenService);

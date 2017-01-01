@@ -65,7 +65,8 @@ export class PodCardController {
    * @export
    */
   isPending() {
-    return !this.hasWarnings() && this.pod.podStatus.podPhase === 'Pending';
+    // podPhase should be Pending if init containers are running but we are being extra thorough.
+    return this.pod.podStatus.status === 'pending';
   }
 
   /**
@@ -73,7 +74,7 @@ export class PodCardController {
    * @export
    */
   isSuccess() {
-    return !this.isPending() && !this.isFailed();
+    return this.pod.podStatus.status === 'success';
   }
 
   /**
@@ -82,7 +83,7 @@ export class PodCardController {
    * @export
    */
   isFailed() {
-    return this.pod.podStatus.podPhase === 'Failed' || this.hasWarnings();
+    return this.pod.podStatus.status === 'failed';
   }
 
   /**
@@ -110,8 +111,15 @@ export class PodCardController {
    * @export
    */
   getDisplayStatus() {
+    // See kubectl resource_printer.go for logic in kubectl.
+    // https://github.com/kubernetes/kubernetes/blob/master/pkg/kubectl/resource_printer.go
+
     let msgState = 'running';
     let reason = undefined;
+
+    // NOTE: Init container statuses are currently not taken into account.
+    // However, init containers with errors will still show as failed because
+    // of warnings.
     if (this.pod.podStatus.containerStates) {
       // Container states array may be null when no containers have
       // started yet.

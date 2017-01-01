@@ -22,7 +22,7 @@ import (
 // ----------------------- Standard Comparable Types ------------------------
 // These types specify how given value should be compared
 // They all implement ComparableValueInterface
-// You can convert basic types to these types to supprt auto sorting etc.
+// You can convert basic types to these types to support auto sorting etc.
 // If you cant find your type compare here you will have to implement it yourself :)
 
 type StdComparableInt int
