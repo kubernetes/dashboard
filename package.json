@@ -17,7 +17,7 @@
     "bower": "~1.8.0",
     "browser-sync": "~2.18.2",
     "browser-sync-spa": "~1.0.3",
-    "browserify": "~13.1.0",
+    "browserify": "~13.3.0",
     "browserify-istanbul": "~2.0.0",
     "clang-format": "1.0.46",
     "del": "~2.2.2",
