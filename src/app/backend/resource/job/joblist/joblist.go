@@ -112,9 +112,9 @@ func CreateJobList(jobs []batch.Job, pods []api.Pod, events []api.Event,
 	cachedResources := &dataselect.CachedResources{
 		Pods: pods,
 	}
-	replicationControllerCells, metricPromises := dataselect.GenericDataSelectWithMetrics(
+	jobCells, metricPromises := dataselect.GenericDataSelectWithMetrics(
 		job.ToCells(jobs), dsQuery, cachedResources, heapsterClient)
-	jobs = job.FromCells(replicationControllerCells)
+	jobs = job.FromCells(jobCells)
 
 	for _, job := range jobs {
 		var completions int32
