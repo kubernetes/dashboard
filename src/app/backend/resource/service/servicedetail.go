@@ -19,6 +19,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -85,6 +86,14 @@ func GetServicePods(client k8sClient.Interface, heapsterClient client.HeapsterCl
 	service, err := client.Core().Services(namespace).Get(name)
 	if err != nil {
 		return nil, err
+	}
+
+	if service.Spec.Selector == nil {
+		emptyPodList := &pod.PodList {
+			Pods: []pod.Pod{},
+			CumulativeMetrics: []metric.Metric{},
+		}
+		return emptyPodList, nil
 	}
 
 	labelSelector := labels.SelectorFromSet(service.Spec.Selector)
