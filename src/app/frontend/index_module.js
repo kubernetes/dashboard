@@ -51,6 +51,7 @@ import serviceListModule from './servicelist/servicelist_module';
 import servicesanddiscoveryModule from './servicesanddiscovery/module';
 import statefulSetListModule from './statefulsetlist/statefulsetlist_module';
 import workloadsModule from './workloads/workloads_module';
+import accessControlModule from './accesscontrol/module';
 
 
 export default angular
@@ -97,6 +98,7 @@ export default angular
           servicesanddiscoveryModule.name,
           configModule.name,
           csrfTokenModule.name,
+          accessControlModule.name
         ])
     .config(indexConfig)
     .config(routeConfig);
