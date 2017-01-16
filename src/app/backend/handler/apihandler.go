@@ -80,7 +80,6 @@ const (
 type APIHandler struct {
 	heapsterClient client.HeapsterClient
 	clientConfig   clientcmd.ClientConfig
-	verber         common.ResourceVerber
 	csrfKey        string
 }
 
@@ -195,13 +194,15 @@ func (apiHandler *APIHandler) injectApiClient(fn func(*clientK8s.Clientset, *res
 	}
 }
 
+func createVerberFromApiClient(client *clientK8s.Clientset) common.ResourceVerber {
+	return common.NewResourceVerber(client.Core().RESTClient(),
+		client.ExtensionsClient.RESTClient(), client.AppsClient.RESTClient(),
+		client.BatchClient.RESTClient(), client.AutoscalingClient.RESTClient())
+}
+
 // CreateHTTPAPIHandler creates a new HTTP handler that handles all requests to the API of the backend.
 func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.HeapsterClient,
 	clientConfig clientcmd.ClientConfig) (http.Handler, error) {
-
-	verber := common.NewResourceVerber(client.Core().RESTClient(),
-		client.ExtensionsClient.RESTClient(), client.AppsClient.RESTClient(),
-		client.BatchClient.RESTClient(), client.AutoscalingClient.RESTClient())
 
 	var csrfKey string
 	inClusterConfig, err := restclient.InClusterConfig()
@@ -220,7 +221,7 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 		csrfKey = string(bytes)
 	}
 
-	apiHandler := APIHandler{heapsterClient, clientConfig, verber, csrfKey}
+	apiHandler := APIHandler{heapsterClient, clientConfig, csrfKey}
 	wsContainer := restful.NewContainer()
 	wsContainer.EnableContentEncoding(true)
 
@@ -1212,7 +1213,9 @@ func (apiHandler *APIHandler) handleGetResource(
 	namespace, ok := request.PathParameters()["namespace"]
 	name := request.PathParameter("name")
 
-	result, err := apiHandler.verber.Get(kind, ok, namespace, name)
+	verber := createVerberFromApiClient(apiClient)
+
+	result, err := verber.Get(kind, ok, namespace, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1232,7 +1235,9 @@ func (apiHandler *APIHandler) handlePutResource(
 		return
 	}
 
-	if err := apiHandler.verber.Put(kind, ok, namespace, name, putSpec); err != nil {
+	verber := createVerberFromApiClient(apiClient)
+
+	if err := verber.Put(kind, ok, namespace, name, putSpec); err != nil {
 		handleInternalError(response, err)
 		return
 	}
@@ -1246,7 +1251,9 @@ func (apiHandler *APIHandler) handleDeleteResource(
 	namespace, ok := request.PathParameters()["namespace"]
 	name := request.PathParameter("name")
 
-	if err := apiHandler.verber.Delete(kind, ok, namespace, name); err != nil {
+	verber := createVerberFromApiClient(apiClient)
+
+	if err := verber.Delete(kind, ok, namespace, name); err != nil {
 		handleInternalError(response, err)
 		return
 	}
