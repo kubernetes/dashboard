@@ -45,6 +45,8 @@ describe('Update Replicas controller', () => {
       state = $state;
       resource = $resource;
       httpBackend = $httpBackend;
+      httpBackend.expectGET('api/v1/csrftoken/replicationcontroller')
+          .respond(200, '{"token": "x"}');
       log = $log;
 
       ctrl = $controller(

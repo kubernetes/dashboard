@@ -730,6 +730,7 @@ backendApi.ConditionList;
 /**
  * @typedef {{
  *   podPhase: string,
+ *   status: string,
  *   containerStates: !Array<!backendApi.ContainerState>
  * }}
  */
@@ -742,7 +743,8 @@ backendApi.PodStatus;
  *   podStatus: !backendApi.PodStatus,
  *   podIP: string,
  *   restartCount: number,
- *   metrics: backendApi.PodMetrics
+ *   metrics: backendApi.PodMetrics,
+ *   warnings: !Array<!backendApi.Event>
  * }}
  */
 backendApi.Pod;
@@ -990,6 +992,7 @@ backendApi.NamespaceList;
  *   typeMeta: !backendApi.TypeMeta,
  *   phase: string,
  *   eventList: !backendApi.EventList,
+ *   resourceLimits: Array<!backendApi.LimitRange>,
  *   resourceQuotaList: !backendApi.ResourceQuotaDetailList,
  * }}
  */
@@ -1146,6 +1149,19 @@ backendApi.PersistentVolumeClaimList;
 
 /**
  * @typedef {{
+ *   resourceType: string,
+ *   resourceName: string,
+ *   min: string,
+ *   max: string,
+ *   default: string,
+ *   defaultRequest: string,
+ *   maxLimitRequestRatio: string
+ * }}
+ */
+backendApi.LimitRange;
+
+/**
+ * @typedef {{
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
  *   scaleTargetRef: !backendApi.ScaleTargetRef,
@@ -1200,6 +1216,13 @@ backendApi.HorizontalPodAutoscalerList;
  * }}
  */
 backendApi.Controller;
+
+/**
+ * @typedef {{
+ *   token: string
+ * }}
+ */
+backendApi.CsrfToken;
 
 /** @typedef {{serverTime: number}} */
 const appConfig_DO_NOT_USE_DIRECTLY = {};

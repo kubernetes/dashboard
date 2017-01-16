@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package limitrange
+package namespace
 
 import (
 	"reflect"
@@ -23,30 +23,30 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 )
 
-func TestGetLimitRangeList(t *testing.T) {
+func TestGetNamespaceList(t *testing.T) {
 	cases := []struct {
-		limitRanges []api.LimitRange
-		expected    *LimitRangeList
+		namespaces []api.Namespace
+		expected   *NamespaceList
 	}{
-		{nil, &LimitRangeList{Items: []LimitRange{}}},
+		{nil, &NamespaceList{Namespaces: []Namespace{}}},
 		{
-			[]api.LimitRange{
+			[]api.Namespace{
 				{ObjectMeta: api.ObjectMeta{Name: "foo"}},
 			},
-			&LimitRangeList{
+			&NamespaceList{
 				ListMeta: common.ListMeta{TotalItems: 1},
-				Items: []LimitRange{{
-					TypeMeta:   common.TypeMeta{Kind: "limitrange"},
+				Namespaces: []Namespace{{
+					TypeMeta:   common.TypeMeta{Kind: "namespace"},
 					ObjectMeta: common.ObjectMeta{Name: "foo"},
 				}},
 			},
 		},
 	}
 	for _, c := range cases {
-		actual := getLimitRangeList(c.limitRanges, dataselect.NoDataSelect)
+		actual := toNamespaceList(c.namespaces, dataselect.NoDataSelect)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("getLimitRangeList(%#v) == \n%#v\nexpected \n%#v\n",
-				c.limitRanges, actual, c.expected)
+			t.Errorf("getNamespaceList(%#v) == \n%#v\nexpected \n%#v\n",
+				c.namespaces, actual, c.expected)
 		}
 	}
 }

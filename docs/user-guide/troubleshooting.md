@@ -11,60 +11,75 @@ Do not move it without providing redirects.
 
 ## Authentication to the Kubernetes API Server
 
-If your Kubernetes cluster is not configured correctly, it may fail to contact
-the API server. Before
-explaining the solution, it is useful to review how the dashboard discovers
-and authenticates with the API server.
+
 A number of components are involved in the authentication process and the first step is to narrow
 down the source of the problem, namely whether it is a problem with user authentication or with service authentication.
-In the diagram below you can see the full authentication flow, starting with the browser
+Both authentications must work:
+
+```
++-------------+   user             +-------------+   service          +-------------+
+|             |   authentication   |             |   authentication   |             |
+|  browser    +------------------->+  apiserver  +<-------------------+  dashboard  |
+|             |                    |             |                    |             |
++-------------+                    +-------------+                    +-------------+
+
+```
+
+__User authentication__
+
+From your workstation you can connect to Dashboard in three different ways:
+
+1. _Authentication through kubectl:_ This is recommended, because it is secure and easy. In your desktop environment (e.g. laptop)
+verify that kubectl is configured properly with `kubectl cluster-info`. If you get a response then you can continue.
+Enter the command `kubectl proxy`. kubectl will relay the user's credentials to apiserver for authentication and proxy every API request to a local server. This server is unprotected, but this is not a problem as it is only accessible from within the workstation. Now access Dashboard with `http://localhost:8001/ui`. If it fails then your problem is located with service authentication (see next section).
+
+2. _Direct access to apiserver:_ Open a browser with the URL `https://<master>/`. A login dialog should pop up. If it does not, then username & password authentication is not configured for the apiserver. See [documentation](http://kubernetes.io/docs/admin/authentication/) if you want to configure it manually. Next, access Dashboard with `https://<master>/ui`. If it fails then your problem is located with service authentication (see next section).
+
+3. _Bypass apiserver:_ If you are working in a trusted environment then you may access Dashboard without authentication. Expose Dashboard service via NodePort. See [user guide](http://kubernetes.io/docs/user-guide/services/) for details.
+
+
+
+__Service authentication__
+
+Dashboard needs information from apiserver. Therefore, authentication is required, which can be achieved in two different ways:
+
+1. _Service Account:_ This is recommended, because nothing has to be configured. Dashboard will use information provided by the system
+to communicate with the API server. See 'Service Account' section for details.
+
+2. _Kubeconfig file:_ In some Kubernetes environments service accounts are not available. In this case a manual configuration is required. The Dashboard binary can be started with the `--kubeconfig` flag. The value of the flag is a path to a file specifying how to connect to the API server.
+The contents of the file is identical to `~/.kube/config` which is used by kubectl to connect to the API server. See 'kubeconfig' section for details.
+
+In the diagram below you can see the full authentication flow with all options, starting with the browser
 on the lower left hand side.
 ```
 
- Workstation                                        Kubernetes
+Workstation                                        Kubernetes
 +------------------+                               +----------------------------------------------------+
 |                  |                               |                                                    |
 |                  |                               |                                                    |
 |  +------------+  |                               |  +------------+   apiserver        +------------+  |
-|  |            |  |      user authentication      |  |            |   proxy            |            |  |
-|  |            +------------------------------------>+            +------------------->+            |  |
+|  |            |  |  authentication with kubectl  |  |            |   proxy            |            |  |
+|  | kubectl    +------------------------------------>+ apiserver  +------------------->+ dashboard  |  |
+|  | proxy      |  |                               |  |            |                    |            |  |
 |  |            |  |                               |  |            |                    |            |  |
 |  +--------+---+  |                               |  |            |                    |            |  |
-|  kubectl  ^      |                               |  |            |                    |            |  |
-|  proxy    |      |                          +------>+            |   service          |            |  |
-|           |      |                          |    |  |            |   authentication   |            |  |
+|           ^      |                          +------>+            |  service account/  |            |  |
+|  localhost|      |                          |    |  |            |  kubeconfig        |            |  |
 |           |      |                          |    |  |            +<-------------------+            |  |
 |  +--------+---+  |                          |    |  |            |                    |            |  |
-|  |            |  |                          |    |  +------------+                    +------------+  |
-|  |            +-----------------------------+    |    apiserver                         dashboard     |
-|  |            |  |      user authentication      |                                                    |
-|  +------------+  |      with username &          |                                                    |
-|  browser         |      password only            |                                                    |
+|  |            |  |      direct access       |    |  +------------+                    +------+-----+  |
+|  | browser    +-----------------------------+    |                                           |        |
+|  |            |  |                               |                                           |        |
+|  |            +----------------------------------------------------------------------------->O        |
+|  +------------+  |      bypass apiserver         |                                        NodePort    |
 |                  |                               |                                                    |
 |                  |                               |                                                    |
 +------------------+                               +----------------------------------------------------+
 
 ```
-__User authentication__
-
-Browsers can only authenticate with username and password. If your apiserver is set up correctly,
- then you can access it directly with `https://<master>/ui`. Otherwise, you can start a local proxy
- with `kubectl proxy` and access Dashboard with the URL `http://localhost:8001`.
-
-__Service authentication__
-
-If you have successfully passed authentication, then apiserver proxy will forward the request to dashboard backend. However, the dashboard backend will need information from apiserver and will have to authenticate with apiserver again.
 
 
-Dashboard can connect with the API server in two different ways:
-
-1. The recommended way is to configure nothing. Dashboard will use a service account (as opposed to a user account)
-to communicate with the API server.
-
-2. In some Kubernetes environments service accounts are not available. In this case a manual configuration is required. The Dashboard binary can be started with the `--kubeconfig` flag. The value of the flag is a path to a file specifying how to connect to the API server.
-The contents of the file is identical to `~/.kube/config` which is used by kubectl to connect to the API server.
-
-## Service Accounts
+## Service Account
 If using a service account to connect to the API server, Dashboard expects the file
 `/var/run/secrets/kubernetes.io/serviceaccount/token` to be present. It provides a secret
 token that is required to authenticate with the API server.
@@ -86,12 +101,12 @@ ca.crt
 namespace
 token
 
-# get IP of master
+# get service IP of master
 $ kubectl get services
 NAME         CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 kubernetes   10.0.0.1     <none>        443/TCP   1d
 
-# check base connectivity
+# check base connectivity from cluster inside
 $ kubectl exec test-701078429-s5kca -- curl -k https://10.0.0.1
 Unauthorized
 
@@ -155,3 +170,65 @@ More information:
 
 * [User Guide: Service Accounts](http://kubernetes.io/docs/user-guide/service-accounts/)
 * [Cluster Administrator Guide: Managing Service Accounts](http://kubernetes.io/docs/admin/service-accounts-admin/)
+
+## kubeconfig
+If you want to use a kubeconfig file for authentication, create a
+deployment file similar to the one below:
+```
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: kubernetes-dashboard
+  name: kubernetes-dashboard
+  namespace: kube-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kubernetes-dashboard
+  template:
+    metadata:
+      labels:
+        app: kubernetes-dashboard
+    spec:
+      containers:
+      - name: kubernetes-dashboard
+        image: gcr.io/google_containers/kubernetes-dashboard-amd64:v1.x.x
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9090
+          protocol: TCP
+        volumeMounts:
+        - name: "kubeconfig"
+          mountPath: "/etc/kubernetes/"
+          readOnly: true
+        args:
+          - --kubeconfig=/etc/kubernetes/kubeconfig.yaml
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 9090
+          initialDelaySeconds: 30
+          timeoutSeconds: 30
+      volumes:
+      - name: "kubeconfig"
+        hostPath:
+          path: "/etc/kubernetes/"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: kubernetes-dashboard
+  name: kubernetes-dashboard
+  namespace: kube-system
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 9090
+  selector:
+    app: kubernetes-dashboard
+
+```

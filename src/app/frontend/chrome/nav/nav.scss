@@ -36,6 +36,11 @@
       background-color: transparent;
     }
   }
+
+  // Children of kd-nav should not shrink to prevent layout issues on IE. 
+  &>* {
+    flex-shrink: 0;
+  }
 }
 
 kd-nav,

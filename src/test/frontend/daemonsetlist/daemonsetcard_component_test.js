@@ -47,6 +47,6 @@ describe('Daemon Set card', () => {
       },
     };
 
-    expect(ctrl.getCreatedAtTooltip()).toMatch('Created at 6/[56]/16.*');
+    expect(ctrl.getCreatedAtTooltip()).toMatch('Created at 2016-06-06T09:13.*');
   });
 });

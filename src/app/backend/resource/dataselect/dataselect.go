@@ -109,6 +109,32 @@ func (self *DataSelector) Sort() *DataSelector {
 	return self
 }
 
+// Filter the data inside as instructed by DataSelectQuery and returns itself to allow method chaining.
+func (self *DataSelector) Filter() *DataSelector {
+	filteredList := []DataCell{}
+
+	for _, c := range self.GenericDataList {
+		matches := true
+		for _, filterBy := range self.DataSelectQuery.FilterQuery.FilterByList {
+			v := c.GetProperty(filterBy.Property)
+			if v == nil {
+				matches = false
+				continue
+			}
+			if filterBy.Value.Compare(v) != 0 {
+				matches = false
+				continue
+			}
+		}
+		if matches {
+			filteredList = append(filteredList, c)
+		}
+	}
+
+	self.GenericDataList = filteredList
+	return self
+}
+
 // GetCumulativeMetrics downloads and aggregates metrics for data cells currently present in self.GenericDataList as instructed
 // by MetricQuery and inserts resulting MetricPromises to self.CumulativeMetricsPromises.
 func (self *DataSelector) GetCumulativeMetrics(heapsterClient *client.HeapsterClient) *DataSelector {
@@ -143,7 +169,7 @@ func (self *DataSelector) GetCumulativeMetrics(heapsterClient *client.HeapsterCl
 	return self
 }
 
-// Paginate paginetes the data inside as instructed by DataSelectQuery and returns itself to allow method chaining.
+// Paginates the data inside as instructed by DataSelectQuery and returns itself to allow method chaining.
 func (self *DataSelector) Paginate() *DataSelector {
 	pQuery := self.DataSelectQuery.PaginationQuery
 	dataList := self.GenericDataList
@@ -183,4 +209,19 @@ func GenericDataSelectWithMetrics(dataList []DataCell, dsQuery *DataSelectQuery,
 	// Pipeline is Filter -> Sort -> CollectMetrics -> Paginate
 	processed := SelectableData.Sort().GetCumulativeMetrics(heapsterClient).Paginate()
 	return processed.GenericDataList, processed.CumulativeMetricsPromises
+}
+
+func GenericDataSelectWithFilterAndMetrics(dataList []DataCell, dsQuery *DataSelectQuery,
+	cachedResources *CachedResources, heapsterClient *client.HeapsterClient) ([]DataCell, metric.MetricPromises, int) {
+	SelectableData := DataSelector{
+		GenericDataList: dataList,
+		DataSelectQuery: dsQuery,
+		CachedResources: cachedResources,
+	}
+	// Pipeline is Filter -> Sort -> CollectMetrics -> Paginate
+	filtered := SelectableData.Filter()
+	filteredTotal := len(filtered.GenericDataList)
+	processed := filtered.Sort().GetCumulativeMetrics(heapsterClient).Paginate()
+	return processed.GenericDataList, processed.CumulativeMetricsPromises, filteredTotal
+
 }

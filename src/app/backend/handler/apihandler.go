@@ -15,6 +15,8 @@
 package handler
 
 import (
+	"crypto/rand"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -39,7 +41,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/ingress"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job/jobdetail"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job/joblist"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/limitrange"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/logs"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
@@ -58,9 +59,12 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/statefulsetlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/workload"
 	"github.com/kubernetes/dashboard/src/app/backend/validation"
+	"golang.org/x/net/xsrftoken"
 	clientK8s "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	"k8s.io/kubernetes/pkg/client/restclient"
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
 	"k8s.io/kubernetes/pkg/runtime"
+	utilnet "k8s.io/kubernetes/pkg/util/net"
 )
 
 const (
@@ -78,6 +82,69 @@ type APIHandler struct {
 	heapsterClient client.HeapsterClient
 	clientConfig   clientcmd.ClientConfig
 	verber         common.ResourceVerber
+	csrfKey        string
+}
+
+type CsrfToken struct {
+	Token string `json:"token"`
+}
+
+func wsMetrics(req *restful.Request, resp *restful.Response, chain *restful.FilterChain) {
+	startTime := time.Now()
+	verb := req.Request.Method
+	resource := mapUrlToResource(req.SelectedRoutePath())
+	client := utilnet.GetHTTPClient(req.Request)
+	chain.ProcessFilter(req, resp)
+	code := resp.StatusCode()
+	contentType := resp.Header().Get("Content-Type")
+	if resource != nil {
+		Monitor(verb, *resource, client, contentType, code, startTime)
+	}
+}
+
+// Post requests should set correct X-CSRF-TOKEN header, all other requests
+// should either not edit anything or be already safe to CSRF attacks (PUT
+// and DELETE)
+func shouldDoCsrfValidation(req *restful.Request) bool {
+	if req.Request.Method != "POST" {
+		return false
+	}
+	// Validation handlers are idempotent functions, and not actual data
+	// modification operations
+	if strings.HasPrefix(req.SelectedRoutePath(), "/api/v1/appdeployment/validate/") {
+		return false
+	}
+	return true
+}
+
+func xsrfValidation(csrfKey string) func(*restful.Request, *restful.Response, *restful.FilterChain) {
+
+	return func(req *restful.Request, resp *restful.Response, chain *restful.FilterChain) {
+		resource := mapUrlToResource(req.SelectedRoutePath())
+		if resource == nil || (shouldDoCsrfValidation(req) &&
+			!xsrftoken.Valid(req.HeaderParameter("X-CSRF-TOKEN"),
+				csrfKey,
+				"none",
+				*resource)) {
+
+			err := errors.New("CSRF validation failed")
+			log.Print(err)
+			resp.AddHeader("Content-Type", "text/plain")
+			resp.WriteErrorString(http.StatusUnauthorized, err.Error()+"\n")
+		} else {
+			chain.ProcessFilter(req, resp)
+		}
+	}
+}
+
+// Extract the resource from the path
+// Third part of URL (/api/v1/<resource>) and ignore potential subresources
+func mapUrlToResource(url string) *string {
+	parts := strings.Split(url, "/")
+	if len(parts) < 3 {
+		return nil
+	}
+	return &parts[3]
 }
 
 // Web-service filter function used for request and response logging.
@@ -108,21 +175,48 @@ func FormatResponseLog(resp *restful.Response, req *restful.Request) string {
 
 // CreateHTTPAPIHandler creates a new HTTP handler that handles all requests to the API of the backend.
 func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.HeapsterClient,
-	clientConfig clientcmd.ClientConfig) http.Handler {
+	clientConfig clientcmd.ClientConfig) (http.Handler, error) {
 
 	verber := common.NewResourceVerber(client.Core().RESTClient(),
 		client.ExtensionsClient.RESTClient(), client.AppsClient.RESTClient(),
 		client.BatchClient.RESTClient(), client.AutoscalingClient.RESTClient())
-	apiHandler := APIHandler{client, heapsterClient, clientConfig, verber}
+
+	var csrfKey string
+	inClusterConfig, err := restclient.InClusterConfig()
+	if err == nil {
+		// We run in a cluster, so we should use a signing key that is the same for potential replications
+		log.Printf("Using service account token for csrf signing")
+		csrfKey = inClusterConfig.BearerToken
+	} else {
+		// Most likely running for a dev, so no replica issues, just generate a random key
+		log.Printf("Using random key for csrf signing")
+		bytes := make([]byte, 256)
+		_, err := rand.Read(bytes)
+		if err != nil {
+			return nil, err
+		}
+		csrfKey = string(bytes)
+	}
+
+	apiHandler := APIHandler{client, heapsterClient, clientConfig, verber, csrfKey}
 	wsContainer := restful.NewContainer()
 	wsContainer.EnableContentEncoding(true)
 
 	apiV1Ws := new(restful.WebService)
 	apiV1Ws.Filter(wsLogger)
+
+	RegisterMetrics()
+	apiV1Ws.Filter(wsMetrics)
+	apiV1Ws.Filter(xsrfValidation(csrfKey))
 	apiV1Ws.Path("/api/v1").
 		Consumes(restful.MIME_JSON).
 		Produces(restful.MIME_JSON)
 	wsContainer.Add(apiV1Ws)
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("csrftoken/{action}").
+			To(apiHandler.handleGetCsrfToken).
+			Writes(CsrfToken{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.POST("/appdeployment").
@@ -463,13 +557,23 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 			Writes(pod.PodList{}))
 
 	apiV1Ws.Route(
-		apiV1Ws.DELETE("/{kind}/namespace/{namespace}/name/{name}").
+		apiV1Ws.DELETE("/_raw/{kind}/namespace/{namespace}/name/{name}").
 			To(apiHandler.handleDeleteResource))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/{kind}/namespace/{namespace}/name/{name}").
+		apiV1Ws.GET("/_raw/{kind}/namespace/{namespace}/name/{name}").
 			To(apiHandler.handleGetResource))
 	apiV1Ws.Route(
-		apiV1Ws.PUT("/{kind}/namespace/{namespace}/name/{name}").
+		apiV1Ws.PUT("/_raw/{kind}/namespace/{namespace}/name/{name}").
+			To(apiHandler.handlePutResource))
+
+	apiV1Ws.Route(
+		apiV1Ws.DELETE("/_raw/{kind}/name/{name}").
+			To(apiHandler.handleDeleteResource))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/_raw/{kind}/name/{name}").
+			To(apiHandler.handleGetResource))
+	apiV1Ws.Route(
+		apiV1Ws.PUT("/_raw/{kind}/name/{name}").
 			To(apiHandler.handlePutResource))
 
 	apiV1Ws.Route(
@@ -498,21 +602,15 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 			To(apiHandler.handleGetPersistentVolumeClaimDetail).
 			Writes(persistentvolumeclaim.PersistentVolumeClaimDetail{}))
 
-	apiV1Ws.Route(
-		apiV1Ws.GET("/limitrange/").
-			To(apiHandler.handleGetLimitRangeList).
-			Writes(limitrange.LimitRangeList{}))
-	apiV1Ws.Route(
-		apiV1Ws.GET("/limitrange/{namespace}").
-			To(apiHandler.handleGetLimitRangeList).
-			Writes(limitrange.LimitRangeList{}))
+	return wsContainer, nil
+}
 
-	apiV1Ws.Route(
-		apiV1Ws.GET("/limitrange/{namespace}/{limitrange}").
-			To(apiHandler.handleGetLimitRangeDetail).
-			Writes(limitrange.LimitRangeList{}))
+func (apiHandler *APIHandler) handleGetCsrfToken(request *restful.Request,
+	response *restful.Response) {
+	action := request.PathParameter("action")
+	token := xsrftoken.Generate(apiHandler.csrfKey, "none", action)
 
-	return wsContainer
+	response.WriteHeaderAndEntity(http.StatusOK, CsrfToken{Token: token})
 }
 
 // Handles get pet set list API call.
@@ -527,7 +625,7 @@ func (apiHandler *APIHandler) handleGetStatefulSetList(request *restful.Request,
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get pet set detail API call.
@@ -542,7 +640,7 @@ func (apiHandler *APIHandler) handleGetStatefulSetDetail(request *restful.Reques
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get pet set pods API call.
@@ -557,7 +655,7 @@ func (apiHandler *APIHandler) handleGetStatefulSetPods(request *restful.Request,
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get pet set events API call.
@@ -572,7 +670,7 @@ func (apiHandler *APIHandler) handleGetStatefulSetEvents(request *restful.Reques
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get service list API call.
@@ -585,7 +683,7 @@ func (apiHandler *APIHandler) handleGetServiceList(request *restful.Request, res
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get service detail API call.
@@ -599,7 +697,7 @@ func (apiHandler *APIHandler) handleGetServiceDetail(request *restful.Request, r
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetIngressDetail(request *restful.Request, response *restful.Response) {
@@ -610,7 +708,7 @@ func (apiHandler *APIHandler) handleGetIngressDetail(request *restful.Request, r
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetIngressList(request *restful.Request, response *restful.Response) {
@@ -637,7 +735,7 @@ func (apiHandler *APIHandler) handleGetServicePods(request *restful.Request,
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get node list API call.
@@ -651,7 +749,7 @@ func (apiHandler *APIHandler) handleGetNodeList(request *restful.Request, respon
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetAdmin(request *restful.Request, response *restful.Response) {
@@ -661,7 +759,7 @@ func (apiHandler *APIHandler) handleGetAdmin(request *restful.Request, response 
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get node detail API call.
@@ -673,7 +771,7 @@ func (apiHandler *APIHandler) handleGetNodeDetail(request *restful.Request, resp
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get node events API call.
@@ -686,7 +784,7 @@ func (apiHandler *APIHandler) handleGetNodeEvents(request *restful.Request, resp
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get node pods API call.
@@ -699,7 +797,7 @@ func (apiHandler *APIHandler) handleGetNodePods(request *restful.Request, respon
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles deploy API call.
@@ -758,7 +856,7 @@ func (apiHandler *APIHandler) handleNameValidity(request *restful.Request, respo
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, validity)
+	response.WriteHeaderAndEntity(http.StatusOK, validity)
 }
 
 // Handles image reference validation API call.
@@ -774,7 +872,7 @@ func (APIHandler *APIHandler) handleImageReferenceValidity(request *restful.Requ
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, validity)
+	response.WriteHeaderAndEntity(http.StatusOK, validity)
 }
 
 // Handles protocol validation API call.
@@ -785,12 +883,12 @@ func (apiHandler *APIHandler) handleProtocolValidity(request *restful.Request, r
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, validation.ValidateProtocol(spec))
+	response.WriteHeaderAndEntity(http.StatusOK, validation.ValidateProtocol(spec))
 }
 
 // Handles get available protocols API call.
 func (apiHandler *APIHandler) handleGetAvailableProcotols(request *restful.Request, response *restful.Response) {
-	response.WriteHeaderAndEntity(http.StatusCreated, deployment.GetAvailableProtocols())
+	response.WriteHeaderAndEntity(http.StatusOK, deployment.GetAvailableProtocols())
 }
 
 // Handles get Replication Controller list API call.
@@ -806,7 +904,7 @@ func (apiHandler *APIHandler) handleGetReplicationControllerList(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Workloads list API call.
@@ -820,7 +918,7 @@ func (apiHandler *APIHandler) handleGetWorkloads(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetServicesAndDiscovery(
@@ -833,7 +931,7 @@ func (apiHandler *APIHandler) handleGetServicesAndDiscovery(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetConfig(
@@ -846,7 +944,7 @@ func (apiHandler *APIHandler) handleGetConfig(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Replica Sets list API call.
@@ -862,7 +960,7 @@ func (apiHandler *APIHandler) handleGetReplicaSets(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Replica Sets Detail API call.
@@ -880,7 +978,7 @@ func (apiHandler *APIHandler) handleGetReplicaSetDetail(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Replica Sets pods API call.
@@ -898,7 +996,7 @@ func (apiHandler *APIHandler) handleGetReplicaSetPods(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Replica Set services API call.
@@ -915,7 +1013,7 @@ func (apiHandler *APIHandler) handleGetReplicaSetServices(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get replica set events API call.
@@ -930,7 +1028,7 @@ func (apiHandler *APIHandler) handleGetReplicaSetEvents(request *restful.Request
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Deployment list API call.
@@ -946,7 +1044,7 @@ func (apiHandler *APIHandler) handleGetDeployments(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Deployment detail API call.
@@ -977,7 +1075,7 @@ func (apiHandler *APIHandler) handleGetDeploymentEvents(request *restful.Request
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get deployment old replica sets API call.
@@ -992,7 +1090,7 @@ func (apiHandler *APIHandler) handleGetDeploymentOldReplicaSets(request *restful
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Pod list API call.
@@ -1008,7 +1106,7 @@ func (apiHandler *APIHandler) handleGetPods(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Pod detail API call.
@@ -1022,7 +1120,7 @@ func (apiHandler *APIHandler) handleGetPodDetail(request *restful.Request, respo
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Replication Controller detail API call.
@@ -1039,7 +1137,7 @@ func (apiHandler *APIHandler) handleGetReplicationControllerDetail(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles update of Replication Controller pods update API call.
@@ -1067,22 +1165,22 @@ func (apiHandler *APIHandler) handleUpdateReplicasCount(
 func (apiHandler *APIHandler) handleGetResource(
 	request *restful.Request, response *restful.Response) {
 	kind := request.PathParameter("kind")
-	namespace := request.PathParameter("namespace")
+	namespace, ok := request.PathParameters()["namespace"]
 	name := request.PathParameter("name")
 
-	result, err := apiHandler.verber.Get(kind, namespace, name)
+	result, err := apiHandler.verber.Get(kind, ok, namespace, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handlePutResource(
 	request *restful.Request, response *restful.Response) {
 	kind := request.PathParameter("kind")
-	namespace := request.PathParameter("namespace")
+	namespace, ok := request.PathParameters()["namespace"]
 	name := request.PathParameter("name")
 	putSpec := &runtime.Unknown{}
 	if err := request.ReadEntity(putSpec); err != nil {
@@ -1090,21 +1188,21 @@ func (apiHandler *APIHandler) handlePutResource(
 		return
 	}
 
-	if err := apiHandler.verber.Put(kind, namespace, name, putSpec); err != nil {
+	if err := apiHandler.verber.Put(kind, ok, namespace, name, putSpec); err != nil {
 		handleInternalError(response, err)
 		return
 	}
 
-	response.WriteHeader(http.StatusOK)
+	response.WriteHeader(http.StatusCreated)
 }
 
 func (apiHandler *APIHandler) handleDeleteResource(
 	request *restful.Request, response *restful.Response) {
 	kind := request.PathParameter("kind")
-	namespace := request.PathParameter("namespace")
+	namespace, ok := request.PathParameters()["namespace"]
 	name := request.PathParameter("name")
 
-	if err := apiHandler.verber.Delete(kind, namespace, name); err != nil {
+	if err := apiHandler.verber.Delete(kind, ok, namespace, name); err != nil {
 		handleInternalError(response, err)
 		return
 	}
@@ -1127,7 +1225,7 @@ func (apiHandler *APIHandler) handleGetReplicationControllerPods(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles namespace creation API call.
@@ -1157,7 +1255,7 @@ func (apiHandler *APIHandler) handleGetNamespaces(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get namespace detail API call.
@@ -1169,7 +1267,7 @@ func (apiHandler *APIHandler) handleGetNamespaceDetail(request *restful.Request,
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get namespace events API call.
@@ -1182,7 +1280,7 @@ func (apiHandler *APIHandler) handleGetNamespaceEvents(request *restful.Request,
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles image pull secret creation API call.
@@ -1208,7 +1306,7 @@ func (apiHandler *APIHandler) handleGetSecretDetail(request *restful.Request, re
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get secrets list API call.
@@ -1242,7 +1340,7 @@ func (apiHandler *APIHandler) handleGetConfigMapDetail(request *restful.Request,
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetPersistentVolumeList(request *restful.Request, response *restful.Response) {
@@ -1262,7 +1360,7 @@ func (apiHandler *APIHandler) handleGetPersistentVolumeDetail(request *restful.R
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetPersistentVolumeClaimList(request *restful.Request, response *restful.Response) {
@@ -1285,29 +1383,7 @@ func (apiHandler *APIHandler) handleGetPersistentVolumeClaimDetail(request *rest
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
-}
-
-func (apiHandler *APIHandler) handleGetLimitRangeList(request *restful.Request, response *restful.Response) {
-	namespace := parseNamespacePathParameter(request)
-	dataSelect := parseDataSelectPathParameter(request)
-	result, err := limitrange.GetLimitRangeList(apiHandler.client, namespace, dataSelect)
-	if err != nil {
-		handleInternalError(response, err)
-		return
-	}
 	response.WriteHeaderAndEntity(http.StatusOK, result)
-}
-
-func (apiHandler *APIHandler) handleGetLimitRangeDetail(request *restful.Request, response *restful.Response) {
-	namespace := request.PathParameter("namespace")
-	name := request.PathParameter("limitrange")
-	result, err := limitrange.GetLimitRangeDetail(apiHandler.client, namespace, name)
-	if err != nil {
-		handleInternalError(response, err)
-		return
-	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
 // Handles log API call.
@@ -1349,7 +1425,7 @@ func (apiHandler *APIHandler) handleLogs(request *restful.Request, response *res
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetPodContainers(request *restful.Request, response *restful.Response) {
@@ -1361,7 +1437,7 @@ func (apiHandler *APIHandler) handleGetPodContainers(request *restful.Request, r
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get replication controller events API call.
@@ -1376,7 +1452,7 @@ func (apiHandler *APIHandler) handleGetReplicationControllerEvents(request *rest
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get replication controller services API call.
@@ -1392,7 +1468,7 @@ func (apiHandler *APIHandler) handleGetReplicationControllerServices(request *re
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handler that writes the given error to the response and sets appropriate HTTP status headers.
@@ -1415,7 +1491,7 @@ func (apiHandler *APIHandler) handleGetDaemonSetList(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Daemon Set detail API call.
@@ -1432,7 +1508,7 @@ func (apiHandler *APIHandler) handleGetDaemonSetDetail(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Daemon Set pods API call.
@@ -1449,7 +1525,7 @@ func (apiHandler *APIHandler) handleGetDaemonSetPods(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Daemon Set services API call.
@@ -1466,7 +1542,7 @@ func (apiHandler *APIHandler) handleGetDaemonSetServices(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get daemon set events API call.
@@ -1481,7 +1557,7 @@ func (apiHandler *APIHandler) handleGetDaemonSetEvents(request *restful.Request,
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles delete Daemon Set API call.
@@ -1516,7 +1592,7 @@ func (apiHandler *APIHandler) handleGetHorizontalPodAutoscalerList(request *rest
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetHorizontalPodAutoscalerDetail(request *restful.Request, response *restful.Response) {
@@ -1529,7 +1605,7 @@ func (apiHandler *APIHandler) handleGetHorizontalPodAutoscalerDetail(request *re
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Jobs list API call.
@@ -1545,7 +1621,7 @@ func (apiHandler *APIHandler) handleGetJobList(request *restful.Request,
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetJobDetail(request *restful.Request, response *restful.Response) {
@@ -1560,7 +1636,7 @@ func (apiHandler *APIHandler) handleGetJobDetail(request *restful.Request, respo
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Job pods API call.
@@ -1578,7 +1654,7 @@ func (apiHandler *APIHandler) handleGetJobPods(request *restful.Request,
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get job events API call.
@@ -1593,10 +1669,10 @@ func (apiHandler *APIHandler) handleGetJobEvents(request *restful.Request, respo
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
-// parseNamespacePathParameter parses namespace selector for list pages in path paramater.
+// parseNamespacePathParameter parses namespace selector for list pages in path parameter.
 // The namespace selector is a comma separated list of namespaces that are trimmed.
 // No namespaces means "view all user namespaces", i.e., everything except kube-system.
 func parseNamespacePathParameter(request *restful.Request) *common.NamespaceQuery {
@@ -1625,6 +1701,10 @@ func parsePaginationPathParameter(request *restful.Request) *dataselect.Paginati
 
 	// Frontend pages start from 1 and backend starts from 0
 	return dataselect.NewPaginationQuery(int(itemsPerPage), int(page-1))
+}
+
+func parseFilterPathParameter(request *restful.Request) *dataselect.FilterQuery {
+	return dataselect.NewFilterQuery(strings.Split(request.QueryParameter("filterby"), ","))
 }
 
 // Parses query parameters of the request and returns a SortQuery object
@@ -1660,6 +1740,7 @@ func parseMetricPathParameter(request *restful.Request) *dataselect.MetricQuery 
 func parseDataSelectPathParameter(request *restful.Request) *dataselect.DataSelectQuery {
 	paginationQuery := parsePaginationPathParameter(request)
 	sortQuery := parseSortPathParameter(request)
+	filterQuery := parseFilterPathParameter(request)
 	metricQuery := parseMetricPathParameter(request)
-	return dataselect.NewDataSelectQuery(paginationQuery, sortQuery, metricQuery)
+	return dataselect.NewDataSelectQuery(paginationQuery, sortQuery, filterQuery, metricQuery)
 }

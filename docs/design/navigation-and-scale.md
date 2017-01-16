@@ -98,7 +98,7 @@ call to action block.
 ![Single resource page template](mockups/23-03-2016-scale-and-navigation/single-resource-page-template.png)
 
 Details of an individual resource instance are shown on a views which displays
-its properites and all related objects (e.g., Services that target a Pod).
+its properties and all related objects (e.g., Services that target a Pod).
 ![Details page template](mockups/23-03-2016-scale-and-navigation/details-page-template.png)
 
 ## Future work

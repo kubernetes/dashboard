@@ -34,6 +34,7 @@ describe('DeployFromSettings controller', () => {
 
     angular.mock.inject(($controller, $httpBackend, $resource) => {
       httpBackend = $httpBackend;
+      httpBackend.expectGET('api/v1/csrftoken/appdeployment').respond(200, '{"token": "x"}');
       angularResource = $resource;
       mockResource = jasmine.createSpy('$resource');
       form = {
@@ -195,6 +196,7 @@ describe('DeployFromSettings controller', () => {
     // when
     form.$valid = true;
     ctrl.deploy();
+    httpBackend.flush(1);
 
     // then
     expect(resourceObject.save).toHaveBeenCalled();
@@ -224,6 +226,7 @@ describe('DeployFromSettings controller', () => {
     // when
     form.$valid = true;
     ctrl.deploy();
+    httpBackend.flush(1);
 
     // then
     expect(resourceObject.save).toHaveBeenCalled();
@@ -246,6 +249,7 @@ describe('DeployFromSettings controller', () => {
     // when
     form.$valid = true;
     ctrl.deploy();
+    httpBackend.flush(1);
 
     // then
     expect(resourceObject.save).toHaveBeenCalled();
@@ -268,6 +272,7 @@ describe('DeployFromSettings controller', () => {
     // when
     form.$valid = true;
     ctrl.deploy();
+    httpBackend.flush(1);
 
     // then
     expect(resourceObject.save).toHaveBeenCalled();
@@ -393,6 +398,7 @@ describe('DeployFromSettings controller', () => {
       form.$valid = true;
       expect(ctrl.isDeployDisabled()).toBe(false);
       ctrl.deploy();
+      httpBackend.flush(1);
       expect(ctrl.isDeployDisabled()).toBe(true);
 
       // then

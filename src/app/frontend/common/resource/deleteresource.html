@@ -17,8 +17,11 @@ limitations under the License.
 <md-dialog aria-label="[[Delete a {{::$ctrl.resourceKindName}}|Title for a delete resource dialog.]]" layout="column">
   <md-dialog-content layout-padding>
     <h4 class="md-title">[[Delete a {{::$ctrl.resourceKindName}}|Title for a delete resource dialog.]]</h4>
-    <div>
+    <div ng-if="::$ctrl.objectMeta.namespace">
       [[Are you sure you want to delete {{::$ctrl.resourceKindName}} <i>{{::$ctrl.objectMeta.name}}</i> in namespace <i>{{::$ctrl.objectMeta.namespace}}</i>?|Confirmation question, appears before any dashboard resource will be deleted.]]
+    </div>
+    <div ng-if="::!$ctrl.objectMeta.namespace">
+      [[Are you sure you want to delete {{::$ctrl.resourceKindName}} <i>{{::$ctrl.objectMeta.name}}</i>?|Confirmation question, appears before any dashboard resource will be deleted. (unnamespaced resources)]]
     </div>
     <md-dialog-actions>
       <md-button class="md-primary kd-cancel-btn" ng-click="$ctrl.cancel()">

@@ -1,0 +1,60 @@
+<kd-resource-card-list selectable="false" with-statuses="false">
+    <kd-resource-card-list-header>
+        [[Resource limits|Title of resource limits card in the namespace details page.]]
+    </kd-resource-card-list-header>
+    <kd-resource-card-header-columns>
+        <kd-resource-card-header-column size="small" grow="2">
+            [[Type|Resource Limits name entry.]]
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column size="small" grow="1">
+            [[Resource|Resource Limits resource entry.]]
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column size="small" grow="1">
+            [[Min|]Resource Limits min entry.]]
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column size="small" grow="1">
+            [[Max|Resource Limits max entry.]]
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column size="small" grow="1">
+            [[Default Request|Resource Limits default request entry.]]
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column size="small" grow="1">
+            [[Default Limit|Resource Limits default limit entry.]]
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column size="small" grow="1">
+            [[Max Limit/Request Ratio|Resource Limits max limit/request ratio entry.]]
+        </kd-resource-card-header-column>
+    </kd-resource-card-header-columns>
+    <kd-resource-card ng-repeat="(key, limitRange) in ::$ctrl.resourceLimits" omit-meta="true">
+        <kd-resource-card-columns>
+            <kd-resource-card-column>
+                <div>{{::limitRange.resourceType}}</div>
+                <div ng-if="::!limitRange.resourceType.length">-</div>
+            </kd-resource-card-column>
+            <kd-resource-card-column>
+                <div>{{::limitRange.resourceName}}</div>
+                <div ng-if="::!limitRange.resourceName.length">-</div>
+            </kd-resource-card-column>
+            <kd-resource-card-column>
+                <div>{{::limitRange.min}}</div>
+                <div ng-if="::!limitRange.min.length">-</div>
+            </kd-resource-card-column>
+            <kd-resource-card-column>
+                <div>{{::limitRange.max}}</div>
+                <div ng-if="::!limitRange.max.length">-</div>
+            </kd-resource-card-column>
+            <kd-resource-card-column>
+                <div>{{::limitRange.defaultRequest}}</div>
+                <div ng-if="::!limitRange.defaultRequest.length">-</div>
+            </kd-resource-card-column>
+            <kd-resource-card-column>
+                <div>{{::limitRange.default}}</div>
+                <div ng-if="::!limitRange.default.length">-</div>
+            </kd-resource-card-column>
+            <kd-resource-card-column>
+                <div>{{::limitRange.maxLimitRequestRatio}}</div>
+                <div ng-if="::!limitRange.maxLimitRequestRatio.length">-</div>
+            </kd-resource-card-column>
+        </kd-resource-card-columns>
+    </kd-resource-card>
+</kd-resource-card-list>

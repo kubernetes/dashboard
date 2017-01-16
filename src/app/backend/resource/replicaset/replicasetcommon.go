@@ -23,7 +23,7 @@ import (
 )
 
 // ReplicaSet is a presentation layer view of Kubernetes Replica Set resource. This means
-// it is Replica Set plus additional augumented data we can get from other sources
+// it is Replica Set plus additional augmented data we can get from other sources
 // (like services that target the same pods).
 type ReplicaSet struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`

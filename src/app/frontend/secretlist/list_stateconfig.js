@@ -14,6 +14,7 @@
 
 import {stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {stateName as parentStateName} from 'config/state';
 
 import {SecretListController} from './list_controller';
 import {stateName} from './list_state';
@@ -33,6 +34,7 @@ export default function stateConfig($stateProvider) {
     data: {
       [breadcrumbsConfig]: {
         'label': i18n.MSG_BREADCRUMBS_SECRETS_LABEL,
+        'parent': parentStateName,
       },
     },
     views: {

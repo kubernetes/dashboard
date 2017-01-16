@@ -61,7 +61,7 @@ func GetWorkloads(client *k8sClient.Clientset, heapsterClient client.HeapsterCli
 		StatefulSetList:           common.GetStatefulSetListChannel(client, nsQuery, 1),
 		ServiceList:               common.GetServiceListChannel(client, nsQuery, 1),
 		PodList:                   common.GetPodListChannel(client, nsQuery, 7),
-		EventList:                 common.GetEventListChannel(client, nsQuery, 6),
+		EventList:                 common.GetEventListChannel(client, nsQuery, 7),
 	}
 
 	return GetWorkloadsFromChannels(channels, heapsterClient, metricQuery)
@@ -108,7 +108,7 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels,
 
 	go func() {
 		podList, err := pod.GetPodListFromChannels(channels,
-			dataselect.NewDataSelectQuery(dataselect.DefaultPagination, dataselect.NoSort, metricQuery),
+			dataselect.NewDataSelectQuery(dataselect.DefaultPagination, dataselect.NoSort, dataselect.NoFilter, metricQuery),
 			heapsterClient)
 		errChan <- err
 		podChan <- podList

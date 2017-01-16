@@ -22,7 +22,7 @@ import (
 	"time"
 )
 
-// AppHandler is a application handler.
+// AppHandler is an application handler.
 type AppHandler func(http.ResponseWriter, *http.Request) (int, error)
 
 // AppConfig is a global configuration of application.
@@ -61,6 +61,7 @@ func getAppConfigJSON() string {
 
 func ConfigHandler(w http.ResponseWriter, r *http.Request) (int, error) {
 	template, err := template.New(ConfigTemplateName).Parse(ConfigTemplate)
+	w.Header().Set("Content-Type", "application/javascript")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return http.StatusInternalServerError, err

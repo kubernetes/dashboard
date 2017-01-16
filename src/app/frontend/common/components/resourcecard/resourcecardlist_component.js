@@ -12,14 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+const HEADER_SLOT = 'header';
+
 /**
  * @final
  */
 export class ResourceCardListController {
   /**
+   * @param {!angular.$transclude} $transclude
    * @ngInject
    */
-  constructor() {
+  constructor($transclude) {
     /**
      * Whether this list is in a pending async state (e.g., loading new page);
      * @export {boolean}
@@ -28,14 +31,14 @@ export class ResourceCardListController {
 
     /**
      * Whether to make list items selectable.
-     * Initialized from a bingind.
+     * Initialized from a binding.
      * @export {boolean|undefined}
      */
     this.selectable;
 
     /**
      * Whether to make show statuses for list items.
-     * Initialized from a bingind.
+     * Initialized from a binding.
      * @export {boolean|undefined}
      */
     this.withStatuses;
@@ -44,6 +47,9 @@ export class ResourceCardListController {
      * @private {!./resourcecardheadercolumns_component.ResourceCardHeaderColumnsController}
      */
     this.headerColumns_;
+
+    /** @private {!angular.$transclude} */
+    this.transclude_ = $transclude;
   }
 
   /**
@@ -70,6 +76,14 @@ export class ResourceCardListController {
    */
   setPending(pending) {
     this.pending = pending;
+  }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  hasHeader() {
+    return this.transclude_.isSlotFilled(HEADER_SLOT);
   }
 }
 
@@ -118,7 +132,7 @@ export const resourceCardListComponent = {
   templateUrl: 'common/components/resourcecard/resourcecardlist.html',
   transclude: {
     'pagination': '?kdResourceCardListPagination',
-    'header': '?kdResourceCardListHeader',
+    [HEADER_SLOT]: '?kdResourceCardListHeader',
   },
   controller: ResourceCardListController,
   bindings: {

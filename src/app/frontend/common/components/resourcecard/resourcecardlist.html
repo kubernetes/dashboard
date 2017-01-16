@@ -16,7 +16,7 @@ limitations under the License.
 
 <div class="kd-resource-card-list-wrapper">
   <div class="kd-resource-card-list-header-wrapper">
-    <div ng-transclude="header" class="kd-resource-card-list-header md-title"></div>
+    <div ng-transclude="header" class="kd-resource-card-list-header md-title" ng-if="::$ctrl.hasHeader()"></div>
     <div ng-transclude="pagination" class="kd-resource-card-list-pagination"></div>
   </div>
   <div class="kd-resource-card-list"
