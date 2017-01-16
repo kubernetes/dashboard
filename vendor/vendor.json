@@ -1353,6 +1353,12 @@
 			"revisionTime": "2016-10-25T17:13:20Z"
 		},
 		{
+			"checksumSHA1": "tqVbgqIoxn4YCFB6xQqDTgfIrEE=",
+			"path": "golang.org/x/net/xsrftoken",
+			"revision": "45e771701b814666a7eb299e6c7a57d0b1799e91",
+			"revisionTime": "2016-12-15T19:42:18Z"
+		},
+		{
 			"checksumSHA1": "2I50iiNO0/paEfqVQDgjflDrGcQ=",
 			"path": "golang.org/x/oauth2",
 			"revision": "65a8d08c6292395d47053be10b3c5e91960def76",

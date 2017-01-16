@@ -139,7 +139,7 @@ type IngressListChannel struct {
 	Error chan error
 }
 
-// GetIngressListChannel returns a pair of channels to a Ingress list and errors that both
+// GetIngressListChannel returns a pair of channels to an Ingress list and errors that both
 // must be read numReads times.
 func GetIngressListChannel(client client.Interface, nsQuery *NamespaceQuery,
 	numReads int) IngressListChannel {

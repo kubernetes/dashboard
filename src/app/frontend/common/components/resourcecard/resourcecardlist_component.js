@@ -31,14 +31,14 @@ export class ResourceCardListController {
 
     /**
      * Whether to make list items selectable.
-     * Initialized from a bingind.
+     * Initialized from a binding.
      * @export {boolean|undefined}
      */
     this.selectable;
 
     /**
      * Whether to make show statuses for list items.
-     * Initialized from a bingind.
+     * Initialized from a binding.
      * @export {boolean|undefined}
      */
     this.withStatuses;

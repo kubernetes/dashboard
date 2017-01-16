@@ -22,13 +22,13 @@ export class DeleteResourceController {
    * @param {!md.$dialog} $mdDialog
    * @param {!angular.$resource} $resource
    * @param {string} resourceKindName
-   * @param {!backendApi.TypeMeta} typeMeta
+   * @param {string} resourceUrl
    * @param {!backendApi.ObjectMeta} objectMeta
    * @ngInject
    */
-  constructor($mdDialog, $resource, resourceKindName, typeMeta, objectMeta) {
-    /** @private {!backendApi.TypeMeta} */
-    this.typeMeta_ = typeMeta;
+  constructor($mdDialog, $resource, resourceKindName, resourceUrl, objectMeta) {
+    /** @private {string} */
+    this.resourceUrl = resourceUrl;
 
     /** @export {!backendApi.ObjectMeta} */
     this.objectMeta = objectMeta;
@@ -41,18 +41,13 @@ export class DeleteResourceController {
 
     /** @export */
     this.resourceKindName = resourceKindName;
-
-    /** @export */
-    this.objectMeta = objectMeta;
   }
 
   /**
    * @export
    */
   remove() {
-    let resource = this.resource_(
-        `api/v1/${this.typeMeta_.kind}/namespace/` +
-        `${this.objectMeta.namespace}/name/${this.objectMeta.name}`);
+    let resource = this.resource_(this.resourceUrl);
     resource.remove(this.mdDialog_.hide, this.mdDialog_.cancel);
   }
 

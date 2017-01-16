@@ -282,7 +282,7 @@ func getLabelsMap(labels []Label) map[string]string {
 
 type createObjectFromInfo func(info *kubectlResource.Info) (bool, error)
 
-// CreateObjectFromInfoFn is a implementation of createObjectFromInfo
+// CreateObjectFromInfoFn is an implementation of createObjectFromInfo
 func CreateObjectFromInfoFn(info *kubectlResource.Info) (bool, error) {
 	createdResource, err := kubectlResource.NewHelper(info.Client, info.Mapping).Create(info.Namespace, true, info.Object)
 	return createdResource != nil, err

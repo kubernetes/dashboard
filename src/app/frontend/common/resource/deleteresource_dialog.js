@@ -17,18 +17,18 @@ import {DeleteResourceController} from './deleteresource_controller';
 /**
  * @param {!md.$dialog} mdDialog
  * @param {string} resourceKindName
- * @param {!backendApi.TypeMeta} typeMeta
+ * @param {string} resourceUrl
  * @param {!backendApi.ObjectMeta} objectMeta
  * @return {!angular.$q.Promise}
  */
-export default function showDeleteDialog(mdDialog, resourceKindName, typeMeta, objectMeta) {
+export default function showDeleteDialog(mdDialog, resourceKindName, resourceUrl, objectMeta) {
   return mdDialog.show({
     controller: DeleteResourceController,
     controllerAs: '$ctrl',
     clickOutsideToClose: true,
     templateUrl: 'common/resource/deleteresource.html',
     locals: {
-      'typeMeta': typeMeta,
+      'resourceUrl': resourceUrl,
       'objectMeta': objectMeta,
       'resourceKindName': resourceKindName,
     },

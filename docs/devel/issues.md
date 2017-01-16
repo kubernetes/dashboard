@@ -40,7 +40,7 @@ Issue kind determines if issue is a bug, enhancement, feature, refactoring of ex
 
 - `kind/bug` - bugs, that need to be fixed. Assigned when something is not working as it was expected.
 - `kind/duplicate` - duplicates of existing issues, that are usually closed and linked with original ones.
-- `kind/enhancement` - enhacements of existing functionalities, that will make the application better.
+- `kind/enhancement` - enhancements of existing functionalities, that will make the application better.
 - `kind/feature` - new features, that could be added to the application.
 - `kind/question` - general discussions and user questions.
 - `kind/refactoring` - issues created in order to enhance code quality without changing application functionality.

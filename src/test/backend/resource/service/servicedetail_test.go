@@ -54,7 +54,7 @@ func TestGetServiceDetail(t *testing.T) {
 				Name: "svc-1", Namespace: "ns-1", Labels: map[string]string{},
 			}},
 			namespace: "ns-1", name: "svc-1",
-			expectedActions: []string{"get", "get", "list"},
+			expectedActions: []string{"get", "get"},
 			expected: &ServiceDetail{
 				ObjectMeta: common.ObjectMeta{
 					Name:      "svc-1",
@@ -63,6 +63,32 @@ func TestGetServiceDetail(t *testing.T) {
 				},
 				TypeMeta:         common.TypeMeta{Kind: common.ResourceKindService},
 				InternalEndpoint: common.Endpoint{Host: "svc-1.ns-1"},
+				PodList: pod.PodList{
+					Pods:              []pod.Pod{},
+					CumulativeMetrics: make([]metric.Metric, 0),
+				},
+			},
+		},
+		{
+			service: &api.Service{
+					ObjectMeta: api.ObjectMeta{
+							Name: "svc-2",
+							Namespace: "ns-2",
+					},
+					Spec: api.ServiceSpec{
+						Selector: map[string]string{"app": "app2"},
+					},
+			},
+			namespace: "ns-2", name: "svc-2",
+			expectedActions: []string{"get", "get", "list"},
+			expected: &ServiceDetail{
+				ObjectMeta: common.ObjectMeta{
+					Name:      "svc-2",
+					Namespace: "ns-2",
+				},
+				Selector: map[string]string{"app": "app2"},
+				TypeMeta:         common.TypeMeta{Kind: common.ResourceKindService},
+				InternalEndpoint: common.Endpoint{Host: "svc-2.ns-2"},
 				PodList: pod.PodList{
 					Pods:              []pod.Pod{},
 					CumulativeMetrics: make([]metric.Metric, 0),

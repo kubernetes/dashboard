@@ -101,7 +101,7 @@ module.exports = function(config) {
       // Make 'import ...' statements relative to the following paths.
       paths: [conf.paths.frontendSrc, conf.paths.frontendTest],
       transform: [
-        // Browserify transform for the istanbul code coverage tool. Isparta istrumenter for ES6
+        // Browserify transform for the istanbul code coverage tool. Isparta instrumenter for ES6
         // code coverage. TODO(floreks): try to make import work instead of require
         ['browserify-istanbul', {'instrumenter': require('isparta')}],
         // Transform ES6 code into ES5 so that browsers can digest it.

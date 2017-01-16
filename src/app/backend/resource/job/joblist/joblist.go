@@ -41,7 +41,7 @@ type JobList struct {
 }
 
 // Job is a presentation layer view of Kubernetes Job resource. This means
-// it is Job plus additional augumented data we can get from other sources
+// it is Job plus additional augmented data we can get from other sources
 type Job struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
 	TypeMeta   common.TypeMeta   `json:"typeMeta"`
@@ -112,9 +112,9 @@ func CreateJobList(jobs []batch.Job, pods []api.Pod, events []api.Event,
 	cachedResources := &dataselect.CachedResources{
 		Pods: pods,
 	}
-	replicationControllerCells, metricPromises := dataselect.GenericDataSelectWithMetrics(
+	jobCells, metricPromises := dataselect.GenericDataSelectWithMetrics(
 		job.ToCells(jobs), dsQuery, cachedResources, heapsterClient)
-	jobs = job.FromCells(replicationControllerCells)
+	jobs = job.FromCells(jobCells)
 
 	for _, job := range jobs {
 		var completions int32

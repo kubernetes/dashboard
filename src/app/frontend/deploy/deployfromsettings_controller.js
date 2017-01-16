@@ -43,11 +43,12 @@ export default class DeployFromSettingsController {
    * @param {!./../chrome/chrome_state.StateParams} $stateParams
    * @param {!./../common/history/history_service.HistoryService} kdHistoryService
    * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
+   * @param {!./../common/csrftoken/csrftoken_service.CsrfTokenService} kdCsrfTokenService
    * @ngInject
    */
   constructor(
       namespaces, protocols, $log, $state, $resource, $q, $mdDialog, $stateParams, kdHistoryService,
-      kdNamespaceService) {
+      kdNamespaceService, kdCsrfTokenService) {
     /**
      * Initialized from the template.
      * @export {!angular.FormController}
@@ -182,6 +183,9 @@ export default class DeployFromSettingsController {
     /** @private {boolean} */
     this.isDeployInProgress_ = false;
 
+    /** @private {!angular.$q.Promise} */
+    this.tokenPromise = kdCsrfTokenService.getTokenForAction('appdeployment');
+
     /**
      * @export
      */
@@ -235,18 +239,27 @@ export default class DeployFromSettingsController {
 
       let defer = this.q_.defer();
 
-      /** @type {!angular.Resource<!backendApi.AppDeploymentSpec>} */
-      let resource = this.resource_('api/v1/appdeployment');
-      this.isDeployInProgress_ = true;
-      resource.save(
-          appDeploymentSpec,
-          (savedConfig) => {
-            defer.resolve(savedConfig);  // Progress ends
-            this.log_.info('Successfully deployed application: ', savedConfig);
-            this.state_.go(workloads);
+      this.tokenPromise.then(
+          (token) => {
+            /** @type {!angular.Resource<!backendApi.AppDeploymentSpec>} */
+            let resource = this.resource_(
+                'api/v1/appdeployment', {},
+                {save: {method: 'POST', headers: {'X-CSRF-TOKEN': token}}});
+            this.isDeployInProgress_ = true;
+            resource.save(
+                appDeploymentSpec,
+                (savedConfig) => {
+                  defer.resolve(savedConfig);  // Progress ends
+                  this.log_.info('Successfully deployed application: ', savedConfig);
+                  this.state_.go(workloads);
+                },
+                (err) => {
+                  defer.reject(err);  // Progress ends
+                  this.log_.error('Error deploying application:', err);
+                });
           },
           (err) => {
-            defer.reject(err);  // Progress ends
+            defer.reject(err);
             this.log_.error('Error deploying application:', err);
           });
       defer.promise.finally(() => {
@@ -458,7 +471,7 @@ const i18n = {
      This text must end with a colon. */
   MSG_DEPLOY_SETTINGS_CONTAINER_IMAGE_INVALID_WARNING: goog.getMsg(`Container image is invalid:`),
 
-  /** @export {string} @desc User helpfor the container image input on the deploy from settings
+  /** @export {string} @desc User help for the container image input on the deploy from settings
      page.*/
   MSG_DEPLOY_SETTINGS_CONTAINER_IMAGE_USER_HELP: goog.getMsg(
       `Enter the URL of a public image on any registry, or a private image hosted on Docker Hub or Google Container Registry.`),

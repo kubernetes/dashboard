@@ -17,19 +17,17 @@ import {EditResourceController} from './editresource_controller';
 /**
  * @param {!md.$dialog} mdDialog
  * @param {string} resourceKindName
- * @param {!backendApi.TypeMeta} typeMeta
- * @param {!backendApi.ObjectMeta} objectMeta
+ * @param {string} resourceUrl
  * @return {!angular.$q.Promise}
  */
-export default function showEditDialog(mdDialog, resourceKindName, typeMeta, objectMeta) {
+export default function showEditDialog(mdDialog, resourceKindName, resourceUrl) {
   return mdDialog.show({
     controller: EditResourceController,
     controllerAs: '$ctrl',
     clickOutsideToClose: true,
     templateUrl: 'common/resource/editresource.html',
     locals: {
-      'typeMeta': typeMeta,
-      'objectMeta': objectMeta,
+      'resourceUrl': resourceUrl,
       'resourceKindName': resourceKindName,
     },
   });

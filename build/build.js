@@ -38,7 +38,7 @@ import {multiDest} from './multidest';
 gulp.task('build', ['backend:prod', 'build-frontend']);
 
 /**
- * Builds production packages for all supported architecures and places them in the dist directory.
+ * Builds production packages for all supported architectures and places them in the dist directory.
  */
 gulp.task('build:cross', ['backend:prod:cross', 'build-frontend:cross']);
 
@@ -89,7 +89,7 @@ gulp.task('locales-for-backend:cross', ['clean-dist'], function() {
 
 /**
  * Builds production version of the frontend application for the default architecture
- * (one copy per locale) and plcaes it under .tmp/dist , preparing it for localization and revision.
+ * (one copy per locale) and places it under .tmp/dist , preparing it for localization and revision.
  */
 gulp.task(
     'frontend-copies',
@@ -98,7 +98,7 @@ gulp.task(
     });
 
 /**
- * Builds production versions of the frontend application for all architecures
+ * Builds production versions of the frontend application for all architectures
  * (one copy per locale) and places them under .tmp, preparing them for localization and revision.
  */
 gulp.task(
