@@ -30,6 +30,7 @@ export default function stateConfig($stateProvider) {
     url: stateUrl,
     parent: chromeStateName,
     resolve: {
+      'roleList': resolveRoleList,
     },
     data: {
       [breadcrumbsConfig]: {
@@ -45,6 +46,18 @@ export default function stateConfig($stateProvider) {
       },
     },
   });
+}
+
+/**
+ * @param {!angular.Resource} kdRoleListResource
+ * @param {!./../common/pagination/pagination_service.PaginationService} kdPaginationService
+ * @returns {!angular.$q.Promise}
+ * @ngInject
+ */
+export function resolveRoleList(kdRoleListResource, kdPaginationService) {
+  /** @type {!backendApi.PaginationQuery} */
+  let query = kdPaginationService.getDefaultResourceQuery('');
+  return kdRoleListResource.get(query).$promise;
 }
 
 const i18n = {

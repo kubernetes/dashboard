@@ -17,9 +17,24 @@
  */
 export class AccessControlController {
   /**
+   * @param {!backendApi.RoleList} roleList
+   * @param {!angular.Resource}kdRoleListResource
    * @ngInject
    */
-  constructor() {
+  constructor(roleList, kdRoleListResource) {
+    /** @export {!backendApi.RoleList} */
+    this.roleList = roleList;
+
+    /** @export {!angular.Resource} */
+    this.roleListResource = kdRoleListResource;
+  }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  shouldShowZeroState() {
+    return this.roleList.items === null || this.roleList.items.length === 0;
   }
 
 }

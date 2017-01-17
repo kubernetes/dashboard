@@ -12,21 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
-import stateConfig from './stateconfig';
-
-import roleListModule from 'rolelist/rolelist_module';
-
 /**
- * Module for the access control view.
+ * @return {!angular.Component}
  */
-export default angular
-    .module(
-        'kubernetesDashboard.accesscontrol',
-        [
-          'ngMaterial',
-          'ngResource',
-          'ui.router',
-          roleListModule.name
-        ])
-    .config(stateConfig);
+export const roleCardListComponent = {
+  transclude: {
+    // Optional header that is transcluded instead of the default one.
+    'header': '?kdHeader',
+  },
+  bindings: {
+    'roleList': '<',
+    'roleListResource': '<',
+  },
+  templateUrl: 'rolelist/rolecardlist.html',
+};
