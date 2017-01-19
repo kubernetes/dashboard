@@ -23,7 +23,7 @@ import (
 	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
-
+	"k8s.io/kubernetes/pkg/apis/rbac"
 	kdClient "github.com/kubernetes/dashboard/src/app/backend/client"
 )
 
@@ -98,7 +98,14 @@ type ResourceChannels struct {
 
 	// List and error channels to HorizontalPodAutoscalers
 	HorizontalPodAutoscalerList HorizontalPodAutoscalerListChannel
+
+	// List and error channels to Roles
+	RoleList RoleListChannel
+
+	// List and error channels to ClusterRoles
+	ClusterRoleList ClusterRoleListChannel
 }
+
 
 // ServiceListChannel is a list and error channels to Services.
 type ServiceListChannel struct {
@@ -587,6 +594,56 @@ func GetSecretListChannel(client client.Interface, nsQuery *NamespaceQuery, numR
 			}
 		}
 		list.Items = filteredItems
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// RoleListChannel is a list and error channels to Roles.
+type RoleListChannel struct {
+	List  chan *rbac.RoleList
+	Error chan error
+}
+
+// GetRoleListChannel returns a pair of channels to a Role list for a namespace and errors that
+// both must be read numReads times.
+func GetRoleListChannel(client client.Interface, numReads int) RoleListChannel {
+	channel := RoleListChannel{
+		List:  make(chan *rbac.RoleList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.Rbac().Roles("").List(listEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// ClusterRoleListChannel is a list and error channels to ClusterRoles.
+type ClusterRoleListChannel struct {
+	List  chan *rbac.ClusterRoleList
+	Error chan error
+}
+
+// GetClusterRoleListChannel returns a pair of channels to a ClusterRole list and errors that
+// both must be read numReads times.
+func GetClusterRoleListChannel(client client.Interface, numReads int) ClusterRoleListChannel {
+	channel := ClusterRoleListChannel{
+		List:  make(chan *rbac.ClusterRoleList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.Rbac().ClusterRoles().List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err

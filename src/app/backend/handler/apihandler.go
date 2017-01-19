@@ -602,8 +602,12 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 			To(apiHandler.handleGetPersistentVolumeClaimDetail).
 			Writes(persistentvolumeclaim.PersistentVolumeClaimDetail{}))
 
+	// TODO Add route for getting RBAC role list
+
 	return wsContainer, nil
 }
+
+// TODO Create handleGetRbacRoleList method
 
 func (apiHandler *APIHandler) handleGetCsrfToken(request *restful.Request,
 	response *restful.Response) {
