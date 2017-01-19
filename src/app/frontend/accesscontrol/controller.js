@@ -36,5 +36,4 @@ export class AccessControlController {
   shouldShowZeroState() {
     return this.roleList.items === null || this.roleList.items.length === 0;
   }
-
 }

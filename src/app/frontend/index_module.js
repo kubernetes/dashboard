@@ -16,6 +16,7 @@
  * @fileoverview Entry point module to the application. Loads and configures other modules needed
  * to bootstrap the application.
  */
+import accessControlModule from './accesscontrol/module';
 import adminModule from './admin/module';
 import chromeModule from './chrome/chrome_module';
 import csrfTokenModule from './common/csrftoken/csrftoken_module';
@@ -51,7 +52,6 @@ import serviceListModule from './servicelist/servicelist_module';
 import servicesanddiscoveryModule from './servicesanddiscovery/module';
 import statefulSetListModule from './statefulsetlist/statefulsetlist_module';
 import workloadsModule from './workloads/workloads_module';
-import accessControlModule from './accesscontrol/module';
 
 
 export default angular

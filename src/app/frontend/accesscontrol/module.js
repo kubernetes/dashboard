@@ -13,9 +13,9 @@
 // limitations under the License.
 
 
-import stateConfig from './stateconfig';
-
 import roleListModule from 'rolelist/rolelist_module';
+
+import stateConfig from './stateconfig';
 
 /**
  * Module for the access control view.
@@ -23,10 +23,5 @@ import roleListModule from 'rolelist/rolelist_module';
 export default angular
     .module(
         'kubernetesDashboard.accesscontrol',
-        [
-          'ngMaterial',
-          'ngResource',
-          'ui.router',
-          roleListModule.name
-        ])
+        ['ngMaterial', 'ngResource', 'ui.router', roleListModule.name])
     .config(stateConfig);
