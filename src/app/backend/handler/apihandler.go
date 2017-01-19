@@ -45,6 +45,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/node"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/rbacbroles"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
@@ -577,6 +578,11 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 			To(apiHandler.handlePutResource))
 
 	apiV1Ws.Route(
+		apiV1Ws.GET("/rbacrole").
+			To(apiHandler.handleGetRbacRoleList).
+			Writes(rbacbroles.RbacRoleList{}))
+
+	apiV1Ws.Route(
 		apiV1Ws.GET("/persistentvolume").
 			To(apiHandler.handleGetPersistentVolumeList).
 			Writes(persistentvolume.PersistentVolumeList{}))
@@ -602,12 +608,18 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 			To(apiHandler.handleGetPersistentVolumeClaimDetail).
 			Writes(persistentvolumeclaim.PersistentVolumeClaimDetail{}))
 
-	// TODO Add route for getting RBAC role list
-
 	return wsContainer, nil
 }
 
-// TODO Create handleGetRbacRoleList method
+func (apiHandler *APIHandler) handleGetRbacRoleList(request *restful.Request, response *restful.Response) {
+	dataSelect := parseDataSelectPathParameter(request)
+	result, err := rbacbroles.GetRbacRoleList(apiHandler.client, dataSelect)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
 
 func (apiHandler *APIHandler) handleGetCsrfToken(request *restful.Request,
 	response *restful.Response) {

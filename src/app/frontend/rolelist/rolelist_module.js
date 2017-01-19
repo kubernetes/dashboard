@@ -44,5 +44,5 @@ export default angular
  * @ngInject
  */
 function roleListResource($resource) {
-  return $resource('apis/rbac.authorization.k8s.io/v1alpha1/roles');
+  return $resource('api/v1/rbacrole');
 }
