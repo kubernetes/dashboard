@@ -36,8 +36,8 @@ limitations under the License.
             [[Verbs|Role list header: access verbs.]]
         </kd-resource-card-header-column>
     </kd-resource-card-header-columns>
-    <kd-persistent-volume-card dir-paginate="rolein $ctrl.roleList.items | itemsPerPage: default"
+    <kd-role-card dir-paginate="role in $ctrl.roleList.items | itemsPerPage: default"
                                role="role" pagination-id="roles"
                                total-items="::$ctrl.roleList.listMeta.totalItems">
-    </kd-persistent-volume-card>
+    </kd-role-card>
 </kd-resource-card-list>

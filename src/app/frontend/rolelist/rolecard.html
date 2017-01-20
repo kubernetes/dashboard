@@ -14,61 +14,35 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card object-meta="$ctrl.persistentVolume.objectMeta" type-meta="$ctrl.persistentVolume.typeMeta">
+<kd-resource-card object-meta="$ctrl.role.objectMeta" type-meta="$ctrl.role.typeMeta">
     <kd-resource-card-columns>
         <kd-resource-card-column>
             <div>
-                <a ng-href="{{::$ctrl.getPersistentVolumeDetailHref()}}" class="kd-middle-ellipsised-link">
-                    <kd-middle-ellipsis display-string="{{$ctrl.persistentVolume.objectMeta.name}}">
+                <a ng-href="{{::$ctrl.getRoleDetailHref()}}" class="kd-middle-ellipsised-link">
+                    <kd-middle-ellipsis display-string="{{$ctrl.role.name}}">
                     </kd-middle-ellipsis>
                 </a>
             </div>
         </kd-resource-card-column>
         <kd-resource-card-column>
-            <kd-labels labels="::$ctrl.persistentVolume.objectMeta.labels"></kd-labels>
-        </kd-resource-card-column>
-        <kd-resource-card-column>
-            <kd-middle-ellipsis ng-repeat="(key, value) in ::$ctrl.persistentVolume.capacity"
-                                display-string="{{::value}}">
+            <kd-middle-ellipsis ng-if="$ctrl.role.namespace===''" display-string="All Namespaces">
+
             </kd-middle-ellipsis>
-            <div ng-hide="::$ctrl.persistentVolume.capacity">-</div>
-        </kd-resource-card-column>
-        <kd-resource-card-column>
-            <kd-middle-ellipsis ng-repeat="(key, value) in ::$ctrl.persistentVolume.accessModes"
-                                display-string="{{::value}}">
+            <kd-middle-ellipsis ng-if="$ctrl.role.namespace!==''" display-string="{{$ctrl.role.namespace}}">
+
             </kd-middle-ellipsis>
-            <div ng-hide="::$ctrl.persistentVolume.accessModes">-</div>
         </kd-resource-card-column>
+        <!-- TODO Only first resource is shown, adjust this once the design doc is updated -->
         <kd-resource-card-column>
-            <kd-middle-ellipsis display-string="{{$ctrl.persistentVolume.status}}">
+            <kd-middle-ellipsis ng-repeat="resource in ::$ctrl.role.rules[0].Resources"
+                                display-string="{{::resource}}">
             </kd-middle-ellipsis>
-            <div ng-hide="::$ctrl.persistentVolume.status">-</div>
         </kd-resource-card-column>
+        <!-- TODO Only first verb is shown, adjust this once the design doc is updated -->
         <kd-resource-card-column>
-            <kd-middle-ellipsis display-string="{{$ctrl.persistentVolume.claim}}">
+            <kd-middle-ellipsis ng-repeat="verb in ::$ctrl.role.rules[0].Verbs"
+                                display-string="{{::verb}}">
             </kd-middle-ellipsis>
-            <div ng-hide="::$ctrl.persistentVolume.claim">-</div>
-        </kd-resource-card-column>
-        <kd-resource-card-column>
-            <kd-middle-ellipsis display-string="{{$ctrl.persistentVolume.reason}}">
-            </kd-middle-ellipsis>
-            <div ng-hide="::$ctrl.persistentVolume.reason">-</div>
-        </kd-resource-card-column>
-        <kd-resource-card-column>
-            {{::$ctrl.persistentVolume.objectMeta.creationTimestamp | relativeTime}}
-            <md-tooltip>
-                {{::$ctrl.getCreatedAtTooltip($ctrl.persistentVolume.objectMeta.creationTimestamp)}}
-            </md-tooltip>
-        </kd-resource-card-column>
-        <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
-            <kd-resource-card-menu>
-                <kd-resource-card-delete-menu-item
-                        resource-kind-name="[[Persistent Volume|Label 'Persistent Volume' which will appear in the persistent volume delete dialog opened from a persistentvolume card on the list page.]]">
-                </kd-resource-card-delete-menu-item>
-                <kd-resource-card-edit-menu-item
-                        resource-kind-name="[[Persistent Volume|Label 'Persistent Volume' which will appear in the persistent volume delete dialog opened from a persistentvolume card on the list page.]]">
-                </kd-resource-card-edit-menu-item>
-            </kd-resource-card-menu>
         </kd-resource-card-column>
     </kd-resource-card-columns>
 </kd-resource-card>
