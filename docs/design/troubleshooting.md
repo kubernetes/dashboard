@@ -98,4 +98,13 @@ to break the command into it's arguments so they can be sent to the API.
 
 #### Similar Features in Other UIs
 
-TODO: OpenShift etc.
+Several other UIs have similar troubleshooting features.
+
+##### OpenShift
+
+The terminal feature was heavily influenced by the terminal feature in
+OpenShift. OpenShift's terminal runs the '/bin/sh' command automatically as
+outlined in this document, however it does not allow running of commands if the
+'/bin/sh' command is not present in the container.
+
+![](mockups/24-01-2017-troubleshooting/openshift.png)
