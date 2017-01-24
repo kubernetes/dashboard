@@ -108,3 +108,12 @@ outlined in this document, however it does not allow running of commands if the
 '/bin/sh' command is not present in the container.
 
 ![](mockups/24-01-2017-troubleshooting/openshift.png)
+
+##### Cabin
+
+Cabin is a mobile application for interacting with a Kubernetes cluster. Cabin
+includes an exec feature that allows the user to execute commands in
+containers. Cabin allows the execution of commands but does not support running
+the command in a tty or piping stdin to the container.
+
+![](mockups/24-01-2017-troubleshooting/cabin.png)
