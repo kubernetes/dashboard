@@ -1,7 +1,7 @@
-# Application Debugging
+# Application Troubleshooting 
 
 This design document is a proposal to consolidate add simple application
-debugging features in Dashboard UI.
+troubleshooting features in Dashboard UI.
 
 ## Background
 
@@ -35,7 +35,7 @@ users point of view. See:
 ## Design
 
 The basis of the design is adding one new feature and rearranging existing
-features in the UI so that debugging features are logically grouped.
+features in the UI so that troubleshooting features are logically grouped.
 
 - Terminal: Allow users to execute a command in a container and attach a
   terminal to it from the UI.
