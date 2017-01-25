@@ -22,4 +22,3 @@ spec:
   containers:
     - name: imagepullbackoff
       image: doesnotexist:nover
-      command: ["/bin/sh", "-c", "echo Succeeded"]
