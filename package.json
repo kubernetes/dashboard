@@ -77,7 +77,7 @@
     "through2": "~2.0.1",
     "uglify-save-license": "~0.4.1",
     "vinyl-paths": "~2.1.0",
-    "watchify": "~3.7.0",
+    "watchify": "~3.9.0",
     "webpack-stream": "~3.2.0",
     "wiredep": "~4.0.0",
     "wrench": "~1.5.9"
