@@ -29,7 +29,7 @@ describe('CreatorInfo directive', () => {
     });
   });
 
-  it('Should just display the kind of unknown creator kinds', () => {
+  it('Should display zerostate info when creator is unknown', () => {
     // given
     scope.creator = {kind: 'Unknown'};
 
@@ -38,8 +38,7 @@ describe('CreatorInfo directive', () => {
     scope.$digest();
 
     // then
-    let span = element.find('span');
-    expect(span.text().trim()).toContain('Unknown');
+    expect(element.text().trim()).toContain('nothing to display');
   });
 
   const kind2directive = new Map([

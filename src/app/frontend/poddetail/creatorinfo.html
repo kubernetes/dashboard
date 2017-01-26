@@ -43,7 +43,20 @@ limitations under the License.
           <kd-header>[[Created by|Heading for Creator card on poddetail page]]</kd-header>
         </kd-stateful-set-card-list>
       </div>
-      <span ng-switch-default>[[Unknown creator||Label for unknown creator of a pod]]</span>
+      <div ng-switch-default>
+        <kd-resource-card-list selectable="false" with-statuses="true">
+          <kd-resource-card-list-header>
+            [[Created by|Heading for Creator card on poddetail page]]
+          </kd-resource-card-list-header>
+
+          <div class="kd-zerostate-message">
+            <kd-zerostate>
+              <div class="kd-zerostate-title">[[There is nothing to display here|Title for pods card zerostate in pod details page.]]</div>
+              <div class="kd-zerostate-text">[[This Pod does not have a creator.|Text for pod creator zerostate in pod details page.]]</div>
+            </kd-zerostate>
+          </div>
+        </kd-resource-card-list>
+      </div>
     </div>
   </kd-content>
 </kd-content-card>
