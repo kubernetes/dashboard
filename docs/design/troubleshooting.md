@@ -1,4 +1,3 @@
-
 # Application Troubleshooting
 
 This design document is a proposal to consolidate application troubleshooting features in Dashboard.
@@ -25,6 +24,26 @@ Troubleshooting and debugging have consistently been a top priority from a user'
   - Improve the UI so that troubleshooting functions are easier to find and use.
   - Attaching to the container process (e.g. kubectl attach) will be out of scope due to low priority. End users can solve most problems by viewing logs. 
   - Port forwarding and API server proxy will be out of scope due to low priority and technical issues.
+
+## Use Cases
+
+Use cases for opening a terminal session are numerous and highly application specific. The use cases are similar to use cases for opening an SSH session to a server.
+
+Some generic use cases include but are not limited to:
+
+- Verifying the contents of files.
+  - Files in the container image.
+  - Files written by a process in the container.
+  - Files in mounted volumes (PersistentVolume, ConfigMap, Secret, etc.)
+- Listing and verifying the state of processes.
+- Running commands to verify the output of a process.
+- Troubleshooting why a process is failing readiness or liveliness probes.
+  - Connecting to and sending commands to processes to test their output.
+  - Running probe commands to test their exit codes and output.
+- Troubleshooting performance issues.
+  - Verifying CPU/memory usage of processes.
+    - Validating this against CPU/memory usage recorded by Kubernetes.
+    - Comparing usage with CPU/memory limits imposed on the container.
 
 ## Design
 
