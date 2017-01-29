@@ -56,7 +56,7 @@
     "html-minifier": "~3.3.0",
     "isparta": "~4.0.0",
     "jsesc": "~2.4.0",
-    "karma": "1.4.0",
+    "karma": "1.4.1",
     "karma-browserify": "~5.1.0",
     "karma-chrome-launcher": "~2.0.0",
     "karma-closure": "~0.1.1",
