@@ -69,7 +69,7 @@
     "karma-sourcemap-loader": "~0.3.7",
     "lodash": "~4.17.0",
     "merge-stream": "~1.0.0",
-    "npm-check-updates": "~2.10.0",
+    "npm-check-updates": "~2.10.1",
     "proxy-middleware": "~0.15.0",
     "q": "~1.4.1",
     "regexp-clone": "~0.0.1",
