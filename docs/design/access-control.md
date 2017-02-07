@@ -65,7 +65,7 @@ the Role and redirect the user to the Role's detail page.
 A rule is a selection of API Groups, resource types and verbs. API Groups and resource types 
 can be arbitrary strings. Entering "*" indicates references __all__ resource types / API groups.
 
-![Overview](mockups/21-11-2016-access-control/new-rule.png | height=300)
+![Overview](mockups/21-11-2016-access-control/new-rule.png)
 
 ## Bind subjects to a role
 
