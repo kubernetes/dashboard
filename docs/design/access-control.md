@@ -32,7 +32,7 @@ NOTE: The design proposed in this document will combine certain concepts:
 
 ## Use Cases
 
-* Shortly introduce the concept of roles and bindings to the user
+* Briefly introduce the concept of roles and bindings to the user
 * Create a Role
 * Bind subjects to a Role
 * Edit a role's rules
@@ -55,8 +55,8 @@ between Roles and Bindings.
 
 Clicking the "+ CREATE ROLE" button will display a form in the right section of the screen. 
 After entering the name and picking a namespace ("all namespaces" will create a ClusterRole),
-the user can add rules to the role by clicking "+ ADD RULE". Clicking "Create" will create 
-the Role and redirect the user to the Role's detail page.
+the user can add rules to the role by clicking "+ ADD RULE". Clicking "Create" will create the Role and select that 
+Role from the list, displaying its details in the panel on the right.
 
 ![Overview](mockups/21-11-2016-access-control/create-role.png)
 
@@ -71,7 +71,8 @@ can be arbitrary strings. Entering "*" indicates references __all__ resource typ
 
 Clicking "+ CREATE BINDING" will open a dialog. After selecting the
 target role, adding subjects and selecting the namespace ("all namespaces" will create a ClusterRoleBinding), 
-clicking "Create" will create the Binding and redirect the user to the Binding's detail page.
+clicking clicking "Create" will create the Binding and select that 
+Binding from the list, displaying its details in the panel on the right.
 
 ![Overview](mockups/21-11-2016-access-control/create-binding.png)
 
