@@ -25,10 +25,12 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/handler"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/spf13/pflag"
+	"net"
 )
 
 var (
 	argPort          = pflag.Int("port", 9090, "The port to listen to for incoming HTTP requests")
+	argBindAddress   = pflag.IP("bind-address", net.IPv4(0, 0, 0, 0), "The IP address on which to serve the --port (set to 0.0.0.0 for all interfaces).")
 	argApiserverHost = pflag.String("apiserver-host", "", "The address of the Kubernetes Apiserver "+
 		"to connect to in the format of protocol://address:port, e.g., "+
 		"http://localhost:8080. If not specified, the assumption is that the binary runs inside a "+
@@ -84,7 +86,7 @@ func main() {
 	// TODO(maciaszczykm): Move to /appConfig.json as it was discussed in #640.
 	http.Handle("/api/appConfig.json", handler.AppHandler(handler.ConfigHandler))
 	http.Handle("/metrics", prometheus.Handler())
-	log.Print(http.ListenAndServe(fmt.Sprintf(":%d", *argPort), nil))
+	log.Print(http.ListenAndServe(fmt.Sprintf("%s:%d", *argBindAddress, *argPort), nil))
 }
 
 /**
