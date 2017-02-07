@@ -224,7 +224,9 @@ Should return `CLI version 3.9.1` and `Local version 3.9.1`.
 Download the command line tool _kubectl_.
 
 ```shell
-$ curl -O https://storage.googleapis.com/kubernetes-release/release/v1.2.4/bin/linux/amd64/kubectl
+$ curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl   
+$ chmod +x ./kubectl   
+$ sudo mv ./kubectl /usr/local/bin/kubectl   
 ```
 
 Clone the Dashboard and Kubernetes code from the GitHub repos. *This could take a while.*
