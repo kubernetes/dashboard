@@ -23,7 +23,7 @@
     "del": "~2.2.2",
     "eslint-plugin-angular": "~1.6.1",
     "file-exists": "2.0.0",
-    "google-closure-compiler": "~20161201.0.0",
+    "google-closure-compiler": "~20170124.0.0",
     "gulp": "~3.9.1",
     "gulp-autoprefixer": "~3.1.0",
     "gulp-browserify": "~0.5.1",
