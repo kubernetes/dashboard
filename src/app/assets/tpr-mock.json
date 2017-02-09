@@ -1,0 +1,40 @@
+{
+  "_comment": "Test file used to simulate fetching third party resources from backend.",
+  "listMeta": {
+    "totalItems": 2
+  },
+  "thirdPartyResources": [
+    {
+      "objectMeta": {
+        "name": "CronJob",
+        "namespace": "default",
+        "creationTimestamp": "",
+        "labels": {
+          "foo": "bar"
+        }
+      },
+      "typeMeta": {
+        "Kind": "ThirdPartyResource",
+        "APIVersion": "foo.com/v1"
+      },
+      "description": "Cron Job",
+      "versions": ["v1", "v2"]
+    },
+    {
+      "objectMeta": {
+        "name": "MyThirdPartyResource",
+        "namespace": "foo-namespace",
+        "creationTimestamp": "",
+        "labels": {
+          "foo": "bar"
+        }
+      },
+      "typeMeta": {
+        "Kind": "ThirdPartyResource",
+        "APIVersion": "foo.com/v1"
+      },
+      "description": "Custom third party resource",
+      "versions": ["v1"]
+    }
+  ]
+}

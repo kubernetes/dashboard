@@ -89,8 +89,8 @@ func GetServicePods(client k8sClient.Interface, heapsterClient client.HeapsterCl
 	}
 
 	if service.Spec.Selector == nil {
-		emptyPodList := &pod.PodList {
-			Pods: []pod.Pod{},
+		emptyPodList := &pod.PodList{
+			Pods:              []pod.Pod{},
 			CumulativeMetrics: []metric.Metric{},
 		}
 		return emptyPodList, nil

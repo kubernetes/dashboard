@@ -50,6 +50,7 @@ import serviceDetailModule from './servicedetail/servicedetail_module';
 import serviceListModule from './servicelist/servicelist_module';
 import servicesanddiscoveryModule from './servicesanddiscovery/module';
 import statefulSetListModule from './statefulsetlist/statefulsetlist_module';
+import thirdPartyResourceListModule from './thirdpartyresourcelist/list_module';
 import workloadsModule from './workloads/workloads_module';
 
 
@@ -97,6 +98,7 @@ export default angular
           servicesanddiscoveryModule.name,
           configModule.name,
           csrfTokenModule.name,
+          thirdPartyResourceListModule.name,
         ])
     .config(indexConfig)
     .config(routeConfig);
