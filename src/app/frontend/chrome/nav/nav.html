@@ -53,4 +53,6 @@ limitations under the License.
     <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.secret}}">[[Secrets|Secrets item in the nav.]]</kd-nav-item>
     <kd-nav-item class="kd-nav-item" state="{{::$ctrl.states.configMap}}">[[Config Maps|Config Maps item in the nav.]]</kd-nav-item>
   </div>
+  <!-- Enabled dynamically if there are third party resources registered in the system -->
+  <kd-third-party-resource-nav states="$ctrl.states"></kd-third-party-resource-nav>
 </md-sidenav>
