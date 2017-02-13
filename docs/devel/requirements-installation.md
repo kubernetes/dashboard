@@ -250,22 +250,25 @@ This will install all the dependencies that are in the `package.json` file in th
 Run the script included with the dashboard that checks out the latest Kubernetes and runs it in a Docker container.
 
 ```shell
-$ cd ~/dashboard
-$ sudo build/run-gulp-in-docker.sh
-$ gulp local-up-cluster
+$ cd ~/dashboard   
+   
+# Start cluster at first, because the dashboard need apiserver-host for requesting.
+$ gulp local-up-cluster   
+  
+# Run script to build docker image with name "kubernetes-dashboard-build-image ", and then start a container.
+# The parameter "serve" is necessary, otherwise, there will be a gulp task error.
+$ sudo build/run-gulp-in-docker.sh serve
 ```
-If you need append ENV variables to container.
+If you need append ENV variables to container, you should edit the Dockerfile.
 
 ```Dockerfile
 ENV http_proxy="http://username:passowrd@10.0.58.88:8080/"
 ENV https_proxy="http://username:password@10.0.58.88:8080/"
 ```
 
-If you need to stop the cluster you can run `$ docker kill $(docker ps -aq)`
+If you need to stop the cluster you can run `$ docker kill $(docker ps -aq)`, 
+and the dashboard container is stopped also.
 
-```shell
-$ gulp serve
-```
 
 ### Check
 
