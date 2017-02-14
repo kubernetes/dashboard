@@ -17,6 +17,8 @@ package service
 import (
 	"testing"
 
+	"reflect"
+
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -25,7 +27,6 @@ import (
 	"k8s.io/kubernetes/pkg/api"
 	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
-	"reflect"
 )
 
 type FakeHeapsterClient struct {
@@ -71,13 +72,13 @@ func TestGetServiceDetail(t *testing.T) {
 		},
 		{
 			service: &api.Service{
-					ObjectMeta: api.ObjectMeta{
-							Name: "svc-2",
-							Namespace: "ns-2",
-					},
-					Spec: api.ServiceSpec{
-						Selector: map[string]string{"app": "app2"},
-					},
+				ObjectMeta: api.ObjectMeta{
+					Name:      "svc-2",
+					Namespace: "ns-2",
+				},
+				Spec: api.ServiceSpec{
+					Selector: map[string]string{"app": "app2"},
+				},
 			},
 			namespace: "ns-2", name: "svc-2",
 			expectedActions: []string{"get", "get", "list"},
@@ -86,7 +87,7 @@ func TestGetServiceDetail(t *testing.T) {
 					Name:      "svc-2",
 					Namespace: "ns-2",
 				},
-				Selector: map[string]string{"app": "app2"},
+				Selector:         map[string]string{"app": "app2"},
 				TypeMeta:         common.TypeMeta{Kind: common.ResourceKindService},
 				InternalEndpoint: common.Endpoint{Host: "svc-2.ns-2"},
 				PodList: pod.PodList{

@@ -21,8 +21,9 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"k8s.io/kubernetes/pkg/api"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	client "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // GetJobEvents gets events associated to job.
@@ -64,7 +65,7 @@ func GetJobEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, 
 func GetJobPodsEvents(client client.Interface, namespace, jobName string) (
 	[]api.Event, error) {
 
-	job, err := client.Batch().Jobs(namespace).Get(jobName)
+	job, err := client.Batch().Jobs(namespace).Get(jobName, metaV1.GetOptions{})
 
 	if err != nil {
 		return nil, err

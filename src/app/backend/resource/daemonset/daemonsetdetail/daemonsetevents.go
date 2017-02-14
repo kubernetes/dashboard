@@ -18,11 +18,12 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"k8s.io/kubernetes/pkg/api"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	client "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // GetDaemonSetEvents gets events associated to daemon set.
@@ -64,7 +65,7 @@ func GetDaemonSetEvents(client client.Interface, dsQuery *dataselect.DataSelectQ
 func GetDaemonSetPodsEvents(client client.Interface, namespace, daemonSetName string) (
 	[]api.Event, error) {
 
-	daemonSet, err := client.Extensions().DaemonSets(namespace).Get(daemonSetName)
+	daemonSet, err := client.Extensions().DaemonSets(namespace).Get(daemonSetName, metaV1.GetOptions{})
 
 	if err != nil {
 		return nil, err

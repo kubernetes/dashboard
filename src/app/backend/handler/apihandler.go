@@ -61,11 +61,11 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/workload"
 	"github.com/kubernetes/dashboard/src/app/backend/validation"
 	"golang.org/x/net/xsrftoken"
-	clientK8s "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
-	"k8s.io/kubernetes/pkg/client/restclient"
-	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
-	"k8s.io/kubernetes/pkg/runtime"
-	utilnet "k8s.io/kubernetes/pkg/util/net"
+	"k8s.io/apimachinery/pkg/runtime"
+	utilnet "k8s.io/apimachinery/pkg/util/net"
+	clientK8s "k8s.io/client-go/kubernetes"
+	restclient "k8s.io/client-go/rest"
+	"k8s.io/client-go/tools/clientcmd"
 )
 
 const (
@@ -179,8 +179,8 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 	clientConfig clientcmd.ClientConfig) (http.Handler, error) {
 
 	verber := common.NewResourceVerber(client.Core().RESTClient(),
-		client.ExtensionsClient.RESTClient(), client.AppsClient.RESTClient(),
-		client.BatchClient.RESTClient(), client.AutoscalingClient.RESTClient())
+		client.Extensions().RESTClient(), client.Apps().RESTClient(),
+		client.Batch().RESTClient(), client.Autoscaling().RESTClient())
 
 	var csrfKey string
 	inClusterConfig, err := restclient.InClusterConfig()
@@ -373,10 +373,11 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 		apiV1Ws.GET("/deployment/{namespace}/{deployment}/event").
 			To(apiHandler.handleGetDeploymentEvents).
 			Writes(common.EventList{}))
-	apiV1Ws.Route(
-		apiV1Ws.GET("/deployment/{namespace}/{deployment}/oldreplicaset").
-			To(apiHandler.handleGetDeploymentOldReplicaSets).
-			Writes(replicasetlist.ReplicaSetList{}))
+	// TODO enable once deployment utils are fixed
+	//apiV1Ws.Route(
+	//	apiV1Ws.GET("/deployment/{namespace}/{deployment}/oldreplicaset").
+	//		To(apiHandler.handleGetDeploymentOldReplicaSets).
+	//		Writes(replicasetlist.ReplicaSetList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/daemonset").
@@ -1090,17 +1091,17 @@ func (apiHandler *APIHandler) handleGetDeploymentEvents(request *restful.Request
 
 // Handles get deployment old replica sets API call.
 func (apiHandler *APIHandler) handleGetDeploymentOldReplicaSets(request *restful.Request, response *restful.Response) {
-	namespace := request.PathParameter("namespace")
-	name := request.PathParameter("deployment")
-	dataSelect := parseDataSelectPathParameter(request)
-
-	result, err := deployment.GetDeploymentOldReplicaSets(apiHandler.client, dataSelect, namespace,
-		name)
-	if err != nil {
-		handleInternalError(response, err)
-		return
-	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	//namespace := request.PathParameter("namespace")
+	//name := request.PathParameter("deployment")
+	//dataSelect := parseDataSelectPathParameter(request)
+	//
+	//result, err := deployment.GetDeploymentOldReplicaSets(apiHandler.client, dataSelect, namespace,
+	//	name)
+	//if err != nil {
+	//	handleInternalError(response, err)
+	//	return
+	//}
+	//response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Pod list API call.

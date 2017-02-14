@@ -19,9 +19,9 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
-	"k8s.io/kubernetes/pkg/api/unversioned"
-	"k8s.io/kubernetes/pkg/apis/autoscaling"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	"k8s.io/apimachinery/pkg/apis/meta/v1"
+	client "k8s.io/client-go/kubernetes"
+	autoscaling "k8s.io/client-go/pkg/apis/autoscaling/v1"
 )
 
 // HorizontalPodAutoscalerDetail provides the presentation layer view of Kubernetes Horizontal Pod Autoscaler resource.
@@ -41,14 +41,14 @@ type HorizontalPodAutoscalerDetail struct {
 	CurrentReplicas int32 `json:"currentReplicas"`
 	DesiredReplicas int32 `json:"desiredReplicas"`
 
-	LastScaleTime *unversioned.Time `json:"lastScaleTime"`
+	LastScaleTime *v1.Time `json:"lastScaleTime"`
 }
 
 // GetHorizontalPodAutoscalerDetail returns detailed information about a horizontal pod autoscaler
 func GetHorizontalPodAutoscalerDetail(client client.Interface, namespace string, name string) (*HorizontalPodAutoscalerDetail, error) {
 	log.Printf("Getting details of %s horizontal pod autoscaler", name)
 
-	rawHorizontalPodAutoscaler, err := client.Autoscaling().HorizontalPodAutoscalers(namespace).Get(name)
+	rawHorizontalPodAutoscaler, err := client.Autoscaling().HorizontalPodAutoscalers(namespace).Get(name, v1.GetOptions{})
 
 	if err != nil {
 		return nil, err

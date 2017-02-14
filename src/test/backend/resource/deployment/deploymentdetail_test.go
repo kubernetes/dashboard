@@ -15,9 +15,10 @@ import (
 	"k8s.io/kubernetes/pkg/controller/deployment/util"
 	"k8s.io/kubernetes/pkg/util/intstr"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"reflect"
 	"testing"
+
+	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 )
 
 func createDeployment(name, namespace, podTemplateName string, podLabel,

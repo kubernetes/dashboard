@@ -15,7 +15,8 @@
 package replicasetdetail
 
 import (
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	client "k8s.io/client-go/kubernetes"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -27,7 +28,7 @@ import (
 func GetReplicaSetServices(client client.Interface, dsQuery *dataselect.DataSelectQuery,
 	namespace, name string) (*service.ServiceList, error) {
 
-	replicaSet, err := client.Extensions().ReplicaSets(namespace).Get(name)
+	replicaSet, err := client.Extensions().ReplicaSets(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

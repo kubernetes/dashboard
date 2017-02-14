@@ -25,7 +25,7 @@ import (
 	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
 )
 
-// func GetHorizontalPodAutoscalerDetail(client *client.Client, namespace string, name string) (*HorizontalPodAutoscalerDetail, error) 
+// func GetHorizontalPodAutoscalerDetail(client *client.Client, namespace string, name string) (*HorizontalPodAutoscalerDetail, error)
 
 func TestGetHorizontalPodAutoscalerDetail(t *testing.T) {
 	cases := []struct {
@@ -52,8 +52,8 @@ func TestGetHorizontalPodAutoscalerDetail(t *testing.T) {
 				},
 			},
 			&HorizontalPodAutoscalerDetail{
-				ObjectMeta:     common.ObjectMeta{Name: "test-name", Namespace: "test-ns"},
-				TypeMeta:       common.TypeMeta{Kind: common.ResourceKindHorizontalPodAutoscaler},
+				ObjectMeta: common.ObjectMeta{Name: "test-name", Namespace: "test-ns"},
+				TypeMeta:   common.TypeMeta{Kind: common.ResourceKindHorizontalPodAutoscaler},
 				ScaleTargetRef: horizontalpodautoscaler.ScaleTargetRef{
 					Kind: "test-kind",
 					Name: "test-name2",
@@ -69,7 +69,6 @@ func TestGetHorizontalPodAutoscalerDetail(t *testing.T) {
 		fakeClient := fake.NewSimpleClientset(c.hpa)
 
 		actual, _ := GetHorizontalPodAutoscalerDetail(fakeClient, c.namespace, c.name)
-
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {

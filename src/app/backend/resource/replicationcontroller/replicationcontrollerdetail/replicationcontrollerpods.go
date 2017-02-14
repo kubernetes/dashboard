@@ -15,16 +15,18 @@
 package replicationcontrollerdetail
 
 import (
+	"log"
+
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"k8s.io/kubernetes/pkg/api"
-	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
-	"k8s.io/kubernetes/pkg/fields"
-	"k8s.io/kubernetes/pkg/labels"
-	"log"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/fields"
+	"k8s.io/apimachinery/pkg/labels"
+	k8sClient "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // GetReplicationControllerPods return list of pods targeting replication controller associated
@@ -46,7 +48,7 @@ func GetReplicationControllerPods(client k8sClient.Interface, heapsterClient cli
 func getRawReplicationControllerPods(client k8sClient.Interface, rcName, namespace string) (
 	[]api.Pod, error) {
 
-	replicationController, err := client.Core().ReplicationControllers(namespace).Get(rcName)
+	replicationController, err := client.Core().ReplicationControllers(namespace).Get(rcName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -54,9 +56,9 @@ func getRawReplicationControllerPods(client k8sClient.Interface, rcName, namespa
 	labelSelector := labels.SelectorFromSet(replicationController.Spec.Selector)
 	channels := &common.ResourceChannels{
 		PodList: common.GetPodListChannelWithOptions(client, common.NewSameNamespaceQuery(namespace),
-			api.ListOptions{
-				LabelSelector: labelSelector,
-				FieldSelector: fields.Everything(),
+			metaV1.ListOptions{
+				LabelSelector: labelSelector.String(),
+				FieldSelector: fields.Everything().String(),
 			}, 1),
 	}
 
@@ -76,9 +78,9 @@ func getReplicationControllerPodInfo(client k8sClient.Interface, rc *api.Replica
 	labelSelector := labels.SelectorFromSet(rc.Spec.Selector)
 	channels := &common.ResourceChannels{
 		PodList: common.GetPodListChannelWithOptions(client, common.NewSameNamespaceQuery(namespace),
-			api.ListOptions{
-				LabelSelector: labelSelector,
-				FieldSelector: fields.Everything(),
+			metaV1.ListOptions{
+				LabelSelector: labelSelector.String(),
+				FieldSelector: fields.Everything().String(),
 			}, 1),
 	}
 
@@ -87,6 +89,6 @@ func getReplicationControllerPodInfo(client k8sClient.Interface, rc *api.Replica
 		return nil, err
 	}
 
-	podInfo := common.GetPodInfo(rc.Status.Replicas, rc.Spec.Replicas, pods.Items)
+	podInfo := common.GetPodInfo(rc.Status.Replicas, *rc.Spec.Replicas, pods.Items)
 	return &podInfo, nil
 }

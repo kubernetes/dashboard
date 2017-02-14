@@ -16,7 +16,7 @@ package resourcequota
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"k8s.io/kubernetes/pkg/api"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // ResourceStatus provides the status of the resource defined by a resource quota.

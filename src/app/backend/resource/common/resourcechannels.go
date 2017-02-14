@@ -15,14 +15,15 @@
 package common
 
 import (
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/apis/apps"
-	"k8s.io/kubernetes/pkg/apis/autoscaling"
-	"k8s.io/kubernetes/pkg/apis/batch"
-	"k8s.io/kubernetes/pkg/apis/extensions"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
-	"k8s.io/kubernetes/pkg/fields"
-	"k8s.io/kubernetes/pkg/labels"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/fields"
+	"k8s.io/apimachinery/pkg/labels"
+	client "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
+	apps "k8s.io/client-go/pkg/apis/apps/v1beta1"
+	autoscaling "k8s.io/client-go/pkg/apis/autoscaling/v1"
+	batch "k8s.io/client-go/pkg/apis/batch/v1"
+	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 
 	kdClient "github.com/kubernetes/dashboard/src/app/backend/client"
 )
@@ -261,7 +262,7 @@ func GetEventListChannel(client client.Interface,
 
 // GetEventListChannelWithOptions is GetEventListChannel plus list options.
 func GetEventListChannelWithOptions(client client.Interface,
-	nsQuery *NamespaceQuery, options api.ListOptions, numReads int) EventListChannel {
+	nsQuery *NamespaceQuery, options metaV1.ListOptions, numReads int) EventListChannel {
 	channel := EventListChannel{
 		List:  make(chan *api.EventList, numReads),
 		Error: make(chan error, numReads),
@@ -300,7 +301,7 @@ func GetPodListChannel(client client.Interface,
 
 // GetPodListChannelWithOptions is GetPodListChannel plus listing options.
 func GetPodListChannelWithOptions(client client.Interface, nsQuery *NamespaceQuery,
-	options api.ListOptions, numReads int) PodListChannel {
+	options metaV1.ListOptions, numReads int) PodListChannel {
 
 	channel := PodListChannel{
 		List:  make(chan *api.PodList, numReads),
@@ -410,7 +411,7 @@ func GetReplicaSetListChannel(client client.Interface,
 // GetReplicaSetListChannelWithOptions returns a pair of channels to a ReplicaSet list filtered
 // by provided options and errors that both must be read numReads times.
 func GetReplicaSetListChannelWithOptions(client client.Interface,
-	nsQuery *NamespaceQuery, options api.ListOptions, numReads int) ReplicaSetListChannel {
+	nsQuery *NamespaceQuery, options metaV1.ListOptions, numReads int) ReplicaSetListChannel {
 	channel := ReplicaSetListChannel{
 		List:  make(chan *extensions.ReplicaSetList, numReads),
 		Error: make(chan error, numReads),
@@ -777,7 +778,7 @@ func GetThirdPartyResourceListChannel(client client.Interface, numReads int) Thi
 	return channel
 }
 
-var listEverything = api.ListOptions{
-	LabelSelector: labels.Everything(),
-	FieldSelector: fields.Everything(),
+var listEverything = metaV1.ListOptions{
+	LabelSelector: labels.Everything().String(),
+	FieldSelector: fields.Everything().String(),
 }

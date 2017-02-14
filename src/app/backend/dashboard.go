@@ -18,6 +18,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"net"
 	"net/http"
 	"os"
 
@@ -25,7 +26,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/handler"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/spf13/pflag"
-	"net"
 )
 
 var (

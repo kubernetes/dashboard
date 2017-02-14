@@ -21,7 +21,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/configmap"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/secret"
-	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	k8sClient "k8s.io/client-go/kubernetes"
 )
 
 // Config structure contains all resource lists grouped into the config category.

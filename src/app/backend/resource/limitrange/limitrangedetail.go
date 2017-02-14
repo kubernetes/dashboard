@@ -15,7 +15,7 @@
 package limitrange
 
 import (
-	"k8s.io/kubernetes/pkg/api"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // limitRanges provides set of limit ranges by limit types and resource names

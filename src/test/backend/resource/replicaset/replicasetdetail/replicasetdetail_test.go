@@ -72,8 +72,8 @@ func TestGetReplicaSetDetail(t *testing.T) {
 				Selector: &unversioned.LabelSelector{
 					MatchLabels: map[string]string{"app": "test"},
 				},
-				ServiceList: service.ServiceList{Services: []service.Service{}},
-				EventList:   common.EventList{Events: []common.Event{}},
+				ServiceList:                 service.ServiceList{Services: []service.Service{}},
+				EventList:                   common.EventList{Events: []common.Event{}},
 				HorizontalPodAutoscalerList: horizontalpodautoscalerlist.HorizontalPodAutoscalerList{HorizontalPodAutoscalers: []horizontalpodautoscalerlist.HorizontalPodAutoscaler{}},
 			},
 		},

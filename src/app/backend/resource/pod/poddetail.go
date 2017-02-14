@@ -18,11 +18,12 @@ import (
 	"encoding/json"
 	"log"
 
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/apis/apps"
-	"k8s.io/kubernetes/pkg/apis/batch"
-	"k8s.io/kubernetes/pkg/apis/extensions"
-	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	k8sClient "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
+	apps "k8s.io/client-go/pkg/apis/apps/v1beta1"
+	batch "k8s.io/client-go/pkg/apis/batch/v1"
+	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
@@ -128,7 +129,7 @@ func GetPodDetail(client k8sClient.Interface, heapsterClient client.HeapsterClie
 		PodMetrics:    common.GetPodMetricsChannel(heapsterClient, name, namespace),
 	}
 
-	pod, err := client.Core().Pods(namespace).Get(name)
+	pod, err := client.Core().Pods(namespace).Get(name, metaV1.GetOptions{})
 
 	if err != nil {
 		return nil, err
@@ -206,7 +207,7 @@ func toPodController(client k8sClient.Interface, reference api.ObjectReference, 
 }
 
 func toJobPodController(client k8sClient.Interface, reference api.ObjectReference, pods []api.Pod, events []api.Event, heapsterClient client.HeapsterClient) (*Controller, error) {
-	job, err := client.Batch().Jobs(reference.Namespace).Get(reference.Name)
+	job, err := client.Batch().Jobs(reference.Namespace).Get(reference.Name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -219,7 +220,7 @@ func toJobPodController(client k8sClient.Interface, reference api.ObjectReferenc
 }
 
 func toReplicaSetPodController(client k8sClient.Interface, reference api.ObjectReference, pods []api.Pod, events []api.Event, heapsterClient client.HeapsterClient) (*Controller, error) {
-	rs, err := client.Extensions().ReplicaSets(reference.Namespace).Get(reference.Name)
+	rs, err := client.Extensions().ReplicaSets(reference.Namespace).Get(reference.Name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -232,7 +233,7 @@ func toReplicaSetPodController(client k8sClient.Interface, reference api.ObjectR
 }
 
 func toReplicationControllerPodController(client k8sClient.Interface, reference api.ObjectReference, pods []api.Pod, events []api.Event, heapsterClient client.HeapsterClient) (*Controller, error) {
-	rc, err := client.Core().ReplicationControllers(reference.Namespace).Get(reference.Name)
+	rc, err := client.Core().ReplicationControllers(reference.Namespace).Get(reference.Name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -245,7 +246,7 @@ func toReplicationControllerPodController(client k8sClient.Interface, reference 
 }
 
 func toDaemonSetPodController(client k8sClient.Interface, reference api.ObjectReference, pods []api.Pod, events []api.Event, heapsterClient client.HeapsterClient) (*Controller, error) {
-	daemonset, err := client.Extensions().DaemonSets(reference.Namespace).Get(reference.Name)
+	daemonset, err := client.Extensions().DaemonSets(reference.Namespace).Get(reference.Name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -259,7 +260,7 @@ func toDaemonSetPodController(client k8sClient.Interface, reference api.ObjectRe
 }
 
 func toStatefulSetPodController(client k8sClient.Interface, reference api.ObjectReference, pods []api.Pod, events []api.Event, heapsterClient client.HeapsterClient) (*Controller, error) {
-	statefulset, err := client.Apps().StatefulSets(reference.Namespace).Get(reference.Name)
+	statefulset, err := client.Apps().StatefulSets(reference.Namespace).Get(reference.Name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

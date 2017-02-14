@@ -19,17 +19,16 @@ import (
 
 	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/replicasetlist"
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/apis/extensions"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
-
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler/horizontalpodautoscalerlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
-	"k8s.io/kubernetes/pkg/api/unversioned"
-	deploymentutil "k8s.io/kubernetes/pkg/controller/deployment/util"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/replicasetlist"
+
+	client "k8s.io/client-go/kubernetes"
+	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
+
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // RollingUpdateStrategy is behavior of a rolling update. See RollingUpdateDeployment K8s object.
@@ -99,32 +98,33 @@ func GetDeploymentDetail(client client.Interface, heapsterClient heapster.Heapst
 
 	log.Printf("Getting details of %s deployment in %s namespace", deploymentName, namespace)
 
-	deployment, err := client.Extensions().Deployments(namespace).Get(deploymentName)
+	deployment, err := client.Extensions().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
 
-	selector, err := unversioned.LabelSelectorAsSelector(deployment.Spec.Selector)
-	if err != nil {
-		return nil, err
-	}
-	options := api.ListOptions{LabelSelector: selector}
+	// TODO fix not to use kubernetes utils
+	//selector, err := metaV1.LabelSelectorAsSelector(deployment.Spec.Selector)
+	//if err != nil {
+	//	return nil, err
+	//}
+	//options := metaV1.ListOptions{LabelSelector: selector.String()}
 
-	channels := &common.ResourceChannels{
-		ReplicaSetList: common.GetReplicaSetListChannelWithOptions(client,
-			common.NewSameNamespaceQuery(namespace), options, 1),
-		PodList: common.GetPodListChannelWithOptions(client,
-			common.NewSameNamespaceQuery(namespace), options, 1),
-	}
+	//channels := &common.ResourceChannels{
+	//	ReplicaSetList: common.GetReplicaSetListChannelWithOptions(client,
+	//		common.NewSameNamespaceQuery(namespace), options, 1),
+	//	PodList: common.GetPodListChannelWithOptions(client,
+	//		common.NewSameNamespaceQuery(namespace), options, 1),
+	//}
 
-	rawRs := <-channels.ReplicaSetList.List
-	if err := <-channels.ReplicaSetList.Error; err != nil {
-		return nil, err
-	}
-	rawPods := <-channels.PodList.List
-	if err := <-channels.PodList.Error; err != nil {
-		return nil, err
-	}
+	//rawRs := <-channels.ReplicaSetList.List
+	//if err := <-channels.ReplicaSetList.Error; err != nil {
+	//	return nil, err
+	//}
+	//rawPods := <-channels.PodList.List
+	//if err := <-channels.PodList.Error; err != nil {
+	//	return nil, err
+	//}
 
 	// Pods
 	podList, err := GetDeploymentPods(client, heapsterClient, dataselect.DefaultDataSelectWithMetrics, namespace, deploymentName)
@@ -143,25 +143,25 @@ func GetDeploymentDetail(client client.Interface, heapsterClient heapster.Heapst
 	}
 
 	// Old Replica Sets
-	oldReplicaSetList, err := GetDeploymentOldReplicaSets(client, dataselect.DefaultDataSelect, namespace, deploymentName)
-	if err != nil {
-		return nil, err
-	}
+	//oldReplicaSetList, err := GetDeploymentOldReplicaSets(client, dataselect.DefaultDataSelect, namespace, deploymentName)
+	//if err != nil {
+	//	return nil, err
+	//}
 
 	// New Replica Set
-	rawRepSets := make([]*extensions.ReplicaSet, 0)
-	for i := range rawRs.Items {
-		rawRepSets = append(rawRepSets, &rawRs.Items[i])
-	}
-	newRs, err := deploymentutil.FindNewReplicaSet(deployment, rawRepSets)
-	if err != nil {
-		return nil, err
-	}
-	var newReplicaSet replicaset.ReplicaSet
-	if newRs != nil {
-		newRsPodInfo := common.GetPodInfo(newRs.Status.Replicas, newRs.Spec.Replicas, rawPods.Items)
-		newReplicaSet = replicaset.ToReplicaSet(newRs, &newRsPodInfo)
-	}
+	//rawRepSets := make([]*extensions.ReplicaSet, 0)
+	//for i := range rawRs.Items {
+	//	rawRepSets = append(rawRepSets, &rawRs.Items[i])
+	//}
+	//newRs, err := deploymentutil.FindNewReplicaSet(deployment, rawRepSets)
+	//if err != nil {
+	//	return nil, err
+	//}
+	//var newReplicaSet replicaset.ReplicaSet
+	//if newRs != nil {
+	//	newRsPodInfo := common.GetPodInfo(newRs.Status.Replicas, newRs.Spec.Replicas, rawPods.Items)
+	//	newReplicaSet = replicaset.ToReplicaSet(newRs, &newRsPodInfo)
+	//}
 
 	// Extra Info
 	var rollingUpdateStrategy *RollingUpdateStrategy
@@ -173,16 +173,16 @@ func GetDeploymentDetail(client client.Interface, heapsterClient heapster.Heapst
 	}
 
 	return &DeploymentDetail{
-		ObjectMeta:                  common.NewObjectMeta(deployment.ObjectMeta),
-		TypeMeta:                    common.NewTypeMeta(common.ResourceKindDeployment),
-		PodList:                     *podList,
-		Selector:                    deployment.Spec.Selector.MatchLabels,
-		StatusInfo:                  GetStatusInfo(&deployment.Status),
-		Strategy:                    deployment.Spec.Strategy.Type,
-		MinReadySeconds:             deployment.Spec.MinReadySeconds,
-		RollingUpdateStrategy:       rollingUpdateStrategy,
-		OldReplicaSetList:           *oldReplicaSetList,
-		NewReplicaSet:               newReplicaSet,
+		ObjectMeta:            common.NewObjectMeta(deployment.ObjectMeta),
+		TypeMeta:              common.NewTypeMeta(common.ResourceKindDeployment),
+		PodList:               *podList,
+		Selector:              deployment.Spec.Selector.MatchLabels,
+		StatusInfo:            GetStatusInfo(&deployment.Status),
+		Strategy:              deployment.Spec.Strategy.Type,
+		MinReadySeconds:       deployment.Spec.MinReadySeconds,
+		RollingUpdateStrategy: rollingUpdateStrategy,
+		//OldReplicaSetList:           *oldReplicaSetList,
+		//NewReplicaSet:               newReplicaSet,
 		RevisionHistoryLimit:        deployment.Spec.RevisionHistoryLimit,
 		EventList:                   *eventList,
 		HorizontalPodAutoscalerList: *hpas,

@@ -18,8 +18,9 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"k8s.io/kubernetes/pkg/api"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	client "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // NamespaceSpec is a specification of namespace to create.
@@ -33,7 +34,7 @@ func CreateNamespace(spec *NamespaceSpec, client *client.Clientset) error {
 	log.Printf("Creating namespace %s", spec.Name)
 
 	namespace := &api.Namespace{
-		ObjectMeta: api.ObjectMeta{
+		ObjectMeta: metaV1.ObjectMeta{
 			Name: spec.Name,
 		},
 	}

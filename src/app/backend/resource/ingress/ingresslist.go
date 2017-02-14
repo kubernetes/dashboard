@@ -17,11 +17,12 @@ package ingress
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/apis/extensions"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
-	"k8s.io/kubernetes/pkg/fields"
-	"k8s.io/kubernetes/pkg/labels"
+
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/fields"
+	"k8s.io/apimachinery/pkg/labels"
+	client "k8s.io/client-go/kubernetes"
+	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
 // Ingress - a single ingress returned to the frontend.
@@ -44,9 +45,9 @@ type IngressList struct {
 // GetIngressList - return all ingresses in the given namespace.
 func GetIngressList(client client.Interface, namespace *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*IngressList, error) {
-	ingressList, err := client.Extensions().Ingresses(namespace.ToRequestParam()).List(api.ListOptions{
-		LabelSelector: labels.Everything(),
-		FieldSelector: fields.Everything(),
+	ingressList, err := client.Extensions().Ingresses(namespace.ToRequestParam()).List(metaV1.ListOptions{
+		LabelSelector: labels.Everything().String(),
+		FieldSelector: fields.Everything().String(),
 	})
 	if err != nil {
 		return nil, err

@@ -15,8 +15,8 @@
 package common
 
 import (
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
+	"k8s.io/apimachinery/pkg/apis/meta/v1"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // FilterNamespacedPodsBySelector returns pods targeted by given resource label selector in given
@@ -50,7 +50,7 @@ func FilterPodsBySelector(pods []api.Pod, resourceSelector map[string]string) []
 // FilterNamespacedPodsByLabelSelector returns pods targeted by given resource label selector in
 // given namespace.
 func FilterNamespacedPodsByLabelSelector(pods []api.Pod, namespace string,
-	labelSelector *unversioned.LabelSelector) []api.Pod {
+	labelSelector *v1.LabelSelector) []api.Pod {
 
 	var matchingPods []api.Pod
 	for _, pod := range pods {
@@ -63,7 +63,7 @@ func FilterNamespacedPodsByLabelSelector(pods []api.Pod, namespace string,
 }
 
 // FilterPodsByLabelSelector returns pods targeted by given resource label selector.
-func FilterPodsByLabelSelector(pods []api.Pod, labelSelector *unversioned.LabelSelector) []api.Pod {
+func FilterPodsByLabelSelector(pods []api.Pod, labelSelector *v1.LabelSelector) []api.Pod {
 
 	var matchingPods []api.Pod
 	for _, pod := range pods {
