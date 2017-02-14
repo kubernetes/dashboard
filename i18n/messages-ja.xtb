@@ -1059,6 +1059,9 @@
   <translation id="5354454761743336471" key="MSG_PODDETAIL_CREATORINFO_3" desc="Heading for Creator card on poddetail page">作成者</translation>
   <translation id="5154195005930272732" key="MSG_PODDETAIL_CREATORINFO_4" desc="Heading for Creator card on poddetail page">作成者</translation>
   <translation id="803331105752777171" key="MSG_PODDETAIL_CREATORINFO_5" desc="|Label for unknown creator of a pod">作成者不明</translation>
+  <translation id="9059880881791485363" key="MSG_PODDETAIL_CREATORINFO_5" desc="Heading for Creator card on poddetail page">Created by</translation>
+  <translation id="4531715723625212375" key="MSG_PODDETAIL_CREATORINFO_6" desc="Title for pods card zerostate in pod details page.">There is nothing to display here</translation>
+  <translation id="7907488041039669525" key="MSG_PODDETAIL_CREATORINFO_7" desc="Text for pod creator zerostate in pod details page.">This Pod does not have a creator.</translation>
   <translation id="1121341707527002694" key="MSG_PODDETAIL_PODDETAIL_0" desc="Title for graph card displaying CPU metric of one pod.">CPU使用量の履歴</translation>
   <translation id="4762477599395572185" key="MSG_PODDETAIL_PODDETAIL_0" desc="Title for graph card displaying CPU metric of one pod.">CPU使用量</translation>
   <translation id="3791462909802261074" key="MSG_PODDETAIL_PODDETAIL_1" desc="Title for graph card displaying memory metric of one pod.">メモリー使用量</translation>
