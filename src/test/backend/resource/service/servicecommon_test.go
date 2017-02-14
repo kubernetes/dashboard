@@ -18,7 +18,8 @@ import (
 	"reflect"
 	"testing"
 
-	"k8s.io/kubernetes/pkg/api"
+	api "k8s.io/client-go/pkg/api/v1"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 )
@@ -34,7 +35,7 @@ func TestToServiceDetail(t *testing.T) {
 			},
 		}, {
 			service: &api.Service{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metaV1.ObjectMeta{
 					Name: "test-service", Namespace: "test-namespace",
 				}},
 			expected: ServiceDetail{
@@ -69,7 +70,7 @@ func TestToService(t *testing.T) {
 			},
 		}, {
 			service: &api.Service{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metaV1.ObjectMeta{
 					Name: "test-service", Namespace: "test-namespace",
 				}},
 			expected: Service{

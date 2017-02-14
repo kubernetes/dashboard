@@ -17,18 +17,22 @@ package deployment
 import (
 	"reflect"
 	"testing"
-
-	"k8s.io/kubernetes/pkg/api"
-	k8serrors "k8s.io/kubernetes/pkg/api/errors"
-	"k8s.io/kubernetes/pkg/api/unversioned"
-	"k8s.io/kubernetes/pkg/apis/extensions"
-
 	"errors"
+
+	api "k8s.io/client-go/pkg/api/v1"
+	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
+	
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 )
+
+func getReplicasPointer(replicas int32) *int32 {
+	return &replicas
+}
 
 func TestGetDeploymentListFromChannels(t *testing.T) {
 	cases := []struct {
@@ -65,21 +69,21 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 		},
 		{
 			extensions.DeploymentList{},
-			&k8serrors.StatusError{ErrStatus: unversioned.Status{}},
+			&k8serrors.StatusError{ErrStatus: metaV1.Status{}},
 			&api.PodList{},
 			nil,
-			&k8serrors.StatusError{ErrStatus: unversioned.Status{}},
+			&k8serrors.StatusError{ErrStatus: metaV1.Status{}},
 		},
 		{
 			extensions.DeploymentList{},
-			&k8serrors.StatusError{ErrStatus: unversioned.Status{Reason: "foo-bar"}},
+			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "foo-bar"}},
 			&api.PodList{},
 			nil,
-			&k8serrors.StatusError{ErrStatus: unversioned.Status{Reason: "foo-bar"}},
+			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "foo-bar"}},
 		},
 		{
 			extensions.DeploymentList{},
-			&k8serrors.StatusError{ErrStatus: unversioned.Status{Reason: "NotFound"}},
+			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "NotFound"}},
 			&api.PodList{},
 			&DeploymentList{
 				Deployments: make([]Deployment, 0),
@@ -89,15 +93,15 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 		{
 			extensions.DeploymentList{
 				Items: []extensions.Deployment{{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Name:              "rs-name",
 						Namespace:         "rs-namespace",
 						Labels:            map[string]string{"key": "value"},
-						CreationTimestamp: unversioned.Unix(111, 222),
+						CreationTimestamp: metaV1.Unix(111, 222),
 					},
 					Spec: extensions.DeploymentSpec{
-						Selector: &unversioned.LabelSelector{MatchLabels: map[string]string{"foo": "bar"}},
-						Replicas: 21,
+						Selector: &metaV1.LabelSelector{MatchLabels: map[string]string{"foo": "bar"}},
+						Replicas: getReplicasPointer(21),
 					},
 					Status: extensions.DeploymentStatus{
 						Replicas: 7,
@@ -108,14 +112,14 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 			&api.PodList{
 				Items: []api.Pod{
 					{
-						ObjectMeta: api.ObjectMeta{
+						ObjectMeta: metaV1.ObjectMeta{
 							Namespace: "rs-namespace",
 							Labels:    map[string]string{"foo": "bar"},
 						},
 						Status: api.PodStatus{Phase: api.PodFailed},
 					},
 					{
-						ObjectMeta: api.ObjectMeta{
+						ObjectMeta: metaV1.ObjectMeta{
 							Namespace: "rs-namespace",
 							Labels:    map[string]string{"foo": "baz"},
 						},
@@ -131,7 +135,7 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 						Name:              "rs-name",
 						Namespace:         "rs-namespace",
 						Labels:            map[string]string{"key": "value"},
-						CreationTimestamp: unversioned.Unix(111, 222),
+						CreationTimestamp: metaV1.Unix(111, 222),
 					},
 					TypeMeta: common.TypeMeta{Kind: common.ResourceKindDeployment},
 					Pods: common.PodInfo{

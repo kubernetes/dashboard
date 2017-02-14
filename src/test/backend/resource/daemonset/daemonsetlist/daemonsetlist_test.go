@@ -21,9 +21,10 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
-	"k8s.io/kubernetes/pkg/apis/extensions"
+
+	api "k8s.io/client-go/pkg/api/v1"
+	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func TestGetDaemonSetList(t *testing.T) {
@@ -42,12 +43,12 @@ func TestGetDaemonSetList(t *testing.T) {
 		}, {
 			[]extensions.DaemonSet{
 				{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Name:      "my-app-1",
 						Namespace: "namespace-1",
 					},
 					Spec: extensions.DaemonSetSpec{
-						Selector: &unversioned.LabelSelector{
+						Selector: &metaV1.LabelSelector{
 							MatchLabels: map[string]string{"app": "my-name-1"},
 						},
 						Template: api.PodTemplateSpec{
@@ -56,12 +57,12 @@ func TestGetDaemonSetList(t *testing.T) {
 					},
 				},
 				{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Name:      "my-app-2",
 						Namespace: "namespace-2",
 					},
 					Spec: extensions.DaemonSetSpec{
-						Selector: &unversioned.LabelSelector{
+						Selector: &metaV1.LabelSelector{
 							MatchLabels: map[string]string{"app": "my-name-2", "ver": "2"},
 						},
 						Template: api.PodTemplateSpec{
@@ -73,14 +74,14 @@ func TestGetDaemonSetList(t *testing.T) {
 			[]api.Service{
 				{
 					Spec: api.ServiceSpec{Selector: map[string]string{"app": "my-name-1"}},
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Name:      "my-app-1",
 						Namespace: "namespace-1",
 					},
 				},
 				{
 					Spec: api.ServiceSpec{Selector: map[string]string{"app": "my-name-2", "ver": "2"}},
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Name:      "my-app-2",
 						Namespace: "namespace-2",
 					},
@@ -88,7 +89,7 @@ func TestGetDaemonSetList(t *testing.T) {
 			},
 			[]api.Pod{
 				{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Namespace: "namespace-1",
 						Labels:    map[string]string{"app": "my-name-1"},
 					},
@@ -97,7 +98,7 @@ func TestGetDaemonSetList(t *testing.T) {
 					},
 				},
 				{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Namespace: "namespace-1",
 						Labels:    map[string]string{"app": "my-name-1"},
 					},
@@ -106,7 +107,7 @@ func TestGetDaemonSetList(t *testing.T) {
 					},
 				},
 				{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Namespace: "namespace-1",
 						Labels:    map[string]string{"app": "my-name-1"},
 					},
@@ -115,7 +116,7 @@ func TestGetDaemonSetList(t *testing.T) {
 					},
 				},
 				{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Namespace: "namespace-2",
 						Labels:    map[string]string{"app": "my-name-1"},
 					},
@@ -124,7 +125,7 @@ func TestGetDaemonSetList(t *testing.T) {
 					},
 				},
 				{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Namespace: "namespace-1",
 						Labels:    map[string]string{"app": "my-name-1"},
 					},
@@ -133,7 +134,7 @@ func TestGetDaemonSetList(t *testing.T) {
 					},
 				},
 				{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Namespace: "namespace-1",
 						Labels:    map[string]string{"app": "my-name-1"},
 					},
@@ -142,7 +143,7 @@ func TestGetDaemonSetList(t *testing.T) {
 					},
 				},
 				{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Namespace: "namespace-1",
 						Labels:    map[string]string{"app": "my-name-1"},
 					},

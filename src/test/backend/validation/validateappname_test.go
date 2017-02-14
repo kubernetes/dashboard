@@ -15,9 +15,11 @@
 package validation
 
 import (
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
-	"k8s.io/kubernetes/pkg/runtime"
+	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/kubernetes/fake"
+
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime"
 
 	"testing"
 )
@@ -40,7 +42,7 @@ func TestValidateName(t *testing.T) {
 		{
 			spec,
 			[]runtime.Object{&api.ReplicationController{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metaV1.ObjectMeta{
 					Name: "rc-1", Namespace: "ns-1",
 				},
 			}},
@@ -49,7 +51,7 @@ func TestValidateName(t *testing.T) {
 		{
 			spec,
 			[]runtime.Object{&api.Service{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metaV1.ObjectMeta{
 					Name: "rc-1", Namespace: "ns-1",
 				},
 			}},
@@ -58,11 +60,11 @@ func TestValidateName(t *testing.T) {
 		{
 			spec,
 			[]runtime.Object{&api.ReplicationController{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metaV1.ObjectMeta{
 					Name: "rc-1", Namespace: "ns-1",
 				},
 			}, &api.Service{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metaV1.ObjectMeta{
 					Name: "rc-1", Namespace: "ns-1",
 				},
 			}},

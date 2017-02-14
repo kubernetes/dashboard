@@ -15,26 +15,27 @@
 package daemonsetdetail
 
 import (
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
-	"k8s.io/kubernetes/pkg/apis/extensions"
-	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
+	api "k8s.io/client-go/pkg/api/v1"
+	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
+	"k8s.io/client-go/kubernetes/fake"
+	
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	"testing"
 )
 
 func createDaemonSet(name, namespace string, labelSelector map[string]string) extensions.DaemonSet {
 	return extensions.DaemonSet{
-		ObjectMeta: api.ObjectMeta{Name: name, Namespace: namespace, Labels: labelSelector},
+		ObjectMeta: metaV1.ObjectMeta{Name: name, Namespace: namespace, Labels: labelSelector},
 		Spec: extensions.DaemonSetSpec{
-			Selector: &unversioned.LabelSelector{MatchLabels: labelSelector},
+			Selector: &metaV1.LabelSelector{MatchLabels: labelSelector},
 		},
 	}
 }
 
 func createService(name, namespace string, labelSelector map[string]string) api.Service {
 	return api.Service{
-		ObjectMeta: api.ObjectMeta{Name: name, Namespace: namespace, Labels: labelSelector},
+		ObjectMeta: metaV1.ObjectMeta{Name: name, Namespace: namespace, Labels: labelSelector},
 		Spec:       api.ServiceSpec{Selector: labelSelector},
 	}
 }

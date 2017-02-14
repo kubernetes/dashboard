@@ -18,8 +18,10 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
+	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/kubernetes/fake"
+
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	"reflect"
 	"testing"
@@ -34,7 +36,7 @@ func TestGetServiceList(t *testing.T) {
 		{
 			serviceList: &api.ServiceList{
 				Items: []api.Service{
-					{ObjectMeta: api.ObjectMeta{
+					{ObjectMeta: metaV1.ObjectMeta{
 						Name: "svc-1", Namespace: "ns-1",
 						Labels: map[string]string{},
 					}},

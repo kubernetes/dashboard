@@ -18,15 +18,16 @@ import (
 	"reflect"
 	"testing"
 
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
-	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
-	"k8s.io/kubernetes/pkg/labels"
+	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/kubernetes/fake"
+	
+	"k8s.io/apimachinery/pkg/labels"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func TestToLabelSelector(t *testing.T) {
-	selector, _ := unversioned.LabelSelectorAsSelector(
-		&unversioned.LabelSelector{MatchLabels: map[string]string{"app": "test"}})
+	selector, _ := metaV1.LabelSelectorAsSelector(
+		&metaV1.LabelSelector{MatchLabels: map[string]string{"app": "test"}})
 
 	cases := []struct {
 		selector map[string]string
@@ -65,7 +66,7 @@ func TestGetServicesForDeletion(t *testing.T) {
 			&api.ReplicationControllerList{
 				Items: []api.ReplicationController{
 					{
-						ObjectMeta: api.ObjectMeta{Name: "rc-1", Namespace: "ns-1",
+						ObjectMeta: metaV1.ObjectMeta{Name: "rc-1", Namespace: "ns-1",
 							Labels: labelSelector},
 						Spec: api.ReplicationControllerSpec{Selector: labelSelector},
 					},
@@ -74,7 +75,7 @@ func TestGetServicesForDeletion(t *testing.T) {
 			&api.ServiceList{
 				Items: []api.Service{
 					{
-						ObjectMeta: api.ObjectMeta{Name: "svc-1", Namespace: "ns-1",
+						ObjectMeta: metaV1.ObjectMeta{Name: "svc-1", Namespace: "ns-1",
 							Labels: labelSelector},
 						Spec: api.ServiceSpec{Selector: labelSelector},
 					},
@@ -87,12 +88,12 @@ func TestGetServicesForDeletion(t *testing.T) {
 			&api.ReplicationControllerList{
 				Items: []api.ReplicationController{
 					{
-						ObjectMeta: api.ObjectMeta{Name: "rc-1", Namespace: "ns-1",
+						ObjectMeta: metaV1.ObjectMeta{Name: "rc-1", Namespace: "ns-1",
 							Labels: labelSelector},
 						Spec: api.ReplicationControllerSpec{Selector: labelSelector},
 					},
 					{
-						ObjectMeta: api.ObjectMeta{Name: "rc-2", Namespace: "ns-1",
+						ObjectMeta: metaV1.ObjectMeta{Name: "rc-2", Namespace: "ns-1",
 							Labels: labelSelector},
 						Spec: api.ReplicationControllerSpec{Selector: labelSelector},
 					},
@@ -101,7 +102,7 @@ func TestGetServicesForDeletion(t *testing.T) {
 			&api.ServiceList{
 				Items: []api.Service{
 					{
-						ObjectMeta: api.ObjectMeta{Name: "svc-1", Namespace: "ns-1",
+						ObjectMeta: metaV1.ObjectMeta{Name: "svc-1", Namespace: "ns-1",
 							Labels: labelSelector},
 						Spec: api.ServiceSpec{Selector: labelSelector},
 					},
@@ -115,7 +116,7 @@ func TestGetServicesForDeletion(t *testing.T) {
 			&api.ServiceList{
 				Items: []api.Service{
 					{
-						ObjectMeta: api.ObjectMeta{Name: "svc-1", Namespace: "ns-1",
+						ObjectMeta: metaV1.ObjectMeta{Name: "svc-1", Namespace: "ns-1",
 							Labels: labelSelector},
 						Spec: api.ServiceSpec{Selector: labelSelector},
 					},

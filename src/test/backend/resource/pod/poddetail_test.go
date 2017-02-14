@@ -24,9 +24,11 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
-	"k8s.io/kubernetes/pkg/client/restclient"
+	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/kubernetes/fake"
+	restclient "k8s.io/client-go/rest"
+
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 type FakeHeapsterClient struct{}
@@ -50,7 +52,7 @@ func TestToPodDetail(t *testing.T) {
 	}{
 		{
 			pod: &api.PodList{Items: []api.Pod{{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metaV1.ObjectMeta{
 					Name: "test-pod", Namespace: "test-namespace",
 					Labels: map[string]string{"app": "test"},
 				}}}},

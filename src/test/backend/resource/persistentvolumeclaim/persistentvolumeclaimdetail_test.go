@@ -19,8 +19,9 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
+	
+	api "k8s.io/client-go/pkg/api/v1"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func TestGetPersistentVolumeClaimDetail(t *testing.T) {
@@ -31,8 +32,8 @@ func TestGetPersistentVolumeClaimDetail(t *testing.T) {
 	}{
 		{
 			&api.PersistentVolumeClaim{
-				TypeMeta:   unversioned.TypeMeta{Kind: "persistentvolumeclaim"},
-				ObjectMeta: api.ObjectMeta{Name: "foo", Namespace: "bar"},
+				TypeMeta:   metaV1.TypeMeta{Kind: "persistentvolumeclaim"},
+				ObjectMeta: metaV1.ObjectMeta{Name: "foo", Namespace: "bar"},
 				Spec: api.PersistentVolumeClaimSpec{
 					AccessModes: []api.PersistentVolumeAccessMode{api.ReadWriteOnce},
 					Resources:   api.ResourceRequirements{},

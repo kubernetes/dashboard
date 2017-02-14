@@ -15,15 +15,16 @@
 package event
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-
-	"k8s.io/kubernetes/pkg/api"
-
 	"reflect"
 	"testing"
 
-	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+
+	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/kubernetes/fake"
+
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func TestGetEvents(t *testing.T) {
@@ -37,13 +38,13 @@ func TestGetEvents(t *testing.T) {
 		{
 			"ns-1", "ev-1",
 			&api.EventList{Items: []api.Event{
-				{Message: "test-message", ObjectMeta: api.ObjectMeta{
+				{Message: "test-message", ObjectMeta: metaV1.ObjectMeta{
 					Name: "ev-1", Namespace: "ns-1", Labels: map[string]string{"app": "test"},
 				}},
 			}},
 			[]string{"list"},
 			[]api.Event{
-				{Message: "test-message", ObjectMeta: api.ObjectMeta{
+				{Message: "test-message", ObjectMeta: metaV1.ObjectMeta{
 					Name: "ev-1", Namespace: "ns-1", Labels: map[string]string{"app": "test"},
 				}},
 			},
@@ -88,13 +89,13 @@ func TestGetPodsEvents(t *testing.T) {
 		{
 			"test-namespace", map[string]string{"app": "test"},
 			&api.PodList{Items: []api.Pod{{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metaV1.ObjectMeta{
 					Name:      "test-pod",
 					Namespace: "test-namespace",
 					UID:       "test-uid",
 					Labels:    map[string]string{"app": "test"},
 				}}, {
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metaV1.ObjectMeta{
 					Name:      "test-pod-2",
 					Namespace: "test-namespace",
 					UID:       "test-uid",
@@ -103,13 +104,13 @@ func TestGetPodsEvents(t *testing.T) {
 			}},
 			&api.EventList{Items: []api.Event{{
 				Message:        "event-test-msg",
-				ObjectMeta:     api.ObjectMeta{Name: "ev-1", Namespace: "test-namespace"},
+				ObjectMeta:     metaV1.ObjectMeta{Name: "ev-1", Namespace: "test-namespace"},
 				InvolvedObject: api.ObjectReference{UID: "test-uid"},
 			}}},
 			[]string{"list", "list"},
 			[]api.Event{{
 				Message:        "event-test-msg",
-				ObjectMeta:     api.ObjectMeta{Name: "ev-1", Namespace: "test-namespace"},
+				ObjectMeta:     metaV1.ObjectMeta{Name: "ev-1", Namespace: "test-namespace"},
 				InvolvedObject: api.ObjectReference{UID: "test-uid"},
 			}},
 		},
@@ -149,8 +150,8 @@ func TestToEventList(t *testing.T) {
 	}{
 		{
 			[]api.Event{
-				{ObjectMeta: api.ObjectMeta{Name: "event-1"}},
-				{ObjectMeta: api.ObjectMeta{Name: "event-2"}},
+				{ObjectMeta: metaV1.ObjectMeta{Name: "event-1"}},
+				{ObjectMeta: metaV1.ObjectMeta{Name: "event-2"}},
 			},
 			"namespace-1",
 			common.EventList{

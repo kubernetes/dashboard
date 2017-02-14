@@ -20,9 +20,12 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/apis/batch"
-	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
+
+	api "k8s.io/client-go/pkg/api/v1"
+	batch "k8s.io/client-go/pkg/apis/batch/v1"
+	"k8s.io/client-go/kubernetes/fake"
+
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func TestGetJobEvents(t *testing.T) {
@@ -37,11 +40,11 @@ func TestGetJobEvents(t *testing.T) {
 		{
 			"ns-1", "job-1",
 			&api.EventList{Items: []api.Event{
-				{Message: "test-message", ObjectMeta: api.ObjectMeta{
+				{Message: "test-message", ObjectMeta: metaV1.ObjectMeta{
 					Name: "ev-1", Namespace: "ns-1", Labels: map[string]string{"app": "test"},
 				}},
 			}},
-			&api.PodList{Items: []api.Pod{{ObjectMeta: api.ObjectMeta{
+			&api.PodList{Items: []api.Pod{{ObjectMeta: metaV1.ObjectMeta{
 				Name: "pod-1", Namespace: "ns-1",
 			}}}},
 			createJob("job-1", "ns-1", map[string]string{"app": "test"}),
@@ -96,18 +99,18 @@ func TestGetJobPodsEvents(t *testing.T) {
 		{
 			"ns-1", "job-1",
 			&api.EventList{Items: []api.Event{
-				{Message: "test-message", ObjectMeta: api.ObjectMeta{
+				{Message: "test-message", ObjectMeta: metaV1.ObjectMeta{
 					Name: "ev-1", Namespace: "ns-1", Labels: map[string]string{"app": "test"},
 				}},
 			}},
-			&api.PodList{Items: []api.Pod{{ObjectMeta: api.ObjectMeta{
+			&api.PodList{Items: []api.Pod{{ObjectMeta: metaV1.ObjectMeta{
 				Name: "pod-1", Namespace: "ns-1", Labels: map[string]string{"app": "test"},
 			}}}},
 			createJob("job-1", "ns-1", map[string]string{"app": "test"}),
 			[]string{"get", "list", "list"},
 			[]api.Event{{
 				Message: "test-message",
-				ObjectMeta: api.ObjectMeta{Name: "ev-1", Namespace: "ns-1",
+				ObjectMeta: metaV1.ObjectMeta{Name: "ev-1", Namespace: "ns-1",
 					Labels: map[string]string{"app": "test"}},
 			}},
 		},

@@ -24,13 +24,15 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
-	"k8s.io/kubernetes/pkg/api"
-	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
-	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
+
+	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/kubernetes/fake"
+
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 type FakeHeapsterClient struct {
-	client k8sClient.Interface
+	client fake.Clientset
 }
 
 type FakeRequest struct{}
@@ -51,7 +53,7 @@ func TestGetServiceDetail(t *testing.T) {
 		expected        *ServiceDetail
 	}{
 		{
-			service: &api.Service{ObjectMeta: api.ObjectMeta{
+			service: &api.Service{ObjectMeta: metaV1.ObjectMeta{
 				Name: "svc-1", Namespace: "ns-1", Labels: map[string]string{},
 			}},
 			namespace: "ns-1", name: "svc-1",
@@ -72,7 +74,7 @@ func TestGetServiceDetail(t *testing.T) {
 		},
 		{
 			service: &api.Service{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metaV1.ObjectMeta{
 					Name:      "svc-2",
 					Namespace: "ns-2",
 				},
@@ -100,7 +102,7 @@ func TestGetServiceDetail(t *testing.T) {
 
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.service)
-		fakeHeapsterClient := FakeHeapsterClient{client: fake.NewSimpleClientset()}
+		fakeHeapsterClient := FakeHeapsterClient{client: *fake.NewSimpleClientset()}
 
 		actual, _ := GetServiceDetail(fakeClient, fakeHeapsterClient,
 			c.namespace, c.name, dataselect.NoDataSelect)

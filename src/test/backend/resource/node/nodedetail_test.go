@@ -24,14 +24,15 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 
-	"k8s.io/kubernetes/pkg/api"
-	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
-	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
-	"k8s.io/kubernetes/pkg/client/restclient"
+	api "k8s.io/client-go/pkg/api/v1"
+	restclient "k8s.io/client-go/rest"
+	"k8s.io/client-go/kubernetes/fake"
+
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 type FakeHeapsterClient struct {
-	client k8sClient.Interface
+	client fake.Clientset
 }
 
 func (c FakeHeapsterClient) Get(path string) client.RequestInterface {
@@ -47,7 +48,7 @@ func TestGetNodeDetail(t *testing.T) {
 		{
 			"test-namespace", "test-node",
 			&api.Node{
-				ObjectMeta: api.ObjectMeta{Name: "test-node"},
+				ObjectMeta: metaV1.ObjectMeta{Name: "test-node"},
 				Spec: api.NodeSpec{
 					ExternalID:    "127.0.0.1",
 					PodCIDR:       "127.0.0.1",
@@ -90,7 +91,7 @@ func TestGetNodeDetail(t *testing.T) {
 
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.node)
-		fakeHeapsterClient := FakeHeapsterClient{client: fake.NewSimpleClientset()}
+		fakeHeapsterClient := FakeHeapsterClient{client: *fake.NewSimpleClientset()}
 
 		dataselect.StdMetricsDataSelect.MetricQuery = dataselect.NoMetrics
 		actual, _ := GetNodeDetail(fakeClient, fakeHeapsterClient, c.name)

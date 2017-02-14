@@ -18,7 +18,8 @@ import (
 	"reflect"
 	"testing"
 
-	"k8s.io/kubernetes/pkg/api"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 func TestFilterPodsBySelector(t *testing.T) {
@@ -36,19 +37,19 @@ func TestFilterPodsBySelector(t *testing.T) {
 			firstLabelSelectorMap,
 			[]api.Pod{
 				{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Name:   "first-pod-ok",
 						Labels: firstLabelSelectorMap,
 					},
 				},
 				{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Name:   "second-pod-ok",
 						Labels: firstLabelSelectorMap,
 					},
 				},
 				{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Name:   "third-pod-wrong",
 						Labels: secondLabelSelectorMap,
 					},
@@ -56,13 +57,13 @@ func TestFilterPodsBySelector(t *testing.T) {
 			},
 			[]api.Pod{
 				{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Name:   "first-pod-ok",
 						Labels: firstLabelSelectorMap,
 					},
 				},
 				{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Name:   "second-pod-ok",
 						Labels: firstLabelSelectorMap,
 					},
@@ -95,21 +96,21 @@ func TestFilterNamespacedPodsBySelector(t *testing.T) {
 			firstLabelSelectorMap, "test-ns-1",
 			[]api.Pod{
 				{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Name:      "first-pod-ok",
 						Labels:    firstLabelSelectorMap,
 						Namespace: "test-ns-1",
 					},
 				},
 				{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Name:      "second-pod-ok",
 						Labels:    firstLabelSelectorMap,
 						Namespace: "test-ns-2",
 					},
 				},
 				{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Name:   "third-pod-wrong",
 						Labels: secondLabelSelectorMap,
 					},
@@ -117,7 +118,7 @@ func TestFilterNamespacedPodsBySelector(t *testing.T) {
 			},
 			[]api.Pod{
 				{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Name:      "first-pod-ok",
 						Labels:    firstLabelSelectorMap,
 						Namespace: "test-ns-1",

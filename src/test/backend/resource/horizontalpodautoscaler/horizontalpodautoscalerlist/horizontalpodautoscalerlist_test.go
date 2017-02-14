@@ -20,15 +20,16 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/apis/autoscaling"
-	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
+
+	autoscaling "k8s.io/client-go/pkg/apis/autoscaling/v1"
+	"k8s.io/client-go/kubernetes/fake"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 var (
 	apiHpaList = []autoscaling.HorizontalPodAutoscaler{
 		{
-			ObjectMeta: api.ObjectMeta{Name: "test-hpa1", Namespace: "test-ns"},
+			ObjectMeta: metaV1.ObjectMeta{Name: "test-hpa1", Namespace: "test-ns"},
 			Spec: autoscaling.HorizontalPodAutoscalerSpec{
 				ScaleTargetRef: autoscaling.CrossVersionObjectReference{
 					Kind: "test-kind1",
@@ -41,7 +42,7 @@ var (
 				DesiredReplicas: 2,
 			},
 		}, {
-			ObjectMeta: api.ObjectMeta{Name: "test-hpa2", Namespace: "test-ns"},
+			ObjectMeta: metaV1.ObjectMeta{Name: "test-hpa2", Namespace: "test-ns"},
 			Spec: autoscaling.HorizontalPodAutoscalerSpec{
 				ScaleTargetRef: autoscaling.CrossVersionObjectReference{
 					Kind: "test-kind2",
@@ -54,7 +55,7 @@ var (
 				DesiredReplicas: 2,
 			},
 		}, {
-			ObjectMeta: api.ObjectMeta{Name: "test-hpa3", Namespace: "test-ns"},
+			ObjectMeta: metaV1.ObjectMeta{Name: "test-hpa3", Namespace: "test-ns"},
 			Spec: autoscaling.HorizontalPodAutoscalerSpec{
 				ScaleTargetRef: autoscaling.CrossVersionObjectReference{
 					Kind: "test-kind2",
@@ -67,7 +68,7 @@ var (
 				DesiredReplicas: 2,
 			},
 		}, {
-			ObjectMeta: api.ObjectMeta{Name: "test-hpa4", Namespace: "test-ns"},
+			ObjectMeta: metaV1.ObjectMeta{Name: "test-hpa4", Namespace: "test-ns"},
 			Spec: autoscaling.HorizontalPodAutoscalerSpec{
 				ScaleTargetRef: autoscaling.CrossVersionObjectReference{
 					Kind: "test-kind2",

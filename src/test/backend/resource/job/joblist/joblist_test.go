@@ -22,10 +22,11 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
-	"k8s.io/kubernetes/pkg/api"
-	k8serrors "k8s.io/kubernetes/pkg/api/errors"
-	"k8s.io/kubernetes/pkg/api/unversioned"
-	"k8s.io/kubernetes/pkg/apis/batch"
+
+	api "k8s.io/client-go/pkg/api/v1"
+	k8serrors "k8s.io/apimachinery/pkg/api/errors"
+	batch "k8s.io/client-go/pkg/apis/batch/v1"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func TestGetJobListFromChannels(t *testing.T) {
@@ -63,21 +64,21 @@ func TestGetJobListFromChannels(t *testing.T) {
 		},
 		{
 			batch.JobList{},
-			&k8serrors.StatusError{ErrStatus: unversioned.Status{}},
+			&k8serrors.StatusError{ErrStatus: metaV1.Status{}},
 			&api.PodList{},
 			nil,
-			&k8serrors.StatusError{ErrStatus: unversioned.Status{}},
+			&k8serrors.StatusError{ErrStatus: metaV1.Status{}},
 		},
 		{
 			batch.JobList{},
-			&k8serrors.StatusError{ErrStatus: unversioned.Status{Reason: "foo-bar"}},
+			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "foo-bar"}},
 			&api.PodList{},
 			nil,
-			&k8serrors.StatusError{ErrStatus: unversioned.Status{Reason: "foo-bar"}},
+			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "foo-bar"}},
 		},
 		{
 			batch.JobList{},
-			&k8serrors.StatusError{ErrStatus: unversioned.Status{Reason: "NotFound"}},
+			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "NotFound"}},
 			&api.PodList{},
 			&JobList{
 				Jobs: make([]Job, 0),
@@ -87,14 +88,14 @@ func TestGetJobListFromChannels(t *testing.T) {
 		{
 			batch.JobList{
 				Items: []batch.Job{{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Name:              "rs-name",
 						Namespace:         "rs-namespace",
 						Labels:            map[string]string{"key": "value"},
-						CreationTimestamp: unversioned.Unix(111, 222),
+						CreationTimestamp: metaV1.Unix(111, 222),
 					},
 					Spec: batch.JobSpec{
-						Selector:    &unversioned.LabelSelector{MatchLabels: map[string]string{"foo": "bar"}},
+						Selector:    &metaV1.LabelSelector{MatchLabels: map[string]string{"foo": "bar"}},
 						Completions: &jobCompletions,
 					},
 					Status: batch.JobStatus{
@@ -102,14 +103,14 @@ func TestGetJobListFromChannels(t *testing.T) {
 					},
 				},
 					{
-						ObjectMeta: api.ObjectMeta{
+						ObjectMeta: metaV1.ObjectMeta{
 							Name:              "rs-name",
 							Namespace:         "rs-namespace",
 							Labels:            map[string]string{"key": "value"},
-							CreationTimestamp: unversioned.Unix(111, 222),
+							CreationTimestamp: metaV1.Unix(111, 222),
 						},
 						Spec: batch.JobSpec{
-							Selector: &unversioned.LabelSelector{MatchLabels: map[string]string{"foo": "bar"}},
+							Selector: &metaV1.LabelSelector{MatchLabels: map[string]string{"foo": "bar"}},
 						},
 						Status: batch.JobStatus{
 							Active: 7,
@@ -121,14 +122,14 @@ func TestGetJobListFromChannels(t *testing.T) {
 			&api.PodList{
 				Items: []api.Pod{
 					{
-						ObjectMeta: api.ObjectMeta{
+						ObjectMeta: metaV1.ObjectMeta{
 							Namespace: "rs-namespace",
 							Labels:    map[string]string{"foo": "bar"},
 						},
 						Status: api.PodStatus{Phase: api.PodFailed},
 					},
 					{
-						ObjectMeta: api.ObjectMeta{
+						ObjectMeta: metaV1.ObjectMeta{
 							Namespace: "rs-namespace",
 							Labels:    map[string]string{"foo": "baz"},
 						},
@@ -144,7 +145,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 						Name:              "rs-name",
 						Namespace:         "rs-namespace",
 						Labels:            map[string]string{"key": "value"},
-						CreationTimestamp: unversioned.Unix(111, 222),
+						CreationTimestamp: metaV1.Unix(111, 222),
 					},
 					TypeMeta: common.TypeMeta{Kind: common.ResourceKindJob},
 					Pods: common.PodInfo{
@@ -158,7 +159,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 						Name:              "rs-name",
 						Namespace:         "rs-namespace",
 						Labels:            map[string]string{"key": "value"},
-						CreationTimestamp: unversioned.Unix(111, 222),
+						CreationTimestamp: metaV1.Unix(111, 222),
 					},
 					TypeMeta: common.TypeMeta{Kind: common.ResourceKindJob},
 					Pods: common.PodInfo{
