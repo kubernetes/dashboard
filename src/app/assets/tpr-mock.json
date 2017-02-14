@@ -34,7 +34,7 @@
         "APIVersion": "foo.com/v1"
       },
       "description": "Custom third party resource",
-      "versions": ["v1"]
+      "versions": ["v1", "v2", "v3"]
     }
   ]
 }

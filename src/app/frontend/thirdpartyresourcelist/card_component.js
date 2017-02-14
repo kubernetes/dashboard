@@ -12,13 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {StateParams} from 'common/resource/resourcedetail';
+import {stateName} from 'thirdpartyresourcedetail/detail_state';
+
 class ThirdPartyResourceCardController {
   /**
    * @ngInject
    */
-  constructor() {
+  constructor($state) {
     /** @export {!backendApi.ThirdPartyResource} ThirdPartyResource initialized from a binding. */
     this.thirdPartyResource;
+
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
+  }
+
+  /**
+   * @return {string}
+   * @export
+   */
+  getStatefulSetDetailHref() {
+    return this.state_.href(
+        stateName,
+        new StateParams(
+            this.thirdPartyResource.objectMeta.namespace, this.thirdPartyResource.objectMeta.name));
   }
 }
 

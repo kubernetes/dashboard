@@ -15,33 +15,29 @@
 /**
  * @final
  */
-export class ThirdPartyResourceDetailController {
+export default class ThirdPartyResourceInfoComponent {
   /**
-   * @ngInject
+   * Constructs ThirdPartyResourceInfoComponent object.
    */
   constructor() {
     /**
-     * Stateful set details. Initialized from the scope.
-     * @export {!backendApi.ThirdPartyResourceDetail}
+     * Third party resource details. Initialized from the scope.
+     * @export {!backendApi.ThirdPartyResource}
      */
-    this.thirdPartyResourceDetail;
+    this.tprDetail;
   }
 }
 
 /**
- * Definition object for the component that displays third party resource list card.
+ * Definition object for the component that displays third party resource info.
  *
- * @type {!angular.Component}
+ * @return {!angular.Directive}
  */
-export const thirdPartyResourceDetailComponent = {
-  transclude: {
-    // Optional header that is transcluded instead of the default one.
-    'header': '?kdHeader',
-  },
-  templateUrl: 'thirdpartyresourcedetail/detail.html',
-  controller: ThirdPartyResourceDetailController,
+export const tprInfoComponent = {
+  controller: ThirdPartyResourceInfoComponent,
+  templateUrl: 'thirdpartyresourcedetail/info.html',
   bindings: {
-    /** {!backendApi.ThirdPartyResourceDetail} */
-    'thirdPartyResourceDetail': '=',
+    /** {!backendApi.ThirdPartyResource} */
+    'tprDetail': '=',
   },
 };
