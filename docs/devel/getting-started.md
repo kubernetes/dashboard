@@ -31,7 +31,7 @@ $ npm i
 If you are using root account you should use:
 
  ```shell
- $ npm i --unsafe-perm
+ # npm i --unsafe-perm
  ```
 
 ## Run a Kubernetes Cluster
