@@ -115,6 +115,7 @@ const (
 	ResourceKindSecret                  = "secret"
 	ResourceKindService                 = "service"
 	ResourceKindStatefulSet             = "statefulset"
+	ResourceKindThirdPartyResource      = "thirdpartyresource"
 )
 
 // ClientType represents type of client that is used to perform generic operations on resources.

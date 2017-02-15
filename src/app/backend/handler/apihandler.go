@@ -57,6 +57,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/servicesanddiscovery"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/statefulsetdetail"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/statefulsetlist"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/thirdpartyresource"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/workload"
 	"github.com/kubernetes/dashboard/src/app/backend/validation"
 	"golang.org/x/net/xsrftoken"
@@ -601,6 +602,15 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 		apiV1Ws.GET("/persistentvolumeclaim/{namespace}/{name}").
 			To(apiHandler.handleGetPersistentVolumeClaimDetail).
 			Writes(persistentvolumeclaim.PersistentVolumeClaimDetail{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/thirdpartyresource").
+			To(apiHandler.handleGetThirdPartyResource).
+			Writes(thirdpartyresource.ThirdPartyResourceList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/thirdpartyresource/{thirdpartyresource}").
+			To(apiHandler.handleGetThirdPartyResourceDetail).
+			Writes(thirdpartyresource.ThirdPartyResourceDetail{}))
 
 	return wsContainer, nil
 }
@@ -1346,6 +1356,28 @@ func (apiHandler *APIHandler) handleGetConfigMapDetail(request *restful.Request,
 func (apiHandler *APIHandler) handleGetPersistentVolumeList(request *restful.Request, response *restful.Response) {
 	dataSelect := parseDataSelectPathParameter(request)
 	result, err := persistentvolume.GetPersistentVolumeList(apiHandler.client, dataSelect)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetThirdPartyResource(request *restful.Request,
+	response *restful.Response) {
+	dataSelect := parseDataSelectPathParameter(request)
+	result, err := thirdpartyresource.GetThirdPartyResourceList(apiHandler.client, dataSelect)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetThirdPartyResourceDetail(request *restful.Request,
+	response *restful.Response) {
+	name := request.PathParameter("thirdpartyresource")
+	result, err := thirdpartyresource.GetThirdPartyResourceDetail(apiHandler.client, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
