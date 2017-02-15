@@ -25,8 +25,14 @@ You can follow [detailed steps on how to install these requirements](requirement
 Clone the repository and install the dependencies:
 
 ```shell
-$ npm install
+$ npm i
 ```
+
+If you are using root account you should use:
+
+ ```shell
+ $ npm i --unsafe-perm
+ ```
 
 ## Run a Kubernetes Cluster
 
