@@ -29,6 +29,7 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 
 	oldclientcmd "k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
+	oldclientcmdapi "k8s.io/kubernetes/pkg/client/unversioned/clientcmd/api"
 	cmdutil "k8s.io/kubernetes/pkg/kubectl/cmd/util"
 	kubectlResource "k8s.io/kubernetes/pkg/kubectl/resource"
 )
@@ -298,7 +299,11 @@ func DeployAppFromFile(spec *AppDeploymentFromFileSpec,
 	const emptyCacheDir = ""
 	validate := spec.Validate
 
-	oldClient := clientConfig.(oldclientcmd.ClientConfig)
+	// TODO: get rid of this transformation
+	oldClient, err := getOldClient(clientConfig)
+	if err != nil {
+		return false, err
+	}
 
 	factory := cmdutil.NewFactory(oldClient)
 	schema, err := factory.Validator(validate, emptyCacheDir)
@@ -328,4 +333,24 @@ func DeployAppFromFile(spec *AppDeploymentFromFileSpec,
 	})
 
 	return deployedResourcesCount > 0, err
+}
+
+func getOldClient(clientConfig clientcmd.ClientConfig) (oldclientcmd.ClientConfig, error) {
+	configAccess := clientConfig.ConfigAccess()
+	cfg, err := clientConfig.ClientConfig()
+	if err != nil {
+		return nil, err
+	}
+
+	explicitPath := ""
+	apiserverHost := cfg.Host
+
+	if configAccess.IsExplicitFile() {
+		explicitPath = configAccess.GetExplicitFile()
+	}
+
+	return oldclientcmd.NewNonInteractiveDeferredLoadingClientConfig(
+			&oldclientcmd.ClientConfigLoadingRules{ExplicitPath: explicitPath},
+			&oldclientcmd.ConfigOverrides{ClusterInfo: oldclientcmdapi.Cluster{Server: apiserverHost}}),
+		nil
 }
