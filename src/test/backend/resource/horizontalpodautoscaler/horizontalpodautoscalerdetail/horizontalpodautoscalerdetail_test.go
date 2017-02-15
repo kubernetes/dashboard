@@ -21,9 +21,9 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 
-	autoscaling "k8s.io/client-go/pkg/apis/autoscaling/v1"
-	"k8s.io/client-go/kubernetes/fake"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/client-go/kubernetes/fake"
+	autoscaling "k8s.io/client-go/pkg/apis/autoscaling/v1"
 )
 
 // func GetHorizontalPodAutoscalerDetail(client *client.Client, namespace string, name string) (*HorizontalPodAutoscalerDetail, error)

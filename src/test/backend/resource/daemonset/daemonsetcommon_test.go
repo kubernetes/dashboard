@@ -21,8 +21,8 @@ import (
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/kubernetes/fake"
 	"k8s.io/apimachinery/pkg/labels"
+	"k8s.io/client-go/kubernetes/fake"
 )
 
 func createDaemonSet(name, namespace string, labelSelector map[string]string) extensions.DaemonSet {

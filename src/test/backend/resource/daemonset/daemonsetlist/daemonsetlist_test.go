@@ -22,9 +22,9 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	api "k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func TestGetDaemonSetList(t *testing.T) {

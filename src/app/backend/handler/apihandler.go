@@ -373,12 +373,10 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 		apiV1Ws.GET("/deployment/{namespace}/{deployment}/event").
 			To(apiHandler.handleGetDeploymentEvents).
 			Writes(common.EventList{}))
-	// TODO enable once deployment utils are fixed
-	//apiV1Ws.Route(
-	//	apiV1Ws.GET("/deployment/{namespace}/{deployment}/oldreplicaset").
-	//		To(apiHandler.handleGetDeploymentOldReplicaSets).
-	//		Writes(replicasetlist.ReplicaSetList{}))
-
+	apiV1Ws.Route(
+		apiV1Ws.GET("/deployment/{namespace}/{deployment}/oldreplicaset").
+			To(apiHandler.handleGetDeploymentOldReplicaSets).
+			Writes(replicasetlist.ReplicaSetList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/daemonset").
 			To(apiHandler.handleGetDaemonSetList).
@@ -1091,17 +1089,17 @@ func (apiHandler *APIHandler) handleGetDeploymentEvents(request *restful.Request
 
 // Handles get deployment old replica sets API call.
 func (apiHandler *APIHandler) handleGetDeploymentOldReplicaSets(request *restful.Request, response *restful.Response) {
-	//namespace := request.PathParameter("namespace")
-	//name := request.PathParameter("deployment")
-	//dataSelect := parseDataSelectPathParameter(request)
-	//
-	//result, err := deployment.GetDeploymentOldReplicaSets(apiHandler.client, dataSelect, namespace,
-	//	name)
-	//if err != nil {
-	//	handleInternalError(response, err)
-	//	return
-	//}
-	//response.WriteHeaderAndEntity(http.StatusOK, result)
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("deployment")
+	dataSelect := parseDataSelectPathParameter(request)
+
+	result, err := deployment.GetDeploymentOldReplicaSets(apiHandler.client, dataSelect, namespace,
+		name)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Pod list API call.

@@ -24,9 +24,9 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 
+	"k8s.io/client-go/kubernetes/fake"
 	api "k8s.io/client-go/pkg/api/v1"
 	restclient "k8s.io/client-go/rest"
-	"k8s.io/client-go/kubernetes/fake"
 
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )

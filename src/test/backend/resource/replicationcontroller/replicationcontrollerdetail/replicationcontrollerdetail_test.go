@@ -15,8 +15,8 @@
 package replicationcontrollerdetail
 
 import (
-	api "k8s.io/client-go/pkg/api/v1"
 	"k8s.io/client-go/kubernetes/fake"
+	api "k8s.io/client-go/pkg/api/v1"
 	core "k8s.io/client-go/testing"
 
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"

@@ -20,6 +20,7 @@ import (
 	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	deploymentutil "github.com/kubernetes/dashboard/src/app/backend/resource/deployment/util"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler/horizontalpodautoscalerlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
@@ -104,27 +105,27 @@ func GetDeploymentDetail(client client.Interface, heapsterClient heapster.Heapst
 	}
 
 	// TODO fix not to use kubernetes utils
-	//selector, err := metaV1.LabelSelectorAsSelector(deployment.Spec.Selector)
-	//if err != nil {
-	//	return nil, err
-	//}
-	//options := metaV1.ListOptions{LabelSelector: selector.String()}
+	selector, err := metaV1.LabelSelectorAsSelector(deployment.Spec.Selector)
+	if err != nil {
+		return nil, err
+	}
+	options := metaV1.ListOptions{LabelSelector: selector.String()}
 
-	//channels := &common.ResourceChannels{
-	//	ReplicaSetList: common.GetReplicaSetListChannelWithOptions(client,
-	//		common.NewSameNamespaceQuery(namespace), options, 1),
-	//	PodList: common.GetPodListChannelWithOptions(client,
-	//		common.NewSameNamespaceQuery(namespace), options, 1),
-	//}
+	channels := &common.ResourceChannels{
+		ReplicaSetList: common.GetReplicaSetListChannelWithOptions(client,
+			common.NewSameNamespaceQuery(namespace), options, 1),
+		PodList: common.GetPodListChannelWithOptions(client,
+			common.NewSameNamespaceQuery(namespace), options, 1),
+	}
 
-	//rawRs := <-channels.ReplicaSetList.List
-	//if err := <-channels.ReplicaSetList.Error; err != nil {
-	//	return nil, err
-	//}
-	//rawPods := <-channels.PodList.List
-	//if err := <-channels.PodList.Error; err != nil {
-	//	return nil, err
-	//}
+	rawRs := <-channels.ReplicaSetList.List
+	if err := <-channels.ReplicaSetList.Error; err != nil {
+		return nil, err
+	}
+	rawPods := <-channels.PodList.List
+	if err := <-channels.PodList.Error; err != nil {
+		return nil, err
+	}
 
 	// Pods
 	podList, err := GetDeploymentPods(client, heapsterClient, dataselect.DefaultDataSelectWithMetrics, namespace, deploymentName)
@@ -143,25 +144,25 @@ func GetDeploymentDetail(client client.Interface, heapsterClient heapster.Heapst
 	}
 
 	// Old Replica Sets
-	//oldReplicaSetList, err := GetDeploymentOldReplicaSets(client, dataselect.DefaultDataSelect, namespace, deploymentName)
-	//if err != nil {
-	//	return nil, err
-	//}
+	oldReplicaSetList, err := GetDeploymentOldReplicaSets(client, dataselect.DefaultDataSelect, namespace, deploymentName)
+	if err != nil {
+		return nil, err
+	}
 
 	// New Replica Set
-	//rawRepSets := make([]*extensions.ReplicaSet, 0)
-	//for i := range rawRs.Items {
-	//	rawRepSets = append(rawRepSets, &rawRs.Items[i])
-	//}
-	//newRs, err := deploymentutil.FindNewReplicaSet(deployment, rawRepSets)
-	//if err != nil {
-	//	return nil, err
-	//}
-	//var newReplicaSet replicaset.ReplicaSet
-	//if newRs != nil {
-	//	newRsPodInfo := common.GetPodInfo(newRs.Status.Replicas, newRs.Spec.Replicas, rawPods.Items)
-	//	newReplicaSet = replicaset.ToReplicaSet(newRs, &newRsPodInfo)
-	//}
+	rawRepSets := make([]*extensions.ReplicaSet, 0)
+	for i := range rawRs.Items {
+		rawRepSets = append(rawRepSets, &rawRs.Items[i])
+	}
+	newRs, err := deploymentutil.FindNewReplicaSet(deployment, rawRepSets)
+	if err != nil {
+		return nil, err
+	}
+	var newReplicaSet replicaset.ReplicaSet
+	if newRs != nil {
+		newRsPodInfo := common.GetPodInfo(newRs.Status.Replicas, *newRs.Spec.Replicas, rawPods.Items)
+		newReplicaSet = replicaset.ToReplicaSet(newRs, &newRsPodInfo)
+	}
 
 	// Extra Info
 	var rollingUpdateStrategy *RollingUpdateStrategy
@@ -173,16 +174,16 @@ func GetDeploymentDetail(client client.Interface, heapsterClient heapster.Heapst
 	}
 
 	return &DeploymentDetail{
-		ObjectMeta:            common.NewObjectMeta(deployment.ObjectMeta),
-		TypeMeta:              common.NewTypeMeta(common.ResourceKindDeployment),
-		PodList:               *podList,
-		Selector:              deployment.Spec.Selector.MatchLabels,
-		StatusInfo:            GetStatusInfo(&deployment.Status),
-		Strategy:              deployment.Spec.Strategy.Type,
-		MinReadySeconds:       deployment.Spec.MinReadySeconds,
-		RollingUpdateStrategy: rollingUpdateStrategy,
-		//OldReplicaSetList:           *oldReplicaSetList,
-		//NewReplicaSet:               newReplicaSet,
+		ObjectMeta:                  common.NewObjectMeta(deployment.ObjectMeta),
+		TypeMeta:                    common.NewTypeMeta(common.ResourceKindDeployment),
+		PodList:                     *podList,
+		Selector:                    deployment.Spec.Selector.MatchLabels,
+		StatusInfo:                  GetStatusInfo(&deployment.Status),
+		Strategy:                    deployment.Spec.Strategy.Type,
+		MinReadySeconds:             deployment.Spec.MinReadySeconds,
+		RollingUpdateStrategy:       rollingUpdateStrategy,
+		OldReplicaSetList:           *oldReplicaSetList,
+		NewReplicaSet:               newReplicaSet,
 		RevisionHistoryLimit:        deployment.Spec.RevisionHistoryLimit,
 		EventList:                   *eventList,
 		HorizontalPodAutoscalerList: *hpas,

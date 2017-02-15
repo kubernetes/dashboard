@@ -25,9 +25,9 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	
-	batch "k8s.io/client-go/pkg/apis/batch/v1"
+
 	"k8s.io/client-go/kubernetes/fake"
+	batch "k8s.io/client-go/pkg/apis/batch/v1"
 	restclient "k8s.io/client-go/rest"
 )
 

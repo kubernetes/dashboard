@@ -4,9 +4,9 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 
+	"k8s.io/client-go/kubernetes/fake"
 	api "k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
-	"k8s.io/client-go/kubernetes/fake"
 
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 

@@ -22,8 +22,8 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	api "k8s.io/client-go/pkg/api/v1"
-metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func TestGetReplicationControllerList(t *testing.T) {

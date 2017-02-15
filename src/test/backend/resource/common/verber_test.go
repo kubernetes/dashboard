@@ -6,11 +6,11 @@ import (
 	"reflect"
 	"testing"
 
-	restclient "k8s.io/client-go/rest"
 	testapi "k8s.io/apimachinery/pkg/api/testing"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	runtimeserializer "k8s.io/apimachinery/pkg/runtime/serializer"
 	"k8s.io/apimachinery/pkg/runtime"
+	runtimeserializer "k8s.io/apimachinery/pkg/runtime/serializer"
+	restclient "k8s.io/client-go/rest"
 )
 
 type clientFunc func(req *http.Request) (*http.Response, error)

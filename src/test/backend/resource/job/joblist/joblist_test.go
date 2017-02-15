@@ -23,10 +23,10 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 
-	api "k8s.io/client-go/pkg/api/v1"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
-	batch "k8s.io/client-go/pkg/apis/batch/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	api "k8s.io/client-go/pkg/api/v1"
+	batch "k8s.io/client-go/pkg/apis/batch/v1"
 )
 
 func TestGetJobListFromChannels(t *testing.T) {

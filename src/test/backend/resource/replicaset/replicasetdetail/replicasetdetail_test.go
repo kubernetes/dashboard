@@ -25,10 +25,10 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/service"
-	
+
+	"k8s.io/client-go/kubernetes/fake"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 	restclient "k8s.io/client-go/rest"
-	"k8s.io/client-go/kubernetes/fake"
 
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )

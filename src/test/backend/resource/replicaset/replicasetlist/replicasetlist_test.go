@@ -19,8 +19,8 @@ import (
 	"reflect"
 	"testing"
 
-	api "k8s.io/client-go/pkg/api/v1"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
+	api "k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"

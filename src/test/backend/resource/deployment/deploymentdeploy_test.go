@@ -19,9 +19,9 @@ import (
 	"regexp"
 	"testing"
 
+	"k8s.io/client-go/kubernetes/fake"
 	api "k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
-	"k8s.io/client-go/kubernetes/fake"
 	core "k8s.io/client-go/testing"
 
 	kubectlResource "k8s.io/kubernetes/pkg/kubectl/resource"
