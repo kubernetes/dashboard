@@ -31,25 +31,26 @@ import (
 	"testing"
 	"time"
 
+	"k8s.io/apimachinery/pkg/api/meta"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/labels"
+	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/apimachinery/pkg/watch"
+	"k8s.io/apiserver/pkg/util/flag"
+	manualfake "k8s.io/client-go/rest/fake"
+	testcore "k8s.io/client-go/testing"
+	"k8s.io/client-go/tools/clientcmd"
+	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
 	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/meta"
 	"k8s.io/kubernetes/pkg/api/testapi"
-	"k8s.io/kubernetes/pkg/api/unversioned"
+	"k8s.io/kubernetes/pkg/api/v1"
 	"k8s.io/kubernetes/pkg/api/validation"
-	"k8s.io/kubernetes/pkg/apimachinery/registered"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
-	manualfake "k8s.io/kubernetes/pkg/client/restclient/fake"
-	testcore "k8s.io/kubernetes/pkg/client/testing/core"
-	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
-	clientcmdapi "k8s.io/kubernetes/pkg/client/unversioned/clientcmd/api"
 	"k8s.io/kubernetes/pkg/controller"
 	"k8s.io/kubernetes/pkg/kubectl"
 	"k8s.io/kubernetes/pkg/kubectl/resource"
-	"k8s.io/kubernetes/pkg/labels"
-	"k8s.io/kubernetes/pkg/runtime"
-	"k8s.io/kubernetes/pkg/util/flag"
-	"k8s.io/kubernetes/pkg/watch"
 )
 
 func TestNewFactoryDefaultFlagBindings(t *testing.T) {
@@ -73,7 +74,7 @@ func TestPortsForObject(t *testing.T) {
 	f := NewFactory(nil)
 
 	pod := &api.Pod{
-		ObjectMeta: api.ObjectMeta{Name: "baz", Namespace: "test", ResourceVersion: "12"},
+		ObjectMeta: metav1.ObjectMeta{Name: "baz", Namespace: "test", ResourceVersion: "12"},
 		Spec: api.PodSpec{
 			Containers: []api.Container{
 				{
@@ -110,7 +111,7 @@ func TestProtocolsForObject(t *testing.T) {
 	f := NewFactory(nil)
 
 	pod := &api.Pod{
-		ObjectMeta: api.ObjectMeta{Name: "baz", Namespace: "test", ResourceVersion: "12"},
+		ObjectMeta: metav1.ObjectMeta{Name: "baz", Namespace: "test", ResourceVersion: "12"},
 		Spec: api.PodSpec{
 			Containers: []api.Container{
 				{
@@ -160,8 +161,8 @@ func TestLabelsForObject(t *testing.T) {
 		{
 			name: "successful re-use of labels",
 			object: &api.Service{
-				ObjectMeta: api.ObjectMeta{Name: "baz", Namespace: "test", Labels: map[string]string{"svc": "test"}},
-				TypeMeta:   unversioned.TypeMeta{Kind: "Service", APIVersion: "v1"},
+				ObjectMeta: metav1.ObjectMeta{Name: "baz", Namespace: "test", Labels: map[string]string{"svc": "test"}},
+				TypeMeta:   metav1.TypeMeta{Kind: "Service", APIVersion: "v1"},
 			},
 			expected: "svc=test",
 			err:      nil,
@@ -169,8 +170,8 @@ func TestLabelsForObject(t *testing.T) {
 		{
 			name: "empty labels",
 			object: &api.Service{
-				ObjectMeta: api.ObjectMeta{Name: "foo", Namespace: "test", Labels: map[string]string{}},
-				TypeMeta:   unversioned.TypeMeta{Kind: "Service", APIVersion: "v1"},
+				ObjectMeta: metav1.ObjectMeta{Name: "foo", Namespace: "test", Labels: map[string]string{}},
+				TypeMeta:   metav1.TypeMeta{Kind: "Service", APIVersion: "v1"},
 			},
 			expected: "",
 			err:      nil,
@@ -178,8 +179,8 @@ func TestLabelsForObject(t *testing.T) {
 		{
 			name: "nil labels",
 			object: &api.Service{
-				ObjectMeta: api.ObjectMeta{Name: "zen", Namespace: "test", Labels: nil},
-				TypeMeta:   unversioned.TypeMeta{Kind: "Service", APIVersion: "v1"},
+				ObjectMeta: metav1.ObjectMeta{Name: "zen", Namespace: "test", Labels: nil},
+				TypeMeta:   metav1.TypeMeta{Kind: "Service", APIVersion: "v1"},
 			},
 			expected: "",
 			err:      nil,
@@ -202,7 +203,7 @@ func TestLabelsForObject(t *testing.T) {
 func TestCanBeExposed(t *testing.T) {
 	factory := NewFactory(nil)
 	tests := []struct {
-		kind      unversioned.GroupKind
+		kind      schema.GroupKind
 		expectErr bool
 	}{
 		{
@@ -239,7 +240,7 @@ func TestFlagUnderscoreRenaming(t *testing.T) {
 }
 
 func loadSchemaForTest() (validation.Schema, error) {
-	pathToSwaggerSpec := "../../../../api/swagger-spec/" + registered.GroupOrDie(api.GroupName).GroupVersion.Version + ".json"
+	pathToSwaggerSpec := "../../../../api/swagger-spec/" + api.Registry.GroupOrDie(api.GroupName).GroupVersion.Version + ".json"
 	data, err := ioutil.ReadFile(pathToSwaggerSpec)
 	if err != nil {
 		return nil, err
@@ -267,6 +268,7 @@ func TestRefetchSchemaWhenValidationFails(t *testing.T) {
 	requests := map[string]int{}
 
 	c := &manualfake.RESTClient{
+		APIRegistry:          api.Registry,
 		NegotiatedSerializer: testapi.Default.NegotiatedSerializer(),
 		Client: manualfake.CreateHTTPClient(func(req *http.Request) (*http.Response, error) {
 			switch p, m := req.URL.Path, req.Method; {
@@ -324,6 +326,7 @@ func TestValidateCachesSchema(t *testing.T) {
 	requests := map[string]int{}
 
 	c := &manualfake.RESTClient{
+		APIRegistry:          api.Registry,
 		NegotiatedSerializer: testapi.Default.NegotiatedSerializer(),
 		Client: manualfake.CreateHTTPClient(func(req *http.Request) (*http.Response, error) {
 			switch p, m := req.URL.Path, req.Method; {
@@ -436,10 +439,10 @@ func newPodList(count, isUnready, isUnhealthy int, labels map[string]string) *ap
 	pods := []api.Pod{}
 	for i := 0; i < count; i++ {
 		newPod := api.Pod{
-			ObjectMeta: api.ObjectMeta{
+			ObjectMeta: metav1.ObjectMeta{
 				Name:              fmt.Sprintf("pod-%d", i+1),
-				Namespace:         api.NamespaceDefault,
-				CreationTimestamp: unversioned.Date(2016, time.April, 1, 1, 0, i, 0, time.UTC),
+				Namespace:         metav1.NamespaceDefault,
+				CreationTimestamp: metav1.Date(2016, time.April, 1, 1, 0, i, 0, time.UTC),
 				Labels:            labels,
 			},
 			Status: api.PodStatus{
@@ -471,7 +474,7 @@ func TestGetFirstPod(t *testing.T) {
 
 		podList  *api.PodList
 		watching []watch.Event
-		sortBy   func([]*api.Pod) sort.Interface
+		sortBy   func([]*v1.Pod) sort.Interface
 
 		expected    *api.Pod
 		expectedNum int
@@ -480,12 +483,12 @@ func TestGetFirstPod(t *testing.T) {
 		{
 			name:    "kubectl logs - two ready pods",
 			podList: newPodList(2, -1, -1, labelSet),
-			sortBy:  func(pods []*api.Pod) sort.Interface { return controller.ByLogging(pods) },
+			sortBy:  func(pods []*v1.Pod) sort.Interface { return controller.ByLogging(pods) },
 			expected: &api.Pod{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metav1.ObjectMeta{
 					Name:              "pod-1",
-					Namespace:         api.NamespaceDefault,
-					CreationTimestamp: unversioned.Date(2016, time.April, 1, 1, 0, 0, 0, time.UTC),
+					Namespace:         metav1.NamespaceDefault,
+					CreationTimestamp: metav1.Date(2016, time.April, 1, 1, 0, 0, 0, time.UTC),
 					Labels:            map[string]string{"test": "selector"},
 				},
 				Status: api.PodStatus{
@@ -502,12 +505,12 @@ func TestGetFirstPod(t *testing.T) {
 		{
 			name:    "kubectl logs - one unhealthy, one healthy",
 			podList: newPodList(2, -1, 1, labelSet),
-			sortBy:  func(pods []*api.Pod) sort.Interface { return controller.ByLogging(pods) },
+			sortBy:  func(pods []*v1.Pod) sort.Interface { return controller.ByLogging(pods) },
 			expected: &api.Pod{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metav1.ObjectMeta{
 					Name:              "pod-2",
-					Namespace:         api.NamespaceDefault,
-					CreationTimestamp: unversioned.Date(2016, time.April, 1, 1, 0, 1, 0, time.UTC),
+					Namespace:         metav1.NamespaceDefault,
+					CreationTimestamp: metav1.Date(2016, time.April, 1, 1, 0, 1, 0, time.UTC),
 					Labels:            map[string]string{"test": "selector"},
 				},
 				Status: api.PodStatus{
@@ -525,12 +528,12 @@ func TestGetFirstPod(t *testing.T) {
 		{
 			name:    "kubectl attach - two ready pods",
 			podList: newPodList(2, -1, -1, labelSet),
-			sortBy:  func(pods []*api.Pod) sort.Interface { return sort.Reverse(controller.ActivePods(pods)) },
+			sortBy:  func(pods []*v1.Pod) sort.Interface { return sort.Reverse(controller.ActivePods(pods)) },
 			expected: &api.Pod{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metav1.ObjectMeta{
 					Name:              "pod-1",
-					Namespace:         api.NamespaceDefault,
-					CreationTimestamp: unversioned.Date(2016, time.April, 1, 1, 0, 0, 0, time.UTC),
+					Namespace:         metav1.NamespaceDefault,
+					CreationTimestamp: metav1.Date(2016, time.April, 1, 1, 0, 0, 0, time.UTC),
 					Labels:            map[string]string{"test": "selector"},
 				},
 				Status: api.PodStatus{
@@ -551,10 +554,10 @@ func TestGetFirstPod(t *testing.T) {
 				{
 					Type: watch.Modified,
 					Object: &api.Pod{
-						ObjectMeta: api.ObjectMeta{
+						ObjectMeta: metav1.ObjectMeta{
 							Name:              "pod-1",
-							Namespace:         api.NamespaceDefault,
-							CreationTimestamp: unversioned.Date(2016, time.April, 1, 1, 0, 0, 0, time.UTC),
+							Namespace:         metav1.NamespaceDefault,
+							CreationTimestamp: metav1.Date(2016, time.April, 1, 1, 0, 0, 0, time.UTC),
 							Labels:            map[string]string{"test": "selector"},
 						},
 						Status: api.PodStatus{
@@ -568,12 +571,12 @@ func TestGetFirstPod(t *testing.T) {
 					},
 				},
 			},
-			sortBy: func(pods []*api.Pod) sort.Interface { return sort.Reverse(controller.ActivePods(pods)) },
+			sortBy: func(pods []*v1.Pod) sort.Interface { return sort.Reverse(controller.ActivePods(pods)) },
 			expected: &api.Pod{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metav1.ObjectMeta{
 					Name:              "pod-1",
-					Namespace:         api.NamespaceDefault,
-					CreationTimestamp: unversioned.Date(2016, time.April, 1, 1, 0, 0, 0, time.UTC),
+					Namespace:         metav1.NamespaceDefault,
+					CreationTimestamp: metav1.Date(2016, time.April, 1, 1, 0, 0, 0, time.UTC),
 					Labels:            map[string]string{"test": "selector"},
 				},
 				Status: api.PodStatus{
@@ -606,7 +609,8 @@ func TestGetFirstPod(t *testing.T) {
 		}
 		selector := labels.Set(labelSet).AsSelector()
 
-		pod, numPods, err := GetFirstPod(fake.Core(), api.NamespaceDefault, selector, 1*time.Minute, test.sortBy)
+		pod, numPods, err := GetFirstPod(fake.Core(), metav1.NamespaceDefault, selector, 1*time.Minute, test.sortBy)
+		pod.Spec.SecurityContext = nil
 		if !test.expectedErr && err != nil {
 			t.Errorf("%s: unexpected error: %v", test.name, err)
 			continue

@@ -22,8 +22,9 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/resource"
+	"k8s.io/apimachinery/pkg/api/resource"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/kubernetes/pkg/api/v1"
 )
 
 func TestExtractFieldPathAsString(t *testing.T) {
@@ -43,8 +44,8 @@ func TestExtractFieldPathAsString(t *testing.T) {
 		{
 			name:      "ok - namespace",
 			fieldPath: "metadata.namespace",
-			obj: &api.Pod{
-				ObjectMeta: api.ObjectMeta{
+			obj: &v1.Pod{
+				ObjectMeta: metav1.ObjectMeta{
 					Namespace: "object-namespace",
 				},
 			},
@@ -53,8 +54,8 @@ func TestExtractFieldPathAsString(t *testing.T) {
 		{
 			name:      "ok - name",
 			fieldPath: "metadata.name",
-			obj: &api.Pod{
-				ObjectMeta: api.ObjectMeta{
+			obj: &v1.Pod{
+				ObjectMeta: metav1.ObjectMeta{
 					Name: "object-name",
 				},
 			},
@@ -63,8 +64,8 @@ func TestExtractFieldPathAsString(t *testing.T) {
 		{
 			name:      "ok - labels",
 			fieldPath: "metadata.labels",
-			obj: &api.Pod{
-				ObjectMeta: api.ObjectMeta{
+			obj: &v1.Pod{
+				ObjectMeta: metav1.ObjectMeta{
 					Labels: map[string]string{"key": "value"},
 				},
 			},
@@ -73,8 +74,8 @@ func TestExtractFieldPathAsString(t *testing.T) {
 		{
 			name:      "ok - labels bslash n",
 			fieldPath: "metadata.labels",
-			obj: &api.Pod{
-				ObjectMeta: api.ObjectMeta{
+			obj: &v1.Pod{
+				ObjectMeta: metav1.ObjectMeta{
 					Labels: map[string]string{"key": "value\n"},
 				},
 			},
@@ -83,8 +84,8 @@ func TestExtractFieldPathAsString(t *testing.T) {
 		{
 			name:      "ok - annotations",
 			fieldPath: "metadata.annotations",
-			obj: &api.Pod{
-				ObjectMeta: api.ObjectMeta{
+			obj: &v1.Pod{
+				ObjectMeta: metav1.ObjectMeta{
 					Annotations: map[string]string{"builder": "john-doe"},
 				},
 			},
@@ -94,12 +95,12 @@ func TestExtractFieldPathAsString(t *testing.T) {
 		{
 			name:      "invalid expression",
 			fieldPath: "metadata.whoops",
-			obj: &api.Pod{
-				ObjectMeta: api.ObjectMeta{
+			obj: &v1.Pod{
+				ObjectMeta: metav1.ObjectMeta{
 					Namespace: "object-namespace",
 				},
 			},
-			expectedMessageFragment: "Unsupported fieldPath",
+			expectedMessageFragment: "unsupported fieldPath",
 		},
 	}
 
@@ -108,37 +109,37 @@ func TestExtractFieldPathAsString(t *testing.T) {
 		if err != nil {
 			if tc.expectedMessageFragment != "" {
 				if !strings.Contains(err.Error(), tc.expectedMessageFragment) {
-					t.Errorf("%v: Unexpected error message: %q, expected to contain %q", tc.name, err, tc.expectedMessageFragment)
+					t.Errorf("%v: unexpected error message: %q, expected to contain %q", tc.name, err, tc.expectedMessageFragment)
 				}
 			} else {
 				t.Errorf("%v: unexpected error: %v", tc.name, err)
 			}
 		} else if e := tc.expectedValue; e != "" && e != actual {
-			t.Errorf("%v: Unexpected result; got %q, expected %q", tc.name, actual, e)
+			t.Errorf("%v: unexpected result; got %q, expected %q", tc.name, actual, e)
 		}
 	}
 }
 
-func getPod(cname, cpuRequest, cpuLimit, memoryRequest, memoryLimit string) *api.Pod {
-	resources := api.ResourceRequirements{
-		Limits:   make(api.ResourceList),
-		Requests: make(api.ResourceList),
+func getPod(cname, cpuRequest, cpuLimit, memoryRequest, memoryLimit string) *v1.Pod {
+	resources := v1.ResourceRequirements{
+		Limits:   make(v1.ResourceList),
+		Requests: make(v1.ResourceList),
 	}
 	if cpuLimit != "" {
-		resources.Limits[api.ResourceCPU] = resource.MustParse(cpuLimit)
+		resources.Limits[v1.ResourceCPU] = resource.MustParse(cpuLimit)
 	}
 	if memoryLimit != "" {
-		resources.Limits[api.ResourceMemory] = resource.MustParse(memoryLimit)
+		resources.Limits[v1.ResourceMemory] = resource.MustParse(memoryLimit)
 	}
 	if cpuRequest != "" {
-		resources.Requests[api.ResourceCPU] = resource.MustParse(cpuRequest)
+		resources.Requests[v1.ResourceCPU] = resource.MustParse(cpuRequest)
 	}
 	if memoryRequest != "" {
-		resources.Requests[api.ResourceMemory] = resource.MustParse(memoryRequest)
+		resources.Requests[v1.ResourceMemory] = resource.MustParse(memoryRequest)
 	}
-	return &api.Pod{
-		Spec: api.PodSpec{
-			Containers: []api.Container{
+	return &v1.Pod{
+		Spec: v1.PodSpec{
+			Containers: []v1.Container{
 				{
 					Name:      cname,
 					Resources: resources,
@@ -150,14 +151,14 @@ func getPod(cname, cpuRequest, cpuLimit, memoryRequest, memoryLimit string) *api
 
 func TestExtractResourceValue(t *testing.T) {
 	cases := []struct {
-		fs            *api.ResourceFieldSelector
-		pod           *api.Pod
+		fs            *v1.ResourceFieldSelector
+		pod           *v1.Pod
 		cName         string
 		expectedValue string
 		expectedError error
 	}{
 		{
-			fs: &api.ResourceFieldSelector{
+			fs: &v1.ResourceFieldSelector{
 				Resource: "limits.cpu",
 			},
 			cName:         "foo",
@@ -165,7 +166,7 @@ func TestExtractResourceValue(t *testing.T) {
 			expectedValue: "9",
 		},
 		{
-			fs: &api.ResourceFieldSelector{
+			fs: &v1.ResourceFieldSelector{
 				Resource: "requests.cpu",
 			},
 			cName:         "foo",
@@ -173,7 +174,7 @@ func TestExtractResourceValue(t *testing.T) {
 			expectedValue: "0",
 		},
 		{
-			fs: &api.ResourceFieldSelector{
+			fs: &v1.ResourceFieldSelector{
 				Resource: "requests.cpu",
 			},
 			cName:         "foo",
@@ -181,7 +182,7 @@ func TestExtractResourceValue(t *testing.T) {
 			expectedValue: "8",
 		},
 		{
-			fs: &api.ResourceFieldSelector{
+			fs: &v1.ResourceFieldSelector{
 				Resource: "requests.cpu",
 			},
 			cName:         "foo",
@@ -189,7 +190,7 @@ func TestExtractResourceValue(t *testing.T) {
 			expectedValue: "1",
 		},
 		{
-			fs: &api.ResourceFieldSelector{
+			fs: &v1.ResourceFieldSelector{
 				Resource: "requests.cpu",
 				Divisor:  resource.MustParse("100m"),
 			},
@@ -198,7 +199,7 @@ func TestExtractResourceValue(t *testing.T) {
 			expectedValue: "12",
 		},
 		{
-			fs: &api.ResourceFieldSelector{
+			fs: &v1.ResourceFieldSelector{
 				Resource: "requests.memory",
 			},
 			cName:         "foo",
@@ -206,7 +207,7 @@ func TestExtractResourceValue(t *testing.T) {
 			expectedValue: "104857600",
 		},
 		{
-			fs: &api.ResourceFieldSelector{
+			fs: &v1.ResourceFieldSelector{
 				Resource: "requests.memory",
 				Divisor:  resource.MustParse("1Mi"),
 			},
@@ -215,7 +216,7 @@ func TestExtractResourceValue(t *testing.T) {
 			expectedValue: "100",
 		},
 		{
-			fs: &api.ResourceFieldSelector{
+			fs: &v1.ResourceFieldSelector{
 				Resource: "limits.memory",
 			},
 			cName:         "foo",
