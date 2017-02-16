@@ -28,7 +28,7 @@ Clone the repository and install the dependencies:
 $ npm i
 ```
 
-If you are using root account you should use:
+Set the `--unsafe-perm` flag to run scripts with root privileges:
 
  ```shell
  # npm i --unsafe-perm
