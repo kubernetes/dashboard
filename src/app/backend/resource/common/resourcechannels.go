@@ -98,6 +98,9 @@ type ResourceChannels struct {
 
 	// List and error channels to HorizontalPodAutoscalers
 	HorizontalPodAutoscalerList HorizontalPodAutoscalerListChannel
+
+	// List and error channels to ThirdPartyResources
+	ThirdPartyResourceList ThirdPartyResourceListChannel
 }
 
 // ServiceListChannel is a list and error channels to Services.
@@ -740,6 +743,31 @@ func GetHorizontalPodAutoscalerListChannel(client client.Interface, nsQuery *Nam
 
 	go func() {
 		list, err := client.Autoscaling().HorizontalPodAutoscalers(nsQuery.ToRequestParam()).List(listEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// ThirdPartyResourceListChannel is a list and error channels to third party resources.
+type ThirdPartyResourceListChannel struct {
+	List  chan *extensions.ThirdPartyResourceList
+	Error chan error
+}
+
+// GetThirdPartyResourceListChannel returns a pair of channels to a third party resource list and
+// errors that both must be read numReads times.
+func GetThirdPartyResourceListChannel(client client.Interface, numReads int) ThirdPartyResourceListChannel {
+	channel := ThirdPartyResourceListChannel{
+		List:  make(chan *extensions.ThirdPartyResourceList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.Extensions().ThirdPartyResources().List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
