@@ -20,6 +20,8 @@ limitations under the License.
   </kd-nav-item>
   <kd-nav-item class="kd-nav-item"
                ng-repeat="tpr in ::$ctrl.thirdPartyResourceList.thirdPartyResources">
-    {{::tpr.objectMeta.name}}
+    <a ng-href="{{::$ctrl.getThirdPartyResourceDetailHref(tpr.objectMeta.name)}}">
+      {{::tpr.objectMeta.name}}
+    </a>
   </kd-nav-item>
 </div>

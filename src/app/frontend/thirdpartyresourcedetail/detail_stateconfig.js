@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as chromeStateName} from 'chrome/chrome_state';
+import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
-import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
+import {appendDetailParamsToUrl} from 'common/resource/globalresourcedetail';
 import {stateName as tprListState, stateUrl} from 'thirdpartyresourcelist/list_state';
 
 import {ThirdPartyResourceDetailController} from './detail_controller';
@@ -46,6 +46,7 @@ export default function stateConfig($stateProvider) {
         controllerAs: '$ctrl',
         templateUrl: 'thirdpartyresourcedetail/detail.html',
       },
+      [actionbarViewName]: {},
     },
   });
 }
@@ -58,7 +59,6 @@ export default function stateConfig($stateProvider) {
  */
 export function getTprDetailResource($resource, $stateParams) {
   return $resource(`api/v1/thirdpartyresource/${$stateParams.objectName}`);
-
 }
 
 /**

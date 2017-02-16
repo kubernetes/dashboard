@@ -28,7 +28,9 @@ export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
     url: stateUrl,
     parent: chromeStateName,
-    resolve: {},
+    resolve: {
+      'thirdPartyResourceList': resolveThirdPartyResourceList,
+    },
     data: {
       [breadcrumbsConfig]: {
         'label': i18n.MSG_BREADCRUMBS_THIRD_PARTY_RESOURCES_LABEL,
@@ -50,3 +52,15 @@ const i18n = {
    action bar. */
   MSG_BREADCRUMBS_THIRD_PARTY_RESOURCES_LABEL: goog.getMsg('Third Party Resources'),
 };
+
+/**
+ * @param {!angular.Resource} kdThirdPartyResourceListResource
+ * @param {!./../common/pagination/pagination_service.PaginationService} kdPaginationService
+ * @returns {!angular.$q.Promise}
+ * @ngInject
+ */
+export function resolveThirdPartyResourceList(kdThirdPartyResourceListResource, kdPaginationService) {
+  /** @type {!backendApi.PaginationQuery} */
+  let query = kdPaginationService.getDefaultResourceQuery('');
+  return kdThirdPartyResourceListResource.get(query).$promise;
+}

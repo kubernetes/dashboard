@@ -21,19 +21,11 @@ export class ThirdPartyResourceListController {
   /**
    * @ngInject
    */
-  constructor(kdThirdPartyResourceService) {
-    /** @private
-     * {!./../common/thirdpartyresource/thirdpartyresource_service.ThirdPartyResourceService}
-     * kdThirdPartyResourceService
-     */
-    this.kdThirdPartyResourceService_ = kdThirdPartyResourceService;
+  constructor(thirdPartyResourceList, kdThirdPartyResourceListResource) {
+    /** @export {!backendApi.ThirdPartyResourceList} */
+    this.thirdPartyResourceList = thirdPartyResourceList;
 
-    /** @export {!backendApi.ThirdPartyResourceList} - initialized from binding */
-    this.thirdPartyResourceList;
-  }
-
-  /** @export */
-  $onInit() {
-    this.thirdPartyResourceList = this.kdThirdPartyResourceService_.getThirdPartyResourceList();
+    /** @export {!angular.Resource} */
+    this.thirdPartyResourceListResource = kdThirdPartyResourceListResource;
   }
 }

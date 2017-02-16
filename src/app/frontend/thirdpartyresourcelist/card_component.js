@@ -31,11 +31,8 @@ class ThirdPartyResourceCardController {
    * @return {string}
    * @export
    */
-  getStatefulSetDetailHref() {
-    return this.state_.href(
-        stateName,
-        new StateParams(
-            this.thirdPartyResource.objectMeta.namespace, this.thirdPartyResource.objectMeta.name));
+  getThirdPartyResourceDetailHref() {
+    return this.state_.href(stateName, new StateParams('', this.thirdPartyResource.objectMeta.name));
   }
 }
 
