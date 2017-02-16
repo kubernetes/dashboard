@@ -27,7 +27,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/replicasetlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller/replicationcontrollerlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/statefulsetlist"
-	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	k8sClient "k8s.io/client-go/kubernetes"
 )
 
 // Workloads structure contains all resource lists grouped into the workloads category.

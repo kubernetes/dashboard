@@ -18,9 +18,10 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/apis/extensions"
-	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/client-go/kubernetes/fake"
+	api "k8s.io/client-go/pkg/api/v1"
+	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 
 	"reflect"
 	"testing"
@@ -39,13 +40,13 @@ func TestGetDaemonSetEvents(t *testing.T) {
 		{
 			"test-namespace", "ds-1",
 			&api.EventList{Items: []api.Event{
-				{Message: "test-message", ObjectMeta: api.ObjectMeta{
+				{Message: "test-message", ObjectMeta: metaV1.ObjectMeta{
 					Name:      "ev-1",
 					Namespace: "test-namespace",
 				}},
 			}},
 			&api.PodList{Items: []api.Pod{
-				{ObjectMeta: api.ObjectMeta{
+				{ObjectMeta: metaV1.ObjectMeta{
 					Name: "pod-1", Namespace: "test-namespace",
 					Labels: map[string]string{"app": "test-pod"},
 				}},
@@ -102,13 +103,13 @@ func TestGetDaemonSetPodsEvents(t *testing.T) {
 		{
 			"test-namespace", "ds-1",
 			&api.EventList{Items: []api.Event{
-				{Message: "test-message", ObjectMeta: api.ObjectMeta{
+				{Message: "test-message", ObjectMeta: metaV1.ObjectMeta{
 					Name:      "ev-1",
 					Namespace: "test-namespace",
 				}},
 			}},
 			&api.PodList{Items: []api.Pod{
-				{ObjectMeta: api.ObjectMeta{
+				{ObjectMeta: metaV1.ObjectMeta{
 					Name: "pod-1", Namespace: "test-namespace",
 					Labels: map[string]string{"app": "test"},
 				}},
@@ -116,7 +117,7 @@ func TestGetDaemonSetPodsEvents(t *testing.T) {
 			&ds,
 			[]string{"get", "list", "list"},
 			[]api.Event{
-				{Message: "test-message", ObjectMeta: api.ObjectMeta{
+				{Message: "test-message", ObjectMeta: metaV1.ObjectMeta{
 					Name:      "ev-1",
 					Namespace: "test-namespace",
 				}},

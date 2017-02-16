@@ -18,11 +18,12 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	resourceEvent "github.com/kubernetes/dashboard/src/app/backend/resource/event"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"k8s.io/kubernetes/pkg/api"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	client "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // GetReplicationControllerEvents returns events for particular namespace and replication
@@ -65,7 +66,7 @@ func GetReplicationControllerEvents(client client.Interface, dsQuery *dataselect
 func getReplicationControllerPodsEvents(client client.Interface, namespace,
 	replicationControllerName string) ([]api.Event, error) {
 
-	replicationController, err := client.Core().ReplicationControllers(namespace).Get(replicationControllerName)
+	replicationController, err := client.Core().ReplicationControllers(namespace).Get(replicationControllerName, metaV1.GetOptions{})
 
 	if err != nil {
 		return nil, err

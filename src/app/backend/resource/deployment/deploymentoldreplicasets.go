@@ -2,32 +2,33 @@ package deployment
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
-
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
-	"k8s.io/kubernetes/pkg/apis/extensions"
-	deploymentutil "k8s.io/kubernetes/pkg/controller/deployment/util"
-
+	deploymentutil "github.com/kubernetes/dashboard/src/app/backend/resource/deployment/util"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/replicasetlist"
+
+	client "k8s.io/client-go/kubernetes"
+	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
+
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// GetDeploymentEvents returns model events for a deployment with the given name in the given
-// namespace
+// TODO fix not to use kubernetes utils
+
+//GetDeploymentEvents returns model events for a deployment with the given name in the given
+//namespace
 func GetDeploymentOldReplicaSets(client client.Interface, dsQuery *dataselect.DataSelectQuery,
 	namespace string, deploymentName string) (*replicasetlist.ReplicaSetList, error) {
 
-	deployment, err := client.Extensions().Deployments(namespace).Get(deploymentName)
+	deployment, err := client.Extensions().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
 
-	selector, err := unversioned.LabelSelectorAsSelector(deployment.Spec.Selector)
+	selector, err := metaV1.LabelSelectorAsSelector(deployment.Spec.Selector)
 	if err != nil {
 		return nil, err
 	}
-	options := api.ListOptions{LabelSelector: selector}
+	options := metaV1.ListOptions{LabelSelector: selector.String()}
 
 	channels := &common.ResourceChannels{
 		ReplicaSetList: common.GetReplicaSetListChannelWithOptions(client,

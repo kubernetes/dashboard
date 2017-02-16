@@ -20,7 +20,8 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"k8s.io/kubernetes/pkg/api"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 func TestGetPersistentVolumeList(t *testing.T) {
@@ -32,7 +33,7 @@ func TestGetPersistentVolumeList(t *testing.T) {
 		{
 			[]api.PersistentVolume{
 				{
-					ObjectMeta: api.ObjectMeta{Name: "foo"},
+					ObjectMeta: metaV1.ObjectMeta{Name: "foo"},
 					Spec: api.PersistentVolumeSpec{
 						PersistentVolumeReclaimPolicy: api.PersistentVolumeReclaimRecycle,
 						AccessModes:                   []api.PersistentVolumeAccessMode{api.ReadWriteOnce},

@@ -17,9 +17,9 @@ package common
 import (
 	"fmt"
 
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/client/restclient"
-	"k8s.io/kubernetes/pkg/runtime"
+	"k8s.io/apimachinery/pkg/runtime"
+	api "k8s.io/client-go/pkg/api/v1"
+	restclient "k8s.io/client-go/rest"
 )
 
 // ResourceVerber is a struct responsible for doing common verb operations on resources, like

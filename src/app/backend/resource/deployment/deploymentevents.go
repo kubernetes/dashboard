@@ -15,13 +15,12 @@
 package deployment
 
 import (
-	"k8s.io/kubernetes/pkg/api"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
-
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	"k8s.io/kubernetes/pkg/api/unversioned"
+
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	client "k8s.io/client-go/kubernetes"
 )
 
 // GetDeploymentEvents returns model events for a deployment with the given name in the given
@@ -29,17 +28,17 @@ import (
 func GetDeploymentEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace string, deploymentName string) (
 	*common.EventList, error) {
 
-	deployment, err := client.Extensions().Deployments(namespace).Get(deploymentName)
+	deployment, err := client.Extensions().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
 
-	selector, err := unversioned.LabelSelectorAsSelector(deployment.Spec.Selector)
+	selector, err := metaV1.LabelSelectorAsSelector(deployment.Spec.Selector)
 	if err != nil {
 		return nil, err
 	}
 
-	options := api.ListOptions{LabelSelector: selector}
+	options := metaV1.ListOptions{LabelSelector: selector.String()}
 	channels := &common.ResourceChannels{
 		EventList: common.GetEventListChannelWithOptions(client,
 			common.NewSameNamespaceQuery(namespace), options, 1),

@@ -18,7 +18,8 @@ import (
 	"reflect"
 	"testing"
 
-	"k8s.io/kubernetes/pkg/api"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	api "k8s.io/client-go/pkg/api/v1"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 )
@@ -33,7 +34,7 @@ func TestGetPodsEventWarningsApi(t *testing.T) {
 		{
 			[]api.Pod{
 				{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Name: "FailedPod",
 					},
 					Status: api.PodStatus{
@@ -402,7 +403,7 @@ func TestFilterEventsByPodsUID(t *testing.T) {
 				{InvolvedObject: api.ObjectReference{UID: "TestObject"}},
 			},
 			[]api.Pod{
-				{ObjectMeta: api.ObjectMeta{UID: "TestPod"}},
+				{ObjectMeta: metaV1.ObjectMeta{UID: "TestPod"}},
 			},
 			[]api.Event{
 				{InvolvedObject: api.ObjectReference{UID: "TestPod"}},
@@ -415,7 +416,7 @@ func TestFilterEventsByPodsUID(t *testing.T) {
 				{InvolvedObject: api.ObjectReference{UID: "TestPod"}},
 			},
 			[]api.Pod{
-				{ObjectMeta: api.ObjectMeta{UID: "TestPod"}},
+				{ObjectMeta: metaV1.ObjectMeta{UID: "TestPod"}},
 			},
 			[]api.Event{
 				{InvolvedObject: api.ObjectReference{UID: "TestPod"}},

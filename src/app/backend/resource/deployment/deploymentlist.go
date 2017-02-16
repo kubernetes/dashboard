@@ -21,10 +21,10 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 
 	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
-	"k8s.io/kubernetes/pkg/api"
-	k8serrors "k8s.io/kubernetes/pkg/api/errors"
-	"k8s.io/kubernetes/pkg/apis/extensions"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	k8serrors "k8s.io/apimachinery/pkg/api/errors"
+	client "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
+	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
@@ -119,7 +119,7 @@ func CreateDeploymentList(deployments []extensions.Deployment, pods []api.Pod,
 
 		matchingPods := common.FilterNamespacedPodsBySelector(pods, deployment.ObjectMeta.Namespace,
 			deployment.Spec.Selector.MatchLabels)
-		podInfo := common.GetPodInfo(deployment.Status.Replicas, deployment.Spec.Replicas,
+		podInfo := common.GetPodInfo(deployment.Status.Replicas, *deployment.Spec.Replicas,
 			matchingPods)
 		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 

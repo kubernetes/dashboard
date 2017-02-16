@@ -2,9 +2,10 @@ package metric
 
 import (
 	"fmt"
+
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
+	"k8s.io/apimachinery/pkg/apis/meta/v1"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // DerivedResources is a map from a derived resource(a resource that is not supported by heapster)
@@ -32,7 +33,7 @@ type ResourceSelector struct {
 	// Selector used to identify this resource (if any).
 	Selector map[string]string
 	// Newer version of selector used to identify this resource (if any).
-	LabelSelector *unversioned.LabelSelector
+	LabelSelector *v1.LabelSelector
 }
 
 // GetHeapsterSelector calculates and returns HeapsterSelector that can be used to download metrics for this resource.

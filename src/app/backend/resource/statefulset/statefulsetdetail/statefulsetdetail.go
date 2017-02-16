@@ -17,8 +17,9 @@ package statefulsetdetail
 import (
 	"log"
 
-	"k8s.io/kubernetes/pkg/apis/apps"
-	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	k8sClient "k8s.io/client-go/kubernetes"
+	apps "k8s.io/client-go/pkg/apis/apps/v1beta1"
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
@@ -53,7 +54,7 @@ func GetStatefulSetDetail(client *k8sClient.Clientset, heapsterClient client.Hea
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 
 	// TODO(floreks): Use channels.
-	statefulSetData, err := client.Apps().StatefulSets(namespace).Get(name)
+	statefulSetData, err := client.Apps().StatefulSets(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

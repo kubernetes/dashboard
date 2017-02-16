@@ -18,8 +18,10 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"k8s.io/kubernetes/pkg/apis/extensions"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	k8sClient "k8s.io/client-go/kubernetes"
+	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
 // ThirdPartyResourceDetail is a third party resource template.
@@ -31,11 +33,11 @@ type ThirdPartyResourceDetail struct {
 }
 
 // GetThirdPartyResourceDetail returns detailed information about a third party resource.
-func GetThirdPartyResourceDetail(client *client.Clientset, name string) (*ThirdPartyResourceDetail,
+func GetThirdPartyResourceDetail(client k8sClient.Interface, name string) (*ThirdPartyResourceDetail,
 	error) {
 	log.Printf("Getting details of %s third party resource", name)
 
-	thirdPartyResource, err := client.ThirdPartyResources().Get(name)
+	thirdPartyResource, err := client.Extensions().ThirdPartyResources().Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

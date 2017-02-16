@@ -24,11 +24,11 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
-	"k8s.io/kubernetes/pkg/apis/batch"
-	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
-	"k8s.io/kubernetes/pkg/client/restclient"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
+	"k8s.io/client-go/kubernetes/fake"
+	batch "k8s.io/client-go/pkg/apis/batch/v1"
+	restclient "k8s.io/client-go/rest"
 )
 
 type FakeHeapsterClient struct {
@@ -43,11 +43,11 @@ func createJob(name, namespace string, labelSelector map[string]string) *batch.J
 	var parallelism int32
 
 	return &batch.Job{
-		ObjectMeta: api.ObjectMeta{
+		ObjectMeta: metaV1.ObjectMeta{
 			Name: name, Namespace: namespace, Labels: labelSelector,
 		},
 		Spec: batch.JobSpec{
-			Selector:    &unversioned.LabelSelector{MatchLabels: labelSelector},
+			Selector:    &metaV1.LabelSelector{MatchLabels: labelSelector},
 			Completions: &jobCompletions,
 			Parallelism: &parallelism,
 		},

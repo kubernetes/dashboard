@@ -18,8 +18,8 @@ import (
 	"reflect"
 	"testing"
 
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	api "k8s.io/client-go/pkg/api/v1"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -28,17 +28,17 @@ import (
 var k8SecretList = &api.SecretList{
 	Items: []api.Secret{
 		{
-			ObjectMeta: api.ObjectMeta{
+			ObjectMeta: metaV1.ObjectMeta{
 				Name:              "user1",
 				Namespace:         "foo",
-				CreationTimestamp: unversioned.Unix(111, 222),
+				CreationTimestamp: metaV1.Unix(111, 222),
 			},
 		},
 		{
-			ObjectMeta: api.ObjectMeta{
+			ObjectMeta: metaV1.ObjectMeta{
 				Name:              "user2",
 				Namespace:         "foo",
-				CreationTimestamp: unversioned.Unix(111, 222),
+				CreationTimestamp: metaV1.Unix(111, 222),
 			},
 		},
 	},
@@ -58,7 +58,7 @@ func TestNewSecretListCreation(t *testing.T) {
 						ObjectMeta: common.ObjectMeta{
 							Name:              "user1",
 							Namespace:         "foo",
-							CreationTimestamp: unversioned.Unix(111, 222),
+							CreationTimestamp: metaV1.Unix(111, 222),
 						},
 						TypeMeta: common.NewTypeMeta(common.ResourceKindSecret),
 					},
@@ -66,7 +66,7 @@ func TestNewSecretListCreation(t *testing.T) {
 						ObjectMeta: common.ObjectMeta{
 							Name:              "user2",
 							Namespace:         "foo",
-							CreationTimestamp: unversioned.Unix(111, 222),
+							CreationTimestamp: metaV1.Unix(111, 222),
 						},
 						TypeMeta: common.NewTypeMeta(common.ResourceKindSecret),
 					},

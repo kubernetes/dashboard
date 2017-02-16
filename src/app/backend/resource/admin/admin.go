@@ -22,7 +22,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/node"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
-	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	k8sClient "k8s.io/client-go/kubernetes"
 )
 
 // Admin structure contains all resource lists grouped into the admin category.

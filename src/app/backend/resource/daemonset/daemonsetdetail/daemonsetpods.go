@@ -19,12 +19,13 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/apis/extensions"
-	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	k8sClient "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
+	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
 // GetDaemonSetPods return list of pods targeting daemon set.
@@ -45,7 +46,7 @@ func GetDaemonSetPods(client k8sClient.Interface, heapsterClient client.Heapster
 func getRawDaemonSetPods(client k8sClient.Interface, daemonSetName, namespace string) (
 	[]api.Pod, error) {
 
-	daemonSet, err := client.Extensions().DaemonSets(namespace).Get(daemonSetName)
+	daemonSet, err := client.Extensions().DaemonSets(namespace).Get(daemonSetName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

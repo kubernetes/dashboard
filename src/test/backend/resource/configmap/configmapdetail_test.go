@@ -19,7 +19,9 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"k8s.io/kubernetes/pkg/api"
+
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 func TestGetConfigMapDetail(t *testing.T) {
@@ -29,7 +31,7 @@ func TestGetConfigMapDetail(t *testing.T) {
 	}{
 		{
 			&api.ConfigMap{
-				Data: map[string]string{"app": "my-name"}, ObjectMeta: api.ObjectMeta{Name: "foo"},
+				Data: map[string]string{"app": "my-name"}, ObjectMeta: metaV1.ObjectMeta{Name: "foo"},
 			},
 			&ConfigMapDetail{
 				TypeMeta:   common.TypeMeta{Kind: "configmap"},
