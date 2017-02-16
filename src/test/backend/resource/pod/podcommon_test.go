@@ -23,6 +23,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 )
 
+// TestToPodPodStatusFailed tests the returned status for pods that have completed unsuccessfully.
 func TestToPodPodStatusFailed(t *testing.T) {
 	pod := &api.Pod{
 		Status: api.PodStatus{
@@ -51,7 +52,37 @@ func TestToPodPodStatusFailed(t *testing.T) {
 	}
 }
 
-func TestToPodPodStatusSuccess(t *testing.T) {
+// TestToPodPodStatusSucceeded tests the returned status for pods that have completed successfully.
+func TestToPodPodStatusSucceeded(t *testing.T) {
+	pod := &api.Pod{
+		Status: api.PodStatus{
+			Phase: api.PodSucceeded,
+			Conditions: []api.PodCondition{
+				api.PodCondition{
+					Type:   api.PodInitialized,
+					Status: api.ConditionTrue,
+				},
+			},
+		},
+	}
+
+	expected := Pod{
+		TypeMeta: common.TypeMeta{Kind: common.ResourceKindPod},
+		PodStatus: PodStatus{
+			Status:   "success",
+			PodPhase: api.PodSucceeded,
+		},
+	}
+
+	actual := ToPod(pod, &common.MetricsByPod{}, []common.Event{})
+
+	if !reflect.DeepEqual(actual, expected) {
+		t.Errorf("ToPod(%#v) == \ngot %#v, \nexpected %#v", pod, actual, expected)
+	}
+}
+
+// TestToPodPodStatusRunning tests the returned status for pods that are running in a ready state.
+func TestToPodPodStatusRunning(t *testing.T) {
 	pod := &api.Pod{
 		Status: api.PodStatus{
 			Phase: api.PodRunning,
@@ -83,6 +114,7 @@ func TestToPodPodStatusSuccess(t *testing.T) {
 	}
 }
 
+// TestToPodPodStatusPending tests the returned status for pods that are in a pending phase
 func TestToPodPodStatusPending(t *testing.T) {
 	pod := &api.Pod{
 		Status: api.PodStatus{
@@ -162,7 +194,8 @@ func TestToPodContainerStates(t *testing.T) {
 	}
 }
 
-func TestGetPodDetail(t *testing.T) {
+// TestToPod tests the the ToPod function in basic scenarios.
+func TestToPod(t *testing.T) {
 	cases := []struct {
 		pod      *api.Pod
 		metrics  *common.MetricsByPod
