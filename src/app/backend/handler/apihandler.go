@@ -63,6 +63,7 @@ import (
 	clientK8s "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 	"k8s.io/kubernetes/pkg/client/restclient"
 	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
+	clientcmdapi "k8s.io/kubernetes/pkg/client/unversioned/clientcmd/api"
 	"k8s.io/kubernetes/pkg/runtime"
 	utilnet "k8s.io/kubernetes/pkg/util/net"
 )
@@ -75,11 +76,16 @@ const (
 	ResponseLogString = "[%s] Outcoming response to %s with %d status code"
 )
 
+type ApiClientConfig struct {
+	ApiserverHost string
+	KubeConfigFile string
+}
+
 // APIHandler is a representation of API handler. Structure contains client, Heapster client and
 // client configuration.
 type APIHandler struct {
 	heapsterClient client.HeapsterClient
-	clientConfig   clientcmd.ClientConfig
+	clientConfig   ApiClientConfig
 	csrfKey        string
 }
 
@@ -173,18 +179,7 @@ func FormatResponseLog(resp *restful.Response, req *restful.Request) string {
 
 func (apiHandler *APIHandler) injectApiClient(fn func(*clientK8s.Clientset, *restful.Request, *restful.Response)) restful.RouteFunction {
 	return func(request *restful.Request, response *restful.Response) {
-		cfg, err := apiHandler.clientConfig.ClientConfig()
-		if err != nil {
-			handleInternalError(response, err)
-			return
-		}
-
-		token := request.HeaderParameter("Authorization")
-		if strings.HasPrefix(token, "Bearer ") {
-			cfg.BearerToken = strings.TrimPrefix(token, "Bearer ")
-		}
-
-		apiclient, err := clientK8s.NewForConfig(cfg)
+		apiclient, _, err := apiHandler.getApiClient(request)
 		if err != nil {
 			handleInternalError(response, err)
 			return
@@ -192,6 +187,32 @@ func (apiHandler *APIHandler) injectApiClient(fn func(*clientK8s.Clientset, *res
 
 		fn(apiclient, request, response)
 	}
+}
+
+func (apiHandler *APIHandler) getApiClient(request *restful.Request) (*clientK8s.Clientset, clientcmd.ClientConfig, error) {
+	authorizationHeader := request.HeaderParameter("Authorization")
+	token := ""
+	if strings.HasPrefix(authorizationHeader, "Bearer ") {
+		token = strings.TrimPrefix(authorizationHeader, "Bearer ")
+	}
+
+	clientConfig := clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
+		&clientcmd.ClientConfigLoadingRules{ ExplicitPath: apiHandler.clientConfig.KubeConfigFile},
+		&clientcmd.ConfigOverrides{
+			AuthInfo:clientcmdapi.AuthInfo{Token: token},
+			ClusterInfo: clientcmdapi.Cluster{Server: apiHandler.clientConfig.ApiserverHost}})
+
+	cfg, err := clientConfig.ClientConfig()
+	if err != nil {
+		return nil, nil, err
+	}
+
+	apiclient, err := clientK8s.NewForConfig(cfg)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return apiclient, clientConfig, nil
 }
 
 func createVerberFromApiClient(client *clientK8s.Clientset) common.ResourceVerber {
@@ -202,7 +223,7 @@ func createVerberFromApiClient(client *clientK8s.Clientset) common.ResourceVerbe
 
 // CreateHTTPAPIHandler creates a new HTTP handler that handles all requests to the API of the backend.
 func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.HeapsterClient,
-	clientConfig clientcmd.ClientConfig) (http.Handler, error) {
+	clientConfig ApiClientConfig) (http.Handler, error) {
 
 	var csrfKey string
 	inClusterConfig, err := restclient.InClusterConfig()
@@ -221,7 +242,7 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 		csrfKey = string(bytes)
 	}
 
-	apiHandler := APIHandler{heapsterClient, clientConfig, csrfKey}
+	apiHandler := APIHandler{heapsterClient, clientConfig, csrfKey, }
 	wsContainer := restful.NewContainer()
 	wsContainer.EnableContentEncoding(true)
 
@@ -857,9 +878,14 @@ func (apiHandler *APIHandler) handleDeployFromFile(apiClient *clientK8s.Clientse
 		return
 	}
 
-	// TODO inject bearer token
+	_, clientConfig, err := apiHandler.getApiClient(request)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
 	isDeployed, err := deployment.DeployAppFromFile(
-		deploymentSpec, deployment.CreateObjectFromInfoFn, apiHandler.clientConfig)
+		deploymentSpec, deployment.CreateObjectFromInfoFn, clientConfig)
 	if !isDeployed {
 		handleInternalError(response, err)
 		return

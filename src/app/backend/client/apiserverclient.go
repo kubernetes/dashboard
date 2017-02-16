@@ -38,7 +38,7 @@ const (
 //
 // apiserverHost param is in the format of protocol://address:port/pathPrefix, e.g.http://localhost:8001.
 // kubeConfig location of kubeconfig file
-func CreateApiserverClient(apiserverHost string, kubeConfig string) (*client.Clientset, clientcmd.ClientConfig, error) {
+func CreateApiserverClient(apiserverHost string, kubeConfig string) (*client.Clientset, error) {
 
 	clientConfig := clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
 		&clientcmd.ClientConfigLoadingRules{ExplicitPath: kubeConfig},
@@ -46,7 +46,7 @@ func CreateApiserverClient(apiserverHost string, kubeConfig string) (*client.Cli
 
 	cfg, err := clientConfig.ClientConfig()
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 
 	cfg.QPS = defaultQPS
@@ -58,7 +58,7 @@ func CreateApiserverClient(apiserverHost string, kubeConfig string) (*client.Cli
 	client, err := client.NewForConfig(cfg)
 
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
-	return client, clientConfig, nil
+	return client, nil
 }
