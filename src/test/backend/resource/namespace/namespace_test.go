@@ -20,7 +20,8 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"k8s.io/kubernetes/pkg/api"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 func TestGetNamespaceList(t *testing.T) {
@@ -31,7 +32,7 @@ func TestGetNamespaceList(t *testing.T) {
 		{nil, &NamespaceList{Namespaces: []Namespace{}}},
 		{
 			[]api.Namespace{
-				{ObjectMeta: api.ObjectMeta{Name: "foo"}},
+				{ObjectMeta: metaV1.ObjectMeta{Name: "foo"}},
 			},
 			&NamespaceList{
 				ListMeta: common.ListMeta{TotalItems: 1},

@@ -19,7 +19,8 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"k8s.io/kubernetes/pkg/api"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 func TestGetNamespaceDetail(t *testing.T) {
@@ -29,7 +30,7 @@ func TestGetNamespaceDetail(t *testing.T) {
 	}{
 		{
 			api.Namespace{
-				ObjectMeta: api.ObjectMeta{Name: "foo"},
+				ObjectMeta: metaV1.ObjectMeta{Name: "foo"},
 				Status: api.NamespaceStatus{
 					Phase: api.NamespaceActive,
 				},

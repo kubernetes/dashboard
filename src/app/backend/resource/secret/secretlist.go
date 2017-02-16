@@ -17,10 +17,11 @@ package secret
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"k8s.io/kubernetes/pkg/api"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
-	"k8s.io/kubernetes/pkg/fields"
-	"k8s.io/kubernetes/pkg/labels"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/fields"
+	"k8s.io/apimachinery/pkg/labels"
+	client "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // SecretSpec - common interface for the specification of different secrets.
@@ -76,9 +77,9 @@ type SecretList struct {
 // GetSecretList - return all secrets in the given namespace.
 func GetSecretList(client *client.Clientset, namespace *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*SecretList, error) {
-	secretList, err := client.Secrets(namespace.ToRequestParam()).List(api.ListOptions{
-		LabelSelector: labels.Everything(),
-		FieldSelector: fields.Everything(),
+	secretList, err := client.Secrets(namespace.ToRequestParam()).List(metaV1.ListOptions{
+		LabelSelector: labels.Everything().String(),
+		FieldSelector: fields.Everything().String(),
 	})
 	if err != nil {
 		return nil, err
@@ -105,7 +106,7 @@ func GetSecretListFromChannels(channels *common.ResourceChannels, dsQuery *datas
 func CreateSecret(client *client.Clientset, spec SecretSpec) (*Secret, error) {
 	namespace := spec.GetNamespace()
 	secret := &api.Secret{
-		ObjectMeta: api.ObjectMeta{
+		ObjectMeta: metaV1.ObjectMeta{
 			Name:      spec.GetName(),
 			Namespace: namespace,
 		},

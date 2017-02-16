@@ -21,7 +21,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/ingress"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/service"
-	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	k8sClient "k8s.io/client-go/kubernetes"
 )
 
 // ServicesAndDiscovery structure contains all resource lists grouped into the servicesAndDiscovery category.

@@ -19,8 +19,10 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/logs"
 
-	"k8s.io/kubernetes/pkg/api"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	client "k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/pkg/api"
+
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // PodContainerList is a list of containers of a pod.
@@ -30,7 +32,7 @@ type PodContainerList struct {
 
 // GetPodContainers returns containers that a pod has.
 func GetPodContainers(client *client.Clientset, namespace, podID string) (*PodContainerList, error) {
-	pod, err := client.Pods(namespace).Get(podID)
+	pod, err := client.Pods(namespace).Get(podID, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +50,7 @@ func GetPodContainers(client *client.Clientset, namespace, podID string) (*PodCo
 // is null, logs for the first one are returned.
 func GetPodLogs(client *client.Clientset, namespace, podID string, container string,
 	logSelector *logs.LogViewSelector) (*logs.Logs, error) {
-	pod, err := client.Pods(namespace).Get(podID)
+	pod, err := client.Pods(namespace).Get(podID, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

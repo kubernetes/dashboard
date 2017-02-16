@@ -19,13 +19,14 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
-
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler/horizontalpodautoscalerlist"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
-	"k8s.io/kubernetes/pkg/api"
-	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
+
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	k8sClient "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // ReplicationControllerDetail represents detailed information about a Replication Controller.
@@ -70,7 +71,7 @@ func GetReplicationControllerDetail(client k8sClient.Interface, heapsterClient c
 	namespace, name string) (*ReplicationControllerDetail, error) {
 	log.Printf("Getting details of %s replication controller in %s namespace", name, namespace)
 
-	replicationController, err := client.Core().ReplicationControllers(namespace).Get(name)
+	replicationController, err := client.Core().ReplicationControllers(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -114,12 +115,12 @@ func UpdateReplicasCount(client k8sClient.Interface, namespace, name string,
 	log.Printf("Updating replicas count to %d for %s replication controller from %s namespace",
 		replicationControllerSpec.Replicas, name, namespace)
 
-	replicationController, err := client.Core().ReplicationControllers(namespace).Get(name)
+	replicationController, err := client.Core().ReplicationControllers(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return err
 	}
 
-	replicationController.Spec.Replicas = replicationControllerSpec.Replicas
+	replicationController.Spec.Replicas = &replicationControllerSpec.Replicas
 
 	_, err = client.Core().ReplicationControllers(namespace).Update(replicationController)
 	if err != nil {

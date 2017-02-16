@@ -19,7 +19,8 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"k8s.io/kubernetes/pkg/api"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 func TestGetSecretDetail(t *testing.T) {
@@ -29,7 +30,7 @@ func TestGetSecretDetail(t *testing.T) {
 	}{
 		{
 			&api.Secret{
-				Data: map[string][]byte{"app": {0, 1, 2, 3}}, ObjectMeta: api.ObjectMeta{Name: "foo"},
+				Data: map[string][]byte{"app": {0, 1, 2, 3}}, ObjectMeta: metaV1.ObjectMeta{Name: "foo"},
 			},
 			&SecretDetail{
 				TypeMeta:   common.TypeMeta{Kind: "secret"},

@@ -1,11 +1,12 @@
 package metric
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
 	"reflect"
 	"testing"
+
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 func TestResourceSelector(t *testing.T) {
@@ -17,35 +18,35 @@ func TestResourceSelector(t *testing.T) {
 	}
 	var cachedPodList = []api.Pod{
 		{
-			ObjectMeta: api.ObjectMeta{
+			ObjectMeta: metaV1.ObjectMeta{
 				Name:      "1",
 				Labels:    resource1,
 				Namespace: "a",
 			},
 		},
 		{
-			ObjectMeta: api.ObjectMeta{
+			ObjectMeta: metaV1.ObjectMeta{
 				Name:      "2",
 				Labels:    resource2,
 				Namespace: "a",
 			},
 		},
 		{
-			ObjectMeta: api.ObjectMeta{
+			ObjectMeta: metaV1.ObjectMeta{
 				Name:      "3",
 				Labels:    resource1,
 				Namespace: "a",
 			},
 		},
 		{
-			ObjectMeta: api.ObjectMeta{
+			ObjectMeta: metaV1.ObjectMeta{
 				Name:      "4",
 				Labels:    resource1,
 				Namespace: "b",
 			},
 		},
 		{
-			ObjectMeta: api.ObjectMeta{
+			ObjectMeta: metaV1.ObjectMeta{
 				Name:   "5",
 				Labels: resource1,
 			},
@@ -98,7 +99,7 @@ func TestResourceSelector(t *testing.T) {
 				Namespace:     "a",
 				ResourceType:  common.ResourceKindDeployment,
 				ResourceName:  "baba",
-				LabelSelector: &unversioned.LabelSelector{MatchLabels: resource1},
+				LabelSelector: &metaV1.LabelSelector{MatchLabels: resource1},
 			},
 			`namespaces/a/pod-list/`,
 			common.ResourceKindPod,

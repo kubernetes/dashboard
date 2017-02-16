@@ -19,12 +19,13 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
-	"k8s.io/kubernetes/pkg/api"
-	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	k8sClient "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // ReplicationSetList contains a list of Pods in the cluster.
@@ -69,7 +70,7 @@ func GetPodList(client k8sClient.Interface, heapsterClient client.HeapsterClient
 	log.Print("Getting list of all pods in the cluster")
 
 	channels := &common.ResourceChannels{
-		PodList:   common.GetPodListChannelWithOptions(client, nsQuery, api.ListOptions{}, 1),
+		PodList:   common.GetPodListChannelWithOptions(client, nsQuery, metaV1.ListOptions{}, 1),
 		EventList: common.GetEventListChannel(client, nsQuery, 1),
 	}
 

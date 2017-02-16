@@ -19,15 +19,20 @@ import (
 	"reflect"
 	"testing"
 
-	"k8s.io/kubernetes/pkg/api"
-	k8serrors "k8s.io/kubernetes/pkg/api/errors"
-	"k8s.io/kubernetes/pkg/api/unversioned"
-	"k8s.io/kubernetes/pkg/apis/apps"
+	api "k8s.io/client-go/pkg/api/v1"
+	apps "k8s.io/client-go/pkg/apis/apps/v1beta1"
+
+	k8serrors "k8s.io/apimachinery/pkg/api/errors"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 )
+
+func getReplicasPointer(replicas int32) *int32 {
+	return &replicas
+}
 
 func TestGetStatefulSetListFromChannels(t *testing.T) {
 	cases := []struct {
@@ -63,21 +68,21 @@ func TestGetStatefulSetListFromChannels(t *testing.T) {
 		},
 		{
 			apps.StatefulSetList{},
-			&k8serrors.StatusError{ErrStatus: unversioned.Status{}},
+			&k8serrors.StatusError{ErrStatus: metaV1.Status{}},
 			&api.PodList{},
 			nil,
-			&k8serrors.StatusError{ErrStatus: unversioned.Status{}},
+			&k8serrors.StatusError{ErrStatus: metaV1.Status{}},
 		},
 		{
 			apps.StatefulSetList{},
-			&k8serrors.StatusError{ErrStatus: unversioned.Status{Reason: "foo-bar"}},
+			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "foo-bar"}},
 			&api.PodList{},
 			nil,
-			&k8serrors.StatusError{ErrStatus: unversioned.Status{Reason: "foo-bar"}},
+			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "foo-bar"}},
 		},
 		{
 			apps.StatefulSetList{},
-			&k8serrors.StatusError{ErrStatus: unversioned.Status{Reason: "NotFound"}},
+			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "NotFound"}},
 			&api.PodList{},
 			&StatefulSetList{
 				StatefulSets: make([]StatefulSet, 0),
@@ -87,15 +92,15 @@ func TestGetStatefulSetListFromChannels(t *testing.T) {
 		{
 			apps.StatefulSetList{
 				Items: []apps.StatefulSet{{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Name:              "rs-name",
 						Namespace:         "rs-namespace",
 						Labels:            map[string]string{"key": "value"},
-						CreationTimestamp: unversioned.Unix(111, 222),
+						CreationTimestamp: metaV1.Unix(111, 222),
 					},
 					Spec: apps.StatefulSetSpec{
-						Selector: &unversioned.LabelSelector{MatchLabels: map[string]string{"foo": "bar"}},
-						Replicas: 21,
+						Selector: &metaV1.LabelSelector{MatchLabels: map[string]string{"foo": "bar"}},
+						Replicas: getReplicasPointer(21),
 					},
 					Status: apps.StatefulSetStatus{
 						Replicas: 7,
@@ -106,14 +111,14 @@ func TestGetStatefulSetListFromChannels(t *testing.T) {
 			&api.PodList{
 				Items: []api.Pod{
 					{
-						ObjectMeta: api.ObjectMeta{
+						ObjectMeta: metaV1.ObjectMeta{
 							Namespace: "rs-namespace",
 							Labels:    map[string]string{"foo": "bar"},
 						},
 						Status: api.PodStatus{Phase: api.PodFailed},
 					},
 					{
-						ObjectMeta: api.ObjectMeta{
+						ObjectMeta: metaV1.ObjectMeta{
 							Namespace: "rs-namespace",
 							Labels:    map[string]string{"foo": "baz"},
 						},
@@ -129,7 +134,7 @@ func TestGetStatefulSetListFromChannels(t *testing.T) {
 						Name:              "rs-name",
 						Namespace:         "rs-namespace",
 						Labels:            map[string]string{"key": "value"},
-						CreationTimestamp: unversioned.Unix(111, 222),
+						CreationTimestamp: metaV1.Unix(111, 222),
 					},
 					TypeMeta: common.TypeMeta{Kind: common.ResourceKindStatefulSet},
 					Pods: common.PodInfo{

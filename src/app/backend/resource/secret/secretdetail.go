@@ -18,8 +18,9 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"k8s.io/kubernetes/pkg/api"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	client "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // SecretDetail API resource provides mechanisms to inject containers with configuration data while keeping
@@ -42,7 +43,7 @@ type SecretDetail struct {
 func GetSecretDetail(client *client.Clientset, namespace, name string) (*SecretDetail, error) {
 	log.Printf("Getting details of %s secret in %s namespace", name, namespace)
 
-	rawSecret, err := client.Secrets(namespace).Get(name)
+	rawSecret, err := client.Secrets(namespace).Get(name, metaV1.GetOptions{})
 
 	if err != nil {
 		return nil, err

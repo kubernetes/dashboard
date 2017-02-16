@@ -23,8 +23,8 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
-	"k8s.io/kubernetes/pkg/api"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	client "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // ReplicationControllerList contains a list of Replication Controllers in the cluster.
@@ -91,7 +91,7 @@ func CreateReplicationControllerList(replicationControllers []api.ReplicationCon
 	for _, rc := range replicationControllers {
 		matchingPods := common.FilterNamespacedPodsBySelector(pods, rc.ObjectMeta.Namespace,
 			rc.Spec.Selector)
-		podInfo := common.GetPodInfo(rc.Status.Replicas, rc.Spec.Replicas, matchingPods)
+		podInfo := common.GetPodInfo(rc.Status.Replicas, *rc.Spec.Replicas, matchingPods)
 		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 
 		replicationController := replicationcontroller.ToReplicationController(&rc, &podInfo)

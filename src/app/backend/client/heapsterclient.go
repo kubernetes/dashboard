@@ -17,8 +17,8 @@ package client
 import (
 	"log"
 
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
-	"k8s.io/kubernetes/pkg/client/restclient"
+	client "k8s.io/client-go/kubernetes"
+	restclient "k8s.io/client-go/rest"
 )
 
 // HeapsterClient  is a client used to make requests to a Heapster instance.

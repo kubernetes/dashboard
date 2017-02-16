@@ -18,11 +18,12 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/apis/extensions"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
-	"k8s.io/kubernetes/pkg/fields"
-	"k8s.io/kubernetes/pkg/labels"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/fields"
+	"k8s.io/apimachinery/pkg/labels"
+	client "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
+	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
 // Based on given selector returns list of services that are candidates for deletion.
@@ -31,9 +32,9 @@ import (
 func GetServicesForDSDeletion(client client.Interface, labelSelector labels.Selector,
 	namespace string) ([]api.Service, error) {
 
-	daemonSet, err := client.Extensions().DaemonSets(namespace).List(api.ListOptions{
-		LabelSelector: labelSelector,
-		FieldSelector: fields.Everything(),
+	daemonSet, err := client.Extensions().DaemonSets(namespace).List(metaV1.ListOptions{
+		LabelSelector: labelSelector.String(),
+		FieldSelector: fields.Everything().String(),
 	})
 	if err != nil {
 		return nil, err
@@ -46,9 +47,9 @@ func GetServicesForDSDeletion(client client.Interface, labelSelector labels.Sele
 		return []api.Service{}, nil
 	}
 
-	services, err := client.Core().Services(namespace).List(api.ListOptions{
-		LabelSelector: labelSelector,
-		FieldSelector: fields.Everything(),
+	services, err := client.Core().Services(namespace).List(metaV1.ListOptions{
+		LabelSelector: labelSelector.String(),
+		FieldSelector: fields.Everything().String(),
 	})
 	if err != nil {
 		return nil, err

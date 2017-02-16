@@ -6,7 +6,8 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"k8s.io/kubernetes/pkg/api"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 func TestGetPersistentVolumeClaimList(t *testing.T) {
@@ -17,7 +18,7 @@ func TestGetPersistentVolumeClaimList(t *testing.T) {
 		{nil, &PersistentVolumeClaimList{Items: []PersistentVolumeClaim{}}},
 		{
 			[]api.PersistentVolumeClaim{{
-				ObjectMeta: api.ObjectMeta{Name: "foo"},
+				ObjectMeta: metaV1.ObjectMeta{Name: "foo"},
 				Spec:       api.PersistentVolumeClaimSpec{VolumeName: "my-volume"},
 				Status:     api.PersistentVolumeClaimStatus{Phase: api.ClaimBound},
 			},

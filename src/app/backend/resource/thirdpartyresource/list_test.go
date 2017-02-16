@@ -20,8 +20,9 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/apis/extensions"
+
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
 func TestGetThirdPartyResourceList(t *testing.T) {
@@ -33,7 +34,7 @@ func TestGetThirdPartyResourceList(t *testing.T) {
 		{
 			[]extensions.ThirdPartyResource{
 				{
-					ObjectMeta:  api.ObjectMeta{Name: "foo"},
+					ObjectMeta:  metaV1.ObjectMeta{Name: "foo"},
 					Description: "test",
 					Versions: []extensions.APIVersion{
 						{

@@ -4,8 +4,9 @@ import (
 	"reflect"
 	"testing"
 
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/resource"
+	"k8s.io/apimachinery/pkg/api/resource"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 func TestGetLimitResourceDetail(t *testing.T) {
@@ -17,7 +18,7 @@ func TestGetLimitResourceDetail(t *testing.T) {
 	}{
 		{
 			&api.LimitRange{
-				ObjectMeta: api.ObjectMeta{Name: "foo"},
+				ObjectMeta: metaV1.ObjectMeta{Name: "foo"},
 				Spec: api.LimitRangeSpec{
 					Limits: []api.LimitRangeItem{
 						{

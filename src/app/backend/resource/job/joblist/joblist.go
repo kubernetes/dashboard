@@ -17,18 +17,18 @@ package joblist
 import (
 	"log"
 
+	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
-
-	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
-	"k8s.io/kubernetes/pkg/api"
-	k8serrors "k8s.io/kubernetes/pkg/api/errors"
-	"k8s.io/kubernetes/pkg/apis/batch"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
-
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+
+	client "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
+	batch "k8s.io/client-go/pkg/apis/batch/v1"
+
+	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 )
 
 // JobList contains a list of Jobs in the cluster.
