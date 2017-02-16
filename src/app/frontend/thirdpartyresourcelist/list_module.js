@@ -38,4 +38,14 @@ export default angular
         ])
     .config(stateConfig)
     .component('kdThirdPartyResourceCardList', thirdPartyResourceCardListComponent)
-    .component('kdThirdPartyResourceCard', thirdPartyResourceCardComponent);
+    .component('kdThirdPartyResourceCard', thirdPartyResourceCardComponent)
+    .factory('kdThirdPartyResourceListResource', thirdPartyResourceListResource);
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function thirdPartyResourceListResource($resource) {
+    return $resource('api/v1/thirdpartyresource');
+}

@@ -24,5 +24,7 @@ export class ThirdPartyResourceDetailController {
   constructor(tprDetail) {
     /** @export {!backendApi.ThirdPartyResource} */
     this.tprDetail = tprDetail;
+
+    console.log("Asd")
   }
 }

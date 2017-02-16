@@ -13,6 +13,8 @@
 // limitations under the License.
 
 import {stateName as thirdPartyResourceState} from 'thirdpartyresourcelist/list_state';
+import {stateName as thirdPartyResourceDetailState} from 'thirdpartyresourcedetail/detail_state';
+import {StateParams} from 'common/resource/resourcedetail';
 
 /**
  * @final
@@ -24,7 +26,7 @@ export class ThirdPartyResourceNavController {
    * kdThirdPartyResourceService
    * @ngInject
    */
-  constructor(kdThirdPartyResourceService) {
+  constructor($state, kdThirdPartyResourceService) {
     /** @private
      * {!./../../common/thirdpartyresource/thirdpartyresource_service.ThirdPartyResourceService}
      * kdThirdPartyResourceService
@@ -36,6 +38,8 @@ export class ThirdPartyResourceNavController {
 
     /** @export {!Object<string, string>} - Initialized from binding. */
     this.states;
+
+    this.state_ = $state;
   }
 
   /** @export */
@@ -51,6 +55,14 @@ export class ThirdPartyResourceNavController {
   /** @export */
   shouldShowThirdPartyResources() {
     return this.kdThirdPartyResourceService_.areThirdPartyResourcesRegistered();
+  }
+
+  /**
+   * @return {string}
+   * @export
+   */
+  getThirdPartyResourceDetailHref(thirdPartyResourceName) {
+    return this.state_.href(thirdPartyResourceDetailState, new StateParams('', thirdPartyResourceName));
   }
 }
 

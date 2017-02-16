@@ -36,6 +36,7 @@ export const thirdPartyResourceCardListComponent = {
   controller: ThirdPartyResourceCardListController,
   bindings: {
     /** {!backendApi.ThirdPartyResourceList} */
-    'thirdPartyResourceList': '<',
+    'thirdPartyResourceList': '=',
+    'thirdPartyResourceListResource': '=',
   },
 };
