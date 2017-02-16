@@ -43,12 +43,6 @@
 			"revisionTime": "2016-02-29T21:34:45Z"
 		},
 		{
-			"checksumSHA1": "ZUoYBJcCAc+K5+FsWFcvk5LAJEU=",
-			"path": "github.com/blang/semver",
-			"revision": "60ec3488bfea7cca02b021d106d9911120d25fe9",
-			"revisionTime": "2016-07-01T05:46:53Z"
-		},
-		{
 			"checksumSHA1": "JXa6kxEjjwtlRKRqVZb+A6blsoA=",
 			"path": "github.com/boltdb/bolt",
 			"revision": "3f7947a25d970e1e5f512276c14d5dcf731ccd5e",
@@ -829,18 +823,6 @@
 			"revisionTime": "2016-05-24T15:18:35Z"
 		},
 		{
-			"checksumSHA1": "FdDlZ/qd4+ky0BQTJy0HGBuv56w=",
-			"path": "github.com/google/cadvisor/info/v1",
-			"revision": "6abe4db6f44d8af66d5e1dec4e847762871bfaf5",
-			"revisionTime": "2016-07-01T02:38:42Z"
-		},
-		{
-			"checksumSHA1": "RFBkdHp1LfFmlgxfC3hwjcVNfKo=",
-			"path": "github.com/google/cadvisor/info/v1/test",
-			"revision": "6abe4db6f44d8af66d5e1dec4e847762871bfaf5",
-			"revisionTime": "2016-07-01T02:38:42Z"
-		},
-		{
 			"checksumSHA1": "dLZsYwz718krPI21yUv2SQWlX58=",
 			"path": "github.com/google/gofuzz",
 			"revision": "fd52762d25a41827db7ef64c43756fd4b9f7e382",
@@ -1149,32 +1131,8 @@
 			"revisionTime": "2016-06-30T21:25:00Z"
 		},
 		{
-			"checksumSHA1": "NIZvmvtxk8SGl9TajehOFzghYg0=",
-			"path": "github.com/opencontainers/runc/libcontainer/cgroups",
-			"revision": "4ad7bbc172f2aed1ebaf5c0ddf1ea8c8136c2e93",
-			"revisionTime": "2016-05-06T00:26:47Z"
-		},
-		{
-			"checksumSHA1": "OhJWzKG/eruYgwH8pG3M3e1KcN0=",
-			"path": "github.com/opencontainers/runc/libcontainer/cgroups/fs",
-			"revision": "4ad7bbc172f2aed1ebaf5c0ddf1ea8c8136c2e93",
-			"revisionTime": "2016-05-06T00:26:47Z"
-		},
-		{
 			"checksumSHA1": "WzgyXh4uZFV88nR5s2uVrnnzdT4=",
 			"path": "github.com/opencontainers/runc/libcontainer/configs",
-			"revision": "629e35666d31f743090452416c8df207d9fdbd34",
-			"revisionTime": "2016-06-24T19:10:23Z"
-		},
-		{
-			"checksumSHA1": "aOXae1tXf5yfYLz9NIiqr6uizfo=",
-			"path": "github.com/opencontainers/runc/libcontainer/system",
-			"revision": "7221e387826c9918fa9fd6e7975baf4d30c8fa54",
-			"revisionTime": "2016-07-01T22:11:51Z"
-		},
-		{
-			"checksumSHA1": "saEnw0x4+xqSNY8UVl2MuwUdNno=",
-			"path": "github.com/opencontainers/runc/libcontainer/utils",
 			"revision": "629e35666d31f743090452416c8df207d9fdbd34",
 			"revisionTime": "2016-06-24T19:10:23Z"
 		},
@@ -1183,12 +1141,6 @@
 			"path": "github.com/pborman/uuid",
 			"revision": "c55201b036063326c5b1b89ccfe45a184973d073",
 			"revisionTime": "2016-02-16T16:37:10Z"
-		},
-		{
-			"checksumSHA1": "o+cYxbFj21tlbJHuB1cyHQcaSKo=",
-			"path": "github.com/petar/GoLLRB/llrb",
-			"revision": "53be0d36a84c2a886ca057d34b6aa4468df9ccb4",
-			"revisionTime": "2013-04-27T21:51:48Z"
 		},
 		{
 			"checksumSHA1": "RZOdTSZN/PgcTqko5LzIAzw+UT4=",
@@ -1825,12 +1777,6 @@
 			"path": "k8s.io/apimachinery/pkg/conversion/queryparams",
 			"revision": "bb0944e83985eee62505a0386e7df9014cc55263",
 			"revisionTime": "2017-02-02T14:30:15Z"
-		},
-		{
-			"checksumSHA1": "jjTFT3tNCv8oguJ5snkosxwgKsY=",
-			"path": "k8s.io/apimachinery/pkg/conversion/unstructured",
-			"revision": "482c04a1de79e88890b5d53d93eb465bc2e746c9",
-			"revisionTime": "2017-02-13T12:35:56Z"
 		},
 		{
 			"checksumSHA1": "yoam6Q4QTctNvBfmVxGIxjtMIWw=",
@@ -3611,18 +3557,6 @@
 		{
 			"checksumSHA1": "UZJaLY72hjdEx8OI5xGaRNgLzHo=",
 			"path": "k8s.io/kubernetes/pkg/client/listers/core/internalversion",
-			"revision": "871fc426b3576bfe9a92b3ca1d4bfa83ea71edd5",
-			"revisionTime": "2017-02-02T09:55:13Z"
-		},
-		{
-			"checksumSHA1": "nuZDtAACLDCfpCoSIKXatVyVLOQ=",
-			"path": "k8s.io/kubernetes/pkg/client/listers/core/v1",
-			"revision": "871fc426b3576bfe9a92b3ca1d4bfa83ea71edd5",
-			"revisionTime": "2017-02-02T09:55:13Z"
-		},
-		{
-			"checksumSHA1": "pIVflyTnge59x3PVs+32VhDxGZI=",
-			"path": "k8s.io/kubernetes/pkg/client/listers/extensions/v1beta1",
 			"revision": "871fc426b3576bfe9a92b3ca1d4bfa83ea71edd5",
 			"revisionTime": "2017-02-02T09:55:13Z"
 		},
