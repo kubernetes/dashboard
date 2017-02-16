@@ -19,8 +19,9 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"k8s.io/kubernetes/pkg/apis/extensions"
-	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+
+	k8sClient "k8s.io/client-go/kubernetes"
+	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
 // ThirdPartyResource is a third party resource template.
@@ -37,9 +38,9 @@ type ThirdPartyResourceList struct {
 }
 
 // GetThirdPartyResourceList returns a list of third party resource templates.
-func GetThirdPartyResourceList(client *internalclientset.Clientset,
+func GetThirdPartyResourceList(client k8sClient.Interface,
 	dsQuery *dataselect.DataSelectQuery) (*ThirdPartyResourceList, error) {
-	log.Printf("Getting list of third party resources")
+	log.Println("Getting list of third party resources")
 
 	channels := &common.ResourceChannels{
 		ThirdPartyResourceList: common.GetThirdPartyResourceListChannel(client, 1),
