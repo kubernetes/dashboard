@@ -57,8 +57,8 @@ export default function stateConfig($stateProvider) {
  * @ngInject
  */
 export function getTprDetailResource($resource, $stateParams) {
-  // TODO(maciaszczykm): Replace with backend call.
-  return $resource('/assets/tpr-detail-mock.json');
+  return $resource(`api/v1/thirdpartyresource/${$stateParams.objectName}`);
+
 }
 
 /**
