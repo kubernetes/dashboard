@@ -22,6 +22,14 @@ import (
 	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 )
 
+// ThirdPartyResourceDetail is a third party resource template. Used in detail view.
+type ThirdPartyResourceDetail struct {
+	ObjectMeta  common.ObjectMeta       `json:"objectMeta"`
+	TypeMeta    common.TypeMeta         `json:"typeMeta"`
+	Description string                  `json:"description"`
+	Versions    []extensions.APIVersion `json:"versions"`
+}
+
 // GetThirdPartyResourceDetail returns detailed information about a third party resource.
 func GetThirdPartyResourceDetail(client *client.Clientset, name string) (*ThirdPartyResourceDetail,
 	error) {
