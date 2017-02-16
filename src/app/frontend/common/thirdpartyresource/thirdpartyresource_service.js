@@ -26,7 +26,7 @@ export class ThirdPartyResourceService {
   resolve() {
     let deferred = this.q_.defer();
 
-    this.resource_('/assets/tpr-mock.json').get().$promise.then((result) => {
+    this.resource_('api/v1/thirdpartyresource').get().$promise.then((result) => {
       this.thirdPartyResourceList_ = result;
       deferred.resolve();
     });
