@@ -23,13 +23,13 @@ import (
 	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 )
 
-// ThirdPartyResource is a third party resource template. Used in list view.
+// ThirdPartyResource is a third party resource template.
 type ThirdPartyResource struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
 	TypeMeta   common.TypeMeta   `json:"typeMeta"`
 }
 
-// ThirdPartyResourceList contains a list of third party resource templates. Used in list view.
+// ThirdPartyResourceList contains a list of third party resource templates.
 type ThirdPartyResourceList struct {
 	ListMeta            common.ListMeta      `json:"listMeta"`
 	TypeMeta            common.TypeMeta      `json:"typeMeta"`

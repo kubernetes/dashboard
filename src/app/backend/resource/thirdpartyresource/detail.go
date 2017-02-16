@@ -22,7 +22,7 @@ import (
 	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
 )
 
-// ThirdPartyResourceDetail is a third party resource template. Used in detail view.
+// ThirdPartyResourceDetail is a third party resource template.
 type ThirdPartyResourceDetail struct {
 	ObjectMeta  common.ObjectMeta       `json:"objectMeta"`
 	TypeMeta    common.TypeMeta         `json:"typeMeta"`
