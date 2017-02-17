@@ -50,8 +50,8 @@ import serviceDetailModule from './servicedetail/servicedetail_module';
 import serviceListModule from './servicelist/servicelist_module';
 import servicesanddiscoveryModule from './servicesanddiscovery/module';
 import statefulSetListModule from './statefulsetlist/statefulsetlist_module';
+import {TitleController} from './title_controller';
 import workloadsModule from './workloads/workloads_module';
-
 
 export default angular
     .module(
@@ -99,4 +99,5 @@ export default angular
           csrfTokenModule.name,
         ])
     .config(indexConfig)
-    .config(routeConfig);
+    .config(routeConfig)
+    .controller('kdTitle', TitleController);
