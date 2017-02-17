@@ -18,7 +18,6 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"

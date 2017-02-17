@@ -17,7 +17,7 @@ package validation
 import (
 	"log"
 
-	k8serrors "k8s.io/apimachinery/pkg/api/errors"
+	"k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
 )
@@ -73,7 +73,7 @@ func ValidateAppName(spec *AppNameValiditySpec, client client.Interface) (*AppNa
 
 // Returns true when the given error is 404-NotFound error.
 func isNotFoundError(err error) bool {
-	statusErr, ok := err.(*k8serrors.StatusError)
+	statusErr, ok := err.(*errors.StatusError)
 	if !ok {
 		return false
 	}

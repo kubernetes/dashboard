@@ -14,9 +14,7 @@
 
 package common
 
-import (
-	api "k8s.io/client-go/pkg/api/v1"
-)
+import api "k8s.io/client-go/pkg/api/v1"
 
 // ServicePort is a pair of port and protocol, e.g. a service endpoint.
 type ServicePort struct {

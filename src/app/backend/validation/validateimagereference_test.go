@@ -14,9 +14,7 @@
 
 package validation
 
-import (
-	"testing"
-)
+import "testing"
 
 func TestValidateImageReference(t *testing.T) {
 	cases := []struct {

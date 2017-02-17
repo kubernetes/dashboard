@@ -14,9 +14,7 @@
 
 package common
 
-import (
-	"testing"
-)
+import "testing"
 
 func TestToRequestParam(t *testing.T) {
 	nsQ := NewSameNamespaceQuery("foo")

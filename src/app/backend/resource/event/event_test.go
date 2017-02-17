@@ -18,10 +18,9 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	api "k8s.io/client-go/pkg/api/v1"
-
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 )
 
 func TestGetPodsEventWarningsApi(t *testing.T) {
@@ -247,7 +246,7 @@ func TestIsReadyOrSucceeded(t *testing.T) {
 				Status: api.PodStatus{
 					Phase: api.PodRunning,
 					Conditions: []api.PodCondition{
-						api.PodCondition{
+						{
 							Type:   api.PodReady,
 							Status: api.ConditionTrue,
 						},
@@ -285,7 +284,7 @@ func TestIsReadyOrSucceeded(t *testing.T) {
 				Status: api.PodStatus{
 					Phase: api.PodRunning,
 					Conditions: []api.PodCondition{
-						api.PodCondition{
+						{
 							Type:   api.PodReady,
 							Status: api.ConditionFalse,
 						},
