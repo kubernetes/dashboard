@@ -77,8 +77,7 @@ gulp.task('package-backend', ['package-backend-source', 'link-vendor']);
  * applied go commands.
  */
 gulp.task('package-backend-source', ['clean-packaged-backend-source'], function() {
-  return gulp
-      .src([path.join(conf.paths.backendSrc, '**/*'), path.join(conf.paths.backendTest, '**/*')])
+  return gulp.src([path.join(conf.paths.backendSrc, '**/*')])
       .pipe(gulp.dest(conf.paths.backendTmpSrc));
 });
 
