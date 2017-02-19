@@ -21,6 +21,7 @@ import eventsModule from 'events/events_module';
 import {containerInfoComponent} from './containerinfo_component';
 import {creatorInfoComponent} from './creatorinfo_component';
 import stateConfig from './poddetail_stateconfig';
+import {podOverviewComponent} from './podoverview_component';
 import {podInfoComponent} from './podinfo_component';
 
 
@@ -43,6 +44,7 @@ export default angular
           configMapModule.name,
         ])
     .config(stateConfig)
+    .component('kdPodOverview', podOverviewComponent)
     .component('kdPodInfo', podInfoComponent)
     .component('kdContainerInfo', containerInfoComponent)
     .component('kdCreatorInfo', creatorInfoComponent);
