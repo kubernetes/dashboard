@@ -18,28 +18,28 @@ import (
 	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	client "k8s.io/client-go/kubernetes"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // getJobPods returns list of pods targeting deployment.
 func GetDeploymentPods(client client.Interface, heapsterClient heapster.HeapsterClient,
 	dsQuery *dataselect.DataSelectQuery, namespace string, deploymentName string) (*pod.PodList, error) {
 
-	deployment, err := client.Extensions().Deployments(namespace).Get(deploymentName)
+	deployment, err := client.Extensions().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
 
-	selector, err := unversioned.LabelSelectorAsSelector(deployment.Spec.Selector)
+	selector, err := metaV1.LabelSelectorAsSelector(deployment.Spec.Selector)
 	if err != nil {
 		return nil, err
 	}
 
-	options := api.ListOptions{LabelSelector: selector}
+	options := metaV1.ListOptions{LabelSelector: selector.String()}
 	channels := &common.ResourceChannels{
 		PodList: common.GetPodListChannelWithOptions(client,
 			common.NewSameNamespaceQuery(namespace), options, 1),

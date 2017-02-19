@@ -18,7 +18,8 @@ import (
 	"reflect"
 	"testing"
 
-	"k8s.io/kubernetes/pkg/api"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 func TestFilterNamespacedServicesBySelector(t *testing.T) {
@@ -37,7 +38,7 @@ func TestFilterNamespacedServicesBySelector(t *testing.T) {
 			firstLabelSelectorMap, "test-ns-1",
 			[]api.Service{
 				{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Name:      "first-service-ok",
 						Namespace: "test-ns-1",
 					},
@@ -46,7 +47,7 @@ func TestFilterNamespacedServicesBySelector(t *testing.T) {
 					},
 				},
 				{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Name:      "second-service-wrong",
 						Namespace: "test-ns-2",
 					},
@@ -55,7 +56,7 @@ func TestFilterNamespacedServicesBySelector(t *testing.T) {
 					},
 				},
 				{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Name:      "third-service-wrong",
 						Namespace: "test-ns-1",
 					},
@@ -66,7 +67,7 @@ func TestFilterNamespacedServicesBySelector(t *testing.T) {
 			},
 			[]api.Service{
 				{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metaV1.ObjectMeta{
 						Name:      "first-service-ok",
 						Namespace: "test-ns-1",
 					},

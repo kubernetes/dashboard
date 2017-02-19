@@ -23,10 +23,11 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/limitrange"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/resourcequota"
-	"k8s.io/kubernetes/pkg/api"
-	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
-	"k8s.io/kubernetes/pkg/fields"
-	"k8s.io/kubernetes/pkg/labels"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/fields"
+	"k8s.io/apimachinery/pkg/labels"
+	k8sClient "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // NamespaceDetail is a presentation layer view of Kubernetes Namespace resource. This means it is Namespace plus
@@ -53,7 +54,7 @@ func GetNamespaceDetail(client k8sClient.Interface, heapsterClient client.Heapst
 	*NamespaceDetail, error) {
 	log.Printf("Getting details of %s namespace", name)
 
-	namespace, err := client.Core().Namespaces().Get(name)
+	namespace, err := client.Core().Namespaces().Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -90,9 +91,9 @@ func toNamespaceDetail(namespace api.Namespace, events common.EventList, resourc
 	}
 }
 
-var listEverything = api.ListOptions{
-	LabelSelector: labels.Everything(),
-	FieldSelector: fields.Everything(),
+var listEverything = metaV1.ListOptions{
+	LabelSelector: labels.Everything().String(),
+	FieldSelector: fields.Everything().String(),
 }
 
 func getResourceQuotas(client k8sClient.Interface, namespace api.Namespace) (*resourcequota.ResourceQuotaDetailList, error) {

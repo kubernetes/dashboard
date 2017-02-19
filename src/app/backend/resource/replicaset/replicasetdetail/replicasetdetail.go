@@ -17,9 +17,9 @@ package replicasetdetail
 import (
 	"log"
 
-	"k8s.io/kubernetes/pkg/api/unversioned"
-	"k8s.io/kubernetes/pkg/apis/extensions"
-	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	k8sClient "k8s.io/client-go/kubernetes"
+	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
@@ -52,7 +52,7 @@ type ReplicaSetDetail struct {
 	EventList common.EventList `json:"eventList"`
 
 	// Selector of this replica set.
-	Selector *unversioned.LabelSelector `json:"selector"`
+	Selector *metaV1.LabelSelector `json:"selector"`
 
 	// List of Horizontal Pod Autoscalers targeting this Replica Set.
 	HorizontalPodAutoscalerList horizontalpodautoscalerlist.HorizontalPodAutoscalerList `json:"horizontalPodAutoscalerList"`
@@ -64,7 +64,7 @@ func GetReplicaSetDetail(client k8sClient.Interface, heapsterClient client.Heaps
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 
 	// TODO(floreks): Use channels.
-	replicaSetData, err := client.Extensions().ReplicaSets(namespace).Get(name)
+	replicaSetData, err := client.Extensions().ReplicaSets(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

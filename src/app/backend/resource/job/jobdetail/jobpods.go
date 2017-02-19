@@ -19,14 +19,15 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/apis/batch"
-	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
-	"k8s.io/kubernetes/pkg/fields"
-	"k8s.io/kubernetes/pkg/labels"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/fields"
+	"k8s.io/apimachinery/pkg/labels"
+	k8sClient "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
+	batch "k8s.io/client-go/pkg/apis/batch/v1"
 )
 
 // GetJobPods return list of pods targeting job.
@@ -46,7 +47,7 @@ func GetJobPods(client k8sClient.Interface, heapsterClient client.HeapsterClient
 // Returns array of api pods targeting job with given name.
 func getRawJobPods(client k8sClient.Interface, petSetName, namespace string) ([]api.Pod, error) {
 
-	replicaSet, err := client.Batch().Jobs(namespace).Get(petSetName)
+	replicaSet, err := client.Batch().Jobs(namespace).Get(petSetName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -54,9 +55,9 @@ func getRawJobPods(client k8sClient.Interface, petSetName, namespace string) ([]
 	labelSelector := labels.SelectorFromSet(replicaSet.Spec.Selector.MatchLabels)
 	channels := &common.ResourceChannels{
 		PodList: common.GetPodListChannelWithOptions(client, common.NewSameNamespaceQuery(namespace),
-			api.ListOptions{
-				LabelSelector: labelSelector,
-				FieldSelector: fields.Everything(),
+			metaV1.ListOptions{
+				LabelSelector: labelSelector.String(),
+				FieldSelector: fields.Everything().String(),
 			}, 1),
 	}
 
@@ -74,9 +75,9 @@ func getJobPodInfo(client k8sClient.Interface, job *batch.Job) (*common.PodInfo,
 	channels := &common.ResourceChannels{
 		PodList: common.GetPodListChannelWithOptions(client, common.NewSameNamespaceQuery(
 			job.Namespace),
-			api.ListOptions{
-				LabelSelector: labelSelector,
-				FieldSelector: fields.Everything(),
+			metaV1.ListOptions{
+				LabelSelector: labelSelector.String(),
+				FieldSelector: fields.Everything().String(),
 			}, 1),
 	}
 

@@ -3,7 +3,7 @@ package common
 import (
 	"testing"
 
-	"k8s.io/kubernetes/pkg/api/unversioned"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func TestIsSelectorMatching(t *testing.T) {
@@ -38,31 +38,31 @@ func TestIsSelectorMatching(t *testing.T) {
 func TestIsLabelSelectorMatching(t *testing.T) {
 	cases := []struct {
 		serviceSelector   map[string]string
-		daemonSetselector *unversioned.LabelSelector
+		daemonSetselector *metaV1.LabelSelector
 		expected          bool
 	}{
 		{nil, nil, false},
-		{nil, &unversioned.LabelSelector{MatchLabels: map[string]string{}}, false},
+		{nil, &metaV1.LabelSelector{MatchLabels: map[string]string{}}, false},
 		{map[string]string{}, nil, false},
-		{map[string]string{}, &unversioned.LabelSelector{MatchLabels: map[string]string{}},
+		{map[string]string{}, &metaV1.LabelSelector{MatchLabels: map[string]string{}},
 			false},
 		{map[string]string{"app": "my-name"},
-			&unversioned.LabelSelector{MatchLabels: map[string]string{}},
+			&metaV1.LabelSelector{MatchLabels: map[string]string{}},
 			false},
 		{map[string]string{"app": "my-name", "version": "2"},
-			&unversioned.LabelSelector{MatchLabels: map[string]string{"app": "my-name", "version": "1.1"}},
+			&metaV1.LabelSelector{MatchLabels: map[string]string{"app": "my-name", "version": "1.1"}},
 			false},
 		{map[string]string{"app": "my-name", "env": "prod"},
-			&unversioned.LabelSelector{MatchLabels: map[string]string{"app": "my-name", "version": "1.1"}},
+			&metaV1.LabelSelector{MatchLabels: map[string]string{"app": "my-name", "version": "1.1"}},
 			false},
 		{map[string]string{"app": "my-name"},
-			&unversioned.LabelSelector{MatchLabels: map[string]string{"app": "my-name"}},
+			&metaV1.LabelSelector{MatchLabels: map[string]string{"app": "my-name"}},
 			true},
 		{map[string]string{"app": "my-name", "version": "1.1"},
-			&unversioned.LabelSelector{MatchLabels: map[string]string{"app": "my-name", "version": "1.1"}},
+			&metaV1.LabelSelector{MatchLabels: map[string]string{"app": "my-name", "version": "1.1"}},
 			true},
 		{map[string]string{"app": "my-name"},
-			&unversioned.LabelSelector{MatchLabels: map[string]string{"app": "my-name", "version": "1.1"}},
+			&metaV1.LabelSelector{MatchLabels: map[string]string{"app": "my-name", "version": "1.1"}},
 			true},
 	}
 	for _, c := range cases {

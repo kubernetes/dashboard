@@ -18,7 +18,8 @@ import (
 	"reflect"
 	"testing"
 
-	"k8s.io/kubernetes/pkg/api"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	api "k8s.io/client-go/pkg/api/v1"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 )
@@ -211,7 +212,7 @@ func TestToPod(t *testing.T) {
 			},
 		}, {
 			pod: &api.Pod{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metaV1.ObjectMeta{
 					Name: "test-pod", Namespace: "test-namespace",
 				}},
 			metrics: &common.MetricsByPod{},

@@ -19,10 +19,11 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"k8s.io/kubernetes/pkg/api"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
-	"k8s.io/kubernetes/pkg/fields"
-	"k8s.io/kubernetes/pkg/labels"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/fields"
+	"k8s.io/apimachinery/pkg/labels"
+	client "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // NamespaceList contains a list of namespaces in the cluster.
@@ -61,9 +62,9 @@ func GetNamespaceList(client *client.Clientset, dsQuery *dataselect.DataSelectQu
 	error) {
 	log.Printf("Getting namespace list")
 
-	namespaces, err := client.Namespaces().List(api.ListOptions{
-		LabelSelector: labels.Everything(),
-		FieldSelector: fields.Everything(),
+	namespaces, err := client.Namespaces().List(metaV1.ListOptions{
+		LabelSelector: labels.Everything().String(),
+		FieldSelector: fields.Everything().String(),
 	})
 
 	if err != nil {

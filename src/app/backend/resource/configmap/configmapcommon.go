@@ -16,7 +16,7 @@ package configmap
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"k8s.io/kubernetes/pkg/api"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // The code below allows to perform complex data section on []api.ConfigMap

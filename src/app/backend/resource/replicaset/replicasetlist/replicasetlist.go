@@ -24,10 +24,10 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
-	"k8s.io/kubernetes/pkg/api"
-	k8serrors "k8s.io/kubernetes/pkg/api/errors"
-	"k8s.io/kubernetes/pkg/apis/extensions"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	k8serrors "k8s.io/apimachinery/pkg/api/errors"
+	client "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
+	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
 // ReplicationSetList contains a list of Replica Sets in the cluster.
@@ -104,7 +104,7 @@ func CreateReplicaSetList(replicaSets []extensions.ReplicaSet, pods []api.Pod,
 		matchingPods := common.FilterNamespacedPodsBySelector(pods, replicaSet.ObjectMeta.Namespace,
 			replicaSet.Spec.Selector.MatchLabels)
 		podInfo := common.GetPodInfo(replicaSet.Status.Replicas,
-			replicaSet.Spec.Replicas, matchingPods)
+			*replicaSet.Spec.Replicas, matchingPods)
 		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 
 		replicaSetList.ReplicaSets = append(replicaSetList.ReplicaSets, replicaset.ToReplicaSet(&replicaSet, &podInfo))

@@ -19,11 +19,13 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"k8s.io/kubernetes/pkg/api"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
-	"k8s.io/kubernetes/pkg/fields"
-	"k8s.io/kubernetes/pkg/labels"
-	"k8s.io/kubernetes/pkg/types"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/fields"
+	"k8s.io/apimachinery/pkg/labels"
+	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/types"
+	client "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // GetEvents gets events associated to resource with given name.
@@ -39,9 +41,9 @@ func GetEvents(client client.Interface, namespace, resourceName string) ([]api.E
 		EventList: common.GetEventListChannelWithOptions(
 			client,
 			common.NewSameNamespaceQuery(namespace),
-			api.ListOptions{
-				LabelSelector: labels.Everything(),
-				FieldSelector: fieldSelector,
+			metaV1.ListOptions{
+				LabelSelector: labels.Everything().String(),
+				FieldSelector: fieldSelector.String(),
 			},
 			1),
 	}
@@ -62,9 +64,9 @@ func GetPodsEvents(client client.Interface, namespace string, resourceSelector m
 		PodList: common.GetPodListChannelWithOptions(
 			client,
 			common.NewSameNamespaceQuery(namespace),
-			api.ListOptions{
-				LabelSelector: labels.SelectorFromSet(resourceSelector),
-				FieldSelector: fields.Everything(),
+			metaV1.ListOptions{
+				LabelSelector: labels.SelectorFromSet(resourceSelector).String(),
+				FieldSelector: fields.Everything().String(),
 			},
 			1),
 		EventList: common.GetEventListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
@@ -90,10 +92,10 @@ func GetNodeEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery,
 	var eventList common.EventList
 
 	mc := client.Core().Nodes()
-	node, _ := mc.Get(nodeName)
-	if ref, err := api.GetReference(node); err == nil {
+	node, _ := mc.Get(nodeName, metaV1.GetOptions{})
+	if ref, err := api.GetReference(runtime.NewScheme(), node); err == nil {
 		ref.UID = types.UID(ref.Name)
-		events, _ := client.Core().Events(api.NamespaceAll).Search(ref)
+		events, _ := client.Core().Events(api.NamespaceAll).Search(runtime.NewScheme(), ref)
 		eventList = CreateEventList(events.Items, dsQuery)
 	} else {
 		log.Print(err)
@@ -104,9 +106,9 @@ func GetNodeEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery,
 
 // GetNodeEvents gets events associated to node with given name.
 func GetNamespaceEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace string) (common.EventList, error) {
-	events, _ := client.Core().Events(namespace).List(api.ListOptions{
-		LabelSelector: labels.Everything(),
-		FieldSelector: fields.Everything(),
+	events, _ := client.Core().Events(namespace).List(metaV1.ListOptions{
+		LabelSelector: labels.Everything().String(),
+		FieldSelector: fields.Everything().String(),
 	})
 	return CreateEventList(events.Items, dsQuery), nil
 }

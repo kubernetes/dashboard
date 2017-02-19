@@ -16,14 +16,15 @@ package replicationcontroller
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
-	"k8s.io/kubernetes/pkg/fields"
-	"k8s.io/kubernetes/pkg/labels"
+
+	"k8s.io/apimachinery/pkg/apis/meta/v1"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/fields"
+	"k8s.io/apimachinery/pkg/labels"
+	client "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // ReplicationController (aka. Replication Controller) plus zero or more Kubernetes services that
@@ -42,7 +43,7 @@ type ReplicationController struct {
 // Transforms simple selector map to labels.Selector object that can be used when querying for
 // object.
 func toLabelSelector(selector map[string]string) (labels.Selector, error) {
-	labelSelector, err := unversioned.LabelSelectorAsSelector(&unversioned.LabelSelector{MatchLabels: selector})
+	labelSelector, err := v1.LabelSelectorAsSelector(&v1.LabelSelector{MatchLabels: selector})
 
 	if err != nil {
 		return nil, err
@@ -57,9 +58,9 @@ func toLabelSelector(selector map[string]string) (labels.Selector, error) {
 func getServicesForDeletion(client client.Interface, labelSelector labels.Selector,
 	namespace string) ([]api.Service, error) {
 
-	replicationControllers, err := client.Core().ReplicationControllers(namespace).List(api.ListOptions{
-		LabelSelector: labelSelector,
-		FieldSelector: fields.Everything(),
+	replicationControllers, err := client.Core().ReplicationControllers(namespace).List(metaV1.ListOptions{
+		LabelSelector: labelSelector.String(),
+		FieldSelector: fields.Everything().String(),
 	})
 	if err != nil {
 		return nil, err
@@ -72,9 +73,9 @@ func getServicesForDeletion(client client.Interface, labelSelector labels.Select
 		return []api.Service{}, nil
 	}
 
-	services, err := client.Core().Services(namespace).List(api.ListOptions{
-		LabelSelector: labelSelector,
-		FieldSelector: fields.Everything(),
+	services, err := client.Core().Services(namespace).List(metaV1.ListOptions{
+		LabelSelector: labelSelector.String(),
+		FieldSelector: fields.Everything().String(),
 	})
 	if err != nil {
 		return nil, err

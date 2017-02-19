@@ -23,17 +23,18 @@ import (
 	"testing"
 	"time"
 
+	"k8s.io/apimachinery/pkg/api/errors"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/apimachinery/pkg/watch"
+	testcore "k8s.io/client-go/testing"
 	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/errors"
-	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/batch"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
 	coreclient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/typed/core/internalversion"
-	testcore "k8s.io/kubernetes/pkg/client/testing/core"
 	deploymentutil "k8s.io/kubernetes/pkg/controller/deployment/util"
-	"k8s.io/kubernetes/pkg/runtime"
-	"k8s.io/kubernetes/pkg/watch"
 )
 
 func TestReplicationControllerStop(t *testing.T) {
@@ -51,7 +52,7 @@ func TestReplicationControllerStop(t *testing.T) {
 				&api.ReplicationControllerList{ // LIST
 					Items: []api.ReplicationController{
 						{
-							ObjectMeta: api.ObjectMeta{
+							ObjectMeta: metav1.ObjectMeta{
 								Name:      name,
 								Namespace: ns,
 							},
@@ -71,7 +72,7 @@ func TestReplicationControllerStop(t *testing.T) {
 				&api.ReplicationControllerList{ // LIST
 					Items: []api.ReplicationController{
 						{
-							ObjectMeta: api.ObjectMeta{
+							ObjectMeta: metav1.ObjectMeta{
 								Name:      "baz",
 								Namespace: ns,
 							},
@@ -80,7 +81,7 @@ func TestReplicationControllerStop(t *testing.T) {
 								Selector: map[string]string{"k3": "v3"}},
 						},
 						{
-							ObjectMeta: api.ObjectMeta{
+							ObjectMeta: metav1.ObjectMeta{
 								Name:      name,
 								Namespace: ns,
 							},
@@ -101,7 +102,7 @@ func TestReplicationControllerStop(t *testing.T) {
 				&api.ReplicationControllerList{ // LIST
 					Items: []api.ReplicationController{
 						{
-							ObjectMeta: api.ObjectMeta{
+							ObjectMeta: metav1.ObjectMeta{
 								Name:      "baz",
 								Namespace: ns,
 							},
@@ -110,7 +111,7 @@ func TestReplicationControllerStop(t *testing.T) {
 								Selector: map[string]string{"k1": "v1", "k2": "v2"}},
 						},
 						{
-							ObjectMeta: api.ObjectMeta{
+							ObjectMeta: metav1.ObjectMeta{
 								Name:      name,
 								Namespace: ns,
 							},
@@ -132,7 +133,7 @@ func TestReplicationControllerStop(t *testing.T) {
 				&api.ReplicationControllerList{ // LIST
 					Items: []api.ReplicationController{
 						{
-							ObjectMeta: api.ObjectMeta{
+							ObjectMeta: metav1.ObjectMeta{
 								Name:      "baz",
 								Namespace: ns,
 							},
@@ -141,7 +142,7 @@ func TestReplicationControllerStop(t *testing.T) {
 								Selector: map[string]string{"k1": "v1", "k2": "v2", "k3": "v3"}},
 						},
 						{
-							ObjectMeta: api.ObjectMeta{
+							ObjectMeta: metav1.ObjectMeta{
 								Name:      "zaz",
 								Namespace: ns,
 							},
@@ -150,7 +151,7 @@ func TestReplicationControllerStop(t *testing.T) {
 								Selector: map[string]string{"k1": "v1"}},
 						},
 						{
-							ObjectMeta: api.ObjectMeta{
+							ObjectMeta: metav1.ObjectMeta{
 								Name:      name,
 								Namespace: ns,
 							},
@@ -173,7 +174,7 @@ func TestReplicationControllerStop(t *testing.T) {
 				&api.ReplicationControllerList{ // LIST
 					Items: []api.ReplicationController{
 						{
-							ObjectMeta: api.ObjectMeta{
+							ObjectMeta: metav1.ObjectMeta{
 								Name:      "zaz",
 								Namespace: ns,
 							},
@@ -182,7 +183,7 @@ func TestReplicationControllerStop(t *testing.T) {
 								Selector: map[string]string{"k1": "v1"}},
 						},
 						{
-							ObjectMeta: api.ObjectMeta{
+							ObjectMeta: metav1.ObjectMeta{
 								Name:      name,
 								Namespace: ns,
 							},
@@ -250,13 +251,13 @@ func TestReplicaSetStop(t *testing.T) {
 				&extensions.ReplicaSetList{ // LIST
 					Items: []extensions.ReplicaSet{
 						{
-							ObjectMeta: api.ObjectMeta{
+							ObjectMeta: metav1.ObjectMeta{
 								Name:      name,
 								Namespace: ns,
 							},
 							Spec: extensions.ReplicaSetSpec{
 								Replicas: 0,
-								Selector: &unversioned.LabelSelector{MatchLabels: map[string]string{"k1": "v1"}},
+								Selector: &metav1.LabelSelector{MatchLabels: map[string]string{"k1": "v1"}},
 							},
 						},
 					},
@@ -271,23 +272,23 @@ func TestReplicaSetStop(t *testing.T) {
 				&extensions.ReplicaSetList{ // LIST
 					Items: []extensions.ReplicaSet{
 						{
-							ObjectMeta: api.ObjectMeta{
+							ObjectMeta: metav1.ObjectMeta{
 								Name:      "baz",
 								Namespace: ns,
 							},
 							Spec: extensions.ReplicaSetSpec{
 								Replicas: 0,
-								Selector: &unversioned.LabelSelector{MatchLabels: map[string]string{"k3": "v3"}},
+								Selector: &metav1.LabelSelector{MatchLabels: map[string]string{"k3": "v3"}},
 							},
 						},
 						{
-							ObjectMeta: api.ObjectMeta{
+							ObjectMeta: metav1.ObjectMeta{
 								Name:      name,
 								Namespace: ns,
 							},
 							Spec: extensions.ReplicaSetSpec{
 								Replicas: 0,
-								Selector: &unversioned.LabelSelector{MatchLabels: map[string]string{"k1": "v1"}},
+								Selector: &metav1.LabelSelector{MatchLabels: map[string]string{"k1": "v1"}},
 							},
 						},
 					},
@@ -341,13 +342,13 @@ func TestJobStop(t *testing.T) {
 				&batch.JobList{ // LIST
 					Items: []batch.Job{
 						{
-							ObjectMeta: api.ObjectMeta{
+							ObjectMeta: metav1.ObjectMeta{
 								Name:      name,
 								Namespace: ns,
 							},
 							Spec: batch.JobSpec{
 								Parallelism: &zero,
-								Selector: &unversioned.LabelSelector{
+								Selector: &metav1.LabelSelector{
 									MatchLabels: map[string]string{"k1": "v1"},
 								},
 							},
@@ -365,13 +366,13 @@ func TestJobStop(t *testing.T) {
 				&batch.JobList{ // LIST
 					Items: []batch.Job{
 						{
-							ObjectMeta: api.ObjectMeta{
+							ObjectMeta: metav1.ObjectMeta{
 								Name:      name,
 								Namespace: ns,
 							},
 							Spec: batch.JobSpec{
 								Parallelism: &zero,
-								Selector: &unversioned.LabelSelector{
+								Selector: &metav1.LabelSelector{
 									MatchLabels: map[string]string{"k1": "v1"},
 								},
 							},
@@ -381,7 +382,7 @@ func TestJobStop(t *testing.T) {
 				&api.PodList{ // LIST
 					Items: []api.Pod{
 						{
-							ObjectMeta: api.ObjectMeta{
+							ObjectMeta: metav1.ObjectMeta{
 								Name:      "pod1",
 								Namespace: ns,
 								Labels:    map[string]string{"k1": "v1"},
@@ -426,19 +427,19 @@ func TestDeploymentStop(t *testing.T) {
 	name := "foo"
 	ns := "default"
 	deployment := extensions.Deployment{
-		ObjectMeta: api.ObjectMeta{
+		ObjectMeta: metav1.ObjectMeta{
 			Name:      name,
 			Namespace: ns,
 		},
 		Spec: extensions.DeploymentSpec{
 			Replicas: 0,
-			Selector: &unversioned.LabelSelector{MatchLabels: map[string]string{"k1": "v1"}},
+			Selector: &metav1.LabelSelector{MatchLabels: map[string]string{"k1": "v1"}},
 		},
 		Status: extensions.DeploymentStatus{
 			Replicas: 0,
 		},
 	}
-	template := deploymentutil.GetNewReplicaSetTemplate(&deployment)
+	template := deploymentutil.GetNewReplicaSetTemplateInternal(&deployment)
 	tests := []struct {
 		Name            string
 		Objs            []runtime.Object
@@ -449,13 +450,13 @@ func TestDeploymentStop(t *testing.T) {
 			Name: "SimpleDeployment",
 			Objs: []runtime.Object{
 				&extensions.Deployment{ // GET
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: metav1.ObjectMeta{
 						Name:      name,
 						Namespace: ns,
 					},
 					Spec: extensions.DeploymentSpec{
 						Replicas: 0,
-						Selector: &unversioned.LabelSelector{MatchLabels: map[string]string{"k1": "v1"}},
+						Selector: &metav1.LabelSelector{MatchLabels: map[string]string{"k1": "v1"}},
 					},
 					Status: extensions.DeploymentStatus{
 						Replicas: 0,
@@ -473,7 +474,7 @@ func TestDeploymentStop(t *testing.T) {
 				&extensions.ReplicaSetList{ // LIST
 					Items: []extensions.ReplicaSet{
 						{
-							ObjectMeta: api.ObjectMeta{
+							ObjectMeta: metav1.ObjectMeta{
 								Name:      name,
 								Namespace: ns,
 								Labels:    map[string]string{"k1": "v1"},
@@ -526,7 +527,7 @@ type noSuchPod struct {
 	coreclient.PodInterface
 }
 
-func (c *noSuchPod) Get(name string) (*api.Pod, error) {
+func (c *noSuchPod) Get(name string, options metav1.GetOptions) (*api.Pod, error) {
 	return nil, fmt.Errorf("%s does not exist", name)
 }
 
@@ -534,7 +535,7 @@ type noDeleteService struct {
 	coreclient.ServiceInterface
 }
 
-func (c *noDeleteService) Delete(service string, o *api.DeleteOptions) error {
+func (c *noDeleteService) Delete(service string, o *metav1.DeleteOptions) error {
 	return fmt.Errorf("I'm afraid I can't do that, Dave")
 }
 
@@ -569,17 +570,17 @@ func (c *reaperCoreFake) Services(namespace string) coreclient.ServiceInterface 
 }
 
 func pod() *api.Pod {
-	return &api.Pod{ObjectMeta: api.ObjectMeta{Namespace: api.NamespaceDefault, Name: "foo"}}
+	return &api.Pod{ObjectMeta: metav1.ObjectMeta{Namespace: metav1.NamespaceDefault, Name: "foo"}}
 }
 
 func service() *api.Service {
-	return &api.Service{ObjectMeta: api.ObjectMeta{Namespace: api.NamespaceDefault, Name: "foo"}}
+	return &api.Service{ObjectMeta: metav1.ObjectMeta{Namespace: metav1.NamespaceDefault, Name: "foo"}}
 }
 
 func TestSimpleStop(t *testing.T) {
 	tests := []struct {
 		fake        *reaperFake
-		kind        unversioned.GroupKind
+		kind        schema.GroupKind
 		actions     []testcore.Action
 		expectError bool
 		test        string
@@ -590,8 +591,8 @@ func TestSimpleStop(t *testing.T) {
 			},
 			kind: api.Kind("Pod"),
 			actions: []testcore.Action{
-				testcore.NewGetAction(api.Resource("pods").WithVersion(""), api.NamespaceDefault, "foo"),
-				testcore.NewDeleteAction(api.Resource("pods").WithVersion(""), api.NamespaceDefault, "foo"),
+				testcore.NewGetAction(api.Resource("pods").WithVersion(""), metav1.NamespaceDefault, "foo"),
+				testcore.NewDeleteAction(api.Resource("pods").WithVersion(""), metav1.NamespaceDefault, "foo"),
 			},
 			expectError: false,
 			test:        "stop pod succeeds",
@@ -602,8 +603,8 @@ func TestSimpleStop(t *testing.T) {
 			},
 			kind: api.Kind("Service"),
 			actions: []testcore.Action{
-				testcore.NewGetAction(api.Resource("services").WithVersion(""), api.NamespaceDefault, "foo"),
-				testcore.NewDeleteAction(api.Resource("services").WithVersion(""), api.NamespaceDefault, "foo"),
+				testcore.NewGetAction(api.Resource("services").WithVersion(""), metav1.NamespaceDefault, "foo"),
+				testcore.NewDeleteAction(api.Resource("services").WithVersion(""), metav1.NamespaceDefault, "foo"),
 			},
 			expectError: false,
 			test:        "stop service succeeds",
@@ -625,7 +626,7 @@ func TestSimpleStop(t *testing.T) {
 			},
 			kind: api.Kind("Service"),
 			actions: []testcore.Action{
-				testcore.NewGetAction(api.Resource("services").WithVersion(""), api.NamespaceDefault, "foo"),
+				testcore.NewGetAction(api.Resource("services").WithVersion(""), metav1.NamespaceDefault, "foo"),
 			},
 			expectError: true,
 			test:        "stop service fails, can't delete",
@@ -663,25 +664,25 @@ func TestDeploymentNotFoundError(t *testing.T) {
 	name := "foo"
 	ns := "default"
 	deployment := &extensions.Deployment{
-		ObjectMeta: api.ObjectMeta{
+		ObjectMeta: metav1.ObjectMeta{
 			Name:      name,
 			Namespace: ns,
 		},
 		Spec: extensions.DeploymentSpec{
 			Replicas: 0,
-			Selector: &unversioned.LabelSelector{MatchLabels: map[string]string{"k1": "v1"}},
+			Selector: &metav1.LabelSelector{MatchLabels: map[string]string{"k1": "v1"}},
 		},
 		Status: extensions.DeploymentStatus{
 			Replicas: 0,
 		},
 	}
-	template := deploymentutil.GetNewReplicaSetTemplate(deployment)
+	template := deploymentutil.GetNewReplicaSetTemplateInternal(deployment)
 
 	fake := fake.NewSimpleClientset(
 		deployment,
 		&extensions.ReplicaSetList{Items: []extensions.ReplicaSet{
 			{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metav1.ObjectMeta{
 					Name:      name,
 					Namespace: ns,
 				},

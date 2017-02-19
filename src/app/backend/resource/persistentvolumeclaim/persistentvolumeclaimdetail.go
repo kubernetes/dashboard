@@ -18,8 +18,9 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"k8s.io/kubernetes/pkg/api"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	client "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // PersistentVolumeClaimDetail provides the presentation layer view of Kubernetes Persistent Volume Claim resource.
@@ -36,7 +37,7 @@ type PersistentVolumeClaimDetail struct {
 func GetPersistentVolumeClaimDetail(client *client.Clientset, namespace string, name string) (*PersistentVolumeClaimDetail, error) {
 	log.Printf("Getting details of %s persistent volume claim", name)
 
-	rawPersistentVolumeClaim, err := client.PersistentVolumeClaims(namespace).Get(name)
+	rawPersistentVolumeClaim, err := client.PersistentVolumeClaims(namespace).Get(name, metaV1.GetOptions{})
 
 	if err != nil {
 		return nil, err

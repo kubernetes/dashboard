@@ -19,8 +19,9 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/resource"
+	"k8s.io/apimachinery/pkg/api/resource"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 func TestGetResourceQuotaDetail(t *testing.T) {
@@ -33,7 +34,7 @@ func TestGetResourceQuotaDetail(t *testing.T) {
 	}{
 		{
 			&api.ResourceQuota{
-				ObjectMeta: api.ObjectMeta{Name: "foo"},
+				ObjectMeta: metaV1.ObjectMeta{Name: "foo"},
 				Spec: api.ResourceQuotaSpec{
 					Hard: map[api.ResourceName]resource.Quantity{
 						api.ResourceMemory: testMemoryQuantity,

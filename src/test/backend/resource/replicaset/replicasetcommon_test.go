@@ -20,8 +20,8 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/apis/extensions"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
 func TestToReplicaSet(t *testing.T) {
@@ -31,7 +31,7 @@ func TestToReplicaSet(t *testing.T) {
 		expected   ReplicaSet
 	}{
 		{
-			&extensions.ReplicaSet{ObjectMeta: api.ObjectMeta{Name: "replica-set"}},
+			&extensions.ReplicaSet{ObjectMeta: metaV1.ObjectMeta{Name: "replica-set"}},
 			&common.PodInfo{Running: 1, Warnings: []common.Event{}},
 			ReplicaSet{
 				ObjectMeta: common.ObjectMeta{Name: "replica-set"},

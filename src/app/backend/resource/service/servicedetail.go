@@ -19,14 +19,15 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"k8s.io/kubernetes/pkg/api"
-	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
-	"k8s.io/kubernetes/pkg/fields"
-	"k8s.io/kubernetes/pkg/labels"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/fields"
+	"k8s.io/apimachinery/pkg/labels"
+	k8sClient "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // Service is a representation of a service.
@@ -63,7 +64,7 @@ func GetServiceDetail(client k8sClient.Interface, heapsterClient client.Heapster
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 
 	// TODO(maciaszczykm): Use channels.
-	serviceData, err := client.Core().Services(namespace).Get(name)
+	serviceData, err := client.Core().Services(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -83,14 +84,14 @@ func GetServiceDetail(client k8sClient.Interface, heapsterClient client.Heapster
 func GetServicePods(client k8sClient.Interface, heapsterClient client.HeapsterClient, namespace,
 	name string, dsQuery *dataselect.DataSelectQuery) (*pod.PodList, error) {
 
-	service, err := client.Core().Services(namespace).Get(name)
+	service, err := client.Core().Services(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
 
 	if service.Spec.Selector == nil {
-		emptyPodList := &pod.PodList {
-			Pods: []pod.Pod{},
+		emptyPodList := &pod.PodList{
+			Pods:              []pod.Pod{},
 			CumulativeMetrics: []metric.Metric{},
 		}
 		return emptyPodList, nil
@@ -100,9 +101,9 @@ func GetServicePods(client k8sClient.Interface, heapsterClient client.HeapsterCl
 	channels := &common.ResourceChannels{
 		PodList: common.GetPodListChannelWithOptions(client,
 			common.NewSameNamespaceQuery(namespace),
-			api.ListOptions{
-				LabelSelector: labelSelector,
-				FieldSelector: fields.Everything(),
+			metaV1.ListOptions{
+				LabelSelector: labelSelector.String(),
+				FieldSelector: fields.Everything().String(),
 			},
 			1),
 	}

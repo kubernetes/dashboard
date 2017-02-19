@@ -17,18 +17,17 @@ package statefulsetlist
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-
 	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
-	"k8s.io/kubernetes/pkg/api"
-	k8serrors "k8s.io/kubernetes/pkg/api/errors"
-	"k8s.io/kubernetes/pkg/apis/apps"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
-
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset"
+
+	k8serrors "k8s.io/apimachinery/pkg/api/errors"
+	client "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
+	apps "k8s.io/client-go/pkg/apis/apps/v1beta1"
 )
 
 // StatefulSetList contains a list of Pet Sets in the cluster.
@@ -120,7 +119,7 @@ func CreateStatefulSetList(statefulSets []apps.StatefulSet, pods []api.Pod, even
 		matchingPods := common.FilterNamespacedPodsBySelector(pods, statefulSet.ObjectMeta.Namespace,
 			statefulSet.Spec.Selector.MatchLabels)
 		// TODO(floreks): Conversion should be omitted when client type will be updated
-		podInfo := common.GetPodInfo(int32(statefulSet.Status.Replicas), int32(statefulSet.Spec.Replicas),
+		podInfo := common.GetPodInfo(statefulSet.Status.Replicas, *statefulSet.Spec.Replicas,
 			matchingPods)
 		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 

@@ -18,10 +18,10 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
-	"k8s.io/kubernetes/pkg/apis/extensions"
-	"k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/fake"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/client-go/kubernetes/fake"
+	api "k8s.io/client-go/pkg/api/v1"
+	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 
 	"reflect"
 	"testing"
@@ -41,16 +41,16 @@ func TestGetReplicaSetEvents(t *testing.T) {
 		{
 			"ns-1", "rs-1",
 			&api.EventList{Items: []api.Event{
-				{Message: "test-message", ObjectMeta: api.ObjectMeta{
+				{Message: "test-message", ObjectMeta: metaV1.ObjectMeta{
 					Name: "ev-1", Namespace: "ns-1", Labels: labelSelector}},
 			}},
-			&api.PodList{Items: []api.Pod{{ObjectMeta: api.ObjectMeta{
+			&api.PodList{Items: []api.Pod{{ObjectMeta: metaV1.ObjectMeta{
 				Name: "pod-1", Namespace: "ns-1"}}}},
 			&extensions.ReplicaSet{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metaV1.ObjectMeta{
 					Name: "rs-1", Namespace: "ns-1", Labels: labelSelector},
 				Spec: extensions.ReplicaSetSpec{
-					Selector: &unversioned.LabelSelector{
+					Selector: &metaV1.LabelSelector{
 						MatchLabels: labelSelector,
 					}}},
 			[]string{"list", "get", "list", "list"},
@@ -106,19 +106,19 @@ func TestGetReplicaSetPodsEvents(t *testing.T) {
 		{
 			"ns-1", "rs-1",
 			&api.EventList{Items: []api.Event{
-				{Message: "test-message", ObjectMeta: api.ObjectMeta{
+				{Message: "test-message", ObjectMeta: metaV1.ObjectMeta{
 					Name: "ev-1", Namespace: "ns-1", Labels: labelSelector}},
 			}},
-			&api.PodList{Items: []api.Pod{{ObjectMeta: api.ObjectMeta{
+			&api.PodList{Items: []api.Pod{{ObjectMeta: metaV1.ObjectMeta{
 				Name: "pod-1", Namespace: "ns-1", Labels: labelSelector}}}},
 			&extensions.ReplicaSet{
-				ObjectMeta: api.ObjectMeta{Name: "rs-1", Namespace: "ns-1", Labels: labelSelector},
+				ObjectMeta: metaV1.ObjectMeta{Name: "rs-1", Namespace: "ns-1", Labels: labelSelector},
 				Spec: extensions.ReplicaSetSpec{
-					Selector: &unversioned.LabelSelector{
+					Selector: &metaV1.LabelSelector{
 						MatchLabels: labelSelector,
 					}}},
 			[]string{"get", "list", "list"},
-			[]api.Event{{Message: "test-message", ObjectMeta: api.ObjectMeta{
+			[]api.Event{{Message: "test-message", ObjectMeta: metaV1.ObjectMeta{
 				Name: "ev-1", Namespace: "ns-1", Labels: labelSelector}}},
 		},
 	}

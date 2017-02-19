@@ -19,12 +19,13 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/apis/apps"
-	k8sClient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	k8sClient "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
+	apps "k8s.io/client-go/pkg/apis/apps/v1beta1"
 )
 
 // GetStatefulSetPods return list of pods targeting pet set.
@@ -45,7 +46,7 @@ func GetStatefulSetPods(client *k8sClient.Clientset, heapsterClient client.Heaps
 func getRawStatefulSetPods(client *k8sClient.Clientset, statefulSetName, namespace string) (
 	[]api.Pod, error) {
 
-	statefulSet, err := client.Apps().StatefulSets(namespace).Get(statefulSetName)
+	statefulSet, err := client.Apps().StatefulSets(namespace).Get(statefulSetName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -73,6 +74,6 @@ func getStatefulSetPodInfo(client *k8sClient.Clientset, statefulSet *apps.Statef
 		return nil, err
 	}
 
-	podInfo := common.GetPodInfo(int32(statefulSet.Status.Replicas), int32(statefulSet.Spec.Replicas), pods)
+	podInfo := common.GetPodInfo(statefulSet.Status.Replicas, *statefulSet.Spec.Replicas, pods)
 	return &podInfo, nil
 }

@@ -20,7 +20,9 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"k8s.io/kubernetes/pkg/api"
+
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 func TestGetConfigMapList(t *testing.T) {
@@ -31,7 +33,7 @@ func TestGetConfigMapList(t *testing.T) {
 		{nil, &ConfigMapList{Items: []ConfigMap{}}},
 		{
 			[]api.ConfigMap{
-				{Data: map[string]string{"app": "my-name"}, ObjectMeta: api.ObjectMeta{Name: "foo"}},
+				{Data: map[string]string{"app": "my-name"}, ObjectMeta: metaV1.ObjectMeta{Name: "foo"}},
 			},
 			&ConfigMapList{
 				ListMeta: common.ListMeta{TotalItems: 1},

@@ -48,8 +48,8 @@ before_script:
   - export CHROME_BIN=chromium-browser
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-  # Install go 1.6.1. It is not there by default.
-  - eval "$(gimme 1.6.1)"
+  # Install go 1.7.1. It is not there by default.
+  - eval "$(gimme 1.7.1)"
 
   - docker --version
 
