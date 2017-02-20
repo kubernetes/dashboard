@@ -203,6 +203,13 @@ func (apiHandler *APIHandler) getApiClient(request *restful.Request) (*clientK8s
 			ClusterInfo: clientcmdapi.Cluster{Server: apiHandler.clientConfig.ApiserverHost}})
 
 	cfg, err := clientConfig.ClientConfig()
+
+	// TODO Workaround, because ClientConfig doesn't override the token from the tokenfile with the one specified
+	// when run inside a cluster
+	if token != "" {
+		cfg.BearerToken = token
+	}
+
 	if err != nil {
 		return nil, nil, err
 	}
