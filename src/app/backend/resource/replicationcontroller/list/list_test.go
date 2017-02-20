@@ -27,7 +27,7 @@ import (
 )
 
 func TestGetReplicationControllerList(t *testing.T) {
-	t.Skip("TODO: Fix it")
+	replicas := int32(0)
 	events := []api.Event{}
 
 	cases := []struct {
@@ -51,6 +51,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 						Namespace: "namespace-1",
 					},
 					Spec: api.ReplicationControllerSpec{
+						Replicas: &replicas,
 						Selector: map[string]string{"app": "my-name-1"},
 						Template: &api.PodTemplateSpec{
 							Spec: api.PodSpec{Containers: []api.Container{{Image: "my-container-image-1"}}},
@@ -63,6 +64,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 						Namespace: "namespace-2",
 					},
 					Spec: api.ReplicationControllerSpec{
+						Replicas: &replicas,
 						Selector: map[string]string{"app": "my-name-2", "ver": "2"},
 						Template: &api.PodTemplateSpec{
 							Spec: api.PodSpec{Containers: []api.Container{{Image: "my-container-image-2"}}},

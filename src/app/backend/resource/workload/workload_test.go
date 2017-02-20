@@ -38,7 +38,7 @@ import (
 )
 
 func TestGetWorkloadsFromChannels(t *testing.T) {
-	t.Skip("TODO: Fix it")
+	replicas := int32(0)
 	var jobCompletions int32
 	cases := []struct {
 		k8sRs          extensions.ReplicaSetList
@@ -77,7 +77,10 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				Items: []extensions.ReplicaSet{
 					{
 						ObjectMeta: metaV1.ObjectMeta{Name: "rs-name"},
-						Spec:       extensions.ReplicaSetSpec{Selector: &metaV1.LabelSelector{}},
+						Spec: extensions.ReplicaSetSpec{
+							Replicas: &replicas,
+							Selector: &metaV1.LabelSelector{},
+						},
 					}},
 			},
 			batch.JobList{
@@ -101,13 +104,17 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				Items: []extensions.Deployment{
 					{
 						ObjectMeta: metaV1.ObjectMeta{Name: "deployment-name"},
-						Spec:       extensions.DeploymentSpec{Selector: &metaV1.LabelSelector{}},
+						Spec: extensions.DeploymentSpec{
+							Selector: &metaV1.LabelSelector{},
+							Replicas: &replicas,
+						},
 					}},
 			},
 			api.ReplicationControllerList{
 				Items: []api.ReplicationController{{
 					ObjectMeta: metaV1.ObjectMeta{Name: "rc-name"},
 					Spec: api.ReplicationControllerSpec{
+						Replicas: &replicas,
 						Template: &api.PodTemplateSpec{},
 					},
 				}},

@@ -9,7 +9,9 @@ import (
 	testapi "k8s.io/apimachinery/pkg/api/testing"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 	runtimeserializer "k8s.io/apimachinery/pkg/runtime/serializer"
+	api "k8s.io/client-go/pkg/api/v1"
 	restclient "k8s.io/client-go/rest"
 )
 
@@ -26,6 +28,11 @@ type FakeRESTClient struct {
 
 func (c *FakeRESTClient) Delete() *restclient.Request {
 	scheme := runtime.NewScheme()
+
+	groupVersion := schema.GroupVersion{Group: "meta.k8s.io", Version: "v1"}
+
+	scheme.AddKnownTypes(groupVersion, &api.DeleteOptions{})
+
 	factory := runtimeserializer.NewCodecFactory(scheme)
 	codec := testapi.TestCodec(factory, metaV1.SchemeGroupVersion)
 	return restclient.NewRequest(clientFunc(func(req *http.Request) (*http.Response, error) {
@@ -48,7 +55,6 @@ func (c *FakeRESTClient) Get() *restclient.Request {
 }
 
 func TestDeleteShouldPropagateErrorsAndChoseClient(t *testing.T) {
-	t.Skip("Needs fixing. Scheme definition and type registration needed.")
 	verber := ResourceVerber{
 		client:           &FakeRESTClient{err: errors.New("err")},
 		extensionsClient: &FakeRESTClient{err: errors.New("err from extensions")},
@@ -58,7 +64,7 @@ func TestDeleteShouldPropagateErrorsAndChoseClient(t *testing.T) {
 	err := verber.Delete("replicaset", true, "bar", "baz")
 
 	if !reflect.DeepEqual(err, errors.New("err from extensions")) {
-		t.Fatalf("Expected error on verber delete but got %#v", err)
+		t.Fatalf("Expected error on verber delete but got %#v", err.Error())
 	}
 
 	err = verber.Delete("service", true, "bar", "baz")

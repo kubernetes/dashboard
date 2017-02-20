@@ -49,34 +49,37 @@ func createDeployment(name, namespace, podTemplateName string, podLabel,
 
 func createReplicaSet(name, namespace string, labelSelector map[string]string,
 	podTemplateSpec api.PodTemplateSpec) extensions.ReplicaSet {
+	replicas := int32(0)
 	return extensions.ReplicaSet{
 		ObjectMeta: metaV1.ObjectMeta{
 			Name: name, Namespace: namespace, Labels: labelSelector,
 		},
-		Spec: extensions.ReplicaSetSpec{Template: podTemplateSpec},
+		Spec: extensions.ReplicaSetSpec{
+			Replicas: &replicas,
+			Template: podTemplateSpec,
+		},
 	}
 }
 
 func TestGetDeploymentDetail(t *testing.T) {
-	t.Skip("Needs fixing. Do not use kubernetes deployment utils.")
 	podList := &api.PodList{}
 	eventList := &api.EventList{}
 
 	deployment := createDeployment("dp-1", "ns-1", "pod-1", map[string]string{"track": "beta"},
 		map[string]string{"foo": "bar"})
 
-	//podTemplateSpec := util.GetNewReplicaSetTemplate(deployment)
+	podTemplateSpec := GetNewReplicaSetTemplate(deployment)
 
-	//newReplicaSet := createReplicaSet("rs-1", "ns-1", map[string]string{"foo": "bar"},
-	//	podTemplateSpec)
+	newReplicaSet := createReplicaSet("rs-1", "ns-1", map[string]string{"foo": "bar"},
+		podTemplateSpec)
 
-	//replicaSetList := &extensions.ReplicaSetList{
-	//	Items: []extensions.ReplicaSet{
-	//		newReplicaSet,
-	//		createReplicaSet("rs-2", "ns-1", map[string]string{"foo": "bar"},
-	//			podTemplateSpec),
-	//	},
-	//}
+	replicaSetList := &extensions.ReplicaSetList{
+		Items: []extensions.ReplicaSet{
+			newReplicaSet,
+			createReplicaSet("rs-2", "ns-1", map[string]string{"foo": "bar"},
+				podTemplateSpec),
+		},
+	}
 
 	cases := []struct {
 		namespace, name string
@@ -116,11 +119,11 @@ func TestGetDeploymentDetail(t *testing.T) {
 					ReplicaSets:       []replicaset.ReplicaSet{},
 					CumulativeMetrics: make([]metric.Metric, 0),
 				},
-				//NewReplicaSet: replicaset.ReplicaSet{
-				//	ObjectMeta: common.NewObjectMeta(newReplicaSet.ObjectMeta),
-				//	TypeMeta:   common.NewTypeMeta(common.ResourceKindReplicaSet),
-				//	Pods:       common.PodInfo{Warnings: []common.Event{}},
-				//},
+				NewReplicaSet: replicaset.ReplicaSet{
+					ObjectMeta: common.NewObjectMeta(newReplicaSet.ObjectMeta),
+					TypeMeta:   common.NewTypeMeta(common.ResourceKindReplicaSet),
+					Pods:       common.PodInfo{Warnings: []common.Event{}},
+				},
 				EventList: common.EventList{
 					Events: []common.Event{},
 				},
@@ -130,7 +133,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		fakeClient := fake.NewSimpleClientset(c.deployment, podList, eventList)
+		fakeClient := fake.NewSimpleClientset(c.deployment, replicaSetList, podList, eventList)
 
 		dataselect.DefaultDataSelectWithMetrics.MetricQuery = dataselect.NoMetrics
 		actual, _ := GetDeploymentDetail(fakeClient, nil, c.namespace, c.name)
