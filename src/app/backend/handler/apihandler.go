@@ -56,6 +56,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/servicesanddiscovery"
 	statefulsetdetail "github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/detail"
 	statefulsetlist "github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/list"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/storageclass"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/thirdpartyresource"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/workload"
 	"github.com/kubernetes/dashboard/src/app/backend/validation"
@@ -179,7 +180,7 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 
 	verber := common.NewResourceVerber(client.Core().RESTClient(),
 		client.Extensions().RESTClient(), client.Apps().RESTClient(),
-		client.Batch().RESTClient(), client.Autoscaling().RESTClient())
+		client.Batch().RESTClient(), client.Autoscaling().RESTClient(), client.Storage().RESTClient())
 
 	var csrfKey string
 	inClusterConfig, err := restclient.InClusterConfig()
@@ -609,6 +610,15 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 		apiV1Ws.GET("/thirdpartyresource/{thirdpartyresource}").
 			To(apiHandler.handleGetThirdPartyResourceDetail).
 			Writes(thirdpartyresource.ThirdPartyResourceDetail{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/storageclass").
+			To(apiHandler.handleGetStorageClassList).
+			Writes(storageclass.StorageClassList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/storageclass/{storageclass}").
+			To(apiHandler.handleGetStorageClass).
+			Writes(storageclass.StorageClass{}))
 
 	return wsContainer, nil
 }
@@ -1695,6 +1705,30 @@ func (apiHandler *APIHandler) handleGetJobEvents(request *restful.Request, respo
 
 	result, err := jobdetail.GetJobEvents(apiHandler.client, dataSelect, namespace,
 		name)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+// Handles get storage class list API call.
+func (apiHandler *APIHandler) handleGetStorageClassList(request *restful.Request, response *restful.Response) {
+	dataSelect := parseDataSelectPathParameter(request)
+
+	result, err := storageclass.GetStorageClassList(apiHandler.client, dataSelect)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+// Handles get storage class API call.
+func (apiHandler *APIHandler) handleGetStorageClass(request *restful.Request, response *restful.Response) {
+	name := request.PathParameter("storageclass")
+
+	result, err := storageclass.GetStorageClass(apiHandler.client, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return

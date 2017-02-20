@@ -116,6 +116,7 @@ const (
 	ResourceKindService                 = "service"
 	ResourceKindStatefulSet             = "statefulset"
 	ResourceKindThirdPartyResource      = "thirdpartyresource"
+	ResourceKindStorageClass            = "storageclass"
 )
 
 // ClientType represents type of client that is used to perform generic operations on resources.
@@ -130,6 +131,7 @@ const (
 	ClientTypeAppsClient        = "appsclient"
 	ClientTypeBatchClient       = "batchclient"
 	ClientTypeAutoscalingClient = "autoscalingclient"
+	ClientTypeStorageClient     = "storageclient"
 )
 
 // Mapping from resource kind to K8s apiserver API path. This is mostly pluralization, because
@@ -164,6 +166,7 @@ var kindToAPIMapping = map[string]struct {
 	ResourceKindService:                 {"services", ClientTypeDefault, true},
 	ResourceKindStatefulSet:             {"statefulsets", ClientTypeAppsClient, true},
 	ResourceKindThirdPartyResource:      {"thirdpartyresources", ClientTypeExtensionClient, true},
+	ResourceKindStorageClass:            {"storageclasses", ClientTypeStorageClient, true},
 }
 
 // IsSelectorMatching returns true when an object with the given
