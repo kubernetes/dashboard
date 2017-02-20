@@ -200,7 +200,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 }
 
 func TestCreateReplicaSetList(t *testing.T) {
-	t.Skip("TODO: Fix it")
+	replicas := int32(0)
 	cases := []struct {
 		replicaSets []extensions.ReplicaSet
 		pods        []api.Pod
@@ -211,9 +211,11 @@ func TestCreateReplicaSetList(t *testing.T) {
 			[]extensions.ReplicaSet{
 				{
 					ObjectMeta: metaV1.ObjectMeta{Name: "replica-set", Namespace: "ns-1"},
-					Spec: extensions.ReplicaSetSpec{Selector: &metaV1.LabelSelector{
-						MatchLabels: map[string]string{"key": "value"},
-					}},
+					Spec: extensions.ReplicaSetSpec{
+						Replicas: &replicas,
+						Selector: &metaV1.LabelSelector{
+							MatchLabels: map[string]string{"key": "value"},
+						}},
 				},
 			},
 			[]api.Pod{},
