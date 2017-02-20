@@ -40,7 +40,7 @@ func (c FakeHeapsterClient) Get(path string) client.RequestInterface {
 }
 
 func TestGetReplicaSetDetail(t *testing.T) {
-	t.Skip("TODO: Fix it")
+	replicas := int32(0)
 	cases := []struct {
 		namespace, name string
 		expectedActions []string
@@ -54,6 +54,7 @@ func TestGetReplicaSetDetail(t *testing.T) {
 				ObjectMeta: metaV1.ObjectMeta{Name: "rs-1", Namespace: "ns-1",
 					Labels: map[string]string{"app": "test"}},
 				Spec: extensions.ReplicaSetSpec{
+					Replicas: &replicas,
 					Selector: &metaV1.LabelSelector{
 						MatchLabels: map[string]string{"app": "test"},
 					},

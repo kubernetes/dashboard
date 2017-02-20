@@ -29,7 +29,7 @@ import (
 )
 
 func TestDeployApp(t *testing.T) {
-	t.Skip("TODO: Fix it")
+	replicas := int32(0)
 	namespace := "foo-namespace"
 	spec := &AppDeploymentSpec{
 		Namespace:       namespace,
@@ -44,6 +44,7 @@ func TestDeployApp(t *testing.T) {
 			Annotations: map[string]string{},
 		},
 		Spec: extensions.DeploymentSpec{
+			Replicas: &replicas,
 			Template: api.PodTemplateSpec{
 				ObjectMeta: metaV1.ObjectMeta{
 					Name:        "foo-name",
@@ -185,7 +186,6 @@ func TestGetAvailableProtocols(t *testing.T) {
 }
 
 func TestDeployAppFromFileWithValidContent(t *testing.T) {
-	t.Skip("TODO: Fix it")
 	validContent := "{\"kind\": \"Namespace\"," +
 		"\"apiVersion\": \"v1\"," +
 		"\"metadata\": {" +
@@ -207,7 +207,6 @@ func TestDeployAppFromFileWithValidContent(t *testing.T) {
 }
 
 func TestDeployAppFromFileWithInvalidContent(t *testing.T) {
-	t.Skip("TODO: Fix it")
 	spec := &AppDeploymentFromFileSpec{
 		Name:    "foo-name",
 		Content: "foo-content-invalid",
