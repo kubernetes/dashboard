@@ -24,7 +24,6 @@ import (
 )
 
 func TestUpdateReplicasCount(t *testing.T) {
-	t.Skip("TODO: Fix it")
 	expectedReplicas := int32(5)
 	cases := []struct {
 		namespace, replicationControllerName string
@@ -50,9 +49,9 @@ func TestUpdateReplicasCount(t *testing.T) {
 		UpdateReplicasCount(fakeClient, c.namespace, c.replicationControllerName, c.replicationControllerSpec)
 
 		actual := fakeClient.Actions()[1].(core.UpdateActionImpl).GetObject().(*api.ReplicationController)
-		if actual.Spec.Replicas != c.expected {
+		if *actual.Spec.Replicas != *c.expected {
 			t.Errorf("UpdateReplicasCount(client, %+v, %+v, %+v). Got %+v, expected %+v",
-				c.namespace, c.replicationControllerName, c.replicationControllerSpec, actual.Spec.Replicas, c.expected)
+				c.namespace, c.replicationControllerName, c.replicationControllerSpec, *actual.Spec.Replicas, *c.expected)
 		}
 
 		actions := fakeClient.Actions()
