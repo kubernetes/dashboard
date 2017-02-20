@@ -15,13 +15,14 @@ limitations under the License.
 -->
 
 <div class="kd-nav-group" ng-if="::$ctrl.shouldShowThirdPartyResources()">
-  <kd-nav-item class="kd-nav-group-item" state="{{::$ctrl.states.thirdpartyresource}}">
+  <kd-nav-item class="kd-nav-group-item" state="{{::$ctrl.states.thirdpartyresource}}"
+               active="$ctrl.isGroupActive()">
     [[Third Party Resources|Third Party Resources menu item in the nav.]]
   </kd-nav-item>
-  <kd-nav-item class="kd-nav-item"
-               ng-repeat="tpr in ::$ctrl.thirdPartyResourceList.thirdPartyResources">
-    <a ng-href="{{::$ctrl.getThirdPartyResourceDetailHref(tpr.objectMeta.name)}}">
+  <div ng-repeat="tpr in ::$ctrl.thirdPartyResourceList.thirdPartyResources">
+    <kd-nav-item class="kd-nav-item" href="{{::$ctrl.getThirdPartyResourceDetailHref(tpr.objectMeta.name)}}"
+                 active="$ctrl.isActive(tpr.objectMeta.name)">
       {{::tpr.objectMeta.name}}
-    </a>
-  </kd-nav-item>
+    </kd-nav-item>
+  </div>
 </div>

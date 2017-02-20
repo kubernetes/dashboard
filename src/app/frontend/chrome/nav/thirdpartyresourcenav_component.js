@@ -21,16 +21,12 @@ import {StateParams} from 'common/resource/resourcedetail';
  */
 export class ThirdPartyResourceNavController {
   /**
-   * @param
-   * {!./../../common/thirdpartyresource/thirdpartyresource_service.ThirdPartyResourceService}
-   * kdThirdPartyResourceService
+   * @param {!./../../common/thirdpartyresource/thirdpartyresource_service.ThirdPartyResourceService} kdThirdPartyResourceService
+   * @param {!./../../common/state/futurestate_service.FutureStateService} kdFutureStateService
    * @ngInject
    */
-  constructor($state, kdThirdPartyResourceService) {
-    /** @private
-     * {!./../../common/thirdpartyresource/thirdpartyresource_service.ThirdPartyResourceService}
-     * kdThirdPartyResourceService
-     */
+  constructor($state, kdThirdPartyResourceService, kdFutureStateService) {
+    /** @private {!./../../common/thirdpartyresource/thirdpartyresource_service.ThirdPartyResourceService} kdThirdPartyResourceService */
     this.kdThirdPartyResourceService_ = kdThirdPartyResourceService;
 
     /** @export {!backendApi.ThirdPartyResourceList} */
@@ -40,6 +36,9 @@ export class ThirdPartyResourceNavController {
     this.states;
 
     this.state_ = $state;
+
+    /** @private {!./../../common/state/futurestate_service.FutureStateService} */
+    this.kdFutureStateService_ = kdFutureStateService;
   }
 
   /** @export */
@@ -63,6 +62,28 @@ export class ThirdPartyResourceNavController {
    */
   getThirdPartyResourceDetailHref(thirdPartyResourceName) {
     return this.state_.href(thirdPartyResourceDetailState, new StateParams('', thirdPartyResourceName));
+  }
+
+  /**
+   * Returns true if third party resource state is active and menu entry should be highlighted.
+   *
+   * @return {boolean}
+   * @export
+   */
+  isGroupActive() {
+    return this.kdFutureStateService_.state.name === thirdPartyResourceState;
+  }
+
+  /**
+   * Returns true if current state is active and menu entry should be highlighted.
+   *
+   * @param {string} entry
+   * @return {boolean}
+   * @export
+   */
+  isActive(entry) {
+    return this.kdFutureStateService_.state.name === thirdPartyResourceDetailState &&
+        this.kdFutureStateService_.params.objectName === entry;
   }
 }
 
