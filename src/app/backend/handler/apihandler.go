@@ -31,16 +31,15 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/config"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/configmap"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/container"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset/daemonsetdetail"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset/daemonsetlist"
+	daemonsetdetail "github.com/kubernetes/dashboard/src/app/backend/resource/daemonset/detail"
+	daemonsetlist "github.com/kubernetes/dashboard/src/app/backend/resource/daemonset/list"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler/horizontalpodautoscalerdetail"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler/horizontalpodautoscalerlist"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/ingress"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/job/jobdetail"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/job/joblist"
+	jobdetail "github.com/kubernetes/dashboard/src/app/backend/resource/job/detail"
+	joblist "github.com/kubernetes/dashboard/src/app/backend/resource/job/list"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/logs"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
@@ -48,15 +47,15 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/replicasetdetail"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/replicasetlist"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller/replicationcontrollerdetail"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller/replicationcontrollerlist"
+	replicasetdetail "github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/detail"
+	replicasetlist "github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/list"
+	replicationcontrollerdetail "github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller/detail"
+	replicationcontrollerlist "github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller/list"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/secret"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/servicesanddiscovery"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/statefulsetdetail"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/statefulsetlist"
+	statefulsetdetail "github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/detail"
+	statefulsetlist "github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/list"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/thirdpartyresource"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/workload"
 	"github.com/kubernetes/dashboard/src/app/backend/validation"
@@ -408,15 +407,15 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 	apiV1Ws.Route(
 		apiV1Ws.GET("/horizontalpodautoscaler").
 			To(apiHandler.handleGetHorizontalPodAutoscalerList).
-			Writes(horizontalpodautoscalerlist.HorizontalPodAutoscalerList{}))
+			Writes(horizontalpodautoscaler.HorizontalPodAutoscalerList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/horizontalpodautoscaler/{namespace}").
 			To(apiHandler.handleGetHorizontalPodAutoscalerList).
-			Writes(horizontalpodautoscalerlist.HorizontalPodAutoscalerList{}))
+			Writes(horizontalpodautoscaler.HorizontalPodAutoscalerList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/horizontalpodautoscaler/{namespace}/{horizontalpodautoscaler}").
 			To(apiHandler.handleGetHorizontalPodAutoscalerDetail).
-			Writes(horizontalpodautoscalerdetail.HorizontalPodAutoscalerDetail{}))
+			Writes(horizontalpodautoscaler.HorizontalPodAutoscalerDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/job").
@@ -1617,7 +1616,7 @@ func (apiHandler *APIHandler) handleGetHorizontalPodAutoscalerList(request *rest
 	response *restful.Response) {
 	namespace := parseNamespacePathParameter(request)
 
-	result, err := horizontalpodautoscalerlist.GetHorizontalPodAutoscalerList(apiHandler.client, namespace)
+	result, err := horizontalpodautoscaler.GetHorizontalPodAutoscalerList(apiHandler.client, namespace)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1630,7 +1629,7 @@ func (apiHandler *APIHandler) handleGetHorizontalPodAutoscalerDetail(request *re
 	namespace := request.PathParameter("namespace")
 	horizontalpodautoscalerParam := request.PathParameter("horizontalpodautoscaler")
 
-	result, err := horizontalpodautoscalerdetail.GetHorizontalPodAutoscalerDetail(apiHandler.client, namespace, horizontalpodautoscalerParam)
+	result, err := horizontalpodautoscaler.GetHorizontalPodAutoscalerDetail(apiHandler.client, namespace, horizontalpodautoscalerParam)
 	if err != nil {
 		handleInternalError(response, err)
 		return

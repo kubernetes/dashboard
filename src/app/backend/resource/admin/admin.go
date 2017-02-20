@@ -22,20 +22,18 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/node"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
-	k8sClient "k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/kubernetes"
 )
 
 // Admin structure contains all resource lists grouped into the admin category.
 type Admin struct {
-	NamespaceList namespace.NamespaceList `json:"namespaceList"`
-
-	NodeList node.NodeList `json:"nodeList"`
-
+	NamespaceList        namespace.NamespaceList               `json:"namespaceList"`
+	NodeList             node.NodeList                         `json:"nodeList"`
 	PersistentVolumeList persistentvolume.PersistentVolumeList `json:"persistentVolumeList"`
 }
 
 // GetAdmin returns a list of all admin resources in the cluster.
-func GetAdmin(client *k8sClient.Clientset) (*Admin, error) {
+func GetAdmin(client *kubernetes.Clientset) (*Admin, error) {
 
 	log.Print("Getting admin category")
 	channels := &common.ResourceChannels{

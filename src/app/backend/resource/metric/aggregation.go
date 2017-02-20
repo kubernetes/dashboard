@@ -14,9 +14,7 @@
 
 package metric
 
-import (
-	"sort"
-)
+import "sort"
 
 // Aggregation modes which should be used for data aggregation. Eg. [sum, min, max].
 

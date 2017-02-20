@@ -14,9 +14,7 @@
 
 package common
 
-import (
-	api "k8s.io/client-go/pkg/api/v1"
-)
+import api "k8s.io/client-go/pkg/api/v1"
 
 // FilterNamespacedServicesBySelector returns services targeted by given resource selector in
 // given namespace.

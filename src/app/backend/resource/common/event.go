@@ -14,9 +14,7 @@
 
 package common
 
-import (
-	"k8s.io/apimachinery/pkg/apis/meta/v1"
-)
+import "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 // EventList is an events response structure.
 type EventList struct {
