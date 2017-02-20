@@ -15,12 +15,10 @@
 package event
 
 import (
+	"log"
 	"strings"
 
-	"log"
-
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-
 	"k8s.io/apimachinery/pkg/types"
 	api "k8s.io/client-go/pkg/api/v1"
 )

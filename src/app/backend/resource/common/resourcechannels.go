@@ -15,6 +15,7 @@
 package common
 
 import (
+	kdClient "github.com/kubernetes/dashboard/src/app/backend/client"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
@@ -24,8 +25,6 @@ import (
 	autoscaling "k8s.io/client-go/pkg/apis/autoscaling/v1"
 	batch "k8s.io/client-go/pkg/apis/batch/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
-
-	kdClient "github.com/kubernetes/dashboard/src/app/backend/client"
 )
 
 // ResourceChannels struct holds channels to resource lists. Each list channel is paired with
@@ -719,7 +718,7 @@ func GetPodMetricsChannel(heapsterClient kdClient.HeapsterClient, name string, n
 	}
 
 	go func() {
-		podNamesByNamespace := map[string][]string{namespace: []string{name}}
+		podNamesByNamespace := map[string][]string{namespace: {name}}
 		metrics, err := getPodListMetrics(podNamesByNamespace, heapsterClient)
 		channel.MetricsByPod <- metrics
 		channel.Error <- err

@@ -17,9 +17,9 @@ package client
 import (
 	"log"
 
-	client "k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
-	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
+	"k8s.io/client-go/tools/clientcmd/api"
 )
 
 // Dashboard UI default values for client configs.
@@ -38,11 +38,11 @@ const (
 //
 // apiserverHost param is in the format of protocol://address:port/pathPrefix, e.g.http://localhost:8001.
 // kubeConfig location of kubeconfig file
-func CreateApiserverClient(apiserverHost string, kubeConfig string) (*client.Clientset, clientcmd.ClientConfig, error) {
+func CreateApiserverClient(apiserverHost string, kubeConfig string) (*kubernetes.Clientset, clientcmd.ClientConfig, error) {
 
 	clientConfig := clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
 		&clientcmd.ClientConfigLoadingRules{ExplicitPath: kubeConfig},
-		&clientcmd.ConfigOverrides{ClusterInfo: clientcmdapi.Cluster{Server: apiserverHost}})
+		&clientcmd.ConfigOverrides{ClusterInfo: api.Cluster{Server: apiserverHost}})
 
 	cfg, err := clientConfig.ClientConfig()
 	if err != nil {
@@ -55,7 +55,7 @@ func CreateApiserverClient(apiserverHost string, kubeConfig string) (*client.Cli
 
 	log.Printf("Creating API server client for %s", cfg.Host)
 
-	client, err := client.NewForConfig(cfg)
+	client, err := kubernetes.NewForConfig(cfg)
 
 	if err != nil {
 		return nil, nil, err

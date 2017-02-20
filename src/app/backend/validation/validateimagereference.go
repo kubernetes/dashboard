@@ -17,7 +17,7 @@ package validation
 import (
 	"log"
 
-	distreference "github.com/docker/distribution/reference"
+	"github.com/docker/distribution/reference"
 )
 
 // ImageReferenceValiditySpec is a specification of an image reference validation request.
@@ -39,7 +39,7 @@ func ValidateImageReference(spec *ImageReferenceValiditySpec) (*ImageReferenceVa
 	log.Printf("Validating %s as an image reference", spec.Reference)
 
 	s := spec.Reference
-	_, err := distreference.ParseNamed(s)
+	_, err := reference.ParseNamed(s)
 	if err != nil {
 		return &ImageReferenceValidity{Valid: false, Reason: err.Error()}, nil
 	}

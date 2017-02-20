@@ -198,7 +198,6 @@ export default {
     assets: path.join(basePath, 'src/app/assets'),
     base: basePath,
     backendSrc: path.join(basePath, 'src/app/backend'),
-    backendTest: path.join(basePath, 'src/test/backend'),
     backendTmp: path.join(basePath, '.tmp/backend'),
     backendTmpSrc:
         path.join(basePath, '.tmp/backend/src/github.com/kubernetes/dashboard/src/app/backend'),
