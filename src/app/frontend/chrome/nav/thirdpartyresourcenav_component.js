@@ -12,21 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as thirdPartyResourceState} from 'thirdpartyresourcelist/list_state';
-import {stateName as thirdPartyResourceDetailState} from 'thirdpartyresourcedetail/detail_state';
 import {StateParams} from 'common/resource/resourcedetail';
+import {stateName as thirdPartyResourceDetailState} from 'thirdpartyresourcedetail/detail_state';
+import {stateName as thirdPartyResourceState} from 'thirdpartyresourcelist/list_state';
 
 /**
  * @final
  */
 export class ThirdPartyResourceNavController {
   /**
-   * @param {!./../../common/thirdpartyresource/thirdpartyresource_service.ThirdPartyResourceService} kdThirdPartyResourceService
+   * @param
+   * {!./../../common/thirdpartyresource/thirdpartyresource_service.ThirdPartyResourceService}
+   * kdThirdPartyResourceService
    * @param {!./../../common/state/futurestate_service.FutureStateService} kdFutureStateService
    * @ngInject
    */
   constructor($state, kdThirdPartyResourceService, kdFutureStateService) {
-    /** @private {!./../../common/thirdpartyresource/thirdpartyresource_service.ThirdPartyResourceService} kdThirdPartyResourceService */
+    /** @private
+     * {!./../../common/thirdpartyresource/thirdpartyresource_service.ThirdPartyResourceService}
+     * kdThirdPartyResourceService */
     this.kdThirdPartyResourceService_ = kdThirdPartyResourceService;
 
     /** @export {!backendApi.ThirdPartyResourceList} */
@@ -35,33 +39,40 @@ export class ThirdPartyResourceNavController {
     /** @export {!Object<string, string>} - Initialized from binding. */
     this.states;
 
+    /** @private {!ui.router.$state} */
     this.state_ = $state;
 
     /** @private {!./../../common/state/futurestate_service.FutureStateService} */
     this.kdFutureStateService_ = kdFutureStateService;
   }
 
-  /** @export */
+  /**
+   * @export
+   */
   $onInit() {
     this.thirdPartyResourceList = this.kdThirdPartyResourceService_.getThirdPartyResourceList();
-
     if (this.shouldShowThirdPartyResources()) {
       // Add link to third party resource list state
       Object.assign(this.states, {'thirdpartyresource': thirdPartyResourceState});
     }
   }
 
-  /** @export */
+  /**
+   * @return {boolean}
+   * @export
+   */
   shouldShowThirdPartyResources() {
     return this.kdThirdPartyResourceService_.areThirdPartyResourcesRegistered();
   }
 
   /**
+   * @param {string} thirdPartyResourceName
    * @return {string}
    * @export
    */
   getThirdPartyResourceDetailHref(thirdPartyResourceName) {
-    return this.state_.href(thirdPartyResourceDetailState, new StateParams('', thirdPartyResourceName));
+    return this.state_.href(
+        thirdPartyResourceDetailState, new StateParams('', thirdPartyResourceName));
   }
 
   /**

@@ -25,18 +25,21 @@ limitations under the License.
       </div>
     </kd-resource-card-column>
     <kd-resource-card-column>
-      <div>
+      <div ng-if="::$ctrl.thirdPartyResource.objectMeta.namespace">
         <kd-middle-ellipsis display-string="{{::$ctrl.thirdPartyResource.objectMeta.namespace}}">
         </kd-middle-ellipsis>
+      </div>
+      <div ng-if="::!$ctrl.thirdPartyResource.objectMeta.namespace">
+        -
       </div>
     </kd-resource-card-column>
     <kd-resource-card-column>
       <kd-labels labels="::$ctrl.thirdPartyResource.objectMeta.labels"></kd-labels>
     </kd-resource-card-column>
     <kd-resource-card-column>
-      {{::$ctrl.deployment.objectMeta.creationTimestamp | relativeTime}}
+      {{::$ctrl.thirdPartyResource.objectMeta.creationTimestamp | relativeTime}}
       <md-tooltip>
-        {{::$ctrl.getCreatedAtTooltip($ctrl.deployment.objectMeta.creationTimestamp)}}
+        {{::$ctrl.getCreatedAtTooltip($ctrl.thirdPartyResource.objectMeta.creationTimestamp)}}
       </md-tooltip>
     </kd-resource-card-column>
   </kd-resource-card-columns>

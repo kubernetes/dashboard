@@ -13,16 +13,6 @@
 // limitations under the License.
 
 /**
- * @final
- */
-export class ThirdPartyResourceCardListController {
-  /**
-   * @ngInject
-   */
-  constructor() {}
-}
-
-/**
  * Definition object for the component that displays third party resource list card.
  *
  * @type {!angular.Component}
@@ -33,7 +23,6 @@ export const thirdPartyResourceCardListComponent = {
     'header': '?kdHeader',
   },
   templateUrl: 'thirdpartyresourcelist/cardlist.html',
-  controller: ThirdPartyResourceCardListController,
   bindings: {
     /** {!backendApi.ThirdPartyResourceList} */
     'thirdPartyResourceList': '=',

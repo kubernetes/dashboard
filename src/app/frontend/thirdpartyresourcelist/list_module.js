@@ -47,5 +47,5 @@ export default angular
  * @ngInject
  */
 function thirdPartyResourceListResource($resource) {
-    return $resource('api/v1/thirdpartyresource');
+  return $resource('api/v1/thirdpartyresource');
 }

@@ -51,8 +51,8 @@ import serviceListModule from './servicelist/servicelist_module';
 import servicesanddiscoveryModule from './servicesanddiscovery/module';
 import statefulSetListModule from './statefulsetlist/statefulsetlist_module';
 import thirdPartyResourceDetailModule from './thirdpartyresourcedetail/detail_module';
-import {TitleController} from './title_controller';
 import thirdPartyResourceListModule from './thirdpartyresourcelist/list_module';
+import {TitleController} from './title_controller';
 import workloadsModule from './workloads/workloads_module';
 
 export default angular

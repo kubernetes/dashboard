@@ -1,3 +1,17 @@
+// Copyright 2015 Google Inc. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 /**
  * @final
  */
@@ -19,8 +33,8 @@ export class ThirdPartyResourceService {
   }
 
   /**
-   * TODO: add comment
-   * @returns {!angular.$q.Promise}
+   * Returns list of third party resources from the backend.
+   * @return {!angular.$q.Promise}
    */
   resolve() {
     let deferred = this.q_.defer();
@@ -34,7 +48,7 @@ export class ThirdPartyResourceService {
   }
 
   /**
-   * @returns {!backendApi.ThirdPartyResourceList}
+   * @return {!backendApi.ThirdPartyResourceList}
    */
   getThirdPartyResourceList() {
     return this.thirdPartyResourceList_;
@@ -42,7 +56,7 @@ export class ThirdPartyResourceService {
 
   /**
    * Return true when there are any third party resources registered in the system, false otherwise.
-   * @returns {boolean}
+   * @return {boolean}
    */
   areThirdPartyResourcesRegistered() {
     return !!this.thirdPartyResourceList_ && !!this.thirdPartyResourceList_.thirdPartyResources &&

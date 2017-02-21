@@ -32,7 +32,8 @@ class ThirdPartyResourceCardController {
    * @export
    */
   getThirdPartyResourceDetailHref() {
-    return this.state_.href(stateName, new StateParams('', this.thirdPartyResource.objectMeta.name));
+    return this.state_.href(
+        stateName, new StateParams('', this.thirdPartyResource.objectMeta.name));
   }
 }
 

@@ -59,7 +59,8 @@ const i18n = {
  * @returns {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveThirdPartyResourceList(kdThirdPartyResourceListResource, kdPaginationService) {
+export function resolveThirdPartyResourceList(
+    kdThirdPartyResourceListResource, kdPaginationService) {
   /** @type {!backendApi.PaginationQuery} */
   let query = kdPaginationService.getDefaultResourceQuery('');
   return kdThirdPartyResourceListResource.get(query).$promise;
