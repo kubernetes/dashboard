@@ -13,3 +13,42 @@
 // limitations under the License.
 
 package storageclass
+
+import (
+	"reflect"
+	"testing"
+
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	storage "k8s.io/client-go/pkg/apis/storage/v1beta1"
+)
+
+func TestToStorageClass(t *testing.T) {
+	cases := []struct {
+		storage  *storage.StorageClass
+		expected StorageClass
+	}{
+		{
+			storage: &storage.StorageClass{},
+			expected: StorageClass{
+				TypeMeta: common.TypeMeta{Kind: common.ResourceKindStorageClass},
+			},
+		}, {
+			storage: &storage.StorageClass{
+				ObjectMeta: metaV1.ObjectMeta{Name: "test-storage"}},
+			expected: StorageClass{
+				ObjectMeta: common.ObjectMeta{Name: "test-storage"},
+				TypeMeta:   common.TypeMeta{Kind: common.ResourceKindStorageClass},
+			},
+		},
+	}
+
+	for _, c := range cases {
+		actual := ToStorageClass(c.storage)
+
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("ToStorageClass(%#v) == \ngot %#v, \nexpected %#v", c.storage, actual,
+				c.expected)
+		}
+	}
+}
