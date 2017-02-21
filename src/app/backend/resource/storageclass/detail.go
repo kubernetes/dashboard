@@ -22,7 +22,7 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
-// TODO
+// StorageClass is a representation of a kubernetes StorageClass object.
 type StorageClass struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
 	TypeMeta   common.TypeMeta   `json:"typeMeta"`
@@ -42,7 +42,7 @@ type StorageClass struct {
 	Parameters map[string]string
 }
 
-// TODO
+// GetStorageClass returns storage class object.
 func GetStorageClass(client kubernetes.Interface, name string) (*StorageClass, error) {
 	log.Printf("Getting details of %s storage class", name)
 

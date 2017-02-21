@@ -23,7 +23,7 @@ import (
 	storage "k8s.io/client-go/pkg/apis/storage/v1beta1"
 )
 
-// TODO
+// StorageClassList holds a list of storage class objects in the cluster.
 type StorageClassList struct {
 	ListMeta common.ListMeta `json:"listMeta"`
 
@@ -31,6 +31,7 @@ type StorageClassList struct {
 	StorageClasses []StorageClass `json:"storageClasses"`
 }
 
+// GetStorageClassList returns a list of all storage class objects in the cluster.
 func GetStorageClassList(client kubernetes.Interface, dsQuery *dataselect.DataSelectQuery) (*StorageClassList, error) {
 	log.Printf("Getting list of storage classes in the cluster")
 
@@ -41,6 +42,7 @@ func GetStorageClassList(client kubernetes.Interface, dsQuery *dataselect.DataSe
 	return GetStorageClassListFromChannels(channels, dsQuery)
 }
 
+// GetStorageClassListFromChannels returns a list of all storage class objects in the cluster.
 func GetStorageClassListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (*StorageClassList, error) {
 	storageClasses := <-channels.StorageClassList.List
 	if err := <-channels.StorageClassList.Error; err != nil {
@@ -50,6 +52,7 @@ func GetStorageClassListFromChannels(channels *common.ResourceChannels, dsQuery 
 	return CreateStorageClassList(storageClasses.Items, dsQuery), nil
 }
 
+// CreateStorageClassList creates list of api storage class objects based on list of kubernetes storage class objects
 func CreateStorageClassList(storageClasses []storage.StorageClass, dsQuery *dataselect.DataSelectQuery) *StorageClassList {
 	storageClassList := &StorageClassList{
 		StorageClasses: make([]StorageClass, 0),
