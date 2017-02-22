@@ -50,6 +50,8 @@ import serviceDetailModule from './servicedetail/servicedetail_module';
 import serviceListModule from './servicelist/servicelist_module';
 import servicesanddiscoveryModule from './servicesanddiscovery/module';
 import statefulSetListModule from './statefulsetlist/statefulsetlist_module';
+import storageClassDetailModule from './storageclassdetail/module';
+import storageClassListModule from './storageclasslist/module';
 import thirdPartyResourceDetailModule from './thirdpartyresourcedetail/detail_module';
 import thirdPartyResourceListModule from './thirdpartyresourcelist/list_module';
 import {TitleController} from './title_controller';
@@ -99,6 +101,8 @@ export default angular
           servicesanddiscoveryModule.name,
           configModule.name,
           csrfTokenModule.name,
+          storageClassListModule.name,
+          storageClassDetailModule.name,
           thirdPartyResourceListModule.name,
           thirdPartyResourceDetailModule.name,
         ])
