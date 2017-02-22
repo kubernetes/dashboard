@@ -44,16 +44,6 @@ export default class PodInfoController {
   getNodeDetailsHref() {
     return this.state_.href(stateName, new GlobalStateParams(this.pod.nodeName));
   }
-
-  /**
-   * @return {string}
-   * @export
-   */
-  getLogsHref() {
-    return this.state_.href(
-        logsStateName,
-        new LogsStateParams(this.pod.objectMeta.namespace, this.pod.objectMeta.name));
-  }
 }
 
 /**
@@ -63,7 +53,7 @@ export default class PodInfoController {
  */
 export const podInfoComponent = {
   controller: PodInfoController,
-  templateUrl: 'poddetail/podinfo.html',
+  templateUrl: 'poddetail/overview/podinfo.html',
   bindings: {
     /** {!backendApi.PodDetail} */
     'pod': '<',

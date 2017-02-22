@@ -15,30 +15,23 @@
 /**
  * @final
  */
-export class PodOverviewController {
+export default class CreatorInfoController {
   /**
    * @ngInject
-   * @param {!backendApi.PodDetail} podDetail
    */
   constructor() {
-    /**
-     * Pod details. Initialized from the scope.
-     * @export {!backendApi.PodDetail}
-     */
-    this.pod;
+    /** @export {!backendApi.Controller} Initialized from a binding. */
+    this.creator;
   }
 }
 
 /**
- * Definition object for the component that displays pod info.
- *
- * @return {!angular.Directive}
+ * @type {!angular.Component}
  */
-export const podOverviewComponent = {
-  controller: PodOverviewController,
-  templateUrl: 'poddetail/podoverview.html',
+export const creatorInfoComponent = {
+  controller: CreatorInfoController,
+  templateUrl: 'poddetail/overview/creatorinfo.html',
   bindings: {
-    /** {!backendApi.PodDetail} */
-    'pod': '<',
+    'creator': '<',
   },
 };

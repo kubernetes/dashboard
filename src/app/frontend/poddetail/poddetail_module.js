@@ -18,11 +18,13 @@ import filtersModule from 'common/filters/filters_module';
 import configMapModule from 'configmapdetail/configmapdetail_module';
 import eventsModule from 'events/events_module';
 
-import {containerInfoComponent} from './containerinfo_component';
-import {creatorInfoComponent} from './creatorinfo_component';
+import {containerInfoComponent} from './overview/containerinfo_component';
+import {creatorInfoComponent} from './overview/creatorinfo_component';
 import stateConfig from './poddetail_stateconfig';
-import {podOverviewComponent} from './podoverview_component';
-import {podInfoComponent} from './podinfo_component';
+
+// TODO: Make overview into module
+import {podOverviewComponent} from './overview/podoverview_component';
+import {podInfoComponent} from './overview/podinfo_component';
 
 
 /**
