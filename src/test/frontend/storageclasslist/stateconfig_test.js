@@ -26,7 +26,7 @@ describe('StateConfig for storage class controller list', () => {
     });
   });
 
-  it('should resolve persistent volume list', angular.mock.inject(($q) => {
+  it('should resolve storage class list', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
 
     let resource = jasmine.createSpyObj('$resource', ['get']);

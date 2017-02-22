@@ -13,7 +13,7 @@
 // limitations under the License.
 
 /**
- * Controller for the persistent volume list view.
+ * Controller for the storage class list view.
  *
  * @final
  */

@@ -20,7 +20,7 @@ import {StorageClassListController} from './controller';
 import {stateName, stateUrl} from './state';
 
 /**
- * Configures states for persistent volume list view.
+ * Configures states for storage class list view.
  * @param {!ui.router.$stateProvider} $stateProvider
  * @ngInject
  */

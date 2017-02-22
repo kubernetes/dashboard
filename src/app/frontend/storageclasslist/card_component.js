@@ -16,7 +16,7 @@ import {StateParams} from 'common/resource/resourcedetail';
 import {stateName} from 'storageclassdetail/state';
 
 /**
- * Controller for the persistent volume card.
+ * Controller for the storage class card.
  *
  * @final
  */
@@ -56,7 +56,7 @@ export default class StorageClassCardController {
   getCreatedAtTooltip(creationDate) {
     let filter = this.interpolate_(`{{date | date}}`);
     /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
-     * persistent volume. */
+     * storage class. */
     let MSG_STORAGE_CLASS_LIST_CREATED_AT_TOOLTIP =
         goog.getMsg('Created at {$creationDate}', {'creationDate': filter({'date': creationDate})});
     return MSG_STORAGE_CLASS_LIST_CREATED_AT_TOOLTIP;
