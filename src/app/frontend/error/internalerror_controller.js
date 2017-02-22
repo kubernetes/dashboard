@@ -18,14 +18,20 @@
 export class InternalErrorController {
   /**
    * @param {!./internalerror_state.StateParams} $stateParams
+   * @param {!./nav_service.NavService} kdNavService
    * @ngInject
    */
-  constructor($stateParams) {
+  constructor($stateParams, kdNavService) {
     /** @export {!angular.$http.Response} */
     this.error = $stateParams.error;
 
+    /** @private {!./nav_service.NavService} */
+    this.kdNavService_ = kdNavService;
+
     /** @export */
     this.i18n = i18n;
+
+    this.kdNavService_.toggle()
   }
 
   /**
