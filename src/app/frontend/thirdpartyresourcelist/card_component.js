@@ -17,23 +17,45 @@ import {stateName} from 'thirdpartyresourcedetail/detail_state';
 
 class ThirdPartyResourceCardController {
   /**
+   * @param {!ui.router.$state} $state
+   * @param {!angular.$interpolate} $interpolate
    * @ngInject
    */
-  constructor($state) {
-    /** @export {!backendApi.ThirdPartyResource} ThirdPartyResource initialized from a binding. */
+  constructor($state, $interpolate) {
+    /**
+     * Initialized from the scope.
+     * @export {!backendApi.ThirdPartyResource}
+     */
     this.thirdPartyResource;
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
+
+    /** @private */
+    this.interpolate_ = $interpolate;
   }
 
   /**
-   * @return {string}
    * @export
+   * @return {string}
    */
   getThirdPartyResourceDetailHref() {
     return this.state_.href(
         stateName, new StateParams('', this.thirdPartyResource.objectMeta.name));
+  }
+
+  /**
+   * @export
+   * @param  {string} creationDate - creation date of the third party resource
+   * @return {string} localized tooltip with the formatted creation date
+   */
+  getCreatedAtTooltip(creationDate) {
+    let filter = this.interpolate_(`{{date | date}}`);
+    /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
+     * third party resource. */
+    let MSG_THIRD_PARTY_RESOURCE_LIST_CREATED_AT_TOOLTIP =
+        goog.getMsg('Created at {$creationDate}', {'creationDate': filter({'date': creationDate})});
+    return MSG_THIRD_PARTY_RESOURCE_LIST_CREATED_AT_TOOLTIP;
   }
 }
 

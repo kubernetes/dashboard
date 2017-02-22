@@ -50,7 +50,7 @@ export default class StorageClassCardController {
 
   /**
    * @export
-   * @param  {string} creationDate - creation date of the config map
+   * @param  {string} creationDate - creation date of the storage class
    * @return {string} localized tooltip with the formatted creation date
    */
   getCreatedAtTooltip(creationDate) {
