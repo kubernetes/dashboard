@@ -14,7 +14,6 @@
 
 import componentsModule from 'common/components/components_module';
 import namespaceModule from 'common/namespace/namespace_module';
-import thirdPartyResourceModule from 'common/thirdpartyresource/thirdpartyresource_module';
 
 import {chromeComponent} from './chrome_component';
 import stateConfig from './chrome_stateconfig';
@@ -33,7 +32,6 @@ export default angular
           componentsModule.name,
           namespaceModule.name,
           navModule.name,
-          thirdPartyResourceModule.name,
         ])
     .config(stateConfig)
     .component('kdChrome', chromeComponent);

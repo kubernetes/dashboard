@@ -27,12 +27,7 @@ export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
     url: `?${namespaceParam}`,
     abstract: true,
-    resolve: {
-      // As this is abstract view without actual controller, we can't resolve and pass data to it.
-      // We are enforcing service initialization and thanks to resolve main view will wait until
-      // service data is resolved. It is used to dynamically build third party resources nav menu.
-      getThirdPartyResourceList,
-    },
+    resolve: {},
     views: {
       '': {
         template: '<div ui-view class="kd-content-div-filled"></div>',
@@ -62,14 +57,4 @@ function requireParentState(stateExtend, parentFn) {
         `${stateName}. This is likely a programming error.`);
   }
   return parentFn(stateExtend);
-}
-
-/**
- * @param {!./../common/thirdpartyresource/thirdpartyresource_service.ThirdPartyResourceService}
- * kdThirdPartyResourceService
- * @return {!angular.$q.Promise}
- * @ngInject
- */
-function getThirdPartyResourceList(kdThirdPartyResourceService) {
-  return kdThirdPartyResourceService.resolve();
 }

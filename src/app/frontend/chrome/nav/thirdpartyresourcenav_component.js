@@ -21,48 +21,48 @@ import {stateName as thirdPartyResourceState} from 'thirdpartyresourcelist/list_
  */
 export class ThirdPartyResourceNavController {
   /**
-   * @param
-   * {!./../../common/thirdpartyresource/thirdpartyresource_service.ThirdPartyResourceService}
-   * kdThirdPartyResourceService
+   * @param {!ui.router.$state} $state
+   * @param {!angular.$resource} $resource
    * @param {!./../../common/state/futurestate_service.FutureStateService} kdFutureStateService
    * @ngInject
    */
-  constructor($state, kdThirdPartyResourceService, kdFutureStateService) {
-    /** @private
-     * {!./../../common/thirdpartyresource/thirdpartyresource_service.ThirdPartyResourceService}
-     * kdThirdPartyResourceService */
-    this.kdThirdPartyResourceService_ = kdThirdPartyResourceService;
+  constructor($state, $resource, kdFutureStateService) {
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
+
+    /** @private {!angular.$resource} */
+    this.resource_ = $resource;
+
+    /** @private {!./../../common/state/futurestate_service.FutureStateService} */
+    this.kdFutureStateService_ = kdFutureStateService;
 
     /** @export {!backendApi.ThirdPartyResourceList} */
     this.thirdPartyResourceList;
 
-    /** @export {!Object<string, string>} - Initialized from binding. */
+    /** @export */
+    this.isVisible = false;
+
+    /**
+     * Initialized from binding.
+     *
+     * @export {!Object<string, string>}
+     */
     this.states;
-
-    /** @private {!ui.router.$state} */
-    this.state_ = $state;
-
-    /** @private {!./../../common/state/futurestate_service.FutureStateService} */
-    this.kdFutureStateService_ = kdFutureStateService;
   }
 
   /**
+   * Resolve list of available third party resources to fill menu with entries.
+   *
    * @export
    */
   $onInit() {
-    this.thirdPartyResourceList = this.kdThirdPartyResourceService_.getThirdPartyResourceList();
-    if (this.shouldShowThirdPartyResources()) {
-      // Add link to third party resource list state
-      Object.assign(this.states, {'thirdpartyresource': thirdPartyResourceState});
-    }
-  }
-
-  /**
-   * @return {boolean}
-   * @export
-   */
-  shouldShowThirdPartyResources() {
-    return this.kdThirdPartyResourceService_.areThirdPartyResourcesRegistered();
+    this.resource_('api/v1/thirdpartyresource').get().$promise.then((result) => {
+      if (result && result.thirdPartyResources && result.thirdPartyResources.length > 0) {
+        this.thirdPartyResourceList = result;
+        Object.assign(this.states, {'thirdpartyresource': thirdPartyResourceState});
+        this.isVisible = true;
+      }
+    });
   }
 
   /**
