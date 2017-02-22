@@ -116,12 +116,7 @@ gulp.task('frontend-test:watch', function(doneFn) {
  * the tests.
  */
 gulp.task('backend-test:watch', ['backend-test'], function() {
-  gulp.watch(
-      [
-        path.join(conf.paths.backendSrc, '**/*.go'),
-        path.join(conf.paths.backendTest, '**/*.go'),
-      ],
-      ['backend-test']);
+  gulp.watch([path.join(conf.paths.backendSrc, '**/*.go')], ['backend-test']);
 });
 
 /**

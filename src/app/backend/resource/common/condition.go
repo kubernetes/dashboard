@@ -15,8 +15,8 @@
 package common
 
 import (
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
+	"k8s.io/apimachinery/pkg/apis/meta/v1"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // Condition represents a single condition of a pod or node.
@@ -26,9 +26,9 @@ type Condition struct {
 	// Status of a condition.
 	Status api.ConditionStatus `json:"status"`
 	// Last probe time of a condition.
-	LastProbeTime unversioned.Time `json:"lastProbeTime"`
+	LastProbeTime v1.Time `json:"lastProbeTime"`
 	// Last transition time of a condition.
-	LastTransitionTime unversioned.Time `json:"lastTransitionTime"`
+	LastTransitionTime v1.Time `json:"lastTransitionTime"`
 	// Reason of a condition.
 	Reason string `json:"reason"`
 	// Message of a condition.

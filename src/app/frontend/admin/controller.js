@@ -21,9 +21,12 @@ export class AdminController {
    * @param {!angular.Resource} kdNamespaceListResource
    * @param {!angular.Resource} kdNodeListResource
    * @param {!angular.Resource} kdPersistentVolumeListResource
+   * @param {!angular.Resource} kdStorageClassListResource
    * @ngInject
    */
-  constructor(admin, kdNamespaceListResource, kdNodeListResource, kdPersistentVolumeListResource) {
+  constructor(
+      admin, kdNamespaceListResource, kdNodeListResource, kdPersistentVolumeListResource,
+      kdStorageClassListResource) {
     /** @export {!backendApi.Admin} */
     this.admin = admin;
     /** @export {!angular.Resource} */
@@ -32,6 +35,8 @@ export class AdminController {
     this.kdNodeListResource = kdNodeListResource;
     /** @export {!angular.Resource} */
     this.kdPersistentVolumeListResource = kdPersistentVolumeListResource;
+    /** @export {!angular.Resource} */
+    this.kdStorageClassListResource = kdStorageClassListResource;
   }
 
   /**
@@ -42,7 +47,8 @@ export class AdminController {
     /** @type {number} */
     let resourcesLength = this.admin.nodeList.listMeta.totalItems +
         this.admin.namespaceList.listMeta.totalItems +
-        this.admin.persistentVolumeList.listMeta.totalItems;
+        this.admin.persistentVolumeList.listMeta.totalItems +
+        this.admin.storageClassList.listMeta.totalItems;
 
     return resourcesLength === 0;
   }
