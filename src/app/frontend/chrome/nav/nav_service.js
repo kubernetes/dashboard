@@ -75,12 +75,22 @@ export class NavService {
   }
 
   /**
+   * Toggles visibility of the navigation component.
    */
   toggle() {
     if (this.navComponent_) {
       this.navComponent_.toggle();
     } else {
       throw new Error('Navigation menu is not registered. This is likely a programming error.');
+    }
+  }
+
+  /**
+   * Sets visibility of the navigation component.
+   */
+  setVisibility(isVisible) {
+    if (this.navComponent_) {
+      this.navComponent_.set(isVisible);
     }
   }
 }

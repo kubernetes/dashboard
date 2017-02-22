@@ -31,7 +31,10 @@ export class InternalErrorController {
     /** @export */
     this.i18n = i18n;
 
-    this.kdNavService_.toggle()
+    /**
+     * Hide side menu while entering internal error page.
+     */
+    this.kdNavService_.setVisibility(false);
   }
 
   /**

@@ -82,6 +82,13 @@ export class NavController {
   toggle() {
     this.isVisible = !this.isVisible;
   }
+
+  /**
+   * Sets visibility of the navigation component.
+   */
+  set(isVisible) {
+    this.isVisible = isVisible;
+  }
 }
 
 /**
