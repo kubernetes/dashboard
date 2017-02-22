@@ -28,12 +28,7 @@ describe('Third Party Resource list controller', () => {
     });
   });
 
-  it('should initialize third party resource controller', angular.mock.inject(($controller) => {
-    let ctrls = {};
-    /** @type {!ThirdPartyResourceListController} */
-    let ctrl = $controller(
-        ThirdPartyResourceListController, {thirdPartyResourceList: {thirdPartyResources: ctrls}});
-
-    expect(ctrl.thirdPartyResourceList.thirdPartyResources).toBe(ctrls);
-  }));
+  it('should instantiate the controller properly', () => {
+    expect(ctrl).not.toBeUndefined();
+  });
 });
