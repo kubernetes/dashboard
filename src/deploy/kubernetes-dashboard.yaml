@@ -25,6 +25,7 @@ metadata:
   namespace: kube-system
 spec:
   replicas: 1
+  revisionHistoryLimit: 10
   selector:
     matchLabels:
       app: kubernetes-dashboard

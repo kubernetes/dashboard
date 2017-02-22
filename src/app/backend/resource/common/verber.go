@@ -30,6 +30,7 @@ type ResourceVerber struct {
 	appsClient        RESTClient
 	batchClient       RESTClient
 	autoscalingClient RESTClient
+	storageClient     RESTClient
 }
 
 func (verber *ResourceVerber) getRESTClientByType(clientType ClientType) RESTClient {
@@ -42,6 +43,8 @@ func (verber *ResourceVerber) getRESTClientByType(clientType ClientType) RESTCli
 		return verber.batchClient
 	case ClientTypeAutoscalingClient:
 		return verber.autoscalingClient
+	case ClientTypeStorageClient:
+		return verber.storageClient
 	default:
 		return verber.client
 	}
@@ -57,8 +60,8 @@ type RESTClient interface {
 // NewResourceVerber creates a new resource verber that uses the given client for performing
 // operations.
 func NewResourceVerber(client, extensionsClient, appsClient,
-	batchClient, autoscalingClient RESTClient) ResourceVerber {
-	return ResourceVerber{client, extensionsClient, appsClient, batchClient, autoscalingClient}
+	batchClient, autoscalingClient, storageClient RESTClient) ResourceVerber {
+	return ResourceVerber{client, extensionsClient, appsClient, batchClient, autoscalingClient, storageClient}
 }
 
 // Delete deletes the resource of the given kind in the given namespace with the given name.
