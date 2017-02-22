@@ -90,7 +90,7 @@ export class NavService {
    */
   setVisibility(isVisible) {
     if (this.navComponent_) {
-      this.navComponent_.set(isVisible);
+      this.navComponent_.setVisibility(isVisible);
     }
   }
 }
