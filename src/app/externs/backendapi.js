@@ -145,6 +145,7 @@ backendApi.Workloads;
  *   nodeList: !backendApi.NodeList,
  *   namespaceList: !backendApi.NamespaceList,
  *   persistentVolumeList: !backendApi.PersistentVolumeList,
+ *   storageClassList: !backendApi.StorageClassList,
  * }}
  */
 backendApi.Admin;

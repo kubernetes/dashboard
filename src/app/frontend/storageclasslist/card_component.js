@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'storageclassdetail/detail_state';
+import {stateName} from 'storageclassdetail/state';
 
 /**
  * Controller for the persistent volume card.

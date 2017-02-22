@@ -12,15 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Definition object for the component that displays Storage Class info.
- *
- * @return {!angular.Directive}
- */
-export const storageClassInfoComponent = {
-  templateUrl: 'storageclassdetail/info.html',
-  bindings: {
-    /** {!backendApi.StorageClass} */
-    'storageClass': '=',
-  },
-};
+import storageClassDetailModule from 'storageclassdetail/module';
+
+describe('Storage Class Info controller', () => {
+  /** @type {!StorageClassInfoController} */
+  let ctrl;
+
+  beforeEach(() => {
+    angular.mock.module(storageClassDetailModule.name);
+
+    angular.mock.inject(($componentController, $rootScope) => {
+      ctrl = $componentController('kdStorageClassInfo', {$scope: $rootScope}, {storageClass: {}});
+    });
+  });
+
+  it('should initialize the ctrl', () => {
+    expect(ctrl.storageClass).not.toBeUndefined();
+  });
+});

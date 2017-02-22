@@ -17,8 +17,8 @@ import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
 import eventsModule from 'events/events_module';
 
-import stateConfig from './detail_stateconfig';
 import {storageClassInfoComponent} from './info_component';
+import stateConfig from './stateconfig';
 
 
 /**

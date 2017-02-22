@@ -15,11 +15,11 @@
 import chromeModule from 'chrome/chrome_module';
 import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
-import storageClassDetailModule from 'storageclassdetail/detail_module';
+import storageClassDetailModule from 'storageclassdetail/module';
 
 import {storageClassCardComponent} from './card_component';
 import {storageClassCardListComponent} from './cardlist_component';
-import stateConfig from './list_stateconfig';
+import stateConfig from './stateconfig';
 
 
 /**

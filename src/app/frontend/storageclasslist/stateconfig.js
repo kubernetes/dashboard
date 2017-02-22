@@ -16,8 +16,8 @@ import {stateName as parentStateName} from 'admin/state';
 import {stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 
-import {StorageClassListController} from './list_controller';
-import {stateName, stateUrl} from './list_state';
+import {StorageClassListController} from './controller';
+import {stateName, stateUrl} from './state';
 
 /**
  * Configures states for persistent volume list view.
@@ -41,7 +41,7 @@ export default function stateConfig($stateProvider) {
       '': {
         controller: StorageClassListController,
         controllerAs: '$ctrl',
-        templateUrl: 'storageclasslist/list.html',
+        templateUrl: 'storageclasslist/storageclasslist.html',
       },
     },
   });

@@ -14,11 +14,11 @@
 
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
-import {stateName as storageClassList, stateUrl} from 'storageclasslist/list_state';
+import {stateName as storageClassList, stateUrl} from 'storageclasslist/state';
 
 import {ActionBarController} from './actionbar_controller';
-import {StorageClassController} from './detail_controller';
-import {stateName} from './detail_state';
+import {StorageClassController} from './controller';
+import {stateName} from './state';
 
 /**
  * Configures states for the Storage Class details view.
@@ -44,7 +44,7 @@ export default function stateConfig($stateProvider) {
       '': {
         controller: StorageClassController,
         controllerAs: '$ctrl',
-        templateUrl: 'storageclassdetail/detail.html',
+        templateUrl: 'storageclassdetail/storageclass.html',
       },
       [actionbarViewName]: {
         controller: ActionBarController,
