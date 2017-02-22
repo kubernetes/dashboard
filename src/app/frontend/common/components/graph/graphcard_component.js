@@ -31,6 +31,10 @@ export class GraphCardController {
     this.selectedMetrics;
   }
 
+  $onChanges() {
+    this.selectedMetrics = this.getSelectedMetrics();
+  }
+
   $onInit() {
     this.selectedMetrics = this.getSelectedMetrics();
   }

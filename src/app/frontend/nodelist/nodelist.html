@@ -30,3 +30,9 @@ limitations under the License.
     </kd-node-card-list>
   </kd-content>
 </kd-content-card>
+
+<kd-auto-refresh source="$ctrl.nodeListResource"
+                 target="$ctrl.nodeList"
+                 type="list-without-namespace"
+                 delay="10000">
+</kd-auto-refresh>
