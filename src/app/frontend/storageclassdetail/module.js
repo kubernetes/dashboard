@@ -13,37 +13,30 @@
 // limitations under the License.
 
 import chromeModule from 'chrome/chrome_module';
-import namespaceListModule from 'namespacelist/namespacelist_module';
-import nodeListModule from 'nodelist/nodelist_module';
-import persistentVolumeListModule from 'persistentvolumelist/persistentvolumelist_module';
-import storageClassListModule from 'storageclasslist/module';
+import componentsModule from 'common/components/components_module';
+import filtersModule from 'common/filters/filters_module';
+import eventsModule from 'events/events_module';
 
+import {storageClassInfoComponent} from './info_component';
 import stateConfig from './stateconfig';
 
+
 /**
- * Module for the admin view.
+ * Angular module for the Storage Class details view.
+ *
+ * The view shows detailed view of a Storage Class.
  */
 export default angular
     .module(
-        'kubernetesDashboard.admin',
+        'kubernetesDashboard.storageClassDetail',
         [
           'ngMaterial',
           'ngResource',
           'ui.router',
+          componentsModule.name,
+          filtersModule.name,
+          eventsModule.name,
           chromeModule.name,
-          nodeListModule.name,
-          namespaceListModule.name,
-          persistentVolumeListModule.name,
-          storageClassListModule.name,
         ])
     .config(stateConfig)
-    .factory('kdAdminResource', resource);
-
-/**
- * @param {!angular.$resource} $resource
- * @return {!angular.Resource}
- * @ngInject
- */
-function resource($resource) {
-  return $resource('api/v1/admin');
-}
+    .component('kdStorageClassInfo', storageClassInfoComponent);
