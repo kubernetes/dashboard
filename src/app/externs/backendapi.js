@@ -145,6 +145,7 @@ backendApi.Workloads;
  *   nodeList: !backendApi.NodeList,
  *   namespaceList: !backendApi.NamespaceList,
  *   persistentVolumeList: !backendApi.PersistentVolumeList,
+ *   storageClassList: !backendApi.StorageClassList,
  * }}
  */
 backendApi.Admin;
@@ -1204,6 +1205,24 @@ backendApi.HorizontalPodAutoscaler;
  * }}
  */
 backendApi.HorizontalPodAutoscalerList;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   provisioner: string,
+ *   parameters: !Array<!Object<string,string>>
+ * }}
+ */
+backendApi.StorageClass;
+
+/**
+ * @typedef {{
+ *   listMeta: !backendApi.ListMeta,
+ *   storageClasses: !Array<!backendApi.StorageClass>
+ * }}
+ */
+backendApi.StorageClassList;
 
 /**
  * @typedef {{

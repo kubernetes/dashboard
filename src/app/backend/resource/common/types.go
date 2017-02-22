@@ -166,7 +166,7 @@ var kindToAPIMapping = map[string]struct {
 	ResourceKindService:                 {"services", ClientTypeDefault, true},
 	ResourceKindStatefulSet:             {"statefulsets", ClientTypeAppsClient, true},
 	ResourceKindThirdPartyResource:      {"thirdpartyresources", ClientTypeExtensionClient, true},
-	ResourceKindStorageClass:            {"storageclasses", ClientTypeStorageClient, true},
+	ResourceKindStorageClass:            {"storageclasses", ClientTypeStorageClient, false},
 }
 
 // IsSelectorMatching returns true when an object with the given
