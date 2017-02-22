@@ -27,7 +27,6 @@ export default function stateConfig($stateProvider) {
   $stateProvider.state(stateName, {
     url: `?${namespaceParam}`,
     abstract: true,
-    resolve: {},
     views: {
       '': {
         template: '<div ui-view class="kd-content-div-filled"></div>',
