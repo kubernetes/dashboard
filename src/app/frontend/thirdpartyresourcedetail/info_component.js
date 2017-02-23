@@ -13,28 +13,11 @@
 // limitations under the License.
 
 /**
- * @final
- */
-export default class ThirdPartyResourceInfoComponent {
-  /**
-   * Constructs ThirdPartyResourceInfoComponent object.
-   */
-  constructor() {
-    /**
-     * Third party resource details. Initialized from the scope.
-     * @export {!backendApi.ThirdPartyResource}
-     */
-    this.tprDetail;
-  }
-}
-
-/**
  * Definition object for the component that displays third party resource info.
  *
  * @return {!angular.Directive}
  */
 export const tprInfoComponent = {
-  controller: ThirdPartyResourceInfoComponent,
   templateUrl: 'thirdpartyresourcedetail/info.html',
   bindings: {
     /** {!backendApi.ThirdPartyResource} */

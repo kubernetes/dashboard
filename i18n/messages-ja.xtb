@@ -1609,6 +1609,7 @@
   <translation id="8979424432104963901" key="MSG_THIRDPARTYRESOURCELIST_CARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of third party resources (thirdpartyresource list view).">Namespace</translation>
   <translation id="8722848692470911393" key="MSG_THIRDPARTYRESOURCELIST_CARDLIST_3" desc="Label \'Labels\' which appears as a column label in the table of third party resources (thirdpartyresource list view).">Labels</translation>
   <translation id="8937761541741166649" key="MSG_THIRDPARTYRESOURCELIST_CARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of third party resources (thirdpartyresource list view).">Age</translation>
+  <translation id="8199201262548259491" key="MSG_THIRD_PARTY_RESOURCE_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of third party resource.">Created at <ph name="CREATION_DATE"/></translation>
   <translation id="6463616657349920914" key="MSG_TIME_NOT_YET_LABEL" desc="Label for relative time that did not happened yet.">-</translation>
   <translation id="3921240742330478356" key="MSG_TIME_UNIT_DAYS_LABEL" desc="Time units label, many days (plural).">日</translation>
   <translation id="3980015737897416585" key="MSG_TIME_UNIT_DAY_LABEL" desc="Time units label, a single day.">1 日</translation>
