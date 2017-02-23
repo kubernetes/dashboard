@@ -16,23 +16,27 @@ package thirdpartyresource
 
 import (
 	"log"
+	"strings"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 	k8sClient "k8s.io/client-go/kubernetes"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
+	"k8s.io/client-go/tools/clientcmd"
 )
 
 // ThirdPartyResourceDetail is a third party resource template.
 type ThirdPartyResourceDetail struct {
-	ObjectMeta  common.ObjectMeta       `json:"objectMeta"`
-	TypeMeta    common.TypeMeta         `json:"typeMeta"`
-	Description string                  `json:"description"`
-	Versions    []extensions.APIVersion `json:"versions"`
+	ObjectMeta  common.ObjectMeta            `json:"objectMeta"`
+	TypeMeta    common.TypeMeta              `json:"typeMeta"`
+	Description string                       `json:"description"`
+	Versions    []extensions.APIVersion      `json:"versions"`
+	Objects     ThirdPartyResourceObjectList `json:"objects"`
 }
 
 // GetThirdPartyResourceDetail returns detailed information about a third party resource.
-func GetThirdPartyResourceDetail(client k8sClient.Interface, name string) (*ThirdPartyResourceDetail,
+func GetThirdPartyResourceDetail(client k8sClient.Interface, config clientcmd.ClientConfig, name string) (*ThirdPartyResourceDetail,
 	error) {
 	log.Printf("Getting details of %s third party resource", name)
 
@@ -41,14 +45,50 @@ func GetThirdPartyResourceDetail(client k8sClient.Interface, name string) (*Thir
 		return nil, err
 	}
 
-	return getThirdPartyResourceDetail(thirdPartyResource), nil
+	return getThirdPartyResourceDetail(config, thirdPartyResource), nil
 }
 
-func getThirdPartyResourceDetail(thirdPartyResource *extensions.ThirdPartyResource) *ThirdPartyResourceDetail {
+func getThirdPartyResourceDetail(config clientcmd.ClientConfig, thirdPartyResource *extensions.ThirdPartyResource) *ThirdPartyResourceDetail {
 	return &ThirdPartyResourceDetail{
 		ObjectMeta:  common.NewObjectMeta(thirdPartyResource.ObjectMeta),
 		TypeMeta:    common.NewTypeMeta(common.ResourceKindThirdPartyResource),
 		Description: thirdPartyResource.Description,
 		Versions:    thirdPartyResource.Versions,
+		Objects:     getThirdPartyResourceObjects(config, thirdPartyResource),
 	}
+}
+
+// TODO(maciaszczykm): It should always take preffered version. Is there any Kubernetes API to use instead of this function?
+func getThirdPartyResourceGroupVersion(thirdPartyResource *extensions.ThirdPartyResource) schema.GroupVersion {
+	version := ""
+	if len(thirdPartyResource.Versions) > 0 {
+		version = thirdPartyResource.Versions[0].Name
+	}
+
+	group := ""
+	if strings.Contains(thirdPartyResource.ObjectMeta.Name, ".") {
+		group = thirdPartyResource.ObjectMeta.Name[strings.Index(thirdPartyResource.ObjectMeta.Name, ".")+1:]
+	} else {
+		group = thirdPartyResource.ObjectMeta.Name
+	}
+
+	return schema.GroupVersion{
+		Group:   group,
+		Version: version,
+	}
+}
+
+// TODO(maciaszczykm): Is there any Kubernetes API to use instead of this function?
+func getThirdPartyResourcePluralName(thirdPartyResource *extensions.ThirdPartyResource) string {
+	name := strings.ToLower(thirdPartyResource.ObjectMeta.Name)
+
+	if strings.Contains(name, "-") {
+		name = strings.Replace(name, "-", "", 1)
+	}
+
+	if strings.Contains(name, ".") {
+		name = name[:strings.Index(name, ".")]
+	}
+
+	return name + "s"
 }

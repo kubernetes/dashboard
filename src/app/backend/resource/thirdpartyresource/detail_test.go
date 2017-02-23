@@ -21,9 +21,13 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
+	"k8s.io/client-go/tools/clientcmd"
 )
 
 func TestGetThirdPartyResourceDetail(t *testing.T) {
+	config := clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
+		&clientcmd.ClientConfigLoadingRules{},
+		&clientcmd.ConfigOverrides{})
 	cases := []struct {
 		thirdPartyResource *extensions.ThirdPartyResource
 		expected           *ThirdPartyResourceDetail
@@ -51,7 +55,7 @@ func TestGetThirdPartyResourceDetail(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := getThirdPartyResourceDetail(c.thirdPartyResource)
+		actual := getThirdPartyResourceDetail(config, c.thirdPartyResource)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getThirdPartyResourceDetail(%#v) == \n%#v\nexpected \n%#v\n",
 				c.thirdPartyResource, actual, c.expected)
