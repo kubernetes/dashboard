@@ -20,7 +20,7 @@ limitations under the License.
            placeholder="{{labelCtrl.label.key}}" ng-disabled="!labelCtrl.label.editable"
            kd-validate="labelKeyNameLength,labelKeyPrefixLength,labelKeyNamePattern,labelKeyPrefixPattern"
            ng-model-options="{allowInvalid: true}">
-    <ng-messages for="labelForm.key.$error" ng-if="labelForm.key.$touched && labelForm.key.$invalid">
+    <ng-messages for="labelForm.key.$error" ng-if="labelForm.key.$touched">
       <ng-message when="unique">
         {{::labelCtrl.getLabelKeyUniqueWarning()}}
       </ng-message>
@@ -40,7 +40,7 @@ limitations under the License.
            placeholder="{{labelCtrl.label.value}}" ng-disabled="!labelCtrl.label.editable"
            kd-validate="labelValuePattern" ng-change="labelCtrl.check()" md-maxlength="253"
            ng-model-options="{ getterSetter: true, allowInvalid: true }">
-    <ng-messages for="labelForm.value.$error" ng-if="labelForm.value.$touched && labelForm.value.$invalid">
+    <ng-messages for="labelForm.value.$error" ng-if="labelForm.value.$touched">
       <ng-message when="kdValidLabelValuePattern">
         [[Label value must be alphanumeric separated by '.' , '-' or '_'.|This warning appears when the value of a specified kubernetes label (on the deploy page) does not match the required pattern.]]
       </ng-message>
