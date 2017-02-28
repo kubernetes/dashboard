@@ -52,7 +52,7 @@
     "gulp-util": "~3.0.7",
     "gulp-watch": "~4.3.8",
     "gulp-xslt": "~2.0.0",
-    "html-minifier": "~3.3.0",
+    "html-minifier": "~3.4.0",
     "isparta": "~4.0.0",
     "jsesc": "~2.4.0",
     "karma": "1.5.0",
