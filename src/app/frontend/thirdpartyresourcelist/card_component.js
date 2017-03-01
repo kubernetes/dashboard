@@ -13,14 +13,9 @@
 // limitations under the License.
 
 import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'storageclassdetail/state';
+import {stateName} from 'thirdpartyresourcedetail/detail_state';
 
-/**
- * Controller for the storage class card.
- *
- * @final
- */
-export default class StorageClassCardController {
+class ThirdPartyResourceCardController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
@@ -29,9 +24,9 @@ export default class StorageClassCardController {
   constructor($state, $interpolate) {
     /**
      * Initialized from the scope.
-     * @export {!backendApi.StorageClass}
+     * @export {!backendApi.ThirdPartyResource}
      */
-    this.storageClass;
+    this.thirdPartyResource;
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
@@ -41,35 +36,36 @@ export default class StorageClassCardController {
   }
 
   /**
-   * @return {string}
    * @export
+   * @return {string}
    */
-  getStorageClassDetailHref() {
-    return this.state_.href(stateName, new StateParams('', this.storageClass.objectMeta.name));
+  getThirdPartyResourceDetailHref() {
+    return this.state_.href(
+        stateName, new StateParams('', this.thirdPartyResource.objectMeta.name));
   }
 
   /**
    * @export
-   * @param  {string} creationDate - creation date of the storage class
+   * @param  {string} creationDate - creation date of the third party resource
    * @return {string} localized tooltip with the formatted creation date
    */
   getCreatedAtTooltip(creationDate) {
     let filter = this.interpolate_(`{{date | date}}`);
     /** @type {string} @desc Tooltip 'Created at [some date]' showing the exact creation time of
-     * storage class. */
-    let MSG_STORAGE_CLASS_LIST_CREATED_AT_TOOLTIP =
+     * third party resource. */
+    let MSG_THIRD_PARTY_RESOURCE_LIST_CREATED_AT_TOOLTIP =
         goog.getMsg('Created at {$creationDate}', {'creationDate': filter({'date': creationDate})});
-    return MSG_STORAGE_CLASS_LIST_CREATED_AT_TOOLTIP;
+    return MSG_THIRD_PARTY_RESOURCE_LIST_CREATED_AT_TOOLTIP;
   }
 }
 
 /**
- * @return {!angular.Component}
+ * @type {!angular.Component}
  */
-export const storageClassCardComponent = {
+export const thirdPartyResourceCardComponent = {
   bindings: {
-    'storageClass': '=',
+    'thirdPartyResource': '=',
   },
-  controller: StorageClassCardController,
-  templateUrl: 'storageclasslist/card.html',
+  controller: ThirdPartyResourceCardController,
+  templateUrl: 'thirdpartyresourcelist/card.html',
 };
