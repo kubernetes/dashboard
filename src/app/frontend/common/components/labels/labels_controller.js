@@ -19,6 +19,12 @@
 const alwaysVisibleLabelsNumber = 5;
 
 /**
+ * Regular expression matching URLs.
+ * @type {RegExp}
+ */
+const urlRegexp = new RegExp('(https?|ftp)://(-\.)?([^\s/?\.#-]+\.?)+(/[^\s]*)?', 'i');
+
+/**
  * @final
  */
 export default class LabelsController {
@@ -73,5 +79,15 @@ export default class LabelsController {
    */
   switchLabelsView() {
     this.isShowingAllLabels_ = !this.isShowingAllLabels_;
+  }
+
+  /**
+   * Returns true if given value is URL.
+   *
+   * @return {boolean}
+   * @export
+   */
+  isHref(value) {
+    return urlRegexp.test(value.trim());
   }
 }
