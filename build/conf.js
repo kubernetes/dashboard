@@ -104,8 +104,8 @@ export default {
      */
     devServerPort: 9091,
     /**
-    * Address for the Kubernetes API server.
-    */
+     * Address for the Kubernetes API server.
+     */
     apiServerHost: 'http://localhost:8080',
     /**
      * Address for the Heapster API server. If blank, the dashboard
@@ -163,8 +163,8 @@ export default {
    */
   frontend: {
     /**
-    * Port number to access the dashboard UI
-    */
+     * Port number to access the dashboard UI
+     */
     serverPort: 9090,
     /**
      * The name of the root Angular module, i.e., the module that bootstraps the application.

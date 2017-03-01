@@ -13,9 +13,9 @@
 // limitations under the License.
 
 /**
-* Name of the namespace state. This state should be used as a parent state for all root states.
-* It provides gobal namespace option for all URLs.
-*/
+ * Name of the namespace state. This state should be used as a parent state for all root states.
+ * It provides gobal namespace option for all URLs.
+ */
 export const stateName = 'chrome';
 
 /** Name of the view. Can be used in state config to define toolbar view */
@@ -45,7 +45,7 @@ export const fillContentConfig = 'fillContent';
 export class StateParams {
   /**
    * @param {string|undefined} namespace
-  */
+   */
   constructor(namespace) {
     /** @export {string|undefined} */
     this.namespace = namespace;
