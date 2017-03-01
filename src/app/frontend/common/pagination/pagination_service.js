@@ -22,9 +22,9 @@ export const DEFAULT_ROWS_LIMIT = 10;
  */
 export class PaginationService {
   /**
-  * @param {!./../namespace/namespace_service.NamespaceService} kdNamespaceService
-  * @ngInject
-  */
+   * @param {!./../namespace/namespace_service.NamespaceService} kdNamespaceService
+   * @ngInject
+   */
   constructor(kdNamespaceService) {
     /** @private {!Array<number>} */
     this.rowsLimitOptions_ = ROWS_LIMIT_OPTIONS;

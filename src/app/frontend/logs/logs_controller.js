@@ -256,8 +256,9 @@ export class LogsController {
    */
   onContainerChange(container) {
     this.state_.go(
-        logs, new StateParams(
-                  this.stateParams_.objectNamespace, this.stateParams_.objectName, container));
+        logs,
+        new StateParams(
+            this.stateParams_.objectNamespace, this.stateParams_.objectName, container));
   }
 
   /**
