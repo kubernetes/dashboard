@@ -13,25 +13,15 @@
 // limitations under the License.
 
 /**
- * @final
+ * Definition object for the component that displays pod info.
+ *
+ * @return {!angular.Directive}
  */
-export default class CreatorInfoController {
-  /**
-   * @ngInject
-   */
-  constructor() {
-    /** @export {!backendApi.Controller} Initialized from a binding. */
-    this.creator;
-  }
-}
-
-/**
- * @type {!angular.Component}
- */
-export const creatorInfoComponent = {
-  controller: CreatorInfoController,
-  templateUrl: 'poddetail/creatorinfo.html',
+export const logsComponent = {
+  controller: LogsController,
+  templateUrl: 'poddetail/logs/logs.html',
   bindings: {
-    'creator': '<',
+    /** {!backendApi.PodDetail} */
+    'pod': '<',
   },
-};
+}

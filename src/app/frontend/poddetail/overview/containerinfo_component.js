@@ -68,7 +68,7 @@ export default class ContainerInfoController {
  */
 export const containerInfoComponent = {
   controller: ContainerInfoController,
-  templateUrl: 'poddetail/containerinfo.html',
+  templateUrl: 'poddetail/overview/containerinfo.html',
   bindings: {
     /** {!Array<backendApi.Container>} */
     'containers': '<',

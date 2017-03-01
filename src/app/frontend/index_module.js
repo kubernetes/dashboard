@@ -31,7 +31,6 @@ import ingressDetailModule from './ingressdetail/module';
 import ingressListModule from './ingresslist/module';
 import jobDetailModule from './jobdetail/jobdetail_module';
 import jobListModule from './joblist/joblist_module';
-import logsModule from './logs/logs_module';
 import namespaceDetailModule from './namespacedetail/namespacedetail_module';
 import namespaceListModule from './namespacelist/namespacelist_module';
 import nodeListModule from './nodelist/nodelist_module';
@@ -73,7 +72,6 @@ export default angular
           errorModule.name,
           jobListModule.name,
           jobDetailModule.name,
-          logsModule.name,
           replicationControllerDetailModule.name,
           replicationControllerListModule.name,
           replicaSetListModule.name,
