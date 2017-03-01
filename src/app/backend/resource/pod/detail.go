@@ -76,11 +76,11 @@ type Controller struct {
 	// Kind of the Controller, will also define wich of the other members will be non nil
 	Kind string `json:"kind"`
 
-	JobList                   *joblist.JobList                                     `json:"job,omitempty"`
-	ReplicaSetList            *replicasetlist.ReplicaSetList                       `json:"replicaset,omitempty"`
-	ReplicationControllerList *replicationcontrollerlist.ReplicationControllerList `json:"replicationcontroller,omitempty"`
-	DaemonSetList             *daemonsetlist.DaemonSetList                         `json:"daemonset,omitempty"`
-	StatefulSetList           *statefulsetlist.StatefulSetList                     `json:"statefulset,omitempty"`
+	JobList                   *joblist.JobList                                     `json:"joblist,omitempty"`
+	ReplicaSetList            *replicasetlist.ReplicaSetList                       `json:"replicasetlist,omitempty"`
+	ReplicationControllerList *replicationcontrollerlist.ReplicationControllerList `json:"replicationcontrollerlist,omitempty"`
+	DaemonSetList             *daemonsetlist.DaemonSetList                         `json:"daemonsetlist,omitempty"`
+	StatefulSetList           *statefulsetlist.StatefulSetList                     `json:"statefulsetlist,omitempty"`
 }
 
 // Container represents a docker/rkt/etc. container that lives in a pod.
