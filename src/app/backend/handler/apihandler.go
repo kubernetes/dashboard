@@ -356,6 +356,10 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 		apiV1Ws.GET("/pod/{namespace}/{pod}/log/{container}").
 			To(apiHandler.handleLogs).
 			Writes(logs.Logs{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/pod/{namespace}/{pod}/event").
+			To(apiHandler.handleGetPodEvents).
+			Writes(common.EventList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/deployment").
@@ -1042,6 +1046,24 @@ func (apiHandler *APIHandler) handleGetReplicaSetEvents(request *restful.Request
 
 	result, err := replicasetdetail.GetReplicaSetEvents(apiHandler.client, dataSelect, namespace,
 		name)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+
+}
+
+// Handles get pod set events API call.
+func (apiHandler *APIHandler) handleGetPodEvents(request *restful.Request, response *restful.Response) {
+	log.Println("Getting events related to a pod in namespace")
+
+	namespace := request.PathParameter("namespace")
+	podName := request.PathParameter("pod")
+	dataSelect := parseDataSelectPathParameter(request)
+
+	result, err := pod.GetEventsForPods(apiHandler.client, dataSelect, namespace,
+		podName)
 	if err != nil {
 		handleInternalError(response, err)
 		return
