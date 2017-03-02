@@ -87,6 +87,38 @@ func GetPodsEvents(client client.Interface, namespace string, resourceSelector m
 	return events, nil
 }
 
+// GetPodEvents gets pods events associated to pod name and namespace
+func GetPodEvents(client client.Interface, namespace, podName string) ([]api.Event, error) {
+
+	channels := &common.ResourceChannels{
+		PodList: common.GetPodListChannel(client,
+			common.NewSameNamespaceQuery(namespace),
+			1),
+		EventList: common.GetEventListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
+	}
+
+	podList := <-channels.PodList.List
+	if err := <-channels.PodList.Error; err != nil {
+		return nil, err
+	}
+
+	eventList := <-channels.EventList.List
+	if err := <-channels.EventList.Error; err != nil {
+		return nil, err
+	}
+
+	l := podList.Items[:0]
+	for _, pi := range podList.Items {
+		if pi.Name == podName {
+			l = append(l, pi)
+		}
+	}
+
+	events := filterEventsByPodsUID(eventList.Items, l)
+
+	return events, nil
+}
+
 // GetNodeEvents gets events associated to node with given name.
 func GetNodeEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, nodeName string) (*common.EventList, error) {
 	var eventList common.EventList

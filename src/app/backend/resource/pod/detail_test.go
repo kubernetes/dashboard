@@ -63,6 +63,7 @@ func TestToPodDetail(t *testing.T) {
 				},
 				Controller: Controller{Kind: "unknown"},
 				Containers: []Container{},
+				EventList:  common.EventList{Events: []common.Event{}},
 			},
 		},
 	}
