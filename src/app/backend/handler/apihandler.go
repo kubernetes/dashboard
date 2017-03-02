@@ -1062,7 +1062,7 @@ func (apiHandler *APIHandler) handleGetPodEvents(request *restful.Request, respo
 	podName := request.PathParameter("pod")
 	dataSelect := parseDataSelectPathParameter(request)
 
-	result, err := pod.GetEventsForPods(apiHandler.client, dataSelect, namespace,
+	result, err := pod.GetEventsForPod(apiHandler.client, dataSelect, namespace,
 		podName)
 	if err != nil {
 		handleInternalError(response, err)
