@@ -27,7 +27,7 @@ limitations under the License.
       <div ng-switch-default class="kd-chip">
         <span>{{::key}}:&nbsp;</span>
         <kd-middle-ellipsis class="kd-chip-value" ng-if="!annotationsCtrl.isHref(value)" display-string=" {{::value}}" ></kd-middle-ellipsis>
-        <a ng-if="annotationsCtrl.isHref(value)" class="kd-chip-value" href="{{::value}}">
+        <a ng-if="annotationsCtrl.isHref(value)" class="kd-chip-value" href="{{::value}}" target="_blank">
           <kd-middle-ellipsis  display-string=" {{::value}}" ></kd-middle-ellipsis>
         </a>
       </div>
