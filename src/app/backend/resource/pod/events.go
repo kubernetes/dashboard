@@ -7,11 +7,10 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	client "k8s.io/client-go/kubernetes"
-	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // Get all events that are associated with this pod.
-func GetEventsForPods(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace, podName string) (
+func GetEventsForPod(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace, podName string) (
 	*common.EventList, error) {
 
 	// Get events for pod.
@@ -22,7 +21,7 @@ func GetEventsForPods(client client.Interface, dsQuery *dataselect.DataSelectQue
 	}
 
 	// Get events for pods in job.
-	podEvents, err := getPodEvents(client, namespace, podName)
+	podEvents, err := event.GetPodEvents(client, namespace, podName)
 
 	if err != nil {
 		return nil, err
@@ -40,15 +39,4 @@ func GetEventsForPods(client client.Interface, dsQuery *dataselect.DataSelectQue
 		len(events.Events), podName, namespace)
 
 	return &events, nil
-}
-
-// Get all events that are in this pod
-func getPodEvents(client client.Interface, namespace, podName string) ([]api.Event, error) {
-
-	podEvents, err := event.GetPodEvents(client, namespace, podName)
-	if err != nil {
-		return nil, err
-	}
-
-	return podEvents, nil
 }
