@@ -65,6 +65,9 @@ type PodDetail struct {
 
 	// Conditions of this pod.
 	Conditions []common.Condition `json:"conditions"`
+
+	// Events is list of events associated with a pod.
+	EventList common.EventList `json:"eventList"`
 }
 
 // Creator is a view of the creator of a given pod, in List for for ease of use
@@ -117,8 +120,7 @@ type EnvVar struct {
 
 // GetPodDetail returns the details (PodDetail) of a named Pod from a particular
 // namespace.
-func GetPodDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	namespace, name string) (*PodDetail, error) {
+func GetPodDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient, namespace, name string) (*PodDetail, error) {
 
 	log.Printf("Getting details of %s pod in %s namespace", name, namespace)
 
@@ -155,7 +157,12 @@ func GetPodDetail(client k8sClient.Interface, heapsterClient client.HeapsterClie
 	}
 	configMapList := <-channels.ConfigMapList.List
 
-	podDetail := toPodDetail(pod, metrics, configMapList, controller)
+	eventList, err := GetEventsForPods(client, dataselect.DefaultDataSelect, pod.Namespace, pod.Name)
+	if err != nil {
+		return nil, err
+	}
+
+	podDetail := toPodDetail(pod, metrics, configMapList, controller, eventList)
 	return &podDetail, nil
 }
 
@@ -271,7 +278,7 @@ func toStatefulSetPodController(client k8sClient.Interface, reference api.Object
 	}, nil
 }
 
-func toPodDetail(pod *api.Pod, metrics []metric.Metric, configMaps *api.ConfigMapList, controller Controller) PodDetail {
+func toPodDetail(pod *api.Pod, metrics []metric.Metric, configMaps *api.ConfigMapList, controller Controller, eventList *common.EventList) PodDetail {
 
 	containers := make([]Container, 0)
 	for _, container := range pod.Spec.Containers {
@@ -306,6 +313,7 @@ func toPodDetail(pod *api.Pod, metrics []metric.Metric, configMaps *api.ConfigMa
 		Containers:   containers,
 		Metrics:      metrics,
 		Conditions:   getPodConditions(*pod),
+		EventList:    *eventList,
 	}
 
 	return podDetail
