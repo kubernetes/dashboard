@@ -1407,7 +1407,7 @@ func (apiHandler *APIHandler) handleGetThirdPartyResource(request *restful.Reque
 func (apiHandler *APIHandler) handleGetThirdPartyResourceDetail(request *restful.Request,
 	response *restful.Response) {
 	name := request.PathParameter("thirdpartyresource")
-	result, err := thirdpartyresource.GetThirdPartyResourceDetail(apiHandler.client, name)
+	result, err := thirdpartyresource.GetThirdPartyResourceDetail(apiHandler.client, apiHandler.clientConfig, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
