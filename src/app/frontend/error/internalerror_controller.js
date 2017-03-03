@@ -18,10 +18,11 @@
 export class InternalErrorController {
   /**
    * @param {!./internalerror_state.StateParams} $stateParams
-   * @param {!./../chrome/nav/nav_service.NavService} kdNavService
+   * * @param {!./../chrome/nav/nav_service.NavService} kdNavService
+   *   @param {!../common/appconfig/appconfig_service.AppConfigService} kdAppConfigService
    * @ngInject
    */
-  constructor($stateParams, kdNavService) {
+  constructor($stateParams, kdNavService, kdAppConfigService) {
     /** @export {!angular.$http.Response} */
     this.error = $stateParams.error;
 
@@ -35,6 +36,12 @@ export class InternalErrorController {
      * Hide side menu while entering internal error page.
      */
     this.kdNavService_.setVisibility(false);
+
+    /** @private {string} */
+    this.dashboardVersion_ = kdAppConfigService.getDashboardVersion();
+
+    /** @private {string} */
+    this.gitCommit_ = kdAppConfigService.getGitCommit();
   }
 
   /**
@@ -75,16 +82,15 @@ export class InternalErrorController {
    * @return {string} URL of GitHub page used to report bugs.
    */
   getLinkToFeedbackPage() {
-    let title = `Dashboard reported ${this.getErrorStatus()}`;
-    let body = `#### Issue details\n\n##### Environment\n<!-- Describe how do you run Kubernetes ` +
-        `and Dashboard.\n      Versions of Node.js, Go etc. are needed only from developers. To ` +
-        `get them use console:\n      $ node --version\n      $ go version\n-->\n\n\`\`\`\n` +
-        `Dashboard version:\nKubernetes version:\nOperating system:\nNode.js version:\nGo version` +
-        `:\n\`\`\`\n##### Steps to reproduce\n<!-- Describe all steps needed to reproduce the ` +
-        `issue. It is a good place to use numbered list. -->\n\n##### Observed result\nDashboard ` +
-        `reported ${this.getErrorStatus()}:\n\`\`\`\n${this.getErrorData()}\n\`\`\`\n\n##### ` +
-        `Expected result\n<!-- Describe expected result as precisely as possible. -->\n\n##### ` +
-        `Comments\n<!-- If you have any comments or more details, put them here. -->`;
+    let title = ``;
+    let body = `##### Steps to reproduce\n<!-- Describe all steps needed to reproduce the ` +
+        `issue. It is a good place to use numbered list. -->\n\n\n##### Environment\n\`\`\`\n` +
+        `Installation method: \nKubernetes version:\nDashboard version: ` +
+        `${this.dashboardVersion_}\nCommit: ${
+                                              this.gitCommit_
+                                            }\n\`\`\`\n\n\n##### Observed result\n` +
+        `Dashboard reported ${this.getErrorStatus()}:\n\`\`\`\n${this.getErrorData()}\`\`\`\n\n\n` +
+        `##### Comments\n<!-- If you have any comments or more details, put them here. -->`;
     return `https://github.com/kubernetes/dashboard/issues/new?title=${encodeURIComponent(title)}` +
         `&body=${encodeURIComponent(body)}`;
   }
