@@ -58,7 +58,8 @@ func getThirdPartyResourceDetail(config clientcmd.ClientConfig, thirdPartyResour
 	}
 }
 
-// TODO(maciaszczykm): It should always take preffered version. Is there any Kubernetes API to use instead of this function?
+// getThirdPartyResourceGroupVersion returns first group version of third party resource. It's also known as
+// preferredVersion.
 func getThirdPartyResourceGroupVersion(thirdPartyResource *extensions.ThirdPartyResource) schema.GroupVersion {
 	version := ""
 	if len(thirdPartyResource.Versions) > 0 {
@@ -78,7 +79,7 @@ func getThirdPartyResourceGroupVersion(thirdPartyResource *extensions.ThirdParty
 	}
 }
 
-// TODO(maciaszczykm): Is there any Kubernetes API to use instead of this function?
+// getThirdPartyResourcePluralName returns third party resource object plural name, which can be used in API calls.
 func getThirdPartyResourcePluralName(thirdPartyResource *extensions.ThirdPartyResource) string {
 	name := strings.ToLower(thirdPartyResource.ObjectMeta.Name)
 

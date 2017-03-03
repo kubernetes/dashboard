@@ -47,9 +47,6 @@ func getThirdPartyResourceObjects(config clientcmd.ClientConfig, thirdPartyResou
 		return list
 	}
 
-	// TODO(maciaszczykm): Is there a way to alter existing rest client to use different group version?
-	// It would allow to create REST client only once, not for each call.
-	// Creating cache for clients also seems to be risky (could take a lot of memory).
 	restClient, err := newRESTClient(restConfig)
 	if err != nil {
 		log.Println(err)
