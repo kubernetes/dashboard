@@ -8,11 +8,13 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 )
 
+// ThirdPartyResourceObject is a single instance of third party resource.
 type ThirdPartyResourceObject struct {
 	metav1.TypeMeta `json:",inline"`
 	Metadata        metav1.ObjectMeta `json:"metadata,omitempty"`
 }
 
+// ThirdPartyResourceObjectList is a list of third party resource instances.
 type ThirdPartyResourceObjectList struct {
 	metav1.TypeMeta `json:",inline"`
 	Metadata        metav1.ListMeta            `json:"metadata,omitempty"`
