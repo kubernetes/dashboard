@@ -45,17 +45,22 @@ func GetThirdPartyResourceDetail(client k8sClient.Interface, config clientcmd.Cl
 		return nil, err
 	}
 
-	return getThirdPartyResourceDetail(config, thirdPartyResource), nil
+	return getThirdPartyResourceDetail(config, thirdPartyResource)
 }
 
-func getThirdPartyResourceDetail(config clientcmd.ClientConfig, thirdPartyResource *extensions.ThirdPartyResource) *ThirdPartyResourceDetail {
+func getThirdPartyResourceDetail(config clientcmd.ClientConfig, thirdPartyResource *extensions.ThirdPartyResource) (*ThirdPartyResourceDetail, error) {
+	objects, err := getThirdPartyResourceObjects(config, thirdPartyResource)
+	if err != nil {
+		return nil, err
+	}
+
 	return &ThirdPartyResourceDetail{
 		ObjectMeta:  common.NewObjectMeta(thirdPartyResource.ObjectMeta),
 		TypeMeta:    common.NewTypeMeta(common.ResourceKindThirdPartyResource),
 		Description: thirdPartyResource.Description,
 		Versions:    thirdPartyResource.Versions,
-		Objects:     getThirdPartyResourceObjects(config, thirdPartyResource),
-	}
+		Objects:     objects,
+	}, err
 }
 
 // getThirdPartyResourceGroupVersion returns first group version of third party resource. It's also known as
