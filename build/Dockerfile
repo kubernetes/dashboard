@@ -39,6 +39,7 @@ WORKDIR /dashboard
 
 # Install all npm deps, bower deps. This will take a while.
 COPY package.json bower.json ./
+COPY build/postinstall.sh build/
 RUN npm install --unsafe-perm
 
 # Copy entire source tree.
