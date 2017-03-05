@@ -17,11 +17,15 @@
  */
 export class PodDetailController {
   /**
-   * @ngInject
    * @param {!backendApi.PodDetail} podDetail
+   * @param {!angular.Resource} kdPodEventsResource
+   * @ngInject
    */
-  constructor(podDetail) {
+  constructor(podDetail, kdPodEventsResource) {
     /** @export {!backendApi.PodDetail} */
     this.podDetail = podDetail;
+
+    /** @export {!angular.Resource} */
+    this.eventListResource = kdPodEventsResource;
   }
 }

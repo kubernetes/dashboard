@@ -59,7 +59,7 @@ const version = {
   /**
    * Current release version of the project.
    */
-  release: 'v1.5.0',
+  release: 'v1.5.1',
   /**
    * Version name of the head release of the project.
    */
@@ -104,8 +104,8 @@ export default {
      */
     devServerPort: 9091,
     /**
-    * Address for the Kubernetes API server.
-    */
+     * Address for the Kubernetes API server.
+     */
     apiServerHost: 'http://localhost:8080',
     /**
      * Address for the Heapster API server. If blank, the dashboard
@@ -163,8 +163,8 @@ export default {
    */
   frontend: {
     /**
-    * Port number to access the dashboard UI
-    */
+     * Port number to access the dashboard UI
+     */
     serverPort: 9090,
     /**
      * The name of the root Angular module, i.e., the module that bootstraps the application.
@@ -198,7 +198,6 @@ export default {
     assets: path.join(basePath, 'src/app/assets'),
     base: basePath,
     backendSrc: path.join(basePath, 'src/app/backend'),
-    backendTest: path.join(basePath, 'src/test/backend'),
     backendTmp: path.join(basePath, '.tmp/backend'),
     backendTmpSrc:
         path.join(basePath, '.tmp/backend/src/github.com/kubernetes/dashboard/src/app/backend'),

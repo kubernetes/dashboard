@@ -14,7 +14,7 @@ logic and fetches raw data from the various Kubernetes APIs.
 Make sure the following software is installed and added to the `$PATH` variable:
 
 * Docker (1.10+)
-* go (1.6.1+)
+* go (1.7+)
 * nodejs (5.1.1+)
 * npm (3+)
 * java (7+)
@@ -25,8 +25,14 @@ You can follow [detailed steps on how to install these requirements](requirement
 Clone the repository and install the dependencies:
 
 ```shell
-$ npm install
+$ npm i
 ```
+
+If you are running commands with root privileges set `--unsafe-perm` flag:
+
+ ```shell
+ # npm i --unsafe-perm
+ ```
 
 ## Run a Kubernetes Cluster
 

@@ -14,9 +14,7 @@
 
 package logs
 
-import (
-	"strings"
-)
+import "strings"
 
 // Logs is a representation of logs response structure.
 type Logs struct {

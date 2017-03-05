@@ -31,16 +31,15 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/config"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/configmap"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/container"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset/daemonsetdetail"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset/daemonsetlist"
+	daemonsetdetail "github.com/kubernetes/dashboard/src/app/backend/resource/daemonset/detail"
+	daemonsetlist "github.com/kubernetes/dashboard/src/app/backend/resource/daemonset/list"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler/horizontalpodautoscalerdetail"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler/horizontalpodautoscalerlist"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/ingress"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/job/jobdetail"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/job/joblist"
+	jobdetail "github.com/kubernetes/dashboard/src/app/backend/resource/job/detail"
+	joblist "github.com/kubernetes/dashboard/src/app/backend/resource/job/list"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/logs"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
@@ -48,23 +47,25 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/replicasetdetail"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/replicasetlist"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller/replicationcontrollerdetail"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller/replicationcontrollerlist"
+	replicasetdetail "github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/detail"
+	replicasetlist "github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/list"
+	replicationcontrollerdetail "github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller/detail"
+	replicationcontrollerlist "github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller/list"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/secret"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/servicesanddiscovery"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/statefulsetdetail"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/statefulsetlist"
+	statefulsetdetail "github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/detail"
+	statefulsetlist "github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/list"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/storageclass"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/thirdpartyresource"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/workload"
 	"github.com/kubernetes/dashboard/src/app/backend/validation"
 	"golang.org/x/net/xsrftoken"
-	clientK8s "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
-	"k8s.io/kubernetes/pkg/client/restclient"
-	"k8s.io/kubernetes/pkg/client/unversioned/clientcmd"
-	"k8s.io/kubernetes/pkg/runtime"
-	utilnet "k8s.io/kubernetes/pkg/util/net"
+	"k8s.io/apimachinery/pkg/runtime"
+	utilnet "k8s.io/apimachinery/pkg/util/net"
+	clientK8s "k8s.io/client-go/kubernetes"
+	restclient "k8s.io/client-go/rest"
+	"k8s.io/client-go/tools/clientcmd"
 )
 
 const (
@@ -178,8 +179,8 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 	clientConfig clientcmd.ClientConfig) (http.Handler, error) {
 
 	verber := common.NewResourceVerber(client.Core().RESTClient(),
-		client.ExtensionsClient.RESTClient(), client.AppsClient.RESTClient(),
-		client.BatchClient.RESTClient(), client.AutoscalingClient.RESTClient())
+		client.Extensions().RESTClient(), client.Apps().RESTClient(),
+		client.Batch().RESTClient(), client.Autoscaling().RESTClient(), client.Storage().RESTClient())
 
 	var csrfKey string
 	inClusterConfig, err := restclient.InClusterConfig()
@@ -355,6 +356,10 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 		apiV1Ws.GET("/pod/{namespace}/{pod}/log/{container}").
 			To(apiHandler.handleLogs).
 			Writes(logs.Logs{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/pod/{namespace}/{pod}/event").
+			To(apiHandler.handleGetPodEvents).
+			Writes(common.EventList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/deployment").
@@ -376,7 +381,6 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 		apiV1Ws.GET("/deployment/{namespace}/{deployment}/oldreplicaset").
 			To(apiHandler.handleGetDeploymentOldReplicaSets).
 			Writes(replicasetlist.ReplicaSetList{}))
-
 	apiV1Ws.Route(
 		apiV1Ws.GET("/daemonset").
 			To(apiHandler.handleGetDaemonSetList).
@@ -408,15 +412,15 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 	apiV1Ws.Route(
 		apiV1Ws.GET("/horizontalpodautoscaler").
 			To(apiHandler.handleGetHorizontalPodAutoscalerList).
-			Writes(horizontalpodautoscalerlist.HorizontalPodAutoscalerList{}))
+			Writes(horizontalpodautoscaler.HorizontalPodAutoscalerList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/horizontalpodautoscaler/{namespace}").
 			To(apiHandler.handleGetHorizontalPodAutoscalerList).
-			Writes(horizontalpodautoscalerlist.HorizontalPodAutoscalerList{}))
+			Writes(horizontalpodautoscaler.HorizontalPodAutoscalerList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/horizontalpodautoscaler/{namespace}/{horizontalpodautoscaler}").
 			To(apiHandler.handleGetHorizontalPodAutoscalerDetail).
-			Writes(horizontalpodautoscalerdetail.HorizontalPodAutoscalerDetail{}))
+			Writes(horizontalpodautoscaler.HorizontalPodAutoscalerDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/job").
@@ -602,6 +606,24 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 			To(apiHandler.handleGetPersistentVolumeClaimDetail).
 			Writes(persistentvolumeclaim.PersistentVolumeClaimDetail{}))
 
+	apiV1Ws.Route(
+		apiV1Ws.GET("/thirdpartyresource").
+			To(apiHandler.handleGetThirdPartyResource).
+			Writes(thirdpartyresource.ThirdPartyResourceList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/thirdpartyresource/{thirdpartyresource}").
+			To(apiHandler.handleGetThirdPartyResourceDetail).
+			Writes(thirdpartyresource.ThirdPartyResourceDetail{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/storageclass").
+			To(apiHandler.handleGetStorageClassList).
+			Writes(storageclass.StorageClassList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/storageclass/{storageclass}").
+			To(apiHandler.handleGetStorageClass).
+			Writes(storageclass.StorageClass{}))
+
 	return wsContainer, nil
 }
 
@@ -625,7 +647,7 @@ func (apiHandler *APIHandler) handleGetStatefulSetList(request *restful.Request,
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get pet set detail API call.
@@ -640,7 +662,7 @@ func (apiHandler *APIHandler) handleGetStatefulSetDetail(request *restful.Reques
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get pet set pods API call.
@@ -655,7 +677,7 @@ func (apiHandler *APIHandler) handleGetStatefulSetPods(request *restful.Request,
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get pet set events API call.
@@ -670,7 +692,7 @@ func (apiHandler *APIHandler) handleGetStatefulSetEvents(request *restful.Reques
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get service list API call.
@@ -683,7 +705,7 @@ func (apiHandler *APIHandler) handleGetServiceList(request *restful.Request, res
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get service detail API call.
@@ -697,7 +719,7 @@ func (apiHandler *APIHandler) handleGetServiceDetail(request *restful.Request, r
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetIngressDetail(request *restful.Request, response *restful.Response) {
@@ -708,7 +730,7 @@ func (apiHandler *APIHandler) handleGetIngressDetail(request *restful.Request, r
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetIngressList(request *restful.Request, response *restful.Response) {
@@ -735,7 +757,7 @@ func (apiHandler *APIHandler) handleGetServicePods(request *restful.Request,
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get node list API call.
@@ -749,7 +771,7 @@ func (apiHandler *APIHandler) handleGetNodeList(request *restful.Request, respon
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetAdmin(request *restful.Request, response *restful.Response) {
@@ -759,7 +781,7 @@ func (apiHandler *APIHandler) handleGetAdmin(request *restful.Request, response 
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get node detail API call.
@@ -771,7 +793,7 @@ func (apiHandler *APIHandler) handleGetNodeDetail(request *restful.Request, resp
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get node events API call.
@@ -784,7 +806,7 @@ func (apiHandler *APIHandler) handleGetNodeEvents(request *restful.Request, resp
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get node pods API call.
@@ -797,7 +819,7 @@ func (apiHandler *APIHandler) handleGetNodePods(request *restful.Request, respon
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles deploy API call.
@@ -856,7 +878,7 @@ func (apiHandler *APIHandler) handleNameValidity(request *restful.Request, respo
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, validity)
+	response.WriteHeaderAndEntity(http.StatusOK, validity)
 }
 
 // Handles image reference validation API call.
@@ -872,7 +894,7 @@ func (APIHandler *APIHandler) handleImageReferenceValidity(request *restful.Requ
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, validity)
+	response.WriteHeaderAndEntity(http.StatusOK, validity)
 }
 
 // Handles protocol validation API call.
@@ -883,12 +905,12 @@ func (apiHandler *APIHandler) handleProtocolValidity(request *restful.Request, r
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, validation.ValidateProtocol(spec))
+	response.WriteHeaderAndEntity(http.StatusOK, validation.ValidateProtocol(spec))
 }
 
 // Handles get available protocols API call.
 func (apiHandler *APIHandler) handleGetAvailableProcotols(request *restful.Request, response *restful.Response) {
-	response.WriteHeaderAndEntity(http.StatusCreated, deployment.GetAvailableProtocols())
+	response.WriteHeaderAndEntity(http.StatusOK, deployment.GetAvailableProtocols())
 }
 
 // Handles get Replication Controller list API call.
@@ -904,7 +926,7 @@ func (apiHandler *APIHandler) handleGetReplicationControllerList(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Workloads list API call.
@@ -918,7 +940,7 @@ func (apiHandler *APIHandler) handleGetWorkloads(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetServicesAndDiscovery(
@@ -931,7 +953,7 @@ func (apiHandler *APIHandler) handleGetServicesAndDiscovery(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetConfig(
@@ -944,7 +966,7 @@ func (apiHandler *APIHandler) handleGetConfig(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Replica Sets list API call.
@@ -960,7 +982,7 @@ func (apiHandler *APIHandler) handleGetReplicaSets(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Replica Sets Detail API call.
@@ -978,7 +1000,7 @@ func (apiHandler *APIHandler) handleGetReplicaSetDetail(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Replica Sets pods API call.
@@ -996,7 +1018,7 @@ func (apiHandler *APIHandler) handleGetReplicaSetPods(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Replica Set services API call.
@@ -1013,7 +1035,7 @@ func (apiHandler *APIHandler) handleGetReplicaSetServices(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get replica set events API call.
@@ -1028,7 +1050,25 @@ func (apiHandler *APIHandler) handleGetReplicaSetEvents(request *restful.Request
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+
+}
+
+// Handles get pod set events API call.
+func (apiHandler *APIHandler) handleGetPodEvents(request *restful.Request, response *restful.Response) {
+	log.Println("Getting events related to a pod in namespace")
+
+	namespace := request.PathParameter("namespace")
+	podName := request.PathParameter("pod")
+	dataSelect := parseDataSelectPathParameter(request)
+
+	result, err := pod.GetEventsForPods(apiHandler.client, dataSelect, namespace,
+		podName)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Deployment list API call.
@@ -1044,7 +1084,7 @@ func (apiHandler *APIHandler) handleGetDeployments(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Deployment detail API call.
@@ -1075,7 +1115,7 @@ func (apiHandler *APIHandler) handleGetDeploymentEvents(request *restful.Request
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get deployment old replica sets API call.
@@ -1090,7 +1130,7 @@ func (apiHandler *APIHandler) handleGetDeploymentOldReplicaSets(request *restful
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Pod list API call.
@@ -1106,7 +1146,7 @@ func (apiHandler *APIHandler) handleGetPods(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Pod detail API call.
@@ -1120,7 +1160,7 @@ func (apiHandler *APIHandler) handleGetPodDetail(request *restful.Request, respo
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Replication Controller detail API call.
@@ -1137,7 +1177,7 @@ func (apiHandler *APIHandler) handleGetReplicationControllerDetail(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles update of Replication Controller pods update API call.
@@ -1193,7 +1233,7 @@ func (apiHandler *APIHandler) handlePutResource(
 		return
 	}
 
-	response.WriteHeader(http.StatusOK)
+	response.WriteHeader(http.StatusCreated)
 }
 
 func (apiHandler *APIHandler) handleDeleteResource(
@@ -1225,7 +1265,7 @@ func (apiHandler *APIHandler) handleGetReplicationControllerPods(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles namespace creation API call.
@@ -1255,7 +1295,7 @@ func (apiHandler *APIHandler) handleGetNamespaces(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get namespace detail API call.
@@ -1267,7 +1307,7 @@ func (apiHandler *APIHandler) handleGetNamespaceDetail(request *restful.Request,
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get namespace events API call.
@@ -1280,7 +1320,7 @@ func (apiHandler *APIHandler) handleGetNamespaceEvents(request *restful.Request,
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles image pull secret creation API call.
@@ -1306,7 +1346,7 @@ func (apiHandler *APIHandler) handleGetSecretDetail(request *restful.Request, re
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get secrets list API call.
@@ -1340,12 +1380,34 @@ func (apiHandler *APIHandler) handleGetConfigMapDetail(request *restful.Request,
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetPersistentVolumeList(request *restful.Request, response *restful.Response) {
 	dataSelect := parseDataSelectPathParameter(request)
 	result, err := persistentvolume.GetPersistentVolumeList(apiHandler.client, dataSelect)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetThirdPartyResource(request *restful.Request,
+	response *restful.Response) {
+	dataSelect := parseDataSelectPathParameter(request)
+	result, err := thirdpartyresource.GetThirdPartyResourceList(apiHandler.client, dataSelect)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetThirdPartyResourceDetail(request *restful.Request,
+	response *restful.Response) {
+	name := request.PathParameter("thirdpartyresource")
+	result, err := thirdpartyresource.GetThirdPartyResourceDetail(apiHandler.client, apiHandler.clientConfig, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1360,7 +1422,7 @@ func (apiHandler *APIHandler) handleGetPersistentVolumeDetail(request *restful.R
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetPersistentVolumeClaimList(request *restful.Request, response *restful.Response) {
@@ -1383,7 +1445,7 @@ func (apiHandler *APIHandler) handleGetPersistentVolumeClaimDetail(request *rest
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles log API call.
@@ -1425,7 +1487,7 @@ func (apiHandler *APIHandler) handleLogs(request *restful.Request, response *res
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetPodContainers(request *restful.Request, response *restful.Response) {
@@ -1437,7 +1499,7 @@ func (apiHandler *APIHandler) handleGetPodContainers(request *restful.Request, r
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get replication controller events API call.
@@ -1452,7 +1514,7 @@ func (apiHandler *APIHandler) handleGetReplicationControllerEvents(request *rest
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get replication controller services API call.
@@ -1468,7 +1530,7 @@ func (apiHandler *APIHandler) handleGetReplicationControllerServices(request *re
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handler that writes the given error to the response and sets appropriate HTTP status headers.
@@ -1491,7 +1553,7 @@ func (apiHandler *APIHandler) handleGetDaemonSetList(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Daemon Set detail API call.
@@ -1508,7 +1570,7 @@ func (apiHandler *APIHandler) handleGetDaemonSetDetail(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Daemon Set pods API call.
@@ -1525,7 +1587,7 @@ func (apiHandler *APIHandler) handleGetDaemonSetPods(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Daemon Set services API call.
@@ -1542,7 +1604,7 @@ func (apiHandler *APIHandler) handleGetDaemonSetServices(
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get daemon set events API call.
@@ -1557,7 +1619,7 @@ func (apiHandler *APIHandler) handleGetDaemonSetEvents(request *restful.Request,
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles delete Daemon Set API call.
@@ -1586,26 +1648,26 @@ func (apiHandler *APIHandler) handleGetHorizontalPodAutoscalerList(request *rest
 	response *restful.Response) {
 	namespace := parseNamespacePathParameter(request)
 
-	result, err := horizontalpodautoscalerlist.GetHorizontalPodAutoscalerList(apiHandler.client, namespace)
+	result, err := horizontalpodautoscaler.GetHorizontalPodAutoscalerList(apiHandler.client, namespace)
 	if err != nil {
 		handleInternalError(response, err)
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetHorizontalPodAutoscalerDetail(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
 	horizontalpodautoscalerParam := request.PathParameter("horizontalpodautoscaler")
 
-	result, err := horizontalpodautoscalerdetail.GetHorizontalPodAutoscalerDetail(apiHandler.client, namespace, horizontalpodautoscalerParam)
+	result, err := horizontalpodautoscaler.GetHorizontalPodAutoscalerDetail(apiHandler.client, namespace, horizontalpodautoscalerParam)
 	if err != nil {
 		handleInternalError(response, err)
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Jobs list API call.
@@ -1621,7 +1683,7 @@ func (apiHandler *APIHandler) handleGetJobList(request *restful.Request,
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetJobDetail(request *restful.Request, response *restful.Response) {
@@ -1636,7 +1698,7 @@ func (apiHandler *APIHandler) handleGetJobDetail(request *restful.Request, respo
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Job pods API call.
@@ -1654,7 +1716,7 @@ func (apiHandler *APIHandler) handleGetJobPods(request *restful.Request,
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get job events API call.
@@ -1669,7 +1731,31 @@ func (apiHandler *APIHandler) handleGetJobEvents(request *restful.Request, respo
 		handleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+// Handles get storage class list API call.
+func (apiHandler *APIHandler) handleGetStorageClassList(request *restful.Request, response *restful.Response) {
+	dataSelect := parseDataSelectPathParameter(request)
+
+	result, err := storageclass.GetStorageClassList(apiHandler.client, dataSelect)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+// Handles get storage class API call.
+func (apiHandler *APIHandler) handleGetStorageClass(request *restful.Request, response *restful.Response) {
+	name := request.PathParameter("storageclass")
+
+	result, err := storageclass.GetStorageClass(apiHandler.client, name)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // parseNamespacePathParameter parses namespace selector for list pages in path parameter.
