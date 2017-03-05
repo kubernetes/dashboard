@@ -13,6 +13,36 @@
 // limitations under the License.
 
 /**
+ * @final
+ */
+export class NodeCardListController {
+  /** @export */
+  constructor() {
+    /** @export {!backendApi.NodeList} - Initialized from binding. */
+    this.nodeList;
+    /** @export {!angular.Resource} - Initialized from binding. */
+    this.nodeListResource;
+  }
+
+  /**
+   * Returns select id string or undefined if podList or podListResource are not defined.
+   * It is needed to enable/disable data select support (pagination, sorting) for particular list.
+   *
+   * @return {string}
+   * @export
+   */
+  getSelectId() {
+    const selectId = 'nodes';
+
+    if (this.nodeList !== undefined && this.nodeListResource !== undefined) {
+      return selectId;
+    }
+
+    return '';
+  }
+}
+
+/**
  * @return {!angular.Component}
  */
 export const nodeCardListComponent = {

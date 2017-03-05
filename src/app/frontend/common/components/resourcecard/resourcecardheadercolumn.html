@@ -14,4 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<ng-transclude class="kd-resource-card-header-column-container"></ng-transclude>
+<div class="kd-resource-card-header-column-container"
+     ng-class="{'kd-resource-card-header-column-sortable': $ctrl.isSortable(),
+                'kd-resource-card-header-column-sorted': $ctrl.isSorted()}">
+  <div class="kd-resource-card-header-sort-column-icon-container"
+       ng-click="$ctrl.sort()"
+       ng-if="::$ctrl.shouldEnableSorting()">
+    <md-icon class="kd-resource-card-header-sort-column-icon-asc"
+             ng-class="{'kd-resource-card-header-column-sorted': $ctrl.isAscending()}">
+      arrow_drop_up
+    </md-icon>
+    <md-icon ng-class="{'kd-resource-card-header-column-sorted': $ctrl.isDescending()}">
+      arrow_drop_down
+    </md-icon>
+  </div>
+
+  <ng-transclude ng-click="::$ctrl.shouldEnableSorting() && $ctrl.sort()"></ng-transclude>
+</div>

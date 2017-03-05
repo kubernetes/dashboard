@@ -15,14 +15,14 @@ limitations under the License.
 -->
 
 <kd-resource-card-list selectable="::$ctrl.selectable"
-                       with-statuses="true">
+                       with-statuses="true"
+                       select-id="{{::$ctrl.getSelectId()}}"
+                       list="$ctrl.serviceList"
+                       list-resource="::$ctrl.serviceListResource">
   <kd-resource-card-list-header ng-transclude="header">
     [[Services|Label which appears above the list of such objects.]]
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination pagination-id="services"
-                                    list="$ctrl.serviceList"
-                                    list-resource="::$ctrl.serviceListResource">
-  </kd-resource-card-list-pagination>
+  <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
   <div ng-show="!$ctrl.serviceList.listMeta.totalItems"
        class="kd-zerostate-message"
        ng-transclude="zerostate"></div>
@@ -58,16 +58,9 @@ limitations under the License.
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
 
-  <kd-service-card ng-if="::$ctrl.serviceListResource"
+  <kd-service-card dir-paginate="service in $ctrl.serviceList.services | itemsPerPage: default"
                    service="service"
-                   dir-paginate="service in $ctrl.serviceList.services | itemsPerPage: default"
-                   total-items="::$ctrl.serviceList.listMeta.totalItems"
-                   pagination-id="services">
-  </kd-service-card>
-
-  <kd-service-card ng-if="::!$ctrl.serviceListResource"
-                   pagination-id="services"
-                   dir-paginate="service in $ctrl.serviceList.services | itemsPerPage: default"
-                   service="service">
+                   pagination-id="{{::$ctrl.getSelectId()}}"
+                   total-items="::$ctrl.serviceList.listMeta.totalItems">
   </kd-service-card>
 </kd-resource-card-list>

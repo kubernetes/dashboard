@@ -13,45 +13,43 @@
 // limitations under the License.
 
 import resourceCardModule from 'common/components/resourcecard/resourcecard_module';
+import dataSelectModule from 'common/dataselect/dataselect_module';
 import errorHandlingModule from 'common/errorhandling/module';
-import paginationModule from 'common/pagination/module';
 
 describe('Resource card list pagination', () => {
-  /** @type
-   *  {!common/components/resourcecard/resourcecardlistpagination_component.ResourceCardListPaginationController}
-   */
+  /** @type {!ResourceCardListPaginationController} */
   let ctrl;
-  /** @type
-   *  {!common/components/resourcecard/resourcecardlist_component.ResourceCardListController}
-   */
+  /** @type {!ResourceCardListController} */
   let resourceCardListCtrl;
   /** @type {string} */
-  let paginationId = 'test-id';
-  /** @type {!common/pagination/service.PaginationService} */
-  let paginationService;
+  let selectId = 'test-id';
+  /** @type {!DataSelectService} */
+  let dataSelectService;
   /** @type {!angular.Scope} */
   let scope;
   /** @type {!angular.$httpBackend} */
   let httpBackend;
   /** @type {string} */
   let namespace = 'ns-1';
-  /** @type {!common/errorhandling/errordialog_service.ErrorDialog} */
+  /** @type {!ErrorDialog} */
   let errDialog;
 
   beforeEach(() => {
-    angular.mock.module(paginationModule.name);
+    angular.mock.module(dataSelectModule.name);
     angular.mock.module(resourceCardModule.name);
     angular.mock.module(errorHandlingModule.name);
 
     angular.mock.inject(
-        ($componentController, _kdPaginationService_, $rootScope, $resource, $httpBackend,
+        ($componentController, _kdDataSelectService_, $rootScope, $resource, $httpBackend,
          errorDialog) => {
-          paginationService = _kdPaginationService_;
-          paginationService.registerInstance(paginationId);
+          dataSelectService = _kdDataSelectService_;
+          dataSelectService.registerInstance(selectId);
 
           errDialog = errorDialog;
           httpBackend = $httpBackend;
-          resourceCardListCtrl = $componentController('kdResourceCardList', {$transclude: {}});
+          resourceCardListCtrl = $componentController(
+              'kdResourceCardList', {$transclude: {}},
+              {listResource: $resource('api/v1/pod/:namespace')});
           scope = $rootScope;
           ctrl = $componentController(
               'kdResourceCardListPagination', {
@@ -59,28 +57,17 @@ describe('Resource card list pagination', () => {
                 errorDialog: errDialog,
               },
               {
-                paginationId: paginationId,
-                kdPaginationService: paginationService,
+                selectId: selectId,
+                kdDataSelectService: dataSelectService,
                 resourceCardListCtrl: resourceCardListCtrl,
-                listResource: $resource('api/v1/pod/:namespace'),
               });
         });
   });
 
-  it('should register listener', () => {
-    // given
-    spyOn(ctrl, 'registerStateChangeListener');
-
-    // when
-    ctrl.$onInit();
-
-    // then
-    expect(ctrl.registerStateChangeListener).toHaveBeenCalled();
-  });
-
   it('should show pagination', () => {
     // given
-    ctrl.list = {listMeta: {totalItems: 50}};
+    resourceCardListCtrl.list = {listMeta: {totalItems: 50}};
+    ctrl.selectId = 'test-id';
 
     // when
     let result = ctrl.shouldShowPagination();
@@ -91,7 +78,8 @@ describe('Resource card list pagination', () => {
 
   it('should hide pagination', () => {
     // given
-    ctrl.list = {listMeta: {totalItems: 10}};
+    resourceCardListCtrl.list = {listMeta: {totalItems: 10}};
+    ctrl.selectId = 'test-id';
 
     // when
     let result = ctrl.shouldShowPagination();
@@ -100,46 +88,24 @@ describe('Resource card list pagination', () => {
     expect(result).toBeFalsy();
   });
 
-  it('should update rows limit', () => {
-    // given
-    ctrl.rowsLimit = 100;
-    spyOn(paginationService, 'setRowsLimit');
-
-    // when
-    ctrl.onRowsLimitUpdate();
-
-    // then
-    expect(paginationService.setRowsLimit).toHaveBeenCalledWith(100, paginationId);
-  });
-
-  it('should reset rows limit', () => {
-    // given
-    spyOn(paginationService, 'resetRowsLimit');
-
-    // when
-    ctrl.$onInit();
-    scope.$broadcast('$stateChangeStart');
-    scope.$apply();
-
-    // then
-    expect(paginationService.resetRowsLimit).toHaveBeenCalled();
-  });
-
   it('should change page', () => {
     // given
     let response = {pods: ['pod-1']};
     let limit = 10;
     let page = 2;
-    let queryString = `itemsPerPage=${limit}&page=${page}`;
-    paginationService.setRowsLimit(limit, paginationId);
+    let queryString = `itemsPerPage=${limit}&page=${page}&sortBy=d,creationTimestamp`;
     httpBackend.expectGET(`api/v1/pod/${namespace}?${queryString}`).respond(200, response);
 
     // when
     ctrl.pageChanged(page);
-    httpBackend.flush();
+    console.log(resourceCardListCtrl.list)
+    scope.$digest();
+    console.log(resourceCardListCtrl.list)
+    // httpBackend.flush();
+
 
     // then
-    expect(ctrl.list.pods).toEqual(response.pods);
+    expect(resourceCardListCtrl.list.pods).toEqual(response.pods);
   });
 
   it('should open error dialog on page change error', () => {
@@ -148,8 +114,7 @@ describe('Resource card list pagination', () => {
     let response = 'error';
     let limit = 10;
     let page = 2;
-    let queryString = `itemsPerPage=${limit}&page=${page}`;
-    paginationService.setRowsLimit(limit, paginationId);
+    let queryString = `itemsPerPage=${limit}&page=${page}&sortBy=d,creationTimestamp`;
     httpBackend.expectGET(`api/v1/pod/${namespace}?${queryString}`).respond(500, response);
 
     // when
@@ -158,18 +123,5 @@ describe('Resource card list pagination', () => {
 
     // then
     expect(errDialog.open).toHaveBeenCalledWith('Pagination error', response);
-  });
-
-  it('should use object namespace first', () => {
-    let limit = 10;
-    let page = 2;
-    let queryString = `itemsPerPage=${limit}&page=${page}`;
-    paginationService.setRowsLimit(limit, paginationId);
-    ctrl.stateParams_.objectNamespace = 'foo-ns';
-    httpBackend.expectGET(`api/v1/pod/foo-ns?${queryString}`).respond(200, {});
-
-    // when
-    ctrl.pageChanged(page);
-    httpBackend.flush();
   });
 });

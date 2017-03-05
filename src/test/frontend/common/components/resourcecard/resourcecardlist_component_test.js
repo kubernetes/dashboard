@@ -12,7 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import componentsModule from 'common/components/components_module';
 import resourceCardModule from 'common/components/resourcecard/resourcecard_module';
+import errorModule from 'common/errorhandling/errorhandling_module';
 
 describe('Resource card list', () => {
   /** @type {!angular.Scope} */
@@ -22,6 +24,8 @@ describe('Resource card list', () => {
 
   beforeEach(() => {
     angular.mock.module(resourceCardModule.name);
+    angular.mock.module(componentsModule.name);
+    angular.mock.module(errorModule.name);
 
     angular.mock.inject(($rootScope, $compile) => {
       scope = $rootScope.$new();

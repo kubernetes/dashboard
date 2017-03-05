@@ -15,14 +15,14 @@ limitations under the License.
 -->
 
 <kd-resource-card-list selectable="false"
-                       with-statuses="true">
+                       with-statuses="true"
+                       select-id="{{::$ctrl.getSelectId()}}"
+                       list="$ctrl.namespaceList"
+                       list-resource="$ctrl.namespaceListResource">
   <kd-resource-card-list-header ng-transclude="header">
     [[Namespaces|Label which appears above the list of such objects.]]
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination pagination-id="namespaces"
-                                    list="$ctrl.namespaceList"
-                                    list-resource="$ctrl.namespaceListResource">
-  </kd-resource-card-list-pagination>
+  <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
 
   <kd-resource-card-header-columns>
     <kd-resource-card-header-column size="small"
@@ -42,16 +42,9 @@ limitations under the License.
       [[Age|Label 'Age' which appears as a column label in the table of namespaces (namespace list view).]]
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
-  <kd-namespace-card ng-if="::$ctrl.namespaceListResource"
-                     dir-paginate="ns in $ctrl.namespaceList.namespaces | itemsPerPage: default"
-                     pagination-id="namespaces"
+  <kd-namespace-card dir-paginate="ns in $ctrl.namespaceList.namespaces | itemsPerPage: default"
+                     pagination-id="{{::$ctrl.getSelectId()}}"
                      namespace="ns"
                      total-items="::$ctrl.namespaceList.listMeta.totalItems">
-  </kd-namespace-card>
-
-  <kd-namespace-card ng-if="::!$ctrl.namespaceListResource"
-                     dir-paginate="ns in $ctrl.namespaceList.namespaces | itemsPerPage: default"
-                     pagination-id="namespaces"
-                     namespace="ns">
   </kd-namespace-card>
 </kd-resource-card-list>

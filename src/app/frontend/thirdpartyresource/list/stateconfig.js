@@ -64,13 +64,12 @@ export function thirdPartyResourceListResource($resource) {
 
 /**
  * @param {!angular.Resource} kdThirdPartyResourceListResource
- * @param {!./../../common/pagination/service.PaginationService} kdPaginationService
+ * @param {!./../../common/dataselect/service.DataSelectService} kdDataSelectService
  * @returns {!angular.$q.Promise}
  * @ngInject
  */
 export function resolveThirdPartyResourceList(
-    kdThirdPartyResourceListResource, kdPaginationService) {
-  /** @type {!backendApi.PaginationQuery} */
-  let query = kdPaginationService.getDefaultResourceQuery('');
+    kdThirdPartyResourceListResource, kdDataSelectService) {
+  let query = kdDataSelectService.getDefaultResourceQuery();
   return kdThirdPartyResourceListResource.get(query).$promise;
 }

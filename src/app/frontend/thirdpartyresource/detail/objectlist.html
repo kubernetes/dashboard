@@ -14,15 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card-list selectable="::$ctrl.selectable"
+<kd-resource-card-list ng-if="::$ctrl.objectList.items"
+                       selectable="::$ctrl.selectable"
                        with-statuses="::$ctrl.withStatuses"
-                       ng-if="::$ctrl.objectList.items">
+                       list-resource="$ctrl.objectListResource"
+                       select-id="{{::$ctrl.getSelectId()}}"
+                       list="$ctrl.objectList">
   <kd-resource-card-list-header ng-transclude="header">
     [[Objects|Label which appears above the list of such objects.]]
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination list-resource="$ctrl.objectListResource"
-                                    pagination-id="objects"
-                                    list="$ctrl.objectList">
+  <kd-resource-card-list-pagination>
   </kd-resource-card-list-pagination>
   <div ng-show="!$ctrl.objectList.listMeta.totalItems"
        class="kd-zerostate-message"
@@ -40,7 +41,7 @@ limitations under the License.
   </kd-resource-card-header-columns>
   <kd-object-card ng-if="::$ctrl.objectListResource"
                   dir-paginate="object in $ctrl.objectList.items | itemsPerPage: default"
-                  pagination-id="objects"
+                  pagination-id="{{::$ctrl.getSelectId()}}"
                   object="object"
                   total-items="::$ctrl.objectList.listMeta.totalItems">
   </kd-object-card>

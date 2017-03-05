@@ -13,6 +13,37 @@
 // limitations under the License.
 
 /**
+ * @final
+ */
+export class PersistentVolumeCardListController {
+  /** @export */
+  constructor() {
+    /** @export {!backendApi.PersistentVolumeList} - Initialized from binding. */
+    this.persistentVolumeList;
+    /** @export {!angular.Resource} - Initialized from binding. */
+    this.persistentVolumeListResource;
+  }
+
+  /**
+   * Returns select id string or undefined if podList or podListResource are not defined.
+   * It is needed to enable/disable data select support (pagination, sorting) for particular list.
+   *
+   * @return {string}
+   * @export
+   */
+  getSelectId() {
+    const selectId = 'persistentvolumes';
+
+    if (this.persistentVolumeList !== undefined &&
+        this.persistentVolumeListResource !== undefined) {
+      return selectId;
+    }
+
+    return '';
+  }
+}
+
+/**
  * @return {!angular.Component}
  */
 export const persistentVolumeCardListComponent = {

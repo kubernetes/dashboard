@@ -31,8 +31,8 @@ type Discovery struct {
 }
 
 // GetDiscovery returns a list of all servicesAndDiscovery resources in the cluster.
-func GetDiscovery(client *kubernetes.Clientset, nsQuery *common.NamespaceQuery) (
-	*Discovery, error) {
+func GetDiscovery(client *kubernetes.Clientset, nsQuery *common.NamespaceQuery,
+	dsQuery *dataselect.DataSelectQuery) (*Discovery, error) {
 
 	log.Print("Getting discovery and load balancing category")
 	channels := &common.ResourceChannels{
@@ -40,12 +40,13 @@ func GetDiscovery(client *kubernetes.Clientset, nsQuery *common.NamespaceQuery) 
 		IngressList: common.GetIngressListChannel(client, nsQuery, 1),
 	}
 
-	return GetDiscoveryFromChannels(channels)
+	return GetDiscoveryFromChannels(channels, dsQuery)
 }
 
 // GetDiscoveryFromChannels returns a list of all servicesAndDiscovery in the cluster, from the
 // channel sources.
-func GetDiscoveryFromChannels(channels *common.ResourceChannels) (*Discovery, error) {
+func GetDiscoveryFromChannels(channels *common.ResourceChannels,
+	dsQuery *dataselect.DataSelectQuery) (*Discovery, error) {
 
 	svcChan := make(chan *service.ServiceList)
 	ingressChan := make(chan *ingress.IngressList)
@@ -53,15 +54,13 @@ func GetDiscoveryFromChannels(channels *common.ResourceChannels) (*Discovery, er
 	errChan := make(chan error, numErrs)
 
 	go func() {
-		items, err := service.GetServiceListFromChannels(channels,
-			dataselect.DefaultDataSelect)
+		items, err := service.GetServiceListFromChannels(channels, dsQuery)
 		errChan <- err
 		svcChan <- items
 	}()
 
 	go func() {
-		items, err := ingress.GetIngressListFromChannels(channels,
-			dataselect.DefaultDataSelect)
+		items, err := ingress.GetIngressListFromChannels(channels, dsQuery)
 		errChan <- err
 		ingressChan <- items
 	}()

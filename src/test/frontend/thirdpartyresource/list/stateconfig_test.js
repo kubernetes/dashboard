@@ -16,13 +16,13 @@ import {resolveThirdPartyResourceList} from 'thirdpartyresource/list/stateconfig
 import thirdPartyResourceModule from 'thirdpartyresource/module';
 
 describe('StateConfig for third party resource controller list', () => {
-  /** @type {!PaginationService} */
-  let kdPaginationService;
+  /** @type {!common/dataselect/dataselect_service.DataSelectService} */
+  let kdDataSelectService;
 
   beforeEach(() => {
     angular.mock.module(thirdPartyResourceModule.name);
-    angular.mock.inject((_kdPaginationService_) => {
-      kdPaginationService = _kdPaginationService_;
+    angular.mock.inject((_kdDataSelectService_) => {
+      kdDataSelectService = _kdDataSelectService_;
     });
   });
 
@@ -34,9 +34,9 @@ describe('StateConfig for third party resource controller list', () => {
       return {$promise: promise};
     });
 
-    let actual = resolveThirdPartyResourceList(resource, kdPaginationService);
+    let actual = resolveThirdPartyResourceList(resource, kdDataSelectService);
 
-    expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery(''));
+    expect(resource.get).toHaveBeenCalledWith(kdDataSelectService.getDefaultResourceQuery(''));
     expect(actual).toBe(promise);
   }));
 });

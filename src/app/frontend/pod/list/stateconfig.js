@@ -65,11 +65,11 @@ export function podListResource($resource) {
 /**
  * @param {!angular.Resource} kdPodListResource
  * @param {!./../../chrome/state.StateParams} $stateParams
- * @param {!./../../common/pagination/service.PaginationService} kdPaginationService
+ * @param {!./../../common/dataselect/service.DataSelectService} kdDataSelectService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolvePodList(kdPodListResource, $stateParams, kdPaginationService) {
-  let paginationQuery = kdPaginationService.getDefaultResourceQuery($stateParams.namespace);
-  return kdPodListResource.get(paginationQuery).$promise;
+export function resolvePodList(kdPodListResource, $stateParams, kdDataSelectService) {
+  let dataSelectQuery = kdDataSelectService.getDefaultResourceQuery($stateParams.namespace);
+  return kdPodListResource.get(dataSelectQuery).$promise;
 }

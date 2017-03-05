@@ -1938,6 +1938,7 @@
   <translation id="8335819709341770111" key="MSG_RESOURCE_CARD_DELETE_ACTION" desc="Action &quot;Delete&quot; (verb), which appears as a menu item on the cards for kubernetes resources.">削除</translation>
   <translation id="3641265385665997534" key="MSG_RESOURCE_CARD_LIST_PAGINATION_ERROR" desc="Message shown to the user when there is a pagination error.">ページネーションエラー</translation>
   <translation id="5574079475783065419" key="MSG_RESOURCE_CARD_LIST_PAGINATION_ROW_SELECTOR_LABEL" desc="Label for pagination rows selector visible on resource lists.">表示行数</translation>
+  <translation id="8315383091892527627" key="MSG_RESOURCE_CARD_LIST_SORT_ERROR" desc="Message shown to the user when there is a sort error.">Sort error</translation>
   <translation id="3746517187831242937" key="MSG_RESOURCE_CARD_MENU_TOOLTIP" desc="Tooltip &quot;Actions&quot;, which appears when you hover over the menu icon on any resource card.">アクション</translation>
   <translation id="5837164744700950654" key="MSG_RESOURCE_DETAIL_INFO_CARD_ANNOTATIONS_LABEL" desc="Label 'annotations' for a resource.">注釈</translation>
   <translation id="5229153540672717672" key="MSG_RESOURCE_DETAIL_INFO_CARD_LABELS_LABEL" desc="Label 'Labels' for a resource.">ラベル</translation>

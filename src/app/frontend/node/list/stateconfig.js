@@ -64,11 +64,11 @@ export function nodeListResource($resource) {
 
 /**
  * @param {!angular.Resource} kdNodeListResource
- * @param {!./../../common/pagination/service.PaginationService} kdPaginationService
- * @return {!angular.$q.Promise}
+ * @param {!./../../common/dataselect/service.DataSelectService} kdDataSelectService
+ * @returns {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveNodeList(kdNodeListResource, kdPaginationService) {
-  let query = kdPaginationService.getDefaultResourceQuery('');
+export function resolveNodeList(kdNodeListResource, kdDataSelectService) {
+  let query = kdDataSelectService.getDefaultResourceQuery('');
   return kdNodeListResource.get(query).$promise;
 }

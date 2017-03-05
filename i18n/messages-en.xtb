@@ -1213,6 +1213,7 @@
   <translation id="1028467341074968941" key="MSG_RESOURCEQUOTA_DETAIL_STATUS_1" desc="Resource quota details status section hard.">Hard</translation>
   <translation id="1101311215261110165" key="MSG_RESOURCEQUOTA_DETAIL_STATUS_2" desc="Resource quota details status section used.">Used</translation>
   <translation id="3641265385665997534" key="MSG_RESOURCE_CARD_LIST_PAGINATION_ERROR" desc="Message shown to the user when there is a pagination error.">Pagination error</translation>
+  <translation id="8315383091892527627" key="MSG_RESOURCE_CARD_LIST_SORT_ERROR" desc="Message shown to the user when there is a sort error.">Sort error</translation>
   <translation id="6881667150857464035" key="MSG_ROLELIST_ROLECARDLIST_0" desc="Label which appears above the list of such objects.">Roles</translation>
   <translation id="7605823177278371307" key="MSG_ROLELIST_ROLECARDLIST_1" desc="Role list header: name.">Name</translation>
   <translation id="8138087091569306999" key="MSG_ROLELIST_ROLECARDLIST_2" desc="Role list header: role type.">Role Type</translation>

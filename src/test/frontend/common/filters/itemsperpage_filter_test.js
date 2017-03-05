@@ -12,42 +12,44 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {ItemsPerPage} from 'common/dataselect/dataselect_builder';
+import dataSelectModule from 'common/dataselect/dataselect_module';
 import filtersModule from 'common/filters/module';
-import paginationModule from 'common/pagination/module';
-import {DEFAULT_ROWS_LIMIT} from 'common/pagination/service';
 
 describe('Items per page filter', () => {
   /** @type {function(!Array<Object>, number, string): !Array<Object>} */
   let itemsPerPageFilter;
-  /** @type {!Object} - service related to third party pagination module */
-  let paginationService;
+  /** @type {!DataSelectService} - service related to data select module */
+  let dataSelectService;
+
 
   beforeEach(() => {
-    angular.mock.module(paginationModule.name);
+    angular.mock.module(dataSelectModule.name);
     angular.mock.module('angularUtils.directives.dirPagination');
     angular.mock.module(filtersModule.name);
 
-    angular.mock.inject((_itemsPerPageFilter_, _paginationService_) => {
+    angular.mock.inject((_itemsPerPageFilter_, _kdDataSelectService_, _paginationService_) => {
       itemsPerPageFilter = _itemsPerPageFilter_;
-      paginationService = _paginationService_;
+      dataSelectService = _kdDataSelectService_;
     });
   });
 
   it('should format memory', () => {
     // given
-    let paginationId = 'test-id';
-    paginationService.registerInstance(paginationId);
+    let dataSelectId = 'test-id';
+    paginationService.registerInstance(dataSelectId);
+    dataSelectService.registerInstance(dataSelectId);
 
     // then
-    expect(itemsPerPageFilter(new Array(20), 5, paginationId).length).toEqual(5);
-    expect(itemsPerPageFilter(new Array(100), 0, paginationId).length).toEqual(100);
-    expect(itemsPerPageFilter(new Array(DEFAULT_ROWS_LIMIT + 10), undefined, paginationId).length)
-        .toEqual(DEFAULT_ROWS_LIMIT);
-    expect(itemsPerPageFilter(new Array(DEFAULT_ROWS_LIMIT + 1), undefined, paginationId).length)
-        .toEqual(DEFAULT_ROWS_LIMIT);
-    expect(itemsPerPageFilter(new Array(DEFAULT_ROWS_LIMIT), undefined, paginationId).length)
-        .toEqual(DEFAULT_ROWS_LIMIT);
-    expect(itemsPerPageFilter(new Array(DEFAULT_ROWS_LIMIT - 1), undefined, paginationId).length)
-        .toEqual(DEFAULT_ROWS_LIMIT - 1);
+    expect(itemsPerPageFilter(new Array(20), 5, dataSelectId).length).toEqual(5);
+    expect(itemsPerPageFilter(new Array(100), 0, dataSelectId).length).toEqual(100);
+    expect(itemsPerPageFilter(new Array(ItemsPerPage + 10), undefined, dataSelectId).length)
+        .toEqual(ItemsPerPage);
+    expect(itemsPerPageFilter(new Array(ItemsPerPage + 1), undefined, dataSelectId).length)
+        .toEqual(ItemsPerPage);
+    expect(itemsPerPageFilter(new Array(ItemsPerPage), undefined, dataSelectId).length)
+        .toEqual(ItemsPerPage);
+    expect(itemsPerPageFilter(new Array(ItemsPerPage - 1), undefined, dataSelectId).length)
+        .toEqual(ItemsPerPage - 1);
   });
 });

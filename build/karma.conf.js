@@ -62,6 +62,8 @@ module.exports = function(config) {
 
     logLevel: 'WARN',
 
+    browserConsoleLogOptions: {terminal: true, level: ''},
+
     // Jasmine jquery is needed to allow angular to use JQuery in tests instead of JQLite.
     // This allows to get elements by selector(angular.element('body')), use find function to
     // search elements by class(element.find(class)) and the most important it allows to

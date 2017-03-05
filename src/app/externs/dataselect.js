@@ -12,23 +12,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import componentsModule from 'common/components/module';
-import filtersModule from 'common/filters/module';
-
-
-import {eventCardListComponent} from './cardlist_component';
+/**
+ * @fileoverview API for data select operations.
+ * @externs
+ */
+const DataSelectApi = {};
 
 /**
- * Angular module for the Replica Set details view.
- *
- * The view shows detailed view of a Replica Set.
+ * @typedef{{
+ *  itemsPerPage: number,
+ *  page: number,
+ *  sortBy: string,
+ *  namespace: string,
+ *  name: string,
+ *  }}
  */
-export default angular
-    .module(
-        'kubernetesDashboard.events',
-        [
-          'ngMaterial',
-          componentsModule.name,
-          filtersModule.name,
-        ])
-    .component('kdEventCardList', eventCardListComponent);
+DataSelectApi.DataSelectQuery;
+
+/**
+ * @typedef{{
+ *  NAME: string,
+ *  STATUS: string,
+ *  AGE: string,
+ *  }}
+ */
+DataSelectApi.SortableProperties;
+
+/**
+ * @typedef{{
+ *  PAGINATE: number,
+ *  SORT: number,
+ *  }}
+ */
+DataSelectApi.SupportedActions;

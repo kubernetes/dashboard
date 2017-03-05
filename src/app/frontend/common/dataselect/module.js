@@ -13,10 +13,22 @@
 // limitations under the License.
 
 import namespaceModule from './../namespace/module';
-import {PaginationService} from './service';
+import {SortableProperties} from './builder';
+import {DataSelectService} from './service';
 
 /**
- * Module containing validators for the application.
+ * Module providing data select operations for the application.
  */
-export default angular.module('kubernetesDashboard.common.pagination', [namespaceModule.name])
-    .service('kdPaginationService', PaginationService);
+export default angular.module('kubernetesDashboard.common.dataSelect', [namespaceModule.name])
+    .service('kdDataSelectService', DataSelectService)
+    .constant('SortableProperties', SortableProperties)
+    .run(dataSelectConfig);
+
+/**
+ * @param {!angular.Scope} $rootScope
+ * @param {!DataSelectApi.SortableProperties} SortableProperties
+ * @ngInject
+ */
+function dataSelectConfig($rootScope, SortableProperties) {
+  $rootScope.SortableProperties = SortableProperties;
+}

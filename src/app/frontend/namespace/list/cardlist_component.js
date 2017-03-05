@@ -13,6 +13,36 @@
 // limitations under the License.
 
 /**
+ * @final
+ */
+export class NamespaceCardListController {
+  /** @export */
+  constructor() {
+    /** @export {!backendApi.NamespaceList} - Initialized from binding. */
+    this.namespaceList;
+    /** @export {!angular.Resource} - Initialized from binding. */
+    this.namespaceListResource;
+  }
+
+  /**
+   * Returns select id string or undefined if podList or podListResource are not defined.
+   * It is needed to enable/disable data select support (pagination, sorting) for particular list.
+   *
+   * @return {string}
+   * @export
+   */
+  getSelectId() {
+    const selectId = 'namespaces';
+
+    if (this.namespaceList !== undefined && this.namespaceListResource !== undefined) {
+      return selectId;
+    }
+
+    return '';
+  }
+}
+
+/**
  * @return {!angular.Component}
  */
 export const namespaceCardListComponent = {
