@@ -147,11 +147,11 @@ For an additional check you can run these commands:
 
 ## Install Go
 
-The instructions below are for install a specific version of Go (1.6.2 for linux amd64). If you want the latest Go version or have a different system, then you can get the latest download URL from https://golang.org/dl/
+The instructions below are for install a specific version of Go (1.8 for linux amd64). If you want the latest Go version or have a different system, then you can get the latest download URL from https://golang.org/dl/
 
 ```shell
-$ wget https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz
-$ sudo tar -C /usr/local -xzf go1.6.2.linux-amd64.tar.gz
+$ wget https://storage.googleapis.com/golang/go1.8.linux-amd64.tar.gz
+$ sudo tar -C /usr/local -xzf go1.8.linux-amd64.tar.gz
 $ export PATH=$PATH:/usr/local/go/bin
 $ echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.profile
 ```
@@ -163,7 +163,7 @@ $ go version
 $ echo $PATH
 ```
 
-The Go version should return something like `go version go1.6.2 linux/amd64`. Note that if you already had Go installed, ensure that `GO15VENDOREXPERIMENT` is unset.
+The Go version should return something like `go version go1.8 linux/amd64`. Note that if you already had Go installed, ensure that `GO15VENDOREXPERIMENT` is unset.
 
 ## Install Node and NPM
 
