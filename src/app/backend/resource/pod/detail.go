@@ -157,7 +157,7 @@ func GetPodDetail(client k8sClient.Interface, heapsterClient client.HeapsterClie
 	}
 	configMapList := <-channels.ConfigMapList.List
 
-	eventList, err := GetEventsForPods(client, dataselect.DefaultDataSelect, pod.Namespace, pod.Name)
+	eventList, err := GetEventsForPod(client, dataselect.DefaultDataSelect, pod.Namespace, pod.Name)
 	if err != nil {
 		return nil, err
 	}
