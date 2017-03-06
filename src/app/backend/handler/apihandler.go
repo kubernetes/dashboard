@@ -1062,7 +1062,7 @@ func (apiHandler *APIHandler) handleGetPodEvents(request *restful.Request, respo
 	podName := request.PathParameter("pod")
 	dataSelect := parseDataSelectPathParameter(request)
 
-	result, err := pod.GetEventsForPods(apiHandler.client, dataSelect, namespace,
+	result, err := pod.GetEventsForPod(apiHandler.client, dataSelect, namespace,
 		podName)
 	if err != nil {
 		handleInternalError(response, err)
@@ -1407,7 +1407,7 @@ func (apiHandler *APIHandler) handleGetThirdPartyResource(request *restful.Reque
 func (apiHandler *APIHandler) handleGetThirdPartyResourceDetail(request *restful.Request,
 	response *restful.Response) {
 	name := request.PathParameter("thirdpartyresource")
-	result, err := thirdpartyresource.GetThirdPartyResourceDetail(apiHandler.client, apiHandler.clientConfig, name)
+	result, err := thirdpartyresource.GetThirdPartyResourceDetail(apiHandler.client, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
