@@ -614,6 +614,10 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 		apiV1Ws.GET("/thirdpartyresource/{thirdpartyresource}").
 			To(apiHandler.handleGetThirdPartyResourceDetail).
 			Writes(thirdpartyresource.ThirdPartyResourceDetail{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/thirdpartyresource/{thirdpartyresource}/object").
+			To(apiHandler.handleGetThirdPartyResourceObjects).
+			Writes(thirdpartyresource.ThirdPartyResourceObjectList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/storageclass").
@@ -1408,6 +1412,17 @@ func (apiHandler *APIHandler) handleGetThirdPartyResourceDetail(request *restful
 	response *restful.Response) {
 	name := request.PathParameter("thirdpartyresource")
 	result, err := thirdpartyresource.GetThirdPartyResourceDetail(apiHandler.client, apiHandler.clientConfig, name)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetThirdPartyResourceObjects(request *restful.Request, response *restful.Response) {
+	name := request.PathParameter("thirdpartyresource")
+	dataSelect := parseDataSelectPathParameter(request)
+	result, err := thirdpartyresource.GetThirdPartyResourceObjects(apiHandler.client, apiHandler.clientConfig, dataSelect, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return

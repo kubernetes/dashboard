@@ -13,19 +13,24 @@
 // limitations under the License.
 
 /**
- * Controller for the Third Party Resource detail view.
+ * Definition object for the component that displays third party resource objects list card.
  *
- * @final
+ * @type {!angular.Component}
  */
-export class ThirdPartyResourceDetailController {
-  /**
-   * @ngInject
-   */
-  constructor(tprDetail, kdThirdPartyResourceObjectsResource) {
-    /** @export {!backendApi.ThirdPartyResource} */
-    this.tprDetail = tprDetail;
-
-    /** @export {!angular.Resource} */
-    this.tprObjectsResource = kdThirdPartyResourceObjectsResource;
-  }
-}
+export const objectListComponent = {
+  transclude: {
+    'header': '?kdHeader',
+    'zerostate': '?kdZerostate',
+  },
+  templateUrl: 'thirdpartyresourcedetail/objectlist.html',
+  bindings: {
+    /** {!backendApi.PodList} */
+    'objectList': '<',
+    /** {!angular.Resource} */
+    'objectListResource': '<',
+    /** {boolean} */
+    'selectable': '<',
+    /** {boolean} */
+    'withStatuses': '<',
+  },
+};

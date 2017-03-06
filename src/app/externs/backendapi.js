@@ -1263,6 +1263,13 @@ backendApi.ThirdPartyResourceList;
 
 /**
  * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ * }}
+ */
+backendApi.ThirdPartyResourceObject;
+
+/**
+ * @typedef {{
  *   token: string
  * }}
  */

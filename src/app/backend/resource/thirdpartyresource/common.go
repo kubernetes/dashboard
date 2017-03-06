@@ -51,3 +51,36 @@ func fromCells(cells []dataselect.DataCell) []extensions.ThirdPartyResource {
 	}
 	return std
 }
+
+// The code below allows to perform complex data section on ThirdPartyResourceObject.
+type ThirdPartyResourceObjectCell ThirdPartyResourceObject
+
+func (self ThirdPartyResourceObjectCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
+	switch name {
+	case dataselect.NameProperty:
+		return dataselect.StdComparableString(self.Metadata.Name)
+	case dataselect.CreationTimestampProperty:
+		return dataselect.StdComparableTime(self.Metadata.CreationTimestamp.Time)
+	case dataselect.NamespaceProperty:
+		return dataselect.StdComparableString(self.Metadata.Namespace)
+	default:
+		// if name is not supported then just return a constant dummy value, sort will have no effect.
+		return nil
+	}
+}
+
+func toObjectCells(std []ThirdPartyResourceObject) []dataselect.DataCell {
+	cells := make([]dataselect.DataCell, len(std))
+	for i := range std {
+		cells[i] = ThirdPartyResourceObjectCell(std[i])
+	}
+	return cells
+}
+
+func fromObjectCells(cells []dataselect.DataCell) []ThirdPartyResourceObject {
+	std := make([]ThirdPartyResourceObject, len(cells))
+	for i := range std {
+		std[i] = ThirdPartyResourceObject(cells[i].(ThirdPartyResourceObjectCell))
+	}
+	return std
+}

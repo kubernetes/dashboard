@@ -15,9 +15,10 @@
 import chromeModule from 'chrome/chrome_module';
 import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
-
 import stateConfig from './detail_stateconfig';
 import {tprInfoComponent} from './info_component';
+import {objectCardComponent} from './objectcard_component';
+import {objectListComponent} from './objectlist_component';
 
 /**
  * Angular module for the Third Party Resource detail view.
@@ -36,4 +37,16 @@ export default angular
           chromeModule.name,
         ])
     .config(stateConfig)
-    .component('kdThirdPartyResourceInfo', tprInfoComponent);
+    .component('kdThirdPartyResourceInfo', tprInfoComponent)
+    .component('kdThirdPartyResourceObjects', objectListComponent)
+    .component('kdObjectCard', objectCardComponent)
+    .factory('kdThirdPartyResourceObjectsResource', thirdPartyResourceObjectsResource);
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function thirdPartyResourceObjectsResource($resource) {
+  return $resource('api/v1/thirdpartyresource/:name/object');
+}
