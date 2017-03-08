@@ -61,6 +61,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/workload"
 	"github.com/kubernetes/dashboard/src/app/backend/validation"
 	"golang.org/x/net/xsrftoken"
+	errorsK8s "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
 	utilnet "k8s.io/apimachinery/pkg/util/net"
 	clientK8s "k8s.io/client-go/kubernetes"
@@ -1536,8 +1537,15 @@ func (apiHandler *APIHandler) handleGetReplicationControllerServices(request *re
 // Handler that writes the given error to the response and sets appropriate HTTP status headers.
 func handleInternalError(response *restful.Response, err error) {
 	log.Print(err)
+
+	statusCode := http.StatusInternalServerError
+	statusError, ok := err.(*errorsK8s.StatusError)
+	if ok && statusError.Status().Code > 0 {
+		statusCode = int(statusError.Status().Code)
+	}
+
 	response.AddHeader("Content-Type", "text/plain")
-	response.WriteErrorString(http.StatusInternalServerError, err.Error()+"\n")
+	response.WriteErrorString(statusCode, err.Error()+"\n")
 }
 
 // Handles get Daemon Set list API call.
