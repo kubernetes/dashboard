@@ -26,7 +26,6 @@ type ThirdPartyResourceObject struct {
 type ThirdPartyResourceObjectList struct {
 	ListMeta        common.ListMeta `json:"listMeta"`
 	metav1.TypeMeta `json:",inline"`
-	Metadata        metav1.ListMeta            `json:"metadata,omitempty"`
 	Items           []ThirdPartyResourceObject `json:"items"`
 }
 

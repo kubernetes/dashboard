@@ -17,7 +17,7 @@
  */
 export class ObjectCardController {
   /**
-   * @ngInject,
+   * @ngInject
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
    */

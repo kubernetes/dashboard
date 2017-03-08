@@ -808,6 +808,7 @@
   <translation id="310605795325552510" key="MSG_STORAGECLASSLIST_CARD_1" desc="Label \'Storage Class\' which will appear in the persistent volume delete dialog opened from a storageclass card on the list page.">Storage Class</translation>
   <translation id="2857396329294182623" key="MSG_STORAGE_CLASS_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of persistent volume.">Created at <ph name="CREATION_DATE"/></translation>
   <translation id="4455224191195228523" key="MSG_THIRDPARTYRESOURCEDETAIL_DETAIL_0" desc="Title for objects card zerostate in third party resource details page.">There is nothing to display here</translation>
+  <translation id="1909818214822603215" key="MSG_THIRDPARTYRESOURCEDETAIL_DETAIL_1" desc="Text for objects card zerostate in third party resource details page.">There are currently no instances of Third Party Resource.</translation>
   <translation id="8096714270041558618" key="MSG_THIRDPARTYRESOURCEDETAIL_DETAIL_1" desc="Text for objects card zerostate in third party resource details page.">There are currently no instances of third Third Party Resource.</translation>
   <translation id="8145942852314005903" key="MSG_THIRDPARTYRESOURCEDETAIL_INFO_0" desc="Header in a detail view">Details</translation>
   <translation id="7281154678200185552" key="MSG_THIRDPARTYRESOURCEDETAIL_INFO_1" desc="Third party resource info details section labels entry.">Labels</translation>
