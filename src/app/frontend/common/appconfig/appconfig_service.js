@@ -62,4 +62,14 @@ export class AppConfigService {
   getGitCommit() {
     return '@@BUILD_GIT_COMMIT';
   }
+
+  /**
+   * The year of the build. It used in the copyright statement.
+   * The token is replaced by the build process
+   * @export
+   * @return {string}
+   */
+  getBuildYear() {
+    return '@@BUILD_YEAR';
+  }
 }
