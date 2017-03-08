@@ -95,7 +95,7 @@ func getThirdPartyResourcePluralName(thirdPartyResource *extensions.ThirdPartyRe
 	name := strings.ToLower(thirdPartyResource.ObjectMeta.Name)
 
 	if strings.Contains(name, "-") {
-		name = strings.Replace(name, "-", "", 1)
+		name = strings.Replace(name, "-", "", -1)
 	}
 
 	if strings.Contains(name, ".") {
