@@ -1538,14 +1538,14 @@ func (apiHandler *APIHandler) handleGetReplicationControllerServices(request *re
 func handleInternalError(response *restful.Response, err error) {
 	log.Print(err)
 
-	errorStatus := http.StatusInternalServerError
+	statusCode := http.StatusInternalServerError
 	statusError, ok := err.(*errorsK8s.StatusError)
 	if ok && statusError.Status().Code > 0 {
-		errorStatus = int(statusError.Status().Code)
+		statusCode = int(statusError.Status().Code)
 	}
 
 	response.AddHeader("Content-Type", "text/plain")
-	response.WriteErrorString(errorStatus, err.Error()+"\n")
+	response.WriteErrorString(statusCode, err.Error()+"\n")
 }
 
 // Handles get Daemon Set list API call.
