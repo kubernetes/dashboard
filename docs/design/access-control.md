@@ -69,10 +69,13 @@ can be arbitrary strings. Entering "*" indicates references __all__ resource typ
 
 ## Bind subjects to a role
 
-Clicking "+ CREATE BINDING" will open a dialog. After selecting the
+Clicking "+ CREATE ROLE BINDING" will open a dialog. After selecting the
 target role, adding subjects and selecting the namespace ("all namespaces" will create a ClusterRoleBinding), 
 clicking clicking "Create" will create the Binding and select that 
 Binding from the list, displaying its details in the panel on the right.
+
+NOTE: If a subject entered by the user exists or not can not be verified at the moment, so it is up to the 
+user to make sure the entered information is correct.
 
 ![Overview](mockups/21-11-2016-access-control/create-binding.png)
 
