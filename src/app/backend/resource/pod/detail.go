@@ -27,6 +27,7 @@ import (
 	replicasetlist "github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/list"
 	replicationcontrollerlist "github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller/list"
 	statefulsetlist "github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/list"
+	"k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
 	api "k8s.io/client-go/pkg/api/v1"
@@ -187,7 +188,22 @@ func getPodCreator(client k8sClient.Interface, creatorAnnotation string, nsQuery
 		return nil, err
 	}
 	reference := serializedReference.Reference
-	return toPodController(client, reference, pods.Items, events.Items, heapsterClient)
+
+	controller, err := toPodController(client, reference, pods.Items, events.Items, heapsterClient)
+	if err != nil && isNotFoundError(err) {
+		return &Controller{}, nil
+	}
+
+	return controller, err
+}
+
+// isNotFoundError returns true when the given error is 404-NotFound error.
+func isNotFoundError(err error) bool {
+	statusErr, ok := err.(*errors.StatusError)
+	if !ok {
+		return false
+	}
+	return statusErr.ErrStatus.Code == 404
 }
 
 func toPodController(client k8sClient.Interface, reference api.ObjectReference, pods []api.Pod, events []api.Event, heapsterClient client.HeapsterClient) (*Controller, error) {
