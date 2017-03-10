@@ -57,9 +57,10 @@ export default class PersistentVolumeClaimCardController {
    */
   getPersistentVolumeClaimDetailHref() {
     return this.state_.href(
-        stateName, new StateParams(
-                       this.persistentVolumeClaim.objectMeta.namespace,
-                       this.persistentVolumeClaim.objectMeta.name));
+        stateName,
+        new StateParams(
+            this.persistentVolumeClaim.objectMeta.namespace,
+            this.persistentVolumeClaim.objectMeta.name));
   }
 
   /**

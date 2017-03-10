@@ -27,6 +27,7 @@ import (
 	replicasetlist "github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/list"
 	replicationcontrollerlist "github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller/list"
 	statefulsetlist "github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/list"
+	"k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
 	api "k8s.io/client-go/pkg/api/v1"
@@ -65,6 +66,9 @@ type PodDetail struct {
 
 	// Conditions of this pod.
 	Conditions []common.Condition `json:"conditions"`
+
+	// Events is list of events associated with a pod.
+	EventList common.EventList `json:"eventList"`
 }
 
 // Creator is a view of the creator of a given pod, in List for for ease of use
@@ -76,11 +80,11 @@ type Controller struct {
 	// Kind of the Controller, will also define wich of the other members will be non nil
 	Kind string `json:"kind"`
 
-	JobList                   *joblist.JobList                                     `json:"job,omitempty"`
-	ReplicaSetList            *replicasetlist.ReplicaSetList                       `json:"replicaset,omitempty"`
-	ReplicationControllerList *replicationcontrollerlist.ReplicationControllerList `json:"replicationcontroller,omitempty"`
-	DaemonSetList             *daemonsetlist.DaemonSetList                         `json:"daemonset,omitempty"`
-	StatefulSetList           *statefulsetlist.StatefulSetList                     `json:"statefulset,omitempty"`
+	JobList                   *joblist.JobList                                     `json:"joblist,omitempty"`
+	ReplicaSetList            *replicasetlist.ReplicaSetList                       `json:"replicasetlist,omitempty"`
+	ReplicationControllerList *replicationcontrollerlist.ReplicationControllerList `json:"replicationcontrollerlist,omitempty"`
+	DaemonSetList             *daemonsetlist.DaemonSetList                         `json:"daemonsetlist,omitempty"`
+	StatefulSetList           *statefulsetlist.StatefulSetList                     `json:"statefulsetlist,omitempty"`
 }
 
 // Container represents a docker/rkt/etc. container that lives in a pod.
@@ -117,8 +121,7 @@ type EnvVar struct {
 
 // GetPodDetail returns the details (PodDetail) of a named Pod from a particular
 // namespace.
-func GetPodDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
-	namespace, name string) (*PodDetail, error) {
+func GetPodDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient, namespace, name string) (*PodDetail, error) {
 
 	log.Printf("Getting details of %s pod in %s namespace", name, namespace)
 
@@ -155,7 +158,12 @@ func GetPodDetail(client k8sClient.Interface, heapsterClient client.HeapsterClie
 	}
 	configMapList := <-channels.ConfigMapList.List
 
-	podDetail := toPodDetail(pod, metrics, configMapList, controller)
+	eventList, err := GetEventsForPod(client, dataselect.DefaultDataSelect, pod.Namespace, pod.Name)
+	if err != nil {
+		return nil, err
+	}
+
+	podDetail := toPodDetail(pod, metrics, configMapList, controller, eventList)
 	return &podDetail, nil
 }
 
@@ -180,7 +188,22 @@ func getPodCreator(client k8sClient.Interface, creatorAnnotation string, nsQuery
 		return nil, err
 	}
 	reference := serializedReference.Reference
-	return toPodController(client, reference, pods.Items, events.Items, heapsterClient)
+
+	controller, err := toPodController(client, reference, pods.Items, events.Items, heapsterClient)
+	if err != nil && isNotFoundError(err) {
+		return &Controller{}, nil
+	}
+
+	return controller, err
+}
+
+// isNotFoundError returns true when the given error is 404-NotFound error.
+func isNotFoundError(err error) bool {
+	statusErr, ok := err.(*errors.StatusError)
+	if !ok {
+		return false
+	}
+	return statusErr.ErrStatus.Code == 404
 }
 
 func toPodController(client k8sClient.Interface, reference api.ObjectReference, pods []api.Pod, events []api.Event, heapsterClient client.HeapsterClient) (*Controller, error) {
@@ -271,7 +294,7 @@ func toStatefulSetPodController(client k8sClient.Interface, reference api.Object
 	}, nil
 }
 
-func toPodDetail(pod *api.Pod, metrics []metric.Metric, configMaps *api.ConfigMapList, controller Controller) PodDetail {
+func toPodDetail(pod *api.Pod, metrics []metric.Metric, configMaps *api.ConfigMapList, controller Controller, eventList *common.EventList) PodDetail {
 
 	containers := make([]Container, 0)
 	for _, container := range pod.Spec.Containers {
@@ -306,6 +329,7 @@ func toPodDetail(pod *api.Pod, metrics []metric.Metric, configMaps *api.ConfigMa
 		Containers:   containers,
 		Metrics:      metrics,
 		Conditions:   getPodConditions(*pod),
+		EventList:    *eventList,
 	}
 
 	return podDetail

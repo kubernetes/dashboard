@@ -25,7 +25,7 @@ import {podInfoComponent} from './podinfo_component';
 
 
 /**
- * Angular module for the Replica Set details view.
+ * Angular module for the Pods view.
  *
  * The view shows detailed view of a Replica Set.
  */
@@ -45,4 +45,14 @@ export default angular
     .config(stateConfig)
     .component('kdPodInfo', podInfoComponent)
     .component('kdContainerInfo', containerInfoComponent)
-    .component('kdCreatorInfo', creatorInfoComponent);
+    .component('kdCreatorInfo', creatorInfoComponent)
+    .factory('kdPodEventsResource', podEventsResource);
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+function podEventsResource($resource) {
+  return $resource('api/v1/pod/:namespace/:name/event');
+}

@@ -18,22 +18,24 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
+	"k8s.io/client-go/tools/clientcmd"
 )
 
 // ThirdPartyResourceDetail is a third party resource template.
 type ThirdPartyResourceDetail struct {
-	ObjectMeta  common.ObjectMeta       `json:"objectMeta"`
-	TypeMeta    common.TypeMeta         `json:"typeMeta"`
-	Description string                  `json:"description"`
-	Versions    []extensions.APIVersion `json:"versions"`
+	ObjectMeta  common.ObjectMeta            `json:"objectMeta"`
+	TypeMeta    common.TypeMeta              `json:"typeMeta"`
+	Description string                       `json:"description"`
+	Versions    []extensions.APIVersion      `json:"versions"`
+	Objects     ThirdPartyResourceObjectList `json:"objects"`
 }
 
 // GetThirdPartyResourceDetail returns detailed information about a third party resource.
-func GetThirdPartyResourceDetail(client k8sClient.Interface, name string) (*ThirdPartyResourceDetail,
-	error) {
+func GetThirdPartyResourceDetail(client k8sClient.Interface, config clientcmd.ClientConfig, name string) (*ThirdPartyResourceDetail, error) {
 	log.Printf("Getting details of %s third party resource", name)
 
 	thirdPartyResource, err := client.Extensions().ThirdPartyResources().Get(name, metaV1.GetOptions{})
@@ -41,14 +43,20 @@ func GetThirdPartyResourceDetail(client k8sClient.Interface, name string) (*Thir
 		return nil, err
 	}
 
-	return getThirdPartyResourceDetail(thirdPartyResource), nil
+	objects, err := GetThirdPartyResourceObjects(client, config, dataselect.DefaultDataSelectWithMetrics, name)
+	if err != nil {
+		return nil, err
+	}
+
+	return getThirdPartyResourceDetail(thirdPartyResource, objects), nil
 }
 
-func getThirdPartyResourceDetail(thirdPartyResource *extensions.ThirdPartyResource) *ThirdPartyResourceDetail {
+func getThirdPartyResourceDetail(thirdPartyResource *extensions.ThirdPartyResource, objects ThirdPartyResourceObjectList) *ThirdPartyResourceDetail {
 	return &ThirdPartyResourceDetail{
 		ObjectMeta:  common.NewObjectMeta(thirdPartyResource.ObjectMeta),
 		TypeMeta:    common.NewTypeMeta(common.ResourceKindThirdPartyResource),
 		Description: thirdPartyResource.Description,
 		Versions:    thirdPartyResource.Versions,
+		Objects:     objects,
 	}
 }

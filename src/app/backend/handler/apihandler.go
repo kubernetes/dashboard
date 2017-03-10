@@ -61,6 +61,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/workload"
 	"github.com/kubernetes/dashboard/src/app/backend/validation"
 	"golang.org/x/net/xsrftoken"
+	errorsK8s "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
 	utilnet "k8s.io/apimachinery/pkg/util/net"
 	clientK8s "k8s.io/client-go/kubernetes"
@@ -356,6 +357,10 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 		apiV1Ws.GET("/pod/{namespace}/{pod}/log/{container}").
 			To(apiHandler.handleLogs).
 			Writes(logs.Logs{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/pod/{namespace}/{pod}/event").
+			To(apiHandler.handleGetPodEvents).
+			Writes(common.EventList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/deployment").
@@ -610,6 +615,10 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 		apiV1Ws.GET("/thirdpartyresource/{thirdpartyresource}").
 			To(apiHandler.handleGetThirdPartyResourceDetail).
 			Writes(thirdpartyresource.ThirdPartyResourceDetail{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/thirdpartyresource/{thirdpartyresource}/object").
+			To(apiHandler.handleGetThirdPartyResourceObjects).
+			Writes(thirdpartyresource.ThirdPartyResourceObjectList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/storageclass").
@@ -1047,6 +1056,24 @@ func (apiHandler *APIHandler) handleGetReplicaSetEvents(request *restful.Request
 		return
 	}
 	response.WriteHeaderAndEntity(http.StatusOK, result)
+
+}
+
+// Handles get pod set events API call.
+func (apiHandler *APIHandler) handleGetPodEvents(request *restful.Request, response *restful.Response) {
+	log.Println("Getting events related to a pod in namespace")
+
+	namespace := request.PathParameter("namespace")
+	podName := request.PathParameter("pod")
+	dataSelect := parseDataSelectPathParameter(request)
+
+	result, err := pod.GetEventsForPod(apiHandler.client, dataSelect, namespace,
+		podName)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles get Deployment list API call.
@@ -1385,7 +1412,18 @@ func (apiHandler *APIHandler) handleGetThirdPartyResource(request *restful.Reque
 func (apiHandler *APIHandler) handleGetThirdPartyResourceDetail(request *restful.Request,
 	response *restful.Response) {
 	name := request.PathParameter("thirdpartyresource")
-	result, err := thirdpartyresource.GetThirdPartyResourceDetail(apiHandler.client, name)
+	result, err := thirdpartyresource.GetThirdPartyResourceDetail(apiHandler.client, apiHandler.clientConfig, name)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetThirdPartyResourceObjects(request *restful.Request, response *restful.Response) {
+	name := request.PathParameter("thirdpartyresource")
+	dataSelect := parseDataSelectPathParameter(request)
+	result, err := thirdpartyresource.GetThirdPartyResourceObjects(apiHandler.client, apiHandler.clientConfig, dataSelect, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1514,8 +1552,15 @@ func (apiHandler *APIHandler) handleGetReplicationControllerServices(request *re
 // Handler that writes the given error to the response and sets appropriate HTTP status headers.
 func handleInternalError(response *restful.Response, err error) {
 	log.Print(err)
+
+	statusCode := http.StatusInternalServerError
+	statusError, ok := err.(*errorsK8s.StatusError)
+	if ok && statusError.Status().Code > 0 {
+		statusCode = int(statusError.Status().Code)
+	}
+
 	response.AddHeader("Content-Type", "text/plain")
-	response.WriteErrorString(http.StatusInternalServerError, err.Error()+"\n")
+	response.WriteErrorString(statusCode, err.Error()+"\n")
 }
 
 // Handles get Daemon Set list API call.

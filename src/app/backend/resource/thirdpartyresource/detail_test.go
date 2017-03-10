@@ -51,7 +51,7 @@ func TestGetThirdPartyResourceDetail(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := getThirdPartyResourceDetail(c.thirdPartyResource)
+		actual := getThirdPartyResourceDetail(c.thirdPartyResource, ThirdPartyResourceObjectList{})
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getThirdPartyResourceDetail(%#v) == \n%#v\nexpected \n%#v\n",
 				c.thirdPartyResource, actual, c.expected)
