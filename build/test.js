@@ -15,8 +15,10 @@
 /**
  * @fileoverview Gulp tasks for unit and integration tests.
  */
+import childProcess from 'child_process';
 import gulp from 'gulp';
 import codecov from 'gulp-codecov.io';
+import print from 'gulp-print'
 import gulpProtractor from 'gulp-protractor';
 import karma from 'karma';
 import path from 'path';
@@ -94,7 +96,15 @@ gulp.task('frontend-test', function(doneFn) {
  * Runs once all unit tests of the backend application.
  */
 gulp.task('backend-test', ['package-backend'], function(doneFn) {
-  goCommand(conf.backend.testCommandArgs, doneFn);
+  childProcess.execFile(
+      conf.paths.goTestScript, [], {cwd: process.cwd()}, function(err, stdout, stderr) {
+        if (err) {
+          console.log(stdout);
+          console.error(stderr);
+          return doneFn(new Error(err));
+        }
+        return doneFn();
+      });
 });
 
 /**

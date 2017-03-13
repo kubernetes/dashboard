@@ -93,13 +93,6 @@ export default {
      */
     mainPackageName: 'github.com/kubernetes/dashboard/src/app/backend',
     /**
-     * Names of all backend packages prefixed with 'test' command.
-     */
-    testCommandArgs: [
-      'test',
-      'github.com/kubernetes/dashboard/src/app/backend/...',
-    ],
-    /**
      * Port number of the backend server. Only used during development.
      */
     devServerPort: 9091,
@@ -221,6 +214,7 @@ export default {
     goTools: path.join(basePath, '.tools/go'),
     goWorkspace: path.join(basePath, '.go_workspace'),
     hyperkube: path.join(basePath, 'build/hyperkube.sh'),
+    goTestScript: path.join(basePath, 'build/go-test.sh'),
     i18nProd: path.join(basePath, '.tmp/i18n'),
     integrationTest: path.join(basePath, 'src/test/integration'),
     jsoneditorImages: path.join(basePath, 'bower_components/jsoneditor/src/css/img'),
