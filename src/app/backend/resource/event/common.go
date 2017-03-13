@@ -15,15 +15,13 @@
 package event
 
 import (
-	"log"
-
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/apimachinery/pkg/types"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 	client "k8s.io/client-go/kubernetes"
 	api "k8s.io/client-go/pkg/api/v1"
 )
@@ -121,18 +119,26 @@ func GetPodEvents(client client.Interface, namespace, podName string) ([]api.Eve
 
 // GetNodeEvents gets events associated to node with given name.
 func GetNodeEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, nodeName string) (*common.EventList, error) {
-	var eventList common.EventList
-
-	mc := client.Core().Nodes()
-	node, _ := mc.Get(nodeName, metaV1.GetOptions{})
-	if ref, err := api.GetReference(runtime.NewScheme(), node); err == nil {
-		ref.UID = types.UID(ref.Name)
-		events, _ := client.Core().Events(api.NamespaceAll).Search(runtime.NewScheme(), ref)
-		eventList = CreateEventList(events.Items, dsQuery)
-	} else {
-		log.Print(err)
+	eventList := common.EventList{
+		Events: make([]common.Event, 0),
 	}
 
+	scheme := runtime.NewScheme()
+	groupVersion := schema.GroupVersion{Group: "", Version: "v1"}
+	scheme.AddKnownTypes(groupVersion, &api.Node{})
+
+	mc := client.Core().Nodes()
+	node, err := mc.Get(nodeName, metaV1.GetOptions{})
+	if err != nil {
+		return nil, err
+	}
+
+	events, err := client.Core().Events(api.NamespaceAll).Search(scheme, node)
+	if err != nil {
+		return nil, err
+	}
+
+	eventList = CreateEventList(events.Items, dsQuery)
 	return &eventList, nil
 }
 
