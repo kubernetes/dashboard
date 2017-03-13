@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# Variables.
 COVERAGE_REPORT_FILE=./coverage/go.txt
 
 # Install packages that are dependencies of the test. Do not run the test. Improves performance.
