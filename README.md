@@ -45,13 +45,13 @@ If the username and password is configured but unknown to you, then use `kubectl
 
 ## Documentation
 
-* The [user guide](http://kubernetes.io/docs/user-guide/ui/) is an entry point for users of Dashboard
+* [User Guide](http://kubernetes.io/docs/user-guide/ui/): Entry-level overview
 
-* The [design overview](docs/design/README.md) describes design concepts of Dashboard
+* [Developer Guide](docs/devel/README.md): For anyone interested in contributing
 
-* The [developer guide](docs/devel/README.md) is for anyone wanting to contribute to Dashboard
+* [Design Guide](docs/design/README.md): For anyone interested in contributing _design_ (less technical)
 
-* The [troubleshooting guide](docs/user-guide/troubleshooting.md) is a collection of typical setup problems
+* [Troubleshooting Guide](docs/user-guide/troubleshooting.md): Common issues encountered while setting up Dashboard
 
 ## License
 
