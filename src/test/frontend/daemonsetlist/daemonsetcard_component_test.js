@@ -37,7 +37,7 @@ describe('Daemon Set card', () => {
     };
 
     // then
-    expect(ctrl.getDaemonSetDetailHref()).toEqual('#/daemonset/foo-namespace/foo-name');
+    expect(ctrl.getDaemonSetDetailHref()).toEqual('#!/daemonset/foo-namespace/foo-name');
   });
 
   it('should format the "created at" tooltip correctly', () => {

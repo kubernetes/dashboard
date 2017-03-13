@@ -80,7 +80,7 @@ export default class DeployFromFileController {
 
   /**
    * Deploys the application based on the state of the controller.
-   *
+   * @return {!angular.$q.Promise|undefined}
    * @export
    */
   deploy(validate = true) {
@@ -129,7 +129,11 @@ export default class DeployFromFileController {
       defer.promise.finally(() => {
         this.isDeployInProgress_ = false;
       });
+
+      return defer.promise;
     }
+
+    return undefined;
   }
 
   /**

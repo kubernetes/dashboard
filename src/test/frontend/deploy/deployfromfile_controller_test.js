@@ -121,13 +121,14 @@ describe('DeployFromFile controller', () => {
     expect(ctrl.kdHistoryService_.back).toHaveBeenCalled();
   });
 
-  it('should not redirect the page and but open error dialog', () => {
+  it('should not redirect the page and but open error dialog', (doneFn) => {
     spyOn(ctrl.errorDialog_, 'open');
     spyOn(ctrl.kdHistoryService_, 'back');
     mockResource.and.callFake(resource);
     httpBackend.expectPOST('api/v1/appdeploymentfromfile').respond(500, 'Deployment failed');
     // when
-    ctrl.deploy();
+    let promise = ctrl.deploy();
+    promise.catch(doneFn);
     httpBackend.flush();
 
     // then
@@ -141,21 +142,22 @@ describe('DeployFromFile controller', () => {
     expect(ctrl.kdHistoryService_.back).toHaveBeenCalled();
   });
 
-  it('should open deploy anyway dialog when validation error occurs', () => {
+  it('should open deploy anyway dialog when validation error occurs', (doneFn) => {
     spyOn(ctrl, 'handleDeployAnywayDialog_');
     mockResource.and.callFake(resource);
     httpBackend.expectPOST('api/v1/appdeploymentfromfile')
         .respond(500, `error: use --validate=false`);
 
     // when
-    ctrl.deploy();
+    let promise = ctrl.deploy();
+    promise.catch(doneFn);
     httpBackend.flush();
 
     // then
     expect(ctrl.handleDeployAnywayDialog_).toHaveBeenCalled();
   });
 
-  it('should redeploy on deploy anyway', () => {
+  it('should redeploy on deploy anyway', (doneFn) => {
     let deferred = q.defer();
     spyOn(mdDialog, 'show').and.returnValue(deferred.promise);
     spyOn(mdDialog, 'confirm').and.callThrough();
@@ -165,7 +167,8 @@ describe('DeployFromFile controller', () => {
         .respond(500, `error: use --validate=false`);
 
     // first deploy
-    ctrl.deploy();
+    let promise = ctrl.deploy();
+    promise.catch(doneFn);
     httpBackend.flush();
 
     // dialog shown and redeploy accepted
@@ -180,7 +183,7 @@ describe('DeployFromFile controller', () => {
     expect(ctrl.deploy).toHaveBeenCalledTimes(2);
   });
 
-  it('should do nothing on cancel deploy anyway', () => {
+  it('should do nothing on cancel deploy anyway', (doneFn) => {
     let deferred = q.defer();
     spyOn(mdDialog, 'show').and.returnValue(deferred.promise);
     spyOn(mdDialog, 'confirm').and.callThrough();
@@ -190,7 +193,8 @@ describe('DeployFromFile controller', () => {
         .respond(500, `error: use --validate=false`);
 
     // first deploy
-    ctrl.deploy();
+    let promise = ctrl.deploy();
+    promise.catch(doneFn);
     httpBackend.flush();
 
     // dialog shown and redeploy cancelled
