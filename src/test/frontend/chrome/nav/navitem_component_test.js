@@ -48,7 +48,7 @@ describe('Nav item component', () => {
     // initial state assert
     expect(ctrl.state).toBe('fakeState');
 
-    expect(ctrl.getHref()).toBe('#fakeStateUrl');
+    expect(ctrl.getHref()).toBe('#!fakeStateUrl');
   });
 
   it('should detect activity', () => {

@@ -32,7 +32,7 @@ describe('Persistent Volume card', () => {
       },
     };
 
-    expect(ctrl.getPersistentVolumeDetailHref()).toBe('#/persistentvolume/bar');
+    expect(ctrl.getPersistentVolumeDetailHref()).toBe('#!/persistentvolume/bar');
   });
 
   it('should format the "created at" tooltip correctly', () => {

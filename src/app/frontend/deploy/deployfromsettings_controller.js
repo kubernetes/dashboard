@@ -88,13 +88,13 @@ export default class DeployFromSettingsController {
      * Initialized from the template.
      * @export {!Array<!backendApi.PortMapping>}
      */
-    this.portMappings;
+    this.portMappings = [];
 
     /**
      * Initialized from the template.
      * @export {!Array<!backendApi.EnvironmentVariable>}
      */
-    this.variables;
+    this.variables = [];
 
     /** @export {boolean} */
     this.isExternal = false;
