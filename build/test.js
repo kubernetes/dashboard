@@ -18,13 +18,10 @@
 import childProcess from 'child_process';
 import gulp from 'gulp';
 import codecov from 'gulp-codecov.io';
-import print from 'gulp-print'
 import gulpProtractor from 'gulp-protractor';
 import karma from 'karma';
 import path from 'path';
-
 import conf from './conf';
-import goCommand from './gocommand';
 import {browserSyncInstance} from './serve';
 
 
@@ -83,6 +80,7 @@ gulp.task('test', ['frontend-test', 'backend-test']);
  */
 gulp.task('coverage-codecov-upload', function() {
   gulp.src(path.join(conf.paths.coverageReport, 'lcov.info')).pipe(codecov());
+  gulp.src(path.join(conf.paths.coverage, 'go.txt')).pipe(codecov());
 });
 
 /**
