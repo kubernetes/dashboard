@@ -14,7 +14,7 @@
 
 describe('Deploy view', () => {
   beforeEach(() => {
-    browser.get('#/deploy');
+    browser.get('#!/deploy');
   });
 
   it('should do something',

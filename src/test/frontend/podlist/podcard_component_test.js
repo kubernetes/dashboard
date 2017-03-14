@@ -53,7 +53,7 @@ describe('Pod card controller', () => {
       },
     };
 
-    expect(ctrl.getPodDetailHref()).toBe('#/pod/foo-namespace/foo-pod');
+    expect(ctrl.getPodDetailHref()).toBe('#!/pod/foo-namespace/foo-pod');
   });
 
   it('should return true when there is at least one error', () => {

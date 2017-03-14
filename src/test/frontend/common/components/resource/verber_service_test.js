@@ -63,6 +63,7 @@ describe('Verber service', () => {
     let promise = verber.showDeleteDialog('', {}, {});
 
     deferred.reject({data: 'foo-data', statusText: 'foo-text'});
+    deferred.promise.catch(doneFn);
     scope.$digest();
     expect(state.reload).not.toHaveBeenCalled();
     expect(mdDialog.alert).toHaveBeenCalled();
@@ -98,6 +99,7 @@ describe('Verber service', () => {
     let promise = verber.showEditDialog('Foo resource', {kind: 'bar'}, {});
 
     deferred.reject({data: 'foo-data', statusText: 'foo-text'});
+    deferred.promise.catch(doneFn);
     scope.$digest();
     expect(state.reload).not.toHaveBeenCalled();
     expect(mdDialog.alert).toHaveBeenCalled();

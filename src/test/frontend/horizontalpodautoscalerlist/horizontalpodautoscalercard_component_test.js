@@ -35,7 +35,7 @@ describe('Horizontal Pod Autoscaler card', () => {
   });
 
   it('should get details href', () => {
-    expect(ctrl.getHorizontalPodAutoscalerDetailHref()).toBe('#/horizontalpodautoscaler/test/bar');
+    expect(ctrl.getHorizontalPodAutoscalerDetailHref()).toBe('#!/horizontalpodautoscaler/test/bar');
   });
 
   it('should format the "created at" tooltip correctly', () => {
