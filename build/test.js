@@ -102,7 +102,7 @@ gulp.task('backend-test', ['package-backend'], function(doneFn) {
 
   testProcess.on('close', (code) => {
     if (code !== 0) {
-      return doneFn(new Error(`Process exited with code: ${code}`))
+      return doneFn(new Error(`Process exited with code: ${code}`));
     }
 
     return doneFn();
