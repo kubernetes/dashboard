@@ -32,7 +32,7 @@ export default class DeploymentPageObject {
    */
   getElementByAppName(xpathString, appName, isArray) {
     let elemQuery = by.xpath(
-        `//*[@href='#/deployment/default/${appName}?namespace=default']` +
+        `//*[@href='#!/deployment/default/${appName}?namespace=default']` +
         `/ancestor::kd-resource-card//${xpathString}`);
     if (isArray) {
       return element.all(elemQuery);

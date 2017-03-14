@@ -24,13 +24,19 @@ export class EnvironmentVariablesController {
      * Two way data binding from the scope.
      * @export {!Array<!backendApi.EnvironmentVariable>}
      */
-    this.variables = [this.newVariable_()];
+    this.variables;
 
     /**
      * Pattern that matches valid variable names. Like C identifier.
      * @const
      * @export {!RegExp}
      */
+    this.namePattern;
+  }
+
+  /** @export */
+  $onInit() {
+    this.variables = [this.newVariable_()];
     this.namePattern = new RegExp('^[A-Za-z_][A-Za-z0-9_]*$');
   }
 
@@ -78,3 +84,17 @@ export class EnvironmentVariablesController {
     return !!variable.name;
   }
 }
+
+/**
+ * Returns directive definition for the environment variables input widget.
+ *
+ * @return {!angular.Directive}
+ */
+export const environmentVariablesComponent = {
+  controller: EnvironmentVariablesController,
+  controllerAs: 'ctrl',
+  templateUrl: 'deploy/environmentvariables.html',
+  bindToController: {
+    'variables': '=',
+  },
+};

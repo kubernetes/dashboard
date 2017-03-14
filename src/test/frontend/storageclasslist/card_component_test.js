@@ -33,7 +33,7 @@ describe('Storage Class card', () => {
       },
     };
 
-    expect(ctrl.getStorageClassDetailHref()).toBe('#/storageclass/bar');
+    expect(ctrl.getStorageClassDetailHref()).toBe('#!/storageclass/bar');
   });
 
   it('should format the "created at" tooltip correctly', () => {
