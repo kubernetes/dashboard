@@ -22,10 +22,10 @@ import errorHandlingModule from '../common/errorhandling/errorhandling_module';
 import initConfig from './deploy_initconfig';
 import stateConfig from './deploy_stateconfig';
 import deployLabelDirective from './deploylabel_directive';
-import environmentVariablesDirective from './environmentvariables_directive';
+import {environmentVariablesComponent} from './environmentvariables_component';
 import fileReaderDirective from './filereader_directive';
 import helpSectionModule from './helpsection/helpsection_module';
-import portMappingsDirective from './portmappings_directive';
+import {portMappingsComponent} from './portmappings_component';
 import uniqueNameDirective from './uniquename_directive';
 import uploadDirective from './upload_directive';
 import validImageReferenceDirective from './validimagereference_directive';
@@ -53,11 +53,11 @@ export default angular
         ])
     .config(stateConfig)
     .run(initConfig)
+    .component('kdPortMappings', portMappingsComponent)
     .directive('kdUniqueName', uniqueNameDirective)
     .directive('kdValidImagereference', validImageReferenceDirective)
     .directive('kdValidProtocol', validProtocolDirective)
     .directive('kdFileReader', fileReaderDirective)
     .directive('kdUpload', uploadDirective)
-    .directive('kdPortMappings', portMappingsDirective)
-    .directive('kdEnvironmentVariables', environmentVariablesDirective)
+    .component('kdEnvironmentVariables', environmentVariablesComponent)
     .directive('kdDeployLabel', deployLabelDirective);

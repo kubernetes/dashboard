@@ -56,7 +56,7 @@ describe('Deploy not existing image story', () => {
 
   it('should deploy app', (doneFn) => {
     // For empty cluster this should actually redirect to zerostate page
-    browser.get('#/deploy/app');
+    browser.get('#!/deploy/app');
     // given
     deployPage.appNameField.sendKeys(appName);
     deployPage.containerImageField.sendKeys(containerImage);
@@ -116,7 +116,7 @@ describe('Deploy not existing image story', () => {
     let cardMenuButton = replicationControllersPage.getElementByAppName(
         replicationControllersPage.cardMenuButtonQuery, appName);
 
-    browser.get('#/deployment');
+    browser.get('#!/deployment');
 
     cardMenuButton.click();
     replicationControllersPage.deleteAppButton.click().then(() => {

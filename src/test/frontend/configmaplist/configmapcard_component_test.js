@@ -32,7 +32,7 @@ describe('Config Map card', () => {
         name: 'bar',
       },
     };
-    expect(ctrl.getConfigMapDetailHref()).toBe('#/configmap/foo/bar');
+    expect(ctrl.getConfigMapDetailHref()).toBe('#!/configmap/foo/bar');
   });
 
   it('should format the "created at" tooltip correctly', () => {

@@ -17,14 +17,14 @@
  *
  * @final
  */
-export default class PortMappingsController {
+export class PortMappingsController {
   /** @ngInject */
   constructor() {
     /**
      * Two way data binding from the scope.
      * @export {!Array<!backendApi.PortMapping>}
      */
-    this.portMappings = [];
+    this.portMappings;
 
     /**
      * Initialized from the scope.
@@ -42,16 +42,22 @@ export default class PortMappingsController {
      * Available service types
      * @export {!Array<ServiceType>}
      */
-    this.serviceTypes = [NO_SERVICE, INT_SERVICE, EXT_SERVICE];
+    this.serviceTypes;
 
     /**
      * Selected service type. Binding to outer scope.
      * @export {ServiceType}
      */
-    this.serviceType = NO_SERVICE;
+    this.serviceType;
 
     /** @export */
     this.i18n = i18n;
+  }
+
+  /** @export */
+  $onInit() {
+    this.serviceTypes = [NO_SERVICE, INT_SERVICE, EXT_SERVICE];
+    this.serviceType = NO_SERVICE;
   }
 
   /**
@@ -176,15 +182,31 @@ export default class PortMappingsController {
   }
 }
 
+/**
+ * Returns component definition for port mappings input widget.
+ *
+ * @return {!angular.Component}
+ */
+export const portMappingsComponent = {
+  controller: PortMappingsController,
+  controllerAs: 'ctrl',
+  templateUrl: 'deploy/portmappings.html',
+  bindToController: {
+    'portMappings': '=',
+    'protocols': '=',
+    'isExternal': '=',
+  },
+};
+
 const i18n = {
   /** @export {string} @desc Label 'None', which appears as an option in the service type
-     selection box on the deploy page.*/
+   selection box on the deploy page.*/
   MSG_PORT_MAPPINGS_SERVICE_TYPE_NONE_LABEL: goog.getMsg('None'),
   /** @export {string} @desc Label 'Internal', which appears as an option in the service type
-     selection box on the deploy page.*/
+   selection box on the deploy page.*/
   MSG_PORT_MAPPINGS_SERVICE_TYPE_INTERNAL_LABEL: goog.getMsg('Internal'),
   /** @export {string} @desc Label 'External', which appears as an option in the service type
-     selection box on the deploy page.*/
+   selection box on the deploy page.*/
   MSG_PORT_MAPPINGS_SERVICE_TYPE_EXTERNAL_LABEL: goog.getMsg('External'),
 };
 
