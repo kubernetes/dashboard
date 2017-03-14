@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import deployModule from 'deploy/deploy_module';
-import {EnvironmentVariablesController} from 'deploy/environmentvariables_component';
 
 describe('EnvironmentVariablesController', () => {
   /** @type {!EnvironmentVariablesController} */
