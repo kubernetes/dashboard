@@ -79,8 +79,8 @@ gulp.task('test', ['frontend-test', 'backend-test']);
  * with them. Does not work locally.
  */
 gulp.task('coverage-codecov-upload', function() {
-  gulp.src(path.join(conf.paths.coverageReport, 'lcov.info')).pipe(codecov());
-  gulp.src(path.join(conf.paths.coverage, 'go.txt')).pipe(codecov());
+  gulp.src(conf.paths.coverageFrontend).pipe(codecov());
+  gulp.src(conf.paths.coverageBackend).pipe(codecov());
 });
 
 /**
@@ -94,14 +94,15 @@ gulp.task('frontend-test', function(doneFn) {
  * Runs once all unit tests of the backend application.
  */
 gulp.task('backend-test', ['package-backend'], function(doneFn) {
-  childProcess.execFile(conf.paths.goTestScript, function(err, stdout, stderr) {
-    if (err) {
-      console.error(stderr);
-      return doneFn(new Error(err));
-    }
-    console.log(stdout);
-    return doneFn();
-  });
+  childProcess.execFile(
+      conf.paths.goTestScript, [conf.paths.coverageBackend], function(err, stdout, stderr) {
+        if (err) {
+          console.error(stderr);
+          return doneFn(new Error(err));
+        }
+        console.log(stdout);
+        return doneFn();
+      });
 });
 
 /**
