@@ -61,7 +61,7 @@ describe('Edit resource menu item', () => {
     expect(state.reload).toHaveBeenCalled();
   });
 
-  it('should ignore cancels', () => {
+  it('should ignore cancels', (doneFn) => {
     let deferred = q.defer();
     spyOn(kdResourceVerberService, 'showEditDialog').and.returnValue(deferred.promise);
     spyOn(state, 'reload');
@@ -69,6 +69,7 @@ describe('Edit resource menu item', () => {
     ctrl.edit();
 
     deferred.reject();
+    deferred.promise.catch(doneFn);
     scope.$digest();
     expect(state.reload).not.toHaveBeenCalled();
     expect(mdDialog.alert).not.toHaveBeenCalled();
