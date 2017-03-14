@@ -94,16 +94,19 @@ gulp.task('frontend-test', function(doneFn) {
  * Runs once all unit tests of the backend application.
  */
 gulp.task('backend-test', ['package-backend'], function(doneFn) {
-  childProcess.execFile(
-      conf.paths.goTestScript, [conf.paths.coverageBackend, conf.backend.mainPackageName],
-      function(err, stdout, stderr) {
-        if (err) {
-          console.error(stderr);
-          return doneFn(new Error(err));
-        }
-        console.log(stdout);
-        return doneFn();
-      });
+  let testProcess = childProcess.execFile(
+      conf.paths.goTestScript, [conf.paths.coverageBackend, conf.backend.mainPackageName]);
+
+  testProcess.stdout.pipe(process.stdout);
+  testProcess.stderr.pipe(process.stderr);
+
+  testProcess.on('close', (code) => {
+    if (code !== 0) {
+      return doneFn(new Error(`Process exited with code: ${code}`))
+    }
+
+    return doneFn();
+  });
 });
 
 /**
