@@ -27,10 +27,10 @@ limitations under the License.
 </div>
 
 <kd-daemon-set-info daemon-set="::ctrl.daemonSetDetail"></kd-daemon-set-info>
+
 <kd-content-card>
   <kd-content>
-    <kd-service-card-list ng-show="::ctrl.daemonSetDetail.serviceList.services.length"
-                          service-list="::ctrl.daemonSetDetail.serviceList"
+    <kd-service-card-list service-list="::ctrl.daemonSetDetail.serviceList"
                           service-list-resource="::ctrl.daemonSetServicesResource">
       <kd-zerostate>
         <div class="kd-zerostate-title">[[There is nothing to display here|Title for services card zerostate in daemon set details page.]]</div>
@@ -39,11 +39,12 @@ limitations under the License.
     </kd-service-card-list>
   </kd-content>
 </kd-content-card>
+
 <kd-content-card>
   <kd-content>
     <kd-pod-card-list pod-list="::ctrl.daemonSetDetail.podList"
                       pod-list-resource="::ctrl.daemonSetPodsResource"
-                      with-statuses="true" ng-show="::ctrl.daemonSetDetail.podList.pods.length">
+                      with-statuses="true" >
       <kd-zerostate>
         <div class="kd-zerostate-title">[[There is nothing to display here|Title for pods card zerostate in daemon set details page.]]</div>
         <div class="kd-zerostate-text">[[There are currently no Pods scheduled on this Daemon Set.|Text for pods card zerostate in daemon set details page.]]</div>
@@ -51,4 +52,5 @@ limitations under the License.
     </kd-pod-card-list>
   </kd-content>
 </kd-content-card>
+
 <kd-event-card-list event-list="::ctrl.daemonSetDetail.eventList" event-list-resource="::ctrl.daemonSetEventsResource"></kd-event-card-list>
