@@ -95,7 +95,8 @@ gulp.task('frontend-test', function(doneFn) {
  */
 gulp.task('backend-test', ['package-backend'], function(doneFn) {
   childProcess.execFile(
-      conf.paths.goTestScript, [conf.paths.coverageBackend], function(err, stdout, stderr) {
+      conf.paths.goTestScript, [conf.paths.coverageBackend, conf.backend.mainPackageName],
+      function(err, stdout, stderr) {
         if (err) {
           console.error(stderr);
           return doneFn(new Error(err));
