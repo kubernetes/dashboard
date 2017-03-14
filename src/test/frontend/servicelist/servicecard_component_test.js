@@ -40,7 +40,7 @@ describe('Service card controller', () => {
     };
 
     // then
-    expect(ctrl.getServiceDetailHref()).toBe('#/service/foo-namespace/foo-service');
+    expect(ctrl.getServiceDetailHref()).toBe('#!/service/foo-namespace/foo-service');
   });
 
   it('should return true when service.clusterIP is null', () => {

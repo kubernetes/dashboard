@@ -40,7 +40,7 @@ describe('Deploy from valid file user story test', () => {
     deployFromFilePage = new DeployFromFilePageObject();
     replicationControllersPage = new ReplicationControllersPageObject();
     deleteDialog = new DeleteReplicationControllerDialogObject();
-    browser.get('#/deploy/file');
+    browser.get('#!/deploy/file');
   });
 
   it('should upload the file', () => {
@@ -65,7 +65,7 @@ describe('Deploy from valid file user story test', () => {
     // clean up
     let cardMenuButton = replicationControllersPage.getElementByAppName(
         replicationControllersPage.cardMenuButtonQuery, appName);
-    browser.get('#/replicationcontroller');
+    browser.get('#!/replicationcontroller');
     cardMenuButton.click();
     replicationControllersPage.deleteAppButton.click().then(() => {
       deleteDialog.deleteAppButton.click();

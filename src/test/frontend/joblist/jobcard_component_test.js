@@ -38,7 +38,7 @@ describe('Job card', () => {
     };
 
     // then
-    expect(ctrl.getJobDetailHref()).toEqual('#/job/foo-namespace/foo-name');
+    expect(ctrl.getJobDetailHref()).toEqual('#!/job/foo-namespace/foo-name');
   });
 
   it('should return true when at least one job controller pod has warning', () => {

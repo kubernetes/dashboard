@@ -37,7 +37,7 @@ describe('Namespace card', () => {
     };
 
     // then
-    expect(ctrl.getNamespaceDetailHref()).toEqual('#/namespace/foo-name');
+    expect(ctrl.getNamespaceDetailHref()).toEqual('#!/namespace/foo-name');
   });
 
   it('should format the "created at" tooltip correctly', () => {
