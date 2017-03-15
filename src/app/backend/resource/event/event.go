@@ -15,13 +15,12 @@
 package event
 
 import (
+	"log"
 	"strings"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"log"
-
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/types"
+	"k8s.io/apimachinery/pkg/types"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // FailedReasonPartials  is an array of partial strings to correctly filter warning events.

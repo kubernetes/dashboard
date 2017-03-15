@@ -37,7 +37,7 @@ describe('Node card', () => {
     };
 
     // then
-    expect(ctrl.getNodeDetailHref()).toEqual('#/node/foo-name');
+    expect(ctrl.getNodeDetailHref()).toEqual('#!/node/foo-name');
   });
 
   it('should display check (success) icon', () => {

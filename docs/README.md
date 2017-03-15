@@ -1,5 +1,5 @@
 # Dashboard Documentation
 
-* The [Design overview](design/README.md) describes design concepts of Dashboard
+* [Developer guide](devel/README.md) for anyone interested in contributing code to Dashboard.
+* [Design guide](design/README.md) for anyone interested in contributing in a design capacity (less technical).
 
-* The [Developer guide](devel/README.md) is for anyone wanting to contribute to Dashboard

@@ -54,7 +54,7 @@ xdescribe('Deploy and delete replication controller user story test', () => {
   });
 
   it('should go to deploy page', () => {
-    browser.get('#/deploy');
+    browser.get('#!/deploy');
 
     expect(browser.getCurrentUrl()).toContain('deploy');
   });

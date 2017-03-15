@@ -37,5 +37,13 @@ limitations under the License.
       </kd-persistent-volume-card-list>
     </kd-content>
   </kd-content-card>
+  <kd-content-card ng-if="$ctrl.admin.storageClassList.storageClasses.length">
+    <kd-content>
+      <kd-storage-class-card-list storage-class-list="$ctrl.admin.storageClassList"
+                                  with-statuses="true"
+                                  storage-class-list-resource="$ctrl.kdStorageClassListResource">
+      </kd-storage-class-card-list>
+    </kd-content>
+  </kd-content-card>
 </div>
 <kd-zero-state ng-if="$ctrl.shouldShowZeroState()"></kd-zero-state>

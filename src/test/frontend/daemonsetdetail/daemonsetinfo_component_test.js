@@ -16,9 +16,9 @@ import daemonSetDetailModule from 'daemonsetdetail/daemonsetdetail_module';
 
 describe('Daemon Set Info controller', () => {
   /**
-* Daemon Set Info controller.
-* @type {!DaemonSetInfoController}
-*/
+   * Daemon Set Info controller.
+   * @type {!DaemonSetInfoController}
+   */
   let ctrl;
 
   beforeEach(() => {

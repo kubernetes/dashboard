@@ -25,6 +25,7 @@ metadata:
   namespace: kube-system
 spec:
   replicas: 1
+  revisionHistoryLimit: 10
   selector:
     matchLabels:
       app: kubernetes-dashboard
@@ -46,7 +47,7 @@ spec:
     spec:
       containers:
       - name: kubernetes-dashboard
-        image: gcr.io/google_containers/kubernetes-dashboard-amd64:v1.5.1
+        image: gcr.io/google_containers/kubernetes-dashboard-amd64:v1.6.0
         imagePullPolicy: Always
         ports:
         - containerPort: 9090

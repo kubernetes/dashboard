@@ -58,9 +58,10 @@ export default class ReplicationControllerCardMenuController {
    */
   viewDetails() {
     this.state_.go(
-        stateName, new StateParams(
-                       this.replicationController.objectMeta.namespace,
-                       this.replicationController.objectMeta.name));
+        stateName,
+        new StateParams(
+            this.replicationController.objectMeta.namespace,
+            this.replicationController.objectMeta.name));
   }
 
   /**

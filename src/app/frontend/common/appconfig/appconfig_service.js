@@ -44,4 +44,22 @@ export class AppConfigService {
       return null;
     }
   }
+
+  /**
+   * Release version number of Dashboard. The token is replaced by the build process
+   * @export
+   * @return {string}
+   */
+  getDashboardVersion() {
+    return '@@BUILD_DASHBOARD_VERSION';
+  }
+
+  /**
+   * SHA commit ID. The token is replaced by the build process
+   * @export
+   * @return {string}
+   */
+  getGitCommit() {
+    return '@@BUILD_GIT_COMMIT';
+  }
 }

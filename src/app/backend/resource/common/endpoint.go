@@ -17,7 +17,7 @@ package common
 import (
 	"bytes"
 
-	"k8s.io/kubernetes/pkg/api"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // Endpoint describes an endpoint that is host and a list of available ports for that host.
