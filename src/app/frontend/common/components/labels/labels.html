@@ -20,7 +20,8 @@ limitations under the License.
     <kd-middle-ellipsis display-string="{{::key}}: {{::value}}" class="kd-chip">
     </kd-middle-ellipsis>
   </div>
-  <div class="kd-chips kd-chips-switch" ng-show="labelsCtrl.isMoreAvailable()"
+  <div class="kd-chips kd-chips-switch"
+       ng-show="labelsCtrl.isMoreAvailable()"
        ng-click="labelsCtrl.switchLabelsView()">
     {{labelsCtrl.isShowingAll() ?
       '[[show fewer labels|Tooltip on the "show less" button for the labels of any kubernetes resource. Usually appears on the resource details pages.]]' :
