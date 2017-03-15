@@ -186,6 +186,8 @@ func TestGetAvailableProtocols(t *testing.T) {
 }
 
 func TestDeployAppFromFileWithValidContent(t *testing.T) {
+	// TODO: rewrite test
+	t.Skip("Should not require working cluster to run.")
 	validContent := "{\"kind\": \"Namespace\"," +
 		"\"apiVersion\": \"v1\"," +
 		"\"metadata\": {" +
@@ -207,6 +209,8 @@ func TestDeployAppFromFileWithValidContent(t *testing.T) {
 }
 
 func TestDeployAppFromFileWithInvalidContent(t *testing.T) {
+	// TODO: rewrite test
+	t.Skip("Should not require working cluster to run.")
 	spec := &AppDeploymentFromFileSpec{
 		Name:    "foo-name",
 		Content: "foo-content-invalid",
