@@ -13,7 +13,7 @@ import (
 	k8sClient "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
-	"k8s.io/client-go/tools/clientcmd"
+	"k8s.io/client-go/rest"
 )
 
 // ThirdPartyResourceObject is a single instance of third party resource.
@@ -31,7 +31,7 @@ type ThirdPartyResourceObjectList struct {
 
 // GetThirdPartyResourceObjects return list of third party resource instances. Channels cannot be
 // used here yet, because we operate on raw JSONs.
-func GetThirdPartyResourceObjects(client k8sClient.Interface, config clientcmd.ClientConfig,
+func GetThirdPartyResourceObjects(client k8sClient.Interface, config *rest.Config,
 	dsQuery *dataselect.DataSelectQuery, tprName string) (ThirdPartyResourceObjectList, error) {
 
 	log.Printf("Getting third party resource %s objects", tprName)

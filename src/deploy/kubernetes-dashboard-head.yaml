@@ -37,7 +37,7 @@ items:
       spec:
         containers:
         - name: kubernetes-dashboard-head
-          image: kubernetesdashboarddev/kubernetes-dashboard-amd64:head
+          image: floreks/kubernetes-dashboard-amd64
           imagePullPolicy: Always
           ports:
           - containerPort: 9090

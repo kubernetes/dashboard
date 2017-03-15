@@ -21,19 +21,13 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/serializer"
 	"k8s.io/client-go/pkg/api"
 	"k8s.io/client-go/rest"
-	"k8s.io/client-go/tools/clientcmd"
 )
 
 func newRESTClient(config *rest.Config) (*rest.RESTClient, error) {
 	return rest.RESTClientFor(config)
 }
 
-func newClientConfig(commonConfig clientcmd.ClientConfig, groupVersion schema.GroupVersion) (*rest.Config, error) {
-	config, err := commonConfig.ClientConfig()
-	if err != nil {
-		return nil, err
-	}
-
+func newClientConfig(config *rest.Config, groupVersion schema.GroupVersion) (*rest.Config, error) {
 	config.GroupVersion = &groupVersion
 	config.APIPath = "/apis"
 	config.ContentType = runtime.ContentTypeJSON
