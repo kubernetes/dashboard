@@ -14,9 +14,7 @@
 
 package common
 
-import (
-	"k8s.io/kubernetes/pkg/api/unversioned"
-)
+import "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 // EventList is an events response structure.
 type EventList struct {
@@ -50,10 +48,10 @@ type Event struct {
 	Count int32 `json:"count"`
 
 	// The time at which the event was first recorded.
-	FirstSeen unversioned.Time `json:"firstSeen"`
+	FirstSeen v1.Time `json:"firstSeen"`
 
 	// The time at which the most recent occurrence of this event was recorded.
-	LastSeen unversioned.Time `json:"lastSeen"`
+	LastSeen v1.Time `json:"lastSeen"`
 
 	// Short, machine understandable string that gives the reason
 	// for this event being generated.

@@ -16,10 +16,11 @@ package dataselect
 
 import (
 	"fmt"
+	"sort"
+
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
-	"k8s.io/kubernetes/pkg/api"
-	"sort"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // CachedResources contains all resources that may be required by DataSelect functions.

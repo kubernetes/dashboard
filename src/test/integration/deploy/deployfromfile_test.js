@@ -21,7 +21,7 @@ describe('Deploy from file view', () => {
   beforeEach(() => {
     page = new DeployFromFilePageObject();
 
-    browser.get('#/deploy/file');
+    browser.get('#!/deploy/file');
     // switches to deploy from file
     page.deployFromFileRadioButton.click();
   });

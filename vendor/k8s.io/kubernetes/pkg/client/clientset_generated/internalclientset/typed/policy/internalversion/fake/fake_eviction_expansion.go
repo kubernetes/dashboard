@@ -17,16 +17,16 @@ limitations under the License.
 package fake
 
 import (
-	unversioned "k8s.io/kubernetes/pkg/api/unversioned"
+	"k8s.io/apimachinery/pkg/runtime/schema"
+	core "k8s.io/client-go/testing"
 	policy "k8s.io/kubernetes/pkg/apis/policy"
-	core "k8s.io/kubernetes/pkg/client/testing/core"
 )
 
 func (c *FakeEvictions) Evict(eviction *policy.Eviction) error {
 	action := core.GetActionImpl{}
 	action.Verb = "post"
 	action.Namespace = c.ns
-	action.Resource = unversioned.GroupVersionResource{Group: "", Version: "", Resource: "pods"}
+	action.Resource = schema.GroupVersionResource{Group: "", Version: "", Resource: "pods"}
 	action.Subresource = "eviction"
 	_, err := c.Fake.Invokes(action, eviction)
 	return err

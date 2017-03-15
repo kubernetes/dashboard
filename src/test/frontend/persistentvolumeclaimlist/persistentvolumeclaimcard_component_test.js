@@ -73,7 +73,7 @@ describe('Persistent Volume Claim card', () => {
       },
     };
 
-    expect(ctrl.getPersistentVolumeClaimDetailHref()).toBe('#/persistentvolumeclaim/foo/bar');
+    expect(ctrl.getPersistentVolumeClaimDetailHref()).toBe('#!/persistentvolumeclaim/foo/bar');
   });
 
   it('should return the value from Namespace service', () => {

@@ -15,16 +15,17 @@
 package common
 
 import (
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/apis/apps"
-	"k8s.io/kubernetes/pkg/apis/autoscaling"
-	"k8s.io/kubernetes/pkg/apis/batch"
-	"k8s.io/kubernetes/pkg/apis/extensions"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
-	"k8s.io/kubernetes/pkg/fields"
-	"k8s.io/kubernetes/pkg/labels"
-	"k8s.io/kubernetes/pkg/apis/rbac"
 	kdClient "github.com/kubernetes/dashboard/src/app/backend/client"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/fields"
+	"k8s.io/apimachinery/pkg/labels"
+	client "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
+	apps "k8s.io/client-go/pkg/apis/apps/v1beta1"
+	autoscaling "k8s.io/client-go/pkg/apis/autoscaling/v1"
+	batch "k8s.io/client-go/pkg/apis/batch/v1"
+	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
+	storage "k8s.io/client-go/pkg/apis/storage/v1beta1"
 )
 
 // ResourceChannels struct holds channels to resource lists. Each list channel is paired with
@@ -98,6 +99,12 @@ type ResourceChannels struct {
 
 	// List and error channels to HorizontalPodAutoscalers
 	HorizontalPodAutoscalerList HorizontalPodAutoscalerListChannel
+
+	// List and error channels to ThirdPartyResources
+	ThirdPartyResourceList ThirdPartyResourceListChannel
+
+	// List and error channels to StorageClasses
+	StorageClassList StorageClassListChannel
 
 	// List and error channels to Roles
 	RoleList RoleListChannel
@@ -265,7 +272,7 @@ func GetEventListChannel(client client.Interface,
 
 // GetEventListChannelWithOptions is GetEventListChannel plus list options.
 func GetEventListChannelWithOptions(client client.Interface,
-	nsQuery *NamespaceQuery, options api.ListOptions, numReads int) EventListChannel {
+	nsQuery *NamespaceQuery, options metaV1.ListOptions, numReads int) EventListChannel {
 	channel := EventListChannel{
 		List:  make(chan *api.EventList, numReads),
 		Error: make(chan error, numReads),
@@ -304,7 +311,7 @@ func GetPodListChannel(client client.Interface,
 
 // GetPodListChannelWithOptions is GetPodListChannel plus listing options.
 func GetPodListChannelWithOptions(client client.Interface, nsQuery *NamespaceQuery,
-	options api.ListOptions, numReads int) PodListChannel {
+	options metaV1.ListOptions, numReads int) PodListChannel {
 
 	channel := PodListChannel{
 		List:  make(chan *api.PodList, numReads),
@@ -414,7 +421,7 @@ func GetReplicaSetListChannel(client client.Interface,
 // GetReplicaSetListChannelWithOptions returns a pair of channels to a ReplicaSet list filtered
 // by provided options and errors that both must be read numReads times.
 func GetReplicaSetListChannelWithOptions(client client.Interface,
-	nsQuery *NamespaceQuery, options api.ListOptions, numReads int) ReplicaSetListChannel {
+	nsQuery *NamespaceQuery, options metaV1.ListOptions, numReads int) ReplicaSetListChannel {
 	channel := ReplicaSetListChannel{
 		List:  make(chan *extensions.ReplicaSetList, numReads),
 		Error: make(chan error, numReads),
@@ -772,7 +779,7 @@ func GetPodMetricsChannel(heapsterClient kdClient.HeapsterClient, name string, n
 	}
 
 	go func() {
-		podNamesByNamespace := map[string][]string{namespace: []string{name}}
+		podNamesByNamespace := map[string][]string{namespace: {name}}
 		metrics, err := getPodListMetrics(podNamesByNamespace, heapsterClient)
 		channel.MetricsByPod <- metrics
 		channel.Error <- err
@@ -806,7 +813,57 @@ func GetHorizontalPodAutoscalerListChannel(client client.Interface, nsQuery *Nam
 	return channel
 }
 
-var listEverything = api.ListOptions{
-	LabelSelector: labels.Everything(),
-	FieldSelector: fields.Everything(),
+// ThirdPartyResourceListChannel is a list and error channels to third party resources.
+type ThirdPartyResourceListChannel struct {
+	List  chan *extensions.ThirdPartyResourceList
+	Error chan error
+}
+
+// GetThirdPartyResourceListChannel returns a pair of channels to a third party resource list and
+// errors that both must be read numReads times.
+func GetThirdPartyResourceListChannel(client client.Interface, numReads int) ThirdPartyResourceListChannel {
+	channel := ThirdPartyResourceListChannel{
+		List:  make(chan *extensions.ThirdPartyResourceList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.Extensions().ThirdPartyResources().List(listEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// StorageClassListChannel is a list and error channels to storage classes.
+type StorageClassListChannel struct {
+	List  chan *storage.StorageClassList
+	Error chan error
+}
+
+// GetStorageClassListChannel returns a pair of channels to a storage class list and
+// errors that both must be read numReads times.
+func GetStorageClassListChannel(client client.Interface, numReads int) StorageClassListChannel {
+	channel := StorageClassListChannel{
+		List:  make(chan *storage.StorageClassList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.Storage().StorageClasses().List(listEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+var listEverything = metaV1.ListOptions{
+	LabelSelector: labels.Everything().String(),
+	FieldSelector: fields.Everything().String(),
 }

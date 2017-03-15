@@ -47,6 +47,6 @@ describe('Ingress card', () => {
   });
 
   it('should return details href', () => {
-    expect(ctrl.getIngressDetailHref()).toBe('#/ingress/foo/bar');
+    expect(ctrl.getIngressDetailHref()).toBe('#!/ingress/foo/bar');
   });
 });

@@ -64,9 +64,10 @@ export class HorizontalPodAutoscalerCardController {
    */
   getHorizontalPodAutoscalerDetailHref() {
     return this.state_.href(
-        stateName, new StateParams(
-                       this.horizontalPodAutoscaler.objectMeta.namespace,
-                       this.horizontalPodAutoscaler.objectMeta.name));
+        stateName,
+        new StateParams(
+            this.horizontalPodAutoscaler.objectMeta.namespace,
+            this.horizontalPodAutoscaler.objectMeta.name));
   }
 
   /**

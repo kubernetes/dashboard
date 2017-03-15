@@ -17,8 +17,8 @@ package client
 import (
 	"log"
 
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
-	"k8s.io/kubernetes/pkg/client/restclient"
+	"k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/rest"
 )
 
 // HeapsterClient  is a client used to make requests to a Heapster instance.
@@ -38,7 +38,7 @@ type RequestInterface interface {
 // InClusterHeapsterClient is an in-cluster implementation of a Heapster client. Talks with Heapster
 // through service proxy.
 type InClusterHeapsterClient struct {
-	client restclient.Interface
+	client rest.Interface
 }
 
 // Get creates request to given path.
@@ -53,7 +53,7 @@ func (c InClusterHeapsterClient) Get(path string) RequestInterface {
 // RemoteHeapsterClient is an implementation of a remote Heapster client. Talks with Heapster
 // through raw RESTClient.
 type RemoteHeapsterClient struct {
-	client restclient.Interface
+	client rest.Interface
 }
 
 // Get creates request to given path.
@@ -65,7 +65,7 @@ func (c RemoteHeapsterClient) Get(path string) RequestInterface {
 // string the function assumes that it is running inside a Kubernetes cluster and connects via
 // service proxy. heapsterHost param is in the format of protocol://address:port,
 // e.g., http://localhost:8002.
-func CreateHeapsterRESTClient(heapsterHost string, apiclient *client.Clientset) (
+func CreateHeapsterRESTClient(heapsterHost string, apiclient *kubernetes.Clientset) (
 	HeapsterClient, error) {
 
 	if heapsterHost == "" {
@@ -73,8 +73,8 @@ func CreateHeapsterRESTClient(heapsterHost string, apiclient *client.Clientset) 
 		return InClusterHeapsterClient{client: apiclient.Core().RESTClient()}, nil
 	}
 
-	cfg := &restclient.Config{Host: heapsterHost, QPS: defaultQPS, Burst: defaultBurst}
-	restClient, err := client.NewForConfig(cfg)
+	cfg := &rest.Config{Host: heapsterHost, QPS: defaultQPS, Burst: defaultBurst}
+	restClient, err := kubernetes.NewForConfig(cfg)
 	if err != nil {
 		return nil, err
 	}
