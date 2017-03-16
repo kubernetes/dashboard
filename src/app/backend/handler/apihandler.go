@@ -66,7 +66,6 @@ import (
 	utilnet "k8s.io/apimachinery/pkg/util/net"
 	clientK8s "k8s.io/client-go/kubernetes"
 	restclient "k8s.io/client-go/rest"
-	"k8s.io/client-go/tools/clientcmd"
 )
 
 const (
@@ -82,7 +81,7 @@ const (
 type APIHandler struct {
 	client         *clientK8s.Clientset
 	heapsterClient client.HeapsterClient
-	clientConfig   clientcmd.ClientConfig
+	config         *restclient.Config
 	verber         common.ResourceVerber
 	csrfKey        string
 }
@@ -177,7 +176,7 @@ func FormatResponseLog(resp *restful.Response, req *restful.Request) string {
 
 // CreateHTTPAPIHandler creates a new HTTP handler that handles all requests to the API of the backend.
 func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.HeapsterClient,
-	clientConfig clientcmd.ClientConfig) (http.Handler, error) {
+	clientConfig *restclient.Config) (http.Handler, error) {
 
 	verber := common.NewResourceVerber(client.Core().RESTClient(),
 		client.Extensions().RESTClient(), client.Apps().RESTClient(),
@@ -851,7 +850,7 @@ func (apiHandler *APIHandler) handleDeployFromFile(request *restful.Request, res
 	}
 
 	isDeployed, err := deployment.DeployAppFromFile(
-		deploymentSpec, deployment.CreateObjectFromInfoFn, apiHandler.clientConfig)
+		deploymentSpec, deployment.CreateObjectFromInfoFn)
 	if !isDeployed {
 		handleInternalError(response, err)
 		return
@@ -1412,7 +1411,7 @@ func (apiHandler *APIHandler) handleGetThirdPartyResource(request *restful.Reque
 func (apiHandler *APIHandler) handleGetThirdPartyResourceDetail(request *restful.Request,
 	response *restful.Response) {
 	name := request.PathParameter("thirdpartyresource")
-	result, err := thirdpartyresource.GetThirdPartyResourceDetail(apiHandler.client, apiHandler.clientConfig, name)
+	result, err := thirdpartyresource.GetThirdPartyResourceDetail(apiHandler.client, apiHandler.config, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1423,7 +1422,7 @@ func (apiHandler *APIHandler) handleGetThirdPartyResourceDetail(request *restful
 func (apiHandler *APIHandler) handleGetThirdPartyResourceObjects(request *restful.Request, response *restful.Response) {
 	name := request.PathParameter("thirdpartyresource")
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := thirdpartyresource.GetThirdPartyResourceObjects(apiHandler.client, apiHandler.clientConfig, dataSelect, name)
+	result, err := thirdpartyresource.GetThirdPartyResourceObjects(apiHandler.client, apiHandler.config, dataSelect, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
