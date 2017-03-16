@@ -18,6 +18,7 @@ import (
 	"log"
 
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/tools/clientcmd/api"
 )
@@ -32,19 +33,31 @@ const (
 	defaultBurst = 1e6
 )
 
+// buildConfigFromFlags builds REST config based on master URL and kubeconfig path.
+// If both of them are empty then in cluster config is used.
+func buildConfigFromFlags(masterUrl, kubeconfigPath string) (*rest.Config, error) {
+	if kubeconfigPath == "" && masterUrl == "" {
+		kubeconfig, err := rest.InClusterConfig()
+		if err != nil {
+			return nil, err
+		}
+
+		return kubeconfig, nil
+	}
+
+	return clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
+		&clientcmd.ClientConfigLoadingRules{ExplicitPath: kubeconfigPath},
+		&clientcmd.ConfigOverrides{ClusterInfo: api.Cluster{Server: masterUrl}}).ClientConfig()
+}
+
 // CreateApiserverClient creates new Kubernetes Apiserver client. When kubeconfig or apiserverHost param is empty
 // the function assumes that it is running inside a Kubernetes cluster and attempts to
 // discover the Apiserver. Otherwise, it connects to the Apiserver specified.
 //
 // apiserverHost param is in the format of protocol://address:port/pathPrefix, e.g.http://localhost:8001.
 // kubeConfig location of kubeconfig file
-func CreateApiserverClient(apiserverHost string, kubeConfig string) (*kubernetes.Clientset, clientcmd.ClientConfig, error) {
-
-	clientConfig := clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
-		&clientcmd.ClientConfigLoadingRules{ExplicitPath: kubeConfig},
-		&clientcmd.ConfigOverrides{ClusterInfo: api.Cluster{Server: apiserverHost}})
-
-	cfg, err := clientConfig.ClientConfig()
+func CreateApiserverClient(apiserverHost string, kubeConfig string) (*kubernetes.Clientset, *rest.Config, error) {
+	cfg, err := buildConfigFromFlags(apiserverHost, kubeConfig)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -56,9 +69,9 @@ func CreateApiserverClient(apiserverHost string, kubeConfig string) (*kubernetes
 	log.Printf("Creating API server client for %s", cfg.Host)
 
 	client, err := kubernetes.NewForConfig(cfg)
-
 	if err != nil {
 		return nil, nil, err
 	}
-	return client, clientConfig, nil
+
+	return client, cfg, nil
 }
