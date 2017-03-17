@@ -44,7 +44,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/node"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/rbacbroles"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/rbacroles"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
@@ -585,7 +585,7 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 	apiV1Ws.Route(
 		apiV1Ws.GET("/rbacrole").
 			To(apiHandler.handleGetRbacRoleList).
-			Writes(rbacbroles.RbacRoleList{}))
+			Writes(rbacroles.RbacRoleList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/persistentvolume").
@@ -640,7 +640,7 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 
 func (apiHandler *APIHandler) handleGetRbacRoleList(request *restful.Request, response *restful.Response) {
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := rbacbroles.GetRbacRoleList(apiHandler.client, dataSelect)
+	result, err := rbacroles.GetRbacRoleList(apiHandler.client, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return

@@ -26,6 +26,7 @@ import (
 	batch "k8s.io/client-go/pkg/apis/batch/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 	storage "k8s.io/client-go/pkg/apis/storage/v1beta1"
+	rbac "k8s.io/client-go/pkg/apis/rbac/v1beta1"
 )
 
 // ResourceChannels struct holds channels to resource lists. Each list channel is paired with

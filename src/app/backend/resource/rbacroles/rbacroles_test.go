@@ -17,20 +17,19 @@ package rbacroles
 import (
 	"reflect"
 	"testing"
-	"k8s.io/kubernetes/pkg/apis/rbac"
+	rbac "k8s.io/client-go/pkg/apis/rbac/v1beta1"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/rbacbroles"
-	"k8s.io/kubernetes/pkg/api"
+	api "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func TestGetRbacRoleList(t *testing.T) {
 	cases := []struct {
 		roles []rbac.Role
 		clusterRoles []rbac.ClusterRole
-		expected          *rbacbroles.RbacRoleList
+		expected          *RbacRoleList
 	}{
-		{nil, nil, &rbacbroles.RbacRoleList{Items: []rbacbroles.RbacRole{}}},
+		{nil, nil, &RbacRoleList{Items: []RbacRole{}}},
 		{
 			[]rbac.Role{
 				{
@@ -52,9 +51,9 @@ func TestGetRbacRoleList(t *testing.T) {
 
 				},
 			},
-			&rbacbroles.RbacRoleList{
+			&RbacRoleList{
 				ListMeta: common.ListMeta{TotalItems: 2},
-				Items: []rbacbroles.RbacRole{{
+				Items: []RbacRole{{
 					ObjectMeta:  common.ObjectMeta{Name: "Role", Namespace: "Testing"},
 					Rules: []rbac.PolicyRule{{
 						Verbs: []string{"get", "put"},
@@ -75,7 +74,7 @@ func TestGetRbacRoleList(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := rbacbroles.SimplifyRbacRoleLists(c.roles, c.clusterRoles, dataselect.NoDataSelect)
+		actual := SimplifyRbacRoleLists(c.roles, c.clusterRoles, dataselect.NoDataSelect)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getRbacRoleList(%#v,%#v) == \n%#v\nexpected \n%#v\n",
 				c.roles, c.clusterRoles, actual, c.expected)

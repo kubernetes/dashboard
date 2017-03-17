@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package rbacbroles
+package rbacroles
 
 import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"k8s.io/kubernetes/pkg/apis/rbac"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
+	rbac "k8s.io/client-go/pkg/apis/rbac/v1beta1"
+	client "k8s.io/client-go/kubernetes"
 )
 
 // RbacRoleList contains a list of Roles and ClusterRoles in the cluster.
