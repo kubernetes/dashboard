@@ -39,6 +39,7 @@
   <translation id="2218294864744563724" key="MSG_BREADCRUMBS_SERVICES_LABEL" desc="Label 'Services' that appears as a breadcrumbs on the action bar.">サービス</translation>
   <translation id="7318741060898365517" key="MSG_BREADCRUMBS_STATEFUL_SETS_LABEL" desc="Label 'Stateful Sets' that appears as a breadcrumbs on the action bar.">ステートフルセット</translation>
   <translation id="1427200251427963672" key="MSG_BREADCRUMBS_STORAGE_CLASSES_LABEL" desc="Label 'Storage Classes' that appears as a breadcrumbs on the action bar.">ストレージクラス</translation>
+  <translation id="4645270776145594474" key="MSG_BREADCRUMBS_STORAGE_LABEL" desc="Label 'Storage' that appears as a breadcrumbs on the action bar.">Storage</translation>
   <translation id="6132384114487014259" key="MSG_BREADCRUMBS_THIRD_PARTY_RESOURCES_LABEL" desc="Label 'Third Party Resources' that appears as a breadcrumbs on the action bar.">サードパーティーリソース</translation>
   <translation id="1656728804447365846" key="MSG_BREADCRUMBS_WORKLOADS_LABEL" desc="Label 'Workloads' that appears as a breadcrumbs on the action bar.">ワークロード</translation>
   <translation id="9218333053624016665" key="MSG_CHROME_NAV_NAV_0" desc="Admin menu item in the nav.">管理者</translation>
