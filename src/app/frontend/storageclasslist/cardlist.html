@@ -42,7 +42,8 @@ limitations under the License.
         </kd-resource-card-header-column>
     </kd-resource-card-header-columns>
     <kd-storage-class-card dir-paginate="storageClass in $ctrl.storageClassList.storageClasses | itemsPerPage: default"
-                               storage-class="storageClass" pagination-id="storageclasses"
-                               total-items="::$ctrl.storageClassList.listMeta.totalItems">
+                           total-items="::$ctrl.storageClassList.listMeta.totalItems"
+                           storage-class="storageClass"
+                           pagination-id="storageclasses">
     </kd-storage-class-card>
 </kd-resource-card-list>
