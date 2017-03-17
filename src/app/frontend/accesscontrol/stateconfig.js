@@ -62,6 +62,6 @@ export function resolveRoleList(kdRoleListResource, kdPaginationService) {
 
 const i18n = {
   /** @type {string} @desc Label 'Access Control' that appears as a breadcrumbs on the action bar.
-     */
+   */
   MSG_BREADCRUMBS_ACCESS_CONTROL_LABEL: goog.getMsg('Access Control'),
 };
