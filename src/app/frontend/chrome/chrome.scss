@@ -155,7 +155,9 @@ $chip-margin: 0 $baseline-grid ($baseline-grid / 2) 0;
 .kd-chips-switch {
   color: $primary;
   cursor: pointer;
+  margin-left: -$baseline-grid / 2;
   outline: none;
+  padding: ($baseline-grid / 4) $baseline-grid;
 }
 
 // Style scrollbars on Webkit-based browsers (e.g., Chrome or Safari).

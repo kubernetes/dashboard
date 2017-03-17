@@ -21,7 +21,6 @@ import {storageClassCardComponent} from './card_component';
 import {storageClassCardListComponent} from './cardlist_component';
 import stateConfig from './stateconfig';
 
-
 /**
  * Angular module for the Storage Class list view.
  */
