@@ -28,8 +28,9 @@ limitations under the License.
 
 <kd-content-card>
   <kd-content>
-    <kd-pod-card-list pod-list="::ctrl.nodeDetail.podList" with-statuses="true"
-                      ng-show="::ctrl.nodeDetail.podList.pods.length" pod-list-resource="::ctrl.podListResource">
+    <kd-pod-card-list pod-list="::ctrl.nodeDetail.podList"
+                      pod-list-resource="::ctrl.podListResource"
+                      with-statuses="true">
       <kd-zerostate>
         <div class="kd-zerostate-title">[[There is nothing to display here|Title for pods card zerostate in node details page.]]</div>
         <div class="kd-zerostate-text">[[There are currently no Pods scheduled on this Node.|Text for pods card zerostate in node details page.]]</div>

@@ -59,7 +59,7 @@ const version = {
   /**
    * Current release version of the project.
    */
-  release: 'v1.5.1',
+  release: 'v1.6.0',
   /**
    * Version name of the head release of the project.
    */
@@ -172,8 +172,7 @@ export default {
     /**
      * Whether to use sauce labs for running tests that require a browser.
      */
-    useSauceLabs: !!process.env.SAUCE_USERNAME && !!process.env.SAUCE_ACCESS_KEY &&
-        !!process.env.TRAVIS && process.env.TRAVIS_PULL_REQUEST === 'false',
+    useSauceLabs: !!process.env.TRAVIS,
   },
 
   /**
