@@ -55,12 +55,14 @@ before_script:
 
 script:
   - 'if [ ${BUILD_SUITE} = "cluster-test" ]; then
-      ./node_modules/.bin/gulp ci --heapsterServerHost "http://localhost:8082";
+      ./node_modules/.bin/gulp check:local-cluster --heapsterServerHost "http://localhost:8082";
     else
       ./node_modules/.bin/gulp check:code-quality;
     fi'
 
-after_script:
-  - 'if [ ${BUILD_SUITE} = "code-test" ]; then
+after_success:
+  - 'if [ ${BUILD_SUITE} = "cluster-test" ]; then
+      ./node_modules/.bin/gulp ci-push-to-docker:head:cross;
+    else
       ./node_modules/.bin/gulp coverage-codecov-upload;
     fi'
