@@ -29,7 +29,7 @@ type Storage struct {
 	PersistentVolumeClaimList persistentvolumeclaim.PersistentVolumeClaimList `json:"persistentVolumeClaimList"`
 }
 
-// GetWorkloads returns a list of all storage resources in the cluster.
+// GetStorage returns a list of all storage resources in the cluster.
 func GetStorage(client *k8sClient.Clientset, heapsterClient client.HeapsterClient,
 	nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*Storage, error) {
 
@@ -60,9 +60,7 @@ func GetStorageFromChannels(channels *common.ResourceChannels, heapsterClient cl
 		return nil, err
 	}
 
-	workloads := &Storage{
+	return &Storage{
 		PersistentVolumeClaimList: *pvcList,
-	}
-
-	return workloads, nil
+	}, nil
 }
