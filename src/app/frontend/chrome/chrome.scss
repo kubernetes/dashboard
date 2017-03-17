@@ -102,6 +102,10 @@ a {
   color: $error-color;
 }
 
+.kd-warning {
+  color: $warning;
+}
+
 .kd-toolbar-tools {
   height: 7 * $baseline-grid;
   margin: auto;
