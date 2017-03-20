@@ -14,14 +14,11 @@
 
 import {stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
-import {stateName as parentStateName} from 'storage/state';
 
-import {PersistentVolumeClaimListController} from './persistentvolumeclaimlist_controller';
-import {stateName, stateUrl} from './persistentvolumeclaimlist_state';
+import {StorageController} from './controller';
+import {stateName, stateUrl} from './state';
 
 /**
- * Configures states for the service view.
- *
  * @param {!ui.router.$stateProvider} $stateProvider
  * @ngInject
  */
@@ -30,39 +27,36 @@ export default function stateConfig($stateProvider) {
     url: stateUrl,
     parent: chromeStateName,
     resolve: {
-      'persistentVolumeClaimList': resolvePersistentVolumeClaimList,
+      'storage': resolveStorage,
     },
     data: {
       [breadcrumbsConfig]: {
-        'parent': parentStateName,
-        'label': i18n.MSG_BREADCRUMBS_PERSISTENT_VOLUME_CLAIM_LABEL,
+        'label': i18n.MSG_BREADCRUMBS_STORAGE_LABEL,
       },
     },
     views: {
       '': {
-        controller: PersistentVolumeClaimListController,
+        controller: StorageController,
         controllerAs: '$ctrl',
-        templateUrl: 'persistentvolumeclaimlist/persistentvolumeclaimlist.html',
+        templateUrl: 'storage/storage.html',
       },
     },
   });
 }
 
 /**
- * @param {!angular.Resource} kdPersistentVolumeClaimListResource
+ * @param {!angular.$resource} kdStorageResource
  * @param {!./../chrome/chrome_state.StateParams} $stateParams
  * @param {!./../common/pagination/pagination_service.PaginationService} kdPaginationService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolvePersistentVolumeClaimList(
-    kdPersistentVolumeClaimListResource, $stateParams, kdPaginationService) {
-  let query = kdPaginationService.getDefaultResourceQuery($stateParams.namespace);
-  return kdPersistentVolumeClaimListResource.get(query).$promise;
+export function resolveStorage(kdStorageResource, $stateParams, kdPaginationService) {
+  let paginationQuery = kdPaginationService.getDefaultResourceQuery($stateParams.namespace);
+  return kdStorageResource.get(paginationQuery).$promise;
 }
 
 const i18n = {
-  /** @type {string} @desc Label 'Persistent Volume Claims' that appears as a breadcrumbs on the
-     action bar. */
-  MSG_BREADCRUMBS_PERSISTENT_VOLUME_CLAIM_LABEL: goog.getMsg('Persistent Volume Claims'),
+  /** @type {string} @desc Label 'Storage' that appears as a breadcrumbs on the action bar. */
+  MSG_BREADCRUMBS_STORAGE_LABEL: goog.getMsg('Storage'),
 };
