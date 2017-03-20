@@ -152,6 +152,13 @@ backendApi.Admin;
 
 /**
  * @typedef {{
+ *   persistentVolumeClaimList: !backendApi.PersistentVolumeClaimList,
+ * }}
+ */
+backendApi.Storage;
+
+/**
+ * @typedef {{
  *   serviceList: !backendApi.ServiceList,
  *   ingressList: !backendApi.IngressList,
  * }}
