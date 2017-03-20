@@ -639,6 +639,7 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 }
 
 func (apiHandler *APIHandler) handleGetRbacRoleList(request *restful.Request, response *restful.Response) {
+	// TODO: Handle case in which RBAC feature is not enabled in API server. Currently returns 404 resource not found
 	dataSelect := parseDataSelectPathParameter(request)
 	result, err := rbacroles.GetRbacRoleList(apiHandler.client, dataSelect)
 	if err != nil {

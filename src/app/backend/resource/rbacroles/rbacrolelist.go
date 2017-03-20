@@ -19,7 +19,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	rbac "k8s.io/client-go/pkg/apis/rbac/v1beta1"
+	rbac "k8s.io/client-go/pkg/apis/rbac/v1alpha1"
 	client "k8s.io/client-go/kubernetes"
 )
 
