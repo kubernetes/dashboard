@@ -38,11 +38,10 @@ type PersistentVolumeDetail struct {
 }
 
 // GetPersistentVolumeDetail returns detailed information about a persistent volume
-func GetPersistentVolumeDetail(client *client.Clientset, name string) (*PersistentVolumeDetail, error) {
+func GetPersistentVolumeDetail(client client.Interface, name string) (*PersistentVolumeDetail, error) {
 	log.Printf("Getting details of %s persistent volume", name)
 
-	rawPersistentVolume, err := client.PersistentVolumes().Get(name, metaV1.GetOptions{})
-
+	rawPersistentVolume, err := client.Core().PersistentVolumes().Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
