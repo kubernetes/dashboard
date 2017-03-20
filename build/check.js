@@ -130,7 +130,7 @@ gulp.task('format-go', function(doneFn) {
         '-w',
         path.relative(conf.paths.base, conf.paths.backendSrc),
       ],
-      doneFn)
+      doneFn);
 });
 
 /**
@@ -143,6 +143,9 @@ gulp.task('format-go', function(doneFn) {
  *     .pipe(gulp.dest(out))
  *
  * All config options can be found on: https://github.com/beautify-web/js-beautify#css--html
+ *
+ * @param {Object} config
+ * @return {Function}
  */
 function formatHtml(config) {
   function format(file, encoding, callback) {
@@ -158,5 +161,5 @@ function formatHtml(config) {
     return callback(null, file);
   }
 
-  return through.obj(format)
+  return through.obj(format);
 }

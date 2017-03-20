@@ -200,7 +200,9 @@ function spawnProcess(processName, args, envOverride) {
  * @param {!Object<string, string>=} [envOverride] optional environment variables overrides map.
  * @return {Q.Promise} A promise object.
  */
-function spawnGoProcess(args, envOverride){return spawnProcess('go', args, envOverride)}
+function spawnGoProcess(args, envOverride) {
+  return spawnProcess('go', args, envOverride);
+}
 
 /**
  * Spawns gofmt process.
@@ -211,6 +213,5 @@ function spawnGoProcess(args, envOverride){return spawnProcess('go', args, envOv
  * @return {Q.Promise} A promise object.
  */
 function spawnGofmtProcess(args, envOverride) {
-  return spawnProcess('gofmt', args, envOverride)
-
+  return spawnProcess('gofmt', args, envOverride);
 }
