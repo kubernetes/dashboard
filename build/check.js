@@ -19,9 +19,15 @@ import gulp from 'gulp';
 import gulpClangFormat from 'gulp-clang-format';
 import gulpEslint from 'gulp-eslint';
 import gulpSassLint from 'gulp-sass-lint';
+import beautify from 'js-beautify';
 import path from 'path';
+import through from 'through2';
 
 import conf from './conf';
+import {gofmtCommand} from './gocommand';
+
+/** HTML beautifier from js-beautify package */
+const htmlBeautify = beautify.html;
 
 /**
  * Builds Dashboard and ensures that the following requirements are met:
@@ -86,6 +92,11 @@ gulp.task('check-javascript-format', function() {
 });
 
 /**
+ * Formats all project files. Includes JS, HTML and Go files.
+ */
+gulp.task('format', ['format-javascript', 'format-html', 'format-go']);
+
+/**
  * Formats all project's JavaScript files using clang-format.
  */
 gulp.task('format-javascript', function() {
@@ -96,3 +107,56 @@ gulp.task('format-javascript', function() {
       .pipe(gulpClangFormat.format('file'))
       .pipe(gulp.dest(conf.paths.base));
 });
+
+/**
+ * Formats all project's HTML files using js-beautify.
+ */
+gulp.task('format-html', function() {
+  return gulp.src([path.join(conf.paths.src, '**/*.html')], {base: conf.paths.base})
+      .pipe(formatHtml({
+        end_with_newline: true,
+        indent_size: 2,
+        wrap_attributes: 'force-aligned',
+      }))
+      .pipe(gulp.dest(conf.paths.base));
+});
+
+/**
+ * Formats all project's Go files using gofmt.
+ */
+gulp.task('format-go', function(doneFn) {
+  gofmtCommand(
+      [
+        '-w',
+        path.relative(conf.paths.base, conf.paths.backendSrc),
+      ],
+      doneFn)
+});
+
+/**
+ * Can be used as gulp pipe function to format HTML files.
+ *
+ * Example usage:
+ * gulp.src([
+ *   path.join(conf.paths.frontendSrc, '**\/*.html')])
+ *     .pipe(formatHtml({indent_size: 2}))
+ *     .pipe(gulp.dest(out))
+ *
+ * All config options can be found on: https://github.com/beautify-web/js-beautify#css--html
+ */
+function formatHtml(config) {
+  function format(file, encoding, callback) {
+    if (file.isNull()) {
+      return callback(null, file);
+    }
+
+    if (file.isBuffer()) {
+      let updatedFile = htmlBeautify(file.contents.toString(), config);
+      file.contents = new Buffer(updatedFile, 'utf-8');
+    }
+
+    return callback(null, file);
+  }
+
+  return through.obj(format)
+}

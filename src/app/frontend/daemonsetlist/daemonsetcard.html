@@ -14,17 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card object-meta="::$ctrl.daemonSet.objectMeta" type-meta="::$ctrl.daemonSet.typeMeta">
+<kd-resource-card object-meta="::$ctrl.daemonSet.objectMeta"
+                  type-meta="::$ctrl.daemonSet.typeMeta">
   <kd-resource-card-status layout="row">
-    <md-icon class="material-icons kd-error" ng-if="::$ctrl.hasWarnings()">
+    <md-icon class="material-icons kd-error"
+             ng-if="::$ctrl.hasWarnings()">
       error
       <md-tooltip md-direction="right">[[One or more pods have errors.|Tooltip for failed pod card icon.]]</md-tooltip>
     </md-icon>
-    <md-icon class="material-icons" ng-if="::$ctrl.isPending()">
+    <md-icon class="material-icons"
+             ng-if="::$ctrl.isPending()">
       timelapse
       <md-tooltip md-direction="right">[[One or more pods are in pending state.|Tooltip for pending pod card icon.]]</md-tooltip>
     </md-icon>
-    <md-icon class="material-icons kd-success" ng-if="::$ctrl.isSuccess()">
+    <md-icon class="material-icons kd-success"
+             ng-if="::$ctrl.isSuccess()">
       check_circle
     </md-icon>
   </kd-resource-card-status>
@@ -65,12 +69,10 @@ limitations under the License.
     </kd-resource-card-column>
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
       <kd-resource-card-menu>
-        <kd-resource-card-delete-menu-item
-                resource-kind-name="[[Daemon Set|Title 'Daemon Set' which is used as a title for the delete/update
+        <kd-resource-card-delete-menu-item resource-kind-name="[[Daemon Set|Title 'Daemon Set' which is used as a title for the delete/update
    dialogs (that can be opened on the daemon set list view).]]">
         </kd-resource-card-delete-menu-item>
-        <kd-resource-card-edit-menu-item
-                resource-kind-name="[[Daemon Set|Title 'Daemon Set' which is used as a title for the delete/update
+        <kd-resource-card-edit-menu-item resource-kind-name="[[Daemon Set|Title 'Daemon Set' which is used as a title for the delete/update
    dialogs (that can be opened on the daemon set list view).]]">
         </kd-resource-card-edit-menu-item>
       </kd-resource-card-menu>

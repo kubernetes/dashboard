@@ -14,22 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card object-meta="$ctrl.node.objectMeta" type-meta="$ctrl.node.typeMeta">
+<kd-resource-card object-meta="$ctrl.node.objectMeta"
+                  type-meta="$ctrl.node.typeMeta">
   <kd-resource-card-status layout="row">
-    <md-icon class="material-icons kd-error" ng-if="::$ctrl.isInNotReadyState()">
+    <md-icon class="material-icons kd-error"
+             ng-if="::$ctrl.isInNotReadyState()">
       error
     </md-icon>
-    <md-icon class="material-icons" ng-if="::$ctrl.isInUnknownState()">
+    <md-icon class="material-icons"
+             ng-if="::$ctrl.isInUnknownState()">
       help
     </md-icon>
-    <md-icon class="material-icons kd-success" ng-if="::$ctrl.isInReadyState()">
+    <md-icon class="material-icons kd-success"
+             ng-if="::$ctrl.isInReadyState()">
       check_circle
     </md-icon>
   </kd-resource-card-status>
   <kd-resource-card-columns>
     <kd-resource-card-column>
       <div>
-        <a ng-href="{{::$ctrl.getNodeDetailHref()}}" class="kd-middle-ellipsised-link">
+        <a ng-href="{{::$ctrl.getNodeDetailHref()}}"
+           class="kd-middle-ellipsised-link">
           <kd-middle-ellipsis display-string="{{$ctrl.node.objectMeta.name}}">
           </kd-middle-ellipsis>
         </a>

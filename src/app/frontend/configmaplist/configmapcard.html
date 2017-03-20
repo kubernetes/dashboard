@@ -14,11 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card object-meta="$ctrl.configMap.objectMeta" type-meta="$ctrl.configMap.typeMeta">
+<kd-resource-card object-meta="$ctrl.configMap.objectMeta"
+                  type-meta="$ctrl.configMap.typeMeta">
   <kd-resource-card-columns>
     <kd-resource-card-column>
       <div>
-        <a ng-href="{{::$ctrl.getConfigMapDetailHref()}}" class="kd-middle-ellipsised-link">
+        <a ng-href="{{::$ctrl.getConfigMapDetailHref()}}"
+           class="kd-middle-ellipsised-link">
           <kd-middle-ellipsis display-string="{{$ctrl.configMap.objectMeta.name}}">
           </kd-middle-ellipsis>
         </a>
@@ -41,12 +43,10 @@ limitations under the License.
     </kd-resource-card-column>
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
       <kd-resource-card-menu>
-        <kd-resource-card-delete-menu-item
-              resource-kind-name="[[Config Map|Label 'Config Map' which will appear in the config map
+        <kd-resource-card-delete-menu-item resource-kind-name="[[Config Map|Label 'Config Map' which will appear in the config map
       delete dialog opened from a config map card on the list page.]]">
         </kd-resource-card-delete-menu-item>
-        <kd-resource-card-edit-menu-item
-              resource-kind-name="[[Config Map|Label 'Config Map' which will appear in the config map
+        <kd-resource-card-edit-menu-item resource-kind-name="[[Config Map|Label 'Config Map' which will appear in the config map
       delete dialog opened from a config map card on the list page.]]">
         </kd-resource-card-edit-menu-item>
       </kd-resource-card-menu>

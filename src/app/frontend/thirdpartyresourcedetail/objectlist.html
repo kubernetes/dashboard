@@ -29,17 +29,19 @@ limitations under the License.
        ng-transclude="zerostate">
   </div>
   <kd-resource-card-header-columns ng-show="::$ctrl.objectList.listMeta.totalItems">
-    <kd-resource-card-header-column size="small" grow="1">
+    <kd-resource-card-header-column size="small"
+                                    grow="1">
       [[Name|Title of a column for the name of a third party resource instance.]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="1">
+    <kd-resource-card-header-column size="small"
+                                    grow="1">
       [[Age|Title of a column for the age of a third party resource instance.]]
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
   <kd-object-card ng-if="::$ctrl.objectListResource"
-               dir-paginate="object in $ctrl.objectList.items | itemsPerPage: default"
-               pagination-id="objects"
-               object="object"
-               total-items="::$ctrl.objectList.listMeta.totalItems">
+                  dir-paginate="object in $ctrl.objectList.items | itemsPerPage: default"
+                  pagination-id="objects"
+                  object="object"
+                  total-items="::$ctrl.objectList.listMeta.totalItems">
   </kd-object-card>
 </kd-resource-card-list>

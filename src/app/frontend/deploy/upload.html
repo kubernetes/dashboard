@@ -15,30 +15,44 @@ limitations under the License.
 -->
 
 <kd-help-section>
-  <div layout="row" layout-align="space-between start">
-    <div flex="auto" >
-      <md-input-container class="md-block kd-upload-file-container" md-is-error="ctrl.isFileNameError()">
+  <div layout="row"
+       layout-align="space-between start">
+    <div flex="auto">
+      <md-input-container class="md-block kd-upload-file-container"
+                          md-is-error="ctrl.isFileNameError()">
         <label>[[YAML or JSON file|A 'YAML or JSON file' label, serving as placeholder for an empty file input field on the deploy page.]]</label>
         <!--TODO: Browse file on focus doesn't work in Firefox. It is to be investigated.-->
-        <input ng-model="ctrl.file.name" ng-focus="ctrl.browseFile()" ng-readonly="true" name="fileName" required/>
-          <ng-messages for="ctrl.form.fileName.$error" role="alert" multiple>
-            <ng-message when="required">[[File is required.|Appears to tell the user that he/she must upload a YAML or a JSON file on the deploy page.]]</ng-message>
-            </ng-message>
-          </ng-messages>
+        <input ng-model="ctrl.file.name"
+               ng-focus="ctrl.browseFile()"
+               ng-readonly="true"
+               name="fileName"
+               required/>
+        <ng-messages for="ctrl.form.fileName.$error"
+                     role="alert"
+                     multiple>
+          <ng-message when="required">[[File is required.|Appears to tell the user that he/she must upload a YAML or a JSON file on the deploy page.]]</ng-message>
+          </ng-message>
+        </ng-messages>
       </md-input-container>
     </div>
-    <md-button type="button" class="md-raised kd-upload-button" ng-click="ctrl.browseFile()">
+    <md-button type="button"
+               class="md-raised kd-upload-button"
+               ng-click="ctrl.browseFile()">
       <label class="kd-upload-label">
         <md-icon>
           <i class="material-icons">more_horiz</i>
         </md-icon>
       </label>
     </md-button>
-    <input type="file" class="kd-upload-file-picker" kd-file-reader ng-model="ctrl.file">
+    <input type="file"
+           class="kd-upload-file-picker"
+           kd-file-reader
+           ng-model="ctrl.file">
   </div>
   <kd-user-help>
     [[Select a YAML or JSON file, specifying the resources to deploy.|User help for the YAML/JSON file upload form on the deploy page.]]
-    <a href="http://kubernetes.io/docs/user-guide/deploying-applications/" target="_blank">
+    <a href="http://kubernetes.io/docs/user-guide/deploying-applications/"
+       target="_blank">
       [[Learn more|The text is used as a 'Learn more' link text besides the file upload on the deploy page.]] <i class="material-icons">open_in_new</i>
     </a>
   </kd-user-help>

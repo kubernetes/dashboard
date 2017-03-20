@@ -29,7 +29,8 @@ limitations under the License.
 <kd-replica-set-info replica-set="::ctrl.replicaSetDetail"></kd-replica-set-info>
 <kd-content-card>
   <kd-content>
-    <kd-pod-card-list pod-list="::ctrl.replicaSetDetail.podList" with-statuses="true"
+    <kd-pod-card-list pod-list="::ctrl.replicaSetDetail.podList"
+                      with-statuses="true"
                       pod-list-resource="::ctrl.replicaSetPodsResource">
       <kd-zerostate>
         <div class="kd-zerostate-title">[[There is nothing to display here|Title for pods card zerostate in replica set details page.]]</div>
@@ -52,14 +53,14 @@ limitations under the License.
 
 <kd-content-card>
   <kd-content>
-    <kd-horizontal-pod-autoscaler-card-list
-             horizontal-pod-autoscaler-list="::ctrl.replicaSetDetail.horizontalPodAutoscalerList">
-        <kd-zerostate>
-          <div class="kd-zerostate-title">[[There is nothing to display here|Title for horizontal pod autoscalers card zerostate in replica set details page.]]</div>
-          <div class="kd-zerostate-text">[[There are currently no Horizontal Pod Autoscalers targeting this Replica Set.|Text for horizontal pod autoscalers card zerostate in replica set details page.]]</div>
-        </kd-zerostate>
+    <kd-horizontal-pod-autoscaler-card-list horizontal-pod-autoscaler-list="::ctrl.replicaSetDetail.horizontalPodAutoscalerList">
+      <kd-zerostate>
+        <div class="kd-zerostate-title">[[There is nothing to display here|Title for horizontal pod autoscalers card zerostate in replica set details page.]]</div>
+        <div class="kd-zerostate-text">[[There are currently no Horizontal Pod Autoscalers targeting this Replica Set.|Text for horizontal pod autoscalers card zerostate in replica set details page.]]</div>
+      </kd-zerostate>
     </kd-horizontal-pod-autoscaler-card-list>
   </kd-content>
 </kd-content-card>
 
-<kd-event-card-list event-list="::ctrl.replicaSetDetail.eventList" event-list-resource="::ctrl.eventListResource"></kd-event-card-list>
+<kd-event-card-list event-list="::ctrl.replicaSetDetail.eventList"
+                    event-list-resource="::ctrl.eventListResource"></kd-event-card-list>
