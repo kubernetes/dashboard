@@ -51,16 +51,11 @@ func GetPersistentVolumeDetail(client *client.Clientset, name string) (*Persiste
 }
 
 func getPersistentVolumeDetail(persistentVolume *api.PersistentVolume) *PersistentVolumeDetail {
-
-	var claim string
-	if persistentVolume.Spec.ClaimRef != nil {
-		claim = persistentVolume.Spec.ClaimRef.Name
-	}
 	return &PersistentVolumeDetail{
 		ObjectMeta:             common.NewObjectMeta(persistentVolume.ObjectMeta),
 		TypeMeta:               common.NewTypeMeta(common.ResourceKindPersistentVolume),
 		Status:                 persistentVolume.Status.Phase,
-		Claim:                  claim,
+		Claim:                  getPersistentVolumeClaim(persistentVolume),
 		ReclaimPolicy:          persistentVolume.Spec.PersistentVolumeReclaimPolicy,
 		AccessModes:            persistentVolume.Spec.AccessModes,
 		Capacity:               persistentVolume.Spec.Capacity,
