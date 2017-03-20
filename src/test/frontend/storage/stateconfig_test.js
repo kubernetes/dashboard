@@ -15,7 +15,7 @@
 import storageListModule from 'storage/module';
 import {resolveStorage} from 'storage/stateconfig';
 
-describe('StateConfig for workload list', () => {
+describe('StateConfig for storage list', () => {
   /** @type {!common/pagination/pagination_service.PaginationService} */
   let kdPaginationService;
 

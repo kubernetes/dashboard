@@ -15,7 +15,7 @@
 import {StorageController} from 'storage/controller';
 import storageListModule from 'storage/module';
 
-describe('Workload list controller', () => {
+describe('Storage list controller', () => {
   /** @type {!storage/controller.StorageController} */
   let ctrl;
 
