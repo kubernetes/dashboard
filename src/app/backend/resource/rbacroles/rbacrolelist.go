@@ -19,8 +19,8 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	rbac "k8s.io/client-go/pkg/apis/rbac/v1alpha1"
 	client "k8s.io/client-go/kubernetes"
+	rbac "k8s.io/client-go/pkg/apis/rbac/v1alpha1"
 )
 
 // RbacRoleList contains a list of Roles and ClusterRoles in the cluster.
@@ -35,6 +35,7 @@ type RbacRoleList struct {
 // ClusterRoles will be referred to as Roles for the namespace "all namespaces".
 type RbacRole struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
+	TypeMeta   common.TypeMeta   `json:"typeMeta"`
 	Rules      []rbac.PolicyRule `json:"rules"`
 	Name       string            `json:"name"`
 	Namespace  string            `json:"namespace"`
@@ -83,6 +84,7 @@ func SimplifyRbacRoleLists(roles []rbac.Role, clusterRoles []rbac.ClusterRole, d
 		result.Items = append(result.Items,
 			RbacRole{
 				ObjectMeta: common.NewObjectMeta(item.ObjectMeta),
+				TypeMeta:   common.NewTypeMeta(common.ResourceKindRbacRole),
 				Name:       item.ObjectMeta.Name,
 				Namespace:  item.ObjectMeta.Namespace,
 				Rules:      item.Rules,
@@ -93,6 +95,7 @@ func SimplifyRbacRoleLists(roles []rbac.Role, clusterRoles []rbac.ClusterRole, d
 		result.Items = append(result.Items,
 			RbacRole{
 				ObjectMeta: common.NewObjectMeta(item.ObjectMeta),
+				TypeMeta:   common.NewTypeMeta(common.ResourceKindRbacClusterRole),
 				Name:       item.ObjectMeta.Name,
 				Namespace:  "",
 				Rules:      item.Rules,

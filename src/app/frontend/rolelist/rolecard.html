@@ -18,30 +18,22 @@ limitations under the License.
     <kd-resource-card-columns>
         <kd-resource-card-column>
             <div>
-                <a ng-href="{{::$ctrl.getRoleDetailHref()}}" class="kd-middle-ellipsised-link">
+                <a ng-click="$ctrl.showRoleDetail(role)" class="kd-middle-ellipsised-link">
                     <kd-middle-ellipsis display-string="{{$ctrl.role.name}}">
                     </kd-middle-ellipsis>
                 </a>
             </div>
         </kd-resource-card-column>
         <kd-resource-card-column>
+            <kd-middle-ellipsis ng-if="$ctrl.role.typeMeta.kind==='clusterrole'" display-string="ClusterRole">
+            </kd-middle-ellipsis>
+            <kd-middle-ellipsis ng-if="$ctrl.role.typeMeta.kind==='role'" display-string="Role">
+            </kd-middle-ellipsis>
+        </kd-resource-card-column>
+        <kd-resource-card-column>
             <kd-middle-ellipsis ng-if="$ctrl.role.namespace===''" display-string="All Namespaces">
-
             </kd-middle-ellipsis>
             <kd-middle-ellipsis ng-if="$ctrl.role.namespace!==''" display-string="{{$ctrl.role.namespace}}">
-
-            </kd-middle-ellipsis>
-        </kd-resource-card-column>
-        <!-- TODO Only first resource is shown, adjust this once the design doc is updated -->
-        <kd-resource-card-column>
-            <kd-middle-ellipsis ng-repeat="resource in ::$ctrl.role.rules[0].Resources"
-                                display-string="{{::resource}}">
-            </kd-middle-ellipsis>
-        </kd-resource-card-column>
-        <!-- TODO Only first verb is shown, adjust this once the design doc is updated -->
-        <kd-resource-card-column>
-            <kd-middle-ellipsis ng-repeat="verb in ::$ctrl.role.rules[0].Verbs"
-                                display-string="{{::verb}}">
             </kd-middle-ellipsis>
         </kd-resource-card-column>
     </kd-resource-card-columns>
