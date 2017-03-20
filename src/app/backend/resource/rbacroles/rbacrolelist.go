@@ -73,15 +73,14 @@ func GetRbacRoleListFromChannels(channels *common.ResourceChannels, dsQuery *dat
 
 // SimplifyRbacRoleLists merges a list of Roles with a list of ClusterRoles to create a simpler, unified list
 func SimplifyRbacRoleLists(roles []rbac.Role, clusterRoles []rbac.ClusterRole, dsQuery *dataselect.DataSelectQuery) *RbacRoleList {
-	result := &RbacRoleList{
-		Items:    make([]RbacRole, 0),
-		ListMeta: common.ListMeta{TotalItems: len(roles) + len(clusterRoles)},
-	}
+	items := make([]RbacRole, 0)
+
 
 	// TODO Take data select query into account
 
+
 	for _, item := range roles {
-		result.Items = append(result.Items,
+		items = append(items,
 			RbacRole{
 				ObjectMeta: common.NewObjectMeta(item.ObjectMeta),
 				TypeMeta:   common.NewTypeMeta(common.ResourceKindRbacRole),
@@ -92,7 +91,7 @@ func SimplifyRbacRoleLists(roles []rbac.Role, clusterRoles []rbac.ClusterRole, d
 	}
 
 	for _, item := range clusterRoles {
-		result.Items = append(result.Items,
+		items = append(items,
 			RbacRole{
 				ObjectMeta: common.NewObjectMeta(item.ObjectMeta),
 				TypeMeta:   common.NewTypeMeta(common.ResourceKindRbacClusterRole),
@@ -101,6 +100,10 @@ func SimplifyRbacRoleLists(roles []rbac.Role, clusterRoles []rbac.ClusterRole, d
 				Rules:      item.Rules,
 			})
 	}
-
+	selectedItems := fromCells(dataselect.GenericDataSelect(toCells(items), dsQuery))
+	result := &RbacRoleList{
+		Items:    selectedItems,
+		ListMeta: common.ListMeta{TotalItems: len(roles) + len(clusterRoles)},
+	}
 	return result
 }

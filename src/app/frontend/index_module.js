@@ -106,7 +106,7 @@ export default angular
           storageClassDetailModule.name,
           thirdPartyResourceListModule.name,
           thirdPartyResourceDetailModule.name,
-          accessControlModule.name
+          accessControlModule.name,
         ])
     .config(indexConfig)
     .config(routeConfig)

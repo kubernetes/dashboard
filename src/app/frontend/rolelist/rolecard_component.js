@@ -12,6 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
+/**
+ * Controller for the RBAC role card.
+ *
+ * @final
+ */
+export default class RoleCardController {
+  /**
+   * @param {!ui.router.$state} $state
+   * @param {!angular.$interpolate} $interpolate
+   * @ngInject
+   */
+  constructor($state, $interpolate) {
+    /**
+     * Initialized from the scope.
+     * @export {!backendApi.Role}
+     */
+    this.role;
+
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
+
+    /** @private */
+    this.interpolate_ = $interpolate;
+  }
+}
+
 /**
  * @return {!angular.Component}
  */
@@ -19,5 +46,6 @@ export const roleCardComponent = {
   bindings: {
     'role': '=',
   },
+  controller: RoleCardController,
   templateUrl: 'rolelist/rolecard.html',
 };
