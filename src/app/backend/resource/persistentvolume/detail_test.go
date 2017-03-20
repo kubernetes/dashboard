@@ -36,7 +36,10 @@ func TestGetPersistentVolumeDetail(t *testing.T) {
 					PersistentVolumeReclaimPolicy: api.PersistentVolumeReclaimRecycle,
 					AccessModes:                   []api.PersistentVolumeAccessMode{api.ReadWriteOnce},
 					Capacity:                      nil,
-					ClaimRef:                      &api.ObjectReference{Name: "myclaim-name"},
+					ClaimRef: &api.ObjectReference{
+						Name:      "myclaim-name",
+						Namespace: "default",
+					},
 					PersistentVolumeSource: api.PersistentVolumeSource{
 						HostPath: &api.HostPathVolumeSource{
 							Path: "my-path",
@@ -55,7 +58,7 @@ func TestGetPersistentVolumeDetail(t *testing.T) {
 				ReclaimPolicy: api.PersistentVolumeReclaimRecycle,
 				AccessModes:   []api.PersistentVolumeAccessMode{api.ReadWriteOnce},
 				Capacity:      nil,
-				Claim:         "myclaim-name",
+				Claim:         "default/myclaim-name",
 				Message:       "my-message",
 				PersistentVolumeSource: api.PersistentVolumeSource{
 					HostPath: &api.HostPathVolumeSource{
