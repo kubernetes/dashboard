@@ -14,15 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div layout="row" layout-align="center center">
-  <div ui-view="actionbar" class="kd-actionbar-view-part"></div>
-  <div ng-if="$ctrl.hasCustomActions()" class="kd-actionbar-divider"></div>
+<div layout="row"
+     layout-align="center center">
+  <div ui-view="actionbar"
+       class="kd-actionbar-view-part"></div>
+  <div ng-if="$ctrl.hasCustomActions()"
+       class="kd-actionbar-divider"></div>
   <div>
     <md-button ng-click="$ctrl.create()">
       <md-icon class="kd-actionbar-icon-button">add</md-icon>
       <md-tooltip md-direction="bottom">
-        [[Create an application or any Kubernetes resource|Tooltip for global action bar
-          create button tooltip.]]
+        [[Create an application or any Kubernetes resource|Tooltip for global action bar create button tooltip.]]
       </md-tooltip>
       [[Create|Label for global action bar create button.]]
     </md-button>

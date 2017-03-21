@@ -14,14 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card object-meta="::$ctrl.service.objectMeta" type-meta="::$ctrl.service.typeMeta">
+<kd-resource-card object-meta="::$ctrl.service.objectMeta"
+                  type-meta="::$ctrl.service.typeMeta">
   <kd-resource-card-status layout="row">
-    <md-icon class="material-icons" ng-if="::$ctrl.isPending()">
+    <md-icon class="material-icons"
+             ng-if="::$ctrl.isPending()">
       timelapse
       <md-tooltip md-direction="right">[[This service is in a pending state|tooltip for pending service card icon]]
       </md-tooltip>
     </md-icon>
-    <md-icon class="material-icons kd-success" ng-if="::$ctrl.isSuccess()">
+    <md-icon class="material-icons kd-success"
+             ng-if="::$ctrl.isSuccess()">
       check_circle
     </md-icon>
   </kd-resource-card-status>

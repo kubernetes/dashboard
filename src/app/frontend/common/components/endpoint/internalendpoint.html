@@ -17,13 +17,11 @@ limitations under the License.
 <div>
   <div ng-repeat="port in ::$ctrl.endpoint.ports">
     <div>
-      <kd-middle-ellipsis
-              display-string="{{::$ctrl.endpoint.host}}:{{::port.port}} {{::port.protocol}}">
+      <kd-middle-ellipsis display-string="{{::$ctrl.endpoint.host}}:{{::port.port}} {{::port.protocol}}">
       </kd-middle-ellipsis>
     </div>
     <div>
-      <kd-middle-ellipsis
-              display-string="{{::$ctrl.endpoint.host}}:{{::port.nodePort}} {{::port.protocol}}">
+      <kd-middle-ellipsis display-string="{{::$ctrl.endpoint.host}}:{{::port.nodePort}} {{::port.protocol}}">
       </kd-middle-ellipsis>
     </div>
   </div>

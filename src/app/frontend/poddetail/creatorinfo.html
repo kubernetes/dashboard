@@ -18,33 +18,38 @@ limitations under the License.
   <kd-content>
     <div ng-switch="$ctrl.creator.kind">
       <div ng-switch-when="Job">
-        <kd-job-card-list job-list="$ctrl.creator.joblist" show-resource-kind="true">
+        <kd-job-card-list job-list="$ctrl.creator.joblist"
+                          show-resource-kind="true">
           <kd-header>[[Created by|Heading for Creator card on poddetail page]]</kd-header>
         </kd-job-card-list>
       </div>
       <div ng-switch-when="DaemonSet">
-        <kd-daemon-set-card-list daemon-set-list="$ctrl.creator.daemonsetlist" show-resource-kind="true">
+        <kd-daemon-set-card-list daemon-set-list="$ctrl.creator.daemonsetlist"
+                                 show-resource-kind="true">
           <kd-header>[[Created by|Heading for Creator card on poddetail page]]</kd-header>
         </kd-daemon-set-card-list>
       </div>
       <div ng-switch-when="ReplicationController">
-        <kd-replication-controller-card-list
-            replication-controller-list="$ctrl.creator.replicationcontrollerlist" show-resource-kind="true">
+        <kd-replication-controller-card-list replication-controller-list="$ctrl.creator.replicationcontrollerlist"
+                                             show-resource-kind="true">
           <kd-header>[[Created by|Heading for Creator card on poddetail page]]</kd-header>
         </kd-replication-controller-card-list>
       </div>
       <div ng-switch-when="ReplicaSet">
-        <kd-replica-set-card-list replica-set-list="$ctrl.creator.replicasetlist" show-resource-kind="true">
+        <kd-replica-set-card-list replica-set-list="$ctrl.creator.replicasetlist"
+                                  show-resource-kind="true">
           <kd-header>[[Created by|Heading for Creator card on poddetail page]]</kd-header>
         </kd-replica-set-card-list>
       </div>
       <div ng-switch-when="StatefulSet">
-        <kd-stateful-set-card-list stateful-set-list="$ctrl.creator.statefulsetlist" show-resource-kind="true">
+        <kd-stateful-set-card-list stateful-set-list="$ctrl.creator.statefulsetlist"
+                                   show-resource-kind="true">
           <kd-header>[[Created by|Heading for Creator card on poddetail page]]</kd-header>
         </kd-stateful-set-card-list>
       </div>
       <div ng-switch-default>
-        <kd-resource-card-list selectable="false" with-statuses="true">
+        <kd-resource-card-list selectable="false"
+                               with-statuses="true">
           <kd-resource-card-list-header>
             [[Created by|Heading for Creator card on poddetail page]]
           </kd-resource-card-list-header>

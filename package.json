@@ -55,6 +55,7 @@
     "gulp-xslt": "~2.0.0",
     "html-minifier": "~3.4.1",
     "isparta": "~4.0.0",
+    "js-beautify": "^1.6.12",
     "jsesc": "~2.4.0",
     "karma": "1.5.0",
     "karma-browserify": "~5.1.0",

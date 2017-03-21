@@ -14,36 +14,44 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card-list selectable="false" with-statuses="false">
-    <kd-resource-card-list-header ng-transclude="header">
-      [[Storage Classes|Label which appears above the list of such objects.]]
-    </kd-resource-card-list-header>
-    <kd-resource-card-list-pagination pagination-id="storageclasses" list="$ctrl.storageClassList"
-                                      list-resource="$ctrl.storageClassListResource">
-    </kd-resource-card-list-pagination>
+<kd-resource-card-list selectable="false"
+                       with-statuses="false">
+  <kd-resource-card-list-header ng-transclude="header">
+    [[Storage Classes|Label which appears above the list of such objects.]]
+  </kd-resource-card-list-header>
+  <kd-resource-card-list-pagination pagination-id="storageclasses"
+                                    list="$ctrl.storageClassList"
+                                    list-resource="$ctrl.storageClassListResource">
+  </kd-resource-card-list-pagination>
 
-    <kd-resource-card-header-columns>
-        <kd-resource-card-header-column size="small" grow="2">
-            [[Name|Storage class list header: name.]]
-        </kd-resource-card-header-column>
-        <kd-resource-card-header-column size="small" grow="2">
-            [[Labels|Storage class list header: labels.]]
-        </kd-resource-card-header-column>
-        <kd-resource-card-header-column size="small" grow="2">
-            [[Provisioner|Storage class list header: provisioner.]]
-        </kd-resource-card-header-column>
-        <kd-resource-card-header-column size="small" grow="2">
-            [[Parameters|Storage class list header: parameters.]]
-        </kd-resource-card-header-column>
-        <kd-resource-card-header-column size="small" grow="1">
-            [[Age|Storage class list header: age.]]
-        </kd-resource-card-header-column>
-        <kd-resource-card-header-column size="small" grow="nogrow">
-        </kd-resource-card-header-column>
-    </kd-resource-card-header-columns>
-    <kd-storage-class-card dir-paginate="storageClass in $ctrl.storageClassList.storageClasses | itemsPerPage: default"
-                           total-items="::$ctrl.storageClassList.listMeta.totalItems"
-                           storage-class="storageClass"
-                           pagination-id="storageclasses">
-    </kd-storage-class-card>
+  <kd-resource-card-header-columns>
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
+      [[Name|Storage class list header: name.]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
+      [[Labels|Storage class list header: labels.]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
+      [[Provisioner|Storage class list header: provisioner.]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
+      [[Parameters|Storage class list header: parameters.]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="1">
+      [[Age|Storage class list header: age.]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="nogrow">
+    </kd-resource-card-header-column>
+  </kd-resource-card-header-columns>
+  <kd-storage-class-card dir-paginate="storageClass in $ctrl.storageClassList.storageClasses | itemsPerPage: default"
+                         total-items="::$ctrl.storageClassList.listMeta.totalItems"
+                         storage-class="storageClass"
+                         pagination-id="storageclasses">
+  </kd-storage-class-card>
 </kd-resource-card-list>

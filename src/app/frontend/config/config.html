@@ -17,14 +17,16 @@ limitations under the License.
 <div ng-if="!$ctrl.shouldShowZeroState()">
   <kd-content-card ng-if="$ctrl.config.secretList.secrets.length">
     <kd-content>
-      <kd-secret-card-list secret-list="$ctrl.config.secretList" with-statuses="true"
+      <kd-secret-card-list secret-list="$ctrl.config.secretList"
+                           with-statuses="true"
                            secret-list-resource="$ctrl.kdSecretListResource">
       </kd-secret-card-list>
     </kd-content>
   </kd-content-card>
   <kd-content-card ng-if="$ctrl.config.configMapList.items.length">
     <kd-content>
-      <kd-config-map-card-list config-map-list="$ctrl.config.configMapList" with-statuses="true"
+      <kd-config-map-card-list config-map-list="$ctrl.config.configMapList"
+                               with-statuses="true"
                                config-map-list-resource="$ctrl.kdConfigMapListResource">
       </kd-config-map-card-list>
     </kd-content>

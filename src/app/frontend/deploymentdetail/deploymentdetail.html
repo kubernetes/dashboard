@@ -46,9 +46,8 @@ limitations under the License.
 
 <kd-content-card>
   <kd-content>
-    <kd-replica-set-card-list
-            replica-set-list="::ctrl.deploymentDetail.oldReplicaSetList"
-            replica-set-list-resource="::ctrl.oldReplicaSetListResource">
+    <kd-replica-set-card-list replica-set-list="::ctrl.deploymentDetail.oldReplicaSetList"
+                              replica-set-list-resource="::ctrl.oldReplicaSetListResource">
       <kd-header>[[Old Replica Sets|Title 'Old Replica Sets' for the old replica sets view, on the deployment details page.]]</kd-header>
       <kd-zerostate>
         <div class="kd-zerostate-title">
@@ -64,8 +63,7 @@ limitations under the License.
 
 <kd-content-card>
   <kd-content>
-    <kd-horizontal-pod-autoscaler-card-list
-             horizontal-pod-autoscaler-list="::ctrl.deploymentDetail.horizontalPodAutoscalerList">
+    <kd-horizontal-pod-autoscaler-card-list horizontal-pod-autoscaler-list="::ctrl.deploymentDetail.horizontalPodAutoscalerList">
       <kd-zerostate>
         <div class="kd-zerostate-title">[[There is nothing to display here|Title for horizontal pod autoscalers card zerostate in replica set details page.]]</div>
         <div class="kd-zerostate-text">[[There are currently no Horizontal Pod Autoscalers targeting this Replica Set.|Text for horizontal pod autoscalers card zerostate in replica set details page.]]</div>

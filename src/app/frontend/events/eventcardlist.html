@@ -16,16 +16,19 @@ limitations under the License.
 
 <kd-content-card>
   <kd-content>
-    <kd-resource-card-list selectable="false" with-statuses="true">
+    <kd-resource-card-list selectable="false"
+                           with-statuses="true">
       <kd-resource-card-list-header>
         [[Events|Label which appears above the list of such objects.]]
       </kd-resource-card-list-header>
-      <kd-resource-card-list-pagination pagination-id="events" list="$ctrl.eventList"
+      <kd-resource-card-list-pagination pagination-id="events"
+                                        list="$ctrl.eventList"
                                         list-resource="$ctrl.eventListResource">
       </kd-resource-card-list-pagination>
 
       <kd-resource-card-header-columns ng-show="$ctrl.hasEvents()">
-        <kd-resource-card-header-column size="medium" grow="4">
+        <kd-resource-card-header-column size="medium"
+                                        grow="4">
           [[Message|Label 'Message' for the event message column of the events table (events list page).]]
         </kd-resource-card-header-column>
         <kd-resource-card-header-column>
@@ -34,7 +37,8 @@ limitations under the License.
         <kd-resource-card-header-column>
           [[Sub-object|Label 'Sub-object' for the respective column of the events table (events list page).]]
         </kd-resource-card-header-column>
-        <kd-resource-card-header-column size="small" grow="nogrow">
+        <kd-resource-card-header-column size="small"
+                                        grow="nogrow">
           [[Count|Label 'Count' for event count column of the events table (events list page).]]
         </kd-resource-card-header-column>
         <kd-resource-card-header-column>
@@ -45,9 +49,11 @@ limitations under the License.
         </kd-resource-card-header-column>
       </kd-resource-card-header-columns>
 
-      <kd-resource-card
-              dir-paginate="event in $ctrl.eventList.events | itemsPerPage: default" total-items="::$ctrl.eventList.listMeta.totalItems"
-              object-meta="event.objectMeta" type-meta="event.typeMeta" pagination-id="events">
+      <kd-resource-card dir-paginate="event in $ctrl.eventList.events | itemsPerPage: default"
+                        total-items="::$ctrl.eventList.listMeta.totalItems"
+                        object-meta="event.objectMeta"
+                        type-meta="event.typeMeta"
+                        pagination-id="events">
         <kd-resource-card-status>
           <i ng-if="$ctrl.isEventWarning(event)"
              class="material-icons kd-replicationcontrollerevents-warning-icon">warning</i>
@@ -75,7 +81,8 @@ limitations under the License.
           </kd-resource-card-column>
         </kd-resource-card-columns>
       </kd-resource-card>
-      <kd-zerostate class="kd-zerostate-message" ng-if="!$ctrl.hasEvents()">
+      <kd-zerostate class="kd-zerostate-message"
+                    ng-if="!$ctrl.hasEvents()">
         <div class="kd-zerostate-title">[[There is nothing to display here|Title of section when there are no events.]]</div>
         <div class="kd-zerostate-text">[[It is possible that all events have expired.|User help on the events page when no events are to be displayed.]]</div>
       </kd-zerostate>

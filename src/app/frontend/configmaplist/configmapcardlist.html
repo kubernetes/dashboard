@@ -14,32 +14,41 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card-list selectable="false" with-statuses="false">
+<kd-resource-card-list selectable="false"
+                       with-statuses="false">
   <kd-resource-card-list-header ng-transclude="header">
     [[Config Maps|Label which appears above the list of such objects.]]
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination pagination-id="configmaps" list="$ctrl.configMapList"
+  <kd-resource-card-list-pagination pagination-id="configmaps"
+                                    list="$ctrl.configMapList"
                                     list-resource="$ctrl.configMapListResource">
   </kd-resource-card-list-pagination>
 
   <kd-resource-card-header-columns>
-    <kd-resource-card-header-column size="small" grow="2">
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
       [[Name|Config map list header: name.]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="2" ng-if="$ctrl.areMultipleNamespacesSelected()">
+    <kd-resource-card-header-column size="small"
+                                    grow="2"
+                                    ng-if="$ctrl.areMultipleNamespacesSelected()">
       [[Namespace|Config map list header: namespace.]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="2">
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
       [[Labels|Config map list header: labels.]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="nogrow">
+    <kd-resource-card-header-column size="small"
+                                    grow="nogrow">
       [[Age|Config map list header: age.]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="nogrow">
+    <kd-resource-card-header-column size="small"
+                                    grow="nogrow">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
   <kd-config-map-card dir-paginate="configMap in $ctrl.configMapList.items | itemsPerPage: default"
-                      config-map="configMap" pagination-id="configmaps"
+                      config-map="configMap"
+                      pagination-id="configmaps"
                       total-items="::$ctrl.configMapList.listMeta.totalItems">
   </kd-config-map-card>
 </kd-resource-card-list>

@@ -36,7 +36,8 @@ limitations under the License.
     <kd-info-card-entry title="[[Cluster IP|Label 'Cluster IP' for the service IP in the cluster, appears in the connectivity part (right) of the service details view.]]">
       {{::$ctrl.service.clusterIP}}
     </kd-info-card-entry>
-    <kd-info-card-entry title="[[Internal endpoints|Label 'Internal endpoints' for the internal endpoints of the service, appears in the connectivity part (right) of the service details view.]]" ng-if="::$ctrl.service.internalEndpoint">
+    <kd-info-card-entry title="[[Internal endpoints|Label 'Internal endpoints' for the internal endpoints of the service, appears in the connectivity part (right) of the service details view.]]"
+                        ng-if="::$ctrl.service.internalEndpoint">
       <kd-internal-endpoint endpoint="::$ctrl.service.internalEndpoint"></kd-internal-endpoint>
     </kd-info-card-entry>
     <kd-info-card-entry title="[[External endpoints|Label 'External endpoints' for the external endpoints of the service, appears in the connectivity part (right) of the service details view.]]"
