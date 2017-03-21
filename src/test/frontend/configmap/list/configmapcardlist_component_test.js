@@ -11,13 +11,14 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import configMapListModule from 'configmaplist/configmaplist_module';
+
+import configMapListModule from 'configmap/module';
 
 describe('Config Map card list', () => {
-  /** @type {!configmaplist/configmapcard_component.ConfigMapCardListController} */
+  /** @type {!ConfigMapCardListController} */
   let ctrl;
   /**
-   * @type {!./../common/namespace/namespace_service.NamespaceService}
+   * @type {!NamespaceService}
    */
   let data;
 
@@ -25,7 +26,7 @@ describe('Config Map card list', () => {
     angular.mock.module(configMapListModule.name);
 
     angular.mock.inject(($componentController, $rootScope, kdNamespaceService) => {
-      /** @type {!./../common/namespace/namespace_service.NamespaceService} */
+      /** @type {!NamespaceService} */
       data = kdNamespaceService;
       /** @type {!ConfigMapCardListController} */
       ctrl = $componentController(

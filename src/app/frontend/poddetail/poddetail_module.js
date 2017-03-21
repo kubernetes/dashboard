@@ -15,7 +15,7 @@
 import chromeModule from 'chrome/chrome_module';
 import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
-import configMapModule from 'configmapdetail/configmapdetail_module';
+import configMapModule from 'configmap/module';
 import eventsModule from 'events/events_module';
 
 import {containerInfoComponent} from './containerinfo_component';

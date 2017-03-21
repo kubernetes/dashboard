@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import configMapListModule from 'configmaplist/configmaplist_module';
-import {resolveConfigMapList} from 'configmaplist/configmaplist_stateconfig';
+import {resolveConfigMapList} from 'configmap/list/stateconfig';
+import configMapListModule from 'configmap/module';
 
 describe('StateConfig for config map controller list', () => {
-  /** @type {!common/pagination/pagination_service.PaginationService} */
+  /** @type {!PaginationService} */
   let kdPaginationService;
 
   beforeEach(() => {

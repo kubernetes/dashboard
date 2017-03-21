@@ -16,39 +16,32 @@ import chromeModule from 'chrome/chrome_module';
 import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
 import namespaceModule from 'common/namespace/namespace_module';
-import configMapDetailModule from 'configmapdetail/configmapdetail_module';
+import eventsModule from 'events/events_module';
 
-import {configMapCardComponent} from './configmapcard_component';
-import {configMapCardListComponent} from './configmapcardlist_component';
-import stateConfig from './configmaplist_stateconfig';
-
+import {configMapInfoComponent} from './detail/info_component';
+import {configMapCardComponent} from './list/card_component';
+import {configMapCardListComponent} from './list/cardlist_component';
+import {configMapListResource} from './list/stateconfig';
+import stateConfig from './stateconfig';
 
 /**
  * Angular module for the Config Map list view.
  */
 export default angular
     .module(
-        'kubernetesDashboard.configMapList',
+        'kubernetesDashboard.configMap',
         [
           'ngMaterial',
           'ngResource',
           'ui.router',
-          filtersModule.name,
-          componentsModule.name,
-          configMapDetailModule.name,
           chromeModule.name,
+          componentsModule.name,
+          eventsModule.name,
+          filtersModule.name,
           namespaceModule.name,
         ])
     .config(stateConfig)
-    .component('kdConfigMapCardList', configMapCardListComponent)
     .component('kdConfigMapCard', configMapCardComponent)
+    .component('kdConfigMapCardList', configMapCardListComponent)
+    .component('kdConfigMapInfo', configMapInfoComponent)
     .factory('kdConfigMapListResource', configMapListResource);
-
-/**
- * @param {!angular.$resource} $resource
- * @return {!angular.Resource}
- * @ngInject
- */
-function configMapListResource($resource) {
-  return $resource('api/v1/configmap/:namespace');
-}

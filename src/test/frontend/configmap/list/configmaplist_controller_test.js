@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ConfigMapListController} from 'configmaplist/configmaplist_controller';
-import configMapListModule from 'configmaplist/configmaplist_module';
+import {ConfigMapListController} from 'configmap/list/controller';
+import configMapListModule from 'configmap/module';
 
 describe('Config Map list controller', () => {
-  /** @type {!configmaplist/configmaplist_controller.ConfigMapListController} */
+  /** @type {!ConfigMapListController} */
   let ctrl;
 
   beforeEach(() => {

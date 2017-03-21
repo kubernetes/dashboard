@@ -16,42 +16,53 @@ import {stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {stateName as parentStateName} from 'config/state';
 
-import {ConfigMapListController} from './configmaplist_controller';
-import {stateName, stateUrl} from './configmaplist_state';
+import {ConfigMapListController} from './controller';
 
 /**
- * Configures states for the config map list view.
- *
- * @param {!ui.router.$stateProvider} $stateProvider
+ * I18n object that defines strings for translation used in this file.
+ */
+const i18n = {
+  /** @type {string} @desc Label 'Config Maps' that appears as a breadcrumbs on the action bar. */
+  MSG_BREADCRUMBS_CONFIG_MAPS_LABEL: goog.getMsg('Config Maps'),
+};
+
+/**
+ * @type {!ui.router.StateConfig}
+ */
+export const config = {
+  url: '',
+  parent: chromeStateName,
+  resolve: {
+    'configMapList': resolveConfigMapList,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': i18n.MSG_BREADCRUMBS_CONFIG_MAPS_LABEL,
+      'parent': parentStateName,
+    },
+  },
+  views: {
+    '': {
+      controller: ConfigMapListController,
+      controllerAs: '$ctrl',
+      templateUrl: 'configmap/list/list.html',
+    },
+  },
+};
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
  * @ngInject
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    url: stateUrl,
-    parent: chromeStateName,
-    resolve: {
-      'configMapList': resolveConfigMapList,
-    },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': i18n.MSG_BREADCRUMBS_CONFIG_MAPS_LABEL,
-        'parent': parentStateName,
-      },
-    },
-    views: {
-      '': {
-        controller: ConfigMapListController,
-        controllerAs: '$ctrl',
-        templateUrl: 'configmaplist/configmaplist.html',
-      },
-    },
-  });
+export function configMapListResource($resource) {
+  return $resource('api/v1/configmap/:namespace');
 }
 
 /**
  * @param {!angular.Resource} kdConfigMapListResource
- * @param {!./../chrome/chrome_state.StateParams} $stateParams
- * @param {!./../common/pagination/pagination_service.PaginationService} kdPaginationService
+ * @param {!./../../chrome/chrome_state.StateParams} $stateParams
+ * @param {!./../../common/pagination/pagination_service.PaginationService} kdPaginationService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
@@ -59,8 +70,3 @@ export function resolveConfigMapList(kdConfigMapListResource, $stateParams, kdPa
   let query = kdPaginationService.getDefaultResourceQuery($stateParams.namespace);
   return kdConfigMapListResource.get(query).$promise;
 }
-
-const i18n = {
-  /** @type {string} @desc Label 'Config Maps' that appears as a breadcrumbs on the action bar. */
-  MSG_BREADCRUMBS_CONFIG_MAPS_LABEL: goog.getMsg('Config Maps'),
-};

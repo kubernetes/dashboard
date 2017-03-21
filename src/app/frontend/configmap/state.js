@@ -12,25 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import configMapDetailModule from 'configmapdetail/configmapdetail_module';
+/** Name of the state. */
+export const stateName = 'configmap';
 
-describe('Config Map Info controller', () => {
-  /** @type {!ConfigMapInfoController} */
-  let ctrl;
-
-  beforeEach(() => {
-    angular.mock.module(configMapDetailModule.name);
-
-    angular.mock.inject(($componentController, $rootScope) => {
-      ctrl = $componentController('kdConfigMapInfo', {$scope: $rootScope}, {
-        configMap: {
-          data: {foo: 'bar'},
-        },
-      });
-    });
-  });
-
-  it('should initialize the ctrl', () => {
-    expect(ctrl.configMap).not.toBeUndefined();
-  });
-});
+/** Absolute URL of the state. */
+export const stateUrl = '/configmap';

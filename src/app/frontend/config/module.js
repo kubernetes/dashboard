@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import chromeModule from 'chrome/chrome_module';
-import configMapModule from 'configmaplist/configmaplist_module';
+import configMapModule from 'configmap/module';
 import secretModule from 'secretlist/module';
 
 import stateConfig from './stateconfig';

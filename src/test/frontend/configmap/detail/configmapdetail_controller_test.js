@@ -12,5 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'configmapdetail';
+import {ConfigMapDetailController} from 'configmap/detail/controller';
+import configMapDetailModule from 'configmap/module';
+
+describe('Config Map Detail controller', () => {
+
+  beforeEach(() => {
+    angular.mock.module(configMapDetailModule.name);
+  });
+
+  it('should initialize config map controller', angular.mock.inject(($controller) => {
+    let data = {};
+    /** @type {!ConfigMapDetailController} */
+    let ctrl = $controller(ConfigMapDetailController, {configMapDetail: data});
+
+    expect(ctrl.configMapDetail).toBe(data);
+  }));
+});

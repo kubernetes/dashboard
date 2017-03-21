@@ -13,7 +13,4 @@
 // limitations under the License.
 
 /** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'configmap';
-
-/** Absolute URL of the state. */
-export const stateUrl = '/configmap';
+export const stateName = 'configmap.list';

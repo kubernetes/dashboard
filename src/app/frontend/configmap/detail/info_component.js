@@ -35,7 +35,7 @@ export default class ConfigMapInfoController {
  */
 export const configMapInfoComponent = {
   controller: ConfigMapInfoController,
-  templateUrl: 'configmapdetail/configmapinfo.html',
+  templateUrl: 'configmap/detail/info.html',
   bindings: {
     /** {!backendApi.ConfigMapDetail} */
     'configMap': '=',

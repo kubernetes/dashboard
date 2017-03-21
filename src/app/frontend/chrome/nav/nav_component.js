@@ -16,7 +16,7 @@ import {stateName as aboutState} from 'about/about_state';
 import {stateName as accessControlState} from 'accesscontrol/state';
 import {stateName as adminState} from 'admin/state';
 import {stateName as configState} from 'config/state';
-import {stateName as configMapState} from 'configmaplist/configmaplist_state';
+import {stateName as configMapState} from 'configmap/list/state';
 import {stateName as daemonSetState} from 'daemonsetlist/daemonsetlist_state';
 import {stateName as deploymentState} from 'deploymentlist/deploymentlist_state';
 import {stateName as ingressState} from 'ingresslist/list_state';

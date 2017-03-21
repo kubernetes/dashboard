@@ -150,6 +150,19 @@
   <translation id="8188034795115917545" key="MSG_CONFIGMAPLIST_CONFIGMAPCARDLIST_4" desc="Config map list header: age.">起動時間</translation>
   <translation id="9099377478659685689" key="MSG_CONFIGMAPLIST_CONFIGMAPCARD_0" desc="Label \'Config Map\' which will appear in the config map\n      delete dialog opened from a config map card on the list page.">コンフィグマップ</translation>
   <translation id="6007981365208604989" key="MSG_CONFIGMAPLIST_CONFIGMAPCARD_1" desc="Label \'Config Map\' which will appear in the config map\n      delete dialog opened from a config map card on the list page.">コンフィグマップ</translation>
+  <translation id="2290466353199139171" key="MSG_CONFIGMAP_DETAIL_ACTIONBAR_0" desc="Label \'Config Map\' which appears at the top of the\n      delete dialog, opened from a config map details page.">Config Map</translation>
+  <translation id="1345195277871602727" key="MSG_CONFIGMAP_DETAIL_DETAIL_0" desc="Header in a detail view of config map deta">Data</translation>
+  <translation id="998665058731826460" key="MSG_CONFIGMAP_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
+  <translation id="4380163225141081319" key="MSG_CONFIGMAP_DETAIL_INFO_1" desc="Config map info details section name entry.">Name</translation>
+  <translation id="6748979229650497011" key="MSG_CONFIGMAP_DETAIL_INFO_2" desc="Config map info details section namespace entry.">Namespace</translation>
+  <translation id="397339215031139526" key="MSG_CONFIGMAP_DETAIL_INFO_3" desc="Config map info details section labels entry.">Labels</translation>
+  <translation id="9090261468074115569" key="MSG_CONFIGMAP_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Config Maps</translation>
+  <translation id="5434719528055235183" key="MSG_CONFIGMAP_LIST_CARDLIST_1" desc="Config map list header: name.">Name</translation>
+  <translation id="4172472290353802354" key="MSG_CONFIGMAP_LIST_CARDLIST_2" desc="Config map list header: namespace.">Namespace</translation>
+  <translation id="2010918488451009803" key="MSG_CONFIGMAP_LIST_CARDLIST_3" desc="Config map list header: labels.">Labels</translation>
+  <translation id="5490277101487527964" key="MSG_CONFIGMAP_LIST_CARDLIST_4" desc="Config map list header: age.">Age</translation>
+  <translation id="6220776078337852001" key="MSG_CONFIGMAP_LIST_CARD_0" desc="Label \'Config Map\' which will appear in the config map\n      delete dialog opened from a config map card on the list page.">Config Map</translation>
+  <translation id="1762365164654423553" key="MSG_CONFIGMAP_LIST_CARD_1" desc="Label \'Config Map\' which will appear in the config map\n      delete dialog opened from a config map card on the list page.">Config Map</translation>
   <translation id="4743112919356949434" key="MSG_CONFIG_CONFIG_0" desc="Label that appears above the list of resources.">シークレット</translation>
   <translation id="7486548633611417214" key="MSG_CONFIG_CONFIG_1" desc="Label that appears above the list of resources.">コンフィグマップ</translation>
   <translation id="3342283564584066330" key="MSG_CONFIG_CONFIG_MAPS_LABEL" desc="Label that appears above the list of resources.">コンフィグマップ</translation>

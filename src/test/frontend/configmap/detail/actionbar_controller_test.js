@@ -12,20 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ConfigMapDetailController} from 'configmapdetail/configmapdetail_controller';
-import configMapDetailModule from 'configmapdetail/configmapdetail_module';
+import {ActionBarController} from 'configmap/detail/actionbar_controller';
+import module from 'configmap/module';
 
-describe('Config Map Detail controller', () => {
+describe('Action Bar controller', () => {
+  /** @type {!ActionBarController} */
+  let ctrl;
+  let details = {};
 
   beforeEach(() => {
-    angular.mock.module(configMapDetailModule.name);
+    angular.mock.module(module.name);
+
+    angular.mock.inject(($controller) => {
+      ctrl = $controller(ActionBarController, {configMapDetail: details});
+    });
   });
 
-  it('should initialize config map controller', angular.mock.inject(($controller) => {
-    let data = {};
-    /** @type {!ConfigMapDetailController} */
-    let ctrl = $controller(ConfigMapDetailController, {configMapDetail: data});
-
-    expect(ctrl.configMapDetail).toBe(data);
-  }));
+  it('should initialize details', () => {
+    expect(ctrl.details).toBe(details);
+  });
 });

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {StateParams} from 'common/resource/resourcedetail';
-import {stateName as configMapState} from 'configmapdetail/configmapdetail_state';
+import {stateName as configMapState} from 'configmap/detail/state';
 import {stateName as logsStateName, StateParams as LogsStateParams} from 'logs/logs_state';
 
 /**

@@ -11,32 +11,26 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import configMapListModule from 'configmaplist/configmaplist_module';
 
-describe('Config Map card', () => {
-  /** @type {!configmaplist/configmapcard_component.ConfigMapCardController} */
+import configMapDetailModule from 'configmap/module';
+
+describe('Config Map Info controller', () => {
+  /** @type {!ConfigMapInfoController} */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(configMapListModule.name);
+    angular.mock.module(configMapDetailModule.name);
 
     angular.mock.inject(($componentController, $rootScope) => {
-      ctrl = $componentController('kdConfigMapCard', {$scope: $rootScope});
+      ctrl = $componentController('kdConfigMapInfo', {$scope: $rootScope}, {
+        configMap: {
+          data: {foo: 'bar'},
+        },
+      });
     });
   });
 
-  it('should get details href', () => {
-    ctrl.configMap = {
-      objectMeta: {
-        namespace: 'foo',
-        name: 'bar',
-      },
-    };
-    expect(ctrl.getConfigMapDetailHref()).toBe('#!/configmap/foo/bar');
-  });
-
-  it('should format the "created at" tooltip correctly', () => {
-    expect(ctrl.getCreatedAtTooltip('2016-06-06T09:13:12Z'))
-        .toMatch('Created at 2016-06-06T09:13.*');
+  it('should initialize the ctrl', () => {
+    expect(ctrl.configMap).not.toBeUndefined();
   });
 });

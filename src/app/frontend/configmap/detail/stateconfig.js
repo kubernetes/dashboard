@@ -12,52 +12,48 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
+import {actionbarViewName} from 'chrome/chrome_state';
+import {stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
-import {stateName as configMapList, stateUrl} from 'configmaplist/configmaplist_state';
+import {stateName as configMapList} from 'configmap/list/state';
+import {stateUrl} from 'configmap/state';
 
 import {ActionBarController} from './actionbar_controller';
-import {ConfigMapDetailController} from './configmapdetail_controller';
-import {stateName} from './configmapdetail_state';
+import {ConfigMapDetailController} from './controller';
 
 /**
- * Configures states for the config map details view.
- *
- * @param {!ui.router.$stateProvider} $stateProvider
- * @ngInject
+ * @type {!ui.router.StateConfig}
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    url: appendDetailParamsToUrl(stateUrl),
-    parent: chromeStateName,
-    resolve: {
-      'configMapDetailResource': getConfigMapDetailResource,
-      'configMapDetail': getConfigMapDetail,
+export const config = {
+  url: appendDetailParamsToUrl(stateUrl),
+  parent: chromeStateName,
+  resolve: {
+    'configMapDetailResource': getConfigMapDetailResource,
+    'configMapDetail': getConfigMapDetail,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': '{{$stateParams.objectName}}',
+      'parent': configMapList,
     },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': '{{$stateParams.objectName}}',
-        'parent': configMapList,
-      },
+  },
+  views: {
+    '': {
+      controller: ConfigMapDetailController,
+      controllerAs: '$ctrl',
+      templateUrl: 'configmap/detail/detail.html',
     },
-    views: {
-      '': {
-        controller: ConfigMapDetailController,
-        controllerAs: '$ctrl',
-        templateUrl: 'configmapdetail/configmapdetail.html',
-      },
-      [actionbarViewName]: {
-        controller: ActionBarController,
-        controllerAs: '$ctrl',
-        templateUrl: 'configmapdetail/actionbar.html',
-      },
+    [actionbarViewName]: {
+      controller: ActionBarController,
+      controllerAs: '$ctrl',
+      templateUrl: 'configmap/detail/actionbar.html',
     },
-  });
-}
+  },
+};
 
 /**
- * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
+ * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource<!backendApi.ConfigMapDetail>}
  * @ngInject

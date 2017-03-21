@@ -22,8 +22,7 @@ import adminModule from './admin/module';
 import chromeModule from './chrome/chrome_module';
 import csrfTokenModule from './common/csrftoken/csrftoken_module';
 import configModule from './config/module';
-import configMapDetailModule from './configmapdetail/configmapdetail_module';
-import configMapListModule from './configmaplist/configmaplist_module';
+import configMapModule from './configmap/module';
 import deployModule from './deploy/deploy_module';
 import deploymentListModule from './deploymentlist/deploymentlist_module';
 import errorModule from './error/error_module';
@@ -97,8 +96,7 @@ export default angular
           persistentVolumeClaimDetailModule.name,
           persistentVolumeClaimListModule.name,
           resourceQuotaDetailModule.name,
-          configMapListModule.name,
-          configMapDetailModule.name,
+          configMapModule.name,
           secretListModule.name,
           secretDetailModule.name,
           ingressListModule.name,
