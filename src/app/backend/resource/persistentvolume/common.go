@@ -16,13 +16,24 @@ package persistentvolume
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
-// The code below allows to perform complex data section on []api.PersistentVolume
+// getPersistentVolumeClaim returns Persistent Volume claim using "namespace/claim" format.
+func getPersistentVolumeClaim(pv *v1.PersistentVolume) string {
+	var claim string
 
-type PersistentVolumeCell api.PersistentVolume
+	if pv.Spec.ClaimRef != nil {
+		claim = pv.Spec.ClaimRef.Namespace + "/" + pv.Spec.ClaimRef.Name
+	}
 
+	return claim
+}
+
+// PersistentVolumeCell allows to perform complex data section on []api.PersistentVolume.
+type PersistentVolumeCell v1.PersistentVolume
+
+// GetProperty allows to perform complex data section on PersistentVolumeCell.
 func (self PersistentVolumeCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
 	case dataselect.NameProperty:
@@ -37,7 +48,8 @@ func (self PersistentVolumeCell) GetProperty(name dataselect.PropertyName) datas
 	}
 }
 
-func toCells(std []api.PersistentVolume) []dataselect.DataCell {
+// toCells converts []api.PersistentVolume to []dataselect.DataCell.
+func toCells(std []v1.PersistentVolume) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
 		cells[i] = PersistentVolumeCell(std[i])
@@ -45,10 +57,11 @@ func toCells(std []api.PersistentVolume) []dataselect.DataCell {
 	return cells
 }
 
-func fromCells(cells []dataselect.DataCell) []api.PersistentVolume {
-	std := make([]api.PersistentVolume, len(cells))
+// fromCells converts cells []dataselect.DataCell to []api.PersistentVolume.
+func fromCells(cells []dataselect.DataCell) []v1.PersistentVolume {
+	std := make([]v1.PersistentVolume, len(cells))
 	for i := range std {
-		std[i] = api.PersistentVolume(cells[i].(PersistentVolumeCell))
+		std[i] = v1.PersistentVolume(cells[i].(PersistentVolumeCell))
 	}
 	return std
 }

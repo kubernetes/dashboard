@@ -21,22 +21,27 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/kubernetes/fake"
 )
 
 func TestGetPersistentVolumeDetail(t *testing.T) {
-
 	cases := []struct {
-		persistentVolumes *api.PersistentVolume
+		name string
+		persistentVolume *api.PersistentVolume
 		expected          *PersistentVolumeDetail
 	}{
 		{
+			"foo",
 			&api.PersistentVolume{
 				ObjectMeta: metaV1.ObjectMeta{Name: "foo"},
 				Spec: api.PersistentVolumeSpec{
 					PersistentVolumeReclaimPolicy: api.PersistentVolumeReclaimRecycle,
 					AccessModes:                   []api.PersistentVolumeAccessMode{api.ReadWriteOnce},
 					Capacity:                      nil,
-					ClaimRef:                      &api.ObjectReference{Name: "myclaim-name"},
+					ClaimRef: &api.ObjectReference{
+						Name:      "myclaim-name",
+						Namespace: "default",
+					},
 					PersistentVolumeSource: api.PersistentVolumeSource{
 						HostPath: &api.HostPathVolumeSource{
 							Path: "my-path",
@@ -55,7 +60,7 @@ func TestGetPersistentVolumeDetail(t *testing.T) {
 				ReclaimPolicy: api.PersistentVolumeReclaimRecycle,
 				AccessModes:   []api.PersistentVolumeAccessMode{api.ReadWriteOnce},
 				Capacity:      nil,
-				Claim:         "myclaim-name",
+				Claim:         "default/myclaim-name",
 				Message:       "my-message",
 				PersistentVolumeSource: api.PersistentVolumeSource{
 					HostPath: &api.HostPathVolumeSource{
@@ -66,10 +71,17 @@ func TestGetPersistentVolumeDetail(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := getPersistentVolumeDetail(c.persistentVolumes)
+		fakeClient := fake.NewSimpleClientset(c.persistentVolume)
+
+		actual, err := GetPersistentVolumeDetail(fakeClient, c.name)
+
+		if err != nil {
+			t.Errorf("GetPersistentVolumeDetail(%#v) == \ngot err %#v", c.persistentVolume, err)
+		}
+
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("getPersistentVolumeDetail(%#v) == \n%#v\nexpected \n%#v\n",
-				c.persistentVolumes, actual, c.expected)
+			t.Errorf("GetPersistentVolumeDetail(%#v) == \n%#v\nexpected \n%#v\n",
+				c.persistentVolume, actual, c.expected)
 		}
 	}
 }
