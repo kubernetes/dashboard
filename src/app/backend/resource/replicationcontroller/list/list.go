@@ -89,8 +89,8 @@ func CreateReplicationControllerList(replicationControllers []api.ReplicationCon
 	replicationControllers = replicationcontroller.FromCells(replicationControllerCells)
 
 	for _, rc := range replicationControllers {
-		matchingPods := common.FilterNamespacedPodsBySelector(pods, rc.ObjectMeta.Namespace,
-			rc.Spec.Selector)
+		matchingPods := common.FilterPodsByControllerResource(rc.Namespace, rc.UID, pods)
+
 		podInfo := common.GetPodInfo(rc.Status.Replicas, *rc.Spec.Replicas, matchingPods)
 		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 
