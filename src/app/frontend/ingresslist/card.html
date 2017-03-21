@@ -14,11 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card type-meta="::$ctrl.ingress.typeMeta" object-meta="::$ctrl.ingress.objectMeta">
+<kd-resource-card type-meta="::$ctrl.ingress.typeMeta"
+                  object-meta="::$ctrl.ingress.objectMeta">
   <kd-resource-card-columns>
     <kd-resource-card-column>
       <div>
-        <a ng-href="{{::$ctrl.getIngressDetailHref()}}" class="kd-middle-ellipsised-link">
+        <a ng-href="{{::$ctrl.getIngressDetailHref()}}"
+           class="kd-middle-ellipsised-link">
           <kd-middle-ellipsis display-string="{{::$ctrl.ingress.objectMeta.name}}">
           </kd-middle-ellipsis>
         </a>

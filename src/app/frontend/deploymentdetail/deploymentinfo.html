@@ -2,8 +2,7 @@
   <kd-info-card-header>[[Details|Header in a detail view]]</kd-info-card-header>
   <kd-info-card-section>
     <kd-info-card-entry title="[[Name|Label 'Name' for the deployment name on the deployment details page.]]">
-      <kd-middle-ellipsis
-              display-string="{{::$ctrl.deployment.objectMeta.name}}">
+      <kd-middle-ellipsis display-string="{{::$ctrl.deployment.objectMeta.name}}">
       </kd-middle-ellipsis>
     </kd-info-card-entry>
     <kd-info-card-entry title="[[Namespace|Label 'Namespace' for the deployment namespace on the deployment details page.]]">
@@ -32,15 +31,14 @@
 
     <kd-info-card-entry title="[[Rolling update strategy|Label 'Rolling Update Strategy' for the deployment's rolling update strategy on the deployment details page.]]"
                         ng-if="$ctrl.rollingUpdateStrategy()">
-      [[Max surge: {{$ctrl.deployment.rollingUpdateStrategy.maxSurge}}|The message says how many replicas can be created above the desired number of replicas in a deployment (deployment details page).]],
-      [[Max unavailable: {{$ctrl.deployment.rollingUpdateStrategy.maxUnavailable}}|The message says how many replicas are allowed to be unavailable during an update in the deployment (deployment details page).]]
+      [[Max surge: {{$ctrl.deployment.rollingUpdateStrategy.maxSurge}}|The message says how many replicas can be created above the desired number of replicas in a deployment (deployment details page).]], [[Max unavailable: {{$ctrl.deployment.rollingUpdateStrategy.maxUnavailable}}|The
+      message says how many replicas are allowed to be unavailable during an update in the deployment (deployment details page).]]
     </kd-info-card-entry>
 
     <kd-info-card-entry title="[[Status|Label 'Status' for the deployment's status information on the deployment details page.]]">
-      [[{{$ctrl.deployment.statusInfo.updated}} updated|The message describes how many replicas were updated in the deployment (deployment details page).]],
-      [[{{$ctrl.deployment.statusInfo.replicas}} total|The message describes how many replicas (in total) are in the deployment (deployment details page).]],
-      [[{{$ctrl.deployment.statusInfo.available}} available|The message describes how many replicas are available in the deployment (deployment details page).]],
-      [[{{$ctrl.deployment.statusInfo.unavailable}} unavailable|The message says how many replicas are unavailable in the deployment (deployment details page).]]
+      [[{{$ctrl.deployment.statusInfo.updated}} updated|The message describes how many replicas were updated in the deployment (deployment details page).]], [[{{$ctrl.deployment.statusInfo.replicas}} total|The message describes how many replicas (in total)
+      are in the deployment (deployment details page).]], [[{{$ctrl.deployment.statusInfo.available}} available|The message describes how many replicas are available in the deployment (deployment details page).]], [[{{$ctrl.deployment.statusInfo.unavailable}}
+      unavailable|The message says how many replicas are unavailable in the deployment (deployment details page).]]
     </kd-info-card-entry>
   </kd-info-card-section>
 </kd-info-card>

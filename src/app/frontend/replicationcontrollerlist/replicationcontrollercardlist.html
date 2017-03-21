@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card-list selectable="false" with-statuses="true">
+<kd-resource-card-list selectable="false"
+                       with-statuses="true">
   <kd-resource-card-list-header ng-transclude="header">
     [[Replication Controllers|Label which appears above the list of such objects.]]
   </kd-resource-card-list-header>
@@ -24,39 +25,52 @@ limitations under the License.
   </kd-resource-card-list-pagination>
 
   <kd-resource-card-header-columns>
-    <kd-resource-card-header-column size="small" grow="2">
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
       [[Name|Label 'Name' which appears as a column label in the table of replication controllers (RC list view).]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="2" ng-if="$ctrl.showResourceKind">
+    <kd-resource-card-header-column size="small"
+                                    grow="2"
+                                    ng-if="$ctrl.showResourceKind">
       [[Kind|Column header 'Kind' of a Replication Controller list]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="2" ng-if="$ctrl.areMultipleNamespacesSelected()">
+    <kd-resource-card-header-column size="small"
+                                    grow="2"
+                                    ng-if="$ctrl.areMultipleNamespacesSelected()">
       [[Namespace|Label 'Namespace' which appears as a column label in the table of replication controllers (RC list view).]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="2">
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
       [[Labels|Label 'Labels' which appears as a column label in the table of replication controllers (RC list view).]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="1">
+    <kd-resource-card-header-column size="small"
+                                    grow="1">
       [[Pods|Label 'Pods' which appears as a column label in the table of replication controllers (RC list view).]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="1">
+    <kd-resource-card-header-column size="small"
+                                    grow="1">
       [[Age|Label 'Age' which appears as a column label in the table of replication controllers (RC list view).]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="4">
+    <kd-resource-card-header-column size="small"
+                                    grow="4">
       [[Images|Label 'Images' which appears as a column label in the table of replication controllers (RC list view).]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="nogrow" class="kd-row-layout-column">
+    <kd-resource-card-header-column size="small"
+                                    grow="nogrow"
+                                    class="kd-row-layout-column">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
   <kd-replication-controller-card ng-if="::$ctrl.replicationControllerListResource"
-                                  replication-controller="rc" pagination-id="replicationcontrollers"
+                                  replication-controller="rc"
+                                  pagination-id="replicationcontrollers"
                                   dir-paginate="rc in $ctrl.replicationControllerList.replicationControllers | itemsPerPage: default"
                                   show-resource-kind="::$ctrl.showResourceKind"
                                   total-items="$ctrl.replicationControllerList.listMeta.totalItems">
   </kd-replication-controller-card>
 
   <kd-replication-controller-card ng-if="::!$ctrl.replicationControllerListResource"
-                                  replication-controller="rc" pagination-id="replicationcontrollers"
+                                  replication-controller="rc"
+                                  pagination-id="replicationcontrollers"
                                   show-resource-kind="::$ctrl.showResourceKind"
                                   dir-paginate="rc in $ctrl.replicationControllerList.replicationControllers | itemsPerPage: default">
   </kd-replication-controller-card>

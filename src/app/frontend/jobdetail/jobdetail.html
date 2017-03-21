@@ -30,7 +30,8 @@ limitations under the License.
 
 <kd-content-card>
   <kd-content>
-    <kd-pod-card-list pod-list="::ctrl.jobDetail.podList" with-statuses="true"
+    <kd-pod-card-list pod-list="::ctrl.jobDetail.podList"
+                      with-statuses="true"
                       pod-list-resource="::ctrl.jobPodsResource">
       <kd-zerostate>
         <div class="kd-zerostate-title">[[There is nothing to display here|Title for pods card zerostate in job details page.]]</div>
@@ -40,4 +41,5 @@ limitations under the License.
   </kd-content>
 </kd-content-card>
 
-<kd-event-card-list event-list="::ctrl.jobDetail.eventList" event-list-resource="::ctrl.eventListResource"></kd-event-card-list>
+<kd-event-card-list event-list="::ctrl.jobDetail.eventList"
+                    event-list-resource="::ctrl.eventListResource"></kd-event-card-list>

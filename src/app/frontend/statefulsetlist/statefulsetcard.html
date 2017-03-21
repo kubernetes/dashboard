@@ -14,26 +14,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card object-meta="$ctrl.statefulSet.objectMeta" type-meta="$ctrl.statefulSet.typeMeta">
+<kd-resource-card object-meta="$ctrl.statefulSet.objectMeta"
+                  type-meta="$ctrl.statefulSet.typeMeta">
   <kd-resource-card-status layout="row">
-    <md-icon class="material-icons kd-error" ng-if="::$ctrl.hasWarnings()">
+    <md-icon class="material-icons kd-error"
+             ng-if="::$ctrl.hasWarnings()">
       error
       <md-tooltip md-direction="right">[[One or more pods have errors|Tooltip text which appears on error icon hover.]]</md-tooltip>
     </md-icon>
-    <md-icon class="material-icons" ng-if="::$ctrl.isPending()">
+    <md-icon class="material-icons"
+             ng-if="::$ctrl.isPending()">
       timelapse
       <md-tooltip md-direction="right">
         [[One or more pods are in pending state|Tooltip text which appears on pending icon hover.]]
       </md-tooltip>
     </md-icon>
-    <md-icon class="material-icons kd-success" ng-if="::$ctrl.isSuccess()">
+    <md-icon class="material-icons kd-success"
+             ng-if="::$ctrl.isSuccess()">
       check_circle
     </md-icon>
   </kd-resource-card-status>
   <kd-resource-card-columns>
     <kd-resource-card-column>
       <div>
-        <a ng-href="{{::$ctrl.getStatefulSetDetailHref()}}" class="kd-middle-ellipsised-link">
+        <a ng-href="{{::$ctrl.getStatefulSetDetailHref()}}"
+           class="kd-middle-ellipsised-link">
           <kd-middle-ellipsis display-string="{{$ctrl.statefulSet.objectMeta.name}}">
           </kd-middle-ellipsis>
         </a>
@@ -70,18 +75,16 @@ limitations under the License.
     </kd-resource-card-column>
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
       <kd-resource-card-menu>
-        <kd-resource-card-delete-menu-item
-              resource-kind-name="[[Stateful Set|Label 'Stateful Set' which will appear in the stateful set delete dialog opened from a stateful set card on the list page.]]">
+        <kd-resource-card-delete-menu-item resource-kind-name="[[Stateful Set|Label 'Stateful Set' which will appear in the stateful set delete dialog opened from a stateful set card on the list page.]]">
         </kd-resource-card-delete-menu-item>
-        <kd-resource-card-edit-menu-item
-              resource-kind-name="[[Stateful Set|Label 'Stateful Set' which will appear in the stateful set delete dialog opened from a stateful set card on the list page.]]">
+        <kd-resource-card-edit-menu-item resource-kind-name="[[Stateful Set|Label 'Stateful Set' which will appear in the stateful set delete dialog opened from a stateful set card on the list page.]]">
         </kd-resource-card-edit-menu-item>
       </kd-resource-card-menu>
     </kd-resource-card-column>
   </kd-resource-card-columns>
   <kd-resource-card-footer ng-if="::$ctrl.hasWarnings()">
-      <div ng-repeat="warning in ::$ctrl.statefulSet.pods.warnings">
-        <span class="kd-error">{{::warning.message}}</span>
-      </div>
+    <div ng-repeat="warning in ::$ctrl.statefulSet.pods.warnings">
+      <span class="kd-error">{{::warning.message}}</span>
+    </div>
   </kd-resource-card-footer>
 </kd-resource-card>

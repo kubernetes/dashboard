@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card object-meta="$ctrl.replicaSet.objectMeta" type-meta="$ctrl.replicaSet.typeMeta">
+<kd-resource-card object-meta="$ctrl.replicaSet.objectMeta"
+                  type-meta="$ctrl.replicaSet.typeMeta">
   <kd-resource-card-status layout="row">
     <md-icon class="material-icons md-warn"
              ng-if="::$ctrl.hasWarnings()">
@@ -27,7 +28,9 @@ limitations under the License.
       <md-tooltip>[[One or more pods are in pending state|Tooltip saying that some pods in a replica set are pending.]]</md-tooltip>
     </md-icon>
 
-    <md-icon class="material-icons" style="color: green";
+    <md-icon class="material-icons"
+             style="color: green"
+             ;
              ng-if="::$ctrl.isSuccess()">
       check_circle
     </md-icon>
@@ -35,7 +38,8 @@ limitations under the License.
   <kd-resource-card-columns>
     <kd-resource-card-column>
       <div>
-        <a ng-href="{{::$ctrl.getReplicaSetDetailHref()}}" class="kd-middle-ellipsised-link">
+        <a ng-href="{{::$ctrl.getReplicaSetDetailHref()}}"
+           class="kd-middle-ellipsised-link">
           <kd-middle-ellipsis display-string="{{$ctrl.replicaSet.objectMeta.name}}">
           </kd-middle-ellipsis>
         </a>
@@ -82,8 +86,8 @@ limitations under the License.
     </kd-resource-card-column>
   </kd-resource-card-columns>
   <kd-resource-card-footer ng-if="::$ctrl.hasWarnings()">
-      <div ng-repeat="warning in ::$ctrl.replicaSet.pods.warnings">
-        <span class="kd-error">{{::warning.message}}</span>
-      </div>
+    <div ng-repeat="warning in ::$ctrl.replicaSet.pods.warnings">
+      <span class="kd-error">{{::warning.message}}</span>
+    </div>
   </kd-resource-card-footer>
 </kd-resource-card>
