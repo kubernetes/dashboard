@@ -17,7 +17,7 @@ package rbacroles
 import (
 	"reflect"
 	"testing"
-	rbac "k8s.io/client-go/pkg/apis/rbac/v1beta1"
+	rbac "k8s.io/client-go/pkg/apis/rbac/v1alpha1"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	api "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -55,6 +55,7 @@ func TestGetRbacRoleList(t *testing.T) {
 				ListMeta: common.ListMeta{TotalItems: 2},
 				Items: []RbacRole{{
 					ObjectMeta:  common.ObjectMeta{Name: "Role", Namespace: "Testing"},
+					TypeMeta:  common.TypeMeta{Kind: common.ResourceKindRbacRole},
 					Rules: []rbac.PolicyRule{{
 						Verbs: []string{"get", "put"},
 						Resources: []string{"pods"},
@@ -63,6 +64,7 @@ func TestGetRbacRoleList(t *testing.T) {
 					Namespace: "Testing",
 				},{
 					ObjectMeta:  common.ObjectMeta{Name: "cluster-role", Namespace: ""},
+					TypeMeta:  common.TypeMeta{Kind: common.ResourceKindRbacClusterRole},
 					Rules: []rbac.PolicyRule{{
 						Verbs: []string{"post", "put"},
 						Resources: []string{"pods", "deployments"},

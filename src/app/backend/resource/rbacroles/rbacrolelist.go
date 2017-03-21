@@ -75,10 +75,6 @@ func GetRbacRoleListFromChannels(channels *common.ResourceChannels, dsQuery *dat
 func SimplifyRbacRoleLists(roles []rbac.Role, clusterRoles []rbac.ClusterRole, dsQuery *dataselect.DataSelectQuery) *RbacRoleList {
 	items := make([]RbacRole, 0)
 
-
-	// TODO Take data select query into account
-
-
 	for _, item := range roles {
 		items = append(items,
 			RbacRole{
