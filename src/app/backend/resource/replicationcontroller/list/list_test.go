@@ -29,6 +29,13 @@ import (
 func TestGetReplicationControllerList(t *testing.T) {
 	replicas := int32(0)
 	events := []api.Event{}
+	controller := true
+	firstAppOwnerRef := []metaV1.OwnerReference{{
+		Kind:       "ReplicationController",
+		Name:       "my-name-1",
+		UID:        "uid-1",
+		Controller: &controller,
+	}}
 
 	cases := []struct {
 		replicationControllers []api.ReplicationController
@@ -49,6 +56,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 					ObjectMeta: metaV1.ObjectMeta{
 						Name:      "my-app-1",
 						Namespace: "namespace-1",
+						UID:       "uid-1",
 					},
 					Spec: api.ReplicationControllerSpec{
 						Replicas: &replicas,
@@ -62,6 +70,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 					ObjectMeta: metaV1.ObjectMeta{
 						Name:      "my-app-2",
 						Namespace: "namespace-2",
+						UID:       "uid-2",
 					},
 					Spec: api.ReplicationControllerSpec{
 						Replicas: &replicas,
@@ -78,6 +87,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 					ObjectMeta: metaV1.ObjectMeta{
 						Name:      "my-app-1",
 						Namespace: "namespace-1",
+						UID:       "uid-1",
 					},
 				},
 				{
@@ -85,14 +95,15 @@ func TestGetReplicationControllerList(t *testing.T) {
 					ObjectMeta: metaV1.ObjectMeta{
 						Name:      "my-app-2",
 						Namespace: "namespace-2",
+						UID:       "uid-1",
 					},
 				},
 			},
 			[]api.Pod{
 				{
 					ObjectMeta: metaV1.ObjectMeta{
-						Namespace: "namespace-1",
-						Labels:    map[string]string{"app": "my-name-1"},
+						Namespace:       "namespace-1",
+						OwnerReferences: firstAppOwnerRef,
 					},
 					Status: api.PodStatus{
 						Phase: api.PodFailed,
@@ -100,8 +111,8 @@ func TestGetReplicationControllerList(t *testing.T) {
 				},
 				{
 					ObjectMeta: metaV1.ObjectMeta{
-						Namespace: "namespace-1",
-						Labels:    map[string]string{"app": "my-name-1"},
+						Namespace:       "namespace-1",
+						OwnerReferences: firstAppOwnerRef,
 					},
 					Status: api.PodStatus{
 						Phase: api.PodFailed,
@@ -109,8 +120,8 @@ func TestGetReplicationControllerList(t *testing.T) {
 				},
 				{
 					ObjectMeta: metaV1.ObjectMeta{
-						Namespace: "namespace-1",
-						Labels:    map[string]string{"app": "my-name-1"},
+						Namespace:       "namespace-1",
+						OwnerReferences: firstAppOwnerRef,
 					},
 					Status: api.PodStatus{
 						Phase: api.PodPending,
@@ -118,8 +129,8 @@ func TestGetReplicationControllerList(t *testing.T) {
 				},
 				{
 					ObjectMeta: metaV1.ObjectMeta{
-						Namespace: "namespace-2",
-						Labels:    map[string]string{"app": "my-name-1"},
+						Namespace:       "namespace-2",
+						OwnerReferences: firstAppOwnerRef,
 					},
 					Status: api.PodStatus{
 						Phase: api.PodPending,
@@ -127,8 +138,8 @@ func TestGetReplicationControllerList(t *testing.T) {
 				},
 				{
 					ObjectMeta: metaV1.ObjectMeta{
-						Namespace: "namespace-1",
-						Labels:    map[string]string{"app": "my-name-1"},
+						Namespace:       "namespace-1",
+						OwnerReferences: firstAppOwnerRef,
 					},
 					Status: api.PodStatus{
 						Phase: api.PodRunning,
@@ -136,8 +147,8 @@ func TestGetReplicationControllerList(t *testing.T) {
 				},
 				{
 					ObjectMeta: metaV1.ObjectMeta{
-						Namespace: "namespace-1",
-						Labels:    map[string]string{"app": "my-name-1"},
+						Namespace:       "namespace-1",
+						OwnerReferences: firstAppOwnerRef,
 					},
 					Status: api.PodStatus{
 						Phase: api.PodSucceeded,
@@ -145,8 +156,8 @@ func TestGetReplicationControllerList(t *testing.T) {
 				},
 				{
 					ObjectMeta: metaV1.ObjectMeta{
-						Namespace: "namespace-1",
-						Labels:    map[string]string{"app": "my-name-1"},
+						Namespace:       "namespace-1",
+						OwnerReferences: firstAppOwnerRef,
 					},
 					Status: api.PodStatus{
 						Phase: api.PodUnknown,
