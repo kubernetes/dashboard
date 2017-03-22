@@ -112,6 +112,12 @@ type ResourceChannels struct {
 
 	// List and error channels to ClusterRoles
 	ClusterRoleList ClusterRoleListChannel
+
+	// List and error channels to RoleBindings
+	RoleBindingList RoleBindingListChannel
+
+	// List and error channels to ClusterRoleBindings
+	ClusterRoleBindingList ClusterRoleBindingListChannel
 }
 
 
@@ -652,6 +658,56 @@ func GetClusterRoleListChannel(client client.Interface, numReads int) ClusterRol
 
 	go func() {
 		list, err := client.RbacV1alpha1().ClusterRoles().List(listEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// RoleBindingListChannel is a list and error channels to RoleBindings.
+type RoleBindingListChannel struct {
+	List  chan *rbac.RoleBindingList
+	Error chan error
+}
+
+// GetRoleBindingListChannel returns a pair of channels to a RoleBinding list for a namespace and errors that
+// both must be read numReads times.
+func GetRoleBindingListChannel(client client.Interface, numReads int) RoleBindingListChannel {
+	channel := RoleBindingListChannel{
+		List:  make(chan *rbac.RoleBindingList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.RbacV1alpha1().RoleBindings("").List(listEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// ClusterRoleBindingListChannel is a list and error channels to ClusterRoleBindings.
+type ClusterRoleBindingListChannel struct {
+	List  chan *rbac.ClusterRoleBindingList
+	Error chan error
+}
+
+// GetClusterRoleBindingListChannel returns a pair of channels to a ClusterRoleBinding list and errors that
+// both must be read numReads times.
+func GetClusterRoleBindingListChannel(client client.Interface, numReads int) ClusterRoleBindingListChannel {
+	channel := ClusterRoleBindingListChannel{
+		List:  make(chan *rbac.ClusterRoleBindingList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.RbacV1alpha1().ClusterRoleBindings().List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err

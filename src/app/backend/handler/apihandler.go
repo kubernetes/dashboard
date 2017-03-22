@@ -68,6 +68,7 @@ import (
 	clientK8s "k8s.io/client-go/kubernetes"
 	restclient "k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/rbacrolebindings"
 )
 
 const (
@@ -581,12 +582,14 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 	apiV1Ws.Route(
 		apiV1Ws.PUT("/_raw/{kind}/name/{name}").
 			To(apiHandler.handlePutResource))
-
 	apiV1Ws.Route(
 		apiV1Ws.GET("/rbacrole").
 			To(apiHandler.handleGetRbacRoleList).
 			Writes(rbacroles.RbacRoleList{}))
-
+	apiV1Ws.Route(
+		apiV1Ws.GET("/rbacrolebinding").
+			To(apiHandler.handleGetRbacRoleBindingList).
+			Writes(rbacrolebindings.RbacRoleBindingList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/persistentvolume").
 			To(apiHandler.handleGetPersistentVolumeList).
@@ -642,6 +645,17 @@ func (apiHandler *APIHandler) handleGetRbacRoleList(request *restful.Request, re
 	// TODO: Handle case in which RBAC feature is not enabled in API server. Currently returns 404 resource not found
 	dataSelect := parseDataSelectPathParameter(request)
 	result, err := rbacroles.GetRbacRoleList(apiHandler.client, dataSelect)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetRbacRoleBindingList(request *restful.Request, response *restful.Response) {
+	// TODO: Handle case in which RBAC feature is not enabled in API server. Currently returns 404 resource not found
+	dataSelect := parseDataSelectPathParameter(request)
+	result, err := rbacrolebindings.GetRbacRoleBindingList(apiHandler.client, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return
