@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {stateName as deploymentDetailState} from 'deployment/detail/state';
 import horizontalPodAutoscalerDetailModule from 'horizontalpodautoscalerdetail/horizontalpodautoscalerdetail_module';
 
 describe('Horizontal Pod Autoscaler Info controller', () => {
@@ -36,7 +37,7 @@ describe('Horizontal Pod Autoscaler Info controller', () => {
 
   it('should get a href to the targeted resource', () => {
     ctrl.state_.href.and.callFake((stateName, stateParams) => {
-      expect(stateName).toBe('deploymentdetail');
+      expect(stateName).toBe(deploymentDetailState);
       expect(stateParams.objectNamespace).toBe('test-namespace');
       expect(stateParams.objectName).toBe('test-deployment');
     });

@@ -16,7 +16,7 @@ import chromeModule from 'chrome/chrome_module';
 import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
 import daemonSetModule from 'daemonset/module';
-import deploymentListModule from 'deploymentlist/deploymentlist_module';
+import deploymentModule from 'deployment/module';
 import horizontalPodAutoscalerListModule from 'horizontalpodautoscalerlist/horizontalpodautoscalerlist_module';
 import jobListModule from 'joblist/joblist_module';
 import replicaSetListModule from 'replicasetlist/replicasetlist_module';
@@ -42,7 +42,7 @@ export default angular
           jobListModule.name,
           replicationControllerListModule.name,
           replicaSetListModule.name,
-          deploymentListModule.name,
+          deploymentModule.name,
           daemonSetModule.name,
           horizontalPodAutoscalerListModule.name,
           statefulSetListModule.name,

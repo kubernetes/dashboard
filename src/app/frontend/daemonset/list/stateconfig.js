@@ -16,6 +16,7 @@ import {stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {stateName as workloadsStateName} from 'workloads/workloads_state';
 
+import {stateUrl} from './../state';
 import {DaemonSetListController} from './controller';
 
 /**
@@ -32,7 +33,7 @@ const i18n = {
  * @type {!ui.router.StateConfig}
  */
 export const config = {
-  url: '',
+  url: stateUrl,
   parent: chromeStateName,
   resolve: {
     'daemonSetList': resolveDaemonSetList,

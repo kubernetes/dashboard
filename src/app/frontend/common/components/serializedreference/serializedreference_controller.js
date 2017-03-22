@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {stateName as daemonSetStateName} from '../../../daemonset/detail/state';
-import {stateName as deploymentStateName} from '../../../deploymentdetail/deploymentdetail_state.js';
+import {stateName as deploymentStateName} from '../../../deployment/detail/state';
 import {stateName as jobStateName} from '../../../jobdetail/jobdetail_state';
 import {stateName as replicaSetStateName} from '../../../replicasetdetail/replicasetdetail_state';
 import {stateName as replicationControllerStateName} from '../../../replicationcontrollerdetail/replicationcontrollerdetail_state';

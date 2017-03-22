@@ -15,49 +15,64 @@
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
-import {stateName as deploymentList} from 'deploymentlist/deploymentlist_state';
+import {stateName as deploymentList} from 'deployment/list/state';
 
+import {stateUrl} from './../state';
 import {ActionBarController} from './actionbar_controller';
-import {DeploymentDetailController} from './deploymentdetail_controller';
-import {stateName, stateUrl} from './deploymentdetail_state';
+import {DeploymentDetailController} from './controller';
 
 /**
- * Configures states for the deployment detail view.
+ * Config state object for the Deployment detail view.
  *
- * @param {!ui.router.$stateProvider} $stateProvider
+ * @type {!ui.router.StateConfig}
+ */
+export const config = {
+  url: appendDetailParamsToUrl(stateUrl),
+  parent: chromeStateName,
+  resolve: {
+    'deploymentDetailResource': getDeploymentDetailResource,
+    'deploymentDetail': getDeploymentDetail,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': '{{$stateParams.objectName}}',
+      'parent': deploymentList,
+    },
+  },
+  views: {
+    '': {
+      controller: DeploymentDetailController,
+      controllerAs: 'ctrl',
+      templateUrl: 'deployment/detail/detail.html',
+    },
+    [actionbarViewName]: {
+      controller: ActionBarController,
+      controllerAs: '$ctrl',
+      templateUrl: 'deployment/detail/actionbar.html',
+    },
+  },
+};
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
  * @ngInject
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    url: appendDetailParamsToUrl(stateUrl),
-    parent: chromeStateName,
-    resolve: {
-      'deploymentDetailResource': getDeploymentDetailResource,
-      'deploymentDetail': getDeploymentDetail,
-    },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': '{{$stateParams.objectName}}',
-        'parent': deploymentList,
-      },
-    },
-    views: {
-      '': {
-        controller: DeploymentDetailController,
-        controllerAs: 'ctrl',
-        templateUrl: 'deploymentdetail/deploymentdetail.html',
-      },
-      [actionbarViewName]: {
-        controller: ActionBarController,
-        controllerAs: '$ctrl',
-        templateUrl: 'deploymentdetail/actionbar.html',
-      },
-    },
-  });
+export function deploymentEventsResource($resource) {
+  return $resource('api/v1/deployment/:namespace/:name/event');
 }
 
 /**
- * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+export function deploymentOldReplicaSetsResource($resource) {
+  return $resource('api/v1/deployment/:namespace/:name/oldreplicaset');
+}
+
+/**
+ * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource<!backendApi.DeploymentDetail>}
  * @ngInject

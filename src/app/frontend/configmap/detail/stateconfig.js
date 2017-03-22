@@ -17,8 +17,8 @@ import {stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 import {stateName as configMapList} from 'configmap/list/state';
-import {stateUrl} from 'configmap/state';
 
+import {stateUrl} from './../state';
 import {ActionBarController} from './actionbar_controller';
 import {ConfigMapDetailController} from './controller';
 

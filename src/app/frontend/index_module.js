@@ -25,7 +25,7 @@ import configModule from './config/module';
 import configMapModule from './configmap/module';
 import daemonSetModule from './daemonset/module';
 import deployModule from './deploy/deploy_module';
-import deploymentListModule from './deploymentlist/deploymentlist_module';
+import deploymentModule from './deployment/module';
 import errorModule from './error/error_module';
 import indexConfig from './index_config';
 import routeConfig from './index_route';
@@ -85,7 +85,7 @@ export default angular
           namespaceDetailModule.name,
           namespaceListModule.name,
           nodeListModule.name,
-          deploymentListModule.name,
+          deploymentModule.name,
           workloadsModule.name,
           storageModule.name,
           adminModule.name,

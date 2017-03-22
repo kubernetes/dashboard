@@ -18,19 +18,19 @@ import filtersModule from 'common/filters/filters_module';
 import namespaceModule from 'common/namespace/namespace_module';
 import eventsModule from 'events/events_module';
 
-import {daemonSetInfoComponent} from './detail/info_component';
-import {daemonSetEventsResource, daemonSetPodsResource, daemonSetServicesResource} from './detail/stateconfig';
-import {daemonSetCardComponent} from './list/card_component';
-import {daemonSetCardListComponent} from './list/cardlist_component';
-import {daemonSetListResource} from './list/stateconfig';
+import {deploymentInfoComponent} from './detail/info_component';
+import {deploymentEventsResource, deploymentOldReplicaSetsResource} from './detail/stateconfig';
+import {deploymentCardComponent} from './list/card_component';
+import {deploymentCardListComponent} from './list/cardlist_component';
+import {deploymentListResource} from './list/stateconfig';
 import stateConfig from './stateconfig';
 
 /**
- * Angular module for the Daemon Set resource.
+ * Angular module for the Deployment resource.
  */
 export default angular
     .module(
-        'kubernetesDashboard.daemonSet',
+        'kubernetesDashboard.deployment',
         [
           'ngMaterial',
           'ngResource',
@@ -42,10 +42,9 @@ export default angular
           namespaceModule.name,
         ])
     .config(stateConfig)
-    .component('kdDaemonSetCard', daemonSetCardComponent)
-    .component('kdDaemonSetCardList', daemonSetCardListComponent)
-    .component('kdDaemonSetInfo', daemonSetInfoComponent)
-    .factory('kdDaemonSetEventsResource', daemonSetEventsResource)
-    .factory('kdDaemonSetListResource', daemonSetListResource)
-    .factory('kdDaemonSetPodsResource', daemonSetPodsResource)
-    .factory('kdDaemonSetServicesResource', daemonSetServicesResource);
+    .component('kdDeploymentCard', deploymentCardComponent)
+    .component('kdDeploymentCardList', deploymentCardListComponent)
+    .component('kdDeploymentInfo', deploymentInfoComponent)
+    .factory('kdDeploymentEventsResource', deploymentEventsResource)
+    .factory('kdDeploymentListResource', deploymentListResource)
+    .factory('kdDeploymentOldReplicaSetsResource', deploymentOldReplicaSetsResource);

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'deploymentdetail/deploymentdetail_state';
+import {stateName} from 'deployment/detail/state';
 
 /**
  * Controller for the replica set card.
@@ -24,7 +24,7 @@ export default class DeploymentCardController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
-   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
+   * @param {!./../../common/namespace/namespace_service.NamespaceService} kdNamespaceService
    * @ngInject
    */
   constructor($state, $interpolate, kdNamespaceService) {
@@ -40,7 +40,7 @@ export default class DeploymentCardController {
     /** @private {!angular.$interpolate} */
     this.interpolate_ = $interpolate;
 
-    /** @private {!./../common/namespace/namespace_service.NamespaceService} */
+    /** @private {!./../../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
   }
 
@@ -112,5 +112,5 @@ export const deploymentCardComponent = {
     'deployment': '=',
   },
   controller: DeploymentCardController,
-  templateUrl: 'deploymentlist/deploymentcard.html',
+  templateUrl: 'deployment/list/card.html',
 };

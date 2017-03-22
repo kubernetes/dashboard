@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {DeploymentListController} from 'deploymentlist/deploymentlist_controller';
-import deploymentListModule from 'deploymentlist/deploymentlist_module';
+import {DeploymentListController} from 'deployment/list/controller';
+import deploymentListModule from 'deployment/module';
 
 describe('Replica Set list controller', () => {
-  /** @type {!deploymentlist/deploymentlist_controller.DeploymentListController} */
+  /** @type {!DeploymentListController} */
   let ctrl;
 
   beforeEach(() => {

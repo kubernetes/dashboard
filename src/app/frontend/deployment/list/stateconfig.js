@@ -16,42 +16,56 @@ import {stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {stateName as workloadsStateName} from 'workloads/workloads_state';
 
-import {DeploymentListController} from './deploymentlist_controller';
-import {stateName, stateUrl} from './deploymentlist_state';
+import {stateUrl} from './../state';
+import {DeploymentListController} from './controller';
 
 /**
- * Configures states for the service view.
+ * I18n object that defines strings for translation used in this file.
+ */
+const i18n = {
+  /** @type {string} @desc Label 'Deployments' that appears as a breadcrumbs on the action bar. */
+  MSG_BREADCRUMBS_DEPLOYMENTS_LABEL: goog.getMsg('Deployments'),
+};
+
+/**
+ * Config state object for the Deployment list view.
  *
- * @param {!ui.router.$stateProvider} $stateProvider
+ * @type {!ui.router.StateConfig}
+ */
+export const config = {
+  url: stateUrl,
+  parent: chromeStateName,
+  resolve: {
+    'deploymentList': resolveDeploymentList,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': i18n.MSG_BREADCRUMBS_DEPLOYMENTS_LABEL,
+      'parent': workloadsStateName,
+    },
+  },
+  views: {
+    '': {
+      controller: DeploymentListController,
+      controllerAs: '$ctrl',
+      templateUrl: 'deployment/list/list.html',
+    },
+  },
+};
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
  * @ngInject
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    url: stateUrl,
-    parent: chromeStateName,
-    resolve: {
-      'deploymentList': resolveDeploymentList,
-    },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': i18n.MSG_BREADCRUMBS_DEPLOYMENTS_LABEL,
-        'parent': workloadsStateName,
-      },
-    },
-    views: {
-      '': {
-        controller: DeploymentListController,
-        controllerAs: '$ctrl',
-        templateUrl: 'deploymentlist/deploymentlist.html',
-      },
-    },
-  });
+export function deploymentListResource($resource) {
+  return $resource('api/v1/deployment/:namespace');
 }
 
 /**
  * @param {!angular.Resource} kdDeploymentListResource
- * @param {!./../chrome/chrome_state.StateParams} $stateParams
- * @param {!./../common/pagination/pagination_service.PaginationService} kdPaginationService
+ * @param {!./../../chrome/chrome_state.StateParams} $stateParams
+ * @param {!./../../common/pagination/pagination_service.PaginationService} kdPaginationService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
@@ -59,8 +73,3 @@ export function resolveDeploymentList(kdDeploymentListResource, $stateParams, kd
   let query = kdPaginationService.getDefaultResourceQuery($stateParams.namespace);
   return kdDeploymentListResource.get(query).$promise;
 }
-
-const i18n = {
-  /** @type {string} @desc Label 'Deployments' that appears as a breadcrumbs on the action bar. */
-  MSG_BREADCRUMBS_DEPLOYMENTS_LABEL: goog.getMsg('Deployments'),
-};

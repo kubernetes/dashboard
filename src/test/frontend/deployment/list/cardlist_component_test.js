@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import deploymentListModule from 'deploymentlist/deploymentlist_module';
+import deploymentListModule from 'deployment/module';
 
 describe('Deployment Card List controller', () => {
   /**
-   * @type {!deploymentlist/deploymentcardlist_component.DeploymentCardListController}
+   * @type {!DeploymentCardListController}
    */
   let ctrl;
   /**
-   * @type {!./../common/namespace/namespace_service.NamespaceService}
+   * @type {!NamespaceService}
    */
   let data;
 
@@ -28,7 +28,7 @@ describe('Deployment Card List controller', () => {
     angular.mock.module(deploymentListModule.name);
 
     angular.mock.inject(($componentController, kdNamespaceService) => {
-      /** @type {!./../common/namespace/namespace_service.NamespaceService} */
+      /** @type {!NamespaceService} */
       data = kdNamespaceService;
       /** @type {!DeploymentCardListController} */
       ctrl = $componentController('kdDeploymentCardList', {kdNamespaceService_: data});

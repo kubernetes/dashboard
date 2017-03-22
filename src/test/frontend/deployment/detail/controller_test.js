@@ -12,23 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ActionBarController} from 'deploymentdetail/actionbar_controller';
-import module from 'deploymentdetail/deploymentdetail_module';
+import {DeploymentDetailController} from 'deployment/detail/controller';
+import deploymentDetailModule from 'deployment/module';
 
-describe('Action Bar controller', () => {
-  /** @type {!ActionBarController} */
-  let ctrl;
-  let details = {};
+describe('Deployment Detail controller', () => {
 
   beforeEach(() => {
-    angular.mock.module(module.name);
-
-    angular.mock.inject(($controller) => {
-      ctrl = $controller(ActionBarController, {deploymentDetail: details});
-    });
+    angular.mock.module(deploymentDetailModule.name);
   });
 
-  it('should initialize details', () => {
-    expect(ctrl.details).toBe(details);
-  });
+  it('should initialize deployment detail', angular.mock.inject(($controller) => {
+    let data = {};
+    /** @type {!DeploymentDetailController} */
+    let ctrl = $controller(DeploymentDetailController, {deploymentDetail: data});
+
+    expect(ctrl.deploymentDetail).toBe(data);
+  }));
 });

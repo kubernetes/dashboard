@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import deploymentListModule from 'deploymentlist/deploymentlist_module';
-import {resolveDeploymentList} from 'deploymentlist/deploymentlist_stateconfig';
+import {resolveDeploymentList} from 'deployment/list/stateconfig';
+import deploymentListModule from 'deployment/module';
 
 describe('StateConfig for deployment list', () => {
-  /** @type {!common/pagination/pagination_service.PaginationService} */
+  /** @type {!PaginationService} */
   let kdPaginationService;
 
   beforeEach(() => {

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {StateParams} from 'common/resource/resourcedetail';
-import {stateName as deploymentStateName} from 'deploymentdetail/deploymentdetail_state';
+import {stateName as deploymentStateName} from 'deployment/detail/state';
 import {stateName} from 'horizontalpodautoscalerdetail/horizontalpodautoscalerdetail_state';
 import {stateName as replicaSetStateName} from 'replicasetdetail/replicasetdetail_state';
 import {stateName as replicationControllerStateName} from 'replicationcontrollerdetail/replicationcontrollerdetail_state';
