@@ -19,6 +19,7 @@ import (
 	"testing"
 
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/types"
 	api "k8s.io/client-go/pkg/api/v1"
 )
 
@@ -156,6 +157,79 @@ func TestGetContainerImages(t *testing.T) {
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetContainerImages(%+v) == %+v, expected %+v",
 				c.podTemplate, actual, c.expected)
+		}
+	}
+}
+
+func TestFilterPodsByControllerResource(t *testing.T) {
+	controller := true
+	okOwnerRef := []metaV1.OwnerReference{{
+		Kind:       "ReplicationController",
+		Name:       "my-name-1",
+		UID:        "uid-1",
+		Controller: &controller,
+	}}
+	nokOwnerRef := []metaV1.OwnerReference{{
+		Kind:       "ReplicationController",
+		Name:       "my-name-1",
+		UID:        "",
+		Controller: &controller,
+	}}
+	cases := []struct {
+		namespace string
+		uid       types.UID
+		pods      []api.Pod
+		expected  []api.Pod
+	}{
+		{
+			"default",
+			"uid-1",
+			[]api.Pod{
+				{
+					ObjectMeta: metaV1.ObjectMeta{
+						Name:            "first-pod-ok",
+						Namespace:       "default",
+						OwnerReferences: okOwnerRef,
+					},
+				},
+				{
+					ObjectMeta: metaV1.ObjectMeta{
+						Name:            "second-pod-ok",
+						Namespace:       "default",
+						OwnerReferences: okOwnerRef,
+					},
+				},
+				{
+					ObjectMeta: metaV1.ObjectMeta{
+						Name:            "third-pod-nok",
+						Namespace:       "default",
+						OwnerReferences: nokOwnerRef,
+					},
+				},
+			},
+			[]api.Pod{
+				{
+					ObjectMeta: metaV1.ObjectMeta{
+						Name:            "first-pod-ok",
+						Namespace:       "default",
+						OwnerReferences: okOwnerRef,
+					},
+				},
+				{
+					ObjectMeta: metaV1.ObjectMeta{
+						Name:            "second-pod-ok",
+						Namespace:       "default",
+						OwnerReferences: okOwnerRef,
+					},
+				},
+			},
+		},
+	}
+	for _, c := range cases {
+		actual := FilterPodsByControllerResource(c.namespace, c.uid, c.pods)
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("FilterPodsBySelector(%+v, %+v, %+v) == %+v, expected %+v",
+				c.pods, c.namespace, c.uid, actual, c.expected)
 		}
 	}
 }

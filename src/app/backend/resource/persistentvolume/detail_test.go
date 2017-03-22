@@ -20,15 +20,15 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	api "k8s.io/client-go/pkg/api/v1"
 	"k8s.io/client-go/kubernetes/fake"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 func TestGetPersistentVolumeDetail(t *testing.T) {
 	cases := []struct {
-		name string
+		name             string
 		persistentVolume *api.PersistentVolume
-		expected          *PersistentVolumeDetail
+		expected         *PersistentVolumeDetail
 	}{
 		{
 			"foo",
