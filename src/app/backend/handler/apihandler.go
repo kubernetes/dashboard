@@ -16,6 +16,7 @@ package handler
 
 import (
 	"crypto/rand"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"log"
@@ -71,7 +72,7 @@ import (
 
 const (
 	// RequestLogString is a template for request log message.
-	RequestLogString = "[%s] Incoming %s %s %s request from %s"
+	RequestLogString = "[%s] Incoming %s %s %s request from %s: %s"
 
 	// ResponseLogString is a template for response log message.
 	ResponseLogString = "[%s] Outcoming response to %s with %d status code"
@@ -120,7 +121,6 @@ func shouldDoCsrfValidation(req *restful.Request) bool {
 }
 
 func xsrfValidation(csrfKey string) func(*restful.Request, *restful.Response, *restful.FilterChain) {
-
 	return func(req *restful.Request, resp *restful.Response, chain *restful.FilterChain) {
 		resource := mapUrlToResource(req.SelectedRoutePath())
 		if resource == nil || (shouldDoCsrfValidation(req) &&
@@ -157,15 +157,24 @@ func wsLogger(req *restful.Request, resp *restful.Response, chain *restful.Filte
 }
 
 // FormatRequestLog formats request log string.
-// TODO(maciaszczykm): Display request body.
 func FormatRequestLog(req *restful.Request) string {
-	reqURI := ""
+	uri := ""
 	if req.Request.URL != nil {
-		reqURI = req.Request.URL.RequestURI()
+		uri = req.Request.URL.RequestURI()
+	}
+
+	content := "{}"
+	entity := make(map[string]interface{})
+	req.ReadEntity(&entity)
+	if len(entity) > 0 {
+		bytes, err := json.MarshalIndent(entity, "", "  ")
+		if err == nil {
+			content = string(bytes)
+		}
 	}
 
 	return fmt.Sprintf(RequestLogString, time.Now().Format(time.RFC3339), req.Request.Proto,
-		req.Request.Method, reqURI, req.Request.RemoteAddr)
+		req.Request.Method, uri, req.Request.RemoteAddr, content)
 }
 
 // FormatResponseLog formats response log string.
