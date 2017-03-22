@@ -14,43 +14,55 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card-list selectable="false" with-statuses="true">
+<kd-resource-card-list selectable="false"
+                       with-statuses="true">
   <kd-resource-card-list-header ng-transclude="header">
     [[Deployments|Label which appears above the list of such objects.]]
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination pagination-id="deployments" list="$ctrl.deploymentList"
+  <kd-resource-card-list-pagination pagination-id="deployments"
+                                    list="$ctrl.deploymentList"
                                     list-resource="::$ctrl.deploymentListResource">
   </kd-resource-card-list-pagination>
 
   <kd-resource-card-header-columns>
-    <kd-resource-card-header-column size="small" grow="2">
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
       [[Name|Label 'Name' which appears as a column label in the table of deployments (deployment list view).]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="2" ng-if="$ctrl.areMultipleNamespacesSelected()">
+    <kd-resource-card-header-column size="small"
+                                    grow="2"
+                                    ng-if="$ctrl.areMultipleNamespacesSelected()">
       [[Namespace|Label 'Namespace' which appears as a column label in the table of deployments (deployment list view).]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="2">
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
       [[Labels|Label 'Labels' which appears as a column label in the table of deployments (deployment list view).]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="1">
+    <kd-resource-card-header-column size="small"
+                                    grow="1">
       [[Pods|Label 'Pods' which appears as a column label in the table of deployments (deployment list view).]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="1">
+    <kd-resource-card-header-column size="small"
+                                    grow="1">
       [[Age|Label 'Age' which appears as a column label in the table of deployments (deployment list view).]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="2">
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
       [[Images|Label 'Images' which appears as a column label in the table of deployments (deployment list view).]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="nogrow">
+    <kd-resource-card-header-column size="small"
+                                    grow="nogrow">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
-  <kd-deployment-card ng-if="::$ctrl.deploymentListResource" deployment="deployment"
+  <kd-deployment-card ng-if="::$ctrl.deploymentListResource"
+                      deployment="deployment"
                       dir-paginate="deployment in $ctrl.deploymentList.deployments | itemsPerPage: default"
                       pagination-id="deployments"
                       total-items="$ctrl.deploymentList.listMeta.totalItems">
   </kd-deployment-card>
 
-  <kd-deployment-card ng-if="::!$ctrl.deploymentListResource" deployment="deployment"
+  <kd-deployment-card ng-if="::!$ctrl.deploymentListResource"
+                      deployment="deployment"
                       dir-paginate="deployment in $ctrl.deploymentList.deployments | itemsPerPage: default"
                       pagination-id="deployments">
   </kd-deployment-card>

@@ -18,8 +18,7 @@ limitations under the License.
   <kd-info-card-header>[[Details|Header in a detail view]]</kd-info-card-header>
   <kd-info-card-section name="[[Details|Details section header. Appears below main header.]]">
     <kd-info-card-entry title="[[Name|Job name. Appears in details section.]]">
-      <kd-middle-ellipsis
-              display-string="{{::$ctrl.job.objectMeta.name}}">
+      <kd-middle-ellipsis display-string="{{::$ctrl.job.objectMeta.name}}">
       </kd-middle-ellipsis>
     </kd-info-card-entry>
     <kd-info-card-entry title="[[Namespace|Job namespace. Appears in details section.]]">
@@ -44,13 +43,17 @@ limitations under the License.
     <kd-info-card-entry title="[[Pods|Pod status section header. Appears below main header.]]">
       <div>
         <div class="kd-comma-separated-item">
-          {{::$ctrl.job.podInfo.running}} [[active|Status of active pods. Appears next to number of active pods.]]<!-- Collapse
+          {{::$ctrl.job.podInfo.running}} [[active|Status of active pods. Appears next to number of active pods.]]
+          <!-- Collapse
           whitespace
-      --></div>
+      -->
+        </div>
         <div class="kd-comma-separated-item">
-          {{::$ctrl.job.podInfo.succeeded}} [[succeeded|Status of succeeded pods. Appears next to number of succeeded pods.]]<!-- Collapse
+          {{::$ctrl.job.podInfo.succeeded}} [[succeeded|Status of succeeded pods. Appears next to number of succeeded pods.]]
+          <!-- Collapse
           whitespace
-      --></div>
+      -->
+        </div>
         <div class="kd-comma-separated-item">
           {{::$ctrl.job.podInfo.failed}} [[failed|Status of failed pods. Appears next to number of failed pods.]]
         </div>

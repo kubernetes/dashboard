@@ -78,12 +78,6 @@ func getPersistentVolumeList(persistentVolumes []api.PersistentVolume, dsQuery *
 	persistentVolumes = fromCells(dataselect.GenericDataSelect(toCells(persistentVolumes), dsQuery))
 
 	for _, item := range persistentVolumes {
-
-		var claim string
-		if item.Spec.ClaimRef != nil {
-			claim = item.Spec.ClaimRef.Name
-		}
-
 		result.Items = append(result.Items,
 			PersistentVolume{
 				ObjectMeta:  common.NewObjectMeta(item.ObjectMeta),
@@ -91,7 +85,7 @@ func getPersistentVolumeList(persistentVolumes []api.PersistentVolume, dsQuery *
 				Capacity:    item.Spec.Capacity,
 				AccessModes: item.Spec.AccessModes,
 				Status:      item.Status.Phase,
-				Claim:       claim,
+				Claim:       getPersistentVolumeClaim(&item),
 				Reason:      item.Status.Reason,
 			})
 	}

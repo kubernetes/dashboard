@@ -14,13 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div ng-if="::$ctrl.shouldShowPagination()" flex="auto" layout="row" class="kd-list-pagination">
-  <dir-pagination-controls ng-if="::!$ctrl.serverSided" pagination-id="::$ctrl.paginationId"
-                           class="kd-list-pagination-controls" boundary-links="true"
+<div ng-if="::$ctrl.shouldShowPagination()"
+     flex="auto"
+     layout="row"
+     class="kd-list-pagination">
+  <dir-pagination-controls ng-if="::!$ctrl.serverSided"
+                           pagination-id="::$ctrl.paginationId"
+                           class="kd-list-pagination-controls"
+                           boundary-links="true"
                            template-url="common/pagination/pagination.html">
   </dir-pagination-controls>
-  <dir-pagination-controls ng-if="::$ctrl.serverSided" pagination-id="::$ctrl.paginationId"
-                           class="kd-list-pagination-controls" boundary-links="true"
+  <dir-pagination-controls ng-if="::$ctrl.serverSided"
+                           pagination-id="::$ctrl.paginationId"
+                           class="kd-list-pagination-controls"
+                           boundary-links="true"
                            template-url="common/pagination/pagination.html"
                            on-page-change="$ctrl.pageChanged(newPageNumber)">
   </dir-pagination-controls>

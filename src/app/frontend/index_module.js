@@ -50,6 +50,7 @@ import serviceDetailModule from './servicedetail/servicedetail_module';
 import serviceListModule from './servicelist/servicelist_module';
 import servicesanddiscoveryModule from './servicesanddiscovery/module';
 import statefulSetListModule from './statefulsetlist/statefulsetlist_module';
+import storageModule from './storage/module';
 import storageClassDetailModule from './storageclassdetail/module';
 import storageClassListModule from './storageclasslist/module';
 import thirdPartyResourceDetailModule from './thirdpartyresourcedetail/detail_module';
@@ -82,6 +83,7 @@ export default angular
           nodeListModule.name,
           deploymentListModule.name,
           workloadsModule.name,
+          storageModule.name,
           adminModule.name,
           serviceDetailModule.name,
           serviceListModule.name,

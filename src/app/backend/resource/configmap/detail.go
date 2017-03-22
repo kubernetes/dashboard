@@ -34,7 +34,7 @@ type ConfigMapDetail struct {
 	Data map[string]string `json:"data,omitempty"`
 }
 
-// GetConfigMapDetail returns returns detailed information about a config map
+// GetConfigMapDetail returns detailed information about a config map
 func GetConfigMapDetail(client *client.Clientset, namespace, name string) (*ConfigMapDetail, error) {
 	log.Printf("Getting details of %s config map in %s namespace", name, namespace)
 

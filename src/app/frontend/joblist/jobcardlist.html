@@ -14,47 +14,63 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card-list selectable="false" with-statuses="true">
+<kd-resource-card-list selectable="false"
+                       with-statuses="true">
   <kd-resource-card-list-header ng-transclude="header">
     [[Jobs|Label which appears above the list of such objects.]]
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination pagination-id="jobs" list="$ctrl.jobList"
+  <kd-resource-card-list-pagination pagination-id="jobs"
+                                    list="$ctrl.jobList"
                                     list-resource="::$ctrl.jobListResource">
   </kd-resource-card-list-pagination>
 
   <kd-resource-card-header-columns>
-    <kd-resource-card-header-column size="small" grow="2">
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
       [[Name|Label 'Name' which appears as a column label in the table of jobs (Job list view).]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="1" ng-if=::$ctrl.showResourceKind>
+    <kd-resource-card-header-column size="small"
+                                    grow="1"
+                                    ng-if=::$ctrl.showResourceKind>
       [[Kind|Column header 'Kind' on a job list table]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="2" ng-if="$ctrl.areMultipleNamespacesSelected()">
+    <kd-resource-card-header-column size="small"
+                                    grow="2"
+                                    ng-if="$ctrl.areMultipleNamespacesSelected()">
       [[Namespace|Label 'Namespace' which appears as a column label in the table of replication controllers (Job list view).]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="2">
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
       [[Labels|Label 'Labels' which appears as a column label in the table of replication controllers (Job list view).]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="1">
+    <kd-resource-card-header-column size="small"
+                                    grow="1">
       [[Pods|Label 'Pods' which appears as a column label in the table of replication controllers (Job list view).]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="1">
+    <kd-resource-card-header-column size="small"
+                                    grow="1">
       [[Age|Label 'Age' which appears as a column label in the table of replication controllers (Job list view).]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="2">
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
       [[Images|Label 'Images' which appears as a column label in the table of replication controllers (Job list view).]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="nogrow">
+    <kd-resource-card-header-column size="small"
+                                    grow="nogrow">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
-  <kd-job-card ng-if="::$ctrl.jobListResource" pagination-id="jobs"
-               dir-paginate="job in $ctrl.jobList.jobs | itemsPerPage: default" job="job"
+  <kd-job-card ng-if="::$ctrl.jobListResource"
+               pagination-id="jobs"
+               dir-paginate="job in $ctrl.jobList.jobs | itemsPerPage: default"
+               job="job"
                show-resource-kind="::$ctrl.showResourceKind"
                total-items="::$ctrl.jobList.listMeta.totalItems">
   </kd-job-card>
 
-  <kd-job-card ng-if="::!$ctrl.jobListResource" pagination-id="jobs"
-               dir-paginate="job in $ctrl.jobList.jobs | itemsPerPage: default" job="job"
+  <kd-job-card ng-if="::!$ctrl.jobListResource"
+               pagination-id="jobs"
+               dir-paginate="job in $ctrl.jobList.jobs | itemsPerPage: default"
+               job="job"
                show-resource-kind="::$ctrl.showResourceKind">
   </kd-job-card>
 </kd-resource-card-list>

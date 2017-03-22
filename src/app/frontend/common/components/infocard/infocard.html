@@ -18,7 +18,10 @@ limitations under the License.
   <kd-title ng-transclude="header"></kd-title>
   <kd-content>
     <div layout="column">
-      <div class="kd-info-card-section" ng-transclude="section" layout="row" layout-padding>
+      <div class="kd-info-card-section"
+           ng-transclude="section"
+           layout="row"
+           layout-padding>
       </div>
     </div>
   </kd-content>
@@ -28,7 +31,10 @@ limitations under the License.
 <kd-content-card ng-if="::!$ctrl.isHeaderFilled()">
   <kd-content>
     <div layout="column">
-      <div class="kd-info-card-section" ng-transclude="section" layout="row" layout-padding>
+      <div class="kd-info-card-section"
+           ng-transclude="section"
+           layout="row"
+           layout-padding>
       </div>
     </div>
   </kd-content>

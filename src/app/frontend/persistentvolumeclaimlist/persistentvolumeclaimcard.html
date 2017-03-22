@@ -14,24 +14,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card object-meta="::$ctrl.persistentVolumeClaim.objectMeta" type-meta="::$ctrl.persistentVolumeClaim.typeMeta">
+<kd-resource-card object-meta="::$ctrl.persistentVolumeClaim.objectMeta"
+                  type-meta="::$ctrl.persistentVolumeClaim.typeMeta">
   <kd-resource-card-status layout="row">
-    <md-icon class="material-icons kd-error" ng-if="::$ctrl.isLost()">
+    <md-icon class="material-icons kd-error"
+             ng-if="::$ctrl.isLost()">
       error
       <md-tooltip md-direction="right">[[This claim is in lost state|Tooltip text which appears on error icon hover.]]</md-tooltip>
     </md-icon>
-    <md-icon class="material-icons kd-" ng-if="::$ctrl.isPending()">
+    <md-icon class="material-icons kd-"
+             ng-if="::$ctrl.isPending()">
       timelapse
       <md-tooltip md-direction="right">[[This claim is in pending state|Tooltip text which appears on pending icon hover.]]</md-tooltip>
     </md-icon>
-    <md-icon class="material-icons kd-success" ng-if="::$ctrl.isBound()">
+    <md-icon class="material-icons kd-success"
+             ng-if="::$ctrl.isBound()">
       check_circle
     </md-icon>
   </kd-resource-card-status>
   <kd-resource-card-columns>
     <kd-resource-card-column>
       <div>
-        <a ng-href="{{::$ctrl.getPersistentVolumeClaimDetailHref()}}" class="kd-middle-ellipsised-link">
+        <a ng-href="{{::$ctrl.getPersistentVolumeClaimDetailHref()}}"
+           class="kd-middle-ellipsised-link">
           <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeClaim.objectMeta.name}}">
           </kd-middle-ellipsis>
         </a>

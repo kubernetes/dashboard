@@ -16,22 +16,31 @@ limitations under the License.
 
 <div class="kd-environment-variables-title md-body-2">[[Environment variables|Title of the Environment Variables section on the deploy page.]]</div>
 <div ng-repeat="variable in ctrl.variables">
-  <ng-form name="variablesForm" layout="row">
-    <md-input-container flex="auto" class="kd-deploy-input-row">
+  <ng-form name="variablesForm"
+           layout="row">
+    <md-input-container flex="auto"
+                        class="kd-deploy-input-row">
       <label>[[Name|Label "Name" which appears as a placeholder for the input of an environment variable name on the deploy page.]]</label>
-      <input ng-model="variable.name" name="name" ng-change="ctrl.addVariableIfNeeed()"
-          ng-pattern="ctrl.namePattern">
-      <ng-messages for="variablesForm.name.$error" role="alert" multiple>
+      <input ng-model="variable.name"
+             name="name"
+             ng-change="ctrl.addVariableIfNeeed()"
+             ng-pattern="ctrl.namePattern">
+      <ng-messages for="variablesForm.name.$error"
+                   role="alert"
+                   multiple>
         <ng-message when="pattern">[[Variable name must be a valid C identifier.|Label "Value" which appears as a placeholder for the input of an environment variable value on the deploy page.]]</ng-message>
       </ng-messages>
     </md-input-container>
     <div flex="5"></div>
-    <md-input-container flex="auto" class="kd-deploy-input-row">
+    <md-input-container flex="auto"
+                        class="kd-deploy-input-row">
       <label>[[Value|Label "Value" which appears as a placeholder for the input of an environment variable value on the deploy page.]]</label>
-      <input ng-model="variable.value" name="value">
+      <input ng-model="variable.value"
+             name="value">
     </md-input-container>
     <div flex="10">
-      <md-button type="button" ng-if="ctrl.isRemovable($index)"
+      <md-button type="button"
+                 ng-if="ctrl.isRemovable($index)"
                  ng-click="ctrl.remove($index)"
                  class="material-icons md-icon-button">
         delete

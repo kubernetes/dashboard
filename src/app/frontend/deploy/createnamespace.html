@@ -14,16 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-dialog aria-label="Create a new namespace" layout="column">
+<md-dialog aria-label="Create a new namespace"
+           layout="column">
   <md-dialog-content layout-padding>
-    <h4 class="md-title" >[[Create a new namespace|Create namespace dialog title. The message appears at the top of the dialog box.]]</h4>
+    <h4 class="md-title">[[Create a new namespace|Create namespace dialog title. The message appears at the top of the dialog box.]]</h4>
     <div>[[The new namespace will be added to the cluster.|Create namespace dialog subtitle. Appears right below the title.]]</div>
 
-    <form name="ctrl.namespaceForm" ng-submit="ctrl.createNamespace()" novalidate>
+    <form name="ctrl.namespaceForm"
+          ng-submit="ctrl.createNamespace()"
+          novalidate>
       <kd-help-section>
         <md-input-container class="md-block">
           <label>[[Namespace name|Label 'Namespace name', which appears as a placeholder in an empty input field in the create namespace dialog.]]</label>
-          <input name="namespace" ng-model="ctrl.namespace"
+          <input name="namespace"
+                 ng-model="ctrl.namespace"
                  md-maxlength="{{ctrl.namespaceMaxLength}}"
                  ng-pattern="ctrl.namespacePattern"
                  required>
@@ -35,14 +39,18 @@ limitations under the License.
         </md-input-container>
         <kd-user-help>
           [[A namespace with the specified name will be added to the cluster.|User help text for the input of the 'Namespace' data.]]
-          <a href="http://kubernetes.io/docs/admin/namespaces/" target="_blank" tabindex="-1">
+          <a href="http://kubernetes.io/docs/admin/namespaces/"
+             target="_blank"
+             tabindex="-1">
             [[Learn more|The text is used as a 'Learn more' link text in the namespace creation dialog]]
             <i class="material-icons">open_in_new</i>
           </a>
         </kd-user-help>
       </kd-help-section>
       <md-dialog-actions layout="row">
-        <md-button ng-disabled="ctrl.isDisabled()" class="md-primary" type="submit">
+        <md-button ng-disabled="ctrl.isDisabled()"
+                   class="md-primary"
+                   type="submit">
           [[Create|The text is put on the 'Create' button in the namespace creation dialog.]]
         </md-button>
         <md-button ng-click="ctrl.cancel()">[[Cancel|The text is put on the 'Cancel' button in the namespace creation dialog.]]</md-button>

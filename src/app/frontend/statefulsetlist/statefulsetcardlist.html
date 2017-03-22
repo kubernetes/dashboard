@@ -14,47 +14,63 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card-list selectable="false" with-statuses="true">
+<kd-resource-card-list selectable="false"
+                       with-statuses="true">
   <kd-resource-card-list-header ng-transclude="header">
     [[Stateful Sets|Label which appears above the list of such objects.]]
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination pagination-id="statefulsets" list="$ctrl.statefulSetList"
+  <kd-resource-card-list-pagination pagination-id="statefulsets"
+                                    list="$ctrl.statefulSetList"
                                     list-resource="$ctrl.statefulSetListResource">
   </kd-resource-card-list-pagination>
 
   <kd-resource-card-header-columns>
-    <kd-resource-card-header-column size="small" grow="2">
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
       [[Name|Stateful set list header: name.]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="1" ng-if="::$ctrl.showResourceKind">
+    <kd-resource-card-header-column size="small"
+                                    grow="1"
+                                    ng-if="::$ctrl.showResourceKind">
       [[Kind|Column header 'Kind' of a Stateful Set List]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="2" ng-if="$ctrl.areMultipleNamespacesSelected()">
+    <kd-resource-card-header-column size="small"
+                                    grow="2"
+                                    ng-if="$ctrl.areMultipleNamespacesSelected()">
       [[Namespace|Stateful set list header: namespace.]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="2">
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
       [[Labels|Stateful set list header: labels.]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="1">
+    <kd-resource-card-header-column size="small"
+                                    grow="1">
       [[Pods|Stateful set list header: pods.]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="1">
+    <kd-resource-card-header-column size="small"
+                                    grow="1">
       [[Age|Stateful set list header: age.]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="2">
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
       [[Images|Stateful set list header: images.]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="nogrow">
+    <kd-resource-card-header-column size="small"
+                                    grow="nogrow">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
-  <kd-stateful-set-card ng-if="::$ctrl.statefulSetListResource" pagination-id="statefulsets" stateful-set="statefulSet"
-                   dir-paginate="statefulSet in $ctrl.statefulSetList.statefulSets | itemsPerPage: default"
-                   show-resource-kind="::$ctrl.showResourceKind"
-                   total-items="::$ctrl.statefulSetList.listMeta.totalItems">
+  <kd-stateful-set-card ng-if="::$ctrl.statefulSetListResource"
+                        pagination-id="statefulsets"
+                        stateful-set="statefulSet"
+                        dir-paginate="statefulSet in $ctrl.statefulSetList.statefulSets | itemsPerPage: default"
+                        show-resource-kind="::$ctrl.showResourceKind"
+                        total-items="::$ctrl.statefulSetList.listMeta.totalItems">
   </kd-stateful-set-card>
 
-  <kd-stateful-set-card ng-if="::!$ctrl.statefulSetListResource" pagination-id="statefulsets" stateful-set="statefulSet"
-                   dir-paginate="statefulSet in $ctrl.statefulSetList.statefulSets | itemsPerPage: default"
-                   show-resource-kind="::$ctrl.showResourceKind">
+  <kd-stateful-set-card ng-if="::!$ctrl.statefulSetListResource"
+                        pagination-id="statefulsets"
+                        stateful-set="statefulSet"
+                        dir-paginate="statefulSet in $ctrl.statefulSetList.statefulSets | itemsPerPage: default"
+                        show-resource-kind="::$ctrl.showResourceKind">
   </kd-stateful-set-card>
 </kd-resource-card-list>

@@ -14,6 +14,7 @@
 
 import {stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {stateName as parentStateName} from 'storage/state';
 
 import {PersistentVolumeClaimListController} from './persistentvolumeclaimlist_controller';
 import {stateName, stateUrl} from './persistentvolumeclaimlist_state';
@@ -33,6 +34,7 @@ export default function stateConfig($stateProvider) {
     },
     data: {
       [breadcrumbsConfig]: {
+        'parent': parentStateName,
         'label': i18n.MSG_BREADCRUMBS_PERSISTENT_VOLUME_CLAIM_LABEL,
       },
     },

@@ -111,8 +111,8 @@ export class PodCardController {
    * @export
    */
   getDisplayStatus() {
-    // See kubectl resource_printer.go for logic in kubectl.
-    // https://github.com/kubernetes/kubernetes/blob/master/pkg/kubectl/resource_printer.go
+    // See kubectl printers.go for logic in kubectl.
+    // https://github.com/kubernetes/kubernetes/blob/39857f486511bd8db81868185674e8b674b1aeb9/pkg/printers/internalversion/printers.go
 
     let msgState = 'running';
     let reason = undefined;

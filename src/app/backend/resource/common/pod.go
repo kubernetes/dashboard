@@ -16,6 +16,7 @@ package common
 
 import (
 	"k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/types"
 	api "k8s.io/client-go/pkg/api/v1"
 )
 
@@ -33,6 +34,24 @@ func FilterNamespacedPodsBySelector(pods []api.Pod, namespace string,
 	}
 
 	return matchingPods
+}
+
+// FilterPodsByControllerResource returns set of pods controlled by given resource.
+// Please note, that OwnerReference is still in development phase:
+// https://github.com/kubernetes/community/blob/master/contributors/design-proposals/controller-ref.md.
+// Currently works for given resources: Replication Controllers.
+func FilterPodsByControllerResource(resourceNamespace string, resourceUID types.UID, allPods []api.Pod) []api.Pod {
+	var pods []api.Pod
+	for _, pod := range allPods {
+		if pod.Namespace == resourceNamespace {
+			for _, ownerRef := range pod.OwnerReferences {
+				if ownerRef.Controller != nil && *ownerRef.Controller == true && ownerRef.UID == resourceUID {
+					pods = append(pods, pod)
+				}
+			}
+		}
+	}
+	return pods
 }
 
 // FilterPodsBySelector returns pods targeted by given resource selector.

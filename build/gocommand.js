@@ -47,9 +47,23 @@ const minGoVersion = '1.6.1';
  * @param {function(?Error=)} doneFn - Callback.
  * @param {!Object<string, string>=} [envOverride] optional environment variables overrides map.
  */
-export default function spawnGoProcess(args, doneFn, envOverride) {
+export default function goCommand(args, doneFn, envOverride) {
   checkPrerequisites()
-      .then(() => spawnProcess(args, envOverride))
+      .then(() => spawnGoProcess(args, envOverride))
+      .then(doneFn)
+      .fail((error) => doneFn(error));
+}
+
+/**
+ * Spawns a Gofmt process after making sure all Go prerequisites are present.
+ *
+ * @param {!Array<string>} args - Arguments of the go command.
+ * @param {function(?Error=)} doneFn - Callback.
+ * @param {!Object<string, string>=} [envOverride] optional environment variables overrides map.
+ */
+export function gofmtCommand(args, doneFn, envOverride) {
+  checkPrerequisites()
+      .then(() => spawnGofmtProcess(args, envOverride))
       .then(doneFn)
       .fail((error) => doneFn(error));
 }
@@ -151,17 +165,18 @@ function checkGovendor() {
 }
 
 /**
- * Spawns Go process.
+ * Spawns a process.
  * Promises an error if the go command process fails.
  *
+ * @param {string} processName - Process name to spawn.
  * @param {!Array<string>} args - Arguments of the go command.
  * @param {!Object<string, string>=} [envOverride] optional environment variables overrides map.
  * @return {Q.Promise} A promise object.
  */
-function spawnProcess(args, envOverride) {
+function spawnProcess(processName, args, envOverride) {
   let deferred = q.defer();
   let envLocal = lodash.merge(env, envOverride);
-  let goTask = child.spawn('go', args, {
+  let goTask = child.spawn(processName, args, {
     env: envLocal,
     stdio: 'inherit',
   });
@@ -175,4 +190,28 @@ function spawnProcess(args, envOverride) {
     deferred.resolve();
   });
   return deferred.promise;
+}
+
+/**
+ * Spawns go process.
+ * Promises an error if the go command process fails.
+ *
+ * @param {!Array<string>} args - Arguments of the go command.
+ * @param {!Object<string, string>=} [envOverride] optional environment variables overrides map.
+ * @return {Q.Promise} A promise object.
+ */
+function spawnGoProcess(args, envOverride) {
+  return spawnProcess('go', args, envOverride);
+}
+
+/**
+ * Spawns gofmt process.
+ * Promises an error if the go command process fails.
+ *
+ * @param {!Array<string>} args - Arguments of the go command.
+ * @param {!Object<string, string>=} [envOverride] optional environment variables overrides map.
+ * @return {Q.Promise} A promise object.
+ */
+function spawnGofmtProcess(args, envOverride) {
+  return spawnProcess('gofmt', args, envOverride);
 }

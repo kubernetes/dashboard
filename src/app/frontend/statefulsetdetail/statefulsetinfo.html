@@ -19,9 +19,6 @@ limitations under the License.
   <kd-info-card-section>
     <kd-object-meta-info-card object-meta="::$ctrl.statefulSet.objectMeta">
     </kd-object-meta-info-card>
-    <kd-info-card-entry title="[[Labels|Stateful set info details section labels entry.]]">
-      <kd-labels labels="::$ctrl.statefulSet.objectMeta.labels"></kd-labels>
-    </kd-info-card-entry>
     <kd-info-card-entry title="[[Images|Stateful set info details section images entry.]]">
       <div ng-repeat="image in $ctrl.statefulSet.containerImages track by $index">
         <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
@@ -32,8 +29,8 @@ limitations under the License.
   <kd-info-card-section name="[[Status|Stateful set info status section name.]]">
     <kd-info-card-entry title="[[Pods|Stateful set info status section pods entry.]]">
       <div ng-if="!$ctrl.areDesiredPodsRunning()">
-        [[{{$ctrl.statefulSet.podInfo.current}} created|The message says that that many pods were created (stateful set details page).]],
-        [[{{$ctrl.statefulSet.podInfo.desired}} desired|The message says that that many pods are desired to run (stateful set details page).]]
+        [[{{$ctrl.statefulSet.podInfo.current}} created|The message says that that many pods were created (stateful set details page).]], [[{{$ctrl.statefulSet.podInfo.desired}} desired|The message says that that many pods are desired to run (stateful set details
+        page).]]
       </div>
       <div ng-if="$ctrl.areDesiredPodsRunning()">
         [[{{$ctrl.statefulSet.podInfo.running}} running|The message says that that many pods are running (stateful set details page).]]
@@ -42,13 +39,16 @@ limitations under the License.
     <kd-info-card-entry title="[[Pods status|Stateful set info status section pods status entry.]]"
                         ng-if="!$ctrl.areDesiredPodsRunning()">
       <div ng-if="!$ctrl.areDesiredPodsRunning()">
-        <div ng-if="::$ctrl.statefulSet.podInfo.pending" class="kd-comma-separated-item">
+        <div ng-if="::$ctrl.statefulSet.podInfo.pending"
+             class="kd-comma-separated-item">
           [[{{$ctrl.statefulSet.podInfo.pending}} pending|The message says that that many pods are pending (stateful set details page).]]
         </div>
-        <div ng-if="::$ctrl.statefulSet.podInfo.failed" class="kd-comma-separated-item">
+        <div ng-if="::$ctrl.statefulSet.podInfo.failed"
+             class="kd-comma-separated-item">
           [[{{$ctrl.statefulSet.podInfo.failed}} failed|The message says that that many pods have failed (stateful set details page).]]
         </div>
-        <div ng-if="::$ctrl.statefulSet.podInfo.running" class="kd-comma-separated-item">
+        <div ng-if="::$ctrl.statefulSet.podInfo.running"
+             class="kd-comma-separated-item">
           [[{{$ctrl.statefulSet.podInfo.running}} running|The message says that that many pods are running (stateful set details page).]]
         </div>
       </div>
