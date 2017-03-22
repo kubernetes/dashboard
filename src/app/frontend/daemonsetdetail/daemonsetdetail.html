@@ -44,7 +44,7 @@ limitations under the License.
   <kd-content>
     <kd-pod-card-list pod-list="::ctrl.daemonSetDetail.podList"
                       pod-list-resource="::ctrl.daemonSetPodsResource"
-                      with-statuses="true" >
+                      with-statuses="true">
       <kd-zerostate>
         <div class="kd-zerostate-title">[[There is nothing to display here|Title for pods card zerostate in daemon set details page.]]</div>
         <div class="kd-zerostate-text">[[There are currently no Pods scheduled on this Daemon Set.|Text for pods card zerostate in daemon set details page.]]</div>
@@ -53,4 +53,5 @@ limitations under the License.
   </kd-content>
 </kd-content-card>
 
-<kd-event-card-list event-list="::ctrl.daemonSetDetail.eventList" event-list-resource="::ctrl.daemonSetEventsResource"></kd-event-card-list>
+<kd-event-card-list event-list="::ctrl.daemonSetDetail.eventList"
+                    event-list-resource="::ctrl.daemonSetEventsResource"></kd-event-card-list>

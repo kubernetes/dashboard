@@ -31,6 +31,7 @@ import {stateName as secretState} from 'secretlist/list_state';
 import {stateName as serviceState} from 'servicelist/servicelist_state';
 import {stateName as servicesanddiscoveryState} from 'servicesanddiscovery/state';
 import {stateName as statefulSetState} from 'statefulsetlist/statefulsetlist_state';
+import {stateName as storageState} from 'storage/state';
 import {stateName as storageClassState} from 'storageclasslist/state';
 import {stateName as workloadState} from 'workloads/workloads_state';
 
@@ -54,6 +55,7 @@ export class NavController {
       'namespace': namespaceState,
       'node': nodeState,
       'workload': workloadState,
+      'storage': storageState,
       'admin': adminState,
       'pod': podState,
       'deployment': deploymentState,

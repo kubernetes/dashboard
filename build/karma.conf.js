@@ -124,10 +124,10 @@ module.exports = function(config) {
     let testName;
     if (process.env.TRAVIS) {
       testName = `Karma tests ${process.env.TRAVIS_REPO_SLUG}, build ` +
-          `${process.env.TRAVIS_BUILD_NUMBER}`;
+          `${process.env.TRAVIS_BUILD_NUMBER}, job ${process.env.TRAVIS_JOB_NUMBER}`;
       if (process.env.TRAVIS_PULL_REQUEST !== 'false') {
         testName += `, PR: https://github.com/${process.env.TRAVIS_REPO_SLUG}/pull/` +
-            `${process.env.TRAVIS_PULL_REQUEST}`;
+            `${process.env.TRAVIS_PULL_REQUEST}, job ${process.env.TRAVIS_JOB_NUMBER}`;
       }
     } else {
       testName = 'Local karma tests';

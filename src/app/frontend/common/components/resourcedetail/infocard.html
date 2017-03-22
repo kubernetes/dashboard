@@ -15,23 +15,22 @@ limitations under the License.
 -->
 
 <kd-info-card-entry title="[[Name|Label 'Name' for a resource.]]">
-  <kd-middle-ellipsis
-          display-string="{{::$ctrl.objectMeta.name}}">
+  <kd-middle-ellipsis display-string="{{::$ctrl.objectMeta.name}}">
   </kd-middle-ellipsis>
 </kd-info-card-entry>
 
 <kd-info-card-entry ng-if="::$ctrl.objectMeta.namespace"
-    title="[[Namespace|Label 'Namespace' for a resource.]]">
+                    title="[[Namespace|Label 'Namespace' for a resource.]]">
   {{::$ctrl.objectMeta.namespace}}
 </kd-info-card-entry>
 
 <kd-info-card-entry ng-if="::$ctrl.objectMeta.labels"
-    title="[[Labels|Label 'Labels' for a resource.]]">
+                    title="[[Labels|Label 'Labels' for a resource.]]">
   <kd-labels labels="::$ctrl.objectMeta.labels"></kd-labels>
 </kd-info-card-entry>
 
 <kd-info-card-entry ng-if="::$ctrl.objectMeta.annotations"
-    title="[[Annotations|Label 'Annotations' for a resource.]]">
+                    title="[[Annotations|Label 'Annotations' for a resource.]]">
   <kd-annotations labels="::$ctrl.objectMeta.annotations"></kd-annotations>
 </kd-info-card-entry>
 

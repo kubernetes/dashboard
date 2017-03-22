@@ -93,13 +93,6 @@ export default {
      */
     mainPackageName: 'github.com/kubernetes/dashboard/src/app/backend',
     /**
-     * Names of all backend packages prefixed with 'test' command.
-     */
-    testCommandArgs: [
-      'test',
-      'github.com/kubernetes/dashboard/src/app/backend/...',
-    ],
-    /**
      * Port number of the backend server. Only used during development.
      */
     devServerPort: 9091,
@@ -179,8 +172,7 @@ export default {
     /**
      * Whether to use sauce labs for running tests that require a browser.
      */
-    useSauceLabs: !!process.env.SAUCE_USERNAME && !!process.env.SAUCE_ACCESS_KEY &&
-        !!process.env.TRAVIS && process.env.TRAVIS_PULL_REQUEST === 'false',
+    useSauceLabs: !!process.env.TRAVIS,
   },
 
   /**
@@ -207,7 +199,8 @@ export default {
     bowerComponents: path.join(basePath, 'bower_components'),
     build: path.join(basePath, 'build'),
     coverage: path.join(basePath, 'coverage'),
-    coverageReport: path.join(basePath, 'coverage/lcov'),
+    coverageBackend: path.join(basePath, 'coverage/go.txt'),
+    coverageFrontend: path.join(basePath, 'coverage/lcov/lcov.info'),
     deploySrc: path.join(basePath, 'src/deploy'),
     dist: path.join(basePath, 'dist', arch.default),
     distCross: arch.list.map((arch) => path.join(basePath, 'dist', arch)),
@@ -221,6 +214,7 @@ export default {
     goTools: path.join(basePath, '.tools/go'),
     goWorkspace: path.join(basePath, '.go_workspace'),
     hyperkube: path.join(basePath, 'build/hyperkube.sh'),
+    goTestScript: path.join(basePath, 'build/go-test.sh'),
     i18nProd: path.join(basePath, '.tmp/i18n'),
     integrationTest: path.join(basePath, 'src/test/integration'),
     jsoneditorImages: path.join(basePath, 'bower_components/jsoneditor/src/css/img'),

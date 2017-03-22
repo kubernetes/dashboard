@@ -28,7 +28,8 @@ limitations under the License.
 
 <kd-pod-info pod="::ctrl.podDetail"></kd-pod-info>
 <kd-container-info containers="::ctrl.podDetail.containers"
-    namespace="::ctrl.podDetail.objectMeta.namespace" pod-name="::ctrl.podDetail.objectMeta.name">
+                   namespace="::ctrl.podDetail.objectMeta.namespace"
+                   pod-name="::ctrl.podDetail.objectMeta.name">
 </kd-container-info>
 
 <kd-content-card ng-if="::ctrl.podDetail.conditions.length">
@@ -39,4 +40,5 @@ limitations under the License.
 
 <kd-creator-info creator="::ctrl.podDetail.controller"></kd-creator-info>
 
-<kd-event-card-list event-list="::ctrl.podDetail.eventList" event-list-resource="::ctrl.eventListResource"></kd-event-card-list>
+<kd-event-card-list event-list="::ctrl.podDetail.eventList"
+                    event-list-resource="::ctrl.eventListResource"></kd-event-card-list>

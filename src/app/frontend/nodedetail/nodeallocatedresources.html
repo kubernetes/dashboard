@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card-list selectable="false" with-statuses="false">
+<kd-resource-card-list selectable="false"
+                       with-statuses="false">
   <kd-resource-card-list-header>
     [[Allocated resources|Label 'Allocated resources' for the allocated resources section.]]
   </kd-resource-card-list-header>
@@ -43,41 +44,36 @@ limitations under the License.
   <kd-resource-card omit-meta="true">
     <kd-resource-card-columns>
       <kd-resource-card-column>
-        <div>{{$ctrl.allocatedResources.cpuRequests | kdCores}} /
-          {{$ctrl.allocatedResources.cpuCapacity | kdCores}}</div>
+        <div>{{$ctrl.allocatedResources.cpuRequests | kdCores}} / {{$ctrl.allocatedResources.cpuCapacity | kdCores}}</div>
       </kd-resource-card-column>
       <kd-resource-card-column>
         <div>{{$ctrl.allocatedResources.cpuRequestsFraction | number: 2}}</div>
       </kd-resource-card-column>
-    <kd-resource-card-column>
-      <div>{{$ctrl.allocatedResources.cpuLimits | kdCores}} /
-        {{$ctrl.allocatedResources.cpuCapacity | kdCores}}</div>
-    </kd-resource-card-column>
-    <kd-resource-card-column>
-      <div>{{$ctrl.allocatedResources.cpuLimitsFraction | number: 2}}</div>
-    </kd-resource-card-column>
-    <kd-resource-card-column>
-      <div>{{$ctrl.allocatedResources.memoryRequests | kdMemory}} /
-        {{$ctrl.allocatedResources.memoryCapacity | kdMemory}}</div>
-    </kd-resource-card-column>
-    <kd-resource-card-column>
-      <div>{{$ctrl.allocatedResources.memoryRequestsFraction | number: 2}}</div>
-    </kd-resource-card-column>
       <kd-resource-card-column>
-        <div>{{$ctrl.allocatedResources.memoryLimits | kdMemory}} /
-          {{$ctrl.allocatedResources.memoryCapacity | kdMemory}}</div>
+        <div>{{$ctrl.allocatedResources.cpuLimits | kdCores}} / {{$ctrl.allocatedResources.cpuCapacity | kdCores}}</div>
+      </kd-resource-card-column>
+      <kd-resource-card-column>
+        <div>{{$ctrl.allocatedResources.cpuLimitsFraction | number: 2}}</div>
+      </kd-resource-card-column>
+      <kd-resource-card-column>
+        <div>{{$ctrl.allocatedResources.memoryRequests | kdMemory}} / {{$ctrl.allocatedResources.memoryCapacity | kdMemory}}</div>
+      </kd-resource-card-column>
+      <kd-resource-card-column>
+        <div>{{$ctrl.allocatedResources.memoryRequestsFraction | number: 2}}</div>
+      </kd-resource-card-column>
+      <kd-resource-card-column>
+        <div>{{$ctrl.allocatedResources.memoryLimits | kdMemory}} / {{$ctrl.allocatedResources.memoryCapacity | kdMemory}}</div>
       </kd-resource-card-column>
       <kd-resource-card-column>
         <div>{{$ctrl.allocatedResources.memoryLimitsFraction | number: 2}}</div>
       </kd-resource-card-column>
 
       <kd-resource-card-column>
-        <div>{{$ctrl.allocatedResources.allocatedPods}} /
-          {{$ctrl.allocatedResources.podCapacity}}</div>
+        <div>{{$ctrl.allocatedResources.allocatedPods}} / {{$ctrl.allocatedResources.podCapacity}}
+        </div>
       </kd-resource-card-column>
       <kd-resource-card-column>
-        <div>{{$ctrl.allocatedResources.allocatedPods / $ctrl.allocatedResources.podCapacity * 100
-          | number : 2}}</div>
+        <div>{{$ctrl.allocatedResources.allocatedPods / $ctrl.allocatedResources.podCapacity * 100 | number : 2}}</div>
       </kd-resource-card-column>
     </kd-resource-card-columns>
   </kd-resource-card>

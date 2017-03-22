@@ -57,6 +57,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/servicesanddiscovery"
 	statefulsetdetail "github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/detail"
 	statefulsetlist "github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/list"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/storage"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/storageclass"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/thirdpartyresource"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/workload"
@@ -84,7 +85,7 @@ const (
 type APIHandler struct {
 	client         *clientK8s.Clientset
 	heapsterClient client.HeapsterClient
-	clientConfig   clientcmd.ClientConfig
+	config         *restclient.Config
 	verber         common.ResourceVerber
 	csrfKey        string
 }
@@ -179,7 +180,7 @@ func FormatResponseLog(resp *restful.Response, req *restful.Request) string {
 
 // CreateHTTPAPIHandler creates a new HTTP handler that handles all requests to the API of the backend.
 func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.HeapsterClient,
-	clientConfig clientcmd.ClientConfig) (http.Handler, error) {
+	clientConfig *restclient.Config) (http.Handler, error) {
 
 	verber := common.NewResourceVerber(client.Core().RESTClient(),
 		client.Extensions().RESTClient(), client.Apps().RESTClient(),
@@ -281,6 +282,15 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 		apiV1Ws.GET("/replicationcontroller/{namespace}/{replicationController}/service").
 			To(apiHandler.handleGetReplicationControllerServices).
 			Writes(resourceService.ServiceList{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/storage").
+			To(apiHandler.handleGetStorage).
+			Writes(storage.Storage{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/storage/{namespace}").
+			To(apiHandler.handleGetStorage).
+			Writes(storage.Storage{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/workload").
@@ -882,7 +892,7 @@ func (apiHandler *APIHandler) handleDeployFromFile(request *restful.Request, res
 	}
 
 	isDeployed, err := deployment.DeployAppFromFile(
-		deploymentSpec, deployment.CreateObjectFromInfoFn, apiHandler.clientConfig)
+		deploymentSpec, deployment.CreateObjectFromInfoFn)
 	if !isDeployed {
 		handleInternalError(response, err)
 		return
@@ -971,6 +981,21 @@ func (apiHandler *APIHandler) handleGetWorkloads(
 
 	namespace := parseNamespacePathParameter(request)
 	result, err := workload.GetWorkloads(apiHandler.client, apiHandler.heapsterClient, namespace, dataselect.StandardMetrics)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+/// / Handles get Storage resources list API call.
+func (apiHandler *APIHandler) handleGetStorage(
+	request *restful.Request, response *restful.Response) {
+
+	namespace := parseNamespacePathParameter(request)
+	dataSelect := parseDataSelectPathParameter(request)
+	result, err := storage.GetStorage(apiHandler.client, apiHandler.heapsterClient, namespace, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1443,7 +1468,7 @@ func (apiHandler *APIHandler) handleGetThirdPartyResource(request *restful.Reque
 func (apiHandler *APIHandler) handleGetThirdPartyResourceDetail(request *restful.Request,
 	response *restful.Response) {
 	name := request.PathParameter("thirdpartyresource")
-	result, err := thirdpartyresource.GetThirdPartyResourceDetail(apiHandler.client, apiHandler.clientConfig, name)
+	result, err := thirdpartyresource.GetThirdPartyResourceDetail(apiHandler.client, apiHandler.config, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1454,7 +1479,7 @@ func (apiHandler *APIHandler) handleGetThirdPartyResourceDetail(request *restful
 func (apiHandler *APIHandler) handleGetThirdPartyResourceObjects(request *restful.Request, response *restful.Response) {
 	name := request.PathParameter("thirdpartyresource")
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := thirdpartyresource.GetThirdPartyResourceObjects(apiHandler.client, apiHandler.clientConfig, dataSelect, name)
+	result, err := thirdpartyresource.GetThirdPartyResourceObjects(apiHandler.client, apiHandler.config, dataSelect, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return

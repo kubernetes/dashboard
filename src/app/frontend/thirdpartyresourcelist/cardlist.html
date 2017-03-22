@@ -23,14 +23,17 @@ limitations under the License.
                                     list-resource="$ctrl.thirdPartyResourceListResource">
   </kd-resource-card-list-pagination>
   <kd-resource-card-header-columns>
-    <kd-resource-card-header-column size="small" grow="1">
+    <kd-resource-card-header-column size="small"
+                                    grow="1">
       [[Name|Label 'Name' which appears as a column label in the table of third party resources (thirdpartyresource listview).]]
     </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small" grow="1">
+    <kd-resource-card-header-column size="small"
+                                    grow="1">
       [[Age|Label 'Age' which appears as a column label in the table of third party resources (thirdpartyresource list view).]]
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
-  <kd-third-party-resource-card pagination-id="thirdpartyresources" third-party-resource="tpr"
+  <kd-third-party-resource-card pagination-id="thirdpartyresources"
+                                third-party-resource="tpr"
                                 dir-paginate="tpr in $ctrl.thirdPartyResourceList.thirdPartyResources | itemsPerPage: default"
                                 total-items="::$ctrl.thirdPartyResourceList.listMeta.totalItems">
   </kd-third-party-resource-card>

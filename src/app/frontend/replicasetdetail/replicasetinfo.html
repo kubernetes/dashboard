@@ -33,23 +33,25 @@ limitations under the License.
         on the replica set details page.]]">
     <kd-info-card-entry title="[[Pods|Label 'Pods' for the pods in a replica set on its details page.]]">
       <div ng-if="!$ctrl.areDesiredPodsRunning()">
-        [[{{::$ctrl.replicaSet.podInfo.current}} created|The message says how many pods were created (replica set details page).]],
-        [[{{::$ctrl.replicaSet.podInfo.desired}} desired|The message says how many pods are desired to run (replica set details page).]]
+        [[{{::$ctrl.replicaSet.podInfo.current}} created|The message says how many pods were created (replica set details page).]], [[{{::$ctrl.replicaSet.podInfo.desired}} desired|The message says how many pods are desired to run (replica set details page).]]
       </div>
       <div ng-if="$ctrl.areDesiredPodsRunning()">
         [[{{::$ctrl.replicaSet.podInfo.running}} running|How many pods are running (replica set details page).]]
       </div>
     </kd-info-card-entry>
     <kd-info-card-entry title="[[Pods status|Label 'Pods status' for the status of the pods in a replica set, on the replica set details page.]]"
-              ng-if="!$ctrl.areDesiredPodsRunning()">
+                        ng-if="!$ctrl.areDesiredPodsRunning()">
       <div ng-if="!$ctrl.areDesiredPodsRunning()">
-        <div ng-if="::$ctrl.replicaSet.podInfo.pending" class="kd-comma-separated-item">
+        <div ng-if="::$ctrl.replicaSet.podInfo.pending"
+             class="kd-comma-separated-item">
           [[{{::$ctrl.replicaSet.podInfo.pending}} pending|The message says how many pods are pending (replica set details page).]]
         </div>
-        <div ng-if="::$ctrl.replicaSet.podInfo.failed" class="kd-comma-separated-item">
+        <div ng-if="::$ctrl.replicaSet.podInfo.failed"
+             class="kd-comma-separated-item">
           [[{{::$ctrl.replicaSet.podInfo.failed}} failed|The message says how many pods have failed (replica set details page).]]
         </div>
-        <div ng-if="::$ctrl.replicaSet.podInfo.running" class="kd-comma-separated-item">
+        <div ng-if="::$ctrl.replicaSet.podInfo.running"
+             class="kd-comma-separated-item">
           [[{{::$ctrl.replicaSet.podInfo.running}} running|The message says how many pods are running (replica set details page).]]
         </div>
       </div>

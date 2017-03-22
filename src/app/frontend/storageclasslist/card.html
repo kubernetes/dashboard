@@ -14,42 +14,42 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card object-meta="$ctrl.storageClass.objectMeta" type-meta="$ctrl.storageClass.typeMeta">
-    <kd-resource-card-columns>
-        <kd-resource-card-column>
-            <div>
-                <a ng-href="{{::$ctrl.getStorageClassDetailHref()}}" class="kd-middle-ellipsised-link">
-                    <kd-middle-ellipsis display-string="{{$ctrl.storageClass.objectMeta.name}}">
-                    </kd-middle-ellipsis>
-                </a>
-            </div>
-        </kd-resource-card-column>
-        <kd-resource-card-column>
-            <kd-labels labels="::$ctrl.storageClass.objectMeta.labels"></kd-labels>
-        </kd-resource-card-column>
-        <kd-resource-card-column>
-            <kd-middle-ellipsis display-string="{{$ctrl.storageClass.provisioner}}">
-            </kd-middle-ellipsis>
-            <div ng-hide="::$ctrl.storageClass.provisioner">-</div>
-        </kd-resource-card-column>
-        <kd-resource-card-column>
-            <kd-labels labels="::$ctrl.storageClass.parameters"></kd-labels>
-        </kd-resource-card-column>
-        <kd-resource-card-column>
-            {{::$ctrl.storageClass.objectMeta.creationTimestamp | relativeTime}}
-            <md-tooltip>
-                {{::$ctrl.getCreatedAtTooltip($ctrl.storageClass.objectMeta.creationTimestamp)}}
-            </md-tooltip>
-        </kd-resource-card-column>
-        <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
-            <kd-resource-card-menu>
-                <kd-resource-card-delete-menu-item
-                        resource-kind-name="[[Storage Class|Label 'Storage Class' which will appear in the storage class delete dialog opened from a storageclass card on the list page.]]">
-                </kd-resource-card-delete-menu-item>
-                <kd-resource-card-edit-menu-item
-                        resource-kind-name="[[Storage Class|Label 'Storage Class' which will appear in the storage class delete dialog opened from a storageclass card on the list page.]]">
-                </kd-resource-card-edit-menu-item>
-            </kd-resource-card-menu>
-        </kd-resource-card-column>
-    </kd-resource-card-columns>
+<kd-resource-card object-meta="$ctrl.storageClass.objectMeta"
+                  type-meta="$ctrl.storageClass.typeMeta">
+  <kd-resource-card-columns>
+    <kd-resource-card-column>
+      <div>
+        <a ng-href="{{::$ctrl.getStorageClassDetailHref()}}"
+           class="kd-middle-ellipsised-link">
+          <kd-middle-ellipsis display-string="{{$ctrl.storageClass.objectMeta.name}}">
+          </kd-middle-ellipsis>
+        </a>
+      </div>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <kd-labels labels="::$ctrl.storageClass.objectMeta.labels"></kd-labels>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <kd-middle-ellipsis display-string="{{$ctrl.storageClass.provisioner}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.storageClass.provisioner">-</div>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <kd-labels labels="::$ctrl.storageClass.parameters"></kd-labels>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      {{::$ctrl.storageClass.objectMeta.creationTimestamp | relativeTime}}
+      <md-tooltip>
+        {{::$ctrl.getCreatedAtTooltip($ctrl.storageClass.objectMeta.creationTimestamp)}}
+      </md-tooltip>
+    </kd-resource-card-column>
+    <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
+      <kd-resource-card-menu>
+        <kd-resource-card-delete-menu-item resource-kind-name="[[Storage Class|Label 'Storage Class' which will appear in the storage class delete dialog opened from a storageclass card on the list page.]]">
+        </kd-resource-card-delete-menu-item>
+        <kd-resource-card-edit-menu-item resource-kind-name="[[Storage Class|Label 'Storage Class' which will appear in the storage class delete dialog opened from a storageclass card on the list page.]]">
+        </kd-resource-card-edit-menu-item>
+      </kd-resource-card-menu>
+    </kd-resource-card-column>
+  </kd-resource-card-columns>
 </kd-resource-card>
