@@ -15,7 +15,7 @@
 import chromeModule from 'chrome/chrome_module';
 import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
-import daemonSetListModule from 'daemonsetlist/daemonsetlist_module';
+import daemonSetModule from 'daemonset/module';
 import deploymentListModule from 'deploymentlist/deploymentlist_module';
 import horizontalPodAutoscalerListModule from 'horizontalpodautoscalerlist/horizontalpodautoscalerlist_module';
 import jobListModule from 'joblist/joblist_module';
@@ -24,7 +24,6 @@ import replicationControllerListModule from 'replicationcontrollerlist/replicati
 import statefulSetListModule from 'statefulsetlist/statefulsetlist_module';
 
 import stateConfig from './workloads_stateconfig';
-
 
 /**
  * Module with a view that displays resources categorized as workloads, e.g., Replica Sets or
@@ -44,7 +43,7 @@ export default angular
           replicationControllerListModule.name,
           replicaSetListModule.name,
           deploymentListModule.name,
-          daemonSetListModule.name,
+          daemonSetModule.name,
           horizontalPodAutoscalerListModule.name,
           statefulSetListModule.name,
         ])

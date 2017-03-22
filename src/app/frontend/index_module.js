@@ -23,6 +23,7 @@ import chromeModule from './chrome/chrome_module';
 import csrfTokenModule from './common/csrftoken/csrftoken_module';
 import configModule from './config/module';
 import configMapModule from './configmap/module';
+import daemonSetModule from './daemonset/module';
 import deployModule from './deploy/deploy_module';
 import deploymentListModule from './deploymentlist/deploymentlist_module';
 import errorModule from './error/error_module';
@@ -72,6 +73,7 @@ export default angular
           'ui.router',
           aboutModule.name,
           chromeModule.name,
+          daemonSetModule.name,
           deployModule.name,
           errorModule.name,
           jobListModule.name,

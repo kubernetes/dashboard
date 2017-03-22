@@ -181,6 +181,43 @@
   <translation id="5303615337793440206" key="MSG_DAEMONSETLIST_DAEMONSETLIST_0" desc="Title for graph card displaying CPU metric of daemon sets.">CPU usage</translation>
   <translation id="140376028532845180" key="MSG_DAEMONSETLIST_DAEMONSETLIST_1" desc="Title for graph card displaying memory metric of daemon sets.">Memory usage</translation>
   <translation id="7975175396227169314" key="MSG_DAEMONSETLIST_DAEMONSETLIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by these daemon sets.</translation>
+  <translation id="3159284180115253445" key="MSG_DAEMONSET_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one daemon set.">CPU usage</translation>
+  <translation id="3656189643804804472" key="MSG_DAEMONSET_DETAIL_DETAIL_1" desc="Title for graph card displaying memory metric of one daemon set.">Memory usage</translation>
+  <translation id="2830742900079405655" key="MSG_DAEMONSET_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by this daemon set.</translation>
+  <translation id="5833515340959055595" key="MSG_DAEMONSET_DETAIL_DETAIL_3" desc="Title for services card zerostate in daemon set details page.">There is nothing to display here</translation>
+  <translation id="5813652713612060929" key="MSG_DAEMONSET_DETAIL_DETAIL_4" desc="Text for services card zerostate in daemon set details page.">There are currently no Services with the same label selector as this Daemon Set.</translation>
+  <translation id="260092214018031914" key="MSG_DAEMONSET_DETAIL_DETAIL_5" desc="Title for pods card zerostate in daemon set details page.">There is nothing to display here</translation>
+  <translation id="2603922476358928027" key="MSG_DAEMONSET_DETAIL_DETAIL_6" desc="Text for pods card zerostate in daemon set details page.">There are currently no Pods scheduled on this Daemon Set.</translation>
+  <translation id="4390902408757290154" key="MSG_DAEMONSET_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
+  <translation id="4420147250432171295" key="MSG_DAEMONSET_DETAIL_INFO_1" desc="Label \'Name\' for the daemon set name on the details page.">Name</translation>
+  <translation id="6360476314472751831" key="MSG_DAEMONSET_DETAIL_INFO_10" desc="Label \'Pods status\' for the status of the pods in a daemon set, on the daemon set details page.">Pods status</translation>
+  <translation id="3771546490015192323" key="MSG_DAEMONSET_DETAIL_INFO_11" desc="The message says how many pods are pending (daemon set details page).">{{::$ctrl.daemonSet.podInfo.pending}} pending</translation>
+  <translation id="6989004320544423836" key="MSG_DAEMONSET_DETAIL_INFO_12" desc="The message says how many pods have failed (daemon set details page).">{{::$ctrl.daemonSet.podInfo.failed}} failed</translation>
+  <translation id="7121920513850122580" key="MSG_DAEMONSET_DETAIL_INFO_13" desc="The message describes how many pods are running (daemon set details page).">{{::$ctrl.daemonSet.podInfo.running}} running</translation>
+  <translation id="1915762576763304293" key="MSG_DAEMONSET_DETAIL_INFO_2" desc="Label \'Namespace\' for the daemon set namespace on the details page">Namespace</translation>
+  <translation id="3087018613949976492" key="MSG_DAEMONSET_DETAIL_INFO_3" desc="Label \'Labels\' for the daemon set\'s labels list on the daemon set details page.">Labels</translation>
+  <translation id="5529663386929562771" key="MSG_DAEMONSET_DETAIL_INFO_4" desc="Label \'Images\' for the list of images used in a daemon set, on its details page.">Images</translation>
+  <translation id="8207927853231587262" key="MSG_DAEMONSET_DETAIL_INFO_5" desc="Subtitle \'Status\' for the right section with pod status information on the daemon set details page.">Status</translation>
+  <translation id="3195556158142781226" key="MSG_DAEMONSET_DETAIL_INFO_6" desc="Label \'Pods\' for the pods in a daemon set on its details page.">Pods</translation>
+  <translation id="1832136994003570020" key="MSG_DAEMONSET_DETAIL_INFO_7" desc="The message describes how many pods were created (daemon set details page).">{{::$ctrl.daemonSet.podInfo.current}} created</translation>
+  <translation id="5651976668507530367" key="MSG_DAEMONSET_DETAIL_INFO_8" desc="The message describes how many pods are desired to run (daemon set details page).">{{::$ctrl.daemonSet.podInfo.desired}} desired</translation>
+  <translation id="5550367961828357134" key="MSG_DAEMONSET_DETAIL_INFO_9" desc="The message describes how many pods are running (daemon set details page).">{{::$ctrl.daemonSet.podInfo.running}} running</translation>
+  <translation id="5631725742223773299" key="MSG_DAEMONSET_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Daemon Sets</translation>
+  <translation id="3304895041101053745" key="MSG_DAEMONSET_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of daemon sets (daemon set list view).">Name</translation>
+  <translation id="7715674186436282027" key="MSG_DAEMONSET_LIST_CARDLIST_2" desc="Column header \'Kind\' on Daemon Set lists">Kind</translation>
+  <translation id="1198220912632063457" key="MSG_DAEMONSET_LIST_CARDLIST_3" desc="Label \'Namespace\' which appears as a column label in the table of daemon sets (daemon set list view).">Namespace</translation>
+  <translation id="4316139792239592855" key="MSG_DAEMONSET_LIST_CARDLIST_4" desc="Label \'Labels\' which appears as a column label in the table of daemon sets (daemon set list view).">Labels</translation>
+  <translation id="315233313099478215" key="MSG_DAEMONSET_LIST_CARDLIST_5" desc="Label \'Pods\' which appears as a column label in the table of daemon sets (daemon set list view).">Pods</translation>
+  <translation id="5238998686445297660" key="MSG_DAEMONSET_LIST_CARDLIST_6" desc="Label \'Age\' which appears as a column label in the table of daemon sets (daemon set list view).">Age</translation>
+  <translation id="2598397233464322530" key="MSG_DAEMONSET_LIST_CARDLIST_7" desc="Label \'Images\' which appears as a column label in the table of daemon sets (daemon set list view).">Images</translation>
+  <translation id="6325130526007284501" key="MSG_DAEMONSET_LIST_CARD_0" desc="Tooltip for failed pod card icon.">One or more pods have errors.</translation>
+  <translation id="7994511127932765314" key="MSG_DAEMONSET_LIST_CARD_1" desc="Tooltip for pending pod card icon.">One or more pods are in pending state.</translation>
+  <translation id="141161203909207679" key="MSG_DAEMONSET_LIST_CARD_2" desc="Column \'Daemon Set\' in a Daemon Set List">Daemon Set</translation>
+  <translation id="422238456212619456" key="MSG_DAEMONSET_LIST_CARD_3" desc="Title \'Daemon Set\' which is used as a title for the delete/update\n   dialogs (that can be opened on the daemon set list view).">Daemon Set</translation>
+  <translation id="583742092710968694" key="MSG_DAEMONSET_LIST_CARD_4" desc="Title \'Daemon Set\' which is used as a title for the delete/update\n   dialogs (that can be opened on the daemon set list view).">Daemon Set</translation>
+  <translation id="7320728056398668491" key="MSG_DAEMONSET_LIST_LIST_0" desc="Title for graph card displaying CPU metric of daemon sets.">CPU usage</translation>
+  <translation id="8788831308012182190" key="MSG_DAEMONSET_LIST_LIST_1" desc="Title for graph card displaying memory metric of daemon sets.">Memory usage</translation>
+  <translation id="2452514894533620787" key="MSG_DAEMONSET_LIST_LIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by these daemon sets.</translation>
   <translation id="1183334493862832095" key="MSG_DAEMON_SET_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of the daemon set.">Created at <ph name="CREATION_DATE"/></translation>
   <translation id="4053635060615677386" key="MSG_DEPLOYMENTDETAIL_ACTIONBAR_0" desc="Label \'Deployment\' which will appear in the deployment delete dialog opened from the deployment details page.">Deployment</translation>
   <translation id="1190053946078776500" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTDETAIL_0" desc="Title for graph card displaying CPU metric of one deployment.">CPU usage</translation>

@@ -11,16 +11,17 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import daemonSetListModule from 'daemonsetlist/daemonsetlist_module';
+
+import daemonSetModule from 'daemonset/module';
 
 describe('Daemon Set card', () => {
   /**
-   * @type {!daemonsetlist/daemonsetcard_component.DaemonSetCardController}
+   * @type {!DaemonSetCardController}
    */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(daemonSetListModule.name);
+    angular.mock.module(daemonSetModule.name);
 
     angular.mock.inject(($componentController, $rootScope) => {
       ctrl = $componentController('kdDaemonSetCard', {$scope: $rootScope});

@@ -17,11 +17,11 @@
  */
 export class DaemonSetCardListController {
   /**
-   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
+   * @param {!./../../common/namespace/namespace_service.NamespaceService} kdNamespaceService
    * @ngInject
    */
   constructor(kdNamespaceService) {
-    /** @private {!./../common/namespace/namespace_service.NamespaceService} */
+    /** @private {!./../../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
   }
 
@@ -44,7 +44,7 @@ export const daemonSetCardListComponent = {
     // Optional header that is transcluded instead of the default one.
     'header': '?kdHeader',
   },
-  templateUrl: 'daemonsetlist/daemonsetcardlist.html',
+  templateUrl: 'daemonset/list/cardlist.html',
   controller: DaemonSetCardListController,
   bindings: {
     /** {!Array<!backendApi.DaemonSetList>} */

@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {DaemonSetListController} from 'daemonsetlist/daemonsetlist_controller';
-import daemonSetListModule from 'daemonsetlist/daemonsetlist_module';
+import {DaemonSetListController} from 'daemonset/list/controller';
+import daemonSetModule from 'daemonset/module';
 
 describe('Daemon Set list controller', () => {
-  /** @type {!daemonsetlist/daemonsetlist_controller.DaemonSetListController} */
+  /** @type {!DaemonSetListController} */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(daemonSetListModule.name);
+    angular.mock.module(daemonSetModule.name);
 
     angular.mock.inject(($controller) => {
       ctrl = $controller(DaemonSetListController, {daemonSetList: {daemonSets: []}});

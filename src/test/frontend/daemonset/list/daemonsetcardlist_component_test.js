@@ -12,23 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import daemonsetListModule from 'daemonsetlist/daemonsetlist_module';
+import daemonSetModule from 'daemonset/module';
 
 describe('Daemon Set Card List controller', () => {
   /**
-   * @type {!daemonsetlist/daemonsetcardlist_component.DaemonSetCardListController}
+   * @type {!DaemonSetCardListController}
    */
   let ctrl;
   /**
-   * @type {!./../common/namespace/namespace_service.NamespaceService}
+   * @type {!NamespaceService}
    */
   let data;
 
   beforeEach(() => {
-    angular.mock.module(daemonsetListModule.name);
+    angular.mock.module(daemonSetModule.name);
 
     angular.mock.inject(($componentController, kdNamespaceService) => {
-      /** @type {!./../common/namespace/namespace_service.NamespaceService} */
+      /** @type {!NamespaceService} */
       data = kdNamespaceService;
       /** @type {!DaemonSetCardListController} */
       ctrl = $componentController('kdDaemonSetCardList', {kdNamespaceService_: data});

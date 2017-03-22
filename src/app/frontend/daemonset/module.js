@@ -18,18 +18,19 @@ import filtersModule from 'common/filters/filters_module';
 import namespaceModule from 'common/namespace/namespace_module';
 import eventsModule from 'events/events_module';
 
-import {configMapInfoComponent} from './detail/info_component';
-import {configMapCardComponent} from './list/card_component';
-import {configMapCardListComponent} from './list/cardlist_component';
-import {configMapListResource} from './list/stateconfig';
+import {daemonSetInfoComponent} from './detail/info_component';
+import {daemonSetEventsResource, daemonSetPodsResource, daemonSetServicesResource} from './detail/stateconfig';
+import {daemonSetCardComponent} from './list/card_component';
+import {daemonSetCardListComponent} from './list/cardlist_component';
+import {daemonSetListResource} from './list/stateconfig';
 import stateConfig from './stateconfig';
 
 /**
- * Angular module for the Config Map resource.
+ * Angular module for the Config Map list view.
  */
 export default angular
     .module(
-        'kubernetesDashboard.configMap',
+        'kubernetesDashboard.daemonSet',
         [
           'ngMaterial',
           'ngResource',
@@ -41,7 +42,10 @@ export default angular
           namespaceModule.name,
         ])
     .config(stateConfig)
-    .component('kdConfigMapCard', configMapCardComponent)
-    .component('kdConfigMapCardList', configMapCardListComponent)
-    .component('kdConfigMapInfo', configMapInfoComponent)
-    .factory('kdConfigMapListResource', configMapListResource);
+    .component('kdDaemonSetCard', daemonSetCardComponent)
+    .component('kdDaemonSetCardList', daemonSetCardListComponent)
+    .component('kdDaemonSetInfo', daemonSetInfoComponent)
+    .factory('kdDaemonSetEventsResource', daemonSetEventsResource)
+    .factory('kdDaemonSetListResource', daemonSetListResource)
+    .factory('kdDaemonSetPodsResource', daemonSetPodsResource)
+    .factory('kdDaemonSetServicesResource', daemonSetServicesResource);

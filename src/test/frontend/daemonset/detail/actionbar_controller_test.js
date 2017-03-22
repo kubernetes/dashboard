@@ -12,8 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'daemonset';
+import {ActionBarController} from 'daemonset/detail/actionbar_controller';
+import daemonSetModule from 'daemonset/module';
 
-/** Absolute URL of the state. */
-export const stateUrl = '/daemonset';
+describe('Action Bar controller', () => {
+  /** @type {!ActionBarController} */
+  let ctrl;
+  let details = {};
+
+  beforeEach(() => {
+    angular.mock.module(daemonSetModule.name);
+
+    angular.mock.inject(($controller) => {
+      ctrl = $controller(ActionBarController, {daemonSetDetail: details});
+    });
+  });
+
+  it('should initialize details', () => {
+    expect(ctrl.details).toBe(details);
+  });
+});

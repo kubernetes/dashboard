@@ -23,6 +23,8 @@ import {ActionBarController} from './actionbar_controller';
 import {ConfigMapDetailController} from './controller';
 
 /**
+ * Config state object for the Config Map detail view.
+ *
  * @type {!ui.router.StateConfig}
  */
 export const config = {

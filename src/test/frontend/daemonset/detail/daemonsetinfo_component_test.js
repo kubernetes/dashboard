@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import daemonSetDetailModule from 'daemonsetdetail/daemonsetdetail_module';
+import daemonSetModule from 'daemonset/module';
 
 describe('Daemon Set Info controller', () => {
   /**
@@ -22,7 +22,7 @@ describe('Daemon Set Info controller', () => {
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(daemonSetDetailModule.name);
+    angular.mock.module(daemonSetModule.name);
     angular.mock.inject(($componentController, $rootScope) => {
       ctrl = $componentController('kdDaemonSetInfo', {$scope: $rootScope}, {
         daemonSet: {

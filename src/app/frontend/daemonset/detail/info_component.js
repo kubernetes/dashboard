@@ -43,7 +43,7 @@ export default class DaemonSetInfoController {
  */
 export const daemonSetInfoComponent = {
   controller: DaemonSetInfoController,
-  templateUrl: 'daemonsetdetail/daemonsetinfo.html',
+  templateUrl: 'daemonset/detail/info.html',
   bindings: {
     /** {!backendApi.DaemonSetDetail} */
     'daemonSet': '=',

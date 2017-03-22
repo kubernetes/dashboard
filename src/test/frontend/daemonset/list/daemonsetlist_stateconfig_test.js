@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import daemonSetListModule from 'daemonsetlist/daemonsetlist_module';
-import {resolveDaemonSetList} from 'daemonsetlist/daemonsetlist_stateconfig';
+import {resolveDaemonSetList} from 'daemonset/list/stateconfig';
+import daemonSetModule from 'daemonset/module';
 
 describe('StateConfig for daemon set list', () => {
-  /** @type {!common/pagination/pagination_service.PaginationService} */
+  /** @type {!PaginationService} */
   let kdPaginationService;
 
   beforeEach(() => {
-    angular.mock.module(daemonSetListModule.name);
+    angular.mock.module(daemonSetModule.name);
     angular.mock.inject((_kdPaginationService_) => {
       kdPaginationService = _kdPaginationService_;
     });

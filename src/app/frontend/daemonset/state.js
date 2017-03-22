@@ -12,20 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {DaemonSetDetailController} from 'daemonsetdetail/daemonsetdetail_controller';
-import daemonSetDetailModule from 'daemonsetdetail/daemonsetdetail_module';
+/** Name of the state. */
+export const stateName = 'daemonset';
 
-describe('DaemonSet Detail controller', () => {
-
-  beforeEach(() => {
-    angular.mock.module(daemonSetDetailModule.name);
-  });
-
-  it('should initialize daemon set detail', angular.mock.inject(($controller) => {
-    let data = {};
-    /** @type {!DaemonSetDetailController} */
-    let ctrl = $controller(DaemonSetDetailController, {daemonSetDetail: data});
-
-    expect(ctrl.daemonSetDetail).toBe(data);
-  }));
-});
+/** Absolute URL of the state. */
+export const stateUrl = '/daemonset';

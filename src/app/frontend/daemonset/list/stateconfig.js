@@ -16,42 +16,55 @@ import {stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {stateName as workloadsStateName} from 'workloads/workloads_state';
 
-import {DaemonSetListController} from './daemonsetlist_controller';
-import {stateName, stateUrl} from './daemonsetlist_state';
+import {DaemonSetListController} from './controller';
 
 /**
- * Configures states for the Daemon Set list view.
+ * I18n object that defines strings for translation used in this file.
+ */
+const i18n = {
+  /** @type {string} @desc Label 'Daemon Sets' that appears as a breadcrumbs on the action bar. */
+  MSG_BREADCRUMBS_DAEMON_SETS_LABEL: goog.getMsg('Daemon Sets'),
+};
+
+/**
+ * Config state object for the Daemon Set list view.
  *
- * @param {!ui.router.$stateProvider} $stateProvider
+ * @type {!ui.router.StateConfig}
+ */
+export const config = {
+  url: '',
+  parent: chromeStateName,
+  resolve: {
+    'daemonSetList': resolveDaemonSetList,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': i18n.MSG_BREADCRUMBS_DAEMON_SETS_LABEL,
+      'parent': workloadsStateName,
+    },
+  },
+  views: {
+    '': {
+      controller: DaemonSetListController,
+      controllerAs: 'ctrl',
+      templateUrl: 'daemonset/list/list.html',
+    },
+  },
+};
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
  * @ngInject
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    url: stateUrl,
-    parent: chromeStateName,
-    resolve: {
-      'daemonSetList': resolveDaemonSetList,
-    },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': i18n.MSG_BREADCRUMBS_DAEMON_SETS_LABEL,
-        'parent': workloadsStateName,
-      },
-    },
-    views: {
-      '': {
-        controller: DaemonSetListController,
-        controllerAs: 'ctrl',
-        templateUrl: 'daemonsetlist/daemonsetlist.html',
-      },
-    },
-  });
+export function daemonSetListResource($resource) {
+  return $resource('api/v1/daemonset/:namespace');
 }
 
 /**
  * @param {!angular.Resource} kdDaemonSetListResource
- * @param {!./../chrome/chrome_state.StateParams} $stateParams
- * @param {!./../common/pagination/pagination_service.PaginationService} kdPaginationService
+ * @param {!./../../chrome/chrome_state.StateParams} $stateParams
+ * @param {!./../../common/pagination/pagination_service.PaginationService} kdPaginationService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
@@ -59,8 +72,3 @@ export function resolveDaemonSetList(kdDaemonSetListResource, $stateParams, kdPa
   let query = kdPaginationService.getDefaultResourceQuery($stateParams.namespace);
   return kdDaemonSetListResource.get(query).$promise;
 }
-
-const i18n = {
-  /** @type {string} @desc Label 'Daemon Sets' that appears as a breadcrumbs on the action bar. */
-  MSG_BREADCRUMBS_DAEMON_SETS_LABEL: goog.getMsg('Daemon Sets'),
-};

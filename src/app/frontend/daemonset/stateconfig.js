@@ -21,7 +21,7 @@ import {config as listConfig} from './list/stateconfig';
 import {stateName, stateUrl} from './state';
 
 /**
- * Configures states for the Config Map resource.
+ * Configures states for the Daemon Set resource.
  *
  * @param {!ui.router.$stateProvider} $stateProvider
  * @ngInject
@@ -33,7 +33,7 @@ export default function stateConfig($stateProvider) {
 }
 
 /**
- * Config state object for the Config Map abstract state.
+ * Config state object for the Daemon Set abstract state.
  *
  * @type {!ui.router.StateConfig}
  */

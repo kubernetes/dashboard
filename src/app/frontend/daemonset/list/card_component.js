@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'daemonsetdetail/daemonsetdetail_state';
+import {stateName} from 'daemonset/detail/state';
 
 /**
  * Controller for daemon set card.
@@ -24,7 +24,7 @@ export class DaemonSetCardController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
-   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
+   * @param {!./../../common/namespace/namespace_service.NamespaceService} kdNamespaceService
    * @ngInject
    */
   constructor($state, $interpolate, kdNamespaceService) {
@@ -37,7 +37,7 @@ export class DaemonSetCardController {
     /** @private {!angular.$interpolate} */
     this.interpolate_ = $interpolate;
 
-    /** @private {!./../common/namespace/namespace_service.NamespaceService} */
+    /** @private {!./../../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
   }
 
@@ -110,5 +110,5 @@ export const daemonSetCardComponent = {
     'showResourceKind': '<',
   },
   controller: DaemonSetCardController,
-  templateUrl: 'daemonsetlist/daemonsetcard.html',
+  templateUrl: 'daemonset/list/card.html',
 };

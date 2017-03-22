@@ -27,6 +27,8 @@ const i18n = {
 };
 
 /**
+ * Config state object for the Config Map list view.
+ *
  * @type {!ui.router.StateConfig}
  */
 export const config = {
