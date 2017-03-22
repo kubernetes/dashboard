@@ -29,11 +29,11 @@ import (
 func TestGetReplicationControllerList(t *testing.T) {
 	replicas := int32(0)
 	events := []api.Event{}
-	controller := true;
+	controller := true
 	firstAppOwnerRef := []metaV1.OwnerReference{{
-		Kind:  "ReplicationController",
-		Name: "my-name-1",
-		UID: "uid-1",
+		Kind:       "ReplicationController",
+		Name:       "my-name-1",
+		UID:        "uid-1",
 		Controller: &controller,
 	}}
 
@@ -56,7 +56,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 					ObjectMeta: metaV1.ObjectMeta{
 						Name:      "my-app-1",
 						Namespace: "namespace-1",
-						UID: "uid-1",
+						UID:       "uid-1",
 					},
 					Spec: api.ReplicationControllerSpec{
 						Replicas: &replicas,
@@ -70,7 +70,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 					ObjectMeta: metaV1.ObjectMeta{
 						Name:      "my-app-2",
 						Namespace: "namespace-2",
-						UID: "uid-2",
+						UID:       "uid-2",
 					},
 					Spec: api.ReplicationControllerSpec{
 						Replicas: &replicas,
@@ -87,7 +87,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 					ObjectMeta: metaV1.ObjectMeta{
 						Name:      "my-app-1",
 						Namespace: "namespace-1",
-						UID: "uid-1",
+						UID:       "uid-1",
 					},
 				},
 				{
@@ -95,14 +95,14 @@ func TestGetReplicationControllerList(t *testing.T) {
 					ObjectMeta: metaV1.ObjectMeta{
 						Name:      "my-app-2",
 						Namespace: "namespace-2",
-						UID: "uid-1",
+						UID:       "uid-1",
 					},
 				},
 			},
 			[]api.Pod{
 				{
 					ObjectMeta: metaV1.ObjectMeta{
-						Namespace: "namespace-1",
+						Namespace:       "namespace-1",
 						OwnerReferences: firstAppOwnerRef,
 					},
 					Status: api.PodStatus{
@@ -111,7 +111,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 				},
 				{
 					ObjectMeta: metaV1.ObjectMeta{
-						Namespace: "namespace-1",
+						Namespace:       "namespace-1",
 						OwnerReferences: firstAppOwnerRef,
 					},
 					Status: api.PodStatus{
@@ -120,7 +120,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 				},
 				{
 					ObjectMeta: metaV1.ObjectMeta{
-						Namespace: "namespace-1",
+						Namespace:       "namespace-1",
 						OwnerReferences: firstAppOwnerRef,
 					},
 					Status: api.PodStatus{
@@ -129,7 +129,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 				},
 				{
 					ObjectMeta: metaV1.ObjectMeta{
-						Namespace: "namespace-2",
+						Namespace:       "namespace-2",
 						OwnerReferences: firstAppOwnerRef,
 					},
 					Status: api.PodStatus{
@@ -138,7 +138,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 				},
 				{
 					ObjectMeta: metaV1.ObjectMeta{
-						Namespace: "namespace-1",
+						Namespace:       "namespace-1",
 						OwnerReferences: firstAppOwnerRef,
 					},
 					Status: api.PodStatus{
@@ -147,7 +147,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 				},
 				{
 					ObjectMeta: metaV1.ObjectMeta{
-						Namespace: "namespace-1",
+						Namespace:       "namespace-1",
 						OwnerReferences: firstAppOwnerRef,
 					},
 					Status: api.PodStatus{
@@ -156,7 +156,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 				},
 				{
 					ObjectMeta: metaV1.ObjectMeta{
-						Namespace: "namespace-1",
+						Namespace:       "namespace-1",
 						OwnerReferences: firstAppOwnerRef,
 					},
 					Status: api.PodStatus{
