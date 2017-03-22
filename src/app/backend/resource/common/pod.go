@@ -45,7 +45,7 @@ func FilterPodsByControllerResource(resourceNamespace string, resourceUID types.
 	for _, pod := range allPods {
 		if pod.Namespace == resourceNamespace {
 			for _, ownerRef := range pod.OwnerReferences {
-				if *ownerRef.Controller == true && ownerRef.UID == resourceUID {
+				if ownerRef.Controller != nil && *ownerRef.Controller == true && ownerRef.UID == resourceUID {
 					pods = append(pods, pod)
 				}
 			}
