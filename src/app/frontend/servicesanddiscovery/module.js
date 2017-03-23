@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import chromeModule from 'chrome/chrome_module';
-import ingressListModule from 'ingresslist/module';
+import ingressModule from 'ingress/module';
 import serviceListModule from 'servicelist/servicelist_module';
 
 import stateConfig from './stateconfig';
@@ -31,7 +31,7 @@ export default angular
           'ui.router',
           chromeModule.name,
           serviceListModule.name,
-          ingressListModule.name,
+          ingressModule.name,
         ])
     .config(stateConfig)
     .factory('kdServicesAndDiscoveryResource', resource);

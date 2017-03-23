@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ingressListModule from 'ingresslist/module';
+import ingressModule from 'ingress/module';
 
 describe('Ingress card', () => {
   /**
-   * @type {!ingresslist/ingresscard_component.IngressCardController}
+   * @type {!IngressCardController}
    */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(ingressListModule.name);
+    angular.mock.module(ingressModule.name);
 
     angular.mock.inject(($componentController, $rootScope) => {
       ctrl = $componentController('kdIngressCard', {$scope: $rootScope}, {

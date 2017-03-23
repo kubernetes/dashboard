@@ -22,10 +22,9 @@ import {ActionBarController} from './actionbar_controller';
 import {HorizontalPodAutoscalerDetailController} from './controller';
 
 /**
- * Configures states for the horizontal pod autoscaler details view.
+ * Config state object for the Horizontal Pod Autoscaler detail view.
  *
- * @param {!ui.router.$stateProvider} $stateProvider
- * @ngInject
+ * @type {!ui.router.StateConfig}
  */
 export const config = {
   url: appendDetailParamsToUrl(stateUrl),

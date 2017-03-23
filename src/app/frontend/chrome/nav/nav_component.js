@@ -19,7 +19,7 @@ import {stateName as configState} from 'config/state';
 import {stateName as configMapState} from 'configmap/list/state';
 import {stateName as daemonSetState} from 'daemonset/list/state';
 import {stateName as deploymentState} from 'deployment/list/state';
-import {stateName as ingressState} from 'ingresslist/list_state';
+import {stateName as ingressState} from 'ingress/list/state';
 import {stateName as jobState} from 'joblist/joblist_state';
 import {stateName as namespaceState} from 'namespacelist/namespacelist_state';
 import {stateName as nodeState} from 'nodelist/nodelist_state';

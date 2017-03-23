@@ -12,20 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {IngressDetailController} from 'ingressdetail/detail_controller';
-import module from 'ingressdetail/module';
-
-describe('Ingress Detail controller', () => {
-
-  beforeEach(() => {
-    angular.mock.module(module.name);
-  });
-
-  it('should initialize ingress controller', angular.mock.inject(($controller) => {
-    let data = {};
-    /** @type {!IngressDetailController} */
-    let ctrl = $controller(IngressDetailController, {ingressDetail: data});
-
-    expect(ctrl.ingressDetail).toBe(data);
-  }));
-});
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'ingress.list';

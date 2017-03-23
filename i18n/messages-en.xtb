@@ -528,6 +528,17 @@
   <translation id="1103411838151096703" key="MSG_INGRESSLIST_CARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of ingresses (ingress list view).">Namespace</translation>
   <translation id="6970100075274497061" key="MSG_INGRESSLIST_CARDLIST_3" desc="Label \'endpoints\' which appears as a column label in the table of ingresses (ingress list view).">Endpoints</translation>
   <translation id="8202258406797150740" key="MSG_INGRESSLIST_CARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of ingresses (ingress list view).">Age</translation>
+  <translation id="8095485922114238358" key="MSG_INGRESS_DETAIL_ACTIONBAR_0" desc="Label \'Ingress\' which appears at the top of the delete dialog, opened from an ingress details page.">Ingress</translation>
+  <translation id="7647290016989598143" key="MSG_INGRESS_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
+  <translation id="6047464944743303851" key="MSG_INGRESS_DETAIL_INFO_1" desc="Resource info details section name entry.">Name</translation>
+  <translation id="5740003858384112864" key="MSG_INGRESS_DETAIL_INFO_2" desc="Resource info details section namespace entry.">Namespace</translation>
+  <translation id="5275379574716211763" key="MSG_INGRESS_DETAIL_INFO_3" desc="Resource info details section labels entry.">Labels</translation>
+  <translation id="7691713819120999107" key="MSG_INGRESS_DETAIL_INFO_4" desc="Resource info details section annotations entry.">Annotations</translation>
+  <translation id="1439690942149691720" key="MSG_INGRESS_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Ingresses</translation>
+  <translation id="4939251984111923775" key="MSG_INGRESS_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of ingresses (ingress list view).">Name</translation>
+  <translation id="2888039058521136770" key="MSG_INGRESS_LIST_CARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of ingresses (ingress list view).">Namespace</translation>
+  <translation id="6177082876544143675" key="MSG_INGRESS_LIST_CARDLIST_3" desc="Label \'endpoints\' which appears as a column label in the table of ingresses (ingress list view).">Endpoints</translation>
+  <translation id="5470067088066957568" key="MSG_INGRESS_LIST_CARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of ingresses (ingress list view).">Age</translation>
   <translation id="6014322650743882966" key="MSG_INGRESS_LIST_STARTED_AT_TOOLTIP" desc="Tooltip 'Started at [some date]' showing the exact start time of the ingress.">Created at <ph name="START_DATE"/> UTC</translation>
   <translation id="6315518507776012285" key="MSG_JOBDETAIL_ACTIONBAR_0" desc="Label \'Job\' which appears at the top of the dialog, opened from a job details page.">Job</translation>
   <translation id="3137266053437967990" key="MSG_JOBDETAIL_JOBDETAIL_0" desc="Title for graph card displaying CPU metric of one job.">CPU usage</translation>

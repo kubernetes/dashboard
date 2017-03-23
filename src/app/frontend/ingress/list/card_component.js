@@ -13,11 +13,11 @@
 // limitations under the License.
 
 import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'ingressdetail/detail_state';
+import {stateName} from 'ingress/detail/state';
 
 class IngressCardController {
   /**
-   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
+   * @param {!./../../common/namespace/namespace_service.NamespaceService} kdNamespaceService
    * @param {!angular.$interpolate} $interpolate
    * @param {!ui.router.$state} $state
    * @ngInject
@@ -32,7 +32,7 @@ class IngressCardController {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
-    /** @private {!./../common/namespace/namespace_service.NamespaceService} */
+    /** @private {!./../../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
   }
 
@@ -77,5 +77,5 @@ export const ingressCardComponent = {
     'ingress': '=',
   },
   controller: IngressCardController,
-  templateUrl: 'ingresslist/card.html',
+  templateUrl: 'ingress/list/card.html',
 };

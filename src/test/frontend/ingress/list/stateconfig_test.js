@@ -12,21 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {resolveIngressList} from 'ingresslist/list_stateconfig';
-import ingressListModule from 'ingresslist/module';
+import {resolveIngressList} from 'ingress/list/stateconfig';
+import ingressModule from 'ingress/module';
 
 describe('StateConfig for ingress list', () => {
-  /** @type {!common/pagination/pagination_service.PaginationService} */
+  /** @type {!PaginationService} */
   let kdPaginationService;
 
   beforeEach(() => {
-    angular.mock.module(ingressListModule.name);
+    angular.mock.module(ingressModule.name);
     angular.mock.inject((_kdPaginationService_) => {
       kdPaginationService = _kdPaginationService_;
     });
   });
 
-  it('should resolve ingresss with', angular.mock.inject(($q) => {
+  it('should resolve ingresses with', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
 
     let resource = jasmine.createSpyObj('$resource', ['get']);
@@ -40,7 +40,7 @@ describe('StateConfig for ingress list', () => {
     expect(actual).toBe(promise);
   }));
 
-  it('should resolve ingresss with no namespace', angular.mock.inject(($q) => {
+  it('should resolve ingresses with no namespace', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
 
     let resource = jasmine.createSpyObj('$resource', ['get']);

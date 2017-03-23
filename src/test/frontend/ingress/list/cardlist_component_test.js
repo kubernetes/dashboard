@@ -12,23 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ingressListModule from 'ingresslist/module';
+import ingressModule from 'ingress/module';
 
 describe('Ingress Card List controller', () => {
   /**
-   * @type {!ingresslist/ingresscardlist_component.IngressCardListController}
+   * @type {!IngressCardListController}
    */
   let ctrl;
   /**
-   * @type {!./../common/namespace/namespace_service.NamespaceService}
+   * @type {!NamespaceService}
    */
   let data;
 
   beforeEach(() => {
-    angular.mock.module(ingressListModule.name);
+    angular.mock.module(ingressModule.name);
 
     angular.mock.inject(($componentController, kdNamespaceService) => {
-      /** @type {!./../common/namespace/namespace_service.NamespaceService} */
+      /** @type {!NamespaceService} */
       data = kdNamespaceService;
       /** @type {!IngressListController} */
       ctrl = $componentController('kdIngressCardList', {kdNamespaceService_: data});

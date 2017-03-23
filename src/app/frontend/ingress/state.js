@@ -12,26 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * @final
- */
-export default class IngressInfoController {
-  constructor() {
-    /** @export {!backendApi.IngressDetail} Initialized from the scope. */
-    this.ingress;
-  }
-}
+/** Name of the state. */
+export const stateName = 'ingress';
 
-/**
- * Definition object for the component that displays ingress info.
- *
- * @return {!angular.Directive}
- */
-export const ingressInfoComponent = {
-  controller: IngressInfoController,
-  templateUrl: 'ingressdetail/info.html',
-  bindings: {
-    /** {!backendApi.IngressDetail} */
-    'ingress': '=',
-  },
-};
+/** Absolute URL of the state. */
+export const stateUrl = '/ingress';

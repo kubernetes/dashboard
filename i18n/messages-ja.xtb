@@ -722,6 +722,12 @@
   <translation id="6970100075274497061" key="MSG_INGRESSLIST_CARDLIST_3" desc="Label \'endpoints\' which appears as a column label in the table of ingresses (ingress list view).">エンドポイント</translation>
   <translation id="8202258406797150740" key="MSG_INGRESSLIST_CARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of ingresses (ingress list view).">起動時間</translation>
   <translation id="8673276203606728394" key="MSG_INGRESSLIST_CARDLIST_4" desc="Label which appears above the list of such objects.">イングレス</translation>
+  <translation id="8095485922114238358" key="MSG_INGRESS_DETAIL_ACTIONBAR_0" desc="Label \'Ingress\' which appears at the top of the delete dialog, opened from an ingress details page.">Ingress</translation>
+  <translation id="7647290016989598143" key="MSG_INGRESS_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
+  <translation id="6047464944743303851" key="MSG_INGRESS_DETAIL_INFO_1" desc="Resource info details section name entry.">Name</translation>
+  <translation id="5740003858384112864" key="MSG_INGRESS_DETAIL_INFO_2" desc="Resource info details section namespace entry.">Namespace</translation>
+  <translation id="5275379574716211763" key="MSG_INGRESS_DETAIL_INFO_3" desc="Resource info details section labels entry.">Labels</translation>
+  <translation id="7691713819120999107" key="MSG_INGRESS_DETAIL_INFO_4" desc="Resource info details section annotations entry.">Annotations</translation>
   <translation id="6865663126039383228" key="MSG_INGRESS_DETAIL_INGRESS_LABEL" desc="Label 'Ingress' which appears at the top of the delete dialog, opened from an ingress details page.">イングレス</translation>
   <translation id="1877969373102862021" key="MSG_INGRESS_INFO_ANNOTATIONS_ENTRY" desc="Resource info details section annotations entry.">注釈</translation>
   <translation id="5171036664970723677" key="MSG_INGRESS_INFO_DATA_SECTION" desc="Config map info details section name.">データ</translation>
@@ -731,6 +737,11 @@
   <translation id="7325414510150727952" key="MSG_INGRESS_INFO_NAME_ENTRY" desc="Config map info details section name entry.">名前</translation>
   <translation id="478996062162971485" key="MSG_INGRESS_INFO_STATUS_SECTION" desc="Resource info status section name.">状態</translation>
   <translation id="3673384585622319132" key="MSG_INGRESS_LIST_AGE_LABEL" desc="Label 'Age' which appears as a column label in the table of ingresss (ingress list view).">起動時間</translation>
+  <translation id="1439690942149691720" key="MSG_INGRESS_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Ingresses</translation>
+  <translation id="4939251984111923775" key="MSG_INGRESS_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of ingresses (ingress list view).">Name</translation>
+  <translation id="2888039058521136770" key="MSG_INGRESS_LIST_CARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of ingresses (ingress list view).">Namespace</translation>
+  <translation id="6177082876544143675" key="MSG_INGRESS_LIST_CARDLIST_3" desc="Label \'endpoints\' which appears as a column label in the table of ingresses (ingress list view).">Endpoints</translation>
+  <translation id="5470067088066957568" key="MSG_INGRESS_LIST_CARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of ingresses (ingress list view).">Age</translation>
   <translation id="2614599743687997113" key="MSG_INGRESS_LIST_ENDPOINTS_LABEL" desc="Label 'endpoints' which appears as a column label in the table of ingresses (ingress list view).">エンドポイント</translation>
   <translation id="6557412002623801560" key="MSG_INGRESS_LIST_NAMESPACE_LABEL" desc="Label 'Namespace' which appears as a column label in the table of ingresss (ingress list view).">ネームスペース</translation>
   <translation id="4380824121111866273" key="MSG_INGRESS_LIST_NAME_LABEL" desc="Label 'Name' which appears as a column label in the table of ingresss (ingress list view).">名前</translation>

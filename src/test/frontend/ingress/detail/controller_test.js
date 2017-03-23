@@ -12,8 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'ingress';
+import {IngressDetailController} from 'ingress/detail/controller';
+import module from 'ingress/module';
 
-/** Absolute URL of the state. */
-export const stateUrl = '/ingress';
+describe('Ingress Detail controller', () => {
+
+  beforeEach(() => {
+    angular.mock.module(module.name);
+  });
+
+  it('should initialize ingress controller', angular.mock.inject(($controller) => {
+    let data = {};
+    /** @type {!IngressDetailController} */
+    let ctrl = $controller(IngressDetailController, {ingressDetail: data});
+
+    expect(ctrl.ingressDetail).toBe(data);
+  }));
+});

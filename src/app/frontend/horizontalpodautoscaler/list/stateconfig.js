@@ -28,7 +28,7 @@ const i18n = {
 };
 
 /**
- * Config state object for the Deployment list view.
+ * Config state object for the Horizontal Pod Autoscaler list view.
  *
  * @type {!ui.router.StateConfig}
  */

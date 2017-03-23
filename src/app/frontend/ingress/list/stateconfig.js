@@ -16,41 +16,56 @@ import {stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {stateName as parentStateName} from 'servicesanddiscovery/state';
 
-import {IngressListController} from './list_controller';
-import {stateName} from './list_state';
-import {stateUrl} from './list_state';
+import {stateUrl} from './../state';
+import {IngressListController} from './controller';
 
 /**
- * @param {!ui.router.$stateProvider} $stateProvider
+ * I18n object that defines strings for translation used in this file.
+ */
+const i18n = {
+  /** @type {string} @desc Label 'Ingress' that appears as a breadcrumbs on the action bar. */
+  MSG_BREADCRUMBS_INGRESSS_LABEL: goog.getMsg('Ingress'),
+};
+
+/**
+ * Config state object for the Ingress list view.
+ *
+ * @type {!ui.router.StateConfig}
+ */
+export const config = {
+  url: stateUrl,
+  parent: chromeStateName,
+  resolve: {
+    'ingressList': resolveIngressList,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': i18n.MSG_BREADCRUMBS_INGRESSS_LABEL,
+      'parent': parentStateName,
+    },
+  },
+  views: {
+    '': {
+      controller: IngressListController,
+      controllerAs: '$ctrl',
+      templateUrl: 'ingress/list/list.html',
+    },
+  },
+};
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
  * @ngInject
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    url: stateUrl,
-    parent: chromeStateName,
-    resolve: {
-      'ingressList': resolveIngressList,
-    },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': i18n.MSG_BREADCRUMBS_INGRESSS_LABEL,
-        'parent': parentStateName,
-      },
-    },
-    views: {
-      '': {
-        controller: IngressListController,
-        controllerAs: '$ctrl',
-        templateUrl: 'ingresslist/list.html',
-      },
-    },
-  });
+export function ingressListResource($resource) {
+  return $resource('api/v1/ingress/:namespace');
 }
 
 /**
  * @param {!angular.Resource} kdIngressListResource
- * @param {!./../chrome/chrome_state.StateParams} $stateParams
- * @param {!./../common/pagination/pagination_service.PaginationService} kdPaginationService
+ * @param {!./../../chrome/chrome_state.StateParams} $stateParams
+ * @param {!./../../common/pagination/pagination_service.PaginationService} kdPaginationService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
@@ -58,8 +73,3 @@ export function resolveIngressList(kdIngressListResource, $stateParams, kdPagina
   let query = kdPaginationService.getDefaultResourceQuery($stateParams.namespace);
   return kdIngressListResource.get(query).$promise;
 }
-
-const i18n = {
-  /** @type {string} @desc Label 'Ingress' that appears as a breadcrumbs on the action bar. */
-  MSG_BREADCRUMBS_INGRESSS_LABEL: goog.getMsg('Ingress'),
-};

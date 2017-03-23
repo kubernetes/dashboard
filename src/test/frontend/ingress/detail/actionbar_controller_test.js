@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ActionBarController} from 'ingressdetail/actionbar_controller';
-import module from 'ingressdetail/module';
+import {ActionBarController} from 'ingress/detail/actionbar_controller';
+import module from 'ingress/module';
 
 describe('Action Bar controller', () => {
   /** @type {!ActionBarController} */

@@ -30,8 +30,7 @@ import errorModule from './error/error_module';
 import horizontalPodAutoscalerModule from './horizontalpodautoscaler/module';
 import indexConfig from './index_config';
 import routeConfig from './index_route';
-import ingressDetailModule from './ingressdetail/module';
-import ingressListModule from './ingresslist/module';
+import ingressModule from './ingress/module';
 import jobDetailModule from './jobdetail/jobdetail_module';
 import jobListModule from './joblist/joblist_module';
 import logsModule from './logs/logs_module';
@@ -103,8 +102,7 @@ export default angular
           configMapModule.name,
           secretListModule.name,
           secretDetailModule.name,
-          ingressListModule.name,
-          ingressDetailModule.name,
+          ingressModule.name,
           servicesanddiscoveryModule.name,
           configModule.name,
           csrfTokenModule.name,

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {getIngressDetail, getIngressDetailResource} from 'ingressdetail/detail_stateconfig';
-import module from 'ingressdetail/module';
+import {getIngressDetail, getIngressDetailResource} from 'ingress/detail/stateconfig';
+import module from 'ingress/module';
 
 describe('StateConfig for ingress detail', () => {
   beforeEach(() => {

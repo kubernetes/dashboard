@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {IngressListController} from 'ingresslist/list_controller';
-import ingressListModule from 'ingresslist/module';
+import {IngressListController} from 'ingress/list/controller';
+import ingressModule from 'ingress/module';
 
 describe('Ingress list controller', () => {
-  /** @type {!ingresslist/ingresslist_controller.IngressListController} */
+  /** @type {!IngressListController} */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(ingressListModule.name);
+    angular.mock.module(ingressModule.name);
 
     angular.mock.inject(($controller) => {
       ctrl = $controller(IngressListController, {ingressList: {ingresss: []}});
