@@ -68,7 +68,6 @@ import (
 	utilnet "k8s.io/apimachinery/pkg/util/net"
 	clientK8s "k8s.io/client-go/kubernetes"
 	restclient "k8s.io/client-go/rest"
-	"k8s.io/client-go/tools/clientcmd"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/rbacrolebindings"
 )
 
