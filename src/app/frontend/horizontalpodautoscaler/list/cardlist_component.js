@@ -17,11 +17,11 @@
  */
 export class HorizontalPodAutoscalerCardListController {
   /**
-   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
+   * @param {!./../../common/namespace/namespace_service.NamespaceService} kdNamespaceService
    * @ngInject
    */
   constructor(kdNamespaceService) {
-    /** @private {!./../common/namespace/namespace_service.NamespaceService} */
+    /** @private {!./../../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
   }
 
@@ -46,7 +46,7 @@ export const horizontalPodAutoscalerCardListComponent = {
     // Optional zerostate content that is shown when there are zero items.
     'zerostate': '?kdZerostate',
   },
-  templateUrl: 'horizontalpodautoscalerlist/horizontalpodautoscalercardlist.html',
+  templateUrl: 'horizontalpodautoscaler/list/cardlist.html',
   controller: HorizontalPodAutoscalerCardListController,
   bindings: {
     /** {!Array<!backendApi.HorizontalPodAutoscalerList>} */

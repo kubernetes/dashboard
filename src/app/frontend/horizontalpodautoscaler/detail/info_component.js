@@ -63,7 +63,7 @@ export default class HorizontalPodAutoscalerInfoController {
    * @export
    * @return {string} localized tooltip with the formatted creation date
    */
-  getLatScaledTooltip() {
+  getLastScaledTooltip() {
     let filter = this.interpolate_(`{{date | date}}`);
     /** @type {string} @desc Tooltip 'Last scaled at [some date]' showing the exact time of
      * the last time the horizontal pod autoscaler was scaled.*/
@@ -81,7 +81,7 @@ export default class HorizontalPodAutoscalerInfoController {
  */
 export const horizontalPodAutoscalerInfoComponent = {
   controller: HorizontalPodAutoscalerInfoController,
-  templateUrl: 'horizontalpodautoscalerdetail/horizontalpodautoscalerinfo.html',
+  templateUrl: 'horizontalpodautoscaler/detail/info.html',
   bindings: {
     /** {!backendApi.HorizontalPodAutoscalerDetail} */
     'horizontalPodAutoscaler': '=',

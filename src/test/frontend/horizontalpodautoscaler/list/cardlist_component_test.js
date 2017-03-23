@@ -11,16 +11,14 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import horizontalPodAutoscalerListModule from 'horizontalpodautoscalerlist/horizontalpodautoscalerlist_module';
+import horizontalPodAutoscalerModule from 'horizontalpodautoscaler/module';
 
 describe('Horizontal Pod Autoscaler card list', () => {
-  /** @type
-   * {!horizontalpodautoscalerlist/horizontalpodautoscalercard_component.HorizontalPodAutoscalerCardListController}
-   */
+  /** @type {!HorizontalPodAutoscalerCardListController} */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(horizontalPodAutoscalerListModule.name);
+    angular.mock.module(horizontalPodAutoscalerModule.name);
 
     angular.mock.inject(($componentController, $rootScope) => {
       /** @type {!HorizontalPodAutoscalerCardListController} */

@@ -17,7 +17,6 @@ import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
 import daemonSetModule from 'daemonset/module';
 import deploymentModule from 'deployment/module';
-import horizontalPodAutoscalerListModule from 'horizontalpodautoscalerlist/horizontalpodautoscalerlist_module';
 import jobListModule from 'joblist/joblist_module';
 import replicaSetListModule from 'replicasetlist/replicasetlist_module';
 import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
@@ -44,7 +43,6 @@ export default angular
           replicaSetListModule.name,
           deploymentModule.name,
           daemonSetModule.name,
-          horizontalPodAutoscalerListModule.name,
           statefulSetListModule.name,
         ])
     .config(stateConfig)

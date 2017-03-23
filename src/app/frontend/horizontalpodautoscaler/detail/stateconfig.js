@@ -15,11 +15,11 @@
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
-import {stateName as horizontalPodAutoscalerList, stateUrl} from 'horizontalpodautoscalerlist/horizontalpodautoscalerlist_state';
+import {stateName as horizontalPodAutoscalerList} from 'horizontalpodautoscaler/list/state';
 
+import {stateUrl} from './../state';
 import {ActionBarController} from './actionbar_controller';
-import {HorizontalPodAutoscalerDetailController} from './horizontalpodautoscalerdetail_controller';
-import {stateName} from './horizontalpodautoscalerdetail_state';
+import {HorizontalPodAutoscalerDetailController} from './controller';
 
 /**
  * Configures states for the horizontal pod autoscaler details view.
@@ -27,37 +27,35 @@ import {stateName} from './horizontalpodautoscalerdetail_state';
  * @param {!ui.router.$stateProvider} $stateProvider
  * @ngInject
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    url: appendDetailParamsToUrl(stateUrl),
-    parent: chromeStateName,
-    resolve: {
-      'horizontalPodAutoscalerDetailResource': getHorizontalPodAutoscalerDetailResource,
-      'horizontalPodAutoscalerDetail': getHorizontalPodAutoscalerDetail,
+export const config = {
+  url: appendDetailParamsToUrl(stateUrl),
+  parent: chromeStateName,
+  resolve: {
+    'horizontalPodAutoscalerDetailResource': getHorizontalPodAutoscalerDetailResource,
+    'horizontalPodAutoscalerDetail': getHorizontalPodAutoscalerDetail,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': '{{$stateParams.objectName}}',
+      'parent': horizontalPodAutoscalerList,
     },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': '{{$stateParams.objectName}}',
-        'parent': horizontalPodAutoscalerList,
-      },
+  },
+  views: {
+    '': {
+      controller: HorizontalPodAutoscalerDetailController,
+      controllerAs: '$ctrl',
+      templateUrl: 'horizontalpodautoscaler/detail/detail.html',
     },
-    views: {
-      '': {
-        controller: HorizontalPodAutoscalerDetailController,
-        controllerAs: '$ctrl',
-        templateUrl: 'horizontalpodautoscalerdetail/horizontalpodautoscalerdetail.html',
-      },
-      [actionbarViewName]: {
-        controller: ActionBarController,
-        controllerAs: '$ctrl',
-        templateUrl: 'horizontalpodautoscalerdetail/actionbar.html',
-      },
+    [actionbarViewName]: {
+      controller: ActionBarController,
+      controllerAs: '$ctrl',
+      templateUrl: 'horizontalpodautoscaler/detail/actionbar.html',
     },
-  });
-}
+  },
+};
 
 /**
- * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
+ * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource<!backendApi.HorizontalPodAutoscalerDetail>}
  * @ngInject

@@ -27,6 +27,7 @@ import daemonSetModule from './daemonset/module';
 import deployModule from './deploy/deploy_module';
 import deploymentModule from './deployment/module';
 import errorModule from './error/error_module';
+import horizontalPodAutoscalerModule from './horizontalpodautoscaler/module';
 import indexConfig from './index_config';
 import routeConfig from './index_route';
 import ingressDetailModule from './ingressdetail/module';
@@ -86,6 +87,7 @@ export default angular
           namespaceListModule.name,
           nodeListModule.name,
           deploymentModule.name,
+          horizontalPodAutoscalerModule.name,
           workloadsModule.name,
           storageModule.name,
           adminModule.name,

@@ -13,14 +13,14 @@
 // limitations under the License.
 
 import {stateName as deploymentDetailState} from 'deployment/detail/state';
-import horizontalPodAutoscalerDetailModule from 'horizontalpodautoscalerdetail/horizontalpodautoscalerdetail_module';
+import horizontalPodAutoscalerModule from 'horizontalpodautoscaler/module';
 
 describe('Horizontal Pod Autoscaler Info controller', () => {
   /** @type {!HorizontalPodAutoscalerInfoController} */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(horizontalPodAutoscalerDetailModule.name);
+    angular.mock.module(horizontalPodAutoscalerModule.name);
 
     angular.mock.inject(($componentController, $rootScope, $state, $interpolate) => {
       ctrl = $componentController(

@@ -14,7 +14,7 @@
 
 import {StateParams} from 'common/resource/resourcedetail';
 import {stateName as deploymentStateName} from 'deployment/detail/state';
-import {stateName} from 'horizontalpodautoscalerdetail/horizontalpodautoscalerdetail_state';
+import {stateName} from 'horizontalpodautoscaler/detail/state';
 import {stateName as replicaSetStateName} from 'replicasetdetail/replicasetdetail_state';
 import {stateName as replicationControllerStateName} from 'replicationcontrollerdetail/replicationcontrollerdetail_state';
 
@@ -33,7 +33,7 @@ export class HorizontalPodAutoscalerCardController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
-   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
+   * @param {!./../../common/namespace/namespace_service.NamespaceService} kdNamespaceService
    * @ngInject
    */
   constructor($state, $interpolate, kdNamespaceService) {
@@ -46,7 +46,7 @@ export class HorizontalPodAutoscalerCardController {
     /** @private {!angular.$interpolate} */
     this.interpolate_ = $interpolate;
 
-    /** @private {!./../common/namespace/namespace_service.NamespaceService} */
+    /** @private {!./../../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
   }
 
@@ -105,5 +105,5 @@ export class HorizontalPodAutoscalerCardController {
 export const horizontalPodAutoscalerCardComponent = {
   bindings: {'horizontalPodAutoscaler': '=', 'showScaleTarget': '<'},
   controller: HorizontalPodAutoscalerCardController,
-  templateUrl: 'horizontalpodautoscalerlist/horizontalpodautoscalercard.html',
+  templateUrl: 'horizontalpodautoscaler/list/card.html',
 };

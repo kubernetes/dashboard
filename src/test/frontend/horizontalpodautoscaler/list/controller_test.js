@@ -12,17 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HorizontalPodAutoscalerListController} from 'horizontalpodautoscalerlist/horizontalpodautoscalerlist_controller';
-import horizontalPodAutoscalerListModule from 'horizontalpodautoscalerlist/horizontalpodautoscalerlist_module';
+import {HorizontalPodAutoscalerListController} from 'horizontalpodautoscaler/list/controller';
+import horizontalPodAutoscalerModule from 'horizontalpodautoscaler/module';
 
 describe('Horizontal Pod Autoscaler list controller', () => {
-  /** @type
-   * {!horizontalpodautoscalerlist/horizontalpodautoscalerlist_controller.HorizontalPodAutoscalerListController}
-   */
+  /** @type {!HorizontalPodAutoscalerListController} */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(horizontalPodAutoscalerListModule.name);
+    angular.mock.module(horizontalPodAutoscalerModule.name);
 
     angular.mock.inject(($controller) => {
       ctrl = $controller(

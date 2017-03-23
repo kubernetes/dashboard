@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import horizontalPodAutoscalerListModule from 'horizontalpodautoscalerlist/horizontalpodautoscalerlist_module';
-import {resolveHorizontalPodAutoscalerList} from 'horizontalpodautoscalerlist/horizontalpodautoscalerlist_stateconfig';
+import {resolveHorizontalPodAutoscalerList} from 'horizontalpodautoscaler/list/stateconfig';
+import horizontalPodAutoscalerModule from 'horizontalpodautoscaler/module';
 
 describe('StateConfig for horizontal pod autoscaler controller list', () => {
-  /** @type {!common/pagination/pagination_service.PaginationService} */
+  /** @type {!PaginationService} */
   let kdPaginationService;
 
   beforeEach(() => {
-    angular.mock.module(horizontalPodAutoscalerListModule.name);
+    angular.mock.module(horizontalPodAutoscalerModule.name);
     angular.mock.inject((_kdPaginationService_) => {
       kdPaginationService = _kdPaginationService_;
     });

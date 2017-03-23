@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HorizontalPodAutoscalerDetailController} from 'horizontalpodautoscalerdetail/horizontalpodautoscalerdetail_controller';
-import horizontalPodAutoscalerDetailModule from 'horizontalpodautoscalerdetail/horizontalpodautoscalerdetail_module';
+import {HorizontalPodAutoscalerDetailController} from 'horizontalpodautoscaler/detail/controller';
+import horizontalPodAutoscalerModule from 'horizontalpodautoscaler/module';
 
 describe('Horizontal Pod Autoscaler Detail controller', () => {
 
   beforeEach(() => {
-    angular.mock.module(horizontalPodAutoscalerDetailModule.name);
+    angular.mock.module(horizontalPodAutoscalerModule.name);
   });
 
   it('should initialize horizontal pod autoscaler controller',
