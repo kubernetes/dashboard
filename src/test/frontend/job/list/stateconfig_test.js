@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import jobListModule from 'joblist/joblist_module';
-import {resolveJobList} from 'joblist/joblist_stateconfig';
+import {resolveJobList} from 'job/list/stateconfig';
+import jobModule from 'job/module';
 
 describe('StateConfig for job list', () => {
-  /** @type {!common/pagination/pagination_service.PaginationService} */
+  /** @type {!PaginationService} */
   let kdPaginationService;
 
   beforeEach(() => {
-    angular.mock.module(jobListModule.name);
+    angular.mock.module(jobModule.name);
     angular.mock.inject((_kdPaginationService_) => {
       kdPaginationService = _kdPaginationService_;
     });

@@ -31,8 +31,7 @@ import horizontalPodAutoscalerModule from './horizontalpodautoscaler/module';
 import indexConfig from './index_config';
 import routeConfig from './index_route';
 import ingressModule from './ingress/module';
-import jobDetailModule from './jobdetail/jobdetail_module';
-import jobListModule from './joblist/joblist_module';
+import jobModule from './job/module';
 import logsModule from './logs/logs_module';
 import namespaceDetailModule from './namespacedetail/namespacedetail_module';
 import namespaceListModule from './namespacelist/namespacelist_module';
@@ -76,8 +75,7 @@ export default angular
           daemonSetModule.name,
           deployModule.name,
           errorModule.name,
-          jobListModule.name,
-          jobDetailModule.name,
+          jobModule.name,
           logsModule.name,
           replicationControllerDetailModule.name,
           replicationControllerListModule.name,

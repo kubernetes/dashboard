@@ -35,7 +35,7 @@ export default class JobInfoController {
  */
 export const jobInfoComponent = {
   controller: JobInfoController,
-  templateUrl: 'jobdetail/jobinfo.html',
+  templateUrl: 'job/detail/info.html',
   bindings: {
     /** {!backendApi.JobDetail} */
     'job': '=',

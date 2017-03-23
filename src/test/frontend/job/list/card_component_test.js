@@ -11,17 +11,16 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import jobListModule from 'joblist/joblist_module';
+
+import jobModule from 'job/module';
 
 describe('Job card', () => {
   /**
-   * @type
-   * {!joblist/jobcard_component.JobCardController}
-   */
+   * @type {!JobCardController} */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(jobListModule.name);
+    angular.mock.module(jobModule.name);
 
     angular.mock.inject(($componentController) => {
       ctrl = $componentController('kdJobCard');

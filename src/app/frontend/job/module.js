@@ -1,13 +1,13 @@
 // Copyright 2015 Google Inc. All Rights Reserved.
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Apache License, Version 2.0 (the 'License');
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
+// distributed under the License is distributed on an 'AS IS' BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
@@ -15,48 +15,36 @@
 import chromeModule from 'chrome/chrome_module';
 import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
+import namespaceModule from 'common/namespace/namespace_module';
 import eventsModule from 'events/events_module';
 
-import stateConfig from './jobdetail_stateconfig';
-import {jobInfoComponent} from './jobinfo_component';
-
+import {jobInfoComponent} from './detail/info_component';
+import {jobEventsResource, jobPodsResource} from './detail/stateconfig';
+import {jobCardComponent} from './list/card_component';
+import {jobCardListComponent} from './list/cardlist_component';
+import {jobListResource} from './list/stateconfig';
+import stateConfig from './stateconfig';
 
 /**
- * Angular module for the Job details view.
- *
- * The view shows detailed view of a Job.
+ * Angular module for the Deployment resource.
  */
 export default angular
     .module(
-        'kubernetesDashboard.jobDetail',
+        'kubernetesDashboard.job',
         [
           'ngMaterial',
           'ngResource',
           'ui.router',
-          componentsModule.name,
           chromeModule.name,
-          filtersModule.name,
+          componentsModule.name,
           eventsModule.name,
+          filtersModule.name,
+          namespaceModule.name,
         ])
     .config(stateConfig)
+    .component('kdJobCard', jobCardComponent)
+    .component('kdJobCardList', jobCardListComponent)
     .component('kdJobInfo', jobInfoComponent)
+    .factory('kdJobListResource', jobListResource)
     .factory('kdJobPodsResource', jobPodsResource)
     .factory('kdJobEventsResource', jobEventsResource);
-
-/**
- * @param {!angular.$resource} $resource
- * @return {!angular.Resource}
- * @ngInject
- */
-function jobEventsResource($resource) {
-  return $resource('api/v1/job/:namespace/:name/event');
-}
-
-/**
- * @param {!angular.$resource} $resource
- * @return {!angular.Resource}
- * @ngInject
- */
-function jobPodsResource($resource) {
-  return $resource('api/v1/job/:namespace/:name/pod');
-}

@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {JobListController} from 'joblist/joblist_controller';
-import jobListModule from 'joblist/joblist_module';
+import {JobListController} from 'job/list/controller';
+import jobModule from 'job/module';
 
 describe('Job list controller', () => {
-  /** @type {!joblist/joblist_controller.JobListController} */
+  /** @type {!JobListController} */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(jobListModule.name);
+    angular.mock.module(jobModule.name);
 
     angular.mock.inject(($controller) => {
       ctrl = $controller(JobListController, {jobList: {jobs: []}});

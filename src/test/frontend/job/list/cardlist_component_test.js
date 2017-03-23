@@ -12,23 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import jobListModule from 'joblist/joblist_module';
+import jobModule from 'job/module';
 
 describe('Job Card List controller', () => {
-  /**
-   * @type {!joblist/jobcardlist_component.JobCardListController}
-   */
+  /** @type {!JobCardListController} */
   let ctrl;
-  /**
-   * @type {!./../common/namespace/namespace_service.NamespaceService}
-   */
+  /** @type {!NamespaceService} */
   let data;
 
   beforeEach(() => {
-    angular.mock.module(jobListModule.name);
+    angular.mock.module(jobModule.name);
 
     angular.mock.inject(($componentController, kdNamespaceService) => {
-      /** @type {!./../common/namespace/namespace_service.NamespaceService} */
+      /** @type {!NamespaceService} */
       data = kdNamespaceService;
       /** @type {!JobCardListController} */
       ctrl = $componentController('kdJobCardList', {kdNamespaceService_: data});

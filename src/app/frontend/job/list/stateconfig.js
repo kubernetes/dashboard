@@ -16,42 +16,56 @@ import {stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {stateName as workloadsStateName} from 'workloads/workloads_state';
 
-import {JobListController} from './joblist_controller';
-import {stateName, stateUrl} from './joblist_state';
+import {stateUrl} from './../state';
+import {JobListController} from './controller';
 
 /**
- * Configures states for the service view.
+ * I18n object that defines strings for translation used in this file.
+ */
+const i18n = {
+  /** @type {string} @desc Label 'Jobs' that appears as a breadcrumbs on the action bar. */
+  MSG_BREADCRUMBS_JOBS_LABEL: goog.getMsg('Jobs'),
+};
+
+/**
+ * Config state object for the Job list view.
  *
- * @param {!ui.router.$stateProvider} $stateProvider
+ * @type {!ui.router.StateConfig}
+ */
+export const config = {
+  url: stateUrl,
+  parent: chromeStateName,
+  resolve: {
+    'jobList': resolveJobList,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': i18n.MSG_BREADCRUMBS_JOBS_LABEL,
+      'parent': workloadsStateName,
+    },
+  },
+  views: {
+    '': {
+      controller: JobListController,
+      controllerAs: '$ctrl',
+      templateUrl: 'job/list/list.html',
+    },
+  },
+};
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
  * @ngInject
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    url: stateUrl,
-    parent: chromeStateName,
-    resolve: {
-      'jobList': resolveJobList,
-    },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': i18n.MSG_BREADCRUMBS_JOBS_LABEL,
-        'parent': workloadsStateName,
-      },
-    },
-    views: {
-      '': {
-        controller: JobListController,
-        controllerAs: '$ctrl',
-        templateUrl: 'joblist/joblist.html',
-      },
-    },
-  });
+export function jobListResource($resource) {
+  return $resource('api/v1/job/:namespace');
 }
 
 /**
  * @param {!angular.Resource} kdJobListResource
- * @param {!./../chrome/chrome_state.StateParams} $stateParams
- * @param {!./../common/pagination/pagination_service.PaginationService} kdPaginationService
+ * @param {!./../../chrome/chrome_state.StateParams} $stateParams
+ * @param {!./../../common/pagination/pagination_service.PaginationService} kdPaginationService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
@@ -59,8 +73,3 @@ export function resolveJobList(kdJobListResource, $stateParams, kdPaginationServ
   let query = kdPaginationService.getDefaultResourceQuery($stateParams.namespace);
   return kdJobListResource.get(query).$promise;
 }
-
-const i18n = {
-  /** @type {string} @desc Label 'Jobs' that appears as a breadcrumbs on the action bar. */
-  MSG_BREADCRUMBS_JOBS_LABEL: goog.getMsg('Jobs'),
-};

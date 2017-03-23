@@ -17,7 +17,7 @@ import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
 import daemonSetModule from 'daemonset/module';
 import deploymentModule from 'deployment/module';
-import jobListModule from 'joblist/joblist_module';
+import jobModule from 'job/module';
 import replicaSetListModule from 'replicasetlist/replicasetlist_module';
 import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
 import statefulSetListModule from 'statefulsetlist/statefulsetlist_module';
@@ -38,7 +38,7 @@ export default angular
           filtersModule.name,
           componentsModule.name,
           chromeModule.name,
-          jobListModule.name,
+          jobModule.name,
           replicationControllerListModule.name,
           replicaSetListModule.name,
           deploymentModule.name,

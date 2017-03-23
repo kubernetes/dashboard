@@ -15,48 +15,64 @@
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
-import {stateName as jobList, stateUrl} from 'joblist/joblist_state';
+import {stateName as jobList} from 'job/list/state';
+
+import {stateUrl} from './../state';
 import {ActionBarController} from './actionbar_controller';
-import {JobDetailController} from './jobdetail_controller';
-import {stateName} from './jobdetail_state';
+import {JobDetailController} from './controller';
 
 /**
- * Configures states for the job details view.
+ * Config state object for the Job detail view.
  *
- * @param {!ui.router.$stateProvider} $stateProvider
+ * @type {!ui.router.StateConfig}
+ */
+export const config = {
+  url: appendDetailParamsToUrl(stateUrl),
+  parent: chromeStateName,
+  resolve: {
+    'jobDetailResource': getJobDetailResource,
+    'jobDetail': getJobDetail,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': '{{$stateParams.objectName}}',
+      'parent': jobList,
+    },
+  },
+  views: {
+    '': {
+      controller: JobDetailController,
+      controllerAs: 'ctrl',
+      templateUrl: 'job/detail/detail.html',
+    },
+    [actionbarViewName]: {
+      templateUrl: 'job/detail/actionbar.html',
+      controller: ActionBarController,
+      controllerAs: '$ctrl',
+    },
+  },
+};
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
  * @ngInject
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    url: appendDetailParamsToUrl(stateUrl),
-    parent: chromeStateName,
-    resolve: {
-      'jobDetailResource': getJobDetailResource,
-      'jobDetail': getJobDetail,
-    },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': '{{$stateParams.objectName}}',
-        'parent': jobList,
-      },
-    },
-    views: {
-      '': {
-        controller: JobDetailController,
-        controllerAs: 'ctrl',
-        templateUrl: 'jobdetail/jobdetail.html',
-      },
-      [actionbarViewName]: {
-        templateUrl: 'jobdetail/actionbar.html',
-        controller: ActionBarController,
-        controllerAs: '$ctrl',
-      },
-    },
-  });
+export function jobEventsResource($resource) {
+  return $resource('api/v1/job/:namespace/:name/event');
 }
 
 /**
- * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+export function jobPodsResource($resource) {
+  return $resource('api/v1/job/:namespace/:name/pod');
+}
+
+/**
+ * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource<!backendApi.JobDetail>}
  * @ngInject

@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {JobDetailController} from 'jobdetail/jobdetail_controller';
-import jobDetailModule from 'jobdetail/jobdetail_module';
+import {JobDetailController} from 'job/detail/controller';
+import jobModule from 'job/module';
 
 describe('Job Detail controller', () => {
 
   beforeEach(() => {
-    angular.mock.module(jobDetailModule.name);
+    angular.mock.module(jobModule.name);
   });
 
   it('should initialize job controller', angular.mock.inject(($controller) => {

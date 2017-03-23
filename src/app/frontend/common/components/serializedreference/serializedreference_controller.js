@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as daemonSetStateName} from '../../../daemonset/detail/state';
-import {stateName as deploymentStateName} from '../../../deployment/detail/state';
-import {stateName as jobStateName} from '../../../jobdetail/jobdetail_state';
+import {stateName as daemonSetStateName} from 'daemonset/detail/state';
+import {stateName as deploymentStateName} from 'deployment/detail/state';
+import {stateName as jobStateName} from 'job/detail/state';
 import {stateName as replicaSetStateName} from '../../../replicasetdetail/replicasetdetail_state';
 import {stateName as replicationControllerStateName} from '../../../replicationcontrollerdetail/replicationcontrollerdetail_state';
 import {stateName as statefulSetStateName} from '../../../statefulsetdetail/statefulsetdetail_state';
