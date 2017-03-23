@@ -16,6 +16,7 @@ package handler
 
 import (
 	"crypto/rand"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"log"
@@ -71,7 +72,7 @@ import (
 
 const (
 	// RequestLogString is a template for request log message.
-	RequestLogString = "[%s] Incoming %s %s %s request from %s"
+	RequestLogString = "[%s] Incoming %s %s %s request from %s: %s"
 
 	// ResponseLogString is a template for response log message.
 	ResponseLogString = "[%s] Outcoming response to %s with %d status code"
@@ -120,7 +121,6 @@ func shouldDoCsrfValidation(req *restful.Request) bool {
 }
 
 func xsrfValidation(csrfKey string) func(*restful.Request, *restful.Response, *restful.FilterChain) {
-
 	return func(req *restful.Request, resp *restful.Response, chain *restful.FilterChain) {
 		resource := mapUrlToResource(req.SelectedRoutePath())
 		if resource == nil || (shouldDoCsrfValidation(req) &&
@@ -139,8 +139,8 @@ func xsrfValidation(csrfKey string) func(*restful.Request, *restful.Response, *r
 	}
 }
 
-// Extract the resource from the path
-// Third part of URL (/api/v1/<resource>) and ignore potential subresources
+// mapUrlToResource extracts the resource from the URL path /api/v1/<resource>. Ignores potential
+// subresources.
 func mapUrlToResource(url string) *string {
 	parts := strings.Split(url, "/")
 	if len(parts) < 3 {
@@ -149,30 +149,38 @@ func mapUrlToResource(url string) *string {
 	return &parts[3]
 }
 
-// Web-service filter function used for request and response logging.
-func wsLogger(req *restful.Request, resp *restful.Response, chain *restful.FilterChain) {
-	log.Printf(FormatRequestLog(req))
-	chain.ProcessFilter(req, resp)
-	log.Printf(FormatResponseLog(resp, req))
+// logRequestAndReponse is a web-service filter function used for request and response logging.
+func logRequestAndReponse(request *restful.Request, response *restful.Response, chain *restful.FilterChain) {
+	log.Printf(formatRequestLog(request))
+	chain.ProcessFilter(request, response)
+	log.Printf(formatResponseLog(response, request))
 }
 
-// FormatRequestLog formats request log string.
-// TODO(maciaszczykm): Display request body.
-func FormatRequestLog(req *restful.Request) string {
-	reqURI := ""
-	if req.Request.URL != nil {
-		reqURI = req.Request.URL.RequestURI()
+// formatRequestLog formats request log string.
+func formatRequestLog(request *restful.Request) string {
+	uri := ""
+	if request.Request.URL != nil {
+		uri = request.Request.URL.RequestURI()
 	}
 
-	return fmt.Sprintf(RequestLogString, time.Now().Format(time.RFC3339), req.Request.Proto,
-		req.Request.Method, reqURI, req.Request.RemoteAddr)
+	content := "{}"
+	entity := make(map[string]interface{})
+	request.ReadEntity(&entity)
+	if len(entity) > 0 {
+		bytes, err := json.MarshalIndent(entity, "", "  ")
+		if err == nil {
+			content = string(bytes)
+		}
+	}
+
+	return fmt.Sprintf(RequestLogString, time.Now().Format(time.RFC3339), request.Request.Proto,
+		request.Request.Method, uri, request.Request.RemoteAddr, content)
 }
 
-// FormatResponseLog formats response log string.
-// TODO(maciaszczykm): Display response content.
-func FormatResponseLog(resp *restful.Response, req *restful.Request) string {
+// formatResponseLog formats response log string.
+func formatResponseLog(response *restful.Response, request *restful.Request) string {
 	return fmt.Sprintf(ResponseLogString, time.Now().Format(time.RFC3339),
-		req.Request.RemoteAddr, resp.StatusCode())
+		request.Request.RemoteAddr, response.StatusCode())
 }
 
 // CreateHTTPAPIHandler creates a new HTTP handler that handles all requests to the API of the backend.
@@ -205,7 +213,7 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 	wsContainer.EnableContentEncoding(true)
 
 	apiV1Ws := new(restful.WebService)
-	apiV1Ws.Filter(wsLogger)
+	apiV1Ws.Filter(logRequestAndReponse)
 
 	RegisterMetrics()
 	apiV1Ws.Filter(wsMetrics)
