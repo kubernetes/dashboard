@@ -18,22 +18,16 @@ import (
 	"encoding/json"
 	"log"
 
+	"fmt"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	daemonsetlist "github.com/kubernetes/dashboard/src/app/backend/resource/daemonset/list"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	joblist "github.com/kubernetes/dashboard/src/app/backend/resource/job/list"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
-	replicasetlist "github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/list"
-	replicationcontrollerlist "github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller/list"
-	statefulsetlist "github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/list"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/owner"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	k8sClient "k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/kubernetes"
 	api "k8s.io/client-go/pkg/api/v1"
-	apps "k8s.io/client-go/pkg/apis/apps/v1beta1"
-	batch "k8s.io/client-go/pkg/apis/batch/v1"
-	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
 // PodDetail is a presentation layer view of Kubernetes PodDetail resource.
@@ -56,7 +50,7 @@ type PodDetail struct {
 	RestartCount int32 `json:"restartCount"`
 
 	// Reference to the Controller
-	Controller Controller `json:"controller"`
+	Controller owner.ResourceOwner `json:"controller"`
 
 	// List of container of this pod.
 	Containers []Container `json:"containers"`
@@ -69,22 +63,6 @@ type PodDetail struct {
 
 	// Events is list of events associated with a pod.
 	EventList common.EventList `json:"eventList"`
-}
-
-// Creator is a view of the creator of a given pod, in List for for ease of use
-// in the frontend logic.
-//
-// Has 'oneof' semantics on the non-Kind fields decided by which Kind is there
-// TODO(maciaszczykm): Refactor.
-type Controller struct {
-	// Kind of the Controller, will also define wich of the other members will be non nil
-	Kind string `json:"kind"`
-
-	JobList                   *joblist.JobList                                     `json:"joblist,omitempty"`
-	ReplicaSetList            *replicasetlist.ReplicaSetList                       `json:"replicasetlist,omitempty"`
-	ReplicationControllerList *replicationcontrollerlist.ReplicationControllerList `json:"replicationcontrollerlist,omitempty"`
-	DaemonSetList             *daemonsetlist.DaemonSetList                         `json:"daemonsetlist,omitempty"`
-	StatefulSetList           *statefulsetlist.StatefulSetList                     `json:"statefulsetlist,omitempty"`
 }
 
 // Container represents a docker/rkt/etc. container that lives in a pod.
@@ -119,9 +97,9 @@ type EnvVar struct {
 	ValueFrom *api.EnvVarSource `json:"valueFrom"`
 }
 
-// GetPodDetail returns the details (PodDetail) of a named Pod from a particular
-// namespace.
-func GetPodDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient, namespace, name string) (*PodDetail, error) {
+// GetPodDetail returns the details (PodDetail) of a named Pod from a particular namespace.
+func GetPodDetail(client kubernetes.Interface, heapsterClient client.HeapsterClient, namespace,
+	name string) (*PodDetail, error) {
 
 	log.Printf("Getting details of %s pod in %s namespace", name, namespace)
 
@@ -136,10 +114,8 @@ func GetPodDetail(client k8sClient.Interface, heapsterClient client.HeapsterClie
 		return nil, err
 	}
 
-	controller := Controller{
-		Kind: "unknown",
-	}
-	creatorAnnotation, found := pod.ObjectMeta.Annotations[api.CreatedByAnnotation]
+	controller := owner.ResourceOwner{}
+	creatorAnnotation, found := pod.ObjectMeta.Annotations[api.CreatedByAnnotation] // TODO Retwite to owned by
 	if found {
 		creatorRef, err := getPodCreator(client, creatorAnnotation, common.NewSameNamespaceQuery(namespace), heapsterClient)
 		if err != nil {
@@ -167,7 +143,8 @@ func GetPodDetail(client k8sClient.Interface, heapsterClient client.HeapsterClie
 	return &podDetail, nil
 }
 
-func getPodCreator(client k8sClient.Interface, creatorAnnotation string, nsQuery *common.NamespaceQuery, heapsterClient client.HeapsterClient) (*Controller, error) {
+func getPodCreator(client kubernetes.Interface, creatorAnnotation string,
+	nsQuery *common.NamespaceQuery, heapsterClient client.HeapsterClient) (*owner.ResourceOwner, error) {
 	var serializedReference api.SerializedReference
 	err := json.Unmarshal([]byte(creatorAnnotation), &serializedReference)
 	if err != nil {
@@ -183,18 +160,21 @@ func getPodCreator(client k8sClient.Interface, creatorAnnotation string, nsQuery
 		return nil, err
 	}
 
-	events := <-channels.EventList.List
-	if err := <-channels.EventList.Error; err != nil {
-		return nil, err
-	}
 	reference := serializedReference.Reference
 
-	controller, err := toPodController(client, reference, pods.Items, events.Items, heapsterClient)
+	rc, _ := owner.NewResourceController(reference, client)
+
+	controller := rc.Get(pods.Items)
+
+	fmt.Println(controller)
+
+	// TODO
+
 	if err != nil && isNotFoundError(err) {
-		return &Controller{}, nil
+		return &owner.ResourceOwner{}, nil
 	}
 
-	return controller, err
+	return &controller, err
 }
 
 // isNotFoundError returns true when the given error is 404-NotFound error.
@@ -206,95 +186,8 @@ func isNotFoundError(err error) bool {
 	return statusErr.ErrStatus.Code == 404
 }
 
-func toPodController(client k8sClient.Interface, reference api.ObjectReference, pods []api.Pod, events []api.Event, heapsterClient client.HeapsterClient) (*Controller, error) {
-	kind := reference.Kind
-	switch kind {
-	case "Job":
-		return toJobPodController(client, reference, pods, events, heapsterClient)
-	case "ReplicaSet":
-		return toReplicaSetPodController(client, reference, pods, events, heapsterClient)
-	case "ReplicationController":
-		return toReplicationControllerPodController(client, reference, pods, events, heapsterClient)
-	case "DaemonSet":
-		return toDaemonSetPodController(client, reference, pods, events, heapsterClient)
-	case "StatefulSet":
-		return toStatefulSetPodController(client, reference, pods, events, heapsterClient)
-	default:
-	}
-	// Will be moved into the default case once all cases are implemented
-	return &Controller{
-		Kind: kind,
-	}, nil
-}
-
-func toJobPodController(client k8sClient.Interface, reference api.ObjectReference, pods []api.Pod, events []api.Event, heapsterClient client.HeapsterClient) (*Controller, error) {
-	job, err := client.Batch().Jobs(reference.Namespace).Get(reference.Name, metaV1.GetOptions{})
-	if err != nil {
-		return nil, err
-	}
-	jobs := []batch.Job{*job}
-	jobList := joblist.CreateJobList(jobs, pods, events, dataselect.StdMetricsDataSelect, &heapsterClient)
-	return &Controller{
-		Kind:    "Job",
-		JobList: jobList,
-	}, nil
-}
-
-func toReplicaSetPodController(client k8sClient.Interface, reference api.ObjectReference, pods []api.Pod, events []api.Event, heapsterClient client.HeapsterClient) (*Controller, error) {
-	rs, err := client.Extensions().ReplicaSets(reference.Namespace).Get(reference.Name, metaV1.GetOptions{})
-	if err != nil {
-		return nil, err
-	}
-	replicaSets := []extensions.ReplicaSet{*rs}
-	replicaSetList := replicasetlist.CreateReplicaSetList(replicaSets, pods, events, dataselect.StdMetricsDataSelect, &heapsterClient)
-	return &Controller{
-		Kind:           "ReplicaSet",
-		ReplicaSetList: replicaSetList,
-	}, nil
-}
-
-func toReplicationControllerPodController(client k8sClient.Interface, reference api.ObjectReference, pods []api.Pod, events []api.Event, heapsterClient client.HeapsterClient) (*Controller, error) {
-	rc, err := client.Core().ReplicationControllers(reference.Namespace).Get(reference.Name, metaV1.GetOptions{})
-	if err != nil {
-		return nil, err
-	}
-	rcs := []api.ReplicationController{*rc}
-	replicationControllerList := replicationcontrollerlist.CreateReplicationControllerList(rcs, dataselect.StdMetricsDataSelect, pods, events, &heapsterClient)
-	return &Controller{
-		Kind: "ReplicationController",
-		ReplicationControllerList: replicationControllerList,
-	}, nil
-}
-
-func toDaemonSetPodController(client k8sClient.Interface, reference api.ObjectReference, pods []api.Pod, events []api.Event, heapsterClient client.HeapsterClient) (*Controller, error) {
-	daemonset, err := client.Extensions().DaemonSets(reference.Namespace).Get(reference.Name, metaV1.GetOptions{})
-	if err != nil {
-		return nil, err
-	}
-	daemonsets := []extensions.DaemonSet{*daemonset}
-
-	daemonSetList := daemonsetlist.CreateDaemonSetList(daemonsets, pods, events, dataselect.StdMetricsDataSelect, &heapsterClient)
-	return &Controller{
-		Kind:          "DaemonSet",
-		DaemonSetList: daemonSetList,
-	}, nil
-}
-
-func toStatefulSetPodController(client k8sClient.Interface, reference api.ObjectReference, pods []api.Pod, events []api.Event, heapsterClient client.HeapsterClient) (*Controller, error) {
-	statefulset, err := client.Apps().StatefulSets(reference.Namespace).Get(reference.Name, metaV1.GetOptions{})
-	if err != nil {
-		return nil, err
-	}
-	statefulsets := []apps.StatefulSet{*statefulset}
-
-	statefulSetList := statefulsetlist.CreateStatefulSetList(statefulsets, pods, events, dataselect.StdMetricsDataSelect, &heapsterClient)
-	return &Controller{
-		Kind:            "StatefulSet",
-		StatefulSetList: statefulSetList,
-	}, nil
-}
-
-func toPodDetail(pod *api.Pod, metrics []metric.Metric, configMaps *api.ConfigMapList, controller Controller, eventList *common.EventList) PodDetail {
+func toPodDetail(pod *api.Pod, metrics []metric.Metric, configMaps *api.ConfigMapList,
+	controller owner.ResourceOwner, eventList *common.EventList) PodDetail {
 
 	containers := make([]Container, 0)
 	for _, container := range pod.Spec.Containers {
