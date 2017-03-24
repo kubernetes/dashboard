@@ -21,7 +21,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	api "k8s.io/client-go/pkg/api/v1"
 )
@@ -46,7 +45,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 	}{
 		{nil, nil, nil, nil,
 			&ReplicationControllerList{
-				ReplicationControllers: []replicationcontroller.ReplicationController{},
+				ReplicationControllers: []ReplicationController{},
 				CumulativeMetrics:      make([]metric.Metric, 0),
 			},
 		},
@@ -178,7 +177,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 			&ReplicationControllerList{
 				ListMeta:          common.ListMeta{TotalItems: 2},
 				CumulativeMetrics: make([]metric.Metric, 0),
-				ReplicationControllers: []replicationcontroller.ReplicationController{
+				ReplicationControllers: []ReplicationController{
 					{
 						ObjectMeta: common.ObjectMeta{
 							Name:      "my-app-1",

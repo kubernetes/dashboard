@@ -28,7 +28,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 )
 
 func getReplicasPointer(replicas int32) *int32 {
@@ -50,7 +49,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 			&ReplicaSetList{
 				ListMeta:          common.ListMeta{},
 				CumulativeMetrics: make([]metric.Metric, 0),
-				ReplicaSets:       []replicaset.ReplicaSet{}},
+				ReplicaSets:       []ReplicaSet{}},
 			nil,
 		},
 		{
@@ -86,7 +85,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "NotFound"}},
 			&api.PodList{},
 			&ReplicaSetList{
-				ReplicaSets: make([]replicaset.ReplicaSet, 0),
+				ReplicaSets: make([]ReplicaSet, 0),
 			},
 			nil,
 		},
@@ -130,7 +129,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 			&ReplicaSetList{
 				ListMeta:          common.ListMeta{TotalItems: 1},
 				CumulativeMetrics: make([]metric.Metric, 0),
-				ReplicaSets: []replicaset.ReplicaSet{{
+				ReplicaSets: []ReplicaSet{{
 					ObjectMeta: common.ObjectMeta{
 						Name:              "rs-name",
 						Namespace:         "rs-namespace",
@@ -223,7 +222,7 @@ func TestCreateReplicaSetList(t *testing.T) {
 			&ReplicaSetList{
 				ListMeta:          common.ListMeta{TotalItems: 1},
 				CumulativeMetrics: make([]metric.Metric, 0),
-				ReplicaSets: []replicaset.ReplicaSet{
+				ReplicaSets: []ReplicaSet{
 					{
 						ObjectMeta: common.ObjectMeta{Name: "replica-set", Namespace: "ns-1"},
 						TypeMeta:   common.TypeMeta{Kind: common.ResourceKindReplicaSet},

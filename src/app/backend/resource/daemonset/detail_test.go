@@ -17,31 +17,10 @@ package daemonset
 import (
 	"testing"
 
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 	api "k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
-
-func createDaemonSet(name, namespace string, labelSelector map[string]string) extensions.DaemonSet {
-	return extensions.DaemonSet{
-		ObjectMeta: metaV1.ObjectMeta{Name: name, Namespace: namespace, Labels: labelSelector},
-		Spec: extensions.DaemonSetSpec{
-			Selector: &metaV1.LabelSelector{MatchLabels: labelSelector},
-		},
-	}
-}
-
-func createService(name, namespace string, labelSelector map[string]string) api.Service {
-	return api.Service{
-		ObjectMeta: metaV1.ObjectMeta{Name: name, Namespace: namespace, Labels: labelSelector},
-		Spec:       api.ServiceSpec{Selector: labelSelector},
-	}
-}
-
-const testNamespace = "test-namespace"
-
-var testLabel = map[string]string{"app": "test"}
 
 func TestDeleteDaemonSetServices(t *testing.T) {
 	cases := []struct {
@@ -51,39 +30,39 @@ func TestDeleteDaemonSetServices(t *testing.T) {
 		expectedActions []string
 	}{
 		{
-			testNamespace, "ds-1",
+			TestNamespace, "ds-1",
 			&extensions.DaemonSetList{
 				Items: []extensions.DaemonSet{
-					createDaemonSet("ds-1", testNamespace, testLabel),
+					CreateDaemonSet("ds-1", TestNamespace, TestLabel),
 				},
 			},
 			&api.ServiceList{
 				Items: []api.Service{
-					createService("svc-1", testNamespace, testLabel),
+					CreateService("svc-1", TestNamespace, TestLabel),
 				},
 			},
 			[]string{"get", "list", "list", "delete"},
 		},
 		{
-			testNamespace, "ds-1",
+			TestNamespace, "ds-1",
 			&extensions.DaemonSetList{
 				Items: []extensions.DaemonSet{
-					createDaemonSet("ds-1", testNamespace, testLabel),
-					createDaemonSet("ds-2", testNamespace, testLabel),
+					CreateDaemonSet("ds-1", TestNamespace, TestLabel),
+					CreateDaemonSet("ds-2", TestNamespace, TestLabel),
 				},
 			},
 			&api.ServiceList{
 				Items: []api.Service{
-					createService("svc-1", testNamespace, testLabel),
+					CreateService("svc-1", TestNamespace, TestLabel),
 				},
 			},
 			[]string{"get", "list"},
 		},
 		{
-			testNamespace, "ds-1",
+			TestNamespace, "ds-1",
 			&extensions.DaemonSetList{
 				Items: []extensions.DaemonSet{
-					createDaemonSet("ds-1", testNamespace, testLabel),
+					CreateDaemonSet("ds-1", TestNamespace, TestLabel),
 				},
 			},
 			&api.ServiceList{},

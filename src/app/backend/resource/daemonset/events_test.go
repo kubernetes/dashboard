@@ -27,7 +27,7 @@ import (
 )
 
 func TestGetDaemonSetEvents(t *testing.T) {
-	ds := createDaemonSet("ds-1", "test-namespace", map[string]string{"app": "test"})
+	ds := CreateDaemonSet("ds-1", "test-namespace", map[string]string{"app": "test"})
 	cases := []struct {
 		namespace, name string
 		eventList       *api.EventList
@@ -77,8 +77,7 @@ func TestGetDaemonSetEvents(t *testing.T) {
 
 		for i, verb := range c.expectedActions {
 			if actions[i].GetVerb() != verb {
-				t.Errorf("Unexpected action: %+v, expected %s",
-					actions[i], verb)
+				t.Errorf("Unexpected action: %+v, expected %s", actions[i], verb)
 			}
 		}
 
@@ -90,7 +89,7 @@ func TestGetDaemonSetEvents(t *testing.T) {
 }
 
 func TestGetDaemonSetPodsEvents(t *testing.T) {
-	ds := createDaemonSet("ds-1", "test-namespace", map[string]string{"app": "test"})
+	ds := CreateDaemonSet("ds-1", "test-namespace", map[string]string{"app": "test"})
 	cases := []struct {
 		namespace, name string
 		eventList       *api.EventList
@@ -138,8 +137,7 @@ func TestGetDaemonSetPodsEvents(t *testing.T) {
 
 		for i, verb := range c.expectedActions {
 			if actions[i].GetVerb() != verb {
-				t.Errorf("Unexpected action: %+v, expected %s",
-					actions[i], verb)
+				t.Errorf("Unexpected action: %+v, expected %s", actions[i], verb)
 			}
 		}
 
