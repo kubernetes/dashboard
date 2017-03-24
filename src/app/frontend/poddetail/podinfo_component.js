@@ -14,7 +14,7 @@
 
 import {GlobalStateParams} from 'common/resource/globalresourcedetail';
 import {stateName as logsStateName, StateParams as LogsStateParams} from 'logs/logs_state';
-import {stateName} from 'nodedetail/nodedetail_state';
+import {stateName} from 'node/detail/state';
 
 /**
  * @final

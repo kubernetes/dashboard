@@ -11,17 +11,15 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import nodeListModule from 'nodelist/nodelist_module';
+
+import nodeModule from 'node/module';
 
 describe('Node card', () => {
-  /**
-   * @type
-   * {!nodelist/nodecard_component.NodeCardController}
-   */
+  /** @type {!NodeCardController} */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(nodeListModule.name);
+    angular.mock.module(nodeModule.name);
 
     angular.mock.inject(($componentController, $rootScope) => {
       ctrl = $componentController('kdNodeCard', {$scope: $rootScope});

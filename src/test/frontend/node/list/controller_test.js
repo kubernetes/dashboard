@@ -12,5 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'nodedetail';
+import {NodeListController} from 'node/list/controller';
+import nodeModule from 'node/module';
+
+describe('Node list controller', () => {
+
+  beforeEach(() => {
+    angular.mock.module(nodeModule.name);
+  });
+
+  it('should initialize node controller', angular.mock.inject(($controller) => {
+    let ctrls = {};
+    /** @type {!NodeListController} */
+    let ctrl = $controller(NodeListController, {nodeList: {nodes: ctrls}});
+
+    expect(ctrl.nodeList.nodes).toBe(ctrls);
+  }));
+});

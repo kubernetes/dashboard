@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import nodeListModule from 'nodelist/nodelist_module';
-import {resolveNodeList} from 'nodelist/nodelist_stateconfig';
+import {resolveNodeList} from 'node/list/stateconfig';
+import nodeModule from 'node/module';
 
 describe('StateConfig for node list', () => {
-  /** @type {!common/pagination/pagination_service.PaginationService} */
+  /** @type {!PaginationService} */
   let kdPaginationService;
 
   beforeEach(() => {
-    angular.mock.module(nodeListModule.name);
+    angular.mock.module(nodeModule.name);
     angular.mock.inject((_kdPaginationService_) => {
       kdPaginationService = _kdPaginationService_;
     });

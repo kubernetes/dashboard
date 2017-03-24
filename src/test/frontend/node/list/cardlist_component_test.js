@@ -12,32 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * @final
- */
-export default class NodeInfoController {
-  /**
-   * @ngInject
-   */
-  constructor() {
-    /**
-     * Node details. Initialized from the scope.
-     * @export {!backendApi.NodeDetail}
-     */
-    this.node;
-  }
-}
+import nodeModule from 'node/module';
 
-/**
- * Definition object for the component that displays node info.
- *
- * @return {!angular.Directive}
- */
-export const nodeInfoComponent = {
-  controller: NodeInfoController,
-  templateUrl: 'nodedetail/nodeinfo.html',
-  bindings: {
-    /** {!backendApi.NodeDetail} */
-    'node': '=',
-  },
-};
+describe('Node card list controller', () => {
+
+  beforeEach(() => {
+    angular.mock.module(nodeModule.name);
+  });
+
+  it('should initialize node card list controller', angular.mock.inject(($componentController) => {
+    // given
+    let ctrl = $componentController('kdNodeCardList', {});
+
+    // then
+    expect(ctrl).toBeDefined();
+  }));
+});

@@ -14,7 +14,7 @@
 
 import chromeModule from 'chrome/chrome_module';
 import namespaceModule from 'namespace/module';
-import nodeListModule from 'nodelist/nodelist_module';
+import nodeModule from 'node/module';
 import persistentVolumeListModule from 'persistentvolumelist/persistentvolumelist_module';
 import storageClassListModule from 'storageclasslist/module';
 
@@ -31,7 +31,7 @@ export default angular
           'ngResource',
           'ui.router',
           chromeModule.name,
-          nodeListModule.name,
+          nodeModule.name,
           namespaceModule.name,
           persistentVolumeListModule.name,
           storageClassListModule.name,

@@ -15,44 +15,60 @@
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {appendDetailParamsToUrl} from 'common/resource/globalresourcedetail';
-import {stateName as nodeList, stateUrl} from 'nodelist/nodelist_state';
 
-import {NodeDetailController} from './nodedetail_controller';
-import {stateName} from './nodedetail_state';
+import {stateName as nodeList} from './../list/state';
+import {stateUrl} from './../state';
+import {NodeDetailController} from './controller';
 
 /**
- * Configures states for the node details view.
+ * Config state object for the Node detail view.
  *
- * @param {!ui.router.$stateProvider} $stateProvider
+ * @type {!ui.router.StateConfig}
+ */
+export const config = {
+  url: appendDetailParamsToUrl(stateUrl),
+  parent: chromeStateName,
+  resolve: {
+    'nodeDetailResource': getNodeDetailResource,
+    'nodeDetail': getNodeDetail,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': '{{$stateParams.objectName}}',
+      'parent': nodeList,
+    },
+  },
+  views: {
+    '': {
+      controller: NodeDetailController,
+      controllerAs: 'ctrl',
+      templateUrl: 'node/detail/detail.html',
+    },
+    [actionbarViewName]: {},
+  },
+};
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
  * @ngInject
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    url: appendDetailParamsToUrl(stateUrl),
-    parent: chromeStateName,
-    resolve: {
-      'nodeDetailResource': getNodeDetailResource,
-      'nodeDetail': getNodeDetail,
-    },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': '{{$stateParams.objectName}}',
-        'parent': nodeList,
-      },
-    },
-    views: {
-      '': {
-        controller: NodeDetailController,
-        controllerAs: 'ctrl',
-        templateUrl: 'nodedetail/nodedetail.html',
-      },
-      [actionbarViewName]: {},
-    },
-  });
+export function nodeEventsResource($resource) {
+  return $resource('api/v1/node/:name/event');
 }
 
 /**
- * @param {!./../common/resource/globalresourcedetail.GlobalStateParams} $stateParams
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+export function nodePodsResource($resource) {
+  return $resource('api/v1/node/:name/pod');
+}
+
+
+/**
+ * @param {!./../../common/resource/globalresourcedetail.GlobalStateParams} $stateParams
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource<!backendApi.NodeDetail>}
  * @ngInject

@@ -12,19 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import nodeListModule from 'nodelist/nodelist_module';
+import {NodeDetailController} from 'node/detail/controller';
+import nodeModule from 'node/module';
 
-describe('Node card list controller', () => {
+describe('Node Detail controller', () => {
 
   beforeEach(() => {
-    angular.mock.module(nodeListModule.name);
+    angular.mock.module(nodeModule.name);
   });
 
-  it('should initialize node card list controller', angular.mock.inject(($componentController) => {
-    // given
-    let ctrl = $componentController('kdNodeCardList', {});
+  it('should initialize node controller', angular.mock.inject(($controller) => {
+    let data = {};
+    /** @type {!NodeDetailController} */
+    let ctrl = $controller(NodeDetailController, {nodeDetail: data});
 
-    // then
-    expect(ctrl).toBeDefined();
+    expect(ctrl.nodeDetail).toBe(data);
   }));
 });

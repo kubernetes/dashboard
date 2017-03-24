@@ -34,7 +34,7 @@ import ingressModule from './ingress/module';
 import jobModule from './job/module';
 import logsModule from './logs/logs_module';
 import namespaceModule from './namespace/module';
-import nodeListModule from './nodelist/nodelist_module';
+import nodeModule from './node/module';
 import persistentVolumeClaimDetailModule from './persistentvolumeclaimdetail/persistentvolumeclaimdetail_module';
 import persistentVolumeClaimListModule from './persistentvolumeclaimlist/persistentvolumeclaimlist_module';
 import persistentVolumeDetailModule from './persistentvolumedetail/persistentvolumedetail_module';
@@ -80,7 +80,7 @@ export default angular
           replicationControllerListModule.name,
           replicaSetListModule.name,
           namespaceModule.name,
-          nodeListModule.name,
+          nodeModule.name,
           deploymentModule.name,
           horizontalPodAutoscalerModule.name,
           workloadsModule.name,

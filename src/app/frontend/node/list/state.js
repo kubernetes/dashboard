@@ -12,17 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * @return {!angular.Component}
- */
-export const nodeCardListComponent = {
-  transclude: {
-    // Optional header that is transcluded instead of the default one.
-    'header': '?kdHeader',
-  },
-  bindings: {
-    'nodeList': '<',
-    'nodeListResource': '<',
-  },
-  templateUrl: 'nodelist/nodecardlist.html',
-};
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'node.list';

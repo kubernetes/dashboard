@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
+/** Name of the state. */
 export const stateName = 'node';
 
 /** Absolute URL of the state. */

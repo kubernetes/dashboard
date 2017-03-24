@@ -15,30 +15,29 @@
 /**
  * @final
  */
-export class NodeAllocatedResourcesController {
+export default class NodeInfoController {
   /**
-   * Constructs node conditions object.
    * @ngInject
    */
   constructor() {
     /**
-     * Node allocated resources. Initialized from the scope.
-     * @export {!backendApi.NodeAllocatedResources}
+     * Node details. Initialized from the scope.
+     * @export {!backendApi.NodeDetail}
      */
-    this.allocatedResources;
+    this.node;
   }
 }
 
 /**
- * Definition object for the component that displays node allocated resources.
+ * Definition object for the component that displays node info.
  *
  * @return {!angular.Directive}
  */
-export const nodeAllocatedResourcesComponent = {
-  controller: NodeAllocatedResourcesController,
-  templateUrl: 'nodedetail/nodeallocatedresources.html',
+export const nodeInfoComponent = {
+  controller: NodeInfoController,
+  templateUrl: 'node/detail/info.html',
   bindings: {
-    /** {!backendApi.NodeAllocatedResources} */
-    'allocatedResources': '=',
+    /** {!backendApi.NodeDetail} */
+    'node': '=',
   },
 };

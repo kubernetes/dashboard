@@ -12,20 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NodeDetailController} from 'nodedetail/nodedetail_controller';
-import nodeDetailModule from 'nodedetail/nodedetail_module';
-
-describe('Node Detail controller', () => {
-
-  beforeEach(() => {
-    angular.mock.module(nodeDetailModule.name);
-  });
-
-  it('should initialize node controller', angular.mock.inject(($controller) => {
-    let data = {};
-    /** @type {!NodeDetailController} */
-    let ctrl = $controller(NodeDetailController, {nodeDetail: data});
-
-    expect(ctrl.nodeDetail).toBe(data);
-  }));
-});
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'node.detail';

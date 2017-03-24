@@ -12,20 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NodeListController} from 'nodelist/nodelist_controller';
-import nodeListModule from 'nodelist/nodelist_module';
-
-describe('Node list controller', () => {
-
-  beforeEach(() => {
-    angular.mock.module(nodeListModule.name);
-  });
-
-  it('should initialize node controller', angular.mock.inject(($controller) => {
-    let ctrls = {};
-    /** @type {!NodeListController} */
-    let ctrl = $controller(NodeListController, {nodeList: {nodes: ctrls}});
-
-    expect(ctrl.nodeList.nodes).toBe(ctrls);
-  }));
-});
+/**
+ * @return {!angular.Component}
+ */
+export const nodeCardListComponent = {
+  transclude: {
+    // Optional header that is transcluded instead of the default one.
+    'header': '?kdHeader',
+  },
+  bindings: {
+    'nodeList': '<',
+    'nodeListResource': '<',
+  },
+  templateUrl: 'node/list/cardlist.html',
+};

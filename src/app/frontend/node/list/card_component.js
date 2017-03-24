@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {GlobalStateParams} from 'common/resource/globalresourcedetail';
-import {stateName} from 'nodedetail/nodedetail_state';
+import {stateName} from 'node/detail/state';
 
 /**
  * Controller for the node card.
@@ -98,5 +98,5 @@ export const nodeCardComponent = {
     'node': '=',
   },
   controller: NodeCardController,
-  templateUrl: 'nodelist/nodecard.html',
+  templateUrl: 'node/list/card.html',
 };
