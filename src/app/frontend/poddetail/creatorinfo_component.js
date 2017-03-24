@@ -21,12 +21,12 @@ import {stateName as replicationControllerStateName} from '../replicationcontrol
 import {stateName as statefulSetStateName} from '../statefulsetdetail/statefulsetdetail_state';
 
 const creatorKindToDetailStateName = {
-  deployment: deploymentStateName,
-  replicaset: replicaSetStateName,
-  replicationcontroller: replicationControllerStateName,
-  daemonset: daemonSetStateName,
-  statefulset: statefulSetStateName,
-  job: jobStateName,
+  'deployment': deploymentStateName,
+  'replicaset': replicaSetStateName,
+  'replicationcontroller': replicationControllerStateName,
+  'daemonset': daemonSetStateName,
+  'statefulset': statefulSetStateName,
+  'job': jobStateName,
 };
 
 /**
