@@ -11,17 +11,16 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import namespaceListModule from 'namespacelist/namespacelist_module';
+
+import namespaceModule from 'namespace/module';
 
 describe('Namespace card', () => {
   /**
-   * @type
-   * {!namespacelist/namespacecard_component.NamespaceCardController}
-   */
+   * @type {!NamespaceCardController} */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(namespaceListModule.name);
+    angular.mock.module(namespaceModule.name);
 
     angular.mock.inject(($componentController, $rootScope) => {
       ctrl = $componentController('kdNamespaceCard', {$scope: $rootScope});

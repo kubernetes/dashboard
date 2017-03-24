@@ -11,23 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import namespaceListModule from 'namespacelist/namespacelist_module';
 
-describe('Namespace card list', () => {
-  /**
-   * @type {!namespacelist/namespacecardlist_component.NamespaceCardListController}
-   */
-  let ctrl;
-
-  beforeEach(() => {
-    angular.mock.module(namespaceListModule.name);
-
-    angular.mock.inject(($componentController, $rootScope) => {
-      ctrl = $componentController('kdNamespaceCardList', {$scope: $rootScope});
-    });
-  });
-
-  it('should instantiate the controller properly', () => {
-    expect(ctrl).not.toBeUndefined();
-  });
-});
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'namespace.list';

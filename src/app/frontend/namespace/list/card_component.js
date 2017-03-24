@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {GlobalStateParams} from 'common/resource/globalresourcedetail';
-import {stateName} from 'namespacedetail/namespacedetail_state';
+import {stateName} from 'namespace/detail/state';
 
 /**
  * Controller for the namespace card.
@@ -89,5 +89,5 @@ export const namespaceCardComponent = {
     'namespace': '=',
   },
   controller: NamespaceCardController,
-  templateUrl: 'namespacelist/namespacecard.html',
+  templateUrl: 'namespace/list/card.html',
 };

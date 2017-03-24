@@ -12,20 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NamespaceListController} from 'namespacelist/namespacelist_controller';
-import namespaceListModule from 'namespacelist/namespacelist_module';
-
-describe('Namespace list controller', () => {
-
-  beforeEach(() => {
-    angular.mock.module(namespaceListModule.name);
-  });
-
-  it('should initialize namespace controller', angular.mock.inject(($controller) => {
-    let ctrls = {};
-    /** @type {!NamespaceListController} */
-    let ctrl = $controller(NamespaceListController, {namespaceList: {namespaces: ctrls}});
-
-    expect(ctrl.namespaceList.namespaces).toBe(ctrls);
-  }));
-});
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'namespace.detail';

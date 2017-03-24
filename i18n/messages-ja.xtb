@@ -796,16 +796,47 @@
   <translation id="8660427171549456209" key="MSG_JOBLIST_JOBLIST_2" desc="Help message detailing what is included in the memory usage">メモリー使用量は、これらのジョブに管理されたポッドのキャッシュも含みます。</translation>
   <translation id="8441658278143071101" key="MSG_JOB_COMPLETIONS" desc="Job completions. Appears in details section.">完了</translation>
   <translation id="9069442902328610253" key="MSG_JOB_DETAILS" desc="Details section header. Appears below main header.">詳細</translation>
+  <translation id="3490469769225638472" key="MSG_JOB_DETAIL_ACTIONBAR_0" desc="Label \'Job\' which appears at the top of the dialog, opened from a job details page.">Job</translation>
   <translation id="2004091910788332111" key="MSG_JOB_DETAIL_CPU_GRAPH_CARD_TITLE" desc="Title for graph card displaying CPU metric of one job.">CPU使用量の履歴</translation>
+  <translation id="9158321222252952956" key="MSG_JOB_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one job.">CPU usage</translation>
+  <translation id="5829638785096512195" key="MSG_JOB_DETAIL_DETAIL_1" desc="Title for graph card displaying memory metric of one job.">Memory usage</translation>
+  <translation id="91452791679953853" key="MSG_JOB_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by this job.</translation>
+  <translation id="1401131470031385407" key="MSG_JOB_DETAIL_DETAIL_3" desc="Title for pods card zerostate in job details page.">There is nothing to display here</translation>
+  <translation id="4839874577559134292" key="MSG_JOB_DETAIL_DETAIL_4" desc="Text for pods card zerostate in job details page.">There are currently no Pods managed by this Job.</translation>
+  <translation id="6354233284482895196" key="MSG_JOB_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
+  <translation id="4213335429121543625" key="MSG_JOB_DETAIL_INFO_1" desc="Details section header. Appears below main header.">Details</translation>
+  <translation id="359304148729162860" key="MSG_JOB_DETAIL_INFO_10" desc="Status of active pods. Appears next to number of active pods.">active</translation>
+  <translation id="7527180372211997328" key="MSG_JOB_DETAIL_INFO_11" desc="Status of succeeded pods. Appears next to number of succeeded pods.">succeeded</translation>
+  <translation id="8898056515542811638" key="MSG_JOB_DETAIL_INFO_12" desc="Status of failed pods. Appears next to number of failed pods.">failed</translation>
+  <translation id="3440502962034639890" key="MSG_JOB_DETAIL_INFO_2" desc="Job name. Appears in details section.">Name</translation>
+  <translation id="7757613850626055375" key="MSG_JOB_DETAIL_INFO_3" desc="Job namespace. Appears in details section.">Namespace</translation>
+  <translation id="3677864800975797430" key="MSG_JOB_DETAIL_INFO_4" desc="Job labels. Appears in details section.">Labels</translation>
+  <translation id="4960487631004379061" key="MSG_JOB_DETAIL_INFO_5" desc="Job images. Appears in details section.">Images</translation>
+  <translation id="7440600544272586624" key="MSG_JOB_DETAIL_INFO_6" desc="Job completions. Appears in details section.">Completions</translation>
+  <translation id="3932529820663589356" key="MSG_JOB_DETAIL_INFO_7" desc="Job parallelism. Appears in details section.">Parallelism</translation>
+  <translation id="5087019331139352594" key="MSG_JOB_DETAIL_INFO_8" desc="Job status. Appears in details section.">Status</translation>
+  <translation id="7217243907189605640" key="MSG_JOB_DETAIL_INFO_9" desc="Pod status section header. Appears below main header.">Pods</translation>
   <translation id="2278267472990776370" key="MSG_JOB_DETAIL_JOB_LABEL" desc="Label 'Job' which appears at the top of the dialog, opened from a job details page.">ジョブ</translation>
   <translation id="2346878241921168871" key="MSG_JOB_DETAIL_MEMORY_GRAPH_CARD_TITLE" desc="Title for graph card displaying memory metric of one job.">メモリー使用量の履歴</translation>
   <translation id="3610014951719533291" key="MSG_JOB_DETAIL_PODS" desc="Title for a pods section.">ポッド</translation>
   <translation id="7788315896863763846" key="MSG_JOB_IMAGES" desc="Job images. Appears in details section.">イメージ</translation>
   <translation id="8163083126193456298" key="MSG_JOB_LABELS" desc="Job labels. Appears in details section.">ラベル</translation>
   <translation id="7287602791689381779" key="MSG_JOB_LIST_AGE_LABEL" desc="Label 'Age' which appears as a column label in the table of replication controllers (Job list view).">起動時間</translation>
+  <translation id="8899423721882867038" key="MSG_JOB_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Jobs</translation>
+  <translation id="2221793663625201923" key="MSG_JOB_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of jobs (Job list view).">Name</translation>
+  <translation id="9149766952814193905" key="MSG_JOB_LIST_CARDLIST_2" desc="Column header \'Kind\' on a job list table">Kind</translation>
+  <translation id="8590813179543551101" key="MSG_JOB_LIST_CARDLIST_3" desc="Label \'Namespace\' which appears as a column label in the table of replication controllers (Job list view).">Namespace</translation>
+  <translation id="7500297282568394709" key="MSG_JOB_LIST_CARDLIST_4" desc="Label \'Labels\' which appears as a column label in the table of replication controllers (Job list view).">Labels</translation>
+  <translation id="8618481285106862901" key="MSG_JOB_LIST_CARDLIST_5" desc="Label \'Pods\' which appears as a column label in the table of replication controllers (Job list view).">Pods</translation>
+  <translation id="2422035758692427914" key="MSG_JOB_LIST_CARDLIST_6" desc="Label \'Age\' which appears as a column label in the table of replication controllers (Job list view).">Age</translation>
+  <translation id="8162859503142023792" key="MSG_JOB_LIST_CARDLIST_7" desc="Label \'Images\' which appears as a column label in the table of replication controllers (Job list view).">Images</translation>
+  <translation id="122753681203495181" key="MSG_JOB_LIST_CARD_0" desc="Column \'Job\' that shows if the resource kind should be shown in a Job List">Job</translation>
   <translation id="4368210931201633527" key="MSG_JOB_LIST_CPU_GRAPH_CARD_TITLE" desc="Title for graph card displaying CPU metric of jobs.">CPU使用量の履歴</translation>
   <translation id="2678441499396017713" key="MSG_JOB_LIST_IMAGES_LABEL" desc="Label 'Images' which appears as a column label in the table of replication controllers (Job list view).">イメージ</translation>
   <translation id="6310730601576371329" key="MSG_JOB_LIST_LABELS_LABEL" desc="Label 'Labels' which appears as a column label in the table of replication controllers (Job list view).">ラベル</translation>
+  <translation id="3055363125961915665" key="MSG_JOB_LIST_LIST_0" desc="Title for graph card displaying CPU metric of jobs.">CPU usage</translation>
+  <translation id="5794425570699478727" key="MSG_JOB_LIST_LIST_1" desc="Title for graph card displaying memory metric of jobs.">Memory usage</translation>
+  <translation id="6300164314930034252" key="MSG_JOB_LIST_LIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by these jobs.</translation>
   <translation id="3552146726479283308" key="MSG_JOB_LIST_MEMORY_GRAPH_CARD_TITLE" desc="Title for graph card displaying memory metric of jobs.">メモリー使用量の履歴</translation>
   <translation id="8978854967234873489" key="MSG_JOB_LIST_NAMESPACE_LABEL" desc="Label 'Namespace' which appears as a column label in the table of replication controllers (Job list view).">ネームスペース</translation>
   <translation id="2872431258829082433" key="MSG_JOB_LIST_NAME_LABEL" desc="Label 'Name' which appears as a column label in the table of jobs (Job list view).">名前</translation>
@@ -853,9 +884,16 @@
   <translation id="1629323405372811987" key="MSG_NAMESPACE_CREATE_DIALOG_TITLE" desc="Create namespace dialog title. The message appears at the top of the dialog box.">新規ネームスペースの作成</translation>
   <translation id="714354688258835139" key="MSG_NAMESPACE_CREATE_DIALOG_USER_HELP" desc="User help text for the input of the 'Namespace' data.">指定した名前のネームスペースをクラスターに追加します。</translation>
   <translation id="8371099607386012708" key="MSG_NAMESPACE_DETAIL_DETAILS_SUBTITLE" desc="Subtitle 'Details' for the left section with general information about a namespace on the namespace details page.">詳細</translation>
+  <translation id="8066049814492652432" key="MSG_NAMESPACE_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
+  <translation id="6352041840775187168" key="MSG_NAMESPACE_DETAIL_INFO_1" desc="Label \'Status\' for the namespace namespace on the namespace details page.">Status</translation>
   <translation id="6824759077419618994" key="MSG_NAMESPACE_DETAIL_RESOURCE_QUOTA_LIST_TITLE" desc="header name for the resource quota list on the namespace details page.">リソースクォータ</translation>
   <translation id="3518338664770517737" key="MSG_NAMESPACE_DETAIL_STATUS_LABEL" desc="Label 'Status' for the namespace namespace on the namespace details page.">状態</translation>
   <translation id="8276489273651307154" key="MSG_NAMESPACE_LIST_AGE_LABEL" desc="Label 'Age' which appears as a column label in the table of namespaces (namespace list view).">起動時間</translation>
+  <translation id="2794451768196559104" key="MSG_NAMESPACE_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Namespaces</translation>
+  <translation id="5403498579453928243" key="MSG_NAMESPACE_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of namespaces (namespace list view).">Name</translation>
+  <translation id="1576456781675309581" key="MSG_NAMESPACE_LIST_CARDLIST_2" desc="Label \'Labels\' which appears as a column label in the table of namespaces (namespace list view).">Labels</translation>
+  <translation id="3598200911441557553" key="MSG_NAMESPACE_LIST_CARDLIST_3" desc="Label \'Status\' which appears as a column label in the table of namespaces (namespace list view).">Status</translation>
+  <translation id="2325476578537884124" key="MSG_NAMESPACE_LIST_CARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of namespaces (namespace list view).">Age</translation>
   <translation id="2940798370079834880" key="MSG_NAMESPACE_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of namespace."><ph name="CREATION_DATE"/> に作成</translation>
   <translation id="5514950065159777148" key="MSG_NAMESPACE_LIST_LABEL" desc="Label atop a list of namespaces">ネームスペース</translation>
   <translation id="2440239566170614701" key="MSG_NAMESPACE_LIST_LABELS_LABEL" desc="Label 'Labels' which appears as a column label in the table of namespaces (namespace list view).">ラベル</translation>

@@ -12,32 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * @final
- */
-export default class NamespaceInfoController {
-  /**
-   * @ngInject
-   */
-  constructor() {
-    /**
-     * Namespace details. Initialized from the scope.
-     * @export {!backendApi.NamespaceDetail}
-     */
-    this.namespace;
-  }
-}
+import namespaceModule from 'namespace/module';
 
-/**
- * Definition object for the component that displays namespace info.
- *
- * @return {!angular.Directive}
- */
-export const namespaceInfoComponent = {
-  controller: NamespaceInfoController,
-  templateUrl: 'namespacedetail/namespaceinfo.html',
-  bindings: {
-    /** {!backendApi.NamespaceDetail} */
-    'namespace': '=',
-  },
-};
+describe('Namespace card list', () => {
+  /** @type {!NamespaceCardListController} */
+  let ctrl;
+
+  beforeEach(() => {
+    angular.mock.module(namespaceModule.name);
+
+    angular.mock.inject(($componentController, $rootScope) => {
+      ctrl = $componentController('kdNamespaceCardList', {$scope: $rootScope});
+    });
+  });
+
+  it('should instantiate the controller properly', () => {
+    expect(ctrl).not.toBeUndefined();
+  });
+});

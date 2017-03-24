@@ -33,8 +33,7 @@ import routeConfig from './index_route';
 import ingressModule from './ingress/module';
 import jobModule from './job/module';
 import logsModule from './logs/logs_module';
-import namespaceDetailModule from './namespacedetail/namespacedetail_module';
-import namespaceListModule from './namespacelist/namespacelist_module';
+import namespaceModule from './namespace/module';
 import nodeListModule from './nodelist/nodelist_module';
 import persistentVolumeClaimDetailModule from './persistentvolumeclaimdetail/persistentvolumeclaimdetail_module';
 import persistentVolumeClaimListModule from './persistentvolumeclaimlist/persistentvolumeclaimlist_module';
@@ -80,8 +79,7 @@ export default angular
           replicationControllerDetailModule.name,
           replicationControllerListModule.name,
           replicaSetListModule.name,
-          namespaceDetailModule.name,
-          namespaceListModule.name,
+          namespaceModule.name,
           nodeListModule.name,
           deploymentModule.name,
           horizontalPodAutoscalerModule.name,

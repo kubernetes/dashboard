@@ -12,17 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * @return {!angular.Component}
- */
-export const namespaceCardListComponent = {
-  transclude: {
-    // Optional header that is transcluded instead of the default one.
-    'header': '?kdHeader',
-  },
-  bindings: {
-    'namespaceList': '<',
-    'namespaceListResource': '<',
-  },
-  templateUrl: 'namespacelist/namespacecardlist.html',
-};
+import namespaceModule from 'namespace/module';
+
+describe('Namespace Info controller', () => {
+  /** @type {!NamespaceInfoController} */
+  let ctrl;
+
+  beforeEach(() => {
+    angular.mock.module(namespaceModule.name);
+
+    angular.mock.inject(($componentController, $rootScope) => {
+      ctrl = $componentController('kdNamespaceInfo', {$scope: $rootScope}, {
+        namespace: {
+          phase: 'Active',
+        },
+      });
+    });
+  });
+
+  it('should instantiate the controller properly', () => {
+    expect(ctrl).not.toBeUndefined();
+  });
+});

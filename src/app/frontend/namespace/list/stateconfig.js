@@ -16,36 +16,50 @@ import {stateName as parentStateName} from 'admin/state';
 import {stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 
-import {NamespaceListController} from './namespacelist_controller';
-import {stateName, stateUrl} from './namespacelist_state';
+import {stateUrl} from './../state';
+import {NamespaceListController} from './controller';
 
 /**
- * Configures states for the service view.
+ * I18n object that defines strings for translation used in this file.
+ */
+const i18n = {
+  /** @type {string} @desc Label 'Namespaces' that appears as a breadcrumbs on the action bar. */
+  MSG_BREADCRUMBS_NAMESPACES_LABEL: goog.getMsg('Namespaces'),
+};
+
+/**
+ * Config state object for the Namespace list view.
  *
- * @param {!ui.router.$stateProvider} $stateProvider
+ * @type {!ui.router.StateConfig}
+ */
+export const config = {
+  url: stateUrl,
+  parent: chromeStateName,
+  resolve: {
+    'namespaceList': resolveNamespaceList,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': i18n.MSG_BREADCRUMBS_NAMESPACES_LABEL,
+      'parent': parentStateName,
+    },
+  },
+  views: {
+    '': {
+      controller: NamespaceListController,
+      controllerAs: '$ctrl',
+      templateUrl: 'namespace/list/list.html',
+    },
+  },
+};
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
  * @ngInject
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    url: stateUrl,
-    parent: chromeStateName,
-    resolve: {
-      'namespaceList': resolveNamespaceList,
-    },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': i18n.MSG_BREADCRUMBS_NAMESPACES_LABEL,
-        'parent': parentStateName,
-      },
-    },
-    views: {
-      '': {
-        controller: NamespaceListController,
-        controllerAs: '$ctrl',
-        templateUrl: 'namespacelist/namespacelist.html',
-      },
-    },
-  });
+export function namespaceListResource($resource) {
+  return $resource('api/v1/namespace');
 }
 
 /**
@@ -58,8 +72,3 @@ export function resolveNamespaceList($resource) {
   let resource = $resource(`api/v1/namespace`);
   return resource.get().$promise;
 }
-
-const i18n = {
-  /** @type {string} @desc Label 'Namespaces' that appears as a breadcrumbs on the action bar. */
-  MSG_BREADCRUMBS_NAMESPACES_LABEL: goog.getMsg('Namespaces'),
-};

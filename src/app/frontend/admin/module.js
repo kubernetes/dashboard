@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import chromeModule from 'chrome/chrome_module';
-import namespaceListModule from 'namespacelist/namespacelist_module';
+import namespaceModule from 'namespace/module';
 import nodeListModule from 'nodelist/nodelist_module';
 import persistentVolumeListModule from 'persistentvolumelist/persistentvolumelist_module';
 import storageClassListModule from 'storageclasslist/module';
@@ -32,7 +32,7 @@ export default angular
           'ui.router',
           chromeModule.name,
           nodeListModule.name,
-          namespaceListModule.name,
+          namespaceModule.name,
           persistentVolumeListModule.name,
           storageClassListModule.name,
         ])

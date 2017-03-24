@@ -12,5 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'namespacedetail';
+import {NamespaceDetailController} from 'namespace/detail/controller';
+import namespaceModule from 'namespace/module';
+
+describe('Namespace Detail controller', () => {
+
+  beforeEach(() => {
+    angular.mock.module(namespaceModule.name);
+  });
+
+  it('should initialize namespace controller', angular.mock.inject(($controller) => {
+    let data = {};
+    /** @type {!NamespaceDetailController} */
+    let ctrl = $controller(NamespaceDetailController, {namespaceDetail: data});
+
+    expect(ctrl.namespaceDetail).toBe(data);
+  }));
+});

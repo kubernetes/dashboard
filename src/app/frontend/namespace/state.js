@@ -12,20 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NamespaceDetailController} from 'namespacedetail/namespacedetail_controller';
-import namespaceDetailModule from 'namespacedetail/namespacedetail_module';
+/** Name of the state. */
+export const stateName = 'namespace';
 
-describe('Namespace Detail controller', () => {
-
-  beforeEach(() => {
-    angular.mock.module(namespaceDetailModule.name);
-  });
-
-  it('should initialize namespace controller', angular.mock.inject(($controller) => {
-    let data = {};
-    /** @type {!NamespaceDetailController} */
-    let ctrl = $controller(NamespaceDetailController, {namespaceDetail: data});
-
-    expect(ctrl.namespaceDetail).toBe(data);
-  }));
-});
+/** Absolute URL of the state. */
+export const stateUrl = '/namespace';

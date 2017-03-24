@@ -12,8 +12,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'namespace';
+/**
+ * @final
+ */
+export default class NamespaceInfoController {
+  /**
+   * @ngInject
+   */
+  constructor() {
+    /**
+     * Namespace details. Initialized from the scope.
+     * @export {!backendApi.NamespaceDetail}
+     */
+    this.namespace;
+  }
+}
 
-/** Absolute URL of the state. */
-export const stateUrl = '/namespace';
+/**
+ * Definition object for the component that displays namespace info.
+ *
+ * @return {!angular.Directive}
+ */
+export const namespaceInfoComponent = {
+  controller: NamespaceInfoController,
+  templateUrl: 'namespace/detail/info.html',
+  bindings: {
+    /** {!backendApi.NamespaceDetail} */
+    'namespace': '=',
+  },
+};

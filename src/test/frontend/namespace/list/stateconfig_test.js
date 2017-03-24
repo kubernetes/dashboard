@@ -12,25 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import namespaceDetailModule from 'namespacedetail/namespacedetail_module';
+import {resolveNamespaceList} from 'namespace/list/stateconfig';
+import namespaceModule from 'namespace/module';
 
-describe('Namespace Info controller', () => {
-  /** @type {!NamespaceInfoController} */
-  let ctrl;
-
+describe('StateConfig for namespace list', () => {
   beforeEach(() => {
-    angular.mock.module(namespaceDetailModule.name);
+    angular.mock.module(namespaceModule.name);
+  });
 
-    angular.mock.inject(($componentController, $rootScope) => {
-      ctrl = $componentController('kdNamespaceInfo', {$scope: $rootScope}, {
-        namespace: {
-          phase: 'Active',
-        },
-      });
+  it('should resolve namespaces', angular.mock.inject(($q) => {
+    let promise = $q.defer().promise;
+
+    let resource = jasmine.createSpy('$resource');
+    resource.and.returnValue({
+      get: function() {
+        return {$promise: promise};
+      },
     });
-  });
 
-  it('should instantiate the controller properly', () => {
-    expect(ctrl).not.toBeUndefined();
-  });
+    let actual = resolveNamespaceList(resource);
+
+    expect(resource).toHaveBeenCalledWith('api/v1/namespace');
+    expect(actual).toBe(promise);
+  }));
+
 });

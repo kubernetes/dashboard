@@ -15,44 +15,50 @@
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {appendDetailParamsToUrl} from 'common/resource/globalresourcedetail';
-import {stateName as namespaceList, stateUrl} from 'namespacelist/namespacelist_state';
 
-import {NamespaceDetailController} from './namespacedetail_controller';
-import {stateName} from './namespacedetail_state';
+import {stateName as namespaceList} from './../list/state';
+import {stateUrl} from './../state';
+import {NamespaceDetailController} from './controller';
 
 /**
- * Configures states for the namespace details view.
+ * Config state object for the Namespace detail view.
  *
- * @param {!ui.router.$stateProvider} $stateProvider
+ * @type {!ui.router.StateConfig}
+ */
+export const config = {
+  url: appendDetailParamsToUrl(stateUrl),
+  parent: chromeStateName,
+  resolve: {
+    'namespaceDetailResource': getNamespaceDetailResource,
+    'namespaceDetail': getNamespaceDetail,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': '{{$stateParams.objectName}}',
+      'parent': namespaceList,
+    },
+  },
+  views: {
+    '': {
+      controller: NamespaceDetailController,
+      controllerAs: 'ctrl',
+      templateUrl: 'namespace/detail/detail.html',
+    },
+    [actionbarViewName]: {},
+  },
+};
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
  * @ngInject
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    url: appendDetailParamsToUrl(stateUrl),
-    parent: chromeStateName,
-    resolve: {
-      'namespaceDetailResource': getNamespaceDetailResource,
-      'namespaceDetail': getNamespaceDetail,
-    },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': '{{$stateParams.objectName}}',
-        'parent': namespaceList,
-      },
-    },
-    views: {
-      '': {
-        controller: NamespaceDetailController,
-        controllerAs: 'ctrl',
-        templateUrl: 'namespacedetail/namespacedetail.html',
-      },
-      [actionbarViewName]: {},
-    },
-  });
+export function namespaceEventsResource($resource) {
+  return $resource('api/v1/namespace/:name/event');
 }
 
 /**
- * @param {!./../common/resource/globalresourcedetail.GlobalStateParams} $stateParams
+ * @param {!./../../common/resource/globalresourcedetail.GlobalStateParams} $stateParams
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource<!backendApi.NamespaceDetail>}
  * @ngInject
