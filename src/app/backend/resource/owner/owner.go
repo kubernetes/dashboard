@@ -30,10 +30,10 @@ import (
 // ResourceOwner is an structure representing resource owner, it may be Replication Controller,
 // Daemon Set, Job etc.
 type ResourceOwner struct {
-	ObjectMeta common.ObjectMeta `json:"objectMeta"`
-	TypeMeta   common.TypeMeta   `json:"typeMeta"`
-	Pods       common.PodInfo
-	Images     []string
+	ObjectMeta      common.ObjectMeta `json:"objectMeta"`
+	TypeMeta        common.TypeMeta   `json:"typeMeta"`
+	Pods            common.PodInfo    `json:"pods"`
+	ContainerImages []string          `json:"containerImages"`
 }
 
 // ResourceController is an interface, that allows to perform operations on resource controller. To
@@ -105,10 +105,10 @@ func (self JobController) Get(allPods []api.Pod, allEvents []api.Event) Resource
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
-		TypeMeta:   common.NewTypeMeta(common.ResourceKindJob),
-		ObjectMeta: common.NewObjectMeta(self.ObjectMeta),
-		Pods:       podInfo,
-		Images:     common.GetContainerImages(&self.Spec.Template.Spec),
+		TypeMeta:        common.NewTypeMeta(common.ResourceKindJob),
+		ObjectMeta:      common.NewObjectMeta(self.ObjectMeta),
+		Pods:            podInfo,
+		ContainerImages: common.GetContainerImages(&self.Spec.Template.Spec),
 	}
 }
 
@@ -124,10 +124,10 @@ func (self ReplicaSetController) Get(allPods []api.Pod, allEvents []api.Event) R
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
-		TypeMeta:   common.NewTypeMeta(common.ResourceKindReplicaSet),
-		ObjectMeta: common.NewObjectMeta(self.ObjectMeta),
-		Pods:       podInfo,
-		Images:     common.GetContainerImages(&self.Spec.Template.Spec),
+		TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicaSet),
+		ObjectMeta:      common.NewObjectMeta(self.ObjectMeta),
+		Pods:            podInfo,
+		ContainerImages: common.GetContainerImages(&self.Spec.Template.Spec),
 	}
 }
 
@@ -143,10 +143,10 @@ func (self ReplicationControllerController) Get(allPods []api.Pod,
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
-		TypeMeta:   common.NewTypeMeta(common.ResourceKindReplicationController),
-		ObjectMeta: common.NewObjectMeta(self.ObjectMeta),
-		Pods:       podInfo,
-		Images:     common.GetContainerImages(&self.Spec.Template.Spec),
+		TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicationController),
+		ObjectMeta:      common.NewObjectMeta(self.ObjectMeta),
+		Pods:            podInfo,
+		ContainerImages: common.GetContainerImages(&self.Spec.Template.Spec),
 	}
 }
 
@@ -163,10 +163,10 @@ func (self DaemonSetController) Get(allPods []api.Pod, allEvents []api.Event) Re
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
-		TypeMeta:   common.NewTypeMeta(common.ResourceKindDaemonSet),
-		ObjectMeta: common.NewObjectMeta(self.ObjectMeta),
-		Pods:       podInfo,
-		Images:     common.GetContainerImages(&self.Spec.Template.Spec),
+		TypeMeta:        common.NewTypeMeta(common.ResourceKindDaemonSet),
+		ObjectMeta:      common.NewObjectMeta(self.ObjectMeta),
+		Pods:            podInfo,
+		ContainerImages: common.GetContainerImages(&self.Spec.Template.Spec),
 	}
 }
 
@@ -182,9 +182,9 @@ func (self StatefulSetController) Get(allPods []api.Pod, allEvents []api.Event) 
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
-		TypeMeta:   common.NewTypeMeta(common.ResourceKindStatefulSet),
-		ObjectMeta: common.NewObjectMeta(self.ObjectMeta),
-		Pods:       podInfo,
-		Images:     common.GetContainerImages(&self.Spec.Template.Spec),
+		TypeMeta:        common.NewTypeMeta(common.ResourceKindStatefulSet),
+		ObjectMeta:      common.NewObjectMeta(self.ObjectMeta),
+		Pods:            podInfo,
+		ContainerImages: common.GetContainerImages(&self.Spec.Template.Spec),
 	}
 }

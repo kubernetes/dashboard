@@ -32,7 +32,7 @@ type ReplicationControllerList struct {
 
 	// Unordered list of Replication Controllers.
 	ReplicationControllers []ReplicationController `json:"replicationControllers"`
-	CumulativeMetrics      []metric.Metric                               `json:"cumulativeMetrics"`
+	CumulativeMetrics      []metric.Metric         `json:"cumulativeMetrics"`
 }
 
 // GetReplicationControllerList returns a list of all Replication Controllers in the cluster.

@@ -16,52 +16,114 @@ limitations under the License.
 
 <kd-content-card>
   <kd-content>
-    <div ng-switch="$ctrl.creator.kind">
-      <div ng-switch-when="Job">
-        <kd-job-card-list job-list="$ctrl.creator.joblist"
-                          show-resource-kind="true">
-          <kd-header>[[Created by|Heading for Creator card on poddetail page]]</kd-header>
-        </kd-job-card-list>
-      </div>
-      <div ng-switch-when="DaemonSet">
-        <kd-daemon-set-card-list daemon-set-list="$ctrl.creator.daemonsetlist"
-                                 show-resource-kind="true">
-          <kd-header>[[Created by|Heading for Creator card on poddetail page]]</kd-header>
-        </kd-daemon-set-card-list>
-      </div>
-      <div ng-switch-when="ReplicationController">
-        <kd-replication-controller-card-list replication-controller-list="$ctrl.creator.replicationcontrollerlist"
-                                             show-resource-kind="true">
-          <kd-header>[[Created by|Heading for Creator card on poddetail page]]</kd-header>
-        </kd-replication-controller-card-list>
-      </div>
-      <div ng-switch-when="ReplicaSet">
-        <kd-replica-set-card-list replica-set-list="$ctrl.creator.replicasetlist"
-                                  show-resource-kind="true">
-          <kd-header>[[Created by|Heading for Creator card on poddetail page]]</kd-header>
-        </kd-replica-set-card-list>
-      </div>
-      <div ng-switch-when="StatefulSet">
-        <kd-stateful-set-card-list stateful-set-list="$ctrl.creator.statefulsetlist"
-                                   show-resource-kind="true">
-          <kd-header>[[Created by|Heading for Creator card on poddetail page]]</kd-header>
-        </kd-stateful-set-card-list>
-      </div>
-      <div ng-switch-default>
-        <kd-resource-card-list selectable="false"
-                               with-statuses="true">
-          <kd-resource-card-list-header>
-            [[Created by|Heading for Creator card on poddetail page]]
-          </kd-resource-card-list-header>
-
-          <div class="kd-zerostate-message">
-            <kd-zerostate>
-              <div class="kd-zerostate-title">[[There is nothing to display here|Title for pods card zerostate in pod details page.]]</div>
-              <div class="kd-zerostate-text">[[This Pod does not have a creator.|Text for pod creator zerostate in pod details page.]]</div>
-            </kd-zerostate>
+    <kd-resource-card-list selectable="false"
+                           with-statuses="true">
+      <kd-resource-card-list-header>
+        [[Created by|Heading for Creator card on pod detail page.]]
+      </kd-resource-card-list-header>
+      <kd-resource-card-header-columns>
+        <kd-resource-card-header-column size="small"
+                                        grow="2">
+          [[Name|Label 'Name' which appears as a column label in the creator card.]]
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column size="small"
+                                        grow="1">
+          [[Kind|Label 'Kind' which appears as a column label in the creator card.]]
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column size="small"
+                                        grow="2"
+                                        ng-if="$ctrl.areMultipleNamespacesSelected()">
+          [[Namespace|Label 'Namespace' which appears as a column label in the creator card.]]
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column size="small"
+                                        grow="2">
+          [[Labels|Label 'Labels' which appears as a column label in the creator card.]]
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column size="small"
+                                        grow="1">
+          [[Pods|Label 'Pods' which appears as a column label in the creator card.]]
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column size="small"
+                                        grow="1">
+          [[Age|Label 'Age' which appears as a column label in the creator card.]]
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column size="small"
+                                        grow="2">
+          [[Images|Label 'Images' which appears as a column label in the creator card.]]
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column size="small"
+                                        grow="nogrow">
+        </kd-resource-card-header-column>
+      </kd-resource-card-header-columns>
+      <kd-resource-card object-meta="$ctrl.creator.objectMeta"
+                        type-meta="$ctrl.creator.typeMeta">
+        <kd-resource-card-status layout="row">
+          <md-icon class="material-icons md-warn"
+                   ng-if="::$ctrl.hasWarnings()">
+            error
+            <md-tooltip>One or more pods have errors</md-tooltip>
+          </md-icon>
+          <md-icon class="material-icons"
+                   ng-if="::$ctrl.isPending()">
+            timelapse
+            <md-tooltip>One or more pods are in pending state</md-tooltip>
+          </md-icon>
+          <md-icon class="material-icons kd-success"
+                   ng-if="::$ctrl.isSuccess()">
+            check_circle
+          </md-icon>
+        </kd-resource-card-status>
+        <kd-resource-card-columns>
+          <kd-resource-card-column>
+            <div>
+              <a ng-href="{{::$ctrl.getCreatorDetailHref()}}"
+                 class="kd-middle-ellipsised-link">
+                <kd-middle-ellipsis display-string="{{$ctrl.creator.objectMeta.name}}">
+                </kd-middle-ellipsis>
+              </a>
+            </div>
+          </kd-resource-card-column>
+          <kd-resource-card-column>
+            {{::$ctrl.creator.typeMeta.kind}}
+          </kd-resource-card-column>
+          <kd-resource-card-column ng-if="$ctrl.areMultipleNamespacesSelected()">
+            <div>
+              <kd-middle-ellipsis display-string="{{::$ctrl.creator.objectMeta.namespace}}">
+              </kd-middle-ellipsis>
+            </div>
+          </kd-resource-card-column>
+          <kd-resource-card-column>
+            <kd-labels labels="::$ctrl.creator.objectMeta.labels"></kd-labels>
+          </kd-resource-card-column>
+          <kd-resource-card-column>
+            <span class="kd-replicase-card-pods-stat">
+        {{::$ctrl.creator.pods.running}} / {{::$ctrl.creator.pods.desired}}
+      </span>
+          </kd-resource-card-column>
+          <kd-resource-card-column>
+            {{::$ctrl.creator.objectMeta.creationTimestamp | relativeTime}}
+            <md-tooltip>
+              Created at {{::$ctrl.creator.objectMeta.creationTimestamp | date}}
+            </md-tooltip>
+          </kd-resource-card-column>
+          <kd-resource-card-column>
+            <div ng-repeat="image in ::$ctrl.creator.containerImages track by $index">
+              <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
+            </div>
+          </kd-resource-card-column>
+          <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
+            <kd-resource-card-menu>
+              <kd-resource-card-delete-menu-item resource-kind-name="{{::$ctrl.creator.typeMeta.kind}}">
+              </kd-resource-card-delete-menu-item>
+            </kd-resource-card-menu>
+          </kd-resource-card-column>
+        </kd-resource-card-columns>
+        <kd-resource-card-footer ng-if="::$ctrl.hasWarnings()">
+          <div ng-repeat="warning in ::$ctrl.creator.pods.warnings">
+            <span class="kd-error">{{::warning.message}}</span>
           </div>
-        </kd-resource-card-list>
-      </div>
-    </div>
+        </kd-resource-card-footer>
+      </kd-resource-card>
+    </kd-resource-card-list>
   </kd-content>
 </kd-content-card>

@@ -17,10 +17,10 @@ package replicaset
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	client "k8s.io/client-go/kubernetes"
@@ -33,8 +33,8 @@ type ReplicaSetList struct {
 	ListMeta common.ListMeta `json:"listMeta"`
 
 	// Unordered list of Replica Sets.
-	ReplicaSets       []ReplicaSet `json:"replicaSets"`
-	CumulativeMetrics []metric.Metric         `json:"cumulativeMetrics"`
+	ReplicaSets       []ReplicaSet    `json:"replicaSets"`
+	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
 }
 
 // GetReplicaSetList returns a list of all Replica Sets in the cluster.
