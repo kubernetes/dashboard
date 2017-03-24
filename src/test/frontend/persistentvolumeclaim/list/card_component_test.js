@@ -11,26 +11,25 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import persistentVolumeClaimListModule from 'persistentvolumeclaimlist/persistentvolumeclaimlist_module';
+
+import persistentVolumeClaimModule from 'persistentvolumeclaim/module';
 
 describe('Persistent Volume Claim card', () => {
-  /** @type
-   * {!persistentvolumeclaimlist/persistentvolumeclaimcard_component.PersistentVolumeClaimCardController}
-   */
+  /** @type {!PersistentVolumeClaimCardController} */
   let ctrl;
   /**
-   * @type {!./../common/namespace/namespace_service.NamespaceService}
+   * @type {!NamespaceService}
    */
   let data;
 
   beforeEach(() => {
-    angular.mock.module(persistentVolumeClaimListModule.name);
+    angular.mock.module(persistentVolumeClaimModule.name);
 
     angular.mock.inject(($componentController, $rootScope, kdNamespaceService) => {
 
       /** @type {!PersistentVolumeClaimCardController} */
       ctrl = $componentController('kdPersistentVolumeClaimCard', {$scope: $rootScope});
-      /** @type {!./../common/namespace/namespace_service.NamespaceService} */
+      /** @type {!NamespaceService} */
       data = kdNamespaceService;
     });
   });

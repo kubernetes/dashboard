@@ -12,17 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {PersistentVolumeClaimListController} from 'persistentvolumeclaimlist/persistentvolumeclaimlist_controller';
-import persistentVolumeClaimListModule from 'persistentvolumeclaimlist/persistentvolumeclaimlist_module';
+import {PersistentVolumeClaimListController} from 'persistentvolumeclaim/list/controller';
+import persistentVolumeClaimModule from 'persistentvolumeclaim/module';
 
 describe('Persistent Volume list controller', () => {
-  /** @type
-   * {!persistentvolumeclaimlist/persistentvolumeclaimlist_controller.PersistentVolumeClaimListController}
-   */
+  /** @type {!PersistentVolumeClaimListController} */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(persistentVolumeClaimListModule.name);
+    angular.mock.module(persistentVolumeClaimModule.name);
 
     angular.mock.inject(($controller) => {
       ctrl = $controller(

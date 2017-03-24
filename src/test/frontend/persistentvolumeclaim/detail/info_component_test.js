@@ -12,23 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ActionBarController} from 'persistentvolumeclaimdetail/actionbar_controller';
-import module from 'persistentvolumeclaimdetail/persistentvolumeclaimdetail_module';
+import persistentVolumeClaimModule from 'persistentvolumeclaim/module';
 
-describe('Action Bar controller', () => {
-  /** @type {!ActionBarController} */
+describe('Persistent Volume ClaimInfo controller', () => {
+  /** @type {!PersistentVolumeClaimInfoController} */
   let ctrl;
-  let details = {};
 
   beforeEach(() => {
-    angular.mock.module(module.name);
+    angular.mock.module(persistentVolumeClaimModule.name);
 
-    angular.mock.inject(($controller) => {
-      ctrl = $controller(ActionBarController, {persistentVolumeClaimDetail: details});
+    angular.mock.inject(($componentController, $rootScope) => {
+      ctrl = $componentController('kdPersistentVolumeClaimInfo', {$scope: $rootScope}, {
+        persistentVolume: {
+          status: 'available',
+        },
+      });
     });
   });
 
-  it('should initialize details', () => {
-    expect(ctrl.details).toBe(details);
+  it('should initialize the ctrl', () => {
+    expect(ctrl).not.toBeUndefined();
   });
 });

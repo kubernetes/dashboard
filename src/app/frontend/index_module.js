@@ -35,8 +35,7 @@ import jobModule from './job/module';
 import logsModule from './logs/logs_module';
 import namespaceModule from './namespace/module';
 import nodeModule from './node/module';
-import persistentVolumeClaimDetailModule from './persistentvolumeclaimdetail/persistentvolumeclaimdetail_module';
-import persistentVolumeClaimListModule from './persistentvolumeclaimlist/persistentvolumeclaimlist_module';
+import persistentVolumeClaimModule from './persistentvolumeclaim/module';
 import persistentVolumeDetailModule from './persistentvolumedetail/persistentvolumedetail_module';
 import persistentVolumeListModule from './persistentvolumelist/persistentvolumelist_module';
 import podDetailModule from './poddetail/poddetail_module';
@@ -92,8 +91,7 @@ export default angular
           persistentVolumeDetailModule.name,
           persistentVolumeListModule.name,
           statefulSetListModule.name,
-          persistentVolumeClaimDetailModule.name,
-          persistentVolumeClaimListModule.name,
+          persistentVolumeClaimModule.name,
           resourceQuotaDetailModule.name,
           configMapModule.name,
           secretListModule.name,

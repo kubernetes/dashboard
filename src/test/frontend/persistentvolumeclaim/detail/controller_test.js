@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {PersistentVolumeClaimDetailController} from 'persistentvolumeclaimdetail/persistentvolumeclaimdetail_controller';
-import persistentVolumeClaimDetailModule from 'persistentvolumeclaimdetail/persistentvolumeclaimdetail_module';
+import {PersistentVolumeClaimDetailController} from 'persistentvolumeclaim/detail/controller';
+import persistentVolumeClaimModule from 'persistentvolumeclaim/module';
 
 describe('Persistent Volume Claim Detail controller', () => {
 
   beforeEach(() => {
-    angular.mock.module(persistentVolumeClaimDetailModule.name);
+    angular.mock.module(persistentVolumeClaimModule.name);
   });
 
   it('should initialize persistent volume claim controller', angular.mock.inject(($controller) => {

@@ -23,7 +23,7 @@ import {stateName as ingressState} from 'ingress/list/state';
 import {stateName as jobState} from 'job/list/state';
 import {stateName as namespaceState} from 'namespace/list/state';
 import {stateName as nodeState} from 'node/list/state';
-import {stateName as persistentVolumeClaimState} from 'persistentvolumeclaimlist/persistentvolumeclaimlist_state';
+import {stateName as persistentVolumeClaimState} from 'persistentvolumeclaim/list/state';
 import {stateName as persistentVolumeState} from 'persistentvolumelist/persistentvolumelist_state';
 import {stateName as podState} from 'podlist/podlist_state';
 import {stateName as replicaSetState} from 'replicasetlist/replicasetlist_state';

@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import persistentVolumeClaimListModule from 'persistentvolumeclaimlist/persistentvolumeclaimlist_module';
-import {resolvePersistentVolumeClaimList} from 'persistentvolumeclaimlist/persistentvolumeclaimlist_stateconfig';
+import {resolvePersistentVolumeClaimList} from 'persistentvolumeclaim/list/stateconfig';
+import persistentVolumeClaimModule from 'persistentvolumeclaim/module';
 
 describe('StateConfig for persistent volume controller list', () => {
-  /** @type {!common/pagination/pagination_service.PaginationService} */
+  /** @type {!PaginationService} */
   let kdPaginationService;
 
   beforeEach(() => {
-    angular.mock.module(persistentVolumeClaimListModule.name);
+    angular.mock.module(persistentVolumeClaimModule.name);
     angular.mock.inject((_kdPaginationService_) => {
       kdPaginationService = _kdPaginationService_;
     });

@@ -18,10 +18,10 @@
 export class PersistentVolumeClaimCardListController {
   /**
    * @ngInject
-   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
+   * @param {!./../../common/namespace/namespace_service.NamespaceService} kdNamespaceService
    */
   constructor(kdNamespaceService) {
-    /** @private {!./../common/namespace/namespace_service.NamespaceService} */
+    /** @private {!./../../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
   }
   /**
@@ -45,6 +45,6 @@ export const persistentVolumeClaimCardListComponent = {
     'persistentVolumeClaimList': '<',
     'persistentVolumeClaimListResource': '<',
   },
-  templateUrl: 'persistentvolumeclaimlist/persistentvolumeclaimcardlist.html',
+  templateUrl: 'persistentvolumeclaim/list/cardlist.html',
   controller: PersistentVolumeClaimCardListController,
 };

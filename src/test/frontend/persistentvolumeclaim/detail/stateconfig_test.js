@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import persistentVolumeClaimDetailModule from 'persistentvolumeclaimdetail/persistentvolumeclaimdetail_module';
-import {getPersistentVolumeClaimDetail, getPersistentVolumeClaimDetailResource} from 'persistentvolumeclaimdetail/persistentvolumeclaimdetail_stateconfig';
+import {getPersistentVolumeClaimDetail, getPersistentVolumeClaimDetailResource} from 'persistentvolumeclaim/detail/stateconfig';
+import persistentVolumeClaimModule from 'persistentvolumeclaim/module';
 
 describe('StateConfig for persistent volume claim detail', () => {
   beforeEach(() => {
-    angular.mock.module(persistentVolumeClaimDetailModule.name);
+    angular.mock.module(persistentVolumeClaimModule.name);
   });
 
   it('should resolve persistent volume claim', angular.mock.inject(($q) => {

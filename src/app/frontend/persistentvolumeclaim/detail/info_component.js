@@ -35,7 +35,7 @@ export default class PersistentVolumeClaimInfoController {
  */
 export const persistentVolumeClaimInfoComponent = {
   controller: PersistentVolumeClaimInfoController,
-  templateUrl: 'persistentvolumeclaimdetail/persistentvolumeclaiminfo.html',
+  templateUrl: 'persistentvolumeclaim/detail/info.html',
   bindings: {
     /** {!backendApi.PersistentVolumeClaimDetail} */
     'persistentVolumeClaim': '=',

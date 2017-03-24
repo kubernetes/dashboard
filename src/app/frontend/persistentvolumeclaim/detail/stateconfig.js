@@ -15,46 +15,43 @@
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
-import {stateName as persistentVolumeClaimList, stateUrl} from 'persistentvolumeclaimlist/persistentvolumeclaimlist_state';
+import {stateName as persistentVolumeClaimList} from './../list/state';
+import {stateUrl} from './../state';
 
 import {ActionBarController} from './actionbar_controller';
-import {PersistentVolumeClaimDetailController} from './persistentvolumeclaimdetail_controller';
-import {stateName} from './persistentvolumeclaimdetail_state';
+import {PersistentVolumeClaimDetailController} from './controller';
 
 /**
- * Configures states for the persistent volume claim details view.
+ * Config state object for the Persistent Volume Claim detail view.
  *
- * @param {!ui.router.$stateProvider} $stateProvider
- * @ngInject
+ * @type {!ui.router.StateConfig}
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    url: appendDetailParamsToUrl(stateUrl),
-    parent: chromeStateName,
-    resolve: {
-      'persistentVolumeClaimDetailResource': getPersistentVolumeClaimDetailResource,
-      'persistentVolumeClaimDetail': getPersistentVolumeClaimDetail,
+export const config = {
+  url: appendDetailParamsToUrl(stateUrl),
+  parent: chromeStateName,
+  resolve: {
+    'persistentVolumeClaimDetailResource': getPersistentVolumeClaimDetailResource,
+    'persistentVolumeClaimDetail': getPersistentVolumeClaimDetail,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': '{{$stateParams.objectName}}',
+      'parent': persistentVolumeClaimList,
     },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': '{{$stateParams.objectName}}',
-        'parent': persistentVolumeClaimList,
-      },
+  },
+  views: {
+    '': {
+      controller: PersistentVolumeClaimDetailController,
+      controllerAs: '$ctrl',
+      templateUrl: 'persistentvolumeclaim/detail/detail.html',
     },
-    views: {
-      '': {
-        controller: PersistentVolumeClaimDetailController,
-        controllerAs: '$ctrl',
-        templateUrl: 'persistentvolumeclaimdetail/persistentvolumeclaimdetail.html',
-      },
-      [actionbarViewName]: {
-        controller: ActionBarController,
-        controllerAs: '$ctrl',
-        templateUrl: 'persistentvolumeclaimdetail/actionbar.html',
-      },
+    [actionbarViewName]: {
+      controller: ActionBarController,
+      controllerAs: '$ctrl',
+      templateUrl: 'persistentvolumeclaim/detail/actionbar.html',
     },
-  });
-}
+  },
+};
 
 /**
  * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
