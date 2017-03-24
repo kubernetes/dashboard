@@ -19,15 +19,15 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	daemonset "github.com/kubernetes/dashboard/src/app/backend/resource/daemonset/list"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
-	job "github.com/kubernetes/dashboard/src/app/backend/resource/job/list"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
-	replicaset "github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/list"
-	replicationcontroller "github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller/list"
-	statefulset "github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/list"
-	k8sClient "k8s.io/client-go/kubernetes"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset"
+	"k8s.io/client-go/kubernetes"
 )
 
 // Workloads structure contains all resource lists grouped into the workloads category.
@@ -48,7 +48,7 @@ type Workloads struct {
 }
 
 // GetWorkloads returns a list of all workloads in the cluster.
-func GetWorkloads(client *k8sClient.Clientset, heapsterClient client.HeapsterClient,
+func GetWorkloads(client *kubernetes.Clientset, heapsterClient client.HeapsterClient,
 	nsQuery *common.NamespaceQuery, metricQuery *dataselect.MetricQuery) (*Workloads, error) {
 
 	log.Print("Getting lists of all workloads")
