@@ -3,20 +3,19 @@ package deployment
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	replicasetlist "github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/list"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
-// TODO fix not to use kubernetes utils
-
 //GetDeploymentEvents returns model events for a deployment with the given name in the given
 //namespace
 func GetDeploymentOldReplicaSets(client client.Interface, dsQuery *dataselect.DataSelectQuery,
-	namespace string, deploymentName string) (*replicasetlist.ReplicaSetList, error) {
+	namespace string, deploymentName string) (*replicaset.ReplicaSetList, error) {
 
-	deployment, err := client.Extensions().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
+	deployment, err := client.Extensions().Deployments(namespace).Get(deploymentName,
+		metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -62,7 +61,7 @@ func GetDeploymentOldReplicaSets(client client.Interface, dsQuery *dataselect.Da
 	for i, replicaSet := range oldRs {
 		oldReplicaSets[i] = *replicaSet
 	}
-	oldReplicaSetList := replicasetlist.CreateReplicaSetList(oldReplicaSets, rawPods.Items, rawEvents.Items,
-		dsQuery, nil)
+	oldReplicaSetList := replicaset.CreateReplicaSetList(oldReplicaSets, rawPods.Items,
+		rawEvents.Items, dsQuery, nil)
 	return oldReplicaSetList, nil
 }
