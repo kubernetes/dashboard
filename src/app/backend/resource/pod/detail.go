@@ -18,7 +18,6 @@ import (
 	"encoding/json"
 	"log"
 
-	"fmt"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -98,6 +97,8 @@ type EnvVar struct {
 }
 
 // GetPodDetail returns the details (PodDetail) of a named Pod from a particular namespace.
+// TODO(maciaszczykm): After owned by reference will be fully-functional it should be used instead
+// of created by annotation.
 func GetPodDetail(client kubernetes.Interface, heapsterClient client.HeapsterClient, namespace,
 	name string) (*PodDetail, error) {
 
@@ -115,7 +116,7 @@ func GetPodDetail(client kubernetes.Interface, heapsterClient client.HeapsterCli
 	}
 
 	controller := owner.ResourceOwner{}
-	creatorAnnotation, found := pod.ObjectMeta.Annotations[api.CreatedByAnnotation] // TODO Retwite to owned by
+	creatorAnnotation, found := pod.ObjectMeta.Annotations[api.CreatedByAnnotation]
 	if found {
 		creatorRef, err := getPodCreator(client, creatorAnnotation, common.NewSameNamespaceQuery(namespace), heapsterClient)
 		if err != nil {
@@ -124,7 +125,6 @@ func GetPodDetail(client kubernetes.Interface, heapsterClient client.HeapsterCli
 		controller = *creatorRef
 	}
 
-	// Download metrics
 	_, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells([]api.Pod{*pod}),
 		dataselect.StdMetricsDataSelect, dataselect.NoResourceCache, &heapsterClient)
 	metrics, _ := metricPromises.GetMetrics()
@@ -145,6 +145,7 @@ func GetPodDetail(client kubernetes.Interface, heapsterClient client.HeapsterCli
 
 func getPodCreator(client kubernetes.Interface, creatorAnnotation string,
 	nsQuery *common.NamespaceQuery, heapsterClient client.HeapsterClient) (*owner.ResourceOwner, error) {
+
 	var serializedReference api.SerializedReference
 	err := json.Unmarshal([]byte(creatorAnnotation), &serializedReference)
 	if err != nil {
@@ -155,25 +156,25 @@ func getPodCreator(client kubernetes.Interface, creatorAnnotation string,
 		PodList:   common.GetPodListChannel(client, nsQuery, 1),
 		EventList: common.GetEventListChannel(client, nsQuery, 1),
 	}
+
 	pods := <-channels.PodList.List
 	if err := <-channels.PodList.Error; err != nil {
 		return nil, err
 	}
 
+	events := <-channels.EventList.List
+	if err := <-channels.EventList.Error; err != nil {
+		return nil, err
+	}
+
 	reference := serializedReference.Reference
 
-	rc, _ := owner.NewResourceController(reference, client)
-
-	controller := rc.Get(pods.Items)
-
-	fmt.Println(controller)
-
-	// TODO
-
+	rc, err := owner.NewResourceController(reference, client)
 	if err != nil && isNotFoundError(err) {
 		return &owner.ResourceOwner{}, nil
 	}
 
+	controller := rc.Get(pods.Items, events.Items)
 	return &controller, err
 }
 
