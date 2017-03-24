@@ -15,7 +15,7 @@
 import chromeModule from 'chrome/chrome_module';
 import namespaceModule from 'namespace/module';
 import nodeModule from 'node/module';
-import persistentVolumeListModule from 'persistentvolumelist/persistentvolumelist_module';
+import persistentVolumeModule from 'persistentvolume/module';
 import storageClassListModule from 'storageclasslist/module';
 
 import stateConfig from './stateconfig';
@@ -33,7 +33,7 @@ export default angular
           chromeModule.name,
           nodeModule.name,
           namespaceModule.name,
-          persistentVolumeListModule.name,
+          persistentVolumeModule.name,
           storageClassListModule.name,
         ])
     .config(stateConfig)

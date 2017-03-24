@@ -35,9 +35,8 @@ import jobModule from './job/module';
 import logsModule from './logs/logs_module';
 import namespaceModule from './namespace/module';
 import nodeModule from './node/module';
+import persistentVolumeModule from './persistentvolume/module';
 import persistentVolumeClaimModule from './persistentvolumeclaim/module';
-import persistentVolumeDetailModule from './persistentvolumedetail/persistentvolumedetail_module';
-import persistentVolumeListModule from './persistentvolumelist/persistentvolumelist_module';
 import podDetailModule from './poddetail/poddetail_module';
 import replicaSetListModule from './replicasetlist/replicasetlist_module';
 import replicationControllerDetailModule from './replicationcontrollerdetail/replicationcontrollerdetail_module';
@@ -88,8 +87,7 @@ export default angular
           serviceDetailModule.name,
           serviceListModule.name,
           podDetailModule.name,
-          persistentVolumeDetailModule.name,
-          persistentVolumeListModule.name,
+          persistentVolumeModule.name,
           statefulSetListModule.name,
           persistentVolumeClaimModule.name,
           resourceQuotaDetailModule.name,

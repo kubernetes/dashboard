@@ -13,27 +13,16 @@
 // limitations under the License.
 
 /**
- * @final
+ * @return {!angular.Component}
  */
-export default class PersistentVolumeSourceInfoController {
-  /**
-   * Constructs statefultion controller info object.
-   * @ngInject
-   */
-  constructor() {
-    /**
-     * Persistent volume source. Initialized from the scope.
-     * @export {!backendApi.PersistentVolumeSource}
-     */
-    this.persistentVolumeSource;
-  }
-}
-
-export const persistentVolumeSourceInfoComponent = {
-  controller: PersistentVolumeSourceInfoController,
-  templateUrl: 'persistentvolumedetail/persistentvolumesourceinfo.html',
-  bindings: {
-    /** {!backendApi.PersistentVolumeSource} */
-    'persistentVolumeSource': '=',
+export const persistentVolumeCardListComponent = {
+  transclude: {
+    // Optional header that is transcluded instead of the default one.
+    'header': '?kdHeader',
   },
+  bindings: {
+    'persistentVolumeList': '<',
+    'persistentVolumeListResource': '<',
+  },
+  templateUrl: 'persistentvolume/list/cardlist.html',
 };

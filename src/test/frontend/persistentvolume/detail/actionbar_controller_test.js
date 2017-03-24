@@ -12,17 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * @return {!angular.Component}
- */
-export const persistentVolumeCardListComponent = {
-  transclude: {
-    // Optional header that is transcluded instead of the default one.
-    'header': '?kdHeader',
-  },
-  bindings: {
-    'persistentVolumeList': '<',
-    'persistentVolumeListResource': '<',
-  },
-  templateUrl: 'persistentvolumelist/persistentvolumecardlist.html',
-};
+import {ActionBarController} from 'persistentvolume/detail/actionbar_controller';
+import module from 'persistentvolume/module';
+
+describe('Action Bar controller', () => {
+  /** @type {!ActionBarController} */
+  let ctrl;
+  let details = {};
+
+  beforeEach(() => {
+    angular.mock.module(module.name);
+
+    angular.mock.inject(($controller) => {
+      ctrl = $controller(ActionBarController, {persistentVolumeDetail: details});
+    });
+  });
+
+  it('should initialize details', () => {
+    expect(ctrl.details).toBe(details);
+  });
+});

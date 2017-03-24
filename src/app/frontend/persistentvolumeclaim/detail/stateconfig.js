@@ -54,7 +54,7 @@ export const config = {
 };
 
 /**
- * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
+ * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource<!backendApi.PersistentVolumeClaimDetail>}
  * @ngInject

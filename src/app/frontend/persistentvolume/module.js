@@ -15,38 +15,35 @@
 import chromeModule from 'chrome/chrome_module';
 import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
-import persistentVolumeDetailModule from 'persistentvolumedetail/persistentvolumedetail_module';
+import namespaceModule from 'common/namespace/namespace_module';
+import eventsModule from 'events/events_module';
 
-import {persistentVolumeCardComponent} from './persistentvolumecard_component';
-import {persistentVolumeCardListComponent} from './persistentvolumecardlist_component';
-import stateConfig from './persistentvolumelist_stateconfig';
-
+import {persistentVolumeInfoComponent} from './detail/info_component';
+import {persistentVolumeSourceInfoComponent} from './detail/sourceinfo_component';
+import {persistentVolumeCardComponent} from './list/card_component';
+import {persistentVolumeCardListComponent} from './list/cardlist_component';
+import {persistentVolumeListResource} from './list/stateconfig';
+import stateConfig from './stateconfig';
 
 /**
- * Angular module for the Persistent Volume list view.
+ * Angular module for the Deployment resource.
  */
 export default angular
     .module(
-        'kubernetesDashboard.persistentVolumeList',
+        'kubernetesDashboard.persistentVolume',
         [
           'ngMaterial',
           'ngResource',
           'ui.router',
-          filtersModule.name,
-          componentsModule.name,
-          persistentVolumeDetailModule.name,
           chromeModule.name,
+          componentsModule.name,
+          eventsModule.name,
+          filtersModule.name,
+          namespaceModule.name,
         ])
     .config(stateConfig)
     .component('kdPersistentVolumeCardList', persistentVolumeCardListComponent)
     .component('kdPersistentVolumeCard', persistentVolumeCardComponent)
+    .component('kdPersistentVolumeInfo', persistentVolumeInfoComponent)
+    .component('kdPersistentVolumeSourceInfo', persistentVolumeSourceInfoComponent)
     .factory('kdPersistentVolumeListResource', persistentVolumeListResource);
-
-/**
- * @param {!angular.$resource} $resource
- * @return {!angular.Resource}
- * @ngInject
- */
-function persistentVolumeListResource($resource) {
-  return $resource('api/v1/persistentvolume');
-}

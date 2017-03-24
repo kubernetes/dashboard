@@ -11,23 +11,21 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import persistentVolumeListModule from 'persistentvolumelist/persistentvolumelist_module';
 
-describe('Persistent Volume card list', () => {
-  /** @type
-   * {!persistentvolumelist/persistentvolumecard_component.PersistentVolumeCardListController} */
-  let ctrl;
+import {PersistentVolumeDetailController} from 'persistentvolume/detail/controller';
+import persistentVolumeDetailModule from 'persistentvolume/module';
+
+describe('Persistent Volume Detail controller', () => {
 
   beforeEach(() => {
-    angular.mock.module(persistentVolumeListModule.name);
-
-    angular.mock.inject(($componentController, $rootScope) => {
-      /** @type {!PersistentVolumeCardListController} */
-      ctrl = $componentController('kdPersistentVolumeCardList', {$scope: $rootScope}, {});
-    });
+    angular.mock.module(persistentVolumeDetailModule.name);
   });
 
-  it('should instantiate the controller properly', () => {
-    expect(ctrl).not.toBeUndefined();
-  });
+  it('should initialize persistent volume controller', angular.mock.inject(($controller) => {
+    let data = {};
+    /** @type {!PersistentVolumeDetailController} */
+    let ctrl = $controller(PersistentVolumeDetailController, {persistentVolumeDetail: data});
+
+    expect(ctrl.persistentVolumeDetail).toBe(data);
+  }));
 });

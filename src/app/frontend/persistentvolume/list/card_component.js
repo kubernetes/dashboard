@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'persistentvolumedetail/persistentvolumedetail_state';
+import {stateName} from 'persistentvolume/detail/state';
 
 /**
  * Controller for the persistent volume card.
@@ -71,5 +71,5 @@ export const persistentVolumeCardComponent = {
     'persistentVolume': '=',
   },
   controller: PersistentVolumeCardController,
-  templateUrl: 'persistentvolumelist/persistentvolumecard.html',
+  templateUrl: 'persistentvolume/list/card.html',
 };

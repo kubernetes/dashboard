@@ -11,10 +11,11 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import persistentVolumeListModule from 'persistentvolumelist/persistentvolumelist_module';
+
+import persistentVolumeListModule from 'persistentvolume/module';
 
 describe('Persistent Volume card', () => {
-  /** @type {!persistentvolumelist/persistentvolumecard_component.PersistentVolumeCardController} */
+  /** @type {!PersistentVolumeCardController} */
   let ctrl;
 
   beforeEach(() => {

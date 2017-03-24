@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {PersistentVolumeListController} from 'persistentvolumelist/persistentvolumelist_controller';
-import persistentVolumeListModule from 'persistentvolumelist/persistentvolumelist_module';
+import {PersistentVolumeListController} from 'persistentvolume/list/controller';
+import persistentVolumeListModule from 'persistentvolume/module';
 
 describe('Persistent Volume list controller', () => {
-  /** @type {!persistentvolumelist/persistentvolumelist_controller.PersistentVolumeListController}
+  /** @type {!PersistentVolumeListController}
    */
   let ctrl;
 

@@ -986,6 +986,12 @@
   <translation id="4611353673808918004" key="MSG_NODELIST_NODELIST_1" desc="Title for graph card displaying memory metric of nodes.">メモリー使用量</translation>
   <translation id="4721357036233678700" key="MSG_NODELIST_NODELIST_1" desc="Title for graph card displaying memory metric of nodes.">メモリー使用量の履歴</translation>
   <translation id="1508766902785018036" key="MSG_NODELIST_NODELIST_2" desc="Help message detailing what is included in the memory usage">メモリー使用量はキャッシュも含みます。</translation>
+  <translation id="5644753445531072726" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_0" desc="Label \'Allocated resources\' for the allocated resources section.">Allocated resources</translation>
+  <translation id="5653584408656823407" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_1" desc="Label \'CPU requests (cores)\' for the allocated resources table header on the node details page.">CPU requests (cores)</translation>
+  <translation id="776419576895892458" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_2" desc="Label \'CPU limits (cores)\' for the allocated resources table header on the node details page.">CPU limits (cores)</translation>
+  <translation id="2364634598145731752" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_3" desc="Label \'Memory requests (bytes)\' for the allocated resources table header on the node details page.">Memory requests (bytes)</translation>
+  <translation id="4803828848895485340" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_4" desc="Label \'Memory limits (bytes)\' for the allocated resources table header on the node details page.">Memory limits (bytes)</translation>
+  <translation id="2898321976840844764" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_5" desc="Label \'Pods\' for the allocated resources table header on the node details page.">Pods</translation>
   <translation id="2557541314727796573" key="MSG_NODE_DETAIL_ALLOCATED_RESOURCES_CPU_LIMITS" desc="Label 'CPU limits (cores)' for the allocated resources table header on the node details page.">CPU 上限（コア数）</translation>
   <translation id="3321130452593338857" key="MSG_NODE_DETAIL_ALLOCATED_RESOURCES_CPU_REQUESTS" desc="Label 'CPU requests (cores)' for the allocated resources table header on the node details page.">CPU 要件（コア数）</translation>
   <translation id="6270650074051326892" key="MSG_NODE_DETAIL_ALLOCATED_RESOURCES_LABEL" desc="Label 'Allocated resources' for the allocated resources section on the node details page.">割り当てリソース</translation>
@@ -1004,7 +1010,29 @@
   <translation id="6259744204007513131" key="MSG_NODE_DETAIL_CONTAINER_RUNTIME_VERSION_LABEL" desc="Label 'Container Runtime Version' for the node container runtime version displayed on its details page.">コンテナランタイムバージョン</translation>
   <translation id="5317140613056692776" key="MSG_NODE_DETAIL_CPU_GRAPH_CARD_TITLE" desc="Title for graph card displaying CPU metric of one node.">CPU使用量の履歴</translation>
   <translation id="6804175941266122408" key="MSG_NODE_DETAIL_DETAILS_SUBTITLE" desc="Subtitle 'Details' for the left section with general information about a node on the node details page.">詳細</translation>
+  <translation id="8825218677764515340" key="MSG_NODE_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one node.">CPU usage</translation>
+  <translation id="1397958944434227282" key="MSG_NODE_DETAIL_DETAIL_1" desc="Title for graph card displaying memory metric of one node.">Memory usage</translation>
+  <translation id="1964687474867368783" key="MSG_NODE_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">The memory usage includes caches.</translation>
+  <translation id="249473403028079051" key="MSG_NODE_DETAIL_DETAIL_3" desc="Title for pods card zerostate in node details page.">There is nothing to display here</translation>
+  <translation id="7278964988916967478" key="MSG_NODE_DETAIL_DETAIL_4" desc="Text for pods card zerostate in node details page.">There are currently no Pods scheduled on this Node.</translation>
   <translation id="4234081832725459634" key="MSG_NODE_DETAIL_EXTERNAL_ID_LABEL" desc="Label 'External ID' for the node external ID displayed on its details page.">外部 ID</translation>
+  <translation id="2128002365715974283" key="MSG_NODE_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
+  <translation id="1545993044656301071" key="MSG_NODE_DETAIL_INFO_1" desc="Label \'Phase\' for the node namespace on the node details page.">Phase</translation>
+  <translation id="7199224922769170090" key="MSG_NODE_DETAIL_INFO_10" desc="Label \'Kernel Version\' for the node kernel version displayed on its details page.">Kernel Version</translation>
+  <translation id="9150708343514384042" key="MSG_NODE_DETAIL_INFO_11" desc="Label \'OS Image\' for the node OS image displayed on its details page.">OS Image</translation>
+  <translation id="5435737724872052823" key="MSG_NODE_DETAIL_INFO_12" desc="Label \'Container Runtime Version\' for the node container runtime version displayed on its details page.">Container Runtime Version</translation>
+  <translation id="4342372933200360270" key="MSG_NODE_DETAIL_INFO_13" desc="Label \'Kubelet Version\' for the node Kubelet version displayed on its details page.">Kubelet Version</translation>
+  <translation id="104208579964546346" key="MSG_NODE_DETAIL_INFO_14" desc="Label \'Kube-Proxy Version\' for the node Kube-Proxy version displayed on its details page.">Kube-Proxy Version</translation>
+  <translation id="6424547851609840629" key="MSG_NODE_DETAIL_INFO_15" desc="Label \'Operating system\' for the node operating system displayed on its details page.">Operating system</translation>
+  <translation id="6375391815927008544" key="MSG_NODE_DETAIL_INFO_16" desc="Label \'Architecture\' for the node architecture displayed on its details page.">Architecture</translation>
+  <translation id="6713664714270681129" key="MSG_NODE_DETAIL_INFO_2" desc="Label \'External ID\' for the node external ID displayed on its details page.">External ID</translation>
+  <translation id="684407257893900868" key="MSG_NODE_DETAIL_INFO_3" desc="Label \'Pod CIDR\' for the node external ID displayed on its details page.">Pod CIDR</translation>
+  <translation id="3412686708492919268" key="MSG_NODE_DETAIL_INFO_4" desc="Label \'Provider ID\' for the node external ID displayed on its details page.">Provider ID</translation>
+  <translation id="4308082913059054249" key="MSG_NODE_DETAIL_INFO_5" desc="Label \'Unschedulable\' for the node external ID displayed on its details page.">Unschedulable</translation>
+  <translation id="2600858180408528492" key="MSG_NODE_DETAIL_INFO_6" desc="Subtitle \'System info\' for the right section with general information about node system on the node details page.">System info</translation>
+  <translation id="4872640972002083253" key="MSG_NODE_DETAIL_INFO_7" desc="Label \'Machine ID\' for the node machine ID displayed on its details page.">Machine ID</translation>
+  <translation id="8031159424504518385" key="MSG_NODE_DETAIL_INFO_8" desc="Label \'System UUID\' for the node system UUID displayed on its details page.">System UUID</translation>
+  <translation id="2870803363346147220" key="MSG_NODE_DETAIL_INFO_9" desc="Label \'Boot ID\' for the node boot ID displayed on its details page.">Boot ID</translation>
   <translation id="1154240901267057761" key="MSG_NODE_DETAIL_KERNEL_VERSION_LABEL" desc="Label 'Kernel Version' for the node kernel version displayed on its details page.">カーネルバージョン</translation>
   <translation id="176051279688267359" key="MSG_NODE_DETAIL_KUBELET_VERSION_LABEL" desc="Label 'Kubelet Version' for the node Kubelet version displayed on its details page.">Kubelet バージョン</translation>
   <translation id="4095768493806539550" key="MSG_NODE_DETAIL_KUBEPROXY_VERSION_LABEL" desc="Label 'Kube-Proxy Version' for the node Kube-Proxy version displayed on its details page.">Kube-Proxy バージョン</translation>
@@ -1022,9 +1050,17 @@
   <translation id="4332786308109934742" key="MSG_NODE_DETAIL_SYSTEM_UUID_LABEL" desc="Label 'System UUID' for the node system UUID displayed on its details page.">システム UUID</translation>
   <translation id="3231786643565186812" key="MSG_NODE_DETAIL_UNSCHEDULABLE_LABEL" desc="Label 'Unschedulable' for the node external ID displayed on its details page.">スケジューリング不可</translation>
   <translation id="5132568729791755489" key="MSG_NODE_LIST_AGE_LABEL" desc="Label 'Age' which appears as a column label in the table of nodes (node list view).">起動時間</translation>
+  <translation id="7623646557609839039" key="MSG_NODE_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Nodes</translation>
+  <translation id="4079495084138822779" key="MSG_NODE_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of nodes (node list view).">Name</translation>
+  <translation id="666977111261221823" key="MSG_NODE_LIST_CARDLIST_2" desc="Label \'Labels\' which appears as a column label in the table of nodes (node list view).">Labels</translation>
+  <translation id="5568169056290988879" key="MSG_NODE_LIST_CARDLIST_3" desc="Label \'Ready\' which appears as a column label in the table of nodes (node list view).">Ready</translation>
+  <translation id="7563356541739732697" key="MSG_NODE_LIST_CARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of nodes (node list view).">Age</translation>
   <translation id="7524676519411642380" key="MSG_NODE_LIST_CPU_GRAPH_CARD_TITLE" desc="Title for graph card displaying CPU metric of nodes.">CPU使用量の履歴</translation>
   <translation id="3161651495562825748" key="MSG_NODE_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of node."><ph name="CREATION_DATE"/> に作成</translation>
   <translation id="8624223044783361486" key="MSG_NODE_LIST_LABELS_LABEL" desc="Label 'Labels' which appears as a column label in the table of nodes (node list view).">ラベル</translation>
+  <translation id="7165645741606687474" key="MSG_NODE_LIST_LIST_0" desc="Title for graph card displaying CPU metric of nodes.">CPU usage</translation>
+  <translation id="7938673888851238901" key="MSG_NODE_LIST_LIST_1" desc="Title for graph card displaying memory metric of nodes.">Memory usage</translation>
+  <translation id="1363994976459428521" key="MSG_NODE_LIST_LIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes caches.</translation>
   <translation id="586088678098641368" key="MSG_NODE_LIST_MEMORY_GRAPH_CARD_TITLE" desc="Title for graph card displaying memory metric of nodes.">メモリー使用量の履歴</translation>
   <translation id="1886003934797453383" key="MSG_NODE_LIST_NAME_LABEL" desc="Label 'Name' which appears as a column label in the table of nodes (node list view).">名前</translation>
   <translation id="6440277990482217612" key="MSG_NODE_LIST_PODS_LABEL" desc="Label 'Pods' which appears as a column label in the table of nodes (node list view).">ポッド</translation>
@@ -1050,6 +1086,20 @@
   <translation id="4669931994584774261" key="MSG_PERSISTENTVOLUMECLAIMLIST_PERSISTENTVOLUMECLAIMCARDLIST_5" desc="Label \'Age\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">起動時間</translation>
   <translation id="5605513756759404025" key="MSG_PERSISTENTVOLUMECLAIMLIST_PERSISTENTVOLUMECLAIMCARD_0" desc="Tooltip text which appears on error icon hover.">この要求はロスト状態です</translation>
   <translation id="7813004235196632560" key="MSG_PERSISTENTVOLUMECLAIMLIST_PERSISTENTVOLUMECLAIMCARD_1" desc="Tooltip text which appears on pending icon hover.">この要求は待機状態です</translation>
+  <translation id="486388281806331038" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_ACTIONBAR_0" desc="Label \'Persistent Volume Claim\' which appears at the top of the delete dialog, opened from a persistent volume claim details page.">Persistent Volume Claim</translation>
+  <translation id="1482471968556330090" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
+  <translation id="6385503627780441862" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_1" desc="Persistent volume claim info details section status entry.">Status</translation>
+  <translation id="2412371468817393973" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_2" desc="Persistent volume claim info details section volume entry.">Volume</translation>
+  <translation id="6740597941261077457" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_3" desc="Persistent volume claim info details section capacity entry.">Capacity</translation>
+  <translation id="297809042910539610" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_4" desc="Persistent volume claim info details section access modes entry.">Access modes</translation>
+  <translation id="29404782164326270" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Persistent Volume Claims</translation>
+  <translation id="5483797855700474826" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">Name</translation>
+  <translation id="1258689958046107203" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">Namespace</translation>
+  <translation id="1790149424209494199" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_3" desc="Label \'Volume\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">Volume</translation>
+  <translation id="5942271040555588136" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_4" desc="Label \'Labels\' which appears as a column label in the table of persistent volume claim (persistent volume claim list view).">Labels</translation>
+  <translation id="5458993660911534244" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_5" desc="Label \'Age\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">Age</translation>
+  <translation id="445776331089273321" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARD_0" desc="Tooltip text which appears on error icon hover.">This claim is in lost state</translation>
+  <translation id="2307976094948542528" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARD_1" desc="Tooltip text which appears on pending icon hover.">This claim is in pending state</translation>
   <translation id="5690741977032012793" key="MSG_PERSISTENTVOLUMEDETAIL_ACTIONBAR_0" desc="Label \'Persistent Volume\' which appears at the top of the delete dialog, opened from a config map details page.">永続ボリューム</translation>
   <translation id="531832117748275245" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMEINFO_0" desc="Persistent volume info details section name.">詳細</translation>
   <translation id="1042932866818648035" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMEINFO_1" desc="Persistent volume info details section status entry.">状態</translation>
@@ -1123,6 +1173,70 @@
   <translation id="3935198859367316955" key="MSG_PERSISTENTVOLUMELIST_PERSISTENTVOLUMECARDLIST_8" desc="Label which appears above the list of such objects.">永続ボリューム</translation>
   <translation id="4506741016926991795" key="MSG_PERSISTENTVOLUMELIST_PERSISTENTVOLUMECARD_0" desc="Label \'Persistent Volume\' which will appear in the persistent volume delete dialog opened from a persistentvolume card on the list page.">永続ボリューム</translation>
   <translation id="6677838767738117816" key="MSG_PERSISTENTVOLUMELIST_PERSISTENTVOLUMECARD_1" desc="Label \'Persistent Volume\' which will appear in the persistent volume delete dialog opened from a persistentvolume card on the list page.">永続ボリューム</translation>
+  <translation id="6410423382942434423" key="MSG_PERSISTENTVOLUME_DETAIL_ACTIONBAR_0" desc="Label \'Persistent Volume\' which appears at the top of the delete dialog, opened from a config map details page.">Persistent Volume</translation>
+  <translation id="6875466029803342193" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
+  <translation id="5670456105080780751" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_1" desc="Persistent volume info details section status entry.">Status</translation>
+  <translation id="1183014090355571191" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_2" desc="Persistent volume info details section claim entry.">Claim</translation>
+  <translation id="8253469971637153606" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_3" desc="Persistent volume info details section reclaim policy entry.">Reclaim policy</translation>
+  <translation id="1048037683065603923" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_4" desc="Persistent volume info details section access modes entry.">Access modes</translation>
+  <translation id="489198110526224081" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_5" desc="Persistent volume info details section capacity entry.">Capacity</translation>
+  <translation id="7193098873360233228" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_6" desc="Persistent volume info details section message entry.">Message</translation>
+  <translation id="3344267084925697004" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_0" desc="Persistent volume source info title.">Persistent volume source</translation>
+  <translation id="4229851576634547217" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_1" desc="Persistent volume source info host path title.">Host path</translation>
+  <translation id="2012274989896397034" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_10" desc="Persistent volume source info AWS block storage section FS type entry.">FS type</translation>
+  <translation id="1159922307397938960" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_11" desc="Persistent volume source info AWS block storage section partition entry.">Partition</translation>
+  <translation id="4179916509768425352" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_12" desc="Persistent volume source info AWS block storage section read only entry.">Read only</translation>
+  <translation id="7238343147110343511" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_13" desc="Persistent volume source info GlusterFS title.">GlusterFS</translation>
+  <translation id="1354033677473902339" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_14" desc="Persistent volume source info GlusterFS section endpoints entry.">Endpoints</translation>
+  <translation id="375828333102036934" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_15" desc="Persistent volume source info GlusterFS section path entry.">Path</translation>
+  <translation id="3510098912106931945" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_16" desc="Persistent volume source info GlusterFS section read only entry.">Read only</translation>
+  <translation id="3276696203563418711" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_17" desc="Persistent volume source info NFS title.">NFS</translation>
+  <translation id="129895814498011422" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_18" desc="Persistent volume source info NFS section server entry.">Server</translation>
+  <translation id="5829629031113012465" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_19" desc="Persistent volume source info NFS section path entry.">Path</translation>
+  <translation id="8315534477825179327" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_2" desc="Persistent volume source info host path section path entry.">Path</translation>
+  <translation id="8795208928592673628" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_20" desc="Persistent volume source info NFS section read only entry.">Read only</translation>
+  <translation id="5496246456166850695" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_21" desc="Persistent volume source info RBD title.">RBD</translation>
+  <translation id="5687418530859459612" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_22" desc="Persistent volume source info RBD section monitors entry.">Monitors</translation>
+  <translation id="8871994344367210584" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_23" desc="Persistent volume source info RBD section image entry.">Image</translation>
+  <translation id="6182877524861275895" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_24" desc="Persistent volume source info RBD section user entry.">User</translation>
+  <translation id="3506078183497376960" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_25" desc="Persistent volume source info RBD section keyring entry.">Keyring</translation>
+  <translation id="7440034293387101951" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_26" desc="Persistent volume source info RBD section secretRef entry.">SecretRef</translation>
+  <translation id="5166862124480598854" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_27" desc="Persistent volume source info RBD section read only entry.">Read only</translation>
+  <translation id="3033202154295339450" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_28" desc="Persistent volume source info ISCSI title.">ISCSI</translation>
+  <translation id="8618333463598695585" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_29" desc="Persistent volume source info ISCSI section target portal entry.">Target portal</translation>
+  <translation id="6125773785592861251" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_3" desc="Persistent volume source info GCE persistent disk title.">GCE persistent disk</translation>
+  <translation id="3150214227551452858" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_30" desc="Persistent volume source info ISCSI section IQN entry.">IQN</translation>
+  <translation id="9020043228751440021" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_31" desc="Persistent volume source info ISCSI section lun entry.">Lun</translation>
+  <translation id="7456243076382885514" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_32" desc="Persistent volume source info ISCSI section FS type entry.">FS type</translation>
+  <translation id="6745988707391969135" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_33" desc="Persistent volume source info ISCSI section read only entry.">Read only</translation>
+  <translation id="2995342957043632456" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_34" desc="Persistent volume source info cinder title.">Cinder</translation>
+  <translation id="6376034190324400343" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_35" desc="Persistent volume source info cinder section volume ID entry.">Volume ID</translation>
+  <translation id="7830413820255512859" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_36" desc="Persistent volume source info cinder section FS Type entry.">FS Type</translation>
+  <translation id="6420301831828714554" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_37" desc="Persistent volume source info cinder section read only entry.">Read only</translation>
+  <translation id="147942501041597135" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_38" desc="Persistent volume source info FC title.">FC</translation>
+  <translation id="3477305325473430932" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_39" desc="Persistent volume source info FC section target WWNs entry.">Target WWNs</translation>
+  <translation id="5593004702745409068" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_4" desc="Persistent volume source info GCE persistent disk section PD name entry.">PD name</translation>
+  <translation id="5770021054145618993" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_40" desc="Persistent volume source info FC section target FS type entry.">FS type</translation>
+  <translation id="6989685862216675322" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_41" desc="Persistent volume source info FC section lun entry.">Lun</translation>
+  <translation id="6455200962901000045" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_42" desc="Persistent volume source info FC section read only entry.">Read only</translation>
+  <translation id="3973978788850461107" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_43" desc="Persistent volume source info flocker title.">Flocker</translation>
+  <translation id="3542351005726885065" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_44" desc="Persistent volume source info FC section dataset name entry.">Dataset name</translation>
+  <translation id="6663983114121853218" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_5" desc="Persistent volume source info GCE persistent disk section FS type entry.">FS type</translation>
+  <translation id="6570825756735916995" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_6" desc="Persistent volume source info GCE persistent disk section partition entry.">Partition</translation>
+  <translation id="713683902153120640" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_7" desc="Persistent volume source info GCE persistent disk section read only entry.">Read only</translation>
+  <translation id="1527957761443744838" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_8" desc="Persistent volume source info AWS block storage title.">AWS block storage</translation>
+  <translation id="2543608444657856177" key="MSG_PERSISTENTVOLUME_DETAIL_SOURCEINFO_9" desc="Persistent volume source info AWS block storage section volume ID entry.">Volume ID</translation>
+  <translation id="7944617415298542080" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Persistent Volumes</translation>
+  <translation id="132041398851471554" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_1" desc="Persistent volume list header: name.">Name</translation>
+  <translation id="5516067660249261426" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_2" desc="Persistent volume list header: labels.">Labels</translation>
+  <translation id="401484757289437256" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_3" desc="Persistent volume list header: capacity.">Capacity</translation>
+  <translation id="119943904947653278" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_4" desc="Persistent volume list header: access modes.">Access modes</translation>
+  <translation id="384445450481051056" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_5" desc="Persistent volume list header: status.">Status</translation>
+  <translation id="6387315119675278668" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_6" desc="Persistent volume list header: claim.">Claim</translation>
+  <translation id="1737383119058892029" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_7" desc="Persistent volume list header: reason.">Reason</translation>
+  <translation id="6418120519158013412" key="MSG_PERSISTENTVOLUME_LIST_CARDLIST_8" desc="Persistent volume list header: age.">Age</translation>
+  <translation id="4551076669296579967" key="MSG_PERSISTENTVOLUME_LIST_CARD_0" desc="Label \'Persistent Volume\' which will appear in the persistent volume delete dialog opened from a persistentvolume card on the list page.">Persistent Volume</translation>
+  <translation id="7476369653916486566" key="MSG_PERSISTENTVOLUME_LIST_CARD_1" desc="Label \'Persistent Volume\' which will appear in the persistent volume delete dialog opened from a persistentvolume card on the list page.">Persistent Volume</translation>
   <translation id="7451790519147451734" key="MSG_PERSISTENT_VOLUME_CLAIM_CARD_TOOLTIP_LOST" desc="Tooltip text which appears on error icon hover.">この要求はロスト状態です</translation>
   <translation id="5250659225561234337" key="MSG_PERSISTENT_VOLUME_CLAIM_CARD_TOOLTIP_PENDING" desc="Tooltip text which appears on pending icon hover.">この要求は待機状態です</translation>
   <translation id="3929728495712967420" key="MSG_PERSISTENT_VOLUME_CLAIM_DETAIL_PERSISTENT_VOLUME_CLAIM_LABEL" desc="Label 'Persistent Volume Claim' which appears at the top of the delete dialog, opened from a persistent volume cClaim details page.">永続ボリューム要求</translation>

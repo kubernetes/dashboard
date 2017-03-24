@@ -12,5 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'persistentvolumedetail';
+import persistentVolumeListModule from 'persistentvolume/module';
+
+describe('Persistent Volume card list', () => {
+  /** @type {!PersistentVolumeCardListController} */
+  let ctrl;
+
+  beforeEach(() => {
+    angular.mock.module(persistentVolumeListModule.name);
+
+    angular.mock.inject(($componentController, $rootScope) => {
+      /** @type {!PersistentVolumeCardListController} */
+      ctrl = $componentController('kdPersistentVolumeCardList', {$scope: $rootScope}, {});
+    });
+  });
+
+  it('should instantiate the controller properly', () => {
+    expect(ctrl).not.toBeUndefined();
+  });
+});

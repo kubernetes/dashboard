@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import persistentVolumeListModule from 'persistentvolumelist/persistentvolumelist_module';
-import {resolvePersistentVolumeList} from 'persistentvolumelist/persistentvolumelist_stateconfig';
+import {resolvePersistentVolumeList} from 'persistentvolume/list/stateconfig';
+import persistentVolumeListModule from 'persistentvolume/module';
 
 describe('StateConfig for persistent volume controller list', () => {
-  /** @type {!common/pagination/pagination_service.PaginationService} */
+  /** @type {!PaginationService} */
   let kdPaginationService;
 
   beforeEach(() => {

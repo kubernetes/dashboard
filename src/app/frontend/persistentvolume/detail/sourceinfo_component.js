@@ -15,30 +15,25 @@
 /**
  * @final
  */
-export default class PersistentVolumeInfoController {
+export default class PersistentVolumeSourceInfoController {
   /**
    * Constructs statefultion controller info object.
    * @ngInject
    */
   constructor() {
     /**
-     * Persistent volume details. Initialized from the scope.
-     * @export {!backendApi.PersistentVolumeDetail}
+     * Persistent volume source. Initialized from the scope.
+     * @export {!backendApi.PersistentVolumeSource}
      */
-    this.persistentVolume;
+    this.persistentVolumeSource;
   }
 }
 
-/**
- * Definition object for the component that displays persistent volume info.
- *
- * @return {!angular.Directive}
- */
-export const persistentVolumeInfoComponent = {
-  controller: PersistentVolumeInfoController,
-  templateUrl: 'persistentvolumedetail/persistentvolumeinfo.html',
+export const persistentVolumeSourceInfoComponent = {
+  controller: PersistentVolumeSourceInfoController,
+  templateUrl: 'persistentvolume/detail/sourceinfo.html',
   bindings: {
-    /** {!backendApi.PersistentVolumeDetail} */
-    'persistentVolume': '=',
+    /** {!backendApi.PersistentVolumeSource} */
+    'persistentVolumeSource': '=',
   },
 };

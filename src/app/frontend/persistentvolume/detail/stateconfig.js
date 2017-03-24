@@ -14,49 +14,46 @@
 
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
-import {stateName as persistentVolumeList, stateUrl} from 'persistentvolumelist/persistentvolumelist_state';
+import {stateName as persistentVolumeList} from './../list/state';
+import {stateUrl} from './../state';
 
 import {ActionBarController} from './actionbar_controller';
-import {PersistentVolumeDetailController} from './persistentvolumedetail_controller';
-import {stateName} from './persistentvolumedetail_state';
+import {PersistentVolumeDetailController} from './controller';
 
 /**
- * Configures states for the persistent volume details view.
+ * Config state object for the Persistent Volume detail view.
  *
- * @param {!ui.router.$stateProvider} $stateProvider
- * @ngInject
+ * @type {!ui.router.StateConfig}
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    url: `${stateUrl}/:objectName`,
-    parent: chromeStateName,
-    resolve: {
-      'persistentVolumeDetailResource': getPersistentVolumeDetailResource,
-      'persistentVolumeDetail': getPersistentVolumeDetail,
+export const config = {
+  url: `${stateUrl}/:objectName`,
+  parent: chromeStateName,
+  resolve: {
+    'persistentVolumeDetailResource': getPersistentVolumeDetailResource,
+    'persistentVolumeDetail': getPersistentVolumeDetail,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': '{{$stateParams.objectName}}',
+      'parent': persistentVolumeList,
     },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': '{{$stateParams.objectName}}',
-        'parent': persistentVolumeList,
-      },
+  },
+  views: {
+    '': {
+      controller: PersistentVolumeDetailController,
+      controllerAs: '$ctrl',
+      templateUrl: 'persistentvolume/detail/detail.html',
     },
-    views: {
-      '': {
-        controller: PersistentVolumeDetailController,
-        controllerAs: '$ctrl',
-        templateUrl: 'persistentvolumedetail/persistentvolumedetail.html',
-      },
-      [actionbarViewName]: {
-        controller: ActionBarController,
-        controllerAs: '$ctrl',
-        templateUrl: 'persistentvolumedetail/actionbar.html',
-      },
+    [actionbarViewName]: {
+      controller: ActionBarController,
+      controllerAs: '$ctrl',
+      templateUrl: 'persistentvolume/detail/actionbar.html',
     },
-  });
-}
+  },
+};
 
 /**
- * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
+ * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource<!backendApi.PersistentVolumeDetail>}
  * @ngInject

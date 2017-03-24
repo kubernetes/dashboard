@@ -16,40 +16,56 @@ import {stateName as parentStateName} from 'admin/state';
 import {stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 
-import {PersistentVolumeListController} from './persistentvolumelist_controller';
-import {stateName, stateUrl} from './persistentvolumelist_state';
+import {stateUrl} from './../state';
+import {PersistentVolumeListController} from './controller';
 
 /**
- * Configures states for persistent volume list view.
- * @param {!ui.router.$stateProvider} $stateProvider
+ * I18n object that defines strings for translation used in this file.
+ */
+const i18n = {
+  /** @type {string} @desc Label 'Persistent Volumes' that appears as a breadcrumbs on the action
+   bar. */
+  MSG_BREADCRUMBS_PERSISTENT_VOLUMES_LABEL: goog.getMsg('Persistent Volumes'),
+};
+
+/**
+ * Config state object for the Persistent Volume list view.
+ *
+ * @type {!ui.router.StateConfig}
+ */
+export const config = {
+  url: stateUrl,
+  parent: chromeStateName,
+  resolve: {
+    'persistentVolumeList': resolvePersistentVolumeList,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': i18n.MSG_BREADCRUMBS_PERSISTENT_VOLUMES_LABEL,
+      'parent': parentStateName,
+    },
+  },
+  views: {
+    '': {
+      controller: PersistentVolumeListController,
+      controllerAs: '$ctrl',
+      templateUrl: 'persistentvolume/list/list.html',
+    },
+  },
+};
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
  * @ngInject
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    url: stateUrl,
-    parent: chromeStateName,
-    resolve: {
-      'persistentVolumeList': resolvePersistentVolumeList,
-    },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': i18n.MSG_BREADCRUMBS_PERSISTENT_VOLUMES_LABEL,
-        'parent': parentStateName,
-      },
-    },
-    views: {
-      '': {
-        controller: PersistentVolumeListController,
-        controllerAs: '$ctrl',
-        templateUrl: 'persistentvolumelist/persistentvolumelist.html',
-      },
-    },
-  });
+export function persistentVolumeListResource($resource) {
+  return $resource('api/v1/persistentvolume');
 }
 
 /**
  * @param {!angular.Resource} kdPersistentVolumeListResource
- * @param {!./../common/pagination/pagination_service.PaginationService} kdPaginationService
+ * @param {!./../../common/pagination/pagination_service.PaginationService} kdPaginationService
  * @returns {!angular.$q.Promise}
  * @ngInject
  */
@@ -58,9 +74,3 @@ export function resolvePersistentVolumeList(kdPersistentVolumeListResource, kdPa
   let query = kdPaginationService.getDefaultResourceQuery('');
   return kdPersistentVolumeListResource.get(query).$promise;
 }
-
-const i18n = {
-  /** @type {string} @desc Label 'Persistent Volumes' that appears as a breadcrumbs on the action
-     bar. */
-  MSG_BREADCRUMBS_PERSISTENT_VOLUMES_LABEL: goog.getMsg('Persistent Volumes'),
-};
