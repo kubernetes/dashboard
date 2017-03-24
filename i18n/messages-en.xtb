@@ -585,6 +585,8 @@
   <translation id="4531715723625212375" key="MSG_PODDETAIL_CREATORINFO_6" desc="Title for pods card zerostate in pod details page.">There is nothing to display here</translation>
   <translation id="495066645228579081" key="MSG_PODDETAIL_CREATORINFO_7" desc="Label \'Images\' which appears as a column label in the creator card.">Images</translation>
   <translation id="7907488041039669525" key="MSG_PODDETAIL_CREATORINFO_7" desc="Text for pod creator zerostate in pod details page.">This Pod does not have a creator.</translation>
+  <translation id="7631003788484867114" key="MSG_PODDETAIL_CREATORINFO_8" desc="Title for pods card zero state in pod details page.">There is nothing to display here</translation>
+  <translation id="757540596100515097" key="MSG_PODDETAIL_CREATORINFO_9" desc="Text for pod creator zero state in pod details page.">This Pod does not have a creator.</translation>
   <translation id="4762477599395572185" key="MSG_PODDETAIL_PODDETAIL_0" desc="Title for graph card displaying CPU metric of one pod.">CPU usage</translation>
   <translation id="3791462909802261074" key="MSG_PODDETAIL_PODDETAIL_1" desc="Title for graph card displaying memory metric of one pod.">Memory usage</translation>
   <translation id="4886615901703785404" key="MSG_PODDETAIL_PODDETAIL_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in this pod.</translation>

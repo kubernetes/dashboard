@@ -85,8 +85,8 @@ export default class CreatorInfoController {
   }
 
   /**
-   * @export
    * @return {string}
+   * @export
    */
   getCreatorDetailHref() {
     return this.state_.href(
