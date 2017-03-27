@@ -46,6 +46,8 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/rbacrolebindings"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/rbacroles"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/secret"
@@ -592,7 +594,14 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 	apiV1Ws.Route(
 		apiV1Ws.PUT("/_raw/{kind}/name/{name}").
 			To(apiHandler.handlePutResource))
-
+	apiV1Ws.Route(
+		apiV1Ws.GET("/rbacrole").
+			To(apiHandler.handleGetRbacRoleList).
+			Writes(rbacroles.RbacRoleList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/rbacrolebinding").
+			To(apiHandler.handleGetRbacRoleBindingList).
+			Writes(rbacrolebindings.RbacRoleBindingList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/persistentvolume").
 			To(apiHandler.handleGetPersistentVolumeList).
@@ -642,6 +651,28 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 			Writes(storageclass.StorageClass{}))
 
 	return wsContainer, nil
+}
+
+func (apiHandler *APIHandler) handleGetRbacRoleList(request *restful.Request, response *restful.Response) {
+	// TODO: Handle case in which RBAC feature is not enabled in API server. Currently returns 404 resource not found
+	dataSelect := parseDataSelectPathParameter(request)
+	result, err := rbacroles.GetRbacRoleList(apiHandler.client, dataSelect)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetRbacRoleBindingList(request *restful.Request, response *restful.Response) {
+	// TODO: Handle case in which RBAC feature is not enabled in API server. Currently returns 404 resource not found
+	dataSelect := parseDataSelectPathParameter(request)
+	result, err := rbacrolebindings.GetRbacRoleBindingList(apiHandler.client, dataSelect)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetCsrfToken(request *restful.Request,

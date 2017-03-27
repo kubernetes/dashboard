@@ -25,6 +25,7 @@ import (
 	autoscaling "k8s.io/client-go/pkg/apis/autoscaling/v1"
 	batch "k8s.io/client-go/pkg/apis/batch/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
+	rbac "k8s.io/client-go/pkg/apis/rbac/v1alpha1"
 	storage "k8s.io/client-go/pkg/apis/storage/v1beta1"
 )
 
@@ -105,6 +106,18 @@ type ResourceChannels struct {
 
 	// List and error channels to StorageClasses
 	StorageClassList StorageClassListChannel
+
+	// List and error channels to Roles
+	RoleList RoleListChannel
+
+	// List and error channels to ClusterRoles
+	ClusterRoleList ClusterRoleListChannel
+
+	// List and error channels to RoleBindings
+	RoleBindingList RoleBindingListChannel
+
+	// List and error channels to ClusterRoleBindings
+	ClusterRoleBindingList ClusterRoleBindingListChannel
 }
 
 // ServiceListChannel is a list and error channels to Services.
@@ -594,6 +607,106 @@ func GetSecretListChannel(client client.Interface, nsQuery *NamespaceQuery, numR
 			}
 		}
 		list.Items = filteredItems
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// RoleListChannel is a list and error channels to Roles.
+type RoleListChannel struct {
+	List  chan *rbac.RoleList
+	Error chan error
+}
+
+// GetRoleListChannel returns a pair of channels to a Role list for a namespace and errors that
+// both must be read numReads times.
+func GetRoleListChannel(client client.Interface, numReads int) RoleListChannel {
+	channel := RoleListChannel{
+		List:  make(chan *rbac.RoleList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.RbacV1alpha1().Roles("").List(listEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// ClusterRoleListChannel is a list and error channels to ClusterRoles.
+type ClusterRoleListChannel struct {
+	List  chan *rbac.ClusterRoleList
+	Error chan error
+}
+
+// GetClusterRoleListChannel returns a pair of channels to a ClusterRole list and errors that
+// both must be read numReads times.
+func GetClusterRoleListChannel(client client.Interface, numReads int) ClusterRoleListChannel {
+	channel := ClusterRoleListChannel{
+		List:  make(chan *rbac.ClusterRoleList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.RbacV1alpha1().ClusterRoles().List(listEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// RoleBindingListChannel is a list and error channels to RoleBindings.
+type RoleBindingListChannel struct {
+	List  chan *rbac.RoleBindingList
+	Error chan error
+}
+
+// GetRoleBindingListChannel returns a pair of channels to a RoleBinding list for a namespace and errors that
+// both must be read numReads times.
+func GetRoleBindingListChannel(client client.Interface, numReads int) RoleBindingListChannel {
+	channel := RoleBindingListChannel{
+		List:  make(chan *rbac.RoleBindingList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.RbacV1alpha1().RoleBindings("").List(listEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// ClusterRoleBindingListChannel is a list and error channels to ClusterRoleBindings.
+type ClusterRoleBindingListChannel struct {
+	List  chan *rbac.ClusterRoleBindingList
+	Error chan error
+}
+
+// GetClusterRoleBindingListChannel returns a pair of channels to a ClusterRoleBinding list and errors that
+// both must be read numReads times.
+func GetClusterRoleBindingListChannel(client client.Interface, numReads int) ClusterRoleBindingListChannel {
+	channel := ClusterRoleBindingListChannel{
+		List:  make(chan *rbac.ClusterRoleBindingList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.RbacV1alpha1().ClusterRoleBindings().List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err

@@ -776,6 +776,22 @@ backendApi.PodDetail;
  * @typedef {{
  *  objectMeta: !backendApi.ObjectMeta,
  *  typeMeta: !backendApi.TypeMeta,
+ * }}
+ */
+backendApi.Role;
+
+/**
+ * @typedef {{
+ *   items: !Array<backendApi.Role>,
+ *   listMeta: !backendApi.ListMeta
+ * }}
+ */
+backendApi.RoleList;
+
+/**
+ * @typedef {{
+ *  objectMeta: !backendApi.ObjectMeta,
+ *  typeMeta: !backendApi.TypeMeta,
  *  internalEndpoint: !backendApi.Endpoint,
  *  externalEndpoints: !Array<!backendApi.Endpoint>,
  *  selector: !Object<string, string>,
@@ -1233,12 +1249,10 @@ backendApi.StorageClassList;
 
 /**
  * @typedef {{
- *   kind: !string,
- *   joblist: backendApi.JobList,
- *   replicasetlist: backendApi.ReplicaSetList,
- *   replicationcontrollerlist: backendApi.ReplicationControllerList,
- *   daemonsetlist: backendApi.DaemonSetList,
- *   statefulsetlist: backendApi.StatefulSetList
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   pods: !backendApi.PodInfo,
+ *   containerImages: !Array<string>,
  * }}
  */
 backendApi.Controller;

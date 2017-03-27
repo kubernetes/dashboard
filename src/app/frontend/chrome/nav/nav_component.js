@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {stateName as accessControlState} from 'accesscontrol/state';
 import {stateName as adminState} from 'admin/state';
 import {stateName as configState} from 'config/state';
 import {stateName as configMapState} from 'configmaplist/configmaplist_state';
@@ -72,6 +73,7 @@ export class NavController {
       'serviceDiscovery': servicesanddiscoveryState,
       'config': configState,
       'storageClass': storageClassState,
+      'accessControl': accessControlState,
     };
   }
 
