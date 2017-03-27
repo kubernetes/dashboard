@@ -44,10 +44,11 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/node"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/rbacroles"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/rbacrolebindings"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/rbacroles"
 	replicasetdetail "github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/detail"
 	replicasetlist "github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/list"
 	replicationcontrollerdetail "github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller/detail"
@@ -68,7 +69,6 @@ import (
 	utilnet "k8s.io/apimachinery/pkg/util/net"
 	clientK8s "k8s.io/client-go/kubernetes"
 	restclient "k8s.io/client-go/rest"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/rbacrolebindings"
 )
 
 const (

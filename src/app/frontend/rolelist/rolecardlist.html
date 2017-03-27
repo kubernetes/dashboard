@@ -14,27 +14,32 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card-list selectable="false" with-statuses="false">
-    <kd-resource-card-list-header ng-transclude="header">
-      [[Roles|Label which appears above the list of such objects.]]
-    </kd-resource-card-list-header>
-    <kd-resource-card-list-pagination pagination-id="roles" list="$ctrl.roleList"
-                                      list-resource="$ctrl.roleListResource">
-    </kd-resource-card-list-pagination>
-
-    <kd-resource-card-header-columns>
-        <kd-resource-card-header-column size="small" grow="2">
-            [[Name|Role list header: name.]]
-        </kd-resource-card-header-column>
-        <kd-resource-card-header-column size="small" grow="2">
-            [[Role Type|Role list header: role type.]]
-        </kd-resource-card-header-column>
-        <kd-resource-card-header-column size="small" grow="2">
-            [[Namespace|Role list header: namespace.]]
-        </kd-resource-card-header-column>
-    </kd-resource-card-header-columns>
-    <kd-role-card dir-paginate="role in $ctrl.roleList.items | itemsPerPage: default"
-                               role="role" pagination-id="roles"
-                               total-items="::$ctrl.roleList.listMeta.totalItems">
-    </kd-role-card>
+<kd-resource-card-list selectable="false"
+                       with-statuses="false">
+  <kd-resource-card-list-header ng-transclude="header">
+    [[Roles|Label which appears above the list of such objects.]]
+  </kd-resource-card-list-header>
+  <kd-resource-card-list-pagination pagination-id="roles"
+                                    list="$ctrl.roleList"
+                                    list-resource="$ctrl.roleListResource">
+  </kd-resource-card-list-pagination>
+  <kd-resource-card-header-columns>
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
+      [[Name|Role list header: name.]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
+      [[Role Type|Role list header: role type.]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
+      [[Namespace|Role list header: namespace.]]
+    </kd-resource-card-header-column>
+  </kd-resource-card-header-columns>
+  <kd-role-card dir-paginate="role in $ctrl.roleList.items | itemsPerPage: default"
+                role="role"
+                pagination-id="roles"
+                total-items="::$ctrl.roleList.listMeta.totalItems">
+  </kd-role-card>
 </kd-resource-card-list>

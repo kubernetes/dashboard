@@ -14,27 +14,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card object-meta="$ctrl.role.objectMeta" type-meta="$ctrl.role.typeMeta">
-    <kd-resource-card-columns>
-        <kd-resource-card-column>
-            <div>
-                <a ng-href="$ctrl.showRoleDetail(role)" class="kd-middle-ellipsised-link">
-                    <kd-middle-ellipsis display-string="{{$ctrl.role.name}}">
-                    </kd-middle-ellipsis>
-                </a>
-            </div>
-        </kd-resource-card-column>
-        <kd-resource-card-column>
-            <kd-middle-ellipsis ng-if="$ctrl.role.typeMeta.kind==='clusterrole'" display-string="ClusterRole">
-            </kd-middle-ellipsis>
-            <kd-middle-ellipsis ng-if="$ctrl.role.typeMeta.kind==='role'" display-string="Role">
-            </kd-middle-ellipsis>
-        </kd-resource-card-column>
-        <kd-resource-card-column>
-            <kd-middle-ellipsis ng-if="$ctrl.role.namespace===''" display-string="All Namespaces">
-            </kd-middle-ellipsis>
-            <kd-middle-ellipsis ng-if="$ctrl.role.namespace!==''" display-string="{{$ctrl.role.namespace}}">
-            </kd-middle-ellipsis>
-        </kd-resource-card-column>
-    </kd-resource-card-columns>
+<kd-resource-card object-meta="$ctrl.role.objectMeta"
+                  type-meta="$ctrl.role.typeMeta">
+  <kd-resource-card-columns>
+    <kd-resource-card-column>
+      <div>
+        <kd-middle-ellipsis display-string="{{$ctrl.role.objectMeta.name}}">
+        </kd-middle-ellipsis>
+      </div>
+    </kd-resource-card-column>
+    <kd-resource-card-column ng-switch="::$ctrl.role.typeMeta.kind">
+      <kd-middle-ellipsis ng-switch-when="clusterrole"
+                          display-string="Cluster Role">
+      </kd-middle-ellipsis>
+      <kd-middle-ellipsis ng-switch-when="role"
+                          display-string="Role">
+      </kd-middle-ellipsis>
+      <div ng-switch-default>-</div>
+    </kd-resource-card-column>
+    <kd-resource-card-column ng-switch="::!!$ctrl.role.objectMeta.namespace">
+      <kd-middle-ellipsis ng-switch-when="false"
+                          display-string="All Namespaces">
+      </kd-middle-ellipsis>
+      <div ng-switch-default>{{::$ctrl.role.objectMeta.namespace}}</div>
+    </kd-resource-card-column>
+  </kd-resource-card-columns>
 </kd-resource-card>

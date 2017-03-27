@@ -15,19 +15,19 @@
 package rbacroles
 
 import (
-	"reflect"
-	"testing"
-	rbac "k8s.io/client-go/pkg/apis/rbac/v1alpha1"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	api "k8s.io/apimachinery/pkg/apis/meta/v1"
+	rbac "k8s.io/client-go/pkg/apis/rbac/v1alpha1"
+	"reflect"
+	"testing"
 )
 
 func TestGetRbacRoleList(t *testing.T) {
 	cases := []struct {
-		roles []rbac.Role
+		roles        []rbac.Role
 		clusterRoles []rbac.ClusterRole
-		expected          *RbacRoleList
+		expected     *RbacRoleList
 	}{
 		{nil, nil, &RbacRoleList{Items: []RbacRole{}}},
 		{
@@ -35,42 +35,28 @@ func TestGetRbacRoleList(t *testing.T) {
 				{
 					ObjectMeta: api.ObjectMeta{Name: "Role", Namespace: "Testing"},
 					Rules: []rbac.PolicyRule{{
-						Verbs: []string{"get", "put"},
+						Verbs:     []string{"get", "put"},
 						Resources: []string{"pods"},
 					}},
-
 				},
 			},
 			[]rbac.ClusterRole{
 				{
 					ObjectMeta: api.ObjectMeta{Name: "cluster-role"},
 					Rules: []rbac.PolicyRule{{
-						Verbs: []string{"post", "put"},
+						Verbs:     []string{"post", "put"},
 						Resources: []string{"pods", "deployments"},
 					}},
-
 				},
 			},
 			&RbacRoleList{
 				ListMeta: common.ListMeta{TotalItems: 2},
 				Items: []RbacRole{{
-					ObjectMeta:  common.ObjectMeta{Name: "Role", Namespace: "Testing"},
-					TypeMeta:  common.TypeMeta{Kind: common.ResourceKindRbacRole},
-					Rules: []rbac.PolicyRule{{
-						Verbs: []string{"get", "put"},
-						Resources: []string{"pods"},
-					}},
-					Name:      "Role",
-					Namespace: "Testing",
-				},{
-					ObjectMeta:  common.ObjectMeta{Name: "cluster-role", Namespace: ""},
-					TypeMeta:  common.TypeMeta{Kind: common.ResourceKindRbacClusterRole},
-					Rules: []rbac.PolicyRule{{
-						Verbs: []string{"post", "put"},
-						Resources: []string{"pods", "deployments"},
-					}},
-					Name:      "cluster-role",
-					Namespace: "",
+					ObjectMeta: common.ObjectMeta{Name: "Role", Namespace: "Testing"},
+					TypeMeta:   common.TypeMeta{Kind: common.ResourceKindRbacRole},
+				}, {
+					ObjectMeta: common.ObjectMeta{Name: "cluster-role", Namespace: ""},
+					TypeMeta:   common.TypeMeta{Kind: common.ResourceKindRbacClusterRole},
 				}},
 			},
 		},

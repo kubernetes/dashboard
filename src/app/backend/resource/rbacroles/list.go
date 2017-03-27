@@ -36,14 +36,11 @@ type RbacRoleList struct {
 type RbacRole struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
 	TypeMeta   common.TypeMeta   `json:"typeMeta"`
-	Rules      []rbac.PolicyRule `json:"rules"`
-	Name       string            `json:"name"`
-	Namespace  string            `json:"namespace"`
 }
 
 // GetRbacRoleList returns a list of all RBAC Roles in the cluster.
 func GetRbacRoleList(client *client.Clientset, dsQuery *dataselect.DataSelectQuery) (*RbacRoleList, error) {
-	log.Print("Getting list rbac roles")
+	log.Println("Getting list of RBAC roles")
 	channels := &common.ResourceChannels{
 		RoleList:        common.GetRoleListChannel(client, 1),
 		ClusterRoleList: common.GetClusterRoleListChannel(client, 1),
@@ -80,9 +77,6 @@ func SimplifyRbacRoleLists(roles []rbac.Role, clusterRoles []rbac.ClusterRole, d
 			RbacRole{
 				ObjectMeta: common.NewObjectMeta(item.ObjectMeta),
 				TypeMeta:   common.NewTypeMeta(common.ResourceKindRbacRole),
-				Name:       item.ObjectMeta.Name,
-				Namespace:  item.ObjectMeta.Namespace,
-				Rules:      item.Rules,
 			})
 	}
 
@@ -91,9 +85,6 @@ func SimplifyRbacRoleLists(roles []rbac.Role, clusterRoles []rbac.ClusterRole, d
 			RbacRole{
 				ObjectMeta: common.NewObjectMeta(item.ObjectMeta),
 				TypeMeta:   common.NewTypeMeta(common.ResourceKindRbacClusterRole),
-				Name:       item.ObjectMeta.Name,
-				Namespace:  "",
-				Rules:      item.Rules,
 			})
 	}
 	selectedItems := fromCells(dataselect.GenericDataSelect(toCells(items), dsQuery))

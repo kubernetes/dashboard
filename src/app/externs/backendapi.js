@@ -776,6 +776,22 @@ backendApi.PodDetail;
  * @typedef {{
  *  objectMeta: !backendApi.ObjectMeta,
  *  typeMeta: !backendApi.TypeMeta,
+ * }}
+ */
+backendApi.Role;
+
+/**
+ * @typedef {{
+ *   items: !Array<backendApi.Role>,
+ *   listMeta: !backendApi.ListMeta
+ * }}
+ */
+backendApi.RoleList;
+
+/**
+ * @typedef {{
+ *  objectMeta: !backendApi.ObjectMeta,
+ *  typeMeta: !backendApi.TypeMeta,
  *  internalEndpoint: !backendApi.Endpoint,
  *  externalEndpoints: !Array<!backendApi.Endpoint>,
  *  selector: !Object<string, string>,

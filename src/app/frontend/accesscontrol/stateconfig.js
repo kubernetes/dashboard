@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as parentStateName} from 'admin/state';
 import {stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 
@@ -35,7 +34,6 @@ export default function stateConfig($stateProvider) {
     data: {
       [breadcrumbsConfig]: {
         'label': i18n.MSG_BREADCRUMBS_ACCESS_CONTROL_LABEL,
-        'parent': parentStateName,
       },
     },
     views: {
