@@ -1249,12 +1249,10 @@ backendApi.StorageClassList;
 
 /**
  * @typedef {{
- *   kind: !string,
- *   joblist: backendApi.JobList,
- *   replicasetlist: backendApi.ReplicaSetList,
- *   replicationcontrollerlist: backendApi.ReplicationControllerList,
- *   daemonsetlist: backendApi.DaemonSetList,
- *   statefulsetlist: backendApi.StatefulSetList
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   pods: !backendApi.PodInfo,
+ *   containerImages: !Array<string>,
  * }}
  */
 backendApi.Controller;
