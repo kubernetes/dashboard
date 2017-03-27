@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {PodListController} from 'podlist/podlist_controller';
-import podListModule from 'podlist/podlist_module';
+import {PodListController} from 'pod/list/controller';
+import podModule from 'pod/module';
 
 describe('Pod list controller', () => {
-  /** @type {!podlist/podlist_controller.PodListController} */
+  /** @type {!PodListController} */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(podListModule.name);
+    angular.mock.module(podModule.name);
 
     angular.mock.inject(($controller) => {
       ctrl = $controller(PodListController, {podList: {pods: []}});

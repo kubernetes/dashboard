@@ -14,7 +14,7 @@
 
 import {StateParams} from 'common/resource/resourcedetail';
 import {stateName as logsStateName, StateParams as LogsStateParams} from 'logs/logs_state';
-import {stateName} from 'poddetail/poddetail_state';
+import {stateName} from 'pod/detail/state';
 
 /**
  * @final
@@ -24,10 +24,10 @@ export class PodCardController {
    * @ngInject,
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
-   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
+   * @param {!./../../common/namespace/namespace_service.NamespaceService} kdNamespaceService
    */
   constructor($state, $interpolate, kdNamespaceService) {
-    /** @private {!./../common/namespace/namespace_service.NamespaceService} */
+    /** @private {!./../../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
 
     /** @private {!ui.router.$state} */
@@ -202,5 +202,5 @@ export const podCardComponent = {
     'showMetrics': '<',
   },
   controller: PodCardController,
-  templateUrl: 'podlist/podcard.html',
+  templateUrl: 'pod/list/card.html',
 };

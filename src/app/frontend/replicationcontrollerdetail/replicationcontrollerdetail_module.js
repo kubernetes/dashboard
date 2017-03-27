@@ -19,7 +19,7 @@ import filtersModule from 'common/filters/filters_module';
 import resourceModule from 'common/resource/resource_module';
 import eventsModule from 'events/events_module';
 import logsModule from 'logs/logs_module';
-import podListModule from 'podlist/podlist_module';
+import podModule from 'pod/module';
 import serviceListModule from 'servicelist/servicelist_module';
 
 import {ReplicationControllerService} from './replicationcontroller_service';
@@ -43,7 +43,7 @@ export default angular
           chromeModule.name,
           filtersModule.name,
           logsModule.name,
-          podListModule.name,
+          podModule.name,
           serviceListModule.name,
           eventsModule.name,
           resourceModule.name,

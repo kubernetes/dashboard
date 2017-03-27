@@ -12,20 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {PodDetailController} from 'poddetail/poddetail_controller';
-import podDetailModule from 'poddetail/poddetail_module';
+import podModule from 'pod/module';
 
-describe('Pod detail controller', () => {
+describe('Pod Info controller', () => {
+  /**
+   * Pod Info controller.
+   * @type {!PodInfoController}
+   */
+  let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(podDetailModule.name);
+    angular.mock.module(podModule.name);
+
+    angular.mock.inject(($componentController, $rootScope) => {
+      ctrl = $componentController('kdPodInfo', {$scope: $rootScope});
+    });
   });
 
-  it('should initialize controller', angular.mock.inject(($controller) => {
-    let data = {podDetail: {}};
-    /** @type {!PodDetailController} */
-    let ctrl = $controller(PodDetailController, {podDetail: data});
-
-    expect(ctrl.podDetail).toBe(data);
-  }));
+  it('should instantiate the controller properly', () => {
+    expect(ctrl).not.toBeUndefined();
+  });
 });

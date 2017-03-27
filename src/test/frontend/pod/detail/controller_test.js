@@ -12,5 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'poddetail';
+import {PodDetailController} from 'pod/detail/controller';
+import podModule from 'pod/module';
+
+describe('Pod detail controller', () => {
+
+  beforeEach(() => {
+    angular.mock.module(podModule.name);
+  });
+
+  it('should initialize controller', angular.mock.inject(($controller) => {
+    let data = {podDetail: {}};
+    /** @type {!PodDetailController} */
+    let ctrl = $controller(PodDetailController, {podDetail: data});
+
+    expect(ctrl.podDetail).toBe(data);
+  }));
+});

@@ -915,6 +915,52 @@
   <translation id="4624949365521774090" key="MSG_PODLIST_PODLIST_0" desc="Title for graph card displaying CPU metric of pods.">CPU usage</translation>
   <translation id="1774454191311054495" key="MSG_PODLIST_PODLIST_1" desc="Title for graph card displaying memory metric of pods.">Memory usage</translation>
   <translation id="7210994576558913771" key="MSG_PODLIST_PODLIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in these pods.</translation>
+  <translation id="4867553232280640900" key="MSG_POD_DETAIL_ACTIONBAR_0" desc="Label \'Pod\' which appears at the top of the delete dialog, opened from a pod details page.">Pod</translation>
+  <translation id="3190654996078973226" key="MSG_POD_DETAIL_CONTAINERINFO_0" desc="Subtitle at the top of the container details.">Containers</translation>
+  <translation id="1970650270984178962" key="MSG_POD_DETAIL_CONTAINERINFO_1" desc="Label for container image.">Image</translation>
+  <translation id="1360847805196042023" key="MSG_POD_DETAIL_CONTAINERINFO_2" desc="Label for container environment variables.">Environment variables</translation>
+  <translation id="3109447894831467677" key="MSG_POD_DETAIL_CONTAINERINFO_3" desc="Label for environment variable that comes from a Config Map">value from ConfigMap {{env.valueFrom.configMapKeyRef.Name}}/{{env.valueFrom.configMapKeyRef.key}}</translation>
+  <translation id="7982652991565550562" key="MSG_POD_DETAIL_CONTAINERINFO_4" desc="Label when there is no container environment variables.">-</translation>
+  <translation id="7884138906305492767" key="MSG_POD_DETAIL_CONTAINERINFO_5" desc="Label for container commands.">Commands</translation>
+  <translation id="6310781543090479387" key="MSG_POD_DETAIL_CONTAINERINFO_6" desc="Label when there is no container commands.">-</translation>
+  <translation id="3742802452775193525" key="MSG_POD_DETAIL_CONTAINERINFO_7" desc="Label for container args.">Args</translation>
+  <translation id="3712176760429571617" key="MSG_POD_DETAIL_CONTAINERINFO_8" desc="Label when there is no container arguments.">-</translation>
+  <translation id="6103596689592690772" key="MSG_POD_DETAIL_CONTAINERINFO_9" desc="Label for the container logs.">View logs</translation>
+  <translation id="3675899736876134447" key="MSG_POD_DETAIL_CREATORINFO_0" desc="Heading for Creator card on pod detail page.">Created by</translation>
+  <translation id="9199113045758849849" key="MSG_POD_DETAIL_CREATORINFO_1" desc="Label \'Name\' which appears as a column label in the creator card.">Name</translation>
+  <translation id="6242760697176997170" key="MSG_POD_DETAIL_CREATORINFO_2" desc="Label \'Kind\' which appears as a column label in the creator card.">Kind</translation>
+  <translation id="859169969272492339" key="MSG_POD_DETAIL_CREATORINFO_3" desc="Label \'Namespace\' which appears as a column label in the creator card.">Namespace</translation>
+  <translation id="5639894053861673852" key="MSG_POD_DETAIL_CREATORINFO_4" desc="Label \'Labels\' which appears as a column label in the creator card.">Labels</translation>
+  <translation id="1299427439266004356" key="MSG_POD_DETAIL_CREATORINFO_5" desc="Label \'Pods\' which appears as a column label in the creator card.">Pods</translation>
+  <translation id="2344179924431390658" key="MSG_POD_DETAIL_CREATORINFO_6" desc="Label \'Age\' which appears as a column label in the creator card.">Age</translation>
+  <translation id="347463114068534057" key="MSG_POD_DETAIL_CREATORINFO_7" desc="Label \'Images\' which appears as a column label in the creator card.">Images</translation>
+  <translation id="2406713024899416413" key="MSG_POD_DETAIL_CREATORINFO_8" desc="Title for pods card zero state in pod details page.">There is nothing to display here</translation>
+  <translation id="2652259329893477150" key="MSG_POD_DETAIL_CREATORINFO_9" desc="Text for pod creator zero state in pod details page.">This Pod does not have a creator.</translation>
+  <translation id="7254693136643899288" key="MSG_POD_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one pod.">CPU usage</translation>
+  <translation id="9048608003178144260" key="MSG_POD_DETAIL_DETAIL_1" desc="Title for graph card displaying memory metric of one pod.">Memory usage</translation>
+  <translation id="5738415577560264420" key="MSG_POD_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in this pod.</translation>
+  <translation id="855512770998820017" key="MSG_POD_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
+  <translation id="1457675883548195036" key="MSG_POD_DETAIL_INFO_1" desc="Label \'Status\' for the pod status in details part (left) of the pod details view.">Status</translation>
+  <translation id="8753288911649190943" key="MSG_POD_DETAIL_INFO_2" desc="Label for the pod logs in details part (left) of the pod details view.">View logs</translation>
+  <translation id="694126564552626450" key="MSG_POD_DETAIL_INFO_3" desc="Subtitle \'Network\' at the top of the column about network connectivity (right) at the pod detail view.">Network</translation>
+  <translation id="7855013997463493128" key="MSG_POD_DETAIL_INFO_4" desc="Label \'Node\' for the node a pods is running on, appears in the connectivity part (right) of the pod details view.">Node</translation>
+  <translation id="7683783814970718475" key="MSG_POD_DETAIL_INFO_5" desc="Label \'IP\' for the pod internal IP, appears in the connectivity part (right) of the pod details view.">IP</translation>
+  <translation id="7869212130089500561" key="MSG_POD_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Pods</translation>
+  <translation id="1984772040767431754" key="MSG_POD_LIST_CARDLIST_1" desc="Title of a column">Name</translation>
+  <translation id="7443881172620941594" key="MSG_POD_LIST_CARDLIST_2" desc="Title of a column">Namespace</translation>
+  <translation id="6983001768279857619" key="MSG_POD_LIST_CARDLIST_3" desc="Title of a pod status column">Status</translation>
+  <translation id="9188256196176968844" key="MSG_POD_LIST_CARDLIST_4" desc="Title of a restarts column for a pod">Restarts</translation>
+  <translation id="6713259838973606526" key="MSG_POD_LIST_CARDLIST_5" desc="Title of a column for the age of a pod">Age</translation>
+  <translation id="2353613362278824556" key="MSG_POD_LIST_CARDLIST_6" desc="Title of a column">CPU (cores)</translation>
+  <translation id="6472029030033782169" key="MSG_POD_LIST_CARDLIST_7" desc="Title of a column">Memory (bytes)</translation>
+  <translation id="5608535302521220986" key="MSG_POD_LIST_CARD_0" desc="Tooltip for failed pod card icon">This pod has errors.</translation>
+  <translation id="7889427465656547627" key="MSG_POD_LIST_CARD_1" desc="Tooltip for pending pod card icon">This pod is in a pending state.</translation>
+  <translation id="6227114160090429637" key="MSG_POD_LIST_CARD_2" desc="Label for logs tooltip">Logs</translation>
+  <translation id="1278633357095866885" key="MSG_POD_LIST_CARD_3" desc="Name of the pod resource">Pod</translation>
+  <translation id="1053078836410141563" key="MSG_POD_LIST_CARD_4" desc="Name of the pod resource">Pod</translation>
+  <translation id="4686932628263410864" key="MSG_POD_LIST_LIST_0" desc="Title for graph card displaying CPU metric of pods.">CPU usage</translation>
+  <translation id="6787006912063616508" key="MSG_POD_LIST_LIST_1" desc="Title for graph card displaying memory metric of pods.">Memory usage</translation>
+  <translation id="2972892229238972501" key="MSG_POD_LIST_LIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in these pods.</translation>
   <translation id="1014088790164786434" key="MSG_POD_LIST_POD_TERMINATED_STATUS" desc="Status message showing a terminated status with [reason].">Terminated: <ph name="REASON"/></translation>
   <translation id="3724043031520273690" key="MSG_POD_LIST_POD_WAITING_STATUS" desc="Status message showing a waiting status with [reason].">Waiting: <ph name="REASON"/></translation>
   <translation id="240453070925206277" key="MSG_POD_LIST_STARTED_AT_TOOLTIP" desc="Tooltip 'Started at [some date]' showing the exact start time of the pod.">Started at <ph name="START_DATE"/> UTC</translation>

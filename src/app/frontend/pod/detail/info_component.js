@@ -63,7 +63,7 @@ export default class PodInfoController {
  */
 export const podInfoComponent = {
   controller: PodInfoController,
-  templateUrl: 'poddetail/podinfo.html',
+  templateUrl: 'pod/detail/info.html',
   bindings: {
     /** {!backendApi.PodDetail} */
     'pod': '<',

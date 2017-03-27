@@ -15,49 +15,55 @@
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
-import {stateName as podList, stateUrl} from 'podlist/podlist_state';
+import {stateName as podList} from './../list/state';
+import {stateUrl} from './../state';
 
 import {ActionBarController} from './actionbar_controller';
-import {PodDetailController} from './poddetail_controller';
-import {stateName} from './poddetail_state';
+import {PodDetailController} from './controller';
 
 /**
- * Configures states for the pod details view.
+ * Config state object for the Pod detail view.
  *
- * @param {!ui.router.$stateProvider} $stateProvider
+ * @type {!ui.router.StateConfig}
+ */
+export const config = {
+  url: appendDetailParamsToUrl(stateUrl),
+  parent: chromeStateName,
+  resolve: {
+    'podDetailResource': getPodDetailResource,
+    'podDetail': getPodDetail,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': '{{$stateParams.objectName}}',
+      'parent': podList,
+    },
+  },
+  views: {
+    '': {
+      controller: PodDetailController,
+      controllerAs: 'ctrl',
+      templateUrl: 'pod/detail/detail.html',
+    },
+    [actionbarViewName]: {
+      controller: ActionBarController,
+      controllerAs: '$ctrl',
+      templateUrl: 'pod/detail/actionbar.html',
+    },
+  },
+};
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
  * @ngInject
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    url: appendDetailParamsToUrl(stateUrl),
-    parent: chromeStateName,
-    resolve: {
-      'podDetailResource': getPodDetailResource,
-      'podDetail': getPodDetail,
-    },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': '{{$stateParams.objectName}}',
-        'parent': podList,
-      },
-    },
-    views: {
-      '': {
-        controller: PodDetailController,
-        controllerAs: 'ctrl',
-        templateUrl: 'poddetail/poddetail.html',
-      },
-      [actionbarViewName]: {
-        controller: ActionBarController,
-        controllerAs: '$ctrl',
-        templateUrl: 'poddetail/actionbar.html',
-      },
-    },
-  });
+export function podEventsResource($resource) {
+  return $resource('api/v1/pod/:namespace/:name/event');
 }
 
 /**
- * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
+ * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource<!backendApi.PodDetail>}
  * @ngInject

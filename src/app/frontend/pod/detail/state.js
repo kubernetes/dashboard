@@ -12,24 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import podDetailModule from 'poddetail/poddetail_module';
-
-describe('Pod Info controller', () => {
-  /**
-   * Pod Info controller.
-   * @type {!PodInfoController}
-   */
-  let ctrl;
-
-  beforeEach(() => {
-    angular.mock.module(podDetailModule.name);
-
-    angular.mock.inject(($componentController, $rootScope) => {
-      ctrl = $componentController('kdPodInfo', {$scope: $rootScope});
-    });
-  });
-
-  it('should instantiate the controller properly', () => {
-    expect(ctrl).not.toBeUndefined();
-  });
-});
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'pod.detail';

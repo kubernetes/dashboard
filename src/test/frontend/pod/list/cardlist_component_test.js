@@ -12,25 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import podDetailModule from 'poddetail/poddetail_module';
-import podsListModule from 'podlist/podlist_module';
+import podModule from 'pod/module';
 
 describe('Pod card list controller', () => {
   /**
-   * @type {!podlist/podcardlist_component.PodCardListController}
+   * @type {!PodCardListController}
    */
   let ctrl;
   /**
-   * @type {!./../common/namespace/namespace_service.NamespaceService}
+   * @type {!NamespaceService}
    */
   let data;
 
   beforeEach(() => {
-    angular.mock.module(podsListModule.name);
-    angular.mock.module(podDetailModule.name);
+    angular.mock.module(podModule.name);
 
     angular.mock.inject(($componentController, $rootScope, kdNamespaceService) => {
-      /** @type {!./../common/namespace/namespace_service.NamespaceService} */
+      /** @type {!NamespaceService} */
       data = kdNamespaceService;
       /** @type {!PodCardListController} */
       ctrl = $componentController(

@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import podListModule from 'podlist/podlist_module';
-import {resolvePodList} from 'podlist/podlist_stateconfig';
+import {resolvePodList} from 'pod/list/stateconfig';
+import podListModule from 'pod/module';
 
 describe('StateConfig for pod list', () => {
-  /** @type {!common/pagination/pagination_service.PaginationService} */
+  /** @type {!PaginationService} */
   let kdPaginationService;
 
   beforeEach(() => {

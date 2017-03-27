@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StateParams} from '../common/resource/resourcedetail.js';
-import {stateName as daemonSetStateName} from '../daemonsetdetail/daemonsetdetail_state';
-import {stateName as deploymentStateName} from '../deploymentdetail/deploymentdetail_state.js';
-import {stateName as jobStateName} from '../jobdetail/jobdetail_state';
-import {stateName as replicaSetStateName} from '../replicasetdetail/replicasetdetail_state';
-import {stateName as replicationControllerStateName} from '../replicationcontrollerdetail/replicationcontrollerdetail_state';
-import {stateName as statefulSetStateName} from '../statefulsetdetail/statefulsetdetail_state';
+import {StateParams} from 'common/resource/resourcedetail';
+import {stateName as daemonSetStateName} from 'daemonset/detail/state';
+import {stateName as deploymentStateName} from 'deployment/detail/state';
+import {stateName as jobStateName} from 'job/detail/state';
+import {stateName as replicaSetStateName} from 'replicasetdetail/replicasetdetail_state';
+import {stateName as replicationControllerStateName} from 'replicationcontrollerdetail/replicationcontrollerdetail_state';
+import {stateName as statefulSetStateName} from 'statefulsetdetail/statefulsetdetail_state';
 
 const creatorKindToDetailStateName = {
   'deployment': deploymentStateName,
@@ -35,7 +35,7 @@ const creatorKindToDetailStateName = {
 export default class CreatorInfoController {
   /**
    * @param {!ui.router.$state} $state
-   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
+   * @param {!./../../common/namespace/namespace_service.NamespaceService} kdNamespaceService
    * @ngInject
    */
   constructor($state, kdNamespaceService) {
@@ -45,7 +45,7 @@ export default class CreatorInfoController {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
-    /** @private {!./../common/namespace/namespace_service.NamespaceService} */
+    /** @private {!./../../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
   }
 
@@ -100,7 +100,7 @@ export default class CreatorInfoController {
  */
 export const creatorInfoComponent = {
   controller: CreatorInfoController,
-  templateUrl: 'poddetail/creatorinfo.html',
+  templateUrl: 'pod/detail/creatorinfo.html',
   bindings: {
     'creator': '<',
   },

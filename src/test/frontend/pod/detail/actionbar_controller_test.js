@@ -12,27 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import module from 'poddetail/poddetail_module';
+import {ActionBarController} from 'pod/detail/actionbar_controller';
+import module from 'pod/module';
 
-describe('Container info component', () => {
-  /** @type {!poddetail/containerinfo_component.ContainerInfoController} */
+describe('Action Bar controller', () => {
+  /** @type {!ActionBarController} */
   let ctrl;
-  /** @type {!Array<!backendApi.Container>} */
-  let containers;
+  let details = {};
 
   beforeEach(() => {
     angular.mock.module(module.name);
 
-    angular.mock.inject(($componentController, $rootScope) => {
-      containers = [];
-      ctrl = $componentController(
-          'kdContainerInfo', {$scope: $rootScope},
-          {namespace: 'foo-namespace', 'containers': containers});
+    angular.mock.inject(($controller) => {
+      ctrl = $controller(ActionBarController, {podDetail: details});
     });
   });
 
-  it('should compute config map href', () => {
-    let cmkr = {Name: 'foo', key: 'bar'};
-    expect(ctrl.getEnvConfigMapHref(cmkr)).toBe('#!/configmap/foo-namespace/foo');
+  it('should initialize details', () => {
+    expect(ctrl.details).toBe(details);
   });
 });

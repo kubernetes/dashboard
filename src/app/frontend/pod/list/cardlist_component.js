@@ -18,7 +18,7 @@
 export class PodCardListController {
   /**
    * @ngInject
-   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
+   * @param {!./../../common/namespace/namespace_service.NamespaceService} kdNamespaceService
    */
   constructor(kdNamespaceService) {
     /**
@@ -30,7 +30,7 @@ export class PodCardListController {
     /** @export {!angular.Resource} Initialized from binding. */
     this.podListResource;
 
-    /** @private {!./../common/namespace/namespace_service.NamespaceService} */
+    /** @private {!./../../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
   }
 
@@ -70,7 +70,7 @@ export const podCardListComponent = {
     // Optional zerostate content that is shown when there are zero items.
     'zerostate': '?kdZerostate',
   },
-  templateUrl: 'podlist/podcardlist.html',
+  templateUrl: 'pod/list/cardlist.html',
   controller: PodCardListController,
   bindings: {
     /** {!backendApi.PodList} */

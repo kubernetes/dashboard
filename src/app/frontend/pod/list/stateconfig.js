@@ -16,42 +16,56 @@ import {stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {stateName as workloadsStateName} from 'workloads/workloads_state';
 
-import {PodListController} from './podlist_controller';
-import {stateName, stateUrl} from './podlist_state';
+import {stateUrl} from './../state';
+import {PodListController} from './controller';
 
 /**
- * Configures states for the service view.
+ * I18n object that defines strings for translation used in this file.
+ */
+const i18n = {
+  /** @type {string} @desc Label 'Pods' that appears as a breadcrumbs on the action bar. */
+  MSG_BREADCRUMBS_PODS_LABEL: goog.getMsg('Pods'),
+};
+
+/**
+ * Config state object for the Pod list view.
  *
- * @param {!ui.router.$stateProvider} $stateProvider
+ * @type {!ui.router.StateConfig}
+ */
+export const config = {
+  url: stateUrl,
+  parent: chromeStateName,
+  resolve: {
+    'podList': resolvePodList,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': i18n.MSG_BREADCRUMBS_PODS_LABEL,
+      'parent': workloadsStateName,
+    },
+  },
+  views: {
+    '': {
+      controller: PodListController,
+      controllerAs: '$ctrl',
+      templateUrl: 'pod/list/list.html',
+    },
+  },
+};
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
  * @ngInject
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    url: stateUrl,
-    parent: chromeStateName,
-    resolve: {
-      'podList': resolvePodList,
-    },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': i18n.MSG_BREADCRUMBS_PODS_LABEL,
-        'parent': workloadsStateName,
-      },
-    },
-    views: {
-      '': {
-        controller: PodListController,
-        controllerAs: '$ctrl',
-        templateUrl: 'podlist/podlist.html',
-      },
-    },
-  });
+export function podListResource($resource) {
+  return $resource('api/v1/pod/:namespace');
 }
 
 /**
  * @param {!angular.Resource} kdPodListResource
- * @param {!./../chrome/chrome_state.StateParams} $stateParams
- * @param {!./../common/pagination/pagination_service.PaginationService} kdPaginationService
+ * @param {!./../../chrome/chrome_state.StateParams} $stateParams
+ * @param {!./../../common/pagination/pagination_service.PaginationService} kdPaginationService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
@@ -59,8 +73,3 @@ export function resolvePodList(kdPodListResource, $stateParams, kdPaginationServ
   let paginationQuery = kdPaginationService.getDefaultResourceQuery($stateParams.namespace);
   return kdPodListResource.get(paginationQuery).$promise;
 }
-
-const i18n = {
-  /** @type {string} @desc Label 'Pods' that appears as a breadcrumbs on the action bar. */
-  MSG_BREADCRUMBS_PODS_LABEL: goog.getMsg('Pods'),
-};

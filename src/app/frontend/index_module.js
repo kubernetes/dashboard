@@ -37,7 +37,7 @@ import namespaceModule from './namespace/module';
 import nodeModule from './node/module';
 import persistentVolumeModule from './persistentvolume/module';
 import persistentVolumeClaimModule from './persistentvolumeclaim/module';
-import podDetailModule from './poddetail/poddetail_module';
+import podModule from './pod/module';
 import replicaSetListModule from './replicasetlist/replicasetlist_module';
 import replicationControllerDetailModule from './replicationcontrollerdetail/replicationcontrollerdetail_module';
 import replicationControllerListModule from './replicationcontrollerlist/replicationcontrollerlist_module';
@@ -86,7 +86,7 @@ export default angular
           adminModule.name,
           serviceDetailModule.name,
           serviceListModule.name,
-          podDetailModule.name,
+          podModule.name,
           persistentVolumeModule.name,
           statefulSetListModule.name,
           persistentVolumeClaimModule.name,
