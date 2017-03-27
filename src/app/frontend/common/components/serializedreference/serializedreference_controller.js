@@ -17,7 +17,7 @@ import {stateName as deploymentStateName} from 'deployment/detail/state';
 import {stateName as jobStateName} from 'job/detail/state';
 import {stateName as replicaSetStateName} from 'replicaset/detail/state';
 import {stateName as replicationControllerStateName} from 'replicationcontroller/detail/state';
-import {stateName as statefulSetStateName} from '../../../statefulsetdetail/statefulsetdetail_state';
+import {stateName as statefulSetStateName} from '../../../statefulset/detail/state';
 import {StateParams} from '../../resource/resourcedetail.js';
 
 const referenceKindToDetailStateName = {

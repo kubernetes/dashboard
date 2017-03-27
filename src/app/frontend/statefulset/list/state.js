@@ -12,23 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ActionBarController} from 'statefulsetdetail/actionbar_controller';
-import module from 'statefulsetdetail/statefulsetdetail_module';
-
-describe('Action Bar controller', () => {
-  /** @type {!ActionBarController} */
-  let ctrl;
-  let details = {};
-
-  beforeEach(() => {
-    angular.mock.module(module.name);
-
-    angular.mock.inject(($controller) => {
-      ctrl = $controller(ActionBarController, {statefulSetDetail: details});
-    });
-  });
-
-  it('should initialize details', () => {
-    expect(ctrl.details).toBe(details);
-  });
-});
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'statefulset.list';

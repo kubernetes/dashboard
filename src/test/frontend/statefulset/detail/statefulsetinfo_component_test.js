@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import statefulSetDetailModule from 'statefulsetdetail/statefulsetdetail_module';
+import statefulSetModule from 'statefulset/module';
 
 describe('Stateful Set Info controller', () => {
   /**
@@ -22,7 +22,7 @@ describe('Stateful Set Info controller', () => {
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(statefulSetDetailModule.name);
+    angular.mock.module(statefulSetModule.name);
 
     angular.mock.inject(($componentController, $rootScope) => {
       ctrl = $componentController('kdStatefulSetInfo', {$scope: $rootScope}, {

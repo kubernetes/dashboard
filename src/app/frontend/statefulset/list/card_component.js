@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'statefulsetdetail/statefulsetdetail_state';
+import {stateName} from 'statefulset/detail/state';
 
 /**
  * Controller for the stateful set card.
@@ -24,7 +24,7 @@ export default class StatefulSetCardController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
-   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
+   * @param {!./../../common/namespace/namespace_service.NamespaceService} kdNamespaceService
    * @ngInject
    */
   constructor($state, $interpolate, kdNamespaceService) {
@@ -40,7 +40,7 @@ export default class StatefulSetCardController {
     /** @private */
     this.interpolate_ = $interpolate;
 
-    /** @private {!./../common/namespace/namespace_service.NamespaceService} */
+    /** @private {!./../../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
   }
 
@@ -113,5 +113,5 @@ export const statefulSetCardComponent = {
     'showResourceKind': '<',
   },
   controller: StatefulSetCardController,
-  templateUrl: 'statefulsetlist/statefulsetcard.html',
+  templateUrl: 'statefulset/list/card.html',
 };

@@ -43,7 +43,7 @@ export default class StatefulSetInfoController {
  */
 export const statefulSetInfoComponent = {
   controller: StatefulSetInfoController,
-  templateUrl: 'statefulsetdetail/statefulsetinfo.html',
+  templateUrl: 'statefulset/detail/info.html',
   bindings: {
     /** {!backendApi.StatefulSetDetail} */
     'statefulSet': '=',

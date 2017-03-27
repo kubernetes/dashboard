@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StatefulSetListController} from 'statefulsetlist/statefulsetlist_controller';
-import statefulSetListModule from 'statefulsetlist/statefulsetlist_module';
+import {StatefulSetListController} from 'statefulset/list/controller';
+import statefulSetModule from 'statefulset/module';
 
 describe('Stateful Set list controller', () => {
-  /** @type {!statefulsetlist/statefulsetlist_controller.StatefulSetListController} */
+  /** @type {!StatefulSetListController} */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(statefulSetListModule.name);
+    angular.mock.module(statefulSetModule.name);
 
     angular.mock.inject(($controller) => {
       ctrl = $controller(StatefulSetListController, {statefulSetList: {statefulSets: []}});

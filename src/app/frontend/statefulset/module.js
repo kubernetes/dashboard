@@ -16,41 +16,35 @@ import chromeModule from 'chrome/chrome_module';
 import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
 import namespaceModule from 'common/namespace/namespace_module';
-import statefulSetDetailModule from 'statefulsetdetail/statefulsetdetail_module';
+import eventsModule from 'events/events_module';
 
-import {statefulSetCardComponent} from './statefulsetcard_component';
-import {statefulSetCardListComponent} from './statefulsetcardlist_component';
-import stateConfig from './statefulsetlist_stateconfig';
-
+import {statefulSetInfoComponent} from './detail/info_component';
+import {statefulSetEventsResource, statefulSetPodsResource} from './detail/stateconfig';
+import {statefulSetCardComponent} from './list/card_component';
+import {statefulSetCardListComponent} from './list/cardlist_component';
+import {statefulSetListResource} from './list/stateconfig';
+import stateConfig from './stateconfig';
 
 /**
- * Angular module for the Stateful Set list view.
- *
- * The view shows Stateful Set running in the cluster and allows to manage them.
+ * Angular module for the Stateful Set resource.
  */
 export default angular
     .module(
-        'kubernetesDashboard.statefulSetList',
+        'kubernetesDashboard.statefulSet',
         [
           'ngMaterial',
           'ngResource',
           'ui.router',
-          filtersModule.name,
-          componentsModule.name,
-          namespaceModule.name,
-          statefulSetDetailModule.name,
           chromeModule.name,
+          componentsModule.name,
+          eventsModule.name,
+          filtersModule.name,
+          namespaceModule.name,
         ])
     .config(stateConfig)
-    .component('kdStatefulSetCardList', statefulSetCardListComponent)
     .component('kdStatefulSetCard', statefulSetCardComponent)
-    .factory('kdStatefulSetListResource', statefulSetListResource);
-
-/**
- * @param {!angular.$resource} $resource
- * @return {!angular.Resource}
- * @ngInject
- */
-function statefulSetListResource($resource) {
-  return $resource('api/v1/statefulset/:namespace');
-}
+    .component('kdStatefulSetCardList', statefulSetCardListComponent)
+    .component('kdStatefulSetInfo', statefulSetInfoComponent)
+    .factory('kdStatefulSetEventsResource', statefulSetEventsResource)
+    .factory('kdStatefulSetListResource', statefulSetListResource)
+    .factory('kdStatefulSetPodsResource', statefulSetPodsResource);

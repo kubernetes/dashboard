@@ -31,7 +31,7 @@ import {stateName as replicationControllerState} from 'replicationcontroller/lis
 import {stateName as secretState} from 'secret/list/state';
 import {stateName as serviceState} from 'service/list/state';
 import {stateName as servicesanddiscoveryState} from 'servicesanddiscovery/state';
-import {stateName as statefulSetState} from 'statefulsetlist/statefulsetlist_state';
+import {stateName as statefulSetState} from 'statefulset/list/state';
 import {stateName as storageState} from 'storage/state';
 import {stateName as storageClassState} from 'storageclasslist/state';
 import {stateName as workloadState} from 'workloads/workloads_state';

@@ -15,49 +15,64 @@
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
-import {stateName as statefulSetList, stateUrl} from 'statefulsetlist/statefulsetlist_state';
+import {stateName as statefulSetList} from './../list/state';
+import {stateUrl} from './../state';
 
 import {ActionBarController} from './actionbar_controller';
-import {StatefulSetDetailController} from './statefulsetdetail_controller';
-import {stateName} from './statefulsetdetail_state';
+import {StatefulSetDetailController} from './controller';
 
 /**
- * Configures states for the stateful set details view.
+ * Config state object for the Stateful Set detail view.
  *
- * @param {!ui.router.$stateProvider} $stateProvider
+ * @type {!ui.router.StateConfig}
+ */
+export const config = {
+  url: appendDetailParamsToUrl(stateUrl),
+  parent: chromeStateName,
+  resolve: {
+    'statefulSetDetailResource': getStatefulSetDetailResource,
+    'statefulSetDetail': getStatefulSetDetail,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': '{{$stateParams.objectName}}',
+      'parent': statefulSetList,
+    },
+  },
+  views: {
+    '': {
+      controller: StatefulSetDetailController,
+      controllerAs: 'ctrl',
+      templateUrl: 'statefulset/detail/detail.html',
+    },
+    [actionbarViewName]: {
+      controller: ActionBarController,
+      controllerAs: '$ctrl',
+      templateUrl: 'statefulset/detail/actionbar.html',
+    },
+  },
+};
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
  * @ngInject
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    url: appendDetailParamsToUrl(stateUrl),
-    parent: chromeStateName,
-    resolve: {
-      'statefulSetDetailResource': getStatefulSetDetailResource,
-      'statefulSetDetail': getStatefulSetDetail,
-    },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': '{{$stateParams.objectName}}',
-        'parent': statefulSetList,
-      },
-    },
-    views: {
-      '': {
-        controller: StatefulSetDetailController,
-        controllerAs: 'ctrl',
-        templateUrl: 'statefulsetdetail/statefulsetdetail.html',
-      },
-      [actionbarViewName]: {
-        controller: ActionBarController,
-        controllerAs: '$ctrl',
-        templateUrl: 'statefulsetdetail/actionbar.html',
-      },
-    },
-  });
+export function statefulSetPodsResource($resource) {
+  return $resource('api/v1/statefulset/:namespace/:name/pod');
 }
 
 /**
- * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+export function statefulSetEventsResource($resource) {
+  return $resource('api/v1/statefulset/:namespace/:name/event');
+}
+
+/**
+ * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource<!backendApi.StatefulSetDetail>}
  * @ngInject

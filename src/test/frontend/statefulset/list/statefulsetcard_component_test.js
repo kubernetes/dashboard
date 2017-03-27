@@ -11,17 +11,15 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import statefulSetListModule from 'statefulsetlist/statefulsetlist_module';
+
+import statefulSetModule from 'statefulset/module';
 
 describe('Stateful Set card', () => {
-  /**
-   * @type
-   * {!statefulsetlist/statefulsetcard_component.StatefulSetCardController}
-   */
+  /** @type {!StatefulSetCardController} */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(statefulSetListModule.name);
+    angular.mock.module(statefulSetModule.name);
 
     angular.mock.inject(($componentController, $rootScope) => {
       ctrl = $componentController('kdStatefulSetCard', {$scope: $rootScope});

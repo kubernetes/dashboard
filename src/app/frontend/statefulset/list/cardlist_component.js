@@ -19,11 +19,11 @@
  */
 export class StatefulSetCardListController {
   /**
-   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
+   * @param {!./../../common/namespace/namespace_service.NamespaceService} kdNamespaceService
    * @ngInject
    */
   constructor(kdNamespaceService) {
-    /** @private {!./../common/namespace/namespace_service.NamespaceService} */
+    /** @private {!./../../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
   }
 
@@ -50,5 +50,5 @@ export const statefulSetCardListComponent = {
     'statefulSetListResource': '<',
     'showResourceKind': '<',
   },
-  templateUrl: 'statefulsetlist/statefulsetcardlist.html',
+  templateUrl: 'statefulset/list/cardlist.html',
 };

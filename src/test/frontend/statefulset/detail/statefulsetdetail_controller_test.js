@@ -12,5 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'statefulsetdetail';
+import {StatefulSetDetailController} from 'statefulset/detail/controller';
+import statefulSetModule from 'statefulset/module';
+
+describe('Stateful Set Detail controller', () => {
+
+  beforeEach(() => {
+    angular.mock.module(statefulSetModule.name);
+  });
+
+  it('should initialize stateful set controller', angular.mock.inject(($controller) => {
+    let data = {};
+    /** @type {!StatefulSetDetailController} */
+    let ctrl = $controller(StatefulSetDetailController, {statefulSetDetail: data});
+
+    expect(ctrl.statefulSetDetail).toBe(data);
+  }));
+});

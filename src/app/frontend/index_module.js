@@ -44,7 +44,7 @@ import resourceQuotaDetailModule from './resourcequotadetail/resourcequotadetail
 import secretModule from './secret/module';
 import serviceModule from './service/module';
 import servicesanddiscoveryModule from './servicesanddiscovery/module';
-import statefulSetListModule from './statefulsetlist/statefulsetlist_module';
+import statefulSetModule from './statefulset/module';
 import storageModule from './storage/module';
 import storageClassDetailModule from './storageclassdetail/module';
 import storageClassListModule from './storageclasslist/module';
@@ -83,7 +83,7 @@ export default angular
           serviceModule.name,
           podModule.name,
           persistentVolumeModule.name,
-          statefulSetListModule.name,
+          statefulSetModule.name,
           persistentVolumeClaimModule.name,
           resourceQuotaDetailModule.name,
           configMapModule.name,

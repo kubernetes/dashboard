@@ -12,23 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import statefulsetListModule from 'statefulsetlist/statefulsetlist_module';
+import statefulSetModule from 'statefulset/module';
 
 describe('Stateful Set Card List controller', () => {
-  /**
-   * @type {!statefulsetlist/statefulsetcardlist_component.StatefulSetCardListController}
-   */
+  /** @type {!StatefulSetCardListController} */
   let ctrl;
   /**
-   * @type {!./../common/namespace/namespace_service.NamespaceService}
+   * @type {!NamespaceService}
    */
   let data;
 
   beforeEach(() => {
-    angular.mock.module(statefulsetListModule.name);
+    angular.mock.module(statefulSetModule.name);
 
     angular.mock.inject(($componentController, kdNamespaceService) => {
-      /** @type {!./../common/namespace/namespace_service.NamespaceService} */
+      /** @type {!NamespaceService} */
       data = kdNamespaceService;
       /** @type {!StatefulSetCardListController} */
       ctrl = $componentController('kdStatefulSetCardList', {kdNamespaceService_: data});

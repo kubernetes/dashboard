@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import statefulSetListModule from 'statefulsetlist/statefulsetlist_module';
-import {resolveStatefulSetList} from 'statefulsetlist/statefulsetlist_stateconfig';
+import {resolveStatefulSetList} from 'statefulset/list/stateconfig';
+import statefulSetModule from 'statefulset/module';
 
 describe('StateConfig for stateful set controller list', () => {
-  /** @type {!common/pagination/pagination_service.PaginationService} */
+  /** @type {!PaginationService} */
   let kdPaginationService;
 
   beforeEach(() => {
-    angular.mock.module(statefulSetListModule.name);
+    angular.mock.module(statefulSetModule.name);
     angular.mock.inject((_kdPaginationService_) => {
       kdPaginationService = _kdPaginationService_;
     });
