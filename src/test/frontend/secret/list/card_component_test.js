@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import secretListModule from 'secretlist/module';
+import secretModule from 'secret/module';
 
 describe('Secret card', () => {
   /**
-   * @type {!secretlist/secretcard_component.SecretCardController}
+   * @type {!SecretCardController}
    */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(secretListModule.name);
+    angular.mock.module(secretModule.name);
 
     angular.mock.inject(($componentController, $rootScope) => {
       ctrl = $componentController('kdSecretCard', {$scope: $rootScope}, {});

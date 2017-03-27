@@ -12,26 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * @final
- */
-export default class SecretInfoController {
-  constructor() {
-    /** @export {!backendApi.SecretDetail} Initialized from the scope. */
-    this.secret;
-  }
-}
-
-/**
- * Definition object for the component that displays secret info.
- *
- * @return {!angular.Directive}
- */
-export const secretInfoComponent = {
-  controller: SecretInfoController,
-  templateUrl: 'secretdetail/info.html',
-  bindings: {
-    /** {!backendApi.SecretDetail} */
-    'secret': '=',
-  },
-};
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'secret.list';

@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {SecretListController} from 'secretlist/list_controller';
-import secretListModule from 'secretlist/module';
+import {SecretListController} from 'secret/list/controller';
+import secretModule from 'secret/module';
 
 describe('Secret list controller', () => {
-  /** @type {!secretlist/secretlist_controller.SecretListController} */
+  /** @type {!SecretListController} */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(secretListModule.name);
+    angular.mock.module(secretModule.name);
 
     angular.mock.inject(($controller) => {
       ctrl = $controller(SecretListController, {secretList: {secrets: []}});

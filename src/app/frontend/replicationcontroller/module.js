@@ -31,7 +31,7 @@ import {replicationControllerListResource} from './list/stateconfig';
 import stateConfig from './stateconfig';
 
 /**
- * Angular module for the Deployment resource.
+ * Angular module for the Replication Controller resource.
  */
 export default angular
     .module(

@@ -14,7 +14,7 @@
 
 import chromeModule from 'chrome/chrome_module';
 import configMapModule from 'configmap/module';
-import secretModule from 'secretlist/module';
+import secretModule from 'secret/module';
 
 import stateConfig from './stateconfig';
 

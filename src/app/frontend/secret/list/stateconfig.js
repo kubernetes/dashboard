@@ -16,41 +16,56 @@ import {stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {stateName as parentStateName} from 'config/state';
 
-import {SecretListController} from './list_controller';
-import {stateName} from './list_state';
-import {stateUrl} from './list_state';
+import {stateUrl} from './../state';
+import {SecretListController} from './controller';
 
 /**
- * @param {!ui.router.$stateProvider} $stateProvider
+ * I18n object that defines strings for translation used in this file.
+ */
+const i18n = {
+  /** @type {string} @desc Label 'Secrets' that appears as a breadcrumbs on the action bar. */
+  MSG_BREADCRUMBS_SECRETS_LABEL: goog.getMsg('Secrets'),
+};
+
+/**
+ * Config state object for the Secret list view.
+ *
+ * @type {!ui.router.StateConfig}
+ */
+export const config = {
+  url: stateUrl,
+  parent: chromeStateName,
+  resolve: {
+    'secretList': resolveSecretList,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': i18n.MSG_BREADCRUMBS_SECRETS_LABEL,
+      'parent': parentStateName,
+    },
+  },
+  views: {
+    '': {
+      controller: SecretListController,
+      controllerAs: '$ctrl',
+      templateUrl: 'secret/list/list.html',
+    },
+  },
+};
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
  * @ngInject
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    url: stateUrl,
-    parent: chromeStateName,
-    resolve: {
-      'secretList': resolveSecretList,
-    },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': i18n.MSG_BREADCRUMBS_SECRETS_LABEL,
-        'parent': parentStateName,
-      },
-    },
-    views: {
-      '': {
-        controller: SecretListController,
-        controllerAs: '$ctrl',
-        templateUrl: 'secretlist/list.html',
-      },
-    },
-  });
+export function secretListResource($resource) {
+  return $resource('api/v1/secret/:namespace');
 }
 
 /**
  * @param {!angular.Resource} kdSecretListResource
- * @param {!./../chrome/chrome_state.StateParams} $stateParams
- * @param {!./../common/pagination/pagination_service.PaginationService} kdPaginationService
+ * @param {!./../../chrome/chrome_state.StateParams} $stateParams
+ * @param {!./../../common/pagination/pagination_service.PaginationService} kdPaginationService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
@@ -58,8 +73,3 @@ export function resolveSecretList(kdSecretListResource, $stateParams, kdPaginati
   let query = kdPaginationService.getDefaultResourceQuery($stateParams.namespace);
   return kdSecretListResource.get(query).$promise;
 }
-
-const i18n = {
-  /** @type {string} @desc Label 'Secrets' that appears as a breadcrumbs on the action bar. */
-  MSG_BREADCRUMBS_SECRETS_LABEL: goog.getMsg('Secrets'),
-};

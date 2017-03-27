@@ -15,49 +15,47 @@
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
-import {stateName as secretList, stateUrl} from 'secretlist/list_state';
+import {stateName as secretList} from './../list/state';
+import {stateUrl} from './../state';
 
 import {ActionBarController} from './actionbar_controller';
-import {SecretDetailController} from './detail_controller';
-import {stateName} from './detail_state';
+import {SecretDetailController} from './controller';
 
 /**
- * Configures states for the secret details view.
+ * Config state object for the Secret detail view.
  *
- * @param {!ui.router.$stateProvider} $stateProvider
- * @ngInject
+ * @type {!ui.router.StateConfig}
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    url: appendDetailParamsToUrl(stateUrl),
-    parent: chromeStateName,
-    resolve: {
-      'secretDetailResource': getSecretDetailResource,
-      'secretDetail': getSecretDetail,
-    },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': '{{$stateParams.objectName}}',
-        'parent': secretList,
+export const config =
+    {
+      url: appendDetailParamsToUrl(stateUrl),
+      parent: chromeStateName,
+      resolve: {
+        'secretDetailResource': getSecretDetailResource,
+        'secretDetail': getSecretDetail,
       },
-    },
-    views: {
-      '': {
-        controller: SecretDetailController,
-        controllerAs: '$ctrl',
-        templateUrl: 'secretdetail/detail.html',
+      data: {
+        [breadcrumbsConfig]: {
+          'label': '{{$stateParams.objectName}}',
+          'parent': secretList,
+        },
       },
-      [actionbarViewName]: {
-        controller: ActionBarController,
-        controllerAs: '$ctrl',
-        templateUrl: 'secretdetail/actionbar.html',
+      views: {
+        '': {
+          controller: SecretDetailController,
+          controllerAs: '$ctrl',
+          templateUrl: 'secret/detail/detail.html',
+        },
+        [actionbarViewName]: {
+          controller: ActionBarController,
+          controllerAs: '$ctrl',
+          templateUrl: 'secret/detail/actionbar.html',
+        },
       },
-    },
-  });
-}
+    }
 
 /**
- * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
+ * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource<!backendApi.SecretDetail>}
  * @ngInject

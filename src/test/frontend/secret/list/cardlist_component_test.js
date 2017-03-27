@@ -12,23 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import secretListModule from 'secretlist/module';
+import secretModule from 'secret/module';
 
 describe('Secret Card List controller', () => {
   /**
-   * @type {!secretlist/secretcardlist_component.SecretCardListController}
+   * @type {!SecretCardListController}
    */
   let ctrl;
   /**
-   * @type {!./../common/namespace/namespace_service.NamespaceService}
+   * @type {!NamespaceService}
    */
   let data;
 
   beforeEach(() => {
-    angular.mock.module(secretListModule.name);
+    angular.mock.module(secretModule.name);
 
     angular.mock.inject(($componentController, kdNamespaceService) => {
-      /** @type {!./../common/namespace/namespace_service.NamespaceService} */
+      /** @type {!NamespaceService} */
       data = kdNamespaceService;
       /** @type {!SecretListController} */
       ctrl = $componentController('kdSecretCardList', {kdNamespaceService_: data});

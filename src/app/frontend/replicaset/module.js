@@ -26,7 +26,7 @@ import {replicaSetListResource} from './list/stateconfig';
 import stateConfig from './stateconfig';
 
 /**
- * Angular module for the Deployment resource.
+ * Angular module for the Replica Set resource.
  */
 export default angular
     .module(

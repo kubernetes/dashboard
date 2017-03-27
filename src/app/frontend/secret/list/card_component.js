@@ -13,11 +13,11 @@
 // limitations under the License.
 
 import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'secretdetail/detail_state';
+import {stateName} from 'secret/detail/state';
 
 class SecretCardController {
   /**
-   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
+   * @param {!./../../common/namespace/namespace_service.NamespaceService} kdNamespaceService
    * @param {!angular.$interpolate} $interpolate
    * @param {!ui.router.$state} $state
    * @ngInject
@@ -32,7 +32,7 @@ class SecretCardController {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
-    /** @private {!./../common/namespace/namespace_service.NamespaceService} */
+    /** @private {!./../../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
   }
 
@@ -76,5 +76,5 @@ export const secretCardComponent = {
     'secret': '=',
   },
   controller: SecretCardController,
-  templateUrl: 'secretlist/card.html',
+  templateUrl: 'secret/list/card.html',
 };

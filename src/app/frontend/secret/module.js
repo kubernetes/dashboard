@@ -1,13 +1,13 @@
 // Copyright 2015 Google Inc. All Rights Reserved.
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Apache License, Version 2.0 (the 'License');
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
+// distributed under the License is distributed on an 'AS IS' BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
@@ -15,28 +15,33 @@
 import chromeModule from 'chrome/chrome_module';
 import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
+import namespaceModule from 'common/namespace/namespace_module';
 import eventsModule from 'events/events_module';
 
-import stateConfig from './detail_stateconfig';
-import {secretInfoComponent} from './info_component';
-
+import {secretInfoComponent} from './detail/info_component';
+import {secretCardComponent} from './list/card_component';
+import {secretCardListComponent} from './list/cardlist_component';
+import {secretListResource} from './list/stateconfig';
+import stateConfig from './stateconfig';
 
 /**
- * Angular module for the Secret details view.
- *
- * The view shows detailed view of a Secret.
+ * Angular module for the Secret resource.
  */
 export default angular
     .module(
-        'kubernetesDashboard.secretDetail',
+        'kubernetesDashboard.secret',
         [
           'ngMaterial',
           'ngResource',
           'ui.router',
-          componentsModule.name,
-          filtersModule.name,
-          eventsModule.name,
           chromeModule.name,
+          componentsModule.name,
+          eventsModule.name,
+          filtersModule.name,
+          namespaceModule.name,
         ])
     .config(stateConfig)
-    .component('kdSecretInfo', secretInfoComponent);
+    .component('kdSecretCard', secretCardComponent)
+    .component('kdSecretCardList', secretCardListComponent)
+    .component('kdSecretInfo', secretInfoComponent)
+    .factory('kdSecretListResource', secretListResource);

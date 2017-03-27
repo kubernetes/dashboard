@@ -12,14 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../variables';
-
-.kd-secret-detail-row {
-  &.kd-info-card-entry {
-    padding: 0;
-  }
-
-  .kd-info-card-entry-content {
-    padding-top: 1.125 * $baseline-grid;
+/**
+ * @final
+ */
+export default class SecretInfoController {
+  constructor() {
+    /** @export {!backendApi.SecretDetail} Initialized from the scope. */
+    this.secret;
   }
 }
+
+/**
+ * Definition object for the component that displays secret info.
+ *
+ * @return {!angular.Directive}
+ */
+export const secretInfoComponent = {
+  controller: SecretInfoController,
+  templateUrl: 'secret/detail/info.html',
+  bindings: {
+    /** {!backendApi.SecretDetail} */
+    'secret': '=',
+  },
+};

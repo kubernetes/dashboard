@@ -25,7 +25,7 @@ import {persistentVolumeClaimListResource} from './list/stateconfig';
 import stateConfig from './stateconfig';
 
 /**
- * Angular module for the Deployment resource.
+ * Angular module for the Persistent Volume Claim resource.
  */
 export default angular
     .module(

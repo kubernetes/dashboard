@@ -27,7 +27,7 @@ import {nodeListResource} from './list/stateconfig';
 import stateConfig from './stateconfig';
 
 /**
- * Angular module for the Deployment resource.
+ * Angular module for the Node resource.
  */
 export default angular
     .module(

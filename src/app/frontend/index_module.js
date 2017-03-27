@@ -41,8 +41,7 @@ import podModule from './pod/module';
 import replicaSetModule from './replicaset/module';
 import replicationControllerModule from './replicationcontroller/module';
 import resourceQuotaDetailModule from './resourcequotadetail/resourcequotadetail_module';
-import secretDetailModule from './secretdetail/module';
-import secretListModule from './secretlist/module';
+import secretModule from './secret/module';
 import serviceDetailModule from './servicedetail/servicedetail_module';
 import serviceListModule from './servicelist/servicelist_module';
 import servicesanddiscoveryModule from './servicesanddiscovery/module';
@@ -90,8 +89,7 @@ export default angular
           persistentVolumeClaimModule.name,
           resourceQuotaDetailModule.name,
           configMapModule.name,
-          secretListModule.name,
-          secretDetailModule.name,
+          secretModule.name,
           ingressModule.name,
           servicesanddiscoveryModule.name,
           configModule.name,

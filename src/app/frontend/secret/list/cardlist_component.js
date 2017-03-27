@@ -17,11 +17,11 @@
  */
 export class SecretCardListController {
   /**
-   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
+   * @param {!./../../common/namespace/namespace_service.NamespaceService} kdNamespaceService
    * @ngInject
    */
   constructor(kdNamespaceService) {
-    /** @private {!./../common/namespace/namespace_service.NamespaceService} */
+    /** @private {!./../../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
   }
 
@@ -44,7 +44,7 @@ export const secretCardListComponent = {
     // Optional header that is transcluded instead of the default one.
     'header': '?kdHeader',
   },
-  templateUrl: 'secretlist/cardlist.html',
+  templateUrl: 'secret/list/cardlist.html',
   controller: SecretCardListController,
   bindings: {
     /** {!backendApi.SecretList} */

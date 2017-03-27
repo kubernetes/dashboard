@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {resolveSecretList} from 'secretlist/list_stateconfig';
-import secretListModule from 'secretlist/module';
+import {resolveSecretList} from 'secret/list/stateconfig';
+import secretModule from 'secret/module';
 
 describe('StateConfig for secret list', () => {
-  /** @type {!common/pagination/pagination_service.PaginationService} */
+  /** @type {!PaginationService} */
   let kdPaginationService;
 
   beforeEach(() => {
-    angular.mock.module(secretListModule.name);
+    angular.mock.module(secretModule.name);
     angular.mock.inject((_kdPaginationService_) => {
       kdPaginationService = _kdPaginationService_;
     });

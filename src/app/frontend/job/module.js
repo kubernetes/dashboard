@@ -26,7 +26,7 @@ import {jobListResource} from './list/stateconfig';
 import stateConfig from './stateconfig';
 
 /**
- * Angular module for the Deployment resource.
+ * Angular module for the Job resource.
  */
 export default angular
     .module(

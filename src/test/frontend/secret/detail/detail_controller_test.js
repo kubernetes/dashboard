@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {SecretDetailController} from 'secretdetail/detail_controller';
-import module from 'secretdetail/module';
+import {SecretDetailController} from 'secret/detail/controller';
+import module from 'secret/module';
 
 describe('Secret Detail controller', () => {
 

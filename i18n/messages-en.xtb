@@ -1188,6 +1188,16 @@
   <translation id="5153024833276909612" key="MSG_SECRETLIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of secrets (secret list view).">Name</translation>
   <translation id="3968263046960145971" key="MSG_SECRETLIST_CARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of secrets (secret list view).">Namespace</translation>
   <translation id="6328422207560999836" key="MSG_SECRETLIST_CARDLIST_3" desc="Label \'Age\' which appears as a column label in the table of secrets (secret list view).">Age</translation>
+  <translation id="6072176334759614767" key="MSG_SECRET_DETAIL_ACTIONBAR_0" desc="Label \'Secret\' which appears at the top of the delete dialog, opened from a secret details page.">Secret</translation>
+  <translation id="2720871506693211747" key="MSG_SECRET_DETAIL_DETAIL_0" desc="Secrets info details section data.">Data</translation>
+  <translation id="5212791345913891342" key="MSG_SECRET_DETAIL_DETAIL_1" desc="Tooltip label for showing secret content">Show secret content</translation>
+  <translation id="4846548664493416435" key="MSG_SECRET_DETAIL_DETAIL_2" desc="Tooltip label for hiding secret content">Hide secret content</translation>
+  <translation id="3077755770695564562" key="MSG_SECRET_DETAIL_DETAIL_3" desc="Secrets info details section bytes.">{{::$ctrl.formatDataValue(value).length}} bytes </translation>
+  <translation id="7738406856610373390" key="MSG_SECRET_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
+  <translation id="482275567627182819" key="MSG_SECRET_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Secrets</translation>
+  <translation id="2133941155168166972" key="MSG_SECRET_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of secrets (secret list view).">Name</translation>
+  <translation id="7478420130341878455" key="MSG_SECRET_LIST_CARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of secrets (secret list view).">Namespace</translation>
+  <translation id="4493598488188566434" key="MSG_SECRET_LIST_CARDLIST_3" desc="Label \'Age\' which appears as a column label in the table of secrets (secret list view).">Age</translation>
   <translation id="2799384691872397176" key="MSG_SECRET_LIST_STARTED_AT_TOOLTIP" desc="Tooltip 'Started at [some date]' showing the exact start time of the secret.">Created at <ph name="START_DATE"/> UTC</translation>
   <translation id="7259128300465442626" key="MSG_SERVICEDETAIL_SERVICEDETAILINFO_0" desc="Header in a detail view">Details</translation>
   <translation id="1436736742516221745" key="MSG_SERVICEDETAIL_SERVICEDETAILINFO_1" desc="Label \'Label selector\' for the service\'s label selector in the details part (left) of the service details view.">Label selector</translation>

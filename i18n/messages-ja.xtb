@@ -1923,10 +1923,20 @@
   <translation id="8863567459580948267" key="MSG_SECRETLIST_CARDLIST_2" desc="Label \'Age\' which appears as a column label in the table of secrets (secret list view).">起動時間</translation>
   <translation id="4020518482449780595" key="MSG_SECRETLIST_CARDLIST_3" desc="Label which appears above the list of such objects.">シークレット</translation>
   <translation id="6328422207560999836" key="MSG_SECRETLIST_CARDLIST_3" desc="Label \'Age\' which appears as a column label in the table of secrets (secret list view).">起動時間</translation>
+  <translation id="6072176334759614767" key="MSG_SECRET_DETAIL_ACTIONBAR_0" desc="Label \'Secret\' which appears at the top of the delete dialog, opened from a secret details page.">Secret</translation>
+  <translation id="2720871506693211747" key="MSG_SECRET_DETAIL_DETAIL_0" desc="Secrets info details section data.">Data</translation>
+  <translation id="5212791345913891342" key="MSG_SECRET_DETAIL_DETAIL_1" desc="Tooltip label for showing secret content">Show secret content</translation>
+  <translation id="4846548664493416435" key="MSG_SECRET_DETAIL_DETAIL_2" desc="Tooltip label for hiding secret content">Hide secret content</translation>
+  <translation id="3077755770695564562" key="MSG_SECRET_DETAIL_DETAIL_3" desc="Secrets info details section bytes.">{{::$ctrl.formatDataValue(value).length}} bytes </translation>
+  <translation id="7738406856610373390" key="MSG_SECRET_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
   <translation id="4100438030563245765" key="MSG_SECRET_DETAIL_SECRET_LABEL" desc="Label 'Secret' which appears at the top of the delete dialog, opened from a secret details page.">シークレット</translation>
   <translation id="7998045333531060596" key="MSG_SECRET_INFO_DATA_SECTION" desc="Config map info details section name.">データ</translation>
   <translation id="6735398210716403327" key="MSG_SECRET_INFO_DETAILS_SECTION" desc="Config map info details section name.">詳細</translation>
   <translation id="3415492435001880814" key="MSG_SECRET_LIST_AGE_LABEL" desc="Label 'Age' which appears as a column label in the table of pods (pod list view).">起動時間</translation>
+  <translation id="482275567627182819" key="MSG_SECRET_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Secrets</translation>
+  <translation id="2133941155168166972" key="MSG_SECRET_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of secrets (secret list view).">Name</translation>
+  <translation id="7478420130341878455" key="MSG_SECRET_LIST_CARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of secrets (secret list view).">Namespace</translation>
+  <translation id="4493598488188566434" key="MSG_SECRET_LIST_CARDLIST_3" desc="Label \'Age\' which appears as a column label in the table of secrets (secret list view).">Age</translation>
   <translation id="1932088152662132374" key="MSG_SECRET_LIST_NAMESPACE_LABEL" desc="Label 'Namespace' which appears as a column label in the table of secrets (secret list view).">ネームスペース</translation>
   <translation id="5369075053717474120" key="MSG_SECRET_LIST_NAME_LABEL" desc="Label 'Name' which appears as a column label in the table of pods (pod list view).">名前</translation>
   <translation id="2799384691872397176" key="MSG_SECRET_LIST_STARTED_AT_TOOLTIP" desc="Tooltip 'Started at [some date]' showing the exact start time of the secret."><ph name="START_DATE"/> UTC に作成</translation>
