@@ -23,7 +23,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
-	replicasetlist "github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/list"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
@@ -75,7 +74,7 @@ type DeploymentDetail struct {
 	RollingUpdateStrategy *RollingUpdateStrategy `json:"rollingUpdateStrategy,omitempty"`
 
 	// RepliaSetList containing old replica sets from the deployment
-	OldReplicaSetList replicasetlist.ReplicaSetList `json:"oldReplicaSetList"`
+	OldReplicaSetList replicaset.ReplicaSetList `json:"oldReplicaSetList"`
 
 	// New replica set used by this deployment
 	NewReplicaSet replicaset.ReplicaSet `json:"newReplicaSet"`

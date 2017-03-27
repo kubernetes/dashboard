@@ -8,7 +8,7 @@
   },
   "license": "Apache-2.0",
   "devDependencies": {
-    "async": "~2.1.2",
+    "async": "~2.2.0",
     "babel": "~6.23.0",
     "babel-core": "~6.24.0",
     "babel-loader": "~6.4.1",
@@ -21,7 +21,7 @@
     "browserify-istanbul": "~2.0.0",
     "clang-format": "1.0.48",
     "del": "~2.2.2",
-    "eslint-plugin-angular": "~2.0.0",
+    "eslint-plugin-angular": "~2.2.0",
     "file-exists": "2.0.0",
     "google-closure-compiler": "~20170218.0.0",
     "gulp": "~3.9.1",

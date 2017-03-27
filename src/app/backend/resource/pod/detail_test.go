@@ -23,6 +23,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/owner"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 	api "k8s.io/client-go/pkg/api/v1"
@@ -43,7 +44,7 @@ func (c FakeHeapsterClient) Get(path string) client.RequestInterface {
 	}), "GET", nil, "/api/v1", restclient.ContentConfig{}, restclient.Serializers{}, nil, nil)
 }
 
-func TestToPodDetail(t *testing.T) {
+func TestGetPodDetail(t *testing.T) {
 	cases := []struct {
 		pod      *api.PodList
 		expected *PodDetail
@@ -61,7 +62,7 @@ func TestToPodDetail(t *testing.T) {
 					Namespace: "test-namespace",
 					Labels:    map[string]string{"app": "test"},
 				},
-				Controller: Controller{Kind: "unknown"},
+				Controller: owner.ResourceOwner{},
 				Containers: []Container{},
 				EventList:  common.EventList{Events: []common.Event{}},
 			},

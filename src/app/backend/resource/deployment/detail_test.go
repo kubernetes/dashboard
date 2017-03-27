@@ -10,7 +10,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
-	replicasetlist "github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/list"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
 	"k8s.io/client-go/kubernetes/fake"
@@ -115,7 +114,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 					MaxSurge:       1,
 					MaxUnavailable: 1,
 				},
-				OldReplicaSetList: replicasetlist.ReplicaSetList{
+				OldReplicaSetList: replicaset.ReplicaSetList{
 					ReplicaSets:       []replicaset.ReplicaSet{},
 					CumulativeMetrics: make([]metric.Metric, 0),
 				},
