@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import replicaSetListModule from 'replicasetlist/replicasetlist_module';
-import {resolveReplicaSetList} from 'replicasetlist/replicasetlist_stateconfig';
+import {resolveReplicaSetList} from 'replicaset/list/stateconfig';
+import replicaSetModule from 'replicaset/module';
 
 describe('StateConfig for replica set list', () => {
-  /** @type {!common/pagination/pagination_service.PaginationService} */
+  /** @type {!PaginationService} */
   let kdPaginationService;
 
   beforeEach(() => {
-    angular.mock.module(replicaSetListModule.name);
+    angular.mock.module(replicaSetModule.name);
     angular.mock.inject((_kdPaginationService_) => {
       kdPaginationService = _kdPaginationService_;
     });

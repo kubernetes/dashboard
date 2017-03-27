@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ReplicaSetListController} from 'replicasetlist/replicasetlist_controller';
-import replicaSetListModule from 'replicasetlist/replicasetlist_module';
+import {ReplicaSetListController} from 'replicaset/list/controller';
+import replicaSetModule from 'replicaset/module';
 
 describe('Replica Set list controller', () => {
-  /** @type {!replicasetlist/replicasetlist_controller.ReplicaSetListController} */
+  /** @type {!ReplicaSetListController} */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(replicaSetListModule.name);
+    angular.mock.module(replicaSetModule.name);
 
     angular.mock.inject(($controller) => {
       ctrl = $controller(ReplicaSetListController, {replicaSetList: {replicaSets: []}});

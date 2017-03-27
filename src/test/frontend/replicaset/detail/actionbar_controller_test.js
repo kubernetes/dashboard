@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ActionBarController} from 'replicasetdetail/actionbar_controller';
-import module from 'replicasetdetail/replicasetdetail_module';
+import {ActionBarController} from 'replicaset/detail/actionbar_controller';
+import module from 'replicaset/module';
 
 describe('Action Bar controller', () => {
   /** @type {!ActionBarController} */

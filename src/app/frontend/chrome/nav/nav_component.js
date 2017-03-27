@@ -26,7 +26,7 @@ import {stateName as nodeState} from 'node/list/state';
 import {stateName as persistentVolumeState} from 'persistentvolume/list/state';
 import {stateName as persistentVolumeClaimState} from 'persistentvolumeclaim/list/state';
 import {stateName as podState} from 'pod/list/state';
-import {stateName as replicaSetState} from 'replicasetlist/replicasetlist_state';
+import {stateName as replicaSetState} from 'replicaset/list/state';
 import {stateName as replicationControllerState} from 'replicationcontrollerlist/replicationcontrollerlist_state';
 import {stateName as secretState} from 'secretlist/list_state';
 import {stateName as serviceState} from 'servicelist/servicelist_state';

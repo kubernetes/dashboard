@@ -43,7 +43,7 @@ export default class ReplicaSetInfoController {
  */
 export const replicaSetInfoComponent = {
   controller: ReplicaSetInfoController,
-  templateUrl: 'replicasetdetail/replicasetinfo.html',
+  templateUrl: 'replicaset/detail/info.html',
   bindings: {
     /** {!backendApi.ReplicaSetDetail} */
     'replicaSet': '=',

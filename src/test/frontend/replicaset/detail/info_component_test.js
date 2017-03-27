@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import replicaSetDetailModule from 'replicasetdetail/replicasetdetail_module';
+import replicaSetModule from 'replicaset/module';
 
 describe('Replica Set Info controller', () => {
   /**
@@ -22,7 +22,7 @@ describe('Replica Set Info controller', () => {
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(replicaSetDetailModule.name);
+    angular.mock.module(replicaSetModule.name);
 
     angular.mock.inject(($componentController, $rootScope) => {
       ctrl = $componentController('kdReplicaSetInfo', {$scope: $rootScope}, {

@@ -12,23 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import replicasetListModule from 'replicasetlist/replicasetlist_module';
+import replicaSetModule from 'replicaset/module';
 
 describe('Replica Set Card List controller', () => {
   /**
-   * @type {!replicasetlist/replicasetcardlist_component.ReplicaSetCardListController}
+   * @type {!ReplicaSetCardListController}
    */
   let ctrl;
   /**
-   * @type {!./../common/namespace/namespace_service.NamespaceService}
+   * @type {!NamespaceService}
    */
   let data;
 
   beforeEach(() => {
-    angular.mock.module(replicasetListModule.name);
+    angular.mock.module(replicaSetModule.name);
 
     angular.mock.inject(($componentController, kdNamespaceService) => {
-      /** @type {!./../common/namespace/namespace_service.NamespaceService} */
+      /** @type {!NamespaceService} */
       data = kdNamespaceService;
       /** @type {!ReplicaSetCardListController} */
       ctrl = $componentController('kdReplicaSetCardList', {kdNamespaceService_: data});

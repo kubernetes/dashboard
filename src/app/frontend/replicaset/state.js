@@ -12,20 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ReplicaSetDetailController} from 'replicasetdetail/replicasetdetail_controller';
-import replicaSetDetailModule from 'replicasetdetail/replicasetdetail_module';
+/** Name of the state. */
+export const stateName = 'replicaset';
 
-describe('Replica Set Detail controller', () => {
-
-  beforeEach(() => {
-    angular.mock.module(replicaSetDetailModule.name);
-  });
-
-  it('should initialize replica set controller', angular.mock.inject(($controller) => {
-    let data = {};
-    /** @type {!ReplicaSetDetailController} */
-    let ctrl = $controller(ReplicaSetDetailController, {replicaSetDetail: data});
-
-    expect(ctrl.replicaSetDetail).toBe(data);
-  }));
-});
+/** Absolute URL of the state. */
+export const stateUrl = '/replicaset';
