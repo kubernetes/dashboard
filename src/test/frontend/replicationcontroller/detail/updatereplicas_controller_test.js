@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import replicationControllerDetailModule from 'replicationcontrollerdetail/replicationcontrollerdetail_module';
-import UpdateReplicasDialogController from 'replicationcontrollerdetail/updatereplicas_controller';
+import UpdateReplicasDialogController from 'replicationcontroller/detail/updatereplicas_controller';
+import replicationControllerModule from 'replicationcontroller/module';
 
 describe('Update Replicas controller', () => {
   /**
@@ -38,7 +38,7 @@ describe('Update Replicas controller', () => {
   let replicationControllerMock = 'foo-name';
 
   beforeEach(() => {
-    angular.mock.module(replicationControllerDetailModule.name);
+    angular.mock.module(replicationControllerModule.name);
 
     angular.mock.inject(($log, $state, $mdDialog, $controller, $httpBackend, $resource) => {
       mdDialog = $mdDialog;

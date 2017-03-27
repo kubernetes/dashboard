@@ -16,7 +16,7 @@ import {StateParams} from 'common/resource/resourcedetail';
 import {stateName as deploymentStateName} from 'deployment/detail/state';
 import {stateName} from 'horizontalpodautoscaler/detail/state';
 import {stateName as replicaSetStateName} from 'replicaset/detail/state';
-import {stateName as replicationControllerStateName} from 'replicationcontrollerdetail/replicationcontrollerdetail_state';
+import {stateName as replicationControllerStateName} from 'replicationcontroller/detail/state';
 
 const referenceKindToDetailStateName = {
   Deployment: deploymentStateName,

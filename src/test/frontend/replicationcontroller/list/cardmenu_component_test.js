@@ -13,21 +13,19 @@
 // limitations under the License.
 
 import {StateParams} from 'common/resource/resourcedetail';
-import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
+import {stateName} from 'replicationcontroller/detail/state';
+import replicationControllerModule from 'replicationcontroller/module';
 
 describe('Replication controller card menu controller', () => {
-  /** @type
-   * {!replicationcontrollerlist/replicationcontrollercardmenu_component.ReplicationControllerCardMenuController}
-   */
+  /** @type {!ReplicationControllerCardMenuController} */
   let ctrl;
   /** @type {!ui.router.$state} */
   let state;
-  /** @type
-   * {!replicationcontrollerdetail/replicationcontroller_service.ReplicationControllerService} */
+  /** @type {!ReplicationControllerService} */
   let kdReplicationControllerService;
 
   beforeEach(() => {
-    angular.mock.module(replicationControllerListModule.name);
+    angular.mock.module(replicationControllerModule.name);
 
     angular.mock.inject(
         ($componentController, $state, _kdReplicationControllerService_, $rootScope) => {
@@ -47,8 +45,7 @@ describe('Replication controller card menu controller', () => {
     ctrl.viewDetails();
 
     // then
-    expect(state.go).toHaveBeenCalledWith(
-        'replicationcontrollerdetail', new StateParams('foo-namespace', 'foo-name'));
+    expect(state.go).toHaveBeenCalledWith(stateName, new StateParams('foo-namespace', 'foo-name'));
   });
 
   it('should open the menu', () => {

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import replicationControllerDetailModule from 'replicationcontrollerdetail/replicationcontrollerdetail_module';
+import replicationControllerModule from 'replicationcontroller/module';
 
 describe('Replication controller service', () => {
   /** @type {!ReplicationControllerService} */
@@ -22,7 +22,7 @@ describe('Replication controller service', () => {
   /** @type {!angular.$q} */
 
   beforeEach(() => {
-    angular.mock.module(replicationControllerDetailModule.name);
+    angular.mock.module(replicationControllerModule.name);
 
     angular.mock.inject((kdReplicationControllerService, $mdDialog) => {
       service = kdReplicationControllerService;

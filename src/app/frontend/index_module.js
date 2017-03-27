@@ -39,8 +39,7 @@ import persistentVolumeModule from './persistentvolume/module';
 import persistentVolumeClaimModule from './persistentvolumeclaim/module';
 import podModule from './pod/module';
 import replicaSetModule from './replicaset/module';
-import replicationControllerDetailModule from './replicationcontrollerdetail/replicationcontrollerdetail_module';
-import replicationControllerListModule from './replicationcontrollerlist/replicationcontrollerlist_module';
+import replicationControllerModule from './replicationcontroller/module';
 import resourceQuotaDetailModule from './resourcequotadetail/resourcequotadetail_module';
 import secretDetailModule from './secretdetail/module';
 import secretListModule from './secretlist/module';
@@ -74,8 +73,7 @@ export default angular
           errorModule.name,
           jobModule.name,
           logsModule.name,
-          replicationControllerDetailModule.name,
-          replicationControllerListModule.name,
+          replicationControllerModule.name,
           replicaSetModule.name,
           namespaceModule.name,
           nodeModule.name,

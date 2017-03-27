@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import replicationControllerDetailModule from 'replicationcontrollerdetail/replicationcontrollerdetail_module';
+import replicationControllerModule from 'replicationcontroller/module';
 
 describe('Replication Controller Info controller', () => {
   /**
@@ -22,7 +22,7 @@ describe('Replication Controller Info controller', () => {
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(replicationControllerDetailModule.name);
+    angular.mock.module(replicationControllerModule.name);
 
     angular.mock.inject(($componentController, $rootScope) => {
       ctrl = $componentController('kdReplicationControllerInfo', {$scope: $rootScope}, {

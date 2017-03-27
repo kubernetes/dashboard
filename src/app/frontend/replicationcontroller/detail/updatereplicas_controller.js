@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {StateParams} from 'common/resource/resourcedetail';
-import {getReplicationControllerSpecPodsResourceWithActions} from './replicationcontrollerdetail_stateconfig';
+import {getReplicationControllerSpecPodsResourceWithActions} from './stateconfig';
 
 /**
  * Controller for the update replication controller dialog.
@@ -26,7 +26,7 @@ export default class UpdateReplicasDialogController {
    * @param {!angular.$log} $log
    * @param {!ui.router.$state} $state
    * @param {!angular.$resource} $resource
-   * @param {!./../common/csrftoken/csrftoken_service.CsrfTokenService} kdCsrfTokenService
+   * @param {!./../../common/csrftoken/csrftoken_service.CsrfTokenService} kdCsrfTokenService
    * @param {string} namespace
    * @param {string} replicationController
    * @param {number} currentPods

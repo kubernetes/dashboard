@@ -12,8 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../variables';
-
-.kd-updatereplicas-pod-status {
-  font-size: $body-font-size-base;
-}
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'replicationcontroller.list';

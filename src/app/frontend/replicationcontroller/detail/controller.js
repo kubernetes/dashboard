@@ -21,7 +21,7 @@ export default class ReplicationControllerDetailController {
   /**
    * @param {!backendApi.ReplicationControllerDetail} replicationControllerDetail
    * @param {!ui.router.$state} $state
-   * @param {!../common/resource/resourcedetail.StateParams} $stateParams
+   * @param {!../../common/resource/resourcedetail.StateParams} $stateParams
    * @param {!angular.Resource} kdRCPodsResource
    * @param {!angular.Resource} kdRCServicesResource
    * @param {!angular.Resource} kdRCEventsResource
@@ -45,7 +45,7 @@ export default class ReplicationControllerDetailController {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
-    /** @private {!../common/resource/resourcedetail.StateParams} */
+    /** @private {!../../common/resource/resourcedetail.StateParams} */
     this.stateParams_ = $stateParams;
   }
 

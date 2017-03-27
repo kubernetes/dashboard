@@ -19,7 +19,7 @@ import daemonSetModule from 'daemonset/module';
 import deploymentModule from 'deployment/module';
 import jobModule from 'job/module';
 import replicaSetModule from 'replicaset/module';
-import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
+import replicationControllerModule from 'replicationcontroller/module';
 import statefulSetListModule from 'statefulsetlist/statefulsetlist_module';
 
 import stateConfig from './workloads_stateconfig';
@@ -39,7 +39,7 @@ export default angular
           componentsModule.name,
           chromeModule.name,
           jobModule.name,
-          replicationControllerListModule.name,
+          replicationControllerModule.name,
           replicaSetModule.name,
           deploymentModule.name,
           daemonSetModule.name,

@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
-import {resolveReplicationControllerList} from 'replicationcontrollerlist/replicationcontrollerlist_stateconfig';
+import {resolveReplicationControllerList} from 'replicationcontroller/list/stateconfig';
+import replicationControllerModule from 'replicationcontroller/module';
 
 describe('StateConfig for replication controller list', () => {
-  /** @type {!common/pagination/pagination_service.PaginationService} */
+  /** @type {!PaginationService} */
   let kdPaginationService;
 
   beforeEach(() => {
-    angular.mock.module(replicationControllerListModule.name);
+    angular.mock.module(replicationControllerModule.name);
     angular.mock.inject((_kdPaginationService_) => {
       kdPaginationService = _kdPaginationService_;
     });

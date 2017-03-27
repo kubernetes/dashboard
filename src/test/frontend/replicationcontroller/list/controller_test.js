@@ -12,17 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ReplicationControllerListController} from 'replicationcontrollerlist/replicationcontrollerlist_controller';
-import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
+import {ReplicationControllerListController} from 'replicationcontroller/list/controller';
+import replicationControllerModule from 'replicationcontroller/module';
 
 describe('Replication controller list controller', () => {
-  /** @type
-   * {!replicationcontrollerlist/replicationcontrollerlist_controller.ReplicationControllerListController}
-   */
+  /** @type {!ReplicationControllerListController} */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(replicationControllerListModule.name);
+    angular.mock.module(replicationControllerModule.name);
 
     angular.mock.inject(($controller) => {
       ctrl = $controller(

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import UpdateReplicasDialogController from 'replicationcontrollerdetail/updatereplicas_controller';
+import UpdateReplicasDialogController from 'replicationcontroller/detail/updatereplicas_controller';
 
 /**
  * Opens update replicas dialog.
@@ -29,7 +29,7 @@ export default function showUpdateReplicasDialog(
     controller: UpdateReplicasDialogController,
     controllerAs: 'ctrl',
     clickOutsideToClose: true,
-    templateUrl: 'replicationcontrollerdetail/updatereplicas.html',
+    templateUrl: 'replicationcontroller/detail/updatereplicas.html',
     locals: {
       'namespace': namespace,
       'replicationController': replicationController,

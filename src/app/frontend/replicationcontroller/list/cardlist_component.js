@@ -17,11 +17,11 @@
  */
 class RCCardListController {
   /**
-   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
+   * @param {!./../../common/namespace/namespace_service.NamespaceService} kdNamespaceService
    * @ngInject
    */
   constructor(kdNamespaceService) {
-    /** @private {!./../common/namespace/namespace_service.NamespaceService} */
+    /** @private {!./../../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
   }
 
@@ -47,6 +47,6 @@ export const replicationControllerCardListComponent = {
     'replicationControllerListResource': '<',
     'showResourceKind': '<',
   },
-  templateUrl: 'replicationcontrollerlist/replicationcontrollercardlist.html',
+  templateUrl: 'replicationcontroller/list/cardlist.html',
   controller: RCCardListController,
 };

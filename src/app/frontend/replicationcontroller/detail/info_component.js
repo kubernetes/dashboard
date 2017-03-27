@@ -44,7 +44,7 @@ export default class ReplicationControllerInfoController {
  */
 export const replicationControllerInfoComponent = {
   controller: ReplicationControllerInfoController,
-  templateUrl: 'replicationcontrollerdetail/replicationcontrollerinfo.html',
+  templateUrl: 'replicationcontroller/detail/info.html',
   bindings: {
     /** {!backendApi.ReplicationControllerDetail} */
     'replicationController': '<',

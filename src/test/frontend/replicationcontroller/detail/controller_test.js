@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ReplicationControllerDetailController from 'replicationcontrollerdetail/replicationcontrollerdetail_controller';
-import replicationControllerDetailModule from 'replicationcontrollerdetail/replicationcontrollerdetail_module';
+import ReplicationControllerDetailController from 'replicationcontroller/detail/controller';
+import replicationControllerModule from 'replicationcontroller/module';
 
 describe('Replication Controller Detail controller', () => {
   /**
@@ -23,7 +23,7 @@ describe('Replication Controller Detail controller', () => {
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(replicationControllerDetailModule.name);
+    angular.mock.module(replicationControllerModule.name);
 
     angular.mock.inject(($controller) => {
       ctrl = $controller(ReplicationControllerDetailController, {

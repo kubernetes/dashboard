@@ -12,23 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
+import replicationControllerModule from 'replicationcontroller/module';
 
 describe('Replication Controller Card List controller', () => {
   /**
-   * @type {!replicationcontrollerlist/replicationcontrollercardlist_component.RCCardListController}
+   * @type {!RCCardListController}
    */
   let ctrl;
   /**
-   * @type {!./../common/namespace/namespace_service.NamespaceService}
+   * @type {!NamespaceService}
    */
   let data;
 
   beforeEach(() => {
-    angular.mock.module(replicationControllerListModule.name);
+    angular.mock.module(replicationControllerModule.name);
 
     angular.mock.inject(($componentController, kdNamespaceService) => {
-      /** @type {!./../common/namespace/namespace_service.NamespaceService} */
+      /** @type {!NamespaceService} */
       data = kdNamespaceService;
       /** @type {!RCCardListController} */
       ctrl = $componentController('kdReplicationControllerCardList', {kdNamespaceService_: data});

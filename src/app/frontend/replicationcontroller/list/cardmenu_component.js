@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'replicationcontrollerdetail/replicationcontrollerdetail_state';
+import {stateName} from 'replicationcontroller/detail/state';
 
 /**
  * Controller for the replication controller card menu
@@ -23,8 +23,7 @@ import {stateName} from 'replicationcontrollerdetail/replicationcontrollerdetail
 export default class ReplicationControllerCardMenuController {
   /**
    * @param {!ui.router.$state} $state
-   * @param
-   * {!./../replicationcontrollerdetail/replicationcontroller_service.ReplicationControllerService}
+   * @param {!./../detail/delete_service.ReplicationControllerService}
    * kdReplicationControllerService
    * @ngInject
    */
@@ -38,9 +37,7 @@ export default class ReplicationControllerCardMenuController {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
-    /** @private
-     * {!./../replicationcontrollerdetail/replicationcontroller_service.ReplicationControllerService}
-     */
+    /** @private {!./../detail/delete_service.ReplicationControllerService} */
     this.kdReplicationControllerService_ = kdReplicationControllerService;
   }
 
@@ -82,5 +79,5 @@ export const replicationControllerCardMenuComponent = {
     'replicationController': '=',
   },
   controller: ReplicationControllerCardMenuController,
-  templateUrl: 'replicationcontrollerlist/replicationcontrollercardmenu.html',
+  templateUrl: 'replicationcontroller/list/cardmenu.html',
 };

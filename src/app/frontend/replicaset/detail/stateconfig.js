@@ -90,8 +90,8 @@ export function replicaSetEventsResource($resource) {
 
 /**
  * @param {!angular.Resource} kdReplicaSetDetailResource
- * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
- * @param {!./../common/pagination/pagination_service.PaginationService} kdPaginationService
+ * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
+ * @param {!./../../common/pagination/pagination_service.PaginationService} kdPaginationService
  * @return {!angular.Resource<!backendApi.ReplicaSetDetail>}
  * @ngInject
  */

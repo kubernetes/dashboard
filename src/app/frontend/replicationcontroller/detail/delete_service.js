@@ -22,14 +22,14 @@ import showUpdateReplicasDialog from './updatereplicas_dialog';
 export class ReplicationControllerService {
   /**
    * @param {!md.$dialog} $mdDialog
-   * @param {!./../common/resource/verber_service.VerberService} kdResourceVerberService
+   * @param {!./../../common/resource/verber_service.VerberService} kdResourceVerberService
    * @ngInject
    */
   constructor($mdDialog, kdResourceVerberService) {
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
 
-    /** @private {!./../common/resource/verber_service.VerberService}*/
+    /** @private {!./../../common/resource/verber_service.VerberService}*/
     this.kdResourceVerberService_ = kdResourceVerberService;
   }
 

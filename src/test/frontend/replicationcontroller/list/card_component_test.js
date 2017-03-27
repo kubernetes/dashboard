@@ -12,17 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import replicationControllerListModule from 'replicationcontrollerlist/replicationcontrollerlist_module';
+import replicationControllerModule from 'replicationcontroller/module';
 
 describe('Replication controller card', () => {
-  /**
-   * @type
-   * {!replicationcontrollerlist/replicationcontrollercard_component.ReplicationControllerCardController}
-   */
+  /** @type {!ReplicationControllerCardController} */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(replicationControllerListModule.name);
+    angular.mock.module(replicationControllerModule.name);
 
     angular.mock.inject(($componentController, $rootScope) => {
       ctrl = $componentController('kdReplicationControllerCard', {$scope: $rootScope});

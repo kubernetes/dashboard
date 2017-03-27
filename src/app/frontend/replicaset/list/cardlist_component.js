@@ -55,6 +55,6 @@ export const replicaSetCardListComponent = {
     'replicaSetListResource': '<',
     'showResourceKind': '<',
   },
-  templateUrl: 'replicaset/list/list.html',
+  templateUrl: 'replicaset/list/cardlist.html',
   controller: ReplicaSetCardListController,
 };

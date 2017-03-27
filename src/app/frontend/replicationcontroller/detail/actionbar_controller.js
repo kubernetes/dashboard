@@ -18,12 +18,11 @@
 export class ActionBarController {
   /**
    * @param {!backendApi.ReplicationControllerDetail} replicationControllerDetail
-   * @param {!./replicationcontroller_service.ReplicationControllerService}
-   * kdReplicationControllerService
+   * @param {!./delete_service.ReplicationControllerService} kdReplicationControllerService
    * @ngInject
    */
   constructor(replicationControllerDetail, kdReplicationControllerService) {
-    /** @private {!./replicationcontroller_service.ReplicationControllerService} */
+    /** @private {!./delete_service.ReplicationControllerService} */
     this.kdReplicationControllerService_ = kdReplicationControllerService;
 
     /** @export {!backendApi.ReplicationControllerDetail} */

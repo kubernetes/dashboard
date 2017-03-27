@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ActionBarController} from 'replicationcontrollerdetail/actionbar_controller';
-import replicationControllerDetailModule from 'replicationcontrollerdetail/replicationcontrollerdetail_module';
+import {ActionBarController} from 'replicationcontroller/detail/actionbar_controller';
+import replicationControllerModule from 'replicationcontroller/module';
 
 describe('Replication Controller Detail Action Bar controller', () => {
   /**
@@ -21,12 +21,11 @@ describe('Replication Controller Detail Action Bar controller', () => {
    * @type {!ReplicationControllerDetailActionBarController}
    */
   let ctrl;
-  /** @type
-   * {!replicationcontrollerdetail/replicationcontroller_service.ReplicationControllerService} */
+  /** @type {!ReplicationControllerService} */
   let kdReplicationControllerService;
 
   beforeEach(() => {
-    angular.mock.module(replicationControllerDetailModule.name);
+    angular.mock.module(replicationControllerModule.name);
 
     angular.mock.inject(($controller, $resource, _kdReplicationControllerService_) => {
       kdReplicationControllerService = _kdReplicationControllerService_;
