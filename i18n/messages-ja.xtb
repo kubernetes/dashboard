@@ -14,6 +14,7 @@
   <translation id="6870889542203892242" key="MSG_ADMIN_PERSISTENT_VOLUMES_LABEL" desc="Label that appears above the list of resources.">永続ボリューム</translation>
   <translation id="7747923130541982538" key="MSG_ADMIN_RESOURCE_QUOTAS_LABEL" desc="Label that appears above the list of resources.">リソースクォータ</translation>
   <translation id="1024358167652076581" key="MSG_ALL_NAMESPACES" desc="Text for dropdown item that indicates that no namespace was selected">すべてのネームスペース</translation>
+  <translation id="837746496620402371" key="MSG_BREADCRUMBS_ACCESS_CONTROL_LABEL" desc="Label 'Access Control' that appears as a breadcrumbs on the action bar.">Access Control</translation>
   <translation id="4466763630197200161" key="MSG_BREADCRUMBS_ADMIN_LABEL" desc="Label 'Admin' that appears as a breadcrumbs on the action bar.">管理者</translation>
   <translation id="954605561178153927" key="MSG_BREADCRUMBS_CONFIG_LABEL" desc="Label 'Config' that appears as a breadcrumbs on the action bar.">コンフィグ</translation>
   <translation id="3212328899649855136" key="MSG_BREADCRUMBS_CONFIG_MAPS_LABEL" desc="Label 'Config Maps' that appears as a breadcrumbs on the action bar.">コンフィグマップ</translation>
@@ -57,6 +58,7 @@
   <translation id="8736839163304985332" key="MSG_CHROME_NAV_NAV_19" desc="Config Maps item in the nav.">コンフィグマップ</translation>
   <translation id="1743316598408730775" key="MSG_CHROME_NAV_NAV_2" desc="Nodes menu item in the nav.">ノード</translation>
   <translation id="3009175856839976873" key="MSG_CHROME_NAV_NAV_20" desc="Storage Classes menu item in the nav.">ストレージクラス</translation>
+  <translation id="2880965389211634878" key="MSG_CHROME_NAV_NAV_21" desc="Access Control menu item in the nav.">Access Control</translation>
   <translation id="4957526140740745953" key="MSG_CHROME_NAV_NAV_3" desc="Persistent Volumes menu item in the nav.">永続ボリューム</translation>
   <translation id="4398523516847444868" key="MSG_CHROME_NAV_NAV_4" desc="Workloads menu item in the nav.">ワークロード</translation>
   <translation id="6003139668988832289" key="MSG_CHROME_NAV_NAV_5" desc="Deployments menu item in the nav.">デプロイメント</translation>
@@ -1470,6 +1472,10 @@
   <translation id="8533038012448542448" key="MSG_RESOURCE_DETAIL_INFO_CARD_NAMESPACE_LABEL" desc="Label 'Namespace' for a resource.">ネームスペース</translation>
   <translation id="4826002371920064937" key="MSG_RESOURCE_DETAIL_INFO_CARD_NAME_LABEL" desc="Label 'Name' for a resource.">名前</translation>
   <translation id="6116578277969213046" key="MSG_RESOURCE_DETAIL_INFO_CARD_START_TIME_LABEL" desc="Label 'Creation time' for a resource.">作成日時</translation>
+  <translation id="6881667150857464035" key="MSG_ROLELIST_ROLECARDLIST_0" desc="Label which appears above the list of such objects.">Roles</translation>
+  <translation id="7605823177278371307" key="MSG_ROLELIST_ROLECARDLIST_1" desc="Role list header: name.">Name</translation>
+  <translation id="8138087091569306999" key="MSG_ROLELIST_ROLECARDLIST_2" desc="Role list header: role type.">Role Type</translation>
+  <translation id="1719257005492651277" key="MSG_ROLELIST_ROLECARDLIST_3" desc="Role list header: namespace.">Namespace</translation>
   <translation id="1320482404001625698" key="MSG_SECRETDETAIL_ACTIONBAR_0" desc="Label \'Secret\' which appears at the top of the delete dialog, opened from a secret details page.">シークレット</translation>
   <translation id="1561742373508692276" key="MSG_SECRETDETAIL_DETAIL_0" desc="Secrets info details section data.">データ </translation>
   <translation id="7988357395949564443" key="MSG_SECRETDETAIL_DETAIL_0" desc="Config map info details section name.">データ</translation>

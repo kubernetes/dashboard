@@ -117,6 +117,10 @@ const (
 	ResourceKindStatefulSet             = "statefulset"
 	ResourceKindThirdPartyResource      = "thirdpartyresource"
 	ResourceKindStorageClass            = "storageclass"
+	ResourceKindRbacRole                = "role"
+	ResourceKindRbacClusterRole         = "clusterrole"
+	ResourceKindRbacRoleBinding         = "rolebinding"
+	ResourceKindRbacClusterRoleBinding  = "clusterrolebinding"
 )
 
 // ClientType represents type of client that is used to perform generic operations on resources.
