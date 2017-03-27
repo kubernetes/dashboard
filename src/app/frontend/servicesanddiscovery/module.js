@@ -14,10 +14,9 @@
 
 import chromeModule from 'chrome/chrome_module';
 import ingressModule from 'ingress/module';
-import serviceListModule from 'servicelist/servicelist_module';
+import serviceModule from 'service/module';
 
 import stateConfig from './stateconfig';
-
 
 /**
  * Module for the admin service sand discovery.
@@ -30,7 +29,7 @@ export default angular
           'ngResource',
           'ui.router',
           chromeModule.name,
-          serviceListModule.name,
+          serviceModule.name,
           ingressModule.name,
         ])
     .config(stateConfig)

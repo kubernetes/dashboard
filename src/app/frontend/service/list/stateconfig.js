@@ -16,42 +16,57 @@ import {stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {stateName as parentStateName} from 'servicesanddiscovery/state';
 
-import {ServiceListController} from './servicelist_controller';
-import {stateName, stateUrl} from './servicelist_state';
+import {stateUrl} from './../state';
+import {ServiceListController} from './controller';
 
 /**
- * Configures states for the service list view.
+ * I18n object that defines strings for translation used in this file.
+ */
+const i18n = {
+  /** @type {string} @desc Label 'Services' that appears as a breadcrumbs on the action bar. */
+  MSG_BREADCRUMBS_SERVICES_LABEL: goog.getMsg('Services'),
+};
+
+/**
+ * Config state object for the Service list view.
  *
- * @param {!ui.router.$stateProvider} $stateProvider
+ * @type {!ui.router.StateConfig}
+ */
+export const config = {
+  url: stateUrl,
+  parent: chromeStateName,
+  resolve: {
+    'serviceList': resolveServiceList,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': i18n.MSG_BREADCRUMBS_SERVICES_LABEL,
+      'parent': parentStateName,
+    },
+  },
+  views: {
+    '': {
+      controller: ServiceListController,
+      controllerAs: 'ctrl',
+      templateUrl: 'service/list/list.html',
+    },
+  },
+};
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
  * @ngInject
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    url: stateUrl,
-    parent: chromeStateName,
-    resolve: {
-      'serviceList': resolveServiceList,
-    },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': i18n.MSG_BREADCRUMBS_SERVICES_LABEL,
-        'parent': parentStateName,
-      },
-    },
-    views: {
-      '': {
-        controller: ServiceListController,
-        controllerAs: 'ctrl',
-        templateUrl: 'servicelist/servicelist.html',
-      },
-    },
-  });
+export function serviceListResource($resource) {
+  return $resource('api/v1/service/:namespace');
 }
+
 
 /**
  * @param {!angular.Resource} kdServiceListResource
- * @param {!./../chrome/chrome_state.StateParams} $stateParams
- * @param {!./../common/pagination/pagination_service.PaginationService} kdPaginationService
+ * @param {!./../../chrome/chrome_state.StateParams} $stateParams
+ * @param {!./../../common/pagination/pagination_service.PaginationService} kdPaginationService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
@@ -59,8 +74,3 @@ export function resolveServiceList(kdServiceListResource, $stateParams, kdPagina
   let query = kdPaginationService.getDefaultResourceQuery($stateParams.namespace);
   return kdServiceListResource.get(query).$promise;
 }
-
-const i18n = {
-  /** @type {string} @desc Label 'Services' that appears as a breadcrumbs on the action bar. */
-  MSG_BREADCRUMBS_SERVICES_LABEL: goog.getMsg('Services'),
-};

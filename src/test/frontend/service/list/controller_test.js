@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ServiceListController} from 'servicelist/servicelist_controller';
-import serviceListModule from 'servicelist/servicelist_module';
+import {ServiceListController} from 'service/list/controller';
+import serviceModule from 'service/module';
 
 describe('Service list controller', () => {
-  /** @type {!servicelist/servicelist_controller.ServiceListController} */
+  /** @type {!ServiceListController} */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(serviceListModule.name);
+    angular.mock.module(serviceModule.name);
 
     angular.mock.inject(($controller) => {
       ctrl = $controller(ServiceListController, {serviceList: {services: []}});

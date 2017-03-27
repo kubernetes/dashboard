@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'servicedetail/servicedetail_state';
+import {stateName} from 'service/detail/state';
 
 /**
  * @final
@@ -21,11 +21,11 @@ import {stateName} from 'servicedetail/servicedetail_state';
 export class ServiceCardController {
   /**
    * @param {!ui.router.$state} $state
-   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
+   * @param {!./../../common/namespace/namespace_service.NamespaceService} kdNamespaceService
    * @ngInject
    */
   constructor($state, kdNamespaceService) {
-    /** @private {!./../common/namespace/namespace_service.NamespaceService} */
+    /** @private {!./../../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
 
     /** @export {!backendApi.Service} */
@@ -91,7 +91,7 @@ export class ServiceCardController {
  * @type {!angular.Component}
  */
 export const serviceCardComponent = {
-  templateUrl: 'servicelist/servicecard.html',
+  templateUrl: 'service/list/card.html',
   controller: ServiceCardController,
   bindings: {
     /** {!backendApi.Service} */

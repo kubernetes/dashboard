@@ -12,23 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ActionBarController} from 'servicedetail/actionbar_controller';
-import module from 'servicedetail/servicedetail_module';
+/** Name of the state. */
+export const stateName = 'service';
 
-describe('Action Bar controller', () => {
-  /** @type {!ActionBarController} */
-  let ctrl;
-  let details = {};
-
-  beforeEach(() => {
-    angular.mock.module(module.name);
-
-    angular.mock.inject(($controller) => {
-      ctrl = $controller(ActionBarController, {serviceDetail: details});
-    });
-  });
-
-  it('should initialize details', () => {
-    expect(ctrl.details).toBe(details);
-  });
-});
+/** Absolute URL of the state. */
+export const stateUrl = '/service';

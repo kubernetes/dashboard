@@ -12,18 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import serviceDetailModule from 'servicedetail/servicedetail_module';
-import serviceListModule from 'servicelist/servicelist_module';
+import serviceModule from 'service/module';
 
 describe('Service card controller', () => {
-  /**
-   * @type {!servicelist/servicecard_component.ServiceCardController}
-   */
+  /** @type {!ServiceCardController} */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(serviceListModule.name);
-    angular.mock.module(serviceDetailModule.name);
+    angular.mock.module(serviceModule.name);
 
     angular.mock.inject(($componentController, $rootScope) => {
       ctrl = $componentController('kdServiceCard', {$scope: $rootScope}, {});

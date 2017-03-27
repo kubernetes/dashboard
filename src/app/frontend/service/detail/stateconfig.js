@@ -16,48 +16,55 @@ import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_sta
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 
-import {stateName as serviceList, stateUrl} from './../servicelist/servicelist_state';
+import {stateName as serviceList} from './../list/state';
+import {stateUrl} from './../state';
 import {ActionBarController} from './actionbar_controller';
-import {ServiceDetailController} from './servicedetail_controller';
-import {stateName} from './servicedetail_state';
+import {ServiceDetailController} from './controller';
 
 /**
- * Configures states for the service details view.
+ * Config state object for the Service detail view.
  *
- * @param {!ui.router.$stateProvider} $stateProvider
+ * @type {!ui.router.StateConfig}
+ */
+export const config = {
+  url: appendDetailParamsToUrl(stateUrl),
+  parent: chromeStateName,
+  resolve: {
+    'serviceDetailResource': getServiceDetailResource,
+    'serviceDetail': resolveServiceDetail,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': '{{$stateParams.objectName}}',
+      'parent': serviceList,
+    },
+  },
+  views: {
+    '': {
+      controller: ServiceDetailController,
+      controllerAs: 'ctrl',
+      templateUrl: 'service/detail/detail.html',
+    },
+    [actionbarViewName]: {
+      controller: ActionBarController,
+      controllerAs: '$ctrl',
+      templateUrl: 'service/detail/actionbar.html',
+    },
+  },
+};
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
  * @ngInject
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    url: appendDetailParamsToUrl(stateUrl),
-    parent: chromeStateName,
-    resolve: {
-      'serviceDetailResource': getServiceDetailResource,
-      'serviceDetail': resolveServiceDetail,
-    },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': '{{$stateParams.objectName}}',
-        'parent': serviceList,
-      },
-    },
-    views: {
-      '': {
-        controller: ServiceDetailController,
-        controllerAs: 'ctrl',
-        templateUrl: 'servicedetail/servicedetail.html',
-      },
-      [actionbarViewName]: {
-        controller: ActionBarController,
-        controllerAs: '$ctrl',
-        templateUrl: 'servicedetail/actionbar.html',
-      },
-    },
-  });
+export function servicePodsResource($resource) {
+  return $resource('api/v1/service/:namespace/:name/pod');
 }
 
+
 /**
- * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
+ * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource<!backendApi.ServiceDetail>}
  * @ngInject

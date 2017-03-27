@@ -12,20 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ServiceDetailController} from 'servicedetail/servicedetail_controller';
-import serviceDetailModule from 'servicedetail/servicedetail_module';
+/**
+ * Service info controller.
+ * @final
+ */
+class ServiceInfoController {
+  constructor() {
+    /** @export {!backendApi.ServiceDetail} Initialized from a binding. */
+    this.service;
+  }
+}
 
-describe('Service detail controller', () => {
-
-  beforeEach(() => {
-    angular.mock.module(serviceDetailModule.name);
-  });
-
-  it('should initialize controller', angular.mock.inject(($controller) => {
-    let data = {serviceDetail: {}};
-    /** @type {!ServiceDetailController} */
-    let ctrl = $controller(ServiceDetailController, {serviceDetail: data});
-
-    expect(ctrl.serviceDetail).toBe(data);
-  }));
-});
+/**
+ * Definition object for the component that displays service info.
+ *
+ * @return {!angular.Directive}
+ */
+export const serviceInfoComponent = {
+  templateUrl: 'service/detail/info.html',
+  bindings: {
+    /** {!backendApi.ServiceDetail} */
+    'service': '<',
+  },
+  controller: ServiceInfoController,
+};

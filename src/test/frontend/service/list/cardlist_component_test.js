@@ -12,23 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import serviceListModule from 'servicelist/servicelist_module';
+import serviceModule from 'service/module';
 
 describe('Service Card List controller', () => {
   /**
-   * @type {!servicelist/servicecardlist_component.ServiceCardListController}
+   * @type {!ServiceCardListController}
    */
   let ctrl;
   /**
-   * @type {!./../common/namespace/namespace_service.NamespaceService}
+   * @type {!NamespaceService}
    * */
   let data;
 
   beforeEach(() => {
-    angular.mock.module(serviceListModule.name);
+    angular.mock.module(serviceModule.name);
 
     angular.mock.inject(($componentController, kdNamespaceService) => {
-      /** @type {!./../common/namespace/namespace_service.NamespaceService} */
+      /** @type {!NamespaceService} */
       data = kdNamespaceService;
       /** @type {!ServiceCardListController} */
       ctrl = $componentController('kdServiceCardList', {kdNamespaceService_: data});

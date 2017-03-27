@@ -12,8 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'service';
+import {ServiceDetailController} from 'service/detail/controller';
+import serviceModule from 'service/module';
 
-/** Absolute URL of the state. */
-export const stateUrl = '/service';
+describe('Service detail controller', () => {
+
+  beforeEach(() => {
+    angular.mock.module(serviceModule.name);
+  });
+
+  it('should initialize controller', angular.mock.inject(($controller) => {
+    let data = {serviceDetail: {}};
+    /** @type {!ServiceDetailController} */
+    let ctrl = $controller(ServiceDetailController, {serviceDetail: data});
+
+    expect(ctrl.serviceDetail).toBe(data);
+  }));
+});

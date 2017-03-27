@@ -12,27 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Service info controller.
- * @final
- */
-class ServiceInfoController {
-  constructor() {
-    /** @export {!backendApi.ServiceDetail} Initialized from a binding. */
-    this.service;
-  }
-}
-
-/**
- * Definition object for the component that displays service info.
- *
- * @return {!angular.Directive}
- */
-export const serviceInfoComponent = {
-  templateUrl: 'servicedetail/servicedetailinfo.html',
-  bindings: {
-    /** {!backendApi.ServiceDetail} */
-    'service': '<',
-  },
-  controller: ServiceInfoController,
-};
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'service.detail';

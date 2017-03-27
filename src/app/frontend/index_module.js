@@ -42,8 +42,7 @@ import replicaSetModule from './replicaset/module';
 import replicationControllerModule from './replicationcontroller/module';
 import resourceQuotaDetailModule from './resourcequotadetail/resourcequotadetail_module';
 import secretModule from './secret/module';
-import serviceDetailModule from './servicedetail/servicedetail_module';
-import serviceListModule from './servicelist/servicelist_module';
+import serviceModule from './service/module';
 import servicesanddiscoveryModule from './servicesanddiscovery/module';
 import statefulSetListModule from './statefulsetlist/statefulsetlist_module';
 import storageModule from './storage/module';
@@ -81,8 +80,7 @@ export default angular
           workloadsModule.name,
           storageModule.name,
           adminModule.name,
-          serviceDetailModule.name,
-          serviceListModule.name,
+          serviceModule.name,
           podModule.name,
           persistentVolumeModule.name,
           statefulSetListModule.name,

@@ -17,11 +17,11 @@
  */
 export class ServiceCardListController {
   /**
-   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
+   * @param {!./../../common/namespace/namespace_service.NamespaceService} kdNamespaceService
    * @ngInject
    */
   constructor(kdNamespaceService) {
-    /** @private {!./../common/namespace/namespace_service.NamespaceService} */
+    /** @private {!./../../common/namespace/namespace_service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
 
     /** @export {!angular.Resource} Initialized from binding. */
@@ -49,7 +49,7 @@ export const serviceCardListComponent = {
     // Optional zerostate content that is shown when there are zero items.
     'zerostate': '?kdZerostate',
   },
-  templateUrl: 'servicelist/servicecardlist.html',
+  templateUrl: 'service/list/cardlist.html',
   controller: ServiceCardListController,
   bindings: {
     /** {!backendApi.ServiceList} */
