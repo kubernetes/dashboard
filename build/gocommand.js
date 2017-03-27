@@ -35,7 +35,7 @@ const env = lodash.merge(process.env, {GOPATH: sourceGopath, PATH: devPath});
 /**
  * Minimum required Go Version
  */
-const minGoVersion = '1.6.1';
+const minGoVersion = '1.7.1';
 
 /**
  * Spawns a Go process after making sure all Go prerequisites are
