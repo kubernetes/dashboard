@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as parentStateName} from 'admin/state';
+import {stateName as parentStateName} from 'cluster/state';
 import {stateName as chromeStateName} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 

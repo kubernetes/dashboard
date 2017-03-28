@@ -145,10 +145,11 @@ backendApi.Workloads;
  *   nodeList: !backendApi.NodeList,
  *   namespaceList: !backendApi.NamespaceList,
  *   persistentVolumeList: !backendApi.PersistentVolumeList,
+ *   roleList: !backendApi.RoleList,
  *   storageClassList: !backendApi.StorageClassList,
  * }}
  */
-backendApi.Admin;
+backendApi.Cluster;
 
 /**
  * @typedef {{

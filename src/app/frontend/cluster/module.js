@@ -21,11 +21,11 @@ import storageClassModule from 'storageclass/module';
 import stateConfig from './stateconfig';
 
 /**
- * Module for the admin view.
+ * Module for the cluster view.
  */
 export default angular
     .module(
-        'kubernetesDashboard.admin',
+        'kubernetesDashboard.cluster',
         [
           'ngMaterial',
           'ngResource',
@@ -37,7 +37,7 @@ export default angular
           storageClassModule.name,
         ])
     .config(stateConfig)
-    .factory('kdAdminResource', resource);
+    .factory('kdClusterResource', resource);
 
 /**
  * @param {!angular.$resource} $resource
@@ -45,5 +45,5 @@ export default angular
  * @ngInject
  */
 function resource($resource) {
-  return $resource('api/v1/admin');
+  return $resource('api/v1/cluster');
 }

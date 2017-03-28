@@ -1,4 +1,4 @@
-// Copyright 2017 Google Inc. All Rights Reserved.
+// Copyright 2015 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,15 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import roleListModule from 'role/module';
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'cluster';
 
-import stateConfig from './stateconfig';
-
-/**
- * Module for the access control view.
- */
-export default angular
-    .module(
-        'kubernetesDashboard.accesscontrol',
-        ['ngMaterial', 'ngResource', 'ui.router', roleListModule.name])
-    .config(stateConfig);
+/** Absolute URL of the state. */
+export const stateUrl = '/cluster';

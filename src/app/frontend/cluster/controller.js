@@ -15,26 +15,29 @@
 /**
  * @final
  */
-export class AdminController {
+export class ClusterController {
   /**
-   * @param {!backendApi.Admin} admin
+   * @param {!backendApi.Cluster} cluster
    * @param {!angular.Resource} kdNamespaceListResource
    * @param {!angular.Resource} kdNodeListResource
    * @param {!angular.Resource} kdPersistentVolumeListResource
+   * @param {!angular.Resource} kdRoleListResource
    * @param {!angular.Resource} kdStorageClassListResource
    * @ngInject
    */
   constructor(
-      admin, kdNamespaceListResource, kdNodeListResource, kdPersistentVolumeListResource,
-      kdStorageClassListResource) {
-    /** @export {!backendApi.Admin} */
-    this.admin = admin;
+      cluster, kdNamespaceListResource, kdNodeListResource, kdPersistentVolumeListResource,
+      kdRoleListResource, kdStorageClassListResource) {
+    /** @export {!backendApi.Cluster} */
+    this.cluster = cluster;
     /** @export {!angular.Resource} */
     this.kdNamespaceListResource = kdNamespaceListResource;
     /** @export {!angular.Resource} */
     this.kdNodeListResource = kdNodeListResource;
     /** @export {!angular.Resource} */
     this.kdPersistentVolumeListResource = kdPersistentVolumeListResource;
+    /** @export {!angular.Resource} */
+    this.kdRoleListResource = kdRoleListResource;
     /** @export {!angular.Resource} */
     this.kdStorageClassListResource = kdStorageClassListResource;
   }
@@ -45,11 +48,10 @@ export class AdminController {
    */
   shouldShowZeroState() {
     /** @type {number} */
-    let resourcesLength = this.admin.nodeList.listMeta.totalItems +
-        this.admin.namespaceList.listMeta.totalItems +
-        this.admin.persistentVolumeList.listMeta.totalItems +
-        this.admin.storageClassList.listMeta.totalItems;
-
+    let resourcesLength = this.cluster.nodeList.listMeta.totalItems +
+        this.cluster.namespaceList.listMeta.totalItems +
+        this.cluster.persistentVolumeList.listMeta.totalItems +
+        this.cluster.storageClassList.listMeta.totalItems;
     return resourcesLength === 0;
   }
 }

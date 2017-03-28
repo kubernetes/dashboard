@@ -15,7 +15,7 @@
 /**
  * @final
  */
-export class AccessControlController {
+export class RoleListController {
   /**
    * @param {!backendApi.RoleList} roleList
    * @param {!angular.Resource}kdRoleListResource

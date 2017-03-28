@@ -15,7 +15,7 @@
 import {stateName as chromeStateName} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 
-import {AdminController} from './controller';
+import {ClusterController} from './controller';
 import {stateName} from './state';
 import {stateUrl} from './state';
 
@@ -28,35 +28,35 @@ export default function stateConfig($stateProvider) {
     url: stateUrl,
     parent: chromeStateName,
     resolve: {
-      'admin': resolveResource,
+      'cluster': resolveResource,
     },
     data: {
       [breadcrumbsConfig]: {
-        'label': i18n.MSG_BREADCRUMBS_ADMIN_LABEL,
+        'label': i18n.MSG_BREADCRUMBS_CLUSTER_LABEL,
       },
     },
     views: {
       '': {
-        controller: AdminController,
+        controller: ClusterController,
         controllerAs: '$ctrl',
-        templateUrl: 'admin/admin.html',
+        templateUrl: 'cluster/cluster.html',
       },
     },
   });
 }
 
 /**
- * @param {!angular.$resource} kdAdminResource
+ * @param {!angular.$resource} kdClusterResource
  * @param {!./../common/pagination/pagination_service.PaginationService} kdPaginationService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveResource(kdAdminResource, kdPaginationService) {
+export function resolveResource(kdClusterResource, kdPaginationService) {
   let paginationQuery = kdPaginationService.getDefaultResourceQuery();
-  return kdAdminResource.get(paginationQuery).$promise;
+  return kdClusterResource.get(paginationQuery).$promise;
 }
 
 const i18n = {
-  /** @type {string} @desc Label 'Admin' that appears as a breadcrumbs on the action bar. */
-  MSG_BREADCRUMBS_ADMIN_LABEL: goog.getMsg('Admin'),
+  /** @type {string} @desc Label 'Cluster' that appears as a breadcrumbs on the action bar. */
+  MSG_BREADCRUMBS_CLUSTER_LABEL: goog.getMsg('Cluster'),
 };

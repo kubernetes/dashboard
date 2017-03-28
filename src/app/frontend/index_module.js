@@ -17,8 +17,8 @@
  * to bootstrap the application.
  */
 import aboutModule from './about/module';
-import accessControlModule from './accesscontrol/module';
-import adminModule from './admin/module';
+import roleModule from './role/module';
+import clusterModule from './cluster/module';
 import chromeModule from './chrome/module';
 import csrfTokenModule from './common/csrftoken/csrftoken_module';
 import configModule from './config/module';
@@ -77,7 +77,7 @@ export default angular
           horizontalPodAutoscalerModule.name,
           workloadsModule.name,
           storageModule.name,
-          adminModule.name,
+          clusterModule.name,
           serviceModule.name,
           podModule.name,
           persistentVolumeModule.name,
@@ -92,7 +92,7 @@ export default angular
           csrfTokenModule.name,
           storageClassModule.name,
           thirdPartyResourceModule.name,
-          accessControlModule.name,
+          roleModule.name,
         ])
     .config(indexConfig)
     .config(routeConfig)

@@ -51,9 +51,7 @@ func GetRbacRoleList(client *client.Clientset, dsQuery *dataselect.DataSelectQue
 
 // GetRbacRoleListFromChannels returns a list of all RBAC roles in the cluster
 // reading required resource list once from the channels.
-func GetRbacRoleListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (
-	*RbacRoleList, error) {
-
+func GetRbacRoleListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (*RbacRoleList, error) {
 	roles := <-channels.RoleList.List
 	if err := <-channels.RoleList.Error; err != nil {
 		return nil, err

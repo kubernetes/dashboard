@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package admin
+package cluster
 
 import (
 	"log"
@@ -22,39 +22,43 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/node"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/rbacroles"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/storageclass"
 	"k8s.io/client-go/kubernetes"
 )
 
-// Admin structure contains all resource lists grouped into the admin category.
-type Admin struct {
+// Cluster structure contains all resource lists grouped into the cluster category.
+type Cluster struct {
 	NamespaceList        namespace.NamespaceList               `json:"namespaceList"`
 	NodeList             node.NodeList                         `json:"nodeList"`
 	PersistentVolumeList persistentvolume.PersistentVolumeList `json:"persistentVolumeList"`
+	RoleList             rbacroles.RbacRoleList                `json:"roleList"`
 	StorageClassList     storageclass.StorageClassList         `json:"storageClassList"`
 }
 
-// GetAdmin returns a list of all admin resources in the cluster.
-func GetAdmin(client *kubernetes.Clientset) (*Admin, error) {
-
-	log.Print("Getting admin category")
+// GetCluster returns a list of all cluster resources in the cluster.
+func GetCluster(client *kubernetes.Clientset) (*Cluster, error) {
+	log.Print("Getting cluster category")
 	channels := &common.ResourceChannels{
 		NamespaceList:        common.GetNamespaceListChannel(client, 1),
 		NodeList:             common.GetNodeListChannel(client, 1),
 		PersistentVolumeList: common.GetPersistentVolumeListChannel(client, 1),
+		RoleList:             common.GetRoleListChannel(client, 1),
+		ClusterRoleList:      common.GetClusterRoleListChannel(client, 1),
 		StorageClassList:     common.GetStorageClassListChannel(client, 1),
 	}
 
-	return GetAdminFromChannels(channels)
+	return GetClusterFromChannels(channels)
 }
 
-// GetAdminFromChannels returns a list of all admin in the cluster, from the
+// GetClusterFromChannels returns a list of all cluster in the cluster, from the
 // channel sources.
-func GetAdminFromChannels(channels *common.ResourceChannels) (*Admin, error) {
+func GetClusterFromChannels(channels *common.ResourceChannels) (*Cluster, error) {
 
 	nsChan := make(chan *namespace.NamespaceList)
 	nodeChan := make(chan *node.NodeList)
 	pvChan := make(chan *persistentvolume.PersistentVolumeList)
+	roleChan := make(chan *rbacroles.RbacRoleList)
 	storageChan := make(chan *storageclass.StorageClassList)
 	numErrs := 4
 	errChan := make(chan error, numErrs)
@@ -80,6 +84,13 @@ func GetAdminFromChannels(channels *common.ResourceChannels) (*Admin, error) {
 	}()
 
 	go func() {
+		items, err := rbacroles.GetRbacRoleListFromChannels(channels,
+			dataselect.DefaultDataSelect)
+		errChan <- err
+		roleChan <- items
+	}()
+
+	go func() {
 		items, err := storageclass.GetStorageClassListFromChannels(channels,
 			dataselect.DefaultDataSelect)
 		errChan <- err
@@ -93,12 +104,13 @@ func GetAdminFromChannels(channels *common.ResourceChannels) (*Admin, error) {
 		}
 	}
 
-	admin := &Admin{
+	cluster := &Cluster{
 		NamespaceList:        *(<-nsChan),
 		NodeList:             *(<-nodeChan),
 		PersistentVolumeList: *(<-pvChan),
+		RoleList:             *(<-roleChan),
 		StorageClassList:     *(<-storageChan),
 	}
 
-	return admin, nil
+	return cluster, nil
 }

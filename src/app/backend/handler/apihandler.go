@@ -27,7 +27,7 @@ import (
 
 	restful "github.com/emicklei/go-restful"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/admin"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/cluster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/config"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/configmap"
@@ -304,9 +304,9 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 			Writes(workload.Workloads{}))
 
 	apiV1Ws.Route(
-		apiV1Ws.GET("/admin").
-			To(apiHandler.handleGetAdmin).
-			Writes(admin.Admin{}))
+		apiV1Ws.GET("/cluster").
+			To(apiHandler.handleGetCluster).
+			Writes(cluster.Cluster{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/servicesanddiscovery").
@@ -822,8 +822,8 @@ func (apiHandler *APIHandler) handleGetNodeList(request *restful.Request, respon
 	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
-func (apiHandler *APIHandler) handleGetAdmin(request *restful.Request, response *restful.Response) {
-	result, err := admin.GetAdmin(apiHandler.client)
+func (apiHandler *APIHandler) handleGetCluster(request *restful.Request, response *restful.Response) {
+	result, err := cluster.GetCluster(apiHandler.client)
 	if err != nil {
 		handleInternalError(response, err)
 		return

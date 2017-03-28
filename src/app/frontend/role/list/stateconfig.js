@@ -14,9 +14,14 @@
 
 import {stateName as chromeStateName} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {RoleListController} from './controller';
+import {stateUrl} from '../state';
 
-import {AccessControlController} from './controller';
-import {stateName, stateUrl} from './state';
+const i18n = {
+  /** @type {string} @desc Label 'Roles' that appears as a breadcrumbs on the action bar.
+   */
+  MSG_BREADCRUMBS_ACCESS_CONTROL_LABEL: goog.getMsg('Roles'),
+};
 
 /**
  * Configures states for the service view.
@@ -24,8 +29,7 @@ import {stateName, stateUrl} from './state';
  * @param {!ui.router.$stateProvider} $stateProvider
  * @ngInject
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
+export const config = {
     url: stateUrl,
     parent: chromeStateName,
     resolve: {
@@ -38,17 +42,25 @@ export default function stateConfig($stateProvider) {
     },
     views: {
       '': {
-        controller: AccessControlController,
+        controller: RoleListController,
         controllerAs: '$ctrl',
-        templateUrl: 'accesscontrol/accesscontrol.html',
+        templateUrl: 'role/list/list.html',
       },
     },
-  });
+}
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+export function roleListResource($resource) {
+  return $resource('api/v1/rbacrole');
 }
 
 /**
  * @param {!angular.Resource} kdRoleListResource
- * @param {!./../common/pagination/pagination_service.PaginationService} kdPaginationService
+ * @param {!./../../common/pagination/pagination_service.PaginationService} kdPaginationService
  * @returns {!angular.$q.Promise}
  * @ngInject
  */
@@ -57,9 +69,3 @@ export function resolveRoleList(kdRoleListResource, kdPaginationService) {
   let query = kdPaginationService.getDefaultResourceQuery('');
   return kdRoleListResource.get(query).$promise;
 }
-
-const i18n = {
-  /** @type {string} @desc Label 'Access Control' that appears as a breadcrumbs on the action bar.
-   */
-  MSG_BREADCRUMBS_ACCESS_CONTROL_LABEL: goog.getMsg('Access Control'),
-};

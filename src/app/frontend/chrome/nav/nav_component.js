@@ -13,8 +13,7 @@
 // limitations under the License.
 
 import {stateName as aboutState} from 'about/state';
-import {stateName as accessControlState} from 'accesscontrol/state';
-import {stateName as adminState} from 'admin/state';
+import {stateName as clusterState} from 'cluster/state';
 import {stateName as configState} from 'config/state';
 import {stateName as configMapState} from 'configmap/list/state';
 import {stateName as daemonSetState} from 'daemonset/list/state';
@@ -28,9 +27,10 @@ import {stateName as persistentVolumeClaimState} from 'persistentvolumeclaim/lis
 import {stateName as podState} from 'pod/list/state';
 import {stateName as replicaSetState} from 'replicaset/list/state';
 import {stateName as replicationControllerState} from 'replicationcontroller/list/state';
+import {stateName as roleState} from 'role/list/state';
 import {stateName as secretState} from 'secret/list/state';
 import {stateName as serviceState} from 'service/list/state';
-import {stateName as servicesanddiscoveryState} from 'servicesanddiscovery/state';
+import {stateName as servicesAndDiscoveryState} from 'servicesanddiscovery/state';
 import {stateName as statefulSetState} from 'statefulset/list/state';
 import {stateName as storageState} from 'storage/state';
 import {stateName as storageClassState} from 'storageclass/list/state';
@@ -57,7 +57,7 @@ export class NavController {
       'node': nodeState,
       'workload': workloadState,
       'storage': storageState,
-      'admin': adminState,
+      'cluster': clusterState,
       'pod': podState,
       'deployment': deploymentState,
       'replicaSet': replicaSetState,
@@ -71,10 +71,10 @@ export class NavController {
       'secret': secretState,
       'configMap': configMapState,
       'ingress': ingressState,
-      'serviceDiscovery': servicesanddiscoveryState,
+      'serviceDiscovery': servicesAndDiscoveryState,
       'config': configState,
       'storageClass': storageClassState,
-      'accessControl': accessControlState,
+      'role': roleState,
       'about': aboutState,
     };
   }
