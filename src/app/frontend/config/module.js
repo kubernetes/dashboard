@@ -14,6 +14,7 @@
 
 import chromeModule from 'chrome/module';
 import configMapModule from 'configmap/module';
+import persistentVolumeClaimModule from 'persistentvolumeclaim/module';
 import secretModule from 'secret/module';
 
 import stateConfig from './stateconfig';
@@ -31,6 +32,7 @@ export default angular
           chromeModule.name,
           configMapModule.name,
           secretModule.name,
+          persistentVolumeClaimModule.name,
         ])
     .config(stateConfig)
     .factory('kdConfigResource', resource);

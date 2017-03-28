@@ -35,6 +35,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/discovery"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/ingress"
@@ -52,9 +53,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/secret"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/discovery"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/storage"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/storageclass"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/thirdpartyresource"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/workload"
@@ -284,15 +283,6 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 		apiV1Ws.GET("/replicationcontroller/{namespace}/{replicationController}/service").
 			To(apiHandler.handleGetReplicationControllerServices).
 			Writes(resourceService.ServiceList{}))
-
-	apiV1Ws.Route(
-		apiV1Ws.GET("/storage").
-			To(apiHandler.handleGetStorage).
-			Writes(storage.Storage{}))
-	apiV1Ws.Route(
-		apiV1Ws.GET("/storage/{namespace}").
-			To(apiHandler.handleGetStorage).
-			Writes(storage.Storage{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/workload").
@@ -982,22 +972,8 @@ func (apiHandler *APIHandler) handleGetWorkloads(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := parseNamespacePathParameter(request)
-	result, err := workload.GetWorkloads(apiHandler.client, apiHandler.heapsterClient, namespace, dataselect.StandardMetrics)
-	if err != nil {
-		handleInternalError(response, err)
-		return
-	}
-
-	response.WriteHeaderAndEntity(http.StatusOK, result)
-}
-
-/// / Handles get Storage resources list API call.
-func (apiHandler *APIHandler) handleGetStorage(
-	request *restful.Request, response *restful.Response) {
-
-	namespace := parseNamespacePathParameter(request)
-	dataSelect := parseDataSelectPathParameter(request)
-	result, err := storage.GetStorage(apiHandler.client, apiHandler.heapsterClient, namespace, dataSelect)
+	result, err := workload.GetWorkloads(apiHandler.client, apiHandler.heapsterClient,
+		namespace, dataselect.StandardMetrics)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1023,7 +999,9 @@ func (apiHandler *APIHandler) handleGetConfig(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := parseNamespacePathParameter(request)
-	result, err := config.GetConfig(apiHandler.client, namespace)
+	dataSelect := parseDataSelectPathParameter(request)
+	result, err := config.GetConfig(apiHandler.client, apiHandler.heapsterClient, namespace,
+		dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return

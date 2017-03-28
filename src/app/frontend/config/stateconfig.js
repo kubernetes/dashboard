@@ -32,7 +32,7 @@ export default function stateConfig($stateProvider) {
     },
     data: {
       [breadcrumbsConfig]: {
-        'label': i18n.MSG_BREADCRUMBS_CONFIG_LABEL,
+        'label': i18n.MSG_BREADCRUMBS_CONFIG_AND_STORAGE_LABEL,
       },
     },
     views: {
@@ -58,7 +58,7 @@ export function resolveResource(kdConfigResource, $stateParams, kdPaginationServ
 }
 
 const i18n = {
-  /** @type {string} @desc Label 'Config' that appears as a breadcrumbs on the
-     action bar. */
-  MSG_BREADCRUMBS_CONFIG_LABEL: goog.getMsg('Config'),
+  /** @type {string} @desc Label 'Config and storage' that appears as a breadcrumbs on the action
+   * bar. */
+  MSG_BREADCRUMBS_CONFIG_AND_STORAGE_LABEL: goog.getMsg('Config and storage'),
 };

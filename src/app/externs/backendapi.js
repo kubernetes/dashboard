@@ -153,13 +153,6 @@ backendApi.Cluster;
 
 /**
  * @typedef {{
- *   persistentVolumeClaimList: !backendApi.PersistentVolumeClaimList,
- * }}
- */
-backendApi.Storage;
-
-/**
- * @typedef {{
  *   serviceList: !backendApi.ServiceList,
  *   ingressList: !backendApi.IngressList,
  * }}
@@ -169,6 +162,7 @@ backendApi.Discovery;
 /**
  * @typedef {{
  *   configMapList: !backendApi.ConfigMapList,
+ *   persistentVolumeClaimList: !backendApi.PersistentVolumeClaimList,
  *   secretList: !backendApi.SecretList,
  * }}
  */

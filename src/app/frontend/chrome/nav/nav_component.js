@@ -18,6 +18,7 @@ import {stateName as configState} from 'config/state';
 import {stateName as configMapState} from 'configmap/list/state';
 import {stateName as daemonSetState} from 'daemonset/list/state';
 import {stateName as deploymentState} from 'deployment/list/state';
+import {stateName as discoveryState} from 'discovery/state';
 import {stateName as ingressState} from 'ingress/list/state';
 import {stateName as jobState} from 'job/list/state';
 import {stateName as namespaceState} from 'namespace/list/state';
@@ -30,9 +31,7 @@ import {stateName as replicationControllerState} from 'replicationcontroller/lis
 import {stateName as roleState} from 'role/list/state';
 import {stateName as secretState} from 'secret/list/state';
 import {stateName as serviceState} from 'service/list/state';
-import {stateName as discoveryState} from 'discovery/state';
 import {stateName as statefulSetState} from 'statefulset/list/state';
-import {stateName as storageState} from 'storage/state';
 import {stateName as storageClassState} from 'storageclass/list/state';
 import {stateName as workloadState} from 'workloads/state';
 
@@ -56,7 +55,6 @@ export class NavController {
       'namespace': namespaceState,
       'node': nodeState,
       'workload': workloadState,
-      'storage': storageState,
       'cluster': clusterState,
       'pod': podState,
       'deployment': deploymentState,

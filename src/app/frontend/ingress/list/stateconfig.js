@@ -23,8 +23,8 @@ import {IngressListController} from './controller';
  * I18n object that defines strings for translation used in this file.
  */
 const i18n = {
-  /** @type {string} @desc Label 'Ingress' that appears as a breadcrumbs on the action bar. */
-  MSG_BREADCRUMBS_INGRESSS_LABEL: goog.getMsg('Ingress'),
+  /** @type {string} @desc Label 'Ingresses' that appears as a breadcrumbs on the action bar. */
+  MSG_BREADCRUMBS_INGRESSS_LABEL: goog.getMsg('Ingresses'),
 };
 
 /**

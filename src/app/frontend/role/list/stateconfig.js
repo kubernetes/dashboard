@@ -13,41 +13,44 @@
 // limitations under the License.
 
 import {stateName as chromeStateName} from 'chrome/state';
+import {stateName as parentStateName} from 'cluster/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
-import {RoleListController} from './controller';
+
 import {stateUrl} from '../state';
+
+import {RoleListController} from './controller';
 
 const i18n = {
   /** @type {string} @desc Label 'Roles' that appears as a breadcrumbs on the action bar.
    */
-  MSG_BREADCRUMBS_ACCESS_CONTROL_LABEL: goog.getMsg('Roles'),
+  MSG_BREADCRUMBS_ROLES_LABEL: goog.getMsg('Roles'),
 };
 
 /**
- * Configures states for the service view.
+ * Config state object for the Role list view.
  *
- * @param {!ui.router.$stateProvider} $stateProvider
- * @ngInject
+ * @type {!ui.router.StateConfig}
  */
 export const config = {
-    url: stateUrl,
-    parent: chromeStateName,
-    resolve: {
-      'roleList': resolveRoleList,
+  url: stateUrl,
+  parent: chromeStateName,
+  resolve: {
+    'roleList': resolveRoleList,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': i18n.MSG_BREADCRUMBS_ROLES_LABEL,
+      'parent': parentStateName,
     },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': i18n.MSG_BREADCRUMBS_ACCESS_CONTROL_LABEL,
-      },
+  },
+  views: {
+    '': {
+      controller: RoleListController,
+      controllerAs: '$ctrl',
+      templateUrl: 'role/list/list.html',
     },
-    views: {
-      '': {
-        controller: RoleListController,
-        controllerAs: '$ctrl',
-        templateUrl: 'role/list/list.html',
-      },
-    },
-}
+  },
+};
 
 /**
  * @param {!angular.$resource} $resource
