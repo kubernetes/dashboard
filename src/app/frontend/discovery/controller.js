@@ -15,16 +15,16 @@
 /**
  * @final
  */
-export class ServicesAndDiscoveryController {
+export class DiscoveryController {
   /**
-   * @param {!backendApi.ServicesAndDiscovery} servicesAndDiscovery
+   * @param {!backendApi.Discovery} discovery
    * @param {!angular.Resource} kdServiceListResource
    * @param {!angular.Resource} kdIngressListResource
    * @ngInject
    */
-  constructor(servicesAndDiscovery, kdServiceListResource, kdIngressListResource) {
-    /** @export {!backendApi.ServicesAndDiscovery} */
-    this.servicesAndDiscovery = servicesAndDiscovery;
+  constructor(discovery, kdServiceListResource, kdIngressListResource) {
+    /** @export {!backendApi.Discovery} */
+    this.discovery = discovery;
     /** @export {!angular.Resource} */
     this.kdServiceListResource = kdServiceListResource;
     /** @export {!angular.Resource} */
@@ -37,9 +37,8 @@ export class ServicesAndDiscoveryController {
    */
   shouldShowZeroState() {
     /** @type {number} */
-    let resourcesLength = this.servicesAndDiscovery.serviceList.listMeta.totalItems +
-        this.servicesAndDiscovery.ingressList.listMeta.totalItems;
-
+    let resourcesLength = this.discovery.serviceList.listMeta.totalItems +
+        this.discovery.ingressList.listMeta.totalItems;
     return resourcesLength === 0;
   }
 }

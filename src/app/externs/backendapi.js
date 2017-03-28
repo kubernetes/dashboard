@@ -164,7 +164,7 @@ backendApi.Storage;
  *   ingressList: !backendApi.IngressList,
  * }}
  */
-backendApi.ServicesAndDiscovery;
+backendApi.Discovery;
 
 /**
  * @typedef {{

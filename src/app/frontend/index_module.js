@@ -43,7 +43,7 @@ import replicationControllerModule from './replicationcontroller/module';
 import resourceQuotaModule from './resourcequota/module';
 import secretModule from './secret/module';
 import serviceModule from './service/module';
-import servicesanddiscoveryModule from './servicesanddiscovery/module';
+import discoveryModule from './discovery/module';
 import statefulSetModule from './statefulset/module';
 import storageModule from './storage/module';
 import storageClassModule from './storageclass/module';
@@ -87,7 +87,7 @@ export default angular
           configMapModule.name,
           secretModule.name,
           ingressModule.name,
-          servicesanddiscoveryModule.name,
+          discoveryModule.name,
           configModule.name,
           csrfTokenModule.name,
           storageClassModule.name,

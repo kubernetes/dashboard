@@ -52,7 +52,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/secret"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/servicesanddiscovery"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/discovery"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/storage"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/storageclass"
@@ -309,13 +309,13 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 			Writes(cluster.Cluster{}))
 
 	apiV1Ws.Route(
-		apiV1Ws.GET("/servicesanddiscovery").
-			To(apiHandler.handleGetServicesAndDiscovery).
-			Writes(servicesanddiscovery.ServicesAndDiscovery{}))
+		apiV1Ws.GET("/discovery").
+			To(apiHandler.handleGetDiscovery).
+			Writes(discovery.Discovery{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/servicesanddiscovery/{namespace}").
-			To(apiHandler.handleGetServicesAndDiscovery).
-			Writes(servicesanddiscovery.ServicesAndDiscovery{}))
+		apiV1Ws.GET("/discovery/{namespace}").
+			To(apiHandler.handleGetDiscovery).
+			Writes(discovery.Discovery{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/config").
@@ -1006,11 +1006,11 @@ func (apiHandler *APIHandler) handleGetStorage(
 	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
-func (apiHandler *APIHandler) handleGetServicesAndDiscovery(
+func (apiHandler *APIHandler) handleGetDiscovery(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := parseNamespacePathParameter(request)
-	result, err := servicesanddiscovery.GetServicesAndDiscovery(apiHandler.client, namespace)
+	result, err := discovery.GetDiscovery(apiHandler.client, namespace)
 	if err != nil {
 		handleInternalError(response, err)
 		return

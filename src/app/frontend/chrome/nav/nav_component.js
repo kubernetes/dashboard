@@ -30,7 +30,7 @@ import {stateName as replicationControllerState} from 'replicationcontroller/lis
 import {stateName as roleState} from 'role/list/state';
 import {stateName as secretState} from 'secret/list/state';
 import {stateName as serviceState} from 'service/list/state';
-import {stateName as servicesAndDiscoveryState} from 'servicesanddiscovery/state';
+import {stateName as discoveryState} from 'discovery/state';
 import {stateName as statefulSetState} from 'statefulset/list/state';
 import {stateName as storageState} from 'storage/state';
 import {stateName as storageClassState} from 'storageclass/list/state';
@@ -71,7 +71,7 @@ export class NavController {
       'secret': secretState,
       'configMap': configMapState,
       'ingress': ingressState,
-      'serviceDiscovery': servicesAndDiscoveryState,
+      'discovery': discoveryState,
       'config': configState,
       'storageClass': storageClassState,
       'role': roleState,

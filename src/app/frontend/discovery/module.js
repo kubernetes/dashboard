@@ -19,11 +19,11 @@ import serviceModule from 'service/module';
 import stateConfig from './stateconfig';
 
 /**
- * Module for the admin service sand discovery.
+ * Module for the discovery and load balancing.
  */
 export default angular
     .module(
-        'kubernetesDashboard.servicesanddiscovery',
+        'kubernetesDashboard.discovery',
         [
           'ngMaterial',
           'ngResource',
@@ -33,7 +33,7 @@ export default angular
           ingressModule.name,
         ])
     .config(stateConfig)
-    .factory('kdServicesAndDiscoveryResource', resource);
+    .factory('kdDiscoveryResource', resource);
 
 /**
  * @param {!angular.$resource} $resource
@@ -41,5 +41,5 @@ export default angular
  * @ngInject
  */
 function resource($resource) {
-  return $resource('api/v1/servicesanddiscovery/:namespace');
+  return $resource('api/v1/discovery/:namespace');
 }
