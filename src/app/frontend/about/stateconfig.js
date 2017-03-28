@@ -13,11 +13,11 @@
 // limitations under the License.
 
 
-import {stateName as chromeStateName} from 'chrome/chrome_state';
+import {stateName as chromeStateName} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 
-import {AboutController} from './about_controller';
-import {stateName, stateUrl} from './about_state';
+import {AboutController} from './controller';
+import {stateName, stateUrl} from './state';
 
 /**
  * Configures states for the about view.

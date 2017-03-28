@@ -16,7 +16,7 @@
  * @fileoverview Entry point module to the application. Loads and configures other modules needed
  * to bootstrap the application.
  */
-import aboutModule from './about/about_module';
+import aboutModule from './about/module';
 import accessControlModule from './accesscontrol/module';
 import adminModule from './admin/module';
 import chromeModule from './chrome/module';

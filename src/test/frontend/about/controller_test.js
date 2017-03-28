@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {AboutController} from 'about/about_controller';
-import module from 'about/about_module';
+import {AboutController} from 'about/controller';
+import module from 'about/module';
 import appconfig_module from 'common/appconfig/appconfig_module';
 
 describe('About controller', () => {
-  /** @type {!about/about_controller.AboutController} */
+  /** @type {!about/controller.AboutController} */
   let ctrl;
 
   beforeEach(() => {
