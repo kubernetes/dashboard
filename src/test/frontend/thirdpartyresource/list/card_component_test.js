@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import thirdPartyResourceListModule from 'thirdpartyresourcelist/list_module';
+import thirdPartyResourceModule from 'thirdpartyresource/module';
 
 describe('Third party resource card', () => {
-  /** @type {!thirdpartyresourcelist/card_component.ThirdPartyResourceCardController} */
+  /** @type {!ThirdPartyResourceCardController} */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(thirdPartyResourceListModule.name);
+    angular.mock.module(thirdPartyResourceModule.name);
 
     angular.mock.inject(($componentController, $rootScope) => {
       ctrl = $componentController('kdThirdPartyResourceCard', {$scope: $rootScope});

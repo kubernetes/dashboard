@@ -15,44 +15,50 @@
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {appendDetailParamsToUrl} from 'common/resource/globalresourcedetail';
-import {stateName as tprListState, stateUrl} from 'thirdpartyresourcelist/list_state';
+import {stateName as tprListState} from 'thirdpartyresource/list/state';
+import {stateUrl} from './../state';
 
-import {ThirdPartyResourceDetailController} from './detail_controller';
-import {stateName} from './detail_state';
+import {ThirdPartyResourceDetailController} from './controller';
 
 /**
- * Configures states for the Third Party Resource detail view.
+ * Config state object for the Third Party Resource detail view.
  *
- * @param {!ui.router.$stateProvider} $stateProvider
+ * @type {!ui.router.StateConfig}
+ */
+export const config = {
+  url: appendDetailParamsToUrl(stateUrl),
+  parent: chromeStateName,
+  resolve: {
+    'tprDetailResource': getTprDetailResource,
+    'tprDetail': getTprDetail,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': '{{$stateParams.objectName}}',
+      'parent': tprListState,
+    },
+  },
+  views: {
+    '': {
+      controller: ThirdPartyResourceDetailController,
+      controllerAs: '$ctrl',
+      templateUrl: 'thirdpartyresource/detail/detail.html',
+    },
+    [actionbarViewName]: {},
+  },
+};
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
  * @ngInject
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    url: appendDetailParamsToUrl(stateUrl),
-    parent: chromeStateName,
-    resolve: {
-      'tprDetailResource': getTprDetailResource,
-      'tprDetail': getTprDetail,
-    },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': '{{$stateParams.objectName}}',
-        'parent': tprListState,
-      },
-    },
-    views: {
-      '': {
-        controller: ThirdPartyResourceDetailController,
-        controllerAs: '$ctrl',
-        templateUrl: 'thirdpartyresourcedetail/detail.html',
-      },
-      [actionbarViewName]: {},
-    },
-  });
+export function thirdPartyResourceObjectsResource($resource) {
+  return $resource('api/v1/thirdpartyresource/:name/object');
 }
 
 /**
- * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
+ * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource<!backendApi.ThirdPartyResource>}
  * @ngInject

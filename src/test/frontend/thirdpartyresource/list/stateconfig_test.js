@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import thirdPartyResourceListModule from 'thirdpartyresourcelist/list_module';
-import {resolveThirdPartyResourceList} from 'thirdpartyresourcelist/list_stateconfig';
+import {resolveThirdPartyResourceList} from 'thirdpartyresource/list/stateconfig';
+import thirdPartyResourceModule from 'thirdpartyresource/module';
 
 describe('StateConfig for third party resource controller list', () => {
-  /** @type {!common/pagination/pagination_service.PaginationService} */
+  /** @type {!PaginationService} */
   let kdPaginationService;
 
   beforeEach(() => {
-    angular.mock.module(thirdPartyResourceListModule.name);
+    angular.mock.module(thirdPartyResourceModule.name);
     angular.mock.inject((_kdPaginationService_) => {
       kdPaginationService = _kdPaginationService_;
     });

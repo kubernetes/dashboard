@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'thirdpartyresourcedetail/detail_state';
+import {stateName} from 'thirdpartyresource/detail/state';
 
 class ThirdPartyResourceCardController {
   /**
@@ -67,5 +67,5 @@ export const thirdPartyResourceCardComponent = {
     'thirdPartyResource': '=',
   },
   controller: ThirdPartyResourceCardController,
-  templateUrl: 'thirdpartyresourcelist/card.html',
+  templateUrl: 'thirdpartyresource/list/card.html',
 };

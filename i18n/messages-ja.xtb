@@ -2136,6 +2136,18 @@
   <translation id="8979424432104963901" key="MSG_THIRDPARTYRESOURCELIST_CARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of third party resources (thirdpartyresource list view).">ネームスペース</translation>
   <translation id="8722848692470911393" key="MSG_THIRDPARTYRESOURCELIST_CARDLIST_3" desc="Label \'Labels\' which appears as a column label in the table of third party resources (thirdpartyresource list view).">ラベル</translation>
   <translation id="8937761541741166649" key="MSG_THIRDPARTYRESOURCELIST_CARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of third party resources (thirdpartyresource list view).">起動時間</translation>
+  <translation id="9087654906203034732" key="MSG_THIRDPARTYRESOURCE_DETAIL_DETAIL_0" desc="Title for objects card zerostate in third party resource details page.">There is nothing to display here</translation>
+  <translation id="8144868515522892950" key="MSG_THIRDPARTYRESOURCE_DETAIL_DETAIL_1" desc="Text for objects card zerostate in third party resource details page.">There are currently no instances of Third Party Resource.</translation>
+  <translation id="1645019540162911830" key="MSG_THIRDPARTYRESOURCE_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
+  <translation id="5988964246734196216" key="MSG_THIRDPARTYRESOURCE_DETAIL_INFO_1" desc="Third party resource info details section labels entry.">Labels</translation>
+  <translation id="7342744654411379319" key="MSG_THIRDPARTYRESOURCE_DETAIL_INFO_2" desc="Third party resource details description entry.">Description</translation>
+  <translation id="7580548521958733766" key="MSG_THIRDPARTYRESOURCE_DETAIL_INFO_3" desc="Third party resource details version entries.">Versions</translation>
+  <translation id="5179027765873903398" key="MSG_THIRDPARTYRESOURCE_DETAIL_OBJECTLIST_0" desc="Label which appears above the list of such objects.">Objects</translation>
+  <translation id="8485751285614915949" key="MSG_THIRDPARTYRESOURCE_DETAIL_OBJECTLIST_1" desc="Title of a column for the name of a third party resource instance.">Name</translation>
+  <translation id="3982141959710379486" key="MSG_THIRDPARTYRESOURCE_DETAIL_OBJECTLIST_2" desc="Title of a column for the age of a third party resource instance.">Age</translation>
+  <translation id="30183360808931965" key="MSG_THIRDPARTYRESOURCE_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Third Party Resources</translation>
+  <translation id="8740983587800475280" key="MSG_THIRDPARTYRESOURCE_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of third party resources (thirdpartyresource listview).">Name</translation>
+  <translation id="8791753450494828145" key="MSG_THIRDPARTYRESOURCE_LIST_CARDLIST_2" desc="Label \'Age\' which appears as a column label in the table of third party resources (thirdpartyresource list view).">Age</translation>
   <translation id="8199201262548259491" key="MSG_THIRD_PARTY_RESOURCE_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of third party resource."><ph name="CREATION_DATE"/> に作成</translation>
   <translation id="6463616657349920914" key="MSG_TIME_NOT_YET_LABEL" desc="Label for relative time that did not happened yet.">-</translation>
   <translation id="3921240742330478356" key="MSG_TIME_UNIT_DAYS_LABEL" desc="Time units label, many days (plural).">日</translation>

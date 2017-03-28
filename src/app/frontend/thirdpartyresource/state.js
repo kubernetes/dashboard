@@ -12,15 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Definition object for the component that displays third party resource info.
- *
- * @return {!angular.Directive}
- */
-export const tprInfoComponent = {
-  templateUrl: 'thirdpartyresourcedetail/info.html',
-  bindings: {
-    /** {!backendApi.ThirdPartyResource} */
-    'tprDetail': '=',
-  },
-};
+/** Name of the state. */
+export const stateName = 'thirdpartyresource';
+
+/** Absolute URL of the state. */
+export const stateUrl = '/thirdpartyresource';

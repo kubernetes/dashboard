@@ -59,5 +59,5 @@ export const objectCardComponent = {
     'object': '=',
   },
   controller: ObjectCardController,
-  templateUrl: 'thirdpartyresourcedetail/objectcard.html',
+  templateUrl: 'thirdpartyresource/detail/objectcard.html',
 };

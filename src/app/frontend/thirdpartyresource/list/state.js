@@ -12,20 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Definition object for the component that displays third party resource list card.
- *
- * @type {!angular.Component}
- */
-export const thirdPartyResourceCardListComponent = {
-  transclude: {
-    // Optional header that is transcluded instead of the default one.
-    'header': '?kdHeader',
-  },
-  templateUrl: 'thirdpartyresourcelist/cardlist.html',
-  bindings: {
-    /** {!backendApi.ThirdPartyResourceList} */
-    'thirdPartyResourceList': '=',
-    'thirdPartyResourceListResource': '=',
-  },
-};
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'thirdpartyresource.list';

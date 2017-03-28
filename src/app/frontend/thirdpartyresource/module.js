@@ -15,38 +15,35 @@
 import chromeModule from 'chrome/chrome_module';
 import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
-import stateConfig from './detail_stateconfig';
-import {tprInfoComponent} from './info_component';
-import {objectCardComponent} from './objectcard_component';
-import {objectListComponent} from './objectlist_component';
+
+import {tprInfoComponent} from './detail/info_component';
+import {objectCardComponent} from './detail/objectcard_component';
+import {objectListComponent} from './detail/objectlist_component';
+import {thirdPartyResourceObjectsResource} from './detail/stateconfig';
+import {thirdPartyResourceCardComponent} from './list/card_component';
+import {thirdPartyResourceCardListComponent} from './list/cardlist_component';
+import {thirdPartyResourceListResource} from './list/stateconfig';
+import stateConfig from './stateconfig';
 
 /**
- * Angular module for the Third Party Resource detail view.
- *
- * The view shows Third Party Resource templates in the cluster and allows to manage them.
+ * Angular module for the Storage Class resource.
  */
 export default angular
     .module(
-        'kubernetesDashboard.thirdPartyResourceDetail',
+        'kubernetesDashboard.thirdPartyResource',
         [
           'ngMaterial',
           'ngResource',
           'ui.router',
-          filtersModule.name,
-          componentsModule.name,
           chromeModule.name,
+          componentsModule.name,
+          filtersModule.name,
         ])
     .config(stateConfig)
+    .component('kdObjectCard', objectCardComponent)
+    .component('kdThirdPartyResourceCard', thirdPartyResourceCardComponent)
+    .component('kdThirdPartyResourceCardList', thirdPartyResourceCardListComponent)
     .component('kdThirdPartyResourceInfo', tprInfoComponent)
     .component('kdThirdPartyResourceObjects', objectListComponent)
-    .component('kdObjectCard', objectCardComponent)
+    .factory('kdThirdPartyResourceListResource', thirdPartyResourceListResource)
     .factory('kdThirdPartyResourceObjectsResource', thirdPartyResourceObjectsResource);
-
-/**
- * @param {!angular.$resource} $resource
- * @return {!angular.Resource}
- * @ngInject
- */
-function thirdPartyResourceObjectsResource($resource) {
-  return $resource('api/v1/thirdpartyresource/:name/object');
-}

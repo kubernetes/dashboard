@@ -15,38 +15,12 @@
 import {stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 
-import {ThirdPartyResourceListController} from './list_controller';
-import {stateName, stateUrl} from './list_state';
+import {stateUrl} from './../state';
+import {ThirdPartyResourceListController} from './controller';
 
 /**
- * Configures states for the Third Party Resource list view.
- *
- * @param {!ui.router.$stateProvider} $stateProvider
- * @ngInject
+ * I18n object that defines strings for translation used in this file.
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    url: stateUrl,
-    parent: chromeStateName,
-    resolve: {
-      'thirdPartyResourceList': resolveThirdPartyResourceList,
-    },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': i18n.MSG_BREADCRUMBS_THIRD_PARTY_RESOURCES_LABEL,
-        'parent': '',
-      },
-    },
-    views: {
-      '': {
-        controller: ThirdPartyResourceListController,
-        controllerAs: '$ctrl',
-        templateUrl: 'thirdpartyresourcelist/list.html',
-      },
-    },
-  });
-}
-
 const i18n = {
   /** @type {string} @desc Label 'Third Party Resources' that appears as a breadcrumbs on the
    action bar. */
@@ -54,8 +28,43 @@ const i18n = {
 };
 
 /**
+ * Config state object for the Third Party Resource list view.
+ *
+ * @type {!ui.router.StateConfig}
+ */
+export const config = {
+  url: stateUrl,
+  parent: chromeStateName,
+  resolve: {
+    'thirdPartyResourceList': resolveThirdPartyResourceList,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': i18n.MSG_BREADCRUMBS_THIRD_PARTY_RESOURCES_LABEL,
+      'parent': '',
+    },
+  },
+  views: {
+    '': {
+      controller: ThirdPartyResourceListController,
+      controllerAs: '$ctrl',
+      templateUrl: 'thirdpartyresource/list/list.html',
+    },
+  },
+};
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
+ * @ngInject
+ */
+export function thirdPartyResourceListResource($resource) {
+  return $resource('api/v1/thirdpartyresource');
+}
+
+/**
  * @param {!angular.Resource} kdThirdPartyResourceListResource
- * @param {!./../common/pagination/pagination_service.PaginationService} kdPaginationService
+ * @param {!./../../common/pagination/pagination_service.PaginationService} kdPaginationService
  * @returns {!angular.$q.Promise}
  * @ngInject
  */

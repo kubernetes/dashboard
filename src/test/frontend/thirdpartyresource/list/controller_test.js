@@ -12,20 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ThirdPartyResourceDetailController} from 'thirdpartyresourcedetail/detail_controller';
-import thirdPartyResourceDetailModule from 'thirdpartyresourcedetail/detail_module';
+import {ThirdPartyResourceListController} from 'thirdpartyresource/list/controller';
+import thirdPartyResourceModule from 'thirdpartyresource/module';
 
-describe('Third Party Resource Detail controller', () => {
+describe('Third Party Resource list controller', () => {
+  /** @type {!ThirdPartyResourceListController} */
+  let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(thirdPartyResourceDetailModule.name);
+    angular.mock.module(thirdPartyResourceModule.name);
+
+    angular.mock.inject(($controller) => {
+      ctrl = $controller(
+          ThirdPartyResourceListController, {thirdPartyResourceList: {thirdPartyResources: []}});
+    });
   });
 
-  it('should initialize storage class controller', angular.mock.inject(($controller) => {
-    let data = {};
-    /** @type {!ThirdPartyResourceDetailController} */
-    let ctrl = $controller(ThirdPartyResourceDetailController, {tprDetail: data});
-
-    expect(ctrl.tprDetail).toBe(data);
-  }));
+  it('should instantiate the controller properly', () => {
+    expect(ctrl).not.toBeUndefined();
+  });
 });

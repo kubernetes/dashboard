@@ -47,8 +47,7 @@ import servicesanddiscoveryModule from './servicesanddiscovery/module';
 import statefulSetModule from './statefulset/module';
 import storageModule from './storage/module';
 import storageClassModule from './storageclass/module';
-import thirdPartyResourceDetailModule from './thirdpartyresourcedetail/detail_module';
-import thirdPartyResourceListModule from './thirdpartyresourcelist/list_module';
+import thirdPartyResourceModule from './thirdpartyresource/module';
 import {TitleController} from './title_controller';
 import workloadsModule from './workloads/workloads_module';
 
@@ -92,8 +91,7 @@ export default angular
           configModule.name,
           csrfTokenModule.name,
           storageClassModule.name,
-          thirdPartyResourceListModule.name,
-          thirdPartyResourceDetailModule.name,
+          thirdPartyResourceModule.name,
           accessControlModule.name,
         ])
     .config(indexConfig)

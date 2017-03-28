@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as thirdPartyResourceDetailState} from 'thirdpartyresourcedetail/detail_state';
-import {stateName as thirdPartyResourceState} from 'thirdpartyresourcelist/list_state';
+import {stateName as thirdPartyResourceDetailState} from 'thirdpartyresource/detail/state';
+import {stateName as thirdPartyResourceState} from 'thirdpartyresource/list/state';
 
 /**
  * @final

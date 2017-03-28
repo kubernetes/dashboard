@@ -12,5 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Name of the state. Can be used in, e.g., $state.go method. */
-export const stateName = 'thirdpartyresourcedetail';
+/**
+ * Definition object for the component that displays third party resource objects list card.
+ *
+ * @type {!angular.Component}
+ */
+export const objectListComponent = {
+  transclude: {
+    'header': '?kdHeader',
+    'zerostate': '?kdZerostate',
+  },
+  templateUrl: 'thirdpartyresource/detail/objectlist.html',
+  bindings: {
+    /** {!backendApi.PodList} */
+    'objectList': '<',
+    /** {!angular.Resource} */
+    'objectListResource': '<',
+    /** {boolean} */
+    'selectable': '<',
+    /** {boolean} */
+    'withStatuses': '<',
+  },
+};

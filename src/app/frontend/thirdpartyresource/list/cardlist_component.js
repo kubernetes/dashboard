@@ -13,24 +13,19 @@
 // limitations under the License.
 
 /**
- * Definition object for the component that displays third party resource objects list card.
+ * Definition object for the component that displays third party resource list card.
  *
  * @type {!angular.Component}
  */
-export const objectListComponent = {
+export const thirdPartyResourceCardListComponent = {
   transclude: {
+    // Optional header that is transcluded instead of the default one.
     'header': '?kdHeader',
-    'zerostate': '?kdZerostate',
   },
-  templateUrl: 'thirdpartyresourcedetail/objectlist.html',
+  templateUrl: 'thirdpartyresource/list/cardlist.html',
   bindings: {
-    /** {!backendApi.PodList} */
-    'objectList': '<',
-    /** {!angular.Resource} */
-    'objectListResource': '<',
-    /** {boolean} */
-    'selectable': '<',
-    /** {boolean} */
-    'withStatuses': '<',
+    /** {!backendApi.ThirdPartyResourceList} */
+    'thirdPartyResourceList': '=',
+    'thirdPartyResourceListResource': '=',
   },
 };
