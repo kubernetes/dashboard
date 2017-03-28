@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as chromeStateName} from 'chrome/chrome_state';
+import {stateName as chromeStateName} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 import {stateName as parentStateName} from 'servicesanddiscovery/state';
 
@@ -64,7 +64,7 @@ export function ingressListResource($resource) {
 
 /**
  * @param {!angular.Resource} kdIngressListResource
- * @param {!./../../chrome/chrome_state.StateParams} $stateParams
+ * @param {!./../../chrome/state.StateParams} $stateParams
  * @param {!./../../common/pagination/pagination_service.PaginationService} kdPaginationService
  * @return {!angular.$q.Promise}
  * @ngInject

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as chromeStateName} from 'chrome/chrome_state';
+import {stateName as chromeStateName} from 'chrome/state';
 
 import {stateName as detailState} from './detail/state';
 import {config as detailConfig} from './detail/stateconfig';

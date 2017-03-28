@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {stateName as parentStateName} from 'admin/state';
-import {stateName as chromeStateName} from 'chrome/chrome_state';
+import {stateName as chromeStateName} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 
 import {stateUrl} from './../state';

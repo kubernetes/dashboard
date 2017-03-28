@@ -19,20 +19,20 @@
 import aboutModule from './about/about_module';
 import accessControlModule from './accesscontrol/module';
 import adminModule from './admin/module';
-import chromeModule from './chrome/chrome_module';
+import chromeModule from './chrome/module';
 import csrfTokenModule from './common/csrftoken/csrftoken_module';
 import configModule from './config/module';
 import configMapModule from './configmap/module';
 import daemonSetModule from './daemonset/module';
-import deployModule from './deploy/deploy_module';
+import deployModule from './deploy/module';
 import deploymentModule from './deployment/module';
-import errorModule from './error/error_module';
+import errorModule from './error/module';
 import horizontalPodAutoscalerModule from './horizontalpodautoscaler/module';
 import indexConfig from './index_config';
 import routeConfig from './index_route';
 import ingressModule from './ingress/module';
 import jobModule from './job/module';
-import logsModule from './logs/logs_module';
+import logsModule from './logs/module';
 import namespaceModule from './namespace/module';
 import nodeModule from './node/module';
 import persistentVolumeModule from './persistentvolume/module';
@@ -40,7 +40,7 @@ import persistentVolumeClaimModule from './persistentvolumeclaim/module';
 import podModule from './pod/module';
 import replicaSetModule from './replicaset/module';
 import replicationControllerModule from './replicationcontroller/module';
-import resourceQuotaDetailModule from './resourcequotadetail/resourcequotadetail_module';
+import resourceQuotaModule from './resourcequota/module';
 import secretModule from './secret/module';
 import serviceModule from './service/module';
 import servicesanddiscoveryModule from './servicesanddiscovery/module';
@@ -49,7 +49,7 @@ import storageModule from './storage/module';
 import storageClassModule from './storageclass/module';
 import thirdPartyResourceModule from './thirdpartyresource/module';
 import {TitleController} from './title_controller';
-import workloadsModule from './workloads/workloads_module';
+import workloadsModule from './workloads/module';
 
 export default angular
     .module(
@@ -83,7 +83,7 @@ export default angular
           persistentVolumeModule.name,
           statefulSetModule.name,
           persistentVolumeClaimModule.name,
-          resourceQuotaDetailModule.name,
+          resourceQuotaModule.name,
           configMapModule.name,
           secretModule.name,
           ingressModule.name,

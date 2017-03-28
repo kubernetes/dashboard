@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import chromeModule from 'chrome/chrome_module';
+import chromeModule from 'chrome/module';
 import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
 import namespaceModule from 'common/namespace/namespace_module';
-import eventsModule from 'events/events_module';
+import eventsModule from 'events/module';
 
 import {ingressInfoComponent} from './detail/info_component';
 import {ingressCardComponent} from './list/card_component';

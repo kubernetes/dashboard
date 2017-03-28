@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import workloadListModule from 'workloads/workloads_module';
-import {resolveWorkloads} from 'workloads/workloads_stateconfig';
+import workloadListModule from 'workloads/module';
+import {resolveWorkloads} from 'workloads/stateconfig';
 
 describe('StateConfig for workload list', () => {
   /** @type {!common/pagination/pagination_service.PaginationService} */

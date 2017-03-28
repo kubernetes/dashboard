@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as chromeStateName} from 'chrome/chrome_state';
+import {stateName as chromeStateName} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
-import {stateName as workloadsStateName} from 'workloads/workloads_state';
+import {stateName as workloadsStateName} from 'workloads/state';
 
 import {stateUrl} from './../state';
 import {ReplicationControllerListController} from './controller';
@@ -65,7 +65,7 @@ export function replicationControllerListResource($resource) {
 
 /**
  * @param {!angular.Resource} kdRCListResource
- * @param {!./../../chrome/chrome_state.StateParams} $stateParams
+ * @param {!./../../chrome/state.StateParams} $stateParams
  * @param {!./../../common/pagination/pagination_service.PaginationService} kdPaginationService
  * @return {!angular.$q.Promise}
  * @ngInject

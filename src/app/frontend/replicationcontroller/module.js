@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import chromeModule from 'chrome/chrome_module';
+import chromeModule from 'chrome/module';
 import componentsModule from 'common/components/components_module';
 import csrfTokenModule from 'common/csrftoken/csrftoken_module';
 import filtersModule from 'common/filters/filters_module';
 import namespaceModule from 'common/namespace/namespace_module';
-import eventsModule from 'events/events_module';
+import eventsModule from 'events/module';
 import podModule from 'pod/module';
 
 import {ReplicationControllerService} from './detail/delete_service';

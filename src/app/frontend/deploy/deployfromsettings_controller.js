@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as workloads} from 'workloads/workloads_state';
+import {stateName as workloads} from 'workloads/state';
 
 import DockerImageReference from '../common/docker/dockerimagereference';
 
@@ -40,7 +40,7 @@ export default class DeployFromSettingsController {
    * @param {!angular.$resource} $resource
    * @param {!angular.$q} $q
    * @param {!md.$dialog} $mdDialog
-   * @param {!./../chrome/chrome_state.StateParams} $stateParams
+   * @param {!./../chrome/state.StateParams} $stateParams
    * @param {!./../common/history/history_service.HistoryService} kdHistoryService
    * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
    * @param {!./../common/csrftoken/csrftoken_service.CsrfTokenService} kdCsrfTokenService

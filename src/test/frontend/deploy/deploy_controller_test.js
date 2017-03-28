@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import DeployController from 'deploy/deploy_controller';
-import deployModule from 'deploy/deploy_module';
+import DeployController from 'deploy/controller';
+import deployModule from 'deploy/module';
 
 describe('Deploy controller', () => {
   /** @type {!DeployController} */

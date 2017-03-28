@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import chromeModule from 'chrome/chrome_module';
+import chromeModule from 'chrome/module';
 import namespaceModule from 'namespace/module';
 import nodeModule from 'node/module';
 import persistentVolumeModule from 'persistentvolume/module';

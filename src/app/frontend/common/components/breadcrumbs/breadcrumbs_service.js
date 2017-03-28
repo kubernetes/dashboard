@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as defaultStateName} from 'workloads/workloads_state';
+import {stateName as defaultStateName} from 'workloads/state';
 
 /** Breadcrumbs config string used on state config. **/
 export const breadcrumbsConfig = 'kdBreadcrumbs';
