@@ -16,6 +16,7 @@
  * @fileoverview Entry point module to the application. Loads and configures other modules needed
  * to bootstrap the application.
  */
+import aboutModule from './about/about_module';
 import accessControlModule from './accesscontrol/module';
 import adminModule from './admin/module';
 import chromeModule from './chrome/chrome_module';
@@ -70,6 +71,7 @@ export default angular
           'ngResource',
           'ngSanitize',
           'ui.router',
+          aboutModule.name,
           chromeModule.name,
           deployModule.name,
           errorModule.name,
