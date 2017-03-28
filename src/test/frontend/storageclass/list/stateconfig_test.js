@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import storageClassListModule from 'storageclasslist/module';
-import {resolveStorageClassList} from 'storageclasslist/stateconfig';
+import {resolveStorageClassList} from 'storageclass/list/stateconfig';
+import storageClassModule from 'storageclass/module';
 
 describe('StateConfig for storage class controller list', () => {
-  /** @type {!common/pagination/pagination_service.PaginationService} */
+  /** @type {!PaginationService} */
   let kdPaginationService;
 
   beforeEach(() => {
-    angular.mock.module(storageClassListModule.name);
+    angular.mock.module(storageClassModule.name);
     angular.mock.inject((_kdPaginationService_) => {
       kdPaginationService = _kdPaginationService_;
     });

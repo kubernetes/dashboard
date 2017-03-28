@@ -12,15 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Definition object for the component that displays Storage Class info.
- *
- * @return {!angular.Directive}
- */
-export const storageClassInfoComponent = {
-  templateUrl: 'storageclassdetail/info.html',
-  bindings: {
-    /** {!backendApi.StorageClass} */
-    'storageClass': '=',
-  },
-};
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'storageclass.list';

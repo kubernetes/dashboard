@@ -16,40 +16,56 @@ import {stateName as parentStateName} from 'admin/state';
 import {stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 
+import {stateUrl} from './../state';
 import {StorageClassListController} from './controller';
-import {stateName, stateUrl} from './state';
 
 /**
- * Configures states for storage class list view.
- * @param {!ui.router.$stateProvider} $stateProvider
+ * I18n object that defines strings for translation used in this file.
+ */
+const i18n = {
+  /** @type {string} @desc Label 'Storage Classes' that appears as a breadcrumbs on the action
+   bar. */
+  MSG_BREADCRUMBS_STORAGE_CLASSES_LABEL: goog.getMsg('Storage Classes'),
+};
+
+/**
+ * Config state object for the Storage Class list view.
+ *
+ * @type {!ui.router.StateConfig}
+ */
+export const config = {
+  url: stateUrl,
+  parent: chromeStateName,
+  resolve: {
+    'storageClassList': resolveStorageClassList,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': i18n.MSG_BREADCRUMBS_STORAGE_CLASSES_LABEL,
+      'parent': parentStateName,
+    },
+  },
+  views: {
+    '': {
+      controller: StorageClassListController,
+      controllerAs: '$ctrl',
+      templateUrl: 'storageclass/list/list.html',
+    },
+  },
+};
+
+/**
+ * @param {!angular.$resource} $resource
+ * @return {!angular.Resource}
  * @ngInject
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    url: stateUrl,
-    parent: chromeStateName,
-    resolve: {
-      'storageClassList': resolveStorageClassList,
-    },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': i18n.MSG_BREADCRUMBS_STORAGE_CLASSES_LABEL,
-        'parent': parentStateName,
-      },
-    },
-    views: {
-      '': {
-        controller: StorageClassListController,
-        controllerAs: '$ctrl',
-        templateUrl: 'storageclasslist/storageclasslist.html',
-      },
-    },
-  });
+export function storageClassListResource($resource) {
+  return $resource('api/v1/storageclass');
 }
 
 /**
  * @param {!angular.Resource} kdStorageClassListResource
- * @param {!./../common/pagination/pagination_service.PaginationService} kdPaginationService
+ * @param {!./../../common/pagination/pagination_service.PaginationService} kdPaginationService
  * @returns {!angular.$q.Promise}
  * @ngInject
  */
@@ -58,9 +74,3 @@ export function resolveStorageClassList(kdStorageClassListResource, kdPagination
   let query = kdPaginationService.getDefaultResourceQuery('');
   return kdStorageClassListResource.get(query).$promise;
 }
-
-const i18n = {
-  /** @type {string} @desc Label 'Storage Classes' that appears as a breadcrumbs on the action
-     bar. */
-  MSG_BREADCRUMBS_STORAGE_CLASSES_LABEL: goog.getMsg('Storage Classes'),
-};

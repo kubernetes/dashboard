@@ -12,17 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * @return {!angular.Component}
- */
-export const storageClassCardListComponent = {
-  transclude: {
-    // Optional header that is transcluded instead of the default one.
-    'header': '?kdHeader',
-  },
-  bindings: {
-    'storageClassList': '<',
-    'storageClassListResource': '<',
-  },
-  templateUrl: 'storageclasslist/cardlist.html',
-};
+import storageClassModule from 'storageclass/module';
+
+describe('Storage Class Info controller', () => {
+  /** @type {!StorageClassInfoController} */
+  let ctrl;
+
+  beforeEach(() => {
+    angular.mock.module(storageClassModule.name);
+
+    angular.mock.inject(($componentController, $rootScope) => {
+      ctrl = $componentController('kdStorageClassInfo', {$scope: $rootScope}, {storageClass: {}});
+    });
+  });
+
+  it('should initialize the ctrl', () => {
+    expect(ctrl.storageClass).not.toBeUndefined();
+  });
+});

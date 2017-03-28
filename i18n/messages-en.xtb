@@ -1314,6 +1314,19 @@
   <translation id="4505943818214171647" key="MSG_STORAGECLASSLIST_CARDLIST_5" desc="Storage class list header: age.">Age</translation>
   <translation id="2882847796231236957" key="MSG_STORAGECLASSLIST_CARD_0" desc="Label \'Storage Class\' which will appear in the persistent volume delete dialog opened from a storageclass card on the list page.">Storage Class</translation>
   <translation id="310605795325552510" key="MSG_STORAGECLASSLIST_CARD_1" desc="Label \'Storage Class\' which will appear in the persistent volume delete dialog opened from a storageclass card on the list page.">Storage Class</translation>
+  <translation id="5285354056155654849" key="MSG_STORAGECLASS_DETAIL_ACTIONBAR_0" desc="Label \'Storage Class\' which appears at the top of the delete dialog, opened from a config map details page.">Storage Class</translation>
+  <translation id="6786610737142795668" key="MSG_STORAGECLASS_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
+  <translation id="6633055939482604965" key="MSG_STORAGECLASS_DETAIL_INFO_1" desc="Label \'Labels\' for the storage class\'s labels list on the storage class details page.">Labels</translation>
+  <translation id="3807082804567161957" key="MSG_STORAGECLASS_DETAIL_INFO_2" desc="Storage Class info details section provisioner entry.">Provisioner</translation>
+  <translation id="8091843399508345711" key="MSG_STORAGECLASS_DETAIL_INFO_3" desc="Storage Class info details section parameters entry.">Parameters</translation>
+  <translation id="2250081047141795057" key="MSG_STORAGECLASS_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Storage Classes</translation>
+  <translation id="1878670581745731263" key="MSG_STORAGECLASS_LIST_CARDLIST_1" desc="Storage class list header: name.">Name</translation>
+  <translation id="7270752644289752116" key="MSG_STORAGECLASS_LIST_CARDLIST_2" desc="Storage class list header: labels.">Labels</translation>
+  <translation id="1137741577335174033" key="MSG_STORAGECLASS_LIST_CARDLIST_3" desc="Storage class list header: provisioner.">Provisioner</translation>
+  <translation id="4317180536835761343" key="MSG_STORAGECLASS_LIST_CARDLIST_4" desc="Storage class list header: parameters.">Parameters</translation>
+  <translation id="1567288620608447744" key="MSG_STORAGECLASS_LIST_CARDLIST_5" desc="Storage class list header: age.">Age</translation>
+  <translation id="8108461949496336520" key="MSG_STORAGECLASS_LIST_CARD_0" desc="Label \'Storage Class\' which will appear in the storage class delete dialog opened from a storageclass card on the list page.">Storage Class</translation>
+  <translation id="3154139817057931405" key="MSG_STORAGECLASS_LIST_CARD_1" desc="Label \'Storage Class\' which will appear in the storage class delete dialog opened from a storageclass card on the list page.">Storage Class</translation>
   <translation id="2857396329294182623" key="MSG_STORAGE_CLASS_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of persistent volume.">Created at <ph name="CREATION_DATE"/></translation>
   <translation id="4455224191195228523" key="MSG_THIRDPARTYRESOURCEDETAIL_DETAIL_0" desc="Title for objects card zerostate in third party resource details page.">There is nothing to display here</translation>
   <translation id="1909818214822603215" key="MSG_THIRDPARTYRESOURCEDETAIL_DETAIL_1" desc="Text for objects card zerostate in third party resource details page.">There are currently no instances of Third Party Resource.</translation>

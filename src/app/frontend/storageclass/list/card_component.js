@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {StateParams} from 'common/resource/resourcedetail';
-import {stateName} from 'storageclassdetail/state';
+import {stateName} from 'storageclass/detail/state';
 
 /**
  * Controller for the storage class card.
@@ -71,5 +71,5 @@ export const storageClassCardComponent = {
     'storageClass': '=',
   },
   controller: StorageClassCardController,
-  templateUrl: 'storageclasslist/card.html',
+  templateUrl: 'storageclass/list/card.html',
 };

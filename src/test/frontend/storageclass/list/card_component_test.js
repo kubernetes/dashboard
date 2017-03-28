@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import storageClassListModule from 'storageclasslist/module';
+import storageClassModule from 'storageclass/module';
 
 describe('Storage Class card', () => {
-  /** @type {!storageclasslist/card_component.StorageClassCardController} */
+  /** @type {!StorageClassCardController} */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(storageClassListModule.name);
+    angular.mock.module(storageClassModule.name);
 
     angular.mock.inject(($componentController, $rootScope) => {
       ctrl = $componentController('kdStorageClassCard', {$scope: $rootScope});

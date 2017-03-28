@@ -16,7 +16,7 @@ import chromeModule from 'chrome/chrome_module';
 import namespaceModule from 'namespace/module';
 import nodeModule from 'node/module';
 import persistentVolumeModule from 'persistentvolume/module';
-import storageClassListModule from 'storageclasslist/module';
+import storageClassModule from 'storageclass/module';
 
 import stateConfig from './stateconfig';
 
@@ -34,7 +34,7 @@ export default angular
           nodeModule.name,
           namespaceModule.name,
           persistentVolumeModule.name,
-          storageClassListModule.name,
+          storageClassModule.name,
         ])
     .config(stateConfig)
     .factory('kdAdminResource', resource);

@@ -12,21 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import storageClassDetailModule from 'storageclassdetail/module';
-
-describe('Storage Class Info controller', () => {
-  /** @type {!StorageClassInfoController} */
-  let ctrl;
-
-  beforeEach(() => {
-    angular.mock.module(storageClassDetailModule.name);
-
-    angular.mock.inject(($componentController, $rootScope) => {
-      ctrl = $componentController('kdStorageClassInfo', {$scope: $rootScope}, {storageClass: {}});
-    });
-  });
-
-  it('should initialize the ctrl', () => {
-    expect(ctrl.storageClass).not.toBeUndefined();
-  });
-});
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'storageclass.detail';

@@ -15,37 +15,33 @@
 import chromeModule from 'chrome/chrome_module';
 import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
-import storageClassDetailModule from 'storageclassdetail/module';
+import namespaceModule from 'common/namespace/namespace_module';
+import eventsModule from 'events/events_module';
 
-import {storageClassCardComponent} from './card_component';
-import {storageClassCardListComponent} from './cardlist_component';
+import {storageClassInfoComponent} from './detail/info_component';
+import {storageClassCardComponent} from './list/card_component';
+import {storageClassCardListComponent} from './list/cardlist_component';
+import {storageClassListResource} from './list/stateconfig';
 import stateConfig from './stateconfig';
 
 /**
- * Angular module for the Storage Class list view.
+ * Angular module for the Storage Class resource.
  */
 export default angular
     .module(
-        'kubernetesDashboard.storageClassList',
+        'kubernetesDashboard.storageClass',
         [
           'ngMaterial',
           'ngResource',
           'ui.router',
-          filtersModule.name,
-          componentsModule.name,
-          storageClassDetailModule.name,
           chromeModule.name,
+          componentsModule.name,
+          eventsModule.name,
+          filtersModule.name,
+          namespaceModule.name,
         ])
     .config(stateConfig)
-    .component('kdStorageClassCardList', storageClassCardListComponent)
     .component('kdStorageClassCard', storageClassCardComponent)
+    .component('kdStorageClassCardList', storageClassCardListComponent)
+    .component('kdStorageClassInfo', storageClassInfoComponent)
     .factory('kdStorageClassListResource', storageClassListResource);
-
-/**
- * @param {!angular.$resource} $resource
- * @return {!angular.Resource}
- * @ngInject
- */
-function storageClassListResource($resource) {
-  return $resource('api/v1/storageclass');
-}

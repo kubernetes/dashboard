@@ -14,49 +14,46 @@
 
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/chrome_state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
-import {stateName as storageClassList, stateUrl} from 'storageclasslist/state';
+import {stateName as storageClassList} from './../list/state';
+import {stateUrl} from './../state';
 
 import {ActionBarController} from './actionbar_controller';
 import {StorageClassController} from './controller';
-import {stateName} from './state';
 
 /**
- * Configures states for the Storage Class details view.
+ * Config state object for the Storage Class detail view.
  *
- * @param {!ui.router.$stateProvider} $stateProvider
- * @ngInject
+ * @type {!ui.router.StateConfig}
  */
-export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, {
-    url: `${stateUrl}/:objectName`,
-    parent: chromeStateName,
-    resolve: {
-      'storageClassResource': getStorageClassResource,
-      'storageClass': getStorageClass,
+export const config = {
+  url: `${stateUrl}/:objectName`,
+  parent: chromeStateName,
+  resolve: {
+    'storageClassResource': getStorageClassResource,
+    'storageClass': getStorageClass,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': '{{$stateParams.objectName}}',
+      'parent': storageClassList,
     },
-    data: {
-      [breadcrumbsConfig]: {
-        'label': '{{$stateParams.objectName}}',
-        'parent': storageClassList,
-      },
+  },
+  views: {
+    '': {
+      controller: StorageClassController,
+      controllerAs: '$ctrl',
+      templateUrl: 'storageclass/detail/detail.html',
     },
-    views: {
-      '': {
-        controller: StorageClassController,
-        controllerAs: '$ctrl',
-        templateUrl: 'storageclassdetail/storageclass.html',
-      },
-      [actionbarViewName]: {
-        controller: ActionBarController,
-        controllerAs: '$ctrl',
-        templateUrl: 'storageclassdetail/actionbar.html',
-      },
+    [actionbarViewName]: {
+      controller: ActionBarController,
+      controllerAs: '$ctrl',
+      templateUrl: 'storageclass/detail/actionbar.html',
     },
-  });
-}
+  },
+};
 
 /**
- * @param {!./../common/resource/resourcedetail.StateParams} $stateParams
+ * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
  * @param {!angular.$resource} $resource
  * @return {!angular.Resource<!backendApi.StorageClass>}
  * @ngInject

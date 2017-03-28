@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StorageClassListController} from 'storageclasslist/controller';
-import storageClassListModule from 'storageclasslist/module';
+import {StorageClassListController} from 'storageclass/list/controller';
+import storageClassModule from 'storageclass/module';
 
 describe('Storage Class list controller', () => {
-  /** @type {!storageclasslist/controller.StorageClassListController}
+  /** @type {!StorageClassListController}
    */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(storageClassListModule.name);
+    angular.mock.module(storageClassModule.name);
 
     angular.mock.inject(($controller) => {
       ctrl = $controller(StorageClassListController, {storageClassList: {storageClasses: []}});

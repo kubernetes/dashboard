@@ -26,33 +26,32 @@ import {SecretDetailController} from './controller';
  *
  * @type {!ui.router.StateConfig}
  */
-export const config =
-    {
-      url: appendDetailParamsToUrl(stateUrl),
-      parent: chromeStateName,
-      resolve: {
-        'secretDetailResource': getSecretDetailResource,
-        'secretDetail': getSecretDetail,
-      },
-      data: {
-        [breadcrumbsConfig]: {
-          'label': '{{$stateParams.objectName}}',
-          'parent': secretList,
-        },
-      },
-      views: {
-        '': {
-          controller: SecretDetailController,
-          controllerAs: '$ctrl',
-          templateUrl: 'secret/detail/detail.html',
-        },
-        [actionbarViewName]: {
-          controller: ActionBarController,
-          controllerAs: '$ctrl',
-          templateUrl: 'secret/detail/actionbar.html',
-        },
-      },
-    }
+export const config = {
+  url: appendDetailParamsToUrl(stateUrl),
+  parent: chromeStateName,
+  resolve: {
+    'secretDetailResource': getSecretDetailResource,
+    'secretDetail': getSecretDetail,
+  },
+  data: {
+    [breadcrumbsConfig]: {
+      'label': '{{$stateParams.objectName}}',
+      'parent': secretList,
+    },
+  },
+  views: {
+    '': {
+      controller: SecretDetailController,
+      controllerAs: '$ctrl',
+      templateUrl: 'secret/detail/detail.html',
+    },
+    [actionbarViewName]: {
+      controller: ActionBarController,
+      controllerAs: '$ctrl',
+      templateUrl: 'secret/detail/actionbar.html',
+    },
+  },
+};
 
 /**
  * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams

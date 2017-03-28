@@ -12,23 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ActionBarController} from 'storageclassdetail/actionbar_controller';
-import module from 'storageclassdetail/module';
+import {StorageClassController} from 'storageclass/detail/controller';
+import storageClassModule from 'storageclass/module';
 
-describe('Action Bar controller', () => {
-  /** @type {!ActionBarController} */
-  let ctrl;
-  let details = {};
+describe('Storage Class Detail controller', () => {
 
   beforeEach(() => {
-    angular.mock.module(module.name);
-
-    angular.mock.inject(($controller) => {
-      ctrl = $controller(ActionBarController, {storageClass: details});
-    });
+    angular.mock.module(storageClassModule.name);
   });
 
-  it('should initialize details', () => {
-    expect(ctrl.details).toBe(details);
-  });
+  it('should initialize storage class controller', angular.mock.inject(($controller) => {
+    let data = {};
+    /** @type {!StorageClassController} */
+    let ctrl = $controller(StorageClassController, {storageClass: data});
+
+    expect(ctrl.storageClass).toBe(data);
+  }));
 });
