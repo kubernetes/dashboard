@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import CreateSecretController from 'deploy/createsecret_controller';
-import deployModule from 'deploy/deploy_module';
+import deployModule from 'deploy/module';
 
 describe('Create-Secret dialog', () => {
   /** @type {!CreateSecretControllerController} */

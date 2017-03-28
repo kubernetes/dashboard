@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import limitRangesDetailModule from 'resourcelimit/resourcelimit_module';
+import limitRangesModule from 'resourcelimit/module';
 
 describe('Resource Limits controller', () => {
   /** @type {!ResourceLimitsController} */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(limitRangesDetailModule.name);
+    angular.mock.module(limitRangesModule.name);
 
     angular.mock.inject(($componentController, $rootScope) => {
       ctrl = $componentController('kdResourceLimits', {$scope: $rootScope}, {

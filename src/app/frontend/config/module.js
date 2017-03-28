@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import chromeModule from 'chrome/chrome_module';
-import configMapModule from 'configmaplist/configmaplist_module';
-import secretModule from 'secretlist/module';
+import chromeModule from 'chrome/module';
+import configMapModule from 'configmap/module';
+import secretModule from 'secret/module';
 
 import stateConfig from './stateconfig';
 

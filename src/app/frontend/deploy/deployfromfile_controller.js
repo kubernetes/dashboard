@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as workloads} from 'workloads/workloads_state';
+import {stateName as workloads} from 'workloads/state';
 
 import showDeployAnywayDialog from './deployanyway_dialog';
 

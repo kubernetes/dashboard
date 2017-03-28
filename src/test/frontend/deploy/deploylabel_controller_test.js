@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import deployModule from 'deploy/deploy_module';
 import DeployLabel from 'deploy/deploylabel';
 import DeployLabelController from 'deploy/deploylabel_controller';
+import deployModule from 'deploy/module';
 
 describe('DeployLabel controller', () => {
   let ctrl;

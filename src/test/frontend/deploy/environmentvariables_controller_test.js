@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import deployModule from 'deploy/deploy_module';
+import deployModule from 'deploy/module';
 
 describe('EnvironmentVariablesController', () => {
   /** @type {!EnvironmentVariablesController} */

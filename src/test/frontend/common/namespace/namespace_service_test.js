@@ -17,7 +17,7 @@ import namespaceModule from 'common/namespace/namespace_module';
 describe('Namespace service', () => {
   /** @type {!common/namespace/namespace_service.NamespaceService} */
   let namespaceService;
-  /** @type {!chrome/chrome_state.StateParams} */
+  /** @type {!chrome/state.StateParams} */
   let stateParams;
 
   beforeEach(() => angular.mock.module(namespaceModule.name));

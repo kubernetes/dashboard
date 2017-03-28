@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import deployModule from 'deploy/deploy_module';
 import DeployFromFileController from 'deploy/deployfromfile_controller';
+import deployModule from 'deploy/module';
 
 describe('DeployFromFile controller', () => {
   /** @type {!DeployFromFileController} */

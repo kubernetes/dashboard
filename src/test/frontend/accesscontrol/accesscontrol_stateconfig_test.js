@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {resolveRoleList} from 'accesscontrol/stateconfig';
-import roleListModule from 'rolelist/rolelist_module';
+import roleListModule from 'role/module';
 
 describe('StateConfig for access control', () => {
   /** @type {!common/pagination/pagination_service.PaginationService} */

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import chromeModule from 'chrome/chrome_module';
+import chromeModule from 'chrome/module';
 import componentsModule from 'common/components/components_module';
 import filtersModule from 'common/filters/filters_module';
-import pvcListModule from 'persistentvolumeclaimlist/persistentvolumeclaimlist_module';
+import persistentVolumeClaimModule from 'persistentvolumeclaim/module';
 import stateConfig from './stateconfig';
 
 /**
@@ -32,7 +32,7 @@ export default angular
           filtersModule.name,
           componentsModule.name,
           chromeModule.name,
-          pvcListModule.name,
+          persistentVolumeClaimModule.name,
         ])
     .config(stateConfig)
     .factory('kdStorageResource', storageResource);

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName} from 'chrome/chrome_state';
-import {deployAppStateName} from 'deploy/deploy_state';
+import {actionbarViewName} from 'chrome/state';
+import {deployAppStateName} from 'deploy/state';
 
 /**
  * @final
