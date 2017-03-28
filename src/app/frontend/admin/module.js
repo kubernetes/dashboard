@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import chromeModule from 'chrome/chrome_module';
-import namespaceListModule from 'namespacelist/namespacelist_module';
-import nodeListModule from 'nodelist/nodelist_module';
-import persistentVolumeListModule from 'persistentvolumelist/persistentvolumelist_module';
-import storageClassListModule from 'storageclasslist/module';
+import chromeModule from 'chrome/module';
+import namespaceModule from 'namespace/module';
+import nodeModule from 'node/module';
+import persistentVolumeModule from 'persistentvolume/module';
+import storageClassModule from 'storageclass/module';
 
 import stateConfig from './stateconfig';
 
@@ -31,10 +31,10 @@ export default angular
           'ngResource',
           'ui.router',
           chromeModule.name,
-          nodeListModule.name,
-          namespaceListModule.name,
-          persistentVolumeListModule.name,
-          storageClassListModule.name,
+          nodeModule.name,
+          namespaceModule.name,
+          persistentVolumeModule.name,
+          storageClassModule.name,
         ])
     .config(stateConfig)
     .factory('kdAdminResource', resource);

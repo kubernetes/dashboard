@@ -14,6 +14,7 @@
 
 import componentsModule from 'common/components/components_module';
 import SerializedReferenceController from 'common/components/serializedreference/serializedreference_controller';
+import {stateName as jobState} from 'job/detail/state';
 
 describe('SerializedReference controller', () => {
   /**
@@ -45,7 +46,7 @@ describe('SerializedReference controller', () => {
     });
 
     ctrl.state_.href.and.callFake((stateName, stateParams) => {
-      expect(stateName).toBe('jobdetail');
+      expect(stateName).toBe(jobState);
       expect(stateParams.objectNamespace).toBe('testing');
       expect(stateParams.objectName).toBe('testJob');
     });

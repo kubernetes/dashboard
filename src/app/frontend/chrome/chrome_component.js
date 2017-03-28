@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {fillContentConfig} from 'chrome/chrome_state';
+import {fillContentConfig} from 'chrome/state';
 
-import {actionbarViewName} from './chrome_state';
+import {actionbarViewName} from './state';
 
 /**
  * Controller for the chrome directive.

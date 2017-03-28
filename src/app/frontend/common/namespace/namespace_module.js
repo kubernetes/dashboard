@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {namespaceParam} from 'chrome/chrome_state';
+import {namespaceParam} from 'chrome/state';
 
 import {NamespaceService} from './namespace_service';
 import {DEFAULT_NAMESPACE, namespaceSelectComponent} from './namespaceselect_component';

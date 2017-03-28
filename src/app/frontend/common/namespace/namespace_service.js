@@ -20,11 +20,11 @@ import {ALL_NAMESPACES} from 'common/namespace/namespaceselect_component';
  */
 export class NamespaceService {
   /**
-   * @param {!./../../chrome/chrome_state.StateParams} $stateParams
+   * @param {!./../../chrome/state.StateParams} $stateParams
    * @ngInject
    */
   constructor($stateParams) {
-    /** @private {!./../../chrome/chrome_state.StateParams} */
+    /** @private {!./../../chrome/state.StateParams} */
     this.stateParams_ = $stateParams;
   }
 

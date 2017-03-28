@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import module from 'chrome/chrome_module';
+import module from 'chrome/module';
 
 describe('Namespace stateconfig ', () => {
   it('should reject states with no parents', () => {
