@@ -15,14 +15,11 @@
 import {stateName as chromeStateName} from 'chrome/state';
 import {stateName as parentStateName} from 'cluster/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
-
 import {stateUrl} from '../state';
-
 import {RoleListController} from './controller';
 
 const i18n = {
-  /** @type {string} @desc Label 'Roles' that appears as a breadcrumbs on the action bar.
-   */
+  /** @type {string} @desc Label 'Roles' that appears as a breadcrumbs on the action bar.*/
   MSG_BREADCRUMBS_ROLES_LABEL: goog.getMsg('Roles'),
 };
 

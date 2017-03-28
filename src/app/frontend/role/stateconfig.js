@@ -24,7 +24,7 @@ import {stateName, stateUrl} from './state';
  * @ngInject
  */
 export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, config).state(listState, listConfig)
+  $stateProvider.state(stateName, config).state(listState, listConfig);
 }
 
 /**
