@@ -12,21 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import storageListModule from 'storage/module';
-import {resolveStorage} from 'storage/stateconfig';
+import module from 'cluster/module';
+import {resolveResource} from 'cluster/stateconfig';
 
-describe('StateConfig for storage list', () => {
+describe('StateConfig for cluster list', () => {
   /** @type {!common/pagination/pagination_service.PaginationService} */
   let kdPaginationService;
 
   beforeEach(() => {
-    angular.mock.module(storageListModule.name);
+    angular.mock.module(module.name);
     angular.mock.inject((_kdPaginationService_) => {
       kdPaginationService = _kdPaginationService_;
     });
   });
 
-  it('should resolve storage with no namespace', angular.mock.inject(($q) => {
+  it('should resolve cluster', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
 
     let resource = jasmine.createSpyObj('$resource', ['get']);
@@ -34,23 +34,9 @@ describe('StateConfig for storage list', () => {
       return {$promise: promise};
     });
 
-    let actual = resolveStorage(resource, {}, kdPaginationService);
+    let actual = resolveResource(resource, kdPaginationService);
 
-    expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery(''));
-    expect(actual).toBe(promise);
-  }));
-
-  it('should resolve storage', angular.mock.inject(($q) => {
-    let promise = $q.defer().promise;
-
-    let resource = jasmine.createSpyObj('$resource', ['get']);
-    resource.get.and.callFake(function() {
-      return {$promise: promise};
-    });
-
-    let actual = resolveStorage(resource, {namespace: 'foo'}, kdPaginationService);
-
-    expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery('foo'));
+    expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery());
     expect(actual).toBe(promise);
   }));
 });

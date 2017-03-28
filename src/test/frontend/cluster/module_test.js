@@ -12,17 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import module from 'servicesanddiscovery/module';
+import module from 'cluster/module';
 
-describe('ServicesAndDiscovery module ', () => {
+describe('Cluster module ', () => {
   beforeEach(() => {
     angular.mock.module(module.name);
   });
 
-  it('should provide kdServicesAndDiscoveryResource',
-     angular.mock.inject((kdServicesAndDiscoveryResource, $httpBackend) => {
-       kdServicesAndDiscoveryResource.get();
-       $httpBackend.expectGET('api/v1/servicesanddiscovery').respond();
-       $httpBackend.flush();
-     }));
+  it('should provide kdClusterResource', angular.mock.inject((kdClusterResource, $httpBackend) => {
+    kdClusterResource.get();
+    $httpBackend.expectGET('api/v1/cluster').respond();
+    $httpBackend.flush();
+  }));
 });

@@ -12,21 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import module from 'admin/module';
-import {resolveResource} from 'admin/stateconfig';
+import {resolveRoleList} from 'role/list/stateconfig';
+import roleListModule from 'role/module';
 
-describe('StateConfig for admin list', () => {
+describe('StateConfig for role', () => {
   /** @type {!common/pagination/pagination_service.PaginationService} */
   let kdPaginationService;
 
   beforeEach(() => {
-    angular.mock.module(module.name);
+    angular.mock.module(roleListModule.name);
     angular.mock.inject((_kdPaginationService_) => {
       kdPaginationService = _kdPaginationService_;
     });
   });
 
-  it('should resolve admin', angular.mock.inject(($q) => {
+  it('should resolve role list', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
 
     let resource = jasmine.createSpyObj('$resource', ['get']);
@@ -34,9 +34,9 @@ describe('StateConfig for admin list', () => {
       return {$promise: promise};
     });
 
-    let actual = resolveResource(resource, kdPaginationService);
+    let actual = resolveRoleList(resource, kdPaginationService);
 
-    expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery());
+    expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery(''));
     expect(actual).toBe(promise);
   }));
 });

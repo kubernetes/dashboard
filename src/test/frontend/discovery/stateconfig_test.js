@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import module from 'servicesanddiscovery/module';
-import {resolveResource} from 'servicesanddiscovery/stateconfig';
+import module from 'discovery/module';
+import {resolveResource} from 'discovery/stateconfig';
 
-describe('StateConfig for servicesanddiscovery list', () => {
+describe('StateConfig for discovery list', () => {
   /** @type {!common/pagination/pagination_service.PaginationService} */
   let kdPaginationService;
 
@@ -26,7 +26,7 @@ describe('StateConfig for servicesanddiscovery list', () => {
     });
   });
 
-  it('should resolve servicesanddiscovery', angular.mock.inject(($q) => {
+  it('should resolve discovery', angular.mock.inject(($q) => {
     let promise = $q.defer().promise;
 
     let resource = jasmine.createSpyObj('$resource', ['get']);

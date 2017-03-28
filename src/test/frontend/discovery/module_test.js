@@ -12,16 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import module from 'admin/module';
+import module from 'discovery/module';
 
-describe('Admin module ', () => {
+describe('Discovery module ', () => {
   beforeEach(() => {
     angular.mock.module(module.name);
   });
 
-  it('should provide kdAdminResource', angular.mock.inject((kdAdminResource, $httpBackend) => {
-    kdAdminResource.get();
-    $httpBackend.expectGET('api/v1/admin').respond();
-    $httpBackend.flush();
-  }));
+  it('should provide kdDiscoveryResource',
+     angular.mock.inject((kdDiscoveryResource, $httpBackend) => {
+       kdDiscoveryResource.get();
+       $httpBackend.expectGET('api/v1/discovery').respond();
+       $httpBackend.flush();
+     }));
 });

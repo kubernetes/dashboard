@@ -12,32 +12,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {AdminController} from 'admin/controller';
-import module from 'admin/module';
+import {ClusterController} from 'cluster/controller';
+import module from 'cluster/module';
 
-describe('Admin list controller', () => {
-  /** @type {!admin/admin_controller.AdminController} */
+describe('Cluster list controller', () => {
+  /** @type {!cluster/cluster_controller.ClusterController} */
   let ctrl;
 
   beforeEach(() => {
     angular.mock.module(module.name);
 
     angular.mock.inject(($controller) => {
-      ctrl = $controller(AdminController, {admin: {admin: []}});
+      ctrl = $controller(ClusterController, {cluster: {cluster: []}});
     });
   });
 
-  it('should initialize admin', angular.mock.inject(($controller) => {
-    let admin = {admin: 'foo-bar'};
-    /** @type {!AdminController} */
-    let ctrl = $controller(AdminController, {admin: admin});
+  it('should initialize cluster', angular.mock.inject(($controller) => {
+    let cluster = {cluster: 'foo-bar'};
+    /** @type {!ClusterController} */
+    let ctrl = $controller(ClusterController, {cluster: cluster});
 
-    expect(ctrl.admin).toBe(admin);
+    expect(ctrl.cluster).toBe(cluster);
   }));
 
   it('should show zero state', () => {
     // given
-    ctrl.admin = {
+    ctrl.cluster = {
       nodeList: {listMeta: {totalItems: 0}},
       namespaceList: {listMeta: {totalItems: 0}},
       persistentVolumeList: {listMeta: {totalItems: 0}},
@@ -49,7 +49,7 @@ describe('Admin list controller', () => {
 
   it('should hide zero state', () => {
     // given
-    ctrl.admin = {
+    ctrl.cluster = {
       nodeList: {listMeta: {totalItems: 1}},
       namespaceList: {listMeta: {totalItems: 0}},
       persistentVolumeList: {listMeta: {totalItems: 0}},
