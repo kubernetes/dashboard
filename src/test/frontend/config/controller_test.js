@@ -16,8 +16,7 @@ import {ConfigController} from 'config/controller';
 import module from 'config/module';
 
 describe('Config list controller', () => {
-  /** @type {!config/config_controller.ConfigController}
-   */
+  /** @type {!ConfigController} */
   let ctrl;
 
   beforeEach(() => {
@@ -41,6 +40,7 @@ describe('Config list controller', () => {
     ctrl.config = {
       secretList: {listMeta: {totalItems: 0}},
       configMapList: {listMeta: {totalItems: 0}},
+      persistentVolumeClaimList: {listMeta: {totalItems: 0}},
     };
 
     expect(ctrl.shouldShowZeroState()).toBe(true);
@@ -51,6 +51,7 @@ describe('Config list controller', () => {
     ctrl.config = {
       secretList: {listMeta: {totalItems: 0}},
       configMapList: {listMeta: {totalItems: 1}},
+      persistentVolumeClaimList: {listMeta: {totalItems: 0}},
     };
 
     // then

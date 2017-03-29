@@ -16,7 +16,7 @@ import {DiscoveryController} from 'discovery/controller';
 import module from 'discovery/module';
 
 describe('Discovery list controller', () => {
-  /** @type {!discovery/discovery_controller.DiscoveryController}
+  /** @type {!DiscoveryController}
    */
   let ctrl;
 
@@ -24,23 +24,21 @@ describe('Discovery list controller', () => {
     angular.mock.module(module.name);
 
     angular.mock.inject(($controller) => {
-      ctrl = $controller(
-          DiscoveryController, {Discovery: {Discovery: []}});
+      ctrl = $controller(DiscoveryController, {discovery: {discovery: []}});
     });
   });
 
   it('should initialize Discovery', angular.mock.inject(($controller) => {
-    let Discovery = {Discovery: 'foo-bar'};
+    let discovery = {discovery: 'foo-bar'};
     /** @type {!DiscoveryController} */
-    let ctrl =
-        $controller(DiscoveryController, {Discovery: Discovery});
+    let ctrl = $controller(DiscoveryController, {discovery: discovery});
 
-    expect(ctrl.Discovery).toBe(Discovery);
+    expect(ctrl.discovery).toBe(discovery);
   }));
 
   it('should show zero state', () => {
     // given
-    ctrl.Discovery = {
+    ctrl.discovery = {
       serviceList: {listMeta: {totalItems: 0}},
       ingressList: {listMeta: {totalItems: 0}},
     };
@@ -50,7 +48,7 @@ describe('Discovery list controller', () => {
 
   it('should hide zero state', () => {
     // given
-    ctrl.Discovery = {
+    ctrl.discovery = {
       serviceList: {listMeta: {totalItems: 0}},
       ingressList: {listMeta: {totalItems: 1}},
     };

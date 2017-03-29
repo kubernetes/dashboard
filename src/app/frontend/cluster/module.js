@@ -16,6 +16,7 @@ import chromeModule from 'chrome/module';
 import namespaceModule from 'namespace/module';
 import nodeModule from 'node/module';
 import persistentVolumeModule from 'persistentvolume/module';
+import roleModule from 'role/module';
 import storageClassModule from 'storageclass/module';
 
 import stateConfig from './stateconfig';
@@ -34,6 +35,7 @@ export default angular
           nodeModule.name,
           namespaceModule.name,
           persistentVolumeModule.name,
+          roleModule.name,
           storageClassModule.name,
         ])
     .config(stateConfig)

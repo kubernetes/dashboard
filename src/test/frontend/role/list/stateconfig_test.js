@@ -16,7 +16,7 @@ import {resolveRoleList} from 'role/list/stateconfig';
 import roleListModule from 'role/module';
 
 describe('StateConfig for role', () => {
-  /** @type {!common/pagination/pagination_service.PaginationService} */
+  /** @type {!PaginationService} */
   let kdPaginationService;
 
   beforeEach(() => {

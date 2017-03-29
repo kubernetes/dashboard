@@ -12,26 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {AccessControlController} from 'accesscontrol/controller';
-import accessControlModule from 'accesscontrol/module';
+import {RoleListController} from 'role/list/controller';
+import roleModule from 'role/module';
 
-describe('Access control controller', () => {
-  /** @type {!accesscontrol/controller.AccessControlController}
+describe('Role controller', () => {
+  /** @type {!RoleListController}
    */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(accessControlModule.name);
+    angular.mock.module(roleModule.name);
 
     angular.mock.inject(($controller) => {
-      ctrl = $controller(AccessControlController, {roleList: {items: []}});
+      ctrl = $controller(RoleListController, {roleList: {items: []}});
     });
   });
 
-  it('should initialize access control controller', angular.mock.inject(($controller) => {
+  it('should initialize role controller', angular.mock.inject(($controller) => {
     let ctrls = {};
-    /** @type {!AccessControlController} */
-    let ctrl = $controller(AccessControlController, {roleList: {items: ctrls}});
+    /** @type {!RoleListController} */
+    let ctrl = $controller(RoleListController, {roleList: {items: ctrls}});
 
     expect(ctrl.roleList.items).toBe(ctrls);
   }));

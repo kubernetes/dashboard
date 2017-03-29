@@ -16,7 +16,7 @@ import {ClusterController} from 'cluster/controller';
 import module from 'cluster/module';
 
 describe('Cluster list controller', () => {
-  /** @type {!cluster/cluster_controller.ClusterController} */
+  /** @type {!cluster/controller.ClusterController} */
   let ctrl;
 
   beforeEach(() => {
@@ -41,6 +41,7 @@ describe('Cluster list controller', () => {
       nodeList: {listMeta: {totalItems: 0}},
       namespaceList: {listMeta: {totalItems: 0}},
       persistentVolumeList: {listMeta: {totalItems: 0}},
+      roleList: {listMeta: {totalItems: 0}},
       storageClassList: {listMeta: {totalItems: 0}},
     };
 
@@ -53,6 +54,7 @@ describe('Cluster list controller', () => {
       nodeList: {listMeta: {totalItems: 1}},
       namespaceList: {listMeta: {totalItems: 0}},
       persistentVolumeList: {listMeta: {totalItems: 0}},
+      roleList: {listMeta: {totalItems: 0}},
       storageClassList: {listMeta: {totalItems: 0}},
     };
 
