@@ -145,17 +145,11 @@ backendApi.Workloads;
  *   nodeList: !backendApi.NodeList,
  *   namespaceList: !backendApi.NamespaceList,
  *   persistentVolumeList: !backendApi.PersistentVolumeList,
+ *   roleList: !backendApi.RoleList,
  *   storageClassList: !backendApi.StorageClassList,
  * }}
  */
-backendApi.Admin;
-
-/**
- * @typedef {{
- *   persistentVolumeClaimList: !backendApi.PersistentVolumeClaimList,
- * }}
- */
-backendApi.Storage;
+backendApi.Cluster;
 
 /**
  * @typedef {{
@@ -163,11 +157,12 @@ backendApi.Storage;
  *   ingressList: !backendApi.IngressList,
  * }}
  */
-backendApi.ServicesAndDiscovery;
+backendApi.Discovery;
 
 /**
  * @typedef {{
  *   configMapList: !backendApi.ConfigMapList,
+ *   persistentVolumeClaimList: !backendApi.PersistentVolumeClaimList,
  *   secretList: !backendApi.SecretList,
  * }}
  */

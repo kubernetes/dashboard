@@ -15,24 +15,20 @@
 /**
  * @final
  */
-export class ConfigController {
+export class DiscoveryController {
   /**
-   * @param {!backendApi.Config} config
-   * @param {!angular.Resource} kdConfigMapListResource
-   * @param {!angular.Resource} kdSecretListResource
-   * @param {!angular.Resource} kdPersistentVolumeClaimListResource
+   * @param {!backendApi.Discovery} discovery
+   * @param {!angular.Resource} kdServiceListResource
+   * @param {!angular.Resource} kdIngressListResource
    * @ngInject
    */
-  constructor(
-      config, kdConfigMapListResource, kdSecretListResource, kdPersistentVolumeClaimListResource) {
-    /** @export {!backendApi.Config} */
-    this.config = config;
+  constructor(discovery, kdServiceListResource, kdIngressListResource) {
+    /** @export {!backendApi.Discovery} */
+    this.discovery = discovery;
     /** @export {!angular.Resource} */
-    this.kdConfigMapListResource = kdConfigMapListResource;
+    this.kdServiceListResource = kdServiceListResource;
     /** @export {!angular.Resource} */
-    this.kdSecretListResource = kdSecretListResource;
-    /** @export {!angular.Resource} */
-    this.pvcListResource = kdPersistentVolumeClaimListResource;
+    this.kdIngressListResource = kdIngressListResource;
   }
 
   /**
@@ -41,9 +37,8 @@ export class ConfigController {
    */
   shouldShowZeroState() {
     /** @type {number} */
-    let resourcesLength = this.config.configMapList.listMeta.totalItems +
-        this.config.secretList.listMeta.totalItems +
-        this.config.persistentVolumeClaimList.listMeta.totalItems;
+    let resourcesLength = this.discovery.serviceList.listMeta.totalItems +
+        this.discovery.ingressList.listMeta.totalItems;
     return resourcesLength === 0;
   }
 }

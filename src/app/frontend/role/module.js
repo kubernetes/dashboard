@@ -18,13 +18,15 @@ import filtersModule from 'common/filters/filters_module';
 
 import {roleCardComponent} from './list/card_component';
 import {roleCardListComponent} from './list/cardlist_component';
+import {roleListResource} from './list/stateconfig';
+import stateConfig from './stateconfig';
 
 /**
  * Angular module for the Role list view.
  */
 export default angular
     .module(
-        'kubernetesDashboard.roleList',
+        'kubernetesDashboard.role',
         [
           'ngMaterial',
           'ngResource',
@@ -33,15 +35,7 @@ export default angular
           componentsModule.name,
           chromeModule.name,
         ])
+    .config(stateConfig)
     .component('kdRoleCardList', roleCardListComponent)
     .component('kdRoleCard', roleCardComponent)
     .factory('kdRoleListResource', roleListResource);
-
-/**
- * @param {!angular.$resource} $resource
- * @return {!angular.Resource}
- * @ngInject
- */
-function roleListResource($resource) {
-  return $resource('api/v1/rbacrole');
-}

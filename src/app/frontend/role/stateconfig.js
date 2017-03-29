@@ -1,4 +1,4 @@
-// Copyright 2015 Google Inc. All Rights Reserved.
+// Copyright 2017 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,9 +13,6 @@
 // limitations under the License.
 
 import {stateName as chromeStateName} from 'chrome/state';
-
-import {stateName as detailState} from './detail/state';
-import {config as detailConfig} from './detail/stateconfig';
 import {stateName as listState} from './list/state';
 import {config as listConfig} from './list/stateconfig';
 import {stateName, stateUrl} from './state';
@@ -27,13 +24,11 @@ import {stateName, stateUrl} from './state';
  * @ngInject
  */
 export default function stateConfig($stateProvider) {
-  $stateProvider.state(stateName, config)
-      .state(listState, listConfig)
-      .state(detailState, detailConfig);
+  $stateProvider.state(stateName, config).state(listState, listConfig);
 }
 
 /**
- * Config state object for the Replica Set abstract state.
+ * Config state object for the Role abstract state.
  *
  * @type {!ui.router.StateConfig}
  */

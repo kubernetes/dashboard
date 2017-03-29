@@ -15,7 +15,7 @@
 import {stateName as chromeStateName} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
 
-import {ConfigController} from './controller';
+import {ClusterController} from './controller';
 import {stateName} from './state';
 import {stateUrl} from './state';
 
@@ -28,37 +28,35 @@ export default function stateConfig($stateProvider) {
     url: stateUrl,
     parent: chromeStateName,
     resolve: {
-      'config': resolveResource,
+      'cluster': resolveResource,
     },
     data: {
       [breadcrumbsConfig]: {
-        'label': i18n.MSG_BREADCRUMBS_CONFIG_AND_STORAGE_LABEL,
+        'label': i18n.MSG_BREADCRUMBS_CLUSTER_LABEL,
       },
     },
     views: {
       '': {
-        controller: ConfigController,
+        controller: ClusterController,
         controllerAs: '$ctrl',
-        templateUrl: 'config/config.html',
+        templateUrl: 'cluster/cluster.html',
       },
     },
   });
 }
 
 /**
- * @param {!angular.$resource} kdConfigResource
- * @param {!./../chrome/state.StateParams} $stateParams
+ * @param {!angular.$resource} kdClusterResource
  * @param {!./../common/pagination/pagination_service.PaginationService} kdPaginationService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveResource(kdConfigResource, $stateParams, kdPaginationService) {
-  let paginationQuery = kdPaginationService.getDefaultResourceQuery($stateParams.namespace);
-  return kdConfigResource.get(paginationQuery).$promise;
+export function resolveResource(kdClusterResource, kdPaginationService) {
+  let paginationQuery = kdPaginationService.getDefaultResourceQuery();
+  return kdClusterResource.get(paginationQuery).$promise;
 }
 
 const i18n = {
-  /** @type {string} @desc Label 'Config and storage' that appears as a breadcrumbs on the action
-   * bar. */
-  MSG_BREADCRUMBS_CONFIG_AND_STORAGE_LABEL: goog.getMsg('Config and storage'),
+  /** @type {string} @desc Label 'Cluster' that appears as a breadcrumbs on the action bar. */
+  MSG_BREADCRUMBS_CLUSTER_LABEL: goog.getMsg('Cluster'),
 };

@@ -27,7 +27,7 @@ import (
 
 	restful "github.com/emicklei/go-restful"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/admin"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/cluster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/config"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/configmap"
@@ -35,6 +35,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/discovery"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/ingress"
@@ -52,9 +53,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/secret"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/servicesanddiscovery"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/storage"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/storageclass"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/thirdpartyresource"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/workload"
@@ -286,15 +285,6 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 			Writes(resourceService.ServiceList{}))
 
 	apiV1Ws.Route(
-		apiV1Ws.GET("/storage").
-			To(apiHandler.handleGetStorage).
-			Writes(storage.Storage{}))
-	apiV1Ws.Route(
-		apiV1Ws.GET("/storage/{namespace}").
-			To(apiHandler.handleGetStorage).
-			Writes(storage.Storage{}))
-
-	apiV1Ws.Route(
 		apiV1Ws.GET("/workload").
 			To(apiHandler.handleGetWorkloads).
 			Writes(workload.Workloads{}))
@@ -304,18 +294,18 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 			Writes(workload.Workloads{}))
 
 	apiV1Ws.Route(
-		apiV1Ws.GET("/admin").
-			To(apiHandler.handleGetAdmin).
-			Writes(admin.Admin{}))
+		apiV1Ws.GET("/cluster").
+			To(apiHandler.handleGetCluster).
+			Writes(cluster.Cluster{}))
 
 	apiV1Ws.Route(
-		apiV1Ws.GET("/servicesanddiscovery").
-			To(apiHandler.handleGetServicesAndDiscovery).
-			Writes(servicesanddiscovery.ServicesAndDiscovery{}))
+		apiV1Ws.GET("/discovery").
+			To(apiHandler.handleGetDiscovery).
+			Writes(discovery.Discovery{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/servicesanddiscovery/{namespace}").
-			To(apiHandler.handleGetServicesAndDiscovery).
-			Writes(servicesanddiscovery.ServicesAndDiscovery{}))
+		apiV1Ws.GET("/discovery/{namespace}").
+			To(apiHandler.handleGetDiscovery).
+			Writes(discovery.Discovery{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/config").
@@ -822,8 +812,8 @@ func (apiHandler *APIHandler) handleGetNodeList(request *restful.Request, respon
 	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
-func (apiHandler *APIHandler) handleGetAdmin(request *restful.Request, response *restful.Response) {
-	result, err := admin.GetAdmin(apiHandler.client)
+func (apiHandler *APIHandler) handleGetCluster(request *restful.Request, response *restful.Response) {
+	result, err := cluster.GetCluster(apiHandler.client)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -982,7 +972,8 @@ func (apiHandler *APIHandler) handleGetWorkloads(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := parseNamespacePathParameter(request)
-	result, err := workload.GetWorkloads(apiHandler.client, apiHandler.heapsterClient, namespace, dataselect.StandardMetrics)
+	result, err := workload.GetWorkloads(apiHandler.client, apiHandler.heapsterClient,
+		namespace, dataselect.StandardMetrics)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -991,26 +982,11 @@ func (apiHandler *APIHandler) handleGetWorkloads(
 	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
-/// / Handles get Storage resources list API call.
-func (apiHandler *APIHandler) handleGetStorage(
+func (apiHandler *APIHandler) handleGetDiscovery(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := parseNamespacePathParameter(request)
-	dataSelect := parseDataSelectPathParameter(request)
-	result, err := storage.GetStorage(apiHandler.client, apiHandler.heapsterClient, namespace, dataSelect)
-	if err != nil {
-		handleInternalError(response, err)
-		return
-	}
-
-	response.WriteHeaderAndEntity(http.StatusOK, result)
-}
-
-func (apiHandler *APIHandler) handleGetServicesAndDiscovery(
-	request *restful.Request, response *restful.Response) {
-
-	namespace := parseNamespacePathParameter(request)
-	result, err := servicesanddiscovery.GetServicesAndDiscovery(apiHandler.client, namespace)
+	result, err := discovery.GetDiscovery(apiHandler.client, namespace)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1023,7 +999,9 @@ func (apiHandler *APIHandler) handleGetConfig(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := parseNamespacePathParameter(request)
-	result, err := config.GetConfig(apiHandler.client, namespace)
+	dataSelect := parseDataSelectPathParameter(request)
+	result, err := config.GetConfig(apiHandler.client, apiHandler.heapsterClient, namespace,
+		dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return

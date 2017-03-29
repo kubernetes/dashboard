@@ -17,15 +17,15 @@
  * to bootstrap the application.
  */
 import aboutModule from './about/module';
-import accessControlModule from './accesscontrol/module';
-import adminModule from './admin/module';
 import chromeModule from './chrome/module';
+import clusterModule from './cluster/module';
 import csrfTokenModule from './common/csrftoken/csrftoken_module';
 import configModule from './config/module';
 import configMapModule from './configmap/module';
 import daemonSetModule from './daemonset/module';
 import deployModule from './deploy/module';
 import deploymentModule from './deployment/module';
+import discoveryModule from './discovery/module';
 import errorModule from './error/module';
 import horizontalPodAutoscalerModule from './horizontalpodautoscaler/module';
 import indexConfig from './index_config';
@@ -41,11 +41,10 @@ import podModule from './pod/module';
 import replicaSetModule from './replicaset/module';
 import replicationControllerModule from './replicationcontroller/module';
 import resourceQuotaModule from './resourcequota/module';
+import roleModule from './role/module';
 import secretModule from './secret/module';
 import serviceModule from './service/module';
-import servicesanddiscoveryModule from './servicesanddiscovery/module';
 import statefulSetModule from './statefulset/module';
-import storageModule from './storage/module';
 import storageClassModule from './storageclass/module';
 import thirdPartyResourceModule from './thirdpartyresource/module';
 import {TitleController} from './title_controller';
@@ -76,8 +75,7 @@ export default angular
           deploymentModule.name,
           horizontalPodAutoscalerModule.name,
           workloadsModule.name,
-          storageModule.name,
-          adminModule.name,
+          clusterModule.name,
           serviceModule.name,
           podModule.name,
           persistentVolumeModule.name,
@@ -87,12 +85,12 @@ export default angular
           configMapModule.name,
           secretModule.name,
           ingressModule.name,
-          servicesanddiscoveryModule.name,
+          discoveryModule.name,
           configModule.name,
           csrfTokenModule.name,
           storageClassModule.name,
           thirdPartyResourceModule.name,
-          accessControlModule.name,
+          roleModule.name,
         ])
     .config(indexConfig)
     .config(routeConfig)

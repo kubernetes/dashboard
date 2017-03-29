@@ -14,7 +14,7 @@
 
 import {stateName as chromeStateName} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
-import {stateName as parentStateName} from 'servicesanddiscovery/state';
+import {stateName as parentStateName} from 'discovery/state';
 
 import {stateUrl} from './../state';
 import {IngressListController} from './controller';
@@ -23,8 +23,8 @@ import {IngressListController} from './controller';
  * I18n object that defines strings for translation used in this file.
  */
 const i18n = {
-  /** @type {string} @desc Label 'Ingress' that appears as a breadcrumbs on the action bar. */
-  MSG_BREADCRUMBS_INGRESSS_LABEL: goog.getMsg('Ingress'),
+  /** @type {string} @desc Label 'Ingresses' that appears as a breadcrumbs on the action bar. */
+  MSG_BREADCRUMBS_INGRESSS_LABEL: goog.getMsg('Ingresses'),
 };
 
 /**

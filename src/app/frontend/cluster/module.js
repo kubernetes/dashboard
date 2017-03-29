@@ -13,29 +13,33 @@
 // limitations under the License.
 
 import chromeModule from 'chrome/module';
-import configMapModule from 'configmap/module';
-import persistentVolumeClaimModule from 'persistentvolumeclaim/module';
-import secretModule from 'secret/module';
+import namespaceModule from 'namespace/module';
+import nodeModule from 'node/module';
+import persistentVolumeModule from 'persistentvolume/module';
+import roleModule from 'role/module';
+import storageClassModule from 'storageclass/module';
 
 import stateConfig from './stateconfig';
 
 /**
- * Module for the config category.
+ * Module for the cluster view.
  */
 export default angular
     .module(
-        'kubernetesDashboard.config',
+        'kubernetesDashboard.cluster',
         [
           'ngMaterial',
           'ngResource',
           'ui.router',
           chromeModule.name,
-          configMapModule.name,
-          secretModule.name,
-          persistentVolumeClaimModule.name,
+          nodeModule.name,
+          namespaceModule.name,
+          persistentVolumeModule.name,
+          roleModule.name,
+          storageClassModule.name,
         ])
     .config(stateConfig)
-    .factory('kdConfigResource', resource);
+    .factory('kdClusterResource', resource);
 
 /**
  * @param {!angular.$resource} $resource
@@ -43,5 +47,5 @@ export default angular
  * @ngInject
  */
 function resource($resource) {
-  return $resource('api/v1/config/:namespace');
+  return $resource('api/v1/cluster');
 }

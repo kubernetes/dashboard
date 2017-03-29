@@ -14,8 +14,7 @@
 
 import {stateName as chromeStateName} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
-
-import {ConfigController} from './controller';
+import {DiscoveryController} from './controller';
 import {stateName} from './state';
 import {stateUrl} from './state';
 
@@ -28,37 +27,37 @@ export default function stateConfig($stateProvider) {
     url: stateUrl,
     parent: chromeStateName,
     resolve: {
-      'config': resolveResource,
+      'discovery': resolveResource,
     },
     data: {
       [breadcrumbsConfig]: {
-        'label': i18n.MSG_BREADCRUMBS_CONFIG_AND_STORAGE_LABEL,
+        'label': i18n.MSG_BREADCRUMBS_DISCOVERY_AND_LOAD_BALANCING_LABEL,
       },
     },
     views: {
       '': {
-        controller: ConfigController,
+        controller: DiscoveryController,
         controllerAs: '$ctrl',
-        templateUrl: 'config/config.html',
+        templateUrl: 'discovery/discovery.html',
       },
     },
   });
 }
 
 /**
- * @param {!angular.$resource} kdConfigResource
+ * @param {!angular.$resource} kdDiscoveryResource
  * @param {!./../chrome/state.StateParams} $stateParams
  * @param {!./../common/pagination/pagination_service.PaginationService} kdPaginationService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveResource(kdConfigResource, $stateParams, kdPaginationService) {
+export function resolveResource(kdDiscoveryResource, $stateParams, kdPaginationService) {
   let paginationQuery = kdPaginationService.getDefaultResourceQuery($stateParams.namespace);
-  return kdConfigResource.get(paginationQuery).$promise;
+  return kdDiscoveryResource.get(paginationQuery).$promise;
 }
 
 const i18n = {
-  /** @type {string} @desc Label 'Config and storage' that appears as a breadcrumbs on the action
-   * bar. */
-  MSG_BREADCRUMBS_CONFIG_AND_STORAGE_LABEL: goog.getMsg('Config and storage'),
+  /** @type {string} @desc Label 'Discovery and load balancing' that appears as a breadcrumbs on the
+     action bar. */
+  MSG_BREADCRUMBS_DISCOVERY_AND_LOAD_BALANCING_LABEL: goog.getMsg('Discovery and load balancing'),
 };

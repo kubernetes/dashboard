@@ -12,35 +12,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ConfigController} from 'config/controller';
-import module from 'config/module';
+import {DiscoveryController} from 'discovery/controller';
+import module from 'discovery/module';
 
-describe('Config list controller', () => {
-  /** @type {!ConfigController} */
+describe('Discovery list controller', () => {
+  /** @type {!DiscoveryController}
+   */
   let ctrl;
 
   beforeEach(() => {
     angular.mock.module(module.name);
 
     angular.mock.inject(($controller) => {
-      ctrl = $controller(ConfigController, {config: {config: []}});
+      ctrl = $controller(DiscoveryController, {discovery: {discovery: []}});
     });
   });
 
-  it('should initialize config', angular.mock.inject(($controller) => {
-    let config = {config: 'foo-bar'};
-    /** @type {!ConfigController} */
-    let ctrl = $controller(ConfigController, {config: config});
+  it('should initialize Discovery', angular.mock.inject(($controller) => {
+    let discovery = {discovery: 'foo-bar'};
+    /** @type {!DiscoveryController} */
+    let ctrl = $controller(DiscoveryController, {discovery: discovery});
 
-    expect(ctrl.config).toBe(config);
+    expect(ctrl.discovery).toBe(discovery);
   }));
 
   it('should show zero state', () => {
     // given
-    ctrl.config = {
-      secretList: {listMeta: {totalItems: 0}},
-      configMapList: {listMeta: {totalItems: 0}},
-      persistentVolumeClaimList: {listMeta: {totalItems: 0}},
+    ctrl.discovery = {
+      serviceList: {listMeta: {totalItems: 0}},
+      ingressList: {listMeta: {totalItems: 0}},
     };
 
     expect(ctrl.shouldShowZeroState()).toBe(true);
@@ -48,10 +48,9 @@ describe('Config list controller', () => {
 
   it('should hide zero state', () => {
     // given
-    ctrl.config = {
-      secretList: {listMeta: {totalItems: 0}},
-      configMapList: {listMeta: {totalItems: 1}},
-      persistentVolumeClaimList: {listMeta: {totalItems: 0}},
+    ctrl.discovery = {
+      serviceList: {listMeta: {totalItems: 0}},
+      ingressList: {listMeta: {totalItems: 1}},
     };
 
     // then
