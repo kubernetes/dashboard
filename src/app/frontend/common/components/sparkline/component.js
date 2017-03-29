@@ -49,3 +49,18 @@ export default class SparklineController {
     return scaled.map(([x, y]) => `${x},${(1 - y)}`).join(' ');
   }
 }
+
+/**
+ * Sparkline component definition.
+ *
+ * @type {!angular.Component}
+ */
+export const sparklineComponent = {
+  bindings: {
+    'timeseries': '<',
+  },
+  controller: SparklineController,
+  controllerAs: 'sparklineCtrl',
+  templateUrl: 'common/components/sparkline/sparkline.html',
+  templateNamespace: 'svg',
+};

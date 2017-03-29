@@ -39,3 +39,17 @@ export default class MiddleEllipsisController {
     return this.displayString.length > this.maxLength;
   }
 }
+
+/**
+ * Middle ellipsis component definition.
+ *
+ * @type {!angular.Component}
+ */
+export const middleEllipsisComponent = {
+  bindings: {
+    'displayString': '@',
+  },
+  controller: MiddleEllipsisController,
+  controllerAs: 'ellipsisCtrl',
+  templateUrl: 'common/components/middleellipsis/middleellipsis.html',
+};

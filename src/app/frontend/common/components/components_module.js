@@ -24,11 +24,11 @@ import endpointModule from './endpoint/endpoint_module';
 import graphModule from './graph/graph_module';
 import infoCardModule from './infocard/infocard_module';
 import {labelComponent} from './labels/component';
-import middleEllipsisDirective from './middleellipsis/middleellipsis_directive';
+import {middleEllipsisComponent} from './middleellipsis/component';
 import resourceCardModule from './resourcecard/resourcecard_module';
 import resourceDetailModule from './resourcedetail/module';
 import serializedReferenceModule from './serializedreference/serializedreference_module';
-import sparklineDirective from './sparkline/sparkline_directive';
+import {sparklineComponent} from './sparkline/component';
 import toggleHiddenTextModule from './togglehiddentext/togglehiddentext_module';
 import warnThresholdDirective from './warnthreshold/warnthreshold_directive';
 import {zeroStateComponent} from './zerostate/component';
@@ -60,6 +60,6 @@ export default angular
         ])
     .component('kdLabels', labelComponent)
     .component('kdZeroState', zeroStateComponent)
-    .directive('kdMiddleEllipsis', middleEllipsisDirective)
-    .directive('kdSparkline', sparklineDirective)
+    .component('kdMiddleEllipsis', middleEllipsisComponent)
+    .component('kdSparkline', sparklineComponent)
     .directive('kdWarnThreshold', warnThresholdDirective);
