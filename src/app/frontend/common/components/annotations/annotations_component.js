@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import LabelsController from '../labels/labels_controller';
+import LabelsController from '../labels/component';
 
 /**
  * @return {!angular.Component}

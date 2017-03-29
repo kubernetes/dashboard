@@ -99,3 +99,18 @@ export default class LabelsController {
     return urlRegexp.test(value.trim());
   }
 }
+
+/**
+ * Labels component definition.
+ *
+ * @type {!angular.Component}
+ */
+export const labelComponent = {
+  bindings: {
+    'labels': '=',
+  },
+  controller: LabelsController,
+  controllerAs: 'labelsCtrl',
+  templateUrl: 'common/components/labels/labels.html',
+
+};

@@ -23,7 +23,7 @@ import contentCardModule from './contentcard/contentcard_module';
 import endpointModule from './endpoint/endpoint_module';
 import graphModule from './graph/graph_module';
 import infoCardModule from './infocard/infocard_module';
-import labelsDirective from './labels/labels_directive';
+import {labelComponent} from './labels/component';
 import middleEllipsisDirective from './middleellipsis/middleellipsis_directive';
 import resourceCardModule from './resourcecard/resourcecard_module';
 import resourceDetailModule from './resourcedetail/module';
@@ -31,7 +31,7 @@ import serializedReferenceModule from './serializedreference/serializedreference
 import sparklineDirective from './sparkline/sparkline_directive';
 import toggleHiddenTextModule from './togglehiddentext/togglehiddentext_module';
 import warnThresholdDirective from './warnthreshold/warnthreshold_directive';
-import zeroStateModule from './zerostate/zerostate_module';
+import {zeroStateComponent} from './zerostate/component';
 
 /**
  * Module containing common components for the application.
@@ -49,7 +49,6 @@ export default angular
           infoCardModule.name,
           resourceDetailModule.name,
           resourceCardModule.name,
-          zeroStateModule.name,
           paginationModule.name,
           namespaceModule.name,
           stateModule.name,
@@ -59,7 +58,8 @@ export default angular
           annotationsModule.name,
           toggleHiddenTextModule.name,
         ])
-    .directive('kdLabels', labelsDirective)
+    .component('kdLabels', labelComponent)
+    .component('kdZeroState', zeroStateComponent)
     .directive('kdMiddleEllipsis', middleEllipsisDirective)
     .directive('kdSparkline', sparklineDirective)
     .directive('kdWarnThreshold', warnThresholdDirective);
