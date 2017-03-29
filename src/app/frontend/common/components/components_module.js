@@ -13,9 +13,7 @@
 // limitations under the License.
 
 import stateModule from 'common/state/module';
-
 import filtersModule from '../filters/filters_module';
-
 import namespaceModule from './../namespace/namespace_module';
 import paginationModule from './../pagination/pagination_module';
 import actionbarModule from './actionbar/actionbar_module';
@@ -24,7 +22,6 @@ import conditionsModule from './conditions/conditions_module';
 import contentCardModule from './contentcard/contentcard_module';
 import endpointModule from './endpoint/endpoint_module';
 import graphModule from './graph/graph_module';
-import i18nDirective from './i18n/i18n_directive';
 import infoCardModule from './infocard/infocard_module';
 import labelsDirective from './labels/labels_directive';
 import middleEllipsisDirective from './middleellipsis/middleellipsis_directive';
@@ -62,7 +59,6 @@ export default angular
           annotationsModule.name,
           toggleHiddenTextModule.name,
         ])
-    .directive('kdI18n', i18nDirective)
     .directive('kdLabels', labelsDirective)
     .directive('kdMiddleEllipsis', middleEllipsisDirective)
     .directive('kdSparkline', sparklineDirective)
