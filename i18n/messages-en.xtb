@@ -58,6 +58,7 @@
   <translation id="2093749467777012107" key="MSG_CHROME_NAV_NAV_12" desc="Services and discovery menu item in the nav.">Services and discovery</translation>
   <translation id="727510939665067635" key="MSG_CHROME_NAV_NAV_13" desc="Stateful Sets menu entry.">Stateful Sets</translation>
   <translation id="7231060462716768345" key="MSG_CHROME_NAV_NAV_13" desc="Services menu item in the nav.">Services</translation>
+  <translation id="3750547428998043153" key="MSG_CHROME_NAV_NAV_14" desc="Discovery and Load Balancing group menu entry.">Discovery and Load Balancing</translation>
   <translation id="3784062264993272168" key="MSG_CHROME_NAV_NAV_14" desc="Discovery and load balancing group menu entry.">Discovery and load balancing</translation>
   <translation id="4709315173311947609" key="MSG_CHROME_NAV_NAV_14" desc="Ingress item in the nav.">Ingress</translation>
   <translation id="7847222014427123367" key="MSG_CHROME_NAV_NAV_14" desc="Ingresses item in the nav.">Ingresses</translation>
@@ -67,6 +68,7 @@
   <translation id="8015161624640032228" key="MSG_CHROME_NAV_NAV_16" desc="Persistent Volume Claims item in the nav.">Persistent Volume Claims</translation>
   <translation id="6873247849362907014" key="MSG_CHROME_NAV_NAV_17" desc="Config item in the nav.">Config</translation>
   <translation id="7682452231762481275" key="MSG_CHROME_NAV_NAV_17" desc="Config and storage group menu entryv.">Config and storage</translation>
+  <translation id="9193587195994732985" key="MSG_CHROME_NAV_NAV_17" desc="Config and Storage group menu entryv.">Config and Storage</translation>
   <translation id="5112568842026217488" key="MSG_CHROME_NAV_NAV_18" desc="Config Maps menu entry.">Config Maps</translation>
   <translation id="7499906935876891155" key="MSG_CHROME_NAV_NAV_18" desc="Secrets item in the nav.">Secrets</translation>
   <translation id="8736839163304985332" key="MSG_CHROME_NAV_NAV_19" desc="Config Maps item in the nav.">Config Maps</translation>
