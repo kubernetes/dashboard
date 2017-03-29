@@ -28,11 +28,37 @@ limitations under the License.
 </div>
 
 <div ng-if="!$ctrl.shouldShowZeroState()">
+  <kd-content-card ng-if="$ctrl.workloads.daemonSetList.daemonSets.length">
+    <kd-content>
+      <kd-daemon-set-card-list daemon-set-list="$ctrl.workloads.daemonSetList"
+                               with-statuses="true"
+                               daemon-set-list-resource="$ctrl.daemonSetListResource">
+      </kd-daemon-set-card-list>
+    </kd-content>
+  </kd-content-card>
+
   <kd-content-card ng-if=$ctrl.workloads.deploymentList.deployments.length>
     <kd-content>
       <kd-deployment-card-list deployment-list="$ctrl.workloads.deploymentList"
                                deployment-list-resource="$ctrl.deploymentListResource">
       </kd-deployment-card-list>
+    </kd-content>
+  </kd-content-card>
+
+  <kd-content-card ng-if="$ctrl.workloads.jobList.jobs.length">
+    <kd-content>
+      <kd-job-card-list job-list="$ctrl.workloads.jobList"
+                        job-list-resource="$ctrl.jobListResource">
+      </kd-job-card-list>
+    </kd-content>
+  </kd-content-card>
+
+  <kd-content-card ng-if="$ctrl.workloads.podList.pods.length">
+    <kd-content>
+      <kd-pod-card-list pod-list="$ctrl.workloads.podList"
+                        pod-list-resource="$ctrl.podListResource"
+                        with-statuses="true">
+      </kd-pod-card-list>
     </kd-content>
   </kd-content-card>
 
@@ -52,37 +78,11 @@ limitations under the License.
     </kd-content>
   </kd-content-card>
 
-  <kd-content-card ng-if="$ctrl.workloads.daemonSetList.daemonSets.length">
-    <kd-content>
-      <kd-daemon-set-card-list daemon-set-list="$ctrl.workloads.daemonSetList"
-                               with-statuses="true"
-                               daemon-set-list-resource="$ctrl.daemonSetListResource">
-      </kd-daemon-set-card-list>
-    </kd-content>
-  </kd-content-card>
-
   <kd-content-card ng-if="$ctrl.workloads.statefulSetList.statefulSets.length">
     <kd-content>
       <kd-stateful-set-card-list stateful-set-list="$ctrl.workloads.statefulSetList"
                                  stateful-set-list-resource="$ctrl.statefulSetListResource">
       </kd-stateful-set-card-list>
-    </kd-content>
-  </kd-content-card>
-
-  <kd-content-card ng-if="$ctrl.workloads.jobList.jobs.length">
-    <kd-content>
-      <kd-job-card-list job-list="$ctrl.workloads.jobList"
-                        job-list-resource="$ctrl.jobListResource">
-      </kd-job-card-list>
-    </kd-content>
-  </kd-content-card>
-
-  <kd-content-card ng-if="$ctrl.workloads.podList.pods.length">
-    <kd-content>
-      <kd-pod-card-list pod-list="$ctrl.workloads.podList"
-                        pod-list-resource="$ctrl.podListResource"
-                        with-statuses="true">
-      </kd-pod-card-list>
     </kd-content>
   </kd-content-card>
 </div>

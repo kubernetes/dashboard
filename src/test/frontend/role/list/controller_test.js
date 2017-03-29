@@ -12,49 +12,47 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ConfigController} from 'config/controller';
-import module from 'config/module';
+import {RoleListController} from 'role/list/controller';
+import roleModule from 'role/module';
 
-describe('Config list controller', () => {
-  /** @type {!ConfigController} */
+describe('Role controller', () => {
+  /** @type {!RoleListController}
+   */
   let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(module.name);
+    angular.mock.module(roleModule.name);
 
     angular.mock.inject(($controller) => {
-      ctrl = $controller(ConfigController, {config: {config: []}});
+      ctrl = $controller(RoleListController, {roleList: {items: []}});
     });
   });
 
-  it('should initialize config', angular.mock.inject(($controller) => {
-    let config = {config: 'foo-bar'};
-    /** @type {!ConfigController} */
-    let ctrl = $controller(ConfigController, {config: config});
+  it('should initialize role controller', angular.mock.inject(($controller) => {
+    let ctrls = {};
+    /** @type {!RoleListController} */
+    let ctrl = $controller(RoleListController, {roleList: {items: ctrls}});
 
-    expect(ctrl.config).toBe(config);
+    expect(ctrl.roleList.items).toBe(ctrls);
   }));
 
   it('should show zero state', () => {
-    // given
-    ctrl.config = {
-      secretList: {listMeta: {totalItems: 0}},
-      configMapList: {listMeta: {totalItems: 0}},
-      persistentVolumeClaimList: {listMeta: {totalItems: 0}},
-    };
-
     expect(ctrl.shouldShowZeroState()).toBe(true);
   });
 
   it('should hide zero state', () => {
     // given
-    ctrl.config = {
-      secretList: {listMeta: {totalItems: 0}},
-      configMapList: {listMeta: {totalItems: 1}},
-      persistentVolumeClaimList: {listMeta: {totalItems: 0}},
-    };
+    ctrl.roleList = {items: ['mock']};
 
     // then
     expect(ctrl.shouldShowZeroState()).toBe(false);
+  });
+
+  it('should show zero state if returned items is null', () => {
+    // given
+    ctrl.roleList = {items: null};
+
+    // then
+    expect(ctrl.shouldShowZeroState()).toBe(true);
   });
 });

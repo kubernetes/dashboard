@@ -17,74 +17,63 @@ limitations under the License.
 <md-sidenav md-is-locked-open="$ctrl.isVisible"
             class="kd-nav"
             layout="column">
+  <!-- TODO(bryk): Add overview. -->
   <div class="kd-nav-group">
     <kd-nav-item class="kd-nav-group-item"
-                 state="{{::$ctrl.states.admin}}">[[Admin|Admin menu item in the nav.]]</kd-nav-item>
+                 state="{{::$ctrl.states.cluster}}">[[Cluster|Cluster group menu entry.]]</kd-nav-item>
     <kd-nav-item class="kd-nav-item"
-                 state="{{::$ctrl.states.namespace}}">[[Namespaces|Namespaces menu item in the nav.]]</kd-nav-item>
+                 state="{{::$ctrl.states.namespace}}">[[Namespaces|Namespaces menu entry.]]</kd-nav-item>
     <kd-nav-item class="kd-nav-item"
-                 state="{{::$ctrl.states.node}}">[[Nodes|Nodes menu item in the nav.]]</kd-nav-item>
+                 state="{{::$ctrl.states.node}}">[[Nodes|Nodes menu entry.]]</kd-nav-item>
     <kd-nav-item class="kd-nav-item"
-                 state="{{::$ctrl.states.persistentVolume}}">[[Persistent Volumes|Persistent Volumes menu item in the nav.]]</kd-nav-item>
+                 state="{{::$ctrl.states.persistentVolume}}">[[Persistent Volumes|Persistent Volumes menu entry.]]</kd-nav-item>
     <kd-nav-item class="kd-nav-item"
-                 state="{{::$ctrl.states.storageClass}}">[[Storage Classes|Storage Classes menu item in the nav.]]</kd-nav-item>
-  </div>
-  <div class="kd-nav-group">
-    <kd-nav-item class="kd-nav-group-item"
-                 state="{{::$ctrl.states.accessControl}}">[[Access control|Access Control menu item in the nav.]]</kd-nav-item>
+                 state="{{::$ctrl.states.role}}">[[Roles|Roles menu entry.]]</kd-nav-item>
+    <kd-nav-item class="kd-nav-item"
+                 state="{{::$ctrl.states.storageClass}}">[[Storage Classes|Storage Classes menu entry.]]</kd-nav-item>
   </div>
   <div class="kd-nav-group-divider"></div>
   <kd-namespace-select></kd-namespace-select>
-  <!--
-  TODO(bryk): Uncomment when this is implemented.
-  <div class="kd-nav-group">
-    <kd-nav-item class="kd-nav-group-item" state="{{::$ctrl.states.overview}}">Overview</kd-nav-item>
-  </div>
-  -->
   <div class="kd-nav-group">
     <kd-nav-item class="kd-nav-group-item"
-                 state="{{::$ctrl.states.workload}}">[[Workloads|Workloads menu item in the nav.]]</kd-nav-item>
+                 state="{{::$ctrl.states.workload}}">[[Workloads|Workloads group menu entry.]]</kd-nav-item>
     <kd-nav-item class="kd-nav-item"
-                 state="{{::$ctrl.states.deployment}}">[[Deployments|Deployments menu item in the nav.]]</kd-nav-item>
+                 state="{{::$ctrl.states.daemonSet}}">[[Daemon Sets|Daemon Sets menu entry.]]</kd-nav-item>
     <kd-nav-item class="kd-nav-item"
-                 state="{{::$ctrl.states.replicaSet}}">[[Replica Sets|Replica Sets menu item in the nav.]]</kd-nav-item>
+                 state="{{::$ctrl.states.deployment}}">[[Deployments|Deployments menu entry.]]</kd-nav-item>
     <kd-nav-item class="kd-nav-item"
-                 state="{{::$ctrl.states.replicationController}}">[[Replication Controllers|Replication Controllers menu item in the nav.]]</kd-nav-item>
+                 state="{{::$ctrl.states.job}}">[[Jobs|Jobs menu entry.]]</kd-nav-item>
     <kd-nav-item class="kd-nav-item"
-                 state="{{::$ctrl.states.daemonSet}}">[[Daemon Sets|Daemon Sets menu item in the nav.]]</kd-nav-item>
+                 state="{{::$ctrl.states.pod}}">[[Pods|Pods menu entry.]]</kd-nav-item>
     <kd-nav-item class="kd-nav-item"
-                 state="{{::$ctrl.states.statefulSet}}">[[Stateful Sets|Stateful Sets menu item in the nav.]]</kd-nav-item>
+                 state="{{::$ctrl.states.replicaSet}}">[[Replica Sets|Replica Sets entry.]]</kd-nav-item>
     <kd-nav-item class="kd-nav-item"
-                 state="{{::$ctrl.states.job}}">[[Jobs|Jobs menu item in the nav.]]</kd-nav-item>
+                 state="{{::$ctrl.states.replicationController}}">[[Replication Controllers|Replication Controllers menu entry.]]</kd-nav-item>
     <kd-nav-item class="kd-nav-item"
-                 state="{{::$ctrl.states.pod}}">[[Pods|Pods menu item in the nav.]]</kd-nav-item>
+                 state="{{::$ctrl.states.statefulSet}}">[[Stateful Sets|Stateful Sets menu entry.]]</kd-nav-item>
   </div>
   <div class="kd-nav-group">
     <kd-nav-item class="kd-nav-group-item"
-                 state="{{::$ctrl.states.serviceDiscovery}}">[[Services and discovery|Services and discovery menu item in the nav.]]</kd-nav-item>
+                 state="{{::$ctrl.states.discovery}}">[[Discovery and Load Balancing|Discovery and Load Balancing group menu entry.]]</kd-nav-item>
     <kd-nav-item class="kd-nav-item"
-                 state="{{::$ctrl.states.service}}">[[Services|Services menu item in the nav.]]</kd-nav-item>
+                 state="{{::$ctrl.states.ingress}}">[[Ingresses|Ingresses menu entry.]]</kd-nav-item>
     <kd-nav-item class="kd-nav-item"
-                 state="{{::$ctrl.states.ingress}}">[[Ingresses|Ingresses item in the nav.]]</kd-nav-item>
+                 state="{{::$ctrl.states.service}}">[[Services|Services menu entry.]]</kd-nav-item>
   </div>
   <div class="kd-nav-group">
     <kd-nav-item class="kd-nav-group-item"
-                 state="{{::$ctrl.states.storage}}">[[Storage|Storage item in the nav.]]</kd-nav-item>
+                 state="{{::$ctrl.states.config}}">[[Config and Storage|Config and Storage group menu entryv.]]</kd-nav-item>
     <kd-nav-item class="kd-nav-item"
-                 state="{{::$ctrl.states.persistentVolumeClaim}}">[[Persistent Volume Claims|Persistent Volume Claims item in the nav.]]</kd-nav-item>
+                 state="{{::$ctrl.states.configMap}}">[[Config Maps|Config Maps menu entry.]]</kd-nav-item>
+    <kd-nav-item class="kd-nav-item"
+                 state="{{::$ctrl.states.persistentVolumeClaim}}">[[Persistent Volume Claims|Persistent Volume Claims menu entry.]]</kd-nav-item>
+    <kd-nav-item class="kd-nav-item"
+                 state="{{::$ctrl.states.secret}}">[[Secrets|Secrets menu entry.]]</kd-nav-item>
   </div>
-  <div class="kd-nav-group">
-    <kd-nav-item class="kd-nav-group-item"
-                 state="{{::$ctrl.states.config}}">[[Config|Config item in the nav.]]</kd-nav-item>
-    <kd-nav-item class="kd-nav-item"
-                 state="{{::$ctrl.states.secret}}">[[Secrets|Secrets item in the nav.]]</kd-nav-item>
-    <kd-nav-item class="kd-nav-item"
-                 state="{{::$ctrl.states.configMap}}">[[Config Maps|Config Maps item in the nav.]]</kd-nav-item>
-  </div>
-  <!-- Enabled dynamically if there are third party resources registered in the system -->
+  <!-- Enabled dynamically if there are third party resources registered in the system. -->
   <kd-third-party-resource-nav states="$ctrl.states"></kd-third-party-resource-nav>
   <div class="kd-nav-group">
     <kd-nav-item class="kd-nav-group-item kd-about"
-                 state="{{::$ctrl.states.about}}">[[About|About menu item in the nav.]]</kd-nav-item>
+                 state="{{::$ctrl.states.about}}">[[About|About page menu entry.]]</kd-nav-item>
   </div>
 </md-sidenav>

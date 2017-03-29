@@ -14,7 +14,7 @@
 
 import {stateName as chromeStateName} from 'chrome/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
-import {stateName as parentStateName} from 'storage/state';
+import {stateName as parentStateName} from 'config/state';
 
 import {stateUrl} from './../state';
 import {PersistentVolumeClaimListController} from './controller';

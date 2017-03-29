@@ -17,41 +17,45 @@ package config
 import (
 	"log"
 
+	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/configmap"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/secret"
-	k8sClient "k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/kubernetes"
 )
 
 // Config structure contains all resource lists grouped into the config category.
 type Config struct {
-	ConfigMapList configmap.ConfigMapList `json:"configMapList"`
-
-	SecretList secret.SecretList `json:"secretList"`
+	ConfigMapList             configmap.ConfigMapList                         `json:"configMapList"`
+	PersistentVolumeClaimList persistentvolumeclaim.PersistentVolumeClaimList `json:"persistentVolumeClaimList"`
+	SecretList                secret.SecretList                               `json:"secretList"`
 }
 
 // GetConfig returns a list of all config resources in the cluster.
-func GetConfig(client *k8sClient.Clientset, nsQuery *common.NamespaceQuery) (
-	*Config, error) {
+func GetConfig(client *kubernetes.Clientset, heapsterClient client.HeapsterClient,
+	nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*Config, error) {
 
 	log.Print("Getting config category")
 	channels := &common.ResourceChannels{
-		ConfigMapList: common.GetConfigMapListChannel(client, nsQuery, 1),
-		SecretList:    common.GetSecretListChannel(client, nsQuery, 1),
+		ConfigMapList:             common.GetConfigMapListChannel(client, nsQuery, 1),
+		SecretList:                common.GetSecretListChannel(client, nsQuery, 1),
+		PersistentVolumeClaimList: common.GetPersistentVolumeClaimListChannel(client, nsQuery, 1),
 	}
 
-	return GetConfigFromChannels(channels)
+	return GetConfigFromChannels(channels, heapsterClient, dsQuery, nsQuery)
 }
 
 // GetConfigFromChannels returns a list of all config in the cluster, from the
 // channel sources.
-func GetConfigFromChannels(channels *common.ResourceChannels) (
-	*Config, error) {
+func GetConfigFromChannels(channels *common.ResourceChannels, heapsterClient client.HeapsterClient,
+	dsQuery *dataselect.DataSelectQuery, nsQuery *common.NamespaceQuery) (*Config, error) {
 
 	configMapChan := make(chan *configmap.ConfigMapList)
 	secretChan := make(chan *secret.SecretList)
-	numErrs := 2
+	pvcChan := make(chan *persistentvolumeclaim.PersistentVolumeClaimList)
+	numErrs := 3
 	errChan := make(chan error, numErrs)
 
 	go func() {
@@ -67,6 +71,12 @@ func GetConfigFromChannels(channels *common.ResourceChannels) (
 		secretChan <- items
 	}()
 
+	go func() {
+		pvcList, err := persistentvolumeclaim.GetPersistentVolumeClaimListFromChannels(channels, nsQuery, dsQuery)
+		errChan <- err
+		pvcChan <- pvcList
+	}()
+
 	for i := 0; i < numErrs; i++ {
 		err := <-errChan
 		if err != nil {
@@ -75,8 +85,9 @@ func GetConfigFromChannels(channels *common.ResourceChannels) (
 	}
 
 	config := &Config{
-		ConfigMapList: *(<-configMapChan),
-		SecretList:    *(<-secretChan),
+		ConfigMapList:             *(<-configMapChan),
+		PersistentVolumeClaimList: *(<-pvcChan),
+		SecretList:                *(<-secretChan),
 	}
 
 	return config, nil

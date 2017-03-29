@@ -25,15 +25,20 @@
   <translation id="1024358167652076581" key="MSG_ALL_NAMESPACES" desc="Text for dropdown item that indicates that no namespace was selected">すべてのネームスペース</translation>
   <translation id="6614117428496734699" key="MSG_BREADCRUMBS_ABOUT_LABEL" desc="Label 'About' that appears as a breadcrumbs on the action bar.">About</translation>
   <translation id="837746496620402371" key="MSG_BREADCRUMBS_ACCESS_CONTROL_LABEL" desc="Label 'Access Control' that appears as a breadcrumbs on the action bar.">Access Control</translation>
+  <translation id="4464435371616157987" key="MSG_BREADCRUMBS_ACCESS_CONTROL_LABEL" desc="Label 'Roles' that appears as a breadcrumbs on the action bar.">Roles</translation>
   <translation id="4466763630197200161" key="MSG_BREADCRUMBS_ADMIN_LABEL" desc="Label 'Admin' that appears as a breadcrumbs on the action bar.">管理者</translation>
+  <translation id="1153397682574555638" key="MSG_BREADCRUMBS_CLUSTER_LABEL" desc="Label 'Cluster' that appears as a breadcrumbs on the action bar.">Cluster</translation>
+  <translation id="5346529710805392125" key="MSG_BREADCRUMBS_CONFIG_AND_STORAGE_LABEL" desc="Label 'Config and storage' that appears as a breadcrumbs on the action bar.">Config and storage</translation>
   <translation id="954605561178153927" key="MSG_BREADCRUMBS_CONFIG_LABEL" desc="Label 'Config' that appears as a breadcrumbs on the action bar.">コンフィグ</translation>
   <translation id="3212328899649855136" key="MSG_BREADCRUMBS_CONFIG_MAPS_LABEL" desc="Label 'Config Maps' that appears as a breadcrumbs on the action bar.">コンフィグマップ</translation>
   <translation id="3217932097841975938" key="MSG_BREADCRUMBS_DAEMON_SETS_LABEL" desc="Label 'Daemon Sets' that appears as a breadcrumbs on the action bar.">デーモンセット</translation>
   <translation id="1744394420157932960" key="MSG_BREADCRUMBS_DEPLOYMENTS_LABEL" desc="Label 'Deployments' that appears as a breadcrumbs on the action bar.">デプロイメント</translation>
   <translation id="9213553703311647006" key="MSG_BREADCRUMBS_DEPLOY_APP_LABEL" desc="Breadcrum label for the deploy containerized app form view.">アプリケーションの作成</translation>
   <translation id="3098067826555563293" key="MSG_BREADCRUMBS_DEPLOY_FILE_LABEL" desc="Breadcrum label for the YAML upload form">アップロード</translation>
+  <translation id="8693076889249273053" key="MSG_BREADCRUMBS_DISCOVERY_AND_LOAD_BALANCING_LABEL" desc="Label 'Discovery and load balancing' that appears as a breadcrumbs on the action bar.">Discovery and load balancing</translation>
   <translation id="2248903848244811172" key="MSG_BREADCRUMBS_HORIZONTAL_POD_AUTOSCALERS_LABEL" desc="Label 'Horizontal Pod Autoscalers' that appears as a breadcrumbs on the action bar.">水平ポッドオートスケーラー</translation>
   <translation id="5747298115200147575" key="MSG_BREADCRUMBS_INGRESSS_LABEL" desc="Label 'Ingress' that appears as a breadcrumbs on the action bar.">イングレス</translation>
+  <translation id="8885204956315323333" key="MSG_BREADCRUMBS_INGRESSS_LABEL" desc="Label 'Ingresses' that appears as a breadcrumbs on the action bar.">Ingresses</translation>
   <translation id="2741276106482217695" key="MSG_BREADCRUMBS_INTERNALERROR_LABEL" desc="Label for internal error page for breadcrumbs on the action bar.">内部エラー</translation>
   <translation id="2024511088483477440" key="MSG_BREADCRUMBS_JOBS_LABEL" desc="Label 'Jobs' that appears as a breadcrumbs on the action bar.">ジョブ</translation>
   <translation id="1050029015813261838" key="MSG_BREADCRUMBS_LOGS_LABEL" desc="Breadcrum label for the logs view.">ログ</translation>
@@ -45,6 +50,7 @@
   <translation id="64391241316684157" key="MSG_BREADCRUMBS_PODS_LABEL" desc="Label 'Pods' that appears as a breadcrumbs on the action bar.">ポッド</translation>
   <translation id="7569244915796303702" key="MSG_BREADCRUMBS_RC_LABEL" desc="Label 'Replication Controllers' that appears as a breadcrumbs on the action bar.">レプリケーションコントローラ</translation>
   <translation id="837518421741773666" key="MSG_BREADCRUMBS_REPLICA_SETS_LABEL" desc="Label 'Replica Sets' that appears as a breadcrumbs on the action bar.">レプリカセット</translation>
+  <translation id="5794147661362074597" key="MSG_BREADCRUMBS_ROLES_LABEL" desc="Label 'Roles' that appears as a breadcrumbs on the action bar.">Roles</translation>
   <translation id="391192137756114804" key="MSG_BREADCRUMBS_SECRETS_LABEL" desc="Label 'Secrets' that appears as a breadcrumbs on the action bar.">シークレット</translation>
   <translation id="5207082267245498149" key="MSG_BREADCRUMBS_SERVICES_AND_DISCOVERY_LABEL" desc="Label 'Services and discovery' that appears as a breadcrumbs on the action bar.">サービスとディスカバリー</translation>
   <translation id="2218294864744563724" key="MSG_BREADCRUMBS_SERVICES_LABEL" desc="Label 'Services' that appears as a breadcrumbs on the action bar.">サービス</translation>
@@ -53,30 +59,51 @@
   <translation id="4645270776145594474" key="MSG_BREADCRUMBS_STORAGE_LABEL" desc="Label 'Storage' that appears as a breadcrumbs on the action bar.">Storage</translation>
   <translation id="6132384114487014259" key="MSG_BREADCRUMBS_THIRD_PARTY_RESOURCES_LABEL" desc="Label 'Third Party Resources' that appears as a breadcrumbs on the action bar.">サードパーティーリソース</translation>
   <translation id="1656728804447365846" key="MSG_BREADCRUMBS_WORKLOADS_LABEL" desc="Label 'Workloads' that appears as a breadcrumbs on the action bar.">ワークロード</translation>
+  <translation id="5023828914132135944" key="MSG_CHROME_NAV_NAV_0" desc="Cluster group menu entry.">Cluster</translation>
   <translation id="9218333053624016665" key="MSG_CHROME_NAV_NAV_0" desc="Admin menu item in the nav.">管理者</translation>
   <translation id="6343362656986122693" key="MSG_CHROME_NAV_NAV_1" desc="Namespaces menu item in the nav.">ネームスペース</translation>
+  <translation id="716443703088219571" key="MSG_CHROME_NAV_NAV_10" desc="Pods menu entry.">Pods</translation>
   <translation id="8628118612810849429" key="MSG_CHROME_NAV_NAV_10" desc="Jobs menu item in the nav.">ジョブ</translation>
+  <translation id="5165405066720776929" key="MSG_CHROME_NAV_NAV_11" desc="Replica Sets entry.">Replica Sets</translation>
   <translation id="5330416203049826616" key="MSG_CHROME_NAV_NAV_11" desc="Pods menu item in the nav.">ポッド</translation>
+  <translation id="1368029980670062566" key="MSG_CHROME_NAV_NAV_12" desc="Replication Controllers menu entry.">Replication Controllers</translation>
   <translation id="2093749467777012107" key="MSG_CHROME_NAV_NAV_12" desc="Services and discovery menu item in the nav.">サービスとディスカバリー</translation>
+  <translation id="727510939665067635" key="MSG_CHROME_NAV_NAV_13" desc="Stateful Sets menu entry.">Stateful Sets</translation>
   <translation id="7231060462716768345" key="MSG_CHROME_NAV_NAV_13" desc="Services menu item in the nav.">サービス</translation>
+  <translation id="3750547428998043153" key="MSG_CHROME_NAV_NAV_14" desc="Discovery and Load Balancing group menu entry.">Discovery and Load Balancing</translation>
+  <translation id="3784062264993272168" key="MSG_CHROME_NAV_NAV_14" desc="Discovery and load balancing group menu entry.">Discovery and load balancing</translation>
   <translation id="4709315173311947609" key="MSG_CHROME_NAV_NAV_14" desc="Ingress item in the nav.">イングレス</translation>
   <translation id="7847222014427123367" key="MSG_CHROME_NAV_NAV_14" desc="Ingresses item in the nav.">イングレス</translation>
   <translation id="3039957839920471408" key="MSG_CHROME_NAV_NAV_15" desc="Storage item in the nav.">ストレージ</translation>
+  <translation id="5657472840568954752" key="MSG_CHROME_NAV_NAV_15" desc="Ingresses menu entry.">Ingresses</translation>
+  <translation id="6209183557961833624" key="MSG_CHROME_NAV_NAV_16" desc="Services menu entry.">Services</translation>
   <translation id="8015161624640032228" key="MSG_CHROME_NAV_NAV_16" desc="Persistent Volume Claims item in the nav.">永続ボリューム要求</translation>
   <translation id="6873247849362907014" key="MSG_CHROME_NAV_NAV_17" desc="Config item in the nav.">コンフィグ</translation>
+  <translation id="7682452231762481275" key="MSG_CHROME_NAV_NAV_17" desc="Config and storage group menu entryv.">Config and storage</translation>
+  <translation id="9193587195994732985" key="MSG_CHROME_NAV_NAV_17" desc="Config and Storage group menu entryv.">Config and Storage</translation>
+  <translation id="5112568842026217488" key="MSG_CHROME_NAV_NAV_18" desc="Config Maps menu entry.">Config Maps</translation>
   <translation id="7499906935876891155" key="MSG_CHROME_NAV_NAV_18" desc="Secrets item in the nav.">シークレット</translation>
   <translation id="8736839163304985332" key="MSG_CHROME_NAV_NAV_19" desc="Config Maps item in the nav.">コンフィグマップ</translation>
+  <translation id="8817168805652183378" key="MSG_CHROME_NAV_NAV_19" desc="Persistent Volume Claims menu entry.">Persistent Volume Claims</translation>
   <translation id="1743316598408730775" key="MSG_CHROME_NAV_NAV_2" desc="Nodes menu item in the nav.">ノード</translation>
+  <translation id="1040732924028857594" key="MSG_CHROME_NAV_NAV_20" desc="Secrets menu entry.">Secrets</translation>
   <translation id="3009175856839976873" key="MSG_CHROME_NAV_NAV_20" desc="Storage Classes menu item in the nav.">ストレージクラス</translation>
   <translation id="3473506392835594145" key="MSG_CHROME_NAV_NAV_21" desc="Access Control menu item in the nav.">Access control</translation>
+  <translation id="8368599117962865229" key="MSG_CHROME_NAV_NAV_21" desc="About page menu entry.">About</translation>
   <translation id="7929882062201514695" key="MSG_CHROME_NAV_NAV_22" desc="About menu item in the nav.">About</translation>
   <translation id="4957526140740745953" key="MSG_CHROME_NAV_NAV_3" desc="Persistent Volumes menu item in the nav.">永続ボリューム</translation>
   <translation id="4398523516847444868" key="MSG_CHROME_NAV_NAV_4" desc="Workloads menu item in the nav.">ワークロード</translation>
+  <translation id="8596594035523566698" key="MSG_CHROME_NAV_NAV_4" desc="Roles menu entry.">Roles</translation>
+  <translation id="874273813471860738" key="MSG_CHROME_NAV_NAV_5" desc="Storage Classes menu entry.">Storage Classes</translation>
   <translation id="6003139668988832289" key="MSG_CHROME_NAV_NAV_5" desc="Deployments menu item in the nav.">デプロイメント</translation>
+  <translation id="4285258567654567328" key="MSG_CHROME_NAV_NAV_6" desc="Workloads group menu entry.">Workloads</translation>
   <translation id="5274052053251499355" key="MSG_CHROME_NAV_NAV_6" desc="Replica Sets menu item in the nav.">レプリカセット</translation>
   <translation id="723915224801093587" key="MSG_CHROME_NAV_NAV_7" desc="Replication Controllers menu item in the nav.">レプリケーションコントローラ</translation>
+  <translation id="5016929559748268107" key="MSG_CHROME_NAV_NAV_7" desc="Daemon Sets menu entry.">Daemon Sets</translation>
+  <translation id="3185730728792936775" key="MSG_CHROME_NAV_NAV_8" desc="Deployments menu entry.">Deployments</translation>
   <translation id="7243740857154177059" key="MSG_CHROME_NAV_NAV_8" desc="Daemon Sets menu item in the nav.">デーモンセット</translation>
   <translation id="958008386879226733" key="MSG_CHROME_NAV_NAV_9" desc="Pet Sets menu item in the nav.">ペットセット</translation>
+  <translation id="1017990697544914862" key="MSG_CHROME_NAV_NAV_9" desc="Jobs menu entry.">Jobs</translation>
   <translation id="2342408690900978106" key="MSG_CHROME_NAV_NAV_9" desc="Stateful Sets menu item in the nav.">ステートフルセット</translation>
   <translation id="5512331139275482810" key="MSG_CHROME_NAV_THIRDPARTYRESOURCENAV_0" desc="Third Party Resources menu item in the nav.">サードパーティーリソース</translation>
   <translation id="6660248664655766122" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARDELETEITEM_0" desc="Action \'Delete\', which is a button on the actionbar and is there for every resource type.">削除</translation>

@@ -1,4 +1,4 @@
-// Copyright 2015 Google Inc. All Rights Reserved.
+// Copyright 2017 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,20 +15,16 @@
 import {stateName as chromeStateName} from 'chrome/state';
 import {stateName as parentStateName} from 'cluster/state';
 import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {stateUrl} from '../state';
+import {RoleListController} from './controller';
 
-import {stateUrl} from './../state';
-import {NodeListController} from './controller';
-
-/**
- * I18n object that defines strings for translation used in this file.
- */
 const i18n = {
-  /** @type {string} @desc Label 'Nodes' that appears as a breadcrumbs on the action bar. */
-  MSG_BREADCRUMBS_NODES_LABEL: goog.getMsg('Nodes'),
+  /** @type {string} @desc Label 'Roles' that appears as a breadcrumbs on the action bar.*/
+  MSG_BREADCRUMBS_ROLES_LABEL: goog.getMsg('Roles'),
 };
 
 /**
- * Config state object for the Node list view.
+ * Config state object for the Role list view.
  *
  * @type {!ui.router.StateConfig}
  */
@@ -36,19 +32,19 @@ export const config = {
   url: stateUrl,
   parent: chromeStateName,
   resolve: {
-    'nodeList': resolveNodeList,
+    'roleList': resolveRoleList,
   },
   data: {
     [breadcrumbsConfig]: {
-      'label': i18n.MSG_BREADCRUMBS_NODES_LABEL,
+      'label': i18n.MSG_BREADCRUMBS_ROLES_LABEL,
       'parent': parentStateName,
     },
   },
   views: {
     '': {
-      controller: NodeListController,
+      controller: RoleListController,
       controllerAs: '$ctrl',
-      templateUrl: 'node/list/list.html',
+      templateUrl: 'role/list/list.html',
     },
   },
 };
@@ -58,17 +54,18 @@ export const config = {
  * @return {!angular.Resource}
  * @ngInject
  */
-export function nodeListResource($resource) {
-  return $resource('api/v1/node');
+export function roleListResource($resource) {
+  return $resource('api/v1/rbacrole');
 }
 
 /**
- * @param {!angular.Resource} kdNodeListResource
+ * @param {!angular.Resource} kdRoleListResource
  * @param {!./../../common/pagination/pagination_service.PaginationService} kdPaginationService
- * @return {!angular.$q.Promise}
+ * @returns {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveNodeList(kdNodeListResource, kdPaginationService) {
+export function resolveRoleList(kdRoleListResource, kdPaginationService) {
+  /** @type {!backendApi.PaginationQuery} */
   let query = kdPaginationService.getDefaultResourceQuery('');
-  return kdNodeListResource.get(query).$promise;
+  return kdRoleListResource.get(query).$promise;
 }
