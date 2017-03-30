@@ -21,7 +21,7 @@ func createDeployment(name, namespace, podTemplateName string, podLabel,
 	labelSelector map[string]string) *extensions.Deployment {
 	replicas := int32(4)
 	maxSurge := intstr.FromInt(1)
-	maxUnavailable := intstr.FromString("1")
+	maxUnavailable := intstr.FromString("25")
 
 	return &extensions.Deployment{
 		ObjectMeta: metaV1.ObjectMeta{
@@ -111,8 +111,8 @@ func TestGetDeploymentDetail(t *testing.T) {
 				Strategy:        "RollingUpdate",
 				MinReadySeconds: 5,
 				RollingUpdateStrategy: &RollingUpdateStrategy{
-					MaxSurge:       1,
-					MaxUnavailable: 1,
+					MaxSurge:       &IntOrString.FromInt(1),
+					MaxUnavailable: &IntOrString.FromString("25%"),
 				},
 				OldReplicaSetList: replicaset.ReplicaSetList{
 					ReplicaSets:       []replicaset.ReplicaSet{},
