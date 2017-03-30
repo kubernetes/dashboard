@@ -27,7 +27,7 @@ import (
 	api "k8s.io/client-go/pkg/api/v1"
 )
 
-// ReplicationSetList contains a list of Pods in the cluster.
+// PodList contains a list of Pods in the cluster.
 type PodList struct {
 	ListMeta common.ListMeta `json:"listMeta"`
 
@@ -76,7 +76,7 @@ func GetPodList(client k8sClient.Interface, heapsterClient client.HeapsterClient
 	return GetPodListFromChannels(channels, dsQuery, heapsterClient)
 }
 
-// GetPodList returns a list of all Pods in the cluster
+// GetPodListFromChannels returns a list of all Pods in the cluster
 // reading required resource list once from the channels.
 func GetPodListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery,
 	heapsterClient client.HeapsterClient) (*PodList, error) {
