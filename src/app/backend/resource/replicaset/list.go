@@ -51,7 +51,7 @@ func GetReplicaSetList(client client.Interface, nsQuery *common.NamespaceQuery,
 	return GetReplicaSetListFromChannels(channels, dsQuery, heapsterClient)
 }
 
-// GetReplicaSetList returns a list of all Replica Sets in the cluster
+// GetReplicaSetListFromChannels returns a list of all Replica Sets in the cluster
 // reading required resource list once from the channels.
 func GetReplicaSetListFromChannels(channels *common.ResourceChannels,
 	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*ReplicaSetList, error) {
