@@ -32,10 +32,9 @@ import {processI18nMessages} from './i18n';
 const gulpClosureCompiler = closureCompiler.gulp();
 
 /**
- * Returns function creating a stream that compiles frontend JavaScript files into development bundle located in
- * {conf.paths.serve}
- * directory. This has to be done because currently browsers do not handle ES6 syntax and
- * modules correctly.
+ * Returns function creating a stream that compiles frontend JavaScript files into development
+ * bundle located in {conf.paths.serve} directory. This has to be done because currently browsers do
+ * not handle ES6 syntax and modules correctly.
  *
  * Only dependencies of root application module are included in the bundle.
  * @param {boolean} throwError - whether task should throw an error in case of JS syntax errors.
