@@ -50,13 +50,13 @@ function getBackendArgs(mode) {
   }
 
   if (mode === conf.backend.development) {
-    args.push(`--port=${conf.backend.devServerPort}`)
+    args.push(`--port=${conf.backend.devServerPort}`);
   }
 
   if (conf.backend.envKubeconfig) {
-    args.push(`--kubeconfig=${conf.backend.envKubeconfig}`)
+    args.push(`--kubeconfig=${conf.backend.envKubeconfig}`);
   } else {
-    args.push(`--apiserver-host=${conf.backend.envApiServerHost || conf.backend.apiServerHost}`)
+    args.push(`--apiserver-host=${conf.backend.envApiServerHost || conf.backend.apiServerHost}`);
   }
 
   return args;
