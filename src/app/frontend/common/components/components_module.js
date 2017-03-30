@@ -13,25 +13,27 @@
 // limitations under the License.
 
 import stateModule from 'common/state/module';
+
 import filtersModule from '../filters/filters_module';
+
 import namespaceModule from './../namespace/namespace_module';
 import paginationModule from './../pagination/pagination_module';
 import actionbarModule from './actionbar/actionbar_module';
 import annotationsModule from './annotations/module';
+import {conditionListComponent} from './conditions/component';
+import {contentCardComponent} from './contentcard/component';
 import endpointModule from './endpoint/endpoint_module';
 import graphModule from './graph/graph_module';
 import infoCardModule from './infocard/infocard_module';
 import {labelComponent} from './labels/component';
 import {middleEllipsisComponent} from './middleellipsis/component';
 import resourceCardModule from './resourcecard/resourcecard_module';
+import {infoCardComponent} from './resourcedetail/component';
 import {serializedReferenceComponent} from './serializedreference/component';
 import {sparklineComponent} from './sparkline/component';
 import {toggleHiddenTextComponent} from './togglehiddentext/component';
 import warnThresholdDirective from './warnthreshold/directive';
-import {contentCardComponent} from './contentcard/component';
-import {infoCardComponent} from './resourcedetail/component';
 import {zeroStateComponent} from './zerostate/component';
-import {conditionListComponent} from './conditions/component';
 
 /**
  * Module containing common components for the application.
