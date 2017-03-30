@@ -137,7 +137,8 @@ export default class DeployFromFileController {
   }
 
   /**
-   * Returns true if given error contains information about validate=false argument, false otherwise.
+   * Returns true if given error contains information about validate=false argument, false
+   * otherwise.
    *
    * @param {string} err
    * @return {boolean}

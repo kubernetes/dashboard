@@ -547,7 +547,7 @@ const i18n = {
   MSG_DEPLOY_SETTINGS_NAMESPACE_CREATE_ACTION: goog.getMsg(`Create a new namespace...`),
 
   /** @export {string} @desc User help for the namespace selection on the deploy from settings page.
-     */
+   */
   MSG_DEPLOY_SETTINGS_NAMESPACE_USER_HELP:
       goog.getMsg(`Namespaces let you partition resources into logically named groups.`),
 

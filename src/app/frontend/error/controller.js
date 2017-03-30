@@ -64,9 +64,9 @@ export class InternalErrorController {
   }
 
   /**
-     * @export
-     * @return {string}
-     */
+   * @export
+   * @return {string}
+   */
   getErrorData() {
     if (this.error && this.error.data && this.error.data.length > 0) {
       return this.error.data;
