@@ -64,6 +64,19 @@ $ kubectl proxy --port=8080
 kubectl will handle authentication with Kubernetes and create an API proxy with the address
 `localhost:8080`. Therefore, no changes in the configuration are required.
 
+Another way to connect to real cluster while developing dashboard is to override default values used 
+by our build pipeline. In order to do that we have introduced two environment variables
+`KUBE_DASHBOARD_APISERVER_HOST` and `KUBE_DASHBOARD_KUBECONFIG` that will be used over default ones when
+defined. Before running our gulp tasks just do:
+
+```shell
+$ export KUBE_DASHBOARD_APISERVER_HOST="http://<APISERVER_IP>:<APISERVER_PORT>"
+# or
+$ export KUBE_DASHBOARD_KUBECONFIG="<KUBECONFIG_FILE_PATH>"
+```
+
+**NOTE: Environment variable `KUBE_DASHBOARD_KUBECONFIG` has higher priority than `KUBE_DASHBOARD_APISERVER_HOST`.**
+
 ## Serving Dashboard for Development
 
 It is easy to compile and run Dashboard. Open a new tab in your terminal and type:
