@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import componentsModule from 'common/components/components_module';
-import SparklineController from 'common/components/sparkline/sparkline_controller';
+import SparklineController from 'common/components/sparkline/component';
 
 describe('Sparkline controller', () => {
   /**

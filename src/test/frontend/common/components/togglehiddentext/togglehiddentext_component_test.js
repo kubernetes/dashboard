@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import toggleHiddenTextModule from 'common/components/togglehiddentext/togglehiddentext_module';
+import componentsModule from 'common/components/components_module';
 
 describe('Toggle hidden text', () => {
   /** @type {!angular.Scope} */
@@ -21,7 +21,7 @@ describe('Toggle hidden text', () => {
   let compile;
 
   beforeEach(() => {
-    angular.mock.module(toggleHiddenTextModule.name);
+    angular.mock.module(componentsModule.name);
 
     angular.mock.inject(($rootScope, $compile) => {
       scope = $rootScope.$new();

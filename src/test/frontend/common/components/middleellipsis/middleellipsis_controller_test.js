@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import componentsModule from 'common/components/components_module';
-import MiddleEllipsisController from 'common/components/middleellipsis/middleellipsis_controller';
+import MiddleEllipsisController from 'common/components/middleellipsis/component';
 
 describe('Middle ellipsis controller', () => {
   /**

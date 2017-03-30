@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import contentCardModule from 'common/components/contentcard/contentcard_module';
+import componentsModule from 'common/components/components_module';
 
 describe('Content card', () => {
   /** @type {!angular.Scope} */
@@ -21,7 +21,7 @@ describe('Content card', () => {
   let compile;
 
   beforeEach(() => {
-    angular.mock.module(contentCardModule.name);
+    angular.mock.module(componentsModule.name);
 
     angular.mock.inject(($rootScope, $compile) => {
       scope = $rootScope.$new();
