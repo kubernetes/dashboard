@@ -184,10 +184,10 @@ export class LogsController {
   }
 
   /**
-    * Return proper style class for text color icon.
-    * @export
-    * @returns {string}
-    */
+   * Return proper style class for text color icon.
+   * @export
+   * @returns {string}
+   */
   getColorIconClass() {
     const logsTextColor = 'kd-logs-color-icon';
     if (this.logsService.getInverted()) {
@@ -197,10 +197,10 @@ export class LogsController {
   }
 
   /**
-    * Return proper style class for font size icon.
-    * @export
-    * @returns {string}
-    */
+   * Return proper style class for font size icon.
+   * @export
+   * @returns {string}
+   */
   getSizeIconClass() {
     const logsTextColor = 'kd-logs-size-icon';
     if (this.logsService.getCompact()) {
