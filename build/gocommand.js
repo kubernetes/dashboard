@@ -109,8 +109,6 @@ function checkGoVersion() {
         env: env,
       },
       function(error, stdout) {
-        deferred.resolve();
-        return;
         let match = /go version devel/.exec(stdout.toString());
         if (match && match.length > 0) {
           // If running a development version of Go we asume the version to be
