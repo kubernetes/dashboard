@@ -15,7 +15,7 @@
 import componentsModule from 'common/components/components_module';
 import namespaceModule from 'common/namespace/namespace_module';
 
-import {chromeComponent} from './chrome_component';
+import {chromeComponent} from './component';
 import navModule from './nav/module';
 import stateConfig from './stateconfig';
 

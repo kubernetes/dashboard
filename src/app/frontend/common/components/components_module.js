@@ -18,20 +18,20 @@ import namespaceModule from './../namespace/namespace_module';
 import paginationModule from './../pagination/pagination_module';
 import actionbarModule from './actionbar/actionbar_module';
 import annotationsModule from './annotations/module';
-import conditionsModule from './conditions/conditions_module';
-import contentCardModule from './contentcard/contentcard_module';
 import endpointModule from './endpoint/endpoint_module';
 import graphModule from './graph/graph_module';
 import infoCardModule from './infocard/infocard_module';
 import {labelComponent} from './labels/component';
 import {middleEllipsisComponent} from './middleellipsis/component';
 import resourceCardModule from './resourcecard/resourcecard_module';
-import resourceDetailModule from './resourcedetail/module';
-import serializedReferenceModule from './serializedreference/serializedreference_module';
+import {serializedReferenceComponent} from './serializedreference/component';
 import {sparklineComponent} from './sparkline/component';
-import toggleHiddenTextModule from './togglehiddentext/togglehiddentext_module';
-import warnThresholdDirective from './warnthreshold/warnthreshold_directive';
+import {toggleHiddenTextComponent} from './togglehiddentext/component';
+import warnThresholdDirective from './warnthreshold/directive';
+import {contentCardComponent} from './contentcard/component';
+import {infoCardComponent} from './resourcedetail/component';
 import {zeroStateComponent} from './zerostate/component';
+import {conditionListComponent} from './conditions/component';
 
 /**
  * Module containing common components for the application.
@@ -44,22 +44,22 @@ export default angular
           'ui.router',
           filtersModule.name,
           actionbarModule.name,
-          contentCardModule.name,
           endpointModule.name,
           infoCardModule.name,
-          resourceDetailModule.name,
           resourceCardModule.name,
           paginationModule.name,
           namespaceModule.name,
           stateModule.name,
           graphModule.name,
-          conditionsModule.name,
-          serializedReferenceModule.name,
           annotationsModule.name,
-          toggleHiddenTextModule.name,
         ])
     .component('kdLabels', labelComponent)
     .component('kdZeroState', zeroStateComponent)
     .component('kdMiddleEllipsis', middleEllipsisComponent)
     .component('kdSparkline', sparklineComponent)
+    .component('kdToggleHiddenText', toggleHiddenTextComponent)
+    .component('kdSerializedReference', serializedReferenceComponent)
+    .component('kdObjectMetaInfoCard', infoCardComponent)
+    .component('kdContentCard', contentCardComponent)
+    .component('kdConditionList', conditionListComponent)
     .directive('kdWarnThreshold', warnThresholdDirective);

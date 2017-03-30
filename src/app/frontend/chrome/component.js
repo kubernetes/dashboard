@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import {fillContentConfig} from 'chrome/state';
-
 import {actionbarViewName} from './state';
 
 /**
