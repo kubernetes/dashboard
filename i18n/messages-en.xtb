@@ -1420,4 +1420,5 @@
   <translation id="4302564966959880468" key="MSG_WORKLOADS_WORKLOADS_0" desc="Title for graph card displaying CPU metric of one all resources.">CPU usage</translation>
   <translation id="1036433586363793837" key="MSG_WORKLOADS_WORKLOADS_1" desc="Title for graph card displaying memory metric of one all resources.">Memory usage</translation>
   <translation id="5680064618107855853" key="MSG_WORKLOADS_WORKLOADS_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by these resources. (Does not count pods double because it is mentioned both in the pod list and its controller is mentioned in e.g. a replica set.)</translation>
+  <translation id="6487218483864052953" key="MSG_serviceS_LABEL" desc="Label 'Services' that appears as a breadcrumbs on the action bar.">Services</translation>
 </translationbundle>

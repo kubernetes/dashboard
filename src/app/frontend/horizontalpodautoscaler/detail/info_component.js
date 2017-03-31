@@ -77,7 +77,7 @@ export default class HorizontalPodAutoscalerInfoController {
 /**
  * Definition object for the component that displays horizontal pod autoscaler info.
  *
- * @return {!angular.Directive}
+ * @return {!angular.Component}
  */
 export const horizontalPodAutoscalerInfoComponent = {
   controller: HorizontalPodAutoscalerInfoController,

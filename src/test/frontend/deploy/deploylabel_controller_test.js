@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import DeployLabel from 'deploy/deploylabel';
-import DeployLabelController from 'deploy/deploylabel_controller';
+import DeployLabelController from 'deploy/deploylabel_component';
 import deployModule from 'deploy/module';
 
 describe('DeployLabel controller', () => {

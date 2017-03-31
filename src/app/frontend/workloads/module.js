@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import chromeModule from 'chrome/module';
-import componentsModule from 'common/components/components_module';
-import filtersModule from 'common/filters/filters_module';
+import componentsModule from 'common/components/module';
+import filtersModule from 'common/filters/module';
 import daemonSetModule from 'daemonset/module';
 import deploymentModule from 'deployment/module';
 import jobModule from 'job/module';

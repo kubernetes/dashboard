@@ -14,7 +14,7 @@
 
 import {stateName as chromeStateName} from 'chrome/state';
 import {stateName as parentStateName} from 'cluster/state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 
 import {stateUrl} from './../state';
 import {NodeListController} from './controller';
@@ -64,7 +64,7 @@ export function nodeListResource($resource) {
 
 /**
  * @param {!angular.Resource} kdNodeListResource
- * @param {!./../../common/pagination/pagination_service.PaginationService} kdPaginationService
+ * @param {!./../../common/pagination/service.PaginationService} kdPaginationService
  * @return {!angular.$q.Promise}
  * @ngInject
  */

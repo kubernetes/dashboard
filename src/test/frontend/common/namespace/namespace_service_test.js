@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import namespaceModule from 'common/namespace/namespace_module';
+import namespaceModule from 'common/namespace/module';
 
 describe('Namespace service', () => {
-  /** @type {!common/namespace/namespace_service.NamespaceService} */
+  /** @type {!common/namespace/service.NamespaceService} */
   let namespaceService;
   /** @type {!chrome/state.StateParams} */
   let stateParams;

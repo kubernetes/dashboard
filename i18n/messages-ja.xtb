@@ -2237,4 +2237,5 @@
   <translation id="7917748096388880672" key="MSG_YAML_EDIT_MENU_LABEL" desc="Label for YAML edit menu item.">YAML を見る／編集する</translation>
   <translation id="6640815328418723695" key="MSG_ZERO_STATE_TEXT" desc="Text which appears on zero state view under the title. It provides to deploy view or offers user to take the Dashboard Tour."><ph name="CREATE_NEW_LINK"/>コンテナアプリを配備<ph name="CREATE_NEW_CLOSE_LINK"/>、他のネームスペースを選択、もっと知るために<ph name="OPEN_LINK"/>ダッシュボードツアーに出る<ph name="LINK_ICON"/><ph name="CLOSE_LINK"/> が可能です</translation>
   <translation id="1538072409274591134" key="MSG_ZERO_STATE_TITLE" desc="Title text which appears on zero state view.">表示するものがありません</translation>
+  <translation id="6487218483864052953" key="MSG_serviceS_LABEL" desc="Label 'Services' that appears as a breadcrumbs on the action bar.">Services</translation>
 </translationbundle>

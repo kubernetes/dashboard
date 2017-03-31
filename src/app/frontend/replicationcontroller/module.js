@@ -13,12 +13,13 @@
 // limitations under the License.
 
 import chromeModule from 'chrome/module';
-import componentsModule from 'common/components/components_module';
-import csrfTokenModule from 'common/csrftoken/csrftoken_module';
-import filtersModule from 'common/filters/filters_module';
-import namespaceModule from 'common/namespace/namespace_module';
+import componentsModule from 'common/components/module';
+import csrfTokenModule from 'common/csrftoken/module';
+import filtersModule from 'common/filters/module';
+import namespaceModule from 'common/namespace/module';
 import eventsModule from 'events/module';
 import podModule from 'pod/module';
+import {ScaleService} from 'common/scaling/scaleresource_service';
 
 import {ReplicationControllerService} from './detail/delete_service';
 import {replicationControllerInfoComponent} from './detail/info_component';
@@ -54,6 +55,7 @@ export default angular
     .component('kdReplicationControllerCardMenu', replicationControllerCardMenuComponent)
     .component('kdReplicationControllerInfo', replicationControllerInfoComponent)
     .service('kdReplicationControllerService', ReplicationControllerService)
+    .service('kdScaleService', ScaleService)
     .factory('kdRCListResource', replicationControllerListResource)
     .factory('kdRCResource', replicationControllerResource)
     .factory('kdRCPodsResource', replicationControllerPodsResource)

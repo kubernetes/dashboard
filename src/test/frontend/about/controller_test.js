@@ -14,7 +14,7 @@
 
 import {AboutController} from 'about/controller';
 import module from 'about/module';
-import appconfig_module from 'common/appconfig/appconfig_module';
+import appconfig_module from 'common/appconfig/module';
 
 describe('About controller', () => {
   /** @type {!about/controller.AboutController} */

@@ -31,7 +31,7 @@ export default class NamespaceInfoController {
 /**
  * Definition object for the component that displays namespace info.
  *
- * @return {!angular.Directive}
+ * @return {!angular.Component}
  */
 export const namespaceInfoComponent = {
   controller: NamespaceInfoController,

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {actionbarViewName, stateName as chromeStateName} from 'chrome/state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 import {appendDetailParamsToUrl} from 'common/resource/resourcedetail';
 import {stateName as replicationControllers} from 'replicationcontroller/list/state';
 import {stateUrl} from './../state';
@@ -116,7 +116,7 @@ export function getReplicationControllerSpecPodsResourceWithActions(
 /**
  * @param {!angular.Resource} kdRCResource
  * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
- * @param {!./../../common/pagination/pagination_service.PaginationService} kdPaginationService
+ * @param {!./../../common/pagination/service.PaginationService} kdPaginationService
  * @return {!angular.$q.Promise}
  * @ngInject
  */

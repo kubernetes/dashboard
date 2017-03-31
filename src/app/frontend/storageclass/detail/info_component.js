@@ -15,7 +15,7 @@
 /**
  * Definition object for the component that displays Storage Class info.
  *
- * @return {!angular.Directive}
+ * @return {!angular.Component}
  */
 export const storageClassInfoComponent = {
   templateUrl: 'storageclass/detail/info.html',

@@ -31,7 +31,7 @@ export default class PersistentVolumeClaimInfoController {
 /**
  * Definition object for the component that displays persistent volume claim info.
  *
- * @return {!angular.Directive}
+ * @return {!angular.Component}
  */
 export const persistentVolumeClaimInfoComponent = {
   controller: PersistentVolumeClaimInfoController,

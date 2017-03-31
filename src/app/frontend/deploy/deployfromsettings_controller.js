@@ -41,9 +41,9 @@ export default class DeployFromSettingsController {
    * @param {!angular.$q} $q
    * @param {!md.$dialog} $mdDialog
    * @param {!./../chrome/state.StateParams} $stateParams
-   * @param {!./../common/history/history_service.HistoryService} kdHistoryService
-   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
-   * @param {!./../common/csrftoken/csrftoken_service.CsrfTokenService} kdCsrfTokenService
+   * @param {!./../common/history/service.HistoryService} kdHistoryService
+   * @param {!./../common/namespace/service.NamespaceService} kdNamespaceService
+   * @param {!./../common/csrftoken/service.CsrfTokenService} kdCsrfTokenService
    * @ngInject
    */
   constructor(
@@ -177,7 +177,7 @@ export default class DeployFromSettingsController {
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
 
-    /** @private {!./../common/history/history_service.HistoryService} */
+    /** @private {!./../common/history/service.HistoryService} */
     this.kdHistoryService_ = kdHistoryService;
 
     /** @private {boolean} */

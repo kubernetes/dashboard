@@ -40,7 +40,7 @@ export default class ReplicationControllerInfoController {
 /**
  * Definition object for the component that displays replication controller info.
  *
- * @return {!angular.Directive}
+ * @return {!angular.Component}
  */
 export const replicationControllerInfoComponent = {
   controller: ReplicationControllerInfoController,

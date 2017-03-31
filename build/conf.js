@@ -101,11 +101,24 @@ export default {
      */
     apiServerHost: 'http://localhost:8080',
     /**
+     * Env variable with address for the Kubernetes API server.
+     */
+    envApiServerHost: process.env.KUBE_DASHBOARD_APISERVER_HOST,
+    /**
+     * Env variable with path to kubeconfig file.
+     */
+    envKubeconfig: process.env.KUBE_DASHBOARD_KUBECONFIG,
+    /**
      * Address for the Heapster API server. If blank, the dashboard
      * will attempt to connect to Heapster via a service proxy.
      */
     heapsterServerHost:
         gulpUtil.env.heapsterServerHost !== undefined ? gulpUtil.env.heapsterServerHost : '',
+    /**
+     * Variables used to differentiate between prod and dev build.
+     */
+    production: 'prod',
+    development: 'dev',
   },
 
   /**

@@ -14,18 +14,18 @@
 
 import chromeModule from 'chrome/module';
 import {StateParams} from 'chrome/state';
-import module from 'common/namespace/namespace_module';
+import module from 'common/namespace/module';
 
 describe('Namespace select component ', () => {
   /** @type {!angular.Scope} */
   let scope;
-  /** @type {!common/namespace/namespaceselect_component.NamespaceSelectController} */
+  /** @type {!common/namespace/component.NamespaceSelectController} */
   let ctrl;
   /** @type {!angular.$httpBackend} */
   let httpBackend;
   /** @type {!ui.router.$state} */
   let state;
-  /** @type {!common/state/futurestate_service.FutureStateService}*/
+  /** @type {!common/state/service.FutureStateService}*/
   let kdFutureStateService;
 
   beforeEach(() => {
@@ -136,5 +136,29 @@ describe('Namespace select component ', () => {
     state.go('fakeState', {namespace: unsafe});
     scope.$digest();
     expect(ctrl.selectedNamespace).toBe('default');
+  });
+
+  it('should redirect if on details page of object from different namespace', () => {
+    let toParams = {
+      namespace: 'chosen-namespace',
+      objectNamespace: 'different-namespace',
+    };
+    expect(ctrl.shouldRedirect_(toParams)).toBeTruthy();
+  });
+
+  it('should not redirect if all namespaces are selected', () => {
+    let toParams = {
+      namespace: '_all',
+      objectNamespace: 'different-namespace',
+    };
+    expect(ctrl.shouldRedirect_(toParams)).toBeFalsy();
+  });
+
+  it('should not redirect if same namespaces are selected', () => {
+    let toParams = {
+      namespace: 'namespace',
+      objectNamespace: 'namespace',
+    };
+    expect(ctrl.shouldRedirect_(toParams)).toBeFalsy();
   });
 });

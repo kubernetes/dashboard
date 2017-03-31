@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {annotationsComponent} from './annotations_component';
+import {annotationsComponent} from './component';
 import {lastAppliedConfigurationComponent} from './lastappliedconfiguration_component';
 
 export default angular

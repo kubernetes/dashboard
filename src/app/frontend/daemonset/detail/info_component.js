@@ -39,7 +39,7 @@ export default class DaemonSetInfoController {
 /**
  * Definition object for the component that displays daemon set info.
  *
- * @return {!angular.Directive}
+ * @return {!angular.Component}
  */
 export const daemonSetInfoComponent = {
   controller: DaemonSetInfoController,

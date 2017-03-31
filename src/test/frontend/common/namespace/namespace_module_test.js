@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {namespaceParam} from 'chrome/state';
-import module from 'common/namespace/namespace_module';
+import module from 'common/namespace/module';
 
 describe('Namespace module ', () => {
   beforeEach(() => {

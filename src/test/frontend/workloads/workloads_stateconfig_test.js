@@ -16,7 +16,7 @@ import workloadListModule from 'workloads/module';
 import {resolveWorkloads} from 'workloads/stateconfig';
 
 describe('StateConfig for workload list', () => {
-  /** @type {!common/pagination/pagination_service.PaginationService} */
+  /** @type {!common/pagination/service.PaginationService} */
   let kdPaginationService;
 
   beforeEach(() => {

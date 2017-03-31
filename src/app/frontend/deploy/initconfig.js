@@ -21,7 +21,7 @@ import {LabelValuePatternValidator} from './validators/labelvaluepatternvalidato
 /**
  * Configures deploy view related components.
  *
- * @param {!./../common/validators/validator_factory.ValidatorFactory} kdValidatorFactory
+ * @param {!./../common/validators/factory.ValidatorFactory} kdValidatorFactory
  * @ngInject
  */
 export default function initConfig(kdValidatorFactory) {

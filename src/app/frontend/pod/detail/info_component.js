@@ -59,7 +59,7 @@ export default class PodInfoController {
 /**
  * Definition object for the component that displays pod info.
  *
- * @return {!angular.Directive}
+ * @return {!angular.Component}
  */
 export const podInfoComponent = {
   controller: PodInfoController,

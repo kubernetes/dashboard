@@ -15,7 +15,7 @@
 /**
  * Definition object for the component that displays third party resource info.
  *
- * @return {!angular.Directive}
+ * @return {!angular.Component}
  */
 export const tprInfoComponent = {
   templateUrl: 'thirdpartyresource/detail/info.html',

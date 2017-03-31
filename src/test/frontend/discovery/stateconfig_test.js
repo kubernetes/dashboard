@@ -16,7 +16,7 @@ import module from 'discovery/module';
 import {resolveResource} from 'discovery/stateconfig';
 
 describe('StateConfig for discovery list', () => {
-  /** @type {!common/pagination/pagination_service.PaginationService} */
+  /** @type {!common/pagination/service.PaginationService} */
   let kdPaginationService;
 
   beforeEach(() => {

@@ -15,7 +15,7 @@
 /**
  * Returns directive definition object for the component that displays the service
  * endpoint (type {backendApi.Endpoint}) which is accessible only from the inside of the cluster
- * @return {!angular.Directive}
+ * @return {!angular.Component}
  */
 export const internalEndpointComponent = {
   templateUrl: 'common/components/endpoint/internalendpoint.html',

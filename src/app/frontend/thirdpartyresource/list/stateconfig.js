@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {stateName as chromeStateName} from 'chrome/state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 
 import {stateUrl} from './../state';
 import {ThirdPartyResourceListController} from './controller';
@@ -64,7 +64,7 @@ export function thirdPartyResourceListResource($resource) {
 
 /**
  * @param {!angular.Resource} kdThirdPartyResourceListResource
- * @param {!./../../common/pagination/pagination_service.PaginationService} kdPaginationService
+ * @param {!./../../common/pagination/service.PaginationService} kdPaginationService
  * @returns {!angular.$q.Promise}
  * @ngInject
  */

@@ -16,7 +16,7 @@ import module from 'cluster/module';
 import {resolveResource} from 'cluster/stateconfig';
 
 describe('StateConfig for cluster list', () => {
-  /** @type {!common/pagination/pagination_service.PaginationService} */
+  /** @type {!common/pagination/service.PaginationService} */
   let kdPaginationService;
 
   beforeEach(() => {

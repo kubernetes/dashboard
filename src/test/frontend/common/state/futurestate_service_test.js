@@ -15,7 +15,7 @@
 import module from 'common/state/module';
 
 describe('History service', () => {
-  /** @type {!common/state/futurestate_service.FutureStateService} */
+  /** @type {!common/state/service.FutureStateService} */
   let service;
   /** @type {!angular.Scope} */
   let scope;
