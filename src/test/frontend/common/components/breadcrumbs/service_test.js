@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
-import componentsModule from 'common/components/components_module';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
+import componentsModule from 'common/components/module';
 import {stateName as defaultStateName} from 'workloads/state';
 
 describe('Breadcrumbs service ', () => {

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import filtersModule from 'common/filters/filters_module';
+import filtersModule from 'common/filters/module';
 
 describe('Relative time filter', () => {
 

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import coresFilter from 'common/filters/cores_filter';
-import memoryFilter from 'common/filters/memory_filter';
+import coresFilter from 'common/filters/cores';
+import memoryFilter from 'common/filters/memory';
 
 /**
  * Formats the number to contain ideally 3 significant figures, but reduces the number of

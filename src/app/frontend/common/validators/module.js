@@ -12,18 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {AppConfigService} from './appconfig_service';
+import validateDirective from './directive';
+import {ValidatorFactory} from './factory';
 
 /**
- * Application configuration provider.
+ * Module containing validators for the application.
  */
-export default class AppConfigServiceProvider {
-  /**
-   * @param {appConfig_DO_NOT_USE_DIRECTLY} appConfig
-   * @ngInject
-   * @export
-   */
-  $get(appConfig) {
-    return new AppConfigService(appConfig || {});
-  }
-}
+export default angular
+    .module(
+        'kubernetesDashboard.common.validators',
+        [
+          'ngMaterial',
+        ])
+    .service('kdValidatorFactory', ValidatorFactory)
+    .directive('kdValidate', validateDirective);

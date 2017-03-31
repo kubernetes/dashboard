@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {stateName as chromeStateName} from 'chrome/state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 import {stateName as parentStateName} from 'config/state';
 
 import {stateUrl} from './../state';
@@ -67,7 +67,7 @@ export function persistentVolumeClaimListResource($resource) {
 /**
  * @param {!angular.Resource} kdPersistentVolumeClaimListResource
  * @param {!./../../chrome/state.StateParams} $stateParams
- * @param {!./../../common/pagination/pagination_service.PaginationService} kdPaginationService
+ * @param {!./../../common/pagination/service.PaginationService} kdPaginationService
  * @return {!angular.$q.Promise}
  * @ngInject
  */

@@ -15,7 +15,7 @@
 /**
  * Returns filter function to display relative time since given date.
  *
- * @param {!../appconfig/appconfig_service.AppConfigService} kdAppConfigService
+ * @param {!../appconfig/service.AppConfigService} kdAppConfigService
  * @return {function(string): string}
  * @ngInject
  */

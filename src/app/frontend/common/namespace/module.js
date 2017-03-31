@@ -14,8 +14,8 @@
 
 import {namespaceParam} from 'chrome/state';
 
-import {NamespaceService} from './namespace_service';
-import {DEFAULT_NAMESPACE, namespaceSelectComponent} from './namespaceselect_component';
+import {DEFAULT_NAMESPACE, namespaceSelectComponent} from './component';
+import {NamespaceService} from './service';
 
 /**
  * Angular module global namespace selection components.

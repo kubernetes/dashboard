@@ -12,18 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {graphComponent} from './graph_component';
-import {graphCardComponent} from './graphcard_component';
+import namespaceModule from './../namespace/module';
+import {PaginationService} from './service';
 
 /**
- * Module containing common graph components.
+ * Module containing validators for the application.
  */
-export default angular
-    .module(
-        'kubernetesDashboard.common.components.graph',
-        [
-          'ngMaterial',
-          'ui.router',
-        ])
-    .component('kdGraph', graphComponent)
-    .component('kdGraphCard', graphCardComponent);
+export default angular.module('kubernetesDashboard.common.pagination', [namespaceModule.name])
+    .service('kdPaginationService', PaginationService);

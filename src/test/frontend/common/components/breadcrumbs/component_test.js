@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
-import componentsModule from 'common/components/components_module';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
+import componentsModule from 'common/components/module';
 
 describe('Breadcrumbs controller ', () => {
   /** @type {ui.router.$state} */
@@ -24,7 +24,7 @@ describe('Breadcrumbs controller ', () => {
   let ctrl;
   /** @type {number} */
   let breadcrumbsLimit = 3;
-  /** @type {!common/state/futurestate_service.FutureStateService}*/
+  /** @type {!common/state/service.FutureStateService}*/
   let kdFutureStateService;
 
   /**

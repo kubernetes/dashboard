@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import module from 'common/history/history_module';
+import module from 'common/history/module';
 
 describe('History service', () => {
-  /** @type {!common/history/history_service.HistoryService} */
+  /** @type {!common/history/service.HistoryService} */
   let service;
   /** @type {!angular.Scope} */
   let scope;

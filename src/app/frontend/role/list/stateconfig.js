@@ -14,7 +14,7 @@
 
 import {stateName as chromeStateName} from 'chrome/state';
 import {stateName as parentStateName} from 'cluster/state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 import {stateUrl} from '../state';
 import {RoleListController} from './controller';
 
@@ -60,7 +60,7 @@ export function roleListResource($resource) {
 
 /**
  * @param {!angular.Resource} kdRoleListResource
- * @param {!./../../common/pagination/pagination_service.PaginationService} kdPaginationService
+ * @param {!./../../common/pagination/service.PaginationService} kdPaginationService
  * @returns {!angular.$q.Promise}
  * @ngInject
  */

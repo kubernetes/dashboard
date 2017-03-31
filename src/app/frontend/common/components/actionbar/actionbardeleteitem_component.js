@@ -21,7 +21,7 @@
 export class ActionbarDeleteItemController {
   /**
    * @param {!./../../resource/verber_service.VerberService} kdResourceVerberService
-   * @param {!./../breadcrumbs/breadcrumbs_service.BreadcrumbsService} kdBreadcrumbsService
+   * @param {!./../breadcrumbs/service.BreadcrumbsService} kdBreadcrumbsService
    * @param {!ui.router.$state} $state
    * @ngInject
    */
@@ -38,7 +38,7 @@ export class ActionbarDeleteItemController {
     /** @private {!./../../resource/verber_service.VerberService} */
     this.kdResourceVerberService_ = kdResourceVerberService;
 
-    /** @private {!./../breadcrumbs/breadcrumbs_service.BreadcrumbsService} */
+    /** @private {!./../breadcrumbs/service.BreadcrumbsService} */
     this.kdBreadcrumbsService_ = kdBreadcrumbsService;
 
     /** @private {!ui.router.$state}} */

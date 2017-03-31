@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {stateName as chromeStateName} from 'chrome/state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 
 import DeployController from './controller';
 import DeployFromFileController from './deployfromfile_controller';

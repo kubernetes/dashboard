@@ -73,3 +73,17 @@ export class AppConfigService {
     return '@@BUILD_YEAR';
   }
 }
+
+/**
+ * Application configuration provider.
+ */
+export default class AppConfigServiceProvider {
+  /**
+   * @param {appConfig_DO_NOT_USE_DIRECTLY} appConfig
+   * @ngInject
+   * @export
+   */
+  $get(appConfig) {
+    return new AppConfigService(appConfig || {});
+  }
+}

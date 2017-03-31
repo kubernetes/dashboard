@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import componentsModule from 'common/components/components_module';
-import namespaceModule from 'common/namespace/namespace_module';
+import componentsModule from 'common/components/module';
+import namespaceModule from 'common/namespace/module';
 
 import {chromeComponent} from './component';
 import navModule from './nav/module';

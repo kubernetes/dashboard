@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {stateName as chromeStateName} from 'chrome/state';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 import {stateName as parentStateName} from 'discovery/state';
 
 import {stateUrl} from './../state';
@@ -24,7 +24,7 @@ import {ServiceListController} from './controller';
  */
 const i18n = {
   /** @type {string} @desc Label 'Services' that appears as a breadcrumbs on the action bar. */
-  MSG_BREADCRUMBS_SERVICES_LABEL: goog.getMsg('Services'),
+  MSG_serviceS_LABEL: goog.getMsg('Services'),
 };
 
 /**
@@ -40,7 +40,7 @@ export const config = {
   },
   data: {
     [breadcrumbsConfig]: {
-      'label': i18n.MSG_BREADCRUMBS_SERVICES_LABEL,
+      'label': i18n.MSG_serviceS_LABEL,
       'parent': parentStateName,
     },
   },
@@ -66,7 +66,7 @@ export function serviceListResource($resource) {
 /**
  * @param {!angular.Resource} kdServiceListResource
  * @param {!./../../chrome/state.StateParams} $stateParams
- * @param {!./../../common/pagination/pagination_service.PaginationService} kdPaginationService
+ * @param {!./../../common/pagination/service.PaginationService} kdPaginationService
  * @return {!angular.$q.Promise}
  * @ngInject
  */

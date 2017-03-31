@@ -29,8 +29,8 @@ export class NamespaceSelectController {
    * @param {!angular.$resource} $resource
    * @param {!ui.router.$state} $state
    * @param {!angular.Scope} $scope
-   * @param {!./namespace_service.NamespaceService} kdNamespaceService
-   * @param {!./../state/futurestate_service.FutureStateService} kdFutureStateService
+   * @param {!./service.NamespaceService} kdNamespaceService
+   * @param {!./../state/service.FutureStateService} kdFutureStateService
    * @ngInject
    */
   constructor($resource, $state, $scope, kdNamespaceService, kdFutureStateService) {
@@ -56,7 +56,7 @@ export class NamespaceSelectController {
     this.selectedNamespace;
 
     /**
-     * @private {!./namespace_service.NamespaceService}
+     * @private {!./service.NamespaceService}
      */
     this.namespaceService_ = kdNamespaceService;
 
@@ -69,7 +69,7 @@ export class NamespaceSelectController {
     /** @private {!angular.Scope} */
     this.scope_ = $scope;
 
-    /** @private {!./../state/futurestate_service.FutureStateService}} */
+    /** @private {!./../state/service.FutureStateService}} */
     this.kdFutureStateService_ = kdFutureStateService;
 
     /** @export */

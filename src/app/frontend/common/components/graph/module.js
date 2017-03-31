@@ -12,17 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import validateDirective from './validate_directive';
-import {ValidatorFactory} from './validator_factory';
+import {graphComponent} from './component';
+import {graphCardComponent} from './graphcard_component';
 
 /**
- * Module containing validators for the application.
+ * Module containing common graph components.
  */
 export default angular
     .module(
-        'kubernetesDashboard.common.validators',
+        'kubernetesDashboard.common.components.graph',
         [
           'ngMaterial',
+          'ui.router',
         ])
-    .service('kdValidatorFactory', ValidatorFactory)
-    .directive('kdValidate', validateDirective);
+    .component('kdGraph', graphComponent)
+    .component('kdGraphCard', graphCardComponent);

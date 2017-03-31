@@ -1,4 +1,3 @@
-
 // Copyright 2015 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import appConfigServiceProvider from './appconfig_serviceprovider';
+import {CsrfTokenService} from './service';
 
 /**
- * Angular module containing application configuration.
+ * Module congaining a csrfToken service.
  */
 export default angular
     .module(
-        'kubernetesDashboard.appconfig',
+        'kubernetesDashboard.common.csrftoken',
         [
-          'ngMaterial',
+          'ui.router',
         ])
-    .provider('kdAppConfigService', appConfigServiceProvider)
-    .value('appConfig', appConfig_DO_NOT_USE_DIRECTLY);
+    .service('kdCsrfTokenService', CsrfTokenService);

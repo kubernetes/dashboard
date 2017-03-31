@@ -13,15 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ErrorDialog} from './errordialog_service';
+import appConfigServiceProvider from './service';
 
 /**
- * Angular module containing navigation chrome for the application.
+ * Angular module containing application configuration.
  */
 export default angular
     .module(
-        'kubernetesDashboard.errorhandling',
+        'kubernetesDashboard.appconfig',
         [
           'ngMaterial',
         ])
-    .service('errorDialog', ErrorDialog);
+    .provider('kdAppConfigService', appConfigServiceProvider)
+    .value('appConfig', appConfig_DO_NOT_USE_DIRECTLY);

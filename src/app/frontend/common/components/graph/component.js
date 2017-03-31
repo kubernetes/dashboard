@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {axisSettings, metricDisplaySettings, TimeAxisType} from './graph_settings';
+import {axisSettings, metricDisplaySettings, TimeAxisType} from './settings';
 import {getNewMax, getTickValues} from './tick_values';
 
 export class GraphController {

@@ -1,3 +1,4 @@
+
 // Copyright 2015 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,12 +13,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import namespaceModule from './../namespace/namespace_module';
-import {PaginationService} from './pagination_service';
-
+import {ErrorDialog} from './service';
 
 /**
- * Module containing validators for the application.
+ * Angular module containing navigation chrome for the application.
  */
-export default angular.module('kubernetesDashboard.common.pagination', [namespaceModule.name])
-    .service('kdPaginationService', PaginationService);
+export default angular
+    .module(
+        'kubernetesDashboard.errorhandling',
+        [
+          'ngMaterial',
+        ])
+    .service('errorDialog', ErrorDialog);

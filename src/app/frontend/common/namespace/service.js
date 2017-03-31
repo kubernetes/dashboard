@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ALL_NAMESPACES} from 'common/namespace/namespaceselect_component';
+import {ALL_NAMESPACES} from 'common/namespace/component';
 
 /**
  * Service class for registering namespace.

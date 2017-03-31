@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import resourceModule from 'common/resource/resource_module';
+import resourceModule from 'common/resource/module';
 
-import {breadcrumbsComponent} from './../breadcrumbs/breadcrumbs_component';
-import {BreadcrumbsService} from './../breadcrumbs/breadcrumbs_service';
-import {actionbarComponent} from './actionbar_component';
+import {breadcrumbsComponent} from './../breadcrumbs/component';
+import {BreadcrumbsService} from './../breadcrumbs/service';
 import {actionbarDeleteItemComponent} from './actionbardeleteitem_component';
 import {actionbarDetailButtonsComponent} from './actionbardetailbuttons_component';
 import {actionbarEditItemComponent} from './actionbaredititem_component';
 import {actionbarListButtonsComponent} from './actionbarlistbuttons_component';
+import {actionbarComponent} from './component';
 
 
 /**

@@ -13,17 +13,15 @@
 // limitations under the License.
 
 import stateModule from 'common/state/module';
-
-import filtersModule from '../filters/filters_module';
-
-import namespaceModule from './../namespace/namespace_module';
-import paginationModule from './../pagination/pagination_module';
-import actionbarModule from './actionbar/actionbar_module';
+import filtersModule from '../filters/module';
+import namespaceModule from './../namespace/module';
+import paginationModule from './../pagination/module';
+import actionbarModule from './actionbar/module';
 import annotationsModule from './annotations/module';
 import {conditionListComponent} from './conditions/component';
 import {contentCardComponent} from './contentcard/component';
-import endpointModule from './endpoint/endpoint_module';
-import graphModule from './graph/graph_module';
+import endpointModule from './endpoint/module';
+import graphModule from './graph/module';
 import infoCardModule from './infocard/infocard_module';
 import {labelComponent} from './labels/component';
 import {middleEllipsisComponent} from './middleellipsis/component';

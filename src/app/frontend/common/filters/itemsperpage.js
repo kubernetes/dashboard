@@ -17,7 +17,7 @@
  * redundant objects.
  *
  * @param {function(!Array<Object>, number, string): !Array<Object>} $delegate
- * @param {!../pagination/pagination_service.PaginationService} kdPaginationService
+ * @param {!../pagination/service.PaginationService} kdPaginationService
  * @return {function(!Array<Object>, number, string): !Array<Object>}
  * @ngInject
  */

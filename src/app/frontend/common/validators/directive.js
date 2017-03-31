@@ -29,7 +29,7 @@
  *  `<input type="string" kd-validate="labelKeyPrefixPattern">`
  *  `<input type="string" kd-validate="labelKeyNameLength">`
  *
- * @param {!./validator_factory.ValidatorFactory} kdValidatorFactory
+ * @param {!./factory.ValidatorFactory} kdValidatorFactory
  * @return {!angular.Directive}
  * @ngInject
  */
