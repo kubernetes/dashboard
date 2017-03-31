@@ -32,7 +32,7 @@ export default class ConditionListController {
 /**
  * Definition object for the component that displays conditions list.
  *
- * @return {!angular.Directive}
+ * @return {!angular.Component}
  */
 export const conditionListComponent = {
   controller: ConditionListController,

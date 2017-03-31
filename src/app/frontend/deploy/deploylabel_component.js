@@ -147,3 +147,18 @@ export default class DeployLabelController {
     return MSG_DEPLOY_LABEL_KEY_NOT_UNIQUE_WARNING;
   }
 }
+
+/**
+ * Returns directive definition for deploy form label.
+ *
+ * @return {!angular.Component}
+ */
+export const labelComponent = {
+  controller: DeployLabelController,
+  controllerAs: 'labelCtrl',
+  templateUrl: 'deploy/deploylabel.html',
+  bindings: {
+    'label': '=',
+    'labels': '=',
+  },
+};

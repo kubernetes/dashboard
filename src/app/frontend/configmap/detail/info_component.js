@@ -31,7 +31,7 @@ export default class ConfigMapInfoController {
 /**
  * Definition object for the component that displays config map info.
  *
- * @return {!angular.Directive}
+ * @return {!angular.Component}
  */
 export const configMapInfoComponent = {
   controller: ConfigMapInfoController,

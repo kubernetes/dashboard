@@ -25,7 +25,7 @@ export default class SecretInfoController {
 /**
  * Definition object for the component that displays secret info.
  *
- * @return {!angular.Directive}
+ * @return {!angular.Component}
  */
 export const secretInfoComponent = {
   controller: SecretInfoController,

@@ -39,7 +39,7 @@ export default class ReplicaSetInfoController {
 /**
  * Definition object for the component that displays replica set info.
  *
- * @return {!angular.Directive}
+ * @return {!angular.Component}
  */
 export const replicaSetInfoComponent = {
   controller: ReplicaSetInfoController,

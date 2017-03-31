@@ -26,7 +26,7 @@ class ServiceInfoController {
 /**
  * Definition object for the component that displays service info.
  *
- * @return {!angular.Directive}
+ * @return {!angular.Component}
  */
 export const serviceInfoComponent = {
   templateUrl: 'service/detail/info.html',
