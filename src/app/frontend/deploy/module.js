@@ -18,7 +18,7 @@ import historyModule from 'common/history/module';
 import validatorsModule from 'common/validators/module';
 import errorHandlingModule from '../common/errorhandling/module';
 
-import deployLabelDirective from './deploylabel_directive';
+import deployLabelComponent from './deploylabel_component';
 import {environmentVariablesComponent} from './environmentvariables_component';
 import fileReaderDirective from './filereader_directive';
 import helpSectionModule from './helpsection/helpsection_module';
@@ -58,4 +58,4 @@ export default angular
     .directive('kdFileReader', fileReaderDirective)
     .directive('kdUpload', uploadDirective)
     .component('kdEnvironmentVariables', environmentVariablesComponent)
-    .directive('kdDeployLabel', deployLabelDirective);
+    .component('kdDeployLabel', deployLabelComponent);
