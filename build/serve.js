@@ -24,33 +24,10 @@ import proxyMiddleware from 'proxy-middleware';
 import url from 'url';
 import conf from './conf';
 
-
 /**
  * Browser sync instance that serves the application.
  */
 export const browserSyncInstance = browserSync.create();
-
-/**
- * Dashboard backend arguments used for development mode.
- *
- * @type {!Array<string>}
- */
-const backendDevArgs = [
-  `--apiserver-host=${conf.backend.apiServerHost}`,
-  `--port=${conf.backend.devServerPort}`,
-  `--heapster-host=${conf.backend.heapsterServerHost}`,
-];
-
-/**
- * Dashboard backend arguments used for production mode.
- *
- * @type {!Array<string>}
- */
-const backendArgs = [
-  `--apiserver-host=${conf.backend.apiServerHost}`,
-  `--port=${conf.frontend.serverPort}`,
-  `--heapster-host=${conf.backend.heapsterServerHost}`,
-];
 
 /**
  * Currently running backend process object. Null if the backend is not running.
@@ -58,6 +35,32 @@ const backendArgs = [
  * @type {?child.ChildProcess}
  */
 let runningBackendProcess = null;
+
+/**
+ * Builds array of arguments for backend process based on env variables and prod/dev mode.
+ *
+ * @param {string} mode
+ * @return {!Array<string>}
+ */
+function getBackendArgs(mode) {
+  let args = [`--heapster-host=${conf.backend.heapsterServerHost}`];
+
+  if (mode === conf.backend.production) {
+    args.push(`--port=${conf.frontend.serverPort}`);
+  }
+
+  if (mode === conf.backend.development) {
+    args.push(`--port=${conf.backend.devServerPort}`);
+  }
+
+  if (conf.backend.envKubeconfig) {
+    args.push(`--kubeconfig=${conf.backend.envKubeconfig}`);
+  } else {
+    args.push(`--apiserver-host=${conf.backend.envApiServerHost || conf.backend.apiServerHost}`);
+  }
+
+  return args;
+}
 
 /**
  * Initializes BrowserSync tool. Files are served from baseDir directory list and all API calls
@@ -134,8 +137,8 @@ gulp.task('serve:prod', ['spawn-backend:prod']);
  */
 gulp.task('spawn-backend', ['backend', 'kill-backend', 'locales-for-backend:dev'], function() {
   runningBackendProcess = child.spawn(
-      path.join(conf.paths.serve, conf.backend.binaryName), backendDevArgs,
-      {stdio: 'inherit', cwd: conf.paths.serve});
+      path.join(conf.paths.serve, conf.backend.binaryName),
+      getBackendArgs(conf.backend.development), {stdio: 'inherit', cwd: conf.paths.serve});
 
   runningBackendProcess.on('exit', function() {
     // Mark that there is no backend process running anymore.
@@ -150,7 +153,7 @@ gulp.task('spawn-backend', ['backend', 'kill-backend', 'locales-for-backend:dev'
  */
 gulp.task('spawn-backend:prod', ['build-frontend', 'backend:prod', 'kill-backend'], function() {
   runningBackendProcess = child.spawn(
-      path.join(conf.paths.dist, conf.backend.binaryName), backendArgs,
+      path.join(conf.paths.dist, conf.backend.binaryName), getBackendArgs(conf.backend.production),
       {stdio: 'inherit', cwd: conf.paths.dist});
 
   runningBackendProcess.on('exit', function() {
