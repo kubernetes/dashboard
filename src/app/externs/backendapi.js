@@ -547,8 +547,8 @@ backendApi.DeploymentList;
 
 /**
  * @typedef {{
- *   maxSurge: !number,
- *   maxUnavailable: !number,
+ *   maxSurge: !(number|string),
+ *   maxUnavailable: !(number|string),
  * }}
  */
 backendApi.RollingUpdateStrategy;
