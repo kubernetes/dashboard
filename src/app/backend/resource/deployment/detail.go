@@ -24,14 +24,15 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	intstr "k8s.io/apimachinery/pkg/util/intstr"
 	client "k8s.io/client-go/kubernetes"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
 // RollingUpdateStrategy is behavior of a rolling update. See RollingUpdateDeployment K8s object.
 type RollingUpdateStrategy struct {
-	MaxSurge       int `json:"maxSurge"`
-	MaxUnavailable int `json:"maxUnavailable"`
+	MaxSurge       *intstr.IntOrString `json:"maxSurge"`
+	MaxUnavailable *intstr.IntOrString `json:"maxUnavailable"`
 }
 
 type StatusInfo struct {
@@ -164,8 +165,8 @@ func GetDeploymentDetail(client client.Interface, heapsterClient heapster.Heapst
 	var rollingUpdateStrategy *RollingUpdateStrategy
 	if deployment.Spec.Strategy.RollingUpdate != nil {
 		rollingUpdateStrategy = &RollingUpdateStrategy{
-			MaxSurge:       deployment.Spec.Strategy.RollingUpdate.MaxSurge.IntValue(),
-			MaxUnavailable: deployment.Spec.Strategy.RollingUpdate.MaxUnavailable.IntValue(),
+			MaxSurge:       deployment.Spec.Strategy.RollingUpdate.MaxSurge,
+			MaxUnavailable: deployment.Spec.Strategy.RollingUpdate.MaxUnavailable,
 		}
 	}
 
