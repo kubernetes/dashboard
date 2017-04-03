@@ -137,4 +137,28 @@ describe('Namespace select component ', () => {
     scope.$digest();
     expect(ctrl.selectedNamespace).toBe('default');
   });
+
+  it('should redirect if on details page of object from different namespace', () => {
+    let toParams = {
+      namespace: 'chosen-namespace',
+      objectNamespace: 'different-namespace',
+    };
+    expect(ctrl.shouldRedirect_(toParams)).toBeTruthy();
+  });
+
+  it('should not redirect if all namespaces are selected', () => {
+    let toParams = {
+      namespace: '_all',
+      objectNamespace: 'different-namespace',
+    };
+    expect(ctrl.shouldRedirect_(toParams)).toBeFalsy();
+  });
+
+  it('should not redirect if same namespaces are selected', () => {
+    let toParams = {
+      namespace: 'namespace',
+      objectNamespace: 'namespace',
+    };
+    expect(ctrl.shouldRedirect_(toParams)).toBeFalsy();
+  });
 });
