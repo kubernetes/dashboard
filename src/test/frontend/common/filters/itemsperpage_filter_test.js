@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ItemsPerPage} from 'common/dataselect/dataselect_builder';
-import dataSelectModule from 'common/dataselect/dataselect_module';
+import {ItemsPerPage} from 'common/dataselect/builder';
+import dataSelectModule from 'common/dataselect/module';
 import filtersModule from 'common/filters/module';
 
 describe('Items per page filter', () => {
@@ -21,6 +21,8 @@ describe('Items per page filter', () => {
   let itemsPerPageFilter;
   /** @type {!DataSelectService} - service related to data select module */
   let dataSelectService;
+  /** @type {!Object} */
+  let paginationService;
 
 
   beforeEach(() => {
@@ -31,6 +33,7 @@ describe('Items per page filter', () => {
     angular.mock.inject((_itemsPerPageFilter_, _kdDataSelectService_, _paginationService_) => {
       itemsPerPageFilter = _itemsPerPageFilter_;
       dataSelectService = _kdDataSelectService_;
+      paginationService = _paginationService_;
     });
   });
 

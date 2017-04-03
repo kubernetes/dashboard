@@ -16,7 +16,7 @@ import {resolvePersistentVolumeList} from 'persistentvolume/list/stateconfig';
 import persistentVolumeListModule from 'persistentvolume/module';
 
 describe('StateConfig for persistent volume controller list', () => {
-  /** @type {!common/dataselect/dataselect_service.DataSelectService} */
+  /** @type {!DataSelectService} */
   let kdDataSelectService;
 
   beforeEach(() => {

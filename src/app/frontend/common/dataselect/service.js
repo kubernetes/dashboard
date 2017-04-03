@@ -105,8 +105,7 @@ export class DataSelectService {
     }
 
     this.instances_.set(dataSelectId, query);
-    let resource = listResource.get(query);
-    return resource.$promise;
+    return listResource.get(query).$promise;
   }
 
   /**

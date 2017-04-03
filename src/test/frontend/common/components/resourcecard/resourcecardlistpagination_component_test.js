@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import resourceCardModule from 'common/components/resourcecard/resourcecard_module';
-import dataSelectModule from 'common/dataselect/dataselect_module';
+import dataSelectModule from 'common/dataselect/module';
 import errorHandlingModule from 'common/errorhandling/module';
 
 describe('Resource card list pagination', () => {
@@ -33,6 +33,8 @@ describe('Resource card list pagination', () => {
   let namespace = 'ns-1';
   /** @type {!ErrorDialog} */
   let errDialog;
+  /** @type {!angular.$q} **/
+  let q;
 
   beforeEach(() => {
     angular.mock.module(dataSelectModule.name);
@@ -41,12 +43,13 @@ describe('Resource card list pagination', () => {
 
     angular.mock.inject(
         ($componentController, _kdDataSelectService_, $rootScope, $resource, $httpBackend,
-         errorDialog) => {
+         errorDialog, $q) => {
           dataSelectService = _kdDataSelectService_;
           dataSelectService.registerInstance(selectId);
 
           errDialog = errorDialog;
           httpBackend = $httpBackend;
+          q = $q;
           resourceCardListCtrl = $componentController(
               'kdResourceCardList', {$transclude: {}},
               {listResource: $resource('api/v1/pod/:namespace')});
@@ -90,19 +93,15 @@ describe('Resource card list pagination', () => {
 
   it('should change page', () => {
     // given
+    let deferred = q.defer();
     let response = {pods: ['pod-1']};
-    let limit = 10;
     let page = 2;
-    let queryString = `itemsPerPage=${limit}&page=${page}&sortBy=d,creationTimestamp`;
-    httpBackend.expectGET(`api/v1/pod/${namespace}?${queryString}`).respond(200, response);
+    spyOn(dataSelectService, 'paginate').and.returnValue(deferred.promise);
 
     // when
     ctrl.pageChanged(page);
-    console.log(resourceCardListCtrl.list)
+    deferred.resolve(response);
     scope.$digest();
-    console.log(resourceCardListCtrl.list)
-    // httpBackend.flush();
-
 
     // then
     expect(resourceCardListCtrl.list.pods).toEqual(response.pods);
@@ -110,18 +109,18 @@ describe('Resource card list pagination', () => {
 
   it('should open error dialog on page change error', () => {
     // given
-    spyOn(errDialog, 'open');
-    let response = 'error';
-    let limit = 10;
+    let deferred = q.defer();
+    let response = {data: 'error'};
     let page = 2;
-    let queryString = `itemsPerPage=${limit}&page=${page}&sortBy=d,creationTimestamp`;
-    httpBackend.expectGET(`api/v1/pod/${namespace}?${queryString}`).respond(500, response);
+    spyOn(errDialog, 'open');
+    spyOn(dataSelectService, 'paginate').and.returnValue(deferred.promise);
 
     // when
     ctrl.pageChanged(page);
-    httpBackend.flush();
+    deferred.reject(response);
+    scope.$digest();
 
     // then
-    expect(errDialog.open).toHaveBeenCalledWith('Pagination error', response);
+    expect(errDialog.open).toHaveBeenCalledWith('Pagination error', response.data);
   });
 });

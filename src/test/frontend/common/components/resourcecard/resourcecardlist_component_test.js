@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import componentsModule from 'common/components/components_module';
+import componentsModule from 'common/components/module';
 import resourceCardModule from 'common/components/resourcecard/resourcecard_module';
-import errorModule from 'common/errorhandling/errorhandling_module';
+import errorModule from 'common/errorhandling/module';
 
 describe('Resource card list', () => {
   /** @type {!angular.Scope} */

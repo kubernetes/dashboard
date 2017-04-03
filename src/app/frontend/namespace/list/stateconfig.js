@@ -69,6 +69,6 @@ export function namespaceListResource($resource) {
  * @ngInject
  */
 export function resolveNamespaceList(kdNamespaceListResource, kdDataSelectService) {
-  let query = kdDataSelectService.getDefaultResourceQuery();
+  let query = kdDataSelectService.getDefaultResourceQuery('');
   return kdNamespaceListResource.get(query).$promise;
 }
