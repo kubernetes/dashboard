@@ -50,6 +50,7 @@ export const roleCardListComponent = {
     // Optional header that is transcluded instead of the default one.
     'header': '?kdHeader',
   },
+  controller: RoleCardListController,
   bindings: {
     'roleList': '<',
     'roleListResource': '<',

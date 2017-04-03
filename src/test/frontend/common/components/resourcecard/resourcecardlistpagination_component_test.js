@@ -27,8 +27,6 @@ describe('Resource card list pagination', () => {
   let dataSelectService;
   /** @type {!angular.Scope} */
   let scope;
-  /** @type {!angular.$httpBackend} */
-  let httpBackend;
   /** @type {string} */
   let namespace = 'ns-1';
   /** @type {!ErrorDialog} */
@@ -48,7 +46,6 @@ describe('Resource card list pagination', () => {
           dataSelectService.registerInstance(selectId);
 
           errDialog = errorDialog;
-          httpBackend = $httpBackend;
           q = $q;
           resourceCardListCtrl = $componentController(
               'kdResourceCardList', {$transclude: {}},

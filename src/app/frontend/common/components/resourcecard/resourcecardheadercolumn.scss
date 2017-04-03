@@ -28,8 +28,8 @@ kd-resource-card-header-column {
 }
 
 .kd-resource-card-header-column-container {
-  display: flex;
   align-items: center;
+  display: flex;
 }
 
 .kd-resource-card-header-column-sortable {
@@ -38,7 +38,7 @@ kd-resource-card-header-column {
   &:hover {
     &:not(.kd-resource-card-header-column-sorted) {
       * {
-        color: rgba(0, 0, 0, 0.87);
+        color: $foreground-1;
       }
     }
   }
@@ -50,7 +50,7 @@ kd-resource-card-header-column {
 }
 
 .kd-resource-card-header-column-sorted {
-  color: rgba(0, 0, 0, 0.87);
+  color: $foreground-1;
 }
 
 .kd-resource-card-header-sort-column-icon-container {
