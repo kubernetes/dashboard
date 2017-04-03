@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import errorhandlingModule from 'common/errorhandling/errorhandling_module';
+import errorhandlingModule from 'common/errorhandling/module';
 
 describe('Errorhandling service', () => {
   /** @type {!ErrorDialog} */

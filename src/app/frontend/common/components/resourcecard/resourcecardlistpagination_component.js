@@ -17,10 +17,10 @@
  */
 export class ResourceCardListPaginationController {
   /**
-   * @param {!../../pagination/pagination_service.PaginationService} kdPaginationService
+   * @param {!../../pagination/service.PaginationService} kdPaginationService
    * @param {!../../../chrome/state.StateParams|!../../resource/resourcedetail.StateParams}
    *     $stateParams
-   * @param {!../../errorhandling/errordialog_service.ErrorDialog} errorDialog
+   * @param {!../../errorhandling/service.ErrorDialog} errorDialog
    * @param {!angular.Scope} $scope
    * @ngInject
    */
@@ -35,7 +35,7 @@ export class ResourceCardListPaginationController {
     this.listResource;
     /** @export {{listMeta: !backendApi.ListMeta}} Initialized from binding. */
     this.list;
-    /** @private {!../../pagination/pagination_service.PaginationService} */
+    /** @private {!../../pagination/service.PaginationService} */
     this.paginationService_ = kdPaginationService;
     /** @private
      * {!../../../chrome/state.StateParams|!../../resource/resourcedetail.StateParams} */
@@ -46,7 +46,7 @@ export class ResourceCardListPaginationController {
     this.rowsLimitOptions = this.paginationService_.getRowsLimitOptions();
     /** @export {boolean} - Indicates whether pagination should be server sided of frontend only. */
     this.serverSided = true;
-    /** @private {!../../errorhandling/errordialog_service.ErrorDialog} */
+    /** @private {!../../errorhandling/service.ErrorDialog} */
     this.errorDialog_ = errorDialog;
     /** @private {!angular.Scope} */
     this.scope_ = $scope;

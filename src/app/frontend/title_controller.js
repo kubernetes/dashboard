@@ -20,11 +20,11 @@
 export class TitleController {
   /**
    * @param {!angular.$interpolate} $interpolate
-   * @param {!./common/state/futurestate_service.FutureStateService} kdFutureStateService
+   * @param {!./common/state/service.FutureStateService} kdFutureStateService
    * @ngInject
    */
   constructor($interpolate, kdFutureStateService) {
-    /** @private {!./common/state/futurestate_service.FutureStateService} */
+    /** @private {!./common/state/service.FutureStateService} */
     this.kdFutureStateService_ = kdFutureStateService;
 
     /** @private {!angular.$interpolate} */

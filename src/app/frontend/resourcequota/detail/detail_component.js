@@ -28,7 +28,7 @@ export default class ResourceQuotaDetailController {
 /**
  * Definition object for the component that displays resource quota detail status.
  *
- * @return {!angular.Directive}
+ * @return {!angular.Component}
  */
 export const resourceQuotaDetailComponent = {
   controller: ResourceQuotaDetailController,

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import componentsModule from 'common/components/components_module';
-import SerializedReferenceController from 'common/components/serializedreference/serializedreference_controller';
+import componentsModule from 'common/components/module';
+import SerializedReferenceController from 'common/components/serializedreference/component';
 import {stateName as jobState} from 'job/detail/state';
 
 describe('SerializedReference controller', () => {

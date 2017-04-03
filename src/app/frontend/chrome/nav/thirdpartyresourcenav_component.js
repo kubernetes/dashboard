@@ -22,7 +22,7 @@ export class ThirdPartyResourceNavController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!angular.$resource} $resource
-   * @param {!./../../common/state/futurestate_service.FutureStateService} kdFutureStateService
+   * @param {!./../../common/state/service.FutureStateService} kdFutureStateService
    * @ngInject
    */
   constructor($state, $resource, kdFutureStateService) {
@@ -32,7 +32,7 @@ export class ThirdPartyResourceNavController {
     /** @private {!angular.$resource} */
     this.resource_ = $resource;
 
-    /** @private {!./../../common/state/futurestate_service.FutureStateService} */
+    /** @private {!./../../common/state/service.FutureStateService} */
     this.kdFutureStateService_ = kdFutureStateService;
 
     /** @export */

@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import componentsModule from 'common/components/components_module';
-import csrfTokenModule from 'common/csrftoken/csrftoken_module';
-import historyModule from 'common/history/history_module';
-import validatorsModule from 'common/validators/validators_module';
+import componentsModule from 'common/components/module';
+import csrfTokenModule from 'common/csrftoken/module';
+import historyModule from 'common/history/module';
+import validatorsModule from 'common/validators/module';
+import errorHandlingModule from '../common/errorhandling/module';
 
-import errorHandlingModule from '../common/errorhandling/errorhandling_module';
-
-import deployLabelDirective from './deploylabel_directive';
+import deployLabelComponent from './deploylabel_component';
 import {environmentVariablesComponent} from './environmentvariables_component';
 import fileReaderDirective from './filereader_directive';
 import helpSectionModule from './helpsection/helpsection_module';
@@ -59,4 +58,4 @@ export default angular
     .directive('kdFileReader', fileReaderDirective)
     .directive('kdUpload', uploadDirective)
     .component('kdEnvironmentVariables', environmentVariablesComponent)
-    .directive('kdDeployLabel', deployLabelDirective);
+    .component('kdDeployLabel', deployLabelComponent);

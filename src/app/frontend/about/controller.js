@@ -20,7 +20,7 @@
  */
 export class AboutController {
   /**
-   *   @param {!../common/appconfig/appconfig_service.AppConfigService} kdAppConfigService
+   *   @param {!../common/appconfig/service.AppConfigService} kdAppConfigService
    * @ngInject
    */
   constructor(kdAppConfigService) {

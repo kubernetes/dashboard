@@ -13,9 +13,9 @@
 // limitations under the License.
 
 import chromeModule from 'chrome/module';
-import componentsModule from 'common/components/components_module';
-import filtersModule from 'common/filters/filters_module';
-import namespaceModule from 'common/namespace/namespace_module';
+import componentsModule from 'common/components/module';
+import filtersModule from 'common/filters/module';
+import namespaceModule from 'common/namespace/module';
 import eventsModule from 'events/module';
 
 import {horizontalPodAutoscalerInfoComponent} from './detail/info_component';

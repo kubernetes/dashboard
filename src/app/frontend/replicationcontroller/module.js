@@ -13,10 +13,10 @@
 // limitations under the License.
 
 import chromeModule from 'chrome/module';
-import componentsModule from 'common/components/components_module';
-import csrfTokenModule from 'common/csrftoken/csrftoken_module';
-import filtersModule from 'common/filters/filters_module';
-import namespaceModule from 'common/namespace/namespace_module';
+import componentsModule from 'common/components/module';
+import csrfTokenModule from 'common/csrftoken/module';
+import filtersModule from 'common/filters/module';
+import namespaceModule from 'common/namespace/module';
 import eventsModule from 'events/module';
 import podModule from 'pod/module';
 

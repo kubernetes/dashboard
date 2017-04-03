@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import filtersModule from 'common/filters/filters_module';
-import paginationModule from 'common/pagination/pagination_module';
-import {DEFAULT_ROWS_LIMIT} from 'common/pagination/pagination_service';
+import filtersModule from 'common/filters/module';
+import paginationModule from 'common/pagination/module';
+import {DEFAULT_ROWS_LIMIT} from 'common/pagination/service';
 
 describe('Items per page filter', () => {
   /** @type {function(!Array<Object>, number, string): !Array<Object>} */

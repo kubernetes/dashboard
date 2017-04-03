@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import module from 'common/components/components_module';
+import module from 'common/components/module';
 
 describe('annotations component', () => {
   /** @type {!angular.Scope} */

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {FutureStateService} from './futurestate_service';
+import {FutureStateService} from './service';
 
 /**
  * Module containing validators for the application.

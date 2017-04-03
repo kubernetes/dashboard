@@ -31,7 +31,7 @@ export default class ResourceLimitsController {
 /**
  * Definition object for the component that displays resource limits.
  *
- * @return {!angular.Directive}
+ * @return {!angular.Component}
  */
 export const resourceLimitsComponent = {
   controller: ResourceLimitsController,
