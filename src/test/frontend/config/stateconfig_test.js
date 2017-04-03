@@ -16,7 +16,7 @@ import module from 'config/module';
 import {resolveResource} from 'config/stateconfig';
 
 describe('StateConfig for config list', () => {
-  /** @type {!common/pagination/pagination_service.PaginationService} */
+  /** @type {!common/pagination/service.PaginationService} */
   let kdPaginationService;
 
   beforeEach(() => {

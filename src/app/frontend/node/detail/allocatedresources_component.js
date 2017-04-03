@@ -32,7 +32,7 @@ export class NodeAllocatedResourcesController {
 /**
  * Definition object for the component that displays node allocated resources.
  *
- * @return {!angular.Directive}
+ * @return {!angular.Component}
  */
 export const nodeAllocatedResourcesComponent = {
   controller: NodeAllocatedResourcesController,

@@ -31,7 +31,7 @@ export default class NodeInfoController {
 /**
  * Definition object for the component that displays node info.
  *
- * @return {!angular.Directive}
+ * @return {!angular.Component}
  */
 export const nodeInfoComponent = {
   controller: NodeInfoController,

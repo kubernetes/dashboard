@@ -21,11 +21,11 @@ import {stateName} from 'service/detail/state';
 export class ServiceCardController {
   /**
    * @param {!ui.router.$state} $state
-   * @param {!./../../common/namespace/namespace_service.NamespaceService} kdNamespaceService
+   * @param {!./../../common/namespace/service.NamespaceService} kdNamespaceService
    * @ngInject
    */
   constructor($state, kdNamespaceService) {
-    /** @private {!./../../common/namespace/namespace_service.NamespaceService} */
+    /** @private {!./../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
 
     /** @export {!backendApi.Service} */

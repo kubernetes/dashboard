@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import chromeModule from 'chrome/module';
-import componentsModule from 'common/components/components_module';
-import filtersModule from 'common/filters/filters_module';
+import componentsModule from 'common/components/module';
+import filtersModule from 'common/filters/module';
 
 import {roleCardComponent} from './list/card_component';
 import {roleCardListComponent} from './list/cardlist_component';

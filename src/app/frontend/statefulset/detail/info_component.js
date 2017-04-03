@@ -39,7 +39,7 @@ export default class StatefulSetInfoController {
 /**
  * Definition object for the component that displays stateful set info.
  *
- * @return {!angular.Directive}
+ * @return {!angular.Component}
  */
 export const statefulSetInfoComponent = {
   controller: StatefulSetInfoController,

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import validatorsModule from 'common/validators/validators_module';
+import validatorsModule from 'common/validators/module';
 
 describe('Validate directive', () => {
   /** @type {!angular.Scope} */

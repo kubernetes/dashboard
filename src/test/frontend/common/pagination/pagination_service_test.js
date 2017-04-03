@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import paginationModule from 'common/pagination/pagination_module';
-import {DEFAULT_ROWS_LIMIT, ROWS_LIMIT_OPTIONS} from 'common/pagination/pagination_service';
+import paginationModule from 'common/pagination/module';
+import {DEFAULT_ROWS_LIMIT, ROWS_LIMIT_OPTIONS} from 'common/pagination/service';
 
 describe('Pagination service', () => {
-  /** @type {!common/pagination/pagination_service.PaginationService} */
+  /** @type {!common/pagination/service.PaginationService} */
   let paginationService;
   /** @type {string} */
   let paginationId;

@@ -31,7 +31,7 @@ export default class JobInfoController {
 /**
  * Definition object for the component that displays job info.
  *
- * @return {!angular.Directive}
+ * @return {!angular.Component}
  */
 export const jobInfoComponent = {
   controller: JobInfoController,

@@ -32,7 +32,7 @@ export default class PersistentVolumeInfoController {
 /**
  * Definition object for the component that displays persistent volume info.
  *
- * @return {!angular.Directive}
+ * @return {!angular.Component}
  */
 export const persistentVolumeInfoComponent = {
   controller: PersistentVolumeInfoController,

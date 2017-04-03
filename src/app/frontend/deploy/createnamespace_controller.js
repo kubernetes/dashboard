@@ -25,7 +25,7 @@ export default class NamespaceDialogController {
    * TODO (cheld) Set correct type after fixing issue #159
    * @param {!Object} errorDialog
    * @param {!Array<string>} namespaces
-   * @param {!./../common/csrftoken/csrftoken_service.CsrfTokenService} kdCsrfTokenService
+   * @param {!./../common/csrftoken/service.CsrfTokenService} kdCsrfTokenService
    * @ngInject
    */
   constructor($mdDialog, $log, $resource, errorDialog, namespaces, kdCsrfTokenService) {

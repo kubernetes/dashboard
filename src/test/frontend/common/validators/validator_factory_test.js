@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {IntegerValidator} from 'common/validators/integervalidator';
-import validatorsModule from 'common/validators/validators_module';
+import validatorsModule from 'common/validators/module';
 import {LabelKeyNameLengthValidator} from 'deploy/validators/labelkeynamelengthvalidator';
 import {LabelKeyNamePatternValidator} from 'deploy/validators/labelkeynamepatternvalidator';
 

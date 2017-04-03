@@ -18,7 +18,7 @@
 export class PodCardListController {
   /**
    * @ngInject
-   * @param {!./../../common/namespace/namespace_service.NamespaceService} kdNamespaceService
+   * @param {!./../../common/namespace/service.NamespaceService} kdNamespaceService
    */
   constructor(kdNamespaceService) {
     /**
@@ -30,7 +30,7 @@ export class PodCardListController {
     /** @export {!angular.Resource} Initialized from binding. */
     this.podListResource;
 
-    /** @private {!./../../common/namespace/namespace_service.NamespaceService} */
+    /** @private {!./../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
   }
 

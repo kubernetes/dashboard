@@ -88,7 +88,7 @@ export class EnvironmentVariablesController {
 /**
  * Returns directive definition for the environment variables input widget.
  *
- * @return {!angular.Directive}
+ * @return {!angular.Component}
  */
 export const environmentVariablesComponent = {
   controller: EnvironmentVariablesController,

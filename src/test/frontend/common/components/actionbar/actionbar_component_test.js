@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import actionbarCardModule from 'common/components/actionbar/actionbar_module';
+import actionbarCardModule from 'common/components/actionbar/module';
 
 describe('Action bar', () => {
   beforeEach(() => angular.mock.module(actionbarCardModule.name));

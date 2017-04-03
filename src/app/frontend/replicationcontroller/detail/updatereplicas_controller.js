@@ -26,7 +26,7 @@ export default class UpdateReplicasDialogController {
    * @param {!angular.$log} $log
    * @param {!ui.router.$state} $state
    * @param {!angular.$resource} $resource
-   * @param {!./../../common/csrftoken/csrftoken_service.CsrfTokenService} kdCsrfTokenService
+   * @param {!./../../common/csrftoken/service.CsrfTokenService} kdCsrfTokenService
    * @param {string} namespace
    * @param {string} replicationController
    * @param {number} currentPods

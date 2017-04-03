@@ -14,18 +14,18 @@
 
 import chromeModule from 'chrome/module';
 import {StateParams} from 'chrome/state';
-import module from 'common/namespace/namespace_module';
+import module from 'common/namespace/module';
 
 describe('Namespace select component ', () => {
   /** @type {!angular.Scope} */
   let scope;
-  /** @type {!common/namespace/namespaceselect_component.NamespaceSelectController} */
+  /** @type {!common/namespace/component.NamespaceSelectController} */
   let ctrl;
   /** @type {!angular.$httpBackend} */
   let httpBackend;
   /** @type {!ui.router.$state} */
   let state;
-  /** @type {!common/state/futurestate_service.FutureStateService}*/
+  /** @type {!common/state/service.FutureStateService}*/
   let kdFutureStateService;
 
   beforeEach(() => {

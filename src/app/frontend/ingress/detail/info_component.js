@@ -25,7 +25,7 @@ export default class IngressInfoController {
 /**
  * Definition object for the component that displays ingress info.
  *
- * @return {!angular.Directive}
+ * @return {!angular.Component}
  */
 export const ingressInfoComponent = {
   controller: IngressInfoController,

@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 
 /**
  * @final
  */
 export class NavService {
   /**
-   * @param {!./../../common/state/futurestate_service.FutureStateService} kdFutureStateService
+   * @param {!./../../common/state/service.FutureStateService} kdFutureStateService
    * @param {!ui.router.$state} $state
    * @ngInject
    */
@@ -33,7 +33,7 @@ export class NavService {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
-    /** @private {!./../../common/state/futurestate_service.FutureStateService} */
+    /** @private {!./../../common/state/service.FutureStateService} */
     this.kdFutureStateService_ = kdFutureStateService;
   }
 
