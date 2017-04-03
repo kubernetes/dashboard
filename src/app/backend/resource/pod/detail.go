@@ -15,6 +15,7 @@
 package pod
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"log"
 
@@ -27,6 +28,7 @@ import (
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	api "k8s.io/client-go/pkg/api/v1"
+	"fmt"
 )
 
 // PodDetail is a presentation layer view of Kubernetes PodDetail resource.
@@ -105,8 +107,11 @@ func GetPodDetail(client kubernetes.Interface, heapsterClient client.HeapsterCli
 	log.Printf("Getting details of %s pod in %s namespace", name, namespace)
 
 	channels := &common.ResourceChannels{
-		ConfigMapList: common.GetConfigMapListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
-		PodMetrics:    common.GetPodMetricsChannel(heapsterClient, name, namespace),
+		ConfigMapList: common.GetConfigMapListChannel(client,
+			common.NewSameNamespaceQuery(namespace), 1),
+		SecretList: common.GetSecretListChannel(client,
+			common.NewSameNamespaceQuery(namespace), 1),
+		PodMetrics: common.GetPodMetricsChannel(heapsterClient, name, namespace),
 	}
 
 	pod, err := client.Core().Pods(namespace).Get(name, metaV1.GetOptions{})
@@ -118,7 +123,8 @@ func GetPodDetail(client kubernetes.Interface, heapsterClient client.HeapsterCli
 	controller := owner.ResourceOwner{}
 	creatorAnnotation, found := pod.ObjectMeta.Annotations[api.CreatedByAnnotation]
 	if found {
-		creatorRef, err := getPodCreator(client, creatorAnnotation, common.NewSameNamespaceQuery(namespace), heapsterClient)
+		creatorRef, err := getPodCreator(client, creatorAnnotation,
+			common.NewSameNamespaceQuery(namespace), heapsterClient)
 		if err != nil {
 			return nil, err
 		}
@@ -134,17 +140,24 @@ func GetPodDetail(client kubernetes.Interface, heapsterClient client.HeapsterCli
 	}
 	configMapList := <-channels.ConfigMapList.List
 
-	eventList, err := GetEventsForPod(client, dataselect.DefaultDataSelect, pod.Namespace, pod.Name)
+	if err = <-channels.SecretList.Error; err != nil {
+		return nil, err
+	}
+	secretList := <-channels.SecretList.List
+
+	eventList, err := GetEventsForPod(client, dataselect.DefaultDataSelect, pod.Namespace,
+		pod.Name)
 	if err != nil {
 		return nil, err
 	}
 
-	podDetail := toPodDetail(pod, metrics, configMapList, controller, eventList)
+	podDetail := toPodDetail(pod, metrics, configMapList, secretList, controller, eventList)
 	return &podDetail, nil
 }
 
 func getPodCreator(client kubernetes.Interface, creatorAnnotation string,
-	nsQuery *common.NamespaceQuery, heapsterClient client.HeapsterClient) (*owner.ResourceOwner, error) {
+	nsQuery *common.NamespaceQuery, heapsterClient client.HeapsterClient) (*owner.ResourceOwner,
+	error) {
 
 	var serializedReference api.SerializedReference
 	err := json.Unmarshal([]byte(creatorAnnotation), &serializedReference)
@@ -188,7 +201,8 @@ func isNotFoundError(err error) bool {
 }
 
 func toPodDetail(pod *api.Pod, metrics []metric.Metric, configMaps *api.ConfigMapList,
-	controller owner.ResourceOwner, eventList *common.EventList) PodDetail {
+	secrets *api.SecretList, controller owner.ResourceOwner,
+	events *common.EventList) PodDetail {
 
 	containers := make([]Container, 0)
 	for _, container := range pod.Spec.Containers {
@@ -200,7 +214,8 @@ func toPodDetail(pod *api.Pod, metrics []metric.Metric, configMaps *api.ConfigMa
 				ValueFrom: envVar.ValueFrom,
 			}
 			if variable.ValueFrom != nil {
-				variable.Value = evalValueFrom(variable.ValueFrom, configMaps)
+				variable.Value = evalValueFrom(variable.ValueFrom, configMaps,
+					secrets)
 			}
 			vars = append(vars, variable)
 		}
@@ -223,21 +238,36 @@ func toPodDetail(pod *api.Pod, metrics []metric.Metric, configMaps *api.ConfigMa
 		Containers:   containers,
 		Metrics:      metrics,
 		Conditions:   getPodConditions(*pod),
-		EventList:    *eventList,
+		EventList:    *events,
 	}
 
 	return podDetail
 }
 
-func evalValueFrom(src *api.EnvVarSource, configMaps *api.ConfigMapList) string {
-	if src.ConfigMapKeyRef != nil {
+func evalValueFrom(src *api.EnvVarSource, configMaps *api.ConfigMapList,
+	secrets *api.SecretList) string {
+	switch {
+	case src.ConfigMapKeyRef != nil:
 		name := src.ConfigMapKeyRef.LocalObjectReference.Name
-
 		for _, configMap := range configMaps.Items {
 			if configMap.ObjectMeta.Name == name {
 				return configMap.Data[src.ConfigMapKeyRef.Key]
 			}
 		}
+	case src.SecretKeyRef != nil:
+		name := src.SecretKeyRef.LocalObjectReference.Name
+		for _, secret := range secrets.Items {
+			if secret.ObjectMeta.Name == name {
+				encoded := base64.StdEncoding.EncodeToString([]byte(
+					secret.Data[src.SecretKeyRef.Key]))
+				fmt.Println(encoded) // TODO
+				return encoded
+			}
+		}
+	case src.ResourceFieldRef != nil:
+		// TODO https://github.com/kubernetes/kubernetes/blob/d82e51edc5f02bff39661203c9b503d054c3493b/pkg/kubectl/describe.go#L1149
+	case src.FieldRef != nil:
+		// TODO
 	}
 	return ""
 }
