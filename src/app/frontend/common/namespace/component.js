@@ -14,11 +14,22 @@
 
 import {namespaceParam} from 'chrome/state';
 
-/** Internal key for empty selection. To differentiate empty string from nulls. */
+/**
+ * Internal key for empty selection. To differentiate empty string from nulls.
+ * @type {string}
+ */
 export const ALL_NAMESPACES = '_all';
 
+/**
+ * Default namespace.
+ * @type {string}
+ */
 export const DEFAULT_NAMESPACE = 'default';
 
+/**
+ * Regular expression for namespace validation.
+ * @type {RegExp}
+ */
 export const NAMESPACE_REGEX = /^([a-z0-9]([-a-z0-9]*[a-z0-9])?|_all)$/;
 
 /**
@@ -29,11 +40,11 @@ export class NamespaceSelectController {
    * @param {!angular.$resource} $resource
    * @param {!ui.router.$state} $state
    * @param {!angular.Scope} $scope
-   * @param {!./service.NamespaceService} kdNamespaceService
    * @param {!./../state/service.FutureStateService} kdFutureStateService
+   * @param {!./../breadcrumbs/service.BreadcrumbsService} kdBreadcrumbsService
    * @ngInject
    */
-  constructor($resource, $state, $scope, kdNamespaceService, kdFutureStateService) {
+  constructor($resource, $state, $scope, kdFutureStateService, kdBreadcrumbsService) {
     /**
      * Initialized with all namespaces on first open.
      * @export {!Array<string>}
@@ -55,11 +66,6 @@ export class NamespaceSelectController {
      */
     this.selectedNamespace;
 
-    /**
-     * @private {!./service.NamespaceService}
-     */
-    this.namespaceService_ = kdNamespaceService;
-
     /** @private {!angular.$resource} */
     this.resource_ = $resource;
 
@@ -71,6 +77,9 @@ export class NamespaceSelectController {
 
     /** @private {!./../state/service.FutureStateService}} */
     this.kdFutureStateService_ = kdFutureStateService;
+
+    /** @private {!./../components/breadcrumbs/breadcrumbs_service.BreadcrumbsService} */
+    this.kdBreadcrumbsService_ = kdBreadcrumbsService;
 
     /** @export */
     this.i18n = i18n;
@@ -88,6 +97,35 @@ export class NamespaceSelectController {
   }
 
   /**
+   *  Redirect should happen if user is on details page (toParams.objectNamespace), not all
+   *  namespaces are selected (toParams.namespace !== "_all") and current object namespace is
+   *  different than selected namespace (toParams.namespace !== toParams.objectNamespace).
+   *
+   * @param {Object<string, string>} toParams
+   * @return {boolean}
+   * @private
+   */
+  shouldRedirect_(toParams) {
+    return toParams && toParams.namespace && toParams.objectNamespace &&
+        toParams.namespace !== '_all' && toParams.namespace !== toParams.objectNamespace;
+  }
+
+  /**
+   * Redirects to parent state. It should be list state, because redirect takes place when user
+   * is detail state.
+   *
+   * @param {Object<string, string>} toParams
+   * @private
+   */
+  redirectToParentState_(toParams) {
+    this.state_.go(
+        this.kdBreadcrumbsService_.getParentStateName(this.state_['$current']), toParams);
+  }
+
+  /**
+   * When namespace is changed perform basic validation (check existence etc.). At the end check if
+   * redirect to list view should happen.
+   *
    * @param {Object<string, string>} toParams
    * @private
    */
@@ -115,6 +153,10 @@ export class NamespaceSelectController {
       }
     } else {
       this.selectedNamespace = DEFAULT_NAMESPACE;
+    }
+
+    if (this.shouldRedirect_(toParams)) {
+      this.redirectToParentState_(toParams);
     }
   }
 
