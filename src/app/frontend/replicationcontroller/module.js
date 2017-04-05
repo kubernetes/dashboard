@@ -19,6 +19,7 @@ import filtersModule from 'common/filters/module';
 import namespaceModule from 'common/namespace/module';
 import eventsModule from 'events/module';
 import podModule from 'pod/module';
+import {ScaleService} from 'common/scaling/scaleresource_service';
 
 import {ReplicationControllerService} from './detail/delete_service';
 import {replicationControllerInfoComponent} from './detail/info_component';
@@ -54,6 +55,7 @@ export default angular
     .component('kdReplicationControllerCardMenu', replicationControllerCardMenuComponent)
     .component('kdReplicationControllerInfo', replicationControllerInfoComponent)
     .service('kdReplicationControllerService', ReplicationControllerService)
+    .service('kdScaleService', ScaleService)
     .factory('kdRCListResource', replicationControllerListResource)
     .factory('kdRCResource', replicationControllerResource)
     .factory('kdRCPodsResource', replicationControllerPodsResource)

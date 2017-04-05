@@ -12,25 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * @final
- */
-export class ActionBarController {
-  /**
-   * @param {!backendApi.JobDetail} jobDetail
-   * @ngInject
-   */
-  constructor(jobDetail, kdScaleService) {
-    /** @private {!./../../common/scaling/scaleresource_service.ScaleService} */
-    this.kdScaleService_ = kdScaleService;
+@import '../../variables';
 
-    /** @export {!backendApi.JobDetail} */
-    this.details = jobDetail;
-  }
-
-  handleScaleResourceDialog() {
-    this.kdScaleService_.showScaleDialog(
-        this.details.objectMeta.namespace, this.details.objectMeta.name, this.details.parallelism,
-        this.details.parallelism, this.details.typeMeta.kind);
-  }
+.kd-updatereplicas-pod-status {
+  font-size: $body-font-size-base;
 }

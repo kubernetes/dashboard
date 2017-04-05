@@ -1,4 +1,4 @@
-// Copyright 2015 Google Inc. All Rights Reserved.
+// Copyright 2015 Google Inc. All Rights Reserved.kubernetesDashboard
 //
 // Licensed under the Apache License, Version 2.0 (the 'License');
 // you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ import componentsModule from 'common/components/module';
 import filtersModule from 'common/filters/module';
 import namespaceModule from 'common/namespace/module';
 import eventsModule from 'events/module';
+import {ScaleService} from 'common/scaling/scaleresource_service';
 
 import {jobInfoComponent} from './detail/info_component';
 import {jobEventsResource, jobPodsResource} from './detail/stateconfig';
@@ -45,6 +46,7 @@ export default angular
     .component('kdJobCard', jobCardComponent)
     .component('kdJobCardList', jobCardListComponent)
     .component('kdJobInfo', jobInfoComponent)
+    .service('kdScaleService', ScaleService)
     .factory('kdJobListResource', jobListResource)
     .factory('kdJobPodsResource', jobPodsResource)
     .factory('kdJobEventsResource', jobEventsResource);

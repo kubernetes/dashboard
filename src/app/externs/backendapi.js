@@ -252,7 +252,8 @@ backendApi.ReplicaSetList;
  *   objectMeta: !backendApi.ObjectMeta,
  *   typeMeta: !backendApi.TypeMeta,
  *   pods: !backendApi.PodInfo,
- *   containerImages: !Array<string>
+ *   containerImages: !Array<string>,
+ *   parallelism: number
  * }}
  */
 backendApi.Job;
@@ -265,7 +266,7 @@ backendApi.Job;
  *   podList: !backendApi.PodList,
  *   containerImages: !Array<string>,
  *   eventList: !backendApi.EventList,
- *   paralleism: number,
+ *   parallelism: number,
  *   completions: number
  * }}
  */
@@ -679,6 +680,15 @@ backendApi.ConfigMapKeyRef;
  * }}
  */
 backendApi.ReplicationControllerSpec;
+
+/**
+ * @typedef {{
+ *   desiredReplicas: number,
+ *   actualReplicas: number,
+ * }}
+ */
+backendApi.ReplicaCounts;
+
 
 /**
  * @typedef {{

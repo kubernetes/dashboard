@@ -17,6 +17,7 @@ import componentsModule from 'common/components/module';
 import filtersModule from 'common/filters/module';
 import namespaceModule from 'common/namespace/module';
 import eventsModule from 'events/module';
+import {ScaleService} from 'common/scaling/scaleresource_service';
 
 import {deploymentInfoComponent} from './detail/info_component';
 import {deploymentEventsResource, deploymentOldReplicaSetsResource} from './detail/stateconfig';
@@ -45,6 +46,7 @@ export default angular
     .component('kdDeploymentCard', deploymentCardComponent)
     .component('kdDeploymentCardList', deploymentCardListComponent)
     .component('kdDeploymentInfo', deploymentInfoComponent)
+    .service('kdScaleService', ScaleService)
     .factory('kdDeploymentEventsResource', deploymentEventsResource)
     .factory('kdDeploymentListResource', deploymentListResource)
     .factory('kdDeploymentOldReplicaSetsResource', deploymentOldReplicaSetsResource);

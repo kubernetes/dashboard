@@ -17,6 +17,7 @@ import componentsModule from 'common/components/module';
 import filtersModule from 'common/filters/module';
 import namespaceModule from 'common/namespace/module';
 import eventsModule from 'events/module';
+import {ScaleService} from 'common/scaling/scaleresource_service';
 
 import {replicaSetInfoComponent} from './detail/info_component';
 import {replicaSetDetailResource, replicaSetEventsResource, replicaSetPodsResource, replicaSetServicesResource} from './detail/stateconfig';
@@ -45,6 +46,7 @@ export default angular
     .component('kdReplicaSetCard', replicaSetCardComponent)
     .component('kdReplicaSetCardList', replicaSetCardListComponent)
     .component('kdReplicaSetInfo', replicaSetInfoComponent)
+    .service('kdScaleService', ScaleService)
     .factory('kdReplicaSetDetailResource', replicaSetDetailResource)
     .factory('kdReplicaSetEventsResource', replicaSetEventsResource)
     .factory('kdReplicaSetListResource', replicaSetListResource)
