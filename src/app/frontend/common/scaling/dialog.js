@@ -12,29 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import UpdateReplicasDialogController from 'replicationcontroller/detail/updatereplicas_controller';
+import ScaleResourceDialogController from './controller';
 
 /**
  * Opens update replicas dialog.
  * @param {!md.$dialog} mdDialog
  * @param {string} namespace
- * @param {string} replicationController
+ * @param {string} resourceName
  * @param {number} currentPods
  * @param {number} desiredPods
+ * @param {string} resourceKindName
  * @return {!angular.$q.Promise}
  */
 export default function showUpdateReplicasDialog(
-    mdDialog, namespace, replicationController, currentPods, desiredPods) {
+    mdDialog, namespace, resourceName, currentPods, desiredPods, resourceKindName) {
   return mdDialog.show({
-    controller: UpdateReplicasDialogController,
-    controllerAs: 'ctrl',
+    controller: ScaleResourceDialogController,
+    controllerAs: '$ctrl',
     clickOutsideToClose: true,
-    templateUrl: 'replicationcontroller/detail/updatereplicas.html',
+    templateUrl: 'common/scaling/scaleresource.html',
     locals: {
       'namespace': namespace,
-      'replicationController': replicationController,
+      'resourceName': resourceName,
       'currentPods': currentPods,
       'desiredPods': desiredPods,
+      'resourceKindName': resourceKindName,
     },
   });
 }

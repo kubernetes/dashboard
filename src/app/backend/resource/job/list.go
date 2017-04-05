@@ -48,6 +48,9 @@ type Job struct {
 
 	// Container images of the Job.
 	ContainerImages []string `json:"containerImages"`
+
+	// number of parallel jobs defined.
+	Parallelism *int32 `json:"parallelism"`
 }
 
 // GetJobList returns a list of all Jobs in the cluster.
@@ -138,5 +141,6 @@ func ToJob(job *batch.Job, podInfo *common.PodInfo) Job {
 		TypeMeta:        common.NewTypeMeta(common.ResourceKindJob),
 		ContainerImages: common.GetContainerImages(&job.Spec.Template.Spec),
 		Pods:            *podInfo,
+		Parallelism:     job.Spec.Parallelism,
 	}
 }

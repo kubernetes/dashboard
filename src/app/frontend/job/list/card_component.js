@@ -24,9 +24,10 @@ export default class JobCardController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!./../../common/namespace/service.NamespaceService} kdNamespaceService
+   * @param {!./../../common/scaling/service.ScaleService} kdScaleService
    * @ngInject
    */
-  constructor($state, kdNamespaceService) {
+  constructor($state, kdNamespaceService, kdScaleService) {
     /**
      * Initialized from the scope.
      * @export {!backendApi.Job}
@@ -38,6 +39,9 @@ export default class JobCardController {
 
     /** @private {!./../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
+
+    /** @private {!./../../common/scaling/service.ScaleService} */
+    this.kdScaleService_ = kdScaleService;
   }
 
   /**
@@ -82,6 +86,15 @@ export default class JobCardController {
    */
   isSuccess() {
     return !this.isPending() && !this.hasWarnings();
+  }
+
+  /**
+   * @export
+   */
+  showScaleDialog() {
+    this.kdScaleService_.showScaleDialog(
+        this.job.objectMeta.namespace, this.job.objectMeta.name, this.job.parallelism,
+        this.job.parallelism, this.job.typeMeta.kind);
   }
 }
 

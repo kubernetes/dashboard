@@ -51,6 +51,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/rbacroles"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/scaling"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/secret"
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset"
@@ -386,6 +387,15 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 		apiV1Ws.GET("/deployment/{namespace}/{deployment}/oldreplicaset").
 			To(apiHandler.handleGetDeploymentOldReplicaSets).
 			Writes(replicaset.ReplicaSetList{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.PUT("/scale/{kind}/{namespace}/{name}/").
+			To(apiHandler.handleScaleResource).
+			Writes(scaling.ReplicaCounts{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/scale/{kind}/{namespace}/{name}").
+			To(apiHandler.handleGetReplicaCount).
+			Writes(scaling.ReplicaCounts{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/daemonset").
 			To(apiHandler.handleGetDaemonSetList).
@@ -876,6 +886,33 @@ func (apiHandler *APIHandler) handleDeploy(request *restful.Request, response *r
 	}
 
 	response.WriteHeaderAndEntity(http.StatusCreated, appDeploymentSpec)
+}
+
+func (apiHandler *APIHandler) handleScaleResource(request *restful.Request, response *restful.Response) {
+	namespace := request.PathParameter("namespace")
+	kind := request.PathParameter("kind")
+	name := request.PathParameter("name")
+	count := request.QueryParameter("scaleBy")
+
+	replicaCountSpec, err := scaling.ScaleResource(apiHandler.client, kind, namespace, name, count)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, replicaCountSpec)
+}
+
+func (apiHandler *APIHandler) handleGetReplicaCount(request *restful.Request, response *restful.Response) {
+	namespace := request.PathParameter("namespace")
+	kind := request.PathParameter("kind")
+	name := request.PathParameter("name")
+
+	scaleSpec, err := scaling.GetScaleSpec(apiHandler.client, kind, namespace, name)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, scaleSpec)
 }
 
 // Handles deploy from file API call.

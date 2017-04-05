@@ -21,20 +21,19 @@ describe('Replication controller card menu controller', () => {
   let ctrl;
   /** @type {!ui.router.$state} */
   let state;
-  /** @type {!ReplicationControllerService} */
-  let kdReplicationControllerService;
+  /** @type {!common/scaling/scaleresource_service.ScaleService}*/
+  let kdScaleService;
 
   beforeEach(() => {
     angular.mock.module(replicationControllerModule.name);
 
-    angular.mock.inject(
-        ($componentController, $state, _kdReplicationControllerService_, $rootScope) => {
-          state = $state;
-          kdReplicationControllerService = _kdReplicationControllerService_;
-          ctrl = $componentController('kdReplicationControllerCardMenu', {$scope: $rootScope}, {
-            replicationController: {objectMeta: {name: 'foo-name', namespace: 'foo-namespace'}},
-          });
-        });
+    angular.mock.inject(($componentController, $state, _kdScaleService_, $rootScope) => {
+      state = $state;
+      kdScaleService = _kdScaleService_;
+      ctrl = $componentController('kdReplicationControllerCardMenu', {$scope: $rootScope}, {
+        replicationController: {objectMeta: {name: 'foo-name', namespace: 'foo-namespace'}},
+      });
+    });
   });
 
   it('should view details', () => {
@@ -67,17 +66,20 @@ describe('Replication controller card menu controller', () => {
         namespace: '',
         name: '',
       },
+      typeMeta: {
+        kind: '',
+      },
       pods: {
         current: 1,
         desired: 1,
       },
     };
-    spyOn(kdReplicationControllerService, 'showUpdateReplicasDialog');
+    spyOn(kdScaleService, 'showScaleDialog');
 
     // when
-    ctrl.showUpdateReplicasDialog();
+    ctrl.showScaleDialog();
 
     // then
-    expect(kdReplicationControllerService.showUpdateReplicasDialog).toHaveBeenCalled();
+    expect(kdScaleService.showScaleDialog).toHaveBeenCalled();
   });
 });
