@@ -42,6 +42,13 @@ limitations under the License.
           text_fields
         </md-icon>
       </md-button>
+      <md-button class="kd-logs-toolbar-button"
+                 ng-click="ctrl.onShowTimestamp()">
+        <md-icon md-font-library="material-icons"
+                 class="kd-logs-timer-icon">
+          {{ctrl.getTimestampIcon()}}
+        </md-icon>
+      </md-button>
     </div>
   </kd-title>
   <kd-content>
@@ -60,9 +67,9 @@ limitations under the License.
       <span class="kd-logs-info"
             ng-show="ctrl.logsSet.length > 1">
         [[Logs from|Title prefix for logs card.]]
-        {{ctrl.podLogs.firstLogLineReference.logTimestamp | date : "short"}}
+        {{ctrl.podLogs.firstLogLineReference.timestamp | date : "short"}}
         [[to|Footer part for logs card.]]
-        {{ctrl.podLogs.lastLogLineReference.logTimestamp | date : "short" }}
+        {{ctrl.podLogs.lastLogLineReference.timestamp | date : "short" }}
       </span>
       <span flex></span>
       <div class="kd-list-pagination-buttons">

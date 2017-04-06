@@ -130,6 +130,10 @@ kd-content-card {
   transform: scale(-1, 1);
 }
 
+.kd-logs-timer-icon {
+  color: $logs-color-black;
+}
+
 .kd-logs-info {
   padding: 1.5 * $baseline-grid;
 }

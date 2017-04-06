@@ -76,25 +76,10 @@ export class LogsController {
   }
 
   $onInit() {
-    this.loadLogs(this.podLogs);
+    this.updateUiModel(this.podLogs);
     this.topIndex = this.podLogs.logs.length;
   }
 
-  /**
-   * Updates all state parameters and sets the current log view to podLogs. If logs are not
-   * available sets logs to no logs available message.
-   * @param {!backendApi.Logs} podLogs
-   * @private
-   */
-  loadLogs(podLogs) {
-    this.podLogs = podLogs;
-    this.currentLogView = podLogs.logViewInfo;
-    let logs = podLogs.logs;
-    if (podLogs.logs.length === 0) {
-      logs = [this.i18n.MSG_LOGS_ZEROSTATE_TEXT];
-    }
-    this.logsSet = this.sanitizeLogs_(logs);
-  }
 
   /**
    * Loads maxLogSize oldest lines of logs.
@@ -147,15 +132,77 @@ export class LogsController {
     this.resource_(`api/v1/pod/${namespace}/${podId}/log/${container}`)
         .get(
             {
-              'referenceTimestamp': this.currentLogView.referenceLogLineId.logTimestamp,
+              'referenceTimestamp': this.currentLogView.referenceLogLineId.timestamp,
               'referenceLineNum': this.currentLogView.referenceLogLineId.lineNum,
               'relativeFrom': relativeFrom,
               'relativeTo': relativeTo,
             },
-            (logs) => {
-              this.loadLogs(logs);
+            (podLogs) => {
+              this.updateUiModel(podLogs);
             });
   }
+
+  /**
+   * Updates all state parameters and sets the current log view with the data returned from the
+   * backend If logs are not available sets logs to no logs available message.
+   * @param {!backendApi.Logs} podLogs
+   * @private
+   */
+  updateUiModel(podLogs) {
+    this.podLogs = podLogs;
+    this.currentLogView = podLogs.logViewInfo;
+    this.logsSet = this.formatAllLogs_(podLogs.logs);
+  }
+
+  /**
+   * Formats logs as HTML.
+   *
+   * @param {!Array<backendApi.LogLine>} logs
+   * @return {!Array<string>}
+   * @private
+   */
+  formatAllLogs_(logs) {
+    if (logs.length === 0) {
+      logs = [{timestamp: '0', content: this.i18n.MSG_LOGS_ZEROSTATE_TEXT}];
+    }
+    return logs.map((line) => this.formatLine_(line));
+  }
+
+
+  /**
+   * Formats the given log line as raw HTML to display to the user.
+   * @param {!backendApi.LogLine} line
+   * @return {*}
+   * @private
+   */
+  formatLine_(line) {
+    // remove html and add colors
+    // We know that trustAsHtml is safe here because escapedLine is escaped to
+    // not contain any HTML markup, and formattedLine is the result of passing
+    // ecapedLine to ansi_to_html, which is known to only add span tags.
+    let escapedContent =
+        this.sce_.trustAsHtml(ansi_up.ansi_to_html(this.escapeHtml_(line.content)));
+
+    // add timestamp if needed
+    let showTimestamp = this.logsService.getShowTimestamp();
+    let logLine = showTimestamp ? `${line.timestamp} ${escapedContent}` : escapedContent;
+
+    return logLine;
+  }
+
+  /**
+   * Escapes an HTML string (e.g. converts "<foo>bar&baz</foo>" to
+   * "&lt;foo&gt;bar&amp;baz&lt;/foo&gt;") by bouncing it through a text node.
+   * @param {string} html
+   * @return {string}
+   * @private
+   */
+  escapeHtml_(html) {
+    let div = this.document_.createElement('div');
+    div.appendChild(this.document_.createTextNode(html));
+    return div.innerHTML;
+  }
+
 
   /**
    * Indicates log area font size.
@@ -210,47 +257,20 @@ export class LogsController {
   }
 
   /**
-   * Formats logs as HTML.
-   *
-   * @param {!Array<string>} logs
-   * @return {!Array<string>}
-   * @private
+   * Return the proper icon depending on the selection state
+   * @export
+   * @returns {string}
    */
-  sanitizeLogs_(logs) {
-    return logs.map((line) => this.formatLine_(line));
+  getTimestampIcon() {
+    if (this.logsService.getShowTimestamp()) {
+      return 'timer';
+    }
+    return 'timer_off';
   }
 
-  /**
-   * Formats the given log line as raw HTML to display to the user.
-   * @param {string} line
-   * @return {*}
-   * @private
-   */
-  formatLine_(line) {
-    let escapedLine = this.escapeHtml_(line);
-    let formattedLine = ansi_up.ansi_to_html(escapedLine);
-
-    // We know that trustAsHtml is safe here because escapedLine is escaped to
-    // not contain any HTML markup, and formattedLine is the result of passing
-    // ecapedLine to ansi_to_html, which is known to only add span tags.
-    return this.sce_.trustAsHtml(formattedLine);
-  }
 
   /**
-   * Escapes an HTML string (e.g. converts "<foo>bar&baz</foo>" to
-   * "&lt;foo&gt;bar&amp;baz&lt;/foo&gt;") by bouncing it through a text node.
-   * @param {string} html
-   * @return {string}
-   * @private
-   */
-  escapeHtml_(html) {
-    let div = this.document_.createElement('div');
-    div.appendChild(this.document_.createTextNode(html));
-    return div.innerHTML;
-  }
-
-  /**
-   * Execute a code when a user changes the selected option of a container element.
+   * Execute when a user changes the selected option of a container element.
    * @param {string} container
    * @export
    */
@@ -262,7 +282,7 @@ export class LogsController {
   }
 
   /**
-   * Execute a code when a user changes the selected option for console font size.
+   * Execute when a user changes the selected option for console font size.
    * @export
    */
   onFontSizeChange() {
@@ -270,11 +290,20 @@ export class LogsController {
   }
 
   /**
-   * Execute a code when a user changes the selected option for console color.
+   * Execute when a user changes the selected option for console color.
    * @export
    */
   onTextColorChange() {
     this.logsService.setInverted();
+  }
+
+  /**
+   * Execute when a user changes the selected option for show timestamp.
+   * @export
+   */
+  onShowTimestamp() {
+    this.logsService.setShowTimestamp();
+    this.logsSet = this.formatAllLogs_(this.podLogs.logs);
   }
 
   /**
