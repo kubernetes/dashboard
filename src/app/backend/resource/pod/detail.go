@@ -307,28 +307,18 @@ func extractContainerResourceValue(fs *v1.ResourceFieldSelector, container *v1.C
 
 	switch fs.Resource {
 	case "limits.cpu":
-		return convertResourceCPUToString(container.Resources.Limits.Cpu(), divisor)
+		return strconv.FormatInt(int64(math.Ceil(float64(container.Resources.Limits.
+			Cpu().MilliValue())/float64(divisor.MilliValue()))), 10)
 	case "limits.memory":
-		return convertResourceMemoryToString(container.Resources.Limits.Memory(), divisor)
+		return strconv.FormatInt(int64(math.Ceil(float64(container.Resources.Limits.
+			Memory().Value())/float64(divisor.Value()))), 10)
 	case "requests.cpu":
-		return convertResourceCPUToString(container.Resources.Requests.Cpu(), divisor)
+		return strconv.FormatInt(int64(math.Ceil(float64(container.Resources.Requests.
+			Cpu().MilliValue())/float64(divisor.MilliValue()))), 10)
 	case "requests.memory":
-		return convertResourceMemoryToString(container.Resources.Requests.Memory(), divisor)
+		return strconv.FormatInt(int64(math.Ceil(float64(container.Resources.Requests.
+			Memory().Value())/float64(divisor.Value()))), 10)
 	}
 
 	return "", fmt.Errorf("Unsupported container resource : %v", fs.Resource)
-}
-
-// convertResourceCPUToString converts cpu value to the format of divisor and returns
-// ceiling of the value.
-func convertResourceCPUToString(cpu *res.Quantity, divisor res.Quantity) (string, error) {
-	c := int64(math.Ceil(float64(cpu.MilliValue()) / float64(divisor.MilliValue())))
-	return strconv.FormatInt(c, 10), nil
-}
-
-// convertResourceMemoryToString converts memory value to the format of divisor and returns
-// ceiling of the value.
-func convertResourceMemoryToString(memory *res.Quantity, divisor res.Quantity) (string, error) {
-	m := int64(math.Ceil(float64(memory.Value()) / float64(divisor.Value())))
-	return strconv.FormatInt(m, 10), nil
 }
