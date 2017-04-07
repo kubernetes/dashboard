@@ -19,7 +19,6 @@ import (
 	"encoding/json"
 	"log"
 
-	"fmt"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
