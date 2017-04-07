@@ -19,6 +19,7 @@ import (
 	"encoding/json"
 	"log"
 
+	"fmt"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -28,7 +29,6 @@ import (
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	api "k8s.io/client-go/pkg/api/v1"
-	"fmt"
 )
 
 // PodDetail is a presentation layer view of Kubernetes PodDetail resource.
@@ -258,10 +258,7 @@ func evalValueFrom(src *api.EnvVarSource, configMaps *api.ConfigMapList,
 		name := src.SecretKeyRef.LocalObjectReference.Name
 		for _, secret := range secrets.Items {
 			if secret.ObjectMeta.Name == name {
-				encoded := base64.StdEncoding.EncodeToString([]byte(
-					secret.Data[src.SecretKeyRef.Key]))
-				fmt.Println(encoded) // TODO
-				return encoded
+				return base64.StdEncoding.EncodeToString([]byte(secret.Data[src.SecretKeyRef.Key]))
 			}
 		}
 	case src.ResourceFieldRef != nil:
