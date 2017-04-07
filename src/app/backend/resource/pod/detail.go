@@ -17,9 +17,11 @@ package pod
 import (
 	"encoding/base64"
 	"encoding/json"
-	"log"
-
 	"fmt"
+	"log"
+	"math"
+	"strconv"
+
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -32,8 +34,6 @@ import (
 	"k8s.io/client-go/pkg/api/v1"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/fieldpath"
-	"math"
-	"strconv"
 )
 
 // PodDetail is a presentation layer view of Kubernetes PodDetail resource. This means it is
