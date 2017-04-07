@@ -12,24 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import statefulSetModule from 'statefulset/module';
+import roleModule from 'role/module';
 
-describe('Stateful Set Card List controller', () => {
-  /** @type {!StatefulSetCardListController} */
-  let ctrl;
+describe('Role Card List controller', () => {
   /**
-   * @type {!NamespaceService}
+   * @type {!SecretCardListController}
    */
-  let data;
+  let ctrl;
 
   beforeEach(() => {
-    angular.mock.module(statefulSetModule.name);
+    angular.mock.module(roleModule.name);
 
-    angular.mock.inject(($componentController, kdNamespaceService) => {
-      /** @type {!NamespaceService} */
-      data = kdNamespaceService;
-      /** @type {!StatefulSetCardListController} */
-      ctrl = $componentController('kdStatefulSetCardList', {kdNamespaceService_: data});
+    angular.mock.inject(($componentController) => {
+      /** @type {!SecretListController} */
+      ctrl = $componentController('kdRoleCardList', {});
     });
   });
 
@@ -37,15 +33,11 @@ describe('Stateful Set Card List controller', () => {
     expect(ctrl).not.toBeUndefined();
   });
 
-  it('should return the value from Namespace service', () => {
-    expect(ctrl.areMultipleNamespacesSelected()).toBe(data.areMultipleNamespacesSelected());
-  });
-
   it('should return correct select id', () => {
     // given
-    let expected = 'statefulsets';
-    ctrl.statefulSetList = {};
-    ctrl.statefulSetListResource = {};
+    let expected = 'roles';
+    ctrl.roleList = {};
+    ctrl.roleListResource = {};
 
     // when
     let got = ctrl.getSelectId();

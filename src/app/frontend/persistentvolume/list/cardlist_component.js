@@ -51,6 +51,7 @@ export const persistentVolumeCardListComponent = {
     // Optional header that is transcluded instead of the default one.
     'header': '?kdHeader',
   },
+  controller: PersistentVolumeCardListController,
   bindings: {
     'persistentVolumeList': '<',
     'persistentVolumeListResource': '<',

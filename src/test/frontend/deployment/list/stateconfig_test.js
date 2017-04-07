@@ -16,7 +16,7 @@ import {resolveDeploymentList} from 'deployment/list/stateconfig';
 import deploymentListModule from 'deployment/module';
 
 describe('StateConfig for deployment list', () => {
-  /** @type {!common/dataselect/dataselect_service.DataSelectService} */
+  /** @type {!DataSelectService} */
   let kdDataSelectService;
 
   beforeEach(() => {

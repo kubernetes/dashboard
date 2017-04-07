@@ -50,6 +50,7 @@ export const nodeCardListComponent = {
     // Optional header that is transcluded instead of the default one.
     'header': '?kdHeader',
   },
+  controller: NodeCardListController,
   bindings: {
     'nodeList': '<',
     'nodeListResource': '<',

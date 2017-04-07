@@ -50,6 +50,7 @@ export const namespaceCardListComponent = {
     // Optional header that is transcluded instead of the default one.
     'header': '?kdHeader',
   },
+  controller: NamespaceCardListController,
   bindings: {
     'namespaceList': '<',
     'namespaceListResource': '<',

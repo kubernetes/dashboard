@@ -12,24 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import statefulSetModule from 'statefulset/module';
+import thirdPartyResourceModule from 'thirdpartyresource/module';
 
-describe('Stateful Set Card List controller', () => {
-  /** @type {!StatefulSetCardListController} */
+describe('Third Party Resource card list', () => {
+  /** @type {!ObjectListController} */
   let ctrl;
-  /**
-   * @type {!NamespaceService}
-   */
-  let data;
 
   beforeEach(() => {
-    angular.mock.module(statefulSetModule.name);
+    angular.mock.module(thirdPartyResourceModule.name);
 
-    angular.mock.inject(($componentController, kdNamespaceService) => {
-      /** @type {!NamespaceService} */
-      data = kdNamespaceService;
-      /** @type {!StatefulSetCardListController} */
-      ctrl = $componentController('kdStatefulSetCardList', {kdNamespaceService_: data});
+    angular.mock.inject(($componentController, $rootScope) => {
+      ctrl = $componentController('kdThirdPartyResourceObjects', {$scope: $rootScope});
     });
   });
 
@@ -37,15 +30,11 @@ describe('Stateful Set Card List controller', () => {
     expect(ctrl).not.toBeUndefined();
   });
 
-  it('should return the value from Namespace service', () => {
-    expect(ctrl.areMultipleNamespacesSelected()).toBe(data.areMultipleNamespacesSelected());
-  });
-
   it('should return correct select id', () => {
     // given
-    let expected = 'statefulsets';
-    ctrl.statefulSetList = {};
-    ctrl.statefulSetListResource = {};
+    let expected = 'thirdpartyresourceobjects';
+    ctrl.objectList = {};
+    ctrl.objectListResource = {};
 
     // when
     let got = ctrl.getSelectId();

@@ -16,7 +16,7 @@ import {resolveHorizontalPodAutoscalerList} from 'horizontalpodautoscaler/list/s
 import horizontalPodAutoscalerModule from 'horizontalpodautoscaler/module';
 
 describe('StateConfig for horizontal pod autoscaler controller list', () => {
-  /** @type {!common/dataselect/dataselect_service.DataSelectService} */
+  /** @type {!DataSelectService} */
   let kdDataSelectService;
 
   beforeEach(() => {
