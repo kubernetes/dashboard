@@ -37,7 +37,7 @@ spec:
       args:
       - while true; do
           echo -en '\n';
-          printenv MY_NODE_NAME;
+          printenv MY_POD_NAME;
           printenv MY_MEM_REQUEST MY_MEM_LIMIT;
           printenv MY_CONST_VALUE;
           printenv MY_SECRET_VALUE;
@@ -51,10 +51,10 @@ spec:
           memory: "64Mi"
           cpu: "250m"
       env:
-        - name: MY_NODE_NAME
+        - name: MY_POD_NAME
           valueFrom:
             fieldRef:
-              fieldPath: spec.nodeName
+              fieldPath: metadata.name
         - name: MY_MEM_REQUEST
           valueFrom:
             resourceFieldRef:

@@ -27,18 +27,19 @@ import (
 	"k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
+	api "k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/fieldpath"
 )
 
-// PodDetail is a presentation layer view of Kubernetes PodDetail resource.
-// This means it is PodDetail plus additional augmented data we can get
-// from other sources (like services that target it).
+// PodDetail is a presentation layer view of Kubernetes PodDetail resource. This means it is PodDetail plus additional
+// augmented data we can get from other sources (like services that target it).
 type PodDetail struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
 	TypeMeta   common.TypeMeta   `json:"typeMeta"`
 
 	// Status of the Pod. See Kubernetes API for reference.
-	PodPhase api.PodPhase `json:"podPhase"`
+	PodPhase v1.PodPhase `json:"podPhase"`
 
 	// IP address of the Pod.
 	PodIP string `json:"podIP"`
@@ -94,23 +95,20 @@ type EnvVar struct {
 	// Defined for derived variables. If non-null, the value is get from the reference.
 	// Note that this is an API struct. This is intentional, as EnvVarSources are plain struct
 	// references.
-	ValueFrom *api.EnvVarSource `json:"valueFrom"`
+	ValueFrom *v1.EnvVarSource `json:"valueFrom"`
 }
 
 // GetPodDetail returns the details (PodDetail) of a named Pod from a particular namespace.
-// TODO(maciaszczykm): After owned by reference will be fully-functional it should be used instead
-// of created by annotation.
-func GetPodDetail(client kubernetes.Interface, heapsterClient client.HeapsterClient, namespace,
-	name string) (*PodDetail, error) {
+// TODO(maciaszczykm): Owner reference should be used instead of created by annotation.
+func GetPodDetail(client kubernetes.Interface, heapsterClient client.HeapsterClient, namespace, name string) (
+	*PodDetail, error) {
 
 	log.Printf("Getting details of %s pod in %s namespace", name, namespace)
 
 	channels := &common.ResourceChannels{
-		ConfigMapList: common.GetConfigMapListChannel(client,
-			common.NewSameNamespaceQuery(namespace), 1),
-		SecretList: common.GetSecretListChannel(client,
-			common.NewSameNamespaceQuery(namespace), 1),
-		PodMetrics: common.GetPodMetricsChannel(heapsterClient, name, namespace),
+		ConfigMapList: common.GetConfigMapListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
+		SecretList:    common.GetSecretListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
+		PodMetrics:    common.GetPodMetricsChannel(heapsterClient, name, namespace),
 	}
 
 	pod, err := client.Core().Pods(namespace).Get(name, metaV1.GetOptions{})
@@ -120,17 +118,16 @@ func GetPodDetail(client kubernetes.Interface, heapsterClient client.HeapsterCli
 	}
 
 	controller := owner.ResourceOwner{}
-	creatorAnnotation, found := pod.ObjectMeta.Annotations[api.CreatedByAnnotation]
+	creatorAnnotation, found := pod.ObjectMeta.Annotations[v1.CreatedByAnnotation]
 	if found {
-		creatorRef, err := getPodCreator(client, creatorAnnotation,
-			common.NewSameNamespaceQuery(namespace), heapsterClient)
+		creatorRef, err := getPodCreator(client, creatorAnnotation, common.NewSameNamespaceQuery(namespace))
 		if err != nil {
 			return nil, err
 		}
 		controller = *creatorRef
 	}
 
-	_, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells([]api.Pod{*pod}),
+	_, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells([]v1.Pod{*pod}),
 		dataselect.StdMetricsDataSelect, dataselect.NoResourceCache, &heapsterClient)
 	metrics, _ := metricPromises.GetMetrics()
 
@@ -144,8 +141,7 @@ func GetPodDetail(client kubernetes.Interface, heapsterClient client.HeapsterCli
 	}
 	secretList := <-channels.SecretList.List
 
-	eventList, err := GetEventsForPod(client, dataselect.DefaultDataSelect, pod.Namespace,
-		pod.Name)
+	eventList, err := GetEventsForPod(client, dataselect.DefaultDataSelect, pod.Namespace, pod.Name)
 	if err != nil {
 		return nil, err
 	}
@@ -154,11 +150,10 @@ func GetPodDetail(client kubernetes.Interface, heapsterClient client.HeapsterCli
 	return &podDetail, nil
 }
 
-func getPodCreator(client kubernetes.Interface, creatorAnnotation string,
-	nsQuery *common.NamespaceQuery, heapsterClient client.HeapsterClient) (*owner.ResourceOwner,
-	error) {
+func getPodCreator(client kubernetes.Interface, creatorAnnotation string, nsQuery *common.NamespaceQuery) (
+	*owner.ResourceOwner, error) {
 
-	var serializedReference api.SerializedReference
+	var serializedReference v1.SerializedReference
 	err := json.Unmarshal([]byte(creatorAnnotation), &serializedReference)
 	if err != nil {
 		return nil, err
@@ -180,7 +175,6 @@ func getPodCreator(client kubernetes.Interface, creatorAnnotation string,
 	}
 
 	reference := serializedReference.Reference
-
 	rc, err := owner.NewResourceController(reference, client)
 	if err != nil && isNotFoundError(err) {
 		return &owner.ResourceOwner{}, nil
@@ -199,9 +193,8 @@ func isNotFoundError(err error) bool {
 	return statusErr.ErrStatus.Code == 404
 }
 
-func toPodDetail(pod *api.Pod, metrics []metric.Metric, configMaps *api.ConfigMapList,
-	secrets *api.SecretList, controller owner.ResourceOwner,
-	events *common.EventList) PodDetail {
+func toPodDetail(pod *v1.Pod, metrics []metric.Metric, configMaps *v1.ConfigMapList, secrets *v1.SecretList,
+	controller owner.ResourceOwner, events *common.EventList) PodDetail {
 
 	containers := make([]Container, 0)
 	for _, container := range pod.Spec.Containers {
@@ -213,8 +206,7 @@ func toPodDetail(pod *api.Pod, metrics []metric.Metric, configMaps *api.ConfigMa
 				ValueFrom: envVar.ValueFrom,
 			}
 			if variable.ValueFrom != nil {
-				variable.Value = evalValueFrom(variable.ValueFrom, configMaps,
-					secrets)
+				variable.Value = evalValueFrom(variable.ValueFrom, pod, configMaps, secrets)
 			}
 			vars = append(vars, variable)
 		}
@@ -243,8 +235,9 @@ func toPodDetail(pod *api.Pod, metrics []metric.Metric, configMaps *api.ConfigMa
 	return podDetail
 }
 
-func evalValueFrom(src *api.EnvVarSource, configMaps *api.ConfigMapList,
-	secrets *api.SecretList) string {
+// evalValueFrom evaluates environment value from given source. For more details check:
+// https://github.com/kubernetes/kubernetes/blob/d82e51edc5f02bff39661203c9b503d054c3493b/pkg/kubectl/describe.go#L1149
+func evalValueFrom(src *v1.EnvVarSource, pod *v1.Pod, configMaps *v1.ConfigMapList, secrets *v1.SecretList) string {
 	switch {
 	case src.ConfigMapKeyRef != nil:
 		name := src.ConfigMapKeyRef.LocalObjectReference.Name
@@ -261,9 +254,20 @@ func evalValueFrom(src *api.EnvVarSource, configMaps *api.ConfigMapList,
 			}
 		}
 	case src.ResourceFieldRef != nil:
-		// TODO https://github.com/kubernetes/kubernetes/blob/d82e51edc5f02bff39661203c9b503d054c3493b/pkg/kubectl/describe.go#L1149
-	case src.FieldRef != nil:
 		// TODO
+	case src.FieldRef != nil:
+		internalFieldPath, _, err := api.Scheme.ConvertFieldLabel(src.FieldRef.APIVersion, "Pod",
+			src.FieldRef.FieldPath, "")
+		if err != nil {
+			log.Println(err)
+			return ""
+		}
+		valueFrom, err := fieldpath.ExtractFieldPathAsString(pod, internalFieldPath)
+		if err != nil {
+			log.Println(err)
+			return ""
+		}
+		return valueFrom
 	}
 	return ""
 }
