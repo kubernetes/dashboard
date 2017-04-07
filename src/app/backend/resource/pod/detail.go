@@ -19,17 +19,21 @@ import (
 	"encoding/json"
 	"log"
 
+	"fmt"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/owner"
 	"k8s.io/apimachinery/pkg/api/errors"
+	res "k8s.io/apimachinery/pkg/api/resource"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
-	api "k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/fieldpath"
+	"math"
+	"strconv"
 )
 
 // PodDetail is a presentation layer view of Kubernetes PodDetail resource. This means it is
@@ -102,8 +106,7 @@ type EnvVar struct {
 // GetPodDetail returns the details (PodDetail) of a named Pod from a particular namespace.
 // TODO(maciaszczykm): Owner reference should be used instead of created by annotation.
 func GetPodDetail(client kubernetes.Interface, heapsterClient client.HeapsterClient, namespace,
-	name string) (
-	*PodDetail, error) {
+	name string) (*PodDetail, error) {
 
 	log.Printf("Getting details of %s pod in %s namespace", name, namespace)
 
@@ -157,8 +160,7 @@ func GetPodDetail(client kubernetes.Interface, heapsterClient client.HeapsterCli
 }
 
 func getPodCreator(client kubernetes.Interface, creatorAnnotation string,
-	nsQuery *common.NamespaceQuery) (
-	*owner.ResourceOwner, error) {
+	nsQuery *common.NamespaceQuery) (*owner.ResourceOwner, error) {
 
 	var serializedReference v1.SerializedReference
 	err := json.Unmarshal([]byte(creatorAnnotation), &serializedReference)
@@ -201,8 +203,8 @@ func isNotFoundError(err error) bool {
 }
 
 func toPodDetail(pod *v1.Pod, metrics []metric.Metric, configMaps *v1.ConfigMapList,
-	secrets *v1.SecretList,
-	controller owner.ResourceOwner, events *common.EventList) PodDetail {
+	secrets *v1.SecretList, controller owner.ResourceOwner,
+	events *common.EventList) PodDetail {
 
 	containers := make([]Container, 0)
 	for _, container := range pod.Spec.Containers {
@@ -214,8 +216,8 @@ func toPodDetail(pod *v1.Pod, metrics []metric.Metric, configMaps *v1.ConfigMapL
 				ValueFrom: envVar.ValueFrom,
 			}
 			if variable.ValueFrom != nil {
-				variable.Value = evalValueFrom(variable.ValueFrom, pod, configMaps,
-					secrets)
+				variable.Value = evalValueFrom(variable.ValueFrom, &container, pod,
+					configMaps, secrets)
 			}
 			vars = append(vars, variable)
 		}
@@ -245,9 +247,9 @@ func toPodDetail(pod *v1.Pod, metrics []metric.Metric, configMaps *v1.ConfigMapL
 }
 
 // evalValueFrom evaluates environment value from given source. For more details check:
-// https://github.com/kubernetes/kubernetes/blob/d82e51edc5f02bff39661203c9b503d054c3493b/pkg/kubectl/describe.go#L1149
-func evalValueFrom(src *v1.EnvVarSource, pod *v1.Pod, configMaps *v1.ConfigMapList,
-	secrets *v1.SecretList) string {
+// https://github.com/kubernetes/kubernetes/blob/d82e51edc5f02bff39661203c9b503d054c3493b/pkg/kubectl/describe.go#L1056
+func evalValueFrom(src *v1.EnvVarSource, container *v1.Container, pod *v1.Pod,
+	configMaps *v1.ConfigMapList, secrets *v1.SecretList) string {
 	switch {
 	case src.ConfigMapKeyRef != nil:
 		name := src.ConfigMapKeyRef.LocalObjectReference.Name
@@ -265,7 +267,15 @@ func evalValueFrom(src *v1.EnvVarSource, pod *v1.Pod, configMaps *v1.ConfigMapLi
 			}
 		}
 	case src.ResourceFieldRef != nil:
-		// TODO
+		valueFrom, err := extractContainerResourceValue(src.ResourceFieldRef, container)
+		if err != nil {
+			valueFrom = ""
+		}
+		resource := src.ResourceFieldRef.Resource
+		if valueFrom == "0" && (resource == "limits.cpu" || resource == "limits.memory") {
+			valueFrom = "node allocatable"
+		}
+		return valueFrom
 	case src.FieldRef != nil:
 		internalFieldPath, _, err := api.Scheme.ConvertFieldLabel(src.FieldRef.APIVersion,
 			"Pod", src.FieldRef.FieldPath, "")
@@ -281,4 +291,44 @@ func evalValueFrom(src *v1.EnvVarSource, pod *v1.Pod, configMaps *v1.ConfigMapLi
 		return valueFrom
 	}
 	return ""
+}
+
+// extractContainerResourceValue extracts the value of a resource in an already known container.
+// TODO(maciaszczykm): Replace this method with call to fieldpath.ExtractContainerResourceValue().
+// To do it update to new client-go and convert arguments to Kubernetes API.
+func extractContainerResourceValue(fs *v1.ResourceFieldSelector, container *v1.Container) (string,
+	error) {
+	divisor := res.Quantity{}
+	if divisor.Cmp(fs.Divisor) == 0 {
+		divisor = res.MustParse("1")
+	} else {
+		divisor = fs.Divisor
+	}
+
+	switch fs.Resource {
+	case "limits.cpu":
+		return convertResourceCPUToString(container.Resources.Limits.Cpu(), divisor)
+	case "limits.memory":
+		return convertResourceMemoryToString(container.Resources.Limits.Memory(), divisor)
+	case "requests.cpu":
+		return convertResourceCPUToString(container.Resources.Requests.Cpu(), divisor)
+	case "requests.memory":
+		return convertResourceMemoryToString(container.Resources.Requests.Memory(), divisor)
+	}
+
+	return "", fmt.Errorf("Unsupported container resource : %v", fs.Resource)
+}
+
+// convertResourceCPUToString converts cpu value to the format of divisor and returns
+// ceiling of the value.
+func convertResourceCPUToString(cpu *res.Quantity, divisor res.Quantity) (string, error) {
+	c := int64(math.Ceil(float64(cpu.MilliValue()) / float64(divisor.MilliValue())))
+	return strconv.FormatInt(c, 10), nil
+}
+
+// convertResourceMemoryToString converts memory value to the format of divisor and returns
+// ceiling of the value.
+func convertResourceMemoryToString(memory *res.Quantity, divisor res.Quantity) (string, error) {
+	m := int64(math.Ceil(float64(memory.Value()) / float64(divisor.Value())))
+	return strconv.FormatInt(m, 10), nil
 }
