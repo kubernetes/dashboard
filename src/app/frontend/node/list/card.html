@@ -16,18 +16,17 @@ limitations under the License.
 
 <kd-resource-card object-meta="$ctrl.node.objectMeta"
                   type-meta="$ctrl.node.typeMeta">
-  <kd-resource-card-status layout="row">
-    <md-icon class="material-icons kd-error"
-             ng-if="::$ctrl.isInNotReadyState()">
-      error
+  <kd-resource-card-status layout="row" ng-switch="$ctrl.node.ready">
+    <md-icon md-svg-icon="checkbox-marked-circle"
+             class="kd-success"
+             ng-switch-when="True">
     </md-icon>
-    <md-icon class="material-icons"
-             ng-if="::$ctrl.isInUnknownState()">
-      help
+    <md-icon md-svg-icon="alert-circle"
+             class="kd-error"
+             ng-switch-when="False">
     </md-icon>
-    <md-icon class="material-icons kd-success"
-             ng-if="::$ctrl.isInReadyState()">
-      check_circle
+    <md-icon md-svg-icon="help-circle"
+             ng-switch-default>
     </md-icon>
   </kd-resource-card-status>
   <kd-resource-card-columns>

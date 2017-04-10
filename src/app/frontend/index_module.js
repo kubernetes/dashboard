@@ -29,6 +29,7 @@ import discoveryModule from './discovery/module';
 import errorModule from './error/module';
 import horizontalPodAutoscalerModule from './horizontalpodautoscaler/module';
 import indexConfig from './index_config';
+import iconsConfig from './index_icons';
 import routeConfig from './index_route';
 import ingressModule from './ingress/module';
 import jobModule from './job/module';
@@ -94,4 +95,5 @@ export default angular
         ])
     .config(indexConfig)
     .config(routeConfig)
+    .config(iconsConfig)
     .controller('kdTitle', TitleController);

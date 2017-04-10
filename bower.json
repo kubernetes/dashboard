@@ -13,16 +13,12 @@
     "ansi-up": "drudru/ansi_up#~v1.3.0",
     "d3": "^3.4.4",
     "nvd3": "1.8.5",
-    "material-design-icons": "~3.0.1",
     "roboto-fontface": "0.7.0",
     "ng-jsoneditor": "angular-tools/ng-jsoneditor#~1.0.0",
     "angularUtils-pagination": "angular-utils-pagination#~0.11.1",
     "easyfont-roboto-mono": "easyfont/roboto-mono#fa7971ea56f68bfdb2771f9cb560c99aca0164c1"
   },
   "overrides": {
-    "material-design-icons": {
-      "main": "iconfont/material-icons.css"
-    },
     "roboto-fontface": {
       "main": "css/roboto/roboto-fontface.css"
     },
