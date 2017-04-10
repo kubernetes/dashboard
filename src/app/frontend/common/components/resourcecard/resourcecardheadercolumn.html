@@ -17,17 +17,21 @@ limitations under the License.
 <div class="kd-resource-card-header-column-container"
      ng-class="{'kd-resource-card-header-column-sortable': $ctrl.isSortable(),
                 'kd-resource-card-header-column-sorted': $ctrl.isSorted()}">
+  <ng-transclude ng-click="::$ctrl.shouldEnableSorting() && $ctrl.sort()"></ng-transclude>
+
   <div class="kd-resource-card-header-sort-column-icon-container"
        ng-click="$ctrl.sort()"
        ng-if="::$ctrl.shouldEnableSorting()">
-    <md-icon class="kd-resource-card-header-sort-column-icon-asc"
-             ng-class="{'kd-resource-card-header-column-sorted': $ctrl.isAscending()}">
+    <md-icon class=""
+             ng-if="!$ctrl.isSorted() || $ctrl.isSorted() && $ctrl.isAscending()"
+             ng-class="{'kd-resource-card-header-column-sorted': $ctrl.isAscending(),
+                       'kd-resource-card-header-sort-column-icon-asc': !$ctrl.isSorted()}">
       arrow_drop_up
     </md-icon>
-    <md-icon ng-class="{'kd-resource-card-header-column-sorted': $ctrl.isDescending()}">
+    <md-icon ng-class="{'kd-resource-card-header-column-sorted': $ctrl.isDescending()}"
+             ng-if="!$ctrl.isSorted() || $ctrl.isSorted() && $ctrl.isDescending()">
       arrow_drop_down
     </md-icon>
   </div>
 
-  <ng-transclude ng-click="::$ctrl.shouldEnableSorting() && $ctrl.sort()"></ng-transclude>
 </div>

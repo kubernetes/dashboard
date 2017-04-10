@@ -136,12 +136,11 @@ describe('DeployFromFile controller', () => {
     expect(ctrl.kdHistoryService_.back).not.toHaveBeenCalled();
   });
 
-  // TODO: enable once karma issue is resolved. Described in PR #1792.
-  // it('should cancel', () => {
-  //   spyOn(ctrl.kdHistoryService_, 'back');
-  //   ctrl.cancel();
-  //   expect(ctrl.kdHistoryService_.back).toHaveBeenCalled();
-  // });
+  it('should cancel', () => {
+    spyOn(ctrl.kdHistoryService_, 'back');
+    ctrl.cancel();
+    expect(ctrl.kdHistoryService_.back).toHaveBeenCalled();
+  });
 
   it('should open deploy anyway dialog when validation error occurs', (doneFn) => {
     spyOn(ctrl, 'handleDeployAnywayDialog_');
