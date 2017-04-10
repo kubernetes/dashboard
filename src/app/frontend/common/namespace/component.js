@@ -41,7 +41,7 @@ export class NamespaceSelectController {
    * @param {!ui.router.$state} $state
    * @param {!angular.Scope} $scope
    * @param {!./../state/service.FutureStateService} kdFutureStateService
-   * @param {!./../breadcrumbs/service.BreadcrumbsService} kdBreadcrumbsService
+   * @param {!./../components/breadcrumbs/service.BreadcrumbsService} kdBreadcrumbsService
    * @ngInject
    */
   constructor($resource, $state, $scope, kdFutureStateService, kdBreadcrumbsService) {
@@ -78,7 +78,7 @@ export class NamespaceSelectController {
     /** @private {!./../state/service.FutureStateService}} */
     this.kdFutureStateService_ = kdFutureStateService;
 
-    /** @private {!./../components/breadcrumbs/breadcrumbs_service.BreadcrumbsService} */
+    /** @private {!./../components/breadcrumbs/service.BreadcrumbsService}} */
     this.kdBreadcrumbsService_ = kdBreadcrumbsService;
 
     /** @export */
