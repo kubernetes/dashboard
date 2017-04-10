@@ -308,16 +308,16 @@ func extractContainerResourceValue(fs *v1.ResourceFieldSelector, container *v1.C
 	switch fs.Resource {
 	case "limits.cpu":
 		return strconv.FormatInt(int64(math.Ceil(float64(container.Resources.Limits.
-			Cpu().MilliValue())/float64(divisor.MilliValue()))), 10)
+			Cpu().MilliValue())/float64(divisor.MilliValue()))), 10), nil
 	case "limits.memory":
 		return strconv.FormatInt(int64(math.Ceil(float64(container.Resources.Limits.
-			Memory().Value())/float64(divisor.Value()))), 10)
+			Memory().Value())/float64(divisor.Value()))), 10), nil
 	case "requests.cpu":
 		return strconv.FormatInt(int64(math.Ceil(float64(container.Resources.Requests.
-			Cpu().MilliValue())/float64(divisor.MilliValue()))), 10)
+			Cpu().MilliValue())/float64(divisor.MilliValue()))), 10), nil
 	case "requests.memory":
 		return strconv.FormatInt(int64(math.Ceil(float64(container.Resources.Requests.
-			Memory().Value())/float64(divisor.Value()))), 10)
+			Memory().Value())/float64(divisor.Value()))), 10), nil
 	}
 
 	return "", fmt.Errorf("Unsupported container resource : %v", fs.Resource)
