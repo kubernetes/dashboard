@@ -18,7 +18,10 @@
  * Icons are located in /src/app/assets/mdi.svg. More details about icon set can be found at:
  * https://materialdesignicons.com/getting-started
  *
- * @param {!ui.$mdIconProvider} $mdIconProvider
+ * TODO(maciaszczykm): Discover $mdIconProvider type:
+ * https://github.com/angular/material/blob/master/src/components/icon/js/iconService.js
+ *
+ * @param {!Object} $mdIconProvider
  * @ngInject
  */
 export default function iconsConfig($mdIconProvider) {
