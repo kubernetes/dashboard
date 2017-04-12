@@ -6,7 +6,7 @@ This document describes how to install and discover development releases of the 
 
 To install latest HEAD release, execute the following command.
 ```bash
-kubectl create -f https://rawgit.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard-head.yaml
+kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard-head.yaml
 ```
 
 Once installed, the release of the UI is not automatically updated. In order to update it, delete
