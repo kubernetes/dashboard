@@ -22,16 +22,12 @@ limitations under the License.
   <div class="kd-resource-card-header-sort-column-icon-container"
        ng-click="$ctrl.sort()"
        ng-if="::$ctrl.shouldEnableSorting()">
-    <md-icon class=""
-             ng-if="!$ctrl.isSorted() || $ctrl.isSorted() && $ctrl.isAscending()"
-             ng-class="{'kd-resource-card-header-column-sorted': $ctrl.isAscending(),
-                       'kd-resource-card-header-sort-column-icon-asc': !$ctrl.isSorted()}">
+    <md-icon class="kd-resource-card-header-sort-column-icon-asc"
+             ng-class="{'kd-resource-card-header-column-sorted': $ctrl.isAscending()}">
       arrow_drop_up
     </md-icon>
-    <md-icon ng-class="{'kd-resource-card-header-column-sorted': $ctrl.isDescending()}"
-             ng-if="!$ctrl.isSorted() || $ctrl.isSorted() && $ctrl.isDescending()">
+    <md-icon ng-class="{'kd-resource-card-header-column-sorted': $ctrl.isDescending()}">
       arrow_drop_down
     </md-icon>
   </div>
-
 </div>
