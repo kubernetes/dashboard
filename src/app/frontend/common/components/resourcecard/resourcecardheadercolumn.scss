@@ -43,6 +43,12 @@ kd-resource-card-header-column {
     }
   }
 
+  md-icon {
+    &:not(.kd-resource-card-header-column-sorted) {
+      color: $foreground-3;
+    }
+  }
+
   * {
     cursor: pointer;
     outline: none;
@@ -51,6 +57,7 @@ kd-resource-card-header-column {
 
 .kd-resource-card-header-column-sorted {
   color: $foreground-1;
+  font-weight: $bold-font-weight;
 }
 
 .kd-resource-card-header-sort-column-icon-container {
