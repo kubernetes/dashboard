@@ -20,12 +20,14 @@ import (
 	"reflect"
 	"testing"
 
+	"encoding/base64"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/owner"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
+	"k8s.io/client-go/pkg/api/v1"
 	api "k8s.io/client-go/pkg/api/v1"
 	restclient "k8s.io/client-go/rest"
 )
@@ -81,6 +83,79 @@ func TestGetPodDetail(t *testing.T) {
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetPodDetail(%#v) == \ngot %#v, \nexpected %#v", c.pod, actual,
 				c.expected)
+		}
+	}
+}
+
+func TestEvalValueFrom(t *testing.T) {
+	cases := []struct {
+		src        *v1.EnvVarSource
+		container  *v1.Container
+		pod        *v1.Pod
+		configMaps *v1.ConfigMapList
+		secrets    *v1.SecretList
+		expected   string
+	}{
+		{
+			src: &v1.EnvVarSource{
+				SecretKeyRef: &v1.SecretKeySelector{
+					LocalObjectReference: v1.LocalObjectReference{
+						Name: "secret-env",
+					},
+					Key: "username",
+				},
+			},
+			container:  nil,
+			pod:        nil,
+			configMaps: nil,
+			secrets: &v1.SecretList{
+				Items: []v1.Secret{
+					{
+						ObjectMeta: metaV1.ObjectMeta{
+							Name: "secret-env",
+						},
+						Data: map[string][]byte{
+							"username": []byte("top-secret"),
+						},
+					},
+				},
+			},
+			expected: base64.StdEncoding.EncodeToString([]byte("top-secret")),
+		},
+		{
+			src: &v1.EnvVarSource{
+				ConfigMapKeyRef: &v1.ConfigMapKeySelector{
+					LocalObjectReference: v1.LocalObjectReference{
+						Name: "config-map-env",
+					},
+					Key: "username",
+				},
+			},
+			container: nil,
+			pod:       nil,
+			configMaps: &v1.ConfigMapList{
+				Items: []v1.ConfigMap{
+					{
+						ObjectMeta: metaV1.ObjectMeta{
+							Name: "config-map-env",
+						},
+						Data: map[string]string{
+							"username": "joey",
+						},
+					},
+				},
+			},
+			secrets:  nil,
+			expected: "joey",
+		},
+	}
+
+	for _, c := range cases {
+		dataselect.DefaultDataSelectWithMetrics.MetricQuery = dataselect.NoMetrics
+		actual := evalValueFrom(c.src, c.container, c.pod, c.configMaps, c.secrets)
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("GetPodDetail(%#v, %#v, %#v, %#v, %#v) == \ngot %#v, \nexpected %#v",
+				c.src, c.container, c.pod, c.configMaps, c.secrets, actual, c.expected)
 		}
 	}
 }
