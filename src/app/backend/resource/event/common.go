@@ -127,13 +127,13 @@ func GetNodeEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery,
 	groupVersion := schema.GroupVersion{Group: "", Version: "v1"}
 	scheme.AddKnownTypes(groupVersion, &api.Node{})
 
-	mc := client.Core().Nodes()
+	mc := client.CoreV1().Nodes()
 	node, err := mc.Get(nodeName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
 
-	events, err := client.Core().Events(api.NamespaceAll).Search(scheme, node)
+	events, err := client.CoreV1().Events(api.NamespaceAll).Search(scheme, node)
 	if err != nil {
 		return nil, err
 	}
@@ -144,7 +144,7 @@ func GetNodeEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery,
 
 // GetNodeEvents gets events associated to node with given name.
 func GetNamespaceEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace string) (common.EventList, error) {
-	events, _ := client.Core().Events(namespace).List(metaV1.ListOptions{
+	events, _ := client.CoreV1().Events(namespace).List(metaV1.ListOptions{
 		LabelSelector: labels.Everything().String(),
 		FieldSelector: fields.Everything().String(),
 	})
