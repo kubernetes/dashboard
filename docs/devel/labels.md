@@ -5,9 +5,9 @@ This document describes labels used across Kubernetes Dashboard.
 Labels used to determine issue kind.
 
 - `kind/bug` - bugs, that need to be fixed. Assigned when something is not working as it was expected.
+- `kind/discussion` - general discussions and user questions.
 - `kind/enhancement` - enhancements of existing functionalities, that will make the application better.
 - `kind/feature` - new features, that could be added to the application.
-- `kind/discussion` - general discussions and user questions.
 - `kind/refactoring` - issues created in order to enhance code quality without changing application functionality.
 
 ## Priority
@@ -30,3 +30,4 @@ Other labels used for issues and pull requests.
 - `duplicate` - duplicates, that should be closed and linked with original issues.
 - `greenkeeper` - pull requests created by [greenkeeper.io bot](https://github.com/greenkeeperio-bot). This label is assigned automatically.
 - `help-wanted` - issues good for contributor onboarding.
+- `missing-details` - issues with missing details, that cannot be reproduced.
