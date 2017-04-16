@@ -43,11 +43,11 @@ func GetReplicationControllerPods(client k8sClient.Interface, heapsterClient cli
 	return &podList, nil
 }
 
-// Returns array of api pods targeting replication controller associated to given name.
+// getRawReplicationControllerPods returns array of api pods targeting replication controller associated to given name.
 func getRawReplicationControllerPods(client k8sClient.Interface, rcName, namespace string) (
 	[]api.Pod, error) {
 
-	replicationController, err := client.Core().ReplicationControllers(namespace).Get(rcName, metaV1.GetOptions{})
+	replicationController, err := client.CoreV1().ReplicationControllers(namespace).Get(rcName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +69,7 @@ func getRawReplicationControllerPods(client k8sClient.Interface, rcName, namespa
 	return podList.Items, nil
 }
 
-// Returns simple info about pods(running, desired, failing, etc.) related to given replication
+// getReplicationControllerPodInfo returns simple info about pods(running, desired, failing, etc.) related to given replication
 // controller.
 func getReplicationControllerPodInfo(client k8sClient.Interface, rc *api.ReplicationController,
 	namespace string) (*common.PodInfo, error) {

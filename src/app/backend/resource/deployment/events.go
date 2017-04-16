@@ -27,7 +27,7 @@ import (
 func GetDeploymentEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace string, deploymentName string) (
 	*common.EventList, error) {
 
-	deployment, err := client.Extensions().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
+	deployment, err := client.ExtensionsV1beta1().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

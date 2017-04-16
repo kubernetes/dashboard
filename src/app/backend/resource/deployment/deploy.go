@@ -205,7 +205,7 @@ func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 			Template: podTemplate,
 		},
 	}
-	_, err := client.Extensions().Deployments(spec.Namespace).Create(deployment)
+	_, err := client.ExtensionsV1beta1().Deployments(spec.Namespace).Create(deployment)
 
 	if err != nil {
 		// TODO(bryk): Roll back created resources in case of error.
@@ -240,7 +240,7 @@ func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 			service.Spec.Ports = append(service.Spec.Ports, servicePort)
 		}
 
-		_, err = client.Core().Services(spec.Namespace).Create(service)
+		_, err = client.CoreV1().Services(spec.Namespace).Create(service)
 
 		// TODO(bryk): Roll back created resources in case of error.
 		return err

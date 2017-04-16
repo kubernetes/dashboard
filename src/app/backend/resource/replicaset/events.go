@@ -65,7 +65,7 @@ func GetReplicaSetEvents(client client.Interface, dsQuery *dataselect.DataSelect
 func GetReplicaSetPodsEvents(client client.Interface, namespace, replicaSetName string) (
 	[]api.Event, error) {
 
-	replicaSet, err := client.Extensions().ReplicaSets(namespace).Get(replicaSetName, metaV1.GetOptions{})
+	replicaSet, err := client.ExtensionsV1beta1().ReplicaSets(namespace).Get(replicaSetName, metaV1.GetOptions{})
 
 	if err != nil {
 		return nil, err

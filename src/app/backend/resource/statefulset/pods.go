@@ -41,11 +41,11 @@ func GetStatefulSetPods(client *k8sClient.Clientset, heapsterClient client.Heaps
 	return &podList, nil
 }
 
-// Returns array of api pods targeting pet set with given name.
+// getRawStatefulSetPods return array of api pods targeting pet set with given name.
 func getRawStatefulSetPods(client *k8sClient.Clientset, statefulSetName, namespace string) (
 	[]api.Pod, error) {
 
-	statefulSet, err := client.Apps().StatefulSets(namespace).Get(statefulSetName, metaV1.GetOptions{})
+	statefulSet, err := client.AppsV1beta1().StatefulSets(namespace).Get(statefulSetName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

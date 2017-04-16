@@ -47,7 +47,7 @@ func GetStorageClass(client kubernetes.Interface, name string) (*StorageClass, e
 	log.Printf("Getting details of %s storage class", name)
 
 	// TODO(maciaszczykm): Use channels.
-	storage, err := client.Storage().StorageClasses().Get(name, metaV1.GetOptions{})
+	storage, err := client.StorageV1beta1().StorageClasses().Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

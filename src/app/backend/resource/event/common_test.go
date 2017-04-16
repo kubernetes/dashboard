@@ -157,11 +157,15 @@ func TestToEventList(t *testing.T) {
 				Events: []common.Event{
 					{
 						ObjectMeta: common.ObjectMeta{Name: "event-1"},
-						TypeMeta:   common.TypeMeta{common.ResourceKindEvent},
+						TypeMeta: common.TypeMeta{
+							Kind: common.ResourceKindEvent,
+						},
 					},
 					{
 						ObjectMeta: common.ObjectMeta{Name: "event-2"},
-						TypeMeta:   common.TypeMeta{common.ResourceKindEvent},
+						TypeMeta: common.TypeMeta{
+							Kind: common.ResourceKindEvent,
+						},
 					},
 				},
 			},

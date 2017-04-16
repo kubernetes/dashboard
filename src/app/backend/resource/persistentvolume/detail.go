@@ -41,7 +41,7 @@ type PersistentVolumeDetail struct {
 func GetPersistentVolumeDetail(client client.Interface, name string) (*PersistentVolumeDetail, error) {
 	log.Printf("Getting details of %s persistent volume", name)
 
-	rawPersistentVolume, err := client.Core().PersistentVolumes().Get(name, metaV1.GetOptions{})
+	rawPersistentVolume, err := client.CoreV1().PersistentVolumes().Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

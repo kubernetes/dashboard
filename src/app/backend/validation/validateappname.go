@@ -45,7 +45,7 @@ func ValidateAppName(spec *AppNameValiditySpec, client client.Interface) (*AppNa
 	isValidRc := false
 	isValidService := false
 
-	_, err := client.Core().ReplicationControllers(spec.Namespace).Get(spec.Name, metaV1.GetOptions{})
+	_, err := client.CoreV1().ReplicationControllers(spec.Namespace).Get(spec.Name, metaV1.GetOptions{})
 	if err != nil {
 		if isNotFoundError(err) {
 			isValidRc = true
@@ -54,7 +54,7 @@ func ValidateAppName(spec *AppNameValiditySpec, client client.Interface) (*AppNa
 		}
 	}
 
-	_, err = client.Core().Services(spec.Namespace).Get(spec.Name, metaV1.GetOptions{})
+	_, err = client.CoreV1().Services(spec.Namespace).Get(spec.Name, metaV1.GetOptions{})
 	if err != nil {
 		if isNotFoundError(err) {
 			isValidService = true

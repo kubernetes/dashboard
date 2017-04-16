@@ -118,7 +118,7 @@ type NodeDetail struct {
 func GetNodeDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient, name string) (*NodeDetail, error) {
 	log.Printf("Getting details of %s node", name)
 
-	node, err := client.Core().Nodes().Get(name, metaV1.GetOptions{})
+	node, err := client.CoreV1().Nodes().Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -208,8 +208,9 @@ func getNodeAllocatedResources(node api.Node, podList *api.PodList) (NodeAllocat
 	}, nil
 }
 
+// GetNodePods return pods list in given named node
 func GetNodePods(client k8sClient.Interface, heapsterClient client.HeapsterClient, dsQuery *dataselect.DataSelectQuery, name string) (*pod.PodList, error) {
-	node, err := client.Core().Nodes().Get(name, metaV1.GetOptions{})
+	node, err := client.CoreV1().Nodes().Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -223,6 +224,7 @@ func GetNodePods(client k8sClient.Interface, heapsterClient client.HeapsterClien
 	return &podList, nil
 }
 
+// getNodePods return pods list
 func getNodePods(client k8sClient.Interface, node api.Node) (*api.PodList, error) {
 	fieldSelector, err := fields.ParseSelector("spec.nodeName=" + node.Name +
 		",status.phase!=" + string(api.PodSucceeded) +
@@ -232,7 +234,7 @@ func getNodePods(client k8sClient.Interface, node api.Node) (*api.PodList, error
 		return nil, err
 	}
 
-	return client.Core().Pods(api.NamespaceAll).List(metaV1.ListOptions{
+	return client.CoreV1().Pods(api.NamespaceAll).List(metaV1.ListOptions{
 		FieldSelector: fieldSelector.String(),
 	})
 }

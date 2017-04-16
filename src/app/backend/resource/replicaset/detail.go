@@ -63,7 +63,7 @@ func GetReplicaSetDetail(client k8sClient.Interface, heapsterClient client.Heaps
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 
 	// TODO(floreks): Use channels.
-	replicaSetData, err := client.Extensions().ReplicaSets(namespace).Get(name, metaV1.GetOptions{})
+	replicaSetData, err := client.ExtensionsV1beta1().ReplicaSets(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
