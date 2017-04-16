@@ -70,7 +70,7 @@ func GetReplicationControllerDetail(client k8sClient.Interface, heapsterClient c
 	namespace, name string) (*ReplicationControllerDetail, error) {
 	log.Printf("Getting details of %s replication controller in %s namespace", name, namespace)
 
-	replicationController, err := client.Core().ReplicationControllers(namespace).Get(name, metaV1.GetOptions{})
+	replicationController, err := client.CoreV1().ReplicationControllers(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -114,7 +114,7 @@ func UpdateReplicasCount(client k8sClient.Interface, namespace, name string,
 	log.Printf("Updating replicas count to %d for %s replication controller from %s namespace",
 		replicationControllerSpec.Replicas, name, namespace)
 
-	replicationController, err := client.Core().ReplicationControllers(namespace).Get(name, metaV1.GetOptions{})
+	replicationController, err := client.CoreV1().ReplicationControllers(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return err
 	}

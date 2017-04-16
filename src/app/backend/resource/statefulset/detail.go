@@ -53,7 +53,7 @@ func GetStatefulSetDetail(client *k8sClient.Clientset, heapsterClient client.Hea
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 
 	// TODO(floreks): Use channels.
-	statefulSetData, err := client.Apps().StatefulSets(namespace).Get(name, metaV1.GetOptions{})
+	statefulSetData, err := client.AppsV1beta1().StatefulSets(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

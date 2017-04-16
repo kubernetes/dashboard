@@ -64,7 +64,7 @@ func GetDaemonSetEvents(client client.Interface, dsQuery *dataselect.DataSelectQ
 func GetDaemonSetPodsEvents(client client.Interface, namespace, daemonSetName string) (
 	[]api.Event, error) {
 
-	daemonSet, err := client.Extensions().DaemonSets(namespace).Get(daemonSetName, metaV1.GetOptions{})
+	daemonSet, err := client.ExtensionsV1beta1().DaemonSets(namespace).Get(daemonSetName, metaV1.GetOptions{})
 
 	if err != nil {
 		return nil, err

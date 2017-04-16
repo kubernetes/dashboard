@@ -183,9 +183,9 @@ func formatResponseLog(response *restful.Response, request *restful.Request) str
 func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.HeapsterClient,
 	clientConfig *restclient.Config) (http.Handler, error) {
 
-	verber := common.NewResourceVerber(client.Core().RESTClient(),
-		client.Extensions().RESTClient(), client.Apps().RESTClient(),
-		client.Batch().RESTClient(), client.Autoscaling().RESTClient(), client.Storage().RESTClient())
+	verber := common.NewResourceVerber(client.CoreV1().RESTClient(),
+		client.ExtensionsV1beta1().RESTClient(), client.AppsV1beta1().RESTClient(),
+		client.BatchV1().RESTClient(), client.AutoscalingV1().RESTClient(), client.StorageV1beta1().RESTClient())
 
 	var csrfKey string
 	inClusterConfig, err := restclient.InClusterConfig()

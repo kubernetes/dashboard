@@ -47,7 +47,7 @@ func GetReplicaSetPods(client k8sClient.Interface, heapsterClient client.Heapste
 func getRawReplicaSetPods(client k8sClient.Interface, petSetName, namespace string) (
 	[]api.Pod, error) {
 
-	replicaSet, err := client.Extensions().ReplicaSets(namespace).Get(petSetName, metaV1.GetOptions{})
+	replicaSet, err := client.ExtensionsV1beta1().ReplicaSets(namespace).Get(petSetName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +69,7 @@ func getRawReplicaSetPods(client k8sClient.Interface, petSetName, namespace stri
 	return podList.Items, nil
 }
 
-// Returns simple info about pods(running, desired, failing, etc.) related to given replica set.
+// getReplicaSetPodInfo returns simple info about pods(running, desired, failing, etc.) related to given replica set.
 func getReplicaSetPodInfo(client k8sClient.Interface, replicaSet *extensions.ReplicaSet) (
 	*common.PodInfo, error) {
 
