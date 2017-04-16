@@ -38,7 +38,7 @@ type ThirdPartyResourceDetail struct {
 func GetThirdPartyResourceDetail(client k8sClient.Interface, config *rest.Config, name string) (*ThirdPartyResourceDetail, error) {
 	log.Printf("Getting details of %s third party resource", name)
 
-	thirdPartyResource, err := client.Extensions().ThirdPartyResources().Get(name, metaV1.GetOptions{})
+	thirdPartyResource, err := client.ExtensionsV1beta1().ThirdPartyResources().Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

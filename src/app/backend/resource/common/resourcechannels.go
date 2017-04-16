@@ -136,7 +136,7 @@ func GetServiceListChannel(client client.Interface,
 		Error: make(chan error, numReads),
 	}
 	go func() {
-		list, err := client.Core().Services(nsQuery.ToRequestParam()).List(listEverything)
+		list, err := client.CoreV1().Services(nsQuery.ToRequestParam()).List(listEverything)
 		var filteredItems []api.Service
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -169,7 +169,7 @@ func GetIngressListChannel(client client.Interface, nsQuery *NamespaceQuery,
 		Error: make(chan error, numReads),
 	}
 	go func() {
-		list, err := client.Extensions().Ingresses(nsQuery.ToRequestParam()).List(listEverything)
+		list, err := client.ExtensionsV1beta1().Ingresses(nsQuery.ToRequestParam()).List(listEverything)
 		var filteredItems []extensions.Ingress
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -203,7 +203,7 @@ func GetLimitRangeListChannel(client client.Interface, nsQuery *NamespaceQuery,
 	}
 
 	go func() {
-		list, err := client.Core().LimitRanges(nsQuery.ToRequestParam()).List(listEverything)
+		list, err := client.CoreV1().LimitRanges(nsQuery.ToRequestParam()).List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -228,7 +228,7 @@ func GetNodeListChannel(client client.Interface, numReads int) NodeListChannel {
 	}
 
 	go func() {
-		list, err := client.Core().Nodes().List(listEverything)
+		list, err := client.CoreV1().Nodes().List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -253,7 +253,7 @@ func GetNamespaceListChannel(client client.Interface, numReads int) NamespaceLis
 	}
 
 	go func() {
-		list, err := client.Core().Namespaces().List(listEverything)
+		list, err := client.CoreV1().Namespaces().List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -285,7 +285,7 @@ func GetEventListChannelWithOptions(client client.Interface,
 	}
 
 	go func() {
-		list, err := client.Core().Events(nsQuery.ToRequestParam()).List(options)
+		list, err := client.CoreV1().Events(nsQuery.ToRequestParam()).List(options)
 		var filteredItems []api.Event
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -325,7 +325,7 @@ func GetPodListChannelWithOptions(client client.Interface, nsQuery *NamespaceQue
 	}
 
 	go func() {
-		list, err := client.Core().Pods(nsQuery.ToRequestParam()).List(options)
+		list, err := client.CoreV1().Pods(nsQuery.ToRequestParam()).List(options)
 		var filteredItems []api.Pod
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -360,7 +360,7 @@ func GetReplicationControllerListChannel(client client.Interface,
 	}
 
 	go func() {
-		list, err := client.Core().ReplicationControllers(nsQuery.ToRequestParam()).List(listEverything)
+		list, err := client.CoreV1().ReplicationControllers(nsQuery.ToRequestParam()).List(listEverything)
 		var filteredItems []api.ReplicationController
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -394,7 +394,7 @@ func GetDeploymentListChannel(client client.Interface,
 	}
 
 	go func() {
-		list, err := client.Extensions().Deployments(nsQuery.ToRequestParam()).List(listEverything)
+		list, err := client.ExtensionsV1beta1().Deployments(nsQuery.ToRequestParam()).List(listEverything)
 		var filteredItems []extensions.Deployment
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -434,7 +434,7 @@ func GetReplicaSetListChannelWithOptions(client client.Interface,
 	}
 
 	go func() {
-		list, err := client.Extensions().ReplicaSets(nsQuery.ToRequestParam()).List(options)
+		list, err := client.ExtensionsV1beta1().ReplicaSets(nsQuery.ToRequestParam()).List(options)
 		var filteredItems []extensions.ReplicaSet
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -467,7 +467,7 @@ func GetDaemonSetListChannel(client client.Interface,
 	}
 
 	go func() {
-		list, err := client.Extensions().DaemonSets(nsQuery.ToRequestParam()).List(listEverything)
+		list, err := client.ExtensionsV1beta1().DaemonSets(nsQuery.ToRequestParam()).List(listEverything)
 		var filteredItems []extensions.DaemonSet
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -500,7 +500,7 @@ func GetJobListChannel(client client.Interface,
 	}
 
 	go func() {
-		list, err := client.Batch().Jobs(nsQuery.ToRequestParam()).List(listEverything)
+		list, err := client.BatchV1().Jobs(nsQuery.ToRequestParam()).List(listEverything)
 		var filteredItems []batch.Job
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -533,7 +533,7 @@ func GetStatefulSetListChannel(client client.Interface,
 	}
 
 	go func() {
-		statefulSets, err := client.Apps().StatefulSets(nsQuery.ToRequestParam()).List(listEverything)
+		statefulSets, err := client.AppsV1beta1().StatefulSets(nsQuery.ToRequestParam()).List(listEverything)
 		var filteredItems []apps.StatefulSet
 		for _, item := range statefulSets.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -566,7 +566,7 @@ func GetConfigMapListChannel(client client.Interface, nsQuery *NamespaceQuery, n
 	}
 
 	go func() {
-		list, err := client.Core().ConfigMaps(nsQuery.ToRequestParam()).List(listEverything)
+		list, err := client.CoreV1().ConfigMaps(nsQuery.ToRequestParam()).List(listEverything)
 		var filteredItems []api.ConfigMap
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -599,7 +599,7 @@ func GetSecretListChannel(client client.Interface, nsQuery *NamespaceQuery, numR
 	}
 
 	go func() {
-		list, err := client.Core().Secrets(nsQuery.ToRequestParam()).List(listEverything)
+		list, err := client.CoreV1().Secrets(nsQuery.ToRequestParam()).List(listEverything)
 		var filteredItems []api.Secret
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -731,7 +731,7 @@ func GetPersistentVolumeListChannel(client client.Interface, numReads int) Persi
 	}
 
 	go func() {
-		list, err := client.Core().PersistentVolumes().List(listEverything)
+		list, err := client.CoreV1().PersistentVolumes().List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -758,7 +758,7 @@ func GetPersistentVolumeClaimListChannel(client client.Interface, nsQuery *Names
 	}
 
 	go func() {
-		list, err := client.Core().PersistentVolumeClaims(nsQuery.ToRequestParam()).List(listEverything)
+		list, err := client.CoreV1().PersistentVolumeClaims(nsQuery.ToRequestParam()).List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -785,7 +785,7 @@ func GetResourceQuotaListChannel(client client.Interface, nsQuery *NamespaceQuer
 	}
 
 	go func() {
-		list, err := client.Core().ResourceQuotas(nsQuery.ToRequestParam()).List(listEverything)
+		list, err := client.CoreV1().ResourceQuotas(nsQuery.ToRequestParam()).List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -844,7 +844,7 @@ func GetPodMetricsChannel(heapsterClient kdClient.HeapsterClient, name string, n
 	return channel
 }
 
-// PodMetricsChannel is a list and error channels to MetricsByPod.
+// HorizontalPodAutoscalerListChannel is a list and error channels.
 type HorizontalPodAutoscalerListChannel struct {
 	List  chan *autoscaling.HorizontalPodAutoscalerList
 	Error chan error
@@ -884,7 +884,7 @@ func GetThirdPartyResourceListChannel(client client.Interface, numReads int) Thi
 	}
 
 	go func() {
-		list, err := client.Extensions().ThirdPartyResources().List(listEverything)
+		list, err := client.ExtensionsV1beta1().ThirdPartyResources().List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -909,7 +909,7 @@ func GetStorageClassListChannel(client client.Interface, numReads int) StorageCl
 	}
 
 	go func() {
-		list, err := client.Storage().StorageClasses().List(listEverything)
+		list, err := client.StorageV1beta1().StorageClasses().List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err

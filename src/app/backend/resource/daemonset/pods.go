@@ -45,7 +45,7 @@ func GetDaemonSetPods(client k8sClient.Interface, heapsterClient client.Heapster
 func getRawDaemonSetPods(client k8sClient.Interface, daemonSetName, namespace string) (
 	[]api.Pod, error) {
 
-	daemonSet, err := client.Extensions().DaemonSets(namespace).Get(daemonSetName, metaV1.GetOptions{})
+	daemonSet, err := client.ExtensionsV1beta1().DaemonSets(namespace).Get(daemonSetName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

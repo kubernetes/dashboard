@@ -65,7 +65,7 @@ func GetReplicationControllerEvents(client client.Interface, dsQuery *dataselect
 func getReplicationControllerPodsEvents(client client.Interface, namespace,
 	replicationControllerName string) ([]api.Event, error) {
 
-	replicationController, err := client.Core().ReplicationControllers(namespace).Get(replicationControllerName, metaV1.GetOptions{})
+	replicationController, err := client.CoreV1().ReplicationControllers(namespace).Get(replicationControllerName, metaV1.GetOptions{})
 
 	if err != nil {
 		return nil, err

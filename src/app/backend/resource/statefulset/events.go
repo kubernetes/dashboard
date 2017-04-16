@@ -64,7 +64,7 @@ func GetStatefulSetEvents(client *client.Clientset, dsQuery *dataselect.DataSele
 func GetStatefulSetPodsEvents(client *client.Clientset, namespace, statefulSetName string) (
 	[]api.Event, error) {
 
-	statefulSet, err := client.Apps().StatefulSets(namespace).Get(statefulSetName, metaV1.GetOptions{})
+	statefulSet, err := client.AppsV1beta1().StatefulSets(namespace).Get(statefulSetName, metaV1.GetOptions{})
 
 	if err != nil {
 		return nil, err
