@@ -37,7 +37,7 @@ type Logs struct {
 	LogViewInfo `json:"logViewInfo"`
 }
 
-// Number that is returned if requested line could not be found
+// LINE_INDEX_NOT_FOUND is returned if requested line could not be found
 var LINE_INDEX_NOT_FOUND = -1
 
 // Default number of lines that should be returned in case of invalid request.
@@ -55,7 +55,7 @@ var DefaultLogViewSelector = &LogViewSelector{
 	ReferenceLogLineId: NewestLogLineId,
 }
 
-// Returns all logs.
+// AllLogViewSelector returns all logs.
 var AllLogViewSelector = &LogViewSelector{
 	RelativeFrom:       -MaxLogLines,
 	RelativeTo:         MaxLogLines,
