@@ -37,6 +37,10 @@ function runFrontendUnitTests(singleRun, doneFn) {
   };
 
   let server = new karma.Server(localConfig, function(failCount) {
+    if(failCount > 0) {
+      // Kill backend server and cluster, if running.
+      gulp.start('kill-all');
+    }
     doneFn(failCount ? new Error(`Failed ${failCount} tests.`) : undefined);
   });
   server.start();
