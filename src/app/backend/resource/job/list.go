@@ -64,7 +64,7 @@ func GetJobList(client client.Interface, nsQuery *common.NamespaceQuery,
 	return GetJobListFromChannels(channels, dsQuery, heapsterClient)
 }
 
-// GetJobList returns a list of all Jobs in the cluster reading required resource list once from the channels.
+// GetJobListFromChannels returns a list of all Jobs in the cluster reading required resource list once from the channels.
 func GetJobListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (
 	*JobList, error) {
 
