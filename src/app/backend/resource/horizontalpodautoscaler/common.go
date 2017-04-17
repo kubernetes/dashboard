@@ -14,8 +14,7 @@
 
 package horizontalpodautoscaler
 
-// Simple mapping of an autoscaling.CrossVersionObjectReference
-type ScaleTargetRef struct {
-	Kind string `json:"kind"`
-	Name string `json:"name"`
-}
+import "k8s.io/client-go/pkg/apis/autoscaling/v1"
+
+// autoscaling.CrossVersionObjectReference
+type ScaleTargetRef v1.CrossVersionObjectReference
