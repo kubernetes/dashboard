@@ -68,7 +68,10 @@ export default class ReplicaSetCardController {
    * @export
    */
   hasWarnings() {
-    return this.replicaSet.pods.warnings.length > 0;
+    if (this.replicaSet.pods.warnings != null) {
+      return this.replicaSet.pods.warnings.length > 0;
+    }
+    return true;
   }
 
   /**
