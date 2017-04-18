@@ -356,11 +356,11 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 	apiV1Ws.Route(
 		apiV1Ws.GET("/pod/{namespace}/{pod}/log").
 			To(apiHandler.handleLogs).
-			Writes(logs.Logs{}))
+			Writes(logs.LogPage{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/pod/{namespace}/{pod}/log/{container}").
 			To(apiHandler.handleLogs).
-			Writes(logs.Logs{}))
+			Writes(logs.LogPage{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/pod/{namespace}/{pod}/event").
 			To(apiHandler.handleGetPodEvents).
@@ -1521,21 +1521,21 @@ func (apiHandler *APIHandler) handleLogs(request *restful.Request, response *res
 		refLineNum = 0
 	}
 
-	relativeFrom, err1 := strconv.Atoi(request.QueryParameter("relativeFrom"))
-	relativeTo, err2 := strconv.Atoi(request.QueryParameter("relativeTo"))
+	offsetFrom, err1 := strconv.Atoi(request.QueryParameter("offsetFrom"))
+	offsetTo, err2 := strconv.Atoi(request.QueryParameter("offsetTo"))
 
-	var logSelector *logs.LogViewSelector
+	var logSelector *logs.Selection
 	if err1 != nil || err2 != nil {
-		logSelector = logs.DefaultLogViewSelector
+		logSelector = logs.DefaultSelection
 	} else {
 
-		logSelector = &logs.LogViewSelector{
-			ReferenceLogLineId: logs.LogLineId{
+		logSelector = &logs.Selection{
+			ReferencePoint: logs.LogLineId{
 				LogTimestamp: logs.LogTimestamp(refTimestamp),
 				LineNum:      refLineNum,
 			},
-			RelativeFrom: relativeFrom,
-			RelativeTo:   relativeTo,
+			OffsetFrom: offsetFrom,
+			OffsetTo:   offsetTo,
 		}
 	}
 
