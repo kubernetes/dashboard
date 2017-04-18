@@ -65,11 +65,11 @@ export function secretListResource($resource) {
 /**
  * @param {!angular.Resource} kdSecretListResource
  * @param {!./../../chrome/state.StateParams} $stateParams
- * @param {!./../../common/pagination/service.PaginationService} kdPaginationService
+ * @param {!./../../common/dataselect/service.DataSelectService} kdDataSelectService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveSecretList(kdSecretListResource, $stateParams, kdPaginationService) {
-  let query = kdPaginationService.getDefaultResourceQuery($stateParams.namespace);
+export function resolveSecretList(kdSecretListResource, $stateParams, kdDataSelectService) {
+  let query = kdDataSelectService.getDefaultResourceQuery($stateParams.namespace);
   return kdSecretListResource.get(query).$promise;
 }

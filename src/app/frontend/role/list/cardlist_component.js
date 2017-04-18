@@ -13,6 +13,36 @@
 // limitations under the License.
 
 /**
+ * @final
+ */
+class RoleCardListController {
+  /** @export */
+  constructor() {
+    /** @export {!backendApi.RoleList} - Initialized from binding. */
+    this.roleList;
+    /** @export {!angular.Resource} - Initialized from binding. */
+    this.roleListResource;
+  }
+
+  /**
+   * Returns select id string or undefined if podList or podListResource are not defined.
+   * It is needed to enable/disable data select support (pagination, sorting) for particular list.
+   *
+   * @return {string}
+   * @export
+   */
+  getSelectId() {
+    const selectId = 'roles';
+
+    if (this.roleList !== undefined && this.roleListResource !== undefined) {
+      return selectId;
+    }
+
+    return '';
+  }
+}
+
+/**
  * @return {!angular.Component}
  */
 export const roleCardListComponent = {
@@ -20,6 +50,7 @@ export const roleCardListComponent = {
     // Optional header that is transcluded instead of the default one.
     'header': '?kdHeader',
   },
+  controller: RoleCardListController,
   bindings: {
     'roleList': '<',
     'roleListResource': '<',

@@ -26,16 +26,6 @@ const backendApi = {};
 
 /**
  * @typedef {{
- *    itemsPerPage: number,
- *    page: number,
- *    namespace: string,
- *    name: (string|undefined)
- * }}
- */
-backendApi.PaginationQuery;
-
-/**
- * @typedef {{
  *   totalItems: number,
  * }}
  */
@@ -1291,6 +1281,14 @@ backendApi.ThirdPartyResourceList;
  * }}
  */
 backendApi.ThirdPartyResourceObject;
+
+/**
+ * @typedef {{
+ *   listMeta: !backendApi.ListMeta,
+ *   items: !Array<!backendApi.ThirdPartyResourceObject>
+ * }}
+ */
+backendApi.ThirdPartyResourceObjectList;
 
 /**
  * @typedef {{

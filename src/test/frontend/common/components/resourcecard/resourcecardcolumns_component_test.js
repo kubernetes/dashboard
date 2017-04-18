@@ -15,8 +15,7 @@
 import resourceCardModule from 'common/components/resourcecard/resourcecard_module';
 
 describe('Resource card columns', () => {
-  /** @type
-   * {!common/components/resourcecard/resourcecardlist_component.ResourceCardColumnsController} */
+  /** @type {!ResourceCardColumnsController} */
   let ctrl;
 
   beforeEach(() => {
@@ -29,12 +28,12 @@ describe('Resource card columns', () => {
     });
   });
 
-  it('should not allow for adding columns berofe initialization', () => {
+  it('should not allow for adding columns before initialization', () => {
     expect(() => {
       ctrl.addAndSizeColumn({});
     })
         .toThrow(
-            new Error('Resource card columns component must be initialized before addingcolumns'));
+            new Error('Resource card columns component must be initialized before adding columns'));
 
     ctrl.$onInit();
     expect(() => {

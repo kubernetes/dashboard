@@ -65,11 +65,11 @@ export function jobListResource($resource) {
 /**
  * @param {!angular.Resource} kdJobListResource
  * @param {!./../../chrome/state.StateParams} $stateParams
- * @param {!./../../common/pagination/service.PaginationService} kdPaginationService
+ * @param {!./../../common/dataselect/service.DataSelectService} kdDataSelectService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveJobList(kdJobListResource, $stateParams, kdPaginationService) {
-  let query = kdPaginationService.getDefaultResourceQuery($stateParams.namespace);
+export function resolveJobList(kdJobListResource, $stateParams, kdDataSelectService) {
+  let query = kdDataSelectService.getDefaultResourceQuery($stateParams.namespace);
   return kdJobListResource.get(query).$promise;
 }

@@ -13,9 +13,11 @@
 // limitations under the License.
 
 import stateModule from 'common/state/module';
+
 import filtersModule from '../filters/module';
+
+import dataSelectModule from './../dataselect/module';
 import namespaceModule from './../namespace/module';
-import paginationModule from './../pagination/module';
 import actionbarModule from './actionbar/module';
 import annotationsModule from './annotations/module';
 import {conditionListComponent} from './conditions/component';
@@ -47,7 +49,7 @@ export default angular
           endpointModule.name,
           infoCardModule.name,
           resourceCardModule.name,
-          paginationModule.name,
+          dataSelectModule.name,
           namespaceModule.name,
           stateModule.name,
           graphModule.name,

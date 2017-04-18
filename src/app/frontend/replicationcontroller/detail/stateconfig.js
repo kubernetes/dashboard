@@ -116,12 +116,12 @@ export function getReplicationControllerSpecPodsResourceWithActions(
 /**
  * @param {!angular.Resource} kdRCResource
  * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
- * @param {!./../../common/pagination/service.PaginationService} kdPaginationService
+ * @param {!./../../common/dataselect/service.DataSelectService} kdDataSelectService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-function resolveReplicationControllerDetails(kdRCResource, $stateParams, kdPaginationService) {
-  let query = kdPaginationService.getDefaultResourceQuery(
+function resolveReplicationControllerDetails(kdRCResource, $stateParams, kdDataSelectService) {
+  let query = kdDataSelectService.getDefaultResourceQuery(
       $stateParams.objectNamespace, $stateParams.objectName);
   return kdRCResource.get(query).$promise;
 }

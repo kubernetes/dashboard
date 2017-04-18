@@ -16,13 +16,13 @@ import {resolveIngressList} from 'ingress/list/stateconfig';
 import ingressModule from 'ingress/module';
 
 describe('StateConfig for ingress list', () => {
-  /** @type {!PaginationService} */
-  let kdPaginationService;
+  /** @type {!common/dataselect/dataselect_service.DataSelectService} */
+  let kdDataSelectService;
 
   beforeEach(() => {
     angular.mock.module(ingressModule.name);
-    angular.mock.inject((_kdPaginationService_) => {
-      kdPaginationService = _kdPaginationService_;
+    angular.mock.inject((_kdDataSelectService_) => {
+      kdDataSelectService = _kdDataSelectService_;
     });
   });
 
@@ -34,9 +34,9 @@ describe('StateConfig for ingress list', () => {
       return {$promise: promise};
     });
 
-    let actual = resolveIngressList(resource, {namespace: 'foo'}, kdPaginationService);
+    let actual = resolveIngressList(resource, {namespace: 'foo'}, kdDataSelectService);
 
-    expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery('foo'));
+    expect(resource.get).toHaveBeenCalledWith(kdDataSelectService.getDefaultResourceQuery('foo'));
     expect(actual).toBe(promise);
   }));
 
@@ -48,9 +48,9 @@ describe('StateConfig for ingress list', () => {
       return {$promise: promise};
     });
 
-    let actual = resolveIngressList(resource, {}, kdPaginationService);
+    let actual = resolveIngressList(resource, {}, kdDataSelectService);
 
-    expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery(''));
+    expect(resource.get).toHaveBeenCalledWith(kdDataSelectService.getDefaultResourceQuery(''));
     expect(actual).toBe(promise);
   }));
 });

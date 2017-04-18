@@ -65,12 +65,11 @@ export function persistentVolumeListResource($resource) {
 
 /**
  * @param {!angular.Resource} kdPersistentVolumeListResource
- * @param {!./../../common/pagination/service.PaginationService} kdPaginationService
+ * @param {!./../../common/dataselect/service.DataSelectService} kdDataSelectService
  * @returns {!angular.$q.Promise}
  * @ngInject
  */
-export function resolvePersistentVolumeList(kdPersistentVolumeListResource, kdPaginationService) {
-  /** @type {!backendApi.PaginationQuery} */
-  let query = kdPaginationService.getDefaultResourceQuery('');
+export function resolvePersistentVolumeList(kdPersistentVolumeListResource, kdDataSelectService) {
+  let query = kdDataSelectService.getDefaultResourceQuery('');
   return kdPersistentVolumeListResource.get(query).$promise;
 }
