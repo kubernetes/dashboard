@@ -43,22 +43,19 @@ func GetReplicationControllerPods(client k8sClient.Interface, heapsterClient cli
 	return &podList, nil
 }
 
-// getRawReplicationControllerPods returns array of api pods targeting replication controller associated to given name.
+// getRawReplicationControllerPods returns array of api pods targeting replication controller
+// associated to given name.
 func getRawReplicationControllerPods(client k8sClient.Interface, rcName, namespace string) (
 	[]api.Pod, error) {
-
-	replicationController, err := client.CoreV1().ReplicationControllers(namespace).Get(rcName, metaV1.GetOptions{})
+	rc, err := client.CoreV1().ReplicationControllers(namespace).Get(rcName,
+		metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
 
-	labelSelector := labels.SelectorFromSet(replicationController.Spec.Selector)
 	channels := &common.ResourceChannels{
-		PodList: common.GetPodListChannelWithOptions(client, common.NewSameNamespaceQuery(namespace),
-			metaV1.ListOptions{
-				LabelSelector: labelSelector.String(),
-				FieldSelector: fields.Everything().String(),
-			}, 1),
+		PodList: common.GetPodListChannel(client, common.NewSameNamespaceQuery(namespace),
+			1),
 	}
 
 	podList := <-channels.PodList.List
@@ -66,18 +63,19 @@ func getRawReplicationControllerPods(client k8sClient.Interface, rcName, namespa
 		return nil, err
 	}
 
-	return podList.Items, nil
+	return common.FilterPodsByOwnerReference(rc.Namespace, rc.UID, podList.Items), nil
 }
 
-// getReplicationControllerPodInfo returns simple info about pods(running, desired, failing, etc.) related to given replication
+// getReplicationControllerPodInfo returns simple info about pods(running, desired, failing, etc.)
+// related to given replication
 // controller.
 func getReplicationControllerPodInfo(client k8sClient.Interface, rc *api.ReplicationController,
 	namespace string) (*common.PodInfo, error) {
 
 	labelSelector := labels.SelectorFromSet(rc.Spec.Selector)
 	channels := &common.ResourceChannels{
-		PodList: common.GetPodListChannelWithOptions(client, common.NewSameNamespaceQuery(namespace),
-			metaV1.ListOptions{
+		PodList: common.GetPodListChannelWithOptions(client,
+			common.NewSameNamespaceQuery(namespace), metaV1.ListOptions{
 				LabelSelector: labelSelector.String(),
 				FieldSelector: fields.Everything().String(),
 			}, 1),

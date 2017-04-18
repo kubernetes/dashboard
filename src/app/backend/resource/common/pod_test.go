@@ -161,7 +161,7 @@ func TestGetContainerImages(t *testing.T) {
 	}
 }
 
-func TestFilterPodsByControllerResource(t *testing.T) {
+func TestFilterPodsByOwnerReference(t *testing.T) {
 	controller := true
 	okOwnerRef := []metaV1.OwnerReference{{
 		Kind:       "ReplicationController",
@@ -226,9 +226,9 @@ func TestFilterPodsByControllerResource(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := FilterPodsByControllerResource(c.namespace, c.uid, c.pods)
+		actual := FilterPodsByOwnerReference(c.namespace, c.uid, c.pods)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("FilterPodsBySelector(%+v, %+v, %+v) == %+v, expected %+v",
+			t.Errorf("FilterPodsByOwnerReference(%+v, %+v, %+v) == %+v, expected %+v",
 				c.pods, c.namespace, c.uid, actual, c.expected)
 		}
 	}

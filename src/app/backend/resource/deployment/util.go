@@ -3,6 +3,7 @@ package deployment
 import (
 	"fmt"
 
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/client-go/pkg/api/helper"
@@ -17,7 +18,7 @@ import (
 func FindNewReplicaSet(deployment *extensions.Deployment, rsList []*extensions.ReplicaSet) (*extensions.ReplicaSet, error) {
 	newRSTemplate := GetNewReplicaSetTemplate(deployment)
 	for i := range rsList {
-		if EqualIgnoreHash(rsList[i].Spec.Template, newRSTemplate) {
+		if common.EqualIgnoreHash(rsList[i].Spec.Template, newRSTemplate) {
 			// This is the new ReplicaSet.
 			return rsList[i], nil
 		}
@@ -45,7 +46,7 @@ func FindOldReplicaSets(deployment *extensions.Deployment, rsList []*extensions.
 				return nil, nil, fmt.Errorf("invalid label selector: %v", err)
 			}
 			// Filter out replica set that has the same pod template spec as the deployment - that is the new replica set.
-			if EqualIgnoreHash(rs.Spec.Template, newRSTemplate) {
+			if common.EqualIgnoreHash(rs.Spec.Template, newRSTemplate) {
 				continue
 			}
 			allOldRSs[rs.ObjectMeta.Name] = rs

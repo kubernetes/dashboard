@@ -36,7 +36,8 @@ type ResourceSelector struct {
 	LabelSelector *v1.LabelSelector
 }
 
-// GetHeapsterSelector calculates and returns HeapsterSelector that can be used to download metrics for this resource.
+// GetHeapsterSelector calculates and returns HeapsterSelector that can be used to download metrics
+// for this resource.
 func (self *ResourceSelector) GetHeapsterSelector(cachedPods []api.Pod) (HeapsterSelector, error) {
 	summingResource, isDerivedResource := DerivedResources[self.ResourceType]
 	if !isDerivedResource {
@@ -52,34 +53,42 @@ func (self *ResourceSelector) GetHeapsterSelector(cachedPods []api.Pod) (Heapste
 		return NewHeapsterSelectorFromNativeResource(common.ResourceKindPod, self.Namespace, podListToNameList(myPods))
 	} else {
 		// currently can only convert derived resource to pods. You can change it by implementing other methods
-		return HeapsterSelector{}, fmt.Errorf(`Internal Error: Requested summing resource is not supported. Requested "%s"`, summingResource)
+		return HeapsterSelector{}, fmt.Errorf(`Internal Error: Requested summing resourceis not supported. Requested "%s"`, summingResource)
 	}
 }
 
 // getMyPodsFromCache returns a full list of pods that belong to this resource.
-// It is important that cachedPods include ALL pods from the namespace of this resource (but they can also include pods from other namespaces).
+// It is important that cachedPods include ALL pods from the namespace of this resource (but they
+// can also include pods from other namespaces).
 func (self *ResourceSelector) getMyPodsFromCache(cachedPods []api.Pod) ([]api.Pod, error) {
-	// make sure we have the full list of pods. you have to make sure the cache has pod list for all namespaces!
-	if cachedPods == nil {
-		return nil, fmt.Errorf(`GetMyPodsFromCache: pods were not available in cache. Required for resource type: "%s"`, self.ResourceType)
-	}
-
-	// now decide whether to match by ResourceSelector or by ResourceLabelSelector
-	if self.LabelSelector != nil {
+	switch {
+	case cachedPods == nil:
+		return nil, fmt.Errorf(`getMyPodsFromCache: pods were not available in cache. Required for resource type: "%s"`, self.ResourceType)
+	case self.LabelSelector != nil:
 		return common.FilterNamespacedPodsByLabelSelector(cachedPods, self.Namespace, self.LabelSelector), nil
-
-	} else if self.Selector != nil {
-		return common.FilterNamespacedPodsBySelector(cachedPods, self.Namespace, self.Selector), nil
-	} else {
-		return nil, fmt.Errorf(`GetMyPodsFromCache: did not find any resource selector for resource type: "%s"`, self.ResourceType)
+	case self.Selector != nil:
+		return filterNamespacedPodsBySelector(cachedPods, self.Namespace, self.Selector), nil
+	default:
+		return nil, fmt.Errorf(`getMyPodsFromCache: did not find any resource selector for resource type: "%s"`, self.ResourceType)
 	}
 }
 
-// Converts list of pods to the list of pod names.
-func podListToNameList(podList []api.Pod) []string {
-	result := []string{}
+// podListToNameList converts list of pods to the list of pod names.
+func podListToNameList(podList []api.Pod) (result []string) {
 	for _, pod := range podList {
 		result = append(result, pod.ObjectMeta.Name)
 	}
-	return result
+	return
+}
+
+// TODO
+func filterNamespacedPodsBySelector(pods []api.Pod, namespace string, resourceSelector map[string]string) []api.Pod {
+	var matchingPods []api.Pod
+	for _, pod := range pods {
+		if pod.ObjectMeta.Namespace == namespace &&
+			common.IsSelectorMatching(resourceSelector, pod.Labels) {
+			matchingPods = append(matchingPods, pod)
+		}
+	}
+	return matchingPods
 }
