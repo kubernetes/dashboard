@@ -67,12 +67,12 @@ export function persistentVolumeClaimListResource($resource) {
 /**
  * @param {!angular.Resource} kdPersistentVolumeClaimListResource
  * @param {!./../../chrome/state.StateParams} $stateParams
- * @param {!./../../common/pagination/service.PaginationService} kdPaginationService
+ * @param {!./../../common/dataselect/service.DataSelectService} kdDataSelectService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
 export function resolvePersistentVolumeClaimList(
-    kdPersistentVolumeClaimListResource, $stateParams, kdPaginationService) {
-  let query = kdPaginationService.getDefaultResourceQuery($stateParams.namespace);
+    kdPersistentVolumeClaimListResource, $stateParams, kdDataSelectService) {
+  let query = kdDataSelectService.getDefaultResourceQuery($stateParams.namespace);
   return kdPersistentVolumeClaimListResource.get(query).$promise;
 }

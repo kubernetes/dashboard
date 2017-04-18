@@ -47,12 +47,12 @@ export default function stateConfig($stateProvider) {
 
 /**
  * @param {!angular.$resource} kdClusterResource
- * @param {!./../common/pagination/service.PaginationService} kdPaginationService
+ * @param {!./../common/dataselect/service.DataSelectService} kdDataSelectService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveResource(kdClusterResource, kdPaginationService) {
-  let paginationQuery = kdPaginationService.getDefaultResourceQuery();
+export function resolveResource(kdClusterResource, kdDataSelectService) {
+  let paginationQuery = kdDataSelectService.getDefaultResourceQuery();
   return kdClusterResource.get(paginationQuery).$promise;
 }
 

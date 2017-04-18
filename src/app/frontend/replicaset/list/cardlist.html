@@ -15,14 +15,14 @@ limitations under the License.
 -->
 
 <kd-resource-card-list selectable="false"
-                       with-statuses="true">
+                       with-statuses="true"
+                       select-id="{{::$ctrl.getSelectId()}}"
+                       list="$ctrl.replicaSetList"
+                       list-resource="::$ctrl.replicaSetListResource">
   <kd-resource-card-list-header ng-transclude="header">
     [[Replica Sets|Label which appears above the list of such objects.]]
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination pagination-id="replicasets"
-                                    list="$ctrl.replicaSetList"
-                                    list-resource="$ctrl.replicaSetListResource">
-  </kd-resource-card-list-pagination>
+  <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
   <kd-resource-card-header-columns ng-show="$ctrl.replicaSetList.listMeta.totalItems">
     <kd-resource-card-header-column size="small"
                                     grow="2">
@@ -58,18 +58,11 @@ limitations under the License.
                                     grow="nogrow">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
-  <kd-replica-set-card ng-if="::$ctrl.replicaSetListResource"
-                       dir-paginate="rs in $ctrl.replicaSetList.replicaSets | itemsPerPage: default"
-                       pagination-id="replicasets"
+  <kd-replica-set-card dir-paginate="rs in $ctrl.replicaSetList.replicaSets | itemsPerPage: default"
+                       pagination-id="{{::$ctrl.getSelectId()}}"
                        replica-set="rs"
                        show-resource-kind="::$ctrl.showResourceKind"
                        total-items="::$ctrl.replicaSetList.listMeta.totalItems">
-  </kd-replica-set-card>
-  <kd-replica-set-card ng-if="::!$ctrl.replicaSetListResource"
-                       dir-paginate="rs in $ctrl.replicaSetList.replicaSets | itemsPerPage: default"
-                       pagination-id="replicasets"
-                       replica-set="rs"
-                       show-resource-kind="::$ctrl.showResourceKind">
   </kd-replica-set-card>
   <div ng-show="!$ctrl.replicaSetList.listMeta.totalItems"
        class="kd-zerostate-message"

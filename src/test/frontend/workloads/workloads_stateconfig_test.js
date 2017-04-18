@@ -16,13 +16,13 @@ import workloadListModule from 'workloads/module';
 import {resolveWorkloads} from 'workloads/stateconfig';
 
 describe('StateConfig for workload list', () => {
-  /** @type {!common/pagination/service.PaginationService} */
-  let kdPaginationService;
+  /** @type {!common/dataselect/dataselect_service.DataSelectService} */
+  let kdDataSelectService;
 
   beforeEach(() => {
     angular.mock.module(workloadListModule.name);
-    angular.mock.inject((_kdPaginationService_) => {
-      kdPaginationService = _kdPaginationService_;
+    angular.mock.inject((_kdDataSelectService_) => {
+      kdDataSelectService = _kdDataSelectService_;
     });
   });
 
@@ -34,9 +34,9 @@ describe('StateConfig for workload list', () => {
       return {$promise: promise};
     });
 
-    let actual = resolveWorkloads(resource, {}, kdPaginationService);
+    let actual = resolveWorkloads(resource, {}, kdDataSelectService);
 
-    expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery(''));
+    expect(resource.get).toHaveBeenCalledWith(kdDataSelectService.getDefaultResourceQuery(''));
     expect(actual).toBe(promise);
   }));
 
@@ -48,9 +48,9 @@ describe('StateConfig for workload list', () => {
       return {$promise: promise};
     });
 
-    let actual = resolveWorkloads(resource, {namespace: 'foo'}, kdPaginationService);
+    let actual = resolveWorkloads(resource, {namespace: 'foo'}, kdDataSelectService);
 
-    expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery('foo'));
+    expect(resource.get).toHaveBeenCalledWith(kdDataSelectService.getDefaultResourceQuery('foo'));
     expect(actual).toBe(promise);
   }));
 });

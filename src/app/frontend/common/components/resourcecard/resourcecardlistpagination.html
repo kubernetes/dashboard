@@ -18,14 +18,7 @@ limitations under the License.
      flex="auto"
      layout="row"
      class="kd-list-pagination">
-  <dir-pagination-controls ng-if="::!$ctrl.serverSided"
-                           pagination-id="::$ctrl.paginationId"
-                           class="kd-list-pagination-controls"
-                           boundary-links="true"
-                           template-url="common/pagination/pagination.html">
-  </dir-pagination-controls>
-  <dir-pagination-controls ng-if="::$ctrl.serverSided"
-                           pagination-id="::$ctrl.paginationId"
+  <dir-pagination-controls pagination-id="::$ctrl.selectId"
                            class="kd-list-pagination-controls"
                            boundary-links="true"
                            template-url="common/pagination/pagination.html"

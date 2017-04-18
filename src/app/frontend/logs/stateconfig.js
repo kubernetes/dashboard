@@ -81,7 +81,6 @@ function resolvePodContainers($stateParams, $resource) {
 
   /** @type {!angular.Resource<!backendApi.PodContainerList>} */
   let resource = $resource(`api/v1/pod/${namespace}/${podId}/container`);
-
   return resource.get().$promise;
 }
 

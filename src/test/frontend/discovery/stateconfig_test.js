@@ -16,13 +16,13 @@ import module from 'discovery/module';
 import {resolveResource} from 'discovery/stateconfig';
 
 describe('StateConfig for discovery list', () => {
-  /** @type {!common/pagination/service.PaginationService} */
-  let kdPaginationService;
+  /** @type {!common/dataselect/dataselect_service.DataSelectService} */
+  let kdDataSelectService;
 
   beforeEach(() => {
     angular.mock.module(module.name);
-    angular.mock.inject((_kdPaginationService_) => {
-      kdPaginationService = _kdPaginationService_;
+    angular.mock.inject((_kdDataSelectService_) => {
+      kdDataSelectService = _kdDataSelectService_;
     });
   });
 
@@ -34,10 +34,10 @@ describe('StateConfig for discovery list', () => {
       return {$promise: promise};
     });
 
-    let actual = resolveResource(resource, {namespace: 'foo-ns'}, kdPaginationService);
+    let actual = resolveResource(resource, {namespace: 'foo-ns'}, kdDataSelectService);
 
     expect(resource.get)
-        .toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery('foo-ns'));
+        .toHaveBeenCalledWith(kdDataSelectService.getDefaultResourceQuery('foo-ns'));
     expect(actual).toBe(promise);
   }));
 });

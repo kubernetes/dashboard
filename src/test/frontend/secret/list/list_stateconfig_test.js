@@ -16,13 +16,13 @@ import {resolveSecretList} from 'secret/list/stateconfig';
 import secretModule from 'secret/module';
 
 describe('StateConfig for secret list', () => {
-  /** @type {!PaginationService} */
-  let kdPaginationService;
+  /** @type {!DataSelectService} */
+  let kdDataSelectService;
 
   beforeEach(() => {
     angular.mock.module(secretModule.name);
-    angular.mock.inject((_kdPaginationService_) => {
-      kdPaginationService = _kdPaginationService_;
+    angular.mock.inject((_kdDataSelectService_) => {
+      kdDataSelectService = _kdDataSelectService_;
     });
   });
 
@@ -34,9 +34,9 @@ describe('StateConfig for secret list', () => {
       return {$promise: promise};
     });
 
-    let actual = resolveSecretList(resource, {namespace: 'foo'}, kdPaginationService);
+    let actual = resolveSecretList(resource, {namespace: 'foo'}, kdDataSelectService);
 
-    expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery('foo'));
+    expect(resource.get).toHaveBeenCalledWith(kdDataSelectService.getDefaultResourceQuery('foo'));
     expect(actual).toBe(promise);
   }));
 
@@ -48,9 +48,9 @@ describe('StateConfig for secret list', () => {
       return {$promise: promise};
     });
 
-    let actual = resolveSecretList(resource, {}, kdPaginationService);
+    let actual = resolveSecretList(resource, {}, kdDataSelectService);
 
-    expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery(''));
+    expect(resource.get).toHaveBeenCalledWith(kdDataSelectService.getDefaultResourceQuery(''));
     expect(actual).toBe(promise);
   }));
 });
