@@ -65,11 +65,11 @@ export function daemonSetListResource($resource) {
 /**
  * @param {!angular.Resource} kdDaemonSetListResource
  * @param {!./../../chrome/state.StateParams} $stateParams
- * @param {!./../../common/pagination/service.PaginationService} kdPaginationService
+ * @param {!./../../common/dataselect/service.DataSelectService} kdDataSelectService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveDaemonSetList(kdDaemonSetListResource, $stateParams, kdPaginationService) {
-  let query = kdPaginationService.getDefaultResourceQuery($stateParams.namespace);
+export function resolveDaemonSetList(kdDaemonSetListResource, $stateParams, kdDataSelectService) {
+  let query = kdDataSelectService.getDefaultResourceQuery($stateParams.namespace);
   return kdDaemonSetListResource.get(query).$promise;
 }

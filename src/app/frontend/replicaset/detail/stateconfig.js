@@ -91,13 +91,13 @@ export function replicaSetEventsResource($resource) {
 /**
  * @param {!angular.Resource} kdReplicaSetDetailResource
  * @param {!./../../common/resource/resourcedetail.StateParams} $stateParams
- * @param {!./../../common/pagination/service.PaginationService} kdPaginationService
+ * @param {!./../../common/dataselect/service.DataSelectService} kdDataSelectService
  * @return {!angular.Resource<!backendApi.ReplicaSetDetail>}
  * @ngInject
  */
 export function resolveReplicaSetDetailResource(
-    kdReplicaSetDetailResource, $stateParams, kdPaginationService) {
-  let query = kdPaginationService.getDefaultResourceQuery(
+    kdReplicaSetDetailResource, $stateParams, kdDataSelectService) {
+  let query = kdDataSelectService.getDefaultResourceQuery(
       $stateParams.objectNamespace, $stateParams.objectName);
   return kdReplicaSetDetailResource.get(query).$promise;
 }

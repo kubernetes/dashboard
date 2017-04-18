@@ -15,14 +15,14 @@ limitations under the License.
 -->
 
 <kd-resource-card-list selectable="false"
-                       with-statuses="true">
+                       with-statuses="true"
+                       select-id="{{::$ctrl.getSelectId()}}"
+                       list="$ctrl.nodeList"
+                       list-resource="::$ctrl.nodeListResource">
   <kd-resource-card-list-header ng-transclude="header">
     [[Nodes|Label which appears above the list of such objects.]]
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination pagination-id="nodes"
-                                    list="$ctrl.nodeList"
-                                    list-resource="::$ctrl.nodeListResource">
-  </kd-resource-card-list-pagination>
+  <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
 
   <kd-resource-card-header-columns>
     <kd-resource-card-header-column size="small"
@@ -42,16 +42,9 @@ limitations under the License.
       [[Age|Label 'Age' which appears as a column label in the table of nodes (node list view).]]
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
-  <kd-node-card ng-if="::$ctrl.nodeListResource"
-                dir-paginate="node in $ctrl.nodeList.nodes | itemsPerPage: default"
-                pagination-id="nodes"
+  <kd-node-card dir-paginate="node in $ctrl.nodeList.nodes | itemsPerPage: default"
+                pagination-id="{{::$ctrl.getSelectId()}}"
                 node="node"
                 total-items="::$ctrl.nodeList.listMeta.totalItems">
-  </kd-node-card>
-
-  <kd-node-card ng-if="::!$ctrl.nodeListResource"
-                dir-paginate="node in $ctrl.nodeList.nodes | itemsPerPage: default"
-                pagination-id="nodes"
-                node="node">
   </kd-node-card>
 </kd-resource-card-list>

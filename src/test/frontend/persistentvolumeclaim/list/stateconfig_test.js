@@ -16,13 +16,13 @@ import {resolvePersistentVolumeClaimList} from 'persistentvolumeclaim/list/state
 import persistentVolumeClaimModule from 'persistentvolumeclaim/module';
 
 describe('StateConfig for persistent volume controller list', () => {
-  /** @type {!PaginationService} */
-  let kdPaginationService;
+  /** @type {!common/dataselect/dataselect_service.DataSelectService} */
+  let kdDataSelectService;
 
   beforeEach(() => {
     angular.mock.module(persistentVolumeClaimModule.name);
-    angular.mock.inject((_kdPaginationService_) => {
-      kdPaginationService = _kdPaginationService_;
+    angular.mock.inject((_kdDataSelectService_) => {
+      kdDataSelectService = _kdDataSelectService_;
     });
   });
 
@@ -34,9 +34,9 @@ describe('StateConfig for persistent volume controller list', () => {
       return {$promise: promise};
     });
 
-    let actual = resolvePersistentVolumeClaimList(resource, {}, kdPaginationService);
+    let actual = resolvePersistentVolumeClaimList(resource, {}, kdDataSelectService);
 
-    expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery(''));
+    expect(resource.get).toHaveBeenCalledWith(kdDataSelectService.getDefaultResourceQuery(''));
     expect(actual).toBe(promise);
   }));
 });

@@ -23,6 +23,28 @@ export class HorizontalPodAutoscalerCardListController {
   constructor(kdNamespaceService) {
     /** @private {!./../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
+    /** @export {!backendApi.HorizontalPodAutoscalerList} - Initialized from binding. */
+    this.horizontalPodAutoscalerList;
+    /** @export {!angular.Resource} - Initialized from binding. */
+    this.horizontalPodAutoscalerListResource;
+  }
+
+  /**
+   * Returns select id string or undefined if list or list resource are not defined.
+   * It is needed to enable/disable data select support (pagination, sorting) for particular list.
+   *
+   * @return {string}
+   * @export
+   */
+  getSelectId() {
+    const selectId = 'hpas';
+
+    if (this.horizontalPodAutoscalerList !== undefined &&
+        this.horizontalPodAutoscalerListResource !== undefined) {
+      return selectId;
+    }
+
+    return '';
   }
 
   /**

@@ -813,7 +813,10 @@ func (apiHandler *APIHandler) handleGetNodeList(request *restful.Request, respon
 }
 
 func (apiHandler *APIHandler) handleGetCluster(request *restful.Request, response *restful.Response) {
-	result, err := cluster.GetCluster(apiHandler.client)
+	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.NoMetrics
+
+	result, err := cluster.GetCluster(apiHandler.client, dataSelect, &apiHandler.heapsterClient)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -972,8 +975,10 @@ func (apiHandler *APIHandler) handleGetWorkloads(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := parseNamespacePathParameter(request)
+	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.NoMetrics
 	result, err := workload.GetWorkloads(apiHandler.client, apiHandler.heapsterClient,
-		namespace, dataselect.StandardMetrics)
+		namespace, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -986,7 +991,8 @@ func (apiHandler *APIHandler) handleGetDiscovery(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := parseNamespacePathParameter(request)
-	result, err := discovery.GetDiscovery(apiHandler.client, namespace)
+	dsQuery := parseDataSelectPathParameter(request)
+	result, err := discovery.GetDiscovery(apiHandler.client, namespace, dsQuery)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -999,9 +1005,8 @@ func (apiHandler *APIHandler) handleGetConfig(
 	request *restful.Request, response *restful.Response) {
 
 	namespace := parseNamespacePathParameter(request)
-	dataSelect := parseDataSelectPathParameter(request)
-	result, err := config.GetConfig(apiHandler.client, apiHandler.heapsterClient, namespace,
-		dataSelect)
+	dsQuery := parseDataSelectPathParameter(request)
+	result, err := config.GetConfig(apiHandler.client, namespace, dsQuery)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1849,12 +1854,12 @@ func parsePaginationPathParameter(request *restful.Request) *dataselect.Paginati
 }
 
 func parseFilterPathParameter(request *restful.Request) *dataselect.FilterQuery {
-	return dataselect.NewFilterQuery(strings.Split(request.QueryParameter("filterby"), ","))
+	return dataselect.NewFilterQuery(strings.Split(request.QueryParameter("filterBy"), ","))
 }
 
 // Parses query parameters of the request and returns a SortQuery object
 func parseSortPathParameter(request *restful.Request) *dataselect.SortQuery {
-	return dataselect.NewSortQuery(strings.Split(request.QueryParameter("sortby"), ","))
+	return dataselect.NewSortQuery(strings.Split(request.QueryParameter("sortBy"), ","))
 }
 
 // Parses query parameters of the request and returns a MetricQuery object

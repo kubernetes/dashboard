@@ -42,4 +42,28 @@ describe('Replication Controller Card List controller', () => {
   it('should return the value from Namespace service', () => {
     expect(ctrl.areMultipleNamespacesSelected()).toBe(data.areMultipleNamespacesSelected());
   });
+
+  it('should return correct select id', () => {
+    // given
+    let expected = 'replicationcontrollers';
+    ctrl.replicationControllerList = {};
+    ctrl.replicationControllerListResource = {};
+
+    // when
+    let got = ctrl.getSelectId();
+
+    // then
+    expect(got).toBe(expected);
+  });
+
+  it('should return empty select id', () => {
+    // given
+    let expected = '';
+
+    // when
+    let got = ctrl.getSelectId();
+
+    // then
+    expect(got).toBe(expected);
+  });
 });

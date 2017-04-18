@@ -16,13 +16,13 @@ import {resolveStatefulSetList} from 'statefulset/list/stateconfig';
 import statefulSetModule from 'statefulset/module';
 
 describe('StateConfig for stateful set controller list', () => {
-  /** @type {!PaginationService} */
-  let kdPaginationService;
+  /** @type {!common/dataselect/dataselect_service.DataSelectService} */
+  let kdDataSelectService;
 
   beforeEach(() => {
     angular.mock.module(statefulSetModule.name);
-    angular.mock.inject((_kdPaginationService_) => {
-      kdPaginationService = _kdPaginationService_;
+    angular.mock.inject((_kdDataSelectService_) => {
+      kdDataSelectService = _kdDataSelectService_;
     });
   });
 
@@ -34,9 +34,9 @@ describe('StateConfig for stateful set controller list', () => {
       return {$promise: promise};
     });
 
-    let actual = resolveStatefulSetList(resource, {namespace: 'foo'}, kdPaginationService);
+    let actual = resolveStatefulSetList(resource, {namespace: 'foo'}, kdDataSelectService);
 
-    expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery('foo'));
+    expect(resource.get).toHaveBeenCalledWith(kdDataSelectService.getDefaultResourceQuery('foo'));
     expect(actual).toBe(promise);
   }));
 
@@ -48,9 +48,9 @@ describe('StateConfig for stateful set controller list', () => {
       return {$promise: promise};
     });
 
-    let actual = resolveStatefulSetList(resource, {}, kdPaginationService);
+    let actual = resolveStatefulSetList(resource, {}, kdDataSelectService);
 
-    expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery(''));
+    expect(resource.get).toHaveBeenCalledWith(kdDataSelectService.getDefaultResourceQuery(''));
     expect(actual).toBe(promise);
   }));
 });

@@ -29,4 +29,28 @@ describe('Namespace card list', () => {
   it('should instantiate the controller properly', () => {
     expect(ctrl).not.toBeUndefined();
   });
+
+  it('should return correct select id', () => {
+    // given
+    let expected = 'namespaces';
+    ctrl.namespaceList = {};
+    ctrl.namespaceListResource = {};
+
+    // when
+    let got = ctrl.getSelectId();
+
+    // then
+    expect(got).toBe(expected);
+  });
+
+  it('should return empty select id', () => {
+    // given
+    let expected = '';
+
+    // when
+    let got = ctrl.getSelectId();
+
+    // then
+    expect(got).toBe(expected);
+  });
 });
