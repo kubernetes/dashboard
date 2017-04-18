@@ -12,13 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Configuration to deploy release version of the Dashboard UI.
+# Configuration to deploy release version of the Dashboard UI compatible with
+# Kubernetes 1.6 (RBAC enabled).
 #
 # Example usage: kubectl create -f <this_file>
 
 apiVersion: v1
 kind: ServiceAccount
 metadata:
+  labels:
+    app: kubernetes-dashboard
   name: kubernetes-dashboard
   namespace: kube-system
 ---
@@ -26,6 +29,8 @@ apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
   name: kubernetes-dashboard
+  labels:
+    app: kubernetes-dashboard
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
