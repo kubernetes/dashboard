@@ -59,7 +59,7 @@ spec:
     spec:
       containers:
       - name: kubernetes-dashboard-head
-        image: gcr.io/google_containers/kubernetes-dashboard-arm:head
+        image: kubernetesdashboarddev/kubernetes-dashboard-arm:head
         imagePullPolicy: Always
         ports:
         - containerPort: 9090
