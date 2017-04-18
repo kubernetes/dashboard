@@ -22,7 +22,7 @@ If it is missing, you can install the latest stable release by running the follo
 $ kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml
 ```
 
-If you have **[https://kubernetes.io/docs/admin/authorization/rbac/](RBAC) enabled** (default for Kubernetes 1.6+), you can install the latest stable release by running the following command:
+If you have **[RBAC](https://kubernetes.io/docs/admin/authorization/rbac/) enabled** (default for Kubernetes 1.6+), you can install the latest stable release by running the following command:
 ```shell
 $ kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard-with-rbac.yaml
 ```
