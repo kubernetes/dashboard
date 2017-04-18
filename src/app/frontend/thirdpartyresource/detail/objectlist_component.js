@@ -13,6 +13,37 @@
 // limitations under the License.
 
 /**
+ * @final
+ */
+class ObjectListController {
+  /** @ngInject */
+  constructor() {
+    /** @export {!backendApi.ThirdPartyResourceObjectList} - Initialized from binding. */
+    this.objectList;
+
+    /** @export {!angular.Resource} - Initialized from binding. */
+    this.objectListResource;
+  }
+
+  /**
+   * Returns select id string or undefined if list or list resource are not defined.
+   * It is needed to enable/disable data select support (pagination, sorting) for particular list.
+   *
+   * @return {string}
+   * @export
+   */
+  getSelectId() {
+    const selectId = 'thirdpartyresourceobjects';
+
+    if (this.objectList !== undefined && this.objectListResource !== undefined) {
+      return selectId;
+    }
+
+    return '';
+  }
+}
+
+/**
  * Definition object for the component that displays third party resource objects list card.
  *
  * @type {!angular.Component}
@@ -22,9 +53,10 @@ export const objectListComponent = {
     'header': '?kdHeader',
     'zerostate': '?kdZerostate',
   },
+  controller: ObjectListController,
   templateUrl: 'thirdpartyresource/detail/objectlist.html',
   bindings: {
-    /** {!backendApi.PodList} */
+    /** {!backendApi.ThirdPartyResourceObjectList} */
     'objectList': '<',
     /** {!angular.Resource} */
     'objectListResource': '<',

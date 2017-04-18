@@ -47,4 +47,28 @@ describe('Persistent Volume Claim card list', () => {
   it('should init i18n', () => {
     expect(ctrl.areMultipleNamespacesSelected()).not.toBeUndefined();
   });
+
+  it('should return correct select id', () => {
+    // given
+    let expected = 'persistentvolumeclaims';
+    ctrl.persistentVolumeClaimList = {};
+    ctrl.persistentVolumeClaimListResource = {};
+
+    // when
+    let got = ctrl.getSelectId();
+
+    // then
+    expect(got).toBe(expected);
+  });
+
+  it('should return empty select id', () => {
+    // given
+    let expected = '';
+
+    // when
+    let got = ctrl.getSelectId();
+
+    // then
+    expect(got).toBe(expected);
+  });
 });

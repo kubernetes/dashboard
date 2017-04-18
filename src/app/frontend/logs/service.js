@@ -26,6 +26,9 @@ export class LogsService {
 
     /** @private {boolean} */
     this.compact_ = false;
+
+    /** @private {boolean} */
+    this.showTimestamp_ = false;
   }
 
   /**
@@ -56,5 +59,20 @@ export class LogsService {
    */
   getCompact() {
     return this.compact_;
+  }
+
+  /**
+   * Switches the show timestamp flag
+   */
+  setShowTimestamp() {
+    this.showTimestamp_ = !this.showTimestamp_;
+  }
+
+  /**
+   * Getter for the show timestamp flag
+   * @returns {boolean}
+   */
+  getShowTimestamp() {
+    return this.showTimestamp_;
   }
 }

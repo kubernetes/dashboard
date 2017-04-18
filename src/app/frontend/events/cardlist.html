@@ -17,15 +17,14 @@ limitations under the License.
 <kd-content-card>
   <kd-content>
     <kd-resource-card-list selectable="false"
-                           with-statuses="true">
+                           with-statuses="true"
+                           select-id="{{::$ctrl.getSelectId()}}"
+                           list="$ctrl.eventList"
+                           list-resource="$ctrl.eventListResource">
       <kd-resource-card-list-header>
         [[Events|Label which appears above the list of such objects.]]
       </kd-resource-card-list-header>
-      <kd-resource-card-list-pagination pagination-id="events"
-                                        list="$ctrl.eventList"
-                                        list-resource="$ctrl.eventListResource">
-      </kd-resource-card-list-pagination>
-
+      <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
       <kd-resource-card-header-columns ng-show="$ctrl.hasEvents()">
         <kd-resource-card-header-column size="medium"
                                         grow="4">
@@ -53,7 +52,7 @@ limitations under the License.
                         total-items="::$ctrl.eventList.listMeta.totalItems"
                         object-meta="event.objectMeta"
                         type-meta="event.typeMeta"
-                        pagination-id="events">
+                        pagination-id="{{::$ctrl.getSelectId()}}">
         <kd-resource-card-status>
           <i ng-if="$ctrl.isEventWarning(event)"
              class="material-icons kd-replicationcontrollerevents-warning-icon">warning</i>

@@ -11,10 +11,10 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 @import '../../../variables';
 
 kd-resource-card-header-column {
+  align-items: center;
   display: flex;
   flex-basis: auto;
   flex-grow: 1;
@@ -28,7 +28,43 @@ kd-resource-card-header-column {
 }
 
 .kd-resource-card-header-column-container {
+  align-items: center;
+  display: flex;
+}
+
+.kd-resource-card-header-column-sortable {
+  // Cascade on hover state to all children excepted the ones that have
+  // kd-resource-card-header-column-sorted class applied already
+  &:hover {
+    &:not(.kd-resource-card-header-column-sorted) {
+      * {
+        color: $foreground-1;
+      }
+    }
+  }
+
+  md-icon {
+    &:not(.kd-resource-card-header-column-sorted) {
+      color: $foreground-3;
+    }
+  }
+
+  * {
+    cursor: pointer;
+    outline: none;
+  }
+}
+
+.kd-resource-card-header-column-sorted {
+  color: $foreground-1;
+  font-weight: $bold-font-weight;
+}
+
+.kd-resource-card-header-sort-column-icon-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+}
+
+.kd-resource-card-header-sort-column-icon-asc {
+  margin-bottom: -2 * $baseline-grid;
 }

@@ -16,13 +16,13 @@ import {resolveStorageClassList} from 'storageclass/list/stateconfig';
 import storageClassModule from 'storageclass/module';
 
 describe('StateConfig for storage class controller list', () => {
-  /** @type {!PaginationService} */
-  let kdPaginationService;
+  /** @type {!common/dataselect/dataselect_service.DataSelectService} */
+  let kdDataSelectService;
 
   beforeEach(() => {
     angular.mock.module(storageClassModule.name);
-    angular.mock.inject((_kdPaginationService_) => {
-      kdPaginationService = _kdPaginationService_;
+    angular.mock.inject((_kdDataSelectService_) => {
+      kdDataSelectService = _kdDataSelectService_;
     });
   });
 
@@ -34,9 +34,9 @@ describe('StateConfig for storage class controller list', () => {
       return {$promise: promise};
     });
 
-    let actual = resolveStorageClassList(resource, kdPaginationService);
+    let actual = resolveStorageClassList(resource, kdDataSelectService);
 
-    expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery(''));
+    expect(resource.get).toHaveBeenCalledWith(kdDataSelectService.getDefaultResourceQuery(''));
     expect(actual).toBe(promise);
   }));
 });

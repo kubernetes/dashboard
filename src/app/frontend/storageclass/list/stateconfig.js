@@ -65,12 +65,11 @@ export function storageClassListResource($resource) {
 
 /**
  * @param {!angular.Resource} kdStorageClassListResource
- * @param {!./../../common/pagination/service.PaginationService} kdPaginationService
+ * @param {!./../../common/dataselect/service.DataSelectService} kdDataSelectService
  * @returns {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveStorageClassList(kdStorageClassListResource, kdPaginationService) {
-  /** @type {!backendApi.PaginationQuery} */
-  let query = kdPaginationService.getDefaultResourceQuery('');
+export function resolveStorageClassList(kdStorageClassListResource, kdDataSelectService) {
+  let query = kdDataSelectService.getDefaultResourceQuery('');
   return kdStorageClassListResource.get(query).$promise;
 }

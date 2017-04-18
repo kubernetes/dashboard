@@ -16,13 +16,13 @@ import {resolveHorizontalPodAutoscalerList} from 'horizontalpodautoscaler/list/s
 import horizontalPodAutoscalerModule from 'horizontalpodautoscaler/module';
 
 describe('StateConfig for horizontal pod autoscaler controller list', () => {
-  /** @type {!PaginationService} */
-  let kdPaginationService;
+  /** @type {!DataSelectService} */
+  let kdDataSelectService;
 
   beforeEach(() => {
     angular.mock.module(horizontalPodAutoscalerModule.name);
-    angular.mock.inject((_kdPaginationService_) => {
-      kdPaginationService = _kdPaginationService_;
+    angular.mock.inject((_kdDataSelectService_) => {
+      kdDataSelectService = _kdDataSelectService_;
     });
   });
 
@@ -35,9 +35,9 @@ describe('StateConfig for horizontal pod autoscaler controller list', () => {
     });
 
     let actual =
-        resolveHorizontalPodAutoscalerList(resource, {namespace: 'test'}, kdPaginationService);
+        resolveHorizontalPodAutoscalerList(resource, {namespace: 'test'}, kdDataSelectService);
 
-    expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery('test'));
+    expect(resource.get).toHaveBeenCalledWith(kdDataSelectService.getDefaultResourceQuery('test'));
     expect(actual).toBe(promise);
   }));
 });

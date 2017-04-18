@@ -32,6 +32,23 @@ export class ReplicaSetCardListController {
   }
 
   /**
+   * Returns select id string or undefined if list or list resource are not defined.
+   * It is needed to enable/disable data select support (pagination, sorting) for particular list.
+   *
+   * @return {string}
+   * @export
+   */
+  getSelectId() {
+    const selectId = 'replicasets';
+
+    if (this.replicaSetList !== undefined && this.replicaSetListResource !== undefined) {
+      return selectId;
+    }
+
+    return '';
+  }
+
+  /**
    * @return {boolean}
    * @export
    */

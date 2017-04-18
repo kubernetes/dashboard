@@ -35,6 +35,23 @@ export class PodCardListController {
   }
 
   /**
+   * Returns select id string or undefined if podList or podListResource are not defined.
+   * It is needed to enable/disable data select support (pagination, sorting) for particular list.
+   *
+   * @return {string}
+   * @export
+   */
+  getSelectId() {
+    const selectId = 'pods';
+
+    if (this.podList !== undefined && this.podListResource !== undefined) {
+      return selectId;
+    }
+
+    return '';
+  }
+
+  /**
    * @return {boolean}
    * @export
    */

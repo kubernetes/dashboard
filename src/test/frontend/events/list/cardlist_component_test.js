@@ -17,7 +17,7 @@ import eventsModule from 'events/module';
 describe('Event Card List controller', () => {
   /**
    * Event Card List controller.
-   * @type {!events/cardlist_component.EventCardListController}
+   * @type {!EventCardListController}
    */
   let ctrl;
 
@@ -77,5 +77,29 @@ describe('Event Card List controller', () => {
 
     // then
     expect(result).toBeFalsy();
+  });
+
+  it('should return correct select id', () => {
+    // given
+    let expected = 'events';
+    ctrl.eventList = {};
+    ctrl.eventListResource = {};
+
+    // when
+    let got = ctrl.getSelectId();
+
+    // then
+    expect(got).toBe(expected);
+  });
+
+  it('should return empty select id', () => {
+    // given
+    let expected = '';
+
+    // when
+    let got = ctrl.getSelectId();
+
+    // then
+    expect(got).toBe(expected);
   });
 });

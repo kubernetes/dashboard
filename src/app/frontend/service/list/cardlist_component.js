@@ -23,9 +23,27 @@ export class ServiceCardListController {
   constructor(kdNamespaceService) {
     /** @private {!./../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
-
+    /** @export {!backendApi.ServiceList} - Initialized from binding. */
+    this.serviceList;
     /** @export {!angular.Resource} Initialized from binding. */
     this.serviceListResource;
+  }
+
+  /**
+   * Returns select id string or undefined if list or list resource are not defined.
+   * It is needed to enable/disable data select support (pagination, sorting) for particular list.
+   *
+   * @return {string}
+   * @export
+   */
+  getSelectId() {
+    const selectId = 'services';
+
+    if (this.serviceList !== undefined && this.serviceListResource !== undefined) {
+      return selectId;
+    }
+
+    return '';
   }
 
   /**

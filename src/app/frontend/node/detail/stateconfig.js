@@ -68,8 +68,8 @@ export function nodePodsResource($resource) {
 
 
 /**
- * @param {!./../../common/resource/globalresourcedetail.GlobalStateParams} $stateParams
  * @param {!angular.$resource} $resource
+ * @param {!./../../common/resource/globalresourcedetail.GlobalStateParams} $stateParams
  * @return {!angular.Resource<!backendApi.NodeDetail>}
  * @ngInject
  */

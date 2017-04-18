@@ -41,4 +41,28 @@ describe('Config Map card list', () => {
   it('should return the value from Namespace service', () => {
     expect(ctrl.areMultipleNamespacesSelected()).toBe(data.areMultipleNamespacesSelected());
   });
+
+  it('should return correct select id', () => {
+    // given
+    let expected = 'configmaps';
+    ctrl.configMapList = {};
+    ctrl.configMapListResource = {};
+
+    // when
+    let result = ctrl.getSelectId();
+
+    // then
+    expect(result).toBe(expected);
+  });
+
+  it('should return empty select id', () => {
+    // given
+    let expected = '';
+
+    // when
+    let result = ctrl.getSelectId();
+
+    // then
+    expect(result).toBe(expected);
+  });
 });

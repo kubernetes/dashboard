@@ -65,11 +65,11 @@ export function replicaSetListResource($resource) {
 /**
  * @param {!angular.Resource} kdReplicaSetListResource
  * @param {!./../../chrome/state.StateParams} $stateParams
- * @param {!./../../common/pagination/service.PaginationService} kdPaginationService
+ * @param {!./../../common/dataselect/service.DataSelectService} kdDataSelectService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveReplicaSetList(kdReplicaSetListResource, $stateParams, kdPaginationService) {
-  let query = kdPaginationService.getDefaultResourceQuery($stateParams.namespace);
+export function resolveReplicaSetList(kdReplicaSetListResource, $stateParams, kdDataSelectService) {
+  let query = kdDataSelectService.getDefaultResourceQuery($stateParams.namespace);
   return kdReplicaSetListResource.get(query).$promise;
 }

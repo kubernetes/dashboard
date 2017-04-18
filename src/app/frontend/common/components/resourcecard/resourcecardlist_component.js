@@ -50,6 +50,15 @@ export class ResourceCardListController {
 
     /** @private {!angular.$transclude} */
     this.transclude_ = $transclude;
+
+    /** @export {string} - Unique data select id. Initialized from binding. */
+    this.selectId;
+
+    /** @export {{listMeta: !backendApi.ListMeta}|undefined} - Initialized from binding. */
+    this.list;
+
+    /** @export {angular.$resource|undefined} - Initialized from binding. */
+    this.listResource;
   }
 
   /**
@@ -140,6 +149,15 @@ export const resourceCardListComponent = {
     'selectable': '<',
     /** {boolean|undefined} whether to show statuses for list items */
     'withStatuses': '<',
+    /** Below properties are required if any data select operations (pagination, sort)
+     * should be supported.
+     */
+    /** {string|undefined} unique data select id */
+    'selectId': '@',
+    /** {Array<Object>|undefined} List of objects to paginate */
+    'list': '=',
+    /** {angular.$resource|undefined} */
+    'listResource': '<',
   },
   bindToController: true,
 };

@@ -15,9 +15,7 @@
 import resourceCardModule from 'common/components/resourcecard/resourcecard_module';
 
 describe('Delete resource menu item', () => {
-  /** @type
-   * {!common/components/resourcecard/resourcecarddeletemenuitem_component.ResourceCardDeleteMenuItemController}
-   */
+  /** @type {!ResourceCardDeleteMenuItemController} */
   let ctrl;
   /** @type {!angular.$q} */
   let q;
@@ -25,7 +23,7 @@ describe('Delete resource menu item', () => {
   let scope;
   /** @type {!ui.router.$state} */
   let state;
-  /** @type {!common/resource/verber_service.VerberService} */
+  /** @type {!VerberService} */
   let kdResourceVerberService;
   /** @type {!md.$dialog}*/
   let mdDialog;

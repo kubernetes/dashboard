@@ -26,16 +26,6 @@ const backendApi = {};
 
 /**
  * @typedef {{
- *    itemsPerPage: number,
- *    page: number,
- *    namespace: string,
- *    name: (string|undefined)
- * }}
- */
-backendApi.PaginationQuery;
-
-/**
- * @typedef {{
  *   totalItems: number,
  * }}
  */
@@ -901,7 +891,7 @@ backendApi.ReplicationControllerPods;
 /**
  * @typedef {{
  *   podId: string,
- *   logs: !Array<string>,
+ *   logs: !Array<backendApi.LogLine>,
  *   container: string,
  *   firstLogLineReference: !backendApi.LogLineReference,
  *   lastLogLineReference: !backendApi.LogLineReference,
@@ -912,11 +902,19 @@ backendApi.Logs;
 
 /**
  * @typedef {{
- *   logTimestamp: string,
+ *   timestamp: string,
  *   lineNum: number,
  * }}
  */
 backendApi.LogLineReference;
+
+/**
+ * @typedef {{
+ *   timestamp: string,
+ *   content: string,
+ * }}
+ */
+backendApi.LogLine;
 
 /**
  * @typedef {{
@@ -1283,6 +1281,14 @@ backendApi.ThirdPartyResourceList;
  * }}
  */
 backendApi.ThirdPartyResourceObject;
+
+/**
+ * @typedef {{
+ *   listMeta: !backendApi.ListMeta,
+ *   items: !Array<!backendApi.ThirdPartyResourceObject>
+ * }}
+ */
+backendApi.ThirdPartyResourceObjectList;
 
 /**
  * @typedef {{
