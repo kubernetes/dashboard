@@ -29,12 +29,10 @@ var DefaultDisplayNumLogLines = 100
 // number of log lines than we can handle.
 var MaxLogLines int = 2000000000
 
-
 const (
 	NewestTimestamp = "newest"
 	OldestTimestamp = "oldest"
 )
-
 
 // NewestLogLineId is the reference Id of the newest line.
 var NewestLogLineId = LogLineId{
@@ -45,7 +43,6 @@ var NewestLogLineId = LogLineId{
 var OldestLogLineId = LogLineId{
 	LogTimestamp: OldestTimestamp,
 }
-
 
 // Default log view selector that is used in case of invalid request
 // Downloads newest DefaultDisplayNumLogLines lines.
@@ -76,8 +73,6 @@ type LogViewSelector struct {
 	RelativeTo int
 }
 
-
-
 // Logs is a representation of logs response structure.
 type Logs struct {
 	// Pod name.
@@ -99,7 +94,6 @@ type Logs struct {
 	LogLines `json:"logs"`
 }
 
-
 // LogViewInfo provides information on the current log view.
 // Fields have the same meaning as in LogViewSelector.
 type LogViewInfo struct {
@@ -107,7 +101,6 @@ type LogViewInfo struct {
 	RelativeFrom       int       `json:"relativeFrom"`
 	RelativeTo         int       `json:"relativeTo"`
 }
-
 
 // LogLines provides means of selecting log views.
 // Problem with logs is that old logs are being deleted and new logs are constantly added.
@@ -120,13 +113,11 @@ type LogViewInfo struct {
 // slice of logs relatively to certain reference line ID.
 type LogLines []LogLine
 
-
 // A single log line. Split into timestamp and and the actual content
 type LogLine struct {
 	Timestamp LogTimestamp `json:"timestamp"`
-	Content string `json:"content"`
+	Content   string       `json:"content"`
 }
-
 
 // LogLineId uniquely identifies a line in logs - immune to log addition/deletion.
 type LogLineId struct {
@@ -141,7 +132,6 @@ type LogLineId struct {
 
 // LogTimestamp is a timestamp that appears on the beginning of each log line.
 type LogTimestamp string
-
 
 // GetLogLineId returns ID of the line with provided lineIndex.
 func (self LogLines) GetLogLineId(lineIndex int) *LogLineId {
@@ -168,7 +158,6 @@ func (self LogLines) GetLogLineId(lineIndex int) *LogLineId {
 		LineNum:      offset,
 	}
 }
-
 
 // SelectLogs returns selected part of LogLines as required by logSelector, moreover it returns IDs of first and last
 // of returned lines and the information of the resulting logView.
@@ -199,8 +188,6 @@ func (self LogLines) SelectLogs(logSelector *LogViewSelector) (LogLines, LogLine
 	}
 	return self[fromIndex:toIndex], *self.GetLogLineId(fromIndex), *self.GetLogLineId(toIndex - 1), logViewInfo
 }
-
-
 
 // GetLineIndex returns the index of the line (referenced from beginning of log array) with provided logLineId.
 func (self LogLines) GetLineIndex(logLineId *LogLineId) int {
@@ -235,7 +222,6 @@ func (self LogLines) GetLineIndex(logLineId *LogLineId) int {
 		return LINE_INDEX_NOT_FOUND
 	}
 }
-
 
 // ToLogLines converts rawLogs (string) to LogLines. This might be slow as we have to split ALL logs by \n.
 // The solution could be to split only required part of logs. To find reference line - do smart binary search on raw string -

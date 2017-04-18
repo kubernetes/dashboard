@@ -59,6 +59,15 @@ limitations under the License.
       </div>
       <div ng-hide="::$ctrl.service.externalEndpoints">-</div>
     </kd-resource-card-column>
+    <kd-resource-card-column>
+      <div ng-if="::$ctrl.service.objectMeta.creationTimestamp">
+        {{::$ctrl.service.objectMeta.creationTimestamp | relativeTime}}
+        <md-tooltip>
+          {{::$ctrl.getStartedAtTooltip($ctrl.service.objectMeta.creationTimestamp)}}
+        </md-tooltip>
+      </div>
+      <div ng-if="::!$ctrl.service.objectMeta.creationTimestamp">-</div>
+    </kd-resource-card-column>
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
       <kd-resource-card-menu>
         <kd-resource-card-delete-menu-item resource-kind-name="Service">

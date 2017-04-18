@@ -26,7 +26,9 @@ limitations under the License.
 
   <kd-resource-card-header-columns>
     <kd-resource-card-header-column size="small"
-                                    grow="2">
+                                    grow="2"
+                                    sortable="true"
+                                    sort-id="$root.SortableProperties.NAME">
       [[Name|Persistent volume list header: name.]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small"
@@ -54,7 +56,9 @@ limitations under the License.
       [[Reason|Persistent volume list header: reason.]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small"
-                                    grow="1">
+                                    grow="1"
+                                    sortable="true"
+                                    sort-id="$root.SortableProperties.AGE">
       [[Age|Persistent volume list header: age.]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small"
