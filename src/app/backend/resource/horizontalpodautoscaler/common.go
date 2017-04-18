@@ -14,8 +14,8 @@
 
 package horizontalpodautoscaler
 
-// autoscaling.CrossVersionObjectReference
+// Simple mapping of an autoscaling.CrossVersionObjectReference
 type ScaleTargetRef struct {
-	Kind string `json:"kind"` 
+	Kind string `json:"kind"`
 	Name string `json:"name"`
 }
