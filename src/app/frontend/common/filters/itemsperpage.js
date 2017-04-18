@@ -17,30 +17,30 @@
  * redundant objects.
  *
  * @param {function(!Array<Object>, number, string): !Array<Object>} $delegate
- * @param {!../pagination/service.PaginationService} kdPaginationService
+ * @param {!../dataselect/service.DataSelectService} kdDataSelectService
  * @return {function(!Array<Object>, number, string): !Array<Object>}
  * @ngInject
  */
-export default function itemsPerPageFilter($delegate, kdPaginationService) {
+export default function itemsPerPageFilter($delegate, kdDataSelectService) {
   /** @type {function(!Array<Object>, number, string): !Array<Object>} */
   let sourceFilter = $delegate;
 
   /**
    * @param {!Array<Object>} collection
    * @param {number} itemsPerPage
-   * @param {string} paginationId
+   * @param {string} dataSelectId
    * @return {!Array<Object>}
    */
-  let filterItems = function(collection, itemsPerPage, paginationId) {
+  let filterItems = function(collection, itemsPerPage, dataSelectId) {
     if (itemsPerPage === undefined) {
-      if (!kdPaginationService.isRegistered(paginationId)) {
-        kdPaginationService.registerInstance(paginationId);
+      if (!kdDataSelectService.isRegistered(dataSelectId)) {
+        kdDataSelectService.registerInstance(dataSelectId);
       }
 
-      return sourceFilter(collection, kdPaginationService.getRowsLimit(paginationId), paginationId);
+      return sourceFilter(collection, kdDataSelectService.getMinRowsLimit(), dataSelectId);
     }
 
-    return sourceFilter(collection, itemsPerPage, paginationId);
+    return sourceFilter(collection, itemsPerPage, dataSelectId);
   };
 
   return filterItems;

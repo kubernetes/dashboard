@@ -12,11 +12,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import namespaceModule from './../namespace/module';
-import {PaginationService} from './service';
+/**
+ * @fileoverview API for data select operations.
+ * @externs
+ */
+const DataSelectApi = {};
 
 /**
- * Module containing validators for the application.
+ * @typedef{{
+ *  itemsPerPage: number,
+ *  page: number,
+ *  sortBy: string,
+ *  namespace: string,
+ *  name: string,
+ *  }}
  */
-export default angular.module('kubernetesDashboard.common.pagination', [namespaceModule.name])
-    .service('kdPaginationService', PaginationService);
+DataSelectApi.DataSelectQuery;
+
+/**
+ * @typedef{{
+ *  NAME: string,
+ *  STATUS: string,
+ *  AGE: string,
+ *  }}
+ */
+DataSelectApi.SortableProperties;
+
+/**
+ * @typedef{{
+ *  PAGINATE: number,
+ *  SORT: number,
+ *  }}
+ */
+DataSelectApi.SupportedActions;

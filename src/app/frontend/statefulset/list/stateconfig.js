@@ -65,12 +65,12 @@ export function statefulSetListResource($resource) {
 /**
  * @param {!angular.Resource} kdStatefulSetListResource
  * @param {!./../../chrome/state.StateParams} $stateParams
- * @param {!./../../common/pagination/service.PaginationService} kdPaginationService
+ * @param {!./../../common/dataselect/service.DataSelectService} kdDataSelectService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
 export function resolveStatefulSetList(
-    kdStatefulSetListResource, $stateParams, kdPaginationService) {
-  let query = kdPaginationService.getDefaultResourceQuery($stateParams.namespace);
+    kdStatefulSetListResource, $stateParams, kdDataSelectService) {
+  let query = kdDataSelectService.getDefaultResourceQuery($stateParams.namespace);
   return kdStatefulSetListResource.get(query).$promise;
 }

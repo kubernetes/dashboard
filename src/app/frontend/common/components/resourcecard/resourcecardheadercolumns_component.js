@@ -40,7 +40,19 @@ export class ResourceCardHeaderColumnsController {
   }
 
   /**
+   * @export
+   */
+  reset() {
+    this.columns_.forEach((column) => {
+      if (column.isSortable()) {
+        column.reset();
+      }
+    });
+  }
+
+  /**
    * @param {!./resourcecardheadercolumn_component.ResourceCardHeaderColumnController} columnCtrl
+   * @param {!angular.JQLite} columnElement
    */
   addAndSizeHeaderColumn(columnCtrl, columnElement) {
     size(columnElement, columnCtrl.size, columnCtrl.grow);

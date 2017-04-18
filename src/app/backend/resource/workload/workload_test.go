@@ -197,9 +197,22 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				Deployments:       c.deployment,
 			},
 			PodList: pod.PodList{
-				ListMeta:          common.ListMeta{TotalItems: len(c.pod)},
-				CumulativeMetrics: make([]metric.Metric, 0),
-				Pods:              c.pod,
+				ListMeta: common.ListMeta{TotalItems: len(c.pod)},
+				CumulativeMetrics: []metric.Metric{
+					{
+						DataPoints: metric.DataPoints{},
+						MetricName: "cpu/usage_rate",
+						Label:      metric.Label{},
+						Aggregate:  "sum",
+					},
+					{
+						DataPoints: metric.DataPoints{},
+						MetricName: "memory/usage",
+						Label:      metric.Label{},
+						Aggregate:  "sum",
+					},
+				},
+				Pods: c.pod,
 			},
 			StatefulSetList: statefulset.StatefulSetList{
 				ListMeta:          common.ListMeta{TotalItems: len(c.statefulSet)},
@@ -330,7 +343,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		channels.EventList.List <- eventList
 		channels.EventList.Error <- nil
 
-		actual, err := GetWorkloadsFromChannels(channels, nil, dataselect.NoMetrics)
+		actual, err := GetWorkloadsFromChannels(channels, nil, dataselect.DefaultDataSelect)
 		if !reflect.DeepEqual(actual, expected) {
 			t.Errorf("GetWorkloadsFromChannels() ==\n          %#v\nExpected: %#v", actual, expected)
 		}

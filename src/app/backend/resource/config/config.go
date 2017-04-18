@@ -17,7 +17,6 @@ package config
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/configmap"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -34,8 +33,8 @@ type Config struct {
 }
 
 // GetConfig returns a list of all config resources in the cluster.
-func GetConfig(client *kubernetes.Clientset, heapsterClient client.HeapsterClient,
-	nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*Config, error) {
+func GetConfig(client *kubernetes.Clientset, nsQuery *common.NamespaceQuery,
+	dsQuery *dataselect.DataSelectQuery) (*Config, error) {
 
 	log.Print("Getting config category")
 	channels := &common.ResourceChannels{
@@ -44,13 +43,13 @@ func GetConfig(client *kubernetes.Clientset, heapsterClient client.HeapsterClien
 		PersistentVolumeClaimList: common.GetPersistentVolumeClaimListChannel(client, nsQuery, 1),
 	}
 
-	return GetConfigFromChannels(channels, heapsterClient, dsQuery, nsQuery)
+	return GetConfigFromChannels(channels, dsQuery, nsQuery)
 }
 
 // GetConfigFromChannels returns a list of all config in the cluster, from the
 // channel sources.
-func GetConfigFromChannels(channels *common.ResourceChannels, heapsterClient client.HeapsterClient,
-	dsQuery *dataselect.DataSelectQuery, nsQuery *common.NamespaceQuery) (*Config, error) {
+func GetConfigFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery,
+	nsQuery *common.NamespaceQuery) (*Config, error) {
 
 	configMapChan := make(chan *configmap.ConfigMapList)
 	secretChan := make(chan *secret.SecretList)
@@ -59,14 +58,13 @@ func GetConfigFromChannels(channels *common.ResourceChannels, heapsterClient cli
 	errChan := make(chan error, numErrs)
 
 	go func() {
-		items, err := configmap.GetConfigMapListFromChannels(channels,
-			dataselect.DefaultDataSelect)
+		items, err := configmap.GetConfigMapListFromChannels(channels, dsQuery)
 		errChan <- err
 		configMapChan <- items
 	}()
 
 	go func() {
-		items, err := secret.GetSecretListFromChannels(channels, dataselect.DefaultDataSelect)
+		items, err := secret.GetSecretListFromChannels(channels, dsQuery)
 		errChan <- err
 		secretChan <- items
 	}()

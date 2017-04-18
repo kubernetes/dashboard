@@ -106,6 +106,9 @@
   <translation id="1017990697544914862" key="MSG_CHROME_NAV_NAV_9" desc="Jobs menu entry.">Jobs</translation>
   <translation id="2342408690900978106" key="MSG_CHROME_NAV_NAV_9" desc="Stateful Sets menu item in the nav.">ステートフルセット</translation>
   <translation id="5512331139275482810" key="MSG_CHROME_NAV_THIRDPARTYRESOURCENAV_0" desc="Third Party Resources menu item in the nav.">サードパーティーリソース</translation>
+  <translation id="4777782265247414366" key="MSG_CLUSTER_CLUSTER_0" desc="Title for graph card displaying CPU metric of one all resources.">CPU usage</translation>
+  <translation id="836326363584870134" key="MSG_CLUSTER_CLUSTER_1" desc="Title for graph card displaying memory metric of one all resources.">Memory usage</translation>
+  <translation id="6503182982225697463" key="MSG_CLUSTER_CLUSTER_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by these resources. (Does not count pods double because it is mentioned both in the pod list and its controller is mentioned in e.g. a replica set.)</translation>
   <translation id="6660248664655766122" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARDELETEITEM_0" desc="Action \'Delete\', which is a button on the actionbar and is there for every resource type.">削除</translation>
   <translation id="8227118065394270046" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBAREDITITEM_0" desc="Action \'Edit\' for the edit button on the global action bar.">編集</translation>
   <translation id="6890205203402149061" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARLISTBUTTONS_0" desc="Label for deploy app button.">アプリ配備</translation>
@@ -1938,6 +1941,7 @@
   <translation id="8335819709341770111" key="MSG_RESOURCE_CARD_DELETE_ACTION" desc="Action &quot;Delete&quot; (verb), which appears as a menu item on the cards for kubernetes resources.">削除</translation>
   <translation id="3641265385665997534" key="MSG_RESOURCE_CARD_LIST_PAGINATION_ERROR" desc="Message shown to the user when there is a pagination error.">ページネーションエラー</translation>
   <translation id="5574079475783065419" key="MSG_RESOURCE_CARD_LIST_PAGINATION_ROW_SELECTOR_LABEL" desc="Label for pagination rows selector visible on resource lists.">表示行数</translation>
+  <translation id="8315383091892527627" key="MSG_RESOURCE_CARD_LIST_SORT_ERROR" desc="Message shown to the user when there is a sort error.">Sort error</translation>
   <translation id="3746517187831242937" key="MSG_RESOURCE_CARD_MENU_TOOLTIP" desc="Tooltip &quot;Actions&quot;, which appears when you hover over the menu icon on any resource card.">アクション</translation>
   <translation id="5837164744700950654" key="MSG_RESOURCE_DETAIL_INFO_CARD_ANNOTATIONS_LABEL" desc="Label 'annotations' for a resource.">注釈</translation>
   <translation id="5229153540672717672" key="MSG_RESOURCE_DETAIL_INFO_CARD_LABELS_LABEL" desc="Label 'Labels' for a resource.">ラベル</translation>

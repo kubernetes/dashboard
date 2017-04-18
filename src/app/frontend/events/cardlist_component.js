@@ -34,6 +34,23 @@ export class EventCardListController {
   }
 
   /**
+   * Returns select id string or undefined if list or list resource are not defined.
+   * It is needed to enable/disable data select support (pagination, sorting) for particular list.
+   *
+   * @return {string}
+   * @export
+   */
+  getSelectId() {
+    const selectId = 'events';
+
+    if (this.eventList !== undefined && this.eventListResource !== undefined) {
+      return selectId;
+    }
+
+    return '';
+  }
+
+  /**
    * Returns true if event is a warning.
    * @param {!backendApi.Event} event
    * @return {boolean}

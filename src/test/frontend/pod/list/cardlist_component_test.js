@@ -57,4 +57,28 @@ describe('Pod card list controller', () => {
     ctrl.podList.pods = [{metrics: {}}];
     expect(ctrl.showMetrics()).toBe(true);
   });
+
+  it('should return correct select id', () => {
+    // given
+    let expected = 'pods';
+    ctrl.podList = {};
+    ctrl.podListResource = {};
+
+    // when
+    let got = ctrl.getSelectId();
+
+    // then
+    expect(got).toBe(expected);
+  });
+
+  it('should return empty select id', () => {
+    // given
+    let expected = '';
+
+    // when
+    let got = ctrl.getSelectId();
+
+    // then
+    expect(got).toBe(expected);
+  });
 });

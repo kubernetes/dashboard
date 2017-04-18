@@ -15,14 +15,14 @@ limitations under the License.
 -->
 
 <kd-resource-card-list selectable="false"
-                       with-statuses="false">
+                       with-statuses="false"
+                       select-id="{{::$ctrl.getSelectId()}}"
+                       list="$ctrl.roleList"
+                       list-resource="$ctrl.roleListResource">
   <kd-resource-card-list-header ng-transclude="header">
     [[Roles|Label which appears above the list of such objects.]]
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination pagination-id="roles"
-                                    list="$ctrl.roleList"
-                                    list-resource="$ctrl.roleListResource">
-  </kd-resource-card-list-pagination>
+  <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
   <kd-resource-card-header-columns>
     <kd-resource-card-header-column size="small"
                                     grow="2">
@@ -39,7 +39,7 @@ limitations under the License.
   </kd-resource-card-header-columns>
   <kd-role-card dir-paginate="role in $ctrl.roleList.items | itemsPerPage: default"
                 role="role"
-                pagination-id="roles"
+                pagination-id="{{::$ctrl.getSelectId()}}"
                 total-items="::$ctrl.roleList.listMeta.totalItems">
   </kd-role-card>
 </kd-resource-card-list>
