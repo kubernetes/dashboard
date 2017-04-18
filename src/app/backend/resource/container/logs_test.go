@@ -21,6 +21,32 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/logs"
 )
 
+
+var log1 = logs.LogLine{
+	Timestamp: "1",
+	Content: "log1",
+}
+
+var log2 = logs.LogLine{
+	Timestamp: "2",
+	Content: "log2",
+}
+
+var log3 = logs.LogLine{
+	Timestamp: "3",
+	Content: "log3",
+}
+
+var log4 = logs.LogLine{
+	Timestamp: "4",
+	Content: "log4",
+}
+
+var log5 = logs.LogLine{
+	Timestamp: "5",
+	Content: "log5",
+}
+
 func TestGetLogs(t *testing.T) {
 
 	cases := []struct {
@@ -51,7 +77,7 @@ func TestGetLogs(t *testing.T) {
 			logs.AllLogViewSelector,
 			&logs.Logs{
 				PodId:     "pod-1",
-				LogLines:  logs.LogLines{"1 log1", "2 log2", "3 log3", "4 log4", "5 log5"},
+				LogLines:  logs.LogLines{log1, log2 ,log3, log4, log5},
 				Container: "test",
 				FirstLogLineReference: logs.LogLineId{
 					LogTimestamp: "1",
@@ -82,7 +108,7 @@ func TestGetLogs(t *testing.T) {
 			},
 			&logs.Logs{
 				PodId:     "pod-1",
-				LogLines:  logs.LogLines{"2 log2", "3 log3"},
+				LogLines:  logs.LogLines{log2,log3},
 				Container: "test",
 				FirstLogLineReference: logs.LogLineId{
 					LogTimestamp: "2",
@@ -113,7 +139,7 @@ func TestGetLogs(t *testing.T) {
 			},
 			&logs.Logs{
 				PodId:     "pod-1",
-				LogLines:  logs.LogLines{"2 log2", "3 log3"},
+				LogLines:  logs.LogLines{log2, log3},
 				Container: "test",
 				FirstLogLineReference: logs.LogLineId{
 					LogTimestamp: "2",
@@ -147,7 +173,7 @@ func TestGetLogs(t *testing.T) {
 			},
 			&logs.Logs{
 				PodId:     "pod-1",
-				LogLines:  logs.LogLines{"2 log2", "3 log3"},
+				LogLines:  logs.LogLines{log2, log3},
 				Container: "test",
 				FirstLogLineReference: logs.LogLineId{
 					LogTimestamp: "2",
@@ -181,7 +207,7 @@ func TestGetLogs(t *testing.T) {
 			},
 			&logs.Logs{
 				PodId:     "pod-1",
-				LogLines:  logs.LogLines{"4 log4", "5 log5"},
+				LogLines:  logs.LogLines{log4, log5},
 				Container: "test",
 				FirstLogLineReference: logs.LogLineId{
 					LogTimestamp: "4",
@@ -215,7 +241,7 @@ func TestGetLogs(t *testing.T) {
 			},
 			&logs.Logs{
 				PodId:     "pod-1",
-				LogLines:  logs.LogLines{"1 log1", "2 log2"},
+				LogLines:  logs.LogLines{log1, log2},
 				Container: "test",
 				FirstLogLineReference: logs.LogLineId{
 					LogTimestamp: "1",
@@ -249,7 +275,13 @@ func TestGetLogs(t *testing.T) {
 			},
 			&logs.Logs{
 				PodId:     "pod-1",
-				LogLines:  logs.LogLines{"1 log2", "1 log3"},
+				LogLines:  logs.LogLines{logs.LogLine{
+					Timestamp: "1",
+					Content: "log2",
+				}, logs.LogLine{
+					Timestamp: "1",
+					Content: "log3",
+				}},
 				Container: "test",
 				FirstLogLineReference: logs.LogLineId{
 					LogTimestamp: "1",

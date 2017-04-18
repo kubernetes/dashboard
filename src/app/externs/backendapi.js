@@ -901,7 +901,7 @@ backendApi.ReplicationControllerPods;
 /**
  * @typedef {{
  *   podId: string,
- *   logs: !Array<string>,
+ *   logs: !Array<backendApi.LogLine>,
  *   container: string,
  *   firstLogLineReference: !backendApi.LogLineReference,
  *   lastLogLineReference: !backendApi.LogLineReference,
@@ -912,11 +912,19 @@ backendApi.Logs;
 
 /**
  * @typedef {{
- *   logTimestamp: string,
+ *   timestamp: string,
  *   lineNum: number,
  * }}
  */
 backendApi.LogLineReference;
+
+/**
+ * @typedef {{
+ *   timestamp: string,
+ *   content: string,
+ * }}
+ */
+backendApi.LogLine;
 
 /**
  * @typedef {{
