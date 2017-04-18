@@ -27,6 +27,7 @@ Labels used to determine if creator of pull request has signed the CLA. It has t
 ## Other
 Other labels used for issues and pull requests.
 
+- `cluster-issue` - issues related to cluster configuration or cluster itself. These issues will not be fixed on Dashboard's side.
 - `duplicate` - duplicates, that should be closed and linked with original issues.
 - `greenkeeper` - pull requests created by [greenkeeper.io bot](https://github.com/greenkeeperio-bot). This label is assigned automatically.
 - `help-wanted` - issues good for contributor onboarding.
