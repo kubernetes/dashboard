@@ -9,9 +9,9 @@ To install latest HEAD release, execute the following command.
 kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard-head.yaml
 ```
 
-If you have **[RBAC](https://kubernetes.io/docs/admin/authorization/rbac/) enabled** (default for Kubernetes 1.6+), execute following command:
+If you have Kubernetes 1.5 or earlier, execute the following command:
 ```shell
-kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard-head-with-rbac.yaml
+kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard-head-no-rbac.yaml
 ```
 
 Once installed, the release of the UI is not automatically updated. In order to update it, delete
