@@ -21,7 +21,7 @@ If it is missing, you can install the latest stable release by running the follo
 $ kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml
 ```
 
-If you using Kubernetes 1.5 or earlier, you can install the latest stable release by running the following command:
+If you are using Kubernetes 1.5 or earlier, you can install the latest stable release by running the following command:
 ```shell
 $ kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard-no-rbac.yaml
 ```
