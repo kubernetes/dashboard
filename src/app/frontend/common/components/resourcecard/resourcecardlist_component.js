@@ -13,6 +13,7 @@
 // limitations under the License.
 
 const HEADER_SLOT = 'header';
+const FOOTER_SLOT = 'footer';
 
 /**
  * @final
@@ -94,6 +95,14 @@ export class ResourceCardListController {
   hasHeader() {
     return this.transclude_.isSlotFilled(HEADER_SLOT);
   }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  hasFooter() {
+    return this.transclude_.isSlotFilled(FOOTER_SLOT);
+  }
 }
 
 /**
@@ -140,8 +149,8 @@ export class ResourceCardListController {
 export const resourceCardListComponent = {
   templateUrl: 'common/components/resourcecard/resourcecardlist.html',
   transclude: {
-    'pagination': '?kdResourceCardListPagination',
     [HEADER_SLOT]: '?kdResourceCardListHeader',
+    [FOOTER_SLOT]: '?kdResourceCardListFooter',
   },
   controller: ResourceCardListController,
   bindings: {

@@ -22,7 +22,6 @@ limitations under the License.
   <kd-resource-card-list-header ng-transclude="header">
     [[Services|Label which appears above the list of such objects.]]
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
   <div ng-show="!$ctrl.serviceList.listMeta.totalItems"
        class="kd-zerostate-message"
        ng-transclude="zerostate"></div>
@@ -71,4 +70,8 @@ limitations under the License.
                    pagination-id="{{::$ctrl.getSelectId()}}"
                    total-items="::$ctrl.serviceList.listMeta.totalItems">
   </kd-service-card>
+
+  <kd-resource-card-list-footer>
+    <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
+  </kd-resource-card-list-footer>
 </kd-resource-card-list>

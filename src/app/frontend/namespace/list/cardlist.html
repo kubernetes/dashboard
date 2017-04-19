@@ -22,7 +22,6 @@ limitations under the License.
   <kd-resource-card-list-header ng-transclude="header">
     [[Namespaces|Label which appears above the list of such objects.]]
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
 
   <kd-resource-card-header-columns>
     <kd-resource-card-header-column size="small"
@@ -51,4 +50,8 @@ limitations under the License.
                      namespace="ns"
                      total-items="::$ctrl.namespaceList.listMeta.totalItems">
   </kd-namespace-card>
+
+  <kd-resource-card-list-footer>
+    <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
+  </kd-resource-card-list-footer>
 </kd-resource-card-list>

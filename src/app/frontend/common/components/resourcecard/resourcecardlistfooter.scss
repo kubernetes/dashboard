@@ -14,14 +14,17 @@
 
 @import '../../../variables';
 
-.kd-list-pagination {
+.kd-resource-card-list-footer {
   align-items: center;
-  justify-content: flex-end;
+  border-top: 1px solid $border;
+  display: flex;
 }
 
-.kd-list-pagination-controls {
-  > * {
-    align-items: center;
-    display: flex;
-  }
+.kd-resource-card-list-footer-content {
+  flex: 1;
+  padding-left: 2 * $baseline-grid;
+}
+
+.kd-resource-card-list-footer-pagination {
+  flex: 1;
 }

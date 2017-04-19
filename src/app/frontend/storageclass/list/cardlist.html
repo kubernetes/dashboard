@@ -22,7 +22,6 @@ limitations under the License.
   <kd-resource-card-list-header ng-transclude="header">
     [[Storage Classes|Label which appears above the list of such objects.]]
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
 
   <kd-resource-card-header-columns>
     <kd-resource-card-header-column size="small"
@@ -58,4 +57,8 @@ limitations under the License.
                          storage-class="storageClass"
                          pagination-id="{{::$ctrl.getSelectId()}}">
   </kd-storage-class-card>
+
+  <kd-resource-card-list-footer>
+    <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
+  </kd-resource-card-list-footer>
 </kd-resource-card-list>

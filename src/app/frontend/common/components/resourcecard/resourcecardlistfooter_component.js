@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
+const PAGINATION_SLOT = 'pagination';
 
-.kd-list-pagination {
-  align-items: center;
-  justify-content: flex-end;
-}
-
-.kd-list-pagination-controls {
-  > * {
-    align-items: center;
-    display: flex;
-  }
-}
+/**
+ * Resource card list footer component. See resource card for documentation.
+ * @type {!angular.Component}
+ */
+export const resourceCardListFooterComponent = {
+  templateUrl: 'common/components/resourcecard/resourcecardlistfooter.html',
+  transclude: {
+    [PAGINATION_SLOT]: '?kdResourceCardListPagination',
+  },
+};

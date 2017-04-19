@@ -21,7 +21,6 @@ limitations under the License.
   <kd-resource-card-list-header ng-transclude="header">
     [[Horizontal Pod Autoscalers|Label which appears above the list of such objects.]]
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
   <div ng-show="!$ctrl.horizontalPodAutoscalerList.listMeta.totalItems"
        class="kd-zerostate-message"
        ng-transclude="zerostate"></div>
@@ -71,4 +70,8 @@ limitations under the License.
                                      horizontal-pod-autoscaler="horizontalPodAutoscaler"
                                      show-scale-target="::$ctrl.showScaleTarget">
   </kd-horizontal-pod-autoscaler-card>
+
+  <kd-resource-card-list-footer>
+    <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
+  </kd-resource-card-list-footer>
 </kd-resource-card-list>

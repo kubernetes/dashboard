@@ -18,13 +18,16 @@ limitations under the License.
   <div class="kd-resource-card-list-header-wrapper">
     <div ng-transclude="header"
          class="kd-resource-card-list-header md-title"
-         ng-if="::$ctrl.hasHeader()"></div>
-    <div ng-transclude="pagination"
-         class="kd-resource-card-list-pagination"></div>
+         ng-if="::$ctrl.hasHeader()">
+    </div>
   </div>
   <div class="kd-resource-card-list"
-       ng-class="{'kd-resource-card-list-selectable': $ctrl.selectable, 'kd-resource-card-list-with-statuses': $ctrl.withStatuses}"
+       ng-class="{'kd-resource-card-list-selectable': $ctrl.selectable,
+                  'kd-resource-card-list-with-statuses': $ctrl.withStatuses}"
        ng-transclude>
+  </div>
+  <div ng-transclude="footer"
+       ng-if="::$ctrl.hasFooter()">
   </div>
   <div class="kd-resource-card-list-pending-overlay"
        ng-if="$ctrl.pending">

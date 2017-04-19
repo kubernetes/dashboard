@@ -22,7 +22,6 @@ limitations under the License.
   <kd-resource-card-list-header ng-transclude="header">
     [[Persistent Volume Claims|Label which appears above the list of such objects.]]
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
 
   <kd-resource-card-header-columns>
     <kd-resource-card-header-column size="small"
@@ -56,4 +55,8 @@ limitations under the License.
                                    persistent-volume-claim="persistentVolumeClaim"
                                    total-items="$ctrl.persistentVolumeClaimList.listMeta.totalItems">
   </kd-persistent-volume-claim-card>
+
+  <kd-resource-card-list-footer>
+    <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
+  </kd-resource-card-list-footer>
 </kd-resource-card-list>

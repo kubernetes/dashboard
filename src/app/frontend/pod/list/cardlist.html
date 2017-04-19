@@ -14,16 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card-list ng-if="::$ctrl.podList.pods"
-                       selectable="::$ctrl.selectable"
+<kd-resource-card-list selectable="::$ctrl.selectable"
                        with-statuses="::$ctrl.withStatuses"
                        select-id="{{::$ctrl.getSelectId()}}"
                        list="$ctrl.podList"
                        list-resource="$ctrl.podListResource">
-  <kd-resource-card-list-header ng-transclude="header">
+  <kd-resource-card-list-header>
     [[Pods|Label which appears above the list of such objects.]]
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
   <div ng-show="!$ctrl.podList.listMeta.totalItems"
        class="kd-zerostate-message"
        ng-transclude="zerostate"></div>
@@ -76,4 +74,8 @@ limitations under the License.
                show-metrics="::$ctrl.showMetrics()"
                total-items="::$ctrl.podList.listMeta.totalItems">
   </kd-pod-card>
+
+  <kd-resource-card-list-footer>
+    <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
+  </kd-resource-card-list-footer>
 </kd-resource-card-list>

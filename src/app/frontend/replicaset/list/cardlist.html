@@ -22,7 +22,11 @@ limitations under the License.
   <kd-resource-card-list-header ng-transclude="header">
     [[Replica Sets|Label which appears above the list of such objects.]]
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
+  <div ng-show="!$ctrl.replicaSetList.listMeta.totalItems"
+       class="kd-zerostate-message"
+       ng-transclude="zerostate">
+  </div>
+
   <kd-resource-card-header-columns ng-show="$ctrl.replicaSetList.listMeta.totalItems">
     <kd-resource-card-header-column size="small"
                                     grow="2"
@@ -68,8 +72,8 @@ limitations under the License.
                        show-resource-kind="::$ctrl.showResourceKind"
                        total-items="::$ctrl.replicaSetList.listMeta.totalItems">
   </kd-replica-set-card>
-  <div ng-show="!$ctrl.replicaSetList.listMeta.totalItems"
-       class="kd-zerostate-message"
-       ng-transclude="zerostate"></div>
 
+  <kd-resource-card-list-footer>
+    <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
+  </kd-resource-card-list-footer>
 </kd-resource-card-list>
