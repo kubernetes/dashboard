@@ -63,10 +63,11 @@ export class ResourceCardHeaderColumnController {
     this.selectId = this.resourceCardListCtrl.selectId;
     this.resourceCardHeaderColumnsCtrl.addAndSizeHeaderColumn(this, this.element_);
 
+    // If column is sortable but required resources are not provided then disable sorting support
     if (this.isSortable() &&
         (this.resourceCardListCtrl.list === undefined ||
          this.resourceCardListCtrl.listResource === undefined)) {
-      throw new Error('List and list resource have to be set on list card.');
+      this.sortable = false;
     }
 
     // Initialize default sort for AGE column

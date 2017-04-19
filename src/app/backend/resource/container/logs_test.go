@@ -21,30 +21,29 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/logs"
 )
 
-
 var log1 = logs.LogLine{
 	Timestamp: "1",
-	Content: "log1",
+	Content:   "log1",
 }
 
 var log2 = logs.LogLine{
 	Timestamp: "2",
-	Content: "log2",
+	Content:   "log2",
 }
 
 var log3 = logs.LogLine{
 	Timestamp: "3",
-	Content: "log3",
+	Content:   "log3",
 }
 
 var log4 = logs.LogLine{
 	Timestamp: "4",
-	Content: "log4",
+	Content:   "log4",
 }
 
 var log5 = logs.LogLine{
 	Timestamp: "5",
-	Content: "log5",
+	Content:   "log5",
 }
 
 func TestGetLogs(t *testing.T) {
@@ -77,7 +76,7 @@ func TestGetLogs(t *testing.T) {
 			logs.AllLogViewSelector,
 			&logs.Logs{
 				PodId:     "pod-1",
-				LogLines:  logs.LogLines{log1, log2 ,log3, log4, log5},
+				LogLines:  logs.LogLines{log1, log2, log3, log4, log5},
 				Container: "test",
 				FirstLogLineReference: logs.LogLineId{
 					LogTimestamp: "1",
@@ -108,7 +107,7 @@ func TestGetLogs(t *testing.T) {
 			},
 			&logs.Logs{
 				PodId:     "pod-1",
-				LogLines:  logs.LogLines{log2,log3},
+				LogLines:  logs.LogLines{log2, log3},
 				Container: "test",
 				FirstLogLineReference: logs.LogLineId{
 					LogTimestamp: "2",
@@ -274,13 +273,13 @@ func TestGetLogs(t *testing.T) {
 				RelativeTo:   2, // request indices 1, 2
 			},
 			&logs.Logs{
-				PodId:     "pod-1",
-				LogLines:  logs.LogLines{logs.LogLine{
+				PodId: "pod-1",
+				LogLines: logs.LogLines{logs.LogLine{
 					Timestamp: "1",
-					Content: "log2",
+					Content:   "log2",
 				}, logs.LogLine{
 					Timestamp: "1",
-					Content: "log3",
+					Content:   "log3",
 				}},
 				Container: "test",
 				FirstLogLineReference: logs.LogLineId{

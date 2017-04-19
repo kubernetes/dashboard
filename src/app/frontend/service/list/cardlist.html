@@ -29,7 +29,9 @@ limitations under the License.
 
   <kd-resource-card-header-columns ng-show="$ctrl.serviceList.listMeta.totalItems">
     <kd-resource-card-header-column size="small"
-                                    grow="2">
+                                    grow="2"
+                                    sortable="true"
+                                    sort-id="$root.SortableProperties.NAME">
       [[Name|Label 'Name' which appears as a column label in the table of services (service list view).]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small"
@@ -52,6 +54,12 @@ limitations under the License.
     <kd-resource-card-header-column size="small"
                                     grow="2">
       [[External endpoints|Label 'External endpoints' which appears as a column label in the table of services (service list view).]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="1"
+                                    sortable="true"
+                                    sort-id="$root.SortableProperties.AGE">
+      [[Age|Label 'Age' which appears as a column label in the table of ingresses (ingress list view).]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small"
                                     grow="nogrow">
