@@ -122,7 +122,7 @@ func (self ReplicationControllerCell) GetResourceSelector() *metric.ResourceSele
 	}
 }
 
-func ToCells(std []api.ReplicationController) []dataselect.DataCell {
+func toCells(std []api.ReplicationController) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
 		cells[i] = ReplicationControllerCell(std[i])
@@ -130,7 +130,7 @@ func ToCells(std []api.ReplicationController) []dataselect.DataCell {
 	return cells
 }
 
-func FromCells(cells []dataselect.DataCell) []api.ReplicationController {
+func fromCells(cells []dataselect.DataCell) []api.ReplicationController {
 	std := make([]api.ReplicationController, len(cells))
 	for i := range std {
 		std[i] = api.ReplicationController(cells[i].(ReplicationControllerCell))

@@ -84,8 +84,8 @@ func CreateReplicationControllerList(replicationControllers []api.ReplicationCon
 	cachedResources := &dataselect.CachedResources{
 		Pods: pods,
 	}
-	rcCells, metricPromises := dataselect.GenericDataSelectWithMetrics(ToCells(replicationControllers), dsQuery, cachedResources, heapsterClient)
-	replicationControllers = FromCells(rcCells)
+	rcCells, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells(replicationControllers), dsQuery, cachedResources, heapsterClient)
+	replicationControllers = fromCells(rcCells)
 
 	for _, rc := range replicationControllers {
 		matchingPods := common.FilterPodsByControllerResource(rc.Namespace, rc.UID, pods)

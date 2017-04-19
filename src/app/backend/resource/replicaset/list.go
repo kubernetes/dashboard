@@ -28,7 +28,7 @@ import (
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
-// ReplicationSetList contains a list of Replica Sets in the cluster.
+// ReplicaSetList contains a list of Replica Sets in the cluster.
 type ReplicaSetList struct {
 	ListMeta common.ListMeta `json:"listMeta"`
 
