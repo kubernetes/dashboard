@@ -12,34 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Configuration to deploy head version of the Dashboard UI compatible with
-# Kubernetes 1.6 (RBAC enabled).
+# Configuration to deploy head version of the Dashboard UI.
 #
 # Example usage: kubectl create -f <this_file>
 
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  labels:
-    app: kubernetes-dashboard-head
-  name: kubernetes-dashboard-head
-  namespace: kube-system
----
-apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: ClusterRoleBinding
-metadata:
-  name: kubernetes-dashboard-head
-  labels:
-    app: kubernetes-dashboard-head
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: cluster-admin
-subjects:
-- kind: ServiceAccount
-  name: kubernetes-dashboard-head
-  namespace: kube-system
----
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
@@ -56,6 +32,17 @@ spec:
     metadata:
       labels:
         app: kubernetes-dashboard-head
+      # Comment the following annotation if Dashboard must not be deployed on master
+      annotations:
+        scheduler.alpha.kubernetes.io/tolerations: |
+          [
+            {
+              "key": "dedicated",
+              "operator": "Equal",
+              "value": "master",
+              "effect": "NoSchedule"
+            }
+          ]
     spec:
       containers:
       - name: kubernetes-dashboard-head
@@ -75,11 +62,6 @@ spec:
             port: 9090
           initialDelaySeconds: 30
           timeoutSeconds: 30
-      serviceAccountName: kubernetes-dashboard-head
-      # Comment the following tolerations if Dashboard must not be deployed on master
-      tolerations:
-      - key: node-role.kubernetes.io/master
-        effect: NoSchedule
 ---
 kind: Service
 apiVersion: v1
