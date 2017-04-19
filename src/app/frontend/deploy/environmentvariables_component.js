@@ -94,7 +94,7 @@ export const environmentVariablesComponent = {
   controller: EnvironmentVariablesController,
   controllerAs: 'ctrl',
   templateUrl: 'deploy/environmentvariables.html',
-  bindToController: {
+  bindings: {
     'variables': '=',
   },
 };
