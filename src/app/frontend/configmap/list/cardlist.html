@@ -26,7 +26,9 @@ limitations under the License.
 
   <kd-resource-card-header-columns>
     <kd-resource-card-header-column size="small"
-                                    grow="2">
+                                    grow="2"
+                                    sortable="true"
+                                    sort-id="$root.SortableProperties.NAME">
       [[Name|Config map list header: name.]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small"
@@ -39,7 +41,9 @@ limitations under the License.
       [[Labels|Config map list header: labels.]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small"
-                                    grow="nogrow">
+                                    grow="nogrow"
+                                    sortable="true"
+                                    sort-id="$root.SortableProperties.AGE">
       [[Age|Config map list header: age.]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small"

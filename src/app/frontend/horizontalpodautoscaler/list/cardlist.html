@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card-list>
+{{$ctrl.horizontalPodAutoscalerListResource}}
+<kd-resource-card-list select-id="{{::$ctrl.getSelectId()}}"
+                       list="$ctrl.horizontalPodAutoscalerList"
+                       list-resource="$ctrl.horizontalPodAutoscalerListResource">
   <kd-resource-card-list-header ng-transclude="header">
     [[Horizontal Pod Autoscalers|Label which appears above the list of such objects.]]
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination pagination-id="jobs"
-                                    list="$ctrl.horizontalPodAutoscalerList"
-                                    list-resource="::$ctrl.horizontalPodAutoscalerListResource">
-  </kd-resource-card-list-pagination>
+  <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
   <div ng-show="!$ctrl.horizontalPodAutoscalerList.listMeta.totalItems"
        class="kd-zerostate-message"
        ng-transclude="zerostate"></div>
@@ -65,17 +65,9 @@ limitations under the License.
                                     grow="nogrow">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
-  <kd-horizontal-pod-autoscaler-card ng-if="::$ctrl.horizontalPodAutoscalerListResource"
-                                     pagination-id="horizontalpodautoscalers"
+  <kd-horizontal-pod-autoscaler-card pagination-id="{{::$ctrl.getSelectId()}}"
                                      dir-paginate="horizontalPodAutoscaler in $ctrl.horizontalPodAutoscalerList.horizontalpodautoscalers | itemsPerPage: default"
                                      total-items="::$ctrl.horizontalPodAutoscalerList.listMeta.totalItems"
-                                     horizontal-pod-autoscaler="horizontalPodAutoscaler"
-                                     show-scale-target="::$ctrl.showScaleTarget">
-  </kd-horizontal-pod-autoscaler-card>
-
-  <kd-horizontal-pod-autoscaler-card ng-if="::!$ctrl.horizontalPodAutoscalerListResource"
-                                     pagination-id="horizontalpodautoscalers"
-                                     dir-paginate="horizontalPodAutoscaler in $ctrl.horizontalPodAutoscalerList.horizontalpodautoscalers | itemsPerPage: default"
                                      horizontal-pod-autoscaler="horizontalPodAutoscaler"
                                      show-scale-target="::$ctrl.showScaleTarget">
   </kd-horizontal-pod-autoscaler-card>

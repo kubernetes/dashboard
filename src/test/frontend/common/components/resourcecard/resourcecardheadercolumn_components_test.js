@@ -65,15 +65,17 @@ describe('Resource card header column', () => {
     expect(ctrl).toBeDefined();
   });
 
-  it('should throw an error when sortable and list or list resource not defined', () => {
-    // given
-    ctrl.sortable = true;
+  it('should disable sorting when sortable is true and list or list resource is not defined',
+     () => {
+       // given
+       ctrl.sortable = true;
 
-    // then
-    expect(() => {
-      ctrl.$onInit();
-    }).toThrow(new Error('List and list resource have to be set on list card.'));
-  });
+       // when
+       ctrl.$onInit();
+
+       // then
+       expect(ctrl.sortable).toBeFalsy();
+     });
 
   it('should init ascending sorting on age column by default', () => {
     // given

@@ -38,5 +38,14 @@ limitations under the License.
       </kd-middle-ellipsis>
       <div ng-switch-default>{{::$ctrl.role.objectMeta.namespace}}</div>
     </kd-resource-card-column>
+    <kd-resource-card-column>
+      <div ng-if="::$ctrl.role.objectMeta.creationTimestamp">
+        {{::$ctrl.role.objectMeta.creationTimestamp | relativeTime}}
+        <md-tooltip>
+          {{::$ctrl.getStartedAtTooltip($ctrl.role.objectMeta.creationTimestamp)}}
+        </md-tooltip>
+      </div>
+      <div ng-if="::!$ctrl.role.objectMeta.creationTimestamp">-</div>
+    </kd-resource-card-column>
   </kd-resource-card-columns>
 </kd-resource-card>

@@ -25,7 +25,10 @@ limitations under the License.
 
   <kd-resource-card-header-columns>
     <kd-resource-card-header-column size="small"
-                                    grow="2">[[Name|Label 'Name' which appears as a column label in the table of ingresses (ingress list view).]]
+                                    grow="2"
+                                    sortable="true"
+                                    sort-id="$root.SortableProperties.NAME">
+      [[Name|Label 'Name' which appears as a column label in the table of ingresses (ingress list view).]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small"
                                     grow="1"
@@ -37,7 +40,10 @@ limitations under the License.
       [[Endpoints|Label 'endpoints' which appears as a column label in the table of ingresses (ingress list view).]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small"
-                                    grow="1">[[Age|Label 'Age' which appears as a column label in the table of ingresses (ingress list view).]]
+                                    grow="1"
+                                    sortable="true"
+                                    sort-id="$root.SortableProperties.AGE">
+      [[Age|Label 'Age' which appears as a column label in the table of ingresses (ingress list view).]]
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
   <kd-ingress-card pagination-id="{{::$ctrl.getSelectId()}}"

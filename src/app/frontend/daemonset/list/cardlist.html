@@ -26,7 +26,9 @@ limitations under the License.
 
   <kd-resource-card-header-columns>
     <kd-resource-card-header-column size="small"
-                                    grow="2">
+                                    grow="2"
+                                    sortable="true"
+                                    sort-id="$root.SortableProperties.NAME">
       [[Name|Label 'Name' which appears as a column label in the table of daemon sets (daemon set list view).]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small"
@@ -48,7 +50,9 @@ limitations under the License.
       [[Pods|Label 'Pods' which appears as a column label in the table of daemon sets (daemon set list view).]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small"
-                                    grow="1">
+                                    grow="1"
+                                    sortable="true"
+                                    sort-id="$root.SortableProperties.AGE">
       [[Age|Label 'Age' which appears as a column label in the table of daemon sets (daemon set list view).]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small"
