@@ -45,9 +45,7 @@ func buildConfigFromFlags(masterUrl, kubeconfigPath string) (*rest.Config, error
 		return kubeconfig, nil
 	}
 
-	return clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
-		&clientcmd.ClientConfigLoadingRules{ExplicitPath: kubeconfigPath},
-		&clientcmd.ConfigOverrides{ClusterInfo: api.Cluster{Server: masterUrl}}).ClientConfig()
+	return nil, nil
 }
 
 // CreateApiserverClient creates new Kubernetes Apiserver client. When kubeconfig or apiserverHost param is empty
@@ -56,22 +54,31 @@ func buildConfigFromFlags(masterUrl, kubeconfigPath string) (*rest.Config, error
 //
 // apiserverHost param is in the format of protocol://address:port/pathPrefix, e.g.http://localhost:8001.
 // kubeConfig location of kubeconfig file
-func CreateApiserverClient(apiserverHost string, kubeConfig string) (*kubernetes.Clientset, *rest.Config, error) {
-	cfg, err := buildConfigFromFlags(apiserverHost, kubeConfig)
+func CreateApiserverClient(apiserverHost string, kubeConfig string) (*kubernetes.Clientset, clientcmd.ClientConfig, error) {
+	restCfg, err := buildConfigFromFlags(apiserverHost, kubeConfig)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	cfg.QPS = defaultQPS
-	cfg.Burst = defaultBurst
-	cfg.ContentType = "application/vnd.kubernetes.protobuf"
+	cmdClientCfg := clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
+		&clientcmd.ClientConfigLoadingRules{ExplicitPath: kubeConfig},
+		&clientcmd.ConfigOverrides{ClusterInfo: api.Cluster{Server: apiserverHost}})
 
-	log.Printf("Creating API server client for %s", cfg.Host)
+	if restCfg == nil {
+		// not in-cluster stage
+		restCfg, _ = cmdClientCfg.ClientConfig()
+	}
 
-	client, err := kubernetes.NewForConfig(cfg)
+	restCfg.QPS = defaultQPS
+	restCfg.Burst = defaultBurst
+	restCfg.ContentType = "application/vnd.kubernetes.protobuf"
+
+	log.Printf("Creating API server client for %s", restCfg.Host)
+
+	client, err := kubernetes.NewForConfig(restCfg)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	return client, cfg, nil
+	return client, cmdClientCfg, nil
 }

@@ -199,7 +199,7 @@ func TestDeployAppFromFileWithValidContent(t *testing.T) {
 	}
 	fakeCreateObjectFromInfo := func(info *kubectlResource.Info) (bool, error) { return true, nil }
 
-	isDeployed, err := DeployAppFromFile(spec, fakeCreateObjectFromInfo)
+	isDeployed, err := DeployAppFromFile(spec, fakeCreateObjectFromInfo, nil)
 	if err != nil {
 		t.Errorf("Expected err to be %#v but got %#v", nil, err)
 	}
@@ -218,7 +218,7 @@ func TestDeployAppFromFileWithInvalidContent(t *testing.T) {
 	// return is set to true to check if the validation prior to this function really works
 	fakeCreateObjectFromInfo := func(info *kubectlResource.Info) (bool, error) { return true, nil }
 
-	isDeployed, err := DeployAppFromFile(spec, fakeCreateObjectFromInfo)
+	isDeployed, err := DeployAppFromFile(spec, fakeCreateObjectFromInfo, nil)
 	if err == nil {
 		t.Errorf("Expected return value to have an error but got %#v", nil)
 	}

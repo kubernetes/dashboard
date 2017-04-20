@@ -25,6 +25,7 @@ import (
 	client "k8s.io/client-go/kubernetes"
 	api "k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
+	"k8s.io/client-go/tools/clientcmd"
 	cmdutil "k8s.io/kubernetes/pkg/kubectl/cmd/util"
 	kubectlResource "k8s.io/kubernetes/pkg/kubectl/resource"
 )
@@ -290,11 +291,12 @@ func CreateObjectFromInfoFn(info *kubectlResource.Info) (bool, error) {
 
 // DeployAppFromFile deploys an app based on the given yaml or json file.
 func DeployAppFromFile(spec *AppDeploymentFromFileSpec,
-	createObjectFromInfoFn createObjectFromInfo) (bool, error) {
+	createObjectFromInfoFn createObjectFromInfo,
+	clientConfig clientcmd.ClientConfig) (bool, error) {
 	const emptyCacheDir = ""
 	validate := spec.Validate
 
-	factory := cmdutil.NewFactory(nil)
+	factory := cmdutil.NewFactory(clientConfig)
 	schema, err := factory.Validator(validate, emptyCacheDir)
 	if err != nil {
 		return false, err
