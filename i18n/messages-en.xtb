@@ -1001,6 +1001,8 @@
   <translation id="4686932628263410864" key="MSG_POD_LIST_LIST_0" desc="Title for graph card displaying CPU metric of pods.">CPU usage</translation>
   <translation id="6787006912063616508" key="MSG_POD_LIST_LIST_1" desc="Title for graph card displaying memory metric of pods.">Memory usage</translation>
   <translation id="2972892229238972501" key="MSG_POD_LIST_LIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in these pods.</translation>
+  <translation id="4285225015227466682" key="MSG_POD_LIST_LIST_3" desc="Title for pods card zerostate.">There is nothing to display here</translation>
+  <translation id="5745727237834321067" key="MSG_POD_LIST_LIST_4" desc="Text for pods card zerostate.">There are no Pods to display.</translation>
   <translation id="1014088790164786434" key="MSG_POD_LIST_POD_TERMINATED_STATUS" desc="Status message showing a terminated status with [reason].">Terminated: <ph name="REASON"/></translation>
   <translation id="3724043031520273690" key="MSG_POD_LIST_POD_WAITING_STATUS" desc="Status message showing a waiting status with [reason].">Waiting: <ph name="REASON"/></translation>
   <translation id="240453070925206277" key="MSG_POD_LIST_STARTED_AT_TOOLTIP" desc="Tooltip 'Started at [some date]' showing the exact start time of the pod.">Started at <ph name="START_DATE"/> UTC</translation>
@@ -1217,6 +1219,7 @@
   <translation id="2324096734502898237" key="MSG_RESOURCEQUOTA_DETAIL_STATUS_0" desc="Resource quota details status section resource name.">Resource Name</translation>
   <translation id="1028467341074968941" key="MSG_RESOURCEQUOTA_DETAIL_STATUS_1" desc="Resource quota details status section hard.">Hard</translation>
   <translation id="1101311215261110165" key="MSG_RESOURCEQUOTA_DETAIL_STATUS_2" desc="Resource quota details status section used.">Used</translation>
+  <translation id="5666870883139874190" key="MSG_RESOURCE_CARD_LIST_FILTERING_ERROR" desc="Message shown to the user when there is a filtering error.">Filtering error</translation>
   <translation id="3641265385665997534" key="MSG_RESOURCE_CARD_LIST_PAGINATION_ERROR" desc="Message shown to the user when there is a pagination error.">Pagination error</translation>
   <translation id="8315383091892527627" key="MSG_RESOURCE_CARD_LIST_SORT_ERROR" desc="Message shown to the user when there is a sort error.">Sort error</translation>
   <translation id="6881667150857464035" key="MSG_ROLELIST_ROLECARDLIST_0" desc="Label which appears above the list of such objects.">Roles</translation>

@@ -163,7 +163,7 @@ export const resourceCardListComponent = {
      */
     /** {string|undefined} unique data select id */
     'selectId': '@',
-    /** {Array<Object>|undefined} List of objects to paginate */
+    /** {Array<Object>|undefined} List of objects to apply data selection */
     'list': '=',
     /** {angular.$resource|undefined} */
     'listResource': '<',

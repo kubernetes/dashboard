@@ -21,12 +21,13 @@ limitations under the License.
                        list-resource="$ctrl.podListResource">
   <kd-resource-card-list-header>
     [[Pods|Label which appears above the list of such objects.]]
+    <kd-resource-card-list-filter></kd-resource-card-list-filter>
   </kd-resource-card-list-header>
   <div ng-show="!$ctrl.podList.listMeta.totalItems"
        class="kd-zerostate-message"
        ng-transclude="zerostate"></div>
 
-  <kd-resource-card-header-columns ng-show="::$ctrl.podList.listMeta.totalItems">
+  <kd-resource-card-header-columns ng-show="$ctrl.podList.listMeta.totalItems">
     <kd-resource-card-header-column size="small"
                                     grow="2"
                                     sortable="true"

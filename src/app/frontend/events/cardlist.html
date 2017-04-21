@@ -24,7 +24,7 @@ limitations under the License.
       <kd-resource-card-list-header>
         [[Events|Label which appears above the list of such objects.]]
       </kd-resource-card-list-header>
-      <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
+
       <kd-resource-card-header-columns ng-show="$ctrl.hasEvents()">
         <kd-resource-card-header-column size="medium"
                                         grow="4">
@@ -85,6 +85,10 @@ limitations under the License.
         <div class="kd-zerostate-title">[[There is nothing to display here|Title of section when there are no events.]]</div>
         <div class="kd-zerostate-text">[[It is possible that all events have expired.|User help on the events page when no events are to be displayed.]]</div>
       </kd-zerostate>
+
+      <kd-resource-card-list-footer>
+        <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
+      </kd-resource-card-list-footer>
     </kd-resource-card-list>
   </kd-content>
 </kd-content-card>

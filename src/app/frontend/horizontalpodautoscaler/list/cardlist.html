@@ -14,11 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-{{$ctrl.horizontalPodAutoscalerListResource}}
 <kd-resource-card-list select-id="{{::$ctrl.getSelectId()}}"
                        list="$ctrl.horizontalPodAutoscalerList"
                        list-resource="$ctrl.horizontalPodAutoscalerListResource">
-  <kd-resource-card-list-header ng-transclude="header">
+  <kd-resource-card-list-header>
     [[Horizontal Pod Autoscalers|Label which appears above the list of such objects.]]
   </kd-resource-card-list-header>
   <div ng-show="!$ctrl.horizontalPodAutoscalerList.listMeta.totalItems"

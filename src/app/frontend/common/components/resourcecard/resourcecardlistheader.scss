@@ -14,27 +14,38 @@
 
 @import '../../../variables';
 
-.kd-resource-card-list {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  overflow-y: auto;
-}
-
-.kd-resource-card-list-wrapper {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-
-.kd-resource-card-list-pending-overlay {
+.kd-resource-card-list-footer {
   align-items: center;
-  background-color: $overlay-color;
-  bottom: 0;
+  border-top: 1px solid $border;
   display: flex;
-  justify-content: center;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
+}
+
+kd-resource-card-list-header {
+  align-items: center;
+  border-bottom: 1px solid $border;
+  display: flex;
+  flex-direction: row;
+  height: 7 * $baseline-grid;
+  justify-content: space-between;
+  padding-left: 2 * $baseline-grid;
+}
+
+.kd-resource-card-list-header {
+  flex-grow: 1;
+  font-weight: $regular-font-weight;
+  height: 7 * $baseline-grid;
+  line-height: 7 * $baseline-grid;
+  margin: 0;
+
+  kd-title {
+    font-weight: $regular-font-weight;
+
+    a {
+      color: $foreground-1;
+    }
+  }
+}
+
+.kd-resource-card-list-header-filter {
+  flex: 1;
 }

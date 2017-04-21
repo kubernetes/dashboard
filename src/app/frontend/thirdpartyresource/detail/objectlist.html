@@ -20,15 +20,14 @@ limitations under the License.
                        list-resource="$ctrl.objectListResource"
                        select-id="{{::$ctrl.getSelectId()}}"
                        list="$ctrl.objectList">
-  <kd-resource-card-list-header ng-transclude="header">
+  <kd-resource-card-list-header>
     [[Objects|Label which appears above the list of such objects.]]
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination>
-  </kd-resource-card-list-pagination>
   <div ng-show="!$ctrl.objectList.listMeta.totalItems"
        class="kd-zerostate-message"
        ng-transclude="zerostate">
   </div>
+
   <kd-resource-card-header-columns ng-show="::$ctrl.objectList.listMeta.totalItems">
     <kd-resource-card-header-column size="small"
                                     grow="1">
@@ -45,4 +44,8 @@ limitations under the License.
                   object="object"
                   total-items="::$ctrl.objectList.listMeta.totalItems">
   </kd-object-card>
+
+  <kd-resource-card-list-footer>
+    <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
+  </kd-resource-card-list-footer>
 </kd-resource-card-list>
