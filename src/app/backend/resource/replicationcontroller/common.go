@@ -118,7 +118,7 @@ func (self ReplicationControllerCell) GetResourceSelector() *metric.ResourceSele
 		Namespace:    self.ObjectMeta.Namespace,
 		ResourceType: common.ResourceKindReplicationController,
 		ResourceName: self.ObjectMeta.Name,
-		Selector:     self.ObjectMeta.Labels,
+		UID:          self.UID,
 	}
 }
 

@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"k8s.io/apimachinery/pkg/apis/meta/v1"
 	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/apimachinery/pkg/types"
 )
 
 // DerivedResources is a map from a derived resource(a resource that is not supported by heapster)
@@ -30,10 +30,10 @@ type ResourceSelector struct {
 	ResourceType common.ResourceKind
 	// Name of this resource.
 	ResourceName string
-	// Selector used to identify this resource (if any).
+	// Selector used to identify this resource (should be used only for Deployments!).
 	Selector map[string]string
-	// Newer version of selector used to identify this resource (if any).
-	LabelSelector *v1.LabelSelector
+	// UID is resource unique identifier.
+	UID types.UID
 }
 
 // GetHeapsterSelector calculates and returns HeapsterSelector that can be used to download metrics
@@ -64,12 +64,17 @@ func (self *ResourceSelector) getMyPodsFromCache(cachedPods []api.Pod) ([]api.Po
 	switch {
 	case cachedPods == nil:
 		return nil, fmt.Errorf(`getMyPodsFromCache: pods were not available in cache. Required for resource type: "%s"`, self.ResourceType)
-	case self.LabelSelector != nil:
-		return common.FilterNamespacedPodsByLabelSelector(cachedPods, self.Namespace, self.LabelSelector), nil
-	case self.Selector != nil:
-		return filterNamespacedPodsBySelector(cachedPods, self.Namespace, self.Selector), nil
+	case self.ResourceType == common.ResourceKindDeployment:
+		// TODO(maciaszczykm): Use common.FilterDeploymentPodsByOwnerReference() once it will be possible to get list of replica sets here.
+		var matchingPods []api.Pod
+		for _, pod := range cachedPods {
+			if pod.ObjectMeta.Namespace == self.Namespace && common.IsSelectorMatching(self.Selector, pod.Labels) {
+				matchingPods = append(matchingPods, pod)
+			}
+		}
+		return matchingPods, nil
 	default:
-		return nil, fmt.Errorf(`getMyPodsFromCache: did not find any resource selector for resource type: "%s"`, self.ResourceType)
+		return common.FilterPodsByOwnerReference(self.Namespace, self.UID, cachedPods), nil
 	}
 }
 
@@ -79,16 +84,4 @@ func podListToNameList(podList []api.Pod) (result []string) {
 		result = append(result, pod.ObjectMeta.Name)
 	}
 	return
-}
-
-// TODO
-func filterNamespacedPodsBySelector(pods []api.Pod, namespace string, resourceSelector map[string]string) []api.Pod {
-	var matchingPods []api.Pod
-	for _, pod := range pods {
-		if pod.ObjectMeta.Namespace == namespace &&
-			common.IsSelectorMatching(resourceSelector, pod.Labels) {
-			matchingPods = append(matchingPods, pod)
-		}
-	}
-	return matchingPods
 }
