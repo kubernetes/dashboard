@@ -1,5 +1,4 @@
-
-// Copyright 2015 Google Inc. All Rights Reserved.
+// Copyright 2016 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,19 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {VerberService} from './verber_service';
+/**
+ * @fileoverview Externs for https://github.com/omichelsen/angular-clipboard
+ *
+ * @externs
+ */
+
+const clipboard = {};
 
 /**
- * Angular module containing navigation chrome for the application.
+ * @typedef {{
+ *   supported: boolean,
+ * }}
  */
-export default angular
-    .module(
-        'kubernetesDashboard.common.resource',
-        [
-          'angular-clipboard',
-          'ngMaterial',
-          'ui.router',
-          'ngResource',
-          'ng.jsoneditor',
-        ])
-    .service('kdResourceVerberService', VerberService);
+clipboard.Clipboard;
+
+/**
+ * @param {string} text
+ * @return
+ */
+clipboard.Clipboard.prototype.copyText = function(text) {};
