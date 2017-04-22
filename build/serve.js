@@ -46,11 +46,11 @@ function getBackendArgs(mode) {
   let args = [`--heapster-host=${conf.backend.heapsterServerHost}`];
 
   if (mode === conf.backend.production) {
-    args.push(`--port=${conf.frontend.serverPort}`);
+    args.push(`--insecure-port=${conf.frontend.serverPort}`);
   }
 
   if (mode === conf.backend.development) {
-    args.push(`--port=${conf.backend.devServerPort}`);
+    args.push(`--insecure-port=${conf.backend.devServerPort}`);
   }
 
   if (conf.backend.envKubeconfig) {
