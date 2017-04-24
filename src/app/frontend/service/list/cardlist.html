@@ -20,7 +20,9 @@ limitations under the License.
                        list="$ctrl.serviceList"
                        list-resource="::$ctrl.serviceListResource">
   <kd-resource-card-list-header>
-    [[Services|Label which appears above the list of such objects.]]
+    <kd-resource-card-list-title ng-transclude="header">
+      [[Services|Label which appears above the list of such objects.]]
+    </kd-resource-card-list-title>
   </kd-resource-card-list-header>
   <div ng-show="!$ctrl.serviceList.listMeta.totalItems"
        class="kd-zerostate-message"

@@ -19,7 +19,9 @@ limitations under the License.
                        list="$ctrl.ingressList"
                        list-resource="$ctrl.ingressListResource">
   <kd-resource-card-list-header>
-    [[Ingresses|Label which appears above the list of such objects.]]
+    <kd-resource-card-list-title ng-transclude="header">
+      [[Ingresses|Label which appears above the list of such objects.]]
+    </kd-resource-card-list-title>
   </kd-resource-card-list-header>
 
   <kd-resource-card-header-columns>

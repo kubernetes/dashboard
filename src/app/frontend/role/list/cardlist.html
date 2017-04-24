@@ -20,7 +20,9 @@ limitations under the License.
                        list="$ctrl.roleList"
                        list-resource="$ctrl.roleListResource">
   <kd-resource-card-list-header>
-    [[Roles|Label which appears above the list of such objects.]]
+    <kd-resource-card-list-title ng-transclude="header">
+      [[Roles|Label which appears above the list of such objects.]]
+    </kd-resource-card-list-title>
   </kd-resource-card-list-header>
 
   <kd-resource-card-header-columns>

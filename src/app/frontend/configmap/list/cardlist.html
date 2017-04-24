@@ -20,7 +20,9 @@ limitations under the License.
                        list="$ctrl.configMapList"
                        list-resource="$ctrl.configMapListResource">
   <kd-resource-card-list-header>
-    [[Config Maps|Label which appears above the list of such objects.]]
+    <kd-resource-card-list-title ng-transclude="header">
+      [[Config Maps|Label which appears above the list of such objects.]]
+    </kd-resource-card-list-title>
   </kd-resource-card-list-header>
 
   <kd-resource-card-header-columns>

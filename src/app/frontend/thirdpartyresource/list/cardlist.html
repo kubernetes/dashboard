@@ -19,7 +19,9 @@ limitations under the License.
                        list="$ctrl.thirdPartyResourceList"
                        list-resource="$ctrl.thirdPartyResourceListResource">
   <kd-resource-card-list-header>
-    [[Third Party Resources|Label which appears above the list of such objects.]]
+    <kd-resource-card-list-title ng-transclude="header">
+      [[Third Party Resources|Label which appears above the list of such objects.]]
+    </kd-resource-card-list-title>
   </kd-resource-card-list-header>
 
   <kd-resource-card-header-columns>

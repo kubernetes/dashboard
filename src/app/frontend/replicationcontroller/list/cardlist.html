@@ -20,7 +20,9 @@ limitations under the License.
                        list="$ctrl.replicationControllerList"
                        list-resource="$ctrl.replicationControllerListResource">
   <kd-resource-card-list-header>
-    [[Replication Controllers|Label which appears above the list of such objects.]]
+    <kd-resource-card-list-title ng-transclude="header">
+      [[Replication Controllers|Label which appears above the list of such objects.]]
+    </kd-resource-card-list-title>
   </kd-resource-card-list-header>
 
   <kd-resource-card-header-columns>

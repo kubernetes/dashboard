@@ -21,7 +21,9 @@ limitations under the License.
                        select-id="{{::$ctrl.getSelectId()}}"
                        list="$ctrl.objectList">
   <kd-resource-card-list-header>
-    [[Objects|Label which appears above the list of such objects.]]
+    <kd-resource-card-list-title ng-transclude="header">
+      [[Objects|Label which appears above the list of such objects.]]
+    </kd-resource-card-list-title>
   </kd-resource-card-list-header>
   <div ng-show="!$ctrl.objectList.listMeta.totalItems"
        class="kd-zerostate-message"

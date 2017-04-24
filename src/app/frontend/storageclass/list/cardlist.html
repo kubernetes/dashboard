@@ -20,7 +20,9 @@ limitations under the License.
                        list="$ctrl.storageClassList"
                        list-resource="$ctrl.storageClassListResource">
   <kd-resource-card-list-header>
-    [[Storage Classes|Label which appears above the list of such objects.]]
+    <kd-resource-card-list-title ng-transclude="header">
+      [[Storage Classes|Label which appears above the list of such objects.]]
+    </kd-resource-card-list-title>
   </kd-resource-card-list-header>
 
   <kd-resource-card-header-columns>

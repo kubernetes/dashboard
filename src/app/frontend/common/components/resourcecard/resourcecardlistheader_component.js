@@ -13,6 +13,7 @@
 // limitations under the License.
 
 const FILTER_SLOT = 'filter';
+const TITLE_SLOT = 'title';
 
 /**
  * @final
@@ -44,6 +45,7 @@ export const resourceCardListHeaderComponent = {
   templateUrl: 'common/components/resourcecard/resourcecardlistheader.html',
   controller: ResourceCardListHeaderController,
   transclude: {
+    [TITLE_SLOT]: '?kdResourceCardListTitle',
     [FILTER_SLOT]: '?kdResourceCardListFilter',
   },
 };

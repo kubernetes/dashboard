@@ -14,8 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div ng-transclude
+<div ng-transclude="title"
      class="kd-resource-card-list-header md-title"></div>
+<div ng-transclude></div>
 <div ng-transclude="filter"
      ng-if="::$ctrl.isFilterSlotFilled()"
      class="kd-resource-card-list-header-filter"></div>

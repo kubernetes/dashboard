@@ -20,7 +20,9 @@ limitations under the License.
                        list="$ctrl.replicaSetList"
                        list-resource="::$ctrl.replicaSetListResource">
   <kd-resource-card-list-header>
-    [[Replica Sets|Label which appears above the list of such objects.]]
+    <kd-resource-card-list-title ng-transclude="header">
+      [[Replica Sets|Label which appears above the list of such objects.]]
+    </kd-resource-card-list-title>
   </kd-resource-card-list-header>
   <div ng-show="!$ctrl.replicaSetList.listMeta.totalItems"
        class="kd-zerostate-message"
