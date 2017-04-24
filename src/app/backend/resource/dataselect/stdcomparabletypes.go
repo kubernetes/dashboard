@@ -32,7 +32,7 @@ func (self StdComparableInt) Compare(otherV ComparableValue) int {
 	return intsCompare(int(self), int(other))
 }
 
-func (self StdComparableInt) StartsWith(otherV ComparableValue) bool {
+func (self StdComparableInt) Contains(otherV ComparableValue) bool {
 	return self.Compare(otherV) == 0
 }
 
@@ -43,9 +43,9 @@ func (self StdComparableString) Compare(otherV ComparableValue) int {
 	return strings.Compare(string(self), string(other))
 }
 
-func (self StdComparableString) StartsWith(otherV ComparableValue) bool {
+func (self StdComparableString) Contains(otherV ComparableValue) bool {
 	other := otherV.(StdComparableString)
-	return strings.HasPrefix(string(other), string(self))
+	return strings.Contains(string(self), string(other))
 }
 
 // StdComparableRFC3339Timestamp takes RFC3339 Timestamp strings and compares them as TIMES. In case of time parsing error compares values as strings.
@@ -65,7 +65,7 @@ func (self StdComparableRFC3339Timestamp) Compare(otherV ComparableValue) int {
 	}
 }
 
-func (self StdComparableRFC3339Timestamp) StartsWith(otherV ComparableValue) bool {
+func (self StdComparableRFC3339Timestamp) Contains(otherV ComparableValue) bool {
 	return self.Compare(otherV) == 0
 }
 
@@ -76,7 +76,7 @@ func (self StdComparableTime) Compare(otherV ComparableValue) int {
 	return ints64Compare(time.Time(self).Unix(), time.Time(other).Unix())
 }
 
-func (self StdComparableTime) StartsWith(otherV ComparableValue) bool {
+func (self StdComparableTime) Contains(otherV ComparableValue) bool {
 	return self.Compare(otherV) == 0
 }
 

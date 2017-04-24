@@ -59,7 +59,7 @@ type ComparableValue interface {
 	// Compares self with other value. Returns 1 if other value is smaller, 0 if they are the same, -1 if other is larger.
 	Compare(ComparableValue) int
 	// Returns true if self value contains or is equal to other value, false otherwise.
-	StartsWith(ComparableValue) bool
+	Contains(ComparableValue) bool
 }
 
 // SelectableData contains all the required data to perform data selection.
@@ -124,7 +124,7 @@ func (self *DataSelector) Filter() *DataSelector {
 				matches = false
 				continue
 			}
-			if !filterBy.Value.StartsWith(v) {
+			if !v.Contains(filterBy.Value) {
 				matches = false
 				continue
 			}

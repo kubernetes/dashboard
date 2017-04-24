@@ -88,7 +88,7 @@ export const resourceCardListFilterComponent = {
   controller: ResourceCardListFilterController,
   require: {
     'resourceCardListCtrl': '^kdResourceCardList',
-    // Make sure that pagination can be only placed in a footer
+    // Make sure that filtering can be only placed in a header
     'resourceCardListHeader': '^^kdResourceCardListHeader',
   },
 };
