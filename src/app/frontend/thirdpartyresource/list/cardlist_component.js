@@ -52,6 +52,8 @@ export const thirdPartyResourceCardListComponent = {
   transclude: {
     // Optional header that is transcluded instead of the default one.
     'header': '?kdHeader',
+    // Optional zerostate content that is shown when there are zero items.
+    'zerostate': '?kdEmptyListText',
   },
   controller: ThirdPartyResourceCardListController,
   templateUrl: 'thirdpartyresource/list/cardlist.html',

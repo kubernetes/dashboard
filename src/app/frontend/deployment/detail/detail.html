@@ -32,14 +32,9 @@ limitations under the License.
   <kd-content>
     <kd-replica-set-card-list replica-set-list="::ctrl.newReplicaSetList">
       <kd-header>[[New Replica Set|Title 'New Replica Set' for the newly created replica set view, on the deployment details page.]]</kd-header>
-      <kd-zerostate>
-        <div class="kd-zerostate-title">
-          [[There is nothing to display here|Title for new replica sets card zero-state in deployment details page.]]
-        </div>
-        <div class="kd-zerostate-text">
-          [[There are currently no new Replica Sets on this Deployment.|Text for new replica sets card zero-state in deployment details page.]]
-        </div>
-      </kd-zerostate>
+      <kd-empty-list-text>
+        [[There are currently no new Replica Sets on this Deployment.|Text for new replica sets card zero-state in deployment details page.]]
+      </kd-empty-list-text>
     </kd-replica-set-card-list>
   </kd-content>
 </kd-content-card>
@@ -49,14 +44,9 @@ limitations under the License.
     <kd-replica-set-card-list replica-set-list="::ctrl.deploymentDetail.oldReplicaSetList"
                               replica-set-list-resource="::ctrl.oldReplicaSetListResource">
       <kd-header>[[Old Replica Sets|Title 'Old Replica Sets' for the old replica sets view, on the deployment details page.]]</kd-header>
-      <kd-zerostate>
-        <div class="kd-zerostate-title">
-          [[There is nothing to display here|Title for old replica sets cards zero-state in deployment details page.]]
-        </div>
-        <div class="kd-zerostate-text">
-          [[This Deployment does not have any old replica sets|Text for old replica sets card zero-state in deployment details page.]]
-        </div>
-      </kd-zerostate>
+      <kd-empty-list-text>
+        [[This Deployment does not have any old replica sets|Text for old replica sets card zero-state in deployment details page.]]
+      </kd-empty-list-text>
     </kd-replica-set-card-list>
   </kd-content>
 </kd-content-card>
@@ -64,10 +54,9 @@ limitations under the License.
 <kd-content-card>
   <kd-content>
     <kd-horizontal-pod-autoscaler-card-list horizontal-pod-autoscaler-list="::ctrl.deploymentDetail.horizontalPodAutoscalerList">
-      <kd-zerostate>
-        <div class="kd-zerostate-title">[[There is nothing to display here|Title for horizontal pod autoscalers card zerostate in replica set details page.]]</div>
-        <div class="kd-zerostate-text">[[There are currently no Horizontal Pod Autoscalers targeting this Deployment.|Text for horizontal pod autoscalers card zerostate in replica set details page.]]</div>
-      </kd-zerostate>
+      <kd-empty-list-text>
+        [[There are currently no Horizontal Pod Autoscalers targeting this Deployment.|Text for horizontal pod autoscalers card zerostate in replica set details page.]]
+      </kd-empty-list-text>
     </kd-horizontal-pod-autoscaler-card-list>
   </kd-content>
 </kd-content-card>

@@ -25,7 +25,12 @@ limitations under the License.
     </kd-resource-card-list-title>
   </kd-resource-card-list-header>
 
-  <kd-resource-card-header-columns>
+  <kd-zero-state ng-if="!$ctrl.roleList.listMeta.totalItems">
+    <kd-zero-state-text ng-transclude="zerostate">
+      [[There are no Roles to display.|Text for role card list zerostate.]]
+    </kd-zero-state-text>
+  </kd-zero-state>
+  <kd-resource-card-header-columns ng-show="$ctrl.roleList.listMeta.totalItems">
     <kd-resource-card-header-column size="small"
                                     grow="2"
                                     sortable="true"

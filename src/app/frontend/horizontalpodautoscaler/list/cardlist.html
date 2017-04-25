@@ -22,10 +22,12 @@ limitations under the License.
       [[Horizontal Pod Autoscalers|Label which appears above the list of such objects.]]
     </kd-resource-card-list-title>
   </kd-resource-card-list-header>
-  <div ng-show="!$ctrl.horizontalPodAutoscalerList.listMeta.totalItems"
-       class="kd-zerostate-message"
-       ng-transclude="zerostate"></div>
 
+  <kd-zero-state ng-if="!$ctrl.horizontalPodAutoscalerList.listMeta.totalItems">
+    <kd-zero-state-text ng-transclude="zerostate">
+      [[There are no Horizontal Pod Autoscalers to display.|Text for horizontal pod autoscaler card list zerostate.]]
+    </kd-zero-state-text>
+  </kd-zero-state>
   <kd-resource-card-header-columns ng-show="$ctrl.horizontalPodAutoscalerList.listMeta.totalItems">
     <kd-resource-card-header-column size="small"
                                     grow="2">

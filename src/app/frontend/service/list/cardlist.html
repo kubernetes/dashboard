@@ -24,10 +24,12 @@ limitations under the License.
       [[Services|Label which appears above the list of such objects.]]
     </kd-resource-card-list-title>
   </kd-resource-card-list-header>
-  <div ng-show="!$ctrl.serviceList.listMeta.totalItems"
-       class="kd-zerostate-message"
-       ng-transclude="zerostate"></div>
 
+  <kd-zero-state ng-if="!$ctrl.serviceList.listMeta.totalItems">
+    <kd-zero-state-text ng-transclude="zerostate">
+      [[There are no Services to display.|Text for service card list zerostate.]]
+    </kd-zero-state-text>
+  </kd-zero-state>
   <kd-resource-card-header-columns ng-show="$ctrl.serviceList.listMeta.totalItems">
     <kd-resource-card-header-column size="small"
                                     grow="2"

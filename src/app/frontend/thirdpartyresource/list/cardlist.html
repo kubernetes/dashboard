@@ -24,7 +24,12 @@ limitations under the License.
     </kd-resource-card-list-title>
   </kd-resource-card-list-header>
 
-  <kd-resource-card-header-columns>
+  <kd-zero-state ng-if="!$ctrl.thirdPartyResourceList.listMeta.totalItems">
+    <kd-zero-state-text ng-transclude="zerostate">
+      [[There are no Third Party Resources to display.|Text for third party resource card list zerostate.]]
+    </kd-zero-state-text>
+  </kd-zero-state>
+  <kd-resource-card-header-columns ng-show="$ctrl.thirdPartyResourceList.listMeta.totalItems">
     <kd-resource-card-header-column size="small"
                                     grow="1">
       [[Name|Label 'Name' which appears as a column label in the table of third party resources (thirdpartyresource list view).]]

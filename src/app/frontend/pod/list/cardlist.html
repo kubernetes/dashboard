@@ -25,10 +25,12 @@ limitations under the License.
     </kd-resource-card-list-title>
     <kd-resource-card-list-filter></kd-resource-card-list-filter>
   </kd-resource-card-list-header>
-  <div ng-show="!$ctrl.podList.listMeta.totalItems"
-       class="kd-zerostate-message"
-       ng-transclude="zerostate"></div>
 
+  <kd-zero-state ng-if="!$ctrl.podList.listMeta.totalItems">
+    <kd-zero-state-text ng-transclude="zerostate">
+      [[There are no Pods to display.|Text for pods card list zerostate.]]
+    </kd-zero-state-text>
+  </kd-zero-state>
   <kd-resource-card-header-columns ng-show="$ctrl.podList.listMeta.totalItems">
     <kd-resource-card-header-column size="small"
                                     grow="2"

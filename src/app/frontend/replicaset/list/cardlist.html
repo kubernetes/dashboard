@@ -24,11 +24,12 @@ limitations under the License.
       [[Replica Sets|Label which appears above the list of such objects.]]
     </kd-resource-card-list-title>
   </kd-resource-card-list-header>
-  <div ng-show="!$ctrl.replicaSetList.listMeta.totalItems"
-       class="kd-zerostate-message"
-       ng-transclude="zerostate">
-  </div>
 
+  <kd-zero-state ng-if="!$ctrl.replicaSetList.listMeta.totalItems">
+    <kd-zero-state-text ng-transclude="zerostate">
+      [[There are no Replica Sets to display.|Text for replica set card list zerostate.]]
+    </kd-zero-state-text>
+  </kd-zero-state>
   <kd-resource-card-header-columns ng-show="$ctrl.replicaSetList.listMeta.totalItems">
     <kd-resource-card-header-column size="small"
                                     grow="2"
