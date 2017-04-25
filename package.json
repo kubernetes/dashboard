@@ -21,7 +21,7 @@
     "browserify-istanbul": "~2.0.0",
     "clang-format": "1.0.49",
     "del": "~2.2.2",
-    "eslint-plugin-angular": "~2.3.0",
+    "eslint-plugin-angular": "~2.4.0",
     "file-exists": "2.0.0",
     "google-closure-compiler": "~20170409.0.0",
     "gulp": "~3.9.1",
