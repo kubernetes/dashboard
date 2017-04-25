@@ -48,6 +48,10 @@ class ResourceCardListFilterController {
     }
   }
 
+  /**
+   * @export
+   * @return {boolean}
+   */
   shouldEnable() {
     return this.selectId_ !== undefined && this.selectId_.length > 0;
   }
@@ -58,6 +62,12 @@ class ResourceCardListFilterController {
    */
   shouldKeepSearchOpen() {
     return this.inputText.length > 0;
+  }
+
+  /** @export */
+  clearInput() {
+    this.inputText = '';
+    this.onTextUpdate();
   }
 
   /** @export */

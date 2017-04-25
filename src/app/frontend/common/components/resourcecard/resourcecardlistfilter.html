@@ -17,13 +17,27 @@ limitations under the License.
 <div class="kd-resource-card-list-filter-wrapper">
   <div class="kd-search-container">
     <input ng-model="$ctrl.inputText"
-           ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }"
+           ng-model-options="{
+            updateOn: 'default blur',
+            debounce: {
+             'default': 100,
+             'blur': 0
+            }
+           }"
            ng-change="$ctrl.onTextUpdate()"
            ng-class="{'kd-search-input-keep-open': $ctrl.shouldKeepSearchOpen()}"
            name="search"
-           type="text"
+           type="search"
            placeholder="Search"
            class="kd-search-input">
-    <md-icon class="material-icons kd-search-icon">search</md-icon>
+    <md-icon class="material-icons kd-search-icon"
+             ng-if="!$ctrl.shouldKeepSearchOpen()">
+      search
+    </md-icon>
+    <md-icon class="material-icons kd-clear-icon"
+             ng-if="$ctrl.shouldKeepSearchOpen()"
+             ng-click="$ctrl.clearInput()">
+      close
+    </md-icon>
   </div>
 </div>

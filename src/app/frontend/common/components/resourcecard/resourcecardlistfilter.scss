@@ -16,7 +16,7 @@
 
 %kd-search-input-border {
   border: 1px solid $border;
-  border-radius: 2 * $baseline-grid;
+  border-radius: $baseline-grid / 4;
   outline: none;
 }
 
@@ -43,11 +43,17 @@ kd-resource-card-list-filter {
   padding-left: $baseline-grid;
 }
 
+.kd-clear-icon {
+  cursor: pointer;
+  outline: none;
+  padding-left: $baseline-grid;
+}
+
 .kd-search-input {
   @extend %kd-search-input-border;
   opacity: 0;
   padding-left: $baseline-grid;
-  transition: opacity 1s, width .5s;
+  transition: opacity .5s, width .5s;
   width: 0;
 
   &:focus {
