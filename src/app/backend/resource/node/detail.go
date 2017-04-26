@@ -28,6 +28,7 @@ import (
 	"k8s.io/apimachinery/pkg/fields"
 	k8sClient "k8s.io/client-go/kubernetes"
 	api "k8s.io/client-go/pkg/api/v1"
+	helper "k8s.io/client-go/pkg/api/v1/resource"
 )
 
 // NodeAllocatedResources describes node allocated resources.
@@ -155,7 +156,7 @@ func getNodeAllocatedResources(node api.Node, podList *api.PodList) (NodeAllocat
 	reqs, limits := map[api.ResourceName]resource.Quantity{}, map[api.ResourceName]resource.Quantity{}
 
 	for _, pod := range podList.Items {
-		podReqs, podLimits, err := api.PodRequestsAndLimits(&pod)
+		podReqs, podLimits, err := helper.PodRequestsAndLimits(&pod)
 		if err != nil {
 			return NodeAllocatedResources{}, err
 		}

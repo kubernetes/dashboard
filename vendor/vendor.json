@@ -2457,6 +2457,12 @@
 			"revisionTime": "2017-04-25T20:28:46Z"
 		},
 		{
+			"checksumSHA1": "7dAPUmhHidNbs9sThH6uo3282aw=",
+			"path": "k8s.io/client-go/pkg/api/helper",
+			"revision": "837527a2a018748fed3d8afe738e54d01f8b2853",
+			"revisionTime": "2017-04-25T20:28:46Z"
+		},
+		{
 			"checksumSHA1": "saTFzKrck7WST/Bfy5twvv1JpaA=",
 			"path": "k8s.io/client-go/pkg/api/install",
 			"revision": "837527a2a018748fed3d8afe738e54d01f8b2853",
@@ -2471,6 +2477,12 @@
 		{
 			"checksumSHA1": "uxKN2j8UvFsniw+M5jxuSnKKnDY=",
 			"path": "k8s.io/client-go/pkg/api/v1/ref",
+			"revision": "837527a2a018748fed3d8afe738e54d01f8b2853",
+			"revisionTime": "2017-04-25T20:28:46Z"
+		},
+		{
+			"checksumSHA1": "ZDhw+1JXRVanTjL9jgRQ6f8BxNQ=",
+			"path": "k8s.io/client-go/pkg/api/v1/resource",
 			"revision": "837527a2a018748fed3d8afe738e54d01f8b2853",
 			"revisionTime": "2017-04-25T20:28:46Z"
 		},
