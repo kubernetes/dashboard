@@ -42,11 +42,13 @@ import (
 	"k8s.io/apimachinery/pkg/util/json"
 	"k8s.io/apimachinery/pkg/util/sets"
 	"k8s.io/apimachinery/pkg/util/strategicpatch"
+	"k8s.io/apimachinery/pkg/util/yaml"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/apis/extensions"
 	"k8s.io/kubernetes/pkg/kubectl"
 	"k8s.io/kubernetes/pkg/kubectl/resource"
+	"k8s.io/kubernetes/pkg/printers"
 	utilexec "k8s.io/kubernetes/pkg/util/exec"
 )
 
@@ -301,10 +303,7 @@ func UsageError(cmd *cobra.Command, format string, args ...interface{}) error {
 }
 
 func IsFilenameEmpty(filenames []string) bool {
-	if len(filenames) == 0 {
-		return true
-	}
-	return false
+	return len(filenames) == 0
 }
 
 // Whether this cmd need watching objects.
@@ -349,7 +348,7 @@ func GetFlagStringArray(cmd *cobra.Command, flag string) []string {
 // GetWideFlag is used to determine if "-o wide" is used
 func GetWideFlag(cmd *cobra.Command) bool {
 	f := cmd.Flags().Lookup("output")
-	if f.Value.String() == "wide" {
+	if f != nil && f.Value != nil && f.Value.String() == "wide" {
 		return true
 	}
 	return false
@@ -389,9 +388,23 @@ func GetFlagDuration(cmd *cobra.Command, flag string) time.Duration {
 	return d
 }
 
+func GetPodRunningTimeoutFlag(cmd *cobra.Command) (time.Duration, error) {
+	timeout := GetFlagDuration(cmd, "pod-running-timeout")
+	if timeout <= 0 {
+		return timeout, fmt.Errorf("--pod-running-timeout must be higher than zero")
+	}
+	return timeout, nil
+}
+
 func AddValidateFlags(cmd *cobra.Command) {
 	cmd.Flags().Bool("validate", true, "If true, use a schema to validate the input before sending it")
 	cmd.Flags().String("schema-cache-dir", fmt.Sprintf("~/%s/%s", clientcmd.RecommendedHomeDir, clientcmd.RecommendedSchemaName), fmt.Sprintf("If non-empty, load/store cached API schemas in this directory, default is '$HOME/%s/%s'", clientcmd.RecommendedHomeDir, clientcmd.RecommendedSchemaName))
+	cmd.MarkFlagFilename("schema-cache-dir")
+}
+
+func AddValidateOptionFlags(cmd *cobra.Command, options *ValidateOptions) {
+	cmd.Flags().BoolVar(&options.EnableValidation, "validate", true, "If true, use a schema to validate the input before sending it")
+	cmd.Flags().StringVar(&options.SchemaCacheDir, "schema-cache-dir", fmt.Sprintf("~/%s/%s", clientcmd.RecommendedHomeDir, clientcmd.RecommendedSchemaName), fmt.Sprintf("If non-empty, load/store cached API schemas in this directory, default is '$HOME/%s/%s'", clientcmd.RecommendedHomeDir, clientcmd.RecommendedSchemaName))
 	cmd.MarkFlagFilename("schema-cache-dir")
 }
 
@@ -405,8 +418,16 @@ func AddDryRunFlag(cmd *cobra.Command) {
 	cmd.Flags().Bool("dry-run", false, "If true, only print the object that would be sent, without sending it.")
 }
 
+func AddPodRunningTimeoutFlag(cmd *cobra.Command, defaultTimeout time.Duration) {
+	cmd.Flags().Duration("pod-running-timeout", defaultTimeout, "The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running")
+}
+
 func AddApplyAnnotationFlags(cmd *cobra.Command) {
-	cmd.Flags().Bool(ApplyAnnotationsFlag, false, "If true, the configuration of current object will be saved in its annotation. This is useful when you want to perform kubectl apply on this object in the future.")
+	cmd.Flags().Bool(ApplyAnnotationsFlag, false, "If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.")
+}
+
+func AddApplyAnnotationVarFlags(cmd *cobra.Command, applyAnnotation *bool) {
+	cmd.Flags().BoolVar(applyAnnotation, ApplyAnnotationsFlag, false, "If true, the configuration of current object will be saved in its annotation. This is useful when you want to perform kubectl apply on this object in the future.")
 }
 
 // AddGeneratorFlags adds flags common to resource generation commands
@@ -414,6 +435,11 @@ func AddApplyAnnotationFlags(cmd *cobra.Command) {
 func AddGeneratorFlags(cmd *cobra.Command, defaultGenerator string) {
 	cmd.Flags().String("generator", defaultGenerator, "The name of the API generator to use.")
 	AddDryRunFlag(cmd)
+}
+
+type ValidateOptions struct {
+	EnableValidation bool
+	SchemaCacheDir   string
 }
 
 func ReadConfigDataFromReader(reader io.Reader, source string) ([]byte, error) {
@@ -431,7 +457,7 @@ func ReadConfigDataFromReader(reader io.Reader, source string) ([]byte, error) {
 
 // Merge requires JSON serialization
 // TODO: merge assumes JSON serialization, and does not properly abstract API retrieval
-func Merge(codec runtime.Codec, dst runtime.Object, fragment, kind string) (runtime.Object, error) {
+func Merge(codec runtime.Codec, dst runtime.Object, fragment string) (runtime.Object, error) {
 	// encode dst into versioned json and apply fragment directly too it
 	target, err := runtime.Encode(codec, dst)
 	if err != nil {
@@ -452,10 +478,11 @@ func Merge(codec runtime.Codec, dst runtime.Object, fragment, kind string) (runt
 // (usually for temporary use).
 func DumpReaderToFile(reader io.Reader, filename string) error {
 	f, err := os.OpenFile(filename, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0600)
-	defer f.Close()
 	if err != nil {
 		return err
 	}
+	defer f.Close()
+
 	buffer := make([]byte, 1024)
 	for {
 		count, err := reader.Read(buffer)
@@ -496,6 +523,10 @@ func UpdateObject(info *resource.Info, codec runtime.Codec, updateFn func(runtim
 // AddCmdRecordFlag adds --record flag to command
 func AddRecordFlag(cmd *cobra.Command) {
 	cmd.Flags().Bool("record", false, "Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.")
+}
+
+func AddRecordVarFlag(cmd *cobra.Command, record *bool) {
+	cmd.Flags().BoolVar(record, "record", false, "Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.")
 }
 
 func GetRecordFlag(cmd *cobra.Command) bool {
@@ -566,13 +597,13 @@ func ShouldRecord(cmd *cobra.Command, info *resource.Info) bool {
 	return GetRecordFlag(cmd) || (ContainsChangeCause(info) && !cmd.Flags().Changed("record"))
 }
 
-func AddInclude3rdPartyVarFlags(cmd *cobra.Command, include3rdParty *bool) {
-	cmd.Flags().BoolVar(include3rdParty, "include-extended-apis", true, "If true, include definitions of new APIs via calls to the API server. [default true]")
+func AddInclude3rdPartyFlags(cmd *cobra.Command) {
+	cmd.Flags().Bool("include-extended-apis", true, "If true, include definitions of new APIs via calls to the API server. [default true]")
 	cmd.Flags().MarkDeprecated("include-extended-apis", "No longer required.")
 }
 
-func AddInclude3rdPartyFlags(cmd *cobra.Command) {
-	cmd.Flags().Bool("include-extended-apis", true, "If true, include definitions of new APIs via calls to the API server. [default true]")
+func AddInclude3rdPartyVarFlags(cmd *cobra.Command, include3rdParty *bool) {
+	cmd.Flags().BoolVar(include3rdParty, "include-extended-apis", true, "If true, include definitions of new APIs via calls to the API server. [default true]")
 	cmd.Flags().MarkDeprecated("include-extended-apis", "No longer required.")
 }
 
@@ -604,28 +635,30 @@ func ParsePairs(pairArgs []string, pairType string, supportRemove bool) (newPair
 		removePairs = []string{}
 	}
 	var invalidBuf bytes.Buffer
-
+	var invalidBufNonEmpty bool
 	for _, pairArg := range pairArgs {
-		if strings.Index(pairArg, "=") != -1 {
+		if strings.Contains(pairArg, "=") {
 			parts := strings.SplitN(pairArg, "=", 2)
 			if len(parts) != 2 {
-				if invalidBuf.Len() > 0 {
+				if invalidBufNonEmpty {
 					invalidBuf.WriteString(", ")
 				}
-				invalidBuf.WriteString(fmt.Sprintf(pairArg))
+				invalidBuf.WriteString(pairArg)
+				invalidBufNonEmpty = true
 			} else {
 				newPairs[parts[0]] = parts[1]
 			}
 		} else if supportRemove && strings.HasSuffix(pairArg, "-") {
 			removePairs = append(removePairs, pairArg[:len(pairArg)-1])
 		} else {
-			if invalidBuf.Len() > 0 {
+			if invalidBufNonEmpty {
 				invalidBuf.WriteString(", ")
 			}
-			invalidBuf.WriteString(fmt.Sprintf(pairArg))
+			invalidBuf.WriteString(pairArg)
+			invalidBufNonEmpty = true
 		}
 	}
-	if invalidBuf.Len() > 0 {
+	if invalidBufNonEmpty {
 		err = fmt.Errorf("invalid %s format: %s", pairType, invalidBuf.String())
 		return
 	}
@@ -672,7 +705,7 @@ func MustPrintWithKinds(objs []runtime.Object, infos []*resource.Info, sorter *k
 
 // FilterResourceList receives a list of runtime objects.
 // If any objects are filtered, that number is returned along with a modified list.
-func FilterResourceList(obj runtime.Object, filterFuncs kubectl.Filters, filterOpts *kubectl.PrintOptions) (int, []runtime.Object, error) {
+func FilterResourceList(obj runtime.Object, filterFuncs kubectl.Filters, filterOpts *printers.PrintOptions) (int, []runtime.Object, error) {
 	items, err := meta.ExtractList(obj)
 	if err != nil {
 		return 0, []runtime.Object{obj}, utilerrors.NewAggregate([]error{err})
@@ -697,9 +730,26 @@ func FilterResourceList(obj runtime.Object, filterFuncs kubectl.Filters, filterO
 	return filterCount, list, nil
 }
 
-func PrintFilterCount(hiddenObjNum int, resource string, options *kubectl.PrintOptions) {
-	if !options.NoHeaders && !options.ShowAll && hiddenObjNum > 0 {
-		glog.V(2).Infof("  info: %d completed object(s) was(were) not shown in %s list. Pass --show-all to see all objects.\n\n", hiddenObjNum, resource)
+// PrintFilterCount displays informational messages based on the number of resources found, hidden, or
+// config flags shown.
+func PrintFilterCount(out io.Writer, found, hidden, errors int, options *printers.PrintOptions, ignoreNotFound bool) {
+	switch {
+	case errors > 0 || ignoreNotFound:
+		// print nothing
+	case found <= hidden:
+		if found == 0 {
+			fmt.Fprintln(out, "No resources found.")
+		} else {
+			fmt.Fprintln(out, "No resources found, use --show-all to see completed objects.")
+		}
+	case hidden > 0 && !options.ShowAll && !options.NoHeaders:
+		if glog.V(2) {
+			if hidden > 1 {
+				fmt.Fprintf(out, "info: %d objects not shown, use --show-all to see completed objects.\n", hidden)
+			} else {
+				fmt.Fprintf(out, "info: 1 object not shown, use --show-all to see completed objects.\n")
+			}
+		}
 	}
 }
 
@@ -757,4 +807,32 @@ func OutputsRawFormat(cmd *cobra.Command) bool {
 	}
 
 	return false
+}
+
+// StripComments will transform a YAML file into JSON, thus dropping any comments
+// in it. Note that if the given file has a syntax error, the transformation will
+// fail and we will manually drop all comments from the file.
+func StripComments(file []byte) []byte {
+	stripped := file
+	stripped, err := yaml.ToJSON(stripped)
+	if err != nil {
+		stripped = ManualStrip(file)
+	}
+	return stripped
+}
+
+// ManualStrip is used for dropping comments from a YAML file
+func ManualStrip(file []byte) []byte {
+	stripped := []byte{}
+	lines := bytes.Split(file, []byte("\n"))
+	for i, line := range lines {
+		if bytes.HasPrefix(bytes.TrimSpace(line), []byte("#")) {
+			continue
+		}
+		stripped = append(stripped, line...)
+		if i < len(lines)-1 {
+			stripped = append(stripped, '\n')
+		}
+	}
+	return stripped
 }
