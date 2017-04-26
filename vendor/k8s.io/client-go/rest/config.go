@@ -22,7 +22,7 @@ import (
 	"net"
 	"net/http"
 	"os"
-	"path"
+	"path/filepath"
 	gruntime "runtime"
 	"strings"
 	"time"
@@ -83,10 +83,6 @@ type Config struct {
 	// TLSClientConfig contains settings to enable transport layer security
 	TLSClientConfig
 
-	// Server should be accessed without verifying the TLS
-	// certificate. For testing only.
-	Insecure bool
-
 	// UserAgent is an optional field that specifies the caller of this request.
 	UserAgent string
 
@@ -132,6 +128,13 @@ type ImpersonationConfig struct {
 
 // TLSClientConfig contains settings to enable transport layer security
 type TLSClientConfig struct {
+	// Server should be accessed without verifying the TLS certificate. For testing only.
+	Insecure bool
+	// ServerName is passed to the server for SNI and is used in the client to check server
+	// ceritificates against. If ServerName is empty, the hostname used to contact the
+	// server is used.
+	ServerName string
+
 	// Server requires TLS client certificate authentication
 	CertFile string
 	// Server requires TLS client certificate authentication
@@ -252,19 +255,51 @@ func SetKubernetesDefaults(config *Config) error {
 	return nil
 }
 
-// DefaultKubernetesUserAgent returns the default user agent that clients can use.
+// adjustCommit returns sufficient significant figures of the commit's git hash.
+func adjustCommit(c string) string {
+	if len(c) == 0 {
+		return "unknown"
+	}
+	if len(c) > 7 {
+		return c[:7]
+	}
+	return c
+}
+
+// adjustVersion strips "alpha", "beta", etc. from version in form
+// major.minor.patch-[alpha|beta|etc].
+func adjustVersion(v string) string {
+	if len(v) == 0 {
+		return "unknown"
+	}
+	seg := strings.SplitN(v, "-", 2)
+	return seg[0]
+}
+
+// adjustCommand returns the last component of the
+// OS-specific command path for use in User-Agent.
+func adjustCommand(p string) string {
+	// Unlikely, but better than returning "".
+	if len(p) == 0 {
+		return "unknown"
+	}
+	return filepath.Base(p)
+}
+
+// buildUserAgent builds a User-Agent string from given args.
+func buildUserAgent(command, version, os, arch, commit string) string {
+	return fmt.Sprintf(
+		"%s/%s (%s/%s) kubernetes/%s", command, version, os, arch, commit)
+}
+
+// DefaultKubernetesUserAgent returns a User-Agent string built from static global vars.
 func DefaultKubernetesUserAgent() string {
-	commit := version.Get().GitCommit
-	if len(commit) > 7 {
-		commit = commit[:7]
-	}
-	if len(commit) == 0 {
-		commit = "unknown"
-	}
-	version := version.Get().GitVersion
-	seg := strings.SplitN(version, "-", 2)
-	version = seg[0]
-	return fmt.Sprintf("%s/%s (%s/%s) kubernetes/%s", path.Base(os.Args[0]), version, gruntime.GOOS, gruntime.GOARCH, commit)
+	return buildUserAgent(
+		adjustCommand(os.Args[0]),
+		adjustVersion(version.Get().GitVersion),
+		gruntime.GOOS,
+		gruntime.GOARCH,
+		adjustCommit(version.Get().GitCommit))
 }
 
 // InClusterConfig returns a config object which uses the service account
@@ -365,11 +400,12 @@ func AnonymousClientConfig(config *Config) *Config {
 		Prefix:        config.Prefix,
 		ContentConfig: config.ContentConfig,
 		TLSClientConfig: TLSClientConfig{
-			CAFile: config.TLSClientConfig.CAFile,
-			CAData: config.TLSClientConfig.CAData,
+			Insecure:   config.Insecure,
+			ServerName: config.ServerName,
+			CAFile:     config.TLSClientConfig.CAFile,
+			CAData:     config.TLSClientConfig.CAData,
 		},
 		RateLimiter:   config.RateLimiter,
-		Insecure:      config.Insecure,
 		UserAgent:     config.UserAgent,
 		Transport:     config.Transport,
 		WrapTransport: config.WrapTransport,
