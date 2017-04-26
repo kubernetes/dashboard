@@ -108,8 +108,9 @@ func CreateJobList(jobs []batch.Job, pods []api.Pod, events []api.Event,
 	cachedResources := &dataselect.CachedResources{
 		Pods: pods,
 	}
-	jobCells, metricPromises := dataselect.GenericDataSelectWithMetrics(ToCells(jobs), dsQuery, cachedResources, heapsterClient)
+	jobCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(ToCells(jobs), dsQuery, cachedResources, heapsterClient)
 	jobs = FromCells(jobCells)
+	jobList.ListMeta = common.ListMeta{TotalItems: filteredTotal}
 
 	for _, job := range jobs {
 		var completions int32

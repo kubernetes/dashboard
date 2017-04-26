@@ -64,7 +64,9 @@ func GetThirdPartyResourceObjects(client k8sClient.Interface, config *rest.Confi
 	list.ListMeta.TotalItems = len(list.Items)
 
 	// Return only slice of data, pagination is done here.
-	list.Items = fromObjectCells(dataselect.GenericDataSelect(toObjectCells(list.Items), dsQuery))
+	tprObjectCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toObjectCells(list.Items), dsQuery)
+	list.Items = fromObjectCells(tprObjectCells)
+	list.ListMeta = common.ListMeta{TotalItems: filteredTotal}
 
 	return list, err
 }

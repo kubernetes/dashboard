@@ -201,6 +201,19 @@ func GenericDataSelect(dataList []DataCell, dsQuery *DataSelectQuery) []DataCell
 	return SelectableData.Sort().Paginate().GenericDataList
 }
 
+// GenericDataSelectWithFilter takes a list of GenericDataCells and DataSelectQuery and returns selected data as instructed by dsQuery.
+func GenericDataSelectWithFilter(dataList []DataCell, dsQuery *DataSelectQuery) ([]DataCell, int) {
+	SelectableData := DataSelector{
+		GenericDataList: dataList,
+		DataSelectQuery: dsQuery,
+	}
+	// Pipeline is Filter -> Sort -> CollectMetrics -> Paginate
+	filtered := SelectableData.Filter()
+	filteredTotal := len(filtered.GenericDataList)
+	processed := filtered.Sort().Paginate()
+	return processed.GenericDataList, filteredTotal
+}
+
 // GenericDataSelect takes a list of GenericDataCells and DataSelectQuery and returns selected data as instructed by dsQuery.
 func GenericDataSelectWithMetrics(dataList []DataCell, dsQuery *DataSelectQuery,
 	cachedResources *CachedResources, heapsterClient *client.HeapsterClient) ([]DataCell, metric.MetricPromises) {
