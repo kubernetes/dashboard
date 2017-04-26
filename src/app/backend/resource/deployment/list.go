@@ -110,8 +110,8 @@ func CreateDeploymentList(deployments []extensions.Deployment, pods []api.Pod,
 	cachedResources := &dataselect.CachedResources{
 		Pods: pods,
 	}
-	replicationControllerCells, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells(deployments), dsQuery, cachedResources, heapsterClient)
-	deployments = fromCells(replicationControllerCells)
+	deploymentCells, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells(deployments), dsQuery, cachedResources, heapsterClient)
+	deployments = fromCells(deploymentCells)
 
 	for _, deployment := range deployments {
 

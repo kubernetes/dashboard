@@ -23,6 +23,27 @@ class DeploymentCardListController {
   constructor(kdNamespaceService) {
     /** @private {!./../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
+    /** @export {!backendApi.DeploymentList} - Initialized from binding. */
+    this.deploymentList;
+    /** @export {!angular.Resource} - Initialized from binding. */
+    this.deploymentListResource;
+  }
+
+  /**
+   * Returns select id string or undefined if list or list resource are not defined.
+   * It is needed to enable/disable data select support (pagination, sorting) for particular list.
+   *
+   * @return {string}
+   * @export
+   */
+  getSelectId() {
+    const selectId = 'deployments';
+
+    if (this.deploymentList !== undefined && this.deploymentListResource !== undefined) {
+      return selectId;
+    }
+
+    return '';
   }
 
   /**

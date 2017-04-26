@@ -96,7 +96,7 @@ func GetDeploymentDetail(client client.Interface, heapsterClient heapster.Heapst
 
 	log.Printf("Getting details of %s deployment in %s namespace", deploymentName, namespace)
 
-	deployment, err := client.Extensions().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
+	deployment, err := client.ExtensionsV1beta1().Deployments(namespace).Get(deploymentName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

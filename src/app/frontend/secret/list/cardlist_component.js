@@ -23,6 +23,27 @@ export class SecretCardListController {
   constructor(kdNamespaceService) {
     /** @private {!./../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
+    /** @export {!backendApi.SecretList} - Initialized from binding. */
+    this.secretList;
+    /** @export {!angular.Resource} - Initialized from binding. */
+    this.secretListResource;
+  }
+
+  /**
+   * Returns select id string or undefined if list or list resource are not defined.
+   * It is needed to enable/disable data select support (pagination, sorting) for particular list.
+   *
+   * @return {string}
+   * @export
+   */
+  getSelectId() {
+    const selectId = 'secrets';
+
+    if (this.secretList !== undefined && this.secretListResource !== undefined) {
+      return selectId;
+    }
+
+    return '';
   }
 
   /**

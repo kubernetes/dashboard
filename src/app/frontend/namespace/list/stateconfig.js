@@ -63,12 +63,12 @@ export function namespaceListResource($resource) {
 }
 
 /**
- * @param {!angular.$resource} $resource
+ * @param {!angular.Resource} kdNamespaceListResource
+ * @param {!./../../common/dataselect/service.DataSelectService} kdDataSelectService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveNamespaceList($resource) {
-  /** @type {!angular.Resource<!backendApi.NamespaceList>} */
-  let resource = $resource(`api/v1/namespace`);
-  return resource.get().$promise;
+export function resolveNamespaceList(kdNamespaceListResource, kdDataSelectService) {
+  let query = kdDataSelectService.getDefaultResourceQuery('');
+  return kdNamespaceListResource.get(query).$promise;
 }

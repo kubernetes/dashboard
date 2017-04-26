@@ -15,18 +15,20 @@ limitations under the License.
 -->
 
 <kd-resource-card-list selectable="false"
-                       with-statuses="false">
+                       with-statuses="false"
+                       select-id="{{::$ctrl.getSelectId()}}"
+                       list="$ctrl.configMapList"
+                       list-resource="$ctrl.configMapListResource">
   <kd-resource-card-list-header ng-transclude="header">
     [[Config Maps|Label which appears above the list of such objects.]]
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination pagination-id="configmaps"
-                                    list="$ctrl.configMapList"
-                                    list-resource="$ctrl.configMapListResource">
-  </kd-resource-card-list-pagination>
+  <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
 
   <kd-resource-card-header-columns>
     <kd-resource-card-header-column size="small"
-                                    grow="2">
+                                    grow="2"
+                                    sortable="true"
+                                    sort-id="$root.SortableProperties.NAME">
       [[Name|Config map list header: name.]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small"
@@ -39,7 +41,9 @@ limitations under the License.
       [[Labels|Config map list header: labels.]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small"
-                                    grow="nogrow">
+                                    grow="nogrow"
+                                    sortable="true"
+                                    sort-id="$root.SortableProperties.AGE">
       [[Age|Config map list header: age.]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small"
@@ -48,7 +52,7 @@ limitations under the License.
   </kd-resource-card-header-columns>
   <kd-config-map-card dir-paginate="configMap in $ctrl.configMapList.items | itemsPerPage: default"
                       config-map="configMap"
-                      pagination-id="configmaps"
+                      pagination-id="{{::$ctrl.getSelectId()}}"
                       total-items="::$ctrl.configMapList.listMeta.totalItems">
   </kd-config-map-card>
 </kd-resource-card-list>

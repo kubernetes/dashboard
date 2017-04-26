@@ -46,22 +46,26 @@ describe('Logs controller', () => {
   const podContainers = {containers: [mockContainer]};
 
   let podLogs = {
-    logs: ['1 a', '2 b', '3 c'],
-    firstLogLineReference: {'logTimestamp': '1', 'lineNum': -1},
-    lastLogLineReference: {logTimestamp: '3', lineNum: -1},
+    logs: [
+      {timestamp: '1', content: 'a'},
+      {timestamp: '2', content: 'b'},
+      {timestamp: '3', content: 'c'},
+    ],
+    firstLogLineReference: {'timestamp': '1', 'lineNum': -1},
+    lastLogLineReference: {timestamp: '3', lineNum: -1},
     logViewInfo: {
-      referenceLogLineId: {'logTimestamp': 'X', 'lineNum': 11},
+      referenceLogLineId: {'timestamp': 'X', 'lineNum': 11},
       'relativeFrom': 22,
       'relativeTo': 25,
     },
   };
 
   let otherLogs = {
-    logs: ['7 x', '8 y'],
-    firstLogLineReference: {'logTimestamp': '7', 'lineNum': -1},
-    lastLogLineReference: {logTimestamp: '8', lineNum: -1},
+    logs: [{timestamp: '7', content: 'x'}, {timestamp: '8', content: 'y'}],
+    firstLogLineReference: {'timestamp': '7', 'lineNum': -1},
+    lastLogLineReference: {timestamp: '8', lineNum: -1},
     logViewInfo: {
-      referenceLogLineId: {'logTimestamp': 'Y', 'lineNum': 12},
+      referenceLogLineId: {'timestamp': 'Y', 'lineNum': 12},
       'relativeFrom': 33,
       'relativeTo': 35,
     },
@@ -99,6 +103,19 @@ describe('Logs controller', () => {
   it('should display logs', () => {
     ctrl.$onInit();
     expect(ctrl.logsSet.length).toEqual(3);
+  });
+
+  it('should not contain timestamp by default', () => {
+    ctrl.$onInit();
+    expect(ctrl.logsSet[0].toString()).toEqual('a');
+    expect(ctrl.logsSet[1].toString()).toEqual('b');
+  });
+
+  it('should contain timestamp when enabling', () => {
+    ctrl.logsService.setShowTimestamp();
+    ctrl.$onInit();
+    expect(ctrl.logsSet[0].toString()).toEqual('1 a');
+    expect(ctrl.logsSet[1].toString()).toEqual('2 b');
   });
 
   it('should load newer logs on loadNewer call', () => {

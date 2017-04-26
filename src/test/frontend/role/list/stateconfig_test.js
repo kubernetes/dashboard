@@ -16,13 +16,13 @@ import {resolveRoleList} from 'role/list/stateconfig';
 import roleListModule from 'role/module';
 
 describe('StateConfig for role', () => {
-  /** @type {!PaginationService} */
-  let kdPaginationService;
+  /** @type {!DataSelectService} */
+  let kdDataSelectService;
 
   beforeEach(() => {
     angular.mock.module(roleListModule.name);
-    angular.mock.inject((_kdPaginationService_) => {
-      kdPaginationService = _kdPaginationService_;
+    angular.mock.inject((_kdDataSelectService_) => {
+      kdDataSelectService = _kdDataSelectService_;
     });
   });
 
@@ -34,9 +34,9 @@ describe('StateConfig for role', () => {
       return {$promise: promise};
     });
 
-    let actual = resolveRoleList(resource, kdPaginationService);
+    let actual = resolveRoleList(resource, kdDataSelectService);
 
-    expect(resource.get).toHaveBeenCalledWith(kdPaginationService.getDefaultResourceQuery(''));
+    expect(resource.get).toHaveBeenCalledWith(kdDataSelectService.getDefaultResourceQuery(''));
     expect(actual).toBe(promise);
   }));
 });

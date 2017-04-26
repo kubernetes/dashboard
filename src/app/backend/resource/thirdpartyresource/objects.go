@@ -37,7 +37,7 @@ func GetThirdPartyResourceObjects(client k8sClient.Interface, config *rest.Confi
 	log.Printf("Getting third party resource %s objects", tprName)
 	var list ThirdPartyResourceObjectList
 
-	thirdPartyResource, err := client.Extensions().ThirdPartyResources().Get(tprName, metaV1.GetOptions{})
+	thirdPartyResource, err := client.ExtensionsV1beta1().ThirdPartyResources().Get(tprName, metaV1.GetOptions{})
 	if err != nil {
 		return list, err
 	}

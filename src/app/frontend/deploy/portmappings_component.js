@@ -191,7 +191,7 @@ export const portMappingsComponent = {
   controller: PortMappingsController,
   controllerAs: 'ctrl',
   templateUrl: 'deploy/portmappings.html',
-  bindToController: {
+  bindings: {
     'portMappings': '=',
     'protocols': '=',
     'isExternal': '=',

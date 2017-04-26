@@ -23,7 +23,30 @@ export class PersistentVolumeClaimCardListController {
   constructor(kdNamespaceService) {
     /** @private {!./../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
+    /** @export {!backendApi.PersistentVolumeClaimList} - Initialized from binding. */
+    this.persistentVolumeClaimList;
+    /** @export {!angular.Resource} - Initialized from binding. */
+    this.persistentVolumeClaimListResource;
   }
+
+  /**
+   * Returns select id string or undefined if podList or podListResource are not defined.
+   * It is needed to enable/disable data select support (pagination, sorting) for particular list.
+   *
+   * @return {string}
+   * @export
+   */
+  getSelectId() {
+    const selectId = 'persistentvolumeclaims';
+
+    if (this.persistentVolumeClaimList !== undefined &&
+        this.persistentVolumeClaimListResource !== undefined) {
+      return selectId;
+    }
+
+    return '';
+  }
+
   /**
    * @return {boolean}
    * @export

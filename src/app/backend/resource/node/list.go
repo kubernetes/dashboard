@@ -64,7 +64,7 @@ func GetNodeListFromChannels(channels *common.ResourceChannels, dsQuery *datasel
 func GetNodeList(client client.Interface, dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*NodeList, error) {
 	log.Print("Getting list of all nodes in the cluster")
 
-	nodes, err := client.Core().Nodes().List(metaV1.ListOptions{
+	nodes, err := client.CoreV1().Nodes().List(metaV1.ListOptions{
 		LabelSelector: labels.Everything().String(),
 		FieldSelector: fields.Everything().String(),
 	})

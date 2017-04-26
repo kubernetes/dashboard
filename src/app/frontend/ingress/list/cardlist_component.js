@@ -23,6 +23,27 @@ export class IngressCardListController {
   constructor(kdNamespaceService) {
     /** @private {!./../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
+    /** @export {!backendApi.IngressList} - Initialized from binding. */
+    this.ingressList;
+    /** @export {!angular.Resource} - Initialized from binding. */
+    this.ingressListResource;
+  }
+
+  /**
+   * Returns select id string or undefined if list or list resource are not defined.
+   * It is needed to enable/disable data select support (pagination, sorting) for particular list.
+   *
+   * @return {string}
+   * @export
+   */
+  getSelectId() {
+    const selectId = 'ingresses';
+
+    if (this.ingressList !== undefined && this.ingressListResource !== undefined) {
+      return selectId;
+    }
+
+    return '';
   }
 
   /**

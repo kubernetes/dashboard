@@ -47,13 +47,13 @@ export default function stateConfig($stateProvider) {
 /**
  * @param {!angular.$resource} kdDiscoveryResource
  * @param {!./../chrome/state.StateParams} $stateParams
- * @param {!./../common/pagination/service.PaginationService} kdPaginationService
+ * @param {!./../common/dataselect/service.DataSelectService} kdDataSelectService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveResource(kdDiscoveryResource, $stateParams, kdPaginationService) {
-  let paginationQuery = kdPaginationService.getDefaultResourceQuery($stateParams.namespace);
-  return kdDiscoveryResource.get(paginationQuery).$promise;
+export function resolveResource(kdDiscoveryResource, $stateParams, kdDataSelectService) {
+  let dataSelectQuery = kdDataSelectService.getDefaultResourceQuery($stateParams.namespace);
+  return kdDiscoveryResource.get(dataSelectQuery).$promise;
 }
 
 const i18n = {

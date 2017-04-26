@@ -157,7 +157,7 @@ describe('DeployFromFile controller', () => {
     expect(ctrl.handleDeployAnywayDialog_).toHaveBeenCalled();
   });
 
-  it('should redeploy on deploy anyway', (doneFn) => {
+  it('should redeploy on deploy anyway 123', (doneFn) => {
     let deferred = q.defer();
     spyOn(mdDialog, 'show').and.returnValue(deferred.promise);
     spyOn(mdDialog, 'confirm').and.callThrough();

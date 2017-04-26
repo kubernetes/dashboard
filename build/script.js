@@ -136,19 +136,19 @@ function createCompileTask(translation) {
  */
 function compileES6(translation) {
   let externs = [
-    path.join(conf.paths.nodeModules, 'google-closure-compiler/contrib/externs/angular-1.5.js'),
+    path.join(conf.paths.nodeModules, 'google-closure-compiler/contrib/externs/angular-1.6.js'),
     path.join(
         conf.paths.nodeModules,
-        'google-closure-compiler/contrib/externs/angular-1.5-http-promise_templated.js'),
+        'google-closure-compiler/contrib/externs/angular-1.6-http-promise_templated.js'),
     path.join(
         conf.paths.nodeModules,
-        'google-closure-compiler/contrib/externs/angular-1.5-q_templated.js'),
+        'google-closure-compiler/contrib/externs/angular-1.6-q_templated.js'),
     path.join(
-        conf.paths.nodeModules, 'google-closure-compiler/contrib/externs/angular-material.js'),
+        conf.paths.nodeModules, 'google-closure-compiler/contrib/externs/angular-material-1.1.js'),
     path.join(
         conf.paths.nodeModules, 'google-closure-compiler/contrib/externs/angular_ui_router.js'),
     path.join(
-        conf.paths.nodeModules, 'google-closure-compiler/contrib/externs/angular-1.4-resource.js'),
+        conf.paths.nodeModules, 'google-closure-compiler/contrib/externs/angular-1.6-resource.js'),
     path.join(
         conf.paths.bowerComponents,
         'cljsjs-packages-externs/d3/resources/cljsjs/d3/common/d3.ext.js'),
@@ -159,6 +159,7 @@ function compileES6(translation) {
     path.join(conf.paths.externs, 'backendapi.js'),
     path.join(conf.paths.externs, 'ansiup.js'),
     path.join(conf.paths.externs, 'uirouter.js'),
+    path.join(conf.paths.externs, 'dataselect.js'),
   ];
 
   let closureCompilerConfig = {
@@ -233,6 +234,13 @@ gulp.task('scripts:prod', ['angular-templates', 'generate-xtbs'], function(doneF
 
   // add a default compilation task (no localization)
   streams = streams.concat(createCompileTask());
+
+  // Handle unhandled rejections and fail immediately if any error occurs.
+  process.on('unhandledRejection', (reason) => {
+    if (reason.message.toLowerCase().includes('error')) {
+      doneFn(reason);
+    }
+  });
 
   // TODO (taimir) : do not run the tasks sequentially once
   // gulp-closure-compiler can be run in parallel

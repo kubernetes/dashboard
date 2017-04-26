@@ -15,18 +15,20 @@ limitations under the License.
 -->
 
 <kd-resource-card-list selectable="::$ctrl.selectable"
-                       with-statuses="::$ctrl.withStatuses">
+                       with-statuses="::$ctrl.withStatuses"
+                       select-id="cardlist.html"
+                       list="$ctrl.daemonSetList"
+                       list-resource="$ctrl.daemonSetListResource">
   <kd-resource-card-list-header ng-transclude="header">
     [[Daemon Sets|Label which appears above the list of such objects.]]
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination pagination-id="daemonsets"
-                                    list="$ctrl.daemonSetList"
-                                    list-resource="$ctrl.daemonSetListResource">
-  </kd-resource-card-list-pagination>
+  <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
 
   <kd-resource-card-header-columns>
     <kd-resource-card-header-column size="small"
-                                    grow="2">
+                                    grow="2"
+                                    sortable="true"
+                                    sort-id="$root.SortableProperties.NAME">
       [[Name|Label 'Name' which appears as a column label in the table of daemon sets (daemon set list view).]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small"
@@ -48,7 +50,9 @@ limitations under the License.
       [[Pods|Label 'Pods' which appears as a column label in the table of daemon sets (daemon set list view).]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small"
-                                    grow="1">
+                                    grow="1"
+                                    sortable="true"
+                                    sort-id="$root.SortableProperties.AGE">
       [[Age|Label 'Age' which appears as a column label in the table of daemon sets (daemon set list view).]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small"
@@ -59,17 +63,9 @@ limitations under the License.
                                     grow="nogrow">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
-  <kd-daemon-set-card ng-if="::$ctrl.daemonSetListResource"
-                      pagination-id="daemonsets"
-                      dir-paginate="daemonSet in $ctrl.daemonSetList.daemonSets | itemsPerPage: default"
+  <kd-daemon-set-card dir-paginate="daemonSet in $ctrl.daemonSetList.daemonSets | itemsPerPage: default"
+                      pagination-id="{{::$ctrl.getSelectId()}}"
                       total-items="::$ctrl.daemonSetList.listMeta.totalItems"
-                      daemon-set="daemonSet"
-                      show-resource-kind="::$ctrl.showResourceKind">
-  </kd-daemon-set-card>
-
-  <kd-daemon-set-card ng-if="::!$ctrl.daemonSetListResource"
-                      pagination-id="daemonsets"
-                      dir-paginate="daemonSet in $ctrl.daemonSetList.daemonSets | itemsPerPage: default"
                       daemon-set="daemonSet"
                       show-resource-kind="::$ctrl.showResourceKind">
   </kd-daemon-set-card>

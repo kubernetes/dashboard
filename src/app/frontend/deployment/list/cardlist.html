@@ -15,18 +15,20 @@ limitations under the License.
 -->
 
 <kd-resource-card-list selectable="false"
-                       with-statuses="true">
+                       with-statuses="true"
+                       select-id="{{::$ctrl.getSelectId()}}"
+                       list="$ctrl.deploymentList"
+                       list-resource="::$ctrl.deploymentListResource">
   <kd-resource-card-list-header ng-transclude="header">
     [[Deployments|Label which appears above the list of such objects.]]
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination pagination-id="deployments"
-                                    list="$ctrl.deploymentList"
-                                    list-resource="::$ctrl.deploymentListResource">
-  </kd-resource-card-list-pagination>
+  <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
 
   <kd-resource-card-header-columns>
     <kd-resource-card-header-column size="small"
-                                    grow="2">
+                                    grow="2"
+                                    sortable="true"
+                                    sort-id="$root.SortableProperties.NAME">
       [[Name|Label 'Name' which appears as a column label in the table of deployments (deployment list view).]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small"
@@ -43,7 +45,9 @@ limitations under the License.
       [[Pods|Label 'Pods' which appears as a column label in the table of deployments (deployment list view).]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small"
-                                    grow="1">
+                                    grow="1"
+                                    sortable="true"
+                                    sort-id="$root.SortableProperties.AGE">
       [[Age|Label 'Age' which appears as a column label in the table of deployments (deployment list view).]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small"
@@ -54,16 +58,9 @@ limitations under the License.
                                     grow="nogrow">
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
-  <kd-deployment-card ng-if="::$ctrl.deploymentListResource"
+  <kd-deployment-card dir-paginate="deployment in $ctrl.deploymentList.deployments | itemsPerPage: default"
                       deployment="deployment"
-                      dir-paginate="deployment in $ctrl.deploymentList.deployments | itemsPerPage: default"
-                      pagination-id="deployments"
+                      pagination-id="{{::$ctrl.getSelectId()}}"
                       total-items="$ctrl.deploymentList.listMeta.totalItems">
-  </kd-deployment-card>
-
-  <kd-deployment-card ng-if="::!$ctrl.deploymentListResource"
-                      deployment="deployment"
-                      dir-paginate="deployment in $ctrl.deploymentList.deployments | itemsPerPage: default"
-                      pagination-id="deployments">
   </kd-deployment-card>
 </kd-resource-card-list>

@@ -36,7 +36,7 @@ type NamespaceDetail struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
 	TypeMeta   common.TypeMeta   `json:"typeMeta"`
 
-	// NamespacePhase is the current lifecycle phase of the namespace.
+	// Phase is the current lifecycle phase of the namespace.
 	Phase api.NamespacePhase `json:"phase"`
 
 	// Events is list of events associated to the namespace.
@@ -54,7 +54,7 @@ func GetNamespaceDetail(client k8sClient.Interface, heapsterClient client.Heapst
 	*NamespaceDetail, error) {
 	log.Printf("Getting details of %s namespace", name)
 
-	namespace, err := client.Core().Namespaces().Get(name, metaV1.GetOptions{})
+	namespace, err := client.CoreV1().Namespaces().Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +97,7 @@ var listEverything = metaV1.ListOptions{
 }
 
 func getResourceQuotas(client k8sClient.Interface, namespace api.Namespace) (*resourcequota.ResourceQuotaDetailList, error) {
-	list, err := client.Core().ResourceQuotas(namespace.Name).List(listEverything)
+	list, err := client.CoreV1().ResourceQuotas(namespace.Name).List(listEverything)
 
 	result := &resourcequota.ResourceQuotaDetailList{
 		Items:    make([]resourcequota.ResourceQuotaDetail, 0),
@@ -113,7 +113,7 @@ func getResourceQuotas(client k8sClient.Interface, namespace api.Namespace) (*re
 }
 
 func getLimitRanges(client k8sClient.Interface, namespace api.Namespace) ([]limitrange.LimitRangeItem, error) {
-	list, err := client.Core().LimitRanges(namespace.Name).List(listEverything)
+	list, err := client.CoreV1().LimitRanges(namespace.Name).List(listEverything)
 
 	if err != nil {
 		return nil, err

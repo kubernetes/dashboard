@@ -64,12 +64,12 @@ export function horizontalPodAutoscalerListResource($resource) {
 /**
  * @param {!angular.Resource} kdHorizontalPodAutoscalerListResource
  * @param {!./../../chrome/state.StateParams} $stateParams
- * @param {!./../../common/pagination/service.PaginationService} kdPaginationService
+ * @param {!./../../common/dataselect/service.DataSelectService} kdDataSelectService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
 export function resolveHorizontalPodAutoscalerList(
-    kdHorizontalPodAutoscalerListResource, $stateParams, kdPaginationService) {
-  let query = kdPaginationService.getDefaultResourceQuery($stateParams.namespace);
+    kdHorizontalPodAutoscalerListResource, $stateParams, kdDataSelectService) {
+  let query = kdDataSelectService.getDefaultResourceQuery($stateParams.namespace);
   return kdHorizontalPodAutoscalerListResource.get(query).$promise;
 }

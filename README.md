@@ -16,10 +16,14 @@ It is likely that the Dashboard is already installed on your cluster. Check with
 $ kubectl get pods --all-namespaces | grep dashboard
 ```
 
-
 If it is missing, you can install the latest stable release by running the following command:
 ```shell
-$ kubectl create -f https://rawgit.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml
+$ kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml
+```
+
+If you are using Kubernetes 1.5 or earlier, you can install the latest stable release by running the following command:
+```shell
+$ kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard-no-rbac.yaml
 ```
 
 You can also install unstable HEAD builds with the newest features that the team works on by

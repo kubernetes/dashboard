@@ -13,6 +13,37 @@
 // limitations under the License.
 
 /**
+ * @final
+ */
+export class ThirdPartyResourceCardListController {
+  /** @export */
+  constructor() {
+    /** @export {!backendApi.ThirdPartyResourceList} - Initialized from binding. */
+    this.thirdPartyResourceList;
+    /** @export {!angular.Resource} Initialized from binding. */
+    this.thirdPartyResourceListResource;
+  }
+
+  /**
+   * Returns select id string or undefined if list or list resource are not defined.
+   * It is needed to enable/disable data select support (pagination, sorting) for particular list.
+   *
+   * @return {string}
+   * @export
+   */
+  getSelectId() {
+    const selectId = 'thirdpartyresources';
+
+    if (this.thirdPartyResourceList !== undefined &&
+        this.thirdPartyResourceListResource !== undefined) {
+      return selectId;
+    }
+
+    return '';
+  }
+}
+
+/**
  * Definition object for the component that displays third party resource list card.
  *
  * @type {!angular.Component}
@@ -22,6 +53,7 @@ export const thirdPartyResourceCardListComponent = {
     // Optional header that is transcluded instead of the default one.
     'header': '?kdHeader',
   },
+  controller: ThirdPartyResourceCardListController,
   templateUrl: 'thirdpartyresource/list/cardlist.html',
   bindings: {
     /** {!backendApi.ThirdPartyResourceList} */

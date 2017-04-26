@@ -17,6 +17,7 @@ package cluster
 import (
 	"log"
 
+	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
@@ -37,7 +38,8 @@ type Cluster struct {
 }
 
 // GetCluster returns a list of all cluster resources in the cluster.
-func GetCluster(client *kubernetes.Clientset) (*Cluster, error) {
+func GetCluster(client *kubernetes.Clientset, dsQuery *dataselect.DataSelectQuery,
+	heapsterClient *client.HeapsterClient) (*Cluster, error) {
 	log.Print("Getting cluster category")
 	channels := &common.ResourceChannels{
 		NamespaceList:        common.GetNamespaceListChannel(client, 1),
@@ -48,12 +50,13 @@ func GetCluster(client *kubernetes.Clientset) (*Cluster, error) {
 		StorageClassList:     common.GetStorageClassListChannel(client, 1),
 	}
 
-	return GetClusterFromChannels(channels)
+	return GetClusterFromChannels(channels, dsQuery, heapsterClient)
 }
 
 // GetClusterFromChannels returns a list of all cluster in the cluster, from the
 // channel sources.
-func GetClusterFromChannels(channels *common.ResourceChannels) (*Cluster, error) {
+func GetClusterFromChannels(channels *common.ResourceChannels,
+	dsQuery *dataselect.DataSelectQuery, heapsterClient *client.HeapsterClient) (*Cluster, error) {
 
 	nsChan := make(chan *namespace.NamespaceList)
 	nodeChan := make(chan *node.NodeList)
@@ -64,35 +67,33 @@ func GetClusterFromChannels(channels *common.ResourceChannels) (*Cluster, error)
 	errChan := make(chan error, numErrs)
 
 	go func() {
-		items, err := namespace.GetNamespaceListFromChannels(channels,
-			dataselect.DefaultDataSelect)
+		items, err := namespace.GetNamespaceListFromChannels(channels, dsQuery)
 		errChan <- err
 		nsChan <- items
 	}()
 
 	go func() {
-		items, err := node.GetNodeListFromChannels(channels, dataselect.DefaultDataSelect, nil)
+		items, err := node.GetNodeListFromChannels(channels,
+			dataselect.NewDataSelectQuery(dsQuery.PaginationQuery, dsQuery.SortQuery,
+				dsQuery.FilterQuery, dataselect.StandardMetrics), heapsterClient)
 		errChan <- err
 		nodeChan <- items
 	}()
 
 	go func() {
-		items, err := persistentvolume.GetPersistentVolumeListFromChannels(channels,
-			dataselect.DefaultDataSelect)
+		items, err := persistentvolume.GetPersistentVolumeListFromChannels(channels, dsQuery)
 		errChan <- err
 		pvChan <- items
 	}()
 
 	go func() {
-		items, err := rbacroles.GetRbacRoleListFromChannels(channels,
-			dataselect.DefaultDataSelect)
+		items, err := rbacroles.GetRbacRoleListFromChannels(channels, dsQuery)
 		errChan <- err
 		roleChan <- items
 	}()
 
 	go func() {
-		items, err := storageclass.GetStorageClassListFromChannels(channels,
-			dataselect.DefaultDataSelect)
+		items, err := storageclass.GetStorageClassListFromChannels(channels, dsQuery)
 		errChan <- err
 		storageChan <- items
 	}()

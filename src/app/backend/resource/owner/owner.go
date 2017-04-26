@@ -50,35 +50,35 @@ func NewResourceController(reference api.ObjectReference, client kubernetes.Inte
 	ResourceController, error) {
 	switch reference.Kind {
 	case "Job":
-		job, err := client.Batch().Jobs(reference.Namespace).Get(reference.Name,
+		job, err := client.BatchV1().Jobs(reference.Namespace).Get(reference.Name,
 			meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return JobController(*job), nil
 	case "ReplicaSet":
-		rs, err := client.Extensions().ReplicaSets(reference.Namespace).Get(reference.Name,
+		rs, err := client.ExtensionsV1beta1().ReplicaSets(reference.Namespace).Get(reference.Name,
 			meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return ReplicaSetController(*rs), nil
 	case "ReplicationController":
-		rc, err := client.Core().ReplicationControllers(reference.Namespace).Get(
+		rc, err := client.CoreV1().ReplicationControllers(reference.Namespace).Get(
 			reference.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return ReplicationControllerController(*rc), nil
 	case "DaemonSet":
-		ds, err := client.Extensions().DaemonSets(reference.Namespace).Get(reference.Name,
+		ds, err := client.ExtensionsV1beta1().DaemonSets(reference.Namespace).Get(reference.Name,
 			meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return DaemonSetController(*ds), nil
 	case "StatefulSet":
-		ss, err := client.Apps().StatefulSets(reference.Namespace).Get(reference.Name,
+		ss, err := client.AppsV1beta1().StatefulSets(reference.Namespace).Get(reference.Name,
 			meta.GetOptions{})
 		if err != nil {
 			return nil, err

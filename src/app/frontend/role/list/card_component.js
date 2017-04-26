@@ -36,6 +36,20 @@ export default class RoleCardController {
     /** @private */
     this.interpolate_ = $interpolate;
   }
+
+  /**
+   * @export
+   * @param  {string} startDate - start date of the role
+   * @return {string} localized tooltip with the formatted start date
+   */
+  getStartedAtTooltip(startDate) {
+    let filter = this.interpolate_(`{{date | date}}`);
+    /** @type {string} @desc Tooltip 'Started at [some date]' showing the exact start time of
+     * the role.*/
+    let MSG_ROLE_LIST_STARTED_AT_TOOLTIP =
+        goog.getMsg('Created at {$startDate} UTC', {'startDate': filter({'date': startDate})});
+    return MSG_ROLE_LIST_STARTED_AT_TOOLTIP;
+  }
 }
 
 /**

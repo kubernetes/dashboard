@@ -15,18 +15,20 @@ limitations under the License.
 -->
 
 <kd-resource-card-list selectable="false"
-                       with-statuses="true">
+                       with-statuses="true"
+                       select-id="{{::$ctrl.getSelectId()}}"
+                       list="$ctrl.persistentVolumeClaimList"
+                       list-resource="$ctrl.persistentVolumeClaimListResource">
   <kd-resource-card-list-header ng-transclude="header">
     [[Persistent Volume Claims|Label which appears above the list of such objects.]]
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination pagination-id="persistentvolumeclaims"
-                                    list="$ctrl.persistentVolumeClaimList"
-                                    list-resource="$ctrl.persistentVolumeClaimListResource">
-  </kd-resource-card-list-pagination>
+  <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
 
   <kd-resource-card-header-columns>
     <kd-resource-card-header-column size="small"
-                                    grow="2">
+                                    grow="2"
+                                    sortable="true"
+                                    sort-id="$root.SortableProperties.NAME">
       [[Name|Label 'Name' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small"
@@ -43,12 +45,14 @@ limitations under the License.
       [[Labels|Label 'Labels' which appears as a column label in the table of persistent volume claim (persistent volume claim list view).]]
     </kd-resource-card-header-column>
     <kd-resource-card-header-column size="small"
-                                    grow="1">
+                                    grow="1"
+                                    sortable="true"
+                                    sort-id="$root.SortableProperties.AGE">
       [[Age|Label 'Age' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).]]
     </kd-resource-card-header-column>
   </kd-resource-card-header-columns>
   <kd-persistent-volume-claim-card dir-paginate="persistentVolumeClaim in $ctrl.persistentVolumeClaimList.items | itemsPerPage: default"
-                                   pagination-id="persistentvolumeclaims"
+                                   pagination-id="{{::$ctrl.getSelectId()}}"
                                    persistent-volume-claim="persistentVolumeClaim"
                                    total-items="$ctrl.persistentVolumeClaimList.listMeta.totalItems">
   </kd-persistent-volume-claim-card>

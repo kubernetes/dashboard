@@ -57,7 +57,7 @@ func GetJobDetail(client k8sClient.Interface, heapsterClient client.HeapsterClie
 	namespace, name string) (*JobDetail, error) {
 
 	// TODO(floreks): Use channels.
-	jobData, err := client.Batch().Jobs(namespace).Get(name, metaV1.GetOptions{})
+	jobData, err := client.BatchV1().Jobs(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

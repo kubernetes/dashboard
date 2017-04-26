@@ -60,12 +60,11 @@ export function roleListResource($resource) {
 
 /**
  * @param {!angular.Resource} kdRoleListResource
- * @param {!./../../common/pagination/service.PaginationService} kdPaginationService
- * @returns {!angular.$q.Promise}
+ * @param {!./../../common/dataselect/service.DataSelectService} kdDataSelectService
+ * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveRoleList(kdRoleListResource, kdPaginationService) {
-  /** @type {!backendApi.PaginationQuery} */
-  let query = kdPaginationService.getDefaultResourceQuery('');
+export function resolveRoleList(kdRoleListResource, kdDataSelectService) {
+  let query = kdDataSelectService.getDefaultResourceQuery('');
   return kdRoleListResource.get(query).$promise;
 }
