@@ -12,26 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as adminState} from 'admin/state';
+import {stateName as aboutState} from 'about/state';
+import {stateName as clusterState} from 'cluster/state';
 import {stateName as configState} from 'config/state';
-import {stateName as configMapState} from 'configmaplist/configmaplist_state';
-import {stateName as daemonSetState} from 'daemonsetlist/daemonsetlist_state';
-import {stateName as deploymentState} from 'deploymentlist/deploymentlist_state';
-import {stateName as ingressState} from 'ingresslist/list_state';
-import {stateName as jobState} from 'joblist/joblist_state';
-import {stateName as namespaceState} from 'namespacelist/namespacelist_state';
-import {stateName as nodeState} from 'nodelist/nodelist_state';
-import {stateName as persistentVolumeClaimState} from 'persistentvolumeclaimlist/persistentvolumeclaimlist_state';
-import {stateName as persistentVolumeState} from 'persistentvolumelist/persistentvolumelist_state';
-import {stateName as podState} from 'podlist/podlist_state';
-import {stateName as replicaSetState} from 'replicasetlist/replicasetlist_state';
-import {stateName as replicationControllerState} from 'replicationcontrollerlist/replicationcontrollerlist_state';
-import {stateName as secretState} from 'secretlist/list_state';
-import {stateName as serviceState} from 'servicelist/servicelist_state';
-import {stateName as servicesanddiscoveryState} from 'servicesanddiscovery/state';
-import {stateName as statefulSetState} from 'statefulsetlist/statefulsetlist_state';
-import {stateName as storageClassState} from 'storageclasslist/state';
-import {stateName as workloadState} from 'workloads/workloads_state';
+import {stateName as configMapState} from 'configmap/list/state';
+import {stateName as daemonSetState} from 'daemonset/list/state';
+import {stateName as deploymentState} from 'deployment/list/state';
+import {stateName as discoveryState} from 'discovery/state';
+import {stateName as ingressState} from 'ingress/list/state';
+import {stateName as jobState} from 'job/list/state';
+import {stateName as namespaceState} from 'namespace/list/state';
+import {stateName as nodeState} from 'node/list/state';
+import {stateName as persistentVolumeState} from 'persistentvolume/list/state';
+import {stateName as persistentVolumeClaimState} from 'persistentvolumeclaim/list/state';
+import {stateName as podState} from 'pod/list/state';
+import {stateName as replicaSetState} from 'replicaset/list/state';
+import {stateName as replicationControllerState} from 'replicationcontroller/list/state';
+import {stateName as roleState} from 'role/list/state';
+import {stateName as secretState} from 'secret/list/state';
+import {stateName as serviceState} from 'service/list/state';
+import {stateName as statefulSetState} from 'statefulset/list/state';
+import {stateName as storageClassState} from 'storageclass/list/state';
+import {stateName as workloadState} from 'workloads/state';
 
 /**
  * @final
@@ -53,7 +55,7 @@ export class NavController {
       'namespace': namespaceState,
       'node': nodeState,
       'workload': workloadState,
-      'admin': adminState,
+      'cluster': clusterState,
       'pod': podState,
       'deployment': deploymentState,
       'replicaSet': replicaSetState,
@@ -67,9 +69,11 @@ export class NavController {
       'secret': secretState,
       'configMap': configMapState,
       'ingress': ingressState,
-      'serviceDiscovery': servicesanddiscoveryState,
+      'discovery': discoveryState,
       'config': configState,
       'storageClass': storageClassState,
+      'role': roleState,
+      'about': aboutState,
     };
   }
 

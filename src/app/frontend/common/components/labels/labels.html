@@ -16,15 +16,17 @@ limitations under the License.
 
 <div ng-if="::labelsCtrl.labels">
   <div ng-repeat="(key, value) in ::labelsCtrl.labels"
-       ng-if="labelsCtrl.isVisible($index)" class="kd-chips">
-    <kd-middle-ellipsis display-string="{{::key}}: {{::value}}" class="kd-chip">
+       ng-if="labelsCtrl.isVisible($index)"
+       class="kd-chips">
+    <kd-middle-ellipsis display-string="{{::key}}: {{::value}}"
+                        class="kd-chip">
     </kd-middle-ellipsis>
   </div>
-  <div class="kd-chips kd-chips-switch" ng-show="labelsCtrl.isMoreAvailable()"
+  <div class="kd-chips kd-chips-switch"
+       ng-show="labelsCtrl.isMoreAvailable()"
        ng-click="labelsCtrl.switchLabelsView()">
-    {{labelsCtrl.isShowingAll() ?
-      '[[show fewer labels|Tooltip on the "show less" button for the labels of any kubernetes resource. Usually appears on the resource details pages.]]' :
-      '[[show all labels|Tooltip on the "show all" button for the labels of any kubernetes resource. Usually appears on the resource details pages.]]' }}
+    {{labelsCtrl.isShowingAll() ? '[[show fewer labels|Tooltip on the "show less" button for the labels of any kubernetes resource. Usually appears on the resource details pages.]]' : '[[show all labels|Tooltip on the "show all" button for the labels of any
+    kubernetes resource. Usually appears on the resource details pages.]]' }}
   </div>
 </div>
 <div ng-hide="::labelsCtrl.labels">-</div>

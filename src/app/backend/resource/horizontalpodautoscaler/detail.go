@@ -47,7 +47,7 @@ type HorizontalPodAutoscalerDetail struct {
 func GetHorizontalPodAutoscalerDetail(client client.Interface, namespace string, name string) (*HorizontalPodAutoscalerDetail, error) {
 	log.Printf("Getting details of %s horizontal pod autoscaler", name)
 
-	rawHorizontalPodAutoscaler, err := client.Autoscaling().HorizontalPodAutoscalers(namespace).Get(name, v1.GetOptions{})
+	rawHorizontalPodAutoscaler, err := client.AutoscalingV1().HorizontalPodAutoscalers(namespace).Get(name, v1.GetOptions{})
 
 	if err != nil {
 		return nil, err

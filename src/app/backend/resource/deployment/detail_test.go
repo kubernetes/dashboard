@@ -10,7 +10,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
-	replicasetlist "github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/list"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
 	"k8s.io/client-go/kubernetes/fake"
@@ -22,7 +21,7 @@ func createDeployment(name, namespace, podTemplateName string, podLabel,
 	labelSelector map[string]string) *extensions.Deployment {
 	replicas := int32(4)
 	maxSurge := intstr.FromInt(1)
-	maxUnavailable := intstr.FromString("1")
+	maxUnavailable := intstr.FromString("25%")
 
 	return &extensions.Deployment{
 		ObjectMeta: metaV1.ObjectMeta{
@@ -81,6 +80,9 @@ func TestGetDeploymentDetail(t *testing.T) {
 		},
 	}
 
+	maxSurge := intstr.FromInt(1)
+	maxUnavailable := intstr.FromString("25%")
+
 	cases := []struct {
 		namespace, name string
 		expectedActions []string
@@ -112,10 +114,10 @@ func TestGetDeploymentDetail(t *testing.T) {
 				Strategy:        "RollingUpdate",
 				MinReadySeconds: 5,
 				RollingUpdateStrategy: &RollingUpdateStrategy{
-					MaxSurge:       1,
-					MaxUnavailable: 1,
+					MaxSurge:       &maxSurge,
+					MaxUnavailable: &maxUnavailable,
 				},
-				OldReplicaSetList: replicasetlist.ReplicaSetList{
+				OldReplicaSetList: replicaset.ReplicaSetList{
 					ReplicaSets:       []replicaset.ReplicaSet{},
 					CumulativeMetrics: make([]metric.Metric, 0),
 				},

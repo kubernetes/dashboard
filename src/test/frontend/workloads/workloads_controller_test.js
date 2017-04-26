@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {WorkloadsController} from 'workloads/workloads_controller';
-import workloadListModule from 'workloads/workloads_module';
+import {WorkloadsController} from 'workloads/controller';
+import workloadListModule from 'workloads/module';
 
 describe('Workload list controller', () => {
-  /** @type {!workloads/workloads_controller.WorkloadsController} */
+  /** @type {!workloads/controller.WorkloadsController} */
   let ctrl;
 
   beforeEach(() => {

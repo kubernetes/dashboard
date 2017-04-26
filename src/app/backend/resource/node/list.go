@@ -47,24 +47,24 @@ type Node struct {
 	Ready api.ConditionStatus `json:"ready"`
 }
 
-// GetNodeListFromChannels returns a list of all namespaces in the cluster.
+// GetNodeListFromChannels returns a list of all Nodes in the cluster.
 func GetNodeListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery,
 	heapsterClient *heapster.HeapsterClient) (*NodeList, error) {
 	log.Print("Getting node list")
 
-	namespaces := <-channels.NodeList.List
+	nodes := <-channels.NodeList.List
 	if err := <-channels.NodeList.Error; err != nil {
 		return nil, err
 	}
 
-	return toNodeList(namespaces.Items, dsQuery, heapsterClient), nil
+	return toNodeList(nodes.Items, dsQuery, heapsterClient), nil
 }
 
 // GetNodeList returns a list of all Nodes in the cluster.
 func GetNodeList(client client.Interface, dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*NodeList, error) {
 	log.Print("Getting list of all nodes in the cluster")
 
-	nodes, err := client.Core().Nodes().List(metaV1.ListOptions{
+	nodes, err := client.CoreV1().Nodes().List(metaV1.ListOptions{
 		LabelSelector: labels.Everything().String(),
 		FieldSelector: fields.Everything().String(),
 	})

@@ -63,7 +63,6 @@ func ConfigHandler(w http.ResponseWriter, r *http.Request) (int, error) {
 	template, err := template.New(ConfigTemplateName).Parse(ConfigTemplate)
 	w.Header().Set("Content-Type", "application/javascript")
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return http.StatusInternalServerError, err
 	}
 	return http.StatusOK, template.Execute(w, getAppConfigJSON())

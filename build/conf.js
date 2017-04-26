@@ -40,7 +40,7 @@ const arch = {
   /**
    * List of all supported architectures by this project.
    */
-  list: ['amd64', 'arm', 'arm64', 'ppc64le'],
+  list: ['amd64', 'arm', 'arm64', 'ppc64le', 's390x'],
 };
 
 /**
@@ -59,7 +59,7 @@ const version = {
   /**
    * Current release version of the project.
    */
-  release: 'v1.5.1',
+  release: 'v1.6.0',
   /**
    * Version name of the head release of the project.
    */
@@ -93,13 +93,6 @@ export default {
      */
     mainPackageName: 'github.com/kubernetes/dashboard/src/app/backend',
     /**
-     * Names of all backend packages prefixed with 'test' command.
-     */
-    testCommandArgs: [
-      'test',
-      'github.com/kubernetes/dashboard/src/app/backend/...',
-    ],
-    /**
      * Port number of the backend server. Only used during development.
      */
     devServerPort: 9091,
@@ -108,11 +101,24 @@ export default {
      */
     apiServerHost: 'http://localhost:8080',
     /**
+     * Env variable with address for the Kubernetes API server.
+     */
+    envApiServerHost: process.env.KUBE_DASHBOARD_APISERVER_HOST,
+    /**
+     * Env variable with path to kubeconfig file.
+     */
+    envKubeconfig: process.env.KUBE_DASHBOARD_KUBECONFIG,
+    /**
      * Address for the Heapster API server. If blank, the dashboard
      * will attempt to connect to Heapster via a service proxy.
      */
     heapsterServerHost:
         gulpUtil.env.heapsterServerHost !== undefined ? gulpUtil.env.heapsterServerHost : '',
+    /**
+     * Variables used to differentiate between prod and dev build.
+     */
+    production: 'prod',
+    development: 'dev',
   },
 
   /**
@@ -179,8 +185,7 @@ export default {
     /**
      * Whether to use sauce labs for running tests that require a browser.
      */
-    useSauceLabs: !!process.env.SAUCE_USERNAME && !!process.env.SAUCE_ACCESS_KEY &&
-        !!process.env.TRAVIS && process.env.TRAVIS_PULL_REQUEST === 'false',
+    useSauceLabs: !!process.env.TRAVIS,
   },
 
   /**
@@ -207,7 +212,8 @@ export default {
     bowerComponents: path.join(basePath, 'bower_components'),
     build: path.join(basePath, 'build'),
     coverage: path.join(basePath, 'coverage'),
-    coverageReport: path.join(basePath, 'coverage/lcov'),
+    coverageBackend: path.join(basePath, 'coverage/go.txt'),
+    coverageFrontend: path.join(basePath, 'coverage/lcov/lcov.info'),
     deploySrc: path.join(basePath, 'src/deploy'),
     dist: path.join(basePath, 'dist', arch.default),
     distCross: arch.list.map((arch) => path.join(basePath, 'dist', arch)),
@@ -221,6 +227,7 @@ export default {
     goTools: path.join(basePath, '.tools/go'),
     goWorkspace: path.join(basePath, '.go_workspace'),
     hyperkube: path.join(basePath, 'build/hyperkube.sh'),
+    goTestScript: path.join(basePath, 'build/go-test.sh'),
     i18nProd: path.join(basePath, '.tmp/i18n'),
     integrationTest: path.join(basePath, 'src/test/integration'),
     jsoneditorImages: path.join(basePath, 'bower_components/jsoneditor/src/css/img'),

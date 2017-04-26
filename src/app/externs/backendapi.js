@@ -26,16 +26,6 @@ const backendApi = {};
 
 /**
  * @typedef {{
- *    itemsPerPage: number,
- *    page: number,
- *    namespace: string,
- *    name: (string|undefined)
- * }}
- */
-backendApi.PaginationQuery;
-
-/**
- * @typedef {{
  *   totalItems: number,
  * }}
  */
@@ -145,10 +135,11 @@ backendApi.Workloads;
  *   nodeList: !backendApi.NodeList,
  *   namespaceList: !backendApi.NamespaceList,
  *   persistentVolumeList: !backendApi.PersistentVolumeList,
+ *   roleList: !backendApi.RoleList,
  *   storageClassList: !backendApi.StorageClassList,
  * }}
  */
-backendApi.Admin;
+backendApi.Cluster;
 
 /**
  * @typedef {{
@@ -156,11 +147,12 @@ backendApi.Admin;
  *   ingressList: !backendApi.IngressList,
  * }}
  */
-backendApi.ServicesAndDiscovery;
+backendApi.Discovery;
 
 /**
  * @typedef {{
  *   configMapList: !backendApi.ConfigMapList,
+ *   persistentVolumeClaimList: !backendApi.PersistentVolumeClaimList,
  *   secretList: !backendApi.SecretList,
  * }}
  */
@@ -545,8 +537,8 @@ backendApi.DeploymentList;
 
 /**
  * @typedef {{
- *   maxSurge: !number,
- *   maxUnavailable: !number,
+ *   maxSurge: !(number|string),
+ *   maxUnavailable: !(number|string),
  * }}
  */
 backendApi.RollingUpdateStrategy;
@@ -769,6 +761,22 @@ backendApi.PodDetail;
  * @typedef {{
  *  objectMeta: !backendApi.ObjectMeta,
  *  typeMeta: !backendApi.TypeMeta,
+ * }}
+ */
+backendApi.Role;
+
+/**
+ * @typedef {{
+ *   items: !Array<backendApi.Role>,
+ *   listMeta: !backendApi.ListMeta
+ * }}
+ */
+backendApi.RoleList;
+
+/**
+ * @typedef {{
+ *  objectMeta: !backendApi.ObjectMeta,
+ *  typeMeta: !backendApi.TypeMeta,
  *  internalEndpoint: !backendApi.Endpoint,
  *  externalEndpoints: !Array<!backendApi.Endpoint>,
  *  selector: !Object<string, string>,
@@ -883,7 +891,7 @@ backendApi.ReplicationControllerPods;
 /**
  * @typedef {{
  *   podId: string,
- *   logs: !Array<string>,
+ *   logs: !Array<backendApi.LogLine>,
  *   container: string,
  *   firstLogLineReference: !backendApi.LogLineReference,
  *   lastLogLineReference: !backendApi.LogLineReference,
@@ -894,11 +902,19 @@ backendApi.Logs;
 
 /**
  * @typedef {{
- *   logTimestamp: string,
+ *   timestamp: string,
  *   lineNum: number,
  * }}
  */
 backendApi.LogLineReference;
+
+/**
+ * @typedef {{
+ *   timestamp: string,
+ *   content: string,
+ * }}
+ */
+backendApi.LogLine;
 
 /**
  * @typedef {{
@@ -1226,12 +1242,10 @@ backendApi.StorageClassList;
 
 /**
  * @typedef {{
- *   kind: !string,
- *   joblist: backendApi.JobList,
- *   replicasetlist: backendApi.ReplicaSetList,
- *   replicationcontrollerlist: backendApi.ReplicationControllerList,
- *   daemonsetlist: backendApi.DaemonSetList,
- *   statefulsetlist: backendApi.StatefulSetList
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   pods: !backendApi.PodInfo,
+ *   containerImages: !Array<string>,
  * }}
  */
 backendApi.Controller;
@@ -1260,6 +1274,21 @@ backendApi.ThirdPartyResource;
  * }}
  */
 backendApi.ThirdPartyResourceList;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ * }}
+ */
+backendApi.ThirdPartyResourceObject;
+
+/**
+ * @typedef {{
+ *   listMeta: !backendApi.ListMeta,
+ *   items: !Array<!backendApi.ThirdPartyResourceObject>
+ * }}
+ */
+backendApi.ThirdPartyResourceObjectList;
 
 /**
  * @typedef {{

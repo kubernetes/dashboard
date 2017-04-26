@@ -63,7 +63,7 @@ func GetServiceDetail(client k8sClient.Interface, heapsterClient client.Heapster
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 
 	// TODO(maciaszczykm): Use channels.
-	serviceData, err := client.Core().Services(namespace).Get(name, metaV1.GetOptions{})
+	serviceData, err := client.CoreV1().Services(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +83,7 @@ func GetServiceDetail(client k8sClient.Interface, heapsterClient client.Heapster
 func GetServicePods(client k8sClient.Interface, heapsterClient client.HeapsterClient, namespace,
 	name string, dsQuery *dataselect.DataSelectQuery) (*pod.PodList, error) {
 
-	service, err := client.Core().Services(namespace).Get(name, metaV1.GetOptions{})
+	service, err := client.CoreV1().Services(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

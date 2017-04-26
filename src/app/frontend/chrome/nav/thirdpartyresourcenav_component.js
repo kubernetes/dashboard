@@ -12,9 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {StateParams} from 'common/resource/resourcedetail';
-import {stateName as thirdPartyResourceDetailState} from 'thirdpartyresourcedetail/detail_state';
-import {stateName as thirdPartyResourceState} from 'thirdpartyresourcelist/list_state';
+import {stateName as thirdPartyResourceDetailState} from 'thirdpartyresource/detail/state';
+import {stateName as thirdPartyResourceState} from 'thirdpartyresource/list/state';
 
 /**
  * @final
@@ -23,7 +22,7 @@ export class ThirdPartyResourceNavController {
   /**
    * @param {!ui.router.$state} $state
    * @param {!angular.$resource} $resource
-   * @param {!./../../common/state/futurestate_service.FutureStateService} kdFutureStateService
+   * @param {!./../../common/state/service.FutureStateService} kdFutureStateService
    * @ngInject
    */
   constructor($state, $resource, kdFutureStateService) {
@@ -33,11 +32,8 @@ export class ThirdPartyResourceNavController {
     /** @private {!angular.$resource} */
     this.resource_ = $resource;
 
-    /** @private {!./../../common/state/futurestate_service.FutureStateService} */
+    /** @private {!./../../common/state/service.FutureStateService} */
     this.kdFutureStateService_ = kdFutureStateService;
-
-    /** @export {!backendApi.ThirdPartyResourceList} */
-    this.thirdPartyResourceList;
 
     /** @export */
     this.isVisible = false;
@@ -58,21 +54,10 @@ export class ThirdPartyResourceNavController {
   $onInit() {
     this.resource_('api/v1/thirdpartyresource').get().$promise.then((result) => {
       if (result && result.thirdPartyResources && result.thirdPartyResources.length > 0) {
-        this.thirdPartyResourceList = result;
         Object.assign(this.states, {'thirdpartyresource': thirdPartyResourceState});
         this.isVisible = true;
       }
     });
-  }
-
-  /**
-   * @param {string} thirdPartyResourceName
-   * @return {string}
-   * @export
-   */
-  getThirdPartyResourceDetailHref(thirdPartyResourceName) {
-    return this.state_.href(
-        thirdPartyResourceDetailState, new StateParams('', thirdPartyResourceName));
   }
 
   /**
@@ -82,19 +67,8 @@ export class ThirdPartyResourceNavController {
    * @export
    */
   isGroupActive() {
-    return this.kdFutureStateService_.state.name === thirdPartyResourceState;
-  }
-
-  /**
-   * Returns true if current state is active and menu entry should be highlighted.
-   *
-   * @param {string} entry
-   * @return {boolean}
-   * @export
-   */
-  isActive(entry) {
-    return this.kdFutureStateService_.state.name === thirdPartyResourceDetailState &&
-        this.kdFutureStateService_.params.objectName === entry;
+    return this.kdFutureStateService_.state.name === thirdPartyResourceState ||
+        this.kdFutureStateService_.state.name === thirdPartyResourceDetailState;
   }
 }
 

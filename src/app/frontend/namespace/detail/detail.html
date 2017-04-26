@@ -1,0 +1,31 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-namespace-info namespace="::ctrl.namespaceDetail"></kd-namespace-info>
+<div ng-if="ctrl.namespaceDetail.resourceQuotaList.items">
+  <div ng-repeat="resourceQuota in ::ctrl.namespaceDetail.resourceQuotaList.items">
+    <kd-resource-quota-detail resource-quota-detail="::resourceQuota"></kd-resource-quota-detail>
+  </div>
+</div>
+
+<kd-content-card ng-if="ctrl.namespaceDetail.resourceLimits.length">
+  <kd-content>
+    <kd-resource-limits resource-limits="ctrl.namespaceDetail.resourceLimits"></kd-resource-limits>
+  </kd-content>
+</kd-content-card>
+<kd-event-card-list event-list="::ctrl.namespaceDetail.eventList"
+                    event-list-resource="::ctrl.eventListResource">
+</kd-event-card-list>

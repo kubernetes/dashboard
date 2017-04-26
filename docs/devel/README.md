@@ -5,4 +5,4 @@ The developer guide is for anyone wanting to contribute code to Dashboard
 ## Index
 * [Getting started guide](getting-started.md)
 * [Release process](release.md)
-* [Issue management](issues.md)
+* [Issue and pull request labels](labels.md)

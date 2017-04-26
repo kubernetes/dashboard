@@ -26,7 +26,7 @@ describe('Deploy from invalid file user story test', () => {
   beforeAll(() => {
     browser.driver.setFileDetector(new remote.FileDetector());
     deployFromFilePage = new DeployFromFilePageObject();
-    browser.get('#/deploy/file');
+    browser.get('#!/deploy/file');
     // switches to deploy from file
     deployFromFilePage.deployFromFileRadioButton.click();
   });

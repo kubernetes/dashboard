@@ -25,7 +25,7 @@ export default class CreateSecretController {
    * TODO (cheld) Set correct type after fixing issue #159
    * @param {!Object} errorDialog
    * @param {string} namespace
-   * @param {!./../common/csrftoken/csrftoken_service.CsrfTokenService} kdCsrfTokenService
+   * @param {!./../common/csrftoken/service.CsrfTokenService} kdCsrfTokenService
    * @ngInject
    */
   constructor($mdDialog, $log, $resource, errorDialog, namespace, kdCsrfTokenService) {

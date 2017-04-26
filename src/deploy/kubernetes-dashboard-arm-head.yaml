@@ -12,58 +12,86 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Configuration to deploy head version of the Dashboard UI.
+# Configuration to deploy head version of the Dashboard UI compatible with
+# Kubernetes 1.6 (RBAC enabled).
 #
 # Example usage: kubectl create -f <this_file>
 
-kind: List
 apiVersion: v1
-items:
-- kind: ReplicationController
-  apiVersion: v1
-  metadata:
-    labels:
+kind: ServiceAccount
+metadata:
+  labels:
+    app: kubernetes-dashboard-head
+  name: kubernetes-dashboard-head
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: kubernetes-dashboard-head
+  labels:
+    app: kubernetes-dashboard-head
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: kubernetes-dashboard-head
+  namespace: kube-system
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  labels:
+    app: kubernetes-dashboard-head
+  name: kubernetes-dashboard-head
+  namespace: kube-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
       app: kubernetes-dashboard-head
-    name: kubernetes-dashboard-head
-    namespace: kube-system
-  spec:
-    replicas: 1
-    selector:
-      app: kubernetes-dashboard-head
-    template:
-      metadata:
-        labels:
-          app: kubernetes-dashboard-head
-      spec:
-        containers:
-        - name: kubernetes-dashboard-head
-          image: kubernetesdashboarddev/kubernetes-dashboard-arm:head
-          imagePullPolicy: Always
-          ports:
-          - containerPort: 9090
-            protocol: TCP
-          args:
-            # Uncomment the following line to manually specify Kubernetes API server Host
-            # If not specified, Dashboard will attempt to auto discover the API server and connect
-            # to it. Uncomment only if the default does not work.
-            # - --apiserver-host=http://my-address:port
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 9090
-            initialDelaySeconds: 30
-            timeoutSeconds: 30
-- kind: Service
-  apiVersion: v1
-  metadata:
-    labels:
-      app: kubernetes-dashboard-head
-    name: dashboard-head
-    namespace: kube-system
-  spec:
-    type: NodePort
-    ports:
-    - port: 80
-      targetPort: 9090
-    selector:
-      app: kubernetes-dashboard-head
+  template:
+    metadata:
+      labels:
+        app: kubernetes-dashboard-head
+    spec:
+      containers:
+      - name: kubernetes-dashboard-head
+        image: kubernetesdashboarddev/kubernetes-dashboard-arm:head
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9090
+          protocol: TCP
+        args:
+          # Uncomment the following line to manually specify Kubernetes API server Host
+          # If not specified, Dashboard will attempt to auto discover the API server and connect
+          # to it. Uncomment only if the default does not work.
+          # - --apiserver-host=http://my-address:port
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 9090
+          initialDelaySeconds: 30
+          timeoutSeconds: 30
+      serviceAccountName: kubernetes-dashboard-head
+      # Comment the following tolerations if Dashboard must not be deployed on master
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+---
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: kubernetes-dashboard-head
+  name: kubernetes-dashboard-head
+  namespace: kube-system
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 9090
+  selector:
+    app: kubernetes-dashboard-head

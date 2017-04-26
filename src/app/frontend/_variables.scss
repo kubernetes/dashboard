@@ -29,6 +29,7 @@ $body-font-size-base:      rem(1.4) !default;
 $caption-font-size-base:   rem(1.2) !default;
 $toolbar-height-size-base: rem(6.4) !default;
 $toolbar-height-size-base-sm: rem(4.8) !default;
+$footer-font-size-base:   rem(1) !default;
 $font-family-monospace: 'Roboto Mono Regular', monospace;
 $font-family-medium-monospace: 'Roboto Mono Medium', monospace;
 $font-family-medium: 'Roboto-Medium';
@@ -52,7 +53,7 @@ $error-color: #ff5722;
 // TODO(bryk): Get those variables from Angular Material scss files.
 $foreground-1: rgba(0, 0, 0, .87);
 $foreground-2: rgba(0, 0, 0, .54);
-$foreground-3: rgba(0, 0, 0, .26);
+$foreground-3: rgba(0, 0, 0, .38);
 $foreground-4: rgba(0, 0, 0, .12);
 $hue-2: rgba(255, 255, 255, .54);
 $hue-3: rgba(255, 255, 255, .26);

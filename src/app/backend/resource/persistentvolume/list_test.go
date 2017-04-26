@@ -37,8 +37,11 @@ func TestGetPersistentVolumeList(t *testing.T) {
 					Spec: api.PersistentVolumeSpec{
 						PersistentVolumeReclaimPolicy: api.PersistentVolumeReclaimRecycle,
 						AccessModes:                   []api.PersistentVolumeAccessMode{api.ReadWriteOnce},
-						ClaimRef:                      &api.ObjectReference{Name: "myclaim-name"},
-						Capacity:                      nil,
+						ClaimRef: &api.ObjectReference{
+							Name:      "myclaim-name",
+							Namespace: "default",
+						},
+						Capacity: nil,
 					},
 					Status: api.PersistentVolumeStatus{
 						Phase:  api.VolumePending,
@@ -54,7 +57,7 @@ func TestGetPersistentVolumeList(t *testing.T) {
 					Capacity:    nil,
 					AccessModes: []api.PersistentVolumeAccessMode{api.ReadWriteOnce},
 					Status:      api.VolumePending,
-					Claim:       "myclaim-name",
+					Claim:       "default/myclaim-name",
 					Reason:      "my-reason",
 				}},
 			},

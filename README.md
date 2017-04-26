@@ -2,6 +2,7 @@
 [![Build Status](https://travis-ci.org/kubernetes/dashboard.svg?branch=master)](https://travis-ci.org/kubernetes/dashboard)
 [![Coverage Status](https://codecov.io/github/kubernetes/dashboard/coverage.svg?branch=master)](https://codecov.io/github/kubernetes/dashboard?branch=master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/kubernetes/dashboard)](https://goreportcard.com/report/github.com/kubernetes/dashboard)
+[![GitHub release](https://img.shields.io/github/release/kubernetes/dashboard.svg)]()
 
 Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters. It allows users to
 manage applications running in the cluster and troubleshoot them, as well as manage the cluster
@@ -15,10 +16,14 @@ It is likely that the Dashboard is already installed on your cluster. Check with
 $ kubectl get pods --all-namespaces | grep dashboard
 ```
 
-
 If it is missing, you can install the latest stable release by running the following command:
 ```shell
-$ kubectl create -f https://rawgit.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml
+$ kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml
+```
+
+If you are using Kubernetes 1.5 or earlier, you can install the latest stable release by running the following command:
+```shell
+$ kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard-no-rbac.yaml
 ```
 
 You can also install unstable HEAD builds with the newest features that the team works on by
@@ -45,13 +50,13 @@ If the username and password is configured but unknown to you, then use `kubectl
 
 ## Documentation
 
-* The [user guide](http://kubernetes.io/docs/user-guide/ui/) is an entry point for users of Dashboard
+* [User Guide](http://kubernetes.io/docs/user-guide/ui/): Entry-level overview
 
-* The [design overview](docs/design/README.md) describes design concepts of Dashboard
+* [Developer Guide](docs/devel/README.md): For anyone interested in contributing
 
-* The [developer guide](docs/devel/README.md) is for anyone wanting to contribute to Dashboard
+* [Design Guide](docs/design/README.md): For anyone interested in contributing _design_ (less technical)
 
-* The [troubleshooting guide](docs/user-guide/troubleshooting.md) is a collection of typical setup problems
+* [Troubleshooting Guide](docs/user-guide/troubleshooting.md): Common issues encountered while setting up Dashboard
 
 ## License
 

@@ -24,7 +24,7 @@ import (
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
-func createDaemonSet(name, namespace string, labelSelector map[string]string) extensions.DaemonSet {
+func CreateDaemonSet(name, namespace string, labelSelector map[string]string) extensions.DaemonSet {
 	return extensions.DaemonSet{
 		ObjectMeta: metaV1.ObjectMeta{Name: name, Namespace: namespace, Labels: labelSelector},
 		Spec: extensions.DaemonSetSpec{
@@ -33,16 +33,16 @@ func createDaemonSet(name, namespace string, labelSelector map[string]string) ex
 	}
 }
 
-func createService(name, namespace string, labelSelector map[string]string) api.Service {
+func CreateService(name, namespace string, labelSelector map[string]string) api.Service {
 	return api.Service{
 		ObjectMeta: metaV1.ObjectMeta{Name: name, Namespace: namespace, Labels: labelSelector},
 		Spec:       api.ServiceSpec{Selector: labelSelector},
 	}
 }
 
-const testNamespace = "test-namespace"
+const TestNamespace = "test-namespace"
 
-var testLabel = map[string]string{"app": "test"}
+var TestLabel = map[string]string{"app": "test"}
 
 func TestGetServicesForDeletionforDS(t *testing.T) {
 	cases := []struct {
@@ -52,40 +52,40 @@ func TestGetServicesForDeletionforDS(t *testing.T) {
 		expectedActions []string
 	}{
 		{
-			labels.SelectorFromSet(testLabel),
+			labels.SelectorFromSet(TestLabel),
 			&extensions.DaemonSetList{
 				Items: []extensions.DaemonSet{
-					createDaemonSet("ds-1", testNamespace, testLabel),
+					CreateDaemonSet("ds-1", TestNamespace, TestLabel),
 				},
 			},
 			&api.ServiceList{
 				Items: []api.Service{
-					createService("svc-1", testNamespace, testLabel),
+					CreateService("svc-1", TestNamespace, TestLabel),
 				},
 			},
 			[]string{"list", "list"},
 		},
 		{
-			labels.SelectorFromSet(testLabel),
+			labels.SelectorFromSet(TestLabel),
 			&extensions.DaemonSetList{
 				Items: []extensions.DaemonSet{
-					createDaemonSet("ds-1", testNamespace, testLabel),
-					createDaemonSet("ds-2", testNamespace, testLabel),
+					CreateDaemonSet("ds-1", TestNamespace, TestLabel),
+					CreateDaemonSet("ds-2", TestNamespace, TestLabel),
 				},
 			},
 			&api.ServiceList{
 				Items: []api.Service{
-					createService("svc-1", testNamespace, testLabel),
+					CreateService("svc-1", TestNamespace, TestLabel),
 				},
 			},
 			[]string{"list"},
 		},
 		{
-			labels.SelectorFromSet(testLabel),
+			labels.SelectorFromSet(TestLabel),
 			&extensions.DaemonSetList{},
 			&api.ServiceList{
 				Items: []api.Service{
-					createService("svc-1", testNamespace, testLabel),
+					CreateService("svc-1", TestNamespace, TestLabel),
 				},
 			},
 			[]string{"list"},
@@ -95,7 +95,7 @@ func TestGetServicesForDeletionforDS(t *testing.T) {
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.DaemonSetList, c.expected)
 
-		GetServicesForDSDeletion(fakeClient, c.labelSelector, testNamespace)
+		GetServicesForDSDeletion(fakeClient, c.labelSelector, TestNamespace)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {

@@ -14,15 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div class="kd-nav-group" ng-if="$ctrl.isVisible">
-  <kd-nav-item class="kd-nav-group-item" state="{{::$ctrl.states.thirdpartyresource}}"
+<div class="kd-nav-group"
+     ng-if="$ctrl.isVisible">
+  <kd-nav-item class="kd-nav-group-item"
+               state="{{::$ctrl.states.thirdpartyresource}}"
                active="$ctrl.isGroupActive()">
     [[Third Party Resources|Third Party Resources menu item in the nav.]]
   </kd-nav-item>
-  <div ng-repeat="tpr in $ctrl.thirdPartyResourceList.thirdPartyResources">
-    <kd-nav-item class="kd-nav-item" href="{{::$ctrl.getThirdPartyResourceDetailHref(tpr.objectMeta.name)}}"
-                 active="$ctrl.isActive(tpr.objectMeta.name)">
-      {{::tpr.objectMeta.name}}
-    </kd-nav-item>
-  </div>
 </div>

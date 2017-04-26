@@ -15,9 +15,7 @@
 import resourceCardModule from 'common/components/resourcecard/resourcecard_module';
 
 describe('Delete resource menu item', () => {
-  /** @type
-   * {!common/components/resourcecard/resourcecarddeletemenuitem_component.ResourceCardDeleteMenuItemController}
-   */
+  /** @type {!ResourceCardDeleteMenuItemController} */
   let ctrl;
   /** @type {!angular.$q} */
   let q;
@@ -25,7 +23,7 @@ describe('Delete resource menu item', () => {
   let scope;
   /** @type {!ui.router.$state} */
   let state;
-  /** @type {!common/resource/verber_service.VerberService} */
+  /** @type {!VerberService} */
   let kdResourceVerberService;
   /** @type {!md.$dialog}*/
   let mdDialog;
@@ -61,7 +59,7 @@ describe('Delete resource menu item', () => {
     expect(state.reload).toHaveBeenCalled();
   });
 
-  it('should ignore cancels', () => {
+  it('should ignore cancels', (doneFn) => {
     let deferred = q.defer();
     spyOn(kdResourceVerberService, 'showDeleteDialog').and.returnValue(deferred.promise);
     spyOn(state, 'reload');
@@ -69,6 +67,7 @@ describe('Delete resource menu item', () => {
     ctrl.remove();
 
     deferred.reject();
+    deferred.promise.catch(doneFn);
     scope.$digest();
     expect(state.reload).not.toHaveBeenCalled();
     expect(mdDialog.alert).not.toHaveBeenCalled();

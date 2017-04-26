@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import NamespaceDialogController from 'deploy/createnamespace_controller';
-import deployModule from 'deploy/deploy_module';
+import deployModule from 'deploy/module';
 
 describe('Create-Namespace dialog', () => {
 

@@ -38,11 +38,10 @@ type PersistentVolumeDetail struct {
 }
 
 // GetPersistentVolumeDetail returns detailed information about a persistent volume
-func GetPersistentVolumeDetail(client *client.Clientset, name string) (*PersistentVolumeDetail, error) {
+func GetPersistentVolumeDetail(client client.Interface, name string) (*PersistentVolumeDetail, error) {
 	log.Printf("Getting details of %s persistent volume", name)
 
-	rawPersistentVolume, err := client.PersistentVolumes().Get(name, metaV1.GetOptions{})
-
+	rawPersistentVolume, err := client.CoreV1().PersistentVolumes().Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -51,16 +50,11 @@ func GetPersistentVolumeDetail(client *client.Clientset, name string) (*Persiste
 }
 
 func getPersistentVolumeDetail(persistentVolume *api.PersistentVolume) *PersistentVolumeDetail {
-
-	var claim string
-	if persistentVolume.Spec.ClaimRef != nil {
-		claim = persistentVolume.Spec.ClaimRef.Name
-	}
 	return &PersistentVolumeDetail{
 		ObjectMeta:             common.NewObjectMeta(persistentVolume.ObjectMeta),
 		TypeMeta:               common.NewTypeMeta(common.ResourceKindPersistentVolume),
 		Status:                 persistentVolume.Status.Phase,
-		Claim:                  claim,
+		Claim:                  getPersistentVolumeClaim(persistentVolume),
 		ReclaimPolicy:          persistentVolume.Spec.PersistentVolumeReclaimPolicy,
 		AccessModes:            persistentVolume.Spec.AccessModes,
 		Capacity:               persistentVolume.Spec.Capacity,

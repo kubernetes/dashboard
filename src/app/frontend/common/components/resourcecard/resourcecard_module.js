@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import resourceModule from 'common/resource/resource_module';
+import resourceModule from 'common/resource/module';
 
 import {resourceCardComponent} from './resourcecard_component';
 import {resourceCardColumnComponent} from './resourcecardcolumn_component';

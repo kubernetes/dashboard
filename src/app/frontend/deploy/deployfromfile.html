@@ -14,14 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<form name="ctrl.form" ng-submit="ctrl.deploy()" novalidate>
-  <kd-upload file="ctrl.file" form="ctrl.form"></kd-upload>
+<form name="ctrl.form"
+      ng-submit="ctrl.deploy()"
+      novalidate>
+  <kd-upload file="ctrl.file"
+             form="ctrl.form"></kd-upload>
   <div></div>
-  <md-button class="md-raised md-primary kd-deploy-submit-button" type="submit"
+  <md-button class="md-raised md-primary kd-deploy-submit-button"
+             type="submit"
              ng-disabled="ctrl.isDeployDisabled()">
     [[Upload|The text is put on the button at the end of the YAML upload page.]]
   </md-button>
-  <md-button class="md-raised kd-deploy-cancel-button" ng-click="ctrl.cancel()">
+  <md-button class="md-raised kd-deploy-cancel-button"
+             ng-click="ctrl.cancel()">
     [[Cancel|The text is put on the 'Cancel' button at the end of the YAML upload page.]]
   </md-button>
 </form>

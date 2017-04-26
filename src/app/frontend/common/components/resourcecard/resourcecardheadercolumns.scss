@@ -17,6 +17,7 @@
 .kd-resource-card-header-columns,
 kd-resource-card-header-columns {
   display: flex;
+  height: $baseline-grid * 3.5;
   width: 100%;
 }
 

@@ -19,17 +19,15 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	daemonsetlist "github.com/kubernetes/dashboard/src/app/backend/resource/daemonset/list"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
-	joblist "github.com/kubernetes/dashboard/src/app/backend/resource/job/list"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
-	replicasetlist "github.com/kubernetes/dashboard/src/app/backend/resource/replicaset/list"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
-	replicationcontrollerlist "github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller/list"
-	statefulsetlist "github.com/kubernetes/dashboard/src/app/backend/resource/statefulset/list"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	api "k8s.io/client-go/pkg/api/v1"
 	apps "k8s.io/client-go/pkg/apis/apps/v1beta1"
@@ -50,11 +48,11 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		k8sStatefulSet apps.StatefulSetList
 		rcs            []replicationcontroller.ReplicationController
 		rs             []replicaset.ReplicaSet
-		jobs           []joblist.Job
-		daemonset      []daemonsetlist.DaemonSet
+		jobs           []job.Job
+		daemonset      []daemonset.DaemonSet
 		deployment     []deployment.Deployment
 		pod            []pod.Pod
-		statefulSet    []statefulsetlist.StatefulSet
+		statefulSet    []statefulset.StatefulSet
 	}{
 		{
 			extensions.ReplicaSetList{},
@@ -66,11 +64,11 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 			apps.StatefulSetList{},
 			[]replicationcontroller.ReplicationController{},
 			[]replicaset.ReplicaSet{},
-			[]joblist.Job{},
-			[]daemonsetlist.DaemonSet{},
+			[]job.Job{},
+			[]daemonset.DaemonSet{},
 			[]deployment.Deployment{},
 			[]pod.Pod{},
-			[]statefulsetlist.StatefulSet{},
+			[]statefulset.StatefulSet{},
 		},
 		{
 			extensions.ReplicaSetList{
@@ -139,7 +137,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 					Warnings: []common.Event{},
 				},
 			}},
-			[]joblist.Job{{
+			[]job.Job{{
 				ObjectMeta: common.ObjectMeta{
 					Name: "job-name",
 				},
@@ -148,7 +146,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 					Warnings: []common.Event{},
 				},
 			}},
-			[]daemonsetlist.DaemonSet{{
+			[]daemonset.DaemonSet{{
 				ObjectMeta: common.ObjectMeta{
 					Name: "ds-name",
 				},
@@ -167,28 +165,28 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				},
 			}},
 			[]pod.Pod{},
-			[]statefulsetlist.StatefulSet{},
+			[]statefulset.StatefulSet{},
 		},
 	}
 
 	for _, c := range cases {
 		expected := &Workloads{
-			ReplicationControllerList: replicationcontrollerlist.ReplicationControllerList{
+			ReplicationControllerList: replicationcontroller.ReplicationControllerList{
 				ListMeta:               common.ListMeta{TotalItems: len(c.rcs)},
 				CumulativeMetrics:      make([]metric.Metric, 0),
 				ReplicationControllers: c.rcs,
 			},
-			ReplicaSetList: replicasetlist.ReplicaSetList{
+			ReplicaSetList: replicaset.ReplicaSetList{
 				ListMeta:          common.ListMeta{TotalItems: len(c.rs)},
 				CumulativeMetrics: make([]metric.Metric, 0),
 				ReplicaSets:       c.rs,
 			},
-			JobList: joblist.JobList{
+			JobList: job.JobList{
 				ListMeta:          common.ListMeta{TotalItems: len(c.jobs)},
 				CumulativeMetrics: make([]metric.Metric, 0),
 				Jobs:              c.jobs,
 			},
-			DaemonSetList: daemonsetlist.DaemonSetList{
+			DaemonSetList: daemonset.DaemonSetList{
 				ListMeta:          common.ListMeta{TotalItems: len(c.daemonset)},
 				CumulativeMetrics: make([]metric.Metric, 0),
 				DaemonSets:        c.daemonset,
@@ -199,11 +197,24 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				Deployments:       c.deployment,
 			},
 			PodList: pod.PodList{
-				ListMeta:          common.ListMeta{TotalItems: len(c.pod)},
-				CumulativeMetrics: make([]metric.Metric, 0),
-				Pods:              c.pod,
+				ListMeta: common.ListMeta{TotalItems: len(c.pod)},
+				CumulativeMetrics: []metric.Metric{
+					{
+						DataPoints: metric.DataPoints{},
+						MetricName: "cpu/usage_rate",
+						Label:      metric.Label{},
+						Aggregate:  "sum",
+					},
+					{
+						DataPoints: metric.DataPoints{},
+						MetricName: "memory/usage",
+						Label:      metric.Label{},
+						Aggregate:  "sum",
+					},
+				},
+				Pods: c.pod,
 			},
-			StatefulSetList: statefulsetlist.StatefulSetList{
+			StatefulSetList: statefulset.StatefulSetList{
 				ListMeta:          common.ListMeta{TotalItems: len(c.statefulSet)},
 				CumulativeMetrics: make([]metric.Metric, 0),
 				StatefulSets:      c.statefulSet,
@@ -332,7 +343,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		channels.EventList.List <- eventList
 		channels.EventList.Error <- nil
 
-		actual, err := GetWorkloadsFromChannels(channels, nil, dataselect.NoMetrics)
+		actual, err := GetWorkloadsFromChannels(channels, nil, dataselect.DefaultDataSelect)
 		if !reflect.DeepEqual(actual, expected) {
 			t.Errorf("GetWorkloadsFromChannels() ==\n          %#v\nExpected: %#v", actual, expected)
 		}

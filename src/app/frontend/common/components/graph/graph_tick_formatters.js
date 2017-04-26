@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import coresFilter from 'common/filters/cores_filter';
-import memoryFilter from 'common/filters/memory_filter';
+import coresFilter from 'common/filters/cores';
+import memoryFilter from 'common/filters/memory';
 
 /**
- * Formats the number to contain ideally 3 significant figures, but reduces the number of significant figures for
- * small numbers in order to keep the number of decimal places down to 3. So for numbers below 0.01 number of
- * significant figures will be 1.
+ * Formats the number to contain ideally 3 significant figures, but reduces the number of
+ * significant figures for small numbers in order to keep the number of decimal places down to 3. So
+ * for numbers below 0.01 number of significant figures will be 1.
  * @param {number} d
  * @return {string}
  * @private

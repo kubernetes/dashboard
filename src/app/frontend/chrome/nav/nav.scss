@@ -37,7 +37,7 @@
     }
   }
 
-  // Children of kd-nav should not shrink to prevent layout issues on IE. 
+  // Children of kd-nav should not shrink to prevent layout issues on IE.
   &>* {
     flex-shrink: 0;
   }
@@ -65,4 +65,8 @@ kd-nav,
   margin-bottom: 2 * $baseline-grid;
   margin-right: 1 * $baseline-grid;
   margin-top: $baseline-grid;
+}
+
+.kd-about {
+  color: $foreground-3;
 }
