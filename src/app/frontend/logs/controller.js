@@ -23,7 +23,7 @@ const maxLogSize = 2e9;
  */
 export class LogsController {
   /**
-   * @param {!backendApi.LogPage} podLogs
+   * @param {!backendApi.LogDetails} podLogs
    * @param {!backendApi.PodContainerList} podContainers
    * @param {!./service.LogsService} logsService
    * @param {!angular.$sce} $sce
@@ -56,7 +56,7 @@ export class LogsController {
     /** @export {!Array<string>} Log set. */
     this.logsSet;
 
-    /** @export {!backendApi.LogPage} */
+    /** @export {!backendApi.LogDetails} */
     this.podLogs = podLogs;
 
     /** @private {!backendApi.LogSelection}*/
@@ -145,7 +145,7 @@ export class LogsController {
   /**
    * Updates all state parameters and sets the current log view with the data returned from the
    * backend If logs are not available sets logs to no logs available message.
-   * @param {!backendApi.LogPage} podLogs
+   * @param {!backendApi.LogDetails} podLogs
    * @private
    */
   updateUiModel(podLogs) {

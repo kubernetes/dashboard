@@ -54,7 +54,7 @@ func TestGetLogs(t *testing.T) {
 		rawLogs     string
 		container   string
 		logSelector *logs.Selection
-		expected    *logs.LogPage
+		expected    *logs.LogDetails
 	}{
 		{
 			"return no logs if no logs are available",
@@ -62,8 +62,8 @@ func TestGetLogs(t *testing.T) {
 			"",
 			"",
 			logs.AllSelection,
-			&logs.LogPage{
-				Info: logs.LogPageInfo{
+			&logs.LogDetails{
+				Info: logs.LogInfo{
 					PodName:       "",
 					ContainerName: "",
 				},
@@ -76,8 +76,8 @@ func TestGetLogs(t *testing.T) {
 			"1 log1\n2 log2\n3 log3\n4 log4\n5 log5",
 			"test",
 			logs.AllSelection,
-			&logs.LogPage{
-				Info: logs.LogPageInfo{
+			&logs.LogDetails{
+				Info: logs.LogInfo{
 					PodName:       "pod-1",
 					ContainerName: "test",
 					FromDate:      "1",
@@ -103,8 +103,8 @@ func TestGetLogs(t *testing.T) {
 				OffsetFrom:     1,
 				OffsetTo:       3,
 			},
-			&logs.LogPage{
-				Info: logs.LogPageInfo{
+			&logs.LogDetails{
+				Info: logs.LogInfo{
 					PodName:       "pod-1",
 					ContainerName: "test",
 					FromDate:      "2",
@@ -130,8 +130,8 @@ func TestGetLogs(t *testing.T) {
 				OffsetFrom:     -3,
 				OffsetTo:       -1,
 			},
-			&logs.LogPage{
-				Info: logs.LogPageInfo{
+			&logs.LogDetails{
+				Info: logs.LogInfo{
 					PodName:       "pod-1",
 					ContainerName: "test",
 					FromDate:      "2",
@@ -160,8 +160,8 @@ func TestGetLogs(t *testing.T) {
 				OffsetFrom: -2,
 				OffsetTo:   0,
 			},
-			&logs.LogPage{
-				Info: logs.LogPageInfo{
+			&logs.LogDetails{
+				Info: logs.LogInfo{
 					PodName:       "pod-1",
 					ContainerName: "test",
 					FromDate:      "2",
@@ -190,8 +190,8 @@ func TestGetLogs(t *testing.T) {
 				OffsetFrom: 1,
 				OffsetTo:   3,
 			},
-			&logs.LogPage{
-				Info: logs.LogPageInfo{
+			&logs.LogDetails{
+				Info: logs.LogInfo{
 					PodName:       "pod-1",
 					ContainerName: "test",
 					FromDate:      "4",
@@ -220,8 +220,8 @@ func TestGetLogs(t *testing.T) {
 				OffsetFrom: -50,
 				OffsetTo:   -48,
 			},
-			&logs.LogPage{
-				Info: logs.LogPageInfo{
+			&logs.LogDetails{
+				Info: logs.LogInfo{
 					PodName:       "pod-1",
 					ContainerName: "test",
 					FromDate:      "1",
@@ -250,8 +250,8 @@ func TestGetLogs(t *testing.T) {
 				OffsetFrom: 0,
 				OffsetTo:   2, // request indices 1, 2
 			},
-			&logs.LogPage{
-				Info: logs.LogPageInfo{
+			&logs.LogDetails{
+				Info: logs.LogInfo{
 					PodName:       "pod-1",
 					ContainerName: "test",
 					FromDate:      "1",

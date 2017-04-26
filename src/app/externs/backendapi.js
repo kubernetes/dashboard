@@ -890,12 +890,12 @@ backendApi.ReplicationControllerPods;
 
 /**
  * @typedef {{
- *   info: !backendApi.LogPageInfo,
+ *   info: !backendApi.LogInfo,
  *   logs: !Array<backendApi.LogLine>,
  *   selection: !backendApi.LogSelection,
  * }}
  */
-backendApi.LogPage;
+backendApi.LogDetails;
 
 /**
  * @typedef {{
@@ -905,7 +905,7 @@ backendApi.LogPage;
  *   toDate: string,
  * }}
  */
-backendApi.LogPageInfo;
+backendApi.LogInfo;
 
 /**
  * @typedef {{

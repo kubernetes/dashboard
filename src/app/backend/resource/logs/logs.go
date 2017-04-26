@@ -58,13 +58,13 @@ var AllSelection = &Selection{
 	ReferencePoint: NewestLogLineId,
 }
 
-// Representation of one page of logs
-type LogPage struct {
+// Representation of log lines
+type LogDetails struct {
 
-	// Meta information for this page
-	Info LogPageInfo `json:"info"`
+	// Additional information of the logs e.g. container name, dates,...
+	Info LogInfo `json:"info"`
 
-	// Meta information about page position in the logs
+	// Reference point to keep track of the position of all the logs
 	Selection `json:"selection"`
 
 	// Actual log lines of this page
@@ -72,7 +72,7 @@ type LogPage struct {
 }
 
 // Meta information about the selected log lines
-type LogPageInfo struct {
+type LogInfo struct {
 
 	// Pod name.
 	PodName string `json:"podName"`

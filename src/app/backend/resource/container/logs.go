@@ -47,7 +47,7 @@ func GetPodContainers(client *client.Clientset, namespace, podID string) (*PodCo
 // GetPodLogs returns logs for particular pod and container. When container
 // is null, logs for the first one are returned.
 func GetPodLogs(client *client.Clientset, namespace, podID string, container string,
-	logSelector *logs.Selection) (*logs.LogPage, error) {
+	logSelector *logs.Selection) (*logs.LogDetails, error) {
 	pod, err := client.Pods(namespace).Get(podID, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
@@ -98,15 +98,15 @@ func getRawPodLogs(client *client.Clientset, namespace, podID string, logOptions
 }
 
 // Build logs structure for given parameters.
-func ConstructLogs(podID string, rawLogs string, container string, logSelector *logs.Selection) *logs.LogPage {
+func ConstructLogs(podID string, rawLogs string, container string, logSelector *logs.Selection) *logs.LogDetails {
 	logLines, fromDate, toDate, logSelection := logs.ToLogLines(rawLogs).SelectLogs(logSelector)
-	info := logs.LogPageInfo{
+	info := logs.LogInfo{
 		PodName:       podID,
 		ContainerName: container,
 		FromDate:      fromDate,
 		ToDate:        toDate,
 	}
-	logs := &logs.LogPage{
+	logs := &logs.LogDetails{
 		Info:      info,
 		Selection: logSelection,
 		LogLines:  logLines,

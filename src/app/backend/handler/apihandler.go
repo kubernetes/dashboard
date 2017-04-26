@@ -356,11 +356,11 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 	apiV1Ws.Route(
 		apiV1Ws.GET("/pod/{namespace}/{pod}/log").
 			To(apiHandler.handleLogs).
-			Writes(logs.LogPage{}))
+			Writes(logs.LogDetails{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/pod/{namespace}/{pod}/log/{container}").
 			To(apiHandler.handleLogs).
-			Writes(logs.LogPage{}))
+			Writes(logs.LogDetails{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/pod/{namespace}/{pod}/event").
 			To(apiHandler.handleGetPodEvents).
