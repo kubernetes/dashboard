@@ -66,7 +66,7 @@ func TestGetNodeDetail(t *testing.T) {
 					CumulativeMetrics: make([]metric.Metric, 0),
 				},
 				EventList: common.EventList{
-					Events: nil,
+					Events: make([]common.Event, 0),
 				},
 				AllocatedResources: NodeAllocatedResources{
 					CPURequests:            0,
