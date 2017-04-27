@@ -39,12 +39,6 @@ message APIVersion {
   optional string name = 1;
 }
 
-message CPUTargetUtilization {
-  // fraction of the requested CPU that should be utilized/used,
-  // e.g. 70 means that 70% of the requested CPU should be in use.
-  optional int32 targetPercentage = 1;
-}
-
 message CustomMetricCurrentStatus {
   // Custom Metric name.
   optional string name = 1;
@@ -77,12 +71,12 @@ message DaemonSet {
   // +optional
   optional k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta metadata = 1;
 
-  // Spec defines the desired behavior of this daemon set.
+  // The desired behavior of this daemon set.
   // More info: http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#spec-and-status
   // +optional
   optional DaemonSetSpec spec = 2;
 
-  // Status is the current status of this daemon set. This data may be
+  // The current status of this daemon set. This data may be
   // out of date by some window of time.
   // Populated by the system.
   // Read-only.
@@ -98,51 +92,98 @@ message DaemonSetList {
   // +optional
   optional k8s.io.apimachinery.pkg.apis.meta.v1.ListMeta metadata = 1;
 
-  // Items is a list of daemon sets.
+  // A list of daemon sets.
   repeated DaemonSet items = 2;
 }
 
 // DaemonSetSpec is the specification of a daemon set.
 message DaemonSetSpec {
-  // Selector is a label query over pods that are managed by the daemon set.
+  // A label query over pods that are managed by the daemon set.
   // Must match in order to be controlled.
   // If empty, defaulted to labels on Pod template.
   // More info: http://kubernetes.io/docs/user-guide/labels#label-selectors
   // +optional
   optional k8s.io.apimachinery.pkg.apis.meta.v1.LabelSelector selector = 1;
 
-  // Template is the object that describes the pod that will be created.
+  // An object that describes the pod that will be created.
   // The DaemonSet will create exactly one copy of this pod on every node
   // that matches the template's node selector (or on every node if no node
   // selector is specified).
   // More info: http://kubernetes.io/docs/user-guide/replication-controller#pod-template
   optional k8s.io.kubernetes.pkg.api.v1.PodTemplateSpec template = 2;
+
+  // An update strategy to replace existing DaemonSet pods with new pods.
+  // +optional
+  optional DaemonSetUpdateStrategy updateStrategy = 3;
+
+  // The minimum number of seconds for which a newly created DaemonSet pod should
+  // be ready without any of its container crashing, for it to be considered
+  // available. Defaults to 0 (pod will be considered available as soon as it
+  // is ready).
+  // +optional
+  optional int32 minReadySeconds = 4;
+
+  // A sequence number representing a specific generation of the template.
+  // Populated by the system. It can be set only during the creation.
+  // +optional
+  optional int64 templateGeneration = 5;
 }
 
 // DaemonSetStatus represents the current status of a daemon set.
 message DaemonSetStatus {
-  // CurrentNumberScheduled is the number of nodes that are running at least 1
+  // The number of nodes that are running at least 1
   // daemon pod and are supposed to run the daemon pod.
   // More info: http://releases.k8s.io/HEAD/docs/admin/daemons.md
   optional int32 currentNumberScheduled = 1;
 
-  // NumberMisscheduled is the number of nodes that are running the daemon pod, but are
+  // The number of nodes that are running the daemon pod, but are
   // not supposed to run the daemon pod.
   // More info: http://releases.k8s.io/HEAD/docs/admin/daemons.md
   optional int32 numberMisscheduled = 2;
 
-  // DesiredNumberScheduled is the total number of nodes that should be running the daemon
+  // The total number of nodes that should be running the daemon
   // pod (including nodes correctly running the daemon pod).
   // More info: http://releases.k8s.io/HEAD/docs/admin/daemons.md
   optional int32 desiredNumberScheduled = 3;
 
-  // NumberReady is the number of nodes that should be running the daemon pod and have one
+  // The number of nodes that should be running the daemon pod and have one
   // or more of the daemon pod running and ready.
   optional int32 numberReady = 4;
 
-  // ObservedGeneration is the most recent generation observed by the daemon set controller.
+  // The most recent generation observed by the daemon set controller.
   // +optional
   optional int64 observedGeneration = 5;
+
+  // The total number of nodes that are running updated daemon pod
+  // +optional
+  optional int32 updatedNumberScheduled = 6;
+
+  // The number of nodes that should be running the
+  // daemon pod and have one or more of the daemon pod running and
+  // available (ready for at least spec.minReadySeconds)
+  // +optional
+  optional int32 numberAvailable = 7;
+
+  // The number of nodes that should be running the
+  // daemon pod and have none of the daemon pod running and available
+  // (ready for at least spec.minReadySeconds)
+  // +optional
+  optional int32 numberUnavailable = 8;
+}
+
+message DaemonSetUpdateStrategy {
+  // Type of daemon set update. Can be "RollingUpdate" or "OnDelete".
+  // Default is OnDelete.
+  // +optional
+  optional string type = 1;
+
+  // Rolling update config params. Present only if type = "RollingUpdate".
+  // ---
+  // TODO: Update this to follow our convention for oneOf, whatever we decide it
+  // to be. Same as DeploymentStrategy.RollingUpdate.
+  // See https://github.com/kubernetes/kubernetes/issues/35345
+  // +optional
+  optional RollingUpdateDaemonSet rollingUpdate = 2;
 }
 
 // Deployment enables declarative updates for Pods and ReplicaSets.
@@ -280,6 +321,8 @@ message DeploymentStatus {
   optional int32 unavailableReplicas = 5;
 
   // Represents the latest available observations of a deployment's current state.
+  // +patchMergeKey=type
+  // +patchStrategy=merge
   repeated DeploymentCondition conditions = 6;
 }
 
@@ -336,73 +379,6 @@ message HTTPIngressPath {
 message HTTPIngressRuleValue {
   // A collection of paths that map requests to backends.
   repeated HTTPIngressPath paths = 1;
-}
-
-// configuration of a horizontal pod autoscaler.
-message HorizontalPodAutoscaler {
-  // Standard object metadata. More info: http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata
-  // +optional
-  optional k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta metadata = 1;
-
-  // behaviour of autoscaler. More info: http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#spec-and-status.
-  // +optional
-  optional HorizontalPodAutoscalerSpec spec = 2;
-
-  // current information about the autoscaler.
-  // +optional
-  optional HorizontalPodAutoscalerStatus status = 3;
-}
-
-// list of horizontal pod autoscaler objects.
-message HorizontalPodAutoscalerList {
-  // Standard list metadata.
-  // +optional
-  optional k8s.io.apimachinery.pkg.apis.meta.v1.ListMeta metadata = 1;
-
-  // list of horizontal pod autoscaler objects.
-  repeated HorizontalPodAutoscaler items = 2;
-}
-
-// specification of a horizontal pod autoscaler.
-message HorizontalPodAutoscalerSpec {
-  // reference to Scale subresource; horizontal pod autoscaler will learn the current resource consumption from its status,
-  // and will set the desired number of pods by modifying its spec.
-  optional SubresourceReference scaleRef = 1;
-
-  // lower limit for the number of pods that can be set by the autoscaler, default 1.
-  // +optional
-  optional int32 minReplicas = 2;
-
-  // upper limit for the number of pods that can be set by the autoscaler; cannot be smaller than MinReplicas.
-  optional int32 maxReplicas = 3;
-
-  // target average CPU utilization (represented as a percentage of requested CPU) over all the pods;
-  // if not specified it defaults to the target CPU utilization at 80% of the requested resources.
-  // +optional
-  optional CPUTargetUtilization cpuUtilization = 4;
-}
-
-// current status of a horizontal pod autoscaler
-message HorizontalPodAutoscalerStatus {
-  // most recent generation observed by this autoscaler.
-  // +optional
-  optional int64 observedGeneration = 1;
-
-  // last time the HorizontalPodAutoscaler scaled the number of pods;
-  // used by the autoscaler to control how often the number of pods is changed.
-  // +optional
-  optional k8s.io.apimachinery.pkg.apis.meta.v1.Time lastScaleTime = 2;
-
-  // current number of replicas of pods managed by this autoscaler.
-  optional int32 currentReplicas = 3;
-
-  // desired number of replicas of pods managed by this autoscaler.
-  optional int32 desiredReplicas = 4;
-
-  // current average CPU utilization over all pods, represented as a percentage of requested CPU,
-  // e.g. 70 means that an average pod is using now 70% of its requested CPU.
-  // +optional
-  optional int32 currentCPUUtilizationPercentage = 5;
 }
 
 // Host Port Range defines a range of host ports that will be enabled by a policy
@@ -565,21 +541,17 @@ message NetworkPolicy {
 message NetworkPolicyIngressRule {
   // List of ports which should be made accessible on the pods selected for this rule.
   // Each item in this list is combined using a logical OR.
-  // If this field is not provided, this rule matches all ports (traffic not restricted by port).
-  // If this field is empty, this rule matches no ports (no traffic matches).
+  // If this field is empty or missing, this rule matches all ports (traffic not restricted by port).
   // If this field is present and contains at least one item, then this rule allows traffic
   // only if the traffic matches at least one port in the list.
-  // TODO: Update this to be a pointer to slice as soon as auto-generation supports it.
   // +optional
   repeated NetworkPolicyPort ports = 1;
 
   // List of sources which should be able to access the pods selected for this rule.
   // Items in this list are combined using a logical OR operation.
-  // If this field is not provided, this rule matches all sources (traffic not restricted by source).
-  // If this field is empty, this rule matches no sources (no traffic matches).
+  // If this field is empty or missing, this rule matches all sources (traffic not restricted by source).
   // If this field is present and contains at least on item, this rule allows traffic only if the
   // traffic matches at least one item in the from list.
-  // TODO: Update this to be a pointer to slice as soon as auto-generation supports it.
   // +optional
   repeated NetworkPolicyPeer from = 2;
 }
@@ -598,7 +570,6 @@ message NetworkPolicyList {
 message NetworkPolicyPeer {
   // This is a label selector which selects Pods in this namespace.
   // This field follows standard label selector semantics.
-  // If not provided, this selector selects no pods.
   // If present but empty, this selector selects all pods in this namespace.
   // +optional
   optional k8s.io.apimachinery.pkg.apis.meta.v1.LabelSelector podSelector = 1;
@@ -606,7 +577,6 @@ message NetworkPolicyPeer {
   // Selects Namespaces using cluster scoped-labels.  This
   // matches all pods in all namespaces selected by this label selector.
   // This field follows standard label selector semantics.
-  // If omitted, this selector selects no namespaces.
   // If present but empty, this selector selects all namespaces.
   // +optional
   optional k8s.io.apimachinery.pkg.apis.meta.v1.LabelSelector namespaceSelector = 2;
@@ -844,6 +814,8 @@ message ReplicaSetStatus {
 
   // Represents the latest available observations of a replica set's current state.
   // +optional
+  // +patchMergeKey=type
+  // +patchStrategy=merge
   repeated ReplicaSetCondition conditions = 6;
 }
 
@@ -855,6 +827,26 @@ message RollbackConfig {
   // The revision to rollback to. If set to 0, rollbck to the last revision.
   // +optional
   optional int64 revision = 1;
+}
+
+// Spec to control the desired behavior of daemon set rolling update.
+message RollingUpdateDaemonSet {
+  // The maximum number of DaemonSet pods that can be unavailable during the
+  // update. Value can be an absolute number (ex: 5) or a percentage of total
+  // number of DaemonSet pods at the start of the update (ex: 10%). Absolute
+  // number is calculated from percentage by rounding up.
+  // This cannot be 0.
+  // Default value is 1.
+  // Example: when this is set to 30%, at most 30% of the total number of nodes
+  // that should be running the daemon pod (i.e. status.desiredNumberScheduled)
+  // can have their pods stopped for an update at any given
+  // time. The update starts by stopping at most 30% of those DaemonSet pods
+  // and then brings up new DaemonSet pods in their place. Once the new pods
+  // are available, it then proceeds onto other DaemonSet pods, thus ensuring
+  // that at least 70% of original number of DaemonSet pods are available at
+  // all times during the update.
+  // +optional
+  optional k8s.io.apimachinery.pkg.util.intstr.IntOrString maxUnavailable = 1;
 }
 
 // Spec to control the desired behavior of rolling update.
@@ -947,25 +939,6 @@ message ScaleStatus {
   // More info: http://kubernetes.io/docs/user-guide/labels#label-selectors
   // +optional
   optional string targetSelector = 3;
-}
-
-// SubresourceReference contains enough information to let you inspect or modify the referred subresource.
-message SubresourceReference {
-  // Kind of the referent; More info: http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#types-kinds
-  // +optional
-  optional string kind = 1;
-
-  // Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
-  // +optional
-  optional string name = 2;
-
-  // API version of the referent
-  // +optional
-  optional string apiVersion = 3;
-
-  // Subresource name of the referent
-  // +optional
-  optional string subresource = 4;
 }
 
 // SupplementalGroupsStrategyOptions defines the strategy type and options used to create the strategy.
