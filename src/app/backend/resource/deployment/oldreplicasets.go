@@ -65,7 +65,7 @@ func GetDeploymentOldReplicaSets(client client.Interface, dsQuery *dataselect.Da
 	for i := range rawRs.Items {
 		rawRepSets = append(rawRepSets, &rawRs.Items[i])
 	}
-	oldRs, _, err := FindOldReplicaSets(deployment, rawRepSets, rawPods)
+	oldRs, _, err := FindOldReplicaSets(deployment, rawRepSets)
 	if err != nil {
 		return nil, err
 	}
