@@ -25,7 +25,6 @@ import (
 	api "k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 	core "k8s.io/client-go/testing"
-	kubectlResource "k8s.io/kubernetes/pkg/kubectl/resource"
 )
 
 func TestDeployApp(t *testing.T) {
