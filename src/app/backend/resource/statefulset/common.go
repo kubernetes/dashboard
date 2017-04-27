@@ -44,7 +44,7 @@ func (self StatefulSetCell) GetResourceSelector() *metric.ResourceSelector {
 		Namespace:    self.ObjectMeta.Namespace,
 		ResourceType: common.ResourceKindStatefulSet,
 		ResourceName: self.ObjectMeta.Name,
-		Selector:     self.Spec.Selector.MatchLabels,
+		UID:          self.UID,
 	}
 }
 

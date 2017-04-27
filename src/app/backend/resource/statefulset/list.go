@@ -28,7 +28,7 @@ import (
 	apps "k8s.io/client-go/pkg/apis/apps/v1beta1"
 )
 
-// StatefulSetList contains a list of Pet Sets in the cluster.
+// StatefulSetList contains a list of Stateful Sets in the cluster.
 type StatefulSetList struct {
 	ListMeta common.ListMeta `json:"listMeta"`
 
@@ -37,9 +37,9 @@ type StatefulSetList struct {
 	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
 }
 
-// StatefulSet is a presentation layer view of Kubernetes Pet Set resource. This means it is Pet Set
-// plus additional augmented data we can get from other sources (like services that target the
-// same pods).
+// StatefulSet is a presentation layer view of Kubernetes Stateful Set resource. This means it is
+// Stateful Set plus additional augmented data we can get from other sources (like services that
+// target the same pods).
 type StatefulSet struct {
 	ObjectMeta common.ObjectMeta `json:"objectMeta"`
 	TypeMeta   common.TypeMeta   `json:"typeMeta"`
@@ -47,11 +47,11 @@ type StatefulSet struct {
 	// Aggregate information about pods belonging to this Pet Set.
 	Pods common.PodInfo `json:"pods"`
 
-	// Container images of the Pet Set.
+	// Container images of the Stateful Set.
 	ContainerImages []string `json:"containerImages"`
 }
 
-// GetStatefulSetList returns a list of all Pet Sets in the cluster.
+// GetStatefulSetList returns a list of all Stateful Sets in the cluster.
 func GetStatefulSetList(client *client.Clientset, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*StatefulSetList, error) {
 	log.Print("Getting list of all pet sets in the cluster")
@@ -65,10 +65,10 @@ func GetStatefulSetList(client *client.Clientset, nsQuery *common.NamespaceQuery
 	return GetStatefulSetListFromChannels(channels, dsQuery, heapsterClient)
 }
 
-// GetStatefulSetListFromChannels returns a list of all Pet Sets in the cluster
-// reading required resource list once from the channels.
-func GetStatefulSetListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (
-	*StatefulSetList, error) {
+// GetStatefulSetListFromChannels returns a list of all Stateful Sets in the cluster reading
+// required resource list once from the channels.
+func GetStatefulSetListFromChannels(channels *common.ResourceChannels,
+	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*StatefulSetList, error) {
 
 	statefulSets := <-channels.StatefulSetList.List
 	if err := <-channels.StatefulSetList.Error; err != nil {
@@ -97,8 +97,8 @@ func GetStatefulSetListFromChannels(channels *common.ResourceChannels, dsQuery *
 	return CreateStatefulSetList(statefulSets.Items, pods.Items, events.Items, dsQuery, heapsterClient), nil
 }
 
-// CreateStatefulSetList creates paginated list of Pet Set model
-// objects based on Kubernetes Pet Set objects array and related resources arrays.
+// CreateStatefulSetList creates paginated list of Stateful Set model objects based on Kubernetes
+// Stateful Set objects array and related resources arrays.
 func CreateStatefulSetList(statefulSets []apps.StatefulSet, pods []api.Pod, events []api.Event,
 	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) *StatefulSetList {
 
@@ -114,14 +114,14 @@ func CreateStatefulSetList(statefulSets []apps.StatefulSet, pods []api.Pod, even
 	statefulSets = fromCells(ssCells)
 
 	for _, statefulSet := range statefulSets {
-		matchingPods := common.FilterNamespacedPodsBySelector(pods, statefulSet.ObjectMeta.Namespace,
-			statefulSet.Spec.Selector.MatchLabels)
+		matchingPods := common.FilterPodsByOwnerReference(statefulSet.Namespace,
+			statefulSet.UID, pods)
 		// TODO(floreks): Conversion should be omitted when client type will be updated
-		podInfo := common.GetPodInfo(statefulSet.Status.Replicas, *statefulSet.Spec.Replicas,
-			matchingPods)
+		podInfo := common.GetPodInfo(statefulSet.Status.Replicas,
+			*statefulSet.Spec.Replicas, matchingPods)
 		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
-
-		statefulSetList.StatefulSets = append(statefulSetList.StatefulSets, ToStatefulSet(&statefulSet, &podInfo))
+		statefulSetList.StatefulSets = append(statefulSetList.StatefulSets,
+			ToStatefulSet(&statefulSet, &podInfo))
 	}
 
 	cumulativeMetrics, err := metricPromises.GetMetrics()

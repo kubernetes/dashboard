@@ -22,15 +22,16 @@ import (
 	heapster "k8s.io/heapster/metrics/api/v1/types"
 )
 
-// HeapsterAllInOneDownloadConfig holds config information specifying whether given native heapster resource type supports list download.
+// HeapsterAllInOneDownloadConfig holds config information specifying whether given native Heapster
+// resource type supports list download.
 var HeapsterAllInOneDownloadConfig = map[common.ResourceKind]bool{
 	common.ResourceKindPod:  true,
 	common.ResourceKindNode: false,
 }
 
-// DataPointsFromMetricJSONFormat converts all the data points from format used by heapster to our format.
-func DataPointsFromMetricJSONFormat(raw heapster.MetricResult) DataPoints {
-	dp := DataPoints{}
+// DataPointsFromMetricJSONFormat converts all the data points from format used by heapster to our
+// format.
+func DataPointsFromMetricJSONFormat(raw heapster.MetricResult) (dp DataPoints) {
 	for _, raw := range raw.Metrics {
 		converted := DataPoint{
 			X: raw.Timestamp.Unix(),
@@ -43,7 +44,7 @@ func DataPointsFromMetricJSONFormat(raw heapster.MetricResult) DataPoints {
 
 		dp = append(dp, converted)
 	}
-	return dp
+	return
 }
 
 // HeapsterUnmarshalType performs heapster GET request to the specifies path and transfers

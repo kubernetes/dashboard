@@ -113,7 +113,7 @@ func CreateJobList(jobs []batch.Job, pods []api.Pod, events []api.Event,
 
 	for _, job := range jobs {
 		var completions int32
-		matchingPods := common.FilterNamespacedPodsBySelector(pods, job.ObjectMeta.Namespace, job.Spec.Selector.MatchLabels)
+		matchingPods := common.FilterPodsByOwnerReference(job.Namespace, job.UID, pods)
 		if job.Spec.Completions != nil {
 			completions = *job.Spec.Completions
 		}

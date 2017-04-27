@@ -44,7 +44,7 @@ func (self JobCell) GetResourceSelector() *metric.ResourceSelector {
 		Namespace:    self.ObjectMeta.Namespace,
 		ResourceType: common.ResourceKindJob,
 		ResourceName: self.ObjectMeta.Name,
-		Selector:     self.Spec.Selector.MatchLabels,
+		UID:          self.UID,
 	}
 }
 

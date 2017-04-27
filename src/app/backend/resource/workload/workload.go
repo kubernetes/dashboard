@@ -54,7 +54,7 @@ func GetWorkloads(client *kubernetes.Clientset, heapsterClient client.HeapsterCl
 	log.Print("Getting lists of all workloads")
 	channels := &common.ResourceChannels{
 		ReplicationControllerList: common.GetReplicationControllerListChannel(client, nsQuery, 1),
-		ReplicaSetList:            common.GetReplicaSetListChannel(client, nsQuery, 1),
+		ReplicaSetList:            common.GetReplicaSetListChannel(client, nsQuery, 2),
 		JobList:                   common.GetJobListChannel(client, nsQuery, 1),
 		DaemonSetList:             common.GetDaemonSetListChannel(client, nsQuery, 1),
 		DeploymentList:            common.GetDeploymentListChannel(client, nsQuery, 1),

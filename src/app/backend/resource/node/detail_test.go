@@ -38,7 +38,6 @@ func (c FakeHeapsterClient) Get(path string) client.RequestInterface {
 }
 
 func TestGetNodeDetail(t *testing.T) {
-	t.Skip("Disabled due to issue in client-go (#145). Will be re-enabled once it is fixed.")
 	cases := []struct {
 		namespace, name string
 		node            *api.Node
@@ -67,7 +66,7 @@ func TestGetNodeDetail(t *testing.T) {
 					CumulativeMetrics: make([]metric.Metric, 0),
 				},
 				EventList: common.EventList{
-					Events: nil,
+					Events: make([]common.Event, 0),
 				},
 				AllocatedResources: NodeAllocatedResources{
 					CPURequests:            0,

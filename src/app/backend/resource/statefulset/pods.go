@@ -29,10 +29,11 @@ import (
 
 // GetStatefulSetPods return list of pods targeting pet set.
 func GetStatefulSetPods(client *k8sClient.Clientset, heapsterClient client.HeapsterClient,
-	dsQuery *dataselect.DataSelectQuery, statefulSetName, namespace string) (*pod.PodList, error) {
-	log.Printf("Getting replication controller %s pods in namespace %s", statefulSetName, namespace)
+	dsQuery *dataselect.DataSelectQuery, name, namespace string) (*pod.PodList, error) {
 
-	pods, err := getRawStatefulSetPods(client, statefulSetName, namespace)
+	log.Printf("Getting replication controller %s pods in namespace %s", name, namespace)
+
+	pods, err := getRawStatefulSetPods(client, name, namespace)
 	if err != nil {
 		return nil, err
 	}
@@ -42,16 +43,17 @@ func GetStatefulSetPods(client *k8sClient.Clientset, heapsterClient client.Heaps
 }
 
 // getRawStatefulSetPods return array of api pods targeting pet set with given name.
-func getRawStatefulSetPods(client *k8sClient.Clientset, statefulSetName, namespace string) (
-	[]api.Pod, error) {
+func getRawStatefulSetPods(client *k8sClient.Clientset, name, namespace string) ([]api.Pod, error) {
 
-	statefulSet, err := client.AppsV1beta1().StatefulSets(namespace).Get(statefulSetName, metaV1.GetOptions{})
+	statefulSet, err := client.AppsV1beta1().StatefulSets(namespace).Get(name,
+		metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
 
 	channels := &common.ResourceChannels{
-		PodList: common.GetPodListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
+		PodList: common.GetPodListChannel(client, common.NewSameNamespaceQuery(namespace),
+			1),
 	}
 
 	podList := <-channels.PodList.List
@@ -59,9 +61,8 @@ func getRawStatefulSetPods(client *k8sClient.Clientset, statefulSetName, namespa
 		return nil, err
 	}
 
-	matchingPods := common.FilterNamespacedPodsByLabelSelector(podList.Items,
-		statefulSet.ObjectMeta.Namespace, statefulSet.Spec.Selector)
-	return matchingPods, nil
+	return common.FilterPodsByOwnerReference(statefulSet.Namespace, statefulSet.UID,
+		podList.Items), nil
 }
 
 // Returns simple info about pods(running, desired, failing, etc.) related to given pet set.

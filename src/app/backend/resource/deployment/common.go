@@ -45,6 +45,7 @@ func (self DeploymentCell) GetResourceSelector() *metric.ResourceSelector {
 		ResourceType: common.ResourceKindDeployment,
 		ResourceName: self.ObjectMeta.Name,
 		Selector:     self.Spec.Selector.MatchLabels,
+		UID:          self.UID,
 	}
 }
 
