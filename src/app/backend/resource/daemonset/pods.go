@@ -42,9 +42,7 @@ func GetDaemonSetPods(client k8sClient.Interface, heapsterClient client.Heapster
 }
 
 // Returns array of api pods targeting daemon set with given name.
-func getRawDaemonSetPods(client k8sClient.Interface, daemonSetName, namespace string) (
-	[]api.Pod, error) {
-
+func getRawDaemonSetPods(client k8sClient.Interface, daemonSetName, namespace string) ([]api.Pod, error) {
 	daemonSet, err := client.ExtensionsV1beta1().DaemonSets(namespace).Get(daemonSetName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
@@ -59,8 +57,7 @@ func getRawDaemonSetPods(client k8sClient.Interface, daemonSetName, namespace st
 		return nil, err
 	}
 
-	matchingPods := common.FilterNamespacedPodsByLabelSelector(podList.Items,
-		daemonSet.ObjectMeta.Namespace, daemonSet.Spec.Selector)
+	matchingPods := common.FilterPodsByOwnerReference(daemonSet.Namespace, daemonSet.UID, podList.Items)
 	return matchingPods, nil
 }
 

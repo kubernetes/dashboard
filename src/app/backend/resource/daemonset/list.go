@@ -104,8 +104,7 @@ func CreateDaemonSetList(daemonSets []extensions.DaemonSet, pods []api.Pod,
 	daemonSets = FromCells(dsCells)
 
 	for _, daemonSet := range daemonSets {
-		matchingPods := common.FilterNamespacedPodsByLabelSelector(pods, daemonSet.Namespace,
-			daemonSet.Spec.Selector)
+		matchingPods := common.FilterPodsByOwnerReference(daemonSet.Namespace, daemonSet.UID, pods)
 		podInfo := common.GetPodInfo(daemonSet.Status.CurrentNumberScheduled,
 			daemonSet.Status.DesiredNumberScheduled, matchingPods)
 		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)

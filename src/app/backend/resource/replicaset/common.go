@@ -65,10 +65,10 @@ func (self ReplicaSetCell) GetProperty(name dataselect.PropertyName) dataselect.
 
 func (self ReplicaSetCell) GetResourceSelector() *metric.ResourceSelector {
 	return &metric.ResourceSelector{
-		Namespace:     self.ObjectMeta.Namespace,
-		ResourceType:  common.ResourceKindReplicaSet,
-		ResourceName:  self.ObjectMeta.Name,
-		LabelSelector: self.Spec.Selector,
+		Namespace:    self.ObjectMeta.Namespace,
+		ResourceType: common.ResourceKindReplicaSet,
+		ResourceName: self.ObjectMeta.Name,
+		UID:          self.UID,
 	}
 }
 

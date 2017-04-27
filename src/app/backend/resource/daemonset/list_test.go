@@ -28,6 +28,29 @@ import (
 
 func TestGetDaemonSetList(t *testing.T) {
 	events := []api.Event{}
+	controller := true
+	validPodMeta := metaV1.ObjectMeta{
+		Namespace: "namespace-1",
+		OwnerReferences: []metaV1.OwnerReference{
+			{
+				Kind:       "DaemonSet",
+				Name:       "my-name-1",
+				UID:        "uid-1",
+				Controller: &controller,
+			},
+		},
+	}
+	diffNamespacePodMeta := metaV1.ObjectMeta{
+		Namespace: "namespace-2",
+		OwnerReferences: []metaV1.OwnerReference{
+			{
+				Kind:       "DaemonSet",
+				Name:       "my-name-1",
+				UID:        "uid-1",
+				Controller: &controller,
+			},
+		},
+	}
 
 	cases := []struct {
 		daemonSets []extensions.DaemonSet
@@ -45,6 +68,7 @@ func TestGetDaemonSetList(t *testing.T) {
 					ObjectMeta: metaV1.ObjectMeta{
 						Name:      "my-app-1",
 						Namespace: "namespace-1",
+						UID:       "uid-1",
 					},
 					Spec: extensions.DaemonSetSpec{
 						Selector: &metaV1.LabelSelector{
@@ -88,64 +112,43 @@ func TestGetDaemonSetList(t *testing.T) {
 			},
 			[]api.Pod{
 				{
-					ObjectMeta: metaV1.ObjectMeta{
-						Namespace: "namespace-1",
-						Labels:    map[string]string{"app": "my-name-1"},
-					},
+					ObjectMeta: validPodMeta,
 					Status: api.PodStatus{
 						Phase: api.PodFailed,
 					},
 				},
 				{
-					ObjectMeta: metaV1.ObjectMeta{
-						Namespace: "namespace-1",
-						Labels:    map[string]string{"app": "my-name-1"},
-					},
+					ObjectMeta: validPodMeta,
 					Status: api.PodStatus{
 						Phase: api.PodFailed,
 					},
 				},
 				{
-					ObjectMeta: metaV1.ObjectMeta{
-						Namespace: "namespace-1",
-						Labels:    map[string]string{"app": "my-name-1"},
-					},
+					ObjectMeta: validPodMeta,
 					Status: api.PodStatus{
 						Phase: api.PodPending,
 					},
 				},
 				{
-					ObjectMeta: metaV1.ObjectMeta{
-						Namespace: "namespace-2",
-						Labels:    map[string]string{"app": "my-name-1"},
-					},
+					ObjectMeta: diffNamespacePodMeta,
 					Status: api.PodStatus{
 						Phase: api.PodPending,
 					},
 				},
 				{
-					ObjectMeta: metaV1.ObjectMeta{
-						Namespace: "namespace-1",
-						Labels:    map[string]string{"app": "my-name-1"},
-					},
+					ObjectMeta: validPodMeta,
 					Status: api.PodStatus{
 						Phase: api.PodRunning,
 					},
 				},
 				{
-					ObjectMeta: metaV1.ObjectMeta{
-						Namespace: "namespace-1",
-						Labels:    map[string]string{"app": "my-name-1"},
-					},
+					ObjectMeta: validPodMeta,
 					Status: api.PodStatus{
 						Phase: api.PodSucceeded,
 					},
 				},
 				{
-					ObjectMeta: metaV1.ObjectMeta{
-						Namespace: "namespace-1",
-						Labels:    map[string]string{"app": "my-name-1"},
-					},
+					ObjectMeta: validPodMeta,
 					Status: api.PodStatus{
 						Phase: api.PodUnknown,
 					},

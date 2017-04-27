@@ -93,18 +93,6 @@ func TestResourceSelector(t *testing.T) {
 			common.ResourceKindPod,
 			[]string{"1", "3"},
 		},
-		{
-			"ResourceSelector for derived resource with new style selector",
-			ResourceSelector{
-				Namespace:     "a",
-				ResourceType:  common.ResourceKindDeployment,
-				ResourceName:  "baba",
-				LabelSelector: &metaV1.LabelSelector{MatchLabels: resource1},
-			},
-			`namespaces/a/pod-list/`,
-			common.ResourceKindPod,
-			[]string{"1", "3"},
-		},
 	}
 	for _, testCase := range testCases {
 		sel, err := testCase.ResourceSelector.GetHeapsterSelector(cachedPodList)

@@ -107,24 +107,7 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 				}},
 			},
 			nil,
-			&api.PodList{
-				Items: []api.Pod{
-					{
-						ObjectMeta: metaV1.ObjectMeta{
-							Namespace: "rs-namespace",
-							Labels:    map[string]string{"foo": "bar"},
-						},
-						Status: api.PodStatus{Phase: api.PodFailed},
-					},
-					{
-						ObjectMeta: metaV1.ObjectMeta{
-							Namespace: "rs-namespace",
-							Labels:    map[string]string{"foo": "baz"},
-						},
-						Status: api.PodStatus{Phase: api.PodFailed},
-					},
-				},
-			},
+			&api.PodList{},
 			&DeploymentList{
 				ListMeta:          common.ListMeta{TotalItems: 1},
 				CumulativeMetrics: make([]metric.Metric, 0),
@@ -139,7 +122,7 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 					Pods: common.PodInfo{
 						Current:  7,
 						Desired:  21,
-						Failed:   1,
+						Failed:   0,
 						Warnings: []common.Event{},
 					},
 				}},
@@ -170,6 +153,10 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 				List:  make(chan *api.EventList, 1),
 				Error: make(chan error, 1),
 			},
+			ReplicaSetList: common.ReplicaSetListChannel{
+				List:  make(chan *extensions.ReplicaSetList, 1),
+				Error: make(chan error, 1),
+			},
 		}
 
 		channels.DeploymentList.Error <- c.k8sDeploymentError
@@ -186,6 +173,9 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 
 		channels.EventList.List <- &api.EventList{}
 		channels.EventList.Error <- nil
+
+		channels.ReplicaSetList.List <- &extensions.ReplicaSetList{}
+		channels.ReplicaSetList.Error <- nil
 
 		actual, err := GetDeploymentListFromChannels(channels, dataselect.NoDataSelect, nil)
 		if !reflect.DeepEqual(actual, c.expected) {

@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"k8s.io/apimachinery/pkg/apis/meta/v1"
 	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/apimachinery/pkg/types"
 )
 
 // DerivedResources is a map from a derived resource(a resource that is not supported by heapster)
@@ -30,13 +30,14 @@ type ResourceSelector struct {
 	ResourceType common.ResourceKind
 	// Name of this resource.
 	ResourceName string
-	// Selector used to identify this resource (if any).
+	// Selector used to identify this resource (should be used only for Deployments!).
 	Selector map[string]string
-	// Newer version of selector used to identify this resource (if any).
-	LabelSelector *v1.LabelSelector
+	// UID is resource unique identifier.
+	UID types.UID
 }
 
-// GetHeapsterSelector calculates and returns HeapsterSelector that can be used to download metrics for this resource.
+// GetHeapsterSelector calculates and returns HeapsterSelector that can be used to download metrics
+// for this resource.
 func (self *ResourceSelector) GetHeapsterSelector(cachedPods []api.Pod) (HeapsterSelector, error) {
 	summingResource, isDerivedResource := DerivedResources[self.ResourceType]
 	if !isDerivedResource {
@@ -52,34 +53,35 @@ func (self *ResourceSelector) GetHeapsterSelector(cachedPods []api.Pod) (Heapste
 		return NewHeapsterSelectorFromNativeResource(common.ResourceKindPod, self.Namespace, podListToNameList(myPods))
 	} else {
 		// currently can only convert derived resource to pods. You can change it by implementing other methods
-		return HeapsterSelector{}, fmt.Errorf(`Internal Error: Requested summing resource is not supported. Requested "%s"`, summingResource)
+		return HeapsterSelector{}, fmt.Errorf(`Internal Error: Requested summing resourceis not supported. Requested "%s"`, summingResource)
 	}
 }
 
 // getMyPodsFromCache returns a full list of pods that belong to this resource.
-// It is important that cachedPods include ALL pods from the namespace of this resource (but they can also include pods from other namespaces).
+// It is important that cachedPods include ALL pods from the namespace of this resource (but they
+// can also include pods from other namespaces).
 func (self *ResourceSelector) getMyPodsFromCache(cachedPods []api.Pod) ([]api.Pod, error) {
-	// make sure we have the full list of pods. you have to make sure the cache has pod list for all namespaces!
-	if cachedPods == nil {
-		return nil, fmt.Errorf(`GetMyPodsFromCache: pods were not available in cache. Required for resource type: "%s"`, self.ResourceType)
-	}
-
-	// now decide whether to match by ResourceSelector or by ResourceLabelSelector
-	if self.LabelSelector != nil {
-		return common.FilterNamespacedPodsByLabelSelector(cachedPods, self.Namespace, self.LabelSelector), nil
-
-	} else if self.Selector != nil {
-		return common.FilterNamespacedPodsBySelector(cachedPods, self.Namespace, self.Selector), nil
-	} else {
-		return nil, fmt.Errorf(`GetMyPodsFromCache: did not find any resource selector for resource type: "%s"`, self.ResourceType)
+	switch {
+	case cachedPods == nil:
+		return nil, fmt.Errorf(`getMyPodsFromCache: pods were not available in cache. Required for resource type: "%s"`, self.ResourceType)
+	case self.ResourceType == common.ResourceKindDeployment:
+		// TODO(maciaszczykm): Use common.FilterDeploymentPodsByOwnerReference() once it will be possible to get list of replica sets here.
+		var matchingPods []api.Pod
+		for _, pod := range cachedPods {
+			if pod.ObjectMeta.Namespace == self.Namespace && common.IsSelectorMatching(self.Selector, pod.Labels) {
+				matchingPods = append(matchingPods, pod)
+			}
+		}
+		return matchingPods, nil
+	default:
+		return common.FilterPodsByOwnerReference(self.Namespace, self.UID, cachedPods), nil
 	}
 }
 
-// Converts list of pods to the list of pod names.
-func podListToNameList(podList []api.Pod) []string {
-	result := []string{}
+// podListToNameList converts list of pods to the list of pod names.
+func podListToNameList(podList []api.Pod) (result []string) {
 	for _, pod := range podList {
 		result = append(result, pod.ObjectMeta.Name)
 	}
-	return result
+	return
 }
