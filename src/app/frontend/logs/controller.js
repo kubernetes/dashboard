@@ -23,7 +23,7 @@ const maxLogSize = 2e9;
  */
 export class LogsController {
   /**
-   * @param {!backendApi.Logs} podLogs
+   * @param {!backendApi.LogDetails} podLogs
    * @param {!backendApi.PodContainerList} podContainers
    * @param {!./service.LogsService} logsService
    * @param {!angular.$sce} $sce
@@ -56,11 +56,11 @@ export class LogsController {
     /** @export {!Array<string>} Log set. */
     this.logsSet;
 
-    /** @export {!backendApi.Logs} */
+    /** @export {!backendApi.LogDetails} */
     this.podLogs = podLogs;
 
-    /** @private {!backendApi.LogViewInfo}*/
-    this.currentLogView;
+    /** @private {!backendApi.LogSelection}*/
+    this.currentSelection;
 
     /** @private {!ui.router.$state} */
     this.state_ = $state;
@@ -69,7 +69,7 @@ export class LogsController {
     this.containers = podContainers.containers;
 
     /** @export {string} */
-    this.container = this.podLogs.container;
+    this.container = this.podLogs.info.containerName;
 
     /** @export {number} */
     this.topIndex = 0;
@@ -102,7 +102,7 @@ export class LogsController {
    * @export
    */
   loadOlder() {
-    this.loadView(this.currentLogView.relativeFrom - logsPerView, this.currentLogView.relativeFrom);
+    this.loadView(this.currentSelection.offsetFrom - logsPerView, this.currentSelection.offsetFrom);
   }
 
   /**
@@ -110,21 +110,21 @@ export class LogsController {
    * @export
    */
   loadNewer() {
-    this.loadView(this.currentLogView.relativeTo, this.currentLogView.relativeTo + logsPerView);
+    this.loadView(this.currentSelection.offsetTo, this.currentSelection.offsetTo + logsPerView);
   }
 
   /**
-   * Downloads and loads slice of logs as specified by relativeFrom and relativeTo.
+   * Downloads and loads slice of logs as specified by offsetFrom and offsetTo.
    * It works just like normal slicing, but indices are referenced relatively to certain reference
    * line.
    * So for example if reference line has index n and we want to download first 10 elements in array
    * we have to use
    * from -n to -n+10.
-   * @param {number} relativeFrom
-   * @param {number} relativeTo
+   * @param {number} offsetFrom
+   * @param {number} offsetTo
    * @private
    */
-  loadView(relativeFrom, relativeTo) {
+  loadView(offsetFrom, offsetTo) {
     let namespace = this.stateParams_.objectNamespace;
     let podId = this.stateParams_.objectName;
     let container = this.stateParams_.container || '';
@@ -132,10 +132,10 @@ export class LogsController {
     this.resource_(`api/v1/pod/${namespace}/${podId}/log/${container}`)
         .get(
             {
-              'referenceTimestamp': this.currentLogView.referenceLogLineId.timestamp,
-              'referenceLineNum': this.currentLogView.referenceLogLineId.lineNum,
-              'relativeFrom': relativeFrom,
-              'relativeTo': relativeTo,
+              'referenceTimestamp': this.currentSelection.referencePoint.timestamp,
+              'referenceLineNum': this.currentSelection.referencePoint.lineNum,
+              'offsetFrom': offsetFrom,
+              'offsetTo': offsetTo,
             },
             (podLogs) => {
               this.updateUiModel(podLogs);
@@ -145,12 +145,12 @@ export class LogsController {
   /**
    * Updates all state parameters and sets the current log view with the data returned from the
    * backend If logs are not available sets logs to no logs available message.
-   * @param {!backendApi.Logs} podLogs
+   * @param {!backendApi.LogDetails} podLogs
    * @private
    */
   updateUiModel(podLogs) {
     this.podLogs = podLogs;
-    this.currentLogView = podLogs.logViewInfo;
+    this.currentSelection = podLogs.selection;
     this.logsSet = this.formatAllLogs_(podLogs.logs);
   }
 

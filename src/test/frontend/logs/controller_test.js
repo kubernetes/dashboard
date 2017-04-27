@@ -51,23 +51,21 @@ describe('Logs controller', () => {
       {timestamp: '2', content: 'b'},
       {timestamp: '3', content: 'c'},
     ],
-    firstLogLineReference: {'timestamp': '1', 'lineNum': -1},
-    lastLogLineReference: {timestamp: '3', lineNum: -1},
-    logViewInfo: {
-      referenceLogLineId: {'timestamp': 'X', 'lineNum': 11},
-      'relativeFrom': 22,
-      'relativeTo': 25,
+    info: {podName: 'test-pod', containerName: 'container-name', fromDate: '1', toDate: '3'},
+    selection: {
+      referencePoint: {'timestamp': 'X', 'lineNum': 11},
+      'offsetFrom': 22,
+      'offsetTo': 25,
     },
   };
 
   let otherLogs = {
     logs: [{timestamp: '7', content: 'x'}, {timestamp: '8', content: 'y'}],
-    firstLogLineReference: {'timestamp': '7', 'lineNum': -1},
-    lastLogLineReference: {timestamp: '8', lineNum: -1},
-    logViewInfo: {
-      referenceLogLineId: {'timestamp': 'Y', 'lineNum': 12},
-      'relativeFrom': 33,
-      'relativeTo': 35,
+    info: {},
+    selection: {
+      referencePoint: {'timestamp': 'Y', 'lineNum': 12},
+      'offsetFrom': 33,
+      'offsetTo': 35,
     },
   };
 
@@ -124,11 +122,11 @@ describe('Logs controller', () => {
     expect(ctrl.logsSet.length).toEqual(3);
     httpBackend
         .expectGET(
-            /api\/v1\/pod\/namespace11\/pod2\/log\/con22\?referenceLineNum=11&referenceTimestamp=X&relativeFrom=25&relativeTo=\d+/)
+            'api/v1/pod/namespace11/pod2/log/con22?offsetFrom=25&offsetTo=125&referenceLineNum=11&referenceTimestamp=X')
         .respond(200, otherLogs);
     httpBackend.flush();
     expect(ctrl.logsSet.length).toEqual(2);
-    expect(ctrl.currentLogView).toEqual(otherLogs.logViewInfo);
+    expect(ctrl.currentSelection).toEqual(otherLogs.selection);
   });
 
   it('should load older logs on loadOlder call', () => {
@@ -137,11 +135,11 @@ describe('Logs controller', () => {
     expect(ctrl.logsSet.length).toEqual(3);
     httpBackend
         .expectGET(
-            /api\/v1\/pod\/namespace11\/pod2\/log\/con22\?referenceLineNum=11&referenceTimestamp=X&relativeFrom=-?\d+&relativeTo=22/)
+            'api/v1/pod/namespace11/pod2/log/con22?offsetFrom=-78&offsetTo=22&referenceLineNum=11&referenceTimestamp=X')
         .respond(200, otherLogs);
     httpBackend.flush();
     expect(ctrl.logsSet.length).toEqual(2);
-    expect(ctrl.currentLogView).toEqual(otherLogs.logViewInfo);
+    expect(ctrl.currentSelection).toEqual(otherLogs.selection);
   });
 
   it('should load newest logs on loadNewest call', () => {
@@ -150,11 +148,11 @@ describe('Logs controller', () => {
     expect(ctrl.logsSet.length).toEqual(3);
     httpBackend
         .expectGET(
-            /api\/v1\/pod\/namespace11\/pod2\/log\/con22\?referenceLineNum=11&referenceTimestamp=X&relativeFrom=\d+&relativeTo=\d+/)
+            'api/v1/pod/namespace11/pod2/log/con22?offsetFrom=2000000000&offsetTo=2000000100&referenceLineNum=11&referenceTimestamp=X')
         .respond(200, otherLogs);
     httpBackend.flush();
     expect(ctrl.logsSet.length).toEqual(2);
-    expect(ctrl.currentLogView).toEqual(otherLogs.logViewInfo);
+    expect(ctrl.currentSelection).toEqual(otherLogs.selection);
 
   });
 
@@ -164,10 +162,10 @@ describe('Logs controller', () => {
     expect(ctrl.logsSet.length).toEqual(3);
     httpBackend
         .expectGET(
-            /api\/v1\/pod\/namespace11\/pod2\/log\/con22\?referenceLineNum=11&referenceTimestamp=X&relativeFrom=-\d+&relativeTo=-\d+/)
+            'api/v1/pod/namespace11/pod2/log/con22?offsetFrom=-2000000100&offsetTo=-2000000000&referenceLineNum=11&referenceTimestamp=X')
         .respond(200, otherLogs);
     httpBackend.flush();
     expect(ctrl.logsSet.length).toEqual(2);
-    expect(ctrl.currentLogView).toEqual(otherLogs.logViewInfo);
+    expect(ctrl.currentSelection).toEqual(otherLogs.selection);
   });
 });
