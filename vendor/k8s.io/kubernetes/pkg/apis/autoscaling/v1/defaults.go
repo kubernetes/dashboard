@@ -21,10 +21,7 @@ import (
 )
 
 func addDefaultingFuncs(scheme *runtime.Scheme) error {
-	RegisterDefaults(scheme)
-	return scheme.AddDefaultingFuncs(
-		SetDefaults_HorizontalPodAutoscaler,
-	)
+	return RegisterDefaults(scheme)
 }
 
 func SetDefaults_HorizontalPodAutoscaler(obj *HorizontalPodAutoscaler) {
@@ -32,4 +29,7 @@ func SetDefaults_HorizontalPodAutoscaler(obj *HorizontalPodAutoscaler) {
 		minReplicas := int32(1)
 		obj.Spec.MinReplicas = &minReplicas
 	}
+
+	// NB: we apply a default for CPU utilization in conversion because
+	// we need access to the annotations to properly apply the default.
 }

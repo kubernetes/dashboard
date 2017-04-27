@@ -5,7 +5,7 @@ import (
 
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/labels"
-	apiHelpers "k8s.io/client-go/pkg/api"
+	"k8s.io/client-go/pkg/api/helper"
 	"k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
@@ -95,5 +95,5 @@ func EqualIgnoreHash(template1, template2 v1.PodTemplateSpec) bool {
 	}
 	// Then, compare the templates without comparing their labels
 	template1.Labels, template2.Labels = nil, nil
-	return apiHelpers.Semantic.DeepEqual(template1, template2)
+	return helper.Semantic.DeepEqual(template1, template2)
 }

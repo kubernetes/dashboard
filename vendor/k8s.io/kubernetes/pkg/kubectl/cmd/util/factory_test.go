@@ -25,12 +25,12 @@ import (
 	"os"
 	"os/user"
 	"path"
-	"reflect"
 	"sort"
 	"strings"
 	"testing"
 	"time"
 
+	apiequality "k8s.io/apimachinery/pkg/api/equality"
 	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/labels"
@@ -623,7 +623,7 @@ func TestGetFirstPod(t *testing.T) {
 			t.Errorf("%s: expected %d pods, got %d", test.name, test.expectedNum, numPods)
 			continue
 		}
-		if !reflect.DeepEqual(test.expected, pod) {
+		if !apiequality.Semantic.DeepEqual(test.expected, pod) {
 			t.Errorf("%s:\nexpected pod:\n%#v\ngot:\n%#v\n\n", test.name, test.expected, pod)
 		}
 	}
@@ -740,17 +740,21 @@ func TestDiscoveryReplaceAliases(t *testing.T) {
 		{
 			name:     "all-replacement",
 			arg:      "all",
-			expected: "pods,replicationcontrollers,services,statefulsets,horizontalpodautoscalers,jobs,deployments,replicasets",
+			expected: "pods,replicationcontrollers,services,statefulsets.apps,horizontalpodautoscalers.autoscaling,jobs.batch,deployments.extensions,replicasets.extensions",
 		},
 		{
 			name:     "alias-in-comma-separated-arg",
 			arg:      "all,secrets",
-			expected: "pods,replicationcontrollers,services,statefulsets,horizontalpodautoscalers,jobs,deployments,replicasets,secrets",
+			expected: "pods,replicationcontrollers,services,statefulsets.apps,horizontalpodautoscalers.autoscaling,jobs.batch,deployments.extensions,replicasets.extensions,secrets",
 		},
 	}
 
-	mapper := NewShortcutExpander(testapi.Default.RESTMapper(), nil)
-	b := resource.NewBuilder(mapper, api.Scheme, fakeClient(), testapi.Default.Codec())
+	ds := &fakeDiscoveryClient{}
+	mapper, err := NewShortcutExpander(testapi.Default.RESTMapper(), ds)
+	if err != nil {
+		t.Fatalf("Unable to create shortcut expander, err = %s", err.Error())
+	}
+	b := resource.NewBuilder(mapper, resource.LegacyCategoryExpander, api.Scheme, fakeClient(), testapi.Default.Codec())
 
 	for _, test := range tests {
 		replaced := b.ReplaceAliases(test.arg)

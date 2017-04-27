@@ -17,9 +17,9 @@ limitations under the License.
 package util
 
 import (
-	"strings"
 	"testing"
 
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/kubernetes/pkg/api/testapi"
 )
@@ -28,66 +28,113 @@ func TestReplaceAliases(t *testing.T) {
 	tests := []struct {
 		name     string
 		arg      string
-		expected string
+		expected schema.GroupVersionResource
+		srvRes   []*metav1.APIResourceList
 	}{
 		{
-			name:     "no-replacement",
-			arg:      "service",
-			expected: "service",
-		},
-		{
-			name:     "all-replacement",
-			arg:      "all",
-			expected: "pods,replicationcontrollers,services,statefulsets,horizontalpodautoscalers,jobs,deployments,replicasets",
-		},
-		{
-			name:     "alias-in-comma-separated-arg",
-			arg:      "all,secrets",
-			expected: "pods,replicationcontrollers,services,statefulsets,horizontalpodautoscalers,jobs,deployments,replicasets,secrets",
-		},
-		{
-			name:     "sc-resolves-to-storageclasses",
-			arg:      "sc",
-			expected: "storageclasses",
+			name:     "rc-resolves-to-replicationcontrollers",
+			arg:      "rc",
+			expected: schema.GroupVersionResource{Resource: "replicationcontrollers"},
+			srvRes:   []*metav1.APIResourceList{},
 		},
 		{
 			name:     "storageclasses-no-replacement",
 			arg:      "storageclasses",
-			expected: "storageclasses",
+			expected: schema.GroupVersionResource{Resource: "storageclasses"},
+			srvRes:   []*metav1.APIResourceList{},
+		},
+		{
+			name:     "hpa-priority",
+			arg:      "hpa",
+			expected: schema.GroupVersionResource{Resource: "superhorizontalpodautoscalers"},
+			srvRes: []*metav1.APIResourceList{
+				{
+					GroupVersion: "autoscaling/v1",
+					APIResources: []metav1.APIResource{
+						{
+							Name:       "superhorizontalpodautoscalers",
+							ShortNames: []string{"hpa"},
+						},
+					},
+				},
+				{
+					GroupVersion: "autoscaling/v1",
+					APIResources: []metav1.APIResource{
+						{
+							Name:       "horizontalpodautoscalers",
+							ShortNames: []string{"hpa"},
+						},
+					},
+				},
+			},
 		},
 	}
 
-	mapper := NewShortcutExpander(testapi.Default.RESTMapper(), nil)
+	ds := &fakeDiscoveryClient{}
+	mapper, err := NewShortcutExpander(testapi.Default.RESTMapper(), ds)
+	if err != nil {
+		t.Fatalf("Unable to create shortcut expander, err %s", err.Error())
+	}
 
 	for _, test := range tests {
-		resources := []string{}
-		for _, arg := range strings.Split(test.arg, ",") {
-			curr, _ := mapper.AliasesForResource(arg)
-			resources = append(resources, curr...)
+		ds.serverResourcesHandler = func() ([]*metav1.APIResourceList, error) {
+			return test.srvRes, nil
 		}
-		if strings.Join(resources, ",") != test.expected {
-			t.Errorf("%s: unexpected argument: expected %s, got %s", test.name, test.expected, resources)
+		actual := mapper.expandResourceShortcut(schema.GroupVersionResource{Resource: test.arg})
+		if actual != test.expected {
+			t.Errorf("%s: unexpected argument: expected %s, got %s", test.name, test.expected, actual)
 		}
 	}
 }
+
 func TestKindFor(t *testing.T) {
 	tests := []struct {
 		in       schema.GroupVersionResource
 		expected schema.GroupVersionKind
+		srvRes   []*metav1.APIResourceList
 	}{
 		{
 			in:       schema.GroupVersionResource{Group: "storage.k8s.io", Version: "", Resource: "sc"},
-			expected: schema.GroupVersionKind{Group: "storage.k8s.io", Version: "v1beta1", Kind: "StorageClass"},
+			expected: schema.GroupVersionKind{Group: "storage.k8s.io", Version: "v1", Kind: "StorageClass"},
+			srvRes: []*metav1.APIResourceList{
+				{
+					GroupVersion: "storage.k8s.io/v1",
+					APIResources: []metav1.APIResource{
+						{
+							Name:       "storageclasses",
+							ShortNames: []string{"sc"},
+						},
+					},
+				},
+			},
 		},
 		{
 			in:       schema.GroupVersionResource{Group: "", Version: "", Resource: "sc"},
-			expected: schema.GroupVersionKind{Group: "storage.k8s.io", Version: "v1beta1", Kind: "StorageClass"},
+			expected: schema.GroupVersionKind{Group: "storage.k8s.io", Version: "v1", Kind: "StorageClass"},
+			srvRes: []*metav1.APIResourceList{
+				{
+					GroupVersion: "storage.k8s.io/v1",
+					APIResources: []metav1.APIResource{
+						{
+							Name:       "storageclasses",
+							ShortNames: []string{"sc"},
+						},
+					},
+				},
+			},
 		},
 	}
 
-	mapper := NewShortcutExpander(testapi.Default.RESTMapper(), nil)
+	ds := &fakeDiscoveryClient{}
+	mapper, err := NewShortcutExpander(testapi.Default.RESTMapper(), ds)
+	if err != nil {
+		t.Fatalf("Unable to create shortcut expander, err %s", err.Error())
+	}
 
 	for i, test := range tests {
+		ds.serverResourcesHandler = func() ([]*metav1.APIResourceList, error) {
+			return test.srvRes, nil
+		}
 		ret, err := mapper.KindFor(test.in)
 		if err != nil {
 			t.Errorf("%d: unexpected error returned %s", i, err.Error())
