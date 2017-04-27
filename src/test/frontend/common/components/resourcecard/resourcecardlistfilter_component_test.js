@@ -16,8 +16,8 @@ import resourceCardModule from 'common/components/resourcecard/resourcecard_modu
 import dataSelectModule from 'common/dataselect/module';
 import errorHandlingModule from 'common/errorhandling/module';
 
-describe('Resource card list pagination', () => {
-  /** @type {!ResourceCardListPaginationController} */
+describe('Resource card list filtering', () => {
+  /** @type {!ResourceCardListFilterController} */
   let ctrl;
   /** @type {!ResourceCardListController} */
   let resourceCardListCtrl;
@@ -50,7 +50,7 @@ describe('Resource card list pagination', () => {
               {listResource: $resource('api/v1/pod/:namespace')});
           scope = $rootScope;
           ctrl = $componentController(
-              'kdResourceCardListPagination', {
+              'kdResourceCardListFilter', {
                 errorDialog: errDialog,
               },
               {
@@ -61,39 +61,34 @@ describe('Resource card list pagination', () => {
         });
   });
 
-  it('should show pagination', () => {
+  it('should enable search', () => {
     // given
-    resourceCardListCtrl.list = {listMeta: {totalItems: 50}};
-    ctrl.selectId = 'test-id';
+    ctrl.selectId_ = 'test-id';
 
     // when
-    let result = ctrl.shouldShowPagination();
+    let result = ctrl.shouldEnable();
 
     // then
     expect(result).toBeTruthy();
   });
 
-  it('should hide pagination', () => {
-    // given
-    resourceCardListCtrl.list = {listMeta: {totalItems: 10}};
-    ctrl.selectId = 'test-id';
-
+  it('should disable search', () => {
     // when
-    let result = ctrl.shouldShowPagination();
+    let result = ctrl.shouldEnable();
 
     // then
     expect(result).toBeFalsy();
   });
 
-  it('should change page', () => {
+  it('should filter pods', () => {
     // given
     let deferred = q.defer();
     let response = {pods: ['pod-1']};
-    let page = 2;
-    spyOn(dataSelectService, 'paginate').and.returnValue(deferred.promise);
+    ctrl.inputText = 'p';
+    spyOn(dataSelectService, 'filter').and.returnValue(deferred.promise);
 
     // when
-    ctrl.pageChanged(page);
+    ctrl.onTextUpdate();
     deferred.resolve(response);
     scope.$digest();
 
@@ -101,20 +96,44 @@ describe('Resource card list pagination', () => {
     expect(resourceCardListCtrl.list.pods).toEqual(response.pods);
   });
 
-  it('should open error dialog on page change error', () => {
+  it('should open error dialog on filter error', () => {
     // given
     let deferred = q.defer();
     let response = {data: 'error'};
-    let page = 2;
     spyOn(errDialog, 'open');
-    spyOn(dataSelectService, 'paginate').and.returnValue(deferred.promise);
+    spyOn(dataSelectService, 'filter').and.returnValue(deferred.promise);
 
     // when
-    ctrl.pageChanged(page);
+    ctrl.onTextUpdate();
     deferred.reject(response);
     scope.$digest();
 
     // then
-    expect(errDialog.open).toHaveBeenCalledWith('Pagination error', response.data);
+    expect(errDialog.open).toHaveBeenCalledWith('Filtering error', response.data);
+  });
+
+  it('should keep search open', () => {
+    // given
+    ctrl.inputText = 'test';
+
+    // when
+    let result = ctrl.shouldKeepSearchOpen();
+
+    // then
+    expect(result).toBeTruthy();
+  });
+
+  it('should clear search box', () => {
+    // given
+    let deferred = q.defer();
+    ctrl.inputText = 'test';
+    spyOn(dataSelectService, 'filter').and.returnValue(deferred.promise);
+
+    // when
+    ctrl.clearInput();
+
+    // then
+    expect(ctrl.inputText).toEqual('');
+    expect(dataSelectService.filter).toHaveBeenCalled();
   });
 });
