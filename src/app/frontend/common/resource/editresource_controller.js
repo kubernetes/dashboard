@@ -22,11 +22,13 @@ export class EditResourceController {
    * @param {!md.$dialog} $mdDialog
    * @param {!angular.$resource} $resource
    * @param {!angular.$http} $http
+   * @param {!clipboard.Clipboard} clipboard
+   * @param {!md.$toast} $mdToast
    * @param {string} resourceKindName
    * @param {string} resourceUrl
    * @ngInject
    */
-  constructor($mdDialog, $resource, $http, resourceKindName, resourceUrl) {
+  constructor($mdDialog, $resource, $http, clipboard, $mdToast, resourceKindName, resourceUrl) {
     /** @export {string} */
     this.resourceKindName = resourceKindName;
 
@@ -44,6 +46,12 @@ export class EditResourceController {
 
     /** @private {!angular.$http} */
     this.http_ = $http;
+
+    /** @private {!clipboard.Clipboard} */
+    this.clipboard_ = clipboard;
+
+    /** @private {!md.$toast} */
+    this.toast_ = $mdToast;
 
     this.init_();
   }
@@ -67,11 +75,46 @@ export class EditResourceController {
   }
 
   /**
+   * @export
+   */
+  copy() {
+    /**
+     * @type {string} @desc Toast message appears when browser does not support clipboard
+     */
+    let MSG_UNSUPPORTED_TOAST = goog.getMsg('Unsupported browser');
+    /**
+     * @type {string} @desc Toast message appears when copied to clipboard.
+     */
+    let MSG_COPIED_TOAST = goog.getMsg('Copied to clipboard');
+    /* if the clipboard functionality is not supported */
+    if (!this.clipboard_.supported) {
+      this.showMessage_(MSG_UNSUPPORTED_TOAST);
+    } else {
+      this.clipboard_.copyText(JSON.stringify(this.data, null, 2));
+      this.showMessage_(MSG_COPIED_TOAST);
+    }
+  }
+
+  /**
    * Cancels and closes the dialog.
    *
    * @export
    */
   cancel() {
     this.mdDialog_.cancel();
+  }
+
+  /**
+   * show an error message
+   *
+   * @private
+   * @param {string} message
+   */
+  showMessage_(message) {
+    this.toast_.show(this.toast_.simple()
+                         .textContent(message)
+                         .position('top right')
+                         .parent(document.getElementsByTagName('md-dialog')[0])
+                         .hideDelay(3000));
   }
 }
