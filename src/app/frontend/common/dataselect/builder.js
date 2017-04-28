@@ -23,7 +23,7 @@ export const SortableProperties = {
 };
 
 /** @const {number} **/
-export const ItemsPerPage = 10;
+export const ItemsPerPage = 30;
 
 /**
  * @final
