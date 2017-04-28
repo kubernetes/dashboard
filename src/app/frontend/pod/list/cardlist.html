@@ -14,21 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card-list ng-if="::$ctrl.podList.pods"
-                       selectable="::$ctrl.selectable"
+<kd-resource-card-list selectable="::$ctrl.selectable"
                        with-statuses="::$ctrl.withStatuses"
                        select-id="{{::$ctrl.getSelectId()}}"
                        list="$ctrl.podList"
                        list-resource="$ctrl.podListResource">
-  <kd-resource-card-list-header ng-transclude="header">
-    [[Pods|Label which appears above the list of such objects.]]
+  <kd-resource-card-list-header>
+    <kd-resource-card-list-title ng-transclude="header">
+      [[Pods|Label which appears above the list of such objects.]]
+    </kd-resource-card-list-title>
+    <kd-resource-card-list-filter></kd-resource-card-list-filter>
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
-  <div ng-show="!$ctrl.podList.listMeta.totalItems"
-       class="kd-zerostate-message"
-       ng-transclude="zerostate"></div>
 
-  <kd-resource-card-header-columns ng-show="::$ctrl.podList.listMeta.totalItems">
+  <kd-zero-state ng-if="!$ctrl.podList.listMeta.totalItems">
+    <kd-zero-state-text ng-transclude="zerostate">
+      [[There are no Pods to display.|Text for pods card list zerostate.]]
+    </kd-zero-state-text>
+  </kd-zero-state>
+  <kd-resource-card-header-columns ng-show="$ctrl.podList.listMeta.totalItems">
     <kd-resource-card-header-column size="small"
                                     grow="2"
                                     sortable="true"
@@ -76,4 +79,8 @@ limitations under the License.
                show-metrics="::$ctrl.showMetrics()"
                total-items="::$ctrl.podList.listMeta.totalItems">
   </kd-pod-card>
+
+  <kd-resource-card-list-footer>
+    <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
+  </kd-resource-card-list-footer>
 </kd-resource-card-list>

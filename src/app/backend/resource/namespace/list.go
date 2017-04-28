@@ -80,7 +80,9 @@ func toNamespaceList(namespaces []api.Namespace, dsQuery *dataselect.DataSelectQ
 		ListMeta:   common.ListMeta{TotalItems: len(namespaces)},
 	}
 
-	namespaces = fromCells(dataselect.GenericDataSelect(toCells(namespaces), dsQuery))
+	namespaceCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(namespaces), dsQuery)
+	namespaces = fromCells(namespaceCells)
+	namespaceList.ListMeta = common.ListMeta{TotalItems: filteredTotal}
 
 	for _, namespace := range namespaces {
 		namespaceList.Namespaces = append(namespaceList.Namespaces, toNamespace(namespace))

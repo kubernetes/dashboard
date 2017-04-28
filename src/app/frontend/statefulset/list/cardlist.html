@@ -19,12 +19,19 @@ limitations under the License.
                        select-id="{{::$ctrl.getSelectId()}}"
                        list="$ctrl.statefulSetList"
                        list-resource="$ctrl.statefulSetListResource">
-  <kd-resource-card-list-header ng-transclude="header">
-    [[Stateful Sets|Label which appears above the list of such objects.]]
+  <kd-resource-card-list-header>
+    <kd-resource-card-list-title ng-transclude="header">
+      [[Stateful Sets|Label which appears above the list of such objects.]]
+    </kd-resource-card-list-title>
+    <kd-resource-card-list-filter></kd-resource-card-list-filter>
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
 
-  <kd-resource-card-header-columns>
+  <kd-zero-state ng-if="!$ctrl.statefulSetList.listMeta.totalItems">
+    <kd-zero-state-text ng-transclude="zerostate">
+      [[There are no Stateful Sets to display.|Text for stateful set card list zerostate.]]
+    </kd-zero-state-text>
+  </kd-zero-state>
+  <kd-resource-card-header-columns ng-show="$ctrl.statefulSetList.listMeta.totalItems">
     <kd-resource-card-header-column size="small"
                                     grow="2"
                                     sortable="true"
@@ -69,4 +76,8 @@ limitations under the License.
                         show-resource-kind="::$ctrl.showResourceKind"
                         total-items="::$ctrl.statefulSetList.listMeta.totalItems">
   </kd-stateful-set-card>
+
+  <kd-resource-card-list-footer>
+    <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
+  </kd-resource-card-list-footer>
 </kd-resource-card-list>

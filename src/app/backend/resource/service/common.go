@@ -54,7 +54,9 @@ func CreateServiceList(services []api.Service, dsQuery *dataselect.DataSelectQue
 		ListMeta: common.ListMeta{TotalItems: len(services)},
 	}
 
-	services = fromCells(dataselect.GenericDataSelect(toCells(services), dsQuery))
+	serviceCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(services), dsQuery)
+	services = fromCells(serviceCells)
+	serviceList.ListMeta = common.ListMeta{TotalItems: filteredTotal}
 
 	for _, service := range services {
 		serviceList.Services = append(serviceList.Services, ToService(&service))

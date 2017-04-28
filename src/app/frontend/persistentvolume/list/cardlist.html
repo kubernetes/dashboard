@@ -19,12 +19,19 @@ limitations under the License.
                        select-id="{{::$ctrl.getSelectId()}}"
                        list="$ctrl.persistentVolumeList"
                        list-resource="$ctrl.persistentVolumeListResource">
-  <kd-resource-card-list-header ng-transclude="header">
-    [[Persistent Volumes|Label which appears above the list of such objects.]]
+  <kd-resource-card-list-header>
+    <kd-resource-card-list-title ng-transclude="header">
+      [[Persistent Volumes|Label which appears above the list of such objects.]]
+    </kd-resource-card-list-title>
+    <kd-resource-card-list-filter></kd-resource-card-list-filter>
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
 
-  <kd-resource-card-header-columns>
+  <kd-zero-state ng-if="!$ctrl.persistentVolumeList.listMeta.totalItems">
+    <kd-zero-state-text ng-transclude="zerostate">
+      [[There are no Persistent Volumes to display.|Text for persistent volume card list zerostate.]]
+    </kd-zero-state-text>
+  </kd-zero-state>
+  <kd-resource-card-header-columns ng-show="$ctrl.persistentVolumeList.listMeta.totalItems">
     <kd-resource-card-header-column size="small"
                                     grow="2"
                                     sortable="true"
@@ -70,4 +77,8 @@ limitations under the License.
                              pagination-id="{{::$ctrl.getSelectId()}}"
                              total-items="::$ctrl.persistentVolumeList.listMeta.totalItems">
   </kd-persistent-volume-card>
+
+  <kd-resource-card-list-footer>
+    <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
+  </kd-resource-card-list-footer>
 </kd-resource-card-list>

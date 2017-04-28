@@ -19,12 +19,19 @@ limitations under the License.
                        select-id="{{::$ctrl.getSelectId()}}"
                        list="$ctrl.persistentVolumeClaimList"
                        list-resource="$ctrl.persistentVolumeClaimListResource">
-  <kd-resource-card-list-header ng-transclude="header">
-    [[Persistent Volume Claims|Label which appears above the list of such objects.]]
+  <kd-resource-card-list-header>
+    <kd-resource-card-list-title ng-transclude="header">
+      [[Persistent Volume Claims|Label which appears above the list of such objects.]]
+    </kd-resource-card-list-title>
+    <kd-resource-card-list-filter></kd-resource-card-list-filter>
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
 
-  <kd-resource-card-header-columns>
+  <kd-zero-state ng-if="!$ctrl.persistentVolumeClaimList.listMeta.totalItems">
+    <kd-zero-state-text ng-transclude="zerostate">
+      [[There are no Persistent Volume Claims to display.|Text for persistent volume claim card list zerostate.]]
+    </kd-zero-state-text>
+  </kd-zero-state>
+  <kd-resource-card-header-columns ng-show="$ctrl.persistentVolumeClaimList.listMeta.totalItems">
     <kd-resource-card-header-column size="small"
                                     grow="2"
                                     sortable="true"
@@ -56,4 +63,8 @@ limitations under the License.
                                    persistent-volume-claim="persistentVolumeClaim"
                                    total-items="$ctrl.persistentVolumeClaimList.listMeta.totalItems">
   </kd-persistent-volume-claim-card>
+
+  <kd-resource-card-list-footer>
+    <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
+  </kd-resource-card-list-footer>
 </kd-resource-card-list>

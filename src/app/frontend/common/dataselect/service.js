@@ -20,6 +20,8 @@ const Actions = {
   PAGINATE: 0,
   /** @export */
   SORT: 1,
+  /** @export */
+  FILTER: 2,
 };
 
 /**
@@ -29,9 +31,10 @@ export class DataSelectService {
   /**
    * @param {!./../namespace/service.NamespaceService} kdNamespaceService
    * @param {!../../chrome/state.StateParams|!../resource/resourcedetail.StateParams} $stateParams
+   * @param {!{setCurrentPage: function(string, number)}} paginationService
    * @ngInject
    */
-  constructor(kdNamespaceService, $stateParams) {
+  constructor(kdNamespaceService, $stateParams, paginationService) {
     /** @private {!Map<string, !DataSelectApi.DataSelectQuery>} */
     this.instances_ = new Map();
     /** @private {!./../namespace/service.NamespaceService} */
@@ -42,6 +45,8 @@ export class DataSelectService {
     this.rowsLimit = ItemsPerPage;
     /** {!../../../chrome/chrome_state.StateParams|!../../resource/resourcedetail.StateParams} */
     this.stateParams_ = $stateParams;
+    /** @private {!{setCurrentPage: function(string, number)}} */
+    this.paginationService_ = paginationService;
   }
 
   /**
@@ -71,10 +76,18 @@ export class DataSelectService {
   }
 
   /**
+   * @param {string} dataSelectId
+   * @private
+   */
+  resetPagination_(dataSelectId) {
+    this.paginationService_.setCurrentPage(dataSelectId, 1);
+  }
+
+  /**
    * @param listResource {!angular.$resource}
    * @param dataSelectId {string}
    * @param dataSelectQuery {!DataSelectApi.DataSelectQuery}
-   * @param action {string}
+   * @param action {number}
    * @return {!angular.$q.Promise}
    * @private
    */
@@ -102,6 +115,10 @@ export class DataSelectService {
       case this.actions_.SORT:
         query.sortBy = dataSelectQuery.sortBy;
         break;
+      case this.actions_.FILTER:
+        query.filterBy = dataSelectQuery.filterBy;
+        query.page = 1;
+        this.resetPagination_(dataSelectId);
     }
 
     this.instances_.set(dataSelectId, query);
@@ -136,6 +153,18 @@ export class DataSelectService {
     let dataSelectQuery =
         new DataSelectQueryBuilder().setAscending(ascending).setSortBy(sortBy).build();
     return this.selectData_(listResource, dataSelectId, dataSelectQuery, this.actions_.SORT);
+  }
+
+  /**
+   * @param listResource {!angular.$resource}
+   * @param dataSelectId {string}
+   * @param filterBy {string}
+   * @return {!angular.$q.Promise}
+   * @export
+   */
+  filter(listResource, dataSelectId, filterBy) {
+    let dataSelectQuery = new DataSelectQueryBuilder().setFilterBy(filterBy).build();
+    return this.selectData_(listResource, dataSelectId, dataSelectQuery, this.actions_.FILTER);
   }
 
   /**

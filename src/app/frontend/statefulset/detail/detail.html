@@ -33,10 +33,9 @@ limitations under the License.
     <kd-pod-card-list pod-list="::ctrl.statefulSetDetail.podList"
                       pod-list-resource="::ctrl.statefulSetPodsResource"
                       with-statuses="true">
-      <kd-zerostate>
-        <div class="kd-zerostate-title">[[There is nothing to display here|Title for pods card zerostate in stateful set details page.]]</div>
-        <div class="kd-zerostate-text">[[There are currently no Pods managed by this Stateful Set.|Text for pods card zerostate in stateful set details page.]]</div>
-      </kd-zerostate>
+      <kd-empty-list-text>
+        [[There are currently no Pods managed by this Stateful Set.|Text for pods card zerostate in stateful set details page.]]
+      </kd-empty-list-text>
     </kd-pod-card-list>
   </kd-content>
 </kd-content-card>

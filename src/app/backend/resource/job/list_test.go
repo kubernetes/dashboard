@@ -92,7 +92,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 						Name:              "rs-name",
 						Namespace:         "rs-namespace",
 						Labels:            map[string]string{"key": "value"},
-						UID: "uid",
+						UID:               "uid",
 						CreationTimestamp: metaV1.Unix(111, 222),
 					},
 					Spec: batch.JobSpec{
@@ -108,7 +108,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 							Name:              "rs-name",
 							Namespace:         "rs-namespace",
 							Labels:            map[string]string{"key": "value"},
-							UID: "uid",
+							UID:               "uid",
 							CreationTimestamp: metaV1.Unix(111, 222),
 						},
 						Spec: batch.JobSpec{

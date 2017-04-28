@@ -82,8 +82,9 @@ func toNodeList(nodes []api.Node, dsQuery *dataselect.DataSelectQuery, heapsterC
 		ListMeta: common.ListMeta{TotalItems: len(nodes)},
 	}
 
-	replicationControllerCells, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells(nodes), dsQuery, dataselect.NoResourceCache, heapsterClient)
-	nodes = fromCells(replicationControllerCells)
+	nodeCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(toCells(nodes), dsQuery, dataselect.NoResourceCache, heapsterClient)
+	nodes = fromCells(nodeCells)
+	nodeList.ListMeta = common.ListMeta{TotalItems: filteredTotal}
 
 	for _, node := range nodes {
 		nodeList.Nodes = append(nodeList.Nodes, toNode(node))

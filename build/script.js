@@ -161,6 +161,7 @@ function compileES6(translation) {
     path.join(conf.paths.externs, 'clipboard.js'),
     path.join(conf.paths.externs, 'uirouter.js'),
     path.join(conf.paths.externs, 'dataselect.js'),
+    path.join(conf.paths.externs, 'dirPagination.js'),
   ];
 
   let closureCompilerConfig = {

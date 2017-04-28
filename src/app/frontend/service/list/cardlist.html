@@ -19,14 +19,18 @@ limitations under the License.
                        select-id="{{::$ctrl.getSelectId()}}"
                        list="$ctrl.serviceList"
                        list-resource="::$ctrl.serviceListResource">
-  <kd-resource-card-list-header ng-transclude="header">
-    [[Services|Label which appears above the list of such objects.]]
+  <kd-resource-card-list-header>
+    <kd-resource-card-list-title ng-transclude="header">
+      [[Services|Label which appears above the list of such objects.]]
+    </kd-resource-card-list-title>
+    <kd-resource-card-list-filter></kd-resource-card-list-filter>
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
-  <div ng-show="!$ctrl.serviceList.listMeta.totalItems"
-       class="kd-zerostate-message"
-       ng-transclude="zerostate"></div>
 
+  <kd-zero-state ng-if="!$ctrl.serviceList.listMeta.totalItems">
+    <kd-zero-state-text ng-transclude="zerostate">
+      [[There are no Services to display.|Text for service card list zerostate.]]
+    </kd-zero-state-text>
+  </kd-zero-state>
   <kd-resource-card-header-columns ng-show="$ctrl.serviceList.listMeta.totalItems">
     <kd-resource-card-header-column size="small"
                                     grow="2"
@@ -71,4 +75,8 @@ limitations under the License.
                    pagination-id="{{::$ctrl.getSelectId()}}"
                    total-items="::$ctrl.serviceList.listMeta.totalItems">
   </kd-service-card>
+
+  <kd-resource-card-list-footer>
+    <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
+  </kd-resource-card-list-footer>
 </kd-resource-card-list>

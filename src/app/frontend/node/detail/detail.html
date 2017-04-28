@@ -33,10 +33,9 @@ limitations under the License.
     <kd-pod-card-list pod-list="::ctrl.nodeDetail.podList"
                       pod-list-resource="::ctrl.podListResource"
                       with-statuses="true">
-      <kd-zerostate>
-        <div class="kd-zerostate-title">[[There is nothing to display here|Title for pods card zerostate in node details page.]]</div>
-        <div class="kd-zerostate-text">[[There are currently no Pods scheduled on this Node.|Text for pods card zerostate in node details page.]]</div>
-      </kd-zerostate>
+      <kd-empty-list-text>
+        [[There are currently no Pods scheduled on this Node.|Text for pods card zerostate in node details page.]]
+      </kd-empty-list-text>
     </kd-pod-card-list>
   </kd-content>
 </kd-content-card>

@@ -59,7 +59,9 @@ func CreateStorageClassList(storageClasses []storage.StorageClass, dsQuery *data
 		ListMeta:       common.ListMeta{TotalItems: len(storageClasses)},
 	}
 
-	storageClasses = fromCells(dataselect.GenericDataSelect(toCells(storageClasses), dsQuery))
+	storageClassCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(storageClasses), dsQuery)
+	storageClasses = fromCells(storageClassCells)
+	storageClassList.ListMeta = common.ListMeta{TotalItems: filteredTotal}
 
 	for _, storageClass := range storageClasses {
 		storageClassList.StorageClasses = append(storageClassList.StorageClasses, ToStorageClass(&storageClass))

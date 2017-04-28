@@ -30,6 +30,7 @@ describe('Data select query builder', () => {
       sortBy: `d,${SortableProperties.AGE}`,
       namespace: '',
       name: '',
+      filterBy: '',
     };
 
     // when
@@ -47,6 +48,7 @@ describe('Data select query builder', () => {
       sortBy: `d,${SortableProperties.NAME}`,
       namespace: 'test-ns',
       name: 'test-name',
+      filterBy: '',
     };
 
     // when

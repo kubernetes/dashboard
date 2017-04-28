@@ -73,7 +73,9 @@ func getConfigMapList(configMaps []api.ConfigMap, dsQuery *dataselect.DataSelect
 		ListMeta: common.ListMeta{TotalItems: len(configMaps)},
 	}
 
-	configMaps = fromCells(dataselect.GenericDataSelect(toCells(configMaps), dsQuery))
+	configMapCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(configMaps), dsQuery)
+	configMaps = fromCells(configMapCells)
+	result.ListMeta = common.ListMeta{TotalItems: filteredTotal}
 
 	for _, item := range configMaps {
 		result.Items = append(result.Items,

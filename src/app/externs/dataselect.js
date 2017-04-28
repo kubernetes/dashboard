@@ -25,6 +25,7 @@ const DataSelectApi = {};
  *  sortBy: string,
  *  namespace: string,
  *  name: string,
+ *  filterBy: string
  *  }}
  */
 DataSelectApi.DataSelectQuery;
@@ -42,6 +43,7 @@ DataSelectApi.SortableProperties;
  * @typedef{{
  *  PAGINATE: number,
  *  SORT: number,
+ *  FILTER: number,
  *  }}
  */
 DataSelectApi.SupportedActions;
