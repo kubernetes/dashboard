@@ -12,17 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {LocalizerService} from './localizer_service';
-import {ErrorDialog} from './service';
+import {kdErrors} from './errors';
 
-/**
- * Angular module containing navigation chrome for the application.
- */
-export default angular
-    .module(
-        'kubernetesDashboard.errorhandling',
-        [
-          'ngMaterial',
-        ])
-    .service('errorDialog', ErrorDialog)
-    .service('localizerService', LocalizerService);
+/** @final */
+export class LocalizerService {
+  /**
+   * @param {string} err
+   * @return {string}
+   * @export
+   */
+  localize(err) {
+    let localizedErr = kdErrors[err.trim()];
+    if (localizedErr === undefined) {
+      return err;
+    }
+
+    return localizedErr;
+  }
+}

@@ -50,7 +50,14 @@ limitations under the License.
            ng-model="ctrl.file">
   </div>
   <kd-user-help>
-    [[Select a YAML or JSON file, specifying the resources to deploy.|User help for the YAML/JSON file upload form on the deploy page.]]
+    <div ng-show="ctrl.isAllNamespacesSelected()">
+      [[Select a YAML or JSON file, specifying the resources to deploy to the default namespace or to the namespace specified in the file.|User help for the YAML/JSON file upload form on the deploy page.]]
+    </div>
+    <div ng-hide="ctrl.isAllNamespacesSelected()">
+      [[Select a YAML or JSON file, specifying the resources to deploy to the currently selected namespace (in the left side menu).|User help for the YAML/JSON file upload form on the deploy page.]]
+    </div>
+
+    <!--[[Select a YAML or JSON file, specifying the resources to deploy.|User help for the YAML/JSON file upload form on the deploy page.]]-->
     <a href="http://kubernetes.io/docs/user-guide/deploying-applications/"
        target="_blank">
       [[Learn more|The text is used as a 'Learn more' link text besides the file upload on the deploy page.]] <i class="material-icons">open_in_new</i>

@@ -16,6 +16,9 @@ import {stateName as workloads} from 'workloads/state';
 
 import showDeployAnywayDialog from './deployanyway_dialog';
 
+const KD_DEPLOY_NAMESPACE_MISMATCH_ERROR = 'KD_DEPLOY_NAMESPACE_MISMATCH_ERROR';
+const KD_DEPLOY_EMPTY_NAMESPACE_ERROR = 'KD_DEPLOY_EMPTY_NAMESPACE_ERROR';
+
 /**
  * Controller for the deploy from file directive.
  *
@@ -31,9 +34,13 @@ export default class DeployFromFileController {
    * @param {!./../common/history/service.HistoryService} kdHistoryService
    * @param {!md.$dialog} $mdDialog
    * @param {!./../common/csrftoken/service.CsrfTokenService} kdCsrfTokenService
+   * @param {} $stateParams TODO
+   * @param {} localizerService TODO
    * @ngInject
    */
-  constructor($log, $resource, $q, errorDialog, kdHistoryService, $mdDialog, kdCsrfTokenService) {
+  constructor(
+      $log, $resource, $q, errorDialog, kdHistoryService, $mdDialog, kdCsrfTokenService,
+      $stateParams, localizerService) {
     /**
      * Initialized the template.
      * @export {!angular.FormController}
@@ -74,6 +81,12 @@ export default class DeployFromFileController {
     /** @private {!angular.$q.Promise} */
     this.tokenPromise = kdCsrfTokenService.getTokenForAction('appdeploymentfromfile');
 
+    /** TODO */
+    this.stateParams_ = $stateParams;
+
+    /** TODO */
+    this.localizerService_ = localizerService;
+
     /** @export */
     this.i18n = i18n;
   }
@@ -88,6 +101,7 @@ export default class DeployFromFileController {
       /** @type {!backendApi.AppDeploymentFromFileSpec} */
       let deploymentSpec = {
         name: this.file.name,
+        namespace: this.stateParams_.namespace,
         content: this.file.content,
         validate: validate,
       };
@@ -116,8 +130,9 @@ export default class DeployFromFileController {
                   if (this.hasValidationError_(err.data)) {
                     this.handleDeployAnywayDialog_(err.data);
                   } else {
+                    let errMsg = this.localizerService_.localize(err.data);
                     this.log_.error('Error deploying application:', err);
-                    this.errorDialog_.open(this.i18n.MSG_DEPLOY_DIALOG_ERROR, err.data);
+                    this.errorDialog_.open(this.i18n.MSG_DEPLOY_DIALOG_ERROR, errMsg);
                   }
                 });
           },

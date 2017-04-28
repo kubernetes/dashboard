@@ -18,8 +18,11 @@
  * @final
  */
 export class UploadController {
-  /** @ngInject */
-  constructor() {
+  /**
+   * @param {!} $stateParams
+   * @ngInject
+   */
+  constructor($stateParams) {
     /** @private {boolean} */
     this.isBrowseFileFuncRegistered_ = false;
 
@@ -35,6 +38,9 @@ export class UploadController {
      * @export {!angular.FormController}
      */
     this.form;
+
+    /** @private {!} */
+    this.stateParams_ = $stateParams;
   }
 
   /**
@@ -63,12 +69,20 @@ export class UploadController {
   /**
    * Used to deactivate the invalid file name report if the form is not submitted yet.
    *
-   * @returns {boolean}
+   * @return {boolean}
    * @export
    */
   isFileNameError() {
     /** @type {!angular.NgModelController} */
     let fileName = this.form['fileName'];
     return this.form.$submitted && fileName.$invalid;
+  }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  isAllNamespacesSelected() {
+    return this.stateParams_.namespace === '_all';
   }
 }
