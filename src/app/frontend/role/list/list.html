@@ -14,14 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-content-card ng-if="!$ctrl.shouldShowZeroState()">
+<kd-content-card>
   <kd-content>
-    <md-content>
-      <kd-role-card-list role-list="$ctrl.roleList"
-                         role-list-resource="$ctrl.roleListResource"
-                         with-statuses="false">
-      </kd-role-card-list>
-    </md-content>
+    <kd-role-card-list ng-if="!$ctrl.shouldShowZeroState()"
+                       role-list="$ctrl.roleList"
+                       role-list-resource="$ctrl.roleListResource"
+                       with-statuses="false">
+    </kd-role-card-list>
+    <kd-zero-state ng-if="$ctrl.shouldShowZeroState()"></kd-zero-state>
   </kd-content>
 </kd-content-card>
-<kd-zero-state ng-if="$ctrl.shouldShowZeroState()"></kd-zero-state>

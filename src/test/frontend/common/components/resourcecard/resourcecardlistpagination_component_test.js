@@ -27,8 +27,6 @@ describe('Resource card list pagination', () => {
   let dataSelectService;
   /** @type {!angular.Scope} */
   let scope;
-  /** @type {string} */
-  let namespace = 'ns-1';
   /** @type {!ErrorDialog} */
   let errDialog;
   /** @type {!angular.$q} **/
@@ -53,7 +51,6 @@ describe('Resource card list pagination', () => {
           scope = $rootScope;
           ctrl = $componentController(
               'kdResourceCardListPagination', {
-                $stateParams: {namespace: namespace},
                 errorDialog: errDialog,
               },
               {

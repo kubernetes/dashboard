@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	api "k8s.io/client-go/pkg/api/v1"
 	"k8s.io/apimachinery/pkg/types"
+	api "k8s.io/client-go/pkg/api/v1"
 )
 
 // DerivedResources is a map from a derived resource(a resource that is not supported by heapster)

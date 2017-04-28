@@ -117,8 +117,9 @@ func CreateDeploymentList(deployments []extensions.Deployment, pods []api.Pod, e
 	cachedResources := &dataselect.CachedResources{
 		Pods: pods,
 	}
-	deploymentCells, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells(deployments), dsQuery, cachedResources, heapsterClient)
+	deploymentCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(toCells(deployments), dsQuery, cachedResources, heapsterClient)
 	deployments = fromCells(deploymentCells)
+	deploymentList.ListMeta = common.ListMeta{TotalItems: filteredTotal}
 
 	for _, deployment := range deployments {
 		matchingPods := common.FilterDeploymentPodsByOwnerReference(deployment, rs, pods)

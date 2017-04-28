@@ -69,7 +69,9 @@ func getThirdPartyResourceList(thirdPartyResources []extensions.ThirdPartyResour
 		ListMeta:            common.ListMeta{TotalItems: len(thirdPartyResources)},
 	}
 
-	thirdPartyResources = fromCells(dataselect.GenericDataSelect(toCells(thirdPartyResources), dsQuery))
+	tprCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(thirdPartyResources), dsQuery)
+	thirdPartyResources = fromCells(tprCells)
+	result.ListMeta = common.ListMeta{TotalItems: filteredTotal}
 
 	for _, item := range thirdPartyResources {
 		result.ThirdPartyResources = append(result.ThirdPartyResources,

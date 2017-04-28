@@ -58,6 +58,8 @@ type MetricDataCell interface {
 type ComparableValue interface {
 	// Compares self with other value. Returns 1 if other value is smaller, 0 if they are the same, -1 if other is larger.
 	Compare(ComparableValue) int
+	// Returns true if self value contains or is equal to other value, false otherwise.
+	Contains(ComparableValue) bool
 }
 
 // SelectableData contains all the required data to perform data selection.
@@ -122,7 +124,7 @@ func (self *DataSelector) Filter() *DataSelector {
 				matches = false
 				continue
 			}
-			if filterBy.Value.Compare(v) != 0 {
+			if !v.Contains(filterBy.Value) {
 				matches = false
 				continue
 			}
@@ -197,6 +199,19 @@ func GenericDataSelect(dataList []DataCell, dsQuery *DataSelectQuery) []DataCell
 		DataSelectQuery: dsQuery,
 	}
 	return SelectableData.Sort().Paginate().GenericDataList
+}
+
+// GenericDataSelectWithFilter takes a list of GenericDataCells and DataSelectQuery and returns selected data as instructed by dsQuery.
+func GenericDataSelectWithFilter(dataList []DataCell, dsQuery *DataSelectQuery) ([]DataCell, int) {
+	SelectableData := DataSelector{
+		GenericDataList: dataList,
+		DataSelectQuery: dsQuery,
+	}
+	// Pipeline is Filter -> Sort -> CollectMetrics -> Paginate
+	filtered := SelectableData.Filter()
+	filteredTotal := len(filtered.GenericDataList)
+	processed := filtered.Sort().Paginate()
+	return processed.GenericDataList, filteredTotal
 }
 
 // GenericDataSelect takes a list of GenericDataCells and DataSelectQuery and returns selected data as instructed by dsQuery.

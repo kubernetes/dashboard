@@ -14,11 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-content-card ng-if="!ctrl.shouldShowZeroState()">
+<kd-content-card>
   <kd-content>
-    <kd-service-card-list service-list="::ctrl.serviceList"
+    <kd-service-card-list ng-if="!ctrl.shouldShowZeroState()"
+                          service-list="::ctrl.serviceList"
                           service-list-resource="::ctrl.serviceListResource">
     </kd-service-card-list>
+    <kd-zero-state ng-if="ctrl.shouldShowZeroState()"></kd-zero-state>
   </kd-content>
 </kd-content-card>
-<kd-zero-state ng-if="ctrl.shouldShowZeroState()"></kd-zero-state>

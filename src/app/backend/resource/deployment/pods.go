@@ -34,7 +34,7 @@ func GetDeploymentPods(client client.Interface, heapsterClient heapster.Heapster
 	}
 
 	channels := &common.ResourceChannels{
-		PodList: common.GetPodListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
+		PodList:        common.GetPodListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
 		ReplicaSetList: common.GetReplicaSetListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
 	}
 

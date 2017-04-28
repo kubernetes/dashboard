@@ -64,6 +64,8 @@ export const daemonSetCardListComponent = {
   transclude: {
     // Optional header that is transcluded instead of the default one.
     'header': '?kdHeader',
+    // Optional zerostate content that is shown when there are zero items.
+    'zerostate': '?kdEmptyListText',
   },
   templateUrl: 'daemonset/list/cardlist.html',
   controller: DaemonSetCardListController,

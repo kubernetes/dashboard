@@ -79,7 +79,9 @@ func getPersistentVolumeClaimList(persistentVolumeClaims []api.PersistentVolumeC
 		ListMeta: common.ListMeta{TotalItems: len(persistentVolumeClaims)},
 	}
 
-	persistentVolumeClaims = fromCells(dataselect.GenericDataSelect(toCells(persistentVolumeClaims), dsQuery))
+	pvcCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(persistentVolumeClaims), dsQuery)
+	persistentVolumeClaims = fromCells(pvcCells)
+	result.ListMeta = common.ListMeta{TotalItems: filteredTotal}
 
 	for _, item := range persistentVolumeClaims {
 		result.Items = append(result.Items,

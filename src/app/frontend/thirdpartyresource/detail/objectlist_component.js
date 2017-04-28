@@ -51,7 +51,8 @@ class ObjectListController {
 export const objectListComponent = {
   transclude: {
     'header': '?kdHeader',
-    'zerostate': '?kdZerostate',
+    // Optional zerostate content that is shown when there are zero items.
+    'zerostate': '?kdEmptyListText',
   },
   controller: ObjectListController,
   templateUrl: 'thirdpartyresource/detail/objectlist.html',

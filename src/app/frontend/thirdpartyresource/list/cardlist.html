@@ -18,11 +18,19 @@ limitations under the License.
                        select-id="{{::$ctrl.getSelectId()}}"
                        list="$ctrl.thirdPartyResourceList"
                        list-resource="$ctrl.thirdPartyResourceListResource">
-  <kd-resource-card-list-header ng-transclude="header">
-    [[Third Party Resources|Label which appears above the list of such objects.]]
+  <kd-resource-card-list-header>
+    <kd-resource-card-list-title ng-transclude="header">
+      [[Third Party Resources|Label which appears above the list of such objects.]]
+    </kd-resource-card-list-title>
+    <kd-resource-card-list-filter></kd-resource-card-list-filter>
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
-  <kd-resource-card-header-columns>
+
+  <kd-zero-state ng-if="!$ctrl.thirdPartyResourceList.listMeta.totalItems">
+    <kd-zero-state-text ng-transclude="zerostate">
+      [[There are no Third Party Resources to display.|Text for third party resource card list zerostate.]]
+    </kd-zero-state-text>
+  </kd-zero-state>
+  <kd-resource-card-header-columns ng-show="$ctrl.thirdPartyResourceList.listMeta.totalItems">
     <kd-resource-card-header-column size="small"
                                     grow="1">
       [[Name|Label 'Name' which appears as a column label in the table of third party resources (thirdpartyresource list view).]]
@@ -37,4 +45,8 @@ limitations under the License.
                                 third-party-resource="tpr"
                                 total-items="::$ctrl.thirdPartyResourceList.listMeta.totalItems">
   </kd-third-party-resource-card>
+
+  <kd-resource-card-list-footer>
+    <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
+  </kd-resource-card-list-footer>
 </kd-resource-card-list>

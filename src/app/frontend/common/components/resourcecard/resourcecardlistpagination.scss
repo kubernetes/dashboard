@@ -25,20 +25,3 @@
     display: flex;
   }
 }
-
-.kd-rows-selector-label {
-  line-height: 6 * $baseline-grid;
-  margin-right: $baseline-grid;
-  vertical-align: middle;
-}
-
-md-select {
-  &.kd-list-pagination-row-selector {
-    margin: 0 ($baseline-grid * 2) ($baseline-grid / 2) 0;
-
-    .md-select-value {
-      min-width: 6 * $baseline-grid;
-      width: 100%;
-    }
-  }
-}

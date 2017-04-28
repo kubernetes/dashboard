@@ -26,12 +26,13 @@ limitations under the License.
   </kd-graph-card>
 </div>
 
-<kd-content-card ng-if="!$ctrl.shouldShowZeroState()">
+<kd-content-card>
   <kd-content>
     <kd-pod-card-list pod-list="$ctrl.podList"
                       pod-list-resource="$ctrl.podListResource"
-                      with-statuses="true">
+                      with-statuses="true"
+                      ng-if="!$ctrl.shouldShowZeroState()">
     </kd-pod-card-list>
+    <kd-zero-state ng-if="$ctrl.shouldShowZeroState()"></kd-zero-state>
   </kd-content>
 </kd-content-card>
-<kd-zero-state ng-if="$ctrl.shouldShowZeroState()"></kd-zero-state>

@@ -95,9 +95,9 @@ func CreateReplicaSetList(replicaSets []extensions.ReplicaSet, pods []api.Pod, e
 	cachedResources := &dataselect.CachedResources{
 		Pods: pods,
 	}
-	rsCells, metricPromises := dataselect.GenericDataSelectWithMetrics(ToCells(replicaSets),
-		dsQuery, cachedResources, heapsterClient)
+	rsCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(ToCells(replicaSets), dsQuery, cachedResources, heapsterClient)
 	replicaSets = FromCells(rsCells)
+	replicaSetList.ListMeta = common.ListMeta{TotalItems: filteredTotal}
 
 	for _, replicaSet := range replicaSets {
 		matchingPods := common.FilterPodsByOwnerReference(replicaSet.Namespace,

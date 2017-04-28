@@ -14,17 +14,23 @@
 
 import {deployAppStateName} from 'deploy/state';
 
+const TITLE_SLOT = 'title';
+const TEXT_SLOT = 'text';
+
 /**
  * @final
  */
 export class ZeroStateController {
   /**
    * @param {!ui.router.$state} $state
+   * @param {!angular.$transclude} $transclude
    * @ngInject
    */
-  constructor($state) {
+  constructor($state, $transclude) {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
+    /** @private {!angular.$transclude} */
+    this.transclude_ = $transclude;
   }
 
   /**
@@ -34,6 +40,14 @@ export class ZeroStateController {
   getStateHref() {
     return this.state_.href(deployAppStateName);
   }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  showDefaultZerostate() {
+    return !this.transclude_.isSlotFilled(TITLE_SLOT) && !this.transclude_.isSlotFilled(TEXT_SLOT);
+  }
 }
 
 /**
@@ -41,6 +55,9 @@ export class ZeroStateController {
  */
 export const zeroStateComponent = {
   templateUrl: 'common/components/zerostate/zerostate.html',
-  transclude: true,
+  transclude: {
+    [TITLE_SLOT]: '?kdZeroStateTitle',
+    [TEXT_SLOT]: '?kdZeroStateText',
+  },
   controller: ZeroStateController,
 };

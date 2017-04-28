@@ -110,8 +110,10 @@ func CreateStatefulSetList(statefulSets []apps.StatefulSet, pods []api.Pod, even
 	cachedResources := &dataselect.CachedResources{
 		Pods: pods,
 	}
-	ssCells, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells(statefulSets), dsQuery, cachedResources, heapsterClient)
+	ssCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(
+		toCells(statefulSets), dsQuery, cachedResources, heapsterClient)
 	statefulSets = fromCells(ssCells)
+	statefulSetList.ListMeta = common.ListMeta{TotalItems: filteredTotal}
 
 	for _, statefulSet := range statefulSets {
 		matchingPods := common.FilterPodsByOwnerReference(statefulSet.Namespace,
