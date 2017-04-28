@@ -158,6 +158,7 @@ function compileES6(translation) {
     // Dashboard externs
     path.join(conf.paths.externs, 'backendapi.js'),
     path.join(conf.paths.externs, 'ansiup.js'),
+    path.join(conf.paths.externs, 'clipboard.js'),
     path.join(conf.paths.externs, 'uirouter.js'),
     path.join(conf.paths.externs, 'dataselect.js'),
   ];
