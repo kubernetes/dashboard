@@ -168,6 +168,13 @@ export class DataSelectService {
   }
 
   /**
+   * @export
+   */
+  filterAll(filterBy){this.instances_.forEach(value => {
+    value.filterBy = filterBy.length > 0 ? `name,${filterBy}` : '';
+  })}
+
+  /**
    * @param {string|undefined} [namespace]
    * @param {string|undefined} [name]
    * @return {!DataSelectApi.DataSelectQuery}

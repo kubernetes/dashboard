@@ -42,7 +42,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/logs"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
+	ns "github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/node"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
@@ -57,6 +57,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/storageclass"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/thirdpartyresource"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/workload"
+	"github.com/kubernetes/dashboard/src/app/backend/search"
 	"github.com/kubernetes/dashboard/src/app/backend/validation"
 	"golang.org/x/net/xsrftoken"
 	errorsK8s "k8s.io/apimachinery/pkg/api/errors"
@@ -244,11 +245,11 @@ func CreateHTTPAPIHandler(heapsterClient client.HeapsterClient,
 	inClusterConfig, err := restclient.InClusterConfig()
 	if err == nil {
 		// We run in a cluster, so we should use a signing key that is the same for potential replications
-		log.Printf("Using service account token for csrf signing")
+		log.Println("Using service account token for csrf signing")
 		csrfKey = inClusterConfig.BearerToken
 	} else {
 		// Most likely running for a dev, so no replica issues, just generate a random key
-		log.Printf("Using random key for csrf signing")
+		log.Println("Using random key for csrf signing")
 		bytes := make([]byte, 256)
 		_, err := rand.Read(bytes)
 		if err != nil {
@@ -505,16 +506,16 @@ func CreateHTTPAPIHandler(heapsterClient client.HeapsterClient,
 	apiV1Ws.Route(
 		apiV1Ws.POST("/namespace").
 			To(apiHandler.handleCreateNamespace).
-			Reads(namespace.NamespaceSpec{}).
-			Writes(namespace.NamespaceSpec{}))
+			Reads(ns.NamespaceSpec{}).
+			Writes(ns.NamespaceSpec{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/namespace").
 			To(apiHandler.handleGetNamespaces).
-			Writes(namespace.NamespaceList{}))
+			Writes(ns.NamespaceList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/namespace/{name}").
 			To(apiHandler.handleGetNamespaceDetail).
-			Writes(namespace.NamespaceDetail{}))
+			Writes(ns.NamespaceDetail{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/namespace/{name}/event").
 			To(apiHandler.handleGetNamespaceEvents).
@@ -693,6 +694,15 @@ func CreateHTTPAPIHandler(heapsterClient client.HeapsterClient,
 		apiV1Ws.GET("/storageclass/{storageclass}").
 			To(apiHandler.handleGetStorageClass).
 			Writes(storageclass.StorageClass{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/search").
+			To(apiHandler.handleSearch).
+			Writes(search.SearchResult{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/search/{namespace}").
+			To(apiHandler.handleSearch).
+			Writes(search.SearchResult{}))
 
 	return wsContainer, nil
 }
@@ -1027,14 +1037,27 @@ func (apiHandler *APIHandler) handleGetReplicationControllerList(
 }
 
 // Handles get Workloads list API call.
-func (apiHandler *APIHandler) handleGetWorkloads(
-	request *restful.Request, response *restful.Response) {
-
+func (apiHandler *APIHandler) handleGetWorkloads(request *restful.Request, response *restful.Response) {
 	namespace := parseNamespacePathParameter(request)
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.NoMetrics
 	result, err := workload.GetWorkloads(getApiClient(request), apiHandler.heapsterClient,
 		namespace, dataSelect)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+// Handles search API call.
+func (apiHandler *APIHandler) handleSearch(request *restful.Request, response *restful.Response) {
+	namespace := parseNamespacePathParameter(request)
+	dataSelect := parseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.NoMetrics
+
+	result, err := search.Search(apiHandler.client, apiHandler.heapsterClient, namespace, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1376,12 +1399,12 @@ func (apiHandler *APIHandler) handleGetReplicationControllerPods(
 // Handles namespace creation API call.
 func (apiHandler *APIHandler) handleCreateNamespace(request *restful.Request,
 	response *restful.Response) {
-	namespaceSpec := new(namespace.NamespaceSpec)
+	namespaceSpec := new(ns.NamespaceSpec)
 	if err := request.ReadEntity(namespaceSpec); err != nil {
 		handleInternalError(response, err)
 		return
 	}
-	if err := namespace.CreateNamespace(namespaceSpec, getApiClient(request)); err != nil {
+	if err := ns.CreateNamespace(namespaceSpec, getApiClient(request)); err != nil {
 		handleInternalError(response, err)
 		return
 	}
@@ -1394,7 +1417,7 @@ func (apiHandler *APIHandler) handleGetNamespaces(
 	request *restful.Request, response *restful.Response) {
 
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := namespace.GetNamespaceList(getApiClient(request), dataSelect)
+	result, err := ns.GetNamespaceList(getApiClient(request), dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1407,7 +1430,7 @@ func (apiHandler *APIHandler) handleGetNamespaces(
 func (apiHandler *APIHandler) handleGetNamespaceDetail(request *restful.Request,
 	response *restful.Response) {
 	name := request.PathParameter("name")
-	result, err := namespace.GetNamespaceDetail(getApiClient(request), apiHandler.heapsterClient, name)
+	result, err := ns.GetNamespaceDetail(getApiClient(request), apiHandler.heapsterClient, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return

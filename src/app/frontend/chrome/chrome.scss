@@ -15,8 +15,16 @@
 @import '../variables';
 
 .kd-toolbar-logo {
-  height: 5 * $baseline-grid;
-  margin-right: 1em;
+  height: 4 * $baseline-grid;
+  margin-right: $baseline-grid;
+  min-height: 4 * $baseline-grid;
+  min-width: 4 * $baseline-grid;
+  width: 4 * $baseline-grid;
+}
+
+.kd-toolbar-logo-text {
+  @extend .kd-toolbar-logo;
+  min-width: 14 * $baseline-grid;
   width: 14 * $baseline-grid;
 }
 
@@ -24,7 +32,35 @@
   display: block;
 }
 
+.kd-logo-bar {
+  flex: 1;
+}
+
+.kd-search-bar {
+  flex: 2;
+}
+
+.kd-global-actions {
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.kd-global-action-icon {
+  margin-right: .25 * $baseline-grid;
+  color: $primary !important;
+}
+
+// TODO(maciaszczykm): Remove !importants.
 .kd-toolbar {
+  height: 6 * $baseline-grid;
+  min-height: 6 * $baseline-grid;
+  padding-left: 1.75 * $baseline-grid;
+  background-color: white !important;
+  color: $primary !important;
+}
+
+.kd-second-toolbar {
   box-shadow: $whiteframe-shadow-1dp;
   height: 7 * $baseline-grid;
   min-height: 7 * $baseline-grid;
@@ -87,11 +123,6 @@ body,
 a {
   color: $primary;
   text-decoration: inherit;
-}
-
-.kd-logo-menu {
-  padding-left: 1.25 * $baseline-grid;
-  width: $nav-width - 6 * $baseline-grid;
 }
 
 .kd-success {
