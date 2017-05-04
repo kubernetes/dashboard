@@ -21,7 +21,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   labels:
-    app: kubernetes-dashboard
+    k8s-app: kubernetes-dashboard
   name: kubernetes-dashboard
   namespace: kube-system
 ---
@@ -30,7 +30,7 @@ kind: ClusterRoleBinding
 metadata:
   name: kubernetes-dashboard
   labels:
-    app: kubernetes-dashboard
+    k8s-app: kubernetes-dashboard
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -44,18 +44,18 @@ kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
   labels:
-    app: kubernetes-dashboard
+    k8s-app: kubernetes-dashboard
   name: kubernetes-dashboard
   namespace: kube-system
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kubernetes-dashboard
+      k8s-app: kubernetes-dashboard
   template:
     metadata:
       labels:
-        app: kubernetes-dashboard
+        k8s-app: kubernetes-dashboard
     spec:
       containers:
       - name: kubernetes-dashboard
@@ -85,7 +85,7 @@ kind: Service
 apiVersion: v1
 metadata:
   labels:
-    app: kubernetes-dashboard
+    k8s-app: kubernetes-dashboard
   name: kubernetes-dashboard
   namespace: kube-system
 spec:
@@ -94,4 +94,4 @@ spec:
   - port: 80
     targetPort: 9090
   selector:
-    app: kubernetes-dashboard
+    k8s-app: kubernetes-dashboard
