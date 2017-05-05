@@ -121,6 +121,7 @@ const (
 	ResourceKindRbacClusterRole         = "clusterrole"
 	ResourceKindRbacRoleBinding         = "rolebinding"
 	ResourceKindRbacClusterRoleBinding  = "clusterrolebinding"
+	ResourceKindComponentStatus         = "componentstatus"
 )
 
 // ClientType represents type of client that is used to perform generic operations on resources.
@@ -171,6 +172,7 @@ var kindToAPIMapping = map[string]struct {
 	ResourceKindStatefulSet:             {"statefulsets", ClientTypeAppsClient, true},
 	ResourceKindThirdPartyResource:      {"thirdpartyresources", ClientTypeExtensionClient, true},
 	ResourceKindStorageClass:            {"storageclasses", ClientTypeStorageClient, false},
+	ResourceKindComponentStatus:         {"componentstatuses", ClientTypeDefault, false},
 }
 
 // IsSelectorMatching returns true when an object with the given
