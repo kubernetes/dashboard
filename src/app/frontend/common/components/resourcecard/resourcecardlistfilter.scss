@@ -14,67 +14,33 @@
 
 @import '../../../variables';
 
-%kd-search-input-border {
-  border: 1px solid $border;
-  border-radius: $baseline-grid / 4;
-  outline: none;
-}
-
-%kd-search-input-border-solid {
-  @extend %kd-search-input-border;
-  border: 1px solid $border-solid !important;
-}
-
-%kd-search-input-visible {
-  opacity: 1;
-  width: 20 * $baseline-grid;
-}
-
 kd-resource-card-list-filter {
   display: flex;
   justify-content: flex-end;
 }
 
 .kd-resource-card-list-filter-wrapper {
+  flex: 0 1 auto;
   padding-right: 3 * $baseline-grid;
 }
 
 .kd-search-icon {
-  padding-left: $baseline-grid;
-}
-
-.kd-clear-icon {
   cursor: pointer;
   outline: none;
   padding-left: $baseline-grid;
 }
 
 .kd-search-input {
-  @extend %kd-search-input-border;
-  opacity: 0;
-  padding-left: $baseline-grid;
-  transition: opacity .5s, width .5s;
-  width: 0;
-
-  &:focus {
-    @extend %kd-search-input-border-solid;
-    @extend %kd-search-input-visible;
-  }
-
-  &.kd-search-input-keep-open {
-    @extend %kd-search-input-visible;
-  }
+  border: none;
+  border-bottom: 1px solid $border;
+  border-radius: $baseline-grid / 4;
+  flex: 0 1 auto;
+  outline: none;
 }
 
 .kd-search-container {
+  justify-content: flex-end;
   display: flex;
   flex-direction: row;
-
-  &:hover {
-    .kd-search-input {
-      @extend %kd-search-input-border;
-      @extend %kd-search-input-visible;
-      transition: opacity .25s, width .5s;
-    }
-  }
+  user-select: none;
 }
