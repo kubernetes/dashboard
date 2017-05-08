@@ -32,10 +32,9 @@ limitations under the License.
   <kd-content>
     <kd-service-card-list service-list="::ctrl.daemonSetDetail.serviceList"
                           service-list-resource="::ctrl.daemonSetServicesResource">
-      <kd-zerostate>
-        <div class="kd-zerostate-title">[[There is nothing to display here|Title for services card zerostate in daemon set details page.]]</div>
-        <div class="kd-zerostate-text">[[There are currently no Services with the same label selector as this Daemon Set.|Text for services card zerostate in daemon set details page.]]</div>
-      </kd-zerostate>
+      <kd-empty-list-text>
+        [[There are currently no Services with the same label selector as this Daemon Set.|Text for services card zerostate in daemon set details page.]]
+      </kd-empty-list-text>
     </kd-service-card-list>
   </kd-content>
 </kd-content-card>
@@ -45,10 +44,9 @@ limitations under the License.
     <kd-pod-card-list pod-list="::ctrl.daemonSetDetail.podList"
                       pod-list-resource="::ctrl.daemonSetPodsResource"
                       with-statuses="true">
-      <kd-zerostate>
-        <div class="kd-zerostate-title">[[There is nothing to display here|Title for pods card zerostate in daemon set details page.]]</div>
-        <div class="kd-zerostate-text">[[There are currently no Pods scheduled on this Daemon Set.|Text for pods card zerostate in daemon set details page.]]</div>
-      </kd-zerostate>
+      <kd-empty-list-text>
+        [[There are currently no Pods scheduled on this Daemon Set.|Text for pods card zerostate in daemon set details page.]]
+      </kd-empty-list-text>
     </kd-pod-card-list>
   </kd-content>
 </kd-content-card>

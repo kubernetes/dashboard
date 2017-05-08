@@ -224,8 +224,8 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 
 		channels := &common.ResourceChannels{
 			ReplicaSetList: common.ReplicaSetListChannel{
-				List:  make(chan *extensions.ReplicaSetList, 1),
-				Error: make(chan error, 1),
+				List:  make(chan *extensions.ReplicaSetList, 2),
+				Error: make(chan error, 2),
 			},
 			JobList: common.JobListChannel{
 				List:  make(chan *batch.JobList, 1),
@@ -265,6 +265,8 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 			},
 		}
 
+		channels.ReplicaSetList.Error <- nil
+		channels.ReplicaSetList.List <- &c.k8sRs
 		channels.ReplicaSetList.Error <- nil
 		channels.ReplicaSetList.List <- &c.k8sRs
 

@@ -16,15 +16,22 @@ limitations under the License.
 
 <kd-resource-card-list selectable="::$ctrl.selectable"
                        with-statuses="::$ctrl.withStatuses"
-                       select-id="cardlist.html"
+                       select-id="{{::$ctrl.getSelectId()}}"
                        list="$ctrl.daemonSetList"
                        list-resource="$ctrl.daemonSetListResource">
-  <kd-resource-card-list-header ng-transclude="header">
-    [[Daemon Sets|Label which appears above the list of such objects.]]
+  <kd-resource-card-list-header>
+    <kd-resource-card-list-title ng-transclude="header">
+      [[Daemon Sets|Label which appears above the list of such objects.]]
+    </kd-resource-card-list-title>
+    <kd-resource-card-list-filter></kd-resource-card-list-filter>
   </kd-resource-card-list-header>
-  <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
 
-  <kd-resource-card-header-columns>
+  <kd-zero-state ng-if="!$ctrl.daemonSetList.listMeta.totalItems">
+    <kd-zero-state-text ng-transclude="zerostate">
+      [[There are no Daemon Sets to display.|Text for daemon set card list zerostate.]]
+    </kd-zero-state-text>
+  </kd-zero-state>
+  <kd-resource-card-header-columns ng-show="$ctrl.daemonSetList.listMeta.totalItems">
     <kd-resource-card-header-column size="small"
                                     grow="2"
                                     sortable="true"
@@ -69,4 +76,8 @@ limitations under the License.
                       daemon-set="daemonSet"
                       show-resource-kind="::$ctrl.showResourceKind">
   </kd-daemon-set-card>
+
+  <kd-resource-card-list-footer>
+    <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
+  </kd-resource-card-list-footer>
 </kd-resource-card-list>

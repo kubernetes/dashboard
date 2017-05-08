@@ -78,10 +78,10 @@ func (self DaemonSetCell) GetProperty(name dataselect.PropertyName) dataselect.C
 
 func (self DaemonSetCell) GetResourceSelector() *metric.ResourceSelector {
 	return &metric.ResourceSelector{
-		Namespace:     self.ObjectMeta.Namespace,
-		ResourceType:  common.ResourceKindDaemonSet,
-		ResourceName:  self.ObjectMeta.Name,
-		LabelSelector: self.Spec.Selector,
+		Namespace:    self.ObjectMeta.Namespace,
+		ResourceType: common.ResourceKindDaemonSet,
+		ResourceName: self.ObjectMeta.Name,
+		UID:          self.UID,
 	}
 }
 

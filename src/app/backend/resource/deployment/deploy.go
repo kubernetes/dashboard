@@ -303,7 +303,8 @@ func DeployAppFromFile(spec *AppDeploymentFromFileSpec,
 	mapper, typer := factory.Object()
 	reader := strings.NewReader(spec.Content)
 
-	r := kubectlResource.NewBuilder(mapper, typer, kubectlResource.ClientMapperFunc(factory.ClientForMapping), factory.Decoder(true)).
+	r := kubectlResource.NewBuilder(mapper, kubectlResource.LegacyCategoryExpander, typer,
+		kubectlResource.ClientMapperFunc(factory.ClientForMapping), factory.Decoder(true)).
 		Schema(schema).
 		NamespaceParam(api.NamespaceDefault).DefaultNamespace().
 		Stream(reader, spec.Name).

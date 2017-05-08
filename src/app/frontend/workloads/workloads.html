@@ -86,4 +86,9 @@ limitations under the License.
     </kd-content>
   </kd-content-card>
 </div>
-<kd-zero-state ng-if="$ctrl.shouldShowZeroState()"></kd-zero-state>
+
+<kd-content-card ng-if="$ctrl.shouldShowZeroState()">
+  <kd-content>
+    <kd-zero-state></kd-zero-state>
+  </kd-content>
+</kd-content-card>

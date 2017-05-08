@@ -33,6 +33,7 @@ func getReplicasPointer(replicas int32) *int32 {
 }
 
 func TestGetReplicaSetListFromChannels(t *testing.T) {
+	controller := true
 	cases := []struct {
 		k8sRs         extensions.ReplicaSetList
 		k8sRsError    error
@@ -94,6 +95,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 						Name:              "rs-name",
 						Namespace:         "rs-namespace",
 						Labels:            map[string]string{"key": "value"},
+						UID:               "uid",
 						CreationTimestamp: metaV1.Unix(111, 222),
 					},
 					Spec: extensions.ReplicaSetSpec{
@@ -111,14 +113,26 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 					{
 						ObjectMeta: metaV1.ObjectMeta{
 							Namespace: "rs-namespace",
-							Labels:    map[string]string{"foo": "bar"},
+							OwnerReferences: []metaV1.OwnerReference{
+								{
+									Name:       "rs-name",
+									UID:        "uid",
+									Controller: &controller,
+								},
+							},
 						},
 						Status: api.PodStatus{Phase: api.PodFailed},
 					},
 					{
 						ObjectMeta: metaV1.ObjectMeta{
 							Namespace: "rs-namespace",
-							Labels:    map[string]string{"foo": "baz"},
+							OwnerReferences: []metaV1.OwnerReference{
+								{
+									Name:       "rs-name-wrong",
+									UID:        "uid-wrong",
+									Controller: &controller,
+								},
+							},
 						},
 						Status: api.PodStatus{Phase: api.PodFailed},
 					},

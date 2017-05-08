@@ -648,6 +648,16 @@ func RetrieveLazy(info *Info, err error) error {
 	return nil
 }
 
+// CreateAndRefresh creates an object from input info and refreshes info with that object
+func CreateAndRefresh(info *Info) error {
+	obj, err := NewHelper(info.Client, info.Mapping).Create(info.Namespace, true, info.Object)
+	if err != nil {
+		return err
+	}
+	info.Refresh(obj, true)
+	return nil
+}
+
 type FilterFunc func(info *Info, err error) (bool, error)
 
 type FilteredVisitor struct {
@@ -694,4 +704,14 @@ func FilterBySelector(s labels.Selector) FilterFunc {
 		}
 		return true, nil
 	}
+}
+
+type InfoListVisitor []*Info
+
+func (infos InfoListVisitor) Visit(fn VisitorFunc) error {
+	var err error
+	for _, i := range infos {
+		err = fn(i, err)
+	}
+	return err
 }

@@ -25,7 +25,6 @@ import (
 	api "k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 	core "k8s.io/client-go/testing"
-	kubectlResource "k8s.io/kubernetes/pkg/kubectl/resource"
 )
 
 func TestDeployApp(t *testing.T) {
@@ -182,47 +181,5 @@ func TestGetAvailableProtocols(t *testing.T) {
 	if !reflect.DeepEqual(actual, expected) {
 		t.Errorf("Expected protocols to be %#v but got %#v",
 			expected, actual)
-	}
-}
-
-func TestDeployAppFromFileWithValidContent(t *testing.T) {
-	// TODO: rewrite test
-	t.Skip("Should not require working cluster to run.")
-	validContent := "{\"kind\": \"Namespace\"," +
-		"\"apiVersion\": \"v1\"," +
-		"\"metadata\": {" +
-		"\"name\": \"test-deployfile-namespace\"," +
-		"\"labels\": {\"name\": \"development\"}}}"
-	spec := &AppDeploymentFromFileSpec{
-		Name:    "foo-name",
-		Content: validContent,
-	}
-	fakeCreateObjectFromInfo := func(info *kubectlResource.Info) (bool, error) { return true, nil }
-
-	isDeployed, err := DeployAppFromFile(spec, fakeCreateObjectFromInfo)
-	if err != nil {
-		t.Errorf("Expected err to be %#v but got %#v", nil, err)
-	}
-	if !isDeployed {
-		t.Errorf("Expected return value to have %#v but got %#v", true, isDeployed)
-	}
-}
-
-func TestDeployAppFromFileWithInvalidContent(t *testing.T) {
-	// TODO: rewrite test
-	t.Skip("Should not require working cluster to run.")
-	spec := &AppDeploymentFromFileSpec{
-		Name:    "foo-name",
-		Content: "foo-content-invalid",
-	}
-	// return is set to true to check if the validation prior to this function really works
-	fakeCreateObjectFromInfo := func(info *kubectlResource.Info) (bool, error) { return true, nil }
-
-	isDeployed, err := DeployAppFromFile(spec, fakeCreateObjectFromInfo)
-	if err == nil {
-		t.Errorf("Expected return value to have an error but got %#v", nil)
-	}
-	if isDeployed {
-		t.Errorf("Expected return value to have %#v but got %#v", false, isDeployed)
 	}
 }

@@ -130,7 +130,9 @@ func NewSecretList(secrets []api.Secret, dsQuery *dataselect.DataSelectQuery) *S
 		Secrets:  make([]Secret, 0),
 	}
 
-	secrets = fromCells(dataselect.GenericDataSelect(toCells(secrets), dsQuery))
+	secretCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(secrets), dsQuery)
+	secrets = fromCells(secretCells)
+	newSecretList.ListMeta = common.ListMeta{TotalItems: filteredTotal}
 
 	for _, secret := range secrets {
 		newSecretList.Secrets = append(newSecretList.Secrets, *NewSecret(&secret))

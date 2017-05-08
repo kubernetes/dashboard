@@ -84,8 +84,8 @@ func GetReplicaSetListFromChannels(channels *common.ResourceChannels,
 
 // CreateReplicaSetList creates paginated list of Replica Set model
 // objects based on Kubernetes Replica Set objects array and related resources arrays.
-func CreateReplicaSetList(replicaSets []extensions.ReplicaSet, pods []api.Pod,
-	events []api.Event, dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) *ReplicaSetList {
+func CreateReplicaSetList(replicaSets []extensions.ReplicaSet, pods []api.Pod, events []api.Event,
+	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) *ReplicaSetList {
 
 	replicaSetList := &ReplicaSetList{
 		ReplicaSets: make([]ReplicaSet, 0),
@@ -95,17 +95,18 @@ func CreateReplicaSetList(replicaSets []extensions.ReplicaSet, pods []api.Pod,
 	cachedResources := &dataselect.CachedResources{
 		Pods: pods,
 	}
-	rsCells, metricPromises := dataselect.GenericDataSelectWithMetrics(ToCells(replicaSets), dsQuery, cachedResources, heapsterClient)
+	rsCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(ToCells(replicaSets), dsQuery, cachedResources, heapsterClient)
 	replicaSets = FromCells(rsCells)
+	replicaSetList.ListMeta = common.ListMeta{TotalItems: filteredTotal}
 
 	for _, replicaSet := range replicaSets {
-		matchingPods := common.FilterNamespacedPodsBySelector(pods, replicaSet.ObjectMeta.Namespace,
-			replicaSet.Spec.Selector.MatchLabels)
-		podInfo := common.GetPodInfo(replicaSet.Status.Replicas,
-			*replicaSet.Spec.Replicas, matchingPods)
+		matchingPods := common.FilterPodsByOwnerReference(replicaSet.Namespace,
+			replicaSet.UID, pods)
+		podInfo := common.GetPodInfo(replicaSet.Status.Replicas, *replicaSet.Spec.Replicas,
+			matchingPods)
 		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
-
-		replicaSetList.ReplicaSets = append(replicaSetList.ReplicaSets, ToReplicaSet(&replicaSet, &podInfo))
+		replicaSetList.ReplicaSets = append(replicaSetList.ReplicaSets,
+			ToReplicaSet(&replicaSet, &podInfo))
 	}
 
 	cumulativeMetrics, err := metricPromises.GetMetrics()

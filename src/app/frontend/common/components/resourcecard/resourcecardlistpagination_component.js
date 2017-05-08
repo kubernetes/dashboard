@@ -108,6 +108,8 @@ export const resourceCardListPaginationComponent = {
   transclude: true,
   require: {
     'resourceCardListCtrl': '^kdResourceCardList',
+    // Make sure that pagination can be only placed in a footer
+    'resourceCardListFooter': '^^kdResourceCardListFooter',
   },
 };
 

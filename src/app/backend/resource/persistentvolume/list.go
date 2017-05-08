@@ -75,7 +75,9 @@ func getPersistentVolumeList(persistentVolumes []api.PersistentVolume, dsQuery *
 		ListMeta: common.ListMeta{TotalItems: len(persistentVolumes)},
 	}
 
-	persistentVolumes = fromCells(dataselect.GenericDataSelect(toCells(persistentVolumes), dsQuery))
+	pvCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(persistentVolumes), dsQuery)
+	persistentVolumes = fromCells(pvCells)
+	result.ListMeta = common.ListMeta{TotalItems: filteredTotal}
 
 	for _, item := range persistentVolumes {
 		result.Items = append(result.Items,

@@ -17,8 +17,6 @@ limitations under the License.
 package v1
 
 const (
-	// If you add a new topology domain here, also consider adding it to the set of default values
-	// for the scheduler's --failure-domain command-line argument.
 	LabelHostname          = "kubernetes.io/hostname"
 	LabelZoneFailureDomain = "failure-domain.beta.kubernetes.io/zone"
 	LabelZoneRegion        = "failure-domain.beta.kubernetes.io/region"
@@ -28,18 +26,12 @@ const (
 	LabelOS   = "beta.kubernetes.io/os"
 	LabelArch = "beta.kubernetes.io/arch"
 
-	// Historically fluentd was a manifest pod the was migrated to DaemonSet.
-	// To avoid situation during cluster upgrade when there are two instances
-	// of fluentd running on a node, kubelet need to mark node on which
-	// fluentd in not running as a manifest pod with LabelFluentdDsReady.
-	LabelFluentdDsReady = "alpha.kubernetes.io/fluentd-ds-ready"
-
-	// When the --use-taint-based-evictions flag is enabled,
+	// When feature-gate for TaintBasedEvictions=true flag is enabled,
 	// TaintNodeNotReady would be automatically added by node controller
 	// when node is not ready, and removed when node becomes ready.
 	TaintNodeNotReady = "node.alpha.kubernetes.io/notReady"
 
-	// When the --use-taint-based-evictions flag is enabled,
+	// When feature-gate for TaintBasedEvictions=true flag is enabled,
 	// TaintNodeUnreachable would be automatically added by node controller
 	// when node becomes unreachable (corresponding to NodeReady status ConditionUnknown)
 	// and removed when node becomes reachable (NodeReady status ConditionTrue).

@@ -84,8 +84,6 @@ func Accessor(obj interface{}) (metav1.Object, error) {
 			return m, nil
 		}
 		return nil, errNotObject
-	case List, metav1.List, ListMetaAccessor, metav1.ListMetaAccessor:
-		return nil, errNotObject
 	default:
 		return nil, errNotObject
 	}
@@ -334,6 +332,14 @@ func extractFromOwnerReference(v reflect.Value, o *metav1.OwnerReference) error 
 		controller := *controllerPtr
 		o.Controller = &controller
 	}
+	var blockOwnerDeletionPtr *bool
+	if err := runtime.Field(v, "BlockOwnerDeletion", &blockOwnerDeletionPtr); err != nil {
+		return err
+	}
+	if blockOwnerDeletionPtr != nil {
+		block := *blockOwnerDeletionPtr
+		o.BlockOwnerDeletion = &block
+	}
 	return nil
 }
 
@@ -354,6 +360,12 @@ func setOwnerReference(v reflect.Value, o *metav1.OwnerReference) error {
 	if o.Controller != nil {
 		controller := *(o.Controller)
 		if err := runtime.SetField(&controller, v, "Controller"); err != nil {
+			return err
+		}
+	}
+	if o.BlockOwnerDeletion != nil {
+		block := *(o.BlockOwnerDeletion)
+		if err := runtime.SetField(&block, v, "BlockOwnerDeletion"); err != nil {
 			return err
 		}
 	}

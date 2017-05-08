@@ -69,6 +69,7 @@ describe('Data Select service ', () => {
       sortBy: `d,${SortableProperties.AGE}`,
       namespace: namespace,
       name: name,
+      filterBy: '',
     };
 
     // when
@@ -88,6 +89,7 @@ describe('Data Select service ', () => {
       sortBy: `d,${SortableProperties.AGE}`,
       namespace: '',
       name: name,
+      filterBy: '',
     };
 
     // when

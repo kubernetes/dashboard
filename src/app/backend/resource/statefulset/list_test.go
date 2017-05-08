@@ -33,6 +33,7 @@ func getReplicasPointer(replicas int32) *int32 {
 }
 
 func TestGetStatefulSetListFromChannels(t *testing.T) {
+	controller := true
 	cases := []struct {
 		k8sRs         apps.StatefulSetList
 		k8sRsError    error
@@ -93,6 +94,7 @@ func TestGetStatefulSetListFromChannels(t *testing.T) {
 					ObjectMeta: metaV1.ObjectMeta{
 						Name:              "rs-name",
 						Namespace:         "rs-namespace",
+						UID:               "uid",
 						Labels:            map[string]string{"key": "value"},
 						CreationTimestamp: metaV1.Unix(111, 222),
 					},
@@ -111,14 +113,28 @@ func TestGetStatefulSetListFromChannels(t *testing.T) {
 					{
 						ObjectMeta: metaV1.ObjectMeta{
 							Namespace: "rs-namespace",
-							Labels:    map[string]string{"foo": "bar"},
+							Labels:    map[string]string{"foo": "baz"},
+							OwnerReferences: []metaV1.OwnerReference{
+								{
+									Name:       "rs-name-wrong",
+									UID:        "uid-wrong",
+									Controller: &controller,
+								},
+							},
 						},
 						Status: api.PodStatus{Phase: api.PodFailed},
 					},
 					{
 						ObjectMeta: metaV1.ObjectMeta{
 							Namespace: "rs-namespace",
-							Labels:    map[string]string{"foo": "baz"},
+							Labels:    map[string]string{"foo": "bar"},
+							OwnerReferences: []metaV1.OwnerReference{
+								{
+									Name:       "rs-name",
+									UID:        "uid",
+									Controller: &controller,
+								},
+							},
 						},
 						Status: api.PodStatus{Phase: api.PodFailed},
 					},

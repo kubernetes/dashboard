@@ -81,63 +81,6 @@ func TestFilterPodsBySelector(t *testing.T) {
 	}
 }
 
-func TestFilterNamespacedPodsBySelector(t *testing.T) {
-	firstLabelSelectorMap := make(map[string]string)
-	firstLabelSelectorMap["name"] = "app-name-first"
-	secondLabelSelectorMap := make(map[string]string)
-	secondLabelSelectorMap["name"] = "app-name-second"
-
-	cases := []struct {
-		selector  map[string]string
-		namespace string
-		pods      []api.Pod
-		expected  []api.Pod
-	}{
-		{
-			firstLabelSelectorMap, "test-ns-1",
-			[]api.Pod{
-				{
-					ObjectMeta: metaV1.ObjectMeta{
-						Name:      "first-pod-ok",
-						Labels:    firstLabelSelectorMap,
-						Namespace: "test-ns-1",
-					},
-				},
-				{
-					ObjectMeta: metaV1.ObjectMeta{
-						Name:      "second-pod-ok",
-						Labels:    firstLabelSelectorMap,
-						Namespace: "test-ns-2",
-					},
-				},
-				{
-					ObjectMeta: metaV1.ObjectMeta{
-						Name:   "third-pod-wrong",
-						Labels: secondLabelSelectorMap,
-					},
-				},
-			},
-			[]api.Pod{
-				{
-					ObjectMeta: metaV1.ObjectMeta{
-						Name:      "first-pod-ok",
-						Labels:    firstLabelSelectorMap,
-						Namespace: "test-ns-1",
-					},
-				},
-			},
-		},
-	}
-
-	for _, c := range cases {
-		actual := FilterNamespacedPodsBySelector(c.pods, c.namespace, c.selector)
-		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("FilterNamespacedPodsBySelector(%+v, %+v) == %+v, expected %+v",
-				c.pods, c.selector, actual, c.expected)
-		}
-	}
-}
-
 func TestGetContainerImages(t *testing.T) {
 	cases := []struct {
 		podTemplate *api.PodSpec
@@ -161,7 +104,7 @@ func TestGetContainerImages(t *testing.T) {
 	}
 }
 
-func TestFilterPodsByControllerResource(t *testing.T) {
+func TestFilterPodsByOwnerReference(t *testing.T) {
 	controller := true
 	okOwnerRef := []metaV1.OwnerReference{{
 		Kind:       "ReplicationController",
@@ -226,9 +169,9 @@ func TestFilterPodsByControllerResource(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := FilterPodsByControllerResource(c.namespace, c.uid, c.pods)
+		actual := FilterPodsByOwnerReference(c.namespace, c.uid, c.pods)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("FilterPodsBySelector(%+v, %+v, %+v) == %+v, expected %+v",
+			t.Errorf("FilterPodsByOwnerReference(%+v, %+v, %+v) == %+v, expected %+v",
 				c.pods, c.namespace, c.uid, actual, c.expected)
 		}
 	}

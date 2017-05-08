@@ -46,19 +46,15 @@ func GetReplicaSetPods(client k8sClient.Interface, heapsterClient client.Heapste
 // Returns array of api pods targeting replica set with given name.
 func getRawReplicaSetPods(client k8sClient.Interface, petSetName, namespace string) (
 	[]api.Pod, error) {
-
-	replicaSet, err := client.ExtensionsV1beta1().ReplicaSets(namespace).Get(petSetName, metaV1.GetOptions{})
+	rs, err := client.ExtensionsV1beta1().ReplicaSets(namespace).Get(petSetName,
+		metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
 
-	labelSelector := labels.SelectorFromSet(replicaSet.Spec.Selector.MatchLabels)
 	channels := &common.ResourceChannels{
-		PodList: common.GetPodListChannelWithOptions(client, common.NewSameNamespaceQuery(namespace),
-			metaV1.ListOptions{
-				LabelSelector: labelSelector.String(),
-				FieldSelector: fields.Everything().String(),
-			}, 1),
+		PodList: common.GetPodListChannel(client, common.NewSameNamespaceQuery(namespace),
+			1),
 	}
 
 	podList := <-channels.PodList.List
@@ -66,10 +62,11 @@ func getRawReplicaSetPods(client k8sClient.Interface, petSetName, namespace stri
 		return nil, err
 	}
 
-	return podList.Items, nil
+	return common.FilterPodsByOwnerReference(rs.Namespace, rs.UID, podList.Items), nil
 }
 
-// getReplicaSetPodInfo returns simple info about pods(running, desired, failing, etc.) related to given replica set.
+// getReplicaSetPodInfo returns simple info about pods(running, desired, failing, etc.) related to
+// given replica set.
 func getReplicaSetPodInfo(client k8sClient.Interface, replicaSet *extensions.ReplicaSet) (
 	*common.PodInfo, error) {
 
@@ -88,6 +85,7 @@ func getReplicaSetPodInfo(client k8sClient.Interface, replicaSet *extensions.Rep
 		return nil, err
 	}
 
-	podInfo := common.GetPodInfo(replicaSet.Status.Replicas, *replicaSet.Spec.Replicas, pods.Items)
+	podInfo := common.GetPodInfo(replicaSet.Status.Replicas, *replicaSet.Spec.Replicas,
+		pods.Items)
 	return &podInfo, nil
 }

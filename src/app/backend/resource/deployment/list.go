@@ -60,6 +60,7 @@ func GetDeploymentList(client client.Interface, nsQuery *common.NamespaceQuery,
 		DeploymentList: common.GetDeploymentListChannel(client, nsQuery, 1),
 		PodList:        common.GetPodListChannel(client, nsQuery, 1),
 		EventList:      common.GetEventListChannel(client, nsQuery, 1),
+		ReplicaSetList: common.GetReplicaSetListChannel(client, nsQuery, 1),
 	}
 
 	return GetDeploymentListFromChannels(channels, dsQuery, heapsterClient)
@@ -94,13 +95,19 @@ func GetDeploymentListFromChannels(channels *common.ResourceChannels,
 		return nil, err
 	}
 
-	return CreateDeploymentList(deployments.Items, pods.Items, events.Items, dsQuery, heapsterClient), nil
+	rs := <-channels.ReplicaSetList.List
+	if err := <-channels.ReplicaSetList.Error; err != nil {
+		return nil, err
+	}
+
+	return CreateDeploymentList(deployments.Items, pods.Items, events.Items, rs.Items, dsQuery, heapsterClient), nil
 }
 
 // CreateDeploymentList returns a list of all Deployment model objects in the cluster, based on all
 // Kubernetes Deployment API objects.
-func CreateDeploymentList(deployments []extensions.Deployment, pods []api.Pod,
-	events []api.Event, dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) *DeploymentList {
+func CreateDeploymentList(deployments []extensions.Deployment, pods []api.Pod, events []api.Event,
+	rs []extensions.ReplicaSet, dsQuery *dataselect.DataSelectQuery,
+	heapsterClient *heapster.HeapsterClient) *DeploymentList {
 
 	deploymentList := &DeploymentList{
 		Deployments: make([]Deployment, 0),
@@ -110,13 +117,12 @@ func CreateDeploymentList(deployments []extensions.Deployment, pods []api.Pod,
 	cachedResources := &dataselect.CachedResources{
 		Pods: pods,
 	}
-	deploymentCells, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells(deployments), dsQuery, cachedResources, heapsterClient)
+	deploymentCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(toCells(deployments), dsQuery, cachedResources, heapsterClient)
 	deployments = fromCells(deploymentCells)
+	deploymentList.ListMeta = common.ListMeta{TotalItems: filteredTotal}
 
 	for _, deployment := range deployments {
-
-		matchingPods := common.FilterNamespacedPodsBySelector(pods, deployment.ObjectMeta.Namespace,
-			deployment.Spec.Selector.MatchLabels)
+		matchingPods := common.FilterDeploymentPodsByOwnerReference(deployment, rs, pods)
 		podInfo := common.GetPodInfo(deployment.Status.Replicas, *deployment.Spec.Replicas,
 			matchingPods)
 		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)

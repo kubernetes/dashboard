@@ -94,7 +94,9 @@ func NewIngressList(ingresses []extensions.Ingress, dsQuery *dataselect.DataSele
 		Items:    make([]Ingress, 0),
 	}
 
-	ingresses = fromCells(dataselect.GenericDataSelect(toCells(ingresses), dsQuery))
+	ingresCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(ingresses), dsQuery)
+	ingresses = fromCells(ingresCells)
+	newIngressList.ListMeta = common.ListMeta{TotalItems: filteredTotal}
 
 	for _, ingress := range ingresses {
 		newIngressList.Items = append(newIngressList.Items, *NewIngress(&ingress))

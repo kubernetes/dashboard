@@ -22,6 +22,7 @@ export default angular
     .module(
         'kubernetesDashboard.common.resource',
         [
+          'angular-clipboard',
           'ngMaterial',
           'ui.router',
           'ngResource',

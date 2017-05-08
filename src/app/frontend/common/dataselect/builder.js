@@ -46,6 +46,8 @@ export class DataSelectQueryBuilder {
     this.namespace_ = '';
     /** @private {string} */
     this.name_ = '';
+    /** @private {string} */
+    this.filterBy_ = '';
 
     return this;
   }
@@ -96,6 +98,13 @@ export class DataSelectQueryBuilder {
     return this;
   }
 
+  /** @export */
+  setFilterBy(filterBy) {
+    this.filterBy_ = filterBy;
+
+    return this;
+  }
+
   /**
    * @param sortBy
    * @param ascending
@@ -104,6 +113,17 @@ export class DataSelectQueryBuilder {
    */
   getSortString_(sortBy, ascending) {
     return `${ascending ? 'a' : 'd'},${sortBy}`;
+  }
+
+  /**
+   * Filter only by name property.
+   * TODO(floreks): extend filtering to support more fields
+   * @param filterBy
+   * @returns {string}
+   * @private
+   */
+  getFilterString_(filterBy) {
+    return filterBy.length > 0 ? `name,${filterBy}` : '';
   }
 
   /**
@@ -117,6 +137,7 @@ export class DataSelectQueryBuilder {
       sortBy: this.getSortString_(this.sortBy_, this.ascending_),
       namespace: this.namespace_,
       name: this.name_,
+      filterBy: this.getFilterString_(this.filterBy_),
     };
   }
 }

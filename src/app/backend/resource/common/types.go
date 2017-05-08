@@ -165,7 +165,7 @@ var kindToAPIMapping = map[string]struct {
 	ResourceKindPod:                     {"pods", ClientTypeDefault, true},
 	ResourceKindReplicaSet:              {"replicasets", ClientTypeExtensionClient, true},
 	ResourceKindReplicationController:   {"replicationcontrollers", ClientTypeDefault, true},
-	ResourceKindResourceQuota:           {"resourcequota", ClientTypeDefault, true},
+	ResourceKindResourceQuota:           {"resourcequotas", ClientTypeDefault, true},
 	ResourceKindSecret:                  {"secrets", ClientTypeDefault, true},
 	ResourceKindService:                 {"services", ClientTypeDefault, true},
 	ResourceKindStatefulSet:             {"statefulsets", ClientTypeAppsClient, true},

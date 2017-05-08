@@ -29,9 +29,13 @@ import (
 )
 
 var (
-	argPort          = pflag.Int("port", 9090, "The port to listen to for incoming HTTP requests")
-	argBindAddress   = pflag.IP("bind-address", net.IPv4(0, 0, 0, 0), "The IP address on which to serve the --port (set to 0.0.0.0 for all interfaces).")
-	argApiserverHost = pflag.String("apiserver-host", "", "The address of the Kubernetes Apiserver "+
+	argInsecurePort        = pflag.Int("insecure-port", 9090, "The port to listen to for incoming HTTP requests.")
+	argPort                = pflag.Int("port", 8443, "The secure port to listen to for incoming HTTPS requests.")
+	argInsecureBindAddress = pflag.IP("insecure-bind-address", net.IPv4(127, 0, 0, 1), "The IP address on which to serve the --port (set to 0.0.0.0 for all interfaces).")
+	argBindAddress         = pflag.IP("bind-address", net.IPv4(0, 0, 0, 0), "The IP address on which to serve the --secure-port (set to 0.0.0.0 for all interfaces).")
+	argCertFile            = pflag.String("tls-cert-file", "", "File containing the default x509 Certificate for HTTPS.")
+	argKeyFile             = pflag.String("tls-key-file", "", "File containing the default x509 private key matching --tls-cert-file.")
+	argApiserverHost       = pflag.String("apiserver-host", "", "The address of the Kubernetes Apiserver "+
 		"to connect to in the format of protocol://address:port, e.g., "+
 		"http://localhost:8080. If not specified, the assumption is that the binary runs inside a "+
 		"Kubernetes cluster and local discovery is attempted.")
@@ -86,7 +90,15 @@ func main() {
 	// TODO(maciaszczykm): Move to /appConfig.json as it was discussed in #640.
 	http.Handle("/api/appConfig.json", handler.AppHandler(handler.ConfigHandler))
 	http.Handle("/metrics", prometheus.Handler())
-	log.Print(http.ListenAndServe(fmt.Sprintf("%s:%d", *argBindAddress, *argPort), nil))
+
+	// Listen for http and https
+	addr := fmt.Sprintf("%s:%d", *argInsecureBindAddress, *argInsecurePort)
+	go log.Fatal(http.ListenAndServe(addr, nil))
+	secureAddr := fmt.Sprintf("%s:%d", *argBindAddress, *argPort)
+	if len(*argCertFile) != 0 && len(*argKeyFile) != 0 {
+		go log.Fatal(http.ListenAndServeTLS(secureAddr, *argCertFile, *argKeyFile, nil))
+	}
+	select {}
 }
 
 /**

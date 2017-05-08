@@ -100,12 +100,12 @@ func CreateDaemonSetList(daemonSets []extensions.DaemonSet, pods []api.Pod,
 	cachedResources := &dataselect.CachedResources{
 		Pods: pods,
 	}
-	dsCells, metricPromises := dataselect.GenericDataSelectWithMetrics(ToCells(daemonSets), dsQuery, cachedResources, heapsterClient)
+	dsCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(ToCells(daemonSets), dsQuery, cachedResources, heapsterClient)
 	daemonSets = FromCells(dsCells)
+	daemonSetList.ListMeta = common.ListMeta{TotalItems: filteredTotal}
 
 	for _, daemonSet := range daemonSets {
-		matchingPods := common.FilterNamespacedPodsByLabelSelector(pods, daemonSet.Namespace,
-			daemonSet.Spec.Selector)
+		matchingPods := common.FilterPodsByOwnerReference(daemonSet.Namespace, daemonSet.UID, pods)
 		podInfo := common.GetPodInfo(daemonSet.Status.CurrentNumberScheduled,
 			daemonSet.Status.DesiredNumberScheduled, matchingPods)
 		podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
