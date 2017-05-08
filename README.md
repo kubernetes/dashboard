@@ -23,7 +23,7 @@ $ kubectl create -f https://git.io/kube-dashboard
 
 If you are using Kubernetes 1.5 or earlier, you can install the latest stable release by running the following command:
 ```shell
-$ kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard-no-rbac.yaml
+$ kubectl create -f https://git.io/kube-dashboard-no-rbac
 ```
 
 You can also install unstable HEAD builds with the newest features that the team works on by
