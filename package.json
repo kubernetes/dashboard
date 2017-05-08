@@ -25,7 +25,7 @@
     "file-exists": "2.0.0",
     "google-closure-compiler": "~20170423.0.0",
     "gulp": "~3.9.1",
-    "gulp-autoprefixer": "~3.1.0",
+    "gulp-autoprefixer": "~4.0.0",
     "gulp-browserify": "~0.5.1",
     "gulp-cheerio": "~0.6.2",
     "gulp-clang-format": "1.0.23",
