@@ -21,37 +21,34 @@ import (
 	"testing"
 	"time"
 
+	apiequality "k8s.io/apimachinery/pkg/api/equality"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/testapi"
-	"k8s.io/kubernetes/pkg/api/unversioned"
-	"k8s.io/kubernetes/pkg/runtime"
-	"k8s.io/kubernetes/pkg/types"
 )
 
-func parseTimeOrDie(ts string) unversioned.Time {
+func parseTimeOrDie(ts string) metav1.Time {
 	t, err := time.Parse(time.RFC3339, ts)
 	if err != nil {
 		panic(err)
 	}
-	return unversioned.Time{Time: t}
+	return metav1.Time{Time: t}
 }
 
 var benchmarkPod api.Pod = api.Pod{
-	TypeMeta: unversioned.TypeMeta{
+	TypeMeta: metav1.TypeMeta{
 		Kind:       "Pod",
 		APIVersion: "v1",
 	},
-	ObjectMeta: api.ObjectMeta{
+	ObjectMeta: metav1.ObjectMeta{
 		Name:              "etcd-server-e2e-test-wojtekt-master",
 		Namespace:         "default",
 		SelfLink:          "/api/v1/namespaces/default/pods/etcd-server-e2e-test-wojtekt-master",
 		UID:               types.UID("a671734a-e8e5-11e4-8fde-42010af09327"),
 		ResourceVersion:   "22",
 		CreationTimestamp: parseTimeOrDie("2015-04-22T11:49:36Z"),
-		Annotations: map[string]string{
-			"kubernetes.io/config.mirror": "mirror",
-			"kubernetes.io/config.source": "file",
-		},
 	},
 	Spec: api.PodSpec{
 		Volumes: []api.Volume{
@@ -140,7 +137,7 @@ func BenchmarkPodCopy(b *testing.B) {
 		}
 		result = obj.(*api.Pod)
 	}
-	if !api.Semantic.DeepEqual(benchmarkPod, *result) {
+	if !apiequality.Semantic.DeepEqual(benchmarkPod, *result) {
 		b.Fatalf("Incorrect copy: expected %v, got %v", benchmarkPod, *result)
 	}
 }
@@ -163,7 +160,7 @@ func BenchmarkNodeCopy(b *testing.B) {
 		}
 		result = obj.(*api.Node)
 	}
-	if !api.Semantic.DeepEqual(node, *result) {
+	if !apiequality.Semantic.DeepEqual(node, *result) {
 		b.Fatalf("Incorrect copy: expected %v, got %v", node, *result)
 	}
 }
@@ -186,7 +183,7 @@ func BenchmarkReplicationControllerCopy(b *testing.B) {
 		}
 		result = obj.(*api.ReplicationController)
 	}
-	if !api.Semantic.DeepEqual(replicationController, *result) {
+	if !apiequality.Semantic.DeepEqual(replicationController, *result) {
 		b.Fatalf("Incorrect copy: expected %v, got %v", replicationController, *result)
 	}
 }

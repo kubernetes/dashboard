@@ -1,0 +1,60 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-info-card>
+  <kd-info-card-header>[[Details|Header in a detail view]]</kd-info-card-header>
+  <kd-info-card-section>
+    <kd-object-meta-info-card object-meta="::$ctrl.replicationController.objectMeta">
+    </kd-object-meta-info-card>
+    <kd-info-card-entry title="[[Selector|Label 'Selector' for the replication controller's selector on the replication controller details page.]]">
+      <kd-labels labels="::$ctrl.replicationController.labelSelector"></kd-labels>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Images|Label 'Images' for the list of images used in a replication controller, on its details page.]]">
+      <div ng-repeat="image in $ctrl.replicationController.containerImages track by $index">
+        <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
+      </div>
+    </kd-info-card-entry>
+  </kd-info-card-section>
+
+  <kd-info-card-section name="[[Status|Subtitle 'Status' for the right section with pod status information on the replication controller details page.]]">
+    <kd-info-card-entry title="[[Pods|Label 'Pods' for the pods in a replication controller on its details page.]]">
+      <div ng-if="!$ctrl.areDesiredPodsRunning()">
+        [[{{::$ctrl.replicationController.podInfo.currentCount}} created|The message says how many pods were created (replication controller details page).]], [[{{::$ctrl.replicationController.podInfo.desired}} desired|The message says how many pods are desired
+        to run (replication controller details page).]]
+      </div>
+      <div ng-if="$ctrl.areDesiredPodsRunning()">
+        [[{{::$ctrl.replicationController.podInfo.running}} running|The message says how many pods are running (replication controller details page).]]
+      </div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Pods status|Label 'Pods status' for the status of the pods in a replication controller, on the replication controller details page.]]"
+                        ng-if="!$ctrl.areDesiredPodsRunning()">
+      <div ng-if="!$ctrl.areDesiredPodsRunning()">
+        <div ng-if="::$ctrl.replicationController.podInfo.pending"
+             class="kd-comma-separated-item">
+          [[{{::$ctrl.replicationController.podInfo.pending}} pending|The message says how many pods are pending (replication controller details page).]]
+        </div>
+        <div ng-if="::$ctrl.replicationController.podInfo.failed"
+             class="kd-comma-separated-item">
+          [[{{::$ctrl.replicationController.podInfo.failed}} failed|The message says how many pods have failed (replication controller details page).]]
+        </div>
+        <div ng-if="::$ctrl.replicationController.podInfo.running"
+             class="kd-comma-separated-item">
+          [[{{::$ctrl.replicationController.podInfo.running}} running|The message says how many pods are running (replication controller details page).]]
+        </div>
+      </div>
+    </kd-info-card-entry>
+  </kd-info-card-section>
+</kd-info-card>

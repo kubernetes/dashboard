@@ -14,7 +14,7 @@ logic and fetches raw data from the various Kubernetes APIs.
 Make sure the following software is installed and added to the `$PATH` variable:
 
 * Docker (1.10+)
-* go (1.6.1+)
+* go (1.7+)
 * nodejs (5.1.1+)
 * npm (3+)
 * java (7+)
@@ -25,8 +25,14 @@ You can follow [detailed steps on how to install these requirements](requirement
 Clone the repository and install the dependencies:
 
 ```shell
-$ npm install
+$ npm i
 ```
+
+If you are running commands with root privileges set `--unsafe-perm` flag:
+
+ ```shell
+ # npm i --unsafe-perm
+ ```
 
 ## Run a Kubernetes Cluster
 
@@ -57,6 +63,19 @@ $ kubectl proxy --port=8080
 
 kubectl will handle authentication with Kubernetes and create an API proxy with the address
 `localhost:8080`. Therefore, no changes in the configuration are required.
+
+Another way to connect to real cluster while developing dashboard is to override default values used 
+by our build pipeline. In order to do that we have introduced two environment variables
+`KUBE_DASHBOARD_APISERVER_HOST` and `KUBE_DASHBOARD_KUBECONFIG` that will be used over default ones when
+defined. Before running our gulp tasks just do:
+
+```shell
+$ export KUBE_DASHBOARD_APISERVER_HOST="http://<APISERVER_IP>:<APISERVER_PORT>"
+# or
+$ export KUBE_DASHBOARD_KUBECONFIG="<KUBECONFIG_FILE_PATH>"
+```
+
+**NOTE: Environment variable `KUBE_DASHBOARD_KUBECONFIG` has higher priority than `KUBE_DASHBOARD_APISERVER_HOST`.**
 
 ## Serving Dashboard for Development
 

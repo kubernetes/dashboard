@@ -1,0 +1,81 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-resource-card-list select-id="{{::$ctrl.getSelectId()}}"
+                       list="$ctrl.horizontalPodAutoscalerList"
+                       list-resource="$ctrl.horizontalPodAutoscalerListResource">
+  <kd-resource-card-list-header>
+    <kd-resource-card-list-title ng-transclude="header">
+      [[Horizontal Pod Autoscalers|Label which appears above the list of such objects.]]
+    </kd-resource-card-list-title>
+    <kd-resource-card-list-filter></kd-resource-card-list-filter>
+  </kd-resource-card-list-header>
+
+  <kd-zero-state ng-if="!$ctrl.horizontalPodAutoscalerList.listMeta.totalItems">
+    <kd-zero-state-text ng-transclude="zerostate">
+      [[There are no Horizontal Pod Autoscalers to display.|Text for horizontal pod autoscaler card list zerostate.]]
+    </kd-zero-state-text>
+  </kd-zero-state>
+  <kd-resource-card-header-columns ng-show="$ctrl.horizontalPodAutoscalerList.listMeta.totalItems">
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
+      [[Name|Label 'Name' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column ng-if="$ctrl.areMultipleNamespacesSelected()"
+                                    size="small"
+                                    grow="2">
+      [[Namespace|Label 'Namespace' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="1"
+                                    ng-if="::$ctrl.showScaleTarget">
+      [[Target|Column header 'Target' on Horizontal Pod Autoscaler lists]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="1">
+      [[Target CPU Utilization|Label 'Target CPU Utilization' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="1">
+      [[Current CPU Utilization|Label 'Current CPU Utilization' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="1">
+      [[Min Replicas|Label 'Min Replicas' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="1">
+      [[Max Replicas|Label 'Max Replicas' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="1">
+      [[Age|Label 'Age' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="nogrow">
+    </kd-resource-card-header-column>
+  </kd-resource-card-header-columns>
+  <kd-horizontal-pod-autoscaler-card pagination-id="{{::$ctrl.getSelectId()}}"
+                                     dir-paginate="horizontalPodAutoscaler in $ctrl.horizontalPodAutoscalerList.horizontalpodautoscalers | itemsPerPage: default"
+                                     total-items="::$ctrl.horizontalPodAutoscalerList.listMeta.totalItems"
+                                     horizontal-pod-autoscaler="horizontalPodAutoscaler"
+                                     show-scale-target="::$ctrl.showScaleTarget">
+  </kd-horizontal-pod-autoscaler-card>
+
+  <kd-resource-card-list-footer>
+    <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
+  </kd-resource-card-list-footer>
+</kd-resource-card-list>

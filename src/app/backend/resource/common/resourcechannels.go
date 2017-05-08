@@ -15,16 +15,18 @@
 package common
 
 import (
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/apis/apps"
-	"k8s.io/kubernetes/pkg/apis/autoscaling"
-	"k8s.io/kubernetes/pkg/apis/batch"
-	"k8s.io/kubernetes/pkg/apis/extensions"
-	client "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset"
-	"k8s.io/kubernetes/pkg/fields"
-	"k8s.io/kubernetes/pkg/labels"
-
 	kdClient "github.com/kubernetes/dashboard/src/app/backend/client"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/fields"
+	"k8s.io/apimachinery/pkg/labels"
+	client "k8s.io/client-go/kubernetes"
+	api "k8s.io/client-go/pkg/api/v1"
+	apps "k8s.io/client-go/pkg/apis/apps/v1beta1"
+	autoscaling "k8s.io/client-go/pkg/apis/autoscaling/v1"
+	batch "k8s.io/client-go/pkg/apis/batch/v1"
+	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
+	rbac "k8s.io/client-go/pkg/apis/rbac/v1alpha1"
+	storage "k8s.io/client-go/pkg/apis/storage/v1beta1"
 )
 
 // ResourceChannels struct holds channels to resource lists. Each list channel is paired with
@@ -98,6 +100,24 @@ type ResourceChannels struct {
 
 	// List and error channels to HorizontalPodAutoscalers
 	HorizontalPodAutoscalerList HorizontalPodAutoscalerListChannel
+
+	// List and error channels to ThirdPartyResources
+	ThirdPartyResourceList ThirdPartyResourceListChannel
+
+	// List and error channels to StorageClasses
+	StorageClassList StorageClassListChannel
+
+	// List and error channels to Roles
+	RoleList RoleListChannel
+
+	// List and error channels to ClusterRoles
+	ClusterRoleList ClusterRoleListChannel
+
+	// List and error channels to RoleBindings
+	RoleBindingList RoleBindingListChannel
+
+	// List and error channels to ClusterRoleBindings
+	ClusterRoleBindingList ClusterRoleBindingListChannel
 }
 
 // ServiceListChannel is a list and error channels to Services.
@@ -108,15 +128,15 @@ type ServiceListChannel struct {
 
 // GetServiceListChannel returns a pair of channels to a Service list and errors that both
 // must be read numReads times.
-func GetServiceListChannel(client client.Interface,
-	nsQuery *NamespaceQuery, numReads int) ServiceListChannel {
+func GetServiceListChannel(client client.Interface, nsQuery *NamespaceQuery,
+	numReads int) ServiceListChannel {
 
 	channel := ServiceListChannel{
 		List:  make(chan *api.ServiceList, numReads),
 		Error: make(chan error, numReads),
 	}
 	go func() {
-		list, err := client.Core().Services(nsQuery.ToRequestParam()).List(listEverything)
+		list, err := client.CoreV1().Services(nsQuery.ToRequestParam()).List(listEverything)
 		var filteredItems []api.Service
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -149,7 +169,8 @@ func GetIngressListChannel(client client.Interface, nsQuery *NamespaceQuery,
 		Error: make(chan error, numReads),
 	}
 	go func() {
-		list, err := client.Extensions().Ingresses(nsQuery.ToRequestParam()).List(listEverything)
+		list, err := client.ExtensionsV1beta1().Ingresses(nsQuery.ToRequestParam()).
+			List(listEverything)
 		var filteredItems []extensions.Ingress
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -183,7 +204,8 @@ func GetLimitRangeListChannel(client client.Interface, nsQuery *NamespaceQuery,
 	}
 
 	go func() {
-		list, err := client.Core().LimitRanges(nsQuery.ToRequestParam()).List(listEverything)
+		list, err := client.CoreV1().LimitRanges(nsQuery.ToRequestParam()).
+			List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -208,7 +230,7 @@ func GetNodeListChannel(client client.Interface, numReads int) NodeListChannel {
 	}
 
 	go func() {
-		list, err := client.Core().Nodes().List(listEverything)
+		list, err := client.CoreV1().Nodes().List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -224,7 +246,8 @@ type NamespaceListChannel struct {
 	Error chan error
 }
 
-// GetNamespaceListChannel returns a pair of channels to a Namespace list and errors that both must be read
+// GetNamespaceListChannel returns a pair of channels to a Namespace list and errors that both must
+// be read
 // numReads times.
 func GetNamespaceListChannel(client client.Interface, numReads int) NamespaceListChannel {
 	channel := NamespaceListChannel{
@@ -233,7 +256,7 @@ func GetNamespaceListChannel(client client.Interface, numReads int) NamespaceLis
 	}
 
 	go func() {
-		list, err := client.Core().Namespaces().List(listEverything)
+		list, err := client.CoreV1().Namespaces().List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -258,14 +281,14 @@ func GetEventListChannel(client client.Interface,
 
 // GetEventListChannelWithOptions is GetEventListChannel plus list options.
 func GetEventListChannelWithOptions(client client.Interface,
-	nsQuery *NamespaceQuery, options api.ListOptions, numReads int) EventListChannel {
+	nsQuery *NamespaceQuery, options metaV1.ListOptions, numReads int) EventListChannel {
 	channel := EventListChannel{
 		List:  make(chan *api.EventList, numReads),
 		Error: make(chan error, numReads),
 	}
 
 	go func() {
-		list, err := client.Core().Events(nsQuery.ToRequestParam()).List(options)
+		list, err := client.CoreV1().Events(nsQuery.ToRequestParam()).List(options)
 		var filteredItems []api.Event
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -297,7 +320,7 @@ func GetPodListChannel(client client.Interface,
 
 // GetPodListChannelWithOptions is GetPodListChannel plus listing options.
 func GetPodListChannelWithOptions(client client.Interface, nsQuery *NamespaceQuery,
-	options api.ListOptions, numReads int) PodListChannel {
+	options metaV1.ListOptions, numReads int) PodListChannel {
 
 	channel := PodListChannel{
 		List:  make(chan *api.PodList, numReads),
@@ -305,7 +328,7 @@ func GetPodListChannelWithOptions(client client.Interface, nsQuery *NamespaceQue
 	}
 
 	go func() {
-		list, err := client.Core().Pods(nsQuery.ToRequestParam()).List(options)
+		list, err := client.CoreV1().Pods(nsQuery.ToRequestParam()).List(options)
 		var filteredItems []api.Pod
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -340,7 +363,8 @@ func GetReplicationControllerListChannel(client client.Interface,
 	}
 
 	go func() {
-		list, err := client.Core().ReplicationControllers(nsQuery.ToRequestParam()).List(listEverything)
+		list, err := client.CoreV1().ReplicationControllers(nsQuery.ToRequestParam()).
+			List(listEverything)
 		var filteredItems []api.ReplicationController
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -374,7 +398,8 @@ func GetDeploymentListChannel(client client.Interface,
 	}
 
 	go func() {
-		list, err := client.Extensions().Deployments(nsQuery.ToRequestParam()).List(listEverything)
+		list, err := client.ExtensionsV1beta1().Deployments(nsQuery.ToRequestParam()).
+			List(listEverything)
 		var filteredItems []extensions.Deployment
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -407,14 +432,15 @@ func GetReplicaSetListChannel(client client.Interface,
 // GetReplicaSetListChannelWithOptions returns a pair of channels to a ReplicaSet list filtered
 // by provided options and errors that both must be read numReads times.
 func GetReplicaSetListChannelWithOptions(client client.Interface,
-	nsQuery *NamespaceQuery, options api.ListOptions, numReads int) ReplicaSetListChannel {
+	nsQuery *NamespaceQuery, options metaV1.ListOptions, numReads int) ReplicaSetListChannel {
 	channel := ReplicaSetListChannel{
 		List:  make(chan *extensions.ReplicaSetList, numReads),
 		Error: make(chan error, numReads),
 	}
 
 	go func() {
-		list, err := client.Extensions().ReplicaSets(nsQuery.ToRequestParam()).List(options)
+		list, err := client.ExtensionsV1beta1().ReplicaSets(nsQuery.ToRequestParam()).
+			List(options)
 		var filteredItems []extensions.ReplicaSet
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -447,7 +473,8 @@ func GetDaemonSetListChannel(client client.Interface,
 	}
 
 	go func() {
-		list, err := client.Extensions().DaemonSets(nsQuery.ToRequestParam()).List(listEverything)
+		list, err := client.ExtensionsV1beta1().DaemonSets(nsQuery.ToRequestParam()).
+			List(listEverything)
 		var filteredItems []extensions.DaemonSet
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -480,7 +507,7 @@ func GetJobListChannel(client client.Interface,
 	}
 
 	go func() {
-		list, err := client.Batch().Jobs(nsQuery.ToRequestParam()).List(listEverything)
+		list, err := client.BatchV1().Jobs(nsQuery.ToRequestParam()).List(listEverything)
 		var filteredItems []batch.Job
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -513,7 +540,8 @@ func GetStatefulSetListChannel(client client.Interface,
 	}
 
 	go func() {
-		statefulSets, err := client.Apps().StatefulSets(nsQuery.ToRequestParam()).List(listEverything)
+		statefulSets, err := client.AppsV1beta1().StatefulSets(nsQuery.ToRequestParam()).
+			List(listEverything)
 		var filteredItems []apps.StatefulSet
 		for _, item := range statefulSets.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -538,7 +566,8 @@ type ConfigMapListChannel struct {
 
 // GetConfigMapListChannel returns a pair of channels to a ConfigMap list and errors that
 // both must be read numReads times.
-func GetConfigMapListChannel(client client.Interface, nsQuery *NamespaceQuery, numReads int) ConfigMapListChannel {
+func GetConfigMapListChannel(client client.Interface, nsQuery *NamespaceQuery,
+	numReads int) ConfigMapListChannel {
 
 	channel := ConfigMapListChannel{
 		List:  make(chan *api.ConfigMapList, numReads),
@@ -546,7 +575,8 @@ func GetConfigMapListChannel(client client.Interface, nsQuery *NamespaceQuery, n
 	}
 
 	go func() {
-		list, err := client.Core().ConfigMaps(nsQuery.ToRequestParam()).List(listEverything)
+		list, err := client.CoreV1().ConfigMaps(nsQuery.ToRequestParam()).
+			List(listEverything)
 		var filteredItems []api.ConfigMap
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -571,7 +601,8 @@ type SecretListChannel struct {
 
 // GetSecretListChannel returns a pair of channels to a Secret list and errors that
 // both must be read numReads times.
-func GetSecretListChannel(client client.Interface, nsQuery *NamespaceQuery, numReads int) SecretListChannel {
+func GetSecretListChannel(client client.Interface, nsQuery *NamespaceQuery,
+	numReads int) SecretListChannel {
 
 	channel := SecretListChannel{
 		List:  make(chan *api.SecretList, numReads),
@@ -579,7 +610,8 @@ func GetSecretListChannel(client client.Interface, nsQuery *NamespaceQuery, numR
 	}
 
 	go func() {
-		list, err := client.Core().Secrets(nsQuery.ToRequestParam()).List(listEverything)
+		list, err := client.CoreV1().Secrets(nsQuery.ToRequestParam()).
+			List(listEverything)
 		var filteredItems []api.Secret
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
@@ -596,22 +628,124 @@ func GetSecretListChannel(client client.Interface, nsQuery *NamespaceQuery, numR
 	return channel
 }
 
+// RoleListChannel is a list and error channels to Roles.
+type RoleListChannel struct {
+	List  chan *rbac.RoleList
+	Error chan error
+}
+
+// GetRoleListChannel returns a pair of channels to a Role list for a namespace and errors that
+// both must be read numReads times.
+func GetRoleListChannel(client client.Interface, numReads int) RoleListChannel {
+	channel := RoleListChannel{
+		List:  make(chan *rbac.RoleList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.RbacV1alpha1().Roles("").List(listEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// ClusterRoleListChannel is a list and error channels to ClusterRoles.
+type ClusterRoleListChannel struct {
+	List  chan *rbac.ClusterRoleList
+	Error chan error
+}
+
+// GetClusterRoleListChannel returns a pair of channels to a ClusterRole list and errors that
+// both must be read numReads times.
+func GetClusterRoleListChannel(client client.Interface, numReads int) ClusterRoleListChannel {
+	channel := ClusterRoleListChannel{
+		List:  make(chan *rbac.ClusterRoleList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.RbacV1alpha1().ClusterRoles().List(listEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// RoleBindingListChannel is a list and error channels to RoleBindings.
+type RoleBindingListChannel struct {
+	List  chan *rbac.RoleBindingList
+	Error chan error
+}
+
+// GetRoleBindingListChannel returns a pair of channels to a RoleBinding list for a namespace and errors that
+// both must be read numReads times.
+func GetRoleBindingListChannel(client client.Interface, numReads int) RoleBindingListChannel {
+	channel := RoleBindingListChannel{
+		List:  make(chan *rbac.RoleBindingList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.RbacV1alpha1().RoleBindings("").List(listEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// ClusterRoleBindingListChannel is a list and error channels to ClusterRoleBindings.
+type ClusterRoleBindingListChannel struct {
+	List  chan *rbac.ClusterRoleBindingList
+	Error chan error
+}
+
+// GetClusterRoleBindingListChannel returns a pair of channels to a ClusterRoleBinding list and
+// errors that both must be read numReads times.
+func GetClusterRoleBindingListChannel(client client.Interface,
+	numReads int) ClusterRoleBindingListChannel {
+	channel := ClusterRoleBindingListChannel{
+		List:  make(chan *rbac.ClusterRoleBindingList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.RbacV1alpha1().ClusterRoleBindings().List(listEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
 // PersistentVolumeListChannel is a list and error channels to PersistentVolumes.
 type PersistentVolumeListChannel struct {
 	List  chan *api.PersistentVolumeList
 	Error chan error
 }
 
-// GetPersistentVolumeListChannel returns a pair of channels to a PersistentVolume list and errors that
-// both must be read numReads times.
-func GetPersistentVolumeListChannel(client client.Interface, numReads int) PersistentVolumeListChannel {
+// GetPersistentVolumeListChannel returns a pair of channels to a PersistentVolume list and errors
+// that both must be read numReads times.
+func GetPersistentVolumeListChannel(client client.Interface,
+	numReads int) PersistentVolumeListChannel {
 	channel := PersistentVolumeListChannel{
 		List:  make(chan *api.PersistentVolumeList, numReads),
 		Error: make(chan error, numReads),
 	}
 
 	go func() {
-		list, err := client.Core().PersistentVolumes().List(listEverything)
+		list, err := client.CoreV1().PersistentVolumes().List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -627,8 +761,8 @@ type PersistentVolumeClaimListChannel struct {
 	Error chan error
 }
 
-// GetPersistentVolumeClaimListChannel returns a pair of channels to a PersistentVolumeClaim list and errors that
-// both must be read numReads times.
+// GetPersistentVolumeClaimListChannel returns a pair of channels to a PersistentVolumeClaim list
+// and errors that both must be read numReads times.
 func GetPersistentVolumeClaimListChannel(client client.Interface, nsQuery *NamespaceQuery,
 	numReads int) PersistentVolumeClaimListChannel {
 
@@ -638,7 +772,8 @@ func GetPersistentVolumeClaimListChannel(client client.Interface, nsQuery *Names
 	}
 
 	go func() {
-		list, err := client.Core().PersistentVolumeClaims(nsQuery.ToRequestParam()).List(listEverything)
+		list, err := client.CoreV1().PersistentVolumeClaims(nsQuery.ToRequestParam()).
+			List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -665,7 +800,8 @@ func GetResourceQuotaListChannel(client client.Interface, nsQuery *NamespaceQuer
 	}
 
 	go func() {
-		list, err := client.Core().ResourceQuotas(nsQuery.ToRequestParam()).List(listEverything)
+		list, err := client.CoreV1().ResourceQuotas(nsQuery.ToRequestParam()).
+			List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -683,7 +819,8 @@ type PodMetricsChannel struct {
 
 // GetPodListMetricsChannel returns a pair of channels to MetricsByPod and errors that
 // both must be read numReads times.
-func GetPodListMetricsChannel(heapsterClient kdClient.HeapsterClient, pods []api.Pod, numReads int) PodMetricsChannel {
+func GetPodListMetricsChannel(heapsterClient kdClient.HeapsterClient, pods []api.Pod,
+	numReads int) PodMetricsChannel {
 	channel := PodMetricsChannel{
 		MetricsByPod: make(chan *MetricsByPod, numReads),
 		Error:        make(chan error, numReads),
@@ -708,14 +845,15 @@ func GetPodListMetricsChannel(heapsterClient kdClient.HeapsterClient, pods []api
 
 // GetPodMetricsChannel returns a pair of channels to MetricsByPod and errors that
 // both must be read 1 time.
-func GetPodMetricsChannel(heapsterClient kdClient.HeapsterClient, name string, namespace string) PodMetricsChannel {
+func GetPodMetricsChannel(heapsterClient kdClient.HeapsterClient, name,
+	namespace string) PodMetricsChannel {
 	channel := PodMetricsChannel{
 		MetricsByPod: make(chan *MetricsByPod, 1),
 		Error:        make(chan error, 1),
 	}
 
 	go func() {
-		podNamesByNamespace := map[string][]string{namespace: []string{name}}
+		podNamesByNamespace := map[string][]string{namespace: {name}}
 		metrics, err := getPodListMetrics(podNamesByNamespace, heapsterClient)
 		channel.MetricsByPod <- metrics
 		channel.Error <- err
@@ -724,7 +862,7 @@ func GetPodMetricsChannel(heapsterClient kdClient.HeapsterClient, name string, n
 	return channel
 }
 
-// PodMetricsChannel is a list and error channels to MetricsByPod.
+// HorizontalPodAutoscalerListChannel is a list and error channels.
 type HorizontalPodAutoscalerListChannel struct {
 	List  chan *autoscaling.HorizontalPodAutoscalerList
 	Error chan error
@@ -732,14 +870,16 @@ type HorizontalPodAutoscalerListChannel struct {
 
 // GetPodListMetricsChannel returns a pair of channels to MetricsByPod and errors that
 // both must be read numReads times.
-func GetHorizontalPodAutoscalerListChannel(client client.Interface, nsQuery *NamespaceQuery, numReads int) HorizontalPodAutoscalerListChannel {
+func GetHorizontalPodAutoscalerListChannel(client client.Interface, nsQuery *NamespaceQuery,
+	numReads int) HorizontalPodAutoscalerListChannel {
 	channel := HorizontalPodAutoscalerListChannel{
 		List:  make(chan *autoscaling.HorizontalPodAutoscalerList, numReads),
 		Error: make(chan error, numReads),
 	}
 
 	go func() {
-		list, err := client.Autoscaling().HorizontalPodAutoscalers(nsQuery.ToRequestParam()).List(listEverything)
+		list, err := client.Autoscaling().HorizontalPodAutoscalers(
+			nsQuery.ToRequestParam()).List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -749,7 +889,58 @@ func GetHorizontalPodAutoscalerListChannel(client client.Interface, nsQuery *Nam
 	return channel
 }
 
-var listEverything = api.ListOptions{
-	LabelSelector: labels.Everything(),
-	FieldSelector: fields.Everything(),
+// ThirdPartyResourceListChannel is a list and error channels to third party resources.
+type ThirdPartyResourceListChannel struct {
+	List  chan *extensions.ThirdPartyResourceList
+	Error chan error
+}
+
+// GetThirdPartyResourceListChannel returns a pair of channels to a third party resource list and
+// errors that both must be read numReads times.
+func GetThirdPartyResourceListChannel(client client.Interface,
+	numReads int) ThirdPartyResourceListChannel {
+	channel := ThirdPartyResourceListChannel{
+		List:  make(chan *extensions.ThirdPartyResourceList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.ExtensionsV1beta1().ThirdPartyResources().List(listEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// StorageClassListChannel is a list and error channels to storage classes.
+type StorageClassListChannel struct {
+	List  chan *storage.StorageClassList
+	Error chan error
+}
+
+// GetStorageClassListChannel returns a pair of channels to a storage class list and
+// errors that both must be read numReads times.
+func GetStorageClassListChannel(client client.Interface, numReads int) StorageClassListChannel {
+	channel := StorageClassListChannel{
+		List:  make(chan *storage.StorageClassList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.StorageV1beta1().StorageClasses().List(listEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+var listEverything = metaV1.ListOptions{
+	LabelSelector: labels.Everything().String(),
+	FieldSelector: fields.Everything().String(),
 }

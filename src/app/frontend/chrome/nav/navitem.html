@@ -14,8 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<md-button ng-href="{{$ctrl.getHref()}}" ng-if="::$ctrl.getHref()" class="kd-nav-item-button"
-  ng-class="{'kd-nav-item-active': $ctrl.isActive()}">
+<md-button ng-href="{{$ctrl.getHref()}}"
+           ng-if="::$ctrl.getHref()"
+           class="kd-nav-item-button"
+           ng-class="{'kd-nav-item-active': $ctrl.isActive()}">
   <span ng-transclude></span>
 </md-button>
-<span ng-transclude ng-if="::!$ctrl.getHref()" class="kd-nav-item-button"></span>
+<span ng-transclude
+      ng-if="::!$ctrl.getHref()"
+      class="kd-nav-item-button"></span>

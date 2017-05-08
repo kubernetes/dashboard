@@ -1,0 +1,101 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-resource-card object-meta="$ctrl.persistentVolume.objectMeta"
+                  type-meta="$ctrl.persistentVolume.typeMeta">
+  <kd-resource-card-status layout="row"
+                           ng-switch="$ctrl.persistentVolume.status">
+    <md-icon class="material-icons kd-success"
+             ng-switch-when="Available">
+      check_circle
+    </md-icon>
+    <md-icon class="material-icons"
+             ng-switch-when="Pending">
+      update
+    </md-icon>
+    <md-icon class="material-icons kd-success"
+             ng-switch-when="Bound">
+      check_circle
+    </md-icon>
+    <md-icon class="material-icons kd-warning"
+             ng-switch-when="Released">
+      remove_circle
+    </md-icon>
+    <md-icon class="material-icons kd-error"
+             ng-switch-when="Failed">
+      error
+    </md-icon>
+    <md-icon class="material-icons"
+             ng-switch-default>
+      help
+    </md-icon>
+  </kd-resource-card-status>
+  <kd-resource-card-columns>
+    <kd-resource-card-column>
+      <div>
+        <a ng-href="{{::$ctrl.getPersistentVolumeDetailHref()}}"
+           class="kd-middle-ellipsised-link">
+          <kd-middle-ellipsis display-string="{{$ctrl.persistentVolume.objectMeta.name}}">
+          </kd-middle-ellipsis>
+        </a>
+      </div>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <kd-labels labels="::$ctrl.persistentVolume.objectMeta.labels"></kd-labels>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <kd-middle-ellipsis ng-repeat="(key, value) in ::$ctrl.persistentVolume.capacity"
+                          display-string="{{::value}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolume.capacity">-</div>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <kd-middle-ellipsis ng-repeat="(key, value) in ::$ctrl.persistentVolume.accessModes"
+                          display-string="{{::value}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolume.accessModes">-</div>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <kd-middle-ellipsis display-string="{{$ctrl.persistentVolume.status}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolume.status">-</div>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <kd-middle-ellipsis display-string="{{$ctrl.persistentVolume.claim}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolume.claim">-</div>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <kd-middle-ellipsis display-string="{{$ctrl.persistentVolume.reason}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolume.reason">-</div>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      {{::$ctrl.persistentVolume.objectMeta.creationTimestamp | relativeTime}}
+      <md-tooltip>
+        {{::$ctrl.getCreatedAtTooltip($ctrl.persistentVolume.objectMeta.creationTimestamp)}}
+      </md-tooltip>
+    </kd-resource-card-column>
+    <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
+      <kd-resource-card-menu>
+        <kd-resource-card-delete-menu-item resource-kind-name="[[Persistent Volume|Label 'Persistent Volume' which will appear in the persistent volume delete dialog opened from a persistentvolume card on the list page.]]">
+        </kd-resource-card-delete-menu-item>
+        <kd-resource-card-edit-menu-item resource-kind-name="[[Persistent Volume|Label 'Persistent Volume' which will appear in the persistent volume delete dialog opened from a persistentvolume card on the list page.]]">
+        </kd-resource-card-edit-menu-item>
+      </kd-resource-card-menu>
+    </kd-resource-card-column>
+  </kd-resource-card-columns>
+</kd-resource-card>

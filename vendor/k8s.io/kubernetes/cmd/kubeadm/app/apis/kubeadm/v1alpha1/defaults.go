@@ -17,23 +17,26 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"k8s.io/kubernetes/pkg/runtime"
+	"net/url"
+
+	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/kubernetes/cmd/kubeadm/app/constants"
 )
 
 const (
 	DefaultServiceDNSDomain  = "cluster.local"
 	DefaultServicesSubnet    = "10.96.0.0/12"
-	DefaultKubernetesVersion = "v1.4.4"
+	DefaultKubernetesVersion = "stable-1.6"
 	DefaultAPIBindPort       = 6443
 	DefaultDiscoveryBindPort = 9898
+	DefaultAuthorizationMode = "RBAC"
+	DefaultCACertPath        = "/etc/kubernetes/pki/ca.crt"
+	DefaultCertificatesDir   = "/etc/kubernetes/pki"
+	DefaultEtcdDataDir       = "/var/lib/etcd"
 )
 
 func addDefaultingFuncs(scheme *runtime.Scheme) error {
-	RegisterDefaults(scheme)
-	return scheme.AddDefaultingFuncs(
-		SetDefaults_MasterConfiguration,
-		SetDefaults_NodeConfiguration,
-	)
+	return RegisterDefaults(scheme)
 }
 
 func SetDefaults_MasterConfiguration(obj *MasterConfiguration) {
@@ -45,10 +48,6 @@ func SetDefaults_MasterConfiguration(obj *MasterConfiguration) {
 		obj.API.BindPort = DefaultAPIBindPort
 	}
 
-	if obj.Discovery.BindPort == 0 {
-		obj.Discovery.BindPort = DefaultDiscoveryBindPort
-	}
-
 	if obj.Networking.ServiceSubnet == "" {
 		obj.Networking.ServiceSubnet = DefaultServicesSubnet
 	}
@@ -56,14 +55,39 @@ func SetDefaults_MasterConfiguration(obj *MasterConfiguration) {
 	if obj.Networking.DNSDomain == "" {
 		obj.Networking.DNSDomain = DefaultServiceDNSDomain
 	}
+
+	if len(obj.AuthorizationModes) == 0 {
+		obj.AuthorizationModes = []string{DefaultAuthorizationMode}
+	}
+
+	if obj.CertificatesDir == "" {
+		obj.CertificatesDir = DefaultCertificatesDir
+	}
+
+	if obj.TokenTTL == 0 {
+		obj.TokenTTL = constants.DefaultTokenDuration
+	}
+
+	if obj.Etcd.DataDir == "" {
+		obj.Etcd.DataDir = DefaultEtcdDataDir
+	}
 }
 
 func SetDefaults_NodeConfiguration(obj *NodeConfiguration) {
-	if obj.APIPort == 0 {
-		obj.APIPort = DefaultAPIBindPort
+	if obj.CACertPath == "" {
+		obj.CACertPath = DefaultCACertPath
 	}
-
-	if obj.DiscoveryPort == 0 {
-		obj.DiscoveryPort = DefaultDiscoveryBindPort
+	if len(obj.TLSBootstrapToken) == 0 {
+		obj.TLSBootstrapToken = obj.Token
+	}
+	if len(obj.DiscoveryToken) == 0 && len(obj.DiscoveryFile) == 0 {
+		obj.DiscoveryToken = obj.Token
+	}
+	// Make sure file URLs become paths
+	if len(obj.DiscoveryFile) != 0 {
+		u, err := url.Parse(obj.DiscoveryFile)
+		if err == nil && u.Scheme == "file" {
+			obj.DiscoveryFile = u.Path
+		}
 	}
 }

@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import chromeModule from 'chrome/chrome_module';
-import {actionbarViewName} from 'chrome/chrome_state';
-import {fillContentConfig} from 'chrome/chrome_state';
+import chromeModule from 'chrome/module';
+import {actionbarViewName} from 'chrome/state';
+import {fillContentConfig} from 'chrome/state';
 
 describe('Chrome controller', () => {
   /** @type {ChromeController} */

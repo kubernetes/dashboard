@@ -13,6 +13,7 @@
 // limitations under the License.
 
 const HEADER_SLOT = 'header';
+const FOOTER_SLOT = 'footer';
 
 /**
  * @final
@@ -50,6 +51,15 @@ export class ResourceCardListController {
 
     /** @private {!angular.$transclude} */
     this.transclude_ = $transclude;
+
+    /** @export {string} - Unique data select id. Initialized from binding. */
+    this.selectId;
+
+    /** @export {{listMeta: !backendApi.ListMeta}|undefined} - Initialized from binding. */
+    this.list;
+
+    /** @export {angular.$resource|undefined} - Initialized from binding. */
+    this.listResource;
   }
 
   /**
@@ -84,6 +94,14 @@ export class ResourceCardListController {
    */
   hasHeader() {
     return this.transclude_.isSlotFilled(HEADER_SLOT);
+  }
+
+  /**
+   * @return {boolean}
+   * @export
+   */
+  hasFooter() {
+    return this.transclude_.isSlotFilled(FOOTER_SLOT);
   }
 }
 
@@ -131,8 +149,8 @@ export class ResourceCardListController {
 export const resourceCardListComponent = {
   templateUrl: 'common/components/resourcecard/resourcecardlist.html',
   transclude: {
-    'pagination': '?kdResourceCardListPagination',
     [HEADER_SLOT]: '?kdResourceCardListHeader',
+    [FOOTER_SLOT]: '?kdResourceCardListFooter',
   },
   controller: ResourceCardListController,
   bindings: {
@@ -140,6 +158,15 @@ export const resourceCardListComponent = {
     'selectable': '<',
     /** {boolean|undefined} whether to show statuses for list items */
     'withStatuses': '<',
+    /** Below properties are required if any data select operations (pagination, sort)
+     * should be supported.
+     */
+    /** {string|undefined} unique data select id */
+    'selectId': '@',
+    /** {Array<Object>|undefined} List of objects to apply data selection */
+    'list': '=',
+    /** {angular.$resource|undefined} */
+    'listResource': '<',
   },
   bindToController: true,
 };

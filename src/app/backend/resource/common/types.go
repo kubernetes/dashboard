@@ -15,8 +15,8 @@
 package common
 
 import (
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
+	"k8s.io/apimachinery/pkg/apis/meta/v1"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // ObjectMeta is metadata about an instance of a resource.
@@ -50,7 +50,7 @@ type ObjectMeta struct {
 	// CreationTimestamp is a timestamp representing the server time when this object was
 	// created. It is not guaranteed to be set in happens-before order across separate operations.
 	// Clients may not set this value. It is represented in RFC3339 form and is in UTC.
-	CreationTimestamp unversioned.Time `json:"creationTimestamp,omitempty"`
+	CreationTimestamp v1.Time `json:"creationTimestamp,omitempty"`
 }
 
 // TypeMeta describes an individual object in an API response or request with strings representing
@@ -72,7 +72,7 @@ type ListMeta struct {
 
 // NewObjectMeta returns internal endpoint name for the given service properties, e.g.,
 // NewObjectMeta creates a new instance of ObjectMeta struct based on K8s object meta.
-func NewObjectMeta(k8SObjectMeta api.ObjectMeta) ObjectMeta {
+func NewObjectMeta(k8SObjectMeta metaV1.ObjectMeta) ObjectMeta {
 	return ObjectMeta{
 		Name:              k8SObjectMeta.Name,
 		Namespace:         k8SObjectMeta.Namespace,
@@ -115,6 +115,12 @@ const (
 	ResourceKindSecret                  = "secret"
 	ResourceKindService                 = "service"
 	ResourceKindStatefulSet             = "statefulset"
+	ResourceKindThirdPartyResource      = "thirdpartyresource"
+	ResourceKindStorageClass            = "storageclass"
+	ResourceKindRbacRole                = "role"
+	ResourceKindRbacClusterRole         = "clusterrole"
+	ResourceKindRbacRoleBinding         = "rolebinding"
+	ResourceKindRbacClusterRoleBinding  = "clusterrolebinding"
 )
 
 // ClientType represents type of client that is used to perform generic operations on resources.
@@ -129,6 +135,7 @@ const (
 	ClientTypeAppsClient        = "appsclient"
 	ClientTypeBatchClient       = "batchclient"
 	ClientTypeAutoscalingClient = "autoscalingclient"
+	ClientTypeStorageClient     = "storageclient"
 )
 
 // Mapping from resource kind to K8s apiserver API path. This is mostly pluralization, because
@@ -158,10 +165,12 @@ var kindToAPIMapping = map[string]struct {
 	ResourceKindPod:                     {"pods", ClientTypeDefault, true},
 	ResourceKindReplicaSet:              {"replicasets", ClientTypeExtensionClient, true},
 	ResourceKindReplicationController:   {"replicationcontrollers", ClientTypeDefault, true},
-	ResourceKindResourceQuota:           {"resourcequota", ClientTypeDefault, true},
+	ResourceKindResourceQuota:           {"resourcequotas", ClientTypeDefault, true},
 	ResourceKindSecret:                  {"secrets", ClientTypeDefault, true},
 	ResourceKindService:                 {"services", ClientTypeDefault, true},
 	ResourceKindStatefulSet:             {"statefulsets", ClientTypeAppsClient, true},
+	ResourceKindThirdPartyResource:      {"thirdpartyresources", ClientTypeExtensionClient, true},
+	ResourceKindStorageClass:            {"storageclasses", ClientTypeStorageClient, false},
 }
 
 // IsSelectorMatching returns true when an object with the given
@@ -185,7 +194,7 @@ func IsSelectorMatching(labelSelector map[string]string,
 // IsLabelSelectorMatching returns true when a resource with the given selector targets the same
 // Resources(or subset) that a tested object selector with the given selector.
 func IsLabelSelectorMatching(selector map[string]string,
-	labelSelector *unversioned.LabelSelector) bool {
+	labelSelector *v1.LabelSelector) bool {
 
 	// If the resource has no selectors, then assume it targets different Pods.
 	if len(selector) == 0 {

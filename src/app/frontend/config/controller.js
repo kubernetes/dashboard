@@ -20,15 +20,19 @@ export class ConfigController {
    * @param {!backendApi.Config} config
    * @param {!angular.Resource} kdConfigMapListResource
    * @param {!angular.Resource} kdSecretListResource
+   * @param {!angular.Resource} kdPersistentVolumeClaimListResource
    * @ngInject
    */
-  constructor(config, kdConfigMapListResource, kdSecretListResource) {
+  constructor(
+      config, kdConfigMapListResource, kdSecretListResource, kdPersistentVolumeClaimListResource) {
     /** @export {!backendApi.Config} */
     this.config = config;
     /** @export {!angular.Resource} */
     this.kdConfigMapListResource = kdConfigMapListResource;
     /** @export {!angular.Resource} */
     this.kdSecretListResource = kdSecretListResource;
+    /** @export {!angular.Resource} */
+    this.pvcListResource = kdPersistentVolumeClaimListResource;
   }
 
   /**
@@ -37,9 +41,9 @@ export class ConfigController {
    */
   shouldShowZeroState() {
     /** @type {number} */
-    let resourcesLength =
-        this.config.configMapList.listMeta.totalItems + this.config.secretList.listMeta.totalItems;
-
+    let resourcesLength = this.config.configMapList.listMeta.totalItems +
+        this.config.secretList.listMeta.totalItems +
+        this.config.persistentVolumeClaimList.listMeta.totalItems;
     return resourcesLength === 0;
   }
 }

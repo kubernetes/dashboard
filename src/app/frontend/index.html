@@ -16,50 +16,60 @@ limitations under the License.
 
 <!doctype html>
 <html ng-app="kubernetesDashboard">
-  <!-- TODO(bryk): Add ng-strict-di setting for production builds. -->
-  <head>
-    <meta charset="utf-8">
-    <title>Kubernetes Dashboard</title>
-    <link rel="icon" type="image/png" href="assets/images/kubernetes-logo.png"/>
-    <meta name="viewport" content="width=device-width">
+<!-- TODO(bryk): Add ng-strict-di setting for production builds. -->
 
-    <!-- build:css static/vendor.css -->
-    <!-- bower:css -->
-    <!-- Bower CSS dependencies are populated here (dev build) and compiled
+<head>
+  <meta charset="utf-8">
+  <title ng-controller="kdTitle as $ctrl"
+         ng-bind="$ctrl.title()"></title>
+  <link rel="icon"
+        type="image/png"
+        href="assets/images/kubernetes-logo.png" />
+  <meta name="viewport"
+        content="width=device-width">
+
+  <!-- build:css static/vendor.css -->
+  <!-- bower:css -->
+  <!-- Bower CSS dependencies are populated here (dev build) and compiled
          into vendor.css (prod build). -->
-    <!-- endbower -->
-    <!-- endbuild -->
+  <!-- endbower -->
+  <!-- endbuild -->
 
-    <!-- build:css static/app.css -->
-    <!-- inject:css -->
-    <!-- Application css files are populated here (dev build) and compiled
+  <!-- build:css static/app.css -->
+  <!-- inject:css -->
+  <!-- Application css files are populated here (dev build) and compiled
          into app.css (prod build). -->
-    <!-- endinject -->
-    <!-- endbuild -->
-  </head>
-  <body>
-    <!--[if lt IE 10]>
+  <!-- endinject -->
+  <!-- endbuild -->
+</head>
+
+<body>
+  <!--[if lt IE 10]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser.
       Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your
       experience.</p>
     <![endif]-->
 
-    <kd-chrome layout="column" layout-fill> <!-- Application content is inserted here. --> </kd-chrome>
-    <!-- build:js static/vendor.js -->
-    <!-- bower:js -->
-    <!-- Bower JS dependencies are populated here (dev build) and compiled
+  <kd-chrome layout="column"
+             layout-fill>
+    <!-- Application content is inserted here. -->
+  </kd-chrome>
+  <!-- build:js static/vendor.js -->
+  <!-- bower:js -->
+  <!-- Bower JS dependencies are populated here (dev build) and compiled
          into vendor.js (prod build). -->
-    <!-- endbower -->
-    <!-- endbuild -->
+  <!-- endbower -->
+  <!-- endbuild -->
 
-    <!-- Script with configuration generated at backend. -->
-    <script src="api/appConfig.json"></script>
+  <!-- Script with configuration generated at backend. -->
+  <script src="api/appConfig.json"></script>
 
-    <!-- build:js static/app.js -->
-    <!-- inject:js -->
-    <!-- Application JS files are populated here. -->
-    <!-- endinject -->
-    <!-- endbuild -->
+  <!-- build:js static/app.js -->
+  <!-- inject:js -->
+  <!-- Application JS files are populated here. -->
+  <!-- endinject -->
+  <!-- endbuild -->
 
-  </body>
+</body>
+
 </html>

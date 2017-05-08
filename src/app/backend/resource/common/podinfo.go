@@ -14,9 +14,7 @@
 
 package common
 
-import (
-	"k8s.io/kubernetes/pkg/api"
-)
+import api "k8s.io/client-go/pkg/api/v1"
 
 // PodInfo represents aggregate information about controller's pods.
 type PodInfo struct {

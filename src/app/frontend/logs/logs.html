@@ -17,41 +17,59 @@ limitations under the License.
 <kd-content-card class="kd-log-content-card">
   <kd-title class="kd-logs-title">
     [[Logs from|Title prefix for logs card.]]
-    <md-select class="kd-logs-toolbar-select" ng-model="ctrl.container"
-               md-on-close="ctrl.onContainerChange(ctrl.container)" required>
-      <md-option ng-repeat="item in ctrl.containers" ng-value="item">
+    <md-select class="kd-logs-toolbar-select"
+               ng-model="ctrl.container"
+               md-on-close="ctrl.onContainerChange(ctrl.container)"
+               required>
+      <md-option ng-repeat="item in ctrl.containers"
+                 ng-value="item">
         <span class="kd-logs-toolbar-text">{{::item}}</span>
       </md-option>
     </md-select>
-    [[in|Title part for logs card.]] {{ctrl.podLogs.podId}}
+    [[in|Title part for logs card.]] {{ctrl.podLogs.info.podName}}
     <div class="kd-logs-style-buttons">
-      <md-button class="kd-logs-toolbar-button" ng-click="ctrl.onTextColorChange()">
-        <md-icon md-font-library="material-icons" ng-class="ctrl.getColorIconClass()">
+      <md-button class="kd-logs-toolbar-button"
+                 ng-click="ctrl.onTextColorChange()">
+        <md-icon md-font-library="material-icons"
+                 ng-class="ctrl.getColorIconClass()">
           format_color_text
         </md-icon>
       </md-button>
-      <md-button class="kd-logs-toolbar-button" ng-click="ctrl.onFontSizeChange()">
-        <md-icon md-font-library="material-icons" ng-class="ctrl.getSizeIconClass()">
+      <md-button class="kd-logs-toolbar-button"
+                 ng-click="ctrl.onFontSizeChange()">
+        <md-icon md-font-library="material-icons"
+                 ng-class="ctrl.getSizeIconClass()">
           text_fields
+        </md-icon>
+      </md-button>
+      <md-button class="kd-logs-toolbar-button"
+                 ng-click="ctrl.onShowTimestamp()">
+        <md-icon md-font-library="material-icons"
+                 class="kd-logs-timer-icon">
+          {{ctrl.getTimestampIcon()}}
         </md-icon>
       </md-button>
     </div>
   </kd-title>
   <kd-content>
-    <md-virtual-repeat-container class="kd-log-view" ng-class="ctrl.getStyleClass()"
+    <md-virtual-repeat-container class="kd-log-view"
+                                 ng-class="ctrl.getStyleClass()"
                                  md-top-index="ctrl.topIndex">
-      <div md-virtual-repeat="item in ctrl.logsSet" ng-class="ctrl.getLogsClass()">
-        <span ng-bind-html="item" class="kd-log-line">&nbsp;</span>
+      <div md-virtual-repeat="item in ctrl.logsSet"
+           ng-class="ctrl.getLogsClass()">
+        <span ng-bind-html="item"
+              class="kd-log-line">&nbsp;</span>
       </div>
     </md-virtual-repeat-container>
   </kd-content>
   <kd-footer>
     <div layout="row">
-      <span class="kd-logs-info" ng-show="ctrl.logsSet.length > 1">
+      <span class="kd-logs-info"
+            ng-show="ctrl.logsSet.length > 1">
         [[Logs from|Title prefix for logs card.]]
-        {{ctrl.podLogs.firstLogLineReference.logTimestamp | date : "short"}}
+        {{ctrl.podLogs.info.fromDate | date : "short"}}
         [[to|Footer part for logs card.]]
-        {{ctrl.podLogs.lastLogLineReference.logTimestamp | date : "short" }}
+        {{ctrl.podLogs.info.toDate | date : "short" }}
       </span>
       <span flex></span>
       <div class="kd-list-pagination-buttons">

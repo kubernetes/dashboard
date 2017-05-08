@@ -19,9 +19,13 @@ package unversioned
 import (
 	"fmt"
 
+	"k8s.io/apimachinery/pkg/api/errors"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/apimachinery/pkg/util/wait"
+	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/errors"
-	"k8s.io/kubernetes/pkg/api/unversioned"
+	"k8s.io/kubernetes/pkg/api/pod"
 	"k8s.io/kubernetes/pkg/apis/apps"
 	"k8s.io/kubernetes/pkg/apis/batch"
 	"k8s.io/kubernetes/pkg/apis/extensions"
@@ -29,8 +33,6 @@ import (
 	batchclient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/typed/batch/internalversion"
 	coreclient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/typed/core/internalversion"
 	extensionsclient "k8s.io/kubernetes/pkg/client/clientset_generated/internalclientset/typed/extensions/internalversion"
-	"k8s.io/kubernetes/pkg/util/wait"
-	"k8s.io/kubernetes/pkg/watch"
 )
 
 // ControllerHasDesiredReplicas returns a condition that will be true if and only if
@@ -42,7 +44,7 @@ func ControllerHasDesiredReplicas(rcClient coreclient.ReplicationControllersGett
 	desiredGeneration := controller.Generation
 
 	return func() (bool, error) {
-		ctrl, err := rcClient.ReplicationControllers(controller.Namespace).Get(controller.Name)
+		ctrl, err := rcClient.ReplicationControllers(controller.Namespace).Get(controller.Name, metav1.GetOptions{})
 		if err != nil {
 			return false, err
 		}
@@ -64,7 +66,7 @@ func ReplicaSetHasDesiredReplicas(rsClient extensionsclient.ReplicaSetsGetter, r
 	desiredGeneration := replicaSet.Generation
 
 	return func() (bool, error) {
-		rs, err := rsClient.ReplicaSets(replicaSet.Namespace).Get(replicaSet.Name)
+		rs, err := rsClient.ReplicaSets(replicaSet.Namespace).Get(replicaSet.Name, metav1.GetOptions{})
 		if err != nil {
 			return false, err
 		}
@@ -77,15 +79,15 @@ func ReplicaSetHasDesiredReplicas(rsClient extensionsclient.ReplicaSetsGetter, r
 	}
 }
 
-// StatefulSetHasDesiredPets returns a conditon that checks the number of petset replicas
-func StatefulSetHasDesiredPets(psClient appsclient.StatefulSetsGetter, petset *apps.StatefulSet) wait.ConditionFunc {
-	// TODO: Differentiate between 0 pets and a really quick scale down using generation.
+// StatefulSetHasDesiredReplicas returns a conditon that checks the number of statefulset replicas
+func StatefulSetHasDesiredReplicas(ssClient appsclient.StatefulSetsGetter, ss *apps.StatefulSet) wait.ConditionFunc {
+	// TODO: Differentiate between 0 statefulset pods and a really quick scale down using generation.
 	return func() (bool, error) {
-		ps, err := psClient.StatefulSets(petset.Namespace).Get(petset.Name)
+		ss, err := ssClient.StatefulSets(ss.Namespace).Get(ss.Name, metav1.GetOptions{})
 		if err != nil {
 			return false, err
 		}
-		return ps.Status.Replicas == ps.Spec.Replicas, nil
+		return ss.Status.Replicas == ss.Spec.Replicas, nil
 	}
 }
 
@@ -93,7 +95,7 @@ func StatefulSetHasDesiredPets(psClient appsclient.StatefulSetsGetter, petset *a
 // for a job equals the current active counts or is less by an appropriate successful/unsuccessful count.
 func JobHasDesiredParallelism(jobClient batchclient.JobsGetter, job *batch.Job) wait.ConditionFunc {
 	return func() (bool, error) {
-		job, err := jobClient.Jobs(job.Namespace).Get(job.Name)
+		job, err := jobClient.Jobs(job.Namespace).Get(job.Name, metav1.GetOptions{})
 		if err != nil {
 			return false, err
 		}
@@ -124,7 +126,7 @@ func DeploymentHasDesiredReplicas(dClient extensionsclient.DeploymentsGetter, de
 	desiredGeneration := deployment.Generation
 
 	return func() (bool, error) {
-		deployment, err := dClient.Deployments(deployment.Namespace).Get(deployment.Name)
+		deployment, err := dClient.Deployments(deployment.Namespace).Get(deployment.Name, metav1.GetOptions{})
 		if err != nil {
 			return false, err
 		}
@@ -146,7 +148,7 @@ var ErrContainerTerminated = fmt.Errorf("container terminated")
 func PodRunning(event watch.Event) (bool, error) {
 	switch event.Type {
 	case watch.Deleted:
-		return false, errors.NewNotFound(unversioned.GroupResource{Resource: "pods"}, "")
+		return false, errors.NewNotFound(schema.GroupResource{Resource: "pods"}, "")
 	}
 	switch t := event.Object.(type) {
 	case *api.Pod:
@@ -165,7 +167,7 @@ func PodRunning(event watch.Event) (bool, error) {
 func PodCompleted(event watch.Event) (bool, error) {
 	switch event.Type {
 	case watch.Deleted:
-		return false, errors.NewNotFound(unversioned.GroupResource{Resource: "pods"}, "")
+		return false, errors.NewNotFound(schema.GroupResource{Resource: "pods"}, "")
 	}
 	switch t := event.Object.(type) {
 	case *api.Pod:
@@ -183,7 +185,7 @@ func PodCompleted(event watch.Event) (bool, error) {
 func PodRunningAndReady(event watch.Event) (bool, error) {
 	switch event.Type {
 	case watch.Deleted:
-		return false, errors.NewNotFound(unversioned.GroupResource{Resource: "pods"}, "")
+		return false, errors.NewNotFound(schema.GroupResource{Resource: "pods"}, "")
 	}
 	switch t := event.Object.(type) {
 	case *api.Pod:
@@ -191,7 +193,7 @@ func PodRunningAndReady(event watch.Event) (bool, error) {
 		case api.PodFailed, api.PodSucceeded:
 			return false, ErrPodCompleted
 		case api.PodRunning:
-			return api.IsPodReady(t), nil
+			return pod.IsPodReady(t), nil
 		}
 	}
 	return false, nil
@@ -202,7 +204,7 @@ func PodRunningAndReady(event watch.Event) (bool, error) {
 func PodNotPending(event watch.Event) (bool, error) {
 	switch event.Type {
 	case watch.Deleted:
-		return false, errors.NewNotFound(unversioned.GroupResource{Resource: "pods"}, "")
+		return false, errors.NewNotFound(schema.GroupResource{Resource: "pods"}, "")
 	}
 	switch t := event.Object.(type) {
 	case *api.Pod:
@@ -222,7 +224,7 @@ func PodContainerRunning(containerName string) watch.ConditionFunc {
 	return func(event watch.Event) (bool, error) {
 		switch event.Type {
 		case watch.Deleted:
-			return false, errors.NewNotFound(unversioned.GroupResource{Resource: "pods"}, "")
+			return false, errors.NewNotFound(schema.GroupResource{Resource: "pods"}, "")
 		}
 		switch t := event.Object.(type) {
 		case *api.Pod:
@@ -262,7 +264,7 @@ func PodContainerRunning(containerName string) watch.ConditionFunc {
 func ServiceAccountHasSecrets(event watch.Event) (bool, error) {
 	switch event.Type {
 	case watch.Deleted:
-		return false, errors.NewNotFound(unversioned.GroupResource{Resource: "serviceaccounts"}, "")
+		return false, errors.NewNotFound(schema.GroupResource{Resource: "serviceaccounts"}, "")
 	}
 	switch t := event.Object.(type) {
 	case *api.ServiceAccount:

@@ -14,13 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<ng-form layout="row" flex="auto" name="labelForm">
-  <md-input-container md-no-float class="kd-deploy-input-row" flex="45">
-    <input name="key" ng-model="labelCtrl.label.key" ng-change="labelCtrl.check(labelForm)"
-           placeholder="{{labelCtrl.label.key}}" ng-disabled="!labelCtrl.label.editable"
+<ng-form layout="row"
+         flex="auto"
+         name="labelForm">
+  <md-input-container md-no-float
+                      class="kd-deploy-input-row"
+                      flex="45">
+    <input name="key"
+           ng-model="labelCtrl.label.key"
+           ng-change="labelCtrl.check(labelForm)"
+           placeholder="{{labelCtrl.label.key}}"
+           ng-disabled="!labelCtrl.label.editable"
            kd-validate="labelKeyNameLength,labelKeyPrefixLength,labelKeyNamePattern,labelKeyPrefixPattern"
            ng-model-options="{allowInvalid: true}">
-    <ng-messages for="labelForm.key.$error" ng-if="labelForm.key.$touched && labelForm.key.$invalid">
+    <ng-messages for="labelForm.key.$error"
+                 ng-if="labelForm.key.$touched && labelForm.key.$invalid">
       <ng-message when="unique">
         {{::labelCtrl.getLabelKeyUniqueWarning()}}
       </ng-message>
@@ -35,19 +43,27 @@ limitations under the License.
     </ng-messages>
   </md-input-container>
   <p flex="5"></p>
-  <md-input-container md-no-float class="kd-deploy-input-row" flex="40">
-    <input name="value" ng-model="labelCtrl.label.value"
-           placeholder="{{labelCtrl.label.value}}" ng-disabled="!labelCtrl.label.editable"
-           kd-validate="labelValuePattern" ng-change="labelCtrl.check()" md-maxlength="253"
+  <md-input-container md-no-float
+                      class="kd-deploy-input-row"
+                      flex="40">
+    <input name="value"
+           ng-model="labelCtrl.label.value"
+           placeholder="{{labelCtrl.label.value}}"
+           ng-disabled="!labelCtrl.label.editable"
+           kd-validate="labelValuePattern"
+           ng-change="labelCtrl.check()"
+           md-maxlength="253"
            ng-model-options="{ getterSetter: true, allowInvalid: true }">
-    <ng-messages for="labelForm.value.$error" ng-if="labelForm.value.$touched && labelForm.value.$invalid">
+    <ng-messages for="labelForm.value.$error"
+                 ng-if="labelForm.value.$touched && labelForm.value.$invalid">
       <ng-message when="kdValidLabelValuePattern">
         [[Label value must be alphanumeric separated by '.' , '-' or '_'.|This warning appears when the value of a specified kubernetes label (on the deploy page) does not match the required pattern.]]
       </ng-message>
       <ng-message when="md-maxlength">[[Label Value must not exceed 253 characters.|This warning appears when the value of a specified kubernetes label (on the deploy page) is too long.]]</ng-message>
     </ng-messages>
   </md-input-container>
-  <md-button type="button" ng-show="labelCtrl.isRemovable()"
+  <md-button type="button"
+             ng-show="labelCtrl.isRemovable()"
              ng-click="labelCtrl.deleteLabel()"
              class="material-icons md-icon-button">delete
   </md-button>

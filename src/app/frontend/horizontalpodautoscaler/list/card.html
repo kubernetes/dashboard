@@ -1,0 +1,77 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-resource-card object-meta="::$ctrl.horizontalPodAutoscaler.objectMeta"
+                  type-meta="::$ctrl.horizontalPodAutoscaler.typeMeta">
+  <kd-resource-card-columns>
+    <kd-resource-card-column>
+      <a ng-href="{{::$ctrl.getHorizontalPodAutoscalerDetailHref()}}">
+        <kd-middle-ellipsis display-string="{{::$ctrl.horizontalPodAutoscaler.objectMeta.name}}">
+        </kd-middle-ellipsis>
+      </a>
+    </kd-resource-card-column>
+    <kd-resource-card-column ng-if="$ctrl.areMultipleNamespacesSelected()">
+      <div>
+        <kd-middle-ellipsis display-string="{{::$ctrl.horizontalPodAutoscaler.objectMeta.namespace}}">
+        </kd-middle-ellipsis>
+      </div>
+    </kd-resource-card-column>
+    <kd-resource-card-column ng-if="$ctrl.showScaleTarget">
+      <a ng-href="{{::$ctrl.getScaleTargetHref()}}">
+        {{::$ctrl.horizontalPodAutoscaler.scaleTargetRef.kind}}: {{::$ctrl.horizontalPodAutoscaler.scaleTargetRef.name}}
+      </a>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <span ng-show="::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage">
+      [[{{::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage}}%|Show the target CPU utilization percentage of a the pods of the targetted resource of a HPA]]
+      </span>
+      <span ng-hide="::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage">
+        -
+      </span>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <span>
+      [[{{::$ctrl.horizontalPodAutoscaler.currentCPUUtilizationPercentage}}%|Show the current CPU utilization percentage of a the pods of the targetted resource of a HPA]]
+      </span>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <span>
+        {{::$ctrl.horizontalPodAutoscaler.minReplicas}}
+      </span>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <span>
+      {{::$ctrl.horizontalPodAutoscaler.maxReplicas}}
+      </span>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      {{::$ctrl.horizontalPodAutoscaler.objectMeta.creationTimestamp | relativeTime}}
+      <md-tooltip>
+        {{::$ctrl.getCreatedAtTooltip()}}
+      </md-tooltip>
+    </kd-resource-card-column>
+    <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
+      <kd-resource-card-menu>
+        <kd-resource-card-delete-menu-item resource-kind-name="[[Horizontal Pod Autoscaler|Title 'Horizontal Pod Autoscaler' which is used as a title for the delete/update
+   dialogs (that can be opened on the horizontal pod autoscaler list view).]]">
+        </kd-resource-card-delete-menu-item>
+        <kd-resource-card-edit-menu-item resource-kind-name="[[Horizontal Pod Autoscaler|Title 'Horizontal Pod Autoscaler' which is used as a title for the delete/update
+   dialogs (that can be opened on the horizontal pod autoscaler list view).]]">
+        </kd-resource-card-edit-menu-item>
+      </kd-resource-card-menu>
+    </kd-resource-card-column>
+  </kd-resource-card-columns>
+</kd-resource-card>

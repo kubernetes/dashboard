@@ -15,9 +15,9 @@
 import module from 'chrome/nav/module';
 
 describe('Nav component', () => {
-  /** @type {!chrome/nav/nav_component.NavController} */
+  /** @type {!chrome/nav/component.NavController} */
   let ctrl;
-  /** @type {!chrome/nav/nav_service.NavService} */
+  /** @type {!chrome/nav/service.NavService} */
   let navService;
 
   beforeEach(() => {

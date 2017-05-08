@@ -25,6 +25,12 @@ export class NavItemController {
     /** @export {string} */
     this.state;
 
+    /** @export {string} */
+    this.href;
+
+    /** @export {boolean} */
+    this.active;
+
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
@@ -38,19 +44,25 @@ export class NavItemController {
   }
 
   /**
+   * Returns reference link for menu entries. By default default href for state will be returned, it
+   * can be overwritten by passing 'href' to the component.
+   *
    * @return {string}
    * @export
    */
   getHref() {
-    return this.state_.href(this.state);
+    return this.href ? this.href : this.state_.href(this.state);
   }
 
   /**
+   * Returns true if current state is active and menu entry should be highlighted. By default uses
+   * navigation service, but can be overwritten by passing 'active' to the component.
+   *
    * @return {boolean}
    * @export
    */
   isActive() {
-    return this.kdNavService_.isActive(this.state);
+    return this.active !== undefined ? this.active : this.kdNavService_.isActive(this.state);
   }
 }
 
@@ -61,6 +73,8 @@ export const navItemComponent = {
   controller: NavItemController,
   bindings: {
     'state': '@',
+    'href': '@',
+    'active': '=',
   },
   transclude: true,
   templateUrl: 'chrome/nav/navitem.html',

@@ -1,0 +1,60 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-info-card>
+  <kd-info-card-header>[[Details|Header in a detail view]]</kd-info-card-header>
+  <kd-info-card-section>
+    <kd-object-meta-info-card object-meta="::$ctrl.replicaSet.objectMeta">
+    </kd-object-meta-info-card>
+    <kd-info-card-entry title="[[Selector|Label 'selector' for replica sets.]]">
+      <kd-labels labels="::$ctrl.replicaSet.selector.matchLabels"></kd-labels>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Images|Label 'Images' for the list of images used in a replica set, on its details page.]]">
+      <div ng-repeat="image in $ctrl.replicaSet.containerImages track by $index">
+        <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
+      </div>
+    </kd-info-card-entry>
+  </kd-info-card-section>
+
+  <kd-info-card-section name="[[Status|Subtitle 'Status' for the right section with pod status information
+        on the replica set details page.]]">
+    <kd-info-card-entry title="[[Pods|Label 'Pods' for the pods in a replica set on its details page.]]">
+      <div ng-if="!$ctrl.areDesiredPodsRunning()">
+        [[{{::$ctrl.replicaSet.podInfo.current}} created|The message says how many pods were created (replica set details page).]], [[{{::$ctrl.replicaSet.podInfo.desired}} desired|The message says how many pods are desired to run (replica set details page).]]
+      </div>
+      <div ng-if="$ctrl.areDesiredPodsRunning()">
+        [[{{::$ctrl.replicaSet.podInfo.running}} running|How many pods are running (replica set details page).]]
+      </div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Pods status|Label 'Pods status' for the status of the pods in a replica set, on the replica set details page.]]"
+                        ng-if="!$ctrl.areDesiredPodsRunning()">
+      <div ng-if="!$ctrl.areDesiredPodsRunning()">
+        <div ng-if="::$ctrl.replicaSet.podInfo.pending"
+             class="kd-comma-separated-item">
+          [[{{::$ctrl.replicaSet.podInfo.pending}} pending|The message says how many pods are pending (replica set details page).]]
+        </div>
+        <div ng-if="::$ctrl.replicaSet.podInfo.failed"
+             class="kd-comma-separated-item">
+          [[{{::$ctrl.replicaSet.podInfo.failed}} failed|The message says how many pods have failed (replica set details page).]]
+        </div>
+        <div ng-if="::$ctrl.replicaSet.podInfo.running"
+             class="kd-comma-separated-item">
+          [[{{::$ctrl.replicaSet.podInfo.running}} running|The message says how many pods are running (replica set details page).]]
+        </div>
+      </div>
+    </kd-info-card-entry>
+  </kd-info-card-section>
+</kd-info-card>

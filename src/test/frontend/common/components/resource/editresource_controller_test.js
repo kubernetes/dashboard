@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {EditResourceController} from 'common/resource/editresource_controller';
-import resourceModule from 'common/resource/resource_module';
+import resourceModule from 'common/resource/module';
 
 describe('Edit resource controller', () => {
   /** @type !{!common/resource/editresource_controller.EditResourceController} */

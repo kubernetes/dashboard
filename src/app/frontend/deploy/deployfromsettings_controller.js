@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as workloads} from 'workloads/workloads_state';
+import {stateName as workloads} from 'workloads/state';
 
 import DockerImageReference from '../common/docker/dockerimagereference';
 
@@ -40,10 +40,10 @@ export default class DeployFromSettingsController {
    * @param {!angular.$resource} $resource
    * @param {!angular.$q} $q
    * @param {!md.$dialog} $mdDialog
-   * @param {!./../chrome/chrome_state.StateParams} $stateParams
-   * @param {!./../common/history/history_service.HistoryService} kdHistoryService
-   * @param {!./../common/namespace/namespace_service.NamespaceService} kdNamespaceService
-   * @param {!./../common/csrftoken/csrftoken_service.CsrfTokenService} kdCsrfTokenService
+   * @param {!./../chrome/state.StateParams} $stateParams
+   * @param {!./../common/history/service.HistoryService} kdHistoryService
+   * @param {!./../common/namespace/service.NamespaceService} kdNamespaceService
+   * @param {!./../common/csrftoken/service.CsrfTokenService} kdCsrfTokenService
    * @ngInject
    */
   constructor(
@@ -88,13 +88,13 @@ export default class DeployFromSettingsController {
      * Initialized from the template.
      * @export {!Array<!backendApi.PortMapping>}
      */
-    this.portMappings;
+    this.portMappings = [];
 
     /**
      * Initialized from the template.
      * @export {!Array<!backendApi.EnvironmentVariable>}
      */
-    this.variables;
+    this.variables = [];
 
     /** @export {boolean} */
     this.isExternal = false;
@@ -177,7 +177,7 @@ export default class DeployFromSettingsController {
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
 
-    /** @private {!./../common/history/history_service.HistoryService} */
+    /** @private {!./../common/history/service.HistoryService} */
     this.kdHistoryService_ = kdHistoryService;
 
     /** @private {boolean} */
@@ -547,7 +547,7 @@ const i18n = {
   MSG_DEPLOY_SETTINGS_NAMESPACE_CREATE_ACTION: goog.getMsg(`Create a new namespace...`),
 
   /** @export {string} @desc User help for the namespace selection on the deploy from settings page.
-     */
+   */
   MSG_DEPLOY_SETTINGS_NAMESPACE_USER_HELP:
       goog.getMsg(`Namespaces let you partition resources into logically named groups.`),
 

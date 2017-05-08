@@ -23,7 +23,7 @@ export class StateParams extends ResourceGlobalStateParams {
   /**
    * @param {string} objectNamespace
    * @param {string} objectName
-  */
+   */
   constructor(objectNamespace, objectName) {
     super(objectName);
 

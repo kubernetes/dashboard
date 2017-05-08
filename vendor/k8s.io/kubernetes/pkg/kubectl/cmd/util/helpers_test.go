@@ -21,23 +21,23 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-	"reflect"
 	"strings"
 	"syscall"
 	"testing"
 
+	apiequality "k8s.io/apimachinery/pkg/api/equality"
+	"k8s.io/apimachinery/pkg/api/errors"
+	"k8s.io/apimachinery/pkg/api/meta"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/apimachinery/pkg/util/validation/field"
 	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/errors"
-	"k8s.io/kubernetes/pkg/api/meta"
 	"k8s.io/kubernetes/pkg/api/testapi"
 	apitesting "k8s.io/kubernetes/pkg/api/testing"
-	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/api/v1"
-	"k8s.io/kubernetes/pkg/apimachinery/registered"
 	"k8s.io/kubernetes/pkg/apis/extensions"
-	"k8s.io/kubernetes/pkg/runtime"
 	uexec "k8s.io/kubernetes/pkg/util/exec"
-	"k8s.io/kubernetes/pkg/util/validation/field"
 )
 
 func TestMerge(t *testing.T) {
@@ -47,18 +47,16 @@ func TestMerge(t *testing.T) {
 		fragment  string
 		expected  runtime.Object
 		expectErr bool
-		kind      string
 	}{
 		{
-			kind: "Pod",
 			obj: &api.Pod{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metav1.ObjectMeta{
 					Name: "foo",
 				},
 			},
-			fragment: fmt.Sprintf(`{ "apiVersion": "%s" }`, registered.GroupOrDie(api.GroupName).GroupVersion.String()),
+			fragment: fmt.Sprintf(`{ "apiVersion": "%s" }`, api.Registry.GroupOrDie(api.GroupName).GroupVersion.String()),
 			expected: &api.Pod{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metav1.ObjectMeta{
 					Name: "foo",
 				},
 				Spec: apitesting.DeepEqualSafePodSpec(),
@@ -67,9 +65,8 @@ func TestMerge(t *testing.T) {
 		/* TODO: uncomment this test once Merge is updated to use
 		strategic-merge-patch. See #8449.
 		{
-			kind: "Pod",
 			obj: &api.Pod{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metav1.ObjectMeta{
 					Name: "foo",
 				},
 				Spec: api.PodSpec{
@@ -85,9 +82,9 @@ func TestMerge(t *testing.T) {
 					},
 				},
 			},
-			fragment: fmt.Sprintf(`{ "apiVersion": "%s", "spec": { "containers": [ { "name": "c1", "image": "green-image" } ] } }`, registered.GroupOrDie(api.GroupName).GroupVersion.String()),
+			fragment: fmt.Sprintf(`{ "apiVersion": "%s", "spec": { "containers": [ { "name": "c1", "image": "green-image" } ] } }`, api.Registry.GroupOrDie(api.GroupName).GroupVersion.String()),
 			expected: &api.Pod{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metav1.ObjectMeta{
 					Name: "foo",
 				},
 				Spec: api.PodSpec{
@@ -105,15 +102,14 @@ func TestMerge(t *testing.T) {
 			},
 		}, */
 		{
-			kind: "Pod",
 			obj: &api.Pod{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metav1.ObjectMeta{
 					Name: "foo",
 				},
 			},
-			fragment: fmt.Sprintf(`{ "apiVersion": "%s", "spec": { "volumes": [ {"name": "v1"}, {"name": "v2"} ] } }`, registered.GroupOrDie(api.GroupName).GroupVersion.String()),
+			fragment: fmt.Sprintf(`{ "apiVersion": "%s", "spec": { "volumes": [ {"name": "v1"}, {"name": "v2"} ] } }`, api.Registry.GroupOrDie(api.GroupName).GroupVersion.String()),
 			expected: &api.Pod{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metav1.ObjectMeta{
 					Name: "foo",
 				},
 				Spec: api.PodSpec{
@@ -131,28 +127,26 @@ func TestMerge(t *testing.T) {
 					DNSPolicy:                     api.DNSClusterFirst,
 					TerminationGracePeriodSeconds: &grace,
 					SecurityContext:               &api.PodSecurityContext{},
+					SchedulerName:                 api.DefaultSchedulerName,
 				},
 			},
 		},
 		{
-			kind:      "Pod",
 			obj:       &api.Pod{},
 			fragment:  "invalid json",
 			expected:  &api.Pod{},
 			expectErr: true,
 		},
 		{
-			kind:      "Service",
 			obj:       &api.Service{},
 			fragment:  `{ "apiVersion": "badVersion" }`,
 			expectErr: true,
 		},
 		{
-			kind: "Service",
 			obj: &api.Service{
 				Spec: api.ServiceSpec{},
 			},
-			fragment: fmt.Sprintf(`{ "apiVersion": "%s", "spec": { "ports": [ { "port": 0 } ] } }`, registered.GroupOrDie(api.GroupName).GroupVersion.String()),
+			fragment: fmt.Sprintf(`{ "apiVersion": "%s", "spec": { "ports": [ { "port": 0 } ] } }`, api.Registry.GroupOrDie(api.GroupName).GroupVersion.String()),
 			expected: &api.Service{
 				Spec: api.ServiceSpec{
 					SessionAffinity: "None",
@@ -167,7 +161,6 @@ func TestMerge(t *testing.T) {
 			},
 		},
 		{
-			kind: "Service",
 			obj: &api.Service{
 				Spec: api.ServiceSpec{
 					Selector: map[string]string{
@@ -175,7 +168,7 @@ func TestMerge(t *testing.T) {
 					},
 				},
 			},
-			fragment: fmt.Sprintf(`{ "apiVersion": "%s", "spec": { "selector": { "version": "v2" } } }`, registered.GroupOrDie(api.GroupName).GroupVersion.String()),
+			fragment: fmt.Sprintf(`{ "apiVersion": "%s", "spec": { "selector": { "version": "v2" } } }`, api.Registry.GroupOrDie(api.GroupName).GroupVersion.String()),
 			expected: &api.Service{
 				Spec: api.ServiceSpec{
 					SessionAffinity: "None",
@@ -189,11 +182,11 @@ func TestMerge(t *testing.T) {
 	}
 
 	for i, test := range tests {
-		out, err := Merge(testapi.Default.Codec(), test.obj, test.fragment, test.kind)
+		out, err := Merge(testapi.Default.Codec(), test.obj, test.fragment)
 		if !test.expectErr {
 			if err != nil {
 				t.Errorf("testcase[%d], unexpected error: %v", i, err)
-			} else if !reflect.DeepEqual(out, test.expected) {
+			} else if !apiequality.Semantic.DeepEqual(out, test.expected) {
 				t.Errorf("\n\ntestcase[%d]\nexpected:\n%+v\nsaw:\n%+v", i, test.expected, out)
 			}
 		}
@@ -250,22 +243,22 @@ func TestCheckInvalidErr(t *testing.T) {
 func TestCheckNoResourceMatchError(t *testing.T) {
 	testCheckError(t, []checkErrTestCase{
 		{
-			&meta.NoResourceMatchError{PartialResource: unversioned.GroupVersionResource{Resource: "foo"}},
+			&meta.NoResourceMatchError{PartialResource: schema.GroupVersionResource{Resource: "foo"}},
 			`the server doesn't have a resource type "foo"`,
 			DefaultErrorExitCode,
 		},
 		{
-			&meta.NoResourceMatchError{PartialResource: unversioned.GroupVersionResource{Version: "theversion", Resource: "foo"}},
+			&meta.NoResourceMatchError{PartialResource: schema.GroupVersionResource{Version: "theversion", Resource: "foo"}},
 			`the server doesn't have a resource type "foo" in version "theversion"`,
 			DefaultErrorExitCode,
 		},
 		{
-			&meta.NoResourceMatchError{PartialResource: unversioned.GroupVersionResource{Group: "thegroup", Version: "theversion", Resource: "foo"}},
+			&meta.NoResourceMatchError{PartialResource: schema.GroupVersionResource{Group: "thegroup", Version: "theversion", Resource: "foo"}},
 			`the server doesn't have a resource type "foo" in group "thegroup" and version "theversion"`,
 			DefaultErrorExitCode,
 		},
 		{
-			&meta.NoResourceMatchError{PartialResource: unversioned.GroupVersionResource{Group: "thegroup", Resource: "foo"}},
+			&meta.NoResourceMatchError{PartialResource: schema.GroupVersionResource{Group: "thegroup", Resource: "foo"}},
 			`the server doesn't have a resource type "foo" in group "thegroup"`,
 			DefaultErrorExitCode,
 		},
@@ -332,35 +325,35 @@ func TestDumpReaderToFile(t *testing.T) {
 func TestMaybeConvert(t *testing.T) {
 	tests := []struct {
 		input    runtime.Object
-		gv       unversioned.GroupVersion
+		gv       schema.GroupVersion
 		expected runtime.Object
 	}{
 		{
 			input: &api.Pod{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metav1.ObjectMeta{
 					Name: "foo",
 				},
 			},
-			gv: unversioned.GroupVersion{Group: "", Version: "v1"},
+			gv: schema.GroupVersion{Group: "", Version: "v1"},
 			expected: &v1.Pod{
-				TypeMeta: unversioned.TypeMeta{
+				TypeMeta: metav1.TypeMeta{
 					APIVersion: "v1",
 					Kind:       "Pod",
 				},
-				ObjectMeta: v1.ObjectMeta{
+				ObjectMeta: metav1.ObjectMeta{
 					Name: "foo",
 				},
 			},
 		},
 		{
 			input: &extensions.ThirdPartyResourceData{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metav1.ObjectMeta{
 					Name: "foo",
 				},
 				Data: []byte("this is some data"),
 			},
 			expected: &extensions.ThirdPartyResourceData{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metav1.ObjectMeta{
 					Name: "foo",
 				},
 				Data: []byte("this is some data"),
@@ -373,7 +366,7 @@ func TestMaybeConvert(t *testing.T) {
 		if err != nil {
 			t.Errorf("unexpected error: %v", err)
 		}
-		if !reflect.DeepEqual(test.expected, obj) {
+		if !apiequality.Semantic.DeepEqual(test.expected, obj) {
 			t.Errorf("expected:\n%#v\nsaw:\n%#v\n", test.expected, obj)
 		}
 	}

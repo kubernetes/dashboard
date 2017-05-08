@@ -17,7 +17,7 @@ limitations under the License.
 package v1beta1
 
 import (
-	"k8s.io/kubernetes/pkg/api/unversioned"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/kubernetes/pkg/api/v1"
 )
 
@@ -36,6 +36,8 @@ type ClusterSpec struct {
 	// This is to help clients reach servers in the most network-efficient way possible.
 	// Clients can use the appropriate server address as per the CIDR that they match.
 	// In case of multiple matches, clients should use the longest matching CIDR.
+	// +patchMergeKey=clientCIDR
+	// +patchStrategy=merge
 	ServerAddressByClientCIDRs []ServerAddressByClientCIDR `json:"serverAddressByClientCIDRs" patchStrategy:"merge" patchMergeKey:"clientCIDR" protobuf:"bytes,1,rep,name=serverAddressByClientCIDRs"`
 	// Name of the secret containing kubeconfig to access this cluster.
 	// The secret is read from the kubernetes cluster that is hosting federation control plane.
@@ -64,10 +66,10 @@ type ClusterCondition struct {
 	Status v1.ConditionStatus `json:"status" protobuf:"bytes,2,opt,name=status,casttype=k8s.io/kubernetes/pkg/api/v1.ConditionStatus"`
 	// Last time the condition was checked.
 	// +optional
-	LastProbeTime unversioned.Time `json:"lastProbeTime,omitempty" protobuf:"bytes,3,opt,name=lastProbeTime"`
+	LastProbeTime metav1.Time `json:"lastProbeTime,omitempty" protobuf:"bytes,3,opt,name=lastProbeTime"`
 	// Last time the condition transit from one status to another.
 	// +optional
-	LastTransitionTime unversioned.Time `json:"lastTransitionTime,omitempty" protobuf:"bytes,4,opt,name=lastTransitionTime"`
+	LastTransitionTime metav1.Time `json:"lastTransitionTime,omitempty" protobuf:"bytes,4,opt,name=lastTransitionTime"`
 	// (brief) reason for the condition's last transition.
 	// +optional
 	Reason string `json:"reason,omitempty" protobuf:"bytes,5,opt,name=reason"`
@@ -76,7 +78,7 @@ type ClusterCondition struct {
 	Message string `json:"message,omitempty" protobuf:"bytes,6,opt,name=message"`
 }
 
-// ClusterStatus is information about the current status of a cluster updated by cluster controller peridocally.
+// ClusterStatus is information about the current status of a cluster updated by cluster controller periodically.
 type ClusterStatus struct {
 	// Conditions is an array of current cluster conditions.
 	// +optional
@@ -95,11 +97,11 @@ type ClusterStatus struct {
 
 // Information about a registered cluster in a federated kubernetes setup. Clusters are not namespaced and have unique names in the federation.
 type Cluster struct {
-	unversioned.TypeMeta `json:",inline"`
+	metav1.TypeMeta `json:",inline"`
 	// Standard object's metadata.
 	// More info: http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata
 	// +optional
-	v1.ObjectMeta `json:"metadata,omitempty" protobuf:"bytes,1,opt,name=metadata"`
+	metav1.ObjectMeta `json:"metadata,omitempty" protobuf:"bytes,1,opt,name=metadata"`
 
 	// Spec defines the behavior of the Cluster.
 	// +optional
@@ -111,12 +113,17 @@ type Cluster struct {
 
 // A list of all the kubernetes clusters registered to the federation
 type ClusterList struct {
-	unversioned.TypeMeta `json:",inline"`
+	metav1.TypeMeta `json:",inline"`
 	// Standard list metadata.
 	// More info: http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#types-kinds
 	// +optional
-	unversioned.ListMeta `json:"metadata,omitempty" protobuf:"bytes,1,opt,name=metadata"`
+	metav1.ListMeta `json:"metadata,omitempty" protobuf:"bytes,1,opt,name=metadata"`
 
 	// List of Cluster objects.
 	Items []Cluster `json:"items" protobuf:"bytes,2,rep,name=items"`
 }
+
+const (
+	// FederationNamespaceSystem is the system namespace where we place federation control plane components.
+	FederationNamespaceSystem string = "federation-system"
+)

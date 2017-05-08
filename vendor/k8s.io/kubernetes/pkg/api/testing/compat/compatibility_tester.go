@@ -26,11 +26,11 @@ import (
 	"strings"
 	"testing"
 
+	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/apimachinery/pkg/util/validation/field"
 	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/api/unversioned"
-	"k8s.io/kubernetes/pkg/kubectl"
-	"k8s.io/kubernetes/pkg/runtime"
-	"k8s.io/kubernetes/pkg/util/validation/field"
+	"k8s.io/kubernetes/pkg/printers"
 )
 
 // Based on: https://github.com/openshift/origin/blob/master/pkg/api/compatibility_test.go
@@ -40,7 +40,7 @@ import (
 // keys in the resulting JSON.
 func TestCompatibility(
 	t *testing.T,
-	version unversioned.GroupVersion,
+	version schema.GroupVersion,
 	input []byte,
 	validator func(obj runtime.Object) field.ErrorList,
 	expectedKeys map[string]string,
@@ -94,7 +94,7 @@ func TestCompatibility(
 	}
 
 	if hasError {
-		printer := new(kubectl.JSONPrinter)
+		printer := &printers.JSONPrinter{}
 		printer.PrintObj(obj, os.Stdout)
 		t.Logf("2: Encoded value: %#v", string(output))
 	}

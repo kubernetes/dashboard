@@ -14,19 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-content-card>
-  <kd-content>
-    <div class="kd-zerostate-message" layout-padding>
-      <div class="kd-zerostate-title">[[There is nothing to display here|Title text which appears
-        on zero state view.]]</div>
-      <div class="kd-zerostate-text">
-        <span>
-          [[You can <a href="{{::$ctrl.getStateHref()}}">deploy a containerized app</a>,
-          select other namespace or
-          <a href="http://kubernetes.io/docs/user-guide/ui/" target="_blank">take the Dashboard Tour
-          <i class="material-icons kd-zerostate-icon">open_in_new</i></a>
-          to learn more.| Description for a zero state page.]]</span>
-      </div>
-    </div>
-  </kd-content>
-</kd-content-card>
+<div ng-class="{'layout-padding': $ctrl.showDefaultZerostate()}"
+     class="kd-zerostate-message">
+  <div class="kd-zerostate-title"
+       ng-transclude="title">[[There is nothing to display here|Title text which appears on zero state view.]]
+  </div>
+  <div class="kd-zerostate-text"
+       ng-transclude="text">
+    <span>
+      [[You can <a href="{{::$ctrl.getStateHref()}}">deploy a containerized app</a>, select other namespace or
+      <a href="http://kubernetes.io/docs/user-guide/ui/" target="_blank">take the Dashboard Tour
+      <i class="material-icons kd-zerostate-icon">open_in_new</i></a>
+      to learn more.| Description for a zero state page.]]
+    </span>
+  </div>
+</div>

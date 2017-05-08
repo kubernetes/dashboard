@@ -1,0 +1,216 @@
+<kd-info-card>
+  <kd-info-card-header>[[Persistent volume source|Persistent volume source info title.]]</kd-info-card-header>
+  <!--Host Path-->
+  <kd-info-card-section ng-if="::$ctrl.persistentVolumeSource.hostPath"
+                        name="[[Host path|Persistent volume source info host path title.]]">
+    <kd-info-card-entry title="[[Path|Persistent volume source info host path section path entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.hostPath.path}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.hostPath.path">-</div>
+    </kd-info-card-entry>
+  </kd-info-card-section>
+  <!--GCE Persistent Disk-->
+  <kd-info-card-section ng-if="::$ctrl.persistentVolumeSource.gcePersistentDisk"
+                        name="[[GCE persistent disk|Persistent volume source info GCE persistent disk title.]]">
+    <kd-info-card-entry title="[[PD name|Persistent volume source info GCE persistent disk section PD name entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.gcePersistentDisk.pdName}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.gcePersistentDisk.pdName">-</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[FS type|Persistent volume source info GCE persistent disk section FS type entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.gcePersistentDisk.fsType}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.gcePersistentDisk.fsType">-</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Partition|Persistent volume source info GCE persistent disk section partition entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.gcePersistentDisk.partition}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.gcePersistentDisk.partition">-</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Read only|Persistent volume source info GCE persistent disk section read only entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.gcePersistentDisk.readOnly}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.gcePersistentDisk.readOnly">-</div>
+    </kd-info-card-entry>
+  </kd-info-card-section>
+  <!--AWS Elastic Block Storage-->
+  <kd-info-card-section ng-if="::$ctrl.persistentVolumeSource.awsElasticBlockStore"
+                        name="[[AWS block storage|Persistent volume source info AWS block storage title.]]">
+    <kd-info-card-entry title="[[Volume ID|Persistent volume source info AWS block storage section volume ID entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.awsElasticBlockStore.volumeID}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.awsElasticBlockStore.volumeID">-</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[FS type|Persistent volume source info AWS block storage section FS type entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.awsElasticBlockStore.fsType}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.awsElasticBlockStore.fsType">-</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Partition|Persistent volume source info AWS block storage section partition entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.awsElasticBlockStore.partition}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.awsElasticBlockStore.partition">-</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Read only|Persistent volume source info AWS block storage section read only entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.awsElasticBlockStore.readOnly}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.awsElasticBlockStore.readOnly">-</div>
+    </kd-info-card-entry>
+  </kd-info-card-section>
+  <!--GLUSTER FS-->
+  <kd-info-card-section ng-if="::$ctrl.persistentVolumeSource.glusterfs"
+                        name="[[GlusterFS|Persistent volume source info GlusterFS title.]]">
+    <kd-info-card-entry title="[[Endpoints|Persistent volume source info GlusterFS section endpoints entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.glusterfs.endpoints}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.glusterfs.endpoints">-</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Path|Persistent volume source info GlusterFS section path entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.glusterfs.path}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.glusterfs.path">-</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Read only|Persistent volume source info GlusterFS section read only entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.glusterfs.readOnly}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.glusterfs.readOnly">-</div>
+    </kd-info-card-entry>
+  </kd-info-card-section>
+  <!--NFS-->
+  <kd-info-card-section ng-if="::$ctrl.persistentVolumeSource.nfs"
+                        name="[[NFS|Persistent volume source info NFS title.]]">
+    <kd-info-card-entry title="[[Server|Persistent volume source info NFS section server entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.nfs.server}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.nfs.server">-</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Path|Persistent volume source info NFS section path entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.nfs.path}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.nfs.path">-</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Read only|Persistent volume source info NFS section read only entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.nfs.readOnly}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.nfs.readOnly">-</div>
+    </kd-info-card-entry>
+  </kd-info-card-section>
+  <!--RBD-->
+  <kd-info-card-section ng-if="::$ctrl.persistentVolumeSource.rbd"
+                        name="[[RBD|Persistent volume source info RBD title.]]">
+    <kd-info-card-entry title="[[Monitors|Persistent volume source info RBD section monitors entry.]]">
+      <kd-middle-ellipsis ng-repeat="(key, value) in ::$ctrl.persistentVolumeSource.rbd.monitors"
+                          display-string="{{::value}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.rbd.monitors">-</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Image|Persistent volume source info RBD section image entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.rbd.image}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.rbd.image">-</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[User|Persistent volume source info RBD section user entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.rbd.user}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.rbd.user">-</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Keyring|Persistent volume source info RBD section keyring entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.rbd.keyring}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.rbd.keyring">-</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[SecretRef|Persistent volume source info RBD section secretRef entry.]]">
+      <kd-middle-ellipsis ng-if="::$ctrl.persistentVolumeSource.rbd.secretRef"
+                          display-string="{{::$ctrl.persistentVolumeSource.rbd.secretRef.name}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.rbd.secretRef.name">-</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Read only|Persistent volume source info RBD section read only entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.rbd.readOnly}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.rbd.readOnly">-</div>
+    </kd-info-card-entry>
+  </kd-info-card-section>
+  <!--ISCSI-->
+  <kd-info-card-section ng-if="::$ctrl.persistentVolumeSource.iscsi"
+                        name="[[ISCSI|Persistent volume source info ISCSI title.]]">
+    <kd-info-card-entry title="[[Target portal|Persistent volume source info ISCSI section target portal entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.iscsi.targetPortal}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.iscsi.targetPortal">-</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[IQN|Persistent volume source info ISCSI section IQN entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.iscsi.iqn}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.iscsi.iqnl">-</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Lun|Persistent volume source info ISCSI section lun entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.iscsi.lun}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.iscsi.lun">-</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[FS type|Persistent volume source info ISCSI section FS type entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.iscsi.fsType}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.iscsi.fsType">-</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Read only|Persistent volume source info ISCSI section read only entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.iscsi.readOnly}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.iscsi.readOnly">-</div>
+    </kd-info-card-entry>
+  </kd-info-card-section>
+  <!--Cinder-->
+  <kd-info-card-section ng-if="::$ctrl.persistentVolumeSource.cinder"
+                        name="[[Cinder|Persistent volume source info cinder title.]]">
+    <kd-info-card-entry title="[[Volume ID|Persistent volume source info cinder section volume ID entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.cinder.volumeID}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.cinder.volumeID">-</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[FS Type|Persistent volume source info cinder section FS Type entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.cinder.fsType}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.cinder.fsType">-</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Read only|Persistent volume source info cinder section read only entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.cinder.readOnly}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.cinder.readOnly">-</div>
+    </kd-info-card-entry>
+  </kd-info-card-section>
+  <!--FC-->
+  <kd-info-card-section ng-if="::$ctrl.persistentVolumeSource.fc"
+                        name="[[FC|Persistent volume source info FC title.]]">
+    <kd-info-card-entry title="[[Target WWNs|Persistent volume source info FC section target WWNs entry.]]">
+      <kd-middle-ellipsis ng-repeat="(key, value) in ::$ctrl.persistentVolumeSource.fc.targetWWNs"
+                          display-string="{{::value}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.fc.targetWWNs">-</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[FS type|Persistent volume source info FC section target FS type entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.fc.fsType}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.fc.fsType">-</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Lun|Persistent volume source info FC section lun entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.fc.lun}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.fc.lun">-</div>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Read only|Persistent volume source info FC section read only entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.fc.readOnly}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.fc.readOnly">-</div>
+    </kd-info-card-entry>
+  </kd-info-card-section>
+  <!--Flocker-->
+  <kd-info-card-section ng-if="::$ctrl.persistentVolumeSource.flocker"
+                        name="[[Flocker|Persistent volume source info flocker title.]]">
+    <kd-info-card-entry title="[[Dataset name|Persistent volume source info FC section dataset name entry.]]">
+      <kd-middle-ellipsis display-string="{{::$ctrl.persistentVolumeSource.flocker.datasetName}}">
+      </kd-middle-ellipsis>
+      <div ng-hide="::$ctrl.persistentVolumeSource.flocker.datasetName">-</div>
+    </kd-info-card-entry>
+  </kd-info-card-section>
+</kd-info-card>

@@ -1,0 +1,53 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-info-card>
+  <kd-info-card-section>
+    <div layout="row">
+      <img src="assets/images/kubernetes-logo.svg"
+           class="kd-about-kubernetes-logo">
+      </img>
+      <div layout="column"
+           layout-align="start start">
+        <div class="md-headline">Dashboard</div>
+        <div class="md-subhead">[[General-Purpose Web UI for Kubernetes Clusters| Dashbord moto on the about page, just below the header]]</div>
+      </div>
+    </div>
+    <a href="https://kubernetes.io/docs/user-guide/ui/">
+      <md-button class="kd-about-button">
+        [[Documentation|This is a label for button displayed on about page used to open documentaion in browser]]
+      </md-button>
+    </a>
+    <a ng-href="{{$ctrl.getLinkToFeedbackPage()}}">
+      <md-button class="kd-about-button">
+        [[Send feedback|This is a label for button displayed on about page used to send feedback to GitHub new issue.]]
+      </md-button>
+    </a>
+    <kd-info-card-entry title="[[Dashboard Version|Label 'Dashboard Version' for the about page.]]"
+                        ng-if="::$ctrl.dashboardVersion">
+      {{$ctrl.dashboardVersion}}
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[Git Commit|Label 'Git Commit' for the about page.]]"
+                        ng-if="::$ctrl.gitCommit">
+      {{$ctrl.gitCommit}}
+    </kd-info-card-entry>
+    <div class="kd-footer kd-copyright-title">[[Copyright 2015-{{$ctrl.latestCopyrightYear}} The Kubernetes Authors.| This is the copyright statement displayed on the about page]]</div>
+    <div class="kd-footer">
+      [[ Kubernetes Dashboard is made possible by the Dashboard
+      <a href="https://github.com/kubernetes/dashboard/graphs/contributors">community</a> as an <a href="https://github.com/kubernetes/dashboard">open source project</a>. | This is the creator reference on the footer of the about page]]
+    </div>
+  </kd-info-card-section>
+</kd-info-card>

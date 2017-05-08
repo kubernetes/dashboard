@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {stateName as workloads} from 'workloads/workloads_state';
+import {stateName as workloads} from 'workloads/state';
 
 import showDeployAnywayDialog from './deployanyway_dialog';
 
@@ -28,9 +28,9 @@ export default class DeployFromFileController {
    * @param {!angular.$q} $q
    * TODO (cheld) Set correct type after fixing issue #159
    * @param {!Object} errorDialog
-   * @param {!./../common/history/history_service.HistoryService} kdHistoryService
+   * @param {!./../common/history/service.HistoryService} kdHistoryService
    * @param {!md.$dialog} $mdDialog
-   * @param {!./../common/csrftoken/csrftoken_service.CsrfTokenService} kdCsrfTokenService
+   * @param {!./../common/csrftoken/service.CsrfTokenService} kdCsrfTokenService
    * @ngInject
    */
   constructor($log, $resource, $q, errorDialog, kdHistoryService, $mdDialog, kdCsrfTokenService) {
@@ -65,7 +65,7 @@ export default class DeployFromFileController {
     /** @private {boolean} */
     this.isDeployInProgress_ = false;
 
-    /** @private {!./../common/history/history_service.HistoryService} */
+    /** @private {!./../common/history/service.HistoryService} */
     this.kdHistoryService_ = kdHistoryService;
 
     /** @private {!md.$dialog} */
@@ -80,7 +80,7 @@ export default class DeployFromFileController {
 
   /**
    * Deploys the application based on the state of the controller.
-   *
+   * @return {!angular.$q.Promise|undefined}
    * @export
    */
   deploy(validate = true) {
@@ -129,11 +129,16 @@ export default class DeployFromFileController {
       defer.promise.finally(() => {
         this.isDeployInProgress_ = false;
       });
+
+      return defer.promise;
     }
+
+    return undefined;
   }
 
   /**
-   * Returns true if given error contains information about validate=false argument, false otherwise.
+   * Returns true if given error contains information about validate=false argument, false
+   * otherwise.
    *
    * @param {string} err
    * @return {boolean}

@@ -16,23 +16,38 @@ limitations under the License.
 
 <div ng-if="::annotationsCtrl.labels">
   <div ng-repeat="(key, value) in ::annotationsCtrl.labels"
-       ng-if="annotationsCtrl.isVisible($index)" class="kd-chips">
-    <div ng-switch on="::key">
-      <div ng-switch-when="kubernetes.io/created-by" class="kd-chip">
-        [[Created by:|Friendly name of the kubernetes.io/created-by annotation]] <kd-serialized-reference reference="value">
+       ng-if="annotationsCtrl.isVisible($index)"
+       class="kd-chips">
+    <div ng-switch
+         on="::key">
+      <div ng-switch-when="kubernetes.io/created-by"
+           class="kd-chip">
+        [[Created by:|Friendly name of the kubernetes.io/created-by annotation]]
+        <kd-serialized-reference reference="value"></kd-serialized-reference>
       </div>
-      <div ng-switch-when="kubectl.kubernetes.io/last-applied-configuration" class="kd-chip">
+      <div ng-switch-when="kubectl.kubernetes.io/last-applied-configuration"
+           class="kd-chip">
         <kd-last-applied-configuration value="::value"></kd-last-applied-configuration>
       </div>
-      <kd-middle-ellipsis ng-switch-default display-string="{{::key}}: {{::value}}" class="kd-chip">
-      </kd-middle-ellipsis>
+      <div ng-switch-default
+           class="kd-chip">
+        <span>{{::key}}:&nbsp;</span>
+        <kd-middle-ellipsis class="kd-chip-value"
+                            ng-if="!annotationsCtrl.isHref(value)"
+                            display-string=" {{::value}}"></kd-middle-ellipsis>
+        <a ng-if="annotationsCtrl.isHref(value)"
+           class="kd-chip-value"
+           href="{{::value}}"
+           target="_blank">
+          <kd-middle-ellipsis display-string=" {{::value}}"></kd-middle-ellipsis>
+        </a>
+      </div>
     </div>
   </div>
-  <div class="kd-chips kd-chips-switch" ng-show="annotationsCtrl.isMoreAvailable()"
+  <div class="kd-chips kd-chips-switch"
+       ng-show="annotationsCtrl.isMoreAvailable()"
        ng-click="annotationsCtrl.switchLabelsView()">
-    {{annotationsCtrl.isShowingAll() ?
-      "[[show fewer annotations|Text on the button to show fewer annotations.]]" :
-      "[[show all annotations|Text on the button to show all the annotations.]]"}}
+    {{annotationsCtrl.isShowingAll() ? "[[show fewer annotations|Text on the button to show fewer annotations.]]" : "[[show all annotations|Text on the button to show all the annotations.]]"}}
   </div>
 </div>
 <div ng-hide="::annotationsCtrl.labels">-</div>

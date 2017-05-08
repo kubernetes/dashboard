@@ -1,0 +1,42 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-info-card>
+  <kd-info-card-header>[[Details|Header in a detail view]]</kd-info-card-header>
+  <kd-info-card-section>
+    <kd-object-meta-info-card object-meta="::$ctrl.pod.objectMeta">
+    </kd-object-meta-info-card>
+    <kd-info-card-entry title="[[Status|Label 'Status' for the pod status in details part (left) of the pod details view.]]">
+      {{::$ctrl.pod.podPhase}}
+    </kd-info-card-entry>
+    <kd-info-card-entry>
+      <a ng-href="{{::$ctrl.getLogsHref()}}"
+         class="kd-middle-ellipsised-link">
+        <kd-middle-ellipsis display-string="[[View logs|Label for the pod logs in details part (left) of the pod details view.]]">
+        </kd-middle-ellipsis>
+      </a>
+    </kd-info-card-entry>
+  </kd-info-card-section>
+
+  <kd-info-card-section name="[[Network|Subtitle 'Network' at the top of the column about network connectivity (right) at the pod detail view.]]">
+    <kd-info-card-entry title="[[Node|Label 'Node' for the node a pods is running on, appears in the connectivity part (right) of the pod details view.]]">
+      <a href="{{$ctrl.getNodeDetailsHref()}}">{{::$ctrl.pod.nodeName}}</a>
+    </kd-info-card-entry>
+    <kd-info-card-entry title="[[IP|Label 'IP' for the pod internal IP, appears in the connectivity part (right) of the pod details view.]]">
+      {{::$ctrl.pod.podIP}}
+    </kd-info-card-entry>
+  </kd-info-card-section>
+</kd-info-card>

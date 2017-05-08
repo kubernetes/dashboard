@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import resourceModule from 'common/resource/resource_module';
+import resourceModule from 'common/resource/module';
 
 describe('Verber service', () => {
   /** @type !{!common/resource/verber_service.VerberService} */
@@ -63,6 +63,7 @@ describe('Verber service', () => {
     let promise = verber.showDeleteDialog('', {}, {});
 
     deferred.reject({data: 'foo-data', statusText: 'foo-text'});
+    deferred.promise.catch(doneFn);
     scope.$digest();
     expect(state.reload).not.toHaveBeenCalled();
     expect(mdDialog.alert).toHaveBeenCalled();
@@ -98,6 +99,7 @@ describe('Verber service', () => {
     let promise = verber.showEditDialog('Foo resource', {kind: 'bar'}, {});
 
     deferred.reject({data: 'foo-data', statusText: 'foo-text'});
+    deferred.promise.catch(doneFn);
     scope.$digest();
     expect(state.reload).not.toHaveBeenCalled();
     expect(mdDialog.alert).toHaveBeenCalled();

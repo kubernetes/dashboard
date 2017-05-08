@@ -26,16 +26,6 @@ const backendApi = {};
 
 /**
  * @typedef {{
- *    itemsPerPage: number,
- *    page: number,
- *    namespace: string,
- *    name: (string|undefined)
- * }}
- */
-backendApi.PaginationQuery;
-
-/**
- * @typedef {{
  *   totalItems: number,
  * }}
  */
@@ -145,9 +135,11 @@ backendApi.Workloads;
  *   nodeList: !backendApi.NodeList,
  *   namespaceList: !backendApi.NamespaceList,
  *   persistentVolumeList: !backendApi.PersistentVolumeList,
+ *   roleList: !backendApi.RoleList,
+ *   storageClassList: !backendApi.StorageClassList,
  * }}
  */
-backendApi.Admin;
+backendApi.Cluster;
 
 /**
  * @typedef {{
@@ -155,11 +147,12 @@ backendApi.Admin;
  *   ingressList: !backendApi.IngressList,
  * }}
  */
-backendApi.ServicesAndDiscovery;
+backendApi.Discovery;
 
 /**
  * @typedef {{
  *   configMapList: !backendApi.ConfigMapList,
+ *   persistentVolumeClaimList: !backendApi.PersistentVolumeClaimList,
  *   secretList: !backendApi.SecretList,
  * }}
  */
@@ -544,8 +537,8 @@ backendApi.DeploymentList;
 
 /**
  * @typedef {{
- *   maxSurge: !number,
- *   maxUnavailable: !number,
+ *   maxSurge: !(number|string),
+ *   maxUnavailable: !(number|string),
  * }}
  */
 backendApi.RollingUpdateStrategy;
@@ -768,6 +761,22 @@ backendApi.PodDetail;
  * @typedef {{
  *  objectMeta: !backendApi.ObjectMeta,
  *  typeMeta: !backendApi.TypeMeta,
+ * }}
+ */
+backendApi.Role;
+
+/**
+ * @typedef {{
+ *   items: !Array<backendApi.Role>,
+ *   listMeta: !backendApi.ListMeta
+ * }}
+ */
+backendApi.RoleList;
+
+/**
+ * @typedef {{
+ *  objectMeta: !backendApi.ObjectMeta,
+ *  typeMeta: !backendApi.TypeMeta,
  *  internalEndpoint: !backendApi.Endpoint,
  *  externalEndpoints: !Array<!backendApi.Endpoint>,
  *  selector: !Object<string, string>,
@@ -881,32 +890,47 @@ backendApi.ReplicationControllerPods;
 
 /**
  * @typedef {{
- *   podId: string,
- *   logs: !Array<string>,
- *   container: string,
- *   firstLogLineReference: !backendApi.LogLineReference,
- *   lastLogLineReference: !backendApi.LogLineReference,
- *   logViewInfo: !backendApi.LogViewInfo
+ *   info: !backendApi.LogInfo,
+ *   logs: !Array<backendApi.LogLine>,
+ *   selection: !backendApi.LogSelection,
  * }}
  */
-backendApi.Logs;
+backendApi.LogDetails;
 
 /**
  * @typedef {{
- *   logTimestamp: string,
+ *   podName: string,
+ *   containerName: string,
+ *   fromDate: string,
+ *   toDate: string,
+ * }}
+ */
+backendApi.LogInfo;
+
+/**
+ * @typedef {{
+ *   timestamp: string,
+ *   content: string,
+ * }}
+ */
+backendApi.LogLine;
+
+/**
+ * @typedef {{
+ *   referencePoint: !backendApi.LogLineReference,
+ *   offsetFrom: number,
+ *   offsetTo: number
+ * }}
+ */
+backendApi.LogSelection;
+
+/**
+ * @typedef {{
+ *   timestamp: string,
  *   lineNum: number,
  * }}
  */
 backendApi.LogLineReference;
-
-/**
- * @typedef {{
- *   referenceLogLineId: !backendApi.LogLineReference,
- *   relativeFrom: number,
- *   relativeTo: number
- * }}
- */
-backendApi.LogViewInfo;
 
 /**
  * @typedef {{
@@ -1207,15 +1231,71 @@ backendApi.HorizontalPodAutoscalerList;
 
 /**
  * @typedef {{
- *   kind: !string,
- *   joblist: backendApi.JobList,
- *   replicasetlist: backendApi.ReplicaSetList,
- *   replicationcontrollerlist: backendApi.ReplicationControllerList,
- *   daemonsetlist: backendApi.DaemonSetList,
- *   statefulsetlist: backendApi.StatefulSetList
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   provisioner: string,
+ *   parameters: !Array<!Object<string,string>>
+ * }}
+ */
+backendApi.StorageClass;
+
+/**
+ * @typedef {{
+ *   listMeta: !backendApi.ListMeta,
+ *   storageClasses: !Array<!backendApi.StorageClass>
+ * }}
+ */
+backendApi.StorageClassList;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   pods: !backendApi.PodInfo,
+ *   containerImages: !Array<string>,
  * }}
  */
 backendApi.Controller;
+
+/**
+ * @typedef {{
+ *   name: string
+ * }}
+ */
+backendApi.APIVersion;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ *   typeMeta: !backendApi.TypeMeta,
+ *   description: string,
+ *   versions: !Array<!backendApi.APIVersion>,
+ * }}
+ */
+backendApi.ThirdPartyResource;
+
+/**
+ * @typedef {{
+ *   listMeta: !backendApi.ListMeta,
+ *   thirdPartyResources: !Array<!backendApi.ThirdPartyResource>
+ * }}
+ */
+backendApi.ThirdPartyResourceList;
+
+/**
+ * @typedef {{
+ *   objectMeta: !backendApi.ObjectMeta,
+ * }}
+ */
+backendApi.ThirdPartyResourceObject;
+
+/**
+ * @typedef {{
+ *   listMeta: !backendApi.ListMeta,
+ *   items: !Array<!backendApi.ThirdPartyResourceObject>
+ * }}
+ */
+backendApi.ThirdPartyResourceObjectList;
 
 /**
  * @typedef {{

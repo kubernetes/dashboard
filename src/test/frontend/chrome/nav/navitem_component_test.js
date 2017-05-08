@@ -15,9 +15,9 @@
 import module from 'chrome/nav/module';
 
 describe('Nav item component', () => {
-  /** @type {!chrome/nav/navitem_component.NavItemController} */
+  /** @type {!chrome/nav/component.NavItemController} */
   let ctrl;
-  /** @type {!chrome/nav/nav_service.NavService} */
+  /** @type {!chrome/nav/service.NavService} */
   let kdNavService;
 
   beforeEach(() => {
@@ -48,7 +48,7 @@ describe('Nav item component', () => {
     // initial state assert
     expect(ctrl.state).toBe('fakeState');
 
-    expect(ctrl.getHref()).toBe('#fakeStateUrl');
+    expect(ctrl.getHref()).toBe('#!fakeStateUrl');
   });
 
   it('should detect activity', () => {

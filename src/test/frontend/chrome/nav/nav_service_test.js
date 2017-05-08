@@ -13,12 +13,12 @@
 // limitations under the License.
 
 import module from 'chrome/nav/module';
-import {breadcrumbsConfig} from 'common/components/breadcrumbs/breadcrumbs_service';
+import {breadcrumbsConfig} from 'common/components/breadcrumbs/service';
 
 describe('Nav service', () => {
-  /** @type {!chrome/nav/nav_service.NavService} */
+  /** @type {!chrome/nav/service.NavService} */
   let navService;
-  /** @type {!common/state/futurestate_service.FutureStateService}*/
+  /** @type {!common/state/service.FutureStateService}*/
   let kdFutureStateService;
 
   beforeEach(() => {

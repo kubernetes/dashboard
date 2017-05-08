@@ -17,131 +17,124 @@ limitations under the License.
 package util
 
 import (
+	"errors"
 	"strings"
 
-	"k8s.io/kubernetes/pkg/api/meta"
-	"k8s.io/kubernetes/pkg/api/unversioned"
-	"k8s.io/kubernetes/pkg/client/typed/discovery"
+	"github.com/golang/glog"
+
+	"k8s.io/apimachinery/pkg/api/meta"
+	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/client-go/discovery"
 	"k8s.io/kubernetes/pkg/kubectl"
 )
 
-// ShortcutExpander is a RESTMapper that can be used for Kubernetes resources.   It expands the resource first, then invokes the wrapped
-type ShortcutExpander struct {
+// shortcutExpander is a RESTMapper that can be used for Kubernetes resources.   It expands the resource first, then invokes the wrapped
+type shortcutExpander struct {
 	RESTMapper meta.RESTMapper
-
-	All []unversioned.GroupResource
 
 	discoveryClient discovery.DiscoveryInterface
 }
 
-var _ meta.RESTMapper = &ShortcutExpander{}
+var _ meta.RESTMapper = &shortcutExpander{}
 
-func NewShortcutExpander(delegate meta.RESTMapper, client discovery.DiscoveryInterface) ShortcutExpander {
-	return ShortcutExpander{All: userResources, RESTMapper: delegate, discoveryClient: client}
+func NewShortcutExpander(delegate meta.RESTMapper, client discovery.DiscoveryInterface) (shortcutExpander, error) {
+	if client == nil {
+		return shortcutExpander{}, errors.New("Please provide discovery client to shortcut expander")
+	}
+	return shortcutExpander{RESTMapper: delegate, discoveryClient: client}, nil
 }
 
-func (e ShortcutExpander) getAll() []unversioned.GroupResource {
-	if e.discoveryClient == nil {
-		return e.All
-	}
+func (e shortcutExpander) KindFor(resource schema.GroupVersionResource) (schema.GroupVersionKind, error) {
+	return e.RESTMapper.KindFor(e.expandResourceShortcut(resource))
+}
 
-	// Check if we have access to server resources
-	apiResources, err := e.discoveryClient.ServerResources()
-	if err != nil {
-		return e.All
-	}
+func (e shortcutExpander) KindsFor(resource schema.GroupVersionResource) ([]schema.GroupVersionKind, error) {
+	return e.RESTMapper.KindsFor(e.expandResourceShortcut(resource))
+}
 
-	availableResources := []unversioned.GroupVersionResource{}
-	for groupVersionString, resourceList := range apiResources {
-		currVersion, err := unversioned.ParseGroupVersion(groupVersionString)
-		if err != nil {
-			return e.All
-		}
+func (e shortcutExpander) ResourcesFor(resource schema.GroupVersionResource) ([]schema.GroupVersionResource, error) {
+	return e.RESTMapper.ResourcesFor(e.expandResourceShortcut(resource))
+}
 
-		for _, resource := range resourceList.APIResources {
-			availableResources = append(availableResources, currVersion.WithResource(resource.Name))
-		}
-	}
+func (e shortcutExpander) ResourceFor(resource schema.GroupVersionResource) (schema.GroupVersionResource, error) {
+	return e.RESTMapper.ResourceFor(e.expandResourceShortcut(resource))
+}
 
-	availableAll := []unversioned.GroupResource{}
-	for _, requestedResource := range e.All {
-		for _, availableResource := range availableResources {
-			if requestedResource.Group == availableResource.Group &&
-				requestedResource.Resource == availableResource.Resource {
-				availableAll = append(availableAll, requestedResource)
-				break
+func (e shortcutExpander) ResourceSingularizer(resource string) (string, error) {
+	return e.RESTMapper.ResourceSingularizer(e.expandResourceShortcut(schema.GroupVersionResource{Resource: resource}).Resource)
+}
+
+func (e shortcutExpander) RESTMapping(gk schema.GroupKind, versions ...string) (*meta.RESTMapping, error) {
+	return e.RESTMapper.RESTMapping(gk, versions...)
+}
+
+func (e shortcutExpander) RESTMappings(gk schema.GroupKind, versions ...string) ([]*meta.RESTMapping, error) {
+	return e.RESTMapper.RESTMappings(gk, versions...)
+}
+
+// getShortcutMappings returns a set of tuples which holds short names for resources.
+// First the list of potential resources will be taken from the API server.
+// Next we will append the hardcoded list of resources - to be backward compatible with old servers.
+// NOTE that the list is ordered by group priority.
+func (e shortcutExpander) getShortcutMappings() ([]kubectl.ResourceShortcuts, error) {
+	res := []kubectl.ResourceShortcuts{}
+	// get server resources
+	apiResList, err := e.discoveryClient.ServerResources()
+	if err == nil {
+		for _, apiResources := range apiResList {
+			for _, apiRes := range apiResources.APIResources {
+				for _, shortName := range apiRes.ShortNames {
+					gv, err := schema.ParseGroupVersion(apiResources.GroupVersion)
+					if err != nil {
+						glog.V(1).Infof("Unable to parse groupversion = %s due to = %s", apiResources.GroupVersion, err.Error())
+						continue
+					}
+					rs := kubectl.ResourceShortcuts{
+						ShortForm: schema.GroupResource{Group: gv.Group, Resource: shortName},
+						LongForm:  schema.GroupResource{Group: gv.Group, Resource: apiRes.Name},
+					}
+					res = append(res, rs)
+				}
 			}
 		}
 	}
 
-	return availableAll
-}
-
-func (e ShortcutExpander) KindFor(resource unversioned.GroupVersionResource) (unversioned.GroupVersionKind, error) {
-	return e.RESTMapper.KindFor(expandResourceShortcut(resource))
-}
-
-func (e ShortcutExpander) KindsFor(resource unversioned.GroupVersionResource) ([]unversioned.GroupVersionKind, error) {
-	return e.RESTMapper.KindsFor(expandResourceShortcut(resource))
-}
-
-func (e ShortcutExpander) ResourcesFor(resource unversioned.GroupVersionResource) ([]unversioned.GroupVersionResource, error) {
-	return e.RESTMapper.ResourcesFor(expandResourceShortcut(resource))
-}
-
-func (e ShortcutExpander) ResourceFor(resource unversioned.GroupVersionResource) (unversioned.GroupVersionResource, error) {
-	return e.RESTMapper.ResourceFor(expandResourceShortcut(resource))
-}
-
-func (e ShortcutExpander) ResourceSingularizer(resource string) (string, error) {
-	return e.RESTMapper.ResourceSingularizer(expandResourceShortcut(unversioned.GroupVersionResource{Resource: resource}).Resource)
-}
-
-func (e ShortcutExpander) RESTMapping(gk unversioned.GroupKind, versions ...string) (*meta.RESTMapping, error) {
-	return e.RESTMapper.RESTMapping(gk, versions...)
-}
-
-func (e ShortcutExpander) RESTMappings(gk unversioned.GroupKind) ([]*meta.RESTMapping, error) {
-	return e.RESTMapper.RESTMappings(gk)
-}
-
-// userResources are the resource names that apply to the primary, user facing resources used by
-// client tools. They are in deletion-first order - dependent resources should be last.
-var userResources = []unversioned.GroupResource{
-	{Group: "", Resource: "pods"},
-	{Group: "", Resource: "replicationcontrollers"},
-	{Group: "", Resource: "services"},
-	{Group: "apps", Resource: "statefulsets"},
-	{Group: "autoscaling", Resource: "horizontalpodautoscalers"},
-	{Group: "extensions", Resource: "jobs"},
-	{Group: "extensions", Resource: "deployments"},
-	{Group: "extensions", Resource: "replicasets"},
-}
-
-// AliasesForResource returns whether a resource has an alias or not
-func (e ShortcutExpander) AliasesForResource(resource string) ([]string, bool) {
-	if strings.ToLower(resource) == "all" {
-		var resources []unversioned.GroupResource
-		if resources = e.getAll(); len(resources) == 0 {
-			resources = userResources
-		}
-		aliases := []string{}
-		for _, r := range resources {
-			aliases = append(aliases, r.Resource)
-		}
-		return aliases, true
-	}
-	expanded := expandResourceShortcut(unversioned.GroupVersionResource{Resource: resource}).Resource
-	return []string{expanded}, (expanded != resource)
+	// append hardcoded short forms at the end of the list
+	res = append(res, kubectl.ResourcesShortcutStatic...)
+	return res, nil
 }
 
 // expandResourceShortcut will return the expanded version of resource
 // (something that a pkg/api/meta.RESTMapper can understand), if it is
-// indeed a shortcut. Otherwise, will return resource unmodified.
-func expandResourceShortcut(resource unversioned.GroupVersionResource) unversioned.GroupVersionResource {
-	if expanded, ok := kubectl.ShortForms[resource.Resource]; ok {
-		resource.Resource = expanded
-		return resource
+// indeed a shortcut. If no match has been found, we will match on group prefixing.
+// Lastly we will return resource unmodified.
+func (e shortcutExpander) expandResourceShortcut(resource schema.GroupVersionResource) schema.GroupVersionResource {
+	// get the shortcut mappings and return on first match.
+	if resources, err := e.getShortcutMappings(); err == nil {
+		for _, item := range resources {
+			if len(resource.Group) != 0 && resource.Group != item.ShortForm.Group {
+				continue
+			}
+			if resource.Resource == item.ShortForm.Resource {
+				resource.Resource = item.LongForm.Resource
+				return resource
+			}
+		}
+
+		// we didn't find exact match so match on group prefixing. This allows autoscal to match autoscaling
+		if len(resource.Group) == 0 {
+			return resource
+		}
+		for _, item := range resources {
+			if !strings.HasPrefix(item.ShortForm.Group, resource.Group) {
+				continue
+			}
+			if resource.Resource == item.ShortForm.Resource {
+				resource.Resource = item.LongForm.Resource
+				return resource
+			}
+		}
 	}
+
 	return resource
 }

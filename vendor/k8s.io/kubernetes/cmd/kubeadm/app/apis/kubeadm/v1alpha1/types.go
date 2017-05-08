@@ -16,28 +16,51 @@ limitations under the License.
 
 package v1alpha1
 
-import "k8s.io/kubernetes/pkg/api/unversioned"
+import (
+	"time"
+
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+)
 
 type MasterConfiguration struct {
-	unversioned.TypeMeta `json:",inline"`
+	metav1.TypeMeta `json:",inline"`
 
-	Secrets           Secrets    `json:"secrets"`
-	API               API        `json:"api"`
-	Etcd              Etcd       `json:"etcd"`
-	Discovery         Discovery  `json:"discovery"`
-	Networking        Networking `json:"networking"`
-	KubernetesVersion string     `json:"kubernetesVersion"`
-	CloudProvider     string     `json:"cloudProvider"`
+	API                API        `json:"api"`
+	Etcd               Etcd       `json:"etcd"`
+	Networking         Networking `json:"networking"`
+	KubernetesVersion  string     `json:"kubernetesVersion"`
+	CloudProvider      string     `json:"cloudProvider"`
+	AuthorizationModes []string   `json:"authorizationModes"`
+
+	Token    string        `json:"token"`
+	TokenTTL time.Duration `json:"tokenTTL"`
+
+	// SelfHosted enables an alpha deployment type where the apiserver, scheduler, and
+	// controller manager are managed by Kubernetes itself. This option is likely to
+	// become the default in the future.
+	SelfHosted bool `json:"selfHosted"`
+
+	APIServerExtraArgs         map[string]string `json:"apiServerExtraArgs"`
+	ControllerManagerExtraArgs map[string]string `json:"controllerManagerExtraArgs"`
+	SchedulerExtraArgs         map[string]string `json:"schedulerExtraArgs"`
+
+	// APIServerCertSANs sets extra Subject Alternative Names for the API Server signing cert
+	APIServerCertSANs []string `json:"apiServerCertSANs"`
+	// CertificatesDir specifies where to store or look for all required certificates
+	CertificatesDir string `json:"certificatesDir"`
 }
 
 type API struct {
-	AdvertiseAddresses []string `json:"advertiseAddresses"`
-	ExternalDNSNames   []string `json:"externalDNSNames"`
-	BindPort           int32    `json:"bindPort"`
+	// AdvertiseAddress sets the address for the API server to advertise.
+	AdvertiseAddress string `json:"advertiseAddress"`
+	// BindPort sets the secure port for the API Server to bind to
+	BindPort int32 `json:"bindPort"`
 }
 
-type Discovery struct {
-	BindPort int32 `json:"bindPort"`
+type TokenDiscovery struct {
+	ID        string   `json:"id"`
+	Secret    string   `json:"secret"`
+	Addresses []string `json:"addresses"`
 }
 
 type Networking struct {
@@ -47,32 +70,21 @@ type Networking struct {
 }
 
 type Etcd struct {
-	Endpoints []string `json:"endpoints"`
-	CAFile    string   `json:"caFile"`
-	CertFile  string   `json:"certFile"`
-	KeyFile   string   `json:"keyFile"`
-}
-
-type Secrets struct {
-	GivenToken  string `json:"givenToken"`  // dot-separated `<TokenID>.<Token>` set by the user
-	TokenID     string `json:"tokenID"`     // optional on master side, will be generated if not specified
-	Token       []byte `json:"token"`       // optional on master side, will be generated if not specified
-	BearerToken string `json:"bearerToken"` // set based on Token
+	Endpoints []string          `json:"endpoints"`
+	CAFile    string            `json:"caFile"`
+	CertFile  string            `json:"certFile"`
+	KeyFile   string            `json:"keyFile"`
+	DataDir   string            `json:"dataDir"`
+	ExtraArgs map[string]string `json:"extraArgs"`
 }
 
 type NodeConfiguration struct {
-	unversioned.TypeMeta `json:",inline"`
+	metav1.TypeMeta `json:",inline"`
 
-	MasterAddresses []string `json:"masterAddresses"`
-	Secrets         Secrets  `json:"secrets"`
-	APIPort         int32    `json:"apiPort"`
-	DiscoveryPort   int32    `json:"discoveryPort"`
-}
-
-// ClusterInfo TODO add description
-type ClusterInfo struct {
-	unversioned.TypeMeta `json:",inline"`
-	// TODO(phase1+) this may become simply `api.Config`
-	CertificateAuthorities []string `json:"certificateAuthorities"`
-	Endpoints              []string `json:"endpoints"`
+	CACertPath               string   `json:"caCertPath"`
+	DiscoveryFile            string   `json:"discoveryFile"`
+	DiscoveryToken           string   `json:"discoveryToken"`
+	DiscoveryTokenAPIServers []string `json:"discoveryTokenAPIServers"`
+	TLSBootstrapToken        string   `json:"tlsBootstrapToken"`
+	Token                    string   `json:"token"`
 }

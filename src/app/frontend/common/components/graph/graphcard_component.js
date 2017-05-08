@@ -36,7 +36,8 @@ export class GraphCardController {
   }
 
   /**
-   * Filters metrics by selectedMetricNames. If selectedMetricNames is undefined returns all metrics.
+   * Filters metrics by selectedMetricNames. If selectedMetricNames is undefined returns all
+   * metrics.
    *
    * @private
    * @return {!Array<!backendApi.Metric>}

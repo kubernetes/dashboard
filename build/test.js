@@ -15,14 +15,13 @@
 /**
  * @fileoverview Gulp tasks for unit and integration tests.
  */
+import childProcess from 'child_process';
 import gulp from 'gulp';
 import codecov from 'gulp-codecov.io';
 import gulpProtractor from 'gulp-protractor';
 import karma from 'karma';
 import path from 'path';
-
 import conf from './conf';
-import goCommand from './gocommand';
 import {browserSyncInstance} from './serve';
 
 
@@ -80,7 +79,8 @@ gulp.task('test', ['frontend-test', 'backend-test']);
  * with them. Does not work locally.
  */
 gulp.task('coverage-codecov-upload', function() {
-  gulp.src(path.join(conf.paths.coverageReport, 'lcov.info')).pipe(codecov());
+  gulp.src(conf.paths.coverageFrontend).pipe(codecov());
+  gulp.src(conf.paths.coverageBackend).pipe(codecov());
 });
 
 /**
@@ -94,7 +94,19 @@ gulp.task('frontend-test', function(doneFn) {
  * Runs once all unit tests of the backend application.
  */
 gulp.task('backend-test', ['package-backend'], function(doneFn) {
-  goCommand(conf.backend.testCommandArgs, doneFn);
+  let testProcess = childProcess.execFile(
+      conf.paths.goTestScript, [conf.paths.coverageBackend, conf.backend.mainPackageName]);
+
+  testProcess.stdout.pipe(process.stdout);
+  testProcess.stderr.pipe(process.stderr);
+
+  testProcess.on('close', (code) => {
+    if (code !== 0) {
+      return doneFn(new Error(`Process exited with code: ${code}`));
+    }
+
+    return doneFn();
+  });
 });
 
 /**
@@ -116,12 +128,7 @@ gulp.task('frontend-test:watch', function(doneFn) {
  * the tests.
  */
 gulp.task('backend-test:watch', ['backend-test'], function() {
-  gulp.watch(
-      [
-        path.join(conf.paths.backendSrc, '**/*.go'),
-        path.join(conf.paths.backendTest, '**/*.go'),
-      ],
-      ['backend-test']);
+  gulp.watch([path.join(conf.paths.backendSrc, '**/*.go')], ['backend-test']);
 });
 
 /**

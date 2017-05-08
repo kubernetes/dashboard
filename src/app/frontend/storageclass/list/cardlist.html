@@ -1,0 +1,72 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-resource-card-list selectable="false"
+                       with-statuses="false"
+                       select-id="{{::$ctrl.getSelectId()}}"
+                       list="$ctrl.storageClassList"
+                       list-resource="$ctrl.storageClassListResource">
+  <kd-resource-card-list-header>
+    <kd-resource-card-list-title ng-transclude="header">
+      [[Storage Classes|Label which appears above the list of such objects.]]
+    </kd-resource-card-list-title>
+    <kd-resource-card-list-filter></kd-resource-card-list-filter>
+  </kd-resource-card-list-header>
+
+  <kd-zero-state ng-if="!$ctrl.storageClassList.listMeta.totalItems">
+    <kd-zero-state-text ng-transclude="zerostate">
+      [[There are no Storage Classes to display.|Text for storage class card list zerostate.]]
+    </kd-zero-state-text>
+  </kd-zero-state>
+  <kd-resource-card-header-columns ng-show="$ctrl.storageClassList.listMeta.totalItems">
+    <kd-resource-card-header-column size="small"
+                                    grow="2"
+                                    sortable="true"
+                                    sort-id="$root.SortableProperties.NAME">
+      [[Name|Storage class list header: name.]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
+      [[Labels|Storage class list header: labels.]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
+      [[Provisioner|Storage class list header: provisioner.]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="2">
+      [[Parameters|Storage class list header: parameters.]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="1"
+                                    sortable="true"
+                                    sort-id="$root.SortableProperties.AGE">
+      [[Age|Storage class list header: age.]]
+    </kd-resource-card-header-column>
+    <kd-resource-card-header-column size="small"
+                                    grow="nogrow">
+    </kd-resource-card-header-column>
+  </kd-resource-card-header-columns>
+  <kd-storage-class-card dir-paginate="storageClass in $ctrl.storageClassList.storageClasses | itemsPerPage: default"
+                         total-items="::$ctrl.storageClassList.listMeta.totalItems"
+                         storage-class="storageClass"
+                         pagination-id="{{::$ctrl.getSelectId()}}">
+  </kd-storage-class-card>
+
+  <kd-resource-card-list-footer>
+    <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
+  </kd-resource-card-list-footer>
+</kd-resource-card-list>

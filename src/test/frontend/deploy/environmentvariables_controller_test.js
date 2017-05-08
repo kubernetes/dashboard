@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import deployModule from 'deploy/deploy_module';
-import {EnvironmentVariablesController} from 'deploy/environmentvariables_controller';
+import deployModule from 'deploy/module';
 
 describe('EnvironmentVariablesController', () => {
   /** @type {!EnvironmentVariablesController} */
@@ -22,8 +21,9 @@ describe('EnvironmentVariablesController', () => {
   beforeEach(() => {
     angular.mock.module(deployModule.name);
 
-    angular.mock.inject(($controller) => {
-      ctrl = $controller(EnvironmentVariablesController);
+    angular.mock.inject(($componentController) => {
+      ctrl = $componentController('kdEnvironmentVariables');
+      ctrl.$onInit();
     });
   });
 

@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import deployModule from 'deploy/deploy_module';
-import * as serviceTypes from 'deploy/portmappings_controller';
-import PortMappingsController from 'deploy/portmappings_controller';
+import deployModule from 'deploy/module';
+import * as serviceTypes from 'deploy/portmappings_component';
+import {PortMappingsController} from 'deploy/portmappings_component';
 
 describe('PortMappingsController controller', () => {
   /** @type {!PortMappingsController} */
@@ -25,7 +25,8 @@ describe('PortMappingsController controller', () => {
     angular.mock.module(deployModule.name);
 
     angular.mock.inject(($controller, $rootScope, $compile) => {
-      ctrl = $controller(PortMappingsController, undefined, {protocols: ['FOO', 'BAR']});
+      ctrl = $controller(
+          PortMappingsController, undefined, {protocols: ['FOO', 'BAR'], portMappings: []});
       let scope = $rootScope.$new();
       let template = angular.element(`<ng-form name="portMappingForm">
             <input name="port" ng-model="port">

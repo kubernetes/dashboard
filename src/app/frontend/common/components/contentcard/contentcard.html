@@ -16,11 +16,14 @@ limitations under the License.
 
 <div class="kd-content-card">
   <div class="kd-content-card-content">
-    <h1 ng-if="$ctrl.isTitleSlotFilled()" layout-padding
-         class="kd-content-card-content-title md-title"
-         ng-transclude="title"></h1>
-    <div ng-transclude="content" class="kd-content-card-transclude-content"></div>
-    <div class="kd-content-card-content-footer" ng-if="$ctrl.isFooterSlotFilled()"
+    <h1 ng-if="$ctrl.isTitleSlotFilled()"
+        layout-padding
+        class="kd-content-card-content-title md-title"
+        ng-transclude="title"></h1>
+    <div ng-transclude="content"
+         class="kd-content-card-transclude-content"></div>
+    <div class="kd-content-card-content-footer"
+         ng-if="$ctrl.isFooterSlotFilled()"
          ng-transclude="footer"></div>
   </div>
 </div>

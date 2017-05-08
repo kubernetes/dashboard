@@ -17,43 +17,14 @@ limitations under the License.
 package v1
 
 import (
-	"k8s.io/kubernetes/pkg/runtime"
+	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/util/intstr"
 	"k8s.io/kubernetes/pkg/util"
-	"k8s.io/kubernetes/pkg/util/intstr"
 	"k8s.io/kubernetes/pkg/util/parsers"
 )
 
 func addDefaultingFuncs(scheme *runtime.Scheme) error {
-	RegisterDefaults(scheme)
-	return scheme.AddDefaultingFuncs(
-		SetDefaults_PodExecOptions,
-		SetDefaults_PodAttachOptions,
-		SetDefaults_ReplicationController,
-		SetDefaults_Volume,
-		SetDefaults_ContainerPort,
-		SetDefaults_Container,
-		SetDefaults_ServiceSpec,
-		SetDefaults_Pod,
-		SetDefaults_PodSpec,
-		SetDefaults_Probe,
-		SetDefaults_SecretVolumeSource,
-		SetDefaults_ConfigMapVolumeSource,
-		SetDefaults_DownwardAPIVolumeSource,
-		SetDefaults_Secret,
-		SetDefaults_PersistentVolume,
-		SetDefaults_PersistentVolumeClaim,
-		SetDefaults_ISCSIVolumeSource,
-		SetDefaults_Endpoints,
-		SetDefaults_HTTPGetAction,
-		SetDefaults_NamespaceStatus,
-		SetDefaults_Node,
-		SetDefaults_NodeStatus,
-		SetDefaults_ObjectFieldSelector,
-		SetDefaults_LimitRangeItem,
-		SetDefaults_ConfigMap,
-		SetDefaults_RBDVolumeSource,
-		SetDefaults_ResourceList,
-	)
+	return RegisterDefaults(scheme)
 }
 
 func SetDefaults_ResourceList(obj *ResourceList) {
@@ -112,7 +83,6 @@ func SetDefaults_Container(obj *Container) {
 		_, tag, _, _ := parsers.ParseImageName(obj.Image)
 
 		// Check image tag
-
 		if tag == "latest" {
 			obj.ImagePullPolicy = PullAlways
 		} else {
@@ -121,6 +91,9 @@ func SetDefaults_Container(obj *Container) {
 	}
 	if obj.TerminationMessagePath == "" {
 		obj.TerminationMessagePath = TerminationMessagePathDefault
+	}
+	if obj.TerminationMessagePolicy == "" {
+		obj.TerminationMessagePolicy = TerminationMessageReadFile
 	}
 }
 func SetDefaults_ServiceSpec(obj *ServiceSpec) {
@@ -157,6 +130,18 @@ func SetDefaults_Pod(obj *Pod) {
 			}
 		}
 	}
+	for i := range obj.Spec.InitContainers {
+		if obj.Spec.InitContainers[i].Resources.Limits != nil {
+			if obj.Spec.InitContainers[i].Resources.Requests == nil {
+				obj.Spec.InitContainers[i].Resources.Requests = make(ResourceList)
+			}
+			for key, value := range obj.Spec.InitContainers[i].Resources.Limits {
+				if _, exists := obj.Spec.InitContainers[i].Resources.Requests[key]; !exists {
+					obj.Spec.InitContainers[i].Resources.Requests[key] = *(value.Copy())
+				}
+			}
+		}
+	}
 }
 func SetDefaults_PodSpec(obj *PodSpec) {
 	if obj.DNSPolicy == "" {
@@ -167,6 +152,7 @@ func SetDefaults_PodSpec(obj *PodSpec) {
 	}
 	if obj.HostNetwork {
 		defaultHostNetworkPorts(&obj.Containers)
+		defaultHostNetworkPorts(&obj.InitContainers)
 	}
 	if obj.SecurityContext == nil {
 		obj.SecurityContext = &PodSecurityContext{}
@@ -174,6 +160,9 @@ func SetDefaults_PodSpec(obj *PodSpec) {
 	if obj.TerminationGracePeriodSeconds == nil {
 		period := int64(DefaultTerminationGracePeriodSeconds)
 		obj.TerminationGracePeriodSeconds = &period
+	}
+	if obj.SchedulerName == "" {
+		obj.SchedulerName = DefaultSchedulerName
 	}
 }
 func SetDefaults_Probe(obj *Probe) {
@@ -211,6 +200,12 @@ func SetDefaults_DownwardAPIVolumeSource(obj *DownwardAPIVolumeSource) {
 func SetDefaults_Secret(obj *Secret) {
 	if obj.Type == "" {
 		obj.Type = SecretTypeOpaque
+	}
+}
+func SetDefaults_ProjectedVolumeSource(obj *ProjectedVolumeSource) {
+	if obj.DefaultMode == nil {
+		perm := int32(ProjectedVolumeSourceDefaultMode)
+		obj.DefaultMode = &perm
 	}
 }
 func SetDefaults_PersistentVolume(obj *PersistentVolume) {
@@ -345,5 +340,20 @@ func SetDefaults_RBDVolumeSource(obj *RBDVolumeSource) {
 	}
 	if obj.Keyring == "" {
 		obj.Keyring = "/etc/ceph/keyring"
+	}
+}
+
+func SetDefaults_ScaleIOVolumeSource(obj *ScaleIOVolumeSource) {
+	if obj.ProtectionDomain == "" {
+		obj.ProtectionDomain = "default"
+	}
+	if obj.StoragePool == "" {
+		obj.StoragePool = "default"
+	}
+	if obj.StorageMode == "" {
+		obj.StorageMode = "ThinProvisioned"
+	}
+	if obj.FSType == "" {
+		obj.FSType = "xfs"
 	}
 }

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import resourceModule from 'common/resource/resource_module';
+import resourceModule from 'common/resource/module';
 
 import {resourceCardComponent} from './resourcecard_component';
 import {resourceCardColumnComponent} from './resourcecardcolumn_component';
@@ -23,9 +23,11 @@ import {resourceCardFooterComponent} from './resourcecardfooter_component';
 import {resourceCardHeaderColumnComponent} from './resourcecardheadercolumn_component';
 import {resourceCardHeaderColumnsComponent} from './resourcecardheadercolumns_component';
 import {resourceCardListComponent} from './resourcecardlist_component';
+import {resourceCardListFilterComponent} from './resourcecardlistfilter_component';
+import {resourceCardListFooterComponent} from './resourcecardlistfooter_component';
+import {resourceCardListHeaderComponent} from './resourcecardlistheader_component';
 import {resourceCardListPaginationComponent} from './resourcecardlistpagination_component';
 import {resourceCardMenuComponent} from './resourcecardmenu_component';
-
 
 /**
  * Module containing common components for resource cards. A resource card should be used
@@ -42,6 +44,9 @@ export default angular
         ])
     .component('kdResourceCard', resourceCardComponent)
     .component('kdResourceCardList', resourceCardListComponent)
+    .component('kdResourceCardListFooter', resourceCardListFooterComponent)
+    .component('kdResourceCardListHeader', resourceCardListHeaderComponent)
+    .component('kdResourceCardListFilter', resourceCardListFilterComponent)
     .component('kdResourceCardListPagination', resourceCardListPaginationComponent)
     .component('kdResourceCardMenu', resourceCardMenuComponent)
     .component('kdResourceCardDeleteMenuItem', resourceCardDeleteMenuItemComponent)

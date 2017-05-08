@@ -17,14 +17,18 @@ limitations under the License.
 package kubectl
 
 import (
+	"io/ioutil"
+	"os"
 	"reflect"
 	"testing"
 
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/kubernetes/pkg/api"
 )
 
 func TestConfigMapGenerate(t *testing.T) {
 	tests := []struct {
+		setup     func(t *testing.T, params map[string]interface{}) func()
 		params    map[string]interface{}
 		expected  *api.ConfigMap
 		expectErr bool
@@ -34,7 +38,7 @@ func TestConfigMapGenerate(t *testing.T) {
 				"name": "foo",
 			},
 			expected: &api.ConfigMap{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metav1.ObjectMeta{
 					Name: "foo",
 				},
 				Data: map[string]string{},
@@ -47,7 +51,7 @@ func TestConfigMapGenerate(t *testing.T) {
 				"type": "my-type",
 			},
 			expected: &api.ConfigMap{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metav1.ObjectMeta{
 					Name: "foo",
 				},
 				Data: map[string]string{},
@@ -60,7 +64,7 @@ func TestConfigMapGenerate(t *testing.T) {
 				"from-literal": []string{"key1=value1", "key2=value2"},
 			},
 			expected: &api.ConfigMap{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metav1.ObjectMeta{
 					Name: "foo",
 				},
 				Data: map[string]string{
@@ -97,7 +101,7 @@ func TestConfigMapGenerate(t *testing.T) {
 				"from-literal": []string{"key1==value1"},
 			},
 			expected: &api.ConfigMap{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: metav1.ObjectMeta{
 					Name: "foo",
 				},
 				Data: map[string]string{
@@ -106,9 +110,84 @@ func TestConfigMapGenerate(t *testing.T) {
 			},
 			expectErr: false,
 		},
+		{
+			setup: setupEnvFile("key1=value1", "#", "", "key2=value2"),
+			params: map[string]interface{}{
+				"name":          "valid_env",
+				"from-env-file": "file.env",
+			},
+			expected: &api.ConfigMap{
+				ObjectMeta: metav1.ObjectMeta{
+					Name: "valid_env",
+				},
+				Data: map[string]string{
+					"key1": "value1",
+					"key2": "value2",
+				},
+			},
+			expectErr: false,
+		},
+		{
+			setup: func() func(t *testing.T, params map[string]interface{}) func() {
+				os.Setenv("g_key1", "1")
+				os.Setenv("g_key2", "2")
+				return setupEnvFile("g_key1", "g_key2=")
+			}(),
+			params: map[string]interface{}{
+				"name":          "getenv",
+				"from-env-file": "file.env",
+			},
+			expected: &api.ConfigMap{
+				ObjectMeta: metav1.ObjectMeta{
+					Name: "getenv",
+				},
+				Data: map[string]string{
+					"g_key1": "1",
+					"g_key2": "",
+				},
+			},
+			expectErr: false,
+		},
+		{
+			params: map[string]interface{}{
+				"name":          "too_many_args",
+				"from-literal":  []string{"key1=value1"},
+				"from-env-file": "file.env",
+			},
+			expectErr: true,
+		},
+		{
+			setup: setupEnvFile("key.1=value1"),
+			params: map[string]interface{}{
+				"name":          "invalid_key",
+				"from-env-file": "file.env",
+			},
+			expectErr: true,
+		},
+		{
+			setup: setupEnvFile("  key1=  value1"),
+			params: map[string]interface{}{
+				"name":          "with_spaces",
+				"from-env-file": "file.env",
+			},
+			expected: &api.ConfigMap{
+				ObjectMeta: metav1.ObjectMeta{
+					Name: "with_spaces",
+				},
+				Data: map[string]string{
+					"key1": "  value1",
+				},
+			},
+			expectErr: false,
+		},
 	}
 	generator := ConfigMapGeneratorV1{}
 	for _, test := range tests {
+		if test.setup != nil {
+			if teardown := test.setup(t, test.params); teardown != nil {
+				defer teardown()
+			}
+		}
 		obj, err := generator.Generate(test.params)
 		if !test.expectErr && err != nil {
 			t.Errorf("unexpected error: %v", err)
@@ -118,6 +197,24 @@ func TestConfigMapGenerate(t *testing.T) {
 		}
 		if !reflect.DeepEqual(obj.(*api.ConfigMap), test.expected) {
 			t.Errorf("\nexpected:\n%#v\nsaw:\n%#v", test.expected, obj.(*api.ConfigMap))
+		}
+	}
+}
+
+func setupEnvFile(lines ...string) func(*testing.T, map[string]interface{}) func() {
+	return func(t *testing.T, params map[string]interface{}) func() {
+		f, err := ioutil.TempFile("", "cme")
+		if err != nil {
+			t.Errorf("unexpected error: %v", err)
+		}
+		for _, l := range lines {
+			f.WriteString(l)
+			f.WriteString("\r\n")
+		}
+		f.Close()
+		params["from-env-file"] = f.Name()
+		return func() {
+			os.Remove(f.Name())
 		}
 	}
 }

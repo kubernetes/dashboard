@@ -1,0 +1,96 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-content-card>
+  <kd-content>
+    <kd-resource-card-list selectable="false"
+                           with-statuses="true"
+                           select-id="{{::$ctrl.getSelectId()}}"
+                           list="$ctrl.eventList"
+                           list-resource="$ctrl.eventListResource">
+      <kd-resource-card-list-header>
+        <kd-resource-card-list-title>
+          [[Events|Label which appears above the list of such objects.]]
+        </kd-resource-card-list-title>
+      </kd-resource-card-list-header>
+
+      <kd-zero-state ng-if="!$ctrl.hasEvents()">
+        <kd-zero-state-text>
+          [[It is possible that all events have expired.|User help on the events page when no events are to be displayed.]]
+        </kd-zero-state-text>
+      </kd-zero-state>
+      <kd-resource-card-header-columns ng-show="$ctrl.hasEvents()">
+        <kd-resource-card-header-column size="medium"
+                                        grow="4">
+          [[Message|Label 'Message' for the event message column of the events table (events list page).]]
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column>
+          [[Source|Label 'Source' for the event source column of the events table (events list page).]]
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column>
+          [[Sub-object|Label 'Sub-object' for the respective column of the events table (events list page).]]
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column size="small"
+                                        grow="nogrow">
+          [[Count|Label 'Count' for event count column of the events table (events list page).]]
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column>
+          [[First seen|Label 'First seen' for the respective column of the events table (events list page).]]
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column>
+          [[Last seen|Label 'Last seen' for the respective column of the events table (events list page).]]
+        </kd-resource-card-header-column>
+      </kd-resource-card-header-columns>
+
+      <kd-resource-card dir-paginate="event in $ctrl.eventList.events | itemsPerPage: default"
+                        total-items="::$ctrl.eventList.listMeta.totalItems"
+                        object-meta="event.objectMeta"
+                        type-meta="event.typeMeta"
+                        pagination-id="{{::$ctrl.getSelectId()}}">
+        <kd-resource-card-status>
+          <i ng-if="$ctrl.isEventWarning(event)"
+             class="material-icons kd-replicationcontrollerevents-warning-icon">warning</i>
+        </kd-resource-card-status>
+
+        <kd-resource-card-columns>
+          <kd-resource-card-column>
+            <div class="kd-replicationcontrollerevents-message">
+              {{event.message}}
+            </div>
+          </kd-resource-card-column>
+          <kd-resource-card-column>
+            {{event.sourceComponent}} {{event.sourceHost}}
+          </kd-resource-card-column>
+          <kd-resource-card-column>
+            <div ng-if="event.object">{{event.object}}</div>
+            <div ng-if="!event.object">-</div>
+          </kd-resource-card-column>
+          <kd-resource-card-column>{{event.count}}</kd-resource-card-column>
+          <kd-resource-card-column>
+            {{event.firstSeen | date}} UTC
+          </kd-resource-card-column>
+          <kd-resource-card-column>
+            {{event.lastSeen | date}} UTC
+          </kd-resource-card-column>
+        </kd-resource-card-columns>
+      </kd-resource-card>
+
+      <kd-resource-card-list-footer>
+        <kd-resource-card-list-pagination></kd-resource-card-list-pagination>
+      </kd-resource-card-list-footer>
+    </kd-resource-card-list>
+  </kd-content>
+</kd-content-card>

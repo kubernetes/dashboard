@@ -1,0 +1,85 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-resource-card object-meta="$ctrl.replicationController.objectMeta"
+                  type-meta="$ctrl.replicationController.typeMeta">
+  <kd-resource-card-status layout="row">
+    <md-icon class="material-icons kd-error"
+             ng-if="::$ctrl.hasWarnings()">
+      error
+      <md-tooltip md-direction="right">[[One or more pods have errors|Tooltip saying that some pods in a replication controller have errors.]]</md-tooltip>
+    </md-icon>
+    <md-icon class="material-icons"
+             ng-if="::$ctrl.isPending()">
+      timelapse
+      <md-tooltip md-direction="right">[[One or more pods are in pending state|Tooltip saying that some pods in a replication controller are pending.]]</md-tooltip>
+    </md-icon>
+    <md-icon class="material-icons kd-success"
+             ng-if="::$ctrl.isSuccess()">
+      check_circle
+    </md-icon>
+  </kd-resource-card-status>
+  <kd-resource-card-columns>
+    <kd-resource-card-column>
+      <a ng-href="{{::$ctrl.getReplicationControllerDetailHref()}}">
+        <div>
+          <kd-middle-ellipsis display-string="{{$ctrl.replicationController.objectMeta.name}}">
+          </kd-middle-ellipsis>
+        </div>
+      </a>
+    </kd-resource-card-column>
+    <kd-resource-card-column ng-if="::$ctrl.showResourceKind">
+      <div>
+        [[Replication Controller|Column 'Replication Controller' in a Replication Controller list]]
+      </div>
+    </kd-resource-card-column>
+    <kd-resource-card-column ng-if="$ctrl.areMultipleNamespacesSelected()">
+      <div>
+        <kd-middle-ellipsis display-string="{{::$ctrl.replicationController.objectMeta.namespace}}">
+        </kd-middle-ellipsis>
+      </div>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <kd-labels labels="::$ctrl.replicationController.objectMeta.labels"></kd-labels>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <span class="kd-replicase-card-pods-stat">
+        {{::$ctrl.replicationController.pods.running}} /
+        {{::$ctrl.replicationController.pods.desired}}
+      </span>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      {{::$ctrl.replicationController.objectMeta.creationTimestamp | relativeTime}}
+      <md-tooltip>
+        {{::$ctrl.getCreatedAtTooltip($ctrl.replicationController.objectMeta.creationTimestamp)}}
+      </md-tooltip>
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      <div ng-repeat="image in ::$ctrl.replicationController.containerImages track by $index">
+        <kd-middle-ellipsis display-string="{{::image}}"></kd-middle-ellipsis>
+      </div>
+    </kd-resource-card-column>
+    <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
+      <kd-replication-controller-card-menu replication-controller="::$ctrl.replicationController">
+      </kd-replication-controller-card-menu>
+    </kd-resource-card-column>
+  </kd-resource-card-columns>
+  <kd-resource-card-footer ng-if="::$ctrl.hasWarnings()">
+    <div ng-repeat="warning in ::$ctrl.replicationController.pods.warnings">
+      <span class="kd-error">{{::warning.message}}</span>
+    </div>
+  </kd-resource-card-footer>
+</kd-resource-card>

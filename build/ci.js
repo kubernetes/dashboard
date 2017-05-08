@@ -19,11 +19,11 @@ import childProcess from 'child_process';
 import gulp from 'gulp';
 
 /**
- * Entry point task for CI environments.
+ * Entry point for CI to push head images to Docker Hub when master builds successfully.
  */
-gulp.task('ci', ['check:local-cluster'], (doneFn) => {
+gulp.task('ci-push-to-docker:head:cross', function(doneFn) {
   if (process.env.TRAVIS) {
-    // Pushe head images when docker user and password are available.
+    // Pushes head images when docker user and password are available.
     if (process.env.TRAVIS_PULL_REQUEST === 'false' && process.env.DOCKER_USER &&
         process.env.DOCKER_PASS) {
       childProcess.exec('docker login -u $DOCKER_USER -p $DOCKER_PASS', (err, stdout, stderr) => {
