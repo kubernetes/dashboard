@@ -211,15 +211,16 @@ func (apiHandler *APIHandler) getApiClient(request *restful.Request) (*clientK8s
 
 	cfg, err := clientConfig.ClientConfig()
 
+	if err != nil {
+		return nil, nil, err
+	}
+
 	// TODO Workaround, because ClientConfig doesn't override the token from the tokenfile with the one specified
 	// when run inside a cluster
 	if token != "" {
 		cfg.BearerToken = token
 	}
 
-	if err != nil {
-		return nil, nil, err
-	}
 
 	apiclient, err := clientK8s.NewForConfig(cfg)
 	if err != nil {
