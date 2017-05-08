@@ -31,7 +31,7 @@ kd-resource-card-list-filter {
 }
 
 .kd-search-input {
-  border: none;
+  border: 0;
   border-bottom: 1px solid $border;
   border-radius: $baseline-grid / 4;
   flex: 0 1 auto;
@@ -39,8 +39,8 @@ kd-resource-card-list-filter {
 }
 
 .kd-search-container {
-  justify-content: flex-end;
   display: flex;
   flex-direction: row;
+  justify-content: flex-end;
   user-select: none;
 }
