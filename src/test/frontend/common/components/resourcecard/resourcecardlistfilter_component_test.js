@@ -66,7 +66,7 @@ describe('Resource card list filtering', () => {
     ctrl.selectId_ = 'test-id';
 
     // when
-    let result = ctrl.shouldEnable();
+    let result = ctrl.shouldEnable_();
 
     // then
     expect(result).toBeTruthy();
@@ -74,7 +74,7 @@ describe('Resource card list filtering', () => {
 
   it('should disable search', () => {
     // when
-    let result = ctrl.shouldEnable();
+    let result = ctrl.shouldEnable_();
 
     // then
     expect(result).toBeFalsy();
@@ -112,20 +112,43 @@ describe('Resource card list filtering', () => {
     expect(errDialog.open).toHaveBeenCalledWith('Filtering error', response.data);
   });
 
-  it('should keep search open', () => {
+  it('should show search', () => {
     // given
-    ctrl.inputText = 'test';
+    ctrl.hidden_ = false;
 
     // when
-    let result = ctrl.shouldKeepSearchOpen();
+    let result = ctrl.isSearchVisible();
 
     // then
     expect(result).toBeTruthy();
   });
 
-  it('should clear search box', () => {
+  it('should hide search', () => {
+    // given
+    ctrl.hidden_ = true;
+
+    // when
+    let result = ctrl.isSearchVisible();
+
+    // then
+    expect(result).toBeFalsy();
+  });
+
+  it('should switch search visibility', () => {
+    // given
+    ctrl.hidden_ = false;
+
+    // when
+    ctrl.switchSearchVisibility();
+
+    // then
+    expect(ctrl.isSearchVisible()).toBeFalsy();
+  });
+
+  it('should clear search box and hide search', () => {
     // given
     let deferred = q.defer();
+    ctrl.hidden_ = false;
     ctrl.inputText = 'test';
     spyOn(dataSelectService, 'filter').and.returnValue(deferred.promise);
 
@@ -135,5 +158,6 @@ describe('Resource card list filtering', () => {
     // then
     expect(ctrl.inputText).toEqual('');
     expect(dataSelectService.filter).toHaveBeenCalled();
+    expect(ctrl.isSearchVisible()).toBeFalsy();
   });
 });
