@@ -70,5 +70,5 @@ export function resolveSearch(
 
 const i18n = {
   /** @type {string} @desc Label 'Search' that appears as a breadcrumbs on the action bar. */
-  MSG_BREADCRUMBS_SEARCH_LABEL: goog.getMsg('Search'),
+  MSG_BREADCRUMBS_SEARCH_LABEL: goog.getMsg('Search for {{$stateParams.q}}'),
 };
