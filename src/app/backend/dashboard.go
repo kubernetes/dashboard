@@ -79,7 +79,6 @@ func main() {
 	}
 
 	apiHandler, err := handler.CreateHTTPAPIHandler(
-		apiserverClient,
 		heapsterRESTClient,
 		handler.ApiClientConfig{ApiserverHost: *argApiserverHost, KubeConfigFile: *argKubeConfigFile})
 	if err != nil {
