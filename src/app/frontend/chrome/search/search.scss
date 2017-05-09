@@ -34,10 +34,10 @@
   input::-webkit-input-placeholder {
     color: $foreground-2;
   }
-}
 
-.kd-search-icon {
-  color: $foreground-2 !important;
-  margin-left: $baseline-grid / 2;
-  padding-right: $baseline-grid * 4;
+  .kd-search-icon {
+    color: $foreground-2 !important;
+    margin-left: $baseline-grid / 2;
+    padding-right: $baseline-grid * 4;
+  }
 }
