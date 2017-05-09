@@ -50,10 +50,10 @@ limitations under the License.
            ng-model="ctrl.file">
   </div>
   <kd-user-help>
-    <div ng-show="ctrl.isAllNamespacesSelected()">
-      [[Select a YAML or JSON file, specifying the resources to deploy to the default namespace or to the namespace specified in the file.|User help for the YAML/JSON file upload form on the deploy page.]]
+    <div ng-show="ctrl.areMultipleNamespacesSelected()">
+      [[Select a YAML or JSON file, specifying the resources to deploy to the namespace specified in the file.|User help for the YAML/JSON file upload form on the deploy page.]]
     </div>
-    <div ng-hide="ctrl.isAllNamespacesSelected()">
+    <div ng-hide="ctrl.areMultipleNamespacesSelected()">
       [[Select a YAML or JSON file, specifying the resources to deploy to the currently selected namespace (in the left side menu).|User help for the YAML/JSON file upload form on the deploy page.]]
     </div>
 

@@ -16,19 +16,29 @@
  * Displays deploy anyway confirm dialog.
  *
  * @param {!md.$dialog} mdDialog
- * @param {string} title
- * @param {string} content
- * @param {string} err
- * @param {string} okMsg
- * @param {string} cancelMsg
+ * @param {string} errorMessage
  * @return {!angular.$q.Promise}
  */
-export default function showDeployAnywayDialog(mdDialog, title, content, err, okMsg, cancelMsg) {
+export default function showDeployAnywayDialog(mdDialog, errorMessage) {
   let dialog = mdDialog.confirm()
-                   .title(title)
-                   .htmlContent(`${err}<br><br>${content}`)
-                   .ok(okMsg)
-                   .cancel(cancelMsg);
+                   .title(i18n.MSG_DEPLOY_ANYWAY_DIALOG_TITLE)
+                   .htmlContent(`${errorMessage}<br><br>${i18n.MSG_DEPLOY_ANYWAY_DIALOG_CONTENT}`)
+                   .ok(i18n.MSG_DEPLOY_ANYWAY_DIALOG_OK)
+                   .cancel(i18n.MSG_DEPLOY_ANYWAY_DIALOG_CANCEL);
 
   return mdDialog.show(dialog);
 }
+
+const i18n = {
+  /** @export {string} @desc Title for the dialog shown on deploy validation error. */
+  MSG_DEPLOY_ANYWAY_DIALOG_TITLE: goog.getMsg('Validation error occurred'),
+
+  /** @export {string} @desc Content for the dialog shown on deploy validation error. */
+  MSG_DEPLOY_ANYWAY_DIALOG_CONTENT: goog.getMsg('Would you like to deploy anyway?'),
+
+  /** @export {string} @desc Confirmation text for the dialog shown on deploy validation error. */
+  MSG_DEPLOY_ANYWAY_DIALOG_OK: goog.getMsg('Yes'),
+
+  /** @export {string} @desc Cancellation text for the dialog shown on deploy validation error. */
+  MSG_DEPLOY_ANYWAY_DIALOG_CANCEL: goog.getMsg('No'),
+};

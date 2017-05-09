@@ -23,5 +23,5 @@ export const kdErrors = {
 
   /** @export {string} @desc Text shown on in error dialog when there is no namespace provided selected in both dashboard and yaml file. */
   MSG_DEPLOY_EMPTY_NAMESPACE_ERROR: goog.getMsg(
-      'Dashboard and your file do not specify any namespace to deploy a resource. Please select a specific namespace in dashboard or specify one in yaml file.'),
+      'Dashboard and your file do not specify any namespace to deploy a resource. Please select a specific namespace in dashboard or add one in yaml file.'),
 };

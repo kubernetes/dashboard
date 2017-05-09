@@ -19,10 +19,10 @@
  */
 export class UploadController {
   /**
-   * @param {!} $stateParams
+   * @param {!../common/namespace/service.NamespaceService} kdNamespaceService
    * @ngInject
    */
-  constructor($stateParams) {
+  constructor(kdNamespaceService) {
     /** @private {boolean} */
     this.isBrowseFileFuncRegistered_ = false;
 
@@ -39,8 +39,8 @@ export class UploadController {
      */
     this.form;
 
-    /** @private {!} */
-    this.stateParams_ = $stateParams;
+    /** @private {!../common/namespace/service.NamespaceService} */
+    this.kdNamespaceService_ = kdNamespaceService;
   }
 
   /**
@@ -82,7 +82,7 @@ export class UploadController {
    * @return {boolean}
    * @export
    */
-  isAllNamespacesSelected() {
-    return this.stateParams_.namespace === '_all';
+  areMultipleNamespacesSelected() {
+    return this.kdNamespaceService_.areMultipleNamespacesSelected();
   }
 }

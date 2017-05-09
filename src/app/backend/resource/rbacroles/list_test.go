@@ -15,12 +15,13 @@
 package rbacroles
 
 import (
+	"reflect"
+	"testing"
+
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	api "k8s.io/apimachinery/pkg/apis/meta/v1"
 	rbac "k8s.io/client-go/pkg/apis/rbac/v1alpha1"
-	"reflect"
-	"testing"
 )
 
 func TestGetRbacRoleList(t *testing.T) {

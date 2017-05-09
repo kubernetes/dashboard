@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import {stateName as workloads} from 'workloads/state';
-
 import showDeployAnywayDialog from './deployanyway_dialog';
 
 const KD_DEPLOY_NAMESPACE_MISMATCH_ERROR = 'KD_DEPLOY_NAMESPACE_MISMATCH_ERROR';
@@ -34,8 +33,8 @@ export default class DeployFromFileController {
    * @param {!./../common/history/service.HistoryService} kdHistoryService
    * @param {!md.$dialog} $mdDialog
    * @param {!./../common/csrftoken/service.CsrfTokenService} kdCsrfTokenService
-   * @param {} $stateParams TODO
-   * @param {} localizerService TODO
+   * @param {!../chrome/state.StateParams} $stateParams
+   * @param {!../common/errorhandling/localizer_service.LocalizerService} localizerService
    * @ngInject
    */
   constructor(
@@ -81,10 +80,10 @@ export default class DeployFromFileController {
     /** @private {!angular.$q.Promise} */
     this.tokenPromise = kdCsrfTokenService.getTokenForAction('appdeploymentfromfile');
 
-    /** TODO */
+    /** @private {!../chrome/state.StateParams} */
     this.stateParams_ = $stateParams;
 
-    /** TODO */
+    /** @private {!../common/errorhandling/localizer_service.LocalizerService} */
     this.localizerService_ = localizerService;
 
     /** @export */
@@ -170,13 +169,9 @@ export default class DeployFromFileController {
    * @private
    */
   handleDeployAnywayDialog_(err) {
-    showDeployAnywayDialog(
-        this.mdDialog_, this.i18n.MSG_DEPLOY_ANYWAY_DIALOG_TITLE,
-        this.i18n.MSG_DEPLOY_ANYWAY_DIALOG_CONTENT, err, this.i18n.MSG_DEPLOY_ANYWAY_DIALOG_OK,
-        this.i18n.MSG_DEPLOY_ANYWAY_DIALOG_CANCEL)
-        .then(() => {
-          this.deploy(false);
-        });
+    showDeployAnywayDialog(this.mdDialog_, err).then(() => {
+      this.deploy(false);
+    });
   }
 
   /**
@@ -198,18 +193,6 @@ export default class DeployFromFileController {
 }
 
 const i18n = {
-  /** @export {string} @desc Title for the dialog shown on deploy validation error. */
-  MSG_DEPLOY_ANYWAY_DIALOG_TITLE: goog.getMsg('Validation error occurred'),
-
-  /** @export {string} @desc Content for the dialog shown on deploy validation error. */
-  MSG_DEPLOY_ANYWAY_DIALOG_CONTENT: goog.getMsg('Would you like to deploy anyway?'),
-
-  /** @export {string} @desc Confirmation text for the dialog shown on deploy validation error. */
-  MSG_DEPLOY_ANYWAY_DIALOG_OK: goog.getMsg('Yes'),
-
-  /** @export {string} @desc Cancellation text for the dialog shown on deploy validation error. */
-  MSG_DEPLOY_ANYWAY_DIALOG_CANCEL: goog.getMsg('No'),
-
   /** @export {string} @desc Text shown on failed deploy in error dialog. */
   MSG_DEPLOY_DIALOG_ERROR: goog.getMsg('Deploying file has failed'),
 };

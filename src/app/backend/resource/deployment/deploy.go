@@ -16,6 +16,9 @@ package deployment
 
 import (
 	"fmt"
+	"log"
+	"strings"
+
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -25,8 +28,6 @@ import (
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 	cmdutil "k8s.io/kubernetes/pkg/kubectl/cmd/util"
 	kubectlResource "k8s.io/kubernetes/pkg/kubectl/resource"
-	"log"
-	"strings"
 )
 
 const (
