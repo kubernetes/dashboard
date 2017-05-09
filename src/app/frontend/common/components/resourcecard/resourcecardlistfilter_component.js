@@ -31,13 +31,15 @@ class ResourceCardListFilterController {
     this.selectId_;
     /** @export */
     this.i18n = i18n;
+    /** @private - Indicates whether search input should be shown or not */
+    this.hidden_ = true;
   }
 
   /** @export */
   $onInit() {
     this.selectId_ = this.resourceCardListCtrl.selectId;
 
-    if (this.shouldEnable() &&
+    if (this.shouldEnable_() &&
         (this.resourceCardListCtrl.list === undefined ||
          this.resourceCardListCtrl.listResource === undefined)) {
       throw new Error('List and list resource have to be set on list card.');
@@ -49,10 +51,10 @@ class ResourceCardListFilterController {
   }
 
   /**
-   * @export
+   * @private
    * @return {boolean}
    */
-  shouldEnable() {
+  shouldEnable_() {
     return this.selectId_ !== undefined && this.selectId_.length > 0;
   }
 
@@ -60,14 +62,25 @@ class ResourceCardListFilterController {
    * @export
    * @return {boolean}
    */
-  shouldKeepSearchOpen() {
-    return this.inputText.length > 0;
+  isSearchVisible() {
+    return !this.hidden_;
+  }
+
+  /**
+   * @export
+   */
+  switchSearchVisibility() {
+    this.hidden_ = !this.hidden_;
   }
 
   /** @export */
   clearInput() {
-    this.inputText = '';
-    this.onTextUpdate();
+    this.switchSearchVisibility();
+    // Do not call backend if it is not needed
+    if (this.inputText.length > 0) {
+      this.inputText = '';
+      this.onTextUpdate();
+    }
   }
 
   /** @export */
@@ -86,6 +99,30 @@ class ResourceCardListFilterController {
           this.errorDialog_.open(this.i18n.MSG_RESOURCE_CARD_LIST_FILTERING_ERROR, err.data);
           this.resourceCardListCtrl.setPending(false);
         });
+  }
+
+  /**
+   * @export
+   * @return {string}
+   */
+  getTooltipMessage() {
+    /**
+     * @type {string} @desc Tooltip on resource card list filter icon.
+     */
+    let MSG_RESOURCE_CARD_LIST_FILTER_ICON_TOOLTIP = goog.getMsg('Filter objects by name');
+    return MSG_RESOURCE_CARD_LIST_FILTER_ICON_TOOLTIP;
+  }
+
+  /**
+   * @export
+   * @return {string}
+   */
+  getPlaceholderText() {
+    /**
+     * @type {string} @desc Tooltip on resource card list filter icon.
+     */
+    let MSG_RESOURCE_CARD_LIST_FILTER_PLACEHOLDER_TEXT = goog.getMsg('Search');
+    return MSG_RESOURCE_CARD_LIST_FILTER_PLACEHOLDER_TEXT;
   }
 }
 
