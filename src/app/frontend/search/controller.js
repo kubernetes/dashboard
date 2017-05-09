@@ -33,6 +33,8 @@ export class SearchController {
    * @param {!angular.Resource} kdConfigMapListResource
    * @param {!angular.Resource} kdSecretListResource
    * @param {!angular.Resource} kdPersistentVolumeClaimListResource
+   * @param {!angular.Resource} kdServiceListResource
+   * @param {!angular.Resource} kdIngressListResource
    * @ngInject
    */
   constructor(
@@ -40,7 +42,7 @@ export class SearchController {
       kdDeploymentListResource, kdStatefulSetListResource, kdJobListResource, kdRCListResource,
       kdNamespaceListResource, kdNodeListResource, kdPersistentVolumeListResource,
       kdRoleListResource, kdStorageClassListResource, kdConfigMapListResource, kdSecretListResource,
-      kdPersistentVolumeClaimListResource) {
+      kdPersistentVolumeClaimListResource, kdServiceListResource, kdIngressListResource) {
     /** @export {!backendApi.Search} */
     this.search = search;
 
@@ -88,6 +90,12 @@ export class SearchController {
 
     /** @export {!angular.Resource} */
     this.pvcListResource = kdPersistentVolumeClaimListResource;
+
+    /** @export {!angular.Resource} */
+    this.kdServiceListResource = kdServiceListResource;
+
+    /** @export {!angular.Resource} */
+    this.kdIngressListResource = kdIngressListResource;
   }
 
   /**
@@ -105,7 +113,8 @@ export class SearchController {
         this.search.persistentVolumeList.listMeta.totalItems +
         this.search.storageClassList.listMeta.totalItems +
         this.search.configMapList.listMeta.totalItems + this.search.secretList.listMeta.totalItems +
-        this.search.persistentVolumeClaimList.listMeta.totalItems;
+        this.search.persistentVolumeClaimList.listMeta.totalItems +
+        this.search.serviceList.listMeta.totalItems + this.search.ingressList.listMeta.totalItems;
 
     return resourcesLength === 0;
   }

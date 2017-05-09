@@ -144,6 +144,24 @@ limitations under the License.
     </kd-content>
   </kd-content-card>
 
+  <kd-content-card ng-if="$ctrl.search.ingressList.items.length">
+    <kd-content>
+      <kd-ingress-card-list ingress-list="$ctrl.search.ingressList"
+                            with-statuses="true"
+                            ingress-list-resource="$ctrl.kdIngressListResource">
+      </kd-ingress-card-list>
+    </kd-content>
+  </kd-content-card>
+
+  <kd-content-card ng-if="$ctrl.search.serviceList.services.length">
+    <kd-content>
+      <kd-service-card-list service-list="$ctrl.search.serviceList"
+                            with-statuses="true"
+                            service-list-resource="$ctrl.kdServiceListResource">
+      </kd-service-card-list>
+    </kd-content>
+  </kd-content-card>
+
 </div>
 
 <kd-content-card ng-if="$ctrl.shouldShowZeroState()">

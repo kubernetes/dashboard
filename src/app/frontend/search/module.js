@@ -18,6 +18,7 @@ import filtersModule from 'common/filters/module';
 import configMapModule from 'configmap/module';
 import daemonSetModule from 'daemonset/module';
 import deploymentModule from 'deployment/module';
+import ingressModule from 'ingress/module';
 import jobModule from 'job/module';
 import namespaceModule from 'namespace/module';
 import nodeModule from 'node/module';
@@ -27,6 +28,7 @@ import replicaSetModule from 'replicaset/module';
 import replicationControllerModule from 'replicationcontroller/module';
 import roleModule from 'role/module';
 import secretModule from 'secret/module';
+import serviceModule from 'service/module';
 import statefulSetModule from 'statefulset/module';
 import storageClassModule from 'storageclass/module';
 
@@ -60,6 +62,8 @@ export default angular
           configMapModule.name,
           secretModule.name,
           persistentVolumeClaimModule.name,
+          serviceModule.name,
+          ingressModule.name,
         ])
     .config(stateConfig)
     .factory('kdSearchResource', searchResource);
