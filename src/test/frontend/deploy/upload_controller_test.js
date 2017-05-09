@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {UploadController} from 'deploy/upload_controller.js';
+import namespaceModule from 'common/namespace/module';
+import {UploadController} from 'deploy/upload_controller';
 
 describe('Upload Controller', () => {
   /** @type {!UploadController} */
@@ -21,6 +22,8 @@ describe('Upload Controller', () => {
   let form;
 
   beforeEach(() => {
+    angular.mock.module(namespaceModule.name);
+
     angular.mock.inject(($controller) => {
       form = {
         $submitted: false,
