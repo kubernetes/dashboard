@@ -15,9 +15,6 @@
 import {stateName as workloads} from 'workloads/state';
 import showDeployAnywayDialog from './deployanyway_dialog';
 
-const KD_DEPLOY_NAMESPACE_MISMATCH_ERROR = 'KD_DEPLOY_NAMESPACE_MISMATCH_ERROR';
-const KD_DEPLOY_EMPTY_NAMESPACE_ERROR = 'KD_DEPLOY_EMPTY_NAMESPACE_ERROR';
-
 /**
  * Controller for the deploy from file directive.
  *
