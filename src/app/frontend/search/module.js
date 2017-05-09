@@ -15,15 +15,18 @@
 import chromeModule from 'chrome/module';
 import componentsModule from 'common/components/module';
 import filtersModule from 'common/filters/module';
+import configMapModule from 'configmap/module';
 import daemonSetModule from 'daemonset/module';
 import deploymentModule from 'deployment/module';
 import jobModule from 'job/module';
 import namespaceModule from 'namespace/module';
 import nodeModule from 'node/module';
 import persistentVolumeModule from 'persistentvolume/module';
+import persistentVolumeClaimModule from 'persistentvolumeclaim/module';
 import replicaSetModule from 'replicaset/module';
 import replicationControllerModule from 'replicationcontroller/module';
 import roleModule from 'role/module';
+import secretModule from 'secret/module';
 import statefulSetModule from 'statefulset/module';
 import storageClassModule from 'storageclass/module';
 
@@ -54,6 +57,9 @@ export default angular
           persistentVolumeModule.name,
           roleModule.name,
           storageClassModule.name,
+          configMapModule.name,
+          secretModule.name,
+          persistentVolumeClaimModule.name,
         ])
     .config(stateConfig)
     .factory('kdSearchResource', searchResource);

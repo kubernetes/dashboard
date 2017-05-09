@@ -30,13 +30,17 @@ export class SearchController {
    * @param {!angular.Resource} kdPersistentVolumeListResource
    * @param {!angular.Resource} kdRoleListResource
    * @param {!angular.Resource} kdStorageClassListResource
+   * @param {!angular.Resource} kdConfigMapListResource
+   * @param {!angular.Resource} kdSecretListResource
+   * @param {!angular.Resource} kdPersistentVolumeClaimListResource
    * @ngInject
    */
   constructor(
       search, kdPodListResource, kdReplicaSetListResource, kdDaemonSetListResource,
       kdDeploymentListResource, kdStatefulSetListResource, kdJobListResource, kdRCListResource,
       kdNamespaceListResource, kdNodeListResource, kdPersistentVolumeListResource,
-      kdRoleListResource, kdStorageClassListResource) {
+      kdRoleListResource, kdStorageClassListResource, kdConfigMapListResource, kdSecretListResource,
+      kdPersistentVolumeClaimListResource) {
     /** @export {!backendApi.Search} */
     this.search = search;
 
@@ -75,6 +79,15 @@ export class SearchController {
 
     /** @export {!angular.Resource} */
     this.kdStorageClassListResource = kdStorageClassListResource;
+
+    /** @export {!angular.Resource} */
+    this.kdConfigMapListResource = kdConfigMapListResource;
+    /** @export {!angular.Resource} */
+
+    this.kdSecretListResource = kdSecretListResource;
+
+    /** @export {!angular.Resource} */
+    this.pvcListResource = kdPersistentVolumeClaimListResource;
   }
 
   /**
@@ -90,7 +103,9 @@ export class SearchController {
         this.search.statefulSetList.listMeta.totalItems + this.search.nodeList.listMeta.totalItems +
         this.search.namespaceList.listMeta.totalItems +
         this.search.persistentVolumeList.listMeta.totalItems +
-        this.search.storageClassList.listMeta.totalItems;
+        this.search.storageClassList.listMeta.totalItems +
+        this.search.configMapList.listMeta.totalItems + this.search.secretList.listMeta.totalItems +
+        this.search.persistentVolumeClaimList.listMeta.totalItems;
 
     return resourcesLength === 0;
   }

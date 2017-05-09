@@ -118,6 +118,32 @@ limitations under the License.
     </kd-content>
   </kd-content-card>
 
+  <kd-content-card ng-if="$ctrl.search.configMapList.items.length">
+    <kd-content>
+      <kd-config-map-card-list config-map-list="$ctrl.search.configMapList"
+                               with-statuses="true"
+                               config-map-list-resource="$ctrl.kdConfigMapListResource">
+      </kd-config-map-card-list>
+    </kd-content>
+  </kd-content-card>
+
+  <kd-content-card ng-if=$ctrl.search.persistentVolumeClaimList.items.length>
+    <kd-content>
+      <kd-persistent-volume-claim-card-list persistent-volume-claim-list="$ctrl.search.persistentVolumeClaimList"
+                                            persistent-volume-claim-list-resource="$ctrl.pvcListResource">
+      </kd-persistent-volume-claim-card-list>
+    </kd-content>
+  </kd-content-card>
+
+  <kd-content-card ng-if="$ctrl.search.secretList.secrets.length">
+    <kd-content>
+      <kd-secret-card-list secret-list="$ctrl.search.secretList"
+                           with-statuses="true"
+                           secret-list-resource="$ctrl.kdSecretListResource">
+      </kd-secret-card-list>
+    </kd-content>
+  </kd-content-card>
+
 </div>
 
 <kd-content-card ng-if="$ctrl.shouldShowZeroState()">
