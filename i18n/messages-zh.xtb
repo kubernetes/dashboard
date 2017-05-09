@@ -2,20 +2,20 @@
 <!DOCTYPE translationbundle><translationbundle lang="zh">
   <translation id="6783150167357318030" key="MSG_ACTION_BAR_DELETE_TOOLTIP" desc="Generic &quot;Delete some resource&quot; tooltip text which appears over the delete icon on the global action bar.">删除<ph name="RESOURCE_NAME"/></translation>
   <translation id="1421031463694814701" key="MSG_ACTION_BAR_EDIT_TOOLTIP" desc="Generic &quot;Edit some resource&quot; tooltip text which appears over the edit icon on the global action bar.">编辑<ph name="RESOURCE_NAME"/></translation>
-  <translation id="1024358167652076581" key="MSG_ALL_NAMESPACES" desc="Text for dropdown item that indicates that no namespace was selected">包括所有名字空间(All namespaces)</translation>
+  <translation id="1024358167652076581" key="MSG_ALL_NAMESPACES" desc="Text for dropdown item that indicates that no namespace was selected">所有命名空间(All namespaces)</translation>
   <translation id="4466763630197200161" key="MSG_BREADCRUMBS_ADMIN_LABEL" desc="Label 'Admin' that appears as a breadcrumbs on the action bar.">管理(Admin)</translation>
-  <translation id="954605561178153927" key="MSG_BREADCRUMBS_CONFIG_LABEL" desc="Label 'Config' that appears as a breadcrumbs on the action bar.">配置字典(Config)</translation>
-  <translation id="3212328899649855136" key="MSG_BREADCRUMBS_CONFIG_MAPS_LABEL" desc="Label 'Config Maps' that appears as a breadcrumbs on the action bar.">配置式字典(Config Maps)</translation>
+  <translation id="954605561178153927" key="MSG_BREADCRUMBS_CONFIG_LABEL" desc="Label 'Config' that appears as a breadcrumbs on the action bar.">配置管理(Config)</translation>
+  <translation id="3212328899649855136" key="MSG_BREADCRUMBS_CONFIG_MAPS_LABEL" desc="Label 'Config Maps' that appears as a breadcrumbs on the action bar.">配置集(Config Maps)</translation>
   <translation id="3217932097841975938" key="MSG_BREADCRUMBS_DAEMON_SETS_LABEL" desc="Label 'Daemon Sets' that appears as a breadcrumbs on the action bar.">守护式Pod集(Daemon Sets)</translation>
   <translation id="1744394420157932960" key="MSG_BREADCRUMBS_DEPLOYMENTS_LABEL" desc="Label 'Deployments' that appears as a breadcrumbs on the action bar.">部署(Deployments)</translation>
   <translation id="9213553703311647006" key="MSG_BREADCRUMBS_DEPLOY_APP_LABEL" desc="Breadcrum label for the deploy containerized app form view.">创建应用</translation>
   <translation id="3098067826555563293" key="MSG_BREADCRUMBS_DEPLOY_FILE_LABEL" desc="Breadcrum label for the YAML upload form">上传(Upload)</translation>
   <translation id="2248903848244811172" key="MSG_BREADCRUMBS_HORIZONTAL_POD_AUTOSCALERS_LABEL" desc="Label 'Horizontal Pod Autoscalers' that appears as a breadcrumbs on the action bar.">Pod水平自动伸缩</translation>
-  <translation id="5747298115200147575" key="MSG_BREADCRUMBS_INGRESSS_LABEL" desc="Label 'Ingress' that appears as a breadcrumbs on the action bar.">入口地址(Ingress)</translation>
+  <translation id="5747298115200147575" key="MSG_BREADCRUMBS_INGRESSS_LABEL" desc="Label 'Ingress' that appears as a breadcrumbs on the action bar.">路由(Ingress)</translation>
   <translation id="2741276106482217695" key="MSG_BREADCRUMBS_INTERNALERROR_LABEL" desc="Label for internal error page for breadcrumbs on the action bar.">内部错误(Internal error)</translation>
-  <translation id="2024511088483477440" key="MSG_BREADCRUMBS_JOBS_LABEL" desc="Label 'Jobs' that appears as a breadcrumbs on the action bar.">批量任务(Jobs)</translation>
+  <translation id="2024511088483477440" key="MSG_BREADCRUMBS_JOBS_LABEL" desc="Label 'Jobs' that appears as a breadcrumbs on the action bar.">批处理任务(Jobs)</translation>
   <translation id="1050029015813261838" key="MSG_BREADCRUMBS_LOGS_LABEL" desc="Breadcrum label for the logs view.">日志</translation>
-  <translation id="7538864180606148657" key="MSG_BREADCRUMBS_NAMESPACES_LABEL" desc="Label 'Namespaces' that appears as a breadcrumbs on the action bar.">名字空间(Namespaces)</translation>
+  <translation id="7538864180606148657" key="MSG_BREADCRUMBS_NAMESPACES_LABEL" desc="Label 'Namespaces' that appears as a breadcrumbs on the action bar.">命名空间(Namespaces)</translation>
   <translation id="1946322401100894439" key="MSG_BREADCRUMBS_NODES_LABEL" desc="Label 'Nodes' that appears as a breadcrumbs on the action bar.">工作节点(Nodes)</translation>
   <translation id="8962145809533946028" key="MSG_BREADCRUMBS_PERSISTENT_VOLUMES_LABEL" desc="Label 'Persistent Volumes' that appears as a breadcrumbs on the action bar.">持久性存储卷(Persistent Volumes)</translation>
   <translation id="6751018699028607617" key="MSG_BREADCRUMBS_PERSISTENT_VOLUME_CLAIM_LABEL" desc="Label 'Persistent Volume Claims' that appears as a breadcrumbs on the action bar.">持久性存储卷索取(Persistent Volume Claims)</translation>
