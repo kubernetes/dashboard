@@ -72,6 +72,52 @@ limitations under the License.
       </kd-stateful-set-card-list>
     </kd-content>
   </kd-content-card>
+
+  <kd-content-card ng-if="$ctrl.search.namespaceList.namespaces.length">
+    <kd-content>
+      <kd-namespace-card-list namespace-list="$ctrl.search.namespaceList"
+                              with-statuses="true"
+                              namespace-list-resource="$ctrl.kdNamespaceListResource">
+      </kd-namespace-card-list>
+    </kd-content>
+  </kd-content-card>
+
+  <kd-content-card ng-if="$ctrl.search.nodeList.nodes.length">
+    <kd-content>
+      <kd-node-card-list node-list="$ctrl.search.nodeList"
+                         with-statuses="true"
+                         node-list-resource="$ctrl.kdNodeListResource">
+      </kd-node-card-list>
+    </kd-content>
+  </kd-content-card>
+
+  <kd-content-card ng-if="$ctrl.search.persistentVolumeList.items.length">
+    <kd-content>
+      <kd-persistent-volume-card-list persistent-volume-list="$ctrl.search.persistentVolumeList"
+                                      with-statuses="true"
+                                      persistent-volume-list-resource="$ctrl.kdPersistentVolumeListResource">
+      </kd-persistent-volume-card-list>
+    </kd-content>
+  </kd-content-card>
+
+  <kd-content-card ng-if="$ctrl.search.roleList.items.length">
+    <kd-content>
+      <kd-role-card-list role-list="$ctrl.search.roleList"
+                         with-statuses="false"
+                         role-list-resource="$ctrl.kdRoleListResource">
+      </kd-role-card-list>
+    </kd-content>
+  </kd-content-card>
+
+  <kd-content-card ng-if="$ctrl.search.storageClassList.storageClasses.length">
+    <kd-content>
+      <kd-storage-class-card-list storage-class-list="$ctrl.search.storageClassList"
+                                  with-statuses="true"
+                                  storage-class-list-resource="$ctrl.kdStorageClassListResource">
+      </kd-storage-class-card-list>
+    </kd-content>
+  </kd-content-card>
+
 </div>
 
 <kd-content-card ng-if="$ctrl.shouldShowZeroState()">

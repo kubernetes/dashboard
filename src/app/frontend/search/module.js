@@ -18,9 +18,14 @@ import filtersModule from 'common/filters/module';
 import daemonSetModule from 'daemonset/module';
 import deploymentModule from 'deployment/module';
 import jobModule from 'job/module';
+import namespaceModule from 'namespace/module';
+import nodeModule from 'node/module';
+import persistentVolumeModule from 'persistentvolume/module';
 import replicaSetModule from 'replicaset/module';
 import replicationControllerModule from 'replicationcontroller/module';
+import roleModule from 'role/module';
 import statefulSetModule from 'statefulset/module';
+import storageClassModule from 'storageclass/module';
 
 import stateConfig from './stateconfig';
 
@@ -44,6 +49,11 @@ export default angular
           deploymentModule.name,
           daemonSetModule.name,
           statefulSetModule.name,
+          nodeModule.name,
+          namespaceModule.name,
+          persistentVolumeModule.name,
+          roleModule.name,
+          storageClassModule.name,
         ])
     .config(stateConfig)
     .factory('kdSearchResource', searchResource);

@@ -25,11 +25,18 @@ export class SearchController {
    * @param {!angular.Resource} kdStatefulSetListResource
    * @param {!angular.Resource} kdJobListResource
    * @param {!angular.Resource} kdRCListResource
+   * @param {!angular.Resource} kdNamespaceListResource
+   * @param {!angular.Resource} kdNodeListResource
+   * @param {!angular.Resource} kdPersistentVolumeListResource
+   * @param {!angular.Resource} kdRoleListResource
+   * @param {!angular.Resource} kdStorageClassListResource
    * @ngInject
    */
   constructor(
       search, kdPodListResource, kdReplicaSetListResource, kdDaemonSetListResource,
-      kdDeploymentListResource, kdStatefulSetListResource, kdJobListResource, kdRCListResource) {
+      kdDeploymentListResource, kdStatefulSetListResource, kdJobListResource, kdRCListResource,
+      kdNamespaceListResource, kdNodeListResource, kdPersistentVolumeListResource,
+      kdRoleListResource, kdStorageClassListResource) {
     /** @export {!backendApi.Search} */
     this.search = search;
 
@@ -53,6 +60,21 @@ export class SearchController {
 
     /** @export {!angular.Resource} */
     this.rcListResource = kdRCListResource;
+
+    /** @export {!angular.Resource} */
+    this.kdNamespaceListResource = kdNamespaceListResource;
+
+    /** @export {!angular.Resource} */
+    this.kdNodeListResource = kdNodeListResource;
+
+    /** @export {!angular.Resource} */
+    this.kdPersistentVolumeListResource = kdPersistentVolumeListResource;
+
+    /** @export {!angular.Resource} */
+    this.kdRoleListResource = kdRoleListResource;
+
+    /** @export {!angular.Resource} */
+    this.kdStorageClassListResource = kdStorageClassListResource;
   }
 
   /**
@@ -65,7 +87,10 @@ export class SearchController {
         this.search.replicaSetList.listMeta.totalItems + this.search.jobList.listMeta.totalItems +
         this.search.replicationControllerList.listMeta.totalItems +
         this.search.podList.listMeta.totalItems + this.search.daemonSetList.listMeta.totalItems +
-        this.search.statefulSetList.listMeta.totalItems;
+        this.search.statefulSetList.listMeta.totalItems + this.search.nodeList.listMeta.totalItems +
+        this.search.namespaceList.listMeta.totalItems +
+        this.search.persistentVolumeList.listMeta.totalItems +
+        this.search.storageClassList.listMeta.totalItems;
 
     return resourcesLength === 0;
   }

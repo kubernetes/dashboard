@@ -28,6 +28,7 @@ limitations under the License.
 </div>
 
 <div ng-if="!$ctrl.shouldShowZeroState()">
+
   <kd-content-card ng-if="$ctrl.cluster.namespaceList.namespaces.length">
     <kd-content>
       <kd-namespace-card-list namespace-list="$ctrl.cluster.namespaceList"
@@ -36,6 +37,7 @@ limitations under the License.
       </kd-namespace-card-list>
     </kd-content>
   </kd-content-card>
+
   <kd-content-card ng-if="$ctrl.cluster.nodeList.nodes.length">
     <kd-content>
       <kd-node-card-list node-list="$ctrl.cluster.nodeList"
@@ -44,6 +46,7 @@ limitations under the License.
       </kd-node-card-list>
     </kd-content>
   </kd-content-card>
+
   <kd-content-card ng-if="$ctrl.cluster.persistentVolumeList.items.length">
     <kd-content>
       <kd-persistent-volume-card-list persistent-volume-list="$ctrl.cluster.persistentVolumeList"
@@ -52,6 +55,7 @@ limitations under the License.
       </kd-persistent-volume-card-list>
     </kd-content>
   </kd-content-card>
+
   <kd-content-card ng-if="$ctrl.cluster.roleList.items.length">
     <kd-content>
       <kd-role-card-list role-list="$ctrl.cluster.roleList"
@@ -60,6 +64,7 @@ limitations under the License.
       </kd-role-card-list>
     </kd-content>
   </kd-content-card>
+
   <kd-content-card ng-if="$ctrl.cluster.storageClassList.storageClasses.length">
     <kd-content>
       <kd-storage-class-card-list storage-class-list="$ctrl.cluster.storageClassList"
@@ -68,6 +73,7 @@ limitations under the License.
       </kd-storage-class-card-list>
     </kd-content>
   </kd-content-card>
+
 </div>
 
 <kd-content-card ng-if="$ctrl.shouldShowZeroState()">

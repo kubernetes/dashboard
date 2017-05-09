@@ -27,7 +27,7 @@ export class SearchController {
     this.state_ = $state;
 
     this.query = '';
-}
+  }
 
   /**
    * @export
