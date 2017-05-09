@@ -16,7 +16,8 @@ limitations under the License.
 
 <div class="kd-resource-card-list-filter-wrapper">
   <div class="kd-search-container">
-    <input ng-model="$ctrl.inputText"
+    <input ng-if="$ctrl.isSearchVisible()"
+           ng-model="$ctrl.inputText"
            ng-model-options="{
             updateOn: 'default blur',
             debounce: {
@@ -25,17 +26,18 @@ limitations under the License.
             }
            }"
            ng-change="$ctrl.onTextUpdate()"
-           ng-class="{'kd-search-input-keep-open': $ctrl.shouldKeepSearchOpen()}"
            name="search"
            type="search"
-           placeholder="Search"
+           placeholder="{{::$ctrl.getPlaceholderText()}}"
            class="kd-search-input">
     <md-icon class="material-icons kd-search-icon"
-             ng-if="!$ctrl.shouldKeepSearchOpen()">
-      search
+             ng-if="!$ctrl.isSearchVisible()"
+             ng-click="$ctrl.switchSearchVisibility()">
+      filter_list
+      <md-tooltip>{{::$ctrl.getTooltipMessage()}}</md-tooltip>
     </md-icon>
-    <md-icon class="material-icons kd-clear-icon"
-             ng-if="$ctrl.shouldKeepSearchOpen()"
+    <md-icon class="material-icons kd-search-icon"
+             ng-if="$ctrl.isSearchVisible()"
              ng-click="$ctrl.clearInput()">
       close
     </md-icon>

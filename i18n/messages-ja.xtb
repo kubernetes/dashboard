@@ -1959,6 +1959,8 @@
   <translation id="1101311215261110165" key="MSG_RESOURCEQUOTA_DETAIL_STATUS_2" desc="Resource quota details status section used.">Used</translation>
   <translation id="8335819709341770111" key="MSG_RESOURCE_CARD_DELETE_ACTION" desc="Action &quot;Delete&quot; (verb), which appears as a menu item on the cards for kubernetes resources.">削除</translation>
   <translation id="5666870883139874190" key="MSG_RESOURCE_CARD_LIST_FILTERING_ERROR" desc="Message shown to the user when there is a filtering error.">Filtering error</translation>
+  <translation id="5352740626481015314" key="MSG_RESOURCE_CARD_LIST_FILTER_ICON_TOOLTIP" desc="Tooltip on resource card list filter icon.">Filter objects by name</translation>
+  <translation id="6139977749663403568" key="MSG_RESOURCE_CARD_LIST_FILTER_PLACEHOLDER_TEXT" desc="Tooltip on resource card list filter icon.">Search</translation>
   <translation id="3641265385665997534" key="MSG_RESOURCE_CARD_LIST_PAGINATION_ERROR" desc="Message shown to the user when there is a pagination error.">ページネーションエラー</translation>
   <translation id="5574079475783065419" key="MSG_RESOURCE_CARD_LIST_PAGINATION_ROW_SELECTOR_LABEL" desc="Label for pagination rows selector visible on resource lists.">表示行数</translation>
   <translation id="8315383091892527627" key="MSG_RESOURCE_CARD_LIST_SORT_ERROR" desc="Message shown to the user when there is a sort error.">Sort error</translation>
