@@ -121,9 +121,10 @@ export class DataSelectService {
         this.resetPagination_(dataSelectId);
     }
 
-    this.applySearch_(query)
-
     this.instances_.set(dataSelectId, query);
+
+    query = this.applySearch_(query)
+
     return listResource.get(query).$promise;
   }
 
@@ -133,7 +134,10 @@ export class DataSelectService {
    */
   applySearch_(query) {
     if (!!this.stateParams_.q) {
-      query.search = 'name,' + this.stateParams_.q;
+      if(!!query.filterBy) {
+        query.filterBy += ","
+      }
+      query.filterBy += 'name,' + this.stateParams_.q;
     }
     return query;
   }

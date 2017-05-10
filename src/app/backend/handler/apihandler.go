@@ -1936,16 +1936,7 @@ func parsePaginationPathParameter(request *restful.Request) *dataselect.Paginati
 }
 
 func parseFilterPathParameter(request *restful.Request) *dataselect.FilterQuery {
-	filterBy := request.QueryParameter("filterBy")
-
-	if len(request.QueryParameter("filterBy")) > 0 &&
-		len(request.QueryParameter("search")) > 0 {
-		filterBy += ","
-	}
-
-	filterBy += request.QueryParameter("search")
-
-	return dataselect.NewFilterQuery(strings.Split(filterBy, ","))
+	return dataselect.NewFilterQuery(strings.Split(request.QueryParameter("filterBy"), ","))
 }
 
 // Parses query parameters of the request and returns a SortQuery object
