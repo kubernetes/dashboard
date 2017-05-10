@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: kubernetes-dashboard-ci
+  name: kubernetes-dashboard-ci
+  # namespace: kube-system
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 9090
+    nodePort: 30090
+  selector:
+    app: kubernetes-dashboard-ci

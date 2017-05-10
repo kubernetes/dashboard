@@ -1,0 +1,37 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  labels:
+    app: kubernetes-dashboard-ci
+  name: kubernetes-dashboard-ci
+  # namespace: kube-system
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: kubernetes-dashboard-ci
+  template:
+    metadata:
+      labels:
+        app: kubernetes-dashboard-ci
+    spec:
+      containers:
+      - name: kubernetes-dashboard-ci
+        image: tangfeixiong/kubernetes-dashboard-amd64:head # kubernetes/kubernetes-dashboard-amd64:head
+        # imagePullPolicy: Always
+        ports:
+        - containerPort: 9090
+          protocol: TCP
+        args:
+          # Uncomment the following line to manually specify Kubernetes API server Host
+          # If not specified, Dashboard will attempt to auto discover the API server and connect
+          # to it. Uncomment only if the default does not work.
+          # - --apiserver-host=http://my-address:port
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 9090
+          initialDelaySeconds: 30
+          timeoutSeconds: 30
