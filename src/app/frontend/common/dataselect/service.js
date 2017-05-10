@@ -123,7 +123,7 @@ export class DataSelectService {
 
     this.instances_.set(dataSelectId, query);
 
-    query = this.applySearch_(query)
+    query = this.applySearch_(query);
 
     return listResource.get(query).$promise;
   }
