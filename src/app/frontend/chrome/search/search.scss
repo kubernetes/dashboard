@@ -22,17 +22,17 @@
   padding-left: $baseline-grid;
 
   input {
-    border: 0;
     background-color: transparent;
+    border: 0;
     color: $foreground-1;
     font-size: $subhead-font-size-base;
     outline: none;
     padding: $baseline-grid * 1.25;
     width: 100%;
-  }
 
-  input::-webkit-input-placeholder {
-    color: $foreground-2;
+    ::-webkit-input-placeholder {
+      color: $foreground-2;
+    }
   }
 
   .kd-search-icon {

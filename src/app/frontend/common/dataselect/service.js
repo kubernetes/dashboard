@@ -133,11 +133,11 @@ export class DataSelectService {
    * @private
    */
   applySearch_(query) {
-    if (!!this.stateParams_.q) {
-      if(!!query.filterBy) {
-        query.filterBy += ","
+    if (this.stateParams_.q) {
+      if (query.filterBy) {
+        query.filterBy += ',';
       }
-      query.filterBy += 'name,' + this.stateParams_.q;
+      query.filterBy += `name,${this.stateParams_.q}`;
     }
     return query;
   }

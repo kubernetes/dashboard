@@ -14,7 +14,7 @@
 
 @import '../variables';
 
-.kd-toolbar-logo {
+%kd-toolbar-logo-placeholder {
   height: 4 * $baseline-grid;
   margin-right: $baseline-grid;
   min-height: 4 * $baseline-grid;
@@ -22,8 +22,12 @@
   width: 4 * $baseline-grid;
 }
 
+.kd-toolbar-logo {
+  @extend %kd-toolbar-logo-placeholder;
+}
+
 .kd-toolbar-logo-text {
-  @extend .kd-toolbar-logo;
+  @extend %kd-toolbar-logo-placeholder;
   min-width: 14 * $baseline-grid;
   width: 14 * $baseline-grid;
 }
@@ -48,15 +52,15 @@
 
 kd-chrome {
   .kd-toolbar {
+    background-color: $content-background;
+    color: $primary;
     height: 6 * $baseline-grid;
     min-height: 6 * $baseline-grid;
     padding-left: 1.75 * $baseline-grid;
-    background-color: $content-background;
-    color: $primary;
 
     .kd-global-action-icon {
-      margin-right: .25 * $baseline-grid;
       color: $primary;
+      margin-right: .25 * $baseline-grid;
     }
   }
 }
