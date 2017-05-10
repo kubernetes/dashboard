@@ -49,18 +49,15 @@ export default function stateConfig($stateProvider) {
  * @param {!angular.$resource} kdSearchResource
  * @param {!./../chrome/state.StateParams} $stateParams
  * @param {!./../namespace/service.NamespaceService} kdNamespaceService
- * @param {!./../common/dataselect/service.DataSelectService} kdDataSelectService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
-export function resolveSearch(
-    kdSearchResource, $stateParams, kdNamespaceService, kdDataSelectService) {
-  kdDataSelectService.filterAll($stateParams.q)
+export function resolveSearch(kdSearchResource, $stateParams, kdNamespaceService) {
+  let query = new DataSelectQueryBuilder()
+                  .setNamespace($stateParams.namespace)
+                  .setFilterBy($stateParams.q)
+                  .build();
 
-      let query = new DataSelectQueryBuilder()
-                      .setFilterBy($stateParams.q)
-                      .setNamespace($stateParams.namespace)
-                      .build();
   if (kdNamespaceService.isMultiNamespace(query.namespace)) {
     query.namespace = '';
   }

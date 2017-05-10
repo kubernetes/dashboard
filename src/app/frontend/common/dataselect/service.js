@@ -97,7 +97,7 @@ export class DataSelectService {
     let namespace =
         this.stateParams_.objectNamespace || this.stateParams_.namespace || query.namespace;
 
-    if (!dataSelectQuery) {
+    if (!query) {
       throw new Error(`Data select query for given data select id ${dataSelectId} does not exist`);
     }
 
@@ -121,8 +121,21 @@ export class DataSelectService {
         this.resetPagination_(dataSelectId);
     }
 
+    this.applySearch_(query)
+
     this.instances_.set(dataSelectId, query);
     return listResource.get(query).$promise;
+  }
+
+  /**
+   * @param query
+   * @private
+   */
+  applySearch_(query) {
+    if (!!this.stateParams_.q) {
+      query.search = 'name,' + this.stateParams_.q;
+    }
+    return query;
   }
 
   /**
@@ -166,13 +179,6 @@ export class DataSelectService {
     let dataSelectQuery = new DataSelectQueryBuilder().setFilterBy(filterBy).build();
     return this.selectData_(listResource, dataSelectId, dataSelectQuery, this.actions_.FILTER);
   }
-
-  /**
-   * @export
-   */
-  filterAll(filterBy){this.instances_.forEach(value => {
-    value.filterBy = filterBy.length > 0 ? `name,${filterBy}` : '';
-  })}
 
   /**
    * @param {string|undefined} [namespace]
