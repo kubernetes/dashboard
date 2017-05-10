@@ -46,18 +46,19 @@
   justify-content: flex-end;
 }
 
-.kd-global-action-icon {
-  margin-right: .25 * $baseline-grid;
-  color: $primary !important;
-}
+kd-chrome {
+  .kd-toolbar {
+    height: 6 * $baseline-grid;
+    min-height: 6 * $baseline-grid;
+    padding-left: 1.75 * $baseline-grid;
+    background-color: $content-background;
+    color: $primary;
 
-// TODO(maciaszczykm): Remove !importants.
-.kd-toolbar {
-  height: 6 * $baseline-grid;
-  min-height: 6 * $baseline-grid;
-  padding-left: 1.75 * $baseline-grid;
-  background-color: white !important;
-  color: $primary !important;
+    .kd-global-action-icon {
+      margin-right: .25 * $baseline-grid;
+      color: $primary;
+    }
+  }
 }
 
 .kd-second-toolbar {
