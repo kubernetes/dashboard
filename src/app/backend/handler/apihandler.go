@@ -950,7 +950,7 @@ func (apiHandler *APIHandler) handleScaleResource(request *restful.Request, resp
 	name := request.PathParameter("name")
 	count := request.QueryParameter("scaleBy")
 
-	replicaCountSpec, err := scaling.ScaleResource(apiHandler.client, kind, namespace, name, count)
+	replicaCountSpec, err := scaling.ScaleResource(getApiClient(request), kind, namespace, name, count)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -963,7 +963,7 @@ func (apiHandler *APIHandler) handleGetReplicaCount(request *restful.Request, re
 	kind := request.PathParameter("kind")
 	name := request.PathParameter("name")
 
-	scaleSpec, err := scaling.GetScaleSpec(apiHandler.client, kind, namespace, name)
+	scaleSpec, err := scaling.GetScaleSpec(getApiClient(request), kind, namespace, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
