@@ -21,24 +21,20 @@ limitations under the License.
     <h4 class="md-title">[[Select colors|Title for a delete resource dialog.]]</h4>
     <div>
 
-     <li ng-repeat="c in $ctrl.colors">
-            <span ng-style="c" >--{{c.label}}</span>
-       <md-button class="md-primary kd-update-btn"
-                       ng-click="$ctrl.setColors(c)">
-            <span ng-style="c">  -- Select -- </span>
+     <div ng-repeat="s in $ctrl.styles">
+            
+       <md-button class="md-primary kd-update-btn"  style="width:100%"
+                       ng-click="$ctrl.selectStyle(s)"  ng-style="s">
+             -- {{s.label}} --
             </md-button>
-     </li>
+     </div>
     </div>
     <md-dialog-actions>
       <md-button class="md-primary kd-cancel-btn"
                  ng-click="$ctrl.cancel()">
         [[Cancel|Label for cancel button.]]
       </md-button>
-
-      <md-button class="md-primary kd-update-btn"
-                 ng-click="$ctrl.setColors()">
-        [[Set Colors|Label for select colors button.]]
-      </md-button>
+      
     </md-dialog-actions>
   </md-dialog-content>
 </md-dialog>

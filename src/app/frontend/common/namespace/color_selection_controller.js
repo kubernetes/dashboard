@@ -28,22 +28,18 @@ export class ColorSelectionController {
         /** @private {!md.$dialog} */
         this.mdDialog_ = $mdDialog;
 
-        this.colors = [
-            {'label': "Silver", 'color': "#C0C0C0"},
-            {'label': "Gray", 'color': "#808080"},
-            {'label': "Black", 'color': "#000000"},
-            {'label': "Red", 'color': "#FF0000"},
-            {'label': "Maroon", 'color': "#800000"},
-            {'label': "Yellow", 'color': "#FFFF00"},
-            {'label': "Olive", 'color': "#808000"},
-            {'label': "Lime", 'color': "#00FF00"},
-            {'label': "Green", 'color': "#008000"},
-            {'label': "Aqua", 'color': "#00FFFF"},
-            {'label': "Teal", 'color': "#008080"},
-            {'label': "Blue", 'color': "#0000FF"},
-            {'label': "Navy", 'color': "#000080"},
-            {'label': "Fuchsia", 'color': "#FF00FF"},
-            {'label': "Purple", 'color': "##800080"},
+        this.styles = [
+            {'label': "Mea Cuppa", 'color': "#191919", 'background-color':'#FFF056'},
+            {'label': "Big Top", 'color': "#C63D0F", 'background-color':'#7E8F7C'},
+            {'label': "Tory's Eye", 'color': "#005A31", 'background-color':'#F3FAB6'},
+            {'label': "Event Finds", 'color': "#558C89", 'background-color':'#ECECEA'},
+            {'label': "Cheese Survival Kit", 'color': "#F6F6F6", 'background-color':'#2B2B2B'},
+            {'label': "Nordic Ruby", 'color': "#F5F3EE", 'background-color':'#7D1935'},
+            {'label': "Lake Nona", 'color': "#67BCDB", 'background-color':'#E44424'},
+            {'label': "Lemon Stand", 'color': "#FFE658", 'background-color':'#6DBDD6'},
+            {'label': "Mint", 'color': "#585858", 'background-color':'#C1E1A6'},
+            {'label': "Odopod", 'color': "#DF3D82", 'background-color':'#191919'},
+            {'label': "None"},
         ];
 
     }
@@ -52,8 +48,8 @@ export class ColorSelectionController {
     /**
      * @export
      */
-    setColors(c) {
-        return this.mdDialog_.hide(c);
+    selectStyle(s) {
+        return this.mdDialog_.hide(s);
     }
 
 

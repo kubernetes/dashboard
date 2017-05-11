@@ -12,6 +12,7 @@ export class ColorSelectionService {
 
         /** @private {!angular.$q} */
         this.q_ = $q;
+
     }
 
     /**

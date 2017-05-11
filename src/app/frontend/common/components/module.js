@@ -35,8 +35,6 @@ import {toggleHiddenTextComponent} from './togglehiddentext/component';
 import warnThresholdDirective from './warnthreshold/directive';
 import {zeroStateComponent} from './zerostate/component';
 
-import {namespaceIndicatorComponent} from './namespace_indicator/ns_indicator';
-
 
 /**
  * Module containing common components for the application.
@@ -68,5 +66,4 @@ export default angular
     .component('kdObjectMetaInfoCard', infoCardComponent)
     .component('kdContentCard', contentCardComponent)
     .component('kdConditionList', conditionListComponent)
-    .component('kdNamespaceIndicatorComponent', namespaceIndicatorComponent)   
     .directive('kdWarnThreshold', warnThresholdDirective);
