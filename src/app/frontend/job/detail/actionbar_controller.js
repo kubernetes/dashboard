@@ -29,6 +29,7 @@ export class ActionBarController {
     this.details = jobDetail;
   }
 
+  /** @export */
   handleScaleResourceDialog() {
     this.kdScaleService_.showScaleDialog(
         this.details.objectMeta.namespace, this.details.objectMeta.name, this.details.parallelism,
