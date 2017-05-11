@@ -20,15 +20,25 @@ describe('Action Bar controller', () => {
   let ctrl;
   let details = {};
 
+  /** @type
+   * {!../../../frontend/common/scaling/scaleresource_service.ScaleService} */
+  let kdScaleService;
+
   beforeEach(() => {
     angular.mock.module(module.name);
 
-    angular.mock.inject(($controller) => {
-      ctrl = $controller(ActionBarController, {deploymentDetail: details});
+    angular.mock.inject(($controller, _kdScaleService_) => {
+      kdScaleService = _kdScaleService_;
+
+      ctrl = $controller(
+          ActionBarController, {deploymentDetail: details, kdScaleService: _kdScaleService_});
     });
   });
 
-  it('should initialize details', () => {
+  it('should show edit replicas dialog', () => {
+
+
+    spyOn(kdScaleService, 'showScaleDialog');
     expect(ctrl.details).toBe(details);
   });
 });
