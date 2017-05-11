@@ -23,7 +23,7 @@ import {stateName, stateUrl} from './state';
  * @return {string}
  */
 function getBreadcrumbLabel() {
-  return i18n.MSG_BREADCRUMBS_SEARCH_LABEL + ' {{$stateParams.q}}'
+  return `${i18n.MSG_BREADCRUMBS_SEARCH_LABEL} {{$stateParams.q}}`;
 }
 
 /**
