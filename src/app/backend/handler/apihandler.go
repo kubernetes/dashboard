@@ -1057,7 +1057,7 @@ func (apiHandler *APIHandler) handleSearch(request *restful.Request, response *r
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.NoMetrics
 
-	result, err := search.Search(apiHandler.client, apiHandler.heapsterClient, namespace, dataSelect)
+	result, err := search.Search(getApiClient(request), apiHandler.heapsterClient, namespace, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return
