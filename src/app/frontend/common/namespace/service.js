@@ -23,9 +23,10 @@ export class NamespaceService {
    * @param {!./../../chrome/state.StateParams} $stateParams
    * @ngInject
    */
-  constructor($stateParams) {
+  constructor($stateParams,$cookies) {
     /** @private {!./../../chrome/state.StateParams} */
     this.stateParams_ = $stateParams;
+    this.cookies = $cookies;
   }
 
   /**
@@ -42,5 +43,9 @@ export class NamespaceService {
    */
   isMultiNamespace(namespace) {
     return namespace === ALL_NAMESPACES;
+  }
+
+  nsStyle( namespace){
+    return {'background-color':'yellow'};
   }
 }

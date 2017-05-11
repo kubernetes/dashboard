@@ -1,4 +1,10 @@
-<div class="kd-namespace-select-title">[[Namespace|Title for namespace select.]]</div>
+<div class="kd-namespace-select-title" ng-style="$ctrl.nsStyle">[[Namespace|Title for namespace select.]]
+  <md-button ng-click="$ctrl.selectColors()"
+              class="md-icon-button">
+     <md-icon md-font-library="material-icons">more_vert</md-icon>
+     <md-tooltip>[[Change Namespace Colors|Tooltip "colors"]]</md-tooltip>
+   </md-button>
+</div>
 <md-input-container class="kd-namespace-select-input-container">
   <md-select ng-model="$ctrl.selectedNamespace"
              md-on-open="$ctrl.loadNamespacesIfNeeded()"

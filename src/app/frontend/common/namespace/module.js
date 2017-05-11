@@ -16,6 +16,7 @@ import {namespaceParam} from 'chrome/state';
 
 import {DEFAULT_NAMESPACE, namespaceSelectComponent} from './component';
 import {NamespaceService} from './service';
+import {ColorSelectionService} from './color_selection_service';
 
 /**
  * Angular module global namespace selection components.
@@ -26,10 +27,12 @@ export default angular
         [
           'ngMaterial',
           'ngResource',
+          'ngCookies',
           'ui.router',
         ])
     .component('kdNamespaceSelect', namespaceSelectComponent)
     .service('kdNamespaceService', NamespaceService)
+    .service('kdColorSelectionService', ColorSelectionService)
     .run(ensureNamespaceParamPresent);
 
 /**
