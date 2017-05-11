@@ -27,4 +27,4 @@ ADD . /
 # The port that the application listens on.
 # TODO(bryk): Parametrize this argument so that other build tools are aware of the exposed port.
 EXPOSE 9090
-ENTRYPOINT ["/dashboard", "--port=9090", "--insecure-bind-address=0.0.0.0"]
+ENTRYPOINT ["/dashboard", "--insecure-bind-address=0.0.0.0"]
