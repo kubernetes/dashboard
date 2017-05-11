@@ -12,32 +12,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import showScaleDialog from './dialog';
+
 /**
- * Opens replication controller delete dialog.
+ * Opens scale resource dialog.
  *
  * @final
  */
-export class ReplicationControllerService {
+export class ScaleService {
   /**
    * @param {!md.$dialog} $mdDialog
-   * @param {!./../../common/resource/verber_service.VerberService} kdResourceVerberService
    * @ngInject
    */
-  constructor($mdDialog, kdResourceVerberService) {
+  constructor($mdDialog) {
     /** @private {!md.$dialog} */
     this.mdDialog_ = $mdDialog;
-
-    /** @private {!./../../common/resource/verber_service.VerberService}*/
-    this.kdResourceVerberService_ = kdResourceVerberService;
   }
 
   /**
-   * @param {!backendApi.TypeMeta} typeMeta
-   * @param {!backendApi.ObjectMeta} objectMeta
-   * @return {!angular.$q.Promise}
+   * Opens an scale resource dialog. Returns a promise that is resolved/rejected when
+   * user wants
+   * to update the replicas. Nothing happens when user clicks cancel on the dialog.
+   *
+   * @param {string} namespace
+   * @param {string} resource
+   * @param {number} currentPods
+   * @param {number} desiredPods
+   * @param {string} resourceKindName
+   * @returns {!angular.$q.Promise}
    */
-  showDeleteDialog(typeMeta, objectMeta) {
-    return this.kdResourceVerberService_.showDeleteDialog(
-        'Replication Controller', typeMeta, objectMeta);
+  showScaleDialog(namespace, resource, currentPods, desiredPods, resourceKindName) {
+    return showScaleDialog(
+        this.mdDialog_, namespace, resource, currentPods, desiredPods, resourceKindName);
   }
 }

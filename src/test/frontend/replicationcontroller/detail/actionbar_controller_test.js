@@ -22,17 +22,17 @@ describe('Replication Controller Detail Action Bar controller', () => {
    */
   let ctrl;
   /** @type {!ReplicationControllerService} */
-  let kdReplicationControllerService;
+  let kdScaleService;
 
   beforeEach(() => {
     angular.mock.module(replicationControllerModule.name);
 
-    angular.mock.inject(($controller, $resource, _kdReplicationControllerService_) => {
-      kdReplicationControllerService = _kdReplicationControllerService_;
+    angular.mock.inject(($controller, $resource, _kdScaleService_) => {
+      kdScaleService = _kdScaleService_;
 
       ctrl = $controller(ActionBarController, {
         replicationControllerDetail: {},
-        kdReplicationControllerService: _kdReplicationControllerService_,
+        kdScaleService: _kdScaleService_,
       });
     });
   });
@@ -44,17 +44,20 @@ describe('Replication Controller Detail Action Bar controller', () => {
         namespace: 'foo-namespace',
         name: 'foo-name',
       },
+      typeMeta: {
+        kind: '',
+      },
       podInfo: {
         current: 3,
         desired: 3,
       },
     };
-    spyOn(kdReplicationControllerService, 'showUpdateReplicasDialog');
+    spyOn(kdScaleService, 'showScaleDialog');
 
     // when
-    ctrl.handleUpdateReplicasDialog();
+    ctrl.handleScaleResourceDialog();
 
     // then
-    expect(kdReplicationControllerService.showUpdateReplicasDialog).toHaveBeenCalled();
+    expect(kdScaleService.showScaleDialog).toHaveBeenCalled();
   });
 });

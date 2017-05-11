@@ -23,11 +23,10 @@ import {stateName} from 'replicationcontroller/detail/state';
 export default class ReplicationControllerCardMenuController {
   /**
    * @param {!ui.router.$state} $state
-   * @param {!./../detail/delete_service.ReplicationControllerService}
-   * kdReplicationControllerService
+   * @param {!./../../common/scaling/service.ScaleService} kdScaleService
    * @ngInject
    */
-  constructor($state, kdReplicationControllerService) {
+  constructor($state, kdScaleService) {
     /**
      * Initialized from the scope.
      * @export {!backendApi.ReplicationController}
@@ -37,8 +36,8 @@ export default class ReplicationControllerCardMenuController {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
 
-    /** @private {!./../detail/delete_service.ReplicationControllerService} */
-    this.kdReplicationControllerService_ = kdReplicationControllerService;
+    /** @private {!./../../common/scaling/service.ScaleService} */
+    this.kdScaleService_ = kdScaleService;
   }
 
   /**
@@ -64,10 +63,11 @@ export default class ReplicationControllerCardMenuController {
   /**
    * @export
    */
-  showUpdateReplicasDialog() {
-    this.kdReplicationControllerService_.showUpdateReplicasDialog(
+  showScaleDialog() {
+    this.kdScaleService_.showScaleDialog(
         this.replicationController.objectMeta.namespace, this.replicationController.objectMeta.name,
-        this.replicationController.pods.current, this.replicationController.pods.desired);
+        this.replicationController.pods.current, this.replicationController.pods.desired,
+        this.replicationController.typeMeta.kind);
   }
 }
 

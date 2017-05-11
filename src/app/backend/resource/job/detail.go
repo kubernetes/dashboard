@@ -45,7 +45,7 @@ type JobDetail struct {
 
 	// Parallelism specifies the maximum desired number of pods the job should run at any given
 	// time.
-	Parallelism *int32 `json:"paralleism"`
+	Parallelism *int32 `json:"parallelism"`
 
 	// Completions specifies the desired number of successfully finished pods the job should be
 	// run with.
