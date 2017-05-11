@@ -62,7 +62,7 @@ func main() {
 		log.Printf("Using kubeconfig file: %s", *argKubeConfigFile)
 	}
 
-	apiserverClient, config, err := client.CreateApiserverClient(*argApiserverHost, *argKubeConfigFile)
+	apiserverClient, err := client.CreateApiserverClient(*argApiserverHost, *argKubeConfigFile)
 	if err != nil {
 		handleFatalInitError(err)
 	}
@@ -78,7 +78,9 @@ func main() {
 		log.Printf("Could not create heapster client: %s. Continuing.", err)
 	}
 
-	apiHandler, err := handler.CreateHTTPAPIHandler(apiserverClient, heapsterRESTClient, config)
+	apiHandler, err := handler.CreateHTTPAPIHandler(
+		heapsterRESTClient,
+		handler.ApiClientConfig{ApiserverHost: *argApiserverHost, KubeConfigFile: *argKubeConfigFile})
 	if err != nil {
 		handleFatalInitError(err)
 	}
