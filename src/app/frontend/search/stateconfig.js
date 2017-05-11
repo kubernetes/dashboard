@@ -20,6 +20,13 @@ import {SearchController} from './controller';
 import {stateName, stateUrl} from './state';
 
 /**
+ * @return {string}
+ */
+function getBreadcrumbLabel() {
+  return i18n.MSG_BREADCRUMBS_SEARCH_LABEL + ' {{$stateParams.q}}'
+}
+
+/**
  * @param {!ui.router.$stateProvider} $stateProvider
  * @ngInject
  */
@@ -32,7 +39,7 @@ export default function stateConfig($stateProvider) {
     },
     data: {
       [breadcrumbsConfig]: {
-        'label': i18n.MSG_BREADCRUMBS_SEARCH_LABEL,
+        'label': getBreadcrumbLabel(),
       },
     },
     views: {
@@ -47,8 +54,8 @@ export default function stateConfig($stateProvider) {
 
 /**
  * @param {!angular.$resource} kdSearchResource
- * @param {!./../chrome/state.StateParams} $stateParams
- * @param {!./../namespace/service.NamespaceService} kdNamespaceService
+ * @param {!searchApi.StateParams} $stateParams
+ * @param {!./../common/namespace/service.NamespaceService} kdNamespaceService
  * @return {!angular.$q.Promise}
  * @ngInject
  */
@@ -67,5 +74,5 @@ export function resolveSearch(kdSearchResource, $stateParams, kdNamespaceService
 
 const i18n = {
   /** @type {string} @desc Label 'Search' that appears as a breadcrumbs on the action bar. */
-  MSG_BREADCRUMBS_SEARCH_LABEL: goog.getMsg('Search for {{$stateParams.q}}'),
+  MSG_BREADCRUMBS_SEARCH_LABEL: goog.getMsg('Search for'),
 };

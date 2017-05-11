@@ -30,7 +30,7 @@ const Actions = {
 export class DataSelectService {
   /**
    * @param {!./../namespace/service.NamespaceService} kdNamespaceService
-   * @param {!../../chrome/state.StateParams|!../resource/resourcedetail.StateParams} $stateParams
+   * @param {!searchApi.StateParams|!../../chrome/state.StateParams|!../resource/resourcedetail.StateParams} $stateParams
    * @param {!{setCurrentPage: function(string, number)}} paginationService
    * @ngInject
    */
@@ -43,7 +43,9 @@ export class DataSelectService {
     this.actions_ = Actions;
     /** @export {number} **/
     this.rowsLimit = ItemsPerPage;
-    /** {!../../../chrome/chrome_state.StateParams|!../../resource/resourcedetail.StateParams} */
+    /**
+     * {!searchApi.StateParams|!../../../chrome/chrome_state.StateParams|!../../resource/resourcedetail.StateParams}
+     */
     this.stateParams_ = $stateParams;
     /** @private {!{setCurrentPage: function(string, number)}} */
     this.paginationService_ = paginationService;

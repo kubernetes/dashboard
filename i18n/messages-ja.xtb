@@ -51,6 +51,7 @@
   <translation id="7569244915796303702" key="MSG_BREADCRUMBS_RC_LABEL" desc="Label 'Replication Controllers' that appears as a breadcrumbs on the action bar.">レプリケーションコントローラ</translation>
   <translation id="837518421741773666" key="MSG_BREADCRUMBS_REPLICA_SETS_LABEL" desc="Label 'Replica Sets' that appears as a breadcrumbs on the action bar.">レプリカセット</translation>
   <translation id="5794147661362074597" key="MSG_BREADCRUMBS_ROLES_LABEL" desc="Label 'Roles' that appears as a breadcrumbs on the action bar.">Roles</translation>
+  <translation id="2851304790534826779" key="MSG_BREADCRUMBS_SEARCH_LABEL" desc="Label 'Search' that appears as a breadcrumbs on the action bar.">Search for</translation>
   <translation id="391192137756114804" key="MSG_BREADCRUMBS_SECRETS_LABEL" desc="Label 'Secrets' that appears as a breadcrumbs on the action bar.">シークレット</translation>
   <translation id="5207082267245498149" key="MSG_BREADCRUMBS_SERVICES_AND_DISCOVERY_LABEL" desc="Label 'Services and discovery' that appears as a breadcrumbs on the action bar.">サービスとディスカバリー</translation>
   <translation id="2218294864744563724" key="MSG_BREADCRUMBS_SERVICES_LABEL" desc="Label 'Services' that appears as a breadcrumbs on the action bar.">サービス</translation>
@@ -59,6 +60,8 @@
   <translation id="4645270776145594474" key="MSG_BREADCRUMBS_STORAGE_LABEL" desc="Label 'Storage' that appears as a breadcrumbs on the action bar.">Storage</translation>
   <translation id="6132384114487014259" key="MSG_BREADCRUMBS_THIRD_PARTY_RESOURCES_LABEL" desc="Label 'Third Party Resources' that appears as a breadcrumbs on the action bar.">サードパーティーリソース</translation>
   <translation id="1656728804447365846" key="MSG_BREADCRUMBS_WORKLOADS_LABEL" desc="Label 'Workloads' that appears as a breadcrumbs on the action bar.">ワークロード</translation>
+  <translation id="5441724995487814814" key="MSG_CHROME_CHROME_0" desc="Tooltip for global action bar create button tooltip.">Create an application or any Kubernetes resource</translation>
+  <translation id="152996649337797552" key="MSG_CHROME_CHROME_1" desc="Label for global action bar create button.">Create</translation>
   <translation id="5023828914132135944" key="MSG_CHROME_NAV_NAV_0" desc="Cluster group menu entry.">Cluster</translation>
   <translation id="9218333053624016665" key="MSG_CHROME_NAV_NAV_0" desc="Admin menu item in the nav.">管理者</translation>
   <translation id="6343362656986122693" key="MSG_CHROME_NAV_NAV_1" desc="Namespaces menu item in the nav.">ネームスペース</translation>
