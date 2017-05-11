@@ -64,6 +64,8 @@ import (
 	utilnet "k8s.io/apimachinery/pkg/util/net"
 	clientK8s "k8s.io/client-go/kubernetes"
 	restclient "k8s.io/client-go/rest"
+	"k8s.io/client-go/tools/clientcmd"
+	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
 )
 
 const (
@@ -74,13 +76,16 @@ const (
 	ResponseLogString = "[%s] Outcoming response to %s with %d status code"
 )
 
+type ApiClientConfig struct {
+	ApiserverHost  string
+	KubeConfigFile string
+}
+
 // APIHandler is a representation of API handler. Structure contains client, Heapster client and
 // client configuration.
 type APIHandler struct {
-	client         *clientK8s.Clientset
 	heapsterClient client.HeapsterClient
-	config         *restclient.Config
-	verber         common.ResourceVerber
+	clientConfig   ApiClientConfig
 	csrfKey        string
 }
 
@@ -135,6 +140,52 @@ func xsrfValidation(csrfKey string) func(*restful.Request, *restful.Response, *r
 	}
 }
 
+func injectApiClient(apiHandler *APIHandler) func(*restful.Request, *restful.Response, *restful.FilterChain) {
+	return func(req *restful.Request, resp *restful.Response, chain *restful.FilterChain) {
+		authorizationHeader := req.HeaderParameter("Authorization")
+		token := ""
+		if strings.HasPrefix(authorizationHeader, "Bearer ") {
+			token = strings.TrimPrefix(authorizationHeader, "Bearer ")
+		}
+
+		clientConfig := clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
+			&clientcmd.ClientConfigLoadingRules{ExplicitPath: apiHandler.clientConfig.KubeConfigFile},
+			&clientcmd.ConfigOverrides{
+				AuthInfo:    clientcmdapi.AuthInfo{Token: token},
+				ClusterInfo: clientcmdapi.Cluster{Server: apiHandler.clientConfig.ApiserverHost}})
+
+		cfg, err := clientConfig.ClientConfig()
+
+		if err != nil {
+			handleInternalError(resp, err)
+		}
+
+		// TODO Workaround, because ClientConfig doesn't override the token from the tokenfile with the one specified
+		// when run inside a cluster
+		if token != "" {
+			cfg.BearerToken = token
+		}
+
+		apiclient, err := clientK8s.NewForConfig(cfg)
+		if err != nil {
+			handleInternalError(resp, err)
+		}
+
+		req.SetAttribute("apiclient", apiclient)
+		req.SetAttribute("apiconfig", cfg)
+
+		chain.ProcessFilter(req, resp)
+	}
+}
+
+func getApiClient(request *restful.Request) *clientK8s.Clientset {
+	return request.Attribute("apiclient").(*clientK8s.Clientset)
+}
+
+func getApiConfig(request *restful.Request) *restclient.Config {
+	return request.Attribute("apiconfig").(*restclient.Config)
+}
+
 // mapUrlToResource extracts the resource from the URL path /api/v1/<resource>. Ignores potential
 // subresources.
 func mapUrlToResource(url string) *string {
@@ -179,13 +230,15 @@ func formatResponseLog(response *restful.Response, request *restful.Request) str
 		request.Request.RemoteAddr, response.StatusCode())
 }
 
-// CreateHTTPAPIHandler creates a new HTTP handler that handles all requests to the API of the backend.
-func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.HeapsterClient,
-	clientConfig *restclient.Config) (http.Handler, error) {
-
-	verber := common.NewResourceVerber(client.CoreV1().RESTClient(),
+func createVerberFromApiClient(client *clientK8s.Clientset) common.ResourceVerber {
+	return common.NewResourceVerber(client.CoreV1().RESTClient(),
 		client.ExtensionsV1beta1().RESTClient(), client.AppsV1beta1().RESTClient(),
 		client.BatchV1().RESTClient(), client.AutoscalingV1().RESTClient(), client.StorageV1beta1().RESTClient())
+}
+
+// CreateHTTPAPIHandler creates a new HTTP handler that handles all requests to the API of the backend.
+func CreateHTTPAPIHandler(heapsterClient client.HeapsterClient,
+	clientConfig ApiClientConfig) (http.Handler, error) {
 
 	var csrfKey string
 	inClusterConfig, err := restclient.InClusterConfig()
@@ -204,7 +257,7 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 		csrfKey = string(bytes)
 	}
 
-	apiHandler := APIHandler{client, heapsterClient, clientConfig, verber, csrfKey}
+	apiHandler := APIHandler{heapsterClient, clientConfig, csrfKey}
 	wsContainer := restful.NewContainer()
 	wsContainer.EnableContentEncoding(true)
 
@@ -214,6 +267,7 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 	RegisterMetrics()
 	apiV1Ws.Filter(wsMetrics)
 	apiV1Ws.Filter(xsrfValidation(csrfKey))
+	apiV1Ws.Filter(injectApiClient(&apiHandler))
 	apiV1Ws.Path("/api/v1").
 		Consumes(restful.MIME_JSON).
 		Produces(restful.MIME_JSON)
@@ -646,7 +700,7 @@ func CreateHTTPAPIHandler(client *clientK8s.Clientset, heapsterClient client.Hea
 func (apiHandler *APIHandler) handleGetRbacRoleList(request *restful.Request, response *restful.Response) {
 	// TODO: Handle case in which RBAC feature is not enabled in API server. Currently returns 404 resource not found
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := rbacroles.GetRbacRoleList(apiHandler.client, dataSelect)
+	result, err := rbacroles.GetRbacRoleList(getApiClient(request), dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -657,7 +711,7 @@ func (apiHandler *APIHandler) handleGetRbacRoleList(request *restful.Request, re
 func (apiHandler *APIHandler) handleGetRbacRoleBindingList(request *restful.Request, response *restful.Response) {
 	// TODO: Handle case in which RBAC feature is not enabled in API server. Currently returns 404 resource not found
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := rbacrolebindings.GetRbacRoleBindingList(apiHandler.client, dataSelect)
+	result, err := rbacrolebindings.GetRbacRoleBindingList(getApiClient(request), dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -679,7 +733,8 @@ func (apiHandler *APIHandler) handleGetStatefulSetList(request *restful.Request,
 	namespace := parseNamespacePathParameter(request)
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.StandardMetrics
-	result, err := statefulset.GetStatefulSetList(apiHandler.client, namespace, dataSelect, &apiHandler.heapsterClient)
+
+	result, err := statefulset.GetStatefulSetList(getApiClient(request), namespace, dataSelect, &apiHandler.heapsterClient)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -694,7 +749,7 @@ func (apiHandler *APIHandler) handleGetStatefulSetDetail(request *restful.Reques
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("statefulset")
 
-	result, err := statefulset.GetStatefulSetDetail(apiHandler.client, apiHandler.heapsterClient,
+	result, err := statefulset.GetStatefulSetDetail(getApiClient(request), apiHandler.heapsterClient,
 		namespace, name)
 	if err != nil {
 		handleInternalError(response, err)
@@ -709,7 +764,8 @@ func (apiHandler *APIHandler) handleGetStatefulSetPods(request *restful.Request,
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("statefulset")
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := statefulset.GetStatefulSetPods(apiHandler.client, apiHandler.heapsterClient,
+
+	result, err := statefulset.GetStatefulSetPods(getApiClient(request), apiHandler.heapsterClient,
 		dataSelect, name, namespace)
 	if err != nil {
 		handleInternalError(response, err)
@@ -724,7 +780,7 @@ func (apiHandler *APIHandler) handleGetStatefulSetEvents(request *restful.Reques
 	name := request.PathParameter("statefulset")
 	dataSelect := parseDataSelectPathParameter(request)
 
-	result, err := statefulset.GetStatefulSetEvents(apiHandler.client, dataSelect, namespace,
+	result, err := statefulset.GetStatefulSetEvents(getApiClient(request), dataSelect, namespace,
 		name)
 	if err != nil {
 		handleInternalError(response, err)
@@ -737,7 +793,7 @@ func (apiHandler *APIHandler) handleGetStatefulSetEvents(request *restful.Reques
 func (apiHandler *APIHandler) handleGetServiceList(request *restful.Request, response *restful.Response) {
 	namespace := parseNamespacePathParameter(request)
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := resourceService.GetServiceList(apiHandler.client, namespace, dataSelect)
+	result, err := resourceService.GetServiceList(getApiClient(request), namespace, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -751,7 +807,7 @@ func (apiHandler *APIHandler) handleGetServiceDetail(request *restful.Request, r
 	namespace := request.PathParameter("namespace")
 	service := request.PathParameter("service")
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := resourceService.GetServiceDetail(apiHandler.client, apiHandler.heapsterClient,
+	result, err := resourceService.GetServiceDetail(getApiClient(request), apiHandler.heapsterClient,
 		namespace, service, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
@@ -763,7 +819,7 @@ func (apiHandler *APIHandler) handleGetServiceDetail(request *restful.Request, r
 func (apiHandler *APIHandler) handleGetIngressDetail(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("name")
-	result, err := ingress.GetIngressDetail(apiHandler.client, namespace, name)
+	result, err := ingress.GetIngressDetail(getApiClient(request), namespace, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -774,7 +830,7 @@ func (apiHandler *APIHandler) handleGetIngressDetail(request *restful.Request, r
 func (apiHandler *APIHandler) handleGetIngressList(request *restful.Request, response *restful.Response) {
 	dataSelect := parseDataSelectPathParameter(request)
 	namespace := parseNamespacePathParameter(request)
-	result, err := ingress.GetIngressList(apiHandler.client, namespace, dataSelect)
+	result, err := ingress.GetIngressList(getApiClient(request), namespace, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -789,7 +845,7 @@ func (apiHandler *APIHandler) handleGetServicePods(request *restful.Request,
 	namespace := request.PathParameter("namespace")
 	service := request.PathParameter("service")
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := resourceService.GetServicePods(apiHandler.client, apiHandler.heapsterClient,
+	result, err := resourceService.GetServicePods(getApiClient(request), apiHandler.heapsterClient,
 		namespace, service, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
@@ -803,7 +859,7 @@ func (apiHandler *APIHandler) handleGetNodeList(request *restful.Request, respon
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.StandardMetrics
 
-	result, err := node.GetNodeList(apiHandler.client, dataSelect, &apiHandler.heapsterClient)
+	result, err := node.GetNodeList(getApiClient(request), dataSelect, &apiHandler.heapsterClient)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -816,7 +872,7 @@ func (apiHandler *APIHandler) handleGetCluster(request *restful.Request, respons
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.NoMetrics
 
-	result, err := cluster.GetCluster(apiHandler.client, dataSelect, &apiHandler.heapsterClient)
+	result, err := cluster.GetCluster(getApiClient(request), dataSelect, &apiHandler.heapsterClient)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -829,7 +885,7 @@ func (apiHandler *APIHandler) handleGetCluster(request *restful.Request, respons
 func (apiHandler *APIHandler) handleGetNodeDetail(request *restful.Request, response *restful.Response) {
 	name := request.PathParameter("name")
 
-	result, err := node.GetNodeDetail(apiHandler.client, apiHandler.heapsterClient, name)
+	result, err := node.GetNodeDetail(getApiClient(request), apiHandler.heapsterClient, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -842,7 +898,7 @@ func (apiHandler *APIHandler) handleGetNodeEvents(request *restful.Request, resp
 	name := request.PathParameter("name")
 	dataSelect := parseDataSelectPathParameter(request)
 
-	result, err := event.GetNodeEvents(apiHandler.client, dataSelect, name)
+	result, err := event.GetNodeEvents(getApiClient(request), dataSelect, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -855,7 +911,7 @@ func (apiHandler *APIHandler) handleGetNodePods(request *restful.Request, respon
 	name := request.PathParameter("name")
 	dataSelect := parseDataSelectPathParameter(request)
 
-	result, err := node.GetNodePods(apiHandler.client, apiHandler.heapsterClient, dataSelect, name)
+	result, err := node.GetNodePods(getApiClient(request), apiHandler.heapsterClient, dataSelect, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -870,7 +926,7 @@ func (apiHandler *APIHandler) handleDeploy(request *restful.Request, response *r
 		handleInternalError(response, err)
 		return
 	}
-	if err := deployment.DeployApp(appDeploymentSpec, apiHandler.client); err != nil {
+	if err := deployment.DeployApp(appDeploymentSpec, getApiClient(request)); err != nil {
 		handleInternalError(response, err)
 		return
 	}
@@ -913,7 +969,7 @@ func (apiHandler *APIHandler) handleNameValidity(request *restful.Request, respo
 		return
 	}
 
-	validity, err := validation.ValidateAppName(spec, apiHandler.client)
+	validity, err := validation.ValidateAppName(spec, getApiClient(request))
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -961,7 +1017,7 @@ func (apiHandler *APIHandler) handleGetReplicationControllerList(
 	namespace := parseNamespacePathParameter(request)
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.StandardMetrics
-	result, err := replicationcontroller.GetReplicationControllerList(apiHandler.client, namespace, dataSelect, &apiHandler.heapsterClient)
+	result, err := replicationcontroller.GetReplicationControllerList(getApiClient(request), namespace, dataSelect, &apiHandler.heapsterClient)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -977,7 +1033,7 @@ func (apiHandler *APIHandler) handleGetWorkloads(
 	namespace := parseNamespacePathParameter(request)
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.NoMetrics
-	result, err := workload.GetWorkloads(apiHandler.client, apiHandler.heapsterClient,
+	result, err := workload.GetWorkloads(getApiClient(request), apiHandler.heapsterClient,
 		namespace, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
@@ -992,7 +1048,7 @@ func (apiHandler *APIHandler) handleGetDiscovery(
 
 	namespace := parseNamespacePathParameter(request)
 	dsQuery := parseDataSelectPathParameter(request)
-	result, err := discovery.GetDiscovery(apiHandler.client, namespace, dsQuery)
+	result, err := discovery.GetDiscovery(getApiClient(request), namespace, dsQuery)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1006,7 +1062,7 @@ func (apiHandler *APIHandler) handleGetConfig(
 
 	namespace := parseNamespacePathParameter(request)
 	dsQuery := parseDataSelectPathParameter(request)
-	result, err := config.GetConfig(apiHandler.client, namespace, dsQuery)
+	result, err := config.GetConfig(getApiClient(request), namespace, dsQuery)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1022,7 +1078,7 @@ func (apiHandler *APIHandler) handleGetReplicaSets(
 	namespace := parseNamespacePathParameter(request)
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.StandardMetrics
-	result, err := replicaset.GetReplicaSetList(apiHandler.client, namespace, dataSelect, &apiHandler.heapsterClient)
+	result, err := replicaset.GetReplicaSetList(getApiClient(request), namespace, dataSelect, &apiHandler.heapsterClient)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1038,7 +1094,7 @@ func (apiHandler *APIHandler) handleGetReplicaSetDetail(
 	namespace := request.PathParameter("namespace")
 	replicaSet := request.PathParameter("replicaSet")
 
-	result, err := replicaset.GetReplicaSetDetail(apiHandler.client, apiHandler.heapsterClient,
+	result, err := replicaset.GetReplicaSetDetail(getApiClient(request), apiHandler.heapsterClient,
 		namespace, replicaSet)
 
 	if err != nil {
@@ -1056,7 +1112,7 @@ func (apiHandler *APIHandler) handleGetReplicaSetPods(
 	namespace := request.PathParameter("namespace")
 	replicaSet := request.PathParameter("replicaSet")
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := replicaset.GetReplicaSetPods(apiHandler.client, apiHandler.heapsterClient,
+	result, err := replicaset.GetReplicaSetPods(getApiClient(request), apiHandler.heapsterClient,
 		dataSelect, replicaSet, namespace)
 
 	if err != nil {
@@ -1074,7 +1130,7 @@ func (apiHandler *APIHandler) handleGetReplicaSetServices(
 	namespace := request.PathParameter("namespace")
 	replicaSet := request.PathParameter("replicaSet")
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := replicaset.GetReplicaSetServices(apiHandler.client, dataSelect, namespace,
+	result, err := replicaset.GetReplicaSetServices(getApiClient(request), dataSelect, namespace,
 		replicaSet)
 	if err != nil {
 		handleInternalError(response, err)
@@ -1090,7 +1146,7 @@ func (apiHandler *APIHandler) handleGetReplicaSetEvents(request *restful.Request
 	name := request.PathParameter("replicaSet")
 	dataSelect := parseDataSelectPathParameter(request)
 
-	result, err := replicaset.GetReplicaSetEvents(apiHandler.client, dataSelect, namespace,
+	result, err := replicaset.GetReplicaSetEvents(getApiClient(request), dataSelect, namespace,
 		name)
 	if err != nil {
 		handleInternalError(response, err)
@@ -1108,7 +1164,7 @@ func (apiHandler *APIHandler) handleGetPodEvents(request *restful.Request, respo
 	podName := request.PathParameter("pod")
 	dataSelect := parseDataSelectPathParameter(request)
 
-	result, err := pod.GetEventsForPod(apiHandler.client, dataSelect, namespace,
+	result, err := pod.GetEventsForPod(getApiClient(request), dataSelect, namespace,
 		podName)
 	if err != nil {
 		handleInternalError(response, err)
@@ -1124,7 +1180,7 @@ func (apiHandler *APIHandler) handleGetDeployments(
 	namespace := parseNamespacePathParameter(request)
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.StandardMetrics
-	result, err := deployment.GetDeploymentList(apiHandler.client, namespace, dataSelect, &apiHandler.heapsterClient)
+	result, err := deployment.GetDeploymentList(getApiClient(request), namespace, dataSelect, &apiHandler.heapsterClient)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1140,7 +1196,7 @@ func (apiHandler *APIHandler) handleGetDeploymentDetail(
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("deployment")
 
-	result, err := deployment.GetDeploymentDetail(apiHandler.client, apiHandler.heapsterClient, namespace, name)
+	result, err := deployment.GetDeploymentDetail(getApiClient(request), apiHandler.heapsterClient, namespace, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1155,7 +1211,7 @@ func (apiHandler *APIHandler) handleGetDeploymentEvents(request *restful.Request
 	name := request.PathParameter("deployment")
 	dataSelect := parseDataSelectPathParameter(request)
 
-	result, err := deployment.GetDeploymentEvents(apiHandler.client, dataSelect, namespace,
+	result, err := deployment.GetDeploymentEvents(getApiClient(request), dataSelect, namespace,
 		name)
 	if err != nil {
 		handleInternalError(response, err)
@@ -1170,7 +1226,7 @@ func (apiHandler *APIHandler) handleGetDeploymentOldReplicaSets(request *restful
 	name := request.PathParameter("deployment")
 	dataSelect := parseDataSelectPathParameter(request)
 
-	result, err := deployment.GetDeploymentOldReplicaSets(apiHandler.client, dataSelect, namespace,
+	result, err := deployment.GetDeploymentOldReplicaSets(getApiClient(request), dataSelect, namespace,
 		name)
 	if err != nil {
 		handleInternalError(response, err)
@@ -1186,7 +1242,7 @@ func (apiHandler *APIHandler) handleGetPods(
 	namespace := parseNamespacePathParameter(request)
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.StandardMetrics // download standard metrics - cpu, and memory - by default
-	result, err := pod.GetPodList(apiHandler.client, apiHandler.heapsterClient, namespace, dataSelect)
+	result, err := pod.GetPodList(getApiClient(request), apiHandler.heapsterClient, namespace, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1200,7 +1256,7 @@ func (apiHandler *APIHandler) handleGetPodDetail(request *restful.Request, respo
 
 	namespace := request.PathParameter("namespace")
 	podName := request.PathParameter("pod")
-	result, err := pod.GetPodDetail(apiHandler.client, apiHandler.heapsterClient, namespace, podName)
+	result, err := pod.GetPodDetail(getApiClient(request), apiHandler.heapsterClient, namespace, podName)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1216,7 +1272,7 @@ func (apiHandler *APIHandler) handleGetReplicationControllerDetail(
 	namespace := request.PathParameter("namespace")
 	replicationController := request.PathParameter("replicationController")
 
-	result, err := replicationcontroller.GetReplicationControllerDetail(apiHandler.client,
+	result, err := replicationcontroller.GetReplicationControllerDetail(getApiClient(request),
 		apiHandler.heapsterClient, namespace, replicationController)
 	if err != nil {
 		handleInternalError(response, err)
@@ -1239,7 +1295,7 @@ func (apiHandler *APIHandler) handleUpdateReplicasCount(
 		return
 	}
 
-	if err := replicationcontroller.UpdateReplicasCount(apiHandler.client, namespace, replicationControllerName,
+	if err := replicationcontroller.UpdateReplicasCount(getApiClient(request), namespace, replicationControllerName,
 		replicationControllerSpec); err != nil {
 		handleInternalError(response, err)
 		return
@@ -1254,7 +1310,8 @@ func (apiHandler *APIHandler) handleGetResource(
 	namespace, ok := request.PathParameters()["namespace"]
 	name := request.PathParameter("name")
 
-	result, err := apiHandler.verber.Get(kind, ok, namespace, name)
+	verber := createVerberFromApiClient(getApiClient(request))
+	result, err := verber.Get(kind, ok, namespace, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1274,7 +1331,8 @@ func (apiHandler *APIHandler) handlePutResource(
 		return
 	}
 
-	if err := apiHandler.verber.Put(kind, ok, namespace, name, putSpec); err != nil {
+	verber := createVerberFromApiClient(getApiClient(request))
+	if err := verber.Put(kind, ok, namespace, name, putSpec); err != nil {
 		handleInternalError(response, err)
 		return
 	}
@@ -1288,7 +1346,8 @@ func (apiHandler *APIHandler) handleDeleteResource(
 	namespace, ok := request.PathParameters()["namespace"]
 	name := request.PathParameter("name")
 
-	if err := apiHandler.verber.Delete(kind, ok, namespace, name); err != nil {
+	verber := createVerberFromApiClient(getApiClient(request))
+	if err := verber.Delete(kind, ok, namespace, name); err != nil {
 		handleInternalError(response, err)
 		return
 	}
@@ -1304,7 +1363,7 @@ func (apiHandler *APIHandler) handleGetReplicationControllerPods(
 	replicationController := request.PathParameter("replicationController")
 	dataSelect := parseDataSelectPathParameter(request)
 
-	result, err := replicationcontroller.GetReplicationControllerPods(apiHandler.client, apiHandler.heapsterClient,
+	result, err := replicationcontroller.GetReplicationControllerPods(getApiClient(request), apiHandler.heapsterClient,
 		dataSelect, replicationController, namespace)
 	if err != nil {
 		handleInternalError(response, err)
@@ -1322,7 +1381,7 @@ func (apiHandler *APIHandler) handleCreateNamespace(request *restful.Request,
 		handleInternalError(response, err)
 		return
 	}
-	if err := namespace.CreateNamespace(namespaceSpec, apiHandler.client); err != nil {
+	if err := namespace.CreateNamespace(namespaceSpec, getApiClient(request)); err != nil {
 		handleInternalError(response, err)
 		return
 	}
@@ -1335,7 +1394,7 @@ func (apiHandler *APIHandler) handleGetNamespaces(
 	request *restful.Request, response *restful.Response) {
 
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := namespace.GetNamespaceList(apiHandler.client, dataSelect)
+	result, err := namespace.GetNamespaceList(getApiClient(request), dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1348,7 +1407,7 @@ func (apiHandler *APIHandler) handleGetNamespaces(
 func (apiHandler *APIHandler) handleGetNamespaceDetail(request *restful.Request,
 	response *restful.Response) {
 	name := request.PathParameter("name")
-	result, err := namespace.GetNamespaceDetail(apiHandler.client, apiHandler.heapsterClient, name)
+	result, err := namespace.GetNamespaceDetail(getApiClient(request), apiHandler.heapsterClient, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1361,7 +1420,7 @@ func (apiHandler *APIHandler) handleGetNamespaceEvents(request *restful.Request,
 	name := request.PathParameter("name")
 	dataSelect := parseDataSelectPathParameter(request)
 
-	result, err := event.GetNamespaceEvents(apiHandler.client, dataSelect, name)
+	result, err := event.GetNamespaceEvents(getApiClient(request), dataSelect, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1376,7 +1435,7 @@ func (apiHandler *APIHandler) handleCreateImagePullSecret(request *restful.Reque
 		handleInternalError(response, err)
 		return
 	}
-	secret, err := secret.CreateSecret(apiHandler.client, secretSpec)
+	secret, err := secret.CreateSecret(getApiClient(request), secretSpec)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1387,7 +1446,7 @@ func (apiHandler *APIHandler) handleCreateImagePullSecret(request *restful.Reque
 func (apiHandler *APIHandler) handleGetSecretDetail(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("name")
-	result, err := secret.GetSecretDetail(apiHandler.client, namespace, name)
+	result, err := secret.GetSecretDetail(getApiClient(request), namespace, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1399,7 +1458,7 @@ func (apiHandler *APIHandler) handleGetSecretDetail(request *restful.Request, re
 func (apiHandler *APIHandler) handleGetSecretList(request *restful.Request, response *restful.Response) {
 	dataSelect := parseDataSelectPathParameter(request)
 	namespace := parseNamespacePathParameter(request)
-	result, err := secret.GetSecretList(apiHandler.client, namespace, dataSelect)
+	result, err := secret.GetSecretList(getApiClient(request), namespace, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1410,7 +1469,7 @@ func (apiHandler *APIHandler) handleGetSecretList(request *restful.Request, resp
 func (apiHandler *APIHandler) handleGetConfigMapList(request *restful.Request, response *restful.Response) {
 	namespace := parseNamespacePathParameter(request)
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := configmap.GetConfigMapList(apiHandler.client, namespace, dataSelect)
+	result, err := configmap.GetConfigMapList(getApiClient(request), namespace, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1421,7 +1480,7 @@ func (apiHandler *APIHandler) handleGetConfigMapList(request *restful.Request, r
 func (apiHandler *APIHandler) handleGetConfigMapDetail(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("configmap")
-	result, err := configmap.GetConfigMapDetail(apiHandler.client, namespace, name)
+	result, err := configmap.GetConfigMapDetail(getApiClient(request), namespace, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1431,7 +1490,7 @@ func (apiHandler *APIHandler) handleGetConfigMapDetail(request *restful.Request,
 
 func (apiHandler *APIHandler) handleGetPersistentVolumeList(request *restful.Request, response *restful.Response) {
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := persistentvolume.GetPersistentVolumeList(apiHandler.client, dataSelect)
+	result, err := persistentvolume.GetPersistentVolumeList(getApiClient(request), dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1442,7 +1501,7 @@ func (apiHandler *APIHandler) handleGetPersistentVolumeList(request *restful.Req
 func (apiHandler *APIHandler) handleGetThirdPartyResource(request *restful.Request,
 	response *restful.Response) {
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := thirdpartyresource.GetThirdPartyResourceList(apiHandler.client, dataSelect)
+	result, err := thirdpartyresource.GetThirdPartyResourceList(getApiClient(request), dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1453,7 +1512,7 @@ func (apiHandler *APIHandler) handleGetThirdPartyResource(request *restful.Reque
 func (apiHandler *APIHandler) handleGetThirdPartyResourceDetail(request *restful.Request,
 	response *restful.Response) {
 	name := request.PathParameter("thirdpartyresource")
-	result, err := thirdpartyresource.GetThirdPartyResourceDetail(apiHandler.client, apiHandler.config, name)
+	result, err := thirdpartyresource.GetThirdPartyResourceDetail(getApiClient(request), getApiConfig(request), name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1464,7 +1523,7 @@ func (apiHandler *APIHandler) handleGetThirdPartyResourceDetail(request *restful
 func (apiHandler *APIHandler) handleGetThirdPartyResourceObjects(request *restful.Request, response *restful.Response) {
 	name := request.PathParameter("thirdpartyresource")
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := thirdpartyresource.GetThirdPartyResourceObjects(apiHandler.client, apiHandler.config, dataSelect, name)
+	result, err := thirdpartyresource.GetThirdPartyResourceObjects(getApiClient(request), getApiConfig(request), dataSelect, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1474,7 +1533,7 @@ func (apiHandler *APIHandler) handleGetThirdPartyResourceObjects(request *restfu
 
 func (apiHandler *APIHandler) handleGetPersistentVolumeDetail(request *restful.Request, response *restful.Response) {
 	name := request.PathParameter("persistentvolume")
-	result, err := persistentvolume.GetPersistentVolumeDetail(apiHandler.client, name)
+	result, err := persistentvolume.GetPersistentVolumeDetail(getApiClient(request), name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1486,7 +1545,7 @@ func (apiHandler *APIHandler) handleGetPersistentVolumeClaimList(request *restfu
 
 	namespace := parseNamespacePathParameter(request)
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := persistentvolumeclaim.GetPersistentVolumeClaimList(apiHandler.client, namespace, dataSelect)
+	result, err := persistentvolumeclaim.GetPersistentVolumeClaimList(getApiClient(request), namespace, dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1497,7 +1556,7 @@ func (apiHandler *APIHandler) handleGetPersistentVolumeClaimList(request *restfu
 func (apiHandler *APIHandler) handleGetPersistentVolumeClaimDetail(request *restful.Request, response *restful.Response) {
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("name")
-	result, err := persistentvolumeclaim.GetPersistentVolumeClaimDetail(apiHandler.client, namespace, name)
+	result, err := persistentvolumeclaim.GetPersistentVolumeClaimDetail(getApiClient(request), namespace, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1539,7 +1598,7 @@ func (apiHandler *APIHandler) handleLogs(request *restful.Request, response *res
 		}
 	}
 
-	result, err := container.GetPodLogs(apiHandler.client, namespace, podID, containerID, logSelector)
+	result, err := container.GetPodLogs(getApiClient(request), namespace, podID, containerID, logSelector)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1551,7 +1610,7 @@ func (apiHandler *APIHandler) handleGetPodContainers(request *restful.Request, r
 	namespace := request.PathParameter("namespace")
 	podID := request.PathParameter("pod")
 
-	result, err := container.GetPodContainers(apiHandler.client, namespace, podID)
+	result, err := container.GetPodContainers(getApiClient(request), namespace, podID)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1565,7 +1624,7 @@ func (apiHandler *APIHandler) handleGetReplicationControllerEvents(request *rest
 	replicationController := request.PathParameter("replicationController")
 	dataSelect := parseDataSelectPathParameter(request)
 
-	result, err := replicationcontroller.GetReplicationControllerEvents(apiHandler.client, dataSelect, namespace,
+	result, err := replicationcontroller.GetReplicationControllerEvents(getApiClient(request), dataSelect, namespace,
 		replicationController)
 	if err != nil {
 		handleInternalError(response, err)
@@ -1581,7 +1640,7 @@ func (apiHandler *APIHandler) handleGetReplicationControllerServices(request *re
 	replicationController := request.PathParameter("replicationController")
 	dataSelect := parseDataSelectPathParameter(request)
 
-	result, err := replicationcontroller.GetReplicationControllerServices(apiHandler.client, dataSelect,
+	result, err := replicationcontroller.GetReplicationControllerServices(getApiClient(request), dataSelect,
 		namespace, replicationController)
 	if err != nil {
 		handleInternalError(response, err)
@@ -1611,7 +1670,7 @@ func (apiHandler *APIHandler) handleGetDaemonSetList(
 	namespace := parseNamespacePathParameter(request)
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.StandardMetrics
-	result, err := daemonset.GetDaemonSetList(apiHandler.client, namespace, dataSelect, &apiHandler.heapsterClient)
+	result, err := daemonset.GetDaemonSetList(getApiClient(request), namespace, dataSelect, &apiHandler.heapsterClient)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1627,7 +1686,7 @@ func (apiHandler *APIHandler) handleGetDaemonSetDetail(
 	namespace := request.PathParameter("namespace")
 	daemonSet := request.PathParameter("daemonSet")
 
-	result, err := daemonset.GetDaemonSetDetail(apiHandler.client, apiHandler.heapsterClient,
+	result, err := daemonset.GetDaemonSetDetail(getApiClient(request), apiHandler.heapsterClient,
 		namespace, daemonSet)
 	if err != nil {
 		handleInternalError(response, err)
@@ -1644,7 +1703,7 @@ func (apiHandler *APIHandler) handleGetDaemonSetPods(
 	namespace := request.PathParameter("namespace")
 	daemonSet := request.PathParameter("daemonSet")
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := daemonset.GetDaemonSetPods(apiHandler.client, apiHandler.heapsterClient,
+	result, err := daemonset.GetDaemonSetPods(getApiClient(request), apiHandler.heapsterClient,
 		dataSelect, daemonSet, namespace)
 	if err != nil {
 		handleInternalError(response, err)
@@ -1661,7 +1720,7 @@ func (apiHandler *APIHandler) handleGetDaemonSetServices(
 	namespace := request.PathParameter("namespace")
 	daemonSet := request.PathParameter("daemonSet")
 	dataSelect := parseDataSelectPathParameter(request)
-	result, err := daemonset.GetDaemonSetServices(apiHandler.client, dataSelect, namespace,
+	result, err := daemonset.GetDaemonSetServices(getApiClient(request), dataSelect, namespace,
 		daemonSet)
 	if err != nil {
 		handleInternalError(response, err)
@@ -1677,7 +1736,7 @@ func (apiHandler *APIHandler) handleGetDaemonSetEvents(request *restful.Request,
 	name := request.PathParameter("daemonSet")
 	dataSelect := parseDataSelectPathParameter(request)
 
-	result, err := daemonset.GetDaemonSetEvents(apiHandler.client, dataSelect, namespace,
+	result, err := daemonset.GetDaemonSetEvents(getApiClient(request), dataSelect, namespace,
 		name)
 	if err != nil {
 		handleInternalError(response, err)
@@ -1698,7 +1757,7 @@ func (apiHandler *APIHandler) handleDeleteDaemonSet(
 		return
 	}
 
-	if err := daemonset.DeleteDaemonSet(apiHandler.client, namespace,
+	if err := daemonset.DeleteDaemonSet(getApiClient(request), namespace,
 		daemonSet, deleteServices); err != nil {
 		handleInternalError(response, err)
 		return
@@ -1712,7 +1771,7 @@ func (apiHandler *APIHandler) handleGetHorizontalPodAutoscalerList(request *rest
 	response *restful.Response) {
 	namespace := parseNamespacePathParameter(request)
 
-	result, err := horizontalpodautoscaler.GetHorizontalPodAutoscalerList(apiHandler.client, namespace)
+	result, err := horizontalpodautoscaler.GetHorizontalPodAutoscalerList(getApiClient(request), namespace)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1725,7 +1784,7 @@ func (apiHandler *APIHandler) handleGetHorizontalPodAutoscalerDetail(request *re
 	namespace := request.PathParameter("namespace")
 	horizontalpodautoscalerParam := request.PathParameter("horizontalpodautoscaler")
 
-	result, err := horizontalpodautoscaler.GetHorizontalPodAutoscalerDetail(apiHandler.client, namespace, horizontalpodautoscalerParam)
+	result, err := horizontalpodautoscaler.GetHorizontalPodAutoscalerDetail(getApiClient(request), namespace, horizontalpodautoscalerParam)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1741,7 +1800,7 @@ func (apiHandler *APIHandler) handleGetJobList(request *restful.Request,
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.StandardMetrics
 
-	result, err := job.GetJobList(apiHandler.client, namespace, dataSelect, &apiHandler.heapsterClient)
+	result, err := job.GetJobList(getApiClient(request), namespace, dataSelect, &apiHandler.heapsterClient)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1756,7 +1815,7 @@ func (apiHandler *APIHandler) handleGetJobDetail(request *restful.Request, respo
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.StandardMetrics
 
-	result, err := job.GetJobDetail(apiHandler.client, apiHandler.heapsterClient, namespace, jobParam)
+	result, err := job.GetJobDetail(getApiClient(request), apiHandler.heapsterClient, namespace, jobParam)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1773,7 +1832,7 @@ func (apiHandler *APIHandler) handleGetJobPods(request *restful.Request,
 	jobParam := request.PathParameter("job")
 	dataSelect := parseDataSelectPathParameter(request)
 
-	result, err := job.GetJobPods(apiHandler.client, apiHandler.heapsterClient, dataSelect,
+	result, err := job.GetJobPods(getApiClient(request), apiHandler.heapsterClient, dataSelect,
 		namespace, jobParam)
 	if err != nil {
 		handleInternalError(response, err)
@@ -1789,7 +1848,7 @@ func (apiHandler *APIHandler) handleGetJobEvents(request *restful.Request, respo
 	name := request.PathParameter("job")
 	dataSelect := parseDataSelectPathParameter(request)
 
-	result, err := job.GetJobEvents(apiHandler.client, dataSelect, namespace,
+	result, err := job.GetJobEvents(getApiClient(request), dataSelect, namespace,
 		name)
 	if err != nil {
 		handleInternalError(response, err)
@@ -1802,7 +1861,7 @@ func (apiHandler *APIHandler) handleGetJobEvents(request *restful.Request, respo
 func (apiHandler *APIHandler) handleGetStorageClassList(request *restful.Request, response *restful.Response) {
 	dataSelect := parseDataSelectPathParameter(request)
 
-	result, err := storageclass.GetStorageClassList(apiHandler.client, dataSelect)
+	result, err := storageclass.GetStorageClassList(getApiClient(request), dataSelect)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -1814,7 +1873,7 @@ func (apiHandler *APIHandler) handleGetStorageClassList(request *restful.Request
 func (apiHandler *APIHandler) handleGetStorageClass(request *restful.Request, response *restful.Response) {
 	name := request.PathParameter("storageclass")
 
-	result, err := storageclass.GetStorageClass(apiHandler.client, name)
+	result, err := storageclass.GetStorageClass(getApiClient(request), name)
 	if err != nil {
 		handleInternalError(response, err)
 		return
