@@ -43,7 +43,7 @@ type JobDetail struct {
 	// List of events related to this Job.
 	EventList common.EventList `json:"eventList"`
 
-	// parallelism specifies the maximum desired number of pods the job should run at any given
+	// Parallelism specifies the maximum desired number of pods the job should run at any given
 	// time.
 	Parallelism *int32 `json:"parallelism"`
 
