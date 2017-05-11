@@ -28,7 +28,6 @@ export default function showUpdateReplicasDialog(
     mdDialog, namespace, resourceName, currentPods, desiredPods, resourceKindName) {
   return mdDialog.show({
     controller: ScaleResourceDialogController,
-    controllerAs: '$ctrl',
     clickOutsideToClose: true,
     templateUrl: 'common/scaling/scaleresource.html',
     locals: {
