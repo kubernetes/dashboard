@@ -31,7 +31,6 @@ export default class BreadcrumbsController {
   constructor($state, $interpolate, kdBreadcrumbsService, $scope, kdFutureStateService) {
     /** @private {!ui.router.$state} */
     this.state_ = $state;
-    window['k8d_state'] =  $state;
 
     /** @private {!angular.$interpolate} */
     this.interpolate_ = $interpolate;

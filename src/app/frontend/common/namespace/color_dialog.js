@@ -16,8 +16,6 @@ import {ColorSelectionController} from './color_selection_controller';
 
 /**
  * @param {!md.$dialog} mdDialog
- * @param {string} resourceKindName
- * @param {string} resourceUrl
  * @return {!angular.$q.Promise}
  */
 export default function showColorSelectionDialog(mdDialog) {
