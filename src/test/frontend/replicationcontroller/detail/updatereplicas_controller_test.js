@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import UpdateReplicasDialogController from 'replicationcontroller/detail/updatereplicas_controller';
+import UpdateReplicasDialogController from 'common/scaling/controller';
 import replicationControllerModule from 'replicationcontroller/module';
 
 describe('Update Replicas controller', () => {
@@ -36,6 +36,8 @@ describe('Update Replicas controller', () => {
   let namespaceMock = 'foo-namespace';
   /** @type {string} */
   let replicationControllerMock = 'foo-name';
+  /** @type {string} */
+  let resourceKindNameMock = 'replicationcontroller';
 
   beforeEach(() => {
     angular.mock.module(replicationControllerModule.name);
@@ -45,17 +47,16 @@ describe('Update Replicas controller', () => {
       state = $state;
       resource = $resource;
       httpBackend = $httpBackend;
-      httpBackend.expectGET('api/v1/csrftoken/replicationcontroller')
-          .respond(200, '{"token": "x"}');
       log = $log;
 
       ctrl = $controller(
           UpdateReplicasDialogController, {
             $resource: resource,
             namespace: namespaceMock,
-            replicationController: replicationControllerMock,
             currentPods: 1,
-            desiredPods: 1,
+            desiredPods: 2,
+            resourceName: replicationControllerMock,
+            resourceKindName: resourceKindNameMock,
           },
           {updateReplicasForm: {$valid: true}});
     });
@@ -63,32 +64,33 @@ describe('Update Replicas controller', () => {
 
   it('should update controller replicas to given number and log success', () => {
     // given
-    let replicaSpec = {
-      replicas: 5,
+    let replicaCounts = {
+      desiredReplicas: 2,
+      actualReplicas: 1,
     };
     spyOn(log, 'info');
     spyOn(state, 'reload');
-    httpBackend.whenPOST('api/v1/replicationcontroller/foo-namespace/foo-name/update/pod')
-        .respond(200, replicaSpec);
+    httpBackend.whenPUT('api/v1/scale/replicationcontroller/foo-namespace/foo-name?scaleBy=2')
+        .respond(200, replicaCounts);
 
     // when
-    ctrl.updateReplicas();
+    ctrl.scaleResource();
     httpBackend.flush();
 
     // then
     expect(log.info).toHaveBeenCalledWith(
-        `Successfully updated replicas number to ${replicaSpec.replicas}`);
+        `Successfully updated replicas number to ${replicaCounts.desiredReplicas}`);
     expect(state.reload).toHaveBeenCalled();
   });
 
   it('should log error on failed update', () => {
     // given
     spyOn(log, 'error');
-    httpBackend.whenPOST('api/v1/replicationcontroller/foo-namespace/foo-name/update/pod')
+    httpBackend.whenPUT('api/v1/scale/replicationcontroller/foo-namespace/foo-name?scaleBy=2')
         .respond(404);
 
     // when
-    ctrl.updateReplicas();
+    ctrl.scaleResource();
     httpBackend.flush();
 
     // then

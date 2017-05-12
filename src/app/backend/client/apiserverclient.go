@@ -56,10 +56,10 @@ func buildConfigFromFlags(masterUrl, kubeconfigPath string) (*rest.Config, error
 //
 // apiserverHost param is in the format of protocol://address:port/pathPrefix, e.g.http://localhost:8001.
 // kubeConfig location of kubeconfig file
-func CreateApiserverClient(apiserverHost string, kubeConfig string) (*kubernetes.Clientset, *rest.Config, error) {
+func CreateApiserverClient(apiserverHost string, kubeConfig string) (*kubernetes.Clientset, error) {
 	cfg, err := buildConfigFromFlags(apiserverHost, kubeConfig)
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 
 	cfg.QPS = defaultQPS
@@ -70,8 +70,8 @@ func CreateApiserverClient(apiserverHost string, kubeConfig string) (*kubernetes
 
 	client, err := kubernetes.NewForConfig(cfg)
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 
-	return client, cfg, nil
+	return client, nil
 }

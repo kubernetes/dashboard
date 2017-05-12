@@ -20,8 +20,21 @@ export class ActionBarController {
    * @param {!backendApi.ReplicaSetDetail} replicaSetDetail
    * @ngInject
    */
-  constructor(replicaSetDetail) {
+  constructor(replicaSetDetail, kdScaleService) {
+    /** @private {!./../../common/scaling/service.ScaleService} */
+    this.kdScaleService_ = kdScaleService;
+
     /** @export {!backendApi.ReplicaSetDetail} */
     this.details = replicaSetDetail;
+  }
+
+  /**
+   * Handles update of replicas count in replication controller dialog.
+   * @export
+   */
+  handleScaleResourceDialog() {
+    this.kdScaleService_.showScaleDialog(
+        this.details.objectMeta.namespace, this.details.objectMeta.name,
+        this.details.podInfo.current, this.details.podInfo.desired, this.details.typeMeta.kind);
   }
 }

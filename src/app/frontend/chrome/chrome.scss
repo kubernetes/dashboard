@@ -14,9 +14,21 @@
 
 @import '../variables';
 
+%kd-toolbar-logo-placeholder {
+  height: 4 * $baseline-grid;
+  margin-right: $baseline-grid;
+  min-height: 4 * $baseline-grid;
+  min-width: 4 * $baseline-grid;
+  width: 4 * $baseline-grid;
+}
+
 .kd-toolbar-logo {
-  height: 5 * $baseline-grid;
-  margin-right: 1em;
+  @extend %kd-toolbar-logo-placeholder;
+}
+
+.kd-toolbar-logo-text {
+  @extend %kd-toolbar-logo-placeholder;
+  min-width: 14 * $baseline-grid;
   width: 14 * $baseline-grid;
 }
 
@@ -24,7 +36,36 @@
   display: block;
 }
 
-.kd-toolbar {
+.kd-logo-bar {
+  flex: 1;
+}
+
+.kd-search-bar {
+  flex: 2;
+}
+
+.kd-global-actions {
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+kd-chrome {
+  .kd-toolbar {
+    background-color: $content-background;
+    color: $primary;
+    height: 6 * $baseline-grid;
+    min-height: 6 * $baseline-grid;
+    padding-left: 1.75 * $baseline-grid;
+
+    .kd-global-action-icon {
+      color: $primary;
+      margin-right: .25 * $baseline-grid;
+    }
+  }
+}
+
+.kd-second-toolbar {
   box-shadow: $whiteframe-shadow-1dp;
   height: 7 * $baseline-grid;
   min-height: 7 * $baseline-grid;
@@ -87,11 +128,6 @@ body,
 a {
   color: $primary;
   text-decoration: inherit;
-}
-
-.kd-logo-menu {
-  padding-left: 1.25 * $baseline-grid;
-  width: $nav-width - 6 * $baseline-grid;
 }
 
 .kd-success {

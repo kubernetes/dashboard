@@ -42,6 +42,7 @@ import replicaSetModule from './replicaset/module';
 import replicationControllerModule from './replicationcontroller/module';
 import resourceQuotaModule from './resourcequota/module';
 import roleModule from './role/module';
+import searchModule from './search/module';
 import secretModule from './secret/module';
 import serviceModule from './service/module';
 import statefulSetModule from './statefulset/module';
@@ -75,6 +76,7 @@ export default angular
           deploymentModule.name,
           horizontalPodAutoscalerModule.name,
           workloadsModule.name,
+          searchModule.name,
           clusterModule.name,
           serviceModule.name,
           podModule.name,

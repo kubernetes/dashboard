@@ -12,43 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {actionbarViewName} from 'chrome/state';
-import {deployAppStateName} from 'deploy/state';
-
-/**
- * @final
- */
-export class ActionbarComponent {
-  /**
-   * @param {!ui.router.$state} $state
-   * @ngInject
-   */
-  constructor($state) {
-    /** @private {!ui.router.$state} */
-    this.state_ = $state;
-  }
-
-  /**
-   * @return {boolean}
-   * @export
-   */
-  hasCustomActions() {
-    return !!this.state_.current.views && !!this.state_.current.views[actionbarViewName];
-  }
-
-  /**
-   * @export
-   */
-  create() {
-    this.state_.go(deployAppStateName);
-  }
-}
-
 /**
  * @type {!angular.Component}
  */
 export const actionbarComponent = {
   templateUrl: 'common/components/actionbar/actionbar.html',
   transclude: true,
-  controller: ActionbarComponent,
 };

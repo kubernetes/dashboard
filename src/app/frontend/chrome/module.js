@@ -17,6 +17,7 @@ import namespaceModule from 'common/namespace/module';
 
 import {chromeComponent} from './component';
 import navModule from './nav/module';
+import {searchComponent} from './search/component';
 import stateConfig from './stateconfig';
 
 /**
@@ -33,4 +34,5 @@ export default angular
           navModule.name,
         ])
     .config(stateConfig)
-    .component('kdChrome', chromeComponent);
+    .component('kdChrome', chromeComponent)
+    .component('kdSearch', searchComponent);

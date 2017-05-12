@@ -16,6 +16,7 @@ import chromeModule from 'chrome/module';
 import componentsModule from 'common/components/module';
 import filtersModule from 'common/filters/module';
 import namespaceModule from 'common/namespace/module';
+import {ScaleService} from 'common/scaling/service';
 import eventsModule from 'events/module';
 
 import {deploymentInfoComponent} from './detail/info_component';
@@ -45,6 +46,7 @@ export default angular
     .component('kdDeploymentCard', deploymentCardComponent)
     .component('kdDeploymentCardList', deploymentCardListComponent)
     .component('kdDeploymentInfo', deploymentInfoComponent)
+    .service('kdScaleService', ScaleService)
     .factory('kdDeploymentEventsResource', deploymentEventsResource)
     .factory('kdDeploymentListResource', deploymentListResource)
     .factory('kdDeploymentOldReplicaSetsResource', deploymentOldReplicaSetsResource);

@@ -20,18 +20,18 @@ kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
   labels:
-    app: kubernetes-dashboard
+    k8s-app: kubernetes-dashboard
   name: kubernetes-dashboard
   namespace: kube-system
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kubernetes-dashboard
+      k8s-app: kubernetes-dashboard
   template:
     metadata:
       labels:
-        app: kubernetes-dashboard
+        k8s-app: kubernetes-dashboard
       # Comment the following annotation if Dashboard must not be deployed on master
       annotations:
         scheduler.alpha.kubernetes.io/tolerations: |
@@ -67,7 +67,7 @@ kind: Service
 apiVersion: v1
 metadata:
   labels:
-    app: kubernetes-dashboard
+    k8s-app: kubernetes-dashboard
   name: kubernetes-dashboard
   namespace: kube-system
 spec:
@@ -76,4 +76,4 @@ spec:
   - port: 80
     targetPort: 9090
   selector:
-    app: kubernetes-dashboard
+    k8s-app: kubernetes-dashboard
