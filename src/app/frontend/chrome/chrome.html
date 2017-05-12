@@ -16,13 +16,30 @@ limitations under the License.
 
 <md-toolbar class="kd-toolbar">
   <div class="md-toolbar-tools kd-toolbar-tools">
-    <kd-nav-hamburger flex="none"></kd-nav-hamburger>
-    <h2 class="kd-logo-menu"
-        flex="none">
-      <md-icon md-svg-icon="assets/images/kubernetes-logo-text.svg"
+    <div class="kd-logo-bar">
+      <md-icon md-svg-icon="assets/images/kubernetes-logo.svg"
                class="kd-toolbar-logo">
       </md-icon>
-    </h2>
+      <md-icon md-svg-icon="assets/images/kubernetes-logo-text.svg"
+               class="kd-toolbar-logo-text">
+      </md-icon>
+    </div>
+    <kd-search class="kd-search-bar"></kd-search>
+    <div class="kd-global-actions">
+      <md-button ng-click="$ctrl.create()">
+        <md-icon class="kd-global-action-icon">add</md-icon>
+        <md-tooltip md-direction="bottom">
+          [[Create an application or any Kubernetes resource|Tooltip for global action bar create button tooltip.]]
+        </md-tooltip>
+        [[Create|Label for global action bar create button.]]
+      </md-button>
+    </div>
+  </div>
+</md-toolbar>
+
+<md-toolbar class="kd-second-toolbar">
+  <div class="md-toolbar-tools kd-toolbar-tools">
+    <kd-nav-hamburger flex="none"></kd-nav-hamburger>
     <kd-breadcrumbs class="kd-actionbar-breadcrumbs"
                     limit="3"
                     flex="auto"

@@ -13,9 +13,16 @@
 // limitations under the License.
 
 /**
- * @type {!angular.Component}
+ * @fileoverview Externs for search module.
+ *
+ * @externs
  */
-export const actionbarComponent = {
-  templateUrl: 'common/components/actionbar/actionbar.html',
-  transclude: true,
-};
+
+const searchApi = {};
+
+/**
+ * @typedef {{
+ *   q: string,
+ * }}
+ */
+searchApi.StateParams;

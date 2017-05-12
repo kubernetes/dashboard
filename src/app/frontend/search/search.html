@@ -1,0 +1,172 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<div ng-if="!$ctrl.shouldShowZeroState()">
+
+  <kd-content-card ng-if="$ctrl.search.configMapList.items.length">
+    <kd-content>
+      <kd-config-map-card-list config-map-list="$ctrl.search.configMapList"
+                               with-statuses="true"
+                               config-map-list-resource="$ctrl.kdConfigMapListResource">
+      </kd-config-map-card-list>
+    </kd-content>
+  </kd-content-card>
+
+  <kd-content-card ng-if="$ctrl.search.daemonSetList.daemonSets.length">
+    <kd-content>
+      <kd-daemon-set-card-list daemon-set-list="$ctrl.search.daemonSetList"
+                               with-statuses="true"
+                               daemon-set-list-resource="$ctrl.daemonSetListResource">
+      </kd-daemon-set-card-list>
+    </kd-content>
+  </kd-content-card>
+
+  <kd-content-card ng-if=$ctrl.search.deploymentList.deployments.length>
+    <kd-content>
+      <kd-deployment-card-list deployment-list="$ctrl.search.deploymentList"
+                               deployment-list-resource="$ctrl.deploymentListResource">
+      </kd-deployment-card-list>
+    </kd-content>
+  </kd-content-card>
+
+  <kd-content-card ng-if="$ctrl.search.ingressList.items.length">
+    <kd-content>
+      <kd-ingress-card-list ingress-list="$ctrl.search.ingressList"
+                            with-statuses="true"
+                            ingress-list-resource="$ctrl.kdIngressListResource">
+      </kd-ingress-card-list>
+    </kd-content>
+  </kd-content-card>
+
+  <kd-content-card ng-if="$ctrl.search.jobList.jobs.length">
+    <kd-content>
+      <kd-job-card-list job-list="$ctrl.search.jobList"
+                        job-list-resource="$ctrl.jobListResource">
+      </kd-job-card-list>
+    </kd-content>
+  </kd-content-card>
+
+  <kd-content-card ng-if="$ctrl.search.namespaceList.namespaces.length">
+    <kd-content>
+      <kd-namespace-card-list namespace-list="$ctrl.search.namespaceList"
+                              with-statuses="true"
+                              namespace-list-resource="$ctrl.kdNamespaceListResource">
+      </kd-namespace-card-list>
+    </kd-content>
+  </kd-content-card>
+
+  <kd-content-card ng-if="$ctrl.search.nodeList.nodes.length">
+    <kd-content>
+      <kd-node-card-list node-list="$ctrl.search.nodeList"
+                         with-statuses="true"
+                         node-list-resource="$ctrl.kdNodeListResource">
+      </kd-node-card-list>
+    </kd-content>
+  </kd-content-card>
+
+  <kd-content-card ng-if="$ctrl.search.persistentVolumeList.items.length">
+    <kd-content>
+      <kd-persistent-volume-card-list persistent-volume-list="$ctrl.search.persistentVolumeList"
+                                      with-statuses="true"
+                                      persistent-volume-list-resource="$ctrl.kdPersistentVolumeListResource">
+      </kd-persistent-volume-card-list>
+    </kd-content>
+  </kd-content-card>
+
+  <kd-content-card ng-if=$ctrl.search.persistentVolumeClaimList.items.length>
+    <kd-content>
+      <kd-persistent-volume-claim-card-list persistent-volume-claim-list="$ctrl.search.persistentVolumeClaimList"
+                                            persistent-volume-claim-list-resource="$ctrl.pvcListResource">
+      </kd-persistent-volume-claim-card-list>
+    </kd-content>
+  </kd-content-card>
+
+  <kd-content-card ng-if="$ctrl.search.podList.pods.length">
+    <kd-content>
+      <kd-pod-card-list pod-list="$ctrl.search.podList"
+                        pod-list-resource="$ctrl.podListResource"
+                        with-statuses="true">
+      </kd-pod-card-list>
+    </kd-content>
+  </kd-content-card>
+
+  <kd-content-card ng-if="$ctrl.search.replicaSetList.replicaSets.length">
+    <kd-content>
+      <kd-replica-set-card-list replica-set-list="$ctrl.search.replicaSetList"
+                                replica-set-list-resource="$ctrl.replicaSetListResource">
+      </kd-replica-set-card-list>
+    </kd-content>
+  </kd-content-card>
+
+  <kd-content-card ng-if="$ctrl.search.replicationControllerList.replicationControllers.length">
+    <kd-content>
+      <kd-replication-controller-card-list replication-controller-list="$ctrl.search.replicationControllerList"
+                                           replication-controller-list-resource="$ctrl.rcListResource">
+      </kd-replication-controller-card-list>
+    </kd-content>
+  </kd-content-card>
+
+  <kd-content-card ng-if="$ctrl.search.roleList.items.length">
+    <kd-content>
+      <kd-role-card-list role-list="$ctrl.search.roleList"
+                         with-statuses="false"
+                         role-list-resource="$ctrl.kdRoleListResource">
+      </kd-role-card-list>
+    </kd-content>
+  </kd-content-card>
+
+  <kd-content-card ng-if="$ctrl.search.secretList.secrets.length">
+    <kd-content>
+      <kd-secret-card-list secret-list="$ctrl.search.secretList"
+                           with-statuses="true"
+                           secret-list-resource="$ctrl.kdSecretListResource">
+      </kd-secret-card-list>
+    </kd-content>
+  </kd-content-card>
+
+  <kd-content-card ng-if="$ctrl.search.serviceList.services.length">
+    <kd-content>
+      <kd-service-card-list service-list="$ctrl.search.serviceList"
+                            with-statuses="true"
+                            service-list-resource="$ctrl.kdServiceListResource">
+      </kd-service-card-list>
+    </kd-content>
+  </kd-content-card>
+
+  <kd-content-card ng-if="$ctrl.search.statefulSetList.statefulSets.length">
+    <kd-content>
+      <kd-stateful-set-card-list stateful-set-list="$ctrl.search.statefulSetList"
+                                 stateful-set-list-resource="$ctrl.statefulSetListResource">
+      </kd-stateful-set-card-list>
+    </kd-content>
+  </kd-content-card>
+
+  <kd-content-card ng-if="$ctrl.search.storageClassList.storageClasses.length">
+    <kd-content>
+      <kd-storage-class-card-list storage-class-list="$ctrl.search.storageClassList"
+                                  with-statuses="true"
+                                  storage-class-list-resource="$ctrl.kdStorageClassListResource">
+      </kd-storage-class-card-list>
+    </kd-content>
+  </kd-content-card>
+
+</div>
+
+<kd-content-card ng-if="$ctrl.shouldShowZeroState()">
+  <kd-content>
+    <kd-zero-state></kd-zero-state>
+  </kd-content>
+</kd-content-card>

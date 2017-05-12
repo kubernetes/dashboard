@@ -14,8 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div layout="row"
-     layout-align="center center">
-  <div ui-view="actionbar"
-       class="kd-actionbar-view-part"></div>
-</div>
+<form class="kd-search"
+      ng-submit="$ctrl.submit()">
+  <md-icon class="kd-search-icon">search</md-icon>
+  <input type="search"
+         placeholder="Search"
+         ng-model="$ctrl.query"
+         required>
+</form>

@@ -22,11 +22,11 @@ limitations under the License.
   <a ng-switch-when="false"
      href="{{::breadcrumb.stateLink}}"
      class="kd-faded-breadcrumb">
-    {{::breadcrumb.label}}
+    {{breadcrumb.label}}
   </a>
   <div ng-switch-when="true"
        class="kd-breadcrumbs-ellipsised">
-    <kd-middle-ellipsis display-string="{{::breadcrumb.label}}"></kd-middle-ellipsis>
+    <kd-middle-ellipsis display-string="{{breadcrumb.label}}"></kd-middle-ellipsis>
   </div>
   <md-icon ng-switch-when="false"
            class="kd-faded-breadcrumb">
