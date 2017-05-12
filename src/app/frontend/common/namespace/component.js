@@ -98,9 +98,9 @@ export class NamespaceSelectController {
       let day = d.getDate();
       this.cookies.putObject(
           'kd-ns-styles', this.nsStyles, {path: '/', expires: new Date(year + 1, month, day)});
-    }
-        /** @export */
-        this.i18n = i18n;
+    };
+    /** @export */
+    this.i18n = i18n;
   }
 
   /**
@@ -231,7 +231,7 @@ export class NamespaceSelectController {
   getNamespaceStyle(namespace) {
     let style = this.nsStyles[namespace];
     if (!style) {
-      style = {}
+      style = {};
     }
     return style;
   }
