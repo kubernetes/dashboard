@@ -54,8 +54,6 @@ export class NamespaceSelectController {
      */
     this.namespaces = [];
 
-    this.nsStyle = {'background-color': 'green'};
-
     /** @export {string} */
     this.ALL_NAMESPACES = ALL_NAMESPACES;
 
@@ -99,7 +97,7 @@ export class NamespaceSelectController {
       let month = d.getMonth();
       let day = d.getDate();
       this.cookies.putObject(
-          'kd-ns-styles', this.nsStyles, {path: '/', expires: new Date(year + 1, month, day)})
+          'kd-ns-styles', this.nsStyles, {path: '/', expires: new Date(year + 1, month, day)});
     }
         /** @export */
         this.i18n = i18n;
