@@ -17,8 +17,8 @@ package common
 import (
 	"fmt"
 
+	api "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
-	api "k8s.io/client-go/pkg/api/v1"
 	restclient "k8s.io/client-go/rest"
 )
 
@@ -82,9 +82,9 @@ func (verber *ResourceVerber) Delete(kind string, namespaceSet bool, namespace s
 	client := verber.getRESTClientByType(resourceSpec.ClientType)
 
 	// Do cascade delete by default, as this is what users typically expect.
-	defaultOrphanDependents := false
+	defaultPropagationPolicy := api.DeletePropagationForeground
 	defaultDeleteOptions := &api.DeleteOptions{
-		OrphanDependents: &defaultOrphanDependents,
+		PropagationPolicy: &defaultPropagationPolicy,
 	}
 
 	req := client.Delete().
