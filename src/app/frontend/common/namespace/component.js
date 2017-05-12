@@ -90,8 +90,7 @@ export class NamespaceSelectController {
     if (!this.nsStyles) {
       this.nsStyles = {};
     }
-    this.storeNamespaceStyles =
-        function() {
+    this.storeNamespaceStyles = function() {
       let d = new Date();
       let year = d.getFullYear();
       let month = d.getMonth();
