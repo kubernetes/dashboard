@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import {stateName as workloads} from 'workloads/state';
-
 import showDeployAnywayDialog from './deployanyway_dialog';
 
 /**
@@ -31,9 +30,13 @@ export default class DeployFromFileController {
    * @param {!./../common/history/service.HistoryService} kdHistoryService
    * @param {!md.$dialog} $mdDialog
    * @param {!./../common/csrftoken/service.CsrfTokenService} kdCsrfTokenService
+   * @param {!../chrome/state.StateParams} $stateParams
+   * @param {!../common/errorhandling/localizer_service.LocalizerService} localizerService
    * @ngInject
    */
-  constructor($log, $resource, $q, errorDialog, kdHistoryService, $mdDialog, kdCsrfTokenService) {
+  constructor(
+      $log, $resource, $q, errorDialog, kdHistoryService, $mdDialog, kdCsrfTokenService,
+      $stateParams, localizerService) {
     /**
      * Initialized the template.
      * @export {!angular.FormController}
@@ -74,6 +77,12 @@ export default class DeployFromFileController {
     /** @private {!angular.$q.Promise} */
     this.tokenPromise = kdCsrfTokenService.getTokenForAction('appdeploymentfromfile');
 
+    /** @private {!../chrome/state.StateParams} */
+    this.stateParams_ = $stateParams;
+
+    /** @private {!../common/errorhandling/localizer_service.LocalizerService} */
+    this.localizerService_ = localizerService;
+
     /** @export */
     this.i18n = i18n;
   }
@@ -88,6 +97,7 @@ export default class DeployFromFileController {
       /** @type {!backendApi.AppDeploymentFromFileSpec} */
       let deploymentSpec = {
         name: this.file.name,
+        namespace: this.stateParams_.namespace,
         content: this.file.content,
         validate: validate,
       };
@@ -116,8 +126,9 @@ export default class DeployFromFileController {
                   if (this.hasValidationError_(err.data)) {
                     this.handleDeployAnywayDialog_(err.data);
                   } else {
+                    let errMsg = this.localizerService_.localize(err.data);
                     this.log_.error('Error deploying application:', err);
-                    this.errorDialog_.open(this.i18n.MSG_DEPLOY_DIALOG_ERROR, err.data);
+                    this.errorDialog_.open(this.i18n.MSG_DEPLOY_DIALOG_ERROR, errMsg);
                   }
                 });
           },
@@ -155,13 +166,9 @@ export default class DeployFromFileController {
    * @private
    */
   handleDeployAnywayDialog_(err) {
-    showDeployAnywayDialog(
-        this.mdDialog_, this.i18n.MSG_DEPLOY_ANYWAY_DIALOG_TITLE,
-        this.i18n.MSG_DEPLOY_ANYWAY_DIALOG_CONTENT, err, this.i18n.MSG_DEPLOY_ANYWAY_DIALOG_OK,
-        this.i18n.MSG_DEPLOY_ANYWAY_DIALOG_CANCEL)
-        .then(() => {
-          this.deploy(false);
-        });
+    showDeployAnywayDialog(this.mdDialog_, err).then(() => {
+      this.deploy(false);
+    });
   }
 
   /**
@@ -183,18 +190,6 @@ export default class DeployFromFileController {
 }
 
 const i18n = {
-  /** @export {string} @desc Title for the dialog shown on deploy validation error. */
-  MSG_DEPLOY_ANYWAY_DIALOG_TITLE: goog.getMsg('Validation error occurred'),
-
-  /** @export {string} @desc Content for the dialog shown on deploy validation error. */
-  MSG_DEPLOY_ANYWAY_DIALOG_CONTENT: goog.getMsg('Would you like to deploy anyway?'),
-
-  /** @export {string} @desc Confirmation text for the dialog shown on deploy validation error. */
-  MSG_DEPLOY_ANYWAY_DIALOG_OK: goog.getMsg('Yes'),
-
-  /** @export {string} @desc Cancellation text for the dialog shown on deploy validation error. */
-  MSG_DEPLOY_ANYWAY_DIALOG_CANCEL: goog.getMsg('No'),
-
   /** @export {string} @desc Text shown on failed deploy in error dialog. */
   MSG_DEPLOY_DIALOG_ERROR: goog.getMsg('Deploying file has failed'),
 };
