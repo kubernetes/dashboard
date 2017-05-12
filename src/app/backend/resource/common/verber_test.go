@@ -11,7 +11,6 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	runtimeserializer "k8s.io/apimachinery/pkg/runtime/serializer"
-	api "k8s.io/client-go/pkg/api/v1"
 	restclient "k8s.io/client-go/rest"
 )
 
@@ -31,7 +30,7 @@ func (c *FakeRESTClient) Delete() *restclient.Request {
 
 	groupVersion := schema.GroupVersion{Group: "meta.k8s.io", Version: "v1"}
 
-	scheme.AddKnownTypes(groupVersion, &api.DeleteOptions{})
+	scheme.AddKnownTypes(groupVersion, &metaV1.DeleteOptions{})
 
 	factory := runtimeserializer.NewCodecFactory(scheme)
 	codec := testapi.TestCodec(factory, metaV1.SchemeGroupVersion)
