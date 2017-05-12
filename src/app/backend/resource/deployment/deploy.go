@@ -19,6 +19,7 @@ import (
 	"log"
 	"strings"
 
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
@@ -88,6 +89,9 @@ type AppDeploymentSpec struct {
 type AppDeploymentFromFileSpec struct {
 	// Name of the file
 	Name string `json:"name"`
+
+	// Namespace that object should be deployed in
+	Namespace string `json:"namespace"`
 
 	// File content
 	Content string `json:"content"`
@@ -303,13 +307,20 @@ func DeployAppFromFile(spec *AppDeploymentFromFileSpec,
 	mapper, typer := factory.Object()
 	reader := strings.NewReader(spec.Content)
 
-	r := kubectlResource.NewBuilder(mapper, kubectlResource.LegacyCategoryExpander, typer,
+	fmt.Printf("Namespace for deploy from file: %s\n", spec.Namespace)
+
+	builder := kubectlResource.NewBuilder(mapper, kubectlResource.LegacyCategoryExpander, typer,
 		kubectlResource.ClientMapperFunc(factory.ClientForMapping), factory.Decoder(true)).
 		Schema(schema).
-		NamespaceParam(api.NamespaceDefault).DefaultNamespace().
+		NamespaceParam(spec.Namespace).
 		Stream(reader, spec.Name).
-		Flatten().
-		Do()
+		Flatten()
+
+	if strings.Compare(spec.Namespace, "_all") != 0 {
+		builder.RequireNamespace()
+	}
+
+	r := builder.Do()
 
 	deployedResourcesCount := 0
 
@@ -322,5 +333,6 @@ func DeployAppFromFile(spec *AppDeploymentFromFileSpec,
 		return err
 	})
 
+	err = common.LocalizeError(err)
 	return deployedResourcesCount > 0, err
 }
