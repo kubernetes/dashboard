@@ -1,0 +1,66 @@
+<!--
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<md-dialog aria-label="[[Scale a {{::$ctrl.resourceKindName}}|Title for a scaling resource dialog.]]"
+           layout="column">
+  <md-dialog-content layout-padding>
+    <h4 class="md-title">[[Scale a {{::$ctrl.resourceKindName}}|Title for a scaling resource dialog.]]</h4>
+    <div>
+      <br>[[Resource {{::$ctrl.resourceName}} will be updated to reflect the desired count.|User help for the pod count update dialog (on the replication controllers detail page).]]<br/> {{$ctrl.getCurrentPods()}},{{$ctrl.getDesiredPods()}}
+    </div>
+    <div>
+      <md-input-container class="md-block">
+        <div ng-if="!$ctrl.isJob()">
+          <label>[[Desired number of pods|Label 'Desired number of pods', which appears as a placeholder for the
+            pods count input on the "update pods count" dialog (for a Deployment, ReplicaSet, Replication Controller resource).]]</label>
+        </div>
+        <div ng-if="$ctrl.isJob()">
+          <label>[[Desired degree of parallelism for Job|Label 'Desired degree parallelism for a Job', which appears as a placeholder for the
+            parallelism count input on the "update parallelism count" dialog (for a Job resource).]]</label>
+        </div>
+        <input name="DesiredPods"
+               type="number"
+               kd-validate="integer"
+               min="0"
+               ng-model="$ctrl.desiredPods"
+               required
+               kd-warn-threshold="100"
+               kd-warn-threshold-bind="showWarning">
+        <ng-messages for="ctrl.updateReplicasForm.podCount.$error"
+                     role="alert">
+          <ng-message when="required">[[Number of pods is required.|This warning appears when the user does not specify a pods count on the "update number of pods" dialog (for a deployment).]]
+          </ng-message>
+          <ng-message when="number,kdValidInteger">[[Number of replicas must be equal to or greater than zero.|This warning appears when the specified pods count on the "update number of pods" dialog is not positive or non-integer.]]
+          </ng-message>
+        </ng-messages>
+        <span class="kd-warn-threshold"
+              ng-show="showWarning">3
+          [[Setting high number of pods may cause performance issues of the cluster and Dashboard UI.|This warning appears when the specified pods count (on the "update number of pods" dialog) is very high.]]
+        </span>
+      </md-input-container>
+    </div>
+    <md-dialog-actions>
+      <md-button class="md-primary kd-cancel-btn"
+                 ng-click="$ctrl.cancel()">
+        [[Cancel|Label for cancel button.]]
+      </md-button>
+      <md-button class="md-primary kd-submit-btn"
+                 ng-click="$ctrl.scaleResource()">
+        [[OK|Action 'OK' for the confirmation button on the "update number of pods dialog".]]
+      </md-button>
+    </md-dialog-actions>
+  </md-dialog-content>
+</md-dialog>

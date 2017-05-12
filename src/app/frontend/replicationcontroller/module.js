@@ -17,6 +17,7 @@ import componentsModule from 'common/components/module';
 import csrfTokenModule from 'common/csrftoken/module';
 import filtersModule from 'common/filters/module';
 import namespaceModule from 'common/namespace/module';
+import {ScaleService} from 'common/scaling/service';
 import eventsModule from 'events/module';
 import podModule from 'pod/module';
 
@@ -54,6 +55,7 @@ export default angular
     .component('kdReplicationControllerCardMenu', replicationControllerCardMenuComponent)
     .component('kdReplicationControllerInfo', replicationControllerInfoComponent)
     .service('kdReplicationControllerService', ReplicationControllerService)
+    .service('kdScaleService', ScaleService)
     .factory('kdRCListResource', replicationControllerListResource)
     .factory('kdRCResource', replicationControllerResource)
     .factory('kdRCPodsResource', replicationControllerPodsResource)
