@@ -30,7 +30,7 @@ const Actions = {
 export class DataSelectService {
   /**
    * @param {!./../namespace/service.NamespaceService} kdNamespaceService
-   * @param {!../../chrome/state.StateParams|!../resource/resourcedetail.StateParams} $stateParams
+   * @param {!searchApi.StateParams|!../../chrome/state.StateParams|!../resource/resourcedetail.StateParams} $stateParams
    * @param {!{setCurrentPage: function(string, number)}} paginationService
    * @ngInject
    */
@@ -43,7 +43,9 @@ export class DataSelectService {
     this.actions_ = Actions;
     /** @export {number} **/
     this.rowsLimit = ItemsPerPage;
-    /** {!../../../chrome/chrome_state.StateParams|!../../resource/resourcedetail.StateParams} */
+    /**
+     * {!searchApi.StateParams|!../../../chrome/chrome_state.StateParams|!../../resource/resourcedetail.StateParams}
+     */
     this.stateParams_ = $stateParams;
     /** @private {!{setCurrentPage: function(string, number)}} */
     this.paginationService_ = paginationService;
@@ -97,7 +99,7 @@ export class DataSelectService {
     let namespace =
         this.stateParams_.objectNamespace || this.stateParams_.namespace || query.namespace;
 
-    if (!dataSelectQuery) {
+    if (!query) {
       throw new Error(`Data select query for given data select id ${dataSelectId} does not exist`);
     }
 
@@ -122,7 +124,24 @@ export class DataSelectService {
     }
 
     this.instances_.set(dataSelectId, query);
+
+    query = this.applySearch_(query);
+
     return listResource.get(query).$promise;
+  }
+
+  /**
+   * @param query
+   * @private
+   */
+  applySearch_(query) {
+    if (this.stateParams_.q) {
+      if (query.filterBy) {
+        query.filterBy += ',';
+      }
+      query.filterBy += `name,${this.stateParams_.q}`;
+    }
+    return query;
   }
 
   /**

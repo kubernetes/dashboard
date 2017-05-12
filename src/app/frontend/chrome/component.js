@@ -13,6 +13,8 @@
 // limitations under the License.
 
 import {fillContentConfig} from 'chrome/state';
+import {deployAppStateName} from 'deploy/state';
+
 import {actionbarViewName} from './state';
 
 /**
@@ -96,6 +98,13 @@ export class ChromeController {
   hideSpinner_() {
     this.loading = false;
     this.showLoadingSpinner = false;
+  }
+
+  /**
+   * @export
+   */
+  create() {
+    this.state_.go(deployAppStateName);
   }
 }
 

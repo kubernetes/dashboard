@@ -160,6 +160,29 @@ backendApi.Config;
 
 /**
  * @typedef {{
+ *   deploymentList: !backendApi.DeploymentList,
+ *   replicaSetList: !backendApi.ReplicaSetList,
+ *   jobList: !backendApi.JobList,
+ *   replicationControllerList: !backendApi.ReplicationControllerList,
+ *   podList: !backendApi.PodList,
+ *   daemonSetList: !backendApi.DaemonSetList,
+ *   statefulSetList: !backendApi.StatefulSetList,
+ *   nodeList: !backendApi.NodeList,
+ *   namespaceList: !backendApi.NamespaceList,
+ *   persistentVolumeList: !backendApi.PersistentVolumeList,
+ *   roleList: !backendApi.RoleList,
+ *   storageClassList: !backendApi.StorageClassList,
+ *   serviceList: !backendApi.ServiceList,
+ *   ingressList: !backendApi.IngressList,
+ *   configMapList: !backendApi.ConfigMapList,
+ *   persistentVolumeClaimList: !backendApi.PersistentVolumeClaimList,
+ *   secretList: !backendApi.SecretList,
+ * }}
+ */
+backendApi.Search;
+
+/**
+ * @typedef {{
  *   timestamp: string,
  *   value: number
  * }}

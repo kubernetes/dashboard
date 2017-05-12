@@ -12,10 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {stateName} from 'search/state';
+
 /**
- * @type {!angular.Component}
+ * @final
  */
-export const actionbarComponent = {
-  templateUrl: 'common/components/actionbar/actionbar.html',
-  transclude: true,
+export class SearchController {
+  /**
+   * @param {!ui.router.$state} $state
+   * @ngInject
+   */
+  constructor($state) {
+    /** @private {!ui.router.$state} */
+    this.state_ = $state;
+
+    this.query = '';
+  }
+
+  /**
+   * @export
+   */
+  submit() {
+    this.state_.go(stateName, {q: this.query});
+  }
+}
+
+/** @type {!angular.Component} */
+export const searchComponent = {
+  controller: SearchController,
+  templateUrl: 'chrome/search/search.html',
 };

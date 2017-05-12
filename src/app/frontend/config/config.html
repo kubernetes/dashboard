@@ -15,6 +15,7 @@ limitations under the License.
 -->
 
 <div ng-if="!$ctrl.shouldShowZeroState()">
+
   <kd-content-card ng-if="$ctrl.config.configMapList.items.length">
     <kd-content>
       <kd-config-map-card-list config-map-list="$ctrl.config.configMapList"
@@ -40,7 +41,9 @@ limitations under the License.
       </kd-secret-card-list>
     </kd-content>
   </kd-content-card>
+
 </div>
+
 <kd-content-card ng-if="$ctrl.shouldShowZeroState()">
   <kd-content>
     <kd-zero-state></kd-zero-state>

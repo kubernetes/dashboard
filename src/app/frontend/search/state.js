@@ -12,10 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * @type {!angular.Component}
- */
-export const actionbarComponent = {
-  templateUrl: 'common/components/actionbar/actionbar.html',
-  transclude: true,
-};
+/** Name of the state. Can be used in, e.g., $state.go method. */
+export const stateName = 'search';
+
+/** Absolute URL of the state. */
+export const stateUrl = '/search?q';
