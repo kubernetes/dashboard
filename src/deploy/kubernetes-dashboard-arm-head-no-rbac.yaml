@@ -47,6 +47,7 @@ spec:
       containers:
       - name: kubernetes-dashboard-head
         image: kubernetesdashboarddev/kubernetes-dashboard-arm:head
+        # Image is tagged and updated with :head, so always pull it.
         imagePullPolicy: Always
         ports:
         - containerPort: 9090
