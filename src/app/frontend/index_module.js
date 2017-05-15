@@ -48,6 +48,7 @@ import replicationControllerModule from './replicationcontroller/module';
 import resourceLimitModule from './resourcelimit/module';
 import resourceQuotaModule from './resourcequota/module';
 import roleModule from './role/module';
+import scopeModule from './scope/module';
 import searchModule from './search/module';
 import secretModule from './secret/module';
 import serviceModule from './service/module';
@@ -89,6 +90,7 @@ export default angular
           workloadsModule.name,
           searchModule.name,
           clusterModule.name,
+          scopeModule.name,
           serviceModule.name,
           podModule.name,
           persistentVolumeModule.name,
