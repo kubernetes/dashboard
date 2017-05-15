@@ -47,7 +47,6 @@ spec:
       containers:
       - name: kubernetes-dashboard
         image: gcr.io/google_containers/kubernetes-dashboard-arm:v1.6.0
-        imagePullPolicy: Always
         ports:
         - containerPort: 9090
           protocol: TCP
