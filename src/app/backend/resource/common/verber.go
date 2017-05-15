@@ -168,3 +168,36 @@ func (verber *ResourceVerber) Get(kind string, namespaceSet bool, namespace stri
 
 	return result, err
 }
+
+// GetList gets the resource of the given kind in the given namespace or not.
+func (verber *ResourceVerber) GetList(kind string, namespaceSet bool, namespace string) (runtime.Object, error) {
+	resourceSpec, ok := kindToAPIMapping[kind]
+	if !ok {
+		return nil, fmt.Errorf("Unknown resource kind: %s", kind)
+	}
+
+	if namespaceSet != resourceSpec.Namespaced {
+		if namespaceSet {
+			return nil, fmt.Errorf("Set namespace for not-namespaced resource kind: %s", kind)
+		} else {
+			return nil, fmt.Errorf("Set no namespace for namespaced resource kind: %s", kind)
+		}
+	}
+
+	client := verber.getRESTClientByType(resourceSpec.ClientType)
+
+	result := &runtime.Unknown{}
+	req := client.Get().
+		Resource(resourceSpec.Resource).
+		SetHeader("Accept", "application/json")
+
+	if resourceSpec.Namespaced {
+		req.Namespace(namespace)
+	}
+
+	err := req.
+		Do().
+		Into(result)
+
+	return result, err
+}

@@ -631,6 +631,9 @@ func CreateHTTPAPIHandler(heapsterClient client.HeapsterClient,
 			Writes(pod.PodList{}))
 
 	apiV1Ws.Route(
+		apiV1Ws.GET("/_raw/{kind}/namespace/{namespace}").
+			To(apiHandler.handleGetResourceList))
+	apiV1Ws.Route(
 		apiV1Ws.DELETE("/_raw/{kind}/namespace/{namespace}/name/{name}").
 			To(apiHandler.handleDeleteResource))
 	apiV1Ws.Route(
@@ -640,6 +643,9 @@ func CreateHTTPAPIHandler(heapsterClient client.HeapsterClient,
 		apiV1Ws.PUT("/_raw/{kind}/namespace/{namespace}/name/{name}").
 			To(apiHandler.handlePutResource))
 
+	apiV1Ws.Route(
+		apiV1Ws.GET("/_raw/{kind}").
+			To(apiHandler.handleGetResourceList))
 	apiV1Ws.Route(
 		apiV1Ws.DELETE("/_raw/{kind}/name/{name}").
 			To(apiHandler.handleDeleteResource))
@@ -1362,6 +1368,20 @@ func (apiHandler *APIHandler) handleUpdateReplicasCount(
 	}
 
 	response.WriteHeader(http.StatusAccepted)
+}
+
+func (apiHandler *APIHandler) handleGetResourceList(
+	request *restful.Request, response *restful.Response) {
+	kind := request.PathParameter("kind")
+	namespace, ok := request.PathParameters()["namespace"]
+
+	result, err := apiHandler.verber.GetList(kind, ok, namespace)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetResource(
