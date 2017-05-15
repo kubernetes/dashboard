@@ -1,5 +1,3 @@
-#### Issue details
-
 ##### Environment
 <!-- Describe how do you run Kubernetes and Dashboard. 
      Versions of Node.js, Go etc. are needed only from developers. To get them use console:
