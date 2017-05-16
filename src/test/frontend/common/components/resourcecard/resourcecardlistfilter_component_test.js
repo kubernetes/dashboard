@@ -63,10 +63,11 @@ describe('Resource card list filtering', () => {
 
   it('should enable search', () => {
     // given
-    ctrl.selectId_ = 'test-id';
+    ctrl.selectId_ = 'mock';
+    ctrl.resourceCardListCtrl = {list: 'mock', listResource: 'mock'};
 
     // when
-    let result = ctrl.shouldEnable_();
+    let result = ctrl.shouldEnable();
 
     // then
     expect(result).toBeTruthy();
@@ -74,7 +75,7 @@ describe('Resource card list filtering', () => {
 
   it('should disable search', () => {
     // when
-    let result = ctrl.shouldEnable_();
+    let result = ctrl.shouldEnable();
 
     // then
     expect(result).toBeFalsy();

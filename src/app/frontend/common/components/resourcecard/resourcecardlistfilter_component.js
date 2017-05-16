@@ -39,23 +39,19 @@ class ResourceCardListFilterController {
   $onInit() {
     this.selectId_ = this.resourceCardListCtrl.selectId;
 
-    if (this.shouldEnable_() &&
-        (this.resourceCardListCtrl.list === undefined ||
-         this.resourceCardListCtrl.listResource === undefined)) {
-      throw new Error('List and list resource have to be set on list card.');
-    }
-
     if (!this.dataSelectService_.isRegistered(this.selectId_)) {
       this.dataSelectService_.registerInstance(this.selectId_);
     }
   }
 
   /**
-   * @private
+   * @export
    * @return {boolean}
    */
-  shouldEnable_() {
-    return this.selectId_ !== undefined && this.selectId_.length > 0;
+  shouldEnable() {
+    return this.selectId_ !== undefined && this.selectId_.length > 0 &&
+        this.resourceCardListCtrl.list !== undefined &&
+        this.resourceCardListCtrl.listResource !== undefined;
   }
 
   /**
