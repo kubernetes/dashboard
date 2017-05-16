@@ -16,6 +16,7 @@ import chromeModule from 'chrome/module';
 import componentsModule from 'common/components/module';
 import filtersModule from 'common/filters/module';
 import namespaceModule from 'common/namespace/module';
+import {ScaleService} from 'common/scaling/service';
 import eventsModule from 'events/module';
 
 import {statefulSetInfoComponent} from './detail/info_component';
@@ -45,6 +46,7 @@ export default angular
     .component('kdStatefulSetCard', statefulSetCardComponent)
     .component('kdStatefulSetCardList', statefulSetCardListComponent)
     .component('kdStatefulSetInfo', statefulSetInfoComponent)
+    .service('kdScaleService', ScaleService)
     .factory('kdStatefulSetEventsResource', statefulSetEventsResource)
     .factory('kdStatefulSetListResource', statefulSetListResource)
     .factory('kdStatefulSetPodsResource', statefulSetPodsResource);

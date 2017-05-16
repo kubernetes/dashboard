@@ -25,9 +25,10 @@ export default class StatefulSetCardController {
    * @param {!ui.router.$state} $state
    * @param {!angular.$interpolate} $interpolate
    * @param {!./../../common/namespace/service.NamespaceService} kdNamespaceService
+   * @param {!./../../common/scaling/service.ScaleService} kdScaleService
    * @ngInject
    */
-  constructor($state, $interpolate, kdNamespaceService) {
+  constructor($state, $interpolate, kdNamespaceService, kdScaleService) {
     /**
      * Initialized from the scope.
      * @export {!backendApi.StatefulSet}
@@ -42,6 +43,9 @@ export default class StatefulSetCardController {
 
     /** @private {!./../../common/namespace/service.NamespaceService} */
     this.kdNamespaceService_ = kdNamespaceService;
+
+    /** @private {!./../../common/scaling/service.ScaleService} */
+    this.kdScaleService_ = kdScaleService;
   }
 
   /**
@@ -50,6 +54,16 @@ export default class StatefulSetCardController {
    */
   areMultipleNamespacesSelected() {
     return this.kdNamespaceService_.areMultipleNamespacesSelected();
+  }
+
+  /**
+   * @export
+   */
+  showScaleDialog() {
+    this.kdScaleService_.showScaleDialog(
+        this.statefulSet.objectMeta.namespace, this.statefulSet.objectMeta.name,
+        this.statefulSet.pods.current, this.statefulSet.pods.desired,
+        this.statefulSet.typeMeta.kind);
   }
 
   /**
