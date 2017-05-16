@@ -27,7 +27,6 @@ limitations under the License.
 </div>
 
 <kd-stateful-set-info stateful-set="::ctrl.statefulSetDetail"></kd-stateful-set-info>
-
 <kd-content-card>
   <kd-content>
     <kd-pod-card-list pod-list="::ctrl.statefulSetDetail.podList"
@@ -37,6 +36,26 @@ limitations under the License.
         [[There are currently no Pods managed by this Stateful Set.|Text for pods card zerostate in stateful set details page.]]
       </kd-empty-list-text>
     </kd-pod-card-list>
+  </kd-content>
+</kd-content-card>
+<kd-content-card>
+  <kd-content>
+    <kd-service-card-list service-list="::ctrl.statefulSetDetail.serviceList"
+                          service-list-resource="::ctrl.statefulSetServiceResource">
+      <kd-empty-list-text>
+        [[There are currently no Services with the same label selector as this Replica Set.|Text for services card zerostate in replica set details page.]]
+      </kd-empty-list-text>
+    </kd-service-card-list>
+  </kd-content>
+</kd-content-card>
+
+<kd-content-card>
+  <kd-content>
+    <kd-horizontal-pod-autoscaler-card-list horizontal-pod-autoscaler-list="::ctrl.statefulSetDetail.horizontalPodAutoscalerList">
+      <kd-empty-list-text>
+        [[There are currently no Horizontal Pod Autoscalers targeting this Replica Set.|Text for horizontal pod autoscalers card zerostate in replica set details page.]]
+      </kd-empty-list-text>
+    </kd-horizontal-pod-autoscaler-card-list>
   </kd-content>
 </kd-content-card>
 

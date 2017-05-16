@@ -18,10 +18,24 @@
 export class ActionBarController {
   /**
    * @param {!backendApi.StatefulSetDetail} statefulSetDetail
+   * @param {!./../../common/scaling/service.ScaleService} kdScaleService
    * @ngInject
    */
-  constructor(statefulSetDetail) {
+  constructor(statefulSetDetail, kdScaleService) {
+    /** @private {!./../../common/scaling/service.ScaleService} */
+    this.kdScaleService_ = kdScaleService;
+
     /** @export {!backendApi.StatefulSetDetail} */
     this.details = statefulSetDetail;
+  }
+
+  /**
+   * Handles update of replicas count in statefulset controller dialog.
+   * @export
+   */
+  handleScaleResourceDialog() {
+    this.kdScaleService_.showScaleDialog(
+        this.details.objectMeta.namespace, this.details.objectMeta.name,
+        this.details.podInfo.current, this.details.podInfo.desired, this.details.typeMeta.kind);
   }
 }

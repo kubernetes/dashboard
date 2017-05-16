@@ -75,6 +75,11 @@ limitations under the License.
     </kd-resource-card-column>
     <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
       <kd-resource-card-menu>
+        <md-menu-item>
+          <md-button ng-click="$ctrl.showScaleDialog()">
+            [[Scale|Action 'Edit Pod Count' on the drop down menu for a single statefulset (statefulset list page).]]
+          </md-button>
+        </md-menu-item>
         <kd-resource-card-delete-menu-item resource-kind-name="[[Stateful Set|Label 'Stateful Set' which will appear in the stateful set delete dialog opened from a stateful set card on the list page.]]">
         </kd-resource-card-delete-menu-item>
         <kd-resource-card-edit-menu-item resource-kind-name="[[Stateful Set|Label 'Stateful Set' which will appear in the stateful set delete dialog opened from a stateful set card on the list page.]]">
