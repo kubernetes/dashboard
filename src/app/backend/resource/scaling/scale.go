@@ -30,7 +30,7 @@ type ReplicaCounts struct {
 // GetScaleSpec returns a populated ReplicaCounts object with desired and actual number of replicas.
 func GetScaleSpec(client client.Interface, kind, namespace, name string) (rc *ReplicaCounts, err error) {
 	rc = new(ReplicaCounts)
-	s, err := client.Extensions().Scales(namespace).Get(kind, name)
+	s, err := client.ExtensionsV1beta1().Scales(namespace).Get(kind, name)
 	if err != nil {
 		return nil, err
 	}
@@ -47,6 +47,8 @@ func ScaleResource(client client.Interface, kind, namespace, name, count string)
 	rc = new(ReplicaCounts)
 	if strings.ToLower(kind) == "job" {
 		err = scaleJobResource(client, namespace, name, count, rc)
+	} else if strings.ToLower(kind) == "statefulset" {
+		err = scaleStatefulSetResource(client, namespace, name, count, rc)
 	} else {
 		err = scaleGenericResource(client, kind, namespace, name, count, rc)
 	}
@@ -59,7 +61,7 @@ func ScaleResource(client client.Interface, kind, namespace, name, count string)
 
 //ScaleGenericResource is used for Deployment, ReplicaSet, Replication Controller scaling.
 func scaleGenericResource(client client.Interface, kind, namespace, name, count string, rc *ReplicaCounts) error {
-	s, err := client.Extensions().Scales(namespace).Get(kind, name)
+	s, err := client.ExtensionsV1beta1().Scales(namespace).Get(kind, name)
 	if err != nil {
 		return err
 	}
@@ -68,7 +70,7 @@ func scaleGenericResource(client client.Interface, kind, namespace, name, count 
 		return err
 	}
 	s.Spec.Replicas = int32(c)
-	s, err = client.Extensions().Scales(namespace).Update(kind, s)
+	s, err = client.ExtensionsV1beta1().Scales(namespace).Update(kind, s)
 	if err != nil {
 		return err
 	}
@@ -90,6 +92,23 @@ func scaleJobResource(client client.Interface, namespace, name, count string, rc
 
 	rc.DesiredReplicas = *j.Spec.Parallelism
 	rc.ActualReplicas = *j.Spec.Parallelism
+
+	return nil
+}
+
+// scaleStatefulSet is exclusively used for statefulsets
+func scaleStatefulSetResource(client client.Interface, namespace, name, count string, rc *ReplicaCounts) error {
+	ss, err := client.AppsV1beta1().StatefulSets(namespace).Get(name, metaV1.GetOptions{})
+	c, err := strconv.Atoi(count)
+	if err != nil {
+		return err
+	}
+
+	*ss.Spec.Replicas = int32(c)
+	ss, err = client.AppsV1beta1().StatefulSets(namespace).Update(ss)
+
+	rc.DesiredReplicas = *ss.Spec.Replicas
+	rc.ActualReplicas = ss.Status.Replicas
 
 	return nil
 }
