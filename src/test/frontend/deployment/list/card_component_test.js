@@ -19,12 +19,21 @@ describe('Deployment card', () => {
    * @type {!DeploymentCardController}
    */
   let ctrl;
+  /**
+   * @type {!ScaleService}
+   */
+  let scaleData;
 
   beforeEach(() => {
     angular.mock.module(deploymentListModule.name);
 
-    angular.mock.inject(($componentController, $rootScope) => {
-      ctrl = $componentController('kdDeploymentCard', {$scope: $rootScope});
+    angular.mock.inject(($componentController, $rootScope, kdScaleService) => {
+      /* @type {!ScaleService} */
+      scaleData = kdScaleService;
+      ctrl = $componentController('kdDeploymentCard', {
+        $scope: $rootScope,
+        kdScaleService_: scaleData,
+      });
     });
   });
 

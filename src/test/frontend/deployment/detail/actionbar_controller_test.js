@@ -18,11 +18,9 @@ import module from 'deployment/module';
 describe('Action Bar controller', () => {
   /** @type {!ActionBarController} */
   let ctrl;
-  let details = {};
-
-  /** @type
-   * {!../../../frontend/common/scaling/scaleresource_service.ScaleService} */
+  /** @type {!ScaleService} */
   let kdScaleService;
+  let details = {};
 
   beforeEach(() => {
     angular.mock.module(module.name);
@@ -30,15 +28,38 @@ describe('Action Bar controller', () => {
     angular.mock.inject(($controller, _kdScaleService_) => {
       kdScaleService = _kdScaleService_;
 
-      ctrl = $controller(
-          ActionBarController, {deploymentDetail: details, kdScaleService: _kdScaleService_});
+      ctrl = $controller(ActionBarController, {
+        deploymentDetail: details,
+        kdScaleService: _kdScaleService_,
+      });
     });
   });
 
-  it('should show edit replicas dialog', () => {
-
-
-    spyOn(kdScaleService, 'showScaleDialog');
+  it('should initialize details', () => {
     expect(ctrl.details).toBe(details);
+  });
+
+  it('should show edit replicas dialog', () => {
+    // given
+    ctrl.details = {
+      objectMeta: {
+        namespace: 'foo-namespace',
+        name: 'foo-name',
+      },
+      typeMeta: {
+        kind: '',
+      },
+      statusInfo: {
+        replicas: 3,
+        available: 3,
+      },
+    };
+    spyOn(kdScaleService, 'showScaleDialog');
+
+    // when
+    ctrl.handleScaleResourceDialog();
+
+    // then
+    expect(kdScaleService.showScaleDialog).toHaveBeenCalled();
   });
 });
