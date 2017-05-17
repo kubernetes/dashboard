@@ -21,15 +21,22 @@ describe('Stateful Set Card List controller', () => {
    * @type {!NamespaceService}
    */
   let data;
+  /**
+   * @type {!ScaleService}
+   */
+  let scaleData;
 
   beforeEach(() => {
     angular.mock.module(statefulSetModule.name);
 
-    angular.mock.inject(($componentController, kdNamespaceService) => {
+    angular.mock.inject(($componentController, kdNamespaceService, kdScaleService) => {
+      /** @type {!ScaleService} */
+      scaleData = kdScaleService;
       /** @type {!NamespaceService} */
       data = kdNamespaceService;
       /** @type {!StatefulSetCardListController} */
-      ctrl = $componentController('kdStatefulSetCardList', {kdNamespaceService_: data});
+      ctrl = $componentController(
+          'kdStatefulSetCardList', {kdNamespaceService_: data, kdScaleService_: scaleData});
     });
   });
 

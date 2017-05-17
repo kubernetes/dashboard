@@ -17,12 +17,23 @@ import statefulSetModule from 'statefulset/module';
 describe('Stateful Set card', () => {
   /** @type {!StatefulSetCardController} */
   let ctrl;
+  /**
+   * @type {!ScaleService}
+   */
+  let scaleData;
 
   beforeEach(() => {
     angular.mock.module(statefulSetModule.name);
 
-    angular.mock.inject(($componentController, $rootScope) => {
-      ctrl = $componentController('kdStatefulSetCard', {$scope: $rootScope});
+    angular.mock.inject(($componentController, $rootScope, kdScaleService) => {
+      /**
+       * @type {!ScaleService}
+       */
+      scaleData = kdScaleService;
+      ctrl = $componentController('kdStatefulSetCard', {
+        $scope: $rootScope,
+        kdScaleService_: scaleData,
+      });
     });
   });
 

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ActionBarController} from 'statefulset/detail/actionbar_controller';
-import module from 'statefulset/module';
+import {ActionBarController} from 'job/detail/actionbar_controller';
+import module from 'job/module';
 
 describe('Action Bar controller', () => {
   /** @type {!ActionBarController} */
@@ -29,7 +29,7 @@ describe('Action Bar controller', () => {
       kdScaleService = _kdScaleService_;
 
       ctrl = $controller(ActionBarController, {
-        statefulSetDetail: details,
+        jobDetail: details,
         kdScaleService: _kdScaleService_,
       });
     });
@@ -49,10 +49,7 @@ describe('Action Bar controller', () => {
       typeMeta: {
         kind: '',
       },
-      podInfo: {
-        current: 3,
-        desired: 3,
-      },
+      parallelism: 3,
     };
     spyOn(kdScaleService, 'showScaleDialog');
 

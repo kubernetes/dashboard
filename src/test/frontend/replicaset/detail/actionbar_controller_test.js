@@ -18,17 +18,48 @@ import module from 'replicaset/module';
 describe('Action Bar controller', () => {
   /** @type {!ActionBarController} */
   let ctrl;
+  let kdScaleService;
   let details = {};
 
   beforeEach(() => {
     angular.mock.module(module.name);
 
-    angular.mock.inject(($controller) => {
-      ctrl = $controller(ActionBarController, {replicaSetDetail: details});
+    angular.mock.inject(($controller, _kdScaleService_) => {
+      /** @type {!ScaleService} */
+      kdScaleService = _kdScaleService_;
+
+      ctrl = $controller(ActionBarController, {
+        replicaSetDetail: details,
+        kdScaleService: _kdScaleService_,
+      });
     });
   });
 
   it('should initialize details', () => {
     expect(ctrl.details).toBe(details);
+  });
+
+  it('should show edit replicas dialog', () => {
+    // given
+    ctrl.details = {
+      objectMeta: {
+        namespace: 'foo-namespace',
+        name: 'foo-name',
+      },
+      typeMeta: {
+        kind: '',
+      },
+      podInfo: {
+        current: 3,
+        desired: 3,
+      },
+    };
+    spyOn(kdScaleService, 'showScaleDialog');
+
+    // when
+    ctrl.handleScaleResourceDialog();
+
+    // then
+    expect(kdScaleService.showScaleDialog).toHaveBeenCalled();
   });
 });
