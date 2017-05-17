@@ -2338,7 +2338,7 @@ type PodSpec struct {
 	DNSPolicy DNSPolicy `json:"dnsPolicy,omitempty" protobuf:"bytes,6,opt,name=dnsPolicy,casttype=DNSPolicy"`
 	// NodeSelector is a selector which must be true for the pod to fit on a node.
 	// Selector which must match a node's labels for the pod to be scheduled on that node.
-	// More info: http://kubernetes.io/docs/user-guide/node-selection/README
+	// More info: http://kubernetes.io/docs/user-guide/node-selection/README.md
 	// +optional
 	NodeSelector map[string]string `json:"nodeSelector,omitempty" protobuf:"bytes,7,rep,name=nodeSelector"`
 
@@ -2406,6 +2406,21 @@ type PodSpec struct {
 	// If specified, the pod's tolerations.
 	// +optional
 	Tolerations []Toleration `json:"tolerations,omitempty" protobuf:"bytes,22,opt,name=tolerations"`
+	// HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts
+	// file if specified. This is only valid for non-hostNetwork pods.
+	// +optional
+	// +patchMergeKey=IP
+	// +patchStrategy=merge
+	HostAliases []HostAlias `json:"hostMappings,omitempty" patchStrategy:"merge" patchMergeKey:"IP" protobuf:"bytes,23,rep,name=hostMappings"`
+}
+
+// HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the
+// pod's hosts file.
+type HostAlias struct {
+	// IP address of the host file entry.
+	IP string `json:"ip,omitempty" protobuf:"bytes,1,opt,name=ip"`
+	// Hostnames for the the above IP address.
+	Hostnames []string `json:"hostnames,omitempty" protobuf:"bytes,2,rep,name=hostnames"`
 }
 
 // PodSecurityContext holds pod-level security attributes and common container settings.
@@ -2425,7 +2440,7 @@ type PodSecurityContext struct {
 	// PodSecurityContext, the value specified in SecurityContext takes precedence
 	// for that container.
 	// +optional
-	RunAsUser *int64 `json:"runAsUser,omitempty" protobuf:"varint,2,opt,name=runAsUser"`
+	RunAsUser *types.UnixUserID `json:"runAsUser,omitempty" protobuf:"varint,2,opt,name=runAsUser,casttype=k8s.io/apimachinery/pkg/types.UnixUserID"`
 	// Indicates that the container must run as a non-root user.
 	// If true, the Kubelet will validate the image at runtime to ensure that it
 	// does not run as UID 0 (root) and fail to start the container if it does.
@@ -2438,7 +2453,7 @@ type PodSecurityContext struct {
 	// to the container's primary GID.  If unspecified, no groups will be added to
 	// any container.
 	// +optional
-	SupplementalGroups []int64 `json:"supplementalGroups,omitempty" protobuf:"varint,4,rep,name=supplementalGroups"`
+	SupplementalGroups []types.UnixGroupID `json:"supplementalGroups,omitempty" protobuf:"varint,4,rep,name=supplementalGroups,casttype=k8s.io/apimachinery/pkg/types.UnixGroupID"`
 	// A special supplemental group that applies to all containers in a pod.
 	// Some volume types allow the Kubelet to change the ownership of that volume
 	// to be owned by the pod:
@@ -2449,7 +2464,7 @@ type PodSecurityContext struct {
 	//
 	// If unset, the Kubelet will not modify the ownership and permissions of any volume.
 	// +optional
-	FSGroup *int64 `json:"fsGroup,omitempty" protobuf:"varint,5,opt,name=fsGroup"`
+	FSGroup *types.UnixGroupID `json:"fsGroup,omitempty" protobuf:"varint,5,opt,name=fsGroup,casttype=k8s.io/apimachinery/pkg/types.UnixGroupID"`
 }
 
 // PodQOSClass defines the supported qos classes of Pods.
@@ -2777,6 +2792,16 @@ const (
 	ServiceTypeExternalName ServiceType = "ExternalName"
 )
 
+// Service External Traffic Policy Type string
+type ServiceExternalTrafficPolicyType string
+
+const (
+	// ServiceExternalTrafficPolicyTypeLocal specifies local endpoints behavior.
+	ServiceExternalTrafficPolicyTypeLocal ServiceExternalTrafficPolicyType = "Local"
+	// ServiceExternalTrafficPolicyTypeGlobal specifies global (legacy) behavior.
+	ServiceExternalTrafficPolicyTypeGlobal ServiceExternalTrafficPolicyType = "Global"
+)
+
 // ServiceStatus represents the current status of a service.
 type ServiceStatus struct {
 	// LoadBalancer contains the current status of the load-balancer,
@@ -2889,6 +2914,20 @@ type ServiceSpec struct {
 	// Must be a valid DNS name and requires Type to be ExternalName.
 	// +optional
 	ExternalName string `json:"externalName,omitempty" protobuf:"bytes,10,opt,name=externalName"`
+
+	// externalTrafficPolicy denotes if this Service desires to route external traffic to
+	// local endpoints only. This preserves Source IP and avoids a second hop for
+	// LoadBalancer and Nodeport type services.
+	// +optional
+	ExternalTrafficPolicy ServiceExternalTrafficPolicyType `json:"externalTrafficPolicy,omitempty" protobuf:"bytes,11,opt,name=externalTrafficPolicy"`
+
+	// healthCheckNodePort specifies the healthcheck nodePort for the service.
+	// If not specified, HealthCheckNodePort is created by the service api
+	// backend with the allocated nodePort. Will use user-specified nodePort value
+	// if specified by the client. Only effects when Type is set to LoadBalancer
+	// and ExternalTrafficPolicy is set to Local.
+	// +optional
+	HealthCheckNodePort int32 `json:"healthCheckNodePort,omitempty" protobuf:"bytes,12,opt,name=healthCheckNodePort"`
 }
 
 // ServicePort contains information on service's port.
@@ -3348,13 +3387,11 @@ type NodeAddressType string
 
 // These are valid address type of node.
 const (
-	// Deprecated: NodeLegacyHostIP will be removed in 1.7.
-	NodeLegacyHostIP NodeAddressType = "LegacyHostIP"
-	NodeHostName     NodeAddressType = "Hostname"
-	NodeExternalIP   NodeAddressType = "ExternalIP"
-	NodeInternalIP   NodeAddressType = "InternalIP"
-	NodeExternalDNS  NodeAddressType = "ExternalDNS"
-	NodeInternalDNS  NodeAddressType = "InternalDNS"
+	NodeHostName    NodeAddressType = "Hostname"
+	NodeExternalIP  NodeAddressType = "ExternalIP"
+	NodeInternalIP  NodeAddressType = "InternalIP"
+	NodeExternalDNS NodeAddressType = "ExternalDNS"
+	NodeInternalDNS NodeAddressType = "InternalDNS"
 )
 
 // NodeAddress contains information for the node's address.
@@ -4354,7 +4391,7 @@ type SecurityContext struct {
 	// May also be set in PodSecurityContext.  If set in both SecurityContext and
 	// PodSecurityContext, the value specified in SecurityContext takes precedence.
 	// +optional
-	RunAsUser *int64 `json:"runAsUser,omitempty" protobuf:"varint,4,opt,name=runAsUser"`
+	RunAsUser *types.UnixUserID `json:"runAsUser,omitempty" protobuf:"varint,4,opt,name=runAsUser,casttype=k8s.io/apimachinery/pkg/types.UnixUserID"`
 	// Indicates that the container must run as a non-root user.
 	// If true, the Kubelet will validate the image at runtime to ensure that it
 	// does not run as UID 0 (root) and fail to start the container if it does.
@@ -4428,3 +4465,37 @@ type NodeResources struct {
 	// Capacity represents the available resources of a node
 	Capacity ResourceList `protobuf:"bytes,1,rep,name=capacity,casttype=ResourceList,castkey=ResourceName"`
 }
+
+const (
+	// Enable stdin for remote command execution
+	ExecStdinParam = "input"
+	// Enable stdout for remote command execution
+	ExecStdoutParam = "output"
+	// Enable stderr for remote command execution
+	ExecStderrParam = "error"
+	// Enable TTY for remote command execution
+	ExecTTYParam = "tty"
+	// Command to run for remote command execution
+	ExecCommandParamm = "command"
+
+	// Name of header that specifies stream type
+	StreamType = "streamType"
+	// Value for streamType header for stdin stream
+	StreamTypeStdin = "stdin"
+	// Value for streamType header for stdout stream
+	StreamTypeStdout = "stdout"
+	// Value for streamType header for stderr stream
+	StreamTypeStderr = "stderr"
+	// Value for streamType header for data stream
+	StreamTypeData = "data"
+	// Value for streamType header for error stream
+	StreamTypeError = "error"
+	// Value for streamType header for terminal resize stream
+	StreamTypeResize = "resize"
+
+	// Name of header that specifies the port being forwarded
+	PortHeader = "port"
+	// Name of header that specifies a request ID used to associate the error
+	// and data streams for a single forwarded connection
+	PortForwardRequestIDHeader = "requestID"
+)
