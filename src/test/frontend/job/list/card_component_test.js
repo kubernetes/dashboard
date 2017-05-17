@@ -18,12 +18,21 @@ describe('Job card', () => {
   /**
    * @type {!JobCardController} */
   let ctrl;
+  /**
+   * @type {!ScaleService}
+   */
+  let scaleData;
 
   beforeEach(() => {
     angular.mock.module(jobModule.name);
 
-    angular.mock.inject(($componentController) => {
-      ctrl = $componentController('kdJobCard');
+    angular.mock.inject(($componentController, $rootScope, kdScaleService) => {
+      /* @type {!ScaleService} */
+      scaleData = kdScaleService;
+      ctrl = $componentController('kdJobCard', {
+        $scope: $rootScope,
+        kdScaleService_: scaleData,
+      });
     });
   });
 

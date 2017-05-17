@@ -18,6 +18,7 @@
 export class ActionBarController {
   /**
    * @param {!backendApi.ReplicaSetDetail} replicaSetDetail
+   * @param {!common/scaling/service.ScaleService} kdScaleService
    * @ngInject
    */
   constructor(replicaSetDetail, kdScaleService) {

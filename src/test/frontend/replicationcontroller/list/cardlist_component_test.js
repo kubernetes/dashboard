@@ -23,15 +23,24 @@ describe('Replication Controller Card List controller', () => {
    * @type {!NamespaceService}
    */
   let data;
+  /**
+   * @type {!ScaleService}
+   */
+  let scaleData;
 
   beforeEach(() => {
     angular.mock.module(replicationControllerModule.name);
 
-    angular.mock.inject(($componentController, kdNamespaceService) => {
+    angular.mock.inject(($componentController, kdNamespaceService, kdScaleService) => {
+      /** @type {!ScaleService} */
+      scaleData = kdScaleService;
       /** @type {!NamespaceService} */
       data = kdNamespaceService;
       /** @type {!RCCardListController} */
-      ctrl = $componentController('kdReplicationControllerCardList', {kdNamespaceService_: data});
+      ctrl = $componentController('kdReplicationControllerCardList', {
+        kdNamespaceService_: data,
+        kdScaleService_: scaleData,
+      });
     });
   });
 

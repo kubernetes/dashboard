@@ -19,15 +19,20 @@ describe('Job Card List controller', () => {
   let ctrl;
   /** @type {!NamespaceService} */
   let data;
+  /*@type {!ScaleService}*/
+  let scaleData;
 
   beforeEach(() => {
     angular.mock.module(jobModule.name);
 
-    angular.mock.inject(($componentController, kdNamespaceService) => {
+    angular.mock.inject(($componentController, kdNamespaceService, kdScaleService) => {
       /** @type {!NamespaceService} */
       data = kdNamespaceService;
+      /** @type {!ScaleService} */
+      scaleData = kdScaleService;
       /** @type {!JobCardListController} */
-      ctrl = $componentController('kdJobCardList', {kdNamespaceService_: data});
+      ctrl = $componentController(
+          'kdJobCardList', {kdNamespaceService_: data, kdScaleService_: scaleData});
     });
   });
 
