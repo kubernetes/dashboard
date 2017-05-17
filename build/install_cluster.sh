@@ -1,21 +1,15 @@
-#!/bin/bash
-
-echo "test"
-
-sudo su
-
-echo "test2"
 
 
-apt-get update && apt-get install -y apt-transport-https
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
-cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
-deb http://apt.kubernetes.io/ kubernetes-xenial main
-EOF
-apt-get update
+echo "add repo"
+sudo sh -c "curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -"
+sudo sh -c "echo 'deb http://apt.kubernetes.io/ kubernetes-xenial main' > /etc/apt/sources.list.d/kubernetes.list"
+echo "update"
+sudo apt-get update
 # Install docker if you don't have it already.
-apt-get install -y kubelet kubeadm kubectl kubernetes-cni
-kubeadm init
+echo "install"
+sudo sh -c "apt-get install -y kubelet kubeadm kubectl kubernetes-cni"
+echo "init"
+sudo kubeadm init
 
 cp /etc/kubernetes/admin.conf $HOME/
 chown $(id -u):$(id -g) $HOME/admin.conf
