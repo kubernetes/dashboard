@@ -13,7 +13,8 @@
 // limitations under the License.
 
 /**
- * Application configuration service.
+ * Application configuration service. This file is modified during build process, it should be
+ * available under appconfig/service.js location.
  *
  * @final
  */

@@ -216,7 +216,7 @@ function patchBuildInformation() {
   if (typeof(commit) === 'undefined') {
     commit = '';
   }
-  return gulpIf('**/appconfig_service.js', gulpReplaceTask({
+  return gulpIf('**/appconfig/service.js', gulpReplaceTask({
                   patterns: [
                     {match: 'BUILD_GIT_COMMIT', replacement: commit},
                     {match: 'BUILD_DASHBOARD_VERSION', replacement: conf.deploy.version.release},
