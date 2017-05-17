@@ -2,7 +2,7 @@
 
 echo "test"
 
-sudo -s
+sudo su
 
 echo "test2"
 
