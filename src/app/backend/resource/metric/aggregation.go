@@ -24,7 +24,7 @@ const (
 	SumAggregation     = "sum"
 	MaxAggregation     = "max"
 	MinAggregation     = "min"
-	DefaultAggregation = "sum"
+	DefaultAggregation = SumAggregation
 )
 
 type AggregationNames []AggregationName

@@ -97,7 +97,7 @@ func TestGetNodeDetail(t *testing.T) {
 		actual, _ := GetNodeDetail(fakeClient, fakeHeapsterClient, c.name)
 
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("GetNodeDetail(client,heapsterClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
+			t.Errorf("GetNodeDetail(client,metricClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
 				c.namespace, c.name, actual, c.expected)
 		}
 	}

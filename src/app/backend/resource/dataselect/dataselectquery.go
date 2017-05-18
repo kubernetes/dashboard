@@ -15,8 +15,7 @@
 package dataselect
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric"
 )
 
 // Options for GenericDataSelect which takes []GenericDataCell and returns selected data.
@@ -33,7 +32,7 @@ var NoMetrics = NewMetricQuery(nil, nil)
 
 // StandardMetrics query results in a standard metrics being returned.
 // standard metrics are: cpu usage, memory usage and aggregation = sum.
-var StandardMetrics = NewMetricQuery([]string{common.CpuUsage, common.MemoryUsage},
+var StandardMetrics = NewMetricQuery([]string{metric.CpuUsage, metric.MemoryUsage},
 	metric.OnlySumAggregation)
 
 // MetricQuery holds parameters for metric extraction process.
@@ -45,11 +44,11 @@ type MetricQuery struct {
 	MetricNames []string
 	// Aggregations to be performed for each metric. Check available aggregations in aggregation.go.
 	// If empty, default aggregation will be used (sum).
-	Aggregations metric.AggregationNames
+	Aggregations metric.AggregationModes
 }
 
 // NewMetricQuery returns a metric query from provided settings.
-func NewMetricQuery(metricNames []string, aggregations metric.AggregationNames) *MetricQuery {
+func NewMetricQuery(metricNames []string, aggregations metric.AggregationModes) *MetricQuery {
 	return &MetricQuery{
 		MetricNames:  metricNames,
 		Aggregations: aggregations,

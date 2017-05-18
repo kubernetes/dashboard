@@ -22,7 +22,7 @@ import (
 	"k8s.io/client-go/rest"
 )
 
-// HeapsterClient  is a client used to make requests to a Heapster instance.
+// HeapsterClient is a client used to make requests to a Heapster instance.
 type HeapsterClient interface {
 	// Creates a new GET HTTP request to heapster, specified by the path param, to the V1 API
 	// endpoint. The path param is without the API prefix, e.g.,
@@ -34,6 +34,7 @@ type HeapsterClient interface {
 // Separation is done to allow testing.
 type RequestInterface interface {
 	DoRaw() ([]byte, error)
+	AbsPath(segments ...string) *rest.Request
 }
 
 // InClusterHeapsterClient is an in-cluster implementation of a Heapster client. Talks with Heapster
@@ -71,7 +72,7 @@ func CreateHeapsterRESTClient(heapsterHost string, apiclient *kubernetes.Clients
 
 	if heapsterHost == "" {
 		log.Print("Creating in-cluster Heapster client")
-		return InClusterHeapsterClient{client: apiclient.Core().RESTClient()}, nil
+		return healthCheck(InClusterHeapsterClient{client: apiclient.Core().RESTClient()})
 	}
 
 	cfg := &rest.Config{Host: heapsterHost, QPS: client.DefaultQPS, Burst: client.DefaultBurst}
@@ -80,5 +81,15 @@ func CreateHeapsterRESTClient(heapsterHost string, apiclient *kubernetes.Clients
 		return nil, err
 	}
 	log.Printf("Creating remote Heapster client for %s", heapsterHost)
-	return RemoteHeapsterClient{client: restClient.Core().RESTClient()}, nil
+	return healthCheck(RemoteHeapsterClient{client: restClient.Core().RESTClient()})
+}
+
+func healthCheck(client HeapsterClient) (HeapsterClient, error) {
+	_, err := client.Get("healthz").AbsPath("/").DoRaw()
+	if err == nil {
+		log.Print("Successful initial request to heapster")
+		return client, nil
+	}
+
+	return nil, err
 }
