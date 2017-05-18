@@ -43,5 +43,3 @@ func TestShouldDoCsrfValidation(t *testing.T) {
 		}
 	}
 }
-
-// TODO(maciaszczykm): https://github.com/emicklei/go-restful/blob/master/examples/restful-curly-router_test.go
