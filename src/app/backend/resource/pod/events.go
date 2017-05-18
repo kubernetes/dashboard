@@ -12,25 +12,17 @@ import (
 // GetEventsForPod gets events that are associated with this pod.
 func GetEventsForPod(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace,
 	podName string) (*common.EventList, error) {
-
-	// Get events for pod.
-	rsEvents, err := event.GetEvents(client, namespace, podName)
-	if err != nil {
-		return nil, err
-	}
-
-	// Get events for pods in job.
+	
 	podEvents, err := event.GetPodEvents(client, namespace, podName)
 	if err != nil {
 		return nil, err
 	}
 
-	apiEvents := append(rsEvents, podEvents...)
-	if !event.IsTypeFilled(apiEvents) {
-		apiEvents = event.FillEventsType(apiEvents)
+	if !event.IsTypeFilled(podEvents) {
+		podEvents = event.FillEventsType(podEvents)
 	}
 
-	events := event.CreateEventList(apiEvents, dsQuery)
+	events := event.CreateEventList(podEvents, dsQuery)
 
 	log.Printf("Found %d events related to %s pod in %s namespace", len(events.Events), podName,
 		namespace)
