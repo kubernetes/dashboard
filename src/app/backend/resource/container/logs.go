@@ -106,10 +106,9 @@ func ConstructLogs(podID string, rawLogs string, container string, logSelector *
 		FromDate:      fromDate,
 		ToDate:        toDate,
 	}
-	logs := &logs.LogDetails{
+	return &logs.LogDetails{
 		Info:      info,
 		Selection: logSelection,
 		LogLines:  logLines,
 	}
-	return logs
 }
