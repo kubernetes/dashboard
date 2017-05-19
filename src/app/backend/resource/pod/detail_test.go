@@ -65,9 +65,10 @@ func TestGetPodDetail(t *testing.T) {
 					Namespace: "test-namespace",
 					Labels:    map[string]string{"app": "test"},
 				},
-				Controller: owner.ResourceOwner{},
-				Containers: []Container{},
-				EventList:  common.EventList{Events: []common.Event{}},
+				Controller:     owner.ResourceOwner{},
+				Containers:     []Container{},
+				InitContainers: []Container{},
+				EventList:      common.EventList{Events: []common.Event{}},
 			},
 		},
 	}

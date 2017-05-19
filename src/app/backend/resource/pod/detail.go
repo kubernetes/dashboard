@@ -61,6 +61,9 @@ type PodDetail struct {
 	// List of container of this pod.
 	Containers []Container `json:"containers"`
 
+	// List of initContainer of this pod.
+	InitContainers []Container `json:"initContainers"`
+
 	// Metrics collected for this resource
 	Metrics []metric.Metric `json:"metrics"`
 
@@ -118,7 +121,7 @@ func GetPodDetail(client kubernetes.Interface, heapsterClient client.HeapsterCli
 		PodMetrics: common.GetPodMetricsChannel(heapsterClient, name, namespace),
 	}
 
-	pod, err := client.Core().Pods(namespace).Get(name, metaV1.GetOptions{})
+	pod, err := client.CoreV1().Pods(namespace).Get(name, metaV1.GetOptions{})
 
 	if err != nil {
 		return nil, err
@@ -202,12 +205,9 @@ func isNotFoundError(err error) bool {
 	return statusErr.ErrStatus.Code == 404
 }
 
-func toPodDetail(pod *v1.Pod, metrics []metric.Metric, configMaps *v1.ConfigMapList,
-	secrets *v1.SecretList, controller owner.ResourceOwner,
-	events *common.EventList) PodDetail {
-
+func extractContainerInfo(containerList []v1.Container, pod *v1.Pod, configMaps *v1.ConfigMapList, secrets *v1.SecretList) []Container {
 	containers := make([]Container, 0)
-	for _, container := range pod.Spec.Containers {
+	for _, container := range containerList {
 		vars := make([]EnvVar, 0)
 		for _, envVar := range container.Env {
 			variable := EnvVar{
@@ -229,20 +229,26 @@ func toPodDetail(pod *v1.Pod, metrics []metric.Metric, configMaps *v1.ConfigMapL
 			Args:     container.Args,
 		})
 	}
-	podDetail := PodDetail{
-		ObjectMeta:   common.NewObjectMeta(pod.ObjectMeta),
-		TypeMeta:     common.NewTypeMeta(common.ResourceKindPod),
-		PodPhase:     pod.Status.Phase,
-		PodIP:        pod.Status.PodIP,
-		RestartCount: getRestartCount(*pod),
-		NodeName:     pod.Spec.NodeName,
-		Controller:   controller,
-		Containers:   containers,
-		Metrics:      metrics,
-		Conditions:   getPodConditions(*pod),
-		EventList:    *events,
-	}
+	return containers
+}
 
+func toPodDetail(pod *v1.Pod, metrics []metric.Metric, configMaps *v1.ConfigMapList,
+	secrets *v1.SecretList, controller owner.ResourceOwner,
+	events *common.EventList) PodDetail {
+	podDetail := PodDetail{
+		ObjectMeta:     common.NewObjectMeta(pod.ObjectMeta),
+		TypeMeta:       common.NewTypeMeta(common.ResourceKindPod),
+		PodPhase:       pod.Status.Phase,
+		PodIP:          pod.Status.PodIP,
+		RestartCount:   getRestartCount(*pod),
+		NodeName:       pod.Spec.NodeName,
+		Controller:     controller,
+		Containers:     extractContainerInfo(pod.Spec.Containers, pod, configMaps, secrets),
+		InitContainers: extractContainerInfo(pod.Spec.InitContainers, pod, configMaps, secrets),
+		Metrics:        metrics,
+		Conditions:     getPodConditions(*pod),
+		EventList:      *events,
+	}
 	return podDetail
 }
 

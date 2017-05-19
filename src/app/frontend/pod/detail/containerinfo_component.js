@@ -67,6 +67,10 @@ export default class ContainerInfoController {
  * @type {!angular.Component}
  */
 export const containerInfoComponent = {
+  transclude: {
+    // Optional header that is transcluded instead of the default one.
+    'header': '?kdHeader',
+  },
   controller: ContainerInfoController,
   templateUrl: 'pod/detail/containerinfo.html',
   bindings: {
