@@ -64,7 +64,7 @@ $ kubectl proxy --port=8080
 kubectl will handle authentication with Kubernetes and create an API proxy with the address
 `localhost:8080`. Therefore, no changes in the configuration are required.
 
-Another way to connect to real cluster while developing dashboard is to override default values used 
+Another way to connect to real cluster while developing dashboard is to override default values used
 by our build pipeline. In order to do that we have introduced two environment variables
 `KUBE_DASHBOARD_APISERVER_HOST` and `KUBE_DASHBOARD_KUBECONFIG` that will be used over default ones when
 defined. Before running our gulp tasks just do:
@@ -139,7 +139,7 @@ Dashboard backend (9090)  ---> Kubernetes API server (8080)
 In order to package everything into a ready-to-run Docker image, use the following task:
 
 ```shell
-$ gulp docker-image:canary
+$ gulp docker-image:head
 ```
 
 You might notice that the Docker image is very small and requires only a few MB. Only
@@ -170,18 +170,18 @@ $ gulp check-javascript-format
 ```
 
 ## Committing changes to your fork
-   
+
 Before committing any changes, please link/copy the pre-commit hook into your .git directory. This will keep you from accidentally committing non formatted code.
-   
+
 The hook requires gofmt to be in your PATH.
-   
+
 ```shell
 cd <dashboard_home>/.git/hooks/
 ln -s ../../hooks/pre-commit .
 ```
-   
+
 Then you can commit your changes and push them to your fork:
-   
+
 ```shell
 git commit
 git push -f origin my-feature

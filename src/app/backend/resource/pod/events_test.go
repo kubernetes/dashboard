@@ -13,15 +13,27 @@ import (
 
 func TestGetPodEvents(t *testing.T) {
 	cases := []struct {
-		namespace, name string
-		eventList       *api.EventList
-		expected        *common.EventList
+		namespace, podName string
+		eventList          *api.EventList
+		podList            *api.PodList
+		expected           *common.EventList
 	}{
 		{
-			"ns-1", "dp-1",
+			"ns-1", "pod-1",
 			&api.EventList{Items: []api.Event{
-				{Message: "test-message", ObjectMeta: metaV1.ObjectMeta{
-					Name: "ev-1", Namespace: "ns-1", Labels: map[string]string{"app": "test"},
+				{
+					Message: "test-message",
+					ObjectMeta: metaV1.ObjectMeta{
+						Name: "ev-1", Namespace: "ns-1",
+						Labels: map[string]string{"app": "test"},
+					},
+					InvolvedObject: api.ObjectReference{UID: "test-uid"}},
+			}},
+			&api.PodList{Items: []api.Pod{
+				{ObjectMeta: metaV1.ObjectMeta{
+					Name: "pod-1",
+					Namespace: "ns-1",
+					UID: "test-uid",
 				}},
 			}},
 			&common.EventList{
@@ -37,12 +49,12 @@ func TestGetPodEvents(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		fakeClient := fake.NewSimpleClientset(c.eventList)
+		fakeClient := fake.NewSimpleClientset(c.podList, c.eventList)
 
-		actual, _ := GetEventsForPod(fakeClient, dataselect.NoDataSelect, c.namespace, c.name)
+		actual, _ := GetEventsForPod(fakeClient, dataselect.NoDataSelect, c.namespace, c.podName)
 
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("GetEventsForPods(%#v) == \ngot %#v, \nexpected %#v", actual,
+			t.Errorf("GetEventsForPods == \ngot %#v, \nexpected %#v", actual,
 				c.expected)
 		}
 	}

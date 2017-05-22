@@ -105,7 +105,7 @@ func GetPodEvents(client client.Interface, namespace, podName string) ([]api.Eve
 		return nil, err
 	}
 
-	l := podList.Items[:0]
+	l := make([]api.Pod, 0)
 	for _, pi := range podList.Items {
 		if pi.Name == podName {
 			l = append(l, pi)
