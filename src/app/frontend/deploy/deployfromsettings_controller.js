@@ -13,9 +13,6 @@
 // limitations under the License.
 
 import {stateName as workloads} from 'workloads/state';
-
-import DockerImageReference from '../common/docker/dockerimagereference';
-
 import showNamespaceDialog from './createnamespace_dialog';
 import showCreateSecretDialog from './createsecret_dialog';
 import DeployLabel from './deploylabel';
@@ -24,7 +21,6 @@ import {uniqueNameValidationKey} from './uniquename_directive';
 
 // Label keys for predefined labels
 const APP_LABEL_KEY = 'app';
-const VERSION_LABEL_KEY = 'version';
 
 /**
  * Controller for the deploy from settings directive.
@@ -102,7 +98,6 @@ export default class DeployFromSettingsController {
     /** @export {!Array<!DeployLabel>} */
     this.labels = [
       new DeployLabel(APP_LABEL_KEY, '', false, this.getName_.bind(this)),
-      new DeployLabel(VERSION_LABEL_KEY, '', false, this.getContainerImageVersion_.bind(this)),
       new DeployLabel(),
     ];
 
@@ -405,15 +400,6 @@ export default class DeployFromSettingsController {
   /**
    * Callbacks used in DeployLabel model to make it aware of controller state changes.
    */
-
-  /**
-   * Returns extracted from link container image version.
-   * @return {string}
-   * @private
-   */
-  getContainerImageVersion_() {
-    return new DockerImageReference(this.containerImage).tag();
-  }
 
   /**
    * Returns application name.
