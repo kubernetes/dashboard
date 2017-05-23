@@ -22,7 +22,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/pkg/api/v1"
@@ -45,7 +45,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 			&v1.PodList{},
 			&JobList{
 				ListMeta:          api.ListMeta{},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Jobs:              []Job{}},
 			nil,
 		},
@@ -154,7 +154,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 			},
 			&JobList{
 				ListMeta:          api.ListMeta{TotalItems: 2},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Jobs: []Job{{
 					ObjectMeta: api.ObjectMeta{
 						Name:              "rs-name",

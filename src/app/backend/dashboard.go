@@ -25,6 +25,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/handler"
 	"github.com/kubernetes/dashboard/src/app/backend/integration"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/spf13/pflag"
 )
@@ -77,17 +78,16 @@ func main() {
 	log.Printf("Successful initial request to the apiserver, version: %s", versionInfo.String())
 
 	// Init integrations
-	integrationClient := integration.
-		NewIntegrationClient().
-		ConfigureHeapster(*argHeapsterHost, apiserverClient)
-
-	//heapsterRESTClient, err := client.CreateHeapsterRESTClient(*argHeapsterHost, apiserverClient)
-	//if err != nil {
-	//	log.Printf("Could not create heapster client: %s. Continuing.", err)
-	//}
+	integrationManager := integration.NewIntegrationManager(clientManager)
+	err = integrationManager.Metric().
+		ConfigureHeapster(*argHeapsterHost, apiserverClient).
+		Enable(heapster.HeapsterIntegrationID)
+	if err != nil {
+		log.Printf("Could not enable metric client: %s. Continuing.", err)
+	}
 
 	apiHandler, err := handler.CreateHTTPAPIHandler(
-		integrationClient,
+		integrationManager,
 		clientManager)
 	if err != nil {
 		handleFatalInitError(err)

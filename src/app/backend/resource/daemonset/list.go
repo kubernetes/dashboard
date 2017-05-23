@@ -18,11 +18,10 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
@@ -33,8 +32,8 @@ type DaemonSetList struct {
 	ListMeta api.ListMeta `json:"listMeta"`
 
 	// Unordered list of Daemon Sets
-	DaemonSets        []DaemonSet     `json:"daemonSets"`
-	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
+	DaemonSets        []DaemonSet        `json:"daemonSets"`
+	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
 }
 
 // DaemonSet (aka. Daemon Set) plus zero or more Kubernetes services that
@@ -52,7 +51,7 @@ type DaemonSet struct {
 
 // GetDaemonSetList returns a list of all Daemon Set in the cluster.
 func GetDaemonSetList(client *client.Clientset, nsQuery *common.NamespaceQuery,
-	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*DaemonSetList, error) {
+	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*DaemonSetList, error) {
 	log.Print("Getting list of all daemon sets in the cluster")
 	channels := &common.ResourceChannels{
 		DaemonSetList: common.GetDaemonSetListChannel(client, nsQuery, 1),
@@ -61,13 +60,13 @@ func GetDaemonSetList(client *client.Clientset, nsQuery *common.NamespaceQuery,
 		EventList:     common.GetEventListChannel(client, nsQuery, 1),
 	}
 
-	return GetDaemonSetListFromChannels(channels, dsQuery, heapsterClient)
+	return GetDaemonSetListFromChannels(channels, dsQuery, metricClient)
 }
 
 // GetDaemonSetListFromChannels returns a list of all Daemon Seet in the cluster
 // reading required resource list once from the channels.
 func GetDaemonSetListFromChannels(channels *common.ResourceChannels,
-	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*DaemonSetList, error) {
+	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*DaemonSetList, error) {
 
 	daemonSets := <-channels.DaemonSetList.List
 	if err := <-channels.DaemonSetList.Error; err != nil {
@@ -84,14 +83,14 @@ func GetDaemonSetListFromChannels(channels *common.ResourceChannels,
 		return nil, err
 	}
 
-	result := CreateDaemonSetList(daemonSets.Items, pods.Items, events.Items, dsQuery, heapsterClient)
+	result := CreateDaemonSetList(daemonSets.Items, pods.Items, events.Items, dsQuery, metricClient)
 	return result, nil
 }
 
 // CreateDaemonSetList returns a list of all Daemon Set model objects in the cluster, based on all
 // Kubernetes Daemon Set API objects.
 func CreateDaemonSetList(daemonSets []extensions.DaemonSet, pods []v1.Pod,
-	events []v1.Event, dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) *DaemonSetList {
+	events []v1.Event, dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) *DaemonSetList {
 
 	daemonSetList := &DaemonSetList{
 		DaemonSets: make([]DaemonSet, 0),
@@ -101,7 +100,9 @@ func CreateDaemonSetList(daemonSets []extensions.DaemonSet, pods []v1.Pod,
 	cachedResources := &dataselect.CachedResources{
 		Pods: pods,
 	}
-	dsCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(ToCells(daemonSets), dsQuery, cachedResources, heapsterClient)
+	dsCells, metricPromises, filteredTotal := dataselect.
+		GenericDataSelectWithFilterAndMetrics(
+			ToCells(daemonSets), dsQuery, cachedResources, metricClient)
 	daemonSets = FromCells(dsCells)
 	daemonSetList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
@@ -123,7 +124,7 @@ func CreateDaemonSetList(daemonSets []extensions.DaemonSet, pods []v1.Pod,
 	cumulativeMetrics, err := metricPromises.GetMetrics()
 	daemonSetList.CumulativeMetrics = cumulativeMetrics
 	if err != nil {
-		daemonSetList.CumulativeMetrics = make([]metric.Metric, 0)
+		daemonSetList.CumulativeMetrics = make([]metricapi.Metric, 0)
 	}
 
 	return daemonSetList

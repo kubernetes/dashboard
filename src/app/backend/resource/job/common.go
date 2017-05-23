@@ -17,7 +17,7 @@ package job
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	batch "k8s.io/client-go/pkg/apis/batch/v1"
 )
 
@@ -39,8 +39,8 @@ func (self JobCell) GetProperty(name dataselect.PropertyName) dataselect.Compara
 	}
 }
 
-func (self JobCell) GetResourceSelector() *metric.ResourceSelector {
-	return &metric.ResourceSelector{
+func (self JobCell) GetResourceSelector() *metricapi.ResourceSelector {
+	return &metricapi.ResourceSelector{
 		Namespace:    self.ObjectMeta.Namespace,
 		ResourceType: api.ResourceKindJob,
 		ResourceName: self.ObjectMeta.Name,

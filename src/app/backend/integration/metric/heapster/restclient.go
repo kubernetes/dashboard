@@ -36,13 +36,7 @@ func (c inClusterHeapsterClient) Get(path string) RequestInterface {
 }
 
 func (self inClusterHeapsterClient) HealthCheck() error {
-	_, err := self.Get("healthz").AbsPath("/").DoRaw()
-	if err == nil {
-		log.Print("Successful initial request to heapster")
-		return nil
-	}
-
-	return err
+	return healthCheck(self)
 }
 
 // RemoteHeapsterClient is an implementation of a remote Heapster client. Talks with Heapster
@@ -57,7 +51,11 @@ func (c remoteHeapsterClient) Get(path string) RequestInterface {
 }
 
 func (self remoteHeapsterClient) HealthCheck() error {
-	_, err := self.Get("healthz").AbsPath("/").DoRaw()
+	return healthCheck(self)
+}
+
+func healthCheck(client HeapsterRESTClient) error {
+	_, err := client.Get("healthz").AbsPath("/").DoRaw()
 	if err == nil {
 		log.Print("Successful initial request to heapster")
 		return nil

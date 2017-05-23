@@ -22,7 +22,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/pkg/api/v1"
@@ -48,7 +48,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 			&v1.PodList{},
 			&ReplicaSetList{
 				ListMeta:          api.ListMeta{},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
 				ReplicaSets:       []ReplicaSet{}},
 			nil,
 		},
@@ -141,7 +141,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 			},
 			&ReplicaSetList{
 				ListMeta:          api.ListMeta{TotalItems: 1},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
 				ReplicaSets: []ReplicaSet{{
 					ObjectMeta: api.ObjectMeta{
 						Name:              "rs-name",
@@ -234,7 +234,7 @@ func TestCreateReplicaSetList(t *testing.T) {
 			[]v1.Event{},
 			&ReplicaSetList{
 				ListMeta:          api.ListMeta{TotalItems: 1},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
 				ReplicaSets: []ReplicaSet{
 					{
 						ObjectMeta: api.ObjectMeta{Name: "replica-set", Namespace: "ns-1"},

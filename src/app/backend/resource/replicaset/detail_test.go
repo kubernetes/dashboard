@@ -19,11 +19,11 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/service"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -68,7 +68,7 @@ func TestGetReplicaSetDetail(t *testing.T) {
 				PodInfo:  common.PodInfo{Warnings: []common.Event{}},
 				PodList: pod.PodList{
 					Pods:              []pod.Pod{},
-					CumulativeMetrics: make([]metric.Metric, 0),
+					CumulativeMetrics: make([]metricapi.Metric, 0),
 				},
 				Selector: &metaV1.LabelSelector{
 					MatchLabels: map[string]string{"app": "test"},

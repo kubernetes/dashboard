@@ -22,7 +22,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	v1 "k8s.io/client-go/pkg/api/v1"
@@ -48,7 +48,7 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 			&DeploymentList{
 				ListMeta:          api.ListMeta{},
 				Deployments:       []Deployment{},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
 			},
 			nil,
 		},
@@ -111,7 +111,7 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 			&v1.PodList{},
 			&DeploymentList{
 				ListMeta:          api.ListMeta{TotalItems: 1},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Deployments: []Deployment{{
 					ObjectMeta: api.ObjectMeta{
 						Name:              "rs-name",

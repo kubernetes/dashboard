@@ -18,11 +18,10 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
@@ -33,8 +32,8 @@ type PodList struct {
 	ListMeta api.ListMeta `json:"listMeta"`
 
 	// Unordered list of Pods.
-	Pods              []Pod           `json:"pods"`
-	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
+	Pods              []Pod              `json:"pods"`
+	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
 }
 
 type PodStatus struct {
@@ -58,14 +57,14 @@ type Pod struct {
 	RestartCount int32 `json:"restartCount"`
 
 	// Pod metrics.
-	Metrics *common.PodMetrics `json:"metrics"`
+	Metrics *PodMetrics `json:"metrics"`
 
 	// Pod warning events
 	Warnings []common.Event `json:"warnings"`
 }
 
 // GetPodList returns a list of all Pods in the cluster.
-func GetPodList(client k8sClient.Interface, heapsterClient heapster.HeapsterClient,
+func GetPodList(client k8sClient.Interface, metricClient metricapi.MetricClient,
 	nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*PodList, error) {
 	log.Print("Getting list of all pods in the cluster")
 
@@ -74,13 +73,13 @@ func GetPodList(client k8sClient.Interface, heapsterClient heapster.HeapsterClie
 		EventList: common.GetEventListChannel(client, nsQuery, 1),
 	}
 
-	return GetPodListFromChannels(channels, dsQuery, heapsterClient)
+	return GetPodListFromChannels(channels, dsQuery, metricClient)
 }
 
 // GetPodListFromChannels returns a list of all Pods in the cluster
 // reading required resource list once from the channels.
 func GetPodListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery,
-	heapsterClient heapster.HeapsterClient) (*PodList, error) {
+	metricClient metricapi.MetricClient) (*PodList, error) {
 
 	pods := <-channels.PodList.List
 	if err := <-channels.PodList.Error; err != nil {
@@ -92,21 +91,22 @@ func GetPodListFromChannels(channels *common.ResourceChannels, dsQuery *datasele
 		return nil, err
 	}
 
-	podList := CreatePodList(pods.Items, eventList.Items, dsQuery, heapsterClient)
+	podList := CreatePodList(pods.Items, eventList.Items, dsQuery, metricClient)
 	return &podList, nil
 }
 
 func CreatePodList(pods []v1.Pod, events []v1.Event, dsQuery *dataselect.DataSelectQuery,
-	heapsterClient heapster.HeapsterClient) PodList {
+	metricClient metricapi.MetricClient) PodList {
 
-	channels := &common.ResourceChannels{
-		PodMetrics: common.GetPodListMetricsChannel(heapsterClient, pods, 1),
-	}
-
-	if err := <-channels.PodMetrics.Error; err != nil {
-		log.Printf("Skipping Heapster metrics because of error: %s\n", err)
-	}
-	metrics := <-channels.PodMetrics.MetricsByPod
+	// TODO handle that
+	//channels := &common.ResourceChannels{
+	//	PodMetrics: common.GetPodListMetricsChannel(heapsterClient, pods, 1),
+	//}
+	//
+	//if err := <-channels.PodMetrics.Error; err != nil {
+	//	log.Printf("Skipping Heapster metrics because of error: %s\n", err)
+	//}
+	//metrics := <-channels.PodMetrics.MetricsByPod
 
 	podList := PodList{
 		Pods: make([]Pod, 0),
@@ -115,14 +115,14 @@ func CreatePodList(pods []v1.Pod, events []v1.Event, dsQuery *dataselect.DataSel
 	cache := &dataselect.CachedResources{Pods: pods}
 
 	podCells, cumulativeMetricsPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(toCells(pods), dsQuery,
-		cache, &heapsterClient)
+		cache, metricClient)
 	pods = fromCells(podCells)
 	podList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, pod := range pods {
 		warnings := event.GetPodsEventWarnings(events, []v1.Pod{pod})
 
-		podDetail := ToPod(&pod, metrics, warnings)
+		podDetail := ToPod(&pod, &MetricsByPod{}, warnings)
 		podDetail.Warnings = warnings
 		podList.Pods = append(podList.Pods, podDetail)
 
@@ -131,7 +131,7 @@ func CreatePodList(pods []v1.Pod, events []v1.Event, dsQuery *dataselect.DataSel
 
 	podList.CumulativeMetrics = cumulativeMetrics
 	if err != nil {
-		podList.CumulativeMetrics = make([]metric.Metric, 0)
+		podList.CumulativeMetrics = make([]metricapi.Metric, 0)
 	}
 
 	return podList

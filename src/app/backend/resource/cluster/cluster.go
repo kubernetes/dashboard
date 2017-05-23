@@ -17,7 +17,7 @@ package cluster
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
@@ -39,7 +39,7 @@ type Cluster struct {
 
 // GetCluster returns a list of all cluster resources in the cluster.
 func GetCluster(client *kubernetes.Clientset, dsQuery *dataselect.DataSelectQuery,
-	heapsterClient *heapster.HeapsterClient) (*Cluster, error) {
+	metricClient metricapi.MetricClient) (*Cluster, error) {
 	log.Print("Getting cluster category")
 	channels := &common.ResourceChannels{
 		NamespaceList:        common.GetNamespaceListChannel(client, 1),
@@ -50,13 +50,13 @@ func GetCluster(client *kubernetes.Clientset, dsQuery *dataselect.DataSelectQuer
 		StorageClassList:     common.GetStorageClassListChannel(client, 1),
 	}
 
-	return GetClusterFromChannels(client, channels, dsQuery, heapsterClient)
+	return GetClusterFromChannels(client, channels, dsQuery, metricClient)
 }
 
 // GetClusterFromChannels returns a list of all cluster in the cluster, from the
 // channel sources.
 func GetClusterFromChannels(client *kubernetes.Clientset, channels *common.ResourceChannels,
-	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (
+	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (
 	*Cluster, error) {
 
 	nsChan := make(chan *namespace.NamespaceList)
@@ -76,7 +76,7 @@ func GetClusterFromChannels(client *kubernetes.Clientset, channels *common.Resou
 	go func() {
 		items, err := node.GetNodeListFromChannels(client, channels,
 			dataselect.NewDataSelectQuery(dsQuery.PaginationQuery, dsQuery.SortQuery,
-				dsQuery.FilterQuery, dataselect.StandardMetrics), *heapsterClient)
+				dsQuery.FilterQuery, dataselect.StandardMetrics), metricClient)
 		errChan <- err
 		nodeChan <- items
 	}()

@@ -22,7 +22,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -117,7 +117,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 				TypeMeta: api.TypeMeta{Kind: api.ResourceKindDeployment},
 				PodList: pod.PodList{
 					Pods:              []pod.Pod{},
-					CumulativeMetrics: make([]metric.Metric, 0),
+					CumulativeMetrics: make([]metricapi.Metric, 0),
 				},
 				Selector: map[string]string{"foo": "bar"},
 				StatusInfo: StatusInfo{
@@ -134,7 +134,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 				},
 				OldReplicaSetList: replicaset.ReplicaSetList{
 					ReplicaSets:       []replicaset.ReplicaSet{},
-					CumulativeMetrics: make([]metric.Metric, 0),
+					CumulativeMetrics: make([]metricapi.Metric, 0),
 				},
 				NewReplicaSet: replicaset.ReplicaSet{
 					ObjectMeta: api.NewObjectMeta(newReplicaSet.ObjectMeta),

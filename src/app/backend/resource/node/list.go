@@ -18,10 +18,9 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
@@ -31,9 +30,9 @@ import (
 
 // NodeList contains a list of nodes in the cluster.
 type NodeList struct {
-	ListMeta          api.ListMeta    `json:"listMeta"`
-	Nodes             []Node          `json:"nodes"`
-	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
+	ListMeta          api.ListMeta       `json:"listMeta"`
+	Nodes             []Node             `json:"nodes"`
+	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
 }
 
 // Node is a presentation layer view of Kubernetes nodes. This means it is node plus additional
@@ -47,7 +46,7 @@ type Node struct {
 
 // GetNodeListFromChannels returns a list of all Nodes in the cluster.
 func GetNodeListFromChannels(client client.Interface, channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery,
-	heapsterClient heapster.HeapsterClient) (*NodeList, error) {
+	metricClient metricapi.MetricClient) (*NodeList, error) {
 	log.Print("Getting node list")
 
 	nodes := <-channels.NodeList.List
@@ -55,11 +54,11 @@ func GetNodeListFromChannels(client client.Interface, channels *common.ResourceC
 		return &NodeList{Nodes: []Node{}}, err
 	}
 
-	return toNodeList(client, nodes.Items, dsQuery, heapsterClient), nil
+	return toNodeList(client, nodes.Items, dsQuery, metricClient), nil
 }
 
 // GetNodeList returns a list of all Nodes in the cluster.
-func GetNodeList(client client.Interface, dsQuery *dataselect.DataSelectQuery, heapsterClient heapster.HeapsterClient) (*NodeList, error) {
+func GetNodeList(client client.Interface, dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*NodeList, error) {
 	log.Print("Getting list of all nodes in the cluster")
 
 	nodes, err := client.CoreV1().Nodes().List(metaV1.ListOptions{
@@ -71,18 +70,18 @@ func GetNodeList(client client.Interface, dsQuery *dataselect.DataSelectQuery, h
 		return nil, err
 	}
 
-	return toNodeList(client, nodes.Items, dsQuery, heapsterClient), nil
+	return toNodeList(client, nodes.Items, dsQuery, metricClient), nil
 }
 
 func toNodeList(client client.Interface, nodes []v1.Node, dsQuery *dataselect.DataSelectQuery,
-	heapsterClient heapster.HeapsterClient) *NodeList {
+	metricClient metricapi.MetricClient) *NodeList {
 	nodeList := &NodeList{
 		Nodes:    make([]Node, 0),
 		ListMeta: api.ListMeta{TotalItems: len(nodes)},
 	}
 
 	nodeCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(toCells(nodes),
-		dsQuery, dataselect.NoResourceCache, &heapsterClient)
+		dsQuery, dataselect.NoResourceCache, metricClient)
 	nodes = fromCells(nodeCells)
 	nodeList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
@@ -100,7 +99,7 @@ func toNodeList(client client.Interface, nodes []v1.Node, dsQuery *dataselect.Da
 	cumulativeMetrics, err := metricPromises.GetMetrics()
 	nodeList.CumulativeMetrics = cumulativeMetrics
 	if err != nil {
-		nodeList.CumulativeMetrics = make([]metric.Metric, 0)
+		nodeList.CumulativeMetrics = make([]metricapi.Metric, 0)
 	}
 
 	return nodeList

@@ -24,7 +24,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
@@ -174,42 +174,42 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		expected := &Workloads{
 			ReplicationControllerList: replicationcontroller.ReplicationControllerList{
 				ListMeta:               api.ListMeta{TotalItems: len(c.rcs)},
-				CumulativeMetrics:      make([]metric.Metric, 0),
+				CumulativeMetrics:      make([]metricapi.Metric, 0),
 				ReplicationControllers: c.rcs,
 			},
 			ReplicaSetList: replicaset.ReplicaSetList{
 				ListMeta:          api.ListMeta{TotalItems: len(c.rs)},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
 				ReplicaSets:       c.rs,
 			},
 			JobList: job.JobList{
 				ListMeta:          api.ListMeta{TotalItems: len(c.jobs)},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Jobs:              c.jobs,
 			},
 			DaemonSetList: daemonset.DaemonSetList{
 				ListMeta:          api.ListMeta{TotalItems: len(c.daemonset)},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
 				DaemonSets:        c.daemonset,
 			},
 			DeploymentList: deployment.DeploymentList{
 				ListMeta:          api.ListMeta{TotalItems: len(c.deployment)},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Deployments:       c.deployment,
 			},
 			PodList: pod.PodList{
 				ListMeta: api.ListMeta{TotalItems: len(c.pod)},
-				CumulativeMetrics: []metric.Metric{
+				CumulativeMetrics: []metricapi.Metric{
 					{
-						DataPoints: metric.DataPoints{},
+						DataPoints: metricapi.DataPoints{},
 						MetricName: "cpu/usage_rate",
-						Label:      metric.Label{},
+						Label:      metricapi.Label{},
 						Aggregate:  "sum",
 					},
 					{
-						DataPoints: metric.DataPoints{},
+						DataPoints: metricapi.DataPoints{},
 						MetricName: "memory/usage",
-						Label:      metric.Label{},
+						Label:      metricapi.Label{},
 						Aggregate:  "sum",
 					},
 				},
@@ -217,7 +217,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 			},
 			StatefulSetList: statefulset.StatefulSetList{
 				ListMeta:          api.ListMeta{TotalItems: len(c.statefulSet)},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
 				StatefulSets:      c.statefulSet,
 			},
 		}

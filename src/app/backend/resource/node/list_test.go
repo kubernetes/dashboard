@@ -20,7 +20,7 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 	"k8s.io/client-go/pkg/api/v1"
@@ -42,7 +42,7 @@ func TestGetNodeList(t *testing.T) {
 				ListMeta: api.ListMeta{
 					TotalItems: 1,
 				},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Nodes: []Node{{
 					ObjectMeta: api.ObjectMeta{Name: "test-node"},
 					TypeMeta:   api.TypeMeta{Kind: api.ResourceKindNode},

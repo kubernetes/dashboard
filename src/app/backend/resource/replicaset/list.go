@@ -18,11 +18,10 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
@@ -34,13 +33,13 @@ type ReplicaSetList struct {
 	ListMeta api.ListMeta `json:"listMeta"`
 
 	// Unordered list of Replica Sets.
-	ReplicaSets       []ReplicaSet    `json:"replicaSets"`
-	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
+	ReplicaSets       []ReplicaSet       `json:"replicaSets"`
+	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
 }
 
 // GetReplicaSetList returns a list of all Replica Sets in the cluster.
 func GetReplicaSetList(client client.Interface, nsQuery *common.NamespaceQuery,
-	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*ReplicaSetList, error) {
+	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*ReplicaSetList, error) {
 	log.Print("Getting list of all replica sets in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -49,13 +48,13 @@ func GetReplicaSetList(client client.Interface, nsQuery *common.NamespaceQuery,
 		EventList:      common.GetEventListChannel(client, nsQuery, 1),
 	}
 
-	return GetReplicaSetListFromChannels(channels, dsQuery, heapsterClient)
+	return GetReplicaSetListFromChannels(channels, dsQuery, metricClient)
 }
 
 // GetReplicaSetListFromChannels returns a list of all Replica Sets in the cluster
 // reading required resource list once from the channels.
 func GetReplicaSetListFromChannels(channels *common.ResourceChannels,
-	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*ReplicaSetList, error) {
+	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*ReplicaSetList, error) {
 
 	replicaSets := <-channels.ReplicaSetList.List
 	if err := <-channels.ReplicaSetList.Error; err != nil {
@@ -80,13 +79,13 @@ func GetReplicaSetListFromChannels(channels *common.ResourceChannels,
 	if err := <-channels.EventList.Error; err != nil {
 		return nil, err
 	}
-	return CreateReplicaSetList(replicaSets.Items, pods.Items, events.Items, dsQuery, heapsterClient), nil
+	return CreateReplicaSetList(replicaSets.Items, pods.Items, events.Items, dsQuery, metricClient), nil
 }
 
 // CreateReplicaSetList creates paginated list of Replica Set model
 // objects based on Kubernetes Replica Set objects array and related resources arrays.
 func CreateReplicaSetList(replicaSets []extensions.ReplicaSet, pods []v1.Pod, events []v1.Event,
-	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) *ReplicaSetList {
+	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) *ReplicaSetList {
 
 	replicaSetList := &ReplicaSetList{
 		ReplicaSets: make([]ReplicaSet, 0),
@@ -96,7 +95,9 @@ func CreateReplicaSetList(replicaSets []extensions.ReplicaSet, pods []v1.Pod, ev
 	cachedResources := &dataselect.CachedResources{
 		Pods: pods,
 	}
-	rsCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(ToCells(replicaSets), dsQuery, cachedResources, heapsterClient)
+	rsCells, metricPromises, filteredTotal := dataselect.
+		GenericDataSelectWithFilterAndMetrics(
+			ToCells(replicaSets), dsQuery, cachedResources, metricClient)
 	replicaSets = FromCells(rsCells)
 	replicaSetList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
@@ -113,7 +114,7 @@ func CreateReplicaSetList(replicaSets []extensions.ReplicaSet, pods []v1.Pod, ev
 	cumulativeMetrics, err := metricPromises.GetMetrics()
 	replicaSetList.CumulativeMetrics = cumulativeMetrics
 	if err != nil {
-		replicaSetList.CumulativeMetrics = make([]metric.Metric, 0)
+		replicaSetList.CumulativeMetrics = make([]metricapi.Metric, 0)
 	}
 
 	return replicaSetList

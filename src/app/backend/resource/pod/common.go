@@ -18,7 +18,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"k8s.io/client-go/pkg/api/v1"
 )
 
@@ -83,7 +83,7 @@ func getPodStatusStatus(pod v1.Pod, warnings []common.Event) string {
 }
 
 // ToPod transforms Kubernetes pod object into object returned by API.
-func ToPod(pod *v1.Pod, metrics *common.MetricsByPod, warnings []common.Event) Pod {
+func ToPod(pod *v1.Pod, metrics *MetricsByPod, warnings []common.Event) Pod {
 	podDetail := Pod{
 		ObjectMeta:   api.NewObjectMeta(pod.ObjectMeta),
 		TypeMeta:     api.NewTypeMeta(api.ResourceKindPod),
@@ -128,8 +128,8 @@ func (self PodCell) GetProperty(name dataselect.PropertyName) dataselect.Compara
 	}
 }
 
-func (self PodCell) GetResourceSelector() *metric.ResourceSelector {
-	return &metric.ResourceSelector{
+func (self PodCell) GetResourceSelector() *metricapi.ResourceSelector {
+	return &metricapi.ResourceSelector{
 		Namespace:    self.ObjectMeta.Namespace,
 		ResourceType: api.ResourceKindPod,
 		ResourceName: self.ObjectMeta.Name,

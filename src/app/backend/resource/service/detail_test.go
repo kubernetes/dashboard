@@ -19,10 +19,10 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
@@ -66,7 +66,7 @@ func TestGetServiceDetail(t *testing.T) {
 				InternalEndpoint: common.Endpoint{Host: "svc-1.ns-1"},
 				PodList: pod.PodList{
 					Pods:              []pod.Pod{},
-					CumulativeMetrics: make([]metric.Metric, 0),
+					CumulativeMetrics: make([]metricapi.Metric, 0),
 				},
 			},
 		},
@@ -92,7 +92,7 @@ func TestGetServiceDetail(t *testing.T) {
 				InternalEndpoint: common.Endpoint{Host: "svc-2.ns-2"},
 				PodList: pod.PodList{
 					Pods:              []pod.Pod{},
-					CumulativeMetrics: make([]metric.Metric, 0),
+					CumulativeMetrics: make([]metricapi.Metric, 0),
 				},
 			},
 		},

@@ -17,7 +17,7 @@ package statefulset
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
@@ -28,7 +28,7 @@ import (
 )
 
 // GetStatefulSetPods return list of pods targeting pet set.
-func GetStatefulSetPods(client *k8sClient.Clientset, heapsterClient heapster.HeapsterClient,
+func GetStatefulSetPods(client *k8sClient.Clientset, metricClient metricapi.MetricClient,
 	dsQuery *dataselect.DataSelectQuery, name, namespace string) (*pod.PodList, error) {
 
 	log.Printf("Getting replication controller %s pods in namespace %s", name, namespace)
@@ -38,7 +38,7 @@ func GetStatefulSetPods(client *k8sClient.Clientset, heapsterClient heapster.Hea
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(pods, []v1.Event{}, dsQuery, heapsterClient)
+	podList := pod.CreatePodList(pods, []v1.Event{}, dsQuery, metricClient)
 	return &podList, nil
 }
 
