@@ -31,6 +31,12 @@ limitations under the License.
                    namespace="::ctrl.podDetail.objectMeta.namespace"
                    pod-name="::ctrl.podDetail.objectMeta.name">
 </kd-container-info>
+<kd-container-info containers="::ctrl.podDetail.initContainers"
+                   is-init-container="true"
+                   namespace="::ctrl.podDetail.objectMeta.namespace"
+                   pod-name="::ctrl.podDetail.objectMeta.name">
+  <kd-header>[[Init Containers|Subtitle at the top of the container details.]]</kd-header>
+</kd-container-info>
 
 <kd-content-card ng-if="::ctrl.podDetail.conditions.length">
   <kd-content>
