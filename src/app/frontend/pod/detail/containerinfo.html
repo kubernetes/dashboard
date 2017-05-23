@@ -15,7 +15,9 @@ limitations under the License.
 -->
 
 <kd-info-card>
-  <kd-info-card-header>[[Containers|Subtitle at the top of the container details.]]</kd-info-card-header>
+  <kd-info-card-header ng-transclude="header">
+    [[Containers|Subtitle at the top of the container details.]]
+  </kd-info-card-header>
   <kd-info-card-section ng-repeat="container in ::$ctrl.containers"
                         name="{{::container.name}}">
     <kd-info-card-entry title="[[Image|Label for container image.]]">
