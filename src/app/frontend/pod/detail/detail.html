@@ -31,7 +31,8 @@ limitations under the License.
                    namespace="::ctrl.podDetail.objectMeta.namespace"
                    pod-name="::ctrl.podDetail.objectMeta.name">
 </kd-container-info>
-<kd-container-info containers="::ctrl.podDetail.initContainers"
+<kd-container-info ng-if="::ctrl.podDetail.initContainers.length > 0"
+                   containers="::ctrl.podDetail.initContainers"
                    is-init-container="true"
                    namespace="::ctrl.podDetail.objectMeta.namespace"
                    pod-name="::ctrl.podDetail.objectMeta.name">
