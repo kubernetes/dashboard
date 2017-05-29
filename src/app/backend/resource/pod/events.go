@@ -12,7 +12,7 @@ import (
 // GetEventsForPod gets events that are associated with this pod.
 func GetEventsForPod(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace,
 	podName string) (*common.EventList, error) {
-	
+
 	podEvents, err := event.GetPodEvents(client, namespace, podName)
 	if err != nil {
 		return nil, err

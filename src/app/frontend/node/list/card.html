@@ -47,6 +47,18 @@ limitations under the License.
       {{::$ctrl.node.ready}}
     </kd-resource-card-column>
     <kd-resource-card-column>
+      {{::$ctrl.node.allocatedResources.cpuRequests | kdCores}} ({{$ctrl.node.allocatedResources.cpuRequestsFraction | number: 2}}%)
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      {{::$ctrl.node.allocatedResources.cpuLimits | kdCores}} ({{$ctrl.node.allocatedResources.cpuLimitsFraction | number: 2}}%)
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      {{::$ctrl.node.allocatedResources.memoryRequests | kdMemory}} ({{$ctrl.node.allocatedResources.memoryRequestsFraction | number: 2}}%)
+    </kd-resource-card-column>
+    <kd-resource-card-column>
+      {{::$ctrl.node.allocatedResources.memoryLimits | kdMemory}} ({{$ctrl.node.allocatedResources.memoryLimitsFraction | number: 2}}%)
+    </kd-resource-card-column>
+    <kd-resource-card-column>
       {{::$ctrl.node.objectMeta.creationTimestamp | relativeTime}}
       <md-tooltip>
         {{::$ctrl.getCreatedAtTooltip($ctrl.node.objectMeta.creationTimestamp)}}
