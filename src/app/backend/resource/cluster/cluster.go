@@ -75,7 +75,7 @@ func GetClusterFromChannels(client *kubernetes.Clientset, channels *common.Resou
 	go func() {
 		items, err := node.GetNodeListFromChannels(client, channels,
 			dataselect.NewDataSelectQuery(dsQuery.PaginationQuery, dsQuery.SortQuery,
-				dsQuery.FilterQuery, dataselect.StandardMetrics), heapsterClient)
+				dsQuery.FilterQuery, dataselect.StandardMetrics), *heapsterClient)
 		errChan <- err
 		nodeChan <- items
 	}()

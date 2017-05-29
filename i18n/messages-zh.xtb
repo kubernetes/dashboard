@@ -746,6 +746,10 @@
   <translation id="5568169056290988879" key="MSG_NODE_LIST_CARDLIST_3" desc="Label \'Ready\' which appears as a column label in the table of nodes (node list view).">Ready</translation>
   <translation id="7563356541739732697" key="MSG_NODE_LIST_CARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of nodes (node list view).">Age</translation>
   <translation id="2936243005887118324" key="MSG_NODE_LIST_CARDLIST_5" desc="Text for node card list zerostate.">There are no Nodes to display.</translation>
+  <translation id="122468837221390322" key="MSG_NODE_LIST_CARDLIST_6" desc="Label \'CPU requests (cores)\' which appears as a column label in the table of nodes (node list view).">CPU requests (cores)</translation>
+  <translation id="3265578351261846339" key="MSG_NODE_LIST_CARDLIST_7" desc="Label \'CPU limits (cores)\' which appears as a column label in the table of nodes (node list view).">CPU limits (cores)</translation>
+  <translation id="6356771158000155450" key="MSG_NODE_LIST_CARDLIST_8" desc="Label \'Memory requests (bytes)\' which appears as a column label in the table of nodes (node list view).">Memory requests (bytes)</translation>
+  <translation id="3809309296866504854" key="MSG_NODE_LIST_CARDLIST_9" desc="Label \'Memory limits (bytes)\' which appears as a column label in the table of nodes (node list view).">Memory limits (bytes)</translation>
   <translation id="3161651495562825748" key="MSG_NODE_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of node.">创建于<ph name="CREATION_DATE"/></translation>
   <translation id="7165645741606687474" key="MSG_NODE_LIST_LIST_0" desc="Title for graph card displaying CPU metric of nodes.">CPU usage</translation>
   <translation id="7938673888851238901" key="MSG_NODE_LIST_LIST_1" desc="Title for graph card displaying memory metric of nodes.">Memory usage</translation>
@@ -982,6 +986,7 @@
   <translation id="7254693136643899288" key="MSG_POD_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one pod.">CPU usage</translation>
   <translation id="9048608003178144260" key="MSG_POD_DETAIL_DETAIL_1" desc="Title for graph card displaying memory metric of one pod.">Memory usage</translation>
   <translation id="5738415577560264420" key="MSG_POD_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in this pod.</translation>
+  <translation id="3180983899887518304" key="MSG_POD_DETAIL_DETAIL_3" desc="Subtitle at the top of the container details.">Init Containers</translation>
   <translation id="855512770998820017" key="MSG_POD_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
   <translation id="1457675883548195036" key="MSG_POD_DETAIL_INFO_1" desc="Label \'Status\' for the pod status in details part (left) of the pod details view.">Status</translation>
   <translation id="8753288911649190943" key="MSG_POD_DETAIL_INFO_2" desc="Label for the pod logs in details part (left) of the pod details view.">View logs</translation>
