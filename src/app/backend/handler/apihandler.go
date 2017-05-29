@@ -846,7 +846,7 @@ func (apiHandler *APIHandler) handleGetServicePods(request *restful.Request, res
 func (apiHandler *APIHandler) handleGetNodeList(request *restful.Request, response *restful.Response) {
 	dataSelect := parseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.StandardMetrics
-	result, err := node.GetNodeList(getApiClient(request), dataSelect, &apiHandler.heapsterClient)
+	result, err := node.GetNodeList(getApiClient(request), dataSelect, apiHandler.heapsterClient)
 	if err != nil {
 		handleInternalError(response, err)
 		return

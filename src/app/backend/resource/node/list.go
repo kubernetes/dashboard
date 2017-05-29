@@ -46,7 +46,7 @@ type Node struct {
 
 // GetNodeListFromChannels returns a list of all Nodes in the cluster.
 func GetNodeListFromChannels(client client.Interface, channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery,
-	heapsterClient *heapster.HeapsterClient) (*NodeList, error) {
+	heapsterClient heapster.HeapsterClient) (*NodeList, error) {
 	log.Print("Getting node list")
 
 	nodes := <-channels.NodeList.List
@@ -58,7 +58,7 @@ func GetNodeListFromChannels(client client.Interface, channels *common.ResourceC
 }
 
 // GetNodeList returns a list of all Nodes in the cluster.
-func GetNodeList(client client.Interface, dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (*NodeList, error) {
+func GetNodeList(client client.Interface, dsQuery *dataselect.DataSelectQuery, heapsterClient heapster.HeapsterClient) (*NodeList, error) {
 	log.Print("Getting list of all nodes in the cluster")
 
 	nodes, err := client.CoreV1().Nodes().List(metaV1.ListOptions{
@@ -74,14 +74,14 @@ func GetNodeList(client client.Interface, dsQuery *dataselect.DataSelectQuery, h
 }
 
 func toNodeList(client client.Interface, nodes []api.Node, dsQuery *dataselect.DataSelectQuery,
-	heapsterClient *heapster.HeapsterClient) *NodeList {
+	heapsterClient heapster.HeapsterClient) *NodeList {
 	nodeList := &NodeList{
 		Nodes:    make([]Node, 0),
 		ListMeta: common.ListMeta{TotalItems: len(nodes)},
 	}
 
 	nodeCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(toCells(nodes),
-		dsQuery, dataselect.NoResourceCache, heapsterClient)
+		dsQuery, dataselect.NoResourceCache, &heapsterClient)
 	nodes = fromCells(nodeCells)
 	nodeList.ListMeta = common.ListMeta{TotalItems: filteredTotal}
 
