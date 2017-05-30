@@ -50,12 +50,12 @@ func GetCluster(client *kubernetes.Clientset, dsQuery *dataselect.DataSelectQuer
 		StorageClassList:     common.GetStorageClassListChannel(client, 1),
 	}
 
-	return GetClusterFromChannels(channels, dsQuery, heapsterClient)
+	return GetClusterFromChannels(client, channels, dsQuery, heapsterClient)
 }
 
 // GetClusterFromChannels returns a list of all cluster in the cluster, from the
 // channel sources.
-func GetClusterFromChannels(channels *common.ResourceChannels,
+func GetClusterFromChannels(client *kubernetes.Clientset, channels *common.ResourceChannels,
 	dsQuery *dataselect.DataSelectQuery, heapsterClient *client.HeapsterClient) (*Cluster, error) {
 
 	nsChan := make(chan *namespace.NamespaceList)
@@ -73,9 +73,9 @@ func GetClusterFromChannels(channels *common.ResourceChannels,
 	}()
 
 	go func() {
-		items, err := node.GetNodeListFromChannels(channels,
+		items, err := node.GetNodeListFromChannels(client, channels,
 			dataselect.NewDataSelectQuery(dsQuery.PaginationQuery, dsQuery.SortQuery,
-				dsQuery.FilterQuery, dataselect.StandardMetrics), heapsterClient)
+				dsQuery.FilterQuery, dataselect.StandardMetrics), *heapsterClient)
 		errChan <- err
 		nodeChan <- items
 	}()

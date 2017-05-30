@@ -31,9 +31,9 @@ func TestGetPodEvents(t *testing.T) {
 			}},
 			&api.PodList{Items: []api.Pod{
 				{ObjectMeta: metaV1.ObjectMeta{
-					Name: "pod-1",
+					Name:      "pod-1",
 					Namespace: "ns-1",
-					UID: "test-uid",
+					UID:       "test-uid",
 				}},
 			}},
 			&common.EventList{
