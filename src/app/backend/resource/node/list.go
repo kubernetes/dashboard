@@ -89,6 +89,7 @@ func toNodeList(client client.Interface, nodes []api.Node, dsQuery *dataselect.D
 		pods, err := getNodePods(client, node)
 		if err != nil {
 			log.Printf("Couldn't get pods of %s node\n", node.Name)
+			log.Println(err)
 		}
 
 		nodeList.Nodes = append(nodeList.Nodes, toNode(node, pods))
@@ -108,6 +109,7 @@ func toNode(node api.Node, pods *api.PodList) Node {
 	allocatedResources, err := getNodeAllocatedResources(node, pods)
 	if err != nil {
 		log.Printf("Couldn't get allocated resources of %s node\n", node.Name)
+		log.Println(err)
 	}
 
 	return Node{
