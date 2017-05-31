@@ -18,31 +18,32 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 func TestToServiceDetail(t *testing.T) {
 	cases := []struct {
-		service  *api.Service
+		service  *v1.Service
 		expected ServiceDetail
 	}{
 		{
-			service: &api.Service{}, expected: ServiceDetail{
-				TypeMeta: common.TypeMeta{Kind: common.ResourceKindService},
+			service: &v1.Service{}, expected: ServiceDetail{
+				TypeMeta: api.TypeMeta{Kind: api.ResourceKindService},
 			},
 		}, {
-			service: &api.Service{
+			service: &v1.Service{
 				ObjectMeta: metaV1.ObjectMeta{
 					Name: "test-service", Namespace: "test-namespace",
 				}},
 			expected: ServiceDetail{
-				ObjectMeta: common.ObjectMeta{
+				ObjectMeta: api.ObjectMeta{
 					Name:      "test-service",
 					Namespace: "test-namespace",
 				},
-				TypeMeta:         common.TypeMeta{Kind: common.ResourceKindService},
+				TypeMeta:         api.TypeMeta{Kind: api.ResourceKindService},
 				InternalEndpoint: common.Endpoint{Host: "test-service.test-namespace"},
 			},
 		},
@@ -60,24 +61,24 @@ func TestToServiceDetail(t *testing.T) {
 
 func TestToService(t *testing.T) {
 	cases := []struct {
-		service  *api.Service
+		service  *v1.Service
 		expected Service
 	}{
 		{
-			service: &api.Service{}, expected: Service{
-				TypeMeta: common.TypeMeta{Kind: common.ResourceKindService},
+			service: &v1.Service{}, expected: Service{
+				TypeMeta: api.TypeMeta{Kind: api.ResourceKindService},
 			},
 		}, {
-			service: &api.Service{
+			service: &v1.Service{
 				ObjectMeta: metaV1.ObjectMeta{
 					Name: "test-service", Namespace: "test-namespace",
 				}},
 			expected: Service{
-				ObjectMeta: common.ObjectMeta{
+				ObjectMeta: api.ObjectMeta{
 					Name:      "test-service",
 					Namespace: "test-namespace",
 				},
-				TypeMeta:         common.TypeMeta{Kind: common.ResourceKindService},
+				TypeMeta:         api.TypeMeta{Kind: api.ResourceKindService},
 				InternalEndpoint: common.Endpoint{Host: "test-service.test-namespace"},
 			},
 		},

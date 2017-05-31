@@ -15,16 +15,17 @@
 package service
 
 import (
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 // ToService returns api service object based on kubernetes service object
-func ToService(service *api.Service) Service {
+func ToService(service *v1.Service) Service {
 	return Service{
-		ObjectMeta:        common.NewObjectMeta(service.ObjectMeta),
-		TypeMeta:          common.NewTypeMeta(common.ResourceKindService),
+		ObjectMeta:        api.NewObjectMeta(service.ObjectMeta),
+		TypeMeta:          api.NewTypeMeta(api.ResourceKindService),
 		InternalEndpoint:  common.GetInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports),
 		ExternalEndpoints: common.GetExternalEndpoints(service),
 		Selector:          service.Spec.Selector,
@@ -34,10 +35,10 @@ func ToService(service *api.Service) Service {
 }
 
 // ToServiceDetail returns api service object based on kubernetes service object
-func ToServiceDetail(service *api.Service) ServiceDetail {
+func ToServiceDetail(service *v1.Service) ServiceDetail {
 	return ServiceDetail{
-		ObjectMeta:        common.NewObjectMeta(service.ObjectMeta),
-		TypeMeta:          common.NewTypeMeta(common.ResourceKindService),
+		ObjectMeta:        api.NewObjectMeta(service.ObjectMeta),
+		TypeMeta:          api.NewTypeMeta(api.ResourceKindService),
 		InternalEndpoint:  common.GetInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports),
 		ExternalEndpoints: common.GetExternalEndpoints(service),
 		Selector:          service.Spec.Selector,
@@ -48,15 +49,15 @@ func ToServiceDetail(service *api.Service) ServiceDetail {
 
 // CreateServiceList returns paginated service list based on given service array
 // and pagination query.
-func CreateServiceList(services []api.Service, dsQuery *dataselect.DataSelectQuery) *ServiceList {
+func CreateServiceList(services []v1.Service, dsQuery *dataselect.DataSelectQuery) *ServiceList {
 	serviceList := &ServiceList{
 		Services: make([]Service, 0),
-		ListMeta: common.ListMeta{TotalItems: len(services)},
+		ListMeta: api.ListMeta{TotalItems: len(services)},
 	}
 
 	serviceCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(services), dsQuery)
 	services = fromCells(serviceCells)
-	serviceList.ListMeta = common.ListMeta{TotalItems: filteredTotal}
+	serviceList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, service := range services {
 		serviceList.Services = append(serviceList.Services, ToService(&service))
@@ -67,7 +68,7 @@ func CreateServiceList(services []api.Service, dsQuery *dataselect.DataSelectQue
 
 // The code below allows to perform complex data section on []api.Service
 
-type ServiceCell api.Service
+type ServiceCell v1.Service
 
 func (self ServiceCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
@@ -83,7 +84,7 @@ func (self ServiceCell) GetProperty(name dataselect.PropertyName) dataselect.Com
 	}
 }
 
-func toCells(std []api.Service) []dataselect.DataCell {
+func toCells(std []v1.Service) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
 		cells[i] = ServiceCell(std[i])
@@ -91,10 +92,10 @@ func toCells(std []api.Service) []dataselect.DataCell {
 	return cells
 }
 
-func fromCells(cells []dataselect.DataCell) []api.Service {
-	std := make([]api.Service, len(cells))
+func fromCells(cells []dataselect.DataCell) []v1.Service {
+	std := make([]v1.Service, len(cells))
 	for i := range std {
-		std[i] = api.Service(cells[i].(ServiceCell))
+		std[i] = v1.Service(cells[i].(ServiceCell))
 	}
 	return std
 }

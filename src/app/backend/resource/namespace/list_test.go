@@ -18,27 +18,27 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 func TestGetNamespaceList(t *testing.T) {
 	cases := []struct {
-		namespaces []api.Namespace
+		namespaces []v1.Namespace
 		expected   *NamespaceList
 	}{
 		{nil, &NamespaceList{Namespaces: []Namespace{}}},
 		{
-			[]api.Namespace{
+			[]v1.Namespace{
 				{ObjectMeta: metaV1.ObjectMeta{Name: "foo"}},
 			},
 			&NamespaceList{
-				ListMeta: common.ListMeta{TotalItems: 1},
+				ListMeta: api.ListMeta{TotalItems: 1},
 				Namespaces: []Namespace{{
-					TypeMeta:   common.TypeMeta{Kind: "namespace"},
-					ObjectMeta: common.ObjectMeta{Name: "foo"},
+					TypeMeta:   api.TypeMeta{Kind: "namespace"},
+					ObjectMeta: api.ObjectMeta{Name: "foo"},
 				}},
 			},
 		},

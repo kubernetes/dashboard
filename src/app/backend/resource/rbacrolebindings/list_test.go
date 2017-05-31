@@ -18,9 +18,9 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	api "k8s.io/apimachinery/pkg/apis/meta/v1"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	rbac "k8s.io/client-go/pkg/apis/rbac/v1alpha1"
 )
 
@@ -34,7 +34,7 @@ func TestGetRbacRoleBindingList(t *testing.T) {
 		{
 			[]rbac.RoleBinding{
 				{
-					ObjectMeta: api.ObjectMeta{Name: "RoleBinding", Namespace: "Testing"},
+					ObjectMeta: metaV1.ObjectMeta{Name: "RoleBinding", Namespace: "Testing"},
 					Subjects: []rbac.Subject{{
 						Kind:      "ServiceAccount",
 						Name:      "Testuser",
@@ -52,7 +52,7 @@ func TestGetRbacRoleBindingList(t *testing.T) {
 			},
 			[]rbac.ClusterRoleBinding{
 				{
-					ObjectMeta: api.ObjectMeta{Name: "ClusterRoleBinding", Namespace: ""},
+					ObjectMeta: metaV1.ObjectMeta{Name: "ClusterRoleBinding", Namespace: ""},
 					Subjects: []rbac.Subject{{
 						Kind: "Group",
 						Name: "admins",
@@ -68,10 +68,10 @@ func TestGetRbacRoleBindingList(t *testing.T) {
 				},
 			},
 			&RbacRoleBindingList{
-				ListMeta: common.ListMeta{TotalItems: 2},
+				ListMeta: api.ListMeta{TotalItems: 2},
 				Items: []RbacRoleBinding{{
-					ObjectMeta: common.ObjectMeta{Name: "RoleBinding", Namespace: "Testing"},
-					TypeMeta:   common.NewTypeMeta(common.ResourceKindRbacRoleBinding),
+					ObjectMeta: api.ObjectMeta{Name: "RoleBinding", Namespace: "Testing"},
+					TypeMeta:   api.NewTypeMeta(api.ResourceKindRbacRoleBinding),
 					Name:       "RoleBinding",
 					Namespace:  "Testing",
 					Subjects: []rbac.Subject{{
@@ -88,8 +88,8 @@ func TestGetRbacRoleBindingList(t *testing.T) {
 						Name:     "my-role",
 					},
 				}, {
-					ObjectMeta: common.ObjectMeta{Name: "ClusterRoleBinding", Namespace: ""},
-					TypeMeta:   common.NewTypeMeta(common.ResourceKindRbacClusterRoleBinding),
+					ObjectMeta: api.ObjectMeta{Name: "ClusterRoleBinding", Namespace: ""},
+					TypeMeta:   api.NewTypeMeta(api.ResourceKindRbacClusterRoleBinding),
 					Name:       "ClusterRoleBinding",
 					Namespace:  "",
 					Subjects: []rbac.Subject{{

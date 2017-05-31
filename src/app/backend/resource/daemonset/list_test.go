@@ -18,16 +18,17 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
 func TestGetDaemonSetList(t *testing.T) {
-	events := []api.Event{}
+	events := []v1.Event{}
 	controller := true
 	validPodMeta := metaV1.ObjectMeta{
 		Namespace: "namespace-1",
@@ -54,9 +55,9 @@ func TestGetDaemonSetList(t *testing.T) {
 
 	cases := []struct {
 		daemonSets []extensions.DaemonSet
-		services   []api.Service
-		pods       []api.Pod
-		nodes      []api.Node
+		services   []v1.Service
+		pods       []v1.Pod
+		nodes      []v1.Node
 		expected   *DaemonSetList
 	}{
 		{nil, nil, nil, nil, &DaemonSetList{
@@ -74,8 +75,8 @@ func TestGetDaemonSetList(t *testing.T) {
 						Selector: &metaV1.LabelSelector{
 							MatchLabels: map[string]string{"app": "my-name-1"},
 						},
-						Template: api.PodTemplateSpec{
-							Spec: api.PodSpec{Containers: []api.Container{{Image: "my-container-image-1"}}},
+						Template: v1.PodTemplateSpec{
+							Spec: v1.PodSpec{Containers: []v1.Container{{Image: "my-container-image-1"}}},
 						},
 					},
 				},
@@ -88,77 +89,77 @@ func TestGetDaemonSetList(t *testing.T) {
 						Selector: &metaV1.LabelSelector{
 							MatchLabels: map[string]string{"app": "my-name-2", "ver": "2"},
 						},
-						Template: api.PodTemplateSpec{
-							Spec: api.PodSpec{Containers: []api.Container{{Image: "my-container-image-2"}}},
+						Template: v1.PodTemplateSpec{
+							Spec: v1.PodSpec{Containers: []v1.Container{{Image: "my-container-image-2"}}},
 						},
 					},
 				},
 			},
-			[]api.Service{
+			[]v1.Service{
 				{
-					Spec: api.ServiceSpec{Selector: map[string]string{"app": "my-name-1"}},
+					Spec: v1.ServiceSpec{Selector: map[string]string{"app": "my-name-1"}},
 					ObjectMeta: metaV1.ObjectMeta{
 						Name:      "my-app-1",
 						Namespace: "namespace-1",
 					},
 				},
 				{
-					Spec: api.ServiceSpec{Selector: map[string]string{"app": "my-name-2", "ver": "2"}},
+					Spec: v1.ServiceSpec{Selector: map[string]string{"app": "my-name-2", "ver": "2"}},
 					ObjectMeta: metaV1.ObjectMeta{
 						Name:      "my-app-2",
 						Namespace: "namespace-2",
 					},
 				},
 			},
-			[]api.Pod{
+			[]v1.Pod{
 				{
 					ObjectMeta: validPodMeta,
-					Status: api.PodStatus{
-						Phase: api.PodFailed,
+					Status: v1.PodStatus{
+						Phase: v1.PodFailed,
 					},
 				},
 				{
 					ObjectMeta: validPodMeta,
-					Status: api.PodStatus{
-						Phase: api.PodFailed,
+					Status: v1.PodStatus{
+						Phase: v1.PodFailed,
 					},
 				},
 				{
 					ObjectMeta: validPodMeta,
-					Status: api.PodStatus{
-						Phase: api.PodPending,
+					Status: v1.PodStatus{
+						Phase: v1.PodPending,
 					},
 				},
 				{
 					ObjectMeta: diffNamespacePodMeta,
-					Status: api.PodStatus{
-						Phase: api.PodPending,
+					Status: v1.PodStatus{
+						Phase: v1.PodPending,
 					},
 				},
 				{
 					ObjectMeta: validPodMeta,
-					Status: api.PodStatus{
-						Phase: api.PodRunning,
+					Status: v1.PodStatus{
+						Phase: v1.PodRunning,
 					},
 				},
 				{
 					ObjectMeta: validPodMeta,
-					Status: api.PodStatus{
-						Phase: api.PodSucceeded,
+					Status: v1.PodStatus{
+						Phase: v1.PodSucceeded,
 					},
 				},
 				{
 					ObjectMeta: validPodMeta,
-					Status: api.PodStatus{
-						Phase: api.PodUnknown,
+					Status: v1.PodStatus{
+						Phase: v1.PodUnknown,
 					},
 				},
 			},
-			[]api.Node{{
-				Status: api.NodeStatus{
-					Addresses: []api.NodeAddress{
+			[]v1.Node{{
+				Status: v1.NodeStatus{
+					Addresses: []v1.NodeAddress{
 						{
-							Type:    api.NodeExternalIP,
+							Type:    v1.NodeExternalIP,
 							Address: "192.168.1.108",
 						},
 					},
@@ -166,15 +167,15 @@ func TestGetDaemonSetList(t *testing.T) {
 			},
 			},
 			&DaemonSetList{
-				ListMeta:          common.ListMeta{TotalItems: 2},
+				ListMeta:          api.ListMeta{TotalItems: 2},
 				CumulativeMetrics: make([]metric.Metric, 0),
 				DaemonSets: []DaemonSet{
 					{
-						ObjectMeta: common.ObjectMeta{
+						ObjectMeta: api.ObjectMeta{
 							Name:      "my-app-1",
 							Namespace: "namespace-1",
 						},
-						TypeMeta:        common.TypeMeta{Kind: common.ResourceKindDaemonSet},
+						TypeMeta:        api.TypeMeta{Kind: api.ResourceKindDaemonSet},
 						ContainerImages: []string{"my-container-image-1"},
 						Pods: common.PodInfo{
 							Failed:    2,
@@ -184,11 +185,11 @@ func TestGetDaemonSetList(t *testing.T) {
 							Warnings:  []common.Event{},
 						},
 					}, {
-						ObjectMeta: common.ObjectMeta{
+						ObjectMeta: api.ObjectMeta{
 							Name:      "my-app-2",
 							Namespace: "namespace-2",
 						},
-						TypeMeta:        common.TypeMeta{Kind: common.ResourceKindDaemonSet},
+						TypeMeta:        api.TypeMeta{Kind: api.ResourceKindDaemonSet},
 						ContainerImages: []string{"my-container-image-2"},
 						Pods: common.PodInfo{
 							Warnings: []common.Event{},

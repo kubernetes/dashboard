@@ -17,14 +17,15 @@ package deployment
 import (
 	"log"
 
-	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	intstr "k8s.io/apimachinery/pkg/util/intstr"
+	"k8s.io/apimachinery/pkg/util/intstr"
 	client "k8s.io/client-go/kubernetes"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
@@ -52,8 +53,8 @@ type StatusInfo struct {
 
 // DeploymentDetail is a presentation layer view of Kubernetes Deployment resource.
 type DeploymentDetail struct {
-	ObjectMeta common.ObjectMeta `json:"objectMeta"`
-	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 
 	// Detailed information about Pods belonging to this Deployment.
 	PodList pod.PodList `json:"podList"`
@@ -171,8 +172,8 @@ func GetDeploymentDetail(client client.Interface, heapsterClient heapster.Heapst
 	}
 
 	return &DeploymentDetail{
-		ObjectMeta:                  common.NewObjectMeta(deployment.ObjectMeta),
-		TypeMeta:                    common.NewTypeMeta(common.ResourceKindDeployment),
+		ObjectMeta:                  api.NewObjectMeta(deployment.ObjectMeta),
+		TypeMeta:                    api.NewTypeMeta(api.ResourceKindDeployment),
 		PodList:                     *podList,
 		Selector:                    deployment.Spec.Selector.MatchLabels,
 		StatusInfo:                  GetStatusInfo(&deployment.Status),

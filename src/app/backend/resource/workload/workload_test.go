@@ -18,6 +18,7 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -29,7 +30,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/statefulset"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 	apps "k8s.io/client-go/pkg/apis/apps/v1beta1"
 	batch "k8s.io/client-go/pkg/apis/batch/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
@@ -43,8 +44,8 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		k8sJobs        batch.JobList
 		k8sDaemonSet   extensions.DaemonSetList
 		k8sDeployment  extensions.DeploymentList
-		k8sRc          api.ReplicationControllerList
-		k8sPod         api.PodList
+		k8sRc          v1.ReplicationControllerList
+		k8sPod         v1.PodList
 		k8sStatefulSet apps.StatefulSetList
 		rcs            []replicationcontroller.ReplicationController
 		rs             []replicaset.ReplicaSet
@@ -59,8 +60,8 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 			batch.JobList{},
 			extensions.DaemonSetList{},
 			extensions.DeploymentList{},
-			api.ReplicationControllerList{},
-			api.PodList{},
+			v1.ReplicationControllerList{},
+			v1.PodList{},
 			apps.StatefulSetList{},
 			[]replicationcontroller.ReplicationController{},
 			[]replicaset.ReplicaSet{},
@@ -108,58 +109,58 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 						},
 					}},
 			},
-			api.ReplicationControllerList{
-				Items: []api.ReplicationController{{
+			v1.ReplicationControllerList{
+				Items: []v1.ReplicationController{{
 					ObjectMeta: metaV1.ObjectMeta{Name: "rc-name"},
-					Spec: api.ReplicationControllerSpec{
+					Spec: v1.ReplicationControllerSpec{
 						Replicas: &replicas,
-						Template: &api.PodTemplateSpec{},
+						Template: &v1.PodTemplateSpec{},
 					},
 				}},
 			},
-			api.PodList{},
+			v1.PodList{},
 			apps.StatefulSetList{},
 			[]replicationcontroller.ReplicationController{{
-				ObjectMeta: common.ObjectMeta{
+				ObjectMeta: api.ObjectMeta{
 					Name: "rc-name",
 				},
-				TypeMeta: common.TypeMeta{Kind: common.ResourceKindReplicationController},
+				TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicationController},
 				Pods: common.PodInfo{
 					Warnings: []common.Event{},
 				},
 			}},
 			[]replicaset.ReplicaSet{{
-				ObjectMeta: common.ObjectMeta{
+				ObjectMeta: api.ObjectMeta{
 					Name: "rs-name",
 				},
-				TypeMeta: common.TypeMeta{Kind: common.ResourceKindReplicaSet},
+				TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicaSet},
 				Pods: common.PodInfo{
 					Warnings: []common.Event{},
 				},
 			}},
 			[]job.Job{{
-				ObjectMeta: common.ObjectMeta{
+				ObjectMeta: api.ObjectMeta{
 					Name: "job-name",
 				},
-				TypeMeta: common.TypeMeta{Kind: common.ResourceKindJob},
+				TypeMeta: api.TypeMeta{Kind: api.ResourceKindJob},
 				Pods: common.PodInfo{
 					Warnings: []common.Event{},
 				},
 			}},
 			[]daemonset.DaemonSet{{
-				ObjectMeta: common.ObjectMeta{
+				ObjectMeta: api.ObjectMeta{
 					Name: "ds-name",
 				},
-				TypeMeta: common.TypeMeta{Kind: common.ResourceKindDaemonSet},
+				TypeMeta: api.TypeMeta{Kind: api.ResourceKindDaemonSet},
 				Pods: common.PodInfo{
 					Warnings: []common.Event{},
 				},
 			}},
 			[]deployment.Deployment{{
-				ObjectMeta: common.ObjectMeta{
+				ObjectMeta: api.ObjectMeta{
 					Name: "deployment-name",
 				},
-				TypeMeta: common.TypeMeta{Kind: common.ResourceKindDeployment},
+				TypeMeta: api.TypeMeta{Kind: api.ResourceKindDeployment},
 				Pods: common.PodInfo{
 					Warnings: []common.Event{},
 				},
@@ -172,32 +173,32 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 	for _, c := range cases {
 		expected := &Workloads{
 			ReplicationControllerList: replicationcontroller.ReplicationControllerList{
-				ListMeta:               common.ListMeta{TotalItems: len(c.rcs)},
+				ListMeta:               api.ListMeta{TotalItems: len(c.rcs)},
 				CumulativeMetrics:      make([]metric.Metric, 0),
 				ReplicationControllers: c.rcs,
 			},
 			ReplicaSetList: replicaset.ReplicaSetList{
-				ListMeta:          common.ListMeta{TotalItems: len(c.rs)},
+				ListMeta:          api.ListMeta{TotalItems: len(c.rs)},
 				CumulativeMetrics: make([]metric.Metric, 0),
 				ReplicaSets:       c.rs,
 			},
 			JobList: job.JobList{
-				ListMeta:          common.ListMeta{TotalItems: len(c.jobs)},
+				ListMeta:          api.ListMeta{TotalItems: len(c.jobs)},
 				CumulativeMetrics: make([]metric.Metric, 0),
 				Jobs:              c.jobs,
 			},
 			DaemonSetList: daemonset.DaemonSetList{
-				ListMeta:          common.ListMeta{TotalItems: len(c.daemonset)},
+				ListMeta:          api.ListMeta{TotalItems: len(c.daemonset)},
 				CumulativeMetrics: make([]metric.Metric, 0),
 				DaemonSets:        c.daemonset,
 			},
 			DeploymentList: deployment.DeploymentList{
-				ListMeta:          common.ListMeta{TotalItems: len(c.deployment)},
+				ListMeta:          api.ListMeta{TotalItems: len(c.deployment)},
 				CumulativeMetrics: make([]metric.Metric, 0),
 				Deployments:       c.deployment,
 			},
 			PodList: pod.PodList{
-				ListMeta: common.ListMeta{TotalItems: len(c.pod)},
+				ListMeta: api.ListMeta{TotalItems: len(c.pod)},
 				CumulativeMetrics: []metric.Metric{
 					{
 						DataPoints: metric.DataPoints{},
@@ -215,7 +216,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				Pods: c.pod,
 			},
 			StatefulSetList: statefulset.StatefulSetList{
-				ListMeta:          common.ListMeta{TotalItems: len(c.statefulSet)},
+				ListMeta:          api.ListMeta{TotalItems: len(c.statefulSet)},
 				CumulativeMetrics: make([]metric.Metric, 0),
 				StatefulSets:      c.statefulSet,
 			},
@@ -232,7 +233,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				Error: make(chan error, 1),
 			},
 			ReplicationControllerList: common.ReplicationControllerListChannel{
-				List:  make(chan *api.ReplicationControllerList, 1),
+				List:  make(chan *v1.ReplicationControllerList, 1),
 				Error: make(chan error, 1),
 			},
 			DaemonSetList: common.DaemonSetListChannel{
@@ -248,19 +249,19 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				Error: make(chan error, 1),
 			},
 			NodeList: common.NodeListChannel{
-				List:  make(chan *api.NodeList, 6),
+				List:  make(chan *v1.NodeList, 6),
 				Error: make(chan error, 6),
 			},
 			ServiceList: common.ServiceListChannel{
-				List:  make(chan *api.ServiceList, 6),
+				List:  make(chan *v1.ServiceList, 6),
 				Error: make(chan error, 6),
 			},
 			PodList: common.PodListChannel{
-				List:  make(chan *api.PodList, 7),
+				List:  make(chan *v1.PodList, 7),
 				Error: make(chan error, 7),
 			},
 			EventList: common.EventListChannel{
-				List:  make(chan *api.EventList, 7),
+				List:  make(chan *v1.EventList, 7),
 				Error: make(chan error, 7),
 			},
 		}
@@ -285,7 +286,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		channels.StatefulSetList.List <- &c.k8sStatefulSet
 		channels.StatefulSetList.Error <- nil
 
-		nodeList := &api.NodeList{}
+		nodeList := &v1.NodeList{}
 		channels.NodeList.List <- nodeList
 		channels.NodeList.Error <- nil
 		channels.NodeList.List <- nodeList
@@ -299,7 +300,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		channels.NodeList.List <- nodeList
 		channels.NodeList.Error <- nil
 
-		serviceList := &api.ServiceList{}
+		serviceList := &v1.ServiceList{}
 		channels.ServiceList.List <- serviceList
 		channels.ServiceList.Error <- nil
 		channels.ServiceList.List <- serviceList
@@ -329,7 +330,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 		channels.PodList.List <- podList
 		channels.PodList.Error <- nil
 
-		eventList := &api.EventList{}
+		eventList := &v1.EventList{}
 		channels.EventList.List <- eventList
 		channels.EventList.Error <- nil
 		channels.EventList.List <- eventList

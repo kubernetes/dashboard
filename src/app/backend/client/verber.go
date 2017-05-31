@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package common
+package client
 
 import (
 	"fmt"
 
-	api "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	restclient "k8s.io/client-go/rest"
 )
@@ -33,17 +34,17 @@ type ResourceVerber struct {
 	storageClient     RESTClient
 }
 
-func (verber *ResourceVerber) getRESTClientByType(clientType ClientType) RESTClient {
+func (verber *ResourceVerber) getRESTClientByType(clientType api.ClientType) RESTClient {
 	switch clientType {
-	case ClientTypeExtensionClient:
+	case api.ClientTypeExtensionClient:
 		return verber.extensionsClient
-	case ClientTypeAppsClient:
+	case api.ClientTypeAppsClient:
 		return verber.appsClient
-	case ClientTypeBatchClient:
+	case api.ClientTypeBatchClient:
 		return verber.batchClient
-	case ClientTypeAutoscalingClient:
+	case api.ClientTypeAutoscalingClient:
 		return verber.autoscalingClient
-	case ClientTypeStorageClient:
+	case api.ClientTypeStorageClient:
 		return verber.storageClient
 	default:
 		return verber.client
@@ -66,7 +67,7 @@ func NewResourceVerber(client, extensionsClient, appsClient,
 
 // Delete deletes the resource of the given kind in the given namespace with the given name.
 func (verber *ResourceVerber) Delete(kind string, namespaceSet bool, namespace string, name string) error {
-	resourceSpec, ok := kindToAPIMapping[kind]
+	resourceSpec, ok := api.KindToAPIMapping[kind]
 	if !ok {
 		return fmt.Errorf("Unknown resource kind: %s", kind)
 	}
@@ -82,8 +83,8 @@ func (verber *ResourceVerber) Delete(kind string, namespaceSet bool, namespace s
 	client := verber.getRESTClientByType(resourceSpec.ClientType)
 
 	// Do cascade delete by default, as this is what users typically expect.
-	defaultPropagationPolicy := api.DeletePropagationForeground
-	defaultDeleteOptions := &api.DeleteOptions{
+	defaultPropagationPolicy := v1.DeletePropagationForeground
+	defaultDeleteOptions := &v1.DeleteOptions{
 		PropagationPolicy: &defaultPropagationPolicy,
 	}
 
@@ -105,7 +106,7 @@ func (verber *ResourceVerber) Delete(kind string, namespaceSet bool, namespace s
 func (verber *ResourceVerber) Put(kind string, namespaceSet bool, namespace string, name string,
 	object *runtime.Unknown) error {
 
-	resourceSpec, ok := kindToAPIMapping[kind]
+	resourceSpec, ok := api.KindToAPIMapping[kind]
 	if !ok {
 		return fmt.Errorf("Unknown resource kind: %s", kind)
 	}
@@ -137,7 +138,7 @@ func (verber *ResourceVerber) Put(kind string, namespaceSet bool, namespace stri
 
 // Get gets the resource of the given kind in the given namespace with the given name.
 func (verber *ResourceVerber) Get(kind string, namespaceSet bool, namespace string, name string) (runtime.Object, error) {
-	resourceSpec, ok := kindToAPIMapping[kind]
+	resourceSpec, ok := api.KindToAPIMapping[kind]
 	if !ok {
 		return nil, fmt.Errorf("Unknown resource kind: %s", kind)
 	}

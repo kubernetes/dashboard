@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package common
+package api
 
 import (
 	"k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -141,7 +141,7 @@ const (
 // Mapping from resource kind to K8s apiserver API path. This is mostly pluralization, because
 // K8s apiserver uses plural paths and this project singular.
 // Must be kept in sync with the list of supported kinds.
-var kindToAPIMapping = map[string]struct {
+var KindToAPIMapping = map[string]struct {
 	// K8s resource name
 	Resource string
 	// Client type used by given resource, i.e. deployments are using extension client and pet

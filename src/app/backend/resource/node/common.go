@@ -15,14 +15,15 @@
 package node
 
 import (
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 //getContainerImages returns container image strings from the given node.
-func getContainerImages(node api.Node) []string {
+func getContainerImages(node v1.Node) []string {
 	var containerImages []string
 	for _, image := range node.Status.Images {
 		for _, name := range image.Names {
@@ -34,7 +35,7 @@ func getContainerImages(node api.Node) []string {
 
 // The code below allows to perform complex data section on []api.Node
 
-type NodeCell api.Node
+type NodeCell v1.Node
 
 func (self NodeCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
@@ -53,12 +54,12 @@ func (self NodeCell) GetProperty(name dataselect.PropertyName) dataselect.Compar
 func (self NodeCell) GetResourceSelector() *metric.ResourceSelector {
 	return &metric.ResourceSelector{
 		Namespace:    self.ObjectMeta.Namespace,
-		ResourceType: common.ResourceKindNode,
+		ResourceType: api.ResourceKindNode,
 		ResourceName: self.ObjectMeta.Name,
 	}
 }
 
-func toCells(std []api.Node) []dataselect.DataCell {
+func toCells(std []v1.Node) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
 		cells[i] = NodeCell(std[i])
@@ -66,15 +67,15 @@ func toCells(std []api.Node) []dataselect.DataCell {
 	return cells
 }
 
-func fromCells(cells []dataselect.DataCell) []api.Node {
-	std := make([]api.Node, len(cells))
+func fromCells(cells []dataselect.DataCell) []v1.Node {
+	std := make([]v1.Node, len(cells))
 	for i := range std {
-		std[i] = api.Node(cells[i].(NodeCell))
+		std[i] = v1.Node(cells[i].(NodeCell))
 	}
 	return std
 }
 
-func getNodeConditions(pod api.Node) []common.Condition {
+func getNodeConditions(pod v1.Node) []common.Condition {
 	var conditions []common.Condition
 	for _, condition := range pod.Status.Conditions {
 		conditions = append(conditions, common.Condition{

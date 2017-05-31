@@ -17,7 +17,8 @@ package node
 import (
 	"log"
 
-	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
@@ -25,12 +26,12 @@ import (
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
 	client "k8s.io/client-go/kubernetes"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 // NodeList contains a list of nodes in the cluster.
 type NodeList struct {
-	ListMeta          common.ListMeta `json:"listMeta"`
+	ListMeta          api.ListMeta    `json:"listMeta"`
 	Nodes             []Node          `json:"nodes"`
 	CumulativeMetrics []metric.Metric `json:"cumulativeMetrics"`
 }
@@ -38,9 +39,9 @@ type NodeList struct {
 // Node is a presentation layer view of Kubernetes nodes. This means it is node plus additional
 // augmented data we can get from other sources.
 type Node struct {
-	ObjectMeta         common.ObjectMeta      `json:"objectMeta"`
-	TypeMeta           common.TypeMeta        `json:"typeMeta"`
-	Ready              api.ConditionStatus    `json:"ready"`
+	ObjectMeta         api.ObjectMeta         `json:"objectMeta"`
+	TypeMeta           api.TypeMeta           `json:"typeMeta"`
+	Ready              v1.ConditionStatus     `json:"ready"`
 	AllocatedResources NodeAllocatedResources `json:"allocatedResources"`
 }
 
@@ -73,17 +74,17 @@ func GetNodeList(client client.Interface, dsQuery *dataselect.DataSelectQuery, h
 	return toNodeList(client, nodes.Items, dsQuery, heapsterClient), nil
 }
 
-func toNodeList(client client.Interface, nodes []api.Node, dsQuery *dataselect.DataSelectQuery,
+func toNodeList(client client.Interface, nodes []v1.Node, dsQuery *dataselect.DataSelectQuery,
 	heapsterClient heapster.HeapsterClient) *NodeList {
 	nodeList := &NodeList{
 		Nodes:    make([]Node, 0),
-		ListMeta: common.ListMeta{TotalItems: len(nodes)},
+		ListMeta: api.ListMeta{TotalItems: len(nodes)},
 	}
 
 	nodeCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(toCells(nodes),
 		dsQuery, dataselect.NoResourceCache, &heapsterClient)
 	nodes = fromCells(nodeCells)
-	nodeList.ListMeta = common.ListMeta{TotalItems: filteredTotal}
+	nodeList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, node := range nodes {
 		pods, err := getNodePods(client, node)
@@ -105,7 +106,7 @@ func toNodeList(client client.Interface, nodes []api.Node, dsQuery *dataselect.D
 	return nodeList
 }
 
-func toNode(node api.Node, pods *api.PodList) Node {
+func toNode(node v1.Node, pods *v1.PodList) Node {
 	allocatedResources, err := getNodeAllocatedResources(node, pods)
 	if err != nil {
 		log.Printf("Couldn't get allocated resources of %s node\n", node.Name)
@@ -113,19 +114,19 @@ func toNode(node api.Node, pods *api.PodList) Node {
 	}
 
 	return Node{
-		ObjectMeta:         common.NewObjectMeta(node.ObjectMeta),
-		TypeMeta:           common.NewTypeMeta(common.ResourceKindNode),
-		Ready:              getNodeConditionStatus(node, api.NodeReady),
+		ObjectMeta:         api.NewObjectMeta(node.ObjectMeta),
+		TypeMeta:           api.NewTypeMeta(api.ResourceKindNode),
+		Ready:              getNodeConditionStatus(node, v1.NodeReady),
 		AllocatedResources: allocatedResources,
 	}
 }
 
 // Returns the status (True, False, Unknown) of a particular NodeConditionType
-func getNodeConditionStatus(node api.Node, conditionType api.NodeConditionType) api.ConditionStatus {
+func getNodeConditionStatus(node v1.Node, conditionType v1.NodeConditionType) v1.ConditionStatus {
 	for _, condition := range node.Status.Conditions {
 		if condition.Type == conditionType {
 			return condition.Status
 		}
 	}
-	return api.ConditionUnknown
+	return v1.ConditionUnknown
 }

@@ -15,7 +15,7 @@
 package common
 
 import (
-	kdClient "github.com/kubernetes/dashboard/src/app/backend/client"
+	kdClient "github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"

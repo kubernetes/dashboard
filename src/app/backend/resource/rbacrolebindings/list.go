@@ -17,6 +17,7 @@ package rbacrolebindings
 import (
 	"log"
 
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	client "k8s.io/client-go/kubernetes"
@@ -25,7 +26,7 @@ import (
 
 // RbacRoleBindingList contains a list of Roles and ClusterRoles in the cluster.
 type RbacRoleBindingList struct {
-	ListMeta common.ListMeta `json:"listMeta"`
+	ListMeta api.ListMeta `json:"listMeta"`
 
 	// Unordered list of RbacRoleBindings
 	Items []RbacRoleBinding `json:"items"`
@@ -34,12 +35,12 @@ type RbacRoleBindingList struct {
 // RbacRoleBinding provides the simplified, combined presentation layer view of Kubernetes' RBAC RoleBindings and ClusterRoleBindings.
 // ClusterRoleBindings will be referred to as RoleBindings for the namespace "all namespaces".
 type RbacRoleBinding struct {
-	ObjectMeta common.ObjectMeta `json:"objectMeta"`
-	TypeMeta   common.TypeMeta   `json:"typeMeta"`
-	Subjects   []rbac.Subject    `json:"subjects"`
-	RoleRef    rbac.RoleRef      `json:"roleRef"`
-	Name       string            `json:"name"`
-	Namespace  string            `json:"namespace"`
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
+	Subjects   []rbac.Subject `json:"subjects"`
+	RoleRef    rbac.RoleRef   `json:"roleRef"`
+	Name       string         `json:"name"`
+	Namespace  string         `json:"namespace"`
 }
 
 // GetRbacRoleBindingList returns a list of all RBAC Role Bindings in the cluster.
@@ -79,8 +80,8 @@ func SimplifyRbacRoleBindingLists(roleBindings []rbac.RoleBinding, clusterRoleBi
 	for _, item := range roleBindings {
 		items = append(items,
 			RbacRoleBinding{
-				ObjectMeta: common.NewObjectMeta(item.ObjectMeta),
-				TypeMeta:   common.NewTypeMeta(common.ResourceKindRbacRoleBinding),
+				ObjectMeta: api.NewObjectMeta(item.ObjectMeta),
+				TypeMeta:   api.NewTypeMeta(api.ResourceKindRbacRoleBinding),
 				Name:       item.ObjectMeta.Name,
 				Namespace:  item.ObjectMeta.Namespace,
 				RoleRef:    item.RoleRef,
@@ -91,8 +92,8 @@ func SimplifyRbacRoleBindingLists(roleBindings []rbac.RoleBinding, clusterRoleBi
 	for _, item := range clusterRoleBindings {
 		items = append(items,
 			RbacRoleBinding{
-				ObjectMeta: common.NewObjectMeta(item.ObjectMeta),
-				TypeMeta:   common.NewTypeMeta(common.ResourceKindRbacClusterRoleBinding),
+				ObjectMeta: api.NewObjectMeta(item.ObjectMeta),
+				TypeMeta:   api.NewTypeMeta(api.ResourceKindRbacClusterRoleBinding),
 				Name:       item.ObjectMeta.Name,
 				Namespace:  "",
 				RoleRef:    item.RoleRef,
@@ -102,7 +103,7 @@ func SimplifyRbacRoleBindingLists(roleBindings []rbac.RoleBinding, clusterRoleBi
 	selectedItems := fromCells(dataselect.GenericDataSelect(toCells(items), dsQuery))
 	result := &RbacRoleBindingList{
 		Items:    selectedItems,
-		ListMeta: common.ListMeta{TotalItems: len(roleBindings) + len(clusterRoleBindings)},
+		ListMeta: api.ListMeta{TotalItems: len(roleBindings) + len(clusterRoleBindings)},
 	}
 	return result
 }

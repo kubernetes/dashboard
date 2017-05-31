@@ -18,16 +18,16 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	client "github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 // CachedResources contains all resources that may be required by DataSelect functions.
 // Depending on the need you may have to provide DataSelect with resources it requires, for example
 // resource like deployment will need Pods in order to calculate its metrics.
 type CachedResources struct {
-	Pods []api.Pod
+	Pods []v1.Pod
 	// More cached resources can be added.
 	// For example, if you want to use Events from DataSelect, you will have to add them here.
 }

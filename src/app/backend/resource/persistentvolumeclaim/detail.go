@@ -17,20 +17,20 @@ package persistentvolumeclaim
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 // PersistentVolumeClaimDetail provides the presentation layer view of Kubernetes Persistent Volume Claim resource.
 type PersistentVolumeClaimDetail struct {
-	ObjectMeta  common.ObjectMeta                `json:"objectMeta"`
-	TypeMeta    common.TypeMeta                  `json:"typeMeta"`
-	Status      api.PersistentVolumeClaimPhase   `json:"status"`
-	Volume      string                           `json:"volume"`
-	Capacity    api.ResourceList                 `json:"capacity"`
-	AccessModes []api.PersistentVolumeAccessMode `json:"accessModes"`
+	ObjectMeta  api.ObjectMeta                  `json:"objectMeta"`
+	TypeMeta    api.TypeMeta                    `json:"typeMeta"`
+	Status      v1.PersistentVolumeClaimPhase   `json:"status"`
+	Volume      string                          `json:"volume"`
+	Capacity    v1.ResourceList                 `json:"capacity"`
+	AccessModes []v1.PersistentVolumeAccessMode `json:"accessModes"`
 }
 
 // GetPersistentVolumeClaimDetail returns detailed information about a persistent volume claim
@@ -46,11 +46,11 @@ func GetPersistentVolumeClaimDetail(client *client.Clientset, namespace string, 
 	return getPersistentVolumeClaimDetail(rawPersistentVolumeClaim), nil
 }
 
-func getPersistentVolumeClaimDetail(persistentVolumeClaim *api.PersistentVolumeClaim) *PersistentVolumeClaimDetail {
+func getPersistentVolumeClaimDetail(persistentVolumeClaim *v1.PersistentVolumeClaim) *PersistentVolumeClaimDetail {
 
 	return &PersistentVolumeClaimDetail{
-		ObjectMeta:  common.NewObjectMeta(persistentVolumeClaim.ObjectMeta),
-		TypeMeta:    common.NewTypeMeta(common.ResourceKindPersistentVolumeClaim),
+		ObjectMeta:  api.NewObjectMeta(persistentVolumeClaim.ObjectMeta),
+		TypeMeta:    api.NewTypeMeta(api.ResourceKindPersistentVolumeClaim),
 		Status:      persistentVolumeClaim.Status.Phase,
 		Volume:      persistentVolumeClaim.Spec.VolumeName,
 		Capacity:    persistentVolumeClaim.Status.Capacity,

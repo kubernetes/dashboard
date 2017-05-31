@@ -18,45 +18,45 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 func TestGetPersistentVolumeList(t *testing.T) {
 	cases := []struct {
-		persistentVolumes []api.PersistentVolume
+		persistentVolumes []v1.PersistentVolume
 		expected          *PersistentVolumeList
 	}{
 		{nil, &PersistentVolumeList{Items: []PersistentVolume{}}},
 		{
-			[]api.PersistentVolume{
+			[]v1.PersistentVolume{
 				{
 					ObjectMeta: metaV1.ObjectMeta{Name: "foo"},
-					Spec: api.PersistentVolumeSpec{
-						PersistentVolumeReclaimPolicy: api.PersistentVolumeReclaimRecycle,
-						AccessModes:                   []api.PersistentVolumeAccessMode{api.ReadWriteOnce},
-						ClaimRef: &api.ObjectReference{
+					Spec: v1.PersistentVolumeSpec{
+						PersistentVolumeReclaimPolicy: v1.PersistentVolumeReclaimRecycle,
+						AccessModes:                   []v1.PersistentVolumeAccessMode{v1.ReadWriteOnce},
+						ClaimRef: &v1.ObjectReference{
 							Name:      "myclaim-name",
 							Namespace: "default",
 						},
 						Capacity: nil,
 					},
-					Status: api.PersistentVolumeStatus{
-						Phase:  api.VolumePending,
+					Status: v1.PersistentVolumeStatus{
+						Phase:  v1.VolumePending,
 						Reason: "my-reason",
 					},
 				},
 			},
 			&PersistentVolumeList{
-				ListMeta: common.ListMeta{TotalItems: 1},
+				ListMeta: api.ListMeta{TotalItems: 1},
 				Items: []PersistentVolume{{
-					TypeMeta:    common.TypeMeta{Kind: "persistentvolume"},
-					ObjectMeta:  common.ObjectMeta{Name: "foo"},
+					TypeMeta:    api.TypeMeta{Kind: "persistentvolume"},
+					ObjectMeta:  api.ObjectMeta{Name: "foo"},
 					Capacity:    nil,
-					AccessModes: []api.PersistentVolumeAccessMode{api.ReadWriteOnce},
-					Status:      api.VolumePending,
+					AccessModes: []v1.PersistentVolumeAccessMode{v1.ReadWriteOnce},
+					Status:      v1.VolumePending,
 					Claim:       "default/myclaim-name",
 					Reason:      "my-reason",
 				}},

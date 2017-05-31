@@ -17,11 +17,12 @@ package owner
 import (
 	"fmt"
 
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	meta "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 	apps "k8s.io/client-go/pkg/apis/apps/v1beta1"
 	batch "k8s.io/client-go/pkg/apis/batch/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
@@ -30,10 +31,10 @@ import (
 // ResourceOwner is an structure representing resource owner, it may be Replication Controller,
 // Daemon Set, Job etc.
 type ResourceOwner struct {
-	ObjectMeta      common.ObjectMeta `json:"objectMeta"`
-	TypeMeta        common.TypeMeta   `json:"typeMeta"`
-	Pods            common.PodInfo    `json:"pods"`
-	ContainerImages []string          `json:"containerImages"`
+	ObjectMeta      api.ObjectMeta `json:"objectMeta"`
+	TypeMeta        api.TypeMeta   `json:"typeMeta"`
+	Pods            common.PodInfo `json:"pods"`
+	ContainerImages []string       `json:"containerImages"`
 }
 
 // ResourceController is an interface, that allows to perform operations on resource controller. To
@@ -41,12 +42,12 @@ type ResourceOwner struct {
 // provide more detailed set of functions.
 type ResourceController interface {
 	// Get is a method, that returns ResourceOwner object.
-	Get(allPods []api.Pod, allEvents []api.Event) ResourceOwner
+	Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner
 }
 
 // NewResourceController creates instance of ResourceController based on given reference. It allows
 // to convert owner/created by references to real objects.
-func NewResourceController(reference api.ObjectReference, client kubernetes.Interface) (
+func NewResourceController(reference v1.ObjectReference, client kubernetes.Interface) (
 	ResourceController, error) {
 	switch reference.Kind {
 	case "Job":
@@ -94,7 +95,7 @@ func NewResourceController(reference api.ObjectReference, client kubernetes.Inte
 type JobController batch.Job
 
 // Get is an implementation of Get method from ResourceController interface.
-func (self JobController) Get(allPods []api.Pod, allEvents []api.Event) ResourceOwner {
+func (self JobController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
 	matchingPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID, allPods)
 	var completions int32
 	if self.Spec.Completions != nil {
@@ -104,8 +105,8 @@ func (self JobController) Get(allPods []api.Pod, allEvents []api.Event) Resource
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
-		TypeMeta:        common.NewTypeMeta(common.ResourceKindJob),
-		ObjectMeta:      common.NewObjectMeta(self.ObjectMeta),
+		TypeMeta:        api.NewTypeMeta(api.ResourceKindJob),
+		ObjectMeta:      api.NewObjectMeta(self.ObjectMeta),
 		Pods:            podInfo,
 		ContainerImages: common.GetContainerImages(&self.Spec.Template.Spec),
 	}
@@ -116,14 +117,14 @@ func (self JobController) Get(allPods []api.Pod, allEvents []api.Event) Resource
 type ReplicaSetController extensions.ReplicaSet
 
 // Get is an implementation of Get method from ResourceController interface.
-func (self ReplicaSetController) Get(allPods []api.Pod, allEvents []api.Event) ResourceOwner {
+func (self ReplicaSetController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
 	matchingPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID, allPods)
 	podInfo := common.GetPodInfo(self.Status.Replicas, *self.Spec.Replicas, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
-		TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicaSet),
-		ObjectMeta:      common.NewObjectMeta(self.ObjectMeta),
+		TypeMeta:        api.NewTypeMeta(api.ResourceKindReplicaSet),
+		ObjectMeta:      api.NewObjectMeta(self.ObjectMeta),
 		Pods:            podInfo,
 		ContainerImages: common.GetContainerImages(&self.Spec.Template.Spec),
 	}
@@ -131,18 +132,18 @@ func (self ReplicaSetController) Get(allPods []api.Pod, allEvents []api.Event) R
 
 // ReplicationControllerController is an alias-type for Kubernetes API Replication Controller type.
 // It allows to provide custom set of functions for already existing type.
-type ReplicationControllerController api.ReplicationController
+type ReplicationControllerController v1.ReplicationController
 
 // Get is an implementation of Get method from ResourceController interface.
-func (self ReplicationControllerController) Get(allPods []api.Pod,
-	allEvents []api.Event) ResourceOwner {
+func (self ReplicationControllerController) Get(allPods []v1.Pod,
+	allEvents []v1.Event) ResourceOwner {
 	matchingPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID, allPods)
 	podInfo := common.GetPodInfo(self.Status.Replicas, *self.Spec.Replicas, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
-		TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicationController),
-		ObjectMeta:      common.NewObjectMeta(self.ObjectMeta),
+		TypeMeta:        api.NewTypeMeta(api.ResourceKindReplicationController),
+		ObjectMeta:      api.NewObjectMeta(self.ObjectMeta),
 		Pods:            podInfo,
 		ContainerImages: common.GetContainerImages(&self.Spec.Template.Spec),
 	}
@@ -153,15 +154,15 @@ func (self ReplicationControllerController) Get(allPods []api.Pod,
 type DaemonSetController extensions.DaemonSet
 
 // Get is an implementation of Get method from ResourceController interface.
-func (self DaemonSetController) Get(allPods []api.Pod, allEvents []api.Event) ResourceOwner {
+func (self DaemonSetController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
 	matchingPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID, allPods)
 	podInfo := common.GetPodInfo(self.Status.CurrentNumberScheduled,
 		self.Status.DesiredNumberScheduled, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
-		TypeMeta:        common.NewTypeMeta(common.ResourceKindDaemonSet),
-		ObjectMeta:      common.NewObjectMeta(self.ObjectMeta),
+		TypeMeta:        api.NewTypeMeta(api.ResourceKindDaemonSet),
+		ObjectMeta:      api.NewObjectMeta(self.ObjectMeta),
 		Pods:            podInfo,
 		ContainerImages: common.GetContainerImages(&self.Spec.Template.Spec),
 	}
@@ -172,14 +173,14 @@ func (self DaemonSetController) Get(allPods []api.Pod, allEvents []api.Event) Re
 type StatefulSetController apps.StatefulSet
 
 // Get is an implementation of Get method from ResourceController interface.
-func (self StatefulSetController) Get(allPods []api.Pod, allEvents []api.Event) ResourceOwner {
+func (self StatefulSetController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
 	matchingPods := common.FilterPodsByOwnerReference(self.Namespace, self.UID, allPods)
 	podInfo := common.GetPodInfo(self.Status.Replicas, *self.Spec.Replicas, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
-		TypeMeta:        common.NewTypeMeta(common.ResourceKindStatefulSet),
-		ObjectMeta:      common.NewObjectMeta(self.ObjectMeta),
+		TypeMeta:        api.NewTypeMeta(api.ResourceKindStatefulSet),
+		ObjectMeta:      api.NewObjectMeta(self.ObjectMeta),
 		Pods:            podInfo,
 		ContainerImages: common.GetContainerImages(&self.Spec.Template.Spec),
 	}

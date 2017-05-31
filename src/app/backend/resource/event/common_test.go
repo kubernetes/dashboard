@@ -18,30 +18,31 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 func TestGetEvents(t *testing.T) {
 	cases := []struct {
 		namespace       string
 		name            string
-		eventList       *api.EventList
+		eventList       *v1.EventList
 		expectedActions []string
-		expected        []api.Event
+		expected        []v1.Event
 	}{
 		{
 			"ns-1", "ev-1",
-			&api.EventList{Items: []api.Event{
+			&v1.EventList{Items: []v1.Event{
 				{Message: "test-message", ObjectMeta: metaV1.ObjectMeta{
 					Name: "ev-1", Namespace: "ns-1", Labels: map[string]string{"app": "test"},
 				}},
 			}},
 			[]string{"list"},
-			[]api.Event{
+			[]v1.Event{
 				{Message: "test-message", ObjectMeta: metaV1.ObjectMeta{
 					Name: "ev-1", Namespace: "ns-1", Labels: map[string]string{"app": "test"},
 				}},
@@ -79,14 +80,14 @@ func TestGetPodsEvents(t *testing.T) {
 	cases := []struct {
 		namespace       string
 		selector        map[string]string
-		podList         *api.PodList
-		eventList       *api.EventList
+		podList         *v1.PodList
+		eventList       *v1.EventList
 		expectedActions []string
-		expected        []api.Event
+		expected        []v1.Event
 	}{
 		{
 			"test-namespace", map[string]string{"app": "test"},
-			&api.PodList{Items: []api.Pod{{
+			&v1.PodList{Items: []v1.Pod{{
 				ObjectMeta: metaV1.ObjectMeta{
 					Name:      "test-pod",
 					Namespace: "test-namespace",
@@ -100,16 +101,16 @@ func TestGetPodsEvents(t *testing.T) {
 					Labels:    map[string]string{"app": "test-app"},
 				}},
 			}},
-			&api.EventList{Items: []api.Event{{
+			&v1.EventList{Items: []v1.Event{{
 				Message:        "event-test-msg",
 				ObjectMeta:     metaV1.ObjectMeta{Name: "ev-1", Namespace: "test-namespace"},
-				InvolvedObject: api.ObjectReference{UID: "test-uid"},
+				InvolvedObject: v1.ObjectReference{UID: "test-uid"},
 			}}},
 			[]string{"list", "list"},
-			[]api.Event{{
+			[]v1.Event{{
 				Message:        "event-test-msg",
 				ObjectMeta:     metaV1.ObjectMeta{Name: "ev-1", Namespace: "test-namespace"},
-				InvolvedObject: api.ObjectReference{UID: "test-uid"},
+				InvolvedObject: v1.ObjectReference{UID: "test-uid"},
 			}},
 		},
 	}
@@ -142,26 +143,26 @@ func TestGetPodsEvents(t *testing.T) {
 
 func TestToEventList(t *testing.T) {
 	cases := []struct {
-		events    []api.Event
+		events    []v1.Event
 		namespace string
 		expected  common.EventList
 	}{
 		{
-			[]api.Event{
+			[]v1.Event{
 				{ObjectMeta: metaV1.ObjectMeta{Name: "event-1"}},
 				{ObjectMeta: metaV1.ObjectMeta{Name: "event-2"}},
 			},
 			"namespace-1",
 			common.EventList{
-				ListMeta: common.ListMeta{TotalItems: 2},
+				ListMeta: api.ListMeta{TotalItems: 2},
 				Events: []common.Event{
 					{
-						ObjectMeta: common.ObjectMeta{Name: "event-1"},
-						TypeMeta:   common.TypeMeta{common.ResourceKindEvent},
+						ObjectMeta: api.ObjectMeta{Name: "event-1"},
+						TypeMeta:   api.TypeMeta{api.ResourceKindEvent},
 					},
 					{
-						ObjectMeta: common.ObjectMeta{Name: "event-2"},
-						TypeMeta:   common.TypeMeta{common.ResourceKindEvent},
+						ObjectMeta: api.ObjectMeta{Name: "event-2"},
+						TypeMeta:   api.TypeMeta{api.ResourceKindEvent},
 					},
 				},
 			},

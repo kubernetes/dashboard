@@ -19,12 +19,13 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	api "k8s.io/client-go/pkg/api/v1"
+	v1 "k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
@@ -36,16 +37,16 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 	cases := []struct {
 		k8sDeployment      extensions.DeploymentList
 		k8sDeploymentError error
-		pods               *api.PodList
+		pods               *v1.PodList
 		expected           *DeploymentList
 		expectedError      error
 	}{
 		{
 			extensions.DeploymentList{},
 			nil,
-			&api.PodList{},
+			&v1.PodList{},
 			&DeploymentList{
-				ListMeta:          common.ListMeta{},
+				ListMeta:          api.ListMeta{},
 				Deployments:       []Deployment{},
 				CumulativeMetrics: make([]metric.Metric, 0),
 			},
@@ -54,35 +55,35 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 		{
 			extensions.DeploymentList{},
 			errors.New("MyCustomError"),
-			&api.PodList{},
+			&v1.PodList{},
 			nil,
 			errors.New("MyCustomError"),
 		},
 		{
 			extensions.DeploymentList{},
 			&k8serrors.StatusError{},
-			&api.PodList{},
+			&v1.PodList{},
 			nil,
 			&k8serrors.StatusError{},
 		},
 		{
 			extensions.DeploymentList{},
 			&k8serrors.StatusError{ErrStatus: metaV1.Status{}},
-			&api.PodList{},
+			&v1.PodList{},
 			nil,
 			&k8serrors.StatusError{ErrStatus: metaV1.Status{}},
 		},
 		{
 			extensions.DeploymentList{},
 			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "foo-bar"}},
-			&api.PodList{},
+			&v1.PodList{},
 			nil,
 			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "foo-bar"}},
 		},
 		{
 			extensions.DeploymentList{},
 			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "NotFound"}},
-			&api.PodList{},
+			&v1.PodList{},
 			&DeploymentList{
 				Deployments: make([]Deployment, 0),
 			},
@@ -107,18 +108,18 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 				}},
 			},
 			nil,
-			&api.PodList{},
+			&v1.PodList{},
 			&DeploymentList{
-				ListMeta:          common.ListMeta{TotalItems: 1},
+				ListMeta:          api.ListMeta{TotalItems: 1},
 				CumulativeMetrics: make([]metric.Metric, 0),
 				Deployments: []Deployment{{
-					ObjectMeta: common.ObjectMeta{
+					ObjectMeta: api.ObjectMeta{
 						Name:              "rs-name",
 						Namespace:         "rs-namespace",
 						Labels:            map[string]string{"key": "value"},
 						CreationTimestamp: metaV1.Unix(111, 222),
 					},
-					TypeMeta: common.TypeMeta{Kind: common.ResourceKindDeployment},
+					TypeMeta: api.TypeMeta{Kind: api.ResourceKindDeployment},
 					Pods: common.PodInfo{
 						Current:  7,
 						Desired:  21,
@@ -138,19 +139,19 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 				Error: make(chan error, 1),
 			},
 			NodeList: common.NodeListChannel{
-				List:  make(chan *api.NodeList, 1),
+				List:  make(chan *v1.NodeList, 1),
 				Error: make(chan error, 1),
 			},
 			ServiceList: common.ServiceListChannel{
-				List:  make(chan *api.ServiceList, 1),
+				List:  make(chan *v1.ServiceList, 1),
 				Error: make(chan error, 1),
 			},
 			PodList: common.PodListChannel{
-				List:  make(chan *api.PodList, 1),
+				List:  make(chan *v1.PodList, 1),
 				Error: make(chan error, 1),
 			},
 			EventList: common.EventListChannel{
-				List:  make(chan *api.EventList, 1),
+				List:  make(chan *v1.EventList, 1),
 				Error: make(chan error, 1),
 			},
 			ReplicaSetList: common.ReplicaSetListChannel{
@@ -162,16 +163,16 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 		channels.DeploymentList.Error <- c.k8sDeploymentError
 		channels.DeploymentList.List <- &c.k8sDeployment
 
-		channels.NodeList.List <- &api.NodeList{}
+		channels.NodeList.List <- &v1.NodeList{}
 		channels.NodeList.Error <- nil
 
-		channels.ServiceList.List <- &api.ServiceList{}
+		channels.ServiceList.List <- &v1.ServiceList{}
 		channels.ServiceList.Error <- nil
 
 		channels.PodList.List <- c.pods
 		channels.PodList.Error <- nil
 
-		channels.EventList.List <- &api.EventList{}
+		channels.EventList.List <- &v1.EventList{}
 		channels.EventList.Error <- nil
 
 		channels.ReplicaSetList.List <- &extensions.ReplicaSetList{}

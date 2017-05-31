@@ -17,18 +17,19 @@ package replicationcontroller
 import (
 	"log"
 
-	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	client "k8s.io/client-go/kubernetes"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 // ReplicationControllerList contains a list of Replication Controllers in the cluster.
 type ReplicationControllerList struct {
-	ListMeta common.ListMeta `json:"listMeta"`
+	ListMeta api.ListMeta `json:"listMeta"`
 
 	// Unordered list of Replication Controllers.
 	ReplicationControllers []ReplicationController `json:"replicationControllers"`
@@ -74,12 +75,12 @@ func GetReplicationControllerListFromChannels(channels *common.ResourceChannels,
 
 // CreateReplicationControllerList creates paginated list of Replication Controller model
 // objects based on Kubernetes Replication Controller objects array and related resources arrays.
-func CreateReplicationControllerList(replicationControllers []api.ReplicationController,
-	dsQuery *dataselect.DataSelectQuery, pods []api.Pod, events []api.Event, heapsterClient *heapster.HeapsterClient) *ReplicationControllerList {
+func CreateReplicationControllerList(replicationControllers []v1.ReplicationController,
+	dsQuery *dataselect.DataSelectQuery, pods []v1.Pod, events []v1.Event, heapsterClient *heapster.HeapsterClient) *ReplicationControllerList {
 
 	rcList := &ReplicationControllerList{
 		ReplicationControllers: make([]ReplicationController, 0),
-		ListMeta:               common.ListMeta{TotalItems: len(replicationControllers)},
+		ListMeta:               api.ListMeta{TotalItems: len(replicationControllers)},
 	}
 	cachedResources := &dataselect.CachedResources{
 		Pods: pods,
@@ -87,7 +88,7 @@ func CreateReplicationControllerList(replicationControllers []api.ReplicationCon
 	rcCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(
 		toCells(replicationControllers), dsQuery, cachedResources, heapsterClient)
 	replicationControllers = fromCells(rcCells)
-	rcList.ListMeta = common.ListMeta{TotalItems: filteredTotal}
+	rcList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, rc := range replicationControllers {
 		matchingPods := common.FilterPodsByOwnerReference(rc.Namespace, rc.UID, pods)

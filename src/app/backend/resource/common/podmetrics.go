@@ -21,7 +21,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	client "github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	heapster "k8s.io/heapster/metrics/api/v1/types"
 )
 
@@ -60,7 +60,7 @@ type PodMetrics struct {
 // with heapster.
 func getPodListMetrics(podNamesByNamespace map[string][]string,
 	heapsterClient client.HeapsterClient) (*MetricsByPod, error) {
-	log.Printf("Getting pod metrics")
+	log.Print("Getting pod metrics")
 
 	result := &MetricsByPod{MetricsMap: make(map[string]map[string]PodMetrics)}
 

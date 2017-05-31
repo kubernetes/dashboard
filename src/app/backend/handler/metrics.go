@@ -36,14 +36,14 @@ var (
 )
 
 // Initialize all metrics in prometheus
-func RegisterMetrics() {
+func init() {
 	prometheus.MustRegister(requestCounter)
 	prometheus.MustRegister(requestLatencies)
 	prometheus.MustRegister(requestLatenciesSummary)
 }
 
 // Track API call in prometheus
-func Monitor(verb, resource string, client, contentType string, httpCode int, reqStart time.Time) {
+func monitor(verb, resource string, client, contentType string, httpCode int, reqStart time.Time) {
 	elapsed := float64((time.Since(reqStart)) / time.Microsecond)
 	requestCounter.WithLabelValues(verb, resource, client, contentType, strconv.Itoa(httpCode)).Inc()
 	requestLatencies.WithLabelValues(verb, resource).Observe(elapsed)

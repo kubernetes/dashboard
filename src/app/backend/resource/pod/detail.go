@@ -22,7 +22,8 @@ import (
 	"math"
 	"strconv"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
@@ -32,7 +33,7 @@ import (
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
-	"k8s.io/kubernetes/pkg/api"
+	kubeapi "k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/fieldpath"
 )
 
@@ -40,8 +41,8 @@ import (
 // PodDetail plus additional augmented data we can get from other sources (like services that
 // target it).
 type PodDetail struct {
-	ObjectMeta common.ObjectMeta `json:"objectMeta"`
-	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 
 	// Status of the Pod. See Kubernetes API for reference.
 	PodPhase v1.PodPhase `json:"podPhase"`
@@ -108,7 +109,7 @@ type EnvVar struct {
 
 // GetPodDetail returns the details (PodDetail) of a named Pod from a particular namespace.
 // TODO(maciaszczykm): Owner reference should be used instead of created by annotation.
-func GetPodDetail(client kubernetes.Interface, heapsterClient client.HeapsterClient, namespace,
+func GetPodDetail(client kubernetes.Interface, heapsterClient heapster.HeapsterClient, namespace,
 	name string) (*PodDetail, error) {
 
 	log.Printf("Getting details of %s pod in %s namespace", name, namespace)
@@ -236,8 +237,8 @@ func toPodDetail(pod *v1.Pod, metrics []metric.Metric, configMaps *v1.ConfigMapL
 	secrets *v1.SecretList, controller owner.ResourceOwner,
 	events *common.EventList) PodDetail {
 	podDetail := PodDetail{
-		ObjectMeta:     common.NewObjectMeta(pod.ObjectMeta),
-		TypeMeta:       common.NewTypeMeta(common.ResourceKindPod),
+		ObjectMeta:     api.NewObjectMeta(pod.ObjectMeta),
+		TypeMeta:       api.NewTypeMeta(api.ResourceKindPod),
 		PodPhase:       pod.Status.Phase,
 		PodIP:          pod.Status.PodIP,
 		RestartCount:   getRestartCount(*pod),
@@ -283,7 +284,7 @@ func evalValueFrom(src *v1.EnvVarSource, container *v1.Container, pod *v1.Pod,
 		}
 		return valueFrom
 	case src.FieldRef != nil:
-		internalFieldPath, _, err := api.Scheme.ConvertFieldLabel(src.FieldRef.APIVersion,
+		internalFieldPath, _, err := kubeapi.Scheme.ConvertFieldLabel(src.FieldRef.APIVersion,
 			"Pod", src.FieldRef.FieldPath, "")
 		if err != nil {
 			log.Println(err)

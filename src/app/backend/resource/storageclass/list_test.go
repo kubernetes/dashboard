@@ -18,7 +18,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
@@ -43,14 +43,14 @@ func TestGetStorageClassList(t *testing.T) {
 				}},
 			expectedActions: []string{"list"},
 			expected: &StorageClassList{
-				ListMeta: common.ListMeta{TotalItems: 1},
+				ListMeta: api.ListMeta{TotalItems: 1},
 				StorageClasses: []StorageClass{
 					{
-						ObjectMeta: common.ObjectMeta{
+						ObjectMeta: api.ObjectMeta{
 							Name:   "storage-1",
 							Labels: map[string]string{},
 						},
-						TypeMeta: common.TypeMeta{Kind: common.ResourceKindStorageClass},
+						TypeMeta: api.TypeMeta{Kind: api.ResourceKindStorageClass},
 					},
 				},
 			},

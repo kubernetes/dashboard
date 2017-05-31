@@ -15,7 +15,8 @@
 package job
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
@@ -28,8 +29,8 @@ import (
 // it is Job plus additional augmented data we can get from other sources
 // (like services that target the same pods).
 type JobDetail struct {
-	ObjectMeta common.ObjectMeta `json:"objectMeta"`
-	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 
 	// Aggregate information about pods belonging to this Job.
 	PodInfo common.PodInfo `json:"podInfo"`
@@ -53,7 +54,7 @@ type JobDetail struct {
 }
 
 // GetJobDetail gets job details.
-func GetJobDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
+func GetJobDetail(client k8sClient.Interface, heapsterClient heapster.HeapsterClient,
 	namespace, name string) (*JobDetail, error) {
 
 	// TODO(floreks): Use channels.
@@ -81,11 +82,11 @@ func GetJobDetail(client k8sClient.Interface, heapsterClient client.HeapsterClie
 	return &job, nil
 }
 
-func getJobDetail(job *batch.Job, heapsterClient client.HeapsterClient,
+func getJobDetail(job *batch.Job, heapsterClient heapster.HeapsterClient,
 	eventList common.EventList, podList pod.PodList, podInfo common.PodInfo) JobDetail {
 	return JobDetail{
-		ObjectMeta:      common.NewObjectMeta(job.ObjectMeta),
-		TypeMeta:        common.NewTypeMeta(common.ResourceKindJob),
+		ObjectMeta:      api.NewObjectMeta(job.ObjectMeta),
+		TypeMeta:        api.NewTypeMeta(api.ResourceKindJob),
 		ContainerImages: common.GetContainerImages(&job.Spec.Template.Spec),
 		PodInfo:         podInfo,
 		PodList:         podList,

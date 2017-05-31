@@ -17,7 +17,7 @@ package replicaset
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
@@ -25,12 +25,12 @@ import (
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
 	k8sClient "k8s.io/client-go/kubernetes"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
 // GetReplicaSetPods return list of pods targeting replica set.
-func GetReplicaSetPods(client k8sClient.Interface, heapsterClient client.HeapsterClient,
+func GetReplicaSetPods(client k8sClient.Interface, heapsterClient heapster.HeapsterClient,
 	dsQuery *dataselect.DataSelectQuery, petSetName, namespace string) (*pod.PodList, error) {
 	log.Printf("Getting replication controller %s pods in namespace %s", petSetName, namespace)
 
@@ -39,13 +39,13 @@ func GetReplicaSetPods(client k8sClient.Interface, heapsterClient client.Heapste
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(pods, []api.Event{}, dsQuery, heapsterClient)
+	podList := pod.CreatePodList(pods, []v1.Event{}, dsQuery, heapsterClient)
 	return &podList, nil
 }
 
 // Returns array of api pods targeting replica set with given name.
 func getRawReplicaSetPods(client k8sClient.Interface, petSetName, namespace string) (
-	[]api.Pod, error) {
+	[]v1.Pod, error) {
 	rs, err := client.ExtensionsV1beta1().ReplicaSets(namespace).Get(petSetName,
 		metaV1.GetOptions{})
 	if err != nil {

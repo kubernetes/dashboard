@@ -5,9 +5,10 @@ import (
 	"testing"
 
 	"bytes"
-	"github.com/emicklei/go-restful"
 	"reflect"
 	"strings"
+
+	"github.com/emicklei/go-restful"
 )
 
 func TestCreateHTTPAPIHandler(t *testing.T) {

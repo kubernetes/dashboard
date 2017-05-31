@@ -18,11 +18,12 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
@@ -31,19 +32,19 @@ func TestGetReplicaSetEvents(t *testing.T) {
 
 	cases := []struct {
 		namespace, name string
-		eventList       *api.EventList
-		podList         *api.PodList
+		eventList       *v1.EventList
+		podList         *v1.PodList
 		replicaSet      *extensions.ReplicaSet
 		expectedActions []string
 		expected        *common.EventList
 	}{
 		{
 			"ns-1", "rs-1",
-			&api.EventList{Items: []api.Event{
+			&v1.EventList{Items: []v1.Event{
 				{Message: "test-message", ObjectMeta: metaV1.ObjectMeta{
 					Name: "ev-1", Namespace: "ns-1", Labels: labelSelector}},
 			}},
-			&api.PodList{Items: []api.Pod{{ObjectMeta: metaV1.ObjectMeta{
+			&v1.PodList{Items: []v1.Pod{{ObjectMeta: metaV1.ObjectMeta{
 				Name: "pod-1", Namespace: "ns-1"}}}},
 			&extensions.ReplicaSet{
 				ObjectMeta: metaV1.ObjectMeta{
@@ -54,13 +55,13 @@ func TestGetReplicaSetEvents(t *testing.T) {
 					}}},
 			[]string{"list", "get", "list", "list"},
 			&common.EventList{
-				ListMeta: common.ListMeta{TotalItems: 1},
+				ListMeta: api.ListMeta{TotalItems: 1},
 				Events: []common.Event{{
-					TypeMeta: common.TypeMeta{Kind: common.ResourceKindEvent},
-					ObjectMeta: common.ObjectMeta{
+					TypeMeta: api.TypeMeta{Kind: api.ResourceKindEvent},
+					ObjectMeta: api.ObjectMeta{
 						Name: "ev-1", Namespace: "ns-1", Labels: labelSelector},
 					Message: "test-message",
-					Type:    api.EventTypeNormal,
+					Type:    v1.EventTypeNormal,
 				}}},
 		},
 	}
@@ -96,19 +97,19 @@ func TestGetReplicaSetPodsEvents(t *testing.T) {
 
 	cases := []struct {
 		namespace, name string
-		eventList       *api.EventList
-		podList         *api.PodList
+		eventList       *v1.EventList
+		podList         *v1.PodList
 		replicaSet      *extensions.ReplicaSet
 		expectedActions []string
-		expected        []api.Event
+		expected        []v1.Event
 	}{
 		{
 			"ns-1", "rs-1",
-			&api.EventList{Items: []api.Event{
+			&v1.EventList{Items: []v1.Event{
 				{Message: "test-message", ObjectMeta: metaV1.ObjectMeta{
 					Name: "ev-1", Namespace: "ns-1", Labels: labelSelector}},
 			}},
-			&api.PodList{Items: []api.Pod{{ObjectMeta: metaV1.ObjectMeta{
+			&v1.PodList{Items: []v1.Pod{{ObjectMeta: metaV1.ObjectMeta{
 				Name: "pod-1", Namespace: "ns-1", Labels: labelSelector}}}},
 			&extensions.ReplicaSet{
 				ObjectMeta: metaV1.ObjectMeta{Name: "rs-1", Namespace: "ns-1", Labels: labelSelector},
@@ -117,7 +118,7 @@ func TestGetReplicaSetPodsEvents(t *testing.T) {
 						MatchLabels: labelSelector,
 					}}},
 			[]string{"get", "list", "list"},
-			[]api.Event{{Message: "test-message", ObjectMeta: metaV1.ObjectMeta{
+			[]v1.Event{{Message: "test-message", ObjectMeta: metaV1.ObjectMeta{
 				Name: "ev-1", Namespace: "ns-1", Labels: labelSelector}}},
 		},
 	}

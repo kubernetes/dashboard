@@ -17,20 +17,21 @@ package job
 import (
 	"log"
 
-	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	client "k8s.io/client-go/kubernetes"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 	batch "k8s.io/client-go/pkg/apis/batch/v1"
 )
 
 // JobList contains a list of Jobs in the cluster.
 type JobList struct {
-	ListMeta common.ListMeta `json:"listMeta"`
+	ListMeta api.ListMeta `json:"listMeta"`
 
 	// Unordered list of Jobs.
 	Jobs              []Job           `json:"jobs"`
@@ -40,8 +41,8 @@ type JobList struct {
 // Job is a presentation layer view of Kubernetes Job resource. This means it is Job plus additional
 // augmented data we can get from other sources
 type Job struct {
-	ObjectMeta common.ObjectMeta `json:"objectMeta"`
-	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 
 	// Aggregate information about pods belonging to this Job.
 	Pods common.PodInfo `json:"pods"`
@@ -100,12 +101,12 @@ func GetJobListFromChannels(channels *common.ResourceChannels, dsQuery *datasele
 
 // CreateJobList returns a list of all Job model objects in the cluster, based on all
 // Kubernetes Job API objects.
-func CreateJobList(jobs []batch.Job, pods []api.Pod, events []api.Event,
+func CreateJobList(jobs []batch.Job, pods []v1.Pod, events []v1.Event,
 	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) *JobList {
 
 	jobList := &JobList{
 		Jobs:     make([]Job, 0),
-		ListMeta: common.ListMeta{TotalItems: len(jobs)},
+		ListMeta: api.ListMeta{TotalItems: len(jobs)},
 	}
 
 	cachedResources := &dataselect.CachedResources{
@@ -113,7 +114,7 @@ func CreateJobList(jobs []batch.Job, pods []api.Pod, events []api.Event,
 	}
 	jobCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(ToCells(jobs), dsQuery, cachedResources, heapsterClient)
 	jobs = FromCells(jobCells)
-	jobList.ListMeta = common.ListMeta{TotalItems: filteredTotal}
+	jobList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, job := range jobs {
 		var completions int32
@@ -137,8 +138,8 @@ func CreateJobList(jobs []batch.Job, pods []api.Pod, events []api.Event,
 
 func ToJob(job *batch.Job, podInfo *common.PodInfo) Job {
 	return Job{
-		ObjectMeta:      common.NewObjectMeta(job.ObjectMeta),
-		TypeMeta:        common.NewTypeMeta(common.ResourceKindJob),
+		ObjectMeta:      api.NewObjectMeta(job.ObjectMeta),
+		TypeMeta:        api.NewTypeMeta(api.ResourceKindJob),
 		ContainerImages: common.GetContainerImages(&job.Spec.Template.Spec),
 		Pods:            *podInfo,
 		Parallelism:     job.Spec.Parallelism,

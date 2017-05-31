@@ -4,30 +4,30 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 func TestGetPersistentVolumeClaimList(t *testing.T) {
 	cases := []struct {
-		persistentVolumeClaims []api.PersistentVolumeClaim
+		persistentVolumeClaims []v1.PersistentVolumeClaim
 		expected               *PersistentVolumeClaimList
 	}{
 		{nil, &PersistentVolumeClaimList{Items: []PersistentVolumeClaim{}}},
 		{
-			[]api.PersistentVolumeClaim{{
+			[]v1.PersistentVolumeClaim{{
 				ObjectMeta: metaV1.ObjectMeta{Name: "foo"},
-				Spec:       api.PersistentVolumeClaimSpec{VolumeName: "my-volume"},
-				Status:     api.PersistentVolumeClaimStatus{Phase: api.ClaimBound},
+				Spec:       v1.PersistentVolumeClaimSpec{VolumeName: "my-volume"},
+				Status:     v1.PersistentVolumeClaimStatus{Phase: v1.ClaimBound},
 			},
 			},
 			&PersistentVolumeClaimList{
-				ListMeta: common.ListMeta{TotalItems: 1},
+				ListMeta: api.ListMeta{TotalItems: 1},
 				Items: []PersistentVolumeClaim{{
-					TypeMeta:   common.TypeMeta{Kind: "persistentvolumeclaim"},
-					ObjectMeta: common.ObjectMeta{Name: "foo"},
+					TypeMeta:   api.TypeMeta{Kind: "persistentvolumeclaim"},
+					ObjectMeta: api.ObjectMeta{Name: "foo"},
 					Status:     "Bound",
 					Volume:     "my-volume",
 				}},

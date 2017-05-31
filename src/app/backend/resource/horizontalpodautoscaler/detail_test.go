@@ -18,7 +18,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 	autoscaling "k8s.io/client-go/pkg/apis/autoscaling/v1"
@@ -51,8 +51,8 @@ func TestGetHorizontalPodAutoscalerDetail(t *testing.T) {
 				},
 			},
 			&HorizontalPodAutoscalerDetail{
-				ObjectMeta: common.ObjectMeta{Name: "test-name", Namespace: "test-ns"},
-				TypeMeta:   common.TypeMeta{Kind: common.ResourceKindHorizontalPodAutoscaler},
+				ObjectMeta: api.ObjectMeta{Name: "test-name", Namespace: "test-ns"},
+				TypeMeta:   api.TypeMeta{Kind: api.ResourceKindHorizontalPodAutoscaler},
 				ScaleTargetRef: ScaleTargetRef{
 					Kind: "test-kind",
 					Name: "test-name2",

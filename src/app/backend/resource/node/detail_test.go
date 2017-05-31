@@ -18,14 +18,15 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 	restclient "k8s.io/client-go/rest"
 )
 
@@ -33,21 +34,21 @@ type FakeHeapsterClient struct {
 	client fake.Clientset
 }
 
-func (c FakeHeapsterClient) Get(path string) client.RequestInterface {
+func (c FakeHeapsterClient) Get(path string) heapster.RequestInterface {
 	return &restclient.Request{}
 }
 
 func TestGetNodeDetail(t *testing.T) {
 	cases := []struct {
 		namespace, name string
-		node            *api.Node
+		node            *v1.Node
 		expected        *NodeDetail
 	}{
 		{
 			"test-namespace", "test-node",
-			&api.Node{
+			&v1.Node{
 				ObjectMeta: metaV1.ObjectMeta{Name: "test-node"},
-				Spec: api.NodeSpec{
+				Spec: v1.NodeSpec{
 					ExternalID:    "127.0.0.1",
 					PodCIDR:       "127.0.0.1",
 					ProviderID:    "ID-1",
@@ -55,8 +56,8 @@ func TestGetNodeDetail(t *testing.T) {
 				},
 			},
 			&NodeDetail{
-				ObjectMeta:    common.ObjectMeta{Name: "test-node"},
-				TypeMeta:      common.TypeMeta{Kind: common.ResourceKindNode},
+				ObjectMeta:    api.ObjectMeta{Name: "test-node"},
+				TypeMeta:      api.TypeMeta{Kind: api.ResourceKindNode},
 				ExternalID:    "127.0.0.1",
 				PodCIDR:       "127.0.0.1",
 				ProviderID:    "ID-1",

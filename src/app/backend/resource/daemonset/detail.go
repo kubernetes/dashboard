@@ -17,7 +17,8 @@ package daemonset
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
@@ -29,8 +30,8 @@ import (
 
 // DaemonSeDetail represents detailed information about a Daemon Set.
 type DaemonSetDetail struct {
-	ObjectMeta common.ObjectMeta `json:"objectMeta"`
-	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 
 	// Label selector of the Daemon Set.
 	LabelSelector *v1.LabelSelector `json:"labelSelector,omitempty"`
@@ -55,7 +56,7 @@ type DaemonSetDetail struct {
 }
 
 // Returns detailed information about the given daemon set in the given namespace.
-func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
+func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient heapster.HeapsterClient,
 	namespace, name string) (*DaemonSetDetail, error) {
 	log.Printf("Getting details of %s daemon set in %s namespace", name, namespace)
 
@@ -85,8 +86,8 @@ func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient client.Heapst
 	}
 
 	daemonSetDetail := &DaemonSetDetail{
-		ObjectMeta:    common.NewObjectMeta(daemonSet.ObjectMeta),
-		TypeMeta:      common.NewTypeMeta(common.ResourceKindDaemonSet),
+		ObjectMeta:    api.NewObjectMeta(daemonSet.ObjectMeta),
+		TypeMeta:      api.NewTypeMeta(api.ResourceKindDaemonSet),
 		LabelSelector: daemonSet.Spec.Selector,
 		PodInfo:       *podInfo,
 		PodList:       *podList,

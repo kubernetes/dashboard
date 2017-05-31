@@ -17,18 +17,18 @@ package statefulset
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 	apps "k8s.io/client-go/pkg/apis/apps/v1beta1"
 )
 
 // GetStatefulSetPods return list of pods targeting pet set.
-func GetStatefulSetPods(client *k8sClient.Clientset, heapsterClient client.HeapsterClient,
+func GetStatefulSetPods(client *k8sClient.Clientset, heapsterClient heapster.HeapsterClient,
 	dsQuery *dataselect.DataSelectQuery, name, namespace string) (*pod.PodList, error) {
 
 	log.Printf("Getting replication controller %s pods in namespace %s", name, namespace)
@@ -38,12 +38,12 @@ func GetStatefulSetPods(client *k8sClient.Clientset, heapsterClient client.Heaps
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(pods, []api.Event{}, dsQuery, heapsterClient)
+	podList := pod.CreatePodList(pods, []v1.Event{}, dsQuery, heapsterClient)
 	return &podList, nil
 }
 
 // getRawStatefulSetPods return array of api pods targeting pet set with given name.
-func getRawStatefulSetPods(client *k8sClient.Clientset, name, namespace string) ([]api.Pod, error) {
+func getRawStatefulSetPods(client *k8sClient.Clientset, name, namespace string) ([]v1.Pod, error) {
 
 	statefulSet, err := client.AppsV1beta1().StatefulSets(namespace).Get(name,
 		metaV1.GetOptions{})

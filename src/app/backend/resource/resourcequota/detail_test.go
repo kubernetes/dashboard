@@ -18,10 +18,10 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 func TestGetResourceQuotaDetail(t *testing.T) {
@@ -29,37 +29,37 @@ func TestGetResourceQuotaDetail(t *testing.T) {
 	testMemoryQuantity, _ := resource.ParseQuantity("6G")
 
 	cases := []struct {
-		resourceQuotas *api.ResourceQuota
+		resourceQuotas *v1.ResourceQuota
 		expected       *ResourceQuotaDetail
 	}{
 		{
-			&api.ResourceQuota{
+			&v1.ResourceQuota{
 				ObjectMeta: metaV1.ObjectMeta{Name: "foo"},
-				Spec: api.ResourceQuotaSpec{
-					Hard: map[api.ResourceName]resource.Quantity{
-						api.ResourceMemory: testMemoryQuantity,
+				Spec: v1.ResourceQuotaSpec{
+					Hard: map[v1.ResourceName]resource.Quantity{
+						v1.ResourceMemory: testMemoryQuantity,
 					},
-					Scopes: []api.ResourceQuotaScope{
-						api.ResourceQuotaScopeBestEffort,
+					Scopes: []v1.ResourceQuotaScope{
+						v1.ResourceQuotaScopeBestEffort,
 					},
 				},
-				Status: api.ResourceQuotaStatus{
-					Hard: map[api.ResourceName]resource.Quantity{
-						api.ResourceMemory: testMemoryQuantity,
+				Status: v1.ResourceQuotaStatus{
+					Hard: map[v1.ResourceName]resource.Quantity{
+						v1.ResourceMemory: testMemoryQuantity,
 					},
-					Used: map[api.ResourceName]resource.Quantity{
-						api.ResourceMemory: testMemoryQuantity,
+					Used: map[v1.ResourceName]resource.Quantity{
+						v1.ResourceMemory: testMemoryQuantity,
 					},
 				},
 			},
 			&ResourceQuotaDetail{
-				TypeMeta:   common.TypeMeta{Kind: "resourcequota"},
-				ObjectMeta: common.ObjectMeta{Name: "foo"},
-				Scopes: []api.ResourceQuotaScope{
-					api.ResourceQuotaScopeBestEffort,
+				TypeMeta:   api.TypeMeta{Kind: "resourcequota"},
+				ObjectMeta: api.ObjectMeta{Name: "foo"},
+				Scopes: []v1.ResourceQuotaScope{
+					v1.ResourceQuotaScopeBestEffort,
 				},
-				StatusList: map[api.ResourceName]ResourceStatus{
-					api.ResourceMemory: {
+				StatusList: map[v1.ResourceName]ResourceStatus{
+					v1.ResourceMemory: {
 						Hard: testMemoryQuantity.String(),
 						Used: testMemoryQuantity.String(),
 					},

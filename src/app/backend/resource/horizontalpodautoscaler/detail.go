@@ -17,7 +17,7 @@ package horizontalpodautoscaler
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
 	autoscaling "k8s.io/client-go/pkg/apis/autoscaling/v1"
@@ -26,8 +26,8 @@ import (
 // HorizontalPodAutoscalerDetail provides the presentation layer view of Kubernetes Horizontal Pod Autoscaler resource.
 // close mapping of the autoscaling.HorizontalPodAutoscaler type with part of the *Spec and *Detail childs
 type HorizontalPodAutoscalerDetail struct {
-	ObjectMeta common.ObjectMeta `json:"objectMeta"`
-	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 
 	ScaleTargetRef ScaleTargetRef `json:"scaleTargetRef"`
 
@@ -59,8 +59,8 @@ func GetHorizontalPodAutoscalerDetail(client client.Interface, namespace string,
 func getHorizontalPodAutoscalerDetail(horizontalPodAutoscaler *autoscaling.HorizontalPodAutoscaler) *HorizontalPodAutoscalerDetail {
 
 	return &HorizontalPodAutoscalerDetail{
-		ObjectMeta: common.NewObjectMeta(horizontalPodAutoscaler.ObjectMeta),
-		TypeMeta:   common.NewTypeMeta(common.ResourceKindHorizontalPodAutoscaler),
+		ObjectMeta: api.NewObjectMeta(horizontalPodAutoscaler.ObjectMeta),
+		TypeMeta:   api.NewTypeMeta(api.ResourceKindHorizontalPodAutoscaler),
 
 		ScaleTargetRef: ScaleTargetRef{
 			Kind: horizontalPodAutoscaler.Spec.ScaleTargetRef.Kind,
