@@ -30,6 +30,33 @@ export class GraphController {
       this.generateGraph();
   }
 
+  // https://nvd3-community.github.io/nvd3/examples/documentation.html#pieChart
+  initPieChart(size, margin, ratio) {
+      let chart = nv.models.pieChart()
+          .showLegend(false)
+          .showLabels(true)
+          .x(function (d) {return d.label;})
+          .y(function (d) {return d.value;})
+          .donut(true)
+          .donutRatio(ratio)
+          .color(['#326de6', '#fff'])
+          .margin({top: margin, right: margin, bottom: margin, left: margin})
+          .width(size)
+          .height(size)
+          .growOnHover(false)
+          .labelType(function(d, i){
+
+            // Displays label only for allocated resources, free will be white on white without label - invisible.
+            if(i === 0) {
+              return d.data.value;
+            }
+            return "";
+          });
+
+      chart.tooltip.enabled(false);
+      return chart;
+  }
+
 
   /**
    * Generates graph using this.metrics provided.
@@ -41,7 +68,7 @@ export class GraphController {
     let size = 320;
 
     var dataset = [
-      {label:'Usage', value:0.81},
+      {label:'Usage', value:4},
       {label:'Free', value:8},
     ];
 
@@ -52,27 +79,9 @@ export class GraphController {
 
 
     nv.addGraph(() => {
-      chart = nv.models.pieChart()
-          .showLegend(false)
-          .x(function (d) {return d.label;})
-          .y(function (d) {return d.value;})
-          .donut(true)
-          .donutRatio(0.65)
-          .color(['#326de6', '#fff'])
-          .margin({top: 0, right: 0, bottom: 0, left: 0})
-          .width(size) // width
-          .height(size); // height
-
-      chart2 = nv.models.pieChart()
-          .showLegend(false)
-          .x(function (d) {return d.label;})
-          .y(function (d) {return d.value;})
-          .donut(true)
-          .donutRatio(0.60)
-          .color(['#326de6', '#fff'])
-          .margin({top: 36, right: 36, bottom: 36, left: 36})
-          .width(size) // width
-          .height(size); // height
+      chart = this.initPieChart(size, 0, 0.65);
+      chart2 = this.initPieChart(size, 36, 0.6);
+      chart2.title('CPU Usage');
 
       let graphArea = d3.select(this.element_[0]);
       let svg = graphArea.append('svg');
