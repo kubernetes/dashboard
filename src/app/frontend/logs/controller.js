@@ -16,6 +16,11 @@ import {stateName as logs, StateParams} from './state';
 
 const logsPerView = 100;
 const maxLogSize = 2e9;
+const beginningOfLogFile = 'beginning';
+const endOfLogFile = 'end';
+const oldestTimestamp = 'oldest';
+const newestTimestamp = 'newest';
+
 /**
  * Controller for the logs view.
  *
@@ -31,10 +36,12 @@ export class LogsController {
    * @param {!./state.StateParams} $stateParams
    * @param {!angular.$resource} $resource
    * @param {!ui.router.$state} $state
+   * @param {!../common/errorhandling/service.ErrorDialog} errorDialog
    * @ngInject
    */
   constructor(
-      podLogs, podContainers, logsService, $sce, $document, $resource, $stateParams, $state) {
+      podLogs, podContainers, logsService, $sce, $document, $resource, $stateParams, $state,
+      errorDialog) {
     /** @private {!angular.$sce} */
     this.sce_ = $sce;
 
@@ -73,6 +80,9 @@ export class LogsController {
 
     /** @export {number} */
     this.topIndex = 0;
+
+    /** @private {!../common/errorhandling/service.ErrorDialog} */
+    this.errorDialog_ = errorDialog;
   }
 
   $onInit() {
@@ -86,7 +96,7 @@ export class LogsController {
    * @export
    */
   loadOldest() {
-    this.loadView(-maxLogSize - logsPerView, -maxLogSize);
+    this.loadView(beginningOfLogFile, oldestTimestamp, 0, -maxLogSize - logsPerView, -maxLogSize);
   }
 
   /**
@@ -94,7 +104,7 @@ export class LogsController {
    * @export
    */
   loadNewest() {
-    this.loadView(maxLogSize, maxLogSize + logsPerView);
+    this.loadView(endOfLogFile, newestTimestamp, 0, maxLogSize, maxLogSize + logsPerView);
   }
 
   /**
@@ -102,7 +112,10 @@ export class LogsController {
    * @export
    */
   loadOlder() {
-    this.loadView(this.currentSelection.offsetFrom - logsPerView, this.currentSelection.offsetFrom);
+    this.loadView(
+        this.currentSelection.logFilePosition, this.currentSelection.referencePoint.timestamp,
+        this.currentSelection.referencePoint.lineNum,
+        this.currentSelection.offsetFrom - logsPerView, this.currentSelection.offsetFrom);
   }
 
   /**
@@ -110,7 +123,10 @@ export class LogsController {
    * @export
    */
   loadNewer() {
-    this.loadView(this.currentSelection.offsetTo, this.currentSelection.offsetTo + logsPerView);
+    this.loadView(
+        this.currentSelection.logFilePosition, this.currentSelection.referencePoint.timestamp,
+        this.currentSelection.referencePoint.lineNum, this.currentSelection.offsetTo,
+        this.currentSelection.offsetTo + logsPerView);
   }
 
   /**
@@ -120,11 +136,14 @@ export class LogsController {
    * So for example if reference line has index n and we want to download first 10 elements in array
    * we have to use
    * from -n to -n+10.
+   * @param {string} logFilePosition
+   * @param {string} referenceTimestamp
+   * @param {number} referenceLinenum
    * @param {number} offsetFrom
    * @param {number} offsetTo
    * @private
    */
-  loadView(offsetFrom, offsetTo) {
+  loadView(logFilePosition, referenceTimestamp, referenceLinenum, offsetFrom, offsetTo) {
     let namespace = this.stateParams_.objectNamespace;
     let podId = this.stateParams_.objectName;
     let container = this.stateParams_.container || '';
@@ -132,8 +151,9 @@ export class LogsController {
     this.resource_(`api/v1/pod/${namespace}/${podId}/log/${container}`)
         .get(
             {
-              'referenceTimestamp': this.currentSelection.referencePoint.timestamp,
-              'referenceLineNum': this.currentSelection.referencePoint.lineNum,
+              'logFilePosition': logFilePosition,
+              'referenceTimestamp': referenceTimestamp,
+              'referenceLineNum': referenceLinenum,
               'offsetFrom': offsetFrom,
               'offsetTo': offsetTo,
             },
@@ -152,6 +172,9 @@ export class LogsController {
     this.podLogs = podLogs;
     this.currentSelection = podLogs.selection;
     this.logsSet = this.formatAllLogs_(podLogs.logs);
+    if (podLogs.info.truncated) {
+      this.errorDialog_.open(this.i18n.MSG_LOGS_TRUNCATED_WARNING, '');
+    }
   }
 
   /**
@@ -349,4 +372,7 @@ export class LogsController {
 const i18n = {
   /** @export {string} @desc Text for logs card zerostate in logs page. */
   MSG_LOGS_ZEROSTATE_TEXT: goog.getMsg('The selected container has not logged any messages yet.'),
+  /** @export {string} @desc Error dialog indicating that parts of the log file is missing due to memory constraints. */
+  MSG_LOGS_TRUNCATED_WARNING:
+      goog.getMsg('The middle part of the log file cannot be loaded, because it is too big.'),
 };

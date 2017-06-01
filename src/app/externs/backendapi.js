@@ -936,6 +936,7 @@ backendApi.LogDetails;
  *   containerName: string,
  *   fromDate: string,
  *   toDate: string,
+ *   truncated: boolean
  * }}
  */
 backendApi.LogInfo;
@@ -950,6 +951,7 @@ backendApi.LogLine;
 
 /**
  * @typedef {{
+ *   logFilePosition: string,
  *   referencePoint: !backendApi.LogLineReference,
  *   offsetFrom: number,
  *   offsetTo: number

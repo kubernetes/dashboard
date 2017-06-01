@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import errorModule from 'common/errorhandling/module';
 import {LogsController} from 'logs/controller';
 import LogsModule from 'logs/module';
 import {StateParams} from 'logs/state';
@@ -53,6 +54,7 @@ describe('Logs controller', () => {
     ],
     info: {podName: 'test-pod', containerName: 'container-name', fromDate: '1', toDate: '3'},
     selection: {
+      logFilePosition: 'beginning',
       referencePoint: {'timestamp': 'X', 'lineNum': 11},
       'offsetFrom': 22,
       'offsetTo': 25,
@@ -71,12 +73,14 @@ describe('Logs controller', () => {
 
   beforeEach(() => {
     angular.mock.module(LogsModule.name);
+    angular.mock.module(errorModule.name);
 
-    angular.mock.inject(($controller, $httpBackend) => {
+    angular.mock.inject(($controller, $httpBackend, errorDialog) => {
       ctrl = $controller(LogsController, {
         podLogs: angular.copy(podLogs),
         podContainers: podContainers,
         $stateParams: stateParams,
+        errorDialog: errorDialog,
       });
       httpBackend = $httpBackend;
     });
@@ -122,7 +126,7 @@ describe('Logs controller', () => {
     expect(ctrl.logsSet.length).toEqual(3);
     httpBackend
         .expectGET(
-            'api/v1/pod/namespace11/pod2/log/con22?offsetFrom=25&offsetTo=125&referenceLineNum=11&referenceTimestamp=X')
+            'api/v1/pod/namespace11/pod2/log/con22?logFilePosition=beginning&offsetFrom=25&offsetTo=125&referenceLineNum=11&referenceTimestamp=X')
         .respond(200, otherLogs);
     httpBackend.flush();
     expect(ctrl.logsSet.length).toEqual(2);
@@ -135,7 +139,7 @@ describe('Logs controller', () => {
     expect(ctrl.logsSet.length).toEqual(3);
     httpBackend
         .expectGET(
-            'api/v1/pod/namespace11/pod2/log/con22?offsetFrom=-78&offsetTo=22&referenceLineNum=11&referenceTimestamp=X')
+            'api/v1/pod/namespace11/pod2/log/con22?logFilePosition=beginning&offsetFrom=-78&offsetTo=22&referenceLineNum=11&referenceTimestamp=X')
         .respond(200, otherLogs);
     httpBackend.flush();
     expect(ctrl.logsSet.length).toEqual(2);
@@ -148,7 +152,7 @@ describe('Logs controller', () => {
     expect(ctrl.logsSet.length).toEqual(3);
     httpBackend
         .expectGET(
-            'api/v1/pod/namespace11/pod2/log/con22?offsetFrom=2000000000&offsetTo=2000000100&referenceLineNum=11&referenceTimestamp=X')
+            'api/v1/pod/namespace11/pod2/log/con22?logFilePosition=end&offsetFrom=2000000000&offsetTo=2000000100&referenceLineNum=0&referenceTimestamp=newest')
         .respond(200, otherLogs);
     httpBackend.flush();
     expect(ctrl.logsSet.length).toEqual(2);
@@ -162,10 +166,12 @@ describe('Logs controller', () => {
     expect(ctrl.logsSet.length).toEqual(3);
     httpBackend
         .expectGET(
-            'api/v1/pod/namespace11/pod2/log/con22?offsetFrom=-2000000100&offsetTo=-2000000000&referenceLineNum=11&referenceTimestamp=X')
+            'api/v1/pod/namespace11/pod2/log/con22?logFilePosition=beginning&offsetFrom=-2000000100&offsetTo=-2000000000&referenceLineNum=0&referenceTimestamp=oldest')
         .respond(200, otherLogs);
     httpBackend.flush();
     expect(ctrl.logsSet.length).toEqual(2);
     expect(ctrl.currentSelection).toEqual(otherLogs.selection);
   });
+
+
 });

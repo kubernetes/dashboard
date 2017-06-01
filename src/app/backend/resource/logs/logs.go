@@ -33,6 +33,11 @@ const (
 	OldestTimestamp = "oldest"
 )
 
+const (
+	Beginning = "beginning"
+	End       = "end"
+)
+
 // NewestLogLineId is the reference Id of the newest line.
 var NewestLogLineId = LogLineId{
 	LogTimestamp: NewestTimestamp,
@@ -46,9 +51,10 @@ var OldestLogLineId = LogLineId{
 // Default log view selector that is used in case of invalid request
 // Downloads newest DefaultDisplayNumLogLines lines.
 var DefaultSelection = &Selection{
-	OffsetFrom:     1 - DefaultDisplayNumLogLines,
-	OffsetTo:       1,
-	ReferencePoint: NewestLogLineId,
+	OffsetFrom:      1 - DefaultDisplayNumLogLines,
+	OffsetTo:        1,
+	ReferencePoint:  NewestLogLineId,
+	LogFilePosition: End,
 }
 
 // Returns all logs.
@@ -85,6 +91,8 @@ type LogInfo struct {
 
 	// Date of the last log line
 	ToDate LogTimestamp `json:"toDate"`
+
+	Truncated bool `json:"truncated"`
 }
 
 // Selection of a slice of logs.
@@ -99,6 +107,9 @@ type Selection struct {
 	OffsetFrom int `json:"offsetFrom"`
 	// Last index of the slice relatively to the reference line (this one will not be included).
 	OffsetTo int `json:"offsetTo"`
+	// The log file is loaded either from the beginning or from the end. This matters only if the log file is too
+	// large to be handled and must be truncated (to avoid oom)
+	LogFilePosition string `json:"logFilePosition"`
 }
 
 // LogLineId uniquely identifies a line in logs - immune to log addition/deletion.
@@ -112,8 +123,7 @@ type LogLineId struct {
 	LineNum int `json:"lineNum"`
 }
 
-// LogLines provides means of selecting log views.
-// Problem with logs is that old logs are being deleted and new logs are constantly added.
+// LogLines provides means of selecting log views. Problem with logs is that new logs are constantly added.
 // Therefore the number of logs constantly changes and we cannot use normal indexing. For example
 // if certain line has index N then it may not have index N anymore 1 second later as logs at the beginning of the list
 // are being deleted. Therefore it is necessary to reference log indices relative to some line that we are certain will not be deleted.
@@ -134,32 +144,38 @@ type LogTimestamp string
 
 // SelectLogs returns selected part of LogLines as required by logSelector, moreover it returns IDs of first and last
 // of returned lines and the information of the resulting logView.
-func (self LogLines) SelectLogs(logSelection *Selection) (LogLines, LogTimestamp, LogTimestamp, Selection) {
+func (self LogLines) SelectLogs(logSelection *Selection) (LogLines, LogTimestamp, LogTimestamp, Selection, bool) {
 	requestedNumItems := logSelection.OffsetTo - logSelection.OffsetFrom
 	referenceLineIndex := self.getLineIndex(&logSelection.ReferencePoint)
 	if referenceLineIndex == LINE_INDEX_NOT_FOUND || requestedNumItems <= 0 || len(self) == 0 {
 		// Requested reference line could not be found, probably it's already gone or requested no logs. Return no logs.
-		return LogLines{}, "", "", Selection{}
+		return LogLines{}, "", "", Selection{}, false
 	}
 	fromIndex := referenceLineIndex + logSelection.OffsetFrom
 	toIndex := referenceLineIndex + logSelection.OffsetTo
+	lastPage := false
 	if requestedNumItems > len(self) {
 		fromIndex = 0
 		toIndex = len(self)
+		lastPage = true
 	} else if toIndex > len(self) {
 		fromIndex -= toIndex - len(self)
 		toIndex = len(self)
+		lastPage = logSelection.LogFilePosition == Beginning
 	} else if fromIndex < 0 {
 		toIndex += -fromIndex
 		fromIndex = 0
+		lastPage = logSelection.LogFilePosition == End
 	}
+
 	// set the middle of log array as a reference point, this part of array should not be affected by log deletion/addition.
 	newSelection := Selection{
-		ReferencePoint: *self.createLogLineId(len(self) / 2),
-		OffsetFrom:     fromIndex - len(self)/2,
-		OffsetTo:       toIndex - len(self)/2,
+		ReferencePoint:  *self.createLogLineId(len(self) / 2),
+		OffsetFrom:      fromIndex - len(self)/2,
+		OffsetTo:        toIndex - len(self)/2,
+		LogFilePosition: logSelection.LogFilePosition,
 	}
-	return self[fromIndex:toIndex], self[fromIndex].Timestamp, self[toIndex-1].Timestamp, newSelection
+	return self[fromIndex:toIndex], self[fromIndex].Timestamp, self[toIndex-1].Timestamp, newSelection, lastPage
 }
 
 // GetLineIndex returns the index of the line (referenced from beginning of log array) with provided logLineId.
@@ -231,9 +247,11 @@ func ToLogLines(rawLogs string) LogLines {
 	for _, line := range strings.Split(rawLogs, "\n") {
 		if line != "" {
 			idx := strings.Index(line, " ")
-			timestamp := LogTimestamp(line[0:idx])
-			content := line[idx+1:]
-			logLines = append(logLines, LogLine{Timestamp: timestamp, Content: content})
+			if idx > 0 {
+				timestamp := LogTimestamp(line[0:idx])
+				content := line[idx+1:]
+				logLines = append(logLines, LogLine{Timestamp: timestamp, Content: content})
+			}
 		}
 	}
 	return logLines
