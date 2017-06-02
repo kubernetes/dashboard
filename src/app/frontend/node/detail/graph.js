@@ -24,74 +24,82 @@ export class GraphController {
 
     /** @private {!angular.JQLite} */
     this.element_ = $element;
+
+    /** {number} **/
+    this.requests;
+
+    /** {number} **/
+    this.limits;
   }
 
   $onInit() {
-      this.generateGraph();
+    this.requestsData = [
+      {value: this.requests},
+      {value: 100 - this.requests},
+    ];
+
+    this.limitsData = [
+      {value: this.limits},
+      {value: 100 - this.limits},
+    ];
+
+    this.generateGraph_();
   }
 
-  // https://nvd3-community.github.io/nvd3/examples/documentation.html#pieChart
-  initPieChart(size, margin, ratio) {
-      let chart = nv.models.pieChart()
-          .showLegend(false)
-          .showLabels(true)
-          .x(function (d) {return d.label;})
-          .y(function (d) {return d.value;})
-          .donut(true)
-          .donutRatio(ratio)
-          .color(['#326de6', '#fff'])
-          .margin({top: margin, right: margin, bottom: margin, left: margin})
-          .width(size)
-          .height(size)
-          .growOnHover(false)
-          .labelType(function(d, i){
+  /**
+   * Initializes pie chart graph. Check documentation at:
+   * https://nvd3-community.github.io/nvd3/examples/documentation.html#pieChart
+   *
+   * @private
+   */
+  initPieChart_(svg, data, color, margin, ratio) {
+    let size = 320;
+    let chart = nv.models.pieChart()
+                    .showLegend(false)
+                    .showLabels(true)
+                    .x((d) => {
+                      return d.value;
+                    })
+                    .y((d) => {
+                      return d.value;
+                    })
+                    .donut(true)
+                    .donutRatio(ratio)
+                    .color([color, '#ddd'])
+                    .margin({top: margin, right: margin, bottom: margin, left: margin})
+                    .width(size)
+                    .height(size)
+                    .growOnHover(false)
+                    .labelType((d, i) => {
+                      // Displays label only for allocated resources.
+                      if (i === 0) {
+                        return `${d.data.value.toFixed(2)}%`;
+                      }
+                      return '';
+                    });
 
-            // Displays label only for allocated resources, free will be white on white without label - invisible.
-            if(i === 0) {
-              return d.data.value;
-            }
-            return "";
-          });
+    chart.tooltip.enabled(false);
 
-      chart.tooltip.enabled(false);
-      return chart;
+    svg.attr('height', size)
+        .attr('width', size)
+        .append('g')
+        .datum(data)
+        .transition()
+        .duration(350)
+        .call(chart);
   }
 
 
   /**
-   * Generates graph using this.metrics provided.
+   * Generates graph using provided requests and limits bindings.
    * @private
    */
-  generateGraph() {
-    let chart;
-    let chart2;
-    let size = 320;
-
-    var dataset = [
-      {label:'Usage', value:4},
-      {label:'Free', value:8},
-    ];
-
-    var dataset2 = [
-      {label:'Usage', value:70},
-      {label:'Free', value:30},
-    ];
-
-
+  generateGraph_() {
     nv.addGraph(() => {
-      chart = this.initPieChart(size, 0, 0.65);
-      chart2 = this.initPieChart(size, 36, 0.6);
-      chart2.title('CPU Usage');
+      let svg = d3.select(this.element_[0]).append('svg');
 
-      let graphArea = d3.select(this.element_[0]);
-      let svg = graphArea.append('svg');
-
-      svg.attr("height", size).attr("width", size).append("g").datum(dataset).transition().duration(350).call(chart);
-      svg.attr("height", size).attr("width", size).append("g").datum(dataset2).transition().duration(350).call(chart2);
-
-      nv.utils.windowResize(chart.update);
-      this.scope_.$watch(() => graphArea.node().getBoundingClientRect().width, false);
-      return chart;
+      this.initPieChart_(svg, this.requestsData, '#00c752', 0, 0.65);
+      this.initPieChart_(svg, this.limitsData, '#326de6', 36, 0.6);
     });
   }
 }
@@ -102,6 +110,10 @@ export class GraphController {
  * @type {!angular.Component}
  */
 export const graphComponent = {
+  bindings: {
+    'requests': '<',
+    'limits': '<',
+  },
   controller: GraphController,
   templateUrl: 'node/detail/graph.html',
 };
