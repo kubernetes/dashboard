@@ -17,14 +17,21 @@ limitations under the License.
 <kd-content-card>
   <kd-title>[[Allocated resources|Label 'Allocated resources' for the allocated resources section.]]</kd-title>
   <kd-content>
-    <div style="display: inline-block">
-      <kd-node-graph requests="$ctrl.allocatedResources.cpuRequestsFraction"
-                     limits="$ctrl.allocatedResources.cpuLimitsFraction"></kd-node-graph>
-    </div>
-    <div style="display: inline-block">
-      <kd-node-graph requests="$ctrl.allocatedResources.memoryRequestsFraction"
-                     limits="$ctrl.allocatedResources.memoryLimitsFraction"></kd-node-graph>
-      <!-- TODO(maciaszczykm): Translude data to show legend. -->
+    <div style="display: flex; flex-flow: row wrap; justify-content: center">
+      <div style="flex: 1 auto; text-align: center">
+        <kd-node-graph requests="$ctrl.allocatedResources.cpuRequestsFraction"
+                       limits="$ctrl.allocatedResources.cpuLimitsFraction"></kd-node-graph>
+      </div>
+      <div style="flex: 1 auto; text-align: center">
+        <kd-node-graph requests="$ctrl.allocatedResources.memoryRequestsFraction"
+                       limits="$ctrl.allocatedResources.memoryLimitsFraction"></kd-node-graph>
+        <!-- TODO(maciaszczykm): Translude data to show legend. -->
+      </div>
+      <div style="flex: 1 auto; text-align: center">
+        <kd-node-graph requests="$ctrl.allocatedResources.memoryRequestsFraction"
+                       limits="$ctrl.allocatedResources.memoryLimitsFraction"></kd-node-graph>
+        <!-- TODO(maciaszczykm): Pods. -->
+      </div>
     </div>
 
     <kd-resource-card-list selectable="false"

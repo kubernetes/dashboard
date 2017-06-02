@@ -53,7 +53,7 @@ export class GraphController {
    * @private
    */
   initPieChart_(svg, data, color, margin, ratio) {
-    let size = 320;
+    let size = 280;
     let chart = nv.models.pieChart()
                     .showLegend(false)
                     .showLabels(true)
@@ -98,8 +98,8 @@ export class GraphController {
     nv.addGraph(() => {
       let svg = d3.select(this.element_[0]).append('svg');
 
-      this.initPieChart_(svg, this.requestsData, '#00c752', 0, 0.65);
-      this.initPieChart_(svg, this.limitsData, '#326de6', 36, 0.6);
+      this.initPieChart_(svg, this.requestsData, '#00c752', 0, 0.61);
+      this.initPieChart_(svg, this.limitsData, '#326de6', 36, 0.55);
     });
   }
 }
