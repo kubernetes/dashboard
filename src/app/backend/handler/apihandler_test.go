@@ -11,13 +11,6 @@ import (
 	"github.com/emicklei/go-restful"
 )
 
-func TestCreateHTTPAPIHandler(t *testing.T) {
-	_, err := CreateHTTPAPIHandler(nil, ApiClientConfig{ApiserverHost: "127.0.0.1", KubeConfigFile: ""})
-	if err != nil {
-		t.Fatal("CreateHTTPAPIHandler() cannot create HTTP API handler")
-	}
-}
-
 func TestShouldDoCsrfValidation(t *testing.T) {
 	cases := []struct {
 		request  *restful.Request

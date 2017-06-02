@@ -15,6 +15,7 @@ import (
 	"k8s.io/client-go/kubernetes/fake"
 	"k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 )
 
 func createDeployment(name, namespace, podTemplateName string, podLabel,
@@ -124,10 +125,10 @@ func TestGetDeploymentDetail(t *testing.T) {
 				NewReplicaSet: replicaset.ReplicaSet{
 					ObjectMeta: api.NewObjectMeta(newReplicaSet.ObjectMeta),
 					TypeMeta:   api.NewTypeMeta(api.ResourceKindReplicaSet),
-					Pods:       api.PodInfo{Warnings: []api.Event{}},
+					Pods:       common.PodInfo{Warnings: []common.Event{}},
 				},
-				EventList: api.EventList{
-					Events: []api.Event{},
+				EventList: common.EventList{
+					Events: []common.Event{},
 				},
 				HorizontalPodAutoscalerList: horizontalpodautoscaler.HorizontalPodAutoscalerList{HorizontalPodAutoscalers: []horizontalpodautoscaler.HorizontalPodAutoscaler{}},
 			},
