@@ -26,61 +26,54 @@ limitations under the License.
                      limits="$ctrl.allocatedResources.memoryLimitsFraction"></kd-node-graph>
       <!-- TODO(maciaszczykm): Translude data to show legend. -->
     </div>
+
+    <kd-resource-card-list selectable="false"
+                           with-statuses="false">
+      <kd-resource-card-header-columns>
+        <kd-resource-card-header-column size="large">
+          [[CPU requests (cores)|Label 'CPU requests (cores)' for the allocated resources table header on the node details page.]]
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column size="large">
+          [[CPU limits (cores)|Label 'CPU limits (cores)' for the allocated resources table header on the node details page.]]
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column size="large">
+          [[Memory requests (bytes)|Label 'Memory requests (bytes)' for the allocated resources table header on the node details page.]]
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column size="large">
+          [[Memory limits (bytes)|Label 'Memory limits (bytes)' for the allocated resources table header on the node details page.]]
+        </kd-resource-card-header-column>
+        <kd-resource-card-header-column size="large">
+          [[Pods|Label 'Pods' for the allocated resources table header on the node details page.]]
+        </kd-resource-card-header-column>
+      </kd-resource-card-header-columns>
+      <kd-resource-card omit-meta="true">
+        <kd-resource-card-columns>
+          <kd-resource-card-column>
+            <div>
+              {{$ctrl.allocatedResources.cpuRequests | kdCores}} / {{$ctrl.allocatedResources.cpuCapacity | kdCores}}
+            </div>
+          </kd-resource-card-column>
+          <kd-resource-card-column>
+            <div>
+              {{$ctrl.allocatedResources.cpuLimits | kdCores}} / {{$ctrl.allocatedResources.cpuCapacity | kdCores}}
+            </div>
+          </kd-resource-card-column>
+          <kd-resource-card-column>
+            <div>
+              {{$ctrl.allocatedResources.memoryRequests | kdMemory}} / {{$ctrl.allocatedResources.memoryCapacity | kdMemory}}
+            </div>
+          </kd-resource-card-column>
+          <kd-resource-card-column>
+            <div>
+              {{$ctrl.allocatedResources.memoryLimits | kdMemory}} / {{$ctrl.allocatedResources.memoryCapacity | kdMemory}}
+            </div>
+          </kd-resource-card-column>
+          <kd-resource-card-column>
+            <div>{{$ctrl.allocatedResources.allocatedPods}} / {{$ctrl.allocatedResources.podCapacity}}
+            </div>
+          </kd-resource-card-column>
+        </kd-resource-card-columns>
+      </kd-resource-card>
+    </kd-resource-card-list>
   </kd-content>
 </kd-content-card>
-
-
-
-
-
-<kd-resource-card-list selectable="false"
-                       with-statuses="false">
-  <kd-resource-card-list-header>
-    <kd-resource-card-list-title>
-      [[Allocated resources|Label 'Allocated resources' for the allocated resources section.]]
-    </kd-resource-card-list-title>
-  </kd-resource-card-list-header>
-  <kd-resource-card-header-columns>
-    <kd-resource-card-header-column size="large">
-      [[CPU requests (cores)|Label 'CPU requests (cores)' for the allocated resources table header on the node details page.]]
-    </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="large">
-      [[CPU limits (cores)|Label 'CPU limits (cores)' for the allocated resources table header on the node details page.]]
-    </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="large">
-      [[Memory requests (bytes)|Label 'Memory requests (bytes)' for the allocated resources table header on the node details page.]]
-    </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="large">
-      [[Memory limits (bytes)|Label 'Memory limits (bytes)' for the allocated resources table header on the node details page.]]
-    </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="large">
-      [[Pods|Label 'Pods' for the allocated resources table header on the node details page.]]
-    </kd-resource-card-header-column>
-  </kd-resource-card-header-columns>
-  <kd-resource-card omit-meta="true">
-    <kd-resource-card-columns>
-      <kd-resource-card-column>
-        <div>{{$ctrl.allocatedResources.cpuRequests | kdCores}} / {{$ctrl.allocatedResources.cpuCapacity | kdCores}}</div>
-      </kd-resource-card-column>
-
-      <kd-resource-card-column>
-        <div>{{$ctrl.allocatedResources.cpuLimits | kdCores}} / {{$ctrl.allocatedResources.cpuCapacity | kdCores}}</div>
-      </kd-resource-card-column>
-
-      <kd-resource-card-column>
-        <div>{{$ctrl.allocatedResources.memoryRequests | kdMemory}} / {{$ctrl.allocatedResources.memoryCapacity | kdMemory}}</div>
-      </kd-resource-card-column>
-
-      <kd-resource-card-column>
-        <div>{{$ctrl.allocatedResources.memoryLimits | kdMemory}} / {{$ctrl.allocatedResources.memoryCapacity | kdMemory}}</div>
-      </kd-resource-card-column>
-
-
-      <kd-resource-card-column>
-        <div>{{$ctrl.allocatedResources.allocatedPods}} / {{$ctrl.allocatedResources.podCapacity}}
-        </div>
-      </kd-resource-card-column>
-
-    </kd-resource-card-columns>
-  </kd-resource-card>
-</kd-resource-card-list>
