@@ -56,17 +56,6 @@ describe('DeployFromSettings controller', () => {
     });
   });
 
-  it('should return empty string when containerImage is undefined', () => {
-    // given
-    ctrl.containerImage = undefined;
-
-    // when
-    let result = ctrl.getContainerImageVersion_();
-
-    // then
-    expect(result).toEqual('');
-  });
-
   it('should select initial namespace', angular.mock.inject(($controller) => {
     ctrl = $controller(DeployFromSettingController, {
       namespaces: {namespaces: [{objectMeta: {name: 'foo'}}, {objectMeta: {name: 'bar'}}]},
@@ -84,65 +73,6 @@ describe('DeployFromSettings controller', () => {
 
     expect(ctrl.namespace).toBe('bar');
   }));
-
-  it('should return empty string when containerImage is empty', () => {
-    // given
-    ctrl.containerImage = '';
-
-    // when
-    let result = ctrl.getContainerImageVersion_();
-
-    // then
-    expect(result).toEqual('');
-  });
-
-  it('should return empty string when containerImage is not empty and does not contain `:`' +
-         ' delimiter',
-     () => {
-       // given
-       ctrl.containerImage = 'test';
-
-       // when
-       let result = ctrl.getContainerImageVersion_();
-
-       // then
-       expect(result).toEqual('');
-     });
-
-  it('should return part of the string after `:` delimiter', () => {
-    // given
-    ctrl.containerImage = 'test:1';
-
-    // when
-    let result = ctrl.getContainerImageVersion_();
-
-    // then
-    expect(result).toEqual('1');
-  });
-
-  it('should return part of the string after `:` delimiter', () => {
-    // given
-    ctrl.containerImage = 'private.registry:5000/test:1';
-
-    // when
-    let result = ctrl.getContainerImageVersion_();
-
-    // then
-    expect(result).toEqual('1');
-  });
-
-  it('should return empty string when containerImage is not empty and does not containe `:`' +
-         ' delimiter after `/` delimiter',
-     () => {
-       // given
-       ctrl.containerImage = 'private.registry:5000/test';
-
-       // when
-       let result = ctrl.getContainerImageVersion_();
-
-       // then
-       expect(result).toEqual('');
-     });
 
   it('should return empty array when labels array is empty', () => {
     // given
