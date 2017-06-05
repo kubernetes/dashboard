@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export class GraphController {
+export class AllocatedResourcesChartController {
   /**
    * @ngInject
    * @param {!angular.Scope} $scope
@@ -30,9 +30,6 @@ export class GraphController {
 
     /** {number} Inner graph percent. **/
     this.inner;
-
-    /** {string} Graph title. **/
-    this.title;
   }
 
   $onInit() {
@@ -113,18 +110,15 @@ export class GraphController {
 }
 
 /**
- * Definition object for the component that displays graph with CPU and Memory usage metrics.
+ * Definition object for the component that displays chart with allocated resources.
  *
  * @type {!angular.Component}
  */
-export const graphComponent = {
-  restrict: 'E',
-  transclude: true,
+export const allocatedResourcesChartComponent = {
   bindings: {
     'outer': '<',
     'inner': '<',
-    'title': '<',
   },
-  controller: GraphController,
-  templateUrl: 'node/detail/graph.html',
+  controller: AllocatedResourcesChartController,
+  templateUrl: 'node/detail/allocatedresourceschart.html',
 };

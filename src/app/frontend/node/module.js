@@ -19,7 +19,7 @@ import namespaceModule from 'common/namespace/module';
 import eventsModule from 'events/module';
 
 import {nodeAllocatedResourcesComponent} from './detail/allocatedresources_component';
-import {graphComponent} from './detail/graph';
+import {allocatedResourcesChartComponent} from './detail/allocatedresourceschart_component';
 import {nodeInfoComponent} from './detail/info_component';
 import {nodeEventsResource, nodePodsResource} from './detail/stateconfig';
 import {nodeCardComponent} from './list/card_component';
@@ -48,7 +48,7 @@ export default angular
     .component('kdNodeCard', nodeCardComponent)
     .component('kdNodeCardList', nodeCardListComponent)
     .component('kdNodeInfo', nodeInfoComponent)
-    .component('kdNodeGraph', graphComponent)
+    .component('kdAllocatedResourcesChart', allocatedResourcesChartComponent)
     .factory('kdNodeEventsResource', nodeEventsResource)
     .factory('kdNodeListResource', nodeListResource)
     .factory('kdNodePodsResource', nodePodsResource);

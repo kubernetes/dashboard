@@ -19,9 +19,9 @@ limitations under the License.
   <kd-content>
     <div class="kd-allocated-resources">
       <div class="kd-graph-container">
-        <kd-node-graph outer="$ctrl.allocatedResources.cpuRequestsFraction"
-                       inner="$ctrl.allocatedResources.cpuLimitsFraction">
-        </kd-node-graph>
+        <kd-allocated-resources-chart outer="$ctrl.allocatedResources.cpuRequestsFraction"
+                                      inner="$ctrl.allocatedResources.cpuLimitsFraction">
+        </kd-allocated-resources-chart>
         <div class="kd-graph-legend">
           <div class="kd-graph-legend-title">
             CPU allocation (cores)
@@ -50,9 +50,9 @@ limitations under the License.
         </div>
       </div>
       <div class="kd-graph-container">
-        <kd-node-graph outer="$ctrl.allocatedResources.memoryRequestsFraction"
-                       inner="$ctrl.allocatedResources.memoryLimitsFraction">
-        </kd-node-graph>
+        <kd-allocated-resources-chart outer="$ctrl.allocatedResources.memoryRequestsFraction"
+                                      inner="$ctrl.allocatedResources.memoryLimitsFraction">
+        </kd-allocated-resources-chart>
         <div class="kd-graph-legend">
           <div class="kd-graph-legend-title">
             Memory allocation (bytes)
@@ -81,8 +81,8 @@ limitations under the License.
         </div>
       </div>
       <div class="kd-graph-container">
-        <kd-node-graph outer="$ctrl.allocatedResources.podFraction">
-        </kd-node-graph>
+        <kd-allocated-resources-chart outer="$ctrl.allocatedResources.podFraction">
+        </kd-allocated-resources-chart>
         <div class="kd-graph-legend">
           <div class="kd-graph-legend-title">
             Pods allocation
