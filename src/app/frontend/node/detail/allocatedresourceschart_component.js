@@ -33,16 +33,6 @@ export class AllocatedResourcesChartController {
   }
 
   $onInit() {
-    this.outerData = [
-      {value: this.outer},
-      {value: 100 - this.outer},
-    ];
-
-    this.innerData = [
-      {value: this.inner},
-      {value: 100 - this.inner},
-    ];
-
     this.generateGraph_();
   }
 
@@ -99,11 +89,23 @@ export class AllocatedResourcesChartController {
       let svg = d3.select(this.element_[0]).append('svg');
 
       if (this.outer !== undefined) {
-        this.initPieChart_(svg, this.outerData, '#00c752', 0, 0.61);
+        this.initPieChart_(
+            svg,
+            [
+              {value: this.outer},
+              {value: 100 - this.outer},
+            ],
+            '#00c752', 0, 0.61);
       }
 
       if (this.inner !== undefined) {
-        this.initPieChart_(svg, this.innerData, '#326de6', 36, 0.55);
+        this.initPieChart_(
+            svg,
+            [
+              {value: this.inner},
+              {value: 100 - this.inner},
+            ],
+            '#326de6', 36, 0.55);
       }
     });
   }
