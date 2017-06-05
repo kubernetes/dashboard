@@ -25,22 +25,25 @@ export class GraphController {
     /** @private {!angular.JQLite} */
     this.element_ = $element;
 
-    /** {number} **/
-    this.requests;
+    /** {number} Outer graph percent. **/
+    this.outer;
 
-    /** {number} **/
-    this.limits;
+    /** {number} Inner graph percent. **/
+    this.inner;
+
+    /** {string} Graph title. **/
+    this.title;
   }
 
   $onInit() {
-    this.requestsData = [
-      {value: this.requests},
-      {value: 100 - this.requests},
+    this.outerData = [
+      {value: this.outer},
+      {value: 100 - this.outer},
     ];
 
-    this.limitsData = [
-      {value: this.limits},
-      {value: 100 - this.limits},
+    this.innerData = [
+      {value: this.inner},
+      {value: 100 - this.inner},
     ];
 
     this.generateGraph_();
@@ -96,10 +99,15 @@ export class GraphController {
    */
   generateGraph_() {
     nv.addGraph(() => {
-      let svg = d3.select(this.element_[0]).append('svg');
+        let svg = d3.select(this.element_[0]).append('svg');
 
-      this.initPieChart_(svg, this.requestsData, '#00c752', 0, 0.61);
-      this.initPieChart_(svg, this.limitsData, '#326de6', 36, 0.55);
+        if (this.outer !== undefined) {
+            this.initPieChart_(svg, this.outerData, '#00c752', 0, 0.61);
+        }
+
+        if (this.inner !== undefined) {
+            this.initPieChart_(svg, this.innerData, '#326de6', 36, 0.55);
+        }
     });
   }
 }
@@ -110,9 +118,12 @@ export class GraphController {
  * @type {!angular.Component}
  */
 export const graphComponent = {
+  restrict: 'E',
+    transclude: true,
   bindings: {
-    'requests': '<',
-    'limits': '<',
+    'outer': '<',
+    'inner': '<',
+    'title': '<',
   },
   controller: GraphController,
   templateUrl: 'node/detail/graph.html',
