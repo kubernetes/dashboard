@@ -64,7 +64,7 @@ func main() {
 	}
 
 	clientManager := client.NewClientManager(*argKubeConfigFile, *argApiserverHost)
-	apiserverClient, err := clientManager.RawClient()
+	apiserverClient, err := clientManager.Client(nil)
 	if err != nil {
 		handleFatalInitError(err)
 	}

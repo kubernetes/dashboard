@@ -19,6 +19,12 @@ import (
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
+// CsrfToken is used to secure requests from CSRF attacks
+type CsrfToken struct {
+	// Token generated on request for validation
+	Token string `json:"token"`
+}
+
 // ObjectMeta is metadata about an instance of a resource.
 type ObjectMeta struct {
 	// Name is unique within a namespace. Name is primarily intended for creation

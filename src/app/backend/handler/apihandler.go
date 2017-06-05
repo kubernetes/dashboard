@@ -21,6 +21,7 @@ import (
 	"strings"
 
 	restful "github.com/emicklei/go-restful"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/cluster"
@@ -94,7 +95,7 @@ func CreateHTTPAPIHandler(heapsterClient heapster.HeapsterClient, manager client
 	apiV1Ws.Route(
 		apiV1Ws.GET("csrftoken/{action}").
 			To(apiHandler.handleGetCsrfToken).
-			Writes(client.CsrfToken{}))
+			Writes(api.CsrfToken{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.POST("/appdeployment").
@@ -570,7 +571,7 @@ func (apiHandler *APIHandler) handleGetRbacRoleBindingList(request *restful.Requ
 func (apiHandler *APIHandler) handleGetCsrfToken(request *restful.Request, response *restful.Response) {
 	action := request.PathParameter("action")
 	token := xsrftoken.Generate(apiHandler.manager.CSRFKey(), "none", action)
-	response.WriteHeaderAndEntity(http.StatusOK, client.CsrfToken{Token: token})
+	response.WriteHeaderAndEntity(http.StatusOK, api.CsrfToken{Token: token})
 }
 
 func (apiHandler *APIHandler) handleGetStatefulSetList(request *restful.Request, response *restful.Response) {

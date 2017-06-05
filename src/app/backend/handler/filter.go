@@ -15,6 +15,7 @@ import (
 	utilnet "k8s.io/apimachinery/pkg/util/net"
 )
 
+// InstallFilters installs defined filter for given web service
 func InstallFilters(ws *restful.WebService, manager client.ClientManager) {
 	ws.Filter(requestAndResponseLogger)
 	ws.Filter(metricsFilter)
