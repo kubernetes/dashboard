@@ -14,69 +14,95 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-resource-card-list selectable="false"
-                       with-statuses="false">
-  <kd-resource-card-list-header>
-    <kd-resource-card-list-title>
-      [[Allocated resources|Label 'Allocated resources' for the allocated resources section.]]
-    </kd-resource-card-list-title>
-  </kd-resource-card-list-header>
-  <kd-resource-card-header-columns>
-    <kd-resource-card-header-column size="large">
-      [[CPU requests (cores)|Label 'CPU requests (cores)' for the allocated resources table header on the node details page.]]
-    </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small">%</kd-resource-card-header-column>
-    <kd-resource-card-header-column size="large">
-      [[CPU limits (cores)|Label 'CPU limits (cores)' for the allocated resources table header on the node details page.]]
-    </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small">%</kd-resource-card-header-column>
-    <kd-resource-card-header-column size="large">
-      [[Memory requests (bytes)|Label 'Memory requests (bytes)' for the allocated resources table header on the node details page.]]
-    </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small">%</kd-resource-card-header-column>
-    <kd-resource-card-header-column size="large">
-      [[Memory limits (bytes)|Label 'Memory limits (bytes)' for the allocated resources table header on the node details page.]]
-    </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small">%</kd-resource-card-header-column>
-    <kd-resource-card-header-column size="large">
-      [[Pods|Label 'Pods' for the allocated resources table header on the node details page.]]
-    </kd-resource-card-header-column>
-    <kd-resource-card-header-column size="small">%</kd-resource-card-header-column>
-  </kd-resource-card-header-columns>
-  <kd-resource-card omit-meta="true">
-    <kd-resource-card-columns>
-      <kd-resource-card-column>
-        <div>{{$ctrl.allocatedResources.cpuRequests | kdCores}} / {{$ctrl.allocatedResources.cpuCapacity | kdCores}}</div>
-      </kd-resource-card-column>
-      <kd-resource-card-column>
-        <div>{{$ctrl.allocatedResources.cpuRequestsFraction | number: 2}}</div>
-      </kd-resource-card-column>
-      <kd-resource-card-column>
-        <div>{{$ctrl.allocatedResources.cpuLimits | kdCores}} / {{$ctrl.allocatedResources.cpuCapacity | kdCores}}</div>
-      </kd-resource-card-column>
-      <kd-resource-card-column>
-        <div>{{$ctrl.allocatedResources.cpuLimitsFraction | number: 2}}</div>
-      </kd-resource-card-column>
-      <kd-resource-card-column>
-        <div>{{$ctrl.allocatedResources.memoryRequests | kdMemory}} / {{$ctrl.allocatedResources.memoryCapacity | kdMemory}}</div>
-      </kd-resource-card-column>
-      <kd-resource-card-column>
-        <div>{{$ctrl.allocatedResources.memoryRequestsFraction | number: 2}}</div>
-      </kd-resource-card-column>
-      <kd-resource-card-column>
-        <div>{{$ctrl.allocatedResources.memoryLimits | kdMemory}} / {{$ctrl.allocatedResources.memoryCapacity | kdMemory}}</div>
-      </kd-resource-card-column>
-      <kd-resource-card-column>
-        <div>{{$ctrl.allocatedResources.memoryLimitsFraction | number: 2}}</div>
-      </kd-resource-card-column>
-
-      <kd-resource-card-column>
-        <div>{{$ctrl.allocatedResources.allocatedPods}} / {{$ctrl.allocatedResources.podCapacity}}
+<kd-content-card>
+  <kd-title>[[Allocated resources|Label 'Allocated resources' for the allocated resources section.]]</kd-title>
+  <kd-content>
+    <div class="kd-allocated-resources">
+      <div class="kd-graph-container">
+        <kd-allocated-resources-chart outer="$ctrl.allocatedResources.cpuRequestsFraction"
+                                      inner="$ctrl.allocatedResources.cpuLimitsFraction">
+        </kd-allocated-resources-chart>
+        <div class="kd-graph-legend">
+          <div class="kd-graph-legend-title">
+            CPU allocation (cores)
+          </div>
+          <div class="kd-graph-legend-entry">
+            <md-icon class="kd-graph-green">stop</md-icon>
+            [[Requests|Label 'Requests' for the allocated resources graphs legend.]]
+            <span class="kd-graph-legend-value">
+              {{$ctrl.allocatedResources.cpuRequests | kdCores}}
+            </span>
+          </div>
+          <div class="kd-graph-legend-entry">
+            <md-icon class="kd-graph-blue">stop</md-icon>
+            [[Limits|Label 'Limits' for the allocated resources graphs legend.]]
+            <span class="kd-graph-legend-value">
+              {{$ctrl.allocatedResources.cpuLimits | kdCores}}
+            </span>
+          </div>
+          <div class="kd-graph-legend-entry">
+            <div class="kd-graph-legend-placeholder"></div>
+            [[Capacity|Label 'Capacity' for the allocated resources graphs legend.]]
+            <span class="kd-graph-legend-value">
+              {{$ctrl.allocatedResources.cpuCapacity | kdCores}}
+            </span>
+          </div>
         </div>
-      </kd-resource-card-column>
-      <kd-resource-card-column>
-        <div>{{$ctrl.allocatedResources.allocatedPods / $ctrl.allocatedResources.podCapacity * 100 | number : 2}}</div>
-      </kd-resource-card-column>
-    </kd-resource-card-columns>
-  </kd-resource-card>
-</kd-resource-card-list>
+      </div>
+      <div class="kd-graph-container">
+        <kd-allocated-resources-chart outer="$ctrl.allocatedResources.memoryRequestsFraction"
+                                      inner="$ctrl.allocatedResources.memoryLimitsFraction">
+        </kd-allocated-resources-chart>
+        <div class="kd-graph-legend">
+          <div class="kd-graph-legend-title">
+            Memory allocation (bytes)
+          </div>
+          <div class="kd-graph-legend-entry">
+            <md-icon class="kd-graph-green">stop</md-icon>
+            [[Requests|Label 'Requests' for the allocated resources graphs legend.]]
+            <span class="kd-graph-legend-value">
+            {{$ctrl.allocatedResources.memoryRequests | kdMemory}}
+            </span>
+          </div>
+          <div class="kd-graph-legend-entry">
+            <md-icon class="kd-graph-blue">stop</md-icon>
+            [[Limits|Label 'Limits' for the allocated resources graphs legend.]]
+            <span class="kd-graph-legend-value">
+            {{$ctrl.allocatedResources.memoryLimits | kdMemory}}
+            </span>
+          </div>
+          <div class="kd-graph-legend-entry">
+            <div class="kd-graph-legend-placeholder"></div>
+            [[Capacity|Label 'Capacity' for the allocated resources graphs legend.]]
+            <span class="kd-graph-legend-value">
+            {{$ctrl.allocatedResources.memoryCapacity | kdMemory}}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="kd-graph-container">
+        <kd-allocated-resources-chart outer="$ctrl.allocatedResources.podFraction">
+        </kd-allocated-resources-chart>
+        <div class="kd-graph-legend">
+          <div class="kd-graph-legend-title">
+            Pods allocation
+          </div>
+          <div class="kd-graph-legend-entry">
+            <md-icon class="kd-graph-green">stop</md-icon>
+            [[Allocation|Label 'Allocation' for the allocated resources graphs legend.]]
+            <span class="kd-graph-legend-value">
+            {{$ctrl.allocatedResources.allocatedPods}}
+            </span>
+          </div>
+          <div class="kd-graph-legend-entry">
+            <div class="kd-graph-legend-placeholder"></div>
+            [[Capacity|Label 'Capacity' for the allocated resources graphs legend.]]
+            <span class="kd-graph-legend-value">
+            {{$ctrl.allocatedResources.podCapacity}}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </kd-content>
+</kd-content-card>
