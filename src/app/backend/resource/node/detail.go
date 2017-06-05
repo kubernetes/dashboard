@@ -71,6 +71,9 @@ type NodeAllocatedResources struct {
 
 	// PodCapacity is maximum number of pods, that can be allocated on the node.
 	PodCapacity int64 `json:"podCapacity"`
+
+	// PodFraction is a fraction of pods, that can be allocated on given node.
+	PodFraction float64 `json:"podFraction"`
 }
 
 // NodeDetail is a presentation layer view of Kubernetes Node resource. This means it is Node plus
@@ -195,6 +198,12 @@ func getNodeAllocatedResources(node v1.Node, podList *v1.PodList) (NodeAllocated
 		memoryLimitsFraction = float64(memoryLimits.MilliValue()) / capacity * 100
 	}
 
+	var podFraction float64 = 0
+	var podCapacity int64 = node.Status.Capacity.Pods().Value()
+	if podCapacity > 0 {
+		podFraction = float64(len(podList.Items)) / float64(podCapacity) * 100
+	}
+
 	return NodeAllocatedResources{
 		CPURequests:            cpuRequests.MilliValue(),
 		CPURequestsFraction:    cpuRequestsFraction,
@@ -207,7 +216,8 @@ func getNodeAllocatedResources(node v1.Node, podList *v1.PodList) (NodeAllocated
 		MemoryLimitsFraction:   memoryLimitsFraction,
 		MemoryCapacity:         node.Status.Capacity.Memory().Value(),
 		AllocatedPods:          len(podList.Items),
-		PodCapacity:            node.Status.Capacity.Pods().Value(),
+		PodCapacity:            podCapacity,
+		PodFraction:            podFraction,
 	}, nil
 }
 

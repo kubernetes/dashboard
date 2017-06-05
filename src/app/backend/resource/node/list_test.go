@@ -60,6 +60,7 @@ func TestGetNodeList(t *testing.T) {
 						MemoryCapacity:         0,
 						AllocatedPods:          0,
 						PodCapacity:            0,
+						PodFraction:            0,
 					},
 				},
 				},

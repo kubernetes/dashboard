@@ -1142,7 +1142,8 @@ backendApi.NodeInfo;
  *   memoryLimitsFraction: number,
  *   memoryCapacity: number,
  *   allocatedPods: number,
- *   podCapacity: number
+ *   podCapacity: number,
+ *   podFraction: number
  * }}
  */
 backendApi.NodeAllocatedResources;

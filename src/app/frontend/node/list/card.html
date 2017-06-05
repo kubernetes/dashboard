@@ -50,25 +50,25 @@ limitations under the License.
       <div ng-if="::$ctrl.node.allocatedResources">
         {{::$ctrl.node.allocatedResources.cpuRequests | kdCores}} ({{$ctrl.node.allocatedResources.cpuRequestsFraction | number: 2}}%)
       </div>
-      <div ng-if="!::$ctrl.node.allocatedResources">-</div>
+      <div ng-if="::!$ctrl.node.allocatedResources">-</div>
     </kd-resource-card-column>
     <kd-resource-card-column>
       <div ng-if="::$ctrl.node.allocatedResources">
         {{::$ctrl.node.allocatedResources.cpuLimits | kdCores}} ({{$ctrl.node.allocatedResources.cpuLimitsFraction | number: 2}}%)
       </div>
-      <div ng-if="!::$ctrl.node.allocatedResources">-</div>
+      <div ng-if="::!$ctrl.node.allocatedResources">-</div>
     </kd-resource-card-column>
     <kd-resource-card-column>
       <div ng-if="::$ctrl.node.allocatedResources">
         {{::$ctrl.node.allocatedResources.memoryRequests | kdMemory}} ({{$ctrl.node.allocatedResources.memoryRequestsFraction | number: 2}}%)
       </div>
-      <div ng-if="!::$ctrl.node.allocatedResources">-</div>
+      <div ng-if="::!$ctrl.node.allocatedResources">-</div>
     </kd-resource-card-column>
     <kd-resource-card-column>
       <div ng-if="::$ctrl.node.allocatedResources">
         {{::$ctrl.node.allocatedResources.memoryLimits | kdMemory}} ({{$ctrl.node.allocatedResources.memoryLimitsFraction | number: 2}}%)
       </div>
-      <div ng-if="!::$ctrl.node.allocatedResources">-</div>
+      <div ng-if="::!$ctrl.node.allocatedResources">-</div>
     </kd-resource-card-column>
     <kd-resource-card-column>
       {{::$ctrl.node.objectMeta.creationTimestamp | relativeTime}}
