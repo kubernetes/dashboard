@@ -196,6 +196,12 @@ func getNodeAllocatedResources(node api.Node, podList *api.PodList) (NodeAllocat
 		memoryLimitsFraction = float64(memoryLimits.MilliValue()) / capacity * 100
 	}
 
+	var podFraction float64 = 0
+	var podCapacity int64 = node.Status.Capacity.Pods().Value()
+	if podCapacity > 0 {
+		podFraction = float64(len(podList.Items)) / float64(podCapacity) * 100
+	}
+
 	return NodeAllocatedResources{
 		CPURequests:            cpuRequests.MilliValue(),
 		CPURequestsFraction:    cpuRequestsFraction,
@@ -208,8 +214,8 @@ func getNodeAllocatedResources(node api.Node, podList *api.PodList) (NodeAllocat
 		MemoryLimitsFraction:   memoryLimitsFraction,
 		MemoryCapacity:         node.Status.Capacity.Memory().Value(),
 		AllocatedPods:          len(podList.Items),
-		PodCapacity:            node.Status.Capacity.Pods().Value(),
-		PodFraction:            float64(len(podList.Items)) / float64(node.Status.Capacity.Pods().Value()) * 100,
+		PodCapacity:            podCapacity,
+		PodFraction:            podFraction,
 	}, nil
 }
 
