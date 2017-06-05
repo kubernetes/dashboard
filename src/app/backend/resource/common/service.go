@@ -14,17 +14,20 @@
 
 package common
 
-import api "k8s.io/client-go/pkg/api/v1"
+import (
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"k8s.io/client-go/pkg/api/v1"
+)
 
 // FilterNamespacedServicesBySelector returns services targeted by given resource selector in
 // given namespace.
-func FilterNamespacedServicesBySelector(services []api.Service, namespace string,
-	resourceSelector map[string]string) []api.Service {
+func FilterNamespacedServicesBySelector(services []v1.Service, namespace string,
+	resourceSelector map[string]string) []v1.Service {
 
-	var matchingServices []api.Service
+	var matchingServices []v1.Service
 	for _, service := range services {
 		if service.ObjectMeta.Namespace == namespace &&
-			IsSelectorMatching(service.Spec.Selector, resourceSelector) {
+			api.IsSelectorMatching(service.Spec.Selector, resourceSelector) {
 			matchingServices = append(matchingServices, service)
 		}
 	}

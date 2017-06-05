@@ -18,34 +18,34 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 func TestGetNodeList(t *testing.T) {
 	cases := []struct {
-		node     *api.Node
+		node     *v1.Node
 		expected *NodeList
 	}{
 		{
-			&api.Node{
+			&v1.Node{
 				ObjectMeta: metaV1.ObjectMeta{Name: "test-node"},
-				Spec: api.NodeSpec{
+				Spec: v1.NodeSpec{
 					Unschedulable: true,
 				},
 			},
 			&NodeList{
-				ListMeta: common.ListMeta{
+				ListMeta: api.ListMeta{
 					TotalItems: 1,
 				},
 				CumulativeMetrics: make([]metric.Metric, 0),
 				Nodes: []Node{{
-					ObjectMeta: common.ObjectMeta{Name: "test-node"},
-					TypeMeta:   common.TypeMeta{Kind: common.ResourceKindNode},
+					ObjectMeta: api.ObjectMeta{Name: "test-node"},
+					TypeMeta:   api.TypeMeta{Kind: api.ResourceKindNode},
 					Ready:      "Unknown",
 					AllocatedResources: NodeAllocatedResources{
 						CPURequests:            0,

@@ -17,15 +17,16 @@ package persistentvolume
 import (
 	"log"
 
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	client "k8s.io/client-go/kubernetes"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 // PersistentVolumeList contains a list of Persistent Volumes in the cluster.
 type PersistentVolumeList struct {
-	ListMeta common.ListMeta `json:"listMeta"`
+	ListMeta api.ListMeta `json:"listMeta"`
 
 	// Unordered list of Persistent Volumes
 	Items []PersistentVolume `json:"items"`
@@ -33,14 +34,14 @@ type PersistentVolumeList struct {
 
 // PersistentVolume provides the simplified presentation layer view of Kubernetes Persistent Volume resource.
 type PersistentVolume struct {
-	ObjectMeta common.ObjectMeta `json:"objectMeta"`
-	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 
-	Capacity    api.ResourceList                 `json:"capacity"`
-	AccessModes []api.PersistentVolumeAccessMode `json:"accessModes"`
-	Status      api.PersistentVolumePhase        `json:"status"`
-	Claim       string                           `json:"claim"`
-	Reason      string                           `json:"reason"`
+	Capacity    v1.ResourceList                 `json:"capacity"`
+	AccessModes []v1.PersistentVolumeAccessMode `json:"accessModes"`
+	Status      v1.PersistentVolumePhase        `json:"status"`
+	Claim       string                          `json:"claim"`
+	Reason      string                          `json:"reason"`
 	// No additional info in the list object.
 }
 
@@ -69,21 +70,21 @@ func GetPersistentVolumeListFromChannels(channels *common.ResourceChannels, dsQu
 	return result, nil
 }
 
-func getPersistentVolumeList(persistentVolumes []api.PersistentVolume, dsQuery *dataselect.DataSelectQuery) *PersistentVolumeList {
+func getPersistentVolumeList(persistentVolumes []v1.PersistentVolume, dsQuery *dataselect.DataSelectQuery) *PersistentVolumeList {
 	result := &PersistentVolumeList{
 		Items:    make([]PersistentVolume, 0),
-		ListMeta: common.ListMeta{TotalItems: len(persistentVolumes)},
+		ListMeta: api.ListMeta{TotalItems: len(persistentVolumes)},
 	}
 
 	pvCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(persistentVolumes), dsQuery)
 	persistentVolumes = fromCells(pvCells)
-	result.ListMeta = common.ListMeta{TotalItems: filteredTotal}
+	result.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, item := range persistentVolumes {
 		result.Items = append(result.Items,
 			PersistentVolume{
-				ObjectMeta:  common.NewObjectMeta(item.ObjectMeta),
-				TypeMeta:    common.NewTypeMeta(common.ResourceKindPersistentVolume),
+				ObjectMeta:  api.NewObjectMeta(item.ObjectMeta),
+				TypeMeta:    api.NewTypeMeta(api.ResourceKindPersistentVolume),
 				Capacity:    item.Spec.Capacity,
 				AccessModes: item.Spec.AccessModes,
 				Status:      item.Status.Phase,

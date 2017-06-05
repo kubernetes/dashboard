@@ -17,6 +17,7 @@ package rbacroles
 import (
 	"log"
 
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	client "k8s.io/client-go/kubernetes"
@@ -25,7 +26,7 @@ import (
 
 // RbacRoleList contains a list of Roles and ClusterRoles in the cluster.
 type RbacRoleList struct {
-	ListMeta common.ListMeta `json:"listMeta"`
+	ListMeta api.ListMeta `json:"listMeta"`
 
 	// Unordered list of RbacRoles
 	Items []RbacRole `json:"items"`
@@ -34,8 +35,8 @@ type RbacRoleList struct {
 // RbacRole provides the simplified, combined presentation layer view of Kubernetes' RBAC Roles and ClusterRoles.
 // ClusterRoles will be referred to as Roles for the namespace "all namespaces".
 type RbacRole struct {
-	ObjectMeta common.ObjectMeta `json:"objectMeta"`
-	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 }
 
 // GetRbacRoleList returns a list of all RBAC Roles in the cluster.
@@ -72,29 +73,29 @@ func SimplifyRbacRoleLists(roles []rbac.Role, clusterRoles []rbac.ClusterRole, d
 
 	result := &RbacRoleList{
 		Items:    make([]RbacRole, 0),
-		ListMeta: common.ListMeta{TotalItems: len(roles) + len(clusterRoles)},
+		ListMeta: api.ListMeta{TotalItems: len(roles) + len(clusterRoles)},
 	}
 
 	for _, item := range roles {
 		items = append(items,
 			RbacRole{
-				ObjectMeta: common.NewObjectMeta(item.ObjectMeta),
-				TypeMeta:   common.NewTypeMeta(common.ResourceKindRbacRole),
+				ObjectMeta: api.NewObjectMeta(item.ObjectMeta),
+				TypeMeta:   api.NewTypeMeta(api.ResourceKindRbacRole),
 			})
 	}
 
 	for _, item := range clusterRoles {
 		items = append(items,
 			RbacRole{
-				ObjectMeta: common.NewObjectMeta(item.ObjectMeta),
-				TypeMeta:   common.NewTypeMeta(common.ResourceKindRbacClusterRole),
+				ObjectMeta: api.NewObjectMeta(item.ObjectMeta),
+				TypeMeta:   api.NewTypeMeta(api.ResourceKindRbacClusterRole),
 			})
 	}
 
 	roleCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(items), dsQuery)
 	items = fromCells(roleCells)
 
-	result.ListMeta = common.ListMeta{TotalItems: filteredTotal}
+	result.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 	result.Items = items
 
 	return result

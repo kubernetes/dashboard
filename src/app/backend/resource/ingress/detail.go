@@ -17,7 +17,7 @@ package ingress
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
@@ -26,8 +26,8 @@ import (
 // IngressDetail API resource provides mechanisms to inject containers with configuration data while keeping
 // containers agnostic of Kubernetes
 type IngressDetail struct {
-	ObjectMeta common.ObjectMeta `json:"objectMeta"`
-	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 
 	// TODO(bryk): replace this with UI specific fields.
 	// Spec is the desired state of the Ingress.
@@ -52,8 +52,8 @@ func GetIngressDetail(client client.Interface, namespace, name string) (*Ingress
 
 func getIngressDetail(rawIngress *extensions.Ingress) *IngressDetail {
 	return &IngressDetail{
-		ObjectMeta: common.NewObjectMeta(rawIngress.ObjectMeta),
-		TypeMeta:   common.NewTypeMeta(common.ResourceKindIngress),
+		ObjectMeta: api.NewObjectMeta(rawIngress.ObjectMeta),
+		TypeMeta:   api.NewTypeMeta(api.ResourceKindIngress),
 		Spec:       rawIngress.Spec,
 		Status:     rawIngress.Status,
 	}

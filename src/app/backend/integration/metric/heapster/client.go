@@ -12,11 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package client
+package heapster
 
 import (
 	"log"
 
+	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 )
@@ -73,7 +74,7 @@ func CreateHeapsterRESTClient(heapsterHost string, apiclient *kubernetes.Clients
 		return InClusterHeapsterClient{client: apiclient.Core().RESTClient()}, nil
 	}
 
-	cfg := &rest.Config{Host: heapsterHost, QPS: defaultQPS, Burst: defaultBurst}
+	cfg := &rest.Config{Host: heapsterHost, QPS: client.DefaultQPS, Burst: client.DefaultBurst}
 	restClient, err := kubernetes.NewForConfig(cfg)
 	if err != nil {
 		return nil, err

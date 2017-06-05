@@ -15,6 +15,7 @@
 package ingress
 
 import (
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -26,8 +27,8 @@ import (
 
 // Ingress - a single ingress returned to the frontend.
 type Ingress struct {
-	common.ObjectMeta `json:"objectMeta"`
-	common.TypeMeta   `json:"typeMeta"`
+	api.ObjectMeta `json:"objectMeta"`
+	api.TypeMeta   `json:"typeMeta"`
 
 	// External endpoints of this ingress.
 	Endpoints []common.Endpoint `json:"endpoints"`
@@ -35,7 +36,7 @@ type Ingress struct {
 
 // IngressList - response structure for a queried ingress list.
 type IngressList struct {
-	common.ListMeta `json:"listMeta"`
+	api.ListMeta `json:"listMeta"`
 
 	// Unordered list of Ingresss.
 	Items []Ingress `json:"items"`
@@ -68,8 +69,8 @@ func GetIngressListFromChannels(channels *common.ResourceChannels,
 // NewIngress - creates a new instance of Ingress struct based on K8s Ingress.
 func NewIngress(ingress *extensions.Ingress) *Ingress {
 	modelIngress := &Ingress{
-		ObjectMeta: common.NewObjectMeta(ingress.ObjectMeta),
-		TypeMeta:   common.NewTypeMeta(common.ResourceKindIngress),
+		ObjectMeta: api.NewObjectMeta(ingress.ObjectMeta),
+		TypeMeta:   api.NewTypeMeta(api.ResourceKindIngress),
 		Endpoints:  getEndpoints(ingress),
 	}
 
@@ -90,13 +91,13 @@ func getEndpoints(ingress *extensions.Ingress) []common.Endpoint {
 // NewIngressList - creates a new instance of IngressList struct based on K8s Ingress array.
 func NewIngressList(ingresses []extensions.Ingress, dsQuery *dataselect.DataSelectQuery) *IngressList {
 	newIngressList := &IngressList{
-		ListMeta: common.ListMeta{TotalItems: len(ingresses)},
+		ListMeta: api.ListMeta{TotalItems: len(ingresses)},
 		Items:    make([]Ingress, 0),
 	}
 
 	ingresCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(ingresses), dsQuery)
 	ingresses = fromCells(ingresCells)
-	newIngressList.ListMeta = common.ListMeta{TotalItems: filteredTotal}
+	newIngressList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, ingress := range ingresses {
 		newIngressList.Items = append(newIngressList.Items, *NewIngress(&ingress))

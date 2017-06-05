@@ -15,7 +15,7 @@
 package deployment
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
@@ -42,7 +42,7 @@ func (self DeploymentCell) GetProperty(name dataselect.PropertyName) dataselect.
 func (self DeploymentCell) GetResourceSelector() *metric.ResourceSelector {
 	return &metric.ResourceSelector{
 		Namespace:    self.ObjectMeta.Namespace,
-		ResourceType: common.ResourceKindDeployment,
+		ResourceType: api.ResourceKindDeployment,
 		ResourceName: self.ObjectMeta.Name,
 		Selector:     self.Spec.Selector.MatchLabels,
 		UID:          self.UID,

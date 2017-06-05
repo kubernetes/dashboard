@@ -17,7 +17,8 @@ package service
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
@@ -26,13 +27,13 @@ import (
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
 	k8sClient "k8s.io/client-go/kubernetes"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 // Service is a representation of a service.
 type ServiceDetail struct {
-	ObjectMeta common.ObjectMeta `json:"objectMeta"`
-	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 
 	// InternalEndpoint of all Kubernetes services that have the same label selector as connected Replication
 	// Controller. Endpoint is DNS name merged with ports.
@@ -46,7 +47,7 @@ type ServiceDetail struct {
 	Selector map[string]string `json:"selector"`
 
 	// Type determines how the service will be exposed.  Valid options: ClusterIP, NodePort, LoadBalancer
-	Type api.ServiceType `json:"type"`
+	Type v1.ServiceType `json:"type"`
 
 	// ClusterIP is usually assigned by the master. Valid values are None, empty string (""), or
 	// a valid IP address. None can be specified for headless services when proxying is not required
@@ -57,7 +58,7 @@ type ServiceDetail struct {
 }
 
 // GetServiceDetail gets service details.
-func GetServiceDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
+func GetServiceDetail(client k8sClient.Interface, heapsterClient heapster.HeapsterClient,
 	namespace, name string, dsQuery *dataselect.DataSelectQuery) (*ServiceDetail, error) {
 
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
@@ -80,7 +81,7 @@ func GetServiceDetail(client k8sClient.Interface, heapsterClient client.Heapster
 }
 
 // GetServicePods gets list of pods targeted by given label selector in given namespace.
-func GetServicePods(client k8sClient.Interface, heapsterClient client.HeapsterClient, namespace,
+func GetServicePods(client k8sClient.Interface, heapsterClient heapster.HeapsterClient, namespace,
 	name string, dsQuery *dataselect.DataSelectQuery) (*pod.PodList, error) {
 
 	service, err := client.CoreV1().Services(namespace).Get(name, metaV1.GetOptions{})
@@ -112,6 +113,6 @@ func GetServicePods(client k8sClient.Interface, heapsterClient client.HeapsterCl
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(apiPodList.Items, []api.Event{}, dsQuery, heapsterClient)
+	podList := pod.CreatePodList(apiPodList.Items, []v1.Event{}, dsQuery, heapsterClient)
 	return &podList, nil
 }

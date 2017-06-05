@@ -22,7 +22,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 // GetStatefulSetEvents gets events associated to pet set.
@@ -62,7 +62,7 @@ func GetStatefulSetEvents(client *client.Clientset, dsQuery *dataselect.DataSele
 
 // GetStatefulSetPodsEvents gets events associated to pods in pet set.
 func GetStatefulSetPodsEvents(client *client.Clientset, namespace, statefulSetName string) (
-	[]api.Event, error) {
+	[]v1.Event, error) {
 
 	statefulSet, err := client.AppsV1beta1().StatefulSets(namespace).Get(statefulSetName, metaV1.GetOptions{})
 

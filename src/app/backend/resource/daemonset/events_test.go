@@ -18,11 +18,12 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
@@ -30,21 +31,21 @@ func TestGetDaemonSetEvents(t *testing.T) {
 	ds := CreateDaemonSet("ds-1", "test-namespace", map[string]string{"app": "test"})
 	cases := []struct {
 		namespace, name string
-		eventList       *api.EventList
-		podList         *api.PodList
+		eventList       *v1.EventList
+		podList         *v1.PodList
 		daemonSet       *extensions.DaemonSet
 		expectedActions []string
 		expected        *common.EventList
 	}{
 		{
 			"test-namespace", "ds-1",
-			&api.EventList{Items: []api.Event{
+			&v1.EventList{Items: []v1.Event{
 				{Message: "test-message", ObjectMeta: metaV1.ObjectMeta{
 					Name:      "ev-1",
 					Namespace: "test-namespace",
 				}},
 			}},
-			&api.PodList{Items: []api.Pod{
+			&v1.PodList{Items: []v1.Pod{
 				{ObjectMeta: metaV1.ObjectMeta{
 					Name: "pod-1", Namespace: "test-namespace",
 					Labels: map[string]string{"app": "test-pod"},
@@ -53,12 +54,12 @@ func TestGetDaemonSetEvents(t *testing.T) {
 			&ds,
 			[]string{"list", "get", "list", "list"},
 			&common.EventList{
-				ListMeta: common.ListMeta{TotalItems: 1},
+				ListMeta: api.ListMeta{TotalItems: 1},
 				Events: []common.Event{{
-					TypeMeta:   common.TypeMeta{Kind: common.ResourceKindEvent},
-					ObjectMeta: common.ObjectMeta{Name: "ev-1", Namespace: "test-namespace"},
+					TypeMeta:   api.TypeMeta{Kind: api.ResourceKindEvent},
+					ObjectMeta: api.ObjectMeta{Name: "ev-1", Namespace: "test-namespace"},
 					Message:    "test-message",
-					Type:       api.EventTypeNormal,
+					Type:       v1.EventTypeNormal,
 				}}},
 		},
 	}
@@ -92,21 +93,21 @@ func TestGetDaemonSetPodsEvents(t *testing.T) {
 	ds := CreateDaemonSet("ds-1", "test-namespace", map[string]string{"app": "test"})
 	cases := []struct {
 		namespace, name string
-		eventList       *api.EventList
-		podList         *api.PodList
+		eventList       *v1.EventList
+		podList         *v1.PodList
 		daemonSet       *extensions.DaemonSet
 		expectedActions []string
-		expected        []api.Event
+		expected        []v1.Event
 	}{
 		{
 			"test-namespace", "ds-1",
-			&api.EventList{Items: []api.Event{
+			&v1.EventList{Items: []v1.Event{
 				{Message: "test-message", ObjectMeta: metaV1.ObjectMeta{
 					Name:      "ev-1",
 					Namespace: "test-namespace",
 				}},
 			}},
-			&api.PodList{Items: []api.Pod{
+			&v1.PodList{Items: []v1.Pod{
 				{ObjectMeta: metaV1.ObjectMeta{
 					Name: "pod-1", Namespace: "test-namespace",
 					Labels: map[string]string{"app": "test"},
@@ -114,7 +115,7 @@ func TestGetDaemonSetPodsEvents(t *testing.T) {
 			}},
 			&ds,
 			[]string{"get", "list", "list"},
-			[]api.Event{
+			[]v1.Event{
 				{Message: "test-message", ObjectMeta: metaV1.ObjectMeta{
 					Name:      "ev-1",
 					Namespace: "test-namespace",

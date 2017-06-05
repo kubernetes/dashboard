@@ -4,9 +4,9 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 func TestResourceSelector(t *testing.T) {
@@ -16,7 +16,7 @@ func TestResourceSelector(t *testing.T) {
 	resource2 := map[string]string{
 		"resource": "2",
 	}
-	var cachedPodList = []api.Pod{
+	var cachedPodList = []v1.Pod{
 		{
 			ObjectMeta: metaV1.ObjectMeta{
 				Name:      "1",
@@ -56,41 +56,41 @@ func TestResourceSelector(t *testing.T) {
 		Info                   string
 		ResourceSelector       ResourceSelector
 		ExpectedPath           string
-		ExpectedTargetResource common.ResourceKind
+		ExpectedTargetResource api.ResourceKind
 		ExpectedResources      []string
 	}{
 		{
 			"ResourceSelector for native resource - pod",
 			ResourceSelector{
 				Namespace:    "bar",
-				ResourceType: common.ResourceKindPod,
+				ResourceType: api.ResourceKindPod,
 				ResourceName: "foo",
 			},
 			`namespaces/bar/pod-list/`,
-			common.ResourceKindPod,
+			api.ResourceKindPod,
 			[]string{"foo"},
 		},
 		{
 			"ResourceSelector for native resource - node",
 			ResourceSelector{
 				Namespace:    "barn",
-				ResourceType: common.ResourceKindNode,
+				ResourceType: api.ResourceKindNode,
 				ResourceName: "foon",
 			},
 			`nodes/`,
-			common.ResourceKindNode,
+			api.ResourceKindNode,
 			[]string{"foon"},
 		},
 		{
 			"ResourceSelector for derived resource with old style selector",
 			ResourceSelector{
 				Namespace:    "a",
-				ResourceType: common.ResourceKindDeployment,
+				ResourceType: api.ResourceKindDeployment,
 				ResourceName: "baba",
 				Selector:     resource1,
 			},
 			`namespaces/a/pod-list/`,
-			common.ResourceKindPod,
+			api.ResourceKindPod,
 			[]string{"1", "3"},
 		},
 	}

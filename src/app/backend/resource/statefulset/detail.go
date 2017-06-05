@@ -17,7 +17,8 @@ package statefulset
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
@@ -30,8 +31,8 @@ import (
 // it is Pet Set plus additional augmented data we can get from other sources
 // (like services that target the same pods).
 type StatefulSetDetail struct {
-	ObjectMeta common.ObjectMeta `json:"objectMeta"`
-	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 
 	// Aggregate information about pods belonging to this Pet Set.
 	PodInfo common.PodInfo `json:"podInfo"`
@@ -47,7 +48,7 @@ type StatefulSetDetail struct {
 }
 
 // GetStatefulSetDetail gets pet set details.
-func GetStatefulSetDetail(client *k8sClient.Clientset, heapsterClient client.HeapsterClient,
+func GetStatefulSetDetail(client *k8sClient.Clientset, heapsterClient heapster.HeapsterClient,
 	namespace, name string) (*StatefulSetDetail, error) {
 
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
@@ -77,12 +78,12 @@ func GetStatefulSetDetail(client *k8sClient.Clientset, heapsterClient client.Hea
 	return &statefulSet, nil
 }
 
-func getStatefulSetDetail(statefulSet *apps.StatefulSet, heapsterClient client.HeapsterClient,
+func getStatefulSetDetail(statefulSet *apps.StatefulSet, heapsterClient heapster.HeapsterClient,
 	eventList common.EventList, podList pod.PodList, podInfo common.PodInfo) StatefulSetDetail {
 
 	return StatefulSetDetail{
-		ObjectMeta:      common.NewObjectMeta(statefulSet.ObjectMeta),
-		TypeMeta:        common.NewTypeMeta(common.ResourceKindStatefulSet),
+		ObjectMeta:      api.NewObjectMeta(statefulSet.ObjectMeta),
+		TypeMeta:        api.NewTypeMeta(api.ResourceKindStatefulSet),
 		ContainerImages: common.GetContainerImages(&statefulSet.Spec.Template.Spec),
 		PodInfo:         podInfo,
 		PodList:         podList,

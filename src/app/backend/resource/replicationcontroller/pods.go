@@ -17,7 +17,7 @@ package replicationcontroller
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
@@ -25,12 +25,13 @@ import (
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
 	k8sClient "k8s.io/client-go/kubernetes"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 // GetReplicationControllerPods return list of pods targeting replication controller associated
 // to given name.
-func GetReplicationControllerPods(client k8sClient.Interface, heapsterClient client.HeapsterClient,
+func GetReplicationControllerPods(client k8sClient.Interface,
+	heapsterClient heapster.HeapsterClient,
 	dsQuery *dataselect.DataSelectQuery, rcName, namespace string) (*pod.PodList, error) {
 	log.Printf("Getting replication controller %s pods in namespace %s", rcName, namespace)
 
@@ -39,14 +40,14 @@ func GetReplicationControllerPods(client k8sClient.Interface, heapsterClient cli
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(pods, []api.Event{}, dsQuery, heapsterClient)
+	podList := pod.CreatePodList(pods, []v1.Event{}, dsQuery, heapsterClient)
 	return &podList, nil
 }
 
 // getRawReplicationControllerPods returns array of api pods targeting replication controller
 // associated to given name.
 func getRawReplicationControllerPods(client k8sClient.Interface, rcName, namespace string) (
-	[]api.Pod, error) {
+	[]v1.Pod, error) {
 	rc, err := client.CoreV1().ReplicationControllers(namespace).Get(rcName,
 		metaV1.GetOptions{})
 	if err != nil {
@@ -69,7 +70,7 @@ func getRawReplicationControllerPods(client k8sClient.Interface, rcName, namespa
 // getReplicationControllerPodInfo returns simple info about pods(running, desired, failing, etc.)
 // related to given replication
 // controller.
-func getReplicationControllerPodInfo(client k8sClient.Interface, rc *api.ReplicationController,
+func getReplicationControllerPodInfo(client k8sClient.Interface, rc *v1.ReplicationController,
 	namespace string) (*common.PodInfo, error) {
 
 	labelSelector := labels.SelectorFromSet(rc.Spec.Selector)

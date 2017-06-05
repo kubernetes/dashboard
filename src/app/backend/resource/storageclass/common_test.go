@@ -18,7 +18,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	storage "k8s.io/client-go/pkg/apis/storage/v1beta1"
 )
@@ -31,14 +31,14 @@ func TestToStorageClass(t *testing.T) {
 		{
 			storage: &storage.StorageClass{},
 			expected: StorageClass{
-				TypeMeta: common.TypeMeta{Kind: common.ResourceKindStorageClass},
+				TypeMeta: api.TypeMeta{Kind: api.ResourceKindStorageClass},
 			},
 		}, {
 			storage: &storage.StorageClass{
 				ObjectMeta: metaV1.ObjectMeta{Name: "test-storage"}},
 			expected: StorageClass{
-				ObjectMeta: common.ObjectMeta{Name: "test-storage"},
-				TypeMeta:   common.TypeMeta{Kind: common.ResourceKindStorageClass},
+				ObjectMeta: api.ObjectMeta{Name: "test-storage"},
+				TypeMeta:   api.TypeMeta{Kind: api.ResourceKindStorageClass},
 			},
 		},
 	}

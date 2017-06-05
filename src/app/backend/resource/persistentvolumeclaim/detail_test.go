@@ -18,40 +18,39 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 func TestGetPersistentVolumeClaimDetail(t *testing.T) {
 
 	cases := []struct {
-		persistentVolumeClaims *api.PersistentVolumeClaim
+		persistentVolumeClaims *v1.PersistentVolumeClaim
 		expected               *PersistentVolumeClaimDetail
 	}{
 		{
-			&api.PersistentVolumeClaim{
+			&v1.PersistentVolumeClaim{
 				TypeMeta:   metaV1.TypeMeta{Kind: "persistentvolumeclaim"},
 				ObjectMeta: metaV1.ObjectMeta{Name: "foo", Namespace: "bar"},
-				Spec: api.PersistentVolumeClaimSpec{
-					AccessModes: []api.PersistentVolumeAccessMode{api.ReadWriteOnce},
-					Resources:   api.ResourceRequirements{},
+				Spec: v1.PersistentVolumeClaimSpec{
+					AccessModes: []v1.PersistentVolumeAccessMode{v1.ReadWriteOnce},
+					Resources:   v1.ResourceRequirements{},
 					VolumeName:  "volume",
 				},
-				Status: api.PersistentVolumeClaimStatus{
-					Phase:       api.PersistentVolumeClaimPhase(api.ClaimPending),
-					AccessModes: []api.PersistentVolumeAccessMode{api.ReadWriteOnce},
+				Status: v1.PersistentVolumeClaimStatus{
+					Phase:       v1.PersistentVolumeClaimPhase(v1.ClaimPending),
+					AccessModes: []v1.PersistentVolumeAccessMode{v1.ReadWriteOnce},
 					Capacity:    nil,
 				},
 			},
 			&PersistentVolumeClaimDetail{
-				ObjectMeta:  common.ObjectMeta{Name: "foo", Namespace: "bar"},
-				TypeMeta:    common.TypeMeta{Kind: "persistentvolumeclaim"},
-				Status:      api.ClaimPending,
+				ObjectMeta:  api.ObjectMeta{Name: "foo", Namespace: "bar"},
+				TypeMeta:    api.TypeMeta{Kind: "persistentvolumeclaim"},
+				Status:      v1.ClaimPending,
 				Volume:      "volume",
 				Capacity:    nil,
-				AccessModes: []api.PersistentVolumeAccessMode{api.ReadWriteOnce},
+				AccessModes: []v1.PersistentVolumeAccessMode{v1.ReadWriteOnce},
 			},
 		},
 	}

@@ -15,6 +15,7 @@
 package replicaset
 
 import (
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
@@ -25,8 +26,8 @@ import (
 // it is Replica Set plus additional augmented data we can get from other sources
 // (like services that target the same pods).
 type ReplicaSet struct {
-	ObjectMeta common.ObjectMeta `json:"objectMeta"`
-	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 
 	// Aggregate information about pods belonging to this Replica Set.
 	Pods common.PodInfo `json:"pods"`
@@ -38,8 +39,8 @@ type ReplicaSet struct {
 // ToReplicaSet converts replica set api object to replica set model object.
 func ToReplicaSet(replicaSet *extensions.ReplicaSet, podInfo *common.PodInfo) ReplicaSet {
 	return ReplicaSet{
-		ObjectMeta:      common.NewObjectMeta(replicaSet.ObjectMeta),
-		TypeMeta:        common.NewTypeMeta(common.ResourceKindReplicaSet),
+		ObjectMeta:      api.NewObjectMeta(replicaSet.ObjectMeta),
+		TypeMeta:        api.NewTypeMeta(api.ResourceKindReplicaSet),
 		ContainerImages: common.GetContainerImages(&replicaSet.Spec.Template.Spec),
 		Pods:            *podInfo,
 	}
@@ -66,7 +67,7 @@ func (self ReplicaSetCell) GetProperty(name dataselect.PropertyName) dataselect.
 func (self ReplicaSetCell) GetResourceSelector() *metric.ResourceSelector {
 	return &metric.ResourceSelector{
 		Namespace:    self.ObjectMeta.Namespace,
-		ResourceType: common.ResourceKindReplicaSet,
+		ResourceType: api.ResourceKindReplicaSet,
 		ResourceName: self.ObjectMeta.Name,
 		UID:          self.UID,
 	}

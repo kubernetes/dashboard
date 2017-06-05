@@ -17,7 +17,7 @@ package cluster
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
@@ -39,7 +39,7 @@ type Cluster struct {
 
 // GetCluster returns a list of all cluster resources in the cluster.
 func GetCluster(client *kubernetes.Clientset, dsQuery *dataselect.DataSelectQuery,
-	heapsterClient *client.HeapsterClient) (*Cluster, error) {
+	heapsterClient *heapster.HeapsterClient) (*Cluster, error) {
 	log.Print("Getting cluster category")
 	channels := &common.ResourceChannels{
 		NamespaceList:        common.GetNamespaceListChannel(client, 1),
@@ -56,7 +56,8 @@ func GetCluster(client *kubernetes.Clientset, dsQuery *dataselect.DataSelectQuer
 // GetClusterFromChannels returns a list of all cluster in the cluster, from the
 // channel sources.
 func GetClusterFromChannels(client *kubernetes.Clientset, channels *common.ResourceChannels,
-	dsQuery *dataselect.DataSelectQuery, heapsterClient *client.HeapsterClient) (*Cluster, error) {
+	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) (
+	*Cluster, error) {
 
 	nsChan := make(chan *namespace.NamespaceList)
 	nodeChan := make(chan *node.NodeList)

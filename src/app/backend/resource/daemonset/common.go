@@ -15,14 +15,14 @@
 package daemonset
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
 	client "k8s.io/client-go/kubernetes"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
@@ -30,7 +30,7 @@ import (
 // Services are matched by daemon sets' label selector. They are deleted if given
 // label selector is targeting only 1 daemon set.
 func GetServicesForDSDeletion(client client.Interface, labelSelector labels.Selector,
-	namespace string) ([]api.Service, error) {
+	namespace string) ([]v1.Service, error) {
 
 	daemonSet, err := client.Extensions().DaemonSets(namespace).List(metaV1.ListOptions{
 		LabelSelector: labelSelector.String(),
@@ -44,7 +44,7 @@ func GetServicesForDSDeletion(client client.Interface, labelSelector labels.Sele
 	// then we can delete services targeted by this label selector,
 	// otherwise we can not delete any services so just return empty list
 	if len(daemonSet.Items) != 1 {
-		return []api.Service{}, nil
+		return []v1.Service{}, nil
 	}
 
 	services, err := client.Core().Services(namespace).List(metaV1.ListOptions{
@@ -79,7 +79,7 @@ func (self DaemonSetCell) GetProperty(name dataselect.PropertyName) dataselect.C
 func (self DaemonSetCell) GetResourceSelector() *metric.ResourceSelector {
 	return &metric.ResourceSelector{
 		Namespace:    self.ObjectMeta.Namespace,
-		ResourceType: common.ResourceKindDaemonSet,
+		ResourceType: api.ResourceKindDaemonSet,
 		ResourceName: self.ObjectMeta.Name,
 		UID:          self.UID,
 	}

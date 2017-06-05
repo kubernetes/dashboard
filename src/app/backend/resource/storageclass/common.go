@@ -15,7 +15,7 @@
 package storageclass
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	storage "k8s.io/client-go/pkg/apis/storage/v1beta1"
 )
@@ -23,8 +23,8 @@ import (
 // ToStorageClass returns api storage class object based on kubernetes storage class object
 func ToStorageClass(storageClass *storage.StorageClass) StorageClass {
 	return StorageClass{
-		ObjectMeta:  common.NewObjectMeta(storageClass.ObjectMeta),
-		TypeMeta:    common.NewTypeMeta(common.ResourceKindStorageClass),
+		ObjectMeta:  api.NewObjectMeta(storageClass.ObjectMeta),
+		TypeMeta:    api.NewTypeMeta(api.ResourceKindStorageClass),
 		Provisioner: storageClass.Provisioner,
 		Parameters:  storageClass.Parameters,
 	}

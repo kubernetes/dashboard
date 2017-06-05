@@ -15,10 +15,11 @@
 package scaling
 
 import (
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	client "k8s.io/client-go/kubernetes"
 	"strconv"
 	"strings"
+
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	client "k8s.io/client-go/kubernetes"
 )
 
 // ReplicaCounts provide the desired and actual number of replicas.

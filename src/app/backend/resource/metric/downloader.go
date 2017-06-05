@@ -18,8 +18,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	client "github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	heapster "k8s.io/heapster/metrics/api/v1/types"
 )
 
@@ -105,7 +105,7 @@ type DataPoint struct {
 }
 
 // Label stores information about identity of resources described by this metric.
-type Label map[common.ResourceKind][]string
+type Label map[api.ResourceKind][]string
 
 // AddMetricLabel returns a combined Label of self and other resource. (new label describes both resources).
 func (self Label) AddMetricLabel(other Label) Label {
@@ -122,7 +122,8 @@ func (self Label) AddMetricLabel(other Label) Label {
 // the result as MetricPromises - one promise for each HeapsterSelector. If HeapsterSelector consists of many native resources
 // (eg. for example deployments can consist of hundreds of pods) then the sum for all its native resources is calculated.
 // HeapsterSelectors are compressed before download process so that the smallest number of heapster requests is used.
-func (self HeapsterSelectors) DownloadMetric(client client.HeapsterClient, metricName string) MetricPromises {
+func (self HeapsterSelectors) DownloadMetric(client client.HeapsterClient,
+	metricName string) MetricPromises {
 	// Downloads metric in the fastest possible way by first compressing HeapsterSelectors and later unpacking the result to separate boxes.
 	compressedSelectors, reverseMapping := self.compress()
 
@@ -208,7 +209,7 @@ func removeDuplicates(list []string) []string {
 // a mapping between indices from new compressed list to the list of children indices from original list.
 func (self HeapsterSelectors) compress() (HeapsterSelectors, map[string][]int) {
 	reverseMapping := map[string][]int{}
-	resourceTypeMap := map[string]common.ResourceKind{}
+	resourceTypeMap := map[string]api.ResourceKind{}
 	resourceMap := map[string][]string{}
 	labelMap := map[string]Label{}
 	for i, selector := range self {
@@ -241,18 +242,19 @@ func (self HeapsterSelectors) compress() (HeapsterSelectors, map[string][]int) {
 
 // NewHeapsterSelectorFromNativeResource returns new heapster selector for native resources specified in arguments.
 // returns error if requested resource is not native or is not supported.
-func NewHeapsterSelectorFromNativeResource(resourceType common.ResourceKind, namespace string, resourceNames []string) (HeapsterSelector, error) {
+func NewHeapsterSelectorFromNativeResource(resourceType api.ResourceKind, namespace string,
+	resourceNames []string) (HeapsterSelector, error) {
 	// Here we have 2 possibilities because this module allows downloading Nodes and Pods from heapster
-	if resourceType == common.ResourceKindPod {
+	if resourceType == api.ResourceKindPod {
 		return HeapsterSelector{
-			TargetResourceType: common.ResourceKindPod,
+			TargetResourceType: api.ResourceKindPod,
 			Path:               `namespaces/` + namespace + `/pod-list/`,
 			Resources:          resourceNames,
 			Label:              Label{resourceType: resourceNames},
 		}, nil
-	} else if resourceType == common.ResourceKindNode {
+	} else if resourceType == api.ResourceKindNode {
 		return HeapsterSelector{
-			TargetResourceType: common.ResourceKindNode,
+			TargetResourceType: api.ResourceKindNode,
 			Path:               `nodes/`,
 			Resources:          resourceNames,
 			Label:              Label{resourceType: resourceNames},
@@ -290,7 +292,7 @@ func aggregateMetricPromises(metricPromises MetricPromises, metricName string, a
 type HeapsterSelectors []HeapsterSelector
 
 type HeapsterSelector struct {
-	TargetResourceType common.ResourceKind
+	TargetResourceType api.ResourceKind
 	Path               string
 	Resources          []string
 	Label

@@ -18,7 +18,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
@@ -39,8 +39,8 @@ func TestGetThirdPartyResourceDetail(t *testing.T) {
 				},
 			},
 			&ThirdPartyResourceDetail{
-				TypeMeta:    common.TypeMeta{Kind: common.ResourceKindThirdPartyResource},
-				ObjectMeta:  common.ObjectMeta{Name: "foo"},
+				TypeMeta:    api.TypeMeta{Kind: api.ResourceKindThirdPartyResource},
+				ObjectMeta:  api.ObjectMeta{Name: "foo"},
 				Description: "test",
 				Versions: []extensions.APIVersion{
 					{

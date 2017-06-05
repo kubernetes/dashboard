@@ -18,14 +18,15 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 type FakeHeapsterClient struct {
@@ -38,30 +39,30 @@ func (FakeRequest) DoRaw() ([]byte, error) {
 	return nil, nil
 }
 
-func (c FakeHeapsterClient) Get(path string) client.RequestInterface {
+func (c FakeHeapsterClient) Get(path string) heapster.RequestInterface {
 	return FakeRequest{}
 }
 
 func TestGetServiceDetail(t *testing.T) {
 	cases := []struct {
-		service         *api.Service
+		service         *v1.Service
 		namespace, name string
 		expectedActions []string
 		expected        *ServiceDetail
 	}{
 		{
-			service: &api.Service{ObjectMeta: metaV1.ObjectMeta{
+			service: &v1.Service{ObjectMeta: metaV1.ObjectMeta{
 				Name: "svc-1", Namespace: "ns-1", Labels: map[string]string{},
 			}},
 			namespace: "ns-1", name: "svc-1",
 			expectedActions: []string{"get", "get"},
 			expected: &ServiceDetail{
-				ObjectMeta: common.ObjectMeta{
+				ObjectMeta: api.ObjectMeta{
 					Name:      "svc-1",
 					Namespace: "ns-1",
 					Labels:    map[string]string{},
 				},
-				TypeMeta:         common.TypeMeta{Kind: common.ResourceKindService},
+				TypeMeta:         api.TypeMeta{Kind: api.ResourceKindService},
 				InternalEndpoint: common.Endpoint{Host: "svc-1.ns-1"},
 				PodList: pod.PodList{
 					Pods:              []pod.Pod{},
@@ -70,24 +71,24 @@ func TestGetServiceDetail(t *testing.T) {
 			},
 		},
 		{
-			service: &api.Service{
+			service: &v1.Service{
 				ObjectMeta: metaV1.ObjectMeta{
 					Name:      "svc-2",
 					Namespace: "ns-2",
 				},
-				Spec: api.ServiceSpec{
+				Spec: v1.ServiceSpec{
 					Selector: map[string]string{"app": "app2"},
 				},
 			},
 			namespace: "ns-2", name: "svc-2",
 			expectedActions: []string{"get", "get", "list"},
 			expected: &ServiceDetail{
-				ObjectMeta: common.ObjectMeta{
+				ObjectMeta: api.ObjectMeta{
 					Name:      "svc-2",
 					Namespace: "ns-2",
 				},
 				Selector:         map[string]string{"app": "app2"},
-				TypeMeta:         common.TypeMeta{Kind: common.ResourceKindService},
+				TypeMeta:         api.TypeMeta{Kind: api.ResourceKindService},
 				InternalEndpoint: common.Endpoint{Host: "svc-2.ns-2"},
 				PodList: pod.PodList{
 					Pods:              []pod.Pod{},
