@@ -81,6 +81,7 @@ func TestGetNodeDetail(t *testing.T) {
 					MemoryCapacity:         0,
 					AllocatedPods:          0,
 					PodCapacity:            0,
+					PodFraction:            0,
 				},
 				Metrics: make([]metric.Metric, 0),
 			},
