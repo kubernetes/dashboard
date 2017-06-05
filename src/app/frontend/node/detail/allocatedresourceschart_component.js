@@ -25,10 +25,17 @@ export class AllocatedResourcesChartController {
     /** @private {!angular.JQLite} */
     this.element_ = $element;
 
-    /** {number} Outer graph percent. **/
+
+    /**
+     * Outer graph percent. Initialized from the scope.
+     * @export {number}
+     */
     this.outer;
 
-    /** {number} Inner graph percent. **/
+    /**
+     * Inner graph percent. Initialized from the scope.
+     * @export {number}
+     */
     this.inner;
   }
 
