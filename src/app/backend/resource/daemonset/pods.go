@@ -17,7 +17,7 @@ package daemonset
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
@@ -28,7 +28,7 @@ import (
 )
 
 // GetDaemonSetPods return list of pods targeting daemon set.
-func GetDaemonSetPods(client k8sClient.Interface, heapsterClient client.HeapsterClient,
+func GetDaemonSetPods(client k8sClient.Interface, heapsterClient heapster.HeapsterClient,
 	dsQuery *dataselect.DataSelectQuery, daemonSetName, namespace string) (*pod.PodList, error) {
 	log.Printf("Getting replication controller %s pods in namespace %s", daemonSetName, namespace)
 

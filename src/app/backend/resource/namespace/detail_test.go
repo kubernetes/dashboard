@@ -18,27 +18,28 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 func TestGetNamespaceDetail(t *testing.T) {
 	cases := []struct {
-		namespace api.Namespace
+		namespace v1.Namespace
 		expected  *NamespaceDetail
 	}{
 		{
-			api.Namespace{
+			v1.Namespace{
 				ObjectMeta: metaV1.ObjectMeta{Name: "foo"},
-				Status: api.NamespaceStatus{
-					Phase: api.NamespaceActive,
+				Status: v1.NamespaceStatus{
+					Phase: v1.NamespaceActive,
 				},
 			},
 			&NamespaceDetail{
-				TypeMeta:   common.TypeMeta{Kind: "namespace"},
-				ObjectMeta: common.ObjectMeta{Name: "foo"},
-				Phase:      api.NamespaceActive,
+				TypeMeta:   api.TypeMeta{Kind: "namespace"},
+				ObjectMeta: api.ObjectMeta{Name: "foo"},
+				Phase:      v1.NamespaceActive,
 			},
 		},
 	}

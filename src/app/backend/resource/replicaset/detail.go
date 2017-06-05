@@ -17,7 +17,8 @@ package replicaset
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
@@ -32,8 +33,8 @@ import (
 // it is Replica Set plus additional augmented data we can get from other sources
 // (like services that target the same pods).
 type ReplicaSetDetail struct {
-	ObjectMeta common.ObjectMeta `json:"objectMeta"`
-	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 
 	// Aggregate information about pods belonging to this Replica Set.
 	PodInfo common.PodInfo `json:"podInfo"`
@@ -58,7 +59,7 @@ type ReplicaSetDetail struct {
 }
 
 // GetReplicaSetDetail gets replica set details.
-func GetReplicaSetDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
+func GetReplicaSetDetail(client k8sClient.Interface, heapsterClient heapster.HeapsterClient,
 	namespace, name string) (*ReplicaSetDetail, error) {
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 
@@ -102,8 +103,8 @@ func ToReplicaSetDetail(replicaSet *extensions.ReplicaSet, eventList common.Even
 	podList pod.PodList, podInfo common.PodInfo, serviceList resourceService.ServiceList, hpas horizontalpodautoscaler.HorizontalPodAutoscalerList) ReplicaSetDetail {
 
 	return ReplicaSetDetail{
-		ObjectMeta:                  common.NewObjectMeta(replicaSet.ObjectMeta),
-		TypeMeta:                    common.NewTypeMeta(common.ResourceKindReplicaSet),
+		ObjectMeta:                  api.NewObjectMeta(replicaSet.ObjectMeta),
+		TypeMeta:                    api.NewTypeMeta(api.ResourceKindReplicaSet),
 		ContainerImages:             common.GetContainerImages(&replicaSet.Spec.Template.Spec),
 		Selector:                    replicaSet.Spec.Selector,
 		PodInfo:                     podInfo,

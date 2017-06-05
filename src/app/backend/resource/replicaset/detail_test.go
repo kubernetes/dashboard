@@ -18,7 +18,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
@@ -35,7 +36,7 @@ type FakeHeapsterClient struct {
 	client fake.Clientset
 }
 
-func (c FakeHeapsterClient) Get(path string) client.RequestInterface {
+func (c FakeHeapsterClient) Get(path string) heapster.RequestInterface {
 	return &restclient.Request{}
 }
 
@@ -61,9 +62,9 @@ func TestGetReplicaSetDetail(t *testing.T) {
 				},
 			},
 			&ReplicaSetDetail{
-				ObjectMeta: common.ObjectMeta{Name: "rs-1", Namespace: "ns-1",
+				ObjectMeta: api.ObjectMeta{Name: "rs-1", Namespace: "ns-1",
 					Labels: map[string]string{"app": "test"}},
-				TypeMeta: common.TypeMeta{Kind: common.ResourceKindReplicaSet},
+				TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicaSet},
 				PodInfo:  common.PodInfo{Warnings: []common.Event{}},
 				PodList: pod.PodList{
 					Pods:              []pod.Pod{},
@@ -124,35 +125,35 @@ func TestToReplicaSetDetail(t *testing.T) {
 			common.PodInfo{},
 			service.ServiceList{},
 			horizontalpodautoscaler.HorizontalPodAutoscalerList{},
-			ReplicaSetDetail{TypeMeta: common.TypeMeta{Kind: common.ResourceKindReplicaSet}},
+			ReplicaSetDetail{TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicaSet}},
 		}, {
 			&extensions.ReplicaSet{ObjectMeta: metaV1.ObjectMeta{Name: "replica-set"}},
 			common.EventList{Events: []common.Event{{Message: "event-msg"}}},
-			pod.PodList{Pods: []pod.Pod{{ObjectMeta: common.ObjectMeta{Name: "pod-1"}}}},
+			pod.PodList{Pods: []pod.Pod{{ObjectMeta: api.ObjectMeta{Name: "pod-1"}}}},
 			common.PodInfo{},
-			service.ServiceList{Services: []service.Service{{ObjectMeta: common.ObjectMeta{Name: "service-1"}}}},
+			service.ServiceList{Services: []service.Service{{ObjectMeta: api.ObjectMeta{Name: "service-1"}}}},
 			horizontalpodautoscaler.HorizontalPodAutoscalerList{
 				HorizontalPodAutoscalers: []horizontalpodautoscaler.HorizontalPodAutoscaler{{
-					ObjectMeta: common.ObjectMeta{Name: "hpa-1"},
+					ObjectMeta: api.ObjectMeta{Name: "hpa-1"},
 				}},
 			},
 			ReplicaSetDetail{
-				ObjectMeta: common.ObjectMeta{Name: "replica-set"},
-				TypeMeta:   common.TypeMeta{Kind: common.ResourceKindReplicaSet},
+				ObjectMeta: api.ObjectMeta{Name: "replica-set"},
+				TypeMeta:   api.TypeMeta{Kind: api.ResourceKindReplicaSet},
 				EventList:  common.EventList{Events: []common.Event{{Message: "event-msg"}}},
 				PodList: pod.PodList{
 					Pods: []pod.Pod{{
-						ObjectMeta: common.ObjectMeta{Name: "pod-1"},
+						ObjectMeta: api.ObjectMeta{Name: "pod-1"},
 					}},
 				},
 				ServiceList: service.ServiceList{
 					Services: []service.Service{{
-						ObjectMeta: common.ObjectMeta{Name: "service-1"},
+						ObjectMeta: api.ObjectMeta{Name: "service-1"},
 					}},
 				},
 				HorizontalPodAutoscalerList: horizontalpodautoscaler.HorizontalPodAutoscalerList{
 					HorizontalPodAutoscalers: []horizontalpodautoscaler.HorizontalPodAutoscaler{{
-						ObjectMeta: common.ObjectMeta{Name: "hpa-1"},
+						ObjectMeta: api.ObjectMeta{Name: "hpa-1"},
 					}},
 				},
 			},

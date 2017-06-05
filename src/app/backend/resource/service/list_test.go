@@ -15,27 +15,26 @@
 package service
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-
-	"k8s.io/client-go/kubernetes/fake"
-	api "k8s.io/client-go/pkg/api/v1"
-
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-
 	"reflect"
 	"testing"
+
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/client-go/kubernetes/fake"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 func TestGetServiceList(t *testing.T) {
 	cases := []struct {
-		serviceList     *api.ServiceList
+		serviceList     *v1.ServiceList
 		expectedActions []string
 		expected        *ServiceList
 	}{
 		{
-			serviceList: &api.ServiceList{
-				Items: []api.Service{
+			serviceList: &v1.ServiceList{
+				Items: []v1.Service{
 					{ObjectMeta: metaV1.ObjectMeta{
 						Name: "svc-1", Namespace: "ns-1",
 						Labels: map[string]string{},
@@ -43,15 +42,15 @@ func TestGetServiceList(t *testing.T) {
 				}},
 			expectedActions: []string{"list"},
 			expected: &ServiceList{
-				ListMeta: common.ListMeta{TotalItems: 1},
+				ListMeta: api.ListMeta{TotalItems: 1},
 				Services: []Service{
 					{
-						ObjectMeta: common.ObjectMeta{
+						ObjectMeta: api.ObjectMeta{
 							Name:      "svc-1",
 							Namespace: "ns-1",
 							Labels:    map[string]string{},
 						},
-						TypeMeta:         common.TypeMeta{Kind: common.ResourceKindService},
+						TypeMeta:         api.TypeMeta{Kind: api.ResourceKindService},
 						InternalEndpoint: common.Endpoint{Host: "svc-1.ns-1"},
 					},
 				},

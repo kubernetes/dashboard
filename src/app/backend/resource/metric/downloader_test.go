@@ -11,9 +11,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	heapster "k8s.io/heapster/metrics/api/v1/types"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	types "k8s.io/heapster/metrics/api/v1/types"
 )
 
 type GlobalCounter int32
@@ -44,10 +44,10 @@ type FakeRequest struct {
 	Path string
 }
 
-type PodData map[string][]heapster.MetricPoint
-type NodeData map[string][]heapster.MetricPoint
+type PodData map[string][]types.MetricPoint
+type NodeData map[string][]types.MetricPoint
 
-func (self FakeHeapster) Get(path string) client.RequestInterface {
+func (self FakeHeapster) Get(path string) heapster.RequestInterface {
 	return FakeRequest{self.PodData, self.NodeData, path}
 }
 
@@ -77,11 +77,11 @@ func (self FakeRequest) DoRaw() ([]byte, error) {
 		}
 		namespace := submatch[1]
 
-		items := []heapster.MetricResult{}
+		items := []types.MetricResult{}
 		for _, pod := range requestedPods {
-			items = append(items, heapster.MetricResult{Metrics: self.PodData[pod+"/"+namespace]})
+			items = append(items, types.MetricResult{Metrics: self.PodData[pod+"/"+namespace]})
 		}
-		x, err := json.Marshal(heapster.MetricResultList{Items: items})
+		x, err := json.Marshal(types.MetricResultList{Items: items})
 		log.Println("Got you:", string(x))
 		return x, err
 
@@ -93,7 +93,7 @@ func (self FakeRequest) DoRaw() ([]byte, error) {
 		}
 		requestedNode := submatch[1]
 
-		x, err := json.Marshal(heapster.MetricResult{Metrics: self.NodeData[requestedNode]})
+		x, err := json.Marshal(types.MetricResult{Metrics: self.NodeData[requestedNode]})
 		log.Println("Got you:", string(x))
 		return x, err
 	} else {
@@ -104,11 +104,11 @@ func (self FakeRequest) DoRaw() ([]byte, error) {
 const TimeTemplate = "2016-08-12T11:0%d:00Z"
 const TimeTemplateValue = int64(1470999600)
 
-func NewRawDPs(dps []int64, startTime int) []heapster.MetricPoint {
-	newRdps := []heapster.MetricPoint{}
+func NewRawDPs(dps []int64, startTime int) []types.MetricPoint {
+	newRdps := []types.MetricPoint{}
 	for i := 0; i < len(dps) && startTime+i < 10; i++ {
 		parsedTime, _ := time.Parse(time.RFC3339, fmt.Sprintf(TimeTemplate, i+startTime))
-		newRdps = append(newRdps, heapster.MetricPoint{Timestamp: parsedTime, Value: uint64(dps[i])})
+		newRdps = append(newRdps, types.MetricPoint{Timestamp: parsedTime, Value: uint64(dps[i])})
 	}
 	return newRdps
 }
@@ -146,7 +146,7 @@ var fakeHeapsterClient = FakeHeapster{
 	NodeData: fakeNodeData,
 }
 
-func fakeHeapsterSelector(resourceType common.ResourceKind, namespace string, resourceNames []string) HeapsterSelector {
+func fakeHeapsterSelector(resourceType api.ResourceKind, namespace string, resourceNames []string) HeapsterSelector {
 	a, _ := NewHeapsterSelectorFromNativeResource(resourceType, namespace, resourceNames)
 	return a
 }
@@ -161,55 +161,55 @@ func TestHeapsterSelector(t *testing.T) {
 	testCases := []HeapsterSelectorTestCase{
 		{
 			"get data for single pod",
-			fakeHeapsterSelector(common.ResourceKindPod, "a", []string{"P1"}),
+			fakeHeapsterSelector(api.ResourceKindPod, "a", []string{"P1"}),
 			newDps([]int64{0, 5, 10}, 0),
 			1,
 		},
 		{
 			"get data for 3 pods",
-			fakeHeapsterSelector(common.ResourceKindPod, "a", []string{"P1", "P2", "P3"}),
+			fakeHeapsterSelector(api.ResourceKindPod, "a", []string{"P1", "P2", "P3"}),
 			newDps([]int64{45, 60, 75}, 0),
 			1,
 		},
 		{
 			"get data for 4 pods where 1 pod does not exist - ignore non existing pod",
-			fakeHeapsterSelector(common.ResourceKindPod, "a", []string{"P1", "P2", "P3", "NON_EXISTING"}),
+			fakeHeapsterSelector(api.ResourceKindPod, "a", []string{"P1", "P2", "P3", "NON_EXISTING"}),
 			newDps([]int64{45, 60, 75}, 0),
 			1,
 		},
 		{
 			"get data for 4 pods where pods have different X timestams available",
-			fakeHeapsterSelector(common.ResourceKindPod, "b", []string{"P1", "P2", "P3", "P4"}),
+			fakeHeapsterSelector(api.ResourceKindPod, "b", []string{"P1", "P2", "P3", "P4"}),
 			newDps([]int64{1000, 2300, 2700, 1500}, 0),
 			1,
 		},
 		{
 			"ask for non existing namespace - return no data points",
-			fakeHeapsterSelector(common.ResourceKindPod, "NON_EXISTING_NAMESPACE", []string{"P1"}),
+			fakeHeapsterSelector(api.ResourceKindPod, "NON_EXISTING_NAMESPACE", []string{"P1"}),
 			newDps([]int64{}, 0),
 			1,
 		},
 		{
 			"get data for 0 pods - return no data points",
-			fakeHeapsterSelector(common.ResourceKindPod, "b", []string{}),
+			fakeHeapsterSelector(api.ResourceKindPod, "b", []string{}),
 			newDps([]int64{}, 0),
 			0,
 		},
 		{
 			"get data for 0 nodes - return no data points",
-			fakeHeapsterSelector(common.ResourceKindNode, "NO_NAMESPACE", []string{}),
+			fakeHeapsterSelector(api.ResourceKindNode, "NO_NAMESPACE", []string{}),
 			newDps([]int64{}, 0),
 			0,
 		},
 		{
 			"ask for 1 node",
-			fakeHeapsterSelector(common.ResourceKindNode, "NO_NAMESPACE", []string{"N1"}),
+			fakeHeapsterSelector(api.ResourceKindNode, "NO_NAMESPACE", []string{"N1"}),
 			newDps([]int64{0, 5, 10}, 0),
 			1,
 		},
 		{
 			"ask for 3 nodes",
-			fakeHeapsterSelector(common.ResourceKindNode, "NO_NAMESPACE", []string{"N1", "N2", "N3"}),
+			fakeHeapsterSelector(api.ResourceKindNode, "NO_NAMESPACE", []string{"N1", "N2", "N3"}),
 			newDps([]int64{45, 60, 75}, 0),
 			3, // change this to 1 when nodes support all in 1 download.
 		},
@@ -236,13 +236,13 @@ func TestHeapsterSelector(t *testing.T) {
 }
 
 var selectorPool = HeapsterSelectors{
-	fakeHeapsterSelector(common.ResourceKindPod, "a", []string{"P1"}),
-	fakeHeapsterSelector(common.ResourceKindPod, "a", []string{"P2", "P3", "P4"}),
-	fakeHeapsterSelector(common.ResourceKindPod, "a", []string{"P3", "P4"}),
-	fakeHeapsterSelector(common.ResourceKindPod, "b", []string{"P1", "P2", "P3"}),
-	fakeHeapsterSelector(common.ResourceKindPod, "b", []string{"P2", "P3", "P4"}),
-	fakeHeapsterSelector(common.ResourceKindNode, "NO_NAMESPACE", []string{"N1", "N2", "N3"}),
-	fakeHeapsterSelector(common.ResourceKindNode, "NO_NAMESPACE", []string{"N3", "N4"}),
+	fakeHeapsterSelector(api.ResourceKindPod, "a", []string{"P1"}),
+	fakeHeapsterSelector(api.ResourceKindPod, "a", []string{"P2", "P3", "P4"}),
+	fakeHeapsterSelector(api.ResourceKindPod, "a", []string{"P3", "P4"}),
+	fakeHeapsterSelector(api.ResourceKindPod, "b", []string{"P1", "P2", "P3"}),
+	fakeHeapsterSelector(api.ResourceKindPod, "b", []string{"P2", "P3", "P4"}),
+	fakeHeapsterSelector(api.ResourceKindNode, "NO_NAMESPACE", []string{"N1", "N2", "N3"}),
+	fakeHeapsterSelector(api.ResourceKindNode, "NO_NAMESPACE", []string{"N3", "N4"}),
 }
 
 func TestHeapsterSelectors(t *testing.T) {

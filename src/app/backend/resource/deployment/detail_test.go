@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
@@ -13,8 +13,9 @@ import (
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
 	"k8s.io/client-go/kubernetes/fake"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 )
 
 func createDeployment(name, namespace, podTemplateName string, podLabel,
@@ -37,7 +38,7 @@ func createDeployment(name, namespace, podTemplateName string, podLabel,
 					MaxUnavailable: &maxUnavailable,
 				},
 			},
-			Template: api.PodTemplateSpec{
+			Template: v1.PodTemplateSpec{
 				ObjectMeta: metaV1.ObjectMeta{Name: podTemplateName, Labels: podLabel}},
 		},
 		Status: extensions.DeploymentStatus{
@@ -47,7 +48,7 @@ func createDeployment(name, namespace, podTemplateName string, podLabel,
 }
 
 func createReplicaSet(name, namespace string, labelSelector map[string]string,
-	podTemplateSpec api.PodTemplateSpec) extensions.ReplicaSet {
+	podTemplateSpec v1.PodTemplateSpec) extensions.ReplicaSet {
 	replicas := int32(0)
 	return extensions.ReplicaSet{
 		ObjectMeta: metaV1.ObjectMeta{
@@ -61,8 +62,8 @@ func createReplicaSet(name, namespace string, labelSelector map[string]string,
 }
 
 func TestGetDeploymentDetail(t *testing.T) {
-	podList := &api.PodList{}
-	eventList := &api.EventList{}
+	podList := &v1.PodList{}
+	eventList := &v1.EventList{}
 
 	deployment := createDeployment("dp-1", "ns-1", "pod-1", map[string]string{"track": "beta"},
 		map[string]string{"foo": "bar"})
@@ -94,12 +95,12 @@ func TestGetDeploymentDetail(t *testing.T) {
 			[]string{"get", "list", "list", "get", "list", "list", "get", "list", "list", "get", "list", "list", "list"},
 			deployment,
 			&DeploymentDetail{
-				ObjectMeta: common.ObjectMeta{
+				ObjectMeta: api.ObjectMeta{
 					Name:      "dp-1",
 					Namespace: "ns-1",
 					Labels:    map[string]string{"foo": "bar"},
 				},
-				TypeMeta: common.TypeMeta{Kind: common.ResourceKindDeployment},
+				TypeMeta: api.TypeMeta{Kind: api.ResourceKindDeployment},
 				PodList: pod.PodList{
 					Pods:              []pod.Pod{},
 					CumulativeMetrics: make([]metric.Metric, 0),
@@ -122,8 +123,8 @@ func TestGetDeploymentDetail(t *testing.T) {
 					CumulativeMetrics: make([]metric.Metric, 0),
 				},
 				NewReplicaSet: replicaset.ReplicaSet{
-					ObjectMeta: common.NewObjectMeta(newReplicaSet.ObjectMeta),
-					TypeMeta:   common.NewTypeMeta(common.ResourceKindReplicaSet),
+					ObjectMeta: api.NewObjectMeta(newReplicaSet.ObjectMeta),
+					TypeMeta:   api.NewTypeMeta(api.ResourceKindReplicaSet),
 					Pods:       common.PodInfo{Warnings: []common.Event{}},
 				},
 				EventList: common.EventList{

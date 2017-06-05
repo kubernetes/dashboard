@@ -18,23 +18,23 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 func TestGetConfigMapDetail(t *testing.T) {
 	cases := []struct {
-		configMaps *api.ConfigMap
+		configMaps *v1.ConfigMap
 		expected   *ConfigMapDetail
 	}{
 		{
-			&api.ConfigMap{
+			&v1.ConfigMap{
 				Data: map[string]string{"app": "my-name"}, ObjectMeta: metaV1.ObjectMeta{Name: "foo"},
 			},
 			&ConfigMapDetail{
-				TypeMeta:   common.TypeMeta{Kind: "configmap"},
-				ObjectMeta: common.ObjectMeta{Name: "foo"},
+				TypeMeta:   api.TypeMeta{Kind: "configmap"},
+				ObjectMeta: api.ObjectMeta{Name: "foo"},
 				Data:       map[string]string{"app": "my-name"},
 			},
 		},

@@ -4,14 +4,14 @@ import (
 	"log"
 	"strings"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/util/json"
 	k8sClient "k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/pkg/api"
+	kubeapi "k8s.io/client-go/pkg/api"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 	"k8s.io/client-go/rest"
 )
@@ -24,7 +24,7 @@ type ThirdPartyResourceObject struct {
 
 // ThirdPartyResourceObjectList is a list of third party resource instances.
 type ThirdPartyResourceObjectList struct {
-	ListMeta        common.ListMeta `json:"listMeta"`
+	ListMeta        api.ListMeta `json:"listMeta"`
 	metav1.TypeMeta `json:",inline"`
 	Items           []ThirdPartyResourceObject `json:"items"`
 }
@@ -52,7 +52,7 @@ func GetThirdPartyResourceObjects(client k8sClient.Interface, config *rest.Confi
 		return list, err
 	}
 
-	raw, err := restClient.Get().Resource(getThirdPartyResourcePluralName(thirdPartyResource)).Namespace(api.NamespaceAll).Do().Raw()
+	raw, err := restClient.Get().Resource(getThirdPartyResourcePluralName(thirdPartyResource)).Namespace(kubeapi.NamespaceAll).Do().Raw()
 	if err != nil {
 		return list, err
 	}
@@ -66,7 +66,7 @@ func GetThirdPartyResourceObjects(client k8sClient.Interface, config *rest.Confi
 	// Return only slice of data, pagination is done here.
 	tprObjectCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toObjectCells(list.Items), dsQuery)
 	list.Items = fromObjectCells(tprObjectCells)
-	list.ListMeta = common.ListMeta{TotalItems: filteredTotal}
+	list.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	return list, err
 }

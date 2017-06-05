@@ -17,20 +17,21 @@ package deployment
 import (
 	"log"
 
-	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	client "k8s.io/client-go/kubernetes"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
 // ReplicationSetList contains a list of Deployments in the cluster.
 type DeploymentList struct {
-	ListMeta common.ListMeta `json:"listMeta"`
+	ListMeta api.ListMeta `json:"listMeta"`
 
 	// Unordered list of Deployments.
 	Deployments       []Deployment    `json:"deployments"`
@@ -41,8 +42,8 @@ type DeploymentList struct {
 // it is Deployment plus additional augmented data we can get from other sources
 // (like services that target the same pods).
 type Deployment struct {
-	ObjectMeta common.ObjectMeta `json:"objectMeta"`
-	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 
 	// Aggregate information about pods belonging to this Deployment.
 	Pods common.PodInfo `json:"pods"`
@@ -105,13 +106,13 @@ func GetDeploymentListFromChannels(channels *common.ResourceChannels,
 
 // CreateDeploymentList returns a list of all Deployment model objects in the cluster, based on all
 // Kubernetes Deployment API objects.
-func CreateDeploymentList(deployments []extensions.Deployment, pods []api.Pod, events []api.Event,
+func CreateDeploymentList(deployments []extensions.Deployment, pods []v1.Pod, events []v1.Event,
 	rs []extensions.ReplicaSet, dsQuery *dataselect.DataSelectQuery,
 	heapsterClient *heapster.HeapsterClient) *DeploymentList {
 
 	deploymentList := &DeploymentList{
 		Deployments: make([]Deployment, 0),
-		ListMeta:    common.ListMeta{TotalItems: len(deployments)},
+		ListMeta:    api.ListMeta{TotalItems: len(deployments)},
 	}
 
 	cachedResources := &dataselect.CachedResources{
@@ -119,7 +120,7 @@ func CreateDeploymentList(deployments []extensions.Deployment, pods []api.Pod, e
 	}
 	deploymentCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(toCells(deployments), dsQuery, cachedResources, heapsterClient)
 	deployments = fromCells(deploymentCells)
-	deploymentList.ListMeta = common.ListMeta{TotalItems: filteredTotal}
+	deploymentList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, deployment := range deployments {
 		matchingPods := common.FilterDeploymentPodsByOwnerReference(deployment, rs, pods)
@@ -129,8 +130,8 @@ func CreateDeploymentList(deployments []extensions.Deployment, pods []api.Pod, e
 
 		deploymentList.Deployments = append(deploymentList.Deployments,
 			Deployment{
-				ObjectMeta:      common.NewObjectMeta(deployment.ObjectMeta),
-				TypeMeta:        common.NewTypeMeta(common.ResourceKindDeployment),
+				ObjectMeta:      api.NewObjectMeta(deployment.ObjectMeta),
+				TypeMeta:        api.NewTypeMeta(api.ResourceKindDeployment),
 				ContainerImages: common.GetContainerImages(&deployment.Spec.Template.Spec),
 				Pods:            podInfo,
 			})

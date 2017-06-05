@@ -17,19 +17,20 @@ package daemonset
 import (
 	"log"
 
-	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	client "k8s.io/client-go/kubernetes"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
 // DaemonSetList contains a list of Daemon Sets in the cluster.
 type DaemonSetList struct {
-	ListMeta common.ListMeta `json:"listMeta"`
+	ListMeta api.ListMeta `json:"listMeta"`
 
 	// Unordered list of Daemon Sets
 	DaemonSets        []DaemonSet     `json:"daemonSets"`
@@ -39,8 +40,8 @@ type DaemonSetList struct {
 // DaemonSet (aka. Daemon Set) plus zero or more Kubernetes services that
 // target the Daemon Set.
 type DaemonSet struct {
-	ObjectMeta common.ObjectMeta `json:"objectMeta"`
-	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 
 	// Aggregate information about pods belonging to this Daemon Set.
 	Pods common.PodInfo `json:"pods"`
@@ -89,12 +90,12 @@ func GetDaemonSetListFromChannels(channels *common.ResourceChannels,
 
 // CreateDaemonSetList returns a list of all Daemon Set model objects in the cluster, based on all
 // Kubernetes Daemon Set API objects.
-func CreateDaemonSetList(daemonSets []extensions.DaemonSet, pods []api.Pod,
-	events []api.Event, dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) *DaemonSetList {
+func CreateDaemonSetList(daemonSets []extensions.DaemonSet, pods []v1.Pod,
+	events []v1.Event, dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) *DaemonSetList {
 
 	daemonSetList := &DaemonSetList{
 		DaemonSets: make([]DaemonSet, 0),
-		ListMeta:   common.ListMeta{TotalItems: len(daemonSets)},
+		ListMeta:   api.ListMeta{TotalItems: len(daemonSets)},
 	}
 
 	cachedResources := &dataselect.CachedResources{
@@ -102,7 +103,7 @@ func CreateDaemonSetList(daemonSets []extensions.DaemonSet, pods []api.Pod,
 	}
 	dsCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(ToCells(daemonSets), dsQuery, cachedResources, heapsterClient)
 	daemonSets = FromCells(dsCells)
-	daemonSetList.ListMeta = common.ListMeta{TotalItems: filteredTotal}
+	daemonSetList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, daemonSet := range daemonSets {
 		matchingPods := common.FilterPodsByOwnerReference(daemonSet.Namespace, daemonSet.UID, pods)
@@ -112,8 +113,8 @@ func CreateDaemonSetList(daemonSets []extensions.DaemonSet, pods []api.Pod,
 
 		daemonSetList.DaemonSets = append(daemonSetList.DaemonSets,
 			DaemonSet{
-				ObjectMeta:      common.NewObjectMeta(daemonSet.ObjectMeta),
-				TypeMeta:        common.NewTypeMeta(common.ResourceKindDaemonSet),
+				ObjectMeta:      api.NewObjectMeta(daemonSet.ObjectMeta),
+				TypeMeta:        api.NewTypeMeta(api.ResourceKindDaemonSet),
 				Pods:            podInfo,
 				ContainerImages: common.GetContainerImages(&daemonSet.Spec.Template.Spec),
 			})

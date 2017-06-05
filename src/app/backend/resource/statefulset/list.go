@@ -17,20 +17,21 @@ package statefulset
 import (
 	"log"
 
-	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	client "k8s.io/client-go/kubernetes"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 	apps "k8s.io/client-go/pkg/apis/apps/v1beta1"
 )
 
 // StatefulSetList contains a list of Stateful Sets in the cluster.
 type StatefulSetList struct {
-	ListMeta common.ListMeta `json:"listMeta"`
+	ListMeta api.ListMeta `json:"listMeta"`
 
 	// Unordered list of Pet Sets.
 	StatefulSets      []StatefulSet   `json:"statefulSets"`
@@ -41,8 +42,8 @@ type StatefulSetList struct {
 // Stateful Set plus additional augmented data we can get from other sources (like services that
 // target the same pods).
 type StatefulSet struct {
-	ObjectMeta common.ObjectMeta `json:"objectMeta"`
-	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 
 	// Aggregate information about pods belonging to this Pet Set.
 	Pods common.PodInfo `json:"pods"`
@@ -99,12 +100,12 @@ func GetStatefulSetListFromChannels(channels *common.ResourceChannels,
 
 // CreateStatefulSetList creates paginated list of Stateful Set model objects based on Kubernetes
 // Stateful Set objects array and related resources arrays.
-func CreateStatefulSetList(statefulSets []apps.StatefulSet, pods []api.Pod, events []api.Event,
+func CreateStatefulSetList(statefulSets []apps.StatefulSet, pods []v1.Pod, events []v1.Event,
 	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) *StatefulSetList {
 
 	statefulSetList := &StatefulSetList{
 		StatefulSets: make([]StatefulSet, 0),
-		ListMeta:     common.ListMeta{TotalItems: len(statefulSets)},
+		ListMeta:     api.ListMeta{TotalItems: len(statefulSets)},
 	}
 
 	cachedResources := &dataselect.CachedResources{
@@ -113,7 +114,7 @@ func CreateStatefulSetList(statefulSets []apps.StatefulSet, pods []api.Pod, even
 	ssCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(
 		toCells(statefulSets), dsQuery, cachedResources, heapsterClient)
 	statefulSets = fromCells(ssCells)
-	statefulSetList.ListMeta = common.ListMeta{TotalItems: filteredTotal}
+	statefulSetList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, statefulSet := range statefulSets {
 		matchingPods := common.FilterPodsByOwnerReference(statefulSet.Namespace,
@@ -138,8 +139,8 @@ func CreateStatefulSetList(statefulSets []apps.StatefulSet, pods []api.Pod, even
 // ToStatefulSet transforms pet set into StatefulSet object returned by API.
 func ToStatefulSet(statefulSet *apps.StatefulSet, podInfo *common.PodInfo) StatefulSet {
 	return StatefulSet{
-		ObjectMeta:      common.NewObjectMeta(statefulSet.ObjectMeta),
-		TypeMeta:        common.NewTypeMeta(common.ResourceKindStatefulSet),
+		ObjectMeta:      api.NewObjectMeta(statefulSet.ObjectMeta),
+		TypeMeta:        api.NewTypeMeta(api.ResourceKindStatefulSet),
 		ContainerImages: common.GetContainerImages(&statefulSet.Spec.Template.Spec),
 		Pods:            *podInfo,
 	}

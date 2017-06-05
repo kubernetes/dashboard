@@ -19,12 +19,13 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
@@ -37,16 +38,16 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 	cases := []struct {
 		k8sRs         extensions.ReplicaSetList
 		k8sRsError    error
-		pods          *api.PodList
+		pods          *v1.PodList
 		expected      *ReplicaSetList
 		expectedError error
 	}{
 		{
 			extensions.ReplicaSetList{},
 			nil,
-			&api.PodList{},
+			&v1.PodList{},
 			&ReplicaSetList{
-				ListMeta:          common.ListMeta{},
+				ListMeta:          api.ListMeta{},
 				CumulativeMetrics: make([]metric.Metric, 0),
 				ReplicaSets:       []ReplicaSet{}},
 			nil,
@@ -54,35 +55,35 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 		{
 			extensions.ReplicaSetList{},
 			errors.New("MyCustomError"),
-			&api.PodList{},
+			&v1.PodList{},
 			nil,
 			errors.New("MyCustomError"),
 		},
 		{
 			extensions.ReplicaSetList{},
 			&k8serrors.StatusError{},
-			&api.PodList{},
+			&v1.PodList{},
 			nil,
 			&k8serrors.StatusError{},
 		},
 		{
 			extensions.ReplicaSetList{},
 			&k8serrors.StatusError{ErrStatus: metaV1.Status{}},
-			&api.PodList{},
+			&v1.PodList{},
 			nil,
 			&k8serrors.StatusError{ErrStatus: metaV1.Status{}},
 		},
 		{
 			extensions.ReplicaSetList{},
 			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "foo-bar"}},
-			&api.PodList{},
+			&v1.PodList{},
 			nil,
 			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "foo-bar"}},
 		},
 		{
 			extensions.ReplicaSetList{},
 			&k8serrors.StatusError{ErrStatus: metaV1.Status{Reason: "NotFound"}},
-			&api.PodList{},
+			&v1.PodList{},
 			&ReplicaSetList{
 				ReplicaSets: make([]ReplicaSet, 0),
 			},
@@ -108,8 +109,8 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 				}},
 			},
 			nil,
-			&api.PodList{
-				Items: []api.Pod{
+			&v1.PodList{
+				Items: []v1.Pod{
 					{
 						ObjectMeta: metaV1.ObjectMeta{
 							Namespace: "rs-namespace",
@@ -121,7 +122,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 								},
 							},
 						},
-						Status: api.PodStatus{Phase: api.PodFailed},
+						Status: v1.PodStatus{Phase: v1.PodFailed},
 					},
 					{
 						ObjectMeta: metaV1.ObjectMeta{
@@ -134,21 +135,21 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 								},
 							},
 						},
-						Status: api.PodStatus{Phase: api.PodFailed},
+						Status: v1.PodStatus{Phase: v1.PodFailed},
 					},
 				},
 			},
 			&ReplicaSetList{
-				ListMeta:          common.ListMeta{TotalItems: 1},
+				ListMeta:          api.ListMeta{TotalItems: 1},
 				CumulativeMetrics: make([]metric.Metric, 0),
 				ReplicaSets: []ReplicaSet{{
-					ObjectMeta: common.ObjectMeta{
+					ObjectMeta: api.ObjectMeta{
 						Name:              "rs-name",
 						Namespace:         "rs-namespace",
 						Labels:            map[string]string{"key": "value"},
 						CreationTimestamp: metaV1.Unix(111, 222),
 					},
-					TypeMeta: common.TypeMeta{Kind: common.ResourceKindReplicaSet},
+					TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicaSet},
 					Pods: common.PodInfo{
 						Current:  7,
 						Desired:  21,
@@ -168,19 +169,19 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 				Error: make(chan error, 1),
 			},
 			NodeList: common.NodeListChannel{
-				List:  make(chan *api.NodeList, 1),
+				List:  make(chan *v1.NodeList, 1),
 				Error: make(chan error, 1),
 			},
 			ServiceList: common.ServiceListChannel{
-				List:  make(chan *api.ServiceList, 1),
+				List:  make(chan *v1.ServiceList, 1),
 				Error: make(chan error, 1),
 			},
 			PodList: common.PodListChannel{
-				List:  make(chan *api.PodList, 1),
+				List:  make(chan *v1.PodList, 1),
 				Error: make(chan error, 1),
 			},
 			EventList: common.EventListChannel{
-				List:  make(chan *api.EventList, 1),
+				List:  make(chan *v1.EventList, 1),
 				Error: make(chan error, 1),
 			},
 		}
@@ -188,16 +189,16 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 		channels.ReplicaSetList.Error <- c.k8sRsError
 		channels.ReplicaSetList.List <- &c.k8sRs
 
-		channels.NodeList.List <- &api.NodeList{}
+		channels.NodeList.List <- &v1.NodeList{}
 		channels.NodeList.Error <- nil
 
-		channels.ServiceList.List <- &api.ServiceList{}
+		channels.ServiceList.List <- &v1.ServiceList{}
 		channels.ServiceList.Error <- nil
 
 		channels.PodList.List <- c.pods
 		channels.PodList.Error <- nil
 
-		channels.EventList.List <- &api.EventList{}
+		channels.EventList.List <- &v1.EventList{}
 		channels.EventList.Error <- nil
 
 		actual, err := GetReplicaSetListFromChannels(channels, dataselect.NoDataSelect, nil)
@@ -214,8 +215,8 @@ func TestCreateReplicaSetList(t *testing.T) {
 	replicas := int32(0)
 	cases := []struct {
 		replicaSets []extensions.ReplicaSet
-		pods        []api.Pod
-		events      []api.Event
+		pods        []v1.Pod
+		events      []v1.Event
 		expected    *ReplicaSetList
 	}{
 		{
@@ -229,15 +230,15 @@ func TestCreateReplicaSetList(t *testing.T) {
 						}},
 				},
 			},
-			[]api.Pod{},
-			[]api.Event{},
+			[]v1.Pod{},
+			[]v1.Event{},
 			&ReplicaSetList{
-				ListMeta:          common.ListMeta{TotalItems: 1},
+				ListMeta:          api.ListMeta{TotalItems: 1},
 				CumulativeMetrics: make([]metric.Metric, 0),
 				ReplicaSets: []ReplicaSet{
 					{
-						ObjectMeta: common.ObjectMeta{Name: "replica-set", Namespace: "ns-1"},
-						TypeMeta:   common.TypeMeta{Kind: common.ResourceKindReplicaSet},
+						ObjectMeta: api.ObjectMeta{Name: "replica-set", Namespace: "ns-1"},
+						TypeMeta:   api.TypeMeta{Kind: api.ResourceKindReplicaSet},
 						Pods:       common.PodInfo{Warnings: []common.Event{}},
 					},
 				},

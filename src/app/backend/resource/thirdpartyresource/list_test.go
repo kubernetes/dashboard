@@ -18,7 +18,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
@@ -43,10 +43,10 @@ func TestGetThirdPartyResourceList(t *testing.T) {
 				},
 			},
 			&ThirdPartyResourceList{
-				ListMeta: common.ListMeta{TotalItems: 1},
+				ListMeta: api.ListMeta{TotalItems: 1},
 				ThirdPartyResources: []ThirdPartyResource{{
-					TypeMeta:   common.TypeMeta{Kind: common.ResourceKindThirdPartyResource},
-					ObjectMeta: common.ObjectMeta{Name: "foo"},
+					TypeMeta:   api.TypeMeta{Kind: api.ResourceKindThirdPartyResource},
+					ObjectMeta: api.ObjectMeta{Name: "foo"},
 				}},
 			},
 		},

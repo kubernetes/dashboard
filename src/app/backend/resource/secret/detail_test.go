@@ -18,23 +18,23 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 func TestGetSecretDetail(t *testing.T) {
 	cases := []struct {
-		secrets  *api.Secret
+		secrets  *v1.Secret
 		expected *SecretDetail
 	}{
 		{
-			&api.Secret{
+			&v1.Secret{
 				Data: map[string][]byte{"app": {0, 1, 2, 3}}, ObjectMeta: metaV1.ObjectMeta{Name: "foo"},
 			},
 			&SecretDetail{
-				TypeMeta:   common.TypeMeta{Kind: "secret"},
-				ObjectMeta: common.ObjectMeta{Name: "foo"},
+				TypeMeta:   api.TypeMeta{Kind: "secret"},
+				ObjectMeta: api.ObjectMeta{Name: "foo"},
 				Data:       map[string][]byte{"app": {0, 1, 2, 3}},
 			},
 		},

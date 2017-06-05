@@ -18,27 +18,27 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 func TestGetConfigMapList(t *testing.T) {
 	cases := []struct {
-		configMaps []api.ConfigMap
+		configMaps []v1.ConfigMap
 		expected   *ConfigMapList
 	}{
 		{nil, &ConfigMapList{Items: []ConfigMap{}}},
 		{
-			[]api.ConfigMap{
+			[]v1.ConfigMap{
 				{Data: map[string]string{"app": "my-name"}, ObjectMeta: metaV1.ObjectMeta{Name: "foo"}},
 			},
 			&ConfigMapList{
-				ListMeta: common.ListMeta{TotalItems: 1},
+				ListMeta: api.ListMeta{TotalItems: 1},
 				Items: []ConfigMap{{
-					TypeMeta:   common.TypeMeta{Kind: "configmap"},
-					ObjectMeta: common.ObjectMeta{Name: "foo"},
+					TypeMeta:   api.TypeMeta{Kind: "configmap"},
+					ObjectMeta: api.ObjectMeta{Name: "foo"},
 				}},
 			},
 		},

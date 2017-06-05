@@ -17,20 +17,21 @@ package replicaset
 import (
 	"log"
 
-	heapster "github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	client "k8s.io/client-go/kubernetes"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
 // ReplicaSetList contains a list of Replica Sets in the cluster.
 type ReplicaSetList struct {
-	ListMeta common.ListMeta `json:"listMeta"`
+	ListMeta api.ListMeta `json:"listMeta"`
 
 	// Unordered list of Replica Sets.
 	ReplicaSets       []ReplicaSet    `json:"replicaSets"`
@@ -84,12 +85,12 @@ func GetReplicaSetListFromChannels(channels *common.ResourceChannels,
 
 // CreateReplicaSetList creates paginated list of Replica Set model
 // objects based on Kubernetes Replica Set objects array and related resources arrays.
-func CreateReplicaSetList(replicaSets []extensions.ReplicaSet, pods []api.Pod, events []api.Event,
+func CreateReplicaSetList(replicaSets []extensions.ReplicaSet, pods []v1.Pod, events []v1.Event,
 	dsQuery *dataselect.DataSelectQuery, heapsterClient *heapster.HeapsterClient) *ReplicaSetList {
 
 	replicaSetList := &ReplicaSetList{
 		ReplicaSets: make([]ReplicaSet, 0),
-		ListMeta:    common.ListMeta{TotalItems: len(replicaSets)},
+		ListMeta:    api.ListMeta{TotalItems: len(replicaSets)},
 	}
 
 	cachedResources := &dataselect.CachedResources{
@@ -97,7 +98,7 @@ func CreateReplicaSetList(replicaSets []extensions.ReplicaSet, pods []api.Pod, e
 	}
 	rsCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(ToCells(replicaSets), dsQuery, cachedResources, heapsterClient)
 	replicaSets = FromCells(rsCells)
-	replicaSetList.ListMeta = common.ListMeta{TotalItems: filteredTotal}
+	replicaSetList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, replicaSet := range replicaSets {
 		matchingPods := common.FilterPodsByOwnerReference(replicaSet.Namespace,

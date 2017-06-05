@@ -15,19 +15,20 @@
 package common
 
 import (
-	"k8s.io/apimachinery/pkg/apis/meta/v1"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/pkg/api/helper"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
 )
 
 // FilterPodsByControllerResource returns a subset of pods controlled by given deployment.
 func FilterDeploymentPodsByOwnerReference(deployment extensions.Deployment,
-	allRS []extensions.ReplicaSet, allPods []api.Pod) []api.Pod {
-	var matchingPods []api.Pod
+	allRS []extensions.ReplicaSet, allPods []v1.Pod) []v1.Pod {
+	var matchingPods []v1.Pod
 
-	rsTemplate := api.PodTemplateSpec{
+	rsTemplate := v1.PodTemplateSpec{
 		ObjectMeta: deployment.Spec.Template.ObjectMeta,
 		Spec:       deployment.Spec.Template.Spec,
 	}
@@ -43,8 +44,8 @@ func FilterDeploymentPodsByOwnerReference(deployment extensions.Deployment,
 
 // FilterPodsByControllerResource returns a subset of pods controlled by given controller resource,
 // excluding deployments.
-func FilterPodsByOwnerReference(namespace string, uid types.UID, allPods []api.Pod) []api.Pod {
-	var matchingPods []api.Pod
+func FilterPodsByOwnerReference(namespace string, uid types.UID, allPods []v1.Pod) []v1.Pod {
+	var matchingPods []v1.Pod
 	for _, pod := range allPods {
 		if pod.Namespace == namespace {
 			for _, ownerRef := range pod.OwnerReferences {
@@ -59,10 +60,10 @@ func FilterPodsByOwnerReference(namespace string, uid types.UID, allPods []api.P
 }
 
 // FilterPodsBySelector returns pods targeted by given resource selector.
-func FilterPodsBySelector(pods []api.Pod, resourceSelector map[string]string) []api.Pod {
-	var matchingPods []api.Pod
+func FilterPodsBySelector(pods []v1.Pod, resourceSelector map[string]string) []v1.Pod {
+	var matchingPods []v1.Pod
 	for _, pod := range pods {
-		if IsSelectorMatching(resourceSelector, pod.Labels) {
+		if api.IsSelectorMatching(resourceSelector, pod.Labels) {
 			matchingPods = append(matchingPods, pod)
 		}
 	}
@@ -71,13 +72,13 @@ func FilterPodsBySelector(pods []api.Pod, resourceSelector map[string]string) []
 
 // FilterNamespacedPodsByLabelSelector returns pods targeted by given resource label selector in
 // given namespace.
-func FilterNamespacedPodsByLabelSelector(pods []api.Pod, namespace string,
-	labelSelector *v1.LabelSelector) []api.Pod {
+func FilterNamespacedPodsByLabelSelector(pods []v1.Pod, namespace string,
+	labelSelector *metaV1.LabelSelector) []v1.Pod {
 
-	var matchingPods []api.Pod
+	var matchingPods []v1.Pod
 	for _, pod := range pods {
 		if pod.ObjectMeta.Namespace == namespace &&
-			IsLabelSelectorMatching(pod.Labels, labelSelector) {
+			api.IsLabelSelectorMatching(pod.Labels, labelSelector) {
 			matchingPods = append(matchingPods, pod)
 		}
 	}
@@ -85,7 +86,7 @@ func FilterNamespacedPodsByLabelSelector(pods []api.Pod, namespace string,
 }
 
 // GetContainerImages returns container image strings from the given pod spec.
-func GetContainerImages(podTemplate *api.PodSpec) []string {
+func GetContainerImages(podTemplate *v1.PodSpec) []string {
 	var containerImages []string
 	for _, container := range podTemplate.Containers {
 		containerImages = append(containerImages, container.Image)
@@ -97,7 +98,7 @@ func GetContainerImages(podTemplate *api.PodSpec) []string {
 // We ignore pod-template-hash because the hash result would be different upon podTemplateSpec API changes
 // (e.g. the addition of a new field will cause the hash code to change)
 // Note that we assume input podTemplateSpecs contain non-empty labels
-func EqualIgnoreHash(template1, template2 api.PodTemplateSpec) bool {
+func EqualIgnoreHash(template1, template2 v1.PodTemplateSpec) bool {
 	// First, compare template.Labels (ignoring hash)
 	labels1, labels2 := template1.Labels, template2.Labels
 	if len(labels1) > len(labels2) {

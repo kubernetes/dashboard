@@ -15,13 +15,14 @@
 package horizontalpodautoscaler
 
 import (
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	k8sClient "k8s.io/client-go/kubernetes"
 	autoscaling "k8s.io/client-go/pkg/apis/autoscaling/v1"
 )
 
 type HorizontalPodAutoscalerList struct {
-	ListMeta common.ListMeta `json:"listMeta"`
+	ListMeta api.ListMeta `json:"listMeta"`
 
 	// Unordered list of Horizontal Pod Autoscalers.
 	HorizontalPodAutoscalers []HorizontalPodAutoscaler `json:"horizontalpodautoscalers"`
@@ -29,8 +30,8 @@ type HorizontalPodAutoscalerList struct {
 
 // HorizontalPodAutoscaler (aka. Horizontal Pod Autoscaler)
 type HorizontalPodAutoscaler struct {
-	ObjectMeta common.ObjectMeta `json:"objectMeta"`
-	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 
 	ScaleTargetRef ScaleTargetRef `json:"scaleTargetRef"`
 
@@ -75,7 +76,7 @@ func GetHorizontalPodAutoscalerListForResource(client k8sClient.Interface, names
 func createHorizontalPodAutoscalerList(hpas []autoscaling.HorizontalPodAutoscaler) *HorizontalPodAutoscalerList {
 	hpaList := &HorizontalPodAutoscalerList{
 		HorizontalPodAutoscalers: make([]HorizontalPodAutoscaler, 0),
-		ListMeta:                 common.ListMeta{TotalItems: len(hpas)},
+		ListMeta:                 api.ListMeta{TotalItems: len(hpas)},
 	}
 
 	for _, hpa := range hpas {
@@ -87,8 +88,8 @@ func createHorizontalPodAutoscalerList(hpas []autoscaling.HorizontalPodAutoscale
 
 func toHorizontalPodAutoScaler(hpa *autoscaling.HorizontalPodAutoscaler) HorizontalPodAutoscaler {
 	return HorizontalPodAutoscaler{
-		ObjectMeta: common.NewObjectMeta(hpa.ObjectMeta),
-		TypeMeta:   common.NewTypeMeta(common.ResourceKindHorizontalPodAutoscaler),
+		ObjectMeta: api.NewObjectMeta(hpa.ObjectMeta),
+		TypeMeta:   api.NewTypeMeta(api.ResourceKindHorizontalPodAutoscaler),
 
 		ScaleTargetRef: ScaleTargetRef{
 			Kind: hpa.Spec.ScaleTargetRef.Kind,

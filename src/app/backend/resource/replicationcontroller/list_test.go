@@ -18,16 +18,17 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 func TestGetReplicationControllerList(t *testing.T) {
 	replicas := int32(0)
-	events := []api.Event{}
+	events := []v1.Event{}
 	controller := true
 	firstAppOwnerRef := []metaV1.OwnerReference{{
 		Kind:       "ReplicationController",
@@ -37,10 +38,10 @@ func TestGetReplicationControllerList(t *testing.T) {
 	}}
 
 	cases := []struct {
-		replicationControllers []api.ReplicationController
-		services               []api.Service
-		pods                   []api.Pod
-		nodes                  []api.Node
+		replicationControllers []v1.ReplicationController
+		services               []v1.Service
+		pods                   []v1.Pod
+		nodes                  []v1.Node
 		expected               *ReplicationControllerList
 	}{
 		{nil, nil, nil, nil,
@@ -50,18 +51,18 @@ func TestGetReplicationControllerList(t *testing.T) {
 			},
 		},
 		{
-			[]api.ReplicationController{
+			[]v1.ReplicationController{
 				{
 					ObjectMeta: metaV1.ObjectMeta{
 						Name:      "my-app-1",
 						Namespace: "namespace-1",
 						UID:       "uid-1",
 					},
-					Spec: api.ReplicationControllerSpec{
+					Spec: v1.ReplicationControllerSpec{
 						Replicas: &replicas,
 						Selector: map[string]string{"app": "my-name-1"},
-						Template: &api.PodTemplateSpec{
-							Spec: api.PodSpec{Containers: []api.Container{{Image: "my-container-image-1"}}},
+						Template: &v1.PodTemplateSpec{
+							Spec: v1.PodSpec{Containers: []v1.Container{{Image: "my-container-image-1"}}},
 						},
 					},
 				},
@@ -71,18 +72,18 @@ func TestGetReplicationControllerList(t *testing.T) {
 						Namespace: "namespace-2",
 						UID:       "uid-2",
 					},
-					Spec: api.ReplicationControllerSpec{
+					Spec: v1.ReplicationControllerSpec{
 						Replicas: &replicas,
 						Selector: map[string]string{"app": "my-name-2", "ver": "2"},
-						Template: &api.PodTemplateSpec{
-							Spec: api.PodSpec{Containers: []api.Container{{Image: "my-container-image-2"}}},
+						Template: &v1.PodTemplateSpec{
+							Spec: v1.PodSpec{Containers: []v1.Container{{Image: "my-container-image-2"}}},
 						},
 					},
 				},
 			},
-			[]api.Service{
+			[]v1.Service{
 				{
-					Spec: api.ServiceSpec{Selector: map[string]string{"app": "my-name-1"}},
+					Spec: v1.ServiceSpec{Selector: map[string]string{"app": "my-name-1"}},
 					ObjectMeta: metaV1.ObjectMeta{
 						Name:      "my-app-1",
 						Namespace: "namespace-1",
@@ -90,7 +91,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 					},
 				},
 				{
-					Spec: api.ServiceSpec{Selector: map[string]string{"app": "my-name-2", "ver": "2"}},
+					Spec: v1.ServiceSpec{Selector: map[string]string{"app": "my-name-2", "ver": "2"}},
 					ObjectMeta: metaV1.ObjectMeta{
 						Name:      "my-app-2",
 						Namespace: "namespace-2",
@@ -98,14 +99,14 @@ func TestGetReplicationControllerList(t *testing.T) {
 					},
 				},
 			},
-			[]api.Pod{
+			[]v1.Pod{
 				{
 					ObjectMeta: metaV1.ObjectMeta{
 						Namespace:       "namespace-1",
 						OwnerReferences: firstAppOwnerRef,
 					},
-					Status: api.PodStatus{
-						Phase: api.PodFailed,
+					Status: v1.PodStatus{
+						Phase: v1.PodFailed,
 					},
 				},
 				{
@@ -113,8 +114,8 @@ func TestGetReplicationControllerList(t *testing.T) {
 						Namespace:       "namespace-1",
 						OwnerReferences: firstAppOwnerRef,
 					},
-					Status: api.PodStatus{
-						Phase: api.PodFailed,
+					Status: v1.PodStatus{
+						Phase: v1.PodFailed,
 					},
 				},
 				{
@@ -122,8 +123,8 @@ func TestGetReplicationControllerList(t *testing.T) {
 						Namespace:       "namespace-1",
 						OwnerReferences: firstAppOwnerRef,
 					},
-					Status: api.PodStatus{
-						Phase: api.PodPending,
+					Status: v1.PodStatus{
+						Phase: v1.PodPending,
 					},
 				},
 				{
@@ -131,8 +132,8 @@ func TestGetReplicationControllerList(t *testing.T) {
 						Namespace:       "namespace-2",
 						OwnerReferences: firstAppOwnerRef,
 					},
-					Status: api.PodStatus{
-						Phase: api.PodPending,
+					Status: v1.PodStatus{
+						Phase: v1.PodPending,
 					},
 				},
 				{
@@ -140,8 +141,8 @@ func TestGetReplicationControllerList(t *testing.T) {
 						Namespace:       "namespace-1",
 						OwnerReferences: firstAppOwnerRef,
 					},
-					Status: api.PodStatus{
-						Phase: api.PodRunning,
+					Status: v1.PodStatus{
+						Phase: v1.PodRunning,
 					},
 				},
 				{
@@ -149,8 +150,8 @@ func TestGetReplicationControllerList(t *testing.T) {
 						Namespace:       "namespace-1",
 						OwnerReferences: firstAppOwnerRef,
 					},
-					Status: api.PodStatus{
-						Phase: api.PodSucceeded,
+					Status: v1.PodStatus{
+						Phase: v1.PodSucceeded,
 					},
 				},
 				{
@@ -158,16 +159,16 @@ func TestGetReplicationControllerList(t *testing.T) {
 						Namespace:       "namespace-1",
 						OwnerReferences: firstAppOwnerRef,
 					},
-					Status: api.PodStatus{
-						Phase: api.PodUnknown,
+					Status: v1.PodStatus{
+						Phase: v1.PodUnknown,
 					},
 				},
 			},
-			[]api.Node{{
-				Status: api.NodeStatus{
-					Addresses: []api.NodeAddress{
+			[]v1.Node{{
+				Status: v1.NodeStatus{
+					Addresses: []v1.NodeAddress{
 						{
-							Type:    api.NodeExternalIP,
+							Type:    v1.NodeExternalIP,
 							Address: "192.168.1.108",
 						},
 					},
@@ -175,15 +176,15 @@ func TestGetReplicationControllerList(t *testing.T) {
 			},
 			},
 			&ReplicationControllerList{
-				ListMeta:          common.ListMeta{TotalItems: 2},
+				ListMeta:          api.ListMeta{TotalItems: 2},
 				CumulativeMetrics: make([]metric.Metric, 0),
 				ReplicationControllers: []ReplicationController{
 					{
-						ObjectMeta: common.ObjectMeta{
+						ObjectMeta: api.ObjectMeta{
 							Name:      "my-app-1",
 							Namespace: "namespace-1",
 						},
-						TypeMeta:        common.TypeMeta{Kind: common.ResourceKindReplicationController},
+						TypeMeta:        api.TypeMeta{Kind: api.ResourceKindReplicationController},
 						ContainerImages: []string{"my-container-image-1"},
 						Pods: common.PodInfo{
 							Failed:    2,
@@ -193,11 +194,11 @@ func TestGetReplicationControllerList(t *testing.T) {
 							Warnings:  []common.Event{},
 						},
 					}, {
-						ObjectMeta: common.ObjectMeta{
+						ObjectMeta: api.ObjectMeta{
 							Name:      "my-app-2",
 							Namespace: "namespace-2",
 						},
-						TypeMeta:        common.TypeMeta{Kind: common.ResourceKindReplicationController},
+						TypeMeta:        api.TypeMeta{Kind: api.ResourceKindReplicationController},
 						ContainerImages: []string{"my-container-image-2"},
 						Pods: common.PodInfo{
 							Warnings: []common.Event{},

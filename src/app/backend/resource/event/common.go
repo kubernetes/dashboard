@@ -15,6 +15,7 @@
 package event
 
 import (
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -23,11 +24,11 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	client "k8s.io/client-go/kubernetes"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 // GetEvents gets events associated to resource with given name.
-func GetEvents(client client.Interface, namespace, resourceName string) ([]api.Event, error) {
+func GetEvents(client client.Interface, namespace, resourceName string) ([]v1.Event, error) {
 
 	fieldSelector, err := fields.ParseSelector("involvedObject.name=" + resourceName)
 
@@ -56,7 +57,7 @@ func GetEvents(client client.Interface, namespace, resourceName string) ([]api.E
 
 // GetPodsEvents gets pods events associated to resource targeted by given resource selector.
 func GetPodsEvents(client client.Interface, namespace string, resourceSelector map[string]string) (
-	[]api.Event, error) {
+	[]v1.Event, error) {
 
 	channels := &common.ResourceChannels{
 		PodList: common.GetPodListChannelWithOptions(
@@ -86,7 +87,7 @@ func GetPodsEvents(client client.Interface, namespace string, resourceSelector m
 }
 
 // GetPodEvents gets pods events associated to pod name and namespace
-func GetPodEvents(client client.Interface, namespace, podName string) ([]api.Event, error) {
+func GetPodEvents(client client.Interface, namespace, podName string) ([]v1.Event, error) {
 
 	channels := &common.ResourceChannels{
 		PodList: common.GetPodListChannel(client,
@@ -105,7 +106,7 @@ func GetPodEvents(client client.Interface, namespace, podName string) ([]api.Eve
 		return nil, err
 	}
 
-	l := make([]api.Pod, 0)
+	l := make([]v1.Pod, 0)
 	for _, pi := range podList.Items {
 		if pi.Name == podName {
 			l = append(l, pi)
@@ -125,7 +126,7 @@ func GetNodeEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery,
 
 	scheme := runtime.NewScheme()
 	groupVersion := schema.GroupVersion{Group: "", Version: "v1"}
-	scheme.AddKnownTypes(groupVersion, &api.Node{})
+	scheme.AddKnownTypes(groupVersion, &v1.Node{})
 
 	mc := client.CoreV1().Nodes()
 	node, err := mc.Get(nodeName, metaV1.GetOptions{})
@@ -133,7 +134,7 @@ func GetNodeEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery,
 		return nil, err
 	}
 
-	events, err := client.CoreV1().Events(api.NamespaceAll).Search(scheme, node)
+	events, err := client.CoreV1().Events(v1.NamespaceAll).Search(scheme, node)
 	if err != nil {
 		return nil, err
 	}
@@ -152,12 +153,12 @@ func GetNamespaceEvents(client client.Interface, dsQuery *dataselect.DataSelectQ
 }
 
 // Based on event Reason fills event Type in order to allow correct filtering by Type.
-func FillEventsType(events []api.Event) []api.Event {
+func FillEventsType(events []v1.Event) []v1.Event {
 	for i := range events {
 		if isFailedReason(events[i].Reason, FailedReasonPartials...) {
-			events[i].Type = api.EventTypeWarning
+			events[i].Type = v1.EventTypeWarning
 		} else {
-			events[i].Type = api.EventTypeNormal
+			events[i].Type = v1.EventTypeNormal
 		}
 	}
 
@@ -166,7 +167,7 @@ func FillEventsType(events []api.Event) []api.Event {
 
 // IsTypeFilled returns true if all given events type is filled, false otherwise.
 // This is needed as some older versions of kubernetes do not have Type property filled.
-func IsTypeFilled(events []api.Event) bool {
+func IsTypeFilled(events []v1.Event) bool {
 	if len(events) == 0 {
 		return false
 	}
@@ -181,10 +182,10 @@ func IsTypeFilled(events []api.Event) bool {
 }
 
 // ToEvent converts event api Event to Event model object.
-func ToEvent(event api.Event) common.Event {
+func ToEvent(event v1.Event) common.Event {
 	result := common.Event{
-		ObjectMeta:      common.NewObjectMeta(event.ObjectMeta),
-		TypeMeta:        common.NewTypeMeta(common.ResourceKindEvent),
+		ObjectMeta:      api.NewObjectMeta(event.ObjectMeta),
+		TypeMeta:        api.NewTypeMeta(api.ResourceKindEvent),
 		Message:         event.Message,
 		SourceComponent: event.Source.Component,
 		SourceHost:      event.Source.Host,
@@ -200,11 +201,11 @@ func ToEvent(event api.Event) common.Event {
 }
 
 // CreateEventList converts array of api events to common EventList structure
-func CreateEventList(events []api.Event, dsQuery *dataselect.DataSelectQuery) common.EventList {
+func CreateEventList(events []v1.Event, dsQuery *dataselect.DataSelectQuery) common.EventList {
 
 	eventList := common.EventList{
 		Events:   make([]common.Event, 0),
-		ListMeta: common.ListMeta{TotalItems: len(events)},
+		ListMeta: api.ListMeta{TotalItems: len(events)},
 	}
 
 	events = fromCells(dataselect.GenericDataSelect(toCells(events), dsQuery))
@@ -219,7 +220,7 @@ func CreateEventList(events []api.Event, dsQuery *dataselect.DataSelectQuery) co
 
 // The code below allows to perform complex data section on []api.Event
 
-type EventCell api.Event
+type EventCell v1.Event
 
 func (self EventCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
@@ -235,7 +236,7 @@ func (self EventCell) GetProperty(name dataselect.PropertyName) dataselect.Compa
 	}
 }
 
-func toCells(std []api.Event) []dataselect.DataCell {
+func toCells(std []v1.Event) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
 		cells[i] = EventCell(std[i])
@@ -243,10 +244,10 @@ func toCells(std []api.Event) []dataselect.DataCell {
 	return cells
 }
 
-func fromCells(cells []dataselect.DataCell) []api.Event {
-	std := make([]api.Event, len(cells))
+func fromCells(cells []dataselect.DataCell) []v1.Event {
+	std := make([]v1.Event, len(cells))
 	for i := range std {
-		std[i] = api.Event(cells[i].(EventCell))
+		std[i] = v1.Event(cells[i].(EventCell))
 	}
 	return std
 }

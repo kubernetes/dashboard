@@ -17,7 +17,7 @@ package thirdpartyresource
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
@@ -27,8 +27,8 @@ import (
 
 // ThirdPartyResourceDetail is a third party resource template.
 type ThirdPartyResourceDetail struct {
-	ObjectMeta  common.ObjectMeta            `json:"objectMeta"`
-	TypeMeta    common.TypeMeta              `json:"typeMeta"`
+	ObjectMeta  api.ObjectMeta               `json:"objectMeta"`
+	TypeMeta    api.TypeMeta                 `json:"typeMeta"`
 	Description string                       `json:"description"`
 	Versions    []extensions.APIVersion      `json:"versions"`
 	Objects     ThirdPartyResourceObjectList `json:"objects"`
@@ -53,8 +53,8 @@ func GetThirdPartyResourceDetail(client k8sClient.Interface, config *rest.Config
 
 func getThirdPartyResourceDetail(thirdPartyResource *extensions.ThirdPartyResource, objects ThirdPartyResourceObjectList) *ThirdPartyResourceDetail {
 	return &ThirdPartyResourceDetail{
-		ObjectMeta:  common.NewObjectMeta(thirdPartyResource.ObjectMeta),
-		TypeMeta:    common.NewTypeMeta(common.ResourceKindThirdPartyResource),
+		ObjectMeta:  api.NewObjectMeta(thirdPartyResource.ObjectMeta),
+		TypeMeta:    api.NewTypeMeta(api.ResourceKindThirdPartyResource),
 		Description: thirdPartyResource.Description,
 		Versions:    thirdPartyResource.Versions,
 		Objects:     objects,

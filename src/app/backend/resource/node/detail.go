@@ -17,7 +17,8 @@ package node
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
@@ -27,7 +28,7 @@ import (
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	k8sClient "k8s.io/client-go/kubernetes"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 	helper "k8s.io/client-go/pkg/api/v1/resource"
 )
 
@@ -75,11 +76,11 @@ type NodeAllocatedResources struct {
 // NodeDetail is a presentation layer view of Kubernetes Node resource. This means it is Node plus
 // additional augmented data we can get from other sources.
 type NodeDetail struct {
-	ObjectMeta common.ObjectMeta `json:"objectMeta"`
-	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 
 	// NodePhase is the current lifecycle phase of the node.
-	Phase api.NodePhase `json:"phase"`
+	Phase v1.NodePhase `json:"phase"`
 
 	// Resources allocated by node.
 	AllocatedResources NodeAllocatedResources `json:"allocatedResources"`
@@ -97,7 +98,7 @@ type NodeDetail struct {
 	Unschedulable bool `json:"unschedulable"`
 
 	// Set of ids/uuids to uniquely identify the node.
-	NodeInfo api.NodeSystemInfo `json:"nodeInfo"`
+	NodeInfo v1.NodeSystemInfo `json:"nodeInfo"`
 
 	// Conditions is an array of current node conditions.
 	Conditions []common.Condition `json:"conditions"`
@@ -116,7 +117,8 @@ type NodeDetail struct {
 }
 
 // GetNodeDetail gets node details.
-func GetNodeDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient, name string) (*NodeDetail, error) {
+func GetNodeDetail(client k8sClient.Interface, heapsterClient heapster.HeapsterClient,
+	name string) (*NodeDetail, error) {
 	log.Printf("Getting details of %s node", name)
 
 	node, err := client.CoreV1().Nodes().Get(name, metaV1.GetOptions{})
@@ -126,7 +128,7 @@ func GetNodeDetail(client k8sClient.Interface, heapsterClient client.HeapsterCli
 
 	// Download standard metrics. Currently metrics are hard coded, but it is possible to replace
 	// dataselect.StdMetricsDataSelect with data select provided in the request.
-	_, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells([]api.Node{*node}),
+	_, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells([]v1.Node{*node}),
 		dataselect.StdMetricsDataSelect,
 		dataselect.NoResourceCache, &heapsterClient)
 
@@ -152,8 +154,8 @@ func GetNodeDetail(client k8sClient.Interface, heapsterClient client.HeapsterCli
 	return &nodeDetails, nil
 }
 
-func getNodeAllocatedResources(node api.Node, podList *api.PodList) (NodeAllocatedResources, error) {
-	reqs, limits := map[api.ResourceName]resource.Quantity{}, map[api.ResourceName]resource.Quantity{}
+func getNodeAllocatedResources(node v1.Node, podList *v1.PodList) (NodeAllocatedResources, error) {
+	reqs, limits := map[v1.ResourceName]resource.Quantity{}, map[v1.ResourceName]resource.Quantity{}
 
 	for _, pod := range podList.Items {
 		podReqs, podLimits, err := helper.PodRequestsAndLimits(&pod)
@@ -178,8 +180,8 @@ func getNodeAllocatedResources(node api.Node, podList *api.PodList) (NodeAllocat
 		}
 	}
 
-	cpuRequests, cpuLimits, memoryRequests, memoryLimits := reqs[api.ResourceCPU],
-		limits[api.ResourceCPU], reqs[api.ResourceMemory], limits[api.ResourceMemory]
+	cpuRequests, cpuLimits, memoryRequests, memoryLimits := reqs[v1.ResourceCPU],
+		limits[v1.ResourceCPU], reqs[v1.ResourceMemory], limits[v1.ResourceMemory]
 
 	var cpuRequestsFraction, cpuLimitsFraction float64 = 0, 0
 	if capacity := float64(node.Status.Capacity.Cpu().MilliValue()); capacity > 0 {
@@ -210,7 +212,8 @@ func getNodeAllocatedResources(node api.Node, podList *api.PodList) (NodeAllocat
 }
 
 // GetNodePods return pods list in given named node
-func GetNodePods(client k8sClient.Interface, heapsterClient client.HeapsterClient, dsQuery *dataselect.DataSelectQuery, name string) (*pod.PodList, error) {
+func GetNodePods(client k8sClient.Interface, heapsterClient heapster.HeapsterClient,
+	dsQuery *dataselect.DataSelectQuery, name string) (*pod.PodList, error) {
 	node, err := client.CoreV1().Nodes().Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
@@ -221,31 +224,31 @@ func GetNodePods(client k8sClient.Interface, heapsterClient client.HeapsterClien
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(pods.Items, []api.Event{}, dsQuery, heapsterClient)
+	podList := pod.CreatePodList(pods.Items, []v1.Event{}, dsQuery, heapsterClient)
 	return &podList, nil
 }
 
 // getNodePods return pods list
-func getNodePods(client k8sClient.Interface, node api.Node) (*api.PodList, error) {
+func getNodePods(client k8sClient.Interface, node v1.Node) (*v1.PodList, error) {
 	fieldSelector, err := fields.ParseSelector("spec.nodeName=" + node.Name +
-		",status.phase!=" + string(api.PodSucceeded) +
-		",status.phase!=" + string(api.PodFailed))
+		",status.phase!=" + string(v1.PodSucceeded) +
+		",status.phase!=" + string(v1.PodFailed))
 
 	if err != nil {
 		return nil, err
 	}
 
-	return client.CoreV1().Pods(api.NamespaceAll).List(metaV1.ListOptions{
+	return client.CoreV1().Pods(v1.NamespaceAll).List(metaV1.ListOptions{
 		FieldSelector: fieldSelector.String(),
 	})
 }
 
-func toNodeDetail(node api.Node, pods *pod.PodList, eventList *common.EventList,
+func toNodeDetail(node v1.Node, pods *pod.PodList, eventList *common.EventList,
 	allocatedResources NodeAllocatedResources, metrics []metric.Metric) NodeDetail {
 
 	return NodeDetail{
-		ObjectMeta:         common.NewObjectMeta(node.ObjectMeta),
-		TypeMeta:           common.NewTypeMeta(common.ResourceKindNode),
+		ObjectMeta:         api.NewObjectMeta(node.ObjectMeta),
+		TypeMeta:           api.NewTypeMeta(api.ResourceKindNode),
 		Phase:              node.Status.Phase,
 		ExternalID:         node.Spec.ExternalID,
 		ProviderID:         node.Spec.ProviderID,

@@ -17,7 +17,7 @@ package job
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
@@ -30,7 +30,7 @@ import (
 )
 
 // GetJobPods return list of pods targeting job.
-func GetJobPods(client k8sClient.Interface, heapsterClient client.HeapsterClient,
+func GetJobPods(client k8sClient.Interface, heapsterClient heapster.HeapsterClient,
 	dsQuery *dataselect.DataSelectQuery, namespace string, jobName string) (*pod.PodList, error) {
 	log.Printf("Getting replication controller %s pods in namespace %s", jobName, namespace)
 

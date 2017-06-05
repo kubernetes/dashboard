@@ -17,6 +17,7 @@ package thirdpartyresource
 import (
 	"log"
 
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	k8sClient "k8s.io/client-go/kubernetes"
@@ -25,14 +26,14 @@ import (
 
 // ThirdPartyResource is a third party resource template.
 type ThirdPartyResource struct {
-	ObjectMeta common.ObjectMeta `json:"objectMeta"`
-	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 }
 
 // ThirdPartyResourceList contains a list of third party resource templates.
 type ThirdPartyResourceList struct {
-	ListMeta            common.ListMeta      `json:"listMeta"`
-	TypeMeta            common.TypeMeta      `json:"typeMeta"`
+	ListMeta            api.ListMeta         `json:"listMeta"`
+	TypeMeta            api.TypeMeta         `json:"typeMeta"`
 	ThirdPartyResources []ThirdPartyResource `json:"thirdPartyResources"`
 }
 
@@ -66,18 +67,18 @@ func getThirdPartyResourceList(thirdPartyResources []extensions.ThirdPartyResour
 	dsQuery *dataselect.DataSelectQuery) *ThirdPartyResourceList {
 	result := &ThirdPartyResourceList{
 		ThirdPartyResources: make([]ThirdPartyResource, 0),
-		ListMeta:            common.ListMeta{TotalItems: len(thirdPartyResources)},
+		ListMeta:            api.ListMeta{TotalItems: len(thirdPartyResources)},
 	}
 
 	tprCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(thirdPartyResources), dsQuery)
 	thirdPartyResources = fromCells(tprCells)
-	result.ListMeta = common.ListMeta{TotalItems: filteredTotal}
+	result.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, item := range thirdPartyResources {
 		result.ThirdPartyResources = append(result.ThirdPartyResources,
 			ThirdPartyResource{
-				ObjectMeta: common.NewObjectMeta(item.ObjectMeta),
-				TypeMeta:   common.NewTypeMeta(common.ResourceKindThirdPartyResource),
+				ObjectMeta: api.NewObjectMeta(item.ObjectMeta),
+				TypeMeta:   api.NewTypeMeta(api.ResourceKindThirdPartyResource),
 			})
 	}
 

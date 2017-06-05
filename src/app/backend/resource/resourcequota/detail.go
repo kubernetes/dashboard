@@ -15,8 +15,8 @@
 package resourcequota
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	api "k8s.io/client-go/pkg/api/v1"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 // ResourceStatus provides the status of the resource defined by a resource quota.
@@ -27,24 +27,24 @@ type ResourceStatus struct {
 
 // ResourceQuotaDetail provides the presentation layer view of Kubernetes Resource Quotas resource.
 type ResourceQuotaDetail struct {
-	ObjectMeta common.ObjectMeta `json:"objectMeta"`
-	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 
 	// Scopes defines quota scopes
-	Scopes []api.ResourceQuotaScope `json:"scopes,omitempty"`
+	Scopes []v1.ResourceQuotaScope `json:"scopes,omitempty"`
 
 	// StatusList is a set of (resource name, Used, Hard) tuple.
-	StatusList map[api.ResourceName]ResourceStatus `json:"statusList,omitempty"`
+	StatusList map[v1.ResourceName]ResourceStatus `json:"statusList,omitempty"`
 }
 
 // ResourceQuotaDetailList
 type ResourceQuotaDetailList struct {
-	ListMeta common.ListMeta       `json:"listMeta"`
+	ListMeta api.ListMeta          `json:"listMeta"`
 	Items    []ResourceQuotaDetail `json:"items"`
 }
 
-func ToResourceQuotaDetail(rawResourceQuota *api.ResourceQuota) *ResourceQuotaDetail {
-	statusList := make(map[api.ResourceName]ResourceStatus)
+func ToResourceQuotaDetail(rawResourceQuota *v1.ResourceQuota) *ResourceQuotaDetail {
+	statusList := make(map[v1.ResourceName]ResourceStatus)
 
 	for key, value := range rawResourceQuota.Status.Hard {
 		used := rawResourceQuota.Status.Used[key]
@@ -54,8 +54,8 @@ func ToResourceQuotaDetail(rawResourceQuota *api.ResourceQuota) *ResourceQuotaDe
 		}
 	}
 	return &ResourceQuotaDetail{
-		ObjectMeta: common.NewObjectMeta(rawResourceQuota.ObjectMeta),
-		TypeMeta:   common.NewTypeMeta(common.ResourceKindResourceQuota),
+		ObjectMeta: api.NewObjectMeta(rawResourceQuota.ObjectMeta),
+		TypeMeta:   api.NewTypeMeta(api.ResourceKindResourceQuota),
 		Scopes:     rawResourceQuota.Spec.Scopes,
 		StatusList: statusList,
 	}

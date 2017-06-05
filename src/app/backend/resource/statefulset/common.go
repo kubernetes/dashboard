@@ -15,7 +15,7 @@
 package statefulset
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	apps "k8s.io/client-go/pkg/apis/apps/v1beta1"
@@ -42,7 +42,7 @@ func (self StatefulSetCell) GetProperty(name dataselect.PropertyName) dataselect
 func (self StatefulSetCell) GetResourceSelector() *metric.ResourceSelector {
 	return &metric.ResourceSelector{
 		Namespace:    self.ObjectMeta.Namespace,
-		ResourceType: common.ResourceKindStatefulSet,
+		ResourceType: api.ResourceKindStatefulSet,
 		ResourceName: self.ObjectMeta.Name,
 		UID:          self.UID,
 	}

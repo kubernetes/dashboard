@@ -17,19 +17,20 @@ package pod
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 // PodList contains a list of Pods in the cluster.
 type PodList struct {
-	ListMeta common.ListMeta `json:"listMeta"`
+	ListMeta api.ListMeta `json:"listMeta"`
 
 	// Unordered list of Pods.
 	Pods              []Pod           `json:"pods"`
@@ -38,17 +39,17 @@ type PodList struct {
 
 type PodStatus struct {
 	// Status of the Pod. See Kubernetes API for reference.
-	Status          string               `json:"status"`
-	PodPhase        api.PodPhase         `json:"podPhase"`
-	ContainerStates []api.ContainerState `json:"containerStates"`
+	Status          string              `json:"status"`
+	PodPhase        v1.PodPhase         `json:"podPhase"`
+	ContainerStates []v1.ContainerState `json:"containerStates"`
 }
 
 // Pod is a presentation layer view of Kubernetes Pod resource. This means
 // it is Pod plus additional augmented data we can get from other sources
 // (like services that target it).
 type Pod struct {
-	ObjectMeta common.ObjectMeta `json:"objectMeta"`
-	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 
 	// More info on pod status
 	PodStatus PodStatus `json:"podStatus"`
@@ -64,7 +65,7 @@ type Pod struct {
 }
 
 // GetPodList returns a list of all Pods in the cluster.
-func GetPodList(client k8sClient.Interface, heapsterClient client.HeapsterClient,
+func GetPodList(client k8sClient.Interface, heapsterClient heapster.HeapsterClient,
 	nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*PodList, error) {
 	log.Print("Getting list of all pods in the cluster")
 
@@ -79,7 +80,7 @@ func GetPodList(client k8sClient.Interface, heapsterClient client.HeapsterClient
 // GetPodListFromChannels returns a list of all Pods in the cluster
 // reading required resource list once from the channels.
 func GetPodListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery,
-	heapsterClient client.HeapsterClient) (*PodList, error) {
+	heapsterClient heapster.HeapsterClient) (*PodList, error) {
 
 	pods := <-channels.PodList.List
 	if err := <-channels.PodList.Error; err != nil {
@@ -95,8 +96,8 @@ func GetPodListFromChannels(channels *common.ResourceChannels, dsQuery *datasele
 	return &podList, nil
 }
 
-func CreatePodList(pods []api.Pod, events []api.Event, dsQuery *dataselect.DataSelectQuery,
-	heapsterClient client.HeapsterClient) PodList {
+func CreatePodList(pods []v1.Pod, events []v1.Event, dsQuery *dataselect.DataSelectQuery,
+	heapsterClient heapster.HeapsterClient) PodList {
 
 	channels := &common.ResourceChannels{
 		PodMetrics: common.GetPodListMetricsChannel(heapsterClient, pods, 1),
@@ -116,10 +117,10 @@ func CreatePodList(pods []api.Pod, events []api.Event, dsQuery *dataselect.DataS
 	podCells, cumulativeMetricsPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(toCells(pods), dsQuery,
 		cache, &heapsterClient)
 	pods = fromCells(podCells)
-	podList.ListMeta = common.ListMeta{TotalItems: filteredTotal}
+	podList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, pod := range pods {
-		warnings := event.GetPodsEventWarnings(events, []api.Pod{pod})
+		warnings := event.GetPodsEventWarnings(events, []v1.Pod{pod})
 
 		podDetail := ToPod(&pod, metrics, warnings)
 		podDetail.Warnings = warnings

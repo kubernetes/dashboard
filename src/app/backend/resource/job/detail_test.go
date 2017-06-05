@@ -18,7 +18,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
@@ -32,7 +33,7 @@ import (
 type FakeHeapsterClient struct {
 }
 
-func (c FakeHeapsterClient) Get(path string) client.RequestInterface {
+func (c FakeHeapsterClient) Get(path string) heapster.RequestInterface {
 	return &restclient.Request{}
 }
 
@@ -67,9 +68,9 @@ func TestGetJobDetail(t *testing.T) {
 			[]string{"get", "get", "list", "list", "list", "get", "list", "list"},
 			createJob("job-1", "ns-1", map[string]string{"app": "test"}),
 			&JobDetail{
-				ObjectMeta: common.ObjectMeta{Name: "job-1", Namespace: "ns-1",
+				ObjectMeta: api.ObjectMeta{Name: "job-1", Namespace: "ns-1",
 					Labels: map[string]string{"app": "test"}},
-				TypeMeta: common.TypeMeta{Kind: common.ResourceKindJob},
+				TypeMeta: api.TypeMeta{Kind: api.ResourceKindJob},
 				PodInfo:  common.PodInfo{Warnings: []common.Event{}},
 				PodList: pod.PodList{
 					Pods:              []pod.Pod{},

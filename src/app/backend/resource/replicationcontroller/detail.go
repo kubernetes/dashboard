@@ -17,7 +17,8 @@ package replicationcontroller
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
@@ -25,13 +26,13 @@ import (
 	resourceService "github.com/kubernetes/dashboard/src/app/backend/resource/service"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 // ReplicationControllerDetail represents detailed information about a Replication Controller.
 type ReplicationControllerDetail struct {
-	ObjectMeta common.ObjectMeta `json:"objectMeta"`
-	TypeMeta   common.TypeMeta   `json:"typeMeta"`
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 
 	// Label selector of the Replication Controller.
 	LabelSelector map[string]string `json:"labelSelector"`
@@ -66,7 +67,8 @@ type ReplicationControllerSpec struct {
 
 // GetReplicationControllerDetail returns detailed information about the given replication
 // controller in the given namespace.
-func GetReplicationControllerDetail(client k8sClient.Interface, heapsterClient client.HeapsterClient,
+func GetReplicationControllerDetail(client k8sClient.Interface,
+	heapsterClient heapster.HeapsterClient,
 	namespace, name string) (*ReplicationControllerDetail, error) {
 	log.Printf("Getting details of %s replication controller in %s namespace", name, namespace)
 
@@ -134,13 +136,13 @@ func UpdateReplicasCount(client k8sClient.Interface, namespace, name string,
 
 // ToReplicationControllerDetail converts replication controller api object to replication
 // controller detail model object.
-func ToReplicationControllerDetail(replicationController *api.ReplicationController,
+func ToReplicationControllerDetail(replicationController *v1.ReplicationController,
 	podInfo common.PodInfo, podList pod.PodList, eventList common.EventList,
 	serviceList resourceService.ServiceList, hpas horizontalpodautoscaler.HorizontalPodAutoscalerList) ReplicationControllerDetail {
 
 	replicationControllerDetail := ReplicationControllerDetail{
-		ObjectMeta:                  common.NewObjectMeta(replicationController.ObjectMeta),
-		TypeMeta:                    common.NewTypeMeta(common.ResourceKindReplicationController),
+		ObjectMeta:                  api.NewObjectMeta(replicationController.ObjectMeta),
+		TypeMeta:                    api.NewTypeMeta(api.ResourceKindReplicationController),
 		LabelSelector:               replicationController.Spec.Selector,
 		PodInfo:                     podInfo,
 		PodList:                     podList,

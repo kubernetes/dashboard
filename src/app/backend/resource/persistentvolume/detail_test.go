@@ -18,52 +18,52 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 func TestGetPersistentVolumeDetail(t *testing.T) {
 	cases := []struct {
 		name             string
-		persistentVolume *api.PersistentVolume
+		persistentVolume *v1.PersistentVolume
 		expected         *PersistentVolumeDetail
 	}{
 		{
 			"foo",
-			&api.PersistentVolume{
+			&v1.PersistentVolume{
 				ObjectMeta: metaV1.ObjectMeta{Name: "foo"},
-				Spec: api.PersistentVolumeSpec{
-					PersistentVolumeReclaimPolicy: api.PersistentVolumeReclaimRecycle,
-					AccessModes:                   []api.PersistentVolumeAccessMode{api.ReadWriteOnce},
+				Spec: v1.PersistentVolumeSpec{
+					PersistentVolumeReclaimPolicy: v1.PersistentVolumeReclaimRecycle,
+					AccessModes:                   []v1.PersistentVolumeAccessMode{v1.ReadWriteOnce},
 					Capacity:                      nil,
-					ClaimRef: &api.ObjectReference{
+					ClaimRef: &v1.ObjectReference{
 						Name:      "myclaim-name",
 						Namespace: "default",
 					},
-					PersistentVolumeSource: api.PersistentVolumeSource{
-						HostPath: &api.HostPathVolumeSource{
+					PersistentVolumeSource: v1.PersistentVolumeSource{
+						HostPath: &v1.HostPathVolumeSource{
 							Path: "my-path",
 						},
 					},
 				},
-				Status: api.PersistentVolumeStatus{
-					Phase:   api.VolumePending,
+				Status: v1.PersistentVolumeStatus{
+					Phase:   v1.VolumePending,
 					Message: "my-message",
 				},
 			},
 			&PersistentVolumeDetail{
-				TypeMeta:      common.TypeMeta{Kind: "persistentvolume"},
-				ObjectMeta:    common.ObjectMeta{Name: "foo"},
-				Status:        api.VolumePending,
-				ReclaimPolicy: api.PersistentVolumeReclaimRecycle,
-				AccessModes:   []api.PersistentVolumeAccessMode{api.ReadWriteOnce},
+				TypeMeta:      api.TypeMeta{Kind: "persistentvolume"},
+				ObjectMeta:    api.ObjectMeta{Name: "foo"},
+				Status:        v1.VolumePending,
+				ReclaimPolicy: v1.PersistentVolumeReclaimRecycle,
+				AccessModes:   []v1.PersistentVolumeAccessMode{v1.ReadWriteOnce},
 				Capacity:      nil,
 				Claim:         "default/myclaim-name",
 				Message:       "my-message",
-				PersistentVolumeSource: api.PersistentVolumeSource{
-					HostPath: &api.HostPathVolumeSource{
+				PersistentVolumeSource: v1.PersistentVolumeSource{
+					HostPath: &v1.HostPathVolumeSource{
 						Path: "my-path",
 					},
 				},

@@ -15,19 +15,20 @@
 package secret
 
 import (
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
 	client "k8s.io/client-go/kubernetes"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 // SecretSpec - common interface for the specification of different secrets.
 type SecretSpec interface {
 	GetName() string
-	GetType() api.SecretType
+	GetType() v1.SecretType
 	GetNamespace() string
 	GetData() map[string][]byte
 }
@@ -46,8 +47,8 @@ func (spec *ImagePullSecretSpec) GetName() string {
 }
 
 // GetType - return the type of the ImagePullSecret, which is always api.SecretTypeDockercfg
-func (spec *ImagePullSecretSpec) GetType() api.SecretType {
-	return api.SecretTypeDockercfg
+func (spec *ImagePullSecretSpec) GetType() v1.SecretType {
+	return v1.SecretTypeDockercfg
 }
 
 // GetNamespace - return the namespace of the ImagePullSecret
@@ -57,18 +58,18 @@ func (spec *ImagePullSecretSpec) GetNamespace() string {
 
 // GetData - return the data the secret carries, it is a single key-value pair
 func (spec *ImagePullSecretSpec) GetData() map[string][]byte {
-	return map[string][]byte{api.DockerConfigKey: spec.Data}
+	return map[string][]byte{v1.DockerConfigKey: spec.Data}
 }
 
 // Secret - a single secret returned to the frontend.
 type Secret struct {
-	common.ObjectMeta `json:"objectMeta"`
-	common.TypeMeta   `json:"typeMeta"`
+	api.ObjectMeta `json:"objectMeta"`
+	api.TypeMeta   `json:"typeMeta"`
 }
 
 // SecretsList - response structure for a queried secrets list.
 type SecretList struct {
-	common.ListMeta `json:"listMeta"`
+	api.ListMeta `json:"listMeta"`
 
 	// Unordered list of Secrets.
 	Secrets []Secret `json:"secrets"`
@@ -105,7 +106,7 @@ func GetSecretListFromChannels(channels *common.ResourceChannels, dsQuery *datas
 // CreateSecret - create a single secret using the cluster API client
 func CreateSecret(client *client.Clientset, spec SecretSpec) (*Secret, error) {
 	namespace := spec.GetNamespace()
-	secret := &api.Secret{
+	secret := &v1.Secret{
 		ObjectMeta: metaV1.ObjectMeta{
 			Name:      spec.GetName(),
 			Namespace: namespace,
@@ -118,21 +119,21 @@ func CreateSecret(client *client.Clientset, spec SecretSpec) (*Secret, error) {
 }
 
 // NewSecret - creates a new instance of Secret struct based on K8s Secret.
-func NewSecret(secret *api.Secret) *Secret {
-	return &Secret{common.NewObjectMeta(secret.ObjectMeta),
-		common.NewTypeMeta(common.ResourceKindSecret)}
+func NewSecret(secret *v1.Secret) *Secret {
+	return &Secret{api.NewObjectMeta(secret.ObjectMeta),
+		api.NewTypeMeta(api.ResourceKindSecret)}
 }
 
 // NewSecret - creates a new instance of SecretList struct based on K8s Secrets array.
-func NewSecretList(secrets []api.Secret, dsQuery *dataselect.DataSelectQuery) *SecretList {
+func NewSecretList(secrets []v1.Secret, dsQuery *dataselect.DataSelectQuery) *SecretList {
 	newSecretList := &SecretList{
-		ListMeta: common.ListMeta{TotalItems: len(secrets)},
+		ListMeta: api.ListMeta{TotalItems: len(secrets)},
 		Secrets:  make([]Secret, 0),
 	}
 
 	secretCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(secrets), dsQuery)
 	secrets = fromCells(secretCells)
-	newSecretList.ListMeta = common.ListMeta{TotalItems: filteredTotal}
+	newSecretList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, secret := range secrets {
 		newSecretList.Secrets = append(newSecretList.Secrets, *NewSecret(&secret))

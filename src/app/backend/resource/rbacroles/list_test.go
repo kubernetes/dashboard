@@ -18,9 +18,9 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	api "k8s.io/apimachinery/pkg/apis/meta/v1"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	rbac "k8s.io/client-go/pkg/apis/rbac/v1alpha1"
 )
 
@@ -34,7 +34,7 @@ func TestGetRbacRoleList(t *testing.T) {
 		{
 			[]rbac.Role{
 				{
-					ObjectMeta: api.ObjectMeta{Name: "Role", Namespace: "Testing"},
+					ObjectMeta: metaV1.ObjectMeta{Name: "Role", Namespace: "Testing"},
 					Rules: []rbac.PolicyRule{{
 						Verbs:     []string{"get", "put"},
 						Resources: []string{"pods"},
@@ -43,7 +43,7 @@ func TestGetRbacRoleList(t *testing.T) {
 			},
 			[]rbac.ClusterRole{
 				{
-					ObjectMeta: api.ObjectMeta{Name: "cluster-role"},
+					ObjectMeta: metaV1.ObjectMeta{Name: "cluster-role"},
 					Rules: []rbac.PolicyRule{{
 						Verbs:     []string{"post", "put"},
 						Resources: []string{"pods", "deployments"},
@@ -51,13 +51,13 @@ func TestGetRbacRoleList(t *testing.T) {
 				},
 			},
 			&RbacRoleList{
-				ListMeta: common.ListMeta{TotalItems: 2},
+				ListMeta: api.ListMeta{TotalItems: 2},
 				Items: []RbacRole{{
-					ObjectMeta: common.ObjectMeta{Name: "Role", Namespace: "Testing"},
-					TypeMeta:   common.TypeMeta{Kind: common.ResourceKindRbacRole},
+					ObjectMeta: api.ObjectMeta{Name: "Role", Namespace: "Testing"},
+					TypeMeta:   api.TypeMeta{Kind: api.ResourceKindRbacRole},
 				}, {
-					ObjectMeta: common.ObjectMeta{Name: "cluster-role", Namespace: ""},
-					TypeMeta:   common.TypeMeta{Kind: common.ResourceKindRbacClusterRole},
+					ObjectMeta: api.ObjectMeta{Name: "cluster-role", Namespace: ""},
+					TypeMeta:   api.TypeMeta{Kind: api.ResourceKindRbacClusterRole},
 				}},
 			},
 		},

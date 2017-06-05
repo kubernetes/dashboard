@@ -18,14 +18,15 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	api "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
-var k8SecretList = &api.SecretList{
-	Items: []api.Secret{
+var k8SecretList = &v1.SecretList{
+	Items: []v1.Secret{
 		{
 			ObjectMeta: metaV1.ObjectMeta{
 				Name:              "user1",
@@ -45,7 +46,7 @@ var k8SecretList = &api.SecretList{
 
 func TestNewSecretListCreation(t *testing.T) {
 	cases := []struct {
-		k8sRs     *api.SecretList
+		k8sRs     *v1.SecretList
 		expected  *SecretList
 		namespace *common.NamespaceQuery
 	}{
@@ -54,23 +55,23 @@ func TestNewSecretListCreation(t *testing.T) {
 			&SecretList{
 				Secrets: []Secret{
 					{
-						ObjectMeta: common.ObjectMeta{
+						ObjectMeta: api.ObjectMeta{
 							Name:              "user1",
 							Namespace:         "foo",
 							CreationTimestamp: metaV1.Unix(111, 222),
 						},
-						TypeMeta: common.NewTypeMeta(common.ResourceKindSecret),
+						TypeMeta: api.NewTypeMeta(api.ResourceKindSecret),
 					},
 					{
-						ObjectMeta: common.ObjectMeta{
+						ObjectMeta: api.ObjectMeta{
 							Name:              "user2",
 							Namespace:         "foo",
 							CreationTimestamp: metaV1.Unix(111, 222),
 						},
-						TypeMeta: common.NewTypeMeta(common.ResourceKindSecret),
+						TypeMeta: api.NewTypeMeta(api.ResourceKindSecret),
 					},
 				},
-				ListMeta: common.ListMeta{2},
+				ListMeta: api.ListMeta{2},
 			},
 			common.NewNamespaceQuery([]string{"foo"}),
 		},

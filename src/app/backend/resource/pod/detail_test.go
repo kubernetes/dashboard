@@ -15,21 +15,22 @@
 package pod
 
 import (
-	"fmt"
 	"net/http"
 	"reflect"
 	"testing"
 
 	"encoding/base64"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"errors"
+
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/owner"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 	"k8s.io/client-go/pkg/api/v1"
-	api "k8s.io/client-go/pkg/api/v1"
 	restclient "k8s.io/client-go/rest"
 )
 
@@ -41,26 +42,26 @@ func (f clientFunc) Do(req *http.Request) (*http.Response, error) {
 	return f(req)
 }
 
-func (c FakeHeapsterClient) Get(path string) client.RequestInterface {
+func (c FakeHeapsterClient) Get(path string) heapster.RequestInterface {
 	return restclient.NewRequest(clientFunc(func(req *http.Request) (*http.Response, error) {
-		return nil, fmt.Errorf("fake error")
+		return nil, errors.New("fake error")
 	}), "GET", nil, "/api/v1", restclient.ContentConfig{}, restclient.Serializers{}, nil, nil)
 }
 
 func TestGetPodDetail(t *testing.T) {
 	cases := []struct {
-		pod      *api.PodList
+		pod      *v1.PodList
 		expected *PodDetail
 	}{
 		{
-			pod: &api.PodList{Items: []api.Pod{{
+			pod: &v1.PodList{Items: []v1.Pod{{
 				ObjectMeta: metaV1.ObjectMeta{
 					Name: "test-pod", Namespace: "test-namespace",
 					Labels: map[string]string{"app": "test"},
 				}}}},
 			expected: &PodDetail{
-				TypeMeta: common.TypeMeta{Kind: common.ResourceKindPod},
-				ObjectMeta: common.ObjectMeta{
+				TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
+				ObjectMeta: api.ObjectMeta{
 					Name:      "test-pod",
 					Namespace: "test-namespace",
 					Labels:    map[string]string{"app": "test"},
