@@ -1,3 +1,17 @@
+// Copyright 2015 Google Inc. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package client
 
 import (
@@ -49,7 +63,7 @@ type clientManager struct {
 }
 
 // Client returns kubernetes client that is created based on authentication information extracted
-// from request.
+// from request. If request is nil then authentication will be skipped.
 func (self *clientManager) Client(req *restful.Request) (*kubernetes.Clientset, error) {
 	cfg, err := self.Config(req)
 	if err != nil {
@@ -123,13 +137,13 @@ func (self *clientManager) buildConfigFromFlags(apiserverHost, kubeConfigPath st
 		return self.inClusterConfig, nil
 	}
 
-	return nil, errors.New("Could not create client config. Check logs for more information.")
+	return nil, errors.New("Could not create client config. Check logs for more information")
 }
 
 // Extracts authentication information from request header
 func (self *clientManager) extractAuthInfo(req *restful.Request) api.AuthInfo {
 	if req == nil {
-		log.Print("No request provided. Skipping authorization header.")
+		log.Print("No request provided. Skipping authorization header")
 		return api.AuthInfo{}
 	}
 
@@ -166,11 +180,11 @@ func (self *clientManager) initCSRFKey() {
 // Initializes in-cluster config if apiserverHost and kubeConfigPath were not provided.
 func (self *clientManager) initInClusterConfig() {
 	if len(self.apiserverHost) > 0 || len(self.kubeConfigPath) > 0 {
-		log.Print("Skipping in-cluster config.")
+		log.Print("Skipping in-cluster config")
 		return
 	}
 
-	log.Print("Using in-cluster config to connect to apiserver.")
+	log.Print("Using in-cluster config to connect to apiserver")
 	cfg, err := rest.InClusterConfig()
 	if err != nil {
 		log.Printf("Could not init in cluster config: %s", err.Error())
@@ -185,7 +199,7 @@ func (self *clientManager) generateCSRFKey() {
 	bytes := make([]byte, 256)
 	_, err := rand.Read(bytes)
 	if err != nil {
-		panic("Fatal error. Could not generate csrf key.")
+		panic("Fatal error. Could not generate csrf key")
 	}
 
 	self.csrfKey = string(bytes)
@@ -196,7 +210,7 @@ func (self *clientManager) isRunningInCluster() bool {
 	return self.inClusterConfig != nil
 }
 
-// NewClientManager created client manager based on kubeConfigPath and apiserverHost parameters.
+// NewClientManager creates client manager based on kubeConfigPath and apiserverHost parameters.
 // If both are empty then in-cluster config is used.
 func NewClientManager(kubeConfigPath, apiserverHost string) ClientManager {
 	result := &clientManager{

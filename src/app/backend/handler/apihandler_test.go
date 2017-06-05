@@ -9,7 +9,15 @@ import (
 	"strings"
 
 	"github.com/emicklei/go-restful"
+	"github.com/kubernetes/dashboard/src/app/backend/client"
 )
+
+func TestCreateHTTPAPIHandler(t *testing.T) {
+	_, err := CreateHTTPAPIHandler(nil, client.NewClientManager("", "http://localhost:8080"))
+	if err != nil {
+		t.Fatal("CreateHTTPAPIHandler() cannot create HTTP API handler")
+	}
+}
 
 func TestShouldDoCsrfValidation(t *testing.T) {
 	cases := []struct {
