@@ -99,15 +99,15 @@ export class GraphController {
    */
   generateGraph_() {
     nv.addGraph(() => {
-        let svg = d3.select(this.element_[0]).append('svg');
+      let svg = d3.select(this.element_[0]).append('svg');
 
-        if (this.outer !== undefined) {
-            this.initPieChart_(svg, this.outerData, '#00c752', 0, 0.61);
-        }
+      if (this.outer !== undefined) {
+        this.initPieChart_(svg, this.outerData, '#00c752', 0, 0.61);
+      }
 
-        if (this.inner !== undefined) {
-            this.initPieChart_(svg, this.innerData, '#326de6', 36, 0.55);
-        }
+      if (this.inner !== undefined) {
+        this.initPieChart_(svg, this.innerData, '#326de6', 36, 0.55);
+      }
     });
   }
 }
@@ -119,7 +119,7 @@ export class GraphController {
  */
 export const graphComponent = {
   restrict: 'E',
-    transclude: true,
+  transclude: true,
   bindings: {
     'outer': '<',
     'inner': '<',
