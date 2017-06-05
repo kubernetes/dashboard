@@ -53,14 +53,14 @@
 }
 
 .kd-graph-legend-value {
-  text-align: right;
   flex: 1 auto;
+  text-align: right;
 }
 
 .kd-graph-green {
-  color: #00c752;
+  color: $chart-1;
 }
 
 .kd-graph-blue {
-  color: #326de6;
+  color: $chart-2;
 }
