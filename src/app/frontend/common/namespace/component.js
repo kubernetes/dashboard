@@ -42,9 +42,12 @@ export class NamespaceSelectController {
    * @param {!angular.Scope} $scope
    * @param {!./../state/service.FutureStateService} kdFutureStateService
    * @param {!./../components/breadcrumbs/service.BreadcrumbsService} kdBreadcrumbsService
+   * @param {!./color_selection_service.ColorSelectionService} kdColorSelectionService
    * @ngInject
    */
-  constructor($resource, $state, $scope, kdFutureStateService, kdBreadcrumbsService) {
+  constructor(
+      $resource, $state, $scope, $cookies, kdFutureStateService, kdBreadcrumbsService,
+      kdColorSelectionService) {
     /**
      * Initialized with all namespaces on first open.
      * @export {!Array<string>}
@@ -81,6 +84,20 @@ export class NamespaceSelectController {
     /** @private {!./../components/breadcrumbs/service.BreadcrumbsService}} */
     this.kdBreadcrumbsService_ = kdBreadcrumbsService;
 
+    this.kdColorSelectionService = kdColorSelectionService;
+    this.cookies = $cookies;
+    this.nsStyles = this.cookies.getObject('kd-ns-styles');
+    if (!this.nsStyles) {
+      this.nsStyles = {};
+    }
+    this.storeNamespaceStyles = function() {
+      let d = new Date();
+      let year = d.getFullYear();
+      let month = d.getMonth();
+      let day = d.getDate();
+      this.cookies.putObject(
+          'kd-ns-styles', this.nsStyles, {path: '/', expires: new Date(year + 1, month, day)});
+    };
     /** @export */
     this.i18n = i18n;
   }
@@ -198,6 +215,29 @@ export class NamespaceSelectController {
         }
       });
     }
+  }
+
+  selectColors() {
+    this.kdColorSelectionService.selectColors().then((data) => {
+      this.setNamespaceStyle(this.selectedNamespace, data);
+    });
+  }
+
+  currentNamespaceStyle() {
+    return this.getNamespaceStyle(this.selectedNamespace);
+  }
+
+  getNamespaceStyle(namespace) {
+    let style = this.nsStyles[namespace];
+    if (!style) {
+      style = {};
+    }
+    return style;
+  }
+
+  setNamespaceStyle(namespace, style) {
+    this.nsStyles[namespace] = style;
+    this.storeNamespaceStyles();
   }
 }
 

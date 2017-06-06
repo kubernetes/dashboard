@@ -35,6 +35,7 @@ import {toggleHiddenTextComponent} from './togglehiddentext/component';
 import warnThresholdDirective from './warnthreshold/directive';
 import {zeroStateComponent} from './zerostate/component';
 
+
 /**
  * Module containing common components for the application.
  */
@@ -44,6 +45,7 @@ export default angular
         [
           'ngMaterial',
           'ui.router',
+          'ngCookies',
           filtersModule.name,
           actionbarModule.name,
           endpointModule.name,
