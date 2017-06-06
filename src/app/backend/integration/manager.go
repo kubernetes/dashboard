@@ -47,7 +47,7 @@ func (self *integrationManager) getState(integration api.Integration) *api.Integ
 		Error: integration.HealthCheck(),
 	}
 
-	result.Connected = (result.Error != nil && len(result.Error.Error()) == 0)
+	result.Connected = (result.Error == nil)
 	result.LastChecked = v1.Now()
 
 	return result
