@@ -22,21 +22,11 @@ import (
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 	"k8s.io/client-go/pkg/api/v1"
-	restclient "k8s.io/client-go/rest"
 )
-
-type FakeHeapsterClient struct {
-	client fake.Clientset
-}
-
-func (c FakeHeapsterClient) Get(path string) heapster.RequestInterface {
-	return &restclient.Request{}
-}
 
 func TestGetNodeDetail(t *testing.T) {
 	cases := []struct {
@@ -91,10 +81,9 @@ func TestGetNodeDetail(t *testing.T) {
 
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.node)
-		fakeHeapsterClient := FakeHeapsterClient{client: *fake.NewSimpleClientset()}
 
 		dataselect.StdMetricsDataSelect.MetricQuery = dataselect.NoMetrics
-		actual, _ := GetNodeDetail(fakeClient, fakeHeapsterClient, c.name)
+		actual, _ := GetNodeDetail(fakeClient, nil, c.name)
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetNodeDetail(client,metricClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",

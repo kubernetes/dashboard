@@ -70,8 +70,7 @@ func TestGetNodeList(t *testing.T) {
 
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.node)
-		fakeHeapsterClient := FakeHeapsterClient{client: *fake.NewSimpleClientset()}
-		actual, _ := GetNodeList(fakeClient, dataselect.NoDataSelect, fakeHeapsterClient)
+		actual, _ := GetNodeList(fakeClient, dataselect.NoDataSelect, nil)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetNodeList() == \ngot: %#v, \nexpected %#v", actual, c.expected)
 		}

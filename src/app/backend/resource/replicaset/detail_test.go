@@ -23,22 +23,12 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
-	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/service"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
-	restclient "k8s.io/client-go/rest"
 )
-
-type FakeHeapsterClient struct {
-	client fake.Clientset
-}
-
-func (c FakeHeapsterClient) Get(path string) heapster.RequestInterface {
-	return &restclient.Request{}
-}
 
 func TestGetReplicaSetDetail(t *testing.T) {
 	replicas := int32(0)
@@ -82,10 +72,9 @@ func TestGetReplicaSetDetail(t *testing.T) {
 
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.replicaSet)
-		fakeHeapsterClient := FakeHeapsterClient{client: *fake.NewSimpleClientset()}
 
 		dataselect.DefaultDataSelectWithMetrics.MetricQuery = dataselect.NoMetrics
-		actual, _ := GetReplicaSetDetail(fakeClient, fakeHeapsterClient, c.namespace, c.name)
+		actual, _ := GetReplicaSetDetail(fakeClient, nil, c.namespace, c.name)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {

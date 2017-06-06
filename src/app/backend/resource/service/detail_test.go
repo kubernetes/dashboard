@@ -22,26 +22,11 @@ import (
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 	"k8s.io/client-go/pkg/api/v1"
 )
-
-type FakeHeapsterClient struct {
-	client fake.Clientset
-}
-
-type FakeRequest struct{}
-
-func (FakeRequest) DoRaw() ([]byte, error) {
-	return nil, nil
-}
-
-func (c FakeHeapsterClient) Get(path string) heapster.RequestInterface {
-	return FakeRequest{}
-}
 
 func TestGetServiceDetail(t *testing.T) {
 	cases := []struct {
@@ -100,9 +85,8 @@ func TestGetServiceDetail(t *testing.T) {
 
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.service)
-		fakeHeapsterClient := FakeHeapsterClient{client: *fake.NewSimpleClientset()}
 
-		actual, _ := GetServiceDetail(fakeClient, fakeHeapsterClient,
+		actual, _ := GetServiceDetail(fakeClient, nil,
 			c.namespace, c.name, dataselect.NoDataSelect)
 
 		actions := fakeClient.Actions()

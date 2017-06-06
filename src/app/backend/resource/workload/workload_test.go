@@ -199,20 +199,7 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 			},
 			PodList: pod.PodList{
 				ListMeta: api.ListMeta{TotalItems: len(c.pod)},
-				CumulativeMetrics: []metricapi.Metric{
-					{
-						DataPoints: metricapi.DataPoints{},
-						MetricName: "cpu/usage_rate",
-						Label:      metricapi.Label{},
-						Aggregate:  "sum",
-					},
-					{
-						DataPoints: metricapi.DataPoints{},
-						MetricName: "memory/usage",
-						Label:      metricapi.Label{},
-						Aggregate:  "sum",
-					},
-				},
+				CumulativeMetrics: []metricapi.Metric{},
 				Pods: c.pod,
 			},
 			StatefulSetList: statefulset.StatefulSetList{

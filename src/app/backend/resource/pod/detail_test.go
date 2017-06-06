@@ -15,13 +15,9 @@
 package pod
 
 import (
-	"net/http"
+	"encoding/base64"
 	"reflect"
 	"testing"
-
-	"encoding/base64"
-
-	"errors"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
@@ -31,22 +27,7 @@ import (
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 	"k8s.io/client-go/pkg/api/v1"
-	restclient "k8s.io/client-go/rest"
 )
-
-type FakeHeapsterClient struct{}
-
-type clientFunc func(req *http.Request) (*http.Response, error)
-
-func (f clientFunc) Do(req *http.Request) (*http.Response, error) {
-	return f(req)
-}
-
-func (c FakeHeapsterClient) Get(path string) heapster.RequestInterface {
-	return restclient.NewRequest(clientFunc(func(req *http.Request) (*http.Response, error) {
-		return nil, errors.New("fake error")
-	}), "GET", nil, "/api/v1", restclient.ContentConfig{}, restclient.Serializers{}, nil, nil)
-}
 
 func TestGetPodDetail(t *testing.T) {
 	cases := []struct {
@@ -70,6 +51,7 @@ func TestGetPodDetail(t *testing.T) {
 				Containers:     []Container{},
 				InitContainers: []Container{},
 				EventList:      common.EventList{Events: []common.Event{}},
+				Metrics:        []metricapi.Metric{},
 			},
 		},
 	}
@@ -78,7 +60,7 @@ func TestGetPodDetail(t *testing.T) {
 		fakeClient := fake.NewSimpleClientset(c.pod)
 
 		dataselect.DefaultDataSelectWithMetrics.MetricQuery = dataselect.NoMetrics
-		actual, err := GetPodDetail(fakeClient, FakeHeapsterClient{}, "test-namespace", "test-pod")
+		actual, err := GetPodDetail(fakeClient, nil, "test-namespace", "test-pod")
 
 		if err != nil {
 			t.Errorf("GetPodDetail(%#v) == \ngot err %#v", c.pod, err)
