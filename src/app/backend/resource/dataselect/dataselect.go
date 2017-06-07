@@ -19,19 +19,7 @@ import (
 
 	"github.com/emicklei/go-restful/log"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
-	"k8s.io/client-go/pkg/api/v1"
 )
-
-// CachedResources contains all resources that may be required by DataSelect functions.
-// Depending on the need you may have to provide DataSelect with resources it requires, for example
-// resource like deployment will need Pods in order to calculate its metrics.
-type CachedResources struct {
-	Pods []v1.Pod
-	// More cached resources can be added.
-	// For example, if you want to use Events from DataSelect, you will have to add them here.
-}
-
-var NoResourceCache = &CachedResources{}
 
 // GenericDataCell describes the interface of the data cell that contains all the necessary methods needed to perform
 // complex data selection
@@ -68,7 +56,7 @@ type DataSelector struct {
 	// DataSelectQuery holds instructions for data select.
 	DataSelectQuery *DataSelectQuery
 	// CachedResources stores resources that may be needed during data selection process
-	CachedResources *CachedResources
+	CachedResources *metricapi.CachedResources
 	// CumulativeMetricsPromises is a list of promises holding aggregated metrics for resources in GenericDataList.
 	// The metrics will be calculated after calling GetCumulativeMetrics method.
 	CumulativeMetricsPromises metricapi.MetricPromises
@@ -169,7 +157,7 @@ func (self *DataSelector) GetCumulativeMetrics(metricClient metricapi.MetricClie
 
 	metricPromises := make(metricapi.MetricPromises, 0)
 	for _, metricName := range metricNames {
-		promises := metricClient.DownloadMetric(selectors, metricName)
+		promises := metricClient.DownloadMetric(selectors, metricName, self.CachedResources)
 		promises = metricClient.AggregateMetrics(promises, metricName, aggregations)
 
 		metricPromises = append(metricPromises, promises...)
@@ -223,7 +211,7 @@ func GenericDataSelectWithFilter(dataList []DataCell, dsQuery *DataSelectQuery) 
 
 // GenericDataSelect takes a list of GenericDataCells and DataSelectQuery and returns selected data as instructed by dsQuery.
 func GenericDataSelectWithMetrics(dataList []DataCell, dsQuery *DataSelectQuery,
-	cachedResources *CachedResources, metricClient metricapi.MetricClient) (
+	cachedResources *metricapi.CachedResources, metricClient metricapi.MetricClient) (
 	[]DataCell, metricapi.MetricPromises) {
 	SelectableData := DataSelector{
 		GenericDataList: dataList,
@@ -236,7 +224,7 @@ func GenericDataSelectWithMetrics(dataList []DataCell, dsQuery *DataSelectQuery,
 }
 
 func GenericDataSelectWithFilterAndMetrics(dataList []DataCell, dsQuery *DataSelectQuery,
-	cachedResources *CachedResources, metricClient metricapi.MetricClient) (
+	cachedResources *metricapi.CachedResources, metricClient metricapi.MetricClient) (
 	[]DataCell, metricapi.MetricPromises, int) {
 	SelectableData := DataSelector{
 		GenericDataList: dataList,

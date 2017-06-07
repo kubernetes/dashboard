@@ -1,24 +1,37 @@
 package api
 
 import (
+	"time"
+
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
 	"k8s.io/apimachinery/pkg/types"
-	"time"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 type MetricClient interface {
 	// Metric API methods required to show graphs and sparklines on pod list
-	DownloadMetric(selectors []ResourceSelector,
-		metricName string) MetricPromises
-	DownloadMetrics(selectors []ResourceSelector,
-		metricNames []string) MetricPromises
+	DownloadMetric(selectors []ResourceSelector, metricName string,
+		cachedResources *CachedResources) MetricPromises
+	DownloadMetrics(selectors []ResourceSelector, metricNames []string,
+		cachedResources *CachedResources) MetricPromises
 	AggregateMetrics(metrics MetricPromises, metricName string,
 		aggregations AggregationModes) MetricPromises
 
 	// Implements IntegrationApp interface
 	integrationapi.Integration
 }
+
+// CachedResources contains all resources that may be required by DataSelect functions for metric
+// gathering. Depending on the need you may have to provide DataSelect with resources it
+// requires, for example resource like deployment will need Pods in order to calculate its metrics.
+type CachedResources struct {
+	Pods []v1.Pod
+	// More cached resources can be added.
+	// For example, if you want to use Events from DataSelect, you will have to add them here.
+}
+
+var NoResourceCache = &CachedResources{}
 
 // Aggregation modes which should be used for data aggregation. Eg. [sum, min, max].
 

@@ -107,7 +107,7 @@ func CreateStatefulSetList(statefulSets []apps.StatefulSet, pods []v1.Pod, event
 		ListMeta:     api.ListMeta{TotalItems: len(statefulSets)},
 	}
 
-	cachedResources := &dataselect.CachedResources{
+	cachedResources := &metricapi.CachedResources{
 		Pods: pods,
 	}
 	ssCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(

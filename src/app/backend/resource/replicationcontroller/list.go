@@ -81,7 +81,7 @@ func CreateReplicationControllerList(replicationControllers []v1.ReplicationCont
 		ReplicationControllers: make([]ReplicationController, 0),
 		ListMeta:               api.ListMeta{TotalItems: len(replicationControllers)},
 	}
-	cachedResources := &dataselect.CachedResources{
+	cachedResources := &metricapi.CachedResources{
 		Pods: pods,
 	}
 	rcCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(

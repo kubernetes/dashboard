@@ -97,7 +97,7 @@ func CreateDaemonSetList(daemonSets []extensions.DaemonSet, pods []v1.Pod,
 		ListMeta:   api.ListMeta{TotalItems: len(daemonSets)},
 	}
 
-	cachedResources := &dataselect.CachedResources{
+	cachedResources := &metricapi.CachedResources{
 		Pods: pods,
 	}
 	dsCells, metricPromises, filteredTotal := dataselect.

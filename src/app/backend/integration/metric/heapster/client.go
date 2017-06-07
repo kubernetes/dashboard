@@ -40,18 +40,18 @@ func (self HeapsterClient) ID() integrationapi.IntegrationID {
 // Implement MetricClient interface
 
 func (self HeapsterClient) DownloadMetrics(selectors []metricapi.ResourceSelector,
-	metricNames []string) metricapi.MetricPromises {
+	metricNames []string, cachedResources *metricapi.CachedResources) metricapi.MetricPromises {
 	result := metricapi.MetricPromises{}
 	for _, metricName := range metricNames {
-		collectedMetrics := self.DownloadMetric(selectors, metricName)
+		collectedMetrics := self.DownloadMetric(selectors, metricName, cachedResources)
 		result = append(result, collectedMetrics...)
 	}
 	return result
 }
 
 func (self HeapsterClient) DownloadMetric(selectors []metricapi.ResourceSelector,
-	metricName string) metricapi.MetricPromises {
-	heapsterSelectors := getHeapsterSelectors(selectors)
+	metricName string, cachedResources *metricapi.CachedResources) metricapi.MetricPromises {
+	heapsterSelectors := getHeapsterSelectors(selectors, cachedResources)
 
 	// Downloads metric in the fastest possible way by first compressing HeapsterSelectors and later unpacking the result to separate boxes.
 	compressedSelectors, reverseMapping := compress(heapsterSelectors)

@@ -108,7 +108,7 @@ func CreateJobList(jobs []batch.Job, pods []v1.Pod, events []v1.Event,
 		ListMeta: api.ListMeta{TotalItems: len(jobs)},
 	}
 
-	cachedResources := &dataselect.CachedResources{
+	cachedResources := &metricapi.CachedResources{
 		Pods: pods,
 	}
 	jobCells, metricPromises, filteredTotal := dataselect.

@@ -118,7 +118,6 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 			common.NewSameNamespaceQuery(namespace), 1),
 		SecretList: common.GetSecretListChannel(client,
 			common.NewSameNamespaceQuery(namespace), 1),
-		//PodMetrics: common.GetPodMetricsChannel(heapsterClient, name, namespace),
 	}
 
 	pod, err := client.CoreV1().Pods(namespace).Get(name, metaV1.GetOptions{})
@@ -139,7 +138,7 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 	}
 
 	_, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells([]v1.Pod{*pod}),
-		dataselect.StdMetricsDataSelect, dataselect.NoResourceCache, metricClient)
+		dataselect.StdMetricsDataSelect, metricapi.NoResourceCache, metricClient)
 	metrics, _ := metricPromises.GetMetrics()
 
 	if err = <-channels.ConfigMapList.Error; err != nil {

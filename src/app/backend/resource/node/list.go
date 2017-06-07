@@ -81,7 +81,7 @@ func toNodeList(client client.Interface, nodes []v1.Node, dsQuery *dataselect.Da
 	}
 
 	nodeCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(toCells(nodes),
-		dsQuery, dataselect.NoResourceCache, metricClient)
+		dsQuery, metricapi.NoResourceCache, metricClient)
 	nodes = fromCells(nodeCells)
 	nodeList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 

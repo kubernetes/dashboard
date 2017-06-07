@@ -5,6 +5,8 @@ import (
 	"github.com/emicklei/go-restful/log"
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 type heapsterSelector struct {
@@ -14,10 +16,11 @@ type heapsterSelector struct {
 	metricapi.Label
 }
 
-func getHeapsterSelectors(selectors []metricapi.ResourceSelector) []heapsterSelector {
+func getHeapsterSelectors(selectors []metricapi.ResourceSelector,
+	cachedResources *metricapi.CachedResources) []heapsterSelector {
 	result := make([]heapsterSelector, len(selectors))
 	for i, selector := range selectors {
-		heapsterSelector, err := getHeapsterSelector(selector)
+		heapsterSelector, err := getHeapsterSelector(selector, cachedResources)
 		if err != nil {
 			log.Printf("There was an error during transformation to heapster selector: %s", err.Error())
 			continue
@@ -29,7 +32,8 @@ func getHeapsterSelectors(selectors []metricapi.ResourceSelector) []heapsterSele
 	return result
 }
 
-func getHeapsterSelector(selector metricapi.ResourceSelector) (heapsterSelector, error) {
+func getHeapsterSelector(selector metricapi.ResourceSelector,
+	cachedResources *metricapi.CachedResources) (heapsterSelector, error) {
 	summingResource, isDerivedResource := metricapi.DerivedResources[selector.ResourceType]
 	if !isDerivedResource {
 		return newHeapsterSelectorFromNativeResource(selector.ResourceType, selector.Namespace, []string{selector.ResourceName})
@@ -37,14 +41,37 @@ func getHeapsterSelector(selector metricapi.ResourceSelector) (heapsterSelector,
 	// We are dealing with derived resource. Convert derived resource to its native resources.
 	// For example, convert deployment to the list of pod names that belong to this deployment
 	if summingResource == api.ResourceKindPod {
-		//myPods, err := self.getMyPodsFromCache(cachedPods)
-		//if err != nil {
-		//	return heapsterSelector{}, err
-		//}
-		return newHeapsterSelectorFromNativeResource(api.ResourceKindPod, selector.Namespace, []string{}) // podListToNameList(myPods)
+		myPods, err := getMyPodsFromCache(selector, cachedResources.Pods)
+		if err != nil {
+			return heapsterSelector{}, err
+		}
+		return newHeapsterSelectorFromNativeResource(api.ResourceKindPod,
+			selector.Namespace, podListToNameList(myPods)) // podListToNameList(myPods)
 	} else {
 		// currently can only convert derived resource to pods. You can change it by implementing other methods
 		return heapsterSelector{}, fmt.Errorf(`Internal Error: Requested summing resources not supported. Requested "%s"`, summingResource)
+	}
+}
+
+// getMyPodsFromCache returns a full list of pods that belong to this resource.
+// It is important that cachedPods include ALL pods from the namespace of this resource (but they
+// can also include pods from other namespaces).
+func getMyPodsFromCache(selector metricapi.ResourceSelector, cachedPods []v1.Pod) (
+	[]v1.Pod, error) {
+	switch {
+	case cachedPods == nil:
+		return nil, fmt.Errorf(`getMyPodsFromCache: pods were not available in cache. Required for resource type: "%s"`, selector.ResourceType)
+	case selector.ResourceType == api.ResourceKindDeployment:
+		// TODO(maciaszczykm): Use api.FilterDeploymentPodsByOwnerReference() once it will be possible to get list of replica sets here.
+		var matchingPods []v1.Pod
+		for _, pod := range cachedPods {
+			if pod.ObjectMeta.Namespace == selector.Namespace && api.IsSelectorMatching(selector.Selector, pod.Labels) {
+				matchingPods = append(matchingPods, pod)
+			}
+		}
+		return matchingPods, nil
+	default:
+		return common.FilterPodsByOwnerReference(selector.Namespace, selector.UID, cachedPods), nil
 	}
 }
 
@@ -69,4 +96,12 @@ func newHeapsterSelectorFromNativeResource(resourceType api.ResourceKind, namesp
 	} else {
 		return heapsterSelector{}, fmt.Errorf(`Resource "%s" is not a native heapster resource type or is not supported`, resourceType)
 	}
+}
+
+// podListToNameList converts list of pods to the list of pod names.
+func podListToNameList(podList []v1.Pod) (result []string) {
+	for _, pod := range podList {
+		result = append(result, pod.ObjectMeta.Name)
+	}
+	return
 }

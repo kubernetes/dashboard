@@ -112,7 +112,7 @@ func CreatePodList(pods []v1.Pod, events []v1.Event, dsQuery *dataselect.DataSel
 		Pods: make([]Pod, 0),
 	}
 
-	cache := &dataselect.CachedResources{Pods: pods}
+	cache := &metricapi.CachedResources{Pods: pods}
 
 	podCells, cumulativeMetricsPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(toCells(pods), dsQuery,
 		cache, metricClient)

@@ -135,7 +135,7 @@ func GetNodeDetail(client k8sClient.Interface, metricClient metricapi.MetricClie
 	// dataselect.StdMetricsDataSelect with data select provided in the request.
 	_, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells([]v1.Node{*node}),
 		dataselect.StdMetricsDataSelect,
-		dataselect.NoResourceCache, metricClient)
+		metricapi.NoResourceCache, metricClient)
 
 	pods, err := getNodePods(client, *node)
 	if err != nil {

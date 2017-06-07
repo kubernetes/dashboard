@@ -92,7 +92,7 @@ func CreateReplicaSetList(replicaSets []extensions.ReplicaSet, pods []v1.Pod, ev
 		ListMeta:    api.ListMeta{TotalItems: len(replicaSets)},
 	}
 
-	cachedResources := &dataselect.CachedResources{
+	cachedResources := &metricapi.CachedResources{
 		Pods: pods,
 	}
 	rsCells, metricPromises, filteredTotal := dataselect.

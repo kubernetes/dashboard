@@ -114,7 +114,7 @@ func CreateDeploymentList(deployments []extensions.Deployment, pods []v1.Pod, ev
 		ListMeta:    api.ListMeta{TotalItems: len(deployments)},
 	}
 
-	cachedResources := &dataselect.CachedResources{
+	cachedResources := &metricapi.CachedResources{
 		Pods: pods,
 	}
 	deploymentCells, metricPromises, filteredTotal := dataselect.
