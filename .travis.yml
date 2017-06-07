@@ -31,22 +31,7 @@ cache:
     - bower_components
     - .tools
 
-addons:
-  # Run tests that require a browser on SauceLabs CI provider. Learn more at: https://saucelabs.com
-  sauce_connect: true
-  # Enables sauce labs for pull requests
-  jwt:
-    secure: NfCHCQULhYH0JUobRTBGF4QuQxMoj0Zs9iH71oSgI+eW7ClpNDp0cEF8h+IelTdPGQY7T9Kz4tyrZkUeXD5Mi/jjZT0YnjxSS8Ip6rRRxPDCWEmxbhOrZTEBXYfa4vqCY7rLnor8g579WOZ+RyoiotPC8tlc955nEgBk1jDxyAgXoUy0SdA/05r6A2IqKfs95u+yq0nsYqYJBj/3onx2SQv94eMQ7qq9GMhsAWMoNzLsBfU8AkZLsJ2w/W2p9tQURNk1hgCEewMwe6E6+G3XMAnDoIXBHkRAU335FBUE+f2kZ5Gl3GKE8pvWJaUWLePzfBvlmzCi4GW6lPlrRE5m+3wiiSzcbEAJnWOVPBrD/6mogYaJ5RijKzWk5o91eV8lU/lttp0hpH7PdWj1CEZk7EmyKO7ZF7ScALOZgs/dGyGgWcAvA0zwCDzdxXIitq9Eegc0xU+bB9jyJgi4dV9H1T1prwtS/TdhBU6sXKEjFVIgPUQa/TqBgaSs634kqRueH3bNfSD8Nf655AFeSgwdGiW0pBDm/WESftFWBMW3eV+KYtBFmGU/b3g+eEmd04j+lIOkK6EzU1QetUCKhpeMc5509So/+k4XghPHldWYzRldpY0kbp32VnAY8egsDdAHxgPrs2mTIDD1W//D/XJI9J072/z47GN4Af5zryz/3Nc=
 
-matrix:
-  include:
-    # Job 1 - Local cluster + integration tests
-    - node_js: 7.7.3
-      env: BUILD_SUITE=cluster-test SAUCE_USERNAME=k8s-dashboard-ci
-
-    # Job 2 - Code tests (frontend + backend)
-    - node_js: 7.7.3
-      env: BUILD_SUITE=code-test SAUCE_USERNAME=k8s-dashboard-ci
 
 before_script:
   # Install go 1.7.1. It is not there by default.
@@ -54,15 +39,4 @@ before_script:
   - docker --version
 
 script:
-  - 'if [ ${BUILD_SUITE} = "cluster-test" ]; then
-      ./node_modules/.bin/gulp check:local-cluster --heapsterServerHost "http://localhost:8082";
-    else
-      ./node_modules/.bin/gulp check:code-quality;
-    fi'
-
-after_success:
-  - 'if [ ${BUILD_SUITE} = "cluster-test" ]; then
-      ./node_modules/.bin/gulp ci-push-to-docker:head:cross;
-    else
-      ./node_modules/.bin/gulp coverage-codecov-upload;
-    fi'
+  - ./build/install_cluster.sh
