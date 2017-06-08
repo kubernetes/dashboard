@@ -11,7 +11,7 @@
     "angular-resource": "~1.6.4",
     "angular-sanitize": "~1.6.4",
     "ansi-up": "drudru/ansi_up#~v1.3.0",
-    "d3": "^4.9.1",
+    "d3": "^3.5.17",
     "nvd3": "1.8.5",
     "material-design-icons": "~3.0.1",
     "roboto-fontface": "0.7.0",
