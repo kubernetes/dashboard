@@ -2,16 +2,16 @@
   "name": "kubernetes-dashboard",
   "version": "1.6.1",
   "dependencies": {
-    "angular": "~1.6.2",
-    "angular-animate": "~1.6.2",
-    "angular-aria": "~1.6.2",
-    "angular-material": "~1.1.3",
-    "angular-messages": "~1.6.2",
-    "angular-ui-router": "~0.4.2",
-    "angular-resource": "~1.6.2",
-    "angular-sanitize": "~1.6.2",
+    "angular": "~1.6.4",
+    "angular-animate": "~1.6.4",
+    "angular-aria": "~1.6.4",
+    "angular-material": "~1.1.4",
+    "angular-messages": "~1.6.4",
+    "angular-ui-router": "~1.0.3",
+    "angular-resource": "~1.6.4",
+    "angular-sanitize": "~1.6.4",
     "ansi-up": "drudru/ansi_up#~v1.3.0",
-    "d3": "^3.4.4",
+    "d3": "^4.9.1",
     "nvd3": "1.8.5",
     "material-design-icons": "~3.0.1",
     "roboto-fontface": "0.7.0",
@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "cljsjs-packages-externs": "https://github.com/cljsjs/packages.git#0c44b38658ad789a45d342bff4f13706276f293a",
-    "angular-mocks": "~1.6.2",
+    "angular-mocks": "~1.6.4",
     "google-closure-library": "*"
   }
 }
