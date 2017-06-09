@@ -121,8 +121,7 @@ describe('DeployFromFile controller', () => {
     expect(ctrl.kdHistoryService_.back).toHaveBeenCalled();
   });
 
-  // TODO(maciaszczykm): Reenable this after fixing 'Possibly unhandled rejection...'.
-  xit('should not redirect the page and but open error dialog', (doneFn) => {
+  it('should not redirect the page and but open error dialog', (doneFn) => {
     spyOn(ctrl.errorDialog_, 'open');
     spyOn(ctrl.kdHistoryService_, 'back');
     mockResource.and.callFake(resource);
@@ -143,8 +142,7 @@ describe('DeployFromFile controller', () => {
     expect(ctrl.kdHistoryService_.back).toHaveBeenCalled();
   });
 
-  // TODO(maciaszczykm): Reenable this after fixing 'Possibly unhandled rejection...'.
-  xit('should open deploy anyway dialog when validation error occurs', (doneFn) => {
+  it('should open deploy anyway dialog when validation error occurs', (doneFn) => {
     spyOn(ctrl, 'handleDeployAnywayDialog_');
     mockResource.and.callFake(resource);
     httpBackend.expectPOST('api/v1/appdeploymentfromfile')
