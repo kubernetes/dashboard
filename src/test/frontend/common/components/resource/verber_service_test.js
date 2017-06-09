@@ -15,7 +15,7 @@
 import resourceModule from 'common/resource/module';
 
 describe('Verber service', () => {
-  /** @type !{!common/resource/verber_service.VerberService} */
+  /** @type {!VerberService} */
   let verber;
   /** @type {!md.$dialog} */
   let mdDialog;
@@ -55,13 +55,12 @@ describe('Verber service', () => {
     scope.$digest();
   });
 
-  // TODO(maciaszczykm): Reenable this after fixing 'Possibly unhandled rejection...'.
-  xit('should show alert window on delete error', (doneFn) => {
+  it('should show alert window on delete error', (doneFn) => {
     let deferred = q.defer();
     spyOn(mdDialog, 'show').and.returnValue(deferred.promise);
     spyOn(state, 'reload');
     spyOn(mdDialog, 'alert').and.callThrough();
-    let promise = verber.showDeleteDialog('', {}, {});
+    let promise = verber.showDeleteDialog('', {}, {}).catch((err) => {console.log(err)});
 
     deferred.reject({data: 'foo-data', statusText: 'foo-text'});
     deferred.promise.catch(doneFn);
@@ -92,13 +91,13 @@ describe('Verber service', () => {
     scope.$digest();
   });
 
-  // TODO(maciaszczykm): Reenable this after fixing 'Possibly unhandled rejection...'.
-  xit('should show alert window on edit error', (doneFn) => {
+  it('should show alert window on edit error', (doneFn) => {
     let deferred = q.defer();
     spyOn(mdDialog, 'show').and.returnValue(deferred.promise);
     spyOn(state, 'reload');
     spyOn(mdDialog, 'alert').and.callThrough();
-    let promise = verber.showEditDialog('Foo resource', {kind: 'bar'}, {});
+    let promise =
+        verber.showEditDialog('Foo resource', {kind: 'bar'}, {}).catch((err) => {console.log(err)});
 
     deferred.reject({data: 'foo-data', statusText: 'foo-text'});
     deferred.promise.catch(doneFn);
