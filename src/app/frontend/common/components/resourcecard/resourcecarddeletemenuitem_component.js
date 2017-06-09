@@ -49,7 +49,8 @@ export class ResourceCardDeleteMenuItemController {
         .then(() => {
           // For now just reload the state. Later we can remove the item in place.
           this.state_.reload();
-        });
+        })
+        .catch((err) => {console.log(err)});
   }
 }
 

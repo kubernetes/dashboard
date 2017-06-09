@@ -49,7 +49,8 @@ export class ResourceCardEditMenuItemController {
         .then(() => {
           // For now just reload the state. Later we can update the item in place.
           this.state_.reload();
-        });
+        })
+        .catch((err) => {console.log(err)});
   }
 }
 

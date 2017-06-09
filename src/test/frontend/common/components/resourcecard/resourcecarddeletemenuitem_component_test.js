@@ -59,8 +59,7 @@ describe('Delete resource menu item', () => {
     expect(state.reload).toHaveBeenCalled();
   });
 
-  // TODO(maciaszczykm): Reenable this after fixing 'Possibly unhandled rejection...'.
-  xit('should ignore cancels', (doneFn) => {
+  it('should ignore cancels', (doneFn) => {
     let deferred = q.defer();
     spyOn(kdResourceVerberService, 'showDeleteDialog').and.returnValue(deferred.promise);
     spyOn(state, 'reload');
