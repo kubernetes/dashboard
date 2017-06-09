@@ -15,30 +15,20 @@
 package pod
 
 import (
-	"encoding/json"
-	"fmt"
-	"strings"
-	"time"
+	"log"
 
-	heapster "k8s.io/heapster/metrics/api/v1/types"
-)
-
-const (
-	CpuUsage    = "cpu/usage_rate"
-	MemoryUsage = "memory/usage"
+	"errors"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"k8s.io/apimachinery/pkg/types"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 // MetricsByPod is a metrics map by pod name.
 type MetricsByPod struct {
 	// Metrics by namespace and name of a pod.
-	MetricsMap map[string]map[string]PodMetrics `json:"metricsMap"`
-}
-
-// MetricResult is a some sample measurement of a non-negative, integer quantity (for example,
-// memory usage in bytes observed at some moment)
-type MetricResult struct {
-	Timestamp time.Time `json:"timestamp"`
-	Value     uint64    `json:"value"`
+	MetricsMap map[types.UID]PodMetrics `json:"metricsMap"`
 }
 
 // PodMetrics is a structure representing pods metrics, contains information about CPU and memory
@@ -49,119 +39,63 @@ type PodMetrics struct {
 	// Pod memory usage in bytes.
 	MemoryUsage *uint64 `json:"memoryUsage"`
 	// Timestamped samples of CPUUsage over some short period of history
-	CPUUsageHistory []MetricResult `json:"cpuUsageHistory"`
+	CPUUsageHistory []metricapi.MetricPoint `json:"cpuUsageHistory"`
 	// Timestamped samples of pod memory usage over some short period of history
-	MemoryUsageHistory []MetricResult `json:"memoryUsageHistory"`
+	MemoryUsageHistory []metricapi.MetricPoint `json:"memoryUsageHistory"`
 }
 
-// Return Pods metrics for the given list of pods. Returns error in case of errors when talking
-// with heapster.
-//func getPodListMetrics(podNamesByNamespace map[string][]string,
-//	metricClient metric.MetricClient) (*MetricsByPod, error) {
-//	log.Println("Getting pod metrics")
-//
-//	result := &MetricsByPod{MetricsMap: make(map[string]map[string]PodMetrics)}
-//
-//	for namespace, podNames := range podNamesByNamespace {
-//		metricCPUUsagePath := createMetricPath(namespace, podNames, CpuUsage)
-//		metricMemUsagePath := createMetricPath(namespace, podNames, MemoryUsage)
-//
-//		resultCPUUsageRaw, err := getRawMetrics(metricClient, metricCPUUsagePath)
-//		if err != nil {
-//			return nil, err
-//		}
-//
-//		resultMemUsageRaw, err := getRawMetrics(metricClient, metricMemUsagePath)
-//		if err != nil {
-//			return nil, err
-//		}
-//
-//		cpuMetricResult, err := unmarshalMetrics(resultCPUUsageRaw)
-//		if err != nil {
-//			return nil, err
-//		}
-//		memMetricResult, err := unmarshalMetrics(resultMemUsageRaw)
-//		if err != nil {
-//			return nil, err
-//		}
-//
-//		if result.MetricsMap[namespace] == nil {
-//			result.MetricsMap[namespace] = make(map[string]PodMetrics)
-//		}
-//
-//		fillPodMetrics(cpuMetricResult, memMetricResult, podNames,
-//			result.MetricsMap[namespace])
-//	}
-//
-//	return result, nil
-//}
+func getMetricsPerPod(pods []v1.Pod, metricClient metricapi.MetricClient,
+	cache *metricapi.CachedResources, dsQuery *dataselect.DataSelectQuery) (
+	*MetricsByPod, error) {
+	log.Println("Getting pod metrics")
 
-// Create URL path for metrics.
-func createMetricPath(namespace string, podNames []string, metricName string) string {
-	return fmt.Sprintf("/model/namespaces/%s/pod-list/%s/metrics/%s",
-		namespace,
-		strings.Join(podNames, ","),
-		metricName)
-}
+	result := &MetricsByPod{MetricsMap: make(map[types.UID]PodMetrics)}
 
-// Retrieves raw metrics from Heapster.
-//func getRawMetrics(metricClient metric.MetricClient, metricPath string) ([]byte, error) {
-//	resultRaw, err := metricClient.Get(metricPath).DoRaw()
-//
-//	if err != nil {
-//		return make([]byte, 0), err
-//	}
-//	return resultRaw, nil
-//}
-
-// Deserialize raw metrics to object.
-func unmarshalMetrics(rawData []byte) ([]heapster.MetricResult, error) {
-	metricResultList := &heapster.MetricResultList{}
-	err := json.Unmarshal(rawData, metricResultList)
+	metricPromises := dataselect.PodListMetrics(toCells(pods), dsQuery, metricClient, cache)
+	metrics, err := metricPromises.GetMetrics()
 	if err != nil {
-		return make([]heapster.MetricResult, 0), err
+		return result, err
 	}
-	return metricResultList.Items, nil
+
+	for _, m := range metrics {
+		uid, err := getPodUIDFromMetric(m)
+		if err != nil {
+			log.Printf("Skipping metric because of error: %s", err.Error())
+		}
+
+		podMetrics := PodMetrics{}
+		if p, exists := result.MetricsMap[uid]; exists {
+			podMetrics = p
+		}
+
+		if m.MetricName == metricapi.CpuUsage && len(m.MetricPoints) > 0 {
+			podMetrics.CPUUsage = &m.MetricPoints[len(m.MetricPoints)-1].Value
+			podMetrics.CPUUsageHistory = m.MetricPoints
+		}
+
+		if m.MetricName == metricapi.MemoryUsage && len(m.MetricPoints) > 0 {
+			podMetrics.MemoryUsage = &m.MetricPoints[len(m.MetricPoints)-1].Value
+			podMetrics.MemoryUsageHistory = m.MetricPoints
+		}
+
+		result.MetricsMap[uid] = podMetrics
+	}
+
+	return result, nil
 }
 
-// Create response structure for API call.
-func fillPodMetrics(cpuMetrics []heapster.MetricResult, memMetrics []heapster.MetricResult,
-	podNames []string, result map[string]PodMetrics) {
-	if len(cpuMetrics) == len(podNames) && len(memMetrics) == len(podNames) {
-		for iterator, podName := range podNames {
-			var memValue *uint64
-			var cpuValue *uint64
-			memMetricsList := memMetrics[iterator].Metrics
-			cpuMetricsList := cpuMetrics[iterator].Metrics
-
-			if len(memMetricsList) > 0 {
-				memValue = &memMetricsList[len(memMetricsList)-1].Value
-			}
-
-			if len(cpuMetricsList) > 0 {
-				cpuValue = &cpuMetricsList[len(cpuMetricsList)-1].Value
-			}
-
-			cpuHistory := make([]MetricResult, len(cpuMetricsList))
-			memHistory := make([]MetricResult, len(memMetricsList))
-
-			for i, cpuMeasure := range cpuMetricsList {
-				cpuHistory[i].Value = cpuMeasure.Value
-				cpuHistory[i].Timestamp = cpuMeasure.Timestamp
-			}
-
-			for i, memMeasure := range memMetricsList {
-				memHistory[i].Value = memMeasure.Value
-				memHistory[i].Timestamp = memMeasure.Timestamp
-			}
-
-			podResources := PodMetrics{
-				CPUUsage:           cpuValue,
-				MemoryUsage:        memValue,
-				CPUUsageHistory:    cpuHistory,
-				MemoryUsageHistory: memHistory,
-			}
-			result[podName] = podResources
-		}
+func getPodUIDFromMetric(metric metricapi.Metric) (types.UID, error) {
+	// Check is metric label contains required resource UID
+	uidList, exists := metric.Label[api.ResourceKindPod]
+	if !exists {
+		return "", errors.New("Metric label not set.")
 	}
+
+	// Check if metric maps to single resource. Multiple uids means that data was aggregated
+	// from multiple resources. We should have metrics per resource here.
+	if len(uidList) != 1 {
+		return "", errors.New("Found multiple UIDs. Metric should contain data for single resource only.")
+	}
+
+	return types.UID(uidList[0]), nil
 }

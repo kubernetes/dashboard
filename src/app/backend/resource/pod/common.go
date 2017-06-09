@@ -16,9 +16,9 @@ package pod
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"k8s.io/client-go/pkg/api/v1"
 )
 
@@ -91,8 +91,11 @@ func ToPod(pod *v1.Pod, metrics *MetricsByPod, warnings []common.Event) Pod {
 		RestartCount: getRestartCount(*pod),
 	}
 
-	if metrics != nil && metrics.MetricsMap[pod.Namespace] != nil {
-		m := metrics.MetricsMap[pod.Namespace][pod.Name]
+	if metrics == nil {
+		return podDetail
+	}
+
+	if m, exists := metrics.MetricsMap[pod.UID]; exists {
 		podDetail.Metrics = &m
 	}
 
@@ -133,6 +136,7 @@ func (self PodCell) GetResourceSelector() *metricapi.ResourceSelector {
 		Namespace:    self.ObjectMeta.Namespace,
 		ResourceType: api.ResourceKindPod,
 		ResourceName: self.ObjectMeta.Name,
+		UID:          self.ObjectMeta.UID,
 	}
 }
 

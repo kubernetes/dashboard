@@ -104,7 +104,7 @@ func (self HeapsterClient) downloadMetric(heapsterSelectors []heapsterSelector,
 				}
 				// aggregate the data for this resource
 
-				aggregatedMetric := aggregation.AggregateData(requestedResources, metricName, "sum")
+				aggregatedMetric := aggregation.AggregateData(requestedResources, metricName, metricapi.SumAggregation)
 				aggregatedMetric.Label = heapsterSelectors[originalMappingIndex].Label
 				result[originalMappingIndex].Metric <- &aggregatedMetric
 				result[originalMappingIndex].Error <- nil

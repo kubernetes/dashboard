@@ -811,57 +811,6 @@ func GetResourceQuotaListChannel(client client.Interface, nsQuery *NamespaceQuer
 	return channel
 }
 
-//// PodMetricsChannel is a list and error channels to MetricsByPod.
-//type PodMetricsChannel struct {
-//	MetricsByPod chan *MetricsByPod
-//	Error        chan error
-//}
-//
-//// GetPodListMetricsChannel returns a pair of channels to MetricsByPod and errors that
-//// both must be read numReads times.
-//func GetPodListMetricsChannel(metricClient metric.MetricClient, pods []api.Pod,
-//	numReads int) PodMetricsChannel {
-//	channel := PodMetricsChannel{
-//		MetricsByPod: make(chan *MetricsByPod, numReads),
-//		Error:        make(chan error, numReads),
-//	}
-//
-//	go func() {
-//		podNamesByNamespace := make(map[string][]string)
-//		for _, pod := range pods {
-//			podNamesByNamespace[pod.ObjectMeta.Namespace] =
-//				append(podNamesByNamespace[pod.ObjectMeta.Namespace], pod.Name)
-//		}
-//
-//		metrics, err := getPodListMetrics(podNamesByNamespace, metricClient)
-//		for i := 0; i < numReads; i++ {
-//			channel.MetricsByPod <- metrics
-//			channel.Error <- err
-//		}
-//	}()
-//
-//	return channel
-//}
-//
-//// GetPodMetricsChannel returns a pair of channels to MetricsByPod and errors that
-//// both must be read 1 time.
-//func GetPodMetricsChannel(metricClient metric.MetricClient, name,
-//	namespace string) PodMetricsChannel {
-//	channel := PodMetricsChannel{
-//		MetricsByPod: make(chan *MetricsByPod, 1),
-//		Error:        make(chan error, 1),
-//	}
-//
-//	go func() {
-//		podNamesByNamespace := map[string][]string{namespace: {name}}
-//		metrics, err := getPodListMetrics(podNamesByNamespace, metricClient)
-//		channel.MetricsByPod <- metrics
-//		channel.Error <- err
-//	}()
-//
-//	return channel
-//}
-
 // HorizontalPodAutoscalerListChannel is a list and error channels.
 type HorizontalPodAutoscalerListChannel struct {
 	List  chan *autoscaling.HorizontalPodAutoscalerList

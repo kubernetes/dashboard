@@ -97,38 +97,31 @@ func GetPodListFromChannels(channels *common.ResourceChannels, dsQuery *datasele
 
 func CreatePodList(pods []v1.Pod, events []v1.Event, dsQuery *dataselect.DataSelectQuery,
 	metricClient metricapi.MetricClient) PodList {
-
-	// TODO handle that
-	//channels := &common.ResourceChannels{
-	//	PodMetrics: common.GetPodListMetricsChannel(heapsterClient, pods, 1),
-	//}
-	//
-	//if err := <-channels.PodMetrics.Error; err != nil {
-	//	log.Printf("Skipping Heapster metrics because of error: %s\n", err)
-	//}
-	//metrics := <-channels.PodMetrics.MetricsByPod
-
 	podList := PodList{
 		Pods: make([]Pod, 0),
 	}
 
-	cache := &metricapi.CachedResources{Pods: pods}
-
-	podCells, cumulativeMetricsPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(toCells(pods), dsQuery,
-		cache, metricClient)
+	cache := metricapi.NoResourceCache
+	podCells, cumulativeMetricsPromises, filteredTotal := dataselect.
+		GenericDataSelectWithFilterAndMetrics(toCells(pods), dsQuery, cache, metricClient)
 	pods = fromCells(podCells)
 	podList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+
+	metrics, err := getMetricsPerPod(pods, metricClient, cache, dsQuery)
+	if err != nil {
+		log.Printf("Skipping Heapster metrics because of error: %s\n", err)
+	}
 
 	for _, pod := range pods {
 		warnings := event.GetPodsEventWarnings(events, []v1.Pod{pod})
 
-		podDetail := ToPod(&pod, &MetricsByPod{}, warnings)
+		podDetail := ToPod(&pod, metrics, warnings)
 		podDetail.Warnings = warnings
 		podList.Pods = append(podList.Pods, podDetail)
 
 	}
-	cumulativeMetrics, err := cumulativeMetricsPromises.GetMetrics()
 
+	cumulativeMetrics, err := cumulativeMetricsPromises.GetMetrics()
 	podList.CumulativeMetrics = cumulativeMetrics
 	if err != nil {
 		podList.CumulativeMetrics = make([]metricapi.Metric, 0)

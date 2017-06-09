@@ -19,6 +19,7 @@ import (
 
 	"github.com/emicklei/go-restful/log"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
+	"errors"
 )
 
 // GenericDataCell describes the interface of the data cell that contains all the necessary methods needed to perform
@@ -123,11 +124,62 @@ func (self *DataSelector) Filter() *DataSelector {
 	return self
 }
 
+func (self *DataSelector) getMetrics(metricClient metricapi.MetricClient) (
+	[]metricapi.MetricPromises, error) {
+	metricPromises := make([]metricapi.MetricPromises, 0)
+
+	if metricClient == nil {
+		return metricPromises, errors.New("No metric client provided. Skipping metrics.")
+	}
+
+	metricNames := self.DataSelectQuery.MetricQuery.MetricNames
+	if metricNames == nil {
+		return metricPromises, errors.New("No metrics specified. Skipping metrics.")
+	}
+
+	selectors := make([]metricapi.ResourceSelector, len(self.GenericDataList))
+	for i, dataCell := range self.GenericDataList {
+		// make sure data cells support metrics
+		metricDataCell, ok := dataCell.(MetricDataCell)
+		if !ok {
+			log.Printf("Data cell does not implemenet MetricDataCell. Skipping. %v", dataCell)
+			continue
+		}
+
+		selectors[i] = *metricDataCell.GetResourceSelector()
+	}
+
+	for _, metricName := range metricNames {
+		promises := metricClient.DownloadMetric(selectors, metricName, self.CachedResources)
+		metricPromises = append(metricPromises, promises)
+	}
+
+	return metricPromises, nil
+}
+
+// // TODO add doc
+func (self *DataSelector) GetMetrics(metricClient metricapi.MetricClient) *DataSelector {
+	metricPromisesList, err := self.getMetrics(metricClient)
+	if err != nil {
+		log.Print(err)
+		return self
+	}
+
+	metricPromises := make(metricapi.MetricPromises, 0)
+	for _, promises := range metricPromisesList {
+		metricPromises = append(metricPromises, promises...)
+	}
+
+	self.CumulativeMetricsPromises = metricPromises
+	return self
+}
+
 // GetCumulativeMetrics downloads and aggregates metrics for data cells currently present in self.GenericDataList as instructed
 // by MetricQuery and inserts resulting MetricPromises to self.CumulativeMetricsPromises.
 func (self *DataSelector) GetCumulativeMetrics(metricClient metricapi.MetricClient) *DataSelector {
-	if metricClient == nil {
-		log.Print("No metric client provided. Skipping metrics.")
+	metricPromisesList, err := self.getMetrics(metricClient)
+	if err != nil {
+		log.Print(err)
 		return self
 	}
 
@@ -142,27 +194,12 @@ func (self *DataSelector) GetCumulativeMetrics(metricClient metricapi.MetricClie
 		aggregations = metricapi.OnlyDefaultAggregation
 	}
 
-	selectors := make([]metricapi.ResourceSelector, len(self.GenericDataList))
-	// get all heapster queries
-	for i, dataCell := range self.GenericDataList {
-		// make sure data cells support metrics
-		metricDataCell, ok := dataCell.(MetricDataCell)
-		if !ok {
-			log.Printf("Data cell does not implemenet MetricDataCell. Skipping. %v", dataCell)
-			continue
-		}
-
-		selectors[i] = *metricDataCell.GetResourceSelector()
-	}
-
 	metricPromises := make(metricapi.MetricPromises, 0)
-	for _, metricName := range metricNames {
-		promises := metricClient.DownloadMetric(selectors, metricName, self.CachedResources)
-		promises = metricClient.AggregateMetrics(promises, metricName, aggregations)
-
+	for i, metricName := range metricNames {
+		promises := metricClient.AggregateMetrics(metricPromisesList[i], metricName, aggregations)
 		metricPromises = append(metricPromises, promises...)
-
 	}
+
 	self.CumulativeMetricsPromises = metricPromises
 	return self
 }
@@ -223,6 +260,7 @@ func GenericDataSelectWithMetrics(dataList []DataCell, dsQuery *DataSelectQuery,
 	return processed.GenericDataList, processed.CumulativeMetricsPromises
 }
 
+// TODO add doc
 func GenericDataSelectWithFilterAndMetrics(dataList []DataCell, dsQuery *DataSelectQuery,
 	cachedResources *metricapi.CachedResources, metricClient metricapi.MetricClient) (
 	[]DataCell, metricapi.MetricPromises, int) {
@@ -236,5 +274,17 @@ func GenericDataSelectWithFilterAndMetrics(dataList []DataCell, dsQuery *DataSel
 	filteredTotal := len(filtered.GenericDataList)
 	processed := filtered.Sort().GetCumulativeMetrics(metricClient).Paginate()
 	return processed.GenericDataList, processed.CumulativeMetricsPromises, filteredTotal
+}
 
+// TODO add doc
+func PodListMetrics(dataList []DataCell, dsQuery *DataSelectQuery, metricClient metricapi.MetricClient,
+	cachedResources *metricapi.CachedResources) metricapi.MetricPromises {
+	selectableData := DataSelector{
+		GenericDataList: dataList,
+		DataSelectQuery: dsQuery,
+		CachedResources: cachedResources,
+	}
+
+	processed := selectableData.GetMetrics(metricClient)
+	return processed.CumulativeMetricsPromises
 }

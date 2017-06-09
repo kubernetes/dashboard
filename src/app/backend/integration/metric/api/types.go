@@ -100,7 +100,8 @@ type MetricPoint struct {
 	Value     uint64    `json:"value"`
 }
 
-// Label stores information about identity of resources described by this metric.
+// TODO refactor this to use types.UID instead of a string.
+// Label stores information about identity of resources (UIDs) described by this metric.
 type Label map[api.ResourceKind][]string
 
 // AddMetricLabel returns a combined Label of self and other resource. (new label describes both resources).
@@ -118,11 +119,12 @@ func (self Label) AddMetricLabel(other Label) Label {
 type Metric struct {
 	// DataPoints is a list of X, Y int64 data points, sorted by X.
 	DataPoints `json:"dataPoints"`
-
+	// MetricPoints is a list of value, timestamp metrics used for sparklines on a pod list page.
 	MetricPoints []MetricPoint `json:"metricPoints"`
 	// MetricName is the name of metric stored in this struct.
 	MetricName string `json:"metricName"`
-	// Label stores information about identity of resources described by this metric.
+	// TODO refactor this to use types.UID instead of a string.
+	// Label stores information about identity of resources (UIDS) described by this metric.
 	Label `json:"-"`
 	// Names of aggregating function used.
 	Aggregate AggregationMode `json:"aggregation,omitempty"`

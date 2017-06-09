@@ -36,7 +36,8 @@ func getHeapsterSelector(selector metricapi.ResourceSelector,
 	cachedResources *metricapi.CachedResources) (heapsterSelector, error) {
 	summingResource, isDerivedResource := metricapi.DerivedResources[selector.ResourceType]
 	if !isDerivedResource {
-		return newHeapsterSelectorFromNativeResource(selector.ResourceType, selector.Namespace, []string{selector.ResourceName})
+		return newHeapsterSelectorFromNativeResource(selector.ResourceType, selector.Namespace,
+			[]string{selector.ResourceName}, []string{string(selector.UID)})
 	}
 	// We are dealing with derived resource. Convert derived resource to its native resources.
 	// For example, convert deployment to the list of pod names that belong to this deployment
@@ -46,7 +47,7 @@ func getHeapsterSelector(selector metricapi.ResourceSelector,
 			return heapsterSelector{}, err
 		}
 		return newHeapsterSelectorFromNativeResource(api.ResourceKindPod,
-			selector.Namespace, podListToNameList(myPods)) // podListToNameList(myPods)
+			selector.Namespace, podListToNameList(myPods), podListToUIDList(myPods))
 	} else {
 		// currently can only convert derived resource to pods. You can change it by implementing other methods
 		return heapsterSelector{}, fmt.Errorf(`Internal Error: Requested summing resources not supported. Requested "%s"`, summingResource)
@@ -65,6 +66,7 @@ func getMyPodsFromCache(selector metricapi.ResourceSelector, cachedPods []v1.Pod
 		// TODO(maciaszczykm): Use api.FilterDeploymentPodsByOwnerReference() once it will be possible to get list of replica sets here.
 		var matchingPods []v1.Pod
 		for _, pod := range cachedPods {
+			// TODO fix deployments
 			if pod.ObjectMeta.Namespace == selector.Namespace && api.IsSelectorMatching(selector.Selector, pod.Labels) {
 				matchingPods = append(matchingPods, pod)
 			}
@@ -77,21 +79,22 @@ func getMyPodsFromCache(selector metricapi.ResourceSelector, cachedPods []v1.Pod
 
 // NewHeapsterSelectorFromNativeResource returns new heapster selector for native resources specified in arguments.
 // returns error if requested resource is not native or is not supported.
-func newHeapsterSelectorFromNativeResource(resourceType api.ResourceKind, namespace string, resourceNames []string) (heapsterSelector, error) {
+func newHeapsterSelectorFromNativeResource(resourceType api.ResourceKind, namespace string,
+	resourceNames []string, resourceUIDs []string) (heapsterSelector, error) {
 	// Here we have 2 possibilities because this module allows downloading Nodes and Pods from heapster
 	if resourceType == api.ResourceKindPod {
 		return heapsterSelector{
 			TargetResourceType: api.ResourceKindPod,
 			Path:               `namespaces/` + namespace + `/pod-list/`,
 			Resources:          resourceNames,
-			Label:              metricapi.Label{resourceType: resourceNames},
+			Label:              metricapi.Label{resourceType: resourceUIDs},
 		}, nil
 	} else if resourceType == api.ResourceKindNode {
 		return heapsterSelector{
 			TargetResourceType: api.ResourceKindNode,
 			Path:               `nodes/`,
 			Resources:          resourceNames,
-			Label:              metricapi.Label{resourceType: resourceNames},
+			Label:              metricapi.Label{resourceType: resourceUIDs},
 		}, nil
 	} else {
 		return heapsterSelector{}, fmt.Errorf(`Resource "%s" is not a native heapster resource type or is not supported`, resourceType)
@@ -101,7 +104,14 @@ func newHeapsterSelectorFromNativeResource(resourceType api.ResourceKind, namesp
 // podListToNameList converts list of pods to the list of pod names.
 func podListToNameList(podList []v1.Pod) (result []string) {
 	for _, pod := range podList {
-		result = append(result, pod.ObjectMeta.Name)
+		result = append(result, pod.Name)
+	}
+	return
+}
+
+func podListToUIDList(podList []v1.Pod) (result []string) {
+	for _, pod := range podList {
+		result = append(result, string(pod.UID))
 	}
 	return
 }

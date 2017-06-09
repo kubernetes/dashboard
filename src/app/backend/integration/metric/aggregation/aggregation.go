@@ -32,12 +32,20 @@ func AggregateData(metricList []api.Metric, metricName string, aggregationName a
 		newDataPoints = append(newDataPoints, api.DataPoint{x, y})
 	}
 
+	// We need metric points for sparklines so we can't aggregate them as they are per
+	// resource metrics already.
+	metricPoints := []api.MetricPoint{}
+	if len(metricList) == 1 {
+		metricPoints = metricList[0].MetricPoints
+	}
+
 	// Create new data cell
 	return api.Metric{
-		DataPoints: newDataPoints,
-		MetricName: metricName,
-		Label:      newLabel,
-		Aggregate:  aggregationName,
+		DataPoints:   newDataPoints,
+		MetricPoints: metricPoints,
+		MetricName:   metricName,
+		Label:        newLabel,
+		Aggregate:    aggregationName,
 	}
 
 }
