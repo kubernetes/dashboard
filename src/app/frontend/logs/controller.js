@@ -16,7 +16,11 @@ import {stateName as logs, StateParams} from './state';
 
 const logsPerView = 100;
 const maxLogSize = 2e9;
+// Load logs from the beginning of the log file. This matters only if the log file is too large to
+// be loaded completely.
 const beginningOfLogFile = 'beginning';
+// Load logs from the end of the log file. This matters only if the log file is too large to be
+// loaded completely.
 const endOfLogFile = 'end';
 const oldestTimestamp = 'oldest';
 const newestTimestamp = 'newest';

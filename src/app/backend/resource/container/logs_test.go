@@ -325,25 +325,6 @@ func TestGetLogs(t *testing.T) {
 	}
 }
 
-func TestTruncateOfLogs(t *testing.T) {
-	cases := []struct {
-		info        string
-		podId       string
-		rawLogs     string
-		container   string
-		logSelector *logs.Selection
-		expected    *logs.LogDetails
-	}{}
-	lineReadLimit = int64(10)
-	for _, c := range cases {
-		actual := ConstructLogs(c.podId, c.rawLogs, c.container, c.logSelector)
-		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("Test Case: %s.\nReceived: %#v \nExpected: %#v\n\n", c.info, actual, c.expected)
-		}
-
-	}
-}
-
 func TestMapToLogOptions(t *testing.T) {
 	cases := []struct {
 		info        string

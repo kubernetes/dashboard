@@ -25,10 +25,10 @@ import (
 )
 
 // maximum number of lines loaded from the apiserver
-var lineReadLimit = int64(5000)
+var lineReadLimit int64 = 5000
 
 // maximum number of bytes loaded from the apiserver
-var byteReadLimit = int64(500000)
+var byteReadLimit int64 = 500000
 
 // PodContainerList is a list of containers of a pod.
 type PodContainerList struct {
@@ -73,26 +73,23 @@ func GetPodLogs(client *client.Clientset, namespace, podID string, container str
 	return details, nil
 }
 
+// Maps the log selection to the corresponding api object
+// Read limits are set to avoid out of memory issues
 func mapToLogOptions(container string, logSelector *logs.Selection) *v1.PodLogOptions {
-	if logSelector.LogFilePosition == logs.Beginning {
-		logOptions := &v1.PodLogOptions{
-			Container:  container,
-			Follow:     false,
-			Previous:   false,
-			Timestamps: true,
-			LimitBytes: &byteReadLimit,
-		}
-		return logOptions
-	} else {
-		logOptions := &v1.PodLogOptions{
-			Container:  container,
-			Follow:     false,
-			Previous:   false,
-			Timestamps: true,
-			TailLines:  &lineReadLimit,
-		}
-		return logOptions
+	logOptions := &v1.PodLogOptions{
+		Container:  container,
+		Follow:     false,
+		Previous:   false,
+		Timestamps: true,
 	}
+
+	if logSelector.LogFilePosition == logs.Beginning {
+		logOptions.LimitBytes = &byteReadLimit
+	} else {
+		logOptions.TailLines = &lineReadLimit
+	}
+
+	return logOptions
 }
 
 // Construct a request for getting the logs for a pod and retrieves the logs.
@@ -125,7 +122,7 @@ func ConstructLogs(podID string, rawLogs string, container string, logSelector *
 	parsedLines := logs.ToLogLines(rawLogs)
 	logLines, fromDate, toDate, logSelection, lastPage := parsedLines.SelectLogs(logSelector)
 
-	readLimitReached := (int64(len(rawLogs))) == byteReadLimit || (int64(len(parsedLines)) == lineReadLimit)
+	readLimitReached := isReadLimitReached(int64(len(rawLogs)), int64(len(parsedLines)), logSelector.LogFilePosition)
 	truncated := readLimitReached && lastPage
 
 	info := logs.LogInfo{
@@ -140,4 +137,15 @@ func ConstructLogs(podID string, rawLogs string, container string, logSelector *
 		Selection: logSelection,
 		LogLines:  logLines,
 	}
+}
+
+// Checks if the amount of log file returned from the apiserver is equal to the read limits
+func isReadLimitReached(bytesLoaded int64, linesLoaded int64, logFilePosition string) bool {
+	if logFilePosition == logs.Beginning && bytesLoaded >= byteReadLimit {
+		return true
+	}
+	if logFilePosition == logs.End && linesLoaded >= lineReadLimit {
+		return true
+	}
+	return false
 }

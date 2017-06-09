@@ -33,6 +33,8 @@ const (
 	OldestTimestamp = "oldest"
 )
 
+// Load logs from the beginning or the end of the of the log file.
+// This matters only if the log file is too large to be loaded completely.
 const (
 	Beginning = "beginning"
 	End       = "end"
@@ -92,6 +94,7 @@ type LogInfo struct {
 	// Date of the last log line
 	ToDate LogTimestamp `json:"toDate"`
 
+	// Some log lines in the middle of the log file could not be loaded, because the log file is too large.
 	Truncated bool `json:"truncated"`
 }
 
