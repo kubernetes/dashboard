@@ -25,16 +25,20 @@ describe('Verber service', () => {
   let scope;
   /** @type {!ui.router.State} **/
   let state;
+  /** @type {!angular.$log} */
+  let log;
 
   beforeEach(() => angular.mock.module(resourceModule.name));
 
-  beforeEach(angular.mock.inject((kdResourceVerberService, $mdDialog, $q, $rootScope, $state) => {
-    verber = kdResourceVerberService;
-    mdDialog = $mdDialog;
-    q = $q;
-    scope = $rootScope.$new();
-    state = $state;
-  }));
+  beforeEach(
+      angular.mock.inject((kdResourceVerberService, $mdDialog, $q, $rootScope, $state, $log) => {
+        verber = kdResourceVerberService;
+        mdDialog = $mdDialog;
+        q = $q;
+        scope = $rootScope.$new();
+        state = $state;
+        log = $log;
+      }));
 
   it('should show delete dialog resource', (doneFn) => {
     let deferred = q.defer();
@@ -60,7 +64,9 @@ describe('Verber service', () => {
     spyOn(mdDialog, 'show').and.returnValue(deferred.promise);
     spyOn(state, 'reload');
     spyOn(mdDialog, 'alert').and.callThrough();
-    let promise = verber.showDeleteDialog('', {}, {}).catch((err) => {console.log(err)});
+    let promise = verber.showDeleteDialog('', {}, {}).catch((err) => {
+      log.error('Error showing delete dialog:', err);
+    });
 
     deferred.reject({data: 'foo-data', statusText: 'foo-text'});
     deferred.promise.catch(doneFn);
@@ -96,8 +102,9 @@ describe('Verber service', () => {
     spyOn(mdDialog, 'show').and.returnValue(deferred.promise);
     spyOn(state, 'reload');
     spyOn(mdDialog, 'alert').and.callThrough();
-    let promise =
-        verber.showEditDialog('Foo resource', {kind: 'bar'}, {}).catch((err) => {console.log(err)});
+    let promise = verber.showEditDialog('Foo resource', {kind: 'bar'}, {}).catch((err) => {
+      log.error('Error showing edit dialog:', err);
+    });
 
     deferred.reject({data: 'foo-data', statusText: 'foo-text'});
     deferred.promise.catch(doneFn);
