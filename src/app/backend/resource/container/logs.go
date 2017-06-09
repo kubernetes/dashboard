@@ -141,11 +141,7 @@ func ConstructLogs(podID string, rawLogs string, container string, logSelector *
 
 // Checks if the amount of log file returned from the apiserver is equal to the read limits
 func isReadLimitReached(bytesLoaded int64, linesLoaded int64, logFilePosition string) bool {
-	if logFilePosition == logs.Beginning && bytesLoaded >= byteReadLimit {
-		return true
-	}
-	if logFilePosition == logs.End && linesLoaded >= lineReadLimit {
-		return true
-	}
+	return (logFilePosition == logs.Beginning && bytesLoaded >= byteReadLimit) ||
+		(logFilePosition == logs.End && linesLoaded >= lineReadLimit)
 	return false
 }
