@@ -55,7 +55,6 @@ export class ResourceCardDeleteMenuItemController {
           this.state_.reload();
         })
         .catch((err) => {
-          defer.reject(err);
           this.log_.error('Error showing delete dialog:', err);
         });
   }
