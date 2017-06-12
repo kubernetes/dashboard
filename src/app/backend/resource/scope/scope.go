@@ -38,7 +38,7 @@ type Scope struct {
 func PostScope(client client.Interface) (*Scope, error) {
 	log.Print("Installing scope on the cluster")
 
-	response, err := http.Get("https://cloud.weave.works/launch/k8s/weavescope.yaml?k8s-service-type=NodePort")
+	response, err := http.Get("https://raw.githubusercontent.com/kubernetes/dashboard/master/src/app/backend/resource/scope/scope.yaml")
 
 	if err != nil {
 		log.Print(err)
