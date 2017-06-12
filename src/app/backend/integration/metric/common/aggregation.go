@@ -1,4 +1,4 @@
-package aggregation
+package common
 
 import (
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
@@ -75,6 +75,8 @@ func AggregatingMapFromDataList(metricList []metricapi.Metric, metricName string
 	return aggrMap, newLabel
 }
 
+// AggregateMetricPromises aggregates all data from metric promises using AggregatingFunction
+// with name aggregateName.
 func AggregateMetricPromises(metricPromises metricapi.MetricPromises, metricName string,
 	aggregations metricapi.AggregationModes, forceLabel metricapi.Label) metricapi.MetricPromises {
 	if aggregations == nil || len(aggregations) == 0 {

@@ -5,6 +5,7 @@ import (
 	"log"
 )
 
+// HeapsterRESTClient is used to make raw requests to heapster.
 type HeapsterRESTClient interface {
 	// Creates a new GET HTTP request to heapster, specified by the path param, to the V1 API
 	// endpoint. The path param is without the API prefix, e.g.,
@@ -35,6 +36,7 @@ func (c inClusterHeapsterClient) Get(path string) RequestInterface {
 		Suffix("/api/v1" + path)
 }
 
+// HealthCheck does a health check of the application.
 func (self inClusterHeapsterClient) HealthCheck() error {
 	return healthCheck(self)
 }
@@ -50,10 +52,12 @@ func (c remoteHeapsterClient) Get(path string) RequestInterface {
 	return c.client.Get().Suffix(path)
 }
 
+// HealthCheck does a health check of the application.
 func (self remoteHeapsterClient) HealthCheck() error {
 	return healthCheck(self)
 }
 
+// Returns nil if connection to application can be established, error object otherwise.
 func healthCheck(client HeapsterRESTClient) error {
 	_, err := client.Get("healthz").AbsPath("/").DoRaw()
 	if err == nil {

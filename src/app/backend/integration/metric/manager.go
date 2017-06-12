@@ -11,25 +11,32 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
+// MetricManager is responsible for management of all integrated applications related to metrics.
 type MetricManager interface {
-	// Returns active Metric client.
+	// Client returns active Metric client.
 	Client() metricapi.MetricClient
+	// Enable is responsible for switching active client if given integration application id
+	// is found and related application is healthy (we can connect to it).
 	Enable(integrationapi.IntegrationID) error
+	// List returns list of available metric related integrations.
 	List() []integrationapi.Integration
-
+	// ConfigureHeapster configures and adds heapster to clients list.
 	ConfigureHeapster(host string, client *kubernetes.Clientset) MetricManager
 }
 
+// Implements MetricManager interface.
 type metricManager struct {
 	manager client.ClientManager
 	clients map[integrationapi.IntegrationID]metricapi.MetricClient
 	active  metricapi.MetricClient
 }
 
+// Client implements metric manager interface. See MetricManager for more information.
 func (self *metricManager) Client() metricapi.MetricClient {
 	return self.active
 }
 
+// Enable implements metric manager interface. See MetricManager for more information.
 func (self *metricManager) Enable(id integrationapi.IntegrationID) error {
 	metricClient, exists := self.clients[id]
 	if !exists {
@@ -45,6 +52,7 @@ func (self *metricManager) Enable(id integrationapi.IntegrationID) error {
 	return nil
 }
 
+// List implements metric manager interface. See MetricManager for more information.
 func (self *metricManager) List() []integrationapi.Integration {
 	result := make([]integrationapi.Integration, 0)
 	for _, c := range self.clients {
@@ -54,6 +62,7 @@ func (self *metricManager) List() []integrationapi.Integration {
 	return result
 }
 
+// ConfigureHeapster implements metric manager interface. See MetricManager for more information.
 func (self *metricManager) ConfigureHeapster(host string,
 	client *kubernetes.Clientset) MetricManager {
 	kubeClient, err := self.manager.Client(nil)
@@ -72,6 +81,7 @@ func (self *metricManager) ConfigureHeapster(host string,
 	return self
 }
 
+// NewMetricManager creates metric manager.
 func NewMetricManager(manager client.ClientManager) MetricManager {
 	return &metricManager{
 		manager: manager,

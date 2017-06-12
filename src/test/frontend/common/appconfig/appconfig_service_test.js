@@ -30,7 +30,7 @@ describe('Appconfig service test', () => {
         20,    // hour
         30,    // minute
         40     // second
-    );
+        );
     jasmine.clock().mockDate(currentTime);
     /** @type {!common/appconfig/service.AppConfigService} */
     let kdAppConfigService = new AppConfigService({serverTime: 1234567890123});

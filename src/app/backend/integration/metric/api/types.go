@@ -14,12 +14,20 @@ const (
 	HeapsterIntegrationID integrationapi.IntegrationID = "heapster"
 )
 
+// MetricClient is an interface that exposes API used by dashboard to show graphs and sparklines.
 type MetricClient interface {
-	// Metric API methods required to show graphs and sparklines on pod list
+	// DownloadMetric returns MetricPromises for specified list of selector, for single type
+	// of metric, i.e. cpu usage. Cached resources is usually list of pods as other high level
+	// resources do not directly provide metrics. Only pods targeted by them.
 	DownloadMetric(selectors []ResourceSelector, metricName string,
 		cachedResources *CachedResources) MetricPromises
+	// DownloadMetrics is similar to DownloadMetric method. It returns MetricPromises for
+	// given list of metrics, i.e. cpu/memory usage instead of single metric type.
 	DownloadMetrics(selectors []ResourceSelector, metricNames []string,
 		cachedResources *CachedResources) MetricPromises
+	// AggregateMetrics is used to aggregate previously downloaded metrics based on
+	// aggregation mode (sum, min, avg). It is used to show cumulative metric graphs on
+	// resource list pages.
 	AggregateMetrics(metrics MetricPromises, metricName string,
 		aggregations AggregationModes) MetricPromises
 
@@ -38,10 +46,10 @@ type CachedResources struct {
 
 var NoResourceCache = &CachedResources{}
 
-// Aggregation modes which should be used for data aggregation. Eg. [sum, min, max].
-
+// AggregationMode informs how data should be aggregated (sum, min, max)
 type AggregationMode string
 
+// Aggregation modes which should be used for data aggregation. Eg. [sum, min, max].
 const (
 	SumAggregation     = "sum"
 	MaxAggregation     = "max"
@@ -105,7 +113,7 @@ type MetricPoint struct {
 	Value     uint64    `json:"value"`
 }
 
-// Label stores information about identity of resources (UIDs) described by this metric.
+// Label stores information about identity of resources (UIDs) described by metric.
 type Label map[api.ResourceKind][]types.UID
 
 // AddMetricLabel returns a unique combined Label of self and other resource.
@@ -140,7 +148,6 @@ type Metric struct {
 	MetricPoints []MetricPoint `json:"metricPoints"`
 	// MetricName is the name of metric stored in this struct.
 	MetricName string `json:"metricName"`
-	// TODO refactor this to use types.UID instead of a string.
 	// Label stores information about identity of resources (UIDS) described by this metric.
 	Label `json:"-"`
 	// Names of aggregating function used.

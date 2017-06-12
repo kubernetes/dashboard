@@ -202,7 +202,7 @@ export class GraphController {
           () => graphArea.node().getBoundingClientRect().width,  // variable to watch
           () => startChartUpdatePeriod(1600, 200),
           false  // not a deep watch
-      );
+          );
 
       return chart;
     });

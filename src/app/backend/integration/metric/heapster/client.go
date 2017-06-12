@@ -9,21 +9,22 @@ import (
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/aggregation"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/common"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	heapster "k8s.io/heapster/metrics/api/v1/types"
 )
 
-// Heapster client implements metric client API.
+// Heapster client implements MetricClient and Integration interfaces.
 type heapsterClient struct {
 	client HeapsterRESTClient
 }
 
-// Implement IntegrationApp interface
+// Implement Integration interface.
 
+// HealthCheck TODO
 func (self heapsterClient) HealthCheck() error {
 	if self.client == nil {
 		return errors.New("Heapster not configured")
@@ -32,12 +33,14 @@ func (self heapsterClient) HealthCheck() error {
 	return self.client.HealthCheck()
 }
 
+// ID TODO
 func (self heapsterClient) ID() integrationapi.IntegrationID {
 	return metricapi.HeapsterIntegrationID
 }
 
 // Implement MetricClient interface
 
+// DownloadMetrics implements metric client interface. See MetricClient for more information.
 func (self heapsterClient) DownloadMetrics(selectors []metricapi.ResourceSelector,
 	metricNames []string, cachedResources *metricapi.CachedResources) metricapi.MetricPromises {
 	result := metricapi.MetricPromises{}
@@ -48,6 +51,7 @@ func (self heapsterClient) DownloadMetrics(selectors []metricapi.ResourceSelecto
 	return result
 }
 
+// DownloadMetric implements metric client interface. See MetricClient for more information.
 func (self heapsterClient) DownloadMetric(selectors []metricapi.ResourceSelector,
 	metricName string, cachedResources *metricapi.CachedResources) metricapi.MetricPromises {
 	heapsterSelectors := getHeapsterSelectors(selectors, cachedResources)
@@ -57,9 +61,10 @@ func (self heapsterClient) DownloadMetric(selectors []metricapi.ResourceSelector
 	return self.downloadMetric(heapsterSelectors, compressedSelectors, reverseMapping, metricName)
 }
 
+// AggregateMetrics implements metric client interface. See MetricClient for more information.
 func (self heapsterClient) AggregateMetrics(metrics metricapi.MetricPromises, metricName string,
 	aggregations metricapi.AggregationModes) metricapi.MetricPromises {
-	return aggregation.AggregateMetricPromises(metrics, metricName, aggregations, nil)
+	return common.AggregateMetricPromises(metrics, metricName, aggregations, nil)
 }
 
 func (self heapsterClient) downloadMetric(heapsterSelectors []heapsterSelector,
@@ -104,7 +109,7 @@ func (self heapsterClient) downloadMetric(heapsterSelectors []heapsterSelector,
 			}
 
 			// aggregate the data for this resource
-			aggregatedMetric := aggregation.AggregateData(requestedResources, metricName, metricapi.SumAggregation)
+			aggregatedMetric := common.AggregateData(requestedResources, metricName, metricapi.SumAggregation)
 			result[originalMappingIndex].Metric <- &aggregatedMetric
 			result[originalMappingIndex].Error <- nil
 		}
