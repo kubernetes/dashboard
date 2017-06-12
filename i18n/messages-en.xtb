@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE translationbundle><translationbundle lang="en">
   <translation id="961242340990264399" key="MSG_ABOUT_ABOUT_0" desc="This is a label for button displayed on about page used to open documentaion in browser">Documentation</translation>
-  <translation id="3846688850575044887" key="MSG_ABOUT_ABOUT_0" desc="Header in a about view">About</translation>
-  <translation id="5154196819042094229" key="MSG_ABOUT_ABOUT_0" desc="Title text which appears on zero state view.">There is nothing to display here</translation>
   <translation id="5634646746226609179" key="MSG_ABOUT_ABOUT_1" desc="Label \'Dashboard Version\' for the about page.">Dashboard Version</translation>
   <translation id="4718120324314749596" key="MSG_ABOUT_ABOUT_2" desc="Label \'Git Commit\' for the about page.">Git Commit</translation>
   <translation id="5788105450172886273" key="MSG_ABOUT_ABOUT_3" desc="This is a label for button displayed on about page used to send feedback to GitHub new issue.">Send feedback</translation>
@@ -13,12 +11,8 @@
   <translation id="1421031463694814701" key="MSG_ACTION_BAR_EDIT_TOOLTIP" desc="Generic &quot;Edit some resource&quot; tooltip text which appears over the edit icon on the global action bar.">Edit <ph name="RESOURCE_NAME"/></translation>
   <translation id="1024358167652076581" key="MSG_ALL_NAMESPACES" desc="Text for dropdown item that indicates that no namespace was selected">All namespaces</translation>
   <translation id="6614117428496734699" key="MSG_BREADCRUMBS_ABOUT_LABEL" desc="Label 'About' that appears as a breadcrumbs on the action bar.">About</translation>
-  <translation id="837746496620402371" key="MSG_BREADCRUMBS_ACCESS_CONTROL_LABEL" desc="Label 'Access Control' that appears as a breadcrumbs on the action bar.">Access Control</translation>
-  <translation id="4464435371616157987" key="MSG_BREADCRUMBS_ACCESS_CONTROL_LABEL" desc="Label 'Roles' that appears as a breadcrumbs on the action bar.">Roles</translation>
-  <translation id="4466763630197200161" key="MSG_BREADCRUMBS_ADMIN_LABEL" desc="Label 'Admin' that appears as a breadcrumbs on the action bar.">Admin</translation>
   <translation id="1153397682574555638" key="MSG_BREADCRUMBS_CLUSTER_LABEL" desc="Label 'Cluster' that appears as a breadcrumbs on the action bar.">Cluster</translation>
   <translation id="5346529710805392125" key="MSG_BREADCRUMBS_CONFIG_AND_STORAGE_LABEL" desc="Label 'Config and storage' that appears as a breadcrumbs on the action bar.">Config and storage</translation>
-  <translation id="954605561178153927" key="MSG_BREADCRUMBS_CONFIG_LABEL" desc="Label 'Config' that appears as a breadcrumbs on the action bar.">Config</translation>
   <translation id="3212328899649855136" key="MSG_BREADCRUMBS_CONFIG_MAPS_LABEL" desc="Label 'Config Maps' that appears as a breadcrumbs on the action bar.">Config Maps</translation>
   <translation id="3217932097841975938" key="MSG_BREADCRUMBS_DAEMON_SETS_LABEL" desc="Label 'Daemon Sets' that appears as a breadcrumbs on the action bar.">Daemon Sets</translation>
   <translation id="1744394420157932960" key="MSG_BREADCRUMBS_DEPLOYMENTS_LABEL" desc="Label 'Deployments' that appears as a breadcrumbs on the action bar.">Deployments</translation>
@@ -26,7 +20,6 @@
   <translation id="3098067826555563293" key="MSG_BREADCRUMBS_DEPLOY_FILE_LABEL" desc="Breadcrum label for the YAML upload form">Upload</translation>
   <translation id="8693076889249273053" key="MSG_BREADCRUMBS_DISCOVERY_AND_LOAD_BALANCING_LABEL" desc="Label 'Discovery and load balancing' that appears as a breadcrumbs on the action bar.">Discovery and load balancing</translation>
   <translation id="2248903848244811172" key="MSG_BREADCRUMBS_HORIZONTAL_POD_AUTOSCALERS_LABEL" desc="Label 'Horizontal Pod Autoscalers' that appears as a breadcrumbs on the action bar.">Horizontal Pod Autoscalers</translation>
-  <translation id="5747298115200147575" key="MSG_BREADCRUMBS_INGRESSS_LABEL" desc="Label 'Ingress' that appears as a breadcrumbs on the action bar.">Ingress</translation>
   <translation id="8885204956315323333" key="MSG_BREADCRUMBS_INGRESSS_LABEL" desc="Label 'Ingresses' that appears as a breadcrumbs on the action bar.">Ingresses</translation>
   <translation id="2741276106482217695" key="MSG_BREADCRUMBS_INTERNALERROR_LABEL" desc="Label for internal error page for breadcrumbs on the action bar.">Internal error</translation>
   <translation id="2024511088483477440" key="MSG_BREADCRUMBS_JOBS_LABEL" desc="Label 'Jobs' that appears as a breadcrumbs on the action bar.">Jobs</translation>
@@ -41,60 +34,34 @@
   <translation id="5794147661362074597" key="MSG_BREADCRUMBS_ROLES_LABEL" desc="Label 'Roles' that appears as a breadcrumbs on the action bar.">Roles</translation>
   <translation id="2851304790534826779" key="MSG_BREADCRUMBS_SEARCH_LABEL" desc="Label 'Search' that appears as a breadcrumbs on the action bar.">Search for</translation>
   <translation id="391192137756114804" key="MSG_BREADCRUMBS_SECRETS_LABEL" desc="Label 'Secrets' that appears as a breadcrumbs on the action bar.">Secrets</translation>
-  <translation id="5207082267245498149" key="MSG_BREADCRUMBS_SERVICES_AND_DISCOVERY_LABEL" desc="Label 'Services and discovery' that appears as a breadcrumbs on the action bar.">Services and discovery</translation>
-  <translation id="2218294864744563724" key="MSG_BREADCRUMBS_SERVICES_LABEL" desc="Label 'Services' that appears as a breadcrumbs on the action bar.">Services</translation>
   <translation id="7318741060898365517" key="MSG_BREADCRUMBS_STATEFUL_SETS_LABEL" desc="Label 'Stateful Sets' that appears as a breadcrumbs on the action bar.">Stateful Sets</translation>
   <translation id="1427200251427963672" key="MSG_BREADCRUMBS_STORAGE_CLASSES_LABEL" desc="Label 'Storage Classes' that appears as a breadcrumbs on the action bar.">Storage Classes</translation>
-  <translation id="4645270776145594474" key="MSG_BREADCRUMBS_STORAGE_LABEL" desc="Label 'Storage' that appears as a breadcrumbs on the action bar.">Storage</translation>
   <translation id="6132384114487014259" key="MSG_BREADCRUMBS_THIRD_PARTY_RESOURCES_LABEL" desc="Label 'Third Party Resources' that appears as a breadcrumbs on the action bar.">Third Party Resources</translation>
   <translation id="1656728804447365846" key="MSG_BREADCRUMBS_WORKLOADS_LABEL" desc="Label 'Workloads' that appears as a breadcrumbs on the action bar.">Workloads</translation>
   <translation id="5441724995487814814" key="MSG_CHROME_CHROME_0" desc="Tooltip for global action bar create button tooltip.">Create an application or any Kubernetes resource</translation>
   <translation id="152996649337797552" key="MSG_CHROME_CHROME_1" desc="Label for global action bar create button.">Create</translation>
   <translation id="5023828914132135944" key="MSG_CHROME_NAV_NAV_0" desc="Cluster group menu entry.">Cluster</translation>
-  <translation id="9218333053624016665" key="MSG_CHROME_NAV_NAV_0" desc="Admin menu item in the nav.">Admin</translation>
-  <translation id="6343362656986122693" key="MSG_CHROME_NAV_NAV_1" desc="Namespaces menu item in the nav.">Namespaces</translation>
+  <translation id="6343362656986122693" key="MSG_CHROME_NAV_NAV_1" desc="Namespaces menu entry.">Namespaces</translation>
   <translation id="716443703088219571" key="MSG_CHROME_NAV_NAV_10" desc="Pods menu entry.">Pods</translation>
-  <translation id="8628118612810849429" key="MSG_CHROME_NAV_NAV_10" desc="Jobs menu item in the nav.">Jobs</translation>
   <translation id="5165405066720776929" key="MSG_CHROME_NAV_NAV_11" desc="Replica Sets entry.">Replica Sets</translation>
-  <translation id="5330416203049826616" key="MSG_CHROME_NAV_NAV_11" desc="Pods menu item in the nav.">Pods</translation>
   <translation id="1368029980670062566" key="MSG_CHROME_NAV_NAV_12" desc="Replication Controllers menu entry.">Replication Controllers</translation>
-  <translation id="2093749467777012107" key="MSG_CHROME_NAV_NAV_12" desc="Services and discovery menu item in the nav.">Services and discovery</translation>
   <translation id="727510939665067635" key="MSG_CHROME_NAV_NAV_13" desc="Stateful Sets menu entry.">Stateful Sets</translation>
-  <translation id="7231060462716768345" key="MSG_CHROME_NAV_NAV_13" desc="Services menu item in the nav.">Services</translation>
   <translation id="3750547428998043153" key="MSG_CHROME_NAV_NAV_14" desc="Discovery and Load Balancing group menu entry.">Discovery and Load Balancing</translation>
-  <translation id="3784062264993272168" key="MSG_CHROME_NAV_NAV_14" desc="Discovery and load balancing group menu entry.">Discovery and load balancing</translation>
-  <translation id="4709315173311947609" key="MSG_CHROME_NAV_NAV_14" desc="Ingress item in the nav.">Ingress</translation>
-  <translation id="7847222014427123367" key="MSG_CHROME_NAV_NAV_14" desc="Ingresses item in the nav.">Ingresses</translation>
-  <translation id="3039957839920471408" key="MSG_CHROME_NAV_NAV_15" desc="Storage item in the nav.">Storage</translation>
   <translation id="5657472840568954752" key="MSG_CHROME_NAV_NAV_15" desc="Ingresses menu entry.">Ingresses</translation>
   <translation id="6209183557961833624" key="MSG_CHROME_NAV_NAV_16" desc="Services menu entry.">Services</translation>
-  <translation id="8015161624640032228" key="MSG_CHROME_NAV_NAV_16" desc="Persistent Volume Claims item in the nav.">Persistent Volume Claims</translation>
-  <translation id="6873247849362907014" key="MSG_CHROME_NAV_NAV_17" desc="Config item in the nav.">Config</translation>
-  <translation id="7682452231762481275" key="MSG_CHROME_NAV_NAV_17" desc="Config and storage group menu entryv.">Config and storage</translation>
   <translation id="9193587195994732985" key="MSG_CHROME_NAV_NAV_17" desc="Config and Storage group menu entryv.">Config and Storage</translation>
   <translation id="5112568842026217488" key="MSG_CHROME_NAV_NAV_18" desc="Config Maps menu entry.">Config Maps</translation>
-  <translation id="7499906935876891155" key="MSG_CHROME_NAV_NAV_18" desc="Secrets item in the nav.">Secrets</translation>
-  <translation id="8736839163304985332" key="MSG_CHROME_NAV_NAV_19" desc="Config Maps item in the nav.">Config Maps</translation>
   <translation id="8817168805652183378" key="MSG_CHROME_NAV_NAV_19" desc="Persistent Volume Claims menu entry.">Persistent Volume Claims</translation>
-  <translation id="1743316598408730775" key="MSG_CHROME_NAV_NAV_2" desc="Nodes menu item in the nav.">Nodes</translation>
+  <translation id="1743316598408730775" key="MSG_CHROME_NAV_NAV_2" desc="Nodes menu entry.">Nodes</translation>
   <translation id="1040732924028857594" key="MSG_CHROME_NAV_NAV_20" desc="Secrets menu entry.">Secrets</translation>
-  <translation id="3009175856839976873" key="MSG_CHROME_NAV_NAV_20" desc="Storage Classes menu item in the nav.">Storage Classes</translation>
-  <translation id="3473506392835594145" key="MSG_CHROME_NAV_NAV_21" desc="Access Control menu item in the nav.">Access control</translation>
   <translation id="8368599117962865229" key="MSG_CHROME_NAV_NAV_21" desc="About page menu entry.">About</translation>
-  <translation id="7929882062201514695" key="MSG_CHROME_NAV_NAV_22" desc="About menu item in the nav.">About</translation>
-  <translation id="4957526140740745953" key="MSG_CHROME_NAV_NAV_3" desc="Persistent Volumes menu item in the nav.">Persistent Volumes</translation>
-  <translation id="4398523516847444868" key="MSG_CHROME_NAV_NAV_4" desc="Workloads menu item in the nav.">Workloads</translation>
+  <translation id="4957526140740745953" key="MSG_CHROME_NAV_NAV_3" desc="Persistent Volumes menu entry.">Persistent Volumes</translation>
   <translation id="8596594035523566698" key="MSG_CHROME_NAV_NAV_4" desc="Roles menu entry.">Roles</translation>
   <translation id="874273813471860738" key="MSG_CHROME_NAV_NAV_5" desc="Storage Classes menu entry.">Storage Classes</translation>
-  <translation id="6003139668988832289" key="MSG_CHROME_NAV_NAV_5" desc="Deployments menu item in the nav.">Deployments</translation>
   <translation id="4285258567654567328" key="MSG_CHROME_NAV_NAV_6" desc="Workloads group menu entry.">Workloads</translation>
-  <translation id="5274052053251499355" key="MSG_CHROME_NAV_NAV_6" desc="Replica Sets menu item in the nav.">Replica Sets</translation>
-  <translation id="723915224801093587" key="MSG_CHROME_NAV_NAV_7" desc="Replication Controllers menu item in the nav.">Replication Controllers</translation>
   <translation id="5016929559748268107" key="MSG_CHROME_NAV_NAV_7" desc="Daemon Sets menu entry.">Daemon Sets</translation>
   <translation id="3185730728792936775" key="MSG_CHROME_NAV_NAV_8" desc="Deployments menu entry.">Deployments</translation>
-  <translation id="7243740857154177059" key="MSG_CHROME_NAV_NAV_8" desc="Daemon Sets menu item in the nav.">Daemon Sets</translation>
   <translation id="1017990697544914862" key="MSG_CHROME_NAV_NAV_9" desc="Jobs menu entry.">Jobs</translation>
-  <translation id="2342408690900978106" key="MSG_CHROME_NAV_NAV_9" desc="Stateful Sets menu item in the nav.">Stateful Sets</translation>
   <translation id="5512331139275482810" key="MSG_CHROME_NAV_THIRDPARTYRESOURCENAV_0" desc="Third Party Resources menu item in the nav.">Third Party Resources</translation>
   <translation id="4777782265247414366" key="MSG_CLUSTER_CLUSTER_0" desc="Title for graph card displaying CPU metric of one all resources.">CPU usage</translation>
   <translation id="836326363584870134" key="MSG_CLUSTER_CLUSTER_1" desc="Title for graph card displaying memory metric of one all resources.">Memory usage</translation>
@@ -103,8 +70,6 @@
   <translation id="8227118065394270046" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBAREDITITEM_0" desc="Action \'Edit\' for the edit button on the global action bar.">Edit</translation>
   <translation id="6890205203402149061" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARLISTBUTTONS_0" desc="Label for deploy app button.">Deploy app</translation>
   <translation id="8440773175603161155" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBARLISTBUTTONS_1" desc="Label for upload YAML button.">Upload YAML</translation>
-  <translation id="6056787647703242343" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBAR_0" desc="Tooltip for global action bar create button tooltip.">Create an application or any Kubernetes resource</translation>
-  <translation id="5675030862734752753" key="MSG_COMMON_COMPONENTS_ACTIONBAR_ACTIONBAR_1" desc="Label for global action bar create button.">Create</translation>
   <translation id="1745702155571319443" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_0" desc="Friendly name of the kubernetes.io/created-by annotation">Created by:</translation>
   <translation id="1417978160910275828" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_1" desc="Text on the button to show fewer annotations.">show fewer annotations</translation>
   <translation id="6884163988875905686" key="MSG_COMMON_COMPONENTS_ANNOTATIONS_ANNOTATIONS_2" desc="Text on the button to show all the annotations.">show all annotations</translation>
@@ -159,19 +124,6 @@
   <translation id="294261030618218767" key="MSG_COMMON_SCALING_SCALERESOURCE_7" desc="This warning appears when the specified pods count (on the &quot;update number of pods&quot; dialog) is very high.">Setting high number of pods may cause performance issues of the cluster and Dashboard UI.</translation>
   <translation id="2060548261728726971" key="MSG_COMMON_SCALING_SCALERESOURCE_8" desc="Label for cancel button.">Cancel</translation>
   <translation id="486192895688311189" key="MSG_COMMON_SCALING_SCALERESOURCE_9" desc="Action \'OK\' for the confirmation button on the &quot;update number of pods dialog&quot;.">OK</translation>
-  <translation id="5535184846025660010" key="MSG_CONFIGMAPDETAIL_ACTIONBAR_0" desc="Label \'Config Map\' which appears at the top of the\n      delete dialog, opened from a config map details page.">Config Map</translation>
-  <translation id="8136474798646965010" key="MSG_CONFIGMAPDETAIL_CONFIGMAPDETAIL_0" desc="Config map info details section name.">Data</translation>
-  <translation id="1352871513810336119" key="MSG_CONFIGMAPDETAIL_CONFIGMAPINFO_0" desc="Config map info details section name.">Details</translation>
-  <translation id="2897674652375319747" key="MSG_CONFIGMAPDETAIL_CONFIGMAPINFO_1" desc="Config map info details section name entry.">Name</translation>
-  <translation id="7010821932496148334" key="MSG_CONFIGMAPDETAIL_CONFIGMAPINFO_2" desc="Config map info details section namespace entry.">Namespace</translation>
-  <translation id="1271772440832407086" key="MSG_CONFIGMAPDETAIL_CONFIGMAPINFO_3" desc="Config map info details section labels entry.">Labels</translation>
-  <translation id="6714516722398546568" key="MSG_CONFIGMAPLIST_CONFIGMAPCARDLIST_0" desc="Label which appears above the list of such objects.">Config Maps</translation>
-  <translation id="7366357537526824936" key="MSG_CONFIGMAPLIST_CONFIGMAPCARDLIST_1" desc="Config map list header: name.">Name</translation>
-  <translation id="1794471366983587465" key="MSG_CONFIGMAPLIST_CONFIGMAPCARDLIST_2" desc="Config map list header: namespace.">Namespace</translation>
-  <translation id="4286174361065406281" key="MSG_CONFIGMAPLIST_CONFIGMAPCARDLIST_3" desc="Config map list header: labels.">Labels</translation>
-  <translation id="8188034795115917545" key="MSG_CONFIGMAPLIST_CONFIGMAPCARDLIST_4" desc="Config map list header: age.">Age</translation>
-  <translation id="9099377478659685689" key="MSG_CONFIGMAPLIST_CONFIGMAPCARD_0" desc="Label \'Config Map\' which will appear in the config map\n      delete dialog opened from a config map card on the list page.">Config Map</translation>
-  <translation id="6007981365208604989" key="MSG_CONFIGMAPLIST_CONFIGMAPCARD_1" desc="Label \'Config Map\' which will appear in the config map\n      delete dialog opened from a config map card on the list page.">Config Map</translation>
   <translation id="2290466353199139171" key="MSG_CONFIGMAP_DETAIL_ACTIONBAR_0" desc="Label \'Config Map\' which appears at the top of the\n      delete dialog, opened from a config map details page.">Config Map</translation>
   <translation id="1345195277871602727" key="MSG_CONFIGMAP_DETAIL_DETAIL_0" desc="Header in a detail view of config map deta">Data</translation>
   <translation id="998665058731826460" key="MSG_CONFIGMAP_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
@@ -191,49 +143,10 @@
   <translation id="9181886817358182792" key="MSG_CONFIG_MAP_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of config map.">Created at <ph name="CREATION_DATE"/></translation>
   <translation id="6508331633234837511" key="MSG_COPIED_TOAST" desc="Toast message appears when copied to clipboard.">Copied to clipboard</translation>
   <translation id="2823218791264820502" key="MSG_CURRENT_PODS_MSG" desc="Satisfies a way to make normal binding in angularjs to pass in google closure compiler.">Current status: <ph name="CURRENT_PODS"/> created</translation>
-  <translation id="1503342925011598787" key="MSG_DAEMONSETDETAIL_DAEMONSETDETAIL_0" desc="Title for graph card displaying CPU metric of one daemon set.">CPU usage</translation>
-  <translation id="2835520423599206338" key="MSG_DAEMONSETDETAIL_DAEMONSETDETAIL_1" desc="Title for graph card displaying memory metric of one daemon set.">Memory usage</translation>
-  <translation id="7319143768148352243" key="MSG_DAEMONSETDETAIL_DAEMONSETDETAIL_2" desc="Title for services card zerostate in daemon set details page.">There is nothing to display here</translation>
-  <translation id="7790539596444175102" key="MSG_DAEMONSETDETAIL_DAEMONSETDETAIL_3" desc="Text for services card zerostate in daemon set details page.">There are currently no Services with the same label selector as this Daemon Set.</translation>
-  <translation id="8424416251818845327" key="MSG_DAEMONSETDETAIL_DAEMONSETDETAIL_4" desc="Title for pods card zerostate in daemon set details page.">There is nothing to display here</translation>
-  <translation id="3333055591419687069" key="MSG_DAEMONSETDETAIL_DAEMONSETDETAIL_5" desc="Text for pods card zerostate in daemon set details page.">There are currently no Pods scheduled on this Daemon Set.</translation>
-  <translation id="5383475676046290814" key="MSG_DAEMONSETDETAIL_DAEMONSETDETAIL_6" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by this daemon set.</translation>
-  <translation id="3423045806024821964" key="MSG_DAEMONSETDETAIL_DAEMONSETINFO_0" desc="Header in a detail view">Details</translation>
-  <translation id="4580410843139788804" key="MSG_DAEMONSETDETAIL_DAEMONSETINFO_1" desc="Label \'Name\' for the daemon set name on the details page.">Name</translation>
-  <translation id="7268987876988181631" key="MSG_DAEMONSETDETAIL_DAEMONSETINFO_10" desc="Label \'Pods status\' for the status of the pods in a daemon set, on the daemon set details page.">Pods status</translation>
-  <translation id="8950590081276318682" key="MSG_DAEMONSETDETAIL_DAEMONSETINFO_11" desc="The message says how many pods are pending (daemon set details page).">{{::$ctrl.daemonSet.podInfo.pending}} pending</translation>
-  <translation id="1735768425145229001" key="MSG_DAEMONSETDETAIL_DAEMONSETINFO_12" desc="The message says how many pods have failed (daemon set details page).">{{::$ctrl.daemonSet.podInfo.failed}} failed</translation>
-  <translation id="6323407576967306459" key="MSG_DAEMONSETDETAIL_DAEMONSETINFO_13" desc="The message describes how many pods are running (daemon set details page).">{{::$ctrl.daemonSet.podInfo.running}} running</translation>
-  <translation id="8195722724761383997" key="MSG_DAEMONSETDETAIL_DAEMONSETINFO_2" desc="Label \'Namespace\' for the daemon set namespace on the details page">Namespace</translation>
-  <translation id="25697326707390922" key="MSG_DAEMONSETDETAIL_DAEMONSETINFO_3" desc="Label \'Labels\' for the daemon set\'s labels list on the daemon set details page.">Labels</translation>
-  <translation id="3552976081583007037" key="MSG_DAEMONSETDETAIL_DAEMONSETINFO_4" desc="Label \'Images\' for the list of images used in a daemon set, on its details page.">Images</translation>
-  <translation id="5681227028178343803" key="MSG_DAEMONSETDETAIL_DAEMONSETINFO_5" desc="Subtitle \'Status\' for the right section with pod status information on the daemon set details page.">Status</translation>
-  <translation id="7946918927284487425" key="MSG_DAEMONSETDETAIL_DAEMONSETINFO_6" desc="Label \'Pods\' for the pods in a daemon set on its details page.">Pods</translation>
-  <translation id="1512791901006391093" key="MSG_DAEMONSETDETAIL_DAEMONSETINFO_7" desc="The message describes how many pods were created (daemon set details page).">{{::$ctrl.daemonSet.podInfo.current}} created</translation>
-  <translation id="8651728291166331245" key="MSG_DAEMONSETDETAIL_DAEMONSETINFO_8" desc="The message describes how many pods are desired to run (daemon set details page).">{{::$ctrl.daemonSet.podInfo.desired}} desired</translation>
-  <translation id="6036400701322899962" key="MSG_DAEMONSETDETAIL_DAEMONSETINFO_9" desc="The message describes how many pods are running (daemon set details page).">{{::$ctrl.daemonSet.podInfo.running}} running</translation>
-  <translation id="6155508007473448229" key="MSG_DAEMONSETLIST_DAEMONSETCARDLIST_0" desc="Label which appears above the list of such objects.">Daemon Sets</translation>
-  <translation id="7994642330349517802" key="MSG_DAEMONSETLIST_DAEMONSETCARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of daemon sets (daemon set list view).">Name</translation>
-  <translation id="8159300355476076796" key="MSG_DAEMONSETLIST_DAEMONSETCARDLIST_2" desc="Column header \'Kind\' on Daemon Set lists">Kind</translation>
-  <translation id="6449235115490321946" key="MSG_DAEMONSETLIST_DAEMONSETCARDLIST_3" desc="Label \'Namespace\' which appears as a column label in the table of daemon sets (daemon set list view).">Namespace</translation>
-  <translation id="6798797393717480514" key="MSG_DAEMONSETLIST_DAEMONSETCARDLIST_4" desc="Label \'Labels\' which appears as a column label in the table of daemon sets (daemon set list view).">Labels</translation>
-  <translation id="384335931310725401" key="MSG_DAEMONSETLIST_DAEMONSETCARDLIST_5" desc="Label \'Pods\' which appears as a column label in the table of daemon sets (daemon set list view).">Pods</translation>
-  <translation id="7937207561551700641" key="MSG_DAEMONSETLIST_DAEMONSETCARDLIST_6" desc="Label \'Age\' which appears as a column label in the table of daemon sets (daemon set list view).">Age</translation>
-  <translation id="6998493895549683379" key="MSG_DAEMONSETLIST_DAEMONSETCARDLIST_7" desc="Label \'Images\' which appears as a column label in the table of daemon sets (daemon set list view).">Images</translation>
-  <translation id="3784907760890901476" key="MSG_DAEMONSETLIST_DAEMONSETCARD_0" desc="Tooltip for failed pod card icon.">One or more pods have errors.</translation>
-  <translation id="3275892213334559219" key="MSG_DAEMONSETLIST_DAEMONSETCARD_1" desc="Tooltip for pending pod card icon.">One or more pods are in pending state.</translation>
-  <translation id="8955659027323921646" key="MSG_DAEMONSETLIST_DAEMONSETCARD_2" desc="Column \'Daemon Set\' in a Daemon Set List">Daemon Set</translation>
-  <translation id="855745345882113659" key="MSG_DAEMONSETLIST_DAEMONSETCARD_3" desc="Title \'Daemon Set\' which is used as a title for the delete/update\n   dialogs (that can be opened on the daemon set list view).">Daemon Set</translation>
-  <translation id="117699576076811818" key="MSG_DAEMONSETLIST_DAEMONSETCARD_4" desc="Title \'Daemon Set\' which is used as a title for the delete/update\n   dialogs (that can be opened on the daemon set list view).">Daemon Set</translation>
-  <translation id="5303615337793440206" key="MSG_DAEMONSETLIST_DAEMONSETLIST_0" desc="Title for graph card displaying CPU metric of daemon sets.">CPU usage</translation>
-  <translation id="140376028532845180" key="MSG_DAEMONSETLIST_DAEMONSETLIST_1" desc="Title for graph card displaying memory metric of daemon sets.">Memory usage</translation>
-  <translation id="7975175396227169314" key="MSG_DAEMONSETLIST_DAEMONSETLIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by these daemon sets.</translation>
   <translation id="3159284180115253445" key="MSG_DAEMONSET_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one daemon set.">CPU usage</translation>
   <translation id="3656189643804804472" key="MSG_DAEMONSET_DETAIL_DETAIL_1" desc="Title for graph card displaying memory metric of one daemon set.">Memory usage</translation>
   <translation id="2830742900079405655" key="MSG_DAEMONSET_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by this daemon set.</translation>
-  <translation id="5833515340959055595" key="MSG_DAEMONSET_DETAIL_DETAIL_3" desc="Title for services card zerostate in daemon set details page.">There is nothing to display here</translation>
   <translation id="5813652713612060929" key="MSG_DAEMONSET_DETAIL_DETAIL_4" desc="Text for services card zerostate in daemon set details page.">There are currently no Services with the same label selector as this Daemon Set.</translation>
-  <translation id="260092214018031914" key="MSG_DAEMONSET_DETAIL_DETAIL_5" desc="Title for pods card zerostate in daemon set details page.">There is nothing to display here</translation>
   <translation id="2603922476358928027" key="MSG_DAEMONSET_DETAIL_DETAIL_6" desc="Text for pods card zerostate in daemon set details page.">There are currently no Pods scheduled on this Daemon Set.</translation>
   <translation id="4390902408757290154" key="MSG_DAEMONSET_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
   <translation id="4420147250432171295" key="MSG_DAEMONSET_DETAIL_INFO_1" desc="Label \'Name\' for the daemon set name on the details page.">Name</translation>
@@ -267,66 +180,17 @@
   <translation id="8788831308012182190" key="MSG_DAEMONSET_LIST_LIST_1" desc="Title for graph card displaying memory metric of daemon sets.">Memory usage</translation>
   <translation id="2452514894533620787" key="MSG_DAEMONSET_LIST_LIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by these daemon sets.</translation>
   <translation id="1183334493862832095" key="MSG_DAEMON_SET_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of the daemon set.">Created at <ph name="CREATION_DATE"/></translation>
-  <translation id="4053635060615677386" key="MSG_DEPLOYMENTDETAIL_ACTIONBAR_0" desc="Label \'Deployment\' which will appear in the deployment delete dialog opened from the deployment details page.">Deployment</translation>
-  <translation id="1190053946078776500" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTDETAIL_0" desc="Title for graph card displaying CPU metric of one deployment.">CPU usage</translation>
-  <translation id="6583176718896419422" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTDETAIL_1" desc="Title for graph card displaying memory metric of one deployment.">Memory usage</translation>
-  <translation id="7882069685399181748" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTDETAIL_10" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">There are currently no Horizontal Pod Autoscalers targeting this Replica Set.</translation>
-  <translation id="2755870669643040350" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTDETAIL_2" desc="Title \'New Replica Set\' for the newly created replica set view, on the deployment details page.">New Replica Set</translation>
-  <translation id="5365869365225481011" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTDETAIL_3" desc="Title for new replica sets card zero-state in deployment details page.">There is nothing to display here</translation>
-  <translation id="8134746838306478635" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTDETAIL_4" desc="Text for new replica sets card zero-state in deployment details page.">There are currently no new Replication Controllers on this Deployment.</translation>
-  <translation id="6487211170584452205" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTDETAIL_5" desc="Title \'Old Replica Sets\' for the old replica sets view, on the deployment details page.">Old Replica Sets</translation>
-  <translation id="8677527448460155787" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTDETAIL_6" desc="Title for old replica sets cards zero-state in deployment details page.">There is nothing to display here</translation>
-  <translation id="3343452155972940723" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTDETAIL_7" desc="Text for old replica sets card zero-state in deployment details page.">This Deployment does not have any old replica sets</translation>
-  <translation id="1657292729919768689" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTDETAIL_8" desc="Title for horizontal pod autoscalers card zerostate in replica set details page.">There is nothing to display here</translation>
-  <translation id="3105021760531941947" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTDETAIL_9" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by this deployment.</translation>
-  <translation id="1248730598517029630" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTINFO_0" desc="Header in a detail view">Details</translation>
-  <translation id="5084808157238989425" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTINFO_1" desc="Label \'Name\' for the deployment name on the deployment details page.">Name</translation>
-  <translation id="7360695589141375940" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTINFO_10" desc="The message says how many replicas can be created above the desired number of replicas in a deployment (deployment details page).">Max surge: {{ $ctrl.deployment.rollingUpdateStrategy.maxSurge}}</translation>
-  <translation id="6581455891986389533" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTINFO_11" desc="The message says how many replicas are allowed to be unavailable during an update in the deployment (deployment details page).">Max unavailable: {{ $ctrl.deployment.rollingUpdateStrategy.maxUnavailable}}</translation>
-  <translation id="5008807455060838896" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTINFO_12" desc="Label \'Status\' for the deployment\'s status information on the deployment details page.">Status</translation>
-  <translation id="5185970495719556906" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTINFO_13" desc="The message describes how many replicas were updated in the deployment (deployment details page).">{{ $ctrl.deployment.statusInfo.updated}} updated</translation>
-  <translation id="3627882092099285644" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTINFO_14" desc="The message describes how many replicas (in total) are in the deployment (deployment details page).">{{ $ctrl.deployment.statusInfo.replicas}} total</translation>
-  <translation id="7885483046882038624" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTINFO_15" desc="The message describes how many replicas are available in the deployment (deployment details page).">{{ $ctrl.deployment.statusInfo.available}} available</translation>
-  <translation id="5225739491043517" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTINFO_16" desc="The message says how many replicas are unavailable in the deployment (deployment details page).">{{ $ctrl.deployment.statusInfo.unavailable}} unavailable</translation>
-  <translation id="6556203351766206955" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTINFO_2" desc="Label \'Namespace\' for the deployment namespace on the deployment details page.">Namespace</translation>
-  <translation id="7408059421363536605" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTINFO_3" desc="Label \'Labels\' for the deployment\'s labels list on the deployment details page.">Labels</translation>
-  <translation id="1093338324719768337" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTINFO_4" desc="Label \'Label selector\' for the deployment\'s labels list on the deployment details page.">Label selector</translation>
-  <translation id="4730072908657325030" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTINFO_4" desc="Label \'Selector\' for the deployment\'s labels list on the deployment details page.">Selector</translation>
-  <translation id="2772438295379413090" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTINFO_5" desc="Label \'Min Ready Seconds\' for the deployment on the deployment details page.">Strategy</translation>
-  <translation id="8299156742142871312" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTINFO_6" desc="Label \'Min Ready Seconds\' for the deployment on the deployment details page.">Min ready seconds</translation>
-  <translation id="5357614532090481334" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTINFO_7" desc="Label \'Revision history limit\' for the deployment property on the deployment details page.">Revision history limit</translation>
-  <translation id="2868194495107771911" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTINFO_8" desc="Label for the when revision history limit is not set.">Not set</translation>
-  <translation id="1463103350945499186" key="MSG_DEPLOYMENTDETAIL_DEPLOYMENTINFO_9" desc="Label \'Rolling Update Strategy\' for the deployment\'s rolling update strategy on the deployment details page.">Rolling update strategy</translation>
-  <translation id="7338956570297426643" key="MSG_DEPLOYMENTLIST_DEPLOYMENTCARDLIST_0" desc="Label which appears above the list of such objects.">Deployments</translation>
-  <translation id="2725695786464339983" key="MSG_DEPLOYMENTLIST_DEPLOYMENTCARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of deployments (deployment list view).">Name</translation>
-  <translation id="8234435706253450734" key="MSG_DEPLOYMENTLIST_DEPLOYMENTCARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of deployments (deployment list view).">Namespace</translation>
-  <translation id="3457906930573554389" key="MSG_DEPLOYMENTLIST_DEPLOYMENTCARDLIST_3" desc="Label \'Labels\' which appears as a column label in the table of deployments (deployment list view).">Labels</translation>
-  <translation id="7683466410114518513" key="MSG_DEPLOYMENTLIST_DEPLOYMENTCARDLIST_4" desc="Label \'Pods\' which appears as a column label in the table of deployments (deployment list view).">Pods</translation>
-  <translation id="1462714668954298619" key="MSG_DEPLOYMENTLIST_DEPLOYMENTCARDLIST_5" desc="Label \'Age\' which appears as a column label in the table of deployments (deployment list view).">Age</translation>
-  <translation id="8033169319195962958" key="MSG_DEPLOYMENTLIST_DEPLOYMENTCARDLIST_6" desc="Label \'Images\' which appears as a column label in the table of deployments (deployment list view).">Images</translation>
-  <translation id="8277532327248402914" key="MSG_DEPLOYMENTLIST_DEPLOYMENTCARD_0" desc="Tooltip saying that some pods in a deployment have errors.">One or more pods have errors</translation>
-  <translation id="603844582005614830" key="MSG_DEPLOYMENTLIST_DEPLOYMENTCARD_1" desc="Tooltip saying that some pods in a deployment are pending.">One or more pods are in pending state</translation>
-  <translation id="8978072017731186000" key="MSG_DEPLOYMENTLIST_DEPLOYMENTCARD_2" desc="Label \'Deployment\' which will appear in the deployment delete dialog opened from a deployment card on the list page.">Deployment</translation>
-  <translation id="7647706169332437459" key="MSG_DEPLOYMENTLIST_DEPLOYMENTCARD_3" desc="Label \'Deployment\' which will appear in the deployment delete dialog opened from a deployment card on the list page.">Deployment</translation>
-  <translation id="3596671845051866336" key="MSG_DEPLOYMENTLIST_DEPLOYMENTLIST_0" desc="Title for graph card displaying CPU metric of deployments.">CPU usage</translation>
-  <translation id="6520027878530985690" key="MSG_DEPLOYMENTLIST_DEPLOYMENTLIST_1" desc="Title for graph card displaying memory metric of deployments.">Memory usage</translation>
-  <translation id="5720117868467044726" key="MSG_DEPLOYMENTLIST_DEPLOYMENTLIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by these deployments.</translation>
   <translation id="8731452969115857295" key="MSG_DEPLOYMENT_DETAIL_ACTIONBAR_0" desc="Label \'Deployment\' which will appear in the deployment delete dialog opened from the deployment details page.">Deployment</translation>
   <translation id="7127369397131060308" key="MSG_DEPLOYMENT_DETAIL_ACTIONBAR_1" desc="Tooltip for the \'scale\' button on the action bar of a deployment details view.">Edit number of pods</translation>
   <translation id="951957391705478704" key="MSG_DEPLOYMENT_DETAIL_ACTIONBAR_2" desc="Tooltip for the \'scale\' button on the action bar of a deployment details view.">Scale</translation>
   <translation id="916794903553842041" key="MSG_DEPLOYMENT_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one deployment.">CPU usage</translation>
   <translation id="8453931805104629005" key="MSG_DEPLOYMENT_DETAIL_DETAIL_1" desc="Title for graph card displaying memory metric of one deployment.">Memory usage</translation>
   <translation id="620255252783687720" key="MSG_DEPLOYMENT_DETAIL_DETAIL_10" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">There are currently no Horizontal Pod Autoscalers targeting this Deployment.</translation>
-  <translation id="4236751308157834550" key="MSG_DEPLOYMENT_DETAIL_DETAIL_10" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">There are currently no Horizontal Pod Autoscalers targeting this Replica Set.</translation>
   <translation id="7206451673196119468" key="MSG_DEPLOYMENT_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by this deployment.</translation>
   <translation id="4293182903162394917" key="MSG_DEPLOYMENT_DETAIL_DETAIL_3" desc="Title \'New Replica Set\' for the newly created replica set view, on the deployment details page.">New Replica Set</translation>
-  <translation id="261504180115600707" key="MSG_DEPLOYMENT_DETAIL_DETAIL_4" desc="Title for new replica sets card zero-state in deployment details page.">There is nothing to display here</translation>
-  <translation id="1210480928949951706" key="MSG_DEPLOYMENT_DETAIL_DETAIL_5" desc="Text for new replica sets card zero-state in deployment details page.">There are currently no new Replication Controllers on this Deployment.</translation>
   <translation id="5406429395386793842" key="MSG_DEPLOYMENT_DETAIL_DETAIL_5" desc="Text for new replica sets card zero-state in deployment details page.">There are currently no new Replica Sets on this Deployment.</translation>
   <translation id="1547411698211271610" key="MSG_DEPLOYMENT_DETAIL_DETAIL_6" desc="Title \'Old Replica Sets\' for the old replica sets view, on the deployment details page.">Old Replica Sets</translation>
-  <translation id="3258856307702078085" key="MSG_DEPLOYMENT_DETAIL_DETAIL_7" desc="Title for old replica sets cards zero-state in deployment details page.">There is nothing to display here</translation>
   <translation id="7774850522073185051" key="MSG_DEPLOYMENT_DETAIL_DETAIL_8" desc="Text for old replica sets card zero-state in deployment details page.">This Deployment does not have any old replica sets</translation>
-  <translation id="4012358001472034808" key="MSG_DEPLOYMENT_DETAIL_DETAIL_9" desc="Title for horizontal pod autoscalers card zerostate in replica set details page.">There is nothing to display here</translation>
   <translation id="6611756545608338379" key="MSG_DEPLOYMENT_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
   <translation id="6535447767822430239" key="MSG_DEPLOYMENT_DETAIL_INFO_1" desc="Label \'Name\' for the deployment name on the deployment details page.">Name</translation>
   <translation id="4052405407765242541" key="MSG_DEPLOYMENT_DETAIL_INFO_10" desc="The message says how many replicas can be created above the desired number of replicas in a deployment (deployment details page).">Max surge: {{ $ctrl.deployment.rollingUpdateStrategy.maxSurge}}</translation>
@@ -338,7 +202,6 @@
   <translation id="3113137197415192324" key="MSG_DEPLOYMENT_DETAIL_INFO_16" desc="The message says how many replicas are unavailable in the deployment (deployment details page).">{{ $ctrl.deployment.statusInfo.unavailable}} unavailable</translation>
   <translation id="638037533109128765" key="MSG_DEPLOYMENT_DETAIL_INFO_2" desc="Label \'Namespace\' for the deployment namespace on the deployment details page.">Namespace</translation>
   <translation id="5010967792828441755" key="MSG_DEPLOYMENT_DETAIL_INFO_3" desc="Label \'Labels\' for the deployment\'s labels list on the deployment details page.">Labels</translation>
-  <translation id="1216231215423143369" key="MSG_DEPLOYMENT_DETAIL_INFO_4" desc="Label \'Label selector\' for the deployment\'s labels list on the deployment details page.">Label selector</translation>
   <translation id="4852965799360700062" key="MSG_DEPLOYMENT_DETAIL_INFO_4" desc="Label \'Selector\' for the deployment\'s labels list on the deployment details page.">Selector</translation>
   <translation id="7842815268569286123" key="MSG_DEPLOYMENT_DETAIL_INFO_5" desc="Label \'Min Ready Seconds\' for the deployment on the deployment details page.">Strategy</translation>
   <translation id="120947107266620923" key="MSG_DEPLOYMENT_DETAIL_INFO_6" desc="Label \'Min Ready Seconds\' for the deployment on the deployment details page.">Min ready seconds</translation>
@@ -410,7 +273,6 @@
   <translation id="2106636614171074357" key="MSG_DEPLOY_DEPLOY_2" desc="Text for a selection option, which the user must click to upload a YAML/JSON file to deploy from on the deploy page.">Upload a YAML or JSON file</translation>
   <translation id="2293780968979487050" key="MSG_DEPLOY_DEPLOY_3" desc="User help with a link redirecting to the &quot;Dashboard tour&quot; on the deploy page.">To learn more, &lt;a href="http://kubernetes.io/docs/user-guide/ui/" target="_blank" tabindex="-1"&gt; take the Dashboard Tour &lt;i class="material-icons"&gt;open_in_new&lt;/i&gt;&lt;/a&gt;</translation>
   <translation id="6885083433056530489" key="MSG_DEPLOY_DIALOG_ERROR" desc="Text shown on failed deploy in error dialog.">Deploying file has failed</translation>
-  <translation id="1886245275698966389" key="MSG_DEPLOY_EMPTY_NAMESPACE_ERROR" desc="Text shown on in error dialog when there is no namespace provided selected in both dashboard and yaml file.">Dashboard and your file do not specify any namespace to deploy a resource. Please select a specific namespace in dashboard or specify one in yaml file.</translation>
   <translation id="3201385994827441255" key="MSG_DEPLOY_EMPTY_NAMESPACE_ERROR" desc="Text shown on in error dialog when there is no namespace provided selected in both dashboard and yaml file.">Dashboard and your file do not specify any namespace to deploy a resource. Please select a specific namespace in dashboard or add one in yaml file.</translation>
   <translation id="1523443588838795036" key="MSG_DEPLOY_ENVIRONMENTVARIABLES_0" desc="Title of the Environment Variables section on the deploy page.">Environment variables</translation>
   <translation id="5261984673543175121" key="MSG_DEPLOY_ENVIRONMENTVARIABLES_1" desc="Label &quot;Name&quot; which appears as a placeholder for the input of an environment variable name on the deploy page.">Name</translation>
@@ -437,7 +299,7 @@
   <translation id="3987564063412539284" key="MSG_DEPLOY_SETTINGS_CONTAINER_IMAGE_INVALID_WARNING" desc="Appears to tell the user that the typed in container image is invalid. This text must end with a colon.">Container image is invalid:</translation>
   <translation id="2384273649400241565" key="MSG_DEPLOY_SETTINGS_CONTAINER_IMAGE_LABEL" desc="Label &quot;Container image&quot;, which appears as a placeholder in an empty input field for a container image on the deploy from settings page.">Container image</translation>
   <translation id="5045196368183048329" key="MSG_DEPLOY_SETTINGS_CONTAINER_IMAGE_REQUIRED_WARNING" desc="Appears to tell the user that the container image input on the deploy from settings page is required.">Container image is required</translation>
-  <translation id="4875656272464452077" key="MSG_DEPLOY_SETTINGS_CONTAINER_IMAGE_USER_HELP" desc="User helpfor the container image input on the deploy from settings page.">Enter the URL of a public image on any registry, or a private image hosted on Docker Hub or Google Container Registry.</translation>
+  <translation id="4875656272464452077" key="MSG_DEPLOY_SETTINGS_CONTAINER_IMAGE_USER_HELP" desc="User help for the container image input on the deploy from settings page.">Enter the URL of a public image on any registry, or a private image hosted on Docker Hub or Google Container Registry.</translation>
   <translation id="8647847835448929594" key="MSG_DEPLOY_SETTINGS_CPU_MEM_USER_HELP" desc="User help for the memory and cpu requirement inputs on the deploy from settings page.">You can specify minimum CPU and memory requirements for the container.</translation>
   <translation id="5490209057800683483" key="MSG_DEPLOY_SETTINGS_CPU_NEGATIVE_WARNING" desc="Appears to tell the user that the typed in number of CPU cores (on the deploy page) cannot be negative.">CPU requirement must be given as a positive number.</translation>
   <translation id="6710871378232724793" key="MSG_DEPLOY_SETTINGS_CPU_NOT_A_NUMBER_WARNING" desc="Appears to tell the user that the typed in CPU cores count on the deploy page is not a number.">CPU requirement must be given as a valid number.</translation>
@@ -476,17 +338,11 @@
   <translation id="2365040178679032944" key="MSG_DEPLOY_UPLOAD_0" desc="A \'YAML or JSON file\' label, serving as placeholder for an empty file input field on the deploy page.">YAML or JSON file</translation>
   <translation id="4669054964389464806" key="MSG_DEPLOY_UPLOAD_1" desc="Appears to tell the user that he/she must upload a YAML or a JSON file on the deploy page.">File is required.</translation>
   <translation id="2829276195106359606" key="MSG_DEPLOY_UPLOAD_2" desc="User help for the YAML/JSON file upload form on the deploy page.">Select a YAML or JSON file, specifying the resources to deploy to the namespace specified in the file.</translation>
-  <translation id="7942197803383171833" key="MSG_DEPLOY_UPLOAD_2" desc="User help for the YAML/JSON file upload form on the deploy page.">Select a YAML or JSON file, specifying the resources to deploy.</translation>
   <translation id="1706523109425956587" key="MSG_DEPLOY_UPLOAD_3" desc="The text is used as a \'Learn more\' link text besides the file upload on the deploy page.">Learn more</translation>
   <translation id="2854540335199012536" key="MSG_DEPLOY_UPLOAD_4" desc="User help for the YAML/JSON file upload form on the deploy page.">Select a YAML or JSON file, specifying the resources to deploy to the currently selected namespace (in the left side menu).</translation>
   <translation id="7869641598803414323" key="MSG_DESIRED_PODS_MSG" desc="Satisfies a way to make normal binding in angularjs to pass in google closure compiler."><ph name="DESIRED_PODS"/> desired.</translation>
   <translation id="4162582061346784285" key="MSG_ERROR_HANDLING_DIALOG_CLOSE_ACTION" desc="Action &quot;Close&quot; which appears at the bottom of any displayed error dialog.">Close</translation>
   <translation id="6020266409089609793" key="MSG_ERROR_INTERNALERROR_0" desc="This is a label for button displayed on error page used to send feedback to GitHub new issue.">Send feedback</translation>
-  <translation id="6510078647741040827" key="MSG_ERROR_INTERNALERROR_0" desc="This message appears in an error dialog when the returned error code is not recognized.">Unknown Server Error.</translation>
-  <translation id="4145537915999486390" key="MSG_ERROR_INTERNALERROR_1" desc="This is a label for button displayed on error page used to report bugs on GitHub.">Report a bug</translation>
-  <translation id="7320935166128929457" key="MSG_ERROR_UKNOWN_WARNING" desc="This message appears in an error dialog when the returned error code is not recognized.">Unknown Server Error</translation>
-  <translation id="7527074982331141078" key="MSG_EVENTS_ALL_LABEL" desc="Label 'All' for the event selection drop-down.">All</translation>
-  <translation id="9183905402242013542" key="MSG_EVENTS_CARD" desc="Label for the events card.">Events</translation>
   <translation id="1499717850384845922" key="MSG_EVENTS_CARDLIST_0" desc="Label which appears above the list of such objects.">Events</translation>
   <translation id="394833373610211124" key="MSG_EVENTS_CARDLIST_1" desc="Label \'Message\' for the event message column of the events table (events list page).">Message</translation>
   <translation id="397148110173555485" key="MSG_EVENTS_CARDLIST_2" desc="Label \'Source\' for the event source column of the events table (events list page).">Source</translation>
@@ -494,19 +350,7 @@
   <translation id="4243993147460207456" key="MSG_EVENTS_CARDLIST_4" desc="Label \'Count\' for event count column of the events table (events list page).">Count</translation>
   <translation id="2318056046996927961" key="MSG_EVENTS_CARDLIST_5" desc="Label \'First seen\' for the respective column of the events table (events list page).">First seen</translation>
   <translation id="8546806166673222480" key="MSG_EVENTS_CARDLIST_6" desc="Label \'Last seen\' for the respective column of the events table (events list page).">Last seen</translation>
-  <translation id="426796895248196483" key="MSG_EVENTS_CARDLIST_7" desc="Title of section when there are no events.">There is nothing to display here</translation>
   <translation id="8384910280515978185" key="MSG_EVENTS_CARDLIST_8" desc="User help on the events page when no events are to be displayed.">It is possible that all events have expired.</translation>
-  <translation id="6413199566846581831" key="MSG_EVENTS_COUNT_LABEL" desc="Label 'Count' for event count column of the events table (events list page).">Count</translation>
-  <translation id="4179338997362096957" key="MSG_EVENTS_EVENTCARDLIST_0" desc="Label for the events card.">Events</translation>
-  <translation id="4179338997362096957" key="MSG_EVENTS_EVENTCARDLIST_0" desc="Label which appears above the list of such objects.">Events</translation>
-  <translation id="7618020634310257225" key="MSG_EVENTS_EVENTCARDLIST_1" desc="Label \'Message\' for the event message column of the events table (events list page).">Message</translation>
-  <translation id="7495297439436040330" key="MSG_EVENTS_EVENTCARDLIST_2" desc="Label \'Source\' for the event source column of the events table (events list page).">Source</translation>
-  <translation id="2711667379693797919" key="MSG_EVENTS_EVENTCARDLIST_3" desc="Label \'Sub-object\' for the respective column of the events table (events list page).">Sub-object</translation>
-  <translation id="2916394551891554218" key="MSG_EVENTS_EVENTCARDLIST_4" desc="Label \'Count\' for event count column of the events table (events list page).">Count</translation>
-  <translation id="8248624391902115626" key="MSG_EVENTS_EVENTCARDLIST_5" desc="Label \'First seen\' for the respective column of the events table (events list page).">First seen</translation>
-  <translation id="2544603000807264761" key="MSG_EVENTS_EVENTCARDLIST_6" desc="Label \'Last seen\' for the respective column of the events table (events list page).">Last seen</translation>
-  <translation id="7386770668705738137" key="MSG_EVENTS_EVENTCARDLIST_7" desc="Title of section when there are no events.">There is nothing to display here</translation>
-  <translation id="4440376186457350549" key="MSG_EVENTS_EVENTCARDLIST_8" desc="User help on the events page when no events are to be displayed.">It is possible that all events have expired.</translation>
   <translation id="4919061456654775514" key="MSG_EVENTS_WARNING_LABEL" desc="Label 'Warning' for the event selection drop-down.">Warning</translation>
   <translation id="339987725992094148" key="MSG_GRAPH_CPU_AXIS_LABEL" desc="Name of Y axis showing CPU usage.">CPU (cores)</translation>
   <translation id="4576303150557908117" key="MSG_GRAPH_CPU_LIMIT_LEGEND_LABEL" desc="Name of the CPU limit metric as displayed in the legend.">CPU Limit</translation>
@@ -515,34 +359,6 @@
   <translation id="2029236165141474072" key="MSG_GRAPH_MEMORY_AXIS_LABEL" desc="Name of Y axis showing memory usage.">Memory (bytes)</translation>
   <translation id="6525531670828842343" key="MSG_GRAPH_MEMORY_USAGE_LEGEND_LABEL" desc="Name of the memory usage metric as displayed in the legend.">Memory Usage</translation>
   <translation id="185015236199417198" key="MSG_GRAPH_TIME_AXIS_LABEL" desc="Name of time axis.">Time</translation>
-  <translation id="1585380567194471022" key="MSG_HORIZONTALPODAUTOSCALERDETAIL_ACTIONBAR_0" desc="Label \'Horizontal Pod Autoscaler\' which appears at the top of the delete dialog, opened from a horizontal pod autoscaler details page.">Horizontal Pod Autoscaler</translation>
-  <translation id="6001363562011800982" key="MSG_HORIZONTALPODAUTOSCALERDETAIL_HORIZONTALPODAUTOSCALERINFO_0" desc="Horizontal pod autoscaler info details section name.">Details</translation>
-  <translation id="4349444875965815998" key="MSG_HORIZONTALPODAUTOSCALERDETAIL_HORIZONTALPODAUTOSCALERINFO_1" desc="Horizontal pod autoscaler info details section target entry.">Target</translation>
-  <translation id="4383172258177588474" key="MSG_HORIZONTALPODAUTOSCALERDETAIL_HORIZONTALPODAUTOSCALERINFO_10" desc="Show the target CPU utilization percentage of a the pods of the targetted resource of a HPA">{{::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage}}%</translation>
-  <translation id="3566296546406486" key="MSG_HORIZONTALPODAUTOSCALERDETAIL_HORIZONTALPODAUTOSCALERINFO_11" desc="Show the current CPU utilization percentage of a the pods of the targetted resource of a HPA">{{::$ctrl.horizontalPodAutoscaler.currentCPUUtilizationPercentage}}%</translation>
-  <translation id="6055916048648764366" key="MSG_HORIZONTALPODAUTOSCALERDETAIL_HORIZONTALPODAUTOSCALERINFO_2" desc="Horizontal pod autoscaler info details section minReplicas entry.">Min Replicas</translation>
-  <translation id="2401828660026961194" key="MSG_HORIZONTALPODAUTOSCALERDETAIL_HORIZONTALPODAUTOSCALERINFO_3" desc="Horizontal pod autoscaler info details section maxReplicas entry.">Max Replicas</translation>
-  <translation id="4352785826284670810" key="MSG_HORIZONTALPODAUTOSCALERDETAIL_HORIZONTALPODAUTOSCALERINFO_4" desc="Horizontal pod autoscaler info details section targetCPUUtilizationPercentage entry.">Target CPU Utilization</translation>
-  <translation id="386603353971468389" key="MSG_HORIZONTALPODAUTOSCALERDETAIL_HORIZONTALPODAUTOSCALERINFO_5" desc="Horizontal pod autoscaler info status section">Status</translation>
-  <translation id="3760935098631869914" key="MSG_HORIZONTALPODAUTOSCALERDETAIL_HORIZONTALPODAUTOSCALERINFO_6" desc="Horizontal pod autoscaler info status section currentReplicas entry.">Current Replicas</translation>
-  <translation id="13793892879855030" key="MSG_HORIZONTALPODAUTOSCALERDETAIL_HORIZONTALPODAUTOSCALERINFO_7" desc="Horizontal pod autoscaler info status section desiredReplicas entry.">Desired Replicas</translation>
-  <translation id="5824390170223929765" key="MSG_HORIZONTALPODAUTOSCALERDETAIL_HORIZONTALPODAUTOSCALERINFO_8" desc="Horizontal pod autoscaler info status section currentCPUUtilizationPercentage entry.">Current CPU Utilization</translation>
-  <translation id="6863596710614069087" key="MSG_HORIZONTALPODAUTOSCALERDETAIL_HORIZONTALPODAUTOSCALERINFO_9" desc="Horizontal pod autoscaler info status section lastScaleTime entry.">Last Scaled</translation>
-  <translation id="6920848302260535604" key="MSG_HORIZONTALPODAUTOSCALERLIST_HORIZONTALPODAUTOSCALERCARDLIST_0" desc="Label \'Name\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">Name</translation>
-  <translation id="1708970013829034488" key="MSG_HORIZONTALPODAUTOSCALERLIST_HORIZONTALPODAUTOSCALERCARDLIST_1" desc="Label \'Namespace\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">Namespace</translation>
-  <translation id="9050068234199794412" key="MSG_HORIZONTALPODAUTOSCALERLIST_HORIZONTALPODAUTOSCALERCARDLIST_2" desc="Column header \'Target\' on Horizontal Pod Autoscaler lists">Target</translation>
-  <translation id="4902919628347014985" key="MSG_HORIZONTALPODAUTOSCALERLIST_HORIZONTALPODAUTOSCALERCARDLIST_3" desc="Label \'Target CPU Utilization\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">Target CPU Utilization</translation>
-  <translation id="5456575766156291825" key="MSG_HORIZONTALPODAUTOSCALERLIST_HORIZONTALPODAUTOSCALERCARDLIST_4" desc="Label \'Current CPU Utilization\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">Current CPU Utilization</translation>
-  <translation id="3480074136071562190" key="MSG_HORIZONTALPODAUTOSCALERLIST_HORIZONTALPODAUTOSCALERCARDLIST_5" desc="Label \'Min Replicas\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">Min Replicas</translation>
-  <translation id="6782226350855633567" key="MSG_HORIZONTALPODAUTOSCALERLIST_HORIZONTALPODAUTOSCALERCARDLIST_6" desc="Label \'Max Replicas\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">Max Replicas</translation>
-  <translation id="5898581805249524010" key="MSG_HORIZONTALPODAUTOSCALERLIST_HORIZONTALPODAUTOSCALERCARDLIST_7" desc="Label \'Age\' which appears as a column label in the table of horizontal pod autoscalers (horizontal pod autoscaler list view).">Age</translation>
-  <translation id="8591149019597136152" key="MSG_HORIZONTALPODAUTOSCALERLIST_HORIZONTALPODAUTOSCALERCARDLIST_8" desc="Label which appears above the list of such objects.">Horizontal Pod Autoscalers</translation>
-  <translation id="4304848307720371510" key="MSG_HORIZONTALPODAUTOSCALERLIST_HORIZONTALPODAUTOSCALERCARD_0" desc="Title \'Horizontal Pod Autoscaler\' which is used as a title for the delete/update\n   dialogs (that can be opened on the horizontal pod autoscaler list view).">Horizontal Pod Autoscaler</translation>
-  <translation id="2268145183636697214" key="MSG_HORIZONTALPODAUTOSCALERLIST_HORIZONTALPODAUTOSCALERCARD_1" desc="Title \'Horizontal Pod Autoscaler\' which is used as a title for the delete/update\n   dialogs (that can be opened on the horizontal pod autoscaler list view).">Horizontal Pod Autoscaler</translation>
-  <translation id="716999287416888029" key="MSG_HORIZONTALPODAUTOSCALERLIST_HORIZONTALPODAUTOSCALERCARD_2" desc="Show the target CPU utilization percentage of a the pods of the targetted resource of a HPA">{{::$ctrl.horizontalPodAutoscaler.targetCPUUtilizationPercentage}}%</translation>
-  <translation id="4151977615417356292" key="MSG_HORIZONTALPODAUTOSCALERLIST_HORIZONTALPODAUTOSCALERCARD_3" desc="Show the current CPU utilization percentage of a the pods of the targetted resource of a HPA">{{::$ctrl.horizontalPodAutoscaler.currentCPUUtilizationPercentage}}%</translation>
-  <translation id="3565335137919292331" key="MSG_HORIZONTALPODAUTOSCALERLIST_HORIZONTALPODAUTOSCALERLIST_0" desc="Title for graph card displaying CPU metric of horizontal pod autoscalers.">CPU usage history</translation>
-  <translation id="5614176435246042613" key="MSG_HORIZONTALPODAUTOSCALERLIST_HORIZONTALPODAUTOSCALERLIST_1" desc="Title for graph card displaying memory metric of horizontal pod autoscalers.">Memory usage history</translation>
   <translation id="3116131023784654870" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_ACTIONBAR_0" desc="Label \'Horizontal Pod Autoscaler\' which appears at the top of the delete dialog, opened from a horizontal pod autoscaler details page.">Horizontal Pod Autoscaler</translation>
   <translation id="4234217286162701029" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_0" desc="Horizontal pod autoscaler info details section name.">Details</translation>
   <translation id="8852238167226878780" key="MSG_HORIZONTALPODAUTOSCALER_DETAIL_INFO_1" desc="Horizontal pod autoscaler info details section target entry.">Target</translation>
@@ -572,31 +388,6 @@
   <translation id="8880232300868913858" key="MSG_HORIZONTALPODAUTOSCALER_LIST_CARD_3" desc="Title \'Horizontal Pod Autoscaler\' which is used as a title for the delete/update\n   dialogs (that can be opened on the horizontal pod autoscaler list view).">Horizontal Pod Autoscaler</translation>
   <translation id="6040027076420887056" key="MSG_HORIZONTAL_POD_AUTOSCALER_DETAIL_LAST_SCALED_TOOLTIP" desc="Tooltip 'Last scaled at [some date]' showing the exact time of the last time the horizontal pod autoscaler was scaled.">Last scaled at <ph name="SCALE_DATE"/></translation>
   <translation id="9182587734524448852" key="MSG_HORIZONTAL_POD_AUTOSCALER_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of the horizontal pod autoscaler.">Created at <ph name="CREATION_DATE"/></translation>
-  <translation id="919509716730095946" key="MSG_IMAGE_PULL_SECRET_CANCEL_ACTION" desc="The text is put on the 'Cancel' button in the image pull secret creation dialog.">Cancel</translation>
-  <translation id="413516354763358070" key="MSG_IMAGE_PULL_SECRET_CREATE_ACTION" desc="The text is put on the 'Create' button in the image pull secret creation dialog.">Create</translation>
-  <translation id="3382981767955244666" key="MSG_IMAGE_PULL_SECRET_CREATE_DIALOG_SUBTITLE" desc="Create image pull secret dialog subtitle. Appears right below the title.">The new secret will be added to the cluster</translation>
-  <translation id="6489624424433759035" key="MSG_IMAGE_PULL_SECRET_CREATE_DIALOG_TITLE" desc="Create image pull secret dialog title. The message appears at the top of the dialog box.">Create a new image pull secret</translation>
-  <translation id="8342519402917559446" key="MSG_IMAGE_PULL_SECRET_CREATE_DIALOG_USER_HELP" desc="User help text for the create image pull secret dialog. Directly after this text a specific namespace is specified.">A secret with the specified name will be added to the cluster in the namespace</translation>
-  <translation id="6217421730854783216" key="MSG_IMAGE_PULL_SECRET_DATA_BASE64_WARNING" desc="The text appears when the image pull secret data is not Base64 encoded.">Data must be Base64 encoded</translation>
-  <translation id="2983148182170296230" key="MSG_IMAGE_PULL_SECRET_DATA_LABEL" desc="Label 'Image pull secret data', which appears as a placeholder in an empty input field in the image pull secret creation dialog.">Image pull secret data</translation>
-  <translation id="3432622161353334586" key="MSG_IMAGE_PULL_SECRET_DATA_REQUIRED_WARNING" desc="Warning which tells the user that the image pull secret data is required.">Data is required</translation>
-  <translation id="7793557773608682327" key="MSG_IMAGE_PULL_SECRET_DATA_USER_HELP" desc="User help text for the input of the &quot;Image Pull Secret&quot; data.">Specify the data for your secret to hold. The value is the Base64 encoded content of a .dockercfg file.</translation>
-  <translation id="7394607899033025775" key="MSG_IMAGE_PULL_SECRET_LEARN_MORE_ACTION" desc="The text is used as a 'Learn more' link text in the image pull secret creation dialog">Learn more</translation>
-  <translation id="696865387402025901" key="MSG_IMAGE_PULL_SECRET_NAME_LABEL" desc="Label 'Secret name', which appears as a placeholder in an empty input field in the image pull secret creation dialog.">Secret name</translation>
-  <translation id="4127420758208322272" key="MSG_IMAGE_PULL_SECRET_NAME_LENGTH_WARNING" desc="The text appears when the image pull secret name exceeds the maximal length.">Name must be up to <ph name="MAX_LENGTH"/> characters long.</translation>
-  <translation id="7256994603560688149" key="MSG_IMAGE_PULL_SECRET_NAME_PATTERN_WARNING" desc="The text appears when the image pull secret name does not match the expected pattern.">Name must follow the DNS domain name syntax (e.g. new.image-pull.secret)</translation>
-  <translation id="7263428501718162087" key="MSG_IMAGE_PULL_SECRET_NAME_REQUIRED_WARNING" desc="Warning which tells the user that the image pull secret name is required.">Name is required.</translation>
-  <translation id="9187405739901697345" key="MSG_INGRESSDETAIL_ACTIONBAR_0" desc="Label \'Ingress\' which appears at the top of the delete dialog, opened from an ingress details page.">Ingress</translation>
-  <translation id="2640165037560914246" key="MSG_INGRESSDETAIL_INFO_0" desc="Header in a detail view">Details</translation>
-  <translation id="9151423718836175081" key="MSG_INGRESSDETAIL_INFO_1" desc="Resource info details section name entry.">Name</translation>
-  <translation id="5711019371830079014" key="MSG_INGRESSDETAIL_INFO_2" desc="Resource info details section namespace entry.">Namespace</translation>
-  <translation id="2087085534074400977" key="MSG_INGRESSDETAIL_INFO_3" desc="Resource info details section labels entry.">Labels</translation>
-  <translation id="3221446391724737441" key="MSG_INGRESSDETAIL_INFO_4" desc="Resource info details section annotations entry.">Annotations</translation>
-  <translation id="4313226248975897155" key="MSG_INGRESSLIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Ingresses</translation>
-  <translation id="5303084475271187350" key="MSG_INGRESSLIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of ingresses (ingress list view).">Name</translation>
-  <translation id="1103411838151096703" key="MSG_INGRESSLIST_CARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of ingresses (ingress list view).">Namespace</translation>
-  <translation id="6970100075274497061" key="MSG_INGRESSLIST_CARDLIST_3" desc="Label \'endpoints\' which appears as a column label in the table of ingresses (ingress list view).">Endpoints</translation>
-  <translation id="8202258406797150740" key="MSG_INGRESSLIST_CARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of ingresses (ingress list view).">Age</translation>
   <translation id="8095485922114238358" key="MSG_INGRESS_DETAIL_ACTIONBAR_0" desc="Label \'Ingress\' which appears at the top of the delete dialog, opened from an ingress details page.">Ingress</translation>
   <translation id="7647290016989598143" key="MSG_INGRESS_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
   <translation id="6047464944743303851" key="MSG_INGRESS_DETAIL_INFO_1" desc="Resource info details section name entry.">Name</translation>
@@ -610,44 +401,12 @@
   <translation id="5470067088066957568" key="MSG_INGRESS_LIST_CARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of ingresses (ingress list view).">Age</translation>
   <translation id="6006534028215971090" key="MSG_INGRESS_LIST_CARDLIST_5" desc="Text for ingress card list zerostate.">There are no Ingresses to display.</translation>
   <translation id="6014322650743882966" key="MSG_INGRESS_LIST_STARTED_AT_TOOLTIP" desc="Tooltip 'Started at [some date]' showing the exact start time of the ingress.">Created at <ph name="START_DATE"/> UTC</translation>
-  <translation id="6315518507776012285" key="MSG_JOBDETAIL_ACTIONBAR_0" desc="Label \'Job\' which appears at the top of the dialog, opened from a job details page.">Job</translation>
-  <translation id="3137266053437967990" key="MSG_JOBDETAIL_JOBDETAIL_0" desc="Title for graph card displaying CPU metric of one job.">CPU usage</translation>
-  <translation id="3929486061329485708" key="MSG_JOBDETAIL_JOBDETAIL_1" desc="Title for graph card displaying memory metric of one job.">Memory usage</translation>
-  <translation id="6202081236302719912" key="MSG_JOBDETAIL_JOBDETAIL_2" desc="Title for pods card zerostate in job details page.">There is nothing to display here</translation>
-  <translation id="7711574620482239562" key="MSG_JOBDETAIL_JOBDETAIL_3" desc="Text for pods card zerostate in job details page.">There are currently no Pods managed by this Job.</translation>
-  <translation id="7136239150284139255" key="MSG_JOBDETAIL_JOBDETAIL_4" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by this job.</translation>
-  <translation id="8480509937783146429" key="MSG_JOBDETAIL_JOBINFO_0" desc="Header in a detail view">Details</translation>
-  <translation id="3298132135084270929" key="MSG_JOBDETAIL_JOBINFO_1" desc="Details section header. Appears below main header.">Details</translation>
-  <translation id="2017665805239450995" key="MSG_JOBDETAIL_JOBINFO_10" desc="Status of active pods. Appears next to number of active pods.">active</translation>
-  <translation id="3450090554915388315" key="MSG_JOBDETAIL_JOBINFO_11" desc="Status of succeeded pods. Appears next to number of succeeded pods.">succeeded</translation>
-  <translation id="5769981784960179322" key="MSG_JOBDETAIL_JOBINFO_12" desc="Status of failed pods. Appears next to number of failed pods.">failed</translation>
-  <translation id="995015845843015239" key="MSG_JOBDETAIL_JOBINFO_2" desc="Job name. Appears in details section.">Name</translation>
-  <translation id="7702623821881914365" key="MSG_JOBDETAIL_JOBINFO_3" desc="Job namespace. Appears in details section.">Namespace</translation>
-  <translation id="6476443144438101274" key="MSG_JOBDETAIL_JOBINFO_4" desc="Job labels. Appears in details section.">Labels</translation>
-  <translation id="4833380290327253490" key="MSG_JOBDETAIL_JOBINFO_5" desc="Job images. Appears in details section.">Images</translation>
-  <translation id="8418124988298428049" key="MSG_JOBDETAIL_JOBINFO_6" desc="Job completions. Appears in details section.">Completions</translation>
-  <translation id="6342794758614990549" key="MSG_JOBDETAIL_JOBINFO_7" desc="Job parallelism. Appears in details section.">Parallelism</translation>
-  <translation id="1816387606453801726" key="MSG_JOBDETAIL_JOBINFO_8" desc="Job status. Appears in details section.">Status</translation>
-  <translation id="2030973694573341783" key="MSG_JOBDETAIL_JOBINFO_9" desc="Pod status section header. Appears below main header.">Pods</translation>
-  <translation id="7386215157106592796" key="MSG_JOBLIST_JOBCARDLIST_0" desc="Label which appears above the list of such objects.">Jobs</translation>
-  <translation id="1606921563255441848" key="MSG_JOBLIST_JOBCARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of jobs (Job list view).">Name</translation>
-  <translation id="5193224674640862613" key="MSG_JOBLIST_JOBCARDLIST_2" desc="Column header \'Kind\' on a job list table">Kind</translation>
-  <translation id="4056512314561198203" key="MSG_JOBLIST_JOBCARDLIST_3" desc="Label \'Namespace\' which appears as a column label in the table of replication controllers (Job list view).">Namespace</translation>
-  <translation id="193295090677945127" key="MSG_JOBLIST_JOBCARDLIST_4" desc="Label \'Labels\' which appears as a column label in the table of replication controllers (Job list view).">Labels</translation>
-  <translation id="3521518395978441509" key="MSG_JOBLIST_JOBCARDLIST_5" desc="Label \'Pods\' which appears as a column label in the table of replication controllers (Job list view).">Pods</translation>
-  <translation id="5390427693105568167" key="MSG_JOBLIST_JOBCARDLIST_6" desc="Label \'Age\' which appears as a column label in the table of replication controllers (Job list view).">Age</translation>
-  <translation id="3631039750555381179" key="MSG_JOBLIST_JOBCARDLIST_7" desc="Label \'Images\' which appears as a column label in the table of replication controllers (Job list view).">Images</translation>
-  <translation id="7832178859215843217" key="MSG_JOBLIST_JOBCARD_0" desc="Column \'Job\' that shows if the resource kind should be shown in a Job List">Job</translation>
-  <translation id="357262544660295674" key="MSG_JOBLIST_JOBLIST_0" desc="Title for graph card displaying CPU metric of jobs.">CPU usage</translation>
-  <translation id="6787661994791732767" key="MSG_JOBLIST_JOBLIST_1" desc="Title for graph card displaying memory metric of jobs.">Memory usage</translation>
-  <translation id="8660427171549456209" key="MSG_JOBLIST_JOBLIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by these jobs.</translation>
   <translation id="3490469769225638472" key="MSG_JOB_DETAIL_ACTIONBAR_0" desc="Label \'Job\' which appears at the top of the dialog, opened from a job details page.">Job</translation>
   <translation id="6829338653792413829" key="MSG_JOB_DETAIL_ACTIONBAR_1" desc="Tooltip for the \'scale\' button on the action bar of a deployment details view.">Edit number of pods</translation>
   <translation id="2508302008087028844" key="MSG_JOB_DETAIL_ACTIONBAR_2" desc="Tooltip for the \'scale\' button on the action bar of a deployment details view.">Scale</translation>
   <translation id="9158321222252952956" key="MSG_JOB_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one job.">CPU usage</translation>
   <translation id="5829638785096512195" key="MSG_JOB_DETAIL_DETAIL_1" desc="Title for graph card displaying memory metric of one job.">Memory usage</translation>
   <translation id="91452791679953853" key="MSG_JOB_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by this job.</translation>
-  <translation id="1401131470031385407" key="MSG_JOB_DETAIL_DETAIL_3" desc="Title for pods card zerostate in job details page.">There is nothing to display here</translation>
   <translation id="4839874577559134292" key="MSG_JOB_DETAIL_DETAIL_4" desc="Text for pods card zerostate in job details page.">There are currently no Pods managed by this Job.</translation>
   <translation id="6354233284482895196" key="MSG_JOB_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
   <translation id="4213335429121543625" key="MSG_JOB_DETAIL_INFO_1" desc="Details section header. Appears below main header.">Details</translation>
@@ -681,13 +440,6 @@
   <translation id="6208229815004454576" key="MSG_LOGS_LOGS_2" desc="Title prefix for logs card.">Logs from</translation>
   <translation id="1223986507449568472" key="MSG_LOGS_LOGS_3" desc="Footer part for logs card.">to</translation>
   <translation id="7594890250973129963" key="MSG_LOGS_ZEROSTATE_TEXT" desc="Text for logs card zerostate in logs page.">The selected container has not logged any messages yet.</translation>
-  <translation id="6246076431108385744" key="MSG_NAMESPACEDETAIL_NAMESPACEINFO_0" desc="Header in a detail view">Details</translation>
-  <translation id="3311845944254518412" key="MSG_NAMESPACEDETAIL_NAMESPACEINFO_1" desc="Label \'Status\' for the namespace namespace on the namespace details page.">Status</translation>
-  <translation id="3157977938541808621" key="MSG_NAMESPACELIST_NAMESPACECARDLIST_0" desc="Label which appears above the list of such objects.">Namespaces</translation>
-  <translation id="6994715066347054165" key="MSG_NAMESPACELIST_NAMESPACECARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of namespaces (namespace list view).">Name</translation>
-  <translation id="5732001205743518035" key="MSG_NAMESPACELIST_NAMESPACECARDLIST_2" desc="Label \'Labels\' which appears as a column label in the table of namespaces (namespace list view).">Labels</translation>
-  <translation id="6617082814971547346" key="MSG_NAMESPACELIST_NAMESPACECARDLIST_3" desc="Label \'Status\' which appears as a column label in the table of namespaces (namespace list view).">Status</translation>
-  <translation id="2470377857712331671" key="MSG_NAMESPACELIST_NAMESPACECARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of namespaces (namespace list view).">Age</translation>
   <translation id="8066049814492652432" key="MSG_NAMESPACE_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
   <translation id="6352041840775187168" key="MSG_NAMESPACE_DETAIL_INFO_1" desc="Label \'Status\' for the namespace namespace on the namespace details page.">Status</translation>
   <translation id="2794451768196559104" key="MSG_NAMESPACE_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Namespaces</translation>
@@ -698,60 +450,18 @@
   <translation id="2075541801746082922" key="MSG_NAMESPACE_LIST_CARDLIST_5" desc="Text for namespace card list zerostate.">There are no Namespaces to display.</translation>
   <translation id="2940798370079834880" key="MSG_NAMESPACE_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of namespace.">Created at <ph name="CREATION_DATE"/></translation>
   <translation id="5143266087600531180" key="MSG_NAMESPACE_SELECT_ARIA_LABEL" desc="Text describing what namespace selector is">Selector for namespaces</translation>
-  <translation id="7797522188510592984" key="MSG_NODEDETAIL_NODEALLOCATEDRESOURCES_0" desc="Label \'Allocated resources\' for the allocated resources section.">Allocated resources</translation>
-  <translation id="3054467191154992607" key="MSG_NODEDETAIL_NODEALLOCATEDRESOURCES_1" desc="Label \'CPU requests (cores)\' for the allocated resources table header on the node details page.">CPU requests (cores)</translation>
-  <translation id="1449326582134481983" key="MSG_NODEDETAIL_NODEALLOCATEDRESOURCES_2" desc="Label \'CPU limits (cores)\' for the allocated resources table header on the node details page.">CPU limits (cores)</translation>
-  <translation id="7880699345478801016" key="MSG_NODEDETAIL_NODEALLOCATEDRESOURCES_3" desc="Label \'Memory requests (bytes)\' for the allocated resources table header on the node details page.">Memory requests (bytes)</translation>
-  <translation id="2052465499677816037" key="MSG_NODEDETAIL_NODEALLOCATEDRESOURCES_4" desc="Label \'Memory limits (bytes)\' for the allocated resources table header on the node details page.">Memory limits (bytes)</translation>
-  <translation id="2780921315651856117" key="MSG_NODEDETAIL_NODEALLOCATEDRESOURCES_5" desc="Label \'Pods\' for the allocated resources table header on the node details page.">Pods</translation>
-  <translation id="4624650691998608382" key="MSG_NODEDETAIL_NODEDETAIL_0" desc="Title for graph card displaying CPU metric of one node.">CPU usage</translation>
-  <translation id="1343876625847209938" key="MSG_NODEDETAIL_NODEDETAIL_1" desc="Title for graph card displaying memory metric of one node.">Memory usage</translation>
-  <translation id="8390986378502085908" key="MSG_NODEDETAIL_NODEDETAIL_2" desc="Title for pods card zerostate in node details page.">There is nothing to display here</translation>
-  <translation id="531047836377416117" key="MSG_NODEDETAIL_NODEDETAIL_3" desc="Text for pods card zerostate in node details page.">There are currently no Pods scheduled on this Node.</translation>
-  <translation id="7140524624837436563" key="MSG_NODEDETAIL_NODEDETAIL_4" desc="Help message detailing what is included in the memory usage">The memory usage includes caches.</translation>
-  <translation id="1966636847201373148" key="MSG_NODEDETAIL_NODEINFO_0" desc="Header in a detail view">Details</translation>
-  <translation id="2302970997184862335" key="MSG_NODEDETAIL_NODEINFO_1" desc="Label \'Phase\' for the node namespace on the node details page.">Phase</translation>
-  <translation id="6072834872781542238" key="MSG_NODEDETAIL_NODEINFO_10" desc="Label \'Kernel Version\' for the node kernel version displayed on its details page.">Kernel Version</translation>
-  <translation id="2120884359219534577" key="MSG_NODEDETAIL_NODEINFO_11" desc="Label \'OS Image\' for the node OS image displayed on its details page.">OS Image</translation>
-  <translation id="4399897742616389514" key="MSG_NODEDETAIL_NODEINFO_12" desc="Label \'Container Runtime Version\' for the node container runtime version displayed on its details page.">Container Runtime Version</translation>
-  <translation id="550319238721767689" key="MSG_NODEDETAIL_NODEINFO_13" desc="Label \'Kubelet Version\' for the node Kubelet version displayed on its details page.">Kubelet Version</translation>
-  <translation id="1645376422031978941" key="MSG_NODEDETAIL_NODEINFO_14" desc="Label \'Kube-Proxy Version\' for the node Kube-Proxy version displayed on its details page.">Kube-Proxy Version</translation>
-  <translation id="2297963612104724662" key="MSG_NODEDETAIL_NODEINFO_15" desc="Label \'Operating system\' for the node operating system displayed on its details page.">Operating system</translation>
-  <translation id="2007826146141004195" key="MSG_NODEDETAIL_NODEINFO_16" desc="Label \'Architecture\' for the node architecture displayed on its details page.">Architecture</translation>
-  <translation id="2294329447550596732" key="MSG_NODEDETAIL_NODEINFO_2" desc="Label \'External ID\' for the node external ID displayed on its details page.">External ID</translation>
-  <translation id="6321203802266804878" key="MSG_NODEDETAIL_NODEINFO_3" desc="Label \'Pod CIDR\' for the node external ID displayed on its details page.">Pod CIDR</translation>
-  <translation id="2792008525844955504" key="MSG_NODEDETAIL_NODEINFO_4" desc="Label \'Provider ID\' for the node external ID displayed on its details page.">Provider ID</translation>
-  <translation id="7745148516300686452" key="MSG_NODEDETAIL_NODEINFO_5" desc="Label \'Unschedulable\' for the node external ID displayed on its details page.">Unschedulable</translation>
-  <translation id="2750865476998402940" key="MSG_NODEDETAIL_NODEINFO_6" desc="Subtitle \'System info\' for the right section with general information about node system on the node details page.">System info</translation>
-  <translation id="7400670026996882160" key="MSG_NODEDETAIL_NODEINFO_7" desc="Label \'Machine ID\' for the node machine ID displayed on its details page.">Machine ID</translation>
-  <translation id="7091930339665338471" key="MSG_NODEDETAIL_NODEINFO_8" desc="Label \'System UUID\' for the node system UUID displayed on its details page.">System UUID</translation>
-  <translation id="7608450553482340527" key="MSG_NODEDETAIL_NODEINFO_9" desc="Label \'Boot ID\' for the node boot ID displayed on its details page.">Boot ID</translation>
-  <translation id="368792575208141365" key="MSG_NODELIST_NODECARDLIST_0" desc="Label which appears above the list of such objects.">Nodes</translation>
-  <translation id="8497552287250269908" key="MSG_NODELIST_NODECARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of nodes (node list view).">Name</translation>
-  <translation id="5514017206648662113" key="MSG_NODELIST_NODECARDLIST_2" desc="Label \'Labels\' which appears as a column label in the table of nodes (node list view).">Labels</translation>
-  <translation id="5420615820754628110" key="MSG_NODELIST_NODECARDLIST_3" desc="Label \'Ready\' which appears as a column label in the table of nodes (node list view).">Ready</translation>
-  <translation id="864918782734831803" key="MSG_NODELIST_NODECARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of nodes (node list view).">Age</translation>
-  <translation id="1139931975436155591" key="MSG_NODELIST_NODELIST_0" desc="Title for graph card displaying CPU metric of nodes.">CPU usage</translation>
-  <translation id="4611353673808918004" key="MSG_NODELIST_NODELIST_1" desc="Title for graph card displaying memory metric of nodes.">Memory usage</translation>
-  <translation id="1508766902785018036" key="MSG_NODELIST_NODELIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes caches.</translation>
   <translation id="5644753445531072726" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_0" desc="Label \'Allocated resources\' for the allocated resources section.">Allocated resources</translation>
   <translation id="3448064978953547706" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_1" desc="Label \'Requests\' for the allocated resources graphs legend.">Requests</translation>
-  <translation id="5653584408656823407" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_1" desc="Label \'CPU requests (cores)\' for the allocated resources table header on the node details page.">CPU requests (cores)</translation>
-  <translation id="776419576895892458" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_2" desc="Label \'CPU limits (cores)\' for the allocated resources table header on the node details page.">CPU limits (cores)</translation>
   <translation id="7138692152606832108" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_2" desc="Label \'Limits\' for the allocated resources graphs legend.">Limits</translation>
-  <translation id="2364634598145731752" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_3" desc="Label \'Memory requests (bytes)\' for the allocated resources table header on the node details page.">Memory requests (bytes)</translation>
   <translation id="9137523745385232068" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_3" desc="Label \'Capacity\' for the allocated resources graphs legend.">Capacity</translation>
-  <translation id="4803828848895485340" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_4" desc="Label \'Memory limits (bytes)\' for the allocated resources table header on the node details page.">Memory limits (bytes)</translation>
   <translation id="4929249194769778893" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_4" desc="Label \'Requests\' for the allocated resources graphs legend.">Requests</translation>
   <translation id="495272876191440718" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_5" desc="Label \'Limits\' for the allocated resources graphs legend.">Limits</translation>
-  <translation id="2898321976840844764" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_5" desc="Label \'Pods\' for the allocated resources table header on the node details page.">Pods</translation>
   <translation id="2228308297469848373" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_6" desc="Label \'Capacity\' for the allocated resources graphs legend.">Capacity</translation>
   <translation id="3729099716287586109" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_7" desc="Label \'Allocation\' for the allocated resources graphs legend.">Allocation</translation>
   <translation id="1870534195313284860" key="MSG_NODE_DETAIL_ALLOCATEDRESOURCES_8" desc="Label \'Capacity\' for the allocated resources graphs legend.">Capacity</translation>
   <translation id="8825218677764515340" key="MSG_NODE_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one node.">CPU usage</translation>
   <translation id="1397958944434227282" key="MSG_NODE_DETAIL_DETAIL_1" desc="Title for graph card displaying memory metric of one node.">Memory usage</translation>
   <translation id="1964687474867368783" key="MSG_NODE_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">The memory usage includes caches.</translation>
-  <translation id="249473403028079051" key="MSG_NODE_DETAIL_DETAIL_3" desc="Title for pods card zerostate in node details page.">There is nothing to display here</translation>
   <translation id="7278964988916967478" key="MSG_NODE_DETAIL_DETAIL_4" desc="Text for pods card zerostate in node details page.">There are currently no Pods scheduled on this Node.</translation>
   <translation id="2128002365715974283" key="MSG_NODE_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
   <translation id="1545993044656301071" key="MSG_NODE_DETAIL_INFO_1" desc="Label \'Phase\' for the node namespace on the node details page.">Phase</translation>
@@ -785,20 +495,6 @@
   <translation id="7938673888851238901" key="MSG_NODE_LIST_LIST_1" desc="Title for graph card displaying memory metric of nodes.">Memory usage</translation>
   <translation id="1363994976459428521" key="MSG_NODE_LIST_LIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes caches.</translation>
   <translation id="2230058550547139309" key="MSG_NO_ERROR_DATA" desc="String to display when error object has no data.">No error data available</translation>
-  <translation id="6997507737763635005" key="MSG_PERSISTENTVOLUMECLAIMDETAIL_ACTIONBAR_0" desc="Label \'Persistent Volume Claim\' which appears at the top of the delete dialog, opened from a persistent volume claim details page.">Persistent Volume Claim</translation>
-  <translation id="1297935396913654466" key="MSG_PERSISTENTVOLUMECLAIMDETAIL_PERSISTENTVOLUMECLAIMINFO_0" desc="Header in a detail view">Details</translation>
-  <translation id="4504917958472688873" key="MSG_PERSISTENTVOLUMECLAIMDETAIL_PERSISTENTVOLUMECLAIMINFO_1" desc="Persistent volume claim info details section status entry.">Status</translation>
-  <translation id="4647526198205146421" key="MSG_PERSISTENTVOLUMECLAIMDETAIL_PERSISTENTVOLUMECLAIMINFO_2" desc="Persistent volume claim info details section volume entry.">Volume</translation>
-  <translation id="4573804148379208551" key="MSG_PERSISTENTVOLUMECLAIMDETAIL_PERSISTENTVOLUMECLAIMINFO_3" desc="Persistent volume claim info details section capacity entry.">Capacity</translation>
-  <translation id="9110806056221049320" key="MSG_PERSISTENTVOLUMECLAIMDETAIL_PERSISTENTVOLUMECLAIMINFO_4" desc="Persistent volume claim info details section access modes entry.">Access modes</translation>
-  <translation id="7501902062811472506" key="MSG_PERSISTENTVOLUMECLAIMLIST_PERSISTENTVOLUMECLAIMCARDLIST_0" desc="Label which appears above the list of such objects.">Persistent Volume Claims</translation>
-  <translation id="6586647416917075263" key="MSG_PERSISTENTVOLUMECLAIMLIST_PERSISTENTVOLUMECLAIMCARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">Name</translation>
-  <translation id="6404469456421622697" key="MSG_PERSISTENTVOLUMECLAIMLIST_PERSISTENTVOLUMECLAIMCARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">Namespace</translation>
-  <translation id="2306325482144488153" key="MSG_PERSISTENTVOLUMECLAIMLIST_PERSISTENTVOLUMECLAIMCARDLIST_3" desc="Label \'Volume\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">Volume</translation>
-  <translation id="7038728376661079663" key="MSG_PERSISTENTVOLUMECLAIMLIST_PERSISTENTVOLUMECLAIMCARDLIST_4" desc="Label \'Labels\' which appears as a column label in the table of persistent volume claim (persistent volume claim list view).">Labels</translation>
-  <translation id="4669931994584774261" key="MSG_PERSISTENTVOLUMECLAIMLIST_PERSISTENTVOLUMECLAIMCARDLIST_5" desc="Label \'Age\' which appears as a column label in the table of persistent volume claims (persistent volume claim list view).">Age</translation>
-  <translation id="5605513756759404025" key="MSG_PERSISTENTVOLUMECLAIMLIST_PERSISTENTVOLUMECLAIMCARD_0" desc="Tooltip text which appears on error icon hover.">This claim is in lost state</translation>
-  <translation id="7813004235196632560" key="MSG_PERSISTENTVOLUMECLAIMLIST_PERSISTENTVOLUMECLAIMCARD_1" desc="Tooltip text which appears on pending icon hover.">This claim is in pending state</translation>
   <translation id="486388281806331038" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_ACTIONBAR_0" desc="Label \'Persistent Volume Claim\' which appears at the top of the delete dialog, opened from a persistent volume claim details page.">Persistent Volume Claim</translation>
   <translation id="1482471968556330090" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
   <translation id="6385503627780441862" key="MSG_PERSISTENTVOLUMECLAIM_DETAIL_INFO_1" desc="Persistent volume claim info details section status entry.">Status</translation>
@@ -814,70 +510,6 @@
   <translation id="5623491181214143081" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_6" desc="Text for persistent volume claim card list zerostate.">There are no Persistent Volume Claims to display.</translation>
   <translation id="445776331089273321" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARD_0" desc="Tooltip text which appears on error icon hover.">This claim is in lost state</translation>
   <translation id="2307976094948542528" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARD_1" desc="Tooltip text which appears on pending icon hover.">This claim is in pending state</translation>
-  <translation id="5690741977032012793" key="MSG_PERSISTENTVOLUMEDETAIL_ACTIONBAR_0" desc="Label \'Persistent Volume\' which appears at the top of the delete dialog, opened from a config map details page.">Persistent Volume</translation>
-  <translation id="531832117748275245" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMEINFO_0" desc="Header in a detail view">Details</translation>
-  <translation id="1042932866818648035" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMEINFO_1" desc="Persistent volume info details section status entry.">Status</translation>
-  <translation id="3081126042784159012" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMEINFO_2" desc="Persistent volume info details section claim entry.">Claim</translation>
-  <translation id="7182818547783749726" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMEINFO_3" desc="Persistent volume info details section reclaim policy entry.">Reclaim policy</translation>
-  <translation id="443944952000229636" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMEINFO_4" desc="Persistent volume info details section access modes entry.">Access modes</translation>
-  <translation id="1127622794456444636" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMEINFO_5" desc="Persistent volume info details section capacity entry.">Capacity</translation>
-  <translation id="6537926556417509183" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMEINFO_6" desc="Persistent volume info details section message entry.">Message</translation>
-  <translation id="7521270075566539105" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_0" desc="Persistent volume source info title.">Persistent volume source</translation>
-  <translation id="919267099507883347" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_1" desc="Persistent volume source info host path title.">Host path</translation>
-  <translation id="3807167332160112212" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_10" desc="Persistent volume source info AWS block storage section FS type entry.">FS type</translation>
-  <translation id="979368484246273450" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_11" desc="Persistent volume source info AWS block storage section partition entry.">Partition</translation>
-  <translation id="1299542970154738952" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_12" desc="Persistent volume source info AWS block storage section read only entry.">Read only</translation>
-  <translation id="4135782444075544266" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_13" desc="Persistent volume source info GlusterFS title.">GlusterFS</translation>
-  <translation id="2569664254655810738" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_14" desc="Persistent volume source info GlusterFS section endpoints entry.">Endpoints</translation>
-  <translation id="4633870082474509431" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_15" desc="Persistent volume source info GlusterFS section path entry.">Path</translation>
-  <translation id="397487829024651382" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_16" desc="Persistent volume source info GlusterFS section read only entry.">Read only</translation>
-  <translation id="5619308793256280403" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_17" desc="Persistent volume source info NFS title.">NFS</translation>
-  <translation id="7834555382735600781" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_18" desc="Persistent volume source info NFS section server entry.">Server</translation>
-  <translation id="7667677018558025610" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_19" desc="Persistent volume source info NFS section path entry.">Path</translation>
-  <translation id="201779226324807369" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_2" desc="Persistent volume source info host path section path entry.">Path</translation>
-  <translation id="1949642346146243678" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_20" desc="Persistent volume source info NFS section read only entry.">Read only</translation>
-  <translation id="8496289070980678094" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_21" desc="Persistent volume source info RBD title.">RBD</translation>
-  <translation id="5934811483427830483" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_22" desc="Persistent volume source info RBD section monitors entry.">Monitors</translation>
-  <translation id="4486513869456314053" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_23" desc="Persistent volume source info RBD section image entry.">Image</translation>
-  <translation id="475670366265060231" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_24" desc="Persistent volume source info RBD section user entry.">User</translation>
-  <translation id="6832333539946175463" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_25" desc="Persistent volume source info RBD section keyring entry.">Keyring</translation>
-  <translation id="7398881350143169133" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_26" desc="Persistent volume source info RBD section secretRef entry.">SecretRef</translation>
-  <translation id="2293490330562922929" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_27" desc="Persistent volume source info RBD section read only entry.">Read only</translation>
-  <translation id="2717760225270282250" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_28" desc="Persistent volume source info ISCSI title.">ISCSI</translation>
-  <translation id="49740911429535010" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_29" desc="Persistent volume source info ISCSI section target portal entry.">Target portal</translation>
-  <translation id="5961286647055063686" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_3" desc="Persistent volume source info GCE persistent disk title.">GCE persistent disk</translation>
-  <translation id="7456613679651122047" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_30" desc="Persistent volume source info ISCSI section IQN entry.">IQN</translation>
-  <translation id="1746212043954320639" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_31" desc="Persistent volume source info ISCSI section lun entry.">Lun</translation>
-  <translation id="2534695985841322496" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_32" desc="Persistent volume source info ISCSI section FS type entry.">FS type</translation>
-  <translation id="5062175038475733644" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_33" desc="Persistent volume source info ISCSI section read only entry.">Read only</translation>
-  <translation id="3622592905692901586" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_34" desc="Persistent volume source info cinder title.">Cinder</translation>
-  <translation id="3875276079227523005" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_35" desc="Persistent volume source info cinder section volume ID entry.">Volume ID</translation>
-  <translation id="6721746543864985172" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_36" desc="Persistent volume source info cinder section FS Type entry.">FS Type</translation>
-  <translation id="1310408807965227932" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_37" desc="Persistent volume source info cinder section read only entry.">Read only</translation>
-  <translation id="926158203438031972" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_38" desc="Persistent volume source info FC title.">FC</translation>
-  <translation id="6864793615321198615" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_39" desc="Persistent volume source info FC section target WWNs entry.">Target WWNs</translation>
-  <translation id="1568023638733467455" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_4" desc="Persistent volume source info GCE persistent disk section PD name entry.">PD name</translation>
-  <translation id="8695810616484793857" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_40" desc="Persistent volume source info FC section target FS type entry.">FS type</translation>
-  <translation id="8513164690115873718" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_41" desc="Persistent volume source info FC section lun entry.">Lun</translation>
-  <translation id="8769403155769233935" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_42" desc="Persistent volume source info FC section read only entry.">Read only</translation>
-  <translation id="4506953457330228846" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_43" desc="Persistent volume source info flocker title.">Flocker</translation>
-  <translation id="682505233527131809" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_44" desc="Persistent volume source info FC section dataset name entry.">Dataset name</translation>
-  <translation id="1332420157425652821" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_5" desc="Persistent volume source info GCE persistent disk section FS type entry.">FS type</translation>
-  <translation id="4628849845192725116" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_6" desc="Persistent volume source info GCE persistent disk section partition entry.">Partition</translation>
-  <translation id="1466148946164734921" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_7" desc="Persistent volume source info GCE persistent disk section read only entry.">Read only</translation>
-  <translation id="6954190418538076190" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_8" desc="Persistent volume source info AWS block storage title.">AWS block storage</translation>
-  <translation id="3089720526397196800" key="MSG_PERSISTENTVOLUMEDETAIL_PERSISTENTVOLUMESOURCEINFO_9" desc="Persistent volume source info AWS block storage section volume ID entry.">Volume ID</translation>
-  <translation id="2627082729510018572" key="MSG_PERSISTENTVOLUMELIST_PERSISTENTVOLUMECARDLIST_0" desc="Label which appears above the list of such objects.">Persistent Volumes</translation>
-  <translation id="7472422284700775984" key="MSG_PERSISTENTVOLUMELIST_PERSISTENTVOLUMECARDLIST_1" desc="Persistent volume list header: name.">Name</translation>
-  <translation id="9011785450606292423" key="MSG_PERSISTENTVOLUMELIST_PERSISTENTVOLUMECARDLIST_2" desc="Persistent volume list header: labels.">Labels</translation>
-  <translation id="4446374425136765370" key="MSG_PERSISTENTVOLUMELIST_PERSISTENTVOLUMECARDLIST_3" desc="Persistent volume list header: capacity.">Capacity</translation>
-  <translation id="4735181473292260665" key="MSG_PERSISTENTVOLUMELIST_PERSISTENTVOLUMECARDLIST_4" desc="Persistent volume list header: access modes.">Access modes</translation>
-  <translation id="8441317291018454797" key="MSG_PERSISTENTVOLUMELIST_PERSISTENTVOLUMECARDLIST_5" desc="Persistent volume list header: status.">Status</translation>
-  <translation id="1065531234461755448" key="MSG_PERSISTENTVOLUMELIST_PERSISTENTVOLUMECARDLIST_6" desc="Persistent volume list header: claim.">Claim</translation>
-  <translation id="8185353957042898352" key="MSG_PERSISTENTVOLUMELIST_PERSISTENTVOLUMECARDLIST_7" desc="Persistent volume list header: reason.">Reason</translation>
-  <translation id="2604157972664563506" key="MSG_PERSISTENTVOLUMELIST_PERSISTENTVOLUMECARDLIST_8" desc="Persistent volume list header: age.">Age</translation>
-  <translation id="4506741016926991795" key="MSG_PERSISTENTVOLUMELIST_PERSISTENTVOLUMECARD_0" desc="Label \'Persistent Volume\' which will appear in the persistent volume delete dialog opened from a persistentvolume card on the list page.">Persistent Volume</translation>
-  <translation id="6677838767738117816" key="MSG_PERSISTENTVOLUMELIST_PERSISTENTVOLUMECARD_1" desc="Label \'Persistent Volume\' which will appear in the persistent volume delete dialog opened from a persistentvolume card on the list page.">Persistent Volume</translation>
   <translation id="6410423382942434423" key="MSG_PERSISTENTVOLUME_DETAIL_ACTIONBAR_0" desc="Label \'Persistent Volume\' which appears at the top of the delete dialog, opened from a config map details page.">Persistent Volume</translation>
   <translation id="6875466029803342193" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
   <translation id="5670456105080780751" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_1" desc="Persistent volume info details section status entry.">Status</translation>
@@ -945,66 +577,6 @@
   <translation id="7476369653916486566" key="MSG_PERSISTENTVOLUME_LIST_CARD_1" desc="Label \'Persistent Volume\' which will appear in the persistent volume delete dialog opened from a persistentvolume card on the list page.">Persistent Volume</translation>
   <translation id="6860347532246002287" key="MSG_PERSISTENT_VOLUME_CLAIM_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of persistent volume claim.">Created at <ph name="CREATION_DATE"/></translation>
   <translation id="7869718532150162176" key="MSG_PERSISTENT_VOLUME_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of persistent volume.">Created at <ph name="CREATION_DATE"/></translation>
-  <translation id="2274539880532747000" key="MSG_PODDETAIL_ACTIONBAR_0" desc="Label \'Pod\' which appears at the top of the delete dialog, opened from a pod details page.">Pod</translation>
-  <translation id="1530652887767114965" key="MSG_PODDETAIL_CONTAINERINFO_0" desc="Subtitle at the top of the container details.">Containers</translation>
-  <translation id="344796737697479186" key="MSG_PODDETAIL_CONTAINERINFO_1" desc="Label for container image.">Image</translation>
-  <translation id="3743838518643025356" key="MSG_PODDETAIL_CONTAINERINFO_2" desc="Label for container environment variables.">Environment variables</translation>
-  <translation id="7465138239796555454" key="MSG_PODDETAIL_CONTAINERINFO_3" desc="Label for environment variable that comes from a Config Map">value from ConfigMap {{env.valueFrom.configMapKeyRef.Name}}/{{env.valueFrom.configMapKeyRef.key}}</translation>
-  <translation id="5819780368982068100" key="MSG_PODDETAIL_CONTAINERINFO_4" desc="Label when there is no container environment variables.">-</translation>
-  <translation id="3614409731739584891" key="MSG_PODDETAIL_CONTAINERINFO_5" desc="Label for container commands.">Commands</translation>
-  <translation id="2547900428309997273" key="MSG_PODDETAIL_CONTAINERINFO_6" desc="Label when there is no container commands.">-</translation>
-  <translation id="6628792456376296558" key="MSG_PODDETAIL_CONTAINERINFO_7" desc="Label for container args.">Args</translation>
-  <translation id="6203718664600482216" key="MSG_PODDETAIL_CONTAINERINFO_8" desc="Label when there is no container arguments.">-</translation>
-  <translation id="2796629198059640113" key="MSG_PODDETAIL_CONTAINERINFO_9" desc="Label for the container logs.">View logs</translation>
-  <translation id="3727004916932340445" key="MSG_PODDETAIL_CREATORINFO_0" desc="Heading for Creator card on poddetail page">Created by</translation>
-  <translation id="5631675338332682932" key="MSG_PODDETAIL_CREATORINFO_1" desc="Heading for Creator card on poddetail page">Created by</translation>
-  <translation id="8640126889516735851" key="MSG_PODDETAIL_CREATORINFO_1" desc="Label \'Name\' which appears as a column label in the creator card.">Name</translation>
-  <translation id="5486843492714890062" key="MSG_PODDETAIL_CREATORINFO_2" desc="Label \'Kind\' which appears as a column label in the creator card.">Kind</translation>
-  <translation id="7184954225025922528" key="MSG_PODDETAIL_CREATORINFO_2" desc="Heading for Creator card on poddetail page">Created by</translation>
-  <translation id="5354454761743336471" key="MSG_PODDETAIL_CREATORINFO_3" desc="Heading for Creator card on poddetail page">Created by</translation>
-  <translation id="6269582651630613299" key="MSG_PODDETAIL_CREATORINFO_3" desc="Label \'Namespace\' which appears as a column label in the creator card.">Namespace</translation>
-  <translation id="573484246643563912" key="MSG_PODDETAIL_CREATORINFO_4" desc="Label \'Labels\' which appears as a column label in the creator card.">Labels</translation>
-  <translation id="5154195005930272732" key="MSG_PODDETAIL_CREATORINFO_4" desc="Heading for Creator card on poddetail page">Created by</translation>
-  <translation id="803331105752777171" key="MSG_PODDETAIL_CREATORINFO_5" desc="|Label for unknown creator of a pod">Unknown creator</translation>
-  <translation id="1933152551731053017" key="MSG_PODDETAIL_CREATORINFO_5" desc="Label \'Pods\' which appears as a column label in the creator card.">Pods</translation>
-  <translation id="9059880881791485363" key="MSG_PODDETAIL_CREATORINFO_5" desc="Heading for Creator card on poddetail page">Created by</translation>
-  <translation id="2032785600366283844" key="MSG_PODDETAIL_CREATORINFO_6" desc="Label \'Age\' which appears as a column label in the creator card.">Age</translation>
-  <translation id="4531715723625212375" key="MSG_PODDETAIL_CREATORINFO_6" desc="Title for pods card zerostate in pod details page.">There is nothing to display here</translation>
-  <translation id="495066645228579081" key="MSG_PODDETAIL_CREATORINFO_7" desc="Label \'Images\' which appears as a column label in the creator card.">Images</translation>
-  <translation id="7907488041039669525" key="MSG_PODDETAIL_CREATORINFO_7" desc="Text for pod creator zerostate in pod details page.">This Pod does not have a creator.</translation>
-  <translation id="7631003788484867114" key="MSG_PODDETAIL_CREATORINFO_8" desc="Title for pods card zero state in pod details page.">There is nothing to display here</translation>
-  <translation id="757540596100515097" key="MSG_PODDETAIL_CREATORINFO_9" desc="Text for pod creator zero state in pod details page.">This Pod does not have a creator.</translation>
-  <translation id="4762477599395572185" key="MSG_PODDETAIL_PODDETAIL_0" desc="Title for graph card displaying CPU metric of one pod.">CPU usage</translation>
-  <translation id="3791462909802261074" key="MSG_PODDETAIL_PODDETAIL_1" desc="Title for graph card displaying memory metric of one pod.">Memory usage</translation>
-  <translation id="4886615901703785404" key="MSG_PODDETAIL_PODDETAIL_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in this pod.</translation>
-  <translation id="5986775267389891527" key="MSG_PODDETAIL_PODINFO_0" desc="Header in a detail view">Details</translation>
-  <translation id="4915755492526213647" key="MSG_PODDETAIL_PODINFO_1" desc="Label \'Status\' for the pod status in details part (left) of the pod details view.">Status</translation>
-  <translation id="4706889120804601226" key="MSG_PODDETAIL_PODINFO_2" desc="Label for the pod logs in details part (left) of the pod details view.">View logs</translation>
-  <translation id="5820310305313104705" key="MSG_PODDETAIL_PODINFO_3" desc="Subtitle \'Network\' at the top of the column about network connectivity (right) at the pod detail view.">Network</translation>
-  <translation id="8887079473973013405" key="MSG_PODDETAIL_PODINFO_4" desc="Label \'Node\' for the node a pods is running on, appears in the connectivity part (right) of the pod details view.">Node</translation>
-  <translation id="8379029618314815509" key="MSG_PODDETAIL_PODINFO_5" desc="Label \'IP\' for the pod internal IP, appears in the connectivity part (right) of the pod details view.">IP</translation>
-  <translation id="374148468911616788" key="MSG_PODLIST_PODCARDLIST_0" desc="Label which appears above the list of such objects.">Pods</translation>
-  <translation id="170372201679634566" key="MSG_PODLIST_PODCARDLIST_1" desc="Title of a column">Name</translation>
-  <translation id="4807944863354440050" key="MSG_PODLIST_PODCARDLIST_10" desc="Tooltip for pending pod card icon">This pod is in a pending state.</translation>
-  <translation id="1810197656846030681" key="MSG_PODLIST_PODCARDLIST_11" desc="Label for logs tooltip">Logs</translation>
-  <translation id="6710159274365919294" key="MSG_PODLIST_PODCARDLIST_12" desc="Name of the pod resource">Pod</translation>
-  <translation id="7304816947453896902" key="MSG_PODLIST_PODCARDLIST_13" desc="Name of the pod resource">Pod</translation>
-  <translation id="1503229819722800462" key="MSG_PODLIST_PODCARDLIST_2" desc="Title of a column">Namespace</translation>
-  <translation id="4111912640165744921" key="MSG_PODLIST_PODCARDLIST_3" desc="Title of a pod status column">Status</translation>
-  <translation id="8442000298679502120" key="MSG_PODLIST_PODCARDLIST_4" desc="Title of a restarts column for a pod">Restarts</translation>
-  <translation id="4613796725498130784" key="MSG_PODLIST_PODCARDLIST_5" desc="Title of a column for the age of a pod">Age</translation>
-  <translation id="7832188009632033047" key="MSG_PODLIST_PODCARDLIST_6" desc="Title of a column">Cluster IP</translation>
-  <translation id="6443550122641250762" key="MSG_PODLIST_PODCARDLIST_7" desc="Title of a column">CPU (cores)</translation>
-  <translation id="3396535268909732737" key="MSG_PODLIST_PODCARDLIST_8" desc="Title of a column">Memory (bytes)</translation>
-  <translation id="7236041095972031158" key="MSG_PODLIST_PODCARDLIST_9" desc="Tooltip for failed pod card icon">This pod has errors.</translation>
-  <translation id="1979198258258777444" key="MSG_PODLIST_PODCARD_0" desc="Tooltip for failed pod card icon">This pod has errors.</translation>
-  <translation id="6198079975160516049" key="MSG_PODLIST_PODCARD_1" desc="Tooltip for pending pod card icon">This pod is in a pending state.</translation>
-  <translation id="9163686479589740365" key="MSG_PODLIST_PODCARD_2" desc="Label for logs tooltip">Logs</translation>
-  <translation id="1311816473397506166" key="MSG_PODLIST_PODCARD_3" desc="Name of the pod resource">Pod</translation>
-  <translation id="7649589521591327794" key="MSG_PODLIST_PODCARD_4" desc="Name of the pod resource">Pod</translation>
-  <translation id="4624949365521774090" key="MSG_PODLIST_PODLIST_0" desc="Title for graph card displaying CPU metric of pods.">CPU usage</translation>
-  <translation id="1774454191311054495" key="MSG_PODLIST_PODLIST_1" desc="Title for graph card displaying memory metric of pods.">Memory usage</translation>
-  <translation id="7210994576558913771" key="MSG_PODLIST_PODLIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in these pods.</translation>
   <translation id="4867553232280640900" key="MSG_POD_DETAIL_ACTIONBAR_0" desc="Label \'Pod\' which appears at the top of the delete dialog, opened from a pod details page.">Pod</translation>
   <translation id="3190654996078973226" key="MSG_POD_DETAIL_CONTAINERINFO_0" desc="Subtitle at the top of the container details.">Containers</translation>
   <translation id="1970650270984178962" key="MSG_POD_DETAIL_CONTAINERINFO_1" desc="Label for container image.">Image</translation>
@@ -1024,7 +596,6 @@
   <translation id="1299427439266004356" key="MSG_POD_DETAIL_CREATORINFO_5" desc="Label \'Pods\' which appears as a column label in the creator card.">Pods</translation>
   <translation id="2344179924431390658" key="MSG_POD_DETAIL_CREATORINFO_6" desc="Label \'Age\' which appears as a column label in the creator card.">Age</translation>
   <translation id="347463114068534057" key="MSG_POD_DETAIL_CREATORINFO_7" desc="Label \'Images\' which appears as a column label in the creator card.">Images</translation>
-  <translation id="2406713024899416413" key="MSG_POD_DETAIL_CREATORINFO_8" desc="Title for pods card zero state in pod details page.">There is nothing to display here</translation>
   <translation id="2652259329893477150" key="MSG_POD_DETAIL_CREATORINFO_9" desc="Text for pod creator zero state in pod details page.">This Pod does not have a creator.</translation>
   <translation id="7254693136643899288" key="MSG_POD_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one pod.">CPU usage</translation>
   <translation id="9048608003178144260" key="MSG_POD_DETAIL_DETAIL_1" desc="Title for graph card displaying memory metric of one pod.">Memory usage</translation>
@@ -1053,8 +624,6 @@
   <translation id="4686932628263410864" key="MSG_POD_LIST_LIST_0" desc="Title for graph card displaying CPU metric of pods.">CPU usage</translation>
   <translation id="6787006912063616508" key="MSG_POD_LIST_LIST_1" desc="Title for graph card displaying memory metric of pods.">Memory usage</translation>
   <translation id="2972892229238972501" key="MSG_POD_LIST_LIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in these pods.</translation>
-  <translation id="4285225015227466682" key="MSG_POD_LIST_LIST_3" desc="Title for pods card zerostate.">There is nothing to display here</translation>
-  <translation id="5745727237834321067" key="MSG_POD_LIST_LIST_4" desc="Text for pods card zerostate.">There are no Pods to display.</translation>
   <translation id="1014088790164786434" key="MSG_POD_LIST_POD_TERMINATED_STATUS" desc="Status message showing a terminated status with [reason].">Terminated: <ph name="REASON"/></translation>
   <translation id="3724043031520273690" key="MSG_POD_LIST_POD_WAITING_STATUS" desc="Status message showing a waiting status with [reason].">Waiting: <ph name="REASON"/></translation>
   <translation id="240453070925206277" key="MSG_POD_LIST_STARTED_AT_TOOLTIP" desc="Tooltip 'Started at [some date]' showing the exact start time of the pod.">Started at <ph name="START_DATE"/> UTC</translation>
@@ -1062,57 +631,14 @@
   <translation id="8050645543692471361" key="MSG_PORT_MAPPINGS_SERVICE_TYPE_INTERNAL_LABEL" desc="Label 'Internal', which appears as an option in the service type selection box on the deploy page.">Internal</translation>
   <translation id="721797967401199865" key="MSG_PORT_MAPPINGS_SERVICE_TYPE_NONE_LABEL" desc="Label 'None', which appears as an option in the service type selection box on the deploy page.">None</translation>
   <translation id="4521543753957765275" key="MSG_RC_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of replication controller.">Created at <ph name="CREATION_DATE"/></translation>
-  <translation id="4370858496997964873" key="MSG_REPLICASETDETAIL_ACTIONBAR_0" desc="Label \'Replica Set\' which appears at the top of the delete dialog, opened from a replica set details page.">Replica Set</translation>
-  <translation id="6616446588046874249" key="MSG_REPLICASETDETAIL_REPLICASETDETAIL_0" desc="Title for graph card displaying CPU metric of one replica set.">CPU usage</translation>
-  <translation id="1832506219529828876" key="MSG_REPLICASETDETAIL_REPLICASETDETAIL_1" desc="Title for graph card displaying memory metric of one replica set.">Memory usage</translation>
-  <translation id="3558242860377729085" key="MSG_REPLICASETDETAIL_REPLICASETDETAIL_2" desc="Title for pods card zerostate in replica set details page.">There is nothing to display here</translation>
-  <translation id="7654420870479566397" key="MSG_REPLICASETDETAIL_REPLICASETDETAIL_3" desc="Text for pods card zerostate in replica set details page.">There are currently no Pods managed by this Replica Set</translation>
-  <translation id="1135375549362010250" key="MSG_REPLICASETDETAIL_REPLICASETDETAIL_4" desc="Title for services card zerostate in replica set details page.">There is nothing to display here</translation>
-  <translation id="880515132801542432" key="MSG_REPLICASETDETAIL_REPLICASETDETAIL_5" desc="Text for services card zerostate in replica set details page.">There are currently no Services with the same label selector as this Replica Set.</translation>
-  <translation id="1739643344463227134" key="MSG_REPLICASETDETAIL_REPLICASETDETAIL_6" desc="Title for horizontal pod autoscalers card zerostate in replica set details page.">There is nothing to display here</translation>
-  <translation id="2144161925439913963" key="MSG_REPLICASETDETAIL_REPLICASETDETAIL_7" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">There are currently no Horizontal Pod Autoscalers targeting this Replica Set.</translation>
-  <translation id="7427216245196652831" key="MSG_REPLICASETDETAIL_REPLICASETDETAIL_8" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by this replica set.</translation>
-  <translation id="8565706677236438077" key="MSG_REPLICASETDETAIL_REPLICASETINFO_0" desc="Header in a detail view">Details</translation>
-  <translation id="894856145436951468" key="MSG_REPLICASETDETAIL_REPLICASETINFO_1" desc="Label \'selector\' for replica sets.">Selector</translation>
-  <translation id="8624660585907028627" key="MSG_REPLICASETDETAIL_REPLICASETINFO_10" desc="The message says how many pods are running (replica set details page).">{{::$ctrl.replicaSet.podInfo.running}} running</translation>
-  <translation id="7128946363542037659" key="MSG_REPLICASETDETAIL_REPLICASETINFO_11" desc="How many pods are running (replica set details page).">{{::$ctrl.replicaSet.podInfo.running}} running</translation>
-  <translation id="49658715446023601" key="MSG_REPLICASETDETAIL_REPLICASETINFO_2" desc="Label \'Images\' for the list of images used in a replica set, on its details page.">Images</translation>
-  <translation id="4727954073189068542" key="MSG_REPLICASETDETAIL_REPLICASETINFO_3" desc="Subtitle \'Status\' for the right section with pod status information\n        on the replica set details page.">Status</translation>
-  <translation id="6482247821119993893" key="MSG_REPLICASETDETAIL_REPLICASETINFO_4" desc="Label \'Pods\' for the pods in a replica set on its details page.">Pods</translation>
-  <translation id="809902657016982280" key="MSG_REPLICASETDETAIL_REPLICASETINFO_5" desc="The message says how many pods were created (replica set details page).">{{::$replicaSet.podInfo.current}} created</translation>
-  <translation id="6606278136257013770" key="MSG_REPLICASETDETAIL_REPLICASETINFO_5" desc="The message says how many pods were created (replica set details page).">{{::$ctrl.replicaSet.podInfo.current}} created</translation>
-  <translation id="6665629823278215735" key="MSG_REPLICASETDETAIL_REPLICASETINFO_6" desc="The message says how many pods are desired to run (replica set details page).">{{::$ctrl.replicaSet.podInfo.desired}} desired</translation>
-  <translation id="7548241978446696621" key="MSG_REPLICASETDETAIL_REPLICASETINFO_6" desc="The message says how many pods are desired to run (replica set details page).">{{::$replicaSet.podInfo.desired}} desired</translation>
-  <translation id="8547168002233289211" key="MSG_REPLICASETDETAIL_REPLICASETINFO_7" desc="Label \'Pods status\' for the status of the pods in a replica set, on the replica set details page.">Pods status</translation>
-  <translation id="8104685147737422972" key="MSG_REPLICASETDETAIL_REPLICASETINFO_8" desc="The message says how many pods are pending (replica set details page).">{{::$ctrl.replicaSet.podInfo.pending}} pending</translation>
-  <translation id="8376407430510598355" key="MSG_REPLICASETDETAIL_REPLICASETINFO_9" desc="The message says how many pods have failed (replica set details page).">{{::$ctrl.replicaSet.podInfo.failed}} failed</translation>
-  <translation id="1942450976273605886" key="MSG_REPLICASETLIST_REPLICASETCARDLIST_0" desc="Label which appears above the list of such objects.">Replica Sets</translation>
-  <translation id="35013899844489260" key="MSG_REPLICASETLIST_REPLICASETCARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of replica sets (replica set list view).">Name</translation>
-  <translation id="4704593828760467493" key="MSG_REPLICASETLIST_REPLICASETCARDLIST_2" desc="Column header \'Kind\' for a Replica Set list">Kind</translation>
-  <translation id="6988454734919312387" key="MSG_REPLICASETLIST_REPLICASETCARDLIST_3" desc="Label \'Namespace\' which appears as a column label in the table of replication controllers (RC list view).">Namespace</translation>
-  <translation id="9057691764883484450" key="MSG_REPLICASETLIST_REPLICASETCARDLIST_4" desc="Label \'Labels\' which appears as a column label in the table of replica sets (replica set list view).">Labels</translation>
-  <translation id="1177504818499498644" key="MSG_REPLICASETLIST_REPLICASETCARDLIST_5" desc="Label \'Pods\' which appears as a column label in the table of replica sets (replica set list view).">Pods</translation>
-  <translation id="6893289190898212489" key="MSG_REPLICASETLIST_REPLICASETCARDLIST_6" desc="Label \'Age\' which appears as a column label in the table of replica sets (replica set list view).">Age</translation>
-  <translation id="2804613360944890895" key="MSG_REPLICASETLIST_REPLICASETCARDLIST_7" desc="Label \'Images\' which appears as a column label in the table of replica sets (replica set list view).">Images</translation>
-  <translation id="3788680313877493424" key="MSG_REPLICASETLIST_REPLICASETCARD_0" desc="Tooltip saying that some pods in a replica set have errors.">One or more pods have errors</translation>
-  <translation id="9099923011381618453" key="MSG_REPLICASETLIST_REPLICASETCARD_1" desc="Tooltip saying that some pods in a replica set are pending.">One or more pods are in pending state</translation>
-  <translation id="7991739295193236885" key="MSG_REPLICASETLIST_REPLICASETCARD_2" desc="Column \'Replica Set\' that shows if the resource kind should be shown in a Replica Set List">Replica Set</translation>
-  <translation id="2099605549394286336" key="MSG_REPLICASETLIST_REPLICASETCARD_3" desc="Label \'Replica Set\' which appears at the top of the delete dialog, opened from a replica set list page.">Replica Set</translation>
-  <translation id="6619234045663975567" key="MSG_REPLICASETLIST_REPLICASETCARD_4" desc="Label \'Replica Set\' which appears at the top of the delete dialog, opened from a replica set list page.">Replica Set</translation>
-  <translation id="4060565009520367123" key="MSG_REPLICASETLIST_REPLICASETLIST_0" desc="Title for graph card displaying CPU metric of replica sets.">CPU usage</translation>
-  <translation id="4492539501833209064" key="MSG_REPLICASETLIST_REPLICASETLIST_1" desc="Title for graph card displaying memory metric of replica sets.">Memory usage</translation>
-  <translation id="5987073561559829067" key="MSG_REPLICASETLIST_REPLICASETLIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by these replica sets.</translation>
   <translation id="1260262098898397299" key="MSG_REPLICASET_DETAIL_ACTIONBAR_0" desc="Label \'Replica Set\' which appears at the top of the delete dialog, opened from a replica set details page.">Replica Set</translation>
   <translation id="2139391156871443392" key="MSG_REPLICASET_DETAIL_ACTIONBAR_1" desc="Tooltip for the \'scale\' button on the action bar of a deployment details view.">Edit number of pods</translation>
   <translation id="6231957744809190528" key="MSG_REPLICASET_DETAIL_ACTIONBAR_2" desc="Tooltip for the \'scale\' button on the action bar of a deployment details view.">Scale</translation>
   <translation id="4400871969398726978" key="MSG_REPLICASET_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one replica set.">CPU usage</translation>
   <translation id="4704389000141025902" key="MSG_REPLICASET_DETAIL_DETAIL_1" desc="Title for graph card displaying memory metric of one replica set.">Memory usage</translation>
   <translation id="8906155885743398611" key="MSG_REPLICASET_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by this replica set.</translation>
-  <translation id="3170766457058548803" key="MSG_REPLICASET_DETAIL_DETAIL_3" desc="Title for pods card zerostate in replica set details page.">There is nothing to display here</translation>
   <translation id="4572191373237361392" key="MSG_REPLICASET_DETAIL_DETAIL_4" desc="Text for pods card zerostate in replica set details page.">There are currently no Pods managed by this Replica Set</translation>
-  <translation id="3928523609053828012" key="MSG_REPLICASET_DETAIL_DETAIL_5" desc="Title for services card zerostate in replica set details page.">There is nothing to display here</translation>
   <translation id="4073087810541869774" key="MSG_REPLICASET_DETAIL_DETAIL_6" desc="Text for services card zerostate in replica set details page.">There are currently no Services with the same label selector as this Replica Set.</translation>
-  <translation id="9074901147049766730" key="MSG_REPLICASET_DETAIL_DETAIL_7" desc="Title for horizontal pod autoscalers card zerostate in replica set details page.">There is nothing to display here</translation>
   <translation id="866751517478629490" key="MSG_REPLICASET_DETAIL_DETAIL_8" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">There are currently no Horizontal Pod Autoscalers targeting this Replica Set.</translation>
   <translation id="55301176526383580" key="MSG_REPLICASET_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
   <translation id="4263408774070199925" key="MSG_REPLICASET_DETAIL_INFO_1" desc="Label \'selector\' for replica sets.">Selector</translation>
@@ -1144,76 +670,14 @@
   <translation id="1953836789676016853" key="MSG_REPLICASET_LIST_LIST_0" desc="Title for graph card displaying CPU metric of replica sets.">CPU usage</translation>
   <translation id="110700328163812848" key="MSG_REPLICASET_LIST_LIST_1" desc="Title for graph card displaying memory metric of replica sets.">Memory usage</translation>
   <translation id="8124993050775257685" key="MSG_REPLICASET_LIST_LIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by these replica sets.</translation>
-  <translation id="6194638567193104531" key="MSG_REPLICATIONCONTROLLERDETAIL_ACTIONBAR_0" desc="Tooltip for the \'scale\' button on the action bar of a replication controller details view.">Edit number of pods</translation>
-  <translation id="1117778161103271395" key="MSG_REPLICATIONCONTROLLERDETAIL_ACTIONBAR_1" desc="Tooltip for the \'scale\' button on the action bar of a replication controller details view.">Scale</translation>
-  <translation id="1073944984422921935" key="MSG_REPLICATIONCONTROLLERDETAIL_ACTIONBAR_2" desc="Label \'Replication Controller\' which appears at the top of the edit dialog, opened from a replication controller details page.">Replication Controller</translation>
-  <translation id="1441981876128770443" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERDETAIL_0" desc="Title for graph card displaying CPU metric of one replication controller.">CPU usage</translation>
-  <translation id="2255738522550840701" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERDETAIL_1" desc="Title for graph card displaying memory metric of one replication controller.">Memory usage</translation>
-  <translation id="4105159091033520614" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERDETAIL_2" desc="Title for services card zerostate in replication controller details page.">There is nothing to display here</translation>
-  <translation id="4268320100851052311" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERDETAIL_3" desc="Text for services card zerostate in replication controller details page.">There are currently no Services with the same label selector as this Replication Controller.</translation>
-  <translation id="6532158949094659908" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERDETAIL_4" desc="Title for pods card zerostate in replication controller details page.">There is nothing to display here</translation>
-  <translation id="176265090235551081" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERDETAIL_5" desc="Text for pods card zerostate in replication controller details page.">There are currently no Pods managed by this Replication Controller.</translation>
-  <translation id="8498175178549968061" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERDETAIL_6" desc="Title for horizontal pod autoscalers card zerostate in replica set details page.">There is nothing to display here</translation>
-  <translation id="6855396672598642073" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERDETAIL_7" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">There are currently no Horizontal Pod Autoscalers targeting this Replica Set.</translation>
-  <translation id="2586383148460097486" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERDETAIL_8" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by this replication controller.</translation>
-  <translation id="7402939720404007932" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_0" desc="Header in a detail view">Details</translation>
-  <translation id="1196972009152001079" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_1" desc="Label \'Selector\' for the replication controller\'s selector on the replication controller details page.">Selector</translation>
-  <translation id="6783609462069220194" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_1" desc="Label \'Label selector\' for the replication controller\'s selector on the replication controller details page.">Label selector</translation>
-  <translation id="2200677324979259623" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_10" desc="The message says how many pods have failed (replication controller details page).">{{::$ctrl.replicationController.podInfo.failed}} failed</translation>
-  <translation id="3761863497321140949" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_10" desc="The message says how many pods have failed (replication controller details page).">{{::$ctrl.replicationControllerpods.podInfo.failed}} failed</translation>
-  <translation id="685391262612042942" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_11" desc="The message says how many pods are running (replication controller details page).">{{::$ctrl.replicationControllerpods.podInfo.running}} running</translation>
-  <translation id="1174718180390767181" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_11" desc="The message says how many pods are running (replication controller details page).">{{::$ctrl.replicationController.podInfo.running}} running</translation>
-  <translation id="3760095315629361828" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_2" desc="Label \'Images\' for the list of images used in a replication controller, on its details page.">Images</translation>
-  <translation id="6630932251751110260" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_3" desc="Subtitle \'Status\' for the right section with pod status information on the replication controller details page.">Status</translation>
-  <translation id="3776290183365464913" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_4" desc="Label \'Pods\' for the pods in a replication controller on its details page.">Pods</translation>
-  <translation id="1487522648872865029" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_5" desc="The message says how many pods were created (replication controller details page).">{{::$ctrl.replicationController.podInfo.currentCount}} created</translation>
-  <translation id="1873229320753133625" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_5" desc="The message says how many pods were created (replication controller details page).">{{::$ctrl.replicationControllerpods.podInfo.currentCount}} created</translation>
-  <translation id="1495807469943798704" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_6" desc="The message says how many pods are desired to run (replication controller details page).">{{::$ctrl.replicationController.podInfo.desired}} desired</translation>
-  <translation id="2540821765282986739" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_6" desc="The message says how many pods are desired to run (replication controller details page).">{{::$ctrl.replicationControllerpods.podInfo.desired}} desired</translation>
-  <translation id="1879148990165298394" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_7" desc="The message says how many pods are running (replication controller details page).">{{::$ctrl.replicationControllerpods.podInfo.running}} running</translation>
-  <translation id="2368475907944022633" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_7" desc="The message says how many pods are running (replication controller details page).">{{::$ctrl.replicationController.podInfo.running}} running</translation>
-  <translation id="7106104127622334142" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_8" desc="Label \'Pods status\' for the status of the pods in a replication controller, on the replication controller details page.">Pods status</translation>
-  <translation id="5717602471292785005" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_9" desc="The message says how many pods are pending (replication controller details page).">{{::$ctrl.replicationControllerpods.podInfo.pending}} pending</translation>
-  <translation id="6128908853633901897" key="MSG_REPLICATIONCONTROLLERDETAIL_REPLICATIONCONTROLLERINFO_9" desc="The message says how many pods are pending (replication controller details page).">{{::$ctrl.replicationController.podInfo.pending}} pending</translation>
-  <translation id="492720185165061432" key="MSG_REPLICATIONCONTROLLERDETAIL_UPDATEREPLICAS_0" desc="Title for the pod count update dialog (for a replication controller).">Set desired number of pods</translation>
-  <translation id="3157265907543577974" key="MSG_REPLICATIONCONTROLLERDETAIL_UPDATEREPLICAS_1" desc="User help for the pod count update dialog (on the replication controllers detail page).">Replication controller {{::$ctrl.replicationController}} will be updated to reflect the desired count.</translation>
-  <translation id="7714894693497678367" key="MSG_REPLICATIONCONTROLLERDETAIL_UPDATEREPLICAS_2" desc="Status text for a replication controller, showing the number of created and desired pods.">Current status: {{::$ctrl.createdPods}} created, {{::$ctrl.desiredPods}} desired</translation>
-  <translation id="6737243845229284498" key="MSG_REPLICATIONCONTROLLERDETAIL_UPDATEREPLICAS_3" desc="Label \'Number of pods\', which appears as a placeholder for the pods count input on the &quot;update pods count&quot; dialog (for a replication controller).">Number of pods</translation>
-  <translation id="5331405001923521346" key="MSG_REPLICATIONCONTROLLERDETAIL_UPDATEREPLICAS_4" desc="This warning appears when the user does not specify a pods count on the &quot;update number of pods&quot; dialog (for a replication controller).">Number of pods is required.</translation>
-  <translation id="3652913022857572857" key="MSG_REPLICATIONCONTROLLERDETAIL_UPDATEREPLICAS_5" desc="This warning appears when the specified pods count on the &quot;update number of pods&quot; dialog is not positive or non-integer.">Number of replicas must be equal to or greater than zero.</translation>
-  <translation id="723401348758349063" key="MSG_REPLICATIONCONTROLLERDETAIL_UPDATEREPLICAS_6" desc="This warning appears when the specified pods count (on the &quot;update number of pods&quot; dialog) is very high.">Setting high number of pods may cause performance issues of the cluster and Dashboard UI.</translation>
-  <translation id="1577288574479175085" key="MSG_REPLICATIONCONTROLLERDETAIL_UPDATEREPLICAS_7" desc="Action \'Cancel\' for the cancel button on the &quot;update number of pods&quot; dialog.">Cancel</translation>
-  <translation id="998415453756258010" key="MSG_REPLICATIONCONTROLLERDETAIL_UPDATEREPLICAS_8" desc="Action \'OK\' for the confirmation button on the &quot;update number of pods dialog&quot;.">OK</translation>
-  <translation id="1927443891535278857" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARDLIST_0" desc="Label which appears above the list of such objects.">Replication Controllers</translation>
-  <translation id="3883946866088587944" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of replication controllers (RC list view).">Name</translation>
-  <translation id="817820897947507865" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARDLIST_2" desc="Column header \'Kind\' of a Replication Controller list">Kind</translation>
-  <translation id="2966726296531543057" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARDLIST_3" desc="Label \'Namespace\' which appears as a column label in the table of replication controllers (RC list view).">Namespace</translation>
-  <translation id="4798759695323748590" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARDLIST_4" desc="Label \'Labels\' which appears as a column label in the table of replication controllers (RC list view).">Labels</translation>
-  <translation id="3693002827293303997" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARDLIST_5" desc="Label \'Pods\' which appears as a column label in the table of replication controllers (RC list view).">Pods</translation>
-  <translation id="6383225440156563089" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARDLIST_6" desc="Label \'Age\' which appears as a column label in the table of replication controllers (RC list view).">Age</translation>
-  <translation id="274980798171222532" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARDLIST_7" desc="Label \'Images\' which appears as a column label in the table of replication controllers (RC list view).">Images</translation>
-  <translation id="8084928264379926918" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARDMENU_0" desc="Action \'View details\' on the drop down menu for a single replication controller (replication controller list page).">View details</translation>
-  <translation id="6650510423801823605" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARDMENU_1" desc="Action \'Edit Pod Count\' on the drop down menu for a single replication controller (replication controller list page).">Scale</translation>
-  <translation id="1901538518547150511" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARDMENU_2" desc="Label \'Replication Controller\' which will appear in the replication Controller delete dialogm opened from a replication controller card on the list page.">Replication Controller</translation>
-  <translation id="2730518820167859237" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARDMENU_3" desc="Label \'Replication Controller\' which will appear in the replication Controller delete dialogm opened from a replication controller card on the list page.">Replication Controller</translation>
-  <translation id="7284938913191969508" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARD_0" desc="Tooltip saying that some pods in a replication controller have errors.">One or more pods have errors</translation>
-  <translation id="6808946859530903795" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARD_1" desc="Tooltip saying that some pods in a replication controller are pending.">One or more pods are in pending state</translation>
-  <translation id="1219983969126455904" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERCARD_2" desc="Column \'Replication Controller\' in a Replication Controller list">Replication Controller</translation>
-  <translation id="4795577034077745296" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERLIST_0" desc="Title for graph card displaying CPU metric of replication controllers.">CPU usage</translation>
-  <translation id="259439258646686772" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERLIST_1" desc="Title for graph card displaying memory metric of replication controllers.">Memory usage</translation>
-  <translation id="3837527568365892343" key="MSG_REPLICATIONCONTROLLERLIST_REPLICATIONCONTROLLERLIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by these replication controllers.</translation>
   <translation id="1878569263371070678" key="MSG_REPLICATIONCONTROLLER_DETAIL_ACTIONBAR_0" desc="Tooltip for the \'scale\' button on the action bar of a replication controller details view.">Edit number of pods</translation>
   <translation id="3406595776017844770" key="MSG_REPLICATIONCONTROLLER_DETAIL_ACTIONBAR_1" desc="Tooltip for the \'scale\' button on the action bar of a replication controller details view.">Scale</translation>
   <translation id="5668789506232173619" key="MSG_REPLICATIONCONTROLLER_DETAIL_ACTIONBAR_2" desc="Label \'Replication Controller\' which appears at the top of the edit dialog, opened from a replication controller details page.">Replication Controller</translation>
   <translation id="540465365371246326" key="MSG_REPLICATIONCONTROLLER_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one replication controller.">CPU usage</translation>
   <translation id="5679990989824450360" key="MSG_REPLICATIONCONTROLLER_DETAIL_DETAIL_1" desc="Title for graph card displaying memory metric of one replication controller.">Memory usage</translation>
   <translation id="811005294829243195" key="MSG_REPLICATIONCONTROLLER_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by this replication controller.</translation>
-  <translation id="7048414160456029369" key="MSG_REPLICATIONCONTROLLER_DETAIL_DETAIL_3" desc="Title for services card zerostate in replication controller details page.">There is nothing to display here</translation>
   <translation id="5205445021979184107" key="MSG_REPLICATIONCONTROLLER_DETAIL_DETAIL_4" desc="Text for services card zerostate in replication controller details page.">There are currently no Services with the same label selector as this Replication Controller.</translation>
-  <translation id="5555613326832178228" key="MSG_REPLICATIONCONTROLLER_DETAIL_DETAIL_5" desc="Title for pods card zerostate in replication controller details page.">There is nothing to display here</translation>
   <translation id="3131127524918345503" key="MSG_REPLICATIONCONTROLLER_DETAIL_DETAIL_6" desc="Text for pods card zerostate in replication controller details page.">There are currently no Pods managed by this Replication Controller.</translation>
-  <translation id="8500914651917232176" key="MSG_REPLICATIONCONTROLLER_DETAIL_DETAIL_7" desc="Title for horizontal pod autoscalers card zerostate in replica set details page.">There is nothing to display here</translation>
-  <translation id="4489091683101765622" key="MSG_REPLICATIONCONTROLLER_DETAIL_DETAIL_8" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">There are currently no Horizontal Pod Autoscalers targeting this Replica Set.</translation>
   <translation id="6774788258232499089" key="MSG_REPLICATIONCONTROLLER_DETAIL_DETAIL_8" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">There are currently no Horizontal Pod Autoscalers targeting this Replication Controller.</translation>
   <translation id="226817742496907856" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
   <translation id="2966352401153803656" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_1" desc="Label \'Selector\' for the replication controller\'s selector on the replication controller details page.">Selector</translation>
@@ -1227,15 +691,6 @@
   <translation id="6816738060650305426" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_7" desc="The message says how many pods are running (replication controller details page).">{{::$ctrl.replicationController.podInfo.running}} running</translation>
   <translation id="2996817668812553434" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_8" desc="Label \'Pods status\' for the status of the pods in a replication controller, on the replication controller details page.">Pods status</translation>
   <translation id="1894294583521271782" key="MSG_REPLICATIONCONTROLLER_DETAIL_INFO_9" desc="The message says how many pods are pending (replication controller details page).">{{::$ctrl.replicationController.podInfo.pending}} pending</translation>
-  <translation id="896527128088271476" key="MSG_REPLICATIONCONTROLLER_DETAIL_UPDATEREPLICAS_0" desc="Title for the pod count update dialog (for a replication controller).">Set desired number of pods</translation>
-  <translation id="312578428600091178" key="MSG_REPLICATIONCONTROLLER_DETAIL_UPDATEREPLICAS_1" desc="User help for the pod count update dialog (on the replication controllers detail page).">Replication controller {{::$ctrl.replicationController}} will be updated to reflect the desired count.</translation>
-  <translation id="191594115181420708" key="MSG_REPLICATIONCONTROLLER_DETAIL_UPDATEREPLICAS_2" desc="Status text for a replication controller, showing the number of created and desired pods.">Current status: {{::$ctrl.createdPods}} created, {{::$ctrl.desiredPods}} desired</translation>
-  <translation id="6410992033611109786" key="MSG_REPLICATIONCONTROLLER_DETAIL_UPDATEREPLICAS_3" desc="Label \'Number of pods\', which appears as a placeholder for the pods count input on the &quot;update pods count&quot; dialog (for a replication controller).">Number of pods</translation>
-  <translation id="8389132044085623804" key="MSG_REPLICATIONCONTROLLER_DETAIL_UPDATEREPLICAS_4" desc="This warning appears when the user does not specify a pods count on the &quot;update number of pods&quot; dialog (for a replication controller).">Number of pods is required.</translation>
-  <translation id="1088411438311223666" key="MSG_REPLICATIONCONTROLLER_DETAIL_UPDATEREPLICAS_5" desc="This warning appears when the specified pods count on the &quot;update number of pods&quot; dialog is not positive or non-integer.">Number of replicas must be equal to or greater than zero.</translation>
-  <translation id="4749346717776383469" key="MSG_REPLICATIONCONTROLLER_DETAIL_UPDATEREPLICAS_6" desc="This warning appears when the specified pods count (on the &quot;update number of pods&quot; dialog) is very high.">Setting high number of pods may cause performance issues of the cluster and Dashboard UI.</translation>
-  <translation id="6267424688704647935" key="MSG_REPLICATIONCONTROLLER_DETAIL_UPDATEREPLICAS_7" desc="Action \'Cancel\' for the cancel button on the &quot;update number of pods&quot; dialog.">Cancel</translation>
-  <translation id="2703075926259904665" key="MSG_REPLICATIONCONTROLLER_DETAIL_UPDATEREPLICAS_8" desc="Action \'OK\' for the confirmation button on the &quot;update number of pods dialog&quot;.">OK</translation>
   <translation id="4434451626308089157" key="MSG_REPLICATIONCONTROLLER_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Replication Controllers</translation>
   <translation id="4241490788014176188" key="MSG_REPLICATIONCONTROLLER_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of replication controllers (RC list view).">Name</translation>
   <translation id="8687785566574889286" key="MSG_REPLICATIONCONTROLLER_LIST_CARDLIST_2" desc="Column header \'Kind\' of a Replication Controller list">Kind</translation>
@@ -1264,12 +719,6 @@
   <translation id="6947338869559428640" key="MSG_RESOURCELIMIT_RESOURCELIMITS_5" desc="Resource Limits default request entry.">Default Request</translation>
   <translation id="836896690388641861" key="MSG_RESOURCELIMIT_RESOURCELIMITS_6" desc="Resource Limits default limit entry.">Default Limit</translation>
   <translation id="323516129286855678" key="MSG_RESOURCELIMIT_RESOURCELIMITS_7" desc="Resource Limits max limit/request ratio entry.">Max Limit/Request Ratio</translation>
-  <translation id="2045128203058673243" key="MSG_RESOURCEQUOTADETAIL_RESOURCEQUOTADETAILSTATUS_0" desc="Resource quota details status section resource name.">Resource Name</translation>
-  <translation id="6733342110976047464" key="MSG_RESOURCEQUOTADETAIL_RESOURCEQUOTADETAILSTATUS_1" desc="Resource quota details status section hard.">Hard</translation>
-  <translation id="3725558341406139723" key="MSG_RESOURCEQUOTADETAIL_RESOURCEQUOTADETAILSTATUS_2" desc="Resource quota details status section used.">Used</translation>
-  <translation id="2713001911479470584" key="MSG_RESOURCEQUOTADETAIL_RESOURCEQUOTADETAIL_0" desc="Resource quota info details section title.">Resource Quotas</translation>
-  <translation id="4707374810025494648" key="MSG_RESOURCEQUOTADETAIL_RESOURCEQUOTADETAIL_1" desc="Resource quota info details section name">Name</translation>
-  <translation id="6441862772940625742" key="MSG_RESOURCEQUOTADETAIL_RESOURCEQUOTADETAIL_2" desc="Resource quota info details section scopes">Scopes</translation>
   <translation id="7531862076213500526" key="MSG_RESOURCEQUOTA_DETAIL_DETAIL_0" desc="Resource quota info details section title.">Resource Quotas</translation>
   <translation id="2839859779657386369" key="MSG_RESOURCEQUOTA_DETAIL_DETAIL_1" desc="Resource quota info details section name">Name</translation>
   <translation id="4649467264578406553" key="MSG_RESOURCEQUOTA_DETAIL_DETAIL_2" desc="Resource quota info details section scopes">Scopes</translation>
@@ -1281,10 +730,6 @@
   <translation id="6139977749663403568" key="MSG_RESOURCE_CARD_LIST_FILTER_PLACEHOLDER_TEXT" desc="Tooltip on resource card list filter icon.">Search</translation>
   <translation id="3641265385665997534" key="MSG_RESOURCE_CARD_LIST_PAGINATION_ERROR" desc="Message shown to the user when there is a pagination error.">Pagination error</translation>
   <translation id="8315383091892527627" key="MSG_RESOURCE_CARD_LIST_SORT_ERROR" desc="Message shown to the user when there is a sort error.">Sort error</translation>
-  <translation id="6881667150857464035" key="MSG_ROLELIST_ROLECARDLIST_0" desc="Label which appears above the list of such objects.">Roles</translation>
-  <translation id="7605823177278371307" key="MSG_ROLELIST_ROLECARDLIST_1" desc="Role list header: name.">Name</translation>
-  <translation id="8138087091569306999" key="MSG_ROLELIST_ROLECARDLIST_2" desc="Role list header: role type.">Role Type</translation>
-  <translation id="1719257005492651277" key="MSG_ROLELIST_ROLECARDLIST_3" desc="Role list header: namespace.">Namespace</translation>
   <translation id="3279648086091797093" key="MSG_ROLE_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Roles</translation>
   <translation id="4180591456756847095" key="MSG_ROLE_LIST_CARDLIST_1" desc="Role list header: name.">Name</translation>
   <translation id="7494857132807181920" key="MSG_ROLE_LIST_CARDLIST_2" desc="Role list header: role type.">Role Type</translation>
@@ -1292,19 +737,6 @@
   <translation id="3197213955933923965" key="MSG_ROLE_LIST_CARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of ingresses (ingress list view).">Age</translation>
   <translation id="8108259204772140609" key="MSG_ROLE_LIST_CARDLIST_5" desc="Text for role card list zerostate.">There are no Roles to display.</translation>
   <translation id="2864599603034607510" key="MSG_ROLE_LIST_STARTED_AT_TOOLTIP" desc="Tooltip 'Started at [some date]' showing the exact start time of the role.">Created at <ph name="START_DATE"/> UTC</translation>
-  <translation id="1320482404001625698" key="MSG_SECRETDETAIL_ACTIONBAR_0" desc="Label \'Secret\' which appears at the top of the delete dialog, opened from a secret details page.">Secret</translation>
-  <translation id="1561742373508692276" key="MSG_SECRETDETAIL_DETAIL_0" desc="Secrets info details section data.">Data </translation>
-  <translation id="7988357395949564443" key="MSG_SECRETDETAIL_DETAIL_0" desc="Secrets info details section data.">Data</translation>
-  <translation id="1940368443923988450" key="MSG_SECRETDETAIL_DETAIL_1" desc="Secrets info details section bytes.">bytes </translation>
-  <translation id="7488314601782256695" key="MSG_SECRETDETAIL_DETAIL_1" desc="Tooltip label for showing secret content">Show secret content</translation>
-  <translation id="1451479307509203762" key="MSG_SECRETDETAIL_DETAIL_2" desc="Tooltip label for hiding secret content">Hide secret content</translation>
-  <translation id="4708429676068316448" key="MSG_SECRETDETAIL_DETAIL_3" desc="Secrets info details section bytes.">{{::$ctrl.formatDataValue(value).length}} bytes </translation>
-  <translation id="9171260393962890085" key="MSG_SECRETDETAIL_DETAIL_3" desc="Secrets info details section bytes.">{{::value.length}} bytes </translation>
-  <translation id="4201489447726655383" key="MSG_SECRETDETAIL_INFO_0" desc="Header in a detail view">Details</translation>
-  <translation id="3332721336645492797" key="MSG_SECRETLIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Secrets</translation>
-  <translation id="5153024833276909612" key="MSG_SECRETLIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of secrets (secret list view).">Name</translation>
-  <translation id="3968263046960145971" key="MSG_SECRETLIST_CARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of secrets (secret list view).">Namespace</translation>
-  <translation id="6328422207560999836" key="MSG_SECRETLIST_CARDLIST_3" desc="Label \'Age\' which appears as a column label in the table of secrets (secret list view).">Age</translation>
   <translation id="6072176334759614767" key="MSG_SECRET_DETAIL_ACTIONBAR_0" desc="Label \'Secret\' which appears at the top of the delete dialog, opened from a secret details page.">Secret</translation>
   <translation id="2720871506693211747" key="MSG_SECRET_DETAIL_DETAIL_0" desc="Secrets info details section data.">Data</translation>
   <translation id="5212791345913891342" key="MSG_SECRET_DETAIL_DETAIL_1" desc="Tooltip label for showing secret content">Show secret content</translation>
@@ -1317,24 +749,6 @@
   <translation id="4493598488188566434" key="MSG_SECRET_LIST_CARDLIST_3" desc="Label \'Age\' which appears as a column label in the table of secrets (secret list view).">Age</translation>
   <translation id="5636111591527461304" key="MSG_SECRET_LIST_CARDLIST_4" desc="Text for secret card list zerostate.">There are no Secrets to display.</translation>
   <translation id="2799384691872397176" key="MSG_SECRET_LIST_STARTED_AT_TOOLTIP" desc="Tooltip 'Started at [some date]' showing the exact start time of the secret.">Created at <ph name="START_DATE"/> UTC</translation>
-  <translation id="7259128300465442626" key="MSG_SERVICEDETAIL_SERVICEDETAILINFO_0" desc="Header in a detail view">Details</translation>
-  <translation id="1436736742516221745" key="MSG_SERVICEDETAIL_SERVICEDETAILINFO_1" desc="Label \'Label selector\' for the service\'s label selector in the details part (left) of the service details view.">Label selector</translation>
-  <translation id="2546354780750282456" key="MSG_SERVICEDETAIL_SERVICEDETAILINFO_2" desc="Label \'Type\' for the service type in the details part (left) of the service details view.">Type</translation>
-  <translation id="2516362046923512884" key="MSG_SERVICEDETAIL_SERVICEDETAILINFO_3" desc="Subtitle \'Connection\' at the top of the column about network connectivity (right) at the service detail view.">Connection</translation>
-  <translation id="794398525449704602" key="MSG_SERVICEDETAIL_SERVICEDETAILINFO_4" desc="Label \'Cluster IP\' for the service IP in the cluster, appears in the connectivity part (right) of the service details view.">Cluster IP</translation>
-  <translation id="9144264658721563611" key="MSG_SERVICEDETAIL_SERVICEDETAILINFO_5" desc="Label \'Internal endpoints\' for the internal endpoints of the service, appears in the connectivity part (right) of the service details view.">Internal endpoints</translation>
-  <translation id="939574893609507785" key="MSG_SERVICEDETAIL_SERVICEDETAILINFO_6" desc="Label \'External endpoints\' for the external endpoints of the service, appears in the connectivity part (right) of the service details view.">External endpoints</translation>
-  <translation id="8302893756956754954" key="MSG_SERVICEDETAIL_SERVICEDETAIL_0" desc="Title for pods card zerostate in stateful set details page.">There is nothing to display here</translation>
-  <translation id="1777687475500640375" key="MSG_SERVICEDETAIL_SERVICEDETAIL_1" desc="Text for pods card zerostate in stateful set details page.">There are currently no Pods selected by this Service.</translation>
-  <translation id="5598175555148966016" key="MSG_SERVICELIST_SERVICECARDLIST_0" desc="Label which appears above the list of such objects.">Services</translation>
-  <translation id="668323935453874914" key="MSG_SERVICELIST_SERVICECARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of services (service list view).">Name</translation>
-  <translation id="5879151015255792005" key="MSG_SERVICELIST_SERVICECARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of services (service list view).">Namespace</translation>
-  <translation id="8197359356330384567" key="MSG_SERVICELIST_SERVICECARDLIST_3" desc="Label \'Labels\' which appears as a column label in the table of services (service list view).">Labels</translation>
-  <translation id="6951488712384233222" key="MSG_SERVICELIST_SERVICECARDLIST_4" desc="Label \'Cluster IP\' which appears as a column label in the table of services (service list view).">Cluster IP</translation>
-  <translation id="8943299193201683733" key="MSG_SERVICELIST_SERVICECARDLIST_5" desc="Label \'Internal endpoints\' which appears as a column label in the table of services (service list view).">Internal endpoints</translation>
-  <translation id="2444115344683141265" key="MSG_SERVICELIST_SERVICECARDLIST_6" desc="Label \'External endpoints\' which appears as a column label in the table of services (service list view).">External endpoints</translation>
-  <translation id="6527658776236691367" key="MSG_SERVICELIST_SERVICECARD_0" desc="tooltip for pending service card icon">This service is in a pending state</translation>
-  <translation id="5222062868090128368" key="MSG_SERVICE_DETAIL_DETAIL_0" desc="Title for pods card zerostate in stateful set details page.">There is nothing to display here</translation>
   <translation id="2095406541360162780" key="MSG_SERVICE_DETAIL_DETAIL_1" desc="Text for pods card zerostate in stateful set details page.">There are currently no Pods selected by this Service.</translation>
   <translation id="8542374982013786209" key="MSG_SERVICE_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
   <translation id="7974388484711199446" key="MSG_SERVICE_DETAIL_INFO_1" desc="Label \'Label selector\' for the service\'s label selector in the details part (left) of the service details view.">Label selector</translation>
@@ -1354,47 +768,12 @@
   <translation id="7871952624539430064" key="MSG_SERVICE_LIST_CARDLIST_8" desc="Text for service card list zerostate.">There are no Services to display.</translation>
   <translation id="3019719082217228018" key="MSG_SERVICE_LIST_CARD_0" desc="tooltip for pending service card icon">This service is in a pending state</translation>
   <translation id="5528801080901607886" key="MSG_SERVICE_LIST_STARTED_AT_TOOLTIP" desc="Tooltip 'Started at [some date]' showing the exact start time of the service.">Created at <ph name="START_DATE"/> UTC</translation>
-  <translation id="6466948840454457439" key="MSG_STATEFULSETDETAIL_ACTIONBAR_0" desc="Label \'Stateful Set\' which appears at the top of the delete dialog, opened from a stateful set details page.">Stateful Set</translation>
-  <translation id="8560431905058366716" key="MSG_STATEFULSETDETAIL_STATEFULSETDETAIL_0" desc="Title for graph card displaying CPU metric of one stateful set.">CPU usage</translation>
-  <translation id="4602699404115016650" key="MSG_STATEFULSETDETAIL_STATEFULSETDETAIL_1" desc="Title for graph card displaying memory metric of one stateful set.">Memory usage</translation>
-  <translation id="439234466141512322" key="MSG_STATEFULSETDETAIL_STATEFULSETDETAIL_2" desc="Title for pods card zerostate in stateful set details page.">There is nothing to display here</translation>
-  <translation id="4011847440243562469" key="MSG_STATEFULSETDETAIL_STATEFULSETDETAIL_3" desc="Text for pods card zerostate in stateful set details page.">There are currently no Pods managed by this Stateful Set.</translation>
-  <translation id="2997186500849595344" key="MSG_STATEFULSETDETAIL_STATEFULSETDETAIL_4" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by this stateful set.</translation>
-  <translation id="5159068943236535151" key="MSG_STATEFULSETDETAIL_STATEFULSETINFO_0" desc="Header in a detail view">Details</translation>
-  <translation id="6072563950037365561" key="MSG_STATEFULSETDETAIL_STATEFULSETINFO_1" desc="Stateful set info details section labels entry.">Labels</translation>
-  <translation id="3768403093712231242" key="MSG_STATEFULSETDETAIL_STATEFULSETINFO_10" desc="The message says that that many pods have failed (stateful set details page).">{{ $ctrl.statefulSet.podInfo.failed}} failed</translation>
-  <translation id="7403639126041403167" key="MSG_STATEFULSETDETAIL_STATEFULSETINFO_11" desc="The message says that that many pods are running (stateful set details page).">{{ $ctrl.statefulSet.podInfo.running}} running</translation>
-  <translation id="4914399275150934885" key="MSG_STATEFULSETDETAIL_STATEFULSETINFO_2" desc="Stateful set info details section images entry.">Images</translation>
-  <translation id="7949963885016781367" key="MSG_STATEFULSETDETAIL_STATEFULSETINFO_3" desc="Stateful set info status section name.">Status</translation>
-  <translation id="4410282404464816771" key="MSG_STATEFULSETDETAIL_STATEFULSETINFO_4" desc="Stateful set info status section pods entry.">Pods</translation>
-  <translation id="7836997624326579154" key="MSG_STATEFULSETDETAIL_STATEFULSETINFO_5" desc="The message says that that many pods were created (stateful set details page).">{{ $ctrl.statefulSet.podInfo.current}} created</translation>
-  <translation id="8722433510276864891" key="MSG_STATEFULSETDETAIL_STATEFULSETINFO_6" desc="The message says that that many pods are desired to run (stateful set details page).">{{ $ctrl.statefulSet.podInfo.desired}} desired</translation>
-  <translation id="6872699682199937943" key="MSG_STATEFULSETDETAIL_STATEFULSETINFO_7" desc="The message says that that many pods are running (stateful set details page).">{{ $ctrl.statefulSet.podInfo.running}} running</translation>
-  <translation id="5246197426661985912" key="MSG_STATEFULSETDETAIL_STATEFULSETINFO_8" desc="Stateful set info status section pods status entry.">Pods status</translation>
-  <translation id="5558960002895908493" key="MSG_STATEFULSETDETAIL_STATEFULSETINFO_9" desc="The message says that that many pods are pending (stateful set details page).">{{ $ctrl.statefulSet.podInfo.pending}} pending</translation>
-  <translation id="3329165128695718741" key="MSG_STATEFULSETLIST_STATEFULSETCARDLIST_0" desc="Label which appears above the list of such objects.">Stateful Sets</translation>
-  <translation id="97430540410941938" key="MSG_STATEFULSETLIST_STATEFULSETCARDLIST_1" desc="Stateful set list header: name.">Name</translation>
-  <translation id="7681892480495641304" key="MSG_STATEFULSETLIST_STATEFULSETCARDLIST_2" desc="Column header \'Kind\' of a Stateful Set List">Kind</translation>
-  <translation id="5267341698480860113" key="MSG_STATEFULSETLIST_STATEFULSETCARDLIST_3" desc="Stateful set list header: namespace.">Namespace</translation>
-  <translation id="4704530158704545013" key="MSG_STATEFULSETLIST_STATEFULSETCARDLIST_4" desc="Stateful set list header: labels.">Labels</translation>
-  <translation id="2035134087146365965" key="MSG_STATEFULSETLIST_STATEFULSETCARDLIST_5" desc="Stateful set list header: pods.">Pods</translation>
-  <translation id="3287024836227304575" key="MSG_STATEFULSETLIST_STATEFULSETCARDLIST_6" desc="Stateful set list header: age.">Age</translation>
-  <translation id="1519911326409356572" key="MSG_STATEFULSETLIST_STATEFULSETCARDLIST_7" desc="Stateful set list header: images.">Images</translation>
-  <translation id="8445209011919601205" key="MSG_STATEFULSETLIST_STATEFULSETCARD_0" desc="Tooltip text which appears on error icon hover.">One or more pods have errors</translation>
-  <translation id="2295021428175974915" key="MSG_STATEFULSETLIST_STATEFULSETCARD_1" desc="Tooltip text which appears on pending icon hover.">One or more pods are in pending state</translation>
-  <translation id="6349661589037853705" key="MSG_STATEFULSETLIST_STATEFULSETCARD_2" desc="Column \'Stateful Set\' of a Stateful Set List">Stateful Set</translation>
-  <translation id="2540707678008837572" key="MSG_STATEFULSETLIST_STATEFULSETCARD_3" desc="Label \'Stateful Set\' which will appear in the stateful set delete dialog opened from a stateful set card on the list page.">Stateful Set</translation>
-  <translation id="1666773532643611718" key="MSG_STATEFULSETLIST_STATEFULSETCARD_4" desc="Label \'Stateful Set\' which will appear in the stateful set delete dialog opened from a stateful set card on the list page.">Stateful Set</translation>
-  <translation id="5496057141257652512" key="MSG_STATEFULSETLIST_STATEFULSETLIST_0" desc="Title for graph card displaying CPU metric of stateful sets.">CPU usage</translation>
-  <translation id="5949487857481253373" key="MSG_STATEFULSETLIST_STATEFULSETLIST_1" desc="Title for graph card displaying memory metric of stateful sets.">Memory usage</translation>
-  <translation id="4453952610053429376" key="MSG_STATEFULSETLIST_STATEFULSETLIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by these stateful sets.</translation>
   <translation id="2232943352979399383" key="MSG_STATEFULSET_DETAIL_ACTIONBAR_0" desc="Label \'Stateful Set\' which appears at the top of the delete dialog, opened from a stateful set details page.">Stateful Set</translation>
   <translation id="8505855597345419629" key="MSG_STATEFULSET_DETAIL_ACTIONBAR_1" desc="Tooltip for the \'scale\' button on the action bar of a statefulset details view.">Edit number of pods</translation>
   <translation id="3619645847649857259" key="MSG_STATEFULSET_DETAIL_ACTIONBAR_2" desc="Tooltip for the \'scale\' button on the action bar of a statefulset details view.">Scale</translation>
   <translation id="7161753444048215428" key="MSG_STATEFULSET_DETAIL_DETAIL_0" desc="Title for graph card displaying CPU metric of one stateful set.">CPU usage</translation>
   <translation id="8249817415205260138" key="MSG_STATEFULSET_DETAIL_DETAIL_1" desc="Title for graph card displaying memory metric of one stateful set.">Memory usage</translation>
   <translation id="5166179618558114310" key="MSG_STATEFULSET_DETAIL_DETAIL_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by this stateful set.</translation>
-  <translation id="3329510261686120442" key="MSG_STATEFULSET_DETAIL_DETAIL_3" desc="Title for pods card zerostate in stateful set details page.">There is nothing to display here</translation>
   <translation id="8811199499879136388" key="MSG_STATEFULSET_DETAIL_DETAIL_3" desc="Text for services card zerostate in replica set details page.">There are currently no Services with the same label selector as this Replica Set.</translation>
   <translation id="8863896898922148088" key="MSG_STATEFULSET_DETAIL_DETAIL_4" desc="Text for pods card zerostate in stateful set details page.">There are currently no Pods managed by this Stateful Set.</translation>
   <translation id="2168027988411259566" key="MSG_STATEFULSET_DETAIL_DETAIL_5" desc="Text for horizontal pod autoscalers card zerostate in replica set details page.">There are currently no Horizontal Pod Autoscalers targeting this Replica Set.</translation>
@@ -1428,19 +807,6 @@
   <translation id="7302052672443322476" key="MSG_STATEFULSET_LIST_LIST_1" desc="Title for graph card displaying memory metric of stateful sets.">Memory usage</translation>
   <translation id="725937525862708224" key="MSG_STATEFULSET_LIST_LIST_2" desc="Help message detailing what is included in the memory usage">The memory usage includes the caches in the pods managed by these stateful sets.</translation>
   <translation id="6868140200572137421" key="MSG_STATEFUL_SET_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of stateful set.">Created at <ph name="CREATION_DATE"/></translation>
-  <translation id="3845258623294585092" key="MSG_STORAGECLASSDETAIL_ACTIONBAR_0" desc="Label \'Storage Class\' which appears at the top of the delete dialog, opened from a config map details page.">Storage Class</translation>
-  <translation id="6112487762115934260" key="MSG_STORAGECLASSDETAIL_INFO_0" desc="Header in a detail view">Details</translation>
-  <translation id="7429744805412578813" key="MSG_STORAGECLASSDETAIL_INFO_1" desc="Label \'Labels\' for the storage class\'s labels list on the storage class details page.">Labels</translation>
-  <translation id="4574441007364120674" key="MSG_STORAGECLASSDETAIL_INFO_2" desc="Storage Class info details section provisioner entry.">Provisioner</translation>
-  <translation id="4977823441775704922" key="MSG_STORAGECLASSDETAIL_INFO_3" desc="Storage Class info details section parameters entry.">Parameters</translation>
-  <translation id="6008341695704911355" key="MSG_STORAGECLASSLIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Storage Classes</translation>
-  <translation id="8688891660072056178" key="MSG_STORAGECLASSLIST_CARDLIST_1" desc="Storage class list header: name.">Name</translation>
-  <translation id="6035383925010933879" key="MSG_STORAGECLASSLIST_CARDLIST_2" desc="Storage class list header: labels.">Labels</translation>
-  <translation id="1806030793883905199" key="MSG_STORAGECLASSLIST_CARDLIST_3" desc="Storage class list header: provisioner.">Provisioner</translation>
-  <translation id="5744180173965368140" key="MSG_STORAGECLASSLIST_CARDLIST_4" desc="Storage class list header: parameters.">Parameters</translation>
-  <translation id="4505943818214171647" key="MSG_STORAGECLASSLIST_CARDLIST_5" desc="Storage class list header: age.">Age</translation>
-  <translation id="2882847796231236957" key="MSG_STORAGECLASSLIST_CARD_0" desc="Label \'Storage Class\' which will appear in the persistent volume delete dialog opened from a storageclass card on the list page.">Storage Class</translation>
-  <translation id="310605795325552510" key="MSG_STORAGECLASSLIST_CARD_1" desc="Label \'Storage Class\' which will appear in the persistent volume delete dialog opened from a storageclass card on the list page.">Storage Class</translation>
   <translation id="5285354056155654849" key="MSG_STORAGECLASS_DETAIL_ACTIONBAR_0" desc="Label \'Storage Class\' which appears at the top of the delete dialog, opened from a config map details page.">Storage Class</translation>
   <translation id="6786610737142795668" key="MSG_STORAGECLASS_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
   <translation id="6633055939482604965" key="MSG_STORAGECLASS_DETAIL_INFO_1" desc="Label \'Labels\' for the storage class\'s labels list on the storage class details page.">Labels</translation>
@@ -1455,23 +821,7 @@
   <translation id="544730200378378586" key="MSG_STORAGECLASS_LIST_CARDLIST_6" desc="Text for storage class card list zerostate.">There are no Storage Classes to display.</translation>
   <translation id="8108461949496336520" key="MSG_STORAGECLASS_LIST_CARD_0" desc="Label \'Storage Class\' which will appear in the storage class delete dialog opened from a storageclass card on the list page.">Storage Class</translation>
   <translation id="3154139817057931405" key="MSG_STORAGECLASS_LIST_CARD_1" desc="Label \'Storage Class\' which will appear in the storage class delete dialog opened from a storageclass card on the list page.">Storage Class</translation>
-  <translation id="2857396329294182623" key="MSG_STORAGE_CLASS_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of persistent volume.">Created at <ph name="CREATION_DATE"/></translation>
-  <translation id="4455224191195228523" key="MSG_THIRDPARTYRESOURCEDETAIL_DETAIL_0" desc="Title for objects card zerostate in third party resource details page.">There is nothing to display here</translation>
-  <translation id="1909818214822603215" key="MSG_THIRDPARTYRESOURCEDETAIL_DETAIL_1" desc="Text for objects card zerostate in third party resource details page.">There are currently no instances of Third Party Resource.</translation>
-  <translation id="8096714270041558618" key="MSG_THIRDPARTYRESOURCEDETAIL_DETAIL_1" desc="Text for objects card zerostate in third party resource details page.">There are currently no instances of third Third Party Resource.</translation>
-  <translation id="8145942852314005903" key="MSG_THIRDPARTYRESOURCEDETAIL_INFO_0" desc="Header in a detail view">Details</translation>
-  <translation id="7281154678200185552" key="MSG_THIRDPARTYRESOURCEDETAIL_INFO_1" desc="Third party resource info details section labels entry.">Labels</translation>
-  <translation id="2961425669979694598" key="MSG_THIRDPARTYRESOURCEDETAIL_INFO_2" desc="Third party resource details description entry.">Description</translation>
-  <translation id="394726761295476578" key="MSG_THIRDPARTYRESOURCEDETAIL_INFO_3" desc="Third party resource details version entries.">Versions</translation>
-  <translation id="5859282796569626091" key="MSG_THIRDPARTYRESOURCEDETAIL_OBJECTLIST_0" desc="Label which appears above the list of such objects.">Objects</translation>
-  <translation id="4244694497322096294" key="MSG_THIRDPARTYRESOURCEDETAIL_OBJECTLIST_1" desc="Title of a column for the name of a third party resource instance.">Name</translation>
-  <translation id="380051855392635906" key="MSG_THIRDPARTYRESOURCEDETAIL_OBJECTLIST_2" desc="Title of a column for the age of a third party resource instance.">Age</translation>
-  <translation id="7322149261945894364" key="MSG_THIRDPARTYRESOURCELIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Third Party Resources</translation>
-  <translation id="8359100264820972218" key="MSG_THIRDPARTYRESOURCELIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of secrets (secret listview).">Name</translation>
-  <translation id="8979424432104963901" key="MSG_THIRDPARTYRESOURCELIST_CARDLIST_2" desc="Label \'Namespace\' which appears as a column label in the table of third party resources (thirdpartyresource list view).">Namespace</translation>
-  <translation id="8722848692470911393" key="MSG_THIRDPARTYRESOURCELIST_CARDLIST_3" desc="Label \'Labels\' which appears as a column label in the table of third party resources (thirdpartyresource list view).">Labels</translation>
-  <translation id="8937761541741166649" key="MSG_THIRDPARTYRESOURCELIST_CARDLIST_4" desc="Label \'Age\' which appears as a column label in the table of third party resources (thirdpartyresource list view).">Age</translation>
-  <translation id="9087654906203034732" key="MSG_THIRDPARTYRESOURCE_DETAIL_DETAIL_0" desc="Title for objects card zerostate in third party resource details page.">There is nothing to display here</translation>
+  <translation id="2857396329294182623" key="MSG_STORAGE_CLASS_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of storage class.">Created at <ph name="CREATION_DATE"/></translation>
   <translation id="8144868515522892950" key="MSG_THIRDPARTYRESOURCE_DETAIL_DETAIL_1" desc="Text for objects card zerostate in third party resource details page.">There are currently no instances of Third Party Resource.</translation>
   <translation id="1645019540162911830" key="MSG_THIRDPARTYRESOURCE_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
   <translation id="5988964246734196216" key="MSG_THIRDPARTYRESOURCE_DETAIL_INFO_1" desc="Third party resource info details section labels entry.">Labels</translation>
@@ -1483,7 +833,6 @@
   <translation id="1437843514019946359" key="MSG_THIRDPARTYRESOURCE_DETAIL_OBJECTLIST_3" desc="Text for third party resource object card list zerostate.">There are no Third Party Resource Objects to display.</translation>
   <translation id="30183360808931965" key="MSG_THIRDPARTYRESOURCE_LIST_CARDLIST_0" desc="Label which appears above the list of such objects.">Third Party Resources</translation>
   <translation id="5740863454207335284" key="MSG_THIRDPARTYRESOURCE_LIST_CARDLIST_1" desc="Text for third party resource card list zerostate.">There are no Third Party Resources to display.</translation>
-  <translation id="8740983587800475280" key="MSG_THIRDPARTYRESOURCE_LIST_CARDLIST_1" desc="Label \'Name\' which appears as a column label in the table of third party resources (thirdpartyresource listview).">Name</translation>
   <translation id="8791753450494828145" key="MSG_THIRDPARTYRESOURCE_LIST_CARDLIST_2" desc="Label \'Age\' which appears as a column label in the table of third party resources (thirdpartyresource list view).">Age</translation>
   <translation id="3992016852662821711" key="MSG_THIRDPARTYRESOURCE_LIST_CARDLIST_3" desc="Label \'Name\' which appears as a column label in the table of third party resources (thirdpartyresource list view).">Name</translation>
   <translation id="8199201262548259491" key="MSG_THIRD_PARTY_RESOURCE_LIST_CREATED_AT_TOOLTIP" desc="Tooltip 'Created at [some date]' showing the exact creation time of third party resource.">Created at <ph name="CREATION_DATE"/></translation>
