@@ -9,6 +9,11 @@ import (
 	"k8s.io/client-go/pkg/api/v1"
 )
 
+// IDs of all integrated metric applications.
+const (
+	HeapsterIntegrationID integrationapi.IntegrationID = "heapster"
+)
+
 type MetricClient interface {
 	// Metric API methods required to show graphs and sparklines on pod list
 	DownloadMetric(selectors []ResourceSelector, metricName string,
@@ -100,17 +105,29 @@ type MetricPoint struct {
 	Value     uint64    `json:"value"`
 }
 
-// TODO refactor this to use types.UID instead of a string.
 // Label stores information about identity of resources (UIDs) described by this metric.
-type Label map[api.ResourceKind][]string
+type Label map[api.ResourceKind][]types.UID
 
-// AddMetricLabel returns a combined Label of self and other resource. (new label describes both resources).
+// AddMetricLabel returns a unique combined Label of self and other resource.
+// New label describes both resources.
 func (self Label) AddMetricLabel(other Label) Label {
 	if other == nil {
 		return self
 	}
+
+	uniqueMap := map[types.UID]bool{}
+	for _, v := range self {
+		for _, t := range v {
+			uniqueMap[t] = true
+		}
+	}
+
 	for k, v := range other {
-		self[k] = append(self[k], v...)
+		for _, t := range v {
+			if _, exists := uniqueMap[t]; !exists {
+				self[k] = append(self[k], t)
+			}
+		}
 	}
 	return self
 }

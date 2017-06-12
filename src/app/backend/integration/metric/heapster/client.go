@@ -11,21 +11,20 @@ import (
 	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
 	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/aggregation"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
+	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	heapster "k8s.io/heapster/metrics/api/v1/types"
 )
 
-const HeapsterIntegrationID integrationapi.IntegrationID = "heapster"
-
 // Heapster client implements metric client API.
-type HeapsterClient struct {
+type heapsterClient struct {
 	client HeapsterRESTClient
 }
 
 // Implement IntegrationApp interface
 
-func (self HeapsterClient) HealthCheck() error {
+func (self heapsterClient) HealthCheck() error {
 	if self.client == nil {
 		return errors.New("Heapster not configured")
 	}
@@ -33,13 +32,13 @@ func (self HeapsterClient) HealthCheck() error {
 	return self.client.HealthCheck()
 }
 
-func (self HeapsterClient) ID() integrationapi.IntegrationID {
-	return HeapsterIntegrationID
+func (self heapsterClient) ID() integrationapi.IntegrationID {
+	return metricapi.HeapsterIntegrationID
 }
 
 // Implement MetricClient interface
 
-func (self HeapsterClient) DownloadMetrics(selectors []metricapi.ResourceSelector,
+func (self heapsterClient) DownloadMetrics(selectors []metricapi.ResourceSelector,
 	metricNames []string, cachedResources *metricapi.CachedResources) metricapi.MetricPromises {
 	result := metricapi.MetricPromises{}
 	for _, metricName := range metricNames {
@@ -49,7 +48,7 @@ func (self HeapsterClient) DownloadMetrics(selectors []metricapi.ResourceSelecto
 	return result
 }
 
-func (self HeapsterClient) DownloadMetric(selectors []metricapi.ResourceSelector,
+func (self heapsterClient) DownloadMetric(selectors []metricapi.ResourceSelector,
 	metricName string, cachedResources *metricapi.CachedResources) metricapi.MetricPromises {
 	heapsterSelectors := getHeapsterSelectors(selectors, cachedResources)
 
@@ -58,12 +57,12 @@ func (self HeapsterClient) DownloadMetric(selectors []metricapi.ResourceSelector
 	return self.downloadMetric(heapsterSelectors, compressedSelectors, reverseMapping, metricName)
 }
 
-func (self HeapsterClient) AggregateMetrics(metrics metricapi.MetricPromises, metricName string,
+func (self heapsterClient) AggregateMetrics(metrics metricapi.MetricPromises, metricName string,
 	aggregations metricapi.AggregationModes) metricapi.MetricPromises {
 	return aggregation.AggregateMetricPromises(metrics, metricName, aggregations, nil)
 }
 
-func (self HeapsterClient) downloadMetric(heapsterSelectors []heapsterSelector,
+func (self heapsterClient) downloadMetric(heapsterSelectors []heapsterSelector,
 	compressedSelectors []heapsterSelector, reverseMapping map[string][]int,
 	metricName string) metricapi.MetricPromises {
 	// collect all the required data (as promises)
@@ -75,48 +74,48 @@ func (self HeapsterClient) downloadMetric(heapsterSelectors []heapsterSelector,
 	// prepare final result
 	result := metricapi.NewMetricPromises(len(heapsterSelectors))
 	// unpack downloaded data - this is threading safe because there is only one thread running.
-	go func() {
-		// unpack the data selector by selector.
-		for selectorId, selector := range compressedSelectors {
-			unassignedResourcePromises := unassignedResourcePromisesList[selectorId]
-			// now unpack the resources and push errors in case of error.
-			unassignedResources, err := unassignedResourcePromises.GetMetrics()
-			if err != nil {
-				for _, originalMappingIndex := range reverseMapping[selector.Path] {
-					result[originalMappingIndex].Error <- err
-					result[originalMappingIndex].Metric <- nil
-				}
-				continue
-			}
-			unassignedResourceMap := map[string]metricapi.Metric{}
-			for _, unassignedMetric := range unassignedResources {
-				unassignedResourceMap[unassignedMetric.
-					Label[selector.TargetResourceType][0]] = unassignedMetric
-			}
 
-			// now, if everything went ok, unpack the metrics into original selectors
+	// unpack the data selector by selector.
+	for selectorId, selector := range compressedSelectors {
+		unassignedResourcePromises := unassignedResourcePromisesList[selectorId]
+		// now unpack the resources and push errors in case of error.
+		unassignedResources, err := unassignedResourcePromises.GetMetrics()
+		if err != nil {
 			for _, originalMappingIndex := range reverseMapping[selector.Path] {
-				// find out what resources this selector needs
-				requestedResources := []metricapi.Metric{}
-				for _, requestedResourceName := range heapsterSelectors[originalMappingIndex].Resources {
-					requestedResources = append(requestedResources,
-						unassignedResourceMap[requestedResourceName])
-				}
-				// aggregate the data for this resource
-
-				aggregatedMetric := aggregation.AggregateData(requestedResources, metricName, metricapi.SumAggregation)
-				aggregatedMetric.Label = heapsterSelectors[originalMappingIndex].Label
-				result[originalMappingIndex].Metric <- &aggregatedMetric
-				result[originalMappingIndex].Error <- nil
+				result[originalMappingIndex].Error <- err
+				result[originalMappingIndex].Metric <- nil
 			}
+			continue
 		}
-	}()
+		unassignedResourceMap := map[types.UID]metricapi.Metric{}
+		for _, unassignedMetric := range unassignedResources {
+			unassignedResourceMap[unassignedMetric.
+				Label[selector.TargetResourceType][0]] = unassignedMetric
+		}
+
+		// now, if everything went ok, unpack the metrics into original selectors
+		for _, originalMappingIndex := range reverseMapping[selector.Path] {
+			// find out what resources this selector needs
+			requestedResources := []metricapi.Metric{}
+			for _, requestedResourceUID := range heapsterSelectors[originalMappingIndex].
+				Label[selector.TargetResourceType] {
+				requestedResources = append(requestedResources,
+					unassignedResourceMap[requestedResourceUID])
+			}
+
+			// aggregate the data for this resource
+			aggregatedMetric := aggregation.AggregateData(requestedResources, metricName, metricapi.SumAggregation)
+			result[originalMappingIndex].Metric <- &aggregatedMetric
+			result[originalMappingIndex].Error <- nil
+		}
+	}
+
 	return result
 }
 
 // downloadMetricForEachTargetResource downloads requested metric for each resource present in HeapsterSelector
 // and returns the result as a list of promises - one promise for each resource. Order of promises returned is the same as order in self.Resources.
-func (self HeapsterClient) downloadMetricForEachTargetResource(selector heapsterSelector, metricName string) metricapi.MetricPromises {
+func (self heapsterClient) downloadMetricForEachTargetResource(selector heapsterSelector, metricName string) metricapi.MetricPromises {
 	var notAggregatedMetrics metricapi.MetricPromises
 	if HeapsterAllInOneDownloadConfig[selector.TargetResourceType] {
 		notAggregatedMetrics = self.allInOneDownload(selector, metricName)
@@ -131,7 +130,7 @@ func (self HeapsterClient) downloadMetricForEachTargetResource(selector heapster
 
 // ithResourceDownload downloads metric for ith resource in self.Resources. Use only in case all in 1 download is not supported
 // for this resource type.
-func (self HeapsterClient) ithResourceDownload(selector heapsterSelector, metricName string,
+func (self heapsterClient) ithResourceDownload(selector heapsterSelector, metricName string,
 	i int) metricapi.MetricPromise {
 	result := metricapi.NewMetricPromise()
 	go func() {
@@ -149,7 +148,9 @@ func (self HeapsterClient) ithResourceDownload(selector heapsterSelector, metric
 			MetricPoints: toMetricPoints(rawResult.Metrics),
 			MetricName:   metricName,
 			Label: metricapi.Label{
-				selector.TargetResourceType: []string{selector.Resources[i]},
+				selector.TargetResourceType: []types.UID{
+					selector.Label[selector.TargetResourceType][i],
+				},
 			},
 		}
 		result.Error <- nil
@@ -160,7 +161,7 @@ func (self HeapsterClient) ithResourceDownload(selector heapsterSelector, metric
 
 // allInOneDownload downloads metrics for all resources present in self.Resources in one request.
 // returns a list of metric promises - one promise for each resource. Order of self.Resources is preserved.
-func (self HeapsterClient) allInOneDownload(selector heapsterSelector, metricName string) metricapi.MetricPromises {
+func (self heapsterClient) allInOneDownload(selector heapsterSelector, metricName string) metricapi.MetricPromises {
 	result := metricapi.NewMetricPromises(len(selector.Resources))
 	go func() {
 		if len(selector.Resources) == 0 {
@@ -185,7 +186,9 @@ func (self HeapsterClient) allInOneDownload(selector heapsterSelector, metricNam
 				MetricPoints: toMetricPoints(rawResult.Metrics),
 				MetricName:   metricName,
 				Label: metricapi.Label{
-					selector.TargetResourceType: []string{selector.Resources[i]},
+					selector.TargetResourceType: []types.UID{
+						selector.Label[selector.TargetResourceType][i],
+					},
 				},
 			}
 			result[i].Error <- nil
@@ -198,7 +201,7 @@ func (self HeapsterClient) allInOneDownload(selector heapsterSelector, metricNam
 
 // unmarshalType performs heapster GET request to the specifies path and transfers
 // the data to the interface provided.
-func (self HeapsterClient) unmarshalType(path string, v interface{}) error {
+func (self heapsterClient) unmarshalType(path string, v interface{}) error {
 	rawData, err := self.client.Get("/model/" + path).DoRaw()
 	if err != nil {
 		return err
@@ -216,15 +219,15 @@ func CreateHeapsterClient(host string, k8sClient *kubernetes.Clientset) (
 	if host == "" {
 		log.Print("Creating in-cluster Heapster client")
 		c := inClusterHeapsterClient{client: k8sClient.Core().RESTClient()}
-		return HeapsterClient{client: c}, nil
+		return heapsterClient{client: c}, nil
 	}
 
 	cfg := &rest.Config{Host: host, QPS: client.DefaultQPS, Burst: client.DefaultBurst}
 	restClient, err := kubernetes.NewForConfig(cfg)
 	if err != nil {
-		return HeapsterClient{}, err
+		return heapsterClient{}, err
 	}
 	log.Printf("Creating remote Heapster client for %s", host)
 	c := remoteHeapsterClient{client: restClient.Core().RESTClient()}
-	return HeapsterClient{client: c}, nil
+	return heapsterClient{client: c}, nil
 }

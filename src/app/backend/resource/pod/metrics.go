@@ -45,13 +45,13 @@ type PodMetrics struct {
 }
 
 func getMetricsPerPod(pods []v1.Pod, metricClient metricapi.MetricClient,
-	cache *metricapi.CachedResources, dsQuery *dataselect.DataSelectQuery) (
+	dsQuery *dataselect.DataSelectQuery) (
 	*MetricsByPod, error) {
 	log.Println("Getting pod metrics")
 
 	result := &MetricsByPod{MetricsMap: make(map[types.UID]PodMetrics)}
 
-	metricPromises := dataselect.PodListMetrics(toCells(pods), dsQuery, metricClient, cache)
+	metricPromises := dataselect.PodListMetrics(toCells(pods), dsQuery, metricClient)
 	metrics, err := metricPromises.GetMetrics()
 	if err != nil {
 		return result, err

@@ -19,12 +19,12 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
-	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
@@ -198,9 +198,9 @@ func TestGetWorkloadsFromChannels(t *testing.T) {
 				Deployments:       c.deployment,
 			},
 			PodList: pod.PodList{
-				ListMeta: api.ListMeta{TotalItems: len(c.pod)},
+				ListMeta:          api.ListMeta{TotalItems: len(c.pod)},
 				CumulativeMetrics: []metricapi.Metric{},
-				Pods: c.pod,
+				Pods:              c.pod,
 			},
 			StatefulSetList: statefulset.StatefulSetList{
 				ListMeta:          api.ListMeta{TotalItems: len(c.statefulSet)},

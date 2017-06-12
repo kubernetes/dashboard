@@ -6,6 +6,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/pkg/api/v1"
 )
 
@@ -37,7 +38,7 @@ func getHeapsterSelector(selector metricapi.ResourceSelector,
 	summingResource, isDerivedResource := metricapi.DerivedResources[selector.ResourceType]
 	if !isDerivedResource {
 		return newHeapsterSelectorFromNativeResource(selector.ResourceType, selector.Namespace,
-			[]string{selector.ResourceName}, []string{string(selector.UID)})
+			[]string{selector.ResourceName}, []types.UID{selector.UID})
 	}
 	// We are dealing with derived resource. Convert derived resource to its native resources.
 	// For example, convert deployment to the list of pod names that belong to this deployment
@@ -80,7 +81,7 @@ func getMyPodsFromCache(selector metricapi.ResourceSelector, cachedPods []v1.Pod
 // NewHeapsterSelectorFromNativeResource returns new heapster selector for native resources specified in arguments.
 // returns error if requested resource is not native or is not supported.
 func newHeapsterSelectorFromNativeResource(resourceType api.ResourceKind, namespace string,
-	resourceNames []string, resourceUIDs []string) (heapsterSelector, error) {
+	resourceNames []string, resourceUIDs []types.UID) (heapsterSelector, error) {
 	// Here we have 2 possibilities because this module allows downloading Nodes and Pods from heapster
 	if resourceType == api.ResourceKindPod {
 		return heapsterSelector{
@@ -109,9 +110,9 @@ func podListToNameList(podList []v1.Pod) (result []string) {
 	return
 }
 
-func podListToUIDList(podList []v1.Pod) (result []string) {
+func podListToUIDList(podList []v1.Pod) (result []types.UID) {
 	for _, pod := range podList {
-		result = append(result, string(pod.UID))
+		result = append(result, pod.UID)
 	}
 	return
 }

@@ -6,21 +6,6 @@ import (
 	heapster "k8s.io/heapster/metrics/api/v1/types"
 )
 
-// removeDuplicates returns a new list of strings with duplicates removed.
-func removeDuplicates(list []string) []string {
-	// uniqueEntries will store unique elements of the list. Maps cannot have duplicate keys.
-	uniqueEntries := map[string]bool{}
-	for _, e := range list {
-		uniqueEntries[e] = false
-	}
-	uniqueList := []string{}
-	for e := range uniqueEntries {
-		uniqueList = append(uniqueList, e)
-	}
-	return uniqueList
-
-}
-
 // compress compresses list of HeapsterSelectors to equivalent, shorter one in order to perform smaller number of requests.
 // For example if we have 2 HeapsterSelectors, first downloading data for pods A, B and second one downloading data for pods B,C.
 // compress will compress this to just one HeapsterSelector downloading data for A,B,C. Reverse mapping returned provides
@@ -30,11 +15,19 @@ func compress(selectors []heapsterSelector) ([]heapsterSelector, map[string][]in
 	resourceTypeMap := map[string]api.ResourceKind{}
 	resourceMap := map[string][]string{}
 	labelMap := map[string]metricapi.Label{}
+	resourceAdded := map[string]bool{}
 	for i, selector := range selectors {
 		entry := selector.Path
 		resources, doesEntryExist := resourceMap[selector.Path]
 		// compress resources
-		resourceMap[entry] = append(resources, selector.Resources...)
+		for _, resource := range selector.Resources {
+			if _, exists := resourceAdded[resource]; !exists {
+				resourceMap[entry] = append(resources, resource)
+			}
+
+			resourceAdded[resource] = true
+		}
+
 		// compress labels
 		if !doesEntryExist {
 			resourceTypeMap[entry] = selector.TargetResourceType // this will be the same for all entries
@@ -48,7 +41,7 @@ func compress(selectors []heapsterSelector) ([]heapsterSelector, map[string][]in
 	for entry, resourceType := range resourceTypeMap {
 		newSelector := heapsterSelector{
 			Path:               entry,
-			Resources:          removeDuplicates(resourceMap[entry]), // remove duplicate resources so that they are not downloaded twice.
+			Resources:          resourceMap[entry],
 			Label:              labelMap[entry],
 			TargetResourceType: resourceType,
 		}

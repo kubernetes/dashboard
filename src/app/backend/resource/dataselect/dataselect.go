@@ -17,9 +17,9 @@ package dataselect
 import (
 	"sort"
 
+	"errors"
 	"github.com/emicklei/go-restful/log"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
-	"errors"
 )
 
 // GenericDataCell describes the interface of the data cell that contains all the necessary methods needed to perform
@@ -61,6 +61,10 @@ type DataSelector struct {
 	// CumulativeMetricsPromises is a list of promises holding aggregated metrics for resources in GenericDataList.
 	// The metrics will be calculated after calling GetCumulativeMetrics method.
 	CumulativeMetricsPromises metricapi.MetricPromises
+	// MetricsPromises is a list of promises holding metrics for resources in GenericDataList.
+	// The metrics will be calculated after calling GetMetrics method. Metric will not be
+	// aggregated and can are used to display sparklines on pod list.
+	MetricsPromises metricapi.MetricPromises
 }
 
 // Implementation of sort.Interface so that we can use built-in sort function (sort.Sort) for sorting SelectableData
@@ -157,7 +161,7 @@ func (self *DataSelector) getMetrics(metricClient metricapi.MetricClient) (
 	return metricPromises, nil
 }
 
-// // TODO add doc
+// TODO add doc
 func (self *DataSelector) GetMetrics(metricClient metricapi.MetricClient) *DataSelector {
 	metricPromisesList, err := self.getMetrics(metricClient)
 	if err != nil {
@@ -170,7 +174,7 @@ func (self *DataSelector) GetMetrics(metricClient metricapi.MetricClient) *DataS
 		metricPromises = append(metricPromises, promises...)
 	}
 
-	self.CumulativeMetricsPromises = metricPromises
+	self.MetricsPromises = metricPromises
 	return self
 }
 
@@ -277,14 +281,14 @@ func GenericDataSelectWithFilterAndMetrics(dataList []DataCell, dsQuery *DataSel
 }
 
 // TODO add doc
-func PodListMetrics(dataList []DataCell, dsQuery *DataSelectQuery, metricClient metricapi.MetricClient,
-	cachedResources *metricapi.CachedResources) metricapi.MetricPromises {
+func PodListMetrics(dataList []DataCell, dsQuery *DataSelectQuery,
+	metricClient metricapi.MetricClient) metricapi.MetricPromises {
 	selectableData := DataSelector{
 		GenericDataList: dataList,
 		DataSelectQuery: dsQuery,
-		CachedResources: cachedResources,
+		CachedResources: metricapi.NoResourceCache,
 	}
 
 	processed := selectableData.GetMetrics(metricClient)
-	return processed.CumulativeMetricsPromises
+	return processed.MetricsPromises
 }

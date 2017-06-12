@@ -16,8 +16,8 @@ package job
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	batch "k8s.io/client-go/pkg/apis/batch/v1"
 )
 

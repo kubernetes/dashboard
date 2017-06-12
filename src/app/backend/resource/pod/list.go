@@ -101,13 +101,13 @@ func CreatePodList(pods []v1.Pod, events []v1.Event, dsQuery *dataselect.DataSel
 		Pods: make([]Pod, 0),
 	}
 
-	cache := metricapi.NoResourceCache
 	podCells, cumulativeMetricsPromises, filteredTotal := dataselect.
-		GenericDataSelectWithFilterAndMetrics(toCells(pods), dsQuery, cache, metricClient)
+		GenericDataSelectWithFilterAndMetrics(toCells(pods), dsQuery,
+			metricapi.NoResourceCache, metricClient)
 	pods = fromCells(podCells)
 	podList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
-	metrics, err := getMetricsPerPod(pods, metricClient, cache, dsQuery)
+	metrics, err := getMetricsPerPod(pods, metricClient, dsQuery)
 	if err != nil {
 		log.Printf("Skipping Heapster metrics because of error: %s\n", err)
 	}

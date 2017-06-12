@@ -16,8 +16,8 @@ package statefulset
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	apps "k8s.io/client-go/pkg/apis/apps/v1beta1"
 )
 

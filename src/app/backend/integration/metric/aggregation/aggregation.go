@@ -1,7 +1,7 @@
 package aggregation
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"sort"
 )
 
@@ -14,10 +14,11 @@ func (a SortableInt64) Less(i, j int) bool { return a[i] < a[j] }
 
 // AggregateData aggregates all the data from dataList using AggregatingFunction with name aggregateName.
 // Standard data aggregation function.
-func AggregateData(metricList []api.Metric, metricName string, aggregationName api.AggregationMode) api.Metric {
-	_, isAggregateAvailable := api.AggregatingFunctions[aggregationName]
+func AggregateData(metricList []metricapi.Metric, metricName string,
+	aggregationName metricapi.AggregationMode) metricapi.Metric {
+	_, isAggregateAvailable := metricapi.AggregatingFunctions[aggregationName]
 	if !isAggregateAvailable {
-		aggregationName = api.DefaultAggregation
+		aggregationName = metricapi.DefaultAggregation
 	}
 
 	aggrMap, newLabel := AggregatingMapFromDataList(metricList, metricName)
@@ -25,22 +26,22 @@ func AggregateData(metricList []api.Metric, metricName string, aggregationName a
 	for k := range aggrMap {
 		Xs = append(Xs, k)
 	}
-	newDataPoints := []api.DataPoint{}
+	newDataPoints := []metricapi.DataPoint{}
 	sort.Sort(Xs) // ensure X data points are sorted
 	for _, x := range Xs {
-		y := api.AggregatingFunctions[aggregationName](aggrMap[x])
-		newDataPoints = append(newDataPoints, api.DataPoint{x, y})
+		y := metricapi.AggregatingFunctions[aggregationName](aggrMap[x])
+		newDataPoints = append(newDataPoints, metricapi.DataPoint{x, y})
 	}
 
 	// We need metric points for sparklines so we can't aggregate them as they are per
-	// resource metrics already.
-	metricPoints := []api.MetricPoint{}
+	// resource metrics already. Provide them only if aggregate is run on single resource.
+	metricPoints := []metricapi.MetricPoint{}
 	if len(metricList) == 1 {
 		metricPoints = metricList[0].MetricPoints
 	}
 
 	// Create new data cell
-	return api.Metric{
+	return metricapi.Metric{
 		DataPoints:   newDataPoints,
 		MetricPoints: metricPoints,
 		MetricName:   metricName,
@@ -52,8 +53,9 @@ func AggregateData(metricList []api.Metric, metricName string, aggregationName a
 
 // AggregatingMapFromDataList for all Data entries of given metric generates a cumulative map X -> [List of all Ys at this X].
 // Afterwards this list of Ys can be easily aggregated.
-func AggregatingMapFromDataList(metricList []api.Metric, metricName string) (map[int64][]int64, api.Label) {
-	newLabel := api.Label{}
+func AggregatingMapFromDataList(metricList []metricapi.Metric, metricName string) (
+	map[int64][]int64, metricapi.Label) {
+	newLabel := metricapi.Label{}
 
 	aggrMap := make(map[int64][]int64, 0)
 	for _, data := range metricList {
@@ -73,19 +75,19 @@ func AggregatingMapFromDataList(metricList []api.Metric, metricName string) (map
 	return aggrMap, newLabel
 }
 
-func AggregateMetricPromises(metricPromises api.MetricPromises, metricName string,
-	aggregations api.AggregationModes, forceLabel api.Label) api.MetricPromises {
+func AggregateMetricPromises(metricPromises metricapi.MetricPromises, metricName string,
+	aggregations metricapi.AggregationModes, forceLabel metricapi.Label) metricapi.MetricPromises {
 	if aggregations == nil || len(aggregations) == 0 {
-		aggregations = api.OnlyDefaultAggregation
+		aggregations = metricapi.OnlyDefaultAggregation
 	}
-	result := api.NewMetricPromises(len(aggregations))
+	result := metricapi.NewMetricPromises(len(aggregations))
 	go func() {
 		metricList, err := metricPromises.GetMetrics()
 		if err != nil {
 			result.PutMetrics(metricList, err)
 			return
 		}
-		aggrResult := []api.Metric{}
+		aggrResult := []metricapi.Metric{}
 		for _, aggregation := range aggregations {
 			aggregated := AggregateData(metricList, metricName, aggregation)
 			if forceLabel != nil {

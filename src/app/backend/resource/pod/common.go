@@ -91,24 +91,11 @@ func ToPod(pod *v1.Pod, metrics *MetricsByPod, warnings []common.Event) Pod {
 		RestartCount: getRestartCount(*pod),
 	}
 
-	if metrics == nil {
-		return podDetail
-	}
-
 	if m, exists := metrics.MetricsMap[pod.UID]; exists {
 		podDetail.Metrics = &m
 	}
 
 	return podDetail
-}
-
-// GetContainerImages returns container image strings from the given pod spec.
-func GetContainerImages(podTemplate *v1.PodSpec) []string {
-	var containerImages []string
-	for _, container := range podTemplate.Containers {
-		containerImages = append(containerImages, container.Image)
-	}
-	return containerImages
 }
 
 // The code below allows to perform complex data section on []api.Pod
