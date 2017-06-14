@@ -45,6 +45,7 @@ import roleModule from './role/module';
 import searchModule from './search/module';
 import secretModule from './secret/module';
 import serviceModule from './service/module';
+import shellModule from './shell/module';
 import statefulSetModule from './statefulset/module';
 import storageClassModule from './storageclass/module';
 import thirdPartyResourceModule from './thirdpartyresource/module';
@@ -69,6 +70,7 @@ export default angular
           errorModule.name,
           jobModule.name,
           logsModule.name,
+          shellModule.name,
           replicationControllerModule.name,
           replicaSetModule.name,
           namespaceModule.name,

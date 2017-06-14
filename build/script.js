@@ -163,6 +163,9 @@ function compileES6(translation) {
     path.join(conf.paths.externs, 'dataselect.js'),
     path.join(conf.paths.externs, 'dirPagination.js'),
     path.join(conf.paths.externs, 'searchapi.js'),
+    path.join(conf.paths.externs, 'shell.js'),
+    path.join(conf.paths.externs, 'hterm.js'),
+    path.join(conf.paths.externs, 'sockjs.js'),
   ];
 
   let closureCompilerConfig = {
