@@ -27,7 +27,7 @@ describe('Relative time filter', () => {
       23,    // hour
       59,    // minute
       59     // second
-      );
+  );
 
   /** @type {function(!Date):string} */
   let relativeTimeFilter;

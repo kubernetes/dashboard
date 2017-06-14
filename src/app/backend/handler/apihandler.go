@@ -1198,13 +1198,13 @@ func (apiHandler *APIHandler) handleExecShell(request *restful.Request, response
 		return
 	}
 
-	k8sClient, err := apiHandler.manager.Client(request)
+	k8sClient, err := apiHandler.cManager.Client(request)
 	if err != nil {
 		handleInternalError(response, err)
 		return
 	}
 
-	cfg, err := apiHandler.manager.Config(request)
+	cfg, err := apiHandler.cManager.Config(request)
 	if err != nil {
 		handleInternalError(response, err)
 		return
