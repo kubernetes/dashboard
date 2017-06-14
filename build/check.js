@@ -15,9 +15,13 @@
 /**
  * @fileoverview Gulp tasks for checking and validating the code or a commit.
  */
+import fs from 'fs';
 import gulp from 'gulp';
 import gulpClangFormat from 'gulp-clang-format';
 import gulpEslint from 'gulp-eslint';
+import filter from 'gulp-filter';
+import license from 'gulp-header-license';
+import licenseCheck from 'gulp-license-check';
 import gulpSassLint from 'gulp-sass-lint';
 import beautify from 'js-beautify';
 import path from 'path';
@@ -38,7 +42,7 @@ const htmlBeautify = beautify.html;
  *
  * This task should be used prior to publishing a change.
  **/
-gulp.task('check', ['lint', 'test', 'integration-test:prod']);
+gulp.task('check', ['check-license-headers', 'lint', 'test', 'integration-test:prod']);
 
 /**
  * Checks the code quality (integration tests only) of Dashboard. In addition a local kubernetes
@@ -131,6 +135,70 @@ gulp.task('format-go', function(doneFn) {
         path.relative(conf.paths.base, conf.paths.backendSrc),
       ],
       doneFn);
+});
+
+/**
+ * Checks and prints all source files for presence of up-to-date license headers.
+ * License header templates are stored in 'license' directory.
+ */
+gulp.task('check-license-headers', () => {
+  const HEADER_NOT_PRESENT = 'Header not present';
+  const commonFilter = filter('**/*.{js,go}', {restore: true});
+  const htmlFilter = filter('**/*.html', {restore: true});
+
+  let hasErrors = false;
+  const handleLogEvent = (event) => {
+    if (!hasErrors && event.msg.startsWith(HEADER_NOT_PRESENT)) {
+      hasErrors = true;
+    }
+  };
+
+  const handleEndEvent = () => {
+    if (hasErrors) {
+      throw new Error('License headers need to be present in all files.');
+    }
+  };
+
+  return gulp.src([path.join(conf.paths.src, '**/*.{js,go,html}')], {base: conf.paths.base})
+      .pipe(commonFilter)
+      .pipe(licenseCheck(licenseConfig('license/header.txt')).on('log', handleLogEvent))
+      .pipe(commonFilter.restore)
+      .pipe(htmlFilter)
+      .pipe(licenseCheck(licenseConfig('license/header_html.txt')).on('log', handleLogEvent))
+      .pipe(htmlFilter.restore)
+      .on('end', handleEndEvent);
+});
+
+/**
+ * Returns config object for gulp-license-check plugin.
+ * @param {string} licenseFilePath
+ * @return {Object}
+ */
+function licenseConfig(licenseFilePath) {
+  return {
+    path: licenseFilePath,
+    blocking: false,
+    logInfo: false,
+    logError: true,
+  };
+}
+
+/**
+ * Updates license headers in all source files based on templates stored in 'license' directory.
+ */
+gulp.task('update-license-headers', () => {
+  const commonFilter = filter('**/*.{js,go}', {restore: true});
+  const htmlFilter = filter('**/*.html', {restore: true});
+  const matchRate = 0.9;
+
+  gulp.src([path.join(conf.paths.src, '**/*.{js,go,html}')], {base: conf.paths.base})
+      .pipe(commonFilter)
+      .pipe(license(fs.readFileSync('license/header.txt', 'utf8'), {}, matchRate))
+      .pipe(commonFilter.restore)
+      .pipe(htmlFilter)
+      .pipe(license(fs.readFileSync('license/header_html.txt', 'utf8'), {}, matchRate))
+      .pipe(htmlFilter.restore)
+      .pipe(gulp.dest(conf.paths.base));
 });
 
 /**
