@@ -161,7 +161,8 @@ func (self *DataSelector) getMetrics(metricClient metricapi.MetricClient) (
 	return metricPromises, nil
 }
 
-// TODO add doc
+// GetMetrics downloads metrics for data cells currently present in self.GenericDataList as instructed
+// by MetricQuery and inserts resulting MetricPromises to self.MetricsPromises.
 func (self *DataSelector) GetMetrics(metricClient metricapi.MetricClient) *DataSelector {
 	metricPromisesList, err := self.getMetrics(metricClient)
 	if err != nil {
