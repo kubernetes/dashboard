@@ -23,6 +23,20 @@ limitations under the License.
   <kd-info-card-section>
     <kd-object-meta-info-card object-meta="::$ctrl.node.objectMeta">
     </kd-object-meta-info-card>
+    <kd-info-card-entry title="[[Taints|Label 'Taints' for the node taints displayed on its details page.]]"
+                        ng-if="::$ctrl.node.taints">
+      <div ng-repeat="(index, taint) in ::$ctrl.node.taints"
+           class="kd-chips">
+        <kd-middle-ellipsis display-string="{{::taint.key}}: {{::taint.value}}: {{::taint.effect}} ({{::taint.timeAdded}})"
+                            ng-if="::taint.timeAdded"
+                            class="kd-chip">
+        </kd-middle-ellipsis>
+        <kd-middle-ellipsis display-string="{{::taint.key}}: {{::taint.value}}: {{::taint.effect}}"
+                            ng-if="::!taint.timeAdded"
+                            class="kd-chip">
+        </kd-middle-ellipsis>
+      </div>
+    </kd-info-card-entry>
     <kd-info-card-entry title="[[Phase|Label 'Phase' for the node namespace on the node details page.]]"
                         ng-if="::$ctrl.node.phase">
       {{$ctrl.node.phase}}

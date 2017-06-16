@@ -117,6 +117,9 @@ type NodeDetail struct {
 
 	// Metrics collected for this resource
 	Metrics []metric.Metric `json:"metrics"`
+
+	// Taints
+	Taints []v1.Taint `json:"taints,omitempty"`
 }
 
 // GetNodeDetail gets node details.
@@ -271,5 +274,6 @@ func toNodeDetail(node v1.Node, pods *pod.PodList, eventList *common.EventList,
 		EventList:          *eventList,
 		AllocatedResources: allocatedResources,
 		Metrics:            metrics,
+		Taints:             node.Spec.Taints,
 	}
 }
