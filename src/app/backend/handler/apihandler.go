@@ -60,6 +60,7 @@ import (
 	"golang.org/x/net/xsrftoken"
 	errorsK8s "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/kubernetes/pkg/client/unversioned/remotecommand"
 )
 
 const (
@@ -74,6 +75,12 @@ const (
 type APIHandler struct {
 	heapsterClient heapster.HeapsterClient
 	manager        client.ClientManager
+}
+
+// TerminalResponse is sent by handleExecShell. The Id is a random session id that binds the original REST request and the SockJS connection.
+// Any client in possession of this Id can hijack the terminal session.
+type TerminalResponse struct {
+	Id string `json:"id"`
 }
 
 // CreateHTTPAPIHandler creates a new HTTP handler that handles all requests to the API of the backend.
@@ -238,6 +245,10 @@ func CreateHTTPAPIHandler(heapsterClient heapster.HeapsterClient, manager client
 		apiV1Ws.GET("/pod/{namespace}/{pod}/event").
 			To(apiHandler.handleGetPodEvents).
 			Writes(common.EventList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/pod/{namespace}/{pod}/shell/{container}").
+			To(apiHandler.handleExecShell).
+			Writes(TerminalResponse{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/deployment").
@@ -1146,6 +1157,35 @@ func (apiHandler *APIHandler) handleGetPodEvents(request *restful.Request, respo
 		return
 	}
 	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+// Handles execute shell API call
+func (apiHandler *APIHandler) handleExecShell(request *restful.Request, response *restful.Response) {
+	sessionId, err := genTerminalSessionId()
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	k8sClient, err := apiHandler.manager.Client(request)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	cfg, err := apiHandler.manager.Config(request)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	terminalSessions[sessionId] = TerminalSession{
+		id:       sessionId,
+		bound:    make(chan error),
+		sizeChan: make(chan remotecommand.TerminalSize),
+	}
+	go WaitForTerminal(k8sClient, cfg, request, sessionId)
+	response.WriteHeaderAndEntity(http.StatusOK, TerminalResponse{Id: sessionId})
 }
 
 func (apiHandler *APIHandler) handleGetDeployments(request *restful.Request, response *restful.Response) {

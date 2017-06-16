@@ -877,6 +877,12 @@
 			"revisionTime": "2016-02-01T17:48:07Z"
 		},
 		{
+			"checksumSHA1": "G9xlHV7kNV0SFK4mwyym9O5qWZ0=",
+			"path": "github.com/gorilla/websocket",
+			"revision": "a91eba7f97777409bc2c443f5534d41dd20c5720",
+			"revisionTime": "2017-03-19T17:27:27Z"
+		},
+		{
 			"checksumSHA1": "yst2ieNYOiHFoAcA2+jJFtfan+g=",
 			"path": "github.com/grpc-ecosystem/grpc-gateway/examples/examplepb",
 			"revision": "325488925d6af252d18cc5ade7032127bc898ac7",
@@ -923,6 +929,12 @@
 			"path": "github.com/howeyc/gopass",
 			"revision": "f5387c492211eb133053880d23dfae62aa14123d",
 			"revisionTime": "2016-10-03T13:09:00Z"
+		},
+		{
+			"checksumSHA1": "1quR5pQNYFEgMLp987my6ZXh3vU=",
+			"path": "github.com/igm/sockjs-go/sockjs",
+			"revision": "1f275fbd3bcc9a21ec90217b80f40db44404410b",
+			"revisionTime": "2016-11-15T19:28:38Z"
 		},
 		{
 			"checksumSHA1": "n/llKRPzxcWttjZtpAWA7VW9iJA=",
@@ -1717,6 +1729,12 @@
 			"path": "gopkg.in/check.v1",
 			"revision": "4f90aeace3a26ad7021961c297b22c42160c7b25",
 			"revisionTime": "2016-01-05T16:49:36Z"
+		},
+		{
+			"checksumSHA1": "ubw5EnGNT/r1hmOchk9YrwqHJvk=",
+			"path": "gopkg.in/igm/sockjs-go.v2/sockjs",
+			"revision": "d276e9ffe5cc5c271b81198cc77a2adf6c4482d2",
+			"revisionTime": "2016-11-15T19:38:03Z"
 		},
 		{
 			"checksumSHA1": "puukSI4sk1NrZynJws6JPuOUnj8=",
@@ -4165,6 +4183,12 @@
 			"path": "k8s.io/kubernetes/pkg/client/unversioned",
 			"revision": "21f30db4c68eae6cda0955ac3d7912326e65d135",
 			"revisionTime": "2017-04-26T00:56:44Z"
+		},
+		{
+			"checksumSHA1": "LZF+rOOAb+paoWURMdmYDNYF8Ww=",
+			"path": "k8s.io/kubernetes/pkg/client/unversioned/remotecommand",
+			"revision": "3dfffac7f918ef4c2409b898b3d40a89419dce24",
+			"revisionTime": "2017-05-11T19:20:17Z"
 		},
 		{
 			"checksumSHA1": "jFgbQj6gWZGErv0Q/4EIS4exwTw=",
