@@ -18,7 +18,9 @@
     "ng-jsoneditor": "angular-tools/ng-jsoneditor#~1.0.0",
     "angularUtils-pagination": "angular-utils-pagination#~0.11.1",
     "easyfont-roboto-mono": "easyfont/roboto-mono#fa7971ea56f68bfdb2771f9cb560c99aca0164c1",
-    "angular-clipboard": "^1.5.0"
+    "angular-clipboard": "^1.5.0",
+    "hterm": "~1.0.0",
+    "sockjs-client": "^1.1.4"
   },
   "overrides": {
     "material-design-icons": {
