@@ -41,7 +41,7 @@ task is provided that checks out the latest stable version, and runs it inside a
 Run the following command:
 
 ```shell
-$ gulp local-up-cluster
+$ gulp local-up-cluster --heapsterServerHost 'http://localhost:8082'
 ```
 
 This will build and start a lightweight local cluster, consisting of a master and a single node.
@@ -190,7 +190,7 @@ git push -f origin my-feature
 ## Building Dashboard Inside a Container
 
 It's possible to run `gulp` and all the dependencies inside a development container. To do this,
-just replace `gulp [some arg]` commands with `build/run-gulp-in-docker.sh [some arg]`. If you
+just replace `gulp [some arg]` commands with `build/run-gulp-in-docker.sh [some arg]` (e.g. `build/run-gulp-in-docker.sh serve`). If you
 do this, the only dependency is `docker`, and required commands such as `npm install`
 will be run automatically.
 

@@ -17,7 +17,7 @@ package workload
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
@@ -48,7 +48,7 @@ type Workloads struct {
 }
 
 // GetWorkloads returns a list of all workloads in the cluster.
-func GetWorkloads(client *kubernetes.Clientset, heapsterClient heapster.HeapsterClient,
+func GetWorkloads(client *kubernetes.Clientset, metricClient metricapi.MetricClient,
 	nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*Workloads, error) {
 
 	log.Print("Getting lists of all workloads")
@@ -64,13 +64,13 @@ func GetWorkloads(client *kubernetes.Clientset, heapsterClient heapster.Heapster
 		EventList:                 common.GetEventListChannel(client, nsQuery, 7),
 	}
 
-	return GetWorkloadsFromChannels(channels, heapsterClient, dsQuery)
+	return GetWorkloadsFromChannels(channels, metricClient, dsQuery)
 }
 
 // GetWorkloadsFromChannels returns a list of all workloads in the cluster, from the
 // channel sources.
 func GetWorkloadsFromChannels(channels *common.ResourceChannels,
-	heapsterClient heapster.HeapsterClient, dsQuery *dataselect.DataSelectQuery) (*Workloads,
+	metricClient metricapi.MetricClient, dsQuery *dataselect.DataSelectQuery) (*Workloads,
 	error) {
 
 	rsChan := make(chan *replicaset.ReplicaSetList)
@@ -110,7 +110,7 @@ func GetWorkloadsFromChannels(channels *common.ResourceChannels,
 	go func() {
 		podList, err := pod.GetPodListFromChannels(channels,
 			dataselect.NewDataSelectQuery(dsQuery.PaginationQuery, dsQuery.SortQuery,
-				dsQuery.FilterQuery, dataselect.StandardMetrics), heapsterClient)
+				dsQuery.FilterQuery, dataselect.StandardMetrics), metricClient)
 		errChan <- err
 		podChan <- podList
 	}()

@@ -20,15 +20,16 @@
  */
 export class FutureStateService {
   /**
+   * @param {!ui.router.$state} $state
    * @param {!angular.Scope} $rootScope
    * @ngInject
    */
-  constructor($rootScope) {
+  constructor($state, $rootScope) {
     /** @private {!angular.Scope} */
     this.scope_ = $rootScope;
 
-    /** @type {ui.router.$state} */
-    this.state = null;
+    /** @type {!ui.router.$state} */
+    this.state = $state;
 
     /** @type {Object<string, string>} */
     this.params = null;

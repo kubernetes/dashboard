@@ -17,9 +17,10 @@ package daemonset
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
@@ -28,7 +29,7 @@ import (
 )
 
 // GetDaemonSetPods return list of pods targeting daemon set.
-func GetDaemonSetPods(client k8sClient.Interface, heapsterClient heapster.HeapsterClient,
+func GetDaemonSetPods(client k8sClient.Interface, metricClient metricapi.MetricClient,
 	dsQuery *dataselect.DataSelectQuery, daemonSetName, namespace string) (*pod.PodList, error) {
 	log.Printf("Getting replication controller %s pods in namespace %s", daemonSetName, namespace)
 
@@ -37,7 +38,12 @@ func GetDaemonSetPods(client k8sClient.Interface, heapsterClient heapster.Heapst
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(pods, []api.Event{}, dsQuery, heapsterClient)
+	events, err := event.GetPodsEvents(client, namespace, pods)
+	if err != nil {
+		return nil, err
+	}
+
+	podList := pod.CreatePodList(pods, events, dsQuery, metricClient)
 	return &podList, nil
 }
 

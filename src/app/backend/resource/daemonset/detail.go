@@ -18,7 +18,7 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
@@ -56,7 +56,7 @@ type DaemonSetDetail struct {
 }
 
 // Returns detailed information about the given daemon set in the given namespace.
-func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient heapster.HeapsterClient,
+func GetDaemonSetDetail(client k8sClient.Interface, metricClient metricapi.MetricClient,
 	namespace, name string) (*DaemonSetDetail, error) {
 	log.Printf("Getting details of %s daemon set in %s namespace", name, namespace)
 
@@ -65,7 +65,7 @@ func GetDaemonSetDetail(client k8sClient.Interface, heapsterClient heapster.Heap
 		return nil, err
 	}
 
-	podList, err := GetDaemonSetPods(client, heapsterClient, dataselect.DefaultDataSelectWithMetrics, name, namespace)
+	podList, err := GetDaemonSetPods(client, metricClient, dataselect.DefaultDataSelectWithMetrics, name, namespace)
 	if err != nil {
 		return nil, err
 	}

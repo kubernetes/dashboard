@@ -61,5 +61,13 @@ limitations under the License.
         {{::$ctrl.getCreatedAtTooltip($ctrl.persistentVolumeClaim.objectMeta.creationTimestamp)}}
       </md-tooltip>
     </kd-resource-card-column>
+    <kd-resource-card-column class="kd-row-layout-column kd-icon-column">
+      <kd-resource-card-menu>
+        <kd-resource-card-delete-menu-item resource-kind-name="[[Persistent Volume Claim|Label 'Persistent Volume Claim' which will appear in the persistent volume claim delete dialog opened from a persistentvolumeclaim card on the list page.]]">
+        </kd-resource-card-delete-menu-item>
+        <kd-resource-card-edit-menu-item resource-kind-name="[[Persistent Volume Claim|Label 'Persistent Volume Claim' which will appear in the persistent volume claim edit dialog opened from a persistentvolumeclaim card on the list page.]]">
+        </kd-resource-card-edit-menu-item>
+      </kd-resource-card-menu>
+    </kd-resource-card-column>
   </kd-resource-card-columns>
 </kd-resource-card>

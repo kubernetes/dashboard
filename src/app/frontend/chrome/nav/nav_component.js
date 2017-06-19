@@ -28,7 +28,6 @@ import {stateName as persistentVolumeClaimState} from 'persistentvolumeclaim/lis
 import {stateName as podState} from 'pod/list/state';
 import {stateName as replicaSetState} from 'replicaset/list/state';
 import {stateName as replicationControllerState} from 'replicationcontroller/list/state';
-import {stateName as roleState} from 'role/list/state';
 import {stateName as secretState} from 'secret/list/state';
 import {stateName as serviceState} from 'service/list/state';
 import {stateName as statefulSetState} from 'statefulset/list/state';
@@ -72,7 +71,6 @@ export class NavController {
       'discovery': discoveryState,
       'config': configState,
       'storageClass': storageClassState,
-      'role': roleState,
       'about': aboutState,
     };
   }

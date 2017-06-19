@@ -62,7 +62,7 @@ func GetPersistentVolumeListFromChannels(channels *common.ResourceChannels, dsQu
 
 	persistentVolumes := <-channels.PersistentVolumeList.List
 	if err := <-channels.PersistentVolumeList.Error; err != nil {
-		return nil, err
+		return &PersistentVolumeList{Items: []PersistentVolume{}}, err
 	}
 
 	result := getPersistentVolumeList(persistentVolumes.Items, dsQuery)

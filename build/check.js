@@ -161,10 +161,12 @@ gulp.task('check-license-headers', () => {
 
   return gulp.src([path.join(conf.paths.src, '**/*.{js,go,html}')], {base: conf.paths.base})
       .pipe(commonFilter)
-      .pipe(licenseCheck(licenseConfig('license/header.txt')).on('log', handleLogEvent))
+      .pipe(
+          licenseCheck(licenseConfig('build/assets/license/header.txt')).on('log', handleLogEvent))
       .pipe(commonFilter.restore)
       .pipe(htmlFilter)
-      .pipe(licenseCheck(licenseConfig('license/header_html.txt')).on('log', handleLogEvent))
+      .pipe(licenseCheck(licenseConfig('build/assets/license/header_html.txt'))
+                .on('log', handleLogEvent))
       .pipe(htmlFilter.restore)
       .on('end', handleEndEvent);
 });
@@ -193,10 +195,10 @@ gulp.task('update-license-headers', () => {
 
   gulp.src([path.join(conf.paths.src, '**/*.{js,go,html}')], {base: conf.paths.base})
       .pipe(commonFilter)
-      .pipe(license(fs.readFileSync('license/header.txt', 'utf8'), {}, matchRate))
+      .pipe(license(fs.readFileSync('build/assets/license/header.txt', 'utf8'), {}, matchRate))
       .pipe(commonFilter.restore)
       .pipe(htmlFilter)
-      .pipe(license(fs.readFileSync('license/header_html.txt', 'utf8'), {}, matchRate))
+      .pipe(license(fs.readFileSync('build/assets/license/header_html.txt', 'utf8'), {}, matchRate))
       .pipe(htmlFilter.restore)
       .pipe(gulp.dest(conf.paths.base));
 });

@@ -18,9 +18,10 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
@@ -92,7 +93,7 @@ type DeploymentDetail struct {
 }
 
 // GetDeploymentDetail returns model object of deployment and error, if any.
-func GetDeploymentDetail(client client.Interface, heapsterClient heapster.HeapsterClient, namespace string,
+func GetDeploymentDetail(client client.Interface, metricClient metricapi.MetricClient, namespace string,
 	deploymentName string) (*DeploymentDetail, error) {
 
 	log.Printf("Getting details of %s deployment in %s namespace", deploymentName, namespace)
@@ -126,7 +127,7 @@ func GetDeploymentDetail(client client.Interface, heapsterClient heapster.Heapst
 	}
 
 	// Pods
-	podList, err := GetDeploymentPods(client, heapsterClient, dataselect.DefaultDataSelectWithMetrics, namespace, deploymentName)
+	podList, err := GetDeploymentPods(client, metricClient, dataselect.DefaultDataSelectWithMetrics, namespace, deploymentName)
 	if err != nil {
 		return nil, err
 	}
@@ -159,6 +160,12 @@ func GetDeploymentDetail(client client.Interface, heapsterClient heapster.Heapst
 	var newReplicaSet replicaset.ReplicaSet
 	if newRs != nil {
 		newRsPodInfo := common.GetPodInfo(newRs.Status.Replicas, *newRs.Spec.Replicas, rawPods.Items)
+		events, err := event.GetPodsEvents(client, namespace, rawPods.Items)
+		if err != nil {
+			return nil, err
+		}
+
+		newRsPodInfo.Warnings = event.CreateEventList(events, dataselect.NoDataSelect).Events
 		newReplicaSet = replicaset.ToReplicaSet(newRs, &newRsPodInfo)
 	}
 

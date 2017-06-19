@@ -18,7 +18,7 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
@@ -59,7 +59,7 @@ type ReplicaSetDetail struct {
 }
 
 // GetReplicaSetDetail gets replica set details.
-func GetReplicaSetDetail(client k8sClient.Interface, heapsterClient heapster.HeapsterClient,
+func GetReplicaSetDetail(client k8sClient.Interface, metricClient metricapi.MetricClient,
 	namespace, name string) (*ReplicaSetDetail, error) {
 	log.Printf("Getting details of %s service in %s namespace", name, namespace)
 
@@ -74,7 +74,7 @@ func GetReplicaSetDetail(client k8sClient.Interface, heapsterClient heapster.Hea
 		return nil, err
 	}
 
-	podList, err := GetReplicaSetPods(client, heapsterClient, dataselect.DefaultDataSelectWithMetrics, name, namespace)
+	podList, err := GetReplicaSetPods(client, metricClient, dataselect.DefaultDataSelectWithMetrics, name, namespace)
 	if err != nil {
 		return nil, err
 	}

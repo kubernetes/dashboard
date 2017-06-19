@@ -23,10 +23,6 @@ export class LocalizerService {
    */
   localize(err) {
     let localizedErr = kdErrors[err.trim()];
-    if (localizedErr === undefined) {
-      return err;
-    }
-
-    return localizedErr;
+    return localizedErr === undefined ? err : localizedErr;
   }
 }

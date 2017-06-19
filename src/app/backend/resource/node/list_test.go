@@ -19,8 +19,8 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 	"k8s.io/client-go/pkg/api/v1"
@@ -42,7 +42,7 @@ func TestGetNodeList(t *testing.T) {
 				ListMeta: api.ListMeta{
 					TotalItems: 1,
 				},
-				CumulativeMetrics: make([]metric.Metric, 0),
+				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Nodes: []Node{{
 					ObjectMeta: api.ObjectMeta{Name: "test-node"},
 					TypeMeta:   api.TypeMeta{Kind: api.ResourceKindNode},
@@ -70,8 +70,7 @@ func TestGetNodeList(t *testing.T) {
 
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.node)
-		fakeHeapsterClient := FakeHeapsterClient{client: *fake.NewSimpleClientset()}
-		actual, _ := GetNodeList(fakeClient, dataselect.NoDataSelect, fakeHeapsterClient)
+		actual, _ := GetNodeList(fakeClient, dataselect.NoDataSelect, nil)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetNodeList() == \ngot: %#v, \nexpected %#v", actual, c.expected)
 		}

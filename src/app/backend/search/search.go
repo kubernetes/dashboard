@@ -15,7 +15,7 @@
 package search
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/cluster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/config"
@@ -73,11 +73,11 @@ type SearchResult struct {
 	// TODO(maciaszczykm): Third party resources.
 }
 
-func Search(client *kubernetes.Clientset, heapsterClient heapster.HeapsterClient,
+func Search(client *kubernetes.Clientset, metricClient metricapi.MetricClient,
 	nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*SearchResult, error) {
 
-	clusterResources, err := cluster.GetCluster(client, dsQuery, &heapsterClient)
+	clusterResources, err := cluster.GetCluster(client, dsQuery, metricClient)
 	if err != nil {
 		return &SearchResult{}, err
 	}
@@ -92,7 +92,7 @@ func Search(client *kubernetes.Clientset, heapsterClient heapster.HeapsterClient
 		return &SearchResult{}, err
 	}
 
-	workloadsResources, err := workload.GetWorkloads(client, heapsterClient, nsQuery, dsQuery)
+	workloadsResources, err := workload.GetWorkloads(client, metricClient, nsQuery, dsQuery)
 	if err != nil {
 		return &SearchResult{}, err
 	}

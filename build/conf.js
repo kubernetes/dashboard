@@ -93,6 +93,13 @@ export default {
      */
     mainPackageName: 'github.com/kubernetes/dashboard/src/app/backend',
     /**
+     * Names of all backend packages prefixed with 'test' command.
+     */
+    testCommandArgs: [
+      'test',
+      'github.com/kubernetes/dashboard/src/app/backend/...',
+    ],
+    /**
      * Port number of the backend server. Only used during development.
      */
     devServerPort: 9091,

@@ -23,14 +23,14 @@ import (
 	"strconv"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/owner"
 	"k8s.io/apimachinery/pkg/api/errors"
 	res "k8s.io/apimachinery/pkg/api/resource"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
 	kubeapi "k8s.io/kubernetes/pkg/api"
@@ -66,7 +66,7 @@ type PodDetail struct {
 	InitContainers []Container `json:"initContainers"`
 
 	// Metrics collected for this resource
-	Metrics []metric.Metric `json:"metrics"`
+	Metrics []metricapi.Metric `json:"metrics"`
 
 	// Conditions of this pod.
 	Conditions []common.Condition `json:"conditions"`
@@ -109,7 +109,7 @@ type EnvVar struct {
 
 // GetPodDetail returns the details (PodDetail) of a named Pod from a particular namespace.
 // TODO(maciaszczykm): Owner reference should be used instead of created by annotation.
-func GetPodDetail(client kubernetes.Interface, heapsterClient heapster.HeapsterClient, namespace,
+func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClient, namespace,
 	name string) (*PodDetail, error) {
 
 	log.Printf("Getting details of %s pod in %s namespace", name, namespace)
@@ -119,7 +119,6 @@ func GetPodDetail(client kubernetes.Interface, heapsterClient heapster.HeapsterC
 			common.NewSameNamespaceQuery(namespace), 1),
 		SecretList: common.GetSecretListChannel(client,
 			common.NewSameNamespaceQuery(namespace), 1),
-		PodMetrics: common.GetPodMetricsChannel(heapsterClient, name, namespace),
 	}
 
 	pod, err := client.CoreV1().Pods(namespace).Get(name, metaV1.GetOptions{})
@@ -132,7 +131,7 @@ func GetPodDetail(client kubernetes.Interface, heapsterClient heapster.HeapsterC
 	creatorAnnotation, found := pod.ObjectMeta.Annotations[v1.CreatedByAnnotation]
 	if found {
 		creatorRef, err := getPodCreator(client, creatorAnnotation,
-			common.NewSameNamespaceQuery(namespace))
+			common.NewSameNamespaceQuery(namespace), pod)
 		if err != nil {
 			return nil, err
 		}
@@ -140,7 +139,7 @@ func GetPodDetail(client kubernetes.Interface, heapsterClient heapster.HeapsterC
 	}
 
 	_, metricPromises := dataselect.GenericDataSelectWithMetrics(toCells([]v1.Pod{*pod}),
-		dataselect.StdMetricsDataSelect, dataselect.NoResourceCache, &heapsterClient)
+		dataselect.StdMetricsDataSelect, metricapi.NoResourceCache, metricClient)
 	metrics, _ := metricPromises.GetMetrics()
 
 	if err = <-channels.ConfigMapList.Error; err != nil {
@@ -164,7 +163,7 @@ func GetPodDetail(client kubernetes.Interface, heapsterClient heapster.HeapsterC
 }
 
 func getPodCreator(client kubernetes.Interface, creatorAnnotation string,
-	nsQuery *common.NamespaceQuery) (*owner.ResourceOwner, error) {
+	nsQuery *common.NamespaceQuery, pod *v1.Pod) (*owner.ResourceOwner, error) {
 
 	var serializedReference v1.SerializedReference
 	err := json.Unmarshal([]byte(creatorAnnotation), &serializedReference)
@@ -189,12 +188,29 @@ func getPodCreator(client kubernetes.Interface, creatorAnnotation string,
 
 	reference := serializedReference.Reference
 	rc, err := owner.NewResourceController(reference, client)
-	if err != nil && isNotFoundError(err) {
+	if err != nil {
+		if isNotFoundError(err) {
+			return &owner.ResourceOwner{}, nil
+		}
+
+		return nil, err
+	}
+
+	if hasInvalidControllerReference(rc.UID(), pod) {
+		// Delete creator annotation if it is targeting invalid resource
+		delete(pod.ObjectMeta.Annotations, v1.CreatedByAnnotation)
 		return &owner.ResourceOwner{}, nil
 	}
 
 	controller := rc.Get(pods.Items, events.Items)
 	return &controller, err
+}
+
+// Job pods are targeted using label 'controller-uid' set on both Pod and Job. We have to make
+// sure that orphaned job pod is not going to show different job with same name as its' creator.
+func hasInvalidControllerReference(jobUID types.UID, pod *v1.Pod) bool {
+	uidLabel, hasControllerLabel := pod.Labels["controller-uid"]
+	return hasControllerLabel && uidLabel != string(jobUID)
 }
 
 // isNotFoundError returns true when the given error is 404-NotFound error.
@@ -233,7 +249,7 @@ func extractContainerInfo(containerList []v1.Container, pod *v1.Pod, configMaps 
 	return containers
 }
 
-func toPodDetail(pod *v1.Pod, metrics []metric.Metric, configMaps *v1.ConfigMapList,
+func toPodDetail(pod *v1.Pod, metrics []metricapi.Metric, configMaps *v1.ConfigMapList,
 	secrets *v1.SecretList, controller owner.ResourceOwner,
 	events *common.EventList) PodDetail {
 	podDetail := PodDetail{

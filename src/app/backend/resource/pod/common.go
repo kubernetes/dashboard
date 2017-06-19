@@ -16,9 +16,9 @@ package pod
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	"k8s.io/client-go/pkg/api/v1"
 )
 
@@ -83,7 +83,7 @@ func getPodStatusStatus(pod v1.Pod, warnings []common.Event) string {
 }
 
 // ToPod transforms Kubernetes pod object into object returned by API.
-func ToPod(pod *v1.Pod, metrics *common.MetricsByPod, warnings []common.Event) Pod {
+func ToPod(pod *v1.Pod, metrics *MetricsByPod, warnings []common.Event) Pod {
 	podDetail := Pod{
 		ObjectMeta:   api.NewObjectMeta(pod.ObjectMeta),
 		TypeMeta:     api.NewTypeMeta(api.ResourceKindPod),
@@ -91,21 +91,11 @@ func ToPod(pod *v1.Pod, metrics *common.MetricsByPod, warnings []common.Event) P
 		RestartCount: getRestartCount(*pod),
 	}
 
-	if metrics != nil && metrics.MetricsMap[pod.Namespace] != nil {
-		m := metrics.MetricsMap[pod.Namespace][pod.Name]
+	if m, exists := metrics.MetricsMap[pod.UID]; exists {
 		podDetail.Metrics = &m
 	}
 
 	return podDetail
-}
-
-// GetContainerImages returns container image strings from the given pod spec.
-func GetContainerImages(podTemplate *v1.PodSpec) []string {
-	var containerImages []string
-	for _, container := range podTemplate.Containers {
-		containerImages = append(containerImages, container.Image)
-	}
-	return containerImages
 }
 
 // The code below allows to perform complex data section on []api.Pod
@@ -128,11 +118,12 @@ func (self PodCell) GetProperty(name dataselect.PropertyName) dataselect.Compara
 	}
 }
 
-func (self PodCell) GetResourceSelector() *metric.ResourceSelector {
-	return &metric.ResourceSelector{
+func (self PodCell) GetResourceSelector() *metricapi.ResourceSelector {
+	return &metricapi.ResourceSelector{
 		Namespace:    self.ObjectMeta.Namespace,
 		ResourceType: api.ResourceKindPod,
 		ResourceName: self.ObjectMeta.Name,
+		UID:          self.ObjectMeta.UID,
 	}
 }
 

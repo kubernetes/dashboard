@@ -16,8 +16,8 @@ package daemonset
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/metric"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
@@ -76,8 +76,8 @@ func (self DaemonSetCell) GetProperty(name dataselect.PropertyName) dataselect.C
 	}
 }
 
-func (self DaemonSetCell) GetResourceSelector() *metric.ResourceSelector {
-	return &metric.ResourceSelector{
+func (self DaemonSetCell) GetResourceSelector() *metricapi.ResourceSelector {
+	return &metricapi.ResourceSelector{
 		Namespace:    self.ObjectMeta.Namespace,
 		ResourceType: api.ResourceKindDaemonSet,
 		ResourceName: self.ObjectMeta.Name,

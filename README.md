@@ -1,8 +1,10 @@
 # Kubernetes Dashboard
+
 [![Build Status](https://travis-ci.org/kubernetes/dashboard.svg?branch=master)](https://travis-ci.org/kubernetes/dashboard)
 [![Coverage Status](https://codecov.io/github/kubernetes/dashboard/coverage.svg?branch=master)](https://codecov.io/github/kubernetes/dashboard?branch=master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/kubernetes/dashboard)](https://goreportcard.com/report/github.com/kubernetes/dashboard)
 [![GitHub release](https://img.shields.io/github/release/kubernetes/dashboard.svg)](https://github.com/kubernetes/dashboard/releases/latest)
+[![Greenkeeper badge](https://badges.greenkeeper.io/kubernetes/dashboard.svg)](https://greenkeeper.io/)
 
 Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters. It allows users to
 manage applications running in the cluster and troubleshoot them, as well as manage the cluster
@@ -44,7 +46,7 @@ The UI can _only_ be accessed from the machine where the command is executed. Se
 ## Alternative Usage
 You may access the UI directly via the apiserver proxy. Open a browser and navigate to `https://<kubernetes-master>/ui`.
 
-Please note, this works only if the apiserver is set up to allow authentication with username and password. This is not currently the case with the setup tool `kubeadm`. See [documentation](http://kubernetes.io/docs/admin/authentication/) if you want to configure it manually.
+Please note that this works only if the apiserver is set up to allow authentication with username and password or certificates, however certificates require some manual steps to be installed in the browser. This is not currently the case with the setup tool `kubeadm`. See [documentation](http://kubernetes.io/docs/admin/authentication/) if you want to configure it manually.
 
 If the username and password is configured but unknown to you, then use `kubectl config view` to find it.
 

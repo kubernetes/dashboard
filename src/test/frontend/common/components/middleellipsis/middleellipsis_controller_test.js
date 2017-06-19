@@ -29,21 +29,7 @@ describe('Middle ellipsis controller', () => {
     });
   });
 
-  it('should truncate display string', () => {
-    // given
-    ctrl.displayString = new Array(32).join('x');
-    ctrl.maxLength = 16;
-
-    // then
-    expect(ctrl.shouldTruncate()).toBe(true);
-  });
-
-  it('should not truncate display string', () => {
-    // given
-    ctrl.displayString = new Array(16).join('x');
-    ctrl.maxLength = 32;
-
-    // then
-    expect(ctrl.shouldTruncate()).toBe(false);
+  it('should initialize controller', () => {
+    expect(ctrl).not.toBeNull();
   });
 });
