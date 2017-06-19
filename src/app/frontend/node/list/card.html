@@ -46,7 +46,7 @@ limitations under the License.
     <kd-resource-card-column>
       <div ng-repeat="(index, taint) in ::$ctrl.node.taints"
            class="kd-chips">
-        <kd-middle-ellipsis display-string="{{::taint.key}}: {{::taint.value}}: {{::taint.effect}}"
+        <kd-middle-ellipsis display-string="{{::taint.key}}={{::taint.value}}:{{::taint.effect}}"
                             class="kd-chip">
         </kd-middle-ellipsis>
       </div>

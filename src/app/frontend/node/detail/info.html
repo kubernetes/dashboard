@@ -27,12 +27,7 @@ limitations under the License.
                         ng-if="::$ctrl.node.taints">
       <div ng-repeat="(index, taint) in ::$ctrl.node.taints"
            class="kd-chips">
-        <kd-middle-ellipsis display-string="{{::taint.key}}: {{::taint.value}}: {{::taint.effect}} ({{::taint.timeAdded}})"
-                            ng-if="::taint.timeAdded"
-                            class="kd-chip">
-        </kd-middle-ellipsis>
-        <kd-middle-ellipsis display-string="{{::taint.key}}: {{::taint.value}}: {{::taint.effect}}"
-                            ng-if="::!taint.timeAdded"
+        <kd-middle-ellipsis display-string="{{::taint.key}}={{::taint.value}}:{{::taint.effect}}"
                             class="kd-chip">
         </kd-middle-ellipsis>
       </div>
