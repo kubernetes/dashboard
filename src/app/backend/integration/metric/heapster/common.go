@@ -1,3 +1,17 @@
+// Copyright 2017 The Kubernetes Dashboard Authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package heapster
 
 import (
@@ -15,18 +29,11 @@ func compress(selectors []heapsterSelector) ([]heapsterSelector, map[string][]in
 	resourceTypeMap := map[string]api.ResourceKind{}
 	resourceMap := map[string][]string{}
 	labelMap := map[string]metricapi.Label{}
-	resourceAdded := map[string]bool{}
 	for i, selector := range selectors {
 		entry := selector.Path
 		resources, doesEntryExist := resourceMap[selector.Path]
 		// compress resources
-		for _, resource := range selector.Resources {
-			if _, exists := resourceAdded[resource]; !exists {
-				resourceMap[entry] = append(resources, resource)
-			}
-
-			resourceAdded[resource] = true
-		}
+		resourceMap[entry] = append(resources, selector.Resources...)
 
 		// compress labels
 		if !doesEntryExist {
@@ -36,6 +43,11 @@ func compress(selectors []heapsterSelector) ([]heapsterSelector, map[string][]in
 		labelMap[entry].AddMetricLabel(selector.Label)
 		reverseMapping[entry] = append(reverseMapping[entry], i)
 	}
+
+	for entry, resources := range resourceMap {
+		resourceMap[entry] = toUniqueSlice(resources)
+	}
+
 	// create new compressed HeapsterSelectors.
 	compressed := make([]heapsterSelector, 0)
 	for entry, resourceType := range resourceTypeMap {
@@ -48,6 +60,20 @@ func compress(selectors []heapsterSelector) ([]heapsterSelector, map[string][]in
 		compressed = append(compressed, newSelector)
 	}
 	return compressed, reverseMapping
+}
+
+func toUniqueSlice(strings []string) []string {
+	result := make([]string, 0)
+	uniquenessMap := make(map[string]bool)
+	for _, s := range strings {
+		if _, exists := uniquenessMap[s]; !exists {
+			result = append(result, s)
+		}
+
+		uniquenessMap[s] = true
+	}
+
+	return result
 }
 
 func toMetricPoints(heapsterMetricPoint []heapster.MetricPoint) []metricapi.MetricPoint {
