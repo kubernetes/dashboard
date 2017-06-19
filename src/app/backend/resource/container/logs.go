@@ -143,5 +143,4 @@ func ConstructLogs(podID string, rawLogs string, container string, logSelector *
 func isReadLimitReached(bytesLoaded int64, linesLoaded int64, logFilePosition string) bool {
 	return (logFilePosition == logs.Beginning && bytesLoaded >= byteReadLimit) ||
 		(logFilePosition == logs.End && linesLoaded >= lineReadLimit)
-	return false
 }
