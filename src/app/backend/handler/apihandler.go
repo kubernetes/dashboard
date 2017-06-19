@@ -1723,6 +1723,7 @@ func (apiHandler *APIHandler) handleLogs(request *restful.Request, response *res
 
 	offsetFrom, err1 := strconv.Atoi(request.QueryParameter("offsetFrom"))
 	offsetTo, err2 := strconv.Atoi(request.QueryParameter("offsetTo"))
+	logFilePosition := request.QueryParameter("logFilePosition")
 
 	var logSelector *logs.Selection
 	if err1 != nil || err2 != nil {
@@ -1733,8 +1734,9 @@ func (apiHandler *APIHandler) handleLogs(request *restful.Request, response *res
 				LogTimestamp: logs.LogTimestamp(refTimestamp),
 				LineNum:      refLineNum,
 			},
-			OffsetFrom: offsetFrom,
-			OffsetTo:   offsetTo,
+			OffsetFrom:      offsetFrom,
+			OffsetTo:        offsetTo,
+			LogFilePosition: logFilePosition,
 		}
 	}
 

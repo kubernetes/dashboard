@@ -19,6 +19,7 @@ import (
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/logs"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 var log1 = logs.LogLine{
@@ -47,7 +48,8 @@ var log5 = logs.LogLine{
 }
 
 func TestGetLogs(t *testing.T) {
-
+	// for the test cases, the line read limit is reduced to 10
+	lineReadLimit = int64(10)
 	cases := []struct {
 		info        string
 		podId       string
@@ -273,11 +275,91 @@ func TestGetLogs(t *testing.T) {
 					OffsetTo:   1},
 			},
 		},
+		{
+			"set truncated flag if read limit is reached",
+			"pod-1",
+			"1 log1\n2 log2\n3 log3\n4 log4\n5 log5\n6 log6\n7 log7\n8 log8\n9 log9\n10 log10",
+			"test",
+			&logs.Selection{
+				ReferencePoint: logs.LogLineId{
+					LogTimestamp: logs.LogTimestamp("5"),
+					LineNum:      1,
+				},
+				OffsetFrom:      -10,
+				OffsetTo:        -8, // request indices ouside (beginning) of available log lines
+				LogFilePosition: "end",
+			},
+			&logs.LogDetails{
+				Info: logs.LogInfo{
+					PodName:       "pod-1",
+					ContainerName: "test",
+					FromDate:      "1",
+					ToDate:        "2",
+					Truncated:     true, // Read limit is set to 10. Log lines could not be loaded
+				},
+				LogLines: logs.LogLines{logs.LogLine{ // Last available page of logs is returned
+					Timestamp: "1",
+					Content:   "log1",
+				}, logs.LogLine{
+					Timestamp: "2",
+					Content:   "log2",
+				}},
+				Selection: logs.Selection{
+					ReferencePoint: logs.LogLineId{
+						LogTimestamp: "6",
+						LineNum:      -1,
+					},
+					OffsetFrom:      -5,
+					OffsetTo:        -3,
+					LogFilePosition: "end",
+				},
+			},
+		},
 	}
 	for _, c := range cases {
 		actual := ConstructLogs(c.podId, c.rawLogs, c.container, c.logSelector)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("Test Case: %s.\nReceived: %#v \nExpected: %#v\n\n", c.info, actual, c.expected)
 		}
+
+	}
+}
+
+func TestMapToLogOptions(t *testing.T) {
+	cases := []struct {
+		info        string
+		container   string
+		logSelector *logs.Selection
+		expected    *v1.PodLogOptions
+	}{
+		{"Byte limit must be set, when reading the log file from the beginning",
+			"test",
+			&logs.Selection{
+				LogFilePosition: "beginning",
+			},
+			&v1.PodLogOptions{
+				Container:  "test",
+				Timestamps: true,
+				LimitBytes: &byteReadLimit,
+			},
+		},
+		{"Line limit must be set, when reading the log file from the end",
+			"test",
+			&logs.Selection{
+				LogFilePosition: "end",
+			},
+			&v1.PodLogOptions{
+				Container:  "test",
+				Timestamps: true,
+				TailLines:  &lineReadLimit,
+			},
+		},
+	}
+	for _, c := range cases {
+		actual := mapToLogOptions(c.container, c.logSelector)
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("Test Case: %s.\nReceived: %#v \nExpected: %#v\n\n", c.info, actual, c.expected)
+		}
+
 	}
 }
