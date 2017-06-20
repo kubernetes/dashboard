@@ -22,11 +22,12 @@ import (
 	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
-	"k8s.io/client-go/kubernetes"
 )
 
 // MetricManager is responsible for management of all integrated applications related to metrics.
 type MetricManager interface {
+	// TODO add doc
+	AddClient(metricapi.MetricClient) MetricManager
 	// Client returns active Metric client.
 	Client() metricapi.MetricClient
 	// Enable is responsible for switching active client if given integration application id
@@ -35,7 +36,7 @@ type MetricManager interface {
 	// List returns list of available metric related integrations.
 	List() []integrationapi.Integration
 	// ConfigureHeapster configures and adds heapster to clients list.
-	ConfigureHeapster(host string, client *kubernetes.Clientset) MetricManager
+	ConfigureHeapster(host string) MetricManager
 }
 
 // Implements MetricManager interface.
@@ -43,6 +44,15 @@ type metricManager struct {
 	manager client.ClientManager
 	clients map[integrationapi.IntegrationID]metricapi.MetricClient
 	active  metricapi.MetricClient
+}
+
+// TODO add doc
+func (self *metricManager) AddClient(client metricapi.MetricClient) MetricManager {
+	if client != nil {
+		self.clients[client.ID()] = client
+	}
+
+	return self
 }
 
 // Client implements metric manager interface. See MetricManager for more information.
@@ -77,8 +87,7 @@ func (self *metricManager) List() []integrationapi.Integration {
 }
 
 // ConfigureHeapster implements metric manager interface. See MetricManager for more information.
-func (self *metricManager) ConfigureHeapster(host string,
-	client *kubernetes.Clientset) MetricManager {
+func (self *metricManager) ConfigureHeapster(host string) MetricManager {
 	kubeClient, err := self.manager.Client(nil)
 	if err != nil {
 		log.Print(err)

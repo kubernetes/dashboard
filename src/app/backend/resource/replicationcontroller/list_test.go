@@ -23,10 +23,11 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/client-go/kubernetes/fake"
 	"k8s.io/client-go/pkg/api/v1"
 )
 
-func TestGetReplicationControllerList(t *testing.T) {
+func TestCreateReplicationControllerList(t *testing.T) {
 	replicas := int32(0)
 	events := []v1.Event{}
 	controller := true
@@ -214,6 +215,75 @@ func TestGetReplicationControllerList(t *testing.T) {
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getReplicationControllerList(%#v, %#v) == \n%#v\nexpected \n%#v\n",
 				c.replicationControllers, c.services, actual, c.expected)
+		}
+	}
+}
+
+func TestGetReplicationControllerList(t *testing.T) {
+	replicas := int32(1)
+	cases := []struct {
+		rcList          *v1.ReplicationControllerList
+		expectedActions []string
+		expected        *ReplicationControllerList
+	}{
+		{
+			rcList: &v1.ReplicationControllerList{
+				Items: []v1.ReplicationController{
+					{
+						ObjectMeta: metaV1.ObjectMeta{
+							Name:   "rc-1",
+							Labels: map[string]string{},
+						},
+						Spec: v1.ReplicationControllerSpec{
+							Replicas: &replicas,
+							Template: &v1.PodTemplateSpec{},
+						},
+					},
+				}},
+			expectedActions: []string{"list", "list", "list"},
+			expected: &ReplicationControllerList{
+				ListMeta: api.ListMeta{TotalItems: 1},
+				ReplicationControllers: []ReplicationController{
+					{
+						ObjectMeta: api.ObjectMeta{
+							Name:   "rc-1",
+							Labels: map[string]string{},
+						},
+						TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicationController},
+						Pods: common.PodInfo{
+							Desired:  replicas,
+							Warnings: make([]common.Event, 0),
+						},
+					},
+				},
+				CumulativeMetrics: make([]metricapi.Metric, 0),
+			},
+		},
+	}
+
+	for _, c := range cases {
+		fakeClient := fake.NewSimpleClientset(c.rcList)
+
+		actual, _ := GetReplicationControllerList(fakeClient, &common.NamespaceQuery{},
+			dataselect.NoDataSelect, nil)
+
+		actions := fakeClient.Actions()
+		if len(actions) != len(c.expectedActions) {
+			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
+				len(c.expectedActions), len(actions))
+			continue
+		}
+
+		for i, verb := range c.expectedActions {
+			if actions[i].GetVerb() != verb {
+				t.Errorf("Unexpected action: %+v, expected %s",
+					actions[i], verb)
+			}
+		}
+
+		if !reflect.DeepEqual(actual, c.expected) {
+			t.Errorf("GetReplicationControllerList(client) == got\n%#v, expected\n %#v",
+				actual, c.expected)
 		}
 	}
 }

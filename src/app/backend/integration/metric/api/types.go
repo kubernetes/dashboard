@@ -17,15 +17,11 @@ package api
 import (
 	"time"
 
+	"fmt"
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/pkg/api/v1"
-)
-
-// IDs of all integrated metric applications.
-const (
-	HeapsterIntegrationID integrationapi.IntegrationID = "heapster"
 )
 
 // MetricClient is an interface that exposes API used by dashboard to show graphs and sparklines.
@@ -166,6 +162,15 @@ type Metric struct {
 	Label `json:"-"`
 	// Names of aggregating function used.
 	Aggregate AggregationMode `json:"aggregation,omitempty"`
+}
+
+// String implements stringer interface to allow easy printing
+func (self Metric) String() string {
+	return "{\nDataPoints: " + fmt.Sprintf("%v", self.DataPoints) +
+		"\nMetricPoints: " + fmt.Sprintf("%v", self.MetricPoints) +
+		"\nMetricName: " + self.MetricName +
+		"\nLabel: " + fmt.Sprintf("%v", self.Label) +
+		"\nAggregate: " + fmt.Sprintf("%v", self.Aggregate)
 }
 
 // MetricPromise is used for parallel data extraction. Contains len 1 channels for Metric and Error.

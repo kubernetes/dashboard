@@ -25,7 +25,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	"github.com/kubernetes/dashboard/src/app/backend/handler"
 	"github.com/kubernetes/dashboard/src/app/backend/integration"
-	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
+	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/spf13/pflag"
 )
@@ -80,8 +80,8 @@ func main() {
 	// Init integrations
 	integrationManager := integration.NewIntegrationManager(clientManager)
 	err = integrationManager.Metric().
-		ConfigureHeapster(*argHeapsterHost, apiserverClient).
-		Enable(metricapi.HeapsterIntegrationID)
+		ConfigureHeapster(*argHeapsterHost).
+		Enable(integrationapi.HeapsterIntegrationID)
 	if err != nil {
 		log.Printf("Could not enable metric client: %s. Continuing.", err)
 	}

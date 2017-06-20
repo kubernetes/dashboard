@@ -24,7 +24,7 @@ import (
 	"k8s.io/client-go/pkg/api/v1"
 )
 
-func TestResourceSelector(t *testing.T) {
+func TestGetHeapsterSelector(t *testing.T) {
 	resource1 := map[string]string{
 		"resource": "1",
 	}

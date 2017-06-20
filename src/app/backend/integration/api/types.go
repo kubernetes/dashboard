@@ -19,6 +19,10 @@ import "k8s.io/apimachinery/pkg/apis/meta/v1"
 // IntegrationID is a unique identification string that every integrated app has to provide.
 type IntegrationID string
 
+const (
+	HeapsterIntegrationID IntegrationID = "heapster"
+)
+
 // Integration represents application integrated into the dashboard. Every application
 // has to provide health check and id. Additionally every client supported by integration manager
 // has to implement this interface

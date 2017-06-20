@@ -36,7 +36,7 @@ type ReplicationControllerList struct {
 }
 
 // GetReplicationControllerList returns a list of all Replication Controllers in the cluster.
-func GetReplicationControllerList(client *client.Clientset, nsQuery *common.NamespaceQuery,
+func GetReplicationControllerList(client client.Interface, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*ReplicationControllerList, error) {
 	log.Print("Getting list of all replication controllers in the cluster")
 

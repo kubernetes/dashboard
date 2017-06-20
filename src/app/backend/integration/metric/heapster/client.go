@@ -49,7 +49,7 @@ func (self heapsterClient) HealthCheck() error {
 
 // ID TODO
 func (self heapsterClient) ID() integrationapi.IntegrationID {
-	return metricapi.HeapsterIntegrationID
+	return integrationapi.HeapsterIntegrationID
 }
 
 // Implement MetricClient interface
@@ -235,7 +235,7 @@ func (self heapsterClient) unmarshalType(path string, v interface{}) error {
 func CreateHeapsterClient(host string, k8sClient *kubernetes.Clientset) (
 	metricapi.MetricClient, error) {
 
-	if host == "" {
+	if host == "" && k8sClient != nil {
 		log.Print("Creating in-cluster Heapster client")
 		c := inClusterHeapsterClient{client: k8sClient.Core().RESTClient()}
 		return heapsterClient{client: c}, nil
