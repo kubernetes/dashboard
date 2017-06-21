@@ -153,7 +153,7 @@ export default class DeployLabelController {
  *
  * @return {!angular.Component}
  */
-export const labelComponent = {
+export const deployLabelComponent = {
   controller: DeployLabelController,
   controllerAs: 'labelCtrl',
   templateUrl: 'deploy/deploylabel.html',
