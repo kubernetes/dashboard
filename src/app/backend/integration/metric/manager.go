@@ -26,7 +26,7 @@ import (
 
 // MetricManager is responsible for management of all integrated applications related to metrics.
 type MetricManager interface {
-	// TODO add doc
+	// AddClient adds metric client to client list supported by this manager.
 	AddClient(metricapi.MetricClient) MetricManager
 	// Client returns active Metric client.
 	Client() metricapi.MetricClient
@@ -46,7 +46,7 @@ type metricManager struct {
 	active  metricapi.MetricClient
 }
 
-// TODO add doc
+// AddClient implements metric manager interface. See MetricManager for more information.
 func (self *metricManager) AddClient(client metricapi.MetricClient) MetricManager {
 	if client != nil {
 		self.clients[client.ID()] = client

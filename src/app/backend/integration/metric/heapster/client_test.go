@@ -441,7 +441,6 @@ func TestDownloadMetrics(t *testing.T) {
 	}
 }
 
-// TODO add test
 func TestCreateHeapsterClient(t *testing.T) {
 	k8sClient, _ := client.NewClientManager("", "http://localhost:8080").Client(nil)
 	cases := []struct {

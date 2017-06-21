@@ -26,7 +26,12 @@ type IntegrationHandler struct {
 	manager IntegrationManager
 }
 
-// Install creates new endpoints for integrations.
+// Install creates new endpoints for integrations. All information that any integration would want
+// to expose by creating new endpoints should be kept here, i.e. helm integration might want to
+// create endpoint to list available releases/charts.
+//
+// By default endpoint for checking state of the integrations is installed. It allows user
+// to check state of integration by accessing `<DASHBOARD_URL>/api/v1/integration/{name}/state`.
 func (self IntegrationHandler) Install(ws *restful.WebService) {
 	ws.Route(
 		ws.GET("/integration/{name}/state").

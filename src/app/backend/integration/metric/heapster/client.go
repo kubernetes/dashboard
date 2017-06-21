@@ -38,7 +38,7 @@ type heapsterClient struct {
 
 // Implement Integration interface.
 
-// HealthCheck TODO
+// HealthCheck implements integration app interface. See Integration interface for more information.
 func (self heapsterClient) HealthCheck() error {
 	if self.client == nil {
 		return errors.New("Heapster not configured")
@@ -47,7 +47,7 @@ func (self heapsterClient) HealthCheck() error {
 	return self.client.HealthCheck()
 }
 
-// ID TODO
+// ID implements integration app interface. See Integration interface for more information.
 func (self heapsterClient) ID() integrationapi.IntegrationID {
 	return integrationapi.HeapsterIntegrationID
 }

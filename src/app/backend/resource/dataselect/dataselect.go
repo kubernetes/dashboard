@@ -265,7 +265,7 @@ func GenericDataSelectWithMetrics(dataList []DataCell, dsQuery *DataSelectQuery,
 	return processed.GenericDataList, processed.CumulativeMetricsPromises
 }
 
-// TODO add doc
+// GenericDataSelect takes a list of GenericDataCells and DataSelectQuery and returns selected data as instructed by dsQuery.
 func GenericDataSelectWithFilterAndMetrics(dataList []DataCell, dsQuery *DataSelectQuery,
 	cachedResources *metricapi.CachedResources, metricClient metricapi.MetricClient) (
 	[]DataCell, metricapi.MetricPromises, int) {
@@ -281,7 +281,7 @@ func GenericDataSelectWithFilterAndMetrics(dataList []DataCell, dsQuery *DataSel
 	return processed.GenericDataList, processed.CumulativeMetricsPromises, filteredTotal
 }
 
-// TODO add doc
+// PodListMetrics returns metrics for every resource on the dataList without aggregating data.
 func PodListMetrics(dataList []DataCell, dsQuery *DataSelectQuery,
 	metricClient metricapi.MetricClient) metricapi.MetricPromises {
 	selectableData := DataSelector{

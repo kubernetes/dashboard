@@ -29,7 +29,6 @@ func getMetricPromises(metrics []metricapi.Metric) metricapi.MetricPromises {
 	return metricPromises
 }
 
-// TODO add test
 func TestAggregateMetricPromises(t *testing.T) {
 	cases := []struct {
 		info         string
