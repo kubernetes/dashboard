@@ -18,9 +18,10 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
+	"k8s.io/kubernetes/pkg/api"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
 )
 
@@ -29,7 +30,7 @@ import (
 func GetDeploymentEvents(client client.Interface, dsQuery *dataselect.DataSelectQuery, namespace string, deploymentName string) (
 	*common.EventList, error) {
 	
-	fieldSelector, err := fields.ParseSelector("involvedObject.name=" + deploymentName)
+	fieldSelector, err := fields.ParseSelector(api.EventInvolvedNameField + "=" + deploymentName)
 	if err != nil {
 		return nil, err
 	}
