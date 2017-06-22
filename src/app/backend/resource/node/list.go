@@ -43,7 +43,6 @@ type Node struct {
 	TypeMeta           api.TypeMeta           `json:"typeMeta"`
 	Ready              v1.ConditionStatus     `json:"ready"`
 	AllocatedResources NodeAllocatedResources `json:"allocatedResources"`
-	Taints             []v1.Taint             `json:"taints"`
 }
 
 // GetNodeListFromChannels returns a list of all Nodes in the cluster.
@@ -119,7 +118,6 @@ func toNode(node v1.Node, pods *v1.PodList) Node {
 		TypeMeta:           api.NewTypeMeta(api.ResourceKindNode),
 		Ready:              getNodeConditionStatus(node, v1.NodeReady),
 		AllocatedResources: allocatedResources,
-		Taints:             node.Spec.Taints,
 	}
 }
 
