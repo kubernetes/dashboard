@@ -37,6 +37,8 @@ const (
 	DefaultBurst = 1e6
 	// Use kubernetes protobuf as content type by default
 	DefaultContentType = "application/vnd.kubernetes.protobuf"
+	// Default cluster/context/auth name to be set in clientcmd config
+	DefaultCmdConfigName = "kubernetes"
 )
 
 // ClientManager is responsible for initializing and creating clients to communicate with
@@ -44,6 +46,7 @@ const (
 type ClientManager interface {
 	Client(req *restful.Request) (*kubernetes.Clientset, error)
 	Config(req *restful.Request) (*rest.Config, error)
+	ClientCmdConfig(req *restful.Request) (clientcmd.ClientConfig, error)
 	CSRFKey() string
 	VerberClient(req *restful.Request) (ResourceVerber, error)
 }
@@ -81,6 +84,23 @@ func (self *clientManager) Client(req *restful.Request) (*kubernetes.Clientset, 
 // Config creates rest Config based on authentication information extracted from request.
 // Currently request header is only checked for existence of 'Authentication: BearerToken'
 func (self *clientManager) Config(req *restful.Request) (*rest.Config, error) {
+	cmdConfig, err := self.ClientCmdConfig(req)
+	if err != nil {
+		return nil, err
+	}
+
+	cfg, err := cmdConfig.ClientConfig()
+	if err != nil {
+		return nil, err
+	}
+
+	self.initConfig(cfg)
+	return cfg, nil
+}
+
+// ClientCmdConfig creates ClientCmd Config based on authentication information extracted from request.
+// Currently request header is only checked for existence of 'Authentication: BearerToken'
+func (self *clientManager) ClientCmdConfig(req *restful.Request) (clientcmd.ClientConfig, error) {
 	authInfo := self.extractAuthInfo(req)
 
 	cfg, err := self.buildConfigFromFlags(self.apiserverHost, self.kubeConfigPath)
@@ -88,13 +108,28 @@ func (self *clientManager) Config(req *restful.Request) (*rest.Config, error) {
 		return nil, err
 	}
 
-	// Override auth header token. For now only bearer token is supported
-	if len(authInfo.Token) > 0 {
-		cfg.BearerToken = authInfo.Token
+	// Use token in cfg if there is no token in authInfo
+	if len(authInfo.Token) == 0 {
+		authInfo.Token = cfg.BearerToken
 	}
 
-	self.initConfig(cfg)
-	return cfg, nil
+	cmdCfg := api.NewConfig()
+	cmdCfg.Clusters[DefaultCmdConfigName] = &api.Cluster{
+		Server:                cfg.Host,
+		CertificateAuthority:  cfg.TLSClientConfig.CAFile,
+		InsecureSkipTLSVerify: cfg.TLSClientConfig.Insecure,
+	}
+	cmdCfg.AuthInfos[DefaultCmdConfigName] = &authInfo
+	cmdCfg.Contexts[DefaultCmdConfigName] = &api.Context{
+		Cluster:  DefaultCmdConfigName,
+		AuthInfo: DefaultCmdConfigName,
+	}
+	cmdCfg.CurrentContext = DefaultCmdConfigName
+
+	return clientcmd.NewDefaultClientConfig(
+		*cmdCfg,
+		&clientcmd.ConfigOverrides{},
+	), nil
 }
 
 // CSRFKey returns key that is generated upon client manager creation
