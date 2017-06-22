@@ -15,9 +15,10 @@
 package client
 
 import (
-	"github.com/emicklei/go-restful"
 	"net/http"
 	"testing"
+
+	"github.com/emicklei/go-restful"
 )
 
 func TestNewClientManager(t *testing.T) {
@@ -100,7 +101,7 @@ func TestConfig(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		manager := NewClientManager("", "http://localhost:8080")
+		manager := NewClientManager("", "https://localhost:8080")
 		cfg, err := manager.Config(c.request)
 
 		if err != nil {
@@ -112,6 +113,60 @@ func TestConfig(t *testing.T) {
 		if cfg.BearerToken != c.expected {
 			t.Fatalf("Config(%v): Expected token to be %s but got %s",
 				c.request, c.expected, cfg.BearerToken)
+		}
+	}
+}
+
+func TestClientCmdConfig(t *testing.T) {
+	cases := []struct {
+		request  *restful.Request
+		expected string
+	}{
+		{
+			&restful.Request{
+				Request: &http.Request{
+					Header: http.Header(map[string][]string{}),
+				},
+			},
+			"",
+		},
+		{
+			&restful.Request{
+				Request: &http.Request{
+					Header: http.Header(map[string][]string{
+						"Authorization": []string{"Bearer test-token"},
+					}),
+				},
+			},
+			"test-token",
+		},
+		{nil, ""},
+	}
+
+	for _, c := range cases {
+		manager := NewClientManager("", "https://localhost:8080")
+		cmdCfg, err := manager.ClientCmdConfig(c.request)
+
+		if err != nil {
+			t.Fatalf("Config(%v): Expected client config to be created but error was thrown:"+
+				" %s",
+				c.request, err.Error())
+		}
+
+		var bearerToken string
+		if cmdCfg != nil {
+			cfg, err := cmdCfg.ClientConfig()
+			if err != nil {
+				t.Fatalf("Config(%v): Expected config to be created but error was thrown:"+
+					" %s",
+					c.request, err.Error())
+			}
+			bearerToken = cfg.BearerToken
+		}
+
+		if bearerToken != c.expected {
+			t.Fatalf("Config(%v): Expected token to be %s but got %s",
+				c.request, c.expected, bearerToken)
 		}
 	}
 }
