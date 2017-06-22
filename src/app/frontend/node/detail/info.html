@@ -28,7 +28,12 @@ limitations under the License.
       <div ng-repeat="(index, taint) in ::$ctrl.node.taints"
            class="kd-chips">
         <kd-middle-ellipsis display-string="{{::taint.key}}={{::taint.value}}:{{::taint.effect}}"
-                            class="kd-chip">
+                            class="kd-chip"
+                            ng-if="::taint.value">
+        </kd-middle-ellipsis>
+        <kd-middle-ellipsis display-string="{{::taint.key}}:{{::taint.effect}}"
+                            class="kd-chip"
+                            ng-if="::!taint.value">
         </kd-middle-ellipsis>
       </div>
     </kd-info-card-entry>
