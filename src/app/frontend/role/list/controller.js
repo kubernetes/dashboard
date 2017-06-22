@@ -18,7 +18,7 @@
 export class RoleListController {
   /**
    * @param {!backendApi.RoleList} roleList
-   * @param {!angular.Resource}kdRoleListResource
+   * @param {!angular.Resource} kdRoleListResource
    * @ngInject
    */
   constructor(roleList, kdRoleListResource) {
