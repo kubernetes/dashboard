@@ -106,7 +106,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 	}{
 		{
 			"ns-1", "dp-1",
-			[]string{"get", "list", "list", "get", "list", "list", "get", "list", "list", "get", "list", "list", "list"},
+			[]string{"get", "list", "list", "get", "list", "list", "list", "list", "get", "list", "list", "list"},
 			deployment,
 			&DeploymentDetail{
 				ObjectMeta: api.ObjectMeta{
