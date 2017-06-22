@@ -477,14 +477,20 @@ func CreateHTTPAPIHandler(heapsterClient heapster.HeapsterClient, manager client
 	apiV1Ws.Route(
 		apiV1Ws.PUT("/_raw/{kind}/name/{name}").
 			To(apiHandler.handlePutResource))
+
 	apiV1Ws.Route(
-		apiV1Ws.GET("/rbacrole").
+		apiV1Ws.GET("/rbac/role").
 			To(apiHandler.handleGetRbacRoleList).
 			Writes(rbacroles.RbacRoleList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/rbacrolebinding").
+		apiV1Ws.GET("/rbac/rolebinding").
 			To(apiHandler.handleGetRbacRoleBindingList).
 			Writes(rbacrolebindings.RbacRoleBindingList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/rbac/status").
+			To(apiHandler.handleRbacStatus).
+			Writes(validation.RbacStatus{}))
+
 	apiV1Ws.Route(
 		apiV1Ws.GET("/persistentvolume").
 			To(apiHandler.handleGetPersistentVolumeList).
@@ -572,6 +578,21 @@ func (apiHandler *APIHandler) handleGetRbacRoleBindingList(request *restful.Requ
 
 	dataSelect := parseDataSelectPathParameter(request)
 	result, err := rbacrolebindings.GetRbacRoleBindingList(k8sClient, dataSelect)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleRbacStatus(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.manager.Client(request)
+	if err != nil {
+		handleInternalError(response, err)
+		return
+	}
+
+	result, err := validation.ValidateRbacStatus(k8sClient)
 	if err != nil {
 		handleInternalError(response, err)
 		return

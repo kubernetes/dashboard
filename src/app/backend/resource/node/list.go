@@ -52,7 +52,7 @@ func GetNodeListFromChannels(client client.Interface, channels *common.ResourceC
 
 	nodes := <-channels.NodeList.List
 	if err := <-channels.NodeList.Error; err != nil {
-		return nil, err
+		return &NodeList{Nodes: []Node{}}, err
 	}
 
 	return toNodeList(client, nodes.Items, dsQuery, heapsterClient), nil

@@ -27,8 +27,8 @@ limitations under the License.
                  state="{{::$ctrl.states.node}}">[[Nodes|Nodes menu entry.]]</kd-nav-item>
     <kd-nav-item class="kd-nav-item"
                  state="{{::$ctrl.states.persistentVolume}}">[[Persistent Volumes|Persistent Volumes menu entry.]]</kd-nav-item>
-    <kd-nav-item class="kd-nav-item"
-                 state="{{::$ctrl.states.role}}">[[Roles|Roles menu entry.]]</kd-nav-item>
+    <!-- Enabled dynamically if there rbacs are enabled in the cluster. -->
+    <kd-role-nav states="$ctrl.states"></kd-role-nav>
     <kd-nav-item class="kd-nav-item"
                  state="{{::$ctrl.states.storageClass}}">[[Storage Classes|Storage Classes menu entry.]]</kd-nav-item>
   </div>

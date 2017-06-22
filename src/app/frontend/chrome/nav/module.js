@@ -33,6 +33,7 @@ import {hamburgerComponent} from './hamburger_component';
 import {navComponent} from './nav_component';
 import {NavService} from './nav_service';
 import {navItemComponent} from './navitem_component';
+import {roleNavComponent} from './rolenav_component';
 import {thirdPartyResourceNavComponent} from './thirdpartyresourcenav_component';
 
 
@@ -51,4 +52,5 @@ export default angular
     .component('kdNavHamburger', hamburgerComponent)
     .component('kdNavItem', navItemComponent)
     .component('kdNav', navComponent)
+    .component('kdRoleNav', roleNavComponent)
     .component('kdThirdPartyResourceNav', thirdPartyResourceNavComponent);

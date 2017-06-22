@@ -21,7 +21,8 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	client "k8s.io/client-go/kubernetes"
-	rbac "k8s.io/client-go/pkg/apis/rbac/v1alpha1"
+	rbac "k8s.io/client-go/pkg/apis/rbac/v1beta1"
+	"fmt"
 )
 
 // RbacRoleList contains a list of Roles and ClusterRoles in the cluster.
@@ -41,6 +42,7 @@ type RbacRole struct {
 
 // GetRbacRoleList returns a list of all RBAC Roles in the cluster.
 func GetRbacRoleList(client *client.Clientset, dsQuery *dataselect.DataSelectQuery) (*RbacRoleList, error) {
+	fmt.Println(client.RbacV1beta1().RESTClient().APIVersion())
 	log.Println("Getting list of RBAC roles")
 	channels := &common.ResourceChannels{
 		RoleList:        common.GetRoleListChannel(client, 1),
@@ -55,11 +57,11 @@ func GetRbacRoleList(client *client.Clientset, dsQuery *dataselect.DataSelectQue
 func GetRbacRoleListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (*RbacRoleList, error) {
 	roles := <-channels.RoleList.List
 	if err := <-channels.RoleList.Error; err != nil {
-		return nil, err
+		return &RbacRoleList{Items: []RbacRole{}}, err
 	}
 	clusterRoles := <-channels.ClusterRoleList.List
 	if err := <-channels.ClusterRoleList.Error; err != nil {
-		return nil, err
+		return &RbacRoleList{Items: []RbacRole{}}, err
 	}
 
 	result := SimplifyRbacRoleLists(roles.Items, clusterRoles.Items, dsQuery)
