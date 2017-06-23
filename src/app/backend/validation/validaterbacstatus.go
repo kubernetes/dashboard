@@ -39,12 +39,12 @@ func ValidateRbacStatus(client kubernetes.Interface) (*RbacStatus, error) {
 
 	apiVersions := metav1.ExtractGroupVersions(groupList)
 	return &RbacStatus{
-		Enabled: found(apiVersions, rbac.SchemeGroupVersion.String()),
+		Enabled: contains(apiVersions, rbac.SchemeGroupVersion.String()),
 	}, nil
 }
 
 // Returns true if element has been found in given array, false otherwise.
-func found(arr []string, str string) bool {
+func contains(arr []string, str string) bool {
 	sort.Strings(arr)
 	idx := sort.SearchStrings(arr, str)
 	return idx < len(arr) && arr[idx] == str
