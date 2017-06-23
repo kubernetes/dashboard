@@ -64,7 +64,7 @@ func GetClusterFromChannels(client *kubernetes.Clientset, channels *common.Resou
 	pvChan := make(chan *persistentvolume.PersistentVolumeList)
 	roleChan := make(chan *rbacroles.RbacRoleList)
 	storageChan := make(chan *storageclass.StorageClassList)
-	numErrs := 4
+	numErrs := 5
 	errChan := make(chan error, numErrs)
 
 	go func() {
@@ -102,7 +102,9 @@ func GetClusterFromChannels(client *kubernetes.Clientset, channels *common.Resou
 	for i := 0; i < numErrs; i++ {
 		err := <-errChan
 		if err != nil {
-			return nil, err
+			// Log errors instead of forwarding. This way even if 1 resource fails
+			// other will be displayed
+			log.Print(err)
 		}
 	}
 

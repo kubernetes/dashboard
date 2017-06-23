@@ -25,7 +25,7 @@ import (
 	autoscaling "k8s.io/client-go/pkg/apis/autoscaling/v1"
 	batch "k8s.io/client-go/pkg/apis/batch/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
-	rbac "k8s.io/client-go/pkg/apis/rbac/v1alpha1"
+	rbac "k8s.io/client-go/pkg/apis/rbac/v1beta1"
 	storage "k8s.io/client-go/pkg/apis/storage/v1beta1"
 )
 
@@ -643,7 +643,7 @@ func GetRoleListChannel(client client.Interface, numReads int) RoleListChannel {
 	}
 
 	go func() {
-		list, err := client.RbacV1alpha1().Roles("").List(listEverything)
+		list, err := client.RbacV1beta1().Roles("").List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -668,7 +668,7 @@ func GetClusterRoleListChannel(client client.Interface, numReads int) ClusterRol
 	}
 
 	go func() {
-		list, err := client.RbacV1alpha1().ClusterRoles().List(listEverything)
+		list, err := client.RbacV1beta1().ClusterRoles().List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -693,7 +693,7 @@ func GetRoleBindingListChannel(client client.Interface, numReads int) RoleBindin
 	}
 
 	go func() {
-		list, err := client.RbacV1alpha1().RoleBindings("").List(listEverything)
+		list, err := client.RbacV1beta1().RoleBindings("").List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
@@ -719,7 +719,7 @@ func GetClusterRoleBindingListChannel(client client.Interface,
 	}
 
 	go func() {
-		list, err := client.RbacV1alpha1().ClusterRoleBindings().List(listEverything)
+		list, err := client.RbacV1beta1().ClusterRoleBindings().List(listEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err
