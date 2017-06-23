@@ -15,9 +15,10 @@
 package client
 
 import (
-	"github.com/emicklei/go-restful"
 	"net/http"
 	"testing"
+
+	"github.com/emicklei/go-restful"
 )
 
 func TestNewClientManager(t *testing.T) {

@@ -34,7 +34,7 @@ type RbacStatus struct {
 func ValidateRbacStatus(client kubernetes.Interface) (*RbacStatus, error) {
 	groupList, err := client.Discovery().ServerGroups()
 	if err != nil {
-		return nil, fmt.Errorf("Couldn't get available api versions from server: %v\n", err)
+		return nil, fmt.Errorf("Couldn't get available api versions from server: %v", err)
 	}
 
 	apiVersions := metav1.ExtractGroupVersions(groupList)
@@ -47,5 +47,5 @@ func ValidateRbacStatus(client kubernetes.Interface) (*RbacStatus, error) {
 func contains(arr []string, str string) bool {
 	sort.Strings(arr)
 	idx := sort.SearchStrings(arr, str)
-	return idx < len(arr) && arr[idx] == str
+	return len(arr) > 0 && idx < len(arr) && arr[idx] == str
 }

@@ -45,6 +45,7 @@ export default angular
         'kubernetesDashboard.chrome.nav',
         [
           'ngMaterial',
+          'ngResource',
           'ui.router',
           stateModule.name,
         ])
