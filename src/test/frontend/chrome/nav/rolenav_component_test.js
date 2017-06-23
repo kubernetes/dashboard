@@ -12,19 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import stateConfig from './stateconfig';
-import termOpenDirective from './termopen_directive';
+import module from 'chrome/nav/module';
 
-/**
- * Angular module for the shell view.
- *
- */
-export default angular
-    .module(
-        'kubernetesDashboard.shell',
-        [
-          'ngResource',
-          'ui.router',
-        ])
-    .config(stateConfig)
-    .directive('termOpen', ['$timeout', termOpenDirective]);
+describe('Role nav component', () => {
+  /** @type {!RoleNavController} */
+  let ctrl;
+
+  beforeEach(() => {
+    angular.mock.module(module.name);
+    angular.mock.inject(($componentController, $resource, $rootScope) => {
+      ctrl = $componentController('kdRoleNav', {$resource: $resource, $scope: $rootScope});
+      ctrl.$onInit();
+    });
+  });
+
+  it('should instantiate the controller properly', () => {
+    expect(ctrl).not.toBeUndefined();
+  });
+});

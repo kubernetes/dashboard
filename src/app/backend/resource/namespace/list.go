@@ -52,7 +52,7 @@ func GetNamespaceListFromChannels(channels *common.ResourceChannels, dsQuery *da
 
 	namespaces := <-channels.NamespaceList.List
 	if err := <-channels.NamespaceList.Error; err != nil {
-		return nil, err
+		return &NamespaceList{Namespaces: []Namespace{}}, err
 	}
 
 	return toNamespaceList(namespaces.Items, dsQuery), nil

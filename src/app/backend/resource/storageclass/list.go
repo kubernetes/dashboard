@@ -47,7 +47,7 @@ func GetStorageClassList(client kubernetes.Interface, dsQuery *dataselect.DataSe
 func GetStorageClassListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (*StorageClassList, error) {
 	storageClasses := <-channels.StorageClassList.List
 	if err := <-channels.StorageClassList.Error; err != nil {
-		return nil, err
+		return &StorageClassList{StorageClasses: []StorageClass{}}, err
 	}
 
 	return CreateStorageClassList(storageClasses.Items, dsQuery), nil
