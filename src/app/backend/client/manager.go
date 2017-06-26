@@ -115,9 +115,10 @@ func (self *clientManager) ClientCmdConfig(req *restful.Request) (clientcmd.Clie
 
 	cmdCfg := api.NewConfig()
 	cmdCfg.Clusters[DefaultCmdConfigName] = &api.Cluster{
-		Server:                cfg.Host,
-		CertificateAuthority:  cfg.TLSClientConfig.CAFile,
-		InsecureSkipTLSVerify: cfg.TLSClientConfig.Insecure,
+		Server:                   cfg.Host,
+		CertificateAuthority:     cfg.TLSClientConfig.CAFile,
+		CertificateAuthorityData: cfg.TLSClientConfig.CAData,
+		InsecureSkipTLSVerify:    cfg.TLSClientConfig.Insecure,
 	}
 	cmdCfg.AuthInfos[DefaultCmdConfigName] = &authInfo
 	cmdCfg.Contexts[DefaultCmdConfigName] = &api.Context{
