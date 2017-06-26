@@ -21,7 +21,7 @@ import gulpUrlAdjuster from 'gulp-css-url-adjuster';
 import gulpHtmlmin from 'gulp-htmlmin';
 import gulpIf from 'gulp-if';
 import gulpMinifyCss from 'gulp-minify-css';
-import GulpRevAll from 'gulp-rev-all';
+import revAll from 'gulp-rev-all';
 import gulpUglify from 'gulp-uglify';
 import gulpUseref from 'gulp-useref';
 import mergeStream from 'merge-stream';
@@ -234,7 +234,10 @@ function createFrontendCopies(outputDirs) {
                      replace: ['prod/', ''],
                    })))
       .pipe(gulpIf('**/vendor.js', gulpUglify({
-                     preserveComments: uglifySaveLicense,
+                     output: {
+                       comments: uglifySaveLicense,
+                     },
+                     // preserveComments: uglifySaveLicense,
                      // Disable compression of unused vars. This speeds up minification a lot (like
                      // 10 times).
                      // See https://github.com/mishoo/UglifyJS2/issues/321
@@ -256,11 +259,11 @@ function createFrontendCopies(outputDirs) {
  * @return {stream}
  */
 function doRevision() {
-  // Do not update references other than in index.html. Do not rev index.html itself.
-  let revAll =
-      new GulpRevAll({dontRenameFile: ['index.html'], dontSearchFile: [/^(?!.*index\.html$).*$/]});
-  return gulp.src([path.join(conf.paths.distPre, '**'), '!**/assets/**/*'])
-      .pipe(revAll.revision())
+  return gulp
+      .src([path.join(conf.paths.distPre, '**'), '!**/assets/**/*'])
+      // Do not update references other than in index.html. Do not rev index.html itself.
+      .pipe(revAll.revision(
+          {dontRenameFile: ['index.html'], dontSearchFile: [/^(?!.*index\.html$).*$/]}))
       .pipe(gulp.dest(conf.paths.distRoot));
 }
 

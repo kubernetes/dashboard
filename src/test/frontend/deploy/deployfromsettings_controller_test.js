@@ -373,7 +373,7 @@ describe('DeployFromSettings controller', () => {
     let allPatterns = {
       servicePattern: '[a-z]([-a-z0-9]*[a-z0-9])?',
       labelPattern: '(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?',
-      rcPattern: '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*',
+      rcPattern: '[a-z0-9]([-a-z0-9]*[a-z0-9])?(.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*',
       appNamePattern: namePattern,
     };
 
