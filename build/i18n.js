@@ -42,7 +42,7 @@ function extractForLanguage(langKey) {
   let messagesSource = path.join(conf.paths.messagesForExtraction, '**.js');
   let command = `java -jar ${conf.paths.xtbgenerator} --lang ${langKey}` +
       ` --xtb_output_file ${translationBundle} --js ${codeSource} --js ${messagesSource}`;
-  if (fileExists(translationBundle)) {
+  if (fileExists.sync(translationBundle)) {
     command = `${command} --translations_file ${translationBundle}`;
   }
 
