@@ -589,7 +589,7 @@ func (apiHandler *APIHandler) handleGetRbacRoleBindingList(request *restful.Requ
 }
 
 func (apiHandler *APIHandler) handleRbacStatus(request *restful.Request, response *restful.Response) {
-	k8sClient, err := apiHandler.manager.Client(request)
+	k8sClient, err := apiHandler.cManager.Client(request)
 	if err != nil {
 		handleInternalError(response, err)
 		return
@@ -909,7 +909,7 @@ func (apiHandler *APIHandler) handleGetReplicaCount(request *restful.Request, re
 }
 
 func (apiHandler *APIHandler) handleDeployFromFile(request *restful.Request, response *restful.Response) {
-	cfg, err := apiHandler.manager.ClientCmdConfig(request)
+	cfg, err := apiHandler.cManager.ClientCmdConfig(request)
 	if err != nil {
 		handleInternalError(response, err)
 		return

@@ -25,8 +25,8 @@ import (
 
 // IntegrationManager is responsible for management of all integrated applications.
 type IntegrationManager interface {
-	// List returns list of all supported integrations.
-	List() []api.Integration
+	// IntegrationsGetter is responsible for listing all supported integrations.
+	IntegrationsGetter
 	// GetState returns state of integration based on its' id.
 	GetState(id api.IntegrationID) (*api.IntegrationState, error)
 	// Metric returns metric manager that is responsible for management of metric integrations.
@@ -36,16 +36,6 @@ type IntegrationManager interface {
 // Implements IntegrationManager interface
 type integrationManager struct {
 	metric metric.MetricManager
-}
-
-// List implements integration manager interface. See IntegrationManager for more information.
-func (self *integrationManager) List() []api.Integration {
-	result := make([]api.Integration, 0)
-
-	// Append all types of integrations
-	result = append(result, self.Metric().List()...)
-
-	return result
 }
 
 // Metric implements integration manager interface. See IntegrationManager for more information.
