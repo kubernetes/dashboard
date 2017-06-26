@@ -118,7 +118,7 @@ function checkGoVersion() {
           deferred.resolve();
           return;
         }
-        match = /[\d\.]+/.exec(stdout.toString());  // matches version number
+        match = /[\d.]+/.exec(stdout.toString());  // matches version number
         if (match && match.length < 1) {
           deferred.reject(new Error('Go version not found.'));
           return;
