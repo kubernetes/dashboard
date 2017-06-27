@@ -23,20 +23,6 @@ export default class MiddleEllipsisController {
   constructor() {
     /** @export {string} Initialized from the scope. */
     this.displayString;
-
-    /** @export {number} Calculated during directive linking phase. */
-    this.maxLength;
-  }
-
-  /**
-   * Checks whether text fulfills length restrictions. If it is too long then returns true, false
-   * otherwise.
-   *
-   * @return {boolean}
-   * @export
-   */
-  shouldTruncate() {
-    return this.displayString.length > this.maxLength;
   }
 }
 
