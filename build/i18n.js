@@ -19,6 +19,7 @@ import childProcess from 'child_process';
 import fileExists from 'file-exists';
 import gulp from 'gulp';
 import cheerio from 'gulp-cheerio';
+import freplace from 'gulp-findreplace';
 import gulpUtil from 'gulp-util';
 import xslt from 'gulp-xslt';
 import jsesc from 'jsesc';
@@ -58,7 +59,9 @@ function extractForLanguage(langKey) {
   return deferred.promise;
 }
 
-gulp.task('generate-xtbs', ['extract-translations', 'sort-translations']);
+gulp.task(
+    'generate-xtbs',
+    ['extract-translations', 'sort-translations', 'remove-redundant-translations']);
 
 let prevMsgs = {};
 
@@ -104,6 +107,78 @@ gulp.task(
 gulp.task('sort-translations', ['extract-translations'], function() {
   return gulp.src('i18n/messages-*.xtb').pipe(xslt('build/sortxtb.xslt')).pipe(gulp.dest('i18n'));
 });
+
+/**
+ * Task to remove redundant translations. Do not run manually as it should be executed
+ * as a part of 'gulp generate-xtbs' task.
+ */
+gulp.task('remove-redundant-translations', ['angular-templates'], function() {
+  // Mark every message found in JavaScript files as used, it will allow deletion of unused messages
+  // afterwards.
+  let jsSource = path.join(conf.paths.frontendSrc, '**/*.js');
+  gulp.src(jsSource).pipe(freplace(/MSG_\w*/g, function(match) {
+    translationsManager.addUsed(match);
+  }));
+
+  let used = translationsManager.getUsed();
+
+  return gulp.src('i18n/messages-*.xtb')
+      .pipe(cheerio((doc) => {
+        let redundant = new Set();
+
+        // Find translations to remove.
+        doc('translation').each((i, translation) => {
+          let key = translation.attribs.key;
+          if (!used.has(key)) {
+            redundant.add(key);
+          }
+        });
+
+        // Remove redundant translations.
+        redundant.forEach((r) => {
+          doc(`translation[key=${r}]`).remove();
+        });
+      }))
+      .pipe(gulp.dest('i18n/'));
+});
+
+/**
+ * Translations manager is a closure function allowing to manage translations.
+ * Allows removing unused translations after marking certain as used.
+ *
+ * @type {{markAsUsed, removeUnused}}
+ */
+export let translationsManager = (function() {
+
+  /**
+   * Set of translations marked as used.
+   *
+   * @type {Set}
+   */
+  let used = new Set();
+
+  /**
+   * Function used to mark translations as used.
+   *
+   * @param key
+   */
+  function addUsed(key) {
+    used.add(key);
+  }
+
+  /**
+   * Function used to get used translations.
+   *
+   * @returns {Set}
+   */
+  function getUsed() {
+    return used;
+  }
+
+  return {
+    addUsed: addUsed, getUsed: getUsed,
+  }
+})();
 
 // Regex to match [[Foo | Bar]] or [[Foo]] i18n placeholders.
 // Technical details:
@@ -174,6 +249,10 @@ export function processI18nMessages(file, minifiedHtml) {
     // for compiler passses.
     content = content.replace(message.original, `' + ${message.varName} + '`);
     pureHtmlContent = pureHtmlContent.replace(message.original, message.text);
+
+    // Mark every message found in this HTML file as used, it will allow deletion of unused messages
+    // afterwards.
+    translationsManager.addUsed(message.varName);
   });
 
   let messageVariables = i18nMessages.map((message) => {
