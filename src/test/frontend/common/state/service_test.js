@@ -42,7 +42,7 @@ describe('History service', () => {
   it('should track future and current state', () => {
     service.init();
 
-    expect(service.state).toBe(null);
+    expect(service.state).toBe(state);
     expect(service.params).toBe(null);
 
     state.go('fakeState', {});
