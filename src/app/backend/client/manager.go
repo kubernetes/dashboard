@@ -179,13 +179,13 @@ func (self *clientManager) buildConfigFromFlags(apiserverHost, kubeConfigPath st
 // Based on rest config creates auth info structure.
 func (self *clientManager) buildAuthInfoFromConfig(cfg *rest.Config) api.AuthInfo {
 	return api.AuthInfo{
-		Token: cfg.BearerToken,
-		ClientCertificate: cfg.CertFile,
-		ClientKey: cfg.KeyFile,
+		Token:                 cfg.BearerToken,
+		ClientCertificate:     cfg.CertFile,
+		ClientKey:             cfg.KeyFile,
 		ClientCertificateData: cfg.CertData,
-		ClientKeyData: cfg.KeyData,
-		Username: cfg.Username,
-		Password: cfg.Password,
+		ClientKeyData:         cfg.KeyData,
+		Username:              cfg.Username,
+		Password:              cfg.Password,
 	}
 }
 
