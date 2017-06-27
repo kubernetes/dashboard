@@ -105,7 +105,6 @@ gulp.task('sort-translations', ['extract-translations'], function() {
   return gulp.src('i18n/messages-*.xtb').pipe(xslt('build/sortxtb.xslt')).pipe(gulp.dest('i18n'));
 });
 
-
 // Regex to match [[Foo | Bar]] or [[Foo]] i18n placeholders.
 // Technical details:
 // * First capturing group is lazy math for any string not-containing |. This is to make
