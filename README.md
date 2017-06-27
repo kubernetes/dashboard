@@ -46,7 +46,7 @@ The UI can _only_ be accessed from the machine where the command is executed. Se
 ## Alternative Usage
 You may access the UI directly via the apiserver proxy. Open a browser and navigate to `https://<kubernetes-master>/ui`.
 
-Please note that this works only if the apiserver is set up to allow authentication with username and password or certificates, however certificates require some manual steps to install them in the browser. This is not currently the case with the setup tool `kubeadm`. See [documentation](http://kubernetes.io/docs/admin/authentication/) if you want to configure it manually.
+Please note that this works only if the apiserver is set up to allow authentication with username and password or certificates, however certificates require some manual steps to be installed in the browser. This is not currently the case with the setup tool `kubeadm`. See [documentation](http://kubernetes.io/docs/admin/authentication/) if you want to configure it manually.
 
 If the username and password is configured but unknown to you, then use `kubectl config view` to find it.
 
