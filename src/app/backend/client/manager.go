@@ -108,9 +108,9 @@ func (self *clientManager) ClientCmdConfig(req *restful.Request) (clientcmd.Clie
 		return nil, err
 	}
 
-	// Use token in cfg if there is no token in authInfo
+	// Use auth data provided in cfg if there is no token in header
 	if len(authInfo.Token) == 0 {
-		authInfo.Token = cfg.BearerToken
+		authInfo = self.buildAuthInfoFromConfig(cfg)
 	}
 
 	cmdCfg := api.NewConfig()
@@ -174,6 +174,19 @@ func (self *clientManager) buildConfigFromFlags(apiserverHost, kubeConfigPath st
 	}
 
 	return nil, errors.New("Could not create client config. Check logs for more information")
+}
+
+// Based on rest config creates auth info structure.
+func (self *clientManager) buildAuthInfoFromConfig(cfg *rest.Config) api.AuthInfo {
+	return api.AuthInfo{
+		Token: cfg.BearerToken,
+		ClientCertificate: cfg.CertFile,
+		ClientKey: cfg.KeyFile,
+		ClientCertificateData: cfg.CertData,
+		ClientKeyData: cfg.KeyData,
+		Username: cfg.Username,
+		Password: cfg.Password,
+	}
 }
 
 // Extracts authentication information from request header
