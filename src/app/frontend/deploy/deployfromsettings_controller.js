@@ -246,7 +246,7 @@ export default class DeployFromSettingsController {
                 (savedConfig) => {
                   defer.resolve(savedConfig);  // Progress ends
                   this.log_.info('Successfully deployed application: ', savedConfig);
-                  this.state_.go(workloads);
+                  this.kdHistoryService_.back(workloads);
                 },
                 (err) => {
                   defer.reject(err);  // Progress ends
