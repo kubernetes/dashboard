@@ -1,0 +1,1 @@
+TODO: describe dashboard authorization mechanism and provide generic description on configuration
