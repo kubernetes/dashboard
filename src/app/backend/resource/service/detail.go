@@ -53,6 +53,9 @@ type ServiceDetail struct {
 	// a valid IP address. None can be specified for headless services when proxying is not required
 	ClusterIP string `json:"clusterIP"`
 
+	// List of events related to this Service
+	EventList common.EventList `json:"eventList"`
+
 	// PodList represents list of pods targeted by same label selector as this service.
 	PodList pod.PodList `json:"podList"`
 }
@@ -74,8 +77,14 @@ func GetServiceDetail(client k8sClient.Interface, heapsterClient heapster.Heapst
 		return nil, err
 	}
 
+	eventList, err := GetServiceEvents(client, dataselect.DefaultDataSelect, namespace, name)
+	if err != nil {
+		return nil, err
+	}
+
 	service := ToServiceDetail(serviceData)
 	service.PodList = *podList
+	service.EventList = *eventList
 
 	return &service, nil
 }

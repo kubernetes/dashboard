@@ -55,7 +55,7 @@ func TestGetServiceDetail(t *testing.T) {
 				Name: "svc-1", Namespace: "ns-1", Labels: map[string]string{},
 			}},
 			namespace: "ns-1", name: "svc-1",
-			expectedActions: []string{"get", "get"},
+			expectedActions: []string{"get", "get", "list"},
 			expected: &ServiceDetail{
 				ObjectMeta: api.ObjectMeta{
 					Name:      "svc-1",
@@ -67,6 +67,9 @@ func TestGetServiceDetail(t *testing.T) {
 				PodList: pod.PodList{
 					Pods:              []pod.Pod{},
 					CumulativeMetrics: make([]metric.Metric, 0),
+				},
+				EventList: common.EventList{
+					Events: []common.Event{},
 				},
 			},
 		},
@@ -81,7 +84,7 @@ func TestGetServiceDetail(t *testing.T) {
 				},
 			},
 			namespace: "ns-2", name: "svc-2",
-			expectedActions: []string{"get", "get", "list"},
+			expectedActions: []string{"get", "get", "list", "list"},
 			expected: &ServiceDetail{
 				ObjectMeta: api.ObjectMeta{
 					Name:      "svc-2",
@@ -93,6 +96,9 @@ func TestGetServiceDetail(t *testing.T) {
 				PodList: pod.PodList{
 					Pods:              []pod.Pod{},
 					CumulativeMetrics: make([]metric.Metric, 0),
+				},
+				EventList: common.EventList{
+					Events: []common.Event{},
 				},
 			},
 		},
