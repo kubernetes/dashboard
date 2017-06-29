@@ -513,6 +513,8 @@
   <translation id="5623491181214143081" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARDLIST_6" desc="Text for persistent volume claim card list zerostate.">There are no Persistent Volume Claims to display.</translation>
   <translation id="445776331089273321" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARD_0" desc="Tooltip text which appears on error icon hover.">This claim is in lost state</translation>
   <translation id="2307976094948542528" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARD_1" desc="Tooltip text which appears on pending icon hover.">This claim is in pending state</translation>
+  <translation id="739174621480425961" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARD_2" desc="Label \'Persistent Volume Claim\' which will appear in the persistent volume claim delete dialog opened from a persistentvolumeclaim card on the list page.">Persistent Volume Claim</translation>
+  <translation id="5269246278061874461" key="MSG_PERSISTENTVOLUMECLAIM_LIST_CARD_3" desc="Label \'Persistent Volume Claim\' which will appear in the persistent volume claim edit dialog opened from a persistentvolumeclaim card on the list page.">Persistent Volume Claim</translation>
   <translation id="6410423382942434423" key="MSG_PERSISTENTVOLUME_DETAIL_ACTIONBAR_0" desc="Label \'Persistent Volume\' which appears at the top of the delete dialog, opened from a config map details page.">Persistent Volume</translation>
   <translation id="6875466029803342193" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_0" desc="Header in a detail view">Details</translation>
   <translation id="5670456105080780751" key="MSG_PERSISTENTVOLUME_DETAIL_INFO_1" desc="Persistent volume info details section status entry.">Status</translation>
