@@ -40,7 +40,7 @@ func TestGetReplicaSetDetail(t *testing.T) {
 	}{
 		{
 			"ns-1", "rs-1",
-			[]string{"get", "list", "get", "list", "list", "get", "list", "list", "get", "list", "list"},
+			[]string{"get", "list", "get", "list", "list", "get", "list", "list"},
 			&extensions.ReplicaSet{
 				ObjectMeta: metaV1.ObjectMeta{Name: "rs-1", Namespace: "ns-1",
 					Labels: map[string]string{"app": "test"}},

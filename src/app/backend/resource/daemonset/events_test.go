@@ -52,7 +52,7 @@ func TestGetDaemonSetEvents(t *testing.T) {
 				}},
 			}},
 			&ds,
-			[]string{"list", "get", "list", "list"},
+			[]string{"list"},
 			&common.EventList{
 				ListMeta: api.ListMeta{TotalItems: 1},
 				Events: []common.Event{{
@@ -84,66 +84,6 @@ func TestGetDaemonSetEvents(t *testing.T) {
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetDaemonSetEvents(client,%#v, %#v) == \ngot: %#v, \nexpected %#v",
-				c.namespace, c.name, actual, c.expected)
-		}
-	}
-}
-
-func TestGetDaemonSetPodsEvents(t *testing.T) {
-	ds := CreateDaemonSet("ds-1", "test-namespace", map[string]string{"app": "test"})
-	cases := []struct {
-		namespace, name string
-		eventList       *v1.EventList
-		podList         *v1.PodList
-		daemonSet       *extensions.DaemonSet
-		expectedActions []string
-		expected        []v1.Event
-	}{
-		{
-			"test-namespace", "ds-1",
-			&v1.EventList{Items: []v1.Event{
-				{Message: "test-message", ObjectMeta: metaV1.ObjectMeta{
-					Name:      "ev-1",
-					Namespace: "test-namespace",
-				}},
-			}},
-			&v1.PodList{Items: []v1.Pod{
-				{ObjectMeta: metaV1.ObjectMeta{
-					Name: "pod-1", Namespace: "test-namespace",
-					Labels: map[string]string{"app": "test"},
-				}},
-			}},
-			&ds,
-			[]string{"get", "list", "list"},
-			[]v1.Event{
-				{Message: "test-message", ObjectMeta: metaV1.ObjectMeta{
-					Name:      "ev-1",
-					Namespace: "test-namespace",
-				}},
-			},
-		},
-	}
-
-	for _, c := range cases {
-		fakeClient := fake.NewSimpleClientset(c.daemonSet, c.podList, c.eventList)
-
-		actual, _ := GetDaemonSetPodsEvents(fakeClient, c.namespace, c.name)
-
-		actions := fakeClient.Actions()
-		if len(actions) != len(c.expectedActions) {
-			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
-				len(c.expectedActions), len(actions))
-			continue
-		}
-
-		for i, verb := range c.expectedActions {
-			if actions[i].GetVerb() != verb {
-				t.Errorf("Unexpected action: %+v, expected %s", actions[i], verb)
-			}
-		}
-
-		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("GetDaemonSetPodsEvents(client,%#v, %#v) == \ngot: %#v, \nexpected %#v",
 				c.namespace, c.name, actual, c.expected)
 		}
 	}

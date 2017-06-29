@@ -47,7 +47,7 @@ func TestGetJobEvents(t *testing.T) {
 				Name: "pod-1", Namespace: "ns-1",
 			}}}},
 			createJob("job-1", "ns-1", map[string]string{"app": "test"}),
-			[]string{"list", "get", "list", "list"},
+			[]string{"list"},
 			&common.EventList{
 				ListMeta: api.ListMeta{TotalItems: 1},
 				Events: []common.Event{{
@@ -81,61 +81,6 @@ func TestGetJobEvents(t *testing.T) {
 
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("TestGetJobEvents(client,metricClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
-				c.namespace, c.name, actual, c.expected)
-		}
-	}
-}
-
-func TestGetJobPodsEvents(t *testing.T) {
-	cases := []struct {
-		namespace, name string
-		eventList       *v1.EventList
-		podList         *v1.PodList
-		job             *batch.Job
-		expectedActions []string
-		expected        []v1.Event
-	}{
-		{
-			"ns-1", "job-1",
-			&v1.EventList{Items: []v1.Event{
-				{Message: "test-message", ObjectMeta: metaV1.ObjectMeta{
-					Name: "ev-1", Namespace: "ns-1", Labels: map[string]string{"app": "test"},
-				}},
-			}},
-			&v1.PodList{Items: []v1.Pod{{ObjectMeta: metaV1.ObjectMeta{
-				Name: "pod-1", Namespace: "ns-1", Labels: map[string]string{"app": "test"},
-			}}}},
-			createJob("job-1", "ns-1", map[string]string{"app": "test"}),
-			[]string{"get", "list", "list"},
-			[]v1.Event{{
-				Message: "test-message",
-				ObjectMeta: metaV1.ObjectMeta{Name: "ev-1", Namespace: "ns-1",
-					Labels: map[string]string{"app": "test"}},
-			}},
-		},
-	}
-
-	for _, c := range cases {
-		fakeClient := fake.NewSimpleClientset(c.job, c.podList, c.eventList)
-
-		actual, _ := GetJobPodsEvents(fakeClient, c.namespace, c.name)
-
-		actions := fakeClient.Actions()
-		if len(actions) != len(c.expectedActions) {
-			t.Errorf("Unexpected actions: %v, expected %d actions got %d", actions,
-				len(c.expectedActions), len(actions))
-			continue
-		}
-
-		for i, verb := range c.expectedActions {
-			if actions[i].GetVerb() != verb {
-				t.Errorf("Unexpected action: %+v, expected %s",
-					actions[i], verb)
-			}
-		}
-
-		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("TestGetJobPodsEvents(client,metricClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
 				c.namespace, c.name, actual, c.expected)
 		}
 	}

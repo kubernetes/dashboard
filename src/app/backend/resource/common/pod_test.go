@@ -23,64 +23,6 @@ import (
 	api "k8s.io/client-go/pkg/api/v1"
 )
 
-func TestFilterPodsBySelector(t *testing.T) {
-	firstLabelSelectorMap := make(map[string]string)
-	firstLabelSelectorMap["name"] = "app-name-first"
-	secondLabelSelectorMap := make(map[string]string)
-	secondLabelSelectorMap["name"] = "app-name-second"
-
-	cases := []struct {
-		selector map[string]string
-		pods     []api.Pod
-		expected []api.Pod
-	}{
-		{
-			firstLabelSelectorMap,
-			[]api.Pod{
-				{
-					ObjectMeta: metaV1.ObjectMeta{
-						Name:   "first-pod-ok",
-						Labels: firstLabelSelectorMap,
-					},
-				},
-				{
-					ObjectMeta: metaV1.ObjectMeta{
-						Name:   "second-pod-ok",
-						Labels: firstLabelSelectorMap,
-					},
-				},
-				{
-					ObjectMeta: metaV1.ObjectMeta{
-						Name:   "third-pod-wrong",
-						Labels: secondLabelSelectorMap,
-					},
-				},
-			},
-			[]api.Pod{
-				{
-					ObjectMeta: metaV1.ObjectMeta{
-						Name:   "first-pod-ok",
-						Labels: firstLabelSelectorMap,
-					},
-				},
-				{
-					ObjectMeta: metaV1.ObjectMeta{
-						Name:   "second-pod-ok",
-						Labels: firstLabelSelectorMap,
-					},
-				},
-			},
-		},
-	}
-	for _, c := range cases {
-		actual := FilterPodsBySelector(c.pods, c.selector)
-		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("FilterPodsBySelector(%+v, %+v) == %+v, expected %+v",
-				c.pods, c.selector, actual, c.expected)
-		}
-	}
-}
-
 func TestGetContainerImages(t *testing.T) {
 	cases := []struct {
 		podTemplate *api.PodSpec
