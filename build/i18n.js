@@ -160,7 +160,7 @@ export let translationsManager = (function() {
   /**
    * Function used to mark translations as used.
    *
-   * @param key
+   * @param {string} key
    */
   function addUsed(key) {
     used.add(key);
@@ -169,15 +169,16 @@ export let translationsManager = (function() {
   /**
    * Function used to get used translations.
    *
-   * @returns {Set}
+   * @return {Set}
    */
   function getUsed() {
     return used;
   }
 
   return {
-    addUsed: addUsed, getUsed: getUsed,
-  }
+    addUsed: addUsed,
+    getUsed: getUsed,
+  };
 })();
 
 // Regex to match [[Foo | Bar]] or [[Foo]] i18n placeholders.
