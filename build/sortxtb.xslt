@@ -17,8 +17,8 @@
   <!--empty template suppresses 'source' attribute -->
   <xsl:template match="@source"/>
 
+  <!-- remove duplicates -->
   <xsl:key name="indexKey" match="//translation[@key]" use="@key" />
-
   <xsl:template match="translation">
     <xsl:if test="generate-id()=generate-id(key('indexKey', @key)[1])">
       <xsl:copy>
