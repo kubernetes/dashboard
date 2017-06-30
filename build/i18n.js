@@ -109,14 +109,14 @@ gulp.task('sort-translations', ['extract-translations'], function() {
 });
 
 /**
- * Task to used to find translations used in JavaScript files. Do not run manually. It should be invoked as a part of
- * 'gulp remove-redundant-translations'.
+ * Task to used to find translations used in JavaScript files. Do not run manually. It should be
+ * invoked as a part of 'gulp remove-redundant-translations'.
  */
 gulp.task('find-translations-used-in-js', function() {
   let jsSource = path.join(conf.paths.frontendSrc, '**/*.js');
   return gulp.src(jsSource).pipe(freplace(/MSG_\w*/g, function(match) {
-    // Mark every message found in JavaScript files as used, it will allow deletion of unused messages
-    // afterwards.
+    // Mark every message found in JavaScript files as used, it will allow deletion of unused
+    // messages afterwards.
     translationsManager.addUsed(match);
   }));
 });
@@ -125,29 +125,31 @@ gulp.task('find-translations-used-in-js', function() {
  * Task to remove redundant translations. Do not run manually. It should be invoked as a part of
  * 'gulp generate-xtbs'.
  */
-gulp.task('remove-redundant-translations', ['angular-templates', 'find-translations-used-in-js'], function() {
-  // Get translations used in JavaScript and HTML files. These will not be removed.
-  let used = translationsManager.getUsed();
+gulp.task(
+    'remove-redundant-translations', ['angular-templates', 'find-translations-used-in-js'],
+    function() {
+      // Get translations used in JavaScript and HTML files. These will not be removed.
+      let used = translationsManager.getUsed();
 
-  return gulp.src('i18n/messages-*.xtb')
-      .pipe(cheerio((doc) => {
-        let redundant = new Set();
+      return gulp.src('i18n/messages-*.xtb')
+          .pipe(cheerio((doc) => {
+            let redundant = new Set();
 
-        // Find translations to remove.
-        doc('translation').each((i, translation) => {
-          let key = translation.attribs.key;
-          if (!used.has(key)) {
-            redundant.add(key);
-          }
-        });
+            // Find translations to remove.
+            doc('translation').each((i, translation) => {
+              let key = translation.attribs.key;
+              if (!used.has(key)) {
+                redundant.add(key);
+              }
+            });
 
-        // Remove redundant translations.
-        redundant.forEach((r) => {
-          doc(`translation[key=${r}]`).remove();
-        });
-      }))
-      .pipe(gulp.dest('i18n/'));
-});
+            // Remove redundant translations.
+            redundant.forEach((r) => {
+              doc(`translation[key=${r}]`).remove();
+            });
+          }))
+          .pipe(gulp.dest('i18n/'));
+    });
 
 /**
  * Translations manager is a closure function allowing to manage translations.
