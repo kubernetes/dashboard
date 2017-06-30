@@ -109,17 +109,23 @@ gulp.task('sort-translations', ['extract-translations'], function() {
 });
 
 /**
+ * Task to used to find translations used in JavaScript files. Do not run manually. It should be invoked as a part of
+ * 'gulp remove-redundant-translations'.
+ */
+gulp.task('find-translations-used-in-js', function() {
+  let jsSource = path.join(conf.paths.frontendSrc, '**/*.js');
+  return gulp.src(jsSource).pipe(freplace(/MSG_\w*/g, function(match) {
+    // Mark every message found in JavaScript files as used, it will allow deletion of unused messages
+    // afterwards.
+    translationsManager.addUsed(match);
+  }));
+});
+
+/**
  * Task to remove redundant translations. Do not run manually. It should be invoked as a part of
  * 'gulp generate-xtbs'.
  */
-gulp.task('remove-redundant-translations', ['angular-templates'], function() {
-  // Mark every message found in JavaScript files as used, it will allow deletion of unused messages
-  // afterwards.
-  let jsSource = path.join(conf.paths.frontendSrc, '**/*.js');
-  gulp.src(jsSource).pipe(freplace(/MSG_\w*/g, function(match) {
-    translationsManager.addUsed(match);
-  }));
-
+gulp.task('remove-redundant-translations', ['angular-templates', 'find-translations-used-in-js'], function() {
   // Get translations used in JavaScript and HTML files. These will not be removed.
   let used = translationsManager.getUsed();
 
