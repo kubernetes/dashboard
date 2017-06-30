@@ -109,8 +109,8 @@ gulp.task('sort-translations', ['extract-translations'], function() {
 });
 
 /**
- * Task to remove redundant translations. Do not run manually as it should be executed
- * as a part of 'gulp generate-xtbs' task.
+ * Task to remove redundant translations. Do not run manually. It should be invoked as a part of
+ * 'gulp generate-xtbs'.
  */
 gulp.task('remove-redundant-translations', ['angular-templates'], function() {
   // Mark every message found in JavaScript files as used, it will allow deletion of unused messages
@@ -120,6 +120,7 @@ gulp.task('remove-redundant-translations', ['angular-templates'], function() {
     translationsManager.addUsed(match);
   }));
 
+  // Get translations used in JavaScript and HTML files. These will not be removed.
   let used = translationsManager.getUsed();
 
   return gulp.src('i18n/messages-*.xtb')
