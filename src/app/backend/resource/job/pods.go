@@ -32,9 +32,9 @@ import (
 // GetJobPods return list of pods targeting job.
 func GetJobPods(client k8sClient.Interface, heapsterClient heapster.HeapsterClient,
 	dsQuery *dataselect.DataSelectQuery, namespace string, jobName string) (*pod.PodList, error) {
-	log.Printf("Getting replication controller %s pods in namespace %s", jobName, namespace)
+	log.Printf("Getting job controller %s pods in namespace %s", jobName, namespace)
 
-	pods, err := getRawJobPods(client, jobName, namespace)
+	pods, err := getRawJobPods(client, namespace, jobName)
 	if err != nil {
 		return nil, err
 	}
@@ -44,14 +44,13 @@ func GetJobPods(client k8sClient.Interface, heapsterClient heapster.HeapsterClie
 }
 
 // Returns array of api pods targeting job with given name.
-func getRawJobPods(client k8sClient.Interface, petSetName, namespace string) ([]api.Pod, error) {
-
-	replicaSet, err := client.Batch().Jobs(namespace).Get(petSetName, metaV1.GetOptions{})
+func getRawJobPods(client k8sClient.Interface, namespace, jobName string) ([]api.Pod, error) {
+	job, err := client.BatchV1().Jobs(namespace).Get(jobName, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
 
-	labelSelector := labels.SelectorFromSet(replicaSet.Spec.Selector.MatchLabels)
+	labelSelector := labels.SelectorFromSet(job.Spec.Selector.MatchLabels)
 	channels := &common.ResourceChannels{
 		PodList: common.GetPodListChannelWithOptions(client, common.NewSameNamespaceQuery(namespace),
 			metaV1.ListOptions{

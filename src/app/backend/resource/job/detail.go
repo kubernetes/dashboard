@@ -15,6 +15,8 @@
 package job
 
 import (
+	"log"
+
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
@@ -94,4 +96,28 @@ func getJobDetail(job *batch.Job, heapsterClient heapster.HeapsterClient,
 		Parallelism:     job.Spec.Parallelism,
 		Completions:     job.Spec.Completions,
 	}
+}
+
+// Deletes job with given name in given namespace and related pods.
+func DeleteJob(client k8sClient.Interface, namespace, name string) error {
+
+	log.Printf("Deleting %s job from %s namespace", name, namespace)
+
+	pods, err := getRawJobPods(client, namespace, name)
+	if err != nil {
+		return err
+	}
+	if err := client.BatchV1().Jobs(namespace).Delete(name, &metaV1.DeleteOptions{}); err != nil {
+		return err
+	}
+
+	for _, pod := range pods {
+		if err := client.Core().Pods(namespace).Delete(pod.Name, &metaV1.DeleteOptions{}); err != nil {
+			return err
+		}
+	}
+
+	log.Printf("Successfully deleted %s job from %s namespace", name, namespace)
+
+	return nil
 }

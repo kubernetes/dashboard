@@ -31,6 +31,7 @@ import (
 )
 
 type FakeHeapsterClient struct {
+	client fake.Clientset
 }
 
 func (c FakeHeapsterClient) Get(path string) heapster.RequestInterface {
@@ -85,7 +86,7 @@ func TestGetJobDetail(t *testing.T) {
 
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.job)
-		fakeHeapsterClient := FakeHeapsterClient{}
+		fakeHeapsterClient := FakeHeapsterClient{client: *fake.NewSimpleClientset()}
 
 		dataselect.DefaultDataSelectWithMetrics.MetricQuery = dataselect.NoMetrics
 		actual, _ := GetJobDetail(fakeClient, fakeHeapsterClient, c.namespace, c.name)
