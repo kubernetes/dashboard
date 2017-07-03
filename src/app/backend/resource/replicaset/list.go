@@ -22,7 +22,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
@@ -35,6 +34,9 @@ type ReplicaSetList struct {
 	// Unordered list of Replica Sets.
 	ReplicaSets       []ReplicaSet       `json:"replicaSets"`
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // GetReplicaSetList returns a list of all Replica Sets in the cluster.
@@ -58,15 +60,6 @@ func GetReplicaSetListFromChannels(channels *common.ResourceChannels,
 
 	replicaSets := <-channels.ReplicaSetList.List
 	if err := <-channels.ReplicaSetList.Error; err != nil {
-		statusErr, ok := err.(*k8serrors.StatusError)
-		if ok && statusErr.ErrStatus.Reason == "NotFound" {
-			// NotFound - this means that the server does not support Replica Set objects, which
-			// is fine.
-			emptyList := &ReplicaSetList{
-				ReplicaSets: make([]ReplicaSet, 0),
-			}
-			return emptyList, nil
-		}
 		return nil, err
 	}
 

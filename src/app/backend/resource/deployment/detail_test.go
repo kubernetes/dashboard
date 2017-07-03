@@ -84,8 +84,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 
 	podTemplateSpec := GetNewReplicaSetTemplate(deployment)
 
-	newReplicaSet := createReplicaSet("rs-1", "ns-1", map[string]string{"foo": "bar"},
-		podTemplateSpec)
+	newReplicaSet := createReplicaSet("rs-1", "ns-1", map[string]string{"foo": "bar"}, podTemplateSpec)
 
 	replicaSetList := &extensions.ReplicaSetList{
 		Items: []extensions.ReplicaSet{
@@ -144,14 +143,15 @@ func TestGetDeploymentDetail(t *testing.T) {
 				EventList: common.EventList{
 					Events: []common.Event{},
 				},
-				HorizontalPodAutoscalerList: horizontalpodautoscaler.HorizontalPodAutoscalerList{HorizontalPodAutoscalers: []horizontalpodautoscaler.HorizontalPodAutoscaler{}},
+				HorizontalPodAutoscalerList: horizontalpodautoscaler.HorizontalPodAutoscalerList{
+					HorizontalPodAutoscalers: []horizontalpodautoscaler.HorizontalPodAutoscaler{},
+				},
 			},
 		},
 	}
 
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.deployment, replicaSetList, podList, eventList)
-
 		dataselect.DefaultDataSelectWithMetrics.MetricQuery = dataselect.NoMetrics
 		actual, _ := GetDeploymentDetail(fakeClient, nil, c.namespace, c.name)
 
@@ -164,8 +164,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 
 		for i, verb := range c.expectedActions {
 			if actions[i].GetVerb() != verb {
-				t.Errorf("Unexpected action: %+v, expected %s",
-					actions[i], verb)
+				t.Errorf("Unexpected action: %+v, expected %s", actions[i], verb)
 			}
 		}
 

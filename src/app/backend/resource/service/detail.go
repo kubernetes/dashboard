@@ -127,6 +127,6 @@ func GetServicePods(client k8sClient.Interface, metricClient metricapi.MetricCli
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(apiPodList.Items, events, dsQuery, metricClient)
+	podList := pod.CreatePodList(apiPodList.Items, events, []error{}, dsQuery, metricClient)
 	return &podList, nil
 }

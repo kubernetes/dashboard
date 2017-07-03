@@ -45,7 +45,7 @@ func GetReplicaSetPods(client k8sClient.Interface, metricClient metricapi.Metric
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(pods, events, dsQuery, metricClient)
+	podList := pod.CreatePodList(pods, events, []error{}, dsQuery, metricClient)
 	return &podList, nil
 }
 

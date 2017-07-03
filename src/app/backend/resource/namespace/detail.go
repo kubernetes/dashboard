@@ -18,7 +18,6 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
-	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
@@ -30,6 +29,11 @@ import (
 	k8sClient "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
 )
+
+var listEverything = metaV1.ListOptions{
+	LabelSelector: labels.Everything().String(),
+	FieldSelector: fields.Everything().String(),
+}
 
 // NamespaceDetail is a presentation layer view of Kubernetes Namespace resource. This means it is Namespace plus
 // additional augmented data we can get from other sources.
@@ -51,10 +55,8 @@ type NamespaceDetail struct {
 }
 
 // GetNamespaceDetail gets namespace details.
-func GetNamespaceDetail(client k8sClient.Interface, metricClient metricapi.MetricClient,
-	name string) (
-	*NamespaceDetail, error) {
-	log.Printf("Getting details of %s namespace", name)
+func GetNamespaceDetail(client k8sClient.Interface, name string) (*NamespaceDetail, error) {
+	log.Printf("Getting details of %s namespace\n", name)
 
 	namespace, err := client.CoreV1().Namespaces().Get(name, metaV1.GetOptions{})
 	if err != nil {
@@ -77,11 +79,11 @@ func GetNamespaceDetail(client k8sClient.Interface, metricClient metricapi.Metri
 	}
 
 	namespaceDetails := toNamespaceDetail(*namespace, events, resourceQuotaList, resourceLimits)
-
 	return &namespaceDetails, nil
 }
 
-func toNamespaceDetail(namespace v1.Namespace, events common.EventList, resourceQuotaList *resourcequota.ResourceQuotaDetailList, resourceLimits []limitrange.LimitRangeItem) NamespaceDetail {
+func toNamespaceDetail(namespace v1.Namespace, events common.EventList, resourceQuotaList *resourcequota.ResourceQuotaDetailList,
+	resourceLimits []limitrange.LimitRangeItem) NamespaceDetail {
 
 	return NamespaceDetail{
 		ObjectMeta:        api.NewObjectMeta(namespace.ObjectMeta),
@@ -91,11 +93,6 @@ func toNamespaceDetail(namespace v1.Namespace, events common.EventList, resource
 		ResourceQuotaList: resourceQuotaList,
 		ResourceLimits:    resourceLimits,
 	}
-}
-
-var listEverything = metaV1.ListOptions{
-	LabelSelector: labels.Everything().String(),
-	FieldSelector: fields.Everything().String(),
 }
 
 func getResourceQuotas(client k8sClient.Interface, namespace v1.Namespace) (*resourcequota.ResourceQuotaDetailList, error) {
@@ -116,7 +113,6 @@ func getResourceQuotas(client k8sClient.Interface, namespace v1.Namespace) (*res
 
 func getLimitRanges(client k8sClient.Interface, namespace v1.Namespace) ([]limitrange.LimitRangeItem, error) {
 	list, err := client.CoreV1().LimitRanges(namespace.Name).List(listEverything)
-
 	if err != nil {
 		return nil, err
 	}

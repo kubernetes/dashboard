@@ -44,22 +44,19 @@ func GetStatefulSetPods(client *k8sClient.Clientset, metricClient metricapi.Metr
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(pods, events, dsQuery, metricClient)
+	podList := pod.CreatePodList(pods, events, []error{}, dsQuery, metricClient)
 	return &podList, nil
 }
 
 // getRawStatefulSetPods return array of api pods targeting pet set with given name.
 func getRawStatefulSetPods(client *k8sClient.Clientset, name, namespace string) ([]v1.Pod, error) {
-
-	statefulSet, err := client.AppsV1beta1().StatefulSets(namespace).Get(name,
-		metaV1.GetOptions{})
+	statefulSet, err := client.AppsV1beta1().StatefulSets(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
 
 	channels := &common.ResourceChannels{
-		PodList: common.GetPodListChannel(client, common.NewSameNamespaceQuery(namespace),
-			1),
+		PodList: common.GetPodListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
 	}
 
 	podList := <-channels.PodList.List
@@ -67,14 +64,11 @@ func getRawStatefulSetPods(client *k8sClient.Clientset, name, namespace string) 
 		return nil, err
 	}
 
-	return common.FilterPodsByOwnerReference(statefulSet.Namespace, statefulSet.UID,
-		podList.Items), nil
+	return common.FilterPodsByOwnerReference(statefulSet.Namespace, statefulSet.UID, podList.Items), nil
 }
 
 // Returns simple info about pods(running, desired, failing, etc.) related to given pet set.
-func getStatefulSetPodInfo(client *k8sClient.Clientset, statefulSet *apps.StatefulSet) (
-	*common.PodInfo, error) {
-
+func getStatefulSetPodInfo(client *k8sClient.Clientset, statefulSet *apps.StatefulSet) (*common.PodInfo, error) {
 	pods, err := getRawStatefulSetPods(client, statefulSet.Name, statefulSet.Namespace)
 	if err != nil {
 		return nil, err

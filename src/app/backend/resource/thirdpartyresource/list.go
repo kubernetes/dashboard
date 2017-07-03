@@ -18,6 +18,7 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	k8sClient "k8s.io/client-go/kubernetes"
@@ -35,11 +36,13 @@ type ThirdPartyResourceList struct {
 	ListMeta            api.ListMeta         `json:"listMeta"`
 	TypeMeta            api.TypeMeta         `json:"typeMeta"`
 	ThirdPartyResources []ThirdPartyResource `json:"thirdPartyResources"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // GetThirdPartyResourceList returns a list of third party resource templates.
-func GetThirdPartyResourceList(client k8sClient.Interface,
-	dsQuery *dataselect.DataSelectQuery) (*ThirdPartyResourceList, error) {
+func GetThirdPartyResourceList(client k8sClient.Interface, dsQuery *dataselect.DataSelectQuery) (*ThirdPartyResourceList, error) {
 	log.Println("Getting list of third party resources")
 
 	channels := &common.ResourceChannels{
@@ -51,23 +54,25 @@ func GetThirdPartyResourceList(client k8sClient.Interface,
 
 // GetThirdPartyResourceListFromChannels returns a list of all third party resources in the cluster
 // reading required resource list once from the channels.
-func GetThirdPartyResourceListFromChannels(channels *common.ResourceChannels,
-	dsQuery *dataselect.DataSelectQuery) (*ThirdPartyResourceList, error) {
-
+func GetThirdPartyResourceListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (*ThirdPartyResourceList, error) {
 	tprs := <-channels.ThirdPartyResourceList.List
-	if err := <-channels.ThirdPartyResourceList.Error; err != nil {
-		return nil, err
+	err := <-channels.ThirdPartyResourceList.Error
+	nonCriticalErrors, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return nil, criticalError
 	}
 
-	result := getThirdPartyResourceList(tprs.Items, dsQuery)
+	result := getThirdPartyResourceList(tprs.Items, nonCriticalErrors, dsQuery)
 	return result, nil
 }
 
-func getThirdPartyResourceList(thirdPartyResources []extensions.ThirdPartyResource,
+func getThirdPartyResourceList(thirdPartyResources []extensions.ThirdPartyResource, nonCriticalErrors []error,
 	dsQuery *dataselect.DataSelectQuery) *ThirdPartyResourceList {
+
 	result := &ThirdPartyResourceList{
 		ThirdPartyResources: make([]ThirdPartyResource, 0),
 		ListMeta:            api.ListMeta{TotalItems: len(thirdPartyResources)},
+		Errors:              nonCriticalErrors,
 	}
 
 	tprCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(thirdPartyResources), dsQuery)

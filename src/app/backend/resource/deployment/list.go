@@ -22,7 +22,6 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
-	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/pkg/api/v1"
 	extensions "k8s.io/client-go/pkg/apis/extensions/v1beta1"
@@ -30,11 +29,14 @@ import (
 
 // ReplicationSetList contains a list of Deployments in the cluster.
 type DeploymentList struct {
-	ListMeta api.ListMeta `json:"listMeta"`
+	ListMeta          api.ListMeta       `json:"listMeta"`
+	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
 
 	// Unordered list of Deployments.
-	Deployments       []Deployment       `json:"deployments"`
-	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
+	Deployments []Deployment `json:"deployments"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // Deployment is a presentation layer view of Kubernetes Deployment resource. This means
@@ -52,8 +54,8 @@ type Deployment struct {
 }
 
 // GetDeploymentList returns a list of all Deployments in the cluster.
-func GetDeploymentList(client client.Interface, nsQuery *common.NamespaceQuery,
-	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*DeploymentList, error) {
+func GetDeploymentList(client client.Interface, nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery,
+	metricClient metricapi.MetricClient) (*DeploymentList, error) {
 	log.Print("Getting list of all deployments in the cluster")
 
 	channels := &common.ResourceChannels{
@@ -68,20 +70,11 @@ func GetDeploymentList(client client.Interface, nsQuery *common.NamespaceQuery,
 
 // GetDeploymentList returns a list of all Deployments in the cluster
 // reading required resource list once from the channels.
-func GetDeploymentListFromChannels(channels *common.ResourceChannels,
-	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*DeploymentList, error) {
+func GetDeploymentListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery,
+	metricClient metricapi.MetricClient) (*DeploymentList, error) {
 
 	deployments := <-channels.DeploymentList.List
 	if err := <-channels.DeploymentList.Error; err != nil {
-		statusErr, ok := err.(*k8serrors.StatusError)
-		if ok && statusErr.ErrStatus.Reason == "NotFound" {
-			// NotFound - this means that the server does not support Deployment objects, which
-			// is fine.
-			emptyList := &DeploymentList{
-				Deployments: make([]Deployment, 0),
-			}
-			return emptyList, nil
-		}
 		return nil, err
 	}
 
@@ -105,9 +98,8 @@ func GetDeploymentListFromChannels(channels *common.ResourceChannels,
 
 // CreateDeploymentList returns a list of all Deployment model objects in the cluster, based on all
 // Kubernetes Deployment API objects.
-func CreateDeploymentList(deployments []extensions.Deployment, pods []v1.Pod, events []v1.Event,
-	rs []extensions.ReplicaSet, dsQuery *dataselect.DataSelectQuery,
-	metricClient metricapi.MetricClient) *DeploymentList {
+func CreateDeploymentList(deployments []extensions.Deployment, pods []v1.Pod, events []v1.Event, rs []extensions.ReplicaSet,
+	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) *DeploymentList {
 
 	deploymentList := &DeploymentList{
 		Deployments: make([]Deployment, 0),

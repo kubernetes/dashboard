@@ -33,6 +33,9 @@ type ReplicationControllerList struct {
 	// Unordered list of Replication Controllers.
 	ReplicationControllers []ReplicationController `json:"replicationControllers"`
 	CumulativeMetrics      []metricapi.Metric      `json:"cumulativeMetrics"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // GetReplicationControllerList returns a list of all Replication Controllers in the cluster.

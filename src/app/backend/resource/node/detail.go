@@ -143,6 +143,9 @@ func GetNodeDetail(client k8sClient.Interface, metricClient metricapi.MetricClie
 	}
 
 	podList, err := GetNodePods(client, metricClient, dataselect.DefaultDataSelect, name)
+	if err != nil {
+		return nil, err
+	}
 
 	eventList, err := event.GetNodeEvents(client, dataselect.DefaultDataSelect, node.Name)
 	if err != nil {
@@ -236,7 +239,7 @@ func GetNodePods(client k8sClient.Interface, metricClient metricapi.MetricClient
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(pods.Items, []v1.Event{}, dsQuery, metricClient)
+	podList := pod.CreatePodList(pods.Items, []v1.Event{}, []error{}, dsQuery, metricClient)
 	return &podList, nil
 }
 

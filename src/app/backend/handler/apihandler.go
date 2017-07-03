@@ -1491,7 +1491,7 @@ func (apiHandler *APIHandler) handleGetNamespaceDetail(request *restful.Request,
 	}
 
 	name := request.PathParameter("name")
-	result, err := ns.GetNamespaceDetail(k8sClient, apiHandler.iManager.Metric().Client(), name)
+	result, err := ns.GetNamespaceDetail(k8sClient, name)
 	if err != nil {
 		handleInternalError(response, err)
 		return

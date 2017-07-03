@@ -54,6 +54,9 @@ type ServiceList struct {
 
 	// Unordered list of services.
 	Services []Service `json:"services"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // GetServiceList returns a list of all services in the cluster.

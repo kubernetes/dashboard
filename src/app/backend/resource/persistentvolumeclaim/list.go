@@ -32,6 +32,9 @@ type PersistentVolumeClaimList struct {
 
 	// Unordered list of persistent volume claims
 	Items []PersistentVolumeClaim `json:"items"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // PersistentVolumeClaim provides the simplified presentation layer view of Kubernetes Persistent Volume Claim resource.

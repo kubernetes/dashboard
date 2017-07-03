@@ -54,6 +54,6 @@ func GetDeploymentPods(client client.Interface, metricClient metricapi.MetricCli
 		return nil, err
 	}
 
-	podList := pod.CreatePodList(pods, events, dsQuery, metricClient)
+	podList := pod.CreatePodList(pods, events, []error{}, dsQuery, metricClient)
 	return &podList, nil
 }

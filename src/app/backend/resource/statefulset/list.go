@@ -35,6 +35,9 @@ type StatefulSetList struct {
 	// Unordered list of Pet Sets.
 	StatefulSets      []StatefulSet      `json:"statefulSets"`
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // StatefulSet is a presentation layer view of Kubernetes Stateful Set resource. This means it is

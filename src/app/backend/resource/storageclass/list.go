@@ -30,6 +30,9 @@ type StorageClassList struct {
 
 	// Unordered list of storage classes.
 	StorageClasses []StorageClass `json:"storageClasses"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // GetStorageClassList returns a list of all storage class objects in the cluster.

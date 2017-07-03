@@ -40,6 +40,9 @@ type IngressList struct {
 
 	// Unordered list of Ingresss.
 	Items []Ingress `json:"items"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // GetIngressList - return all ingresses in the given namespace.

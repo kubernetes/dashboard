@@ -35,6 +35,9 @@ type JobList struct {
 	// Unordered list of Jobs.
 	Jobs              []Job              `json:"jobs"`
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
 }
 
 // Job is a presentation layer view of Kubernetes Job resource. This means it is Job plus additional
